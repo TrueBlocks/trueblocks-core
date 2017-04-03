@@ -1,6 +1,5 @@
-<table>
-<tr><td><font color=yellow>Usage:</font></td><td>blockScrape [-l|-c|-d|-i|-r|-f|-s|-v|-h]</td></tr>
-<tr><td><font color=yellow>Purpose:</font></td><td>Indexes non-emtpy blocks (i.e. one or more transactions). Alternatively, lists non-empty blocks or checks for correctness.</td></tr>
+Usage | blockScrape [-l\|-c\|-d\|-i|-r|-f|-s|-v|-h]</td></tr>
+Purpose | Indexes non-emtpy blocks (i.e. one or more transactions). Alternatively, lists non-empty blocks or checks for correctness.</td></tr>
 <tr><td colspan=2><font color=yellow>Where:</font></td></tr>
 <tr><td colspan=2>
 <pre>
