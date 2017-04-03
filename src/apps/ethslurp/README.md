@@ -14,6 +14,7 @@ Check out Great Hill Corporation on <a href="https://www.facebook.com/GreatHillC
 
 | Option | Full Command | Description |
 | -------: | :------- | :------- |
+|  | addr | the address of the account or contract to slurp |
 | -a | --archive | filename of output (stdout otherwise) |
 | -b | --blocks | export records in block range (:0[:max]) |
 | -d | --dates | export records in date range (:yyyymmdd[hhmmss][:yyyymmdd[hhmmss]]) |
