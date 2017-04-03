@@ -5,11 +5,8 @@ This folder contains the core applications needed to accomplish the QuickBlocks 
 1. [blockScrape](blockScrape)
 2. [miniBlocks](miniBlocks)
 3. [getBlock](getBlock) / [getTrans](getTrans) / [getReceipt](getReceipt) / [getLog](getLog) / [getCode](getCode) / [getBalance](getBalance)
-4. [makeClass](makeClass)
-5. [grabABI](grabABI)
-6. [chafra](chafra)
-7. [ethname](ethname)
-8. [ethprice](ethprice)
-9. [ethslurp](ethslurp)
+4. [chafra](chafra)
+5. [ethprice](ethprice)
+6. [ethslurp](ethslurp)
 
 Each is explained further in their own individual README.md files.
