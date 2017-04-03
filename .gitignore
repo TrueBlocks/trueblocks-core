@@ -1,3 +1,18 @@
+# For now, the code
+*.cpp
+*.h
+makefile
+*.xcodeproj
+objs
+data
+results
+bin
+monitors
+tests
+other
+saved_docs
+scripts
+
 # Compiled Object files
 *.slo
 *.lo
@@ -27,6 +42,3 @@
 *.exe
 *.out
 *.app
-
-# Binaries
-/bin/
