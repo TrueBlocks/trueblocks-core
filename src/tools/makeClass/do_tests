@@ -1,0 +1,32 @@
+echo "no params"   | tee tests/test1.txt
+makeClass -t           >>tests/test1.txt
+
+echo "no params"    | tee tests/test2.txt
+makeClass -t x          >>tests/test2.txt
+
+echo "non existant file"     | tee tests/test3.txt
+makeClass -t -e x                >>tests/test3.txt
+
+echo "conflicting options"    | tee tests/test4.txt
+makeClass -t -e -r                >>tests/test4.txt
+
+echo "conflicting options"    | tee tests/test5.txt
+makeClass -t -l -r                >>tests/test5.txt
+
+echo "conflicting options"    | tee tests/test6.txt
+makeClass -t -c -r                >>tests/test6.txt
+
+echo "conflicting options"    | tee tests/test7.txt
+makeClass -t -c -r -e             >>tests/test7.txt
+
+echo "clear option"       | tee tests/test8.txt
+makeClass -t -c function      >>tests/test8.txt
+
+echo "list option"       | tee tests/test9.txt
+makeClass -t -l function     >>tests/test9.txt
+
+echo "edit option"       | tee tests/test10.txt
+makeClass -t -e function     >>tests/test10.txt
+
+#we don't test the run option since it gets tested whenever it runs normally
+

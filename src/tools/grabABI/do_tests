@@ -1,0 +1,14 @@
+echo "Testing help file"						| tee data/test1.txt
+grabABI 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 -th			2>&1 >data/test1.txt
+
+echo "Testing verbose mode"						| tee data/test2.txt
+grabABI 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 -tv			2>&1 >data/test2.txt
+
+echo "Testing non constant with verbose"				| tee data/test3.txt
+grabABI 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 -tvn			2>&1 >data/test3.txt
+
+echo "Testing encoding with non const and verbose"			| tee data/test4.txt
+grabABI 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 -tvne		2>&1 >data/test4.txt
+
+echo "Testing encoding, verbose, non const, and generation"		| tee data/test5.txt
+#grabABI 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 -tvneg:`pwd`	2>&1 >data/test5.txt

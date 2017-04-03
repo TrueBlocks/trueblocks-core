@@ -12,6 +12,7 @@ tests
 other
 saved_docs
 scripts
+backups
 
 # Compiled Object files
 *.slo
