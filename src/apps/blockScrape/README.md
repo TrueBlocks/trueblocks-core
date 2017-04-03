@@ -1,8 +1,9 @@
 
-`Usage:` blockScrape [-l|-c|-d|-i|-r|-f|-s|-v|-h]
+`Usage:` blockScrape [-l|-c|-d|-i|-r|-f|-s|-v|-h]  
 `Purpose:` Indexes non-emtpy blocks (i.e. one or more transactions). Alternatively, lists non-empty blocks or checks for correctness.
-           
-`Where:`
+             
+`Where:`  
+
 | Option | Full Command | Description |
 | -------: | :------- | :------- |
 | -l | --list | list all non-empty block numbers |
