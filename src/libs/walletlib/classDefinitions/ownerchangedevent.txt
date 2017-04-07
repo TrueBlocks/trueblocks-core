@@ -1,0 +1,6 @@
+class:		QOwnerChangedEvent
+baseClass:	CLogEntry
+fields:		address oldOwner|address newOwner|
+includes:	logentry.h
+cIncs:		#include "etherlib.h"
+destination:	./walletlib/

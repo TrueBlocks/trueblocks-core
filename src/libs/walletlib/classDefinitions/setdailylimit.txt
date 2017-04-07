@@ -1,0 +1,6 @@
+class:		QSetDailyLimit
+baseClass:	CTransaction
+fields:		uint256 _newLimit|
+includes:	transaction.h
+cIncs:		#include "etherlib.h"
+destination:	./walletlib/

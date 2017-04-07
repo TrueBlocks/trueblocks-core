@@ -1,6 +1,6 @@
 
-`Usage:` miniBlocks [-v|-h] mode  
-`Purpose:` Freshen or check the miniBlock database.
+`Usage:`    miniBlocks [-v|-h] mode  
+`Purpose:`  Freshen or check the miniBlock database.
              
 `Where:`  
 

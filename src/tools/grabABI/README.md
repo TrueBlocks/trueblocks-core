@@ -1,11 +1,12 @@
 
-`Usage:` grabABI [-c|-g|-e|-n|-o|-t|-v|-h] addr  
-`Purpose:` Fetches the ABI for a smart contract. Optionally generates C++ source code representing that ABI.
+`Usage:`    grabABI [-c|-g|-e|-n|-o|-t|-v|-h] addr  
+`Purpose:`  Fetches the ABI for a smart contract. Optionally generates C++ source code representing that ABI.
              
 `Where:`  
 
 | Option | Full Command | Description |
 | -------: | :------- | :------- |
+|  | addr | the address of the smart contract |
 | -c | --canoncial | convert all types to their canoncial represenation and remove all spaces from display |
 | -g | --generate | generate C++ code into ':dir' for all functions and events found in the ABI |
 | -e | --encode | generate the encodings for the functions / events in the ABI |

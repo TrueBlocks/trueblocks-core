@@ -1,6 +1,6 @@
 
-`Usage:` cacheMan [-b|-c|-f|-l|-n|-m|-t|-v|-h] filenames  
-`Purpose:` Show the contents of an account cache and/or fix it by removing duplicate records.
+`Usage:`    cacheMan [-b|-c|-f|-l|-n|-m|-t|-v|-h] filenames  
+`Purpose:`  Show the contents of an account cache and/or fix it by removing duplicate records.
              
 `Where:`  
 

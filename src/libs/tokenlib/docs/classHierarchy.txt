@@ -1,0 +1,16 @@
+CBaseNode
+  |
+  |--- CTransaction
+  |  |
+  |  |--- CApprove
+  |  |--- CCreateTokenProxy
+  |  |--- CDefaultFunc
+  |  |--- CTransfer
+  |  |--- CTransferFrom
+  |  |--- CUnknown
+  |
+  |--- CLogEntry
+     |
+     |--- CApprovalEvent
+     |--- CCreatedTokenEvent
+     |--- CTransferEvent

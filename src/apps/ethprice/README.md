@@ -1,7 +1,7 @@
 
-`Usage:` ethslurp [-c|-f|-p|-w|-o|-t|-v|-h]  
-`Purpose:` Freshen and/or print price quotes for the Ethereum network.
-
+`Usage:`    ethslurp [-c|-f|-p|-w|-o|-t|-v|-h]  
+`Purpose:`  Freshen and/or print price quotes for the Ethereum network.
+             
 `Where:`  
 
 | Option | Full Command | Description |
@@ -16,3 +16,4 @@
 | -h | --help | display this help screen |
 
   Powered by the Poloniex APIs and QuickBlocks.io
+

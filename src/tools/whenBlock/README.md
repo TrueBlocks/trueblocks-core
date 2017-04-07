@@ -1,6 +1,6 @@
 
-`Usage:` whenBlock [-h] date/block  
-`Purpose:` Finds the nearest block before the JSON-formatted date, or the date of the block.
+`Usage:`    whenBlock [-h] date/block  
+`Purpose:`  Finds the nearest block before the JSON-formatted date, or the date of the block.
              
 `Where:`  
 
