@@ -1,7 +1,14 @@
+## blockScrape
+
+The `blockScrape` program, using your local node's RPC or IPC, reads each block from any EVM-based blockchain and stores it for later retrieval. After extensive optimizations to the data, including determining each transaction's error status and expanding internal message calls, the blocks are stored in a speed-optimized binary database for fast retrieval. By doing as much work as possible before storage, we see significant increase in the speed of retrieval.
+
+If you automate `blockScrape` using something like `cron` it will keep the binary database fresh as per the blockchain its scraping. A sister program, called `miniBlocks` uses the data created by `blockScrape` to build an ultra-light-weight less-detailed, but much faster version of the data.
+
+### Usage
 
 `Usage:`    blockScrape [-l|-c|-d|-i|-r|-f|-s|-v|-h]  
 `Purpose:`  Indexes non-emtpy blocks (i.e. one or more transactions). Alternatively, lists non-empty blocks or checks for correctness.
-
+             
 `Where:`  
 
 | Option | Full Command | Description |
@@ -17,3 +24,5 @@
 | -h | --help | display this help screen |
 
   Powered by QuickBlocks.io
+
+### Options
