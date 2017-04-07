@@ -7,8 +7,8 @@ Check out Great Hill Corporation on <a href="https://www.facebook.com/GreatHillC
 
 ### ethslurp
 
-`Usage:` ethslurp [-a|-b|-d|-m|-n|-r|-f|-i|-e|-o|-l|-c|-t|-v|-h] addr  
-`Purpose:` Fetches data off the Ethereum blockchain for an arbitrary account or smart contract. Optionally formats the output to your specification.
+`Usage:`    ethslurp [-a|-b|-d|-m|-n|-r|-f|-i|-e|-o|-l|-c|-t|-v|-h] addr  
+`Purpose:`  Fetches data off the Ethereum blockchain for an arbitrary account or smart contract. Optionally formats the output to your specification.
              
 `Where:`  
 

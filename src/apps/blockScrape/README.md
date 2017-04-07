@@ -1,7 +1,7 @@
 
-`Usage:` blockScrape [-l|-c|-d|-i|-r|-f|-s|-v|-h]  
-`Purpose:` Indexes non-emtpy blocks (i.e. one or more transactions). Alternatively, lists non-empty blocks or checks for correctness.
-             
+`Usage:`    blockScrape [-l|-c|-d|-i|-r|-f|-s|-v|-h]  
+`Purpose:`  Indexes non-emtpy blocks (i.e. one or more transactions). Alternatively, lists non-empty blocks or checks for correctness.
+
 `Where:`  
 
 | Option | Full Command | Description |
@@ -17,4 +17,3 @@
 | -h | --help | display this help screen |
 
   Powered by QuickBlocks.io
-

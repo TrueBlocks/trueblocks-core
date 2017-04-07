@@ -1,11 +1,12 @@
 
-`Usage:` makeClass [-a|-c|-e|-f|-l|-r|-t|-v|-h] className  
-`Purpose:` Creates a c++ class file and header.
+`Usage:`    makeClass [-a|-c|-e|-f|-l|-r|-t|-v|-h] className  
+`Purpose:`  Creates a c++ class file and header.
              
 `Where:`  
 
 | Option | Full Command | Description |
 | -------: | :------- | :------- |
+|  | className | name of c++ class |
 | -a | --all | clear, list, edit, or run all classes found in the data folder. |
 | -c | --clear | remove the class definition file |
 | -e | --edit | edit class definition file |

@@ -1,0 +1,6 @@
+class:		QExecute
+baseClass:	CTransaction
+fields:		address _to|uint256 _value|bytes _data|
+includes:	transaction.h
+cIncs:		#include "etherlib.h"
+destination:	./walletlib/

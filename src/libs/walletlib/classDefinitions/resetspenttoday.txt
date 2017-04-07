@@ -1,0 +1,6 @@
+class:		QResetSpentToday
+baseClass:	CTransaction
+fields:		
+includes:	transaction.h
+cIncs:		#include "etherlib.h"
+destination:	./walletlib/

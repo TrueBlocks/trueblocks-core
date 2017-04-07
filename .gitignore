@@ -13,6 +13,8 @@ other
 saved_docs
 scripts
 backups
+working
+quickBlocks Facts
 
 # Compiled Object files
 *.slo
@@ -43,3 +45,7 @@ backups
 *.exe
 *.out
 *.app
+
+src/file.1
+
+src/file
