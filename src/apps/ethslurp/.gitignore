@@ -1,10 +1,6 @@
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
-objs
-objs/*
+*.cpp
+*.h
+makefile
 
 # Mac junk
 *.xcodeproj
@@ -23,40 +19,3 @@ src/*
 src/*/*
 email
 email/*
-
-# Precompiled Headers
-*.gch
-*.pch
-
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
-
-# Fortran module files
-*.mod
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
-
-# Executables
-*.exe
-*.out
-*.app
-
-# Build directory
-junk/
-build/
-docs/_build
-docs/utils/__pycache__
-
-# vim stuff
-*.swp
-
-abis.tar.gz
-theData.tar.gz
-
-file.txt

@@ -1,7 +1,4 @@
 # For now, the code
-*.cpp
-*.h
-makefile
 *.xcodeproj
 objs
 data
@@ -15,6 +12,9 @@ scripts
 backups
 working
 quickBlocks Facts
+src/file.1
+src/file
+src/tools/speedTest/
 
 # Compiled Object files
 *.slo
@@ -45,9 +45,3 @@ quickBlocks Facts
 *.exe
 *.out
 *.app
-
-src/file.1
-
-src/file
-
-src/tools/speedTest/
