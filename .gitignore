@@ -8,7 +8,6 @@ monitors
 tests
 other
 saved_docs
-scripts
 backups
 working
 quickBlocks Facts
@@ -38,3 +37,5 @@ src/tools/speedTest/
 *.la
 *.a
 *.lib
+
+src/tools/scripts/ethsed
