@@ -44,4 +44,8 @@ src/tools/speedTest/
 # Executables
 *.exe
 *.out
+<<<<<<< HEAD
 *.app
+=======
+*.app
+>>>>>>> origin/master
