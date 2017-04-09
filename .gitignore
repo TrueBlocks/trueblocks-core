@@ -12,8 +12,6 @@ scripts
 backups
 working
 quickBlocks Facts
-src/file.1
-src/file
 src/tools/speedTest/
 
 # Compiled Object files
@@ -40,12 +38,3 @@ src/tools/speedTest/
 *.la
 *.a
 *.lib
-
-# Executables
-*.exe
-*.out
-<<<<<<< HEAD
-*.app
-=======
-*.app
->>>>>>> origin/master
