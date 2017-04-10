@@ -5,7 +5,6 @@ all:
 #	@cd monitors ; make ; echo
 #	@cd monitors/dao ; make ; echo
 #	@cd monitors/singular ; make ; echo
-	@cd other/03_acctTree ; make app ; echo
 	@cd other/04_inerror ; make app ; echo
 	@cd other/07_bytesUsed ; make app ; echo
 	@cd other/08_latestBlock ; make app ; echo
@@ -25,7 +24,6 @@ clean:
 	@cd tools ; make clean
 #	@cd monitors/dao ; make cleanall
 #	@cd monitors/singular ; make cleanall
-	@cd other/03_acctTree ; make clean
 	@cd other/04_inerror ; make clean
 	@cd other/07_bytesUsed ; make clean
 	@cd other/08_latestBlock ; make clean
@@ -78,10 +76,10 @@ rebuild:
 	@makeClass -ar
 
 readmes:
-	cd apps ; make readmes
-	cd tools ; make readmes
-#	cd monitors/tokenlib ; cat README.md
-#	cd monitors/walletlib ; cat README.md
-#	cd libs/abilib ; cat README.md
-#	cd libs/etherlib ; cat README.md
-#	cd libs/utillib ; cat README.md
+	@cd apps ; make readmes
+	@cd tools ; make readmes
+#	@cd monitors/tokenlib ; cat README.md
+#	@cd monitors/walletlib ; cat README.md
+#	@cd libs/abilib ; cat README.md
+#	@cd libs/etherlib ; cat README.md
+#	@cd libs/utillib ; cat README.md
