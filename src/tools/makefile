@@ -40,4 +40,5 @@ readmes:
 	@cd cacheMan ; cacheMan -th >README.md
 #	@cd ethname ; ehtname -th >README.md
 	@cd makeClass ; makeClass -th >README.md
-#	@cd speedTest ; scrapeTest -th >README.md
+#	@cd speedTest ; speedTest -th >README.md
+	@cd acctTree ; acctTree -th >README.md

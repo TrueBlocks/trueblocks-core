@@ -1,5 +1,5 @@
 
-`Usage:`    getBlock [-c|-f|-m|-p|-t|-v|-h] num  
+`Usage:`    getBlock [-c|-f|-m|-p|-t|-s|-v|-h] num  
 `Purpose:`  Returns block(s) from local cache (default) or directly from node.
              
 `Where:`  
@@ -12,6 +12,7 @@
 | -m | --mini | output only data fields that exist in miniBlocks and miniTrans |
 | -p | --parity | mimic parity output using quickBlocks (i.e. quoted hexidecimal for numbers) |
 | -t | --terse | retreive transaction hashes instead of full transactions |
+| -s | --silent | do not print results to screen, used for speed testing |
 | -v | --verbose | set verbose level. Follow with a number to set level (-v0 for silent) |
 | -h | --help | display this help screen |
 

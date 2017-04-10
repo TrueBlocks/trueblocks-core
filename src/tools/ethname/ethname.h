@@ -7,7 +7,7 @@
 #include "utillib.h"
 #include "options.h"
 
-class CAccountName //: public CAccount
+class CAccountName
 {
 public:
 	SFString addr;

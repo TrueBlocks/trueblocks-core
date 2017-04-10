@@ -15,8 +15,10 @@ The hour/minute/second portions of the date are optional, and if omitted, defaul
 
 | Option | Full Command | Description |
 | -------: | :------- | :------- |
-|  | date/block | YYYY-MM-DD-[HH[:MM[:SS]]], blockNumber, or a special value from [first&#124;latest&#124;iceage&#124;homestead&#124;daohack&#124;daofork&#124;tangerine&#124;spurious] |
+|  | date/block | One of the special values listed below or YYYY-MM-DD-[HH[:MM[:SS]]] or blockNumber |
 | -h | --help | display this help screen |
+
+[0m	Special values: [first|latest|iceage|homestead|daohack|daofork|tangerine|spurious|stateclear]
 
   Powered by QuickBlocks.io
 
