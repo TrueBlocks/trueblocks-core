@@ -73,6 +73,7 @@ rebuild:
 	@cd monitors/dao ; make rebuild ; cd -
 	@cd monitors/singular ; make rebuild ; cd -
 	@cd monitors/ens ; make rebuild ; cd -
+	@cd libs ; make rebuild ; cd -
 	@makeClass -ar
 
 readmes:
@@ -83,3 +84,7 @@ readmes:
 #	@cd libs/abilib ; cat README.md
 #	@cd libs/etherlib ; cat README.md
 #	@cd libs/utillib ; cat README.md
+
+lint:
+	@cd apps ; make lint
+	@cd tools ; make lint

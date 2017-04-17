@@ -8,19 +8,20 @@ The hour/minute/second portions of the date are optional, and if omitted, defaul
 
 #### Help Screen
 
-`Usage:`    whenBlock [-h] date/block  
+`Usage:`    whenBlock [-l|-h] date/block  
 `Purpose:`  Finds the nearest block before the JSON-formatted date, or the date of the given block.
              
 `Where:`  
 
 | Option | Full Command | Description |
 | -------: | :------- | :------- |
-|  | date/block | One of the special values listed below or YYYY-MM-DD-[HH[:MM[:SS]]] or blockNumber |
+|  | date/block | one of the special values listed below or YYYY-MM-DD-[HH[:MM[:SS]]] or blockNumber |
+| -l | --list | list special blocks timestamps and dates |
 | -h | --help | display this help screen |
 
 [0m	Special values: [first|latest|iceage|homestead|daohack|daofork|tangerine|spurious|stateclear]
 
-  Powered by QuickBlocks.io
+[1;34m  Powered by QuickBlocks.io
 
 #### The --file option
 

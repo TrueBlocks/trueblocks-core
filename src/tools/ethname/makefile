@@ -28,6 +28,9 @@ app:
 	@make $(product)
 	mv $(product) $(dest)
 
+lint:
+	@pylint *.[ch]*
+
 test:
 	@make
 	@./do_tests

@@ -1,16 +1,16 @@
 all:
 	@cd ../libs ; make
-	@cd blockScrape ; make ; echo
-	@cd chifra ; make ; echo
-	@cd ethprice ; make ; echo
-	@cd ethslurp ; make ; echo
-#	@cd getBalance ; make ; echo
-	@cd getBlock ; make ; echo
-#	@cd getCode ; make ; echo
-	@cd getLogs ; make ; echo
-#	@cd getReceipt ; make ; echo
-	@cd getTrans ; make ; echo
-	@cd miniBlocks ; make ; echo
+	@cd blockScrape ; make
+	@cd chifra ; make
+	@cd ethprice ; make
+	@cd ethslurp ; make
+#	@cd getBalance ; make
+	@cd getBlock ; make
+#	@cd getCode ; make
+	@cd getLogs ; make
+#	@cd getReceipt ; make
+	@cd getTrans ; make
+	@cd miniBlocks ; make
 
 cleanall:
 	@cd ../libs ; make clean
@@ -52,8 +52,21 @@ readmes:
 	@cd ethslurp ; ethslurp -th >README.md
 #	@cd getBalance ; getBalance -th >README.md
 	@cd getBlock ; getBlock -th >README.md
-#	@cd getCode ; getCode -th >README.md
+	@cd getCode ; getCode -th >README.md
 	@cd getLogs ; getLogs -th >README.md
 #	@cd getReceipt ; getReceipt -th >README.md
 #	@cd getTrans ; getTrans -th >README.md
 	@cd miniBlocks ; miniBlocks -th >README.md
+
+lint:
+	@cd blockScrape ; make lint
+#	@cd chifra ; make lint
+#	@cd ethprice ; make lint
+#	@cd ethslurp ; make lint
+#	@cd getBalance ; make lint
+#	@cd getBlock ; make lint
+#	@cd getCode ; make lint
+#	@cd getLogs ; make lint
+#	@cd getReceipt ; make lint
+#	@cd getTrans ; make lint
+	@cd miniBlocks ; make lint
