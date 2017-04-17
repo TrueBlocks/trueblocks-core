@@ -7,25 +7,22 @@
 #include "utillib.h"
 #include "options.h"
 
-class CAccountName
-{
+class CAccountName {
 public:
-	SFString addr;
-	SFString source;
-	SFString name;
-	CAccountName() { }
-	CAccountName(SFString& nameIn)
-	{
-		source = nameIn;
-		addr = toLower(nextTokenClear(source,'\t'));
-		name = nextTokenClear(source,'\t');
-	}
-	SFString Format12(void)
-	{
-#define F(a) (SFString("`") + (SFString(#a) + "`: `" + a + "` ")).Substitute("`","\"")
-		return ("{" + F(addr) + ", " + F(name) + ", " + F(source) + "},").Substitute(" ,",",");
-	}
-        bool Match(const SFString& s1, const SFString& s2, const SFString& s3, bool matchCase, bool all);
+    SFString addr;
+    SFString source;
+    SFString name;
+    CAccountName(void) { }
+    explicit CAccountName(SFString& nameIn) {
+        source = nameIn;
+        addr = toLower(nextTokenClear(source, '\t'));
+        name = nextTokenClear(source, '\t');
+    }
+    SFString Format12(void) {
+#define F(a) (SFString("`") + (SFString(#a) + "`: `" + a + "` ")).Substitute("`", "\"")
+        return ("{" + F(addr) + ", " + F(name) + ", " + F(source) + "},").Substitute(" ,", ",");
+    }
+    bool Match(const SFString& s1, const SFString& s2, const SFString& s3, bool matchCase, bool all);
 };
 
 extern CAccountName *accounts;

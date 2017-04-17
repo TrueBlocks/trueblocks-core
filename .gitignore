@@ -39,3 +39,4 @@ src/tools/speedTest/
 *.lib
 
 src/tools/scripts/ethsed
+*.pptx
