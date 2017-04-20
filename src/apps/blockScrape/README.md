@@ -6,7 +6,7 @@ If you automate `blockScrape` using something like `cron` it will keep the binar
 
 ### Usage
 
-`Usage:`    blockScrape [-l|-c|-d|-i|-r|-f|-s|-v|-h]  
+`Usage:`    blockScrape [-l|-c|-d|-e|-n|-i|-r|-f|-s|-v|-h]  
 `Purpose:`  Indexes non-emtpy blocks (i.e. one or more transactions). Alternatively, lists non-empty blocks or checks for correctness.
              
 `Where:`  
@@ -16,6 +16,8 @@ If you automate `blockScrape` using something like `cron` it will keep the binar
 | -l | --list | list all non-empty block numbers |
 | -c | --check | check that empty blocks are empty, and visa versa. Optionally start at :block |
 | -d | --deep | when doing 'check', do a deep check |
+| -e | --emptyOnly | when doing 'check', skip non-empty blocks (i.e. check only blocks with no transactions) |
+| -n | --noEmpty | when doing 'check', skip empty blocks (i.e. check only blocks with transactions) |
 | -i | --indexOnly | only create the index, don't save any blocks (applies only to --refreshen mode) |
 | -r | --refreshen | remove the full-block index and re-create it |
 | -f | --freshen | starting from the most recently visited block, append any new, non-empty block numbers to the index |
