@@ -10,6 +10,7 @@ all:
 	@cd abiTest ; make app
 	@cd acctTree ; make app
 	@cd scripts ; make app
+	@cd bytesUsed ; make app
 
 cleanall:
 	@cd ../libs ; make cleanall
@@ -24,6 +25,8 @@ clean:
 	@cd makeClass ; make clean
 	@cd speedTest ; make clean
 	@cd abiTest ; make clean
+	@cd acctTree ; make clean
+	@cd bytesUsed ; make clean
 
 test:
 	@cd grabABI; make test
@@ -38,6 +41,7 @@ testall:
 ##	@cd ethname; make test
 ##	@cd speedTest; make test
 #	@cd acctTree ; make test
+	@cd bytesUsed ; make test
 
 readmes:
 	@cd grabABI ; grabABI -th >README.md
@@ -47,8 +51,9 @@ readmes:
 #	@cd ethname ; ehtname -th >README.md
 	@cd makeClass ; makeClass -th >README.md
 #	@cd speedTest ; speedTest -th >README.md
-	@cd acctTree ; acctTree -th >README.md
 #	@cd abiTest ; abiTest -th >README.md
+	@cd acctTree ; acctTree -th >README.md
+	@cd bytesUsed ; bin/bytesUsed -th >README.md
 
 lint:
 	@cd abiTest ; make lint
@@ -60,3 +65,4 @@ lint:
 	@cd sha3 ; make lint
 	@cd speedTest ; make lint
 	@cd whenBlock ; make lint
+	@cd bytesUsed ; make lint

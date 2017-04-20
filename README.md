@@ -20,7 +20,7 @@ Instead of this:
 
 You get this:
 
-## Full Decentralized
+## Fully Decentralized
 
 Unlike any other block chain scraper you may find such as http://etherscan.io or http://chaindata.info, QuickBlocks is fully decentralized. The system interacts only with the node. As a result of this, if the node is on your own machine, so is QuickBlocks. You can disconnect your machine from the web, and as long as the node is running, QuickBlocks will work. That's decentralized.
 
