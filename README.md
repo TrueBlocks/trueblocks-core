@@ -1,42 +1,40 @@
 # quickBlocks
 
-QuickBlocks is a collection of software libraries, applications, and tools that allow you to access Ethereum virtual machine (EVM ) based blockchain data (a) more quickly, (b) with higher information content, and (c) in an fully decentralized way, (d) in a fully automated way, (e) in a fully zero maintenance way.
+QuickBlocks is a collection of software libraries, applications, and tools that allow you to access Ethereum virtual machine (EVM) based blockchain data (a) more quickly, (b) with higher information content, and (c) in an fully decentralized way, (d) in a fully automated way, (e) in a fully zero maintenance way.
 
-Yes. That's a mouthful. We'll break it down.
+That's a mouthful. We'll break it down.
 
 ## More Quickly
 
-We interact with the Ethereum node using the RPC interface to accumulate and cache the block, transaction, receipt, and log data from the node. During the storage of this data we do everything we can think of to make later retrieval of that data as quick as possible.
+We interact with the Ethereum node via the RPC interface to accumulate and cache block, transaction, receipt, and event log data. Prior to storing the data we do everything we can think of to make later retrieval of that data as quick as possible without losing sight of the fact that our solution is fully decentralized. Some of the optimizations we make are
 
 1. attach receipts and logs to transactions
-2. identify in-error transactions using the transaction trace function
-3. store the blocks in 1,000 block files for quicker retrieval
+2. identify in-error transactions using the node's trace functionality
+3. identify potentially-internal transactions
+4. store the blocks optimized for quick, later retrieval
 
 ## More Informationally Rich
 
-If QuickBlocks is provided with an ABI definition for a particular address, the system can decode all of the transactional data including generated log files. Instead of dealing with 'hashes' and 'merkel roots' and 'sha3', you deal with the data in the format from which it was created: your own smart contract.
+If given an ABI definition for a particular smart contract, QuickBlocks is able to decode all of the transactional data including generated event logs. Instead of dealing with 'hashes' and 'merkel roots' and 'sha3', the developer/user deals with the data in the very familiar language: that of their own smart contracts.
 
 Instead of this:
 
 You get this:
 
-## Full Decentralized
+## Fully Decentralized
 
-Unlike any other block chain scraper you may find such as http://etherscan.io or http://chaindata.info, QuickBlocks is fully decentralized. The system interacts only with the node. As a result of this, if the node is on your own machine, so is QuickBlocks. You can disconnect your machine from the web, and as long as the node is running, QuickBlocks will work. That's decentralized.
+Unlike any other block chain scrapers you may find (such as http://etherscan.io), QuickBlocks is fully decentralized. The system interacts only with your local node. (Although, it can, if you wish, interact with any node). As a result, you could conceivably disconnect your machine from the Internet, and as long as the node was running, QuickBlocks would work. You wouldn't get fresh blocks, but QuickBlocks would still operate. That's what we mean by `decentralized`.
 
-## Fully Automatic
+## Fully Automatic yet Customizable
 
-The code necessary to provide the above mentioned fully-parsed data (i.e. data in the language of your own smart contract) is generated automatically (programmatically) from the supplied ABI file. You do not need to write any code to monitor or interact with the data from your smart contract. At the same time, because the generated code is regular C++ code, you can interact with your data in any way you like.
+The code necessary to provide the above mentioned richer data (i.e. data in the language of your own smart contract) is generated automatically (programmatically) from the ABI. A fully functional `c-callable static library` is created. At the same time, due to the fact that the generated code is C++, you can program it to do anything you like. See some examples (TODO).
 
 ## Fully Maintenance Free
 
-The smart contract you're presumedly monitoring with QuickBlocks, once it's deployed, is immutable. That means that the automatically generated c++ code can also be immutable (if you want it to). You could literally automatically generate a data delivery layer for your smart contract that requires no further interaction. It can just stand beside your smart contract (off chain) and deliver all generated data at high speed.
+Every smart contract, once deployed, is immutable. That means that the automatically generated C++ code is also immutable (if you want it to). You could literally automatically generate a data delivery layer for your smart contract that requires no further interaction. It can simply run forever, standing off-chain, but beside your smart contract, and deliver all your contact's data at high speed.
 
-## Folders
+## Structure of the Project
 
-These are the folders that make up the QuickBlocks system:
-
-1. [src](src) - source code for the QuickBlocks libraries, core applications, and sample monitors.
+1. [src](src) - source code for the QuickBlocks libraries, core applications, tools, and sample monitors.
 2. bin - location of primary executables generated by QuickBlocks
 3. docs - documentation
-4. test - test cases

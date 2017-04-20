@@ -1,13 +1,12 @@
 
-`Usage:`    sha3 [-o|-t|-v|-h]  
-`Purpose:`  This is what the program does.
+`Usage:`    acctTree [-t|-v|-h]  
+`Purpose:`  Build an account tree listing first transaction, latest transaction, and proposed balance for each account.
              
 `Where:`  
 
 | Option | Full Command | Description |
 | -------: | :------- | :------- |
-| -o | --option1 | option one |
-| -t | --thing | option two |
+| -t | --test | generate intermediary files but do not execute the commands |
 | -v | --verbose | set verbose level. Follow with a number to set level (-v0 for silent) |
 | -h | --help | display this help screen |
 

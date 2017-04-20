@@ -1,3 +1,3 @@
 # quickBlocks
 
-This folder documents the QuickBlocks system.
+Visit the quickBlocks [documentation](https://github.com/Great-Hill-Corporation/quickBlocks/wiki).
