@@ -13,6 +13,7 @@ all:
 	@cd other/18_internal ; make app ; echo
 	@cd other/22_genesis ; make app ; echo
 	@cd other/stringTest; make app ; echo
+	@cd tests ; make ; echo
 
 cleanall:
 	@make clean
@@ -31,6 +32,7 @@ clean:
 	@cd other/18_internal ; make clean
 	@cd other/22_genesis ; make clean
 	@cd other/stringTest; make clean
+	@cd tests ; make clean
 
 test:
 	@make
@@ -45,6 +47,7 @@ test:
 #	@cd other/16_encodingABIs; make test
 	@cd other/19_blooms; make test
 	@cd other/stringTest; make test
+	@cd tests ; make test
 
 testall:
 	@make
@@ -65,6 +68,7 @@ testall:
 ##	@cd other/25_toRust; make test
 ##	@cd other/27_inputSize; make test
 ##	@cd other/99_mappingTest; make test
+	@cd tests ; make testall
 
 rebuild:
 	@cd monitors/dao ; make rebuild ; cd -
@@ -81,7 +85,9 @@ readmes:
 #	@cd libs/abilib ; cat README.md
 #	@cd libs/etherlib ; cat README.md
 #	@cd libs/utillib ; cat README.md
+	@cd tests ; make readmes
 
 lint:
 	@cd apps ; make lint
 	@cd tools ; make lint
+	@cd tests ; make lint
