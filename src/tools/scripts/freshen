@@ -1,0 +1,4 @@
+#!/bin/bash
+
+blockScrape -fl
+miniBlocks freshen

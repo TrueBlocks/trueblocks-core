@@ -35,7 +35,6 @@ src/tools/speedTest/
 # Compiled Static libraries
 *.lai
 *.la
-*.a
 *.lib
 
 src/tools/scripts/ethsed
