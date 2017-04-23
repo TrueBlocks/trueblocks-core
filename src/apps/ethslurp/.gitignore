@@ -1,6 +1,6 @@
-*.cpp
-*.h
-makefile
+# *.cpp
+# *.h
+# makefile
 
 # Mac junk
 *.xcodeproj
