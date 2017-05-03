@@ -49,8 +49,9 @@ back:
 	@cp -pR ~/.ethslurp/abis          theData/backup/
 	@cp -pR ~/.ethslurp/configs       theData/backup/
 	@cp -pR ~/.ethslurp/slurps        theData/backup/
+	@cp -pR ~/.ethslurp/prices        theData/backup/
 	@cp -p  ~/.ethslurp/ethslurp.toml theData/backup/
-#	@cp -p  ~/.ethslurp/prices.bin    theData/backup/
+	@cp -p  ~/.ethslurp/prices.bin    theData/backup/
 
 $(product): $(objects) $(libs)
 	$(CXX) -o $(product) $(objects) $(libs)

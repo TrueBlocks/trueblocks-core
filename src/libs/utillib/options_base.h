@@ -21,7 +21,7 @@ public:
 	               COptionsBase  (void) { fromFile = false; minArgs=1; }
 	virtual       ~COptionsBase  (void) { }
 
-		bool prepareArguments(int argc, const char *argv[], const SFString& homeFolder=nullString);
+		bool prepareArguments(int argc, const char *argv[], const SFString& homeFolder="");
 	virtual bool parseArguments  (SFString& command) = 0;
 
 protected:
@@ -48,7 +48,7 @@ public:
 };
 
 //--------------------------------------------------------------------------------
-extern int      usage       (const SFString& errMsg=nullString);
+extern int      usage       (const SFString& errMsg="");
 extern SFString options     (void);
 extern SFString descriptions(void);
 extern SFString purpose     (void);

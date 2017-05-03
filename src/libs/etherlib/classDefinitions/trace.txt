@@ -1,0 +1,5 @@
+class:		CTrace
+fields:		uint32 gas|string returnValue|CStructLogArray structLogs
+includes:	ethtypes.h|abilib.h|structlog.h
+cIncs:		#include "etherlib.h"
+disabled:	true

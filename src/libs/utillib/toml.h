@@ -125,6 +125,7 @@ inline uint32_t CToml::getConfigInt(const SFString& group, const SFString& key, 
 inline bool CToml::getConfigBool(const SFString& group, const SFString& key, bool def) const
 {
 	SFString ret = getConfigStr(group, key, asString(def));
+    ret.ReplaceAny(";\t\n\r ","");
 	return ((ret == "true" || ret == "1") ? true : false);
 }
 

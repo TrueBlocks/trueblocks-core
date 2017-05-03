@@ -39,3 +39,5 @@ src/tools/speedTest/
 
 src/tools/scripts/ethsed
 *.pptx
+
+*.key

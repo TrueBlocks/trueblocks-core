@@ -28,57 +28,57 @@ class CTransaction;
 class CReceipt : public CBaseNode
 {
 public:
-	SFAddress contractAddress;
-	SFUint32 gasUsed;
-	CLogEntryArray logs;
-	SFBloom logsBloom;
+    SFAddress contractAddress;
+    SFUint32 gasUsed;
+    CLogEntryArray logs;
+    SFBloom logsBloom;
 
 public:
-		CReceipt(void);
-		CReceipt(const CReceipt& re);
-	       ~CReceipt(void);
-	CReceipt&	operator=(const CReceipt& re);
+    CReceipt(void);
+    CReceipt(const CReceipt& re);
+   ~CReceipt(void);
+    CReceipt& operator=(const CReceipt& re);
 
-	DECLARE_NODE (CReceipt);
+    DECLARE_NODE (CReceipt);
 
-	// EXISTING_CODE
-	const CTransaction *pTrans;
+    // EXISTING_CODE
+    const CTransaction *pTrans;
 #if 0
-	uint32_t cumulativeGasUsed;
-	SFAddress from12;
-	SFHash blockHash;
-	uint32_t blockNumber;
-	SFString root;
-	SFAddress to;
-	SFHash transactionHash;
-	uint32_t transactionIndex;
+    uint32_t cumulativeGasUsed;
+    SFAddress from12;
+    SFHash blockHash;
+    uint32_t blockNumber;
+    SFString root;
+    SFAddress to;
+    SFHash transactionHash;
+    uint32_t transactionIndex;
 #endif
-	// EXISTING_CODE
+    // EXISTING_CODE
 
 protected:
-	void Clear(void);
-	void Init(void);
-	void Copy(const CReceipt& re);
-	bool readBackLevel(SFArchive& archive);
+    void Clear(void);
+    void Init(void);
+    void Copy(const CReceipt& re);
+    bool readBackLevel(SFArchive& archive);
 
-	// EXISTING_CODE
-	// EXISTING_CODE
+    // EXISTING_CODE
+    // EXISTING_CODE
 };
 
 //--------------------------------------------------------------------------
 inline CReceipt::CReceipt(void)
 {
-	Init();
-	// EXISTING_CODE
-	// EXISTING_CODE
+    Init();
+    // EXISTING_CODE
+    // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
 inline CReceipt::CReceipt(const CReceipt& re)
 {
-	// EXISTING_CODE
-	// EXISTING_CODE
-	Copy(re);
+    // EXISTING_CODE
+    // EXISTING_CODE
+    Copy(re);
 }
 
 // EXISTING_CODE
@@ -87,85 +87,85 @@ inline CReceipt::CReceipt(const CReceipt& re)
 //--------------------------------------------------------------------------
 inline CReceipt::~CReceipt(void)
 {
-	Clear();
-	// EXISTING_CODE
-	// EXISTING_CODE
+    Clear();
+    // EXISTING_CODE
+    // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
 inline void CReceipt::Clear(void)
 {
-	// EXISTING_CODE
-	// EXISTING_CODE
+    // EXISTING_CODE
+    // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
 inline void CReceipt::Init(void)
 {
-	CBaseNode::Init();
+    CBaseNode::Init();
 
-//	contractAddress = EMPTY;
-	gasUsed = 0;
-//	logs = ??; /* unknown type: CLogEntryArray */
-	logsBloom = 0;
+//    contractAddress = EMPTY;
+    gasUsed = 0;
+//    logs = ??; /* unknown type: CLogEntryArray */
+    logsBloom = 0;
 
-	// EXISTING_CODE
-	pTrans = NULL;
+    // EXISTING_CODE
+    pTrans = NULL;
 #if 0
-	blockHash = EMPTY;
-	blockNumber = 0;
-	cumulativeGasUsed = 0;
-	from = EMPTY;
-	root = EMPTY;
-	to = EMPTY;
-	transactionHash = EMPTY;
-	transactionIndex = 0;
+    blockHash = EMPTY;
+    blockNumber = 0;
+    cumulativeGasUsed = 0;
+    from = EMPTY;
+    root = EMPTY;
+    to = EMPTY;
+    transactionHash = EMPTY;
+    transactionIndex = 0;
 #endif
-	// EXISTING_CODE
+    // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
 inline void CReceipt::Copy(const CReceipt& re)
 {
-	Clear();
-	CBaseNode::Copy(re);
+    Clear();
+    CBaseNode::Copy(re);
 
-	contractAddress = re.contractAddress;
-	gasUsed = re.gasUsed;
-	logs = re.logs;
-	logsBloom = re.logsBloom;
+    contractAddress = re.contractAddress;
+    gasUsed = re.gasUsed;
+    logs = re.logs;
+    logsBloom = re.logsBloom;
 
-	// EXISTING_CODE
-	pTrans = re.pTrans; // no deep copy becuase it's const
+    // EXISTING_CODE
+    pTrans = re.pTrans; // no deep copy becuase it's const
 #if 0
-	blockHash = re.blockHash;
-	blockNumber = re.blockNumber;
-	cumulativeGasUsed = re.cumulativeGasUsed;
-	from = re.from;
-	root = re.root;
-	to = re.to;
-	transactionHash = re.transactionHash;
-	transactionIndex = re.transactionIndex;
+    blockHash = re.blockHash;
+    blockNumber = re.blockNumber;
+    cumulativeGasUsed = re.cumulativeGasUsed;
+    from = re.from;
+    root = re.root;
+    to = re.to;
+    transactionHash = re.transactionHash;
+    transactionIndex = re.transactionIndex;
 #endif
-	// EXISTING_CODE
-	finishParse();
+    // EXISTING_CODE
+    finishParse();
 }
 
 //--------------------------------------------------------------------------
 inline CReceipt& CReceipt::operator=(const CReceipt& re)
 {
-	Copy(re);
-	// EXISTING_CODE
-	// EXISTING_CODE
-	return *this;
+    Copy(re);
+    // EXISTING_CODE
+    // EXISTING_CODE
+    return *this;
 }
 
 //---------------------------------------------------------------------------
 inline SFString CReceipt::getValueByName(const SFString& fieldName) const
 {
-	// EXISTING_CODE
-	// EXISTING_CODE
-	return Format("[{"+toUpper(fieldName)+"}]");
+    // EXISTING_CODE
+    // EXISTING_CODE
+    return Format("[{"+toUpper(fieldName)+"}]");
 }
 
 //---------------------------------------------------------------------------

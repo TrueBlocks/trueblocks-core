@@ -91,7 +91,7 @@ public: \
 	virtual void     finishParse       (void); \
 	virtual bool     handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data=NULL) const; \
 	virtual void     Format            (CExportContext& ctx, const SFString& fmtIn, void *data=NULL) const; \
-	virtual SFString Format            (const SFString& fmtIn=nullString) const { CStringExportContext ctx;Format(ctx, fmtIn, NULL);return ctx.str;} \
+	virtual SFString Format            (const SFString& fmtIn="") const { CStringExportContext ctx;Format(ctx, fmtIn, NULL);return ctx.str;} \
 	        SFString getClassName      (void) const; \
 	static  void     registerClass     (void);
 

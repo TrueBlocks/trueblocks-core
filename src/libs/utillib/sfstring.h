@@ -12,7 +12,6 @@
 //--------------------------------------------------------------------
 #define NOPOS ((size_t)-1)
 extern const char* CHR_VALID_NAME;
-extern char nullString[];
 
 //--------------------------------------------------------------------
 //#define NATIVE
@@ -571,8 +570,8 @@ inline SFString padCenter(const SFString& str, size_t len, char p=' ')
 #define padNum18T(n) padLeft(asString((n)),18)
 
 //--------------------------------------------------------------------
-extern SFString snagFieldClear     (      SFString& in, const SFString& tagName, const SFString& defVal=nullString);
-extern SFString snagField          (const SFString& in, const SFString& tagName, const SFString& defVal=nullString);
+extern SFString snagFieldClear     (      SFString& in, const SFString& tagName, const SFString& defVal="");
+extern SFString snagField          (const SFString& in, const SFString& tagName, const SFString& defVal="");
 
 //--------------------------------------------------------------------
 inline SFString toLower(const SFString& in)

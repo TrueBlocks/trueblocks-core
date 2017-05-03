@@ -10,7 +10,7 @@
 #include "sfdate.h"
 
 //-------------------------------------------------------------------------------
-extern SFString getCWD(const SFString& filename=nullString);
+extern SFString getCWD(const SFString& filename="");
 
 //-------------------------------------------------------------------------------
 class SFTime;

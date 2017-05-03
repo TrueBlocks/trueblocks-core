@@ -27,53 +27,53 @@ class CReceipt;
 class CLogEntry : public CBaseNode
 {
 public:
-	SFAddress address;
-	SFString data;
-	SFUint32 logIndex;
-	SFBigUintArray topics;
+    SFAddress address;
+    SFString data;
+    SFUint32 logIndex;
+    SFBigUintArray topics;
 
 public:
-		CLogEntry(void);
-		CLogEntry(const CLogEntry& lo);
-	       ~CLogEntry(void);
-	CLogEntry&	operator=(const CLogEntry& lo);
+    CLogEntry(void);
+    CLogEntry(const CLogEntry& lo);
+   ~CLogEntry(void);
+    CLogEntry& operator=(const CLogEntry& lo);
 
-	DECLARE_NODE (CLogEntry);
+    DECLARE_NODE (CLogEntry);
 
-	// EXISTING_CODE
-	const CReceipt *pReceipt;
+    // EXISTING_CODE
+    const CReceipt *pReceipt;
 #if 0
-	SFHash blockHash;
-	uint32_t blockNumber;
-	SFHash transactionHash;
-	uint32_t transactionIndex;
+    SFHash blockHash;
+    uint32_t blockNumber;
+    SFHash transactionHash;
+    uint32_t transactionIndex;
 #endif
-	// EXISTING_CODE
+    // EXISTING_CODE
 
 protected:
-	void Clear(void);
-	void Init(void);
-	void Copy(const CLogEntry& lo);
-	bool readBackLevel(SFArchive& archive);
+    void Clear(void);
+    void Init(void);
+    void Copy(const CLogEntry& lo);
+    bool readBackLevel(SFArchive& archive);
 
-	// EXISTING_CODE
-	// EXISTING_CODE
+    // EXISTING_CODE
+    // EXISTING_CODE
 };
 
 //--------------------------------------------------------------------------
 inline CLogEntry::CLogEntry(void)
 {
-	Init();
-	// EXISTING_CODE
-	// EXISTING_CODE
+    Init();
+    // EXISTING_CODE
+    // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
 inline CLogEntry::CLogEntry(const CLogEntry& lo)
 {
-	// EXISTING_CODE
-	// EXISTING_CODE
-	Copy(lo);
+    // EXISTING_CODE
+    // EXISTING_CODE
+    Copy(lo);
 }
 
 // EXISTING_CODE
@@ -82,77 +82,77 @@ inline CLogEntry::CLogEntry(const CLogEntry& lo)
 //--------------------------------------------------------------------------
 inline CLogEntry::~CLogEntry(void)
 {
-	Clear();
-	// EXISTING_CODE
-	// EXISTING_CODE
+    Clear();
+    // EXISTING_CODE
+    // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
 inline void CLogEntry::Clear(void)
 {
-	// EXISTING_CODE
-	// EXISTING_CODE
+    // EXISTING_CODE
+    // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
 inline void CLogEntry::Init(void)
 {
-	CBaseNode::Init();
+    CBaseNode::Init();
 
-//	address = EMPTY;
-//	data = EMPTY;
-	logIndex = 0;
-//	topics = ??; /* unknown type: SFBigUintArray */
+//    address = EMPTY;
+//    data = EMPTY;
+    logIndex = 0;
+//    topics = ??; /* unknown type: SFBigUintArray */
 
-	// EXISTING_CODE
+    // EXISTING_CODE
 #if 0
-	blockHash = EMPTY;
-	blockNumber = 0;
-	transactionHash = EMPTY;
-	transactionIndex = 0;
+    blockHash = EMPTY;
+    blockNumber = 0;
+    transactionHash = EMPTY;
+    transactionIndex = 0;
 #endif
-	pReceipt = NULL;
-	// EXISTING_CODE
+    pReceipt = NULL;
+    // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
 inline void CLogEntry::Copy(const CLogEntry& lo)
 {
-	Clear();
-	CBaseNode::Copy(lo);
+    Clear();
+    CBaseNode::Copy(lo);
 
-	address = lo.address;
-	data = lo.data;
-	logIndex = lo.logIndex;
-	topics = lo.topics;
+    address = lo.address;
+    data = lo.data;
+    logIndex = lo.logIndex;
+    topics = lo.topics;
 
-	// EXISTING_CODE
+    // EXISTING_CODE
 #if 0
-	blockHash = lo.blockHash;
-	blockNumber = lo.blockNumber;
-	transactionHash = lo.transactionHash;
-	transactionIndex = lo.transactionIndex;
+    blockHash = lo.blockHash;
+    blockNumber = lo.blockNumber;
+    transactionHash = lo.transactionHash;
+    transactionIndex = lo.transactionIndex;
 #endif
-	pReceipt = lo.pReceipt; // no deep copy because it's const
-	// EXISTING_CODE
-	finishParse();
+    pReceipt = lo.pReceipt; // no deep copy because it's const
+    // EXISTING_CODE
+    finishParse();
 }
 
 //--------------------------------------------------------------------------
 inline CLogEntry& CLogEntry::operator=(const CLogEntry& lo)
 {
-	Copy(lo);
-	// EXISTING_CODE
-	// EXISTING_CODE
-	return *this;
+    Copy(lo);
+    // EXISTING_CODE
+    // EXISTING_CODE
+    return *this;
 }
 
 //---------------------------------------------------------------------------
 inline SFString CLogEntry::getValueByName(const SFString& fieldName) const
 {
-	// EXISTING_CODE
-	// EXISTING_CODE
-	return Format("[{"+toUpper(fieldName)+"}]");
+    // EXISTING_CODE
+    // EXISTING_CODE
+    return Format("[{"+toUpper(fieldName)+"}]");
 }
 
 //---------------------------------------------------------------------------

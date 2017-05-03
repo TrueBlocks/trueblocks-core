@@ -1,0 +1,7 @@
+class:		CTransaction
+fields:		hash hash|hash blockHash|uint32 blockNumber|uint32 transactionIndex|uint32 nonce|uint32 timeStamp|address from|address to|uint256 value|uint32 gas|uint32 gasPrice|uint256 cumulativeGasUsed|string input|uint32 isError|uint32 isInternalTx|CReceipt receipt
+includes:	ethtypes.h|abilib.h|receipt.h
+cIncs:		#include "etherlib.h"
+;
+; full tranaction
+;fields:	hash blockHash|uint32 blockNumber|string creates|int confirmations|address contractAddress|string cumulativeGasUsed|address from|int gas|string gasPrice|string gasUsed|hash hash|string input|bool isError|bool isInternalTx|int nonce|hash r|string raw|hash s|int timeStamp|address to|int transactionIndex|hash v|string value|CReceipt receipt|CTrace trace

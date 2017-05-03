@@ -1,0 +1,4 @@
+class:		CRPCResult
+fields:		string jsonrpc|string result|string id
+includes:	utillib.h
+cIncs:		#include "etherlib.h"

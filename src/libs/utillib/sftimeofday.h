@@ -47,7 +47,7 @@ private:
 	bool          operator>=       (const SFTimeOfDay& tod) const;
 	bool          operator<=       (const SFTimeOfDay& tod) const;
 
-	SFString      Format           (const SFString& fmt=nullString) const;
+	SFString      Format           (const SFString& fmt="") const;
 
 	bool          IsValid          (void) const;
 
