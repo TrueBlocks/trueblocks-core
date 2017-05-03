@@ -18,6 +18,10 @@ clean:
 	@cd tokenlib; make clean
 	@cd walletlib; make clean
 
+readmes:
+	@echo ""
+#	@echo "Nothing here yet"
+
 rebuild:
 	@cd abilib ; make rebuild
 	@cd etherlib ; make rebuild
