@@ -6,7 +6,7 @@
 
 | Option | Full Command | Description |
 | -------: | :------- | :------- |
-|  | addr | the address of the smart contract |
+|  | addr | the address(es) of the smart contract(s) to grab |
 | -c | --canoncial | convert all types to their canoncial represenation and remove all spaces from display |
 | -g | --generate | generate C++ code into ':dir' for all functions and events found in the ABI |
 | -e | --encode | generate the encodings for the functions / events in the ABI |

@@ -72,9 +72,7 @@ readmes:
 	@cd apps ; make readmes
 	@cd tools ; make readmes
 	@cd monitors ; make readmes
-#	@cd libs/abilib ; cat README.md
-#	@cd libs/etherlib ; cat README.md
-#	@cd libs/utillib ; cat README.md
+	@cd libs ; make readmes
 	@cd tests ; make readmes
 
 lint:

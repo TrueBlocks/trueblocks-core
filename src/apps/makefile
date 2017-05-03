@@ -50,11 +50,11 @@ readmes:
 	@cd chifra ; chifra -th >README.md
 	@cd ethprice ; ethprice -th >README.md
 	@cd ethslurp ; ethslurp -th >README.md
-#	@cd getBalance ; getBalance -th >README.md
+	@cd getBalance ; getBalance -th >README.md
 	@cd getBlock ; getBlock -th >README.md
 	@cd getLogs ; getLogs -th >README.md
 #	@cd getReceipt ; getReceipt -th >README.md
-#	@cd getTrans ; getTrans -th >README.md
+	@cd getTrans ; getTrans -th >README.md
 	@cd isContract ; isContract -th >README.md
 	@cd miniBlocks ; miniBlocks -th >README.md
 
