@@ -26,55 +26,56 @@ typedef SFUniqueList<CFunction*>       CFunctionListU;
 class CFunction : public CBaseNode
 {
 public:
-	SFString name;
-	SFString type;
-	bool anonymous;
-	bool constant;
-	bool payable;
-	SFString signature;
-	SFString encoding;
-	CParameterArray inputs;
-	CParameterArray outputs;
+    SFString name;
+    SFString type;
+    bool anonymous;
+    bool constant;
+    bool payable;
+    SFString signature;
+    SFString encoding;
+    CParameterArray inputs;
+    CParameterArray outputs;
 
 public:
-		CFunction(void);
-		CFunction(const CFunction& fu);
-	       ~CFunction(void);
-	CFunction&	operator=(const CFunction& fu);
+    CFunction(void);
+    CFunction(const CFunction& fu);
+   ~CFunction(void);
+    CFunction& operator=(const CFunction& fu);
 
-	DECLARE_NODE (CFunction);
+    DECLARE_NODE (CFunction);
 
-	// EXISTING_CODE
-	void parseParams(bool input, const SFString& value);
-	bool hasAddrs;
-	SFString getSignature(SFUint32 parts) const;
-	SFString encodeItem(void) const;
-	// EXISTING_CODE
+    // EXISTING_CODE
+    void parseParams(bool input, const SFString& value);
+    bool hasAddrs;
+    SFString getSignature(SFUint32 parts) const;
+    SFString encodeItem(void) const;
+    bool isBuiltin;
+    // EXISTING_CODE
 
 protected:
-	void Clear(void);
-	void Init(void);
-	void Copy(const CFunction& fu);
-	bool readBackLevel(SFArchive& archive);
+    void Clear(void);
+    void Init(void);
+    void Copy(const CFunction& fu);
+    bool readBackLevel(SFArchive& archive);
 
-	// EXISTING_CODE
-	// EXISTING_CODE
+    // EXISTING_CODE
+    // EXISTING_CODE
 };
 
 //--------------------------------------------------------------------------
 inline CFunction::CFunction(void)
 {
-	Init();
-	// EXISTING_CODE
-	// EXISTING_CODE
+    Init();
+    // EXISTING_CODE
+    // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
 inline CFunction::CFunction(const CFunction& fu)
 {
-	// EXISTING_CODE
-	// EXISTING_CODE
-	Copy(fu);
+    // EXISTING_CODE
+    // EXISTING_CODE
+    Copy(fu);
 }
 
 // EXISTING_CODE
@@ -83,75 +84,77 @@ inline CFunction::CFunction(const CFunction& fu)
 //--------------------------------------------------------------------------
 inline CFunction::~CFunction(void)
 {
-	Clear();
-	// EXISTING_CODE
-	// EXISTING_CODE
+    Clear();
+    // EXISTING_CODE
+    // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
 inline void CFunction::Clear(void)
 {
-	// EXISTING_CODE
-	// EXISTING_CODE
+    // EXISTING_CODE
+    // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
 inline void CFunction::Init(void)
 {
-	CBaseNode::Init();
+    CBaseNode::Init();
 
-//	name = EMPTY;
-//	type = EMPTY;
-	anonymous = 0;
-	constant = 0;
-	payable = 0;
-//	signature = EMPTY;
-//	encoding = EMPTY;
-//	inputs = ??; /* unknown type: CParameterArray */
-//	outputs = ??; /* unknown type: CParameterArray */
+//    name = EMPTY;
+//    type = EMPTY;
+    anonymous = 0;
+    constant = 0;
+    payable = 0;
+//    signature = EMPTY;
+//    encoding = EMPTY;
+//    inputs = ??; /* unknown type: CParameterArray */
+//    outputs = ??; /* unknown type: CParameterArray */
 
-	// EXISTING_CODE
-	hasAddrs = false;
-	// EXISTING_CODE
+    // EXISTING_CODE
+    hasAddrs = false;
+    isBuiltin = false;
+    // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
 inline void CFunction::Copy(const CFunction& fu)
 {
-	Clear();
-	CBaseNode::Copy(fu);
+    Clear();
+    CBaseNode::Copy(fu);
 
-	name = fu.name;
-	type = fu.type;
-	anonymous = fu.anonymous;
-	constant = fu.constant;
-	payable = fu.payable;
-	signature = fu.signature;
-	encoding = fu.encoding;
-	inputs = fu.inputs;
-	outputs = fu.outputs;
+    name = fu.name;
+    type = fu.type;
+    anonymous = fu.anonymous;
+    constant = fu.constant;
+    payable = fu.payable;
+    signature = fu.signature;
+    encoding = fu.encoding;
+    inputs = fu.inputs;
+    outputs = fu.outputs;
 
-	// EXISTING_CODE
-	hasAddrs = fu.hasAddrs;
-	// EXISTING_CODE
-	finishParse();
+    // EXISTING_CODE
+    hasAddrs = fu.hasAddrs;
+    isBuiltin = fu.isBuiltin;
+    // EXISTING_CODE
+    finishParse();
 }
 
 //--------------------------------------------------------------------------
 inline CFunction& CFunction::operator=(const CFunction& fu)
 {
-	Copy(fu);
-	// EXISTING_CODE
-	// EXISTING_CODE
-	return *this;
+    Copy(fu);
+    // EXISTING_CODE
+    // EXISTING_CODE
+    return *this;
 }
 
 //---------------------------------------------------------------------------
 inline SFString CFunction::getValueByName(const SFString& fieldName) const
 {
-	// EXISTING_CODE
-	// EXISTING_CODE
-	return Format("[{"+toUpper(fieldName)+"}]");
+    // EXISTING_CODE
+    // EXISTING_CODE
+    return Format("[{"+toUpper(fieldName)+"}]");
 }
 
 //---------------------------------------------------------------------------

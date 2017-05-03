@@ -1,5 +1,5 @@
 
-`Usage:`    cacheMan [-b|-c|-f|-l|-n|-m|-t|-v|-h] filenames  
+`Usage:`    cacheMan [-b|-c|-f|-l|-n|-e|-m|-t|-v|-h] filenames  
 `Purpose:`  Show the contents of an account cache and/or fix it by removing duplicate records.
              
 `Where:`  
@@ -12,6 +12,7 @@
 | -f | --fix | remove duplicates from the cache (if any) |
 | -l | --list | list the contents of the cache (the default if no other option) |
 | -n | --nocolor | do not color the output |
+| -e | --extract | extract transactions for the given contract :id |
 | -m | --merge | merge two or more caches into a single cache |
 | -t | --truncate | truncate the cache at block :n (implies --fix) |
 | -v | --verbose | set verbose level. Follow with a number to set level (-v0 for silent) |

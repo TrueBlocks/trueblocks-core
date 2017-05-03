@@ -52,3 +52,49 @@
 #define greenCheck (SFString(cGreen) + "✓" + cOff)
 #define redX       (SFString(cRed)   + "X" + cOff)
 
+//-----------------------------------------------------------------------
+inline SFString convertColor(const SFString& colorIn) {
+    bool bold = colorIn.Contains("_b");
+    bool ital = colorIn.Contains("_i");
+    SFString color = colorIn;
+    color = nextTokenClear(color, '_');
+    if (color == "black"  ) return (bold ? bBlack   : ital ? iBlack   : cBlack   );
+    else if (color == "blue"   ) return (bold ? bBlue    : ital ? iBlue    : cBlue    );
+    else if (color == "red"    ) return (bold ? bRed     : ital ? iRed     : cRed     );
+    else if (color == "green"  ) return (bold ? bGreen   : ital ? iGreen   : cGreen   );
+    else if (color == "yellow" ) return (bold ? bYellow  : ital ? iYellow  : cYellow  );
+    else if (color == "magenta") return (bold ? bMagenta : ital ? iMagenta : cMagenta );
+    else if (color == "teal"   ) return (bold ? bTeal    : ital ? iTeal    : cTeal    );
+    else if (color == "white"  ) return (bold ? bWhite   : ital ? iWhite   : cWhite   );
+    return "";
+}
+
+#define BARLEN 80
+inline void progressBar(int _barLen, int _part, int _whole, const SFString& _tim) {
+    double percent = _part / static_cast<double>(_whole);
+    SFUint32 p = (SFUint32)(_barLen*percent/.75);
+
+    SFString sss(' ', MAX(0, _barLen - p));
+
+    cerr << cYellow << _part << cOff << " of " << cYellow << _whole << cOff;
+    cerr << " (" << cBlue << padLeft(fmtFloatp(100.*percent, 1), 5, ' ') << cOff << "%)";
+    cerr << " [" << SFString('x', p).Substitute("x", "░");
+    cerr << sss;
+    cerr << "] in ";
+    cerr << cGreen << _tim << cOff << " seconds.\r";
+    cerr.flush();
+}
+inline void progressBar(int _barLen, int _part, int _whole, int _tim) { progressBar(_barLen, _part, _whole, asString(_tim)); }
+/*
+// TODO: Do I really need this?
+#define BARLEN 80
+#define progressBar(_barLen,_part,_whole,_tim) \
+{ \
+	double percent = _part/(double)_whole; \
+	SFUint32 p = (SFUint32)(_barLen*percent); \
+	cerr << asYellow(_part) << " of " << asYellow(_whole) \
+	<< " (" << asBlueB(padLeft(fmtFloatp(100.*percent,1),5,' ')) << "%)" \
+	<< " [" << SFString('x',p).Substitute("x","░") << SFString(' ',_barLen-p) << "] in " << asGreen(_tim) << "seconds.\r"; \
+	cerr.flush(); \
+}
+*/

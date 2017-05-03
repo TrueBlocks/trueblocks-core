@@ -87,7 +87,7 @@ private:
   bool       operator>=             (const SFDate& date) const;
   bool       operator<=             (const SFDate& date) const;
 
-  SFString   Format                 (const SFString& fmt=nullString) const;
+  SFString   Format                 (const SFString& fmt="") const;
 
   bool       IsValid                (void) const;
 

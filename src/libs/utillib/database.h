@@ -156,6 +156,8 @@ extern SFString docxToString     (const SFString& filename);
 extern size_t   stringToDocxFile (const SFString& fileName, const SFString& contents);
 extern size_t   stringToPDF      (const SFString& fileName, const SFString& contents);
 extern SFString excelFileToString(const SFString& filename);
+extern void     quitHandler      (int s);
+extern void     registerQuitHandler(void);
 
 //----------------------------------------------------------------------
 inline bool asciiFileToBuffer(const SFString& filename, SFString *contents, uint32_t maxLines=INT_MAX)

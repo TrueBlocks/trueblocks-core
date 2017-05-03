@@ -1,0 +1,3 @@
+class:		CPriceQuote
+fields:		uint32 timeStamp|float open|float high|float low|float close|float quoteVolume|float volume|float weightedAvg
+includes:	ethtypes.h|abilib.h

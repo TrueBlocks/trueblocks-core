@@ -1,0 +1,5 @@
+class:		CBlockChain
+fields:		CBlockArray blocks
+includes:	block.h|etherlib.h
+cIncs:		#include "account.h"
+disabled:	true

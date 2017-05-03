@@ -1,10 +1,8 @@
 all:
 	@cd libs ; make ; echo
 	@cd apps ; make ; echo
+	@cd monitors ; make ; echo
 	@cd tools ; make ; echo
-#	@cd monitors ; make ; echo
-#	@cd monitors/dao ; make ; echo
-#	@cd monitors/singular ; make ; echo
 	@cd other/04_inerror ; make app ; echo
 	@cd other/08_latestBlock ; make app ; echo
 	@cd other/09_toJSON ; make app ; echo
@@ -12,7 +10,6 @@ all:
 	@cd other/17_creations ; make app ; echo
 	@cd other/18_internal ; make app ; echo
 	@cd other/22_genesis ; make app ; echo
-	@cd other/stringTest; make app ; echo
 	@cd tests ; make ; echo
 
 cleanall:
@@ -21,9 +18,8 @@ cleanall:
 clean:
 	@cd libs ; make clean
 	@cd apps ; make clean
+	@cd monitors ; make cleanall
 	@cd tools ; make clean
-#	@cd monitors/dao ; make cleanall
-#	@cd monitors/singular ; make cleanall
 	@cd other/04_inerror ; make clean
 	@cd other/08_latestBlock ; make clean
 	@cd other/09_toJSON ; make clean
@@ -31,7 +27,6 @@ clean:
 	@cd other/17_creations ; make clean
 	@cd other/18_internal ; make clean
 	@cd other/22_genesis ; make clean
-	@cd other/stringTest; make clean
 	@cd tests ; make clean
 
 test:
@@ -41,12 +36,10 @@ test:
 	@blockScrape -fl
 	@miniBlocks freshen
 	@cd apps ; make test
+	@cd monitors ; make test
 	@cd tools ; make test
-#	@cd monitors/dao; make test
-#	@cd monitors/singular; make test
 #	@cd other/16_encodingABIs; make test
 	@cd other/19_blooms; make test
-	@cd other/stringTest; make test
 	@cd tests ; make test
 
 testall:
@@ -56,6 +49,7 @@ testall:
 	@blockScrape -fl
 	@miniBlocks freshen
 	@cd apps ; make testall
+	@cd monitors ; make test
 	@cd tools ; make testall
 	@cd other/04_inerror; make test
 	@cd other/18_internal; make test
@@ -71,17 +65,13 @@ testall:
 	@cd tests ; make testall
 
 rebuild:
-	@cd monitors/dao ; make rebuild ; cd -
-	@cd monitors/singular ; make rebuild ; cd -
-	@cd monitors/ens ; make rebuild ; cd -
 	@cd libs ; make rebuild ; cd -
-	@makeClass -ar
+	@cd monitors ; make rebuild ; cd -
 
 readmes:
 	@cd apps ; make readmes
 	@cd tools ; make readmes
-#	@cd monitors/tokenlib ; cat README.md
-#	@cd monitors/walletlib ; cat README.md
+	@cd monitors ; make readmes
 #	@cd libs/abilib ; cat README.md
 #	@cd libs/etherlib ; cat README.md
 #	@cd libs/utillib ; cat README.md
@@ -90,4 +80,8 @@ readmes:
 lint:
 	@cd apps ; make lint
 	@cd tools ; make lint
+	@cd monitors ; make lint
 	@cd tests ; make lint
+
+freshen:
+	@cd monitors ; make freshen

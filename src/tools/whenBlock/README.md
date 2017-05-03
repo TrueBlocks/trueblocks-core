@@ -19,7 +19,7 @@ The hour/minute/second portions of the date are optional, and if omitted, defaul
 | -l | --list | list special blocks timestamps and dates |
 | -h | --help | display this help screen |
 
-[0m	Special values: [first|latest|iceage|homestead|daohack|daofork|tangerine|spurious|stateclear]
+[0m	Special values: [first|latest|iceage|homestead|daofund|daohack|daofork|tangerine|spurious|stateclear]
 
 [1;34m  Powered by QuickBlocks.io
 

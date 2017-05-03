@@ -73,7 +73,7 @@ public:
 	virtual bool     Serialize      (SFArchive& archive) = 0;
 	virtual bool     SerializeC     (SFArchive& archive) const = 0;
 	virtual void     finishParse    (void) = 0;
-	virtual SFString Format         (const SFString& fmtIn=nullString) const = 0;
+	virtual SFString Format         (const SFString& fmtIn="") const = 0;
 
 protected:
 	        bool     preSerialize (SFArchive& archive);

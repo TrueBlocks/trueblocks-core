@@ -19,11 +19,7 @@ clean:
 	@cd walletlib; make clean
 
 rebuild:
-	@echo "Rebuilding token lib"
-	@rm -f tokenlib/*.[ch]* tokenlib/makefile tokenlib/classDefinitions/*.txt
-	@grabABI TokenLib -g:tokenlib
-	@echo
-	@echo "Rebuilding wallet lib"
-	@rm -f walletlib/*.[ch]* walletlib/makefile walletlib/classDefinitions/*.txt
-	@grabABI WalletLib -g:walletlib
-	@echo
+	@cd abilib ; make rebuild
+	@cd etherlib ; make rebuild
+	@cd tokenlib ; make rebuild
+	@cd walletlib ; make rebuild

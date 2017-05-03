@@ -1,0 +1,4 @@
+class:		CReceipt
+fields:		address contractAddress|uint32 gasUsed|CLogEntryArray logs|bloom logsBloom
+includes:	ethtypes.h|abilib.h|logentry.h
+cIncs:		#include "etherlib.h"

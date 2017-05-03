@@ -40,48 +40,48 @@ class CFunction;
 class CParameter : public CBaseNode
 {
 public:
-	bool indexed;
-	SFString name;
-	SFString type;
-	bool isPointer;
-	bool isArray;
-	SFString strDefault;
+    bool indexed;
+    SFString name;
+    SFString type;
+    bool isPointer;
+    bool isArray;
+    SFString strDefault;
 
 public:
-		CParameter(void);
-		CParameter(const CParameter& pa);
-	       ~CParameter(void);
-	CParameter&	operator=(const CParameter& pa);
+    CParameter(void);
+    CParameter(const CParameter& pa);
+   ~CParameter(void);
+    CParameter& operator=(const CParameter& pa);
 
-	DECLARE_NODE (CParameter);
+    DECLARE_NODE (CParameter);
 
-	// EXISTING_CODE
-	// EXISTING_CODE
+    // EXISTING_CODE
+    // EXISTING_CODE
 
 protected:
-	void Clear(void);
-	void Init(void);
-	void Copy(const CParameter& pa);
-	bool readBackLevel(SFArchive& archive);
+    void Clear(void);
+    void Init(void);
+    void Copy(const CParameter& pa);
+    bool readBackLevel(SFArchive& archive);
 
-	// EXISTING_CODE
-	// EXISTING_CODE
+    // EXISTING_CODE
+    // EXISTING_CODE
 };
 
 //--------------------------------------------------------------------------
 inline CParameter::CParameter(void)
 {
-	Init();
-	// EXISTING_CODE
-	// EXISTING_CODE
+    Init();
+    // EXISTING_CODE
+    // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
 inline CParameter::CParameter(const CParameter& pa)
 {
-	// EXISTING_CODE
-	// EXISTING_CODE
-	Copy(pa);
+    // EXISTING_CODE
+    // EXISTING_CODE
+    Copy(pa);
 }
 
 // EXISTING_CODE
@@ -90,67 +90,67 @@ inline CParameter::CParameter(const CParameter& pa)
 //--------------------------------------------------------------------------
 inline CParameter::~CParameter(void)
 {
-	Clear();
-	// EXISTING_CODE
-	// EXISTING_CODE
+    Clear();
+    // EXISTING_CODE
+    // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
 inline void CParameter::Clear(void)
 {
-	// EXISTING_CODE
-	// EXISTING_CODE
+    // EXISTING_CODE
+    // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
 inline void CParameter::Init(void)
 {
-	CBaseNode::Init();
+    CBaseNode::Init();
 
-	indexed = 0;
-//	name = EMPTY;
-//	type = EMPTY;
-	isPointer = 0;
-	isArray = 0;
-//	strDefault = EMPTY;
+    indexed = 0;
+//    name = EMPTY;
+//    type = EMPTY;
+    isPointer = 0;
+    isArray = 0;
+//    strDefault = EMPTY;
 
-	// EXISTING_CODE
-	// EXISTING_CODE
+    // EXISTING_CODE
+    // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
 inline void CParameter::Copy(const CParameter& pa)
 {
-	Clear();
-	CBaseNode::Copy(pa);
+    Clear();
+    CBaseNode::Copy(pa);
 
-	indexed = pa.indexed;
-	name = pa.name;
-	type = pa.type;
-	isPointer = pa.isPointer;
-	isArray = pa.isArray;
-	strDefault = pa.strDefault;
+    indexed = pa.indexed;
+    name = pa.name;
+    type = pa.type;
+    isPointer = pa.isPointer;
+    isArray = pa.isArray;
+    strDefault = pa.strDefault;
 
-	// EXISTING_CODE
-	// EXISTING_CODE
-	finishParse();
+    // EXISTING_CODE
+    // EXISTING_CODE
+    finishParse();
 }
 
 //--------------------------------------------------------------------------
 inline CParameter& CParameter::operator=(const CParameter& pa)
 {
-	Copy(pa);
-	// EXISTING_CODE
-	// EXISTING_CODE
-	return *this;
+    Copy(pa);
+    // EXISTING_CODE
+    // EXISTING_CODE
+    return *this;
 }
 
 //---------------------------------------------------------------------------
 inline SFString CParameter::getValueByName(const SFString& fieldName) const
 {
-	// EXISTING_CODE
-	// EXISTING_CODE
-	return Format("[{"+toUpper(fieldName)+"}]");
+    // EXISTING_CODE
+    // EXISTING_CODE
+    return Format("[{"+toUpper(fieldName)+"}]");
 }
 
 //---------------------------------------------------------------------------

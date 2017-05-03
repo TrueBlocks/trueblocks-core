@@ -1,0 +1,3 @@
+class:		CAccount
+fields:		address addr|string header|string displayString|uint32 pageSize|uint32 lastPage|int64 lastBlock=-1|uint32 nVisible|CTransactionArray transactions
+includes:	ethtypes.h|abilib.h|transaction.h

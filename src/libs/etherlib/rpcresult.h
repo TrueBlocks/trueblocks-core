@@ -25,45 +25,45 @@ typedef SFUniqueList<CRPCResult*>       CRPCResultListU;
 class CRPCResult : public CBaseNode
 {
 public:
-	SFString jsonrpc;
-	SFString result;
-	SFString id;
+    SFString jsonrpc;
+    SFString result;
+    SFString id;
 
 public:
-		CRPCResult(void);
-		CRPCResult(const CRPCResult& rp);
-	       ~CRPCResult(void);
-	CRPCResult&	operator=(const CRPCResult& rp);
+    CRPCResult(void);
+    CRPCResult(const CRPCResult& rp);
+   ~CRPCResult(void);
+    CRPCResult& operator=(const CRPCResult& rp);
 
-	DECLARE_NODE (CRPCResult);
+    DECLARE_NODE (CRPCResult);
 
-	// EXISTING_CODE
-	// EXISTING_CODE
+    // EXISTING_CODE
+    // EXISTING_CODE
 
 protected:
-	void Clear(void);
-	void Init(void);
-	void Copy(const CRPCResult& rp);
-	bool readBackLevel(SFArchive& archive);
+    void Clear(void);
+    void Init(void);
+    void Copy(const CRPCResult& rp);
+    bool readBackLevel(SFArchive& archive);
 
-	// EXISTING_CODE
-	// EXISTING_CODE
+    // EXISTING_CODE
+    // EXISTING_CODE
 };
 
 //--------------------------------------------------------------------------
 inline CRPCResult::CRPCResult(void)
 {
-	Init();
-	// EXISTING_CODE
-	// EXISTING_CODE
+    Init();
+    // EXISTING_CODE
+    // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
 inline CRPCResult::CRPCResult(const CRPCResult& rp)
 {
-	// EXISTING_CODE
-	// EXISTING_CODE
-	Copy(rp);
+    // EXISTING_CODE
+    // EXISTING_CODE
+    Copy(rp);
 }
 
 // EXISTING_CODE
@@ -72,61 +72,61 @@ inline CRPCResult::CRPCResult(const CRPCResult& rp)
 //--------------------------------------------------------------------------
 inline CRPCResult::~CRPCResult(void)
 {
-	Clear();
-	// EXISTING_CODE
-	// EXISTING_CODE
+    Clear();
+    // EXISTING_CODE
+    // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
 inline void CRPCResult::Clear(void)
 {
-	// EXISTING_CODE
-	// EXISTING_CODE
+    // EXISTING_CODE
+    // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
 inline void CRPCResult::Init(void)
 {
-	CBaseNode::Init();
+    CBaseNode::Init();
 
-//	jsonrpc = EMPTY;
-//	result = EMPTY;
-//	id = EMPTY;
+//    jsonrpc = EMPTY;
+//    result = EMPTY;
+//    id = EMPTY;
 
-	// EXISTING_CODE
-	// EXISTING_CODE
+    // EXISTING_CODE
+    // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
 inline void CRPCResult::Copy(const CRPCResult& rp)
 {
-	Clear();
-	CBaseNode::Copy(rp);
+    Clear();
+    CBaseNode::Copy(rp);
 
-	jsonrpc = rp.jsonrpc;
-	result = rp.result;
-	id = rp.id;
+    jsonrpc = rp.jsonrpc;
+    result = rp.result;
+    id = rp.id;
 
-	// EXISTING_CODE
-	// EXISTING_CODE
-	finishParse();
+    // EXISTING_CODE
+    // EXISTING_CODE
+    finishParse();
 }
 
 //--------------------------------------------------------------------------
 inline CRPCResult& CRPCResult::operator=(const CRPCResult& rp)
 {
-	Copy(rp);
-	// EXISTING_CODE
-	// EXISTING_CODE
-	return *this;
+    Copy(rp);
+    // EXISTING_CODE
+    // EXISTING_CODE
+    return *this;
 }
 
 //---------------------------------------------------------------------------
 inline SFString CRPCResult::getValueByName(const SFString& fieldName) const
 {
-	// EXISTING_CODE
-	// EXISTING_CODE
-	return Format("[{"+toUpper(fieldName)+"}]");
+    // EXISTING_CODE
+    // EXISTING_CODE
+    return Format("[{"+toUpper(fieldName)+"}]");
 }
 
 //---------------------------------------------------------------------------

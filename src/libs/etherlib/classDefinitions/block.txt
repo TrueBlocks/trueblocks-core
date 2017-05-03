@@ -1,0 +1,8 @@
+class:		CBlock
+fields:		uint32 gasLimit|uint32 gasUsed|hash hash|bloom logsBloom|uint32 blockNumber|hash parentHash|uint32 timestamp|CTransactionArray transactions
+includes:	ethtypes.h|abilib.h|transaction.h
+cIncs:		#include "etherlib.h"
+;
+;
+; full block definition
+;address author|string difficulty|string extraData|string gasLimit|string gasUsed|hash hash|string logsBloom|address miner|hash mixHash|string nonce|string number|hash parentHash|string receiptRoot|string receiptsRoot|SFStringArray sealFields|string sha3Uncles|string size|string stateRoot|string timestamp|string totalDifficulty|CTransactionArray transactions|string transactionsRoot|SFStringArray uncles

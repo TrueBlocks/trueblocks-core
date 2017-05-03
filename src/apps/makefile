@@ -30,7 +30,7 @@ clean:
 	@cd miniBlocks ; make clean
 
 test:
-#	@cd blockScrape ; make test
+	@cd blockScrape ; make test
 	@cd chifra ; make test
 #	@cd getBalance ; make test
 	@cd getBlock ; make test

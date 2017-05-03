@@ -28,68 +28,68 @@ typedef SFUniqueList<CBlock*>       CBlockListU;
 class CBlock : public CBaseNode
 {
 public:
-	SFUint32 gasLimit;
-	SFUint32 gasUsed;
-	SFHash hash;
-	SFBloom logsBloom;
-	SFUint32 blockNumber;
-	SFHash parentHash;
-	SFUint32 timestamp;
-	CTransactionArray transactions;
+    SFUint32 gasLimit;
+    SFUint32 gasUsed;
+    SFHash hash;
+    SFBloom logsBloom;
+    SFUint32 blockNumber;
+    SFHash parentHash;
+    SFUint32 timestamp;
+    CTransactionArray transactions;
 
 public:
-		CBlock(void);
-		CBlock(const CBlock& bl);
-	       ~CBlock(void);
-	CBlock&	operator=(const CBlock& bl);
+    CBlock(void);
+    CBlock(const CBlock& bl);
+   ~CBlock(void);
+    CBlock& operator=(const CBlock& bl);
 
-	DECLARE_NODE (CBlock);
+    DECLARE_NODE (CBlock);
 
-	// EXISTING_CODE
+    // EXISTING_CODE
 #if 0
-	SFAddress author;
-	SFString difficulty;
-	SFString extraData;
-	SFString logsBloom;
-	SFAddress miner;
-	SFHash mixHash;
-	SFString nonce;
-	SFString receiptRoot;
-	SFString receiptsRoot;
-	SFStringArray sealFields;
-	SFString sha3Uncles;
-	SFString size;
-	SFString stateRoot;
-	SFString totalDifficulty;
-	SFString transactionsRoot;
-	SFStringArray uncles;
+    SFAddress author;
+    SFString difficulty;
+    SFString extraData;
+    SFString logsBloom;
+    SFAddress miner;
+    SFHash mixHash;
+    SFString nonce;
+    SFString receiptRoot;
+    SFString receiptsRoot;
+    SFStringArray sealFields;
+    SFString sha3Uncles;
+    SFString size;
+    SFString stateRoot;
+    SFString totalDifficulty;
+    SFString transactionsRoot;
+    SFStringArray uncles;
 #endif
-	// EXISTING_CODE
+    // EXISTING_CODE
 
 protected:
-	void Clear(void);
-	void Init(void);
-	void Copy(const CBlock& bl);
-	bool readBackLevel(SFArchive& archive);
+    void Clear(void);
+    void Init(void);
+    void Copy(const CBlock& bl);
+    bool readBackLevel(SFArchive& archive);
 
-	// EXISTING_CODE
-	// EXISTING_CODE
+    // EXISTING_CODE
+    // EXISTING_CODE
 };
 
 //--------------------------------------------------------------------------
 inline CBlock::CBlock(void)
 {
-	Init();
-	// EXISTING_CODE
-	// EXISTING_CODE
+    Init();
+    // EXISTING_CODE
+    // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
 inline CBlock::CBlock(const CBlock& bl)
 {
-	// EXISTING_CODE
-	// EXISTING_CODE
-	Copy(bl);
+    // EXISTING_CODE
+    // EXISTING_CODE
+    Copy(bl);
 }
 
 // EXISTING_CODE
@@ -98,105 +98,105 @@ inline CBlock::CBlock(const CBlock& bl)
 //--------------------------------------------------------------------------
 inline CBlock::~CBlock(void)
 {
-	Clear();
-	// EXISTING_CODE
-	// EXISTING_CODE
+    Clear();
+    // EXISTING_CODE
+    // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
 inline void CBlock::Clear(void)
 {
-	// EXISTING_CODE
-	// EXISTING_CODE
+    // EXISTING_CODE
+    // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
 inline void CBlock::Init(void)
 {
-	CBaseNode::Init();
+    CBaseNode::Init();
 
-	gasLimit = 0;
-	gasUsed = 0;
-//	hash = EMPTY;
-	logsBloom = 0;
-	blockNumber = 0;
-//	parentHash = EMPTY;
-	timestamp = 0;
-//	transactions = ??; /* unknown type: CTransactionArray */
+    gasLimit = 0;
+    gasUsed = 0;
+//    hash = EMPTY;
+    logsBloom = 0;
+    blockNumber = 0;
+//    parentHash = EMPTY;
+    timestamp = 0;
+//    transactions = ??; /* unknown type: CTransactionArray */
 
-	// EXISTING_CODE
+    // EXISTING_CODE
 #if 0
-	author = EMPTY;
-	difficulty = EMPTY;
-	extraData = EMPTY;
-	miner = EMPTY;
-	mixHash = EMPTY;
-	nonce = EMPTY;
-	receiptRoot = EMPTY;
-	receiptsRoot = EMPTY;
-//	sealFields = ??; /* unknown type: SFStringArray */
-	sha3Uncles = EMPTY;
-	size = EMPTY;
-	stateRoot = EMPTY;
-	totalDifficulty = EMPTY;
-	transactionsRoot = EMPTY;
-//	uncles = ??; /* unknown type: SFStringArray */
+    author = EMPTY;
+    difficulty = EMPTY;
+    extraData = EMPTY;
+    miner = EMPTY;
+    mixHash = EMPTY;
+    nonce = EMPTY;
+    receiptRoot = EMPTY;
+    receiptsRoot = EMPTY;
+//    sealFields = ??; /* unknown type: SFStringArray */
+    sha3Uncles = EMPTY;
+    size = EMPTY;
+    stateRoot = EMPTY;
+    totalDifficulty = EMPTY;
+    transactionsRoot = EMPTY;
+//    uncles = ??; /* unknown type: SFStringArray */
 #endif
-	// EXISTING_CODE
+    // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
 inline void CBlock::Copy(const CBlock& bl)
 {
-	Clear();
-	CBaseNode::Copy(bl);
+    Clear();
+    CBaseNode::Copy(bl);
 
-	gasLimit = bl.gasLimit;
-	gasUsed = bl.gasUsed;
-	hash = bl.hash;
-	logsBloom = bl.logsBloom;
-	blockNumber = bl.blockNumber;
-	parentHash = bl.parentHash;
-	timestamp = bl.timestamp;
-	transactions = bl.transactions;
+    gasLimit = bl.gasLimit;
+    gasUsed = bl.gasUsed;
+    hash = bl.hash;
+    logsBloom = bl.logsBloom;
+    blockNumber = bl.blockNumber;
+    parentHash = bl.parentHash;
+    timestamp = bl.timestamp;
+    transactions = bl.transactions;
 
-	// EXISTING_CODE
+    // EXISTING_CODE
 #if 0
-	author = bl.author;
-	difficulty = bl.difficulty;
-	extraData = bl.extraData;
-	miner = bl.miner;
-	mixHash = bl.mixHash;
-	nonce = bl.nonce;
-	receiptRoot = bl.receiptRoot;
-	receiptsRoot = bl.receiptsRoot;
-	sealFields = bl.sealFields;
-	sha3Uncles = bl.sha3Uncles;
-	size = bl.size;
-	stateRoot = bl.stateRoot;
-	totalDifficulty = bl.totalDifficulty;
-	transactionsRoot = bl.transactionsRoot;
-	uncles = bl.uncles;
+    author = bl.author;
+    difficulty = bl.difficulty;
+    extraData = bl.extraData;
+    miner = bl.miner;
+    mixHash = bl.mixHash;
+    nonce = bl.nonce;
+    receiptRoot = bl.receiptRoot;
+    receiptsRoot = bl.receiptsRoot;
+    sealFields = bl.sealFields;
+    sha3Uncles = bl.sha3Uncles;
+    size = bl.size;
+    stateRoot = bl.stateRoot;
+    totalDifficulty = bl.totalDifficulty;
+    transactionsRoot = bl.transactionsRoot;
+    uncles = bl.uncles;
 #endif
-	// EXISTING_CODE
-	finishParse();
+    // EXISTING_CODE
+    finishParse();
 }
 
 //--------------------------------------------------------------------------
 inline CBlock& CBlock::operator=(const CBlock& bl)
 {
-	Copy(bl);
-	// EXISTING_CODE
-	// EXISTING_CODE
-	return *this;
+    Copy(bl);
+    // EXISTING_CODE
+    // EXISTING_CODE
+    return *this;
 }
 
 //---------------------------------------------------------------------------
 inline SFString CBlock::getValueByName(const SFString& fieldName) const
 {
-	// EXISTING_CODE
-	// EXISTING_CODE
-	return Format("[{"+toUpper(fieldName)+"}]");
+    // EXISTING_CODE
+    // EXISTING_CODE
+    return Format("[{"+toUpper(fieldName)+"}]");
 }
 
 //---------------------------------------------------------------------------

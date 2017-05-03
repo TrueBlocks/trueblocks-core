@@ -1,0 +1,2 @@
+cd parselib
+grabABI [{ADDR}] -n $1

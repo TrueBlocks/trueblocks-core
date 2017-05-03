@@ -26,50 +26,50 @@ typedef SFUniqueList<CAbi*>       CAbiListU;
 class CAbi : public CBaseNode
 {
 public:
-	CFunctionArray abiByName;
-	CFunctionArray abiByEncoding;
+    CFunctionArray abiByName;
+    CFunctionArray abiByEncoding;
 
 public:
-		CAbi(void);
-		CAbi(const CAbi& ab);
-	       ~CAbi(void);
-	CAbi&	operator=(const CAbi& ab);
+    CAbi(void);
+    CAbi(const CAbi& ab);
+   ~CAbi(void);
+    CAbi& operator=(const CAbi& ab);
 
-	DECLARE_NODE (CAbi);
+    DECLARE_NODE (CAbi);
 
-	// EXISTING_CODE
+    // EXISTING_CODE
         void clearABI(void);
         bool loadABI  (const SFString& addr, bool append=false);
 #if 1 //NEW_CODE
         CFunction *findFunctionByName(const SFString& search);
 #endif
         CFunction *findFunctionByEncoding(const SFString& search);
-	// EXISTING_CODE
+    // EXISTING_CODE
 
 protected:
-	void Clear(void);
-	void Init(void);
-	void Copy(const CAbi& ab);
-	bool readBackLevel(SFArchive& archive);
+    void Clear(void);
+    void Init(void);
+    void Copy(const CAbi& ab);
+    bool readBackLevel(SFArchive& archive);
 
-	// EXISTING_CODE
-	// EXISTING_CODE
+    // EXISTING_CODE
+    // EXISTING_CODE
 };
 
 //--------------------------------------------------------------------------
 inline CAbi::CAbi(void)
 {
-	Init();
-	// EXISTING_CODE
-	// EXISTING_CODE
+    Init();
+    // EXISTING_CODE
+    // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
 inline CAbi::CAbi(const CAbi& ab)
 {
-	// EXISTING_CODE
-	// EXISTING_CODE
-	Copy(ab);
+    // EXISTING_CODE
+    // EXISTING_CODE
+    Copy(ab);
 }
 
 // EXISTING_CODE
@@ -78,61 +78,61 @@ inline CAbi::CAbi(const CAbi& ab)
 //--------------------------------------------------------------------------
 inline CAbi::~CAbi(void)
 {
-	Clear();
-	// EXISTING_CODE
-	// EXISTING_CODE
+    Clear();
+    // EXISTING_CODE
+    // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
 inline void CAbi::Clear(void)
 {
-	// EXISTING_CODE
-	abiByName.Clear();
-	abiByEncoding.Clear();
-	// EXISTING_CODE
+    // EXISTING_CODE
+    abiByName.Clear();
+    abiByEncoding.Clear();
+    // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
 inline void CAbi::Init(void)
 {
-	CBaseNode::Init();
+    CBaseNode::Init();
 
-//	abiByName = ??; /* unknown type: CFunctionArray */
-//	abiByEncoding = ??; /* unknown type: CFunctionArray */
+//    abiByName = ??; /* unknown type: CFunctionArray */
+//    abiByEncoding = ??; /* unknown type: CFunctionArray */
 
-	// EXISTING_CODE
-	// EXISTING_CODE
+    // EXISTING_CODE
+    // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
 inline void CAbi::Copy(const CAbi& ab)
 {
-	Clear();
-	CBaseNode::Copy(ab);
+    Clear();
+    CBaseNode::Copy(ab);
 
-	abiByName = ab.abiByName;
-	abiByEncoding = ab.abiByEncoding;
+    abiByName = ab.abiByName;
+    abiByEncoding = ab.abiByEncoding;
 
-	// EXISTING_CODE
-	// EXISTING_CODE
-	finishParse();
+    // EXISTING_CODE
+    // EXISTING_CODE
+    finishParse();
 }
 
 //--------------------------------------------------------------------------
 inline CAbi& CAbi::operator=(const CAbi& ab)
 {
-	Copy(ab);
-	// EXISTING_CODE
-	// EXISTING_CODE
-	return *this;
+    Copy(ab);
+    // EXISTING_CODE
+    // EXISTING_CODE
+    return *this;
 }
 
 //---------------------------------------------------------------------------
 inline SFString CAbi::getValueByName(const SFString& fieldName) const
 {
-	// EXISTING_CODE
-	// EXISTING_CODE
-	return Format("[{"+toUpper(fieldName)+"}]");
+    // EXISTING_CODE
+    // EXISTING_CODE
+    return Format("[{"+toUpper(fieldName)+"}]");
 }
 
 //---------------------------------------------------------------------------
