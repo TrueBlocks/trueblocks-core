@@ -1,11 +1,13 @@
 
-`Usage:` ethname [-a|-c|-l|-m|-o|-w|-v|-h] term [name]  
-`Purpose:` Find a name given an Ethereum address, or find an address given a name.
+`Usage:`    ethname [-a|-c|-l|-m|-o|-w|-v|-h] term [name]  
+`Purpose:`  Find a name given an Ethereum address, or find an address given a name.
              
 `Where:`  
 
 | Option | Full Command | Description |
 | -------: | :------- | :------- |
+|  | term [name] | search for 'term' in either name or address. If 'name' is present, term 
+			     is assumed to be an address. In this case, both must match |
 | -a | --all | search 'source' field as well name and address |
 | -c | --count | print only the count of the number of matches |
 | -l | --list | list all names |

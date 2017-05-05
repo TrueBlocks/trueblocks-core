@@ -10,7 +10,8 @@
 class COptionsBase
 {
 public:
-	static SFString msg;
+	static SFString header;
+    static SFString footer;
 	static bool useVerbose;
 	static bool useTesting;
 
