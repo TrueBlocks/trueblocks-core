@@ -23,6 +23,7 @@ readmes:
 #	@echo "Nothing here yet"
 
 rebuild:
+#	@cd utillib ; make rebuild
 	@cd abilib ; make rebuild
 	@cd etherlib ; make rebuild
 	@cd tokenlib ; make rebuild

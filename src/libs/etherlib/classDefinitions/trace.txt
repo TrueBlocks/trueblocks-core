@@ -1,5 +1,3 @@
 class:		CTrace
-fields:		uint32 gas|string returnValue|CStructLogArray structLogs
-includes:	ethtypes.h|abilib.h|structlog.h
-cIncs:		#include "etherlib.h"
-disabled:	true
+fields:		CTraceAction action|hash blockHash|uint32 blockNumber|CTraceResult result|uint32 subtraces|SFAddressArray traceAddress|hash transactionHash|uint32 transactionPosition|string type
+includes:	ethtypes.h|abilib.h|traceaction.h|traceresult.h
