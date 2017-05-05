@@ -4,7 +4,6 @@ all:
 	@cd monitors ; make ; echo
 	@cd tools ; make ; echo
 	@cd other/04_inerror ; make app ; echo
-	@cd other/08_latestBlock ; make app ; echo
 	@cd other/09_toJSON ; make app ; echo
 	@cd other/15_gasHole ; make app ; echo
 	@cd other/17_creations ; make app ; echo
@@ -21,7 +20,6 @@ clean:
 	@cd monitors ; make cleanall
 	@cd tools ; make clean
 	@cd other/04_inerror ; make clean
-	@cd other/08_latestBlock ; make clean
 	@cd other/09_toJSON ; make clean
 	@cd other/15_gasHole ; make clean
 	@cd other/17_creations ; make clean
@@ -55,7 +53,6 @@ testall:
 	@cd other/18_internal; make test
 ##	@cd other/05_visitor; make test
 ##	@cd other/06_addresses; make test
-##	@cd other/08_latestBlock; make test
 ##	@cd other/15_gasHole; make test
 ##	@cd other/15_tracingNeed; make test
 ##	@cd other/23_bloom; make test

@@ -1,7 +1,7 @@
 #-------------------------------------------------
 libraries=../../libs
 bin=../../../bin
-cflags=-std=c++11 -Wall -O2 -I. -I$(libraries)/utillib
+cflags=-std=c++11 -Wall -O2 -I. -I$(libraries)/include
 
 #-------------------------------------------------
 # for mac builds
