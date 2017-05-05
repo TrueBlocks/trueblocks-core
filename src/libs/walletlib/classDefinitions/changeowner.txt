@@ -1,6 +1,0 @@
-class:		QChangeOwner
-baseClass:	CTransaction
-fields:		address _from|address _to|
-includes:	transaction.h
-cIncs:		#include "etherlib.h"
-destination:	./walletlib/

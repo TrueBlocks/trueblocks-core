@@ -1,6 +1,0 @@
-class:		QConfirm
-baseClass:	CTransaction
-fields:		bytes32 _h|
-includes:	transaction.h
-cIncs:		#include "etherlib.h"
-destination:	./walletlib/

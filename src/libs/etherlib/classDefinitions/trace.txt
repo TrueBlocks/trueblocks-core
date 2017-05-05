@@ -1,3 +1,0 @@
-class:		CTrace
-fields:		CTraceAction action|hash blockHash|uint32 blockNumber|CTraceResult result|uint32 subtraces|SFAddressArray traceAddress|hash transactionHash|uint32 transactionPosition|string type
-includes:	ethtypes.h|abilib.h|traceaction.h|traceresult.h

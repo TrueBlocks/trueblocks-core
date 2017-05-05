@@ -1,6 +1,0 @@
-class:		QConfirmationNeededEvent
-baseClass:	CLogEntry
-fields:		bytes32 operation|address initiator|uint256 value|address to|bytes data|
-includes:	logentry.h
-cIncs:		#include "etherlib.h"
-destination:	./walletlib/

@@ -1,4 +1,0 @@
-class:		CAccountWatch
-fields:		uint32 index|address address|string name|string color|blknum_t firstBlock|bool disabled|int256 inFlows|int256 outFlows|int256 corrections|uint256 nodeBal
-includes:	ethtypes.h|abilib.h
-cIncs:		#include "etherlib.h"
