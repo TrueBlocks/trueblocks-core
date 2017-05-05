@@ -38,12 +38,12 @@ testall:
 #	@cd ethname; make test
 
 readmes:
-	@cd ethname ; ehtname -th >README.md
+	@cd ethname ; ethname -th >README.md
 	@cd whenBlock ; whenBlock -th >README.md
 	@cd getBalance ; getBalance -th >README.md
 	@cd getBlock ; getBlock -th >README.md
 	@cd getLogs ; getLogs -th >README.md
-	@cd getReceipt ; getReceipt -th >README.md
+#	@cd getReceipt ; getReceipt -th >README.md
 	@cd getTrans ; getTrans -th >README.md
 	@cd isContract ; isContract -th >README.md
 

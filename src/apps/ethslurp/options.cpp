@@ -220,7 +220,8 @@ void COptions::Init(void) {
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
     Init();
-    msg = "  Portions of this software are Powered by Etherscan.io APIs and QuickBlocks.io\n\n";
+    header = "";
+    footer = "  Portions of this software are Powered by Etherscan.io APIs and QuickBlocks.io\n\n";
 }
 
 //--------------------------------------------------------------------------------

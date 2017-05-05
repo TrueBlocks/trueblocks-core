@@ -1,5 +1,11 @@
+utillib/
+abilib/
+etherlib/
+tokenlib/
+walletlib/
+
+# utillib.a
 # abilib.a
 # etherlib.a
 tokenlib.a
-# utillib.a
 walletlib.a

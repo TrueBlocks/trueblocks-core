@@ -1,3 +1,3 @@
 *.cpp
-# *.h
+*.h
 makefile
