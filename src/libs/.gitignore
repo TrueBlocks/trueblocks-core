@@ -1,8 +1,8 @@
-utillib/
-abilib/
-etherlib/
-tokenlib/
-walletlib/
+utillib
+abilib
+etherlib
+tokenlib
+walletlib
 
 # utillib.a
 # abilib.a
