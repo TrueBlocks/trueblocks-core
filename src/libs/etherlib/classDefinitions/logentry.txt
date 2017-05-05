@@ -1,4 +1,0 @@
-class:		CLogEntry
-fields:		address address|string data|uint32 logIndex|SFBigUintArray topics
-includes:	ethtypes.h|abilib.h
-cIncs:		#include "etherlib.h"

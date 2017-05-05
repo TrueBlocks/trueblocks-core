@@ -1,6 +1,0 @@
-class:		QRevoke
-baseClass:	CTransaction
-fields:		bytes32 _operation|
-includes:	transaction.h
-cIncs:		#include "etherlib.h"
-destination:	./walletlib/

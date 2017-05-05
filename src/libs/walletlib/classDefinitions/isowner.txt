@@ -1,6 +1,0 @@
-class:		QIsOwner
-baseClass:	CTransaction
-fields:		address _addr|
-includes:	transaction.h
-cIncs:		#include "etherlib.h"
-destination:	./walletlib/

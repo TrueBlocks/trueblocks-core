@@ -1,3 +1,0 @@
-class:		CTraceResult
-fields:     uint32 gasUsed|string output
-includes:	ethtypes.h|abilib.h
