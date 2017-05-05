@@ -1,4 +1,4 @@
-*.cpp
-*.h
-makefile
+#*.cpp
+#*.h
+#makefile
 tests
