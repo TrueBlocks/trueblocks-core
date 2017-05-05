@@ -1,5 +1,7 @@
 *.cpp
 *.h
 makefile
-*.txt
 tests
+docs
+test1
+do_tests
