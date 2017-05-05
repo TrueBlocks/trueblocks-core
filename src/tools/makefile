@@ -2,7 +2,7 @@ all:
 	@cd ../libs ; make
 	@cd ethname ; make app
 	@cd whenBlock ; make app
-#	@cd getBalance ; make
+	@cd getBalance ; make
 	@cd getBlock ; make
 	@cd getLogs ; make
 #	@cd getReceipt ; make
@@ -17,7 +17,7 @@ cleanall:
 clean:
 	@cd ethname ; make clean
 	@cd whenBlock ; make clean
-#	@cd getBalance ; make clean
+	@cd getBalance ; make clean
 	@cd getBlock ; make clean
 	@cd getLogs ; make clean
 #	@cd getReceipt ; make clean
@@ -26,7 +26,7 @@ clean:
 
 test:
 	@cd whenBlock ; make test
-#	@cd getBalance ; make test
+	@cd getBalance ; make test
 	@cd getBlock ; make test
 	@cd getLogs ; make test
 #	@cd getReceipt ; make test
