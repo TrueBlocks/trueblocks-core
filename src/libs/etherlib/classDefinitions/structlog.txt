@@ -1,4 +1,0 @@
-class:		CStructLog
-fields:		uint32 depth|bool error|uint32 gas|uint32 gasCost|SFStringArray memory|string op|uint32 pc|SFStringArray stack|SFStringArray storage
-includes:	ethtypes.h|abilib.h
-disabled:	true

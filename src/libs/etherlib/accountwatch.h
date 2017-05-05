@@ -12,47 +12,55 @@
  */
 #include "ethtypes.h"
 #include "abilib.h"
-#include "traceaction.h"
-#include "traceresult.h"
 
 //--------------------------------------------------------------------------
-class CTrace;
-typedef SFArrayBase<CTrace>         CTraceArray;
-typedef SFList<CTrace*>             CTraceList;
-typedef SFUniqueList<CTrace*>       CTraceListU;
+class CAccountWatch;
+typedef SFArrayBase<CAccountWatch>         CAccountWatchArray;
+typedef SFList<CAccountWatch*>             CAccountWatchList;
+typedef SFUniqueList<CAccountWatch*>       CAccountWatchListU;
 
 // EXISTING_CODE
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CTrace : public CBaseNode
+class CAccountWatch : public CBaseNode
 {
 public:
-    CTraceAction action;
-    SFHash blockHash;
-    SFUint32 blockNumber;
-    CTraceResult result;
-    SFUint32 subtraces;
-    SFStringArray traceAddress;
-    SFHash transactionHash;
-    SFUint32 transactionPosition;
-    SFString type;
+    SFUint32 index;
+    SFAddress address;
+    SFString name;
+    SFString color;
+    SFUint32 firstBlock;
+    bool disabled;
+    SFIntBN inFlows;
+    SFIntBN outFlows;
+    SFIntBN corrections;
+    SFUintBN actBal;
 
 public:
-    CTrace(void);
-    CTrace(const CTrace& tr);
-   ~CTrace(void);
-    CTrace& operator=(const CTrace& tr);
+    CAccountWatch(void);
+    CAccountWatch(const CAccountWatch& ac);
+   ~CAccountWatch(void);
+    CAccountWatch& operator=(const CAccountWatch& ac);
 
-    DECLARE_NODE (CTrace);
+    DECLARE_NODE (CAccountWatch);
 
     // EXISTING_CODE
+    CAccountWatch(uint32_t _id, const SFString& _addr, const SFString& _name, blknum_t fB, const SFString& _color)
+        : index(_id), address(toLower(_addr)), name(_name), color(_color), firstBlock(fB),
+          disabled(false), inFlows(0), outFlows(0), actBal(0) {}
+    SFIntBN balance(void) const;
+    SFIntBN correctedBal(void) const;
+    void correctShun(SFIntBN cor) const;
+    void flowIn(SFIntBN _amt) const;
+    void flowOut(SFIntBN _amt) const;
+    bool getWatch(const CToml& toml, uint32_t n);
     // EXISTING_CODE
 
 protected:
     void Clear(void);
     void Init(void);
-    void Copy(const CTrace& tr);
+    void Copy(const CAccountWatch& ac);
     bool readBackLevel(SFArchive& archive);
 
     // EXISTING_CODE
@@ -60,7 +68,7 @@ protected:
 };
 
 //--------------------------------------------------------------------------
-inline CTrace::CTrace(void)
+inline CAccountWatch::CAccountWatch(void)
 {
     Init();
     // EXISTING_CODE
@@ -68,18 +76,18 @@ inline CTrace::CTrace(void)
 }
 
 //--------------------------------------------------------------------------
-inline CTrace::CTrace(const CTrace& tr)
+inline CAccountWatch::CAccountWatch(const CAccountWatch& ac)
 {
     // EXISTING_CODE
     // EXISTING_CODE
-    Copy(tr);
+    Copy(ac);
 }
 
 // EXISTING_CODE
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline CTrace::~CTrace(void)
+inline CAccountWatch::~CAccountWatch(void)
 {
     Clear();
     // EXISTING_CODE
@@ -87,46 +95,48 @@ inline CTrace::~CTrace(void)
 }
 
 //--------------------------------------------------------------------------
-inline void CTrace::Clear(void)
+inline void CAccountWatch::Clear(void)
 {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CTrace::Init(void)
+inline void CAccountWatch::Init(void)
 {
     CBaseNode::Init();
 
-//    action = ??; /* unknown type: CTraceAction */
-//    blockHash = EMPTY;
-    blockNumber = 0;
-//    result = ??; /* unknown type: CTraceResult */
-    subtraces = 0;
-//    traceAddress = ??; /* unknown type: SFAddressArray */
-//    transactionHash = EMPTY;
-    transactionPosition = 0;
-//    type = EMPTY;
+    index = 0;
+//    address = EMPTY;
+//    name = EMPTY;
+//    color = EMPTY;
+    firstBlock = 0;
+    disabled = 0;
+    inFlows = 0;
+    outFlows = 0;
+    corrections = 0;
+    actBal = 0;
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CTrace::Copy(const CTrace& tr)
+inline void CAccountWatch::Copy(const CAccountWatch& ac)
 {
     Clear();
-    CBaseNode::Copy(tr);
+    CBaseNode::Copy(ac);
 
-    action = tr.action;
-    blockHash = tr.blockHash;
-    blockNumber = tr.blockNumber;
-    result = tr.result;
-    subtraces = tr.subtraces;
-    traceAddress = tr.traceAddress;
-    transactionHash = tr.transactionHash;
-    transactionPosition = tr.transactionPosition;
-    type = tr.type;
+    index = ac.index;
+    address = ac.address;
+    name = ac.name;
+    color = ac.color;
+    firstBlock = ac.firstBlock;
+    disabled = ac.disabled;
+    inFlows = ac.inFlows;
+    outFlows = ac.outFlows;
+    corrections = ac.corrections;
+    actBal = ac.actBal;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -134,16 +144,16 @@ inline void CTrace::Copy(const CTrace& tr)
 }
 
 //--------------------------------------------------------------------------
-inline CTrace& CTrace::operator=(const CTrace& tr)
+inline CAccountWatch& CAccountWatch::operator=(const CAccountWatch& ac)
 {
-    Copy(tr);
+    Copy(ac);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
 //---------------------------------------------------------------------------
-inline SFString CTrace::getValueByName(const SFString& fieldName) const
+inline SFString CAccountWatch::getValueByName(const SFString& fieldName) const
 {
     // EXISTING_CODE
     // EXISTING_CODE
@@ -151,9 +161,9 @@ inline SFString CTrace::getValueByName(const SFString& fieldName) const
 }
 
 //---------------------------------------------------------------------------
-IMPLEMENT_ARCHIVE_ARRAY(CTraceArray);
-IMPLEMENT_ARCHIVE_ARRAY_C(CTraceArray);
-IMPLEMENT_ARCHIVE_LIST(CTraceList);
+IMPLEMENT_ARCHIVE_ARRAY(CAccountWatchArray);
+IMPLEMENT_ARCHIVE_ARRAY_C(CAccountWatchArray);
+IMPLEMENT_ARCHIVE_LIST(CAccountWatchList);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

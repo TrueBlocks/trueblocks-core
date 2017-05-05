@@ -49,6 +49,7 @@ extern bool     queryRawBlock           (SFString& block,     const SFString& nu
 extern bool     queryRawTransaction     (const SFHash& txHash, SFString& results);
 extern bool     queryRawReceipt         (const SFHash& txHash, SFString& results);
 extern bool     queryRawLogs            (SFUint32 fromBlock, SFUint32 toBlock, const SFAddress& addr, SFString& results);
+extern bool     queryRawTrace           (SFString& trace,     const SFString& hashIn);
 
 //-------------------------------------------------------------------------
 extern void     etherlib_init           (const SFString& client);
@@ -70,10 +71,10 @@ typedef bool (*MINIBLOCKVISITFUNC)(CMiniBlock& block, const CMiniTrans *trans, v
 typedef bool (*MINITRANSVISITFUNC)(CMiniTrans& trans, void *data);
 
 //-------------------------------------------------------------------------
-extern bool forEveryBlockOnDisc          (BLOCKVISITFUNC func, void *data, SFUint32 start=0, SFUint32 count=(SFUint32)-1);
-extern bool forEveryEmptyBlockOnDisc     (BLOCKVISITFUNC func, void *data, SFUint32 start=0, SFUint32 count=(SFUint32)-1);
-extern bool forEveryNonEmptyBlockOnDisc  (BLOCKVISITFUNC func, void *data, SFUint32 start=0, SFUint32 count=(SFUint32)-1);
-extern bool forEveryFullBlockIndex       (BLOCKVISITFUNC func, void *data, SFUint32 start=0, SFUint32 count=(SFUint32)-1);
+extern bool forEveryBlockOnDisc          (BLOCKVISITFUNC func, void *data, SFUint32 start=0, SFUint32 count=(SFUint32)-1, SFUint32 skip=1);
+extern bool forEveryEmptyBlockOnDisc     (BLOCKVISITFUNC func, void *data, SFUint32 start=0, SFUint32 count=(SFUint32)-1, SFUint32 skip=1);
+extern bool forEveryNonEmptyBlockOnDisc  (BLOCKVISITFUNC func, void *data, SFUint32 start=0, SFUint32 count=(SFUint32)-1, SFUint32 skip=1);
+extern bool forEveryFullBlockIndex       (BLOCKVISITFUNC func, void *data, SFUint32 start=0, SFUint32 count=(SFUint32)-1, SFUint32 skip=1);
 
 //-------------------------------------------------------------------------
 extern bool forEveryTransaction          (TRANSVISITFUNC func, void *data, SFUint32 start=0, SFUint32 count=(SFUint32)-1);

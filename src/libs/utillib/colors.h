@@ -69,32 +69,27 @@ inline SFString convertColor(const SFString& colorIn) {
     return "";
 }
 
-#define BARLEN 80
-inline void progressBar(int _barLen, int _part, int _whole, const SFString& _tim) {
-    double percent = _part / static_cast<double>(_whole);
-    SFUint32 p = (SFUint32)(_barLen*percent/.75);
+//-----------------------------------------------------------------------
+#define BARLEN 100
 
-    SFString sss(' ', MAX(0, _barLen - p));
+//-----------------------------------------------------------------------
+inline void progressBar(SFUint32 _part, SFUint32 _whole, const SFString& _tim="") {
 
-    cerr << cYellow << _part << cOff << " of " << cYellow << _whole << cOff;
-    cerr << " (" << cBlue << padLeft(fmtFloatp(100.*percent, 1), 5, ' ') << cOff << "%)";
-    cerr << " [" << SFString('x', p).Substitute("x", "░");
-    cerr << sss;
-    cerr << "] in ";
-    cerr << cGreen << _tim << cOff << " seconds.\r";
-    cerr.flush();
+    double percent = (_part / static_cast<double>(_whole));
+    SFUint32 len = (SFUint32)(BARLEN * percent);
+
+    cout << cYellow << _part << cOff << " of " << cYellow << _whole << cOff;
+    cout << " (" << cBlue << padLeft(fmtFloatp(100.*percent, 1), 5, ' ') << cOff << "%)";
+    cout << " [" << SFString('x', len).Substitute("x", "░");
+    cout << SFString(' ', MAX(0, BARLEN - len));
+    cout << "]";
+    if (!_tim.empty())
+        cout << " in " << cGreen << _tim << cOff << " seconds.";
+    cout << "\r";
+    cout.flush();
 }
-inline void progressBar(int _barLen, int _part, int _whole, int _tim) { progressBar(_barLen, _part, _whole, asString(_tim)); }
-/*
-// TODO: Do I really need this?
-#define BARLEN 80
-#define progressBar(_barLen,_part,_whole,_tim) \
-{ \
-	double percent = _part/(double)_whole; \
-	SFUint32 p = (SFUint32)(_barLen*percent); \
-	cerr << asYellow(_part) << " of " << asYellow(_whole) \
-	<< " (" << asBlueB(padLeft(fmtFloatp(100.*percent,1),5,' ')) << "%)" \
-	<< " [" << SFString('x',p).Substitute("x","░") << SFString(' ',_barLen-p) << "] in " << asGreen(_tim) << "seconds.\r"; \
-	cerr.flush(); \
+
+//-----------------------------------------------------------------------
+inline void progressBar(SFUint32 _part, SFUint32 _whole, int _tim=0) {
+    progressBar(_part, _whole, (_tim == 0 ? "" : asString(_tim)));
 }
-*/

@@ -1,0 +1,3 @@
+class:		CTraceAction
+fields:     string callType|address from|uint32 gas|string input|address to|uint256 value
+includes:	ethtypes.h|abilib.h

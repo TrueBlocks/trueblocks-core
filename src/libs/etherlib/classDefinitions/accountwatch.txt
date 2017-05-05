@@ -1,0 +1,4 @@
+class:		CAccountWatch
+fields:		uint32 index|address address|string name|string color|uint32 firstBlock|bool disabled|SFIntBN inFlows|SFIntBN outFlows|SFIntBN corrections|uint256 actBal
+includes:	ethtypes.h|abilib.h
+cIncs:		#include "etherlib.h"
