@@ -1,6 +1,7 @@
 # *.cpp
 # *.h
 # makefile
+tests
 
 # Mac junk
 *.xcodeproj
