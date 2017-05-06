@@ -80,9 +80,9 @@ void COptions::Init(void) {
 }
 
 const char *STR_README_HEADER =
-"The `getTrans` tool retrieves transactions from the running Ethereum node (using the `--fromNode` option) or from "
-"QuickBlocks (the default). You may provide a transaction `hash`, a `blockNumber.transactionID` pair, or a "
-"`blockHash.transactionID` pair (or any combination) to specify the transaction(s).\n"
+"The `getTrans` tool retrieves transactions from the running Ethereum node (using the `--fromNode` option) "
+"or from QuickBlocks (the default). You may provide a transaction `hash`, a `blockNumber.transactionID` "
+"pair, or a `blockHash.transactionID` pair (or any combination) to specify the transaction(s).\n"
 "\n"
 "Use the `--trace` option to display a trace of the transaction as well.\n";
 
@@ -92,10 +92,10 @@ COptions::COptions(void) {
     SFString url = "https://github.com/paritytech/parity/wiki/JSONRPC-eth-module";
     header = STR_README_HEADER;
     // footer = "";
-    seeAlso = "This command-line tool implements these RPC interfaces: "
+    seeAlso = "See Also: This command-line tool implements these RPC interfaces: "
         "[eth_getTransactionByHash](" + url + "#eth_gettransactionbyhash), "
         "[eth_getTransactionByBlockNumberAndIndex](" + url + "#eth_gettransactionbyblocknumberandindex), "
-        "[eth_getTransactionByBlockHashAndIndex](" + url + "#eth_gettransactionbyblockhashandindex).\n\n";
+        "[eth_getTransactionByBlockHashAndIndex](" + url + "#eth_gettransactionbyblockhashandindex).\n";
 }
 
 //--------------------------------------------------------------------------------

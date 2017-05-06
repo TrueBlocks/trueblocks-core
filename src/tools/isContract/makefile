@@ -57,4 +57,4 @@ cleanall:
 	@make clean
 
 clean:
-	-@$(RM) -f $(product) objs/* 2> /dev/null
+	-@$(RM) -f $(dest) $(product) objs/* 2> /dev/null

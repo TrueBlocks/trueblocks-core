@@ -1,5 +1,2 @@
-*.cpp
-*.h
-makefile
 *.txt
 tests
