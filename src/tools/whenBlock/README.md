@@ -6,7 +6,7 @@ In the first case, one simply supplies a block number and the date and time of t
 
 The `hour`/`minute`/`second` portions of the date are optional, and if omitted, default to zero in each case.
 
-#### Help Screen
+#### Usage
 
 `Usage:`    whenBlock [-l|-h] date/block  
 `Purpose:`  Finds the nearest block before the JSON-formatted date, or the date of the given block.
@@ -19,10 +19,10 @@ The `hour`/`minute`/`second` portions of the date are optional, and if omitted, 
 | -l | --list | list special blocks timestamps and dates |
 | -h | --help | display this help screen |
 
-	Special values: [first|latest|iceage|homestead|daofund|daohack|daofork|tangerine|spurious|stateclear]
+  Special values: [ first | latest | iceage | homestead | daofund | daohack | daofork | tangerine | spurious | stateclear ]
 
 ##### The --file option
 
-All `quickBlocks` command-line tools support the `--file:filename` option. Place valid commands, on separate lines, in a file and include the above option. In some cases, this option may significantly improve performance. Please a semi-colon at the start of a line to make it a comment.
+All `quickBlocks` command-line tools support the `--file:filename` option. Place valid commands, on separate lines, in a file and include the above option. In some cases, this option may significantly improve performance. Place a semi-colon at the start of a line to make it a comment.
 
 Powered by QuickBlocks.io

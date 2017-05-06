@@ -35,7 +35,7 @@ bool COptions::parseArguments(SFString& command) {
             addrs += arg + "|";
 
         } else {
-            if (toLong(arg)<1)
+            if (toLong(arg) < 1)
                 return usage(arg + " does not appear to be a valid parameter. Quitting...");
             blocks += arg + "|";
         }
@@ -71,13 +71,14 @@ const char *STR_README_HEAD =
 "addresses or multiple blocks on the line, but not both. `block`, if not specified, defaults to `latest`.\n"
 "\n"
 "`getBalance` retrieves the balance from the local Ethereum node (not QuickBlocks). Use the `--accounting` "
-"option of an account monitor to retrieve the balance from QuickBlocks (both balances should always agree, obviously).\n";
+"option of an account monitor to retrieve the balance from QuickBlocks.\n";
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
     Init();
     header = STR_README_HEAD;
     // footer = "";
+    // seeAlso = "";
 }
 
 //--------------------------------------------------------------------------------

@@ -5,6 +5,10 @@ Watch a video tutorial <a href="https://www.youtube.com/watch?v=ZZDV1yAgces">her
 
 Check out Great Hill Corporation on <a href="https://www.facebook.com/GreatHillCorporation/">Facebook</a> or <a href="https://twitter.com/ethslurp">Twitter</a>
 
+### Building from source
+
+Please see the <a href="https://github.com/Great-Hill-Corporation/ethslurp/blob/master/INSTALL.md">INSTALL.md</a> file for more information.
+
 ### ethslurp
 
 `Usage:`    ethslurp [-a|-b|-d|-m|-n|-r|-f|-i|-e|-o|-l|-c|-t|-v|-h] addr  
@@ -31,8 +35,10 @@ Check out Great Hill Corporation on <a href="https://www.facebook.com/GreatHillC
 | -v | --verbose | set verbose level. Follow with a number to set level (-v0 for silent) |
 | -h | --help | display this help screen |
 
-  Portions of this software are Powered by Etherscan.io APIs and QuickBlocks.io
+  Portions of this software are Powered by Etherscan.io APIs
 
-### Building from source
+##### The --file option
 
-Please see the <a href="https://github.com/Great-Hill-Corporation/ethslurp/blob/master/INSTALL.md">INSTALL.md</a> file for more information.
+All `quickBlocks` command-line tools support the `--file:filename` option. Place valid commands, on separate lines, in a file and include the above option. In some cases, this option may significantly improve performance. Please a semi-colon at the start of a line to make it a comment.
+
+Powered by QuickBlocks.io
