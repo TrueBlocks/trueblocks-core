@@ -1,0 +1,11 @@
+if [ ! -z $1 ]
+then
+	if [ ! -z $2 ] 
+	then
+		echo ""
+	else
+		open https://etherscan.io/address/$1
+	fi
+else
+	echo "please enter a thing"
+fi
