@@ -6,7 +6,7 @@ While primarily illustrative, these tools may be useful in other ways as well, f
 
 #### Applications
 
-+ [getBlock](getBlock) / [getTrans](getTrans) / [getReceipt](getReceipt) / [getLog](getLog) - These programs allows you to retrieve particular parts of the Ethereum blockchain. By default, each of these tools retrieves a cached version of the blockchain data from QuickBlocks, however, they may also be used to query the Ethereum node (i.e. parity) directly. We use these tools in various testing and scripting scenarios.
++ [getBlock](getBlock) / [getTrans](getTrans) / [getReceipt](getReceipt) / [getLogs](getLogs) - These programs allows you to retrieve particular parts of the Ethereum blockchain. By default, each of these tools retrieves a cached version of the blockchain data from QuickBlocks, however, they may also be used to query the Ethereum node (i.e. parity) directly. We use these tools in various testing and scripting scenarios.
 
 + [getBalance](getBalance) - Unlike the other `get` commands in this folder, `getBalance` operates only against the Ethereum node. The program retrieves balances from one or more addresses at a given block. We use this program in testing our [monitors](../monitors) and the ensure that our cacheing mechanisms work properly.
 
