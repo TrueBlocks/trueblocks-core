@@ -14,7 +14,7 @@ While primarily illustrative, these tools may be useful in other ways as well, f
 
 + [whenBlock](whenBlock) - This surprisingly handy tool allows you to enter either a block number and it returns the date of that block, or a date and it returns the block just prior to the date. It makes exploring and analyzing the blockchain much easier because you don't have to remember block numbers.
 
-+ [ethname](ethname) - This simple tool provides a rudimentary service attaching Ethereum address to names and visa versa. It may be used as a simple reminder of ethereum addresses vs. user-specified names.
++ [ethName](ethName) - This simple tool provides a rudimentary service attaching Ethereum address to names and visa versa. It may be used as a simple reminder of ethereum addresses vs. user-specified names.
 
 #### Scripts
 
