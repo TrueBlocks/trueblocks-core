@@ -1,7 +1,7 @@
 ## sha3
 
 
-#### Help Screen
+#### Usage
 
 `Usage:`    sha3 [-o|-t|-v|-h]  
 `Purpose:`  This is what the program does.
@@ -17,6 +17,6 @@
 
 ##### The --file option
 
-All `quickBlocks` command-line tools support the `--file:filename` option. Place valid commands, on separate lines, in a file and include the above option. In some cases, this option may significantly improve performance. Please a semi-colon at the start of a line to make it a comment.
+All `quickBlocks` command-line tools support the `--file:filename` option. Place valid commands, on separate lines, in a file and include the above option. In some cases, this option may significantly improve performance. Place a semi-colon at the start of a line to make it a comment.
 
 Powered by QuickBlocks.io

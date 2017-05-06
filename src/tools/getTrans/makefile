@@ -10,14 +10,14 @@ libs=$(libraries)/*.a /usr/lib/libcurl.dylib
 #libs=$(libraries)/*.a -lcurl
 
 #-------------------------------------------------
-exec=ethName
+exec=getTrans
 product=objs/$(exec)
 dest=$(bin)/$(exec)
 
 #-------------------------------------------------
 src= \
 options.cpp \
-ethName.cpp
+getTrans.cpp
 
 #-------------------------------------------------
 all:
@@ -57,4 +57,4 @@ cleanall:
 	@make clean
 
 clean:
-	-@$(RM) -f $(dest) $(product) objs/* 2> /dev/null
+	-@$(RM) -f $(product) objs/* 2> /dev/null

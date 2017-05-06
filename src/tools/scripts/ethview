@@ -1,1 +1,0 @@
-cat config.toml | grep address | sed 's/address_[01234]    = /ethscan 0x/' >/tmp/file ; chmod uog+x /tmp/file ; /tmp/file ; rm -f /tmp/file

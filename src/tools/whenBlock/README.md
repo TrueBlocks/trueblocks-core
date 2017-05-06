@@ -19,7 +19,7 @@ The `hour`/`minute`/`second` portions of the date are optional, and if omitted, 
 | -l | --list | list special blocks timestamps and dates |
 | -h | --help | display this help screen |
 
-  Special values: [ first | latest | iceage | homestead | daofund | daohack | daofork | tangerine | spurious | stateclear ]
+  Special values: [ first | iceage | homestead | daofund | daohack | daofork | tangerine | spurious | stateclear | latest ]
 
 ##### The --file option
 

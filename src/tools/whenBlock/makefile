@@ -10,14 +10,14 @@ libs=$(libraries)/*.a /usr/lib/libcurl.dylib
 #libs=$(libraries)/*.a -lcurl
 
 #-------------------------------------------------
-exec=ethName
+exec=whenBlock
 product=objs/$(exec)
 dest=$(bin)/$(exec)
 
 #-------------------------------------------------
 src= \
 options.cpp \
-ethName.cpp
+whenBlock.cpp
 
 #-------------------------------------------------
 all:
@@ -33,7 +33,11 @@ lint:
 
 test:
 	@make
-	@cd tests ; ./do_tests | tee results.txt
+	@cat tests/in.txt tests/out.txt >tests/results.txt
+	@echo "Testing" >>tests/results.txt
+	@whenBlock --file:tests/in.txt | tee x ; cat x >>tests/results.txt
+	@echo "--------------------------------" | tee x ; cat x >>tests/results.txt
+	@whenBlock --file:tests/out.txt | tee x ; cat x >>tests/results.txt ; rm -f x
 
 #-------------------------------------------------
 # probably don't have to change below this line
@@ -57,4 +61,4 @@ cleanall:
 	@make clean
 
 clean:
-	-@$(RM) -f $(dest) $(product) objs/* 2> /dev/null
+	-@$(RM) -f $(dest) objs/* 2> /dev/null

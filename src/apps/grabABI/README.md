@@ -1,7 +1,7 @@
 ## grabABI
 
 
-#### Help Screen
+#### Usage
 
 `Usage:`    grabABI [-c|-g|-e|-n|-o|-t|-v|-h] addr  
 `Purpose:`  Fetches the ABI for a smart contract. Optionally generates C++ source code representing that ABI.
@@ -22,6 +22,6 @@
 
 ##### The --file option
 
-All `quickBlocks` command-line tools support the `--file:filename` option. Place valid commands, on separate lines, in a file and include the above option. In some cases, this option may significantly improve performance. Please a semi-colon at the start of a line to make it a comment.
+All `quickBlocks` command-line tools support the `--file:filename` option. Place valid commands, on separate lines, in a file and include the above option. In some cases, this option may significantly improve performance. Place a semi-colon at the start of a line to make it a comment.
 
 Powered by QuickBlocks.io

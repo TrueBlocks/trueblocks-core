@@ -1,9 +1,9 @@
-## ethname
+## ethName
 
 
 #### Usage
 
-`Usage:`    ethname [-a|-c|-l|-m|-o|-w|-v|-h] term [name]  
+`Usage:`    ethName [-a|-c|-l|-m|-o|-w|-v|-h] term [name]  
 `Purpose:`  Find a name given an Ethereum address, or find an address given a name.
              
 `Where:`  

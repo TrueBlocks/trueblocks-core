@@ -1,5 +1,6 @@
 ## isContract
 
+This simple program may be used to query an Ethereum address to determine if it is a smart contract or simply a 'regular' account. It may also be used to retrieve the actual byte-code from an address (if present). Finally, it may be used to compare two Ethereum addresses to see if they hold the same smart contract code. You may specify multiple addresses on a line.
 
 #### Usage
 
