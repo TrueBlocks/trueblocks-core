@@ -1,25 +1,35 @@
 ## ethName
 
+`ethName` provides a very simple, poorly-done method by which to keep track of 'real life' names and their associated Ethereum addresses. While the tools needs a lot of work, it has come in handy as we've been writing **quickBlocks**. Eventually a feature such as this will be replaced with ENS (or an equivalent), but in the mean time, `ethname` works well to help you remember who is associated with which addresses.
+
+A very useful way to use of this tools is to feed its output into another command-line tool's input. For example, you could make a command such as:
+
+    ethname -a 'FredJones' | ethscan
+
+which would open the [etscan](http://etherscan.io) website with the address associated with Fred's address(es).
 
 #### Usage
 
-`Usage:`    ethName [-a|-c|-l|-m|-o|-w|-v|-h] term [name]  
+`Usage:`    ethName [-a|-c|-l|-m|-o|-s|-v|-h] term [name]  
 `Purpose:`  Find a name given an Ethereum address, or find an address given a name.
              
 `Where:`  
 
 | Option | Full Command | Description |
 | -------: | :------- | :------- |
-|  | term [name] | search for 'term' in either name or address. If 'name' is present, term 
-			     is assumed to be an address. In this case, both must match |
-| -a | --all | search 'source' field as well name and address |
+|  | term [name] | search terms |
+| -a | --addrOnly | export only the associated address to be used as input to further commands |
 | -c | --count | print only the count of the number of matches |
-| -l | --list | list all names |
+| -l | --list | list all names in the database |
 | -m | --matchCase | matches must agree in case (the default is to ignore case) |
 | -o | --open | open the name database for editing |
-| -w | --write | write the name/address pair to database. Will prompt for an optional source |
+| -s | --source | search 'source' field as well name and address (the default) |
 | -v | --verbose | set verbose level. Follow with a number to set level (-v0 for silent) |
 | -h | --help | display this help screen |
+
+#### Notes
+
+With one search term, search in both `name` and `address` fields. With two terms, the first must match the `address` field, while the second must match the `name` field. When there are two search terms, both must match.
 
 ##### The --file option
 

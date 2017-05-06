@@ -1,0 +1,1 @@
+getBlock latest "$@" 2>&1 | sed 's/getBlock/latestBlock/'

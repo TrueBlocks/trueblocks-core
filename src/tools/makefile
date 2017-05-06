@@ -7,8 +7,8 @@ all:
 #	@cd getReceipt ; make
 	@cd getTrans ; make
 	@cd isContract ; make
-	@cd scripts ; make app
 	@cd whenBlock ; make app
+	@cd scripts ; make app
 
 cleanall:
 	@cd ../libs ; make cleanall
@@ -48,11 +48,11 @@ readmes:
 	@cd whenBlock ; whenBlock -th >README.md
 
 lint:
-	@cd ethName ; make lint
-	@cd getBalance ; make lint
-	@cd getBlock ; make lint
-	@cd getLogs ; make lint
-	@cd getReceipt ; make lint
-	@cd getTrans ; make lint
-	@cd isContract ; make lint
-	@cd whenBlock ; make lint
+	@cd ethName ; make lint 2>&1 | tee ../lintReport.txt
+	@cd getBalance ; make lint 2>&1 | tee -a ../lintReport.txt
+	@cd getBlock ; make lint 2>&1 | tee -a ../lintReport.txt
+	@cd getLogs ; make lint 2>&1 | tee -a ../lintReport.txt
+	@cd getReceipt ; make lint 2>&1 | tee -a ../lintReport.txt
+	@cd getTrans ; make lint 2>&1 | tee -a ../lintReport.txt
+	@cd isContract ; make lint 2>&1 | tee -a ../lintReport.txt
+	@cd whenBlock ; make lint 2>&1 | tee -a ../lintReport.txt

@@ -10,14 +10,14 @@ libs=$(libraries)/*.a /usr/lib/libcurl.dylib
 #libs=$(libraries)/*.a -lcurl
 
 #-------------------------------------------------
-exec=whenBlock
+exec=getLogs
 product=objs/$(exec)
 dest=$(bin)/$(exec)
 
 #-------------------------------------------------
 src= \
 options.cpp \
-whenBlock.cpp
+getLogs.cpp
 
 #-------------------------------------------------
 all:
@@ -33,11 +33,7 @@ lint:
 
 test:
 	@make
-	@cat tests/in.txt tests/out.txt >tests/results.txt
-	@echo "Testing" >>tests/results.txt
-	@whenBlock --file:tests/in.txt | tee x ; cat x >>tests/results.txt
-	@echo "--------------------------------" | tee x ; cat x >>tests/results.txt
-	@whenBlock --file:tests/out.txt | tee x ; cat x >>tests/results.txt ; rm -f x
+	@echo "No tests"
 
 #-------------------------------------------------
 # probably don't have to change below this line
