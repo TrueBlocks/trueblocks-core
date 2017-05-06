@@ -20,7 +20,7 @@ While primarily illustrative, these tools may be useful in other ways as well, f
 
 + [scripts](scripts) - A collection of simple bash shell scripts that make working with the blockchain simpler.
 
-    - **4byte** - This script querys the [4byte directory](http://4byte.io) looking for matching function and/or event signatures given a function or event name, or visa-versa.
+    - **4byte** - This script querys the [4byte directory](https://www.4byte.directory/) looking for matching function and/or event signatures given a function or event name, or visa-versa.
 
     - **ethgoog** - This script searches google for a given Ethereum address while removing any search engine results matching well-known blockchain scrapers. This makes it easier to find references to an addresses if one it trying to attach that addresses to a human name.
 
