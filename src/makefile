@@ -1,6 +1,6 @@
 all:
 #	@cd libs ; make ; echo
-#	@cd apps ; make ; echo
+	@cd apps ; make ; echo
 #	@cd monitors ; make ; echo
 	@cd tools ; make ; echo
 #	@cd other/04_inerror ; make app ; echo
@@ -16,7 +16,7 @@ cleanall:
 
 clean:
 #	@cd libs ; make clean
-#	@cd apps ; make clean
+	@cd apps ; make clean
 #	@cd monitors ; make cleanall
 	@cd tools ; make clean
 #	@cd other/04_inerror ; make clean
