@@ -12,8 +12,10 @@ The `apps` folder contains the primary applications built on the QuickBlocks lib
 
 5. [ethslurp](ethslurp) - This program pulls data from the http://etherscan.io APIs. It can be used in testing to verify that the results from QuickBlocks and the results from EtherScan are consistent.
 
-6. [getBlock](getBlock) / [getTrans](getTrans) / [getReceipt](getReceipt) / [getLog](getLog) / [getBalance](getBalance) - Each of these programs retrieves a single (or series of) blocks / transactions / receipts / logs / codes / balances from the specified item. These tools may be useful in various shell scripting and testing scenarios.
-
-7. [isContract](isContract) - This app returns `true` or `false` depending if the address is a smart contract or not. It can also pull the actual byte code of the contract, if present.
-
 Each of these programs is explained further in its own individual README.md files.
+
+1. [grabABI](grabABI) - This is the basis of the `chafra` application. Given an Etheruem address, this tool first grabs the ABI from where ever it can find it (http://etherscan.io, ENS, etc.). It then parses the ABI and writes all the C++ necessary to build an Ethereum address monitor. `chafra` uses this tool extensively.
+
+2. [makeClass](makeClass) - This tool is used by `grabABI` to write the actual C++ code generated during the `chafra` process. Many of the source files found in `etherlib` are also generated automatically using this tool.
+
+3. [cacheMan](cacheMan) - This tool allows one to explore the a monitor's binary cache data file. It preforms various checks on the data. The tool provides options for truncating the cache and/or merging two caches into one which may be useful in certain circumstances.

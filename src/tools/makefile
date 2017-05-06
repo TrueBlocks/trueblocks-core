@@ -1,6 +1,6 @@
 all:
 	@cd ../libs ; make
-	@cd ethname ; make app
+	@cd ethName ; make app
 	@cd getBalance ; make
 	@cd getBlock ; make
 	@cd getLogs ; make
@@ -15,7 +15,7 @@ cleanall:
 	@make clean
 
 clean:
-	@cd ethname ; make clean
+	@cd ethName ; make clean
 	@cd getBalance ; make clean
 	@cd getBlock ; make clean
 	@cd getLogs ; make clean
@@ -25,7 +25,7 @@ clean:
 	@cd whenBlock ; make clean
 
 test:
-	@cd ethname; make test
+	@cd ethName; make test
 	@cd getBalance ; make test
 	@cd getBlock ; make test
 	@cd getLogs ; make test
@@ -38,7 +38,7 @@ testall:
 	@make test
 
 readmes:
-	@cd ethname ; ethname -th >README.md
+	@cd ethName ; ethName -th >README.md
 	@cd getBalance ; getBalance -th >README.md
 	@cd getBlock ; getBlock -th >README.md
 	@cd getLogs ; getLogs -th >README.md
@@ -48,7 +48,7 @@ readmes:
 	@cd whenBlock ; whenBlock -th >README.md
 
 lint:
-	@cd ethname ; make lint
+	@cd ethName ; make lint
 	@cd getBalance ; make lint
 	@cd getBlock ; make lint
 	@cd getLogs ; make lint

@@ -10,14 +10,14 @@ libs=$(libraries)/*.a /usr/lib/libcurl.dylib
 #libs=$(libraries)/*.a -lcurl
 
 #-------------------------------------------------
-exec=ethName
+exec=isContract
 product=objs/$(exec)
 dest=$(bin)/$(exec)
 
 #-------------------------------------------------
 src= \
 options.cpp \
-ethName.cpp
+isContract.cpp
 
 #-------------------------------------------------
 all:
@@ -33,7 +33,7 @@ lint:
 
 test:
 	@make
-	@cd tests ; ./do_tests | tee results.txt
+	@cd tests ; ./do_tests 2>&1 | tee results.txt
 
 #-------------------------------------------------
 # probably don't have to change below this line
@@ -57,4 +57,4 @@ cleanall:
 	@make clean
 
 clean:
-	-@$(RM) -f $(dest) $(product) objs/* 2> /dev/null
+	-@$(RM) -f $(product) objs/* 2> /dev/null

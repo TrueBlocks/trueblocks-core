@@ -1,5 +1,0 @@
-#!/bin/bash
-
-blockScrape -fl
-miniBlocks freshen
-time make freshen
