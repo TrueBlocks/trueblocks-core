@@ -40,6 +40,8 @@ inline SFString getSha3                 (const SFString& hexIn) { SFString ret; 
 //-------------------------------------------------------------------------
 extern bool     getBlock                (CBlock& block,       SFUint32 num);
 extern bool     getTransaction          (CTransaction& trans, const SFString& hash);
+extern bool     getTransaction          (CTransaction& trans, const SFString& hash, SFUint32 transID);
+extern bool     getTransaction          (CTransaction& trans, blknum_t blockNum, SFUint32 transID);
 extern bool     getReceipt              (CReceipt& receipt,   const SFString& hash);
 extern bool     getLogEntry             (CLogEntry& log,      const SFString& hash);
 

@@ -12,6 +12,7 @@ class COptionsBase
 public:
 	static SFString header;
     static SFString footer;
+    static SFString seeAlso;
 	static bool useVerbose;
 	static bool useTesting;
 

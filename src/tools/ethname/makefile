@@ -33,7 +33,7 @@ lint:
 
 test:
 	@make
-	@./do_tests
+	@cd tests ; ./do_tests | tee results.txt
 
 #-------------------------------------------------
 # probably don't have to change below this line
