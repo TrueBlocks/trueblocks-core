@@ -1,0 +1,2 @@
+curl "https://www.4byte.directory/api/v1/signatures/?format=json&hex_signature=$1" | python -m json.tool
+curl "https://www.4byte.directory/api/v1/signatures/?format=json&text_signature=$1" | python -m json.tool
