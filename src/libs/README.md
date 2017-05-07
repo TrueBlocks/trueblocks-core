@@ -1,4 +1,10 @@
-# QuickBlocks Libraries
+# Libs
+
+**Note:**
+
+Currently we provide only the header files and static .a libraries. As these libraries are better documented and more well-tested, we will release this code further.
+
+<hr>
 
 The core of QuickBlocks is the following libraries:
 
