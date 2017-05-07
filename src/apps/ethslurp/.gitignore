@@ -1,22 +1,4 @@
-# *.cpp
-# *.h
-# makefile
 tests
-
-# Mac junk
-*.xcodeproj
-.DS_Store
-ethslurp
-api_key
-TODO.txt
-abis
-theData/*
+theData
 docs
-docs/*
-data
-data/*
-src
-src/*
-src/*/*
 email
-email/*
