@@ -8,7 +8,7 @@ all:
 	@cd getTrans ; make
 	@cd isContract ; make
 	@cd whenBlock ; make app
-	@cd scripts ; make app
+	@cd scripts ; make
 
 cleanall:
 	@cd ../libs ; make cleanall
