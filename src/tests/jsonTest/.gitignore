@@ -1,5 +1,3 @@
 *.cpp
 *.h
 makefile
-tests
-docs
