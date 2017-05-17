@@ -1,6 +1,6 @@
 # quickBlocks
 
-QuickBlocks is a collection of software libraries, applications, and tools that allow you to access Ethereum virtual machine (EVM) based blockchain data (a) more quickly, (b) with higher information content, and (c) in an fully decentralized way, (d) in a fully automated way, (e) in a fully zero maintenance way.
+QuickBlocks is a collection of software [libraries](src/libs), [applications](src/apps), and [tools](src/tools) that allow you to access the Ethereum virtual machine (EVM) blockchain data (a) more quickly, (b) with higher information content, (c) in an fully decentralized way, (d) in a fully automated way, and (e) in a most maintenance free way.
 
 That's a mouthful. We'll break it down.
 
@@ -13,7 +13,7 @@ We interact with the Ethereum node via the RPC interface to accumulate and cache
 3. identify potentially-internal transactions
 4. store the blocks optimized for quick, later retrieval
 
-## More Informationally Rich
+## Higher Information Content
 
 If given an ABI definition for a particular smart contract, QuickBlocks is able to decode all of the transactional data including generated event logs. Instead of dealing with 'hashes' and 'merkel roots' and 'sha3', the developer/user deals with the data in the very familiar language: that of their own smart contracts.
 
@@ -29,7 +29,7 @@ Unlike any other block chain scrapers you may find (such as http://etherscan.io)
 
 The code necessary to provide the above mentioned richer data (i.e. data in the language of your own smart contract) is generated automatically (programmatically) from the ABI. A fully functional `c-callable static library` is created. At the same time, due to the fact that the generated code is C++, you can program it to do anything you like. See some examples (TODO).
 
-## Fully Maintenance Free
+## Maintenance Free
 
 Every smart contract, once deployed, is immutable. That means that the automatically generated C++ code is also immutable (if you want it to). You could literally automatically generate a data delivery layer for your smart contract that requires no further interaction. It can simply run forever, standing off-chain, but beside your smart contract, and deliver all your contact's data at high speed.
 
