@@ -1,0 +1,38 @@
+tests/head "Default with no params does refresh"
+bin/blockScrape -t
+
+echo ""
+tests/head "Should fail for 'bad' parameter"
+bin/blockScrape bad -t
+
+echo ""
+tests/head "Should fail for bad parameter"
+bin/blockScrape -s=bad -t
+
+echo ""
+tests/head "Should fail for missing end parameter"
+bin/blockScrape -mode=scrape -s=10 -t
+
+echo ""
+tests/head "Should fail for bad end parameter"
+bin/blockScrape -s=10 -e=bad -t
+
+echo ""
+tests/head "Should fail for extranious params (in freshen mode, no start or end is needed)"
+bin/blockScrape -s=10 -e=12 -t
+
+echo ""
+tests/head "Should freshen from last block to most recent"
+bin/blockScrape -mode=freshen -t
+
+echo ""
+tests/head "Should fail because scrape mode needs both start and end"
+bin/blockScrape scrape -t
+
+echo ""
+tests/head "Should fail because missing end"
+bin/blockScrape scrape -start=10 -t
+
+echo ""
+tests/head "Should scrape from start to end"
+bin/blockScrape scrape -start=10 -end=12 -t

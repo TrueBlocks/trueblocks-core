@@ -1,0 +1,117 @@
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Default with no params does refresh
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Should fail for 'bad' parameter
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  Invalid option: bad
+
+  Usage:   blockScrape [-m|-s|-e|-t|-v|-h]
+  Purpose: Retrieve Ethereum block data using RPC by spinning backward from 'end' to 'start' block depending on mode.
+  Where:
+	-m  (or -mode=m)     'freshen' (default) grabs latest block to most recent visited block, 'scrape' grabs [start,end)
+	-s  (or -start=n)    start block, required if mode=scrape, ignored otherwise
+	-e  (or -end=n)      end block, required if mode=scrape, ignored otherwise
+	-t  (or -test)       generate intermediary files but do not execute the commands
+	-v  (or -verbose)    set verbose level. Follow with a number to set level (-v0 for silent)
+	-h  (or -help)       display this help screen
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Should fail for bad parameter
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  start value must be a number
+
+  Usage:   blockScrape [-m|-s|-e|-t|-v|-h]
+  Purpose: Retrieve Ethereum block data using RPC by spinning backward from 'end' to 'start' block depending on mode.
+  Where:
+	-m  (or -mode=m)     'freshen' (default) grabs latest block to most recent visited block, 'scrape' grabs [start,end)
+	-s  (or -start=n)    start block, required if mode=scrape, ignored otherwise
+	-e  (or -end=n)      end block, required if mode=scrape, ignored otherwise
+	-t  (or -test)       generate intermediary files but do not execute the commands
+	-v  (or -verbose)    set verbose level. Follow with a number to set level (-v0 for silent)
+	-h  (or -help)       display this help screen
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Should fail for missing end parameter
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  If mode is 'scrape', both start and end values must be set.
+
+  Usage:   blockScrape [-m|-s|-e|-t|-v|-h]
+  Purpose: Retrieve Ethereum block data using RPC by spinning backward from 'end' to 'start' block depending on mode.
+  Where:
+	-m  (or -mode=m)     'freshen' (default) grabs latest block to most recent visited block, 'scrape' grabs [start,end)
+	-s  (or -start=n)    start block, required if mode=scrape, ignored otherwise
+	-e  (or -end=n)      end block, required if mode=scrape, ignored otherwise
+	-t  (or -test)       generate intermediary files but do not execute the commands
+	-v  (or -verbose)    set verbose level. Follow with a number to set level (-v0 for silent)
+	-h  (or -help)       display this help screen
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Should fail for bad end parameter
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  end value must be a number
+
+  Usage:   blockScrape [-m|-s|-e|-t|-v|-h]
+  Purpose: Retrieve Ethereum block data using RPC by spinning backward from 'end' to 'start' block depending on mode.
+  Where:
+	-m  (or -mode=m)     'freshen' (default) grabs latest block to most recent visited block, 'scrape' grabs [start,end)
+	-s  (or -start=n)    start block, required if mode=scrape, ignored otherwise
+	-e  (or -end=n)      end block, required if mode=scrape, ignored otherwise
+	-t  (or -test)       generate intermediary files but do not execute the commands
+	-v  (or -verbose)    set verbose level. Follow with a number to set level (-v0 for silent)
+	-h  (or -help)       display this help screen
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Should fail for extranious params (in freshen mode, no start or end is needed)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Should freshen from last block to most recent
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Should fail because scrape mode needs both start and end
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  If mode is 'scrape', both start and end values must be set.
+
+  Usage:   blockScrape [-m|-s|-e|-t|-v|-h]
+  Purpose: Retrieve Ethereum block data using RPC by spinning backward from 'end' to 'start' block depending on mode.
+  Where:
+	-m  (or -mode=m)     'freshen' (default) grabs latest block to most recent visited block, 'scrape' grabs [start,end)
+	-s  (or -start=n)    start block, required if mode=scrape, ignored otherwise
+	-e  (or -end=n)      end block, required if mode=scrape, ignored otherwise
+	-t  (or -test)       generate intermediary files but do not execute the commands
+	-v  (or -verbose)    set verbose level. Follow with a number to set level (-v0 for silent)
+	-h  (or -help)       display this help screen
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Should fail because missing end
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  If mode is 'scrape', both start and end values must be set.
+
+  Usage:   blockScrape [-m|-s|-e|-t|-v|-h]
+  Purpose: Retrieve Ethereum block data using RPC by spinning backward from 'end' to 'start' block depending on mode.
+  Where:
+	-m  (or -mode=m)     'freshen' (default) grabs latest block to most recent visited block, 'scrape' grabs [start,end)
+	-s  (or -start=n)    start block, required if mode=scrape, ignored otherwise
+	-e  (or -end=n)      end block, required if mode=scrape, ignored otherwise
+	-t  (or -test)       generate intermediary files but do not execute the commands
+	-v  (or -verbose)    set verbose level. Follow with a number to set level (-v0 for silent)
+	-h  (or -help)       display this help screen
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Should scrape from start to end
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
