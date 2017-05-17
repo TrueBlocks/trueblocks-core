@@ -6,6 +6,8 @@
  *
  * The LICENSE at the root of this repo details your rights (if any)
  *------------------------------------------------------------------------*/
+#include "utillib.h"
+
 class COptions : public COptionsBase {
 public:
     SFString addr;
@@ -16,6 +18,7 @@ public:
     bool matchCase;
     bool open;
     bool list;
+    bool addrOnly;
 
     COptions(void);
     ~COptions(void) {}
@@ -23,5 +26,3 @@ public:
     bool parseArguments(SFString& command);
     void Init(void);
 };
-
-#define DATA_FILE getHomeFolder()+".ethslurp/configs/names.conf"

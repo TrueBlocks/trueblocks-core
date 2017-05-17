@@ -16,6 +16,7 @@ dest=$(bin)/$(exec)
 
 #-------------------------------------------------
 src= \
+accountname.cpp \
 options.cpp \
 ethName.cpp
 

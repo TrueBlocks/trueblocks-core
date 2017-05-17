@@ -7,15 +7,16 @@
  *------------------------------------------------------------------------*/
 #include "utillib.h"
 #include "options.h"
+#include "accountname.h"
 
 //---------------------------------------------------------------------------------------------------
 CParams params[] = {
     CParams("~term [name]", "search terms"),
     CParams("-addrOnly",    "export only the associated address to be used as input to further commands"),
     CParams("-count",       "print only the count of the number of matches"),
+    CParams("-edit",        "edit the name database"),
     CParams("-list",        "list all names in the database"),
     CParams("-matchCase",   "matches must agree in case (the default is to ignore case)"),
-    CParams("-open",        "open the name database for editing"),
     CParams("-source",      "search 'source' field as well name and address (the default)"),
     CParams("",             "Find a name given an Ethereum address, or find an address given a name.\n"),
 };
@@ -33,15 +34,18 @@ bool COptions::parseArguments(SFString& command) {
         } else if (arg == "-c" || arg == "--count") {
             count = true;
 
+        } else if (arg == "-a" || arg == "--addrOnly") {
+            addrOnly = true;
+
         } else if (arg == "-l" || arg == "--list") {
             list = true;
 
         } else if (arg == "-m" || arg == "--matchCase") {
             matchCase = true;
 
-        } else if (arg == "-o" || arg == "--open") {
+        } else if (arg == "-e" || arg == "--edit") {
             // open command stuff
-            system("nano -I " + DATA_FILE);
+            system("nano -I " + configPath("configs/names.conf"));
             exit(0);
 
         } else if (arg.startsWith('-')) {
@@ -65,16 +69,19 @@ bool COptions::parseArguments(SFString& command) {
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
+
+    CAccountName::registerClass();
     paramsPtr = params;
     nParamsRef = nParams;
 
     outScreen.setOutput(stdout);  // so we know where it is at the start of each run
-    addr = EMPTY;
-    name = EMPTY;
-    source = EMPTY;
+    // addr = "";
+    // name = "";
+    // source = "";
     all = false;
     matchCase = false;
     list = false;
+    addrOnly = false;
 }
 
 //---------------------------------------------------------------------------------------------------
