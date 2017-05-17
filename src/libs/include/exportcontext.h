@@ -10,104 +10,131 @@
 #include "sfstring.h"
 #include "sftime.h"
 
-class CExportContext
-{
-public:
-	uint32_t nTabs;
-	SFString fmt;
-	char     tCh;
+namespace qblocks {
 
-	         CExportContext(void);
-	virtual ~CExportContext(void) { }
+    //----------------------------------------------------------------------------
+    class CExportOptions
+    {
+    public:
+        uint32_t lev, spcs;
+        bool noFrst;
+        char tab, nl;
+        bool quoteNums;
+        bool hexNums;
+        bool hashesOnly;
+        bool colored;
+        CExportOptions(void)
+        {
+            noFrst = false;
+            lev = 0; spcs = 2;
+            tab = ' '; nl = '\n';
+            quoteNums = false;
+            hexNums = false;
+            hashesOnly = false;
+            colored = false;
+        }
+    };
+    extern CExportOptions& expContext(void);
+    extern void incIndent(void);
+    extern void decIndent(void);
+    extern SFString indent(void);
 
-	virtual CExportContext& operator<<(bool b);
-	virtual CExportContext& operator<<(char c);
-	virtual CExportContext& operator<<(long dw);
-	virtual CExportContext& operator<<(unsigned int ui);
-	virtual CExportContext& operator<<(unsigned long ui);
-	virtual CExportContext& operator<<(unsigned long long ui);
-	virtual CExportContext& operator<<(int i);
-	virtual CExportContext& operator<<(float f);
-	virtual CExportContext& operator<<(double f);
-	virtual CExportContext& operator<<(const char *str);
-	virtual CExportContext& operator<<(const SFString& str);
-	virtual CExportContext& operator<<(const SFTime& tm);
+    class CExportContext
+    {
+    public:
+        uint32_t nTabs;
+        SFString fmt;
+        char     tCh;
 
-	virtual SFString tabs      (uint32_t add=0) { return SFString(tCh, nTabs+add); }
-	virtual SFString inc       (void)          { SFString ret = SFString(tCh, nTabs); nTabs++; return ret; }
-	virtual SFString dec       (void)          { nTabs--;  return SFString(tCh, nTabs); }
+        CExportContext(void);
+        virtual ~CExportContext(void) { }
 
-	virtual void     setOutput (void *output)        = 0;
-	virtual void*    getOutput (void) const          = 0;
-	virtual void     Output    (const SFString& str) = 0;
-	virtual void     Flush     (void)                = 0;
-};
+        virtual CExportContext& operator<<(bool b);
+        virtual CExportContext& operator<<(char c);
+        virtual CExportContext& operator<<(unsigned int ui);
+        virtual CExportContext& operator<<(int64_t dw);
+        virtual CExportContext& operator<<(uint64_t ui);
+        virtual CExportContext& operator<<(int i);
+        virtual CExportContext& operator<<(float f);
+        virtual CExportContext& operator<<(double f);
+        virtual CExportContext& operator<<(const char *str);
+        virtual CExportContext& operator<<(const SFString& str);
+        virtual CExportContext& operator<<(const SFTime& tm);
 
-// Handy for debugging
-class CFileExportContext : public CExportContext
-{
-public:
-	FILE *m_output;
+        virtual SFString tabs      (uint32_t add=0) { return SFString(tCh, nTabs+add); }
+        virtual SFString inc       (void)          { SFString ret = SFString(tCh, nTabs); nTabs++; return ret; }
+        virtual SFString dec       (void)          { nTabs--;  return SFString(tCh, nTabs); }
 
-	CFileExportContext(void *output=NULL)
-		{
-			m_output = ((output == NULL) ? stdout : (FILE*)output);
-		}
+        virtual void     setOutput (void *output)        = 0;
+        virtual void*    getOutput (void) const          = 0;
+        virtual void     Output    (const SFString& str) = 0;
+        virtual void     Flush     (void)                = 0;
+    };
 
-	CFileExportContext(const SFString& filename, const SFString& mode)
-		{
-			m_output = fopen((const char *)filename, mode);
-			if (!m_output)
-				m_output = stdout;
-		}
+    // Handy for debugging
+    class CFileExportContext : public CExportContext
+    {
+    public:
+        FILE *m_output;
 
-	~CFileExportContext(void)
-		{
-			Close();
-		}
+        CFileExportContext(void *output=NULL)
+        {
+            m_output = ((output == NULL) ? stdout : (FILE*)output);
+        }
 
-	void  setOutput (void *output);
-	void *getOutput (void) const { return m_output; };
-	void  Output    (const SFString& str);
-	void  Flush     (void)
-		{
-			ASSERT(m_output)
-			fflush(m_output);
-		}
-	void Close(void)
-		{
-			Flush();
-			if (m_output != stdout && m_output != stderr)
-				fclose(m_output);
-			m_output = stdout;
-		}
-};
+        CFileExportContext(const SFString& filename, const SFString& mode)
+        {
+            m_output = fopen((const char *)filename, mode);
+            if (!m_output)
+                m_output = stdout;
+        }
 
-class CErrorExportContext : public CFileExportContext
-{
-public:
-	CErrorExportContext(void) : CFileExportContext(stderr) {}
-};
+        ~CFileExportContext(void)
+        {
+            Close();
+        }
 
-// Handy for generating HTML into strings
-class CStringExportContext : public CExportContext
-{
-public:
-	SFString str;
+        void  setOutput (void *output);
+        void *getOutput (void) const { return m_output; };
+        void  Output    (const SFString& str);
+        void  Flush     (void)
+        {
+            ASSERT(m_output)
+            fflush(m_output);
+        }
+        void Close(void)
+        {
+            Flush();
+            if (m_output != stdout && m_output != stderr)
+                fclose(m_output);
+            m_output = stdout;
+        }
+    };
 
-	CStringExportContext(void) {}
+    class CErrorExportContext : public CFileExportContext
+    {
+    public:
+        CErrorExportContext(void) : CFileExportContext(stderr) {}
+    };
 
-	void  setOutput (void *output);
-	void* getOutput (void) const { return NULL; };
-	void  Output    (const SFString& s);
-	void  Flush     (void) { } // do nothing
+    // Handy for generating code into strings
+    class CStringExportContext : public CExportContext
+    {
+    public:
+        SFString str;
 
-	operator SFString(void) const;
-};
-
-inline CStringExportContext::operator SFString(void) const
-{
-   return str;
+        CStringExportContext(void) {}
+        
+        void  setOutput (void *output);
+        void* getOutput (void) const { return NULL; };
+        void  Output    (const SFString& s);
+        void  Flush     (void) { } // do nothing
+        
+        operator SFString(void) const;
+    };
+    
+    inline CStringExportContext::operator SFString(void) const
+    {
+        return str;
+    }
 }
-
-#define Fmt(a) (SFString("`")+SFString(a))

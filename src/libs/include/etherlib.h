@@ -26,3 +26,5 @@
 #include "miniblock.h"
 #include "node.h"
 #include "accountwatch.h"
+
+using namespace qblocks;

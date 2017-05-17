@@ -8,132 +8,39 @@
  *------------------------------------------------------------------------*/
 
 #include <sys/timeb.h>
+#include <cstdint>
 
-//----------------------------------------------------------------------
-class CPerformanceClock
-{
-protected:
-	long m_Seconds;
-	long m_uSeconds;
+namespace qblocks {
 
-public:
-	CPerformanceClock(void)
-		{
-			m_Seconds  = 0;
-			m_uSeconds = 0;
-		}
+    //----------------------------------------------------------------------
+    class CPerformanceClock {
+    protected:
+        int64_t m_Seconds;
+        int64_t m_uSeconds;
 
-	CPerformanceClock(const CPerformanceClock& t)
-		{
-			m_Seconds  = t.m_Seconds;
-			m_uSeconds = t.m_uSeconds;
-		}
+    public:
+        CPerformanceClock(void);
+        CPerformanceClock(const CPerformanceClock& t);
+        CPerformanceClock(int64_t secs, int64_t usecs);
 
-	CPerformanceClock(long secs, long usecs)
-		{
-			m_Seconds  = secs;
-			m_uSeconds = usecs;
-		}
+        CPerformanceClock& operator=(const CPerformanceClock& t);
+        CPerformanceClock& operator=(double t);
 
-	CPerformanceClock& operator=(const CPerformanceClock& t)
-		{
-			m_Seconds  = t.m_Seconds;
-			m_uSeconds = t.m_uSeconds;
-			return *this;
-		}
+        operator double(void) const;  // NOLINT
+        bool operator>(const CPerformanceClock& q) const;
+        bool operator<(const CPerformanceClock& q) const;
+        bool operator>=(const CPerformanceClock& q) const;
+        bool operator<=(const CPerformanceClock& q) const;
+        bool operator==(const CPerformanceClock& q) const;
+        bool operator!=(const CPerformanceClock& q) const;
 
-	CPerformanceClock& operator=(double t)
-		{
-			m_Seconds  = (long)t; // truncate
-			m_uSeconds = (long)((t - m_Seconds) / 1000000.0);
-			return *this;
-		}
+        static CPerformanceClock Now(void);
+        friend CPerformanceClock operator+(const CPerformanceClock& t1, const CPerformanceClock& t2);
+        friend CPerformanceClock operator-(const CPerformanceClock& t1, const CPerformanceClock& t2);
+    };
 
-	friend CPerformanceClock operator+(const CPerformanceClock& t1, const CPerformanceClock& t2)
-	{
-		CPerformanceClock t;
-		t.m_uSeconds = t1.m_uSeconds + t2.m_uSeconds;
+#define qbNow CPerformanceClock::Now
+#define START_TIMER() double timerStart = qbNow();
+#define STOP_TIMER() double timerStop = qbNow(); double timeSpent = timerStop - timerStart;
 
-		if(t.m_uSeconds >= 1000000)
-		{
-			t.m_uSeconds -= 1000000;
-			t.m_Seconds = t1.m_Seconds + t2.m_Seconds + 1;
-		} else
-		{
-			t.m_Seconds = t1.m_Seconds + t2.m_Seconds;
-			if((t.m_Seconds >= 1) && ((t.m_uSeconds < 0)))
-			{
-				t.m_Seconds--;
-				t.m_uSeconds += 1000000;
-			}
-		}
-		return t;
-	}
-
-	friend CPerformanceClock operator-(const CPerformanceClock& t1, const CPerformanceClock& t2)
-	{
-		CPerformanceClock t;
-		t.m_uSeconds = t1.m_uSeconds - t2.m_uSeconds;
-
-		if(t.m_uSeconds < 0)
-		{
-			t.m_uSeconds += 1000000;
-			t.m_Seconds = t1.m_Seconds - t2.m_Seconds - 1;
-		} else
-		{
-			 t.m_Seconds = t1.m_Seconds - t2.m_Seconds;
-		}
-		return t;
-	}
-
-	operator double(void) const
-	{
-		return ((double)m_Seconds + ((double)m_uSeconds / 1000000.0));
-	}
-
-	bool operator>(const CPerformanceClock& q) const
-	{
-		return ((m_Seconds > q.m_Seconds) ||
-						((m_Seconds == q.m_Seconds) && (m_uSeconds > q.m_uSeconds)));
-	}
-
-	bool operator<(const CPerformanceClock& q) const
-	{
-		return ((m_Seconds < q.m_Seconds) ||
-						((m_Seconds == q.m_Seconds) && (m_uSeconds < q.m_uSeconds)));
-	}
-
-	bool operator>=(const CPerformanceClock& q) const
-		{
-			return ((m_Seconds >= q.m_Seconds) ||
-							((m_Seconds == q.m_Seconds) && (m_uSeconds >= q.m_uSeconds)));
-		}
-
-	bool operator<=(const CPerformanceClock& q) const
-		{
-			return ((m_Seconds <= q.m_Seconds) ||
-							((m_Seconds == q.m_Seconds) && (m_uSeconds <= q.m_uSeconds)));
-		}
-
-	bool operator==(const CPerformanceClock& q)
-		{
-			return ((m_Seconds == q.m_Seconds) &&
-							(m_uSeconds == q.m_uSeconds));
-		}
-
-	bool operator!=(const CPerformanceClock& q)
-		{
-			return !operator==(q);
-		}
-
-	static CPerformanceClock Now(void)
-		{
-			struct timeb _t;
-			ftime(&_t);
-			return CPerformanceClock((long)_t.time, _t.millitm * 1000);
-		}
-};
-
-#define vrNow CPerformanceClock::Now
-#define PERF_START()	double timerStart = vrNow();
-#define PERF_STOP()	double timerStop = vrNow(); double timeSpent = timerStop - timerStart;
+}  // namespace qblocks

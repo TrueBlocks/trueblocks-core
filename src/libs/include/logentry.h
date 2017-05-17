@@ -13,6 +13,8 @@
 #include "ethtypes.h"
 #include "abilib.h"
 
+namespace qblocks {
+
 //--------------------------------------------------------------------------
 class CLogEntry;
 typedef SFArrayBase<CLogEntry>         CLogEntryArray;
@@ -35,7 +37,7 @@ public:
 public:
     CLogEntry(void);
     CLogEntry(const CLogEntry& lo);
-   ~CLogEntry(void);
+    ~CLogEntry(void);
     CLogEntry& operator=(const CLogEntry& lo);
 
     DECLARE_NODE (CLogEntry);
@@ -133,7 +135,8 @@ inline void CLogEntry::Copy(const CLogEntry& lo)
     transactionHash = lo.transactionHash;
     transactionIndex = lo.transactionIndex;
 #endif
-    pReceipt = lo.pReceipt; // no deep copy because it's const
+    // no deep copy because it's const
+    pReceipt = lo.pReceipt;
     // EXISTING_CODE
     finishParse();
 }
@@ -161,7 +164,13 @@ IMPLEMENT_ARCHIVE_ARRAY_C(CLogEntryArray);
 IMPLEMENT_ARCHIVE_LIST(CLogEntryList);
 
 //---------------------------------------------------------------------------
+extern SFArchive& operator<<(SFArchive& archive, const CLogEntry& log);
+extern SFArchive& operator>>(SFArchive& archive, CLogEntry& log);
+
+//---------------------------------------------------------------------------
 // EXISTING_CODE
 extern SFString nextReceiptChunk(const SFString& fieldIn, bool& force, const void *data);
 extern SFString nextLogentryChunk(const SFString& fieldIn, bool& force, const void *data);
 // EXISTING_CODE
+}  // namespace qblocks
+

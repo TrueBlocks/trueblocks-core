@@ -7,6 +7,8 @@
  * The LICENSE at the root of this repo details your rights (if any)
  *------------------------------------------------------------------------*/
 
+namespace qblocks {
+
 //------------------------------------------------------------------------
 class CMiniBlock
 {
@@ -96,6 +98,7 @@ public:
         << " gasPrice: " << gasPrice;
         return ctx.str;
     }
-    
+
     CMiniTrans() {}
 };
+}  // namespace qblocks

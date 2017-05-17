@@ -9,18 +9,21 @@
 
 #include "abilib.h"
 
+namespace qblocks {
+
 //---------------------------------------------------------------------------------------------------
 class CWebAPI
 {
 private:
-	SFString key;
-	SFString provider;
-	SFString url;
+    SFString key;
+    SFString provider;
+    SFString url;
 
 public:
-              CWebAPI (void);
-             ~CWebAPI (void);
+    CWebAPI(void);
+    ~CWebAPI(void);
 
-	bool    checkKey (CToml& toml);
-	SFString  getKey   (void) const;
+    bool checkKey(CToml& toml);
+    SFString getKey(void) const;
 };
+}

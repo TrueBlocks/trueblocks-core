@@ -13,6 +13,8 @@
 #include "ethtypes.h"
 #include "abilib.h"
 
+namespace qblocks {
+
 //--------------------------------------------------------------------------
 class CPriceQuote;
 typedef SFArrayBase<CPriceQuote>         CPriceQuoteArray;
@@ -26,7 +28,7 @@ typedef SFUniqueList<CPriceQuote*>       CPriceQuoteListU;
 class CPriceQuote : public CBaseNode
 {
 public:
-    timestamp_t timeStamp;
+    SFUint32 timestamp;
     float open;
     float high;
     float low;
@@ -38,7 +40,7 @@ public:
 public:
     CPriceQuote(void);
     CPriceQuote(const CPriceQuote& pr);
-   ~CPriceQuote(void);
+    ~CPriceQuote(void);
     CPriceQuote& operator=(const CPriceQuote& pr);
 
     DECLARE_NODE (CPriceQuote);
@@ -62,6 +64,7 @@ inline CPriceQuote::CPriceQuote(void)
 {
     Init();
     // EXISTING_CODE
+    extern bool loadPriceData(CPriceQuoteArray& quotes, bool freshen, SFString& message, SFUint32 step=1);
     // EXISTING_CODE
 }
 
@@ -96,7 +99,7 @@ inline void CPriceQuote::Init(void)
 {
     CBaseNode::Init();
 
-    timeStamp = 0;
+    timestamp = 0;
     open = 0.0;
     high = 0.0;
     low = 0.0;
@@ -116,7 +119,7 @@ inline void CPriceQuote::Copy(const CPriceQuote& pr)
     Clear();
     CBaseNode::Copy(pr);
 
-    timeStamp = pr.timeStamp;
+    timestamp = pr.timestamp;
     open = pr.open;
     high = pr.high;
     low = pr.low;
@@ -157,3 +160,5 @@ IMPLEMENT_ARCHIVE_LIST(CPriceQuoteList);
 // EXISTING_CODE
 extern bool loadPriceData(CPriceQuoteArray& quotes, bool freshen, SFString& message, SFUint32 step=1);
 // EXISTING_CODE
+}  // namespace qblocks
+

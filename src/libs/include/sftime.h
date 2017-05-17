@@ -8,213 +8,191 @@
  *------------------------------------------------------------------------*/
 
 #include "sfos.h"
-#include "sfdate.h"
-#include "sftimeofday.h"
 
-using timestamp_t = uint64_t;
+namespace qblocks {
 
-//-------------------------------------------------------------------------
-// A Date class with a granularity of 1 second
-//-------------------------------------------------------------------------
-class SFTime
-{
-public:
-				SFTime          (void);
-				SFTime          (const SFTime& date);
+    using timestamp_t = time_t;
 
-				SFTime          (uint32_t year, uint32_t month, uint32_t day, uint32_t hour, uint32_t min, uint32_t sec);
-				SFTime          (uint32_t year, uint32_t month, uint32_t weekInMonth, uint32_t dayOfWeek, uint32_t hour, uint32_t min, uint32_t sec);
-				SFTime          (uint32_t days, uint32_t hour, uint32_t min, uint32_t sec);
-				SFTime          (const SFDate& date, const SFTimeOfDay& tod);
-				SFTime          (const SF_TIMESTRUCT& sysTime, bool useDayOfWeek=false);
-				SFTime          (const SFString& dateStr, const SFString& fmtStr);
+    class SFTime;
+    enum MONTH {
+        JANUARY = 1, FEBRUARY, MARCH,
+        APRIL, MAY, JUNE,
+        JULY, AUGUST, SEPTEMBER,
+        OCTOBER, NOVEMBER, DECEMBER
+    };
 
-	//	       ~SFTime          (void);
+    enum DayOfWeek {
+        SUNDAY = 1, MONDAY, TUESDAY,
+        WEDNESDAY, THURSDAY, FRIDAY, SATURDAY
+    };
 
-	SFTime&     operator=       (const SFTime& date);
+    struct SFDateStruct {
+        uint32_t m_Year;
+        uint32_t m_Month;
+        uint32_t m_Day;
+        uint32_t m_Hour;
+        uint32_t m_Minute;
+        uint32_t m_Second;
+    };
 
-	uint32_t    GetDay          (void) const;
-	uint32_t    GetMonth        (void) const;
-	uint32_t    GetYear         (void) const;
-	uint32_t    GetHour         (void) const;
-	uint32_t    GetMinute       (void) const;
-	uint32_t    GetSecond       (void) const;
-	uint32_t    GetDayOfWeek    (void) const;
+    //-------------------------------------------------------------------------
+    // A Date class with a granularity of 1 second
+    //-------------------------------------------------------------------------
+    class SFTime {
+    private:
+        class SFDate {
+            // Count of days since 15 October 1582 (start of Gregorian Calendar)
+            SFUint32 m_nDays;
 
-	timestamp_t GetTotalSeconds (void) const;
+            SFDate(void);
+            SFDate(const SFDate& dt);
 
-	bool        IsValid         (void) const;
+            // Everything is private because on the SFTime class (which is exposed to end users and
+            // is a 'friend' can use this class
+            SFDate(uint32_t year, uint32_t month, uint32_t day);
+            SFDate(uint32_t year, uint32_t month, uint32_t weekInMonth, uint32_t dayOfWeek);
+            explicit SFDate(int64_t days);
+            explicit SFDate(const tm& sysTime);
+            SFDate(const SFString& dateStr, const SFString& fmtStr);
 
-	SFTime      operator+       (const uint32_t& ts) const;
-	SFTime      operator-       (const uint32_t& ts) const;
-	int64_t     operator-       (SFTime& date);
+            // ~SFDate(void);
 
-	bool        operator==      (const SFTime& date) const;
-	bool        operator!=      (const SFTime& date) const;
+            SFDate& operator=(const SFDate& date);
 
-	bool        operator>       (const SFTime& date) const;
-	bool        operator<       (const SFTime& date) const;
+            uint32_t GetYear(void) const;
+            uint32_t GetMonth(void) const;
+            uint32_t GetDay(void) const;
 
-	bool        operator>=      (const SFTime& date) const;
-	bool        operator<=      (const SFTime& date) const;
+            int64_t GetTotalDays(void) const;
 
-	bool        onTheHour       (void) const;
+            SFDate operator+(int32_t days) const;
+            SFDate operator-(int32_t days) const;
 
-	SFString    Format          (uint32_t fmt) const;
-	SFString    Format          (const SFString& fmt) const;
+            SFDate& operator+=(int32_t days);
+            SFDate& operator-=(int32_t days);
 
-	void        fromSortStr     (const SFString& vStr);
+            bool operator==(const SFDate& date) const;
+            bool operator!=(const SFDate& date) const;
 
-private:
-	friend void SetTime       (SFTime& date, const SFString& tStr);
-	friend void SetDate       (SFTime& date, const SFString& dStr);
-	friend void SetTimeAndDate(SFTime& date, const SFString& valueStr);
+            bool operator>(const SFDate& date) const;
+            bool operator<(const SFDate& date) const;
 
-public:
-	SFDate      getDatePart     (void) const;
-	SFTimeOfDay getTimePart     (void) const;
+            bool operator>=(const SFDate& date) const;
+            bool operator<=(const SFDate& date) const;
 
-	// Count of seconds from same epoch as SFDate uses
-	long     m_nSeconds;
-};
+            SFString Format(const SFString& fmt = "") const;
 
-inline uint32_t SFTime::GetYear() const
-{
-	return getDatePart().GetYear();
-}
+            bool IsValid(void) const;
 
-inline uint32_t SFTime::GetMonth() const
-{
-	return getDatePart().GetMonth();
-}
+            SFDate& setValues(uint32_t y, uint32_t m, uint32_t d);
+            SFDateStruct getDateStruct(void) const;
 
-inline uint32_t SFTime::GetDay() const
-{
-	return getDatePart().GetDay();
-}
+            friend class SFTime;
+            friend uint32_t getWeekOfMonth(const SFDate& date);
+            friend uint32_t getDayOfWeek(const SFDate& date);
+        };
 
-inline uint32_t SFTime::GetHour() const
-{
-	return getTimePart().GetHour();
-}
+        //----------------------------------------------------------------------------
+        // Used by SFTime to hold the time portion of the date
+        //----------------------------------------------------------------------------
+        class SFTimeOfDay {
+            SFTimeOfDay(void);
+            SFTimeOfDay(const SFTimeOfDay& tod);
 
-inline uint32_t SFTime::GetMinute() const
-{
-	return getTimePart().GetMinute();
-}
+            // Everything is private because on the SFTime class (which is exposed to
+            // end users and is a 'friend' can use this class)
+            explicit SFTimeOfDay(const tm& sysTime);
+            explicit SFTimeOfDay(uint32_t secs);
+            SFTimeOfDay(uint32_t h, uint32_t m, uint32_t s);
+            SFTimeOfDay(const SFString& dateStr, const SFString& fmtStr);
 
-inline uint32_t SFTime::GetSecond() const
-{
-	return getTimePart().GetSecond();
-}
+            // ~SFTimeOfDay(void);
+            SFTimeOfDay&  operator=(const SFTimeOfDay& tod);
 
-inline timestamp_t SFTime::GetTotalSeconds(void) const
-{
-	return m_nSeconds;
-}
+            uint32_t GetHour(void) const;
+            uint32_t GetMinute(void) const;
+            uint32_t GetSecond(void) const;
+            uint32_t GetTotalSeconds(void) const;
 
-extern uint32_t getDayOfWeek(const SFDate& date);
-inline uint32_t SFTime::GetDayOfWeek() const
-{
-	return ::getDayOfWeek(getDatePart());
-}
+            bool operator==(const SFTimeOfDay& tod) const;
+            bool operator!=(const SFTimeOfDay& tod) const;
 
-// We only do the test for equality and greater than. We then use these to do all other tests
-inline bool SFTime::operator==(const SFTime& date) const
-{
-	ASSERT(IsValid());
-	return (m_nSeconds == date.m_nSeconds);
-}
+            bool operator>(const SFTimeOfDay& tod) const;
+            bool operator<(const SFTimeOfDay& tod) const;
 
-inline bool SFTime::operator!=(const SFTime& date) const
-{
-	return !operator==(date);
-}
+            bool operator>=(const SFTimeOfDay& tod) const;
+            bool operator<=(const SFTimeOfDay& tod) const;
 
-inline bool SFTime::operator>(const SFTime& date) const
-{
-	return (m_nSeconds > date.m_nSeconds);
-}
+            SFString Format(const SFString& fmt = "") const;
 
-inline bool SFTime::operator>=(const SFTime& date) const
-{
-	return operator>(date) || operator==(date);
-}
+            bool IsValid(void) const;
 
-inline bool SFTime::operator<(const SFTime& date) const
-{
-	return (m_nSeconds < date.m_nSeconds);
-}
+            uint32_t m_nSeconds;
+            friend class SFTime;
+        };
 
-inline bool SFTime::operator<=(const SFTime& date) const
-{
-	return operator<(date) || operator==(date);
-}
+    public:
+        SFTime(void);
+        SFTime(const SFTime& date);
 
-inline SFTime SFTime::operator+(const uint32_t& ts) const
-{
-	SFTime ret;
-	ret.m_nSeconds = m_nSeconds + ts;
-	return ret;
-}
+        SFTime(uint32_t year, uint32_t month, uint32_t day, uint32_t hour, uint32_t min, uint32_t sec);
+        SFTime(uint32_t year, uint32_t month, uint32_t weekInMonth, uint32_t dayOfWeek,
+               uint32_t hour, uint32_t min, uint32_t sec);
+        SFTime(uint32_t days, uint32_t hour, uint32_t min, uint32_t sec);
+        SFTime(const SFDate& date, const SFTimeOfDay& tod);
+        explicit SFTime(const tm& sysTime, bool useDayOfWeek = false);
+        SFTime(const SFString& dateStr, const SFString& fmtStr);
 
-inline SFTime SFTime::operator-(const uint32_t& ts) const
-{
-	SFTime ret;
-	ret.m_nSeconds = m_nSeconds - ts;
-	return ret;
-}
+        // ~SFTime(void);
 
-inline int64_t SFTime::operator-(SFTime& date)
-{
-	return m_nSeconds - date.m_nSeconds;
-}
+        SFTime& operator=(const SFTime& date);
 
-inline bool SFTime::IsValid() const
-{
-	return (m_nSeconds != (long)0xdeadbeef);
-}
+        uint32_t GetDay(void) const;
+        uint32_t GetMonth(void) const;
+        uint32_t GetYear(void) const;
+        uint32_t GetHour(void) const;
+        uint32_t GetMinute(void) const;
+        uint32_t GetSecond(void) const;
+        uint32_t GetDayOfWeek(void) const;
 
-inline SFDate SFTime::getDatePart() const
-{
-	ASSERT(IsValid());
-	return SFDate((m_nSeconds / SECS_PER_DAY) - 2000000000L);
-}
+        timestamp_t GetTotalSeconds(void) const;
 
-inline SFTimeOfDay SFTime::getTimePart() const
-{
-	if (m_nSeconds == getDatePart().GetTotalDays())
-		return SFTimeOfDay(0); // midnight at start of day
+        bool IsValid(void) const;
 
-	ASSERT(IsValid());
-	ASSERT(m_nSeconds >= getDatePart().GetTotalDays());
+        SFTime operator+(const uint32_t& ts) const;
+        SFTime operator-(const uint32_t& ts) const;
+        int64_t operator-(SFTime& date);
 
-	int64_t secs = m_nSeconds;
-	int64_t dateSecs = getDatePart().GetTotalDays() * SECS_PER_DAY;
-	return SFTimeOfDay(uint32_t(secs-dateSecs));
-}
+        bool operator==(const SFTime& date) const;
+        bool operator!=(const SFTime& date) const;
 
-inline bool SFTime::onTheHour(void) const
-{
-	return (GetMinute() < 5 || GetMinute() > 55);
-}
+        bool operator>(const SFTime& date) const;
+        bool operator<(const SFTime& date) const;
 
-inline SFString getPaddedDate(const SFTime& date)
-{
-	SFString ret = padNum2(date.GetMonth())+"_"+padNum2(date.GetDay());
-	if (date.GetDayOfWeek()==1) ret += "Su";
-	if (date.GetDayOfWeek()==2) ret += "M";
-	if (date.GetDayOfWeek()==3) ret += "T";
-	if (date.GetDayOfWeek()==4) ret += "W";
-	if (date.GetDayOfWeek()==5) ret += "R";
-	if (date.GetDayOfWeek()==6) ret += "F";
-	if (date.GetDayOfWeek()==7) ret += "Sa";
-	return ret;
-}
+        bool operator>=(const SFTime& date) const;
+        bool operator<=(const SFTime& date) const;
 
-//---------------------------------------------------------------------------------------------
-extern ostream &operator <<(ostream &os, const SFTime& x);
+        bool onTheHour(void) const;
 
-//-----------------------------------------------------------------------------------
-extern SFTime      dateFromTimeStamp(timestamp_t tsIn);
-extern timestamp_t toTimeStamp(const SFTime& timeIn);
+        SFString Format(uint32_t fmt) const;
+        SFString Format(const SFString& fmt) const;
+
+        SFDate getDatePart(void) const;
+        SFTimeOfDay getTimePart(void) const;
+
+        // Count of seconds from same epoch as SFDate uses
+        int64_t m_nSeconds;
+
+        friend uint32_t getDayOfWeek(const SFDate& date);
+    };
+
+    //-----------------------------------------------------------------------------------
+    extern SFTime dateFromTimeStamp(timestamp_t tsIn);
+    extern timestamp_t toTimeStamp(const SFTime& timeIn);
+    extern SFTime snagDate(const SFString& str, int dir = 0);  // -1 BOD, 0 MIDDAY, 1 EOD
+    extern SFTime Now(void);
+
+    //---------------------------------------------------------------------------------------------
+    extern ostream &operator <<(ostream &os, const SFTime& x);
+
+}  // namespace qblocks

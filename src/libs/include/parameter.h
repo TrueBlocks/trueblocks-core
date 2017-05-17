@@ -12,6 +12,8 @@
  */
 #include "utillib.h"
 
+namespace qblocks {
+
 //--------------------------------------------------------------------------
 class CParameter;
 typedef SFArrayBase<CParameter>         CParameterArray;
@@ -50,7 +52,7 @@ public:
 public:
     CParameter(void);
     CParameter(const CParameter& pa);
-   ~CParameter(void);
+    ~CParameter(void);
     CParameter& operator=(const CParameter& pa);
 
     DECLARE_NODE (CParameter);
@@ -161,3 +163,5 @@ IMPLEMENT_ARCHIVE_LIST(CParameterList);
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
+}  // namespace qblocks
+

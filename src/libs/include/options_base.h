@@ -7,70 +7,70 @@
  * The LICENSE at the root of this repo details your rights (if any)
  *------------------------------------------------------------------------*/
 
-class COptionsBase
-{
-public:
-	static SFString header;
-    static SFString footer;
-    static SFString seeAlso;
-	static bool useVerbose;
-	static bool useTesting;
+namespace qblocks {
 
-	SFString commandList;
-	bool     fromFile;
-	SFUint32 minArgs;
+    class COptionsBase {
+    public:
+        static SFString header;
+        static SFString footer;
+        static SFString seeAlso;
+        static bool useVerbose;
+        static bool useTesting;
 
-	               COptionsBase  (void) { fromFile = false; minArgs=1; }
-	virtual       ~COptionsBase  (void) { }
+        SFString commandList;
+        bool     fromFile;
+        SFUint32 minArgs;
 
-		bool prepareArguments(int argc, const char *argv[], const SFString& homeFolder="");
-	virtual bool parseArguments  (SFString& command) = 0;
+        COptionsBase(void) { fromFile = false; minArgs = 1; }
+        virtual ~COptionsBase(void) { }
 
-protected:
-	virtual void Init (void) = 0;
-};
+        bool prepareArguments(int argc, const char *argv[]);
+        virtual bool parseArguments(SFString& command) = 0;
 
-//--------------------------------------------------------------------------------
-class CDefaultOptions : public COptionsBase
-{
-public:
-	CDefaultOptions() {}
-	bool parseArguments(SFString& command) { return true; };
-	void Init (void) {};
-};
+    protected:
+        virtual void Init(void) = 0;
+    };
 
-//--------------------------------------------------------------------------------
-class CParams
-{
-public:
-	SFString  shortName;
-	SFString  longName;
-	SFString  description;
-	CParams( const SFString& name, const SFString& descr );
-};
+    //--------------------------------------------------------------------------------
+    class CDefaultOptions : public COptionsBase {
+    public:
+        CDefaultOptions() {}
+        bool parseArguments(SFString& command) { return true; }
+        void Init(void) {}
+    };
 
-//--------------------------------------------------------------------------------
-extern int      usage       (const SFString& errMsg="");
-extern SFString options     (void);
-extern SFString descriptions(void);
-extern SFString purpose     (void);
+    //--------------------------------------------------------------------------------
+    class CParams {
+    public:
+        SFString  shortName;
+        SFString  longName;
+        SFString  description;
+        CParams(const SFString& name, const SFString& descr);
+    };
 
-//--------------------------------------------------------------------------------
-extern int      sortParams  (const void *c1, const void *c2);
-extern SFString expandOption(SFString& arg);
+    //--------------------------------------------------------------------------------
+    extern int usage(const SFString& errMsg = "");
+    extern SFString options(void);
+    extern SFString descriptions(void);
+    extern SFString purpose(void);
 
-//--------------------------------------------------------------------------------
-extern SFUint32 verbose;
-extern bool isTesting;
+    //--------------------------------------------------------------------------------
+    extern int sortParams(const void *c1, const void *c2);
+    extern SFString expandOption(SFString& arg);
 
-//--------------------------------------------------------------------------------
-extern CFileExportContext   outScreen;
-extern CFileExportContext&  outErr;
+    //--------------------------------------------------------------------------------
+    extern SFUint32 verbose;
+    extern bool isTesting;
 
-//--------------------------------------------------------------------------------
-extern SFString cachePath (const SFString& part=EMPTY);
-extern SFString configPath(const SFString& part=EMPTY);
+    //--------------------------------------------------------------------------------
+    extern CFileExportContext outScreen;
+    extern CFileExportContext& outErr;
 
-//--------------------------------------------------------------------------------
-extern CParams   *paramsPtr;
-extern uint32_t&  nParamsRef;
+    //--------------------------------------------------------------------------------
+    extern SFString configPath(const SFString& part = "");
+    inline SFString cachePath(const SFString& part = "") { return configPath("slurps/") + part; }
+    
+    //--------------------------------------------------------------------------------
+    extern CParams *paramsPtr;
+    extern uint32_t& nParamsRef;
+}
