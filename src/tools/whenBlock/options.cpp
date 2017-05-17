@@ -22,6 +22,7 @@ bool COptions::parseArguments(SFString& command) {
     while (!command.empty()) {
         SFString arg = nextTokenClear(command, ' ');
         arg.ReplaceAll("{~}", " ");
+        arg.ReplaceAll("T", " ");
 
         if (arg == "-l" || arg == "--list") {
 
@@ -29,10 +30,8 @@ bool COptions::parseArguments(SFString& command) {
             return false;
 
         } else if (arg.ContainsAny(":- ")) {
-            SFString str = arg.Substitute("-", ";")
-                                .Substitute(" ", ";")
-                                .Substitute(":", ";")
-                                .Substitute(";UTC", "");
+            SFString str = arg.Substitute("-", ";").Substitute(" ", ";")
+                                .Substitute(":", ";").Substitute(";UTC", "");
             date = snagDate(str);
 
         } else {
@@ -62,12 +61,15 @@ bool COptions::parseArguments(SFString& command) {
             return usage("Please supply either a JSON formatted date or a blockNumber.");
 
     } else {
-        if (blockNum > getClientLatestBlk()) {
+        blknum_t l = getClientLatestBlk();
+        if (blockNum > l) {
             if (special.empty()) {
                 return usage("Block number (" + asString(blockNum) + ") must be less than latest "
-                             "block: " + asString(getClientLatestBlk()));
+                             "block: " + asString(l));
 
             } else {
+                // For the cases where user's node is behind the head of the block and getClientLatestBlk
+                // returns a block number in the past, the only thing we can present is known block dates
                 cout << "\n\tSpecial block: " << cYellow << special << " " << blockNum << cOff << "\n\n";
                 return false;
             }
