@@ -5,7 +5,8 @@
  *
  * The LICENSE at the root of this repo details your rights (if any)
  *------------------------------------------------------------------------*/
-#include "ethName.h"
+#include "options.h"
+#include "accountname.h"
 
 //-----------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
@@ -19,12 +20,14 @@ int main(int argc, const char *argv[]) {
         if (!options.parseArguments(command))
             return 0;
 
+        SFString fmt = (options.addrOnly ? "[{ADDR}]" : "");
         if (options.list) {
-            for (int i = 0 ; i < nNames ; i++)
-                out << accounts[i].Format12() << "\n";
+            for (int i = 0 ; i < accounts.getCount() ; i++)
+                out << accounts[i].Format(fmt).Substitute("\n", " ").Substitute("  ", " ") << "\n";
             exit(0);
         }
-        SFString ret = showName(options.addr, options.name, options.source, options.matchCase, options.all);
+
+        SFString ret = showName(options);
         if (!ret.empty())
             out << ret;
         else if (verbose)
@@ -32,50 +35,43 @@ int main(int argc, const char *argv[]) {
 
         out.Flush();
     }
-    if (accounts)
-        delete [] accounts;
 
     return 0;
 }
 
 //-----------------------------------------------------------------------
 void loadData(void) {
-    if (nNames > 0 || accounts != NULL)
+    if (accounts.getCount() > 0)
         return;
 
-    SFString contents = asciiFileToString(DATA_FILE);
+    SFString contents = asciiFileToString(configPath("configs/names.conf"));
     contents.ReplaceAll("\t\t", "\t");
-
-    uint32_t nLines = countOf('\n', contents);
-    accounts = new CAccountName[nLines];
-    if (!accounts) {
-        outErr << "Could not allocate memory for " << nLines << " account names. Quitting...\n";
-        exit(0);
-    }
 
     while (!contents.empty()) {
         SFString line = nextTokenClear(contents, '\n');
         if (!countOf('\t', line))
             outErr << "Line " << line << " does not contain two tabs.\n";
-        accounts[nNames++] = CAccountName(line);
+        accounts[accounts.getCount()] = CAccountName(line);
     }
 }
 
 //-----------------------------------------------------------------------
 uint32_t countOf(const SFString& addr) {
     uint32_t cnt = 0;
-    for (int i = 0 ; i < nNames ; i++)
+    for (int i = 0 ; i < accounts.getCount() ; i++)
         if (accounts[i].addr % addr)
             cnt++;
     return cnt;
 }
 
 //-----------------------------------------------------------------------
-SFString showName(const SFString& s1, const SFString& s2, const SFString& s3, bool matchCase, bool all) {
+SFString showName(const COptions& options)
+{
     SFString ret;
-    for (int i = 0 ; i < nNames ; i++) {
-        if (accounts[i].Match(s1, s2, s3, matchCase, all))
-            ret += (accounts[i].Format12() + "\n");
+    SFString fmt = (options.addrOnly ? "[{ADDR}]" : "");
+    for (int i = 0 ; i < accounts.getCount() ; i++) {
+        if (accounts[i].Match(options.addr, options.name, options.source, options.matchCase, options.all))
+            ret += (accounts[i].Format(fmt).Substitute("\n", " ").Substitute("  ", " ") + "\n");
     }
     return ret;
 }
@@ -88,10 +84,7 @@ SFString setName(const SFString& addr, const SFString& name) {
 }
 
 //-----------------------------------------------------------------------
-CAccountName *accounts = NULL;
-uint32_t nNames = 0;
-
-//-----------------------------------------------------------------------
+CAccountNameArray accounts;
 CFileExportContext out;
 
 //---------------------------------------------------------------------------
