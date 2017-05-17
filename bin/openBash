@@ -1,1 +1,6 @@
+#!/usr/bin/env bash
+#
+# Opens a useful documentation page for bash scripting
+#
+
 open http://tldp.org/HOWTO/Bash-Prog-Intro-HOWTO.html
