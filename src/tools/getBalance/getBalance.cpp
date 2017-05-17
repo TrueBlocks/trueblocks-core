@@ -29,7 +29,7 @@ int main(int argc, const char *argv[]) {
             SFAddress addr = nextTokenClear(options.addrs, '|');
             SFString blocks = options.blocks;
             while (!blocks.empty()) {
-                blknum_t block = (blknum_t)toLongU(nextTokenClear(blocks, '|'));
+                blknum_t block = toLongU(nextTokenClear(blocks, '|'));
                 SFUintBN bal = getBalance(addr, block);
                 if (options.asData)
                     cout << block << "\t" << addr << "\t" << bal << "\n";
