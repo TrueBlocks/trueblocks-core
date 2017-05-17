@@ -7,6 +7,10 @@
  * The LICENSE at the root of this repo details your rights (if any)
  *------------------------------------------------------------------------*/
 
-#include "utillib.h"
+#include "basetypes.h"
 
-extern SFString  urlToString(const SFString& url=EMPTY);
+namespace qblocks {
+
+    extern SFString urlToString(const SFString& url = EMPTY);
+
+}  // namespace qblocks

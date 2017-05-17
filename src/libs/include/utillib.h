@@ -7,8 +7,9 @@
  * The LICENSE at the root of this repo details your rights (if any)
  *------------------------------------------------------------------------*/
 #include "basetypes.h"
-#include "basenode.h"
 #include "sfstring.h"
+#include "basenode.h"
+#include "biglib.h"
 #include "dates.h"
 #include "sfos.h"
 #include "database.h"
@@ -18,13 +19,13 @@
 #include "sfarchive.h"
 #include "fielddata.h"
 #include "curl_code.h"
-#include "fielddata.h"
+#include "fielddata.h"  // NOLINT
 #include "colors.h"
-#include "sfarchive.h"
+#include "sfarchive.h"  // NOLINT
 #include "performance.h"
 #include "options_base.h"
-#include "paths.h"
-#include "biglib.h"
-#include "filename.h"
+#include "filenames.h"
 
-#define curVersion ((long)0x00000201)
+#define curVersion ((uint64_t)0x00000201)
+
+using namespace qblocks;

@@ -7,10 +7,14 @@
  * The LICENSE at the root of this repo details your rights (if any)
  *------------------------------------------------------------------------*/
 
+#include "utillib.h"
+
+namespace qblocks {
+
 #define SFAddress      SFString
 #define SFHash         SFString
 #define SFBloom        SFUintBN
-#define blknum_t       uint32_t
+#define blknum_t       uint64_t
 #define txnum_t        uint32_t
 #define lognum_t       uint32_t
 
@@ -20,7 +24,6 @@
 #define toWei(a)       canonicalWei(a)
 #define toUnsigned(a)  (SFUint32)((a).startsWith("0x")?hex2Long((a)):toLongU((a)))
 
-class SFUintBN;
 #define fromAddress(a)  ((a).empty() ? "0x0" : (a))
 #define fromHash(a)     ((a).empty() ? "0x0" : (a))
 #define fromWei(a)      to_string((a)).c_str()
@@ -28,20 +31,20 @@ class SFUintBN;
 #define fromBloom(a)    ((a)==0?"0x0":"0x"+padLeft(toLower(SFString(to_hex((a)).c_str())),512,'0'))
 #define fromUnsigned(a) asStringU((a))
 
-#include "utillib.h"
 //------------------------------------------------------
 inline SFAddress toAddress(const SFString& strIn)
 {
-	// Strip it if it's there. We will put it back
-	SFString ret = strIn.Substitute("0x","");
+    // Strip it if it's there. We will put it back
+    SFString ret = strIn.Substitute("0x","");
 
-	// Shorten, but only if all leading zeros
-	if (ret.length()==64 && ret.startsWith("000000000000000000000000"))
-		ret.Replace("000000000000000000000000","");
+    // Shorten, but only if all leading zeros
+    if (ret.length()==64 && ret.startsWith("000000000000000000000000"))
+        ret.Replace("000000000000000000000000","");
 
-	// Special case
-	if (ret.empty())
-		ret = "0";
+    // Special case
+    if (ret.empty())
+        ret = "0";
 
-	return "0x" + ret;
+    return "0x" + ret;
+}
 }

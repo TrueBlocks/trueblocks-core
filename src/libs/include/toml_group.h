@@ -9,83 +9,78 @@
 
 #include "list.h"
 
-//-------------------------------------------------------------------------
-class CTomlGroup
-{
-public:
-	SFString  groupName;
-	bool      comment;
-	CTomlKeyList keys;
+namespace qblocks {
 
-	CTomlGroup(void);
-	CTomlGroup(const CTomlGroup& group);
+    //-------------------------------------------------------------------------
+    class CTomlGroup {
+    public:
+        SFString  groupName;
+        bool      comment;
+        CTomlKeyList keys;
 
-	~CTomlGroup(void);
+        CTomlGroup(void);
+        CTomlGroup(const CTomlGroup& group);
 
-	CTomlGroup& operator=(const CTomlGroup& group);
+        ~CTomlGroup(void);
 
-	CTomlKey *addKey(const SFString& keyName, const SFString& val, bool commented);
-	CTomlKey *findKey(const SFString& keyName) const;
+        CTomlGroup& operator=(const CTomlGroup& group);
 
-private:
-	void Clear(void);
-	void Copy(const CTomlGroup& group);
+        CTomlKey *addKey(const SFString& keyName, const SFString& val, bool commented);
+        CTomlKey *findKey(const SFString& keyName) const;
 
-};
-typedef SFList<CTomlGroup*> CTomlGroupList;
+    private:
+        void Clear(void);
+        void Copy(const CTomlGroup& group);
 
-//-------------------------------------------------------------------------
-inline CTomlGroup::CTomlGroup(void)
-{
-	Clear();
-}
+    };
+    typedef SFList<CTomlGroup*> CTomlGroupList;
 
-//-------------------------------------------------------------------------
-inline CTomlGroup::CTomlGroup(const CTomlGroup& group)
-{
-	Copy(group);
-}
+    //-------------------------------------------------------------------------
+    inline CTomlGroup::CTomlGroup(void) {
+        Clear();
+    }
 
-//-------------------------------------------------------------------------
-inline CTomlGroup::~CTomlGroup(void)
-{
-	Clear();
-}
+    //-------------------------------------------------------------------------
+    inline CTomlGroup::CTomlGroup(const CTomlGroup& group) {
+        Copy(group);
+    }
 
-//-------------------------------------------------------------------------
-inline CTomlGroup& CTomlGroup::operator=(const CTomlGroup& group)
-{
-	Copy(group);
-	return *this;
-}
+    //-------------------------------------------------------------------------
+    inline CTomlGroup::~CTomlGroup(void) {
+        Clear();
+    }
 
-//-------------------------------------------------------------------------
-inline void CTomlGroup::Clear(void)
-{
-	groupName = EMPTY;
-	comment = false;
-	LISTPOS kPos = keys.GetHeadPosition();
-	while (kPos)
-	{
-		CTomlKey *key = keys.GetNext(kPos);
-		delete key;
-	}
-	keys.RemoveAll();
-}
+    //-------------------------------------------------------------------------
+    inline CTomlGroup& CTomlGroup::operator=(const CTomlGroup& group) {
+        Copy(group);
+        return *this;
+    }
 
-//-------------------------------------------------------------------------
-inline void CTomlGroup::Copy(const CTomlGroup& group)
-{
-	Clear();
+    //-------------------------------------------------------------------------
+    inline void CTomlGroup::Clear(void) {
+        groupName = EMPTY;
+        comment = false;
+        LISTPOS kPos = keys.GetHeadPosition();
+        while (kPos) {
+            CTomlKey *key = keys.GetNext(kPos);
+            delete key;
+        }
+        keys.RemoveAll();
+    }
 
-	groupName = group.groupName;
-	comment = group.comment;
-
-	LISTPOS kPos = group.keys.GetHeadPosition();
-	while (kPos)
-	{
-		CTomlKey *orig = group.keys.GetNext(kPos);
-		CTomlKey *copy = new CTomlKey(*orig);
-		keys.AddTail(copy);
-	}
+    //-------------------------------------------------------------------------
+    inline void CTomlGroup::Copy(const CTomlGroup& group) {
+        Clear();
+        
+        groupName = group.groupName;
+        comment = group.comment;
+        
+        LISTPOS kPos = group.keys.GetHeadPosition();
+        while (kPos) {
+            CTomlKey *orig = group.keys.GetNext(kPos);
+            CTomlKey *copy = new CTomlKey(*orig);
+            keys.AddTail(copy);
+        }
+    }
+    
 }

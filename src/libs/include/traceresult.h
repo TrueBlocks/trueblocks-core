@@ -13,33 +13,31 @@
 #include "ethtypes.h"
 #include "abilib.h"
 
+namespace qblocks {
+
 //--------------------------------------------------------------------------
-class CTraceAction;
-typedef SFArrayBase<CTraceAction>         CTraceActionArray;
-typedef SFList<CTraceAction*>             CTraceActionList;
-typedef SFUniqueList<CTraceAction*>       CTraceActionListU;
+class CTraceResult;
+typedef SFArrayBase<CTraceResult>         CTraceResultArray;
+typedef SFList<CTraceResult*>             CTraceResultList;
+typedef SFUniqueList<CTraceResult*>       CTraceResultListU;
 
 // EXISTING_CODE
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CTraceAction : public CBaseNode
+class CTraceResult : public CBaseNode
 {
 public:
-    SFString callType;
-    SFAddress from;
-    SFUint32 gas;
-    SFString input;
-    SFAddress to;
-    SFUintBN value;
+    SFUint32 gasUsed;
+    SFString output;
 
 public:
-    CTraceAction(void);
-    CTraceAction(const CTraceAction& tr);
-   ~CTraceAction(void);
-    CTraceAction& operator=(const CTraceAction& tr);
+    CTraceResult(void);
+    CTraceResult(const CTraceResult& tr);
+    ~CTraceResult(void);
+    CTraceResult& operator=(const CTraceResult& tr);
 
-    DECLARE_NODE (CTraceAction);
+    DECLARE_NODE (CTraceResult);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -47,7 +45,7 @@ public:
 protected:
     void Clear(void);
     void Init(void);
-    void Copy(const CTraceAction& tr);
+    void Copy(const CTraceResult& tr);
     bool readBackLevel(SFArchive& archive);
 
     // EXISTING_CODE
@@ -55,7 +53,7 @@ protected:
 };
 
 //--------------------------------------------------------------------------
-inline CTraceAction::CTraceAction(void)
+inline CTraceResult::CTraceResult(void)
 {
     Init();
     // EXISTING_CODE
@@ -63,7 +61,7 @@ inline CTraceAction::CTraceAction(void)
 }
 
 //--------------------------------------------------------------------------
-inline CTraceAction::CTraceAction(const CTraceAction& tr)
+inline CTraceResult::CTraceResult(const CTraceResult& tr)
 {
     // EXISTING_CODE
     // EXISTING_CODE
@@ -74,7 +72,7 @@ inline CTraceAction::CTraceAction(const CTraceAction& tr)
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline CTraceAction::~CTraceAction(void)
+inline CTraceResult::~CTraceResult(void)
 {
     Clear();
     // EXISTING_CODE
@@ -82,40 +80,32 @@ inline CTraceAction::~CTraceAction(void)
 }
 
 //--------------------------------------------------------------------------
-inline void CTraceAction::Clear(void)
+inline void CTraceResult::Clear(void)
 {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CTraceAction::Init(void)
+inline void CTraceResult::Init(void)
 {
     CBaseNode::Init();
 
-//    callType = EMPTY;
-//    from = EMPTY;
-    gas = 0;
-//    input = EMPTY;
-//    to = EMPTY;
-    value = 0;
+    gasUsed = 0;
+//    output = EMPTY;
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CTraceAction::Copy(const CTraceAction& tr)
+inline void CTraceResult::Copy(const CTraceResult& tr)
 {
     Clear();
     CBaseNode::Copy(tr);
 
-    callType = tr.callType;
-    from = tr.from;
-    gas = tr.gas;
-    input = tr.input;
-    to = tr.to;
-    value = tr.value;
+    gasUsed = tr.gasUsed;
+    output = tr.output;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -123,7 +113,7 @@ inline void CTraceAction::Copy(const CTraceAction& tr)
 }
 
 //--------------------------------------------------------------------------
-inline CTraceAction& CTraceAction::operator=(const CTraceAction& tr)
+inline CTraceResult& CTraceResult::operator=(const CTraceResult& tr)
 {
     Copy(tr);
     // EXISTING_CODE
@@ -132,7 +122,7 @@ inline CTraceAction& CTraceAction::operator=(const CTraceAction& tr)
 }
 
 //---------------------------------------------------------------------------
-inline SFString CTraceAction::getValueByName(const SFString& fieldName) const
+inline SFString CTraceResult::getValueByName(const SFString& fieldName) const
 {
     // EXISTING_CODE
     // EXISTING_CODE
@@ -140,10 +130,12 @@ inline SFString CTraceAction::getValueByName(const SFString& fieldName) const
 }
 
 //---------------------------------------------------------------------------
-IMPLEMENT_ARCHIVE_ARRAY(CTraceActionArray);
-IMPLEMENT_ARCHIVE_ARRAY_C(CTraceActionArray);
-IMPLEMENT_ARCHIVE_LIST(CTraceActionList);
+IMPLEMENT_ARCHIVE_ARRAY(CTraceResultArray);
+IMPLEMENT_ARCHIVE_ARRAY_C(CTraceResultArray);
+IMPLEMENT_ARCHIVE_LIST(CTraceResultList);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
+}  // namespace qblocks
+

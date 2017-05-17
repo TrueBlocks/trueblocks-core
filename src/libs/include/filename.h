@@ -7,41 +7,45 @@
  * The LICENSE at the root of this repo details your rights (if any)
  *------------------------------------------------------------------------*/
 
-//----------------------------------------------------------------------------------
-class CFilename
-{
-private:
-	CFilename(void) {} // cannot create default
+namespace qblocks {
 
-	SFString path;
-	SFString fileName;
+    //----------------------------------------------------------------------------------
+    class CFilename
+    {
+    private:
+        CFilename(void) {} // cannot create default
 
-public:
-	CFilename(const SFString& fnIn);
-	SFString getPath(void) const { return path; }
-	SFString getFilename(void) const { return fileName; }
-	SFString getFullPath(void) const { return (path+fileName).Substitute("//","/"); }
-};
+        SFString path;
+        SFString fileName;
 
-//----------------------------------------------------------------------------------
-inline CFilename::CFilename(const SFString& fnIn)
-{
-	SFString fn = fnIn;
-	if (!fn.startsWith('/') && !fn.startsWith('.') && !fn.startsWith('~'))
-		fn = "./" + fn; // assume cwd
-	fn.Replace("../", getCWD()+"xx/");
-	fn.Replace("./",  getCWD());
-	fn.Replace("~/",  getHomeFolder());
-	fn.Replace("xx/", "../");
+    public:
+        CFilename(const SFString& fnIn);
+        SFString getPath(void) const { return path; }
+        SFString getFilename(void) const { return fileName; }
+        SFString getFullPath(void) const { return (path+fileName).Substitute("//","/"); }
+    };
 
-	if (fn.endsWith('/'))
-	{
-		path = fn;
-		fileName = EMPTY;
+    //----------------------------------------------------------------------------------
+    inline CFilename::CFilename(const SFString& fnIn)
+    {
+        SFString fn = fnIn;
+        if (!fn.startsWith('/') && !fn.startsWith('.') && !fn.startsWith('~'))
+            fn = "./" + fn; // assume cwd
+        fn.Replace("../", getCWD()+"xx/");
+        fn.Replace("./",  getCWD());
+        fn.Replace("~/",  getHomeFolder());
+        fn.Replace("xx/", "../");
 
-	} else
-	{
-		path = fn.Left(fn.ReverseFind('/')+1);
-		fileName = fn.Substitute(path, EMPTY);
-	}
+        if (fn.endsWith('/'))
+        {
+            path = fn;
+            fileName = EMPTY;
+            
+        } else
+        {
+            path = fn.Left(fn.ReverseFind('/')+1);
+            fileName = fn.Substitute(path, EMPTY);
+        }
+    }
+    
 }

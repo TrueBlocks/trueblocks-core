@@ -14,6 +14,8 @@
 #include "abilib.h"
 #include "receipt.h"
 
+namespace qblocks {
+
 //--------------------------------------------------------------------------
 class CTransaction;
 typedef SFArrayBase<CTransaction>         CTransactionArray;
@@ -33,7 +35,7 @@ public:
     SFUint32 blockNumber;
     SFUint32 transactionIndex;
     SFUint32 nonce;
-    SFUint32 timeStamp;
+    SFUint32 timestamp;
     SFAddress from;
     SFAddress to;
     SFUintBN value;
@@ -48,7 +50,7 @@ public:
 public:
     CTransaction(void);
     CTransaction(const CTransaction& tr);
-   ~CTransaction(void);
+    ~CTransaction(void);
     CTransaction& operator=(const CTransaction& tr);
 
     DECLARE_NODE (CTransaction);
@@ -128,7 +130,7 @@ inline void CTransaction::Init(void)
     blockNumber = 0;
     transactionIndex = 0;
     nonce = 0;
-    timeStamp = 0;
+    timestamp = 0;
 //    from = EMPTY;
 //    to = EMPTY;
     value = 0;
@@ -153,7 +155,7 @@ inline void CTransaction::Init(void)
     raw = EMPTY;
     s = EMPTY;
     v = EMPTY;
-//    trace = ??; /* unknown type: CTrace */
+    //    trace = ??; /* unknown type: CTrace */
 #endif
     // EXISTING_CODE
 }
@@ -169,7 +171,7 @@ inline void CTransaction::Copy(const CTransaction& tr)
     blockNumber = tr.blockNumber;
     transactionIndex = tr.transactionIndex;
     nonce = tr.nonce;
-    timeStamp = tr.timeStamp;
+    timestamp = tr.timestamp;
     from = tr.from;
     to = tr.to;
     value = tr.value;
@@ -223,6 +225,10 @@ IMPLEMENT_ARCHIVE_ARRAY_C(CTransactionArray);
 IMPLEMENT_ARCHIVE_LIST(CTransactionList);
 
 //---------------------------------------------------------------------------
+extern SFArchive& operator<<(SFArchive& archive, const CTransaction& tra);
+extern SFArchive& operator>>(SFArchive& archive, CTransaction& tra);
+
+//---------------------------------------------------------------------------
 // EXISTING_CODE
 inline SFString wei2Ether(const SFString& _value)
 {
@@ -244,3 +250,5 @@ extern int sortTransactionsForWrite(const void *rr1, const void *rr2);
 extern SFString parse(const SFString& params, int nItems, SFString *types);
 extern SFString nextBlockChunk(const SFString& fieldIn, bool& force, const void *data);
 // EXISTING_CODE
+}  // namespace qblocks
+

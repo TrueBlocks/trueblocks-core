@@ -13,6 +13,8 @@
 #include "ethtypes.h"
 #include "abilib.h"
 
+namespace qblocks {
+
 //--------------------------------------------------------------------------
 class CAccountWatch;
 typedef SFArrayBase<CAccountWatch>         CAccountWatchArray;
@@ -35,20 +37,20 @@ public:
     SFIntBN inFlows;
     SFIntBN outFlows;
     SFIntBN corrections;
-    SFUintBN actBal;
+    SFUintBN nodeBal;
 
 public:
     CAccountWatch(void);
     CAccountWatch(const CAccountWatch& ac);
-   ~CAccountWatch(void);
+    ~CAccountWatch(void);
     CAccountWatch& operator=(const CAccountWatch& ac);
 
     DECLARE_NODE (CAccountWatch);
 
     // EXISTING_CODE
     CAccountWatch(uint32_t _id, const SFString& _addr, const SFString& _name, blknum_t fB, const SFString& _color)
-        : index(_id), address(toLower(_addr)), name(_name), color(_color), firstBlock(fB),
-          disabled(false), inFlows(0), outFlows(0), actBal(0) {}
+    : index(_id), address(toLower(_addr)), name(_name), color(_color), firstBlock(fB),
+    disabled(false), inFlows(0), outFlows(0), nodeBal(0) {}
     SFIntBN balance(void) const;
     SFIntBN correctedBal(void) const;
     void correctShun(SFIntBN cor) const;
@@ -115,7 +117,7 @@ inline void CAccountWatch::Init(void)
     inFlows = 0;
     outFlows = 0;
     corrections = 0;
-    actBal = 0;
+    nodeBal = 0;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -136,7 +138,7 @@ inline void CAccountWatch::Copy(const CAccountWatch& ac)
     inFlows = ac.inFlows;
     outFlows = ac.outFlows;
     corrections = ac.corrections;
-    actBal = ac.actBal;
+    nodeBal = ac.nodeBal;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -168,3 +170,5 @@ IMPLEMENT_ARCHIVE_LIST(CAccountWatchList);
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
+}  // namespace qblocks
+

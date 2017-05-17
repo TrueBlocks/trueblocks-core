@@ -14,6 +14,8 @@
 #include "abilib.h"
 #include "transaction.h"
 
+namespace qblocks {
+
 //--------------------------------------------------------------------------
 class CAccount;
 typedef SFArrayBase<CAccount>         CAccountArray;
@@ -39,7 +41,7 @@ public:
 public:
     CAccount(void);
     CAccount(const CAccount& ac);
-   ~CAccount(void);
+    ~CAccount(void);
     CAccount& operator=(const CAccount& ac);
 
     DECLARE_NODE (CAccount);
@@ -112,9 +114,9 @@ inline void CAccount::Init(void)
 //    transactions = ??; /* unknown type: CTransactionArray */
 
     // EXISTING_CODE
-//    abi = ??; /* unknown type: CAbi */
-//    abi.abiByName.Clear();
-//    abi.abiByEncoding.Clear();
+    //    abi = ??; /* unknown type: CAbi */
+    //    abi.abiByName.Clear();
+    //    abi.abiByEncoding.Clear();
     // EXISTING_CODE
 }
 
@@ -171,3 +173,5 @@ extern CFileExportContext& outErr;
 #define REP_FREQ   11
 #define REP_INFREQ 563
 // EXISTING_CODE
+}  // namespace qblocks
+

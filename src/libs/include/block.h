@@ -14,6 +14,8 @@
 #include "abilib.h"
 #include "transaction.h"
 
+namespace qblocks {
+
 //--------------------------------------------------------------------------
 class CBlock;
 typedef SFArrayBase<CBlock>         CBlockArray;
@@ -40,7 +42,7 @@ public:
 public:
     CBlock(void);
     CBlock(const CBlock& bl);
-   ~CBlock(void);
+    ~CBlock(void);
     CBlock& operator=(const CBlock& bl);
 
     DECLARE_NODE (CBlock);
@@ -134,13 +136,13 @@ inline void CBlock::Init(void)
     nonce = EMPTY;
     receiptRoot = EMPTY;
     receiptsRoot = EMPTY;
-//    sealFields = ??; /* unknown type: SFStringArray */
+    //    sealFields = ??; /* unknown type: SFStringArray */
     sha3Uncles = EMPTY;
     size = EMPTY;
     stateRoot = EMPTY;
     totalDifficulty = EMPTY;
     transactionsRoot = EMPTY;
-//    uncles = ??; /* unknown type: SFStringArray */
+    //    uncles = ??; /* unknown type: SFStringArray */
 #endif
     // EXISTING_CODE
 }
@@ -205,5 +207,11 @@ IMPLEMENT_ARCHIVE_ARRAY_C(CBlockArray);
 IMPLEMENT_ARCHIVE_LIST(CBlockList);
 
 //---------------------------------------------------------------------------
+extern SFArchive& operator<<(SFArchive& archive, const CBlock& blo);
+extern SFArchive& operator>>(SFArchive& archive, CBlock& blo);
+
+//---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
+}  // namespace qblocks
+

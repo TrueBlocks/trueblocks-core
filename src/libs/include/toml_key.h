@@ -9,35 +9,34 @@
 
 #include "list.h"
 
-//-------------------------------------------------------------------------
-class CTomlKey
-{
-public:
-	SFString keyName;
-	SFString value;
-	bool     comment;
+namespace qblocks {
 
-	       CTomlKey    (void);
-	       CTomlKey    (const CTomlKey& key);
-	CTomlKey& operator=(const CTomlKey& key);
-};
-typedef SFList<CTomlKey*> CTomlKeyList;
+    //-------------------------------------------------------------------------
+    class CTomlKey {
+    public:
+        SFString keyName;
+        SFString value;
+        bool     comment;
 
-//-------------------------------------------------------------------------
-inline CTomlKey::CTomlKey() : comment(false)
-{
-}
+        CTomlKey(void);
+        CTomlKey(const CTomlKey& key);
+        CTomlKey& operator=(const CTomlKey& key);
+    };
+    typedef SFList<CTomlKey*> CTomlKeyList;
 
-//-------------------------------------------------------------------------
-inline CTomlKey::CTomlKey(const CTomlKey& key) : keyName(key.keyName), value(key.value), comment(key.comment)
-{
-}
+    //-------------------------------------------------------------------------
+    inline CTomlKey::CTomlKey() : comment(false) {
+    }
 
-//-------------------------------------------------------------------------
-inline CTomlKey& CTomlKey::operator=(const CTomlKey& key)
-{
-	keyName = key.keyName;
-	value = key.value;
-	comment = key.comment;
-	return *this;
+    //-------------------------------------------------------------------------
+    inline CTomlKey::CTomlKey(const CTomlKey& key) : keyName(key.keyName), value(key.value), comment(key.comment) {
+    }
+
+    //-------------------------------------------------------------------------
+    inline CTomlKey& CTomlKey::operator=(const CTomlKey& key) {
+        keyName = key.keyName;
+        value = key.value;
+        comment = key.comment;
+        return *this;
+    }
 }

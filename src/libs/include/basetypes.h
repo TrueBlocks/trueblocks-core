@@ -8,6 +8,11 @@
  *------------------------------------------------------------------------*/
 
 //-------------------------------------------------------------------------
+#include <string>
+#include <sstream>
+#include <iostream>
+#include <fstream>
+#include <cstdint>
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
@@ -22,41 +27,58 @@
 #include <unistd.h>
 #include <sys/stat.h>
 #include <pwd.h>
-#include <string>
-#include <sstream>
-#include <iostream>
+#include <signal.h>
+#include <unistd.h>
+#include <glob.h>
+#include <libgen.h>
+#include <sys/timeb.h>
+#include <curl/curl.h>
 using namespace std;
 
-//-------------------------------------------------------------------------
-using SF_TIMESTRUCT = struct tm;
-using SFUint32 = unsigned long;
+namespace qblocks {
 
-//-------------------------------------------------------------------------
-#ifndef MIN
-#define MIN(a, b) (((a)>(b)) ? (b) : (a))
-#define MAX(a, b) (((a)>(b)) ? (a) : (b))
-#endif
+    //-------------------------------------------------------------------------
+    using SFUint32 = uint64_t;
 
-//-------------------------------------------------------------------------
-#define SECS_PER_DAY  (24*60*60)
-#define SECS_PER_HOUR    (60*60)
-#define SECS_PER_MIN        (60)
+    //-------------------------------------------------------------------------
+    #ifndef MIN
+    #define MIN(a, b) (((a)>(b)) ? (b) : (a))
+    #define MAX(a, b) (((a)>(b)) ? (a) : (b))
+    #endif
 
-//-------------------------------------------------------------------------
-#ifdef _DEBUG
-#define ASSERT(a) { if (!(a)) { cout << "error at " << __FILE__ << "(" << __LINE__ << ")\n"; } }
-#define VERIFY(a) { if (!(a)) { cout << "error at " << __FILE__ << "(" << __LINE__ << ")\n"; } (a); }
-#else
-#define ASSERT(a)
-#define VERIFY(a) (a)
-#endif
+    //-------------------------------------------------------------------------
+    #define SECS_PER_DAY  (24*60*60)
+    #define SECS_PER_HOUR    (60*60)
+    #define SECS_PER_MIN        (60)
 
-//-------------------------------------------------------------------------
-template<class T>
-inline bool inRange(T val, T min, T max)
-{
-	return (val >= min && val <= max);
-}
+    //-------------------------------------------------------------------------
+    #ifdef _DEBUG
+    #define ASSERT(a) { if (!(a)) { cout << "error at " << __FILE__ << "(" << __LINE__ << ")\n"; } }
+    #define VERIFY(a) { if (!(a)) { cout << "error at " << __FILE__ << "(" << __LINE__ << ")\n"; } (a); }
+    #else
+    #define ASSERT(a)
+    #define VERIFY(a) (a)
+    #endif
+
+    //-------------------------------------------------------------------------
+    template<class T>
+    inline bool inRange(T val, T min, T max)
+    {
+        return (val >= min && val <= max);
+    }
+
+}  // namespace qblocks
 
 //-------------------------------------------------------------------------
 #include "sfstring.h"
+#include "string_utils.h"
+#include "list.h"
+
+//-------------------------------------------------------------------------
+namespace qblocks {
+
+    typedef SFArrayBase<SFString> SFStringArray;
+    typedef SFList<SFString> SFStringList;
+    typedef SFArrayBase<SFUint32> SFUintArray;
+
+}  // namespace qblocks

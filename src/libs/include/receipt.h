@@ -14,6 +14,8 @@
 #include "abilib.h"
 #include "logentry.h"
 
+namespace qblocks {
+
 //--------------------------------------------------------------------------
 class CReceipt;
 typedef SFArrayBase<CReceipt>         CReceiptArray;
@@ -36,7 +38,7 @@ public:
 public:
     CReceipt(void);
     CReceipt(const CReceipt& re);
-   ~CReceipt(void);
+    ~CReceipt(void);
     CReceipt& operator=(const CReceipt& re);
 
     DECLARE_NODE (CReceipt);
@@ -174,6 +176,12 @@ IMPLEMENT_ARCHIVE_ARRAY_C(CReceiptArray);
 IMPLEMENT_ARCHIVE_LIST(CReceiptList);
 
 //---------------------------------------------------------------------------
+extern SFArchive& operator<<(SFArchive& archive, const CReceipt& rec);
+extern SFArchive& operator>>(SFArchive& archive, CReceipt& rec);
+
+//---------------------------------------------------------------------------
 // EXISTING_CODE
 extern SFString nextTransactionChunk(const SFString& fieldIn, bool& force, const void *data);
 // EXISTING_CODE
+}  // namespace qblocks
+

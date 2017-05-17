@@ -15,6 +15,8 @@
 #include "traceaction.h"
 #include "traceresult.h"
 
+namespace qblocks {
+
 //--------------------------------------------------------------------------
 class CTrace;
 typedef SFArrayBase<CTrace>         CTraceArray;
@@ -28,20 +30,20 @@ typedef SFUniqueList<CTrace*>       CTraceListU;
 class CTrace : public CBaseNode
 {
 public:
-    CTraceAction action;
     SFHash blockHash;
     SFUint32 blockNumber;
-    CTraceResult result;
     SFUint32 subtraces;
     SFStringArray traceAddress;
     SFHash transactionHash;
     SFUint32 transactionPosition;
     SFString type;
+    CTraceAction action;
+    CTraceResult result;
 
 public:
     CTrace(void);
     CTrace(const CTrace& tr);
-   ~CTrace(void);
+    ~CTrace(void);
     CTrace& operator=(const CTrace& tr);
 
     DECLARE_NODE (CTrace);
@@ -98,15 +100,15 @@ inline void CTrace::Init(void)
 {
     CBaseNode::Init();
 
-//    action = ??; /* unknown type: CTraceAction */
 //    blockHash = EMPTY;
     blockNumber = 0;
-//    result = ??; /* unknown type: CTraceResult */
     subtraces = 0;
-//    traceAddress = ??; /* unknown type: SFAddressArray */
+//    traceAddress = ??; /* unknown type: SFStringArray */
 //    transactionHash = EMPTY;
     transactionPosition = 0;
 //    type = EMPTY;
+//    action = ??; /* unknown type: CTraceAction */
+//    result = ??; /* unknown type: CTraceResult */
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -118,15 +120,15 @@ inline void CTrace::Copy(const CTrace& tr)
     Clear();
     CBaseNode::Copy(tr);
 
-    action = tr.action;
     blockHash = tr.blockHash;
     blockNumber = tr.blockNumber;
-    result = tr.result;
     subtraces = tr.subtraces;
     traceAddress = tr.traceAddress;
     transactionHash = tr.transactionHash;
     transactionPosition = tr.transactionPosition;
     type = tr.type;
+    action = tr.action;
+    result = tr.result;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -158,3 +160,5 @@ IMPLEMENT_ARCHIVE_LIST(CTraceList);
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
+}  // namespace qblocks
+

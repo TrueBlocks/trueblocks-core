@@ -8,135 +8,85 @@
  *------------------------------------------------------------------------*/
 
 #include "database.h"
-#include "toml_key.h"
-#include "toml_group.h"
 
-//-------------------------------------------------------------------------
-class CToml : public CSharedResource
-{
-public:
-	CTomlGroupList groups;
+namespace qblocks {
 
-public:
-	 CToml(void);
-	~CToml(void);
+    //-------------------------------------------------------------------------
+    class CToml : public CSharedResource {
+    private:
+        void Clear(void);
+        // no copies
+        CToml(const CToml& toml);
+        CToml& operator= (const CToml& toml);
 
-	SFString getConfigStr (const SFString& group, const SFString& key, const SFString& def) const;
-	uint32_t getConfigInt (const SFString& group, const SFString& key, uint32_t def) const;
-    bool     getConfigBool(const SFString& group, const SFString& key, bool del) const;
+        //-------------------------------------------------------------------------
+        // support class for toml file
+        class CTomlKey {
+        public:
+            SFString keyName;
+            SFString value;
+            bool     comment;
 
-	void     setConfigStr (const SFString& group, const SFString& key, const SFString& value);
-	void     setConfigInt (const SFString& group, const SFString& key, uint32_t value);
-	void     setConfigBool(const SFString& group, const SFString& key, bool value);
+            CTomlKey(void);
+            CTomlKey(const CTomlKey& key);
+            CTomlKey& operator=(const CTomlKey& key);
+        };
+        typedef SFList<CTomlKey*> CTomlKeyList;
 
-	bool     writeFile    (void);
-	bool     readFile     (const SFString& filename);
-	void     mergeFile    (CToml *tomlIn);
+        //-------------------------------------------------------------------------
+        // support class for toml file
+        class CTomlGroup {
+        public:
+            SFString  groupName;
+            bool      comment;
+            CTomlKeyList keys;
 
-protected:
-	CTomlGroup *addGroup  (const SFString& group, bool commented);
-	CTomlGroup *findGroup (const SFString& group) const;
+            CTomlGroup(void);
+            CTomlGroup(const CTomlGroup& group);
 
-	CTomlKey *addKey      (const SFString& group, const SFString& key, const SFString& val, bool commented);
-	CTomlKey *findKey     (const SFString& group, const SFString& key) const;
+            ~CTomlGroup(void);
 
-private:
-	void Clear(void);
-	// no copies
-	CToml(const CToml& toml);
-	CToml& operator= (const CToml& toml);
-};
+            CTomlGroup& operator=(const CTomlGroup& group);
 
-//-------------------------------------------------------------------------
-extern ostream& operator<<(ostream& os, const CToml& t);
+            CTomlKey *addKey(const SFString& keyName, const SFString& val, bool commented);
+            CTomlKey *findKey(const SFString& keyName) const;
 
-//-------------------------------------------------------------------------
-inline CToml::CToml(void)
-{
-}
+        private:
+            void Clear(void);
+            void Copy(const CTomlGroup& group);
 
-//-------------------------------------------------------------------------
-inline CToml::~CToml(void)
-{
-	Clear();
-}
+        };
+        typedef SFList<CTomlGroup*> CTomlGroupList;
 
-//-------------------------------------------------------------------------
-inline void CToml::Clear(void)
-{
-	LISTPOS gPos = groups.GetHeadPosition();
-	while (gPos)
-	{
-		CTomlGroup *group = groups.GetNext(gPos);
-		delete group;
-	}
-	groups.RemoveAll();
-}
+    protected:
+        CTomlGroup *addGroup(const SFString& group, bool commented);
+        CTomlGroup *findGroup(const SFString& group) const;
 
-//-------------------------------------------------------------------------
-inline CTomlGroup *CToml::addGroup(const SFString& group, bool commented)
-{
-	ASSERT(!findGroup(group));
-	CTomlGroup *newGroup = new CTomlGroup;
-	newGroup->comment = commented;
-	newGroup->groupName = group;
-	groups.AddTail(newGroup);
-	return newGroup;
-}
+        CTomlKey *addKey(const SFString& group, const SFString& key, const SFString& val, bool commented);
+        CTomlKey *findKey(const SFString& group, const SFString& key) const;
 
-//-------------------------------------------------------------------------
-inline CTomlGroup *CToml::findGroup(const SFString& group) const
-{
-	LISTPOS gPos = groups.GetHeadPosition();
-	while (gPos)
-	{
-		CTomlGroup *grp = groups.GetNext(gPos);
-		if (grp->groupName == group)
-			return grp;
-	}
-	return NULL;
-}
+    public:
+        CTomlGroupList groups;
 
-//-------------------------------------------------------------------------
-inline CTomlKey *CToml::addKey(const SFString& group, const SFString& key, const SFString& val, bool commented)
-{
-	CTomlGroup *grp = findGroup(group);
-	ASSERT(grp);
-	return grp->addKey(key, val, commented);
-}
+        CToml(void);
+        ~CToml(void);
 
-//-------------------------------------------------------------------------
-inline CTomlKey *CToml::findKey(const SFString& group, const SFString& key) const
-{
-	CTomlGroup *grp = findGroup(group);
-	if (grp)
-		return grp->findKey(key);
-	return NULL;
-}
+        SFString getConfigStr(const SFString& group, const SFString& key, const SFString& def) const;
+        uint64_t getConfigInt(const SFString& group, const SFString& key, uint64_t def) const;
+        bool getConfigBool(const SFString& group, const SFString& key, bool def) const;
 
-//-------------------------------------------------------------------------
-inline uint32_t CToml::getConfigInt(const SFString& group, const SFString& key, uint32_t def) const
-{
-	SFString ret = getConfigStr(group, key, asString(def));
-	return toLong32u(ret);
-}
+        void setConfigStr(const SFString& group, const SFString& key, const SFString& value);
+        void setConfigInt(const SFString& group, const SFString& key, uint64_t value);
+        void setConfigBool(const SFString& group, const SFString& key, bool value);
 
-//-------------------------------------------------------------------------
-inline bool CToml::getConfigBool(const SFString& group, const SFString& key, bool def) const
-{
-	SFString ret = getConfigStr(group, key, asString(def));
-    ret.ReplaceAny(";\t\n\r ","");
-	return ((ret == "true" || ret == "1") ? true : false);
-}
+        bool writeFile(void);
+        bool readFile(const SFString& filename);
+        void mergeFile(CToml *tomlIn);
 
-//-------------------------------------------------------------------------
-inline void CToml::setConfigInt(const SFString& group, const SFString& key, uint32_t value)
-{
-	setConfigStr(group, key, asString(value));
-}
+        friend ostream& operator<<(ostream& os, const CToml& tomlIn);
+    };
 
-//-------------------------------------------------------------------------
-inline void CToml::setConfigBool(const SFString& group, const SFString& key, bool value)
-{
-	setConfigStr(group, key, asString(value));
-}
+    //-------------------------------------------------------------------------
+    extern ostream& operator<<(ostream& os, const CToml& t);
+
+}  // namespace qblocks

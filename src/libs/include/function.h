@@ -13,6 +13,8 @@
 #include "utillib.h"
 #include "parameter.h"
 
+namespace qblocks {
+
 //--------------------------------------------------------------------------
 class CFunction;
 typedef SFArrayBase<CFunction>         CFunctionArray;
@@ -39,7 +41,7 @@ public:
 public:
     CFunction(void);
     CFunction(const CFunction& fu);
-   ~CFunction(void);
+    ~CFunction(void);
     CFunction& operator=(const CFunction& fu);
 
     DECLARE_NODE (CFunction);
@@ -165,3 +167,5 @@ IMPLEMENT_ARCHIVE_LIST(CFunctionList);
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
+}  // namespace qblocks
+

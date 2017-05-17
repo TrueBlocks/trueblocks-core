@@ -13,6 +13,8 @@
 #include "function.h"
 #include "parameter.h"
 
+namespace qblocks {
+
 //--------------------------------------------------------------------------
 class CAbi;
 typedef SFArrayBase<CAbi>         CAbiArray;
@@ -32,18 +34,18 @@ public:
 public:
     CAbi(void);
     CAbi(const CAbi& ab);
-   ~CAbi(void);
+    ~CAbi(void);
     CAbi& operator=(const CAbi& ab);
 
     DECLARE_NODE (CAbi);
 
     // EXISTING_CODE
-        void clearABI(void);
-        bool loadABI  (const SFString& addr, bool append=false);
+    void clearABI(void);
+    bool loadABI  (const SFString& addr, bool append=false);
 #if 1 //NEW_CODE
-        CFunction *findFunctionByName(const SFString& search);
+    CFunction *findFunctionByName(const SFString& search);
 #endif
-        CFunction *findFunctionByEncoding(const SFString& search);
+    CFunction *findFunctionByEncoding(const SFString& search);
     // EXISTING_CODE
 
 protected:
@@ -147,4 +149,7 @@ extern bool isTesting;
 extern CFileExportContext& outErr;
 #define REP_FREQ   11
 #define REP_INFREQ 563
+void clearAbis(void);
 // EXISTING_CODE
+}  // namespace qblocks
+

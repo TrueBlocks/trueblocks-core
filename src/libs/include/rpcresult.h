@@ -12,6 +12,8 @@
  */
 #include "utillib.h"
 
+namespace qblocks {
+
 //--------------------------------------------------------------------------
 class CRPCResult;
 typedef SFArrayBase<CRPCResult>         CRPCResultArray;
@@ -32,7 +34,7 @@ public:
 public:
     CRPCResult(void);
     CRPCResult(const CRPCResult& rp);
-   ~CRPCResult(void);
+    ~CRPCResult(void);
     CRPCResult& operator=(const CRPCResult& rp);
 
     DECLARE_NODE (CRPCResult);
@@ -137,3 +139,5 @@ IMPLEMENT_ARCHIVE_LIST(CRPCResultList);
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
+}  // namespace qblocks
+

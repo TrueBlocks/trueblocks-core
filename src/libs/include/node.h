@@ -9,12 +9,15 @@
 
 #include "etherlib.h"
 
+namespace qblocks {
+
 #define BLOCK_CACHE SFString("/Volumes/Samsung_T3/scraper/")
 
 #define contractAddrs  (BLOCK_CACHE+"contracts.bin")
 #define fullBlockIndex (BLOCK_CACHE+"fullBlocks.bin")
 #define miniBlockCache (BLOCK_CACHE+"miniBlocks.bin")
 #define miniTransCache (BLOCK_CACHE+"miniTrans.bin")
+#define blockFolder    (BLOCK_CACHE+"blocks/")
 
 //-----------------------------------------------------------------------
 extern bool     readOneBlock_fromJson   (      CBlock& block,   const SFString& fileName);
@@ -33,6 +36,7 @@ extern void     freshenLocalCache       (bool indexOnly);
 //-------------------------------------------------------------------------
 extern bool     getCode                 (const SFAddress& addr, SFString& theCode);
 inline SFString getCode                 (const SFAddress& addr) { SFString ret; getCode(addr, ret); return ret; }
+inline bool     isContract              (const SFAddress& addr) { return !getCode(addr).Substitute("0x","").empty(); }
 extern SFUintBN getBalance              (const SFAddress& addr, blknum_t blockNum);
 extern bool     getSha3                 (const SFString& hexIn, SFString& shaOut);
 inline SFString getSha3                 (const SFString& hexIn) { SFString ret; getSha3(hexIn,ret); return ret; }
@@ -89,25 +93,21 @@ extern bool forEveryMiniBlockInMemory    (MINIBLOCKVISITFUNC func, void *data, S
 extern void clearInMemoryCache           (void);
 
 //-------------------------------------------------------------------------
-extern bool visitBlock                   (CBlock& block, void *data);
-extern bool visitMini                    (CMiniBlock& block, const CMiniTrans *trans, void *data);
-
-//-------------------------------------------------------------------------
 class CBlockVisitor
 {
 public:
-	CBlockVisitor(SFUint32 fb, SFUint32 c) : m_firstBlock(fb), m_cnt(c) { }
-	SFUint32 firstBlock() const { return m_firstBlock; }
-	SFUint32 getCount() const { return m_cnt; }
-	void setFirst(SFUint32 n) { m_firstBlock = n; }
-	void setCount(SFUint32 n) { m_cnt = n; }
+    CBlockVisitor(SFUint32 fb, SFUint32 c) : m_firstBlock(fb), m_cnt(c) { }
+    SFUint32 firstBlock() const { return m_firstBlock; }
+    SFUint32 getCount() const { return m_cnt; }
+    void setFirst(SFUint32 n) { m_firstBlock = n; }
+    void setCount(SFUint32 n) { m_cnt = n; }
 
 protected:
-	SFUint32 m_firstBlock;
-	SFUint32 m_cnt;
+    SFUint32 m_firstBlock;
+    SFUint32 m_cnt;
 
 private:
-	CBlockVisitor(void) : m_firstBlock(0), m_cnt(0) { }
+    CBlockVisitor(void) : m_firstBlock(0), m_cnt(0) { }
 };
 
 // Syntactic Sugar (TODO: These should be removed from the library)
@@ -130,21 +130,22 @@ inline void   forEveryMiniBlockInMemory  (MINIBLOCKVISITFUNC func, CBlockVisitor
 //-------------------------------------------------------------------------
 inline SFUintBN makeBloom(const SFString& hexIn)
 {
-	SFString sha = getSha3(hexIn);
-	SFUintBN bloom;
-	for (uint32_t i=0;i<3;i++)
-		bloom |= (SFUintBN(1) << (strtoul((const char*)"0x"+sha.substr(2+(i*4),4),NULL,16))%2048);
-	return bloom;
+    SFString sha = getSha3(hexIn);
+    SFUintBN bloom;
+    for (uint32_t i=0;i<3;i++)
+        bloom |= (SFUintBN(1) << (strtoul((const char*)"0x"+sha.substr(2+(i*4),4),NULL,16))%2048);
+    return bloom;
 }
 
 //-------------------------------------------------------------------------
 inline bool isBloomHit(const SFUintBN& test, const SFUintBN filter)
 {
-	return ((test & filter) == test);
+    return ((test & filter) == test);
 }
 
 //-------------------------------------------------------------------------
 inline bool isBloomHit(const SFString& hexIn, const SFUintBN filter)
 {
-	return isBloomHit(makeBloom(hexIn),filter);
+    return isBloomHit(makeBloom(hexIn),filter);
 }
+}  // namespace qblocks
