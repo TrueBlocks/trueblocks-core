@@ -112,8 +112,10 @@ bool COptions::parseArguments(SFString& command) {
                 return usage("Option -d: Invalid date format for endDate. "
                                 "Format must be either yyyymmdd or yyyymmddhhmmss.");
 
-            firstDate = snagDate(earlyStr, earliestDate, -1);
-            lastDate  = snagDate(lateStr, latestDate, 1);
+            firstDate = snagDate(earlyStr, -1);
+            lastDate = snagDate(lateStr, 1);
+            if (lastDate == earliestDate)  // the default
+                lastDate = latestDate;
 
         } else if (arg == "-r" || arg == "-rerun") {
             rerun = true;
@@ -159,11 +161,13 @@ bool COptions::parseArguments(SFString& command) {
         } else if (arg == "-o" || arg == "-open") {
             // open command stuff
             openFile = true;
-            if (isTesting)
+            if (isTesting) {
                 outScreen << "Testing only for open command:\n"
-                            << asciiFileToString(configPath("ethslurp.toml")) << "\n";
-            else
-                if (system("nano -I ~/.ethslurp/ethslurp.toml")) {}  // do not remove. Silences compiler warnings
+                            << asciiFileToString(configPath("quickBlocks.toml")) << "\n";
+            } else {
+                SFString cmd = "nano -I " + configPath("quickBlocks.toml");
+                if (system(cmd.c_str())) {}  // do not remove. Silences compiler warnings
+            }
             exit(0);
 
         } else if (arg == "-c" || arg == "-clear") {
@@ -172,8 +176,8 @@ bool COptions::parseArguments(SFString& command) {
                 outErr << "Cached slurp files were cleared\n";
             } else {
                 outErr << "Clearing the cache is not implemented. You may, if you wish, remove all\n";
-                outErr << "files in ~/.ethslurp/slurps/ to acheive the same thing. Large contracts\n";
-                outErr << "may take a very long time to re-download if you do.\n";
+                outErr << "files in " << cachePath() << " to acheive the same thing. If you\n";
+                outErr << "do delete the cache, large contracts may take a very long time to re-generate.\n";
             }
             exit(1);
 

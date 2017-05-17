@@ -16,7 +16,7 @@ int main(int argc, const char * argv[]) {
     CSlurperApp slurper;
     COptions options;
 
-    if (!options.prepareArguments(argc, argv, "ethslurp"))
+    if (!options.prepareArguments(argc, argv))
         return 0;
 
     while (!options.commandList.empty()) {
@@ -130,8 +130,7 @@ bool CSlurperApp::Initialize(COptions& options, SFString& message) {
     if (!options.rerun) {
         theAccount.transactions.Clear();
         theAccount = CAccount();
-        extern uint32_t nAbis;
-        nAbis = 0;
+        clearAbis();
     }
 
     // We are ready to slurp
@@ -145,7 +144,7 @@ bool CSlurperApp::Initialize(COptions& options, SFString& message) {
 
 //--------------------------------------------------------------------------------
 bool CSlurperApp::Slurp(COptions& options, SFString& message) {
-    double start = vrNow();
+    double start = qbNow();
 
     // We always need the ABI
     theAccount.abi.loadABI(theAccount.addr);
@@ -247,7 +246,7 @@ bool CSlurperApp::Slurp(COptions& options, SFString& message) {
         // pre allocate the array (probably wrong input here--Grow takes max needed size, not addition size needed)
         theAccount.transactions.Grow(nRead);
 
-        long lastBlock = 0;  // DO NOT CHANGE! MAKES A BUG IF YOU MAKE IT UNSIGNED NOLINT
+        int64_t lastBlock = 0;  // DO NOT CHANGE! MAKES A BUG IF YOU MAKE IT UNSIGNED NOLINT
         char *p = cleanUpJson((char *)(contents.c_str()));  // NOLINT
         while (p && *p) {
             CTransaction trans;
@@ -255,7 +254,7 @@ bool CSlurperApp::Slurp(COptions& options, SFString& message) {
             trans.pParent = &theAccount;
             p = trans.parseJson(p, nFields);
             if (nFields) {
-                long transBlock = trans.blockNumber;  // NOLINT
+                int64_t transBlock = trans.blockNumber;  // NOLINT
                 if (transBlock > theAccount.lastBlock) {  // add the new transaction if it's in a new block
                     theAccount.transactions[nextRecord++] = trans;
                     lastBlock = transBlock;
@@ -290,7 +289,7 @@ bool CSlurperApp::Slurp(COptions& options, SFString& message) {
     }
 
     if (!isTesting) {
-        double stop = vrNow();
+        double stop = qbNow();
         double timeSpent = stop-start;
         fprintf(stderr, "\tLoaded %d total records in %f seconds\n", theAccount.transactions.getCount(), timeSpent);
         fflush(stderr);
@@ -301,7 +300,7 @@ bool CSlurperApp::Slurp(COptions& options, SFString& message) {
 
 //--------------------------------------------------------------------------------
 bool CSlurperApp::Filter(COptions& options, SFString& message) {
-    double start = vrNow();
+    double start = qbNow();
 
     uint32_t nFuncFilts = 0;
     SFString funcFilts[20];
@@ -319,7 +318,7 @@ bool CSlurperApp::Filter(COptions& options, SFString& message) {
 
         // The -blocks and -dates filters are mutually exclusive, -dates predominates.
         if (options.firstDate != earliestDate || options.lastDate != latestDate) {
-            SFTime date = dateFromTimeStamp(trans->timeStamp);
+            SFTime date = dateFromTimeStamp(trans->timestamp);
             bool isVisible = (date >= options.firstDate && date <= options.lastDate);
             trans->m_showing = isVisible;
 
@@ -358,7 +357,7 @@ bool CSlurperApp::Filter(COptions& options, SFString& message) {
         }
 
         theAccount.nVisible += trans->m_showing;
-        long nFiltered = (theAccount.nVisible + 1);  // NOLINT
+        int64_t nFiltered = (theAccount.nVisible + 1);  // NOLINT
         if (!(nFiltered % REP_INFREQ)) {
             outErr << "\t" << "Filtering..." << nFiltered << " records passed." << (isTesting ? "\n" : "\r");
             outErr.Flush();
@@ -366,9 +365,9 @@ bool CSlurperApp::Filter(COptions& options, SFString& message) {
     }
 
     if (!isTesting) {
-        double stop = vrNow();
+        double stop = qbNow();
         double timeSpent = stop-start;
-        fprintf(stderr, "\tFilter passed %ld visible records of %d in %f seconds\n",
+        fprintf(stderr, "\tFilter passed %llu visible records of %u in %f seconds\n",
                     theAccount.nVisible, theAccount.transactions.getCount(), timeSpent);
         fflush(stderr);
     }
@@ -378,15 +377,15 @@ bool CSlurperApp::Filter(COptions& options, SFString& message) {
 
 //---------------------------------------------------------------------------------------------------
 bool CSlurperApp::Display(COptions& options, SFString& message) {
-    double start = vrNow();
+    double start = qbNow();
     if (options.reverseSort)
         theAccount.transactions.Sort(sortReverseChron);
     theAccount.Format(outScreen, getFormatString(options, "file", false));
 
     if (!isTesting) {
-        double stop = vrNow();
+        double stop = qbNow();
         double timeSpent = stop-start;
-        fprintf(stderr, "\tExported %ld records in %f seconds             \n\n", theAccount.nVisible, timeSpent);
+        fprintf(stderr, "\tExported %lld records in %f seconds             \n\n", theAccount.nVisible, timeSpent);
         fflush(stderr);
     }
     return true;
@@ -525,7 +524,7 @@ bool establishFolders(CToml& toml) {
         exit(0);
     }
 
-    SFString tomlFilename = configPath("ethslurp.toml");
+    SFString tomlFilename = configPath("quickBlocks.toml");
     toml.setFilename(tomlFilename);
     if (folderExists(cachePath()) && fileExists(tomlFilename)) {
         toml.readFile(tomlFilename);
@@ -579,7 +578,7 @@ int sortReverseChron(const void *rr1, const void *rr2) {
     const CTransaction *tr2 = reinterpret_cast<const CTransaction*>(rr2);
 
     int32_t ret;
-    ret = (uint32_t)(tr2->timeStamp - tr1->timeStamp);
+    ret = (uint32_t)(tr2->timestamp - tr1->timestamp);
     if (ret != 0)
         return ret;
     return sortTransactionsForWrite(rr1, rr2);

@@ -34,8 +34,3 @@ private:
 //---------------------------------------------------------------------------------------------------
 extern bool establishFolders(CToml& toml);
 extern void findBlockRange(const SFString& contents, uint32_t& minBlock, uint32_t& maxBlock);
-
-//---------------------------------------------------------------------------------------------------
-extern void reportTimes(const SFString& func, double start, double stop, double timeSpent);
-#define START_TIMER() PERF_START();
-#define STOP_TIMER(func) PERF_STOP(); reportTimes(func, timerStart, timerStop, timeSpent);
