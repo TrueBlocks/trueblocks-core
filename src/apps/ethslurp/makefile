@@ -46,12 +46,12 @@ test: all
 back:
 	@rm -fR theData/backup
 	@mkdir theData/backup
-	@cp -pR ~/.ethslurp/abis          theData/backup/
-	@cp -pR ~/.ethslurp/configs       theData/backup/
-	@cp -pR ~/.ethslurp/slurps        theData/backup/
-	@cp -pR ~/.ethslurp/prices        theData/backup/
-	@cp -p  ~/.ethslurp/ethslurp.toml theData/backup/
-	@cp -p  ~/.ethslurp/prices.bin    theData/backup/
+	@cp -pR ~/.quickBlocks/abis             theData/backup/
+	@cp -pR ~/.quickBlocks/configs          theData/backup/
+	@cp -pR ~/.quickBlocks/slurps           theData/backup/
+	@cp -pR ~/.quickBlocks/prices           theData/backup/
+	@cp -p  ~/.quickBlocks/quickBlocks.toml theData/backup/
+	@cp -p  ~/.quickBlocks/prices.bin       theData/backup/
 
 $(product): $(objects) $(libs)
 	$(CXX) -o $(product) $(objects) $(libs)
