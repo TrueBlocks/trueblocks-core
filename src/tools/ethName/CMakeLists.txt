@@ -40,7 +40,7 @@ target_link_libraries (${TOOL_NAME} ${PROJECT_STATIC_LIBS})
 # readme target
 set(TOOLS_PATH "${CMAKE_SOURCE_DIR}/tools")
 set(CURRENT_TOOL_PATH "${TOOLS_PATH}/${TOOL_NAME}")
-set(README_FILE "README.carlos")
+set(README_FILE "README.md")
 add_custom_target(readme 
 	COMMAND ${EXECUTABLE_OUTPUT_PATH}/${TOOL_NAME} -th > ${README_FILE}
 	DEPENDS ${TOOL_NAME}
