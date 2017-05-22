@@ -6,6 +6,10 @@ project(quickBlocks)
 # Debug msg
 # message(DEBUG  "Building src")
 
+set_property(GLOBAL PROPERTY ALLOW_DUPLICATE_CUSTOM_TARGETS 1)
+
+set(README_TARGET "readme")
+
 # Compilation order of the src subdirectories
 add_subdirectory(libs)
 add_subdirectory(apps)
