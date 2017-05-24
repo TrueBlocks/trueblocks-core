@@ -48,3 +48,11 @@ add_custom_target(${README_TARGET}
 	COMMENT "Generating README.md file for ${TOOL_NAME}"
         VERBATIM)
 
+# plint target
+add_custom_target(${LINT_TARGET}
+        COMMAND ${PYLINT_CMD} ${SOURCE_FILES}
+        WORKING_DIRECTORY ${CURRENT_TOOL_PATH}
+        COMMENT "Running pylint for ${TOOL_NAME}"
+        VERBATIM)
+
+
