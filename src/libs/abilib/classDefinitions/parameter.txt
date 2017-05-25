@@ -1,0 +1,3 @@
+class:		CParameter
+fields:		bool indexed|string name|string type|bool isPointer|bool isArray|bool isObject|string strDefault
+includes:	utillib.h
