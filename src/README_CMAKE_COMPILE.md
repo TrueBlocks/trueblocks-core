@@ -1,6 +1,6 @@
 To compile whole project using cmake do:
 
-At MAC environments, using command line:
+From the command line:
 
 1) cd <project_path>/src
 2) mkdir build
@@ -8,11 +8,11 @@ At MAC environments, using command line:
 4) cmake ..
 5) make
 
-# If you want to clean repeat
+# If you want to clean and rebuild
 1) make clean
 2) make
 
-# If something changed at CMake files
+# If the CMake files changed
 1) cd <project_path>/src/build
 2) rm -rf *
 3) cmake ..
