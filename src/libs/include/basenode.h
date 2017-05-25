@@ -15,8 +15,7 @@ namespace qblocks {
     class SFArchive;
 
     //----------------------------------------------------------------------------
-    class CBaseNode
-    {
+    class CBaseNode {
     public:
         SFUint32 m_deleted;
         SFUint32 m_schema;
@@ -36,6 +35,7 @@ namespace qblocks {
         virtual char *parseJson(char *s);
         virtual char *parseCSV(char *s, uint32_t& nFields, const SFString *fields);
         virtual char *parseText(char *s, uint32_t& nFields, const SFString *fields);
+        virtual SFString toJson1(void) const;
         virtual SFString toJson(void) const;
         virtual SFString toJson(const SFString& fields) const;
         virtual SFString toJson(const CFieldList *fields) const;
@@ -43,7 +43,7 @@ namespace qblocks {
 
         DECLARE_NODE_BASE(CBaseNode)
 
-        virtual SFString getValueByName (const SFString& fieldName) const = 0;
+        virtual SFString getValueByName(const SFString& fieldName) const = 0;
         virtual bool setValueByName(const SFString& fieldName, const SFString& fieldValue) = 0;
         virtual bool Serialize(SFArchive& archive) = 0;
         virtual bool SerializeC(SFArchive& archive) const = 0;
@@ -51,7 +51,7 @@ namespace qblocks {
         virtual SFString Format(const SFString& fmtIn = "") const = 0;
 
     protected:
-        bool preSerialize (SFArchive& archive);
+        bool preSerialize(SFArchive& archive);
         bool postSerialize(SFArchive& archive);
         bool preSerializeC(SFArchive& archive) const;
         bool postSerializeC(SFArchive& archive) const;
@@ -71,8 +71,8 @@ namespace qblocks {
     extern char *cleanUpJson(char *s);
 
     //--------------------------------------------------------------------------------------------------------------
-    typedef SFString (*NEXTCHUNKFUNC) (const SFString& fieldIn, bool& forceShow, const void *data);
-    
+    typedef SFString (*NEXTCHUNKFUNC)(const SFString& fieldIn, bool& forceShow, const void *data);
+
     //--------------------------------------------------------------------------------------------------------------
     SFString getNextChunk(SFString& fmtOut, NEXTCHUNKFUNC func, const void *data);
-}
+}  // namespace qblocks

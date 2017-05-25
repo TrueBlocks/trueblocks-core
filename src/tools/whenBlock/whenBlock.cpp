@@ -92,7 +92,7 @@ bool lookCloser(CBlock& block, void *data) {
 //---------------------------------------------------------------
 bool lookupDate(CBlock& block, const SFTime& date) {
     if (!blocks) {
-        nBlocks = SFos::fileSize(miniBlockCache) / sizeof(CMiniBlock);
+        nBlocks = fileSize(miniBlockCache) / sizeof(CMiniBlock);
         blocks = new CMiniBlock[nBlocks];
         if (!blocks)
             return usage("Could not allocate memory for the blocks (size needed: " + asString(nBlocks) + ").\n");

@@ -120,7 +120,7 @@ namespace qblocks {
             return;
 
         // The user is requesting access to an index that is past range. We need to grow the array.
-        uint32_t newSize = MAX(m_nSize + ARRAY_CHUNK_SIZE, sizeNeeded);
+        uint32_t newSize = max(m_nSize + ARRAY_CHUNK_SIZE, sizeNeeded);
         TYPE *newArray = new TYPE[newSize];
         if (m_nValues) {
             ASSERT(m_Values);
@@ -571,4 +571,8 @@ namespace qblocks {
     public:
         SFUniqueStringList(void) : SFUniqueList(sortByStringValue, compareStringValue) { }
     };
+
+    typedef SFArrayBase<SFString> SFStringArray;
+    typedef SFList<SFString> SFStringList;
+    typedef SFArrayBase<SFUint32> SFUintArray;
 }

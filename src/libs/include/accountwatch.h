@@ -12,6 +12,7 @@
  */
 #include "ethtypes.h"
 #include "abilib.h"
+#include "incomestatement.h"
 
 namespace qblocks {
 
@@ -34,10 +35,8 @@ public:
     SFString color;
     SFUint32 firstBlock;
     bool disabled;
-    SFIntBN inFlows;
-    SFIntBN outFlows;
-    SFIntBN corrections;
-    SFUintBN nodeBal;
+    CIncomeStatement qbis;
+    CIncomeStatement nodeis;
 
 public:
     CAccountWatch(void);
@@ -50,13 +49,8 @@ public:
     // EXISTING_CODE
     CAccountWatch(uint32_t _id, const SFString& _addr, const SFString& _name, blknum_t fB, const SFString& _color)
     : index(_id), address(toLower(_addr)), name(_name), color(_color), firstBlock(fB),
-    disabled(false), inFlows(0), outFlows(0), nodeBal(0) {}
-    SFIntBN balance(void) const;
-    SFIntBN correctedBal(void) const;
-    void correctShun(SFIntBN cor) const;
-    void flowIn(SFIntBN _amt) const;
-    void flowOut(SFIntBN _amt) const;
-    bool getWatch(const CToml& toml, uint32_t n);
+    disabled(false) { }
+    bool getWatch(const CToml& toml, uint32_t n, bool fromFile);
     // EXISTING_CODE
 
 protected:
@@ -114,10 +108,8 @@ inline void CAccountWatch::Init(void)
 //    color = EMPTY;
     firstBlock = 0;
     disabled = 0;
-    inFlows = 0;
-    outFlows = 0;
-    corrections = 0;
-    nodeBal = 0;
+//    qbis = ??; /* unknown type: CIncomeStatement */
+//    nodeis = ??; /* unknown type: CIncomeStatement */
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -135,10 +127,8 @@ inline void CAccountWatch::Copy(const CAccountWatch& ac)
     color = ac.color;
     firstBlock = ac.firstBlock;
     disabled = ac.disabled;
-    inFlows = ac.inFlows;
-    outFlows = ac.outFlows;
-    corrections = ac.corrections;
-    nodeBal = ac.nodeBal;
+    qbis = ac.qbis;
+    nodeis = ac.nodeis;
 
     // EXISTING_CODE
     // EXISTING_CODE

@@ -13,8 +13,7 @@
 namespace qblocks {
 
     //----------------------------------------------------------------------------
-    class CExportOptions
-    {
+    class CExportOptions {
     public:
         uint32_t lev, spcs;
         bool noFrst;
@@ -23,8 +22,7 @@ namespace qblocks {
         bool hexNums;
         bool hashesOnly;
         bool colored;
-        CExportOptions(void)
-        {
+        CExportOptions(void) {
             noFrst = false;
             lev = 0; spcs = 2;
             tab = ' '; nl = '\n';
@@ -39,8 +37,7 @@ namespace qblocks {
     extern void decIndent(void);
     extern SFString indent(void);
 
-    class CExportContext
-    {
+    class CExportContext {
     public:
         uint32_t nTabs;
         SFString fmt;
@@ -61,80 +58,71 @@ namespace qblocks {
         virtual CExportContext& operator<<(const SFString& str);
         virtual CExportContext& operator<<(const SFTime& tm);
 
-        virtual SFString tabs      (uint32_t add=0) { return SFString(tCh, nTabs+add); }
-        virtual SFString inc       (void)          { SFString ret = SFString(tCh, nTabs); nTabs++; return ret; }
-        virtual SFString dec       (void)          { nTabs--;  return SFString(tCh, nTabs); }
+        virtual SFString tabs(uint32_t add = 0) { return SFString(tCh, nTabs + add); }
+        virtual SFString inc(void) { SFString ret = SFString(tCh, nTabs); nTabs++; return ret; }
+        virtual SFString dec(void) { nTabs--; return SFString(tCh, nTabs); }
 
-        virtual void     setOutput (void *output)        = 0;
-        virtual void*    getOutput (void) const          = 0;
-        virtual void     Output    (const SFString& str) = 0;
-        virtual void     Flush     (void)                = 0;
+        virtual void setOutput(void *output) = 0;
+        virtual void* getOutput(void) const = 0;
+        virtual void Output(const SFString& str) = 0;
+        virtual void flush(void) = 0;
     };
 
     // Handy for debugging
-    class CFileExportContext : public CExportContext
-    {
+    class CFileExportContext : public CExportContext {
     public:
         FILE *m_output;
 
-        CFileExportContext(void *output=NULL)
-        {
-            m_output = ((output == NULL) ? stdout : (FILE*)output);
+        explicit CFileExportContext(void *output = NULL) {
+            m_output = ((output == NULL) ? stdout : reinterpret_cast<FILE*>(output));
         }
 
-        CFileExportContext(const SFString& filename, const SFString& mode)
-        {
+        CFileExportContext(const SFString& filename, const SFString& mode) {
             m_output = fopen((const char *)filename, mode);
             if (!m_output)
                 m_output = stdout;
         }
 
-        ~CFileExportContext(void)
-        {
+        ~CFileExportContext(void) {
             Close();
         }
 
-        void  setOutput (void *output);
-        void *getOutput (void) const { return m_output; };
-        void  Output    (const SFString& str);
-        void  Flush     (void)
-        {
+        void  setOutput(void *output);
+        void *getOutput(void) const { return m_output; }
+        void  Output(const SFString& str);
+        void  flush(void) {
             ASSERT(m_output)
             fflush(m_output);
         }
-        void Close(void)
-        {
-            Flush();
+        void Close(void) {
+            flush();
             if (m_output != stdout && m_output != stderr)
                 fclose(m_output);
             m_output = stdout;
         }
     };
 
-    class CErrorExportContext : public CFileExportContext
-    {
+    class CErrorExportContext : public CFileExportContext {
     public:
         CErrorExportContext(void) : CFileExportContext(stderr) {}
     };
 
     // Handy for generating code into strings
-    class CStringExportContext : public CExportContext
-    {
+    class CStringExportContext : public CExportContext {
     public:
         SFString str;
 
         CStringExportContext(void) {}
-        
-        void  setOutput (void *output);
-        void* getOutput (void) const { return NULL; };
-        void  Output    (const SFString& s);
-        void  Flush     (void) { } // do nothing
-        
+
+        void  setOutput(void *output);
+        void* getOutput(void) const { return NULL; }
+        void  Output(const SFString& s);
+        void  flush(void) { }  // do nothing
+
         operator SFString(void) const;
     };
-    
-    inline CStringExportContext::operator SFString(void) const
-    {
+
+    inline CStringExportContext::operator SFString(void) const {
         return str;
     }
-}
+}  // namespace qblocks

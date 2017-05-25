@@ -1,31 +1,37 @@
 all:
-	@echo
-#	@cd utillib; make
-#	@cd abilib; make
-#	@cd etherlib; make
+	@cd utillib; make
+	@cd abilib; make
+	@cd etherlib; make
 
 tokens:
-#	@make all
-#	@cd tokenlib; make
-#	@cd walletlib; make
+	@make all
+	@cd tokenlib; make
+	@cd walletlib; make
 
 cleanall:
-#	@make clean
+	@make clean
 
 clean:
-#	@cd utillib; make clean
-#	@cd abilib; make clean
-#	@cd etherlib; make clean
-#	@cd tokenlib; make clean
-#	@cd walletlib; make clean
+	@cd utillib; make clean
+	@cd abilib; make clean
+	@cd etherlib; make clean
+	@cd tokenlib; make clean
+	@cd walletlib; make clean
 
 readmes:
-#	@echo ""
-##	@echo "Nothing here yet"
+	@echo ""
+#	@echo "Nothing here yet"
 
 rebuild:
-##	@cd utillib ; make rebuild
-#	@cd abilib ; make rebuild
-#	@cd etherlib ; make rebuild
-#	@cd tokenlib ; make rebuild
-#	@cd walletlib ; make rebuild
+#	@cd utillib ; make rebuild
+	@cd abilib ; make rebuild
+	@cd etherlib ; make rebuild
+	@cd tokenlib ; make rebuild
+	@cd walletlib ; make rebuild
+
+lint:
+	@cd utillib ; make lint
+	@cd abilib ; make lint
+	@cd etherlib ; make lint
+	@cd tokenlib ; make lint
+	@cd walletlib ; make lint

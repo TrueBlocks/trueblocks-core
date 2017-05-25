@@ -49,7 +49,7 @@ class RPCSession
 public:
     CReceipt           eth_getTransactionReceipt ( SFString const& _transactionHash );
     SFString           eth_getCode               ( SFString const& _address, SFString const& _blockNumber );
-    SFString           eth_getBalance            ( SFString const& _address, SFString const& _blockNumber );
+    SFString           eth_getBalanc e            ( SFString const& _address, SFString const& _blockNumber );
     SFString           eth_getStorageRoot        ( SFString const& _address, SFString const& _blockNumber );
     SFString           rpcCall                   (SFString const& _methodName, SFString const& _args);
 
