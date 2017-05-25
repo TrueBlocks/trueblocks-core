@@ -8,6 +8,9 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
+CFileExportContext outScreen;
+
+//---------------------------------------------------------------------------------------------------
 CParams params[] = {
     CParams("~addr",        "the address of the account or contract to slurp"),
     CParams("-archive",     "filename of output (stdout otherwise)"),
@@ -71,10 +74,10 @@ bool COptions::parseArguments(SFString& command) {
 
         } else if (arg == "-l" || arg == "-list") {
             uint32_t nFiles = 0;
-            SFos::listFilesOrFolders(nFiles, NULL, cachePath("*.*"));
+            listFilesOrFolders(nFiles, NULL, cachePath("*.*"));
             if (nFiles) {
                 SFString *files = new SFString[nFiles];
-                SFos::listFilesOrFolders(nFiles, files, cachePath("*.*"));
+                listFilesOrFolders(nFiles, files, cachePath("*.*"));
                 for (int i = 0 ; i < nFiles ; i++)
                     outScreen << files[i] << "\n";
                 delete [] files;
@@ -88,10 +91,10 @@ bool COptions::parseArguments(SFString& command) {
 
         } else if (arg.Left(3) == "-b:" || arg.Left(8) == "-blocks:") {
             arg = arg.Substitute("-b:", EMPTY).Substitute("-blocks:", EMPTY);
-            firstBlock2Read = MAX(0, toLong32u(arg));
+            firstBlock2Read = max(0U, toLong32u(arg));
             if (arg.Contains(":")) {
                 nextTokenClear(arg, ':');
-                lastBlock2Read = MAX(firstBlock2Read, toLong32u(arg));
+                lastBlock2Read = max(firstBlock2Read, toLong32u(arg));
             }
 
         } else if (arg == "-d") {
@@ -124,8 +127,8 @@ bool COptions::parseArguments(SFString& command) {
             nextTokenClear(arg, ':');
             uint32_t wait = toLong32u(arg);
             if (wait) {
-                outErr << "Sleeping " << wait << " seconds\n";
-                SFos::sleep(wait);
+                cerr << "Sleeping " << wait << " seconds\n";
+                qbSleep(wait);
             }
 
         } else if (arg.startsWith("-m")) {
@@ -172,12 +175,12 @@ bool COptions::parseArguments(SFString& command) {
 
         } else if (arg == "-c" || arg == "-clear") {
             if (isTesting) {
-                SFos::removeFolder(cachePath());
-                outErr << "Cached slurp files were cleared\n";
+                removeFolder(cachePath());
+                cerr << "Cached slurp files were cleared\n";
             } else {
-                outErr << "Clearing the cache is not implemented. You may, if you wish, remove all\n";
-                outErr << "files in " << cachePath() << " to acheive the same thing. If you\n";
-                outErr << "do delete the cache, large contracts may take a very long time to re-generate.\n";
+                cerr << "Clearing the cache is not implemented. You may, if you wish, remove all\n";
+                cerr << "files in " << cachePath() << " to acheive the same thing. If you\n";
+                cerr << "do delete the cache, large contracts may take a very long time to re-generate.\n";
             }
             exit(1);
 

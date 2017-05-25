@@ -48,8 +48,9 @@ bool COptions::parseArguments(SFString& command) {
             system("nano -I " + configPath("configs/names.conf"));
             exit(0);
 
-        } else if (arg.startsWith('-')) {
-            if (arg != "-t" && arg != "-h" && !arg.Contains("-v")) {
+        } else if (arg.startsWith('-')) {  // do not collapse
+
+            if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);
             }
 
@@ -74,7 +75,6 @@ void COptions::Init(void) {
     paramsPtr = params;
     nParamsRef = nParams;
 
-    outScreen.setOutput(stdout);  // so we know where it is at the start of each run
     // addr = "";
     // name = "";
     // source = "";

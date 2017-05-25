@@ -10,46 +10,44 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
-#include "function.h"
-#include "parameter.h"
+#include "ethtypes.h"
+#include "abilib.h"
 
 namespace qblocks {
 
 //--------------------------------------------------------------------------
-class CAbi;
-typedef SFArrayBase<CAbi>         CAbiArray;
-typedef SFList<CAbi*>             CAbiList;
-typedef SFUniqueList<CAbi*>       CAbiListU;
+class CBalHistory;
+typedef SFArrayBase<CBalHistory>         CBalHistoryArray;
+typedef SFList<CBalHistory*>             CBalHistoryList;
+typedef SFUniqueList<CBalHistory*>       CBalHistoryListU;
 
 // EXISTING_CODE
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CAbi : public CBaseNode
+class CBalHistory : public CBaseNode
 {
 public:
-    CFunctionArray abiByName;
-    CFunctionArray abiByEncoding;
+    SFString recordID;
+    SFTime txDate;
+    SFIntBN balance;
 
 public:
-    CAbi(void);
-    CAbi(const CAbi& ab);
-    ~CAbi(void);
-    CAbi& operator=(const CAbi& ab);
+    CBalHistory(void);
+    CBalHistory(const CBalHistory& ba);
+    ~CBalHistory(void);
+    CBalHistory& operator=(const CBalHistory& ba);
 
-    DECLARE_NODE (CAbi);
+    DECLARE_NODE (CBalHistory);
 
     // EXISTING_CODE
-    void clearABI(void);
-    bool loadABI  (const SFString& addr, bool append=false);
-    CFunction *findFunctionByName(const SFString& search);
-    CFunction *findFunctionByEncoding(const SFString& search);
+    CBalHistory(const SFString& _recID, SFIntBN bal) : recordID(_recID), balance(bal) { }
     // EXISTING_CODE
 
 protected:
     void Clear(void);
     void Init(void);
-    void Copy(const CAbi& ab);
+    void Copy(const CBalHistory& ba);
     bool readBackLevel(SFArchive& archive);
 
     // EXISTING_CODE
@@ -57,7 +55,7 @@ protected:
 };
 
 //--------------------------------------------------------------------------
-inline CAbi::CAbi(void)
+inline CBalHistory::CBalHistory(void)
 {
     Init();
     // EXISTING_CODE
@@ -65,18 +63,18 @@ inline CAbi::CAbi(void)
 }
 
 //--------------------------------------------------------------------------
-inline CAbi::CAbi(const CAbi& ab)
+inline CBalHistory::CBalHistory(const CBalHistory& ba)
 {
     // EXISTING_CODE
     // EXISTING_CODE
-    Copy(ab);
+    Copy(ba);
 }
 
 // EXISTING_CODE
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline CAbi::~CAbi(void)
+inline CBalHistory::~CBalHistory(void)
 {
     Clear();
     // EXISTING_CODE
@@ -84,34 +82,34 @@ inline CAbi::~CAbi(void)
 }
 
 //--------------------------------------------------------------------------
-inline void CAbi::Clear(void)
+inline void CBalHistory::Clear(void)
 {
     // EXISTING_CODE
-    abiByName.Clear();
-    abiByEncoding.Clear();
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CAbi::Init(void)
+inline void CBalHistory::Init(void)
 {
     CBaseNode::Init();
 
-//    abiByName = ??; /* unknown type: CFunctionArray */
-//    abiByEncoding = ??; /* unknown type: CFunctionArray */
+//    recordID = EMPTY;
+    txDate = earliestDate;
+    balance = 0;
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CAbi::Copy(const CAbi& ab)
+inline void CBalHistory::Copy(const CBalHistory& ba)
 {
     Clear();
-    CBaseNode::Copy(ab);
+    CBaseNode::Copy(ba);
 
-    abiByName = ab.abiByName;
-    abiByEncoding = ab.abiByEncoding;
+    recordID = ba.recordID;
+    txDate = ba.txDate;
+    balance = ba.balance;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -119,16 +117,16 @@ inline void CAbi::Copy(const CAbi& ab)
 }
 
 //--------------------------------------------------------------------------
-inline CAbi& CAbi::operator=(const CAbi& ab)
+inline CBalHistory& CBalHistory::operator=(const CBalHistory& ba)
 {
-    Copy(ab);
+    Copy(ba);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
 //---------------------------------------------------------------------------
-inline SFString CAbi::getValueByName(const SFString& fieldName) const
+inline SFString CBalHistory::getValueByName(const SFString& fieldName) const
 {
     // EXISTING_CODE
     // EXISTING_CODE
@@ -136,17 +134,19 @@ inline SFString CAbi::getValueByName(const SFString& fieldName) const
 }
 
 //---------------------------------------------------------------------------
-IMPLEMENT_ARCHIVE_ARRAY(CAbiArray);
-IMPLEMENT_ARCHIVE_ARRAY_C(CAbiArray);
-IMPLEMENT_ARCHIVE_LIST(CAbiList);
+IMPLEMENT_ARCHIVE_ARRAY(CBalHistoryArray);
+IMPLEMENT_ARCHIVE_ARRAY_C(CBalHistoryArray);
+IMPLEMENT_ARCHIVE_LIST(CBalHistoryList);
+
+//---------------------------------------------------------------------------
+extern SFArchive& operator<<(SFArchive& archive, const CBalHistory& bal);
+extern SFArchive& operator>>(SFArchive& archive, CBalHistory& bal);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-extern SFUint32 verbose;
-extern bool isTesting;
-#define REP_FREQ   11
-#define REP_INFREQ 563
-void clearAbis(void);
+inline SFString toRecordID(const SFString& addr, blknum_t bn, SFUint32 tn) {
+    return addr + "_" + padNum9(bn) + "_" + padNum5(tn);
+}
 // EXISTING_CODE
 }  // namespace qblocks
 

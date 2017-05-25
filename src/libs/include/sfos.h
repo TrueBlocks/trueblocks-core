@@ -13,65 +13,30 @@ namespace qblocks {
     class SFTime;
 
     //-------------------------------------------------------------------------------
-    class SFos {
-    public:
-        static void fileLastModifyDate(const SFString& filename, SFTime *ret);
-        static SFTime fileLastModifyDate(const SFString& filename);
-        static SFUint32 fileSize(const SFString& file);
+    extern SFUint32 fileSize(const SFString& file);
 
-        static uint32_t nFiles(const SFString& path);
-        static void listFiles(uint32_t& nFiles, SFString *files, const SFString& mask);
-        static void listFilesOrFolders(uint32_t& nItems, SFString *items, const SFString& mask);
-        static uint32_t nFolders(const SFString& path);
-        static void listFolders(uint32_t& nDirs, SFString *dirs, const SFString& mask);
-        static void copyFolder(const SFString& from, const SFString& to);
+    extern uint32_t nFiles(const SFString& path);
+    extern uint32_t nFolders(const SFString& path);
 
-        static int removeFolder(const SFString& folder);
-        static int removeFile(const SFString& file);
+    extern void listFiles(uint32_t& nFiles, SFString *files, const SFString& mask);
+    extern void listFolders(uint32_t& nDirs, SFString *dirs, const SFString& mask);
+    extern void listFilesOrFolders(uint32_t& nItems, SFString *items, const SFString& mask);
 
-        static int copyFile(const SFString& from, const SFString& to);
-        static int copyFile_Special(const SFString& from, const SFString& to);
-        static int moveFile(const SFString& from, const SFString& to);
+    extern int copyFile(const SFString& from, const SFString& to);
+    extern int moveFile(const SFString& from, const SFString& to);
+    extern int removeFile(const SFString& file);
+    extern int removeFolder(const SFString& folder);
 
-        static void sleep(float units);
-
-        static SFString doCommand(const SFString& cmd);
-        static SFString doCommand(const SFString& tmpPath, const SFString& cmd);
-    };
-
-    //-------------------------------------------------------------------------------
-    inline bool validPath(const SFString& str) {
-        // No empty paths, path must end with '/', no DOS paths, no double slashes
-        return (!str.empty() && str.endsWith('/') && !str.Contains("\\") && !str.Contains("//"));
-    }
-
-    //-------------------------------------------------------------------------------
-    inline uint32_t nFilesInFolder(const SFString& mask) {
-        uint32_t nFiles = 0;
-        SFos::listFiles(nFiles, NULL, mask);
-        return nFiles;
-    }
-
-    //-------------------------------------------------------------------------------------------------------------
-    inline bool fileExists(const SFString& file) {
-        struct stat statBuf;
-        return !file.empty() && stat((const char *)file, &statBuf) == 0;
-    }
-
-    //-------------------------------------------------------------------------------------------------------------
-    inline bool waitForCreate(const SFString& filename) {
-        uint32_t max = 500;
-
-        uint32_t cnt = 0;
-        while (cnt < max && !fileExists(filename))
-            cnt++;
-
-        return fileExists(filename);
-    }
-
-    //-------------------------------------------------------------------------------------------------------------
-    extern SFString getCWD(const SFString& filename = "");
     extern bool folderExists(const SFString& path);
+    extern bool fileExists(const SFString& file);
+
     extern bool establishFolder(const SFString& path, SFString& created);
     inline bool establishFolder(const SFString& path) { SFString unused; return establishFolder(path, unused); }
-}
+
+    extern SFTime fileCreateDate(const SFString& filename);
+    extern SFTime fileLastModifyDate(const SFString& filename);
+
+    extern void qbSleep(float units);
+    extern SFString getCWD(const SFString& filename = "");
+    extern SFString doCommand(const SFString& cmd);
+}  // namespace qblocks
