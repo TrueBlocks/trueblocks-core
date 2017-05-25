@@ -47,6 +47,7 @@ public:
     SFString type;
     bool isPointer;
     bool isArray;
+    bool isObject;
     SFString strDefault;
 
 public:
@@ -114,6 +115,7 @@ inline void CParameter::Init(void)
 //    type = EMPTY;
     isPointer = 0;
     isArray = 0;
+    isObject = 0;
 //    strDefault = EMPTY;
 
     // EXISTING_CODE
@@ -131,6 +133,7 @@ inline void CParameter::Copy(const CParameter& pa)
     type = pa.type;
     isPointer = pa.isPointer;
     isArray = pa.isArray;
+    isObject = pa.isObject;
     strDefault = pa.strDefault;
 
     // EXISTING_CODE
