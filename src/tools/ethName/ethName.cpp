@@ -65,8 +65,7 @@ uint32_t countOf(const SFString& addr) {
 }
 
 //-----------------------------------------------------------------------
-SFString showName(const COptions& options)
-{
+SFString showName(const COptions& options) {
     SFString ret;
     SFString fmt = (options.addrOnly ? "[{ADDR}]" : "");
     for (int i = 0 ; i < accounts.getCount() ; i++) {
