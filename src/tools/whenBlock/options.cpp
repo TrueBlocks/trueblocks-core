@@ -34,6 +34,12 @@ bool COptions::parseArguments(SFString& command) {
                                 .Substitute(":", ";").Substitute(";UTC", "");
             date = snagDate(str);
 
+        } else if (arg.startsWith('-')) {  // do not collapse
+
+            if (!builtInCmd(arg)) {
+                return usage("Invalid option: " + arg);
+            }
+
         } else {
 
             if (arg == "latest") {
@@ -88,7 +94,6 @@ void COptions::Init(void) {
     date = earliestDate;
 //  special = "";
 
-    outScreen.setOutput(stdout);  // so we know where it is at the start of each run
     useVerbose = false;
     useTesting = false;
 
@@ -136,5 +141,4 @@ COptions::COptions(void) {
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
-    outScreen.setOutput(stdout);  // flushes and clears archive file if any
 }
