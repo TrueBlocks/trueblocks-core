@@ -26,6 +26,7 @@ namespace qblocks {
 
         bool prepareArguments(int argc, const char *argv[]);
         virtual bool parseArguments(SFString& command) = 0;
+        bool builtInCmd(const SFString& arg);
 
     protected:
         virtual void Init(void) = 0;
@@ -63,14 +64,12 @@ namespace qblocks {
     extern bool isTesting;
 
     //--------------------------------------------------------------------------------
-    extern CFileExportContext outScreen;
-    extern CFileExportContext& outErr;
-
-    //--------------------------------------------------------------------------------
     extern SFString configPath(const SFString& part = "");
     inline SFString cachePath(const SFString& part = "") { return configPath("slurps/") + part; }
-    
+
     //--------------------------------------------------------------------------------
     extern CParams *paramsPtr;
     extern uint32_t& nParamsRef;
-}
+
+    #define curVersion ((uint64_t)0x00000201)
+}  // namespace qblocks

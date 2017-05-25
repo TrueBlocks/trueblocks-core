@@ -91,7 +91,7 @@ namespace qblocks {
         cout << cYellow << _part << cOff << " of " << cYellow << _whole << cOff;
         cout << " (" << cBlue << padLeft(fmtFloatp(100.*percent, 1), 5, ' ') << cOff << "%)";
         cout << " [" << SFString('x', len).Substitute("x", "░");
-        cout << SFString(' ', MAX(0, barLen() - len));
+        cout << SFString(' ', max(0ULL, barLen() - len));
         cout << "]";
         if (!_tim.empty())
             cout << " " << _tim;
