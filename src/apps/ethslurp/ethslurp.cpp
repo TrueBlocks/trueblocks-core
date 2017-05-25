@@ -21,7 +21,7 @@ int main(int argc, const char * argv[]) {
 
     while (!options.commandList.empty()) {
         SFString command = nextTokenClear(options.commandList, '\n');
-        outErr << "Processing: " << command << "\n";
+        cerr << "Processing: " << command << "\n";
 
         if (!options.parseArguments(command))
             return false;
@@ -136,7 +136,7 @@ bool CSlurperApp::Initialize(COptions& options, SFString& message) {
     // We are ready to slurp
     theAccount.addr = addr;
 
-    outErr << "\t" << "Slurping " << theAccount.addr << "\n";
+    cerr << "\t" << "Slurping " << theAccount.addr << "\n";
 
     // Finished
     return true;
@@ -168,23 +168,23 @@ bool CSlurperApp::Slurp(COptions& options, SFString& message) {
     }
 
     SFTime now = Now();
-    SFTime fileTime = SFos::fileLastModifyDate(cacheFilename);
+    SFTime fileTime = fileLastModifyDate(cacheFilename);
 
     // If the user tells us he/she wants to update the cache, or the cache
     // hasn't been updated in five minutes, then update it
-    uint32_t nSeconds = MAX(60, toml.getConfigInt("settings", "update_freq", 300));
+    uint32_t nSeconds = max(60ULL, toml.getConfigInt("settings", "update_freq", 300));
     if ((now - fileTime) > nSeconds) {
         // This is how many records we currently have
         uint32_t origCount  = theAccount.transactions.getCount();
         uint32_t nNewBlocks = 0;
 
-        outErr << "\tSlurping new transactions from blockchain...\n";
+        cerr << "\tSlurping new transactions from blockchain...\n";
         uint32_t nextRecord = origCount;
         uint32_t nRead = 0;
         uint32_t nRequests = 0;
 
         // We already have 'page' pages, so start there.
-        uint32_t page = MAX((uint32_t)theAccount.lastPage, 1);
+        uint32_t page = max((uint32_t)theAccount.lastPage, (uint32_t)1);
 
         // Keep reading until we get less than a full page
         SFString contents;
@@ -215,7 +215,7 @@ bool CSlurperApp::Slurp(COptions& options, SFString& message) {
 
             uint64_t nRecords = countOf('}', thisPage) - 1;
             nRead += nRecords;
-            outErr << "\tDownloaded " << nRead << " potentially new transactions." << (isTesting?"\n":"\r");
+            cerr << "\tDownloaded " << nRead << " potentially new transactions." << (isTesting?"\n":"\r");
 
             // If we got a full page, there are more to come
             done = (nRecords < options.pageSize);
@@ -224,7 +224,7 @@ bool CSlurperApp::Slurp(COptions& options, SFString& message) {
 
             // Etherscan.io doesn't want more than five pages per second, so sleep for a second
             if (++nRequests == 4) {
-                SFos::sleep(1.0);
+                qbSleep(1.0);
                 nRequests = 0;
             }
 
@@ -236,7 +236,7 @@ bool CSlurperApp::Slurp(COptions& options, SFString& message) {
         uint32_t minBlock = 0, maxBlock = 0;
         findBlockRange(contents, minBlock, maxBlock);
 #ifndef NO_INTERNET
-        outErr << "\n\tDownload contains blocks from " << minBlock << " to " << maxBlock << "\n";
+        cerr << "\n\tDownload contains blocks from " << minBlock << " to " << maxBlock << "\n";
 #endif
 
         // Keep track of which last full page we've read
@@ -259,23 +259,23 @@ bool CSlurperApp::Slurp(COptions& options, SFString& message) {
                     theAccount.transactions[nextRecord++] = trans;
                     lastBlock = transBlock;
                     if (!(++nNewBlocks % REP_FREQ)) {
-                        outErr << "\tFound new transaction at block " << transBlock
+                        cerr << "\tFound new transaction at block " << transBlock
                                 << ". Importing..." << (isTesting?"\n":"\r");
-                        outErr.Flush();
+                        cerr.flush();
                     }
                 }
             }
         }
         if (!isTesting && nNewBlocks) {
-            outErr << "\tFound new transaction at block " << lastBlock << ". Importing...\n";
-            outErr.Flush();
+            cerr << "\tFound new transaction at block " << lastBlock << ". Importing...\n";
+            cerr.flush();
         }
 
-        theAccount.lastBlock = MAX(theAccount.lastBlock, lastBlock);
+        theAccount.lastBlock = max(theAccount.lastBlock, lastBlock);
         // Write the data if we got new data
         uint32_t newRecords = (theAccount.transactions.getCount() - origCount);
         if (newRecords) {
-            outErr << "\tWriting " << newRecords << " new records to cache\n";
+            cerr << "\tWriting " << newRecords << " new records to cache\n";
             SFArchive archive(false, NO_SCHEMA, true);
             if (archive.Lock(cacheFilename, binaryWriteCreate, LOCK_CREATE)) {
                 theAccount.Serialize(archive);
@@ -332,12 +332,12 @@ bool CSlurperApp::Filter(COptions& options, SFString& message) {
         ASSERT(!(options.incomeOnly && options.expenseOnly));  // can't be both
         if (options.incomeOnly && fromAddress(trans->to) != theAccount.addr) {
             if (verbose)
-                outErr << trans->Format("\tskipping expenditure [{HASH}]\n");
+                cerr << trans->Format("\tskipping expenditure [{HASH}]\n");
             trans->m_showing = false;
 
         } else if (options.expenseOnly && fromAddress(trans->from) != theAccount.addr) {
             if (verbose)
-                outErr << trans->Format("\tskipping inflow [{HASH}]\n");
+                cerr << trans->Format("\tskipping inflow [{HASH}]\n");
             trans->m_showing = false;
         }
 
@@ -359,8 +359,8 @@ bool CSlurperApp::Filter(COptions& options, SFString& message) {
         theAccount.nVisible += trans->m_showing;
         int64_t nFiltered = (theAccount.nVisible + 1);  // NOLINT
         if (!(nFiltered % REP_INFREQ)) {
-            outErr << "\t" << "Filtering..." << nFiltered << " records passed." << (isTesting ? "\n" : "\r");
-            outErr.Flush();
+            cerr << "\t" << "Filtering..." << nFiltered << " records passed." << (isTesting ? "\n" : "\r");
+            cerr.flush();
         }
     }
 
@@ -425,7 +425,7 @@ SFString CSlurperApp::getFormatString(COptions& options, const SFString& which, 
     }
 
     if (!errMsg.empty()) {
-        outErr << errMsg;
+        cerr << errMsg;
         exit(0);
     }
 
@@ -461,7 +461,7 @@ void CSlurperApp::buildDisplayStrings(COptions& options) {
 
         const CFieldData *field = GETRUNTIME_CLASS(CTransaction)->FindField(fieldName);
         if (!field) {
-            outErr << "Field '" << fieldName << "' not found in fieldList '" << origList << "'. Quitting...\n";
+            cerr << "Field '" << fieldName << "' not found in fieldList '" << origList << "'. Quitting...\n";
             exit(0);
         }
         if (field->isHidden() && force) ((CFieldData*)field)->setHidden(false);  // NOLINT
@@ -520,7 +520,7 @@ void findBlockRange(const SFString& json, uint32_t& minBlock, uint32_t& maxBlock
 bool establishFolders(CToml& toml) {
     // Just double check we're in the right bracnh
     if (getCWD().Contains("/src.GitHub.1")) {
-        outErr << "You're in src.GitHub.1 folder. Comment this code if you mean to be.\n";
+        cerr << "You're in src.GitHub.1 folder. Comment this code if you mean to be.\n";
         exit(0);
     }
 
