@@ -26,6 +26,4 @@
 #include "options_base.h"
 #include "filenames.h"
 
-#define curVersion ((uint64_t)0x00000201)
-
 using namespace qblocks;

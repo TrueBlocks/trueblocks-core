@@ -135,10 +135,10 @@ namespace qblocks {
         SFTime(void);
         SFTime(const SFTime& date);
 
-        SFTime(uint32_t year, uint32_t month, uint32_t day, uint32_t hour, uint32_t min, uint32_t sec);
+        SFTime(uint32_t year, uint32_t month, uint32_t day, uint32_t hour, uint32_t minute, uint32_t sec);
         SFTime(uint32_t year, uint32_t month, uint32_t weekInMonth, uint32_t dayOfWeek,
-               uint32_t hour, uint32_t min, uint32_t sec);
-        SFTime(uint32_t days, uint32_t hour, uint32_t min, uint32_t sec);
+               uint32_t hour, uint32_t minute, uint32_t sec);
+        SFTime(uint32_t days, uint32_t hour, uint32_t minute, uint32_t sec);
         SFTime(const SFDate& date, const SFTimeOfDay& tod);
         explicit SFTime(const tm& sysTime, bool useDayOfWeek = false);
         SFTime(const SFString& dateStr, const SFString& fmtStr);
@@ -195,4 +195,6 @@ namespace qblocks {
     //---------------------------------------------------------------------------------------------
     extern ostream &operator <<(ostream &os, const SFTime& x);
 
+    extern const SFTime latestDate;
+    extern const SFTime earliestDate;
 }  // namespace qblocks
