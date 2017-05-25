@@ -34,9 +34,16 @@ bool COptions::parseArguments(SFString& command) {
                 return usage(arg + " does not appear to be a valid Ethereum address. Quitting...");
             addrs += arg + "|";
 
+        } else if (arg.startsWith('-')) {  // do not collapse
+
+            if (!builtInCmd(arg)) {
+                return usage("Invalid option: " + arg);
+            }
+
         } else {
-            if (toLong(arg) < 1)
-                return usage(arg + " does not appear to be a valid parameter. Quitting...");
+
+            if (toLong(arg) < 0)
+                return usage(arg + " does not appear to be a valid address. Quitting...");
             blocks += arg + "|";
         }
     }
@@ -60,7 +67,6 @@ void COptions::Init(void) {
     asEther = false;
     asData = false;
 
-    outScreen.setOutput(stdout);  // so we know where it is at the start of each run
     useVerbose = true;
     useTesting = false;
 }
@@ -83,5 +89,4 @@ COptions::COptions(void) {
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
-    outScreen.setOutput(stdout);  // flushes and clears archive file if any
 }

@@ -65,9 +65,11 @@ bool COptions::parseArguments(SFString& command) {
             expContext().hexNums = true;
             expContext().quoteNums = true;
 
-        } else if (arg.startsWith('-')) {
-            if (arg != "-h" && !arg.Contains("-v"))
+        } else if (arg.startsWith('-')) {  // do not collapse
+
+            if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);
+            }
 
         } else {
 
@@ -145,7 +147,6 @@ void COptions::Init(void) {
     nNums      = 0;  // we will set this to '1' later if user supplies no values
     start = stop = 0;
 
-    outScreen.setOutput(stdout);  // so we know where it is at the start of each run
     useVerbose = true;
     useTesting = false;
 }
@@ -160,7 +161,6 @@ COptions::COptions(void) {
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
-    outScreen.setOutput(stdout);  // flushes and clears archive file if any
 }
 
 //--------------------------------------------------------------------------------
