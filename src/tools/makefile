@@ -1,13 +1,13 @@
 all:
 	@cd ../libs ; make
-	@cd ethName ; make app
+	@cd ethName ; make
 	@cd getBalance ; make
 	@cd getBlock ; make
 	@cd getLogs ; make
 #	@cd getReceipt ; make
 	@cd getTrans ; make
 	@cd isContract ; make
-	@cd whenBlock ; make app
+	@cd whenBlock ; make
 	@cd scripts ; make
 
 cleanall:

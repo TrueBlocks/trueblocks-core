@@ -30,7 +30,7 @@ int main(int argc, const char *argv[]) {
             SFString blocks = options.blocks;
             while (!blocks.empty()) {
                 blknum_t block = toLongU(nextTokenClear(blocks, '|'));
-                SFUintBN bal = getBalance(addr, block);
+                SFUintBN bal = getBalance(addr, block, false); //isDemo);
                 if (options.asData)
                     cout << block << "\t" << addr << "\t" << bal << "\n";
                 else

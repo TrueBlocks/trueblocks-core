@@ -21,9 +21,6 @@ namespace qblocks {
     extern uint32_t DaysInMonth(const SFTime& date);
     extern SFTime AddOneDay(const SFTime& date);
 
-    extern const SFTime latestDate;
-    extern const SFTime earliestDate;
-
     inline SFTime BOH(const SFTime& date) {
         // H:00:00
         return SFTime(date.GetYear(), date.GetMonth(), date.GetDay(), date.GetHour(), 0, 0);

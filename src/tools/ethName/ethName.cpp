@@ -33,7 +33,7 @@ int main(int argc, const char *argv[]) {
         else if (verbose)
             out << "Address '" << options.addr << "' not found\n";
 
-        out.Flush();
+        out.flush();
     }
 
     return 0;
@@ -50,7 +50,7 @@ void loadData(void) {
     while (!contents.empty()) {
         SFString line = nextTokenClear(contents, '\n');
         if (!countOf('\t', line))
-            outErr << "Line " << line << " does not contain two tabs.\n";
+            cerr << "Line " << line << " does not contain two tabs.\n";
         accounts[accounts.getCount()] = CAccountName(line);
     }
 }

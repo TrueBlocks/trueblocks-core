@@ -26,5 +26,6 @@
 #include "miniblock.h"
 #include "node.h"
 #include "accountwatch.h"
+#include "balhistory.h"
 
 using namespace qblocks;
