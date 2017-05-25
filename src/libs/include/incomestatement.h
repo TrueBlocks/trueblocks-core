@@ -10,46 +10,46 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
-#include "function.h"
-#include "parameter.h"
+#include "ethtypes.h"
+#include "abilib.h"
 
 namespace qblocks {
 
 //--------------------------------------------------------------------------
-class CAbi;
-typedef SFArrayBase<CAbi>         CAbiArray;
-typedef SFList<CAbi*>             CAbiList;
-typedef SFUniqueList<CAbi*>       CAbiListU;
+class CIncomeStatement;
+typedef SFArrayBase<CIncomeStatement>         CIncomeStatementArray;
+typedef SFList<CIncomeStatement*>             CIncomeStatementList;
+typedef SFUniqueList<CIncomeStatement*>       CIncomeStatementListU;
 
 // EXISTING_CODE
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CAbi : public CBaseNode
+class CIncomeStatement : public CBaseNode
 {
 public:
-    CFunctionArray abiByName;
-    CFunctionArray abiByEncoding;
+    SFIntBN begBal;
+    SFIntBN inflow;
+    SFIntBN outflow;
+    SFIntBN endBal;
+    SFUint32 blockNum;
 
 public:
-    CAbi(void);
-    CAbi(const CAbi& ab);
-    ~CAbi(void);
-    CAbi& operator=(const CAbi& ab);
+    CIncomeStatement(void);
+    CIncomeStatement(const CIncomeStatement& in);
+    ~CIncomeStatement(void);
+    CIncomeStatement& operator=(const CIncomeStatement& in);
 
-    DECLARE_NODE (CAbi);
+    DECLARE_NODE (CIncomeStatement);
 
     // EXISTING_CODE
-    void clearABI(void);
-    bool loadABI  (const SFString& addr, bool append=false);
-    CFunction *findFunctionByName(const SFString& search);
-    CFunction *findFunctionByEncoding(const SFString& search);
+    void operator+=(const CIncomeStatement &x);
     // EXISTING_CODE
 
 protected:
     void Clear(void);
     void Init(void);
-    void Copy(const CAbi& ab);
+    void Copy(const CIncomeStatement& in);
     bool readBackLevel(SFArchive& archive);
 
     // EXISTING_CODE
@@ -57,7 +57,7 @@ protected:
 };
 
 //--------------------------------------------------------------------------
-inline CAbi::CAbi(void)
+inline CIncomeStatement::CIncomeStatement(void)
 {
     Init();
     // EXISTING_CODE
@@ -65,18 +65,18 @@ inline CAbi::CAbi(void)
 }
 
 //--------------------------------------------------------------------------
-inline CAbi::CAbi(const CAbi& ab)
+inline CIncomeStatement::CIncomeStatement(const CIncomeStatement& in)
 {
     // EXISTING_CODE
     // EXISTING_CODE
-    Copy(ab);
+    Copy(in);
 }
 
 // EXISTING_CODE
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline CAbi::~CAbi(void)
+inline CIncomeStatement::~CIncomeStatement(void)
 {
     Clear();
     // EXISTING_CODE
@@ -84,34 +84,38 @@ inline CAbi::~CAbi(void)
 }
 
 //--------------------------------------------------------------------------
-inline void CAbi::Clear(void)
+inline void CIncomeStatement::Clear(void)
 {
     // EXISTING_CODE
-    abiByName.Clear();
-    abiByEncoding.Clear();
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CAbi::Init(void)
+inline void CIncomeStatement::Init(void)
 {
     CBaseNode::Init();
 
-//    abiByName = ??; /* unknown type: CFunctionArray */
-//    abiByEncoding = ??; /* unknown type: CFunctionArray */
+    begBal = 0;
+    inflow = 0;
+    outflow = 0;
+    endBal = 0;
+    blockNum = 0;
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CAbi::Copy(const CAbi& ab)
+inline void CIncomeStatement::Copy(const CIncomeStatement& in)
 {
     Clear();
-    CBaseNode::Copy(ab);
+    CBaseNode::Copy(in);
 
-    abiByName = ab.abiByName;
-    abiByEncoding = ab.abiByEncoding;
+    begBal = in.begBal;
+    inflow = in.inflow;
+    outflow = in.outflow;
+    endBal = in.endBal;
+    blockNum = in.blockNum;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -119,16 +123,16 @@ inline void CAbi::Copy(const CAbi& ab)
 }
 
 //--------------------------------------------------------------------------
-inline CAbi& CAbi::operator=(const CAbi& ab)
+inline CIncomeStatement& CIncomeStatement::operator=(const CIncomeStatement& in)
 {
-    Copy(ab);
+    Copy(in);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
 //---------------------------------------------------------------------------
-inline SFString CAbi::getValueByName(const SFString& fieldName) const
+inline SFString CIncomeStatement::getValueByName(const SFString& fieldName) const
 {
     // EXISTING_CODE
     // EXISTING_CODE
@@ -136,17 +140,26 @@ inline SFString CAbi::getValueByName(const SFString& fieldName) const
 }
 
 //---------------------------------------------------------------------------
-IMPLEMENT_ARCHIVE_ARRAY(CAbiArray);
-IMPLEMENT_ARCHIVE_ARRAY_C(CAbiArray);
-IMPLEMENT_ARCHIVE_LIST(CAbiList);
+IMPLEMENT_ARCHIVE_ARRAY(CIncomeStatementArray);
+IMPLEMENT_ARCHIVE_ARRAY_C(CIncomeStatementArray);
+IMPLEMENT_ARCHIVE_LIST(CIncomeStatementList);
+
+//---------------------------------------------------------------------------
+extern SFArchive& operator<<(SFArchive& archive, const CIncomeStatement& inc);
+extern SFArchive& operator>>(SFArchive& archive, CIncomeStatement& inc);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-extern SFUint32 verbose;
-extern bool isTesting;
-#define REP_FREQ   11
-#define REP_INFREQ 563
-void clearAbis(void);
+    extern ostream& operator<<(ostream& os, const CIncomeStatement& t);
+    //------------------------------------------------------------
+    inline void CIncomeStatement::operator+=(const CIncomeStatement &x)
+    {
+        begBal += x.begBal;
+        inflow += x.inflow;
+        outflow += x.outflow;
+        endBal += x.endBal;
+        blockNum = x.blockNum;
+    }
 // EXISTING_CODE
 }  // namespace qblocks
 

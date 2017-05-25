@@ -147,6 +147,10 @@ IMPLEMENT_ARCHIVE_ARRAY_C(CTraceActionArray);
 IMPLEMENT_ARCHIVE_LIST(CTraceActionList);
 
 //---------------------------------------------------------------------------
+extern SFArchive& operator<<(SFArchive& archive, const CTraceAction& tra);
+extern SFArchive& operator>>(SFArchive& archive, CTraceAction& tra);
+
+//---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks

@@ -92,9 +92,7 @@ inline CAccount::~CAccount(void)
 inline void CAccount::Clear(void)
 {
     // EXISTING_CODE
-#if 1 //NEW_CODE
     abi.abiByName.Clear();
-#endif
     abi.abiByEncoding.Clear();
     // EXISTING_CODE
 }
@@ -169,7 +167,6 @@ IMPLEMENT_ARCHIVE_LIST(CAccountList);
 // EXISTING_CODE
 extern SFUint32 verbose;
 extern bool isTesting;
-extern CFileExportContext& outErr;
 #define REP_FREQ   11
 #define REP_INFREQ 563
 // EXISTING_CODE
