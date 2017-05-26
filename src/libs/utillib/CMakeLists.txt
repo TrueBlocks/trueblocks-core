@@ -7,16 +7,11 @@ project (utillib)
 # c++ compilation flags
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -O2")
 
-# Headers required, it depends on utillib
-set(PROJECT_LIBS_PATH "${CMAKE_SOURCE_DIR}/libs")
-set(PROJECT_INCLUDES "${PROJECT_LIBS_PATH}/include")
-include_directories(${PROJECT_INCLUDES})
-
 # The sources to be used
 file(GLOB SOURCE_FILES "*.cpp")
 
 # Output
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/libs")
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/libs")
 
 # Define the executable to be generated
 add_library(utillib STATIC ${SOURCE_FILES})
@@ -25,6 +20,7 @@ add_library(utillib STATIC ${SOURCE_FILES})
 set(COMMON_INCLUDE_PATH "${CMAKE_SOURCE_DIR}/libs/include")
 file(GLOB HEADER_FILES "*.h*")
 file(COPY ${HEADER_FILES} DESTINATION ${COMMON_INCLUDE_PATH})
+
 
 # plint target
 set(CURRENT_TOOL_PATH "${CMAKE_SOURCE_DIR}/libs/utillib")
