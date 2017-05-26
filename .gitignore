@@ -42,3 +42,6 @@ src/tools/scripts/ethsed
 
 # Hidden files
 .DS_Store
+
+# bin generated
+bin
