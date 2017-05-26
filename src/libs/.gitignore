@@ -1,11 +1,4 @@
-utillib
-abilib
-etherlib
 tokenlib
 walletlib
-
-# utillib.a
-# abilib.a
-# etherlib.a
 tokenlib.a
 walletlib.a
