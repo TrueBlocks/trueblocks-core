@@ -1,3 +1,0 @@
-class:		CAbi
-fields:		CFunctionArray abiByName|CFunctionArray abiByEncoding
-includes:	function.h|parameter.h
