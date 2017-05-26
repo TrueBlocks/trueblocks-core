@@ -39,3 +39,6 @@ src/tools/scripts/ethsed
 *.pptx
 
 *.key
+
+# Hidden files
+.DS_Store
