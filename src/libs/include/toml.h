@@ -73,8 +73,8 @@ namespace qblocks {
         ~CToml(void);
 
         SFString getConfigStr(const SFString& group, const SFString& key, const SFString& def) const;
-        uint64_t getConfigInt(const SFString& group, const SFString& key, uint64_t def) const;
-        SFUintBN getConfigBigInt(const SFString& group, const SFString& key, SFUintBN def) const;
+		uint64_t getConfigInt(const SFString& group, const SFString& key, uint64_t def) const;
+		SFUintBN getConfigBigInt(const SFString& group, const SFString& key, SFUintBN def) const;
         bool getConfigBool(const SFString& group, const SFString& key, bool def) const;
 
         void setConfigStr(const SFString& group, const SFString& key, const SFString& value);
