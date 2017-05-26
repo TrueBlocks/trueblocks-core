@@ -1,7 +1,0 @@
-CBaseNode
-  |
-  |--- CAbi
-  |
-  |--- CFunction
-  |
-  |--- CParameter
