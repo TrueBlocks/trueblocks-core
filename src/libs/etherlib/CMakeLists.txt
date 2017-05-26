@@ -7,18 +7,19 @@ project (etherlib)
 # c++ compilation flags
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -O2")
 
-# Headers required, it depends on utillib and abilib
-include_directories("${CMAKE_SOURCE_DIR}/libs/utillib")
-include_directories("${CMAKE_SOURCE_DIR}/libs/abilib")
 
 # The sources to be used
 file(GLOB SOURCE_FILES "*.cpp")
 
 # Output
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/libs")
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/libs")
 
 # Define the executable to be generated
 add_library(etherlib STATIC ${SOURCE_FILES})
+
+# Headers required, it depends on utillib and abilib
+target_include_directories(etherlib PUBLIC "${CMAKE_SOURCE_DIR}/libs/utillib")
+target_include_directories(etherlib PUBLIC "${CMAKE_SOURCE_DIR}/libs/abilib")
 
 # Copy the library headers, make them available for the rest of modules
 set(COMMON_INCLUDE_PATH "${CMAKE_SOURCE_DIR}/libs/include")

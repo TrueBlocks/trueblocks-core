@@ -7,17 +7,18 @@ project (abilib)
 # c++ compilation flags
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -O2")
 
-# Headers required, it depends on utillib
-include_directories(${CMAKE_SOURCE_DIR}/libs/utillib)
 
 # The sources to be used
 file(GLOB SOURCE_FILES "*.cpp")
 
 # Output
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/libs")
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/libs")
 
 # Define the executable to be generated
 add_library(abilib STATIC ${SOURCE_FILES})
+
+# Headers required, it depends on utillib
+target_include_directories(abilib PUBLIC "${CMAKE_SOURCE_DIR}/libs/utillib")
 
 # Copy the library headers, make them available for the rest of modules
 set(COMMON_INCLUDE_PATH "${CMAKE_SOURCE_DIR}/libs/include")
