@@ -1,3 +1,4 @@
 tokenlib
 walletlib
-*.a
+tokenlib.a
+walletlib.a
