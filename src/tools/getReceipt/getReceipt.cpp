@@ -5,5 +5,9 @@
  *
  * The LICENSE at the root of this repo details your rights (if any)
  *------------------------------------------------------------------------*/
-void main(void) {
+#include "etherlib.h"
+
+int main(void) {
+    cout << "Hello world\n";
+    return 0;
 }
