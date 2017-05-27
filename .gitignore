@@ -10,6 +10,7 @@ backups
 working
 quickBlocks Facts
 src/tools/speedTest/
+build
 
 # Compiled Object files
 *.slo
@@ -42,3 +43,10 @@ src/tools/scripts/ethsed
 
 # Hidden files
 .DS_Store
+
+# bin generated
+bin
+
+src/libs/etherlib.a
+
+src/libs/abilib.a
