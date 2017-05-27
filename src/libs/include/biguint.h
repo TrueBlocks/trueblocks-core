@@ -3,7 +3,7 @@
  * Derived from https://mattmccutchen.net/bigint/index.html
  *------------------------------------------------------------------------*/
 
-#include "nla.h"
+#include "bignla.h"
 
 namespace qblocks {
 
