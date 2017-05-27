@@ -27,9 +27,11 @@ bool COptions::parseArguments(SFString& command) {
         } else if (arg == "-t" || arg == "--thing") {
             option2 = true;
 
-        } else if (arg.startsWith('-')) {
-            if (!arg.Contains("-h") && !arg.Contains("-v") && !arg.Contains("-t"))
+        } else if (arg.startsWith('-')) {  // do not collapse
+
+            if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);
+            }
         }
     }
 
@@ -47,7 +49,6 @@ void COptions::Init(void) {
     option1 = false;
     option2 = false;
 
-    outScreen.setOutput(stdout);  // so we know where it is at the start of each run
     useVerbose = true;
     useTesting = false;
 }
@@ -62,5 +63,4 @@ COptions::COptions(void) {
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
-    outScreen.setOutput(stdout);  // flushes and clears archive file if any
 }

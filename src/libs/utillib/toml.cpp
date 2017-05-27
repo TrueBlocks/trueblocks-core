@@ -158,12 +158,12 @@ namespace qblocks {
         }
     }
 
-	SFUintBN CToml::getConfigBigInt(const SFString& group, const SFString& key, SFUintBN def) const {
-		SFString ret = getConfigStr(group,key,to_string(def).c_str());
-		return str2BigUint(ret);
-	}
+    SFUintBN CToml::getConfigBigInt(const SFString& group, const SFString& key, SFUintBN def) const {
+        SFString ret = getConfigStr(group, key, to_string(def).c_str());
+        return str2BigUint(ret);
+    }
 
-	//---------------------------------------------------------------------------------------
+    //---------------------------------------------------------------------------------------
     SFString CToml::getConfigStr(const SFString& group, const SFString& key, const SFString& def) const {
         SFString ret = def;
         CTomlGroup *grp = findGroup(group);

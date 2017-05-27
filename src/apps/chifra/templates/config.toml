@@ -3,13 +3,15 @@ to_screen = true
 use_color = true
 show_logs = true
 max_width = 180
-check_balances = false
+accounting = true
+debug = false
+notify = false
 
 [formats]
 screen_fmt1 = [{CONTRACT}]  [{BLOCKNUMBER}].[{TRANSACTIONINDEX}].[{DATE}]  [{FROM}]  [{ETHER}]  [{FUNCTION}]\n\tinput: [{INPUT}]\n\thash: [{HASH}]\n
 screen_fmt2 = [{DATE}]\t[{FROM}]\t[{TO}]\t[{ETHER}]\t[{FUNCTION}]\t[{ISERROR}]\t[{BLOCKNUMBER}]\t[{HASH}]\n
 screen_fmt = [{HEAD}]\n\
-	\tdate: @[{DATE}]# timestamp: @[{TIMESTAMP}]#\n\
+	\tdate: @[{DATE}]# timestamp: @[{TIMESTAMP}]# ether: @[{ETHER}]#\n\
 	\tfrom: @[{FROM}]# to: @[{TO}]# value: @[{w:30:VALUE}]# \n\
 	\thash: @[{HASH}]# \n\
 	\tblockNumber: @[{BLOCKNUMBER}]# txIndex: @[{TRANSACTIONINDEX}]#\n\

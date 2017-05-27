@@ -29,10 +29,11 @@ bool COptions::parseArguments(SFString& command) {
 
             trace = true;
 
-        } else if (arg.startsWith('-')) {
+        } else if (arg.startsWith('-')) {  // do not collapse
 
-            if (!arg.Contains("-h") && !arg.Contains("-v") && !arg.Contains("-t"))
+            if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);
+            }
 
         } else {
             if (arg.startsWith("0x")) {
@@ -74,7 +75,6 @@ void COptions::Init(void) {
     // queries = "";
     trace = false;
 
-    outScreen.setOutput(stdout);  // so we know where it is at the start of each run
     useVerbose = true;
     useTesting = false;
 }
@@ -100,5 +100,4 @@ COptions::COptions(void) {
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
-    outScreen.setOutput(stdout);  // flushes and clears archive file if any
 }
