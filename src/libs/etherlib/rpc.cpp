@@ -124,3 +124,5 @@ RPCSession::RPCSession(const SFString& _path) : m_ipcSocket(_path)
 }  // namespace qblocks
 
 #endif
+
+void unused2(void) {}
