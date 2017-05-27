@@ -7,6 +7,7 @@ basenode.cpp \
 bigint.cpp \
 biglib.cpp \
 biguint.cpp \
+colors.cpp \
 curl_code.cpp \
 database.cpp \
 dates.cpp \

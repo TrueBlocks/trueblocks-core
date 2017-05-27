@@ -37,6 +37,9 @@ test:
 testall:
 	@make test
 
+rebuild:
+	@cd ethName ; makeClass -arv ; cd -
+
 readmes:
 	@cd ethName ; ethName -th >README.md
 	@cd getBalance ; getBalance -th >README.md

@@ -36,6 +36,9 @@ testall:
 ##	@cd sha3; make test
 ##	@cd speedTest; make test
 
+rebuild:
+	@echo Nothing to rebuild
+
 readmes:
 #	@cd abiTest ; abiTest -th >README.md
 	@cd acctTree ; acctTree -th >README.md
