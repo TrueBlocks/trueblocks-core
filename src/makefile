@@ -1,32 +1,3 @@
-all:
-	@cd libs ; make ; echo
-	@cd apps ; make ; echo
-	@cd monitors ; make ; echo
-	@cd tools ; make ; echo
-	@cd other/04_inerror ; make app ; echo
-	@cd other/09_toJSON ; make app ; echo
-	@cd other/15_gasHole ; make app ; echo
-	@cd other/17_creations ; make app ; echo
-	@cd other/18_internal ; make app ; echo
-	@cd other/22_genesis ; make app ; echo
-	@cd tests ; make ; echo
-
-cleanall:
-	@make clean
-
-clean:
-	@cd libs ; make clean
-	@cd apps ; make clean
-	@cd monitors ; make cleanall
-	@cd tools ; make clean
-	@cd other/04_inerror ; make clean
-	@cd other/09_toJSON ; make clean
-	@cd other/15_gasHole ; make clean
-	@cd other/17_creations ; make clean
-	@cd other/18_internal ; make clean
-	@cd other/22_genesis ; make clean
-	@cd tests ; make clean
-
 test:
 	@make
 	@clear
