@@ -8,12 +8,11 @@ add_subdirectory(ethName)
 add_subdirectory(getBalance)
 add_subdirectory(getBlock)
 add_subdirectory(getLogs)
+add_subdirectory(getReceipt)
 add_subdirectory(getTrans)
 add_subdirectory(isContract)
 add_subdirectory(whenBlock)
 add_subdirectory(scripts)
 
 # Debug msg
-# message(WARNING  "Building tools")
-
-
+#message(WARNING  "Building tools")
