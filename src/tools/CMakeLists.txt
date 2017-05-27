@@ -15,4 +15,4 @@ add_subdirectory(whenBlock)
 add_subdirectory(scripts)
 
 # Debug msg
-message(WARNING  "Building tools")
+#message(WARNING  "Building tools")

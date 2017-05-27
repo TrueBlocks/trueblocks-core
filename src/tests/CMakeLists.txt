@@ -14,4 +14,4 @@ add_subdirectory(stringTest)
 add_subdirectory(tomlTest)
 
 # Debug msg
-message(WARNING  "Building tools")
+#message(WARNING  "Building tools")
