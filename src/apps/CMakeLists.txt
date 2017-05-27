@@ -8,13 +8,9 @@ project(apps)
 #add_subdirectory(chifra)
 add_subdirectory(ethprice)
 add_subdirectory(ethslurp)
-<<<<<<< HEAD
-add_subdirectory(ethprice)
-=======
 add_subdirectory(grabABI)
 add_subdirectory(makeClass)
 #add_subdirectory(miniBlocks)
->>>>>>> cmake-branch
 
 # Debug msg
 #message(WARNING  "Building apps")
