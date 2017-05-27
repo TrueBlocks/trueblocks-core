@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+#
+# Opens various Ethereum related documentation in the browser
+
+open "https://github.com/ethereum/wiki/wiki/Ethereum-Contract-ABI"
+open "https://github.com/ethereum/wiki/wiki/JSON-RPC"
+open "https://github.com/paritytech/parity/wiki/JSONRPC"
+open "http://hughm.cs.ukzn.ac.za/~murrellh/os/notes/ncurses.html"

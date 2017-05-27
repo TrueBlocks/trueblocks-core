@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+#
+# Searches the Ethereum 4byte registry for either a function signature (i.e. 4byte representation)
+# or the function name. Pretty prints results. Assumes existance of python on end user machine
+
+curl "https://www.4byte.directory/api/v1/signatures/?format=json&hex_signature=$1" | python -m json.tool
+curl "https://www.4byte.directory/api/v1/signatures/?format=json&text_signature=$1" | python -m json.tool
