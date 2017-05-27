@@ -6,4 +6,4 @@
  * The LICENSE at the root of this repo details your rights (if any)
  *------------------------------------------------------------------------*/
 #include "abilib.h"
-
+void unused1(void) {}
