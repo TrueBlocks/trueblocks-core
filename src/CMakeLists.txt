@@ -36,5 +36,4 @@ set(LINT_TARGET "lint")
 add_subdirectory(libs)
 add_subdirectory(apps)
 add_subdirectory(tools)
-
-
+add_subdirectory(tests)
