@@ -10,6 +10,7 @@ backups
 working
 quickBlocks Facts
 src/tools/speedTest/
+build
 
 # Compiled Object files
 *.slo
