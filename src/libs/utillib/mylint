@@ -1,0 +1,8 @@
+pylint database.* exportcontext.* options_base.* basenode.* curl_code.* dates.* filenames.* performance.* sfarchive.* sftime.* toml.* sfos.*
+
+#bigint.cpp
+#biglib.cpp
+#biguint.cpp
+#fielddata.cpp
+#runtimeclass.cpp
+#sfstring.cpp
