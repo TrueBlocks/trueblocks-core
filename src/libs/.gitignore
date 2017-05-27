@@ -1,6 +1,3 @@
-utillib
-abilib
-etherlib
 tokenlib
 walletlib
 
@@ -9,3 +6,7 @@ walletlib
 # etherlib.a
 tokenlib.a
 walletlib.a
+
+# We ignore the include directory, headers present here are generated on the fly
+include
+*.a
