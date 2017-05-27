@@ -37,7 +37,4 @@ add_subdirectory(libs)
 add_subdirectory(apps)
 add_subdirectory(tools)
 add_subdirectory(tests)
-<<<<<<< HEAD
-=======
 add_subdirectory(other)
->>>>>>> develop
