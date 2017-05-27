@@ -43,7 +43,12 @@ public:
     DECLARE_NODE (CIncomeStatement);
 
     // EXISTING_CODE
+    SFIntBN nodeBal;
     void operator+=(const CIncomeStatement &x);
+    bool reconcile(const SFAddress& addr, blknum_t blockNum);
+    bool balanced(void) const { return ((nodeBal - endBal) == 0); }
+    SFIntBN difference(void) const { return (nodeBal - endBal); }
+    void correct(void) { endBal = nodeBal; }
     // EXISTING_CODE
 
 protected:

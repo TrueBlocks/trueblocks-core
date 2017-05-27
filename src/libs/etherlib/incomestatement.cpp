@@ -225,24 +225,25 @@ SFArchive& operator>>(SFArchive& archive, CIncomeStatement& inc) {
     return archive;
 }
 
-int wed=28;
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 ostream& operator<<(ostream& os, const CIncomeStatement& is) {
+    int width=28;
     if (is.begBal == is.endBal && is.begBal == -1) {
-        os << padCenter("begBal",wed) << "\t"
-        << padCenter("inFlow",wed) << "\t"
-        << padCenter("outFlow",wed) << "\t"
-        << padCenter("endBal",wed) ;
+        os << padCenter("begBal",width) << "\t"
+        << padCenter("inFlow",width) << "\t"
+        << padCenter("outFlow",width) << "\t"
+        << padCenter("endBal",width);
     } else {
-        os << padLeft(wei2Ether(to_string(is.begBal).c_str()),wed) << "\t"
-        << padLeft(wei2Ether(to_string(is.inflow).c_str()),wed) << "\t"
-        << padLeft(wei2Ether(to_string(is.outflow).c_str()),wed) << "\t"
-        << padLeft(wei2Ether(to_string(is.endBal).c_str()),wed);
-// << "\t"
-//        << is.blockNum;
+        os << padLeft(wei2Ether(to_string(is.begBal).c_str()),width) << "\t"
+        << padLeft(wei2Ether(to_string(is.inflow).c_str()),width) << "\t"
+        << padLeft(wei2Ether(to_string(is.outflow).c_str()),width) << "\t"
+        << padLeft(wei2Ether(to_string(is.endBal).c_str()),width);
     }
     return os;
+}
+bool CIncomeStatement::reconcile(const SFAddress& addr, blknum_t blockNum) {
+    nodeBal = getBalance(addr, blockNum, false); return balanced();
 }
 // EXISTING_CODE
 }  // namespace qblocks
