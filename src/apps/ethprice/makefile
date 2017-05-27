@@ -1,3 +1,4 @@
+<<<<<<< HEAD:src/apps/ethprice/makefile
 #-------------------------------------------------
 libraries=../../libs
 bin=../../../bin
@@ -52,3 +53,11 @@ cleanall:
 
 clean:
 	-@$(RM) -f $(dest) $(product) $(objs)/*.o $(objs)/*.a 2> /dev/null
+=======
+lint:
+	@pylint *.[ch]*
+
+test:
+	@make
+	@echo "No tests"
+>>>>>>> develop:src/tools/getLogs/makefile
