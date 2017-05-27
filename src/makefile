@@ -66,6 +66,8 @@ rebuild:
 	@cd apps/grabABI ; make ; cd -
 	@cd libs ; make rebuild ; cd -
 	@cd monitors ; make rebuild ; cd -
+	@cd tools ; make rebuild ; cd -
+	@cd tests ; make rebuild ; cd -
 
 readmes:
 	@cd apps ; make readmes
