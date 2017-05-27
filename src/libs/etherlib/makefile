@@ -9,14 +9,15 @@ balhistory.cpp \
 block.cpp \
 incomestatement.cpp \
 logentry.cpp \
+node.cpp \
 pricequote.cpp \
 receipt.cpp \
 rpcresult.cpp \
+trace.cpp \
+traceaction.cpp \
+traceresult.cpp \
 transaction.cpp \
-webapi.cpp \
-node.cpp
-
-#etherlib.cpp
+webapi.cpp
 
 all:
 	@make $(product)
