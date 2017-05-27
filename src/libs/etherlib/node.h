@@ -121,11 +121,6 @@ inline void   forEveryMiniBlockInMemory  (MINIBLOCKVISITFUNC func, CBlockVisitor
 //-------------------------------------------------------------------------
 // Helps debug a bloom filter
 #define dbgBloom(a) fromBloom(a).Substitute("0"," ")
-//	.Substitute("0",SFString(iWhite)+"."+cOff) \
-//	.Substitute("1",SFString(cGreen)+"1"+cOff) \
-//	.Substitute("2",SFString(cRed)+"2"+cOff) \
-//	.Substitute("4",SFString(cBlue)+"4"+cOff) \
-//	.Substitute("8",SFString(cMagenta)+"8"+cOff)
 
 //-------------------------------------------------------------------------
 inline SFUintBN makeBloom(const SFString& hexIn)
