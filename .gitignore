@@ -46,7 +46,3 @@ src/tools/scripts/ethsed
 
 # bin generated
 bin
-
-src/libs/etherlib.a
-
-src/libs/abilib.a
