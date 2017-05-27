@@ -7,6 +7,8 @@ project(libs)
 add_subdirectory(utillib)
 add_subdirectory(abilib)
 add_subdirectory(etherlib)
+add_subdirectory(tokenlib)
+add_subdirectory(walletlib)
 
 # Debug msg
 # message(WARNING  "Building libs")

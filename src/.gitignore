@@ -1,6 +1,4 @@
-<<<<<<< HEAD
 bin
-design.txt
-=======
 build
->>>>>>> origin/cmake-branch
+design.txt
+makefile

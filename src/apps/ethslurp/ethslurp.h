@@ -6,6 +6,7 @@
  *
  * The LICENSE at the root of this repo details your rights (if any)
  *------------------------------------------------------------------------*/
+#include <algorithm>
 #include "etherlib.h"
 #include "options.h"
 
@@ -34,3 +35,5 @@ private:
 //---------------------------------------------------------------------------------------------------
 extern bool establishFolders(CToml& toml);
 extern void findBlockRange(const SFString& contents, uint32_t& minBlock, uint32_t& maxBlock);
+
+extern CFileExportContext outScreen;
