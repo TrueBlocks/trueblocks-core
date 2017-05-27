@@ -11,5 +11,4 @@ add_subdirectory(tokenlib)
 add_subdirectory(walletlib)
 
 # Debug msg
-# message(WARNING  "Building libs")
-
+#message(WARNING  "Building libs")
