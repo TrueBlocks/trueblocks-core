@@ -74,6 +74,9 @@ namespace qblocks {
                 if (args) delete [] args;
                 return usage();
 
+            } else if (arg == "--nocolors") {
+                colorsOff();
+
             } else if (arg.startsWith("-v") || arg.startsWith("--verbose")) {
                 verbose = true;
                 arg.Replace("--verbose", EMPTY);
@@ -126,6 +129,8 @@ namespace qblocks {
             return true;
         if (arg == "--version")
             return true;
+        if (arg == "--nocolors")
+            return true;
         return false;
     }
 
@@ -153,17 +158,13 @@ namespace qblocks {
 
     static SFString sep = "  ";
     static SFString sep2 = "";
-    static SFString yellow = bYellow;
-    static SFString off = cOff;
-    static SFString red = cRed;
-    static SFString blue = bBlue;
     extern const char *STR_FILE_OPTION;
 
     //--------------------------------------------------------------------------------
     int usage(const SFString& errMsg) {
         if (isTesting) {
             sep = sep2 = "`";
-            yellow = off = red = blue = "";
+            colorsOff();
             cerr << "## " << programName << "\n\n";
             cerr << COptionsBase::header;
             cerr << "\n#### Usage\n";
@@ -171,8 +172,8 @@ namespace qblocks {
 
         cerr << "\n";
         if (!errMsg.empty())
-            cerr << red << "  " << errMsg << "\n\n";
-        cerr << yellow << sep << "Usage:" << sep2 << "    " << off << programName << " " << options() << "  \n";
+            cerr << cRed << "  " << errMsg << "\n\n";
+        cerr << bYellow << sep << "Usage:" << sep2 << "    " << cOff << programName << " " << options() << "  \n";
         cerr << purpose();
         cerr << descriptions() << "\n";
         if (isTesting && !COptionsBase::seeAlso.empty()) {
@@ -183,7 +184,7 @@ namespace qblocks {
         cerr << COptionsBase::footer;
         if (isTesting)
             cerr << STR_FILE_OPTION;
-        cerr << blue << (isTesting?"":"  ") << "Powered by QuickBlocks.io\n" << off;
+        cerr << bBlue << (isTesting?"":"  ") << "Powered by QuickBlocks\n" << cOff;
         return false;
     }
 
@@ -192,6 +193,8 @@ namespace qblocks {
     "##### Other options\n"
     "\n"
     "Enter --version to display the current version of the tool.\n"
+    "\n"
+    "Enter --nocolors to turn off colored display.\n"
     "\n"
     "All `quickBlocks` command-line tools support the `--file:filename` option. Place valid commands, on separate "
     "lines, in a file and include the above option. In some cases, this option may significantly improve "
@@ -235,10 +238,10 @@ namespace qblocks {
         CStringExportContext ctx;
         if (!purpose.empty()) {
             purpose.Replace("\n           ", EMPTY);
-            ctx << yellow << sep << "Purpose:" << sep2 << "  " << off
+            ctx << bYellow << sep << "Purpose:" << sep2 << "  " << cOff
                 << purpose.Substitute("\n", "\n           ") << "  \n";
         }
-        ctx << yellow << sep << "Where:" << sep << off << "  \n";
+        ctx << bYellow << sep << "Where:" << sep << cOff << "  \n";
         return ctx.str;
     }
 
