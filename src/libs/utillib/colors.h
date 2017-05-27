@@ -9,50 +9,53 @@
 
 namespace qblocks {
 
-    //---------------------------------------------------------------------------------------------------
     // regular colors
-    #define cBlack    "\e[0;30m"
-    #define cRed      "\e[0;31m"
-    #define cGreen    "\e[0;32m"
-    #define cYellow   "\e[0;33m"
-    #define cBlue     "\e[0;34m"
-    #define cMagenta  "\e[0;35m"
-    #define cTeal     "\e[0;36m"
-    #define cWhite    "\e[0;37m"
+    extern SFString cBlack;
+    extern SFString cRed;
+    extern SFString cGreen;
+    extern SFString cYellow;
+    extern SFString cBlue;
+    extern SFString cMagenta;
+    extern SFString cTeal;
+    extern SFString cWhite;
+    extern SFString cOff;
+
+    extern SFString bbold;
+    extern SFString italic;
+    extern SFString underline;
+    extern SFString reversed;
+    extern SFString strikethru;
+
+    // bold italic colors
+    #define biBlack  (cBlack+bbold+italic)
 
     // bold colors
-    #define bBlack    "\e[1;30m"
-    #define bRed      "\e[1;31m"
-    #define bGreen    "\e[1;32m"
-    #define bYellow   "\e[1;33m"
-    #define bBlue     "\e[1;34m"
-    #define bMagenta  "\e[1;35m"
-    #define bTeal     "\e[1;36m"
-    #define bWhite    "\e[1;37m"
+    #define bBlack   (cBlack+bbold)
+    #define bRed     (cRed+bbold)
+    #define bGreen   (cGreen+bbold)
+    #define bYellow  (cYellow+bbold)
+    #define bBlue    (cBlue+bbold)
+    #define bMagenta (cMagenta+bbold)
+    #define bTeal    (cTeal+bbold)
+    #define bWhite   (cWhite+bbold)
 
     // italic colors
-    #define italic    SFString("\e[3m")
-    #define iBlack    "\e[0m\e[3;30m"
-    #define iRed      "\e[0m\e[3;31m"
-    #define iGreen    "\e[0m\e[3;32m"
-    #define iYellow   "\e[0m\e[3;33m"
-    #define iBlue     "\e[0m\e[3;34m"
-    #define iMagenta  "\e[0m\e[3;35m"
-    #define iTeal     "\e[0m\e[3;36m"
-    #define iWhite    "\e[0m\e[3;37m"
+    #define iBlack   (cBlack+italic)
+    #define iRed     (cRed+italic)
+    #define iGreen   (cGreen+italic)
+    #define iYellow  (cYellow+italic)
+    #define iBlue    (cBlue+italic)
+    #define iMagenta (cMagenta+italic)
+    #define iTeal    (cTeal+italic)
+    #define iWhite   (cWhite+italic)
 
-    // turn it off
-    #define cOff      "\e[0m"
 
-    #define asRed(a)      cRed << a << cOff
-    #define asGreen(a)    cGreen << a << cOff
-    #define asYellow(a)   cYellow << a << cOff
-    #define asBlue(a)     cBlue << a << cOff
-    #define asMagenta(a)  cMagenta << a << cOff
-    #define asBlueB(a)    bBlue << a << cOff
+    #define asYellow(a) cYellow << a << cOff
 
-    #define greenCheck (SFString(cGreen) + "✓" + cOff)
-    #define redX       (SFString(cRed)   + "X" + cOff)
+    #define greenCheck (cGreen + "✓" + cOff)
+    #define redX       (cRed   + "X" + cOff)
+
+    extern void colorsOff(void);
 
     //-----------------------------------------------------------------------
     inline SFString convertColor(const SFString& colorIn) {

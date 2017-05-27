@@ -19,13 +19,11 @@ static SFString nextAccountnameChunk(const SFString& fieldIn, bool& force, const
 static SFString nextAccountnameChunk_custom(const SFString& fieldIn, bool& force, const void *data);
 
 //---------------------------------------------------------------------------
-void CAccountName::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const
-{
+void CAccountName::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
     if (!m_showing)
         return;
 
-    if (fmtIn.empty())
-    {
+    if (fmtIn.empty()) {
         ctx << toJson();
         return;
     }
@@ -39,18 +37,15 @@ void CAccountName::Format(CExportContext& ctx, const SFString& fmtIn, void *data
 }
 
 //---------------------------------------------------------------------------
-SFString nextAccountnameChunk(const SFString& fieldIn, bool& force, const void *data)
-{
+SFString nextAccountnameChunk(const SFString& fieldIn, bool& force, const void *data) {
     const CAccountName *acc = (const CAccountName *)data;
-    if (acc)
-    {
+    if (acc) {
         // Give customized code a chance to override first
         SFString ret = nextAccountnameChunk_custom(fieldIn, force, data);
         if (!ret.empty())
             return ret;
 
-        switch (tolower(fieldIn[0]))
-        {
+        switch (tolower(fieldIn[0])) {
             case 'a':
                 if ( fieldIn % "addr" ) return acc->addr;
                 break;
@@ -75,13 +70,11 @@ SFString nextAccountnameChunk(const SFString& fieldIn, bool& force, const void *
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CAccountName::setValueByName(const SFString& fieldName, const SFString& fieldValue)
-{
+bool CAccountName::setValueByName(const SFString& fieldName, const SFString& fieldValue) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    switch (tolower(fieldName[0]))
-    {
+    switch (tolower(fieldName[0])) {
         case 'a':
             if ( fieldName % "addr" ) { addr = fieldValue; return true; }
             break;
@@ -98,15 +91,13 @@ bool CAccountName::setValueByName(const SFString& fieldName, const SFString& fie
 }
 
 //---------------------------------------------------------------------------------------------------
-void CAccountName::finishParse()
-{
+void CAccountName::finishParse() {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CAccountName::Serialize(SFArchive& archive)
-{
+bool CAccountName::Serialize(SFArchive& archive) {
     if (!archive.isReading())
         return ((const CAccountName*)this)->SerializeC(archive);
 
@@ -121,8 +112,7 @@ bool CAccountName::Serialize(SFArchive& archive)
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CAccountName::SerializeC(SFArchive& archive) const
-{
+bool CAccountName::SerializeC(SFArchive& archive) const {
     if (!preSerializeC(archive))
         return false;
 
@@ -134,13 +124,12 @@ bool CAccountName::SerializeC(SFArchive& archive) const
 }
 
 //---------------------------------------------------------------------------
-void CAccountName::registerClass(void)
-{
-    static bool been_here=false;
+void CAccountName::registerClass(void) {
+    static bool been_here = false;
     if (been_here) return;
-    been_here=true;
+    been_here = true;
 
-    uint32_t fieldNum=1000;
+    uint32_t fieldNum = 1000;
     ADD_FIELD(CAccountName, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
     ADD_FIELD(CAccountName, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
     ADD_FIELD(CAccountName, "addr", T_TEXT, ++fieldNum);
@@ -156,19 +145,16 @@ void CAccountName::registerClass(void)
 }
 
 //---------------------------------------------------------------------------
-SFString nextAccountnameChunk_custom(const SFString& fieldIn, bool& force, const void *data)
-{
+SFString nextAccountnameChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
     const CAccountName *acc = (const CAccountName *)data;
-    if (acc)
-    {
-        switch (tolower(fieldIn[0]))
-        {
+    if (acc) {
+        switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn,force,acc);
+                    return nextBasenodeChunk(fieldIn, force, acc);
                 break;
 
             default:
@@ -180,17 +166,15 @@ SFString nextAccountnameChunk_custom(const SFString& fieldIn, bool& force, const
 }
 
 //---------------------------------------------------------------------------
-bool CAccountName::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const
-{
+bool CAccountName::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
 }
 
 //---------------------------------------------------------------------------
-bool CAccountName::readBackLevel(SFArchive& archive)
-{
-    bool done=false;
+bool CAccountName::readBackLevel(SFArchive& archive) {
+    bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
