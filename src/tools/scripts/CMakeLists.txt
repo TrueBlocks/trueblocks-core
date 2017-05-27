@@ -1,6 +1,12 @@
 # This makefile just copies scripts into configured destination
 set(SCRIPTS_DEST_PATH "${CMAKE_SOURCE_DIR}/../bin")
 
+<<<<<<< HEAD
+=======
+# project
+project (scripts)
+
+>>>>>>> develop
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/openYP DESTINATION ${SCRIPTS_DEST_PATH})
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/openRPC DESTINATION ${SCRIPTS_DEST_PATH})
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/latestBlock DESTINATION ${SCRIPTS_DEST_PATH})
