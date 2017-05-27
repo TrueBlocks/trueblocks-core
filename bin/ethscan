@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+#
+# Usage: ethscan [ tx hash | address | block # ]
+# Opens http://etherscan.io with either a transaction hash, an Ethereum address
+# or a block number
+
+if [ ! -z $1 ]
+    # If the first input is not empty...
+then
+	if [ ! -z $2 ]
+        # If the second input is not empty...
+	then
+        # report an error
+        theColorRed = '\033[0;31m'
+        noColor = '\033[0m'
+		echo ""
+        echo -e ${theColorRed}"    Specify only a single transaction hash, account address, or block number"${noColor}
+		echo ""
+	else
+        if [ ${#1} = 66 ]
+        then
+            open https://etherscan.io/tx/$1
+        else
+            if [ ${#1} = 42 ]
+            then
+                open https://etherscan.io/address/$1
+            else
+                # assumes a block, but this may be wrong, open it anyway
+                open https://etherscan.io/block/$1
+            fi
+        fi
+	fi
+else
+    # The input was empty, so just open the site
+	open https://etherscan.io
+fi
