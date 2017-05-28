@@ -27,8 +27,7 @@ class CBlock;
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CTransaction : public CBaseNode
-{
+class CTransaction : public CBaseNode {
 public:
     SFHash hash;
     SFHash blockHash;
@@ -53,7 +52,7 @@ public:
     ~CTransaction(void);
     CTransaction& operator=(const CTransaction& tr);
 
-    DECLARE_NODE (CTransaction);
+    DECLARE_NODE(CTransaction);
 
     // EXISTING_CODE
     const CBlock *pBlock;
@@ -87,16 +86,14 @@ protected:
 };
 
 //--------------------------------------------------------------------------
-inline CTransaction::CTransaction(void)
-{
+inline CTransaction::CTransaction(void) {
     Init();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CTransaction::CTransaction(const CTransaction& tr)
-{
+inline CTransaction::CTransaction(const CTransaction& tr) {
     // EXISTING_CODE
     // EXISTING_CODE
     Copy(tr);
@@ -106,23 +103,20 @@ inline CTransaction::CTransaction(const CTransaction& tr)
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline CTransaction::~CTransaction(void)
-{
+inline CTransaction::~CTransaction(void) {
     Clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CTransaction::Clear(void)
-{
+inline void CTransaction::Clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CTransaction::Init(void)
-{
+inline void CTransaction::Init(void) {
     CBaseNode::Init();
 
 //    hash = EMPTY;
@@ -161,8 +155,7 @@ inline void CTransaction::Init(void)
 }
 
 //--------------------------------------------------------------------------
-inline void CTransaction::Copy(const CTransaction& tr)
-{
+inline void CTransaction::Copy(const CTransaction& tr) {
     Clear();
     CBaseNode::Copy(tr);
 
@@ -203,8 +196,7 @@ inline void CTransaction::Copy(const CTransaction& tr)
 }
 
 //--------------------------------------------------------------------------
-inline CTransaction& CTransaction::operator=(const CTransaction& tr)
-{
+inline CTransaction& CTransaction::operator=(const CTransaction& tr) {
     Copy(tr);
     // EXISTING_CODE
     // EXISTING_CODE
@@ -212,8 +204,7 @@ inline CTransaction& CTransaction::operator=(const CTransaction& tr)
 }
 
 //---------------------------------------------------------------------------
-inline SFString CTransaction::getValueByName(const SFString& fieldName) const
-{
+inline SFString CTransaction::getValueByName(const SFString& fieldName) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return Format("[{"+toUpper(fieldName)+"}]");

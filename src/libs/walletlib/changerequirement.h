@@ -22,8 +22,7 @@ typedef SFUniqueList<QChangeRequirement*>       QChangeRequirementListU;
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class QChangeRequirement : public CTransaction
-{
+class QChangeRequirement : public CTransaction {
 public:
     SFUintBN _newRequired;
 
@@ -33,7 +32,7 @@ public:
     ~QChangeRequirement(void);
     QChangeRequirement& operator=(const QChangeRequirement& ch);
 
-    DECLARE_NODE (QChangeRequirement);
+    DECLARE_NODE(QChangeRequirement);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -49,16 +48,14 @@ protected:
 };
 
 //--------------------------------------------------------------------------
-inline QChangeRequirement::QChangeRequirement(void)
-{
+inline QChangeRequirement::QChangeRequirement(void) {
     Init();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline QChangeRequirement::QChangeRequirement(const QChangeRequirement& ch)
-{
+inline QChangeRequirement::QChangeRequirement(const QChangeRequirement& ch) {
     // EXISTING_CODE
     // EXISTING_CODE
     Copy(ch);
@@ -68,23 +65,20 @@ inline QChangeRequirement::QChangeRequirement(const QChangeRequirement& ch)
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline QChangeRequirement::~QChangeRequirement(void)
-{
+inline QChangeRequirement::~QChangeRequirement(void) {
     Clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void QChangeRequirement::Clear(void)
-{
+inline void QChangeRequirement::Clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void QChangeRequirement::Init(void)
-{
+inline void QChangeRequirement::Init(void) {
     CTransaction::Init();
 
     _newRequired = 0;
@@ -94,8 +88,7 @@ inline void QChangeRequirement::Init(void)
 }
 
 //--------------------------------------------------------------------------
-inline void QChangeRequirement::Copy(const QChangeRequirement& ch)
-{
+inline void QChangeRequirement::Copy(const QChangeRequirement& ch) {
     Clear();
     CTransaction::Copy(ch);
 
@@ -107,8 +100,7 @@ inline void QChangeRequirement::Copy(const QChangeRequirement& ch)
 }
 
 //--------------------------------------------------------------------------
-inline QChangeRequirement& QChangeRequirement::operator=(const QChangeRequirement& ch)
-{
+inline QChangeRequirement& QChangeRequirement::operator=(const QChangeRequirement& ch) {
     Copy(ch);
     // EXISTING_CODE
     // EXISTING_CODE
@@ -116,8 +108,7 @@ inline QChangeRequirement& QChangeRequirement::operator=(const QChangeRequiremen
 }
 
 //---------------------------------------------------------------------------
-inline SFString QChangeRequirement::getValueByName(const SFString& fieldName) const
-{
+inline SFString QChangeRequirement::getValueByName(const SFString& fieldName) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return Format("[{"+toUpper(fieldName)+"}]");

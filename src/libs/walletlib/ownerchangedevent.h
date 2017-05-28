@@ -22,8 +22,7 @@ typedef SFUniqueList<QOwnerChangedEvent*>       QOwnerChangedEventListU;
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class QOwnerChangedEvent : public CLogEntry
-{
+class QOwnerChangedEvent : public CLogEntry {
 public:
     SFAddress oldOwner;
     SFAddress newOwner;
@@ -34,7 +33,7 @@ public:
     ~QOwnerChangedEvent(void);
     QOwnerChangedEvent& operator=(const QOwnerChangedEvent& ow);
 
-    DECLARE_NODE (QOwnerChangedEvent);
+    DECLARE_NODE(QOwnerChangedEvent);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -50,16 +49,14 @@ protected:
 };
 
 //--------------------------------------------------------------------------
-inline QOwnerChangedEvent::QOwnerChangedEvent(void)
-{
+inline QOwnerChangedEvent::QOwnerChangedEvent(void) {
     Init();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline QOwnerChangedEvent::QOwnerChangedEvent(const QOwnerChangedEvent& ow)
-{
+inline QOwnerChangedEvent::QOwnerChangedEvent(const QOwnerChangedEvent& ow) {
     // EXISTING_CODE
     // EXISTING_CODE
     Copy(ow);
@@ -69,23 +66,20 @@ inline QOwnerChangedEvent::QOwnerChangedEvent(const QOwnerChangedEvent& ow)
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline QOwnerChangedEvent::~QOwnerChangedEvent(void)
-{
+inline QOwnerChangedEvent::~QOwnerChangedEvent(void) {
     Clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void QOwnerChangedEvent::Clear(void)
-{
+inline void QOwnerChangedEvent::Clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void QOwnerChangedEvent::Init(void)
-{
+inline void QOwnerChangedEvent::Init(void) {
     CLogEntry::Init();
 
 //    oldOwner = EMPTY;
@@ -96,8 +90,7 @@ inline void QOwnerChangedEvent::Init(void)
 }
 
 //--------------------------------------------------------------------------
-inline void QOwnerChangedEvent::Copy(const QOwnerChangedEvent& ow)
-{
+inline void QOwnerChangedEvent::Copy(const QOwnerChangedEvent& ow) {
     Clear();
     CLogEntry::Copy(ow);
 
@@ -110,8 +103,7 @@ inline void QOwnerChangedEvent::Copy(const QOwnerChangedEvent& ow)
 }
 
 //--------------------------------------------------------------------------
-inline QOwnerChangedEvent& QOwnerChangedEvent::operator=(const QOwnerChangedEvent& ow)
-{
+inline QOwnerChangedEvent& QOwnerChangedEvent::operator=(const QOwnerChangedEvent& ow) {
     Copy(ow);
     // EXISTING_CODE
     // EXISTING_CODE
@@ -119,8 +111,7 @@ inline QOwnerChangedEvent& QOwnerChangedEvent::operator=(const QOwnerChangedEven
 }
 
 //---------------------------------------------------------------------------
-inline SFString QOwnerChangedEvent::getValueByName(const SFString& fieldName) const
-{
+inline SFString QOwnerChangedEvent::getValueByName(const SFString& fieldName) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return Format("[{"+toUpper(fieldName)+"}]");

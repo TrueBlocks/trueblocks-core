@@ -26,8 +26,7 @@ typedef SFUniqueList<CAccount*>       CAccountListU;
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CAccount : public CBaseNode
-{
+class CAccount : public CBaseNode {
 public:
     SFAddress addr;
     SFString header;
@@ -44,7 +43,7 @@ public:
     ~CAccount(void);
     CAccount& operator=(const CAccount& ac);
 
-    DECLARE_NODE (CAccount);
+    DECLARE_NODE(CAccount);
 
     // EXISTING_CODE
     CAbi abi;
@@ -62,16 +61,14 @@ protected:
 };
 
 //--------------------------------------------------------------------------
-inline CAccount::CAccount(void)
-{
+inline CAccount::CAccount(void) {
     Init();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CAccount::CAccount(const CAccount& ac)
-{
+inline CAccount::CAccount(const CAccount& ac) {
     // EXISTING_CODE
     // EXISTING_CODE
     Copy(ac);
@@ -81,16 +78,14 @@ inline CAccount::CAccount(const CAccount& ac)
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline CAccount::~CAccount(void)
-{
+inline CAccount::~CAccount(void) {
     Clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CAccount::Clear(void)
-{
+inline void CAccount::Clear(void) {
     // EXISTING_CODE
     abi.abiByName.Clear();
     abi.abiByEncoding.Clear();
@@ -98,8 +93,7 @@ inline void CAccount::Clear(void)
 }
 
 //--------------------------------------------------------------------------
-inline void CAccount::Init(void)
-{
+inline void CAccount::Init(void) {
     CBaseNode::Init();
 
 //    addr = EMPTY;
@@ -119,8 +113,7 @@ inline void CAccount::Init(void)
 }
 
 //--------------------------------------------------------------------------
-inline void CAccount::Copy(const CAccount& ac)
-{
+inline void CAccount::Copy(const CAccount& ac) {
     Clear();
     CBaseNode::Copy(ac);
 
@@ -142,8 +135,7 @@ inline void CAccount::Copy(const CAccount& ac)
 }
 
 //--------------------------------------------------------------------------
-inline CAccount& CAccount::operator=(const CAccount& ac)
-{
+inline CAccount& CAccount::operator=(const CAccount& ac) {
     Copy(ac);
     // EXISTING_CODE
     // EXISTING_CODE
@@ -151,8 +143,7 @@ inline CAccount& CAccount::operator=(const CAccount& ac)
 }
 
 //---------------------------------------------------------------------------
-inline SFString CAccount::getValueByName(const SFString& fieldName) const
-{
+inline SFString CAccount::getValueByName(const SFString& fieldName) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return Format("[{"+toUpper(fieldName)+"}]");

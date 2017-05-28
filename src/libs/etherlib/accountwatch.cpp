@@ -22,13 +22,11 @@ static SFString nextAccountwatchChunk(const SFString& fieldIn, bool& force, cons
 static SFString nextAccountwatchChunk_custom(const SFString& fieldIn, bool& force, const void *data);
 
 //---------------------------------------------------------------------------
-void CAccountWatch::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const
-{
+void CAccountWatch::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
     if (!m_showing)
         return;
 
-    if (fmtIn.empty())
-    {
+    if (fmtIn.empty()) {
         ctx << toJson();
         return;
     }
@@ -42,18 +40,15 @@ void CAccountWatch::Format(CExportContext& ctx, const SFString& fmtIn, void *dat
 }
 
 //---------------------------------------------------------------------------
-SFString nextAccountwatchChunk(const SFString& fieldIn, bool& force, const void *data)
-{
+SFString nextAccountwatchChunk(const SFString& fieldIn, bool& force, const void *data) {
     const CAccountWatch *acc = (const CAccountWatch *)data;
-    if (acc)
-    {
+    if (acc) {
         // Give customized code a chance to override first
         SFString ret = nextAccountwatchChunk_custom(fieldIn, force, data);
         if (!ret.empty())
             return ret;
 
-        switch (tolower(fieldIn[0]))
-        {
+        switch (tolower(fieldIn[0])) {
             case 'a':
                 if ( fieldIn % "address" ) return fromAddress(acc->address);
                 break;
@@ -87,12 +82,11 @@ SFString nextAccountwatchChunk(const SFString& fieldIn, bool& force, const void 
             return ret;
     }
 
-    return "<span class=warning>Field not found: [{" + fieldIn + "}]</span>\n";
+    return "Field not found: [{" + fieldIn + "}]\n";
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CAccountWatch::setValueByName(const SFString& fieldName, const SFString& fieldValue)
-{
+bool CAccountWatch::setValueByName(const SFString& fieldName, const SFString& fieldValue) {
     // EXISTING_CODE
     if (fieldName % "qbis") {
         char *p = (char *)(const char*)fieldValue;
@@ -108,8 +102,7 @@ bool CAccountWatch::setValueByName(const SFString& fieldName, const SFString& fi
     }
     // EXISTING_CODE
 
-    switch (tolower(fieldName[0]))
-    {
+    switch (tolower(fieldName[0])) {
         case 'a':
             if ( fieldName % "address" ) { address = toAddress(fieldValue); return true; }
             break;
@@ -139,15 +132,13 @@ bool CAccountWatch::setValueByName(const SFString& fieldName, const SFString& fi
 }
 
 //---------------------------------------------------------------------------------------------------
-void CAccountWatch::finishParse()
-{
+void CAccountWatch::finishParse() {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CAccountWatch::Serialize(SFArchive& archive)
-{
+bool CAccountWatch::Serialize(SFArchive& archive) {
     if (!archive.isReading())
         return ((const CAccountWatch*)this)->SerializeC(archive);
 
@@ -167,8 +158,7 @@ bool CAccountWatch::Serialize(SFArchive& archive)
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CAccountWatch::SerializeC(SFArchive& archive) const
-{
+bool CAccountWatch::SerializeC(SFArchive& archive) const {
     if (!preSerializeC(archive))
         return false;
 
@@ -185,13 +175,12 @@ bool CAccountWatch::SerializeC(SFArchive& archive) const
 }
 
 //---------------------------------------------------------------------------
-void CAccountWatch::registerClass(void)
-{
-    static bool been_here=false;
+void CAccountWatch::registerClass(void) {
+    static bool been_here = false;
     if (been_here) return;
-    been_here=true;
+    been_here = true;
 
-    uint32_t fieldNum=1000;
+    uint32_t fieldNum = 1000;
     ADD_FIELD(CAccountWatch, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
     ADD_FIELD(CAccountWatch, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
     ADD_FIELD(CAccountWatch, "index", T_NUMBER, ++fieldNum);
@@ -212,19 +201,16 @@ void CAccountWatch::registerClass(void)
 }
 
 //---------------------------------------------------------------------------
-SFString nextAccountwatchChunk_custom(const SFString& fieldIn, bool& force, const void *data)
-{
+SFString nextAccountwatchChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
     const CAccountWatch *acc = (const CAccountWatch *)data;
-    if (acc)
-    {
-        switch (tolower(fieldIn[0]))
-        {
+    if (acc) {
+        switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn,force,acc);
+                    return nextBasenodeChunk(fieldIn, force, acc);
                 break;
 
             default:
@@ -236,17 +222,15 @@ SFString nextAccountwatchChunk_custom(const SFString& fieldIn, bool& force, cons
 }
 
 //---------------------------------------------------------------------------
-bool CAccountWatch::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const
-{
+bool CAccountWatch::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
 }
 
 //---------------------------------------------------------------------------
-bool CAccountWatch::readBackLevel(SFArchive& archive)
-{
-    bool done=false;
+bool CAccountWatch::readBackLevel(SFArchive& archive) {
+    bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
     return done;

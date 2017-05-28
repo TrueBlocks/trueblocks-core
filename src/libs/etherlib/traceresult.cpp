@@ -22,13 +22,11 @@ static SFString nextTraceresultChunk(const SFString& fieldIn, bool& force, const
 static SFString nextTraceresultChunk_custom(const SFString& fieldIn, bool& force, const void *data);
 
 //---------------------------------------------------------------------------
-void CTraceResult::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const
-{
+void CTraceResult::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
     if (!m_showing)
         return;
 
-    if (fmtIn.empty())
-    {
+    if (fmtIn.empty()) {
         ctx << toJson();
         return;
     }
@@ -42,18 +40,15 @@ void CTraceResult::Format(CExportContext& ctx, const SFString& fmtIn, void *data
 }
 
 //---------------------------------------------------------------------------
-SFString nextTraceresultChunk(const SFString& fieldIn, bool& force, const void *data)
-{
+SFString nextTraceresultChunk(const SFString& fieldIn, bool& force, const void *data) {
     const CTraceResult *tra = (const CTraceResult *)data;
-    if (tra)
-    {
+    if (tra) {
         // Give customized code a chance to override first
         SFString ret = nextTraceresultChunk_custom(fieldIn, force, data);
         if (!ret.empty())
             return ret;
 
-        switch (tolower(fieldIn[0]))
-        {
+        switch (tolower(fieldIn[0])) {
             case 'g':
                 if ( fieldIn % "gasUsed" ) return asStringU(tra->gasUsed);
                 break;
@@ -71,17 +66,15 @@ SFString nextTraceresultChunk(const SFString& fieldIn, bool& force, const void *
             return ret;
     }
 
-    return "<span class=warning>Field not found: [{" + fieldIn + "}]</span>\n";
+    return "Field not found: [{" + fieldIn + "}]\n";
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CTraceResult::setValueByName(const SFString& fieldName, const SFString& fieldValue)
-{
+bool CTraceResult::setValueByName(const SFString& fieldName, const SFString& fieldValue) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    switch (tolower(fieldName[0]))
-    {
+    switch (tolower(fieldName[0])) {
         case 'g':
             if ( fieldName % "gasUsed" ) { gasUsed = toUnsigned(fieldValue); return true; }
             break;
@@ -95,15 +88,13 @@ bool CTraceResult::setValueByName(const SFString& fieldName, const SFString& fie
 }
 
 //---------------------------------------------------------------------------------------------------
-void CTraceResult::finishParse()
-{
+void CTraceResult::finishParse() {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CTraceResult::Serialize(SFArchive& archive)
-{
+bool CTraceResult::Serialize(SFArchive& archive) {
     if (!archive.isReading())
         return ((const CTraceResult*)this)->SerializeC(archive);
 
@@ -117,8 +108,7 @@ bool CTraceResult::Serialize(SFArchive& archive)
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CTraceResult::SerializeC(SFArchive& archive) const
-{
+bool CTraceResult::SerializeC(SFArchive& archive) const {
     if (!preSerializeC(archive))
         return false;
 
@@ -129,13 +119,12 @@ bool CTraceResult::SerializeC(SFArchive& archive) const
 }
 
 //---------------------------------------------------------------------------
-void CTraceResult::registerClass(void)
-{
-    static bool been_here=false;
+void CTraceResult::registerClass(void) {
+    static bool been_here = false;
     if (been_here) return;
-    been_here=true;
+    been_here = true;
 
-    uint32_t fieldNum=1000;
+    uint32_t fieldNum = 1000;
     ADD_FIELD(CTraceResult, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
     ADD_FIELD(CTraceResult, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
     ADD_FIELD(CTraceResult, "gasUsed", T_NUMBER, ++fieldNum);
@@ -150,19 +139,16 @@ void CTraceResult::registerClass(void)
 }
 
 //---------------------------------------------------------------------------
-SFString nextTraceresultChunk_custom(const SFString& fieldIn, bool& force, const void *data)
-{
+SFString nextTraceresultChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
     const CTraceResult *tra = (const CTraceResult *)data;
-    if (tra)
-    {
-        switch (tolower(fieldIn[0]))
-        {
+    if (tra) {
+        switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn,force,tra);
+                    return nextBasenodeChunk(fieldIn, force, tra);
                 break;
 
             default:
@@ -174,17 +160,15 @@ SFString nextTraceresultChunk_custom(const SFString& fieldIn, bool& force, const
 }
 
 //---------------------------------------------------------------------------
-bool CTraceResult::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const
-{
+bool CTraceResult::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
 }
 
 //---------------------------------------------------------------------------
-bool CTraceResult::readBackLevel(SFArchive& archive)
-{
-    bool done=false;
+bool CTraceResult::readBackLevel(SFArchive& archive) {
+    bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
     return done;

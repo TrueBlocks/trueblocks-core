@@ -22,8 +22,7 @@ typedef SFUniqueList<QIsOwner*>       QIsOwnerListU;
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class QIsOwner : public CTransaction
-{
+class QIsOwner : public CTransaction {
 public:
     SFAddress _addr;
 
@@ -33,7 +32,7 @@ public:
     ~QIsOwner(void);
     QIsOwner& operator=(const QIsOwner& is);
 
-    DECLARE_NODE (QIsOwner);
+    DECLARE_NODE(QIsOwner);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -49,16 +48,14 @@ protected:
 };
 
 //--------------------------------------------------------------------------
-inline QIsOwner::QIsOwner(void)
-{
+inline QIsOwner::QIsOwner(void) {
     Init();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline QIsOwner::QIsOwner(const QIsOwner& is)
-{
+inline QIsOwner::QIsOwner(const QIsOwner& is) {
     // EXISTING_CODE
     // EXISTING_CODE
     Copy(is);
@@ -68,23 +65,20 @@ inline QIsOwner::QIsOwner(const QIsOwner& is)
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline QIsOwner::~QIsOwner(void)
-{
+inline QIsOwner::~QIsOwner(void) {
     Clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void QIsOwner::Clear(void)
-{
+inline void QIsOwner::Clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void QIsOwner::Init(void)
-{
+inline void QIsOwner::Init(void) {
     CTransaction::Init();
 
 //    _addr = EMPTY;
@@ -94,8 +88,7 @@ inline void QIsOwner::Init(void)
 }
 
 //--------------------------------------------------------------------------
-inline void QIsOwner::Copy(const QIsOwner& is)
-{
+inline void QIsOwner::Copy(const QIsOwner& is) {
     Clear();
     CTransaction::Copy(is);
 
@@ -107,8 +100,7 @@ inline void QIsOwner::Copy(const QIsOwner& is)
 }
 
 //--------------------------------------------------------------------------
-inline QIsOwner& QIsOwner::operator=(const QIsOwner& is)
-{
+inline QIsOwner& QIsOwner::operator=(const QIsOwner& is) {
     Copy(is);
     // EXISTING_CODE
     // EXISTING_CODE
@@ -116,8 +108,7 @@ inline QIsOwner& QIsOwner::operator=(const QIsOwner& is)
 }
 
 //---------------------------------------------------------------------------
-inline SFString QIsOwner::getValueByName(const SFString& fieldName) const
-{
+inline SFString QIsOwner::getValueByName(const SFString& fieldName) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return Format("[{"+toUpper(fieldName)+"}]");
