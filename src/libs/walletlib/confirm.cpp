@@ -20,13 +20,11 @@ static SFString nextConfirmChunk(const SFString& fieldIn, bool& force, const voi
 static SFString nextConfirmChunk_custom(const SFString& fieldIn, bool& force, const void *data);
 
 //---------------------------------------------------------------------------
-void QConfirm::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const
-{
+void QConfirm::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
     if (!m_showing)
         return;
 
-    if (fmtIn.empty())
-    {
+    if (fmtIn.empty()) {
         ctx << toJson();
         return;
     }
@@ -40,18 +38,15 @@ void QConfirm::Format(CExportContext& ctx, const SFString& fmtIn, void *data) co
 }
 
 //---------------------------------------------------------------------------
-SFString nextConfirmChunk(const SFString& fieldIn, bool& force, const void *data)
-{
+SFString nextConfirmChunk(const SFString& fieldIn, bool& force, const void *data) {
     const QConfirm *con = (const QConfirm *)data;
-    if (con)
-    {
+    if (con) {
         // Give customized code a chance to override first
         SFString ret = nextConfirmChunk_custom(fieldIn, force, data);
         if (!ret.empty())
             return ret;
 
-        switch (tolower(fieldIn[0]))
-        {
+        switch (tolower(fieldIn[0])) {
             case '_':
                 if ( fieldIn % "_h" ) return con->_h;
                 break;
@@ -66,20 +61,18 @@ SFString nextConfirmChunk(const SFString& fieldIn, bool& force, const void *data
             return ret;
     }
 
-    return "<span class=warning>Field not found: [{" + fieldIn + "}]</span>\n";
+    return "Field not found: [{" + fieldIn + "}]\n";
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QConfirm::setValueByName(const SFString& fieldName, const SFString& fieldValue)
-{
+bool QConfirm::setValueByName(const SFString& fieldName, const SFString& fieldValue) {
     // EXISTING_CODE
     // EXISTING_CODE
 
     if (CTransaction::setValueByName(fieldName, fieldValue))
         return true;
 
-    switch (tolower(fieldName[0]))
-    {
+    switch (tolower(fieldName[0])) {
         case '_':
             if ( fieldName % "_h" ) { _h = toLower(fieldValue); return true; }
             break;
@@ -90,15 +83,13 @@ bool QConfirm::setValueByName(const SFString& fieldName, const SFString& fieldVa
 }
 
 //---------------------------------------------------------------------------------------------------
-void QConfirm::finishParse()
-{
+void QConfirm::finishParse() {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QConfirm::Serialize(SFArchive& archive)
-{
+bool QConfirm::Serialize(SFArchive& archive) {
     if (!archive.isReading())
         return ((const QConfirm*)this)->SerializeC(archive);
 
@@ -110,8 +101,7 @@ bool QConfirm::Serialize(SFArchive& archive)
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QConfirm::SerializeC(SFArchive& archive) const
-{
+bool QConfirm::SerializeC(SFArchive& archive) const {
     CTransaction::SerializeC(archive);
 
     archive << _h;
@@ -120,15 +110,14 @@ bool QConfirm::SerializeC(SFArchive& archive) const
 }
 
 //---------------------------------------------------------------------------
-void QConfirm::registerClass(void)
-{
-    static bool been_here=false;
+void QConfirm::registerClass(void) {
+    static bool been_here = false;
     if (been_here) return;
-    been_here=true;
+    been_here = true;
 
     CTransaction::registerClass();
 
-    uint32_t fieldNum=1000;
+    uint32_t fieldNum = 1000;
     ADD_FIELD(QConfirm, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
     ADD_FIELD(QConfirm, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
     ADD_FIELD(QConfirm, "_h", T_TEXT, ++fieldNum);
@@ -142,19 +131,16 @@ void QConfirm::registerClass(void)
 }
 
 //---------------------------------------------------------------------------
-SFString nextConfirmChunk_custom(const SFString& fieldIn, bool& force, const void *data)
-{
+SFString nextConfirmChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
     const QConfirm *con = (const QConfirm *)data;
-    if (con)
-    {
-        switch (tolower(fieldIn[0]))
-        {
+    if (con) {
+        switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn,force,con);
+                    return nextBasenodeChunk(fieldIn, force, con);
                 break;
 
             default:
@@ -166,17 +152,15 @@ SFString nextConfirmChunk_custom(const SFString& fieldIn, bool& force, const voi
 }
 
 //---------------------------------------------------------------------------
-bool QConfirm::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const
-{
+bool QConfirm::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
 }
 
 //---------------------------------------------------------------------------
-bool QConfirm::readBackLevel(SFArchive& archive)
-{
-    bool done=false;
+bool QConfirm::readBackLevel(SFArchive& archive) {
+    bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
     return done;

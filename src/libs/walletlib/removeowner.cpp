@@ -20,13 +20,11 @@ static SFString nextRemoveownerChunk(const SFString& fieldIn, bool& force, const
 static SFString nextRemoveownerChunk_custom(const SFString& fieldIn, bool& force, const void *data);
 
 //---------------------------------------------------------------------------
-void QRemoveOwner::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const
-{
+void QRemoveOwner::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
     if (!m_showing)
         return;
 
-    if (fmtIn.empty())
-    {
+    if (fmtIn.empty()) {
         ctx << toJson();
         return;
     }
@@ -40,18 +38,15 @@ void QRemoveOwner::Format(CExportContext& ctx, const SFString& fmtIn, void *data
 }
 
 //---------------------------------------------------------------------------
-SFString nextRemoveownerChunk(const SFString& fieldIn, bool& force, const void *data)
-{
+SFString nextRemoveownerChunk(const SFString& fieldIn, bool& force, const void *data) {
     const QRemoveOwner *rem = (const QRemoveOwner *)data;
-    if (rem)
-    {
+    if (rem) {
         // Give customized code a chance to override first
         SFString ret = nextRemoveownerChunk_custom(fieldIn, force, data);
         if (!ret.empty())
             return ret;
 
-        switch (tolower(fieldIn[0]))
-        {
+        switch (tolower(fieldIn[0])) {
             case '_':
                 if ( fieldIn % "_owner" ) return fromAddress(rem->_owner);
                 break;
@@ -66,20 +61,18 @@ SFString nextRemoveownerChunk(const SFString& fieldIn, bool& force, const void *
             return ret;
     }
 
-    return "<span class=warning>Field not found: [{" + fieldIn + "}]</span>\n";
+    return "Field not found: [{" + fieldIn + "}]\n";
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QRemoveOwner::setValueByName(const SFString& fieldName, const SFString& fieldValue)
-{
+bool QRemoveOwner::setValueByName(const SFString& fieldName, const SFString& fieldValue) {
     // EXISTING_CODE
     // EXISTING_CODE
 
     if (CTransaction::setValueByName(fieldName, fieldValue))
         return true;
 
-    switch (tolower(fieldName[0]))
-    {
+    switch (tolower(fieldName[0])) {
         case '_':
             if ( fieldName % "_owner" ) { _owner = toAddress(fieldValue); return true; }
             break;
@@ -90,15 +83,13 @@ bool QRemoveOwner::setValueByName(const SFString& fieldName, const SFString& fie
 }
 
 //---------------------------------------------------------------------------------------------------
-void QRemoveOwner::finishParse()
-{
+void QRemoveOwner::finishParse() {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QRemoveOwner::Serialize(SFArchive& archive)
-{
+bool QRemoveOwner::Serialize(SFArchive& archive) {
     if (!archive.isReading())
         return ((const QRemoveOwner*)this)->SerializeC(archive);
 
@@ -110,8 +101,7 @@ bool QRemoveOwner::Serialize(SFArchive& archive)
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QRemoveOwner::SerializeC(SFArchive& archive) const
-{
+bool QRemoveOwner::SerializeC(SFArchive& archive) const {
     CTransaction::SerializeC(archive);
 
     archive << _owner;
@@ -120,15 +110,14 @@ bool QRemoveOwner::SerializeC(SFArchive& archive) const
 }
 
 //---------------------------------------------------------------------------
-void QRemoveOwner::registerClass(void)
-{
-    static bool been_here=false;
+void QRemoveOwner::registerClass(void) {
+    static bool been_here = false;
     if (been_here) return;
-    been_here=true;
+    been_here = true;
 
     CTransaction::registerClass();
 
-    uint32_t fieldNum=1000;
+    uint32_t fieldNum = 1000;
     ADD_FIELD(QRemoveOwner, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
     ADD_FIELD(QRemoveOwner, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
     ADD_FIELD(QRemoveOwner, "_owner", T_TEXT, ++fieldNum);
@@ -142,19 +131,16 @@ void QRemoveOwner::registerClass(void)
 }
 
 //---------------------------------------------------------------------------
-SFString nextRemoveownerChunk_custom(const SFString& fieldIn, bool& force, const void *data)
-{
+SFString nextRemoveownerChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
     const QRemoveOwner *rem = (const QRemoveOwner *)data;
-    if (rem)
-    {
-        switch (tolower(fieldIn[0]))
-        {
+    if (rem) {
+        switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn,force,rem);
+                    return nextBasenodeChunk(fieldIn, force, rem);
                 break;
 
             default:
@@ -166,17 +152,15 @@ SFString nextRemoveownerChunk_custom(const SFString& fieldIn, bool& force, const
 }
 
 //---------------------------------------------------------------------------
-bool QRemoveOwner::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const
-{
+bool QRemoveOwner::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
 }
 
 //---------------------------------------------------------------------------
-bool QRemoveOwner::readBackLevel(SFArchive& archive)
-{
-    bool done=false;
+bool QRemoveOwner::readBackLevel(SFArchive& archive) {
+    bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
     return done;

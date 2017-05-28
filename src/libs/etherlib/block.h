@@ -27,8 +27,7 @@ typedef SFUniqueList<CBlock*>       CBlockListU;
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CBlock : public CBaseNode
-{
+class CBlock : public CBaseNode {
 public:
     SFUint32 gasLimit;
     SFUint32 gasUsed;
@@ -45,7 +44,7 @@ public:
     ~CBlock(void);
     CBlock& operator=(const CBlock& bl);
 
-    DECLARE_NODE (CBlock);
+    DECLARE_NODE(CBlock);
 
     // EXISTING_CODE
 #if 0
@@ -79,16 +78,14 @@ protected:
 };
 
 //--------------------------------------------------------------------------
-inline CBlock::CBlock(void)
-{
+inline CBlock::CBlock(void) {
     Init();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CBlock::CBlock(const CBlock& bl)
-{
+inline CBlock::CBlock(const CBlock& bl) {
     // EXISTING_CODE
     // EXISTING_CODE
     Copy(bl);
@@ -98,23 +95,20 @@ inline CBlock::CBlock(const CBlock& bl)
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline CBlock::~CBlock(void)
-{
+inline CBlock::~CBlock(void) {
     Clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CBlock::Clear(void)
-{
+inline void CBlock::Clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CBlock::Init(void)
-{
+inline void CBlock::Init(void) {
     CBaseNode::Init();
 
     gasLimit = 0;
@@ -148,8 +142,7 @@ inline void CBlock::Init(void)
 }
 
 //--------------------------------------------------------------------------
-inline void CBlock::Copy(const CBlock& bl)
-{
+inline void CBlock::Copy(const CBlock& bl) {
     Clear();
     CBaseNode::Copy(bl);
 
@@ -185,8 +178,7 @@ inline void CBlock::Copy(const CBlock& bl)
 }
 
 //--------------------------------------------------------------------------
-inline CBlock& CBlock::operator=(const CBlock& bl)
-{
+inline CBlock& CBlock::operator=(const CBlock& bl) {
     Copy(bl);
     // EXISTING_CODE
     // EXISTING_CODE
@@ -194,8 +186,7 @@ inline CBlock& CBlock::operator=(const CBlock& bl)
 }
 
 //---------------------------------------------------------------------------
-inline SFString CBlock::getValueByName(const SFString& fieldName) const
-{
+inline SFString CBlock::getValueByName(const SFString& fieldName) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return Format("[{"+toUpper(fieldName)+"}]");

@@ -26,8 +26,7 @@ class CReceipt;
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CLogEntry : public CBaseNode
-{
+class CLogEntry : public CBaseNode {
 public:
     SFAddress address;
     SFString data;
@@ -40,7 +39,7 @@ public:
     ~CLogEntry(void);
     CLogEntry& operator=(const CLogEntry& lo);
 
-    DECLARE_NODE (CLogEntry);
+    DECLARE_NODE(CLogEntry);
 
     // EXISTING_CODE
     const CReceipt *pReceipt;
@@ -63,16 +62,14 @@ protected:
 };
 
 //--------------------------------------------------------------------------
-inline CLogEntry::CLogEntry(void)
-{
+inline CLogEntry::CLogEntry(void) {
     Init();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CLogEntry::CLogEntry(const CLogEntry& lo)
-{
+inline CLogEntry::CLogEntry(const CLogEntry& lo) {
     // EXISTING_CODE
     // EXISTING_CODE
     Copy(lo);
@@ -82,23 +79,20 @@ inline CLogEntry::CLogEntry(const CLogEntry& lo)
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline CLogEntry::~CLogEntry(void)
-{
+inline CLogEntry::~CLogEntry(void) {
     Clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CLogEntry::Clear(void)
-{
+inline void CLogEntry::Clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CLogEntry::Init(void)
-{
+inline void CLogEntry::Init(void) {
     CBaseNode::Init();
 
 //    address = EMPTY;
@@ -118,8 +112,7 @@ inline void CLogEntry::Init(void)
 }
 
 //--------------------------------------------------------------------------
-inline void CLogEntry::Copy(const CLogEntry& lo)
-{
+inline void CLogEntry::Copy(const CLogEntry& lo) {
     Clear();
     CBaseNode::Copy(lo);
 
@@ -142,8 +135,7 @@ inline void CLogEntry::Copy(const CLogEntry& lo)
 }
 
 //--------------------------------------------------------------------------
-inline CLogEntry& CLogEntry::operator=(const CLogEntry& lo)
-{
+inline CLogEntry& CLogEntry::operator=(const CLogEntry& lo) {
     Copy(lo);
     // EXISTING_CODE
     // EXISTING_CODE
@@ -151,8 +143,7 @@ inline CLogEntry& CLogEntry::operator=(const CLogEntry& lo)
 }
 
 //---------------------------------------------------------------------------
-inline SFString CLogEntry::getValueByName(const SFString& fieldName) const
-{
+inline SFString CLogEntry::getValueByName(const SFString& fieldName) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return Format("[{"+toUpper(fieldName)+"}]");

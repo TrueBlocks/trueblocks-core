@@ -22,8 +22,7 @@ typedef SFUniqueList<QRequirementChangedEvent*>       QRequirementChangedEventLi
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class QRequirementChangedEvent : public CLogEntry
-{
+class QRequirementChangedEvent : public CLogEntry {
 public:
     SFUintBN newRequirement;
 
@@ -33,7 +32,7 @@ public:
     ~QRequirementChangedEvent(void);
     QRequirementChangedEvent& operator=(const QRequirementChangedEvent& re);
 
-    DECLARE_NODE (QRequirementChangedEvent);
+    DECLARE_NODE(QRequirementChangedEvent);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -49,16 +48,14 @@ protected:
 };
 
 //--------------------------------------------------------------------------
-inline QRequirementChangedEvent::QRequirementChangedEvent(void)
-{
+inline QRequirementChangedEvent::QRequirementChangedEvent(void) {
     Init();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline QRequirementChangedEvent::QRequirementChangedEvent(const QRequirementChangedEvent& re)
-{
+inline QRequirementChangedEvent::QRequirementChangedEvent(const QRequirementChangedEvent& re) {
     // EXISTING_CODE
     // EXISTING_CODE
     Copy(re);
@@ -68,23 +65,20 @@ inline QRequirementChangedEvent::QRequirementChangedEvent(const QRequirementChan
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline QRequirementChangedEvent::~QRequirementChangedEvent(void)
-{
+inline QRequirementChangedEvent::~QRequirementChangedEvent(void) {
     Clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void QRequirementChangedEvent::Clear(void)
-{
+inline void QRequirementChangedEvent::Clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void QRequirementChangedEvent::Init(void)
-{
+inline void QRequirementChangedEvent::Init(void) {
     CLogEntry::Init();
 
     newRequirement = 0;
@@ -94,8 +88,7 @@ inline void QRequirementChangedEvent::Init(void)
 }
 
 //--------------------------------------------------------------------------
-inline void QRequirementChangedEvent::Copy(const QRequirementChangedEvent& re)
-{
+inline void QRequirementChangedEvent::Copy(const QRequirementChangedEvent& re) {
     Clear();
     CLogEntry::Copy(re);
 
@@ -107,8 +100,7 @@ inline void QRequirementChangedEvent::Copy(const QRequirementChangedEvent& re)
 }
 
 //--------------------------------------------------------------------------
-inline QRequirementChangedEvent& QRequirementChangedEvent::operator=(const QRequirementChangedEvent& re)
-{
+inline QRequirementChangedEvent& QRequirementChangedEvent::operator=(const QRequirementChangedEvent& re) {
     Copy(re);
     // EXISTING_CODE
     // EXISTING_CODE
@@ -116,8 +108,7 @@ inline QRequirementChangedEvent& QRequirementChangedEvent::operator=(const QRequ
 }
 
 //---------------------------------------------------------------------------
-inline SFString QRequirementChangedEvent::getValueByName(const SFString& fieldName) const
-{
+inline SFString QRequirementChangedEvent::getValueByName(const SFString& fieldName) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return Format("[{"+toUpper(fieldName)+"}]");

@@ -22,8 +22,7 @@ typedef SFUniqueList<QResetSpentToday*>       QResetSpentTodayListU;
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class QResetSpentToday : public CTransaction
-{
+class QResetSpentToday : public CTransaction {
 public:
 
 public:
@@ -32,7 +31,7 @@ public:
     ~QResetSpentToday(void);
     QResetSpentToday& operator=(const QResetSpentToday& re);
 
-    DECLARE_NODE (QResetSpentToday);
+    DECLARE_NODE(QResetSpentToday);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -48,16 +47,14 @@ protected:
 };
 
 //--------------------------------------------------------------------------
-inline QResetSpentToday::QResetSpentToday(void)
-{
+inline QResetSpentToday::QResetSpentToday(void) {
     Init();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline QResetSpentToday::QResetSpentToday(const QResetSpentToday& re)
-{
+inline QResetSpentToday::QResetSpentToday(const QResetSpentToday& re) {
     // EXISTING_CODE
     // EXISTING_CODE
     Copy(re);
@@ -67,23 +64,20 @@ inline QResetSpentToday::QResetSpentToday(const QResetSpentToday& re)
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline QResetSpentToday::~QResetSpentToday(void)
-{
+inline QResetSpentToday::~QResetSpentToday(void) {
     Clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void QResetSpentToday::Clear(void)
-{
+inline void QResetSpentToday::Clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void QResetSpentToday::Init(void)
-{
+inline void QResetSpentToday::Init(void) {
     CTransaction::Init();
 
     // EXISTING_CODE
@@ -91,8 +85,7 @@ inline void QResetSpentToday::Init(void)
 }
 
 //--------------------------------------------------------------------------
-inline void QResetSpentToday::Copy(const QResetSpentToday& re)
-{
+inline void QResetSpentToday::Copy(const QResetSpentToday& re) {
     Clear();
     CTransaction::Copy(re);
 
@@ -102,8 +95,7 @@ inline void QResetSpentToday::Copy(const QResetSpentToday& re)
 }
 
 //--------------------------------------------------------------------------
-inline QResetSpentToday& QResetSpentToday::operator=(const QResetSpentToday& re)
-{
+inline QResetSpentToday& QResetSpentToday::operator=(const QResetSpentToday& re) {
     Copy(re);
     // EXISTING_CODE
     // EXISTING_CODE
@@ -111,8 +103,7 @@ inline QResetSpentToday& QResetSpentToday::operator=(const QResetSpentToday& re)
 }
 
 //---------------------------------------------------------------------------
-inline SFString QResetSpentToday::getValueByName(const SFString& fieldName) const
-{
+inline SFString QResetSpentToday::getValueByName(const SFString& fieldName) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return Format("[{"+toUpper(fieldName)+"}]");

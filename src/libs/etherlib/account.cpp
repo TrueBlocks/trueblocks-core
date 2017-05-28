@@ -21,13 +21,11 @@ static SFString nextAccountChunk(const SFString& fieldIn, bool& force, const voi
 static SFString nextAccountChunk_custom(const SFString& fieldIn, bool& force, const void *data);
 
 //---------------------------------------------------------------------------
-void CAccount::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const
-{
+void CAccount::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
     if (!m_showing)
         return;
 
-    if (fmtIn.empty())
-    {
+    if (fmtIn.empty()) {
         ctx << toJson();
         return;
     }
@@ -41,18 +39,15 @@ void CAccount::Format(CExportContext& ctx, const SFString& fmtIn, void *data) co
 }
 
 //---------------------------------------------------------------------------
-SFString nextAccountChunk(const SFString& fieldIn, bool& force, const void *data)
-{
+SFString nextAccountChunk(const SFString& fieldIn, bool& force, const void *data) {
     const CAccount *acc = (const CAccount *)data;
-    if (acc)
-    {
+    if (acc) {
         // Give customized code a chance to override first
         SFString ret = nextAccountChunk_custom(fieldIn, force, data);
         if (!ret.empty())
             return ret;
 
-        switch (tolower(fieldIn[0]))
-        {
+        switch (tolower(fieldIn[0])) {
             case 'a':
                 if ( fieldIn % "addr" ) return fromAddress(acc->addr);
                 break;
@@ -97,17 +92,15 @@ SFString nextAccountChunk(const SFString& fieldIn, bool& force, const void *data
             return ret;
     }
 
-    return "<span class=warning>Field not found: [{" + fieldIn + "}]</span>\n";
+    return "Field not found: [{" + fieldIn + "}]\n";
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CAccount::setValueByName(const SFString& fieldName, const SFString& fieldValue)
-{
+bool CAccount::setValueByName(const SFString& fieldName, const SFString& fieldValue) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    switch (tolower(fieldName[0]))
-    {
+    switch (tolower(fieldName[0])) {
         case 'a':
             if ( fieldName % "addr" ) { addr = toAddress(fieldValue); return true; }
             break;
@@ -137,8 +130,7 @@ bool CAccount::setValueByName(const SFString& fieldName, const SFString& fieldVa
 }
 
 //---------------------------------------------------------------------------------------------------
-void CAccount::finishParse()
-{
+void CAccount::finishParse() {
     // EXISTING_CODE
     for (uint32_t i=0;i<transactions.getCount();i++)
     {
@@ -152,8 +144,7 @@ void CAccount::finishParse()
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CAccount::Serialize(SFArchive& archive)
-{
+bool CAccount::Serialize(SFArchive& archive) {
     if (!archive.isReading())
         return ((const CAccount*)this)->SerializeC(archive);
 
@@ -173,8 +164,7 @@ bool CAccount::Serialize(SFArchive& archive)
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CAccount::SerializeC(SFArchive& archive) const
-{
+bool CAccount::SerializeC(SFArchive& archive) const {
     if (!preSerializeC(archive))
         return false;
 
@@ -191,13 +181,12 @@ bool CAccount::SerializeC(SFArchive& archive) const
 }
 
 //---------------------------------------------------------------------------
-void CAccount::registerClass(void)
-{
-    static bool been_here=false;
+void CAccount::registerClass(void) {
+    static bool been_here = false;
     if (been_here) return;
-    been_here=true;
+    been_here = true;
 
-    uint32_t fieldNum=1000;
+    uint32_t fieldNum = 1000;
     ADD_FIELD(CAccount, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
     ADD_FIELD(CAccount, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
     ADD_FIELD(CAccount, "addr", T_TEXT, ++fieldNum);
@@ -218,13 +207,10 @@ void CAccount::registerClass(void)
 }
 
 //---------------------------------------------------------------------------
-SFString nextAccountChunk_custom(const SFString& fieldIn, bool& force, const void *data)
-{
+SFString nextAccountChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
     const CAccount *acc = (const CAccount *)data;
-    if (acc)
-    {
-        switch (tolower(fieldIn[0]))
-        {
+    if (acc) {
+        switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             case 'n':
                 if ( fieldIn % "now" ) return (isTesting ? "TESTING_TIME" : Now().Format(FMT_JSON));
@@ -236,7 +222,7 @@ SFString nextAccountChunk_custom(const SFString& fieldIn, bool& force, const voi
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn,force,acc);
+                    return nextBasenodeChunk(fieldIn, force, acc);
                 break;
 
             default:
@@ -248,8 +234,7 @@ SFString nextAccountChunk_custom(const SFString& fieldIn, bool& force, const voi
 }
 
 //---------------------------------------------------------------------------
-bool CAccount::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const
-{
+bool CAccount::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
     // EXISTING_CODE
     // Split the format string into three parts: pre, post and records.
     // If no records, just process as normal. We do this because it's so slow
@@ -303,9 +288,8 @@ bool CAccount::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, vo
 }
 
 //---------------------------------------------------------------------------
-bool CAccount::readBackLevel(SFArchive& archive)
-{
-    bool done=false;
+bool CAccount::readBackLevel(SFArchive& archive) {
+    bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
     return done;

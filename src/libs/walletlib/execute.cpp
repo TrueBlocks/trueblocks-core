@@ -20,13 +20,11 @@ static SFString nextExecuteChunk(const SFString& fieldIn, bool& force, const voi
 static SFString nextExecuteChunk_custom(const SFString& fieldIn, bool& force, const void *data);
 
 //---------------------------------------------------------------------------
-void QExecute::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const
-{
+void QExecute::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
     if (!m_showing)
         return;
 
-    if (fmtIn.empty())
-    {
+    if (fmtIn.empty()) {
         ctx << toJson();
         return;
     }
@@ -40,18 +38,15 @@ void QExecute::Format(CExportContext& ctx, const SFString& fmtIn, void *data) co
 }
 
 //---------------------------------------------------------------------------
-SFString nextExecuteChunk(const SFString& fieldIn, bool& force, const void *data)
-{
+SFString nextExecuteChunk(const SFString& fieldIn, bool& force, const void *data) {
     const QExecute *exe = (const QExecute *)data;
-    if (exe)
-    {
+    if (exe) {
         // Give customized code a chance to override first
         SFString ret = nextExecuteChunk_custom(fieldIn, force, data);
         if (!ret.empty())
             return ret;
 
-        switch (tolower(fieldIn[0]))
-        {
+        switch (tolower(fieldIn[0])) {
             case '_':
                 if ( fieldIn % "_to" ) return fromAddress(exe->_to);
                 if ( fieldIn % "_value" ) return asStringBN(exe->_value);
@@ -68,20 +63,18 @@ SFString nextExecuteChunk(const SFString& fieldIn, bool& force, const void *data
             return ret;
     }
 
-    return "<span class=warning>Field not found: [{" + fieldIn + "}]</span>\n";
+    return "Field not found: [{" + fieldIn + "}]\n";
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QExecute::setValueByName(const SFString& fieldName, const SFString& fieldValue)
-{
+bool QExecute::setValueByName(const SFString& fieldName, const SFString& fieldValue) {
     // EXISTING_CODE
     // EXISTING_CODE
 
     if (CTransaction::setValueByName(fieldName, fieldValue))
         return true;
 
-    switch (tolower(fieldName[0]))
-    {
+    switch (tolower(fieldName[0])) {
         case '_':
             if ( fieldName % "_to" ) { _to = toAddress(fieldValue); return true; }
             if ( fieldName % "_value" ) { _value = toUnsigned(fieldValue); return true; }
@@ -94,15 +87,13 @@ bool QExecute::setValueByName(const SFString& fieldName, const SFString& fieldVa
 }
 
 //---------------------------------------------------------------------------------------------------
-void QExecute::finishParse()
-{
+void QExecute::finishParse() {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QExecute::Serialize(SFArchive& archive)
-{
+bool QExecute::Serialize(SFArchive& archive) {
     if (!archive.isReading())
         return ((const QExecute*)this)->SerializeC(archive);
 
@@ -116,8 +107,7 @@ bool QExecute::Serialize(SFArchive& archive)
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QExecute::SerializeC(SFArchive& archive) const
-{
+bool QExecute::SerializeC(SFArchive& archive) const {
     CTransaction::SerializeC(archive);
 
     archive << _to;
@@ -128,15 +118,14 @@ bool QExecute::SerializeC(SFArchive& archive) const
 }
 
 //---------------------------------------------------------------------------
-void QExecute::registerClass(void)
-{
-    static bool been_here=false;
+void QExecute::registerClass(void) {
+    static bool been_here = false;
     if (been_here) return;
-    been_here=true;
+    been_here = true;
 
     CTransaction::registerClass();
 
-    uint32_t fieldNum=1000;
+    uint32_t fieldNum = 1000;
     ADD_FIELD(QExecute, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
     ADD_FIELD(QExecute, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
     ADD_FIELD(QExecute, "_to", T_TEXT, ++fieldNum);
@@ -152,19 +141,16 @@ void QExecute::registerClass(void)
 }
 
 //---------------------------------------------------------------------------
-SFString nextExecuteChunk_custom(const SFString& fieldIn, bool& force, const void *data)
-{
+SFString nextExecuteChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
     const QExecute *exe = (const QExecute *)data;
-    if (exe)
-    {
-        switch (tolower(fieldIn[0]))
-        {
+    if (exe) {
+        switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn,force,exe);
+                    return nextBasenodeChunk(fieldIn, force, exe);
                 break;
 
             default:
@@ -176,17 +162,15 @@ SFString nextExecuteChunk_custom(const SFString& fieldIn, bool& force, const voi
 }
 
 //---------------------------------------------------------------------------
-bool QExecute::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const
-{
+bool QExecute::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
 }
 
 //---------------------------------------------------------------------------
-bool QExecute::readBackLevel(SFArchive& archive)
-{
-    bool done=false;
+bool QExecute::readBackLevel(SFArchive& archive) {
+    bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
     return done;

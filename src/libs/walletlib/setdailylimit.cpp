@@ -20,13 +20,11 @@ static SFString nextSetdailylimitChunk(const SFString& fieldIn, bool& force, con
 static SFString nextSetdailylimitChunk_custom(const SFString& fieldIn, bool& force, const void *data);
 
 //---------------------------------------------------------------------------
-void QSetDailyLimit::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const
-{
+void QSetDailyLimit::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
     if (!m_showing)
         return;
 
-    if (fmtIn.empty())
-    {
+    if (fmtIn.empty()) {
         ctx << toJson();
         return;
     }
@@ -40,18 +38,15 @@ void QSetDailyLimit::Format(CExportContext& ctx, const SFString& fmtIn, void *da
 }
 
 //---------------------------------------------------------------------------
-SFString nextSetdailylimitChunk(const SFString& fieldIn, bool& force, const void *data)
-{
+SFString nextSetdailylimitChunk(const SFString& fieldIn, bool& force, const void *data) {
     const QSetDailyLimit *set = (const QSetDailyLimit *)data;
-    if (set)
-    {
+    if (set) {
         // Give customized code a chance to override first
         SFString ret = nextSetdailylimitChunk_custom(fieldIn, force, data);
         if (!ret.empty())
             return ret;
 
-        switch (tolower(fieldIn[0]))
-        {
+        switch (tolower(fieldIn[0])) {
             case '_':
                 if ( fieldIn % "_newLimit" ) return asStringBN(set->_newLimit);
                 break;
@@ -66,20 +61,18 @@ SFString nextSetdailylimitChunk(const SFString& fieldIn, bool& force, const void
             return ret;
     }
 
-    return "<span class=warning>Field not found: [{" + fieldIn + "}]</span>\n";
+    return "Field not found: [{" + fieldIn + "}]\n";
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QSetDailyLimit::setValueByName(const SFString& fieldName, const SFString& fieldValue)
-{
+bool QSetDailyLimit::setValueByName(const SFString& fieldName, const SFString& fieldValue) {
     // EXISTING_CODE
     // EXISTING_CODE
 
     if (CTransaction::setValueByName(fieldName, fieldValue))
         return true;
 
-    switch (tolower(fieldName[0]))
-    {
+    switch (tolower(fieldName[0])) {
         case '_':
             if ( fieldName % "_newLimit" ) { _newLimit = toUnsigned(fieldValue); return true; }
             break;
@@ -90,15 +83,13 @@ bool QSetDailyLimit::setValueByName(const SFString& fieldName, const SFString& f
 }
 
 //---------------------------------------------------------------------------------------------------
-void QSetDailyLimit::finishParse()
-{
+void QSetDailyLimit::finishParse() {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QSetDailyLimit::Serialize(SFArchive& archive)
-{
+bool QSetDailyLimit::Serialize(SFArchive& archive) {
     if (!archive.isReading())
         return ((const QSetDailyLimit*)this)->SerializeC(archive);
 
@@ -110,8 +101,7 @@ bool QSetDailyLimit::Serialize(SFArchive& archive)
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QSetDailyLimit::SerializeC(SFArchive& archive) const
-{
+bool QSetDailyLimit::SerializeC(SFArchive& archive) const {
     CTransaction::SerializeC(archive);
 
     archive << _newLimit;
@@ -120,15 +110,14 @@ bool QSetDailyLimit::SerializeC(SFArchive& archive) const
 }
 
 //---------------------------------------------------------------------------
-void QSetDailyLimit::registerClass(void)
-{
-    static bool been_here=false;
+void QSetDailyLimit::registerClass(void) {
+    static bool been_here = false;
     if (been_here) return;
-    been_here=true;
+    been_here = true;
 
     CTransaction::registerClass();
 
-    uint32_t fieldNum=1000;
+    uint32_t fieldNum = 1000;
     ADD_FIELD(QSetDailyLimit, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
     ADD_FIELD(QSetDailyLimit, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
     ADD_FIELD(QSetDailyLimit, "_newLimit", T_NUMBER, ++fieldNum);
@@ -142,19 +131,16 @@ void QSetDailyLimit::registerClass(void)
 }
 
 //---------------------------------------------------------------------------
-SFString nextSetdailylimitChunk_custom(const SFString& fieldIn, bool& force, const void *data)
-{
+SFString nextSetdailylimitChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
     const QSetDailyLimit *set = (const QSetDailyLimit *)data;
-    if (set)
-    {
-        switch (tolower(fieldIn[0]))
-        {
+    if (set) {
+        switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn,force,set);
+                    return nextBasenodeChunk(fieldIn, force, set);
                 break;
 
             default:
@@ -166,17 +152,15 @@ SFString nextSetdailylimitChunk_custom(const SFString& fieldIn, bool& force, con
 }
 
 //---------------------------------------------------------------------------
-bool QSetDailyLimit::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const
-{
+bool QSetDailyLimit::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
 }
 
 //---------------------------------------------------------------------------
-bool QSetDailyLimit::readBackLevel(SFArchive& archive)
-{
-    bool done=false;
+bool QSetDailyLimit::readBackLevel(SFArchive& archive) {
+    bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
     return done;

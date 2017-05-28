@@ -20,13 +20,11 @@ static SFString nextConfirmationneededeventChunk(const SFString& fieldIn, bool& 
 static SFString nextConfirmationneededeventChunk_custom(const SFString& fieldIn, bool& force, const void *data);
 
 //---------------------------------------------------------------------------
-void QConfirmationNeededEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const
-{
+void QConfirmationNeededEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
     if (!m_showing)
         return;
 
-    if (fmtIn.empty())
-    {
+    if (fmtIn.empty()) {
         ctx << toJson();
         return;
     }
@@ -40,18 +38,15 @@ void QConfirmationNeededEvent::Format(CExportContext& ctx, const SFString& fmtIn
 }
 
 //---------------------------------------------------------------------------
-SFString nextConfirmationneededeventChunk(const SFString& fieldIn, bool& force, const void *data)
-{
+SFString nextConfirmationneededeventChunk(const SFString& fieldIn, bool& force, const void *data) {
     const QConfirmationNeededEvent *con = (const QConfirmationNeededEvent *)data;
-    if (con)
-    {
+    if (con) {
         // Give customized code a chance to override first
         SFString ret = nextConfirmationneededeventChunk_custom(fieldIn, force, data);
         if (!ret.empty())
             return ret;
 
-        switch (tolower(fieldIn[0]))
-        {
+        switch (tolower(fieldIn[0])) {
             case 'd':
                 if ( fieldIn % "data" ) return con->data;
                 break;
@@ -78,20 +73,18 @@ SFString nextConfirmationneededeventChunk(const SFString& fieldIn, bool& force, 
             return ret;
     }
 
-    return "<span class=warning>Field not found: [{" + fieldIn + "}]</span>\n";
+    return "Field not found: [{" + fieldIn + "}]\n";
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QConfirmationNeededEvent::setValueByName(const SFString& fieldName, const SFString& fieldValue)
-{
+bool QConfirmationNeededEvent::setValueByName(const SFString& fieldName, const SFString& fieldValue) {
     // EXISTING_CODE
     // EXISTING_CODE
 
     if (CLogEntry::setValueByName(fieldName, fieldValue))
         return true;
 
-    switch (tolower(fieldName[0]))
-    {
+    switch (tolower(fieldName[0])) {
         case 'd':
             if ( fieldName % "data" ) { data = toLower(fieldValue); return true; }
             break;
@@ -114,15 +107,13 @@ bool QConfirmationNeededEvent::setValueByName(const SFString& fieldName, const S
 }
 
 //---------------------------------------------------------------------------------------------------
-void QConfirmationNeededEvent::finishParse()
-{
+void QConfirmationNeededEvent::finishParse() {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QConfirmationNeededEvent::Serialize(SFArchive& archive)
-{
+bool QConfirmationNeededEvent::Serialize(SFArchive& archive) {
     if (!archive.isReading())
         return ((const QConfirmationNeededEvent*)this)->SerializeC(archive);
 
@@ -138,8 +129,7 @@ bool QConfirmationNeededEvent::Serialize(SFArchive& archive)
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QConfirmationNeededEvent::SerializeC(SFArchive& archive) const
-{
+bool QConfirmationNeededEvent::SerializeC(SFArchive& archive) const {
     CLogEntry::SerializeC(archive);
 
     archive << operation;
@@ -152,15 +142,14 @@ bool QConfirmationNeededEvent::SerializeC(SFArchive& archive) const
 }
 
 //---------------------------------------------------------------------------
-void QConfirmationNeededEvent::registerClass(void)
-{
-    static bool been_here=false;
+void QConfirmationNeededEvent::registerClass(void) {
+    static bool been_here = false;
     if (been_here) return;
-    been_here=true;
+    been_here = true;
 
     CLogEntry::registerClass();
 
-    uint32_t fieldNum=1000;
+    uint32_t fieldNum = 1000;
     ADD_FIELD(QConfirmationNeededEvent, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
     ADD_FIELD(QConfirmationNeededEvent, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
     ADD_FIELD(QConfirmationNeededEvent, "operation", T_TEXT, ++fieldNum);
@@ -178,19 +167,16 @@ void QConfirmationNeededEvent::registerClass(void)
 }
 
 //---------------------------------------------------------------------------
-SFString nextConfirmationneededeventChunk_custom(const SFString& fieldIn, bool& force, const void *data)
-{
+SFString nextConfirmationneededeventChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
     const QConfirmationNeededEvent *con = (const QConfirmationNeededEvent *)data;
-    if (con)
-    {
-        switch (tolower(fieldIn[0]))
-        {
+    if (con) {
+        switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn,force,con);
+                    return nextBasenodeChunk(fieldIn, force, con);
                 break;
 
             default:
@@ -202,17 +188,15 @@ SFString nextConfirmationneededeventChunk_custom(const SFString& fieldIn, bool& 
 }
 
 //---------------------------------------------------------------------------
-bool QConfirmationNeededEvent::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const
-{
+bool QConfirmationNeededEvent::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
 }
 
 //---------------------------------------------------------------------------
-bool QConfirmationNeededEvent::readBackLevel(SFArchive& archive)
-{
-    bool done=false;
+bool QConfirmationNeededEvent::readBackLevel(SFArchive& archive) {
+    bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
     return done;

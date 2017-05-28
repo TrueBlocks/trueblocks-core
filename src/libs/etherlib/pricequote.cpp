@@ -21,13 +21,11 @@ static SFString nextPricequoteChunk(const SFString& fieldIn, bool& force, const 
 static SFString nextPricequoteChunk_custom(const SFString& fieldIn, bool& force, const void *data);
 
 //---------------------------------------------------------------------------
-void CPriceQuote::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const
-{
+void CPriceQuote::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
     if (!m_showing)
         return;
 
-    if (fmtIn.empty())
-    {
+    if (fmtIn.empty()) {
         ctx << toJson();
         return;
     }
@@ -41,18 +39,15 @@ void CPriceQuote::Format(CExportContext& ctx, const SFString& fmtIn, void *data)
 }
 
 //---------------------------------------------------------------------------
-SFString nextPricequoteChunk(const SFString& fieldIn, bool& force, const void *data)
-{
+SFString nextPricequoteChunk(const SFString& fieldIn, bool& force, const void *data) {
     const CPriceQuote *pri = (const CPriceQuote *)data;
-    if (pri)
-    {
+    if (pri) {
         // Give customized code a chance to override first
         SFString ret = nextPricequoteChunk_custom(fieldIn, force, data);
         if (!ret.empty())
             return ret;
 
-        switch (tolower(fieldIn[0]))
-        {
+        switch (tolower(fieldIn[0])) {
             case 'c':
                 if ( fieldIn % "close" ) return asStringF(pri->close);
                 break;
@@ -88,12 +83,11 @@ SFString nextPricequoteChunk(const SFString& fieldIn, bool& force, const void *d
             return ret;
     }
 
-    return "<span class=warning>Field not found: [{" + fieldIn + "}]</span>\n";
+    return "Field not found: [{" + fieldIn + "}]\n";
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CPriceQuote::setValueByName(const SFString& fieldName, const SFString& fieldValue)
-{
+bool CPriceQuote::setValueByName(const SFString& fieldName, const SFString& fieldValue) {
     // EXISTING_CODE
     if ( fieldName % "date" || fieldName % "timestamp" )
     {
@@ -103,8 +97,7 @@ bool CPriceQuote::setValueByName(const SFString& fieldName, const SFString& fiel
     }
     // EXISTING_CODE
 
-    switch (tolower(fieldName[0]))
-    {
+    switch (tolower(fieldName[0])) {
         case 'c':
             if ( fieldName % "close" ) { close = toFloat(fieldValue); return true; }
             break;
@@ -136,16 +129,14 @@ bool CPriceQuote::setValueByName(const SFString& fieldName, const SFString& fiel
 }
 
 //---------------------------------------------------------------------------------------------------
-void CPriceQuote::finishParse()
-{
+void CPriceQuote::finishParse() {
     // EXISTING_CODE
     date = dateFromTimeStamp(timestamp);
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CPriceQuote::Serialize(SFArchive& archive)
-{
+bool CPriceQuote::Serialize(SFArchive& archive) {
     if (!archive.isReading())
         return ((const CPriceQuote*)this)->SerializeC(archive);
 
@@ -165,8 +156,7 @@ bool CPriceQuote::Serialize(SFArchive& archive)
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CPriceQuote::SerializeC(SFArchive& archive) const
-{
+bool CPriceQuote::SerializeC(SFArchive& archive) const {
     if (!preSerializeC(archive))
         return false;
 
@@ -183,13 +173,12 @@ bool CPriceQuote::SerializeC(SFArchive& archive) const
 }
 
 //---------------------------------------------------------------------------
-void CPriceQuote::registerClass(void)
-{
-    static bool been_here=false;
+void CPriceQuote::registerClass(void) {
+    static bool been_here = false;
     if (been_here) return;
-    been_here=true;
+    been_here = true;
 
-    uint32_t fieldNum=1000;
+    uint32_t fieldNum = 1000;
     ADD_FIELD(CPriceQuote, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
     ADD_FIELD(CPriceQuote, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
     ADD_FIELD(CPriceQuote, "timestamp", T_NUMBER, ++fieldNum);
@@ -211,13 +200,10 @@ void CPriceQuote::registerClass(void)
 }
 
 //---------------------------------------------------------------------------
-SFString nextPricequoteChunk_custom(const SFString& fieldIn, bool& force, const void *data)
-{
+SFString nextPricequoteChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
     const CPriceQuote *pri = (const CPriceQuote *)data;
-    if (pri)
-    {
-        switch (tolower(fieldIn[0]))
-        {
+    if (pri) {
+        switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             case 'd':
                 if ( fieldIn % "date" ) return pri->date.Format(FMT_JSON);
@@ -226,7 +212,7 @@ SFString nextPricequoteChunk_custom(const SFString& fieldIn, bool& force, const 
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn,force,pri);
+                    return nextBasenodeChunk(fieldIn, force, pri);
                 break;
 
             default:
@@ -238,17 +224,15 @@ SFString nextPricequoteChunk_custom(const SFString& fieldIn, bool& force, const 
 }
 
 //---------------------------------------------------------------------------
-bool CPriceQuote::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const
-{
+bool CPriceQuote::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
 }
 
 //---------------------------------------------------------------------------
-bool CPriceQuote::readBackLevel(SFArchive& archive)
-{
-    bool done=false;
+bool CPriceQuote::readBackLevel(SFArchive& archive) {
+    bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
     return done;

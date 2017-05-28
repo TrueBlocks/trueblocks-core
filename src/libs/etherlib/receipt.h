@@ -27,8 +27,7 @@ class CTransaction;
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CReceipt : public CBaseNode
-{
+class CReceipt : public CBaseNode {
 public:
     SFAddress contractAddress;
     SFUint32 gasUsed;
@@ -41,7 +40,7 @@ public:
     ~CReceipt(void);
     CReceipt& operator=(const CReceipt& re);
 
-    DECLARE_NODE (CReceipt);
+    DECLARE_NODE(CReceipt);
 
     // EXISTING_CODE
     const CTransaction *pTrans;
@@ -68,16 +67,14 @@ protected:
 };
 
 //--------------------------------------------------------------------------
-inline CReceipt::CReceipt(void)
-{
+inline CReceipt::CReceipt(void) {
     Init();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CReceipt::CReceipt(const CReceipt& re)
-{
+inline CReceipt::CReceipt(const CReceipt& re) {
     // EXISTING_CODE
     // EXISTING_CODE
     Copy(re);
@@ -87,23 +84,20 @@ inline CReceipt::CReceipt(const CReceipt& re)
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline CReceipt::~CReceipt(void)
-{
+inline CReceipt::~CReceipt(void) {
     Clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CReceipt::Clear(void)
-{
+inline void CReceipt::Clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CReceipt::Init(void)
-{
+inline void CReceipt::Init(void) {
     CBaseNode::Init();
 
 //    contractAddress = EMPTY;
@@ -127,8 +121,7 @@ inline void CReceipt::Init(void)
 }
 
 //--------------------------------------------------------------------------
-inline void CReceipt::Copy(const CReceipt& re)
-{
+inline void CReceipt::Copy(const CReceipt& re) {
     Clear();
     CBaseNode::Copy(re);
 
@@ -154,8 +147,7 @@ inline void CReceipt::Copy(const CReceipt& re)
 }
 
 //--------------------------------------------------------------------------
-inline CReceipt& CReceipt::operator=(const CReceipt& re)
-{
+inline CReceipt& CReceipt::operator=(const CReceipt& re) {
     Copy(re);
     // EXISTING_CODE
     // EXISTING_CODE
@@ -163,8 +155,7 @@ inline CReceipt& CReceipt::operator=(const CReceipt& re)
 }
 
 //---------------------------------------------------------------------------
-inline SFString CReceipt::getValueByName(const SFString& fieldName) const
-{
+inline SFString CReceipt::getValueByName(const SFString& fieldName) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return Format("[{"+toUpper(fieldName)+"}]");

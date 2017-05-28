@@ -21,13 +21,11 @@ static SFString nextParameterChunk(const SFString& fieldIn, bool& force, const v
 static SFString nextParameterChunk_custom(const SFString& fieldIn, bool& force, const void *data);
 
 //---------------------------------------------------------------------------
-void CParameter::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const
-{
+void CParameter::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
     if (!m_showing)
         return;
 
-    if (fmtIn.empty())
-    {
+    if (fmtIn.empty()) {
         ctx << toJson();
         return;
     }
@@ -41,18 +39,15 @@ void CParameter::Format(CExportContext& ctx, const SFString& fmtIn, void *data) 
 }
 
 //---------------------------------------------------------------------------
-SFString nextParameterChunk(const SFString& fieldIn, bool& force, const void *data)
-{
+SFString nextParameterChunk(const SFString& fieldIn, bool& force, const void *data) {
     const CParameter *par = (const CParameter *)data;
-    if (par)
-    {
+    if (par) {
         // Give customized code a chance to override first
         SFString ret = nextParameterChunk_custom(fieldIn, force, data);
         if (!ret.empty())
             return ret;
 
-        switch (tolower(fieldIn[0]))
-        {
+        switch (tolower(fieldIn[0])) {
             case 'i':
                 if ( fieldIn % "indexed" ) return asString(par->indexed);
                 if ( fieldIn % "isPointer" ) return asString(par->isPointer);
@@ -79,17 +74,15 @@ SFString nextParameterChunk(const SFString& fieldIn, bool& force, const void *da
             return ret;
     }
 
-    return "<span class=warning>Field not found: [{" + fieldIn + "}]</span>\n";
+    return "Field not found: [{" + fieldIn + "}]\n";
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CParameter::setValueByName(const SFString& fieldName, const SFString& fieldValue)
-{
+bool CParameter::setValueByName(const SFString& fieldName, const SFString& fieldValue) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    switch (tolower(fieldName[0]))
-    {
+    switch (tolower(fieldName[0])) {
         case 'i':
             if ( fieldName % "indexed" ) { indexed = toBool(fieldValue); return true; }
             if ( fieldName % "isPointer" ) { isPointer = toBool(fieldValue); return true; }
@@ -112,15 +105,13 @@ bool CParameter::setValueByName(const SFString& fieldName, const SFString& field
 }
 
 //---------------------------------------------------------------------------------------------------
-void CParameter::finishParse()
-{
+void CParameter::finishParse() {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CParameter::Serialize(SFArchive& archive)
-{
+bool CParameter::Serialize(SFArchive& archive) {
     if (!archive.isReading())
         return ((const CParameter*)this)->SerializeC(archive);
 
@@ -139,8 +130,7 @@ bool CParameter::Serialize(SFArchive& archive)
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CParameter::SerializeC(SFArchive& archive) const
-{
+bool CParameter::SerializeC(SFArchive& archive) const {
     if (!preSerializeC(archive))
         return false;
 
@@ -156,13 +146,12 @@ bool CParameter::SerializeC(SFArchive& archive) const
 }
 
 //---------------------------------------------------------------------------
-void CParameter::registerClass(void)
-{
-    static bool been_here=false;
+void CParameter::registerClass(void) {
+    static bool been_here = false;
     if (been_here) return;
-    been_here=true;
+    been_here = true;
 
-    uint32_t fieldNum=1000;
+    uint32_t fieldNum = 1000;
     ADD_FIELD(CParameter, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
     ADD_FIELD(CParameter, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
     ADD_FIELD(CParameter, "indexed", T_BOOL, ++fieldNum);
@@ -182,19 +171,16 @@ void CParameter::registerClass(void)
 }
 
 //---------------------------------------------------------------------------
-SFString nextParameterChunk_custom(const SFString& fieldIn, bool& force, const void *data)
-{
+SFString nextParameterChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
     const CParameter *par = (const CParameter *)data;
-    if (par)
-    {
-        switch (tolower(fieldIn[0]))
-        {
+    if (par) {
+        switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn,force,par);
+                    return nextBasenodeChunk(fieldIn, force, par);
                 break;
 
             default:
@@ -206,17 +192,15 @@ SFString nextParameterChunk_custom(const SFString& fieldIn, bool& force, const v
 }
 
 //---------------------------------------------------------------------------
-bool CParameter::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const
-{
+bool CParameter::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
 }
 
 //---------------------------------------------------------------------------
-bool CParameter::readBackLevel(SFArchive& archive)
-{
-    bool done=false;
+bool CParameter::readBackLevel(SFArchive& archive) {
+    bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
