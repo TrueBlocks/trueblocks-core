@@ -99,22 +99,35 @@ void CVisitor::openIncomeStatement(const CBlock& block) {
 //-----------------------------------------------------------------------
 void showColoredTrace(CVisitor *vis, const SFHash& hash) {
 
-    SFString trace;
-    queryRawTrace(trace, hash);
+    SFString traceStrIn;
+    queryRawTrace(traceStrIn, hash);
 
-
-
+//#define PARSETRACE
+#ifdef PARSETRACE
+    SFString traceStr;
+    char *p = cleanUpJson((char *)(traceStrIn.c_str()));  // NOLINT
+    while (p && *p) {
+        CTrace trace;
+        uint32_t nFields = 0;
+        p = trace.parseJson(p, nFields);
+        if (nFields) {
+            traceStr += (trace.Format() + "\n");
+        }
+    }
+#else
+    SFString traceStr = traceStrIn;
+#endif
 
     for (int i = 0 ; i < vis->watches.getCount()-1 ; i++) { // don't show extra accounts
-        trace.ReplaceAll(vis->watches[i].address,vis->watches[i].color+vis->watches[i].name+" ("+vis->watches[i].address+") "+cOff);
+        traceStr.ReplaceAll(vis->watches[i].address,vis->watches[i].color+vis->watches[i].name+" ("+vis->watches[i].address+") "+cOff);
     }
-    while (trace.Contains("\"value\":\""))
-        trace.ReplaceAll("\"value\":\"", "|");
+    while (traceStr.Contains("\"value\":\""))
+        traceStr.ReplaceAll("\"value\":\"", "|");
     SFString str;
-    while (!trace.empty())
+    while (!traceStr.empty())
     {
-        SFString front = nextTokenClear(trace, '|');
-        SFString val = nextTokenClear(trace, '\"');
+        SFString front = nextTokenClear(traceStr, '|');
+        SFString val = nextTokenClear(traceStr, '\"');
         str += (front);
         if (!val.empty())
             str += (SFString("\"value\":\"") + bRed + asStringBN(canonicalWei(val)) + "\"" + cOff);
@@ -130,14 +143,14 @@ bool CVisitor::closeIncomeStatement(const CBlock& block) {
     CIncomeStatement header;
     header.begBal = header.endBal = -1;
 
-    cout << padCenter("",14) << header << "\t" << padCenter("nodeBal",28) << "\n";
+    cout << padCenter("",14) << header << "   " << padCenter("nodeBal",28) << "\n";
     CIncomeStatement total;
     for (int i = 0 ; i < watches.getCount() ; i++) {
         watches[i].qbis.blockNum = block.blockNumber;
         watches[i].qbis.begBal = watches[i].qbis.endBal;
         watches[i].nodeis.begBal = watches[i].nodeis.endBal;
         watches[i].qbis.endBal = (watches[i].qbis.begBal + watches[i].qbis.inflow - watches[i].qbis.outflow);
-        cout << padRight(watches[i].name,14) << watches[i].qbis << "\t";
+        cout << padRight(watches[i].name,14) << watches[i].qbis << "   ";
         if (i < watches.getCount()-1) {
             watches[i].qbis.reconcile(watches[i].address, block.blockNumber);
             cout << padLeft(wei2Ether(to_string(watches[i].qbis.nodeBal).c_str()),28);
@@ -168,7 +181,7 @@ bool CVisitor::closeIncomeStatement(const CBlock& block) {
                 cerr.flush();
                 char buffer[256];
                 fgets(buffer, 256, stdin);
-                SFString res = SFString(buffer).Substitute("\n","");
+                SFString res = Strip(SFString(buffer).Substitute("\n",""),' ');
 
                 if (res == "q" || res == "quit" || res == "exit") {
                     return false;
