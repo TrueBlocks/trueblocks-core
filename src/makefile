@@ -40,4 +40,4 @@ readmes:
 	@cd tests ; make readmes
 
 freshen:
-	@cd monitors ; make freshen
+	@cd monitors ; make -f freshen.mak
