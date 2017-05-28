@@ -25,8 +25,7 @@ typedef SFUniqueList<CAbi*>       CAbiListU;
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CAbi : public CBaseNode
-{
+class CAbi : public CBaseNode {
 public:
     CFunctionArray abiByName;
     CFunctionArray abiByEncoding;
@@ -37,7 +36,7 @@ public:
     ~CAbi(void);
     CAbi& operator=(const CAbi& ab);
 
-    DECLARE_NODE (CAbi);
+    DECLARE_NODE(CAbi);
 
     // EXISTING_CODE
     void clearABI(void);
@@ -57,16 +56,14 @@ protected:
 };
 
 //--------------------------------------------------------------------------
-inline CAbi::CAbi(void)
-{
+inline CAbi::CAbi(void) {
     Init();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CAbi::CAbi(const CAbi& ab)
-{
+inline CAbi::CAbi(const CAbi& ab) {
     // EXISTING_CODE
     // EXISTING_CODE
     Copy(ab);
@@ -76,16 +73,14 @@ inline CAbi::CAbi(const CAbi& ab)
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline CAbi::~CAbi(void)
-{
+inline CAbi::~CAbi(void) {
     Clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CAbi::Clear(void)
-{
+inline void CAbi::Clear(void) {
     // EXISTING_CODE
     abiByName.Clear();
     abiByEncoding.Clear();
@@ -93,8 +88,7 @@ inline void CAbi::Clear(void)
 }
 
 //--------------------------------------------------------------------------
-inline void CAbi::Init(void)
-{
+inline void CAbi::Init(void) {
     CBaseNode::Init();
 
 //    abiByName = ??; /* unknown type: CFunctionArray */
@@ -105,8 +99,7 @@ inline void CAbi::Init(void)
 }
 
 //--------------------------------------------------------------------------
-inline void CAbi::Copy(const CAbi& ab)
-{
+inline void CAbi::Copy(const CAbi& ab) {
     Clear();
     CBaseNode::Copy(ab);
 
@@ -119,8 +112,7 @@ inline void CAbi::Copy(const CAbi& ab)
 }
 
 //--------------------------------------------------------------------------
-inline CAbi& CAbi::operator=(const CAbi& ab)
-{
+inline CAbi& CAbi::operator=(const CAbi& ab) {
     Copy(ab);
     // EXISTING_CODE
     // EXISTING_CODE
@@ -128,8 +120,7 @@ inline CAbi& CAbi::operator=(const CAbi& ab)
 }
 
 //---------------------------------------------------------------------------
-inline SFString CAbi::getValueByName(const SFString& fieldName) const
-{
+inline SFString CAbi::getValueByName(const SFString& fieldName) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return Format("[{"+toUpper(fieldName)+"}]");

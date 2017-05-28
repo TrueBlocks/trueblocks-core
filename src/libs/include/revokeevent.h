@@ -22,8 +22,7 @@ typedef SFUniqueList<QRevokeEvent*>       QRevokeEventListU;
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class QRevokeEvent : public CLogEntry
-{
+class QRevokeEvent : public CLogEntry {
 public:
     SFAddress owner;
     SFString operation;
@@ -34,7 +33,7 @@ public:
     ~QRevokeEvent(void);
     QRevokeEvent& operator=(const QRevokeEvent& re);
 
-    DECLARE_NODE (QRevokeEvent);
+    DECLARE_NODE(QRevokeEvent);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -50,16 +49,14 @@ protected:
 };
 
 //--------------------------------------------------------------------------
-inline QRevokeEvent::QRevokeEvent(void)
-{
+inline QRevokeEvent::QRevokeEvent(void) {
     Init();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline QRevokeEvent::QRevokeEvent(const QRevokeEvent& re)
-{
+inline QRevokeEvent::QRevokeEvent(const QRevokeEvent& re) {
     // EXISTING_CODE
     // EXISTING_CODE
     Copy(re);
@@ -69,23 +66,20 @@ inline QRevokeEvent::QRevokeEvent(const QRevokeEvent& re)
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline QRevokeEvent::~QRevokeEvent(void)
-{
+inline QRevokeEvent::~QRevokeEvent(void) {
     Clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void QRevokeEvent::Clear(void)
-{
+inline void QRevokeEvent::Clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void QRevokeEvent::Init(void)
-{
+inline void QRevokeEvent::Init(void) {
     CLogEntry::Init();
 
 //    owner = EMPTY;
@@ -96,8 +90,7 @@ inline void QRevokeEvent::Init(void)
 }
 
 //--------------------------------------------------------------------------
-inline void QRevokeEvent::Copy(const QRevokeEvent& re)
-{
+inline void QRevokeEvent::Copy(const QRevokeEvent& re) {
     Clear();
     CLogEntry::Copy(re);
 
@@ -110,8 +103,7 @@ inline void QRevokeEvent::Copy(const QRevokeEvent& re)
 }
 
 //--------------------------------------------------------------------------
-inline QRevokeEvent& QRevokeEvent::operator=(const QRevokeEvent& re)
-{
+inline QRevokeEvent& QRevokeEvent::operator=(const QRevokeEvent& re) {
     Copy(re);
     // EXISTING_CODE
     // EXISTING_CODE
@@ -119,8 +111,7 @@ inline QRevokeEvent& QRevokeEvent::operator=(const QRevokeEvent& re)
 }
 
 //---------------------------------------------------------------------------
-inline SFString QRevokeEvent::getValueByName(const SFString& fieldName) const
-{
+inline SFString QRevokeEvent::getValueByName(const SFString& fieldName) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return Format("[{"+toUpper(fieldName)+"}]");

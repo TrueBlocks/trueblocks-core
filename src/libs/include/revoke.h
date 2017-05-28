@@ -22,8 +22,7 @@ typedef SFUniqueList<QRevoke*>       QRevokeListU;
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class QRevoke : public CTransaction
-{
+class QRevoke : public CTransaction {
 public:
     SFString _operation;
 
@@ -33,7 +32,7 @@ public:
     ~QRevoke(void);
     QRevoke& operator=(const QRevoke& re);
 
-    DECLARE_NODE (QRevoke);
+    DECLARE_NODE(QRevoke);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -49,16 +48,14 @@ protected:
 };
 
 //--------------------------------------------------------------------------
-inline QRevoke::QRevoke(void)
-{
+inline QRevoke::QRevoke(void) {
     Init();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline QRevoke::QRevoke(const QRevoke& re)
-{
+inline QRevoke::QRevoke(const QRevoke& re) {
     // EXISTING_CODE
     // EXISTING_CODE
     Copy(re);
@@ -68,23 +65,20 @@ inline QRevoke::QRevoke(const QRevoke& re)
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline QRevoke::~QRevoke(void)
-{
+inline QRevoke::~QRevoke(void) {
     Clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void QRevoke::Clear(void)
-{
+inline void QRevoke::Clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void QRevoke::Init(void)
-{
+inline void QRevoke::Init(void) {
     CTransaction::Init();
 
 //    _operation = EMPTY;
@@ -94,8 +88,7 @@ inline void QRevoke::Init(void)
 }
 
 //--------------------------------------------------------------------------
-inline void QRevoke::Copy(const QRevoke& re)
-{
+inline void QRevoke::Copy(const QRevoke& re) {
     Clear();
     CTransaction::Copy(re);
 
@@ -107,8 +100,7 @@ inline void QRevoke::Copy(const QRevoke& re)
 }
 
 //--------------------------------------------------------------------------
-inline QRevoke& QRevoke::operator=(const QRevoke& re)
-{
+inline QRevoke& QRevoke::operator=(const QRevoke& re) {
     Copy(re);
     // EXISTING_CODE
     // EXISTING_CODE
@@ -116,8 +108,7 @@ inline QRevoke& QRevoke::operator=(const QRevoke& re)
 }
 
 //---------------------------------------------------------------------------
-inline SFString QRevoke::getValueByName(const SFString& fieldName) const
-{
+inline SFString QRevoke::getValueByName(const SFString& fieldName) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return Format("[{"+toUpper(fieldName)+"}]");

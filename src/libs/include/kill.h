@@ -22,8 +22,7 @@ typedef SFUniqueList<QKill*>       QKillListU;
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class QKill : public CTransaction
-{
+class QKill : public CTransaction {
 public:
     SFAddress _to;
 
@@ -33,7 +32,7 @@ public:
     ~QKill(void);
     QKill& operator=(const QKill& ki);
 
-    DECLARE_NODE (QKill);
+    DECLARE_NODE(QKill);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -49,16 +48,14 @@ protected:
 };
 
 //--------------------------------------------------------------------------
-inline QKill::QKill(void)
-{
+inline QKill::QKill(void) {
     Init();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline QKill::QKill(const QKill& ki)
-{
+inline QKill::QKill(const QKill& ki) {
     // EXISTING_CODE
     // EXISTING_CODE
     Copy(ki);
@@ -68,23 +65,20 @@ inline QKill::QKill(const QKill& ki)
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline QKill::~QKill(void)
-{
+inline QKill::~QKill(void) {
     Clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void QKill::Clear(void)
-{
+inline void QKill::Clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void QKill::Init(void)
-{
+inline void QKill::Init(void) {
     CTransaction::Init();
 
 //    _to = EMPTY;
@@ -94,8 +88,7 @@ inline void QKill::Init(void)
 }
 
 //--------------------------------------------------------------------------
-inline void QKill::Copy(const QKill& ki)
-{
+inline void QKill::Copy(const QKill& ki) {
     Clear();
     CTransaction::Copy(ki);
 
@@ -107,8 +100,7 @@ inline void QKill::Copy(const QKill& ki)
 }
 
 //--------------------------------------------------------------------------
-inline QKill& QKill::operator=(const QKill& ki)
-{
+inline QKill& QKill::operator=(const QKill& ki) {
     Copy(ki);
     // EXISTING_CODE
     // EXISTING_CODE
@@ -116,8 +108,7 @@ inline QKill& QKill::operator=(const QKill& ki)
 }
 
 //---------------------------------------------------------------------------
-inline SFString QKill::getValueByName(const SFString& fieldName) const
-{
+inline SFString QKill::getValueByName(const SFString& fieldName) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return Format("[{"+toUpper(fieldName)+"}]");
