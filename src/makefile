@@ -32,27 +32,12 @@ testall:
 ##	@cd other/99_mappingTest; make test
 	@cd tests ; make testall
 
-rebuild:
-	@cd apps/makeClass ; make ; cd -
-	@cd apps/grabABI ; make ; cd -
-	@cd libs ; make rebuild ; cd -
-	@cd monitors ; make rebuild ; cd -
-	@cd tools ; make rebuild ; cd -
-	@cd tests ; make rebuild ; cd -
-
 readmes:
 	@cd apps ; make readmes
 	@cd tools ; make readmes
 	@cd monitors ; make readmes
 	@cd libs ; make readmes
 	@cd tests ; make readmes
-
-lint:
-	@cd apps ; make lint
-	@cd libs ; make lint
-	@cd tools ; make lint
-	@cd monitors ; make lint
-	@cd tests ; make lint
 
 freshen:
 	@cd monitors ; make freshen

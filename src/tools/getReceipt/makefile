@@ -1,2 +1,0 @@
-lint:
-	@pylint *.[ch]*
