@@ -34,6 +34,7 @@ void displayTransaction(uint32_t which, const CTransaction *theTrans, void *data
         SFString func = promoted->function;
         SFString fmt = format.Substitute("[{FUNCTION}]", func).Substitute("[{FUNC}]", toProper(nextTokenClear(func,'|')));
         fmt.ReplaceAll("[{CONTRACT}]", contractName);
+        fmt.ReplaceAll("[{CONTRACT3}]", contractName.Left(3));
         fmt.ReplaceAll("[{TYPE}]", transType);
         fmt.Replace("[{P}]", (promoted == theTrans?"":"\t\tparsed: %[{w:130:PARSED}]#\n"));
 
