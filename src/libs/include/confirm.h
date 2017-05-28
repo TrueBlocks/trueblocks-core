@@ -22,8 +22,7 @@ typedef SFUniqueList<QConfirm*>       QConfirmListU;
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class QConfirm : public CTransaction
-{
+class QConfirm : public CTransaction {
 public:
     SFString _h;
 
@@ -33,7 +32,7 @@ public:
     ~QConfirm(void);
     QConfirm& operator=(const QConfirm& co);
 
-    DECLARE_NODE (QConfirm);
+    DECLARE_NODE(QConfirm);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -49,16 +48,14 @@ protected:
 };
 
 //--------------------------------------------------------------------------
-inline QConfirm::QConfirm(void)
-{
+inline QConfirm::QConfirm(void) {
     Init();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline QConfirm::QConfirm(const QConfirm& co)
-{
+inline QConfirm::QConfirm(const QConfirm& co) {
     // EXISTING_CODE
     // EXISTING_CODE
     Copy(co);
@@ -68,23 +65,20 @@ inline QConfirm::QConfirm(const QConfirm& co)
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline QConfirm::~QConfirm(void)
-{
+inline QConfirm::~QConfirm(void) {
     Clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void QConfirm::Clear(void)
-{
+inline void QConfirm::Clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void QConfirm::Init(void)
-{
+inline void QConfirm::Init(void) {
     CTransaction::Init();
 
 //    _h = EMPTY;
@@ -94,8 +88,7 @@ inline void QConfirm::Init(void)
 }
 
 //--------------------------------------------------------------------------
-inline void QConfirm::Copy(const QConfirm& co)
-{
+inline void QConfirm::Copy(const QConfirm& co) {
     Clear();
     CTransaction::Copy(co);
 
@@ -107,8 +100,7 @@ inline void QConfirm::Copy(const QConfirm& co)
 }
 
 //--------------------------------------------------------------------------
-inline QConfirm& QConfirm::operator=(const QConfirm& co)
-{
+inline QConfirm& QConfirm::operator=(const QConfirm& co) {
     Copy(co);
     // EXISTING_CODE
     // EXISTING_CODE
@@ -116,8 +108,7 @@ inline QConfirm& QConfirm::operator=(const QConfirm& co)
 }
 
 //---------------------------------------------------------------------------
-inline SFString QConfirm::getValueByName(const SFString& fieldName) const
-{
+inline SFString QConfirm::getValueByName(const SFString& fieldName) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return Format("[{"+toUpper(fieldName)+"}]");

@@ -22,8 +22,7 @@ typedef SFUniqueList<QTransferFrom*>       QTransferFromListU;
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class QTransferFrom : public CTransaction
-{
+class QTransferFrom : public CTransaction {
 public:
     SFAddress _from;
     SFAddress _to;
@@ -35,7 +34,7 @@ public:
     ~QTransferFrom(void);
     QTransferFrom& operator=(const QTransferFrom& tr);
 
-    DECLARE_NODE (QTransferFrom);
+    DECLARE_NODE(QTransferFrom);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -51,16 +50,14 @@ protected:
 };
 
 //--------------------------------------------------------------------------
-inline QTransferFrom::QTransferFrom(void)
-{
+inline QTransferFrom::QTransferFrom(void) {
     Init();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline QTransferFrom::QTransferFrom(const QTransferFrom& tr)
-{
+inline QTransferFrom::QTransferFrom(const QTransferFrom& tr) {
     // EXISTING_CODE
     // EXISTING_CODE
     Copy(tr);
@@ -70,23 +67,20 @@ inline QTransferFrom::QTransferFrom(const QTransferFrom& tr)
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline QTransferFrom::~QTransferFrom(void)
-{
+inline QTransferFrom::~QTransferFrom(void) {
     Clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void QTransferFrom::Clear(void)
-{
+inline void QTransferFrom::Clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void QTransferFrom::Init(void)
-{
+inline void QTransferFrom::Init(void) {
     CTransaction::Init();
 
 //    _from = EMPTY;
@@ -98,8 +92,7 @@ inline void QTransferFrom::Init(void)
 }
 
 //--------------------------------------------------------------------------
-inline void QTransferFrom::Copy(const QTransferFrom& tr)
-{
+inline void QTransferFrom::Copy(const QTransferFrom& tr) {
     Clear();
     CTransaction::Copy(tr);
 
@@ -113,8 +106,7 @@ inline void QTransferFrom::Copy(const QTransferFrom& tr)
 }
 
 //--------------------------------------------------------------------------
-inline QTransferFrom& QTransferFrom::operator=(const QTransferFrom& tr)
-{
+inline QTransferFrom& QTransferFrom::operator=(const QTransferFrom& tr) {
     Copy(tr);
     // EXISTING_CODE
     // EXISTING_CODE
@@ -122,8 +114,7 @@ inline QTransferFrom& QTransferFrom::operator=(const QTransferFrom& tr)
 }
 
 //---------------------------------------------------------------------------
-inline SFString QTransferFrom::getValueByName(const SFString& fieldName) const
-{
+inline SFString QTransferFrom::getValueByName(const SFString& fieldName) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return Format("[{"+toUpper(fieldName)+"}]");
