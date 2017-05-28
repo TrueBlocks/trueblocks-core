@@ -22,8 +22,7 @@ typedef SFUniqueList<QExecute*>       QExecuteListU;
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class QExecute : public CTransaction
-{
+class QExecute : public CTransaction {
 public:
     SFAddress _to;
     SFUintBN _value;
@@ -35,7 +34,7 @@ public:
     ~QExecute(void);
     QExecute& operator=(const QExecute& ex);
 
-    DECLARE_NODE (QExecute);
+    DECLARE_NODE(QExecute);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -51,16 +50,14 @@ protected:
 };
 
 //--------------------------------------------------------------------------
-inline QExecute::QExecute(void)
-{
+inline QExecute::QExecute(void) {
     Init();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline QExecute::QExecute(const QExecute& ex)
-{
+inline QExecute::QExecute(const QExecute& ex) {
     // EXISTING_CODE
     // EXISTING_CODE
     Copy(ex);
@@ -70,23 +67,20 @@ inline QExecute::QExecute(const QExecute& ex)
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline QExecute::~QExecute(void)
-{
+inline QExecute::~QExecute(void) {
     Clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void QExecute::Clear(void)
-{
+inline void QExecute::Clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void QExecute::Init(void)
-{
+inline void QExecute::Init(void) {
     CTransaction::Init();
 
 //    _to = EMPTY;
@@ -98,8 +92,7 @@ inline void QExecute::Init(void)
 }
 
 //--------------------------------------------------------------------------
-inline void QExecute::Copy(const QExecute& ex)
-{
+inline void QExecute::Copy(const QExecute& ex) {
     Clear();
     CTransaction::Copy(ex);
 
@@ -113,8 +106,7 @@ inline void QExecute::Copy(const QExecute& ex)
 }
 
 //--------------------------------------------------------------------------
-inline QExecute& QExecute::operator=(const QExecute& ex)
-{
+inline QExecute& QExecute::operator=(const QExecute& ex) {
     Copy(ex);
     // EXISTING_CODE
     // EXISTING_CODE
@@ -122,8 +114,7 @@ inline QExecute& QExecute::operator=(const QExecute& ex)
 }
 
 //---------------------------------------------------------------------------
-inline SFString QExecute::getValueByName(const SFString& fieldName) const
-{
+inline SFString QExecute::getValueByName(const SFString& fieldName) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return Format("[{"+toUpper(fieldName)+"}]");
