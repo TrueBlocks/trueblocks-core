@@ -22,13 +22,11 @@ extern SFString nextLogentryChunk(const SFString& fieldIn, bool& force, const vo
 static SFString nextLogentryChunk_custom(const SFString& fieldIn, bool& force, const void *data);
 
 //---------------------------------------------------------------------------
-void CLogEntry::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const
-{
+void CLogEntry::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
     if (!m_showing)
         return;
 
-    if (fmtIn.empty())
-    {
+    if (fmtIn.empty()) {
         ctx << toJson();
         return;
     }
@@ -42,18 +40,15 @@ void CLogEntry::Format(CExportContext& ctx, const SFString& fmtIn, void *data) c
 }
 
 //---------------------------------------------------------------------------
-SFString nextLogentryChunk(const SFString& fieldIn, bool& force, const void *data)
-{
+SFString nextLogentryChunk(const SFString& fieldIn, bool& force, const void *data) {
     const CLogEntry *log = (const CLogEntry *)data;
-    if (log)
-    {
+    if (log) {
         // Give customized code a chance to override first
         SFString ret = nextLogentryChunk_custom(fieldIn, force, data);
         if (!ret.empty())
             return ret;
 
-        switch (tolower(fieldIn[0]))
-        {
+        switch (tolower(fieldIn[0])) {
             case 'a':
                 if ( fieldIn % "address" ) return fromAddress(log->address);
                 break;
@@ -94,12 +89,11 @@ SFString nextLogentryChunk(const SFString& fieldIn, bool& force, const void *dat
             return ret;
     }
 
-    return "<span class=warning>Field not found: [{" + fieldIn + "}]</span>\n";
+    return "Field not found: [{" + fieldIn + "}]\n";
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CLogEntry::setValueByName(const SFString& fieldName, const SFString& fieldValue)
-{
+bool CLogEntry::setValueByName(const SFString& fieldName, const SFString& fieldValue) {
     // EXISTING_CODE
     if (fieldName % "topics")
     {
@@ -113,8 +107,7 @@ bool CLogEntry::setValueByName(const SFString& fieldName, const SFString& fieldV
             return true;
     // EXISTING_CODE
 
-    switch (tolower(fieldName[0]))
-    {
+    switch (tolower(fieldName[0])) {
         case 'a':
             if ( fieldName % "address" ) { address = toAddress(fieldValue); return true; }
             break;
@@ -134,15 +127,13 @@ bool CLogEntry::setValueByName(const SFString& fieldName, const SFString& fieldV
 }
 
 //---------------------------------------------------------------------------------------------------
-void CLogEntry::finishParse()
-{
+void CLogEntry::finishParse() {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CLogEntry::Serialize(SFArchive& archive)
-{
+bool CLogEntry::Serialize(SFArchive& archive) {
     if (!archive.isReading())
         return ((const CLogEntry*)this)->SerializeC(archive);
 
@@ -158,8 +149,7 @@ bool CLogEntry::Serialize(SFArchive& archive)
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CLogEntry::SerializeC(SFArchive& archive) const
-{
+bool CLogEntry::SerializeC(SFArchive& archive) const {
     if (!preSerializeC(archive))
         return false;
 
@@ -172,13 +162,12 @@ bool CLogEntry::SerializeC(SFArchive& archive) const
 }
 
 //---------------------------------------------------------------------------
-void CLogEntry::registerClass(void)
-{
-    static bool been_here=false;
+void CLogEntry::registerClass(void) {
+    static bool been_here = false;
     if (been_here) return;
-    been_here=true;
+    been_here = true;
 
-    uint32_t fieldNum=1000;
+    uint32_t fieldNum = 1000;
     ADD_FIELD(CLogEntry, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
     ADD_FIELD(CLogEntry, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
     ADD_FIELD(CLogEntry, "address", T_TEXT, ++fieldNum);
@@ -195,19 +184,16 @@ void CLogEntry::registerClass(void)
 }
 
 //---------------------------------------------------------------------------
-SFString nextLogentryChunk_custom(const SFString& fieldIn, bool& force, const void *data)
-{
+SFString nextLogentryChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
     const CLogEntry *log = (const CLogEntry *)data;
-    if (log)
-    {
-        switch (tolower(fieldIn[0]))
-        {
+    if (log) {
+        switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn,force,log);
+                    return nextBasenodeChunk(fieldIn, force, log);
                 break;
 
             default:
@@ -219,17 +205,15 @@ SFString nextLogentryChunk_custom(const SFString& fieldIn, bool& force, const vo
 }
 
 //---------------------------------------------------------------------------
-bool CLogEntry::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const
-{
+bool CLogEntry::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
 }
 
 //---------------------------------------------------------------------------
-bool CLogEntry::readBackLevel(SFArchive& archive)
-{
-    bool done=false;
+bool CLogEntry::readBackLevel(SFArchive& archive) {
+    bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
     return done;

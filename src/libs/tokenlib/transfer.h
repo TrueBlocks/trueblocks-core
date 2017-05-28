@@ -22,8 +22,7 @@ typedef SFUniqueList<QTransfer*>       QTransferListU;
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class QTransfer : public CTransaction
-{
+class QTransfer : public CTransaction {
 public:
     SFAddress _to;
     SFUintBN _value;
@@ -34,7 +33,7 @@ public:
     ~QTransfer(void);
     QTransfer& operator=(const QTransfer& tr);
 
-    DECLARE_NODE (QTransfer);
+    DECLARE_NODE(QTransfer);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -50,16 +49,14 @@ protected:
 };
 
 //--------------------------------------------------------------------------
-inline QTransfer::QTransfer(void)
-{
+inline QTransfer::QTransfer(void) {
     Init();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline QTransfer::QTransfer(const QTransfer& tr)
-{
+inline QTransfer::QTransfer(const QTransfer& tr) {
     // EXISTING_CODE
     // EXISTING_CODE
     Copy(tr);
@@ -69,23 +66,20 @@ inline QTransfer::QTransfer(const QTransfer& tr)
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline QTransfer::~QTransfer(void)
-{
+inline QTransfer::~QTransfer(void) {
     Clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void QTransfer::Clear(void)
-{
+inline void QTransfer::Clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void QTransfer::Init(void)
-{
+inline void QTransfer::Init(void) {
     CTransaction::Init();
 
 //    _to = EMPTY;
@@ -96,8 +90,7 @@ inline void QTransfer::Init(void)
 }
 
 //--------------------------------------------------------------------------
-inline void QTransfer::Copy(const QTransfer& tr)
-{
+inline void QTransfer::Copy(const QTransfer& tr) {
     Clear();
     CTransaction::Copy(tr);
 
@@ -110,8 +103,7 @@ inline void QTransfer::Copy(const QTransfer& tr)
 }
 
 //--------------------------------------------------------------------------
-inline QTransfer& QTransfer::operator=(const QTransfer& tr)
-{
+inline QTransfer& QTransfer::operator=(const QTransfer& tr) {
     Copy(tr);
     // EXISTING_CODE
     // EXISTING_CODE
@@ -119,8 +111,7 @@ inline QTransfer& QTransfer::operator=(const QTransfer& tr)
 }
 
 //---------------------------------------------------------------------------
-inline SFString QTransfer::getValueByName(const SFString& fieldName) const
-{
+inline SFString QTransfer::getValueByName(const SFString& fieldName) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return Format("[{"+toUpper(fieldName)+"}]");

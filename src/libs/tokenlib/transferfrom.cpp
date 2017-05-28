@@ -20,13 +20,11 @@ static SFString nextTransferfromChunk(const SFString& fieldIn, bool& force, cons
 static SFString nextTransferfromChunk_custom(const SFString& fieldIn, bool& force, const void *data);
 
 //---------------------------------------------------------------------------
-void QTransferFrom::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const
-{
+void QTransferFrom::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
     if (!m_showing)
         return;
 
-    if (fmtIn.empty())
-    {
+    if (fmtIn.empty()) {
         ctx << toJson();
         return;
     }
@@ -40,18 +38,15 @@ void QTransferFrom::Format(CExportContext& ctx, const SFString& fmtIn, void *dat
 }
 
 //---------------------------------------------------------------------------
-SFString nextTransferfromChunk(const SFString& fieldIn, bool& force, const void *data)
-{
+SFString nextTransferfromChunk(const SFString& fieldIn, bool& force, const void *data) {
     const QTransferFrom *tra = (const QTransferFrom *)data;
-    if (tra)
-    {
+    if (tra) {
         // Give customized code a chance to override first
         SFString ret = nextTransferfromChunk_custom(fieldIn, force, data);
         if (!ret.empty())
             return ret;
 
-        switch (tolower(fieldIn[0]))
-        {
+        switch (tolower(fieldIn[0])) {
             case '_':
                 if ( fieldIn % "_from" ) return fromAddress(tra->_from);
                 if ( fieldIn % "_to" ) return fromAddress(tra->_to);
@@ -68,20 +63,18 @@ SFString nextTransferfromChunk(const SFString& fieldIn, bool& force, const void 
             return ret;
     }
 
-    return "<span class=warning>Field not found: [{" + fieldIn + "}]</span>\n";
+    return "Field not found: [{" + fieldIn + "}]\n";
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QTransferFrom::setValueByName(const SFString& fieldName, const SFString& fieldValue)
-{
+bool QTransferFrom::setValueByName(const SFString& fieldName, const SFString& fieldValue) {
     // EXISTING_CODE
     // EXISTING_CODE
 
     if (CTransaction::setValueByName(fieldName, fieldValue))
         return true;
 
-    switch (tolower(fieldName[0]))
-    {
+    switch (tolower(fieldName[0])) {
         case '_':
             if ( fieldName % "_from" ) { _from = toAddress(fieldValue); return true; }
             if ( fieldName % "_to" ) { _to = toAddress(fieldValue); return true; }
@@ -94,15 +87,13 @@ bool QTransferFrom::setValueByName(const SFString& fieldName, const SFString& fi
 }
 
 //---------------------------------------------------------------------------------------------------
-void QTransferFrom::finishParse()
-{
+void QTransferFrom::finishParse() {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QTransferFrom::Serialize(SFArchive& archive)
-{
+bool QTransferFrom::Serialize(SFArchive& archive) {
     if (!archive.isReading())
         return ((const QTransferFrom*)this)->SerializeC(archive);
 
@@ -116,8 +107,7 @@ bool QTransferFrom::Serialize(SFArchive& archive)
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QTransferFrom::SerializeC(SFArchive& archive) const
-{
+bool QTransferFrom::SerializeC(SFArchive& archive) const {
     CTransaction::SerializeC(archive);
 
     archive << _from;
@@ -128,15 +118,14 @@ bool QTransferFrom::SerializeC(SFArchive& archive) const
 }
 
 //---------------------------------------------------------------------------
-void QTransferFrom::registerClass(void)
-{
-    static bool been_here=false;
+void QTransferFrom::registerClass(void) {
+    static bool been_here = false;
     if (been_here) return;
-    been_here=true;
+    been_here = true;
 
     CTransaction::registerClass();
 
-    uint32_t fieldNum=1000;
+    uint32_t fieldNum = 1000;
     ADD_FIELD(QTransferFrom, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
     ADD_FIELD(QTransferFrom, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
     ADD_FIELD(QTransferFrom, "_from", T_TEXT, ++fieldNum);
@@ -152,19 +141,16 @@ void QTransferFrom::registerClass(void)
 }
 
 //---------------------------------------------------------------------------
-SFString nextTransferfromChunk_custom(const SFString& fieldIn, bool& force, const void *data)
-{
+SFString nextTransferfromChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
     const QTransferFrom *tra = (const QTransferFrom *)data;
-    if (tra)
-    {
-        switch (tolower(fieldIn[0]))
-        {
+    if (tra) {
+        switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn,force,tra);
+                    return nextBasenodeChunk(fieldIn, force, tra);
                 break;
 
             default:
@@ -176,17 +162,15 @@ SFString nextTransferfromChunk_custom(const SFString& fieldIn, bool& force, cons
 }
 
 //---------------------------------------------------------------------------
-bool QTransferFrom::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const
-{
+bool QTransferFrom::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
 }
 
 //---------------------------------------------------------------------------
-bool QTransferFrom::readBackLevel(SFArchive& archive)
-{
-    bool done=false;
+bool QTransferFrom::readBackLevel(SFArchive& archive) {
+    bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
     return done;

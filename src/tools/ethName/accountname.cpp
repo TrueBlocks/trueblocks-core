@@ -66,7 +66,7 @@ SFString nextAccountnameChunk(const SFString& fieldIn, bool& force, const void *
             return ret;
     }
 
-    return "<span class=warning>Field not found: [{" + fieldIn + "}]</span>\n";
+    return "Field not found: [{" + fieldIn + "}]\n";
 }
 
 //---------------------------------------------------------------------------------------------------

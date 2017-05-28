@@ -20,13 +20,11 @@ static SFString nextChangerequirementChunk(const SFString& fieldIn, bool& force,
 static SFString nextChangerequirementChunk_custom(const SFString& fieldIn, bool& force, const void *data);
 
 //---------------------------------------------------------------------------
-void QChangeRequirement::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const
-{
+void QChangeRequirement::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
     if (!m_showing)
         return;
 
-    if (fmtIn.empty())
-    {
+    if (fmtIn.empty()) {
         ctx << toJson();
         return;
     }
@@ -40,18 +38,15 @@ void QChangeRequirement::Format(CExportContext& ctx, const SFString& fmtIn, void
 }
 
 //---------------------------------------------------------------------------
-SFString nextChangerequirementChunk(const SFString& fieldIn, bool& force, const void *data)
-{
+SFString nextChangerequirementChunk(const SFString& fieldIn, bool& force, const void *data) {
     const QChangeRequirement *cha = (const QChangeRequirement *)data;
-    if (cha)
-    {
+    if (cha) {
         // Give customized code a chance to override first
         SFString ret = nextChangerequirementChunk_custom(fieldIn, force, data);
         if (!ret.empty())
             return ret;
 
-        switch (tolower(fieldIn[0]))
-        {
+        switch (tolower(fieldIn[0])) {
             case '_':
                 if ( fieldIn % "_newRequired" ) return asStringBN(cha->_newRequired);
                 break;
@@ -66,20 +61,18 @@ SFString nextChangerequirementChunk(const SFString& fieldIn, bool& force, const 
             return ret;
     }
 
-    return "<span class=warning>Field not found: [{" + fieldIn + "}]</span>\n";
+    return "Field not found: [{" + fieldIn + "}]\n";
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QChangeRequirement::setValueByName(const SFString& fieldName, const SFString& fieldValue)
-{
+bool QChangeRequirement::setValueByName(const SFString& fieldName, const SFString& fieldValue) {
     // EXISTING_CODE
     // EXISTING_CODE
 
     if (CTransaction::setValueByName(fieldName, fieldValue))
         return true;
 
-    switch (tolower(fieldName[0]))
-    {
+    switch (tolower(fieldName[0])) {
         case '_':
             if ( fieldName % "_newRequired" ) { _newRequired = toUnsigned(fieldValue); return true; }
             break;
@@ -90,15 +83,13 @@ bool QChangeRequirement::setValueByName(const SFString& fieldName, const SFStrin
 }
 
 //---------------------------------------------------------------------------------------------------
-void QChangeRequirement::finishParse()
-{
+void QChangeRequirement::finishParse() {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QChangeRequirement::Serialize(SFArchive& archive)
-{
+bool QChangeRequirement::Serialize(SFArchive& archive) {
     if (!archive.isReading())
         return ((const QChangeRequirement*)this)->SerializeC(archive);
 
@@ -110,8 +101,7 @@ bool QChangeRequirement::Serialize(SFArchive& archive)
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QChangeRequirement::SerializeC(SFArchive& archive) const
-{
+bool QChangeRequirement::SerializeC(SFArchive& archive) const {
     CTransaction::SerializeC(archive);
 
     archive << _newRequired;
@@ -120,15 +110,14 @@ bool QChangeRequirement::SerializeC(SFArchive& archive) const
 }
 
 //---------------------------------------------------------------------------
-void QChangeRequirement::registerClass(void)
-{
-    static bool been_here=false;
+void QChangeRequirement::registerClass(void) {
+    static bool been_here = false;
     if (been_here) return;
-    been_here=true;
+    been_here = true;
 
     CTransaction::registerClass();
 
-    uint32_t fieldNum=1000;
+    uint32_t fieldNum = 1000;
     ADD_FIELD(QChangeRequirement, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
     ADD_FIELD(QChangeRequirement, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
     ADD_FIELD(QChangeRequirement, "_newRequired", T_NUMBER, ++fieldNum);
@@ -142,19 +131,16 @@ void QChangeRequirement::registerClass(void)
 }
 
 //---------------------------------------------------------------------------
-SFString nextChangerequirementChunk_custom(const SFString& fieldIn, bool& force, const void *data)
-{
+SFString nextChangerequirementChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
     const QChangeRequirement *cha = (const QChangeRequirement *)data;
-    if (cha)
-    {
-        switch (tolower(fieldIn[0]))
-        {
+    if (cha) {
+        switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn,force,cha);
+                    return nextBasenodeChunk(fieldIn, force, cha);
                 break;
 
             default:
@@ -166,17 +152,15 @@ SFString nextChangerequirementChunk_custom(const SFString& fieldIn, bool& force,
 }
 
 //---------------------------------------------------------------------------
-bool QChangeRequirement::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const
-{
+bool QChangeRequirement::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
 }
 
 //---------------------------------------------------------------------------
-bool QChangeRequirement::readBackLevel(SFArchive& archive)
-{
-    bool done=false;
+bool QChangeRequirement::readBackLevel(SFArchive& archive) {
+    bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
     return done;

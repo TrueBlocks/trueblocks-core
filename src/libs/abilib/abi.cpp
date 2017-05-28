@@ -21,13 +21,11 @@ static SFString nextAbiChunk(const SFString& fieldIn, bool& force, const void *d
 static SFString nextAbiChunk_custom(const SFString& fieldIn, bool& force, const void *data);
 
 //---------------------------------------------------------------------------
-void CAbi::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const
-{
+void CAbi::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
     if (!m_showing)
         return;
 
-    if (fmtIn.empty())
-    {
+    if (fmtIn.empty()) {
         ctx << toJson();
         return;
     }
@@ -41,18 +39,15 @@ void CAbi::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const
 }
 
 //---------------------------------------------------------------------------
-SFString nextAbiChunk(const SFString& fieldIn, bool& force, const void *data)
-{
+SFString nextAbiChunk(const SFString& fieldIn, bool& force, const void *data) {
     const CAbi *abi = (const CAbi *)data;
-    if (abi)
-    {
+    if (abi) {
         // Give customized code a chance to override first
         SFString ret = nextAbiChunk_custom(fieldIn, force, data);
         if (!ret.empty())
             return ret;
 
-        switch (tolower(fieldIn[0]))
-        {
+        switch (tolower(fieldIn[0])) {
             case 'a':
                 if ( fieldIn % "abiByName" )
                 {
@@ -90,17 +85,15 @@ SFString nextAbiChunk(const SFString& fieldIn, bool& force, const void *data)
             return ret;
     }
 
-    return "<span class=warning>Field not found: [{" + fieldIn + "}]</span>\n";
+    return "Field not found: [{" + fieldIn + "}]\n";
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CAbi::setValueByName(const SFString& fieldName, const SFString& fieldValue)
-{
+bool CAbi::setValueByName(const SFString& fieldName, const SFString& fieldValue) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    switch (tolower(fieldName[0]))
-    {
+    switch (tolower(fieldName[0])) {
         case 'a':
             if ( fieldName % "abiByName" ) return true;
             if ( fieldName % "abiByEncoding" ) return true;
@@ -112,15 +105,13 @@ bool CAbi::setValueByName(const SFString& fieldName, const SFString& fieldValue)
 }
 
 //---------------------------------------------------------------------------------------------------
-void CAbi::finishParse()
-{
+void CAbi::finishParse() {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CAbi::Serialize(SFArchive& archive)
-{
+bool CAbi::Serialize(SFArchive& archive) {
     if (!archive.isReading())
         return ((const CAbi*)this)->SerializeC(archive);
 
@@ -134,8 +125,7 @@ bool CAbi::Serialize(SFArchive& archive)
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CAbi::SerializeC(SFArchive& archive) const
-{
+bool CAbi::SerializeC(SFArchive& archive) const {
     if (!preSerializeC(archive))
         return false;
 
@@ -146,13 +136,12 @@ bool CAbi::SerializeC(SFArchive& archive) const
 }
 
 //---------------------------------------------------------------------------
-void CAbi::registerClass(void)
-{
-    static bool been_here=false;
+void CAbi::registerClass(void) {
+    static bool been_here = false;
     if (been_here) return;
-    been_here=true;
+    been_here = true;
 
-    uint32_t fieldNum=1000;
+    uint32_t fieldNum = 1000;
     ADD_FIELD(CAbi, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
     ADD_FIELD(CAbi, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
     ADD_FIELD(CAbi, "abiByName", T_TEXT|TS_ARRAY, ++fieldNum);
@@ -167,19 +156,16 @@ void CAbi::registerClass(void)
 }
 
 //---------------------------------------------------------------------------
-SFString nextAbiChunk_custom(const SFString& fieldIn, bool& force, const void *data)
-{
+SFString nextAbiChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
     const CAbi *abi = (const CAbi *)data;
-    if (abi)
-    {
-        switch (tolower(fieldIn[0]))
-        {
+    if (abi) {
+        switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn,force,abi);
+                    return nextBasenodeChunk(fieldIn, force, abi);
                 break;
 
             default:
@@ -191,17 +177,15 @@ SFString nextAbiChunk_custom(const SFString& fieldIn, bool& force, const void *d
 }
 
 //---------------------------------------------------------------------------
-bool CAbi::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const
-{
+bool CAbi::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
 }
 
 //---------------------------------------------------------------------------
-bool CAbi::readBackLevel(SFArchive& archive)
-{
-    bool done=false;
+bool CAbi::readBackLevel(SFArchive& archive) {
+    bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
     return done;

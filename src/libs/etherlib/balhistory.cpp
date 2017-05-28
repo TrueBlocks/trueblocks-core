@@ -22,13 +22,11 @@ static SFString nextBalhistoryChunk(const SFString& fieldIn, bool& force, const 
 static SFString nextBalhistoryChunk_custom(const SFString& fieldIn, bool& force, const void *data);
 
 //---------------------------------------------------------------------------
-void CBalHistory::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const
-{
+void CBalHistory::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
     if (!m_showing)
         return;
 
-    if (fmtIn.empty())
-    {
+    if (fmtIn.empty()) {
         ctx << toJson();
         return;
     }
@@ -42,18 +40,15 @@ void CBalHistory::Format(CExportContext& ctx, const SFString& fmtIn, void *data)
 }
 
 //---------------------------------------------------------------------------
-SFString nextBalhistoryChunk(const SFString& fieldIn, bool& force, const void *data)
-{
+SFString nextBalhistoryChunk(const SFString& fieldIn, bool& force, const void *data) {
     const CBalHistory *bal = (const CBalHistory *)data;
-    if (bal)
-    {
+    if (bal) {
         // Give customized code a chance to override first
         SFString ret = nextBalhistoryChunk_custom(fieldIn, force, data);
         if (!ret.empty())
             return ret;
 
-        switch (tolower(fieldIn[0]))
-        {
+        switch (tolower(fieldIn[0])) {
             case 'b':
                 if ( fieldIn % "balance" ) return asStringBN(bal->balance);
                 break;
@@ -74,17 +69,15 @@ SFString nextBalhistoryChunk(const SFString& fieldIn, bool& force, const void *d
             return ret;
     }
 
-    return "<span class=warning>Field not found: [{" + fieldIn + "}]</span>\n";
+    return "Field not found: [{" + fieldIn + "}]\n";
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CBalHistory::setValueByName(const SFString& fieldName, const SFString& fieldValue)
-{
+bool CBalHistory::setValueByName(const SFString& fieldName, const SFString& fieldValue) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    switch (tolower(fieldName[0]))
-    {
+    switch (tolower(fieldName[0])) {
         case 'b':
             if ( fieldName % "balance" ) { balance = toLong(fieldValue); return true; }
             break;
@@ -101,15 +94,13 @@ bool CBalHistory::setValueByName(const SFString& fieldName, const SFString& fiel
 }
 
 //---------------------------------------------------------------------------------------------------
-void CBalHistory::finishParse()
-{
+void CBalHistory::finishParse() {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CBalHistory::Serialize(SFArchive& archive)
-{
+bool CBalHistory::Serialize(SFArchive& archive) {
     if (!archive.isReading())
         return ((const CBalHistory*)this)->SerializeC(archive);
 
@@ -124,8 +115,7 @@ bool CBalHistory::Serialize(SFArchive& archive)
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CBalHistory::SerializeC(SFArchive& archive) const
-{
+bool CBalHistory::SerializeC(SFArchive& archive) const {
     if (!preSerializeC(archive))
         return false;
 
@@ -137,13 +127,12 @@ bool CBalHistory::SerializeC(SFArchive& archive) const
 }
 
 //---------------------------------------------------------------------------
-void CBalHistory::registerClass(void)
-{
-    static bool been_here=false;
+void CBalHistory::registerClass(void) {
+    static bool been_here = false;
     if (been_here) return;
-    been_here=true;
+    been_here = true;
 
-    uint32_t fieldNum=1000;
+    uint32_t fieldNum = 1000;
     ADD_FIELD(CBalHistory, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
     ADD_FIELD(CBalHistory, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
     ADD_FIELD(CBalHistory, "recordID", T_TEXT, ++fieldNum);
@@ -159,19 +148,16 @@ void CBalHistory::registerClass(void)
 }
 
 //---------------------------------------------------------------------------
-SFString nextBalhistoryChunk_custom(const SFString& fieldIn, bool& force, const void *data)
-{
+SFString nextBalhistoryChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
     const CBalHistory *bal = (const CBalHistory *)data;
-    if (bal)
-    {
-        switch (tolower(fieldIn[0]))
-        {
+    if (bal) {
+        switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn,force,bal);
+                    return nextBasenodeChunk(fieldIn, force, bal);
                 break;
 
             default:
@@ -183,17 +169,15 @@ SFString nextBalhistoryChunk_custom(const SFString& fieldIn, bool& force, const 
 }
 
 //---------------------------------------------------------------------------
-bool CBalHistory::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const
-{
+bool CBalHistory::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
 }
 
 //---------------------------------------------------------------------------
-bool CBalHistory::readBackLevel(SFArchive& archive)
-{
-    bool done=false;
+bool CBalHistory::readBackLevel(SFArchive& archive) {
+    bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
     return done;

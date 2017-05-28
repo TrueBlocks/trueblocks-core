@@ -21,13 +21,11 @@ static SFString nextFunctionChunk(const SFString& fieldIn, bool& force, const vo
 static SFString nextFunctionChunk_custom(const SFString& fieldIn, bool& force, const void *data);
 
 //---------------------------------------------------------------------------
-void CFunction::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const
-{
+void CFunction::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
     if (!m_showing)
         return;
 
-    if (fmtIn.empty())
-    {
+    if (fmtIn.empty()) {
         ctx << toJson();
         return;
     }
@@ -41,18 +39,15 @@ void CFunction::Format(CExportContext& ctx, const SFString& fmtIn, void *data) c
 }
 
 //---------------------------------------------------------------------------
-SFString nextFunctionChunk(const SFString& fieldIn, bool& force, const void *data)
-{
+SFString nextFunctionChunk(const SFString& fieldIn, bool& force, const void *data) {
     const CFunction *fun = (const CFunction *)data;
-    if (fun)
-    {
+    if (fun) {
         // Give customized code a chance to override first
         SFString ret = nextFunctionChunk_custom(fieldIn, force, data);
         if (!ret.empty())
             return ret;
 
-        switch (tolower(fieldIn[0]))
-        {
+        switch (tolower(fieldIn[0])) {
             case 'a':
                 if ( fieldIn % "anonymous" ) return asString(fun->anonymous);
                 break;
@@ -113,12 +108,11 @@ SFString nextFunctionChunk(const SFString& fieldIn, bool& force, const void *dat
             return ret;
     }
 
-    return "<span class=warning>Field not found: [{" + fieldIn + "}]</span>\n";
+    return "Field not found: [{" + fieldIn + "}]\n";
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CFunction::setValueByName(const SFString& fieldName, const SFString& fieldValue)
-{
+bool CFunction::setValueByName(const SFString& fieldName, const SFString& fieldValue) {
     // EXISTING_CODE
     if ( fieldName % "inputs" )
     {
@@ -136,8 +130,7 @@ bool CFunction::setValueByName(const SFString& fieldName, const SFString& fieldV
     }
     // EXISTING_CODE
 
-    switch (tolower(fieldName[0]))
-    {
+    switch (tolower(fieldName[0])) {
         case 'a':
             if ( fieldName % "anonymous" ) { anonymous = toBool(fieldValue); return true; }
             break;
@@ -172,8 +165,7 @@ bool CFunction::setValueByName(const SFString& fieldName, const SFString& fieldV
 }
 
 //---------------------------------------------------------------------------------------------------
-void CFunction::finishParse()
-{
+void CFunction::finishParse() {
     // EXISTING_CODE
     for (uint32_t i=0;i<inputs.getCount();i++)
         hasAddrs |= (inputs[i].type == "address");
@@ -183,8 +175,7 @@ void CFunction::finishParse()
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CFunction::Serialize(SFArchive& archive)
-{
+bool CFunction::Serialize(SFArchive& archive) {
     if (!archive.isReading())
         return ((const CFunction*)this)->SerializeC(archive);
 
@@ -205,8 +196,7 @@ bool CFunction::Serialize(SFArchive& archive)
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CFunction::SerializeC(SFArchive& archive) const
-{
+bool CFunction::SerializeC(SFArchive& archive) const {
     if (!preSerializeC(archive))
         return false;
 
@@ -224,13 +214,12 @@ bool CFunction::SerializeC(SFArchive& archive) const
 }
 
 //---------------------------------------------------------------------------
-void CFunction::registerClass(void)
-{
-    static bool been_here=false;
+void CFunction::registerClass(void) {
+    static bool been_here = false;
     if (been_here) return;
-    been_here=true;
+    been_here = true;
 
-    uint32_t fieldNum=1000;
+    uint32_t fieldNum = 1000;
     ADD_FIELD(CFunction, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
     ADD_FIELD(CFunction, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
     ADD_FIELD(CFunction, "name", T_TEXT, ++fieldNum);
@@ -254,13 +243,10 @@ void CFunction::registerClass(void)
 }
 
 //---------------------------------------------------------------------------
-SFString nextFunctionChunk_custom(const SFString& fieldIn, bool& force, const void *data)
-{
+SFString nextFunctionChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
     const CFunction *fun = (const CFunction *)data;
-    if (fun)
-    {
-        switch (tolower(fieldIn[0]))
-        {
+    if (fun) {
+        switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             case 'h':
                 if ( fieldIn % "hex" )
@@ -290,7 +276,7 @@ SFString nextFunctionChunk_custom(const SFString& fieldIn, bool& force, const vo
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn,force,fun);
+                    return nextBasenodeChunk(fieldIn, force, fun);
                 break;
 
             default:
@@ -302,17 +288,15 @@ SFString nextFunctionChunk_custom(const SFString& fieldIn, bool& force, const vo
 }
 
 //---------------------------------------------------------------------------
-bool CFunction::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const
-{
+bool CFunction::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
 }
 
 //---------------------------------------------------------------------------
-bool CFunction::readBackLevel(SFArchive& archive)
-{
-    bool done=false;
+bool CFunction::readBackLevel(SFArchive& archive) {
+    bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
     return done;

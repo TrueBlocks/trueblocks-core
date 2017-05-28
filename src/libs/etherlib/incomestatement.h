@@ -25,8 +25,7 @@ typedef SFUniqueList<CIncomeStatement*>       CIncomeStatementListU;
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CIncomeStatement : public CBaseNode
-{
+class CIncomeStatement : public CBaseNode {
 public:
     SFIntBN begBal;
     SFIntBN inflow;
@@ -40,7 +39,7 @@ public:
     ~CIncomeStatement(void);
     CIncomeStatement& operator=(const CIncomeStatement& in);
 
-    DECLARE_NODE (CIncomeStatement);
+    DECLARE_NODE(CIncomeStatement);
 
     // EXISTING_CODE
     SFIntBN nodeBal;
@@ -62,16 +61,14 @@ protected:
 };
 
 //--------------------------------------------------------------------------
-inline CIncomeStatement::CIncomeStatement(void)
-{
+inline CIncomeStatement::CIncomeStatement(void) {
     Init();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CIncomeStatement::CIncomeStatement(const CIncomeStatement& in)
-{
+inline CIncomeStatement::CIncomeStatement(const CIncomeStatement& in) {
     // EXISTING_CODE
     // EXISTING_CODE
     Copy(in);
@@ -81,23 +78,20 @@ inline CIncomeStatement::CIncomeStatement(const CIncomeStatement& in)
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline CIncomeStatement::~CIncomeStatement(void)
-{
+inline CIncomeStatement::~CIncomeStatement(void) {
     Clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CIncomeStatement::Clear(void)
-{
+inline void CIncomeStatement::Clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CIncomeStatement::Init(void)
-{
+inline void CIncomeStatement::Init(void) {
     CBaseNode::Init();
 
     begBal = 0;
@@ -111,8 +105,7 @@ inline void CIncomeStatement::Init(void)
 }
 
 //--------------------------------------------------------------------------
-inline void CIncomeStatement::Copy(const CIncomeStatement& in)
-{
+inline void CIncomeStatement::Copy(const CIncomeStatement& in) {
     Clear();
     CBaseNode::Copy(in);
 
@@ -128,8 +121,7 @@ inline void CIncomeStatement::Copy(const CIncomeStatement& in)
 }
 
 //--------------------------------------------------------------------------
-inline CIncomeStatement& CIncomeStatement::operator=(const CIncomeStatement& in)
-{
+inline CIncomeStatement& CIncomeStatement::operator=(const CIncomeStatement& in) {
     Copy(in);
     // EXISTING_CODE
     // EXISTING_CODE
@@ -137,8 +129,7 @@ inline CIncomeStatement& CIncomeStatement::operator=(const CIncomeStatement& in)
 }
 
 //---------------------------------------------------------------------------
-inline SFString CIncomeStatement::getValueByName(const SFString& fieldName) const
-{
+inline SFString CIncomeStatement::getValueByName(const SFString& fieldName) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return Format("[{"+toUpper(fieldName)+"}]");

@@ -20,13 +20,11 @@ static SFString nextIsownerChunk(const SFString& fieldIn, bool& force, const voi
 static SFString nextIsownerChunk_custom(const SFString& fieldIn, bool& force, const void *data);
 
 //---------------------------------------------------------------------------
-void QIsOwner::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const
-{
+void QIsOwner::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
     if (!m_showing)
         return;
 
-    if (fmtIn.empty())
-    {
+    if (fmtIn.empty()) {
         ctx << toJson();
         return;
     }
@@ -40,18 +38,15 @@ void QIsOwner::Format(CExportContext& ctx, const SFString& fmtIn, void *data) co
 }
 
 //---------------------------------------------------------------------------
-SFString nextIsownerChunk(const SFString& fieldIn, bool& force, const void *data)
-{
+SFString nextIsownerChunk(const SFString& fieldIn, bool& force, const void *data) {
     const QIsOwner *iso = (const QIsOwner *)data;
-    if (iso)
-    {
+    if (iso) {
         // Give customized code a chance to override first
         SFString ret = nextIsownerChunk_custom(fieldIn, force, data);
         if (!ret.empty())
             return ret;
 
-        switch (tolower(fieldIn[0]))
-        {
+        switch (tolower(fieldIn[0])) {
             case '_':
                 if ( fieldIn % "_addr" ) return fromAddress(iso->_addr);
                 break;
@@ -66,20 +61,18 @@ SFString nextIsownerChunk(const SFString& fieldIn, bool& force, const void *data
             return ret;
     }
 
-    return "<span class=warning>Field not found: [{" + fieldIn + "}]</span>\n";
+    return "Field not found: [{" + fieldIn + "}]\n";
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QIsOwner::setValueByName(const SFString& fieldName, const SFString& fieldValue)
-{
+bool QIsOwner::setValueByName(const SFString& fieldName, const SFString& fieldValue) {
     // EXISTING_CODE
     // EXISTING_CODE
 
     if (CTransaction::setValueByName(fieldName, fieldValue))
         return true;
 
-    switch (tolower(fieldName[0]))
-    {
+    switch (tolower(fieldName[0])) {
         case '_':
             if ( fieldName % "_addr" ) { _addr = toAddress(fieldValue); return true; }
             break;
@@ -90,15 +83,13 @@ bool QIsOwner::setValueByName(const SFString& fieldName, const SFString& fieldVa
 }
 
 //---------------------------------------------------------------------------------------------------
-void QIsOwner::finishParse()
-{
+void QIsOwner::finishParse() {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QIsOwner::Serialize(SFArchive& archive)
-{
+bool QIsOwner::Serialize(SFArchive& archive) {
     if (!archive.isReading())
         return ((const QIsOwner*)this)->SerializeC(archive);
 
@@ -110,8 +101,7 @@ bool QIsOwner::Serialize(SFArchive& archive)
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QIsOwner::SerializeC(SFArchive& archive) const
-{
+bool QIsOwner::SerializeC(SFArchive& archive) const {
     CTransaction::SerializeC(archive);
 
     archive << _addr;
@@ -120,15 +110,14 @@ bool QIsOwner::SerializeC(SFArchive& archive) const
 }
 
 //---------------------------------------------------------------------------
-void QIsOwner::registerClass(void)
-{
-    static bool been_here=false;
+void QIsOwner::registerClass(void) {
+    static bool been_here = false;
     if (been_here) return;
-    been_here=true;
+    been_here = true;
 
     CTransaction::registerClass();
 
-    uint32_t fieldNum=1000;
+    uint32_t fieldNum = 1000;
     ADD_FIELD(QIsOwner, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
     ADD_FIELD(QIsOwner, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
     ADD_FIELD(QIsOwner, "_addr", T_TEXT, ++fieldNum);
@@ -142,19 +131,16 @@ void QIsOwner::registerClass(void)
 }
 
 //---------------------------------------------------------------------------
-SFString nextIsownerChunk_custom(const SFString& fieldIn, bool& force, const void *data)
-{
+SFString nextIsownerChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
     const QIsOwner *iso = (const QIsOwner *)data;
-    if (iso)
-    {
-        switch (tolower(fieldIn[0]))
-        {
+    if (iso) {
+        switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn,force,iso);
+                    return nextBasenodeChunk(fieldIn, force, iso);
                 break;
 
             default:
@@ -166,17 +152,15 @@ SFString nextIsownerChunk_custom(const SFString& fieldIn, bool& force, const voi
 }
 
 //---------------------------------------------------------------------------
-bool QIsOwner::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const
-{
+bool QIsOwner::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
 }
 
 //---------------------------------------------------------------------------
-bool QIsOwner::readBackLevel(SFArchive& archive)
-{
-    bool done=false;
+bool QIsOwner::readBackLevel(SFArchive& archive) {
+    bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
