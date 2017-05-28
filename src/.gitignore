@@ -2,3 +2,4 @@ bin
 build
 design.txt
 makefile
+*.mak

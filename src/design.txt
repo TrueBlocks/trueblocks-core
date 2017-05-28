@@ -23,3 +23,10 @@ Implications of Per-Block Reconciliation
 	Cost of monitoring is minimal
 	Cache data per account as three integers block, transaction, internal id
 How to Handle Block Re-Orgs
+
+
+
+Monitoring, Auditing, Per-Block Accounting, Gas/Operation Analysis, I can record what happens in each function call to show percentages
+
+Overall: highest spending contract
+
