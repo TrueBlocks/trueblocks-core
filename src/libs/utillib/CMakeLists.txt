@@ -20,11 +20,3 @@ add_library(${PROJECT_NAME} STATIC ${SOURCE_FILES})
 set(COMMON_INCLUDE_PATH "${CMAKE_SOURCE_DIR}/libs/include")
 file(GLOB HEADER_FILES "*.h*")
 file(COPY ${HEADER_FILES} DESTINATION ${COMMON_INCLUDE_PATH})
-
-
-# plint target
-add_custom_target(${LINT_TARGET}
-        COMMAND ${PYLINT_CMD} ${SOURCE_FILES}
-        WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}
-        COMMENT "Running pylint for ${TOOL_NAME}"
-        VERBATIM)
