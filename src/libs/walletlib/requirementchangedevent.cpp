@@ -20,13 +20,11 @@ static SFString nextRequirementchangedeventChunk(const SFString& fieldIn, bool& 
 static SFString nextRequirementchangedeventChunk_custom(const SFString& fieldIn, bool& force, const void *data);
 
 //---------------------------------------------------------------------------
-void QRequirementChangedEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const
-{
+void QRequirementChangedEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
     if (!m_showing)
         return;
 
-    if (fmtIn.empty())
-    {
+    if (fmtIn.empty()) {
         ctx << toJson();
         return;
     }
@@ -40,18 +38,15 @@ void QRequirementChangedEvent::Format(CExportContext& ctx, const SFString& fmtIn
 }
 
 //---------------------------------------------------------------------------
-SFString nextRequirementchangedeventChunk(const SFString& fieldIn, bool& force, const void *data)
-{
+SFString nextRequirementchangedeventChunk(const SFString& fieldIn, bool& force, const void *data) {
     const QRequirementChangedEvent *req = (const QRequirementChangedEvent *)data;
-    if (req)
-    {
+    if (req) {
         // Give customized code a chance to override first
         SFString ret = nextRequirementchangedeventChunk_custom(fieldIn, force, data);
         if (!ret.empty())
             return ret;
 
-        switch (tolower(fieldIn[0]))
-        {
+        switch (tolower(fieldIn[0])) {
             case 'n':
                 if ( fieldIn % "newRequirement" ) return asStringBN(req->newRequirement);
                 break;
@@ -66,20 +61,18 @@ SFString nextRequirementchangedeventChunk(const SFString& fieldIn, bool& force, 
             return ret;
     }
 
-    return "<span class=warning>Field not found: [{" + fieldIn + "}]</span>\n";
+    return "Field not found: [{" + fieldIn + "}]\n";
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QRequirementChangedEvent::setValueByName(const SFString& fieldName, const SFString& fieldValue)
-{
+bool QRequirementChangedEvent::setValueByName(const SFString& fieldName, const SFString& fieldValue) {
     // EXISTING_CODE
     // EXISTING_CODE
 
     if (CLogEntry::setValueByName(fieldName, fieldValue))
         return true;
 
-    switch (tolower(fieldName[0]))
-    {
+    switch (tolower(fieldName[0])) {
         case 'n':
             if ( fieldName % "newRequirement" ) { newRequirement = toUnsigned(fieldValue); return true; }
             break;
@@ -90,15 +83,13 @@ bool QRequirementChangedEvent::setValueByName(const SFString& fieldName, const S
 }
 
 //---------------------------------------------------------------------------------------------------
-void QRequirementChangedEvent::finishParse()
-{
+void QRequirementChangedEvent::finishParse() {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QRequirementChangedEvent::Serialize(SFArchive& archive)
-{
+bool QRequirementChangedEvent::Serialize(SFArchive& archive) {
     if (!archive.isReading())
         return ((const QRequirementChangedEvent*)this)->SerializeC(archive);
 
@@ -110,8 +101,7 @@ bool QRequirementChangedEvent::Serialize(SFArchive& archive)
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QRequirementChangedEvent::SerializeC(SFArchive& archive) const
-{
+bool QRequirementChangedEvent::SerializeC(SFArchive& archive) const {
     CLogEntry::SerializeC(archive);
 
     archive << newRequirement;
@@ -120,15 +110,14 @@ bool QRequirementChangedEvent::SerializeC(SFArchive& archive) const
 }
 
 //---------------------------------------------------------------------------
-void QRequirementChangedEvent::registerClass(void)
-{
-    static bool been_here=false;
+void QRequirementChangedEvent::registerClass(void) {
+    static bool been_here = false;
     if (been_here) return;
-    been_here=true;
+    been_here = true;
 
     CLogEntry::registerClass();
 
-    uint32_t fieldNum=1000;
+    uint32_t fieldNum = 1000;
     ADD_FIELD(QRequirementChangedEvent, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
     ADD_FIELD(QRequirementChangedEvent, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
     ADD_FIELD(QRequirementChangedEvent, "newRequirement", T_NUMBER, ++fieldNum);
@@ -142,19 +131,16 @@ void QRequirementChangedEvent::registerClass(void)
 }
 
 //---------------------------------------------------------------------------
-SFString nextRequirementchangedeventChunk_custom(const SFString& fieldIn, bool& force, const void *data)
-{
+SFString nextRequirementchangedeventChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
     const QRequirementChangedEvent *req = (const QRequirementChangedEvent *)data;
-    if (req)
-    {
-        switch (tolower(fieldIn[0]))
-        {
+    if (req) {
+        switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn,force,req);
+                    return nextBasenodeChunk(fieldIn, force, req);
                 break;
 
             default:
@@ -166,17 +152,15 @@ SFString nextRequirementchangedeventChunk_custom(const SFString& fieldIn, bool& 
 }
 
 //---------------------------------------------------------------------------
-bool QRequirementChangedEvent::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const
-{
+bool QRequirementChangedEvent::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
 }
 
 //---------------------------------------------------------------------------
-bool QRequirementChangedEvent::readBackLevel(SFArchive& archive)
-{
-    bool done=false;
+bool QRequirementChangedEvent::readBackLevel(SFArchive& archive) {
+    bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
     return done;

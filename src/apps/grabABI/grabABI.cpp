@@ -34,11 +34,16 @@ int sortFunctionByName(const void *v1, const void *v2) {
 
 SFString classDir;
 //-----------------------------------------------------------------------
-inline void makeTheCode(const SFString& fn, const SFString& addr)
-{
+inline SFString projectName(void) {
+    return classDir.Substitute("/Users/jrush/src.GitHub/quickBlocks/src/monitors/","").Substitute("/parselib/","");
+}
+
+//-----------------------------------------------------------------------
+inline void makeTheCode(const SFString& fn, const SFString& addr) {
     SFString theCode = asciiFileToString(templateFolder + fn);
     theCode.ReplaceAll("[{ADDR}]", addr);
-    writeTheCode(classDir + "../" + fn, theCode, "", fn != "makefile");
+    theCode.ReplaceAll("[{PROJECT_NAME}]", projectName());
+    writeTheCode(classDir + "../" + fn, theCode, "", fn != "CMakeFile.txt");
 }
 
 //-----------------------------------------------------------------------
@@ -307,12 +312,9 @@ int main(int argc, const char *argv[]) {
 
             // The library make file
             sources.ReplaceReverse(" \\\n", " \\\n" + options.prefix + ".cpp\n");
-            SFString makefile = asciiFileToString(templateFolder + "parselib/makefile").Substitute("[{SOURCES}]", sources);
-            if (!options.isBuiltin())
-                makefile.Replace("product=../[{PREFIX}].a\n", "product=parselib.a\n");
-            makefile.ReplaceAll("[{EXTRA}]", " -I$(libraries)/tokenlib -I$(libraries)/walletlib");
-            makefile.ReplaceAll("[{PREFIX}]", options.prefix);
-            writeTheCode(classDir + "makefile", makefile.Substitute("{QB}", (options.isBuiltin()?"_qb":"")), "", false);
+            SFString makefile = asciiFileToString(templateFolder + "parselib/CMakeLists.txt");
+            makefile.ReplaceAll("[{PROJECT_NAME}]", projectName());
+            writeTheCode(classDir + "CMakeLists.txt", makefile);
 
             // The library source file
             factory1.Replace("} else ", "");
@@ -361,13 +363,13 @@ int main(int argc, const char *argv[]) {
 
             // The support.h file
             if (!options.isBuiltin()) {
-                makeTheCode("support.h",   options.primaryAddr.Substitute("0x", ""));
-                makeTheCode("support.cpp", options.primaryAddr.Substitute("0x", ""));
-                makeTheCode("rebuild",     StripTrailing(addrList,'|').Substitute("|", " "));
-                makeTheCode("makefile",    options.primaryAddr);
-                makeTheCode("options.h",   options.primaryAddr);
-                makeTheCode("options.cpp", options.primaryAddr);
-                makeTheCode("main.cpp",    options.primaryAddr);
+                makeTheCode("support.h",      options.primaryAddr.Substitute("0x", ""));
+                makeTheCode("support.cpp",    options.primaryAddr.Substitute("0x", ""));
+                makeTheCode("rebuild",        StripTrailing(addrList,'|').Substitute("|", " "));
+                makeTheCode("CMakeLists.txt", options.primaryAddr);
+                makeTheCode("options.h",      options.primaryAddr);
+                makeTheCode("options.cpp",    options.primaryAddr);
+                makeTheCode("main.cpp",       options.primaryAddr);
             }
         }
     }

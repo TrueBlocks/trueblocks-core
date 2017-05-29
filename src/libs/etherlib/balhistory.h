@@ -25,8 +25,7 @@ typedef SFUniqueList<CBalHistory*>       CBalHistoryListU;
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CBalHistory : public CBaseNode
-{
+class CBalHistory : public CBaseNode {
 public:
     SFString recordID;
     SFTime txDate;
@@ -38,7 +37,7 @@ public:
     ~CBalHistory(void);
     CBalHistory& operator=(const CBalHistory& ba);
 
-    DECLARE_NODE (CBalHistory);
+    DECLARE_NODE(CBalHistory);
 
     // EXISTING_CODE
     CBalHistory(const SFString& _recID, SFIntBN bal) : recordID(_recID), balance(bal) { }
@@ -55,16 +54,14 @@ protected:
 };
 
 //--------------------------------------------------------------------------
-inline CBalHistory::CBalHistory(void)
-{
+inline CBalHistory::CBalHistory(void) {
     Init();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CBalHistory::CBalHistory(const CBalHistory& ba)
-{
+inline CBalHistory::CBalHistory(const CBalHistory& ba) {
     // EXISTING_CODE
     // EXISTING_CODE
     Copy(ba);
@@ -74,23 +71,20 @@ inline CBalHistory::CBalHistory(const CBalHistory& ba)
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline CBalHistory::~CBalHistory(void)
-{
+inline CBalHistory::~CBalHistory(void) {
     Clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CBalHistory::Clear(void)
-{
+inline void CBalHistory::Clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CBalHistory::Init(void)
-{
+inline void CBalHistory::Init(void) {
     CBaseNode::Init();
 
 //    recordID = EMPTY;
@@ -102,8 +96,7 @@ inline void CBalHistory::Init(void)
 }
 
 //--------------------------------------------------------------------------
-inline void CBalHistory::Copy(const CBalHistory& ba)
-{
+inline void CBalHistory::Copy(const CBalHistory& ba) {
     Clear();
     CBaseNode::Copy(ba);
 
@@ -117,8 +110,7 @@ inline void CBalHistory::Copy(const CBalHistory& ba)
 }
 
 //--------------------------------------------------------------------------
-inline CBalHistory& CBalHistory::operator=(const CBalHistory& ba)
-{
+inline CBalHistory& CBalHistory::operator=(const CBalHistory& ba) {
     Copy(ba);
     // EXISTING_CODE
     // EXISTING_CODE
@@ -126,8 +118,7 @@ inline CBalHistory& CBalHistory::operator=(const CBalHistory& ba)
 }
 
 //---------------------------------------------------------------------------
-inline SFString CBalHistory::getValueByName(const SFString& fieldName) const
-{
+inline SFString CBalHistory::getValueByName(const SFString& fieldName) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return Format("[{"+toUpper(fieldName)+"}]");

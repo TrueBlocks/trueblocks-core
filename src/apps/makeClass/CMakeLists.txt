@@ -32,12 +32,3 @@ endif (CURL_FOUND)
 
 # Add the project static libs at linking
 target_link_libraries (makeClass ${PROJECT_STATIC_LIBS})
-
-# plint target
-set(CURRENT_TOOL_PATH "${CMAKE_SOURCE_DIR}/apps/makeClass")
-add_custom_target(${LINT_TARGET}
-        COMMAND ${PYLINT_CMD} ${SOURCE_FILES}
-        WORKING_DIRECTORY ${CURRENT_TOOL_PATH}
-        COMMENT "Running pylint for ${TOOL_NAME}"
-        VERBATIM)
-

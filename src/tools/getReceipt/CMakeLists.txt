@@ -35,7 +35,7 @@ endif (CURL_FOUND)
 target_link_libraries (${TOOL_NAME} ${PROJECT_STATIC_LIBS})
 
 # Define customized targets here
-# We add here user defined targets like: test, readme, lint
+# We add here user defined targets like: test, readme
 
 # readme target
 set(TOOLS_PATH "${CMAKE_SOURCE_DIR}/tools")
@@ -46,11 +46,4 @@ add_custom_target(${README_TARGET}
 	DEPENDS ${TOOL_NAME}
 	WORKING_DIRECTORY ${CURRENT_TOOL_PATH}
 	COMMENT "Generating README.md file for ${TOOL_NAME}"
-        VERBATIM)
-
-# plint target
-add_custom_target(${LINT_TARGET}
-        COMMAND ${PYLINT_CMD} ${SOURCE_FILES}
-        WORKING_DIRECTORY ${CURRENT_TOOL_PATH}
-        COMMENT "Running pylint for ${TOOL_NAME}"
         VERBATIM)

@@ -22,13 +22,11 @@ extern SFString nextBlockChunk(const SFString& fieldIn, bool& force, const void 
 static SFString nextBlockChunk_custom(const SFString& fieldIn, bool& force, const void *data);
 
 //---------------------------------------------------------------------------
-void CBlock::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const
-{
+void CBlock::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
     if (!m_showing)
         return;
 
-    if (fmtIn.empty())
-    {
+    if (fmtIn.empty()) {
         ctx << toJson();
         return;
     }
@@ -42,18 +40,15 @@ void CBlock::Format(CExportContext& ctx, const SFString& fmtIn, void *data) cons
 }
 
 //---------------------------------------------------------------------------
-SFString nextBlockChunk(const SFString& fieldIn, bool& force, const void *data)
-{
+SFString nextBlockChunk(const SFString& fieldIn, bool& force, const void *data) {
     const CBlock *blo = (const CBlock *)data;
-    if (blo)
-    {
+    if (blo) {
         // Give customized code a chance to override first
         SFString ret = nextBlockChunk_custom(fieldIn, force, data);
         if (!ret.empty())
             return ret;
 
-        switch (tolower(fieldIn[0]))
-        {
+        switch (tolower(fieldIn[0])) {
             case 'b':
                 if ( fieldIn % "blockNumber" ) return asStringU(blo->blockNumber);
                 break;
@@ -96,12 +91,11 @@ SFString nextBlockChunk(const SFString& fieldIn, bool& force, const void *data)
             return ret;
     }
 
-    return "<span class=warning>Field not found: [{" + fieldIn + "}]</span>\n";
+    return "Field not found: [{" + fieldIn + "}]\n";
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CBlock::setValueByName(const SFString& fieldName, const SFString& fieldValue)
-{
+bool CBlock::setValueByName(const SFString& fieldName, const SFString& fieldValue) {
     // EXISTING_CODE
     if (fieldName % "number")
     {
@@ -136,8 +130,7 @@ bool CBlock::setValueByName(const SFString& fieldName, const SFString& fieldValu
     }
     // EXISTING_CODE
 
-    switch (tolower(fieldName[0]))
-    {
+    switch (tolower(fieldName[0])) {
         case 'b':
             if ( fieldName % "blockNumber" ) { blockNumber = toUnsigned(fieldValue); return true; }
             break;
@@ -165,15 +158,13 @@ bool CBlock::setValueByName(const SFString& fieldName, const SFString& fieldValu
 }
 
 //---------------------------------------------------------------------------------------------------
-void CBlock::finishParse()
-{
+void CBlock::finishParse() {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CBlock::Serialize(SFArchive& archive)
-{
+bool CBlock::Serialize(SFArchive& archive) {
     if (!archive.isReading())
         return ((const CBlock*)this)->SerializeC(archive);
 
@@ -193,8 +184,7 @@ bool CBlock::Serialize(SFArchive& archive)
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CBlock::SerializeC(SFArchive& archive) const
-{
+bool CBlock::SerializeC(SFArchive& archive) const {
     if (!preSerializeC(archive))
         return false;
 
@@ -211,13 +201,12 @@ bool CBlock::SerializeC(SFArchive& archive) const
 }
 
 //---------------------------------------------------------------------------
-void CBlock::registerClass(void)
-{
-    static bool been_here=false;
+void CBlock::registerClass(void) {
+    static bool been_here = false;
     if (been_here) return;
-    been_here=true;
+    been_here = true;
 
-    uint32_t fieldNum=1000;
+    uint32_t fieldNum = 1000;
     ADD_FIELD(CBlock, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
     ADD_FIELD(CBlock, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
     ADD_FIELD(CBlock, "gasLimit", T_NUMBER, ++fieldNum);
@@ -238,13 +227,10 @@ void CBlock::registerClass(void)
 }
 
 //---------------------------------------------------------------------------
-SFString nextBlockChunk_custom(const SFString& fieldIn, bool& force, const void *data)
-{
+SFString nextBlockChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
     const CBlock *blo = (const CBlock *)data;
-    if (blo)
-    {
-        switch (tolower(fieldIn[0]))
-        {
+    if (blo) {
+        switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             case 'n':
                 if ( fieldIn % "number" ) return asStringU(blo->blockNumber);
@@ -267,7 +253,7 @@ SFString nextBlockChunk_custom(const SFString& fieldIn, bool& force, const void 
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn,force,blo);
+                    return nextBasenodeChunk(fieldIn, force, blo);
                 break;
 
             default:
@@ -279,17 +265,15 @@ SFString nextBlockChunk_custom(const SFString& fieldIn, bool& force, const void 
 }
 
 //---------------------------------------------------------------------------
-bool CBlock::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const
-{
+bool CBlock::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
 }
 
 //---------------------------------------------------------------------------
-bool CBlock::readBackLevel(SFArchive& archive)
-{
-    bool done=false;
+bool CBlock::readBackLevel(SFArchive& archive) {
+    bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
     return done;

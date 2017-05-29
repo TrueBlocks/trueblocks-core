@@ -22,8 +22,7 @@ typedef SFUniqueList<QRemoveOwner*>       QRemoveOwnerListU;
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class QRemoveOwner : public CTransaction
-{
+class QRemoveOwner : public CTransaction {
 public:
     SFAddress _owner;
 
@@ -33,7 +32,7 @@ public:
     ~QRemoveOwner(void);
     QRemoveOwner& operator=(const QRemoveOwner& re);
 
-    DECLARE_NODE (QRemoveOwner);
+    DECLARE_NODE(QRemoveOwner);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -49,16 +48,14 @@ protected:
 };
 
 //--------------------------------------------------------------------------
-inline QRemoveOwner::QRemoveOwner(void)
-{
+inline QRemoveOwner::QRemoveOwner(void) {
     Init();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline QRemoveOwner::QRemoveOwner(const QRemoveOwner& re)
-{
+inline QRemoveOwner::QRemoveOwner(const QRemoveOwner& re) {
     // EXISTING_CODE
     // EXISTING_CODE
     Copy(re);
@@ -68,23 +65,20 @@ inline QRemoveOwner::QRemoveOwner(const QRemoveOwner& re)
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline QRemoveOwner::~QRemoveOwner(void)
-{
+inline QRemoveOwner::~QRemoveOwner(void) {
     Clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void QRemoveOwner::Clear(void)
-{
+inline void QRemoveOwner::Clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void QRemoveOwner::Init(void)
-{
+inline void QRemoveOwner::Init(void) {
     CTransaction::Init();
 
 //    _owner = EMPTY;
@@ -94,8 +88,7 @@ inline void QRemoveOwner::Init(void)
 }
 
 //--------------------------------------------------------------------------
-inline void QRemoveOwner::Copy(const QRemoveOwner& re)
-{
+inline void QRemoveOwner::Copy(const QRemoveOwner& re) {
     Clear();
     CTransaction::Copy(re);
 
@@ -107,8 +100,7 @@ inline void QRemoveOwner::Copy(const QRemoveOwner& re)
 }
 
 //--------------------------------------------------------------------------
-inline QRemoveOwner& QRemoveOwner::operator=(const QRemoveOwner& re)
-{
+inline QRemoveOwner& QRemoveOwner::operator=(const QRemoveOwner& re) {
     Copy(re);
     // EXISTING_CODE
     // EXISTING_CODE
@@ -116,8 +108,7 @@ inline QRemoveOwner& QRemoveOwner::operator=(const QRemoveOwner& re)
 }
 
 //---------------------------------------------------------------------------
-inline SFString QRemoveOwner::getValueByName(const SFString& fieldName) const
-{
+inline SFString QRemoveOwner::getValueByName(const SFString& fieldName) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return Format("[{"+toUpper(fieldName)+"}]");

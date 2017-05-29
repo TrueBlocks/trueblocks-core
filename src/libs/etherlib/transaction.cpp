@@ -22,13 +22,11 @@ extern SFString nextTransactionChunk(const SFString& fieldIn, bool& force, const
 static SFString nextTransactionChunk_custom(const SFString& fieldIn, bool& force, const void *data);
 
 //---------------------------------------------------------------------------
-void CTransaction::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const
-{
+void CTransaction::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
     if (!m_showing)
         return;
 
-    if (fmtIn.empty())
-    {
+    if (fmtIn.empty()) {
         ctx << toJson();
         return;
     }
@@ -42,18 +40,15 @@ void CTransaction::Format(CExportContext& ctx, const SFString& fmtIn, void *data
 }
 
 //---------------------------------------------------------------------------
-SFString nextTransactionChunk(const SFString& fieldIn, bool& force, const void *data)
-{
+SFString nextTransactionChunk(const SFString& fieldIn, bool& force, const void *data) {
     const CTransaction *tra = (const CTransaction *)data;
-    if (tra)
-    {
+    if (tra) {
         // Give customized code a chance to override first
         SFString ret = nextTransactionChunk_custom(fieldIn, force, data);
         if (!ret.empty())
             return ret;
 
-        switch (tolower(fieldIn[0]))
-        {
+        switch (tolower(fieldIn[0])) {
             case 'b':
                 if ( fieldIn % "blockHash" ) return fromHash(tra->blockHash);
                 if ( fieldIn % "blockNumber" ) return asStringU(tra->blockNumber);
@@ -107,12 +102,11 @@ SFString nextTransactionChunk(const SFString& fieldIn, bool& force, const void *
             return ret;
     }
 
-    return "<span class=warning>Field not found: [{" + fieldIn + "}]</span>\n";
+    return "Field not found: [{" + fieldIn + "}]\n";
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CTransaction::setValueByName(const SFString& fieldName, const SFString& fieldValue)
-{
+bool CTransaction::setValueByName(const SFString& fieldName, const SFString& fieldValue) {
     // EXISTING_CODE
     if (fieldName == "to" && fieldValue == "null")
         *((SFString*)&fieldValue) = "0x";
@@ -150,8 +144,7 @@ bool CTransaction::setValueByName(const SFString& fieldName, const SFString& fie
             return true;
     // EXISTING_CODE
 
-    switch (tolower(fieldName[0]))
-    {
+    switch (tolower(fieldName[0])) {
         case 'b':
             if ( fieldName % "blockHash" ) { blockHash = toHash(fieldValue); return true; }
             if ( fieldName % "blockNumber" ) { blockNumber = toUnsigned(fieldValue); return true; }
@@ -195,8 +188,7 @@ bool CTransaction::setValueByName(const SFString& fieldName, const SFString& fie
 }
 
 //---------------------------------------------------------------------------------------------------
-void CTransaction::finishParse()
-{
+void CTransaction::finishParse() {
     // EXISTING_CODE
     if (pParent && pParent->isKindOf(GETRUNTIME_CLASS(CAccount)))
         funcPtr = ((CAccount*)pParent)->abi.findFunctionByEncoding(input.substr(2,8));
@@ -206,8 +198,7 @@ void CTransaction::finishParse()
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CTransaction::Serialize(SFArchive& archive)
-{
+bool CTransaction::Serialize(SFArchive& archive) {
     if (!archive.isReading())
         return ((const CTransaction*)this)->SerializeC(archive);
 
@@ -235,8 +226,7 @@ bool CTransaction::Serialize(SFArchive& archive)
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CTransaction::SerializeC(SFArchive& archive) const
-{
+bool CTransaction::SerializeC(SFArchive& archive) const {
     if (!preSerializeC(archive))
         return false;
 
@@ -261,13 +251,12 @@ bool CTransaction::SerializeC(SFArchive& archive) const
 }
 
 //---------------------------------------------------------------------------
-void CTransaction::registerClass(void)
-{
-    static bool been_here=false;
+void CTransaction::registerClass(void) {
+    static bool been_here = false;
     if (been_here) return;
-    been_here=true;
+    been_here = true;
 
-    uint32_t fieldNum=1000;
+    uint32_t fieldNum = 1000;
     ADD_FIELD(CTransaction, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
     ADD_FIELD(CTransaction, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
     ADD_FIELD(CTransaction, "hash", T_TEXT, ++fieldNum);
@@ -312,13 +301,10 @@ void CTransaction::registerClass(void)
 }
 
 //---------------------------------------------------------------------------
-SFString nextTransactionChunk_custom(const SFString& fieldIn, bool& force, const void *data)
-{
+SFString nextTransactionChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
     const CTransaction *tra = (const CTransaction *)data;
-    if (tra)
-    {
-        switch (tolower(fieldIn[0]))
-        {
+    if (tra) {
+        switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             case 'c':
                 if ( fieldIn % "contractAddress" ) return fromAddress(tra->receipt.contractAddress); break;
@@ -343,7 +329,7 @@ SFString nextTransactionChunk_custom(const SFString& fieldIn, bool& force, const
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn,force,tra);
+                    return nextBasenodeChunk(fieldIn, force, tra);
                 break;
 
             default:
@@ -355,17 +341,15 @@ SFString nextTransactionChunk_custom(const SFString& fieldIn, bool& force, const
 }
 
 //---------------------------------------------------------------------------
-bool CTransaction::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const
-{
+bool CTransaction::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
 }
 
 //---------------------------------------------------------------------------
-bool CTransaction::readBackLevel(SFArchive& archive)
-{
-    bool done=false;
+bool CTransaction::readBackLevel(SFArchive& archive) {
+    bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
     return done;

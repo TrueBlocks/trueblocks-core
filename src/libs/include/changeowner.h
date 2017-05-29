@@ -22,8 +22,7 @@ typedef SFUniqueList<QChangeOwner*>       QChangeOwnerListU;
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class QChangeOwner : public CTransaction
-{
+class QChangeOwner : public CTransaction {
 public:
     SFAddress _from;
     SFAddress _to;
@@ -34,7 +33,7 @@ public:
     ~QChangeOwner(void);
     QChangeOwner& operator=(const QChangeOwner& ch);
 
-    DECLARE_NODE (QChangeOwner);
+    DECLARE_NODE(QChangeOwner);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -50,16 +49,14 @@ protected:
 };
 
 //--------------------------------------------------------------------------
-inline QChangeOwner::QChangeOwner(void)
-{
+inline QChangeOwner::QChangeOwner(void) {
     Init();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline QChangeOwner::QChangeOwner(const QChangeOwner& ch)
-{
+inline QChangeOwner::QChangeOwner(const QChangeOwner& ch) {
     // EXISTING_CODE
     // EXISTING_CODE
     Copy(ch);
@@ -69,23 +66,20 @@ inline QChangeOwner::QChangeOwner(const QChangeOwner& ch)
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline QChangeOwner::~QChangeOwner(void)
-{
+inline QChangeOwner::~QChangeOwner(void) {
     Clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void QChangeOwner::Clear(void)
-{
+inline void QChangeOwner::Clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void QChangeOwner::Init(void)
-{
+inline void QChangeOwner::Init(void) {
     CTransaction::Init();
 
 //    _from = EMPTY;
@@ -96,8 +90,7 @@ inline void QChangeOwner::Init(void)
 }
 
 //--------------------------------------------------------------------------
-inline void QChangeOwner::Copy(const QChangeOwner& ch)
-{
+inline void QChangeOwner::Copy(const QChangeOwner& ch) {
     Clear();
     CTransaction::Copy(ch);
 
@@ -110,8 +103,7 @@ inline void QChangeOwner::Copy(const QChangeOwner& ch)
 }
 
 //--------------------------------------------------------------------------
-inline QChangeOwner& QChangeOwner::operator=(const QChangeOwner& ch)
-{
+inline QChangeOwner& QChangeOwner::operator=(const QChangeOwner& ch) {
     Copy(ch);
     // EXISTING_CODE
     // EXISTING_CODE
@@ -119,8 +111,7 @@ inline QChangeOwner& QChangeOwner::operator=(const QChangeOwner& ch)
 }
 
 //---------------------------------------------------------------------------
-inline SFString QChangeOwner::getValueByName(const SFString& fieldName) const
-{
+inline SFString QChangeOwner::getValueByName(const SFString& fieldName) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return Format("[{"+toUpper(fieldName)+"}]");

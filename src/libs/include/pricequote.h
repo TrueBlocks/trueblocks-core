@@ -25,8 +25,7 @@ typedef SFUniqueList<CPriceQuote*>       CPriceQuoteListU;
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CPriceQuote : public CBaseNode
-{
+class CPriceQuote : public CBaseNode {
 public:
     SFUint32 timestamp;
     float open;
@@ -43,7 +42,7 @@ public:
     ~CPriceQuote(void);
     CPriceQuote& operator=(const CPriceQuote& pr);
 
-    DECLARE_NODE (CPriceQuote);
+    DECLARE_NODE(CPriceQuote);
 
     // EXISTING_CODE
     SFTime date;
@@ -60,8 +59,7 @@ protected:
 };
 
 //--------------------------------------------------------------------------
-inline CPriceQuote::CPriceQuote(void)
-{
+inline CPriceQuote::CPriceQuote(void) {
     Init();
     // EXISTING_CODE
     extern bool loadPriceData(CPriceQuoteArray& quotes, bool freshen, SFString& message, SFUint32 step=1);
@@ -69,8 +67,7 @@ inline CPriceQuote::CPriceQuote(void)
 }
 
 //--------------------------------------------------------------------------
-inline CPriceQuote::CPriceQuote(const CPriceQuote& pr)
-{
+inline CPriceQuote::CPriceQuote(const CPriceQuote& pr) {
     // EXISTING_CODE
     // EXISTING_CODE
     Copy(pr);
@@ -80,23 +77,20 @@ inline CPriceQuote::CPriceQuote(const CPriceQuote& pr)
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline CPriceQuote::~CPriceQuote(void)
-{
+inline CPriceQuote::~CPriceQuote(void) {
     Clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CPriceQuote::Clear(void)
-{
+inline void CPriceQuote::Clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CPriceQuote::Init(void)
-{
+inline void CPriceQuote::Init(void) {
     CBaseNode::Init();
 
     timestamp = 0;
@@ -114,8 +108,7 @@ inline void CPriceQuote::Init(void)
 }
 
 //--------------------------------------------------------------------------
-inline void CPriceQuote::Copy(const CPriceQuote& pr)
-{
+inline void CPriceQuote::Copy(const CPriceQuote& pr) {
     Clear();
     CBaseNode::Copy(pr);
 
@@ -135,8 +128,7 @@ inline void CPriceQuote::Copy(const CPriceQuote& pr)
 }
 
 //--------------------------------------------------------------------------
-inline CPriceQuote& CPriceQuote::operator=(const CPriceQuote& pr)
-{
+inline CPriceQuote& CPriceQuote::operator=(const CPriceQuote& pr) {
     Copy(pr);
     // EXISTING_CODE
     // EXISTING_CODE
@@ -144,8 +136,7 @@ inline CPriceQuote& CPriceQuote::operator=(const CPriceQuote& pr)
 }
 
 //---------------------------------------------------------------------------
-inline SFString CPriceQuote::getValueByName(const SFString& fieldName) const
-{
+inline SFString CPriceQuote::getValueByName(const SFString& fieldName) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return Format("[{"+toUpper(fieldName)+"}]");

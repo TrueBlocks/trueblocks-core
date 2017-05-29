@@ -22,8 +22,7 @@ typedef SFUniqueList<QAddOwner*>       QAddOwnerListU;
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class QAddOwner : public CTransaction
-{
+class QAddOwner : public CTransaction {
 public:
     SFAddress _owner;
 
@@ -33,7 +32,7 @@ public:
     ~QAddOwner(void);
     QAddOwner& operator=(const QAddOwner& ad);
 
-    DECLARE_NODE (QAddOwner);
+    DECLARE_NODE(QAddOwner);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -49,16 +48,14 @@ protected:
 };
 
 //--------------------------------------------------------------------------
-inline QAddOwner::QAddOwner(void)
-{
+inline QAddOwner::QAddOwner(void) {
     Init();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline QAddOwner::QAddOwner(const QAddOwner& ad)
-{
+inline QAddOwner::QAddOwner(const QAddOwner& ad) {
     // EXISTING_CODE
     // EXISTING_CODE
     Copy(ad);
@@ -68,23 +65,20 @@ inline QAddOwner::QAddOwner(const QAddOwner& ad)
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline QAddOwner::~QAddOwner(void)
-{
+inline QAddOwner::~QAddOwner(void) {
     Clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void QAddOwner::Clear(void)
-{
+inline void QAddOwner::Clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void QAddOwner::Init(void)
-{
+inline void QAddOwner::Init(void) {
     CTransaction::Init();
 
 //    _owner = EMPTY;
@@ -94,8 +88,7 @@ inline void QAddOwner::Init(void)
 }
 
 //--------------------------------------------------------------------------
-inline void QAddOwner::Copy(const QAddOwner& ad)
-{
+inline void QAddOwner::Copy(const QAddOwner& ad) {
     Clear();
     CTransaction::Copy(ad);
 
@@ -107,8 +100,7 @@ inline void QAddOwner::Copy(const QAddOwner& ad)
 }
 
 //--------------------------------------------------------------------------
-inline QAddOwner& QAddOwner::operator=(const QAddOwner& ad)
-{
+inline QAddOwner& QAddOwner::operator=(const QAddOwner& ad) {
     Copy(ad);
     // EXISTING_CODE
     // EXISTING_CODE
@@ -116,8 +108,7 @@ inline QAddOwner& QAddOwner::operator=(const QAddOwner& ad)
 }
 
 //---------------------------------------------------------------------------
-inline SFString QAddOwner::getValueByName(const SFString& fieldName) const
-{
+inline SFString QAddOwner::getValueByName(const SFString& fieldName) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return Format("[{"+toUpper(fieldName)+"}]");

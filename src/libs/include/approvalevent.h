@@ -22,8 +22,7 @@ typedef SFUniqueList<QApprovalEvent*>       QApprovalEventListU;
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class QApprovalEvent : public CLogEntry
-{
+class QApprovalEvent : public CLogEntry {
 public:
     SFAddress _owner;
     SFAddress _spender;
@@ -35,7 +34,7 @@ public:
     ~QApprovalEvent(void);
     QApprovalEvent& operator=(const QApprovalEvent& ap);
 
-    DECLARE_NODE (QApprovalEvent);
+    DECLARE_NODE(QApprovalEvent);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -51,16 +50,14 @@ protected:
 };
 
 //--------------------------------------------------------------------------
-inline QApprovalEvent::QApprovalEvent(void)
-{
+inline QApprovalEvent::QApprovalEvent(void) {
     Init();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline QApprovalEvent::QApprovalEvent(const QApprovalEvent& ap)
-{
+inline QApprovalEvent::QApprovalEvent(const QApprovalEvent& ap) {
     // EXISTING_CODE
     // EXISTING_CODE
     Copy(ap);
@@ -70,23 +67,20 @@ inline QApprovalEvent::QApprovalEvent(const QApprovalEvent& ap)
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline QApprovalEvent::~QApprovalEvent(void)
-{
+inline QApprovalEvent::~QApprovalEvent(void) {
     Clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void QApprovalEvent::Clear(void)
-{
+inline void QApprovalEvent::Clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void QApprovalEvent::Init(void)
-{
+inline void QApprovalEvent::Init(void) {
     CLogEntry::Init();
 
 //    _owner = EMPTY;
@@ -98,8 +92,7 @@ inline void QApprovalEvent::Init(void)
 }
 
 //--------------------------------------------------------------------------
-inline void QApprovalEvent::Copy(const QApprovalEvent& ap)
-{
+inline void QApprovalEvent::Copy(const QApprovalEvent& ap) {
     Clear();
     CLogEntry::Copy(ap);
 
@@ -113,8 +106,7 @@ inline void QApprovalEvent::Copy(const QApprovalEvent& ap)
 }
 
 //--------------------------------------------------------------------------
-inline QApprovalEvent& QApprovalEvent::operator=(const QApprovalEvent& ap)
-{
+inline QApprovalEvent& QApprovalEvent::operator=(const QApprovalEvent& ap) {
     Copy(ap);
     // EXISTING_CODE
     // EXISTING_CODE
@@ -122,8 +114,7 @@ inline QApprovalEvent& QApprovalEvent::operator=(const QApprovalEvent& ap)
 }
 
 //---------------------------------------------------------------------------
-inline SFString QApprovalEvent::getValueByName(const SFString& fieldName) const
-{
+inline SFString QApprovalEvent::getValueByName(const SFString& fieldName) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return Format("[{"+toUpper(fieldName)+"}]");

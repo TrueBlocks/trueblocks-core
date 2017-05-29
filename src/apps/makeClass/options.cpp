@@ -13,9 +13,10 @@ CParams params[] = {
     CParams("~className",    "name of C++ class(es) to process"),
     CParams("-clear",        "remove <className(s)> definition file from local folder"),
     CParams("-edit",         "edit <className(s)> definition file in local folder"),
-    CParams("-list",         "list all definition files found in the local folder"),
     CParams("-filter",       "process only files with :filter in their names"),
+    CParams("-list",         "list all definition files found in the local folder"),
     CParams("-namespace",    "surround the code with a --namespace:ns"),
+    CParams("-silent",       "on error (no classDefinition file) exit silently"),
     CParams("-run",          "run the class maker on associated <className(s)>"),
     CParams("-all",          "clear, edit, list, or run all class definitions found in the local folder"),
     CParams("",              "Creates a C++ class based on definitions found in ./classDefinition/<className>.\n"),
@@ -46,6 +47,9 @@ bool COptions::parseArguments(SFString& command) {
             isList = true;
             isRemove = isEdit = false;  // last in wins
 
+        } else if (arg == "-s" || arg == "--silent") {
+            silent = true;
+
         } else if (arg.startsWith("-n:") || arg.startsWith("--namespace:")) {
 
             namesp = arg.Substitute("-n:", "").Substitute(".--namespace:", "");
@@ -75,11 +79,12 @@ bool COptions::parseArguments(SFString& command) {
         }
     }
 
+    SFString errMsg;
     if (!folderExists("./classDefinitions/"))
-        return usage("./classDefinitions folder does not exist. Quitting...");
+        errMsg = "./classDefinitions folder does not exist. Quitting...";
 
     if (!folderExists(configPath("makeClass/")))
-        return usage((configPath("makeClass") + " folder does not exist. Quitting..."));
+        errMsg = (configPath("makeClass") + " folder does not exist. Quitting...");
 
     if (isAll || isList) {
         classNames = EMPTY;  // rebuild the class list from the classDefinitions folder
@@ -88,13 +93,19 @@ bool COptions::parseArguments(SFString& command) {
 
     if (classNames.empty()) {
         if (!filter.empty())
-            return usage("Found no classes that matched the filter: " + filter);
+            errMsg = "Found no classes that matched the filter: " + filter;
         else
-            return usage("You must specify at least one className (or -a or -l)");
+            errMsg = "You must specify at least one className (or -a or -l)";
     }
 
     if (!isList && !isEdit && !isRemove && !isRun)
-        return usage("You must specify at least one of --run, --list, --edit, or --clear");
+        errMsg = "You must specify at least one of --run, --list, --edit, or --clear";
+
+    if (silent && !errMsg.empty())
+        return false;
+
+    if (!errMsg.empty())
+        return usage(errMsg);
 
     return true;
 }
@@ -109,6 +120,7 @@ void COptions::Init(void) {
     isRun = false;
     isList = false;
     isAll = false;
+    silent = false;
     // namesp = "";
     // classNames = "";
     // filter = "";

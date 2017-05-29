@@ -20,13 +20,11 @@ static SFString nextChangeownerChunk(const SFString& fieldIn, bool& force, const
 static SFString nextChangeownerChunk_custom(const SFString& fieldIn, bool& force, const void *data);
 
 //---------------------------------------------------------------------------
-void QChangeOwner::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const
-{
+void QChangeOwner::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
     if (!m_showing)
         return;
 
-    if (fmtIn.empty())
-    {
+    if (fmtIn.empty()) {
         ctx << toJson();
         return;
     }
@@ -40,18 +38,15 @@ void QChangeOwner::Format(CExportContext& ctx, const SFString& fmtIn, void *data
 }
 
 //---------------------------------------------------------------------------
-SFString nextChangeownerChunk(const SFString& fieldIn, bool& force, const void *data)
-{
+SFString nextChangeownerChunk(const SFString& fieldIn, bool& force, const void *data) {
     const QChangeOwner *cha = (const QChangeOwner *)data;
-    if (cha)
-    {
+    if (cha) {
         // Give customized code a chance to override first
         SFString ret = nextChangeownerChunk_custom(fieldIn, force, data);
         if (!ret.empty())
             return ret;
 
-        switch (tolower(fieldIn[0]))
-        {
+        switch (tolower(fieldIn[0])) {
             case '_':
                 if ( fieldIn % "_from" ) return fromAddress(cha->_from);
                 if ( fieldIn % "_to" ) return fromAddress(cha->_to);
@@ -67,20 +62,18 @@ SFString nextChangeownerChunk(const SFString& fieldIn, bool& force, const void *
             return ret;
     }
 
-    return "<span class=warning>Field not found: [{" + fieldIn + "}]</span>\n";
+    return "Field not found: [{" + fieldIn + "}]\n";
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QChangeOwner::setValueByName(const SFString& fieldName, const SFString& fieldValue)
-{
+bool QChangeOwner::setValueByName(const SFString& fieldName, const SFString& fieldValue) {
     // EXISTING_CODE
     // EXISTING_CODE
 
     if (CTransaction::setValueByName(fieldName, fieldValue))
         return true;
 
-    switch (tolower(fieldName[0]))
-    {
+    switch (tolower(fieldName[0])) {
         case '_':
             if ( fieldName % "_from" ) { _from = toAddress(fieldValue); return true; }
             if ( fieldName % "_to" ) { _to = toAddress(fieldValue); return true; }
@@ -92,15 +85,13 @@ bool QChangeOwner::setValueByName(const SFString& fieldName, const SFString& fie
 }
 
 //---------------------------------------------------------------------------------------------------
-void QChangeOwner::finishParse()
-{
+void QChangeOwner::finishParse() {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QChangeOwner::Serialize(SFArchive& archive)
-{
+bool QChangeOwner::Serialize(SFArchive& archive) {
     if (!archive.isReading())
         return ((const QChangeOwner*)this)->SerializeC(archive);
 
@@ -113,8 +104,7 @@ bool QChangeOwner::Serialize(SFArchive& archive)
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QChangeOwner::SerializeC(SFArchive& archive) const
-{
+bool QChangeOwner::SerializeC(SFArchive& archive) const {
     CTransaction::SerializeC(archive);
 
     archive << _from;
@@ -124,15 +114,14 @@ bool QChangeOwner::SerializeC(SFArchive& archive) const
 }
 
 //---------------------------------------------------------------------------
-void QChangeOwner::registerClass(void)
-{
-    static bool been_here=false;
+void QChangeOwner::registerClass(void) {
+    static bool been_here = false;
     if (been_here) return;
-    been_here=true;
+    been_here = true;
 
     CTransaction::registerClass();
 
-    uint32_t fieldNum=1000;
+    uint32_t fieldNum = 1000;
     ADD_FIELD(QChangeOwner, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
     ADD_FIELD(QChangeOwner, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
     ADD_FIELD(QChangeOwner, "_from", T_TEXT, ++fieldNum);
@@ -147,19 +136,16 @@ void QChangeOwner::registerClass(void)
 }
 
 //---------------------------------------------------------------------------
-SFString nextChangeownerChunk_custom(const SFString& fieldIn, bool& force, const void *data)
-{
+SFString nextChangeownerChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
     const QChangeOwner *cha = (const QChangeOwner *)data;
-    if (cha)
-    {
-        switch (tolower(fieldIn[0]))
-        {
+    if (cha) {
+        switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn,force,cha);
+                    return nextBasenodeChunk(fieldIn, force, cha);
                 break;
 
             default:
@@ -171,17 +157,15 @@ SFString nextChangeownerChunk_custom(const SFString& fieldIn, bool& force, const
 }
 
 //---------------------------------------------------------------------------
-bool QChangeOwner::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const
-{
+bool QChangeOwner::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
 }
 
 //---------------------------------------------------------------------------
-bool QChangeOwner::readBackLevel(SFArchive& archive)
-{
-    bool done=false;
+bool QChangeOwner::readBackLevel(SFArchive& archive) {
+    bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
     return done;

@@ -20,13 +20,11 @@ static SFString nextDepositeventChunk(const SFString& fieldIn, bool& force, cons
 static SFString nextDepositeventChunk_custom(const SFString& fieldIn, bool& force, const void *data);
 
 //---------------------------------------------------------------------------
-void QDepositEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const
-{
+void QDepositEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
     if (!m_showing)
         return;
 
-    if (fmtIn.empty())
-    {
+    if (fmtIn.empty()) {
         ctx << toJson();
         return;
     }
@@ -40,18 +38,15 @@ void QDepositEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *dat
 }
 
 //---------------------------------------------------------------------------
-SFString nextDepositeventChunk(const SFString& fieldIn, bool& force, const void *data)
-{
+SFString nextDepositeventChunk(const SFString& fieldIn, bool& force, const void *data) {
     const QDepositEvent *dep = (const QDepositEvent *)data;
-    if (dep)
-    {
+    if (dep) {
         // Give customized code a chance to override first
         SFString ret = nextDepositeventChunk_custom(fieldIn, force, data);
         if (!ret.empty())
             return ret;
 
-        switch (tolower(fieldIn[0]))
-        {
+        switch (tolower(fieldIn[0])) {
             case 'f':
                 if ( fieldIn % "from" ) return fromAddress(dep->from);
                 break;
@@ -69,20 +64,18 @@ SFString nextDepositeventChunk(const SFString& fieldIn, bool& force, const void 
             return ret;
     }
 
-    return "<span class=warning>Field not found: [{" + fieldIn + "}]</span>\n";
+    return "Field not found: [{" + fieldIn + "}]\n";
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QDepositEvent::setValueByName(const SFString& fieldName, const SFString& fieldValue)
-{
+bool QDepositEvent::setValueByName(const SFString& fieldName, const SFString& fieldValue) {
     // EXISTING_CODE
     // EXISTING_CODE
 
     if (CLogEntry::setValueByName(fieldName, fieldValue))
         return true;
 
-    switch (tolower(fieldName[0]))
-    {
+    switch (tolower(fieldName[0])) {
         case 'f':
             if ( fieldName % "from" ) { from = toAddress(fieldValue); return true; }
             break;
@@ -96,15 +89,13 @@ bool QDepositEvent::setValueByName(const SFString& fieldName, const SFString& fi
 }
 
 //---------------------------------------------------------------------------------------------------
-void QDepositEvent::finishParse()
-{
+void QDepositEvent::finishParse() {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QDepositEvent::Serialize(SFArchive& archive)
-{
+bool QDepositEvent::Serialize(SFArchive& archive) {
     if (!archive.isReading())
         return ((const QDepositEvent*)this)->SerializeC(archive);
 
@@ -117,8 +108,7 @@ bool QDepositEvent::Serialize(SFArchive& archive)
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QDepositEvent::SerializeC(SFArchive& archive) const
-{
+bool QDepositEvent::SerializeC(SFArchive& archive) const {
     CLogEntry::SerializeC(archive);
 
     archive << from;
@@ -128,15 +118,14 @@ bool QDepositEvent::SerializeC(SFArchive& archive) const
 }
 
 //---------------------------------------------------------------------------
-void QDepositEvent::registerClass(void)
-{
-    static bool been_here=false;
+void QDepositEvent::registerClass(void) {
+    static bool been_here = false;
     if (been_here) return;
-    been_here=true;
+    been_here = true;
 
     CLogEntry::registerClass();
 
-    uint32_t fieldNum=1000;
+    uint32_t fieldNum = 1000;
     ADD_FIELD(QDepositEvent, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
     ADD_FIELD(QDepositEvent, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
     ADD_FIELD(QDepositEvent, "from", T_TEXT, ++fieldNum);
@@ -151,19 +140,16 @@ void QDepositEvent::registerClass(void)
 }
 
 //---------------------------------------------------------------------------
-SFString nextDepositeventChunk_custom(const SFString& fieldIn, bool& force, const void *data)
-{
+SFString nextDepositeventChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
     const QDepositEvent *dep = (const QDepositEvent *)data;
-    if (dep)
-    {
-        switch (tolower(fieldIn[0]))
-        {
+    if (dep) {
+        switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn,force,dep);
+                    return nextBasenodeChunk(fieldIn, force, dep);
                 break;
 
             default:
@@ -175,17 +161,15 @@ SFString nextDepositeventChunk_custom(const SFString& fieldIn, bool& force, cons
 }
 
 //---------------------------------------------------------------------------
-bool QDepositEvent::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const
-{
+bool QDepositEvent::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
 }
 
 //---------------------------------------------------------------------------
-bool QDepositEvent::readBackLevel(SFArchive& archive)
-{
-    bool done=false;
+bool QDepositEvent::readBackLevel(SFArchive& archive) {
+    bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
     return done;

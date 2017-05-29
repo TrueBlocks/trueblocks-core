@@ -22,8 +22,7 @@ typedef SFUniqueList<[{CLASS_NAME}]*>       [{CLASS_NAME}]ListU;
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class [{CLASS_NAME}] : public [{BASE_CLASS}]
-{
+class [{CLASS_NAME}] : public [{BASE_CLASS}] {
 public:
 [FIELD_DEC]
 public:
@@ -32,7 +31,7 @@ public:
     ~[{CLASS_NAME}](void);
     [{CLASS_NAME}]& operator=(const [{CLASS_NAME}]& [{SHORT}]);
 
-    DECLARE_NODE ([{CLASS_NAME}]);
+    DECLARE_NODE([{CLASS_NAME}]);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -48,16 +47,14 @@ protected:
 };
 
 //--------------------------------------------------------------------------
-inline [{CLASS_NAME}]::[{CLASS_NAME}](void)
-{
+inline [{CLASS_NAME}]::[{CLASS_NAME}](void) {
     Init();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline [{CLASS_NAME}]::[{CLASS_NAME}](const [{CLASS_NAME}]& [{SHORT}])
-{
+inline [{CLASS_NAME}]::[{CLASS_NAME}](const [{CLASS_NAME}]& [{SHORT}]) {
     // EXISTING_CODE
     // EXISTING_CODE
     Copy([{SHORT}]);
@@ -67,23 +64,20 @@ inline [{CLASS_NAME}]::[{CLASS_NAME}](const [{CLASS_NAME}]& [{SHORT}])
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline [{CLASS_NAME}]::~[{CLASS_NAME}](void)
-{
+inline [{CLASS_NAME}]::~[{CLASS_NAME}](void) {
     Clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void [{CLASS_NAME}]::Clear(void)
-{
+inline void [{CLASS_NAME}]::Clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void [{CLASS_NAME}]::Init(void)
-{
+inline void [{CLASS_NAME}]::Init(void) {
     [{BASE_CLASS}]::Init();
 
 [FIELD_SET]
@@ -92,8 +86,7 @@ inline void [{CLASS_NAME}]::Init(void)
 }
 
 //--------------------------------------------------------------------------
-inline void [{CLASS_NAME}]::Copy(const [{CLASS_NAME}]& [{SHORT}])
-{
+inline void [{CLASS_NAME}]::Copy(const [{CLASS_NAME}]& [{SHORT}]) {
     Clear();
     [{BASE_CLASS}]::Copy([{SHORT}]);
 
@@ -104,8 +97,7 @@ inline void [{CLASS_NAME}]::Copy(const [{CLASS_NAME}]& [{SHORT}])
 }
 
 //--------------------------------------------------------------------------
-inline [{CLASS_NAME}]& [{CLASS_NAME}]::operator=(const [{CLASS_NAME}]& [{SHORT}])
-{
+inline [{CLASS_NAME}]& [{CLASS_NAME}]::operator=(const [{CLASS_NAME}]& [{SHORT}]) {
     Copy([{SHORT}]);
     // EXISTING_CODE
     // EXISTING_CODE
@@ -113,8 +105,7 @@ inline [{CLASS_NAME}]& [{CLASS_NAME}]::operator=(const [{CLASS_NAME}]& [{SHORT}]
 }
 
 //---------------------------------------------------------------------------
-inline SFString [{CLASS_NAME}]::getValueByName(const SFString& fieldName) const
-{
+inline SFString [{CLASS_NAME}]::getValueByName(const SFString& fieldName) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return Format("[{"+toUpper(fieldName)+"}]");

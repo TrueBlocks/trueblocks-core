@@ -39,8 +39,7 @@ class CFunction;
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CParameter : public CBaseNode
-{
+class CParameter : public CBaseNode {
 public:
     bool indexed;
     SFString name;
@@ -56,7 +55,7 @@ public:
     ~CParameter(void);
     CParameter& operator=(const CParameter& pa);
 
-    DECLARE_NODE (CParameter);
+    DECLARE_NODE(CParameter);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -72,16 +71,14 @@ protected:
 };
 
 //--------------------------------------------------------------------------
-inline CParameter::CParameter(void)
-{
+inline CParameter::CParameter(void) {
     Init();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CParameter::CParameter(const CParameter& pa)
-{
+inline CParameter::CParameter(const CParameter& pa) {
     // EXISTING_CODE
     // EXISTING_CODE
     Copy(pa);
@@ -91,23 +88,20 @@ inline CParameter::CParameter(const CParameter& pa)
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline CParameter::~CParameter(void)
-{
+inline CParameter::~CParameter(void) {
     Clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CParameter::Clear(void)
-{
+inline void CParameter::Clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CParameter::Init(void)
-{
+inline void CParameter::Init(void) {
     CBaseNode::Init();
 
     indexed = 0;
@@ -123,8 +117,7 @@ inline void CParameter::Init(void)
 }
 
 //--------------------------------------------------------------------------
-inline void CParameter::Copy(const CParameter& pa)
-{
+inline void CParameter::Copy(const CParameter& pa) {
     Clear();
     CBaseNode::Copy(pa);
 
@@ -142,8 +135,7 @@ inline void CParameter::Copy(const CParameter& pa)
 }
 
 //--------------------------------------------------------------------------
-inline CParameter& CParameter::operator=(const CParameter& pa)
-{
+inline CParameter& CParameter::operator=(const CParameter& pa) {
     Copy(pa);
     // EXISTING_CODE
     // EXISTING_CODE
@@ -151,8 +143,7 @@ inline CParameter& CParameter::operator=(const CParameter& pa)
 }
 
 //---------------------------------------------------------------------------
-inline SFString CParameter::getValueByName(const SFString& fieldName) const
-{
+inline SFString CParameter::getValueByName(const SFString& fieldName) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return Format("[{"+toUpper(fieldName)+"}]");
