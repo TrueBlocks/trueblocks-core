@@ -22,13 +22,11 @@ extern SFString nextReceiptChunk(const SFString& fieldIn, bool& force, const voi
 static SFString nextReceiptChunk_custom(const SFString& fieldIn, bool& force, const void *data);
 
 //---------------------------------------------------------------------------
-void CReceipt::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const
-{
+void CReceipt::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
     if (!m_showing)
         return;
 
-    if (fmtIn.empty())
-    {
+    if (fmtIn.empty()) {
         ctx << toJson();
         return;
     }
@@ -42,18 +40,15 @@ void CReceipt::Format(CExportContext& ctx, const SFString& fmtIn, void *data) co
 }
 
 //---------------------------------------------------------------------------
-SFString nextReceiptChunk(const SFString& fieldIn, bool& force, const void *data)
-{
+SFString nextReceiptChunk(const SFString& fieldIn, bool& force, const void *data) {
     const CReceipt *rec = (const CReceipt *)data;
-    if (rec)
-    {
+    if (rec) {
         // Give customized code a chance to override first
         SFString ret = nextReceiptChunk_custom(fieldIn, force, data);
         if (!ret.empty())
             return ret;
 
-        switch (tolower(fieldIn[0]))
-        {
+        switch (tolower(fieldIn[0])) {
             case 'c':
                 if ( fieldIn % "contractAddress" ) return fromAddress(rec->contractAddress);
                 break;
@@ -92,12 +87,11 @@ SFString nextReceiptChunk(const SFString& fieldIn, bool& force, const void *data
             return ret;
     }
 
-    return "<span class=warning>Field not found: [{" + fieldIn + "}]</span>\n";
+    return "Field not found: [{" + fieldIn + "}]\n";
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CReceipt::setValueByName(const SFString& fieldName, const SFString& fieldValue)
-{
+bool CReceipt::setValueByName(const SFString& fieldName, const SFString& fieldValue) {
     // EXISTING_CODE
     if (fieldName == "contractAddress" && fieldValue == "null")
         *((SFString*)&fieldValue) = "0";
@@ -125,8 +119,7 @@ bool CReceipt::setValueByName(const SFString& fieldName, const SFString& fieldVa
             return true;
     // EXISTING_CODE
 
-    switch (tolower(fieldName[0]))
-    {
+    switch (tolower(fieldName[0])) {
         case 'c':
             if ( fieldName % "contractAddress" ) { contractAddress = toAddress(fieldValue); return true; }
             break;
@@ -144,15 +137,13 @@ bool CReceipt::setValueByName(const SFString& fieldName, const SFString& fieldVa
 }
 
 //---------------------------------------------------------------------------------------------------
-void CReceipt::finishParse()
-{
+void CReceipt::finishParse() {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CReceipt::Serialize(SFArchive& archive)
-{
+bool CReceipt::Serialize(SFArchive& archive) {
     if (!archive.isReading())
         return ((const CReceipt*)this)->SerializeC(archive);
 
@@ -168,8 +159,7 @@ bool CReceipt::Serialize(SFArchive& archive)
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CReceipt::SerializeC(SFArchive& archive) const
-{
+bool CReceipt::SerializeC(SFArchive& archive) const {
     if (!preSerializeC(archive))
         return false;
 
@@ -182,13 +172,12 @@ bool CReceipt::SerializeC(SFArchive& archive) const
 }
 
 //---------------------------------------------------------------------------
-void CReceipt::registerClass(void)
-{
-    static bool been_here=false;
+void CReceipt::registerClass(void) {
+    static bool been_here = false;
     if (been_here) return;
-    been_here=true;
+    been_here = true;
 
-    uint32_t fieldNum=1000;
+    uint32_t fieldNum = 1000;
     ADD_FIELD(CReceipt, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
     ADD_FIELD(CReceipt, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
     ADD_FIELD(CReceipt, "contractAddress", T_TEXT, ++fieldNum);
@@ -205,19 +194,16 @@ void CReceipt::registerClass(void)
 }
 
 //---------------------------------------------------------------------------
-SFString nextReceiptChunk_custom(const SFString& fieldIn, bool& force, const void *data)
-{
+SFString nextReceiptChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
     const CReceipt *rec = (const CReceipt *)data;
-    if (rec)
-    {
-        switch (tolower(fieldIn[0]))
-        {
+    if (rec) {
+        switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn,force,rec);
+                    return nextBasenodeChunk(fieldIn, force, rec);
                 break;
 
             default:
@@ -229,17 +215,15 @@ SFString nextReceiptChunk_custom(const SFString& fieldIn, bool& force, const voi
 }
 
 //---------------------------------------------------------------------------
-bool CReceipt::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const
-{
+bool CReceipt::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
 }
 
 //---------------------------------------------------------------------------
-bool CReceipt::readBackLevel(SFArchive& archive)
-{
-    bool done=false;
+bool CReceipt::readBackLevel(SFArchive& archive) {
+    bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
     return done;

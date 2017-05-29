@@ -20,13 +20,11 @@ static SFString nextOwneraddedeventChunk(const SFString& fieldIn, bool& force, c
 static SFString nextOwneraddedeventChunk_custom(const SFString& fieldIn, bool& force, const void *data);
 
 //---------------------------------------------------------------------------
-void QOwnerAddedEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const
-{
+void QOwnerAddedEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
     if (!m_showing)
         return;
 
-    if (fmtIn.empty())
-    {
+    if (fmtIn.empty()) {
         ctx << toJson();
         return;
     }
@@ -40,18 +38,15 @@ void QOwnerAddedEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *
 }
 
 //---------------------------------------------------------------------------
-SFString nextOwneraddedeventChunk(const SFString& fieldIn, bool& force, const void *data)
-{
+SFString nextOwneraddedeventChunk(const SFString& fieldIn, bool& force, const void *data) {
     const QOwnerAddedEvent *own = (const QOwnerAddedEvent *)data;
-    if (own)
-    {
+    if (own) {
         // Give customized code a chance to override first
         SFString ret = nextOwneraddedeventChunk_custom(fieldIn, force, data);
         if (!ret.empty())
             return ret;
 
-        switch (tolower(fieldIn[0]))
-        {
+        switch (tolower(fieldIn[0])) {
             case 'n':
                 if ( fieldIn % "newOwner" ) return fromAddress(own->newOwner);
                 break;
@@ -66,20 +61,18 @@ SFString nextOwneraddedeventChunk(const SFString& fieldIn, bool& force, const vo
             return ret;
     }
 
-    return "<span class=warning>Field not found: [{" + fieldIn + "}]</span>\n";
+    return "Field not found: [{" + fieldIn + "}]\n";
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QOwnerAddedEvent::setValueByName(const SFString& fieldName, const SFString& fieldValue)
-{
+bool QOwnerAddedEvent::setValueByName(const SFString& fieldName, const SFString& fieldValue) {
     // EXISTING_CODE
     // EXISTING_CODE
 
     if (CLogEntry::setValueByName(fieldName, fieldValue))
         return true;
 
-    switch (tolower(fieldName[0]))
-    {
+    switch (tolower(fieldName[0])) {
         case 'n':
             if ( fieldName % "newOwner" ) { newOwner = toAddress(fieldValue); return true; }
             break;
@@ -90,15 +83,13 @@ bool QOwnerAddedEvent::setValueByName(const SFString& fieldName, const SFString&
 }
 
 //---------------------------------------------------------------------------------------------------
-void QOwnerAddedEvent::finishParse()
-{
+void QOwnerAddedEvent::finishParse() {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QOwnerAddedEvent::Serialize(SFArchive& archive)
-{
+bool QOwnerAddedEvent::Serialize(SFArchive& archive) {
     if (!archive.isReading())
         return ((const QOwnerAddedEvent*)this)->SerializeC(archive);
 
@@ -110,8 +101,7 @@ bool QOwnerAddedEvent::Serialize(SFArchive& archive)
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QOwnerAddedEvent::SerializeC(SFArchive& archive) const
-{
+bool QOwnerAddedEvent::SerializeC(SFArchive& archive) const {
     CLogEntry::SerializeC(archive);
 
     archive << newOwner;
@@ -120,15 +110,14 @@ bool QOwnerAddedEvent::SerializeC(SFArchive& archive) const
 }
 
 //---------------------------------------------------------------------------
-void QOwnerAddedEvent::registerClass(void)
-{
-    static bool been_here=false;
+void QOwnerAddedEvent::registerClass(void) {
+    static bool been_here = false;
     if (been_here) return;
-    been_here=true;
+    been_here = true;
 
     CLogEntry::registerClass();
 
-    uint32_t fieldNum=1000;
+    uint32_t fieldNum = 1000;
     ADD_FIELD(QOwnerAddedEvent, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
     ADD_FIELD(QOwnerAddedEvent, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
     ADD_FIELD(QOwnerAddedEvent, "newOwner", T_TEXT, ++fieldNum);
@@ -142,19 +131,16 @@ void QOwnerAddedEvent::registerClass(void)
 }
 
 //---------------------------------------------------------------------------
-SFString nextOwneraddedeventChunk_custom(const SFString& fieldIn, bool& force, const void *data)
-{
+SFString nextOwneraddedeventChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
     const QOwnerAddedEvent *own = (const QOwnerAddedEvent *)data;
-    if (own)
-    {
-        switch (tolower(fieldIn[0]))
-        {
+    if (own) {
+        switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn,force,own);
+                    return nextBasenodeChunk(fieldIn, force, own);
                 break;
 
             default:
@@ -166,17 +152,15 @@ SFString nextOwneraddedeventChunk_custom(const SFString& fieldIn, bool& force, c
 }
 
 //---------------------------------------------------------------------------
-bool QOwnerAddedEvent::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const
-{
+bool QOwnerAddedEvent::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
 }
 
 //---------------------------------------------------------------------------
-bool QOwnerAddedEvent::readBackLevel(SFArchive& archive)
-{
-    bool done=false;
+bool QOwnerAddedEvent::readBackLevel(SFArchive& archive) {
+    bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
     return done;

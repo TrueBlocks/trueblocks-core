@@ -16,6 +16,7 @@ public:
     bool isEdit;
     bool isRemove;
     bool isList;
+    bool silent;
     SFString namesp;
 
     SFString classNames;

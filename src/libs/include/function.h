@@ -25,8 +25,7 @@ typedef SFUniqueList<CFunction*>       CFunctionListU;
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CFunction : public CBaseNode
-{
+class CFunction : public CBaseNode {
 public:
     SFString name;
     SFString type;
@@ -44,7 +43,7 @@ public:
     ~CFunction(void);
     CFunction& operator=(const CFunction& fu);
 
-    DECLARE_NODE (CFunction);
+    DECLARE_NODE(CFunction);
 
     // EXISTING_CODE
     void parseParams(bool input, const SFString& value);
@@ -65,16 +64,14 @@ protected:
 };
 
 //--------------------------------------------------------------------------
-inline CFunction::CFunction(void)
-{
+inline CFunction::CFunction(void) {
     Init();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CFunction::CFunction(const CFunction& fu)
-{
+inline CFunction::CFunction(const CFunction& fu) {
     // EXISTING_CODE
     // EXISTING_CODE
     Copy(fu);
@@ -84,23 +81,20 @@ inline CFunction::CFunction(const CFunction& fu)
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline CFunction::~CFunction(void)
-{
+inline CFunction::~CFunction(void) {
     Clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CFunction::Clear(void)
-{
+inline void CFunction::Clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CFunction::Init(void)
-{
+inline void CFunction::Init(void) {
     CBaseNode::Init();
 
 //    name = EMPTY;
@@ -120,8 +114,7 @@ inline void CFunction::Init(void)
 }
 
 //--------------------------------------------------------------------------
-inline void CFunction::Copy(const CFunction& fu)
-{
+inline void CFunction::Copy(const CFunction& fu) {
     Clear();
     CBaseNode::Copy(fu);
 
@@ -143,8 +136,7 @@ inline void CFunction::Copy(const CFunction& fu)
 }
 
 //--------------------------------------------------------------------------
-inline CFunction& CFunction::operator=(const CFunction& fu)
-{
+inline CFunction& CFunction::operator=(const CFunction& fu) {
     Copy(fu);
     // EXISTING_CODE
     // EXISTING_CODE
@@ -152,8 +144,7 @@ inline CFunction& CFunction::operator=(const CFunction& fu)
 }
 
 //---------------------------------------------------------------------------
-inline SFString CFunction::getValueByName(const SFString& fieldName) const
-{
+inline SFString CFunction::getValueByName(const SFString& fieldName) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return Format("[{"+toUpper(fieldName)+"}]");

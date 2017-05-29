@@ -20,13 +20,11 @@ static SFString nextResetspenttodayChunk(const SFString& fieldIn, bool& force, c
 static SFString nextResetspenttodayChunk_custom(const SFString& fieldIn, bool& force, const void *data);
 
 //---------------------------------------------------------------------------
-void QResetSpentToday::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const
-{
+void QResetSpentToday::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
     if (!m_showing)
         return;
 
-    if (fmtIn.empty())
-    {
+    if (fmtIn.empty()) {
         ctx << toJson();
         return;
     }
@@ -40,18 +38,15 @@ void QResetSpentToday::Format(CExportContext& ctx, const SFString& fmtIn, void *
 }
 
 //---------------------------------------------------------------------------
-SFString nextResetspenttodayChunk(const SFString& fieldIn, bool& force, const void *data)
-{
+SFString nextResetspenttodayChunk(const SFString& fieldIn, bool& force, const void *data) {
     const QResetSpentToday *res = (const QResetSpentToday *)data;
-    if (res)
-    {
+    if (res) {
         // Give customized code a chance to override first
         SFString ret = nextResetspenttodayChunk_custom(fieldIn, force, data);
         if (!ret.empty())
             return ret;
 
-        switch (tolower(fieldIn[0]))
-        {
+        switch (tolower(fieldIn[0])) {
         }
 
         // EXISTING_CODE
@@ -63,20 +58,18 @@ SFString nextResetspenttodayChunk(const SFString& fieldIn, bool& force, const vo
             return ret;
     }
 
-    return "<span class=warning>Field not found: [{" + fieldIn + "}]</span>\n";
+    return "Field not found: [{" + fieldIn + "}]\n";
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QResetSpentToday::setValueByName(const SFString& fieldName, const SFString& fieldValue)
-{
+bool QResetSpentToday::setValueByName(const SFString& fieldName, const SFString& fieldValue) {
     // EXISTING_CODE
     // EXISTING_CODE
 
     if (CTransaction::setValueByName(fieldName, fieldValue))
         return true;
 
-    switch (tolower(fieldName[0]))
-    {
+    switch (tolower(fieldName[0])) {
         default:
             break;
     }
@@ -84,15 +77,13 @@ bool QResetSpentToday::setValueByName(const SFString& fieldName, const SFString&
 }
 
 //---------------------------------------------------------------------------------------------------
-void QResetSpentToday::finishParse()
-{
+void QResetSpentToday::finishParse() {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QResetSpentToday::Serialize(SFArchive& archive)
-{
+bool QResetSpentToday::Serialize(SFArchive& archive) {
     if (!archive.isReading())
         return ((const QResetSpentToday*)this)->SerializeC(archive);
 
@@ -103,23 +94,21 @@ bool QResetSpentToday::Serialize(SFArchive& archive)
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QResetSpentToday::SerializeC(SFArchive& archive) const
-{
+bool QResetSpentToday::SerializeC(SFArchive& archive) const {
     CTransaction::SerializeC(archive);
 
     return true;
 }
 
 //---------------------------------------------------------------------------
-void QResetSpentToday::registerClass(void)
-{
-    static bool been_here=false;
+void QResetSpentToday::registerClass(void) {
+    static bool been_here = false;
     if (been_here) return;
-    been_here=true;
+    been_here = true;
 
     CTransaction::registerClass();
 
-    uint32_t fieldNum=1000;
+    uint32_t fieldNum = 1000;
     ADD_FIELD(QResetSpentToday, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
     ADD_FIELD(QResetSpentToday, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
 
@@ -132,19 +121,16 @@ void QResetSpentToday::registerClass(void)
 }
 
 //---------------------------------------------------------------------------
-SFString nextResetspenttodayChunk_custom(const SFString& fieldIn, bool& force, const void *data)
-{
+SFString nextResetspenttodayChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
     const QResetSpentToday *res = (const QResetSpentToday *)data;
-    if (res)
-    {
-        switch (tolower(fieldIn[0]))
-        {
+    if (res) {
+        switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn,force,res);
+                    return nextBasenodeChunk(fieldIn, force, res);
                 break;
 
             default:
@@ -156,17 +142,15 @@ SFString nextResetspenttodayChunk_custom(const SFString& fieldIn, bool& force, c
 }
 
 //---------------------------------------------------------------------------
-bool QResetSpentToday::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const
-{
+bool QResetSpentToday::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
 }
 
 //---------------------------------------------------------------------------
-bool QResetSpentToday::readBackLevel(SFArchive& archive)
-{
-    bool done=false;
+bool QResetSpentToday::readBackLevel(SFArchive& archive) {
+    bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
     return done;

@@ -22,8 +22,7 @@ typedef SFUniqueList<QTransferEvent*>       QTransferEventListU;
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class QTransferEvent : public CLogEntry
-{
+class QTransferEvent : public CLogEntry {
 public:
     SFAddress _from;
     SFAddress _to;
@@ -35,7 +34,7 @@ public:
     ~QTransferEvent(void);
     QTransferEvent& operator=(const QTransferEvent& tr);
 
-    DECLARE_NODE (QTransferEvent);
+    DECLARE_NODE(QTransferEvent);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -51,16 +50,14 @@ protected:
 };
 
 //--------------------------------------------------------------------------
-inline QTransferEvent::QTransferEvent(void)
-{
+inline QTransferEvent::QTransferEvent(void) {
     Init();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline QTransferEvent::QTransferEvent(const QTransferEvent& tr)
-{
+inline QTransferEvent::QTransferEvent(const QTransferEvent& tr) {
     // EXISTING_CODE
     // EXISTING_CODE
     Copy(tr);
@@ -70,23 +67,20 @@ inline QTransferEvent::QTransferEvent(const QTransferEvent& tr)
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline QTransferEvent::~QTransferEvent(void)
-{
+inline QTransferEvent::~QTransferEvent(void) {
     Clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void QTransferEvent::Clear(void)
-{
+inline void QTransferEvent::Clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void QTransferEvent::Init(void)
-{
+inline void QTransferEvent::Init(void) {
     CLogEntry::Init();
 
 //    _from = EMPTY;
@@ -98,8 +92,7 @@ inline void QTransferEvent::Init(void)
 }
 
 //--------------------------------------------------------------------------
-inline void QTransferEvent::Copy(const QTransferEvent& tr)
-{
+inline void QTransferEvent::Copy(const QTransferEvent& tr) {
     Clear();
     CLogEntry::Copy(tr);
 
@@ -113,8 +106,7 @@ inline void QTransferEvent::Copy(const QTransferEvent& tr)
 }
 
 //--------------------------------------------------------------------------
-inline QTransferEvent& QTransferEvent::operator=(const QTransferEvent& tr)
-{
+inline QTransferEvent& QTransferEvent::operator=(const QTransferEvent& tr) {
     Copy(tr);
     // EXISTING_CODE
     // EXISTING_CODE
@@ -122,8 +114,7 @@ inline QTransferEvent& QTransferEvent::operator=(const QTransferEvent& tr)
 }
 
 //---------------------------------------------------------------------------
-inline SFString QTransferEvent::getValueByName(const SFString& fieldName) const
-{
+inline SFString QTransferEvent::getValueByName(const SFString& fieldName) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return Format("[{"+toUpper(fieldName)+"}]");

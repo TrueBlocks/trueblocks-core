@@ -24,8 +24,7 @@ typedef SFUniqueList<CRPCResult*>       CRPCResultListU;
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CRPCResult : public CBaseNode
-{
+class CRPCResult : public CBaseNode {
 public:
     SFString jsonrpc;
     SFString result;
@@ -37,7 +36,7 @@ public:
     ~CRPCResult(void);
     CRPCResult& operator=(const CRPCResult& rp);
 
-    DECLARE_NODE (CRPCResult);
+    DECLARE_NODE(CRPCResult);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -53,16 +52,14 @@ protected:
 };
 
 //--------------------------------------------------------------------------
-inline CRPCResult::CRPCResult(void)
-{
+inline CRPCResult::CRPCResult(void) {
     Init();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CRPCResult::CRPCResult(const CRPCResult& rp)
-{
+inline CRPCResult::CRPCResult(const CRPCResult& rp) {
     // EXISTING_CODE
     // EXISTING_CODE
     Copy(rp);
@@ -72,23 +69,20 @@ inline CRPCResult::CRPCResult(const CRPCResult& rp)
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline CRPCResult::~CRPCResult(void)
-{
+inline CRPCResult::~CRPCResult(void) {
     Clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CRPCResult::Clear(void)
-{
+inline void CRPCResult::Clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CRPCResult::Init(void)
-{
+inline void CRPCResult::Init(void) {
     CBaseNode::Init();
 
 //    jsonrpc = EMPTY;
@@ -100,8 +94,7 @@ inline void CRPCResult::Init(void)
 }
 
 //--------------------------------------------------------------------------
-inline void CRPCResult::Copy(const CRPCResult& rp)
-{
+inline void CRPCResult::Copy(const CRPCResult& rp) {
     Clear();
     CBaseNode::Copy(rp);
 
@@ -115,8 +108,7 @@ inline void CRPCResult::Copy(const CRPCResult& rp)
 }
 
 //--------------------------------------------------------------------------
-inline CRPCResult& CRPCResult::operator=(const CRPCResult& rp)
-{
+inline CRPCResult& CRPCResult::operator=(const CRPCResult& rp) {
     Copy(rp);
     // EXISTING_CODE
     // EXISTING_CODE
@@ -124,8 +116,7 @@ inline CRPCResult& CRPCResult::operator=(const CRPCResult& rp)
 }
 
 //---------------------------------------------------------------------------
-inline SFString CRPCResult::getValueByName(const SFString& fieldName) const
-{
+inline SFString CRPCResult::getValueByName(const SFString& fieldName) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return Format("[{"+toUpper(fieldName)+"}]");

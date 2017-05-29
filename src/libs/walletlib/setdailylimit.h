@@ -22,8 +22,7 @@ typedef SFUniqueList<QSetDailyLimit*>       QSetDailyLimitListU;
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class QSetDailyLimit : public CTransaction
-{
+class QSetDailyLimit : public CTransaction {
 public:
     SFUintBN _newLimit;
 
@@ -33,7 +32,7 @@ public:
     ~QSetDailyLimit(void);
     QSetDailyLimit& operator=(const QSetDailyLimit& se);
 
-    DECLARE_NODE (QSetDailyLimit);
+    DECLARE_NODE(QSetDailyLimit);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -49,16 +48,14 @@ protected:
 };
 
 //--------------------------------------------------------------------------
-inline QSetDailyLimit::QSetDailyLimit(void)
-{
+inline QSetDailyLimit::QSetDailyLimit(void) {
     Init();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline QSetDailyLimit::QSetDailyLimit(const QSetDailyLimit& se)
-{
+inline QSetDailyLimit::QSetDailyLimit(const QSetDailyLimit& se) {
     // EXISTING_CODE
     // EXISTING_CODE
     Copy(se);
@@ -68,23 +65,20 @@ inline QSetDailyLimit::QSetDailyLimit(const QSetDailyLimit& se)
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline QSetDailyLimit::~QSetDailyLimit(void)
-{
+inline QSetDailyLimit::~QSetDailyLimit(void) {
     Clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void QSetDailyLimit::Clear(void)
-{
+inline void QSetDailyLimit::Clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void QSetDailyLimit::Init(void)
-{
+inline void QSetDailyLimit::Init(void) {
     CTransaction::Init();
 
     _newLimit = 0;
@@ -94,8 +88,7 @@ inline void QSetDailyLimit::Init(void)
 }
 
 //--------------------------------------------------------------------------
-inline void QSetDailyLimit::Copy(const QSetDailyLimit& se)
-{
+inline void QSetDailyLimit::Copy(const QSetDailyLimit& se) {
     Clear();
     CTransaction::Copy(se);
 
@@ -107,8 +100,7 @@ inline void QSetDailyLimit::Copy(const QSetDailyLimit& se)
 }
 
 //--------------------------------------------------------------------------
-inline QSetDailyLimit& QSetDailyLimit::operator=(const QSetDailyLimit& se)
-{
+inline QSetDailyLimit& QSetDailyLimit::operator=(const QSetDailyLimit& se) {
     Copy(se);
     // EXISTING_CODE
     // EXISTING_CODE
@@ -116,8 +108,7 @@ inline QSetDailyLimit& QSetDailyLimit::operator=(const QSetDailyLimit& se)
 }
 
 //---------------------------------------------------------------------------
-inline SFString QSetDailyLimit::getValueByName(const SFString& fieldName) const
-{
+inline SFString QSetDailyLimit::getValueByName(const SFString& fieldName) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return Format("[{"+toUpper(fieldName)+"}]");

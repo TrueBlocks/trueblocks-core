@@ -23,8 +23,7 @@ typedef SFUniqueList<CAccountName*>       CAccountNameListU;
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CAccountName : public CBaseNode
-{
+class CAccountName : public CBaseNode {
 public:
     SFString addr;
     SFString name;
@@ -36,7 +35,7 @@ public:
     ~CAccountName(void);
     CAccountName& operator=(const CAccountName& ac);
 
-    DECLARE_NODE (CAccountName);
+    DECLARE_NODE(CAccountName);
 
     // EXISTING_CODE
     explicit CAccountName(SFString& nameIn) {
@@ -58,16 +57,14 @@ protected:
 };
 
 //--------------------------------------------------------------------------
-inline CAccountName::CAccountName(void)
-{
+inline CAccountName::CAccountName(void) {
     Init();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CAccountName::CAccountName(const CAccountName& ac)
-{
+inline CAccountName::CAccountName(const CAccountName& ac) {
     // EXISTING_CODE
     // EXISTING_CODE
     Copy(ac);
@@ -77,23 +74,20 @@ inline CAccountName::CAccountName(const CAccountName& ac)
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline CAccountName::~CAccountName(void)
-{
+inline CAccountName::~CAccountName(void) {
     Clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CAccountName::Clear(void)
-{
+inline void CAccountName::Clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CAccountName::Init(void)
-{
+inline void CAccountName::Init(void) {
     CBaseNode::Init();
 
 //    addr = EMPTY;
@@ -105,8 +99,7 @@ inline void CAccountName::Init(void)
 }
 
 //--------------------------------------------------------------------------
-inline void CAccountName::Copy(const CAccountName& ac)
-{
+inline void CAccountName::Copy(const CAccountName& ac) {
     Clear();
     CBaseNode::Copy(ac);
 
@@ -120,8 +113,7 @@ inline void CAccountName::Copy(const CAccountName& ac)
 }
 
 //--------------------------------------------------------------------------
-inline CAccountName& CAccountName::operator=(const CAccountName& ac)
-{
+inline CAccountName& CAccountName::operator=(const CAccountName& ac) {
     Copy(ac);
     // EXISTING_CODE
     // EXISTING_CODE
@@ -129,8 +121,7 @@ inline CAccountName& CAccountName::operator=(const CAccountName& ac)
 }
 
 //---------------------------------------------------------------------------
-inline SFString CAccountName::getValueByName(const SFString& fieldName) const
-{
+inline SFString CAccountName::getValueByName(const SFString& fieldName) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return Format("[{"+toUpper(fieldName)+"}]");

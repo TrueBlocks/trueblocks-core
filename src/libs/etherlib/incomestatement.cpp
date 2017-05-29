@@ -22,13 +22,11 @@ static SFString nextIncomestatementChunk(const SFString& fieldIn, bool& force, c
 static SFString nextIncomestatementChunk_custom(const SFString& fieldIn, bool& force, const void *data);
 
 //---------------------------------------------------------------------------
-void CIncomeStatement::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const
-{
+void CIncomeStatement::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
     if (!m_showing)
         return;
 
-    if (fmtIn.empty())
-    {
+    if (fmtIn.empty()) {
         ctx << toJson();
         return;
     }
@@ -42,18 +40,15 @@ void CIncomeStatement::Format(CExportContext& ctx, const SFString& fmtIn, void *
 }
 
 //---------------------------------------------------------------------------
-SFString nextIncomestatementChunk(const SFString& fieldIn, bool& force, const void *data)
-{
+SFString nextIncomestatementChunk(const SFString& fieldIn, bool& force, const void *data) {
     const CIncomeStatement *inc = (const CIncomeStatement *)data;
-    if (inc)
-    {
+    if (inc) {
         // Give customized code a chance to override first
         SFString ret = nextIncomestatementChunk_custom(fieldIn, force, data);
         if (!ret.empty())
             return ret;
 
-        switch (tolower(fieldIn[0]))
-        {
+        switch (tolower(fieldIn[0])) {
             case 'b':
                 if ( fieldIn % "begBal" ) return asStringBN(inc->begBal);
                 if ( fieldIn % "blockNum" ) return asStringU(inc->blockNum);
@@ -78,17 +73,15 @@ SFString nextIncomestatementChunk(const SFString& fieldIn, bool& force, const vo
             return ret;
     }
 
-    return "<span class=warning>Field not found: [{" + fieldIn + "}]</span>\n";
+    return "Field not found: [{" + fieldIn + "}]\n";
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CIncomeStatement::setValueByName(const SFString& fieldName, const SFString& fieldValue)
-{
+bool CIncomeStatement::setValueByName(const SFString& fieldName, const SFString& fieldValue) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    switch (tolower(fieldName[0]))
-    {
+    switch (tolower(fieldName[0])) {
         case 'b':
             if ( fieldName % "begBal" ) { begBal = toLong(fieldValue); return true; }
             if ( fieldName % "blockNum" ) { blockNum = toUnsigned(fieldValue); return true; }
@@ -109,15 +102,13 @@ bool CIncomeStatement::setValueByName(const SFString& fieldName, const SFString&
 }
 
 //---------------------------------------------------------------------------------------------------
-void CIncomeStatement::finishParse()
-{
+void CIncomeStatement::finishParse() {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CIncomeStatement::Serialize(SFArchive& archive)
-{
+bool CIncomeStatement::Serialize(SFArchive& archive) {
     if (!archive.isReading())
         return ((const CIncomeStatement*)this)->SerializeC(archive);
 
@@ -134,8 +125,7 @@ bool CIncomeStatement::Serialize(SFArchive& archive)
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CIncomeStatement::SerializeC(SFArchive& archive) const
-{
+bool CIncomeStatement::SerializeC(SFArchive& archive) const {
     if (!preSerializeC(archive))
         return false;
 
@@ -149,13 +139,12 @@ bool CIncomeStatement::SerializeC(SFArchive& archive) const
 }
 
 //---------------------------------------------------------------------------
-void CIncomeStatement::registerClass(void)
-{
-    static bool been_here=false;
+void CIncomeStatement::registerClass(void) {
+    static bool been_here = false;
     if (been_here) return;
-    been_here=true;
+    been_here = true;
 
-    uint32_t fieldNum=1000;
+    uint32_t fieldNum = 1000;
     ADD_FIELD(CIncomeStatement, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
     ADD_FIELD(CIncomeStatement, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
     ADD_FIELD(CIncomeStatement, "begBal", T_NUMBER, ++fieldNum);
@@ -173,19 +162,16 @@ void CIncomeStatement::registerClass(void)
 }
 
 //---------------------------------------------------------------------------
-SFString nextIncomestatementChunk_custom(const SFString& fieldIn, bool& force, const void *data)
-{
+SFString nextIncomestatementChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
     const CIncomeStatement *inc = (const CIncomeStatement *)data;
-    if (inc)
-    {
-        switch (tolower(fieldIn[0]))
-        {
+    if (inc) {
+        switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn,force,inc);
+                    return nextBasenodeChunk(fieldIn, force, inc);
                 break;
 
             default:
@@ -197,17 +183,15 @@ SFString nextIncomestatementChunk_custom(const SFString& fieldIn, bool& force, c
 }
 
 //---------------------------------------------------------------------------
-bool CIncomeStatement::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const
-{
+bool CIncomeStatement::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
 }
 
 //---------------------------------------------------------------------------
-bool CIncomeStatement::readBackLevel(SFArchive& archive)
-{
-    bool done=false;
+bool CIncomeStatement::readBackLevel(SFArchive& archive) {
+    bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
@@ -228,16 +212,16 @@ SFArchive& operator>>(SFArchive& archive, CIncomeStatement& inc) {
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 ostream& operator<<(ostream& os, const CIncomeStatement& is) {
-    int width=28;
+    int width=22;
     if (is.begBal == is.endBal && is.begBal == -1) {
-        os << padCenter("begBal",width) << "\t"
-        << padCenter("inFlow",width) << "\t"
-        << padCenter("outFlow",width) << "\t"
+        os << padCenter("begBal",width) << "   "
+        << padCenter("inFlow",width) << "   "
+        << padCenter("outFlow",width) << "   "
         << padCenter("endBal",width);
     } else {
-        os << padLeft(wei2Ether(to_string(is.begBal).c_str()),width) << "\t"
-        << padLeft(wei2Ether(to_string(is.inflow).c_str()),width) << "\t"
-        << padLeft(wei2Ether(to_string(is.outflow).c_str()),width) << "\t"
+        os << padLeft(wei2Ether(to_string(is.begBal).c_str()),width) << "   "
+        << padLeft(wei2Ether(to_string(is.inflow).c_str()),width) << "   "
+        << padLeft(wei2Ether(to_string(is.outflow).c_str()),width) << "   "
         << padLeft(wei2Ether(to_string(is.endBal).c_str()),width);
     }
     return os;

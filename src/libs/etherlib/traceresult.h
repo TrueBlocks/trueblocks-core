@@ -25,8 +25,7 @@ typedef SFUniqueList<CTraceResult*>       CTraceResultListU;
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CTraceResult : public CBaseNode
-{
+class CTraceResult : public CBaseNode {
 public:
     SFUint32 gasUsed;
     SFString output;
@@ -37,7 +36,7 @@ public:
     ~CTraceResult(void);
     CTraceResult& operator=(const CTraceResult& tr);
 
-    DECLARE_NODE (CTraceResult);
+    DECLARE_NODE(CTraceResult);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -53,16 +52,14 @@ protected:
 };
 
 //--------------------------------------------------------------------------
-inline CTraceResult::CTraceResult(void)
-{
+inline CTraceResult::CTraceResult(void) {
     Init();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CTraceResult::CTraceResult(const CTraceResult& tr)
-{
+inline CTraceResult::CTraceResult(const CTraceResult& tr) {
     // EXISTING_CODE
     // EXISTING_CODE
     Copy(tr);
@@ -72,23 +69,20 @@ inline CTraceResult::CTraceResult(const CTraceResult& tr)
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline CTraceResult::~CTraceResult(void)
-{
+inline CTraceResult::~CTraceResult(void) {
     Clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CTraceResult::Clear(void)
-{
+inline void CTraceResult::Clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CTraceResult::Init(void)
-{
+inline void CTraceResult::Init(void) {
     CBaseNode::Init();
 
     gasUsed = 0;
@@ -99,8 +93,7 @@ inline void CTraceResult::Init(void)
 }
 
 //--------------------------------------------------------------------------
-inline void CTraceResult::Copy(const CTraceResult& tr)
-{
+inline void CTraceResult::Copy(const CTraceResult& tr) {
     Clear();
     CBaseNode::Copy(tr);
 
@@ -113,8 +106,7 @@ inline void CTraceResult::Copy(const CTraceResult& tr)
 }
 
 //--------------------------------------------------------------------------
-inline CTraceResult& CTraceResult::operator=(const CTraceResult& tr)
-{
+inline CTraceResult& CTraceResult::operator=(const CTraceResult& tr) {
     Copy(tr);
     // EXISTING_CODE
     // EXISTING_CODE
@@ -122,8 +114,7 @@ inline CTraceResult& CTraceResult::operator=(const CTraceResult& tr)
 }
 
 //---------------------------------------------------------------------------
-inline SFString CTraceResult::getValueByName(const SFString& fieldName) const
-{
+inline SFString CTraceResult::getValueByName(const SFString& fieldName) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return Format("[{"+toUpper(fieldName)+"}]");
