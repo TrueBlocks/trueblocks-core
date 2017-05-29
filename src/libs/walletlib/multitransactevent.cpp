@@ -20,13 +20,11 @@ static SFString nextMultitransacteventChunk(const SFString& fieldIn, bool& force
 static SFString nextMultitransacteventChunk_custom(const SFString& fieldIn, bool& force, const void *data);
 
 //---------------------------------------------------------------------------
-void QMultiTransactEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const
-{
+void QMultiTransactEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
     if (!m_showing)
         return;
 
-    if (fmtIn.empty())
-    {
+    if (fmtIn.empty()) {
         ctx << toJson();
         return;
     }
@@ -40,18 +38,15 @@ void QMultiTransactEvent::Format(CExportContext& ctx, const SFString& fmtIn, voi
 }
 
 //---------------------------------------------------------------------------
-SFString nextMultitransacteventChunk(const SFString& fieldIn, bool& force, const void *data)
-{
+SFString nextMultitransacteventChunk(const SFString& fieldIn, bool& force, const void *data) {
     const QMultiTransactEvent *mul = (const QMultiTransactEvent *)data;
-    if (mul)
-    {
+    if (mul) {
         // Give customized code a chance to override first
         SFString ret = nextMultitransacteventChunk_custom(fieldIn, force, data);
         if (!ret.empty())
             return ret;
 
-        switch (tolower(fieldIn[0]))
-        {
+        switch (tolower(fieldIn[0])) {
             case 'd':
                 if ( fieldIn % "data" ) return mul->data;
                 break;
@@ -76,20 +71,18 @@ SFString nextMultitransacteventChunk(const SFString& fieldIn, bool& force, const
             return ret;
     }
 
-    return "<span class=warning>Field not found: [{" + fieldIn + "}]</span>\n";
+    return "Field not found: [{" + fieldIn + "}]\n";
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QMultiTransactEvent::setValueByName(const SFString& fieldName, const SFString& fieldValue)
-{
+bool QMultiTransactEvent::setValueByName(const SFString& fieldName, const SFString& fieldValue) {
     // EXISTING_CODE
     // EXISTING_CODE
 
     if (CLogEntry::setValueByName(fieldName, fieldValue))
         return true;
 
-    switch (tolower(fieldName[0]))
-    {
+    switch (tolower(fieldName[0])) {
         case 'd':
             if ( fieldName % "data" ) { data = toLower(fieldValue); return true; }
             break;
@@ -110,15 +103,13 @@ bool QMultiTransactEvent::setValueByName(const SFString& fieldName, const SFStri
 }
 
 //---------------------------------------------------------------------------------------------------
-void QMultiTransactEvent::finishParse()
-{
+void QMultiTransactEvent::finishParse() {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QMultiTransactEvent::Serialize(SFArchive& archive)
-{
+bool QMultiTransactEvent::Serialize(SFArchive& archive) {
     if (!archive.isReading())
         return ((const QMultiTransactEvent*)this)->SerializeC(archive);
 
@@ -134,8 +125,7 @@ bool QMultiTransactEvent::Serialize(SFArchive& archive)
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QMultiTransactEvent::SerializeC(SFArchive& archive) const
-{
+bool QMultiTransactEvent::SerializeC(SFArchive& archive) const {
     CLogEntry::SerializeC(archive);
 
     archive << owner;
@@ -148,15 +138,14 @@ bool QMultiTransactEvent::SerializeC(SFArchive& archive) const
 }
 
 //---------------------------------------------------------------------------
-void QMultiTransactEvent::registerClass(void)
-{
-    static bool been_here=false;
+void QMultiTransactEvent::registerClass(void) {
+    static bool been_here = false;
     if (been_here) return;
-    been_here=true;
+    been_here = true;
 
     CLogEntry::registerClass();
 
-    uint32_t fieldNum=1000;
+    uint32_t fieldNum = 1000;
     ADD_FIELD(QMultiTransactEvent, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
     ADD_FIELD(QMultiTransactEvent, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
     ADD_FIELD(QMultiTransactEvent, "owner", T_TEXT, ++fieldNum);
@@ -174,19 +163,16 @@ void QMultiTransactEvent::registerClass(void)
 }
 
 //---------------------------------------------------------------------------
-SFString nextMultitransacteventChunk_custom(const SFString& fieldIn, bool& force, const void *data)
-{
+SFString nextMultitransacteventChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
     const QMultiTransactEvent *mul = (const QMultiTransactEvent *)data;
-    if (mul)
-    {
-        switch (tolower(fieldIn[0]))
-        {
+    if (mul) {
+        switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn,force,mul);
+                    return nextBasenodeChunk(fieldIn, force, mul);
                 break;
 
             default:
@@ -198,17 +184,15 @@ SFString nextMultitransacteventChunk_custom(const SFString& fieldIn, bool& force
 }
 
 //---------------------------------------------------------------------------
-bool QMultiTransactEvent::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const
-{
+bool QMultiTransactEvent::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
 }
 
 //---------------------------------------------------------------------------
-bool QMultiTransactEvent::readBackLevel(SFArchive& archive)
-{
-    bool done=false;
+bool QMultiTransactEvent::readBackLevel(SFArchive& archive) {
+    bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
     return done;

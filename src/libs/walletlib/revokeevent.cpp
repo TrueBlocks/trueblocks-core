@@ -20,13 +20,11 @@ static SFString nextRevokeeventChunk(const SFString& fieldIn, bool& force, const
 static SFString nextRevokeeventChunk_custom(const SFString& fieldIn, bool& force, const void *data);
 
 //---------------------------------------------------------------------------
-void QRevokeEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const
-{
+void QRevokeEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
     if (!m_showing)
         return;
 
-    if (fmtIn.empty())
-    {
+    if (fmtIn.empty()) {
         ctx << toJson();
         return;
     }
@@ -40,18 +38,15 @@ void QRevokeEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *data
 }
 
 //---------------------------------------------------------------------------
-SFString nextRevokeeventChunk(const SFString& fieldIn, bool& force, const void *data)
-{
+SFString nextRevokeeventChunk(const SFString& fieldIn, bool& force, const void *data) {
     const QRevokeEvent *rev = (const QRevokeEvent *)data;
-    if (rev)
-    {
+    if (rev) {
         // Give customized code a chance to override first
         SFString ret = nextRevokeeventChunk_custom(fieldIn, force, data);
         if (!ret.empty())
             return ret;
 
-        switch (tolower(fieldIn[0]))
-        {
+        switch (tolower(fieldIn[0])) {
             case 'o':
                 if ( fieldIn % "owner" ) return fromAddress(rev->owner);
                 if ( fieldIn % "operation" ) return rev->operation;
@@ -67,20 +62,18 @@ SFString nextRevokeeventChunk(const SFString& fieldIn, bool& force, const void *
             return ret;
     }
 
-    return "<span class=warning>Field not found: [{" + fieldIn + "}]</span>\n";
+    return "Field not found: [{" + fieldIn + "}]\n";
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QRevokeEvent::setValueByName(const SFString& fieldName, const SFString& fieldValue)
-{
+bool QRevokeEvent::setValueByName(const SFString& fieldName, const SFString& fieldValue) {
     // EXISTING_CODE
     // EXISTING_CODE
 
     if (CLogEntry::setValueByName(fieldName, fieldValue))
         return true;
 
-    switch (tolower(fieldName[0]))
-    {
+    switch (tolower(fieldName[0])) {
         case 'o':
             if ( fieldName % "owner" ) { owner = toAddress(fieldValue); return true; }
             if ( fieldName % "operation" ) { operation = toLower(fieldValue); return true; }
@@ -92,15 +85,13 @@ bool QRevokeEvent::setValueByName(const SFString& fieldName, const SFString& fie
 }
 
 //---------------------------------------------------------------------------------------------------
-void QRevokeEvent::finishParse()
-{
+void QRevokeEvent::finishParse() {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QRevokeEvent::Serialize(SFArchive& archive)
-{
+bool QRevokeEvent::Serialize(SFArchive& archive) {
     if (!archive.isReading())
         return ((const QRevokeEvent*)this)->SerializeC(archive);
 
@@ -113,8 +104,7 @@ bool QRevokeEvent::Serialize(SFArchive& archive)
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QRevokeEvent::SerializeC(SFArchive& archive) const
-{
+bool QRevokeEvent::SerializeC(SFArchive& archive) const {
     CLogEntry::SerializeC(archive);
 
     archive << owner;
@@ -124,15 +114,14 @@ bool QRevokeEvent::SerializeC(SFArchive& archive) const
 }
 
 //---------------------------------------------------------------------------
-void QRevokeEvent::registerClass(void)
-{
-    static bool been_here=false;
+void QRevokeEvent::registerClass(void) {
+    static bool been_here = false;
     if (been_here) return;
-    been_here=true;
+    been_here = true;
 
     CLogEntry::registerClass();
 
-    uint32_t fieldNum=1000;
+    uint32_t fieldNum = 1000;
     ADD_FIELD(QRevokeEvent, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
     ADD_FIELD(QRevokeEvent, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
     ADD_FIELD(QRevokeEvent, "owner", T_TEXT, ++fieldNum);
@@ -147,19 +136,16 @@ void QRevokeEvent::registerClass(void)
 }
 
 //---------------------------------------------------------------------------
-SFString nextRevokeeventChunk_custom(const SFString& fieldIn, bool& force, const void *data)
-{
+SFString nextRevokeeventChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
     const QRevokeEvent *rev = (const QRevokeEvent *)data;
-    if (rev)
-    {
-        switch (tolower(fieldIn[0]))
-        {
+    if (rev) {
+        switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn,force,rev);
+                    return nextBasenodeChunk(fieldIn, force, rev);
                 break;
 
             default:
@@ -171,17 +157,15 @@ SFString nextRevokeeventChunk_custom(const SFString& fieldIn, bool& force, const
 }
 
 //---------------------------------------------------------------------------
-bool QRevokeEvent::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const
-{
+bool QRevokeEvent::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
 }
 
 //---------------------------------------------------------------------------
-bool QRevokeEvent::readBackLevel(SFArchive& archive)
-{
-    bool done=false;
+bool QRevokeEvent::readBackLevel(SFArchive& archive) {
+    bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
     return done;

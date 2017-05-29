@@ -26,8 +26,7 @@ typedef SFUniqueList<CAccountWatch*>       CAccountWatchListU;
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CAccountWatch : public CBaseNode
-{
+class CAccountWatch : public CBaseNode {
 public:
     SFUint32 index;
     SFAddress address;
@@ -44,7 +43,7 @@ public:
     ~CAccountWatch(void);
     CAccountWatch& operator=(const CAccountWatch& ac);
 
-    DECLARE_NODE (CAccountWatch);
+    DECLARE_NODE(CAccountWatch);
 
     // EXISTING_CODE
     CAccountWatch(uint32_t _id, const SFString& _addr, const SFString& _name, blknum_t fB, const SFString& _color)
@@ -64,16 +63,14 @@ protected:
 };
 
 //--------------------------------------------------------------------------
-inline CAccountWatch::CAccountWatch(void)
-{
+inline CAccountWatch::CAccountWatch(void) {
     Init();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CAccountWatch::CAccountWatch(const CAccountWatch& ac)
-{
+inline CAccountWatch::CAccountWatch(const CAccountWatch& ac) {
     // EXISTING_CODE
     // EXISTING_CODE
     Copy(ac);
@@ -83,23 +80,20 @@ inline CAccountWatch::CAccountWatch(const CAccountWatch& ac)
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline CAccountWatch::~CAccountWatch(void)
-{
+inline CAccountWatch::~CAccountWatch(void) {
     Clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CAccountWatch::Clear(void)
-{
+inline void CAccountWatch::Clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CAccountWatch::Init(void)
-{
+inline void CAccountWatch::Init(void) {
     CBaseNode::Init();
 
     index = 0;
@@ -116,8 +110,7 @@ inline void CAccountWatch::Init(void)
 }
 
 //--------------------------------------------------------------------------
-inline void CAccountWatch::Copy(const CAccountWatch& ac)
-{
+inline void CAccountWatch::Copy(const CAccountWatch& ac) {
     Clear();
     CBaseNode::Copy(ac);
 
@@ -136,8 +129,7 @@ inline void CAccountWatch::Copy(const CAccountWatch& ac)
 }
 
 //--------------------------------------------------------------------------
-inline CAccountWatch& CAccountWatch::operator=(const CAccountWatch& ac)
-{
+inline CAccountWatch& CAccountWatch::operator=(const CAccountWatch& ac) {
     Copy(ac);
     // EXISTING_CODE
     // EXISTING_CODE
@@ -145,8 +137,7 @@ inline CAccountWatch& CAccountWatch::operator=(const CAccountWatch& ac)
 }
 
 //---------------------------------------------------------------------------
-inline SFString CAccountWatch::getValueByName(const SFString& fieldName) const
-{
+inline SFString CAccountWatch::getValueByName(const SFString& fieldName) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return Format("[{"+toUpper(fieldName)+"}]");

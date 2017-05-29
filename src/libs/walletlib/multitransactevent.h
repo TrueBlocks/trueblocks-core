@@ -22,8 +22,7 @@ typedef SFUniqueList<QMultiTransactEvent*>       QMultiTransactEventListU;
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class QMultiTransactEvent : public CLogEntry
-{
+class QMultiTransactEvent : public CLogEntry {
 public:
     SFAddress owner;
     SFString operation;
@@ -37,7 +36,7 @@ public:
     ~QMultiTransactEvent(void);
     QMultiTransactEvent& operator=(const QMultiTransactEvent& mu);
 
-    DECLARE_NODE (QMultiTransactEvent);
+    DECLARE_NODE(QMultiTransactEvent);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -53,16 +52,14 @@ protected:
 };
 
 //--------------------------------------------------------------------------
-inline QMultiTransactEvent::QMultiTransactEvent(void)
-{
+inline QMultiTransactEvent::QMultiTransactEvent(void) {
     Init();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline QMultiTransactEvent::QMultiTransactEvent(const QMultiTransactEvent& mu)
-{
+inline QMultiTransactEvent::QMultiTransactEvent(const QMultiTransactEvent& mu) {
     // EXISTING_CODE
     // EXISTING_CODE
     Copy(mu);
@@ -72,23 +69,20 @@ inline QMultiTransactEvent::QMultiTransactEvent(const QMultiTransactEvent& mu)
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline QMultiTransactEvent::~QMultiTransactEvent(void)
-{
+inline QMultiTransactEvent::~QMultiTransactEvent(void) {
     Clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void QMultiTransactEvent::Clear(void)
-{
+inline void QMultiTransactEvent::Clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void QMultiTransactEvent::Init(void)
-{
+inline void QMultiTransactEvent::Init(void) {
     CLogEntry::Init();
 
 //    owner = EMPTY;
@@ -102,8 +96,7 @@ inline void QMultiTransactEvent::Init(void)
 }
 
 //--------------------------------------------------------------------------
-inline void QMultiTransactEvent::Copy(const QMultiTransactEvent& mu)
-{
+inline void QMultiTransactEvent::Copy(const QMultiTransactEvent& mu) {
     Clear();
     CLogEntry::Copy(mu);
 
@@ -119,8 +112,7 @@ inline void QMultiTransactEvent::Copy(const QMultiTransactEvent& mu)
 }
 
 //--------------------------------------------------------------------------
-inline QMultiTransactEvent& QMultiTransactEvent::operator=(const QMultiTransactEvent& mu)
-{
+inline QMultiTransactEvent& QMultiTransactEvent::operator=(const QMultiTransactEvent& mu) {
     Copy(mu);
     // EXISTING_CODE
     // EXISTING_CODE
@@ -128,8 +120,7 @@ inline QMultiTransactEvent& QMultiTransactEvent::operator=(const QMultiTransactE
 }
 
 //---------------------------------------------------------------------------
-inline SFString QMultiTransactEvent::getValueByName(const SFString& fieldName) const
-{
+inline SFString QMultiTransactEvent::getValueByName(const SFString& fieldName) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return Format("[{"+toUpper(fieldName)+"}]");

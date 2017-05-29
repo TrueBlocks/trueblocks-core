@@ -22,8 +22,7 @@ typedef SFUniqueList<QSingleTransactEvent*>       QSingleTransactEventListU;
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class QSingleTransactEvent : public CLogEntry
-{
+class QSingleTransactEvent : public CLogEntry {
 public:
     SFAddress owner;
     SFUintBN value;
@@ -36,7 +35,7 @@ public:
     ~QSingleTransactEvent(void);
     QSingleTransactEvent& operator=(const QSingleTransactEvent& si);
 
-    DECLARE_NODE (QSingleTransactEvent);
+    DECLARE_NODE(QSingleTransactEvent);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -52,16 +51,14 @@ protected:
 };
 
 //--------------------------------------------------------------------------
-inline QSingleTransactEvent::QSingleTransactEvent(void)
-{
+inline QSingleTransactEvent::QSingleTransactEvent(void) {
     Init();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline QSingleTransactEvent::QSingleTransactEvent(const QSingleTransactEvent& si)
-{
+inline QSingleTransactEvent::QSingleTransactEvent(const QSingleTransactEvent& si) {
     // EXISTING_CODE
     // EXISTING_CODE
     Copy(si);
@@ -71,23 +68,20 @@ inline QSingleTransactEvent::QSingleTransactEvent(const QSingleTransactEvent& si
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline QSingleTransactEvent::~QSingleTransactEvent(void)
-{
+inline QSingleTransactEvent::~QSingleTransactEvent(void) {
     Clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void QSingleTransactEvent::Clear(void)
-{
+inline void QSingleTransactEvent::Clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void QSingleTransactEvent::Init(void)
-{
+inline void QSingleTransactEvent::Init(void) {
     CLogEntry::Init();
 
 //    owner = EMPTY;
@@ -100,8 +94,7 @@ inline void QSingleTransactEvent::Init(void)
 }
 
 //--------------------------------------------------------------------------
-inline void QSingleTransactEvent::Copy(const QSingleTransactEvent& si)
-{
+inline void QSingleTransactEvent::Copy(const QSingleTransactEvent& si) {
     Clear();
     CLogEntry::Copy(si);
 
@@ -116,8 +109,7 @@ inline void QSingleTransactEvent::Copy(const QSingleTransactEvent& si)
 }
 
 //--------------------------------------------------------------------------
-inline QSingleTransactEvent& QSingleTransactEvent::operator=(const QSingleTransactEvent& si)
-{
+inline QSingleTransactEvent& QSingleTransactEvent::operator=(const QSingleTransactEvent& si) {
     Copy(si);
     // EXISTING_CODE
     // EXISTING_CODE
@@ -125,8 +117,7 @@ inline QSingleTransactEvent& QSingleTransactEvent::operator=(const QSingleTransa
 }
 
 //---------------------------------------------------------------------------
-inline SFString QSingleTransactEvent::getValueByName(const SFString& fieldName) const
-{
+inline SFString QSingleTransactEvent::getValueByName(const SFString& fieldName) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return Format("[{"+toUpper(fieldName)+"}]");

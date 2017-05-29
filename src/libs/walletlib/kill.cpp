@@ -20,13 +20,11 @@ static SFString nextKillChunk(const SFString& fieldIn, bool& force, const void *
 static SFString nextKillChunk_custom(const SFString& fieldIn, bool& force, const void *data);
 
 //---------------------------------------------------------------------------
-void QKill::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const
-{
+void QKill::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
     if (!m_showing)
         return;
 
-    if (fmtIn.empty())
-    {
+    if (fmtIn.empty()) {
         ctx << toJson();
         return;
     }
@@ -40,18 +38,15 @@ void QKill::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const
 }
 
 //---------------------------------------------------------------------------
-SFString nextKillChunk(const SFString& fieldIn, bool& force, const void *data)
-{
+SFString nextKillChunk(const SFString& fieldIn, bool& force, const void *data) {
     const QKill *kil = (const QKill *)data;
-    if (kil)
-    {
+    if (kil) {
         // Give customized code a chance to override first
         SFString ret = nextKillChunk_custom(fieldIn, force, data);
         if (!ret.empty())
             return ret;
 
-        switch (tolower(fieldIn[0]))
-        {
+        switch (tolower(fieldIn[0])) {
             case '_':
                 if ( fieldIn % "_to" ) return fromAddress(kil->_to);
                 break;
@@ -66,20 +61,18 @@ SFString nextKillChunk(const SFString& fieldIn, bool& force, const void *data)
             return ret;
     }
 
-    return "<span class=warning>Field not found: [{" + fieldIn + "}]</span>\n";
+    return "Field not found: [{" + fieldIn + "}]\n";
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QKill::setValueByName(const SFString& fieldName, const SFString& fieldValue)
-{
+bool QKill::setValueByName(const SFString& fieldName, const SFString& fieldValue) {
     // EXISTING_CODE
     // EXISTING_CODE
 
     if (CTransaction::setValueByName(fieldName, fieldValue))
         return true;
 
-    switch (tolower(fieldName[0]))
-    {
+    switch (tolower(fieldName[0])) {
         case '_':
             if ( fieldName % "_to" ) { _to = toAddress(fieldValue); return true; }
             break;
@@ -90,15 +83,13 @@ bool QKill::setValueByName(const SFString& fieldName, const SFString& fieldValue
 }
 
 //---------------------------------------------------------------------------------------------------
-void QKill::finishParse()
-{
+void QKill::finishParse() {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QKill::Serialize(SFArchive& archive)
-{
+bool QKill::Serialize(SFArchive& archive) {
     if (!archive.isReading())
         return ((const QKill*)this)->SerializeC(archive);
 
@@ -110,8 +101,7 @@ bool QKill::Serialize(SFArchive& archive)
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QKill::SerializeC(SFArchive& archive) const
-{
+bool QKill::SerializeC(SFArchive& archive) const {
     CTransaction::SerializeC(archive);
 
     archive << _to;
@@ -120,15 +110,14 @@ bool QKill::SerializeC(SFArchive& archive) const
 }
 
 //---------------------------------------------------------------------------
-void QKill::registerClass(void)
-{
-    static bool been_here=false;
+void QKill::registerClass(void) {
+    static bool been_here = false;
     if (been_here) return;
-    been_here=true;
+    been_here = true;
 
     CTransaction::registerClass();
 
-    uint32_t fieldNum=1000;
+    uint32_t fieldNum = 1000;
     ADD_FIELD(QKill, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
     ADD_FIELD(QKill, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
     ADD_FIELD(QKill, "_to", T_TEXT, ++fieldNum);
@@ -142,19 +131,16 @@ void QKill::registerClass(void)
 }
 
 //---------------------------------------------------------------------------
-SFString nextKillChunk_custom(const SFString& fieldIn, bool& force, const void *data)
-{
+SFString nextKillChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
     const QKill *kil = (const QKill *)data;
-    if (kil)
-    {
-        switch (tolower(fieldIn[0]))
-        {
+    if (kil) {
+        switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn,force,kil);
+                    return nextBasenodeChunk(fieldIn, force, kil);
                 break;
 
             default:
@@ -166,17 +152,15 @@ SFString nextKillChunk_custom(const SFString& fieldIn, bool& force, const void *
 }
 
 //---------------------------------------------------------------------------
-bool QKill::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const
-{
+bool QKill::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
 }
 
 //---------------------------------------------------------------------------
-bool QKill::readBackLevel(SFArchive& archive)
-{
-    bool done=false;
+bool QKill::readBackLevel(SFArchive& archive) {
+    bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
     return done;

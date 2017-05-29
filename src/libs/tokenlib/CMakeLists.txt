@@ -2,7 +2,7 @@
 cmake_minimum_required (VERSION 2.6)
 
 # project
-project (tokenlib)
+project (token)
 
 # c++ compilation flags
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -O2")
@@ -15,25 +15,16 @@ file(GLOB SOURCE_FILES "*.cpp")
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/libs")
 
 # Define the executable to be generated
-add_library(tokenlib STATIC ${SOURCE_FILES})
+add_library(${PROJECT_NAME} STATIC ${SOURCE_FILES})
 
 # Headers required, it depends on utillib and abilib
-target_include_directories(tokenlib PUBLIC "${CMAKE_SOURCE_DIR}/libs/utillib")
-target_include_directories(tokenlib PUBLIC "${CMAKE_SOURCE_DIR}/libs/abilib")
-target_include_directories(tokenlib PUBLIC "${CMAKE_SOURCE_DIR}/libs/etherlib")
-target_include_directories(tokenlib PUBLIC "${CMAKE_SOURCE_DIR}/libs/tokenlib")
-target_include_directories(tokenlib PUBLIC "${CMAKE_SOURCE_DIR}/libs/walletlib")
+target_include_directories(${PROJECT_NAME} PUBLIC "${CMAKE_SOURCE_DIR}/libs/utillib")
+target_include_directories(${PROJECT_NAME} PUBLIC "${CMAKE_SOURCE_DIR}/libs/abilib")
+target_include_directories(${PROJECT_NAME} PUBLIC "${CMAKE_SOURCE_DIR}/libs/etherlib")
+target_include_directories(${PROJECT_NAME} PUBLIC "${CMAKE_SOURCE_DIR}/libs/tokenlib")
+target_include_directories(${PROJECT_NAME} PUBLIC "${CMAKE_SOURCE_DIR}/libs/walletlib")
 
 # Copy the library headers, make them available for the rest of modules
 set(COMMON_INCLUDE_PATH "${CMAKE_SOURCE_DIR}/libs/include")
 file(GLOB HEADER_FILES "*.h*")
 file(COPY ${HEADER_FILES} DESTINATION ${COMMON_INCLUDE_PATH})
-
-# plint target
-set(CURRENT_TOOL_PATH "${CMAKE_SOURCE_DIR}/libs/tokenlib")
-add_custom_target(${LINT_TARGET}
-        COMMAND ${PYLINT_CMD} ${SOURCE_FILES}
-        WORKING_DIRECTORY ${CURRENT_TOOL_PATH}
-        COMMENT "Running pylint for ${TOOL_NAME}"
-        VERBATIM)
-

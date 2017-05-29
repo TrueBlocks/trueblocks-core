@@ -22,8 +22,7 @@ typedef SFUniqueList<QConfirmationNeededEvent*>       QConfirmationNeededEventLi
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class QConfirmationNeededEvent : public CLogEntry
-{
+class QConfirmationNeededEvent : public CLogEntry {
 public:
     SFString operation;
     SFAddress initiator;
@@ -37,7 +36,7 @@ public:
     ~QConfirmationNeededEvent(void);
     QConfirmationNeededEvent& operator=(const QConfirmationNeededEvent& co);
 
-    DECLARE_NODE (QConfirmationNeededEvent);
+    DECLARE_NODE(QConfirmationNeededEvent);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -53,16 +52,14 @@ protected:
 };
 
 //--------------------------------------------------------------------------
-inline QConfirmationNeededEvent::QConfirmationNeededEvent(void)
-{
+inline QConfirmationNeededEvent::QConfirmationNeededEvent(void) {
     Init();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline QConfirmationNeededEvent::QConfirmationNeededEvent(const QConfirmationNeededEvent& co)
-{
+inline QConfirmationNeededEvent::QConfirmationNeededEvent(const QConfirmationNeededEvent& co) {
     // EXISTING_CODE
     // EXISTING_CODE
     Copy(co);
@@ -72,23 +69,20 @@ inline QConfirmationNeededEvent::QConfirmationNeededEvent(const QConfirmationNee
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline QConfirmationNeededEvent::~QConfirmationNeededEvent(void)
-{
+inline QConfirmationNeededEvent::~QConfirmationNeededEvent(void) {
     Clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void QConfirmationNeededEvent::Clear(void)
-{
+inline void QConfirmationNeededEvent::Clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void QConfirmationNeededEvent::Init(void)
-{
+inline void QConfirmationNeededEvent::Init(void) {
     CLogEntry::Init();
 
 //    operation = EMPTY;
@@ -102,8 +96,7 @@ inline void QConfirmationNeededEvent::Init(void)
 }
 
 //--------------------------------------------------------------------------
-inline void QConfirmationNeededEvent::Copy(const QConfirmationNeededEvent& co)
-{
+inline void QConfirmationNeededEvent::Copy(const QConfirmationNeededEvent& co) {
     Clear();
     CLogEntry::Copy(co);
 
@@ -119,8 +112,7 @@ inline void QConfirmationNeededEvent::Copy(const QConfirmationNeededEvent& co)
 }
 
 //--------------------------------------------------------------------------
-inline QConfirmationNeededEvent& QConfirmationNeededEvent::operator=(const QConfirmationNeededEvent& co)
-{
+inline QConfirmationNeededEvent& QConfirmationNeededEvent::operator=(const QConfirmationNeededEvent& co) {
     Copy(co);
     // EXISTING_CODE
     // EXISTING_CODE
@@ -128,8 +120,7 @@ inline QConfirmationNeededEvent& QConfirmationNeededEvent::operator=(const QConf
 }
 
 //---------------------------------------------------------------------------
-inline SFString QConfirmationNeededEvent::getValueByName(const SFString& fieldName) const
-{
+inline SFString QConfirmationNeededEvent::getValueByName(const SFString& fieldName) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return Format("[{"+toUpper(fieldName)+"}]");

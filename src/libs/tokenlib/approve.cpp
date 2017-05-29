@@ -20,13 +20,11 @@ static SFString nextApproveChunk(const SFString& fieldIn, bool& force, const voi
 static SFString nextApproveChunk_custom(const SFString& fieldIn, bool& force, const void *data);
 
 //---------------------------------------------------------------------------
-void QApprove::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const
-{
+void QApprove::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
     if (!m_showing)
         return;
 
-    if (fmtIn.empty())
-    {
+    if (fmtIn.empty()) {
         ctx << toJson();
         return;
     }
@@ -40,18 +38,15 @@ void QApprove::Format(CExportContext& ctx, const SFString& fmtIn, void *data) co
 }
 
 //---------------------------------------------------------------------------
-SFString nextApproveChunk(const SFString& fieldIn, bool& force, const void *data)
-{
+SFString nextApproveChunk(const SFString& fieldIn, bool& force, const void *data) {
     const QApprove *app = (const QApprove *)data;
-    if (app)
-    {
+    if (app) {
         // Give customized code a chance to override first
         SFString ret = nextApproveChunk_custom(fieldIn, force, data);
         if (!ret.empty())
             return ret;
 
-        switch (tolower(fieldIn[0]))
-        {
+        switch (tolower(fieldIn[0])) {
             case '_':
                 if ( fieldIn % "_spender" ) return fromAddress(app->_spender);
                 if ( fieldIn % "_value" ) return asStringBN(app->_value);
@@ -67,20 +62,18 @@ SFString nextApproveChunk(const SFString& fieldIn, bool& force, const void *data
             return ret;
     }
 
-    return "<span class=warning>Field not found: [{" + fieldIn + "}]</span>\n";
+    return "Field not found: [{" + fieldIn + "}]\n";
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QApprove::setValueByName(const SFString& fieldName, const SFString& fieldValue)
-{
+bool QApprove::setValueByName(const SFString& fieldName, const SFString& fieldValue) {
     // EXISTING_CODE
     // EXISTING_CODE
 
     if (CTransaction::setValueByName(fieldName, fieldValue))
         return true;
 
-    switch (tolower(fieldName[0]))
-    {
+    switch (tolower(fieldName[0])) {
         case '_':
             if ( fieldName % "_spender" ) { _spender = toAddress(fieldValue); return true; }
             if ( fieldName % "_value" ) { _value = toUnsigned(fieldValue); return true; }
@@ -92,15 +85,13 @@ bool QApprove::setValueByName(const SFString& fieldName, const SFString& fieldVa
 }
 
 //---------------------------------------------------------------------------------------------------
-void QApprove::finishParse()
-{
+void QApprove::finishParse() {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QApprove::Serialize(SFArchive& archive)
-{
+bool QApprove::Serialize(SFArchive& archive) {
     if (!archive.isReading())
         return ((const QApprove*)this)->SerializeC(archive);
 
@@ -113,8 +104,7 @@ bool QApprove::Serialize(SFArchive& archive)
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QApprove::SerializeC(SFArchive& archive) const
-{
+bool QApprove::SerializeC(SFArchive& archive) const {
     CTransaction::SerializeC(archive);
 
     archive << _spender;
@@ -124,15 +114,14 @@ bool QApprove::SerializeC(SFArchive& archive) const
 }
 
 //---------------------------------------------------------------------------
-void QApprove::registerClass(void)
-{
-    static bool been_here=false;
+void QApprove::registerClass(void) {
+    static bool been_here = false;
     if (been_here) return;
-    been_here=true;
+    been_here = true;
 
     CTransaction::registerClass();
 
-    uint32_t fieldNum=1000;
+    uint32_t fieldNum = 1000;
     ADD_FIELD(QApprove, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
     ADD_FIELD(QApprove, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
     ADD_FIELD(QApprove, "_spender", T_TEXT, ++fieldNum);
@@ -147,19 +136,16 @@ void QApprove::registerClass(void)
 }
 
 //---------------------------------------------------------------------------
-SFString nextApproveChunk_custom(const SFString& fieldIn, bool& force, const void *data)
-{
+SFString nextApproveChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
     const QApprove *app = (const QApprove *)data;
-    if (app)
-    {
-        switch (tolower(fieldIn[0]))
-        {
+    if (app) {
+        switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn,force,app);
+                    return nextBasenodeChunk(fieldIn, force, app);
                 break;
 
             default:
@@ -171,17 +157,15 @@ SFString nextApproveChunk_custom(const SFString& fieldIn, bool& force, const voi
 }
 
 //---------------------------------------------------------------------------
-bool QApprove::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const
-{
+bool QApprove::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
 }
 
 //---------------------------------------------------------------------------
-bool QApprove::readBackLevel(SFArchive& archive)
-{
-    bool done=false;
+bool QApprove::readBackLevel(SFArchive& archive) {
+    bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
     return done;

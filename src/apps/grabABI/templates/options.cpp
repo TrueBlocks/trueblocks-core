@@ -101,6 +101,10 @@ void COptions::Init(void) {
     paramsPtr = params;
     nParamsRef = nParams;
 
+    CTrace::registerClass();
+    CTraceAction::registerClass();
+    CTraceResult::registerClass();
+
     mode = "freshen|";
     nocolor = false;
     bp = start = 0;

@@ -22,8 +22,7 @@ typedef SFUniqueList<QDepositEvent*>       QDepositEventListU;
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class QDepositEvent : public CLogEntry
-{
+class QDepositEvent : public CLogEntry {
 public:
     SFAddress from;
     SFUintBN value;
@@ -34,7 +33,7 @@ public:
     ~QDepositEvent(void);
     QDepositEvent& operator=(const QDepositEvent& de);
 
-    DECLARE_NODE (QDepositEvent);
+    DECLARE_NODE(QDepositEvent);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -50,16 +49,14 @@ protected:
 };
 
 //--------------------------------------------------------------------------
-inline QDepositEvent::QDepositEvent(void)
-{
+inline QDepositEvent::QDepositEvent(void) {
     Init();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline QDepositEvent::QDepositEvent(const QDepositEvent& de)
-{
+inline QDepositEvent::QDepositEvent(const QDepositEvent& de) {
     // EXISTING_CODE
     // EXISTING_CODE
     Copy(de);
@@ -69,23 +66,20 @@ inline QDepositEvent::QDepositEvent(const QDepositEvent& de)
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline QDepositEvent::~QDepositEvent(void)
-{
+inline QDepositEvent::~QDepositEvent(void) {
     Clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void QDepositEvent::Clear(void)
-{
+inline void QDepositEvent::Clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void QDepositEvent::Init(void)
-{
+inline void QDepositEvent::Init(void) {
     CLogEntry::Init();
 
 //    from = EMPTY;
@@ -96,8 +90,7 @@ inline void QDepositEvent::Init(void)
 }
 
 //--------------------------------------------------------------------------
-inline void QDepositEvent::Copy(const QDepositEvent& de)
-{
+inline void QDepositEvent::Copy(const QDepositEvent& de) {
     Clear();
     CLogEntry::Copy(de);
 
@@ -110,8 +103,7 @@ inline void QDepositEvent::Copy(const QDepositEvent& de)
 }
 
 //--------------------------------------------------------------------------
-inline QDepositEvent& QDepositEvent::operator=(const QDepositEvent& de)
-{
+inline QDepositEvent& QDepositEvent::operator=(const QDepositEvent& de) {
     Copy(de);
     // EXISTING_CODE
     // EXISTING_CODE
@@ -119,8 +111,7 @@ inline QDepositEvent& QDepositEvent::operator=(const QDepositEvent& de)
 }
 
 //---------------------------------------------------------------------------
-inline SFString QDepositEvent::getValueByName(const SFString& fieldName) const
-{
+inline SFString QDepositEvent::getValueByName(const SFString& fieldName) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return Format("[{"+toUpper(fieldName)+"}]");

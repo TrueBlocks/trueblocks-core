@@ -22,8 +22,7 @@ typedef SFUniqueList<QApprove*>       QApproveListU;
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class QApprove : public CTransaction
-{
+class QApprove : public CTransaction {
 public:
     SFAddress _spender;
     SFUintBN _value;
@@ -34,7 +33,7 @@ public:
     ~QApprove(void);
     QApprove& operator=(const QApprove& ap);
 
-    DECLARE_NODE (QApprove);
+    DECLARE_NODE(QApprove);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -50,16 +49,14 @@ protected:
 };
 
 //--------------------------------------------------------------------------
-inline QApprove::QApprove(void)
-{
+inline QApprove::QApprove(void) {
     Init();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline QApprove::QApprove(const QApprove& ap)
-{
+inline QApprove::QApprove(const QApprove& ap) {
     // EXISTING_CODE
     // EXISTING_CODE
     Copy(ap);
@@ -69,23 +66,20 @@ inline QApprove::QApprove(const QApprove& ap)
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline QApprove::~QApprove(void)
-{
+inline QApprove::~QApprove(void) {
     Clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void QApprove::Clear(void)
-{
+inline void QApprove::Clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void QApprove::Init(void)
-{
+inline void QApprove::Init(void) {
     CTransaction::Init();
 
 //    _spender = EMPTY;
@@ -96,8 +90,7 @@ inline void QApprove::Init(void)
 }
 
 //--------------------------------------------------------------------------
-inline void QApprove::Copy(const QApprove& ap)
-{
+inline void QApprove::Copy(const QApprove& ap) {
     Clear();
     CTransaction::Copy(ap);
 
@@ -110,8 +103,7 @@ inline void QApprove::Copy(const QApprove& ap)
 }
 
 //--------------------------------------------------------------------------
-inline QApprove& QApprove::operator=(const QApprove& ap)
-{
+inline QApprove& QApprove::operator=(const QApprove& ap) {
     Copy(ap);
     // EXISTING_CODE
     // EXISTING_CODE
@@ -119,8 +111,7 @@ inline QApprove& QApprove::operator=(const QApprove& ap)
 }
 
 //---------------------------------------------------------------------------
-inline SFString QApprove::getValueByName(const SFString& fieldName) const
-{
+inline SFString QApprove::getValueByName(const SFString& fieldName) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return Format("[{"+toUpper(fieldName)+"}]");
