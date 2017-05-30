@@ -49,28 +49,28 @@ SFString nextPricequoteChunk(const SFString& fieldIn, bool& force, const void *d
 
         switch (tolower(fieldIn[0])) {
             case 'c':
-                if ( fieldIn % "close" ) return asStringF(pri->close);
+                if ( fieldIn % "close" ) return asStringD(pri->close);
                 break;
             case 'h':
-                if ( fieldIn % "high" ) return asStringF(pri->high);
+                if ( fieldIn % "high" ) return asStringD(pri->high);
                 break;
             case 'l':
-                if ( fieldIn % "low" ) return asStringF(pri->low);
+                if ( fieldIn % "low" ) return asStringD(pri->low);
                 break;
             case 'o':
-                if ( fieldIn % "open" ) return asStringF(pri->open);
+                if ( fieldIn % "open" ) return asStringD(pri->open);
                 break;
             case 'q':
-                if ( fieldIn % "quoteVolume" ) return asStringF(pri->quoteVolume);
+                if ( fieldIn % "quoteVolume" ) return asStringD(pri->quoteVolume);
                 break;
             case 't':
                 if ( fieldIn % "timestamp" ) return asStringU(pri->timestamp);
                 break;
             case 'v':
-                if ( fieldIn % "volume" ) return asStringF(pri->volume);
+                if ( fieldIn % "volume" ) return asStringD(pri->volume);
                 break;
             case 'w':
-                if ( fieldIn % "weightedAvg" ) return asStringF(pri->weightedAvg);
+                if ( fieldIn % "weightedAvg" ) return asStringD(pri->weightedAvg);
                 break;
         }
 
@@ -99,28 +99,28 @@ bool CPriceQuote::setValueByName(const SFString& fieldName, const SFString& fiel
 
     switch (tolower(fieldName[0])) {
         case 'c':
-            if ( fieldName % "close" ) { close = toFloat(fieldValue); return true; }
+            if ( fieldName % "close" ) { close = toDouble(fieldValue); return true; }
             break;
         case 'h':
-            if ( fieldName % "high" ) { high = toFloat(fieldValue); return true; }
+            if ( fieldName % "high" ) { high = toDouble(fieldValue); return true; }
             break;
         case 'l':
-            if ( fieldName % "low" ) { low = toFloat(fieldValue); return true; }
+            if ( fieldName % "low" ) { low = toDouble(fieldValue); return true; }
             break;
         case 'o':
-            if ( fieldName % "open" ) { open = toFloat(fieldValue); return true; }
+            if ( fieldName % "open" ) { open = toDouble(fieldValue); return true; }
             break;
         case 'q':
-            if ( fieldName % "quoteVolume" ) { quoteVolume = toFloat(fieldValue); return true; }
+            if ( fieldName % "quoteVolume" ) { quoteVolume = toDouble(fieldValue); return true; }
             break;
         case 't':
             if ( fieldName % "timestamp" ) { timestamp = toUnsigned(fieldValue); return true; }
             break;
         case 'v':
-            if ( fieldName % "volume" ) { volume = toFloat(fieldValue); return true; }
+            if ( fieldName % "volume" ) { volume = toDouble(fieldValue); return true; }
             break;
         case 'w':
-            if ( fieldName % "weightedAvg" ) { weightedAvg = toFloat(fieldValue); return true; }
+            if ( fieldName % "weightedAvg" ) { weightedAvg = toDouble(fieldValue); return true; }
             break;
         default:
             break;
@@ -182,13 +182,13 @@ void CPriceQuote::registerClass(void) {
     ADD_FIELD(CPriceQuote, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
     ADD_FIELD(CPriceQuote, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
     ADD_FIELD(CPriceQuote, "timestamp", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CPriceQuote, "open", T_FLOAT, ++fieldNum);
-    ADD_FIELD(CPriceQuote, "high", T_FLOAT, ++fieldNum);
-    ADD_FIELD(CPriceQuote, "low", T_FLOAT, ++fieldNum);
-    ADD_FIELD(CPriceQuote, "close", T_FLOAT, ++fieldNum);
-    ADD_FIELD(CPriceQuote, "quoteVolume", T_FLOAT, ++fieldNum);
-    ADD_FIELD(CPriceQuote, "volume", T_FLOAT, ++fieldNum);
-    ADD_FIELD(CPriceQuote, "weightedAvg", T_FLOAT, ++fieldNum);
+    ADD_FIELD(CPriceQuote, "open", T_DOUBLE, ++fieldNum);
+    ADD_FIELD(CPriceQuote, "high", T_DOUBLE, ++fieldNum);
+    ADD_FIELD(CPriceQuote, "low", T_DOUBLE, ++fieldNum);
+    ADD_FIELD(CPriceQuote, "close", T_DOUBLE, ++fieldNum);
+    ADD_FIELD(CPriceQuote, "quoteVolume", T_DOUBLE, ++fieldNum);
+    ADD_FIELD(CPriceQuote, "volume", T_DOUBLE, ++fieldNum);
+    ADD_FIELD(CPriceQuote, "weightedAvg", T_DOUBLE, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CPriceQuote, "schema");

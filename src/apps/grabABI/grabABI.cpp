@@ -53,9 +53,12 @@ void addIfUnique(CFunctionArray& functions, const CFunction& func)
     if (func.name.empty())
         return;
 
-    for (int i = 0 ; i < functions.getCount() ; i++)
+    for (int i = 0 ; i < functions.getCount() ; i++) {
         if (functions[i].encoding == func.encoding)
             return;
+        if (functions[i].name == func.name)
+            functions[i].name += "_";
+    }
 
     functions[functions.getCount()] = func;
 }

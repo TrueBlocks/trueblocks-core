@@ -18,39 +18,38 @@ namespace qblocks {
     #define TS_NUMERAL (1<<15)
     #define TS_OBJECT  (1<<16)
 
-    #define T_DATE     ( 4 | TS_DATE )
-    #define T_TIME     ( 5 | TS_DATE )
+    #define T_DATE     (4 | TS_DATE)
+    #define T_TIME     (5 | TS_DATE)
 
-    #define T_TEXT     ( 10 )
-    #define T_BOOL     ( 12 )
-    #define T_NUMBER   ( 14 | TS_NUMERAL )
-    #define T_BLOOM    ( 16 )
+    #define T_TEXT     (10)
+    #define T_BOOL     (12)
+    #define T_NUMBER   (14 | TS_NUMERAL)
+    #define T_BLOOM    (16)
     #define T_FLOAT    T_NUMBER
+    #define T_DOUBLE   T_NUMBER
 
     //-------------------------------------------------------------------------
-    class CFieldData
-    {
+    class CFieldData {
     private:
         SFString m_fieldName;
         uint32_t m_fieldID;
-        uint32_t m_type;
+        uint32_t m_fieldType;
         bool     m_hidden;
 
     public:
-        CFieldData(void) : m_fieldID(0), m_type(0), m_hidden(false) {}
+        CFieldData(void) : m_fieldID(0), m_fieldType(0), m_hidden(false) { }
 
-        bool isHidden    (void) const { return m_hidden;    }
-        void setHidden   (bool hide)  { m_hidden = hide;         }
+        bool isHidden(void) const { return m_hidden; }
+        void setHidden(bool hide) { m_hidden = hide; }
 
-        bool isObject(void) const { return m_type & TS_OBJECT; }
-        bool isArray (void) const { return m_type & TS_ARRAY;  }
+        bool isObject(void) const { return m_fieldType & TS_OBJECT; }
+        bool isArray (void) const { return m_fieldType & TS_ARRAY;  }
 
-        bool operator==(const CFieldData& data)
-        {
+        bool operator==(const CFieldData& data) {
             if (m_fieldName != data.m_fieldName) return false;
-            if (m_fieldID   != data.m_fieldID  ) return false;
-            if (m_type      != data.m_type     ) return false;
-            if (m_hidden    != data.m_hidden   ) return false;
+            if (m_fieldID != data.m_fieldID) return false;
+            if (m_fieldType != data.m_fieldType) return false;
+            if (m_hidden != data.m_hidden) return false;
             return true;
         }
         bool operator!=(const CFieldData& data) { return !operator==(data); }
@@ -61,11 +60,10 @@ namespace qblocks {
     };
 
     //-------------------------------------------------------------------------
-    class CFieldList : public SFList<CFieldData*>
-    {
+    class CFieldList : public SFList<CFieldData*> {
     public:
-        CFieldList           (void) : SFList<CFieldData*>() {}
-        const CFieldData *getFieldByID         (uint32_t id) const;
-        const CFieldData *getFieldByName       (const SFString& name) const;
+        CFieldList(void) : SFList<CFieldData*>() { }
+        const CFieldData *getFieldByID(uint32_t id) const;
+        const CFieldData *getFieldByName(const SFString& name) const;
     };
-}
+}  // namespace qblocks
