@@ -9,7 +9,6 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -O2 -stdlib=libc++")
 
 # Libraries shared by all the modules
 set(PROJECT_LIBS_PATH "${CMAKE_SOURCE_DIR}/libs")
-file(GLOB PROJECT_STATIC_LIBS "${PROJECT_LIBS_PATH}/*.a")
 set(THE_LIBS ${PROJECT_STATIC_LIBS} "${CMAKE_CURRENT_LIST_DIR}/parselib/libparse[{PROJECT_NAME}].a")
 set(PROJECT_INCLUDES "${PROJECT_LIBS_PATH}/include")
 include_directories(${PROJECT_INCLUDES} "${CMAKE_CURRENT_LIST_DIR}/parselib" "${CMAKE_CURRENT_LIST_DIR}")
