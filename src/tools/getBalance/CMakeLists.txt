@@ -9,7 +9,6 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -O2 -stdlib=libc++")
 
 # Libraries shared by all the modules
 set(PROJECT_LIBS_PATH "${CMAKE_SOURCE_DIR}/libs")
-file(GLOB PROJECT_STATIC_LIBS "${PROJECT_LIBS_PATH}/*.a")
 set(PROJECT_INCLUDES "${PROJECT_LIBS_PATH}/include")
 include_directories(${PROJECT_INCLUDES})
 
@@ -32,7 +31,7 @@ if (CURL_FOUND)
 endif (CURL_FOUND)
 
 # Add the project static libs at linking
-target_link_libraries (${TOOL_NAME} ${PROJECT_STATIC_LIBS})
+target_link_libraries (${TOOL_NAME} abi ether token util wallet)
 
 # Define customized targets here
 # We add here user defined targets like: test, readme
