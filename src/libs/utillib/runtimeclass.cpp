@@ -11,24 +11,20 @@
 namespace qblocks {
 
     //-------------------------------------------------------------------------
-    CRuntimeClass::~CRuntimeClass(void)
-    {
+    CRuntimeClass::~CRuntimeClass(void) {
         ClearFieldList();
         ASSERT(!m_FieldList);
     }
 
     //-------------------------------------------------------------------------
-    char *CRuntimeClass::getClassNamePtr(void) const
-    {
+    char *CRuntimeClass::getClassNamePtr(void) const {
         return m_ClassName;
     }
 
     //-------------------------------------------------------------------------
-    bool CRuntimeClass::IsDerivedFrom(const CRuntimeClass* pBaseClass) const
-    {
+    bool CRuntimeClass::IsDerivedFrom(const CRuntimeClass* pBaseClass) const {
         const CRuntimeClass* pClassThis = this;
-        while (pClassThis != NULL)
-        {
+        while (pClassThis != NULL) {
             if (pClassThis == pBaseClass)
                 return true;
             pClassThis = pClassThis->m_BaseClass;
@@ -37,8 +33,7 @@ namespace qblocks {
     }
 
     //-------------------------------------------------------------------------
-    void CRuntimeClass::Initialize(const SFString& protoName)
-    {
+    void CRuntimeClass::Initialize(const SFString& protoName) {
         SFString copy = protoName;
         if (!copy.empty())
             m_ClassName = strdup(copy.c_str());
@@ -52,13 +47,10 @@ namespace qblocks {
     }
 
     //-------------------------------------------------------------------------
-    void CRuntimeClass::ClearFieldList(void)
-    {
-        if (m_FieldList)
-        {
+    void CRuntimeClass::ClearFieldList(void) {
+        if (m_FieldList) {
             LISTPOS p = m_FieldList->GetHeadPosition();
-            while (p)
-            {
+            while (p) {
                 CFieldData *field = m_FieldList->GetNext(p);
                 delete field;
             }
@@ -69,14 +61,11 @@ namespace qblocks {
     }
 
     //-------------------------------------------------------------------------
-    SFString CRuntimeClass::listOfFields(char sep) const
-    {
+    SFString CRuntimeClass::listOfFields(char sep) const {
         SFString ret;
-        if (m_FieldList)
-        {
+        if (m_FieldList) {
             LISTPOS p = m_FieldList->GetHeadPosition();
-            while (p)
-            {
+            while (p) {
                 CFieldData *field = m_FieldList->GetNext(p);
                 ret += field->m_fieldName + sep;
             }
@@ -85,13 +74,10 @@ namespace qblocks {
     }
 
     //-------------------------------------------------------------------------
-    void CRuntimeClass::hideAllFields(void)
-    {
-        if (m_FieldList)
-        {
+    void CRuntimeClass::hideAllFields(void) {
+        if (m_FieldList) {
             LISTPOS p = m_FieldList->GetHeadPosition();
-            while (p)
-            {
+            while (p) {
                 CFieldData *field = m_FieldList->GetNext(p);
                 field->setHidden(true);
             }
@@ -100,30 +86,28 @@ namespace qblocks {
     }
 
     //-------------------------------------------------------------------------
-    void CRuntimeClass::AddField(const SFString& fieldName, uint32_t dataType, uint32_t fieldID)
-    {
+    void CRuntimeClass::AddField(const SFString& fieldName, uint32_t dataType, uint32_t fieldID) {
         if (!m_FieldList)
             m_FieldList = new CFieldList;
         ASSERT(m_FieldList);
 
         CFieldData *field = new CFieldData;
-        if (field)
-        {
+        if (field) {
             field->m_fieldName = fieldName;
-            field->m_type = dataType;
+            field->m_fieldType = dataType;
             field->m_fieldID = fieldID;
             m_FieldList->AddTail(field);
         }
     }
 
     //-------------------------------------------------------------------------
-    CBuiltIn::CBuiltIn(CRuntimeClass *pClass, const SFString& className, uint32_t size, PFNV createFunc, CRuntimeClass *pBase, uint32_t schema)
-    {
+    CBuiltIn::CBuiltIn(CRuntimeClass *pClass, const SFString& className, uint32_t size,
+                       PFNV createFunc, CRuntimeClass *pBase, uint32_t schema) {
         m_pClass = pClass;
         SFString copy = className;
         if (!copy.empty())
             pClass->m_ClassName = strdup(copy.c_str());
-        
+
         pClass->m_ObjectSize    = size;
         // Signifies that we were created with Initialize so we can cleanup (i.e. the class is not builtin)
         pClass->m_classSchema   = schema;
@@ -131,5 +115,4 @@ namespace qblocks {
         pClass->m_FieldList     = NULL;
         pClass->m_CreateFunc    = createFunc;
     }
-    
-}
+}  // namespace qblocks

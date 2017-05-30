@@ -11,44 +11,40 @@
 namespace qblocks {
 
     //-------------------------------------------------------------------------
-    const CFieldData *CFieldList::getFieldByID(uint32_t id) const
-    {
+    const CFieldData *CFieldList::getFieldByID(uint32_t id) const {
         LISTPOS lPos = GetHeadPosition();
-        while (lPos)
-        {
+        while (lPos) {
             CFieldData *field = GetNext(lPos);
             if (field->m_fieldID == id)
                 return field;
         }
 
-        //ASSERT(0); // should never happen
+        ASSERT(0);  // should never happen
         return NULL;
     }
 
     //-------------------------------------------------------------------------
-    const CFieldData *CFieldList::getFieldByName(const SFString& fieldString) const
-    {
-        SFString fieldName = fieldString; fieldName = nextTokenClear(fieldName, '|'); // the input may contain more than just fieldName
+    const CFieldData *CFieldList::getFieldByName(const SFString& fieldString) const {
+
+        // the input may contain more than just fieldName
+        SFString fieldName = fieldString; fieldName = nextTokenClear(fieldName, '|');
 
         const CFieldData *field = NULL;
         LISTPOS lPos = GetHeadPosition();
-        while (lPos)
-        {
+        while (lPos) {
             CFieldData *current = GetNext(lPos);
-            if (current->m_fieldName % fieldName)
-            {
+            if (current->m_fieldName % fieldName) {
                 field = current;
                 continue;
             }
         }
 
-        if (!field)
-        {
+        if (!field) {
             static CFieldData non_field;
             non_field.m_fieldName = "unknown";
             field = &non_field;
         }
-        
+
         return field;
     }
-}
+}  // namespace qblocks

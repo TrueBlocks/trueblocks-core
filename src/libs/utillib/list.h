@@ -7,6 +7,7 @@
  * The LICENSE at the root of this repo details your rights (if any)
  *------------------------------------------------------------------------*/
 
+#include <algorithm>
 #include "basetypes.h"
 
 namespace qblocks {
@@ -164,8 +165,8 @@ namespace qblocks {
     class SFListNode {
     private:
         // Don't allow default construction, copy construction or assignment
-        SFListNode(void) {}
-        SFListNode(const SFListNode& node) {}
+        SFListNode(void) { }
+        SFListNode(const SFListNode& node) { }
         SFListNode& operator=(const SFListNode& node) { return *this; }
 
     public:
@@ -507,37 +508,37 @@ namespace qblocks {
             while (ePos) {
                 LISTPOS lastPos = ePos;
                 TYPE test = GetNext(ePos);
-                
+
                 bool isDup = dupFunc && (dupFunc)(item, test);
                 if (isDup) {
                     // caller must free this memory or drop it
                     return false;
                 }
-                
+
                 if ((sortFunc)(item, test) < 0) {
                     InsertBefore(lastPos, item);
                     return true;
                 }
             }
         }
-        
+
         // ...else just add it to the end
         AddToList(item);
         return true;
     }
-    
+
     //---------------------------------------------------------------------------------
     template<class TYPE>
     class SFStack : public SFList<TYPE> {
     public:
         SFStack(void) {}
         ~SFStack(void) { while (Peek()) delete Pop(); }
-        
+
         void Push(TYPE val) { SFList<TYPE>::AddHead(val); }
         TYPE Peek(void) { return SFList<TYPE>::empty() ? NULL : SFList<TYPE>::GetHead(); }
         TYPE Pop(void) { return SFList<TYPE>::RemoveHead(); }
     };
-    
+
     //---------------------------------------------------------------------------------
     template<class TYPE>
     class SFUniqueList : public SFList<TYPE> {
@@ -552,20 +553,20 @@ namespace qblocks {
             return SFList<TYPE>::AddSorted(item, sortFunc, compFunc);
         }
     };
-    
+
     //-----------------------------------------------------------------------------------------
     inline int sortByStringValue(const void *rr1, const void *rr2) {
         SFString n1 = * reinterpret_cast<const SFString*>(rr1);
         SFString n2 = * reinterpret_cast<const SFString*>(rr2);
         return n1.Icompare(n2);
     }
-    
+
     //-----------------------------------------------------------------------------------------
     inline int compareStringValue(const void *rr1, const void *rr2) {
         // return true of these are the same string
         return !sortByStringValue(rr1, rr2);
     }
-    
+
     //----------------------------------------------------------------------------------------
     class SFUniqueStringList : public SFUniqueList<const SFString&> {
     public:
@@ -575,4 +576,4 @@ namespace qblocks {
     typedef SFArrayBase<SFString> SFStringArray;
     typedef SFList<SFString> SFStringList;
     typedef SFArrayBase<SFUint32> SFUintArray;
-}
+}  // namespace qblocks

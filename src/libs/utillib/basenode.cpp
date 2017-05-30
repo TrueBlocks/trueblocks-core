@@ -418,11 +418,11 @@ namespace qblocks {
                 } else if (fld->isObject()) {
                     ret += val;
 
-                } else if (fld->m_type == T_BLOOM) {
+                } else if (fld->m_fieldType == T_BLOOM) {
                     ret += "\"" + val + "\"";
 
 
-                } else if (fld->m_type == T_NUMBER) {
+                } else if (fld->m_fieldType == T_NUMBER) {
                     if (expContext().quoteNums) ret += "\"";
                     ret += (expContext().hexNums) ? toHex2(val) : decBigNum(val);
                     if (expContext().quoteNums) ret += "\"";
