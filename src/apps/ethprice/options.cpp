@@ -14,7 +14,7 @@ CParams params[] = {
     CParams("-freshen", "Freshen database even if not needed"),
     CParams("-period",  "Time increment for display. Default 120 mins or :t where t is in [5|15|30|120|240|1440]"),
     CParams("-when",    "Time of day to start the display. :h determines the hour to start"),
-    CParams("-output",  "Output level (default 1). :l exposes more data per record"),
+    CParams("-output",  "Output level (default 1). :2 exposes more data per record"),
     CParams("",         "Freshen and/or print price quotes for the Ethereum network.\n"),
 };
 uint32_t nParams = sizeof(params) / sizeof(CParams);

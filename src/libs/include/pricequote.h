@@ -62,7 +62,7 @@ protected:
 inline CPriceQuote::CPriceQuote(void) {
     Init();
     // EXISTING_CODE
-    extern bool loadPriceData(CPriceQuoteArray& quotes, bool freshen, SFString& message, SFUint32 step=1);
+    extern bool loadPriceData(CPriceQuoteArray& quotes, bool freshen, SFString& message, SFUint32 step = 1);
     // EXISTING_CODE
 }
 
@@ -149,7 +149,7 @@ IMPLEMENT_ARCHIVE_LIST(CPriceQuoteList);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-extern bool loadPriceData(CPriceQuoteArray& quotes, bool freshen, SFString& message, SFUint32 step=1);
+extern bool loadPriceData(CPriceQuoteArray& quotes, bool freshen, SFString& message, SFUint32 step = 1);
 // EXISTING_CODE
 }  // namespace qblocks
 

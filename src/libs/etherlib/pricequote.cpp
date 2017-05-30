@@ -89,8 +89,7 @@ SFString nextPricequoteChunk(const SFString& fieldIn, bool& force, const void *d
 //---------------------------------------------------------------------------------------------------
 bool CPriceQuote::setValueByName(const SFString& fieldName, const SFString& fieldValue) {
     // EXISTING_CODE
-    if ( fieldName % "date" || fieldName % "timestamp" )
-    {
+    if ( fieldName % "date" || fieldName % "timestamp" ) {
         timestamp = toLong(fieldValue);
         date = dateFromTimeStamp(timestamp);
         return true;
@@ -240,60 +239,59 @@ bool CPriceQuote::readBackLevel(SFArchive& archive) {
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-bool loadPriceData(CPriceQuoteArray& quotes, bool freshen, SFString& message, SFUint32 step)
-{
+bool loadPriceData(CPriceQuoteArray& quotes, bool freshen, SFString& message, SFUint32 step) {
     if (isTesting && !verbose)
         verbose = 1;
 
     SFString cacheFile = configPath("prices/poloniex.bin");
 
     // Load and possibly refresh the price database
-    SFTime lastRead = SFTime(2015,1,1,0,0,0); // Ethereum didn't even exist before July 2015
-    if (fileExists(cacheFile))
-    {
+    SFTime lastRead = SFTime(2015, 1, 1, 0, 0, 0);  // Ethereum didn't even exist before July 2015
+    if (fileExists(cacheFile)) {
         SFArchive archive(true, NO_SCHEMA, true);
-        if (archive.Lock(cacheFile, binaryReadOnly, LOCK_NOWAIT))
-        {
+        if (archive.Lock(cacheFile, binaryReadOnly, LOCK_NOWAIT)) {
             archive >> lastRead;
             archive >> quotes;
             archive.Close();
             if (verbose)
                 cerr << "Read " << quotes.getCount() << " existing price quotes (lastRead: " << lastRead << ")\n";
 
-        } else
-        {
+        } else {
             message = "Could not open cache file for reading: '" + cacheFile + "'";
             return false;
         }
 
-    } else
-    {
+    } else {
         if (verbose)
             cerr << "Price database not found. Creating it.\n";
     }
 
     SFString msg;
-    SFTime firstDate = SFTime(2015,6,1,0,0,0);
+    SFTime firstDate = SFTime(2015, 6, 1, 0, 0, 0);
     SFTime now       = Now();
-    SFTime nextRead  = (lastRead == SFTime(2015,1,1,0,0,0) ? firstDate : lastRead + 5*60); // 5 minutes
-    if (nextRead > now && !freshen)
-    {
+    SFTime nextRead  = (lastRead == SFTime(2015, 1, 1, 0, 0, 0) ? firstDate : lastRead + 5*60);  // 5 minutes
+//#define DEBUGGING
+#ifdef DEBUGGING
+    cerr << "firstDate: " << firstDate << "\n";
+    cerr << "now: " << now << "\n";
+    cerr << "nextRead: " << nextRead << "\n";
+    cerr.flush();
+#endif
+    if (nextRead > now && !freshen) {
         msg = "Price database is up-to-date as of ";
         verbose = false;
 
-    } else
-    {
+    } else {
         msg = "Price database has been updated to ";
         SFTime prevLast = lastRead;
-        if (freshen)
-        {
+        if (freshen) {
             timestamp_t start = toTimeStamp(nextRead);
-            timestamp_t end   = toTimeStamp(EOD(BOND(now))); // Polinex will give us as much as it has on the following day. Do this to account for time zone
+            // Polinex will give us as much as it has on the following day. Do this to account for time zones
+            timestamp_t end   = toTimeStamp(EOD(BOND(now)));
             if (isTesting)
-                end    = toTimeStamp(SFTime(2016,8,31,23,59,59));
+                end    = toTimeStamp(SFTime(2016, 8, 31, 23, 59, 59));
 
-            if (verbose>1)
-            {
+            if (verbose > 1) {
                 cerr << "start: " << dateFromTimeStamp(start) << "\n";
                 cerr << "end: " << dateFromTimeStamp(end) << "\n";
             }
@@ -313,26 +311,24 @@ bool loadPriceData(CPriceQuoteArray& quotes, bool freshen, SFString& message, SF
             SFString response = urlToString(url);
 
             // Figure out how many new records there are
-            uint32_t nRecords = (uint32_t)countOf('}',response);
+            uint32_t nRecords = (uint32_t)countOf('}', response);
             nRecords--;
             if (verbose)
                 cerr << "Response: " << nRecords << " were sent from Poloniex\n";
-            if (verbose>1)
-                cerr << "JSON: " << response << "\n";
+//            if (verbose > 1)
+//                cerr << "JSON: " << response << "\n";
 
             // And grow the array so we don't have to allocate for each new record
             quotes.Grow(nRecords+10);
 
             // Parse the response and populate the array
-            char *p = cleanUpJson((char *)(const char*)response);
-            while (p && *p)
-            {
-                CPriceQuote quote; uint32_t nFields=0;
-                p = quote.parseJson(p,nFields);
+            char *p = cleanUpJson((char *)(const char*)response);  // NOLINT
+            while (p && *p) {
+                CPriceQuote quote; uint32_t nFields = 0;
+                p = quote.parseJson(p, nFields);
 
                 bool addToArray = quote.timestamp > toTimeStamp(lastRead);
-                if (verbose>1)
-                {
+                if (verbose > 1) {
                     cerr << "addToArray: " << addToArray
                     << " nFields: " << nFields
                     << " quote: " << dateFromTimeStamp(quote.timestamp)
@@ -341,12 +337,13 @@ bool loadPriceData(CPriceQuoteArray& quotes, bool freshen, SFString& message, SF
                 }
 
                 // So as to not inadvertantly add records we already have
-                if (nFields && addToArray)
-                {
+                if (nFields && addToArray) {
                     // First entry should be on a two hour mark so we hit midnight in default two hour case
-                    if (quotes.getCount() || (quote.date.onTheHour() && (!quote.date.GetHour()%2)))
-                    {
+                    if (quotes.getCount() || (quote.date.onTheHour() && (!quote.date.GetHour()%2))) {
                         quotes[quotes.getCount()] = quote;
+#ifdef DEBUGGING
+                        cerr << quote.Format() << "\n";
+#endif
                         lastRead = dateFromTimeStamp(quote.timestamp);
                     }
                 }
@@ -354,24 +351,20 @@ bool loadPriceData(CPriceQuoteArray& quotes, bool freshen, SFString& message, SF
         }
 
         // Write the database to the cache
-        if (prevLast != lastRead && freshen)
-        {
+        if (prevLast != lastRead && freshen) {
             SFArchive archive(false, NO_SCHEMA, true);
-            if (!archive.Lock(cacheFile, binaryWriteCreate, LOCK_NOWAIT))
-            {
+            if (!archive.Lock(cacheFile, binaryWriteCreate, LOCK_NOWAIT)) {
                 message = "Could not open cache file for writing: '" + cacheFile + "'";
                 return false;
             }
             archive << lastRead;
             archive << quotes;
             archive.Close();
-            if (verbose)
-            {
+            if (verbose) {
                 cerr << "Wrote " << quotes.getCount() << " price quotes to file ";
                 cerr << "(lastRead: " << lastRead << ").\n";
             }
-        } else
-        {
+        } else {
             msg = "Data not written because no new data, or no -freshen flag. ";
         }
     }
@@ -379,11 +372,10 @@ bool loadPriceData(CPriceQuoteArray& quotes, bool freshen, SFString& message, SF
     if (!verbose)
         cerr << msg << lastRead << " : " << quotes.getCount() << " records\n";
 
-    if (step != 1)
-    {
+    if (step != 1) {
         CPriceQuoteArray ret;
-        uint32_t cur=0;
-        for (uint32_t i=0;i<quotes.getCount();i+=step)
+        uint32_t cur = 0;
+        for (uint32_t i = 0 ; i < quotes.getCount() ; i += step)
             ret[cur++] = quotes[i];
         quotes = ret;
     }
