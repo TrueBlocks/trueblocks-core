@@ -49,5 +49,4 @@ using SFUint32 = uint64_t;
 
 //-------------------------------------------------------------------------
 #include "sfstring.h"
-#include "string_utils.h"
 #include "list.h"
