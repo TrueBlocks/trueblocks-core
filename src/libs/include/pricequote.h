@@ -28,13 +28,13 @@ typedef SFUniqueList<CPriceQuote*>       CPriceQuoteListU;
 class CPriceQuote : public CBaseNode {
 public:
     SFUint32 timestamp;
-    float open;
-    float high;
-    float low;
-    float close;
-    float quoteVolume;
-    float volume;
-    float weightedAvg;
+    double open;
+    double high;
+    double low;
+    double close;
+    double quoteVolume;
+    double volume;
+    double weightedAvg;
 
 public:
     CPriceQuote(void);

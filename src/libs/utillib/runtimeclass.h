@@ -29,12 +29,12 @@ namespace qblocks {
     //----------------------------------------------------------------------------
     class CRuntimeClass {
     public:
-        char             *m_ClassName;
-        uint32_t          m_ObjectSize;
-        uint32_t          m_classSchema;
-        PFNV              m_CreateFunc;
-        CRuntimeClass    *m_BaseClass;
-        CFieldList       *m_FieldList;
+        char *m_ClassName;
+        uint32_t m_ObjectSize;
+        uint32_t m_classSchema;
+        PFNV m_CreateFunc;
+        CRuntimeClass *m_BaseClass;
+        CFieldList *m_FieldList;
 
     public:
         virtual ~CRuntimeClass(void);
@@ -165,7 +165,7 @@ inline SFArchive& operator>>(SFArchive& archive, LIST_CLASS& array) \
 { \
 return archive; \
 }
-    
+
     //---------------------------------------------------------------------------
     extern SFString nextBasenodeChunk(const SFString& fieldIn, bool force, const CBaseNode *node);
-}
+}  // namespace qblocks
