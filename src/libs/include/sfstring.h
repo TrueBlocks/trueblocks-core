@@ -383,9 +383,11 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------
-    inline SFString formatFloat(double f, uint32_t decimals=10) {
+    inline SFString formatFloat(double f, uint32_t nDecimals=10) {
         char s[100], r[100];
-        sprintf(s, "%.*g", (int)decimals, ((int32_t)(  pow(10, decimals) * (  fabs(f) - labs( (int32_t) f )  )  + 0.5)) / pow(10,decimals));
+        memset(s,'\0',100);
+        memset(r,'\0',100);
+        sprintf(s, "%.*g", (int)nDecimals, ((int64_t)(  pow(10, nDecimals) * (  fabs(f) - labs( (int64_t) f )  )  + 0.5)) / pow(10,nDecimals));
         if (strchr(s, 'e'))
             s[1] = '\0';
         sprintf(r, "%d%s", (int)f, s+1);
