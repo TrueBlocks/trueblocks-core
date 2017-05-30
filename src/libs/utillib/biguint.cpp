@@ -1,5 +1,15 @@
 /*-------------------------------------------------------------------------
  * Derived from https://mattmccutchen.net/bigint/index.html
+ * From the website under the Legal section: I, Matt McCutchen, the sole author
+ * of the original Big Integer Library, waive my copyright to it, placing it
+ * in the public domain.  The library comes with absolutely no warranty.
+ *------------------------------------------------------------------------*/
+/*-------------------------------------------------------------------------
+ * This source code is confidential proprietary information which is
+ * Copyright (c) 2017 by Great Hill Corporation.
+ * All Rights Reserved
+ *
+ * The LICENSE at the root of this repo details your rights (if any)
  *------------------------------------------------------------------------*/
 #include "biguint.h"
 
