@@ -405,21 +405,21 @@ namespace qblocks {
     //--------------------------------------------------------------------
     inline SFString asString(int64_t i) {
         char ret[128];
-        sprintf(ret, "%lld", (int64_t)i);
+        sprintf(ret, "%ld", (int64_t)i);
         return SFString(ret);
     }
 
     //--------------------------------------------------------------------
     inline SFString asStringU(SFUint32 i) {
         char ret[128];
-        sprintf(ret, "%llu", (SFUint32)i);
+        sprintf(ret, "%lu", (SFUint32)i);
         return SFString(ret);
     }
 
     //--------------------------------------------------------------------
     inline SFString asStringULL(uint64_t i) {
         char ret[128];
-        sprintf(ret, "%llu", (uint64_t)i);
+        sprintf(ret, "%lu", (uint64_t)i);
         return SFString(ret);
     }
 
