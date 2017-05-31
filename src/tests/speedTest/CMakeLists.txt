@@ -5,7 +5,7 @@ cmake_minimum_required (VERSION 2.6)
 project (speedTest)
 
 # c++ compilation flags used everywhere
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -O2 -stdlib=libc++")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -O2")
 
 # Libraries shared by all the modules
 set(PROJECT_LIBS_PATH "${CMAKE_SOURCE_DIR}/libs")
@@ -31,7 +31,7 @@ if (CURL_FOUND)
 endif (CURL_FOUND)
 
 # Add the project static libs at linking
-target_link_libraries (${TOOL_NAME} abi ether token util wallet)
+target_link_libraries (${TOOL_NAME} abi ether token util wallet curl)
 
 # Define customized targets here
 # We add here user defined targets like: test, readme

@@ -327,7 +327,7 @@ bool loadPriceData(CPriceQuoteArray& quotes, bool freshen, SFString& message, SF
                 CPriceQuote quote; uint32_t nFields = 0;
                 p = quote.parseJson(p, nFields);
 
-                bool addToArray = quote.timestamp > toTimeStamp(lastRead);
+                bool addToArray = (timestamp_t)quote.timestamp > toTimeStamp(lastRead);
                 if (verbose > 1) {
                     cerr << "addToArray: " << addToArray
                     << " nFields: " << nFields
