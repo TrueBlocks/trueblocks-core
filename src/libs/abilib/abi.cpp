@@ -270,7 +270,7 @@ SFString findEncoding(const SFString& addr, CFunction& func)
         }
     }
 
-    for (uint32_t i = 0 ; i < nAbis ; i++)
+    for (uint64_t i = 0 ; i < nAbis ; i++)
         if (abis[i][0] == func.name)
             return abis[i][1];
     return EMPTY;
