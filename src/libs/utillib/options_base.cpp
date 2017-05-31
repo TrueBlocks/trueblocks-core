@@ -29,7 +29,7 @@ namespace qblocks {
     //--------------------------------------------------------------------------------
     bool COptionsBase::prepareArguments(int argc, const char *argv[]) {
         programName = SFString(argv[0]);
-        if (argc <= minArgs)  // the first arg is the program's name
+        if ((SFUint32)argc <= minArgs)  // the first arg is the program's name
             return usage("Not enough arguments presented.");
 
         uint32_t nArgs = 0;
@@ -60,7 +60,7 @@ namespace qblocks {
         }
 
         SFString cmdFileName = EMPTY;
-        for (int i = 0 ; i < nArgs ; i++) {
+        for (SFUint32 i = 0 ; i < nArgs ; i++) {
             SFString arg = args[i];
             if (arg.startsWith("--file:")) {
                 cmdFileName = arg.Substitute("--file:", EMPTY);
@@ -95,7 +95,7 @@ namespace qblocks {
         commandList = EMPTY;
         fromFile = false;
         if (cmdFileName.empty()) {
-            for (int i = 0 ; i < nArgs ; i++)
+            for (SFUint32 i = 0 ; i < nArgs ; i++)
                 commandList += (args[i] + " ");
             commandList += '\n';
 
@@ -207,7 +207,7 @@ namespace qblocks {
 
         CStringExportContext ctx;
         ctx << "[";
-        for (int i = 0 ; i < nParamsRef ; i++) {
+        for (SFUint32 i = 0 ; i < nParamsRef ; i++) {
             if (paramsPtr[i].shortName.startsWith('~')) {
                 required += (" " + paramsPtr[i].longName.substr(1).Substitute("!", ""));
 
@@ -231,7 +231,7 @@ namespace qblocks {
     //--------------------------------------------------------------------------------
     SFString purpose(void) {
         SFString purpose;
-        for (int i = 0 ; i < nParamsRef ; i++)
+        for (SFUint32 i = 0 ; i < nParamsRef ; i++)
             if (paramsPtr[i].shortName.empty())
                 purpose += ("\n           " + paramsPtr[i].description);
 
@@ -273,7 +273,7 @@ namespace qblocks {
             ctx << "| -------: | :------- | :------- |\n";
         }
 
-        for (int i = 0 ; i < nParamsRef ; i++) {
+        for (SFUint32 i = 0 ; i < nParamsRef ; i++) {
             SFString sName = paramsPtr[i].shortName;
             SFString lName = paramsPtr[i].longName;
             SFString descr = Strip(paramsPtr[i].description, ' ');
@@ -306,7 +306,7 @@ namespace qblocks {
 
         // Check that we don't have a regular command with a single dash, which
         // should report an error in client code
-        for (int i = 0 ; i < nParamsRef ; i++) {
+        for (SFUint32 i = 0 ; i < nParamsRef ; i++) {
             if (paramsPtr[i].longName == arg) {
                 arg = EMPTY;
                 return ret;
