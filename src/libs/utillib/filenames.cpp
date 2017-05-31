@@ -23,7 +23,7 @@ namespace qblocks {
         glob_t globBuf;
         glob((const char *)mask, GLOB_MARK, globErrFunc, &globBuf);
         bool done = false;
-        for (int i = 0 ; i < globBuf.gl_pathc && !done ; i++)
+        for (size_t i = 0 ; i < globBuf.gl_pathc && !done ; i++)
             if (!(func)(globBuf.gl_pathv[i], data))
                 done = true;
         globfree(&globBuf);

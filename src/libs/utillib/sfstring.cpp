@@ -34,7 +34,7 @@ namespace qblocks {
     {
         init();
 
-        int64_t strLen = (str ? strlen(str) : 0);
+        size_t strLen = (str ? strlen(str) : 0);
         len = ((long)len >= 0 ? strLen : len);
         if (str && (strLen > start))
         {
@@ -266,7 +266,7 @@ namespace qblocks {
         init();
 
         int64_t len = lenIn;
-        len = max(0LL, len);
+        len = max((int64_t)0, len);
         if (len > 0)
         {
             reserve(len);
@@ -341,7 +341,7 @@ namespace qblocks {
     //---------------------------------------------------------------------------------------
     bool SFString::ContainsAny(const SFString& search) const
     {
-        for (int i=0;i<search.length();i++)
+        for (size_t i=0;i<search.length();i++)
             if (Contains(search[i]))
                 return true;
         return false;
@@ -350,7 +350,7 @@ namespace qblocks {
     //---------------------------------------------------------------------------------------
     bool SFString::ContainsAll(const SFString& search) const
     {
-        for (int i=0;i<search.length();i++)
+        for (size_t i=0;i<search.length();i++)
             if (!Contains(search[i]))
                 return false;
         return true;
@@ -451,7 +451,7 @@ namespace qblocks {
     void SFString::ReplaceAny(const SFString& list, const SFString& with)
     {
         size_t len = list.length();
-        for (int i=0;i<len;i++)
+        for (size_t i = 0 ; i < len ; i++)
             ReplaceAll(list[i], with);
     }
 
@@ -852,7 +852,7 @@ namespace qblocks {
     //---------------------------------------------------------------------------------------
     bool endsWithAny(const SFString& haystack, const SFString& str)
     {
-        for (int i=0;i<str.length();i++)
+        for (size_t i = 0 ; i < str.length() ; i++)
             if (haystack.endsWith(str[i]))
                 return true;
         return false;
@@ -861,7 +861,7 @@ namespace qblocks {
     //---------------------------------------------------------------------------------------
     bool startsWithAny(const SFString& haystack, const SFString& str)
     {
-        for (int i=0;i<str.length();i++)
+        for (size_t i = 0 ; i < str.length() ; i++)
             if (haystack.startsWith(str[i]))
                 return true;
         return false;
@@ -933,7 +933,7 @@ namespace qblocks {
     SFString string2Hex(const SFString& inAscii)
     {
         SFString ret;
-        for (int i=0;i<inAscii.length();i++)
+        for (size_t i = 0 ; i < inAscii.length() ; i++)
             ret += asHex(inAscii[i]);
         return ret;
     }
@@ -994,7 +994,7 @@ namespace qblocks {
             ReplaceAllExactI("]QXXQX[", with, sep, replaceables);
             return;
         }
-        
+
         SFInt32 i = findExactI(what, sep, replaceables);
         while (i != NOPOS)
         {
@@ -1002,57 +1002,57 @@ namespace qblocks {
             i = findExactI(what, sep, replaceables);
         }
     }
-    
+
     //---------------------------------------------------------------------------------------
     void SFString::ReplaceAnyExact(const SFString& list, const SFString& with, char sep, const SFString& replaceables)
     {
-        SFInt32 len = list.length();
-        for (int i=0;i<len;i++)
+        size_t len = list.length();
+        for (size_t i = 0 ; i < len ; i++)
             ReplaceAllExact(list[i], with, sep, replaceables);
     }
-    
+
     //---------------------------------------------------------------------------------------
     void SFString::ReplaceAnyExactI(const SFString& list, const SFString& with, char sep, const SFString& replaceables)
     {
-        SFInt32 len = list.length();
-        for (int i=0;i<len;i++)
+        size_t len = list.length();
+        for (size_t i = 0 ; i < len ; i++)
             ReplaceAllExactI(list[i], with, sep, replaceables);
     }
-    
+
     //---------------------------------------------------------------------------------------
     void SFString::ReplaceAnyI(const SFString& list, const SFString& with)
     {
-        SFInt32 len = list.length();
-        for (int i=0;i<len;i++)
+        size_t len = list.length();
+        for (size_t i = 0 ; i < len ; i++)
             ReplaceAllI(list[i], with);
     }
-    
+
     //---------------------------------------------------------------------------------------
     bool SFString::findExact(const SFString& search, char sep, const SFString& repables) const
     {
         ASSERT(sep == '|' || sep == ';' || sep == ',' || sep == ' ');
-        
+
         SFString sepStr(sep);
-        
+
         // Surround the stringa with sep to handle boundary cases
         SFString tS = sepStr + *this  + sepStr;
         SFString qS = sepStr + search + sepStr;
-        
+
         // we will replace everything but the separator
         SFString replaceables = repables;
         replaceables.Replace(sepStr, EMPTY);
-        
+
         tS.ReplaceAny(replaceables, sepStr);
-        
+
         return tS.find(qS);
     }
-    
+
     //---------------------------------------------------------------------------------------
     void SFString::ReplaceAllI(const SFString& what, const SFString& with)
     {
         if (what.empty())
             return;
-        
+
         if (with.ContainsI(what))
         {
             // may cause endless recursions so do it in two steps instead
@@ -1060,7 +1060,7 @@ namespace qblocks {
             ReplaceAllI("]QXXQX[", with);
             return;
         }
-        
+
         SFInt32 i = findI(what);
         while (i != NOPOS)
         {
@@ -1069,9 +1069,8 @@ namespace qblocks {
         }
     }
 #endif
-    
+
     //----------------------------------------------------
     string greenCheck = "\e[0;32m" "ok" "\e[0m";
     string redX       = "\e[0;31m" "x" "\e[0m";
-    
-}
+}  // namespace qblocks

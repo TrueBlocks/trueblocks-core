@@ -45,7 +45,8 @@ bool COptions::parseArguments(SFString& command) {
 
         } else if (arg == "-e" || arg == "--edit") {
             // open command stuff
-            system("nano -I " + configPath("configs/names.conf"));
+            SFString command = ("nano -I " + configPath("configs/names.conf"));
+            if (system((const char *)command)) {}; // do not remove. The test just silences compiler warnings
             exit(0);
 
         } else if (arg.startsWith('-')) {  // do not collapse

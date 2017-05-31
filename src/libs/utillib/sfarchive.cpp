@@ -87,7 +87,7 @@ namespace qblocks {
     SFArchive& SFArchive::operator<<(const SFUintBN& bn) {
         *this << bn.capacity;
         *this << bn.len;
-        for (int i=0 ; i < bn.len ; i++)
+        for (size_t i=0 ; i < bn.len ; i++)
             *this << (uint64_t)bn.blk[i];
         return *this;
     }
@@ -174,7 +174,7 @@ namespace qblocks {
         bn.allocate(size);
         bn.capacity = size;
         *this >> bn.len;
-        for (int i=0 ; i < bn.len ; i++)
+        for (size_t i=0 ; i < bn.len ; i++)
             *this >> bn.blk[i];
         return *this;
     }
