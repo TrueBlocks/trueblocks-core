@@ -367,7 +367,7 @@ bool CSlurperApp::Filter(COptions& options, SFString& message) {
     if (!isTesting) {
         double stop = qbNow();
         double timeSpent = stop-start;
-        fprintf(stderr, "\tFilter passed %llu visible records of %u in %f seconds\n",
+        fprintf(stderr, "\tFilter passed %lu visible records of %u in %f seconds\n",
                     (uint64_t)theAccount.nVisible, theAccount.transactions.getCount(), timeSpent);
         fflush(stderr);
     }
@@ -385,7 +385,7 @@ bool CSlurperApp::Display(COptions& options, SFString& message) {
     if (!isTesting) {
         double stop = qbNow();
         double timeSpent = stop-start;
-        fprintf(stderr, "\tExported %lld records in %f seconds             \n\n", (int64_t)theAccount.nVisible, timeSpent);
+        fprintf(stderr, "\tExported %ld records in %f seconds             \n\n", (int64_t)theAccount.nVisible, timeSpent);
         fflush(stderr);
     }
     return true;
