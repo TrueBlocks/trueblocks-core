@@ -22,7 +22,7 @@ int main(int argc, const char *argv[]) {
 
         SFString fmt = (options.addrOnly ? "[{ADDR}]" : "");
         if (options.list) {
-            for (int i = 0 ; i < accounts.getCount() ; i++)
+            for (uint64_t i = 0 ; i < accounts.getCount() ; i++)
                 out << accounts[i].Format(fmt).Substitute("\n", " ").Substitute("  ", " ") << "\n";
             exit(0);
         }
@@ -58,7 +58,7 @@ void loadData(void) {
 //-----------------------------------------------------------------------
 uint32_t countOf(const SFString& addr) {
     uint32_t cnt = 0;
-    for (int i = 0 ; i < accounts.getCount() ; i++)
+    for (uint64_t i = 0 ; i < accounts.getCount() ; i++)
         if (accounts[i].addr % addr)
             cnt++;
     return cnt;
@@ -68,7 +68,7 @@ uint32_t countOf(const SFString& addr) {
 SFString showName(const COptions& options) {
     SFString ret;
     SFString fmt = (options.addrOnly ? "[{ADDR}]" : "");
-    for (int i = 0 ; i < accounts.getCount() ; i++) {
+    for (uint64_t i = 0 ; i < accounts.getCount() ; i++) {
         if (accounts[i].Match(options.addr, options.name, options.source, options.matchCase, options.all))
             ret += (accounts[i].Format(fmt).Substitute("\n", " ").Substitute("  ", " ") + "\n");
     }
