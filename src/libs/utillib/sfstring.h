@@ -405,21 +405,21 @@ namespace qblocks {
     //--------------------------------------------------------------------
     inline SFString asString(int64_t i) {
         char ret[128];
-        sprintf(ret, "%lld", i);
+        sprintf(ret, "%lld", (int64_t)i);
         return SFString(ret);
     }
 
     //--------------------------------------------------------------------
     inline SFString asStringU(SFUint32 i) {
         char ret[128];
-        sprintf(ret, "%llu", i);
+        sprintf(ret, "%llu", (SFUint32)i);
         return SFString(ret);
     }
 
     //--------------------------------------------------------------------
     inline SFString asStringULL(uint64_t i) {
         char ret[128];
-        sprintf(ret, "%llu", i);
+        sprintf(ret, "%llu", (uint64_t)i);
         return SFString(ret);
     }
 
@@ -592,7 +592,7 @@ namespace qblocks {
 #define toBool toBool_in
 
     //----------------------------------------------------------------------------
-    inline SFString shorten(const SFString& in, int x) {
+    inline SFString shorten(const SFString& in, size_t x) {
         return padRight(in.length()>x-3 ? in.Left(x-3) + "..." : in, x);
     }
 
@@ -623,7 +623,7 @@ namespace qblocks {
     inline SFString StripAny(const SFString& str, const SFString& any) {
         SFString ret = str;
         while (endsWithAny(ret, any) || startsWithAny(ret, any)) {
-            for (int i = 0 ; i < any.length() ; i++)
+            for (size_t i = 0 ; i < any.length() ; i++)
                 ret = Strip(ret, any[i]);
         }
         return ret;
