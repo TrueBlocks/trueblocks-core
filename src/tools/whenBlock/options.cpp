@@ -48,7 +48,7 @@ bool COptions::parseArguments(SFString& command) {
 
             } else {
 
-                for (uint32_t i = 0 ; i < specials.getCount() ; i++) {
+                for (uint64_t i = 0 ; i < specials.getCount() ; i++) {
                     SFString n = specials[i];
                     SFString name = nextTokenClear(n, '|');
                     if (name == arg) {
@@ -129,7 +129,7 @@ COptions::COptions(void) {
     Init();
     header = STR_README_HEADER;
     footer = "  Special values: [ ";
-    for (uint32_t i = 0 ; i < specials.getCount() ; i++) {
+    for (uint64_t i = 0 ; i < specials.getCount() ; i++) {
         SFString item = specials[i];
         footer += (nextTokenClear(item, '|') + " | ");
     }

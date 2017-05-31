@@ -172,7 +172,7 @@ bool CSlurperApp::Slurp(COptions& options, SFString& message) {
 
     // If the user tells us he/she wants to update the cache, or the cache
     // hasn't been updated in five minutes, then update it
-    uint32_t nSeconds = max(60UL, toml.getConfigInt("settings", "update_freq", 300));
+    uint32_t nSeconds = max((uint64_t)60, toml.getConfigInt("settings", "update_freq", 300));
     if ((now - fileTime) > nSeconds) {
         // This is how many records we currently have
         uint32_t origCount  = theAccount.transactions.getCount();
@@ -309,7 +309,7 @@ bool CSlurperApp::Filter(COptions& options, SFString& message) {
         funcFilts[nFuncFilts++] = nextTokenClear(filtList, ',');
 
     theAccount.nVisible = 0;
-    for (uint32_t i = 0 ; i < theAccount.transactions.getCount() ; i++) {
+    for (uint64_t i = 0 ; i < theAccount.transactions.getCount() ; i++) {
         CTransaction *trans = &theAccount.transactions[i];
         trans->pParent = &theAccount;
 
@@ -343,7 +343,7 @@ bool CSlurperApp::Filter(COptions& options, SFString& message) {
 
         if (!options.funcFilter.empty()) {
             bool show = false;
-            for (uint32_t i = 0 ; i < nFuncFilts ; i++)
+            for (uint64_t i = 0 ; i < nFuncFilts ; i++)
                 show = (show || trans->isFunction(funcFilts[i]));
             trans->m_showing = show;
         }
@@ -367,8 +367,8 @@ bool CSlurperApp::Filter(COptions& options, SFString& message) {
     if (!isTesting) {
         double stop = qbNow();
         double timeSpent = stop-start;
-        fprintf(stderr, "\tFilter passed %lu visible records of %u in %f seconds\n",
-                    theAccount.nVisible, theAccount.transactions.getCount(), timeSpent);
+        fprintf(stderr, "\tFilter passed %llu visible records of %u in %f seconds\n",
+                    (uint64_t)theAccount.nVisible, theAccount.transactions.getCount(), timeSpent);
         fflush(stderr);
     }
 
@@ -385,7 +385,7 @@ bool CSlurperApp::Display(COptions& options, SFString& message) {
     if (!isTesting) {
         double stop = qbNow();
         double timeSpent = stop-start;
-        fprintf(stderr, "\tExported %ld records in %f seconds             \n\n", theAccount.nVisible, timeSpent);
+        fprintf(stderr, "\tExported %lld records in %f seconds             \n\n", (int64_t)theAccount.nVisible, timeSpent);
         fflush(stderr);
     }
     return true;
