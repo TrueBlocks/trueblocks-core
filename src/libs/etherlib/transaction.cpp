@@ -684,7 +684,7 @@ SFString CTransaction::inputToFunction(void) const
     {
         SFString items[256];
         int nItems = 0;
-        for (size_t i = 0 ; i < funcPtr->inputs.getCount() ; i++)
+        for (uint64_t i = 0 ; i < funcPtr->inputs.getCount() ; i++)
             items[nItems++] = funcPtr->inputs[i].type;
         return funcPtr->name + parse(input.substr(10), nItems, items);
         //        return parseParams(this, funcPtr->name, input.substr(10));

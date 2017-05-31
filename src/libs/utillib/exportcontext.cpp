@@ -36,7 +36,7 @@ namespace qblocks {
     //-------------------------------------------------------------
     CExportContext& CExportContext::operator<<(int64_t dw) {
         char val[64];
-        sprintf(val, (fmt.empty() ? "%ld" : (const char*)fmt), dw);
+        sprintf(val, (fmt.empty() ? "%lld" : (const char*)fmt), (int64_t)dw);
         Output(val);
         return *this;
     }
@@ -52,7 +52,7 @@ namespace qblocks {
     //-------------------------------------------------------------
     CExportContext& CExportContext::operator<<(uint64_t ul) {
         char val[64];
-        sprintf(val, (fmt.empty() ? "%lu" : (const char*)fmt), ul);
+        sprintf(val, (fmt.empty() ? "%llu" : (const char*)fmt), (uint64_t)ul);
         Output(val);
         return *this;
     }
