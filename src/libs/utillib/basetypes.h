@@ -28,6 +28,7 @@
 #include <time.h>
 #include <unistd.h>
 #include <utime.h>
+#include <string.h>
 #include <cstdint>
 #include <fstream>
 #include <iostream>

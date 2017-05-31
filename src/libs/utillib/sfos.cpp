@@ -66,7 +66,7 @@ namespace qblocks {
         glob( (const char *)mask, GLOB_MARK, globErrFunc, &globBuf);
 
         int n = (int)globBuf.gl_pathc;
-        int mx = (int)nStrs;
+        uint32_t mx = nStrs;
         nStrs = 0;
         char c;
 
@@ -231,7 +231,7 @@ extern SFString binaryFileToString(const SFString& filename);
             listFiles(nFiles, files, folder + "*");
             if (files)
             {
-                for (int j=0;j<nFiles;j++)
+                for (uint32_t j = 0 ; j < nFiles ; j++)
                     if (files[j] != "." && files[j] != "..")
                         removeFile(folder+files[j]);
                 delete [] files;

@@ -78,7 +78,7 @@ bool COptions::parseArguments(SFString& command) {
             if (nFiles) {
                 SFString *files = new SFString[nFiles];
                 listFilesOrFolders(nFiles, files, cachePath("*.*"));
-                for (int i = 0 ; i < nFiles ; i++)
+                for (uint32_t i = 0 ; i < nFiles ; i++)
                     outScreen << files[i] << "\n";
                 delete [] files;
             } else {

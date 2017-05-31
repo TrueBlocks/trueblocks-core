@@ -79,7 +79,7 @@ public:
 bool lookCloser(CBlock& block, void *data) {
 //    cout << "Checking block: " << block.blockNumber << " (" << dateFromTimeStamp(block.timestamp) << ")";
     CBlockFinder *bf = reinterpret_cast<CBlockFinder*>(data);
-    if (block.timestamp <= bf->ts) {
+    if ((timestamp_t)block.timestamp <= bf->ts) {
 //        cout << "...saved";
         bf->found = block.blockNumber;
 //        cout << "\n";
