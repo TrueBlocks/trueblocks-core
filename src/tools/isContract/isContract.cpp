@@ -24,7 +24,7 @@ int main(int argc, const char *argv[]) {
         if (!options.parseArguments(command))
             return 0;
 
-        for (int i = 0 ; i < options.nAddrs ; i++) {
+        for (uint32_t i = 0 ; i < options.nAddrs ; i++) {
             if (options.diff) {
                 SFString code1 = getCode(options.addrs[i]);
                 SFString code2 = getCode(options.addrs[i+1]);
