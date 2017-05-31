@@ -114,16 +114,16 @@ void findBlockRange(const SFString& json, uint32_t& minBlock, uint32_t& maxBlock
 	uint32_t len = search.length();
 
 	minBlock = 0;
-	uint32_t first = json.find(search);
-	if (first != NOPOS)
+	int32_t first = json.find(search);
+	if (first != (int32_t)NOPOS)
 	{
 		SFString str = json.substr(first+len);
 		minBlock = toLong(str);
 	}
 
 	SFString end = json.substr(json.ReverseFind('{'));//pull off the last transaction
-	uint32_t last = end.find(search);
-	if (last != NOPOS)
+	int32_t last = end.find(search);
+	if (last != (int32_t)NOPOS)
 	{
 		SFString str = end.substr(last+len);
 		maxBlock = toLong(str);
