@@ -26,14 +26,14 @@ uint32_t CToml1::nFields = 0;
 
 //------------------------------------------------------------------------------------------------------------
 void CToml1::loadFields(uint32_t nItems, const SFString *items) {
-    for (int i = 0 ; i < nItems ; i++)
+    for (uint32_t i = 0 ; i < nItems ; i++)
         fields[i] = items[i];
     nFields = nItems;
 }
 
 //------------------------------------------------------------------------------------------------------------
 uint32_t CToml1::getFieldID(const SFString& fieldName) const {
-    for (int i = 0 ; i < CToml1::nFields ; i++)
+    for (uint32_t i = 0 ; i < CToml1::nFields ; i++)
         if (CToml1::fields[i] % fieldName)
             return i;
     cout << "unknown field: " << fieldName << "....quiting\n";
@@ -51,7 +51,7 @@ const SFString CToml1::getConfigStr(const SFString& unused, const SFString& fiel
 //------------------------------------------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const CToml1& t)
 {
-    for (int i = 0 ; i < t.nFields ; i++) {
+    for (uint32_t i = 0 ; i < t.nFields ; i++) {
         SFString fieldName = "  " + t.fields[i].Right(23) + ":";
         if (fieldName.length() < 23)
             fieldName += SFString(' ', 23-fieldName.length());

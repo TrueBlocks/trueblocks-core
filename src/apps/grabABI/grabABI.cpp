@@ -53,7 +53,7 @@ void addIfUnique(CFunctionArray& functions, const CFunction& func)
     if (func.name.empty())
         return;
 
-    for (int i = 0 ; i < functions.getCount() ; i++) {
+    for (uint64_t i = 0 ; i < functions.getCount() ; i++) {
         if (functions[i].encoding == func.encoding)
             return;
         if (functions[i].name == func.name)
@@ -128,7 +128,7 @@ int main(int argc, const char *argv[]) {
             return 0;
 
         if (options.open) {
-            for (int i = 0 ; i < options.nAddrs ; i++) {
+            for (uint64_t i = 0 ; i < options.nAddrs ; i++) {
                 SFString fileName = configPath("abis/" + options.addrs[i] + ".json");
                 SFString cmd = "open -a /Applications/TextEdit.app " + fileName;
                 doCommand(cmd);
@@ -144,7 +144,7 @@ int main(int argc, const char *argv[]) {
             acquireABI(functions, "0xTokenLib",  options.silent, true);
             acquireABI(functions, "0xWalletLib", options.silent, true);
         }
-        for (int i = 0 ; i < options.nAddrs ; i++) {
+        for (uint64_t i = 0 ; i < options.nAddrs ; i++) {
             options.theABI += ("ABI for addr : " + options.addrs[i] + "\n");
             options.theABI += acquireABI(functions, options.addrs[i], options.silent) + "\n\n";
             addrList += (options.addrs[i] + "|");
@@ -153,7 +153,7 @@ int main(int argc, const char *argv[]) {
         if (!isGenerate) {
             // print to a buffer because we have to modify it before we print it
             cout << "ABI for address " << options.primaryAddr << (options.nAddrs>1 ? " and others" : "") << "\n";
-            for (int i = 0 ; i < functions.getCount() ; i++) {
+            for (uint64_t i = 0 ; i < functions.getCount() ; i++) {
                 CFunction *func = &functions[i];
                 if (!func->constant || !options.noconst)
                     cout << func->getSignature(options.parts) << "\n";
@@ -175,7 +175,7 @@ int main(int argc, const char *argv[]) {
             if (!options.isToken()) headers += ("#include \"tokenlib.h\"\n");
             if (!options.isWallet()) headers += ("#include \"walletlib.h\"\n");
             SFString sources = "src= \\\n", registers, factory1, factory2;
-            for (int i = 0 ; i < functions.getCount() ; i++) {
+            for (uint64_t i = 0 ; i < functions.getCount() ; i++) {
                 CFunction *func = &functions[i];
                 if (!func->isBuiltin) {
                     SFString name = func->Format("[{NAME}]") + (func->type == "event" ? "Event" : "");
@@ -209,7 +209,7 @@ int main(int argc, const char *argv[]) {
                         }
                         SFString fields, assigns1, assigns2, items1;
                         SFUint32 nIndexed = 0;
-                        for (int j = 0 ; j < func->inputs.getCount() ; j++) {
+                        for (uint64_t j = 0 ; j < func->inputs.getCount() ; j++) {
                             fields   += func->inputs[j].Format("[{TYPE}][ {NAME}]|");
                             assigns1 += func->inputs[j].Format(getAssign(&func->inputs[j], j));
                             items1   += "\t\t\titems[nItems++] = \"" + func->inputs[j].type + "\";\n";
