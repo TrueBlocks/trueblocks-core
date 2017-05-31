@@ -139,7 +139,7 @@ namespace qblocks {
             size_t bSize = sizeof(sBuffer);
 
             size_t sFmtLength = sFormat.length();
-            for (int i = 0; i < sFmtLength; i++) {
+            for (size_t i = 0; i < sFmtLength; i++) {
                 char c = sFormat.at(i);
                 if (c == '%') {
                     ++i;
@@ -632,7 +632,7 @@ namespace qblocks {
 
         SFString str = timeStr;  // 12:12:12 am for example
 
-        for (int i = 0 ; i < 3 && str.length() > 0 ; i++) {
+        for (size_t i = 0 ; i < 3 && str.length() > 0 ; i++) {
             switch (fmtStr[i]) {
                 case 'h':
                 case 'H':
@@ -690,7 +690,7 @@ namespace qblocks {
             size_t bSize = sizeof(sBuffer);
 
             size_t sFmtLength = sFormat.length();
-            for (int i = 0; i < sFmtLength; i++) {
+            for (size_t i = 0; i < sFmtLength; i++) {
                 char c = sFormat.at(i);
                 if (c == '%') {
                     ++i;
@@ -939,7 +939,7 @@ namespace qblocks {
         char sep = fmtStr[4];
 
         SFString str = dateStr;  // 12-10-1921 for example
-        for (int i = 0 ; i < 3 && str.length() > 0 ; i++) {
+        for (size_t i = 0 ; i < 3 && str.length() > 0 ; i++) {
             switch (fmtStr[i]) {
                 case 'd':
                 case 'D':
@@ -1091,7 +1091,7 @@ namespace qblocks {
         if (IsValid()) {
 
             size_t sFmtLength = fmtStr.length();
-            for (int i = 0; i < sFmtLength; i++) {
+            for (size_t i = 0; i < sFmtLength; i++) {
                 char c = fmtStr.at(i);
                 if (c == '%') {
                     ++i;
