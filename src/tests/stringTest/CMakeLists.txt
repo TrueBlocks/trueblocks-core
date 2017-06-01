@@ -31,7 +31,7 @@ if (CURL_FOUND)
 endif (CURL_FOUND)
 
 # Add the project static libs at linking
-target_link_libraries (${TOOL_NAME} abi ether token util wallet curl)
+target_link_libraries (${TOOL_NAME} util abi ether token wallet curl)
 
 # Define customized targets here
 # We add here user defined targets like: test, readme
