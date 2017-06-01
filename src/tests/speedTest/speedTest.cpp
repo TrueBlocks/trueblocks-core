@@ -139,8 +139,7 @@ void doOne(uint32_t start, uint32_t stop) {
     bool done = (nBlocks < 1);
     uint32_t b = 0;
     while (!done) {
-        if (blocks[b].blockNumber >= start)
-        {
+        if (blocks[b].blockNumber >= start) {
             CMiniBlock mb = blocks[b];
             visitMini(mb, trans, &reporter);
         }
