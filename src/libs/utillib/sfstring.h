@@ -404,23 +404,41 @@ namespace qblocks {
 
     //--------------------------------------------------------------------
     inline SFString asString(int64_t i) {
+#if 1
+        ostringstream os;
+        os << i;
+        return os.str().c_str();
+#else
         char ret[128];
         sprintf(ret, "%lld", (int64_t)i);
         return SFString(ret);
+#endif
     }
 
     //--------------------------------------------------------------------
     inline SFString asStringU(SFUint32 i) {
+#if 1
+        ostringstream os;
+        os << i;
+        return os.str().c_str();
+#else
         char ret[128];
         sprintf(ret, "%llu", (SFUint32)i);
         return SFString(ret);
+#endif
     }
 
     //--------------------------------------------------------------------
     inline SFString asStringULL(uint64_t i) {
+#if 1
+        ostringstream os;
+        os << i;
+        return os.str().c_str();
+#else
         char ret[128];
         sprintf(ret, "%llu", (uint64_t)i);
         return SFString(ret);
+#endif
     }
 
     //--------------------------------------------------------------------
