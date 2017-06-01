@@ -35,10 +35,13 @@ int main(int argc, const char *argv[]) {
 }
 
 //--------------------------------------------------------------
+extern const char* STR_TEST_DATA;
+
+//--------------------------------------------------------------
 void doTests(void) {
     SFString in;
     bool hasIn = false;
-    SFString contents = asciiFileToString("./tests/input.txt");
+    SFString contents = STR_TEST_DATA;
     while (!contents.empty()) {
         SFString line = nextTokenClear(contents, '\n');
         if (!line.startsWith('#')) {
@@ -57,3 +60,28 @@ void doTests(void) {
         }
     }
 }
+
+//--------------------------------------------------------------
+const char* STR_TEST_DATA =
+"#\n"
+"# From http:/""/www.di-mgt.com.au/sha_testvectors.html\n"
+"# pairs of input / expected output on subsequent lines\n"
+"#\n"
+"#\n"
+"# from RPC web page (already hex)\n"
+"0x68656c6c6f20776f726c64\n"
+"0x47173285a8d7341e5e972fc677286384f802f8ef42a5ec5f03bbfa254cb01fad\n"
+"#\n"
+"# empty string \n"
+"\n"
+"0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470\n"
+"#\n"
+"# longer string\n"
+"abcdefghbcdefghicdefghijdefghijkefghijklfghijklmghijklmnhijklmnoijklmnopjklmnopqklmnopqrlmnopqrsmnopqrstnopqrstu \n"
+"0x4fdc431ca3869f7a79a3a43acbb0019c769c667ad29fb36896209969b8550af7\n"
+"#\n"
+"The quick brown fox jumps over the lazy dog\n"
+"0x4d741b6f1eb29cb2a9b9911c82f56fa8d73b04959d3d9d222895df6c0b28aa15\n"
+"#\n"
+"The quick brown fox jumps over the lazy dog.\n"
+"0x578951e24efd62a3d63a86f7cd19aaa53c898fe287d2552133220370240b572d\n";
