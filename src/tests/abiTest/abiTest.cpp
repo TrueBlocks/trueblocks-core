@@ -10,10 +10,10 @@
 
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
-    if (!fileExists("./tests/input.txt"))
-        return usage("./tests/input.txt file not found.\n");
+    if (!fileExists("./input.txt"))
+        return usage("./input.txt file not found.\n");
 
-    SFString contents = asciiFileToString("./tests/input.txt").Substitute("\t\t", "\t");
+    SFString contents = asciiFileToString("./input.txt").Substitute("\t\t", "\t");
     nextTokenClear(contents, '\n');  // skip header row
     while (!contents.empty()) {
         SFString expected = nextTokenClear(contents, '\n');
