@@ -1,0 +1,7 @@
+class:		CBranch
+baseclass:  CNode
+fields:		CNodeArray m_nodes|string branchValues
+includes:	etherlib.h
+cIncs:		#include "etherlib.h"
+scope:		extern
+serialize:	true
