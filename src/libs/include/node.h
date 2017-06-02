@@ -55,7 +55,7 @@ extern bool     queryRawBlock           (SFString& block,     const SFString& nu
 extern bool     queryRawTransaction     (const SFHash& txHash, SFString& results);
 extern bool     queryRawReceipt         (const SFHash& txHash, SFString& results);
 extern bool     queryRawLogs            (SFUint32 fromBlock, SFUint32 toBlock, const SFAddress& addr, SFString& results);
-extern bool     queryRawTrace           (SFString& trace,     const SFString& hashIn);
+extern bool     queryRawTrace           (SFString& trace,     const SFString& hashIn, bool raw);
 
 //-------------------------------------------------------------------------
 extern void     etherlib_init           (const SFString& client);

@@ -100,7 +100,7 @@ void CVisitor::openIncomeStatement(const CBlock& block) {
 void showColoredTrace(CVisitor *vis, const SFHash& hash) {
 
     SFString traceStrIn;
-    queryRawTrace(traceStrIn, hash);
+    queryRawTrace(traceStrIn, hash, true);
 
 //#define PARSETRACE
 #ifdef PARSETRACE
