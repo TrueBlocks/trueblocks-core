@@ -62,7 +62,7 @@ void testCStr(void) {
     char str[] = "Please split this sentence into tokens";
     char *token;
     char *rest = str;
-    while((token = strtok_r(rest, " ", &rest))) {
+    while ((token = strtok_r(rest, " ", &rest))) {
         cout << token << "\n";
     }
 }

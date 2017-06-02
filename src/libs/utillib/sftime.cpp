@@ -632,7 +632,7 @@ namespace qblocks {
 
         SFString str = timeStr;  // 12:12:12 am for example
 
-        for (size_t i = 0 ; i < 3 && str.length() > 0 ; i++) {
+        for (uint32_t i = 0 ; i < 3 && str.length() > 0 ; i++) {
             switch (fmtStr[i]) {
                 case 'h':
                 case 'H':
@@ -939,7 +939,7 @@ namespace qblocks {
         char sep = fmtStr[4];
 
         SFString str = dateStr;  // 12-10-1921 for example
-        for (size_t i = 0 ; i < 3 && str.length() > 0 ; i++) {
+        for (uint32_t i = 0 ; i < 3 && str.length() > 0 ; i++) {
             switch (fmtStr[i]) {
                 case 'd':
                 case 'D':
