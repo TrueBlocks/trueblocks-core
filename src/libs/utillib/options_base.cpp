@@ -74,7 +74,7 @@ namespace qblocks {
                 if (args) delete [] args;
                 return usage();
 
-            } else if (arg == "--nocolors") {
+            } else if (arg == "--nocolors" || arg == "--nocolor") {
                 colorsOff();
 
             } else if (arg.startsWith("-v") || arg.startsWith("--verbose")) {
