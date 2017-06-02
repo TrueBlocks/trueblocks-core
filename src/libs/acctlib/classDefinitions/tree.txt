@@ -1,0 +1,5 @@
+class:		CTree
+fields:		CNode *m_root
+includes:	etherlib.h|node.h
+scope:		extern
+serialize:	true

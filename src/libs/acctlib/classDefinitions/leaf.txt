@@ -1,0 +1,6 @@
+class:		CLeaf
+fields:		string m_leafValue
+includes:	etherlib.h
+cIncs:		#include "etherlib.h"
+scope:		extern
+serialize:	true

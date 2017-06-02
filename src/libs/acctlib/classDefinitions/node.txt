@@ -1,0 +1,6 @@
+class:		CNode
+fields:		blknum_t index
+includes:	etherlib.h
+cIncs:		#include "etherlib.h"
+scope:		extern
+serialize:	true
