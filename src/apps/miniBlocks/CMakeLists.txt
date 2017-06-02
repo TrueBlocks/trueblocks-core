@@ -2,7 +2,7 @@
 cmake_minimum_required (VERSION 2.6)
 
 # project
-project (getLogs)
+project (miniBlock)
 
 # c++ compilation flags used everywhere
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -O2")
@@ -19,7 +19,7 @@ file(GLOB SOURCE_FILES "*.cpp")
 set(EXECUTABLE_OUTPUT_PATH "${CMAKE_SOURCE_DIR}/../bin")
 
 # Define the executable to be generated
-set(TOOL_NAME "getLogs")
+set(TOOL_NAME "miniBlock")
 add_executable(${TOOL_NAME} ${SOURCE_FILES})
 
 # We will require the CURL library installed

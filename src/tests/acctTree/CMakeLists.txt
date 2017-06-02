@@ -5,7 +5,7 @@ cmake_minimum_required (VERSION 2.6)
 project (acctTree)
 
 # c++ compilation flags used everywhere
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -O2 -stdlib=libc++")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -O2")
 
 # Libraries shared by all the modules
 set(PROJECT_LIBS_PATH "${CMAKE_SOURCE_DIR}/libs")
@@ -32,17 +32,3 @@ endif (CURL_FOUND)
 
 # Add the project static libs at linking
 target_link_libraries (${TOOL_NAME} util abi ether token wallet curl)
-
-# Define customized targets here
-# We add here user defined targets like: test, readme
-
-# readme target
-set(TOOLS_PATH "${CMAKE_SOURCE_DIR}/tools")
-set(CURRENT_TOOL_PATH "${TOOLS_PATH}/${TOOL_NAME}")
-set(README_FILE "README.md")
-add_custom_target(${README_TARGET}
-	COMMAND ${EXECUTABLE_OUTPUT_PATH}/${TOOL_NAME} -th > ${README_FILE}
-	DEPENDS ${TOOL_NAME}
-	WORKING_DIRECTORY ${CURRENT_TOOL_PATH} 
-	COMMENT "Generating README.md file for ${TOOL_NAME}"
-        VERBATIM)
