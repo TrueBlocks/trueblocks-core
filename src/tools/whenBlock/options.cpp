@@ -26,12 +26,18 @@ bool COptions::parseArguments(SFString& command) {
 
         if (arg == "-l" || arg == "--list") {
 
-            cout << "\n\tSpecial block: " << cYellow << arg << " " << cOff << "\n\n";
+            cout << cYellow << "\n\tSpecial blocks:";
+            for (uint32_t i = 0 ; i < specials.getCount() - 1 ; i++) {
+                SFString block = specials[i];
+                SFString name = nextTokenClear(block, '|');
+                cout << cOff << "\n\t  " << padRight(name, 12) << cTeal << padLeft(block, 10);
+            }
+            cout << cOff << "\n";
             return false;
 
-        } else if (arg.ContainsAny(":- ")) {
-            SFString str = arg.Substitute("-", ";").Substitute(" ", ";")
-                                .Substitute(":", ";").Substitute(";UTC", "");
+        } else if (arg.ContainsAny(":-_ ")) {
+            SFString str = arg.Substitute(" ", ";").Substitute("-", ";").Substitute("_", ";")
+                                .Substitute(":", ";").Substitute("T", ";").Substitute(";UTC", "");
             date = snagDate(str);
 
         } else if (arg.startsWith('-')) {  // do not collapse
@@ -48,7 +54,7 @@ bool COptions::parseArguments(SFString& command) {
 
             } else {
 
-                for (uint64_t i = 0 ; i < specials.getCount() ; i++) {
+                for (uint32_t i = 0 ; i < specials.getCount() ; i++) {
                     SFString n = specials[i];
                     SFString name = nextTokenClear(n, '|');
                     if (name == arg) {
@@ -67,11 +73,11 @@ bool COptions::parseArguments(SFString& command) {
             return usage("Please supply either a JSON formatted date or a blockNumber.");
 
     } else {
-        blknum_t l = getClientLatestBlk();
-        if (blockNum > l) {
+        blknum_t latest = getClientLatestBlk();
+        if (blockNum > latest) {
             if (special.empty()) {
                 return usage("Block number (" + asString(blockNum) + ") must be less than latest "
-                             "block: " + asString(l));
+                             "block: " + asString(latest));
 
             } else {
                 // For the cases where user's node is behind the head of the block and getClientLatestBlk
@@ -108,6 +114,37 @@ void COptions::Init(void) {
     specials[specials.getCount()] = "spurious|2675000";
     specials[specials.getCount()] = "stateclear|2718436";
     specials[specials.getCount()] = "latest|";
+
+    SFString custom = asciiFileToString(configPath("whenBlock.toml"));
+    while (!custom.empty()) {
+        SFString line = nextTokenClear(custom, '\n');
+        if (line == "[SPECIAL]") {
+            line = nextTokenClear(custom, '\n');
+            do {
+                SFString block = line;
+                SFString name = nextTokenClear(block, '=');
+                if (toLongU(block))  // non zero means it's a number
+                    specials[specials.getCount()] = Strip(name, ' ') + "|" + Strip(block, ' ');
+                line = nextTokenClear(custom, '\n');
+            } while (!custom.empty());
+        }
+    }
+
+extern int sortByBlockNum(const void *v1, const void *v2);
+    specials.Sort(sortByBlockNum);
+}
+
+//--------------------------------------------------------------------------------
+int sortByBlockNum(const void *v1, const void *v2) {
+    SFString b1 = *reinterpret_cast<SFString*>(v1);
+    SFString b2 = *reinterpret_cast<SFString*>(v2);
+    if (b1 == "latest|")
+        return 1;
+    if (b2 == "latest|")
+        return -1;
+    nextTokenClear(b1, '|');
+    nextTokenClear(b2, '|');
+    return toLong32u(b1) - toLong32u(b2);
 }
 
 //--------------------------------------------------------------------------------
@@ -122,6 +159,9 @@ const char *STR_README_HEADER =
 "displayed. In the later case, one provides a date (and optionally time) and the block number "
 "that occurred at or just prior to that date and time is displayed.\n"
 "\n"
+"Name your own blocks by editing '~./quickBlocks/whenBlock.toml' and placing `name=blockNum` pairs under "
+"the [SPECIAL] section of that file (create it if not present).\n"
+"\n"
 "The `hour`/`minute`/`second` portions of the date are optional, and if omitted, default to zero in each case.\n";
 
 //---------------------------------------------------------------------------------------------------
@@ -129,7 +169,7 @@ COptions::COptions(void) {
     Init();
     header = STR_README_HEADER;
     footer = "  Special values: [ ";
-    for (uint64_t i = 0 ; i < specials.getCount() ; i++) {
+    for (uint32_t i = 0 ; i < specials.getCount() ; i++) {
         SFString item = specials[i];
         footer += (nextTokenClear(item, '|') + " | ");
     }
