@@ -22,7 +22,7 @@ set(EXECUTABLE_OUTPUT_PATH "${CMAKE_SOURCE_DIR}/../bin")
 set(TOOL_NAME "whenBlock")
 add_executable(${TOOL_NAME} ${SOURCE_FILES})
 
-# We will require the CURL library installed 
+# We will require the CURL library installed
 # If found add its include path to includes section and link with it
 find_package (CURL REQUIRED)
 if (CURL_FOUND)
@@ -31,18 +31,4 @@ if (CURL_FOUND)
 endif (CURL_FOUND)
 
 # Add the project static libs at linking
-target_link_libraries (${TOOL_NAME} abi ether token util wallet curl)
-
-# Define customized targets here
-# We add here user defined targets like: test, readme
-
-# readme target
-set(TOOLS_PATH "${CMAKE_SOURCE_DIR}/tools")
-set(CURRENT_TOOL_PATH "${TOOLS_PATH}/${TOOL_NAME}")
-set(README_FILE "README.md")
-add_custom_target(${README_TARGET}
-	COMMAND ${EXECUTABLE_OUTPUT_PATH}/${TOOL_NAME} -th > ${README_FILE}
-	DEPENDS ${TOOL_NAME}
-	WORKING_DIRECTORY ${CURRENT_TOOL_PATH} 
-	COMMENT "Generating README.md file for ${TOOL_NAME}"
-        VERBATIM)
+target_link_libraries (${TOOL_NAME} util abi ether token wallet curl)
