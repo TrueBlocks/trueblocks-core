@@ -42,9 +42,12 @@ int main(int argc, const char *argv[]) {
             }
         }
 
+        // special case for the zero block
+        if (block.blockNumber == 0)
+            block.timestamp = 1438269960;
         cout << (vb?"\n\t":"") << "block " << asYellow("#" << block.blockNumber)
-        << " : " << asYellow(block.timestamp) << " : "
-        << asYellow(dateFromTimeStamp(block.timestamp)) << (vb?"\n":"") << "\n";
+                << " : " << asYellow(block.timestamp) << " : "
+                << asYellow(dateFromTimeStamp(block.timestamp)) << (vb?"\n":"") << "\n";
     }
 
     unloadCache();

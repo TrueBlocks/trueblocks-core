@@ -341,7 +341,7 @@ namespace qblocks {
     //---------------------------------------------------------------------------------------
     bool SFString::ContainsAny(const SFString& search) const
     {
-        for (size_t i=0;i<search.length();i++)
+        for (uint32_t i=0;i<search.length();i++)
             if (Contains(search[i]))
                 return true;
         return false;
@@ -350,7 +350,7 @@ namespace qblocks {
     //---------------------------------------------------------------------------------------
     bool SFString::ContainsAll(const SFString& search) const
     {
-        for (size_t i=0;i<search.length();i++)
+        for (uint32_t i=0;i<search.length();i++)
             if (!Contains(search[i]))
                 return false;
         return true;
@@ -451,7 +451,7 @@ namespace qblocks {
     void SFString::ReplaceAny(const SFString& list, const SFString& with)
     {
         size_t len = list.length();
-        for (size_t i = 0 ; i < len ; i++)
+        for (uint32_t i = 0 ; i < len ; i++)
             ReplaceAll(list[i], with);
     }
 
@@ -852,7 +852,7 @@ namespace qblocks {
     //---------------------------------------------------------------------------------------
     bool endsWithAny(const SFString& haystack, const SFString& str)
     {
-        for (size_t i = 0 ; i < str.length() ; i++)
+        for (uint32_t i = 0 ; i < str.length() ; i++)
             if (haystack.endsWith(str[i]))
                 return true;
         return false;
@@ -861,7 +861,7 @@ namespace qblocks {
     //---------------------------------------------------------------------------------------
     bool startsWithAny(const SFString& haystack, const SFString& str)
     {
-        for (size_t i = 0 ; i < str.length() ; i++)
+        for (uint32_t i = 0 ; i < str.length() ; i++)
             if (haystack.startsWith(str[i]))
                 return true;
         return false;
@@ -933,7 +933,7 @@ namespace qblocks {
     SFString string2Hex(const SFString& inAscii)
     {
         SFString ret;
-        for (size_t i = 0 ; i < inAscii.length() ; i++)
+        for (uint32_t i = 0 ; i < inAscii.length() ; i++)
             ret += asHex(inAscii[i]);
         return ret;
     }

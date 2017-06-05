@@ -59,7 +59,7 @@ void etherlib_init(const SFString& sourceIn)
 {
     // In case we create any lock files, so
     // they get cleaned up
-    registerQuitHandler();
+    registerQuitHandler(defaultQuitHandler);
 
     source = sourceIn;
 
@@ -87,6 +87,7 @@ void etherlib_cleanup(void)
 }
 
 extern size_t write_callback(char *ptr, size_t size, size_t nmemb, void *userdata);
+static bool earlyAbort=false;
 //-------------------------------------------------------------------------
 // Use 'curl' to make an arbitrary rpc call
 //-------------------------------------------------------------------------
@@ -102,7 +103,7 @@ SFString callRPC(const SFString& method, const SFString& params, bool raw)
     thePost +=  quote("id")      + ":"  + quote(asString(id++));
     thePost += "}";
 
-    //#define DEBUG_RPC
+//#define DEBUG_RPC
 #ifdef DEBUG_RPC
     cerr << "\n" << SFString('-',80) << "\n";
     cerr << thePost << "\n";
@@ -116,8 +117,9 @@ SFString callRPC(const SFString& method, const SFString& params, bool raw)
     curl_easy_setopt(getCurl(), CURLOPT_WRITEDATA,     &received);
     curl_easy_setopt(getCurl(), CURLOPT_WRITEFUNCTION, write_callback);
 
+    earlyAbort = false;
     CURLcode res = curl_easy_perform(getCurl());
-    if (res != CURLE_OK)
+    if (res != CURLE_OK && !earlyAbort)
     {
         fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
         exit(0);
@@ -203,9 +205,8 @@ bool queryBlock(CBlock& block, const SFString& numIn, bool needTrace)
         trans->receipt = receipt; // deep copy
         if (needTrace && trans->gas == receipt.gasUsed)
         {
-            SFString h = trans->hash.startsWith("0x") ? trans->hash.substr(2) : trans->hash;
-            h = padLeft(h, 64, '0');
-            SFString trace = callRPC("trace_transaction", "[\"0x" + h +"\"]", false);
+            SFString trace;
+            queryRawTrace(trace, trans->hash);
             trans->isError = trace.ContainsI("error");
             nTraces++;
         }
@@ -321,7 +322,7 @@ bool queryRawTrace(SFString& trace, const SFString& hashIn)
 {
     SFString h = hashIn.startsWith("0x") ? hashIn.substr(2) : hashIn;
     h = padLeft(h, 64, '0');
-    trace = callRPC("trace_transaction", "[\"0x" + h +"\"]", true);
+    trace = "[" + callRPC("trace_transaction", "[\"0x" + h +"\"]", true) + "]";
     return true;
 }
 
@@ -366,6 +367,20 @@ size_t write_callback(char *ptr, size_t size, size_t nmemb, void *userdata)
     strncpy(s,ptr,size*nmemb);
     s[size*nmemb]='\0';
     (*(SFString*)userdata) += s;
+
+    // At block 3804005, there was a hack wherein the byte code
+    // 5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b repeated
+    // thousands of time and doing nothing. If we don't handle this it
+    // dominates the scan for no reason
+    if (strstr(s, "5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b") != NULL) {
+        // This is the hack trace (there are many), so skip it
+        cerr << "Curl response contains '5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b'. Aborting.\n";
+        cerr.flush();
+        earlyAbort = true;
+        return 0;
+    }
+//    cerr << s << "\n";
+
     return size*nmemb;
 }
 
@@ -569,7 +584,7 @@ bool forEveryEmptyBlockOnDisc(BLOCKVISITFUNC func, void *data, SFUint32 start, S
     CSharedResource fullBlocks;
     if (!fullBlocks.Lock(fullBlockIndex, binaryReadOnly, LOCK_WAIT))
     {
-        cerr << "forEveryNonEmptyBlockOnDisc: " << fullBlocks.LockFailure() << "\n";
+        cerr << "forEveryNonEmptyBlockOnDisc failed: " << fullBlocks.LockFailure() << "\n";
         return false;
     }
     ASSERT(fullBlocks.isOpen());
@@ -624,7 +639,7 @@ bool forEveryNonEmptyBlockOnDisc(BLOCKVISITFUNC func, void *data, SFUint32 start
     CSharedResource fullBlocks;
     if (!fullBlocks.Lock(fullBlockIndex, binaryReadOnly, LOCK_WAIT))
     {
-        cerr << "forEveryNonEmptyBlockOnDisc: " << fullBlocks.LockFailure() << "\n";
+        cerr << "forEveryNonEmptyBlockOnDisc failed: " << fullBlocks.LockFailure() << "\n";
         return false;
     }
     ASSERT(fullBlocks.isOpen());
@@ -679,7 +694,7 @@ bool getLatestBlocks(SFUint32& cache, SFUint32& client, CSharedResource *res)
         // We're reading so okay not to wait
         if (!fullBlocks.Lock(fullBlockIndex, binaryReadOnly, LOCK_WAIT))
         {
-            cerr << "getLatestBlocks: " << fullBlocks.LockFailure() << "\n";
+            cerr << "getLatestBlocks failed: " << fullBlocks.LockFailure() << "\n";
             return false;
         }
         pRes = &fullBlocks;
@@ -735,7 +750,7 @@ void createFullBlockIndex(void)
 
     } else
     {
-        cerr << "createFullBlockIndex: " << fullBlocks.LockFailure() << "\n";
+        cerr << "createFullBlockIndex failed: " << fullBlocks.LockFailure() << "\n";
     }
 }
 
@@ -763,7 +778,7 @@ void freshenLocalCache(bool indexOnly)
     CSharedResource fullBlocks;
     if (!fullBlocks.Lock(fullBlockIndex, "a+", LOCK_WAIT))
     {
-        cerr << "freshenLocalCache: " << fullBlocks.LockFailure() << "\n";
+        cerr << "freshenLocalCache failed: " << fullBlocks.LockFailure() << "\n";
         return;
     }
     ASSERT(fullBlocks.isOpen());
@@ -777,7 +792,7 @@ void freshenLocalCache(bool indexOnly)
         if (queryBlock(block,asString(num),true))
         {
             ASSERT(block.transactions.getCount()>0);
-            // We only write the data back if we don't already have the block.
+            // We only he data back if we don't already have the block.
             // Note, 'queryBlock' returns false for empty blocks, so we only
             // ever write non-empty blocks.
             SFString fileName = getBinaryFilename1(num);
@@ -968,6 +983,23 @@ bool forEveryMiniBlockInMemory(MINIBLOCKVISITFUNC func, void *data, SFUint32 sta
 
     return true;
 }
+
+/*
+ SFAddress from;
+ SFAddress to;
+ CReceipt
+    SFAddress contractAddress;
+    CLogEntryArray logs;
+        SFAddress address;
+        SFString data;
+        SFUint32 logIndex;
+        SFBigUintArray topics;
+        CTrace
+            SFStringArray traceAddress;
+            CTraceAction action;
+                SFAddress from;
+                SFAddress to;
+ */
 
 //--------------------------------------------------------------------------
 bool forEveryFullBlockInMemory(BLOCKVISITFUNC func, void *data, SFUint32 start, SFUint32 count)

@@ -51,6 +51,7 @@ namespace qblocks {
 
     //--------------------------------------------------------------------------------
     extern int usage(const SFString& errMsg = "");
+    extern SFString usageStr(const SFString& errMsg = "");
     extern SFString options(void);
     extern SFString descriptions(void);
     extern SFString purpose(void);

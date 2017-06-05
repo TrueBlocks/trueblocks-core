@@ -249,7 +249,7 @@ bool CAccountWatch::getWatch(const CToml& toml, uint32_t n, bool fromFile) {
     if (name.empty())
         return false;
     color = convertColor(toml.getConfigStr("watches", "color_"+asString(n), ""));
-    if (color.empty())
+    if (cBlack != "" && color.empty())
         return false;
     firstBlock = toml.getConfigInt("watches", "firstBlock_"+asString(n), 0);
     disabled = toml.getConfigBool("watches", "disabled_"+asString(n), false);

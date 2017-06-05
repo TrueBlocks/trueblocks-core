@@ -10,16 +10,15 @@
 #include "etherlib.h"
 
 //---------------------------------------------------------------------------------------------------
-class CSlurperApp
-{
+class CSlurperApp {
 private:
-	CToml toml;
-	CWebAPI api;
+    CToml toml;
+    CWebAPI api;
 
 public:
-	CAccount theAccount;
+    CAccount theAccount;
 
-    CSlurperApp(void) : toml() { };
+    CSlurperApp(void) : toml() { }
     ~CSlurperApp(void) { }
 private:
 };
