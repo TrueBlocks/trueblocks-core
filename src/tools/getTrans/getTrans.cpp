@@ -47,7 +47,7 @@ int main(int argc, const char *argv[]) {
             SFString ret = trans.Format(fmt);
             if (options.trace) {
                 SFString trace;
-                queryRawTrace(trace, trans.hash, true);
+                queryRawTrace(trace, trans.hash);
                 ret.ReplaceReverse("}", ",\"trace\": " + trace + "}");
             }
             cout << ret << "\n";
