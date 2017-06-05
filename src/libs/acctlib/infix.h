@@ -6,15 +6,13 @@
  *
  * The LICENSE at the root of this repo details your rights (if any)
  *------------------------------------------------------------------------*/
-#include "acctTree_Base.h"
+#include "ext.h"
 
 //-----------------------------------------------------------------------------
-class acctTree_Branch: public acctTree_Node {
+class acctTree_Infix: public acctTree_Ext {
 public:
-    explicit acctTree_Branch(const SFString& _value);
-    acctTree_Branch(char _i1, acctTree_Node* _n1, const SFString& _value = "");
-    acctTree_Branch(char _i1, acctTree_Node* _n1, char _i2, acctTree_Node* _n2);
-    virtual ~acctTree_Branch(void);
+    acctTree_Infix(const SFString& _key, acctTree_Node* _next);
+    virtual ~acctTree_Infix(void);
 
     SFString at(const SFString& _key) const override;
     acctTree_Node* insert(const SFString& _key, const SFString& _value) override;
@@ -23,10 +21,7 @@ public:
     bool visitItems(ACCTVISITOR func, void *data) const override;
 
 private:
-    /// @returns (byte)-1 when no active branches, 16 when multiple active and the index of the active branch otherwise.
-    char activeBranch() const;
+    bool contains(const SFString& _key) const;
 
-    acctTree_Node *rejig();
-    acctTree_Node *m_nodes[16];
-    SFString m_branchValue;
+    acctTree_Node* m_next;
 };

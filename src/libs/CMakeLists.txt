@@ -7,6 +7,7 @@ project(libs)
 add_subdirectory(utillib)
 add_subdirectory(abilib)
 add_subdirectory(etherlib)
+add_subdirectory(acctlib)
 add_subdirectory(tokenlib)
 add_subdirectory(walletlib)
 
