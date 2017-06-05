@@ -5,7 +5,7 @@
  *
  * The LICENSE at the root of this repo details your rights (if any)
  *------------------------------------------------------------------------*/
-#include "acctTree.h"
+#include "tree.h"
 
 //-----------------------------------------------------------------------------
 acctTree_Node::acctTree_Node(void) : index(0) {
