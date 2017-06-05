@@ -136,8 +136,8 @@ extern int sortByBlockNum(const void *v1, const void *v2);
 
 //--------------------------------------------------------------------------------
 int sortByBlockNum(const void *v1, const void *v2) {
-    SFString b1 = *reinterpret_cast<SFString*>(v1);
-    SFString b2 = *reinterpret_cast<SFString*>(v2);
+    SFString b1 = *(SFString *)v1;  // NOLINT
+    SFString b2 = *(SFString *)v2;  // NOLINT
     if (b1 == "latest|")
         return 1;
     if (b2 == "latest|")
