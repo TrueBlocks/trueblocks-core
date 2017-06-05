@@ -22,9 +22,6 @@ namespace qblocks {
     #define LK_NO_REMOVE_LOCK      4
 
     //----------------------------------------------------------------------
-    static SFString manageRemoveList(const SFString& str = "");
-
-    //----------------------------------------------------------------------
     bool CSharedResource::g_locking = true;
 
     //----------------------------------------------------------------------
@@ -516,7 +513,28 @@ namespace qblocks {
     }
 
     //-----------------------------------------------------------------------
-    static SFString manageRemoveList(const SFString& filename) {
+    void defaultQuitHandler(int s) {
+        cout << "Caught signal " << s << "\n";
+        SFString list = manageRemoveList();
+        while (!list.empty()) {
+            SFString file = nextTokenClear(list, '|');
+            cout << "Removing file: " << file << "\n"; cout.flush();
+            removeFile(file);
+        }
+        exit(1);
+    }
+
+    //-----------------------------------------------------------------------
+    void registerQuitHandler(QUITHANDLER qh) {
+        struct sigaction sigIntHandler;
+        sigIntHandler.sa_handler = qh;
+        sigemptyset(&sigIntHandler.sa_mask);
+        sigIntHandler.sa_flags = 0;
+        sigaction(SIGINT, &sigIntHandler, NULL);
+    }
+
+    //-----------------------------------------------------------------------
+    SFString manageRemoveList(const SFString& filename) {
         static SFString theList;
 
         SFString fn = filename.Substitute("r:", "");;
@@ -530,26 +548,5 @@ namespace qblocks {
             }
         }
         return theList;
-    }
-
-    //-----------------------------------------------------------------------
-    void quitHandler(int s) {
-        cout << "Caught signal " << s << "\n";
-        SFString list = manageRemoveList();
-        while (!list.empty()) {
-            SFString file = nextTokenClear(list, '|');
-            cout << "Removing file: " << file << "\n"; cout.flush();
-            removeFile(file);
-        }
-        exit(1);
-    }
-
-    //-----------------------------------------------------------------------
-    void registerQuitHandler(void) {
-        struct sigaction sigIntHandler;
-        sigIntHandler.sa_handler = quitHandler;
-        sigemptyset(&sigIntHandler.sa_mask);
-        sigIntHandler.sa_flags = 0;
-        sigaction(SIGINT, &sigIntHandler, NULL);
     }
 }  // namespace qblocks

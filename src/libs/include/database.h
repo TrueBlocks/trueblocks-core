@@ -152,8 +152,12 @@ namespace qblocks {
     extern size_t stringToDocxFile(const SFString& fileName, const SFString& contents);
     extern size_t stringToPDF(const SFString& fileName, const SFString& contents);
     extern SFString excelFileToString(const SFString& filename);
-    extern void quitHandler(int s);
-    extern void registerQuitHandler(void);
+
+    //----------------------------------------------------------------------
+    typedef void (*QUITHANDLER) (int s);
+    extern SFString manageRemoveList(const SFString& str = "");
+    extern void defaultQuitHandler(int s);
+    extern void registerQuitHandler(QUITHANDLER qh);
 
     //----------------------------------------------------------------------
     inline bool asciiFileToBuffer(const SFString& filename, SFString *contents, uint32_t maxLines = INT_MAX) {
