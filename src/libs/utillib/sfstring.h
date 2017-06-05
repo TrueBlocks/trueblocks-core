@@ -410,7 +410,7 @@ namespace qblocks {
         return os.str().c_str();
 #else
         char ret[128];
-        sprintf(ret, "%lld", (int64_t)i);
+        sprintf(ret, "%ld", (int64_t)i);
         return SFString(ret);
 #endif
     }
@@ -423,7 +423,7 @@ namespace qblocks {
         return os.str().c_str();
 #else
         char ret[128];
-        sprintf(ret, "%llu", (SFUint32)i);
+        sprintf(ret, "%lu", (SFUint32)i);
         return SFString(ret);
 #endif
     }
@@ -436,7 +436,7 @@ namespace qblocks {
         return os.str().c_str();
 #else
         char ret[128];
-        sprintf(ret, "%llu", (uint64_t)i);
+        sprintf(ret, "%lu", (uint64_t)i);
         return SFString(ret);
 #endif
     }
