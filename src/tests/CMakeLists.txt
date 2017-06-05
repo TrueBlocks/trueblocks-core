@@ -6,7 +6,7 @@ project(tools)
 # Compilation order of the src subdirectories
 add_subdirectory(abiTest)
 add_subdirectory(acctTree)
-add_subdirectory(bytesUsed)
+#add_subdirectory(bytesUsed)
 add_subdirectory(jsonTest)
 add_subdirectory(sha3)
 add_subdirectory(speedTest)
