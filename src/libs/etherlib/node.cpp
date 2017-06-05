@@ -59,7 +59,7 @@ void etherlib_init(const SFString& sourceIn)
 {
     // In case we create any lock files, so
     // they get cleaned up
-    registerQuitHandler();
+    registerQuitHandler(defaultQuitHandler);
 
     source = sourceIn;
 
@@ -103,7 +103,7 @@ SFString callRPC(const SFString& method, const SFString& params, bool raw)
     thePost +=  quote("id")      + ":"  + quote(asString(id++));
     thePost += "}";
 
-// #define DEBUG_RPC
+//#define DEBUG_RPC
 #ifdef DEBUG_RPC
     cerr << "\n" << SFString('-',80) << "\n";
     cerr << thePost << "\n";
@@ -206,7 +206,7 @@ bool queryBlock(CBlock& block, const SFString& numIn, bool needTrace)
         if (needTrace && trans->gas == receipt.gasUsed)
         {
             SFString trace;
-            queryRawTrace(trace, trans->hash, false);
+            queryRawTrace(trace, trans->hash);
             trans->isError = trace.ContainsI("error");
             nTraces++;
         }
@@ -318,11 +318,11 @@ bool getReceipt(CReceipt& receipt, const SFString& hash)
 }
 
 //-------------------------------------------------------------------------
-bool queryRawTrace(SFString& trace, const SFString& hashIn, bool raw)
+bool queryRawTrace(SFString& trace, const SFString& hashIn)
 {
     SFString h = hashIn.startsWith("0x") ? hashIn.substr(2) : hashIn;
     h = padLeft(h, 64, '0');
-    trace = callRPC("trace_transaction", "[\"0x" + h +"\"]", raw);
+    trace = "[" + callRPC("trace_transaction", "[\"0x" + h +"\"]", true) + "]";
     return true;
 }
 
@@ -983,6 +983,23 @@ bool forEveryMiniBlockInMemory(MINIBLOCKVISITFUNC func, void *data, SFUint32 sta
 
     return true;
 }
+
+/*
+ SFAddress from;
+ SFAddress to;
+ CReceipt
+    SFAddress contractAddress;
+    CLogEntryArray logs;
+        SFAddress address;
+        SFString data;
+        SFUint32 logIndex;
+        SFBigUintArray topics;
+        CTrace
+            SFStringArray traceAddress;
+            CTraceAction action;
+                SFAddress from;
+                SFAddress to;
+ */
 
 //--------------------------------------------------------------------------
 bool forEveryFullBlockInMemory(BLOCKVISITFUNC func, void *data, SFUint32 start, SFUint32 count)
