@@ -5,7 +5,7 @@
  *
  * The LICENSE at the root of this repo details your rights (if any)
  *------------------------------------------------------------------------*/
-#include "acctTree.h"
+#include "tree.h"
 #include "options.h"
 #include "reporter.h"
 
@@ -20,7 +20,8 @@ int main(int argc, const char *argv[]) {
     if (!options.prepareArguments(argc, argv))
         return 0;
 
-    while (!options.commandList.empty()) {
+    //while (!options.commandList.empty())
+    {
         SFString command = nextTokenClear(options.commandList, '\n');
         if (!options.parseArguments(command))
             return 0;

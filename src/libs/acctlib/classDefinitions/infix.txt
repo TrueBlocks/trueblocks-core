@@ -1,6 +1,0 @@
-class:		CInfix
-fields:		CNode *m_next
-includes:	etherlib.h
-cIncs:		#include "etherlib.h"
-scope:		extern
-serialize:	true

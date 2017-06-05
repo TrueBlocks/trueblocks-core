@@ -1,6 +1,0 @@
-class:		CExt
-fields:		string m_prefix;
-includes:	etherlib.h
-cIncs:		#include "etherlib.h"
-scope:		extern
-serialize:	true

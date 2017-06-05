@@ -6,7 +6,7 @@
  *
  * The LICENSE at the root of this repo details your rights (if any)
  *------------------------------------------------------------------------*/
-#include "acctTree_Base.h"
+#include "base.h"
 
 //-----------------------------------------------------------------------------
 class acctTree_Ext: public acctTree_Node {

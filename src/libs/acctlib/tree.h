@@ -5,10 +5,10 @@
  *------------------------------------------------------------------------*/
 #include "etherlib.h"
 
-#include "acctTree_Base.h"
-#include "acctTree_Leaf.h"
-#include "acctTree_Branch.h"
-#include "acctTree_Infix.h"
+#include "base.h"
+#include "leaf.h"
+#include "branch.h"
+#include "infix.h"
 
 //----------------------------------------------------------
 #define T_TOP       (0)
@@ -78,3 +78,4 @@ inline SFString idex(uint32_t n) {
 
 //------------------------------------------------------------------
 bool forEveryAccount(CAccountTree *trie, ACCTVISITOR func, void *data);
+extern SFString idnt;

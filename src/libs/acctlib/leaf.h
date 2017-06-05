@@ -6,7 +6,7 @@
  *
  * The LICENSE at the root of this repo details your rights (if any)
  *------------------------------------------------------------------------*/
-#include "acctTree_Ext.h"
+#include "ext.h"
 
 //-----------------------------------------------------------------------------
 class acctTree_Leaf: public acctTree_Ext {
