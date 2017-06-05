@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-#
-# Open the Ethereum yellow paper in a browser
-
-open "http://gavwood.com/paper.pdf"
