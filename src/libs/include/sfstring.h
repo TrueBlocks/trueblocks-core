@@ -404,23 +404,41 @@ namespace qblocks {
 
     //--------------------------------------------------------------------
     inline SFString asString(int64_t i) {
+#if 1
+        ostringstream os;
+        os << i;
+        return os.str().c_str();
+#else
         char ret[128];
         sprintf(ret, "%ld", (int64_t)i);
         return SFString(ret);
+#endif
     }
 
     //--------------------------------------------------------------------
     inline SFString asStringU(SFUint32 i) {
+#if 1
+        ostringstream os;
+        os << i;
+        return os.str().c_str();
+#else
         char ret[128];
         sprintf(ret, "%lu", (SFUint32)i);
         return SFString(ret);
+#endif
     }
 
     //--------------------------------------------------------------------
     inline SFString asStringULL(uint64_t i) {
+#if 1
+        ostringstream os;
+        os << i;
+        return os.str().c_str();
+#else
         char ret[128];
         sprintf(ret, "%lu", (uint64_t)i);
         return SFString(ret);
+#endif
     }
 
     //--------------------------------------------------------------------
@@ -593,7 +611,7 @@ namespace qblocks {
 
     //----------------------------------------------------------------------------
     inline SFString shorten(const SFString& in, size_t x) {
-        return padRight(in.length()>x-3 ? in.Left(x-3) + "..." : in, x);
+        return padRight(in.length()>x-3 ? in.Left(x-3) + "..." : in, (uint32_t)x);
     }
 
     //--------------------------------------------------------------------
@@ -623,7 +641,7 @@ namespace qblocks {
     inline SFString StripAny(const SFString& str, const SFString& any) {
         SFString ret = str;
         while (endsWithAny(ret, any) || startsWithAny(ret, any)) {
-            for (size_t i = 0 ; i < any.length() ; i++)
+            for (uint32_t i = 0 ; i < any.length() ; i++)
                 ret = Strip(ret, any[i]);
         }
         return ret;

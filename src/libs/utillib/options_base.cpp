@@ -74,7 +74,7 @@ namespace qblocks {
                 if (args) delete [] args;
                 return usage();
 
-            } else if (arg == "--nocolors") {
+            } else if (arg == "--nocolors" || arg == "--nocolor") {
                 colorsOff();
 
             } else if (arg.startsWith("-v") || arg.startsWith("--verbose")) {
@@ -162,30 +162,36 @@ namespace qblocks {
 
     //--------------------------------------------------------------------------------
     int usage(const SFString& errMsg) {
+        cerr << usageStr(errMsg);
+        return false;
+    }
+
+    SFString usageStr(const SFString& errMsg) {
+        ostringstream os;
         if (isTesting) {
             sep = sep2 = "`";
             colorsOff();
-            cerr << "## " << programName << "\n\n";
-            cerr << COptionsBase::header;
-            cerr << "\n#### Usage\n";
+            os << "## " << programName << "\n\n";
+            os << COptionsBase::header;
+            os << "\n#### Usage\n";
         }
 
-        cerr << "\n";
+        os << "\n";
         if (!errMsg.empty())
-            cerr << cRed << "  " << errMsg << "\n\n";
-        cerr << bYellow << sep << "Usage:" << sep2 << "    " << cOff << programName << " " << options() << "  \n";
-        cerr << purpose();
-        cerr << descriptions() << "\n";
+            os << cRed << "  " << errMsg << "\n\n";
+        os << bYellow << sep << "Usage:" << sep2 << "    " << cOff << programName << " " << options() << "  \n";
+        os << purpose();
+        os << descriptions() << "\n";
         if (isTesting && !COptionsBase::seeAlso.empty()) {
             SFString note = COptionsBase::seeAlso;
-            cerr << "#### " << nextTokenClear(note, ':') << "\n\n";
-            cerr << Strip(note, ' ') << "\n";
+            os << "#### " << nextTokenClear(note, ':') << "\n\n";
+            os << Strip(note, ' ') << "\n";
         }
-        cerr << COptionsBase::footer;
+        os << COptionsBase::footer;
         if (isTesting)
-            cerr << STR_FILE_OPTION;
-        cerr << bBlue << (isTesting?"":"  ") << "Powered by QuickBlocks\n" << cOff;
-        return false;
+            os << STR_FILE_OPTION;
+        os << bBlue << (isTesting?"":"  ") << "Powered by QuickBlocks\n" << cOff;
+        return os.str().c_str();
     }
 
     //--------------------------------------------------------------------------------
