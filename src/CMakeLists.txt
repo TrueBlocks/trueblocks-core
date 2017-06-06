@@ -34,10 +34,5 @@ add_subdirectory (libs)
 add_subdirectory (apps)
 add_subdirectory (tools)
 add_subdirectory (tests)
-<<<<<<< HEAD
 add_subdirectory (monitors)
 add_subdirectory (other)
-=======
-#add_subdirectory (monitors)
-#add_subdirectory (other)
->>>>>>> master
