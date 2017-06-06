@@ -15,6 +15,9 @@
 //EXISTING_CODE
 
 //-----------------------------------------------------------------------
+#include "debug.h"
+
+//-----------------------------------------------------------------------
 class CStats {
 public:
     SFUint32 visited;
@@ -27,7 +30,7 @@ public:
             endBlock(end), last_ts(0) { barLen(80); }
 
     void initReport(void) const {
-        cerr << startBlock << " : " << endBlock << " : " << nBlocks << " : " << visited << "\n";
+        cerr << startBlock << " : " << endBlock << " : " << nBlocks << " : " << visited << "\r\n";
         cerr.flush();
     }
 
@@ -62,10 +65,13 @@ public:
     blknum_t breakPt;
     SFUint32 nTrans;
     bool cacheOnly;
+    bool autoTrace;
+    CTransBuffer tBuffer;
     CVisitor(void) : cache(true, NO_SCHEMA, false),
         screenFmt(""), stats(0,0), useColor(true), toScreen(true),
         showLogs(false), notify(false), accounting(false), debug(false),
-        breakPt(UINT64_MAX), nTrans(false), cacheOnly(false) { }
+        breakPt(UINT64_MAX), nTrans(false), cacheOnly(false),
+        autoTrace(true), tBuffer() { }
 
     void setColors(const CTransaction *trans, const SFString& contractColor) {
         color    = (trans->isError ? biBlack : SFString(trans->isInternalTx ? cRed : contractColor));
@@ -80,6 +86,7 @@ public:
     bool closeIncomeStatement(const CBlock& block);
 
     CAccountWatchArray watches;
+    bool enterDebugger(void);
 };
 
 //-----------------------------------------------------------------------
