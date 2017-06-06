@@ -5,6 +5,7 @@
  *
  * The LICENSE at the root of this repo details your rights (if any)
  *------------------------------------------------------------------------*/
+#include <ncurses.h>
 #include "etherlib.h"
 #include "options.h"
 #include "parselib.h"
@@ -36,13 +37,14 @@ void displayTransaction(uint32_t which, const CTransaction *theTrans, void *data
         fmt.ReplaceAll("[{CONTRACT}]", contractName);
         fmt.ReplaceAll("[{CONTRACT3}]", contractName.Left(3));
         fmt.ReplaceAll("[{TYPE}]", transType);
-        fmt.Replace("[{P}]", (promoted == theTrans?"":"\t\tparsed: %[{w:130:PARSED}]#\n"));
+        fmt.ReplaceAll("[{TYPE20}]", padRight(transType.Left(15),15));
+        fmt.Replace("[{P}]", (promoted == theTrans?"":"\t\tparsed: %[{w:130:PARSED}]#\r\n"));
 
         SFString head;
         head += ((promoted->isInternalTx ? promoted->to : contractName) + "::" +
                  transType + (promoted->isInternalTx ? " (logs from " + contractName + ")" : ""));
         fmt.Replace("[{HEAD}]", head);
-        fmt.Replace("[{SEP}\n]", SFString('-', maxWid) + "\n");
+        fmt.Replace("[{SEP}\n]", SFString('-', maxWid) + "\r\n");
 
         SFString transStr = promoted->Format(fmt).Substitute("\t"," ");
 
@@ -69,7 +71,7 @@ void displayTransaction(uint32_t which, const CTransaction *theTrans, void *data
                 cout << (visitor->useColor ? iYellow : "");
                 cout << "  " << padLeft(asString(i),2) << ". " << padRight(eventType.Left(15),15) << " " << evtStr;
                 cout << (visitor->useColor ? cOff : "");
-                cout << "\n";
+                cout << "\r\n";
             }
             evtList += eventType + ",";
 
@@ -93,7 +95,7 @@ void displayTransaction(uint32_t which, const CTransaction *theTrans, void *data
     }
 
 extern void showColoredTrace(CVisitor *vis, const SFHash& hash);
-    if (promoted->isInternalTx)
+    if (visitor->autoTrace && promoted->isInternalTx)
         showColoredTrace(visitor, promoted->hash);
 
     // If the transaction was promoted, clear that up
@@ -102,13 +104,33 @@ extern void showColoredTrace(CVisitor *vis, const SFHash& hash);
 
     if (visitor->useColor)
         cout << cOff;
-    cout << "\n";
+    cout << "\r\n";
     cout.flush();
 }
 //EXISTING_CODE
 
 //-----------------------------------------------------------------------
+void myQuitHandler(int s) {
+    cout << "Caught signal " << s << "\n";
+    SFString list = manageRemoveList();
+    while (!list.empty()) {
+        SFString file = nextTokenClear(list, '|');
+        cout << "Removing file: " << file << "\n"; cout.flush();
+        removeFile(file);
+    }
+    endwin();
+    exit(1);
+}
+
+//-----------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
+
+    initscr();
+    raw();
+    keypad(stdscr, TRUE);
+    noecho();
+    refresh();
+    registerQuitHandler(myQuitHandler);
 
     parselib_init("binary");
     if (argc < 2)
@@ -116,14 +138,20 @@ int main(int argc, const char *argv[]) {
 
     // Parse command line, allowing for command files
     COptions options;
-    if (!options.prepareArguments(argc, argv))
-        return 0;
+    if (!options.prepareArguments(argc, argv)) {
+        cout.flush();cerr.flush();getchar();
+        endwin();
+        return false;
+    }
 
     // while (!options.commandList.empty())
     {
         SFString command = nextTokenClear(options.commandList, '\n');
-        if (!options.parseArguments(command))
-            return 0;
+        if (!options.parseArguments(command)) {
+            cout.flush();cerr.flush();getchar();
+            endwin();
+            return false;
+        }
 
         CToml toml;
         toml.setFilename("./config.toml");
@@ -135,20 +163,30 @@ int main(int argc, const char *argv[]) {
         uint64_t nWatches = toml.getConfigInt("watches", "nWatches", 0);
         for (uint32_t i = 0 ; i < nWatches ; i++) {
             CAccountWatch watch;
-            if (!watch.getWatch(toml, i, false))
-                return usage("Invalid watch parameters for watch " + asString(i) + ". Quitting...");
+            if (!watch.getWatch(toml, i, false)) {
+                cout << usageStr("Invalid watch parameters for watch " + asString(i) + ". Quitting...")
+                            .Substitute("\n", "\r\n");
+                cout.flush();cerr.flush();getchar();
+                endwin();
+                return false;
+            }
             visitor.watches[visitor.watches.getCount()] = watch;
             minWatchBlock = min(minWatchBlock, watch.firstBlock);
         }
-        if (!visitor.watches.getCount())
-            return usage("You must specify at least one address to watch in the config file.\n");
+        if (!visitor.watches.getCount()) {
+            cout << usageStr("You must specify at least one address to watch in the config file.\r\n")
+                        .Substitute("\n", "\r\n");
+            cout.flush();cerr.flush();getchar();
+            endwin();
+            return false;
+        }
         visitor.watches[visitor.watches.getCount()] = CAccountWatch(1, "Others", "Ext Accts", 0, bRed);
 
         const char* defaultFormat = "";
         visitor.screenFmt = toml.getConfigStr("formats", "screen_fmt", defaultFormat)
                                     .Substitute("\\n\\\n", "\\n")
                                     .Substitute("\n", "")
-                                    .Substitute("\\n", "\n")
+                                    .Substitute("\\n", "\r\n")
                                     .Substitute("\\t", "\t");
         visitor.useColor = toml.getConfigBool("display", "use_color", true) && !options.nocolor;
         if (!visitor.useColor)
@@ -165,8 +203,14 @@ int main(int argc, const char *argv[]) {
 
         // Showing the cache file (if told to...)
         SFString cacheFileName = "./cache/" + visitor.watches[0].address + ".acct.bin";
-        if (fileExists(cacheFileName + ".lck"))
-            return usage("Already running. Either quit other instance or remove the lock file: '" + cacheFileName + ".lck'. Quitting...");
+        if (fileExists(cacheFileName + ".lck")) {
+            cout << usageStr("Already running. Either quit other instance or remove the lock file: '"
+                             + cacheFileName + ".lck'. Quitting...")
+                    .Substitute("\n", "\r\n");
+            cout.flush();cerr.flush();getchar();
+            endwin();
+            return false;
+        }
 
         // Figure out which block to start on. Note, if 'master' override is not present, use earliest
         // block from the watches. Not that 'displayCache' may modify this to lastest visited block
@@ -209,10 +253,11 @@ int main(int argc, const char *argv[]) {
                 visitor.cache.Release();
             }
             visitor.stats.interumReport(lastBlock, visitor.stats.last_ts);
-            cout << "\n";
+            cout << "\r\n";
         }
     }
 
-    return 0;
+    endwin();
+    return false;
 }
 

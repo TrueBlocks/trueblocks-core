@@ -19,7 +19,7 @@ CParams params[] = {
     CParams("-acctDisp",    "display accounting table of credits and debits"),
     CParams("-nocolor",     "display using plain text, no colors"),
     CParams("-rebuild",     "clear cache and reprocess all transcations (may take a long time)"),
-    CParams("",             "Index transactions for a given Ethereum address (or series of addresses).\n"),
+    CParams("",             "Index transactions for a given Ethereum address (or series of addresses).\r\n"),
 };
 uint32_t nParams = sizeof(params) / sizeof(CParams);
 
@@ -36,15 +36,19 @@ bool COptions::parseArguments(SFString& command) {
         } else if (arg.Contains("-b")) {
             SFString a = arg.Substitute("-b:","").Substitute("--break:","");
             bp = toLongU(a);
-            if (!bp)
-                return usage("You must specify a block number");
+            if (!bp) {
+                cerr << usageStr("You must specify a block number").Substitute("\n","\r\n");
+                return false;
+            }
             verbose |= 0x10;  // force debug
 
         } else if (arg.Contains("-k:")) {
             SFString a = arg.Substitute("-k:","");
             start = toLongU(a);
-            if (!start)
-                return usage("You must specify a block number");
+            if (!start) {
+                cerr << usageStr("You must specify a block number").Substitute("\n","\r\n");
+                return false;
+            }
 
         } else if (arg == "-c" || arg == "--cacheOnly") {
             mode = "showCache|";  // last in wins
@@ -66,7 +70,7 @@ bool COptions::parseArguments(SFString& command) {
 
         } else if (arg == "-r" || arg == "--rebuild") {
             cerr << cRed << "Warning: " << cOff
-            << "Rebuilding the cache may take a very long time. Are you sure? Type 'y' or 'yes' to continue...\n"
+            << "Rebuilding the cache may take a very long time. Are you sure? Type 'y' or 'yes' to continue...\r\n"
             << "  > ";
             cerr.flush();
             char buffer[256];
@@ -78,16 +82,18 @@ bool COptions::parseArguments(SFString& command) {
                 SFString path = fn.getFullPath();
                 removeFolder(path);
                 establishFolder(path);
-                cerr << cYellow << "The cache was cleared. Quitting...\n" << cOff;
+                cerr << cYellow << "The cache was cleared. Quitting...\r\n" << cOff;
             } else {
-                cerr << cYellow << "The cache was not removed. Quitting...\n" << cOff;
+                cerr << cYellow << "The cache was not removed. Quitting...\r\n" << cOff;
             }
-            return 0;
+            return false;
 
         } else if (arg.startsWith('-')) {
-            if (!arg.Contains("-h") && !arg.Contains("-v") && !arg.Contains("-t"))
-                return usage("Invalid option: " + arg);
-        }
+            if (!arg.Contains("-h") && !arg.Contains("-v") && !arg.Contains("-t")) {
+                cerr << usageStr("Invalid option: " + arg).Substitute("\n","\r\n");
+                return false;
+            }
+       }
     }
 
     if (mode.empty())
