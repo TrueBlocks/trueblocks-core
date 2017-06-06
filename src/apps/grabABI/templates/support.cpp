@@ -10,6 +10,7 @@
  * edit the file, but keep your edits inside the 'EXISTING_CODE' tags.
  */
 #include "parselib.h"
+#include "debug.h"
 
 //-----------------------------------------------------------------------
 bool CVisitor::ofInterest(CTransaction *trans, uint32_t& which) {
@@ -90,7 +91,7 @@ void CVisitor::openIncomeStatement(const CBlock& block) {
         watches[i].qbis.inflow = watches[i].qbis.outflow = 0;
     }
     if (nTrans)
-        cout << SFString('=',150) << "\n";
+        cout << SFString('=',150) << "\r\n";
     nTrans = 0;
     nOutOfBal = 0;
     return;
@@ -111,7 +112,7 @@ void showColoredTrace(CVisitor *vis, const SFHash& hash) {
         uint32_t nFields = 0;
         p = trace.parseJson(p, nFields);
         if (nFields) {
-            traceStr += (trace.Format() + "\n");
+            traceStr += (trace.Format() + "\r\n");
         }
     }
 #else
@@ -132,7 +133,7 @@ void showColoredTrace(CVisitor *vis, const SFHash& hash) {
         if (!val.empty())
             str += (SFString("\"value\":\"") + bRed + asStringBN(canonicalWei(val)) + "\"" + cOff);
     }
-    cout << "\n" << cOff << str;
+    cout << "\r\n" << cOff << str;
 }
 
 //-----------------------------------------------------------------------
@@ -143,7 +144,7 @@ bool CVisitor::closeIncomeStatement(const CBlock& block) {
     CIncomeStatement header;
     header.begBal = header.endBal = -1;
 
-    cout << padCenter("",14) << header << "   " << padCenter("nodeBal",28) << "\n";
+    cout << padCenter("",14) << header << "   " << padCenter("nodeBal",28) << "\r\n";
     CIncomeStatement total;
     for (int i = 0 ; i < watches.getCount() ; i++) {
         watches[i].qbis.blockNum = block.blockNumber;
@@ -162,55 +163,20 @@ bool CVisitor::closeIncomeStatement(const CBlock& block) {
                 cout << " " << greenCheck;
             }
         }
-        cout << "\n";
+        cout << "\r\n";
         total += watches[i].qbis;
     }
-    cout << "              " << SFString('-',120) << "\n";
+    cout << "              " << SFString('-',120) << "\r\n";
 //    cout << cGreen;
     cout << padRight("Total:",14) << total << " ";
     cout << greenCheck;
-    cout << "\n" << cOff;
+    cout << "\r\n" << cOff;
     cout.flush();
 
     if (debug) {
         if (nOutOfBal || breakPt == UINT64_MAX || block.blockNumber >= breakPt) {
-            bool done=false;
-            while (!done)
-            {
-                cerr << cOff << "\n===>  ";
-                cerr.flush();
-                char buffer[256];
-                fgets(buffer, 256, stdin);
-                SFString res = Strip(SFString(buffer).Substitute("\n",""),' ');
-
-                if (res == "q" || res == "quit" || res == "exit") {
-                    return false;
-
-                } if (res == "c" || res == "correct") {
-                    for (int i = 0 ; i < watches.getCount() ; i++) {
-                        watches[i].qbis.correct();
-                    }
-                    done = true;
-
-                } else if (res.startsWith("t:") && res.Contains(".")) {
-                    res.Replace("t:","");
-                    SFUint32 bn = toLongU(nextTokenClear(res,'.'));
-                    SFUint32 tn = toLongU(res);
-                    cout << bn << "." << tn << "\n";
-                    CTransaction trans;
-                    getTransaction(trans,bn,tn);
-                    showColoredTrace(this, trans.hash);
-
-                } else if (res == "h" || res == "help") {
-                    cout << "q = quit, c = correcting entry, t:bn.tn = trace at blockNum.transID, s:N = step N steps, c = clear, h = help, enter to continue\n";
-
-                } else if (!res.empty()) {
-                    cout << "invalid command: " << res << "\n";
-                    
-                } else {
-                    done = true;
-                }
-            }
+            if (!enterDebugger())
+                return false;  // quit
         }
     }
     return true;
@@ -239,6 +205,7 @@ void CVisitor::accountForTransaction(const CTransaction *trans) {
     watches[fWhich].qbis.outflow += trans->value;
     watches[tWhich].qbis.inflow += trans->value;
     nTrans++;
+    tBuffer.addItem(trans->blockNumber, trans->transactionIndex);
 }
 
 //-----------------------------------------------------------------------
@@ -268,7 +235,7 @@ int displayCache(const SFString& cacheFileName, SFUint32& blockNum, void *data) 
 
                     // If we switched blocks, read the next block
                     if (!readOneBlock_fromBinary(block, getBinaryFilename1(blockNum))) {
-                        cerr << "Block read failed. Quitting cache read\n";
+                        cerr << "Block read failed. Quitting cache read\r\n";
                         visitor->cache.Release();
                         return false;
                     }
@@ -330,6 +297,6 @@ bool buildCache(CBlock& block, void *data) {
             visitor->stats.interumReport(block.blockNumber, block.timestamp);
     }
     // Write this to the file so we know which block to start on next time the monitor is run
-    stringToAsciiFile("./cache/lastBlock.txt", asStringU(block.blockNumber) + "\n");
+    stringToAsciiFile("./cache/lastBlock.txt", asStringU(block.blockNumber) + "\r\n");
     return visitor->closeIncomeStatement(block);
 }
