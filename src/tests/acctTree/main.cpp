@@ -31,15 +31,13 @@ int main(int argc, const char *argv[]) {
         if (reporter.tree) {
             //-----------------------------------------------
             reporter.startTimer("Accumulating accounts...");
-            verbose = !isTesting;
-            forEveryMiniBlockInMemory(buildTree, &reporter, 0, getClientLatestBlk());
-            verbose = false;
+            forEveryBlockOnDisc(buildTree, &reporter, 2500000, getClientLatestBlk());
             reporter.stopTimer();
 
             //-----------------------------------------------
-            cerr << "\nHit enter to continue...\n";
-            if (!isTesting)
-                getchar();
+//            cerr << "\nHit enter to continue...\n";
+//            if (!isTesting)
+//                getchar();
 
             //-----------------------------------------------
             reporter.startTimer("Displaying accounts...");
@@ -53,40 +51,38 @@ int main(int argc, const char *argv[]) {
 }
 
 //-----------------------------------------------------------------------
-bool buildTree(CMiniBlock& block, const CMiniTrans *trans, void *data) {
-    verbose = false;
+bool buildTree(CBlock& block, void *data) {
+
+    static int x = 0;
     CReporter *r = reinterpret_cast<CReporter*>(data);
 
     r->nBlocksVisited++;
-    for (SFUint32 i = block.firstTrans ; i < block.firstTrans + block.nTrans ; i++) {
-        CMiniTrans *tr = (CMiniTrans*)&trans[i];  // NOLINT
-        if (SFString(tr->to).empty()) {
-            tr->to[0] = '0';
-            tr->to[1] = 'x';
-            tr->to[2] = '0';
-            tr->to[3] = '\0';
-        }
+    for (uint32_t i = 0 ; i < block.transactions.getCount() ; i++) {
+        CTransaction *tr = (CTransaction*)&block.transactions[i];  // NOLINT
+        if (SFString(tr->to).empty())
+            tr->to = "0x0";
         r->nTransVisited++;
         r->tree->insert(tr->from, asString(block.blockNumber));
         r->tree->insert(tr->to, asString(block.blockNumber));
         r->interumReport(tr->from, tr->to, block.blockNumber);
+        x++;
     }
-    return true;
+    return (x < 50000);
 }
 
 //-----------------------------------------------------------------------------
-bool printTree(const acctTree_Node *node, void *data) {
+bool printTree(const CTreeNode *node, void *data) {
     CReporter *r = reinterpret_cast<CReporter*>(data);
 
     r->nAccts++;
 
     // Stop increasing less frequenty while printing so we can see what's going on
-    if (!isTesting && !(r->nAccts % r->stopping)) {
-        char ch = getchar();
-        if (ch == 'q')
-            exit(0);
-        r->stopping*=2;
-    }
+//    if (!isTesting && !(r->nAccts % r->stopping)) {
+//        char ch = getchar();
+//        if (ch == 'q')
+//            exit(0);
+//        r->stopping*=2;
+//    }
 
     // This simply accumulates the longest common prefixes
     if (r->getNext) {
