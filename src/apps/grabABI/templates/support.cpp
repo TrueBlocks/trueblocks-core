@@ -174,10 +174,11 @@ bool CVisitor::closeIncomeStatement(const CBlock& block) {
     cout.flush();
 
     if (debug) {
-        if (nOutOfBal || breakPt == UINT64_MAX || block.blockNumber >= breakPt) {
-            if (!enterDebugger())
-                return false;  // quit
-        }
+        getchar();
+//        if (nOutOfBal || breakPt == UINT64_MAX || block.blockNumber >= breakPt) {
+//            if (!enterDebugger())
+//                return false;  // quit
+//        }
     }
     return true;
 }
