@@ -82,5 +82,5 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-extern bool printTree(const acctTree_Node *node, void *data);
-extern bool buildTree(CMiniBlock& block, const CMiniTrans *trans, void *data);
+extern bool printTree(const CTreeNode *node, void *data);
+extern bool buildTree(CBlock& block, void *data);
