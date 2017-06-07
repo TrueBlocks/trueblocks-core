@@ -5,10 +5,12 @@
  *------------------------------------------------------------------------*/
 #include "etherlib.h"
 
-#include "base.h"
+#include "treenode.h"
 #include "leaf.h"
 #include "branch.h"
 #include "infix.h"
+
+namespace qblocks {
 
 //----------------------------------------------------------
 #define T_TOP       (0)
@@ -37,11 +39,10 @@ public:
     void insert(const SFString& _key, const SFString& _value);
     void insert(const char* _key, blknum_t _value) { insert(SFString(_key).Right(40), asString(_value)); }
     void remove(const SFString& _key);
-    SFString debugPrint(void) const;
     bool visitItems(ACCTVISITOR func, void *data) const;
 
 private:
-    acctTree_Node* m_root;
+    CTreeNode* m_root;
 };
 
 //----------------------------------------------------------
@@ -79,3 +80,7 @@ inline SFString idex(uint32_t n) {
 //------------------------------------------------------------------
 bool forEveryAccount(CAccountTree *trie, ACCTVISITOR func, void *data);
 extern SFString idnt;
+
+}  // namespace qblocks
+
+using namespace qblocks;
