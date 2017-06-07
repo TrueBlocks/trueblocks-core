@@ -42,7 +42,7 @@ public:
 
     void interumReport(SFUint32 bn, timestamp_t ts) {
         timestamp_t tsOut = (ts == 0 ? toTimeStamp(Now()) : ts);
-        progressBar(bn-startBlock, nBlocks, dateFromTimeStamp(tsOut).Format(FMT_JSON));
+        progressBar(bn-startBlock, nBlocks, dateFromTimeStamp(tsOut).Format(FMT_JSON) + " (" + asString(bn) + ")");
         last_ts = ts;
     }
 };

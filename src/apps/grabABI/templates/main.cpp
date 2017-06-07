@@ -5,7 +5,7 @@
  *
  * The LICENSE at the root of this repo details your rights (if any)
  *------------------------------------------------------------------------*/
-#include <ncurses.h>
+//#include <ncurses.h>
 #include "etherlib.h"
 #include "options.h"
 #include "parselib.h"
@@ -44,7 +44,7 @@ void displayTransaction(uint32_t which, const CTransaction *theTrans, void *data
         head += ((promoted->isInternalTx ? promoted->to : contractName) + "::" +
                  transType + (promoted->isInternalTx ? " (logs from " + contractName + ")" : ""));
         fmt.Replace("[{HEAD}]", head);
-        fmt.Replace("[{SEP}\n]", SFString('-', maxWid) + "\r\n");
+        fmt.Replace("[{SEP}\r\n]", SFString('-', maxWid) + "\r\n");
 
         SFString transStr = promoted->Format(fmt).Substitute("\t"," ");
 
@@ -56,6 +56,8 @@ void displayTransaction(uint32_t which, const CTransaction *theTrans, void *data
     //----------------------------------
     SFString evtList;
     if (visitor->showLogs || wantsEvents) {
+        if (theTrans->receipt.logs.getCount())
+            cout << "\r\n";
         for (int i = 0 ; i < theTrans->receipt.logs.getCount() ; i++) {
 
             // Try to promote it. If we can't promote it, revert to the original.
@@ -118,18 +120,18 @@ void myQuitHandler(int s) {
         cout << "Removing file: " << file << "\n"; cout.flush();
         removeFile(file);
     }
-    endwin();
+//    endwin();
     exit(1);
 }
 
 //-----------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
-    initscr();
-    raw();
-    keypad(stdscr, TRUE);
-    noecho();
-    refresh();
+//    initscr();
+//    raw();
+//    keypad(stdscr, TRUE);
+//    noecho();
+//    refresh();
     registerQuitHandler(myQuitHandler);
 
     parselib_init("binary");
@@ -140,7 +142,7 @@ int main(int argc, const char *argv[]) {
     COptions options;
     if (!options.prepareArguments(argc, argv)) {
         cout.flush();cerr.flush();getchar();
-        endwin();
+//        endwin();
         return false;
     }
 
@@ -149,7 +151,7 @@ int main(int argc, const char *argv[]) {
         SFString command = nextTokenClear(options.commandList, '\n');
         if (!options.parseArguments(command)) {
             cout.flush();cerr.flush();getchar();
-            endwin();
+//            endwin();
             return false;
         }
 
@@ -167,7 +169,7 @@ int main(int argc, const char *argv[]) {
                 cout << usageStr("Invalid watch parameters for watch " + asString(i) + ". Quitting...")
                             .Substitute("\n", "\r\n");
                 cout.flush();cerr.flush();getchar();
-                endwin();
+//                endwin();
                 return false;
             }
             visitor.watches[visitor.watches.getCount()] = watch;
@@ -177,7 +179,7 @@ int main(int argc, const char *argv[]) {
             cout << usageStr("You must specify at least one address to watch in the config file.\r\n")
                         .Substitute("\n", "\r\n");
             cout.flush();cerr.flush();getchar();
-            endwin();
+//            endwin();
             return false;
         }
         visitor.watches[visitor.watches.getCount()] = CAccountWatch(1, "Others", "Ext Accts", 0, bRed);
@@ -208,7 +210,7 @@ int main(int argc, const char *argv[]) {
                              + cacheFileName + ".lck'. Quitting...")
                     .Substitute("\n", "\r\n");
             cout.flush();cerr.flush();getchar();
-            endwin();
+//            endwin();
             return false;
         }
 
@@ -257,7 +259,7 @@ int main(int argc, const char *argv[]) {
         }
     }
 
-    endwin();
+//    endwin();
     return false;
 }
 
