@@ -6,17 +6,18 @@
  *
  * The LICENSE at the root of this repo details your rights (if any)
  *------------------------------------------------------------------------*/
-#include "ext.h"
+#include "treenode.h"
+
+namespace qblocks {
 
 //-----------------------------------------------------------------------------
-class acctTree_Leaf: public acctTree_Ext {
+class CLeaf: public CTreeNode {
 public:
-    acctTree_Leaf(const SFString& _key, const SFString& _value);
+    CLeaf(const SFString& _key, const SFString& _value);
 
     SFString at(const SFString& _key) const override;
-    acctTree_Node* insert(const SFString& _key, const SFString& _value) override;
-    acctTree_Node* remove(const SFString& _key) override;
-    SFString debugPrintBody(const SFString& _indent) const override;
+    CTreeNode* insert(const SFString& _key, const SFString& _value) override;
+    CTreeNode* remove(const SFString& _key) override;
     bool visitItems(ACCTVISITOR func, void *data) const override;
 
 private:
@@ -24,3 +25,5 @@ private:
 
     SFString m_leafValue;
 };
+
+}  // namespace qblocks
