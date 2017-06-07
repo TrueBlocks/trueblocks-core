@@ -6,22 +6,134 @@
  *
  * The LICENSE at the root of this repo details your rights (if any)
  *------------------------------------------------------------------------*/
-#include "ext.h"
+/*
+ * This file was generated with makeClass. Edit only those parts of the code inside
+ * of 'EXISTING_CODE' tags.
+ */
+#include "etherlib.h"
+#include "treenode.h"
 
-//-----------------------------------------------------------------------------
-class acctTree_Infix: public acctTree_Ext {
+namespace qblocks {
+
+//--------------------------------------------------------------------------
+class CInfix;
+typedef SFArrayBase<CInfix>         CInfixArray;
+typedef SFList<CInfix*>             CInfixList;
+typedef SFUniqueList<CInfix*>       CInfixListU;
+
+// EXISTING_CODE
+// EXISTING_CODE
+
+//--------------------------------------------------------------------------
+class CInfix : public CTreeNode {
 public:
-    acctTree_Infix(const SFString& _key, acctTree_Node* _next);
-    virtual ~acctTree_Infix(void);
+    CTreeNode *m_next;
 
+public:
+    CInfix(void);
+    CInfix(const CInfix& in);
+    virtual ~CInfix(void);
+    CInfix& operator=(const CInfix& in);
+
+    DECLARE_NODE(CInfix);
+
+    // EXISTING_CODE
+	CInfix(const SFString& _key, CTreeNode* _next) : m_next(_next) {
+    	m_prefix = _key;
+	}
     SFString at(const SFString& _key) const override;
-    acctTree_Node* insert(const SFString& _key, const SFString& _value) override;
-    acctTree_Node* remove(const SFString& _key) override;
-    SFString debugPrintBody(const SFString& _indent) const override;
+    CTreeNode* insert(const SFString& _key, const SFString& _value) override;
+    CTreeNode* remove(const SFString& _key) override;
     bool visitItems(ACCTVISITOR func, void *data) const override;
+	bool contains(const SFString& _key) const;
+    // EXISTING_CODE
 
-private:
-    bool contains(const SFString& _key) const;
+protected:
+    void Clear(void);
+    void Init(void);
+    void Copy(const CInfix& in);
+    bool readBackLevel(SFArchive& archive);
 
-    acctTree_Node* m_next;
+    // EXISTING_CODE
+    // EXISTING_CODE
 };
+
+//--------------------------------------------------------------------------
+inline CInfix::CInfix(void) {
+    Init();
+    // EXISTING_CODE
+    // EXISTING_CODE
+}
+
+//--------------------------------------------------------------------------
+inline CInfix::CInfix(const CInfix& in) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    Copy(in);
+}
+
+// EXISTING_CODE
+// EXISTING_CODE
+
+//--------------------------------------------------------------------------
+inline CInfix::~CInfix(void) {
+    Clear();
+    // EXISTING_CODE
+    if (m_next)
+        delete m_next;
+    // EXISTING_CODE
+}
+
+//--------------------------------------------------------------------------
+inline void CInfix::Clear(void) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+}
+
+//--------------------------------------------------------------------------
+inline void CInfix::Init(void) {
+    CTreeNode::Init();
+
+    m_next = NULL;
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+}
+
+//--------------------------------------------------------------------------
+inline void CInfix::Copy(const CInfix& in) {
+    Clear();
+    CTreeNode::Copy(in);
+
+    if (m_next)
+        *m_next = *in.m_next;
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+    finishParse();
+}
+
+//--------------------------------------------------------------------------
+inline CInfix& CInfix::operator=(const CInfix& in) {
+    Copy(in);
+    // EXISTING_CODE
+    // EXISTING_CODE
+    return *this;
+}
+
+//---------------------------------------------------------------------------
+inline SFString CInfix::getValueByName(const SFString& fieldName) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    return Format("[{"+toUpper(fieldName)+"}]");
+}
+
+//---------------------------------------------------------------------------
+IMPLEMENT_ARCHIVE_ARRAY(CInfixArray);
+IMPLEMENT_ARCHIVE_ARRAY_C(CInfixArray);
+IMPLEMENT_ARCHIVE_LIST(CInfixList);
+
+//---------------------------------------------------------------------------
+// EXISTING_CODE
+// EXISTING_CODE
+}  // namespace qblocks
