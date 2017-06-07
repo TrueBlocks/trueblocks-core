@@ -6,27 +6,30 @@
  *
  * The LICENSE at the root of this repo details your rights (if any)
  *------------------------------------------------------------------------*/
-#include "base.h"
+#include "treenode.h"
+
+namespace qblocks {
 
 //-----------------------------------------------------------------------------
-class acctTree_Branch: public acctTree_Node {
+class CBranch: public CTreeNode {
 public:
-    explicit acctTree_Branch(const SFString& _value);
-    acctTree_Branch(char _i1, acctTree_Node* _n1, const SFString& _value = "");
-    acctTree_Branch(char _i1, acctTree_Node* _n1, char _i2, acctTree_Node* _n2);
-    virtual ~acctTree_Branch(void);
+    explicit CBranch(const SFString& _value);
+    CBranch(char _i1, CTreeNode* _n1, const SFString& _value = "");
+    CBranch(char _i1, CTreeNode* _n1, char _i2, CTreeNode* _n2);
+    virtual ~CBranch(void);
 
     SFString at(const SFString& _key) const override;
-    acctTree_Node* insert(const SFString& _key, const SFString& _value) override;
-    acctTree_Node* remove(const SFString& _key) override;
-    SFString debugPrintBody(const SFString& _indent) const override;
+    CTreeNode* insert(const SFString& _key, const SFString& _value) override;
+    CTreeNode* remove(const SFString& _key) override;
     bool visitItems(ACCTVISITOR func, void *data) const override;
 
 private:
     /// @returns (byte)-1 when no active branches, 16 when multiple active and the index of the active branch otherwise.
     char activeBranch() const;
 
-    acctTree_Node *rejig();
-    acctTree_Node *m_nodes[16];
+    CTreeNode *rejig();
+    CTreeNode *m_nodes[16];
     SFString m_branchValue;
 };
+
+}  // namespace qblocks
