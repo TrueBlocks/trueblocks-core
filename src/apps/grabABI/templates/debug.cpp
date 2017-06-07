@@ -1,3 +1,4 @@
+#if 0
 #include <ncurses.h>
 #include "etherlib.h"
 #include "support.h"
@@ -14,7 +15,6 @@ static CParams debugCmds[] = {
 };
 static SFUint32 nDebugCmds = sizeof(debugCmds) / sizeof(CParams);
 //cout << "\rt:bn.tn = trace at blockNum.transID, h = help, enter to continue\r\n";
-
 
 //---------------------------------------------------------------------
 SFString completeCommand(const SFString& cmd) {
@@ -216,7 +216,6 @@ int main(void) {
     /*  Wait for keypress before ending  * /
     getch();
 
-
     /*  Clean up and exit  * /
     delwin(win);
     endwin();
@@ -225,7 +224,6 @@ int main(void) {
     return EXIT_SUCCESS;
 }
 #endif
-
 
 #if 0
 #include <stdlib.h>
@@ -289,4 +287,5 @@ int main(void) {
 }
 #endif
  */
+#endif
 #endif
