@@ -258,14 +258,6 @@ bool CInfix::readBackLevel(SFArchive& archive) {
     }
 
     //------------------------------------------------------------------
-    SFString types[] = {
-        SFString(cWhite)   + "T_TOPP" + cOff,
-        SFString(cRed)     + "T_LEAF" + cOff,
-        SFString(bYellow)  + "T_BRAN" + cOff,
-        SFString(cGreen)   + "T_INFX" + cOff,
-    };
-
-    //------------------------------------------------------------------
     bool CInfix::visitItems(ACCTVISITOR func, void *data) const {
         ASSERT(func);
         CVisitData *vd = reinterpret_cast<CVisitData*>(data);
@@ -281,3 +273,4 @@ bool CInfix::readBackLevel(SFArchive& archive) {
     }
 // EXISTING_CODE
 }  // namespace qblocks
+

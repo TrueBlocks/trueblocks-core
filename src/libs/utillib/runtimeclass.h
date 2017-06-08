@@ -76,20 +76,20 @@ namespace qblocks {
 public: \
 static CRuntimeClass class##CLASS_NAME; \
 static CBaseNode *CreateObject(void); \
-virtual CRuntimeClass *getRuntimeClass(void) const;
+virtual CRuntimeClass *getRuntimeClass(void) const override;
 
     //------------------------------------------------------------
 #define DECLARE_NODE(CLASS_NAME) \
 DECLARE_NODE_BASE(CLASS_NAME) \
-virtual SFString getValueByName(const SFString& fieldName) const; \
-virtual bool setValueByName(const SFString& fieldName, const SFString& fieldValue); \
-virtual bool Serialize(SFArchive& archive); \
-virtual bool SerializeC(SFArchive& archive) const; \
-virtual void finishParse(void); \
-virtual bool handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data = NULL) const; \
-virtual void Format(CExportContext& ctx, const SFString& fmtIn, void *data = NULL) const; \
-virtual SFString Format(const SFString& fmtIn = "") const {\
-CStringExportContext ctx; Format(ctx, fmtIn, NULL); return ctx.str; } \
+virtual SFString getValueByName(const SFString& fieldName) const override; \
+virtual bool setValueByName(const SFString& fieldName, const SFString& fieldValue) override; \
+virtual bool Serialize(SFArchive& archive) override; \
+virtual bool SerializeC(SFArchive& archive) const override; \
+virtual void finishParse(void) override; \
+virtual bool handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data = NULL) const override; \
+virtual void Format(CExportContext& ctx, const SFString& fmtIn, void *data = NULL) const override; \
+virtual SFString Format(const SFString& fmtIn = "") const override { \
+    CStringExportContext ctx; Format(ctx, fmtIn, NULL); return ctx.str; } \
 SFString getClassName(void) const; \
 static void registerClass(void);
 

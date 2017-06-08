@@ -12,6 +12,7 @@
 namespace qblocks {
 
     //----------------------------------------------------------------------------
+    class CExportContext;
     class SFArchive;
 
     //----------------------------------------------------------------------------
@@ -41,14 +42,20 @@ namespace qblocks {
         virtual SFString toJson(const CFieldList *fields) const;
         virtual SFString toJsonFldList(const CFieldList *fieldList) const;
 
-        DECLARE_NODE_BASE(CBaseNode)
-
-        virtual SFString getValueByName(const SFString& fieldName) const = 0;
-        virtual bool setValueByName(const SFString& fieldName, const SFString& fieldValue) = 0;
-        virtual bool Serialize(SFArchive& archive) = 0;
-        virtual bool SerializeC(SFArchive& archive) const = 0;
-        virtual void finishParse(void) = 0;
-        virtual SFString Format(const SFString& fmtIn = "") const = 0;
+    public:
+        static CRuntimeClass classCBaseNode;
+        static CBaseNode *CreateObject(void);
+        virtual CRuntimeClass *getRuntimeClass(void) const;
+        virtual SFString getValueByName(const SFString& fieldName) const { return ""; }
+        virtual bool setValueByName(const SFString& fieldName, const SFString& fieldValue) { return false; }
+        virtual bool Serialize(SFArchive& archive) { return false; }
+        virtual bool SerializeC(SFArchive& archive) const { return false; }
+        virtual void finishParse(void) { }
+        virtual void Format(CExportContext& ctx, const SFString& fmtIn, void *data = NULL) const { };
+        virtual SFString Format(const SFString& fmtIn = "") const { return ""; };
+        virtual bool handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data = NULL) const {
+            return false;
+        }
 
     protected:
         bool preSerialize(SFArchive& archive);
