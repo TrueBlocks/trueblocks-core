@@ -5,6 +5,7 @@ blockScrape
 build
 bytesUsed
 cacheMan
+chifra
 editAll
 ethName
 ethgoog
@@ -17,6 +18,7 @@ findAll
 fixProj
 fixProj.1
 fixProj2
+freshen
 getBalance
 getBlock
 getLogs
