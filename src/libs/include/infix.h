@@ -38,14 +38,14 @@ public:
     DECLARE_NODE(CInfix);
 
     // EXISTING_CODE
-	CInfix(const SFString& _key, CTreeNode* _next) : m_next(_next) {
-    	m_prefix = _key;
-	}
+    CInfix(const SFString& _key, CTreeNode* _next) : m_next(_next) {
+        m_prefix = _key;
+    }
     SFString at(const SFString& _key) const override;
     CTreeNode* insert(const SFString& _key, const SFString& _value) override;
     CTreeNode* remove(const SFString& _key) override;
     bool visitItems(ACCTVISITOR func, void *data) const override;
-	bool contains(const SFString& _key) const;
+    bool contains(const SFString& _key) const;
     // EXISTING_CODE
 
 protected:
@@ -137,3 +137,4 @@ IMPLEMENT_ARCHIVE_LIST(CInfixList);
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks
+

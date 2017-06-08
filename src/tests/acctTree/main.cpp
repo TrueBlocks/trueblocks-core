@@ -31,7 +31,7 @@ int main(int argc, const char *argv[]) {
         if (reporter.tree) {
             //-----------------------------------------------
             reporter.startTimer("Accumulating accounts...");
-            forEveryBlockOnDisc(buildTree, &reporter, 2500000, getClientLatestBlk());
+            forEveryBlockOnDisc(buildTree, &reporter, 1500000, getClientLatestBlk());
             reporter.stopTimer();
 
             //-----------------------------------------------
@@ -53,7 +53,6 @@ int main(int argc, const char *argv[]) {
 //-----------------------------------------------------------------------
 bool buildTree(CBlock& block, void *data) {
 
-    static int x = 0;
     CReporter *r = reinterpret_cast<CReporter*>(data);
 
     r->nBlocksVisited++;
@@ -64,10 +63,11 @@ bool buildTree(CBlock& block, void *data) {
         r->nTransVisited++;
         r->tree->insert(tr->from, asString(block.blockNumber));
         r->tree->insert(tr->to, asString(block.blockNumber));
-        r->interumReport(tr->from, tr->to, block.blockNumber);
-        x++;
+//        r->interumReport(tr->from, tr->to, block.blockNumber);
+        cerr << r->nBlocksVisited << ":" << block.blockNumber << "\r";
+        cerr.flush();
     }
-    return (x < 50000);
+    return (r->nBlocksVisited < 2500);
 }
 
 //-----------------------------------------------------------------------------
