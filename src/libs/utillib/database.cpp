@@ -509,6 +509,10 @@ namespace qblocks {
 
         if (spaces)
             codeOut.ReplaceAll("\t", "    ");
+
+        if (codeOut.Contains("virtual") || codeOut.Contains("override"))
+            codeOut.Replace("~", "virtual ~");
+
         stringToAsciiFile(fileName, codeOut);
     }
 

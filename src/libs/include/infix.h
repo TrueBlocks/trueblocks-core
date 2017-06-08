@@ -135,6 +135,7 @@ IMPLEMENT_ARCHIVE_LIST(CInfixList);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
+extern SFString nextTreenodeChunk(const SFString& fieldIn, bool& force, const void *data);
 // EXISTING_CODE
 }  // namespace qblocks
 
