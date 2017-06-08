@@ -15,7 +15,7 @@ Depending on the use case, QuickBlocks is able to achieve more than 150 times sp
 
 ## Higher Information Content
 
-An Ethereum node knows nothing about Solidity source code. It can only return hexadecimal bytes. In order to make the data useful, each user must re-translate the data back into the language of the smart contract. For example, [this complicated RPC data](example.json) is simply [a yes vote on a proposal](vote.json). While QuickBlocks is able to return raw hexadecimal data identical to the RPC, by default it returns what we call `articulated data`.
+An Ethereum node knows nothing about Solidity source code. It can only return hexadecimal bytes. In order to make the data useful, each user must re-translate the data back into the language of the smart contract. For example, [this complicated RPC data](docs/example.json) is simply [a yes vote on a proposal](docs/vote.json). While QuickBlocks is able to return raw hexadecimal data identical to the RPC, by default it returns what we call `articulated data`.
 
 QuickBlocks is able to articulate the data by using the smart contract's ABI file. If available, an ABI file contains all the information necessary to translate the RPC data back into the language of the smart contract. This functionality is implemented in the [abilib libary](src/libs/abilib) and the [grabABI](src/apps/grabABI) app. Instead of dealing with **hashes** and **merkel roots** and **sha3**, you deal with **votes** and **transfers** and **withdrawals**.
 
