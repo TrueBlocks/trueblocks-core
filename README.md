@@ -1,35 +1,33 @@
-# quickBlocks
+# QuickBlocks
 
-QuickBlocks is a collection of software [libraries](src/libs), [applications](src/apps), and [tools](src/tools) that allow you to access the Ethereum virtual machine (EVM) blockchain data (a) more quickly, (b) with higher information content, (c) in an fully decentralized way, (d) in a fully automated way, and (e) in a most maintenance free way.
-
-That's a mouthful. We'll break it down.
+QuickBlocks is a collection of software [libraries](src/libs), [applications](src/apps), [tools](src/tools), and [examples](src/tests) that allow you to retrieve Ethereum blockchain data (a) more quickly, (b) with higher information content, (c) in an fully decentralized way, (d) in a fully automated way, and (e) in a highly maintenance free way. (For information on building the project, [link here](BUILD.md).)
 
 ## More Quickly
 
-We interact with the Ethereum node via the RPC interface to accumulate and cache block, transaction, receipt, and event log data. Prior to storing the data we do everything we can think of to make later retrieval of that data as quick as possible without losing sight of the fact that our solution is fully decentralized. Some of the optimizations we make are
+QuickBlocks interacts with the Ethereum blockchain via the RPC interface to accumulate `blocks`, `transactions`, `receipts`, and event `logs`. Prior to storing the data, we optimize it for later retrieval. The primary goal of QuickBlocks is to return the data as quickly as possible while maintaining a fully decentralized stance. These optimizations include:
 
-1. attach receipts and logs to transactions
-2. identify in-error transactions using the node's trace functionality
-3. identify potentially-internal transactions
-4. store the blocks optimized for quick, later retrieval
+1. attaching `receipts` and `logs` directly to `transactions`,
+2. identifying in-error transactions using the node's trace functionality,
+3. pre-processing incoming internal transactions,
+4. storing the data optimized for quick, later retrieval.
+
+Depending on the use case, QuickBlocks is able to achieve more than 150 times speedup relative to the node's RPC interface.
 
 ## Higher Information Content
 
-If given an ABI definition for a particular smart contract, QuickBlocks is able to decode all of the transactional data including generated event logs. Instead of dealing with 'hashes' and 'merkel roots' and 'sha3', the developer/user deals with the data in the very familiar language: that of their own smart contracts.
+An Ethereum node knows nothing about Solidity source code. It can only return hexadecimal bytes. In order to make the data useful, each user must re-translate the data back into the language of the smart contract. For example, [this complicated RPC data](example.json) is simply [a yes vote on a proposal](vote.json). While QuickBlocks is able to return raw hexadecimal data identical to the RPC, by default it returns what we call `articulated data`.
 
-Instead of this:
-
-You get this:
+QuickBlocks is able to articulate the data by using the smart contract's ABI file. If available, an ABI file contains all the information necessary to translate the RPC data back into the language of the smart contract. This functionality is implemented in the [abilib libary](src/libs/abilib) and the [grabABI](src/apps/grabABI) app. Instead of dealing with **hashes** and **merkel roots** and **sha3**, you deal with **votes** and **transfers** and **withdrawals**.
 
 ## Fully Decentralized
 
-Unlike any other block chain scrapers you may find (such as http://etherscan.io), QuickBlocks is fully decentralized. The system interacts only with your local node. (Although, it can, if you wish, interact with any node). As a result, you could conceivably disconnect your machine from the Internet, and as long as the node was running, QuickBlocks would work. You wouldn't get fresh blocks, but QuickBlocks would still operate. That's what we mean by `decentralized`.
+Unlike other block chain scrapers such as http://etherscan.io, QuickBlocks is, by default, fully decentralized. QuickBlocks interacts with only your local Ethereum node. (Although, it can, if you wish, interact with any node such as Infura). This aspect of our system distinguishes QuickBlocks from other options. If you understand and believe in the benefits of decentralization, you will understand why this is important. If you don't, you'll undervalue this aspect of our work.
 
-## Fully Automatic yet Customizable
+## Fully Automatic (Yet Customizable)
 
-The code necessary to provide the above mentioned richer data (i.e. data in the language of your own smart contract) is generated automatically (programmatically) from the ABI. A fully functional `c-callable static library` is created. At the same time, due to the fact that the generated code is C++, you can program it to do anything you like. See some examples (TODO).
+The source code for ***all of the functionality*** mentioned above is generated automatically (i.e. programmatically) using the [grabABI](src/apps/grabABI) and [makeClass](src/apps/makeClass) apps. This makes standing up a [monitor](src/monitors/README.md) for any smart contract (or system of smart contracts) trivial. With a one line command to [chifra](src/apps/chifra/README.md), a fully functional C++ static library is created. At the same time, because the generated code is fairly simple C++ code, it is fully customizable.
 
-## Maintenance Free
+## Low Maintenance
 
 Every smart contract, once deployed, is immutable. That means that the automatically generated C++ code is also immutable (if you want it to). You could literally automatically generate a data delivery layer for your smart contract that requires no further interaction. It can simply run forever, standing off-chain, but beside your smart contract, and deliver all your contact's data at high speed.
 
