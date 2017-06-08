@@ -9,20 +9,19 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
-#include "treenode.h"
 #include "accounttree.h"
 
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CTreeNode, CBaseNode, curVersion);
+IMPLEMENT_NODE(CAccountTree, CBaseNode, curVersion);
 
 //---------------------------------------------------------------------------
-extern SFString nextTreenodeChunk(const SFString& fieldIn, bool& force, const void *data);
-static SFString nextTreenodeChunk_custom(const SFString& fieldIn, bool& force, const void *data);
+static SFString nextAccounttreeChunk(const SFString& fieldIn, bool& force, const void *data);
+static SFString nextAccounttreeChunk_custom(const SFString& fieldIn, bool& force, const void *data);
 
 //---------------------------------------------------------------------------
-void CTreeNode::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+void CAccountTree::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
     if (!m_showing)
         return;
 
@@ -36,24 +35,22 @@ void CTreeNode::Format(CExportContext& ctx, const SFString& fmtIn, void *data) c
         return;
 
     while (!fmt.empty())
-        ctx << getNextChunk(fmt, nextTreenodeChunk, this);
+        ctx << getNextChunk(fmt, nextAccounttreeChunk, this);
 }
 
 //---------------------------------------------------------------------------
-SFString nextTreenodeChunk(const SFString& fieldIn, bool& force, const void *data) {
-    const CTreeNode *tre = (const CTreeNode *)data;
-    if (tre) {
+SFString nextAccounttreeChunk(const SFString& fieldIn, bool& force, const void *data) {
+    const CAccountTree *acc = (const CAccountTree *)data;
+    if (acc) {
         // Give customized code a chance to override first
-        SFString ret = nextTreenodeChunk_custom(fieldIn, force, data);
+        SFString ret = nextAccounttreeChunk_custom(fieldIn, force, data);
         if (!ret.empty())
             return ret;
 
         switch (tolower(fieldIn[0])) {
-            case 'i':
-                if ( fieldIn % "index" ) return asStringU(tre->index);
-                break;
             case 'm':
-                if ( fieldIn % "m_prefix" ) return tre->m_prefix;
+            return EMPTY;
+//                if ( fieldIn % "m_root" ) { expContext().noFrst=true; return acc->m_root.Format(); }
                 break;
         }
 
@@ -61,7 +58,7 @@ SFString nextTreenodeChunk(const SFString& fieldIn, bool& force, const void *dat
         // EXISTING_CODE
 
         // Finally, give the parent class a chance
-        ret = nextBasenodeChunk(fieldIn, force, tre);
+        ret = nextBasenodeChunk(fieldIn, force, acc);
         if (!ret.empty())
             return ret;
     }
@@ -70,16 +67,14 @@ SFString nextTreenodeChunk(const SFString& fieldIn, bool& force, const void *dat
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CTreeNode::setValueByName(const SFString& fieldName, const SFString& fieldValue) {
+bool CAccountTree::setValueByName(const SFString& fieldName, const SFString& fieldValue) {
     // EXISTING_CODE
     // EXISTING_CODE
 
     switch (tolower(fieldName[0])) {
-        case 'i':
-            if ( fieldName % "index" ) { index = toUnsigned(fieldValue); return true; }
-            break;
         case 'm':
-            if ( fieldName % "m_prefix" ) { m_prefix = fieldValue; return true; }
+            return true;
+//            if ( fieldName % "m_root" ) { /* m_root = fieldValue; */ return false; }
             break;
         default:
             break;
@@ -88,67 +83,64 @@ bool CTreeNode::setValueByName(const SFString& fieldName, const SFString& fieldV
 }
 
 //---------------------------------------------------------------------------------------------------
-void CTreeNode::finishParse() {
+void CAccountTree::finishParse() {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CTreeNode::Serialize(SFArchive& archive) {
+bool CAccountTree::Serialize(SFArchive& archive) {
     if (!archive.isReading())
-        return ((const CTreeNode*)this)->SerializeC(archive);
+        return ((const CAccountTree*)this)->SerializeC(archive);
 
     if (!preSerialize(archive))
         return false;
 
-    archive >> index;
-    archive >> m_prefix;
+//    archive >> m_root;
     finishParse();
     return true;
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CTreeNode::SerializeC(SFArchive& archive) const {
+bool CAccountTree::SerializeC(SFArchive& archive) const {
     if (!preSerializeC(archive))
         return false;
 
-    archive << index;
-    archive << m_prefix;
+//    archive << m_root;
 
     return true;
 }
 
 //---------------------------------------------------------------------------
-void CTreeNode::registerClass(void) {
+void CAccountTree::registerClass(void) {
     static bool been_here = false;
     if (been_here) return;
     been_here = true;
 
     uint32_t fieldNum = 1000;
-    ADD_FIELD(CTreeNode, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
-    ADD_FIELD(CTreeNode, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
-    ADD_FIELD(CTreeNode, "index", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CTreeNode, "m_prefix", T_TEXT, ++fieldNum);
+    ADD_FIELD(CAccountTree, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
+    ADD_FIELD(CAccountTree, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
+    ADD_FIELD(CAccountTree, "m_root", T_POINTER, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
-    HIDE_FIELD(CTreeNode, "schema");
-    HIDE_FIELD(CTreeNode, "deleted");
+    HIDE_FIELD(CAccountTree, "schema");
+    HIDE_FIELD(CAccountTree, "deleted");
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------
-SFString nextTreenodeChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
-    const CTreeNode *tre = (const CTreeNode *)data;
-    if (tre) {
+SFString nextAccounttreeChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
+    const CAccountTree *acc = (const CAccountTree *)data;
+    if (acc) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn, force, tre);
+                    return nextBasenodeChunk(fieldIn, force, acc);
                 break;
 
             default:
@@ -160,14 +152,14 @@ SFString nextTreenodeChunk_custom(const SFString& fieldIn, bool& force, const vo
 }
 
 //---------------------------------------------------------------------------
-bool CTreeNode::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+bool CAccountTree::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
 }
 
 //---------------------------------------------------------------------------
-bool CTreeNode::readBackLevel(SFArchive& archive) {
+bool CAccountTree::readBackLevel(SFArchive& archive) {
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -176,40 +168,38 @@ bool CTreeNode::readBackLevel(SFArchive& archive) {
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-CTreeNode* CTreeNode::newBranch(
-    const SFString& _k1,
-    const SFString& _v1,
-    const SFString& _k2,
-    const SFString& _v2) {
-
-    unsigned prefix = commonPrefix(_k1, _k2);
-
-    CTreeNode* ret;
-    if (_k1.length() == prefix) {
-        if (verbose == 2) cerr << "k1 matches up to " << prefix << endl;
-        ret = new CBranch(_k2[prefix], new CLeaf(_k2.substr(prefix+1), _v2), _v1);
-
-    } else if (_k2.length() == prefix) {
-        if (verbose == 2) cerr << "k2 matches up to " << prefix << endl;
-        ret = new CBranch(_k1[prefix], new CLeaf(_k1.substr(prefix+1), _v1), _v2);
-
-    } else {
-        // both continue after split
-        if (verbose == 2) cerr << "both keys continue past prefix " << prefix << endl;
-        ret = new CBranch(_k1[prefix],
-                                    new CLeaf(_k1.substr(prefix+1), _v1),
-                                    _k2[prefix],
-                                    new CLeaf(_k2.substr(prefix+1), _v2));
+    //-----------------------------------------------------------------------------
+    SFString CAccountTree::at(const SFString& _key) const {
+        if (!m_root)
+            return "";
+        return m_root->at(_key);
     }
 
-    if (prefix) {
-        // have shared prefix - split.
-        if (verbose == 2) cerr << "shared prefix " << prefix << endl;
-        ret = new CInfix(_k1.substr(0, prefix), ret);
+    //-----------------------------------------------------------------------------
+    void CAccountTree::remove(const SFString& _key) {
+        if (m_root)
+            m_root = m_root->remove(_key);
     }
 
-    return ret;
-}
+    //-----------------------------------------------------------------------------
+    void CAccountTree::insert(const SFString& _key, const SFString& _value) {
+        if (_value.empty())
+            remove(_key);
+        m_root = m_root ? m_root->insert(_key, _value) : new CLeaf(_key, _value);
+    }
+
+    //-----------------------------------------------------------------------------
+    bool CAccountTree::visitItems(ACCTVISITOR func, void *data) const {
+        if (m_root)
+            return m_root->visitItems(func, data);
+        return true;
+    }
+
+    //------------------------------------------------------------------
+    bool forEveryAccount(CAccountTree *trie, ACCTVISITOR func, void *data) {
+        ASSERT(trie);
+        return trie->visitItems(func, data);
+    }
 // EXISTING_CODE
 }  // namespace qblocks
 

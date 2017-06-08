@@ -9,7 +9,8 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
-#include "tree.h"
+#include "infix.h"
+#include "accounttree.h"
 
 namespace qblocks {
 
@@ -17,7 +18,6 @@ namespace qblocks {
 IMPLEMENT_NODE(CInfix, CTreeNode, curVersion);
 
 //---------------------------------------------------------------------------
-extern SFString nextTreenodeChunk(const SFString& fieldIn, bool& force, const void *data);
 static SFString nextInfixChunk(const SFString& fieldIn, bool& force, const void *data);
 static SFString nextInfixChunk_custom(const SFString& fieldIn, bool& force, const void *data);
 
@@ -124,7 +124,7 @@ void CInfix::registerClass(void) {
     uint32_t fieldNum = 1000;
     ADD_FIELD(CInfix, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
     ADD_FIELD(CInfix, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
-    ADD_FIELD(CInfix, "m_next", TS_OBJECT, ++fieldNum);
+    ADD_FIELD(CInfix, "m_next", T_POINTER, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CInfix, "schema");
@@ -258,14 +258,6 @@ bool CInfix::readBackLevel(SFArchive& archive) {
     }
 
     //------------------------------------------------------------------
-    SFString types[] = {
-        SFString(cWhite)   + "T_TOPP" + cOff,
-        SFString(cRed)     + "T_LEAF" + cOff,
-        SFString(bYellow)  + "T_BRAN" + cOff,
-        SFString(cGreen)   + "T_INFX" + cOff,
-    };
-
-    //------------------------------------------------------------------
     bool CInfix::visitItems(ACCTVISITOR func, void *data) const {
         ASSERT(func);
         CVisitData *vd = reinterpret_cast<CVisitData*>(data);
@@ -281,3 +273,4 @@ bool CInfix::readBackLevel(SFArchive& archive) {
     }
 // EXISTING_CODE
 }  // namespace qblocks
+

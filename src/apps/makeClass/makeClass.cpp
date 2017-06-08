@@ -238,7 +238,7 @@ void generateCode(CToml1& classFile, const SFString& dataFile, const SFString& n
         } else if (fld->type == "float")    { setFmt = "\t[{NAME}] = [{DEFF}];\n"; regType = "T_FLOAT";
         } else if (fld->type == "double")   { setFmt = "\t[{NAME}] = [{DEFF}];\n"; regType = "T_DOUBLE";
         } else if (fld->type == "time")     { setFmt = "\t[{NAME}] = [{DEFT}];\n"; regType = "T_DATE";
-        } else if (fld->isPointer)          { setFmt = "\t[{NAME}] = [{DEFP}];\n"; regType = "T_NONE";
+        } else if (fld->isPointer)          { setFmt = "\t[{NAME}] = [{DEFP}];\n"; regType = "T_POINTER";
         } else if (fld->type.Contains("Array")) { setFmt = badSet; regType = "T_TEXT|TS_ARRAY";
         } else if (fld->isObject)           { setFmt = badSet; regType = "T_TEXT|TS_OBJECT";
         } else                              { setFmt = badSet; regType = "T_TEXT"; }

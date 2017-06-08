@@ -5,11 +5,171 @@
  *
  * The LICENSE at the root of this repo details your rights (if any)
  *------------------------------------------------------------------------*/
+/*
+ * This file was generated with makeClass. Edit only those parts of the code inside
+ * of 'EXISTING_CODE' tags.
+ */
 #include "leaf.h"
-#include "tree.h"
+#include "accounttree.h"
 
 namespace qblocks {
 
+//---------------------------------------------------------------------------
+IMPLEMENT_NODE(CLeaf, CTreeNode, curVersion);
+
+//---------------------------------------------------------------------------
+static SFString nextLeafChunk(const SFString& fieldIn, bool& force, const void *data);
+static SFString nextLeafChunk_custom(const SFString& fieldIn, bool& force, const void *data);
+
+//---------------------------------------------------------------------------
+void CLeaf::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+    if (!m_showing)
+        return;
+
+    if (fmtIn.empty()) {
+        ctx << toJson();
+        return;
+    }
+
+    SFString fmt = fmtIn;
+    if (handleCustomFormat(ctx, fmt, data))
+        return;
+
+    while (!fmt.empty())
+        ctx << getNextChunk(fmt, nextLeafChunk, this);
+}
+
+//---------------------------------------------------------------------------
+SFString nextLeafChunk(const SFString& fieldIn, bool& force, const void *data) {
+    const CLeaf *lea = (const CLeaf *)data;
+    if (lea) {
+        // Give customized code a chance to override first
+        SFString ret = nextLeafChunk_custom(fieldIn, force, data);
+        if (!ret.empty())
+            return ret;
+
+        switch (tolower(fieldIn[0])) {
+            case 'm':
+                if ( fieldIn % "m_leafValue" ) return lea->m_leafValue;
+                break;
+        }
+
+        // EXISTING_CODE
+        // EXISTING_CODE
+
+        // Finally, give the parent class a chance
+        ret = nextTreenodeChunk(fieldIn, force, lea);
+        if (!ret.empty())
+            return ret;
+    }
+
+    return "Field not found: [{" + fieldIn + "}]\n";
+}
+
+//---------------------------------------------------------------------------------------------------
+bool CLeaf::setValueByName(const SFString& fieldName, const SFString& fieldValue) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    if (CTreeNode::setValueByName(fieldName, fieldValue))
+        return true;
+
+    switch (tolower(fieldName[0])) {
+        case 'm':
+            if ( fieldName % "m_leafValue" ) { m_leafValue = fieldValue; return true; }
+            break;
+        default:
+            break;
+    }
+    return false;
+}
+
+//---------------------------------------------------------------------------------------------------
+void CLeaf::finishParse() {
+    // EXISTING_CODE
+    // EXISTING_CODE
+}
+
+//---------------------------------------------------------------------------------------------------
+bool CLeaf::Serialize(SFArchive& archive) {
+    if (!archive.isReading())
+        return ((const CLeaf*)this)->SerializeC(archive);
+
+    CTreeNode::Serialize(archive);
+
+    archive >> m_leafValue;
+    finishParse();
+    return true;
+}
+
+//---------------------------------------------------------------------------------------------------
+bool CLeaf::SerializeC(SFArchive& archive) const {
+    CTreeNode::SerializeC(archive);
+
+    archive << m_leafValue;
+
+    return true;
+}
+
+//---------------------------------------------------------------------------
+void CLeaf::registerClass(void) {
+    static bool been_here = false;
+    if (been_here) return;
+    been_here = true;
+
+    CTreeNode::registerClass();
+
+    uint32_t fieldNum = 1000;
+    ADD_FIELD(CLeaf, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
+    ADD_FIELD(CLeaf, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
+    ADD_FIELD(CLeaf, "m_leafValue", T_TEXT, ++fieldNum);
+
+    // Hide our internal fields, user can turn them on if they like
+    HIDE_FIELD(CLeaf, "schema");
+    HIDE_FIELD(CLeaf, "deleted");
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+}
+
+//---------------------------------------------------------------------------
+SFString nextLeafChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
+    const CLeaf *lea = (const CLeaf *)data;
+    if (lea) {
+        switch (tolower(fieldIn[0])) {
+            // EXISTING_CODE
+            // EXISTING_CODE
+            case 'p':
+                // Display only the fields of this node, not it's parent type
+                if ( fieldIn % "parsed" )
+                    return nextBasenodeChunk(fieldIn, force, lea);
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    return EMPTY;
+}
+
+//---------------------------------------------------------------------------
+bool CLeaf::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    return false;
+}
+
+//---------------------------------------------------------------------------
+bool CLeaf::readBackLevel(SFArchive& archive) {
+    bool done = false;
+    // EXISTING_CODE
+    // EXISTING_CODE
+    return done;
+}
+
+//---------------------------------------------------------------------------
+// EXISTING_CODE
     //-----------------------------------------------------------------------------
     CLeaf::CLeaf(const SFString& _key, const SFString& _value) : m_leafValue(_value) {
         m_prefix = _key;
@@ -89,5 +249,6 @@ namespace qblocks {
         vd->type = save;
         return true;
     }
-    
+// EXISTING_CODE
 }  // namespace qblocks
+

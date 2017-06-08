@@ -5,10 +5,178 @@
  *
  * The LICENSE at the root of this repo details your rights (if any)
  *------------------------------------------------------------------------*/
-#include "tree.h"
+/*
+ * This file was generated with makeClass. Edit only those parts of the code inside
+ * of 'EXISTING_CODE' tags.
+ */
+#include "branch.h"
+#include "accounttree.h"
 
 namespace qblocks {
 
+//---------------------------------------------------------------------------
+IMPLEMENT_NODE(CBranch, CTreeNode, curVersion);
+
+//---------------------------------------------------------------------------
+static SFString nextBranchChunk(const SFString& fieldIn, bool& force, const void *data);
+static SFString nextBranchChunk_custom(const SFString& fieldIn, bool& force, const void *data);
+
+//---------------------------------------------------------------------------
+void CBranch::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+    if (!m_showing)
+        return;
+
+    if (fmtIn.empty()) {
+        ctx << toJson();
+        return;
+    }
+
+    SFString fmt = fmtIn;
+    if (handleCustomFormat(ctx, fmt, data))
+        return;
+
+    while (!fmt.empty())
+        ctx << getNextChunk(fmt, nextBranchChunk, this);
+}
+
+//---------------------------------------------------------------------------
+SFString nextBranchChunk(const SFString& fieldIn, bool& force, const void *data) {
+    const CBranch *bra = (const CBranch *)data;
+    if (bra) {
+        // Give customized code a chance to override first
+        SFString ret = nextBranchChunk_custom(fieldIn, force, data);
+        if (!ret.empty())
+            return ret;
+
+        switch (tolower(fieldIn[0])) {
+            case 'm':
+            return EMPTY;
+//                if ( fieldIn % "m_nodes[16]" ) { expContext().noFrst=true; return bra->m_nodes[16].Format(); }
+                if ( fieldIn % "m_branchValue" ) return bra->m_branchValue;
+                break;
+        }
+
+        // EXISTING_CODE
+        // EXISTING_CODE
+
+        // Finally, give the parent class a chance
+        ret = nextTreenodeChunk(fieldIn, force, bra);
+        if (!ret.empty())
+            return ret;
+    }
+
+    return "Field not found: [{" + fieldIn + "}]\n";
+}
+
+//---------------------------------------------------------------------------------------------------
+bool CBranch::setValueByName(const SFString& fieldName, const SFString& fieldValue) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    if (CTreeNode::setValueByName(fieldName, fieldValue))
+        return true;
+
+    switch (tolower(fieldName[0])) {
+        case 'm':
+            return true;
+//            if ( fieldName % "m_nodes[16]" ) { /* m_nodes[16] = fieldValue; */ return false; }
+            if ( fieldName % "m_branchValue" ) { m_branchValue = fieldValue; return true; }
+            break;
+        default:
+            break;
+    }
+    return false;
+}
+
+//---------------------------------------------------------------------------------------------------
+void CBranch::finishParse() {
+    // EXISTING_CODE
+    // EXISTING_CODE
+}
+
+//---------------------------------------------------------------------------------------------------
+bool CBranch::Serialize(SFArchive& archive) {
+    if (!archive.isReading())
+        return ((const CBranch*)this)->SerializeC(archive);
+
+    CTreeNode::Serialize(archive);
+
+//    archive >> m_nodes[16];
+    archive >> m_branchValue;
+    finishParse();
+    return true;
+}
+
+//---------------------------------------------------------------------------------------------------
+bool CBranch::SerializeC(SFArchive& archive) const {
+    CTreeNode::SerializeC(archive);
+
+//    archive << m_nodes[16];
+    archive << m_branchValue;
+
+    return true;
+}
+
+//---------------------------------------------------------------------------
+void CBranch::registerClass(void) {
+    static bool been_here = false;
+    if (been_here) return;
+    been_here = true;
+
+    CTreeNode::registerClass();
+
+    uint32_t fieldNum = 1000;
+    ADD_FIELD(CBranch, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
+    ADD_FIELD(CBranch, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
+    ADD_FIELD(CBranch, "m_nodes[16]", T_POINTER, ++fieldNum);
+    ADD_FIELD(CBranch, "m_branchValue", T_TEXT, ++fieldNum);
+
+    // Hide our internal fields, user can turn them on if they like
+    HIDE_FIELD(CBranch, "schema");
+    HIDE_FIELD(CBranch, "deleted");
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+}
+
+//---------------------------------------------------------------------------
+SFString nextBranchChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
+    const CBranch *bra = (const CBranch *)data;
+    if (bra) {
+        switch (tolower(fieldIn[0])) {
+            // EXISTING_CODE
+            // EXISTING_CODE
+            case 'p':
+                // Display only the fields of this node, not it's parent type
+                if ( fieldIn % "parsed" )
+                    return nextBasenodeChunk(fieldIn, force, bra);
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    return EMPTY;
+}
+
+//---------------------------------------------------------------------------
+bool CBranch::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    return false;
+}
+
+//---------------------------------------------------------------------------
+bool CBranch::readBackLevel(SFArchive& archive) {
+    bool done = false;
+    // EXISTING_CODE
+    // EXISTING_CODE
+    return done;
+}
+
+//---------------------------------------------------------------------------
+// EXISTING_CODE
     //-----------------------------------------------------------------------------
     CBranch::CBranch(const SFString& _value) : m_branchValue(_value) {
         memset(m_nodes, 0, sizeof(CTreeNode*) * 16);
@@ -25,16 +193,6 @@ namespace qblocks {
         memset(m_nodes, 0, sizeof(CTreeNode*) * 16);
         m_nodes[nodeIndex(_i1)] = _n1;
         m_nodes[nodeIndex(_i2)] = _n2;
-    }
-
-    //-----------------------------------------------------------------------------
-    CBranch::~CBranch(void) {
-        for (int i = 0 ; i < 16 ; i++)
-            if (m_nodes[i])
-                delete m_nodes[i];
-
-        // unecessary, but okay
-        memset(m_nodes, 0, sizeof(CTreeNode*) * 16);
     }
 
     //-----------------------------------------------------------------------------
@@ -78,7 +236,6 @@ namespace qblocks {
         }
         return this;
     }
-
 
     //-----------------------------------------------------------------------------
     CTreeNode* CBranch::remove(const SFString& _key) {
@@ -188,17 +345,12 @@ namespace qblocks {
                 vd->strs = vd->strs + "-" + idex(i);
                 m_nodes[i]->visitItems(func, data);
                 nextTokenClearReverse(vd->strs, '-');
-                
-            } else {
-                //          vd->type = T_LEAF;
-                //          vd->strs = vd->strs + "-" + idex(i) + "+" + conMagenta + "" + conOff;
-                //          cerr << types[vd->type] << "(" << vd->type << ")" << vd->strs << endl;
-                //          nextTokenClearReverse(vd->strs,'-');
             }
         }
         nextTokenClearReverse(vd->strs, '+');
         vd->type = save;
         return true;
     }
-
+// EXISTING_CODE
 }  // namespace qblocks
+
