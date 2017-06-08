@@ -24,7 +24,7 @@ if (CURL_FOUND)
 endif (CURL_FOUND)
 
 # linkable libraries
-set (BASE_LIBS util abi ether ${CURL_LIBRARIES})
+set (BASE_LIBS util abi ether acct ${CURL_LIBRARIES})
 
 # copy destination for various shell scripts
 set (SCRIPTS_DEST_PATH "${CMAKE_SOURCE_DIR}/../bin")
