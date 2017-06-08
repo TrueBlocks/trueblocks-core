@@ -27,9 +27,6 @@ public:
 };
 
 //----------------------------------------------------------
-extern SFString types[];
-
-//----------------------------------------------------------
 class CAccountTree {
 public:
     CAccountTree(void);
