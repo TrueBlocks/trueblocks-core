@@ -1,0 +1,8 @@
+{
+    "blockNumber": 1718416,
+    "transactionIndex": 0,
+    "function": "vote",
+    "voter": "c537edcd70edf7759adeaaea12730b62be7f6a6f",
+    "proposalID": 40,
+    "position": true
+}
