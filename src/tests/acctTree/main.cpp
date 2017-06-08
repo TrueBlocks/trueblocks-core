@@ -5,12 +5,12 @@
  *
  * The LICENSE at the root of this repo details your rights (if any)
  *------------------------------------------------------------------------*/
-#include "tree.h"
 #include "options.h"
 #include "reporter.h"
 
 //-----------------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
+
     // Tell the system where the blocks are and which version to use
     setStorageRoot(BLOCK_CACHE);
     etherlib_init("binary");
