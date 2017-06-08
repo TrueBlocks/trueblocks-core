@@ -120,9 +120,9 @@ inline void CBranch::Copy(const CBranch& br) {
     m_branchValue = br.m_branchValue;
 
     // EXISTING_CODE
-	for (int i=0;i<16;i++)
-    	if (br.m_nodes[i])
-        	*m_nodes[i] = *br.m_nodes[i];
+    for (int i=0;i<16;i++)
+        if (br.m_nodes[i])
+            *m_nodes[i] = *br.m_nodes[i];
     // EXISTING_CODE
     finishParse();
 }
@@ -149,6 +149,7 @@ IMPLEMENT_ARCHIVE_LIST(CBranchList);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
+extern SFString nextTreenodeChunk(const SFString& fieldIn, bool& force, const void *data);
 // EXISTING_CODE
 }  // namespace qblocks
 

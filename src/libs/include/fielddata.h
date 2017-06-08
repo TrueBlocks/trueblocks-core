@@ -25,6 +25,7 @@ namespace qblocks {
     #define T_BOOL     (12)
     #define T_NUMBER   (14 | TS_NUMERAL)
     #define T_BLOOM    (16)
+    #define T_POINTER  (18)
     #define T_FLOAT    T_NUMBER
     #define T_DOUBLE   T_NUMBER
 
