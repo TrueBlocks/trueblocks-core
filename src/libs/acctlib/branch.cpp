@@ -9,7 +9,8 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
-#include "tree.h"
+#include "branch.h"
+#include "accounttree.h"
 
 namespace qblocks {
 
@@ -17,7 +18,6 @@ namespace qblocks {
 IMPLEMENT_NODE(CBranch, CTreeNode, curVersion);
 
 //---------------------------------------------------------------------------
-extern SFString nextTreenodeChunk(const SFString& fieldIn, bool& force, const void *data);
 static SFString nextBranchChunk(const SFString& fieldIn, bool& force, const void *data);
 static SFString nextBranchChunk_custom(const SFString& fieldIn, bool& force, const void *data);
 
@@ -128,7 +128,7 @@ void CBranch::registerClass(void) {
     uint32_t fieldNum = 1000;
     ADD_FIELD(CBranch, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
     ADD_FIELD(CBranch, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
-    ADD_FIELD(CBranch, "m_nodes[16]", TS_OBJECT, ++fieldNum);
+    ADD_FIELD(CBranch, "m_nodes[16]", T_POINTER, ++fieldNum);
     ADD_FIELD(CBranch, "m_branchValue", T_TEXT, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like

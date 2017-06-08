@@ -10,7 +10,7 @@
  * of 'EXISTING_CODE' tags.
  */
 #include "leaf.h"
-#include "tree.h"
+#include "accounttree.h"
 
 namespace qblocks {
 
@@ -18,7 +18,6 @@ namespace qblocks {
 IMPLEMENT_NODE(CLeaf, CTreeNode, curVersion);
 
 //---------------------------------------------------------------------------
-extern SFString nextTreenodeChunk(const SFString& fieldIn, bool& force, const void *data);
 static SFString nextLeafChunk(const SFString& fieldIn, bool& force, const void *data);
 static SFString nextLeafChunk_custom(const SFString& fieldIn, bool& force, const void *data);
 
