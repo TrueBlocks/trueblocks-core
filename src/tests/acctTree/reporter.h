@@ -49,29 +49,28 @@ public:
     void finalReport(void) {
         double durLoad = (endLoad-startLoad);
         double durPrint = (endPrint-startPrint);
-        cerr << "nAccts:    " << cGreen << nAccts         << cOff << "\n";
-        cerr << "maxDepth:  " << cGreen << maxDepth       << cOff << "\n";
-        cerr << "maxMatch1: " << cGreen << maxMatch1      << cOff << "\n";
-        cerr << "maxMatch2: " << cGreen << maxMatch2      << cOff << "\n";
-        cerr << "nBlocks:   " << cGreen << nBlocksVisited << cOff << "\n";
-        cerr << "nTrans:    " << cGreen << nTransVisited  << cOff << "\n";
-        cerr << "Data built in " << cGreen << durLoad
+        cout << "nAccts:    " << cGreen << nAccts         << cOff << "\n";
+        cout << "maxDepth:  " << cGreen << maxDepth       << cOff << "\n";
+        cout << "maxMatch1: " << cGreen << maxMatch1      << cOff << "\n";
+        cout << "maxMatch2: " << cGreen << maxMatch2      << cOff << "\n";
+        cout << "nBlocks:   " << cGreen << nBlocksVisited << cOff << "\n";
+        cout << "nTrans:    " << cGreen << nTransVisited  << cOff << "\n";
+        cout << "Data built in " << cGreen << durLoad
               << " seconds. Data displayed in " << cGreen << durPrint << cOff << " seconds.\n";
-        cerr.flush();
-    }
-
-    void interumReport(const SFString& from, const SFString& to, SFUint32 bn) {
-        if (!(nTransVisited % 1301)) {
-            cout << nBlocksVisited << ":" << bn << "." << from << "\n";
-            cout << nBlocksVisited << ":" << bn << "." << to   << "\n";
-            cout.flush();
-        }
+        cout.flush();
     }
 
     void interumReport(void) {
+        //------------------------------------------------------------------
+        SFString types[] = {
+            SFString(cWhite)   + "T_TOPP" + cOff,
+            SFString(cRed)     + "T_LEAF" + cOff,
+            SFString(bYellow)  + "T_BRAN" + cOff,
+            SFString(cGreen)   + "T_INFX" + cOff,
+        };
         SFString str = strs;
         nextTokenClear(str, '-');
-        cerr << types[type] << "(" << type << ")" << str << "\n";
+        cout << types[type] << "(" << type << ")" << str << "\n";
     }
 
     bool isMax(void) {
