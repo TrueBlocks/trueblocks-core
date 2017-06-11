@@ -14,4 +14,4 @@
 #include "leaf.h"
 #include "treenode.h"
 
-using namespace qblocks;
+using namespace qblocks;  // NOLINT

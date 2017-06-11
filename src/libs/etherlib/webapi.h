@@ -12,8 +12,7 @@
 namespace qblocks {
 
 //---------------------------------------------------------------------------------------------------
-class CWebAPI
-{
+class CWebAPI {
 private:
     SFString key;
     SFString provider;
@@ -26,4 +25,4 @@ public:
     bool checkKey(CToml& toml);
     SFString getKey(void) const;
 };
-}
+}  // namespace qblocks
