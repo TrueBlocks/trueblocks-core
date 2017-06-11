@@ -49,27 +49,23 @@ SFString nextAbiChunk(const SFString& fieldIn, bool& force, const void *data) {
 
         switch (tolower(fieldIn[0])) {
             case 'a':
-                if ( fieldIn % "abiByName" )
-                {
+                if ( fieldIn % "abiByName" ) {
                     uint32_t cnt = abi->abiByName.getCount();
                     if (!cnt) return EMPTY;
                     SFString ret;
-                    for (uint32_t i=0;i<cnt;i++)
-                    {
+                    for (uint32_t i = 0 ; i < cnt ; i++) {
                         ret += abi->abiByName[i].Format();
-                        ret += ((i<cnt-1) ? ",\n" : "\n");
+                        ret += ((i < cnt-1) ? ",\n" : "\n");
                     }
                     return ret;
                 }
-                if ( fieldIn % "abiByEncoding" )
-                {
+                if ( fieldIn % "abiByEncoding" ) {
                     uint32_t cnt = abi->abiByEncoding.getCount();
                     if (!cnt) return EMPTY;
                     SFString ret;
-                    for (uint32_t i=0;i<cnt;i++)
-                    {
+                    for (uint32_t i = 0 ; i < cnt ; i++) {
                         ret += abi->abiByEncoding[i].Format();
-                        ret += ((i<cnt-1) ? ",\n" : "\n");
+                        ret += ((i < cnt-1) ? ",\n" : "\n");
                     }
                     return ret;
                 }
@@ -193,79 +189,68 @@ bool CAbi::readBackLevel(SFArchive& archive) {
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-int sortFuncTableByName(const void *ob1, const void *ob2)
-{
+int sortFuncTableByName(const void *ob1, const void *ob2) {
     CFunction *p1 = (CFunction*)ob1;
     CFunction *p2 = (CFunction*)ob2;
     return p2->name.compare(p1->name);
 }
 
 //---------------------------------------------------------------------------
-int sortFuncTableByEncoding(const void *ob1, const void *ob2)
-{
+int sortFuncTableByEncoding(const void *ob1, const void *ob2) {
     CFunction *p1 = (CFunction*)ob1;
     CFunction *p2 = (CFunction*)ob2;
     return p2->encoding.compare(p1->encoding);
 }
 
 //---------------------------------------------------------------------------
-int findByName(const void *rr1, const void *rr2)
-{
-    CFunction *f1 = (CFunction *)rr1;
-    CFunction *f2 = (CFunction *)rr2;
+int findByName(const void *rr1, const void *rr2) {
+    CFunction *f1 = (CFunction*)rr1;
+    CFunction *f2 = (CFunction*)rr2;
     return f2->name.compare(f1->name);
 }
 
 //---------------------------------------------------------------------------
-int findByEncoding(const void *rr1, const void *rr2)
-{
-    CFunction *f1 = (CFunction *)rr1;
-    CFunction *f2 = (CFunction *)rr2;
+int findByEncoding(const void *rr1, const void *rr2) {
+    CFunction *f1 = (CFunction*)rr1;
+    CFunction *f2 = (CFunction*)rr2;
     return f2->encoding.compare(f1->encoding);
 }
 
 //---------------------------------------------------------------------------
-CFunction *CAbi::findFunctionByName(const SFString& name)
-{
+CFunction *CAbi::findFunctionByName(const SFString& name) {
     CFunction search;
     search.name = name;
-    return abiByName.Find(&search,findByName);
+    return abiByName.Find(&search, findByName);
 }
 
 //---------------------------------------------------------------------------
-CFunction *CAbi::findFunctionByEncoding(const SFString& enc)
-{
+CFunction *CAbi::findFunctionByEncoding(const SFString& enc) {
     CFunction search;
     search.encoding = enc;
-    return abiByEncoding.Find(&search,findByEncoding);
+    return abiByEncoding.Find(&search, findByEncoding);
 }
 
 //---------------------------------------------------------------------------
-void CAbi::clearABI(void)
-{
+void CAbi::clearABI(void) {
     abiByName.Clear();
     abiByEncoding.Clear();
 }
 
 //---------------------------------------------------------------------------
 SFString abis[1000][2];
-uint32_t nAbis=0;
+uint32_t nAbis = 0;
 
 //---------------------------------------------------------------------------
-void clearAbis(void)
-{
+void clearAbis(void) {
     nAbis = 0;
 }
 
-SFString findEncoding(const SFString& addr, CFunction& func)
-{
-    if (!nAbis)
-    {
+SFString findEncoding(const SFString& addr, CFunction& func) {
+    if (!nAbis) {
         SFString contents = asciiFileToString(configPath("abis/"+addr+".abi"));
-        while (!contents.empty())
-        {
-            abis[nAbis][1] = nextTokenClear(contents,'\n');
-            abis[nAbis][0] = nextTokenClear(abis[nAbis][1],'|');
+        while (!contents.empty()) {
+            abis[nAbis][1] = nextTokenClear(contents, '\n');
+            abis[nAbis][0] = nextTokenClear(abis[nAbis][1], '|');
             nAbis++;
         }
     }
@@ -277,31 +262,29 @@ SFString findEncoding(const SFString& addr, CFunction& func)
 }
 
 //---------------------------------------------------------------------------
-static bool getEncoding(const SFString& abiFilename, const SFString& addr, CFunction& func)
-{
+static bool getEncoding(const SFString& abiFilename, const SFString& addr, CFunction& func) {
     if (func.type != "function")
         return false;
 
-    SFString fullName = func.name; // we need the signature for ethabi
-    func.name     = nextTokenClear(func.name,'('); // Cleanup because we only need the name, not the signature
+    SFString fullName = func.name;  // we need the signature for ethabi
+    func.name     = nextTokenClear(func.name, '(');  // Cleanup because we only need the name, not the signature
     func.encoding = findEncoding(addr, func);
-    if (func.encoding.empty() && fileExists("/usr/local/bin/ethabi"))
-    {
+    if (func.encoding.empty() && fileExists("/usr/local/bin/ethabi")) {
         // When we call ethabi, we want the full function declaration (if it's present)
-        SFString cmd = "/usr/local/bin/ethabi encode function \"" + abiFilename + "\" " + fullName.Substitute("(","\\(").Substitute(")","\\)");
+        SFString cmd = "/usr/local/bin/ethabi encode function \"" +
+                            abiFilename + "\" " + fullName.Substitute("(", "\\(").Substitute(")", "\\)");
         func.encoding = doCommand(cmd);
     }
     return !func.encoding.empty();
 }
 
 //---------------------------------------------------------------------------
-bool CAbi::loadABI(const SFString& addr, bool append)
-{
+bool CAbi::loadABI(const SFString& addr, bool append) {
     // Already loaded?
     if (abiByName.getCount() && abiByEncoding.getCount())
         return true;
 
-    SFString abiFilename =     configPath("abis/"+addr+".json");
+    SFString abiFilename = configPath("abis/"+addr+".json");
     if (!fileExists(abiFilename))
         return false;
 
@@ -310,30 +293,27 @@ bool CAbi::loadABI(const SFString& addr, bool append)
     ASSERT(!contents.empty());
 
     SFString abis;
-    char *p = cleanUpJson((char *)(const char*)contents);
-    while (p && *p)
-    {
-        CFunction func;uint32_t nFields=0;
-        p = func.parseJson(p,nFields);
-        if (nFields && getEncoding(abiFilename, addr, func))
-        {
-            abiByName     [ abiByName.getCount     () ] = func;
-            abiByEncoding [ abiByEncoding.getCount () ] = func;
+    char *p = cleanUpJson((char *)contents.c_str());
+    while (p && *p) {
+        CFunction func;
+        uint32_t nFields = 0;
+        p = func.parseJson(p, nFields);
+        if (nFields && getEncoding(abiFilename, addr, func)) {
+            abiByName[abiByName.getCount()] = func;
+            abiByEncoding[abiByEncoding.getCount()] = func;
             abis += func.Format("[{NAME}]|[{ENCODING}]\n");
         }
     }
     if (!fileExists(configPath("abis/"+addr+".abi")))
-        stringToAsciiFile(configPath("abis/"+addr+".abi"),abis);
+        stringToAsciiFile(configPath("abis/"+addr+".abi"), abis);
 
-    abiByName    .Sort( sortFuncTableByName     );
-    abiByEncoding.Sort( sortFuncTableByEncoding );
-    if (verbose)
-    {
-        for (uint32_t i=0;i<abiByName.getCount();i++)
-        {
+    abiByName.Sort(sortFuncTableByName);
+    abiByEncoding.Sort(sortFuncTableByEncoding);
+    if (verbose) {
+        for (uint32_t i = 0 ; i < abiByName.getCount() ; i++) {
             CFunction *f = &abiByName[i];
             if (f->type == "function")
-                cerr << f->Format("[\"{NAME}|][{ENCODING}\"]").Substitute("\n"," ") << "\n";
+                cerr << f->Format("[\"{NAME}|][{ENCODING}\"]").Substitute("\n", " ") << "\n";
         }
     }
     return abiByName.getCount();

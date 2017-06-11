@@ -67,15 +67,13 @@ SFString nextBlockChunk(const SFString& fieldIn, bool& force, const void *data) 
                 break;
             case 't':
                 if ( fieldIn % "timestamp" ) return asStringU(blo->timestamp);
-                if ( fieldIn % "transactions" )
-                {
+                if ( fieldIn % "transactions" ) {
                     uint32_t cnt = blo->transactions.getCount();
                     if (!cnt) return EMPTY;
                     SFString ret;
-                    for (uint32_t i=0;i<cnt;i++)
-                    {
+                    for (uint32_t i = 0 ; i < cnt ; i++) {
                         ret += blo->transactions[i].Format();
-                        ret += ((i<cnt-1) ? ",\n" : "\n");
+                        ret += ((i < cnt - 1) ? ",\n" : "\n");
                     }
                     return ret;
                 }
@@ -97,32 +95,27 @@ SFString nextBlockChunk(const SFString& fieldIn, bool& force, const void *data) 
 //---------------------------------------------------------------------------------------------------
 bool CBlock::setValueByName(const SFString& fieldName, const SFString& fieldValue) {
     // EXISTING_CODE
-    if (fieldName % "number")
-    {
-        (*(SFString*)&fieldName) = "blockNumber";
+    if (fieldName % "number") {
+        *(SFString*)&fieldName = "blockNumber";
 
-    } else if (fieldName % "transactions")
-    {
+    } else if (fieldName % "transactions") {
         // Transactions can come to us either as a JSON object (starts with '{') or a list
         // of hashes (i.e. a string array).
-        if (fieldValue.Contains("{"))
-        {
-            char *p = (char *)(const char*)fieldValue;
-            while (p && *p)
-            {
-                CTransaction trans;uint32_t nFields=0;
-                p = trans.parseJson(p,nFields);
+        if (fieldValue.Contains("{")) {
+            char *p = (char *)fieldValue.c_str();
+            while (p && *p) {
+                CTransaction trans;
+                uint32_t nFields = 0;
+                p = trans.parseJson(p, nFields);
                 if (nFields)
                     transactions[transactions.getCount()] = trans;
             }
 
-        } else
-        {
+        } else {
             SFString str = fieldValue;
-            while (!str.empty())
-            {
+            while (!str.empty()) {
                 CTransaction trans;
-                trans.hash = toAddress(nextTokenClear(str,','));
+                trans.hash = toAddress(nextTokenClear(str, ','));
                 transactions[transactions.getCount()] = trans;
             }
         }
@@ -236,15 +229,13 @@ SFString nextBlockChunk_custom(const SFString& fieldIn, bool& force, const void 
                 if ( fieldIn % "number" ) return asStringU(blo->blockNumber);
                 break;
             case 't':
-                if ( expContext().hashesOnly && fieldIn % "transactions" )
-                {
+                if ( expContext().hashesOnly && fieldIn % "transactions" ) {
                     uint32_t cnt = blo->transactions.getCount();
                     if (!cnt) return EMPTY;
                     SFString ret;
-                    for (uint32_t i=0;i<cnt;i++)
-                    {
+                    for (uint32_t i = 0 ; i < cnt ; i++) {
                         ret += blo->transactions[i].hash;
-                        ret += ((i<cnt-1) ? ",\n" : "\n");
+                        ret += ((i < cnt-1) ? ",\n" : "\n");
                     }
                     return ret;
                 }
