@@ -177,7 +177,7 @@ inline void CTransaction::Copy(const CTransaction& tr) {
     receipt = tr.receipt;
 
     // EXISTING_CODE
-    pBlock = tr.pBlock; // no deep copy, we don't own it
+    pBlock = tr.pBlock;  // no deep copy, we don't own it
     funcPtr = tr.funcPtr;
     function = tr.function;
     ether = tr.ether;
@@ -221,14 +221,13 @@ extern SFArchive& operator>>(SFArchive& archive, CTransaction& tra);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-inline SFString wei2Ether(const SFString& _value)
-{
+inline SFString wei2Ether(const SFString& _value) {
     // Make sure the wei number is at least 18 characters long. Once it is,
     // reverse it, put a decimal at the 18th position, reverse it back,
     // strip leading '0's except the tens digit.
     SFString ret = _value;
-    if (ret.length()<18)
-        ret = padLeft(_value,18).Substitute(" ","0");
+    if (ret.length() < 18)
+        ret = padLeft(_value, 18).Substitute(" ", "0");
     ret.Reverse();
     ret = ret.Left(18) + "." + ret.substr(18);
     ret.Reverse();
