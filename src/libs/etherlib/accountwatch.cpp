@@ -89,15 +89,15 @@ SFString nextAccountwatchChunk(const SFString& fieldIn, bool& force, const void 
 bool CAccountWatch::setValueByName(const SFString& fieldName, const SFString& fieldValue) {
     // EXISTING_CODE
     if (fieldName % "qbis") {
-        char *p = (char *)(const char*)fieldValue;
-        uint32_t nFields=0;
-        qbis.parseJson(p,nFields);
+        char *p = (char *)fieldValue.c_str();
+        uint32_t nFields = 0;
+        qbis.parseJson(p, nFields);
         return true;
 
     } else if (fieldName % "nodeis") {
-        char *p = (char *)(const char*)fieldValue;
-        uint32_t nFields=0;
-        nodeis.parseJson(p,nFields);
+        char *p = (char *)fieldValue.c_str();
+        uint32_t nFields = 0;
+        nodeis.parseJson(p, nFields);
         return true;
     }
     // EXISTING_CODE

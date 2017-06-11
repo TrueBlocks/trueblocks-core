@@ -68,15 +68,13 @@ SFString nextAccountChunk(const SFString& fieldIn, bool& force, const void *data
                 if ( fieldIn % "pageSize" ) return asStringU(acc->pageSize);
                 break;
             case 't':
-                if ( fieldIn % "transactions" )
-                {
+                if ( fieldIn % "transactions" ) {
                     uint32_t cnt = acc->transactions.getCount();
                     if (!cnt) return EMPTY;
                     SFString ret;
-                    for (uint32_t i=0;i<cnt;i++)
-                    {
+                    for (uint32_t i = 0 ; i < cnt ; i++) {
                         ret += acc->transactions[i].Format();
-                        ret += ((i<cnt-1) ? ",\n" : "\n");
+                        ret += ((i < cnt - 1) ? ",\n" : "\n");
                     }
                     return ret;
                 }
@@ -132,12 +130,11 @@ bool CAccount::setValueByName(const SFString& fieldName, const SFString& fieldVa
 //---------------------------------------------------------------------------------------------------
 void CAccount::finishParse() {
     // EXISTING_CODE
-    for (uint32_t i=0;i<transactions.getCount();i++)
-    {
+    for (uint32_t i = 0 ; i < transactions.getCount() ; i++) {
         CTransaction *t = &transactions[i];
-        SFString encoding = t->input.Left(10); //substr(2,8);
-                                               //if (!transactions[i].input.startsWith("0x"))
-                                               //    encoding = transactions[i].input.Left(8);
+        SFString encoding = t->input.Left(10);  // substr(2, 8);
+                                                // if (!transactions[i].input.startsWith("0x"))
+                                                //    encoding = transactions[i].input.Left(8);
         t->funcPtr = abi.findFunctionByEncoding(encoding);
     }
     // EXISTING_CODE
@@ -240,43 +237,41 @@ bool CAccount::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, vo
     // If no records, just process as normal. We do this because it's so slow
     // copying the records into a string, so we write it directly to the
     // export context. If there is no {RECORDS}, then just send handle it like normal
-    if (!fmtIn.Contains("{RECORDS}") || transactions.getCount()==0)
-    {
+    if (!fmtIn.Contains("{RECORDS}") || transactions.getCount() == 0) {
         SFString fmt = fmtIn;
 
         while (!fmt.empty())
             ctx << getNextChunk(fmt, nextAccountChunk, this);
 
-    } else
-    {
+    } else {
         SFString postFmt = fmtIn;
-        postFmt.Replace("{RECORDS}","|");
-        SFString preFmt = nextTokenClear(postFmt,'|');
+        postFmt.Replace("{RECORDS}", "|");
+        SFString preFmt = nextTokenClear(postFmt, '|');
 
         // We assume here that the token was properly formed. For the pre-text we
         // have to clear out the start '[', and for the post text we clear out the ']'
-        preFmt.ReplaceReverse("[","");
-        postFmt.Replace("]","");
+        preFmt.ReplaceReverse("[", "");
+        postFmt.Replace("]", "");
 
         // We handle the display in three parts: pre, records, and post so as
         // to avoid building the entire record list into an ever-growing and
         // ever-slowing string
         while (!preFmt.empty())
             ctx << getNextChunk(preFmt, nextAccountChunk, this);
-        uint32_t cnt=0;
-        for (uint32_t i=0;i<transactions.getCount();i++)
-        {
+        uint32_t cnt = 0;
+        for (uint32_t i = 0 ; i < transactions.getCount() ; i++) {
             cnt += transactions[i].m_showing;
-            if (cnt && !(cnt%REP_INFREQ))
-            {
+            if (cnt && !(cnt % REP_INFREQ)) {
                 cerr << "\tExporting record " << cnt << " of " << nVisible;
-                cerr << (transactions.getCount()!=nVisible?" visible":"") << " records" << (isTesting?"\n":"\r"); cerr.flush();
+                cerr << (transactions.getCount() != nVisible ? " visible" : "") << " records"
+                        << (isTesting ? "\n" : "\r");
+                cerr.flush();
             }
 
             ((CTransaction*)&transactions[i])->pParent = this;
             ctx << transactions[i].Format(displayString);
-            if (cnt>=nVisible)
-                break; // no need to keep spinning if we've shown them all
+            if (cnt >= nVisible)
+                break;  // no need to keep spinning if we've shown them all
         }
         ctx << "\n";
         while (!postFmt.empty())
@@ -297,14 +292,11 @@ bool CAccount::readBackLevel(SFArchive& archive) {
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-uint32_t CAccount::deleteNotShowing(void)
-{
-    uint32_t nDeleted=0;
-    for (uint32_t i=0;i<transactions.getCount();i++)
-    {
+uint32_t CAccount::deleteNotShowing(void) {
+    uint32_t nDeleted = 0;
+    for (uint32_t i = 0 ; i < transactions.getCount() ; i++) {
         CTransaction *t = &transactions[i];
-        if ( ! t->m_showing)
-        {
+        if (!t->m_showing) {
             t->setDeleted(true);
             nDeleted++;
         }
