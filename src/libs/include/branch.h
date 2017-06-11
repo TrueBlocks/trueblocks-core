@@ -46,6 +46,7 @@ public:
     CTreeNode* insert(const SFString& _key, const SFString& _value) override;
     CTreeNode* remove(const SFString& _key) override;
     bool visitItems(ACCTVISITOR func, void *data) const override;
+
 private:
     char activeBranch() const;
     CTreeNode *rejig();
@@ -105,7 +106,7 @@ inline void CBranch::Init(void) {
 //    m_branchValue = EMPTY;
 
     // EXISTING_CODE
-    for (int i=0;i<16;i++)
+    for (int i = 0 ; i < 16 ; i++)
         m_nodes[i] = NULL;
     // EXISTING_CODE
 }
@@ -120,7 +121,7 @@ inline void CBranch::Copy(const CBranch& br) {
     m_branchValue = br.m_branchValue;
 
     // EXISTING_CODE
-    for (int i=0;i<16;i++)
+    for (int i = 0 ; i < 16 ; i++)
         if (br.m_nodes[i])
             *m_nodes[i] = *br.m_nodes[i];
     // EXISTING_CODE
