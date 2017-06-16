@@ -72,23 +72,19 @@ namespace qblocks {
 (&CLASS_NAME::class##CLASS_NAME)
 
     //------------------------------------------------------------
-#define DECLARE_NODE_BASE(CLASS_NAME) \
+#define DECLARE_NODE(CLASS_NAME) \
 public: \
 static CRuntimeClass class##CLASS_NAME; \
 static CBaseNode *CreateObject(void); \
-virtual CRuntimeClass *getRuntimeClass(void) const override;
-
-    //------------------------------------------------------------
-#define DECLARE_NODE(CLASS_NAME) \
-DECLARE_NODE_BASE(CLASS_NAME) \
-virtual SFString getValueByName(const SFString& fieldName) const override; \
-virtual bool setValueByName(const SFString& fieldName, const SFString& fieldValue) override; \
-virtual bool Serialize(SFArchive& archive) override; \
-virtual bool SerializeC(SFArchive& archive) const override; \
-virtual void finishParse(void) override; \
-virtual bool handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data = NULL) const override; \
-virtual void Format(CExportContext& ctx, const SFString& fmtIn, void *data = NULL) const override; \
-virtual SFString Format(const SFString& fmtIn = "") const override { \
+CRuntimeClass *getRuntimeClass(void) const override; \
+SFString getValueByName(const SFString& fieldName) const override; \
+bool setValueByName(const SFString& fieldName, const SFString& fieldValue) override; \
+bool Serialize(SFArchive& archive) override; \
+bool SerializeC(SFArchive& archive) const override; \
+void finishParse(void) override; \
+bool handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data = NULL) const override; \
+void Format(CExportContext& ctx, const SFString& fmtIn, void *data = NULL) const override; \
+SFString Format(const SFString& fmtIn = "") const override { \
     CStringExportContext ctx; Format(ctx, fmtIn, NULL); return ctx.str; } \
 SFString getClassName(void) const; \
 static void registerClass(void);

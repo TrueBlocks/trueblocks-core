@@ -10,6 +10,7 @@
 //---------------------------------------------------------------------------------------------------
 CParams params[] = {
     CParams("~date/block", "one of the special values listed below or YYYY-MM-DD-[HH[:MM[:SS]]] or a blockNumber"),
+    CParams("-alone",      "show the found block or found date unadorned (useful for scripting)"),
     CParams("-list",       "list special blocks timestamps and dates"),
     CParams("", "Finds the nearest block before the JSON-formatted date, or the date of the given block.\n"),
 };
@@ -34,6 +35,10 @@ bool COptions::parseArguments(SFString& command) {
             }
             cout << cOff << "\n";
             return false;
+
+        } else if (arg == "-a" || arg == "--alone") {
+
+            alone = true;
 
         } else if (arg.ContainsAny(":-_ ")) {
             SFString str = arg.Substitute(" ", ";").Substitute("-", ";").Substitute("_", ";")
@@ -99,6 +104,7 @@ void COptions::Init(void) {
     blockNum = NOPOS;
     date = earliestDate;
 //  special = "";
+    alone = false;
 
     useVerbose = false;
     useTesting = false;

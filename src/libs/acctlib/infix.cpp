@@ -10,7 +10,7 @@
  * of 'EXISTING_CODE' tags.
  */
 #include "infix.h"
-#include "accounttree.h"
+#include "treeroot.h"
 
 namespace qblocks {
 
@@ -192,7 +192,7 @@ bool CInfix::readBackLevel(SFArchive& archive) {
 
     //-----------------------------------------------------------------------------
     CTreeNode* CInfix::insert(const SFString& _key, const SFString& _value) {
-        if (verbose == 2) cerr << "\tInserting infix " << _key << "\n";
+        if (verbose == 2) { cerr << "\tinfix inserting " << _key << " at " << _value << "\n"; }
         ASSERT(_value.length());
         if (contains(_key)) {
             m_next = m_next->insert(_key.substr(m_prefix.length()), _value);

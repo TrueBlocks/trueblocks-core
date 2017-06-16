@@ -23,7 +23,7 @@ typedef SFList<CBlock*>             CBlockList;
 typedef SFUniqueList<CBlock*>       CBlockListU;
 
 // EXISTING_CODE
-// TODO: The fields here are the least stuff QuickBlocks needs, I should create a MegaBlock that contains all
+// TODO(tjayrush): The fields here are the least stuff QuickBlocks needs, I should create a MegaBlock that contains all
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------

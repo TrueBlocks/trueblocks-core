@@ -2,7 +2,7 @@
 cmake_minimum_required (VERSION 2.6)
 
 # application project
-project (bytesUsed)
+project (extractor)
 
 # c++ compilation flags used everywhere
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -O2")
@@ -11,10 +11,10 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -O2")
 file(GLOB SOURCE_FILES "*.cpp")
 
 # Output
-set(EXECUTABLE_OUTPUT_PATH "${CMAKE_SOURCE_DIR}/../bin")
+set(EXECUTABLE_OUTPUT_PATH "${CMAKE_CURRENT_LIST_DIR}/bin")
 
 # Define the executable to be generated
-set(TOOL_NAME "bytesUsed")
+set(TOOL_NAME "extractor")
 add_executable(${TOOL_NAME} ${SOURCE_FILES})
 
 # Add the project static libs at linking

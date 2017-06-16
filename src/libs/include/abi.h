@@ -40,7 +40,7 @@ public:
 
     // EXISTING_CODE
     void clearABI(void);
-    bool loadABI  (const SFString& addr, bool append=false);
+    bool loadABI(const SFString& addr, bool append = false);
     CFunction *findFunctionByName(const SFString& search);
     CFunction *findFunctionByEncoding(const SFString& search);
     // EXISTING_CODE

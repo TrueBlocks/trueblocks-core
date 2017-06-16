@@ -19,7 +19,7 @@ int main(int argc, const char *argv[]) {
     if (!options.prepareArguments(argc, argv))
         return 0;
 
-    //while (!options.commandList.empty())
+    // while (!options.commandList.empty())
     {
         SFString command = nextTokenClear(options.commandList, '\n');
         if (!options.parseArguments(command))

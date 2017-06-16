@@ -23,17 +23,16 @@ int main(int argc, const char *argv[]) {
         SFString fmt = (options.addrOnly ? "[{ADDR}]" : "");
         if (options.list) {
             for (uint64_t i = 0 ; i < accounts.getCount() ; i++)
-                out << accounts[i].Format(fmt).Substitute("\n", " ").Substitute("  ", " ") << "\n";
+                cout << accounts[i].Format(fmt).Substitute("\n", " ").Substitute("  ", " ") << "\n";
             exit(0);
         }
 
         SFString ret = showName(options);
         if (!ret.empty())
-            out << ret;
+            cout << ret;
         else if (verbose)
-            out << "Address '" << options.addr << "' not found\n";
-
-        out.flush();
+            cout << "Address '" << options.addr << "' not found\n";
+        cout.flush();
     }
 
     return 0;
@@ -84,7 +83,6 @@ SFString setName(const SFString& addr, const SFString& name) {
 
 //-----------------------------------------------------------------------
 CAccountNameArray accounts;
-CFileExportContext out;
 
 //---------------------------------------------------------------------------
 bool CAccountName::Match(const SFString& s1, const SFString& s2, const SFString& s3, bool matchCase, bool all) {
