@@ -12,7 +12,8 @@
 // #define ADDR "0xc78310231aa53bd3d0fea2f8c705c67730929d8f"
 // #define ADDR "0xaec2e87e0a235266d9c5adc9deb4b2e29b54d009"
 #define ADDR "0xbb9bc244d798123fde783fcc1c72d3bb8c189413"
-#define N 2500
+#define N 20
+#define BL 4000
 // 500000
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
@@ -30,8 +31,8 @@ int main(int argc, const char *argv[]) {
         if (!options.parseArguments(command))
             return 0;
 
-        SFUint32 end = getClientLatestBlk();
         SFUint32 start = 1428757;  // 2364414; // end - 100000;
+        SFUint32 end = start + BL;  // getClientLatestBlk();
         for (uint32_t bn = start ; bn < end ; bn = bn + N) {
             SFString res;
             queryRawLogs(bn, bn+N, ADDR, res);

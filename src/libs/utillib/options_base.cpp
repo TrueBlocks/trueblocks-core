@@ -131,6 +131,8 @@ namespace qblocks {
             return true;
         if (arg == "--nocolors")
             return true;
+        if (arg == "null")
+            return true;
         return false;
     }
 

@@ -15,6 +15,7 @@ public:
     SFUint32 blockNum;
     SFTime   date;
     SFString special;
+    bool alone;
 
     COptions(void);
     ~COptions(void);

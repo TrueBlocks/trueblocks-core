@@ -10,18 +10,15 @@
 namespace qblocks {
 
 //--------------------------------------------------------------------------------
-CWebAPI::CWebAPI(void)
-{
+CWebAPI::CWebAPI(void) {
 }
 
 //--------------------------------------------------------------------------------
-CWebAPI::~CWebAPI(void)
-{
+CWebAPI::~CWebAPI(void) {
 }
 
 //--------------------------------------------------------------------------------
-bool CWebAPI::checkKey(CToml& toml)
-{
+bool CWebAPI::checkKey(CToml& toml) {
     key      = toml.getConfigStr("settings", "api_key",      EMPTY);
     provider = toml.getConfigStr("settings", "api_provider", "EtherScan");
     url      = toml.getConfigStr("settings", "api_url",      "http://etherscan.io/apis");
@@ -34,7 +31,8 @@ bool CWebAPI::checkKey(CToml& toml)
     char buffer[256];
     cerr
     << cRed << "\n  ***Warning***" << cOff << "\n"
-    << "  " << cYellow << "This program" << cOff << " needs an api_key from " + provider + " in order to work. You may get one at\n"
+    << "  " << cYellow
+        << "This program" << cOff << " needs an api_key from " + provider + " in order to work. You may get one at\n"
     << "  " + url + ". See our online help file for more information.\n"
     << "  Please provide an API key or type 'exit'\n"
     << "  > ";
@@ -45,7 +43,7 @@ bool CWebAPI::checkKey(CToml& toml)
     if (key % "exit" || key % "quit")
         exit(0);
 
-    // TODO: extend this to allow for other APIs
+    // TODO(jayrush): extend this to allow for other APIs
 
     // save the key for later
     toml.setConfigStr("settings", "api_key",      key);
@@ -57,8 +55,7 @@ bool CWebAPI::checkKey(CToml& toml)
 }
 
 //--------------------------------------------------------------------------------
-SFString CWebAPI::getKey(void) const
-{
+SFString CWebAPI::getKey(void) const {
     return key;
 }
 }  // namespace qblocks

@@ -10,7 +10,7 @@
  * of 'EXISTING_CODE' tags.
  */
 #include "leaf.h"
-#include "accounttree.h"
+#include "treeroot.h"
 
 namespace qblocks {
 
@@ -50,7 +50,12 @@ SFString nextLeafChunk(const SFString& fieldIn, bool& force, const void *data) {
 
         switch (tolower(fieldIn[0])) {
             case 'm':
+#ifdef OLD_LEAF
                 if ( fieldIn % "m_leafValue" ) return lea->m_leafValue;
+#else
+                if ( fieldIn % "m_first" ) return asStringU(lea->m_first);
+                if ( fieldIn % "m_last" ) return asStringU(lea->m_last);
+#endif
                 break;
         }
 
@@ -76,7 +81,12 @@ bool CLeaf::setValueByName(const SFString& fieldName, const SFString& fieldValue
 
     switch (tolower(fieldName[0])) {
         case 'm':
+#ifdef OLD_LEAF
             if ( fieldName % "m_leafValue" ) { m_leafValue = fieldValue; return true; }
+#else
+            if ( fieldName % "m_first" ) { m_first = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "m_last" ) { m_last = toUnsigned(fieldValue); return true; }
+#endif
             break;
         default:
             break;
@@ -97,7 +107,12 @@ bool CLeaf::Serialize(SFArchive& archive) {
 
     CTreeNode::Serialize(archive);
 
+#ifdef OLD_LEAF
     archive >> m_leafValue;
+#else
+    archive >> m_first;
+    archive >> m_last;
+#endif
     finishParse();
     return true;
 }
@@ -106,7 +121,12 @@ bool CLeaf::Serialize(SFArchive& archive) {
 bool CLeaf::SerializeC(SFArchive& archive) const {
     CTreeNode::SerializeC(archive);
 
+#ifdef OLD_LEAF
     archive << m_leafValue;
+#else
+    archive << m_first;
+    archive << m_last;
+#endif
 
     return true;
 }
@@ -122,7 +142,12 @@ void CLeaf::registerClass(void) {
     uint32_t fieldNum = 1000;
     ADD_FIELD(CLeaf, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
     ADD_FIELD(CLeaf, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
+#ifdef OLD_LEAF
     ADD_FIELD(CLeaf, "m_leafValue", T_TEXT, ++fieldNum);
+#else
+    ADD_FIELD(CLeaf, "m_first", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CLeaf, "m_last", T_NUMBER, ++fieldNum);
+#endif
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CLeaf, "schema");
@@ -170,10 +195,12 @@ bool CLeaf::readBackLevel(SFArchive& archive) {
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
+#ifdef OLD_LEAF
     //-----------------------------------------------------------------------------
-    CLeaf::CLeaf(const SFString& _key, const SFString& _value) : m_leafValue(_value) {
+    CLeaf::CLeaf(const SFString& _key, const SFString& _value) {
+        m_leafValue = _value;
         m_prefix = _key;
-        if (verbose == 2) cerr << "\t\tCreating leaf " << _key << endl;
+        if (verbose == 2) cerr << "\t\tCreating leaf " << _key << " at " << _value << endl;
     }
 
     //-----------------------------------------------------------------------------
@@ -196,14 +223,18 @@ bool CLeaf::readBackLevel(SFArchive& archive) {
     CTreeNode* CLeaf::insert(const SFString& _key, const SFString& _value) {
         if (contains(_key)) {
             // If the leaf exists, we reset the value
-            if (verbose) cerr << "\t\tReplacing leaf contents " << _key << "\n";
             // We've reached the end of the key, so store the value here
-            if (m_leafValue.empty()) {
-                // store the first encountered block
-                m_leafValue = _value;
-
-            } else {
+//            if (m_leafValue.empty()) {
+//                // store the first encountered block
+//                if (verbose) cerr << "\t\tStoring first contents " << _key << " at " << _value << "\n";
+//                m_leafValue = _value;
+//
+//            } else
+            {
                 // preserve the most recent block encountered
+                if (verbose) cerr << "\t\tReplacing leaf contents " << _key << " at " << _value
+//                        << " (" << m_leafValue << ")"
+                        << "\n";
                 m_leafValue = nextTokenClear(m_leafValue, '|');
                 m_leafValue += "|" + _value;
             }
@@ -211,7 +242,7 @@ bool CLeaf::readBackLevel(SFArchive& archive) {
 
         } else {
             // If the leaf is not the key, delete convert to a branch
-            if (verbose == 2) cerr << "\t\tBranching " << _key << "\n";
+            if (verbose == 2) { cerr << "\tleaf branching " << _key << " at " << _value << "\n"; }
             CTreeNode *n = CTreeNode::newBranch(_key, _value, m_prefix, m_leafValue);
             delete this;
             return n;
@@ -249,6 +280,95 @@ bool CLeaf::readBackLevel(SFArchive& archive) {
         vd->type = save;
         return true;
     }
+#else
+    //-----------------------------------------------------------------------------
+    CLeaf::CLeaf(const SFString& _key, const SFString& _value) {
+        SFString last = _value;
+        SFString first = nextTokenClear(last, '|');
+        m_first = toUnsigned(first);
+        m_last = toUnsigned(last);;
+        m_prefix = _key;
+        if (verbose == 2) cerr << "\t\tCreating leaf " << _key << " at " << _value << endl;
+    }
+
+    //-----------------------------------------------------------------------------
+    SFString CLeaf::at(const SFString& _key) const {
+        return contains(_key) ? asString(m_first) + (m_last ? "|" + asString(m_last) : "") : "";
+    }
+
+    //-----------------------------------------------------------------------------
+    bool CLeaf::contains(const SFString& _key) const {
+        size_t l1 = _key.length();
+        size_t l2 = m_prefix.length();
+        const char *s1 = (const char*)_key;
+        const char *s2 = (const char*)m_prefix;
+        bool found = !memcmp(s1, s2, l1);
+
+        return l1 == l2 && found;
+    }
+
+    //-----------------------------------------------------------------------------
+    CTreeNode* CLeaf::insert(const SFString& _key, const SFString& _value) {
+        if (contains(_key)) {
+            // If the leaf exists, we reset the value
+            // We've reached the end of the key, so store the value here
+//            if (m_first == 0) {
+//                // store the first encountered block
+//                if (verbose) cerr << "\t\tStoring first contents " << _key << " at " << _value << "\n";
+//                m_first = toUnsigned(_value);
+//
+//            } else
+            {
+                // preserve the most recent block encountered
+                if (verbose) cerr << "\t\tReplacing leaf contents " << _key << " at " << _value
+//                    << " (" << m_first << ")"
+                    << "\n";
+                m_last = toUnsigned(_value);
+            }
+            return this;
+
+        } else {
+            // If the leaf is not the key, delete and convert to a branch
+            if (verbose == 2) { cerr << "\tleaf branching " << _key << " at " << _value << "\n"; }
+            SFString curVal = asString(m_first) + (m_last ? "|" + asString(m_last) : "");
+            CTreeNode *n = CTreeNode::newBranch(_key, _value, m_prefix, curVal);
+            delete this;
+            return n;
+        }
+    }
+
+    //-----------------------------------------------------------------------------
+    CTreeNode* CLeaf::remove(const SFString& _key) {
+        if (verbose)
+            cerr << endl<< endl<< endl
+            << idnt << SFString('-', 80) << endl
+            << idnt << SFString('-', 80) << endl
+            << idnt << "remove infix at [" << _key << "]: ";
+
+        if (contains(_key)) {
+            if (verbose)
+                cerr << endl << idnt << "removed leaf node at" << _key << endl;
+            delete this;
+            return NULL;
+        }
+        if (verbose)
+            cerr << endl << idnt << "no node removed at" << _key << endl;
+        return this;
+    }
+
+    //------------------------------------------------------------------
+    bool CLeaf::visitItems(ACCTVISITOR func, void *data) const {
+        ASSERT(func);
+        CVisitData *vd = reinterpret_cast<CVisitData*>(data);
+        uint32_t save = vd->type;
+        vd->type = T_LEAF;
+        vd->strs = vd->strs + "+" + (cMagenta+m_prefix + cOff + "|" + cBlue + at(m_prefix) + cOff);
+        (*func)(this, data);
+        nextTokenClearReverse(vd->strs, '+');
+        vd->type = save;
+        return true;
+    }
+#endif
 // EXISTING_CODE
 }  // namespace qblocks
 

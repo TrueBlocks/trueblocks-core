@@ -30,6 +30,7 @@ public:
     SFIntBN begBal;
     SFIntBN inflow;
     SFIntBN outflow;
+    SFIntBN gasCost;
     SFIntBN endBal;
     SFUint32 blockNum;
 
@@ -97,6 +98,7 @@ inline void CIncomeStatement::Init(void) {
     begBal = 0;
     inflow = 0;
     outflow = 0;
+    gasCost = 0;
     endBal = 0;
     blockNum = 0;
 
@@ -112,6 +114,7 @@ inline void CIncomeStatement::Copy(const CIncomeStatement& in) {
     begBal = in.begBal;
     inflow = in.inflow;
     outflow = in.outflow;
+    gasCost = in.gasCost;
     endBal = in.endBal;
     blockNum = in.blockNum;
 
@@ -153,6 +156,7 @@ extern SFArchive& operator>>(SFArchive& archive, CIncomeStatement& inc);
         begBal += x.begBal;
         inflow += x.inflow;
         outflow += x.outflow;
+        gasCost += x.gasCost;
         endBal += x.endBal;
         blockNum = x.blockNum;
     }

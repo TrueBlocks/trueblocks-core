@@ -39,4 +39,6 @@ namespace qblocks {
     extern void qbSleep(float units);
     extern SFString getCWD(const SFString& filename = "");
     extern SFString doCommand(const SFString& cmd);
+
+    #define kMaxPathSize _POSIX_PATH_MAX
 }  // namespace qblocks

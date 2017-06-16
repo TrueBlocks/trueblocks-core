@@ -58,15 +58,13 @@ SFString nextFunctionChunk(const SFString& fieldIn, bool& force, const void *dat
                 if ( fieldIn % "encoding" ) return fun->encoding;
                 break;
             case 'i':
-                if ( fieldIn % "inputs" )
-                {
+                if ( fieldIn % "inputs" ) {
                     uint32_t cnt = fun->inputs.getCount();
                     if (!cnt) return EMPTY;
                     SFString ret;
-                    for (uint32_t i=0;i<cnt;i++)
-                    {
+                    for (uint32_t i = 0 ; i < cnt ; i++) {
                         ret += fun->inputs[i].Format();
-                        ret += ((i<cnt-1) ? ",\n" : "\n");
+                        ret += ((i < cnt - 1) ? ",\n" : "\n");
                     }
                     return ret;
                 }
@@ -75,15 +73,13 @@ SFString nextFunctionChunk(const SFString& fieldIn, bool& force, const void *dat
                 if ( fieldIn % "name" ) return fun->name;
                 break;
             case 'o':
-                if ( fieldIn % "outputs" )
-                {
+                if ( fieldIn % "outputs" ) {
                     uint32_t cnt = fun->outputs.getCount();
                     if (!cnt) return EMPTY;
                     SFString ret;
-                    for (uint32_t i=0;i<cnt;i++)
-                    {
+                    for (uint32_t i = 0 ; i < cnt ; i++) {
                         ret += fun->outputs[i].Format();
-                        ret += ((i<cnt-1) ? ",\n" : "\n");
+                        ret += ((i < cnt - 1) ? ",\n" : "\n");
                     }
                     return ret;
                 }
@@ -114,17 +110,15 @@ SFString nextFunctionChunk(const SFString& fieldIn, bool& force, const void *dat
 //---------------------------------------------------------------------------------------------------
 bool CFunction::setValueByName(const SFString& fieldName, const SFString& fieldValue) {
     // EXISTING_CODE
-    if ( fieldName % "inputs" )
-    {
+    if ( fieldName % "inputs" ) {
         parseParams(true, fieldValue);
         return true;
 
-    } else if ( fieldName % "outputs" )
-    {
+    } else if ( fieldName % "outputs" ) {
         parseParams(false, fieldValue);
         return true;
-    } else if ( fieldName % "signature" )
-    {
+
+    } else if ( fieldName % "signature" ) {
         signature = getSignature(SIG_CANONICAL);
         return true;
     }
@@ -167,7 +161,7 @@ bool CFunction::setValueByName(const SFString& fieldName, const SFString& fieldV
 //---------------------------------------------------------------------------------------------------
 void CFunction::finishParse() {
     // EXISTING_CODE
-    for (uint32_t i=0;i<inputs.getCount();i++)
+    for (uint32_t i = 0 ; i < inputs.getCount() ; i++)
         hasAddrs |= (inputs[i].type == "address");
     signature = getSignature(SIG_CANONICAL);
     encoding  = encodeItem();
@@ -249,26 +243,23 @@ SFString nextFunctionChunk_custom(const SFString& fieldIn, bool& force, const vo
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             case 'h':
-                if ( fieldIn % "hex" )
-                {
+                if ( fieldIn % "hex" ) {
                     SFString ret = fun->name + "(";
-                    for (uint32_t i=0;i< fun->inputs.getCount();i++)
-                    {
+                    for (uint32_t i = 0 ; i < fun->inputs.getCount() ; i++) {
                         ret += fun->inputs[i].type;
                         if (i < fun->inputs.getCount())
                             ret += ",";
                     }
                     ret += ")";
-                    return ret + "\t0x"+string2Hex(ret).Substitute(",)",")");
+                    return ret + "\t0x" + string2Hex(ret).Substitute(",)", ")");
 
-                } else if ( fieldIn % "hasAddrs" )
-                {
+                } else if ( fieldIn % "hasAddrs" ) {
                     return asString(fun->hasAddrs);
+
                 }
                 break;
             case 'i':
-                if ( fieldIn % "isBuiltin" )
-                {
+                if ( fieldIn % "isBuiltin" ) {
                     return asString(fun->isBuiltin);
                 }
                 break;
@@ -304,15 +295,13 @@ bool CFunction::readBackLevel(SFArchive& archive) {
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-void CFunction::parseParams(bool input, const SFString& contents)
-{
-    char *p = (char *)(const char*)contents;
-    while (p && *p)
-    {
-        CParameter param;uint32_t nFields=0;
-        p = param.parseJson(p,nFields);
-        if (nFields)
-        {
+void CFunction::parseParams(bool input, const SFString& contents) {
+    char *p = (char *)contents.c_str();
+    while (p && *p) {
+        CParameter param;
+        uint32_t nFields = 0;
+        p = param.parseJson(p, nFields);
+        if (nFields) {
             if (input)
                 inputs[inputs.getCount()] = param;
             else
@@ -322,8 +311,7 @@ void CFunction::parseParams(bool input, const SFString& contents)
 }
 
 //---------------------------------------------------------------------------
-SFString CFunction::getSignature(SFUint32 parts) const
-{
+SFString CFunction::getSignature(SFUint32 parts) const {
     uint32_t cnt = inputs.getCount();
 
     CStringExportContext ctx;
@@ -331,35 +319,32 @@ SFString CFunction::getSignature(SFUint32 parts) const
     ctx << (parts & SIG_FNAME  ? name          : "");
     ctx << (parts & SIG_FSPACE ? SFString(' ', max(0UL, 35-type.length()-name.length())) : "");
     ctx << (parts & SIG_FTYPE || parts & SIG_FNAME  ? "("    : "");
-    for (uint32_t j=0;j<cnt;j++)
-    {
+    for (uint32_t j = 0 ; j < cnt ; j++) {
         ctx << (parts & SIG_ITYPE    ? inputs[j].type : "");
         ctx << (parts & SIG_IINDEXED ? (inputs[j].indexed ? " indexed" : "") : "");
         ctx << (parts & SIG_INAME    ? " "+inputs[j].name : "");
-        ctx << (parts & SIG_ITYPE    ? (j<cnt-1 ? "," : "") : "");
+        ctx << (parts & SIG_ITYPE    ? (j < cnt-1 ? "," : "") : "");
     }
     ctx << (parts & SIG_FTYPE || parts & SIG_FNAME  ? ")" : "");
     if (parts == SIG_ENCODE)
-        ctx << (parts & SIG_ENCODE ? (parts & SIG_FNAME ? " "+encoding : encoding+" ") : "");
+        ctx << (parts & SIG_ENCODE ? (parts & SIG_FNAME ? " " + encoding : encoding + " ") : "");
     else
         ctx << (parts & SIG_ENCODE ? " [" + encoding + "]" : "");
-    if (verbose && parts != SIG_CANONICAL)
-    {
+    if (verbose && parts != SIG_CANONICAL) {
         ctx << (anonymous ? " anonymous" : "");
         ctx << (constant  ? " constant" : "");
         ctx << (payable   ? " payable" : "");
     }
 
-    ctx.str.ReplaceAll(" )",")");
+    ctx.str.ReplaceAll(" )", ")");
     return Strip(ctx.str, ' ');
 }
 
 //-----------------------------------------------------------------------
-SFString CFunction::encodeItem(void) const
-{
+SFString CFunction::encodeItem(void) const {
     SFString hex = "0x"+string2Hex(signature);
     SFString ret;
-    extern bool getSha3(const SFString& hexIn, SFString& shaOut);
+extern bool getSha3(const SFString& hexIn, SFString& shaOut);
     getSha3(hex, ret);
     ret = (type == "event" ? ret : ret.Left(10));
     return ret;

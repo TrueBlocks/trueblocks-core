@@ -56,6 +56,9 @@ SFString nextIncomestatementChunk(const SFString& fieldIn, bool& force, const vo
             case 'e':
                 if ( fieldIn % "endBal" ) return asStringBN(inc->endBal);
                 break;
+            case 'g':
+                if ( fieldIn % "gasCost" ) return asStringBN(inc->gasCost);
+                break;
             case 'i':
                 if ( fieldIn % "inflow" ) return asStringBN(inc->inflow);
                 break;
@@ -89,6 +92,9 @@ bool CIncomeStatement::setValueByName(const SFString& fieldName, const SFString&
         case 'e':
             if ( fieldName % "endBal" ) { endBal = toLong(fieldValue); return true; }
             break;
+        case 'g':
+            if ( fieldName % "gasCost" ) { gasCost = toLong(fieldValue); return true; }
+            break;
         case 'i':
             if ( fieldName % "inflow" ) { inflow = toLong(fieldValue); return true; }
             break;
@@ -118,6 +124,7 @@ bool CIncomeStatement::Serialize(SFArchive& archive) {
     archive >> begBal;
     archive >> inflow;
     archive >> outflow;
+    archive >> gasCost;
     archive >> endBal;
     archive >> blockNum;
     finishParse();
@@ -132,6 +139,7 @@ bool CIncomeStatement::SerializeC(SFArchive& archive) const {
     archive << begBal;
     archive << inflow;
     archive << outflow;
+    archive << gasCost;
     archive << endBal;
     archive << blockNum;
 
@@ -150,6 +158,7 @@ void CIncomeStatement::registerClass(void) {
     ADD_FIELD(CIncomeStatement, "begBal", T_NUMBER, ++fieldNum);
     ADD_FIELD(CIncomeStatement, "inflow", T_NUMBER, ++fieldNum);
     ADD_FIELD(CIncomeStatement, "outflow", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CIncomeStatement, "gasCost", T_NUMBER, ++fieldNum);
     ADD_FIELD(CIncomeStatement, "endBal", T_NUMBER, ++fieldNum);
     ADD_FIELD(CIncomeStatement, "blockNum", T_NUMBER, ++fieldNum);
 
@@ -217,17 +226,20 @@ ostream& operator<<(ostream& os, const CIncomeStatement& is) {
         os << padCenter("begBal",width) << "   "
         << padCenter("inFlow",width) << "   "
         << padCenter("outFlow",width) << "   "
+        << padCenter("gasCost",width) << "   "
         << padCenter("endBal",width);
     } else {
         os << padLeft(wei2Ether(to_string(is.begBal).c_str()),width) << "   "
         << padLeft(wei2Ether(to_string(is.inflow).c_str()),width) << "   "
         << padLeft(wei2Ether(to_string(is.outflow).c_str()),width) << "   "
+        << padLeft(wei2Ether(to_string(is.gasCost).c_str()),width) << "   "
         << padLeft(wei2Ether(to_string(is.endBal).c_str()),width);
     }
     return os;
 }
 bool CIncomeStatement::reconcile(const SFAddress& addr, blknum_t blockNum) {
-    nodeBal = getBalance(addr, blockNum, false); return balanced();
+    nodeBal = getBalance(addr, blockNum, false);
+    return balanced();
 }
 // EXISTING_CODE
 }  // namespace qblocks
