@@ -55,7 +55,7 @@ SFString nextAbiChunk(const SFString& fieldIn, bool& force, const void *data) {
                     SFString ret;
                     for (uint32_t i = 0 ; i < cnt ; i++) {
                         ret += abi->abiByName[i].Format();
-                        ret += ((i < cnt-1) ? ",\n" : "\n");
+                        ret += ((i < cnt - 1) ? ",\n" : "\n");
                     }
                     return ret;
                 }
@@ -65,7 +65,7 @@ SFString nextAbiChunk(const SFString& fieldIn, bool& force, const void *data) {
                     SFString ret;
                     for (uint32_t i = 0 ; i < cnt ; i++) {
                         ret += abi->abiByEncoding[i].Format();
-                        ret += ((i < cnt-1) ? ",\n" : "\n");
+                        ret += ((i < cnt - 1) ? ",\n" : "\n");
                     }
                     return ret;
                 }

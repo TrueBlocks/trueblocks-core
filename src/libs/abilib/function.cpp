@@ -9,7 +9,6 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
-#include <algorithm>
 #include "function.h"
 
 namespace qblocks {
@@ -65,7 +64,7 @@ SFString nextFunctionChunk(const SFString& fieldIn, bool& force, const void *dat
                     SFString ret;
                     for (uint32_t i = 0 ; i < cnt ; i++) {
                         ret += fun->inputs[i].Format();
-                        ret += ((i < cnt-1) ? ",\n" : "\n");
+                        ret += ((i < cnt - 1) ? ",\n" : "\n");
                     }
                     return ret;
                 }
@@ -80,7 +79,7 @@ SFString nextFunctionChunk(const SFString& fieldIn, bool& force, const void *dat
                     SFString ret;
                     for (uint32_t i = 0 ; i < cnt ; i++) {
                         ret += fun->outputs[i].Format();
-                        ret += ((i < cnt-1) ? ",\n" : "\n");
+                        ret += ((i < cnt - 1) ? ",\n" : "\n");
                     }
                     return ret;
                 }
