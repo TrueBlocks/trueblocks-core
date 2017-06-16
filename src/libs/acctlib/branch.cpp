@@ -10,7 +10,7 @@
  * of 'EXISTING_CODE' tags.
  */
 #include "branch.h"
-#include "accounttree.h"
+#include "treeroot.h"
 
 namespace qblocks {
 
@@ -50,8 +50,7 @@ SFString nextBranchChunk(const SFString& fieldIn, bool& force, const void *data)
 
         switch (tolower(fieldIn[0])) {
             case 'm':
-            return EMPTY;
-//                if ( fieldIn % "m_nodes[16]" ) { expContext().noFrst=true; return bra->m_nodes[16].Format(); }
+                if ( fieldIn % "m_nodes[16]" ) { return EMPTY; }
                 if ( fieldIn % "m_branchValue" ) return bra->m_branchValue;
                 break;
         }
@@ -78,8 +77,7 @@ bool CBranch::setValueByName(const SFString& fieldName, const SFString& fieldVal
 
     switch (tolower(fieldName[0])) {
         case 'm':
-            return true;
-//            if ( fieldName % "m_nodes[16]" ) { /* m_nodes[16] = fieldValue; */ return false; }
+            if ( fieldName % "m_nodes[16]" ) { /* m_nodes[16] = fieldValue; */ return false; }
             if ( fieldName % "m_branchValue" ) { m_branchValue = fieldValue; return true; }
             break;
         default:
@@ -209,7 +207,7 @@ bool CBranch::readBackLevel(SFArchive& archive) {
 
     //-----------------------------------------------------------------------------
     CTreeNode* CBranch::insert(const SFString& _key, const SFString& _value) {
-        if (verbose == 2) cerr << "\tInserting branch " << _key << "\n";
+        if (verbose == 2) { cerr << "\tbranch inserting " << _key << " at " << _value << "\n"; }
         if (_key.empty()) {
             // We've reached the end of the key, so store the value here
             if (m_branchValue.empty()) {
@@ -338,7 +336,8 @@ bool CBranch::readBackLevel(SFArchive& archive) {
         CVisitData *vd = reinterpret_cast<CVisitData*>(data);
         uint32_t save = vd->type;
         vd->type = T_BRANCH;
-        vd->strs = vd->strs + "+" + m_branchValue;
+        //        vd->strs = vd->strs + m_branchValue + "+";
+        vd->strs = vd->strs + "+";
         (*func)(this, data);
         for (uint32_t i = 0; i < 16; ++i) {
             if (m_nodes[i]) {
