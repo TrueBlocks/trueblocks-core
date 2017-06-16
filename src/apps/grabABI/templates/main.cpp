@@ -56,8 +56,6 @@ void displayTransaction(uint32_t which, const CTransaction *theTrans, void *data
     //----------------------------------
     SFString evtList;
     if (visitor->showLogs || wantsEvents) {
-        if (theTrans->receipt.logs.getCount())
-            cout << "\r\n";
         for (int i = 0 ; i < theTrans->receipt.logs.getCount() ; i++) {
 
             // Try to promote it. If we can't promote it, revert to the original.
