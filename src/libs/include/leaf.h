@@ -22,12 +22,18 @@ typedef SFList<CLeaf*>             CLeafList;
 typedef SFUniqueList<CLeaf*>       CLeafListU;
 
 // EXISTING_CODE
+//#define OLD_LEAF 1
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
 class CLeaf : public CTreeNode {
 public:
+#ifdef OLD_LEAF
     SFString m_leafValue;
+#else
+    SFUint32 m_first;
+    SFUint32 m_last;
+#endif
 
 public:
     CLeaf(void);
@@ -92,7 +98,12 @@ inline void CLeaf::Clear(void) {
 inline void CLeaf::Init(void) {
     CTreeNode::Init();
 
+#ifdef OLD_LEAF
 //    m_leafValue = EMPTY;
+#else
+    m_first = 0;
+    m_last = 0;
+#endif
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -103,7 +114,12 @@ inline void CLeaf::Copy(const CLeaf& le) {
     Clear();
     CTreeNode::Copy(le);
 
+#ifdef OLD_LEAF
     m_leafValue = le.m_leafValue;
+#else
+    m_first = le.m_first;
+    m_last = le.m_last;
+#endif
 
     // EXISTING_CODE
     // EXISTING_CODE
