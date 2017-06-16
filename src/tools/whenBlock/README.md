@@ -10,7 +10,7 @@ The `hour`/`minute`/`second` portions of the date are optional, and if omitted, 
 
 #### Usage
 
-`Usage:`    whenBlock [-l|-h] date/block  
+`Usage:`    whenBlock [-a|-l|-h] date/block  
 `Purpose:`  Finds the nearest block before the JSON-formatted date, or the date of the given block.
              
 `Where:`  
@@ -18,6 +18,7 @@ The `hour`/`minute`/`second` portions of the date are optional, and if omitted, 
 | Option | Full Command | Description |
 | -------: | :------- | :------- |
 |  | date/block | one of the special values listed below or YYYY-MM-DD-[HH[:MM[:SS]]] or a blockNumber |
+| -a | --alone | show the found block or found date unadorned (useful for scripting) |
 | -l | --list | list special blocks timestamps and dates |
 | -h | --help | display this help screen |
 
