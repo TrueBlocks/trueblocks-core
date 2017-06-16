@@ -19,49 +19,73 @@ namespace qblocks {
 
     //-------------------------------------------------------------
     CExportContext& CExportContext::operator<<(bool b) {
+#if 1
+        ostringstream os;
+        os << b;
+        Output(os.str().c_str());
+#else
         char val[64];
         sprintf(val, "%c", b ? '1' : '0');
         Output(val);
+#endif
         return *this;
     }
 
     //-------------------------------------------------------------
     CExportContext& CExportContext::operator<<(char c) {
+#if 1
+        ostringstream os;
+        os << c;
+        Output(os.str().c_str());
+#else
         char val[64];
         sprintf(val, "%c", c);
         Output(val);
+#endif
         return *this;
     }
 
     //-------------------------------------------------------------
     CExportContext& CExportContext::operator<<(int64_t dw) {
-        char val[64];
-        sprintf(val, (fmt.empty() ? "%ld" : (const char*)fmt), (int64_t)dw);
-        Output(val);
+        ostringstream os;
+        os << dw;
+        Output(os.str().c_str());
         return *this;
     }
 
     //-------------------------------------------------------------
     CExportContext& CExportContext::operator<<(unsigned int ui) {
+#if 1
+        ostringstream os;
+        os << ui;
+        Output(os.str().c_str());
+#else
         char val[64];
         sprintf(val, (fmt.empty() ? "%d" : (const char*)fmt), ui);
         Output(val);
+#endif
         return *this;
     }
 
     //-------------------------------------------------------------
     CExportContext& CExportContext::operator<<(uint64_t ul) {
-        char val[64];
-        sprintf(val, (fmt.empty() ? "%lu" : (const char*)fmt), (uint64_t)ul);
-        Output(val);
+        ostringstream os;
+        os << ul;
+        Output(os.str().c_str());
         return *this;
     }
 
     //-------------------------------------------------------------
     CExportContext& CExportContext::operator<<(int i) {
+#if 1
+        ostringstream os;
+        os << i;
+        Output(os.str().c_str());
+#else
         char val[64];
         sprintf(val, (fmt.empty() ? "%d" : (const char*)fmt), i);
         Output(val);
+#endif
         return *this;
     }
 

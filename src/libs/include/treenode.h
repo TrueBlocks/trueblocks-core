@@ -10,6 +10,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <algorithm>
 #include "etherlib.h"
 
 namespace qblocks {
@@ -39,9 +40,9 @@ public:
     DECLARE_NODE(CTreeNode);
 
     // EXISTING_CODE
-    virtual SFString at(const SFString& _key) const { return ""; };
-    virtual CTreeNode* insert(const SFString& _key, const SFString& _value) { return NULL; };
-    virtual CTreeNode* remove(const SFString& _key) { return NULL; };
+    virtual SFString at(const SFString& _key) const { return ""; }
+    virtual CTreeNode* insert(const SFString& _key, const SFString& _value) { return NULL; }
+    virtual CTreeNode* remove(const SFString& _key) { return NULL; }
     virtual bool visitItems(ACCTVISITOR func, void *data) const { return true; }
     CTreeNode* newBranch(const SFString& _k1, const SFString& _v1, const SFString& _k2, const SFString& _v2);
     // EXISTING_CODE

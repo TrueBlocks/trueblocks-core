@@ -6,6 +6,7 @@
  *
  * The LICENSE at the root of this repo details your rights (if any)
  *------------------------------------------------------------------------*/
+#include <algorithm>
 
 namespace qblocks {
 
@@ -75,8 +76,7 @@ namespace qblocks {
     }
 
     //-----------------------------------------------------------------------
-    inline SFUint32 barLen(SFUint32 newLen=0)
-    {
+    inline SFUint32 barLen(SFUint32 newLen = 0) {
         static SFUint32 _barLen = 100;
         if (newLen)
             _barLen = newLen;
@@ -84,7 +84,7 @@ namespace qblocks {
     }
 
     //-----------------------------------------------------------------------
-    inline void progressBar(SFUint32 _part, SFUint32 _whole, const SFString& _tim="") {
+    inline void progressBar(SFUint32 _part, SFUint32 _whole, const SFString& _tim = "") {
 
         double percent = 1.0;
         if (_whole > 0)
@@ -103,9 +103,9 @@ namespace qblocks {
     }
 
     //-----------------------------------------------------------------------
-    inline void progressBar(SFUint32 _part, SFUint32 _whole, int _tim=0) {
+    inline void progressBar(SFUint32 _part, SFUint32 _whole, int _tim = 0) {
         CStringExportContext ctx;
         ctx << " in " << cGreen << asString(_tim) << cOff << " seconds.";
         progressBar(_part, _whole, (_tim == 0 ? "" : ctx.str));
     }
-}
+}  // namespace qblocks

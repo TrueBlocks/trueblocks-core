@@ -10,7 +10,7 @@
  * of 'EXISTING_CODE' tags.
  */
 #include "treenode.h"
-#include "accounttree.h"
+#include "treeroot.h"
 
 namespace qblocks {
 
@@ -183,7 +183,6 @@ CTreeNode* CTreeNode::newBranch(
     const SFString& _v2) {
 
     unsigned prefix = commonPrefix(_k1, _k2);
-
     CTreeNode* ret;
     if (_k1.length() == prefix) {
         if (verbose == 2) cerr << "k1 matches up to " << prefix << endl;
@@ -197,9 +196,9 @@ CTreeNode* CTreeNode::newBranch(
         // both continue after split
         if (verbose == 2) cerr << "both keys continue past prefix " << prefix << endl;
         ret = new CBranch(_k1[prefix],
-                                    new CLeaf(_k1.substr(prefix+1), _v1),
-                                    _k2[prefix],
-                                    new CLeaf(_k2.substr(prefix+1), _v2));
+                          new CLeaf(_k1.substr(prefix+1), _v1),
+                          _k2[prefix],
+                          new CLeaf(_k2.substr(prefix+1), _v2));
     }
 
     if (prefix) {
