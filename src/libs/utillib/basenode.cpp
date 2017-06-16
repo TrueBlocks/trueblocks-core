@@ -319,7 +319,7 @@ namespace qblocks {
     extern SFString decBigNum(const SFString& str);
     //--------------------------------------------------------------------------------
     SFString CBaseNode::toJson1(void) const {
-    	return toJson().Substitute("\t", " ").Substitute("\n", "").Substitute("  ", " ");
+        return toJson().Substitute("\t", " ").Substitute("\n", "").Substitute("  ", " ");
     }
     //--------------------------------------------------------------------------------
     SFString CBaseNode::toJson(void) const {

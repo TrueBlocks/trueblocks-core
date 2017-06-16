@@ -5,14 +5,15 @@
  *
  * The LICENSE at the root of this repo details your rights (if any)
  *------------------------------------------------------------------------*/
+#include <glob.h>
+#include <libgen.h>
+#include <algorithm>
+
 #include "basetypes.h"
 
 #include "sfos.h"
 #include "sftime.h"
 #include "string.h"
-
-#include <glob.h>
-#include <libgen.h>
 
 namespace qblocks {
 
@@ -20,8 +21,7 @@ namespace qblocks {
     #define remove unlink
 
     //------------------------------------------------------------------
-    static SFString escapePath(const SFString& nameIn)
-    {
+    static SFString escapePath(const SFString& nameIn) {
         SFString name = nameIn;
         name.ReplaceAll(" ", "\\ ");
         name.ReplaceAll("&", "\\&");
@@ -32,30 +32,27 @@ namespace qblocks {
     }
 
     //------------------------------------------------------------------
-    int copyFile( const SFString& fromIn, const SFString& toIn )
-    {
+    int copyFile(const SFString& fromIn, const SFString& toIn) {
         SFString from = escapePath(fromIn);
         SFString to   = escapePath(toIn);
 
         const SFString copyCmd = "cp -pf";
 
         SFString command = copyCmd + " " + from + " " + to;
-        if (system((const char *)command)) {}; // do not remove. The test just silences compiler warnings
-        return (int)fileExists(to);
+        if (system((const char *)command)) { }  // do not remove. The test just silences compiler warnings
+        return static_cast<int>(fileExists(to));
     }
 
     //------------------------------------------------------------------
-    static int globErrFunc(const char *epath, int eerrno)
-    {
-        //	perror(epath);
+    static int globErrFunc(const char *epath, int eerrno) {
+        //  perror(epath);
         return 0;
     }
 
     //------------------------------------------------------------------
     // Returns a list of either files or folders, but not both.
     //------------------------------------------------------------------
-    void doGlob(uint32_t& nStrs, SFString *strs, const SFString& maskIn, int wantFiles, bool keepPaths )
-    {
+    void doGlob(uint32_t& nStrs, SFString *strs, const SFString& maskIn, int wantFiles, bool keepPaths ) {
         ASSERT(!strs || nStrs);
 
         glob_t globBuf;
@@ -63,19 +60,18 @@ namespace qblocks {
         SFString mask = maskIn;
 
         // should check return code
-        glob( (const char *)mask, GLOB_MARK, globErrFunc, &globBuf);
+        glob((const char *)mask, GLOB_MARK, globErrFunc, &globBuf);
 
-        int n = (int)globBuf.gl_pathc;
+        size_t n = globBuf.gl_pathc;
         uint32_t mx = nStrs;
         nStrs = 0;
         char c;
 
-        for (int i=0;i<n;i++)
-        {
+        for (int i = 0 ; i < n ; i++) {
             // get path
             char *tmp = globBuf.gl_pathv[i];
             // last char
-            c   = tmp[strlen(tmp)-1];
+            c   = tmp[strlen(tmp) - 1];
 
             // if path ends in '/' then this is directory, filter accordingly
 
@@ -84,20 +80,18 @@ namespace qblocks {
             if (wantFiles == ANY_FILETYPE)
                 listEm = true;
 
-            if ( listEm )
-            {
-                if ( NULL != strs )
-                {
-                    SFString path = globBuf.gl_pathv[i] ;
+            if (listEm) {
+                if (NULL != strs) {
+                    SFString path = globBuf.gl_pathv[i];
 
                     // filter specified directories and remove trailing '/'
                     if (path.endsWith('/'))
-                        path = path.Left( path.length() - 1 );
+                        path = path.Left(path.length() - 1);
 
-                    if (!keepPaths)
-                    {
+                    if (!keepPaths) {
                         // trim path to last directory / file
-                        path = basename( (char *)(const char*)path );
+                        char res[kMaxPathSize];
+                        path = basename_r(path.c_str(), res);  // NOLINT
                         if (path.startsWith('/'))
                             path = path.substr(1);
                         // The path we return is always just the name of the folder or file
@@ -105,8 +99,7 @@ namespace qblocks {
                         ASSERT(path.length() && path[0] != '/');
                     }
 
-                    if (wantFiles == ANY_FILETYPE)
-                    {
+                    if (wantFiles == ANY_FILETYPE) {
                         if (isDir)
                             path = "d-" + path;
                         else
@@ -117,14 +110,13 @@ namespace qblocks {
                 }
 
                 nStrs++;
-                if ( NULL != strs && nStrs >= mx )
-                {
+                if (NULL != strs && nStrs >= mx) {
                     break;
                 }
             }
         }
 
-        globfree( &globBuf );
+        globfree(&globBuf);
     }
 
     //-------------------------------------------------------------------------------------------------------------
@@ -143,7 +135,7 @@ namespace qblocks {
         SFTime now = Now();
         SFString tmpPath = "/tmp/";
         SFString filename = makeValidName(tmpPath + "qb_" + now.Format("%Y%m%d%H%M%S"));
-        if (system((const char *)(cmd + ">" + filename))) {}; // do not remove. The test just silences compiler warnings
+        if (system((const char *)(cmd + ">" + filename))) { }  // Don't remove. Silences compiler warnings
 
         // Check twice for existance since the previous command creates the file but may take some time
         waitForCreate(filename);
@@ -154,39 +146,35 @@ extern SFString binaryFileToString(const SFString& filename);
     }
 
     //------------------------------------------------------------------
-    SFString getCWD(const SFString& filename)
-    {
-        char buffer[_POSIX_PATH_MAX];
-        if (::getcwd(buffer, _POSIX_PATH_MAX)) {}; // do not remove. The test just silences compiler warnings
+    SFString getCWD(const SFString& filename) {
+        char buffer[kMaxPathSize];
+        if (::getcwd(buffer, kMaxPathSize)) { }  // do not remove. The test just silences compiler warnings
         SFString folder = buffer;
         if (!folder.endsWith('/'))
             folder += "/";
-        return folder + filename; // may be empty
+        return folder + filename;  // may be empty
     }
 
     //------------------------------------------------------------------
-    int removeFile( const SFString& name )
-    {
-        return ::remove( (const char *)name );
+    int removeFile(const SFString& name) {
+        return ::remove((const char *)name);
     }
 
     //------------------------------------------------------------------
-    int moveFile( const SFString& from, const SFString& to )
-    {
+    int moveFile(const SFString& from, const SFString& to) {
         if (from % to)
             return true;
 
         if (copyFile(from, to))
-            return !removeFile(from); // remove file returns '0' on success
+            return !removeFile(from);  // remove file returns '0' on success
         return false;
     }
 
     //------------------------------------------------------------------
     // Send a float representing seconds - adjust because Windows takes 1/1000 (thousandth)
     // of a second and Linux takes 1/1000000 (millionth)
-    void qbSleep(float units)
-    {
-        ::usleep( (int)(units * 1000000.) );
+    void qbSleep(float units) {
+        ::usleep(units * 1000000.);
     }
 
     //------------------------------------------------------------------
@@ -196,8 +184,7 @@ extern SFString binaryFileToString(const SFString& filename);
     }
 
     //------------------------------------------------------------------
-    bool folderExists(const SFString& folderName)
-    {
+    bool folderExists(const SFString& folderName) {
         if (folderName.empty())
             return false;
 
@@ -205,7 +192,7 @@ extern SFString binaryFileToString(const SFString& filename);
         if (!folder.endsWith('/'))
             folder += '/';
 
-        uint32_t nFiles=0;
+        uint32_t nFiles = 0;
         listFiles(nFiles, NULL, folder+"*.*");
         // check to see if it is just folders
         if (!nFiles)
@@ -213,119 +200,109 @@ extern SFString binaryFileToString(const SFString& filename);
         if (!nFiles)
             listFolders(nFiles, NULL, folder+".");
 
-        return (nFiles>0);
+        return (nFiles > 0);
     }
 
     //--------------------------------------------------------------------------------
-    int removeFolder(const SFString& folderIn)
-    {
+    int removeFolder(const SFString& folderIn) {
         SFString folder = folderIn;
         if (!folder.endsWith('/'))
             folder += "/";
 
-        uint32_t nFiles=0;
+        uint32_t nFiles = 0;
         listFiles(nFiles, NULL, folder + "*");
-        if (nFiles)
-        {
+        if (nFiles) {
             SFString *files = new SFString[nFiles];
             listFiles(nFiles, files, folder + "*");
-            if (files)
-            {
+            if (files) {
                 for (uint32_t j = 0 ; j < nFiles ; j++)
                     if (files[j] != "." && files[j] != "..")
-                        removeFile(folder+files[j]);
+                        removeFile(folder + files[j]);
                 delete [] files;
             }
         }
-        rmdir((const char *)folder);
+        rmdir(folder.c_str());
 
-        return !fileExists((const char *)folder);
+        return !fileExists(folder.c_str());
     }
 
-     //------------------------------------------------------------------
-     SFTime fileCreateDate(const SFString& filename)
-     {
-         if (!fileExists(filename))
-             return earliestDate;
-
-         struct stat statBuf;
-         stat( filename, &statBuf );
-         // Convert time_t to struct tm
-         tm *t = localtime(&statBuf.st_ctime);
-         ASSERT(t);
-
-         return SFTime(t->tm_year + 1900, t->tm_mon+1, t->tm_mday, t->tm_hour, t->tm_min, t->tm_sec);
-     }
-
     //------------------------------------------------------------------
-    SFTime fileLastModifyDate(const SFString& filename)
-    {
+    SFTime fileCreateDate(const SFString& filename) {
         if (!fileExists(filename))
             return earliestDate;
 
         struct stat statBuf;
-        stat( filename, &statBuf );
+        stat(filename, &statBuf);
 
         // Convert time_t to struct tm
-        tm *t = localtime(&statBuf.st_mtime);
+        tm unused;
+        tm *t = localtime_r(&statBuf.st_ctime, &unused);
         ASSERT(t);
         return SFTime(t->tm_year + 1900, t->tm_mon+1, t->tm_mday, t->tm_hour, t->tm_min, t->tm_sec);
     }
 
     //------------------------------------------------------------------
-    uint32_t nFiles(const SFString& path)
-    {
-        uint32_t count=0;
+    SFTime fileLastModifyDate(const SFString& filename) {
+        if (!fileExists(filename))
+            return earliestDate;
+
+        struct stat statBuf;
+        stat(filename, &statBuf);
+
+        // Convert time_t to struct tm
+        tm unused;
+        tm *t = localtime_r(&statBuf.st_mtime, &unused);
+        ASSERT(t);
+        return SFTime(t->tm_year + 1900, t->tm_mon+1, t->tm_mday, t->tm_hour, t->tm_min, t->tm_sec);
+    }
+
+    //------------------------------------------------------------------
+    uint32_t nFiles(const SFString& path) {
+        uint32_t count = 0;
         listFiles(count, NULL, path);
         return max(0U, count);
     }
 
     //------------------------------------------------------------------
-    void listFiles(uint32_t& nStrs, SFString *strs, const SFString& mask)
-    {
-        uint32_t ret=0;
-        doGlob( ret, strs, mask, true, mask.Contains("/*/")); /* fixes color coding in pico */
+    void listFiles(uint32_t& nStrs, SFString *strs, const SFString& mask) {
+        uint32_t ret = 0;
+        doGlob(ret, strs, mask, true, mask.Contains("/*/")); /* fixes color coding in pico */
         nStrs = ret;
     }
 
     //------------------------------------------------------------------
-    uint32_t nFolders(const SFString& path)
-    {
-        uint32_t count=0;
+    uint32_t nFolders(const SFString& path) {
+        uint32_t count = 0;
         listFolders(count, NULL, path);
-        return count; // don't count '.' or '..'
+        return count;  // don't count '.' or '..'
     }
 
     //------------------------------------------------------------------
-    void listFolders(uint32_t& nStrs, SFString *strs, const SFString& mask)
-    {
-        uint32_t ret=0;
-        doGlob( ret, strs, mask, false, mask.Contains("/*/")); /* fixes color coding in pico */
+    void listFolders(uint32_t& nStrs, SFString *strs, const SFString& mask) {
+        uint32_t ret = 0;
+        doGlob(ret, strs, mask, false, mask.Contains("/*/")); /* fixes color coding in pico */
         nStrs = ret;
     }
 
     //------------------------------------------------------------------
-    void listFilesOrFolders(uint32_t& nStrs, SFString *strs, const SFString& mask)
-    {
-        uint32_t ret=0;
-        doGlob( ret, strs, mask, ANY_FILETYPE, mask.Contains("/*/"));
+    void listFilesOrFolders(uint32_t& nStrs, SFString *strs, const SFString& mask) {
+        uint32_t ret = 0;
+        doGlob(ret, strs, mask, ANY_FILETYPE, mask.Contains("/*/"));
         nStrs = ret;
     }
 
     //------------------------------------------------------------------
-    SFUint32 fileSize(const SFString& filename)
-    {
+    SFUint32 fileSize(const SFString& filename) {
         if (!fileExists(filename))
             return 0;
 
         struct stat statBuf;
-        stat( (const char *)filename, &statBuf );
+        stat((const char *)filename, &statBuf);
         return statBuf.st_size;
     }
 
     //----------------------------------------------------------------------------
-    bool establishFolder(const SFString& path, SFString& created)
-    {
+    bool establishFolder(const SFString& path, SFString& created) {
         if (fileExists(path) || folderExists(path))
             return true;
 
@@ -335,16 +312,14 @@ extern SFString binaryFileToString(const SFString& filename);
         targetFolder = targetFolder.Left(find) + "/";
         SFString folder = targetFolder;
         SFString curFolder = "/";
-        while (!folder.empty())
-        {
+        while (!folder.empty()) {
             curFolder += nextTokenClear(folder, '/') + "/";
-            if (!folderExists(curFolder))
-            {
-                mkdir((const char*)curFolder, (mode_t)0755);
+            if (!folderExists(curFolder)) {
+                mkdir(curFolder.c_str(), (mode_t)0755);
                 if (created.empty())
-                    created=curFolder;
+                    created = curFolder;
             }
         }
         return folderExists(targetFolder);
     }
-}
+}  // namespace qblocks
