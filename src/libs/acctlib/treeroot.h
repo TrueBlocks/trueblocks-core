@@ -19,10 +19,10 @@
 namespace qblocks {
 
 //--------------------------------------------------------------------------
-class CAccountTree;
-typedef SFArrayBase<CAccountTree>         CAccountTreeArray;
-typedef SFList<CAccountTree*>             CAccountTreeList;
-typedef SFUniqueList<CAccountTree*>       CAccountTreeListU;
+class CTreeRoot;
+typedef SFArrayBase<CTreeRoot>         CTreeRootArray;
+typedef SFList<CTreeRoot*>             CTreeRootList;
+typedef SFUniqueList<CTreeRoot*>       CTreeRootListU;
 
 // EXISTING_CODE
 //----------------------------------------------------------
@@ -41,22 +41,21 @@ public:
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CAccountTree : public CBaseNode {
+class CTreeRoot : public CBaseNode {
 public:
     CTreeNode *m_root;
 
 public:
-    CAccountTree(void);
-    CAccountTree(const CAccountTree& ac);
-    ~CAccountTree(void);
-    CAccountTree& operator=(const CAccountTree& ac);
+    CTreeRoot(void);
+    CTreeRoot(const CTreeRoot& tr);
+    ~CTreeRoot(void);
+    CTreeRoot& operator=(const CTreeRoot& tr);
 
-    DECLARE_NODE(CAccountTree);
+    DECLARE_NODE(CTreeRoot);
 
     // EXISTING_CODE
     SFString at(const SFString& _key) const;
     void insert(const SFString& _key, const SFString& _value);
-    void insert(const char* _key, blknum_t _value) { insert(SFString(_key).Right(40), asString(_value)); }
     void remove(const SFString& _key);
     bool visitItems(ACCTVISITOR func, void *data) const;
     // EXISTING_CODE
@@ -64,7 +63,7 @@ public:
 protected:
     void Clear(void);
     void Init(void);
-    void Copy(const CAccountTree& ac);
+    void Copy(const CTreeRoot& tr);
     bool readBackLevel(SFArchive& archive);
 
     // EXISTING_CODE
@@ -72,31 +71,31 @@ protected:
 };
 
 //--------------------------------------------------------------------------
-inline CAccountTree::CAccountTree(void) {
+inline CTreeRoot::CTreeRoot(void) {
     Init();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CAccountTree::CAccountTree(const CAccountTree& ac) {
+inline CTreeRoot::CTreeRoot(const CTreeRoot& tr) {
     // EXISTING_CODE
     // EXISTING_CODE
-    Copy(ac);
+    Copy(tr);
 }
 
 // EXISTING_CODE
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline CAccountTree::~CAccountTree(void) {
+inline CTreeRoot::~CTreeRoot(void) {
     Clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CAccountTree::Clear(void) {
+inline void CTreeRoot::Clear(void) {
     // EXISTING_CODE
     if (m_root)
         delete m_root;
@@ -105,7 +104,7 @@ inline void CAccountTree::Clear(void) {
 }
 
 //--------------------------------------------------------------------------
-inline void CAccountTree::Init(void) {
+inline void CTreeRoot::Init(void) {
     CBaseNode::Init();
 
     m_root = NULL;
@@ -115,12 +114,12 @@ inline void CAccountTree::Init(void) {
 }
 
 //--------------------------------------------------------------------------
-inline void CAccountTree::Copy(const CAccountTree& ac) {
+inline void CTreeRoot::Copy(const CTreeRoot& tr) {
     Clear();
-    CBaseNode::Copy(ac);
+    CBaseNode::Copy(tr);
 
-    if (ac.m_root)
-        *m_root = *ac.m_root;
+    if (tr.m_root)
+        *m_root = *tr.m_root;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -128,24 +127,24 @@ inline void CAccountTree::Copy(const CAccountTree& ac) {
 }
 
 //--------------------------------------------------------------------------
-inline CAccountTree& CAccountTree::operator=(const CAccountTree& ac) {
-    Copy(ac);
+inline CTreeRoot& CTreeRoot::operator=(const CTreeRoot& tr) {
+    Copy(tr);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
 //---------------------------------------------------------------------------
-inline SFString CAccountTree::getValueByName(const SFString& fieldName) const {
+inline SFString CTreeRoot::getValueByName(const SFString& fieldName) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return Format("[{"+toUpper(fieldName)+"}]");
 }
 
 //---------------------------------------------------------------------------
-IMPLEMENT_ARCHIVE_ARRAY(CAccountTreeArray);
-IMPLEMENT_ARCHIVE_ARRAY_C(CAccountTreeArray);
-IMPLEMENT_ARCHIVE_LIST(CAccountTreeList);
+IMPLEMENT_ARCHIVE_ARRAY(CTreeRootArray);
+IMPLEMENT_ARCHIVE_ARRAY_C(CTreeRootArray);
+IMPLEMENT_ARCHIVE_LIST(CTreeRootList);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
@@ -182,7 +181,7 @@ inline SFString idex(uint32_t n) {
 }
 
 //------------------------------------------------------------------
-bool forEveryAccount(CAccountTree *trie, ACCTVISITOR func, void *data);
+bool forEveryAccount(CTreeRoot *trie, ACCTVISITOR func, void *data);
 extern SFString idnt;
 // EXISTING_CODE
 }  // namespace qblocks
