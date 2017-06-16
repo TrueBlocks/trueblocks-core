@@ -14,7 +14,6 @@
 #include <inttypes.h>
 #include <libgen.h>
 #include <limits.h>
-#include <algorithm>
 #include <math.h>
 #include <pwd.h>
 #include <signal.h>
@@ -29,6 +28,7 @@
 #include <unistd.h>
 #include <utime.h>
 #include <string.h>
+#include <algorithm>
 #include <cstdint>
 #include <fstream>
 #include <iostream>
