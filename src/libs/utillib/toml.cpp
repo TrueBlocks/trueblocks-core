@@ -160,6 +160,12 @@ namespace qblocks {
 
     SFUintBN CToml::getConfigBigInt(const SFString& group, const SFString& key, SFUintBN def) const {
         SFString ret = getConfigStr(group, key, to_string(def).c_str());
+        SFString check = ret;
+        check.ReplaceAny("0123456789abcdefABCDEF", "");
+        if (!check.empty()) {
+            cerr << "Big int config item " << group << "::" << key << " is not an integer...returning zero.";
+            return 0;
+        }
         return str2BigUint(ret);
     }
 
