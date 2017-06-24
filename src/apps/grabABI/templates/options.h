@@ -9,9 +9,14 @@
 class COptions : public COptionsBase {
 public:
     SFString mode;
-    bool nocolor;
-    SFUint32 bp;
-    blknum_t start;
+    bool single_on;
+    bool accounting_on;
+    bool logs_on;
+    bool trace_on;
+    bool bloom_on;
+    bool debugger_on;
+    bool parse_on;
+    blknum_t kBlock;
 
     COptions(void);
     ~COptions(void);

@@ -73,7 +73,7 @@ SFString nextConfirmationneededeventChunk(const SFString& fieldIn, bool& force, 
             return ret;
     }
 
-    return "Field not found: [{" + fieldIn + "}]\n";
+    return fldNotFound(fieldIn);
 }
 
 //---------------------------------------------------------------------------------------------------

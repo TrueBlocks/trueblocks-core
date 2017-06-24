@@ -14,12 +14,15 @@
   *
   */
 #include "etherlib.h"
+#ifndef NOWALLETLIB
 #include "walletlib.h"
+#endif
 #include "approvalevent.h"
 #include "transferevent.h"
 #include "approve.h"
 #include "transfer.h"
 #include "transferfrom.h"
+#include "tokenbal.h"
 
 //------------------------------------------------------------------------
 extern void tokenlib_init(void);
@@ -34,4 +37,3 @@ extern const SFString func_transferFrom_qb;
 //------------------------------------------------------------------------
 extern const SFString evt_Approval_qb;
 extern const SFString evt_Transfer_qb;
-

@@ -35,7 +35,11 @@ int sortFunctionByName(const void *v1, const void *v2) {
 SFString classDir;
 //-----------------------------------------------------------------------
 inline SFString projectName(void) {
-    return classDir.Substitute("/Users/jrush/src.GitHub/quickBlocks/src/monitors/","").Substitute("/parselib/","");
+    CFilename fn(classDir+"tmp");
+    SFString ret = fn.getPath().Substitute("parselib/","").Substitute("parseLib/","").Substitute("/""/","");
+    nextTokenClearReverse(ret,'/');
+    ret = nextTokenClearReverse(ret,'/');
+    return ret;
 }
 
 //-----------------------------------------------------------------------
@@ -47,17 +51,25 @@ inline void makeTheCode(const SFString& fn, const SFString& addr) {
 }
 
 //-----------------------------------------------------------------------
-void addIfUnique(CFunctionArray& functions, const CFunction& func)
+void addIfUnique(const SFString& addr, CFunctionArray& functions, CFunction& func)
 {
 //#error
     if (func.name.empty())
         return;
 
-    for (uint64_t i = 0 ; i < functions.getCount() ; i++) {
+    for (uint32_t i = 0 ; i < functions.getCount() ; i++) {
         if (functions[i].encoding == func.encoding)
             return;
+#ifdef NEW_CODE
+        // different encoding same name means a duplicate function name in the code. We won't build with
+        // duplicate function names, so we need to modify the incoming function. We do this by appending
+        // the first four characters of the contract's address.
         if (functions[i].name == func.name)
-            functions[i].name += "_";
+            func.name += "_" + (addr.startsWith("0x") ? addr.substr(2,4) : addr.substr(0,4));
+#else
+        if (functions[i].name == func.name)
+            functions[i].name += "1";
+#endif
     }
 
     functions[functions.getCount()] = func;
@@ -104,7 +116,7 @@ SFString acquireABI(CFunctionArray& functions, const SFAddress& addr, bool silen
         uint32_t nFields = 0;
         p = func.parseJson(p, nFields);
         func.isBuiltin = builtIn;
-        addIfUnique(functions, func);
+        addIfUnique(addr, functions, func);
     }
 
     return ret;
@@ -153,7 +165,7 @@ int main(int argc, const char *argv[]) {
         if (!isGenerate) {
             // print to a buffer because we have to modify it before we print it
             cout << "ABI for address " << options.primaryAddr << (options.nAddrs>1 ? " and others" : "") << "\n";
-            for (uint64_t i = 0 ; i < functions.getCount() ; i++) {
+            for (uint32_t i = 0 ; i < functions.getCount() ; i++) {
                 CFunction *func = &functions[i];
                 if (!func->constant || !options.noconst)
                     cout << func->getSignature(options.parts) << "\n";
@@ -175,7 +187,7 @@ int main(int argc, const char *argv[]) {
             if (!options.isToken()) headers += ("#include \"tokenlib.h\"\n");
             if (!options.isWallet()) headers += ("#include \"walletlib.h\"\n");
             SFString sources = "src= \\\n", registers, factory1, factory2;
-            for (uint64_t i = 0 ; i < functions.getCount() ; i++) {
+            for (uint32_t i = 0 ; i < functions.getCount() ; i++) {
                 CFunction *func = &functions[i];
                 if (!func->isBuiltin) {
                     SFString name = func->Format("[{NAME}]") + (func->type == "event" ? "Event" : "");
@@ -209,7 +221,7 @@ int main(int argc, const char *argv[]) {
                         }
                         SFString fields, assigns1, assigns2, items1;
                         SFUint32 nIndexed = 0;
-                        for (uint64_t j = 0 ; j < func->inputs.getCount() ; j++) {
+                        for (uint32_t j = 0 ; j < func->inputs.getCount() ; j++) {
                             fields   += func->inputs[j].Format("[{TYPE}][ {NAME}]|");
                             assigns1 += func->inputs[j].Format(getAssign(&func->inputs[j], j));
                             items1   += "\t\t\titems[nItems++] = \"" + func->inputs[j].type + "\";\n";

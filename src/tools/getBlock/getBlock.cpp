@@ -27,12 +27,12 @@ int main(int argc, const char * argv[]) {
             return 0;
 
         // There can be more than one thing to do...
-        if (!options.silent)
+        if (!options.quiet)
             cout << (options.isMulti() ? "[" : "");
         if (options.isRange) {
             for (SFUint32 i = options.start ; i < options.stop ; i++) {
                 cout << doOneBlock(i, options);
-                if (!options.silent) {
+                if (!options.quiet) {
                     if (i < options.stop-1)
                         cout << ",";
                     cout << "\n";
@@ -52,7 +52,7 @@ int main(int argc, const char * argv[]) {
         } else {
             for (SFUint32 i = 0 ; i < options.nNums ; i++) {
                 cout << doOneBlock(options.nums[i], options);
-                if (!options.silent) {
+                if (!options.quiet) {
                     if (i < options.nNums - 1)
                         cout << ",";
                     cout << "\n";
@@ -70,7 +70,7 @@ int main(int argc, const char * argv[]) {
                 }
             }
         }
-        if (!options.silent)
+        if (!options.quiet)
             cout << (options.isMulti() ? "]" : "");
     }
 
@@ -85,24 +85,22 @@ SFString doOneBlock(SFUint32 num, const COptions& opt) {
     SFString numStr = asString(num);
     if (opt.isRaw) {
 
-        if (queryRawBlock(result, numStr, true, opt.terse)) {
-
-            if (!opt.txHash.empty()) {
-                SFString receipt;
-                queryRawReceipt(opt.txHash, receipt);
-                result += "," + receipt;
-            }
-
-        } else {
+        if (!queryRawBlock(result, numStr, true, opt.terse)) {
             result = "Could not query raw block " + numStr + ". Is an Ethereum node running?";
-
         }
 
     } else {
         // queryBlock returns false if there are no transactions, so ignore the return value
         queryBlock(gold, numStr, true);
+        if (curSource().Contains("Only")) {
+            // --source::cache mode doesn't include timestamp in transactions
+            for (txnum_t t = 0 ; t < gold.transactions.getCount() ; t++) {
+                gold.transactions[t].timestamp = gold.timestamp;
+            }
+
+        }
         result = gold.Format();
     }
 
-    return (opt.silent ? "" : result);
+    return (opt.quiet ? "" : result);
 }

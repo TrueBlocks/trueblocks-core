@@ -18,60 +18,44 @@
 #include "debug.h"
 
 //-----------------------------------------------------------------------
-class CStats {
-public:
-    SFUint32 visited;
-    SFUint32 nBlocks;
-    SFUint32 startBlock;
-    SFUint32 endBlock;
-    timestamp_t last_ts;
-
-    CStats(SFUint32 start, SFUint32 end) : visited(0), nBlocks(end-start), startBlock(start),
-            endBlock(end), last_ts(0) { barLen(80); }
-
-    void initReport(void) const {
-        cerr << startBlock << " : " << endBlock << " : " << nBlocks << " : " << visited << "\r\n";
-        cerr.flush();
-    }
-
-    void interumReport1(SFUint32 bn, timestamp_t ts) {
-        cerr << "fromCache: " << bn << " " << dateFromTimeStamp(ts) << "\r";
-        cerr.flush();
-        last_ts = ts;
-    }
-
-    void interumReport(SFUint32 bn, timestamp_t ts) {
-        timestamp_t tsOut = (ts == 0 ? toTimeStamp(Now()) : ts);
-        progressBar(bn-startBlock, nBlocks, dateFromTimeStamp(tsOut).Format(FMT_JSON) + " (" + asString(bn) + ")");
-        last_ts = ts;
-    }
-};
-
-//-----------------------------------------------------------------------
 class CVisitor {
 public:
     SFArchive cache;
     SFString screenFmt;
+    SFString logFmt;
+    SFString traceFmt;
     SFString color;
     SFString hiColor;
     SFString hiColor2;
-    CStats stats;
-    bool useColor;
-    bool toScreen;
-    bool showLogs;
     bool notify;
-    bool accounting;
-    bool debug;
-    blknum_t breakPt;
-    SFUint32 nTrans;
+    bool accounting_on;
+    bool debugger_on;
+    bool logs_on;
+    bool trace_on;
+    bool bloom_on;
+    bool single_on;
+    bool parse_on;
+    SFUint32 nAccountedFor;
+    SFUint32 nDisplayed;
+    SFUint32 nFreshened;
     bool cacheOnly;
     bool autoTrace;
+    bool autoCorrect;
     CTransBuffer tBuffer;
+    SFUint32 visited;
+    SFUint32 nBlocksToVisit;
+    SFUint32 startBlock;
+    SFUint32 endBlock;
+    timestamp_t last_ts;
+    uint32_t lastWhich;
+    const CTransaction *lastTrans;
+
     CVisitor(void) : cache(true, NO_SCHEMA, false),
-        screenFmt(""), stats(0,0), useColor(true), toScreen(true),
-        showLogs(false), notify(false), accounting(false), debug(false),
-        breakPt(UINT64_MAX), nTrans(false), cacheOnly(false),
-        autoTrace(true), tBuffer() { }
+        screenFmt(""), notify(false), accounting_on(false), debugger_on(false), logs_on(false),
+        trace_on(false), bloom_on(false), single_on(false), parse_on(false), nAccountedFor(0),
+        nDisplayed(0), nFreshened(0), cacheOnly(false), autoTrace(false), autoCorrect(false),
+        tBuffer(), visited(0), nBlocksToVisit(0), startBlock(0), endBlock(0), last_ts(0),
+        lastWhich((uint32_t)NOPOS), lastTrans(NULL) { barLen(80); }
 
     void setColors(const CTransaction *trans, const SFString& contractColor) {
         color    = (trans->isError ? biBlack : SFString(trans->isInternalTx ? cRed : contractColor));
@@ -82,17 +66,38 @@ public:
     bool ofInterest(CTransaction *trans, uint32_t& which);
 
     void openIncomeStatement(const CBlock& block);
-    void accountForTransaction(const CTransaction *trans);
+    void accountForExtTransaction(const CBlock& block, const CTransaction *trans);
+    void accountForIntTransaction(const CBlock& block, const CTrace *trace);
     bool closeIncomeStatement(const CBlock& block);
-
+    SFUint32 nProcessed(void) const {
+        return nDisplayed + nFreshened + nAccountedFor;
+    }
     CAccountWatchArray watches;
-    bool enterDebugger(void);
+    bool enterDebugger(const CBlock& block);
+    void initReport(void) const {
+        cerr << startBlock << " : " << endBlock << " : " << nBlocksToVisit << " : " << visited << "\r\n";
+        cerr.flush();
+    }
+
+    void interumReport1(SFUint32 bn, timestamp_t ts) {
+        cerr << "fromCache: " << bn << " " << dateFromTimeStamp(ts) << "\r";
+        cerr.flush();
+        last_ts = ts;
+    }
+
+    void interumReport(SFUint32 bn, timestamp_t ts, const SFString& endMsg) {
+        progressBar(bn-startBlock, nBlocksToVisit, endMsg);
+        last_ts = ts;
+    }
+
+    void showColoredTrace(const SFHash& hash, bool err);
 };
 
 //-----------------------------------------------------------------------
-extern int  displayCache(const SFString& fileName, SFUint32& blockNum, void *data);
-extern bool buildCache(CBlock& block, void *data);
+extern bool displayFromCache(const SFString& fileName, SFUint32& blockNum, void *data);
+extern bool updateCache(CBlock& block, void *data);
 
 //EXISTING_CODE
-extern void displayTransaction(uint32_t which, const CTransaction *theTrans, void *data);
+extern bool displayTransaction(uint32_t which, const CTransaction *theTrans, void *data);
+extern void showColoredBloom(const SFBloom& bloom, const SFString& msg, const SFString& res);
 //EXISTING_CODE

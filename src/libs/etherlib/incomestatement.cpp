@@ -76,7 +76,7 @@ SFString nextIncomestatementChunk(const SFString& fieldIn, bool& force, const vo
             return ret;
     }
 
-    return "Field not found: [{" + fieldIn + "}]\n";
+    return fldNotFound(fieldIn);
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -237,6 +237,7 @@ ostream& operator<<(ostream& os, const CIncomeStatement& is) {
     }
     return os;
 }
+//---------------------------------------------------------------------------
 bool CIncomeStatement::reconcile(const SFAddress& addr, blknum_t blockNum) {
     nodeBal = getBalance(addr, blockNum, false);
     return balanced();
