@@ -59,8 +59,7 @@ SFString nextLogentryChunk(const SFString& fieldIn, bool& force, const void *dat
                 if ( fieldIn % "logIndex" ) return asStringU(log->logIndex);
                 break;
             case 't':
-                if ( fieldIn % "topics" )
-                {
+                if ( fieldIn % "topics" ) {
                     uint32_t cnt = log->topics.getCount();
                     if (!cnt) return EMPTY;
                     SFString ret;
@@ -88,7 +87,7 @@ SFString nextLogentryChunk(const SFString& fieldIn, bool& force, const void *dat
             return ret;
     }
 
-    return "Field not found: [{" + fieldIn + "}]\n";
+    return fldNotFound(fieldIn);
 }
 
 //---------------------------------------------------------------------------------------------------

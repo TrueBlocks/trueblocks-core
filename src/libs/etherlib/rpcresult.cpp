@@ -69,7 +69,7 @@ SFString nextRpcresultChunk(const SFString& fieldIn, bool& force, const void *da
             return ret;
     }
 
-    return "Field not found: [{" + fieldIn + "}]\n";
+    return fldNotFound(fieldIn);
 }
 
 //---------------------------------------------------------------------------------------------------

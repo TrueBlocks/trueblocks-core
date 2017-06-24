@@ -61,7 +61,7 @@ SFString nextAddownerChunk(const SFString& fieldIn, bool& force, const void *dat
             return ret;
     }
 
-    return "Field not found: [{" + fieldIn + "}]\n";
+    return fldNotFound(fieldIn);
 }
 
 //---------------------------------------------------------------------------------------------------

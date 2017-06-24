@@ -70,7 +70,7 @@ SFString nextSingletransacteventChunk(const SFString& fieldIn, bool& force, cons
             return ret;
     }
 
-    return "Field not found: [{" + fieldIn + "}]\n";
+    return fldNotFound(fieldIn);
 }
 
 //---------------------------------------------------------------------------------------------------
