@@ -50,7 +50,6 @@ SFString nextBranchChunk(const SFString& fieldIn, bool& force, const void *data)
 
         switch (tolower(fieldIn[0])) {
             case 'm':
-                if ( fieldIn % "m_nodes[16]" ) { return EMPTY; }
                 if ( fieldIn % "m_branchValue" ) return bra->m_branchValue;
                 break;
         }
@@ -64,7 +63,7 @@ SFString nextBranchChunk(const SFString& fieldIn, bool& force, const void *data)
             return ret;
     }
 
-    return "Field not found: [{" + fieldIn + "}]\n";
+    return fldNotFound(fieldIn);
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -77,7 +76,6 @@ bool CBranch::setValueByName(const SFString& fieldName, const SFString& fieldVal
 
     switch (tolower(fieldName[0])) {
         case 'm':
-            if ( fieldName % "m_nodes[16]" ) { /* m_nodes[16] = fieldValue; */ return false; }
             if ( fieldName % "m_branchValue" ) { m_branchValue = fieldValue; return true; }
             break;
         default:
@@ -99,7 +97,6 @@ bool CBranch::Serialize(SFArchive& archive) {
 
     CTreeNode::Serialize(archive);
 
-//    archive >> m_nodes[16];
     archive >> m_branchValue;
     finishParse();
     return true;
@@ -109,7 +106,6 @@ bool CBranch::Serialize(SFArchive& archive) {
 bool CBranch::SerializeC(SFArchive& archive) const {
     CTreeNode::SerializeC(archive);
 
-//    archive << m_nodes[16];
     archive << m_branchValue;
 
     return true;
@@ -126,7 +122,6 @@ void CBranch::registerClass(void) {
     uint32_t fieldNum = 1000;
     ADD_FIELD(CBranch, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
     ADD_FIELD(CBranch, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
-    ADD_FIELD(CBranch, "m_nodes[16]", T_POINTER, ++fieldNum);
     ADD_FIELD(CBranch, "m_branchValue", T_TEXT, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
@@ -143,6 +138,9 @@ SFString nextBranchChunk_custom(const SFString& fieldIn, bool& force, const void
     if (bra) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
+            case 'm':
+                if ( fieldIn % "m_nodes" ) { return EMPTY; }
+                break;
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type

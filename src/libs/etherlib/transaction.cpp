@@ -102,7 +102,16 @@ SFString nextTransactionChunk(const SFString& fieldIn, bool& force, const void *
             return ret;
     }
 
-    return "Field not found: [{" + fieldIn + "}]\n";
+    SFString s;
+    s = toUpper(SFString("receipt")) + "::";
+    if (fieldIn.Contains(s)) {
+        SFString f = fieldIn;
+        f.ReplaceAll(s,"");
+        f = tra->receipt.Format("[{"+f+"}]");
+        return f;
+    }
+
+    return fldNotFound(fieldIn);
 }
 
 //---------------------------------------------------------------------------------------------------

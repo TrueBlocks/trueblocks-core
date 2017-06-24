@@ -10,7 +10,7 @@
 //---------------------------------------------------------------------------------------------------
 CParams params[] = {
     CParams("~addr",        "the address(es) of the smart contract(s) to grab"),
-    CParams("-canoncial",   "convert all types to their canoncial represenation and remove all spaces from display"),
+    CParams("-canonical",   "convert all types to their canonical represenation and remove all spaces from display"),
     CParams("-generate",    "generate C++ code into ':dir' for all functions and events found in the ABI"),
     CParams("-encode",      "generate the encodings for the functions / events in the ABI"),
     CParams("-noconst",     "generate encodings for non-constant functions and events only (always true when generating)"), // NOLINT
@@ -110,9 +110,10 @@ COptions::~COptions(void) {
 SFString getPrefix(const SFString& inIn) {
 
     SFString in = inIn; // for example ./ENS/parselib/
+    in.Replace("parseLib","parselib"); // hack: to fix dao monitor
     in.Reverse();
     in.Replace("/", ""); // remove trailing '/'
     in = nextTokenClear(in, '/'); // remove /parselib
-    in.Reverse();\
+    in.Reverse();
     return in;
 }

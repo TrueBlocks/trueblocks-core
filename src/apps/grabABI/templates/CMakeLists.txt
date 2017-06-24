@@ -2,7 +2,7 @@
 cmake_minimum_required (VERSION 2.6)
 
 # monitor project
-project ([{PROJECT_NAME}]_mon)
+project ([{PROJECT_NAME}])
 
 # c++ compilation flags used everywhere
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -O2")
@@ -14,7 +14,7 @@ include_directories("${CMAKE_CURRENT_LIST_DIR}/parselib" "${CMAKE_CURRENT_LIST_D
 file(GLOB SOURCE_FILES "*.cpp")
 
 # Output
-set(EXECUTABLE_OUTPUT_PATH "${CMAKE_SOURCE_DIR}/../bin")
+set(EXECUTABLE_OUTPUT_PATH "${CMAKE_CURRENT_LIST_DIR}/bin")
 
 # Define the executable to be generated
 add_executable(${PROJECT_NAME} ${SOURCE_FILES})

@@ -47,6 +47,8 @@ namespace qblocks {
         CFieldList *GetFieldList(void) const { return m_FieldList; }
         void Initialize(const SFString& protoName);
         void hideAllFields(void);
+        void showAllFields(void);
+        void sortFieldList(void);
 
         CBaseNode *CreateObject(void) {
             if (m_CreateFunc)
@@ -108,6 +110,10 @@ CFieldData *f = GETRUNTIME_CLASS(CLASS_NAME)->FindField(FIELD_NAME); if (f) { f-
 }
 
     //------------------------------------------------------------
+#define SUBFIELD_FMT(a, sf, b) SFString("[\"") + SFString(sf) + SFString("\": \"{") + \
+toUpper(SFString(a)) + "::" + toUpper(SFString(sf)) + "}\"" + (b ? ", ]" : "]")
+
+    //------------------------------------------------------------
 #define UNHIDE_FIELD(CLASS_NAME, FIELD_NAME) {\
 CFieldData *f = GETRUNTIME_CLASS(CLASS_NAME)->FindField(FIELD_NAME); if (f) { f->setHidden(false); }\
 }
@@ -115,6 +121,10 @@ CFieldData *f = GETRUNTIME_CLASS(CLASS_NAME)->FindField(FIELD_NAME); if (f) { f-
     //------------------------------------------------------------
 #define HIDE_ALL_FIELDS(CLASS_NAME) \
 GETRUNTIME_CLASS(CLASS_NAME)->hideAllFields();
+
+    //------------------------------------------------------------
+#define SHOW_ALL_FIELDS(CLASS_NAME) \
+GETRUNTIME_CLASS(CLASS_NAME)->showAllFields();
 
     //------------------------------------------------------------
     // Archive array containers

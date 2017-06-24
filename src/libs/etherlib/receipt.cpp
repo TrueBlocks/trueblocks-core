@@ -56,8 +56,7 @@ SFString nextReceiptChunk(const SFString& fieldIn, bool& force, const void *data
                 if ( fieldIn % "gasUsed" ) return asStringU(rec->gasUsed);
                 break;
             case 'l':
-                if ( fieldIn % "logs" )
-                {
+                if ( fieldIn % "logs" ) {
                     uint32_t cnt = rec->logs.getCount();
                     if (!cnt) return EMPTY;
                     SFString ret;
@@ -86,7 +85,7 @@ SFString nextReceiptChunk(const SFString& fieldIn, bool& force, const void *data
             return ret;
     }
 
-    return "Field not found: [{" + fieldIn + "}]\n";
+    return fldNotFound(fieldIn);
 }
 
 //---------------------------------------------------------------------------------------------------
