@@ -62,8 +62,7 @@ SFString nextTraceChunk(const SFString& fieldIn, bool& force, const void *data) 
                 if ( fieldIn % "subtraces" ) return asStringU(tra->subtraces);
                 break;
             case 't':
-                if ( fieldIn % "traceAddress" )
-                {
+                if ( fieldIn % "traceAddress" ) {
                     uint32_t cnt = tra->traceAddress.getCount();
                     if (!cnt) return EMPTY;
                     SFString ret;
@@ -88,7 +87,23 @@ SFString nextTraceChunk(const SFString& fieldIn, bool& force, const void *data) 
             return ret;
     }
 
-    return "Field not found: [{" + fieldIn + "}]\n";
+    SFString s;
+    s = toUpper(SFString("action")) + "::";
+    if (fieldIn.Contains(s)) {
+        SFString f = fieldIn;
+        f.ReplaceAll(s,"");
+        f = tra->action.Format("[{"+f+"}]");
+        return f;
+    }
+    s = toUpper(SFString("result")) + "::";
+    if (fieldIn.Contains(s)) {
+        SFString f = fieldIn;
+        f.ReplaceAll(s,"");
+        f = tra->result.Format("[{"+f+"}]");
+        return f;
+    }
+
+    return fldNotFound(fieldIn);
 }
 
 //---------------------------------------------------------------------------------------------------
