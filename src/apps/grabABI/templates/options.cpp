@@ -9,15 +9,17 @@
 
 //---------------------------------------------------------------------------------------------------
 CParams params[] = {
-    CParams("-freshen",     "freshen only -- default (do not display transactions from the cache)"),
-    CParams("-k",           "start at block :k"),
-    CParams("-break",       "if debugging, run until (that is break at) this :block"),
-    CParams("-cacheOnly",   "display transactions from the cache only (do not freshen)"),
+    CParams("-freshen",     "mode: freshen only -- default (do not display transactions from the cache)"),
+    CParams("-showCache",   "mode: show transactions from the cache, and then freshen"),
+    CParams("-cacheOnly",   "mode: display transactions from the cache only (do not freshen)"),
+    CParams("-kBlock",      "start processing at block :k"),
+    CParams("-logs",        "display smart contract events (logs)"),
+    CParams("-trace",       "display smart contract internal traces"),
+    CParams("-bloom",       "display bloom filter matching"),
+    CParams("-parse",       "display parsed input data"),
+    CParams("-accounting",  "display credits and debits per account and reconcile at each block"),
     CParams("-debug",       "enter debug mode (pause after each transaction)"),
-    CParams("-showCache",   "show transactions from the cache, and then freshen"),
-    CParams("-logsDisp",    "display smart contract events (logs)"),
-    CParams("-acctDisp",    "display accounting table of credits and debits"),
-    CParams("-nocolor",     "display using plain text, no colors"),
+    CParams("-single",      "if debugging is enable, single step through transactions"),
     CParams("-rebuild",     "clear cache and reprocess all transcations (may take a long time)"),
     CParams("",             "Index transactions for a given Ethereum address (or series of addresses).\r\n"),
 };
@@ -33,19 +35,11 @@ bool COptions::parseArguments(SFString& command) {
             // do nothing -- this is the default
             mode = "freshen|";  // last in wins
 
-        } else if (arg.Contains("-b")) {
-            SFString a = arg.Substitute("-b:","").Substitute("--break:","");
-            bp = toLongU(a);
-            if (!bp) {
-                cerr << usageStr("You must specify a block number").Substitute("\n","\r\n");
-                return false;
-            }
-            verbose |= 0x10;  // force debug
+        } else if (arg.Contains("-k:") || arg.Contains("-kBlock:")) {
 
-        } else if (arg.Contains("-k:")) {
-            SFString a = arg.Substitute("-k:","");
-            start = toLongU(a);
-            if (!start) {
+            arg = arg.Substitute("-k:","").Substitute("-kBlock:","");
+            kBlock = toLongU(arg);
+            if (!kBlock) {
                 cerr << usageStr("You must specify a block number").Substitute("\n","\r\n");
                 return false;
             }
@@ -56,17 +50,26 @@ bool COptions::parseArguments(SFString& command) {
         } else if (arg == "-s" || arg == "--showCache") {
             mode = "showCache|freshen|";  // last in wins
 
-        } else if (arg == "-a" || arg == "--acctDisp") {
-            verbose |= 0x8;
+        } else if (arg == "-s" || arg == "--single" || arg == "--single_step") {
+            single_on = true;
 
-        } else if (arg == "-l" || arg == "--logsDisp") {
-            verbose |= 0x4;
+        } else if (arg == "-a" || arg == "--accounting") {
+            accounting_on = true;
+
+        } else if (arg == "-l" || arg == "--logs") {
+            logs_on = true;
+
+        } else if (arg == "-t" || arg == "--trace") {
+            trace_on = true;
+
+        } else if (arg == "-p" || arg == "--parse") {
+            parse_on = true;
+
+        } else if (arg == "-b" || arg == "--bloom") {
+            bloom_on = true;
 
         } else if (arg == "-d" || arg == "--debug") {
-            verbose |= 0x10;
-
-        } else if (arg == "-n" || arg == "--nocolor") {
-            nocolor = true;
+            debugger_on = true;
 
         } else if (arg == "-r" || arg == "--rebuild") {
             cerr << cRed << "Warning: " << cOff
@@ -99,6 +102,9 @@ bool COptions::parseArguments(SFString& command) {
     if (mode.empty())
         mode = "freshen|";
 
+    if (debugger_on && !accounting_on)
+        return usage("If you want to use the debugger, you must use the --accounting option as well.");
+
     return true;
 }
 
@@ -112,8 +118,14 @@ void COptions::Init(void) {
     CTraceResult::registerClass();
 
     mode = "freshen|";
-    nocolor = false;
-    bp = start = 0;
+    single_on = false;
+    accounting_on = false;
+    debugger_on = false;
+    logs_on = false;
+    trace_on = false;
+    parse_on = false;
+    bloom_on = false;
+    kBlock = 0;
 
     useVerbose = true;
     useTesting = false;
