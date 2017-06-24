@@ -57,8 +57,8 @@ SFString next[{PROPER}]Chunk(const SFString& fieldIn, bool& force, const void *d
         if (!ret.empty())
             return ret;
     }
-
-    return "Field not found: [{" + fieldIn + "}]\n";
+[{SUBCLASSFLDS}]
+    return fldNotFound(fieldIn);
 }
 
 //---------------------------------------------------------------------------------------------------
