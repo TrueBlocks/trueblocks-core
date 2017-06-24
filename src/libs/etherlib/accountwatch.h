@@ -35,7 +35,7 @@ public:
     SFUint32 firstBlock;
     bool disabled;
     CIncomeStatement qbis;
-    CIncomeStatement nodeis;
+    SFUintBN nodeBal;
 
 public:
     CAccountWatch(void);
@@ -103,7 +103,7 @@ inline void CAccountWatch::Init(void) {
     firstBlock = 0;
     disabled = 0;
 //    qbis = ??; /* unknown type: CIncomeStatement */
-//    nodeis = ??; /* unknown type: CIncomeStatement */
+    nodeBal = 0;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -121,7 +121,7 @@ inline void CAccountWatch::Copy(const CAccountWatch& ac) {
     firstBlock = ac.firstBlock;
     disabled = ac.disabled;
     qbis = ac.qbis;
-    nodeis = ac.nodeis;
+    nodeBal = ac.nodeBal;
 
     // EXISTING_CODE
     // EXISTING_CODE

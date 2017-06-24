@@ -27,7 +27,6 @@ typedef SFUniqueList<CBranch*>       CBranchListU;
 //--------------------------------------------------------------------------
 class CBranch : public CTreeNode {
 public:
-    CTreeNode *m_nodes[16];
     SFString m_branchValue;
 
 public:
@@ -39,6 +38,7 @@ public:
     DECLARE_NODE(CBranch);
 
     // EXISTING_CODE
+    CTreeNode *m_nodes[16];
     explicit CBranch(const SFString& _value);
     CBranch(char _i1, CTreeNode* _n1, const SFString& _value = "");
     CBranch(char _i1, CTreeNode* _n1, char _i2, CTreeNode* _n2);
@@ -92,8 +92,6 @@ inline void CBranch::Clear(void) {
     for (int i = 0 ; i < 16 ; i++)
         if (m_nodes[i])
             delete m_nodes[i];
-
-    // unecessary, but okay
     memset(m_nodes, 0, sizeof(CTreeNode*) * 16);
     // EXISTING_CODE
 }
@@ -102,12 +100,10 @@ inline void CBranch::Clear(void) {
 inline void CBranch::Init(void) {
     CTreeNode::Init();
 
-//    m_nodes[16] = NULL;
 //    m_branchValue = EMPTY;
 
     // EXISTING_CODE
-    for (int i = 0 ; i < 16 ; i++)
-        m_nodes[i] = NULL;
+    memset(m_nodes, 0, sizeof(CTreeNode*) * 16);
     // EXISTING_CODE
 }
 
@@ -116,8 +112,6 @@ inline void CBranch::Copy(const CBranch& br) {
     Clear();
     CTreeNode::Copy(br);
 
-//    if (m_nodes[16])
-//        *m_nodes[16] = *br.m_nodes[16];
     m_branchValue = br.m_branchValue;
 
     // EXISTING_CODE

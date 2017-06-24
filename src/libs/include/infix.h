@@ -79,14 +79,15 @@ inline CInfix::CInfix(const CInfix& in) {
 inline CInfix::~CInfix(void) {
     Clear();
     // EXISTING_CODE
-    if (m_next)
-        delete m_next;
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
 inline void CInfix::Clear(void) {
     // EXISTING_CODE
+    if (m_next)
+        delete m_next;
+    m_next = NULL;
     // EXISTING_CODE
 }
 
@@ -105,7 +106,7 @@ inline void CInfix::Copy(const CInfix& in) {
     Clear();
     CTreeNode::Copy(in);
 
-    if (m_next)
+    if (in.m_next)
         *m_next = *in.m_next;
 
     // EXISTING_CODE
