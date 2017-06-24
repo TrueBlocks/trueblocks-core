@@ -8,8 +8,8 @@
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
-    bool option1;
-    bool option2;
+    SFHash hash;
+    bool terse;
 
     COptions(void);
     ~COptions(void);
