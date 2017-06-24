@@ -133,6 +133,7 @@ extern const char* STR_CASE_CODE_ARRAY;
 extern const char* STR_CASE_CODE_STRINGARRAY;
 extern const char* STR_OPERATOR_H;
 extern const char* STR_OPERATOR_C;
+extern const char* STR_SUBCLASS;
 
 SFString tab = SFString("\t");
 
@@ -150,7 +151,7 @@ void generateCode(CToml1& classFile, const SFString& dataFile, const SFString& n
 
     //------------------------------------------------------------------------------------------------
     SFString fieldDec, fieldSet, fieldCopy, fieldArchiveRead, fieldArchiveWrite;
-    SFString fieldReg, fieldCase;
+    SFString fieldReg, fieldCase, fieldSubCls;
 
     //------------------------------------------------------------------------------------------------
     SFString hIncs;
@@ -209,11 +210,12 @@ void generateCode(CToml1& classFile, const SFString& dataFile, const SFString& n
         }
         SFString copyFmt = "\t[{NAME}] = +SHORT+.[{NAME}];\n";
         if (fld->isPointer) {
-            copyFmt = "\tif ([{NAME}])\n\t\t*[{NAME}] = *+SHORT+.[{NAME}];\n";
+            copyFmt = "\tif ([+SHORT+.{NAME}])\n\t\t*[{NAME}] = *+SHORT+.[{NAME}];\n";
         }
         SFString badSet = "/""/\t[{NAME}] = ??; /""* unknown type: [{TYPE}] */\n";
         SFString setFmt = "\t[{NAME}]";
         SFString regFmt = "\tADD_FIELD(CL_NM, \"[{NAME}]\", T_TEXT, ++fieldNum);\n", regType;
+        SFString subClsFmt = STR_SUBCLASS;
 
               if (fld->name == "logsBloom") { setFmt = "\t[{NAME}] = [{DEF}];\n"; regType = "T_BLOOM";
         } else if (fld->type == "string")   { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_TEXT";
@@ -261,6 +263,17 @@ void generateCode(CToml1& classFile, const SFString& dataFile, const SFString& n
         fieldDec += convertTypes(fld->Format(decFmt));
         fieldCopy += fld->Format(copyFmt).Substitute("+SHORT+", "[{SHORT}]");
         fieldSet += fld->Format(setFmt);
+        if (fld->isObject && !fld->isPointer && !fld->type.Contains("Array")) {
+            SFString fmt = subClsFmt;
+            fmt.ReplaceAll("[FNAME]",fld->name);
+            fmt.Replace("[SH3]",short3(baseLower));
+            SFString fldStr = fld->Format(fmt);
+            fldStr.Replace("++", "[{");
+            fldStr.Replace("++", "}]");
+            if (fieldSubCls.empty())
+                fieldSubCls = "\n\tSFString s;\n";
+            fieldSubCls += fldStr;
+        }
         fieldArchiveRead += fld->Format(archFmt);
         fieldArchiveWrite += fld->Format(archFmt.Substitute(">>", "<<"));
     }
@@ -272,6 +285,7 @@ void generateCode(CToml1& classFile, const SFString& dataFile, const SFString& n
     //------------------------------------------------------------------------------------------------
     SFString caseCodeStr    = getCaseCode(fieldCase);
     SFString caseSetCodeStr = getCaseSetCode(fieldCase);
+    SFString subClsCodeStr  = fieldSubCls;
 
     //------------------------------------------------------------------------------------------------
     SFString sorts[4] = { baseLower.Left(2)+"_Name", "", baseLower+"ID", "" };
@@ -320,6 +334,7 @@ void generateCode(CToml1& classFile, const SFString& dataFile, const SFString& n
     srcSource.ReplaceAll("[FIELD_CASE]",        caseCodeStr);
     srcSource.ReplaceAll("[OTHER_INCS]",        otherIncs);
     srcSource.ReplaceAll("[FIELD_SETCASE]",     caseSetCodeStr);
+    srcSource.ReplaceAll("[{SUBCLASSFLDS}]",    subClsCodeStr);
     srcSource.ReplaceAll("[{PARENT_SER}]",      parSer);
     srcSource.ReplaceAll("[{PARENT_SER1}]",     parSer.Substitute("Serialize", "SerializeC"));
     srcSource.ReplaceAll("[{PARENT_REG}]",      parReg);
@@ -540,8 +555,7 @@ const char* STR_CLASSFILE =
 
 //------------------------------------------------------------------------------------------------------------
 const char* STR_CASE_CODE_ARRAY =
-"\n"
-"[BTAB]\t{\n"
+" {\n"
 "[BTAB]\t\tuint32_t cnt = [{SHORT3}]->[{FIELD}].getCount();\n"
 "[BTAB]\t\tif (!cnt) return EMPTY;\n"
 "[BTAB]\t\tSFString ret;\n"
@@ -554,8 +568,7 @@ const char* STR_CASE_CODE_ARRAY =
 
 //------------------------------------------------------------------------------------------------------------
 const char* STR_CASE_CODE_STRINGARRAY =
-"\n"
-"[BTAB]\t{\n"
+" {\n"
 "[BTAB]\t\tuint32_t cnt = [{SHORT3}]->[{FIELD}].getCount();\n"
 "[BTAB]\t\tif (!cnt) return EMPTY;\n"
 "[BTAB]\t\tSFString ret;\n"
@@ -591,6 +604,16 @@ const char* STR_OPERATOR_C =
 "\treturn archive;\n"
 "}\n"
 "\n";
+
+//------------------------------------------------------------------------------------------------------------
+const char* STR_SUBCLASS =
+"\ts = toUpper(SFString(\"[FNAME]\")) + \"::\";\n"
+"\tif (fieldIn.Contains(s)) {\n"
+"\t\tSFString f = fieldIn;\n"
+"\t\tf.ReplaceAll(s,\"\");\n"
+"\t\tf = [SH3]->[FNAME].Format(\"++\"+f+\"++\");\n"
+"\t\treturn f;\n"
+"\t}\n";
 
 //------------------------------------------------------------------------------------------------------------
 SFString short3(const SFString& str) {
