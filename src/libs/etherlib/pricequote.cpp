@@ -83,7 +83,7 @@ SFString nextPricequoteChunk(const SFString& fieldIn, bool& force, const void *d
             return ret;
     }
 
-    return "Field not found: [{" + fieldIn + "}]\n";
+    return fldNotFound(fieldIn);
 }
 
 //---------------------------------------------------------------------------------------------------

@@ -82,4 +82,5 @@ namespace qblocks {
 
     //--------------------------------------------------------------------------------------------------------------
     SFString getNextChunk(SFString& fmtOut, NEXTCHUNKFUNC func, const void *data);
+    SFString fldNotFound(const SFString& str);
 }  // namespace qblocks

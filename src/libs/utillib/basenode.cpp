@@ -592,4 +592,9 @@ namespace qblocks {
         prompt = truncPad(prompt, maxWidth);  // pad or truncate
         return pre + prompt + post;
     }
+
+    //--------------------------------------------------------------------------------
+    SFString fldNotFound(const SFString& str) {
+        return "Field not found: " + str + "\n";
+    }
 }  // namespace qblocks
