@@ -48,6 +48,7 @@ extern bool     getTransaction          (CTransaction& trans, const SFString& ha
 extern bool     getTransaction          (CTransaction& trans, blknum_t blockNum, SFUint32 transID);
 extern bool     getReceipt              (CReceipt& receipt,   const SFString& hash);
 extern bool     getLogEntry             (CLogEntry& log,      const SFString& hash);
+extern void     getTraces               (CTraceArray& traces, const SFHash& hash);
 
 //-------------------------------------------------------------------------
 extern bool     queryBlock              (CBlock& block,       const SFString& num, bool needTrace);
@@ -143,4 +144,7 @@ inline bool isBloomHit(const SFString& hexIn, const SFUintBN filter)
 {
     return isBloomHit(makeBloom(hexIn),filter);
 }
+
+//-------------------------------------------------------------------------
+extern SFString curSource(void);
 }  // namespace qblocks
