@@ -66,7 +66,7 @@ SFString nextAccountwatchChunk(const SFString& fieldIn, bool& force, const void 
                 break;
             case 'n':
                 if ( fieldIn % "name" ) return acc->name;
-                if ( fieldIn % "nodeis" ) { expContext().noFrst=true; return acc->nodeis.Format(); }
+                if ( fieldIn % "nodeBal" ) return asStringBN(acc->nodeBal);
                 break;
             case 'q':
                 if ( fieldIn % "qbis" ) { expContext().noFrst=true; return acc->qbis.Format(); }
@@ -82,7 +82,16 @@ SFString nextAccountwatchChunk(const SFString& fieldIn, bool& force, const void 
             return ret;
     }
 
-    return "Field not found: [{" + fieldIn + "}]\n";
+    SFString s;
+    s = toUpper(SFString("qbis")) + "::";
+    if (fieldIn.Contains(s)) {
+        SFString f = fieldIn;
+        f.ReplaceAll(s,"");
+        f = acc->qbis.Format("[{"+f+"}]");
+        return f;
+    }
+
+    return fldNotFound(fieldIn);
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -92,12 +101,6 @@ bool CAccountWatch::setValueByName(const SFString& fieldName, const SFString& fi
         char *p = (char *)fieldValue.c_str();
         uint32_t nFields = 0;
         qbis.parseJson(p, nFields);
-        return true;
-
-    } else if (fieldName % "nodeis") {
-        char *p = (char *)fieldValue.c_str();
-        uint32_t nFields = 0;
-        nodeis.parseJson(p, nFields);
         return true;
     }
     // EXISTING_CODE
@@ -120,7 +123,7 @@ bool CAccountWatch::setValueByName(const SFString& fieldName, const SFString& fi
             break;
         case 'n':
             if ( fieldName % "name" ) { name = fieldValue; return true; }
-            if ( fieldName % "nodeis" ) { /* nodeis = fieldValue; */ return false; }
+            if ( fieldName % "nodeBal" ) { nodeBal = toUnsigned(fieldValue); return true; }
             break;
         case 'q':
             if ( fieldName % "qbis" ) { /* qbis = fieldValue; */ return false; }
@@ -152,7 +155,7 @@ bool CAccountWatch::Serialize(SFArchive& archive) {
     archive >> firstBlock;
     archive >> disabled;
     archive >> qbis;
-    archive >> nodeis;
+    archive >> nodeBal;
     finishParse();
     return true;
 }
@@ -169,7 +172,7 @@ bool CAccountWatch::SerializeC(SFArchive& archive) const {
     archive << firstBlock;
     archive << disabled;
     archive << qbis;
-    archive << nodeis;
+    archive << nodeBal;
 
     return true;
 }
@@ -190,7 +193,7 @@ void CAccountWatch::registerClass(void) {
     ADD_FIELD(CAccountWatch, "firstBlock", T_NUMBER, ++fieldNum);
     ADD_FIELD(CAccountWatch, "disabled", T_BOOL, ++fieldNum);
     ADD_FIELD(CAccountWatch, "qbis", T_TEXT|TS_OBJECT, ++fieldNum);
-    ADD_FIELD(CAccountWatch, "nodeis", T_TEXT|TS_OBJECT, ++fieldNum);
+    ADD_FIELD(CAccountWatch, "nodeBal", T_NUMBER, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CAccountWatch, "schema");
@@ -255,8 +258,7 @@ bool CAccountWatch::getWatch(const CToml& toml, uint32_t n, bool fromFile) {
     disabled = toml.getConfigBool("watches", "disabled_"+asString(n), false);
     qbis.begBal = toml.getConfigBigInt("watches", "start_bal_"+asString(n), 0);
     qbis.endBal = qbis.begBal;
-    nodeis.begBal = getBalance(address, firstBlock-1, fromFile);
-    nodeis.endBal = nodeis.begBal;
+    nodeBal = getBalance(address, firstBlock-1, fromFile);
     return true;
 }
 // EXISTING_CODE
