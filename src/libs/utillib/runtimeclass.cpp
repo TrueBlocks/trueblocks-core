@@ -86,6 +86,43 @@ namespace qblocks {
     }
 
     //-------------------------------------------------------------------------
+    void CRuntimeClass::showAllFields(void) {
+        if (m_FieldList) {
+            LISTPOS p = m_FieldList->GetHeadPosition();
+            while (p) {
+                CFieldData *field = m_FieldList->GetNext(p);
+                field->setHidden(false);
+            }
+        }
+        return;
+    }
+
+    //-------------------------------------------------------------------------
+    int sortFieldsByName(const void *v1, const void *v2) {
+        CFieldData *f1 = (CFieldData *)v1;
+        CFieldData *f2 = (CFieldData *)v2;
+        return f1->m_fieldName.compare(f2->m_fieldName);
+    }
+    //-------------------------------------------------------------------------
+    void CRuntimeClass::sortFieldList(void) {
+        if (m_FieldList) {
+            CFieldList list;
+            LISTPOS p = m_FieldList->GetHeadPosition();
+            while (p) {
+                CFieldData *field = m_FieldList->GetNext(p);
+                list.AddSorted(field, sortFieldsByName);
+            }
+            *m_FieldList = CFieldList();
+            p = list.GetHeadPosition();
+            while (p) {
+                CFieldData *field = list.GetNext(p);
+                m_FieldList->AddTail(field);
+            }
+        }
+        return;
+    }
+
+    //-------------------------------------------------------------------------
     void CRuntimeClass::AddField(const SFString& fieldName, uint32_t dataType, uint32_t fieldID) {
         if (!m_FieldList)
             m_FieldList = new CFieldList;
