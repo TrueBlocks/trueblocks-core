@@ -81,7 +81,7 @@ SFString nextAbiChunk(const SFString& fieldIn, bool& force, const void *data) {
             return ret;
     }
 
-    return "Field not found: [{" + fieldIn + "}]\n";
+    return fldNotFound(fieldIn);
 }
 
 //---------------------------------------------------------------------------------------------------
