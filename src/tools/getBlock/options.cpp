@@ -11,13 +11,13 @@
 CParams params[] = {
     CParams("~num",         "which block (or blocks if more than one) to retreive (or use [start-stop) for range)"),
 //    CParams("-check",       "pull the given block(s) from both cache and node, compare results, should be no output"),
-    CParams("-fromNode",    "retreive the block(s) directly from the running node with no processing"),
-    CParams("-mini",        "output only data fields that exist in miniBlocks and miniTrans"),
-    CParams("-binary",      "retrieve only quickBlocks binary blocks if they exist, retrieve nothing otherwise"),
+    CParams("-source",      "either :(c)ache or :(r)aw, source for data retrival. (shortcuts -c = qblocks, -r = node)"),
+    CParams("-fields",      "either :(a)ll, (m)ini, (c)ache or :(r)aw; which fields to include in output (all is default)"),
     CParams("-parity",      "mimic parity output using quickBlocks (i.e. quoted hexidecimal for numbers)"),
+    CParams("-re(c)iept",   ""),
     CParams("-terse",       "retreive transaction hashes instead of full transactions"),
-    CParams("-silent",      "do not print results to screen, used for speed testing"),
-    CParams("",             "Returns block(s) from local cache (default) or directly from node.\n"),
+    CParams("-quiet",       "do not print results to screen, used for speed testing"),
+    CParams("",             "Returns block(s) from local cache (the default) or directly from a running node.\n"),
 };
 uint32_t nParams = sizeof(params) / sizeof(CParams);
 
@@ -28,42 +28,87 @@ bool COptions::parseArguments(SFString& command) {
     while (!command.empty()) {
 
         SFString arg = nextTokenClear(command, ' ');
+
+        // shortcuts
+        if (arg == "-r") arg = "--source:raw";
+        if (arg == "-c") arg = "--source:cache";
+
         if (arg == "-c" || arg == "--check") {
             isCheck = true;
 
-        } else if (arg == "-f" || arg == "--fromNode") {
-            isRaw = true;
+        } else if (arg.startsWith("-s:") || arg.startsWith("--source:")) {
+            SFString mode = arg;
+            mode.Replace("-s:","");
+            mode.Replace("--source:","");
+            if (mode == "r" || mode == "raw") {
+                isRaw = true;
+
+            } else if (mode == "c" || mode == "cache") {
+                etherlib_init("binaryOnly");
+
+            } else {
+                return usage("Invalide source. Must be either '(r)aw' or '(c)ache'. Quitting...");
+            }
 
         } else if (arg == "-t" || arg == "--terse") {
             terse = true;
 
-        } else if (arg == "-s" || arg == "--silent") {
-            silent = true;
+        } else if (arg == "-q" || arg == "--quiet") {
+            quiet = true;
 
-        } else if (arg == "-b" || arg == "--binary") {
-            etherlib_init("binaryOnly");
+        } else if (arg.startsWith("-f:") || arg.startsWith("--fields:")) {
+            SFString mode = arg;
+            mode.Replace("-f:","");
+            mode.Replace("--fields:","");
 
-        } else if (arg == "-m" || arg == "--mini") {
-            HIDE_ALL_FIELDS(CBlock);
-            HIDE_ALL_FIELDS(CTransaction);
-            HIDE_ALL_FIELDS(CReceipt);
-            UNHIDE_FIELD(CBlock, "blockNumber");
-            UNHIDE_FIELD(CBlock, "timestamp");
-            UNHIDE_FIELD(CBlock, "transactions");
-            UNHIDE_FIELD(CTransaction, "receipt");
-            UNHIDE_FIELD(CTransaction, "transactionIndex");
-            UNHIDE_FIELD(CTransaction, "gasPrice");
-            UNHIDE_FIELD(CTransaction, "gas");
-            UNHIDE_FIELD(CTransaction, "isError");
-            UNHIDE_FIELD(CTransaction, "from");
-            UNHIDE_FIELD(CTransaction, "to");
-            UNHIDE_FIELD(CTransaction, "value");
-            UNHIDE_FIELD(CReceipt, "gasUsed");
+            if (mode == "a" || mode == "all") {
+                SHOW_ALL_FIELDS(CBlock);
+                SHOW_ALL_FIELDS(CTransaction);
+                SHOW_ALL_FIELDS(CReceipt);
+
+            } else if (mode == "m" || mode == "mini") {
+                HIDE_ALL_FIELDS(CBlock);
+                HIDE_ALL_FIELDS(CTransaction);
+                HIDE_ALL_FIELDS(CReceipt);
+                UNHIDE_FIELD(CBlock, "blockNumber");
+                UNHIDE_FIELD(CBlock, "timestamp");
+                UNHIDE_FIELD(CBlock, "transactions");
+                UNHIDE_FIELD(CTransaction, "receipt");
+                UNHIDE_FIELD(CTransaction, "transactionIndex");
+                UNHIDE_FIELD(CTransaction, "gasPrice");
+                UNHIDE_FIELD(CTransaction, "gas");
+                UNHIDE_FIELD(CTransaction, "isError");
+                UNHIDE_FIELD(CTransaction, "from");
+                UNHIDE_FIELD(CTransaction, "to");
+                UNHIDE_FIELD(CTransaction, "value");
+                UNHIDE_FIELD(CReceipt, "gasUsed");
+
+            } else if (mode == "r" || mode == "raw") {
+            } else if (mode == "c" || mode == "cache") {
+                SHOW_ALL_FIELDS(CBlock);
+                SHOW_ALL_FIELDS(CTransaction);
+                SHOW_ALL_FIELDS(CReceipt);
+                UNHIDE_FIELD(CBlock, "blockNumber");
+                UNHIDE_FIELD(CBlock, "timestamp");
+                UNHIDE_FIELD(CBlock, "transactions");
+                UNHIDE_FIELD(CTransaction, "receipt");
+                UNHIDE_FIELD(CTransaction, "transactionIndex");
+                UNHIDE_FIELD(CTransaction, "gasPrice");
+                UNHIDE_FIELD(CTransaction, "gas");
+                UNHIDE_FIELD(CTransaction, "isError");
+                UNHIDE_FIELD(CTransaction, "from");
+                UNHIDE_FIELD(CTransaction, "to");
+                UNHIDE_FIELD(CTransaction, "value");
+                UNHIDE_FIELD(CReceipt, "gasUsed");
+            }
 
         } else if (arg == "-p" || arg == "--parity") {
-            expContext().spcs = 2;
+            expContext().spcs = 4;
             expContext().hexNums = true;
             expContext().quoteNums = true;
+            GETRUNTIME_CLASS(CBlock)->sortFieldList();
+            GETRUNTIME_CLASS(CTransaction)->sortFieldList();
+            GETRUNTIME_CLASS(CReceipt)->sortFieldList();
 
         } else if (arg.startsWith('-')) {  // do not collapse
 
@@ -84,12 +129,11 @@ bool COptions::parseArguments(SFString& command) {
             } else if (arg.Contains("-")) {
 
                 SFString arg1 = nextTokenClear(arg, '-');
-
                 if (arg1 == "latest")
                     return usage("Cannot start range with 'latest'");
 
-                start = toLong(arg1);
-                stop  = toLong(arg);
+                start = toUnsigned(arg1);
+                stop  = toUnsigned(arg);
                 if (arg == "latest")
                     stop = getClientLatestBlk();
                 if (stop <= start)
@@ -97,26 +141,13 @@ bool COptions::parseArguments(SFString& command) {
                 isRange = true;
 
             } else {
-                // only a singe block number is accepted when receipt is requested
-                static bool hasReceipt = false;
-                if (!hasReceipt) {
-
-                    if (arg.Contains("0x")) {
-                        // Attach a request for a receipt with no spaces after the number
-                        txHash = arg;
-                        txHash.Replace("0x", "|0x");
-                        arg = nextTokenClear(txHash, '|');
-                        hasReceipt = true;
-                    }
-
-                    SFUint32 num = toLong(arg);
-                    if (arg == "latest")
-                        num = getClientLatestBlk();
-                    if (nNums < MAX_NUMS)
-                        nums[nNums++] = num;
-                    else
-                        return usage("Too many blocks in list. Max is " + asString(MAX_NUMS));
-                }
+                SFUint32 num = toUnsigned(arg);
+                if (arg == "latest")
+                    num = getClientLatestBlk();
+                if (nNums < MAX_NUMS)
+                    nums[nNums++] = num;
+                else
+                    return usage("Too many blocks in list. Max is " + asString(MAX_NUMS));
             }
         }
     }
@@ -137,12 +168,11 @@ void COptions::Init(void) {
     expContext().hexNums = false;
     expContext().quoteNums = false;
 
-    isCheck    = false;
-    isRaw      = false;
-    isRange    = false;
-    terse      = false;
-    silent     = false;
-    // txHash = "";
+    isCheck = false;
+    isRaw   = false;
+    isRange = false;
+    terse   = false;
+    quiet   = false;
     nums[0]    = -1;
     nNums      = 0;  // we will set this to '1' later if user supplies no values
     start = stop = 0;
