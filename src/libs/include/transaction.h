@@ -238,6 +238,7 @@ inline SFString wei2Ether(const SFString& _value) {
     if (ret.Contains("0-")) {
         ret = "-" + ret.Substitute("0-","0");
     }
+    ret = ret.Substitute("-.","-0.");
     return ret;
 }
 extern int sortTransactionsForWrite(const void *rr1, const void *rr2);
