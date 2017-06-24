@@ -45,6 +45,7 @@ namespace qblocks {
     public:
         SFString  shortName;
         SFString  longName;
+        SFString  hotKey;
         SFString  description;
         CParams(const SFString& name, const SFString& descr);
     };

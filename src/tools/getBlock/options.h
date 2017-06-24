@@ -16,8 +16,7 @@ public:
     bool isRaw;
     bool isRange;
     bool terse;
-    bool silent;
-    SFString txHash;
+    bool quiet;
     SFUint32 nums[MAX_NUMS];
     SFUint32 nNums;
     SFUint32 start;

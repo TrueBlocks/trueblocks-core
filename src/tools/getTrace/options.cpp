@@ -9,9 +9,9 @@
 
 //---------------------------------------------------------------------------------------------------
 CParams params[] = {
-    CParams("-option1", "option one"),
-    CParams("-thing",   "option two"),
-    CParams("",        "This is what the program does.\n"),
+    CParams("~hash",  "transaction hash of the requested transaction"),
+    CParams("-te(r)se", "display the traces in a terse fashion"),
+    CParams("",       "Retrieve the full trace of a transaction.\n"),
 };
 uint32_t nParams = sizeof(params) / sizeof(CParams);
 
@@ -22,19 +22,21 @@ bool COptions::parseArguments(SFString& command) {
     while (!command.empty()) {
         SFString arg = nextTokenClear(command, ' ');
         if (arg == "-o" || arg == "--option1") {
-            option1 = true;
+            //option1 = true;
 
-        } else if (arg == "-t" || arg == "--thing") {
-            option2 = true;
+        } else if (arg == "-r" || arg == "--terse") {
+            terse = true;
 
         } else if (arg.startsWith('-')) {
             if (!arg.Contains("-h") && !arg.Contains("-v") && !arg.Contains("-t"))
                 return usage("Invalid option: " + arg);
+        } else {
+            hash = arg;
         }
     }
 
-    if (option1 && option2)
-        return usage("Option 1 and option 2 cannot both be true.");
+    if (hash.empty())
+        return usage("You must supply at least one transaction hash.");
 
     return true;
 }
@@ -44,12 +46,12 @@ void COptions::Init(void) {
     paramsPtr = params;
     nParamsRef = nParams;
 
-    option1 = false;
-    option2 = false;
+    // hash = "";
+    terse = false;
 
     useVerbose = true;
     useTesting = false;
-    minArgs = 0;
+//    minArgs = 0;
 }
 
 //---------------------------------------------------------------------------------------------------

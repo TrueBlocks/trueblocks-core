@@ -58,7 +58,7 @@ SFString nextResetspenttodayChunk(const SFString& fieldIn, bool& force, const vo
             return ret;
     }
 
-    return "Field not found: [{" + fieldIn + "}]\n";
+    return fldNotFound(fieldIn);
 }
 
 //---------------------------------------------------------------------------------------------------

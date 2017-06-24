@@ -71,7 +71,7 @@ SFString nextMultitransacteventChunk(const SFString& fieldIn, bool& force, const
             return ret;
     }
 
-    return "Field not found: [{" + fieldIn + "}]\n";
+    return fldNotFound(fieldIn);
 }
 
 //---------------------------------------------------------------------------------------------------

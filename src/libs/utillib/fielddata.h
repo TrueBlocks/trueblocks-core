@@ -58,6 +58,7 @@ namespace qblocks {
         friend class CRuntimeClass;
         friend class CFieldList;
         friend class CBaseNode;
+        friend int sortFieldsByName(const void *v1, const void *v2);
     };
 
     //-------------------------------------------------------------------------
