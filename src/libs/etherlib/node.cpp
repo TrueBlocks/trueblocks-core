@@ -9,7 +9,11 @@
 
 namespace qblocks {
 
-static SFString source;
+namespace qbGlobals {
+    static SFString source;
+}
+//-------------------------------------------------------------------------
+SFString curSource(void) { return qbGlobals::source; }
 
 //-------------------------------------------------------------------------
 CURL *getCurl(bool cleanup=false)
@@ -27,7 +31,7 @@ CURL *getCurl(bool cleanup=false)
 
         headers = curl_slist_append(headers, "Content-Type: application/json");
 
-        if (source == "infura")
+        if (qbGlobals::source == "infura")
         {
             // we have to use Infura
             headers = curl_slist_append(headers, "Infura-Ethereum-Preferred-Client: parity");
@@ -61,7 +65,7 @@ void etherlib_init(const SFString& sourceIn)
     // they get cleaned up
     registerQuitHandler(defaultQuitHandler);
 
-    source = sourceIn;
+    qbGlobals::source = sourceIn;
 
     CBlock       :: registerClass();
     CTransaction :: registerClass();
@@ -126,9 +130,9 @@ SFString callRPC(const SFString& method, const SFString& params, bool raw)
     }
 
 #ifdef DEBUG_RPC
-    cout << "\n" << SFString('-',80) << "\n";
-    cout << thePost << "\n";
-    cout << SFString('-',60) << "\n";
+//    cout << "\n" << SFString('-',80) << "\n";
+//    cout << thePost << "\n";
+    cout << SFString('=',60) << "\n";
     cout << received << "\n";
     cout.flush();
 #endif
@@ -158,18 +162,18 @@ bool queryBlock(CBlock& block, const SFString& numIn, bool needTrace)
         return queryBlock(block, asString(getClientLatestBlk()), needTrace);
 
     long num = toLong(numIn);
-    if ((source.Contains("binary") || source.Contains("nonemp")) && fileSize(getBinaryFilename1(num))>0) {
+    if ((qbGlobals::source.Contains("binary") || qbGlobals::source.Contains("nonemp")) && fileSize(getBinaryFilename1(num))>0) {
         //		if (verbose) { cerr << "Reading binary block: " << num << "\n"; cerr.flush(); }
         UNHIDE_FIELD(CTransaction, "receipt");
         UNHIDE_FIELD(CTransaction, "traces");
         return readOneBlock_fromBinary(block, getBinaryFilename1(num));
 
-    } else if (source.Contains("Only")) {
+    } else if (qbGlobals::source.Contains("Only")) {
         return false;
 
     }
 
-    if (source == "json" && fileSize(getJsonFilename1(num))>0)
+    if (qbGlobals::source == "json" && fileSize(getJsonFilename1(num))>0)
     {
         //		if (verbose) { cerr << "Reading json block: " << num << "\n"; cerr.flush(); }
         UNHIDE_FIELD(CTransaction, "receipt");
@@ -232,11 +236,11 @@ bool queryBlock(CBlock& block, const SFString& numIn, bool needTrace)
 bool getBlock(CBlock& block, SFUint32 numIn)
 {
     // Use queryBlock if you just want to read the block (any method)
-    SFString save = source;
-    if (source=="fastest")
-        source = (fileExists(getBinaryFilename1(numIn)) ? "binary" : "parity");
+    SFString save = qbGlobals::source;
+    if (qbGlobals::source=="fastest")
+        qbGlobals::source = (fileExists(getBinaryFilename1(numIn)) ? "binary" : "parity");
     bool ret = queryBlock(block, asStringU(numIn), true);
-    source = save;
+    qbGlobals::source = save;
     return ret;
 }
 
@@ -315,6 +319,26 @@ bool getReceipt(CReceipt& receipt, const SFString& hash)
     h = padLeft(h, 64, '0');
     getObjectViaRPC(receipt, "eth_getTransactionReceipt", "[\"0x" + h + "\"]");
     return true;
+}
+
+//--------------------------------------------------------------
+void getTraces(CTraceArray& traces, const SFHash& hash)
+{
+    SFString trace;
+    queryRawTrace(trace, hash);
+
+    CRPCResult generic;
+    char *p = cleanUpJson((char*)(const char*)trace);
+    generic.parseJson(p);
+
+    p = cleanUpJson((char *)(generic.result.c_str()));  // NOLINT
+    while (p && *p) {
+        CTrace tr;
+        uint32_t nFields = 0;
+        p = tr.parseJson(p, nFields);
+        if (nFields)
+            traces[traces.getCount()] = tr;
+    }
 }
 
 //-------------------------------------------------------------------------
@@ -457,6 +481,7 @@ bool verifyBlock(const CBlock& qBlock, SFString& result)
 
     SFString qStr = qBlock.Format().Substitute("blockNumber","number"); // our block
     qStr = cleanUpJson((char*)(const char*)qStr);
+//#define DEBUG_VERIFY
 #if DEBUG_VERIFY
     cout << SFString('#',80) << "\nqb: ";
     cout << qStr << "\n";
@@ -578,8 +603,8 @@ bool forEveryEmptyBlockOnDisc(BLOCKVISITFUNC func, void *data, SFUint32 start, S
     if (!func)
         return false;
 
-    SFString save = source;
-    source = "parity"; // the empty blocks are not on disk, so we have to ask parity. Don't write them, though
+    SFString save = qbGlobals::source;
+    qbGlobals::source = "parity"; // the empty blocks are not on disk, so we have to ask parity. Don't write them, though
 
     CSharedResource fullBlocks;
     if (!fullBlocks.Lock(fullBlockIndex, binaryReadOnly, LOCK_WAIT))
@@ -609,7 +634,7 @@ bool forEveryEmptyBlockOnDisc(BLOCKVISITFUNC func, void *data, SFUint32 start, S
                 getBlock(block,cnt);
                 if (!(*func)(block, data))
                 {
-                    source = save;
+                    qbGlobals::source = save;
                     delete [] contents;
                     return false;
                 }
@@ -619,7 +644,7 @@ bool forEveryEmptyBlockOnDisc(BLOCKVISITFUNC func, void *data, SFUint32 start, S
         }
         delete [] contents;
     }
-    source = save;
+    qbGlobals::source = save;
     return true;
 }
 
@@ -655,9 +680,11 @@ bool forEveryNonEmptyBlockOnDisc(BLOCKVISITFUNC func, void *data, SFUint32 start
         for (SFUint32 i = 0 ; i < nItems ; i = i + skip)
         {
             // TODO: This should be a binary search not a scan. This is why it appears to wait
+//cout << "inRange(" << contents[i] << ", " << start << ", " << start+count-1 << "): ";
             if (inRange((SFUint32)contents[i], start, start+count-1))
             {
-                //					if (verbose) { cerr << "Getting block " << contents[i] << "\n"; cerr.flush(); }
+//cout << "true\n";
+//              if (verbose) { cerr << "Getting block " << contents[i] << "\n"; cerr.flush(); }
                 CBlock block;
                 if (getBlock(block,contents[i]))
                 {
@@ -669,7 +696,10 @@ bool forEveryNonEmptyBlockOnDisc(BLOCKVISITFUNC func, void *data, SFUint32 start
                         return false;
                     }
                 }
+            } else {
+//cout << "false\n";
             }
+//cout.flush();
         }
         delete [] contents;
     }
@@ -1004,7 +1034,7 @@ bool forEveryMiniBlockInMemory(MINIBLOCKVISITFUNC func, void *data, SFUint32 sta
 //--------------------------------------------------------------------------
 bool forEveryFullBlockInMemory(BLOCKVISITFUNC func, void *data, SFUint32 start, SFUint32 count)
 {
-    if (source != "mem")
+    if (qbGlobals::source != "mem")
         return false;
     if (!theCache.Load(start,count))
         return false;
