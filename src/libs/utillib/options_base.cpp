@@ -32,8 +32,12 @@ namespace qblocks {
         if ((SFUint32)argc <= minArgs)  // the first arg is the program's name
             return usage("Not enough arguments presented.");
 
+        int nChars = 0;
+        for (int i=0; i<argc; i++) {
+            nChars += SFString(argv[i]).length();
+        }
         uint32_t nArgs = 0;
-        SFString *args = new SFString[argc+2];
+        SFString *args = new SFString[argc+nChars+2];
 
         bool hasStdIn = false;
         for (int i = 1 ; i < argc ; i++) {
@@ -154,6 +158,12 @@ namespace qblocks {
                 nextTokenClear(name, ':');
                 shortName += name[0];
                 longName = "-" + name;
+            }
+            if (longName.Contains("(") && longName.Contains(")")) {
+                hotKey = longName;
+                nextTokenClear(hotKey,'(');
+                hotKey = nextTokenClear(hotKey, ')');
+                longName.ReplaceAny("()","");
             }
         }
     }
