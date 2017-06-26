@@ -48,3 +48,5 @@ src/tools/scripts/ethsed
 bin
 
 fix
+
+issues_detected_ubuntu.txt
