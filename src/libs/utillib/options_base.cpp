@@ -133,7 +133,7 @@ namespace qblocks {
             return true;
         if (arg == "--version")
             return true;
-        if (arg == "--nocolors")
+        if (arg == "--nocolors" || arg == "--nocolor")
             return true;
         if (arg == "null")
             return true;
