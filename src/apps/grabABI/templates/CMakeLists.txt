@@ -22,3 +22,4 @@ add_executable(${PROJECT_NAME} ${SOURCE_FILES})
 # Add the project static libs at linking
 set(THE_LIBS ${BASE_LIBS} token wallet "${CMAKE_CURRENT_LIST_DIR}/parselib/libparse[{PROJECT_NAME}].a")
 target_link_libraries (${PROJECT_NAME} ${THE_LIBS} ncurses)
+target_link_libraries(${TOOL_NAME} ${CURL_LIBRARIES})
