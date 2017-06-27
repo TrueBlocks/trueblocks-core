@@ -67,7 +67,7 @@ namespace qblocks {
         nStrs = 0;
         char c;
 
-        for (int i = 0 ; i < n ; i++) {
+        for (size_t i = 0 ; i < n ; i++) {
             // get path
             char *tmp = globBuf.gl_pathv[i];
             // last char
@@ -90,8 +90,7 @@ namespace qblocks {
 
                     if (!keepPaths) {
                         // trim path to last directory / file
-                        char res[kMaxPathSize];
-                        path = basename_r(path.c_str(), res);  // NOLINT
+                        path = basename((char*)path.c_str());  // NOLINT
                         if (path.startsWith('/'))
                             path = path.substr(1);
                         // The path we return is always just the name of the folder or file
