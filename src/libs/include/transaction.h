@@ -13,6 +13,7 @@
 #include "ethtypes.h"
 #include "abilib.h"
 #include "receipt.h"
+#include "trace.h"
 
 namespace qblocks {
 
@@ -59,6 +60,7 @@ public:
     CFunction *funcPtr;
     SFString function;
     double ether;
+    CTraceArray traces;
 
     SFString inputToFunction(void) const;
     bool isFunction(const SFString& func) const;
