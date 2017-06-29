@@ -32,7 +32,7 @@ public:
     SFUint32 gas;
     SFString input;
     SFAddress to;
-    SFUintBN value;
+    SFWei value;
 
 public:
     CTraceAction(void);

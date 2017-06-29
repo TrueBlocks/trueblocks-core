@@ -65,7 +65,7 @@ SFString nextTraceactionChunk(const SFString& fieldIn, bool& force, const void *
                 if ( fieldIn % "to" ) return fromAddress(tra->to);
                 break;
             case 'v':
-                if ( fieldIn % "value" ) return asStringBN(tra->value);
+                if ( fieldIn % "value" ) return fromWei(tra->value);
                 break;
         }
 
@@ -103,7 +103,7 @@ bool CTraceAction::setValueByName(const SFString& fieldName, const SFString& fie
             if ( fieldName % "to" ) { to = toAddress(fieldValue); return true; }
             break;
         case 'v':
-            if ( fieldName % "value" ) { value = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "value" ) { value = toWei(fieldValue); return true; }
             break;
         default:
             break;
