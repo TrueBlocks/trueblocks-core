@@ -55,6 +55,9 @@ SFString nextTraceChunk(const SFString& fieldIn, bool& force, const void *data) 
                 if ( fieldIn % "blockHash" ) return fromHash(tra->blockHash);
                 if ( fieldIn % "blockNumber" ) return asStringU(tra->blockNumber);
                 break;
+            case 'e':
+                if ( fieldIn % "error" ) return tra->error;
+                break;
             case 'r':
                 if ( fieldIn % "result" ) { expContext().noFrst=true; return tra->result.Format(); }
                 break;
@@ -131,6 +134,9 @@ bool CTrace::setValueByName(const SFString& fieldName, const SFString& fieldValu
             if ( fieldName % "blockHash" ) { blockHash = toHash(fieldValue); return true; }
             if ( fieldName % "blockNumber" ) { blockNumber = toUnsigned(fieldValue); return true; }
             break;
+        case 'e':
+            if ( fieldName % "error" ) { error = fieldValue; return true; }
+            break;
         case 'r':
             if ( fieldName % "result" ) { /* result = fieldValue; */ return false; }
             break;
@@ -170,6 +176,7 @@ bool CTrace::Serialize(SFArchive& archive) {
     archive >> transactionHash;
     archive >> transactionPosition;
     archive >> type;
+    archive >> error;
     archive >> action;
     archive >> result;
     finishParse();
@@ -188,6 +195,7 @@ bool CTrace::SerializeC(SFArchive& archive) const {
     archive << transactionHash;
     archive << transactionPosition;
     archive << type;
+    archive << error;
     archive << action;
     archive << result;
 
@@ -210,6 +218,7 @@ void CTrace::registerClass(void) {
     ADD_FIELD(CTrace, "transactionHash", T_TEXT, ++fieldNum);
     ADD_FIELD(CTrace, "transactionPosition", T_NUMBER, ++fieldNum);
     ADD_FIELD(CTrace, "type", T_TEXT, ++fieldNum);
+    ADD_FIELD(CTrace, "error", T_TEXT, ++fieldNum);
     ADD_FIELD(CTrace, "action", T_TEXT|TS_OBJECT, ++fieldNum);
     ADD_FIELD(CTrace, "result", T_TEXT|TS_OBJECT, ++fieldNum);
 
@@ -259,6 +268,9 @@ bool CTrace::readBackLevel(SFArchive& archive) {
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
+bool CTrace::isError(void) const {
+    return !error.empty();
+}
 // EXISTING_CODE
 }  // namespace qblocks
 
