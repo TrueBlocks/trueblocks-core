@@ -307,7 +307,7 @@ int main(int argc, const char *argv[]) {
 
             // The library header file
             if (!options.isBuiltin())
-                headers += ("#include \"support.h\"\n");
+                headers += ("#include \"processing.h\"\n");
             SFString headerCode = SFString(STR_HEADERFILE).Substitute("[{HEADERS}]", headers);
             SFString parseInit = "parselib_init(const SFString& method)";
             if (!options.isBuiltin())
@@ -376,17 +376,19 @@ int main(int argc, const char *argv[]) {
             sourceCode = sourceCode.Substitute("{QB}", (options.isBuiltin() ? "_qb" : ""));
             writeTheCode(classDir + options.prefix + ".cpp", sourceCode.Substitute("XXXX","[").Substitute("YYYY","]"));
 
-            // The support.h file
+            // The code
             if (!options.isBuiltin()) {
-                makeTheCode("support.h",      options.primaryAddr.Substitute("0x", ""));
-                makeTheCode("support.cpp",    options.primaryAddr.Substitute("0x", ""));
                 makeTheCode("rebuild",        StripTrailing(addrList,'|').Substitute("|", " "));
                 makeTheCode("CMakeLists.txt", options.primaryAddr);
-                makeTheCode("options.h",      options.primaryAddr);
-                makeTheCode("options.cpp",    options.primaryAddr);
                 makeTheCode("debug.h",        options.primaryAddr);
                 makeTheCode("debug.cpp",      options.primaryAddr);
+                makeTheCode("options.cpp",    options.primaryAddr);
                 makeTheCode("main.cpp",       options.primaryAddr);
+                makeTheCode("accounting.cpp", options.primaryAddr);
+                makeTheCode("display.cpp",    options.primaryAddr);
+                makeTheCode("processing.cpp", options.primaryAddr);
+                makeTheCode("processing.h",   options.primaryAddr);
+
             }
         }
     }

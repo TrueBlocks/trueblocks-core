@@ -1,7 +1,7 @@
 #include <ncurses.h>
 #include <stdlib.h>
 #include "etherlib.h"
-#include "support.h"
+#include "processing.h"
 #include "debug.h"
 
 //---------------------------------------------------------------------
@@ -12,6 +12,7 @@ static CParams debugCmds[] = {
     CParams("-(e)thscan",     "Open a block, account, or transaction in http://ethscan.io"),
     CParams("-(s)ource",      "View the smart contract's source code (if found)"),
     CParams("-(b)uffer",      "Show the transaction buffer (including transaction hashes)"),
+    CParams("-(p)lay",        "Play a block.txid.traceid or '+' for next, '-' for prev"),
     CParams("-(l)ist",        "Show the list of accounts being debugged"),
     CParams("-confi(g)",      "Edit the config file"),
     CParams("-clea(r)",       "Clear the screen"),
@@ -21,6 +22,10 @@ static CParams debugCmds[] = {
     CParams("",               "Press enter to continue without correction, up or down arrows to recall commands"),
 };
 static SFUint32 nDebugCmds = sizeof(debugCmds) / sizeof(CParams);
+
+//---------------------------------------------------------------------
+#define isdelim(cc) ((cc) == ':' || (cc) == '.' || (cc) == ' ')
+#define ishex(cc)   ((cc) == 'x' || ((cc) >= 'a' && (cc) <= 'f') || ((cc) >= 'A' && (cc) <= 'F'))
 
 //---------------------------------------------------------------------
 SFString completeCommand(const SFString& cmd) {
@@ -37,6 +42,9 @@ SFString completeCommand(const SFString& cmd) {
 
     return cmd;
 }
+
+//---------------------------------------------------------------------
+#define history(aa) { cmds[cmds.getCount()] = (aa); }
 
 //---------------------------------------------------------------------
 bool CVisitor::enterDebugger(const CBlock& block) {
@@ -82,7 +90,7 @@ bool CVisitor::enterDebugger(const CBlock& block) {
                     for (int i = 0 ; i < watches.getCount() ; i++)
                         watches[i].qbis.correct();
                     done = true;
-                    cmds[cmds.getCount()] = curCmd;
+                    history(curCmd);
 
                 } else if (curCmd == "r" || curCmd == "clear") {
                     clear();
@@ -91,7 +99,7 @@ bool CVisitor::enterDebugger(const CBlock& block) {
                         displayTransaction(lastWhich, lastTrans, this);
                         curCmd = asString(lastWhich) + " ------ > " + asString((uint64_t)lastTrans);
                     }
-                    cmds[cmds.getCount()] = curCmd;
+                    history(curCmd);
 
                 } else if (curCmd == "q" || curCmd == "quit" || curCmd == "exit") {
                     cout << "\r\n";
@@ -99,13 +107,19 @@ bool CVisitor::enterDebugger(const CBlock& block) {
                     return false;
 
                 } else if (curCmd == "a" || curCmd == "autoCorrect") {
-                    cmds[cmds.getCount()] = curCmd;
+                    history(curCmd);
+                    autoCorrect = !autoCorrect;
+                    cout << "autoCorrect is " << (autoCorrect ? "on" : "off");
+                    cout.flush();
+
+                } else if (curCmd == "p" || curCmd == "play") {
+                    history(curCmd);
                     autoCorrect = !autoCorrect;
                     cout << "autoCorrect is " << (autoCorrect ? "on" : "off");
                     cout.flush();
 
                 } else if (curCmd == "v" || curCmd == "verbose") {
-                    cmds[cmds.getCount()] = curCmd;
+                    history(curCmd);
                     autoTrace = !autoTrace;
                     cout << "autoTrace is " << (autoTrace ? "on" : "off");
                     cout.flush();
@@ -119,7 +133,7 @@ bool CVisitor::enterDebugger(const CBlock& block) {
                     } else {
                         cout << "\r\nThere are no items in the transaction buffer\r\n";
                     }
-                    cmds[cmds.getCount()] = curCmd;
+                    history(curCmd);
 
                 } else if (curCmd == "l" || curCmd == "list") {
                     cout << "\r\nAccounts:\r\n";
@@ -128,10 +142,10 @@ bool CVisitor::enterDebugger(const CBlock& block) {
                         cout << "name: " << watches[i].color << watches[i].name << cOff << ", ";
                         cout << "firstBlock: " << watches[i].firstBlock << " }\r\n";
                     }
-                    cmds[cmds.getCount()] = curCmd;
+                    history(curCmd);
 
                 } else if (curCmd.startsWith("s ") || curCmd.startsWith("s:") || curCmd.startsWith("source")) {
-                    cmds[cmds.getCount()] = curCmd;
+                    history(curCmd);
                     curCmd.Replace("s:","");
                     curCmd.Replace("s ","");
                     curCmd.Replace("source:","");
@@ -144,12 +158,12 @@ bool CVisitor::enterDebugger(const CBlock& block) {
                     doCommand(cmd);
 
                 } else if (curCmd == "g" || curCmd == "config") {
-                    cmds[cmds.getCount()] = curCmd;
+                    history(curCmd);
                     SFString cmd = "open ./config.toml";
                     doCommand(cmd);
 
                 } else if (curCmd.startsWith("e ") || curCmd.startsWith("e:") || curCmd.startsWith("ethscan")) {
-                    cmds[cmds.getCount()] = curCmd;
+                    history(curCmd);
                     curCmd.Replace("e:","");
                     curCmd.Replace("e ","");
                     curCmd.Replace("ethscan:","");
@@ -158,7 +172,7 @@ bool CVisitor::enterDebugger(const CBlock& block) {
                     doCommand(cmd);
 
                 } else if (curCmd.startsWith("t:") || curCmd.startsWith("t ") || curCmd.startsWith("trace:")) {
-                    cmds[cmds.getCount()] = curCmd;
+                    history(curCmd);
                     curCmd.Replace("t:","");
                     curCmd.Replace("t ","");
                     curCmd.Replace("trace:","");
@@ -181,7 +195,7 @@ bool CVisitor::enterDebugger(const CBlock& block) {
                         cout << "    " << padRight(cmd,15) << "    " << debugCmds[i].description << "\r\n";
                     }
                     cout << "\r\n";
-                    cmds[cmds.getCount()] = curCmd;
+                    history(curCmd);
 
                 } else if (curCmd == "") {
                     cout << "\r\n";
@@ -190,35 +204,22 @@ bool CVisitor::enterDebugger(const CBlock& block) {
 
                 } else {
                     cout << "invalid command: " << curCmd << SFString(' ',90) << "\r\n";
-                    cmds[cmds.getCount()] = curCmd;
+                    history(curCmd);
                 }
                 curCmd = "";
                 cursor = 0;
                 break;
             default: {
+                bool allowDigits=curCmd.startsWith('t');
+                bool allowHex=curCmd.startsWith('s')||curCmd.startsWith('e');
                 if (ch == 107) // 'k'
                     showKeys = !showKeys;
                 if (showKeys)
                     cout << "\t\t\t\t" << (char)ch << " : " << ch << "\r\n";
-                if ((ch >= 'a' && ch <= 'z') ||
-                    (curCmd.startsWith('t') && (ch == ':'
-                                                || ch == '.'
-                                                || ch == ' '
-                                                || (ch >= '0' && ch <= '9')))
-                    || (curCmd.startsWith('e') && (ch == ':'
-                                                || ch == '.'
-                                                || ch == ' '
-                                                || ch == 'x'
-                                                || (ch >= '0' && ch <= '9')
-                                                || (ch >= 'a' && ch <= 'f')
-                                                || (ch >= 'A' && ch <= 'F')))
-                    || (curCmd.startsWith('s') && (ch == ':'
-                                                || ch == '.'
-                                                || ch == ' '
-                                                || ch == 'x'
-                                                || (ch >= '0' && ch <= '9')
-                                                || (ch >= 'a' && ch <= 'f')
-                                                || (ch >= 'A' && ch <= 'F')))
+                if (
+                        (islower(ch)) ||
+                        (allowDigits && (isdelim(ch) || isdigit(ch))) ||
+                        (allowHex    && (isdelim(ch) || isdigit(ch) || ishex(ch)))
                     )
                     curCmd += ch;
             }
@@ -332,3 +333,8 @@ int main(void) {
 #endif
  */
 #endif
+
+//-----------------------------------------------------------------------
+bool debugFile(void) {
+    return fileExists("./cache/debug");
+}

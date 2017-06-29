@@ -5,182 +5,39 @@
  *
  * The LICENSE at the root of this repo details your rights (if any)
  *------------------------------------------------------------------------*/
-#include "etherlib.h"
-#include "options.h"
-#include "parselib.h"
-
-//EXISTING_CODE
-//-----------------------------------------------------------------------
-bool displayTransaction(uint32_t which, const CTransaction *theTrans, void *data) {
-
-    CVisitor *visitor = reinterpret_cast<CVisitor *>(data);
-    ASSERT(!visitor->watches[which].disabled);
-    visitor->nDisplayed++;
-    visitor->lastWhich = which;
-    visitor->lastTrans = theTrans;
-
-    const CTransaction *promoted = promoteToFunc(theTrans);
-    if (!promoted)
-        promoted = theTrans;  // revert to the original
-
-    SFString contractName = visitor->watches[which].name;
-    SFString transType = (SFString(promoted->getRuntimeClass()->m_ClassName).substr(1));
-
-    //----------------------------------
-    bool wantsEvents = visitor->screenFmt.Contains("[{EVENTS}]");
-    bool wantsParse = visitor->screenFmt.Contains("[{PARSE}]");
-    SFString format  = visitor->screenFmt.Substitute("[{EVENTS}]","").Substitute("[{PARSE}]","");
-    if (!format.empty()) {
-
-        visitor->setColors(theTrans, visitor->watches[which].color);
-
-        SFString func = promoted->function;
-        SFString fmt = format.Substitute("[{FUNCTION}]", func).Substitute("[{FUNC}]", toProper(nextTokenClear(func,'|')));
-        fmt.ReplaceAll("[{CONTRACT}]", contractName);
-        fmt.ReplaceAll("[{CONTRACT3}]", contractName.Left(3));
-        fmt.ReplaceAll("[{TYPE}]", transType);
-        fmt.ReplaceAll("[{TYPE20}]", padRight(transType.Left(15),15) + (theTrans->isInternalTx ? "" : "`"));
-        fmt.Replace("[{P}]", (promoted == theTrans?"":"\t\tparsed: %[{w:130:PARSED}]#\r\n"));
-
-        SFString head;
-        head += ((promoted->isInternalTx ? promoted->to : contractName) + "::" +
-                 transType + (promoted->isInternalTx ? " (logs from " + contractName + ")" : ""));
-        fmt.Replace("[{HEAD}]", head);
-        fmt.Replace("[{SEP}\r\n]", SFString('-', 180) + "\r\n");
-
-        SFString transStr = promoted->Format(fmt).Substitute("\t"," ");
-
-        SFString c1 = visitor->color, c2 = visitor->hiColor, c3 = visitor->hiColor2, c4 = cOff;
-        if (theTrans->isError) {
-            c1 = c2 = c3 = c4 = biBlack;
-        } else if (theTrans->isInternalTx) {
-            c1 = c2 = c3 = c4 = cRed;
-        }
-        cout << c1 << transStr.Substitute("#", c1).Substitute("@", c2).Substitute("%", c3).Substitute("`", c4) << cOff;
-    }
-
-    //----------------------------------
-    if (visitor->parse_on || wantsParse) {
-        SFString parsed = promoted->Format("\r\n[{PARSED}]\r\n")
-        .Substitute(" ", "").Substitute(",", ", ").Substitute("{", "{ ").Substitute("}", " }");
-        cout << iTeal << Strip(parsed, ',');
-    }
-
-    //----------------------------------
-    SFString evtList;
-    if (visitor->logs_on || wantsEvents) {
-        if (visitor->logs_on)
-            cout << "\r\n";
-        for (int i = 0 ; i < theTrans->receipt.logs.getCount() ; i++) {
-
-            // Try to promote it. If we can't promote it, revert to the original.
-            const CLogEntry *l = &theTrans->receipt.logs[i];
-            const CLogEntry *promotedLog = promoteToEvent(l);
-            if (!promotedLog)
-                promotedLog = l;
-
-            // Display it.
-            SFString eventType = (SFString(promotedLog->getRuntimeClass()->m_ClassName).substr(1));
-            SFString evtStr = promotedLog->toJson1();
-            if (visitor->logs_on) {
-                cout << iYellow << "  " << padLeft(asString(i),2) << ". " << padRight(eventType.Left(15),15) << " " << evtStr << cOff << "\r\n";
-            }
-            evtList += eventType + ",";
-
-            // If it was promoted, delete it
-            if (promotedLog != l)
-                delete promotedLog;
-        }
-    }
-    if (wantsEvents)
-        cout << iYellow << "[" << Strip(evtList, ',') << "]";
-
-    //----------------------------------
-    if (visitor->notify) {
-
-        // Display a Mac notification if we're on Mac
-        SFString from = promoted->Format("[{FROM}]").Left(5)+"...";
-        SFString to = promoted->Format("[{TO}]").Left(5)+"...";
-        SFString cmd = "osascript -e 'display notification \"❤️" + transType + ": " +
-                        from + "==>" + to + "\" with title \"" + contractName + "\"'";
-        doCommand(cmd);
-    }
-
-    // TODO(tjrayrush): when should we show the accounting traces?
-    if (visitor->trace_on || visitor->autoTrace) {
-        visitor->showColoredTrace(promoted->hash, theTrans->isError);
-        if (visitor->bloom_on && promoted->receipt.logsBloom != 0) {
-            showColoredBloom(promoted->receipt.logsBloom, "Tx bloom:", "");
-            cout << "\r\n";
-            for (int t=0;t<visitor->watches.getCount()-1;t++) {
-                SFBloom b = makeBloom(visitor->watches[t].address);
-                showColoredBloom(b,visitor->watches[t].color + padRight(visitor->watches[t].name.Left(9),9) + cOff, (isBloomHit(b, promoted->receipt.logsBloom) ? greenCheck : redX));
-                cout << "\r\n";
-            }
-        }
-    }
-
-    // If the transaction was promoted, clear that up
-    if (theTrans != promoted)
-        delete promoted;
-
-    cout << cOff;
-    cout << "\r\n";
-    cout.flush();
-    return true;
-}
-//EXISTING_CODE
-
-//-----------------------------------------------------------------------
 #include <ncurses.h>
-void myQuitHandler(int s) {
-    if (!isendwin())
-        endwin();
-    if (s != 1)
-        cout << "Caught signal " << s << "\n";
-    SFString list = manageRemoveList();
-    while (!list.empty()) {
-        SFString file = nextTokenClear(list, '|');
-        cout << "Removing file: " << file << "\n"; cout.flush();
-        removeFile(file);
-    }
-    exit(1);
-}
-inline void myOnExitHandler(void) { myQuitHandler(1); }
+#include "etherlib.h"
+#include "parselib.h"
+#include "processing.h"
+
+//EXISTING_CODE
+//EXISTING_CODE
 
 //-----------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
-    registerQuitHandler(myQuitHandler);
-
     parselib_init("binary");
+
+    registerQuitHandler(myQuitHandler);
     if (argc < 2)
-        verbose = 0x1;
+        verbose = true;
 
     // Parse command line, allowing for command files
-    COptions options;
-    if (!options.prepareArguments(argc, argv)) {
-        cout.flush();
-        cerr.flush();
-        //getchar();
+    CVisitor visitor;
+    if (!visitor.opts.prepareArguments(argc, argv)) {
         return false;
     }
 
-    // while (!options.commandList.empty())
+    // while (!visitor.opts.commandList.empty())
     {
-        SFString command = nextTokenClear(options.commandList, '\n');
-        if (!options.parseArguments(command)) {
-            cout.flush();
-            cerr.flush();
-            //getchar();
+        SFString command = nextTokenClear(visitor.opts.commandList, '\n');
+        if (!visitor.opts.parseArguments(command)) {
             return false;
         }
 
         CToml toml;
         toml.setFilename("./config.toml");
         toml.readFile("./config.toml");
-
-        CVisitor visitor;
 
         blknum_t minWatchBlock = UINT32_MAX;
         uint64_t nWatches = toml.getConfigInt("watches", "nWatches", 0);
@@ -189,9 +46,6 @@ int main(int argc, const char *argv[]) {
             if (!watch.getWatch(toml, i, false)) {
                 cout << usageStr("Invalid watch parameters for watch " + asString(i) + ". Quitting...")
                             .Substitute("\n", "\r\n");
-                cout.flush();
-                cerr.flush();
-                //getchar();
                 return false;
             }
             visitor.watches[visitor.watches.getCount()] = watch;
@@ -200,9 +54,6 @@ int main(int argc, const char *argv[]) {
         if (!visitor.watches.getCount()) {
             cout << usageStr("You must specify at least one address to watch in the config file.\r\n")
                         .Substitute("\n", "\r\n");
-            cout.flush();
-            cerr.flush();
-            //getchar();
             return false;
         }
         visitor.watches[visitor.watches.getCount()] = CAccountWatch(1, "Others", "Ext Accts", 0, bRed);
@@ -215,13 +66,14 @@ int main(int argc, const char *argv[]) {
                                     .Substitute("\\t", "\t");
 
         visitor.notify        = toml.getConfigBool("display", "notify", false);
-        visitor.accounting_on = toml.getConfigBool("display", "accounting", false) || options.accounting_on;
-        visitor.logs_on       = toml.getConfigBool("display", "logs", false) || options.logs_on;
-        visitor.trace_on      = toml.getConfigBool("display", "trace", false) || options.trace_on;
-        visitor.parse_on      = toml.getConfigBool("display", "parse", false) || options.parse_on;
-        visitor.bloom_on      = toml.getConfigBool("display", "bloom", false) || options.bloom_on;
-        visitor.debugger_on   = toml.getConfigBool("display", "debug", false) || options.debugger_on;
-        visitor.single_on     = toml.getConfigBool("display", "single", false) || options.single_on;
+        visitor.accounting_on = toml.getConfigBool("display", "accounting", false) || visitor.opts.accounting_on;
+        visitor.logs_on       = toml.getConfigBool("display", "logs", false) || visitor.opts.logs_on;
+        visitor.trace_on      = toml.getConfigBool("display", "trace", false) || visitor.opts.trace_on;
+        visitor.parse_on      = toml.getConfigBool("display", "parse", false) || visitor.opts.parse_on;
+        visitor.bloom_on      = toml.getConfigBool("display", "bloom", false) || visitor.opts.bloom_on;
+        visitor.debugger_on   = toml.getConfigBool("display", "debug", false) || visitor.opts.debugger_on;
+        visitor.single_on     = toml.getConfigBool("display", "single", false) || visitor.opts.single_on;
+        visitor.kBlock        = visitor.opts.kBlock;
 
         // Showing the cache file (if told to...)
         SFString cacheFileName = "./cache/" + visitor.watches[0].address + ".acct.bin";
@@ -236,14 +88,15 @@ int main(int argc, const char *argv[]) {
         // Figure out which block to start on. Note, if an 'override' is not present, use earliest
         // block from the watches. Note that 'displayFromCache' may modify this to lastest visited block
         SFUint32 blockNum = max(minWatchBlock-1, toml.getConfigInt("override", "firstBlock", minWatchBlock-1));
-        if (options.kBlock) {
-            blockNum = options.kBlock;
+        if (visitor.kBlock) {
+            blockNum = visitor.kBlock;
             for (uint32_t i = 0 ; i < visitor.watches.getCount() ; i++) {
                 visitor.watches[i].qbis.endBal = getBalance(visitor.watches[i].address, blockNum, false);
             }
         }
 
         if (visitor.debugger_on) {
+            removeFile("./cache/debug");
             initscr();
             raw();
             keypad(stdscr, TRUE);
@@ -255,25 +108,25 @@ int main(int argc, const char *argv[]) {
 
         // Display the cache (if the user tells us to...)
         if (!visitor.debugger_on && !verbose) verbose = 1;
-        visitor.cacheOnly = !options.mode.Contains("freshen");
-        if (options.mode.Contains("showCache")) {
+        visitor.cacheOnly = !visitor.opts.mode.Contains("freshen");
+        if (visitor.opts.mode.Contains("showCache")) {
             // TODO(tjayrush): allow for early quiting from debugger--trouble--with this on, and no cache, it immediately quits
             // because displayFromCache returns 'false' for more than one reason
             if (!displayFromCache(cacheFileName, blockNum, &visitor))
-                options.mode = ""; // do not continue
+                visitor.opts.mode = ""; // do not continue
         }
 
         // Freshening the cache (if the user tells us to...)
-        if (options.mode.Contains("freshen")) {
+        if (visitor.opts.mode.Contains("freshen")) {
 
             SFUint32 lastVisit = toLongU(asciiFileToString("./cache/lastBlock.txt"));
             blockNum = max(blockNum, lastVisit) + 1;
-            SFUint32 lastBlock = getClientLatestBlk();
-            SFUint32 nBlocks = (blockNum >= lastBlock ? 0 : lastBlock - blockNum);
+            SFUint32 topOfChain = getClientLatestBlk();
+            SFUint32 nBlocks = (blockNum >= topOfChain ? 0 : topOfChain - blockNum);
 
-            visitor.nBlocksToVisit= lastBlock-blockNum;
+            visitor.nBlocksToVisit= topOfChain - blockNum;
             visitor.startBlock = blockNum;
-            visitor.endBlock = lastBlock;
+            visitor.endBlock = topOfChain;
             if (verbose)
                 visitor.initReport();
 
@@ -289,8 +142,8 @@ int main(int argc, const char *argv[]) {
                 visitor.cache.Release();
             }
             timestamp_t tsOut = toTimeStamp(Now());
-            SFString endMsg = dateFromTimeStamp(tsOut).Format(FMT_JSON) + " (" + asString(lastBlock) + ")";
-            visitor.interumReport(lastBlock, visitor.last_ts, endMsg);
+            SFString endMsg = dateFromTimeStamp(tsOut).Format(FMT_JSON) + " (" + asString(topOfChain) + ")";
+            visitor.interumReport(topOfChain, visitor.last_ts, endMsg);
             cout << "\r\n";
         }
 
@@ -311,3 +164,22 @@ int main(int argc, const char *argv[]) {
 
     return false;
 }
+
+//-----------------------------------------------------------------------
+void myQuitHandler(int s) {
+    if (!isendwin())
+        endwin();
+    if (s != 1)
+        cout << "Caught signal " << s << "\n";
+    SFString list = manageRemoveList();
+    while (!list.empty()) {
+        SFString file = nextTokenClear(list, '|');
+        cout << "Removing file: " << file << "\n"; cout.flush();
+        removeFile(file);
+    }
+    removeFile("./cache/debug");
+    exit(1);
+}
+
+//EXISTING_CODE
+//EXISTING_CODE
