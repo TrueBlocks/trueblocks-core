@@ -14,6 +14,7 @@ namespace qblocks {
 #define SFAddress      SFString
 #define SFHash         SFString
 #define SFBloom        SFUintBN
+#define SFWei          SFUintBN
 #define blknum_t       uint64_t
 #define txnum_t        uint32_t
 #define lognum_t       uint32_t

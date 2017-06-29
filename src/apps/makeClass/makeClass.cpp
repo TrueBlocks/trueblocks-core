@@ -106,6 +106,7 @@ SFString convertTypes(const SFString& inStr) {
     .Substitute("bytes32 ", "SFString ")
     .Substitute("bytes ",   "SFString ")
     .Substitute("bloom ",   "SFBloom ")
+    .Substitute("wei ",     "SFWei ")
     .Substitute("uint256 ", "SFUintBN ")
     .Substitute("int256 ",  "SFIntBN ")
     .Substitute("uint8 ",   "SFUxnt32 ")
@@ -217,7 +218,8 @@ void generateCode(CToml1& classFile, const SFString& dataFile, const SFString& n
         SFString regFmt = "\tADD_FIELD(CL_NM, \"[{NAME}]\", T_TEXT, ++fieldNum);\n", regType;
         SFString subClsFmt = STR_SUBCLASS;
 
-              if (fld->name == "logsBloom") { setFmt = "\t[{NAME}] = [{DEF}];\n"; regType = "T_BLOOM";
+               if (fld->type == "bloom")    { setFmt = "\t[{NAME}] = [{DEF}];\n"; regType = "T_BLOOM";
+        } else if (fld->type == "wei")      { setFmt = "\t[{NAME}] = [{DEF}];\n"; regType = "T_WEI";
         } else if (fld->type == "string")   { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_TEXT";
         } else if (fld->type == "addr")     { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_TEXT";
         } else if (fld->type == "address")  { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_TEXT";
@@ -234,7 +236,6 @@ void generateCode(CToml1& classFile, const SFString& dataFile, const SFString& n
         } else if (fld->type == "uint32")   { setFmt = "\t[{NAME}] = [{DEF}];\n"; regType = "T_NUMBER";
         } else if (fld->type == "uint64")   { setFmt = "\t[{NAME}] = [{DEF}];\n"; regType = "T_NUMBER";
         } else if (fld->type == "uint256")  { setFmt = "\t[{NAME}] = [{DEF}];\n"; regType = "T_NUMBER";
-        } else if (fld->type == "bloom")    { setFmt = "\t[{NAME}] = [{DEF}];\n"; regType = "T_NUMBER";
         } else if (fld->type == "bbool")    { setFmt = "\t[{NAME}] = [{DEF}];\n"; regType = "T_BOOL";
         } else if (fld->type == "bool")     { setFmt = "\t[{NAME}] = [{DEF}];\n"; regType = "T_BOOL";
         } else if (fld->type == "float")    { setFmt = "\t[{NAME}] = [{DEFF}];\n"; regType = "T_FLOAT";
@@ -401,6 +402,9 @@ SFString getCaseCode(const SFString& fieldCase) {
                     } else if (type == "bloom") {
                         caseCode += " return fromBloom([{SHORT3}]->" + field + ");";
 
+                    } else if (type == "wei") {
+                        caseCode += " return fromWei([{SHORT3}]->" + field + ");";
+
                     } else if (type == "addr" || type == "address") {
                         caseCode += " return fromAddress([{SHORT3}]->" + field + ");";
 
@@ -492,6 +496,9 @@ SFString getCaseSetCode(const SFString& fieldCase) {
 
                     } else if (type == "bloom") {
                         caseCode +=  " { " + field + " = toBloom(fieldValue); return true; }";
+
+                    } else if (type == "wei") {
+                        caseCode +=  " { " + field + " = toWei(fieldValue); return true; }";
 
                     } else if (type == "addr" || type == "address") {
                         caseCode += " { " + field + " = toAddress(fieldValue); return true; }";
