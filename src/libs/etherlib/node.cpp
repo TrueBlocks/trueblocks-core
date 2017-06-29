@@ -165,7 +165,6 @@ bool queryBlock(CBlock& block, const SFString& numIn, bool needTrace)
     if ((qbGlobals::source.Contains("binary") || qbGlobals::source.Contains("nonemp")) && fileSize(getBinaryFilename1(num))>0) {
         //		if (verbose) { cerr << "Reading binary block: " << num << "\n"; cerr.flush(); }
         UNHIDE_FIELD(CTransaction, "receipt");
-        UNHIDE_FIELD(CTransaction, "traces");
         return readOneBlock_fromBinary(block, getBinaryFilename1(num));
 
     } else if (qbGlobals::source.Contains("Only")) {
@@ -177,14 +176,12 @@ bool queryBlock(CBlock& block, const SFString& numIn, bool needTrace)
     {
         //		if (verbose) { cerr << "Reading json block: " << num << "\n"; cerr.flush(); }
         UNHIDE_FIELD(CTransaction, "receipt");
-        UNHIDE_FIELD(CTransaction, "traces");
         return readOneBlock_fromJson(block, getJsonFilename1(num));
 
     }
 
     //	if (verbose) { cerr << "Getting block from node: " << num << "\n"; cerr.flush(); }
     HIDE_FIELD(CTransaction, "receipt");
-    HIDE_FIELD(CTransaction, "traces");
     getObjectViaRPC(block, "eth_getBlockByNumber", "["+quote(asString(num))+",true]");
 
     // If there are no transactions, we're done
