@@ -5,7 +5,7 @@
  *
  * The LICENSE at the root of this repo details your rights (if any)
  *------------------------------------------------------------------------*/
-#include "options.h"
+#include "processing.h"
 
 //---------------------------------------------------------------------------------------------------
 CParams params[] = {
@@ -91,12 +91,11 @@ bool COptions::parseArguments(SFString& command) {
             }
             return false;
 
-        } else if (arg.startsWith('-')) {
-            if (!arg.Contains("-h") && !arg.Contains("-v") && !arg.Contains("-t")) {
-                cerr << usageStr("Invalid option: " + arg).Substitute("\n","\r\n");
-                return false;
+        } else if (arg.startsWith('-')) {  // do not collapse
+            if (!builtInCmd(arg)) {
+                return usage("Invalid option: " + arg);
             }
-       }
+        }
     }
 
     if (mode.empty())
