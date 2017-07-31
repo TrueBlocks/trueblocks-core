@@ -11,79 +11,16 @@
  */
 #include "parselib.h"
 #include "debug.h"
+#include "ncurses.h"
 
 //-----------------------------------------------------------------------
-bool CVisitor::ofInterest(CTransaction *trans, uint32_t& which) {
+bool CVisitor::isTransactionOfInterest(CTransaction *trans, uint32_t& whichWatch) {
 
-    // Assume it's not an internal transaction
-    trans->isInternalTx = false;
-
-    // First, check to see if the transaction is directly 'to' or 'from'
-    for (int i = 0 ; i < watches.getCount()-1 ; i++) {
-        if (trans->to.ContainsI(watches[i].address) || trans->from.ContainsI(watches[i].address)) {
-            which = i;
-            return true;
-        }
-
-        // If this is a contract and this is its birth block, that's a hit
-        if (trans->receipt.contractAddress == watches[i].address) {
-            which = i;
-            trans->isInternalTx = true;  // TODO(tjayrush) - handle contract creation correctly (change to data)
-            return true;
-        }
-    }
-
-    // Next, we check the receipt logs to see if the address appears either in
-    // the log's 'address' field or in one of the data items
-    //
-    // TODO(tjayrush): We should do a 'deep trace' here (or when the block is first read)
-    // to see if there was a 'call,' to our address.
-    for (int i = 0 ; i < trans->receipt.logs.getCount() ; i++) {
-        for (int k = 0 ; k < watches.getCount()-1 ; k++) {
-            SFString acc = watches[k].address;
-
-            CLogEntry *l = reinterpret_cast<CLogEntry *>(&trans->receipt.logs[i]);
-            if (l->address.Contains(acc)) {
-                // If we find a receipt log with an 'address' of interest, this is an
-                // internal transaction that caused our contract to emit an event.
-                which = k;
-                trans->isInternalTx = true;
+    for (int i = 0; i < watches.getCount() ; i++) {
+        if (trans->blockNumber >= watches[i].firstBlock && trans->blockNumber <= watches[i].lastBlock) {
+            if (watches[i].isTransactionOfInterest(trans, nSigs, sigs)) {
+                whichWatch = i;
                 return true;
-
-            } else {
-                // Next, left pad the address with '0' to a width of 32 bytes. If
-                // it matches either an indexed topic or one of the 32-byte aligned
-                // data items, we have found a potential match. We cannot be sure this
-                // is a hit, but it most likely is. This may be a false positive.
-                acc = padLeft(acc.Substitute("0x",""), 64).Substitute(' ', '0');
-                if (l->data.ContainsI(acc)) {
-                    // Do this first to avoid spinning through event sigs if we
-                    // don't have to.
-                    which = k;
-                    trans->isInternalTx = true;
-                    return true;
-
-                } else {
-                    // If the topic[0] is an event of interest...
-                    for (int q = 0 ; q < nSigs ; q++) {
-                        SFHash tHash = fromTopic(l->topics[0]);
-                        if (tHash % sigs[q]) {
-                            which = k;
-                            trans->isInternalTx = true;
-                            return true;
-                        }
-                    }
-
-                    // ...or the address is in the indexed topics or data
-                    for (int j = 1 ; j < l->topics.getCount() ; j++) {
-                        SFHash tHash = fromTopic(l->topics[j]);
-                        if (tHash % acc) {
-                            which = k;
-                            trans->isInternalTx = true;
-                            return true;
-                        }
-                    }
-                }
             }
         }
     }
@@ -107,11 +44,20 @@ bool displayFromCache(const SFString& cacheFileName, SFUint32& blockNum, void *d
         while (!visitor->cache.Eof()) {
 
             SFUint32 transID;
-            uint32_t which;
-            visitor->cache >> which;
+            uint32_t whichWatch;
+            visitor->cache >> whichWatch;
+            if (visitor->cache.Eof()) {
+                visitor->closeIncomeStatement(block);
+                visitor->cache.Release();
+                return true;
+            }
             visitor->cache >> blockNum;
+            if (visitor->cache.Eof()) {
+                visitor->closeIncomeStatement(block);
+                visitor->cache.Release();
+                return true;
+            }
             visitor->cache >> transID;
-
             if (blockNum >= orig) {
 
                 if (blockNum > lastBlock) {  // only re-read if it's a new block
@@ -129,7 +75,13 @@ bool displayFromCache(const SFString& cacheFileName, SFUint32& blockNum, void *d
                         visitor->cache.Release();
                         return false;
                     }
-                    visitor->openIncomeStatement(block);
+
+                    if (!visitor->openIncomeStatement(block))  {
+                        cerr << "Quitting debugger.\r\n";
+                        visitor->cache.Release();
+                        return false; // return false since user hit 'quit' on debugger
+                    }
+
                     lastBlock = blockNum;
                     if (verbose)
                         visitor->interumReport1(block.blockNumber, block.timestamp);
@@ -139,18 +91,117 @@ bool displayFromCache(const SFString& cacheFileName, SFUint32& blockNum, void *d
                 if (transID < block.transactions.getCount()) {
                     CTransaction *trans = &block.transactions[(uint32_t)transID];
                     trans->pBlock = &block;
-                    if (!visitor->watches[which].disabled) {
-                        if (visitor->debugger_on)
+                    if (visitor->watches[whichWatch].status != "disabled") {
+                        if (visitor->opts.trace_on || visitor->opts.logs_on)
                             cout << bGreen << SFString('-',180) << "\r\n";
-                        visitor->displayTransaction(which, trans, visitor);
-                        visitor->accountForExtTransaction(block, trans);
+                        if (visitor->opts.accounting_on || visitor->opts.trace_on)
+                            getTraces(trans->traces, trans->hash);
+                        visitor->accountForTransaction(block, trans);
+                        visitor->lastTrans = trans;
+                        visitor->nDisplayed += visitor->displayTransaction(trans);
+                        if (visitor->opts.debugger_on && !visitor->esc_hit) {
+                            nodelay(stdscr, true);
+                            int ch = getch();
+                            visitor->esc_hit = (ch == 27 || ch == 'q');
+                            if (ch == 27) // esc comes with an extra key
+                                getch();
+                            nodelay(stdscr, false);
+                        }
                     }
                 }
             }
         }
+
         // ignore return since we're done anway
         visitor->closeIncomeStatement(block);
         visitor->cache.Release();
+    }
+    return true;
+}
+
+blknum_t lastBloomHit = 0;
+SFUint32 nFound = 0;
+//-----------------------------------------------------------------------
+bool updateCacheUsingBlooms(const SFString& path, void *data) {
+
+    if (path.endsWith("/")) {
+        forAllFiles(path + "*", updateCacheUsingBlooms, data);
+
+    } else {
+
+        CVisitor *visitor = reinterpret_cast<CVisitor*>(data);
+        if (path.endsWith(".bin")) {
+            SFString p = path.Substitute(".bin","");
+            p.Reverse(); p = nextTokenClear(p, '/'); p.Reverse();
+            blknum_t bloomNum = toUnsigned(p);
+            if (bloomNum <= visitor->startBlock) {
+                static blknum_t lastBucket1 = 0;
+                blknum_t thisBucket1 = (bloomNum / 10000 ) * 10000;
+                if (thisBucket1 != lastBucket1) {
+                    cerr << "earlyExit: " << thisBucket1 << "|"
+                        << visitor->bloomStats.bloomsChecked << "|"
+                        << visitor->bloomStats.bloomHits << "|"
+                        << visitor->bloomStats.falsePositives << "|"
+                        << (qbNow() - visitor->bloomStats.startTime) << "\r";
+                    cerr.flush();
+                    lastBucket1 = thisBucket1;
+                }
+                lastBloomHit = bloomNum;
+                return true; // continue
+            }
+            if (bloomNum >= visitor->startBlock + visitor->nBlocksToVisit)
+                return false; // don't continue
+
+            SFBloom bloom;
+            visitor->bloomStats.bloomsChecked++;
+            SFArchive archive(true, curVersion, true);
+            if (archive.Lock(path, binaryReadOnly, LOCK_NOWAIT)) {
+                archive >> bloom;
+                archive.Close();
+            }
+
+//            cout << "Checking bloom " << path << "\r\n";
+            bool hit = false;
+            for (int i = 0 ; i < visitor->watches.getCount()-1 && !hit; i++) { // don't check too many
+                if (isBloomHit(makeBloom(visitor->watches[i].address), bloom)) {
+                    hit = true;
+                }
+            }
+
+            if (hit) {
+//                cout << "Bloom hit from " << lastBloomHit << " to " << bloomNum << "\r\n";
+                nFound = 0;
+                for (blknum_t k = lastBloomHit ; k < bloomNum ; k++) {
+                    if (fileExists(getBinaryFilename1(k))) {
+//                        cout << "Checking block " << k << "\r\n";
+                        CBlock block;
+                        readOneBlock_fromBinary(block, getBinaryFilename1(k));
+                        updateCache(block, visitor);
+                    }
+                }
+//                cout << "Bloom hit at block " << bloomNum
+//                        << " at address " << padNum7T(hit)
+//                        << " with " << bitsTwiddled(bloom)
+//                        << " bits found " << nFound << " transactions\r";
+                cout.flush();
+                visitor->bloomStats.bloomHits++;
+                visitor->bloomStats.falsePositives += (nFound == 0);
+            }
+            stringToAsciiFile("./cache/lastBlock.txt", asStringU(bloomNum) + "\r\n");
+
+            static blknum_t lastBucket2 = 0;
+            blknum_t thisBucket2 = (bloomNum / 1000 ) * 1000;
+            if (thisBucket2 != lastBucket2) {
+                cout << "buckets: " << thisBucket2 << "|"
+                    << visitor->bloomStats.bloomsChecked << "|"
+                    << visitor->bloomStats.bloomHits << "|"
+                    << visitor->bloomStats.falsePositives << "|"
+                    << (qbNow() - visitor->bloomStats.startTime) << "\r";
+                cout.flush();
+                lastBucket2 = thisBucket2;
+            }
+            lastBloomHit = bloomNum;
+        }
     }
     return true;
 }
@@ -160,30 +211,47 @@ bool updateCache(CBlock& block, void *data) {
 
     CVisitor *visitor = reinterpret_cast<CVisitor*>(data);
 
-    visitor->openIncomeStatement(block);
+    if (!visitor->openIncomeStatement(block))  {
+        cerr << "Quitting debugger.\r\n";
+        return false; // return false since user hit 'quit' on debugger
+    }
     for (int i = 0 ; i < block.transactions.getCount() ; i++) {
 
         CTransaction *trans = &block.transactions[i];
         trans->pBlock = &block;
 
-        uint32_t which;
-        if (visitor->ofInterest(trans, which)) {
+        uint32_t whichWatch;
+        if (visitor->isTransactionOfInterest(trans, whichWatch)) {
+
+            nFound++;
 
             // Display only if the user is interested in this account
-            if (!visitor->watches[which].disabled) {
-                visitor->displayTransaction(which, trans, visitor);
-                visitor->accountForExtTransaction(block, trans);
+            if (visitor->opts.accounting_on || visitor->opts.trace_on)
+                getTraces(trans->traces, trans->hash);
+            visitor->accountForTransaction(block, trans);
+
+            if (visitor->watches[whichWatch].status != "disabled") {
+                visitor->lastTrans = trans;
+                visitor->nDisplayed += visitor->displayTransaction(trans);
+                if (visitor->opts.debugger_on && !visitor->esc_hit) {
+                    nodelay(stdscr, true);
+                    int ch = getch();
+                    visitor->esc_hit = (ch == 27 || ch == 'q');
+                    if (ch == 27) // esc comes with an extra key
+                        getch();
+                    nodelay(stdscr, false);
+                }
             }
 
             ASSERT(!visitor->cache.m_isReading);
             // Write the data even if we're not displaying it (flush to make sure it gets written)
-            visitor->cache << which << trans->pBlock->blockNumber << trans->transactionIndex;
+            visitor->cache << whichWatch << trans->pBlock->blockNumber << trans->transactionIndex;
             visitor->cache.flush();
             visitor->nFreshened++;
         }
     }
 
-    if (verbose) {
+    if (true) { //verbose) {
         timestamp_t tsOut = (block.timestamp == 0 ? toTimeStamp(Now()) : block.timestamp);
         SFString endMsg = dateFromTimeStamp(tsOut).Format(FMT_JSON) + " (" + asString(block.blockNumber) + ")";
         visitor->interumReport(block.blockNumber, block.timestamp, endMsg);
@@ -192,4 +260,65 @@ bool updateCache(CBlock& block, void *data) {
     // Write this to the file so we know which block to start on next time the monitor is run
     stringToAsciiFile("./cache/lastBlock.txt", asStringU(block.blockNumber) + "\r\n");
     return visitor->closeIncomeStatement(block);  // may invoke debugger, which may return false, which will stop update
+}
+
+//-----------------------------------------------------------------------
+void loadWatches(const CToml& toml, CAccountWatchArray& array, const SFString& key, blknum_t& minny, blknum_t& maxxy) {
+
+    minny = UINT32_MAX;
+    maxxy = 0;
+
+    SFString watchStr = toml.getConfigArray("watches", key, "");
+    if (key == "list" && watchStr.empty()) {
+        cout << "Empty list of watches. Quitting.\r\n";
+        exit(0);
+    }
+
+    uint32_t cnt = 0;
+    char *p = cleanUpJson((char *)watchStr.c_str());
+    while (p && *p) {
+        CAccountWatch watch;
+        uint32_t nFields = 0;
+        p = watch.parseJson(p, nFields);
+
+        if (nFields) {
+            // cleanup and report on errors
+            bool okay = true;
+            SFString msg;
+            watch.index = cnt++;
+            watch.address = toLower(watch.address);
+            watch.color = convertColor(watch.color);
+            if (!watch.address.startsWith("0x"))
+                watch.address = "0x" + watch.address;
+            watch.nodeBal = getBalance(watch.address, watch.firstBlock-1, false);
+            if (watch.address.length() != 42) {
+                okay = false;
+                msg = "invalid address " + watch.address;
+            }
+            if (watch.name.empty()) {
+                if (!msg.empty())
+                    msg += ", ";
+                msg += "no name " + watch.name;
+                okay = false;
+            }
+            if (okay) {
+                minny = min(minny, watch.firstBlock);
+                maxxy = max(maxxy, watch.lastBlock);
+                array[array.getCount()] = watch;
+            } else {
+                cerr << msg << "\n";
+            }
+        }
+    }
+    return;
+}
+
+//-----------------------------------------------------------------------
+blknum_t CVisitor::loadWatches(const CToml& toml) {
+
+    blknum_t unused1 = 0, unused2 = 0;
+    ::loadWatches(toml, named, "named", unused1, unused2);
+    ::loadWatches(toml, watches, "list", minWatchBlock, maxWatchBlock);
+    watches[watches.getCount()] = CAccountWatch(watches.getCount(), "Others", "Other Accts", 0, UINT32_MAX, bRed);
+    return true;
 }

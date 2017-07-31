@@ -13,65 +13,56 @@
 #include "debug.h"
 
 //-----------------------------------------------------------------------
-bool CVisitor::displayTransaction(uint32_t which, const CTransaction *theTrans, void *data) {
-
-    ASSERT(!watches[which].disabled);
-    nDisplayed++;
-    lastWhich = which;
-    lastTrans = theTrans;
+bool CVisitor::displayTransaction(const CTransaction *theTrans) const {
 
     const CTransaction *promoted = promoteToFunc(theTrans);
     if (!promoted)
         promoted = theTrans;  // revert to the original
 
-    SFString contractName = watches[which].name;
-    SFString transType = (SFString(promoted->getRuntimeClass()->m_ClassName).substr(1));
-
     //----------------------------------
-    bool wantsEvents = screenFmt.Contains("[{EVENTS}]");
-    bool wantsParse = screenFmt.Contains("[{PARSE}]");
-    SFString format  = screenFmt.Substitute("[{EVENTS}]","").Substitute("[{PARSE}]","");
+    SFString theFmt = screenFmt; //(verbose ? verboseFmt : screenFmt);
+    bool wantsEvents = theFmt.Contains("[{EVENTS}]");
+    bool wantsParse  = theFmt.Contains("[{PARSE}]");
+    SFString format  = theFmt.Substitute("[{EVENTS}]","").Substitute("[{PARSE}]","");
     if (true) { //!format.empty()) {
 
-        setColors(theTrans, watches[which].color);
-
         SFString func = promoted->function;
-        SFString fmt = format.Substitute("[{FUNCTION}]", func).Substitute("[{FUNC}]", toProper(nextTokenClear(func,'|')));
-        fmt.ReplaceAll("[{CONTRACT}]", contractName);
-        fmt.ReplaceAll("[{CONTRACT3}]", contractName.Left(3));
-        fmt.ReplaceAll("[{CONTRACT10}]", padRight(contractName.Left(10),10));
-        fmt.ReplaceAll("[{TYPE}]", transType);
-        fmt.ReplaceAll("[{TYPE20}]", padRight(transType.Left(15),15) + (theTrans->isInternalTx ? "" : "`"));
+        SFString fmt  = format.Substitute("[{FUNCTION}]", func).Substitute("[{FUNC}]", toProper(nextTokenClear(func,'|')));
+        if (expContext().asDollars) {
+            fmt.ReplaceAll("VALUE}",    "VALUE}++USDV++");
+            fmt.ReplaceAll("ETHER}",    "ETHER}++USDV++");
+            fmt.ReplaceAll("GASPRICE}", "GASPRICE}++USDGP++");
+            fmt.ReplaceAll("GASCOST}",  "GASCOST}++USDGC++");
+        }
         fmt.Replace("[{P}]", (promoted == theTrans?"":"\t\tparsed: %[{w:130:PARSED}]#\r\n"));
 
         SFString head;
-        head += ((promoted->isInternalTx ? promoted->to : contractName) + "::" +
-                 transType + (promoted->isInternalTx ? " (logs from " + contractName + ")" : ""));
         fmt.Replace("[{HEAD}]", head);
         fmt.Replace("[{SEP}\r\n]", SFString('-', 180) + "\r\n");
 
-        SFString transStr = promoted->Format(fmt).Substitute("\t"," ");
+        SFString transStr = promoted->Format(fmt);
 
-        SFString c1 = color, c2 = hiColor, c3 = hiColor2, c4 = cOff;
-        if (theTrans->isError) {
-            c1 = c2 = c3 = c4 = biBlack;
-        } else if (theTrans->isInternalTx) {
-            c1 = c2 = c3 = c4 = cRed;
+        if (expContext().asDollars) {
+            timestamp_t ts = toUnsigned(promoted->Format("[{TIMESTAMP}]"));
+            transStr.ReplaceAll("++USDV++",  asDollars(ts, toWei(promoted->Format("[{VALUE}]"))));
+            transStr.ReplaceAll("++USDGP++", asDollars(ts, toWei(promoted->Format("[{GASPRICE}]"))));
+            transStr.ReplaceAll("++USDGC++", asDollars(ts, toWei(promoted->Format("[{GASCOST}]"))));
         }
-        cout << c1 << transStr.Substitute("#", c1).Substitute("@", c2).Substitute("%", c3).Substitute("`", c4) << cOff;
+        transStr = annotate(transStr);
+        cout << cOff << transStr;
     }
 
     //----------------------------------
-    if (parse_on || wantsParse) {
+    if (opts.parse_on || wantsParse) {
         SFString parsed = promoted->Format("\r\n[{PARSED}]\r\n")
-        .Substitute(" ", "").Substitute(",", ", ").Substitute("{", "{ ").Substitute("}", " }");
+                .Substitute(" ", "").Substitute(",", ", ").Substitute("{", "{ ").Substitute("}", " }");
         cout << iTeal << Strip(parsed, ',');
     }
 
     //----------------------------------
     SFString evtList;
-    if (logs_on || wantsEvents) {
-        if (logs_on)
+    if (opts.logs_on || wantsEvents) {
+        if (opts.logs_on)
             cout << "\r\n";
         for (int i = 0 ; i < theTrans->receipt.logs.getCount() ; i++) {
 
@@ -84,8 +75,11 @@ bool CVisitor::displayTransaction(uint32_t which, const CTransaction *theTrans, 
             // Display it.
             SFString eventType = (SFString(promotedLog->getRuntimeClass()->m_ClassName).substr(1));
             SFString evtStr = promotedLog->toJson1();
-            if (logs_on) {
-                cout << iYellow << "  " << padLeft(asString(i),2) << ". " << padRight(eventType.Left(15),15) << " " << evtStr << cOff << "\r\n";
+            if (opts.logs_on) {
+                cout << iYellow << "  "
+                        << padLeft(asString(i),2) << ". "
+                        << padRight(eventType.Left(15),15) << " "
+                        << evtStr << cOff << "\r\n";
             }
             evtList += eventType + ",";
 
@@ -97,21 +91,10 @@ bool CVisitor::displayTransaction(uint32_t which, const CTransaction *theTrans, 
     if (wantsEvents)
         cout << iYellow << "[" << Strip(evtList, ',') << "]";
 
-    //----------------------------------
-    if (notify) {
-
-        // Display a Mac notification if we're on Mac
-        SFString from = promoted->Format("[{FROM}]").Left(5)+"...";
-        SFString to = promoted->Format("[{TO}]").Left(5)+"...";
-        SFString cmd = "osascript -e 'display notification \"❤️" + transType + ": " +
-                        from + "==>" + to + "\" with title \"" + contractName + "\"'";
-        doCommand(cmd);
-    }
-
-    // TODO(tjrayrush): when should we show the accounting traces?
-    if (trace_on || autoTrace) {
-        showColoredTrace(promoted->hash, theTrans->isError);
-        if (bloom_on && promoted->receipt.logsBloom != 0) {
+    if (opts.trace_on) {
+        timestamp_t ts = toUnsigned(theTrans->Format("[{TIMESTAMP}]"));
+        showColoredTrace(ts, theTrans->traces, theTrans->isError);
+        if (opts.bloom_on && promoted->receipt.logsBloom != 0) {
             showColoredBloom(promoted->receipt.logsBloom, "Tx bloom:", "");
             cout << "\r\n";
             for (int t=0;t<watches.getCount()-1;t++) {
@@ -133,19 +116,7 @@ bool CVisitor::displayTransaction(uint32_t which, const CTransaction *theTrans, 
 }
 
 //-----------------------------------------------------------------------
-SFString nameAccount(const SFString& address) {
-    SFString name = address;
-         if (address % "0xbb9bc244d798123fde783fcc1c72d3bb8c189413") name = "The DAO";
-    else if (address % "0x807640a13483f8ac783c557fcdf27be11ea4ac7a") name = "Extra Balance";
-    if (name.length() >= 42)
-        return name;
-    size_t need = 42 - name.length() - 6;  // '6' for ' (' and '...)'
-    name = name + " (" + address.substr(0,need) + "...)";
-    return name;
-}
-
-//-----------------------------------------------------------------------
-void CVisitor::showColoredBloom(const SFBloom& bloom, const SFString& msg, const SFString& res) {
+void CVisitor::showColoredBloom(const SFBloom& bloom, const SFString& msg, const SFString& res) const {
     SFString bl = fromBloom(bloom).substr(2);
     for (int i = 0 ; i < bl.length() ; i = i + 128) {
         SFString m = padLeft(" ",16);
@@ -156,19 +127,12 @@ void CVisitor::showColoredBloom(const SFBloom& bloom, const SFString& msg, const
 }
 
 //-----------------------------------------------------------------------
-void CVisitor::showColoredTrace(const SFHash& hash, bool err) {
-
-    CTraceArray traces;
-    getTraces(traces, hash);
+void CVisitor::showColoredTrace(timestamp_t ts, const CTraceArray& traces, bool err) const {
 
     for (int t = 0 ; t < traces.getCount() ; t++) {
         const CTrace *tt = &traces[t];
-        if (t > 0) {
-            CBlock unused;
-            if (!err)
-                accountForIntTransaction(unused, tt);
-        }
 
+        SFString type = tt->Format("[{ACTION::CALLTYPE}]");
         SFString from = tt->Format("[{ACTION::FROM}]");
         SFString to = tt->Format("[{ACTION::TO}]");
         SFString value = tt->Format("[{ACTION::VALUE}]");
@@ -181,34 +145,40 @@ void CVisitor::showColoredTrace(const SFHash& hash, bool err) {
         for (int i = 0 ; i < watches.getCount()-1 ; i++) {
             SFString c1 = watches[i].color, c2 = cOff;
             if (err) { c1 = c2 = biBlack; }
-            from.Replace(watches[i].address, c1 + nameAccount(watches[i].address) + c2);
-              to.Replace(watches[i].address, c1 + nameAccount(watches[i].address) + c2);
+            from.Replace(watches[i].address, c1 + watches[i].address + c2);
+              to.Replace(watches[i].address, c1 + watches[i].address + c2);
         }
 
-        {
-            SFString exBal = "0x807640a13483f8ac783c557fcdf27be11ea4ac7a";
-            SFString c1 = bBlue, c2 = cOff;
-            if (err) { c1 = c2 = biBlack; }
-            from.Replace(exBal, c1 + nameAccount(exBal) + c2);
-            to.Replace(exBal, c1 + nameAccount(exBal) + c2);
-        }
-
-        SFString c1 = biBlack, c2 = cOff, c3 = bRed+italic;
+        SFString c1 = biBlack, c2 = cOff, c3 = bRed;
         if (err) { c1 = c2 = c3 = biBlack; }
         if (from.length()) {
             cout << c1 <<  "\r\n    " << padNum4(t) << ":" << c2;
-            cout << c1 <<  " \"from\": "         << c2 << from;
-            cout << c1 << ", \"to\": "           << c2 << to;
-            cout << c1 << ", \"subtraces\": "    << c2 << subtraces;
-            cout << c1 << ", \"traceAddress\": " << c2 << traceAddress;
-            cout << c1 << ", \"input\": "        << c2 << input;
+            // TODO(tjayrush) use formatting string here
+            cout << c1 << " { \"type\": "           << c2 << type;
+            cout << c1 <<  " \"from\": "         << c2 << annotate(from);
+            cout << c1 << ", \"to\": "           << c2 << annotate(to);
+//            cout << c1 << ", \"subtraces\": "    << c2 << subtraces;
+//            cout << c1 << ", \"traceAddress\": " << c2 << traceAddress;
+//            cout << c1 << ", \"input\": "        << c2 << input;
 
             SFUintBN wei = canonicalWei(value);
             cout << c1 << ", \"value\": ";
-            cout << (wei == 0 ? "" : c3);
-            cout << wei2Ether(asStringBN(wei)) << c2;
+            cout << (wei == 0 ? cOff : c3);
+            cout << wei2Ether(asStringBN(wei)) << (expContext().asDollars ? asDollars(ts, wei) : "") << c2;
             cout << c1 << " }" << cOff;
         }
     }
     cout << "\r\n";
+}
+
+//-----------------------------------------------------------------------
+SFString CVisitor::annotate(const SFString& strIn) const {
+    SFString ret = strIn;
+    for (int i=0;i<watches.getCount();i++) {
+        ret = ret.Substitute(watches[i].address, watches[i].displayName(true,8));
+    }
+    for (int i=0;i<named.getCount();i++) {
+        ret = ret.Substitute(named[i].address, named[i].displayName(true,8));
+    }
+    return ret;
 }
