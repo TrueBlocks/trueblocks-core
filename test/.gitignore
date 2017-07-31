@@ -1,0 +1,10 @@
+.DS_Store
+bin
+*.twb
+*.o
+proj.xcodeproj
+*.bin
+makefile
+apps
+libs
+tools
