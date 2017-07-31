@@ -150,6 +150,8 @@ IMPLEMENT_ARCHIVE_LIST(CPriceQuoteList);
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 extern bool loadPriceData(CPriceQuoteArray& quotes, bool freshen, SFString& message, SFUint32 step = 1);
+extern uint64_t indexFromTimeStamp(const CPriceQuoteArray& quotes, timestamp_t ts);
+extern SFString asDollars(timestamp_t ts, SFUintBN weiIn);
 // EXISTING_CODE
 }  // namespace qblocks
 

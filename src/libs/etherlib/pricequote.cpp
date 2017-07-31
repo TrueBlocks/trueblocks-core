@@ -289,7 +289,7 @@ bool loadPriceData(CPriceQuoteArray& quotes, bool freshen, SFString& message, SF
             // Polinex will give us as much as it has on the following day. Do this to account for time zones
             timestamp_t end   = toTimeStamp(EOD(BOND(now)));
             if (isTesting)
-                end    = toTimeStamp(SFTime(2016, 8, 31, 23, 59, 59));
+                end = toTimeStamp(SFTime(2016, 8, 31, 23, 59, 59));
 
             if (verbose > 1) {
                 cerr << "start: " << dateFromTimeStamp(start) << "\n";
@@ -381,6 +381,36 @@ bool loadPriceData(CPriceQuoteArray& quotes, bool freshen, SFString& message, SF
     }
 
     return true;
+}
+
+//-----------------------------------------------------------------------------------
+uint64_t indexFromTimeStamp(const CPriceQuoteArray& quotes, timestamp_t ts) {
+    timestamp_t first = quotes[0].timestamp;
+    if (ts < first)
+        return 0;
+    timestamp_t since = ts - first;
+    return min(quotes.getCount()-1, uint32_t(since / (5*60)));
+}
+
+//-----------------------------------------------------------------------
+SFString asDollars(timestamp_t ts, SFUintBN weiIn) {
+    if (weiIn == 0)
+        return "";
+    static CPriceQuoteArray quotes;
+    if (!quotes.getCount()) {
+        SFString message;
+        if (!loadPriceData(quotes, false, message, 1)) {
+            cerr << "Cannot load price data. Quitting.\n";
+            exit(0);
+        }
+    }
+    uint64_t index = indexFromTimeStamp(quotes, ts);
+    CPriceQuote *q = &quotes[(uint32_t)index];
+    double price = q->close * 100.0;
+    uint64_t pInt = (uint64_t)price;
+    weiIn *= pInt;
+    weiIn /= 100;
+    return " ($" + wei2Ether(to_string(weiIn).c_str()) + ")";
 }
 // EXISTING_CODE
 }  // namespace qblocks
