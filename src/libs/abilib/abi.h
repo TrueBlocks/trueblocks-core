@@ -40,7 +40,8 @@ public:
 
     // EXISTING_CODE
     void clearABI(void);
-    bool loadABI(const SFString& addr, bool append = false);
+    bool loadABI(const SFString& addr);
+    bool loadABIFromFile(const SFString& fileName);
     CFunction *findFunctionByName(const SFString& search);
     CFunction *findFunctionByEncoding(const SFString& search);
     // EXISTING_CODE
@@ -138,6 +139,7 @@ extern bool isTesting;
 #define REP_FREQ   11
 #define REP_INFREQ 563
 void clearAbis(void);
+extern ostream& operator<<(ostream& os, const CAbi& t);
 // EXISTING_CODE
 }  // namespace qblocks
 

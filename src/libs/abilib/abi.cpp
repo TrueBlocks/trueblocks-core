@@ -245,6 +245,7 @@ void clearAbis(void) {
     nAbis = 0;
 }
 
+//---------------------------------------------------------------------------
 SFString findEncoding(const SFString& addr, CFunction& func) {
     if (!nAbis) {
         SFString contents = asciiFileToString(configPath("abis/"+addr+".abi"));
@@ -279,7 +280,27 @@ static bool getEncoding(const SFString& abiFilename, const SFString& addr, CFunc
 }
 
 //---------------------------------------------------------------------------
-bool CAbi::loadABI(const SFString& addr, bool append) {
+bool CAbi::loadABIFromFile(const SFString& fileName) {
+
+    SFString contents = asciiFileToString(fileName);
+    ASSERT(!contents.empty());
+    char *p = cleanUpJson((char *)contents.c_str());
+    while (p && *p) {
+        CFunction func;
+        uint32_t nFields = 0;
+        p = func.parseJson(p, nFields);
+        if (nFields) {
+            abiByName[abiByName.getCount()] = func;
+            abiByEncoding[abiByEncoding.getCount()] = func;
+        }
+    }
+    abiByName.Sort(sortFuncTableByName);
+    abiByEncoding.Sort(sortFuncTableByEncoding);
+    return abiByName.getCount();
+}
+
+//---------------------------------------------------------------------------
+bool CAbi::loadABI(const SFString& addr) {
     // Already loaded?
     if (abiByName.getCount() && abiByEncoding.getCount())
         return true;
@@ -289,34 +310,44 @@ bool CAbi::loadABI(const SFString& addr, bool append) {
         return false;
 
     cerr << "\tLoading abi file: " << abiFilename << "...\n";
-    SFString contents = asciiFileToString(abiFilename);
-    ASSERT(!contents.empty());
+    if (loadABIFromFile(abiFilename)) {
 
-    SFString abis;
-    char *p = cleanUpJson((char *)contents.c_str());
-    while (p && *p) {
-        CFunction func;
-        uint32_t nFields = 0;
-        p = func.parseJson(p, nFields);
-        if (nFields && getEncoding(abiFilename, addr, func)) {
-            abiByName[abiByName.getCount()] = func;
-            abiByEncoding[abiByEncoding.getCount()] = func;
-            abis += func.Format("[{NAME}]|[{ENCODING}]\n");
+        SFString abis;
+
+        // TODO(tjayrush): this is wrong. We should remove the need to use external 'ethabi' code to get the encodings
+        for (int i=0;i<abiByName.getCount();i++) {
+            getEncoding(abiFilename, addr, abiByName[i]);
+            abis += abiByName[i].Format("[{NAME}]|[{ENCODING}]\n");
         }
-    }
-    if (!fileExists(configPath("abis/"+addr+".abi")))
-        stringToAsciiFile(configPath("abis/"+addr+".abi"), abis);
 
-    abiByName.Sort(sortFuncTableByName);
-    abiByEncoding.Sort(sortFuncTableByEncoding);
-    if (verbose) {
-        for (uint32_t i = 0 ; i < abiByName.getCount() ; i++) {
-            CFunction *f = &abiByName[i];
-            if (f->type == "function")
-                cerr << f->Format("[\"{NAME}|][{ENCODING}\"]").Substitute("\n", " ") << "\n";
+        // We need to do both since they are copies
+        for (int i=0;i<abiByEncoding.getCount();i++) {
+            getEncoding(abiFilename, addr, abiByEncoding[i]);
+        }
+
+        if (!fileExists(configPath("abis/"+addr+".abi")) && !abis.empty())
+            stringToAsciiFile(configPath("abis/"+addr+".abi"), abis);
+
+        if (verbose) {
+            for (uint32_t i = 0 ; i < abiByName.getCount() ; i++) {
+                CFunction *f = &abiByName[i];
+                if (f->type == "function")
+                    cerr << f->Format("[\"{NAME}|][{ENCODING}\"]").Substitute("\n", " ") << "\n";
+            }
         }
     }
     return abiByName.getCount();
+}
+
+//---------------------------------------------------------------------------
+ostream& operator<<(ostream& os, const CAbi& abi) {
+    for (int i = 0 ; i < abi.abiByName.getCount() ; i++ ) {
+        os << abi.abiByName[i].Format() << "\n";
+    }
+    for (int i = 0 ; i < abi.abiByEncoding.getCount() ; i++ ) {
+        os << abi.abiByEncoding[i].Format() << "\n";
+    }
+    return os;
 }
 // EXISTING_CODE
 }  // namespace qblocks
