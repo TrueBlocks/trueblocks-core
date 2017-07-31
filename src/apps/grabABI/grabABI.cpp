@@ -493,6 +493,7 @@ const char* STR_FACTORY2 =
 
 //-----------------------------------------------------------------------
 const char* STR_CLASSDEF =
+"[settings]\n"
 "class:\t\t[{CLASS}]\n"
 "baseClass:\tC[{BASE}]\n"
 "fields:\t\t[{FIELDS}]\n"

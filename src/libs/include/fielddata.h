@@ -28,6 +28,7 @@ namespace qblocks {
     #define T_POINTER  (18)
     #define T_FLOAT    T_NUMBER
     #define T_DOUBLE   T_NUMBER
+    #define T_WEI      T_NUMBER
 
     //-------------------------------------------------------------------------
     class CFieldData {
