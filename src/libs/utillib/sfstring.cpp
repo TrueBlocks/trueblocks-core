@@ -1069,8 +1069,4 @@ namespace qblocks {
         }
     }
 #endif
-
-    //----------------------------------------------------
-    string greenCheck = "\e[0;32m" "ok" "\e[0m";
-    string redX       = "\e[0;31m" "x" "\e[0m";
 }  // namespace qblocks
