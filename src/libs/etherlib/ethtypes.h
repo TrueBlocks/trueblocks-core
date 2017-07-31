@@ -12,6 +12,7 @@
 namespace qblocks {
 
 #define SFAddress      SFString
+typedef SFArrayBase<SFAddress> SFAddressArray;
 #define SFHash         SFString
 #define SFBloom        SFUintBN
 #define SFWei          SFUintBN
@@ -48,4 +49,17 @@ inline SFAddress toAddress(const SFString& strIn)
 
     return "0x" + ret;
 }
+    
+//-------------------------------------------------------------------------
+inline uint32_t bitsTwiddled(SFBloom n) {
+    uint32_t count = 0;
+    while (n != 0) {
+        SFUintBN x = n - 1;
+        SFUintBN y = n & x;
+        n = y;
+        count++;
+    }
+    return count;
 }
+
+}  // namespace qblocks
