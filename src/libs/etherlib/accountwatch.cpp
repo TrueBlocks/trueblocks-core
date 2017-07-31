@@ -56,7 +56,7 @@ SFString nextAccountwatchChunk(const SFString& fieldIn, bool& force, const void 
                 if ( fieldIn % "color" ) return acc->color;
                 break;
             case 'd':
-                if ( fieldIn % "disabled" ) return asString(acc->disabled);
+                if ( fieldIn % "deepScan" ) return asString(acc->deepScan);
                 break;
             case 'f':
                 if ( fieldIn % "firstBlock" ) return asStringU(acc->firstBlock);
@@ -64,12 +64,18 @@ SFString nextAccountwatchChunk(const SFString& fieldIn, bool& force, const void 
             case 'i':
                 if ( fieldIn % "index" ) return asStringU(acc->index);
                 break;
+            case 'l':
+                if ( fieldIn % "lastBlock" ) return asStringU(acc->lastBlock);
+                break;
             case 'n':
                 if ( fieldIn % "name" ) return acc->name;
                 if ( fieldIn % "nodeBal" ) return asStringBN(acc->nodeBal);
                 break;
             case 'q':
                 if ( fieldIn % "qbis" ) { expContext().noFrst=true; return acc->qbis.Format(); }
+                break;
+            case 's':
+                if ( fieldIn % "status" ) return acc->status;
                 break;
         }
 
@@ -103,6 +109,10 @@ bool CAccountWatch::setValueByName(const SFString& fieldName, const SFString& fi
         qbis.parseJson(p, nFields);
         return true;
     }
+    if (fieldName % "balance") {
+        qbis.endBal = qbis.begBal = toWei(fieldValue);
+        return true;
+    }
     // EXISTING_CODE
 
     switch (tolower(fieldName[0])) {
@@ -113,7 +123,7 @@ bool CAccountWatch::setValueByName(const SFString& fieldName, const SFString& fi
             if ( fieldName % "color" ) { color = fieldValue; return true; }
             break;
         case 'd':
-            if ( fieldName % "disabled" ) { disabled = toBool(fieldValue); return true; }
+            if ( fieldName % "deepScan" ) { deepScan = toBool(fieldValue); return true; }
             break;
         case 'f':
             if ( fieldName % "firstBlock" ) { firstBlock = toUnsigned(fieldValue); return true; }
@@ -121,12 +131,18 @@ bool CAccountWatch::setValueByName(const SFString& fieldName, const SFString& fi
         case 'i':
             if ( fieldName % "index" ) { index = toUnsigned(fieldValue); return true; }
             break;
+        case 'l':
+            if ( fieldName % "lastBlock" ) { lastBlock = toUnsigned(fieldValue); return true; }
+            break;
         case 'n':
             if ( fieldName % "name" ) { name = fieldValue; return true; }
             if ( fieldName % "nodeBal" ) { nodeBal = toUnsigned(fieldValue); return true; }
             break;
         case 'q':
             if ( fieldName % "qbis" ) { /* qbis = fieldValue; */ return false; }
+            break;
+        case 's':
+            if ( fieldName % "status" ) { status = fieldValue; return true; }
             break;
         default:
             break;
@@ -153,7 +169,9 @@ bool CAccountWatch::Serialize(SFArchive& archive) {
     archive >> name;
     archive >> color;
     archive >> firstBlock;
-    archive >> disabled;
+    archive >> lastBlock;
+    archive >> status;
+    archive >> deepScan;
     archive >> qbis;
     archive >> nodeBal;
     finishParse();
@@ -170,7 +188,9 @@ bool CAccountWatch::SerializeC(SFArchive& archive) const {
     archive << name;
     archive << color;
     archive << firstBlock;
-    archive << disabled;
+    archive << lastBlock;
+    archive << status;
+    archive << deepScan;
     archive << qbis;
     archive << nodeBal;
 
@@ -191,7 +211,9 @@ void CAccountWatch::registerClass(void) {
     ADD_FIELD(CAccountWatch, "name", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccountWatch, "color", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccountWatch, "firstBlock", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CAccountWatch, "disabled", T_BOOL, ++fieldNum);
+    ADD_FIELD(CAccountWatch, "lastBlock", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CAccountWatch, "status", T_TEXT, ++fieldNum);
+    ADD_FIELD(CAccountWatch, "deepScan", T_BOOL, ++fieldNum);
     ADD_FIELD(CAccountWatch, "qbis", T_TEXT|TS_OBJECT, ++fieldNum);
     ADD_FIELD(CAccountWatch, "nodeBal", T_NUMBER, ++fieldNum);
 
@@ -241,7 +263,7 @@ bool CAccountWatch::readBackLevel(SFArchive& archive) {
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-bool CAccountWatch::getWatch(const CToml& toml, uint32_t n, bool fromFile) {
+bool CAccountWatch::getWatch(const CToml& toml, uint32_t n) {
     index = n;
     address = toLower(toml.getConfigStr("watches", "address_"+asString(n), ""));
     if (!address.startsWith("0x"))
@@ -255,11 +277,104 @@ bool CAccountWatch::getWatch(const CToml& toml, uint32_t n, bool fromFile) {
     if (cBlack != "" && color.empty())
         return false;
     firstBlock = toml.getConfigInt("watches", "firstBlock_"+asString(n), 0);
-    disabled = toml.getConfigBool("watches", "disabled_"+asString(n), false);
+    lastBlock = toml.getConfigInt("watches", "lastBlock_"+asString(n), UINT_MAX);
+    status = toml.getConfigStr("watches", "status_"+asString(n), "");
     qbis.begBal = toml.getConfigBigInt("watches", "start_bal_"+asString(n), 0);
     qbis.endBal = qbis.begBal;
-    nodeBal = getBalance(address, firstBlock-1, fromFile);
+    nodeBal = getBalance(address, firstBlock-1, false);
     return true;
+}
+
+//---------------------------------------------------------------------------
+SFString CAccountWatch::displayName(bool terse, int w1, int w2) const {
+    if (address == "others") {
+        return padRight(name, w1+w2+1);
+    }
+
+    if (terse) {
+        uint64_t len = name.length();
+        uint64_t need = 42 - len - 6; // " (" and "...)"
+        return color + name.Left(42-6) + " (" + address.Left(need) + "...)" + cOff;
+    }
+
+    return padRight(name.Left(w1),w1) + " " + address.Left(w2) + " ";
+}
+
+//---------------------------------------------------------------------------
+bool CAccountWatch::isTransactionOfInterest(CTransaction *trans, uint32_t nSigs, SFString sigs[]) const {
+    // Assume it's not an internal transaction
+    trans->isInternalTx = false;
+
+    // First, check to see if the transaction is directly 'to' or 'from'
+    if (trans->to.ContainsI(address) || trans->from.ContainsI(address))
+        return true;
+
+    // If this is a contract and this is its birth block, that's a hit
+    if (trans->receipt.contractAddress == address) {
+        trans->isInternalTx = true;  // TODO(tjayrush) - handle contract creation correctly (change to data)
+        return true;
+    }
+
+    // Next, we check the receipt logs to see if the address appears either in
+    // the log's 'address' field or in one of the data items
+    //
+    // TODO(tjayrush): We should do a 'deep trace' here (or when the block is first read)
+    // to see if there was a 'call,' to our address.
+    for (int i = 0 ; i < trans->receipt.logs.getCount() ; i++) {
+        SFString acc = address;
+        CLogEntry *l = reinterpret_cast<CLogEntry *>(&trans->receipt.logs[i]);
+        if (l->address.Contains(acc)) {
+            // If we find a receipt log with an 'address' of interest, this is an
+            // internal transaction that caused our contract to emit an event.
+            trans->isInternalTx = true;
+            return true;
+
+        } else {
+            // Next, left pad the address with '0' to a width of 32 bytes. If
+            // it matches either an indexed topic or one of the 32-byte aligned
+            // data items, we have found a potential match. We cannot be sure this
+            // is a hit, but it most likely is. This may be a false positive.
+            acc = padLeft(acc.Substitute("0x",""), 64).Substitute(' ', '0');
+            if (l->data.ContainsI(acc)) {
+                // Do this first to avoid spinning through event sigs if we
+                // don't have to.
+                trans->isInternalTx = true;
+                return true;
+
+            } else {
+                // If the topic[0] is an event of interest...
+                for (int q = 0 ; q < nSigs ; q++) {
+                    SFHash tHash = fromTopic(l->topics[0]);
+                    if (tHash % sigs[q]) {
+                        trans->isInternalTx = true;
+                        return true;
+                    }
+                }
+
+                // ...or the address is in the indexed topics or data
+                for (int j = 1 ; j < l->topics.getCount() ; j++) {
+                    SFHash tHash = fromTopic(l->topics[j]);
+                    if (tHash % acc) {
+                        trans->isInternalTx = true;
+                        return true;
+                    }
+                }
+            }
+        }
+    }
+
+    if (deepScan) {
+        CTraceArray traces;
+        getTraces(traces, trans->hash);
+        for (int i = 0 ; i < traces.getCount() ; i++) {
+            CTraceAction *action = (CTraceAction*)&(traces[i].action);
+            if (action->to % address || action->from % address || action->address % address || action->refundAddress % address) {
+                trans->isInternalTx = true;
+                return true;
+            }
+        }
+    }
+    return false;
 }
 // EXISTING_CODE
 }  // namespace qblocks
