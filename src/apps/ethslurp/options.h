@@ -30,6 +30,8 @@ public:
     SFString name;
     SFString archiveFile;
     bool wantsArchive;
+    bool cache;
+    uint32_t acct_id;
     FILE *output;  // for use when -a is on
 
     COptions(void);
