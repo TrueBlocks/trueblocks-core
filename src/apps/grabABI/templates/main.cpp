@@ -9,9 +9,13 @@
 #include "etherlib.h"
 #include "parselib.h"
 #include "processing.h"
+#include "debug.h"
 
 //EXISTING_CODE
 //EXISTING_CODE
+
+//-----------------------------------------------------------------------
+#define cleanFmt(str) ((str).Substitute("\\n\\\n", "\\n").Substitute("\n", "").Substitute("\\n", "\r\n").Substitute("\\t", "\t"))
 
 //-----------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
@@ -35,71 +39,48 @@ int main(int argc, const char *argv[]) {
             return false;
         }
 
-        CToml toml;
-        toml.setFilename("./config.toml");
-        toml.readFile("./config.toml");
+        CToml toml("./config.toml");
+        visitor.loadWatches(toml);
 
-        blknum_t minWatchBlock = UINT32_MAX;
-        uint64_t nWatches = toml.getConfigInt("watches", "nWatches", 0);
-        for (uint32_t i = 0 ; i < nWatches ; i++) {
-            CAccountWatch watch;
-            if (!watch.getWatch(toml, i, false)) {
-                cout << usageStr("Invalid watch parameters for watch " + asString(i) + ". Quitting...")
-                            .Substitute("\n", "\r\n");
-                return false;
-            }
-            visitor.watches[visitor.watches.getCount()] = watch;
-            minWatchBlock = min(minWatchBlock, watch.firstBlock);
-        }
-        if (!visitor.watches.getCount()) {
-            cout << usageStr("You must specify at least one address to watch in the config file.\r\n")
-                        .Substitute("\n", "\r\n");
-            return false;
-        }
-        visitor.watches[visitor.watches.getCount()] = CAccountWatch(1, "Others", "Ext Accts", 0, bRed);
-
-        const char* defaultFormat = "";
-        visitor.screenFmt = toml.getConfigStr("formats", "screen_fmt", defaultFormat)
-                                    .Substitute("\\n\\\n", "\\n")
-                                    .Substitute("\n", "")
-                                    .Substitute("\\n", "\r\n")
-                                    .Substitute("\\t", "\t");
-
-        visitor.notify        = toml.getConfigBool("display", "notify", false);
-        visitor.accounting_on = toml.getConfigBool("display", "accounting", false) || visitor.opts.accounting_on;
-        visitor.logs_on       = toml.getConfigBool("display", "logs", false) || visitor.opts.logs_on;
-        visitor.trace_on      = toml.getConfigBool("display", "trace", false) || visitor.opts.trace_on;
-        visitor.parse_on      = toml.getConfigBool("display", "parse", false) || visitor.opts.parse_on;
-        visitor.bloom_on      = toml.getConfigBool("display", "bloom", false) || visitor.opts.bloom_on;
-        visitor.debugger_on   = toml.getConfigBool("display", "debug", false) || visitor.opts.debugger_on;
-        visitor.single_on     = toml.getConfigBool("display", "single", false) || visitor.opts.single_on;
-        visitor.kBlock        = visitor.opts.kBlock;
+        const char* defaultFormat = "{ \"date\": \"[{DATE}]\", \"from\": \"[{FROM}]\", \"to\": \"[{TO}]\", \"value\": \"[{VALUE}]\" }";
+        visitor.screenFmt  = cleanFmt(toml.getConfigStr("formats", "screen_fmt",  defaultFormat));
+        visitor.verboseFmt = cleanFmt(toml.getConfigStr("formats", "verbose_fmt", ""));
+        visitor.opts.accounting_on = toml.getConfigBool("display", "accounting", false) || visitor.opts.accounting_on;
+        visitor.opts.logs_on       = toml.getConfigBool("display", "logs", false) || visitor.opts.logs_on;
+        visitor.opts.trace_on      = toml.getConfigBool("display", "trace", false) || visitor.opts.trace_on;
+        visitor.opts.parse_on      = toml.getConfigBool("display", "parse", false) || visitor.opts.parse_on;
+        visitor.opts.bloom_on      = toml.getConfigBool("display", "bloom", false) || visitor.opts.bloom_on;
+        visitor.opts.debugger_on   = toml.getConfigBool("display", "debug", false) || visitor.opts.debugger_on;
+        visitor.opts.single_on     = toml.getConfigBool("display", "single", false) || visitor.opts.single_on;
+        visitor.opts.kBlock        = visitor.opts.kBlock;
+        visitor.opts.mode          = visitor.opts.mode;
 
         // Showing the cache file (if told to...)
         SFString cacheFileName = "./cache/" + visitor.watches[0].address + ".acct.bin";
         if (fileExists(cacheFileName + ".lck")) {
-            cout << usageStr("Already running. Either quit other instance or remove the lock file: '"
-                             + cacheFileName + ".lck'. Quitting...")
+            cout << usageStr("The cache lock file is present. The program is either already running or it did not end cleanly the\n"
+                            "\tlast time it ran. Quit the already running program or, if it is not running, remove the lock\n"
+                            "\tfile: " + cacheFileName + ".lck'. Quitting...")
                     .Substitute("\n", "\r\n");
             cout.flush();cerr.flush();getchar();
             return false;
         }
 
-        // Figure out which block to start on. Note, if an 'override' is not present, use earliest
-        // block from the watches. Note that 'displayFromCache' may modify this to lastest visited block
-        SFUint32 blockNum = max(minWatchBlock-1, toml.getConfigInt("override", "firstBlock", minWatchBlock-1));
-        if (visitor.kBlock) {
-            blockNum = visitor.kBlock;
+        // Figure out which block to start on. Use earliest block from the watches. Note that
+        // 'displayFromCache' may modify this to lastest visited block
+        SFUint32 blockNum = visitor.minWatchBlock-1;
+        if (visitor.opts.kBlock) {
+            blockNum = visitor.opts.kBlock;
             for (uint32_t i = 0 ; i < visitor.watches.getCount() ; i++) {
                 visitor.watches[i].qbis.endBal = getBalance(visitor.watches[i].address, blockNum, false);
             }
         }
 
-        if (visitor.debugger_on) {
+        if (visitor.opts.debugger_on) {
             removeFile("./cache/debug");
             initscr();
             raw();
-            keypad(stdscr, TRUE);
+            keypad(stdscr, true);
             noecho();
             refresh();
             atexit(myOnExitHandler);
@@ -107,11 +88,10 @@ int main(int argc, const char *argv[]) {
         }
 
         // Display the cache (if the user tells us to...)
-        if (!visitor.debugger_on && !verbose) verbose = 1;
-        visitor.cacheOnly = !visitor.opts.mode.Contains("freshen");
+        if (!visitor.opts.debugger_on && !verbose) verbose = 1;
         if (visitor.opts.mode.Contains("showCache")) {
-            // TODO(tjayrush): allow for early quiting from debugger--trouble--with this on, and no cache, it immediately quits
-            // because displayFromCache returns 'false' for more than one reason
+            // TODO(tjayrush): allow for early quiting from debugger--trouble--with this on, and no cache, it
+            // immediately quits because displayFromCache returns 'false' for more than one reason
             if (!displayFromCache(cacheFileName, blockNum, &visitor))
                 visitor.opts.mode = ""; // do not continue
         }
@@ -119,17 +99,18 @@ int main(int argc, const char *argv[]) {
         // Freshening the cache (if the user tells us to...)
         if (visitor.opts.mode.Contains("freshen")) {
 
-            SFUint32 lastVisit = toLongU(asciiFileToString("./cache/lastBlock.txt"));
+            SFUint32 topOfChain = getLatestBlockFromCache();
+            SFUint32 lastVisit  = toLongU(asciiFileToString("./cache/lastBlock.txt"));
             blockNum = max(blockNum, lastVisit) + 1;
-            SFUint32 topOfChain = getClientLatestBlk();
-            SFUint32 nBlocks = (blockNum >= topOfChain ? 0 : topOfChain - blockNum);
 
-            visitor.nBlocksToVisit= topOfChain - blockNum;
-            visitor.startBlock = blockNum;
-            visitor.endBlock = topOfChain;
-            if (verbose)
-                visitor.initReport();
-
+            visitor.endBlock       = min(topOfChain, visitor.maxWatchBlock);
+            visitor.startBlock     = min(blockNum,   visitor.endBlock);
+            visitor.nBlocksToVisit = visitor.endBlock - visitor.startBlock;
+            cerr << "Freshening from "
+                << visitor.startBlock << " to "
+                << visitor.endBlock << " ("
+                << visitor.nBlocksToVisit << " blocks)\r\n";
+            cerr.flush();
             // The cache may have been opened for reading during displayFromCache, so we
             // close it here, so we can open it back up as append only
             if (visitor.cache.isOpen())
@@ -138,12 +119,12 @@ int main(int argc, const char *argv[]) {
             visitor.cache.m_archiveSchema = NO_SCHEMA;
             visitor.cache.m_writeDeleted = true;
             if (visitor.cache.Lock(cacheFileName, "a+", LOCK_WAIT)) {
-                forEveryNonEmptyBlockOnDisc(updateCache, &visitor, blockNum, nBlocks);
+                forEveryBloomFile(updateCacheUsingBlooms, &visitor, visitor.startBlock, visitor.nBlocksToVisit);
                 visitor.cache.Release();
             }
             timestamp_t tsOut = toTimeStamp(Now());
             SFString endMsg = dateFromTimeStamp(tsOut).Format(FMT_JSON) + " (" + asString(topOfChain) + ")";
-            visitor.interumReport(topOfChain, visitor.last_ts, endMsg);
+            visitor.interumReport(visitor.endBlock, visitor.last_ts, endMsg);
             cout << "\r\n";
         }
 
@@ -155,11 +136,17 @@ int main(int argc, const char *argv[]) {
                 << cYellow << visitor.nAccountedFor << cOff << " accounted for"
                 << " }\r\n";
 
-        if (visitor.debugger_on && visitor.nProcessed() == 0) {
+        if (visitor.opts.debugger_on && visitor.nProcessed() == 0) {
             cout << "Nothing to do. Hit enter to quit...";
             cout.flush();
             getchar();
         }
+    }
+
+    if (visitor.opts.debugger_on) {
+        CBlock block;
+        getBlock(block, getLatestBlockFromCache());
+        visitor.enterDebugger(block);
     }
 
     return false;

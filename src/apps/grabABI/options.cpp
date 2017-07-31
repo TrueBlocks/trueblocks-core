@@ -62,8 +62,8 @@ bool COptions::parseArguments(SFString& command) {
             if (addr.length() != 42 && !addr.ContainsI("tokenlib") && !addr.ContainsI("walletlib"))
                 return usage(addr + " does not appear to be a valid Ethereum address.\n");
             addrs[nAddrs++] = addr;
-            if (nAddrs>10)
-                return usage("You may provide at most 10 addresses");
+            if (nAddrs>MAX_ADDRS)
+                return usage("You may provide at most " + asString(MAX_ADDRS) + " addresses");
         }
     }
 

@@ -8,16 +8,16 @@
 static CParams debugCmds[] = {
     CParams("-(c)orrect",     "Correct the current imbalance and continue to the next imbalance"),
     CParams("-(a)utocorrect", "Turn on or off autocorrect (allows pressing enter to correct)"),
-    CParams("-(t)race",       "Trace previous transaction (enter 't' plus tab to scroll through recent txs)"),
     CParams("-(e)thscan",     "Open a block, account, or transaction in http://ethscan.io"),
     CParams("-(s)ource",      "View the smart contract's source code (if found)"),
     CParams("-(b)uffer",      "Show the transaction buffer (including transaction hashes)"),
-    CParams("-(p)lay",        "Play a block.txid.traceid or '+' for next, '-' for prev"),
     CParams("-(l)ist",        "Show the list of accounts being debugged"),
     CParams("-confi(g)",      "Edit the config file"),
     CParams("-clea(r)",       "Clear the screen"),
+    CParams("-si(n)gle",      "Toggle single step"),
+    CParams("-(t)race",       "Toggle display of trace"),
+    CParams("-(d)ollars",     "Display US dollars as well"),
     CParams("-(q)uit",        "Quit the current monitor program"),
-    CParams("-(v)erbose",     "Toggle auto trace"),
     CParams("-(h)elp",        "Display this screen"),
     CParams("",               "Press enter to continue without correction, up or down arrows to recall commands"),
 };
@@ -96,32 +96,40 @@ bool CVisitor::enterDebugger(const CBlock& block) {
                     clear();
                     refresh();
                     if (lastTrans) {
-                        displayTransaction(lastWhich, lastTrans, this);
-                        curCmd = asString(lastWhich) + " ------ > " + asString((uint64_t)lastTrans);
+                        // Note that if we're showing traces they will have already been attached
+                        displayTransaction(lastTrans);
+                        curCmd = " ------ > " + asString((uint64_t)lastTrans);
                     }
                     history(curCmd);
 
                 } else if (curCmd == "q" || curCmd == "quit" || curCmd == "exit") {
                     cout << "\r\n";
                     cout.flush();
+                    opts.debugger_on = false;
                     return false;
 
                 } else if (curCmd == "a" || curCmd == "autoCorrect") {
                     history(curCmd);
                     autoCorrect = !autoCorrect;
-                    cout << "autoCorrect is " << (autoCorrect ? "on" : "off");
+                    cout << "\tautoCorrect is " << (autoCorrect ? "on" : "off");
                     cout.flush();
 
-                } else if (curCmd == "p" || curCmd == "play") {
+                } else if (curCmd == "t" || curCmd == "trace") {
                     history(curCmd);
-                    autoCorrect = !autoCorrect;
-                    cout << "autoCorrect is " << (autoCorrect ? "on" : "off");
+                    opts.trace_on = !opts.trace_on;
+                    cout << "\ttrace display is " << (opts.trace_on ? "on" : "off");
                     cout.flush();
 
-                } else if (curCmd == "v" || curCmd == "verbose") {
+                } else if (curCmd == "n" || curCmd == "single") {
                     history(curCmd);
-                    autoTrace = !autoTrace;
-                    cout << "autoTrace is " << (autoTrace ? "on" : "off");
+                    opts.single_on = !opts.single_on;
+                    cout << "\tsingle step is " << (opts.single_on ? "on" : "off");
+                    cout.flush();
+
+                } else if (curCmd == "d" || curCmd == "dollar") {
+                    history(curCmd);
+                    expContext().asDollars = !expContext().asDollars;
+                    cout << "\tdollar display is " << (expContext().asDollars ? "on" : "off");
                     cout.flush();
 
                 } else if (curCmd == "b" || curCmd == "buffer") {
@@ -171,17 +179,21 @@ bool CVisitor::enterDebugger(const CBlock& block) {
                     SFString cmd = "ethscan " + curCmd;
                     doCommand(cmd);
 
-                } else if (curCmd.startsWith("t:") || curCmd.startsWith("t ") || curCmd.startsWith("trace:")) {
-                    history(curCmd);
-                    curCmd.Replace("t:","");
-                    curCmd.Replace("t ","");
-                    curCmd.Replace("trace:","");
-                    curCmd.Replace("trace ","");
-                    SFUint32 bn = toLongU(nextTokenClear(curCmd,'.'));
-                    SFUint32 tn = toLongU(curCmd);
-                    CTransaction trans;
-                    getTransaction(trans,bn,tn);
-                    showColoredTrace(trans.hash,trans.isError);
+// TODO(tjayrush): you can clean this up
+//                } else if (curCmd.startsWith("t:") || curCmd.startsWith("t ") || curCmd.startsWith("trace:")) {
+//                    history(curCmd);
+//                    curCmd.Replace("t:","");
+//                    curCmd.Replace("t ","");
+//                    curCmd.Replace("trace:","");
+//                    curCmd.Replace("trace ","");
+//                    SFUint32 bn = toLongU(nextTokenClear(curCmd,'.'));
+//                    SFUint32 tn = toLongU(curCmd);
+//
+//                    CTransaction trans;
+//                    getTransaction(trans,bn,tn);
+//                    getTraces(trans.traces, trans.hash);
+//                    timestamp_t ts = toUnsigned(trans.Format("[{TIMESTAMP}]"));
+//                    showColoredTrace(ts, trans.traces, trans.isError);
 
                 } else if (curCmd == "h" || curCmd == "help") {
                     cout << "\r\n" << bBlue << "Help:" << cOff << "\r\n";
