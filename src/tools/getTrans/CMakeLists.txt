@@ -19,3 +19,6 @@ add_executable(${TOOL_NAME} ${SOURCE_FILES})
 
 # Add the project static libs at linking
 target_link_libraries (${TOOL_NAME} ${BASE_LIBS} token wallet)
+
+# Add some test cases - run using 'make test'
+add_test(NAME getTrans_test WORKING_DIRECTORY ${TESTCASE_PATH}/tools/getTrans/ COMMAND ./run_tests.py)
