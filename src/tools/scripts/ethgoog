@@ -4,4 +4,4 @@
 # scrapers from the results. This makes it much easier to find references to addresses
 # without getting lost in blockchain hex-hell
 
-open "https://www.google.com/?gws_rd=ssl#q=$1+-etherscan+-ethereumblocks+-etherchain+-gastracker+-classic+-etherx"
+open "https://www.google.com/?gws_rd=ssl#q=$1+-etherscan+-ethereumblocks+-etherchain+-gastracker+-classic+-etherx+-centraltickets"
