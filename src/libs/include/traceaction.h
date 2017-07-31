@@ -33,6 +33,9 @@ public:
     SFString input;
     SFAddress to;
     SFWei value;
+    SFAddress address;
+    SFWei balance;
+    SFAddress refundAddress;
 
 public:
     CTraceAction(void);
@@ -95,6 +98,9 @@ inline void CTraceAction::Init(void) {
 //    input = EMPTY;
 //    to = EMPTY;
     value = 0;
+//    address = EMPTY;
+    balance = 0;
+//    refundAddress = EMPTY;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -111,6 +117,9 @@ inline void CTraceAction::Copy(const CTraceAction& tr) {
     input = tr.input;
     to = tr.to;
     value = tr.value;
+    address = tr.address;
+    balance = tr.balance;
+    refundAddress = tr.refundAddress;
 
     // EXISTING_CODE
     // EXISTING_CODE

@@ -6,7 +6,7 @@
  *
  * The LICENSE at the root of this repo details your rights (if any)
  *------------------------------------------------------------------------*/
-#include "pairFile.h"
+//#include "pairFile.h"
 
 //-------------------------------------------------------------------
 class COptions : public COptionsBase {
@@ -22,7 +22,7 @@ public:
     SFString classNames;
     SFString filter;
     SFString dataFile;
-    CToml1 classFile;
+    CToml classFile;
 
     COptions(void);
     ~COptions(void);

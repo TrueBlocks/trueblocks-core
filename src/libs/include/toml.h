@@ -16,7 +16,8 @@ namespace qblocks {
     class CToml : public CSharedResource {
     private:
         void Clear(void);
-        // no copies
+        // no default construction or copies
+        CToml(void) {}
         CToml(const CToml& toml);
         CToml& operator= (const CToml& toml);
 
@@ -69,9 +70,10 @@ namespace qblocks {
     public:
         CTomlGroupList groups;
 
-        CToml(void);
+        CToml(const SFString& fileName);
         ~CToml(void);
 
+        SFString getConfigArray(const SFString& group, const SFString& key, const SFString& def) const;
         SFString getConfigStr(const SFString& group, const SFString& key, const SFString& def) const;
         uint64_t getConfigInt(const SFString& group, const SFString& key, uint64_t def) const;
         SFUintBN getConfigBigInt(const SFString& group, const SFString& key, SFUintBN def) const;
