@@ -165,6 +165,21 @@ void CFunction::finishParse() {
         hasAddrs |= (inputs[i].type == "address");
     signature = getSignature(SIG_CANONICAL);
     encoding  = encodeItem();
+    // The input parameters need to have a name. If not, we provide one
+    int cnt = 0;
+    for (int i = 0 ; i < inputs.getCount() ; i++) {
+        if (inputs[i].name.empty())
+            inputs[i].name = "param_" + asString(cnt++);
+    }
+    // TODO(tjayrush): Do we need names for output params?
+    //cnt = 0;
+    //for (int i = 0 ; i < outputs.getCount() ; i++) {
+    //    if (outputs[i].name.empty()) {
+    //        SFString type = outputs[i].type;
+    //        type.ReplaceAny("0123456789","");
+    //        outputs[i].name = type + "_" + asString(cnt++);
+    //    }
+    //}
     // EXISTING_CODE
 }
 
