@@ -136,7 +136,7 @@ namespace qblocks {
         return parseJson(s, nFields);
     }
 
-    // #define DEBUG_PARSER
+//#define DEBUG_PARSER
 #ifdef DEBUG_PARSER
     SFString tbs;
 #endif
@@ -152,7 +152,7 @@ namespace qblocks {
         printf("--------------------------\n%s\n-----------------------------\n",
                (const char*)SFString(s).Right(300));
 #endif
-        typedef enum { OUTSIDE = 0, IN_NAME, IN_VALUE } parseState;
+        typedef enum { OUTSIDE = 0, IN_NAME, IN_VAL } parseState;
         parseState state = OUTSIDE;
 
         char *fieldName = NULL;
@@ -170,7 +170,7 @@ namespace qblocks {
                         fieldName = s;
 
                     } else if (*s == ':') {
-                        state = IN_VALUE;
+                        state = IN_VAL;
                         *s = '\0';
 #ifdef DEBUG_PARSER
 //                      printf("fn: %-10.10s fv: %-40.40s ---> %-60.60s\n" , fieldName, fieldVal, (s+1));
@@ -179,7 +179,7 @@ namespace qblocks {
                     s++;
                     break;
 
-                case IN_VALUE:
+                case IN_VAL:
                     fieldVal = s;
                     if (*s == '[') {  // array skip to end of array
                         fieldVal++;
