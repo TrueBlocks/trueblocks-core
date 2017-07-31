@@ -17,6 +17,7 @@ CParams params[] = {
     CParams("-re(c)iept",   ""),
     CParams("-terse",       "retreive transaction hashes instead of full transactions"),
     CParams("-quiet",       "do not print results to screen, used for speed testing"),
+    CParams("@f(o)rce",     "force re-write of binary data"),
     CParams("",             "Returns block(s) from local cache (the default) or directly from a running node.\n"),
 };
 uint32_t nParams = sizeof(params) / sizeof(CParams);
@@ -35,6 +36,9 @@ bool COptions::parseArguments(SFString& command) {
 
         if (arg == "-c" || arg == "--check") {
             isCheck = true;
+
+        } else if (arg == "-o" || arg == "--force") {
+            etherlib_init("binary");
 
         } else if (arg.startsWith("-s:") || arg.startsWith("--source:")) {
             SFString mode = arg;
@@ -135,7 +139,7 @@ bool COptions::parseArguments(SFString& command) {
                 start = toUnsigned(arg1);
                 stop  = toUnsigned(arg);
                 if (arg == "latest")
-                    stop = getClientLatestBlk();
+                    stop = getLatestBlockFromClient();
                 if (stop <= start)
                     return usage("'stop' must be strictly larger than 'start'");
                 isRange = true;
@@ -143,7 +147,7 @@ bool COptions::parseArguments(SFString& command) {
             } else {
                 SFUint32 num = toUnsigned(arg);
                 if (arg == "latest")
-                    num = getClientLatestBlk();
+                    num = getLatestBlockFromClient();
                 if (nNums < MAX_NUMS)
                     nums[nNums++] = num;
                 else
