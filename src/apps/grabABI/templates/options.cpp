@@ -13,10 +13,10 @@ CParams params[] = {
     CParams("-showCache",   "mode: show transactions from the cache, and then freshen"),
     CParams("-cacheOnly",   "mode: display transactions from the cache only (do not freshen)"),
     CParams("-kBlock",      "start processing at block :k"),
+    CParams("-parse",       "display parsed input data"),
     CParams("-logs",        "display smart contract events (logs)"),
     CParams("-trace",       "display smart contract internal traces"),
     CParams("-bloom",       "display bloom filter matching"),
-    CParams("-parse",       "display parsed input data"),
     CParams("-accounting",  "display credits and debits per account and reconcile at each block"),
     CParams("-debug",       "enter debug mode (pause after each transaction)"),
     CParams("-single",      "if debugging is enable, single step through transactions"),
@@ -28,6 +28,7 @@ uint32_t nParams = sizeof(params) / sizeof(CParams);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(SFString& command) {
 
+    bool hasOnly = false;
     Init();
     while (!command.empty()) {
         SFString arg = nextTokenClear(command, ' ');
@@ -46,11 +47,13 @@ bool COptions::parseArguments(SFString& command) {
 
         } else if (arg == "-c" || arg == "--cacheOnly") {
             mode = "showCache|";  // last in wins
+            hasOnly = true;
 
         } else if (arg == "-s" || arg == "--showCache") {
-            mode = "showCache|freshen|";  // last in wins
+            if (!hasOnly) // don't add freshen if we've already been told not to
+                mode = "showCache|freshen|";  // last in wins
 
-        } else if (arg == "-s" || arg == "--single" || arg == "--single_step") {
+        } else if (arg == "--single" || arg == "--single_step") {
             single_on = true;
 
         } else if (arg == "-a" || arg == "--accounting") {
