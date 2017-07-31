@@ -55,7 +55,7 @@ bool COptions::parseArguments(SFString& command) {
 
             if (arg == "latest") {
                 special = arg;
-                blockNum = getClientLatestBlk();
+                blockNum = getLatestBlockFromClient();
 
             } else {
 
@@ -78,14 +78,14 @@ bool COptions::parseArguments(SFString& command) {
             return usage("Please supply either a JSON formatted date or a blockNumber.");
 
     } else {
-        blknum_t latest = getClientLatestBlk();
+        blknum_t latest = getLatestBlockFromClient();
         if (blockNum > latest) {
             if (special.empty()) {
                 return usage("Block number (" + asString(blockNum) + ") must be less than latest "
                              "block: " + asString(latest));
 
             } else {
-                // For the cases where user's node is behind the head of the block and getClientLatestBlk
+                // For the cases where user's node is behind the head of the block and getLatestBlockFromClient
                 // returns a block number in the past, the only thing we can present is known block dates
                 cout << "\n\tSpecial block: " << cYellow << special << " " << blockNum << cOff << "\n\n";
                 return false;
