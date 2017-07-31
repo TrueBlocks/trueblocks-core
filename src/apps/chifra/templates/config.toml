@@ -2,7 +2,6 @@
 accounting = false
 debug = false
 logs = false
-notify = false
 trace = false
 bloom = false
 single = false
@@ -10,9 +9,10 @@ parse = false
 
 [formats]
 screen_fmt = \
-    [{CONTRACT10}] : [{TYPE20}] [{DATE}] [{BLOCKNUMBER}] [{w:5:TRANSACTIONINDEX}] \
-    [{FROM}] [{TO}] [{w:20:ETHER}] [{w:6:GASUSED}] [{GASPRICE}] [{EVENTS}]
-alt_fmt = [{HEAD}]\n\
+    { "date": "[{DATE}]", "position": "[{BLOCKNUMBER}].[{TRANSACTIONINDEX}]", \
+    "from": "[{FROM}]", "to": "[{TO}]", "ether": "[{ETHER}]", "gasCost": "[{GASCOST}]", \
+    "hash": "[{HASH}]" }
+verbose_fmt = [{HEAD}]\n\
 	\tdate: @[{DATE}]# timestamp: @[{TIMESTAMP}]# ether: @[{ETHER}]#\n\
 	\tfrom: @[{FROM}]# to: @[{TO}]# value: @[{w:30:VALUE}]# \n\
 	\thash: @[{HASH}]# \n\
@@ -20,10 +20,5 @@ alt_fmt = [{HEAD}]\n\
 	\tinput: @[{INPUT}]#\n\
 	[{P}]
 
-[watches]
-nWatches = [{NWATCHES}]
-[{WATCHES}]
-[[watches2]]
+[[watches]]
 [{JSON_WATCH}]
-[master]
-#firstBlock=<alternative_first_block>
