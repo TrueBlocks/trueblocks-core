@@ -49,6 +49,12 @@ SFString nextTraceactionChunk(const SFString& fieldIn, bool& force, const void *
             return ret;
 
         switch (tolower(fieldIn[0])) {
+            case 'a':
+                if ( fieldIn % "address" ) return fromAddress(tra->address);
+                break;
+            case 'b':
+                if ( fieldIn % "balance" ) return fromWei(tra->balance);
+                break;
             case 'c':
                 if ( fieldIn % "callType" ) return tra->callType;
                 break;
@@ -60,6 +66,9 @@ SFString nextTraceactionChunk(const SFString& fieldIn, bool& force, const void *
                 break;
             case 'i':
                 if ( fieldIn % "input" ) return tra->input;
+                break;
+            case 'r':
+                if ( fieldIn % "refundAddress" ) return fromAddress(tra->refundAddress);
                 break;
             case 't':
                 if ( fieldIn % "to" ) return fromAddress(tra->to);
@@ -87,6 +96,12 @@ bool CTraceAction::setValueByName(const SFString& fieldName, const SFString& fie
     // EXISTING_CODE
 
     switch (tolower(fieldName[0])) {
+        case 'a':
+            if ( fieldName % "address" ) { address = toAddress(fieldValue); return true; }
+            break;
+        case 'b':
+            if ( fieldName % "balance" ) { balance = toWei(fieldValue); return true; }
+            break;
         case 'c':
             if ( fieldName % "callType" ) { callType = fieldValue; return true; }
             break;
@@ -98,6 +113,9 @@ bool CTraceAction::setValueByName(const SFString& fieldName, const SFString& fie
             break;
         case 'i':
             if ( fieldName % "input" ) { input = fieldValue; return true; }
+            break;
+        case 'r':
+            if ( fieldName % "refundAddress" ) { refundAddress = toAddress(fieldValue); return true; }
             break;
         case 't':
             if ( fieldName % "to" ) { to = toAddress(fieldValue); return true; }
@@ -131,6 +149,9 @@ bool CTraceAction::Serialize(SFArchive& archive) {
     archive >> input;
     archive >> to;
     archive >> value;
+    archive >> address;
+    archive >> balance;
+    archive >> refundAddress;
     finishParse();
     return true;
 }
@@ -146,6 +167,9 @@ bool CTraceAction::SerializeC(SFArchive& archive) const {
     archive << input;
     archive << to;
     archive << value;
+    archive << address;
+    archive << balance;
+    archive << refundAddress;
 
     return true;
 }
@@ -164,7 +188,10 @@ void CTraceAction::registerClass(void) {
     ADD_FIELD(CTraceAction, "gas", T_NUMBER, ++fieldNum);
     ADD_FIELD(CTraceAction, "input", T_TEXT, ++fieldNum);
     ADD_FIELD(CTraceAction, "to", T_TEXT, ++fieldNum);
-    ADD_FIELD(CTraceAction, "value", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CTraceAction, "value", T_WEI, ++fieldNum);
+    ADD_FIELD(CTraceAction, "address", T_TEXT, ++fieldNum);
+    ADD_FIELD(CTraceAction, "balance", T_WEI, ++fieldNum);
+    ADD_FIELD(CTraceAction, "refundAddress", T_TEXT, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CTraceAction, "schema");
