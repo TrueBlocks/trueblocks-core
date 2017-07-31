@@ -6,23 +6,17 @@
  * The LICENSE at the root of this repo details your rights (if any)
  *------------------------------------------------------------------------*/
 #include "makeClass.h"
-#include "pairFile.h"
 
 //------------------------------------------------------------------------------------------------------------
 extern void establishFiles(const SFString& className);
-extern void generateCode(CToml1& classFile, const SFString& dataFile, const SFString& ns);
+extern void generateCode(CToml& classFile, const SFString& dataFile, const SFString& ns);
 extern SFString getCaseCode(const SFString& fieldCase);
 extern SFString getCaseSetCode(const SFString& fieldCase);
 extern SFString short3(const SFString& in);
 
 //-----------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
-    SFString items[] = {
-        "class",  "baseClass",   "fields", "includes",
-        "cIncs", "sort",   "disabled", "scope", "serialize"
-    };
-    uint32_t nItems = sizeof(items) / sizeof(SFString);
-    CToml1::loadFields(nItems, items);
+
     CParameter::registerClass();
 
     COptions options;
@@ -45,7 +39,7 @@ int main(int argc, const char *argv[]) {
                 return usage("No class definition file found at " + fileName + "\n");
 
             } else {
-                CToml1 classFile;
+                CToml classFile("");
                 classFile.readFile(fileName);
 
                 if (options.isList) {
@@ -53,7 +47,7 @@ int main(int argc, const char *argv[]) {
                         cout << SFString('-', 80) << "\nFile (dest): " << fileName << "\n";
                         cout << classFile << "\n";
 
-                    } else if (!classFile.isDisabled()) {
+                    } else if (!classFile.getConfigBool("settings", "disabled", false)) {
                         cout << "\t" << classFile.getConfigStr("settings","class","") << "\n";
                     }
 
@@ -67,14 +61,14 @@ int main(int argc, const char *argv[]) {
 
                 } else if (options.isRemove) {
                     if (isTesting) {
-                        cout << "Are you sure you want to remove: " << className
-                                << ".txt? (y=remove this file, otherwise ignore): ";
-                        cout << "would delete " << className << "\n";
+                        cout << "Are you sure you want to remove " << className
+                                << ".cpp and " << className << ".h? (y=remove files, otherwise ignore): ";
+                        cout << "Testing, but would have deleted " << className << ".[ch]*\n";
                     } else {
-                        // TODO(tjayrush): This asks the question, but deletes the file anyway
-                        cerr << "Are you sure you want to remove: " << className
-                                << ".txt? (y=remove this file, otherwise ignore): ";
-                        removeFile(fileName);
+                        // TODO(tjayrush): Doesn't work on purpose
+                        cout << "Are you sure you want to remove " << className
+                                << ".cpp and " << className << ".h? (y=remove files, otherwise ignore): ";
+                        return usage("Files not removed. Quitting...");
                     }
                 } else {
                     if (isTesting)
@@ -83,7 +77,7 @@ int main(int argc, const char *argv[]) {
                         cerr << "Running class definition file '" << className << "'\n";
 
                     if (!isTesting) {
-                        if (classFile.isDisabled()) {
+                        if (classFile.getConfigBool("settings", "disabled", false)) {
                             if (verbose)
                                 cerr << "Disabled class not processed " << className << "\n";
                         } else {
@@ -139,7 +133,7 @@ extern const char* STR_SUBCLASS;
 SFString tab = SFString("\t");
 
 //------------------------------------------------------------------------------------------------------------
-void generateCode(CToml1& classFile, const SFString& dataFile, const SFString& ns) {
+void generateCode(CToml& classFile, const SFString& dataFile, const SFString& ns) {
     //------------------------------------------------------------------------------------------------
     SFString className  = classFile.getConfigStr("settings","class","");
     SFString baseClass  = classFile.getConfigStr("settings","baseClass",""); if (baseClass.empty()) { baseClass = "CBaseNode"; }
