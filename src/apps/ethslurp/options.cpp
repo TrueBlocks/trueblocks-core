@@ -28,6 +28,8 @@ CParams params[] = {
     CParams("@--func",      "display only --func:functionName records"),
     CParams("@--errFilt",   "display only non-error transactions or :errsOnly"),
     CParams("@--reverse",   "display results sorted in reverse chronological order (chronological by default)"),
+    CParams("@--acct_id",   "for 'cache' mode, use this as the :acct_id for the cache (0 otherwise)"),
+    CParams("@--cache",     "write the data to a local QuickBlocks cache"),
     CParams("-clear",       "clear all previously cached slurps"),
     CParams("",             "Fetches data off the Ethereum blockchain for an arbitrary account or smart contract. "
                             "Optionally formats the output to your specification.\n"),
@@ -71,6 +73,13 @@ bool COptions::parseArguments(SFString& command) {
 
         } else if (arg.startsWith("--reverse")) {
             reverseSort = true;
+
+        } else if (arg.startsWith("--acct_id:")) {
+            arg.Replace("--acct_id:","");
+            acct_id = toLong32u(arg);
+
+        } else if (arg.startsWith("--cache")) {
+            cache = true;
 
         } else if (arg == "-l" || arg == "-list") {
             uint32_t nFiles = 0;
@@ -218,6 +227,8 @@ void COptions::Init(void) {
     exportFormat = "json";
     archiveFile = EMPTY;
     wantsArchive = false;
+    cache = false;
+    acct_id = 0;
     // addr = "";
 
     outScreen.setOutput(stdout);  // so we know where it is at the start of each run

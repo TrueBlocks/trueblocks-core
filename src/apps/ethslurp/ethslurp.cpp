@@ -110,7 +110,7 @@ bool CSlurperApp::Initialize(COptions& options, SFString& message) {
     // Load per address configurations if any
     SFString customConfig = configPath("configs/"+addr+".toml");
     if (fileExists(customConfig) || !options.name.empty()) {
-        CToml perAddr;
+        CToml perAddr("");
         perAddr.setFilename(customConfig);
         if (fileExists(customConfig)) {
             perAddr.readFile(customConfig);
@@ -172,7 +172,7 @@ bool CSlurperApp::Slurp(COptions& options, SFString& message) {
 
     // If the user tells us he/she wants to update the cache, or the cache
     // hasn't been updated in five minutes, then update it
-    uint32_t nSeconds = max((uint64_t)60, toml.getConfigInt("settings", "update_freq", 300));
+    uint32_t nSeconds = (uint32_t)max((uint64_t)60, toml.getConfigInt("settings", "update_freq", 300));
     if ((now - fileTime) > nSeconds) {
         // This is how many records we currently have
         uint32_t origCount  = theAccount.transactions.getCount();
@@ -309,7 +309,7 @@ bool CSlurperApp::Filter(COptions& options, SFString& message) {
         funcFilts[nFuncFilts++] = nextTokenClear(filtList, ',');
 
     theAccount.nVisible = 0;
-    for (uint64_t i = 0 ; i < theAccount.transactions.getCount() ; i++) {
+    for (uint32_t i = 0 ; i < theAccount.transactions.getCount() ; i++) {
         CTransaction *trans = &theAccount.transactions[i];
         trans->pParent = &theAccount;
 
@@ -378,9 +378,19 @@ bool CSlurperApp::Filter(COptions& options, SFString& message) {
 //---------------------------------------------------------------------------------------------------
 bool CSlurperApp::Display(COptions& options, SFString& message) {
     double start = qbNow();
+
     if (options.reverseSort)
         theAccount.transactions.Sort(sortReverseChron);
-    theAccount.Format(outScreen, getFormatString(options, "file", false));
+
+    if (options.cache) {
+        for (uint32_t i = 0 ; i < theAccount.transactions.getCount() ; i++) {
+            const CTransaction *t = &theAccount.transactions[i];
+            outScreen << t->Format("[{BLOCKNUMBER}]\t[{TRANSACTIONINDEX}]\t" + asString(options.acct_id)) << "\n";
+        }
+    } else {
+
+        theAccount.Format(outScreen, getFormatString(options, "file", false));
+    }
 
     if (!isTesting) {
         double stop = qbNow();
