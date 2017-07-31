@@ -12,7 +12,10 @@
 namespace qblocks {
 
     //-------------------------------------------------------------------------
-    CToml::CToml(void) {
+    CToml::CToml(const SFString& fileName) : CSharedResource() {
+        setFilename(fileName);
+        if (!fileName.empty())
+            readFile(fileName);
     }
 
     //-------------------------------------------------------------------------
@@ -95,8 +98,10 @@ namespace qblocks {
         SFString curGroup;
         Clear();
 
-        SFString contents = asciiFileToString(filename).Substitute("\\\n ", "\\\n")
-                            .Substitute("\\\n", "").Substitute("\\\r\n", "");
+        SFString contents = asciiFileToString(filename)
+                            .Substitute("\\\n ", "\\\n").Substitute("\\\n", "").Substitute("\\\r\n", "");
+extern SFString stripFullLineComments(const SFString& inStr);
+        contents = stripFullLineComments(contents);
         while (!contents.empty()) {
             SFString value = StripAny(nextTokenClear(contents, '\n'), " \t");
             bool comment = value.startsWith('#');
@@ -167,6 +172,25 @@ namespace qblocks {
             return 0;
         }
         return str2BigUint(ret);
+    }
+
+    //---------------------------------------------------------------------------------------
+    SFString CToml::getConfigArray(const SFString& group, const SFString& key, const SFString& def) const {
+
+        SFString contents = asciiFileToString(getFilename());
+        contents.ReplaceAll(" =","=");
+        contents.ReplaceAll("= ","=");
+        uint64_t fnd = contents.find(key+"=");
+        if (fnd == -1)
+            return "";
+        SFString ret = contents.substr(fnd+key.length()+1);
+        fnd = ret.find("]");
+        if (fnd == -1)
+            return "";
+        ret.ReplaceAll("=",":");
+extern char *cleanUpJson(char *s);
+        ret = cleanUpJson((char*)ret.substr(0,fnd).c_str());
+        return ret;
     }
 
     //---------------------------------------------------------------------------------------
@@ -304,4 +328,15 @@ namespace qblocks {
         return NULL;
     }
 
+    SFString stripFullLineComments(const SFString& inStr) {
+        SFString str = inStr;
+        SFString ret;
+        while (!str.empty()) {
+            SFString line = StripAny(nextTokenClear(str, '\n'), " \t\n\r");
+            if (line.length() && line[0] != '#') {
+                ret += (line + "\n");
+            }
+        }
+        return ret;
+    }
 }  // namespace qblocks
