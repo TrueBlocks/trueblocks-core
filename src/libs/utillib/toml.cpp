@@ -114,6 +114,13 @@ extern SFString stripFullLineComments(const SFString& inStr);
                     curGroup = value;
 
                 } else {
+                    if (curGroup.empty()) {
+                        cerr << "key: " << value << " found outside of a controlling group. Quitting...\n";
+                        cerr.flush();
+                        exit(0);
+                    }
+                    if (value.Contains(":\t"))
+                        value.Replace(":","=");
                     SFString key = nextTokenClear(value, '=');  // value may be empty, but not whitespace
                     key = StripAny(key, " \t");
                     value = StripAny(value, " \t");

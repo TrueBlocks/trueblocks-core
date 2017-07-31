@@ -1,3 +1,4 @@
+[settings]
 class:		CAccountName
 fields:		string addr|string name|string source
 includes:	utillib.h|options.h
