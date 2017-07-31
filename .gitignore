@@ -11,6 +11,7 @@ working
 quickBlocks Facts
 src/tools/speedTest/
 build
+qb-app
 
 # Compiled Object files
 *.slo
