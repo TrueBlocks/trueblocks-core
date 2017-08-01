@@ -22,7 +22,7 @@ add_subdirectory(getBalance)
 add_subdirectory(getTokenBal)
 add_subdirectory(isContract)
 add_subdirectory(whenBlock)
+add_subdirectory(whereBlock)
 add_subdirectory(scripts)
 add_subdirectory(speedTest)
 add_subdirectory(bloomScan)
-
