@@ -39,6 +39,7 @@ bool COptions::parseArguments(SFString& command) {
 
         } else if (arg == "-o" || arg == "--force") {
             etherlib_init("binary");
+            force = true;
 
         } else if (arg.startsWith("-s:") || arg.startsWith("--source:")) {
             SFString mode = arg;
@@ -177,6 +178,7 @@ void COptions::Init(void) {
     isRange = false;
     terse   = false;
     quiet   = false;
+    force   = false;
     nums[0]    = -1;
     nNums      = 0;  // we will set this to '1' later if user supplies no values
     start = stop = 0;
