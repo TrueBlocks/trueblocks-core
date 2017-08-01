@@ -149,8 +149,10 @@ bool updateCacheUsingBlooms(const SFString& path, void *data) {
                 lastBloomHit = bloomNum;
                 return true; // continue
             }
-            if (bloomNum >= visitor->startBlock + visitor->nBlocksToVisit)
+            if (bloomNum >= visitor->startBlock + visitor->nBlocksToVisit) {
+                stringToAsciiFile("./cache/lastBlock.txt", asStringU(bloomNum) + "\r\n");
                 return false; // don't continue
+            }
 
             SFBloom bloom;
             visitor->bloomStats.bloomsChecked++;

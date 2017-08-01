@@ -120,6 +120,7 @@ int main(int argc, const char *argv[]) {
             visitor.cache.m_writeDeleted = true;
             if (visitor.cache.Lock(cacheFileName, "a+", LOCK_WAIT)) {
                 forEveryBloomFile(updateCacheUsingBlooms, &visitor, visitor.startBlock, visitor.nBlocksToVisit);
+                stringToAsciiFile("./cache/lastBlock.txt", asStringU(visitor.startBlock+visitor.nBlocksToVisit) + "\r\n");
                 visitor.cache.Release();
             }
             timestamp_t tsOut = toTimeStamp(Now());
