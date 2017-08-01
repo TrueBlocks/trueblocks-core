@@ -7,4 +7,5 @@ proj.xcodeproj
 makefile
 apps
 libs
-tools
+#tools
+speedTest

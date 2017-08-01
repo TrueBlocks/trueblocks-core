@@ -1,0 +1,6 @@
+ethName 0x1
+ethName 0x1 rob
+ethName 0x1 rob steem
+ethName 0xbf4ed7b27f1d666546e30d74d50d173d20bca754
+ethName cur
+ethName cur -s
