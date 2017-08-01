@@ -1,0 +1,2 @@
+echo "testing: getBlock $1$3 $2"
+getBlock --nocolors $1$3 $2 | tr '\t' ' ' | sed -f tests/fix.sed | sort >tests/data/$1.json
