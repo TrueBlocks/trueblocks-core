@@ -1,0 +1,100 @@
+testing: getBlock 245001 -s:r
+testing: getBlock 2768801 --source:raw
+testing: getBlock 1995314 -s:r
+testing: getBlock 1958017 -s:raw
+testing: getBlock 2250752 -s:r
+testing: getBlock 379637 -r
+testing: getBlock 1413635 -s:raw
+testing: getBlock 675968 --source:r
+testing: getBlock 1828865 -r
+testing: getBlock 2107513 -s:raw
+testing: getBlock 1768365 -s:r
+testing: getBlock 2422063 --source:raw
+testing: getBlock 0x2e7721 --parity
+testing: getBlock 728708 -p
+testing: getBlock 1078944 -p
+testing: getBlock 2080168 -p
+testing: getBlock 358450-0x5785a -p
+testing: getBlock 537624 -p
+testing: getBlock 0xf1bf4-990200 --parity
+testing: getBlock 1369530 -p
+testing: getBlock 1860403 -p
+testing: getBlock 748222 --parity
+testing: getBlock 2562166 -p
+testing: getBlock 728536 -p
+testing: getBlock 1763425 -p
+testing: getBlock 2104669 -p
+testing: getBlock 1709616-1709630
+testing: getBlock 1511790-1511792
+testing: getBlock 2305640-2305641
+testing: getBlock 917679-917683
+testing: getBlock 1014335-1014337
+testing: getBlock 1773006-1773009
+testing: getBlock 354549 12 1001020 
+testing: getBlock 1180524 48931  
+testing: getBlock 1288853 3104987 2544331 45786
+testing: getBlock 582977 2000001  
+testing: getBlock 2523408 -s:r --fields:m
+testing: getBlock 1723728 -f:m
+testing: getBlock 2692933 -s:c -f:m
+testing: getBlock 474798 -f:mini
+testing: getBlock 540481 --fields:mini
+testing: getBlock 2696135 -f:m
+testing: getBlock 633615 --fields:m
+testing: getBlock 558594 --fields:mini
+testing: getBlock 533629 -f:mini
+testing: getBlock 599001 -f:m
+testing: getBlock 2333695 -s:cache
+testing: getBlock 2417105 -c
+testing: getBlock 571904 -s:c
+testing: getBlock 2808951 -s:c
+testing: getBlock 2856798 --source:c
+testing: getBlock 54688 --source:c
+testing: getBlock 1365123 -s:c
+testing: getBlock 2685005 -c
+testing: getBlock 3033382 --source:cache
+testing: getBlock 2999066 -s:c
+testing: getBlock 2521716 
+testing: getBlock 2558337 
+testing: getBlock 1289438 
+testing: getBlock 477644 
+testing: getBlock 2728501 
+testing: getBlock 289897 
+testing: getBlock 3076871 
+testing: getBlock 1314828 
+testing: getBlock 158858 
+testing: getBlock 1025677 
+testing: getBlock 798397 
+testing: getBlock 2706294 
+testing: getBlock 1799404 
+testing: getBlock 2769609 
+testing: getBlock 851731 
+testing: getBlock 141245 
+testing: getBlock 1399675 
+testing: getBlock 640798 
+testing: getBlock 1152642 
+testing: getBlock 1955399 
+testing: getBlock 2017468 
+testing: getBlock 2268412 
+testing: getBlock 3076260 
+testing: getBlock 394557 
+testing: getBlock 381094 
+testing: getBlock 1166008 
+testing: getBlock 2799895 
+testing: getBlock 1909113 
+testing: getBlock 2263030 
+testing: getBlock 723006 
+testing: getBlock 1026962 
+testing: getBlock 2513942 
+testing: getBlock 2271082 
+testing: getBlock 599852 
+testing: getBlock 1078767 
+testing: getBlock 2128321 
+testing: getBlock 1453695 
+testing: getBlock 2360712 
+testing: getBlock 2978171 
+testing: getBlock 2127401 
+testing: getBlock 92590 
+testing: getBlock 2872831 
+testing: getBlock 442738 
+testing: getBlock 635557 
