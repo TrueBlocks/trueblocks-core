@@ -4,8 +4,6 @@ bin
 *.o
 proj.xcodeproj
 *.bin
-makefile
-apps
-libs
-#tools
 speedTest
+backup
+ethslurp

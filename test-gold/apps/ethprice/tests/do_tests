@@ -1,0 +1,18 @@
+set PATH=$PATH:/Users/jrush/source
+
+rm -f ~/.quickBlocks.test/prices/poloniex.bin
+rm -f ./test*
+
+echo "test1 - no params"                               2>&1 | tee test1
+ethprice -t                                            >>test1 2>&1
+
+echo "test2 - help file"                               2>&1 | tee test2
+ethprice -t -h                                         >>test2 2>&1
+
+echo "test3 - verbose with no -f so no writing"        2>&1 | tee test3
+ethprice -t -v                                         >>test3 2>&1
+
+echo "test4 - freshen invalid freq"                    2>&1 | tee test4
+ethprice -t -f -p:12                                   >>test4 2>&1
+
+exit 0
