@@ -10,6 +10,7 @@
  * of 'EXISTING_CODE' tags.
  */
 #include "pricequote.h"
+#include "transaction.h"
 
 namespace qblocks {
 
