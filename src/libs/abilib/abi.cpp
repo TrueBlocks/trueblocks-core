@@ -189,17 +189,11 @@ bool CAbi::readBackLevel(SFArchive& archive) {
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-int sortFuncTableByName(const void *ob1, const void *ob2) {
-    CFunction *p1 = (CFunction*)ob1;
-    CFunction *p2 = (CFunction*)ob2;
-    return p2->name.compare(p1->name);
-}
-
 //---------------------------------------------------------------------------
-int sortFuncTableByEncoding(const void *ob1, const void *ob2) {
-    CFunction *p1 = (CFunction*)ob1;
-    CFunction *p2 = (CFunction*)ob2;
-    return p2->encoding.compare(p1->encoding);
+int sortFuncTableByName(const void *ob1, const void *ob2) {
+    CFunction *f1 = (CFunction*)ob1;
+    CFunction *f2 = (CFunction*)ob2;
+    return f2->name.compare(f1->name);
 }
 
 //---------------------------------------------------------------------------
@@ -210,10 +204,24 @@ int findByName(const void *rr1, const void *rr2) {
 }
 
 //---------------------------------------------------------------------------
+int cleanCompare(const SFString& s1, const SFString& s2) {
+    SFString ss1 = (s1.startsWith("0x") ? s1.substr(2,8) : s1.substr(0,8));
+    SFString ss2 = (s2.startsWith("0x") ? s2.substr(2,8) : s2.substr(0,8));
+    return ss2.compare(ss1);
+}
+
+//---------------------------------------------------------------------------
+int sortFuncTableByEncoding(const void *ob1, const void *ob2) {
+    CFunction *f1 = (CFunction*)ob1;
+    CFunction *f2 = (CFunction*)ob2;
+    return cleanCompare(f1->encoding, f2->encoding);
+}
+
+//---------------------------------------------------------------------------
 int findByEncoding(const void *rr1, const void *rr2) {
     CFunction *f1 = (CFunction*)rr1;
     CFunction *f2 = (CFunction*)rr2;
-    return f2->encoding.compare(f1->encoding);
+    return cleanCompare(f1->encoding, f2->encoding);
 }
 
 //---------------------------------------------------------------------------
