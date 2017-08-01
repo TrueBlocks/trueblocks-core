@@ -50,16 +50,16 @@ SFString nextLeafChunk(const SFString& fieldIn, bool& force, const void *data) {
 
         switch (tolower(fieldIn[0])) {
             case 'b':
-                if ( fieldIn % "blocks" ) {
-                    uint32_t cnt = lea->blocks.getCount();
-                    if (!cnt) return EMPTY;
-                    SFString ret;
-                    for (uint32_t i = 0 ; i < cnt ; i++) {
-                        ret += lea->blocks[i].Format();
-                        ret += ((i < cnt - 1) ? ",\n" : "\n");
-                    }
-                    return ret;
-                }
+//                if ( fieldIn % "blocks" ) {
+//                    uint32_t cnt = lea->blocks.getCount();
+//                    if (!cnt) return EMPTY;
+//                    SFString ret;
+//                    for (uint32_t i = 0 ; i < cnt ; i++) {
+//                        ret += lea->blocks[i].Format();
+//                        ret += ((i < cnt - 1) ? ",\n" : "\n");
+//                    }
+//                    return ret;
+//                }
                 break;
             case 'c':
                 if ( fieldIn % "cnt" ) return asStringU(lea->cnt);
@@ -112,7 +112,7 @@ bool CLeaf::Serialize(SFArchive& archive) {
 
     CTreeNode::Serialize(archive);
 
-    archive >> blocks;
+//    archive >> blocks;
     archive >> cnt;
     finishParse();
     return true;
@@ -122,7 +122,7 @@ bool CLeaf::Serialize(SFArchive& archive) {
 bool CLeaf::SerializeC(SFArchive& archive) const {
     CTreeNode::SerializeC(archive);
 
-    archive << blocks;
+//    archive << blocks;
     archive << cnt;
 
     return true;

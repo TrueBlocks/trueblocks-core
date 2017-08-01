@@ -394,7 +394,7 @@ size_t write_callback(char *ptr, size_t size, size_t nmemb, void *userdata)
     // At block 3804005, there was a hack wherein the byte code
     // 5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b repeated
     // thousands of time and doing nothing. If we don't handle this it
-    // dominates the scan for no reason
+    // dominates the scanning for no reason
     if (strstr(s, "5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b") != NULL) {
         // This is the hack trace (there are many), so skip it
         cerr << "Curl response contains '5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b'. Aborting.\n";
