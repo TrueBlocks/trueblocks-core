@@ -1,0 +1,27 @@
+add contract
+
+enter the contract’s name
+enter the contract’s address
+enter the source of the contract
+Now you can enter an ethname record
+enter the contract’s abi
+Copy it to the folder
+choose a default export format
+choose the fields to export
+manage contract
+
+allow any change to any fields including editing formats
+
+Copied in from duplicate issue Great-Hill-Corporation/ethslurp#48 which was closed.
+
+The first time an address is encountered, the program should ask a few questions. What do you want to name this contract? Is this a regular account or a contract? If 
+it's a contract, can you provide the ABI interface? The program should work without these items, but it would be much easier if they were there. A command link could 
+include the name of the contract or account instead of the address with is obviously impossible to remember. Also--with the ABI we will be able to parse the 'input' 
+field. Without it, we can't.
+
+From issue Great-Hill-Corporation/ethslurp#58 (closed):
+
+I need: a) the address, b) the json ABI, c) a config file with the function* turned on
+Store ABI in ~/.etshslurp/abis. Store config file in ~/.ethslurp/ADDRESS.dat, Add the file to a watch .slrp file
+
+From Great-Hill-Corporation/ethslurp#92
