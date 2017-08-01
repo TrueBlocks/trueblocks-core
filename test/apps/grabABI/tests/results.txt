@@ -1,0 +1,5 @@
+Testing help file
+Testing verbose mode
+Testing non constant with verbose
+Testing encoding with non const and verbose
+Testing encoding, verbose, non const, and generation
