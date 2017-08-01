@@ -1,0 +1,142 @@
+should show help screen
+
+[0;31m  Not enough arguments presented.
+
+[0;33m[1m  Usage:    [0mgetBalance [-d|-e|-v|-h] addrs blocks  
+[0;33m[1m  Purpose:  [0mRetrieve the balance for an account at a block.
+             
+[0;33m[1m  Where:  [0m  
+	addrs                 Ethereum address (starting with '0x') from which to retrieve the balance (required)
+	blocks                the block at which to retrieve the balance (defaults to 'latest') (required)
+	-d  (or --data)       render results as tab delimited data
+	-e  (or --ether)      return the balance in Ether instead of Wei
+	-v  (or --verbose)    set verbose level. Follow with a number to set level (-v0 for silent)
+	-h  (or --help)       display this help screen
+
+[0;34m[1m  Powered by QuickBlocks
+[0m
+bad address
+
+[0;31m  0x12 does not appear to be a valid Ethereum address. Quitting...
+
+[0;33m[1m  Usage:    [0mgetBalance [-d|-e|-v|-h] addrs blocks  
+[0;33m[1m  Purpose:  [0mRetrieve the balance for an account at a block.
+             
+[0;33m[1m  Where:  [0m  
+	addrs                 Ethereum address (starting with '0x') from which to retrieve the balance (required)
+	blocks                the block at which to retrieve the balance (defaults to 'latest') (required)
+	-d  (or --data)       render results as tab delimited data
+	-e  (or --ether)      return the balance in Ether instead of Wei
+	-v  (or --verbose)    set verbose level. Follow with a number to set level (-v0 for silent)
+	-h  (or --help)       display this help screen
+
+[0;34m[1m  Powered by QuickBlocks
+[0m
+bad block
+
+[0;31m  Invalid option: -1
+
+[0;33m[1m  Usage:    [0mgetBalance [-d|-e|-v|-h] addrs blocks  
+[0;33m[1m  Purpose:  [0mRetrieve the balance for an account at a block.
+             
+[0;33m[1m  Where:  [0m  
+	addrs                 Ethereum address (starting with '0x') from which to retrieve the balance (required)
+	blocks                the block at which to retrieve the balance (defaults to 'latest') (required)
+	-d  (or --data)       render results as tab delimited data
+	-e  (or --ether)      return the balance in Ether instead of Wei
+	-v  (or --verbose)    set verbose level. Follow with a number to set level (-v0 for silent)
+	-h  (or --help)       display this help screen
+
+[0;34m[1m  Powered by QuickBlocks
+[0m
+no address
+
+[0;31m  You must provide at least one Ethereum address.
+
+[0;33m[1m  Usage:    [0mgetBalance [-d|-e|-v|-h] addrs blocks  
+[0;33m[1m  Purpose:  [0mRetrieve the balance for an account at a block.
+             
+[0;33m[1m  Where:  [0m  
+	addrs                 Ethereum address (starting with '0x') from which to retrieve the balance (required)
+	blocks                the block at which to retrieve the balance (defaults to 'latest') (required)
+	-d  (or --data)       render results as tab delimited data
+	-e  (or --ether)      return the balance in Ether instead of Wei
+	-v  (or --verbose)    set verbose level. Follow with a number to set level (-v0 for silent)
+	-h  (or --help)       display this help screen
+
+[0;34m[1m  Powered by QuickBlocks
+[0m
+no block (should default to latest block)
+Not run
+
+get balance of dao at block 1500000
+Balance of address 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 at block 1500000: 4420466920675732108465682
+
+get balance of two accounts at 1500000
+Balance of address 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 at block 1500000: 4420466920675732108465682
+
+get balance of tip jar at four different blocks
+Balance of address 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 at block 1500000: 2647815343985767974336
+Balance of address 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 at block 2000000: 3671650516137718461308
+Balance of address 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 at block 2500000: 3905662906205094119236
+Balance of address 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 at block 3000000: 3960634342363571743689
+
+same tests with ether
+
+get balance of dao at block 1500000 in ether
+Balance of address 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 at block 1500000: 4420466920675732108465682
+
+get balance of two accounts at 1500000 in ether
+Balance of address 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 at block 1500000: 4420466920675732108465682
+Balance of address 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 at block 1500000: 2647815343985767974336
+
+get balance of tip jar at four different blocks in ether
+Balance of address 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 at block 1500000: 2647815343985767974336
+Balance of address 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 at block 2000000: 3671650516137718461308
+Balance of address 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 at block 2500000: 3905662906205094119236
+Balance of address 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 at block 3000000: 3960634342363571743689
+
+from file
+Balance of address 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 at block 1500000: 4420466920675732108465682
+Balance of address 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 at block 2000000: 4
+Balance of address 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 at block 2500000: 7450996705823359920
+Balance of address 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 at block 3000000: 7481996705823359927
+Balance of address 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 at block 1500000: 2647815343985767974336
+Balance of address 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 at block 2000000: 3671650516137718461308
+Balance of address 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 at block 2500000: 3905662906205094119236
+Balance of address 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 at block 3000000: 3960634342363571743689
+Balance of address 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 at block 1500000: 2647815343985767974336
+Balance of address 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 at block 2000000: 3671650516137718461308
+Balance of address 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 at block 2500000: 3905662906205094119236
+Balance of address 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 at block 3000000: 3960634342363571743689
+Balance of address 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 at block 1500000: 2647815343985767974336
+Balance of address 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 at block 2000000: 3671650516137718461308
+Balance of address 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 at block 1500000: 4420466920675732108465682
+Balance of address 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 at block 2000000: 4
+Balance of address 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 at block 2500000: 7450996705823359920
+Balance of address 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 at block 3000000: 7481996705823359927
+Balance of address 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 at block 1500000: 4420466920675732108465682
+Balance of address 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 at block 2000000: 4
+Balance of address 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 at block 2500000: 7450996705823359920
+Balance of address 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 at block 3000000: 7481996705823359927
+Balance of address 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 at block 1500000: 4420466920675732108465682
+Balance of address 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 at block 2000000: 4
+Balance of address 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 at block 2500000: 7450996705823359920
+Balance of address 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 at block 3000000: 7481996705823359927
+Balance of address 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 at block 1500000: 4420466920675732108465682
+Balance of address 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 at block 2000000: 4
+Balance of address 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 at block 2500000: 7450996705823359920
+Balance of address 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 at block 3000000: 7481996705823359927
+Balance of address 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 at block 0: 0
+Balance of address 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 at block 1500000: 4420466920675732108465682
+Balance of address 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 at block 1500000: 2647815343985767974336
+Balance of address 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 at block 2000000: 3671650516137718461308
+Balance of address 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 at block 2500000: 3905662906205094119236
+Balance of address 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 at block 3000000: 3960634342363571743689
+Balance of address 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 at block 1500000: 2647815343985767974336
+Balance of address 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 at block 2000000: 3671650516137718461308
+Balance of address 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 at block 2500000: 3905662906205094119236
+Balance of address 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 at block 3000000: 3960634342363571743689
+Balance of address 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 at block 0: 0
+Balance of address 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 at block 1500000: 2647815343985767974336
+
