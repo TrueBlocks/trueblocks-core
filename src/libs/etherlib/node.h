@@ -32,6 +32,7 @@ extern SFString compileSolidity         (const SFString& sol);
 extern SFString getVersionFromClient    (void);
 extern SFUint32 getLatestBlockFromClient(void);
 extern SFUint32 getLatestBlockFromCache (CSharedResource *res=NULL);
+extern SFUint32 getLatestBloomFromCache (void);
 extern bool     getLatestBlocks         (SFUint32& cache, SFUint32& client, CSharedResource *res=NULL);
 
 //-------------------------------------------------------------------------
