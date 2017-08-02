@@ -740,6 +740,11 @@ SFUint32 getLatestBlockFromClient(void)
 }
 
 //--------------------------------------------------------------------------
+SFUint32 getLatestBloomFromCache(void) {
+    return toLongU(asciiFileToString(bloomFolder + "lastBloom.txt"));
+}
+
+//--------------------------------------------------------------------------
 SFUint32 getLatestBlockFromCache(CSharedResource *res) {
 
     SFUint32 ret = 0;
