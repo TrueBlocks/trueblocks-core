@@ -494,11 +494,11 @@ const char* STR_FACTORY2 =
 //-----------------------------------------------------------------------
 const char* STR_CLASSDEF =
 "[settings]\n"
-"class:\t\t[{CLASS}]\n"
-"baseClass:\tC[{BASE}]\n"
-"fields:\t\t[{FIELDS}]\n"
-"includes:\t[{BASE_LOWER}].h\n"
-"cIncs:\t\t#include \"etherlib.h\"\n";
+"class     = [{CLASS}]\n"
+"baseClass = C[{BASE}]\n"
+"fields    = [{FIELDS}]\n"
+"includes  = [{BASE_LOWER}].h\n"
+"cIncs     = #include \"etherlib.h\"\n";
 
 //-----------------------------------------------------------------------
 const char* STR_HEADERFILE =
