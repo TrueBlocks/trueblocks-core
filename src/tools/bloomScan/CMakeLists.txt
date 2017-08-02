@@ -18,7 +18,7 @@ set(TOOL_NAME "bloomScan")
 add_executable(${TOOL_NAME} ${SOURCE_FILES})
 
 # Add the project static libs at linking
-target_link_libraries (${TOOL_NAME} ${BASE_LIBS} token wallet)
+target_link_libraries (${TOOL_NAME} wallet token ${BASE_LIBS})
 
 # Add some test cases - run using 'make test'
 add_test(NAME ${PROJECT}_test WORKING_DIRECTORY ${TESTCASE_PATH}/tools/${PROJECT}/ COMMAND ./run_tests.py)
