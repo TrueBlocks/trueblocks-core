@@ -1042,7 +1042,7 @@ bool forEveryTransactionFrom(TRANSVISITFUNC func, void *data, SFUint32 start, SF
 
 //-------------------------------------------------------------------------
 bool forEveryBloomFile(FILEVISITOR func, void *data, SFUint32 start, SFUint32 count, SFUint32 skip) {
-    if (start == 0 || count == -1) { // visit everything since we're given the default
+    if (start == 0 || count == (SFUint32)-1) { // visit everything since we're given the default
         forEveryFileInFolder(bloomFolder, func, data);
         return true;
     }
