@@ -26,6 +26,8 @@ int main(int argc, const char *argv[]) {
     if (argc < 2)
         verbose = true;
 
+    SFUint32 topOfChain = getLatestBloomFromCache();
+
     // Parse command line, allowing for command files
     CVisitor visitor;
     if (!visitor.opts.prepareArguments(argc, argv)) {
@@ -99,7 +101,6 @@ int main(int argc, const char *argv[]) {
         // Freshening the cache (if the user tells us to...)
         if (visitor.opts.mode.Contains("freshen")) {
 
-            SFUint32 topOfChain = getLatestBlockFromCache();
             SFUint32 lastVisit  = toLongU(asciiFileToString("./cache/lastBlock.txt"));
             blockNum = max(blockNum, lastVisit) + 1;
 
@@ -120,13 +121,14 @@ int main(int argc, const char *argv[]) {
             visitor.cache.m_writeDeleted = true;
             if (visitor.cache.Lock(cacheFileName, "a+", LOCK_WAIT)) {
                 forEveryBloomFile(updateCacheUsingBlooms, &visitor, visitor.startBlock, visitor.nBlocksToVisit);
-                stringToAsciiFile("./cache/lastBlock.txt", asStringU(visitor.startBlock+visitor.nBlocksToVisit) + "\r\n");
                 visitor.cache.Release();
             }
-            timestamp_t tsOut = toTimeStamp(Now());
-            SFString endMsg = dateFromTimeStamp(tsOut).Format(FMT_JSON) + " (" + asString(topOfChain) + ")";
-            visitor.interumReport(visitor.endBlock, visitor.last_ts, endMsg);
-            cout << "\r\n";
+            if (visitor.nFreshened) {
+                timestamp_t tsOut = toTimeStamp(Now());
+                SFString endMsg = dateFromTimeStamp(tsOut).Format(FMT_JSON) + " (" + asString(topOfChain) + ")";
+                visitor.interumReport(visitor.endBlock, visitor.last_ts, endMsg);
+                cout << "\r\n";
+            }
         }
 
         SFTime now = Now();
@@ -146,7 +148,7 @@ int main(int argc, const char *argv[]) {
 
     if (visitor.opts.debugger_on) {
         CBlock block;
-        getBlock(block, getLatestBlockFromCache());
+        getBlock(block, topOfChain);
         visitor.enterDebugger(block);
     }
 
