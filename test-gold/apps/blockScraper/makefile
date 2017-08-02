@@ -8,6 +8,7 @@ exec=blockScrape
 all:
 	@echo ; colorEcho -t "Building $(exec)..."
 	@cd $(build)/$(exec) ; make >/dev/null 2>&1
+	@echo ; colorEcho -t "Building bytesUsed..."
 	@cd bytesUsed ; make
 
 clean:
