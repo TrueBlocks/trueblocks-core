@@ -7,7 +7,7 @@ exec=ethName
 #-------------------------------------------------
 all:
 	@echo ; colorEcho -t "Building $(exec)..."
-	@cd $(build)/$(exec) ; make >/dev/null 2>&1
+	@cd $(build)/$(exec) ; make 2>&1
 
 clean:
 	@cd $(build)/$(exec) ; make clean
