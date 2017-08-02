@@ -60,8 +60,8 @@ bool loadData(void) {
     SFString contents = asciiFileToString(configPath("configs/names.conf"));
     contents.ReplaceAll("\t\t", "\t");
     if (contents.empty()) {
-	stringToAsciiFile(configPath("configs/names.conf"), STR_DEFAULT_DATA);
-	return false;
+        stringToAsciiFile(configPath("configs/names.conf"), STR_DEFAULT_DATA);
+        return false;
     }
 
     while (!contents.empty()) {
