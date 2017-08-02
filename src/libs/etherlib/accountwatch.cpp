@@ -320,7 +320,7 @@ bool CAccountWatch::isTransactionOfInterest(CTransaction *trans, uint32_t nSigs,
     //
     // TODO(tjayrush): We should do a 'deep trace' here (or when the block is first read)
     // to see if there was a 'call,' to our address.
-    for (int i = 0 ; i < trans->receipt.logs.getCount() ; i++) {
+    for (uint64_t i = 0 ; i < trans->receipt.logs.getCount() ; i++) {
         SFString acc = address;
         CLogEntry *l = reinterpret_cast<CLogEntry *>(&trans->receipt.logs[i]);
         if (l->address.Contains(acc)) {
@@ -343,7 +343,7 @@ bool CAccountWatch::isTransactionOfInterest(CTransaction *trans, uint32_t nSigs,
 
             } else {
                 // If the topic[0] is an event of interest...
-                for (int q = 0 ; q < nSigs ; q++) {
+                for (uint64_t q = 0 ; q < nSigs ; q++) {
                     SFHash tHash = fromTopic(l->topics[0]);
                     if (tHash % sigs[q]) {
                         trans->isInternalTx = true;
@@ -352,7 +352,7 @@ bool CAccountWatch::isTransactionOfInterest(CTransaction *trans, uint32_t nSigs,
                 }
 
                 // ...or the address is in the indexed topics or data
-                for (int j = 1 ; j < l->topics.getCount() ; j++) {
+                for (uint64_t j = 1 ; j < l->topics.getCount() ; j++) {
                     SFHash tHash = fromTopic(l->topics[j]);
                     if (tHash % acc) {
                         trans->isInternalTx = true;
@@ -366,7 +366,7 @@ bool CAccountWatch::isTransactionOfInterest(CTransaction *trans, uint32_t nSigs,
     if (deepScan) {
         CTraceArray traces;
         getTraces(traces, trans->hash);
-        for (int i = 0 ; i < traces.getCount() ; i++) {
+        for (uint64_t i = 0 ; i < traces.getCount() ; i++) {
             CTraceAction *action = (CTraceAction*)&(traces[i].action);
             if (action->to % address || action->from % address || action->address % address || action->refundAddress % address) {
                 trans->isInternalTx = true;
