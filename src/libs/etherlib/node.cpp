@@ -83,6 +83,8 @@ void etherlib_init(const SFString& sourceIn)
 
     // initialize curl
     getCurl();
+
+    establishFolder(configPath());
 }
 
 //-------------------------------------------------------------------------
