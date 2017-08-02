@@ -10,9 +10,10 @@
 #
 # The parameters are (N: total number):
 # argv[0] the name of the python script
-# argv[1] the name of the command we want to run
+# argv[1] the name of the command we want to run (absolute path encouraged)
 # argv[2] -> argv[N-3] are the parameters passed to the command
 # argv[N-2] is the output file where result is stored (this one will be compared with the gold copy at the same path but under test_gold)
+# argv[N-1] is the gold copy we want to compare with
 #
 #########################################################################################################################################
 
