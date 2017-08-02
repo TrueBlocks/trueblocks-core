@@ -83,6 +83,8 @@ void etherlib_init(const SFString& sourceIn)
 
     // initialize curl
     getCurl();
+
+    establishFolder(configPath());
 }
 
 //-------------------------------------------------------------------------
@@ -737,6 +739,11 @@ SFUint32 getLatestBlockFromClient(void)
     CBlock block;
     getObjectViaRPC(block, "eth_getBlockByNumber", "[\"latest\",true]");
     return block.blockNumber;
+}
+
+//--------------------------------------------------------------------------
+SFUint32 getLatestBloomFromCache(void) {
+    return toLongU(asciiFileToString(bloomFolder + "lastBloom.txt"));
 }
 
 //--------------------------------------------------------------------------
