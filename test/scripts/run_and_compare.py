@@ -58,7 +58,7 @@ if os.path.isfile(gold_file) == False:
 
 # Build the exact command we want to run as list of items, pick the first ones from argv
 # Then add the output file and redirections
-command = sys.argv[1:-1]
+command = sys.argv[1:-2]
 
 # Debug only 
 # print(command)
