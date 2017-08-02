@@ -10,15 +10,25 @@
 
 //-----------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
+
+   // Tell the system where the blocks are and which version to use
+    setStorageRoot(BLOCK_CACHE);
+    etherlib_init("fastest");
+
     COptions options;
     if (!options.prepareArguments(argc, argv))
         return 0;
 
-    loadData();
+    bool loaded = loadData();
     while (!options.commandList.empty()) {
         SFString command = nextTokenClear(options.commandList, '\n');
         if (!options.parseArguments(command))
             return 0;
+
+        if (!loaded) {
+            usage(configPath("configs/names.conf") + " is empty. Use ethName -e to add some names. Quitting...");
+            exit(0);
+        }
 
         SFString fmt = (options.addrOnly ? "[{ADDR}]" : "");
         if (options.list) {
@@ -38,20 +48,31 @@ int main(int argc, const char *argv[]) {
     return 0;
 }
 
+extern const char *STR_DEFAULT_DATA;
 //-----------------------------------------------------------------------
-void loadData(void) {
+bool loadData(void) {
     if (accounts.getCount() > 0)
-        return;
+        return true;
+
+    if (!folderExists(configPath("configs/")))
+        establishFolder(configPath("configs/"));
 
     SFString contents = asciiFileToString(configPath("configs/names.conf"));
     contents.ReplaceAll("\t\t", "\t");
+    if (contents.empty()) {
+	stringToAsciiFile(configPath("configs/names.conf"), STR_DEFAULT_DATA);
+	return false;
+    }
 
     while (!contents.empty()) {
         SFString line = nextTokenClear(contents, '\n');
-        if (!countOf('\t', line))
-            cerr << "Line " << line << " does not contain two tabs.\n";
-        accounts[accounts.getCount()] = CAccountName(line);
+        if (!line.startsWith("#")) {
+            if (!countOf('\t', line))
+                cerr << "Line " << line << " does not contain two tabs.\n";
+            accounts[accounts.getCount()] = CAccountName(line);
+        }
     }
+    return true;
 }
 
 //-----------------------------------------------------------------------
@@ -104,3 +125,15 @@ bool CAccountName::Match(const SFString& s1, const SFString& s2, const SFString&
     // We have only s1
     return (all ? m11 || m12 || m13 : m11 || m12);
 }
+
+const char *STR_DEFAULT_DATA =
+"#---------------------------------------------------------------------------------------------------\n"
+"#  This is the ethName database. Format records as tab seperated lines with the following format:\n"
+"#\n"
+"#      ethereum_address <tab> name <tab> source <newline>\n"
+"#\n"
+"#  An entry for \"The DAO\" is included below.\n"
+"#---------------------------------------------------------------------------------------------------\n"
+"#          Ethereum Address                      Name                    Source\n"
+"#---------------------------------------------------------------------------------------------------\n"
+"0xbb9bc244d798123fde783fcc1c72d3bb8c189413	The DAO		The DAO website and git hub\n";
