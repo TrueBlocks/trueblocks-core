@@ -1,8 +1,0 @@
-{ "addr": "0x3b350cf8846c12d2f6bd1058f1a3084144a3d434", "name": "Currency_id287_cnt6_2mo", "source": "Ether Camp" }
-{ "addr": "0x73299b09acf67d3b279142975a9a99932996b931", "name": "Security_id289_cnt10_2mo", "source": "Ether Camp" }
-{ "addr": "0xd870e20d6b2ad29a3a68f6a3ddd27d6a79bd61a2", "name": "communityCurrency_id32_cnt142_6mo", "source": "Ether Camp" }
-{ "addr": "0xda4a4626d3e16e094de3225a751aab7128e96526", "name": "CuratorMultiSig", "source": "The Dao" }
-{ "addr": "0xda4a4626d3e16e094de3225a751aab7128e96526", "name": "Wallet_Thedaocurator", "source": "EtherScan.ioVerifiedContracts" }
-{ "addr": "0xe77d1e61dfdac280f0199a2da883c6c7e8a68591", "name": "communityCurrency_id31_cnt34_6mo", "source": "Ether Camp" }
-{ "addr": "0xf8c35f1cf2dc4dbeaeeb2ecb298a80b506a5781d", "name": "DAOSecurity_id190_cnt1_3mo", "source": "Ether Camp" }
-{ "addr": "0xf8c35f1cf2dc4dbeaeeb2ecb298a80b506a5781d", "name": "Daosecurity_Slockitdaosec", "source": "EtherScan.ioVerifiedContracts" }
