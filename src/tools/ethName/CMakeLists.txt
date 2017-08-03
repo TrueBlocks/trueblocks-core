@@ -20,5 +20,33 @@ add_executable(${TOOL_NAME} ${SOURCE_FILES})
 # Add the project static libs at linking
 target_link_libraries (${TOOL_NAME} wallet token ${BASE_LIBS})
 
-# Add some test cases - run using 'make test'
-add_test(NAME ethName_test WORKING_DIRECTORY ${TESTCASE_PATH}/tools/ethName/ COMMAND ./run_tests.py)
+#
+# TEST SECTION 
+#
+
+# Define general stuff: python script to use, paths, ...
+set(TEST_SCRIPT "${TESTCASE_PATH}/scripts/run_and_compare.py")
+set(TEST_EXE "${EXECUTABLE_OUTPUT_PATH}/${TOOL_NAME}")
+set(TEST_INPUT_FILE_PATH "${TESTCASE_PATH}/tools/${TOOL_NAME}/tests/")
+set(TEST_GOLD_FILE_PATH "${TESTCASE_GOLD_PATH}/tools/${TOOL_NAME}/tests/")
+
+#
+# Create a function (run_test) to execute a single test passing the parameters required
+#  We receive the following parameters
+#  - testName : Name we want to assign to the test
+#  - testFileName: File name we will use in our comparison (it contains the output obtained)
+#  - testArgs: The args we need to pass to the test program at command line (i.e. 0x1)
+#
+function(run_test testName testFileName testArgs)
+	set(TEST_INPUT_FILE "${TEST_INPUT_FILE_PATH}/${testFileName}")
+	set(TEST_GOLD_FILE "${TEST_GOLD_FILE_PATH}/${testFileName}")
+	set(TEST_PARAMS "${TEST_EXE} ${testArgs} ${TEST_INPUT_FILE} ${TESTCASE_GOLD_FILE}")
+	add_test(NAME ${testName} COMMAND ${TEST_SCRIPT} ${TEST_PARAMS})
+endfunction(run_test)
+
+# Set the params for each test and define the test case using the shared function
+# TEST1 .- Here some description
+run_test("ethName_test_1" "test1.txt" "0x1")
+
+#TEST2 - Here some description
+run_test("ethName_test_2" "test2.txt" "0x1 rob")
