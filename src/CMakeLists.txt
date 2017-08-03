@@ -34,6 +34,7 @@ set (BASE_LIBS acct abi ether util ${CURL_LIBRARIES})
 set (SCRIPTS_DEST_PATH "${CMAKE_SOURCE_DIR}/../bin")
 set (TESTCASE_PATH "${CMAKE_SOURCE_DIR}/../test")
 set (TESTCASE_GOLD_PATH "${CMAKE_SOURCE_DIR}/../test-gold")
+set (TESTCASE_SCRIPT "${TESTCASE_PATH}/scripts/run_and_compare.py")
 
 # compilation order of the src subdirectories
 add_subdirectory (libs)
