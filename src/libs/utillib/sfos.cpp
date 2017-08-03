@@ -67,7 +67,7 @@ namespace qblocks {
         nStrs = 0;
         char c;
 
-        for (int i = 0 ; i < n ; i++) {
+        for (size_t i = 0 ; i < n ; i++) {
             // get path
             char *tmp = globBuf.gl_pathv[i];
             // last char
