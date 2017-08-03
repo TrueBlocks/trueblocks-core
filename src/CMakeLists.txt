@@ -33,6 +33,7 @@ set (BASE_LIBS acct abi ether util ${CURL_LIBRARIES})
 # folders for various purposes
 set (SCRIPTS_DEST_PATH "${CMAKE_SOURCE_DIR}/../bin")
 set (TESTCASE_PATH "${CMAKE_SOURCE_DIR}/../test")
+set (TESTCASE_GOLD_PATH "${CMAKE_SOURCE_DIR}/../test-gold")
 
 # compilation order of the src subdirectories
 add_subdirectory (libs)
