@@ -323,13 +323,13 @@ bool CAbi::loadABI(const SFString& addr) {
         SFString abis;
 
         // TODO(tjayrush): this is wrong. We should remove the need to use external 'ethabi' code to get the encodings
-        for (int i=0;i<abiByName.getCount();i++) {
+        for (uint32_t i=0;i<abiByName.getCount();i++) {
             getEncoding(abiFilename, addr, abiByName[i]);
             abis += abiByName[i].Format("[{NAME}]|[{ENCODING}]\n");
         }
 
         // We need to do both since they are copies
-        for (int i=0;i<abiByEncoding.getCount();i++) {
+        for (uint32_t i=0;i<abiByEncoding.getCount();i++) {
             getEncoding(abiFilename, addr, abiByEncoding[i]);
         }
 
@@ -349,10 +349,10 @@ bool CAbi::loadABI(const SFString& addr) {
 
 //---------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const CAbi& abi) {
-    for (int i = 0 ; i < abi.abiByName.getCount() ; i++ ) {
+    for (uint32_t i = 0 ; i < abi.abiByName.getCount() ; i++ ) {
         os << abi.abiByName[i].Format() << "\n";
     }
-    for (int i = 0 ; i < abi.abiByEncoding.getCount() ; i++ ) {
+    for (uint32_t i = 0 ; i < abi.abiByEncoding.getCount() ; i++ ) {
         os << abi.abiByEncoding[i].Format() << "\n";
     }
     return os;

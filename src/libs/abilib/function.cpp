@@ -167,7 +167,7 @@ void CFunction::finishParse() {
     encoding  = encodeItem();
     // The input parameters need to have a name. If not, we provide one
     int cnt = 0;
-    for (int i = 0 ; i < inputs.getCount() ; i++) {
+    for (uint32_t i = 0 ; i < inputs.getCount() ; i++) {
         if (inputs[i].name.empty())
             inputs[i].name = "param_" + asString(cnt++);
     }
