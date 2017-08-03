@@ -186,11 +186,11 @@ extern SFString stripFullLineComments(const SFString& inStr);
         contents.ReplaceAll(" =","=");
         contents.ReplaceAll("= ","=");
         uint64_t fnd = contents.find(key+"=");
-        if (fnd == -1)
+        if (fnd == (SFUint32)-1)
             return "";
         SFString ret = contents.substr(fnd+key.length()+1);
         fnd = ret.find("]");
-        if (fnd == -1)
+        if (fnd == (SFUint32)-1)
             return "";
         ret.ReplaceAll("=",":");
 extern char *cleanUpJson(char *s);
