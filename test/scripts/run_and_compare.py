@@ -42,7 +42,7 @@ param_number = len(sys.argv)
 # We need at least the python script [0], the command to be executed [1] the output file [2] and the gold file [3]
 if param_number <= 3:  
     print("ERROR: Invalid parameters number, at least 3 expected")
-    exit(-1)
+    exit(1)
 
 # Get the output/gold files
 output_file = sys.argv[param_number-2]
@@ -51,7 +51,7 @@ gold_file = sys.argv[param_number-1]
 # Check that gold file is present
 if os.path.isfile(gold_file) == False:
     print("ERROR: Could not find gold file %s" % gold_file)
-    exit(-1)
+    exit(2)
 
 #Debug
 #print("%d parameters received, output file is %s gold file %s" % (param_number, output_file, gold_file))
@@ -75,5 +75,6 @@ if result:
 if cmp_files(output_file, gold_file):
     exit(0)
 else:
-    exit(-1)
+    print("ERROR: Differences found comparing %s with %s" % (output_file, gold_file)) 
+    exit(3)
 
