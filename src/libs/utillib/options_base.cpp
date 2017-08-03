@@ -184,6 +184,7 @@ namespace qblocks {
                 nextTokenClear(hotKey,'(');
                 hotKey = nextTokenClear(hotKey, ')');
                 longName.ReplaceAny("()","");
+                shortName = "-" + hotKey;
             }
         }
     }
