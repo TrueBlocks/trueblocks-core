@@ -40,8 +40,7 @@ set(TEST_GOLD_FILE_PATH "${TESTCASE_GOLD_PATH}/tools/${TOOL_NAME}/tests/")
 function(run_test testName testFileName testArgs)
 	set(TEST_INPUT_FILE "${TEST_INPUT_FILE_PATH}/${testFileName}")
 	set(TEST_GOLD_FILE "${TEST_GOLD_FILE_PATH}/${testFileName}")
-	set(TEST_PARAMS "${TEST_EXE} ${testArgs} ${TEST_INPUT_FILE} ${TESTCASE_GOLD_FILE}")
-	add_test(NAME ${testName} COMMAND ${TEST_SCRIPT} ${TEST_PARAMS})
+	add_test(NAME ${testName} COMMAND ${TEST_SCRIPT} ${TEST_EXE} ${testArgs} ${TEST_INPUT_FILE} ${TEST_GOLD_FILE})
 endfunction(run_test)
 
 # Set the params for each test and define the test case using the shared function
