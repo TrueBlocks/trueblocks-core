@@ -19,5 +19,3 @@ add_executable(${TOOL_NAME} ${SOURCE_FILES})
 
 # Add the project static libs at linking
 target_link_libraries (${TOOL_NAME} wallet token ${BASE_LIBS})
-
-# No tests defined for this program yet
