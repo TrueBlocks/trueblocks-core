@@ -33,6 +33,7 @@ function(run_test testName testArgs)
 endfunction(run_test)
 
 # Enter one line for each individual test
+run_test("ethName_README" "-th")
 run_test("ethName_simple_search"  "0x1")
 run_test("ethName_invalid_search" "0x1 rob")
 run_test("ethName_three_params" "0x1 rob steem")

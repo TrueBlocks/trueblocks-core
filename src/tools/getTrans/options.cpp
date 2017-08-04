@@ -36,6 +36,7 @@ bool COptions::parseArguments(SFString& command) {
             }
 
         } else {
+
             if (arg.startsWith("0x")) {
 
                 if (arg.Contains(".")) {
