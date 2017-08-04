@@ -9,9 +9,8 @@
 
 //---------------------------------------------------------------------------------------------------
 CParams params[] = {
-    CParams("-option1", "option one"),
-    CParams("-thing",   "option two"),
-    CParams("",        "This is what the program does.\n"),
+    CParams("~file(s)", "One or more files to parse"),
+    CParams("",     "Test the json parsing facility in quickBlocks.\n"),
 };
 uint32_t nParams = sizeof(params) / sizeof(CParams);
 
@@ -21,22 +20,19 @@ bool COptions::parseArguments(SFString& command) {
     Init();
     while (!command.empty()) {
         SFString arg = nextTokenClear(command, ' ');
-        if (arg == "-o" || arg == "--option1") {
-            option1 = true;
-
-        } else if (arg == "-t" || arg == "--thing") {
-            option2 = true;
-
-        } else if (arg.startsWith('-')) {  // do not collapse
-
+        if (arg.startsWith('-')) {  // do not collapse
             if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);
             }
+        } else {
+            if (!fileExists(arg))
+                return usage("File : " + arg + " does not exists. Quitting...");
+            fileName += (arg + "|");
         }
     }
 
-    if (option1 && option2)
-        return usage("Option 1 and option 2 cannot both be true.");
+    if (fileName.empty())
+        return usage("You must supply a filename to test. Quitting...");
 
     return true;
 }
@@ -46,8 +42,7 @@ void COptions::Init(void) {
     paramsPtr = params;
     nParamsRef = nParams;
 
-    option1 = false;
-    option2 = false;
+    // fileName = "";
 
     useVerbose = true;
     useTesting = false;

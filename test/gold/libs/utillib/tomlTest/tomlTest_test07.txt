@@ -1,0 +1,6 @@
+test07.toml
+[version]
+	version=0:9:0
+[settings]
+	name=data/018_ChildDAO
+
