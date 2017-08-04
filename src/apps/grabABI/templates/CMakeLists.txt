@@ -5,7 +5,7 @@ cmake_minimum_required (VERSION 2.6)
 project ([{PROJECT_NAME}])
 
 # c++ compilation flags used everywhere
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -O2")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Werror -Wall -O2")
 
 # local headers for parser and debugger
 include_directories("${CMAKE_CURRENT_LIST_DIR}/parselib" "${CMAKE_CURRENT_LIST_DIR}")

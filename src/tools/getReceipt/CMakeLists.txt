@@ -5,7 +5,7 @@ cmake_minimum_required (VERSION 2.6)
 project (getReceipt)
 
 # c++ compilation flags used everywhere
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -O2")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Werror -Wall -O2")
 
 # The sources to be used
 file(GLOB SOURCE_FILES "*.cpp")
