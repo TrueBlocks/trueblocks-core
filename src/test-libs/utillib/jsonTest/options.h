@@ -8,8 +8,7 @@
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
-    bool option1;
-    bool option2;
+    SFString fileName;
 
     COptions(void);
     ~COptions(void);
