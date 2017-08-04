@@ -44,8 +44,8 @@ set (SCRIPTS_DEST_PATH "${CMAKE_SOURCE_DIR}/../bin")
 # Enable testing
 enable_testing()
 
-set (TEST_PATH "${CMAKE_SOURCE_DIR}/../test")
-set (GOLD_PATH "${CMAKE_SOURCE_DIR}/../test-gold")
+set (TEST_PATH "${CMAKE_SOURCE_DIR}/../test/working")
+set (GOLD_PATH "${CMAKE_SOURCE_DIR}/../test/gold")
 set (TEST_CHECK "${SCRIPTS_DEST_PATH}/testCheck.py")
 
 # ----------------------------------------------------------------------------------------

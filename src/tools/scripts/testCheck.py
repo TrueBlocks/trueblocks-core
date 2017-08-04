@@ -17,10 +17,17 @@
 #
 #########################################################################################################################################
 
+from __future__ import print_function
 import os
 import sys
 import subprocess
 import filecmp
+
+#-------------------------------------------------------
+# Print to standard error
+#-------------------------------------------------------
+def printe(*args, **kwargs):
+    print(*args, file=sys.stderr, **kwargs)
 
 #-------------------------------------------------------
 # Function to compare 2 txt files
@@ -34,14 +41,14 @@ def cmp_files(a, b):
 #-------------------------------------------------------
 
 # Debugging input array
-# print(sys.argv)
+# printe(sys.argv)
 
 # Check input parameters number
 param_number = len(sys.argv)
 
 # We need at least the python script [0], the command to be executed [1] the output file [2] and the gold file [3]
-if param_number <= 3:  
-    print("ERROR: Invalid parameters number, at least 3 expected")
+if param_number <= 3:
+    printe("ERROR: Invalid parameters number, at least 3 expected")
     exit(1)
 
 # Get the output/gold files
@@ -50,31 +57,34 @@ gold_file = sys.argv[param_number-1]
 
 # Check that gold file is present
 if os.path.isfile(gold_file) == False:
-    print("ERROR: Could not find gold file %s" % gold_file)
+    printe("ERROR: Could not find gold file %s" % gold_file)
     exit(2)
 
 #Debug
-#print("%d parameters received, output file is %s gold file %s" % (param_number, output_file, gold_file))
+#printe("%d parameters received, output file is %s gold file %s" % (param_number, output_file, gold_file))
 
 # Build the exact command we want to run as list of items, pick the first ones from argv
 # Then add the output file and redirections
 command = sys.argv[1:-2]
 
-# Debug only 
-# print(command)
+# Debug only
+# printe(command)
 
 # Open output file and execute the command with redirections
 with open(output_file, 'w') as f:
+    os.chdir(os.path.dirname(output_file))
+    printe(os.getcwd())
+    os.environ["NO_COLOR"] = "true"
     result = subprocess.call(command, stdout=f, stderr=subprocess.STDOUT)
 
 if result:
-    print("ERROR: Command execution failed with error %d" % result)
+    printe("ERROR: Command execution failed with error %d" % result)
     exit(result)
 
 # Command result is OK - compare output file with gold one
 if cmp_files(output_file, gold_file):
     exit(0)
 else:
-    print("ERROR: Differences found comparing %s with %s" % (output_file, gold_file)) 
+    printe("ERROR: Differences found comparing %s with %s" % (output_file, gold_file)) 
     exit(3)
 

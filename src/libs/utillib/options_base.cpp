@@ -28,7 +28,11 @@ namespace qblocks {
 
     //--------------------------------------------------------------------------------
     bool COptionsBase::prepareArguments(int argc, const char *argv[]) {
-        programName = SFString(argv[0]);
+
+        if (SFString(getenv("NO_COLOR")) == "true")
+            colorsOff();
+
+        programName = basename((char*)argv[0]);
         if ((SFUint32)argc <= minArgs)  // the first arg is the program's name
             return usage("Not enough arguments presented.");
 
@@ -110,9 +114,6 @@ namespace qblocks {
             }
         }
 
-        if (SFString(getenv("NO_COLOR")) == "true")
-            colorsOff();
-        
         // If we have a command file, we will use it, if not we will creat one and pretend we have one.
         commandList = EMPTY;
         fromFile = false;
@@ -200,6 +201,7 @@ namespace qblocks {
     }
 
     SFString usageStr(const SFString& errMsg) {
+
         ostringstream os;
         if (isTesting) {
             sep = sep2 = "`";
@@ -223,19 +225,17 @@ namespace qblocks {
         os << COptionsBase::footer;
         if (isTesting)
             os << STR_FILE_OPTION;
-        os << bBlue << (isTesting?"":"  ") << "Powered by QuickBlocks\n" << cOff;
+        os << bBlue << (isTesting?"#### ":"  ") << "Powered by QuickBlocks" << (isTesting?"&reg;":"") << "\n" << cOff;
         return os.str().c_str();
     }
 
     //--------------------------------------------------------------------------------
     const char *STR_FILE_OPTION =
-    "##### Other options\n"
+    "##### Other Options\n"
     "\n"
-    "Enter --version to display the current version of the tool.\n"
-    "\n"
-    "Enter --nocolors to turn off colored display.\n"
-    "\n"
-    "Enter --wei (default), --ether, or --dollars to alter the way value is displayed.\n"
+    "Enter `--version` to display the current version of the tool.  \n"
+    "Enter `--nocolors` to turn off colored display.  \n"
+    "Enter `--wei` (default), `--ether`, or `--dollars` to alter the way value is displayed.  \n"
     "\n"
     "All `quickBlocks` command-line tools support the `--file:filename` option. Place valid commands, on separate "
     "lines, in a file and include the above option. In some cases, this option may significantly improve "
