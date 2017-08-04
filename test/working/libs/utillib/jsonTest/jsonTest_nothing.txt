@@ -1,0 +1,12 @@
+
+  You must supply a filename to test. Quitting...
+
+  Usage:    jsonTest [-v|-h] files  
+  Purpose:  Test the json parsing facility in quickBlocks.
+             
+  Where:    
+	files                 One or more files to parse (required)
+	-v  (or --verbose)    set verbose level. Follow with a number to set level (-v0 for silent)
+	-h  (or --help)       display this help screen
+
+  Powered by QuickBlocks
