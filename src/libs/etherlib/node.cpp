@@ -75,6 +75,9 @@ void etherlib_init(const SFString& sourceIn)
     CBalHistory::registerClass();
     CAccountWatch::registerClass();
     CIncomeStatement::registerClass();
+    CTrace::registerClass();
+    CTraceAction::registerClass();
+    CTraceResult::registerClass();
 
     HIDE_FIELD(CTransaction, "isError");
     HIDE_FIELD(CTransaction, "isInternalTx");
