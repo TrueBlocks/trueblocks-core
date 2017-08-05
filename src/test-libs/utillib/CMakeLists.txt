@@ -8,8 +8,8 @@ project (test-utillib)
 # message (WARNING  "*** Entering libs folder ***")
 
 # Compile the libraries in this order
-add_subdirectory(colorTest)
-add_subdirectory(exportContext)
-add_subdirectory(jsonTest)
-add_subdirectory(stringTest)
-add_subdirectory(tomlTest)
+#add_subdirectory(colorTest)
+#add_subdirectory(exportContext)
+#add_subdirectory(jsonTest)
+#add_subdirectory(stringTest)
+#add_subdirectory(tomlTest)
