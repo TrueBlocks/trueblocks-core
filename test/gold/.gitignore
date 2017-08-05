@@ -1,9 +1,0 @@
-.DS_Store
-bin
-*.twb
-*.o
-proj.xcodeproj
-*.bin
-speedTest
-backup
-ethslurp
