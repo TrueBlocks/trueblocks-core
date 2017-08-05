@@ -29,6 +29,7 @@ public:
     bool bloom_on;
     bool debugger_on;
     bool parse_on;
+    bool autocorrect_on;
     blknum_t kBlock;
 
     COptions(void);
@@ -39,87 +40,97 @@ public:
 };
 
 //-----------------------------------------------------------------------
+class CBlockStats {
+public:
+    uint64_t nBlocks;
+    blknum_t firstBlock;
+    blknum_t lastBlock;
+    blknum_t minWatchBlock;
+    blknum_t maxWatchBlock;
+    CBlock   prevBlock;
+    CBlockStats(void) :
+        nBlocks(0),
+        firstBlock(0),
+        lastBlock(0),
+        minWatchBlock(0),
+        maxWatchBlock(UINT32_MAX),
+        prevBlock()
+    {  }
+};
+
+//-----------------------------------------------------------------------
+class CTransStats {
+public:
+    uint64_t nAccountedFor;
+    uint64_t nDisplayed;
+    uint64_t nFreshened;
+    CTransStats(void) :
+        nAccountedFor(0),
+        nDisplayed(0),
+        nFreshened(0)
+    {  }
+};
+
+//-----------------------------------------------------------------------
 class CBloomStats {
 public:
-    uint32_t bloomsChecked;
-    uint32_t bloomHits;
-    uint32_t falsePositives;
+    uint64_t bloomsChecked;
+    uint64_t bloomHits;
+    uint64_t falsePositives;
     double startTime;
-    CBloomStats(void) : bloomsChecked(0), bloomHits(0), falsePositives(0) { startTime = qbNow(); }
+    CBloomStats(void) :
+        bloomsChecked(0),
+        bloomHits(0),
+        falsePositives(0)
+    { startTime = qbNow(); }
 };
 
 //-----------------------------------------------------------------------
 class CVisitor {
 public:
-    COptions opts;
-    SFArchive cache;
-    SFString screenFmt;
-    SFString verboseFmt;
-    bool esc_hit;
-    SFUint32 nAccountedFor;
-    SFUint32 nDisplayed;
-    SFUint32 nFreshened;
-    bool autoCorrect;
+    COptions     opts;
+    CBloomStats  bloomStats;
+    CTransStats  transStats;
+    CBlockStats  blockStats;
     CTransBuffer tBuffer;
-    SFUint32 nBlocksToVisit;
-    SFUint32 startBlock;
-    SFUint32 endBlock;
-    timestamp_t last_ts;
-    const CTransaction *lastTrans;
-    blknum_t lastBlockNum;
-    SFUint32 nOutOfBal;
-    blknum_t minWatchBlock;
-    blknum_t maxWatchBlock;
-    CBloomStats bloomStats;
+
     CAccountWatchArray watches;
     CAccountWatchArray named;
 
+    SFArchive cache;
+    SFString screenFmt;
+    bool esc_hit;
+    bool user_hit_q;
+
     CVisitor(void) :
+        opts(), bloomStats(), transStats(), blockStats(), tBuffer(),
+//      watches, named,
         cache(true, NO_SCHEMA, false),
-        screenFmt(""), verboseFmt(""),
-        esc_hit(false), nAccountedFor(0),
-        nDisplayed(0), nFreshened(0),
-        autoCorrect(false),
-        tBuffer(), nBlocksToVisit(0), startBlock(0), endBlock(0), last_ts(0),
-        lastTrans(NULL), lastBlockNum(0), nOutOfBal(0),
-        minWatchBlock(0), maxWatchBlock(UINT32_MAX) { barLen(80); }
+        screenFmt(""), esc_hit(false), user_hit_q(false)
+    { barLen(80); }
 
-    bool isTransactionOfInterest(CTransaction *trans, uint32_t& which);
+    bool isTransactionOfInterest  (CTransaction *trans, uint64_t& which);
 
-    bool openIncomeStatement(const CBlock& block);
-    bool accountForTransaction(const CBlock& block, const CTransaction *trans);
-    bool accountForIntTransaction(const CBlock& block, const CTransaction *trans, const CTrace *trace);
-    bool closeIncomeStatement(const CBlock& block);
+    bool openIncomeStatement      (const CBlock& block);
+    bool accountForExtTransaction (const CBlock& block, const CTransaction *trans);
+    bool accountForIntTransaction (const CBlock& block, const CTransaction *trans, const CTrace *trace);
+    bool closeIncomeStatement     (const CBlock& block);
+    bool enterDebugger            (const CBlock& block);
+
     blknum_t loadWatches(const CToml& toml);
-    SFUint32 nProcessed(void) const {
-        return nDisplayed + nFreshened + nAccountedFor;
-    }
-    bool enterDebugger(const CBlock& block);
+    SFString annotate   (const SFString& strIn) const;
 
-    void interumReport1(SFUint32 bn, timestamp_t ts) {
-        cerr << "fromCache: " << bn << " " << dateFromTimeStamp(ts) << "\r";
-        cerr.flush();
-        last_ts = ts;
-    }
-
-    void interumReport(SFUint32 bn, timestamp_t ts, const SFString& endMsg) {
-        blknum_t x = (startBlock >= bn ? 0 : bn - startBlock);
-        progressBar(x, nBlocksToVisit, endMsg);
-        last_ts = ts;
-    }
-
-    void showColoredTrace(timestamp_t ts, const CTraceArray& traces, bool err) const;
-    bool displayTransaction(const CTransaction *theTrans) const;
-    void showColoredBloom(const SFBloom& bloom, const SFString& msg, const SFString& res) const;
-    SFString annotate(const SFString& strIn) const;
+    void displayTrans (const CTransaction *theTrans) const;
+    void displayTrace (timestamp_t ts, const CTraceArray& traces, bool err) const;
+    void displayBloom (const SFBloom& bloom, const SFString& msg, const SFString& res) const;
 };
 
 //-----------------------------------------------------------------------
-extern bool displayFromCache(const SFString& fileName, SFUint32& blockNum, void *data);
-extern bool updateCache(CBlock& block, void *data);
+extern bool displayFromCache      (const SFString& fileName, SFUint32& blockNum, void *data);
 extern bool updateCacheUsingBlooms(const SFString& str, void *data);
-extern void myQuitHandler(int s);
-inline void myOnExitHandler(void) { myQuitHandler(1); }
+extern bool updateCache           (CBlock& block, void *data);
+extern void myQuitHandler         (int s);
+inline void myOnExitHandler       (void) { myQuitHandler(1); }
 
 //EXISTING_CODE
 //EXISTING_CODE
