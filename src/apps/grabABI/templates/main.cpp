@@ -46,7 +46,6 @@ int main(int argc, const char *argv[]) {
 
         const char* defaultFormat = "{ \"date\": \"[{DATE}]\", \"from\": \"[{FROM}]\", \"to\": \"[{TO}]\", \"value\": \"[{VALUE}]\" }";
         visitor.screenFmt  = cleanFmt(toml.getConfigStr("formats", "screen_fmt",  defaultFormat));
-        visitor.verboseFmt = cleanFmt(toml.getConfigStr("formats", "verbose_fmt", ""));
         visitor.opts.accounting_on = toml.getConfigBool("display", "accounting", false) || visitor.opts.accounting_on;
         visitor.opts.logs_on       = toml.getConfigBool("display", "logs", false) || visitor.opts.logs_on;
         visitor.opts.trace_on      = toml.getConfigBool("display", "trace", false) || visitor.opts.trace_on;
@@ -70,12 +69,14 @@ int main(int argc, const char *argv[]) {
 
         // Figure out which block to start on. Use earliest block from the watches. Note that
         // 'displayFromCache' may modify this to lastest visited block
-        SFUint32 blockNum = visitor.minWatchBlock-1;
-        if (visitor.opts.kBlock) {
+        bool upToDate = false;
+        SFUint32 blockNum = visitor.blockStats.minWatchBlock-1;
+        if (visitor.opts.kBlock) {  // we're not starting at the beginning
             blockNum = visitor.opts.kBlock;
             for (uint32_t i = 0 ; i < visitor.watches.getCount() ; i++) {
                 visitor.watches[i].qbis.endBal = getBalance(visitor.watches[i].address, blockNum, false);
             }
+            upToDate = true;
         }
 
         if (visitor.opts.debugger_on) {
@@ -96,6 +97,7 @@ int main(int argc, const char *argv[]) {
             // immediately quits because displayFromCache returns 'false' for more than one reason
             if (!displayFromCache(cacheFileName, blockNum, &visitor))
                 visitor.opts.mode = ""; // do not continue
+            upToDate = true;
         }
 
         // Freshening the cache (if the user tells us to...)
@@ -104,14 +106,18 @@ int main(int argc, const char *argv[]) {
             SFUint32 lastVisit  = toLongU(asciiFileToString("./cache/lastBlock.txt"));
             blockNum = max(blockNum, lastVisit) + 1;
 
-            visitor.endBlock       = min(topOfChain, visitor.maxWatchBlock);
-            visitor.startBlock     = min(blockNum,   visitor.endBlock);
-            visitor.nBlocksToVisit = visitor.endBlock - visitor.startBlock;
-            cerr << "Freshening from "
-                << visitor.startBlock << " to "
-                << visitor.endBlock << " ("
-                << visitor.nBlocksToVisit << " blocks)\r\n";
+            visitor.blockStats.lastBlock  = min(topOfChain, visitor.blockStats.maxWatchBlock);
+            visitor.blockStats.firstBlock = min(blockNum,   visitor.blockStats.lastBlock);
+            visitor.blockStats.nBlocks    = visitor.blockStats.lastBlock - visitor.blockStats.firstBlock;
+            cerr << "Freshening from " << visitor.blockStats.firstBlock << " to " << visitor.blockStats.lastBlock << " (" << visitor.blockStats.nBlocks << " blocks)\r\n";
             cerr.flush();
+
+            if (!upToDate) {  // we're not starting at the beginning
+                for (uint32_t i = 0 ; i < visitor.watches.getCount() ; i++) {
+                    visitor.watches[i].qbis.endBal = getBalance(visitor.watches[i].address, visitor.blockStats.firstBlock, false);
+                }
+            }
+
             // The cache may have been opened for reading during displayFromCache, so we
             // close it here, so we can open it back up as append only
             if (visitor.cache.isOpen())
@@ -120,13 +126,13 @@ int main(int argc, const char *argv[]) {
             visitor.cache.m_archiveSchema = NO_SCHEMA;
             visitor.cache.m_writeDeleted = true;
             if (visitor.cache.Lock(cacheFileName, "a+", LOCK_WAIT)) {
-                forEveryBloomFile(updateCacheUsingBlooms, &visitor, visitor.startBlock, visitor.nBlocksToVisit);
+                forEveryBloomFile(updateCacheUsingBlooms, &visitor, visitor.blockStats.firstBlock, visitor.blockStats.nBlocks);
                 visitor.cache.Release();
             }
-            if (visitor.nFreshened) {
-                timestamp_t tsOut = toTimeStamp(Now());
-                SFString endMsg = dateFromTimeStamp(tsOut).Format(FMT_JSON) + " (" + asString(topOfChain) + ")";
-                visitor.interumReport(visitor.endBlock, visitor.last_ts, endMsg);
+
+            if (visitor.transStats.nFreshened) {
+                SFTime dt = dateFromTimeStamp(visitor.blockStats.prevBlock.timestamp);
+                progressBar(visitor.blockStats.nBlocks, visitor.blockStats.nBlocks, dt.Format(FMT_JSON) + " (" + asString(topOfChain) + ")");
                 cout << "\r\n";
             }
         }
@@ -134,15 +140,18 @@ int main(int argc, const char *argv[]) {
         SFTime now = Now();
         cout << getprogname() << ": " << now.Format(FMT_JSON) << ": "
                 << "{ "
-                << cYellow << visitor.nDisplayed    << cOff << " displayed from cache; "
-                << cYellow << visitor.nFreshened    << cOff << " written to cache; "
-                << cYellow << visitor.nAccountedFor << cOff << " accounted for"
+                << cYellow << visitor.transStats.nDisplayed    << cOff << " displayed from cache; "
+                << cYellow << visitor.transStats.nFreshened    << cOff << " written to cache; "
+                << cYellow << visitor.transStats.nAccountedFor << cOff << " accounted for"
                 << " }\r\n";
 
-        if (visitor.opts.debugger_on && visitor.nProcessed() == 0) {
-            cout << "Nothing to do. Hit enter to quit...";
-            cout.flush();
-            getchar();
+        if (visitor.opts.debugger_on) {
+            // If we were debugging and we did nothing, let the user know
+            if ((visitor.transStats.nDisplayed + visitor.transStats.nFreshened + visitor.transStats.nAccountedFor) == 0) {
+                cout << "Nothing to do. Hit enter to quit...";
+                cout.flush();
+                getchar();
+            }
         }
     }
 

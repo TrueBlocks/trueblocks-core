@@ -20,8 +20,8 @@ bool CVisitor::openIncomeStatement(const CBlock& block) {
         CAccountWatch *w = &watches[i];
         w->qbis.inflow = w->qbis.outflow = w->qbis.gasCost = 0;
         if (i < watches.getCount()-1) {
-            SFIntBN curBal = getBalance(w->address, block.blockNumber-1, false);
-            SFIntBN diff = (curBal - w->qbis.endBal);
+            w->qbis.nodeBal = getBalance(w->address, block.blockNumber-1, false);
+            SFIntBN diff = (w->qbis.nodeBal - w->qbis.endBal);
             if (diff != 0) {
                 SFString c1 = watches[i].color, c2 = cOff;
                 cout << "\r\n" << bRed << SFString('-', 5) << " WARNING " << SFString('-', 166) << "\r\n";
@@ -38,15 +38,12 @@ bool CVisitor::openIncomeStatement(const CBlock& block) {
             }
         }
     }
-    if (nAccountedFor) // depends on previous value. Bad.
-        cout << "\r\n" << bYellow << SFString('-', 180) << "\r\n";
-    nAccountedFor = 0;
-    nOutOfBal = 0;
+    transStats.nAccountedFor = 0;
     return true;
 }
 
 //-----------------------------------------------------------------------
-bool CVisitor::accountForTransaction(const CBlock& block, const CTransaction *trans) {
+bool CVisitor::accountForExtTransaction(const CBlock& block, const CTransaction *trans) {
 
     if (!opts.accounting_on)
         return true;
@@ -75,7 +72,7 @@ bool CVisitor::accountForTransaction(const CBlock& block, const CTransaction *tr
     if (trans->isError) { // || trans->value == 0)
         if (fWhich != watches.getCount() - 1) {
             watches[fWhich].qbis.gasCost += (trans->receipt.gasUsed * trans->gasPrice);
-            nAccountedFor++;
+            transStats.nAccountedFor++;
         }
         return true;
     }
@@ -84,7 +81,7 @@ bool CVisitor::accountForTransaction(const CBlock& block, const CTransaction *tr
     if (fWhich != watches.getCount() - 1)
         watches[fWhich].qbis.gasCost += (trans->receipt.gasUsed * trans->gasPrice);
     watches[tWhich].qbis.inflow += trans->value;
-    nAccountedFor++;
+    transStats.nAccountedFor++;
     tBuffer.addItem(trans->blockNumber, trans->transactionIndex, trans->hash);
     return true;
 }
@@ -119,51 +116,63 @@ bool CVisitor::accountForIntTransaction(const CBlock& block, const CTransaction 
 //    if (fWhich != watches.getCount() - 1)
 //        watches[fWhich].qbis.gasCost += (trans->receipt.gasUsed * trace->gasPrice);
     watches[tWhich].qbis.inflow += trace->action.value;
-    nAccountedFor++;
+    transStats.nAccountedFor++;
 //    tBuffer.addItem(trace->blockNumber, trace->transactionIndex, trace->hash);
     return true;
 }
 
 //-----------------------------------------------------------------------
 bool CVisitor::closeIncomeStatement(const CBlock& block) {
-    // TODO(tjayrush): when should the account display show itself?
+
+    // If the user has not hit the escape key...
     if (!esc_hit) {
-        if (!opts.accounting_on || !nAccountedFor)  // don't report until something interesting happened
+        // ...and is either not accounting or nothing worth reporting happened...
+        if (!opts.accounting_on || !transStats.nAccountedFor) {
+            // ...return
             return true;
+        }
     }
 
-    CIncomeStatement header;
-    header.begBal = header.endBal = -1;
-
-    cout << padCenter("",24) << header << "   " << padCenter("nodeBal",38) << "\r\n";
-    cout << bBlack << SFString('-',180) << "\r\n";
     CIncomeStatement total;
     for (int i = 0 ; i < watches.getCount() ; i++) {
-        watches[i].qbis.blockNum = block.blockNumber;
-        watches[i].qbis.begBal = watches[i].qbis.endBal;
-        watches[i].qbis.endBal = (watches[i].qbis.begBal + watches[i].qbis.inflow - watches[i].qbis.outflow - watches[i].qbis.gasCost);
-
-        cout << watches[i].color << padRight(watches[i].displayName(false,14,6),24) << cOff << watches[i].qbis << "   ";
-
-        if (i < watches.getCount()-1) {
-            watches[i].qbis.reconcile(watches[i].address, block.blockNumber);
-            cout << padLeft(wei2Ether(to_string(watches[i].qbis.nodeBal).c_str()),28);
-            if (!watches[i].qbis.balanced()) {
-
-                cout << " " << bRed << padLeft(wei2Ether(to_string(watches[i].qbis.difference()).c_str()),28) << cOff << redX;
-                nOutOfBal++;
-            } else {
-                cout << " " << greenCheck;
-            }
-        }
-        cout << "\r\n";
         total += watches[i].qbis;
     }
-    cout << SFString(' ',23) << SFString('-',125) << "\r\n";
-    cout << padRight("Total:",24) << total << " ";
-    cout << greenCheck;
-    cout << "\r\n" << cOff;
-    cout.flush();
+
+    uint32_t nOutOfBal = 0;
+    if (total.inflow > 0 || (total.outflow + total.gasCost) > 0) {
+        CIncomeStatement header;
+        header.begBal = header.endBal = -1;
+
+        cout << padCenter("",24) << header << "   " << padCenter("nodeBal",38) << "\r\n";
+        cout << bBlack << SFString('-',180) << "\r\n";
+        for (int i = 0 ; i < watches.getCount() ; i++) {
+            watches[i].qbis.blockNum = block.blockNumber;
+            watches[i].qbis.begBal = watches[i].qbis.endBal;
+            watches[i].qbis.endBal = (watches[i].qbis.begBal + watches[i].qbis.inflow - watches[i].qbis.outflow - watches[i].qbis.gasCost);
+
+            cout << watches[i].color << padRight(watches[i].displayName(false,14,6),24) << cOff << watches[i].qbis << "   ";
+
+            if (i < watches.getCount()-1) {
+                watches[i].qbis.reconcile(watches[i].address, block.blockNumber);
+                cout << padLeft(wei2Ether(to_string(watches[i].qbis.nodeBal).c_str()),28);
+                if (!watches[i].qbis.balanced()) {
+
+                    cout << " " << bRed << padLeft(wei2Ether(to_string(watches[i].qbis.difference()).c_str()),28) << cOff << redX;
+                    nOutOfBal++;
+                } else {
+                    cout << " " << greenCheck;
+                }
+            }
+            cout << "\r\n";
+        }
+        cout << SFString(' ',23) << SFString('-',125) << "\r\n";
+        cout << padRight("Total:",24) << total << " ";
+        cout << greenCheck;
+        cout << "\r\n" << cOff;
+        cout.flush();
+        if (transStats.nAccountedFor)
+            cout << "\r\n" << bYellow << SFString('-', 180) << "\r\n";
+    }
 
     if (opts.debugger_on) {
         if (nOutOfBal || opts.single_on || debugFile() || esc_hit) {
@@ -173,7 +182,7 @@ bool CVisitor::closeIncomeStatement(const CBlock& block) {
             }
         }
     } else if (opts.single_on) {
-        if (!autoCorrect)
+        if (!opts.autocorrect_on)
             cout << "\r\nHit enter to continue, 'c' to correct and continue, or 'q' to quit >> ";
         else
             cout << "\r\nHit enter to continue or 'q' to quit >> ";
@@ -188,11 +197,10 @@ bool CVisitor::closeIncomeStatement(const CBlock& block) {
     }
 
     // TODO(tjayrush): when should auto correct be on or off?
-    if (autoCorrect) {
+    if (opts.autocorrect_on) {
         for (int i = 0 ; i < watches.getCount() ; i++)
             watches[i].qbis.correct();
     }
     esc_hit = false;
     return true;
 }
-

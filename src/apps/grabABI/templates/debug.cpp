@@ -13,7 +13,6 @@ static CParams debugCmds[] = {
     CParams("-(b)uffer",      "Show the transaction buffer (including transaction hashes)"),
     CParams("-(l)ist",        "Show the list of accounts being debugged"),
     CParams("-confi(g)",      "Edit the config file"),
-    CParams("-clea(r)",       "Clear the screen"),
     CParams("-si(n)gle",      "Toggle single step"),
     CParams("-(t)race",       "Toggle display of trace"),
     CParams("-(d)ollars",     "Display US dollars as well"),
@@ -92,26 +91,17 @@ bool CVisitor::enterDebugger(const CBlock& block) {
                     done = true;
                     history(curCmd);
 
-                } else if (curCmd == "r" || curCmd == "clear") {
-                    clear();
-                    refresh();
-                    if (lastTrans) {
-                        // Note that if we're showing traces they will have already been attached
-                        displayTransaction(lastTrans);
-                        curCmd = " ------ > " + asString((uint64_t)lastTrans);
-                    }
-                    history(curCmd);
-
                 } else if (curCmd == "q" || curCmd == "quit" || curCmd == "exit") {
                     cout << "\r\n";
                     cout.flush();
                     opts.debugger_on = false;
+                    user_hit_q = true;
                     return false;
 
                 } else if (curCmd == "a" || curCmd == "autoCorrect") {
                     history(curCmd);
-                    autoCorrect = !autoCorrect;
-                    cout << "\tautoCorrect is " << (autoCorrect ? "on" : "off");
+                    opts.autocorrect_on = !opts.autocorrect_on;
+                    cout << "\tautoCorrect is " << (opts.autocorrect_on ? "on" : "off");
                     cout.flush();
 
                 } else if (curCmd == "t" || curCmd == "trace") {
@@ -145,10 +135,13 @@ bool CVisitor::enterDebugger(const CBlock& block) {
 
                 } else if (curCmd == "l" || curCmd == "list") {
                     cout << "\r\nAccounts:\r\n";
+                    cout << "[";
                     for (int i=0;i<watches.getCount()-1;i++) {
-                        cout << "    " << "{ address: " << watches[i].color << watches[i].address << cOff << ", ";
-                        cout << "name: " << watches[i].color << watches[i].name << cOff << ", ";
-                        cout << "firstBlock: " << watches[i].firstBlock << " }\r\n";
+                        cout << " { ";
+                        cout << "\"address\": \""  << watches[i].color << watches[i].address    << cOff << "\", ";
+                        cout << "\"firstBlock\": " << bRed                     << watches[i].firstBlock << cOff << ", ";
+                        cout << "\"name\": \""     << watches[i].color << watches[i].name       << cOff << "\"";
+                        cout << " }" << (i<watches.getCount()-2 ? ",\r\n " : " ]\r\n");
                     }
                     history(curCmd);
 
@@ -193,7 +186,7 @@ bool CVisitor::enterDebugger(const CBlock& block) {
 //                    getTransaction(trans,bn,tn);
 //                    getTraces(trans.traces, trans.hash);
 //                    timestamp_t ts = toUnsigned(trans.Format("[{TIMESTAMP}]"));
-//                    showColoredTrace(ts, trans.traces, trans.isError);
+//                    displayTrace(ts, trans.traces, trans.isError);
 
                 } else if (curCmd == "h" || curCmd == "help") {
                     cout << "\r\n" << bBlue << "Help:" << cOff << "\r\n";

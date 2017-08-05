@@ -13,14 +13,14 @@
 #include "debug.h"
 
 //-----------------------------------------------------------------------
-bool CVisitor::displayTransaction(const CTransaction *theTrans) const {
+void CVisitor::displayTrans(const CTransaction *theTrans) const {
 
     const CTransaction *promoted = promoteToFunc(theTrans);
     if (!promoted)
         promoted = theTrans;  // revert to the original
 
     //----------------------------------
-    SFString theFmt = screenFmt; //(verbose ? verboseFmt : screenFmt);
+    SFString theFmt = screenFmt;
     bool wantsEvents = theFmt.Contains("[{EVENTS}]");
     bool wantsParse  = theFmt.Contains("[{PARSE}]");
     SFString format  = theFmt.Substitute("[{EVENTS}]","").Substitute("[{PARSE}]","");
@@ -93,13 +93,13 @@ bool CVisitor::displayTransaction(const CTransaction *theTrans) const {
 
     if (opts.trace_on) {
         timestamp_t ts = toUnsigned(theTrans->Format("[{TIMESTAMP}]"));
-        showColoredTrace(ts, theTrans->traces, theTrans->isError);
+        displayTrace(ts, theTrans->traces, theTrans->isError);
         if (opts.bloom_on && promoted->receipt.logsBloom != 0) {
-            showColoredBloom(promoted->receipt.logsBloom, "Tx bloom:", "");
+            displayBloom(promoted->receipt.logsBloom, "Tx bloom:", "");
             cout << "\r\n";
             for (int t=0;t<watches.getCount()-1;t++) {
                 SFBloom b = makeBloom(watches[t].address);
-                showColoredBloom(b,watches[t].color + padRight(watches[t].name.Left(9),9) + cOff, (isBloomHit(b, promoted->receipt.logsBloom) ? greenCheck : redX));
+                displayBloom(b,watches[t].color + padRight(watches[t].name.Left(9),9) + cOff, (isBloomHit(b, promoted->receipt.logsBloom) ? greenCheck : redX));
                 cout << "\r\n";
             }
         }
@@ -112,11 +112,11 @@ bool CVisitor::displayTransaction(const CTransaction *theTrans) const {
     cout << cOff;
     cout << "\r\n";
     cout.flush();
-    return true;
+    return;
 }
 
 //-----------------------------------------------------------------------
-void CVisitor::showColoredBloom(const SFBloom& bloom, const SFString& msg, const SFString& res) const {
+void CVisitor::displayBloom(const SFBloom& bloom, const SFString& msg, const SFString& res) const {
     SFString bl = fromBloom(bloom).substr(2);
     for (int i = 0 ; i < bl.length() ; i = i + 128) {
         SFString m = padLeft(" ",16);
@@ -127,7 +127,7 @@ void CVisitor::showColoredBloom(const SFBloom& bloom, const SFString& msg, const
 }
 
 //-----------------------------------------------------------------------
-void CVisitor::showColoredTrace(timestamp_t ts, const CTraceArray& traces, bool err) const {
+void CVisitor::displayTrace(timestamp_t ts, const CTraceArray& traces, bool err) const {
 
     for (int t = 0 ; t < traces.getCount() ; t++) {
         const CTrace *tt = &traces[t];
