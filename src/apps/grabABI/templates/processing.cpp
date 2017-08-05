@@ -14,7 +14,7 @@
 #include "ncurses.h"
 
 //-----------------------------------------------------------------------
-bool CVisitor::isTransactionOfInterest(CTransaction *trans, uint32_t& whichWatch) {
+bool CVisitor::isTransactionOfInterest(CTransaction *trans, uint64_t& whichWatch) {
 
     for (int i = 0; i < watches.getCount() ; i++) {
         if (trans->blockNumber >= watches[i].firstBlock && trans->blockNumber <= watches[i].lastBlock) {
@@ -69,12 +69,12 @@ bool displayFromCache(const SFString& cacheFileName, SFUint32& blockNum, void *d
                     }
 
                     // If we switched blocks, read the next block
-                    visitor->lastBlockNum = block.blockNumber;
                     if (!readOneBlock_fromBinary(block, getBinaryFilename1(blockNum))) {
                         cerr << "Block read failed. Quitting cache read\r\n";
                         visitor->cache.Release();
                         return false;
                     }
+                    visitor->blockStats.prevBlock = block;
 
                     if (!visitor->openIncomeStatement(block))  {
                         cerr << "Quitting debugger.\r\n";
@@ -83,8 +83,10 @@ bool displayFromCache(const SFString& cacheFileName, SFUint32& blockNum, void *d
                     }
 
                     lastBlock = blockNum;
-                    if (verbose)
-                        visitor->interumReport1(block.blockNumber, block.timestamp);
+                    if (verbose) {
+                        cerr << "fromCache: " << block.blockNumber << " " << dateFromTimeStamp(block.timestamp) << "\r";
+                        cerr.flush();
+                    }
                 }
 
                 // this will always be true, but we just protect ourselves here
@@ -96,9 +98,9 @@ bool displayFromCache(const SFString& cacheFileName, SFUint32& blockNum, void *d
                             cout << bGreen << SFString('-',180) << "\r\n";
                         if (visitor->opts.accounting_on || visitor->opts.trace_on)
                             getTraces(trans->traces, trans->hash);
-                        visitor->accountForTransaction(block, trans);
-                        visitor->lastTrans = trans;
-                        visitor->nDisplayed += visitor->displayTransaction(trans);
+                        visitor->accountForExtTransaction(block, trans);
+                        visitor->displayTrans(trans);
+                        visitor->transStats.nDisplayed++;
                         if (visitor->opts.debugger_on && !visitor->esc_hit) {
                             nodelay(stdscr, true);
                             int ch = getch();
@@ -124,17 +126,20 @@ SFUint32 nFound = 0;
 //-----------------------------------------------------------------------
 bool updateCacheUsingBlooms(const SFString& path, void *data) {
 
+    CVisitor *visitor = reinterpret_cast<CVisitor*>(data);
+    if (visitor->user_hit_q)
+        return false;
+    
     if (path.endsWith("/")) {
         forAllFiles(path + "*", updateCacheUsingBlooms, data);
 
     } else {
 
-        CVisitor *visitor = reinterpret_cast<CVisitor*>(data);
         if (path.endsWith(".bin")) {
             SFString p = path.Substitute(".bin","");
             p.Reverse(); p = nextTokenClear(p, '/'); p.Reverse();
             blknum_t bloomNum = toUnsigned(p);
-            if (bloomNum <= visitor->startBlock) {
+            if (bloomNum <= visitor->blockStats.firstBlock) {
                 static blknum_t lastBucket1 = 0;
                 blknum_t thisBucket1 = (bloomNum / 10000 ) * 10000;
                 if (thisBucket1 != lastBucket1) {
@@ -149,7 +154,7 @@ bool updateCacheUsingBlooms(const SFString& path, void *data) {
                 lastBloomHit = bloomNum;
                 return true; // continue
             }
-            if (bloomNum >= visitor->startBlock + visitor->nBlocksToVisit) {
+            if (bloomNum >= visitor->blockStats.firstBlock + visitor->blockStats.nBlocks) {
                 stringToAsciiFile("./cache/lastBlock.txt", asStringU(bloomNum) + "\r\n");
                 return false; // don't continue
             }
@@ -178,7 +183,12 @@ bool updateCacheUsingBlooms(const SFString& path, void *data) {
 //                        cout << "Checking block " << k << "\r\n";
                         CBlock block;
                         readOneBlock_fromBinary(block, getBinaryFilename1(k));
-                        updateCache(block, visitor);
+                        if (!updateCache(block, visitor)) {
+                            visitor->bloomStats.bloomHits++;
+                            visitor->bloomStats.falsePositives += (nFound == 0);
+                            stringToAsciiFile("./cache/lastBlock.txt", asStringU(bloomNum) + "\r\n");
+                            return false;  // don't continue, user hit 'q'
+                        }
                     }
                 }
 //                cout << "Bloom hit at block " << bloomNum
@@ -222,7 +232,7 @@ bool updateCache(CBlock& block, void *data) {
         CTransaction *trans = &block.transactions[i];
         trans->pBlock = &block;
 
-        uint32_t whichWatch;
+        uint64_t whichWatch;
         if (visitor->isTransactionOfInterest(trans, whichWatch)) {
 
             nFound++;
@@ -230,11 +240,11 @@ bool updateCache(CBlock& block, void *data) {
             // Display only if the user is interested in this account
             if (visitor->opts.accounting_on || visitor->opts.trace_on)
                 getTraces(trans->traces, trans->hash);
-            visitor->accountForTransaction(block, trans);
+            visitor->accountForExtTransaction(block, trans);
 
-            if (visitor->watches[whichWatch].status != "disabled") {
-                visitor->lastTrans = trans;
-                visitor->nDisplayed += visitor->displayTransaction(trans);
+            if (visitor->watches[(uint32_t)whichWatch].status != "disabled") {
+                visitor->displayTrans(trans);
+                visitor->transStats.nDisplayed++;
                 if (visitor->opts.debugger_on && !visitor->esc_hit) {
                     nodelay(stdscr, true);
                     int ch = getch();
@@ -247,20 +257,31 @@ bool updateCache(CBlock& block, void *data) {
 
             ASSERT(!visitor->cache.m_isReading);
             // Write the data even if we're not displaying it (flush to make sure it gets written)
-            visitor->cache << whichWatch << trans->pBlock->blockNumber << trans->transactionIndex;
+            // NEVER CHANGE THE TYPE OR SIZE OF THIS DATA!!!
+            uint32_t ww = (uint32_t)whichWatch;
+            // NEVER CHANGE THE TYPE OR SIZE OF THIS DATA!!!
+            visitor->cache << ww << trans->pBlock->blockNumber << trans->transactionIndex;
             visitor->cache.flush();
-            visitor->nFreshened++;
+            visitor->transStats.nFreshened++;
         }
     }
 
-    if (true) { //verbose) {
-        timestamp_t tsOut = (block.timestamp == 0 ? toTimeStamp(Now()) : block.timestamp);
-        SFString endMsg = dateFromTimeStamp(tsOut).Format(FMT_JSON) + " (" + asString(block.blockNumber) + ")";
-        visitor->interumReport(block.blockNumber, block.timestamp, endMsg);
-    }
+    timestamp_t tsOut = (block.timestamp == 0 ? toTimeStamp(Now()) : block.timestamp);
+    SFString endMsg = dateFromTimeStamp(tsOut).Format(FMT_JSON) + " (" + asString(block.blockNumber) + ")";
+    blknum_t x = (visitor->blockStats.firstBlock >= block.blockNumber ? 0 : block.blockNumber - visitor->blockStats.firstBlock);
+    progressBar(x, visitor->blockStats.nBlocks, endMsg);
+    visitor->blockStats.prevBlock = block;
 
     // Write this to the file so we know which block to start on next time the monitor is run
     stringToAsciiFile("./cache/lastBlock.txt", asStringU(block.blockNumber) + "\r\n");
+    if (visitor->opts.debugger_on && !visitor->esc_hit) {
+        nodelay(stdscr, true);
+        int ch = getch();
+        visitor->esc_hit = (ch == 27 || ch == 'q');
+        if (ch == 27) // esc comes with an extra key
+            getch();
+        nodelay(stdscr, false);
+    }
     return visitor->closeIncomeStatement(block);  // may invoke debugger, which may return false, which will stop update
 }
 
@@ -320,7 +341,7 @@ blknum_t CVisitor::loadWatches(const CToml& toml) {
 
     blknum_t unused1 = 0, unused2 = 0;
     ::loadWatches(toml, named, "named", unused1, unused2);
-    ::loadWatches(toml, watches, "list", minWatchBlock, maxWatchBlock);
+    ::loadWatches(toml, watches, "list", blockStats.minWatchBlock, blockStats.maxWatchBlock);
     watches[watches.getCount()] = CAccountWatch(watches.getCount(), "Others", "Other Accts", 0, UINT32_MAX, bRed);
     return true;
 }
