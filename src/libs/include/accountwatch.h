@@ -53,7 +53,7 @@ public:
     : index(_id), address(toLower(_addr)), name(_name), color(_color), firstBlock(fB), lastBlock(lB), status("") { }
     bool getWatch(const CToml& toml, uint32_t n);
     SFString displayName(bool terse, int w1=20, int w2=8) const;
-    bool isTransactionOfInterest(CTransaction *trans, uint32_t nSigs, SFString sigs[]) const;
+    bool isTransactionOfInterest(CTransaction *trans, uint64_t nSigs, SFString sigs[]) const;
     // EXISTING_CODE
 
 protected:
