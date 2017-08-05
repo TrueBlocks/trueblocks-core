@@ -5,7 +5,7 @@
 cmake_minimum_required (VERSION 2.6)
 
 # ----------------------------------------------------------------------------------------
-# Folder project
+# folder project
 project (quickBlocks)
 
 # ----------------------------------------------------------------------------------------
@@ -31,6 +31,10 @@ find_package (CURL REQUIRED)
 if (CURL_FOUND)
     include_directories(${CURL_INCLUDE_DIRS})
 endif (CURL_FOUND)
+
+# ----------------------------------------------------------------------------------------
+# Globally available C++ settings
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Werror -Wall -O2")
 
 # ----------------------------------------------------------------------------------------
 # Linkable libraries

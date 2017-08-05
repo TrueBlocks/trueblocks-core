@@ -301,7 +301,7 @@ SFString CAccountWatch::displayName(bool terse, int w1, int w2) const {
 }
 
 //---------------------------------------------------------------------------
-bool CAccountWatch::isTransactionOfInterest(CTransaction *trans, uint32_t nSigs, SFString sigs[]) const {
+bool CAccountWatch::isTransactionOfInterest(CTransaction *trans, uint64_t nSigs, SFString sigs[]) const {
     // Assume it's not an internal transaction
     trans->isInternalTx = false;
 
