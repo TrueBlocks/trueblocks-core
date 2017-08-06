@@ -42,7 +42,7 @@ public:
 //-----------------------------------------------------------------------
 class CBlockStats {
 public:
-    uint64_t nBlocks;
+    blknum_t nBlocks;
     blknum_t firstBlock;
     blknum_t lastBlock;
     blknum_t minWatchBlock;
@@ -74,15 +74,14 @@ public:
 //-----------------------------------------------------------------------
 class CBloomStats {
 public:
-    uint64_t bloomsChecked;
-    uint64_t bloomHits;
-    uint64_t falsePositives;
-    double startTime;
+    blknum_t bloomsChecked;
+    blknum_t bloomHits;
+    blknum_t falsePositives;
     CBloomStats(void) :
         bloomsChecked(0),
         bloomHits(0),
         falsePositives(0)
-    { startTime = qbNow(); }
+    {  }
 };
 
 //-----------------------------------------------------------------------
@@ -109,7 +108,7 @@ public:
         screenFmt(""), esc_hit(false), user_hit_q(false)
     { barLen(80); }
 
-    bool isTransactionOfInterest  (CTransaction *trans, uint64_t& which);
+    bool isTransactionOfInterest  (CTransaction *trans, uint32_t& which);
 
     bool openIncomeStatement      (const CBlock& block);
     bool accountForExtTransaction (const CBlock& block, const CTransaction *trans);

@@ -14,7 +14,7 @@
 #include "ncurses.h"
 
 //-----------------------------------------------------------------------
-bool CVisitor::isTransactionOfInterest(CTransaction *trans, uint64_t& whichWatch) {
+bool CVisitor::isTransactionOfInterest(CTransaction *trans, uint32_t& whichWatch) {
 
     for (int i = 0; i < watches.getCount() ; i++) {
         if (trans->blockNumber >= watches[i].firstBlock && trans->blockNumber <= watches[i].lastBlock) {
@@ -146,8 +146,7 @@ bool updateCacheUsingBlooms(const SFString& path, void *data) {
                     cerr << "earlyExit: " << thisBucket1 << "|"
                         << visitor->bloomStats.bloomsChecked << "|"
                         << visitor->bloomStats.bloomHits << "|"
-                        << visitor->bloomStats.falsePositives << "|"
-                        << (qbNow() - visitor->bloomStats.startTime) << "\r";
+                        << visitor->bloomStats.falsePositives << "\r";
                     cerr.flush();
                     lastBucket1 = thisBucket1;
                 }
@@ -207,8 +206,7 @@ bool updateCacheUsingBlooms(const SFString& path, void *data) {
                 cout << "buckets: " << thisBucket2 << "|"
                     << visitor->bloomStats.bloomsChecked << "|"
                     << visitor->bloomStats.bloomHits << "|"
-                    << visitor->bloomStats.falsePositives << "|"
-                    << (qbNow() - visitor->bloomStats.startTime) << "\r";
+                    << visitor->bloomStats.falsePositives << "\r";
                 cout.flush();
                 lastBucket2 = thisBucket2;
             }
@@ -232,7 +230,9 @@ bool updateCache(CBlock& block, void *data) {
         CTransaction *trans = &block.transactions[i];
         trans->pBlock = &block;
 
-        uint64_t whichWatch;
+        // NEVER CHANGE THE TYPE OR SIZE OF THIS DATA!!!
+        uint32_t whichWatch;
+        // NEVER CHANGE THE TYPE OR SIZE OF THIS DATA!!!
         if (visitor->isTransactionOfInterest(trans, whichWatch)) {
 
             nFound++;
@@ -257,10 +257,7 @@ bool updateCache(CBlock& block, void *data) {
 
             ASSERT(!visitor->cache.m_isReading);
             // Write the data even if we're not displaying it (flush to make sure it gets written)
-            // NEVER CHANGE THE TYPE OR SIZE OF THIS DATA!!!
-            uint32_t ww = (uint32_t)whichWatch;
-            // NEVER CHANGE THE TYPE OR SIZE OF THIS DATA!!!
-            visitor->cache << ww << trans->pBlock->blockNumber << trans->transactionIndex;
+            visitor->cache << whichWatch << trans->pBlock->blockNumber << trans->transactionIndex;
             visitor->cache.flush();
             visitor->transStats.nFreshened++;
         }

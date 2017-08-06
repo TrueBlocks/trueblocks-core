@@ -175,7 +175,7 @@ SFString nextSingletransacteventChunk_custom(const SFString& fieldIn, bool& forc
         }
     }
 
-    return EMPTY;
+    return "";
 }
 
 //---------------------------------------------------------------------------

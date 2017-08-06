@@ -225,7 +225,7 @@ SFString nextAccountChunk_custom(const SFString& fieldIn, bool& force, const voi
         }
     }
 
-    return EMPTY;
+    return "";
 }
 
 //---------------------------------------------------------------------------

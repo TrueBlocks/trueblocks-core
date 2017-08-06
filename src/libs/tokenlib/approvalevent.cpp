@@ -158,7 +158,7 @@ SFString nextApprovaleventChunk_custom(const SFString& fieldIn, bool& force, con
         }
     }
 
-    return EMPTY;
+    return "";
 }
 
 //---------------------------------------------------------------------------

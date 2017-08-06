@@ -197,7 +197,7 @@ void generateCode(CToml& classFile, const SFString& dataFile, const SFString& ns
         SFString caseFmt = "[{TYPE}]+[{NAME}]-[{ISPOINTER}]~[{ISOBJECT}]|";
         SFString decFmt  = "\t[{TYPE}] *[{NAME}];\n";
         if (!fld->isPointer) {
-            decFmt.Replace("*", EMPTY);
+            decFmt.Replace("*", "\"\"");
         }
         SFString archFmt = "\tarchive >> [{NAME}];\n";
         if (fld->isPointer) {
@@ -241,14 +241,14 @@ void generateCode(CToml& classFile, const SFString& dataFile, const SFString& ns
         } else                              { setFmt = badSet; regType = "T_TEXT"; }
 
 #define getDefault(a) (fld->strDefault.empty() ? (a) : fld->strDefault )
-        setFmt.Replace("[{DEFS}]", getDefault("EMPTY"));
+        setFmt.Replace("[{DEFS}]", getDefault("\"\""));
         setFmt.Replace("[{DEF}]",  getDefault("0"));
         setFmt.Replace("[{DEFF}]", getDefault("0.0"));
         setFmt.Replace("[{DEFT}]", getDefault("earliestDate"));
         setFmt.Replace("[{DEFP}]", getDefault("NULL"));
 
         // string types are already empty
-        setFmt.Replace("\t[{NAME}] = EMPTY;\n", "/""/\t[{NAME}] = EMPTY;\n");
+        setFmt.Replace("\t[{NAME}] = \"\";\n", "/""/\t[{NAME}] = \"\";\n");
 
 //        if (fld->type.Contains("Array")) regType += "|TS_ARRAY";
 
@@ -381,7 +381,7 @@ SFString getCaseCode(const SFString& fieldCase) {
 
                 if (tolower(field[0]) == ch) {
                     if (type.Contains("List") || isPointer)
-                        caseCode += "\t\t\treturn EMPTY;\n//";
+                        caseCode += "\t\t\treturn \"\";\n//";
                     caseCode += baseTab + tab + "if ( fieldIn % \"" + field + "\" )";
 
                     if (type == "time") {
@@ -522,7 +522,7 @@ SFString getCaseSetCode(const SFString& fieldCase) {
                         caseCode +=  " { " + field + " = toDouble(fieldValue); return true; }";
 
 //                  } else if (type.Contains("SFStringArray")) {
-//                      caseCode += "\n\t\t\t{\n\t\t\t\treturn EMPTY;\n//\t\t\t\tSFStringArray not returned\n\t\t\t}";
+//                      caseCode += "\n\t\t\t{\n\t\t\t\treturn \"\";\n//\t\t\t\tSFStringArray not returned\n\t\t\t}";
 
                     } else if (type.Contains("Array")) {
 //                      SFString str = STR_CASE_CODE_ARRAY;
@@ -558,7 +558,7 @@ const char* STR_CLASSFILE =
 const char* STR_CASE_CODE_ARRAY =
 " {\n"
 "[BTAB]\t\tuint32_t cnt = [{SHORT3}]->[{FIELD}].getCount();\n"
-"[BTAB]\t\tif (!cnt) return EMPTY;\n"
+"[BTAB]\t\tif (!cnt) return \"\";\n"
 "[BTAB]\t\tSFString ret;\n"
 "[BTAB]\t\tfor (uint32_t i = 0 ; i < cnt ; i++) {\n"
 "[BTAB]\t\t\tret += [{SHORT3}]->[{FIELD}][i].Format();\n"
@@ -571,7 +571,7 @@ const char* STR_CASE_CODE_ARRAY =
 const char* STR_CASE_CODE_STRINGARRAY =
 " {\n"
 "[BTAB]\t\tuint32_t cnt = [{SHORT3}]->[{FIELD}].getCount();\n"
-"[BTAB]\t\tif (!cnt) return EMPTY;\n"
+"[BTAB]\t\tif (!cnt) return \"\";\n"
 "[BTAB]\t\tSFString ret;\n"
 "[BTAB]\t\tfor (uint32_t i = 0 ; i < cnt ; i++) {\n"
 "[BTAB]\t\t\tret += indent() + (\"\\\"\" + [{SHORT3}]->[{FIELD}][i] + \"\\\"\");\n"

@@ -199,7 +199,7 @@ SFString nextLogentryChunk_custom(const SFString& fieldIn, bool& force, const vo
         }
     }
 
-    return EMPTY;
+    return "";
 }
 
 //---------------------------------------------------------------------------
