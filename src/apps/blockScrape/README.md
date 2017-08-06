@@ -4,7 +4,7 @@ The `blockScrape` program, using your local node's RPC or IPC, reads each block 
 
 If you automate `blockScrape` using something like `cron` it will keep the binary database fresh as per the blockchain its scraping. A sister program, called `miniBlocks` uses the data created by `blockScrape` to build an ultra-light-weight less-detailed, but much faster version of the data.
 
-### Usage
+#### Usage
 
 `Usage:`    blockScrape [-c|-l|-f|-r|-d|-e|-n|-i|-v|-h] mode  
 `Purpose:`  Indexes non-emtpy blocks (i.e. one or more transactions). Alternatively, lists non-empty blocks or checks for correctness.
@@ -25,8 +25,12 @@ If you automate `blockScrape` using something like `cron` it will keep the binar
 | -v | --verbose | set verbose level. Follow with a number to set level (-v0 for silent) |
 | -h | --help | display this help screen |
 
-##### The --file option
+##### Other Options
+
+Enter `--version` to display the current version of the tool.  
+Enter `--nocolors` to turn off colored display.  
+Enter `--wei` (default), `--ether`, or `--dollars` to alter the way value is displayed.  
 
 All `quickBlocks` command-line tools support the `--file:filename` option. Place valid commands, on separate lines, in a file and include the above option. In some cases, this option may significantly improve performance. Place a semi-colon at the start of a line to make it a comment.
 
-Powered by QuickBlocks.io
+#### Powered by QuickBlocks&reg;
