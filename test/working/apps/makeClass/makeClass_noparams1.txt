@@ -1,0 +1,19 @@
+
+  Unknown parameter: --nocolor
+
+  Usage:    makeClass [-e|-f|-l|-n|-s|-r|-a|-v|-h] className  
+  Purpose:  Creates a C++ class based on definitions found in ./classDefinition/<className>.
+             
+  Where:    
+	className             name of C++ class(es) to process (required)
+	-e  (or --edit)       edit <className(s)> definition file in local folder
+	-f  (or --filter)     process only files with :filter in their names
+	-l  (or --list)       list all definition files found in the local folder
+	-n  (or --namespace)  surround the code with a --namespace:ns
+	-s  (or --silent)     on error (no classDefinition file) exit silently
+	-r  (or --run)        run the class maker on associated <className(s)>
+	-a  (or --all)        clear, edit, list, or run all class definitions found in the local folder
+	-v  (or --verbose)    set verbose level. Follow with a number to set level (-v0 for silent)
+	-h  (or --help)       display this help screen
+
+  Powered by QuickBlocks
