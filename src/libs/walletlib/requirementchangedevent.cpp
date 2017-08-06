@@ -148,7 +148,7 @@ SFString nextRequirementchangedeventChunk_custom(const SFString& fieldIn, bool& 
         }
     }
 
-    return EMPTY;
+    return "";
 }
 
 //---------------------------------------------------------------------------

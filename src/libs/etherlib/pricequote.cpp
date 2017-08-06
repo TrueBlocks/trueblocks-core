@@ -220,7 +220,7 @@ SFString nextPricequoteChunk_custom(const SFString& fieldIn, bool& force, const 
         }
     }
 
-    return EMPTY;
+    return "";
 }
 
 //---------------------------------------------------------------------------

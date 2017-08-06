@@ -158,7 +158,7 @@ SFString nextTransferfromChunk_custom(const SFString& fieldIn, bool& force, cons
         }
     }
 
-    return EMPTY;
+    return "";
 }
 
 //---------------------------------------------------------------------------

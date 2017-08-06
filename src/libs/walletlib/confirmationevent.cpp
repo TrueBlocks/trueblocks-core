@@ -153,7 +153,7 @@ SFString nextConfirmationeventChunk_custom(const SFString& fieldIn, bool& force,
         }
     }
 
-    return EMPTY;
+    return "";
 }
 
 //---------------------------------------------------------------------------

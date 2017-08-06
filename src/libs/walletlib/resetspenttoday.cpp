@@ -138,7 +138,7 @@ SFString nextResetspenttodayChunk_custom(const SFString& fieldIn, bool& force, c
         }
     }
 
-    return EMPTY;
+    return "";
 }
 
 //---------------------------------------------------------------------------
