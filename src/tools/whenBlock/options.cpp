@@ -40,7 +40,7 @@ bool COptions::parseArguments(SFString& command) {
 
             alone = true;
 
-        } else if (arg.ContainsAny(":-_ ")) {
+        } else if (arg.ContainsAny(":-_ ") && !arg.startsWith("-")) {
             SFString str = arg.Substitute(" ", ";").Substitute("-", ";").Substitute("_", ";")
                                 .Substitute(":", ";").Substitute("T", ";").Substitute(";UTC", "");
             date = snagDate(str);
@@ -59,23 +59,29 @@ bool COptions::parseArguments(SFString& command) {
 
             } else {
 
-                for (uint32_t i = 0 ; i < specials.getCount() ; i++) {
-                    SFString n = specials[i];
-                    SFString name = nextTokenClear(n, '|');
-                    if (name == arg) {
-                        special = arg;
-                        blockNum = toLongU(n);
+                if (arg.length() && isdigit(arg[0])) {
+                    blockNum = toLongU(arg);
+
+                } else {
+                    for (uint32_t i = 0 ; i < specials.getCount() ; i++) {
+                        SFString n = specials[i];
+                        SFString name = nextTokenClear(n, '|');
+                        if (name == arg) {
+                            special = arg;
+                            blockNum = toLongU(n);
+                        }
+                    }
+                    if (special.empty()) {
+                        return usage("Argument " + arg + " is not valid. Supply either JSON formatted date or blockNumber. Quitting...");
                     }
                 }
-                if (special.empty())
-                    blockNum = toLongU(arg);
             }
         }
     }
 
     if (blockNum == NOPOS) {
         if (date == earliestDate)
-            return usage("Please supply either a JSON formatted date or a blockNumber.");
+            return usage("Please supply either a JSON formatted date or a blockNumber. Quitting...");
 
     } else {
         blknum_t latest = getLatestBlockFromClient();
@@ -103,7 +109,7 @@ void COptions::Init(void) {
 
     blockNum = NOPOS;
     date = earliestDate;
-//  special = "";
+    special = "";
     alone = false;
 
     useVerbose = false;
