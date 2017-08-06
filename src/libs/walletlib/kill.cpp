@@ -148,7 +148,7 @@ SFString nextKillChunk_custom(const SFString& fieldIn, bool& force, const void *
         }
     }
 
-    return EMPTY;
+    return "";
 }
 
 //---------------------------------------------------------------------------

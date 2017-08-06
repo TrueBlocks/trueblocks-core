@@ -188,7 +188,7 @@ SFString nextIncomestatementChunk_custom(const SFString& fieldIn, bool& force, c
         }
     }
 
-    return EMPTY;
+    return "";
 }
 
 //---------------------------------------------------------------------------

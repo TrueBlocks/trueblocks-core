@@ -169,7 +169,7 @@ SFString nextAbiChunk_custom(const SFString& fieldIn, bool& force, const void *d
         }
     }
 
-    return EMPTY;
+    return "";
 }
 
 //---------------------------------------------------------------------------

@@ -188,7 +188,7 @@ SFString nextParameterChunk_custom(const SFString& fieldIn, bool& force, const v
         }
     }
 
-    return EMPTY;
+    return "";
 }
 
 //---------------------------------------------------------------------------

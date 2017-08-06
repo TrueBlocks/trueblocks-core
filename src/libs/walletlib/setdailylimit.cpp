@@ -148,7 +148,7 @@ SFString nextSetdailylimitChunk_custom(const SFString& fieldIn, bool& force, con
         }
     }
 
-    return EMPTY;
+    return "";
 }
 
 //---------------------------------------------------------------------------

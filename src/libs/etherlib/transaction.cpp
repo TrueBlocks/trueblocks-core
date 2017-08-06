@@ -357,7 +357,7 @@ SFString nextTransactionChunk_custom(const SFString& fieldIn, bool& force, const
         }
     }
 
-    return EMPTY;
+    return "";
 }
 
 //---------------------------------------------------------------------------
