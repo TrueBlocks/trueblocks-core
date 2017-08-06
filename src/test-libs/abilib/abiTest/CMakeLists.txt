@@ -2,17 +2,17 @@
 cmake_minimum_required (VERSION 2.6)
 
 # application project
-project (whenBlock)
+project (abiTest)
 
 # The sources to be used
 file(GLOB SOURCE_FILES "*.cpp")
 
 # Output
-set(EXECUTABLE_OUTPUT_PATH "${CMAKE_SOURCE_DIR}/../bin")
+set(EXECUTABLE_OUTPUT_PATH "${CMAKE_CURRENT_LIST_DIR}/bin")
 
 # Define the executable to be generated
-set(TOOL_NAME "whenBlock")
-set(PROJ_NAME "tools")
+set(TOOL_NAME "abiTest")
+set(PROJ_NAME "libs/abilib")
 add_executable(${TOOL_NAME} ${SOURCE_FILES})
 
 # Add the project static libs at linking
@@ -24,13 +24,14 @@ set(TEST_EXE "${EXECUTABLE_OUTPUT_PATH}/${TOOL_NAME}")
 set(TEST_PATH "${TEST_PATH}/${PROJ_NAME}/${TOOL_NAME}")
 set(GOLD_PATH "${GOLD_PATH}/${PROJ_NAME}/${TOOL_NAME}")
 
+# Function to run an individual test case
 function(run_test testName testArgs)
-    run_the_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${testArgs})
+	run_the_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${testArgs})
 endfunction(run_test)
 
 # Enter one line for each individual test
-run_test("whenBlock_00" "-th")
-#broken -- HOW CAN I CAT THE CONTENTS OF THE FILES INTO THE TEST RESULT?
-#run_test("whenBlock_01" ";cat blocks.txt dates.txt")
-run_test("whenBlock_02" "--file:blocks.txt")
-run_test("whenBlock_03" "--file:dates.txt")
+run_test("abilibTest_00" "-th")
+run_test("abilibTest_01" "ecoding")
+run_test("abilibTest_02" "encoding")
+run_test("abilibTest_03" "generation" "encoding")
+run_test("abilibTest_04" "generation" "encoding" "bad")

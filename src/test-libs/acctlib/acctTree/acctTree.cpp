@@ -8,7 +8,7 @@
 #include "options.h"
 #include "reporter.h"
 
-SFUint32 maxBlocks = 25000;
+SFUint32 maxBlocks = 1000;
 //-----------------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
