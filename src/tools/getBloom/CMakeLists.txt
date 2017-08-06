@@ -16,3 +16,7 @@ add_executable(${TOOL_NAME} ${SOURCE_FILES})
 
 # Add the project static libs at linking
 target_link_libraries (${TOOL_NAME} wallet token ${BASE_LIBS})
+
+# Additional target to make the README.md
+#set(README_FILE "${CMAKE_CURRENT_SOURCE_DIR}/README.md")
+#add_custom_target(readme COMMAND ${TEST_EXE} "-th" ">" "${README_FILE}" "2>&1")
