@@ -12,6 +12,7 @@ set(EXECUTABLE_OUTPUT_PATH "${CMAKE_SOURCE_DIR}/../bin")
 
 # Define the executable to be generated
 set(TOOL_NAME "grabABI")
+set(PROJ_NAME "apps")
 add_executable(${TOOL_NAME} ${SOURCE_FILES})
 
 # Add the project static libs at linking
@@ -33,3 +34,12 @@ function(run_test testName testArgs)
 endfunction(run_test)
 
 # Enter one line for each individual test
+#broken - should make README file run_test("grabABI_README"     "0xbb9bc244d798123fde783fcc1c72d3bb8c189413 -th")
+run_test("grabABI_verbose"    "0xbb9bc244d798123fde783fcc1c72d3bb8c189413 -t -v")
+#broken - should allow 'ganged' options run_test("grabABI_verbose"    "0xbb9bc244d798123fde783fcc1c72d3bb8c189413 -tv")
+run_test("grabABI_noconst"    "0xbb9bc244d798123fde783fcc1c72d3bb8c189413 -t -v -n")
+#broken - should allow 'ganged' options run_test("grabABI_verbose"    "0xbb9bc244d798123fde783fcc1c72d3bb8c189413 -tvn")
+run_test("grabABI_encoding"   "0xbb9bc244d798123fde783fcc1c72d3bb8c189413 -t -v -n -e")
+#broken - should allow 'ganged' options run_test("grabABI_verbose"    "0xbb9bc244d798123fde783fcc1c72d3bb8c189413 -tvne")
+run_test("grabABI_generation" "0xbb9bc244d798123fde783fcc1c72d3bb8c189413 -t -v -n -e -g:code")
+#broken - should allow 'ganged' options run_test("grabABI_verbose"    "0xbb9bc244d798123fde783fcc1c72d3bb8c189413 -tvng:code")
