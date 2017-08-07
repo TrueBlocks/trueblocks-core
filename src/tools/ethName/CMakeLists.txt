@@ -29,13 +29,13 @@ set(README_FILE "${CMAKE_CURRENT_SOURCE_DIR}/README.md")
 add_custom_target(readme COMMAND ${TEST_EXE} "-th" ">" "${README_FILE}" "2>&1")
 
 # Function to run an individual test case
-function(run_test testName testArgs)
-	run_the_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${testArgs})
+function(run_test testName)
+	run_the_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGV1})
 endfunction(run_test)
 
 # Enter one line for each individual test
 run_test("ethName_README" "-th")
-#broken run_test("ethName_no_params"  "")
+run_test("ethName_no_params")
 run_test("ethName_simple_search"  "0x1")
 run_test("ethName_invalid_search" "0x1 rob")
 run_test("ethName_three_params" "0x1 rob steem")
