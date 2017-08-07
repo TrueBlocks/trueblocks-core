@@ -33,6 +33,12 @@ typedef SFArrayBase<SFAddress> SFAddressArray;
 #define fromBloom(a)    ((a)==0?"0x0":"0x"+padLeft(toLower(SFString(to_hex((a)).c_str())),512,'0'))
 #define fromUnsigned(a) asStringU((a))
 
+#define addr2BN toWei
+//----------------------------------------------------------------------------------
+inline bool zeroAddr(const SFAddress& addr) {
+    return (addr2BN(addr) == 0);
+}
+
 //------------------------------------------------------
 inline SFAddress toAddress(const SFString& strIn)
 {
