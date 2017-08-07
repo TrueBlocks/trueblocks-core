@@ -1,3 +1,7 @@
-*.cpp
-*.h
+CMakeLists.txt
+blocks.txt
+config.toml
+extractor.cpp
 makefile
+extractor
+proj.xcodeproj
