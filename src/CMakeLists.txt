@@ -54,10 +54,15 @@ set (TEST_CHECK "${SCRIPTS_DEST_PATH}/testCheck.py")
 
 # ----------------------------------------------------------------------------------------
 # Runs test and checks output against expected gold file
-function(run_the_test testPath goldPath testName testExe testArgs)
+function(run_the_test testPath goldPath testName testExe) # Optional argv4 with command parameters
 	set(TEST_FILE "${testPath}/${testName}.txt")
 	set(GOLD_FILE "${goldPath}/${testName}.txt")
-	add_test(NAME ${testName} COMMAND ${TEST_CHECK} ${testExe} ${testArgs} ${TEST_FILE} ${GOLD_FILE})
+	if (NOT ${ARGV4} STREQUAL "" )
+		# In ARGV4 we receive the parameters to be passed to testExe  (optional)
+	    add_test(NAME ${testName} COMMAND ${TEST_CHECK} ${testExe} ${ARGV4} ${TEST_FILE} ${GOLD_FILE})
+        else()
+	    add_test(NAME ${testName} COMMAND ${TEST_CHECK} ${testExe} ${TEST_FILE} ${GOLD_FILE})
+        endif()
 #	message(STATUS ${testName} " " COMMAND " " ${TEST_CHECK} " " ${testExe} " " ${testArgs} " " ${TEST_FILE} " " ${GOLD_FILE})
 endfunction(run_the_test)
 
