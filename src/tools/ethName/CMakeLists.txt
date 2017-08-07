@@ -35,6 +35,7 @@ endfunction(run_test)
 
 # Enter one line for each individual test
 run_test("ethName_README" "-th")
+#broken run_test("ethName_no_params"  "")
 run_test("ethName_simple_search"  "0x1")
 run_test("ethName_invalid_search" "0x1 rob")
 run_test("ethName_three_params" "0x1 rob steem")
