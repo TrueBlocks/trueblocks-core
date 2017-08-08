@@ -3,6 +3,11 @@
 The `getTrans` tool retrieves transactions from the running Ethereum node (using the `--fromNode` option) or from QuickBlocks (the default). You may provide a transaction `hash`, a `blockNumber.transactionID` pair, or a `blockHash.transactionID` pair (or any combination) to specify the transaction(s).
 
 Use the `--trace` option to display a trace of the transaction as well.
+
+*See Also*: This command-line tool implements these RPC interfaces:
+[eth_getTransactionByHash](https://github.com/paritytech/parity/wiki/JSONRPC-eth-module#eth_gettransactionbyhash), 
+[eth_getTransactionByBlockNumberAndIndex](https://github.com/paritytech/parity/wiki/JSONRPC-eth-module#eth_gettransactionbyblocknumberandindex),
+[eth_getTransactionByBlockHashAndIndex](https://github.com/paritytech/parity/wiki/JSONRPC-eth-module#eth_gettransactionbyblockhashandindex).
 #### Usage
 
 `Usage:`    getTrans [-f|-t|-v|-h] hash bn.transID bh.transID  
@@ -19,10 +24,6 @@ Use the `--trace` option to display a trace of the transaction as well.
 | -t | --trace | return the trace of the transaction in addition to regular details |
 | -v | --verbose | set verbose level. Follow with a number to set level (-v0 for silent) |
 | -h | --help | display this help screen |
-
-#### See Also
-
-This command-line tool implements these RPC interfaces: [eth_getTransactionByHash](https://github.com/paritytech/parity/wiki/JSONRPC-eth-module#eth_gettransactionbyhash), [eth_getTransactionByBlockNumberAndIndex](https://github.com/paritytech/parity/wiki/JSONRPC-eth-module#eth_gettransactionbyblocknumberandindex), [eth_getTransactionByBlockHashAndIndex](https://github.com/paritytech/parity/wiki/JSONRPC-eth-module#eth_gettransactionbyblockhashandindex).
 
 #### Other Options
 

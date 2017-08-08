@@ -1,5 +1,6 @@
 ## getTrace
 
+`getTrace` returns the traces from the given transaction.
 #### Usage
 
 `Usage:`    getTrace [-t|-r|-v|-h] hash  

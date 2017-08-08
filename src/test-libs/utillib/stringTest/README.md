@@ -1,5 +1,6 @@
 ## stringTest
 
+stringTest - Testing only
 foo and bar are not equal
 xfoo and xbar are not equal
 foo is less than bar
