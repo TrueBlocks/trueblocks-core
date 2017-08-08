@@ -13,10 +13,6 @@
 | -v | --verbose | set verbose level. Follow with a number to set level (-v0 for silent) |
 | -h | --help | display this help screen |
 
-#### See Also
-
-This command-line tool implements the [eth_getCode](https://github.com/paritytech/parity/wiki/JSONRPC-eth-module#eth_getcode) RPC interface.
-
 #### Other Options
 
 Enter `--version` to display the current version of the tool.  

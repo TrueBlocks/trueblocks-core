@@ -1,5 +1,6 @@
 ## getLogs
 
+`getLogs` returns a transaction's logs (also called generated events).
 #### Usage
 
 `Usage:`    getLogs [-o|-t|-v|-h]  

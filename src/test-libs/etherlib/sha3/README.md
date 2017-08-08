@@ -1,5 +1,6 @@
 ## sha3
 
+sha3 - Testing only
 #### Usage
 
 `Usage:`    sha3 [-o|-t|-v|-h]  

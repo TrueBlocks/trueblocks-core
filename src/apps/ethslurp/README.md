@@ -1,14 +1,8 @@
 ## ethslurp
-Drink the blockchain (http://ethslurp.com)
 
-Watch a video tutorial <a href="https://www.youtube.com/watch?v=ZZDV1yAgces">here</a>
+ethslurp
 
-Check out Great Hill Corporation on <a href="https://www.facebook.com/GreatHillCorporation/">Facebook</a> or <a href="https://twitter.com/ethslurp">Twitter</a>
-
-### Building from source
-
-Please see the <a href="https://github.com/Great-Hill-Corporation/ethslurp/blob/master/INSTALL.md">INSTALL.md</a> file for more information.
-
+Portions of this software are Powered by Etherscan.io APIs
 #### Usage
 
 `Usage:`    ethslurp [-a|-b|-d|-m|-n|-r|-f|-i|-e|-o|-l|-c|-t|-v|-h] addr  
@@ -35,7 +29,6 @@ Please see the <a href="https://github.com/Great-Hill-Corporation/ethslurp/blob/
 | -v | --verbose | set verbose level. Follow with a number to set level (-v0 for silent) |
 | -h | --help | display this help screen |
 
-  Portions of this software are Powered by Etherscan.io APIs
 #### Other Options
 
 Enter `--version` to display the current version of the tool.  

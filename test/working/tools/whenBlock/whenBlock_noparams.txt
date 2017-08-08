@@ -1,0 +1,13 @@
+
+  Not enough arguments presented.
+
+  Usage:    whenBlock [-a|-l|-h] date/block  
+  Purpose:  Finds the nearest block before the JSON-formatted date, or the date of the given block.
+             
+  Where:    
+	date/block            one of the special values listed below or YYYY-MM-DD-[HH[:MM[:SS]]] or a blockNumber (required)
+	-a  (or --alone)      show the found block or found date unadorned (useful for scripting)
+	-l  (or --list)       list special blocks timestamps and dates
+	-h  (or --help)       display this help screen
+
+  Powered by QuickBlocks
