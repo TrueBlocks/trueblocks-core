@@ -1,14 +1,3 @@
-## ethslurp
-Drink the blockchain (http://ethslurp.com)
-
-Watch a video tutorial <a href="https://www.youtube.com/watch?v=ZZDV1yAgces">here</a>
-
-Check out Great Hill Corporation on <a href="https://www.facebook.com/GreatHillCorporation/">Facebook</a> or <a href="https://twitter.com/ethslurp">Twitter</a>
-
-### Building from source
-
-Please see the <a href="https://github.com/Great-Hill-Corporation/ethslurp/blob/master/INSTALL.md">INSTALL.md</a> file for more information.
-
 #### Usage
 
 `Usage:`    ethslurp [-a|-b|-d|-m|-n|-r|-f|-i|-e|-o|-l|-c|-t|-v|-h] addr  
@@ -36,7 +25,7 @@ Please see the <a href="https://github.com/Great-Hill-Corporation/ethslurp/blob/
 | -h | --help | display this help screen |
 
   Portions of this software are Powered by Etherscan.io APIs
-##### Other Options
+#### Other Options
 
 Enter `--version` to display the current version of the tool.  
 Enter `--nocolors` to turn off colored display.  

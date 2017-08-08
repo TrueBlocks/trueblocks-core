@@ -1,6 +1,3 @@
-## ethprice
-
-
 #### Usage
 
 `Usage:`    ethprice [-a|-c|-f|-p|-w|-o|-t|-v|-h]  
@@ -21,7 +18,7 @@
 | -h | --help | display this help screen |
 
   Powered, in part, by the Poloniex APIs
-##### Other Options
+#### Other Options
 
 Enter `--version` to display the current version of the tool.  
 Enter `--nocolors` to turn off colored display.  
