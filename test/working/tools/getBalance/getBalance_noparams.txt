@@ -1,5 +1,5 @@
 
-  You must provide at least one Ethereum address.
+  Not enough arguments presented.
 
   Usage:    getBalance [-d|-e|-v|-h] addrs blocks  
   Purpose:  Retrieve the balance for an account at a block.
