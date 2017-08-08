@@ -48,10 +48,19 @@ set (SCRIPTS_DEST_PATH "${CMAKE_SOURCE_DIR}/../bin")
 # Enable testing
 enable_testing()
 
-set (TEST_PATH "${CMAKE_SOURCE_DIR}/../test/working")
-set (GOLD_PATH "${CMAKE_SOURCE_DIR}/../test/gold")
-set (TEST_CHECK "${SCRIPTS_DEST_PATH}/testCheck.py")
+set (TEST_PATH   "${CMAKE_SOURCE_DIR}/../test/working")
+set (GOLD_PATH   "${CMAKE_SOURCE_DIR}/../test/gold")
+set (TEST_CHECK  "${SCRIPTS_DEST_PATH}/testCheck.py")
 set (TAG_REPLACE "${SCRIPTS_DEST_PATH}/replaceTag.py")
+
+# ----------------------------------------------------------------------------------------
+# Builds the README.md file in the given folder
+function(build_readme sourcePath toolName)
+    set(README_FILE "${sourcePath}/README.md")
+    set(TOOL_README_TEMPLATE "${sourcePath}/docs/README.tmpl.md")
+    add_custom_command(OUTPUT help.txt COMMAND ${toolName} "-th" ">" help.txt "2>&1")
+    add_custom_target(readme COMMAND "${TAG_REPLACE}" "${TOOL_README_TEMPLATE}" "${toolName}" help.txt "${README_FILE}" DEPENDS help.txt)
+endfunction(build_readme)
 
 # ----------------------------------------------------------------------------------------
 # Runs test and checks output against expected gold file
@@ -61,10 +70,11 @@ function(run_the_test testPath goldPath testName testExe) # Optional argv4 with 
 	if (NOT ${ARGV4} STREQUAL "" )
 		# In ARGV4 we receive the parameters to be passed to testExe  (optional)
 	    add_test(NAME ${testName} COMMAND ${TEST_CHECK} ${testExe} ${ARGV4} ${TEST_FILE} ${GOLD_FILE})
+#        message(STATUS ${testName} " " COMMAND " " ${TEST_CHECK} " " ${testExe} " " ${ARGV4} " " ${TEST_FILE} " " ${GOLD_FILE})
         else()
 	    add_test(NAME ${testName} COMMAND ${TEST_CHECK} ${testExe} ${TEST_FILE} ${GOLD_FILE})
+#        message(STATUS ${testName} " " COMMAND " " ${TEST_CHECK} " " ${testExe} " " ${TEST_FILE} " " ${GOLD_FILE})
         endif()
-#	message(STATUS ${testName} " " COMMAND " " ${TEST_CHECK} " " ${testExe} " " ${testArgs} " " ${TEST_FILE} " " ${GOLD_FILE})
 endfunction(run_the_test)
 
 # ----------------------------------------------------------------------------------------

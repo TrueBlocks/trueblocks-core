@@ -25,8 +25,7 @@ set(TEST_PATH "${TEST_PATH}/${PROJ_NAME}/${TOOL_NAME}")
 set(GOLD_PATH "${GOLD_PATH}/${PROJ_NAME}/${TOOL_NAME}")
 
 # Additional target to make the README.md
-set(README_FILE "${CMAKE_CURRENT_SOURCE_DIR}/README.md")
-add_custom_target(readme COMMAND ${TEST_EXE} "-th" ">" "${README_FILE}" "2>&1")
+build_readme(${CMAKE_CURRENT_SOURCE_DIR} ${TOOL_NAME})
 
 # Function to run an individual test case
 function(run_test testName)
