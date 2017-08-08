@@ -229,7 +229,7 @@ void COptions::Init(void) {
     wantsArchive = false;
     cache = false;
     acct_id = 0;
-    // addr = "";
+    addr = "";
 
     outScreen.setOutput(stdout);  // so we know where it is at the start of each run
     output = NULL;

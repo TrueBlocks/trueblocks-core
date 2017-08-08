@@ -120,9 +120,9 @@ void COptions::Init(void) {
     isList = false;
     isAll = false;
     silent = false;
-    // namesp = "";
-    // classNames = "";
-    // filter = "";
+    namesp = "";
+    classNames = "";
+    filter = "";
 
     useVerbose = true;
     useTesting = false;

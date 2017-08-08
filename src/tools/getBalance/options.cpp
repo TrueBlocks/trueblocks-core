@@ -62,8 +62,8 @@ void COptions::Init(void) {
     paramsPtr = params;
     nParamsRef = nParams;
 
-    // addrs = "";
-    // blocks = "";
+    addrs = "";
+    blocks = "";
     asEther = false;
     asData = false;
 

@@ -76,9 +76,9 @@ void COptions::Init(void) {
     paramsPtr = params;
     nParamsRef = nParams;
 
-    // addr = "";
-    // name = "";
-    // source = "";
+    addr = "";
+    name = "";
+    source = "";
     all = false;
     matchCase = false;
     list = false;
