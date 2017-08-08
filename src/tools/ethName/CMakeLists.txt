@@ -25,8 +25,9 @@ set(TEST_PATH "${TEST_PATH}/${PROJ_NAME}/${TOOL_NAME}")
 set(GOLD_PATH "${GOLD_PATH}/${PROJ_NAME}/${TOOL_NAME}")
 
 # Additional target to make the README.md
-# We set some variables, obtain the usage of the command (using execute_process())
+# We set some variables, obtain the usage of the command (using add_custom_command())
 # Then we build the output README.md file using the template + the command usage obtained
+# readme target depends on the ${TOOL_HELP_CONTENT_FILE} so when needed it is executed first
 set(README_FILE "${CMAKE_CURRENT_SOURCE_DIR}/README.md")
 set(TOOL_HELP_TAG "[{COMMAND_HELP}]")
 set(TOOL_README_TEMPLATE "${CMAKE_CURRENT_SOURCE_DIR}/docs/README.tmpl")
