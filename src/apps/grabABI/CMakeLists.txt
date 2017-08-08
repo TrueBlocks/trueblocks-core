@@ -29,12 +29,12 @@ set(README_FILE "${CMAKE_CURRENT_SOURCE_DIR}/README.md")
 add_custom_target(readme COMMAND ${TEST_EXE} "-th" ">" "${README_FILE}" "2>&1")
 
 # Function to run an individual test case
-function(run_test testName testArgs)
-	run_the_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${testArgs})
+function(run_test testName)
+     run_the_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGV1})
 endfunction(run_test)
 
 # Enter one line for each individual test
-#broken - should make README file run_test("grabABI_README"     "0xbb9bc244d798123fde783fcc1c72d3bb8c189413 -th")
+run_test("grabABI_README"     "-th")
 run_test("grabABI_verbose"    "0xbb9bc244d798123fde783fcc1c72d3bb8c189413 -t -v")
 #broken - should allow 'ganged' options run_test("grabABI_verbose"    "0xbb9bc244d798123fde783fcc1c72d3bb8c189413 -tv")
 run_test("grabABI_noconst"    "0xbb9bc244d798123fde783fcc1c72d3bb8c189413 -t -v -n")

@@ -25,16 +25,16 @@ set(TEST_PATH "${TEST_PATH}/${PROJ_NAME}/${TOOL_NAME}")
 set(GOLD_PATH "${GOLD_PATH}/${PROJ_NAME}/${TOOL_NAME}")
 
 # Additional target to make the README.md
-set(README_FILE "${CMAKE_CURRENT_SOURCE_DIR}/README.md")
-add_custom_target(readme COMMAND ${TEST_EXE} "-th" ">" "${README_FILE}" "2>&1")
+build_readme(${CMAKE_CURRENT_SOURCE_DIR} ${TOOL_NAME})
 
 # Function to run an individual test case
-function(run_test testName testArgs)
-    run_the_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${testArgs})
+function(run_test testName)
+     run_the_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGV1})
 endfunction(run_test)
 
 # Enter one line for each individual test
 run_test("isContract_README"       "-th")
+run_test("isContract_noparams"          )
 run_test("isContract_dash_d_1"     "0x000001f568875f378bf6d170b790967fe429c81a -d")
 run_test("isContract_dash_d_2"     "0x01d04122aeccab138a47103b500f7b3d3b356a27 -d")
 run_test("isContract_dash_n_1"     "0x05f65ab88dc474a83a98994291c7a0abd13c9ae1 -n")
