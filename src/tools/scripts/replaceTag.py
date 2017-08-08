@@ -60,7 +60,7 @@ if os.path.isfile(content_file) == False:
 
 # Check that output file is NOT present, remove it otherwise
 if os.path.isfile(output_file) == True:
-    printe("WARNING: Output file already present %s (removed)" % output_file)
+#    printe("WARNING: Output file already present %s (removed)" % output_file)
     os.remove(output_file)
 
 # Open input file
@@ -77,4 +77,5 @@ output_data = output_data.replace("[{NAME}]", name)
 
 # Generate output file
 with open(output_file, 'w') as file:
+    printe("Wrote file %s" % output_file)
     file.write(output_data)

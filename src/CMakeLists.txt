@@ -59,7 +59,7 @@ function(build_readme sourcePath toolName)
     set(README_FILE "${sourcePath}/README.md")
     set(TOOL_README_TEMPLATE "${sourcePath}/docs/README.tmpl.md")
     add_custom_command(OUTPUT help.txt COMMAND ${toolName} "-th" ">" help.txt "2>&1")
-    add_custom_target(readme COMMAND "${TAG_REPLACE}" "${TOOL_README_TEMPLATE}" "${toolName}" help.txt "${README_FILE}" DEPENDS help.txt)
+    add_custom_target(readme COMMAND "${TAG_REPLACE}" "${TOOL_README_TEMPLATE}" "${toolName}" help.txt "${README_FILE}")
 endfunction(build_readme)
 
 # ----------------------------------------------------------------------------------------
