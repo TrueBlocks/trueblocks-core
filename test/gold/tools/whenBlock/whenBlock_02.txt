@@ -28,6 +28,4 @@ block #1920000 : 1469020840 : 2016-07-20 13:20:40 UTC
 	-l  (or --list)       list special blocks timestamps and dates
 	-h  (or --help)       display this help screen
 
-  Special values: [ first | iceage | homestead | daofund | daohack | daofork | tangerine | spurious | stateclear | latest ]
-
   Powered by QuickBlocks
