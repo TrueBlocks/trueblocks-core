@@ -25,8 +25,16 @@ set(TEST_PATH "${TEST_PATH}/${PROJ_NAME}/${TOOL_NAME}")
 set(GOLD_PATH "${GOLD_PATH}/${PROJ_NAME}/${TOOL_NAME}")
 
 # Additional target to make the README.md
+# We set some variables, obtain the usage of the command (using add_custom_command())
+# Then we build the output README.md file using the template + the command usage obtained
+# readme target depends on the ${TOOL_HELP_CONTENT_FILE} so when needed it is executed first
 set(README_FILE "${CMAKE_CURRENT_SOURCE_DIR}/README.md")
-add_custom_target(readme COMMAND ${TEST_EXE} "-th" ">" "${README_FILE}" "2>&1")
+set(TOOL_HELP_TAG "[{COMMAND_HELP}]")
+set(TOOL_README_TEMPLATE "${CMAKE_CURRENT_SOURCE_DIR}/docs/README.tmpl")
+set(TOOL_HELP_CONTENT_FILE "${CMAKE_CURRENT_BINARY_DIR}/help.txt")
+add_custom_command(OUTPUT ${TOOL_HELP_CONTENT_FILE} COMMAND ${TOOL_NAME} "-h" ">" ${TOOL_HELP_CONTENT_FILE} "2>&1" DEPENDS ${TOOL_NAME})
+add_custom_target(readme COMMAND "${TAG_REPLACE}" "${TOOL_README_TEMPLATE}" "${TOOL_HELP_TAG}" "${TOOL_HELP_CONTENT_FILE}" "${README_FILE}" DEPENDS ${TOOL_NAME} ${TOOL_HELP_CONTENT_FILE})
+#add_custom_target(readme COMMAND ${TEST_EXE} "-th" ">" "${README_FILE}" "2>&1")
 
 # Function to run an individual test case
 function(run_test testName)
