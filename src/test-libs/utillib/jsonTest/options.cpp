@@ -42,7 +42,7 @@ void COptions::Init(void) {
     paramsPtr = params;
     nParamsRef = nParams;
 
-    // fileName = "";
+    fileName = "";
 
     useVerbose = true;
     useTesting = false;

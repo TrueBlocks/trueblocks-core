@@ -69,9 +69,9 @@ void COptions::Init(void) {
     paramsPtr = params;
     nParamsRef = nParams;
 
-    // token = "";
-    // holders = "";
-    // blocks = "";
+    token = "";
+    holders = "";
+    blocks = "";
     asEther = false;
     asData = false;
 

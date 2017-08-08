@@ -37,6 +37,8 @@ bool COptions::parseArguments(SFString& command) {
 
          } else {
 
+             if (nAddrs >= MAX_ADDRS)
+                 return usage("You may query at most " + asString(MAX_ADDRS) + " addresses. Quitting...");
             SFString addr = toLower(arg);
             if (!addr.startsWith("0x"))
                 addr = "0x" + addr;
@@ -65,7 +67,9 @@ void COptions::Init(void) {
     paramsPtr = params;
     nParamsRef = nParams;
 
-    // addrs = [];
+    for (uint32_t i = 0 ; i < MAX_ADDRS ; i++) {
+        addrs[i] = "";
+    }
     nAddrs = 0;
     diff = false;
     display = false;
