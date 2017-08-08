@@ -73,7 +73,7 @@ void COptions::Init(void) {
     paramsPtr = params;
     nParamsRef = nParams;
 
-    // queries = "";
+    queries = "";
     trace = false;
     verbose = true;
 

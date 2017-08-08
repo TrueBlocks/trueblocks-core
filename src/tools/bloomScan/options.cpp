@@ -50,7 +50,7 @@ void COptions::Init(void)
 	paramsPtr  = params;
 	nParamsRef = nParams;
 
-	//mode = "";
+	mode = "";
 
 	useVerbose=true;
 	useTesting=false;

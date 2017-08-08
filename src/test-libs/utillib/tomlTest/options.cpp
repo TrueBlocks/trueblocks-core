@@ -30,7 +30,7 @@ void COptions::Init(void) {
     paramsPtr = params;
     nParamsRef = nParams;
 
-    // filename = "";
+    filename = "";
 
     useVerbose = true;
     useTesting = false;

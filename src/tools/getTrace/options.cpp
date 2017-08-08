@@ -50,7 +50,7 @@ void COptions::Init(void) {
     paramsPtr = params;
     nParamsRef = nParams;
 
-    // hash = "";
+    hash = "";
     terse = false;
     raw = false;
 
