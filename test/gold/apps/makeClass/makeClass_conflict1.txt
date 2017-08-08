@@ -1,6 +1,3 @@
-## makeClass
-
-
 #### Usage
 
   Incompatible options with '-r'. Only '-a' option works with '-r'.

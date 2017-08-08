@@ -1,9 +1,3 @@
-## getBalance
-
-Retrieve the balance of an address (or more than one) at the given block(s). You may specify multiple addresses or multiple blocks on the line, but not both. `block`, if not specified, defaults to `latest`.
-
-`getBalance` retrieves the balance from the local Ethereum node (not QuickBlocks). Use the `--accounting` option of an account monitor to retrieve the balance from QuickBlocks.
-
 #### Usage
 
 `Usage:`    getBalance [-d|-e|-v|-h] addrs blocks  
@@ -20,7 +14,7 @@ Retrieve the balance of an address (or more than one) at the given block(s). You
 | -v | --verbose | set verbose level. Follow with a number to set level (-v0 for silent) |
 | -h | --help | display this help screen |
 
-##### Other Options
+#### Other Options
 
 Enter `--version` to display the current version of the tool.  
 Enter `--nocolors` to turn off colored display.  

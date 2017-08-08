@@ -1,22 +1,20 @@
-## acctTree
-
-
 #### Usage
 
-`Usage:`    acctTree [-a|-s|-t|-v|-h]  
-`Purpose:`  Build an account tree listing first transaction, latest transaction, and proposed balance for each account.
+`Usage:`    whenBlock [-a|-l|-h] date/block  
+`Purpose:`  Finds the nearest block before the JSON-formatted date, or the date of the given block.
              
 `Where:`  
 
 | Option | Full Command | Description |
 | -------: | :------- | :------- |
-| -a | --all | process all transactions from start of chain to latest block |
-| -s | --startBlock | the first block to process |
-| -t | --test | generate intermediary files but do not execute the commands |
-| -v | --verbose | set verbose level. Follow with a number to set level (-v0 for silent) |
+|  | date/block | one of the special values listed below or YYYY-MM-DD-[HH[:MM[:SS]]] or a blockNumber |
+| -a | --alone | show the found block or found date unadorned (useful for scripting) |
+| -l | --list | list special blocks timestamps and dates |
 | -h | --help | display this help screen |
 
-##### Other Options
+  Special values: [ first | iceage | homestead | daofund | daohack | daofork | tangerine | spurious | stateclear | latest ]
+
+#### Other Options
 
 Enter `--version` to display the current version of the tool.  
 Enter `--nocolors` to turn off colored display.  
