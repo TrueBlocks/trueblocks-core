@@ -206,9 +206,7 @@ namespace qblocks {
         if (isTesting) {
             sep = sep2 = "`";
             colorsOff();
-            os << "## " << programName << "\n\n";
-            os << COptionsBase::header;
-            os << "\n#### Usage\n";
+            os << "#### Usage\n";
         }
 
         os << "\n";
@@ -231,7 +229,7 @@ namespace qblocks {
 
     //--------------------------------------------------------------------------------
     const char *STR_FILE_OPTION =
-    "##### Other Options\n"
+    "#### Other Options\n"
     "\n"
     "Enter `--version` to display the current version of the tool.  \n"
     "Enter `--nocolors` to turn off colored display.  \n"
