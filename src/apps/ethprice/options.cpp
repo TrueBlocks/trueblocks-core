@@ -56,7 +56,7 @@ bool COptions::parseArguments(SFString& command) {
             if (arg1 != "-w" && arg1 != "--when")
                 return usage("Unknown parameter: " + orig);
             hour = toLong(arg);
-            
+
         } else if (arg.Contains("-p")) {
 
             SFString orig = arg;
@@ -100,9 +100,6 @@ COptions::COptions(void) {
     COptionsBase::useVerbose = true;
     COptionsBase::useTesting = true;
     Init();
-    // header = "";
-    footer = "  Powered, in part, by the Poloniex APIs\n";
-    // seeAlso = "";
 }
 
 //--------------------------------------------------------------------------
