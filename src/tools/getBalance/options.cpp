@@ -73,19 +73,8 @@ void COptions::Init(void) {
 }
 
 //---------------------------------------------------------------------------------------------------
-const char *STR_README_HEAD =
-"Retrieve the balance of an address (or more than one) at the given block(s). You may specify multiple "
-"addresses or multiple blocks on the line, but not both. `block`, if not specified, defaults to `latest`.\n"
-"\n"
-"`getBalance` retrieves the balance from the local Ethereum node (not QuickBlocks). Use the `--accounting` "
-"option of an account monitor to retrieve the balance from QuickBlocks.\n";
-
-//---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
     Init();
-    header = STR_README_HEAD;
-    // footer = "";
-    // seeAlso = "";
 }
 
 //--------------------------------------------------------------------------------

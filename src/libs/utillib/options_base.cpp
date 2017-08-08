@@ -215,12 +215,6 @@ namespace qblocks {
         os << bYellow << sep << "Usage:" << sep2 << "    " << cOff << programName << " " << options() << "  \n";
         os << purpose();
         os << descriptions() << "\n";
-        if (isTesting && !COptionsBase::seeAlso.empty()) {
-            SFString note = COptionsBase::seeAlso;
-            os << "#### " << nextTokenClear(note, ':') << "\n\n";
-            os << Strip(note, ' ') << "\n";
-        }
-        os << COptionsBase::footer;
         if (isTesting)
             os << STR_FILE_OPTION;
         os << bBlue << (isTesting?"#### ":"  ") << "Powered by QuickBlocks" << (isTesting?"&reg;":"") << "\n" << cOff;
@@ -398,9 +392,9 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    SFString COptionsBase::header = "";
-    SFString COptionsBase::footer = "";
-    SFString COptionsBase::seeAlso = "";
+//    SFString COptionsBase::header = "";
+//    SFString COptionsBase::footer = "";
+//    SFString COptionsBase::seeAlso = "";
     bool COptionsBase::useVerbose = true;
     bool COptionsBase::useTesting = true;
 

@@ -90,7 +90,4 @@ COptions::COptions(void) {
     COptionsBase::useVerbose = true;
     COptionsBase::useTesting = false;
     Init();
-    // header = "";
-    // footer = "";
-    // seeAlso = "";
 }
