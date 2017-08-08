@@ -46,7 +46,7 @@ void COptions::Init(void) {
 
     useVerbose = true;
     useTesting = false;
-//    minArgs = 0;
+    minArgs = 0;
 }
 
 //---------------------------------------------------------------------------------------------------

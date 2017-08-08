@@ -3,13 +3,13 @@
 #########################################################################################################################################
 # This script receives parameters to do the replacement of a given tag within a text file
 #
-# USAGE: replaceTag.py input_file tag content_file output_file
-# argv[0] The input file where we need to replace a given tag
-# argv[1] The tag we want to replace
+# USAGE: replaceTag.py input_file name content_file output_file
+# argv[0] The input file where we need to replace the usage table
+# argv[1] The name of the tool or app
 # argv[2] The file with the text we want to use in replacement (tag -> text)
 # argv[3] Name of the output file we obtain after doing the replacement
-# 
-# Example: replaceTag.py README.tmpl [{COMMAND_HELP}] HELP.txt README.md 
+#
+# Example: replaceTag.py README.tmpl.md [[TOOL_NAME]] HELP.txt README.md
 #
 #########################################################################################################################################
 
@@ -34,8 +34,8 @@ def printe(*args, **kwargs):
 param_number = len(sys.argv)
 
 # We need the following parameters:
-# 1) input file, 
-# 2) the tag to be replaced, 
+# 1) input file,
+# 2) the name of the tool/app
 # 3) the content file (we replace tag with the content of this file)
 # 4) the name of the output file we will generate after replacing the tag at input file
 if param_number <= 4:
@@ -44,7 +44,7 @@ if param_number <= 4:
 
 # Get the input parameters once checked that they are present
 input_file = sys.argv[1]
-tag = sys.argv[2]
+name = sys.argv[2]
 content_file = sys.argv[3]
 output_file = sys.argv[4]
 
@@ -72,7 +72,8 @@ with open(content_file, 'r') as file :
      content_data = file.read()
 
 # Do the replacement
-output_data = input_data.replace(tag, content_data)
+output_data = input_data.replace("[{COMMAND_HELP}]", content_data)
+output_data = output_data.replace("[{NAME}]", name)
 
 # Generate output file
 with open(output_file, 'w') as file:
