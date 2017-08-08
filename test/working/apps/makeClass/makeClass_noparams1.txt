@@ -1,5 +1,5 @@
 
-  Unknown parameter: --nocolor
+  Unknown parameter: You m
 
   Usage:    makeClass [-e|-f|-l|-n|-s|-r|-a|-v|-h] className  
   Purpose:  Creates a C++ class based on definitions found in ./classDefinition/<className>.
