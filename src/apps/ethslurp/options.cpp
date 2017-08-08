@@ -238,9 +238,6 @@ void COptions::Init(void) {
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
     Init();
-    // header = "";
-    footer = "  Portions of this software are Powered by Etherscan.io APIs\n";
-    // seeAlso = "";
 }
 
 //--------------------------------------------------------------------------------
