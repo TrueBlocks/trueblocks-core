@@ -16,7 +16,7 @@ int main(int argc, const char *argv[]) {
 
     SFAddress addrs[] = { "", "0x", "0x0", "0x0000000000000000000000000000000000000000" };
     uint32_t nAddrs = sizeof(addrs) / sizeof(SFAddress);
-    for (int i=0;i<nAddrs;i++) {
+    for (uint32_t i=0;i<nAddrs;i++) {
         cout << addrs[i] << " : " << addr2BN(addrs[i]) << " : " << sizeof(addrs[i]) << " : " << sizeof(addr2BN(addrs[i])) << "\n";
     }
     return 0;
