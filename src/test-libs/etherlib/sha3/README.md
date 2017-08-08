@@ -1,6 +1,3 @@
-## sha3
-
-
 #### Usage
 
 `Usage:`    sha3 [-o|-t|-v|-h]  
@@ -15,7 +12,7 @@
 | -v | --verbose | set verbose level. Follow with a number to set level (-v0 for silent) |
 | -h | --help | display this help screen |
 
-##### Other Options
+#### Other Options
 
 Enter `--version` to display the current version of the tool.  
 Enter `--nocolors` to turn off colored display.  

@@ -1,9 +1,10 @@
 ## getBalance
 
-Retrieve the balance of an address (or more than one) at the given block(s). You may specify multiple addresses or multiple blocks on the line, but not both. `block`, if not specified, defaults to `latest`.
+Retrieve the balance of an address (or more than one) at the given block(s). You may specify multiple addresses or multiple blocks on the line, but not 
+both. `block`, if not specified, defaults to `latest`.
 
-`getBalance` retrieves the balance from the local Ethereum node (not QuickBlocks). Use the `--accounting` option of an account monitor to retrieve the balance from QuickBlocks.
-
+`getBalance` retrieves the balance from the local Ethereum node (not QuickBlocks). Use the `--accounting` option of an account monitor to retrieve the 
+balance from QuickBlocks.
 #### Usage
 
 `Usage:`    getBalance [-d|-e|-v|-h] addrs blocks  
@@ -20,7 +21,7 @@ Retrieve the balance of an address (or more than one) at the given block(s). You
 | -v | --verbose | set verbose level. Follow with a number to set level (-v0 for silent) |
 | -h | --help | display this help screen |
 
-##### Other Options
+#### Other Options
 
 Enter `--version` to display the current version of the tool.  
 Enter `--nocolors` to turn off colored display.  
@@ -29,3 +30,4 @@ Enter `--wei` (default), `--ether`, or `--dollars` to alter the way value is dis
 All `quickBlocks` command-line tools support the `--file:filename` option. Place valid commands, on separate lines, in a file and include the above option. In some cases, this option may significantly improve performance. Place a semi-colon at the start of a line to make it a comment.
 
 #### Powered by QuickBlocks&reg;
+
