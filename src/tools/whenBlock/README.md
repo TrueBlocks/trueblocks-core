@@ -9,6 +9,7 @@ Name your own blocks by editing '~./quickBlocks/whenBlock.toml' and placing `nam
 
 The `hour`/`minute`/`second` portions of the date are optional, and if omitted, default to zero in each case.
 
+   Special values: [ iceage | homestead | daofund | daohack | daofork | tangerine | spurious | stateclear | latest ]
 #### Usage
 
 `Usage:`    whenBlock [-a|-l|-h] date/block  
@@ -22,8 +23,6 @@ The `hour`/`minute`/`second` portions of the date are optional, and if omitted, 
 | -a | --alone | show the found block or found date unadorned (useful for scripting) |
 | -l | --list | list special blocks timestamps and dates |
 | -h | --help | display this help screen |
-
-  Special values: [ first | iceage | homestead | daofund | daohack | daofork | tangerine | spurious | stateclear | latest ]
 
 #### Other Options
 

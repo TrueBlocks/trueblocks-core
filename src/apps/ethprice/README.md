@@ -1,5 +1,8 @@
 ## ethprice
 
+ethprice
+
+Powered, in part, by the Poloniex APIs
 #### Usage
 
 `Usage:`    ethprice [-a|-c|-f|-p|-w|-o|-t|-v|-h]  
@@ -19,7 +22,6 @@
 | -v | --verbose | set verbose level. Follow with a number to set level (-v0 for silent) |
 | -h | --help | display this help screen |
 
-  Powered, in part, by the Poloniex APIs
 #### Other Options
 
 Enter `--version` to display the current version of the tool.  

@@ -12,8 +12,6 @@
 | -l | --list | list special blocks timestamps and dates |
 | -h | --help | display this help screen |
 
-  Special values: [ first | iceage | homestead | daofund | daohack | daofork | tangerine | spurious | stateclear | latest ]
-
 #### Other Options
 
 Enter `--version` to display the current version of the tool.  
