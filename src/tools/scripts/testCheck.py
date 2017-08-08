@@ -73,7 +73,7 @@ command = sys.argv[1:-2]
 # Open output file and execute the command with redirections
 with open(output_file, 'w') as f:
     os.chdir(os.path.dirname(output_file))
-    printe(os.getcwd())
+#    printe(os.getcwd())
     os.environ["NO_COLOR"] = "true"
     result = subprocess.call(command, stdout=f, stderr=subprocess.STDOUT)
 
