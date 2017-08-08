@@ -1,21 +1,19 @@
-## abiTest
-
-
 #### Usage
 
-`Usage:`    abiTest [-v|-h] mode  
-`Purpose:`  Simple program to illustrate how to encode function and event signatures.
+`Usage:`    acctTree [-a|-s|-t|-v|-h]  
+`Purpose:`  Build an account tree listing first transaction, latest transaction, and proposed balance for each account.
              
 `Where:`  
 
 | Option | Full Command | Description |
 | -------: | :------- | :------- |
-|  | mode | Mode of operation. One or more of 'encoding' or 'generation'.
- |
+| -a | --all | process all transactions from start of chain to latest block |
+| -s | --startBlock | the first block to process |
+| -t | --test | generate intermediary files but do not execute the commands |
 | -v | --verbose | set verbose level. Follow with a number to set level (-v0 for silent) |
 | -h | --help | display this help screen |
 
-##### Other Options
+#### Other Options
 
 Enter `--version` to display the current version of the tool.  
 Enter `--nocolors` to turn off colored display.  

@@ -1,15 +1,14 @@
 #### Usage
 
-`Usage:`    getTrace [-t|-r|-v|-h] hash  
-`Purpose:`  Retrieve the full trace of a transaction.
+`Usage:`    abiTest [-v|-h] mode  
+`Purpose:`  Simple program to illustrate how to encode function and event signatures.
              
 `Where:`  
 
 | Option | Full Command | Description |
 | -------: | :------- | :------- |
-|  | hash | transaction hash of the requested transaction |
-| -t | --terse | display the traces in a terse fashion |
-| -r | --raw | return the trace directly from the node without processing |
+|  | mode | Mode of operation. One or more of 'encoding' or 'generation'.
+ |
 | -v | --verbose | set verbose level. Follow with a number to set level (-v0 for silent) |
 | -h | --help | display this help screen |
 
