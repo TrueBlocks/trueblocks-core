@@ -1,0 +1,21 @@
+As root user:
+1) cd /tmp
+2) wget http://d1h4xl4cr1h0mo.cloudfront.net/v1.6.10/x86_64-unknown-linux-gnu/parity_1.6.10_amd64.deb
+3) md5sum parity_1.6.10_amd64.deb  (Check that we obtain the result: 78cd0d0da5e460b74d0c437676ff02af)
+4) As root: dpkg -i parity_1.6.10_amd64.deb
+5) To check what are the files that the package installs:
+
+   dpkg-deb -c parity_1.6.10_amd64.deb
+
+6) To check what are the files that it really installed:
+
+   root@ubuntu-1gb-lon1-01:/tmp# dpkg-query -L parity
+	/.
+	/usr
+	/usr/bin
+	/usr/bin/parity-evm
+	/usr/bin/ethkey
+	/usr/bin/ethstore
+	/usr/bin/parity
+
+7) Parity installs 4 binaries (64 bits ones). We need to study its usage.
