@@ -1,7 +1,7 @@
 # quickBlocks
 
-The primary executables created by the QuickBlocks system reside in this folder. Add this folder to your $PATH to make these executables available to your system.
+QuickBlocks is a series of C++ [libraries](../libs) and a collection of [tools](../tools) and [applications](../apps) built on those libraries. Once built, the tools and appiclation binaries appear in this folder. Add this folder to your $PATH, and you will be able to run these programs.
 
 #### Notes
 
-These executables were built for Mac only. You must rebuild these if you're on some other operating system.
+Generall speaking, no files appear in this folder other than this README.md file and the built binaries. Do not upload any files to this folder.
