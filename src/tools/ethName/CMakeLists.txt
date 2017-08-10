@@ -116,7 +116,6 @@ run_test("ethName_addr_long_name_source_no_match" "--source 0x01 rob")
 #run_test("ethName_addr_long_verbose_no_match" "--verbose 0xFA1")
 #run_test("ethName_addr_long_name_verbose_match" "--verbose 0x17 rob")
 #run_test("ethName_addr_long_name_verbose_no_match" "--verbose 0x01 rob")
-run_test("ethName_edit" "-e")
 # Interactive, to review how we can test this!
 #run_test("ethName_edit" "-e")
 #run_test("ethName_long_edit" "--edit")
