@@ -130,6 +130,7 @@ run_test("ethName_mixed_options_with_list_2" "-c -l -a 0x17 rob")
 run_test("ethName_mixed_options_with_edit_1" "-e -s -a 0x17 rob")
 run_test("ethName_mixed_options_with_edit_2" "-c -e -a 0x17 rob")
 run_test("ethName_all_options" "-a -m -v -c -s 0x17 rob")
+run_test("ethName_addr_no_hex_number" "17 rob")
 
 #Old test created by Thomas - keep them while we generate the new gold ones
 #run_test("ethName_simple_search"   "0x1")
