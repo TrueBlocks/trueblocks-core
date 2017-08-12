@@ -1,0 +1,7 @@
+tomlTest test12.toml 
+test12.toml
+[version]
+	version=0:9:0
+[settings]
+	name=TOP_26_034259.csv
+
