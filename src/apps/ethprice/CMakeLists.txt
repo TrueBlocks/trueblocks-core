@@ -20,6 +20,7 @@ target_link_libraries (${TOOL_NAME} wallet token ${BASE_LIBS})
 # Testing
 # Define paths to test folder and gold folder
 set(TEST_EXE "${EXECUTABLE_OUTPUT_PATH}/${TOOL_NAME}")
+set(PROJ_NAME "apps")
 set(TEST_PATH "${TEST_PATH}/${PROJ_NAME}/${TOOL_NAME}")
 set(GOLD_PATH "${GOLD_PATH}/${PROJ_NAME}/${TOOL_NAME}")
 
@@ -32,8 +33,8 @@ function(run_test testName)
 endfunction(run_test)
 
 # Enter one line for each individual test
+run_test("ethprice_README"          "-th")
 run_test("ethprice_no_params"            )
 run_test("ethprice_invalid_param_1" "-x" )
-run_test("ethprice_invalid_param_2" "-" )
-run_test("ethprice_README"          "-th")
+#run_test("ethprice_invalid_param_2" "-" )
 # No more tests can be added for the moment pendig to review with Thomas the setup

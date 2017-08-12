@@ -58,7 +58,7 @@ gold_file = sys.argv[param_number-1]
 # Check that gold file is present
 if os.path.isfile(gold_file) == False:
     printe("ERROR: Could not find gold file %s" % gold_file)
-    exit(2)
+#    exit(2)
 
 #Debug
 #printe("%d parameters received, output file is %s gold file %s" % (param_number, output_file, gold_file))
@@ -74,6 +74,7 @@ command = sys.argv[1:-2]
 with open(output_file, 'w') as f:
     os.chdir(os.path.dirname(output_file))
 #    printe(os.getcwd())
+    os.environ["SHOW_PARAMS"] = "true"
     os.environ["NO_COLOR"] = "true"
     result = subprocess.call(command, stdout=f, stderr=subprocess.STDOUT)
 
@@ -85,6 +86,6 @@ if result:
 if cmp_files(output_file, gold_file):
     exit(0)
 else:
-    printe("ERROR: Differences found comparing %s with %s" % (output_file, gold_file)) 
+    printe("ERROR: Differences found comparing %s with %s" % (output_file, gold_file))
     exit(3)
 

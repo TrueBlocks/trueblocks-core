@@ -1,3 +1,4 @@
+getBalance -th 
 #### Usage
 
 `Usage:`    getBalance [-d|-e|-v|-h] addrs blocks  

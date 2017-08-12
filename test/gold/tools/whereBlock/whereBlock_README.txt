@@ -1,3 +1,4 @@
+whereBlock -th 
 #### Usage
 
 `Usage:`    whereBlock [-a|-b|-h]  

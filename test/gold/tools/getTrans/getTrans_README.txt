@@ -1,3 +1,4 @@
+getTrans -th 
 #### Usage
 
 `Usage:`    getTrans [-f|-t|-v|-h] hash bn.transID bh.transID  

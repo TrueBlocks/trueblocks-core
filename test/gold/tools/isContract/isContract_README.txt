@@ -1,3 +1,4 @@
+isContract -th 
 #### Usage
 
 `Usage:`    isContract [-d|-n|-v|-h] addr[s]  
