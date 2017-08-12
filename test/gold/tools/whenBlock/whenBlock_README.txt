@@ -1,3 +1,4 @@
+whenBlock -th 
 #### Usage
 
 `Usage:`    whenBlock [-a|-l|-h] date/block  

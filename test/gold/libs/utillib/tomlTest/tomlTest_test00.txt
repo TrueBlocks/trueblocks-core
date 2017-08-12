@@ -1,3 +1,4 @@
+tomlTest test00.toml 
 test00.toml
 [version]
 	version=0:9:0

@@ -1,3 +1,4 @@
+abiTest -th 
 #### Usage
 
 `Usage:`    abiTest [-v|-h] mode  

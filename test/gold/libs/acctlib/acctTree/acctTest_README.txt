@@ -1,3 +1,4 @@
+acctTree -th 
 #### Usage
 
 `Usage:`    acctTree [-a|-s|-t|-v|-h]  

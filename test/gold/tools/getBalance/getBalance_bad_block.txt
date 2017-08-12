@@ -1,3 +1,4 @@
+getBalance 12 -1 
 
   Invalid option: -1
 

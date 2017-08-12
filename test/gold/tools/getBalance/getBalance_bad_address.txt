@@ -1,3 +1,4 @@
+getBalance $doa 0x12 
 
   0x12 does not appear to be a valid Ethereum address. Quitting...
 

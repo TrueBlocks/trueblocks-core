@@ -1,3 +1,4 @@
+getLogs -th 
 #### Usage
 
 `Usage:`    getLogs [-o|-t|-v|-h]  
