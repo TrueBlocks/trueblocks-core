@@ -78,6 +78,18 @@ namespace qblocks {
                     return usage("--file: '" + cmdFileName + "' not found. Quitting.");
                 }
 
+            } else if (arg == "--version") {
+#define MAJOR 0
+#define MINOR 0
+#define BUILD 2
+#define SUBVERS "alpha"
+                SFString r1 = __DATE__;
+                SFString r2 = __TIME__;
+                cerr << programName << " (quickBlocks) "
+                    << MAJOR << "." << MINOR << "." << BUILD << SUBVERS
+                    << "\n";
+                return false;
+
             } else if (arg == "-h" || arg == "--help") {
                 if (args) delete [] args;
                 return usage();
