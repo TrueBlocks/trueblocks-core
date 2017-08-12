@@ -72,7 +72,7 @@ command = sys.argv[1:-2]
 
 # Open output file and execute the command with redirections
 with open(output_file, 'w') as f:
-    os.chdir(os.path.dirname(output_file))
+    os.chdir(os.path.dirname(gold_file))
 #    printe(os.getcwd())
     os.environ["SHOW_PARAMS"] = "true"
     os.environ["NO_COLOR"] = "true"
