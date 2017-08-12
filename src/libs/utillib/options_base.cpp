@@ -36,6 +36,13 @@ namespace qblocks {
         if ((SFUint32)argc <= minArgs)  // the first arg is the program's name
             return usage("Not enough arguments presented.");
 
+        if (SFString(getenv("SHOW_PARAMS")) == "true") {
+            cout << programName << " ";
+            for (int i=1;i<argc;i++)
+                cout << argv[i] << " ";
+            cout << "\n";
+        }
+
         int nChars = 0;
         for (int i=0; i<argc; i++) {
             nChars += SFString(argv[i]).length();

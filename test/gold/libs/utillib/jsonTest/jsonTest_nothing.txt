@@ -1,3 +1,4 @@
+jsonTest 
 
   You must supply a filename to test. Quitting...
 

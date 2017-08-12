@@ -1,3 +1,4 @@
+getTrace -th 
 #### Usage
 
 `Usage:`    getTrace [-t|-r|-v|-h] hash  

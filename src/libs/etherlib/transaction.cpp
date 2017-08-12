@@ -319,7 +319,7 @@ SFString nextTransactionChunk_custom(const SFString& fieldIn, bool& force, const
             // EXISTING_CODE
             case 'c':
                 if ( fieldIn % "contractAddress" ) return fromAddress(tra->receipt.contractAddress);
-		break;
+                break;
             case 'd':
                 if (fieldIn % "date")
                 {

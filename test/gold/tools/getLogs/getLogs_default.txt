@@ -1,3 +1,4 @@
+getLogs a 
 {"jsonrpc":"2.0","result":[],"id":1}
 
 1428757: {"jsonrpc":"2.0","result":[],"id":2}

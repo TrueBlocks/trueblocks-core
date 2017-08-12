@@ -1,3 +1,4 @@
+getTrans 0x0012 
 
   Invalid input.
 
