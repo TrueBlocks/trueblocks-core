@@ -1,0 +1,16 @@
+isContract 0x4671ebe586199456ca28ac050cc9473cbac829eb -n 0x48b4cb193b587c6f2dab1a9123a7bd5e7d490ced 0x4bab4e253813b7c831b67d57f2b6589b9542fc41 
+
+  --nodiff command requires exactly two addresses.
+
+
+  Usage:    isContract [-d|-n|-v|-h] addr[s]  
+  Purpose:  Returns 'true' or 'false' if the given address(es) hold byte code (or displays the code).
+             
+  Where:    
+	addr[s]               a list of Ethereum addresses from which to check for byte code (required)
+	-d  (or --display)    display the actual code at the address(es)
+	-n  (or --nodiff)     return 'true' if (exactly) two Ethereum addresses have identical code
+	-v  (or --verbose)    set verbose level. Follow with a number to set level (-v0 for silent)
+	-h  (or --help)       display this help screen
+
+  Powered by QuickBlocks
