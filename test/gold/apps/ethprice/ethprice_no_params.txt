@@ -4,7 +4,7 @@
   Usage:    ethprice [-a|-c|-f|-p|-w|-o|-t|-v|-h]  
   Purpose:  Freshen and/or print price quotes for the Ethereum network.
              
-  Where:
+  Where:    
 	-a  (or --at)         Report the price since nearest five minutes to :timestamp
 	-c  (or --clear)      Clear the database and re-download price data
 	-f  (or --freshen)    Freshen database even if not needed

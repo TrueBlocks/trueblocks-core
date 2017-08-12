@@ -1,3 +1,4 @@
+ethName 0x1 
 { "addr": "0x19f836f44e1dd9d2c59ffca81ac806b7d033f954", "name": "EthlanceUser2", "source": "http://ethlance.com/#/about" }
 { "addr": "0x1267895780369b48a02781eb08d353e426e5f256", "name": "nagydani", "source": "DevCon2 Token Contract" }
 { "addr": "0x1b63142628311395ceafeea5667e7c9026c862ca", "name": "Taylor Gerring", "source": "DevCon2 Token Contract" }
