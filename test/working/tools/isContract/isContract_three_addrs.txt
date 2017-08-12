@@ -1,3 +1,0 @@
-isContract(0x1267895780369b48a02781eb08d353e426e5f256): false
-isContract(0x1492cdd605d91658f228eab14d8444b60e6da8df): true
-isContract(0x17f8e4bd5a79f095d7b680317de6a617d202b235): true
