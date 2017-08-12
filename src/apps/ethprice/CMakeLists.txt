@@ -32,3 +32,8 @@ function(run_test testName)
 endfunction(run_test)
 
 # Enter one line for each individual test
+run_test("ethprice_no_params"            )
+run_test("ethprice_invalid_param_1" "-x" )
+run_test("ethprice_invalid_param_2" "-" )
+run_test("ethprice_README"          "-th")
+# No more tests can be added for the moment pendig to review with Thomas the setup
