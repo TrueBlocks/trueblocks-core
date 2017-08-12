@@ -1,2 +1,0 @@
-edit option
-open "./classDefinitions/function.txt"
