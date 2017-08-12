@@ -1,2 +1,0 @@
-echo "testing: getBlock $1 $2 $3 $4"
-getBlock --nocolors $1 $2 $3 $4 | jsonlint -p | tr '\t' ' ' | grep -v -f tests/fix.grep | sed -f tests/fix.sed | sort >tests/data/$1_$2_$3_$4.json

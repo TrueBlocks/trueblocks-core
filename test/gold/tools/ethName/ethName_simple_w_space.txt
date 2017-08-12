@@ -1,3 +1,4 @@
+ethName cur  
 { "addr": "0x3b350cf8846c12d2f6bd1058f1a3084144a3d434", "name": "Currency_id287_cnt6_2mo", "source": "Ether Camp" }
 { "addr": "0x73299b09acf67d3b279142975a9a99932996b931", "name": "Security_id289_cnt10_2mo", "source": "Ether Camp" }
 { "addr": "0xd870e20d6b2ad29a3a68f6a3ddd27d6a79bd61a2", "name": "communityCurrency_id32_cnt142_6mo", "source": "Ether Camp" }
