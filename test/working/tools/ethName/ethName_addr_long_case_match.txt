@@ -1,0 +1,7 @@
+ethName --matchCase 0xfa 
+{ "addr": "0xfa3affc8d50e293cdd768bddcd16559e7c617348", "name": "Coin_id80_cnt3_5mo", "source": "Ether Camp" }
+{ "addr": "0xfa52274dd61e1643d2205169732f29114bc240b3", "name": "Kraken_2", "source": "GHC" }
+{ "addr": "0xfa7b9770ca4cb04296cac84f37736d4041251cdf", "name": "ReleaseOracle_id166_cnt22_4mo", "source": "Ether Camp" }
+{ "addr": "0xfa7b9770ca4cb04296cac84f37736d4041251cdf", "name": "Releaseoracle_Gethvercontract", "source": "EtherScan.ioVerifiedContracts" }
+{ "addr": "0xfa86ca27bf2854d98870837fb6f6dfe4bf6453fc", "name": "Early_Partners_024", "source": "Ether Camp" }
+{ "addr": "0xfacf38157f43af121d38ab7b82552df3cec69ab9", "name": "profitsFromBitnationDebitCard_id205_cnt1_3mo", "source": "Ether Camp" }
