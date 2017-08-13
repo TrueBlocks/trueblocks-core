@@ -13,6 +13,7 @@
 #include "ethtypes.h"
 #include "abilib.h"
 #include "receipt.h"
+#include "trace.h"
 
 namespace qblocks {
 
@@ -37,10 +38,10 @@ public:
     SFUint32 timestamp;
     SFAddress from;
     SFAddress to;
-    SFUintBN value;
+    SFWei value;
     SFUint32 gas;
     SFUint32 gasPrice;
-    SFUintBN cumulativeGasUsed;
+    SFWei cumulativeGasUsed;
     SFString input;
     SFUint32 isError;
     SFUint32 isInternalTx;
@@ -59,6 +60,7 @@ public:
     CFunction *funcPtr;
     SFString function;
     double ether;
+    CTraceArray traces;
 
     SFString inputToFunction(void) const;
     bool isFunction(const SFString& func) const;

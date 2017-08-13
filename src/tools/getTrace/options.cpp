@@ -9,9 +9,10 @@
 
 //---------------------------------------------------------------------------------------------------
 CParams params[] = {
-    CParams("~hash",  "transaction hash of the requested transaction"),
-    CParams("-te(r)se", "display the traces in a terse fashion"),
-    CParams("",       "Retrieve the full trace of a transaction.\n"),
+    CParams("~hash",    "transaction hash of the requested transaction"),
+    CParams("-t(e)rse", "display the traces in a terse fashion"),
+    CParams("-raw",     "return the trace directly from the node without processing"),
+    CParams("",         "Retrieve the full trace of a transaction.\n"),
 };
 uint32_t nParams = sizeof(params) / sizeof(CParams);
 
@@ -24,8 +25,11 @@ bool COptions::parseArguments(SFString& command) {
         if (arg == "-o" || arg == "--option1") {
             //option1 = true;
 
-        } else if (arg == "-r" || arg == "--terse") {
+        } else if (arg == "-e" || arg == "--terse") {
             terse = true;
+
+        } else if (arg == "-r" || arg == "--raw") {
+            raw = true;
 
         } else if (arg.startsWith('-')) {
             if (!arg.Contains("-h") && !arg.Contains("-v") && !arg.Contains("-t"))
@@ -46,8 +50,9 @@ void COptions::Init(void) {
     paramsPtr = params;
     nParamsRef = nParams;
 
-    // hash = "";
+    hash = "";
     terse = false;
+    raw = false;
 
     useVerbose = true;
     useTesting = false;
@@ -57,9 +62,6 @@ void COptions::Init(void) {
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
     Init();
-    // header = "";
-    // footer = "";
-    // seeAlso = "";
 }
 
 //--------------------------------------------------------------------------------

@@ -307,7 +307,7 @@ int main(int argc, const char *argv[]) {
 
             // The library header file
             if (!options.isBuiltin())
-                headers += ("#include \"support.h\"\n");
+                headers += ("#include \"processing.h\"\n");
             SFString headerCode = SFString(STR_HEADERFILE).Substitute("[{HEADERS}]", headers);
             SFString parseInit = "parselib_init(const SFString& method)";
             if (!options.isBuiltin())
@@ -376,17 +376,19 @@ int main(int argc, const char *argv[]) {
             sourceCode = sourceCode.Substitute("{QB}", (options.isBuiltin() ? "_qb" : ""));
             writeTheCode(classDir + options.prefix + ".cpp", sourceCode.Substitute("XXXX","[").Substitute("YYYY","]"));
 
-            // The support.h file
+            // The code
             if (!options.isBuiltin()) {
-                makeTheCode("support.h",      options.primaryAddr.Substitute("0x", ""));
-                makeTheCode("support.cpp",    options.primaryAddr.Substitute("0x", ""));
                 makeTheCode("rebuild",        StripTrailing(addrList,'|').Substitute("|", " "));
                 makeTheCode("CMakeLists.txt", options.primaryAddr);
-                makeTheCode("options.h",      options.primaryAddr);
-                makeTheCode("options.cpp",    options.primaryAddr);
                 makeTheCode("debug.h",        options.primaryAddr);
                 makeTheCode("debug.cpp",      options.primaryAddr);
+                makeTheCode("options.cpp",    options.primaryAddr);
                 makeTheCode("main.cpp",       options.primaryAddr);
+                makeTheCode("accounting.cpp", options.primaryAddr);
+                makeTheCode("display.cpp",    options.primaryAddr);
+                makeTheCode("processing.cpp", options.primaryAddr);
+                makeTheCode("processing.h",   options.primaryAddr);
+
             }
         }
     }
@@ -491,11 +493,12 @@ const char* STR_FACTORY2 =
 
 //-----------------------------------------------------------------------
 const char* STR_CLASSDEF =
-"class:\t\t[{CLASS}]\n"
-"baseClass:\tC[{BASE}]\n"
-"fields:\t\t[{FIELDS}]\n"
-"includes:\t[{BASE_LOWER}].h\n"
-"cIncs:\t\t#include \"etherlib.h\"\n";
+"[settings]\n"
+"class     = [{CLASS}]\n"
+"baseClass = C[{BASE}]\n"
+"fields    = [{FIELDS}]\n"
+"includes  = [{BASE_LOWER}].h\n"
+"cIncs     = #include \"etherlib.h\"\n";
 
 //-----------------------------------------------------------------------
 const char* STR_HEADERFILE =

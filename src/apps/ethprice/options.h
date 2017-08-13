@@ -14,6 +14,7 @@ public:
     SFUint32 dispLevel;
     SFUint32 freq;
     SFUint32 hour;
+    timestamp_t at;
 
     COptions(void);
     ~COptions(void) {}

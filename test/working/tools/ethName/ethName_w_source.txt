@@ -1,0 +1,37 @@
+ethName cur -s 
+{ "addr": "0x0029218e1dab069656bfb8a75947825e7989b987", "name": "Christian Reitwie§ner", "source": "DAO_Curator" }
+{ "addr": "0x0037a6b811ffeb6e072da21179d11b1406371c63", "name": "Gavin Wood", "source": "DAO_Curator" }
+{ "addr": "0x127ac03acfad15f7a49dd037e52d5507260e1425", "name": "Vlad Zamfir", "source": "DAO_Curator" }
+{ "addr": "0x1db3439a222c519ab44bb1144fc28167b4fa6ee6", "name": "Vitalik Buterin", "source": "DAO_Curator, slackNation" }
+{ "addr": "0x3b350cf8846c12d2f6bd1058f1a3084144a3d434", "name": "Currency_id287_cnt6_2mo", "source": "Ether Camp" }
+{ "addr": "0x73299b09acf67d3b279142975a9a99932996b931", "name": "Security_id289_cnt10_2mo", "source": "Ether Camp" }
+{ "addr": "0x820c6da74978799d574f61b01f8b5eebc051f95e", "name": "Shermin Voshmgir", "source": "DAO_Curator" }
+{ "addr": "0x82aeb1d8939f514318449fa8ec704a94dc16e01d", "name": "Gian Bochsler", "source": "DAO_Curator" }
+{ "addr": "0x839395e20bbb182fa440d08f850e6c7a8f6f0780", "name": "Griff Green", "source": "DAO_Curator" }
+{ "addr": "0xc157f767030b4cdd1f4100e5eb2b469b688d293e", "name": "Iuri Matias", "source": "DAO_Curator" }
+{ "addr": "0xae90d602778ed98478888fa2756339dd013e34c1", "name": "Martin Becze", "source": "DAO_Curator" }
+{ "addr": "0xb274363d5971b60b6aca27d6f030355e9aa2cf23", "name": "Viktor Tron", "source": "DAO_Curator" }
+{ "addr": "0xb2c1b92f4bed7a173547cc601fb73a1254d10d26", "name": "Aeron Buchanan", "source": "DAO_Curator" }
+{ "addr": "0xc947faed052820f1ad6f4dda435e684a2cd06bb4", "name": "Fabian Vogelsteller", "source": "DAO_Curator" }
+{ "addr": "0xcee96fd34ec793b05ee5b232b0110eac0cc3327e", "name": "Taylor Gerring", "source": "DAO_Curator" }
+{ "addr": "0xd1220a0cf47c7b9be7a2e6ba89f429762e7b9adb", "name": "Alex Van de Sande", "source": "DAO_Curator" }
+{ "addr": "0xd870e20d6b2ad29a3a68f6a3ddd27d6a79bd61a2", "name": "communityCurrency_id32_cnt142_6mo", "source": "Ether Camp" }
+{ "addr": "0xda4a4626d3e16e094de3225a751aab7128e96526", "name": "CuratorMultiSig", "source": "The Dao" }
+{ "addr": "0xda4a4626d3e16e094de3225a751aab7128e96526", "name": "Wallet_Thedaocurator", "source": "EtherScan.ioVerifiedContracts" }
+{ "addr": "0xe578fb92640393b95b53197914bd560b7bc2aac8", "name": "Gustav Simonsson", "source": "DAO_Curator" }
+{ "addr": "0xe77d1e61dfdac280f0199a2da883c6c7e8a68591", "name": "communityCurrency_id31_cnt34_6mo", "source": "Ether Camp" }
+{ "addr": "0xf8c35f1cf2dc4dbeaeeb2ecb298a80b506a5781d", "name": "DAOSecurity_id190_cnt1_3mo", "source": "Ether Camp" }
+{ "addr": "0xf8c35f1cf2dc4dbeaeeb2ecb298a80b506a5781d", "name": "Daosecurity_Slockitdaosec", "source": "EtherScan.ioVerifiedContracts" }
+{ "addr": "0xf9ffba430e290c7fa4be61e3a2f905f6c99dd616", "name": "Timon Rapp", "source": "DAO_Curator" }
+{ "addr": "0x000001f568875f378bf6d170b790967fe429c81a", "name": "Bokky Poobah", "source": "https://medium.com/curator-multisig-phf-official-channel/extrabalance-withdraw-contract-to-be-funded-on-september-15th-a800b4d746f0#.a6ojjp67b" }
+{ "addr": "0x5fc8a61e097c118ce43d200b3c4dcf726cf783a9", "name": "Nick Johnson", "source": "https://medium.com/curator-multisig-phf-official-channel/extrabalance-withdraw-contract-to-be-funded-on-september-15th-a800b4d746f0#.a6ojjp67b)" }
+{ "addr": "0x6377216fd31061edb18b91d33c3d252abf91c2d4", "name": "Beltran Berrocal", "source": "https://medium.com/curator-multisig-phf-official-channel/extrabalance-withdraw-contract-to-be-funded-on-september-15th-a800b4d746f0#.a6ojjp67b" }
+{ "addr": "0x4037fc49e6d6644ae066a56a56ff4273187777a8", "name": "Paul Szczesny", "source": "https://medium.com/curator-multisig-phf-official-channel/extrabalance-withdraw-contract-to-be-funded-on-september-15th-a800b4d746f0#.a6ojjp67b" }
+{ "addr": "0xd292f43d687702bc5f793e56765e1a3b5e541ee3", "name": "Christoph Jentzsch", "source": "https://medium.com/curator-multisig-phf-official-channel/extrabalance-withdraw-contract-to-be-funded-on-september-15th-a800b4d746f0#.a6ojjp67b" }
+{ "addr": "0x8e8a24cba9f2702243ad65bada9b0e8cbc62fd96", "name": "Alexey Akunhov", "source": "https://medium.com/curator-multisig-phf-official-channel/extrabalance-withdraw-contract-to-be-funded-on-september-15th-a800b4d746f0#.a6ojjp67b" }
+{ "addr": "0x839395e20bbb182fa440d08f850e6c7a8f6f0780", "name": "Griff Green", "source": "https://medium.com/curator-multisig-phf-official-channel/extrabalance-withdraw-contract-to-be-funded-on-september-15th-a800b4d746f0#.a6ojjp67b" }
+{ "addr": "0x82aeb1d8939f514318449fa8ec704a94dc16e01d", "name": "Gian Bochsler", "source": "https://medium.com/curator-multisig-phf-official-channel/extrabalance-withdraw-contract-to-be-funded-on-september-15th-a800b4d746f0#.a6ojjp67b" }
+{ "addr": "0xf9ffba430e290c7fa4be61e3a2f905f6c99dd616", "name": "Timon Rapp", "source": "https://medium.com/curator-multisig-phf-official-channel/extrabalance-withdraw-contract-to-be-funded-on-september-15th-a800b4d746f0#.a6ojjp67b" }
+{ "addr": "0x1db3439a222c519ab44bb1144fc28167b4fa6ee6", "name": "Vitalik Buterin", "source": "https://medium.com/curator-multisig-phf-official-channel/extrabalance-withdraw-contract-to-be-funded-on-september-15th-a800b4d746f0#.a6ojjp67b" }
+{ "addr": "0x127ac03acfad15f7a49dd037e52d5507260e1425", "name": "Vlad Zamfir", "source": "https://medium.com/curator-multisig-phf-official-channel/extrabalance-withdraw-contract-to-be-funded-on-september-15th-a800b4d746f0#.a6ojjp67b" }
+{ "addr": "0x820c6da74978799d574f61b01f8b5eebc051f95e", "name": "Shermin Voshmgir", "source": "https://medium.com/curator-multisig-phf-official-channel/extrabalance-withdraw-contract-to-be-funded-on-september-15th-a800b4d746f0#.a6ojjp67b" }

@@ -157,7 +157,7 @@ SFString nextDepositeventChunk_custom(const SFString& fieldIn, bool& force, cons
         }
     }
 
-    return EMPTY;
+    return "";
 }
 
 //---------------------------------------------------------------------------

@@ -53,17 +53,25 @@ int main(int argc, const char *argv[]) {
             fmt += "}\n";
         }
 
-        CTraceArray traces;
-        getTraces(traces, options.hash);
+        if (options.raw) {
 
-        cout << "[";
-        for (uint32_t i = 0 ; i < traces.getCount() ; i++) {
-            SFString res = traces[i].Format(fmt).Substitute(", }", " }");
-            if (!fmt.empty())
-                res = "{ " + res + " }";
-            cout << res << (i < traces.getCount()-1 ? ",\n" : "");
+            SFString trace;
+            queryRawTrace(trace, options.hash);
+            cout << trace << "\n";
+
+        } else {
+            CTraceArray traces;
+            getTraces(traces, options.hash);
+
+            cout << "[";
+            for (uint32_t i = 0 ; i < traces.getCount() ; i++) {
+                SFString res = traces[i].Format(fmt).Substitute(", }", " }");
+                if (!fmt.empty())
+                    res = "{ " + res + " }";
+                cout << res << (i < traces.getCount()-1 ? ",\n" : "");
+            }
+            cout << "]\n";
         }
-        cout << "]\n";
     }
     return 0;
 }

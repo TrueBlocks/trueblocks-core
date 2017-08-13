@@ -4,13 +4,12 @@ objs
 data
 results
 monitors
-other
 saved_docs
 backups
-working
 quickBlocks Facts
 src/tools/speedTest/
 build
+qb-app
 
 # Compiled Object files
 *.slo
@@ -38,7 +37,6 @@ build
 
 src/tools/scripts/ethsed
 *.pptx
-
 *.key
 
 # Hidden files
@@ -48,5 +46,9 @@ src/tools/scripts/ethsed
 bin
 
 fix
-
 issues_detected_ubuntu.txt
+src/setup_mongo.md
+src/ShowQuickBlocks.ppsx
+src/postgres.txt
+src/THINGS_TO_KNOW_ABOUT_QB.TXT
+src/ARTICLE_IDEA.TXT

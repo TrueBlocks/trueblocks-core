@@ -22,6 +22,9 @@ int main(int argc, const char *argv[]) {
     while (!options.commandList.empty()) {
 
         SFString command = nextTokenClear(options.commandList, '\n');
+        if (verbose)
+            cout << "running command: " << command << "\n";
+
         if (!options.parseArguments(command))
             return 0;
 

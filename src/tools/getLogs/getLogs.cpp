@@ -32,7 +32,7 @@ int main(int argc, const char *argv[]) {
             return 0;
 
         SFUint32 start = 1428757;  // 2364414; // end - 100000;
-        SFUint32 end = start + BL;  // getClientLatestBlk();
+        SFUint32 end = start + BL;  // getLatestBlockFromClient();
         for (uint32_t bn = start ; bn < end ; bn = bn + N) {
             SFString res;
             queryRawLogs(bn, bn+N, ADDR, res);

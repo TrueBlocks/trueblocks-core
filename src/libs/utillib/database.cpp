@@ -518,7 +518,8 @@ namespace qblocks {
 
     //-----------------------------------------------------------------------
     void defaultQuitHandler(int s) {
-        cout << "Caught signal " << s << "\n";
+        if (s != 1)
+            cout << "Caught signal " << s << "\n";
         SFString list = manageRemoveList();
         while (!list.empty()) {
             SFString file = nextTokenClear(list, '|');

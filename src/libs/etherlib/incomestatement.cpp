@@ -188,7 +188,7 @@ SFString nextIncomestatementChunk_custom(const SFString& fieldIn, bool& force, c
         }
     }
 
-    return EMPTY;
+    return "";
 }
 
 //---------------------------------------------------------------------------
@@ -229,11 +229,11 @@ ostream& operator<<(ostream& os, const CIncomeStatement& is) {
         << padCenter("gasCost",width) << "   "
         << padCenter("endBal",width);
     } else {
-        os << padLeft(wei2Ether(to_string(is.begBal).c_str()),width) << "   "
-        << padLeft(wei2Ether(to_string(is.inflow).c_str()),width) << "   "
-        << padLeft(wei2Ether(to_string(is.outflow).c_str()),width) << "   "
-        << padLeft(wei2Ether(to_string(is.gasCost).c_str()),width) << "   "
-        << padLeft(wei2Ether(to_string(is.endBal).c_str()),width);
+        os << (is.begBal>0?cGreen:bBlack) << padLeft(wei2Ether(to_string(is.begBal).c_str()),width) << bBlack << "   ";
+        os << (is.inflow>0?cYellow:"") << padLeft(wei2Ether(to_string(is.inflow).c_str()),width) << bBlack << "   ";
+        os << (is.outflow>0?cYellow:"") << padLeft(wei2Ether(to_string(is.outflow).c_str()),width) << bBlack << "   ";
+        os << (is.gasCost>0?cYellow:"") << padLeft(wei2Ether(to_string(is.gasCost).c_str()),width) << cOff << "   ";
+        os << (is.endBal>0?cGreen:bBlack) << padLeft(wei2Ether(to_string(is.endBal).c_str()),width);
     }
     return os;
 }

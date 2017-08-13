@@ -8,12 +8,13 @@
  *------------------------------------------------------------------------*/
 #include "etherlib.h"
 
+#define MAX_ADDRS 40
 class COptions : public COptionsBase {
 public:
     SFUint32 parts;
     bool noconst;
     bool open;
-    SFAddress addrs[10];
+    SFAddress addrs[MAX_ADDRS+2];
     SFUint32 nAddrs;
     SFString primaryAddr;
     SFString classDir;

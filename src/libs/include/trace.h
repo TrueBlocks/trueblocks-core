@@ -36,6 +36,7 @@ public:
     SFHash transactionHash;
     SFUint32 transactionPosition;
     SFString type;
+    SFString error;
     CTraceAction action;
     CTraceResult result;
 
@@ -48,6 +49,7 @@ public:
     DECLARE_NODE(CTrace);
 
     // EXISTING_CODE
+    bool isError(void) const;
     // EXISTING_CODE
 
 protected:
@@ -101,6 +103,7 @@ inline void CTrace::Init(void) {
 //    transactionHash = EMPTY;
     transactionPosition = 0;
 //    type = EMPTY;
+//    error = EMPTY;
 //    action = ??; /* unknown type: CTraceAction */
 //    result = ??; /* unknown type: CTraceResult */
 
@@ -120,6 +123,7 @@ inline void CTrace::Copy(const CTrace& tr) {
     transactionHash = tr.transactionHash;
     transactionPosition = tr.transactionPosition;
     type = tr.type;
+    error = tr.error;
     action = tr.action;
     result = tr.result;
 

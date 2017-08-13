@@ -19,7 +19,7 @@ private:
 public:
     CAccount theAccount;
 
-    CSlurperApp(void) { }
+    CSlurperApp(void) : toml("") { }
     ~CSlurperApp(void) { }
 
     bool Initialize(COptions& options, SFString& message);

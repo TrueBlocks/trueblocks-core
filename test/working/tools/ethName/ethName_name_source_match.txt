@@ -1,0 +1,36 @@
+ethName -s GHC 
+{ "addr": "0x2b61cd90b5591604b3d969ca9eb944d59be6f5a7", "name": "Old EEAR", "source": "JAY GHC" }
+{ "addr": "0x7ed1e469fcb3ee19c0366d829e291451be638e59", "name": "Someone from Philly Meetup", "source": "They sent 0.03 ether to tip jar GHC" }
+{ "addr": "0x008abaf588fe863606e132f20564d901f7ec81f4", "name": "Louis Girifalco", "source": "Philly Meetup GHC" }
+{ "addr": "0x8f53781799515e5dc8f5d00c528940cae99ac969", "name": "Corey Perry's TipJar", "source": "https://medium.com/the-bitcoin-podcast-blog/a-look-at-the-tokencard-ico-investor-distribution-cddeb6f534f9 GHC" }
+{ "addr": "0x654e7f49b474e2f5ac29cc5f2f0d41c8a93d6d0a", "name": "JaysMetaMask Wallet", "source": "Self GHC" }
+{ "addr": "0xd31f381ad54386895852f311fc3be2008c88cb27", "name": "Play Wallet", "source": "Jay's Play Wallet GHC" }
+{ "addr": "0xc430503c9f7cade47eb28958e734ee6255fe143b", "name": "GiftOfFriendship", "source": "Nate's First Contract GHC" }
+{ "addr": "0xfd6c5ac853391486d25ddd5cefb1f7040ee31c2c", "name": "Thomas Rush", "source": "DevCon2 Token Contract GHC" }
+{ "addr": "0x6d343663e55f734781e278b2b41a36c99e0bac40", "name": "Alex Newell", "source": "Transacted with him GHC" }
+{ "addr": "0x9e5adb4e5c299654c2f0619624f7c9eb7b9a3a1a", "name": "Darrel Herbst", "source": "Email / Meetup group GHC" }
+{ "addr": "0x10ed2372778da1b9d96782c894b752d8a647deb8", "name": "NatesWallet2", "source": "GHC" }
+{ "addr": "0x10ed2372778da1b9d96782c894b752d8a647deb8", "name": "NatesWallet2", "source": "WhaleWatch.io GHC" }
+{ "addr": "0x3464e758c8372d7cb536eaf9f5a126d3f574f4c3", "name": "EtherSlurp", "source": "GHC" }
+{ "addr": "0x3e575510b9304ff417c2e4d420d1314dc3f13687", "name": "AaronDR", "source": "GHC" }
+{ "addr": "0x713b73c3994442b533e6a083ec968e40606810ec", "name": "EEAR", "source": "GHC" }
+{ "addr": "0x77d0967ffddbad3aba301837208392573da29299", "name": "NatesWallet", "source": "GHC" }
+{ "addr": "0x77d0967ffddbad3aba301837208392573da29299", "name": "NatesWallet", "source": "WhaleWatch.io GHC" }
+{ "addr": "0x9519afbc60719a83c470ceec41e32d3e4b8b262e", "name": "GH_DAO_Wallet", "source": "GHC" }
+{ "addr": "0xa92e6abc1156b6ed4948cc962cb60f250d422c68", "name": "NewForkedWallet", "source": "GHC" }
+{ "addr": "0xcb1547417575261c4d84cab3e989acfd9f9ee35c", "name": "GH_2_Wallet", "source": "GHC" }
+{ "addr": "0xa7e1819bb646e0b8c0dd6b5dba91212536e98cc5", "name": "Kraken_4", "source": "GHC" }
+{ "addr": "0xb3a0f8e3c7e44949011b18cf5a92ebae41923419", "name": "Kraken_3", "source": "GHC" }
+{ "addr": "0xe583ac239693c716ee5567c7da61c96647d691e5", "name": "Account_4", "source": "GHC" }
+{ "addr": "0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98", "name": "Kraken_1", "source": "GHC" }
+{ "addr": "0xfa52274dd61e1643d2205169732f29114bc240b3", "name": "Kraken_2", "source": "GHC" }
+{ "addr": "0x10821bc0260fe58606d2fd97fda2113d4ab4a1ca", "name": "Kraken_6", "source": "GHC" }
+{ "addr": "0x268e6834d5b40745849157cae0e5715190135f10", "name": "Kraken_7", "source": "GHC" }
+{ "addr": "0x6e1d60f10d33bf887395de3124a949d79ca82dd3", "name": "CoinbaseWallet", "source": "GHC" }
+{ "addr": "0x85979379cb90d63fe944763b42b9ec4b49573ea7", "name": "NewNateWallet3", "source": "GHC" }
+{ "addr": "0xb97073b754660bb356dfe12f78ae366d77dbc80f", "name": "NewEthSlurp", "source": "GHC" }
+{ "addr": "0xfd6c5ac853391486d25ddd5cefb1f7040ee31c2c", "name": "NewTokenHolder", "source": "GHC" }
+{ "addr": "0xbb43f212b7b47bab7164ce74a07bd1d61aef1ee8", "name": "Kraken_1", "source": "GHC" }
+{ "addr": "0xc0fab372fad6613c3be2bb1378b2857a86c5ad90", "name": "Kraken_8", "source": "GHC" }
+{ "addr": "0xf1aa581f353005ba3765b81bf52d6b1c488c2767", "name": "NewOneEther", "source": "GHC" }
+{ "addr": "0xf6b0b85aa3a40e9d3e821847a65bd37d56ac78c2", "name": "Kraken_2", "source": "GHC" }

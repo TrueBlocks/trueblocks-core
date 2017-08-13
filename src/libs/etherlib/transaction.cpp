@@ -79,7 +79,7 @@ SFString nextTransactionChunk(const SFString& fieldIn, bool& force, const void *
                 break;
             case 't':
                 if ( fieldIn % "transactionIndex" ) return asStringU(tra->transactionIndex);
-                if ( fieldIn % "timestamp" ) return asStringU(tra->pBlock?tra->pBlock->timestamp:tra->timestamp);
+                if ( fieldIn % "timestamp" ) return asStringU(tra->timestamp);
                 if ( fieldIn % "to" ) return fromAddress(tra->to);
                 break;
             case 'v':
@@ -276,10 +276,10 @@ void CTransaction::registerClass(void) {
     ADD_FIELD(CTransaction, "timestamp", T_NUMBER, ++fieldNum);
     ADD_FIELD(CTransaction, "from", T_TEXT, ++fieldNum);
     ADD_FIELD(CTransaction, "to", T_TEXT, ++fieldNum);
-    ADD_FIELD(CTransaction, "value", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CTransaction, "value", T_WEI, ++fieldNum);
     ADD_FIELD(CTransaction, "gas", T_NUMBER, ++fieldNum);
     ADD_FIELD(CTransaction, "gasPrice", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CTransaction, "cumulativeGasUsed", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CTransaction, "cumulativeGasUsed", T_WEI, ++fieldNum);
     ADD_FIELD(CTransaction, "input", T_TEXT, ++fieldNum);
     ADD_FIELD(CTransaction, "isError", T_NUMBER, ++fieldNum);
     ADD_FIELD(CTransaction, "isInternalTx", T_NUMBER, ++fieldNum);
@@ -298,6 +298,7 @@ void CTransaction::registerClass(void) {
     HIDE_FIELD(CTransaction, "confirmations");
 
     // Add custom fields
+    ADD_FIELD(CTransaction, "gasCost", T_NUMBER, ++fieldNum);
     ADD_FIELD(CTransaction, "function", T_TEXT, ++fieldNum);
     ADD_FIELD(CTransaction, "gasUsed", T_NUMBER, ++fieldNum);
     ADD_FIELD(CTransaction, "date", T_DATE, ++fieldNum);
@@ -305,6 +306,7 @@ void CTransaction::registerClass(void) {
 
     // Hide fields we don't want to show by default
     HIDE_FIELD(CTransaction, "function");
+    HIDE_FIELD(CTransaction, "gasCost");
     //    HIDE_FIELD(CTransaction, "receipt");
     // EXISTING_CODE
 }
@@ -316,7 +318,8 @@ SFString nextTransactionChunk_custom(const SFString& fieldIn, bool& force, const
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             case 'c':
-                if ( fieldIn % "contractAddress" ) return fromAddress(tra->receipt.contractAddress); break;
+                if ( fieldIn % "contractAddress" ) return fromAddress(tra->receipt.contractAddress);
+                break;
             case 'd':
                 if (fieldIn % "date")
                 {
@@ -333,6 +336,15 @@ SFString nextTransactionChunk_custom(const SFString& fieldIn, bool& force, const
                 break;
             case 'g':
                 if ( fieldIn % "gasUsed" ) return asStringU(tra->receipt.gasUsed);
+                if ( fieldIn % "gasCost" ) {
+                    SFUintBN used = tra->receipt.gasUsed;
+                    SFUintBN price = tra->gasPrice;
+                    return asStringBN(used * price);
+                }
+                break;
+            case 't':
+                if ( fieldIn % "timestamp" && tra->pBlock)
+                    return asStringU(tra->pBlock->timestamp);
                 break;
             // EXISTING_CODE
             case 'p':
@@ -346,7 +358,7 @@ SFString nextTransactionChunk_custom(const SFString& fieldIn, bool& force, const
         }
     }
 
-    return EMPTY;
+    return "";
 }
 
 //---------------------------------------------------------------------------
