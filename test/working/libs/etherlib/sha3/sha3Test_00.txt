@@ -1,12 +1,13 @@
 
   Not enough arguments presented.
 
-  Usage:    sha3 [-o|-t|-v|-h]  
+  Usage:    sha3 [-o|-t|-t|-v|-h]  
   Purpose:  This is what the program does.
              
   Where:    
 	-o  (or --option1)    option one
 	-t  (or --thing)      option two
+	-t  (or --test)       generate intermediary files but do not execute the commands
 	-v  (or --verbose)    set verbose level. Follow with a number to set level (-v0 for silent)
 	-h  (or --help)       display this help screen
 
