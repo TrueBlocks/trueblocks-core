@@ -27,7 +27,7 @@ newens
 papers.save
 printFloat
 #sample
-scripts
+#scripts
 serialize
 single
 speedTest
