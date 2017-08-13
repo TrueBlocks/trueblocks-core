@@ -15,10 +15,6 @@ set(TOOL_NAME "ethprice")
 add_executable(${TOOL_NAME} ${SOURCE_FILES})
 
 # Add the project static libs at linking
-<<<<<<< HEAD
-target_link_libraries (${TOOL_NAME} ${BASE_LIBS} token wallet)
-target_link_libraries (${TOOL_NAME} ${CURL_LIBRARIES})
-=======
 target_link_libraries (${TOOL_NAME} wallet token ${BASE_LIBS})
 
 # Testing
@@ -42,4 +38,3 @@ run_test("ethprice_no_params"            )
 run_test("ethprice_invalid_param_1" "-x" )
 #run_test("ethprice_invalid_param_2" "-" )
 # No more tests can be added for the moment pendig to review with Thomas the setup
->>>>>>> develop

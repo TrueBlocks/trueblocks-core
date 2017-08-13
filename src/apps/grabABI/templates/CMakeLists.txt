@@ -20,9 +20,6 @@ add_executable(${TOOL_NAME} ${SOURCE_FILES})
 # Add the project static libs at linking
 set(THE_LIBS "${CMAKE_CURRENT_LIST_DIR}/parselib/libparse[{PROJECT_NAME}].a" wallet token ${BASE_LIBS})
 target_link_libraries (${PROJECT_NAME} ${THE_LIBS} ncurses)
-<<<<<<< HEAD
-target_link_libraries(${TOOL_NAME} ${CURL_LIBRARIES})
-=======
 
 # Testing
 # Define paths to test folder and gold folder
@@ -39,4 +36,3 @@ function(run_test testName)
 endfunction(run_test)
 
 # Enter one line for each individual test
->>>>>>> develop

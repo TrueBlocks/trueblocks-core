@@ -16,10 +16,6 @@ set(PROJ_NAME "tools")
 add_executable(${TOOL_NAME} ${SOURCE_FILES})
 
 # Add the project static libs at linking
-<<<<<<< HEAD
-target_link_libraries (${TOOL_NAME} ${BASE_LIBS} token wallet)
-target_link_libraries(${TOOL_NAME} ${CURL_LIBRARIES})
-=======
 target_link_libraries (${TOOL_NAME} wallet token ${BASE_LIBS})
 
 # Testing
@@ -62,4 +58,3 @@ run_test("isContract_dash_d_4"    "0x655f01313bb55c04e8ed36a5098984f3f3de57bc -d
 #boken run_test("isContract_dash_dn_2"   "-dn 0x705f04a4f1e7a1e23caea390b8903bd43d96e18e 0x73cbe96839b723bc913d10ba32b58fc476988a36")
 run_test("isContract_multiple"    "0x7753a9d834844cfde5c211ec3912b49f0d8b8e11 0x79d94aae97baf2017c1cd39f3b406d60712d086f 0x7d319a4b48aa12ad04604a4f0d3792b9574feaad 0x80d9c4f6209044de069c545f68644419b520a02f")
 run_test("isContract_from_file"   "--file:cmd_file")
->>>>>>> develop

@@ -90,16 +90,12 @@ namespace qblocks {
 
                     if (!keepPaths) {
                         // trim path to last directory / file
-<<<<<<< HEAD
-                        path = basename((char*)path.c_str());  // NOLINT
-=======
 #ifdef MAC
                         char res[kMaxPathSize];
                         path = basename_r(path.c_str(), res);  // NOLINT
 #else
                         path = basename((char *)path.c_str());  // NOLINT
 #endif
->>>>>>> develop
                         if (path.startsWith('/'))
                             path = path.substr(1);
                         // The path we return is always just the name of the folder or file
