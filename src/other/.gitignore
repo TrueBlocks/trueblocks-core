@@ -1,4 +1,4 @@
-CMakeLists.txt
+#CMakeLists.txt
 acctIndex
 addresses
 atexit
@@ -13,7 +13,6 @@ db
 docs.save
 ens_usage
 esc_key
-findStuckEther
 gasHole
 genesis
 hatch.mak
@@ -27,6 +26,7 @@ memmap
 newens
 papers.save
 printFloat
+#sample
 scripts
 serialize
 single
