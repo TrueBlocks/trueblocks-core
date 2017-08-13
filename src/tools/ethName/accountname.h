@@ -134,7 +134,7 @@ IMPLEMENT_ARCHIVE_LIST(CAccountNameList);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-extern void loadData(void);
+extern bool loadData(void);
 extern uint32_t countOf(const SFString& addr);
 extern SFString showName(const COptions& options);
 extern SFString setName(const SFString& addr, const SFString& name);

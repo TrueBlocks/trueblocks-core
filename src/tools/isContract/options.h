@@ -5,10 +5,11 @@
  *------------------------------------------------------------------------*/
 #include "etherlib.h"
 
+#define MAX_ADDRS 100
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
-    SFAddress addrs[100];
+    SFAddress addrs[MAX_ADDRS];
     SFUint32 nAddrs;
     bool diff;
     bool display;

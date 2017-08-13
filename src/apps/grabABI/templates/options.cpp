@@ -5,7 +5,7 @@
  *
  * The LICENSE at the root of this repo details your rights (if any)
  *------------------------------------------------------------------------*/
-#include "options.h"
+#include "processing.h"
 
 //---------------------------------------------------------------------------------------------------
 CParams params[] = {
@@ -13,11 +13,12 @@ CParams params[] = {
     CParams("-showCache",   "mode: show transactions from the cache, and then freshen"),
     CParams("-cacheOnly",   "mode: display transactions from the cache only (do not freshen)"),
     CParams("-kBlock",      "start processing at block :k"),
-    CParams("-logs",        "display smart contract events (logs)"),
+    CParams("-parse",       "display parsed input data"),
+    CParams("-lo(g)s",      "display smart contract lo(g)s or events"),
     CParams("-trace",       "display smart contract internal traces"),
     CParams("-bloom",       "display bloom filter matching"),
-    CParams("-parse",       "display parsed input data"),
     CParams("-accounting",  "display credits and debits per account and reconcile at each block"),
+    CParams("-list",        "display list of monitored accounts"),
     CParams("-debug",       "enter debug mode (pause after each transaction)"),
     CParams("-single",      "if debugging is enable, single step through transactions"),
     CParams("-rebuild",     "clear cache and reprocess all transcations (may take a long time)"),
@@ -28,6 +29,7 @@ uint32_t nParams = sizeof(params) / sizeof(CParams);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(SFString& command) {
 
+    bool hasOnly = false;
     Init();
     while (!command.empty()) {
         SFString arg = nextTokenClear(command, ' ');
@@ -46,18 +48,34 @@ bool COptions::parseArguments(SFString& command) {
 
         } else if (arg == "-c" || arg == "--cacheOnly") {
             mode = "showCache|";  // last in wins
+            hasOnly = true;
 
         } else if (arg == "-s" || arg == "--showCache") {
-            mode = "showCache|freshen|";  // last in wins
+            if (!hasOnly) // don't add freshen if we've already been told not to
+                mode = "showCache|freshen|";  // last in wins
 
-        } else if (arg == "-s" || arg == "--single" || arg == "--single_step") {
+        } else if (arg == "--single" || arg == "--single_step") {
             single_on = true;
 
         } else if (arg == "-a" || arg == "--accounting") {
             accounting_on = true;
 
-        } else if (arg == "-l" || arg == "--logs") {
+        } else if (arg == "-g" || arg == "--logs") {
             logs_on = true;
+
+        } else if (arg == "-l" || arg == "--list") {
+            CVisitor visitor;
+            CToml toml("./config.toml");
+            visitor.loadWatches(toml);
+            cout << "[";
+            for (int i=0;i<visitor.watches.getCount()-1;i++) {
+                cout << " { ";
+                cout << "\"address\": \""  << visitor.watches[i].color << visitor.watches[i].address    << cOff << "\", ";
+                cout << "\"firstBlock\": " << bRed                     << visitor.watches[i].firstBlock << cOff << ", ";
+                cout << "\"name\": \""     << visitor.watches[i].color << visitor.watches[i].name       << cOff << "\"";
+                cout << " }" << (i<visitor.watches.getCount()-2 ? ",\r\n " : " ]\r\n");
+            }
+            exit(0);
 
         } else if (arg == "-t" || arg == "--trace") {
             trace_on = true;
@@ -91,12 +109,11 @@ bool COptions::parseArguments(SFString& command) {
             }
             return false;
 
-        } else if (arg.startsWith('-')) {
-            if (!arg.Contains("-h") && !arg.Contains("-v") && !arg.Contains("-t")) {
-                cerr << usageStr("Invalid option: " + arg).Substitute("\n","\r\n");
-                return false;
+        } else if (arg.startsWith('-')) {  // do not collapse
+            if (!builtInCmd(arg)) {
+                return usage("Invalid option: " + arg);
             }
-       }
+        }
     }
 
     if (mode.empty())
@@ -113,18 +130,15 @@ void COptions::Init(void) {
     paramsPtr = params;
     nParamsRef = nParams;
 
-    CTrace::registerClass();
-    CTraceAction::registerClass();
-    CTraceResult::registerClass();
-
     mode = "freshen|";
     single_on = false;
     accounting_on = false;
-    debugger_on = false;
     logs_on = false;
     trace_on = false;
-    parse_on = false;
     bloom_on = false;
+    debugger_on = false;
+    parse_on = false;
+    autocorrect_on = false;
     kBlock = 0;
 
     useVerbose = true;
@@ -135,9 +149,6 @@ void COptions::Init(void) {
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
     Init();
-    // header = "";
-    // footer = "";
-    // seeAlso = "";
 }
 
 //--------------------------------------------------------------------------------

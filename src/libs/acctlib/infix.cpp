@@ -152,7 +152,7 @@ SFString nextInfixChunk_custom(const SFString& fieldIn, bool& force, const void 
         }
     }
 
-    return EMPTY;
+    return "";
 }
 
 //---------------------------------------------------------------------------

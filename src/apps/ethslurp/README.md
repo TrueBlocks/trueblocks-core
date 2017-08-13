@@ -1,15 +1,9 @@
-# ethslurp
-Drink the blockchain (http://ethslurp.com)
+## ethslurp
 
-Watch a video tutorial <a href="https://www.youtube.com/watch?v=ZZDV1yAgces">here</a>
+ethslurp
 
-Check out Great Hill Corporation on <a href="https://www.facebook.com/GreatHillCorporation/">Facebook</a> or <a href="https://twitter.com/ethslurp">Twitter</a>
-
-### Building from source
-
-Please see the <a href="https://github.com/Great-Hill-Corporation/ethslurp/blob/master/INSTALL.md">INSTALL.md</a> file for more information.
-
-### ethslurp
+Portions of this software are Powered by Etherscan.io APIs
+#### Usage
 
 `Usage:`    ethslurp [-a|-b|-d|-m|-n|-r|-f|-i|-e|-o|-l|-c|-t|-v|-h] addr  
 `Purpose:`  Fetches data off the Ethereum blockchain for an arbitrary account or smart contract. Optionally formats the output to your specification.
@@ -35,9 +29,13 @@ Please see the <a href="https://github.com/Great-Hill-Corporation/ethslurp/blob/
 | -v | --verbose | set verbose level. Follow with a number to set level (-v0 for silent) |
 | -h | --help | display this help screen |
 
-  Portions of this software are Powered by Etherscan.io APIs
-##### The --file option
+#### Other Options
+
+Enter `--version` to display the current version of the tool.  
+Enter `--nocolors` to turn off colored display.  
+Enter `--wei` (default), `--ether`, or `--dollars` to alter the way value is displayed.  
 
 All `quickBlocks` command-line tools support the `--file:filename` option. Place valid commands, on separate lines, in a file and include the above option. In some cases, this option may significantly improve performance. Place a semi-colon at the start of a line to make it a comment.
 
-Powered by QuickBlocks.io
+#### Powered by QuickBlocks&reg;
+

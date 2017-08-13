@@ -18,6 +18,7 @@ namespace qblocks {
 #define miniBlockCache (BLOCK_CACHE+"miniBlocks.bin")
 #define miniTransCache (BLOCK_CACHE+"miniTrans.bin")
 #define blockFolder    (BLOCK_CACHE+"blocks/")
+#define bloomFolder    (BLOCK_CACHE+"blooms/")
 
 //-----------------------------------------------------------------------
 extern bool     readOneBlock_fromJson   (      CBlock& block,   const SFString& fileName);
@@ -28,10 +29,11 @@ extern bool     verifyBlock             (const CBlock& block,   SFString& result
 
 //-------------------------------------------------------------------------
 extern SFString compileSolidity         (const SFString& sol);
-extern SFString getClientVersion        (void);
-extern SFUint32 getClientLatestBlk      (void);
+extern SFString getVersionFromClient    (void);
+extern SFUint32 getLatestBlockFromClient(void);
+extern SFUint32 getLatestBlockFromCache (CSharedResource *res=NULL);
+extern SFUint32 getLatestBloomFromCache (void);
 extern bool     getLatestBlocks         (SFUint32& cache, SFUint32& client, CSharedResource *res=NULL);
-extern void     freshenLocalCache       (bool indexOnly);
 
 //-------------------------------------------------------------------------
 extern bool     getCode                 (const SFAddress& addr, SFString& theCode);
@@ -82,6 +84,7 @@ extern bool forEveryBlockOnDisc          (BLOCKVISITFUNC func, void *data, SFUin
 extern bool forEveryEmptyBlockOnDisc     (BLOCKVISITFUNC func, void *data, SFUint32 start=0, SFUint32 count=(SFUint32)-1, SFUint32 skip=1);
 extern bool forEveryNonEmptyBlockOnDisc  (BLOCKVISITFUNC func, void *data, SFUint32 start=0, SFUint32 count=(SFUint32)-1, SFUint32 skip=1);
 extern bool forEveryFullBlockIndex       (BLOCKVISITFUNC func, void *data, SFUint32 start=0, SFUint32 count=(SFUint32)-1, SFUint32 skip=1);
+extern bool forEveryBloomFile            (FILEVISITOR func,    void *data, SFUint32 start=0, SFUint32 count=(SFUint32)-1, SFUint32 skip=1);
 
 //-------------------------------------------------------------------------
 extern bool forEveryTransaction          (TRANSVISITFUNC func, void *data, SFUint32 start=0, SFUint32 count=(SFUint32)-1);
@@ -124,13 +127,17 @@ inline void   forEveryMiniBlockInMemory  (MINIBLOCKVISITFUNC func, CBlockVisitor
 #define dbgBloom(a) fromBloom(a).Substitute("0"," ")
 
 //-------------------------------------------------------------------------
-inline SFUintBN makeBloom(const SFString& hexIn)
-{
+inline SFUintBN makeBloom(const SFString& hexIn) {
     SFString sha = getSha3(hexIn);
     SFUintBN bloom;
     for (uint32_t i=0;i<3;i++)
         bloom |= (SFUintBN(1) << (strtoul((const char*)"0x"+sha.substr(2+(i*4),4),NULL,16))%2048);
     return bloom;
+}
+
+//-------------------------------------------------------------------------
+inline SFBloom joinBloom(const SFBloom& b1, const SFBloom& b2) {
+    return (b1 | b2);
 }
 
 //-------------------------------------------------------------------------
@@ -147,4 +154,9 @@ inline bool isBloomHit(const SFString& hexIn, const SFUintBN filter)
 
 //-------------------------------------------------------------------------
 extern SFString curSource(void);
+
+//----------------------------------------------------------------------------------
+extern SFBloom readOneBloom(blknum_t bn);
+extern void    writeOneBloom(const SFString& fileName, const SFBloom& bloom);
+
 }  // namespace qblocks

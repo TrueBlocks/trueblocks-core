@@ -40,7 +40,7 @@ bool COptions::parseArguments(SFString& command) {
 
             alone = true;
 
-        } else if (arg.ContainsAny(":-_ ")) {
+        } else if (arg.ContainsAny(":-_ ") && !arg.startsWith("-")) {
             SFString str = arg.Substitute(" ", ";").Substitute("-", ";").Substitute("_", ";")
                                 .Substitute(":", ";").Substitute("T", ";").Substitute(";UTC", "");
             date = snagDate(str);
@@ -55,37 +55,43 @@ bool COptions::parseArguments(SFString& command) {
 
             if (arg == "latest") {
                 special = arg;
-                blockNum = getClientLatestBlk();
+                blockNum = getLatestBlockFromClient();
 
             } else {
 
-                for (uint32_t i = 0 ; i < specials.getCount() ; i++) {
-                    SFString n = specials[i];
-                    SFString name = nextTokenClear(n, '|');
-                    if (name == arg) {
-                        special = arg;
-                        blockNum = toLongU(n);
+                if (arg.length() && isdigit(arg[0])) {
+                    blockNum = toLongU(arg);
+
+                } else {
+                    for (uint32_t i = 0 ; i < specials.getCount() ; i++) {
+                        SFString n = specials[i];
+                        SFString name = nextTokenClear(n, '|');
+                        if (name == arg) {
+                            special = arg;
+                            blockNum = toLongU(n);
+                        }
+                    }
+                    if (special.empty()) {
+                        return usage("Argument " + arg + " is not valid. Supply either JSON formatted date or blockNumber. Quitting...");
                     }
                 }
-                if (special.empty())
-                    blockNum = toLongU(arg);
             }
         }
     }
 
     if (blockNum == NOPOS) {
         if (date == earliestDate)
-            return usage("Please supply either a JSON formatted date or a blockNumber.");
+            return usage("Please supply either a JSON formatted date or a blockNumber. Quitting...");
 
     } else {
-        blknum_t latest = getClientLatestBlk();
+        blknum_t latest = getLatestBlockFromClient();
         if (blockNum > latest) {
             if (special.empty()) {
                 return usage("Block number (" + asString(blockNum) + ") must be less than latest "
                              "block: " + asString(latest));
 
             } else {
-                // For the cases where user's node is behind the head of the block and getClientLatestBlk
+                // For the cases where user's node is behind the head of the block and getLatestBlockFromClient
                 // returns a block number in the past, the only thing we can present is known block dates
                 cout << "\n\tSpecial block: " << cYellow << special << " " << blockNum << cOff << "\n\n";
                 return false;
@@ -103,7 +109,7 @@ void COptions::Init(void) {
 
     blockNum = NOPOS;
     date = earliestDate;
-//  special = "";
+    special = "";
     alone = false;
 
     useVerbose = false;
@@ -156,33 +162,9 @@ int sortByBlockNum(const void *v1, const void *v2) {
 //--------------------------------------------------------------------------------
 SFStringArray specials;
 
-//--------------------------------------------------------------------------------
-const char *STR_README_HEADER =
-"The `whenBlock` tool answers one of two questions: (1) \"When did a given block occur?\" or "
-"(2) \"What block occurred at or before a given date and time?\"\n"
-"\n"
-"In the first case, one simply supplies a block number and the date and time of that block is "
-"displayed. In the later case, one provides a date (and optionally time) and the block number "
-"that occurred at or just prior to that date and time is displayed.\n"
-"\n"
-"Name your own blocks by editing '~./quickBlocks/whenBlock.toml' and placing `name=blockNum` pairs under "
-"the [SPECIAL] section of that file (create it if not present).\n"
-"\n"
-"The `hour`/`minute`/`second` portions of the date are optional, and if omitted, default to zero in each case.\n";
-
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
     Init();
-    header = STR_README_HEADER;
-    footer = "  Special values: [ ";
-    for (uint32_t i = 0 ; i < specials.getCount() ; i++) {
-        SFString item = specials[i];
-        footer += (nextTokenClear(item, '|') + " | ");
-    }
-    footer.ReplaceReverse("|", "");
-    footer.ReplaceReverse(" ", "");
-    footer += "]\n\n";
-    // seeAlso = "";
 }
 
 //--------------------------------------------------------------------------------

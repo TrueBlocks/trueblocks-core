@@ -67,12 +67,17 @@ void etherlib_init(const SFString& sourceIn)
 
     qbGlobals::source = sourceIn;
 
-    CBlock       :: registerClass();
-    CTransaction :: registerClass();
-    CReceipt     :: registerClass();
-    CLogEntry    :: registerClass();
-    CPriceQuote  :: registerClass();
-    CBalHistory  :: registerClass();
+    CBlock::registerClass();
+    CTransaction::registerClass();
+    CReceipt::registerClass();
+    CLogEntry::registerClass();
+    CPriceQuote::registerClass();
+    CBalHistory::registerClass();
+    CAccountWatch::registerClass();
+    CIncomeStatement::registerClass();
+    CTrace::registerClass();
+    CTraceAction::registerClass();
+    CTraceResult::registerClass();
 
     HIDE_FIELD(CTransaction, "isError");
     HIDE_FIELD(CTransaction, "isInternalTx");
@@ -81,6 +86,8 @@ void etherlib_init(const SFString& sourceIn)
 
     // initialize curl
     getCurl();
+
+    establishFolder(configPath());
 }
 
 //-------------------------------------------------------------------------
@@ -159,13 +166,12 @@ static SFUint32 nTrans=0,nTraced=0;
 bool queryBlock(CBlock& block, const SFString& numIn, bool needTrace)
 {
     if (numIn=="latest")
-        return queryBlock(block, asString(getClientLatestBlk()), needTrace);
+        return queryBlock(block, asString(getLatestBlockFromClient()), needTrace);
 
     long num = toLong(numIn);
     if ((qbGlobals::source.Contains("binary") || qbGlobals::source.Contains("nonemp")) && fileSize(getBinaryFilename1(num))>0) {
         //		if (verbose) { cerr << "Reading binary block: " << num << "\n"; cerr.flush(); }
         UNHIDE_FIELD(CTransaction, "receipt");
-        UNHIDE_FIELD(CTransaction, "traces");
         return readOneBlock_fromBinary(block, getBinaryFilename1(num));
 
     } else if (qbGlobals::source.Contains("Only")) {
@@ -177,14 +183,12 @@ bool queryBlock(CBlock& block, const SFString& numIn, bool needTrace)
     {
         //		if (verbose) { cerr << "Reading json block: " << num << "\n"; cerr.flush(); }
         UNHIDE_FIELD(CTransaction, "receipt");
-        UNHIDE_FIELD(CTransaction, "traces");
         return readOneBlock_fromJson(block, getJsonFilename1(num));
 
     }
 
     //	if (verbose) { cerr << "Getting block from node: " << num << "\n"; cerr.flush(); }
     HIDE_FIELD(CTransaction, "receipt");
-    HIDE_FIELD(CTransaction, "traces");
     getObjectViaRPC(block, "eth_getBlockByNumber", "["+quote(asString(num))+",true]");
 
     // If there are no transactions, we're done
@@ -351,7 +355,7 @@ bool queryRawTrace(SFString& trace, const SFString& hashIn)
 }
 
 //-------------------------------------------------------------------------
-SFString getClientVersion(void)
+SFString getVersionFromClient(void)
 {
     return callRPC("web3_clientVersion", "[]", false);
 }
@@ -395,7 +399,7 @@ size_t write_callback(char *ptr, size_t size, size_t nmemb, void *userdata)
     // At block 3804005, there was a hack wherein the byte code
     // 5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b repeated
     // thousands of time and doing nothing. If we don't handle this it
-    // dominates the scan for no reason
+    // dominates the scanning for no reason
     if (strstr(s, "5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b") != NULL) {
         // This is the hack trace (there are many), so skip it
         cerr << "Curl response contains '5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b'. Aborting.\n";
@@ -470,6 +474,32 @@ bool readOneBlock_fromJson(CBlock& block, const SFString& fileName)
     uint32_t nFields=0;
     block.parseJson(p,nFields);
     return nFields;
+}
+
+//----------------------------------------------------------------------------------
+SFBloom readOneBloom(blknum_t bn) {
+    SFBloom ret = 0;
+    SFString fileName = getBinaryFilename1(bn).Substitute("/blocks/", "/blooms/");
+    SFArchive archive(true, curVersion, true);
+    if (archive.Lock(fileName, binaryReadOnly, LOCK_NOWAIT)) {
+        archive >> ret;
+        archive.Close();
+    }
+    return ret;
+}
+
+//-----------------------------------------------------------------------
+void writeOneBloom(const SFString& fileName, const SFBloom& bloom) {
+    SFString created;
+    if (establishFolder(fileName,created)) {
+        if (!created.empty())
+            cerr << "mkdir(" << created << ")" << SFString(' ',20) << "                                                     \n";
+        SFArchive archive(false, curVersion, true);
+        if (archive.Lock(fileName, binaryWriteCreate, LOCK_CREATE)) {
+            archive << bloom;
+            archive.Close();
+        }
+    }
 }
 
 //-----------------------------------------------------------------------
@@ -707,7 +737,7 @@ bool forEveryNonEmptyBlockOnDisc(BLOCKVISITFUNC func, void *data, SFUint32 start
 }
 
 //-------------------------------------------------------------------------
-SFUint32 getClientLatestBlk(void)
+SFUint32 getLatestBlockFromClient(void)
 {
     CBlock block;
     getObjectViaRPC(block, "eth_getBlockByNumber", "[\"latest\",true]");
@@ -715,8 +745,15 @@ SFUint32 getClientLatestBlk(void)
 }
 
 //--------------------------------------------------------------------------
-bool getLatestBlocks(SFUint32& cache, SFUint32& client, CSharedResource *res)
-{
+SFUint32 getLatestBloomFromCache(void) {
+    return toLongU(asciiFileToString(bloomFolder + "lastBloom.txt"));
+}
+
+//--------------------------------------------------------------------------
+SFUint32 getLatestBlockFromCache(CSharedResource *res) {
+
+    SFUint32 ret = 0;
+
     CSharedResource fullBlocks; // Don't move--need the scope
     CSharedResource *pRes = res;
     if (!pRes)
@@ -724,118 +761,26 @@ bool getLatestBlocks(SFUint32& cache, SFUint32& client, CSharedResource *res)
         // We're reading so okay not to wait
         if (!fullBlocks.Lock(fullBlockIndex, binaryReadOnly, LOCK_WAIT))
         {
-            cerr << "getLatestBlocks failed: " << fullBlocks.LockFailure() << "\n";
-            return false;
+            cerr << "getLatestBlockFromCache failed: " << fullBlocks.LockFailure() << "\n";
+            return ret;
         }
         pRes = &fullBlocks;
     }
     ASSERT(pRes->isOpen());
 
-    client=getClientLatestBlk();
     pRes->Seek(-1*sizeof(SFUint32),SEEK_END);
-    pRes->Read(cache);
+    pRes->Read(ret);
     if (pRes != res)
         pRes->Release();
+    return ret;
+}
+
+//--------------------------------------------------------------------------
+bool getLatestBlocks(SFUint32& cache, SFUint32& client, CSharedResource *res)
+{
+    client = getLatestBlockFromClient();
+    cache  = getLatestBlockFromCache(res);
     return true;
-}
-
-//--------------------------------------------------------------------------
-bool visitBlockFiles(const SFString& path, void *data)
-{
-    if (path.endsWith("/"))
-    {
-        forAllFiles(path + "*", visitBlockFiles, data);
-
-    } else
-    {
-        if (path.Contains(".bin"))
-        {
-            SFString str = path.Substitute(".bin","");
-            SFUint32 num = toLongU(nextTokenClearReverse(str,'/'));
-            cout << "Marking " << path << "              \r";
-            cout.flush();
-
-            CSharedResource *pRes = (CSharedResource*)data;
-            ASSERT(pRes->isOpen());
-            pRes->Write(num);
-        } else
-        {
-            cout << "Skipping " << path << "              \r";
-        }
-        cout.flush();
-    }
-    return true;
-}
-
-//--------------------------------------------------------------------------
-void createFullBlockIndex(void)
-{
-    etherlib_init("binary");
-    CSharedResource fullBlocks;
-    if (fullBlocks.Lock(fullBlockIndex, binaryWriteCreate, LOCK_WAIT))
-    {
-        ASSERT(fullBlocks.isOpen());
-        forEveryFileInFolder(blockFolder, visitBlockFiles, &fullBlocks);
-        fullBlocks.Release();
-
-    } else
-    {
-        cerr << "createFullBlockIndex failed: " << fullBlocks.LockFailure() << "\n";
-    }
-}
-
-//--------------------------------------------------------------------------
-void freshenLocalCache(bool indexOnly)
-{
-    if (indexOnly || (!fileExists(fullBlockIndex) || fileSize(fullBlockIndex)==0))
-    {
-        // if the full block index doesn't exist, we need
-        // to create it. We should actually look at the
-        // blocks on disc. This will create the fullBlockIndex,
-        // fill it with data, and close it so we can open it below.
-        createFullBlockIndex();
-        if (indexOnly)
-            return;
-    }
-
-    bool save = verbose;
-    verbose = true;
-
-    // order matters
-    etherlib_init("parity");
-
-    // Always open for appending. We can skip back on word to see what last was written
-    CSharedResource fullBlocks;
-    if (!fullBlocks.Lock(fullBlockIndex, "a+", LOCK_WAIT))
-    {
-        cerr << "freshenLocalCache failed: " << fullBlocks.LockFailure() << "\n";
-        return;
-    }
-    ASSERT(fullBlocks.isOpen());
-
-    SFUint32 start=0,end=0;
-    getLatestBlocks(start,end,&fullBlocks);
-    start++; // since we've already have this one in cache
-    for (SFUint32 num=start;num<end;num++)
-    {
-        CBlock block;
-        if (queryBlock(block,asString(num),true))
-        {
-            ASSERT(block.transactions.getCount()>0);
-            // We only he data back if we don't already have the block.
-            // Note, 'queryBlock' returns false for empty blocks, so we only
-            // ever write non-empty blocks.
-            SFString fileName = getBinaryFilename1(num);
-            if (!fileExists(fileName))
-            {
-                //				if (verbose) cerr << "Saving binary block: " << num << "\n";
-                writeToBinary(block,fileName);
-                fullBlocks.Write(num);
-            }
-        }
-    }
-    fullBlocks.Release();
-    verbose = save;
 }
 
 //--------------------------------------------------------------------------
@@ -888,8 +833,8 @@ public:
 
     bool Load(SFUint32 _start, SFUint32 _count)
     {
-        start = min(_start,        getClientLatestBlk());
-        count = min(_start+_count, getClientLatestBlk()) - _start;
+        start = min(_start,        getLatestBlockFromCache());
+        count = min(_start+_count, getLatestBlockFromCache()) - _start;
         if (loaded)
             return true;
         loaded = true; // only come through here once, even if we fail to load
@@ -1095,6 +1040,23 @@ bool forEveryTransactionFrom(TRANSVISITFUNC func, void *data, SFUint32 start, SF
 {
     if (!func)
         return false;
+    return true;
+}
+
+//-------------------------------------------------------------------------
+bool forEveryBloomFile(FILEVISITOR func, void *data, SFUint32 start, SFUint32 count, SFUint32 skip) {
+    if (start == 0 || count == (SFUint32)-1) { // visit everything since we're given the default
+        forEveryFileInFolder(bloomFolder, func, data);
+        return true;
+    }
+
+    // visit only the folder the user tells us to visit
+    blknum_t st = (start / 1000) * 1000;
+    blknum_t ed = ((start+count+1000) / 1000) * 1000;
+    for (blknum_t b = st ; b < ed ; b += 1000) {
+        SFString path = getBinaryPath1(b).Substitute("/blocks/","/blooms/");
+        forEveryFileInFolder(path, func, data);
+    }
     return true;
 }
 }  // namespace qblocks

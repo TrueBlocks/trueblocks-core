@@ -601,10 +601,6 @@ namespace qblocks {
     inline double toDouble(const char *str) { return (double)strtold((const char*)(str), NULL); }
     inline double toDouble(char *str) { return (double)strtold((const char*)(str), NULL); }
 
-    //----------------------------------------------------
-    extern string greenCheck;
-    extern string redX;
-
     //--------------------------------------------------------------------
     inline bool toBool_in(const SFString& in) { return in%"true" || toLong(in)!=0; }
 #define toBool toBool_in

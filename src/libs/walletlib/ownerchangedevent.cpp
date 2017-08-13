@@ -157,7 +157,7 @@ SFString nextOwnerchangedeventChunk_custom(const SFString& fieldIn, bool& force,
         }
     }
 
-    return EMPTY;
+    return "";
 }
 
 //---------------------------------------------------------------------------

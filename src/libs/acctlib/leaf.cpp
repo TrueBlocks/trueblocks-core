@@ -49,9 +49,20 @@ SFString nextLeafChunk(const SFString& fieldIn, bool& force, const void *data) {
             return ret;
 
         switch (tolower(fieldIn[0])) {
-            case 'm':
-                if ( fieldIn % "m_first" ) return asStringU(lea->m_first);
-                if ( fieldIn % "m_last" ) return asStringU(lea->m_last);
+            case 'b':
+//                if ( fieldIn % "blocks" ) {
+//                    uint32_t cnt = lea->blocks.getCount();
+//                    if (!cnt) return EMPTY;
+//                    SFString ret;
+//                    for (uint32_t i = 0 ; i < cnt ; i++) {
+//                        ret += lea->blocks[i].Format();
+//                        ret += ((i < cnt - 1) ? ",\n" : "\n");
+//                    }
+//                    return ret;
+//                }
+                break;
+            case 'c':
+                if ( fieldIn % "cnt" ) return asStringU(lea->cnt);
                 break;
         }
 
@@ -76,9 +87,11 @@ bool CLeaf::setValueByName(const SFString& fieldName, const SFString& fieldValue
         return true;
 
     switch (tolower(fieldName[0])) {
-        case 'm':
-            if ( fieldName % "m_first" ) { m_first = toUnsigned(fieldValue); return true; }
-            if ( fieldName % "m_last" ) { m_last = toUnsigned(fieldValue); return true; }
+        case 'b':
+            if ( fieldName % "blocks" ) return true;
+            break;
+        case 'c':
+            if ( fieldName % "cnt" ) { cnt = toUnsigned(fieldValue); return true; }
             break;
         default:
             break;
@@ -99,8 +112,8 @@ bool CLeaf::Serialize(SFArchive& archive) {
 
     CTreeNode::Serialize(archive);
 
-    archive >> m_first;
-    archive >> m_last;
+//    archive >> blocks;
+    archive >> cnt;
     finishParse();
     return true;
 }
@@ -109,8 +122,8 @@ bool CLeaf::Serialize(SFArchive& archive) {
 bool CLeaf::SerializeC(SFArchive& archive) const {
     CTreeNode::SerializeC(archive);
 
-    archive << m_first;
-    archive << m_last;
+//    archive << blocks;
+    archive << cnt;
 
     return true;
 }
@@ -126,8 +139,8 @@ void CLeaf::registerClass(void) {
     uint32_t fieldNum = 1000;
     ADD_FIELD(CLeaf, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
     ADD_FIELD(CLeaf, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
-    ADD_FIELD(CLeaf, "m_first", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CLeaf, "m_last", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CLeaf, "blocks", T_TEXT|TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CLeaf, "cnt", T_NUMBER, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CLeaf, "schema");
@@ -155,7 +168,7 @@ SFString nextLeafChunk_custom(const SFString& fieldIn, bool& force, const void *
         }
     }
 
-    return EMPTY;
+    return "";
 }
 
 //---------------------------------------------------------------------------
@@ -177,17 +190,37 @@ bool CLeaf::readBackLevel(SFArchive& archive) {
 // EXISTING_CODE
     //-----------------------------------------------------------------------------
     CLeaf::CLeaf(const SFString& _key, const SFString& _value) {
+#ifdef OLD_CODE
         SFString last = _value;
         SFString first = nextTokenClear(last, '|');
-        m_first = toUnsigned(first);
-        m_last = toUnsigned(last);;
+        if (!first.empty()) {
+            blocks[blocks.getCount()] = toUnsigned(first);
+            if (!last.empty())
+                blocks[blocks.getCount()] = toUnsigned(last);;
+        }
+#else
+        cnt = 1;
+#endif
         m_prefix = _key;
         if (verbose == 2) cerr << "\t\tCreating leaf " << _key << " at " << _value << endl;
     }
 
     //-----------------------------------------------------------------------------
     SFString CLeaf::at(const SFString& _key) const {
-        return contains(_key) ? asString(m_first) + (m_last ? "|" + asString(m_last) : "") : "";
+        if (!contains(_key))
+            return "";
+
+        SFString ret;
+#ifdef OLD_CODE
+        for (int i = 0 ; i < blocks.getCount() ; i++) {
+            ret += asString(blocks[i]);
+            if (i < blocks.getCount()-1)
+                ret += ",";
+        }
+#else
+        ret = asString(cnt);
+#endif
+        return ret;
     }
 
     //-----------------------------------------------------------------------------
@@ -217,14 +250,31 @@ bool CLeaf::readBackLevel(SFArchive& archive) {
                 if (verbose) cerr << "\t\tReplacing leaf contents " << _key << " at " << _value
 //                    << " (" << m_first << ")"
                     << "\n";
-                m_last = toUnsigned(_value);
+#ifdef OLD_CODE
+                blocks[blocks.getCount()] = toUnsigned(_value);
+#else
+                cnt++;
+#endif
             }
             return this;
 
         } else {
             // If the leaf is not the key, delete and convert to a branch
             if (verbose == 2) { cerr << "\tleaf branching " << _key << " at " << _value << "\n"; }
-            SFString curVal = asString(m_first) + (m_last ? "|" + asString(m_last) : "");
+            SFString curVal;
+            if (!contains(_key) || blocks.getCount() == 0) {
+                curVal = "";
+            } else {
+#ifdef OLD_CODE
+                for (int i = 0 ; i < blocks.getCount() ; i++) {
+                    curVal += asString(blocks[i]);
+                    if (i < blocks.getCount()-1)
+                        curVal += ",";
+                }
+#else
+                curVal = asString(cnt);
+#endif
+            }
             CTreeNode *n = CTreeNode::newBranch(_key, _value, m_prefix, curVal);
             delete this;
             return n;

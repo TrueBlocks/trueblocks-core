@@ -26,6 +26,8 @@ namespace qblocks {
     extern SFString underline;
     extern SFString reversed;
     extern SFString strikethru;
+    extern SFString greenCheck;
+    extern SFString redX;
 
     // bold italic colors
     #define biBlack  (cBlack+bbold+italic)
@@ -50,11 +52,7 @@ namespace qblocks {
     #define iTeal    (cTeal+italic)
     #define iWhite   (cWhite+italic)
 
-
     #define asYellow(a) cYellow << a << cOff
-
-    #define greenCheck (cGreen + "✓" + cOff)
-    #define redX       (cRed   + "X" + cOff)
 
     extern void colorsOff(void);
 

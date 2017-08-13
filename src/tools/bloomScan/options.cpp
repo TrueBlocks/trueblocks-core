@@ -50,7 +50,7 @@ void COptions::Init(void)
 	paramsPtr  = params;
 	nParamsRef = nParams;
 
-	//mode = "";
+	mode = "";
 
 	useVerbose=true;
 	useTesting=false;
@@ -60,9 +60,6 @@ void COptions::Init(void)
 COptions::COptions(void)
 {
 	Init();
-    // header = "";
-    // footer = "";
-    // seeAlso = "";
 }
 
 //--------------------------------------------------------------------------------

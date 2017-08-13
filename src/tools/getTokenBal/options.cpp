@@ -59,7 +59,7 @@ bool COptions::parseArguments(SFString& command) {
         return usage("You must provide at least one holder address.");
 
     if (blocks.empty())
-        blocks = asString(getClientLatestBlk());
+        blocks = asString(getLatestBlockFromClient());
 
     return true;
 }
@@ -69,9 +69,9 @@ void COptions::Init(void) {
     paramsPtr = params;
     nParamsRef = nParams;
 
-    // token = "";
-    // holders = "";
-    // blocks = "";
+    token = "";
+    holders = "";
+    blocks = "";
     asEther = false;
     asData = false;
 
@@ -80,23 +80,8 @@ void COptions::Init(void) {
 }
 
 //---------------------------------------------------------------------------------------------------
-const char *STR_README_HEAD =
-"For the given list of token contracts, retrieve the holders' token balance at the given block(s). You may specify "
-"multiple contracts, holder addresses, or blocks on the line, but not more than one multiple. `block`, if not "
-"specified, defaults to `latest`.\n"
-"\n"
-"If the token contract(s) you're requesting are not ERC20 token standard contracts, the return values are "
-"undefined.\n"
-"\n"
-"`getTokenBal` retrieves a token's balance from the local running Ethereum node (not QuickBlocks). Use the "
-"`--accounting` option of an account monitor to retrieve the balances from QuickBlocks.\n";
-
-//---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
     Init();
-    header = STR_README_HEAD;
-    // footer = "";
-    // seeAlso = "";
 }
 
 //--------------------------------------------------------------------------------

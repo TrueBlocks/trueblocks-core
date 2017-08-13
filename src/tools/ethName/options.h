@@ -6,7 +6,7 @@
  *
  * The LICENSE at the root of this repo details your rights (if any)
  *------------------------------------------------------------------------*/
-#include "utillib.h"
+#include "etherlib.h"
 
 class COptions : public COptionsBase {
 public:

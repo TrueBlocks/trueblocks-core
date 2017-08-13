@@ -22,6 +22,9 @@ namespace qblocks {
         bool hexNums;
         bool hashesOnly;
         bool colored;
+        bool asEther;
+        bool asDollars;
+        bool asWei;
         CExportOptions(void) {
             noFrst = false;
             lev = 0; spcs = 2;
@@ -30,6 +33,9 @@ namespace qblocks {
             hexNums = false;
             hashesOnly = false;
             colored = false;
+            asEther = false;
+            asDollars = false;
+            asWei = true;
         }
     };
     extern CExportOptions& expContext(void);

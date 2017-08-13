@@ -12,8 +12,10 @@
 namespace qblocks {
 
 #define SFAddress      SFString
+typedef SFArrayBase<SFAddress> SFAddressArray;
 #define SFHash         SFString
 #define SFBloom        SFUintBN
+#define SFWei          SFUintBN
 #define blknum_t       uint64_t
 #define txnum_t        uint32_t
 #define lognum_t       uint32_t
@@ -31,6 +33,12 @@ namespace qblocks {
 #define fromBloom(a)    ((a)==0?"0x0":"0x"+padLeft(toLower(SFString(to_hex((a)).c_str())),512,'0'))
 #define fromUnsigned(a) asStringU((a))
 
+#define addr2BN toWei
+//----------------------------------------------------------------------------------
+inline bool zeroAddr(const SFAddress& addr) {
+    return (addr2BN(addr) == 0);
+}
+
 //------------------------------------------------------
 inline SFAddress toAddress(const SFString& strIn)
 {
@@ -47,4 +55,17 @@ inline SFAddress toAddress(const SFString& strIn)
 
     return "0x" + ret;
 }
+    
+//-------------------------------------------------------------------------
+inline uint32_t bitsTwiddled(SFBloom n) {
+    uint32_t count = 0;
+    while (n != 0) {
+        SFUintBN x = n - 1;
+        SFUintBN y = n & x;
+        n = y;
+        count++;
+    }
+    return count;
 }
+
+}  // namespace qblocks

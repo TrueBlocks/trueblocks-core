@@ -10,6 +10,7 @@ class COptions : public COptionsBase {
 public:
     SFHash hash;
     bool terse;
+    bool raw;
 
     COptions(void);
     ~COptions(void);

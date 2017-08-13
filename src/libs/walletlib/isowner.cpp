@@ -148,7 +148,7 @@ SFString nextIsownerChunk_custom(const SFString& fieldIn, bool& force, const voi
         }
     }
 
-    return EMPTY;
+    return "";
 }
 
 //---------------------------------------------------------------------------
