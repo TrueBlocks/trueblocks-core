@@ -12,10 +12,10 @@ include_directories("${CMAKE_SOURCE_DIR}/libs/include")
 
 # Compilation order of the src subdirectories
 #add_subdirectory(blockScrape)
+#add_subdirectory(blockAcct)
 #add_subdirectory(chifra)
 add_subdirectory(ethprice)
 add_subdirectory(ethslurp)
-add_subdirectory(extractor)
 add_subdirectory(grabABI)
 add_subdirectory(makeClass)
 #add_subdirectory(miniBlocks)

@@ -10,6 +10,7 @@
 
 //---------------------------------------------------------------------------------------------------
 CParams params[] = {
+    CParams("-at",      "Report the price since nearest five minutes to :timestamp"),
     CParams("-clear",   "Clear the database and re-download price data"),
     CParams("-freshen", "Freshen database even if not needed"),
     CParams("-period",  "Time increment for display. Default 120 mins or :t where t is in [5|15|30|120|240|1440]"),
@@ -40,6 +41,14 @@ bool COptions::parseArguments(SFString& command) {
 
             freshen = true;
 
+        } else if (arg.Contains("-a")) {
+
+            SFString orig = arg;
+            SFString arg1 = nextTokenClear(arg, ':');
+            if (arg1 != "-a" && arg1 != "--at")
+                return usage("Unknown parameter: " + orig);
+            at = toLong(arg);
+
         } else if (arg.Contains("-w")) {
 
             SFString orig = arg;
@@ -67,6 +76,12 @@ bool COptions::parseArguments(SFString& command) {
                 return usage("Unknown parameter: " + orig);
 
             dispLevel = toLong(arg);
+        } else if (arg.startsWith('-')) {  // do not collapse
+            if (!builtInCmd(arg)) {
+                return usage("Invalid option: " + arg);
+            }
+        } else {
+            return usage("Invalid option: '" + arg + "'. Quiting...");
         }
     }
 
@@ -82,6 +97,7 @@ void COptions::Init(void) {
     dispLevel = 1;
     freq = 120;
     hour = 0;
+    at = 0;
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -90,9 +106,6 @@ COptions::COptions(void) {
     COptionsBase::useVerbose = true;
     COptionsBase::useTesting = true;
     Init();
-    // header = "";
-    footer = "  Powered, in part, by the Poloniex APIs\n";
-    // seeAlso = "";
 }
 
 //--------------------------------------------------------------------------

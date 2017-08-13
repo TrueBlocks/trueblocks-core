@@ -1,0 +1,6 @@
+ethName rob 
+{ "addr": "0x5e0539dcd052698ab7a79f9614fa84c46b4d1d9e", "name": "Robert Olsen", "source": "DevCon2 Token Contract" }
+{ "addr": "0x1736303b570247313eb445d803185455779b91c7", "name": "@robrigo", "source": "Steem" }
+{ "addr": "0x719a5b998cb421f12e3b960cc49d4fdb0988590f", "name": "@robsteady", "source": "Steem" }
+{ "addr": "0xbe46324018124b2d604c2f3eae91d3de9b388b09", "name": "Robinhoodponzi", "source": "EtherScan.ioVerifiedContracts" }
+{ "addr": "0xdf21fa922215b1a56f5a6d6294e6e36c85a0acfb", "name": "Probable_Exchange, Poloniex's DAO Wallet", "source": "Consensys, Slack Nation" }

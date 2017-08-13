@@ -37,6 +37,8 @@ bool COptions::parseArguments(SFString& command) {
 
          } else {
 
+             if (nAddrs >= MAX_ADDRS)
+                 return usage("You may query at most " + asString(MAX_ADDRS) + " addresses. Quitting...");
             SFString addr = toLower(arg);
             if (!addr.startsWith("0x"))
                 addr = "0x" + addr;
@@ -65,7 +67,9 @@ void COptions::Init(void) {
     paramsPtr = params;
     nParamsRef = nParams;
 
-    // addrs = [];
+    for (uint32_t i = 0 ; i < MAX_ADDRS ; i++) {
+        addrs[i] = "";
+    }
     nAddrs = 0;
     diff = false;
     display = false;
@@ -77,13 +81,6 @@ void COptions::Init(void) {
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
     Init();
-    header = "This simple program may be used to query an Ethereum address to determine if it is a smart "
-        "contract or simply a 'regular' account. It may also be used to retrieve the actual byte-code from "
-        "an address (if code is present). Finally, it may be used to compare two addresses to determine if "
-        "they hold identical code. You may specify multiple addresses on a line.\n";
-    // footer = "";
-    seeAlso = "See Also: This command-line tool implements the [eth_getCode](https:/""/github.com/paritytech"
-        "/parity/wiki/JSONRPC-eth-module#eth_getcode) RPC interface.\n";
 }
 
 //--------------------------------------------------------------------------------

@@ -17,6 +17,7 @@ public:
     bool isRange;
     bool terse;
     bool quiet;
+    bool force;
     SFUint32 nums[MAX_NUMS];
     SFUint32 nNums;
     SFUint32 start;

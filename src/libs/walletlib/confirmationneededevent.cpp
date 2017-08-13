@@ -184,7 +184,7 @@ SFString nextConfirmationneededeventChunk_custom(const SFString& fieldIn, bool& 
         }
     }
 
-    return EMPTY;
+    return "";
 }
 
 //---------------------------------------------------------------------------

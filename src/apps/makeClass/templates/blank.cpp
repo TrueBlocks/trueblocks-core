@@ -130,7 +130,7 @@ SFString next[{PROPER}]Chunk_custom(const SFString& fieldIn, bool& force, const 
         }
     }
 
-    return EMPTY;
+    return "";
 }
 
 //---------------------------------------------------------------------------

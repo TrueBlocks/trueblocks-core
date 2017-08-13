@@ -12,6 +12,7 @@
  */
 #include "ethtypes.h"
 #include "abilib.h"
+#include "transaction.h"
 #include "incomestatement.h"
 
 namespace qblocks {
@@ -33,7 +34,9 @@ public:
     SFString name;
     SFString color;
     SFUint32 firstBlock;
-    bool disabled;
+    SFUint32 lastBlock;
+    SFString status;
+    bool deepScan;
     CIncomeStatement qbis;
     SFUintBN nodeBal;
 
@@ -46,10 +49,11 @@ public:
     DECLARE_NODE(CAccountWatch);
 
     // EXISTING_CODE
-    CAccountWatch(uint32_t _id, const SFString& _addr, const SFString& _name, blknum_t fB, const SFString& _color)
-    : index(_id), address(toLower(_addr)), name(_name), color(_color), firstBlock(fB),
-    disabled(false) { }
-    bool getWatch(const CToml& toml, uint32_t n, bool fromFile);
+    CAccountWatch(uint32_t _id, const SFString& _addr, const SFString& _name, blknum_t fB, blknum_t lB, const SFString& _color)
+    : index(_id), address(toLower(_addr)), name(_name), color(_color), firstBlock(fB), lastBlock(lB), status("") { }
+    bool getWatch(const CToml& toml, uint32_t n);
+    SFString displayName(bool terse, int w1=20, int w2=8) const;
+    bool isTransactionOfInterest(CTransaction *trans, uint64_t nSigs, SFString sigs[]) const;
     // EXISTING_CODE
 
 protected:
@@ -101,11 +105,14 @@ inline void CAccountWatch::Init(void) {
 //    name = EMPTY;
 //    color = EMPTY;
     firstBlock = 0;
-    disabled = 0;
+    lastBlock = 0;
+//    status = EMPTY;
+    deepScan = 0;
 //    qbis = ??; /* unknown type: CIncomeStatement */
     nodeBal = 0;
 
     // EXISTING_CODE
+    lastBlock = UINT_MAX;
     // EXISTING_CODE
 }
 
@@ -119,7 +126,9 @@ inline void CAccountWatch::Copy(const CAccountWatch& ac) {
     name = ac.name;
     color = ac.color;
     firstBlock = ac.firstBlock;
-    disabled = ac.disabled;
+    lastBlock = ac.lastBlock;
+    status = ac.status;
+    deepScan = ac.deepScan;
     qbis = ac.qbis;
     nodeBal = ac.nodeBal;
 

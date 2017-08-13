@@ -136,7 +136,7 @@ namespace qblocks {
         return parseJson(s, nFields);
     }
 
-    // #define DEBUG_PARSER
+//#define DEBUG_PARSER
 #ifdef DEBUG_PARSER
     SFString tbs;
 #endif
@@ -152,7 +152,7 @@ namespace qblocks {
         printf("--------------------------\n%s\n-----------------------------\n",
                (const char*)SFString(s).Right(300));
 #endif
-        typedef enum { OUTSIDE = 0, IN_NAME, IN_VALUE } parseState;
+        typedef enum { OUTSIDE = 0, IN_NAME, IN_VAL } parseState;
         parseState state = OUTSIDE;
 
         char *fieldName = NULL;
@@ -170,7 +170,7 @@ namespace qblocks {
                         fieldName = s;
 
                     } else if (*s == ':') {
-                        state = IN_VALUE;
+                        state = IN_VAL;
                         *s = '\0';
 #ifdef DEBUG_PARSER
 //                      printf("fn: %-10.10s fv: %-40.40s ---> %-60.60s\n" , fieldName, fieldVal, (s+1));
@@ -179,7 +179,7 @@ namespace qblocks {
                     s++;
                     break;
 
-                case IN_VALUE:
+                case IN_VAL:
                     fieldVal = s;
                     if (*s == '[') {  // array skip to end of array
                         fieldVal++;
@@ -552,7 +552,6 @@ namespace qblocks {
         // We have a field so lets process it.
         ASSERT(fieldName.length() >= 2);
         bool isPrompt = false;
-        uint32_t maxWidth = 0xdeadbeef;
 
         // The fieldname may contain p: or w:width: or both.  If it contains either it
         // must contain them at the beginning of the string (before the fieldName).  Anything
@@ -564,15 +563,24 @@ namespace qblocks {
             promptName = fieldName;
         }
 
+        uint32_t maxWidth = 0xdeadbeef;
+        bool rightJust = false;
         if (fieldName.ContainsI("w:")) {
             ASSERT(fieldName.Left(2) % "w:");  // must be first modifier in the string
             fieldName.ReplaceI("w:", EMPTY);   // get rid of the 'w:'
             maxWidth = toLong32u(fieldName);   // grab the width
             nextTokenClear(fieldName, ':');    // skip to the start of the fieldname
+        } else if (fieldName.ContainsI("r:")) {
+            ASSERT(fieldName.Left(2) % "r:");  // must be first modifier in the string
+            fieldName.ReplaceI("r:", EMPTY);   // get rid of the 'w:'
+            maxWidth = toLong32u(fieldName);   // grab the width
+            nextTokenClear(fieldName, ':');    // skip to the start of the fieldname
+            rightJust = true;
         }
 
         //--------------------------------------------------------------------
-#define truncPad(str, size) (size == 0xdeadbeef ? str : padRight(str.Left(size), size))
+#define truncPad(str, size)  (size == 0xdeadbeef ? str : padRight(str.Left(size), size))
+#define truncPadR(str, size) (size == 0xdeadbeef ? str : padLeft (str.Left(size), size))
 
         // Get the value of the field.  If the value of the field is empty we return empty for the entire token.
         bool forceShow = false;
@@ -580,7 +588,11 @@ namespace qblocks {
         forceShow = (isPrompt?true:forceShow);
         if (!forceShow && fieldValue.empty())
             return EMPTY;
-        fieldValue = truncPad(fieldValue, maxWidth);  // pad or truncate
+        if (rightJust) {
+            fieldValue = truncPadR(fieldValue, maxWidth);  // pad or truncate
+        } else {
+            fieldValue = truncPad(fieldValue, maxWidth);  // pad or truncate
+        }
 
         // The field is not hidden, the value of the field is not empty, we are not working
         // on a prompt, so we toss back the token referencing the value of the field.
@@ -589,7 +601,11 @@ namespace qblocks {
 
         // We are working on a prompt.  Pick up customizations if any
         SFString prompt = promptName;
-        prompt = truncPad(prompt, maxWidth);  // pad or truncate
+        if (rightJust) {
+            prompt = truncPadR(prompt, maxWidth);  // pad or truncate
+        } else {
+            prompt = truncPad(prompt, maxWidth);  // pad or truncate
+        }
         return pre + prompt + post;
     }
 

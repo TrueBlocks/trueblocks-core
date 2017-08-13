@@ -7,11 +7,10 @@
  *------------------------------------------------------------------------*/
 #include "utillib.h"
 #include "options.h"
-#include "pairFile.h"
 
 CParams params[] = {
     CParams("~className",    "name of C++ class(es) to process"),
-    CParams("-clear",        "remove <className(s)> definition file from local folder"),
+//    CParams("-clean",        "remove generated .cpp and .h file from current folder (if found)"),
     CParams("-edit",         "edit <className(s)> definition file in local folder"),
     CParams("-filter",       "process only files with :filter in their names"),
     CParams("-list",         "list all definition files found in the local folder"),
@@ -35,11 +34,11 @@ bool COptions::parseArguments(SFString& command) {
             isEdit = true;
             isRemove = isList = false;  // last in wins
 
-        } else if (arg == "-c" || arg == "-clear") {
-            if (isRun)
-                return usage("Incompatible options '-r' and '-c'. Choose one or the other.");
-            isRemove = true;
-            isEdit = isList = false;  // last in wins
+//        } else if (arg == "-c" || arg == "-clean") {
+//            if (isRun)
+//                return usage("Incompatible options '-r' and '-c'. Choose one or the other.");
+//            isRemove = true;
+//            isEdit = isList = false;  // last in wins
 
         } else if (arg == "-l" || arg == "-list") {
             if (isRun)
@@ -121,20 +120,17 @@ void COptions::Init(void) {
     isList = false;
     isAll = false;
     silent = false;
-    // namesp = "";
-    // classNames = "";
-    // filter = "";
+    namesp = "";
+    classNames = "";
+    filter = "";
 
     useVerbose = true;
     useTesting = false;
 }
 
 //---------------------------------------------------------------------------------------------------
-COptions::COptions(void) {
+COptions::COptions(void) : classFile("") {
     Init();
-    // header = "";
-    // footer = "";
-    // seeAlso = "";
 }
 
 //--------------------------------------------------------------------------------

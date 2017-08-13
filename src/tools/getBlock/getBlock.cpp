@@ -92,6 +92,11 @@ SFString doOneBlock(SFUint32 num, const COptions& opt) {
     } else {
         // queryBlock returns false if there are no transactions, so ignore the return value
         queryBlock(gold, numStr, true);
+        if (opt.force) { // turn this on to force a write of the block to the disc
+            SFString fileName = getBinaryFilename1(gold.blockNumber);
+            writeToBinary(gold, fileName);
+        }
+
         if (curSource().Contains("Only")) {
             // --source::cache mode doesn't include timestamp in transactions
             for (txnum_t t = 0 ; t < gold.transactions.getCount() ; t++) {

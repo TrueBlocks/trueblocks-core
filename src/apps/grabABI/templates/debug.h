@@ -12,6 +12,8 @@
  */
 
 //EXISTING_CODE
+//EXISTING_CODE
+
 #define MAX_TX 15
 
 //-----------------------------------------------------------------
@@ -51,4 +53,7 @@ public:
 
 //-----------------------------------------------------------------
 extern CTransBuffer tBuffer;
+extern bool debugFile(void);
+
+//EXISTING_CODE
 //EXISTING_CODE

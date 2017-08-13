@@ -52,7 +52,7 @@ bool COptions::parseArguments(SFString& command) {
         return usage("You must provide at least one Ethereum address.");
 
     if (blocks.empty())
-        blocks = asString(getClientLatestBlk());
+        blocks = asString(getLatestBlockFromClient());
 
     return true;
 }
@@ -62,29 +62,19 @@ void COptions::Init(void) {
     paramsPtr = params;
     nParamsRef = nParams;
 
-    // addrs = "";
-    // blocks = "";
+    addrs = "";
+    blocks = "";
     asEther = false;
     asData = false;
 
     useVerbose = true;
     useTesting = false;
+//    minArgs = 0;
 }
-
-//---------------------------------------------------------------------------------------------------
-const char *STR_README_HEAD =
-"Retrieve the balance of an address (or more than one) at the given block(s). You may specify multiple "
-"addresses or multiple blocks on the line, but not both. `block`, if not specified, defaults to `latest`.\n"
-"\n"
-"`getBalance` retrieves the balance from the local Ethereum node (not QuickBlocks). Use the `--accounting` "
-"option of an account monitor to retrieve the balance from QuickBlocks.\n";
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
     Init();
-    header = STR_README_HEAD;
-    // footer = "";
-    // seeAlso = "";
 }
 
 //--------------------------------------------------------------------------------

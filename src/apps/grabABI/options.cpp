@@ -54,6 +54,8 @@ bool COptions::parseArguments(SFString& command) {
                 return usage("Invalid option: " + arg);
 
         } else {
+            if (nAddrs>=MAX_ADDRS)
+                return usage("You may provide at most " + asString(MAX_ADDRS) + " addresses");
             if (primaryAddr.empty())
                 primaryAddr = arg;
             SFAddress addr = toLower(arg);
@@ -62,8 +64,6 @@ bool COptions::parseArguments(SFString& command) {
             if (addr.length() != 42 && !addr.ContainsI("tokenlib") && !addr.ContainsI("walletlib"))
                 return usage(addr + " does not appear to be a valid Ethereum address.\n");
             addrs[nAddrs++] = addr;
-            if (nAddrs>10)
-                return usage("You may provide at most 10 addresses");
         }
     }
 
@@ -88,6 +88,9 @@ void COptions::Init(void) {
     noconst = false;
     open = false;
     silent = false;
+    for (uint32_t i = 0 ; i < MAX_ADDRS ; i++) {
+        addrs[i] = "";
+    }
     nAddrs = 0;
 
     useVerbose = true;
@@ -97,9 +100,6 @@ void COptions::Init(void) {
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
     Init();
-    // header = "";
-    // footer = "";
-    // seeAlso = "";
 }
 
 //--------------------------------------------------------------------------------

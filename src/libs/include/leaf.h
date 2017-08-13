@@ -27,8 +27,8 @@ typedef SFUniqueList<CLeaf*>       CLeafListU;
 //--------------------------------------------------------------------------
 class CLeaf : public CTreeNode {
 public:
-    SFUint32 m_first;
-    SFUint32 m_last;
+    SFBlockArray blocks;
+    SFUint32 cnt;
 
 public:
     CLeaf(void);
@@ -93,8 +93,8 @@ inline void CLeaf::Clear(void) {
 inline void CLeaf::Init(void) {
     CTreeNode::Init();
 
-    m_first = 0;
-    m_last = 0;
+//    blocks = ??; /* unknown type: SFBlockArray */
+    cnt = 0;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -105,8 +105,8 @@ inline void CLeaf::Copy(const CLeaf& le) {
     Clear();
     CTreeNode::Copy(le);
 
-    m_first = le.m_first;
-    m_last = le.m_last;
+    blocks = le.blocks;
+    cnt = le.cnt;
 
     // EXISTING_CODE
     // EXISTING_CODE

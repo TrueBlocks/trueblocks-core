@@ -24,10 +24,13 @@ namespace qblocks {
     SFString underline  = "\e[4m";
     SFString reversed   = "\e[7m";
     SFString strikethru = "\e[7m";
+    SFString greenCheck = "\e[0;32m✓\e[0m";
+    SFString redX       = "\e[0;31mX\e[0m";
 
     void colorsOff(void) {
         cBlack = cRed = cGreen = cYellow = cBlue = "";
         cMagenta = cTeal = cWhite = cOff = bbold = "";
         italic = underline = reversed = strikethru = "";
+        greenCheck = "✓"; redX = "X";
     }
 }  // namespace qblocks
