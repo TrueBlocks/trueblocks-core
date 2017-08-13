@@ -32,7 +32,9 @@ int main(int argc, const char *argv[]) {
 
         SFString fmt = (options.addrOnly ? "[{ADDR}]" : "");
         if (options.list) {
-            for (uint64_t i = 0 ; i < accounts.getCount() ; i++)
+            if (options.count)
+                cout << accounts.getCount() << " items\n";
+            for (uint32_t i = 0 ; i < accounts.getCount() ; i++)
                 cout << accounts[i].Format(fmt).Substitute("\n", " ").Substitute("  ", " ") << "\n";
             exit(0);
         }
@@ -48,37 +50,10 @@ int main(int argc, const char *argv[]) {
     return 0;
 }
 
-extern const char *STR_DEFAULT_DATA;
-//-----------------------------------------------------------------------
-bool loadData(void) {
-    if (accounts.getCount() > 0)
-        return true;
-
-    if (!folderExists(configPath("configs/")))
-        establishFolder(configPath("configs/"));
-
-    SFString contents = asciiFileToString(configPath("configs/names.conf"));
-    contents.ReplaceAll("\t\t", "\t");
-    if (contents.empty()) {
-        stringToAsciiFile(configPath("configs/names.conf"), STR_DEFAULT_DATA);
-        return false;
-    }
-
-    while (!contents.empty()) {
-        SFString line = nextTokenClear(contents, '\n');
-        if (!line.startsWith("#")) {
-            if (!countOf('\t', line))
-                cerr << "Line " << line << " does not contain two tabs.\n";
-            accounts[accounts.getCount()] = CAccountName(line);
-        }
-    }
-    return true;
-}
-
 //-----------------------------------------------------------------------
 uint32_t countOf(const SFString& addr) {
     uint32_t cnt = 0;
-    for (uint64_t i = 0 ; i < accounts.getCount() ; i++)
+    for (uint32_t i = 0 ; i < accounts.getCount() ; i++)
         if (accounts[i].addr % addr)
             cnt++;
     return cnt;
@@ -87,11 +62,17 @@ uint32_t countOf(const SFString& addr) {
 //-----------------------------------------------------------------------
 SFString showName(const COptions& options) {
     SFString ret;
+    uint32_t hits = 0;
     SFString fmt = (options.addrOnly ? "[{ADDR}]" : "");
-    for (uint64_t i = 0 ; i < accounts.getCount() ; i++) {
-        if (accounts[i].Match(options.addr, options.name, options.source, options.matchCase, options.all))
+    for (uint32_t i = 0 ; i < accounts.getCount() ; i++) {
+        if (accounts[i].Match(options.addr, options.name, options.source, options.matchCase, options.all)) {
             ret += (accounts[i].Format(fmt).Substitute("\n", " ").Substitute("  ", " ") + "\n");
+            hits++;
+        }
     }
+
+    if (options.count)
+        ret = asString(hits) + " match" + (hits==1?"":"es") + "\n" + (verbose ? ret : "");
     return ret;
 }
 
@@ -124,6 +105,33 @@ bool CAccountName::Match(const SFString& s1, const SFString& s2, const SFString&
 
     // We have only s1
     return (all ? m11 || m12 || m13 : m11 || m12);
+}
+
+extern const char *STR_DEFAULT_DATA;
+//-----------------------------------------------------------------------
+bool loadData(void) {
+    if (accounts.getCount() > 0)
+        return true;
+
+    if (!folderExists(configPath("configs/")))
+        establishFolder(configPath("configs/"));
+
+    SFString contents = asciiFileToString(configPath("configs/names.conf"));
+    contents.ReplaceAll("\t\t", "\t");
+    if (contents.empty()) {
+        stringToAsciiFile(configPath("configs/names.conf"), STR_DEFAULT_DATA);
+        return false;
+    }
+
+    while (!contents.empty()) {
+        SFString line = nextTokenClear(contents, '\n');
+        if (!line.startsWith("#")) {
+            if (!countOf('\t', line))
+                cerr << "Line " << line << " does not contain two tabs.\n";
+            accounts[accounts.getCount()] = CAccountName(line);
+        }
+    }
+    return true;
 }
 
 const char *STR_DEFAULT_DATA =
