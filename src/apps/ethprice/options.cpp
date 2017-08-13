@@ -76,6 +76,12 @@ bool COptions::parseArguments(SFString& command) {
                 return usage("Unknown parameter: " + orig);
 
             dispLevel = toLong(arg);
+        } else if (arg.startsWith('-')) {  // do not collapse
+            if (!builtInCmd(arg)) {
+                return usage("Invalid option: " + arg);
+            }
+        } else {
+            return usage("Invalid option: '" + arg + "'. Quiting...");
         }
     }
 
