@@ -16,10 +16,6 @@ set(PROJ_NAME "tools")
 add_executable(${TOOL_NAME} ${SOURCE_FILES})
 
 # Add the project static libs at linking
-<<<<<<< HEAD
-target_link_libraries (${TOOL_NAME} ${BASE_LIBS} token wallet)
-target_link_libraries(${TOOL_NAME} ${CURL_LIBRARIES})
-=======
 target_link_libraries (${TOOL_NAME} wallet token ${BASE_LIBS})
 
 # Testing
@@ -55,4 +51,3 @@ run_test("getBalance_tip_4"         "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 
 #broken run_test("getBalance_e_tip_4"       "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 1500000 2000000 2500000 3000000 -e")
 
 run_test("getBalance_from_file"     "--file:cmd_file")
->>>>>>> develop

@@ -16,10 +16,6 @@ set(PROJ_NAME "tools")
 add_executable(${TOOL_NAME} ${SOURCE_FILES})
 
 # Add the project static libs at linking
-<<<<<<< HEAD
-target_link_libraries (${TOOL_NAME} ${BASE_LIBS} token wallet)
-target_link_libraries(${TOOL_NAME} ${CURL_LIBRARIES})
-=======
 target_link_libraries (${TOOL_NAME} wallet token ${BASE_LIBS})
 
 # Testing
@@ -145,4 +141,3 @@ run_test("ethName_three_params"    "0x1 rob steem")
 run_test("ethName_full_addr"       "0xbf4ed7b27f1d666546e30d74d50d173d20bca754")
 run_test("ethName_simple_w_space"  "cur ")
 run_test("ethName_w_source"        "cur -s")
->>>>>>> develop
