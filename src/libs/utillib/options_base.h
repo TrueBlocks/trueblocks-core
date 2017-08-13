@@ -13,12 +13,13 @@ namespace qblocks {
     public:
         static bool useVerbose;
         static bool useTesting;
+        static bool isReadme;
 
         SFString commandList;
         bool     fromFile;
         SFUint32 minArgs;
 
-        COptionsBase(void) { fromFile = false; minArgs = 1; }
+        COptionsBase(void) { fromFile = false; minArgs = 1; isReadme = false; }
         virtual ~COptionsBase(void) { }
 
         bool prepareArguments(int argc, const char *argv[]);
