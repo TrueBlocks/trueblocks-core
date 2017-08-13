@@ -53,11 +53,14 @@ namespace qblocks {
         bool hasStdIn = false;
         for (int i = 1 ; i < argc ; i++) {
             SFString arg = argv[i];
+            arg.Replace("--verbose", "-v");
             while (!arg.empty()) {
                 SFString opt = expandOption(arg);  // handles case of -rf for example
+                if (isReadme)
+                    return usage();
                 if (opt == "-")
                     hasStdIn = true;
-                else
+                else if (!opt.empty())
                     args[nArgs++] = opt;
             }
         }
@@ -74,11 +77,11 @@ namespace qblocks {
                 stdInCmds += "\n";
         }
 
-        SFString cmdFileName = EMPTY;
+        SFString cmdFileName = "";
         for (SFUint32 i = 0 ; i < nArgs ; i++) {
             SFString arg = args[i];
             if (arg.startsWith("--file:")) {
-                cmdFileName = arg.Substitute("--file:", EMPTY);
+                cmdFileName = arg.Substitute("--file:", "");
                 cmdFileName.Replace("~/", getHomeFolder());
                 if (!fileExists(cmdFileName)) {
                     if (args) delete [] args;
@@ -121,20 +124,19 @@ namespace qblocks {
 
             } else if (arg.startsWith("-v") || arg.startsWith("--verbose")) {
                 verbose = true;
-                arg.Replace("--verbose", EMPTY);
-                arg.Replace("-v", EMPTY);
-                arg.Replace(":", EMPTY);
+                arg.Replace("--verbose", "");
+                arg.Replace("-v", "");
+                arg.Replace(":", "");
                 if (!arg.empty())
                     verbose = toLong(arg);
 
-            } else if (arg == "-t" || arg == "--test") {
-
+            } else if (COptionsBase::useTesting && (arg == "-t" || arg == "--test")) {
                 isTesting = true;
             }
         }
 
         // If we have a command file, we will use it, if not we will creat one and pretend we have one.
-        commandList = EMPTY;
+        commandList = "";
         fromFile = false;
         if (cmdFileName.empty()) {
             for (SFUint32 i = 0 ; i < nArgs ; i++)
@@ -167,7 +169,7 @@ namespace qblocks {
             return true;
         if (arg == "-h" || arg == "--help")
             return true;
-        if (arg == "-t" || arg == "--test")
+        if (COptionsBase::useTesting && (arg == "-t" || arg == "--test"))
             return true;
         if (arg == "--version")
             return true;
@@ -222,7 +224,7 @@ namespace qblocks {
     SFString usageStr(const SFString& errMsg) {
 
         ostringstream os;
-        if (isTesting) {
+        if (COptionsBase::isReadme) {
             sep = sep2 = "`";
             colorsOff();
             os << "#### Usage\n";
@@ -234,9 +236,9 @@ namespace qblocks {
         os << bYellow << sep << "Usage:" << sep2 << "    " << cOff << programName << " " << options() << "  \n";
         os << purpose();
         os << descriptions() << "\n";
-        if (isTesting)
+        if (COptionsBase::isReadme)
             os << STR_FILE_OPTION;
-        os << bBlue << (isTesting?"#### ":"  ") << "Powered by QuickBlocks" << (isTesting?"&reg;":"") << "\n" << cOff;
+        os << bBlue << (COptionsBase::isReadme ? "#### " : "  ") << "Powered by QuickBlocks" << (COptionsBase::isReadme ? "&reg;" : "") << "\n" << cOff;
         return os.str().c_str();
     }
 
@@ -289,7 +291,7 @@ namespace qblocks {
 
         CStringExportContext ctx;
         if (!purpose.empty()) {
-            purpose.Replace("\n           ", EMPTY);
+            purpose.Replace("\n           ", "");
             ctx << bYellow << sep << "Purpose:" << sep2 << "  " << cOff
                 << purpose.Substitute("\n", "\n           ") << "  \n";
         }
@@ -300,7 +302,7 @@ namespace qblocks {
     //--------------------------------------------------------------------------------
     SFString description(const SFString& s, const SFString& l, const SFString& d, bool isMode, bool required) {
         CStringExportContext ctx;
-        if (isTesting) {
+        if (COptionsBase::isReadme) {
             ctx << "| " << s << " | " << (isMode ? "" : "-") << l << " | " << d.Substitute("|", "&#124;") << " |\n";
 
         } else {
@@ -319,7 +321,7 @@ namespace qblocks {
         SFString required;
         CStringExportContext ctx;
 
-        if (isTesting) {
+        if (COptionsBase::isReadme) {
             ctx << "\n";
             ctx << "| Option | Full Command | Description |\n";
             ctx << "| -------: | :------- | :------- |\n";
@@ -343,8 +345,7 @@ namespace qblocks {
         }
 
         if (COptionsBase::useTesting)
-            ctx << description("-t", "-test", "generate intermediary files but do not execute the commands",
-                               false, false);
+            ctx << description("-t", "-test", "generate intermediary files but do not execute the commands", false, false);
         if (COptionsBase::useVerbose)
             ctx << description("-v", "-verbose", "set verbose level. Follow with a number to set level "
                                "(-v0 for silent)", false, false);
@@ -354,13 +355,14 @@ namespace qblocks {
 
     //--------------------------------------------------------------------------------
     SFString expandOption(SFString& arg) {
+
         SFString ret = arg;
 
         // Check that we don't have a regular command with a single dash, which
         // should report an error in client code
         for (SFUint32 i = 0 ; i < nParamsRef ; i++) {
             if (paramsPtr[i].longName == arg) {
-                arg = EMPTY;
+                arg = "";
                 return ret;
             }
         }
@@ -369,26 +371,42 @@ namespace qblocks {
 
         // Not an option
         if (!arg.startsWith('-') || arg.startsWith("--")) {
-            arg = EMPTY;
+            arg = "";
             return ret;
         }
 
         // Stdin case
         if (arg == "-") {
-            arg = EMPTY;
+            arg = "";
             return ret;
         }
 
         // Single option
         if (arg.length() == 2) {
-            arg = EMPTY;
+            arg = "";
+            return ret;
+        }
+
+        // Special case
+        if (arg == "-th" || arg == "-ht") {
+            COptionsBase::isReadme = true;
+            arg = "";
+            ret.ReplaceAll("-th","");
+            ret.ReplaceAll("-ht","");
+            return ret;
+        }
+
+        // This may be a command with two -a -b (or more) single options
+        if (arg.length()>2 && arg[2] == ' ') {
+            ret = arg.Left(2);
+            arg = arg.substr(3);
             return ret;
         }
 
         // One of the range commands. These must be alone on
         // the line (this is a bug for -rf:txt for example)
         if (arg.Contains(":") || arg.Contains("=")) {
-            arg = EMPTY;
+            arg = "";
             return ret;
         }
 
@@ -416,6 +434,7 @@ namespace qblocks {
 //    SFString COptionsBase::seeAlso = "";
     bool COptionsBase::useVerbose = true;
     bool COptionsBase::useTesting = true;
+    bool COptionsBase::isReadme = false;
 
     //--------------------------------------------------------------------------------
     SFUint32 verbose = false;
@@ -423,6 +442,6 @@ namespace qblocks {
 
     //---------------------------------------------------------------------------------------------------
     SFString configPath(const SFString& part) {
-        return getHomeFolder() + ".quickBlocks" + (isTesting?".test":EMPTY) + "/" + part;
+        return getHomeFolder() + ".quickBlocks" + (isTesting ? ".test" : "") + "/" + part;
     }
 }  // namespace qblocks

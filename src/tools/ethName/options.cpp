@@ -56,6 +56,7 @@ bool COptions::parseArguments(SFString& command) {
             }
 
         } else {
+
             if (!addr.empty() && !name.empty() && !source.empty())
                 return usage("Invalid option: " + arg);
             else if (!addr.empty() && !name.empty())
@@ -83,6 +84,10 @@ void COptions::Init(void) {
     matchCase = false;
     list = false;
     addrOnly = false;
+    count = false;
+
+    useVerbose = true;
+    useTesting = false;
 }
 
 //---------------------------------------------------------------------------------------------------

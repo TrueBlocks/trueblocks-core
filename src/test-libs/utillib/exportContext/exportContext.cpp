@@ -25,7 +25,6 @@ int main(int argc, const char *argv[]) {
     SFTime t = SFTime(2017,10,12,1,14,12);
 
     CStringExportContext ctx;
-//    ctx << "c string: " << c_str.c_str() << " : " << sizeme(c_str) << "\n";
     ctx << "my string: " << myStr << " : " << sizeme(myStr) << "\n";
     ctx << "bool: " << b << " : " << sizeme(b) << "\n";
     ctx << "char: " << c << " : " << sizeme(c) << "\n";
@@ -41,7 +40,6 @@ int main(int argc, const char *argv[]) {
     ostringstream os;
     os.setf(ios::fixed);
     os << setprecision(10);
-//    os << "c string: " << c_str.c_str() << " : " << sizeme(c_str) << "\n";
     os << "my string: " << myStr << " : " << sizeme(myStr) << "\n";
     os << "bool: " << b << " : " << sizeme(b) << "\n";
     os << "char: " << c << " : " << sizeme(c) << "\n";
