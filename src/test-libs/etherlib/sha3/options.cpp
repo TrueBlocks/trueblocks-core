@@ -50,7 +50,7 @@ void COptions::Init(void) {
     option2 = false;
 
     useVerbose = true;
-    useTesting = false;
+    useTesting = true;
 }
 
 //---------------------------------------------------------------------------------------------------
