@@ -16,10 +16,6 @@ set(PROJ_NAME "tools")
 add_executable(${TOOL_NAME} ${SOURCE_FILES})
 
 # Add the project static libs at linking
-<<<<<<< HEAD
-target_link_libraries (${TOOL_NAME} ${BASE_LIBS} token wallet)
-target_link_libraries(${TOOL_NAME} ${CURL_LIBRARIES})
-=======
 target_link_libraries (${TOOL_NAME} wallet token ${BASE_LIBS})
 
 # Testing
@@ -75,4 +71,3 @@ run_test("getTrace_README" "-th")
 #showOne("0x8324490c68e6268db9eadcb4ce8303ee1d256e480f7637853bb13a3ae1fe1328", "")  # my code had a bug that wouldn't record this properly
 #showOne("0xf9d426284bd20415a53991a004122b3a3a619b295ea98d1d88a5fd3a4125408b", "-r")  # the contract suicided at this hash
 #showOne("0xf9d426284bd20415a53991a004122b3a3a619b295ea98d1d88a5fd3a4125408b", "")  # my code had a bug that wouldn't record this properly
->>>>>>> develop

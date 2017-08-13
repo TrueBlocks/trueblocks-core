@@ -16,10 +16,6 @@ set(PROJ_NAME "tools")
 add_executable(${TOOL_NAME} ${SOURCE_FILES})
 
 # Add the project static libs at linking
-<<<<<<< HEAD
-target_link_libraries (${TOOL_NAME} ${BASE_LIBS} token wallet)
-target_link_libraries(${TOOL_NAME} ${CURL_LIBRARIES})
-=======
 target_link_libraries (${TOOL_NAME} wallet token ${BASE_LIBS})
 
 # Testing
@@ -43,4 +39,3 @@ run_test("whenBlock_noparams"    )
 #run_test("whenBlock_01" ";cat blocks.txt dates.txt")
 run_test("whenBlock_02" "--file:blocks.txt")
 run_test("whenBlock_03" "--file:dates.txt")
->>>>>>> develop

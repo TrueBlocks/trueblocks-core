@@ -16,10 +16,6 @@ set(PROJ_NAME "apps")
 add_executable(${TOOL_NAME} ${SOURCE_FILES})
 
 # Add the project static libs at linking
-<<<<<<< HEAD
-target_link_libraries (${TOOL_NAME} ${BASE_LIBS} token wallet)
-target_link_libraries(${TOOL_NAME} ${CURL_LIBRARIES})
-=======
 target_link_libraries (${TOOL_NAME} wallet token ${BASE_LIBS})
 
 # Testing
@@ -46,4 +42,3 @@ run_test("grabABI_encoding"   "0xbb9bc244d798123fde783fcc1c72d3bb8c189413 -t -v 
 #broken - should allow 'ganged' options run_test("grabABI_verbose"    "0xbb9bc244d798123fde783fcc1c72d3bb8c189413 -tvne")
 run_test("grabABI_generation" "0xbb9bc244d798123fde783fcc1c72d3bb8c189413 -t -v -n -e -g:code")
 #broken - should allow 'ganged' options run_test("grabABI_verbose"    "0xbb9bc244d798123fde783fcc1c72d3bb8c189413 -tvng:code")
->>>>>>> develop
