@@ -34,7 +34,7 @@ endfunction(run_test)
 
 # Enter one line for each individual test
 #
-# ----- >>>  There is no need to test the command line params on this code
+# There is no need to test the command line params on this code
 #
 run_test("printFloat_00")
 run_test("printFloat_01" "-t:1")
