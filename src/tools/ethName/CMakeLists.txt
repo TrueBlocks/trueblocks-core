@@ -107,7 +107,6 @@ run_test("ethName_addr_long_source_match" "--source 1e16 GHC")
 run_test("ethName_addr_long_source_no_match" "--source 1e17 GHC")
 run_test("ethName_addr_long_name_source_match" "--source 1e16 Kraken GHC")
 run_test("ethName_addr_long_name_source_no_match" "--source 1e17 Kraken GHC")
-
 ## Seems broken or not operative the -v option
 run_test("ethName_name_verbose_match" "-v rob")
 run_test("ethName_name_verbose_no_match" "-v no_rob")
@@ -131,6 +130,8 @@ run_test("ethName_mixed_options_with_list_1" "-l -s -a 0x17 rob")
 run_test("ethName_mixed_options_with_list_2" "-c -l -a 0x17 rob")
 run_test("ethName_all_options" "-a -m -v -c -s 0x17 rob")
 run_test("ethName_addr_no_hex_number" "17 rob")
+# Global options
+run_test("ethName_show_version" "--version")
 
 ## Interactive, to review how we can test this!
 #run_test("ethName_edit" "-e")
