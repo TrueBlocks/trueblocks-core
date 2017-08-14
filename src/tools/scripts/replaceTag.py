@@ -48,6 +48,11 @@ name = sys.argv[2]
 content_file = sys.argv[3]
 output_file = sys.argv[4]
 
+#printe(input_file)
+#printe(name)
+#printe(content_file)
+#printe(output_file)
+
 # Check that input file is present
 if os.path.isfile(input_file) == False:
     printe("ERROR: Could not find input file %s" % input_file)
