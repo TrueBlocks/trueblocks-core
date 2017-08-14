@@ -2,7 +2,7 @@ ethprice -x
 
   Invalid option: -x
 
-  Usage:    ethprice [-a|-c|-f|-p|-w|-o|-t|-v|-h]  
+  Usage:    ethprice [-a|-c|-f|-p|-w|-t|-v|-h]  
   Purpose:  Freshen and/or print price quotes for the Ethereum network.
              
   Where:    
@@ -11,7 +11,6 @@ ethprice -x
 	-f  (or --freshen)    Freshen database even if not needed
 	-p  (or --period)     Time increment for display. Default 120 mins or :t where t is in [5|15|30|120|240|1440]
 	-w  (or --when)       Time of day to start the display. :h determines the hour to start
-	-o  (or --output)     Output level (default 1). :2 exposes more data per record
 	-t  (or --test)       generate intermediary files but do not execute the commands
 	-v  (or --verbose)    set verbose level. Follow with a number to set level (-v0 for silent)
 	-h  (or --help)       display this help screen
