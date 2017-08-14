@@ -1,4 +1,4 @@
-#CMakeLists.txt
+CMakeLists.txt
 acctIndex
 addresses
 atexit
@@ -26,8 +26,7 @@ memmap
 newens
 papers.save
 printFloat
-#sample
-#scripts
+scripts
 serialize
 single
 speedTest
