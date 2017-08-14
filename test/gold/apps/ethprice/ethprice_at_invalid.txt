@@ -1,5 +1,6 @@
+ethprice -a 
 
-  Not enough arguments presented.
+  Invalid option: -a
 
   Usage:    ethprice [-a|-c|-f|-p|-w|-t|-v|-h]  
   Purpose:  Freshen and/or print price quotes for the Ethereum network.
