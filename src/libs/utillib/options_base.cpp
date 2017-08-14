@@ -96,7 +96,7 @@ namespace qblocks {
                 SFString r1 = __DATE__;
                 SFString r2 = __TIME__;
                 cerr << programName << " (quickBlocks) "
-                    << MAJOR << "." << MINOR << "." << BUILD << SUBVERS
+                    << MAJOR << "." << MINOR << "." << BUILD << "-" << SUBVERS
                     << "\n";
                 return false;
 

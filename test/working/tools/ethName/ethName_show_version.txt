@@ -1,0 +1,2 @@
+ethName --version 
+ethName (quickBlocks) 0.0.2-alpha
