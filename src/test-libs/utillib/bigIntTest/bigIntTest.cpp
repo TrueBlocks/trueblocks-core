@@ -258,7 +258,7 @@ int main(int argc, const char *argv[])
 		TEST( four|sixteen|3,                                             "23"                );
 		TEST( four&eight,                                                 "0"                 );
 		TEST( SFIntBN(four)-sixteen,                                      "-12"               );
-		TEST( four&sixteen|four,                                          "4"                 );
+		TEST( (four&sixteen)|four,                                        "4"                 );
 		TEST( sixteen%9,                                                  "7"                 );
 		TEST( coreDump,                                                   "1000000000000000000");
 		TEST( modexp(10,9,10000000000)*modexp(10,9,10000000000),          "1000000000000000000");
