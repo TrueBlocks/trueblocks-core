@@ -67,6 +67,10 @@ bool COptions::parseArguments(SFString& command) {
                 addr = arg;
         }
     }
+
+    if (addr.empty() && name.empty() && !list)
+        return usage("You must supply at least one of 'addr,' or 'name.' Quitting...");
+
     return true;
 }
 
