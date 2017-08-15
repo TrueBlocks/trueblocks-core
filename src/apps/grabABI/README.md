@@ -21,6 +21,10 @@
 | -v | --verbose | set verbose level. Follow with a number to set level (-v0 for silent) |
 | -h | --help | display this help screen |
 
+** Notes: **
+
+There is also an option`--silent` that is useful for scripting. It causes the app to display fewer messages.
+
 #### Other Options
 
 Enter `--version` to display the current version of the tool.  
