@@ -13,7 +13,6 @@ db
 docs.save
 ens_usage
 esc_key
-findStuckEther
 gasHole
 genesis
 hatch.mak

@@ -1,3 +1,4 @@
+ethName argc: 3 [1:-v] [2:0x17] 
 ethName -v 0x17 
 { "addr": "0x1728039ce0d18a799c081c5c7fa2090dd365a8d0", "name": "Digx_Presale_Whale_03", "source": "SlackNation" }
 { "addr": "0x1736303b570247313eb445d803185455779b91c7", "name": "@robrigo", "source": "Steem" }

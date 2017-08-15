@@ -1,3 +1,4 @@
+ethName argc: 2 [1:-l] 
 ethName -l 
 { "addr": "0x2b61cd90b5591604b3d969ca9eb944d59be6f5a7", "name": "Old EEAR", "source": "JAY GHC" }
 { "addr": "0x314159265dd8dbb310642f98f50c066173c1259b", "name": "ENS (Main)", "source": "ENS Gitter Channel" }

@@ -1,1 +1,3 @@
-run with namespace option
+makeClass argc: 4 [1:-n:qblocks] [2:-r] [3:function] 
+makeClass -n:qblocks -r function 
+Would run class definition file: function (not run, testing)

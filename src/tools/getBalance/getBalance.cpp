@@ -9,6 +9,17 @@
 #include "options.h"
 
 //--------------------------------------------------------------
+SFString displayValue(SFUintBN valIn) {
+    if (expContext().asEther) {
+        return wei2Ether(asStringBN(valIn));
+    } else if (expContext().asDollars) {
+//        return asDollars(valIn);
+    }
+    ASSERT(expContext().asWei);
+    return asStringBN(valIn);
+}
+
+//--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
     // Tell the system where the blocks are and which version to use
     setStorageRoot(BLOCK_CACHE);
@@ -35,9 +46,9 @@ int main(int argc, const char *argv[]) {
                 blknum_t block = toLongU(nextTokenClear(blocks, '|'));
                 SFUintBN bal = getBalance(addr, block, false);  // isDemo);
                 if (options.asData)
-                    cout << block << "\t" << addr << "\t" << bal << "\n";
+                    cout << block << "\t" << addr << "\t" << displayValue(bal) << "\n";
                 else
-                    cout << "Balance of address " << addr << " at block " << block << ": " << bal << "\n";
+                    cout << "Balance of address " << addr << " at block " << block << ": " << displayValue(bal) << "\n";
                 cout.flush();
             }
         }

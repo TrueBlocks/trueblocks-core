@@ -1,4 +1,0 @@
-ethName 0xbf4ed7b27f1d666546e30d74d50d173d20bca754 
-{ "addr": "0xbf4ed7b27f1d666546e30d74d50d173d20bca754", "name": "DAO_Withdrawl_Account", "source": "Slock.it" }
-{ "addr": "0xbf4ed7b27f1d666546e30d74d50d173d20bca754", "name": "WithdrawDAO_id300_cnt41960_1mo", "source": "Ether Camp" }
-{ "addr": "0xbf4ed7b27f1d666546e30d74d50d173d20bca754", "name": "Withdrawdao_Withdrawdao", "source": "EtherScan.ioVerifiedContracts" }

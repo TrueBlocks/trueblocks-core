@@ -1,2 +1,0 @@
-ethName --verbose 0xFA1 
-Address '0xFA1' not found

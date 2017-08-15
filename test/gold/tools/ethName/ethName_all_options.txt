@@ -1,3 +1,4 @@
+ethName argc: 8 [1:-a] [2:-m] [3:-v] [4:-c] [5:-s] [6:0x17] [7:rob] 
 ethName -a -m -v -c -s 0x17 rob 
 1 match
 0x1736303b570247313eb445d803185455779b91c7

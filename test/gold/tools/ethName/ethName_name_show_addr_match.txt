@@ -1,3 +1,4 @@
+ethName argc: 3 [1:-a] [2:rob] 
 ethName -a rob 
 0x5e0539dcd052698ab7a79f9614fa84c46b4d1d9e
 0x1736303b570247313eb445d803185455779b91c7

@@ -1,0 +1,20 @@
+ethName argc: 2 [1:-v] 
+ethName -v 
+
+  You must supply at least one of 'addr,' or 'name.' Quitting...
+
+  Usage:    ethName [-a|-c|-e|-l|-m|-s|-v|-h] term [name]  
+  Purpose:  Find a name given an Ethereum address, or find an address given a name.
+             
+  Where:    
+	term [name]           search terms (required)
+	-a  (or --addrOnly)   export only the associated address to be used as input to further commands
+	-c  (or --count)      print only the count of the number of matches
+	-e  (or --edit)       edit the name database
+	-l  (or --list)       list all names in the database
+	-m  (or --matchCase)  matches must agree in case (the default is to ignore case)
+	-s  (or --source)     search 'source' field as well name and address (the default)
+	-v  (or --verbose)    set verbose level. Follow with a number to set level (-v0 for silent)
+	-h  (or --help)       display this help screen
+
+  Powered by QuickBlocks
