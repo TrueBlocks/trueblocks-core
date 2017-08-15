@@ -1,1 +1,2 @@
+ethName argc: 4 [1:-a] [2:0x01] [3:rob] 
 ethName -a 0x01 rob 

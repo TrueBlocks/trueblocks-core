@@ -1,1 +1,0 @@
-ethName -s 1e17 GHC 

@@ -1,2 +1,0 @@
-isContract 0x5524c55fb03cf21f549444ccbecb664d0acad706 
-isContract(0x5524c55fb03cf21f549444ccbecb664d0acad706): true

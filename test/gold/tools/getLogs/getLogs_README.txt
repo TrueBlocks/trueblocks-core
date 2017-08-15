@@ -1,3 +1,4 @@
+getLogs argc: 2 [1:-th] 
 getLogs -th 
 #### Usage
 

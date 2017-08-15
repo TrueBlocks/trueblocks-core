@@ -1,5 +1,5 @@
-  Please supply valid Ethereum addresses.
 
+  Not enough arguments presented.
 
   Usage:    isContract [-d|-n|-v|-h] addr[s]  
   Purpose:  Returns 'true' or 'false' if the given address(es) hold byte code (or displays the code).

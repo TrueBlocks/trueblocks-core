@@ -2,6 +2,7 @@ bin
 build
 design.txt
 makefile
+other
 *.mak
 *.a
 *.twb

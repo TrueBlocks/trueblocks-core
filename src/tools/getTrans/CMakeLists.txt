@@ -29,7 +29,7 @@ build_readme(${CMAKE_CURRENT_SOURCE_DIR} ${TOOL_NAME})
 
 # Function to run an individual test case
 function(run_test testName)
-     run_the_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGV1})
+     run_the_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
 endfunction(run_test)
 
 # Enter one line for each individual test
@@ -37,10 +37,11 @@ run_test("getTrans_README"     "-th")
 run_test("getTrans_no_input"        )
 run_test("getTrans_bad_hash"   "0x0012")
 
-#broken run_test("getTrans_bad_index1"  "-v 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.0")
-run_test("getTrans_bad_index2"  "--verbose 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.0")
-run_test("getTrans_bad_index3"  "0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.0 -v")
+run_test("getTrans_bad_index1"  "-v" " 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.0")
+run_test("getTrans_bad_index2"  "--verbose" " 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.0")
+run_test("getTrans_bad_index3"  "0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.0" " -v")
 
-run_test("getTrans_three_ways" "0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.79 -v 3657480.79 0xda2f27fffb36c90c74fc53bd8b721074e87203c727640c95c4c802296e3bf8ad")
+run_test("getTrans_three_ways" "0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.79" " -v" " 3657480.79" " 0xda2f27fffb36c90c74fc53bd8b721074e87203c727640c95c4c802296e3bf8ad")
 run_test("getTrans_by_file"    "--file:cmd_file")
-#broken run_test("getTrans_by_file_v"  "--file:cmd_file --verbose")
+run_test("getTrans_by_file_long_v"  "--file:cmd_file" " --verbose")
+run_test("getTrans_by_file_v"  "--verbose" " --file:cmd_file")
