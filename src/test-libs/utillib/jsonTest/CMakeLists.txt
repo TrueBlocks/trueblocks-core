@@ -29,11 +29,11 @@ build_readme(${CMAKE_CURRENT_SOURCE_DIR} ${TOOL_NAME})
 
 # Function to run an individual test case
 function(run_test testName)
-     run_the_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGV1})
+     run_the_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
 endfunction(run_test)
 
 # Enter one line for each individual test
 run_test("jsonTest_nothing")
 run_test("jsonTest_test00"  "test.json")
 run_test("jsonTest_test01"  "test2.json")
-run_test("jsonTest_test02"  "test.json test2.json")
+run_test("jsonTest_test02"  "test.json" " test2.json")
