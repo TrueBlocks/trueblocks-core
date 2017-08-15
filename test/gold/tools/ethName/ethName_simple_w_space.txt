@@ -1,10 +1,9 @@
-ethName argc: 3 [1:cur] [2:] 
-ethName cur  
-{ "addr": "0x3b350cf8846c12d2f6bd1058f1a3084144a3d434", "name": "Currency_id287_cnt6_2mo", "source": "Ether Camp" }
-{ "addr": "0x73299b09acf67d3b279142975a9a99932996b931", "name": "Security_id289_cnt10_2mo", "source": "Ether Camp" }
-{ "addr": "0xd870e20d6b2ad29a3a68f6a3ddd27d6a79bd61a2", "name": "communityCurrency_id32_cnt142_6mo", "source": "Ether Camp" }
-{ "addr": "0xda4a4626d3e16e094de3225a751aab7128e96526", "name": "CuratorMultiSig", "source": "The Dao" }
-{ "addr": "0xda4a4626d3e16e094de3225a751aab7128e96526", "name": "Wallet_Thedaocurator", "source": "EtherScan.ioVerifiedContracts" }
-{ "addr": "0xe77d1e61dfdac280f0199a2da883c6c7e8a68591", "name": "communityCurrency_id31_cnt34_6mo", "source": "Ether Camp" }
-{ "addr": "0xf8c35f1cf2dc4dbeaeeb2ecb298a80b506a5781d", "name": "DAOSecurity_id190_cnt1_3mo", "source": "Ether Camp" }
-{ "addr": "0xf8c35f1cf2dc4dbeaeeb2ecb298a80b506a5781d", "name": "Daosecurity_Slockitdaosec", "source": "EtherScan.ioVerifiedContracts" }
+ethName argc: 3 [1:etwork] [2:] 
+ethName etwork  
+{ "symbol": "GNT", "name": "Golem Network Token", "addr": "0xa74476443119a942de498590fe1f2454d7d4ac0d", "source": "Etherscan.io", "description": "Golem is going to create the first decentralized global market for computing power" }
+{ "symbol": "SNT", "name": "Status Network Token", "addr": "0x744d70fdbe2ba4cf95131626614a1763df805b9e", "source": "Etherscan.io", "description": "Status is an open source messaging platform and mobile browser to interact with decentralized applications that run on the Ethereum Network" }
+{ "symbol": "BNT", "name": "Bancor Network Token", "addr": "0x1f573d6fb3f13d689ff844b4ce37794d79a7ff1c", "source": "Etherscan.io", "description": "Bancor Protocol is a standard for a new generation of cryptocurrencies called Smart Tokens" }
+{ "symbol": "ANT", "name": "Aragon Network Token", "addr": "0x960b236a07cf122663c4303350609a66a7b288c0", "source": "Etherscan.io", "description": "Create and manage unstoppable organizations. Aragon lets you manage entire organizations using the blockchain. This makes Aragon organizations more efficient than their traditional counterparties" }
+{ "symbol": "RLC", "name": "iEx.ec Network Token", "addr": "0x607f4c5bb672230e8672085532f7e901544a7375", "source": "Etherscan.io", "description": "Blockchain Based distributed cloud computing" }
+{ "symbol": "SAN", "name": "SANtiment Network Token", "addr": "0x7c5a0ce9267ed19b22f8cae653f198e3e8daf098", "source": "Etherscan.io", "description": "A Better Way to Trade Crypto-Markets - Market Datafeeds, Newswires, and Crowd Sentiment Insights for the Blockchain World" }
+{ "symbol": "NET", "name": "Nimiq Network Token", "addr": "0xcfb98637bcae43c13323eaa1731ced2b716962fd", "source": "Etherscan.io", "description": "NimiqNetwork World's first Browser-based Blockchain & Ecosystem" }

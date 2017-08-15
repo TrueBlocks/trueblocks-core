@@ -1,2 +1,2 @@
-ethName argc: 4 [1:-s] [2:1e17] [3:GHC] 
-ethName -s 1e17 GHC 
+ethName argc: 4 [1:-s] [2:cbCD] [3:an.io] 
+ethName -s cbCD an.io 

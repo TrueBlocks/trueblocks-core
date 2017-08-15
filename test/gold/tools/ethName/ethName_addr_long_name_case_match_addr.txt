@@ -1,2 +1,2 @@
-ethName argc: 4 [1:--matchCase] [2:0xfa] [3:roB] 
-ethName --matchCase 0xfa roB 
+ethName argc: 4 [1:--matchCase] [2:0xcb] [3:torJ] 
+ethName --matchCase 0xcb torJ 

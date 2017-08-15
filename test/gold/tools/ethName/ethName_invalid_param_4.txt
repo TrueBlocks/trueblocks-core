@@ -1,5 +1,5 @@
-ethName argc: 3 [1:-x] [2:rob 0xbf4ed7b27f1d666546e30d74d50d173d20bca754] 
-ethName -x rob 0xbf4ed7b27f1d666546e30d74d50d173d20bca754 
+ethName argc: 3 [1:-x] [2:torj 0xbf4ed7b27f1d666546e30d74d50d173d20bca754] 
+ethName -x torj 0xbf4ed7b27f1d666546e30d74d50d173d20bca754 
 
   Invalid option: -x
 

@@ -1,5 +1,5 @@
-ethName argc: 3 [1:-x] [2:rob] 
-ethName -x rob 
+ethName argc: 3 [1:-x] [2:torj] 
+ethName -x torj 
 
   Invalid option: -x
 
