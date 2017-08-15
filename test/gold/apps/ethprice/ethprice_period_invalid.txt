@@ -1,0 +1,19 @@
+ethprice argc: 2 [1:-p] 
+ethprice -p 
+
+  Invalid option: -p
+
+  Usage:    ethprice [-a|-c|-f|-p|-w|-t|-v|-h]  
+  Purpose:  Freshen and/or print price quotes for the Ethereum network.
+             
+  Where:    
+	-a  (or --at)         Report the price since nearest five minutes to :timestamp
+	-c  (or --clear)      Clear the database and re-download price data
+	-f  (or --freshen)    Freshen database even if not needed
+	-p  (or --period)     Time increment for display. Default 120 mins or :t where t is in [5|15|30|120|240|1440]
+	-w  (or --when)       Time of day to start the display. :h determines the hour to start
+	-t  (or --test)       generate intermediary files but do not execute the commands
+	-v  (or --verbose)    set verbose level. Follow with a number to set level (-v0 for silent)
+	-h  (or --help)       display this help screen
+
+  Powered by QuickBlocks
