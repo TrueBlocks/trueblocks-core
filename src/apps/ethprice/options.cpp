@@ -98,6 +98,8 @@ COptions::COptions(void) {
     CPriceQuote::registerClass();
     COptionsBase::useVerbose = true;
     COptionsBase::useTesting = true;
+    // At least one of the options must be used
+    COptionsBase::needsOption = true;
     Init();
 }
 

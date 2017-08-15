@@ -2,7 +2,7 @@ ethprice argc: 2 [1:-th]
 ethprice -th 
 #### Usage
 
-`Usage:`    ethprice [-a|-c|-f|-p|-w|-t|-v|-h]  
+`Usage:`    ethprice -a|-c|-f|-p|-w|-t|-v|-h  
 `Purpose:`  Freshen and/or print price quotes for the Ethereum network.
              
 `Where:`  
