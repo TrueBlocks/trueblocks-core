@@ -10,7 +10,7 @@
 	bh.transID            blockHash.transactionID of one or more Ethereum transactions
 	-f  (or --fromNode)   retrieve the transaction from the running node (from QuickBlocks otherwise)
 	-t  (or --trace)      return the trace of the transaction in addition to regular details
-	-v  (or --verbose)    set verbose level. Follow with a number to set level (-v0 for silent)
+	-v  (or --verbose)    set verbose level. Either -v, --verbose or -v:n where 'n' is level
 	-h  (or --help)       display this help screen
 
   Powered by QuickBlocks

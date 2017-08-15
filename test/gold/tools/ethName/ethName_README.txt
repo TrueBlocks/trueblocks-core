@@ -16,7 +16,7 @@ ethName -th
 | -l | --list | list all names in the database |
 | -m | --matchCase | matches must agree in case (the default is to ignore case) |
 | -s | --source | search 'source' field as well name and address (the default) |
-| -v | --verbose | set verbose level. Follow with a number to set level (-v0 for silent) |
+| -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
 #### Other Options

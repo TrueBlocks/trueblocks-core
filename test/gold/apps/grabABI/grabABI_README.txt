@@ -17,7 +17,7 @@ grabABI -th
 | -o | --open | open the ABI file for editing, download if not already present |
 | -s | --silent | If ABI cannot be acquired, fail silently (useful for scripting) |
 | -t | --test | generate intermediary files but do not execute the commands |
-| -v | --verbose | set verbose level. Follow with a number to set level (-v0 for silent) |
+| -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
 #### Other Options

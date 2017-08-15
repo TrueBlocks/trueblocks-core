@@ -14,7 +14,7 @@ ethName -m
 	-l  (or --list)       list all names in the database
 	-m  (or --matchCase)  matches must agree in case (the default is to ignore case)
 	-s  (or --source)     search 'source' field as well name and address (the default)
-	-v  (or --verbose)    set verbose level. Follow with a number to set level (-v0 for silent)
+	-v  (or --verbose)    set verbose level. Either -v, --verbose or -v:n where 'n' is level
 	-h  (or --help)       display this help screen
 
   Powered by QuickBlocks
