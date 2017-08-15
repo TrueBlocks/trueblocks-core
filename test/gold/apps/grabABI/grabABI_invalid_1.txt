@@ -1,0 +1,22 @@
+grabABI argc: 2 [1:0x00001] 
+grabABI 0x00001 
+
+  Invalid address `0x00001'. Length is not equal to 40 characters (20 bytes).
+
+
+  Usage:    grabABI [-c|-g|-e|-n|-o|-s|-t|-v|-h] addr  
+  Purpose:  Fetches the ABI for a smart contract. Optionally generates C++ source code representing that ABI.
+             
+  Where:    
+	addr                  the address(es) of the smart contract(s) to grab (required)
+	-c  (or --canonical)  convert all types to their canonical represenation and remove all spaces from display
+	-g  (or --generate)   generate C++ code into ':dir' for all functions and events found in the ABI
+	-e  (or --encode)     generate the encodings for the functions / events in the ABI
+	-n  (or --noconst)    generate encodings for non-constant functions and events only (always true when generating)
+	-o  (or --open)       open the ABI file for editing, download if not already present
+	-s  (or --silent)     If ABI cannot be acquired, fail silently (useful for scripting)
+	-t  (or --test)       generate intermediary files but do not execute the commands
+	-v  (or --verbose)    set verbose level. Follow with a number to set level (-v0 for silent)
+	-h  (or --help)       display this help screen
+
+  Powered by QuickBlocks
