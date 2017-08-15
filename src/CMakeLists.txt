@@ -34,7 +34,7 @@ endif (CURL_FOUND)
 
 # ----------------------------------------------------------------------------------------
 # We require the nano editor available
-# We define a generic variable called EDITOR_EXE to assign maybe other editors in the future
+# We define a generic variable called DEFAULT_EDITOR to assign maybe other editors in the future
 # If not found cmake will fail
 set(DEFAULT_EDITOR "nano")
 message (STATUS "======== LOOKING FOR ${DEFAULT_EDITOR}  ========================")
