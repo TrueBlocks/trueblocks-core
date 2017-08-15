@@ -33,6 +33,19 @@ if (CURL_FOUND)
 endif (CURL_FOUND)
 
 # ----------------------------------------------------------------------------------------
+# We require the nano editor available
+# We define a generic variable called EDITOR_EXE to assign maybe other editors in the future
+# If not found cmake will fail
+set(DEFAULT_EDITOR "nano")
+message (STATUS "======== LOOKING FOR ${DEFAULT_EDITOR}  ========================")
+find_program(DEFAULT_EDITOR_PATH nano)
+if (NOT DEFAULT_EDITOR_PATH)
+	message (FATAL_ERROR  "Unable to find ${DEFAULT_EDITOR} in PATH")
+else ()
+	message (STATUS "Found ${DEFAULT_EDITOR}: ${DEFAULT_EDITOR_PATH}")
+endif (NOT DEFAULT_EDITOR_PATH)
+
+# ----------------------------------------------------------------------------------------
 # Globally available C++ settings
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Werror -Wall -O2")
 
