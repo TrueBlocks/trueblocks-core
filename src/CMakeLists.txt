@@ -33,6 +33,19 @@ if (CURL_FOUND)
 endif (CURL_FOUND)
 
 # ----------------------------------------------------------------------------------------
+# We require the nano editor available
+# We define a generic variable called DEFAULT_EDITOR to assign maybe other editors in the future
+# If not found cmake will fail
+set(DEFAULT_EDITOR "nano")
+message (STATUS "======== LOOKING FOR ${DEFAULT_EDITOR}  ========================")
+find_program(DEFAULT_EDITOR_PATH nano)
+if (NOT DEFAULT_EDITOR_PATH)
+	message (FATAL_ERROR  "Unable to find ${DEFAULT_EDITOR} in PATH")
+else ()
+	message (STATUS "Found ${DEFAULT_EDITOR}: ${DEFAULT_EDITOR_PATH}")
+endif (NOT DEFAULT_EDITOR_PATH)
+
+# ----------------------------------------------------------------------------------------
 # Globally available C++ settings
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Werror -Wall -O2")
 
@@ -59,7 +72,7 @@ function(build_readme sourcePath toolName)
     set(README_FILE "${sourcePath}/README.md")
     set(TOOL_README_TEMPLATE "${sourcePath}/docs/README.tmpl.md")
     add_custom_command(OUTPUT help.txt COMMAND ${toolName} "-th" ">" help.txt "2>&1")
-    add_custom_target(readme COMMAND "${TAG_REPLACE}" "${TOOL_README_TEMPLATE}" "${toolName}" help.txt "${README_FILE}")
+    add_custom_target(readme COMMAND "${TAG_REPLACE}" "${TOOL_README_TEMPLATE}" "${toolName}" help.txt "${README_FILE}" DEPENDS help.txt)
 endfunction(build_readme)
 
 # ----------------------------------------------------------------------------------------
