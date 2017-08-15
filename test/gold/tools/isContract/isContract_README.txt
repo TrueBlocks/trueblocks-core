@@ -1,3 +1,4 @@
+isContract argc: 2 [1:-th] 
 isContract -th 
 #### Usage
 

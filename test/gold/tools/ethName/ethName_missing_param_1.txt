@@ -1,3 +1,4 @@
+ethName argc: 2 [1:-m] 
 ethName -m 
 
   You must supply at least one of 'addr,' or 'name.' Quitting...

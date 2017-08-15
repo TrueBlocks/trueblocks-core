@@ -1,2 +1,3 @@
+jsonTest argc: 2 [1:test2.json] 
 jsonTest test2.json 
 test2.json

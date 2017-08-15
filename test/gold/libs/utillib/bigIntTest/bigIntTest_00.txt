@@ -1,3 +1,4 @@
+bigIntTest argc: 1 
 bigIntTest 
 Test 0: 0 expected: 0 ✓
 Test 1: 535 expected: 535 ✓

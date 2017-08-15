@@ -1,2 +1,4 @@
+isContract argc: 3 [1:0x2935aa0a2d2fbb791622c29eb1c117b65b7a9085] [2:-v] 
+isContract 0x2935aa0a2d2fbb791622c29eb1c117b65b7a9085 -v 
 isContract(0x2935aa0a2d2fbb791622c29eb1c117b65b7a9085): false
 0x

@@ -1,3 +1,4 @@
+getBalance argc: 3 [1:$doa] [2:0x12] 
 getBalance $doa 0x12 
 
   0x12 does not appear to be a valid Ethereum address. Quitting...

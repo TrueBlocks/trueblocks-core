@@ -1,1 +1,2 @@
+ethName argc: 4 [1:--matchCase] [2:0xFA] [3:rob] 
 ethName --matchCase 0xFA rob 

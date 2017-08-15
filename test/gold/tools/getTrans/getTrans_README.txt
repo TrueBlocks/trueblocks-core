@@ -1,3 +1,4 @@
+getTrans argc: 2 [1:-th] 
 getTrans -th 
 #### Usage
 

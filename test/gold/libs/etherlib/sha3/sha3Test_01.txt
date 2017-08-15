@@ -1,3 +1,4 @@
+sha3 argc: 2 [1:-t] 
 sha3 -t 
 in:		0x68656c6c6f20776f726c64
 hex:		0x68656c6c6f20776f726c64

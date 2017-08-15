@@ -1,3 +1,4 @@
+ethprice argc: 2 [1:--period:12] 
 ethprice --period:12 
 
   Frequency must be a multiple of five minutes: --period:12

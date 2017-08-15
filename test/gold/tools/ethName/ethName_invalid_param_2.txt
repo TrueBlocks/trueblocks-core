@@ -1,3 +1,4 @@
+ethName argc: 3 [1:-x] [2:rob] 
 ethName -x rob 
 
   Invalid option: -x

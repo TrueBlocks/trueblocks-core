@@ -1,1 +1,2 @@
+ethName argc: 4 [1:-s] [2:1e16] [3:GHC] 
 ethName -s 1e16 GHC 

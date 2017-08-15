@@ -1,2 +1,3 @@
+ethName argc: 3 [1:--count] [2:rob] 
 ethName --count rob 
 5 matches
