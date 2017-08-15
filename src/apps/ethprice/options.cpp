@@ -76,8 +76,11 @@ bool COptions::parseArguments(SFString& command) {
         dispLevel = verbose+1;
 
     SFString fileName = configPath("prices/poloniex.bin");
-    if (!fileExists(fileName) && !freshen)
-        return usage("The file " + fileName + " does not exist. Please run with the --freshen option. Quitting.");
+    if (!fileExists(fileName)) {
+        if (verbose)
+            cerr << "First run, establishing price cache folder.\n";
+        establishFolder(fileName);
+    }
     return true;
 }
 
