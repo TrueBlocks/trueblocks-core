@@ -1,3 +1,0 @@
-jsonTest test.json test2.json 
-test.json
-test2.json
