@@ -1,5 +1,8 @@
+isContract argc: 3 [1:-dn 0x705f04a4f1e7a1e23caea390b8903bd43d96e18e] [2:0x73cbe96839b723bc913d10ba32b58fc476988a36] 
+isContract -dn 0x705f04a4f1e7a1e23caea390b8903bd43d96e18e 0x73cbe96839b723bc913d10ba32b58fc476988a36 
 
   Choose only one of --nodiff and --display.
+
 
   Usage:    isContract [-d|-n|-v|-h] addr[s]  
   Purpose:  Returns 'true' or 'false' if the given address(es) hold byte code (or displays the code).

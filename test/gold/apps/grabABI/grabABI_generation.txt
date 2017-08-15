@@ -1,3 +1,4 @@
+grabABI argc: 7 [1:0xbb9bc244d798123fde783fcc1c72d3bb8c189413] [2:-t] [3:-v] [4:-n] [5:-e] [6:-g:code] 
 grabABI 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 -t -v -n -e -g:code 
 
   Invalid option: -g:code

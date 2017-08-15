@@ -1,0 +1,3 @@
+printFloat argc: 2 [1:-t:1] 
+printFloat -t:1 
+Nothing to do.

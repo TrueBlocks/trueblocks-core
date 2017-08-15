@@ -1,2 +1,3 @@
+ethName argc: 4 [1:-c] [2:0x17] [3:rob] 
 ethName -c 0x17 rob 
 1 match

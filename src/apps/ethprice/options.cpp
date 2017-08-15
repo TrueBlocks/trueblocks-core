@@ -15,7 +15,6 @@ CParams params[] = {
     CParams("-freshen", "Freshen database even if not needed"),
     CParams("-period",  "Time increment for display. Default 120 mins or :t where t is in [5|15|30|120|240|1440]"),
     CParams("-when",    "Time of day to start the display. :h determines the hour to start"),
-    CParams("-output",  "Output level (default 1). :2 exposes more data per record"),
     CParams("",         "Freshen and/or print price quotes for the Ethereum network.\n"),
 };
 uint32_t nParams = sizeof(params) / sizeof(CParams);
@@ -41,50 +40,44 @@ bool COptions::parseArguments(SFString& command) {
 
             freshen = true;
 
-        } else if (arg.Contains("-a")) {
-
+        } else if (arg.startsWith("-a:") || arg.startsWith("--at:")) {
             SFString orig = arg;
-            SFString arg1 = nextTokenClear(arg, ':');
-            if (arg1 != "-a" && arg1 != "--at")
-                return usage("Unknown parameter: " + orig);
+            arg.ReplaceAny("-at:","");
             at = toLong(arg);
-
-        } else if (arg.Contains("-w")) {
-
-            SFString orig = arg;
-            SFString arg1 = nextTokenClear(arg, ':');
-            if (arg1 != "-w" && arg1 != "--when")
+            if (arg.empty() || at == 0)
                 return usage("Unknown parameter: " + orig);
+
+        } else if (arg.startsWith("-w:") || arg.startsWith("--when:")) {
+            SFString orig = arg;
+            arg.ReplaceAny("-when:","");
             hour = toLong(arg);
-
-        } else if (arg.Contains("-p")) {
-
-            SFString orig = arg;
-            SFString arg1 = nextTokenClear(arg, ':');
-            if (arg1 != "-p" && arg1 != "--period")
+            if (arg.empty() || hour > 23)
                 return usage("Unknown parameter: " + orig);
 
+        } else if (arg.startsWith("-p:") || arg.startsWith("--period:")) {
+            SFString orig = arg;
+            arg.ReplaceAny("-period:","");
             freq = toLong(arg);
             if (freq % 5)
                 return usage("Frequency must be a multiple of five minutes: " + orig);
-
-        } else if (arg.Contains("-o")) {
-
-            SFString orig = arg;
-            SFString arg1 = nextTokenClear(arg, ':');
-            if (arg1 != "-o" && arg1 != "--output")
+            if (arg.empty() || freq == 0)
                 return usage("Unknown parameter: " + orig);
 
-            dispLevel = toLong(arg);
         } else if (arg.startsWith('-')) {  // do not collapse
             if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);
             }
+
         } else {
             return usage("Invalid option: '" + arg + "'. Quiting...");
         }
     }
+    if (verbose)
+        dispLevel = verbose+1;
 
+    SFString fileName = configPath("prices/poloniex.bin");
+    if (!fileExists(fileName) && !freshen)
+        return usage("The file " + fileName + " does not exist. Please run with the --freshen option. Quitting.");
     return true;
 }
 

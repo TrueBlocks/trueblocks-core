@@ -1,3 +1,4 @@
+jsonTest argc: 1 
 jsonTest 
 
   You must supply a filename to test. Quitting...

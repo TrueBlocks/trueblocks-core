@@ -1,5 +1,8 @@
+isContract argc: 3 [1:0x6d805b5de59d3f1779e4180b8547bcf728ff91ea] [2:-dn] 
+isContract 0x6d805b5de59d3f1779e4180b8547bcf728ff91ea -dn 
 
   --nodiff command requires exactly two addresses.
+
 
   Usage:    isContract [-d|-n|-v|-h] addr[s]  
   Purpose:  Returns 'true' or 'false' if the given address(es) hold byte code (or displays the code).

@@ -1,2 +1,0 @@
-ethName --verbose no_rob 
-Address 'no_rob' not found
