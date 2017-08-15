@@ -1,8 +1,4 @@
-ethName argc: 3 [1:--matchCase] [2:0xfa] 
-ethName --matchCase 0xfa 
-{ "addr": "0xfa3affc8d50e293cdd768bddcd16559e7c617348", "name": "Coin_id80_cnt3_5mo", "source": "Ether Camp" }
-{ "addr": "0xfa52274dd61e1643d2205169732f29114bc240b3", "name": "Kraken_2", "source": "GHC" }
-{ "addr": "0xfa7b9770ca4cb04296cac84f37736d4041251cdf", "name": "ReleaseOracle_id166_cnt22_4mo", "source": "Ether Camp" }
-{ "addr": "0xfa7b9770ca4cb04296cac84f37736d4041251cdf", "name": "Releaseoracle_Gethvercontract", "source": "EtherScan.ioVerifiedContracts" }
-{ "addr": "0xfa86ca27bf2854d98870837fb6f6dfe4bf6453fc", "name": "Early_Partners_024", "source": "Ether Camp" }
-{ "addr": "0xfacf38157f43af121d38ab7b82552df3cec69ab9", "name": "profitsFromBitnationDebitCard_id205_cnt1_3mo", "source": "Ether Camp" }
+ethName argc: 3 [1:--matchCase] [2:0xcb] 
+ethName --matchCase 0xcb 
+{ "symbol": "HMQ", "name": "Humaniq", "addr": "0xcbcc0f036ed4788f63fc0fee32873d6a7487b908", "source": "Etherscan.io", "description": "Humaniq aims to be a simple and secure 4th generation mobile bank" }
+{ "symbol": "TRST", "name": "WeTrust (Trustcoin)", "addr": "0xcb94be6f13a1182e4a4b6140cb7bf2025d28e41b", "source": "Etherscan.io", "description": "A platform for Trusted Lending Circles, powered by people and blockchain" }

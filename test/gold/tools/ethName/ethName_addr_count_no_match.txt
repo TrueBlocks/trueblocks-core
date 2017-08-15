@@ -1,3 +1,3 @@
-ethName argc: 3 [1:-c] [2:0xFA1] 
-ethName -c 0xFA1 
+ethName argc: 3 [1:-c] [2:0xCB1] 
+ethName -c 0xCB1 
 0 matches

@@ -5,11 +5,13 @@
  *
  * The LICENSE at the root of this repo details your rights (if any)
  *------------------------------------------------------------------------*/
-#include "makeClass.h"
+#include "abilib.h"
+#include "options.h"
 
 //------------------------------------------------------------------------------------------------------------
-extern void establishFiles(const SFString& className);
-extern void generateCode(CToml& classFile, const SFString& dataFile, const SFString& ns);
+extern void     establishFiles(const SFString& className);
+extern void     generateCode(CToml& classFile, const SFString& dataFile, const SFString& ns);
+extern SFString convertTypes(const SFString& inStr);
 extern SFString getCaseCode(const SFString& fieldCase);
 extern SFString getCaseSetCode(const SFString& fieldCase);
 extern SFString short3(const SFString& in);
@@ -197,7 +199,7 @@ void generateCode(CToml& classFile, const SFString& dataFile, const SFString& ns
         SFString caseFmt = "[{TYPE}]+[{NAME}]-[{ISPOINTER}]~[{ISOBJECT}]|";
         SFString decFmt  = "\t[{TYPE}] *[{NAME}];\n";
         if (!fld->isPointer) {
-            decFmt.Replace("*", "\"\"");
+            decFmt.Replace("*", "");
         }
         SFString archFmt = "\tarchive >> [{NAME}];\n";
         if (fld->isPointer) {
@@ -247,15 +249,15 @@ void generateCode(CToml& classFile, const SFString& dataFile, const SFString& ns
         setFmt.Replace("[{DEFT}]", getDefault("earliestDate"));
         setFmt.Replace("[{DEFP}]", getDefault("NULL"));
 
-        // string types are already empty
-        setFmt.Replace("\t[{NAME}] = \"\";\n", "/""/\t[{NAME}] = \"\";\n");
-
-//        if (fld->type.Contains("Array")) regType += "|TS_ARRAY";
+        // string types are already empty, but they need to be initialized in Init
+        //setFmt.Replace("\t[{NAME}] = \"\";\n", "/""/\t[{NAME}] = \"\";\n");
+        //if (fld->type.Contains("Array")) regType += "|TS_ARRAY";
 
         fieldReg += fld->Format(regFmt).Substitute("T_TEXT", regType);
         fieldReg.ReplaceAll("CL_NM", "[{CLASS_NAME}]");
         fieldCase += fld->Format(caseFmt);
-        fieldDec += convertTypes(fld->Format(decFmt));
+        SFString fldFmt = fld->Format(decFmt);
+        fieldDec += convertTypes(fldFmt);
         fieldCopy += fld->Format(copyFmt).Substitute("+SHORT+", "[{SHORT}]");
         fieldSet += fld->Format(setFmt);
         if (fld->isObject && !fld->isPointer && !fld->type.Contains("Array")) {

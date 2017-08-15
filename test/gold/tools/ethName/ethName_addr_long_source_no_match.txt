@@ -1,2 +1,2 @@
-ethName argc: 4 [1:--source] [2:1e17] [3:GHC] 
-ethName --source 1e17 GHC 
+ethName argc: 4 [1:--source] [2:1e17] [3:Ether] 
+ethName --source 1e17 Ether 

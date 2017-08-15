@@ -58,7 +58,7 @@ bool COptions::parseArguments(SFString& command) {
         } else {
 
             if (!addr.empty() && !name.empty() && !source.empty())
-                return usage("Invalid option: " + arg);
+                return usage("You may search for at most three terms: " + arg);
             else if (!addr.empty() && !name.empty())
                 source = arg;
             else if (!addr.empty())

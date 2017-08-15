@@ -1,2 +1,2 @@
-ethName argc: 2 [1:0xFA1] 
-ethName 0xFA1 
+ethName argc: 2 [1:0xCB1] 
+ethName 0xCB1 
