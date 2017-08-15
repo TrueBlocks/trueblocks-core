@@ -49,9 +49,11 @@ bool COptions::parseArguments(SFString& command) {
         } else if (arg == "-o" || arg == "--open") {
             open = true;
 
-        } else if (arg.startsWith('-')) {
-            if (arg != "-h" && !arg.Contains("-v") && arg != "-t")
+        } else if (arg.startsWith('-')) {  // do not collapse
+
+            if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);
+            }
 
         } else {
             if (nAddrs>=MAX_ADDRS)
@@ -62,7 +64,7 @@ bool COptions::parseArguments(SFString& command) {
             if (!addr.startsWith("0x"))
                 addr = "0x" + addr;
             if (addr.length() != 42 && !addr.ContainsI("tokenlib") && !addr.ContainsI("walletlib"))
-                return usage(addr + " does not appear to be a valid Ethereum address.\n");
+                return usage("Invalid address `" + addr + "'. Length is not equal to 40 characters (20 bytes).\n");
             addrs[nAddrs++] = addr;
         }
     }
