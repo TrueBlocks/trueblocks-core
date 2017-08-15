@@ -74,7 +74,7 @@ command = sys.argv[1:-2]
 with open(output_file, 'w') as f:
     os.chdir(os.path.dirname(gold_file))
 #    printe(os.getcwd())
-    os.environ["SHOW_PARAMS"] = "true"
+    os.environ["TEST_MODE"] = "true"
     os.environ["NO_COLOR"] = "true"
     result = subprocess.call(command, stdout=f, stderr=subprocess.STDOUT)
 

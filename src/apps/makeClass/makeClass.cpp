@@ -53,14 +53,14 @@ int main(int argc, const char *argv[]) {
 
                 } else if (options.isEdit) {
                     SFString cmd = "open \"" + fileName + "\"";
-                    if (isTesting) {
+                    if (SFString(getenv("TEST_MODE")) == "true") {
                         cout << cmd << "\n";
                     } else {
                         if (system(cmd.c_str())) {}  // do not remove. Silences compiler warnings
                     }
 
                 } else if (options.isRemove) {
-                    if (isTesting) {
+                    if (SFString(getenv("TEST_MODE")) == "true") {
                         cout << "Are you sure you want to remove " << className
                                 << ".cpp and " << className << ".h? (y=remove files, otherwise ignore): ";
                         cout << "Testing, but would have deleted " << className << ".[ch]*\n";
@@ -71,12 +71,12 @@ int main(int argc, const char *argv[]) {
                         return usage("Files not removed. Quitting...");
                     }
                 } else {
-                    if (isTesting)
+                    if (SFString(getenv("TEST_MODE")) == "true")
                         cout << "Would run class definition file: " << className << " (not run, testing)\n";
                     else if (verbose)
                         cerr << "Running class definition file '" << className << "'\n";
 
-                    if (!isTesting) {
+                    if (SFString(getenv("TEST_MODE")) != "true") {
                         if (classFile.getConfigBool("settings", "disabled", false)) {
                             if (verbose)
                                 cerr << "Disabled class not processed " << className << "\n";
