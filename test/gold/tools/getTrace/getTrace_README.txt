@@ -1,3 +1,4 @@
+getTrace argc: 2 [1:-th] 
 getTrace -th 
 #### Usage
 

@@ -1,3 +1,4 @@
+ethName argc: 2 [1:-th] 
 ethName -th 
 #### Usage
 

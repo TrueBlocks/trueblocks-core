@@ -1,3 +1,5 @@
+makeClass argc: 2 [1:-th] 
+makeClass -th 
 #### Usage
 
 `Usage:`    makeClass [-e|-f|-l|-n|-s|-r|-a|-v|-h] className  

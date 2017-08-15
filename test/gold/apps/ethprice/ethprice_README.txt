@@ -1,3 +1,4 @@
+ethprice argc: 2 [1:-th] 
 ethprice -th 
 #### Usage
 

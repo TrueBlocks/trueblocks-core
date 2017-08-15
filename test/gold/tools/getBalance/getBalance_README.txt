@@ -1,3 +1,4 @@
+getBalance argc: 2 [1:-th] 
 getBalance -th 
 #### Usage
 

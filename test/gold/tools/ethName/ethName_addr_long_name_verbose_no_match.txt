@@ -1,2 +1,3 @@
+ethName argc: 4 [1:--verbose] [2:0x01] [3:rob] 
 ethName --verbose 0x01 rob 
 Address '0x01' not found

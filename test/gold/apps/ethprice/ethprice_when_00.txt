@@ -1,3 +1,4 @@
+ethprice argc: 2 [1:-w:14] 
 ethprice -w:14 
 Data not written because no new data, or no -freshen flag. 2017-07-12 22:00:00 UTC : 202729 records
 [

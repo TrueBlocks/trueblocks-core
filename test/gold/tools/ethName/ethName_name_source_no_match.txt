@@ -1,1 +1,2 @@
+ethName argc: 3 [1:-s] [2:no_GHC] 
 ethName -s no_GHC 
