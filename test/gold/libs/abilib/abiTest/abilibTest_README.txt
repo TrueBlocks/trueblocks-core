@@ -1,3 +1,4 @@
+abiTest argc: 2 [1:-th] 
 abiTest -th 
 #### Usage
 

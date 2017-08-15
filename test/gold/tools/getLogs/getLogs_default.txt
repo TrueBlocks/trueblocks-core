@@ -1,3 +1,4 @@
+getLogs argc: 2 [1:a] 
 getLogs a 
 {"jsonrpc":"2.0","result":[],"id":1}
 

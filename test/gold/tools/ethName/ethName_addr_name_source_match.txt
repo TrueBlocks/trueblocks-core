@@ -1,2 +1,3 @@
+ethName argc: 5 [1:-s] [2:1e16] [3:Kraken] [4:GHC] 
 ethName -s 1e16 Kraken GHC 
 { "addr": "0xfa52274dd61e1643d2205169732f29114bc240b3", "name": "Kraken_2", "source": "GHC" }

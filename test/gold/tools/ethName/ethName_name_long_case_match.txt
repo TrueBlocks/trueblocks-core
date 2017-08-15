@@ -1,3 +1,4 @@
+ethName argc: 3 [1:--matchCase] [2:rob] 
 ethName --matchCase rob 
 { "addr": "0x1736303b570247313eb445d803185455779b91c7", "name": "@robrigo", "source": "Steem" }
 { "addr": "0x719a5b998cb421f12e3b960cc49d4fdb0988590f", "name": "@robsteady", "source": "Steem" }

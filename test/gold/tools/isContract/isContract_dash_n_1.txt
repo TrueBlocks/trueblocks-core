@@ -1,3 +1,4 @@
+isContract argc: 3 [1:0x05f65ab88dc474a83a98994291c7a0abd13c9ae1] [2:-n] 
 isContract 0x05f65ab88dc474a83a98994291c7a0abd13c9ae1 -n 
 
   --nodiff command requires exactly two addresses.

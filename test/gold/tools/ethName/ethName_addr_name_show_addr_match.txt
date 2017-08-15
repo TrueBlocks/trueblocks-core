@@ -1,2 +1,3 @@
+ethName argc: 3 [1:-a] [2:0x17 rob] 
 ethName -a 0x17 rob 
 0x1736303b570247313eb445d803185455779b91c7

@@ -1,3 +1,5 @@
+makeClass argc: 2 [1:x] 
+makeClass x 
 
   You must specify at least one of --run, --list, --edit, or --clear
 

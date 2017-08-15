@@ -1,3 +1,4 @@
+ethName argc: 3 [1:-s] [2:GHC] 
 ethName -s GHC 
 { "addr": "0x2b61cd90b5591604b3d969ca9eb944d59be6f5a7", "name": "Old EEAR", "source": "JAY GHC" }
 { "addr": "0x7ed1e469fcb3ee19c0366d829e291451be638e59", "name": "Someone from Philly Meetup", "source": "They sent 0.03 ether to tip jar GHC" }

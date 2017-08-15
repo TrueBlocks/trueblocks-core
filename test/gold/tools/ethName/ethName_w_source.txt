@@ -1,3 +1,4 @@
+ethName argc: 3 [1:cur] [2:-s] 
 ethName cur -s 
 { "addr": "0x0029218e1dab069656bfb8a75947825e7989b987", "name": "Christian Reitwie§ner", "source": "DAO_Curator" }
 { "addr": "0x0037a6b811ffeb6e072da21179d11b1406371c63", "name": "Gavin Wood", "source": "DAO_Curator" }

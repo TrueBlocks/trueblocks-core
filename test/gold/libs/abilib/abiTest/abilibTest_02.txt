@@ -1,3 +1,4 @@
+abiTest argc: 2 [1:encoding] 
 abiTest encoding 
 Encodings test...
 	event: ContributionMade(address) encoding: 0x97a3367c201ad38e0d37322fd0ffa1b93457541ae8baf20eb9aa50bb83fcabef ✓

@@ -1,3 +1,4 @@
+isContract argc: 2 [1:--file:cmd_file] 
 isContract --file:cmd_file 
 isContract(0x8e8a24cba9f2702243ad65bada9b0e8cbc62fd96): false
 isContract(0x917db76c206f744274375428e261fa6521ac1b05): true

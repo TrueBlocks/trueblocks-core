@@ -1,1 +1,2 @@
+ethName argc: 4 [1:--addrOnly] [2:0x01] [3:rob] 
 ethName --addrOnly 0x01 rob 
