@@ -16,7 +16,7 @@ makeClass -e x
 	-s  (or --silent)     on error (no classDefinition file) exit silently
 	-r  (or --run)        run the class maker on associated <className(s)>
 	-a  (or --all)        clear, edit, list, or run all class definitions found in the local folder
-	-v  (or --verbose)    set verbose level. Follow with a number to set level (-v0 for silent)
+	-v  (or --verbose)    set verbose level. Either -v, --verbose or -v:n where 'n' is level
 	-h  (or --help)       display this help screen
 
   Powered by QuickBlocks

@@ -356,8 +356,7 @@ namespace qblocks {
         if (COptionsBase::useTesting)
             ctx << description("-t", "-test", "generate intermediary files but do not execute the commands", false, false);
         if (COptionsBase::useVerbose)
-            ctx << description("-v", "-verbose", "set verbose level. Follow with a number to set level "
-                               "(-v0 for silent)", false, false);
+            ctx << description("-v", "-verbose", "set verbose level. Either -v, --verbose or -v:n where 'n' is level", false, false);
         ctx << description("-h", "-help", "display this help screen", false, false);
         return ctx.str;
     }
