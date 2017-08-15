@@ -266,7 +266,8 @@ namespace qblocks {
         SFString required;
 
         CStringExportContext ctx;
-        ctx << "[";
+        if (!COptionsBase::needsOption)
+            ctx << "[";
         for (SFUint32 i = 0 ; i < nParamsRef ; i++) {
             if (paramsPtr[i].shortName.startsWith('~')) {
                 required += (" " + paramsPtr[i].longName.substr(1).Substitute("!", ""));
@@ -282,7 +283,9 @@ namespace qblocks {
             ctx << "-t|";
         if (COptionsBase::useVerbose)
             ctx << "-v|";
-        ctx << "-h]";
+        ctx << "-h";
+        if (!COptionsBase::needsOption)
+            ctx << "]";
         ctx << required;
 
         return ctx.str;
@@ -435,12 +438,10 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-//    SFString COptionsBase::header = "";
-//    SFString COptionsBase::footer = "";
-//    SFString COptionsBase::seeAlso = "";
     bool COptionsBase::useVerbose = true;
     bool COptionsBase::useTesting = true;
     bool COptionsBase::isReadme = false;
+    bool COptionsBase::needsOption = false;
 
     //--------------------------------------------------------------------------------
     SFUint32 verbose = false;

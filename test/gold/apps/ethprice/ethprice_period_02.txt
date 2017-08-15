@@ -3,7 +3,7 @@ ethprice --period:12
 
   Frequency must be a multiple of five minutes: --period:12
 
-  Usage:    ethprice [-a|-c|-f|-p|-w|-t|-v|-h]  
+  Usage:    ethprice -a|-c|-f|-p|-w|-t|-v|-h  
   Purpose:  Freshen and/or print price quotes for the Ethereum network.
              
   Where:    
