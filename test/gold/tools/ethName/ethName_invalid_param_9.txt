@@ -1,5 +1,5 @@
-ethName argc: 5 [1:--SOURCE] [2:0x17] [3:rob] [4:other] 
-ethName --SOURCE 0x17 rob other 
+ethName argc: 5 [1:--SOURCE] [2:0xb6] [3:torj] [4:other] 
+ethName --SOURCE 0xb6 torj other 
 
   Invalid option: --SOURCE
 

@@ -1,2 +1,2 @@
-ethName argc: 5 [1:-s] [2:1e17] [3:Kraken] [4:GHC] 
-ethName -s 1e17 Kraken GHC 
+ethName argc: 5 [1:-s] [2:cbCD] [3:Humaniq] [4:EtherScan] 
+ethName -s cbCD Humaniq EtherScan 
