@@ -254,8 +254,12 @@ bool loadPriceData(CPriceQuoteArray& quotes, bool freshen, SFString& message, SF
             archive >> lastRead;
             archive >> quotes;
             archive.Close();
-            if (verbose)
-                cerr << "Read " << quotes.getCount() << " existing price quotes (lastRead: " << lastRead << ")\n";
+            if (verbose) {
+                SFString date = lastRead.Format(FMT_DEFAULT);
+                if (SFString(getenv("TEST_MODE")) == "true")
+                    date = "Now";
+                cerr << "Read " << quotes.getCount() << " existing price quotes (lastRead: " << date << ")\n";
+            }
 
         } else {
             message = "Could not open cache file for reading: '" + cacheFile + "'";
@@ -370,8 +374,12 @@ bool loadPriceData(CPriceQuoteArray& quotes, bool freshen, SFString& message, SF
         }
     }
 
-    if (!verbose)
-        cerr << msg << lastRead << " : " << quotes.getCount() << " records\n";
+    if (!verbose) {
+        SFString date = lastRead.Format(FMT_DEFAULT);
+        if (SFString(getenv("TEST_MODE")) == "true")
+            date = "Now";
+        cerr << msg << date << " : " << quotes.getCount() << " records\n";
+    }
 
     if (step != 1) {
         CPriceQuoteArray ret;
