@@ -1,7 +1,7 @@
 ethprice argc: 2 [1:-v:1] 
 ethprice -v:1 
-Read 212431 existing price quotes (lastRead: 2017-08-15 14:30:00 UTC)
-Price database is up-to-date as of 2017-08-15 14:30:00 UTC : 212431 records
+Read 212431 existing price quotes (lastRead: Now)
+Price database is up-to-date as of Now : 212431 records
 [
 {
   "timestamp": 1439078400,
