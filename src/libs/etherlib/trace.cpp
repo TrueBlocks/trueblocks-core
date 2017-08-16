@@ -67,7 +67,7 @@ SFString nextTraceChunk(const SFString& fieldIn, bool& force, const void *data) 
             case 't':
                 if ( fieldIn % "traceAddress" ) {
                     uint32_t cnt = tra->traceAddress.getCount();
-                    if (!cnt) return EMPTY;
+                    if (!cnt) return "";
                     SFString ret;
                     for (uint32_t i = 0 ; i < cnt ; i++) {
                         ret += indent() + ("\"" + tra->traceAddress[i] + "\"");

@@ -50,7 +50,7 @@ SFString nextInfixChunk(const SFString& fieldIn, bool& force, const void *data) 
 
         switch (tolower(fieldIn[0])) {
             case 'm':
-            return EMPTY;
+            return "";
 //                if ( fieldIn % "m_next" ) { expContext().noFrst=true; return inf->m_next.Format(); }
                 break;
         }
