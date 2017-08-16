@@ -8,6 +8,7 @@ Use the `--trace` option to display a trace of the transaction as well.
 [eth_getTransactionByHash](https://github.com/paritytech/parity/wiki/JSONRPC-eth-module#eth_gettransactionbyhash), 
 [eth_getTransactionByBlockNumberAndIndex](https://github.com/paritytech/parity/wiki/JSONRPC-eth-module#eth_gettransactionbyblocknumberandindex),
 [eth_getTransactionByBlockHashAndIndex](https://github.com/paritytech/parity/wiki/JSONRPC-eth-module#eth_gettransactionbyblockhashandindex).
+
 #### Usage
 
 `Usage:`    getTrans [-f|-t|-v|-h] hash bn.transID bh.transID  
@@ -37,6 +38,7 @@ All QuickBlocks command-line tools support the following commands (although in s
     --ether     |   specify value in ether
     --dollars   |   specify value in US dollars
     --file:fn   |   specify multiple sets of command line options in a file.
+
 *For the `--file:fn` option, place a series of valid command lines in a file and use the above option. In some cases, this option may significantly improve performance. Use semi-colon make comments.*
 
 #### Powered by QuickBlocks&reg;
