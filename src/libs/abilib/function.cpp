@@ -60,7 +60,7 @@ SFString nextFunctionChunk(const SFString& fieldIn, bool& force, const void *dat
             case 'i':
                 if ( fieldIn % "inputs" ) {
                     uint32_t cnt = fun->inputs.getCount();
-                    if (!cnt) return EMPTY;
+                    if (!cnt) return "";
                     SFString ret;
                     for (uint32_t i = 0 ; i < cnt ; i++) {
                         ret += fun->inputs[i].Format();
@@ -75,7 +75,7 @@ SFString nextFunctionChunk(const SFString& fieldIn, bool& force, const void *dat
             case 'o':
                 if ( fieldIn % "outputs" ) {
                     uint32_t cnt = fun->outputs.getCount();
-                    if (!cnt) return EMPTY;
+                    if (!cnt) return "";
                     SFString ret;
                     for (uint32_t i = 0 ; i < cnt ; i++) {
                         ret += fun->outputs[i].Format();
