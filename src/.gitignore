@@ -2,7 +2,7 @@ bin
 build
 design.txt
 makefile
-other
+#other
 *.mak
 *.a
 *.twb
