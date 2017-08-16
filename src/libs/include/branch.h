@@ -100,7 +100,7 @@ inline void CBranch::Clear(void) {
 inline void CBranch::Init(void) {
     CTreeNode::Init();
 
-//    m_branchValue = EMPTY;
+    m_branchValue = "";
 
     // EXISTING_CODE
     memset(m_nodes, 0, sizeof(CTreeNode*) * 16);

@@ -96,16 +96,16 @@ inline void CTrace::Clear(void) {
 inline void CTrace::Init(void) {
     CBaseNode::Init();
 
-//    blockHash = EMPTY;
+    blockHash = "";
     blockNumber = 0;
     subtraces = 0;
-//    traceAddress = ??; /* unknown type: SFStringArray */
-//    transactionHash = EMPTY;
+    traceAddress.Clear();
+    transactionHash = "";
     transactionPosition = 0;
-//    type = EMPTY;
-//    error = EMPTY;
-//    action = ??; /* unknown type: CTraceAction */
-//    result = ??; /* unknown type: CTraceResult */
+    type = "";
+    error = "";
+    action.Init();
+    result.Init();
 
     // EXISTING_CODE
     // EXISTING_CODE

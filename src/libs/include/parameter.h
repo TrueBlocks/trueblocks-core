@@ -105,12 +105,12 @@ inline void CParameter::Init(void) {
     CBaseNode::Init();
 
     indexed = 0;
-//    name = EMPTY;
-//    type = EMPTY;
+    name = "";
+    type = "";
     isPointer = 0;
     isArray = 0;
     isObject = 0;
-//    strDefault = EMPTY;
+    strDefault = "";
 
     // EXISTING_CODE
     // EXISTING_CODE
