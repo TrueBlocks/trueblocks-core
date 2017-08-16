@@ -82,7 +82,7 @@ inline void QTransfer::Clear(void) {
 inline void QTransfer::Init(void) {
     CTransaction::Init();
 
-//    _to = EMPTY;
+    _to = "";
     _value = 0;
 
     // EXISTING_CODE
