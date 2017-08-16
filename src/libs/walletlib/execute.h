@@ -83,9 +83,9 @@ inline void QExecute::Clear(void) {
 inline void QExecute::Init(void) {
     CTransaction::Init();
 
-//    _to = EMPTY;
+    _to = "";
     _value = 0;
-//    _data = EMPTY;
+    _data = "";
 
     // EXISTING_CODE
     // EXISTING_CODE
