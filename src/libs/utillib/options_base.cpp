@@ -252,14 +252,30 @@ namespace qblocks {
     const char *STR_FILE_OPTION =
     "#### Other Options\n"
     "\n"
-    "Enter `--version` to display the current version of the tool.  \n"
-    "Enter `--nocolors` to turn off colored display.  \n"
-    "Enter `--wei` (default), `--ether`, or `--dollars` to alter the way value is displayed.  \n"
+    "All QuickBlocks command-line tools support the following commands (although in some case, they have no meaning):\n"
     "\n"
-    "All `quickBlocks` command-line tools support the `--file:filename` option. Place valid commands, on separate "
-    "lines, in a file and include the above option. In some cases, this option may significantly improve "
-    "performance. Place a semi-colon at the start of a line to make it a comment.\n"
+    "    Command     |         Description\n"
+    "    -----------------------------------------------------------------------------\n"
+    "    --version   |   display the current version of the tool\n"
+    "    --nocolors  |   turn off colored display\n"
+    "    --wei       |   specify value in wei (the default)\n"
+    "    --ether     |   specify value in ether\n"
+    "    --dollars   |   specify value in US dollars\n"
+    "    --file:fn   |   specify multiple sets of command line options in a file.\n"
+    "*For the `--file:fn` option, place a series of valid command lines in a file and use the above option. In some cases, "
+    "this option may significantly improve performance. Use semi-colon make comments.*\n"
     "\n";
+
+//    "#### Other Options\n"
+//    "\n"
+//    "Enter `--version` to display the current version of the tool.  \n"
+//    "Enter `--nocolors` to turn off colored display.  \n"
+//    "Enter `--wei` (default), `--ether`, or `--dollars` to alter the way value is displayed.  \n"
+//    "\n"
+//    "All `quickBlocks` command-line tools support the `--file:filename` option. Place valid commands, on separate "
+//    "lines, in a file and include the above option. In some cases, this option may significantly improve "
+//    "performance. Place a semi-colon at the start of a line to make it a comment.\n"
+//    "\n";
 
     //--------------------------------------------------------------------------------
     SFString options(void) {
