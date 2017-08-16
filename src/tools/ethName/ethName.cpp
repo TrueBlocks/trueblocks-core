@@ -94,28 +94,14 @@ bool CAccountName::Match(const SFString& s1, const SFString& s2, const SFString&
     bool m2 = (matchCase ? name.Contains(s2) : name.ContainsI(s2));
     bool m3 = (matchCase ? source.Contains(s3) : source.ContainsI(s3));
 
-//cout << s1 << " : " << s2 << " : " << s3 << " : " << matchCase << " : " << all << "\n";
-//cout << m11 << " : " << m12 << " : " << m13 << " : " << m2 << " : " << m3 << "\n";
-//cout << addr << " : " << name << " : " << source << "\n";
-//cout << "\n";
-
-    if (!s1.empty() && !s2.empty() && !s3.empty()) {
-//cout << "exit 1\n";
+    if (!s1.empty() && !s2.empty() && !s3.empty())
         return m11 && m2 && m3;  // all three must match
-    }
 
-    if (!s1.empty() && !s2.empty()) {
-//cout << "exit 2\n";
+    if (!s1.empty() && !s2.empty())
         return m11 && m2;  // addr and name must both match
-    }
 
-    if (s1.empty()) {
-//cout << "exit 3\n";
+    if (s1.empty())
         return false;  // nothing matches
-    }
-
-//cout << "exit 4\n";
-//cout << all << (m11 || m12 || m12) << " : " << (m11 || m12) << "\n";
 
     // We have only s1
     return (all ? m11 || m12 || m13 : m11 || m12);
