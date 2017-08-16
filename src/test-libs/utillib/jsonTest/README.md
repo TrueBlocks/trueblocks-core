@@ -11,7 +11,7 @@ jsonTest - Testing only
 | Option | Full Command | Description |
 | -------: | :------- | :------- |
 |  | files | One or more files to parse |
-| -v | --verbose | set verbose level. Follow with a number to set level (-v0 for silent) |
+| -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
 #### Other Options

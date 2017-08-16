@@ -256,8 +256,7 @@ void generateCode(CToml& classFile, const SFString& dataFile, const SFString& ns
         fieldReg += fld->Format(regFmt).Substitute("T_TEXT", regType);
         fieldReg.ReplaceAll("CL_NM", "[{CLASS_NAME}]");
         fieldCase += fld->Format(caseFmt);
-        SFString fldFmt = fld->Format(decFmt);
-        fieldDec += convertTypes(fldFmt);
+        fieldDec += convertTypes(fld->Format(decFmt));
         fieldCopy += fld->Format(copyFmt).Substitute("+SHORT+", "[{SHORT}]");
         fieldSet += fld->Format(setFmt);
         if (fld->isObject && !fld->isPointer && !fld->type.Contains("Array")) {
