@@ -4,19 +4,19 @@ The `ethprice` tool provides Ethereum price data to various `quickBlocks` tools 
 
 #### Usage
 
-`Usage:`    ethprice -a|-c|-f|-p|-w|-t|-v|-h  
+`Usage:`    ethprice -a|-f|-p|-w|-t|-v|-h  
 `Purpose:`  Freshen and/or display price data for the Ethereum network and other purposes.
 
 `Where:`  
 
 | Option | Full Command | Description |
 | -------: | :------- | :------- |
-| -a | --at | Report the price since the nearest five minutes to :ts (timestamp) |
+| -a | --at | Report the price since to the nearest five minutes to :ts (timestamp) |
 | -f | --freshen | Freshen database (append new data) |
-| -p | --period | Display prices in this increment. Default 120 mins or :t where t is [5&#124;15&#124;30&#124;120&#124;240&#124;1440] |
-| -r | --refreshen | Clear the database and refreshen all price data |
+| -p | --period | Display prices in this increment. Default 120 mins or :t where t is in [5&#124;15&#124;30&#124;120&#124;240&#124;1440] |
 | -w | --when | Time of day to start the display. :h determines the hour to start |
-| -v | --verbose | set verbose level. Follow with a number to set level (-v0 for silent) |
+| -t | --test | generate intermediary files but do not execute the commands |
+| -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
 #### Other Options

@@ -3,14 +3,13 @@ ethprice -w
 
   Invalid option: -w
 
-  Usage:    ethprice -a|-c|-f|-p|-w|-t|-v|-h  
-  Purpose:  Freshen and/or print price quotes for the Ethereum network.
+  Usage:    ethprice -a|-f|-p|-w|-t|-v|-h  
+  Purpose:  Freshen and/or display price data for the Ethereum network and other purposes.
              
   Where:    
-	-a  (or --at)         Report the price since nearest five minutes to :timestamp
-	-c  (or --clear)      Clear the database and re-download price data
-	-f  (or --freshen)    Freshen database even if not needed
-	-p  (or --period)     Time increment for display. Default 120 mins or :t where t is in [5|15|30|120|240|1440]
+	-a  (or --at)         Report the price since to the nearest five minutes to :ts (timestamp)
+	-f  (or --freshen)    Freshen database (append new data)
+	-p  (or --period)     Display prices in this increment. Default 120 mins or :t where t is in [5|15|30|120|240|1440]
 	-w  (or --when)       Time of day to start the display. :h determines the hour to start
 	-t  (or --test)       generate intermediary files but do not execute the commands
 	-v  (or --verbose)    set verbose level. Either -v, --verbose or -v:n where 'n' is level
