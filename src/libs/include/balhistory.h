@@ -87,7 +87,7 @@ inline void CBalHistory::Clear(void) {
 inline void CBalHistory::Init(void) {
     CBaseNode::Init();
 
-//    recordID = EMPTY;
+    recordID = "";
     txDate = earliestDate;
     balance = 0;
 

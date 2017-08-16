@@ -81,7 +81,7 @@ inline void QAddOwner::Clear(void) {
 inline void QAddOwner::Init(void) {
     CTransaction::Init();
 
-//    _owner = EMPTY;
+    _owner = "";
 
     // EXISTING_CODE
     // EXISTING_CODE

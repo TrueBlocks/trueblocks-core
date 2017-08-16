@@ -82,7 +82,7 @@ inline void QApprove::Clear(void) {
 inline void QApprove::Init(void) {
     CTransaction::Init();
 
-//    _spender = EMPTY;
+    _spender = "";
     _value = 0;
 
     // EXISTING_CODE

@@ -83,8 +83,8 @@ inline void QApprovalEvent::Clear(void) {
 inline void QApprovalEvent::Init(void) {
     CLogEntry::Init();
 
-//    _owner = EMPTY;
-//    _spender = EMPTY;
+    _owner = "";
+    _spender = "";
     _value = 0;
 
     // EXISTING_CODE
