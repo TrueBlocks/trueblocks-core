@@ -18,7 +18,7 @@
 | -s | --silent | on error (no classDefinition file) exit silently |
 | -r | --run | run the class maker on associated <className(s)> |
 | -a | --all | clear, edit, list, or run all class definitions found in the local folder |
-| -v | --verbose | set verbose level. Follow with a number to set level (-v0 for silent) |
+| -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
 #### Other Options

@@ -12,10 +12,10 @@ which would open the [etherscan](http://etherscan.io) website with the address a
 
 With one search term, search in both `name` and `address` fields. With two terms, the first must match the `address` field, while the second must match the `name` field. When there are two search terms, both must match.
 
-If one mixes options, the `edit` option always predominates. If present, the program opens the database and then quits. The `--list` option predominates otherwise. 
-If present the tool will display a list of all items. The `--count` option works with any other option and will simply display the number of matches or '0 matches' 
-if none. The `--matchCase` option requires case sensitive matching. It works with all other options. The `--addrOnly` option modifies the display output and 
-therefore works with any other options.
+If one mixes options, the `edit` option always predominates. If present, the program opens the database and then quits. The `--list` option predominates otherwise. If 
+present the tool will display a list of all items. The `--count` option works with any other option and will simply display the number of matches or '0 matches' if 
+none. The `--matchCase` option requires case sensitive matching. It works with all other options. The `--addrOnly` option modifies the display output and therefore 
+works with any other options.
 
 #### Usage
 
@@ -33,7 +33,7 @@ therefore works with any other options.
 | -l | --list | list all names in the database |
 | -m | --matchCase | matches must agree in case (the default is to ignore case) |
 | -s | --source | search 'source' field as well name and address (the default) |
-| -v | --verbose | set verbose level. Follow with a number to set level (-v0 for silent) |
+| -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
 #### Other Options

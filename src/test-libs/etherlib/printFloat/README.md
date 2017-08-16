@@ -1,17 +1,16 @@
-## abiTest
+## printFloat
 
-abiTest - Testing only
+sha3 - Testing only
 #### Usage
 
-`Usage:`    abiTest [-v|-h] mode  
-`Purpose:`  Simple program to illustrate how to encode function and event signatures.
+`Usage:`    printFloat [-tn|-v|-h]  
+`Purpose:`  This program tests floating point printing and conversions.
              
 `Where:`  
 
 | Option | Full Command | Description |
 | -------: | :------- | :------- |
-|  | mode | Mode of operation. One or more of 'encoding' or 'generation'.
- |
+| -tn | --n | which test to run |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 

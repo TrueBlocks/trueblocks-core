@@ -19,7 +19,7 @@ If the token contract(s) you're requesting are not ERC20 token standard contract
 |  | blocks | the block at which to retrieve the token balance(s) (defaults to 'latest') |
 | -d | --data | render results as tab delimited data |
 | -e | --ether | return the token balance in Ether instead of Wei |
-| -v | --verbose | set verbose level. Follow with a number to set level (-v0 for silent) |
+| -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
 #### Other Options

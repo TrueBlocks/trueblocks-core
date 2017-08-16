@@ -16,7 +16,7 @@ code. You may specify multiple addresses on a line.
 |  | addr[s] | a list of Ethereum addresses from which to check for byte code |
 | -d | --display | display the actual code at the address(es) |
 | -n | --nodiff | return 'true' if (exactly) two Ethereum addresses have identical code |
-| -v | --verbose | set verbose level. Follow with a number to set level (-v0 for silent) |
+| -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
 #### Other Options
