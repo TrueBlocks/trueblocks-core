@@ -43,3 +43,4 @@ run_test("grabABI_verbose4"    "0xbb9bc244d798123fde783fcc1c72d3bb8c189413" " -t
 run_test("grabABI_generation"  "0xbb9bc244d798123fde783fcc1c72d3bb8c189413" " -t" " -v" " -n" " -e" " -g:code")
 run_test("grabABI_verbose5"    "0xbb9bc244d798123fde783fcc1c72d3bb8c189413" " -tvng:code")
 run_test("grabABI_invalid_1"   "0x00001")
+run_test("grabABI_not_found"   "-o" " 0x1728039ce0d18a799c081c5c7fa2090dd365a8d0")

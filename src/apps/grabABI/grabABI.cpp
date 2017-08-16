@@ -143,7 +143,8 @@ int main(int argc, const char *argv[]) {
             for (uint64_t i = 0 ; i < options.nAddrs ; i++) {
                 SFString fileName = configPath("abis/" + options.addrs[i] + ".json");
                 if (!fileExists(fileName)) {
-                    return usage("ABI for '" + options.addrs[i] + "' not found. Quitting...");
+                    cerr << "ABI for '" + options.addrs[i] + "' not found. Quitting...\n";
+                    return 0;
                 }
                 SFString cmd = "open -a /Applications/TextEdit.app " + fileName;
                 doCommand(cmd);
