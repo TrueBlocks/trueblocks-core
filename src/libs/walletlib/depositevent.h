@@ -82,7 +82,7 @@ inline void QDepositEvent::Clear(void) {
 inline void QDepositEvent::Init(void) {
     CLogEntry::Init();
 
-//    from = EMPTY;
+    from = "";
     value = 0;
 
     // EXISTING_CODE

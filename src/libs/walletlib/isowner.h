@@ -81,7 +81,7 @@ inline void QIsOwner::Clear(void) {
 inline void QIsOwner::Init(void) {
     CTransaction::Init();
 
-//    _addr = EMPTY;
+    _addr = "";
 
     // EXISTING_CODE
     // EXISTING_CODE
