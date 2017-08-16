@@ -4,6 +4,7 @@ This simple program may be used to query an Ethereum address to determine if it 
 code. You may specify multiple addresses on a line.
 
 *See Also*: This command-line tool implements the [eth_getCode](https://github.com/paritytech/parity/wiki/JSONRPC-eth-module#eth_getcode) RPC interface.
+
 #### Usage
 
 `Usage:`    isContract [-d|-n|-v|-h] addr[s]  
@@ -31,6 +32,7 @@ All QuickBlocks command-line tools support the following commands (although in s
     --ether     |   specify value in ether
     --dollars   |   specify value in US dollars
     --file:fn   |   specify multiple sets of command line options in a file.
+
 *For the `--file:fn` option, place a series of valid command lines in a file and use the above option. In some cases, this option may significantly improve performance. Use semi-colon make comments.*
 
 #### Powered by QuickBlocks&reg;

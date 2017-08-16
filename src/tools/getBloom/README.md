@@ -1,6 +1,7 @@
 ## getBloom
 
 `getBloom` retreives the bloom filter from a transaction or block.
+
 #### Usage
 
 `Usage:`    getBloom [-s|-f|-p|-r|-t|-q|-v|-h] num  
@@ -32,8 +33,7 @@ All QuickBlocks command-line tools support the following commands (although in s
     --ether     |   specify value in ether
     --dollars   |   specify value in US dollars
     --file:fn   |   specify multiple sets of command line options in a file.
+
 *For the `--file:fn` option, place a series of valid command lines in a file and use the above option. In some cases, this option may significantly improve performance. Use semi-colon make comments.*
 
 #### Powered by QuickBlocks&reg;
-
-

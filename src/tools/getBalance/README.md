@@ -5,6 +5,7 @@ both. `block`, if not specified, defaults to `latest`.
 
 `getBalance` retrieves the balance from the local Ethereum node (not QuickBlocks). Use the `--accounting` option of an account monitor to retrieve the 
 balance from QuickBlocks.
+
 #### Usage
 
 `Usage:`    getBalance [-d|-e|-v|-h] addrs blocks  
@@ -33,7 +34,7 @@ All QuickBlocks command-line tools support the following commands (although in s
     --ether     |   specify value in ether
     --dollars   |   specify value in US dollars
     --file:fn   |   specify multiple sets of command line options in a file.
+
 *For the `--file:fn` option, place a series of valid command lines in a file and use the above option. In some cases, this option may significantly improve performance. Use semi-colon make comments.*
 
 #### Powered by QuickBlocks&reg;
-
