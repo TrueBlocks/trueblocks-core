@@ -4,7 +4,7 @@ The `ethprice` tool provides Ethereum price data to various `quickBlocks` tools 
 
 #### Usage
 
-`Usage:`    ethprice [-a|-c|-f|-p|-w|-o|-t|-v|-h]  
+`Usage:`    ethprice -a|-c|-f|-p|-w|-t|-v|-h  
 `Purpose:`  Freshen and/or display price data for the Ethereum network and other purposes.
 
 `Where:`  

@@ -28,7 +28,7 @@ With one search term, search in both `name` and `address` fields. With two terms
 | -r | --reciept |  |
 | -t | --terse | retreive transaction hashes instead of full transactions |
 | -q | --quiet | do not print results to screen, used for speed testing |
-| -v | --verbose | set verbose level. Follow with a number to set level (-v0 for silent) |
+| -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
 #### Other Options
