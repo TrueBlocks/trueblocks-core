@@ -3,7 +3,7 @@
 sha3 - Testing only
 #### Usage
 
-`Usage:`    sha3 [-o|-t|-v|-h]  
+`Usage:`    sha3 [-o|-t|-t|-v|-h]  
 `Purpose:`  This is what the program does.
              
 `Where:`  
@@ -12,7 +12,8 @@ sha3 - Testing only
 | -------: | :------- | :------- |
 | -o | --option1 | option one |
 | -t | --thing | option two |
-| -v | --verbose | set verbose level. Follow with a number to set level (-v0 for silent) |
+| -t | --test | generate intermediary files but do not execute the commands |
+| -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
 #### Other Options

@@ -22,7 +22,7 @@ Use the `--trace` option to display a trace of the transaction as well.
 |  | bh.transID | blockHash.transactionID of one or more Ethereum transactions |
 | -f | --fromNode | retrieve the transaction from the running node (from QuickBlocks otherwise) |
 | -t | --trace | return the trace of the transaction in addition to regular details |
-| -v | --verbose | set verbose level. Follow with a number to set level (-v0 for silent) |
+| -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
 #### Other Options

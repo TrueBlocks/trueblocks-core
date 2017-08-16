@@ -1,9 +1,14 @@
 ## grabABI
 
 `grabABI` retreives an ABI file either from a local cache, from ENS, or from [Etherscan](http://etherscan.io) and generates the classDefinition.txt files needed by [makeClass](../makeClass) to generated monitor libraries.
+
+** Notes: **
+
+There is also an option`--silent` that is useful for scripting. It causes the app to display fewer messages.
+
 #### Usage
 
-`Usage:`    grabABI [-c|-g|-e|-n|-o|-s|-t|-v|-h] addr  
+`Usage:`    grabABI [-c|-g|-e|-n|-o|-t|-v|-h] addr  
 `Purpose:`  Fetches the ABI for a smart contract. Optionally generates C++ source code representing that ABI.
              
 `Where:`  
@@ -16,14 +21,9 @@
 | -e | --encode | generate the encodings for the functions / events in the ABI |
 | -n | --noconst | generate encodings for non-constant functions and events only (always true when generating) |
 | -o | --open | open the ABI file for editing, download if not already present |
-| -s | --silent | If ABI cannot be acquired, fail silently (useful for scripting) |
 | -t | --test | generate intermediary files but do not execute the commands |
-| -v | --verbose | set verbose level. Follow with a number to set level (-v0 for silent) |
+| -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
-
-** Notes: **
-
-There is also an option`--silent` that is useful for scripting. It causes the app to display fewer messages.
 
 #### Other Options
 
