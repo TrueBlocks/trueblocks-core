@@ -121,37 +121,37 @@ inline void CTransaction::Clear(void) {
 inline void CTransaction::Init(void) {
     CBaseNode::Init();
 
-//    hash = EMPTY;
-//    blockHash = EMPTY;
+    hash = "";
+    blockHash = "";
     blockNumber = 0;
     transactionIndex = 0;
     nonce = 0;
     timestamp = 0;
-//    from = EMPTY;
-//    to = EMPTY;
+    from = "";
+    to = "";
     value = 0;
     gas = 0;
     gasPrice = 0;
     cumulativeGasUsed = 0;
-//    input = EMPTY;
+    input = "";
     isError = 0;
     isInternalTx = 0;
-//    receipt = ??; /* unknown type: CReceipt */
+    receipt.Init();
 
     // EXISTING_CODE
     pBlock = NULL;
-    function = EMPTY;
+    function = "";
     funcPtr = NULL;
     ether = 0.;
 #if 0
-    creates = EMPTY;
+    creates = "";
     confirmations = 0;
-    contractAddress = EMPTY;
-    r = EMPTY;
-    raw = EMPTY;
-    s = EMPTY;
-    v = EMPTY;
-    //    trace = ??; /* unknown type: CTrace */
+    contractAddress = "";
+    r = "";
+    raw = "";
+    s = "";
+    v = "";
+    trace.Init();
 #endif
     // EXISTING_CODE
 }

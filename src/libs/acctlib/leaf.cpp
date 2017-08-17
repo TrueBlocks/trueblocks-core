@@ -52,7 +52,7 @@ SFString nextLeafChunk(const SFString& fieldIn, bool& force, const void *data) {
             case 'b':
 //                if ( fieldIn % "blocks" ) {
 //                    uint32_t cnt = lea->blocks.getCount();
-//                    if (!cnt) return EMPTY;
+//                    if (!cnt) return "";
 //                    SFString ret;
 //                    for (uint32_t i = 0 ; i < cnt ; i++) {
 //                        ret += lea->blocks[i].Format();

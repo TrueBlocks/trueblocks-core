@@ -1,11 +1,10 @@
 ## grabABI
 
-`grabABI` retreives an ABI file either from a local cache, from ENS, or from [Etherscan](http://etherscan.io) and generates the classDefinition.txt files needed by [makeClass](../makeClass) to generated monitor libraries.
+`grabABI` retreives an ABI file either from a local cache, from the Ethereum Name Service (ENS), or from [Etherscan](http://etherscan.io). Once retreived, `grabABI` generates the classDefinition files needed by [makeClass](../makeClass) to generate a parselib for each [Ethereum address monitor](../../monitors).
 
 ** Notes: **
 
 There is also an option`--silent` that is useful for scripting. It causes the app to display fewer messages.
-
 #### Usage
 
 `Usage:`    grabABI [-c|-g|-e|-n|-o|-t|-v|-h] addr  
@@ -27,11 +26,18 @@ There is also an option`--silent` that is useful for scripting. It causes the ap
 
 #### Other Options
 
-Enter `--version` to display the current version of the tool.  
-Enter `--nocolors` to turn off colored display.  
-Enter `--wei` (default), `--ether`, or `--dollars` to alter the way value is displayed.  
+All QuickBlocks command-line tools support the following commands (although in some case, they have no meaning):
 
-All `quickBlocks` command-line tools support the `--file:filename` option. Place valid commands, on separate lines, in a file and include the above option. In some cases, this option may significantly improve performance. Place a semi-colon at the start of a line to make it a comment.
+    Command     |         Description
+    -----------------------------------------------------------------------------
+    --version   |   display the current version of the tool
+    --nocolors  |   turn off colored display
+    --wei       |   specify value in wei (the default)
+    --ether     |   specify value in ether
+    --dollars   |   specify value in US dollars
+    --file:fn   |   specify multiple sets of command line options in a file.
 
-#### Powered by QuickBlocks&reg;
+*For the `--file:fn` option, place a series of valid command lines in a file and use the above option. In some cases, this option may significantly improve performance. Use semi-colon make comments.*
+
+**Powered by QuickBlocks<sup>&reg;</sup>**
 

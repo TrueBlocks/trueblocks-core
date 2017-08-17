@@ -215,7 +215,7 @@ void COptions::Init(void) {
     incomeOnly = false;
     expenseOnly = false;
     openFile = false;
-    funcFilter = EMPTY;
+    funcFilter = "";
     errFilt = false;
     reverseSort = false;
     firstBlock2Read = 0;
@@ -225,7 +225,7 @@ void COptions::Init(void) {
     maxTransactions = 250000;
     pageSize = 5000;
     exportFormat = "json";
-    archiveFile = EMPTY;
+    archiveFile = "";
     wantsArchive = false;
     cache = false;
     acct_id = 0;

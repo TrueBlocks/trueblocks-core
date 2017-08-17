@@ -36,12 +36,12 @@ CURL *getCurl(bool cleanup=false)
             // we have to use Infura
             headers = curl_slist_append(headers, "Infura-Ethereum-Preferred-Client: parity");
             curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
-            curl_easy_setopt(curl, CURLOPT_URL,        "https:/""/mainnet.infura.io/WkavvX9Hk5tvp34LhN7W");
+            curl_easy_setopt(curl, CURLOPT_URL,        "https://mainnet.infura.io/WkavvX9Hk5tvp34LhN7W");
 
         } else
         {
             curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
-            curl_easy_setopt(curl, CURLOPT_URL,        "http:/""/localhost:8545");
+            curl_easy_setopt(curl, CURLOPT_URL,        "http://localhost:8545");
         }
 
     } else if (cleanup)

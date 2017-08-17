@@ -49,7 +49,7 @@ SFString nextTreerootChunk(const SFString& fieldIn, bool& force, const void *dat
 
         switch (tolower(fieldIn[0])) {
             case 'm':
-            return EMPTY;
+            return "";
 //                if ( fieldIn % "m_root" ) { expContext().noFrst=true; return tre->m_root.Format(); }
                 break;
         }

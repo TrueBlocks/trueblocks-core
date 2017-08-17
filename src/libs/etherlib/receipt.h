@@ -44,6 +44,7 @@ public:
 
     // EXISTING_CODE
     const CTransaction *pTrans;
+    friend class CTransaction;
 #if 0
     uint32_t cumulativeGasUsed;
     SFAddress from12;
@@ -100,21 +101,21 @@ inline void CReceipt::Clear(void) {
 inline void CReceipt::Init(void) {
     CBaseNode::Init();
 
-//    contractAddress = EMPTY;
+    contractAddress = "";
     gasUsed = 0;
-//    logs = ??; /* unknown type: CLogEntryArray */
+    logs.Clear();
     logsBloom = 0;
 
     // EXISTING_CODE
     pTrans = NULL;
 #if 0
-    blockHash = EMPTY;
+    blockHash = "";
     blockNumber = 0;
     cumulativeGasUsed = 0;
-    from = EMPTY;
-    root = EMPTY;
-    to = EMPTY;
-    transactionHash = EMPTY;
+    from = "";
+    root = "";
+    to = "";
+    transactionHash = "";
     transactionIndex = 0;
 #endif
     // EXISTING_CODE
