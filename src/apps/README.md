@@ -1,12 +1,8 @@
 # Apps
 
-**Note:**
-
-Only the `ethslurp` application is currently available. We will publish the remainder of these tools once they are fully documented, tested, and ready to use.
-
 <hr>
 
-The `apps` folder contains the primary applications built on the QuickBlocks libraries. This includes the decentralized blockchain scrapers `blockScrape` and `miniBlocks`; `chifra`, an automated way to create smart contract monitors; `ethprice` which pulls US dollar price data from the Internet; `ethslurp` which is a down-and-dirty centralized command line scraper utilizing *http://etherscan.io* that is very quick, but ultimately incomplete, and a collection of data 'getters' to pull single (or ranges) of blocks, transactions, etc.
+The `apps` folder contains the primary applications built on the QuickBlocks libraries. This includes the decentralized blockchain scrapers `blockScrape`, `blockAcct` and `miniBlocks`; `chifra`, an automated way to create smart contract monitors; `ethprice` which pulls US dollar price data from the Internet; `ethslurp` which is a down-and-dirty centralized command line scraper utilizing *http://etherscan.io* that is very quick, but ultimately incomplete. Another folder, [tools](../tools) contains a collection of 'getters' to pull single (or ranges of) blocks, transactions, traces, receipts, etc.
 
 1. [blockScrape](blockScrape) - The primary component of the QuickBlocks decentralized blockchain scraper. `blockScrape` runs periodically and retrieves blocks from the node software. After processing, this program then stores the blocks locally in a speed-optimized format.
 

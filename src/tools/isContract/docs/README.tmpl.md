@@ -4,4 +4,5 @@ This simple program may be used to query an Ethereum address to determine if it 
 code. You may specify multiple addresses on a line.
 
 *See Also*: This command-line tool implements the [eth_getCode](https://github.com/paritytech/parity/wiki/JSONRPC-eth-module#eth_getcode) RPC interface.
+
 [{COMMAND_HELP}]
