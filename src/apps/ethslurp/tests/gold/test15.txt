@@ -1,0 +1,14 @@
+test15: test list and cache clear options
+0x682e426ea761db77bacd5acdce33ca122175daea.bin
+0x713b73c3994442b533e6a083ec968e40606810ec.bin
+Processing: -t -l
+f-0x682e426ea761db77bacd5acdce33ca122175daea.bin
+Processing: -t -c
+Cached slurp files were cleared
+/Users/jrush/.quickBlocks.test
+/Users/jrush/.quickBlocks.test/abis
+/Users/jrush/.quickBlocks.test/configs
+/Users/jrush/.quickBlocks.test/makeClass
+/Users/jrush/.quickBlocks.test/quickBlocks.toml
+/Users/jrush/.quickBlocks.test/slurps
+/Users/jrush/.quickBlocks.test/slurps/0x713b73c3994442b533e6a083ec968e40606810ec.bin
