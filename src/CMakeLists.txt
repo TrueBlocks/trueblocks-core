@@ -27,10 +27,18 @@ find_package (PythonLibs REQUIRED)
 # ----------------------------------------------------------------------------------------
 # We require the CURL library to be installed for most apps and tools
 # if found add its include path to includes section and link with it
+message (STATUS "======== LOOKING FOR CURL ========================")
 find_package (CURL REQUIRED)
 if (CURL_FOUND)
     include_directories(${CURL_INCLUDE_DIRS})
 endif (CURL_FOUND)
+
+# ----------------------------------------------------------------------------------------
+# We require the GTEST library installed for testing
+# if found add its include path to includes path
+message (STATUS "======== LOOKING FOR GTEST  ========================")
+find_package(GTest REQUIRED)
+include_directories(${GTEST_INCLUDE_DIRS})
 
 # ----------------------------------------------------------------------------------------
 # We require the nano editor available
