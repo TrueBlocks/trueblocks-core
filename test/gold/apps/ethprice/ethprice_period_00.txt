@@ -1,6 +1,6 @@
 ethprice argc: 2 [1:-p:60] 
 ethprice -p:60 
-Data not written because no new data, or no -freshen flag. Now : 212431 records
+Data not written because no new data, or no -freshen flag. Now : cnt records
 [
 { "date": "2015-08-09 00:00:00 UTC", "price": "1.40000001" },
 { "date": "2015-08-09 01:00:00 UTC", "price": "1.40000001" },
@@ -17694,15 +17694,5 @@ Data not written because no new data, or no -freshen flag. Now : 212431 records
 { "date": "2017-08-15 01:00:00 UTC", "price": "296.7993348" },
 { "date": "2017-08-15 02:00:00 UTC", "price": "293.23" },
 { "date": "2017-08-15 03:00:00 UTC", "price": "293.34381796" },
-{ "date": "2017-08-15 04:00:00 UTC", "price": "291.26999999" },
-{ "date": "2017-08-15 05:00:00 UTC", "price": "290.66310906" },
-{ "date": "2017-08-15 06:00:00 UTC", "price": "290.83340001" },
-{ "date": "2017-08-15 07:00:00 UTC", "price": "289.69227364" },
-{ "date": "2017-08-15 08:00:00 UTC", "price": "293.5719" },
-{ "date": "2017-08-15 09:00:00 UTC", "price": "292.030035" },
-{ "date": "2017-08-15 10:00:00 UTC", "price": "286.88227221" },
-{ "date": "2017-08-15 11:00:00 UTC", "price": "285.92418905" },
-{ "date": "2017-08-15 12:00:00 UTC", "price": "284" },
-{ "date": "2017-08-15 13:00:00 UTC", "price": "281.9002934" },
-{ "date": "2017-08-15 14:00:00 UTC", "price": "276.68" }
+{ "date": "2017-08-15 04:00:00 UTC", "price": "291.26999999" }
 ]
