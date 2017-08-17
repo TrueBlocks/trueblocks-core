@@ -239,11 +239,6 @@ bool CPriceQuote::readBackLevel(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------
-bool isTestMode(void) {
-    return (SFString(getenv("TEST_MODE")) == "true");
-}
-
-//---------------------------------------------------------------------------
 // EXISTING_CODE
 bool loadPriceData(CPriceQuoteArray& quotes, bool freshen, SFString& message, SFUint32 step) {
 
