@@ -13,6 +13,7 @@ db
 docs.save
 ens_usage
 esc_key
+format
 gasHole
 genesis
 hatch.mak

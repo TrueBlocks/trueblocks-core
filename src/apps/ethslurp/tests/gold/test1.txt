@@ -1,0 +1,84 @@
+/Users/jrush/.quickBlocks.test
+/Users/jrush/.quickBlocks.test/abis
+/Users/jrush/.quickBlocks.test/configs
+/Users/jrush/.quickBlocks.test/makeClass
+test1: default behaviour should show help
+Processing: -t
+[0;31m
+  ***Warning***[0m
+  [0;33mThis program[0m needs an api_key from EtherScan in order to work. You may get one at
+  http://etherscan.io/apis. See our online help file for more information.
+  Please provide an API key or type 'exit'
+  > ## ethslurp
+
+
+#### Usage
+
+  You must supply an Ethereum account or contract address. Use -r flag to rerun the most recently slurped address.
+
+`Usage:`    ethslurp [-a|-b|-d|-m|-n|-r|-f|-i|-e|-o|-l|-c|-t|-v|-h] addr  
+`Purpose:`  Fetches data off the Ethereum blockchain for an arbitrary account or smart contract. Optionally formats the output to your specification.
+             
+`Where:`  
+
+| Option | Full Command | Description |
+| -------: | :------- | :------- |
+|  | addr | the address of the account or contract to slurp |
+| -a | --archive | filename of output (stdout otherwise) |
+| -b | --blocks | export records in block range (:0[:max]) |
+| -d | --dates | export records in date range (:yyyymmdd[hhmmss][:yyyymmdd[hhmmss]]) |
+| -m | --max | maximum transactions to slurp (:250000) |
+| -n | --name | name this address |
+| -r | --rerun | re-run the most recent slurp |
+| -f | --fmt | pretty print, optionally add ':txt,' ':csv,' or ':html' |
+| -i | --income | include income transactions only |
+| -e | --expense | include expenditures only |
+| -o | --open | open the configuration file for editing |
+| -l | --list | list previously slurped addresses in cache |
+| -c | --clear | clear all previously cached slurps |
+| -t | --test | generate intermediary files but do not execute the commands |
+| -v | --verbose | set verbose level. Follow with a number to set level (-v0 for silent) |
+| -h | --help | display this help screen |
+
+  Portions of this software are Powered by Etherscan.io APIs
+##### Other options
+
+Enter --version to display the current version of the tool.
+
+Enter --nocolors to turn off colored display.
+
+All `quickBlocks` command-line tools support the `--file:filename` option. Place valid commands, on separate lines, in a file and include the above option. In some cases, this option may significantly improve performance. Place a semi-colon at the start of a line to make it a comment.
+
+Powered by QuickBlocks
+/Users/jrush/.quickBlocks.test
+/Users/jrush/.quickBlocks.test/abis
+/Users/jrush/.quickBlocks.test/configs
+/Users/jrush/.quickBlocks.test/makeClass
+/Users/jrush/.quickBlocks.test/quickBlocks.toml
+/Users/jrush/.quickBlocks.test/slurps
+[version]
+current=0.2.0
+
+[settings]
+cachePath=/Users/jrush/.quickBlocks.test/slurps/
+api_key=68E1BQYW85ETVNHKWV27B8N5HYICEHEPH1
+api_provider=EtherScan
+api_url=http://etherscan.io/apis
+
+[display]
+fmt_fieldList=
+fmt_txt_file=[{HEADER}]\n[{RECORDS}]
+fmt_txt_record=[{FIELDS}]\n
+fmt_txt_field=\t[{FIELD}]
+fmt_csv_file=[{HEADER}]\n[{RECORDS}]
+fmt_csv_record=[{FIELDS}]\n
+fmt_csv_field=["{FIELD}"],
+fmt_html_file=<table>\n[{HEADER}]\n[{RECORDS}]</table>\n
+fmt_html_record=\t<tr>\n[{FIELDS}]</tr>\n
+fmt_html_field=\t\t<td>[{FIELD}]</td>\n
+fmt_json_file=[{RECORDS}]\n
+fmt_json_record=\n        {\n[{FIELDS}]        },
+fmt_json_field="[{p:FIELD}]":"[{FIELD}]",
+fmt_custom_file=file:custom_format_file.html
+fmt_custom_record=fmt_html_record
+fmt_custom_field=fmt_html_field
