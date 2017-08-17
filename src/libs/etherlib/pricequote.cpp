@@ -296,10 +296,6 @@ bool loadPriceData(CPriceQuoteArray& quotes, bool freshen, SFString& message, SF
             timestamp_t start = toTimeStamp(nextRead);
             // Polinex will give us as much as it has on the following day. Do this to account for time zones
             timestamp_t end   = toTimeStamp(EOD(BOND(now)));
-            if (isTestMode()) {
-                // TODO(tjayrush): Update this at some point. It will break test cases, but it should keep up
-                end = toTimeStamp(SFTime(2017, 7, 30, 23, 59, 59));
-            }
 
             if (verbose > 1) {
                 cerr << "start: " << dateFromTimeStamp(start) << "\n";
@@ -381,11 +377,11 @@ bool loadPriceData(CPriceQuoteArray& quotes, bool freshen, SFString& message, SF
 
     if (!verbose) {
         SFString date = lastRead.Format(FMT_DEFAULT);
-	SFString count = asString(quotes.getCount());
+        SFString count = asString(quotes.getCount());
         if (isTestMode()) {
             date = "Now";
             count = "cnt";
-	}
+        }
         cerr << msg << date << " : " << count << " records\n";
     }
 
