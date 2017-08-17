@@ -1,4 +1,4 @@
 ## [{NAME}]
 
-jsonTest - Testing only
+Testing only
 [{COMMAND_HELP}]

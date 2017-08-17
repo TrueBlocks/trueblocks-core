@@ -1,4 +1,4 @@
 ## [{NAME}]
 
-acctTree - Testing only
+Testing only
 [{COMMAND_HELP}]

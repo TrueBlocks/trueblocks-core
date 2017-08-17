@@ -1,6 +1,6 @@
 ## printFloat
 
-sha3 - Testing only
+Testing only
 #### Usage
 
 `Usage:`    printFloat [-tn|-v|-h]  

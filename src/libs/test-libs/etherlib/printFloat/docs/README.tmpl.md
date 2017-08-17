@@ -1,4 +1,4 @@
 ## [{NAME}]
 
-sha3 - Testing only
+Testing only
 [{COMMAND_HELP}]
