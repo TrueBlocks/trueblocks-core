@@ -36,7 +36,7 @@ namespace qblocks {
         if ((SFUint32)argc <= minArgs)  // the first arg is the program's name
             return usage("Not enough arguments presented.");
 
-        if (SFString(getenv("TEST_MODE")) == "true") {
+        if (isTestMode()) {
             // we present the data once for clarity...
             cout << programName << " argc: " << argc << " ";
             for (int i=1;i<argc;i++)
