@@ -34,13 +34,6 @@ if (CURL_FOUND)
 endif (CURL_FOUND)
 
 # ----------------------------------------------------------------------------------------
-# We require the GTEST library installed for testing
-# if found add its include path to includes path
-message (STATUS "======== LOOKING FOR GTEST  ========================")
-find_package(GTest REQUIRED)
-include_directories(${GTEST_INCLUDE_DIRS})
-
-# ----------------------------------------------------------------------------------------
 # We require the nano editor available
 # We define a generic variable called DEFAULT_EDITOR to assign maybe other editors in the future
 # If not found cmake will fail
