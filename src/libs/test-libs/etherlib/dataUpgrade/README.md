@@ -1,16 +1,16 @@
-## apiTest
+## dataUpgrade
 
 Testing only
 #### Usage
 
-`Usage:`    apiTest [-o|-v|-h]  
-`Purpose:`  Test harness for quickBlocks.
+`Usage:`    dataUpgrade [-t|-v|-h]  
+`Purpose:`  Test upgrading from one version of the binary data to the next.
              
 `Where:`  
 
 | Option | Full Command | Description |
 | -------: | :------- | :------- |
-| -o | --option | First option |
+| -t | --testNum | test number |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 

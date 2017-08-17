@@ -1,4 +1,4 @@
 ## [{NAME}]
 
-tomlTest - Testing only
+Testing only
 [{COMMAND_HELP}]
