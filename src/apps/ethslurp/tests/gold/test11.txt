@@ -1,0 +1,30 @@
+test11: test open config file
+Processing: -t -o -r -f
+Testing only for open command:
+[version]
+current=0.2.0
+
+[settings]
+cachePath=/Users/jrush/.quickBlocks.test/slurps/
+api_key=68E1BQYW85ETVNHKWV27B8N5HYICEHEPH1
+api_provider=EtherScan
+api_url=http://etherscan.io/apis
+rerun=0x682e426ea761db77bacd5acdce33ca122175daea
+
+[display]
+fmt_txt_file=[{HEADER}]\n[{RECORDS}]
+fmt_txt_record=[{FIELDS}]\n
+fmt_txt_field=\t[{FIELD}]
+fmt_csv_file=[{HEADER}]\n[{RECORDS}]
+fmt_csv_record=[{FIELDS}]\n
+fmt_csv_field=["{FIELD}"],
+fmt_html_file=<table>\n[{HEADER}]\n[{RECORDS}]</table>\n
+fmt_html_record=\t<tr>\n[{FIELDS}]</tr>\n
+fmt_html_field=\t\t<td>[{FIELD}]</td>\n
+fmt_json_file=[{RECORDS}]\n
+fmt_json_record=\n        {\n[{FIELDS}]        },
+fmt_json_field="[{p:FIELD}]":"[{FIELD}]",
+fmt_custom_file=file:custom_format_file.html
+fmt_custom_record=fmt_html_record
+fmt_custom_field=fmt_html_field
+
