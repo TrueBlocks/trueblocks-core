@@ -1,6 +1,6 @@
 ## jsonTest
 
-jsonTest - Testing only
+Testing only
 #### Usage
 
 `Usage:`    jsonTest [-v|-h] files  

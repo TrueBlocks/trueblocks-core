@@ -1,6 +1,6 @@
 ## abiTest
 
-abiTest - Testing only
+Testing only
 #### Usage
 
 `Usage:`    abiTest [-v|-h] mode  

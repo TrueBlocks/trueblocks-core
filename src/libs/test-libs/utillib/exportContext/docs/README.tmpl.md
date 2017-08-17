@@ -1,4 +1,4 @@
 ## [{NAME}]
 
-exportContext - Testing only
+Testing only
 [{COMMAND_HELP}]

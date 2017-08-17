@@ -1,6 +1,6 @@
 ## tomlTest
 
-tomlTest - Testing only
+Testing only
 #### Usage
 
 `Usage:`    tomlTest [-v|-h] filename  

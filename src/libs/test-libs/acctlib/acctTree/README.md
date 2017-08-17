@@ -1,6 +1,6 @@
 ## acctTree
 
-acctTree - Testing only
+Testing only
 #### Usage
 
 `Usage:`    acctTree [-a|-s|-t|-v|-h]  

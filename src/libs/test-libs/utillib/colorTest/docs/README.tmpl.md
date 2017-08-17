@@ -1,4 +1,4 @@
 ## [{NAME}]
 
-colorTest - Testing only
+Testing only
 [{COMMAND_HELP}]
