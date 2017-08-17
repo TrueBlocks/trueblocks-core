@@ -31,10 +31,12 @@ int main(int argc, const char* argv[]) {
                 } else {
                     cout << "[\n";
                     uint32_t step = (uint32_t)options.freq / 5;
-                    for (uint32_t i = 0 ; i < quotes.getCount() ; i = i + step) {
+                    bool done = false;
+                    for (uint32_t i = 0 ; i < quotes.getCount() && !done ; i = i + step) {
+
+                        timestamp_t ts = toUnsigned(quotes[i].Format("[{TIMESTAMP}]"));
                         if (i > 0)
                             cout << ",\n";
-                        timestamp_t ts = toUnsigned(quotes[i].Format("[{TIMESTAMP}]"));
                         if (i != indexFromTimeStamp(quotes, ts)) {
                             cerr << cRed << "mismatch between 'i' ("
                             << i << ") and 'index' ("
@@ -42,6 +44,9 @@ int main(int argc, const char* argv[]) {
                             return 0;
                         }
                         cout << quotes[i].Format(fmt);
+
+                        if (isTestMode() && dateFromTimeStamp(ts) >= SFTime(2017,8,15,0,0,0))
+                            done = true;
                     }
                     cout << "\n]\n";
                 }
