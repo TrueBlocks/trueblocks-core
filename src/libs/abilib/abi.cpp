@@ -51,7 +51,7 @@ SFString nextAbiChunk(const SFString& fieldIn, bool& force, const void *data) {
             case 'a':
                 if ( fieldIn % "abiByName" ) {
                     uint32_t cnt = abi->abiByName.getCount();
-                    if (!cnt) return EMPTY;
+                    if (!cnt) return "";
                     SFString ret;
                     for (uint32_t i = 0 ; i < cnt ; i++) {
                         ret += abi->abiByName[i].Format();
@@ -61,7 +61,7 @@ SFString nextAbiChunk(const SFString& fieldIn, bool& force, const void *data) {
                 }
                 if ( fieldIn % "abiByEncoding" ) {
                     uint32_t cnt = abi->abiByEncoding.getCount();
-                    if (!cnt) return EMPTY;
+                    if (!cnt) return "";
                     SFString ret;
                     for (uint32_t i = 0 ; i < cnt ; i++) {
                         ret += abi->abiByEncoding[i].Format();

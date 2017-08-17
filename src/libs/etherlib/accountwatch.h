@@ -101,14 +101,14 @@ inline void CAccountWatch::Init(void) {
     CBaseNode::Init();
 
     index = 0;
-//    address = EMPTY;
-//    name = EMPTY;
-//    color = EMPTY;
+    address = "";
+    name = "";
+    color = "";
     firstBlock = 0;
     lastBlock = 0;
-//    status = EMPTY;
+    status = "";
     deepScan = 0;
-//    qbis = ??; /* unknown type: CIncomeStatement */
+    qbis.Init();
     nodeBal = 0;
 
     // EXISTING_CODE

@@ -209,38 +209,38 @@ void generateCode(CToml& classFile, const SFString& dataFile, const SFString& ns
         if (fld->isPointer) {
             copyFmt = "\tif ([+SHORT+.{NAME}])\n\t\t*[{NAME}] = *+SHORT+.[{NAME}];\n";
         }
-        SFString badSet = "/""/\t[{NAME}] = ??; /""* unknown type: [{TYPE}] */\n";
+        SFString badSet = "//\t[{NAME}] = ??; /""* unknown type: [{TYPE}] */\n";
         SFString setFmt = "\t[{NAME}]";
         SFString regFmt = "\tADD_FIELD(CL_NM, \"[{NAME}]\", T_TEXT, ++fieldNum);\n", regType;
         SFString subClsFmt = STR_SUBCLASS;
 
-               if (fld->type == "bloom")    { setFmt = "\t[{NAME}] = [{DEF}];\n"; regType = "T_BLOOM";
-        } else if (fld->type == "wei")      { setFmt = "\t[{NAME}] = [{DEF}];\n"; regType = "T_WEI";
-        } else if (fld->type == "string")   { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_TEXT";
-        } else if (fld->type == "addr")     { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_TEXT";
-        } else if (fld->type == "address")  { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_TEXT";
-        } else if (fld->type == "hash")     { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_TEXT";
-        } else if (fld->type == "bytes32")  { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_TEXT";
-        } else if (fld->type == "bytes")    { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_TEXT";
-        } else if (fld->type == "int8")     { setFmt = "\t[{NAME}] = [{DEF}];\n"; regType = "T_NUMBER";
-        } else if (fld->type == "int16")    { setFmt = "\t[{NAME}] = [{DEF}];\n"; regType = "T_NUMBER";
-        } else if (fld->type == "int32")    { setFmt = "\t[{NAME}] = [{DEF}];\n"; regType = "T_NUMBER";
-        } else if (fld->type == "int64")    { setFmt = "\t[{NAME}] = [{DEF}];\n"; regType = "T_NUMBER";
-        } else if (fld->type == "int256")   { setFmt = "\t[{NAME}] = [{DEF}];\n"; regType = "T_NUMBER";
-        } else if (fld->type == "uint8")    { setFmt = "\t[{NAME}] = [{DEF}];\n"; regType = "T_NUMBER";
-        } else if (fld->type == "uint16")   { setFmt = "\t[{NAME}] = [{DEF}];\n"; regType = "T_NUMBER";
-        } else if (fld->type == "uint32")   { setFmt = "\t[{NAME}] = [{DEF}];\n"; regType = "T_NUMBER";
-        } else if (fld->type == "uint64")   { setFmt = "\t[{NAME}] = [{DEF}];\n"; regType = "T_NUMBER";
-        } else if (fld->type == "uint256")  { setFmt = "\t[{NAME}] = [{DEF}];\n"; regType = "T_NUMBER";
-        } else if (fld->type == "bbool")    { setFmt = "\t[{NAME}] = [{DEF}];\n"; regType = "T_BOOL";
-        } else if (fld->type == "bool")     { setFmt = "\t[{NAME}] = [{DEF}];\n"; regType = "T_BOOL";
-        } else if (fld->type == "float")    { setFmt = "\t[{NAME}] = [{DEFF}];\n"; regType = "T_FLOAT";
-        } else if (fld->type == "double")   { setFmt = "\t[{NAME}] = [{DEFF}];\n"; regType = "T_DOUBLE";
-        } else if (fld->type == "time")     { setFmt = "\t[{NAME}] = [{DEFT}];\n"; regType = "T_DATE";
-        } else if (fld->isPointer)          { setFmt = "\t[{NAME}] = [{DEFP}];\n"; regType = "T_POINTER";
-        } else if (fld->type.Contains("Array")) { setFmt = badSet; regType = "T_TEXT|TS_ARRAY";
-        } else if (fld->isObject)           { setFmt = badSet; regType = "T_TEXT|TS_OBJECT";
-        } else                              { setFmt = badSet; regType = "T_TEXT"; }
+               if (fld->type == "bloom")        { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_BLOOM";
+        } else if (fld->type == "wei")          { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_WEI";
+        } else if (fld->type == "string")       { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_TEXT";
+        } else if (fld->type == "addr")         { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_TEXT";
+        } else if (fld->type == "address")      { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_TEXT";
+        } else if (fld->type == "hash")         { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_TEXT";
+        } else if (fld->type == "bytes32")      { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_TEXT";
+        } else if (fld->type == "bytes")        { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_TEXT";
+        } else if (fld->type == "int8")         { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
+        } else if (fld->type == "int16")        { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
+        } else if (fld->type == "int32")        { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
+        } else if (fld->type == "int64")        { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
+        } else if (fld->type == "int256")       { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
+        } else if (fld->type == "uint8")        { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
+        } else if (fld->type == "uint16")       { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
+        } else if (fld->type == "uint32")       { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
+        } else if (fld->type == "uint64")       { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
+        } else if (fld->type == "uint256")      { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
+        } else if (fld->type == "bbool")        { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_BOOL";
+        } else if (fld->type == "bool")         { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_BOOL";
+        } else if (fld->type == "float")        { setFmt = "\t[{NAME}] = [{DEFF}];\n"; regType = "T_FLOAT";
+        } else if (fld->type == "double")       { setFmt = "\t[{NAME}] = [{DEFF}];\n"; regType = "T_DOUBLE";
+        } else if (fld->type == "time")         { setFmt = "\t[{NAME}] = [{DEFT}];\n"; regType = "T_DATE";
+        } else if (fld->isPointer)              { setFmt = "\t[{NAME}] = [{DEFP}];\n"; regType = "T_POINTER";
+        } else if (fld->type.Contains("Array")) { setFmt = "\t[{NAME}].Clear();\n";    regType = "T_TEXT|TS_ARRAY";
+        } else if (fld->isObject)               { setFmt = "\t[{NAME}].Init();\n";     regType = "T_TEXT|TS_OBJECT";
+        } else                                  { setFmt = badSet; regType = "T_TEXT"; }
 
 #define getDefault(a) (fld->strDefault.empty() ? (a) : fld->strDefault )
         setFmt.Replace("[{DEFS}]", getDefault("\"\""));
@@ -248,10 +248,6 @@ void generateCode(CToml& classFile, const SFString& dataFile, const SFString& ns
         setFmt.Replace("[{DEFF}]", getDefault("0.0"));
         setFmt.Replace("[{DEFT}]", getDefault("earliestDate"));
         setFmt.Replace("[{DEFP}]", getDefault("NULL"));
-
-        // string types are already empty, but they need to be initialized in Init
-        //setFmt.Replace("\t[{NAME}] = \"\";\n", "/""/\t[{NAME}] = \"\";\n");
-        //if (fld->type.Contains("Array")) regType += "|TS_ARRAY";
 
         fieldReg += fld->Format(regFmt).Substitute("T_TEXT", regType);
         fieldReg.ReplaceAll("CL_NM", "[{CLASS_NAME}]");
@@ -317,7 +313,7 @@ void generateCode(CToml& classFile, const SFString& dataFile, const SFString& ns
     headSource.ReplaceAll("[{SHORT}]",          baseLower.Left(2));
     headSource.ReplaceAll("[{SCOPE}]",          scope);
     headSource.ReplaceAll("[{NAMESPACE1}]",     (ns.empty() ? "" : "\nnamespace qblocks {\n\n"));
-    headSource.ReplaceAll("[{NAMESPACE2}]",     (ns.empty() ? "" : "}  /""/ namespace qblocks\n"));
+    headSource.ReplaceAll("[{NAMESPACE2}]",     (ns.empty() ? "" : "}  // namespace qblocks\n"));
     writeTheCode(headerFile, headSource, ns);
 
     //------------------------------------------------------------------------------------------------
@@ -360,7 +356,7 @@ void generateCode(CToml& classFile, const SFString& dataFile, const SFString& ns
     srcSource.ReplaceAll("[{SHORT}]",           baseLower.Left(2));
     srcSource.ReplaceAll("[{SCOPE}]",           scope);
     srcSource.ReplaceAll("[{NAMESPACE1}]",      (ns.empty() ? "" : "\nnamespace qblocks {\n\n"));
-    srcSource.ReplaceAll("[{NAMESPACE2}]",      (ns.empty() ? "" : "}  /""/ namespace qblocks\n"));
+    srcSource.ReplaceAll("[{NAMESPACE2}]",      (ns.empty() ? "" : "}  // namespace qblocks\n"));
     writeTheCode(srcFile, srcSource, ns);
 }
 

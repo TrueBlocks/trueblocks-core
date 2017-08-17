@@ -81,7 +81,7 @@ inline void QRevoke::Clear(void) {
 inline void QRevoke::Init(void) {
     CTransaction::Init();
 
-//    _operation = EMPTY;
+    _operation = "";
 
     // EXISTING_CODE
     // EXISTING_CODE

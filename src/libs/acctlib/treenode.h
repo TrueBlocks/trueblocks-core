@@ -91,7 +91,7 @@ inline void CTreeNode::Init(void) {
     CBaseNode::Init();
 
     index = 0;
-//    m_prefix = EMPTY;
+    m_prefix = "";
 
     // EXISTING_CODE
     // EXISTING_CODE

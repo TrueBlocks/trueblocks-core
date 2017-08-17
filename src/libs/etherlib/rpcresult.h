@@ -85,9 +85,9 @@ inline void CRPCResult::Clear(void) {
 inline void CRPCResult::Init(void) {
     CBaseNode::Init();
 
-//    jsonrpc = EMPTY;
-//    result = EMPTY;
-//    id = EMPTY;
+    jsonrpc = "";
+    result = "";
+    id = "";
 
     // EXISTING_CODE
     // EXISTING_CODE

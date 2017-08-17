@@ -9,4 +9,3 @@ project (other)
 
 # Compilation order of the src subdirectories
 #add_subdirectory(scripts)
-add_subdirectory(samples)

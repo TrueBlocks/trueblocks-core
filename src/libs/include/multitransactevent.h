@@ -85,11 +85,11 @@ inline void QMultiTransactEvent::Clear(void) {
 inline void QMultiTransactEvent::Init(void) {
     CLogEntry::Init();
 
-//    owner = EMPTY;
-//    operation = EMPTY;
+    owner = "";
+    operation = "";
     value = 0;
-//    to = EMPTY;
-//    data = EMPTY;
+    to = "";
+    data = "";
 
     // EXISTING_CODE
     // EXISTING_CODE

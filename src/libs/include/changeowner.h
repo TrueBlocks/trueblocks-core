@@ -82,8 +82,8 @@ inline void QChangeOwner::Clear(void) {
 inline void QChangeOwner::Init(void) {
     CTransaction::Init();
 
-//    _from = EMPTY;
-//    _to = EMPTY;
+    _from = "";
+    _to = "";
 
     // EXISTING_CODE
     // EXISTING_CODE
