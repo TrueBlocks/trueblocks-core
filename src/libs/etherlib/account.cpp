@@ -70,7 +70,7 @@ SFString nextAccountChunk(const SFString& fieldIn, bool& force, const void *data
             case 't':
                 if ( fieldIn % "transactions" ) {
                     uint32_t cnt = acc->transactions.getCount();
-                    if (!cnt) return EMPTY;
+                    if (!cnt) return "";
                     SFString ret;
                     for (uint32_t i = 0 ; i < cnt ; i++) {
                         ret += acc->transactions[i].Format();

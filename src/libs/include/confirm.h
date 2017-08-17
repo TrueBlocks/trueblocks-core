@@ -81,7 +81,7 @@ inline void QConfirm::Clear(void) {
 inline void QConfirm::Init(void) {
     CTransaction::Init();
 
-//    _h = EMPTY;
+    _h = "";
 
     // EXISTING_CODE
     // EXISTING_CODE

@@ -61,7 +61,7 @@ SFString nextLogentryChunk(const SFString& fieldIn, bool& force, const void *dat
             case 't':
                 if ( fieldIn % "topics" ) {
                     uint32_t cnt = log->topics.getCount();
-                    if (!cnt) return EMPTY;
+                    if (!cnt) return "";
                     SFString ret;
                     for (uint32_t i = 0 ; i < cnt ; i++) {
                         ret += indent() + ("\"" + fromTopic(log->topics[i]) + "\"");

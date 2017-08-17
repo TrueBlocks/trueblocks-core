@@ -49,6 +49,7 @@ public:
     bool balanced(void) const { return ((nodeBal - endBal) == 0); }
     SFIntBN difference(void) const { return (nodeBal - endBal); }
     void correct(void) { endBal = nodeBal; }
+    friend class CAccountWatch;
     // EXISTING_CODE
 
 protected:

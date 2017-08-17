@@ -44,6 +44,7 @@ public:
     bool loadABIFromFile(const SFString& fileName);
     CFunction *findFunctionByName(const SFString& search);
     CFunction *findFunctionByEncoding(const SFString& search);
+    friend class CAccount;
     // EXISTING_CODE
 
 protected:
@@ -92,8 +93,8 @@ inline void CAbi::Clear(void) {
 inline void CAbi::Init(void) {
     CBaseNode::Init();
 
-//    abiByName = ??; /* unknown type: CFunctionArray */
-//    abiByEncoding = ??; /* unknown type: CFunctionArray */
+    abiByName.Clear();
+    abiByEncoding.Clear();
 
     // EXISTING_CODE
     // EXISTING_CODE

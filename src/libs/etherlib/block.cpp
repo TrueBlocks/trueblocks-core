@@ -69,7 +69,7 @@ SFString nextBlockChunk(const SFString& fieldIn, bool& force, const void *data) 
                 if ( fieldIn % "timestamp" ) return asStringU(blo->timestamp);
                 if ( fieldIn % "transactions" ) {
                     uint32_t cnt = blo->transactions.getCount();
-                    if (!cnt) return EMPTY;
+                    if (!cnt) return "";
                     SFString ret;
                     for (uint32_t i = 0 ; i < cnt ; i++) {
                         ret += blo->transactions[i].Format();

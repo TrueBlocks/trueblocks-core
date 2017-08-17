@@ -82,8 +82,8 @@ inline void QOwnerChangedEvent::Clear(void) {
 inline void QOwnerChangedEvent::Init(void) {
     CLogEntry::Init();
 
-//    oldOwner = EMPTY;
-//    newOwner = EMPTY;
+    oldOwner = "";
+    newOwner = "";
 
     // EXISTING_CODE
     // EXISTING_CODE

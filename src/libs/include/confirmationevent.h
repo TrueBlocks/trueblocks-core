@@ -82,8 +82,8 @@ inline void QConfirmationEvent::Clear(void) {
 inline void QConfirmationEvent::Init(void) {
     CLogEntry::Init();
 
-//    owner = EMPTY;
-//    operation = EMPTY;
+    owner = "";
+    operation = "";
 
     // EXISTING_CODE
     // EXISTING_CODE

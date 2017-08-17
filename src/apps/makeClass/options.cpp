@@ -86,7 +86,7 @@ bool COptions::parseArguments(SFString& command) {
         errMsg = (configPath("makeClass") + " folder does not exist. Quitting...");
 
     if (isAll || isList) {
-        classNames = EMPTY;  // rebuild the class list from the classDefinitions folder
+        classNames = "";  // rebuild the class list from the classDefinitions folder
         forEveryFileInFolder("./classDefinitions/", listClasses, this);
     }
 

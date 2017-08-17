@@ -113,30 +113,30 @@ inline void CBlock::Init(void) {
 
     gasLimit = 0;
     gasUsed = 0;
-//    hash = EMPTY;
+    hash = "";
     logsBloom = 0;
     blockNumber = 0;
-//    parentHash = EMPTY;
+    parentHash = "";
     timestamp = 0;
-//    transactions = ??; /* unknown type: CTransactionArray */
+    transactions.Clear();
 
     // EXISTING_CODE
 #if 0
-    author = EMPTY;
-    difficulty = EMPTY;
-    extraData = EMPTY;
-    miner = EMPTY;
-    mixHash = EMPTY;
-    nonce = EMPTY;
-    receiptRoot = EMPTY;
-    receiptsRoot = EMPTY;
-    //    sealFields = ??; /* unknown type: SFStringArray */
-    sha3Uncles = EMPTY;
-    size = EMPTY;
-    stateRoot = EMPTY;
-    totalDifficulty = EMPTY;
-    transactionsRoot = EMPTY;
-    //    uncles = ??; /* unknown type: SFStringArray */
+    author = "";
+    difficulty = "";
+    extraData = "";
+    miner = "";
+    mixHash = "";
+    nonce = "";
+    receiptRoot = "";
+    receiptsRoot = "";
+    sealFields.Clear();
+    sha3Uncles = "";
+    size = "";
+    stateRoot = "";
+    totalDifficulty = "";
+    transactionsRoot = "";
+    uncles.Clear();
 #endif
     // EXISTING_CODE
 }
