@@ -98,7 +98,6 @@ endfunction(run_the_test)
 # ----------------------------------------------------------------------------------------
 # Compilation order for the subfolders
 add_subdirectory (libs)
-add_subdirectory (test-libs)
 add_subdirectory (apps)
 add_subdirectory (tools)
 add_subdirectory (samples)
