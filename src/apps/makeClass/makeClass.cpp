@@ -209,7 +209,7 @@ void generateCode(CToml& classFile, const SFString& dataFile, const SFString& ns
         if (fld->isPointer) {
             copyFmt = "\tif ([+SHORT+.{NAME}])\n\t\t*[{NAME}] = *+SHORT+.[{NAME}];\n";
         }
-        SFString badSet = "/""/\t[{NAME}] = ??; /""* unknown type: [{TYPE}] */\n";
+        SFString badSet = "//\t[{NAME}] = ??; /""* unknown type: [{TYPE}] */\n";
         SFString setFmt = "\t[{NAME}]";
         SFString regFmt = "\tADD_FIELD(CL_NM, \"[{NAME}]\", T_TEXT, ++fieldNum);\n", regType;
         SFString subClsFmt = STR_SUBCLASS;
@@ -313,7 +313,7 @@ void generateCode(CToml& classFile, const SFString& dataFile, const SFString& ns
     headSource.ReplaceAll("[{SHORT}]",          baseLower.Left(2));
     headSource.ReplaceAll("[{SCOPE}]",          scope);
     headSource.ReplaceAll("[{NAMESPACE1}]",     (ns.empty() ? "" : "\nnamespace qblocks {\n\n"));
-    headSource.ReplaceAll("[{NAMESPACE2}]",     (ns.empty() ? "" : "}  /""/ namespace qblocks\n"));
+    headSource.ReplaceAll("[{NAMESPACE2}]",     (ns.empty() ? "" : "}  // namespace qblocks\n"));
     writeTheCode(headerFile, headSource, ns);
 
     //------------------------------------------------------------------------------------------------
@@ -356,7 +356,7 @@ void generateCode(CToml& classFile, const SFString& dataFile, const SFString& ns
     srcSource.ReplaceAll("[{SHORT}]",           baseLower.Left(2));
     srcSource.ReplaceAll("[{SCOPE}]",           scope);
     srcSource.ReplaceAll("[{NAMESPACE1}]",      (ns.empty() ? "" : "\nnamespace qblocks {\n\n"));
-    srcSource.ReplaceAll("[{NAMESPACE2}]",      (ns.empty() ? "" : "}  /""/ namespace qblocks\n"));
+    srcSource.ReplaceAll("[{NAMESPACE2}]",      (ns.empty() ? "" : "}  // namespace qblocks\n"));
     writeTheCode(srcFile, srcSource, ns);
 }
 

@@ -36,7 +36,7 @@ SFString classDir;
 //-----------------------------------------------------------------------
 inline SFString projectName(void) {
     CFilename fn(classDir+"tmp");
-    SFString ret = fn.getPath().Substitute("parselib/","").Substitute("parseLib/","").Substitute("/""/","");
+    SFString ret = fn.getPath().Substitute("parselib/","").Substitute("parseLib/","").Substitute("//","");
     nextTokenClearReverse(ret,'/');
     ret = nextTokenClearReverse(ret,'/');
     return ret;
@@ -125,7 +125,7 @@ SFString acquireABI(CFunctionArray& functions, const SFAddress& addr, bool silen
 //-----------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
-    etherlib_init("");
+    etherlib_init("binary");
 
     // We keep only a single slurper. If the user is using the --file option and they
     // are reading the same account repeatedly, we only need to read the cache once.
@@ -322,9 +322,9 @@ int main(int argc, const char *argv[]) {
             SFString pprefix = (options.isBuiltin() ? toProper(options.prefix).Substitute("lib", "") : "Func");
             headerCode.ReplaceAll("[{PPREFIX}]", pprefix);
             headerCode.ReplaceAll("FuncEvent", "Event");
-            SFString comment = "/""/------------------------------------------------------------------------\n";
-            funcExterns = (funcExterns.empty() ? "/""/ No functions" : funcExterns);
-            evtExterns = (evtExterns.empty() ? "/""/ No events" : evtExterns);
+            SFString comment = "//------------------------------------------------------------------------\n";
+            funcExterns = (funcExterns.empty() ? "// No functions" : funcExterns);
+            evtExterns = (evtExterns.empty() ? "// No events" : evtExterns);
             headerCode.ReplaceAll("[{EXTERNS}]", comment+funcExterns+"\n"+comment+evtExterns);
             headerCode = headerCode.Substitute("{QB}", (options.isBuiltin() ? "_qb" : ""));
             writeTheCode(classDir + options.prefix + ".h", headerCode);
@@ -361,8 +361,8 @@ int main(int argc, const char *argv[]) {
                                     "\twalletlib_init();\n" :
                                   (options.isWallet() ? "" : "\ttokenlib_init();\n"));
             sourceCode.ReplaceAll("[{CHAINLIB}]", chainInit);
-            sourceCode.ReplaceAll("[{FACTORY1}]", factory1.empty() ? "\t\t{\n\t\t\t/""/ No functions\n" : factory1);
-            sourceCode.ReplaceAll("[{FACTORY2}]", factory2.empty() ? "\t\t{\n\t\t\t/""/ No events\n" : factory2);
+            sourceCode.ReplaceAll("[{FACTORY1}]", factory1.empty() ? "\t\t{\n\t\t\t// No functions\n" : factory1);
+            sourceCode.ReplaceAll("[{FACTORY2}]", factory2.empty() ? "\t\t{\n\t\t\t// No events\n" : factory2);
 
             headers = ("#include \"tokenlib.h\"\n");
             headers += ("#include \"walletlib.h\"\n");
@@ -373,10 +373,10 @@ int main(int argc, const char *argv[]) {
             pprefix = (options.isBuiltin() ? toProper(options.prefix).Substitute("lib", "") : "Func");
             sourceCode.ReplaceAll("[{PPREFIX}]", pprefix);
             sourceCode.ReplaceAll("FuncEvent", "Event");
-            sourceCode.ReplaceAll("[{FUNC_DECLS}]", funcDecls.empty() ? "/""/ No functions" : funcDecls);
-            sourceCode.ReplaceAll("[{SIGS}]", sigs.empty() ? "\t/""/ No functions\n" : sigs);
-            sourceCode.ReplaceAll("[{EVENT_DECLS}]", evtDecls.empty() ? "/""/ No events" : evtDecls);
-            sourceCode.ReplaceAll("[{EVTS}]", evts.empty() ? "\t/""/ No events\n" : evts);
+            sourceCode.ReplaceAll("[{FUNC_DECLS}]", funcDecls.empty() ? "// No functions" : funcDecls);
+            sourceCode.ReplaceAll("[{SIGS}]", sigs.empty() ? "\t// No functions\n" : sigs);
+            sourceCode.ReplaceAll("[{EVENT_DECLS}]", evtDecls.empty() ? "// No events" : evtDecls);
+            sourceCode.ReplaceAll("[{EVTS}]", evts.empty() ? "\t// No events\n" : evts);
             sourceCode = sourceCode.Substitute("{QB}", (options.isBuiltin() ? "_qb" : ""));
             writeTheCode(classDir + options.prefix + ".cpp", sourceCode.Substitute("XXXX","[").Substitute("YYYY","]"));
 
@@ -473,8 +473,8 @@ SFString getEventAssign(const CParameter *p, SFUint32 which, SFUint32 nIndexed) 
 const char* STR_FACTORY1 =
 "\t\t} else if (encoding == func_[{LOWER}]{QB})\n"
 "\t\t{\n"
-"\t\t\t/""/ [{SIGNATURE}]\n"
-"\t\t\t/""/ [{ENCODING}]\n"
+"\t\t\t// [{SIGNATURE}]\n"
+"\t\t\t// [{ENCODING}]\n"
 "\t\t\t[{CLASS}] *a = new [{CLASS}];\n"
 "\t\t\t*(C[{BASE}]*)a = *p; // copy in\n"
 "[{ASSIGNS1}]"
@@ -487,8 +487,8 @@ const char* STR_FACTORY1 =
 const char* STR_FACTORY2 =
 "\t\t} else if (fromTopic(p->topics[0]) % evt_[{LOWER}]{QB})\n"
 "\t\t{\n"
-"\t\t\t/""/ [{SIGNATURE}]\n"
-"\t\t\t/""/ [{ENCODING}]\n"
+"\t\t\t// [{SIGNATURE}]\n"
+"\t\t\t// [{ENCODING}]\n"
 "\t\t\t[{CLASS}] *a = new [{CLASS}];\n"
 "\t\t\t*(C[{BASE}]*)a = *p; // copy in\n"
 "[{ASSIGNS2}]"
