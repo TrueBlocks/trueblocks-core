@@ -64,7 +64,7 @@ void doTests(void) {
 //--------------------------------------------------------------
 const char* STR_TEST_DATA =
 "#\n"
-"# From http:/""/www.di-mgt.com.au/sha_testvectors.html\n"
+"# From http://www.di-mgt.com.au/sha_testvectors.html\n"
 "# pairs of input / expected output on subsequent lines\n"
 "#\n"
 "#\n"
