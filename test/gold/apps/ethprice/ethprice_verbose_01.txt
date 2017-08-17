@@ -1,6 +1,6 @@
 ethprice argc: 2 [1:-v:1] 
 ethprice -v:1 
-Read 212311 existing price quotes (lastRead: Now)
+Read 212431 existing price quotes (lastRead: Now)
 [
 {
   "timestamp": 1439078400,
@@ -97318,5 +97318,60 @@ Read 212311 existing price quotes (lastRead: Now)
   "volume": 20180.38768349,
   "weightedAvg": 0,
   "date": "2017-08-15 04:00:00 UTC"
+},
+{
+  "timestamp": 1502776800,
+  "open": 291.10000001,
+  "high": 292.01999997,
+  "low": 290.8334,
+  "close": 290.83340001,
+  "quoteVolume": 308.95393021,
+  "volume": 90009.85253659,
+  "weightedAvg": 0,
+  "date": "2017-08-15 06:00:00 UTC"
+},
+{
+  "timestamp": 1502784000,
+  "open": 293.10000001,
+  "high": 293.57733998,
+  "low": 293.1,
+  "close": 293.5719,
+  "quoteVolume": 508.17466816,
+  "volume": 149134.35076669,
+  "weightedAvg": 0,
+  "date": "2017-08-15 08:00:00 UTC"
+},
+{
+  "timestamp": 1502791200,
+  "open": 289,
+  "high": 289,
+  "low": 286.88227221,
+  "close": 286.88227221,
+  "quoteVolume": 93.65098795,
+  "volume": 26906.30331696,
+  "weightedAvg": 0,
+  "date": "2017-08-15 10:00:00 UTC"
+},
+{
+  "timestamp": 1502798400,
+  "open": 284.99992996,
+  "high": 285.99950999,
+  "low": 283,
+  "close": 284,
+  "quoteVolume": 51.8314642,
+  "volume": 14725.00690824,
+  "weightedAvg": 0,
+  "date": "2017-08-15 12:00:00 UTC"
+},
+{
+  "timestamp": 1502805600,
+  "open": 279,
+  "high": 279.99999987,
+  "low": 276.555,
+  "close": 276.68,
+  "quoteVolume": 267.53593588,
+  "volume": 74393.53126646,
+  "weightedAvg": 0,
+  "date": "2017-08-15 14:00:00 UTC"
 }
 ]
