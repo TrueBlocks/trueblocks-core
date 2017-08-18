@@ -88,11 +88,16 @@ CAccountNameArray accounts;
 
 //---------------------------------------------------------------------------
 bool CAccountName::Match(const SFString& s1, const SFString& s2, const SFString& s3, bool matchCase, bool all) {
-    bool m11 = (matchCase ? addr.Contains(s1) : addr.ContainsI(s1));
-    bool m12 = (matchCase ? name.Contains(s1) : name.ContainsI(s1));
-    bool m13 = (matchCase ? source.Contains(s1) : source.ContainsI(s1));
-    bool m2 = (matchCase ? name.Contains(s2) : name.ContainsI(s2));
-    bool m3 = (matchCase ? source.Contains(s3) : source.ContainsI(s3));
+
+    SFString theAddr   = addr;
+    SFString theName   = name + " " + symbol;
+    SFString theSource = source;
+
+    bool m11 = (matchCase ? theAddr.Contains(s1)   : theAddr.ContainsI(s1));
+    bool m12 = (matchCase ? theName.Contains(s1)   : theName.ContainsI(s1));
+    bool m13 = (matchCase ? theSource.Contains(s1) : theSource.ContainsI(s1));
+    bool m2  = (matchCase ? theName.Contains(s2)   : theName.ContainsI(s2));
+    bool m3  = (matchCase ? theSource.Contains(s3) : theSource.ContainsI(s3));
 
     if (!s1.empty() && !s2.empty() && !s3.empty())
         return m11 && m2 && m3;  // all three must match
@@ -126,9 +131,13 @@ bool loadData(void) {
     while (!contents.empty()) {
         SFString line = nextTokenClear(contents, '\n');
         if (!line.startsWith("#")) {
-            if (!countOf('\t', line))
+            if (countOf('\t', line) < 2) {
                 cerr << "Line " << line << " does not contain two tabs.\n";
-            accounts[accounts.getCount()] = CAccountName(line);
+
+            } else {
+                CAccountName account(line);
+                accounts[accounts.getCount()] = account;
+            }
         }
     }
     return true;
@@ -185,4 +194,5 @@ const char *STR_DEFAULT_DATA =
 "GUP	Matchpool (Guppy)		0xf7B098298f7C69Fc14610bf71d5e02c60792894C	Etherscan.io	Matchpool is a platform that creates human connections\n"
 "SWT	Swarm City Token		0xB9e7F8568e08d5659f5D29C4997173d84CdF2607	Etherscan.io	Swarm City is a decentralized peer to peer sharing economy\n"
 "BCAP	Blockchain Capital		0xFf3519eeeEA3e76F1F699CCcE5E23ee0bdDa41aC	Etherscan.io	Blockchain Capital is a pioneer and the premier venture capital firm investing in Blockchain enabled technology\n"
-"PLU	Pluton				0xD8912C10681D8B21Fd3742244f44658dBA12264E	Etherscan.io	With Plutus Tap & Pay, you can pay at any NFC-enabled merchant\n";
+"PLU	Pluton				0xD8912C10681D8B21Fd3742244f44658dBA12264E	Etherscan.io	With Plutus Tap & Pay, you can pay at any NFC-enabled merchant\n"
+"EEAR	Eth Early Adoption Registry		0x713b73c3994442b533e6a083ec968e40606810ec	quickBlocks.io	An early, known-dead address useful for testing\n";
