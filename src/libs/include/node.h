@@ -66,6 +66,7 @@ extern void     etherlib_cleanup        (void);
 
 //-------------------------------------------------------------------------
 extern void     setStorageRoot          (const SFString& path);
+extern SFString getStorageRoot          (void);
 extern SFString getJsonFilename1        (SFUint32 num);
 extern SFString getBinaryFilename1      (SFUint32 num);
 extern SFString getJsonPath1            (SFUint32 num);

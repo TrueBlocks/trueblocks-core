@@ -23,6 +23,7 @@ namespace qblocks {
         SFString getPath(void) const;
         SFString getFilename(void) const;
         SFString getFullPath(void) const;
+        SFString relativePath(const SFString& relTo="") const;
     };
 
     //----------------------------------------------------------------------------------
