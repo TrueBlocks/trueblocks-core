@@ -82,4 +82,10 @@ namespace qblocks {
         return (path + fileName).Substitute("//", "/");
     }
 
+    //----------------------------------------------------------------------------------
+    SFString CFilename::relativePath(const SFString& relTo) const {
+        SFString rel = (relTo.empty() ? getCWD() : relTo);
+        return getFullPath().Substitute(rel, "./");
+    }
+
 }  // namespace qblocks

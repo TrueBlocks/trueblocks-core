@@ -25,12 +25,12 @@ int main(int argc, const char *argv[]) {
         if (!options.parseArguments(command))
             return 0;
 
-        SFString fileName = getBinaryFilename1(options.block);
-        bool exists = fileExists(fileName);
+        CFilename fileName(getBinaryFilename1(options.block));
+        bool exists = fileExists(fileName.getFullPath());
         if (exists && options.alone) {
-            cout << fileName << "\n";
+            cout << fileName.getFullPath() << "\n";
         } else if (exists) {
-            cout << "File " << fileName.Substitute(BLOCK_CACHE,"./") << " found in cache.\n";
+            cout << "File " << fileName.relativePath(getStorageRoot()) << " found in cache.\n";
         } else {
             cout << "The block " << options.block << " was not found in the cache.\n";
         }

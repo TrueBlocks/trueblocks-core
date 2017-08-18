@@ -563,6 +563,11 @@ void setStorageRoot(const SFString& path)
 }
 
 //-------------------------------------------------------------------------
+SFString getStorageRoot(void) {
+    return storagePath;
+}
+
+//-------------------------------------------------------------------------
 static SFString getFilename_local(SFUint32 numIn, bool asPath, bool asJson)
 {
     if (storagePath.empty())
