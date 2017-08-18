@@ -34,3 +34,5 @@ endfunction(run_test)
 
 # Enter one line for each individual test
 run_test("whereBlock_README" "-th")
+run_test("whereBlock_NotCached" "45000")
+run_test("whereBlock_Cached" "1001001")
