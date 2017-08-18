@@ -27,6 +27,7 @@ find_package (PythonLibs REQUIRED)
 # ----------------------------------------------------------------------------------------
 # We require the CURL library to be installed for most apps and tools
 # if found add its include path to includes section and link with it
+#
 message (STATUS "======== LOOKING FOR CURL ========================")
 find_package (CURL REQUIRED)
 if (CURL_FOUND)
