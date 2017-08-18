@@ -254,7 +254,7 @@ bool loadPriceData(CPriceQuoteArray& quotes, bool freshen, SFString& message, SF
             archive.Close();
             if (verbose) {
                 SFString date = lastRead.Format(FMT_DEFAULT);
-		SFString count = asString(quotes.getCount());
+                SFString count = asString(quotes.getCount());
                 if (isTestMode()) {
                     date = "Now";
                     count = "cnt";
