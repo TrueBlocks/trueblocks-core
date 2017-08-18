@@ -96,8 +96,8 @@ namespace qblocks {
 
             } else if (arg == "--version") {
 #define MAJOR 0
-#define MINOR 0
-#define BUILD 2
+#define MINOR 2
+#define BUILD 0
 #define SUBVERS "alpha"
                 SFString r1 = __DATE__;
                 SFString r2 = __TIME__;
