@@ -30,7 +30,7 @@ CParams params[] = {
     CParams("@--reverse",   "display results sorted in reverse chronological order (chronological by default)"),
     CParams("@--acct_id",   "for 'cache' mode, use this as the :acct_id for the cache (0 otherwise)"),
     CParams("@--cache",     "write the data to a local QuickBlocks cache"),
-    CParams("-clear",       "clear all previously cached slurps"),
+    CParams("@--clear",     "clear all previously cached slurps"),
     CParams("",             "Fetches data off the Ethereum blockchain for an arbitrary account or smart contract. "
                             "Optionally formats the output to your specification.\n"),
 };
