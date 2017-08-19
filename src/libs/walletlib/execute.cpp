@@ -126,8 +126,8 @@ void QExecute::registerClass(void) {
     CTransaction::registerClass();
 
     uint32_t fieldNum = 1000;
-    ADD_FIELD(QExecute, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
-    ADD_FIELD(QExecute, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
+    ADD_FIELD(QExecute, "schema",  T_NUMBER, ++fieldNum);
+    ADD_FIELD(QExecute, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(QExecute, "_to", T_TEXT, ++fieldNum);
     ADD_FIELD(QExecute, "_value", T_NUMBER, ++fieldNum);
     ADD_FIELD(QExecute, "_data", T_TEXT, ++fieldNum);

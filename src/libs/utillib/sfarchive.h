@@ -26,12 +26,12 @@ namespace qblocks {
         VISITARCHIVEFUNC readMsgFunc;
 
         SFArchive(bool isReading, uint32_t schema, bool writeDeleted) {
-            m_isReading    = isReading;
-            m_archiveSchema       = schema;
-            m_writeDeleted = writeDeleted;
-            pParent        = NULL;
-            writeMsgFunc   = NULL;
-            readMsgFunc    = NULL;
+            m_isReading     = isReading;
+            m_archiveSchema = schema;
+            m_writeDeleted  = writeDeleted;
+            pParent         = NULL;
+            writeMsgFunc    = NULL;
+            readMsgFunc     = NULL;
         }
         bool writeDeleted(void) const {
             return (m_writeDeleted);

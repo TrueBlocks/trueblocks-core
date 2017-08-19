@@ -126,8 +126,8 @@ void QTransferFrom::registerClass(void) {
     CTransaction::registerClass();
 
     uint32_t fieldNum = 1000;
-    ADD_FIELD(QTransferFrom, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
-    ADD_FIELD(QTransferFrom, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
+    ADD_FIELD(QTransferFrom, "schema",  T_NUMBER, ++fieldNum);
+    ADD_FIELD(QTransferFrom, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(QTransferFrom, "_from", T_TEXT, ++fieldNum);
     ADD_FIELD(QTransferFrom, "_to", T_TEXT, ++fieldNum);
     ADD_FIELD(QTransferFrom, "_value", T_NUMBER, ++fieldNum);

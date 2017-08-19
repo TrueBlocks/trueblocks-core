@@ -109,8 +109,8 @@ void QResetSpentToday::registerClass(void) {
     CTransaction::registerClass();
 
     uint32_t fieldNum = 1000;
-    ADD_FIELD(QResetSpentToday, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
-    ADD_FIELD(QResetSpentToday, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
+    ADD_FIELD(QResetSpentToday, "schema",  T_NUMBER, ++fieldNum);
+    ADD_FIELD(QResetSpentToday, "deleted", T_BOOL,  ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(QResetSpentToday, "schema");

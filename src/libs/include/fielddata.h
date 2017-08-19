@@ -12,23 +12,28 @@
 namespace qblocks {
 
     //-------------------------------------------------------------------------
-    #define TS_LABEL   (1<<10)
-    #define TS_DATE    (1<<12)
-    #define TS_ARRAY   (1<<14)
-    #define TS_NUMERAL (1<<15)
-    #define TS_OBJECT  (1<<16)
+    #define TS_NUMERAL (1<<16)
+    #define TS_STRING  (1<<17)
+    #define TS_DATE    (1<<18)
+    #define TS_ARRAY   (1<<19)
+    #define TS_OBJECT  (1<<20)
+    #define TS_POINTER (1<<21)
 
-    #define T_DATE     (4 | TS_DATE)
-    #define T_TIME     (5 | TS_DATE)
-
-    #define T_TEXT     (10)
-    #define T_BOOL     (12)
-    #define T_NUMBER   (14 | TS_NUMERAL)
-    #define T_BLOOM    (16)
-    #define T_POINTER  (18)
-    #define T_FLOAT    T_NUMBER
-    #define T_DOUBLE   T_NUMBER
-    #define T_WEI      T_NUMBER
+    #define T_DATE     ( 6 | TS_DATE   )
+    #define T_TIME     ( 8 | TS_DATE   )
+    #define T_BOOL     (10 | TS_NUMERAL)
+    #define T_NUMBER   (12 | TS_NUMERAL)
+    #define T_FLOAT    (14 | TS_NUMERAL)
+    #define T_DOUBLE   (16 | TS_NUMERAL)
+    #define T_WEI      (18 | TS_NUMERAL)
+    #define T_GAS      (20 | TS_NUMERAL)
+    #define T_ETHER    (22 | TS_NUMERAL)
+    #define T_TEXT     (24 | TS_STRING )
+    #define T_ADDRESS  (26 | TS_STRING )
+    #define T_HASH     (28 | TS_STRING )
+    #define T_BLOOM    (30 | TS_STRING )
+    #define T_POINTER  (32 | TS_POINTER)
+    #define T_OBJECT   (34 | TS_OBJECT )
 
     //-------------------------------------------------------------------------
     class CFieldData {
@@ -46,6 +51,10 @@ namespace qblocks {
 
         bool isObject(void) const { return m_fieldType & TS_OBJECT; }
         bool isArray (void) const { return m_fieldType & TS_ARRAY;  }
+
+        SFString getName(void) const { return m_fieldName; }
+        uint32_t getID  (void) const { return m_fieldID;   }
+        uint32_t getType(void) const { return m_fieldType; }
 
         bool operator==(const CFieldData& data) {
             if (m_fieldName != data.m_fieldName) return false;

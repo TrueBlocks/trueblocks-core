@@ -173,6 +173,8 @@ extern SFArchive& operator>>(SFArchive& archive, CNewBlock& newp);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
+bool readOneNewBlock_fromBinary(CNewBlock& block, const SFString& fileName);
+bool readOneNewBlock_fromJson(CNewBlock& block, const SFString& fileName);
 // EXISTING_CODE
 }  // namespace qblocks
 

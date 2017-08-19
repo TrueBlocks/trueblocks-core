@@ -126,8 +126,8 @@ void QTransferEvent::registerClass(void) {
     CLogEntry::registerClass();
 
     uint32_t fieldNum = 1000;
-    ADD_FIELD(QTransferEvent, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
-    ADD_FIELD(QTransferEvent, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
+    ADD_FIELD(QTransferEvent, "schema",  T_NUMBER, ++fieldNum);
+    ADD_FIELD(QTransferEvent, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(QTransferEvent, "_from", T_TEXT, ++fieldNum);
     ADD_FIELD(QTransferEvent, "_to", T_TEXT, ++fieldNum);
     ADD_FIELD(QTransferEvent, "_value", T_NUMBER, ++fieldNum);

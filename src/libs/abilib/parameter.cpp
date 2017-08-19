@@ -152,8 +152,8 @@ void CParameter::registerClass(void) {
     been_here = true;
 
     uint32_t fieldNum = 1000;
-    ADD_FIELD(CParameter, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
-    ADD_FIELD(CParameter, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
+    ADD_FIELD(CParameter, "schema",  T_NUMBER, ++fieldNum);
+    ADD_FIELD(CParameter, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CParameter, "indexed", T_BOOL, ++fieldNum);
     ADD_FIELD(CParameter, "name", T_TEXT, ++fieldNum);
     ADD_FIELD(CParameter, "type", T_TEXT, ++fieldNum);

@@ -422,7 +422,7 @@ namespace qblocks {
                     ret += "\"" + val + "\"";
 
 
-                } else if (fld->m_fieldType == T_NUMBER) {
+                } else if (fld->m_fieldType & TS_NUMERAL) {
                     if (expContext().quoteNums) ret += "\"";
                     ret += (expContext().hexNums) ? toHex2(val) : decBigNum(val);
                     if (expContext().quoteNums) ret += "\"";
