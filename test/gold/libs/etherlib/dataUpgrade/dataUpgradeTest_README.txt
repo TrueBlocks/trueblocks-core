@@ -1,11 +1,11 @@
 
   Not enough arguments presented.
 
-  Usage:    dataUpgrade [-t|-v|-h]  
-  Purpose:  Test upgrading from one version of the binary data to the next.
+  Usage:    dataUpgrade [-v|-h] mode  
+  Purpose:  Test upgrading binary data to new format.
              
   Where:    
-	-t  (or --testNum)    test number
+	mode                  either a number between 0 and 5, a C++ quickBlocks class name, the word 'upgradeTest' (required)
 	-v  (or --verbose)    set verbose level. Either -v, --verbose or -v:n where 'n' is level
 	-h  (or --help)       display this help screen
 
