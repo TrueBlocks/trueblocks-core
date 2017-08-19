@@ -42,6 +42,13 @@ namespace qblocks {
         bool isReading(void) const {
             return m_isReading;
         }
+        void resetForWriting(void) {
+            if (isOpen())
+                Release();
+            m_isReading = false;
+            m_archiveSchema = NO_SCHEMA;
+            m_writeDeleted = true;
+        }
 
         SFArchive& operator<<(bool b);
         SFArchive& operator<<(char c);
