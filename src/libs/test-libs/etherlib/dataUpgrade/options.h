@@ -8,7 +8,7 @@
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
-    SFUint32 testNum;
+    int32_t testNum;
     SFString className;
 
     COptions(void);
