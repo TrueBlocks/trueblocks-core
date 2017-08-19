@@ -4,11 +4,6 @@ The `getTrans` tool retrieves transactions from the running Ethereum node (using
 
 Use the `--trace` option to display a trace of the transaction as well.
 
-*See Also*: This command-line tool implements these RPC interfaces:
-[eth_getTransactionByHash](https://github.com/paritytech/parity/wiki/JSONRPC-eth-module#eth_gettransactionbyhash), 
-[eth_getTransactionByBlockNumberAndIndex](https://github.com/paritytech/parity/wiki/JSONRPC-eth-module#eth_gettransactionbyblocknumberandindex),
-[eth_getTransactionByBlockHashAndIndex](https://github.com/paritytech/parity/wiki/JSONRPC-eth-module#eth_gettransactionbyblockhashandindex).
-
 #### Usage
 
 `Usage:`    getTrans [-f|-t|-v|-h] hash bn.transID bh.transID  
@@ -26,6 +21,11 @@ Use the `--trace` option to display a trace of the transaction as well.
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
+*See Also*: This command-line tool implements these RPC interfaces:
+[eth_getTransactionByHash](https://github.com/paritytech/parity/wiki/JSONRPC-eth-module#eth_gettransactionbyhash), 
+[eth_getTransactionByBlockNumberAndIndex](https://github.com/paritytech/parity/wiki/JSONRPC-eth-module#eth_gettransactionbyblocknumberandindex),
+[eth_getTransactionByBlockHashAndIndex](https://github.com/paritytech/parity/wiki/JSONRPC-eth-module#eth_gettransactionbyblockhashandindex).
+
 #### Other Options
 
 All QuickBlocks command-line tools support the following commands (although in some case, they have no meaning):
@@ -42,4 +42,5 @@ All QuickBlocks command-line tools support the following commands (although in s
 *For the `--file:fn` option, place a series of valid command lines in a file and use the above option. In some cases, this option may significantly improve performance. Use semi-colon make comments.*
 
 **Powered by QuickBlocks<sup>&reg;</sup>**
+
 

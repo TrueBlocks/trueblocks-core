@@ -8,10 +8,6 @@ A very useful way to use of this tools is to feed its output into another comman
 
 which would open the [etherscan](http://etherscan.io) website with the address associated with Fred's address(es).
 
-#### Notes
-
-With one search term, search in both `name` and `address` fields. With two terms, the first must match the `address` field, while the second must match the `name` field. When there are two search terms, both must match.
-
 #### Usage
 
 `Usage:`    getBlock [-s|-f|-p|-r|-t|-q|-v|-h] num  
@@ -31,6 +27,10 @@ With one search term, search in both `name` and `address` fields. With two terms
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
+#### Notes
+
+With one search term, search in both `name` and `address` fields. With two terms, the first must match the `address` field, while the second must match the `name` field. When there are two search terms, both must match.
+
 #### Other Options
 
 All QuickBlocks command-line tools support the following commands (although in some case, they have no meaning):
@@ -47,4 +47,5 @@ All QuickBlocks command-line tools support the following commands (although in s
 *For the `--file:fn` option, place a series of valid command lines in a file and use the above option. In some cases, this option may significantly improve performance. Use semi-colon make comments.*
 
 **Powered by QuickBlocks<sup>&reg;</sup>**
+
 

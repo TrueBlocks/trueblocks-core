@@ -1,4 +1,5 @@
 ## [{NAME}]
 
 Testing only
-[{COMMAND_HELP}]
+
+[{USAGE_TABLE}][{FOOTER}]

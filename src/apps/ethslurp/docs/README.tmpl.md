@@ -2,5 +2,4 @@
 
 ethslurp
 
-Portions of this software are Powered by Etherscan.io APIs
-[{COMMAND_HELP}]
+[{USAGE_TABLE}][{FOOTER}]Portions of this software are Powered by Etherscan.io APIs

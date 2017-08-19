@@ -3,6 +3,7 @@
 `makeClass` is the heart of [chifra](../chifra). It builds C++ class and header files from a classDefinition files. Class definitions files are placed in a folder called classDefinition in the folder one wishes the resulting C++ code to appear.
 
 The format of the classDefinition file is described below.
+
 #### Usage
 
 `Usage:`    makeClass [-e|-f|-l|-n|-s|-r|-a|-v|-h] className  
@@ -39,4 +40,5 @@ All QuickBlocks command-line tools support the following commands (although in s
 *For the `--file:fn` option, place a series of valid command lines in a file and use the above option. In some cases, this option may significantly improve performance. Use semi-colon make comments.*
 
 **Powered by QuickBlocks<sup>&reg;</sup>**
+
 

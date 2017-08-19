@@ -2,4 +2,4 @@
 
 `getTrace` returns the traces from the given transaction.
 
-[{COMMAND_HELP}]
+[{USAGE_TABLE}][{FOOTER}]
