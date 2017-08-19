@@ -5,7 +5,7 @@ ethslurp
 Portions of this software are Powered by Etherscan.io APIs
 #### Usage
 
-`Usage:`    ethslurp [-a|-b|-d|-m|-n|-r|-f|-i|-e|-o|-l|-c|-t|-v|-h] addr  
+`Usage:`    ethslurp [-a|-b|-d|-m|-n|-r|-f|-i|-e|-o|-l|-t|-v|-h] addr  
 `Purpose:`  Fetches data off the Ethereum blockchain for an arbitrary account or smart contract. Optionally formats the output to your specification.
              
 `Where:`  
@@ -24,7 +24,6 @@ Portions of this software are Powered by Etherscan.io APIs
 | -e | --expense | include expenditures only |
 | -o | --open | open the configuration file for editing |
 | -l | --list | list previously slurped addresses in cache |
-| -c | --clear | clear all previously cached slurps |
 | -t | --test | generate intermediary files but do not execute the commands |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
