@@ -15,9 +15,6 @@ namespace qblocks {
     typedef CBaseNode* (*PFNV)(void);
 
     //----------------------------------------------------------------------------
-#define NO_SCHEMA 501
-
-    //----------------------------------------------------------------------------
     class CRuntimeClass;
     class CBuiltIn {
     public:
