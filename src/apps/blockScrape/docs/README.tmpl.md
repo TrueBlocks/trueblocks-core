@@ -1,4 +1,5 @@
 ## [{NAME}]
 
 blockScrape
-[{COMMAND_HELP}]
+[{USAGE_TABLE}]
+[{FOOTER}]

@@ -3,8 +3,6 @@
 This simple program may be used to query an Ethereum address to determine if it is a smart contract or simply a 'regular' account. It may also be used to retrieve the actual byte-code from an address (if code is present). Finally, it may be used to compare two addresses to determine if they hold identical 
 code. You may specify multiple addresses on a line.
 
-*See Also*: This command-line tool implements the [eth_getCode](https://github.com/paritytech/parity/wiki/JSONRPC-eth-module#eth_getcode) RPC interface.
-
 #### Usage
 
 `Usage:`    isContract [-d|-n|-v|-h] addr[s]  
@@ -19,6 +17,8 @@ code. You may specify multiple addresses on a line.
 | -n | --nodiff | return 'true' if (exactly) two Ethereum addresses have identical code |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
+
+*See Also*: This command-line tool implements the [eth_getCode](https://github.com/paritytech/parity/wiki/JSONRPC-eth-module#eth_getcode) RPC interface.
 
 #### Other Options
 
@@ -36,4 +36,5 @@ All QuickBlocks command-line tools support the following commands (although in s
 *For the `--file:fn` option, place a series of valid command lines in a file and use the above option. In some cases, this option may significantly improve performance. Use semi-colon make comments.*
 
 **Powered by QuickBlocks<sup>&reg;</sup>**
+
 

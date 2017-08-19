@@ -11,4 +11,4 @@ The `hour`/`minute`/`second` portions of the date are optional, and if omitted, 
 
    Special values: [ iceage | homestead | daofund | daohack | daofork | tangerine | spurious | stateclear | latest ]
 
-[{COMMAND_HELP}]
+[{USAGE_TABLE}][{FOOTER}]

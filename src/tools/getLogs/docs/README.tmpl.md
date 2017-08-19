@@ -2,4 +2,4 @@
 
 `getLogs` returns a transaction's logs (also called generated events).
 
-[{COMMAND_HELP}]
+[{USAGE_TABLE}][{FOOTER}]
