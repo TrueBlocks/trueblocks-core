@@ -20,7 +20,10 @@ bool COptions::parseArguments(SFString& command) {
     Init();
     while (!command.empty()) {
         SFString arg = nextTokenClear(command, ' ');
-        if (arg.startsWith('-')) {  // do not collapse
+        if (arg.startsWith("C")) {
+            className = arg;
+
+        } else if (arg.startsWith('-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);
@@ -37,7 +40,7 @@ void COptions::Init(void) {
     paramsPtr = params;
     nParamsRef = nParams;
 
-    testNum = 0;
+    testNum = -1;
 
     useVerbose = true;
     useTesting = false;

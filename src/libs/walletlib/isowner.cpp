@@ -118,8 +118,8 @@ void QIsOwner::registerClass(void) {
     CTransaction::registerClass();
 
     uint32_t fieldNum = 1000;
-    ADD_FIELD(QIsOwner, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
-    ADD_FIELD(QIsOwner, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
+    ADD_FIELD(QIsOwner, "schema",  T_NUMBER, ++fieldNum);
+    ADD_FIELD(QIsOwner, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(QIsOwner, "_addr", T_TEXT, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like

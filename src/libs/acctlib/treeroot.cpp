@@ -118,8 +118,8 @@ void CTreeRoot::registerClass(void) {
     been_here = true;
 
     uint32_t fieldNum = 1000;
-    ADD_FIELD(CTreeRoot, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
-    ADD_FIELD(CTreeRoot, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
+    ADD_FIELD(CTreeRoot, "schema",  T_NUMBER, ++fieldNum);
+    ADD_FIELD(CTreeRoot, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CTreeRoot, "m_root", T_POINTER, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like

@@ -137,8 +137,8 @@ void CLeaf::registerClass(void) {
     CTreeNode::registerClass();
 
     uint32_t fieldNum = 1000;
-    ADD_FIELD(CLeaf, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
-    ADD_FIELD(CLeaf, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
+    ADD_FIELD(CLeaf, "schema",  T_NUMBER, ++fieldNum);
+    ADD_FIELD(CLeaf, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CLeaf, "blocks", T_TEXT|TS_ARRAY, ++fieldNum);
     ADD_FIELD(CLeaf, "cnt", T_NUMBER, ++fieldNum);
 

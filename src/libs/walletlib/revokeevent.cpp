@@ -122,8 +122,8 @@ void QRevokeEvent::registerClass(void) {
     CLogEntry::registerClass();
 
     uint32_t fieldNum = 1000;
-    ADD_FIELD(QRevokeEvent, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
-    ADD_FIELD(QRevokeEvent, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
+    ADD_FIELD(QRevokeEvent, "schema",  T_NUMBER, ++fieldNum);
+    ADD_FIELD(QRevokeEvent, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(QRevokeEvent, "owner", T_TEXT, ++fieldNum);
     ADD_FIELD(QRevokeEvent, "operation", T_TEXT, ++fieldNum);
 

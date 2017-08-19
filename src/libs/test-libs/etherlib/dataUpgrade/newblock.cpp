@@ -224,17 +224,17 @@ void CNewBlock::registerClass(void) {
     been_here = true;
 
     uint32_t fieldNum = 1000;
-    ADD_FIELD(CNewBlock, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
-    ADD_FIELD(CNewBlock, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
-    ADD_FIELD(CNewBlock, "gasLimit", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CNewBlock, "gasUsed", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CNewBlock, "hash", T_TEXT, ++fieldNum);
+    ADD_FIELD(CNewBlock, "schema",  T_NUMBER, ++fieldNum);
+    ADD_FIELD(CNewBlock, "deleted", T_BOOL,  ++fieldNum);
+    ADD_FIELD(CNewBlock, "gasLimit", T_GAS, ++fieldNum);
+    ADD_FIELD(CNewBlock, "gasUsed", T_GAS, ++fieldNum);
+    ADD_FIELD(CNewBlock, "hash", T_HASH, ++fieldNum);
     ADD_FIELD(CNewBlock, "logsBloom", T_BLOOM, ++fieldNum);
     ADD_FIELD(CNewBlock, "blockNumber", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CNewBlock, "parentHash", T_TEXT, ++fieldNum);
+    ADD_FIELD(CNewBlock, "parentHash", T_HASH, ++fieldNum);
     ADD_FIELD(CNewBlock, "timestamp", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CNewBlock, "transactions", T_TEXT|TS_ARRAY, ++fieldNum);
-    ADD_FIELD(CNewBlock, "miner", T_TEXT, ++fieldNum);
+    ADD_FIELD(CNewBlock, "transactions", T_OBJECT|TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CNewBlock, "miner", T_ADDRESS, ++fieldNum);
     ADD_FIELD(CNewBlock, "size", T_NUMBER, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
@@ -335,6 +335,38 @@ CNewBlock::CNewBlock(const CBlock& block) {
     transactions = block.transactions;
     // miner;
     // size;
+}
+
+//-----------------------------------------------------------------------
+bool readOneNewBlock_fromBinary(CNewBlock& block, const SFString& fileName) {
+    block = CNewBlock(); // reset
+    SFArchive archive(true, curVersion, true);
+    if (archive.Lock(fileName, binaryReadOnly, LOCK_NOWAIT))
+    {
+        block.Serialize(archive);
+        archive.Close();
+        return block.blockNumber;
+    }
+    return false;
+}
+
+//-----------------------------------------------------------------------
+bool readOneNewBlock_fromJson(CNewBlock& block, const SFString& fileName) {
+    block = CNewBlock(); // reset
+    SFString contents = asciiFileToString(fileName);
+    if (contents.Contains("null")) {
+        contents.ReplaceAll("null", "\"0x\"");
+        stringToAsciiFile(fileName, contents);
+    }
+
+    if (!contents.endsWith('\n')) {
+        stringToAsciiFile(fileName, contents+"\n");
+    }
+
+    char *p = cleanUpJson((char *)(const char*)contents);
+    uint32_t nFields=0;
+    block.parseJson(p,nFields);
+    return nFields;
 }
 // EXISTING_CODE
 }  // namespace qblocks

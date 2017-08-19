@@ -204,18 +204,18 @@ void CAccountWatch::registerClass(void) {
     been_here = true;
 
     uint32_t fieldNum = 1000;
-    ADD_FIELD(CAccountWatch, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
-    ADD_FIELD(CAccountWatch, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
+    ADD_FIELD(CAccountWatch, "schema",  T_NUMBER, ++fieldNum);
+    ADD_FIELD(CAccountWatch, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CAccountWatch, "index", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CAccountWatch, "address", T_TEXT, ++fieldNum);
+    ADD_FIELD(CAccountWatch, "address", T_ADDRESS, ++fieldNum);
     ADD_FIELD(CAccountWatch, "name", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccountWatch, "color", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccountWatch, "firstBlock", T_NUMBER, ++fieldNum);
     ADD_FIELD(CAccountWatch, "lastBlock", T_NUMBER, ++fieldNum);
     ADD_FIELD(CAccountWatch, "status", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccountWatch, "deepScan", T_BOOL, ++fieldNum);
-    ADD_FIELD(CAccountWatch, "qbis", T_TEXT|TS_OBJECT, ++fieldNum);
-    ADD_FIELD(CAccountWatch, "nodeBal", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CAccountWatch, "qbis", T_OBJECT, ++fieldNum);
+    ADD_FIELD(CAccountWatch, "nodeBal", T_WEI, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CAccountWatch, "schema");

@@ -266,24 +266,24 @@ void CTransaction::registerClass(void) {
     been_here = true;
 
     uint32_t fieldNum = 1000;
-    ADD_FIELD(CTransaction, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
-    ADD_FIELD(CTransaction, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
-    ADD_FIELD(CTransaction, "hash", T_TEXT, ++fieldNum);
-    ADD_FIELD(CTransaction, "blockHash", T_TEXT, ++fieldNum);
+    ADD_FIELD(CTransaction, "schema",  T_NUMBER, ++fieldNum);
+    ADD_FIELD(CTransaction, "deleted", T_BOOL,  ++fieldNum);
+    ADD_FIELD(CTransaction, "hash", T_HASH, ++fieldNum);
+    ADD_FIELD(CTransaction, "blockHash", T_HASH, ++fieldNum);
     ADD_FIELD(CTransaction, "blockNumber", T_NUMBER, ++fieldNum);
     ADD_FIELD(CTransaction, "transactionIndex", T_NUMBER, ++fieldNum);
     ADD_FIELD(CTransaction, "nonce", T_NUMBER, ++fieldNum);
     ADD_FIELD(CTransaction, "timestamp", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CTransaction, "from", T_TEXT, ++fieldNum);
-    ADD_FIELD(CTransaction, "to", T_TEXT, ++fieldNum);
+    ADD_FIELD(CTransaction, "from", T_ADDRESS, ++fieldNum);
+    ADD_FIELD(CTransaction, "to", T_ADDRESS, ++fieldNum);
     ADD_FIELD(CTransaction, "value", T_WEI, ++fieldNum);
-    ADD_FIELD(CTransaction, "gas", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CTransaction, "gasPrice", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CTransaction, "cumulativeGasUsed", T_WEI, ++fieldNum);
+    ADD_FIELD(CTransaction, "gas", T_GAS, ++fieldNum);
+    ADD_FIELD(CTransaction, "gasPrice", T_WEI, ++fieldNum);
+    ADD_FIELD(CTransaction, "cumulativeGasUsed", T_GAS, ++fieldNum);
     ADD_FIELD(CTransaction, "input", T_TEXT, ++fieldNum);
-    ADD_FIELD(CTransaction, "isError", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CTransaction, "isInternalTx", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CTransaction, "receipt", T_TEXT|TS_OBJECT, ++fieldNum);
+    ADD_FIELD(CTransaction, "isError", T_BOOL, ++fieldNum);
+    ADD_FIELD(CTransaction, "isInternalTx", T_BOOL, ++fieldNum);
+    ADD_FIELD(CTransaction, "receipt", T_OBJECT, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CTransaction, "schema");
@@ -298,11 +298,11 @@ void CTransaction::registerClass(void) {
     HIDE_FIELD(CTransaction, "confirmations");
 
     // Add custom fields
-    ADD_FIELD(CTransaction, "gasCost", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CTransaction, "gasCost", T_WEI, ++fieldNum);
     ADD_FIELD(CTransaction, "function", T_TEXT, ++fieldNum);
-    ADD_FIELD(CTransaction, "gasUsed", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CTransaction, "gasUsed", T_GAS, ++fieldNum);
     ADD_FIELD(CTransaction, "date", T_DATE, ++fieldNum);
-    ADD_FIELD(CTransaction, "ether", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CTransaction, "ether", T_ETHER, ++fieldNum);
 
     // Hide fields we don't want to show by default
     HIDE_FIELD(CTransaction, "function");

@@ -1,0 +1,63 @@
+dataUpgrade argc: 2 [1:CPriceQuote] 
+dataUpgrade CPriceQuote 
+--------------------------------------------------------------------------------
+className: CPriceQuote
+objectSize: 112
+classSchema: 513
+baseClass: CBaseNode
+	fieldName: schema
+	  fieldID: 1001
+	  fieldType: T_NUMBER TS_NUMERAL 65548
+	  hidden: 1
+	fieldName: deleted
+	  fieldID: 1002
+	  fieldType: T_BOOL TS_NUMERAL 65546
+	  hidden: 1
+	fieldName: timestamp
+	  fieldID: 1003
+	  fieldType: T_NUMBER TS_NUMERAL 65548
+	  hidden: 0
+	fieldName: open
+	  fieldID: 1004
+	  fieldType: T_DOUBLE TS_NUMERAL 65552
+	  hidden: 0
+	fieldName: high
+	  fieldID: 1005
+	  fieldType: T_DOUBLE TS_NUMERAL 65552
+	  hidden: 0
+	fieldName: low
+	  fieldID: 1006
+	  fieldType: T_DOUBLE TS_NUMERAL 65552
+	  hidden: 0
+	fieldName: close
+	  fieldID: 1007
+	  fieldType: T_DOUBLE TS_NUMERAL 65552
+	  hidden: 0
+	fieldName: quoteVolume
+	  fieldID: 1008
+	  fieldType: T_DOUBLE TS_NUMERAL 65552
+	  hidden: 0
+	fieldName: volume
+	  fieldID: 1009
+	  fieldType: T_DOUBLE TS_NUMERAL 65552
+	  hidden: 0
+	fieldName: weightedAvg
+	  fieldID: 1010
+	  fieldType: T_DOUBLE TS_NUMERAL 65552
+	  hidden: 0
+	fieldName: date
+	  fieldID: 1011
+	  fieldType: T_DATE TS_DATE 262150
+	  hidden: 0
+{
+  "timestamp": 0,
+  "open": 0,
+  "high": 0,
+  "low": 0,
+  "close": 0,
+  "quoteVolume": 0,
+  "volume": 0,
+  "weightedAvg": 0,
+  "date": "1700-01-01 00:00:01 UTC"
+}
+

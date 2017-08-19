@@ -142,8 +142,8 @@ void CAccountName::registerClass(void) {
     been_here = true;
 
     uint32_t fieldNum = 1000;
-    ADD_FIELD(CAccountName, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
-    ADD_FIELD(CAccountName, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
+    ADD_FIELD(CAccountName, "schema",  T_NUMBER, ++fieldNum);
+    ADD_FIELD(CAccountName, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CAccountName, "symbol", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccountName, "name", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccountName, "addr", T_TEXT, ++fieldNum);

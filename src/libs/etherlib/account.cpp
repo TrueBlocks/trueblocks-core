@@ -182,16 +182,16 @@ void CAccount::registerClass(void) {
     been_here = true;
 
     uint32_t fieldNum = 1000;
-    ADD_FIELD(CAccount, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
-    ADD_FIELD(CAccount, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
-    ADD_FIELD(CAccount, "addr", T_TEXT, ++fieldNum);
+    ADD_FIELD(CAccount, "schema",  T_NUMBER, ++fieldNum);
+    ADD_FIELD(CAccount, "deleted", T_BOOL,  ++fieldNum);
+    ADD_FIELD(CAccount, "addr", T_ADDRESS, ++fieldNum);
     ADD_FIELD(CAccount, "header", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccount, "displayString", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccount, "pageSize", T_NUMBER, ++fieldNum);
     ADD_FIELD(CAccount, "lastPage", T_NUMBER, ++fieldNum);
     ADD_FIELD(CAccount, "lastBlock", T_NUMBER, ++fieldNum);
     ADD_FIELD(CAccount, "nVisible", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CAccount, "transactions", T_TEXT|TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CAccount, "transactions", T_OBJECT|TS_ARRAY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CAccount, "schema");
