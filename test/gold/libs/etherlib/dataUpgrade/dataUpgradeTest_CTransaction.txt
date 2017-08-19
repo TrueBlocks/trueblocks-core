@@ -47,19 +47,19 @@ baseClass: CBaseNode
 	  hidden: 0
 	fieldName: value
 	  fieldID: 1011
-	  fieldType: T_WEI TS_NUMERAL 65554
+	  fieldType: T_WEI TS_NUMERAL 4259858 TS_BIGNUM 4259858
 	  hidden: 0
 	fieldName: gas
 	  fieldID: 1012
-	  fieldType: T_GAS TS_NUMERAL 65556
+	  fieldType: T_GAS TS_NUMERAL 4259860 TS_BIGNUM 4259860
 	  hidden: 0
 	fieldName: gasPrice
 	  fieldID: 1013
-	  fieldType: T_WEI TS_NUMERAL 65554
+	  fieldType: T_WEI TS_NUMERAL 4259858 TS_BIGNUM 4259858
 	  hidden: 0
 	fieldName: cumulativeGasUsed
 	  fieldID: 1014
-	  fieldType: T_GAS TS_NUMERAL 65556
+	  fieldType: T_GAS TS_NUMERAL 4259860 TS_BIGNUM 4259860
 	  hidden: 0
 	fieldName: input
 	  fieldID: 1015
@@ -83,7 +83,7 @@ baseClass: CBaseNode
 	  hidden: 1
 	fieldName: gasCost
 	  fieldID: 1020
-	  fieldType: T_WEI TS_NUMERAL 65554
+	  fieldType: T_WEI TS_NUMERAL 4259858 TS_BIGNUM 4259858
 	  hidden: 1
 	fieldName: function
 	  fieldID: 1021
@@ -91,7 +91,7 @@ baseClass: CBaseNode
 	  hidden: 1
 	fieldName: gasUsed
 	  fieldID: 1022
-	  fieldType: T_GAS TS_NUMERAL 65556
+	  fieldType: T_GAS TS_NUMERAL 4259860 TS_BIGNUM 4259860
 	  hidden: 0
 	fieldName: date
 	  fieldID: 1023
@@ -99,7 +99,7 @@ baseClass: CBaseNode
 	  hidden: 1
 	fieldName: ether
 	  fieldID: 1024
-	  fieldType: T_ETHER TS_NUMERAL 65558
+	  fieldType: T_ETHER TS_NUMERAL 4259862 TS_BIGNUM 4259862
 	  hidden: 1
 {
   "hash": "0x0",

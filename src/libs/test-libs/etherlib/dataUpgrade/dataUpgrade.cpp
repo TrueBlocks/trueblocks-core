@@ -154,6 +154,7 @@ SFString baseTypeName(SFUint32 type) {
     if (type & TS_ARRAY)   ret += (" TS_ARRAY "   + asString(type));
     if (type & TS_OBJECT)  ret += (" TS_OBJECT "  + asString(type));
     if (type & TS_POINTER) ret += (" TS_POINTER " + asString(type));
+    if (type & TS_BIGNUM)  ret += (" TS_BIGNUM "  + asString(type));
     return Strip(ret.Substitute("  "," "), ' ');
 }
 
@@ -163,7 +164,6 @@ SFString typeName(SFUint32 type) {
     if (type == T_TIME)    return "T_TIME "    + baseTypeName(type);
     if (type == T_BOOL)    return "T_BOOL "    + baseTypeName(type);
     if (type == T_NUMBER)  return "T_NUMBER "  + baseTypeName(type);
-    if (type == T_FLOAT)   return "T_FLOAT "   + baseTypeName(type);
     if (type == T_DOUBLE)  return "T_DOUBLE "  + baseTypeName(type);
     if (type == T_WEI)     return "T_WEI "     + baseTypeName(type);
     if (type == T_GAS)     return "T_GAS "     + baseTypeName(type);
@@ -175,7 +175,7 @@ SFString typeName(SFUint32 type) {
     if (type == T_POINTER) return "T_POINTER " + baseTypeName(type);
     if (type == T_OBJECT)  return "T_OBJECT "  + baseTypeName(type);
 
-     if (type == (T_OBJECT|TS_ARRAY))  return "T_OBJECT|TS_ARRAY "  + baseTypeName(type);
+    if (type == (T_OBJECT|TS_ARRAY))  return "T_OBJECT|TS_ARRAY "  + baseTypeName(type);
     if (type == (T_TEXT|TS_ARRAY))    return "T_TEXT|TS_ARRAY "    + baseTypeName(type);
     if (type == (T_ADDRESS|TS_ARRAY)) return "T_ADDRESS|TS_ARRAY " + baseTypeName(type);
 

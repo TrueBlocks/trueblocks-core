@@ -51,7 +51,7 @@ baseClass: CBaseNode
 	  hidden: 0
 	fieldName: nodeBal
 	  fieldID: 1012
-	  fieldType: T_WEI TS_NUMERAL 65554
+	  fieldType: T_WEI TS_NUMERAL 4259858 TS_BIGNUM 4259858
 	  hidden: 0
 {
   "index": 0,
