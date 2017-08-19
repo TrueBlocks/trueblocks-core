@@ -9,8 +9,8 @@
 
 //---------------------------------------------------------------------------------------------------
 CParams params[] = {
-    CParams("-testNum", "test number"),
-    CParams("",         "Test upgrading from one version of the binary data to the next.\n"),
+    CParams("~mode", "either a number between 0 and 5, a C++ quickBlocks class name, the word 'upgradeTest'"),
+    CParams("",      "Test upgrading binary data to new format.\n"),
 };
 uint32_t nParams = sizeof(params) / sizeof(CParams);
 

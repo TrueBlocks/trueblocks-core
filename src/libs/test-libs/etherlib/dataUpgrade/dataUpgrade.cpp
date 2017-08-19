@@ -31,7 +31,7 @@ int main(int argc, const char *argv[]) {
 
         if (options.testNum != -1)
             testReadWrite(options);
-        else
+        else if (!options.className.empty())
             testUpgrade(options);
     }
 
@@ -116,6 +116,7 @@ bool testReadWrite(COptions& options) {
     return true;
 }
 
+//--------------------------------------------------------------
 CBaseNode *getNode(const SFString& nodeType) {
     CBaseNode *node = NULL;
          if (nodeType == "CAbi")             node = CAbi::CreateObject();
@@ -146,6 +147,7 @@ CBaseNode *getNode(const SFString& nodeType) {
     return node;
 }
 
+//--------------------------------------------------------------
 SFString baseTypeName(SFUint32 type) {
     SFString ret;
     if (type & TS_NUMERAL) ret += (" TS_NUMERAL " + asString(type));
@@ -158,6 +160,7 @@ SFString baseTypeName(SFUint32 type) {
     return Strip(ret.Substitute("  "," "), ' ');
 }
 
+//--------------------------------------------------------------
 SFString typeName(SFUint32 type) {
 
     if (type == T_DATE)    return "T_DATE "    + baseTypeName(type);
@@ -182,6 +185,7 @@ SFString typeName(SFUint32 type) {
     return "Unknown" + asString(type);
 }
 
+//--------------------------------------------------------------
 bool testUpgrade(COptions& options) {
 
     CBaseNode *node = getNode(options.className);
