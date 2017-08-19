@@ -120,11 +120,7 @@ int main(int argc, const char *argv[]) {
 
             // The cache may have been opened for reading during displayFromCache, so we
             // close it here, so we can open it back up as append only
-            if (visitor.cache.isOpen())
-                visitor.cache.Release();
-            visitor.cache.m_isReading = false;
-            visitor.cache.m_archiveSchema = NO_SCHEMA;
-            visitor.cache.m_writeDeleted = true;
+            visitor.cache.setForWriting();
             if (visitor.cache.Lock(cacheFileName, "a+", LOCK_WAIT)) {
                 forEveryBloomFile(updateCacheUsingBlooms, &visitor, visitor.blockStats.firstBlock, visitor.blockStats.nBlocks);
                 visitor.cache.Release();
