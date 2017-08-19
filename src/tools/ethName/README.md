@@ -27,6 +27,15 @@ which would open the [etherscan](http://etherscan.io) website with the address a
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
+#### Notes
+
+With one search term, search in both `name` and `address` fields. With two terms, the first must match the `address` field, while the second must match the `name` field. When there are two search terms, both must match.
+
+If one mixes options, the `edit` option always predominates. If present, the program opens the database and then quits. The `--list` option predominates otherwise. If 
+present the tool will display a list of all items. The `--count` option works with any other option and will simply display the number of matches or '0 matches' if 
+none. The `--matchCase` option requires case sensitive matching. It works with all other options. The `--addrOnly` option modifies the display output and therefore 
+works with any other options.
+
 #### Other Options
 
 All QuickBlocks command-line tools support the following commands (although in some case, they have no meaning):
@@ -44,12 +53,3 @@ All QuickBlocks command-line tools support the following commands (although in s
 
 **Powered by QuickBlocks<sup>&reg;</sup>**
 
-
-#### Notes
-
-With one search term, search in both `name` and `address` fields. With two terms, the first must match the `address` field, while the second must match the `name` field. When there are two search terms, both must match.
-
-If one mixes options, the `edit` option always predominates. If present, the program opens the database and then quits. The `--list` option predominates otherwise. If 
-present the tool will display a list of all items. The `--count` option works with any other option and will simply display the number of matches or '0 matches' if 
-none. The `--matchCase` option requires case sensitive matching. It works with all other options. The `--addrOnly` option modifies the display output and therefore 
-works with any other options.
