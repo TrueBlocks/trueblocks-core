@@ -1,0 +1,58 @@
+dataUpgrade argc: 2 [1:CFunction] 
+dataUpgrade CFunction 
+--------------------------------------------------------------------------------
+className: CFunction
+objectSize: 184
+classSchema: 513
+baseClass: CBaseNode
+	fieldName: schema
+	  fieldID: 1001
+	  fieldType: T_NUMBER TS_NUMERAL 65548
+	  hidden: 1
+	fieldName: deleted
+	  fieldID: 1002
+	  fieldType: T_BOOL TS_NUMERAL 65546
+	  hidden: 1
+	fieldName: name
+	  fieldID: 1003
+	  fieldType: T_TEXT TS_STRING 131096
+	  hidden: 0
+	fieldName: type
+	  fieldID: 1004
+	  fieldType: T_TEXT TS_STRING 131096
+	  hidden: 0
+	fieldName: anonymous
+	  fieldID: 1005
+	  fieldType: T_BOOL TS_NUMERAL 65546
+	  hidden: 1
+	fieldName: constant
+	  fieldID: 1006
+	  fieldType: T_BOOL TS_NUMERAL 65546
+	  hidden: 0
+	fieldName: payable
+	  fieldID: 1007
+	  fieldType: T_BOOL TS_NUMERAL 65546
+	  hidden: 0
+	fieldName: signature
+	  fieldID: 1008
+	  fieldType: T_TEXT TS_STRING 131096
+	  hidden: 0
+	fieldName: encoding
+	  fieldID: 1009
+	  fieldType: T_TEXT TS_STRING 131096
+	  hidden: 0
+	fieldName: inputs
+	  fieldID: 1010
+	  fieldType: T_OBJECT|TS_ARRAY TS_ARRAY 1572898 TS_OBJECT 1572898
+	  hidden: 0
+	fieldName: outputs
+	  fieldID: 1011
+	  fieldType: T_OBJECT|TS_ARRAY TS_ARRAY 1572898 TS_OBJECT 1572898
+	  hidden: 0
+{
+  "constant": 0,
+  "payable": 0,
+  "inputs": [],
+  "outputs": []
+}
+

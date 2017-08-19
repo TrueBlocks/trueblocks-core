@@ -125,8 +125,8 @@ void CTreeNode::registerClass(void) {
     been_here = true;
 
     uint32_t fieldNum = 1000;
-    ADD_FIELD(CTreeNode, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
-    ADD_FIELD(CTreeNode, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
+    ADD_FIELD(CTreeNode, "schema",  T_NUMBER, ++fieldNum);
+    ADD_FIELD(CTreeNode, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CTreeNode, "index", T_NUMBER, ++fieldNum);
     ADD_FIELD(CTreeNode, "m_prefix", T_TEXT, ++fieldNum);
 

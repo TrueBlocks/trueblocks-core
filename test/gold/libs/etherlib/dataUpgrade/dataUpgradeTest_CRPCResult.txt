@@ -1,0 +1,30 @@
+dataUpgrade argc: 2 [1:CRPCResult] 
+dataUpgrade CRPCResult 
+--------------------------------------------------------------------------------
+className: CRPCResult
+objectSize: 112
+classSchema: 513
+baseClass: CBaseNode
+	fieldName: schema
+	  fieldID: 1001
+	  fieldType: T_NUMBER TS_NUMERAL 65548
+	  hidden: 1
+	fieldName: deleted
+	  fieldID: 1002
+	  fieldType: T_BOOL TS_NUMERAL 65546
+	  hidden: 1
+	fieldName: jsonrpc
+	  fieldID: 1003
+	  fieldType: T_TEXT TS_STRING 131096
+	  hidden: 0
+	fieldName: result
+	  fieldID: 1004
+	  fieldType: T_TEXT TS_STRING 131096
+	  hidden: 0
+	fieldName: id
+	  fieldID: 1005
+	  fieldType: T_TEXT TS_STRING 131096
+	  hidden: 0
+{
+}
+

@@ -100,8 +100,8 @@ void [{CLASS_NAME}]::registerClass(void) {
     been_here = true;
 
     [{PARENT_REG}]uint32_t fieldNum = 1000;
-    ADD_FIELD([{CLASS_NAME}], "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
-    ADD_FIELD([{CLASS_NAME}], "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
+    ADD_FIELD([{CLASS_NAME}], "schema",  T_NUMBER, ++fieldNum);
+    ADD_FIELD([{CLASS_NAME}], "deleted", T_BOOL,  ++fieldNum);
 [REGISTER_FIELDS]
 
     // Hide our internal fields, user can turn them on if they like

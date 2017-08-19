@@ -9,6 +9,7 @@
 class COptions : public COptionsBase {
 public:
     SFUint32 testNum;
+    SFString className;
 
     COptions(void);
     ~COptions(void);

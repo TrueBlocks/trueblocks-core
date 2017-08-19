@@ -209,18 +209,18 @@ void CTrace::registerClass(void) {
     been_here = true;
 
     uint32_t fieldNum = 1000;
-    ADD_FIELD(CTrace, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
-    ADD_FIELD(CTrace, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
-    ADD_FIELD(CTrace, "blockHash", T_TEXT, ++fieldNum);
+    ADD_FIELD(CTrace, "schema",  T_NUMBER, ++fieldNum);
+    ADD_FIELD(CTrace, "deleted", T_BOOL,  ++fieldNum);
+    ADD_FIELD(CTrace, "blockHash", T_HASH, ++fieldNum);
     ADD_FIELD(CTrace, "blockNumber", T_NUMBER, ++fieldNum);
     ADD_FIELD(CTrace, "subtraces", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CTrace, "traceAddress", T_TEXT|TS_ARRAY, ++fieldNum);
-    ADD_FIELD(CTrace, "transactionHash", T_TEXT, ++fieldNum);
+    ADD_FIELD(CTrace, "traceAddress", T_ADDRESS|TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CTrace, "transactionHash", T_HASH, ++fieldNum);
     ADD_FIELD(CTrace, "transactionPosition", T_NUMBER, ++fieldNum);
     ADD_FIELD(CTrace, "type", T_TEXT, ++fieldNum);
     ADD_FIELD(CTrace, "error", T_TEXT, ++fieldNum);
-    ADD_FIELD(CTrace, "action", T_TEXT|TS_OBJECT, ++fieldNum);
-    ADD_FIELD(CTrace, "result", T_TEXT|TS_OBJECT, ++fieldNum);
+    ADD_FIELD(CTrace, "action", T_OBJECT, ++fieldNum);
+    ADD_FIELD(CTrace, "result", T_OBJECT, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CTrace, "schema");

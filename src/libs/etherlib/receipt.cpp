@@ -176,11 +176,11 @@ void CReceipt::registerClass(void) {
     been_here = true;
 
     uint32_t fieldNum = 1000;
-    ADD_FIELD(CReceipt, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
-    ADD_FIELD(CReceipt, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
-    ADD_FIELD(CReceipt, "contractAddress", T_TEXT, ++fieldNum);
-    ADD_FIELD(CReceipt, "gasUsed", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CReceipt, "logs", T_TEXT|TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CReceipt, "schema",  T_NUMBER, ++fieldNum);
+    ADD_FIELD(CReceipt, "deleted", T_BOOL,  ++fieldNum);
+    ADD_FIELD(CReceipt, "contractAddress", T_ADDRESS, ++fieldNum);
+    ADD_FIELD(CReceipt, "gasUsed", T_GAS, ++fieldNum);
+    ADD_FIELD(CReceipt, "logs", T_OBJECT|TS_ARRAY, ++fieldNum);
     ADD_FIELD(CReceipt, "logsBloom", T_BLOOM, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like

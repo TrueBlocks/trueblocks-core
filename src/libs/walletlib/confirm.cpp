@@ -118,8 +118,8 @@ void QConfirm::registerClass(void) {
     CTransaction::registerClass();
 
     uint32_t fieldNum = 1000;
-    ADD_FIELD(QConfirm, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
-    ADD_FIELD(QConfirm, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
+    ADD_FIELD(QConfirm, "schema",  T_NUMBER, ++fieldNum);
+    ADD_FIELD(QConfirm, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(QConfirm, "_h", T_TEXT, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like

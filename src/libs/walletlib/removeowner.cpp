@@ -118,8 +118,8 @@ void QRemoveOwner::registerClass(void) {
     CTransaction::registerClass();
 
     uint32_t fieldNum = 1000;
-    ADD_FIELD(QRemoveOwner, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
-    ADD_FIELD(QRemoveOwner, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
+    ADD_FIELD(QRemoveOwner, "schema",  T_NUMBER, ++fieldNum);
+    ADD_FIELD(QRemoveOwner, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(QRemoveOwner, "_owner", T_TEXT, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like

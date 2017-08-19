@@ -78,6 +78,11 @@ void etherlib_init(const SFString& sourceIn)
     CTrace::registerClass();
     CTraceAction::registerClass();
     CTraceResult::registerClass();
+    CAbi::registerClass();
+    CFunction::registerClass();
+    CParameter::registerClass();
+    CAccount::registerClass();
+    CRPCResult::registerClass();
 
     HIDE_FIELD(CTransaction, "isError");
     HIDE_FIELD(CTransaction, "isInternalTx");

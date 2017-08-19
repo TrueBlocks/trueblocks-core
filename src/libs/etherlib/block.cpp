@@ -200,16 +200,16 @@ void CBlock::registerClass(void) {
     been_here = true;
 
     uint32_t fieldNum = 1000;
-    ADD_FIELD(CBlock, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
-    ADD_FIELD(CBlock, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
-    ADD_FIELD(CBlock, "gasLimit", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CBlock, "gasUsed", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CBlock, "hash", T_TEXT, ++fieldNum);
+    ADD_FIELD(CBlock, "schema",  T_NUMBER, ++fieldNum);
+    ADD_FIELD(CBlock, "deleted", T_BOOL,  ++fieldNum);
+    ADD_FIELD(CBlock, "gasLimit", T_GAS, ++fieldNum);
+    ADD_FIELD(CBlock, "gasUsed", T_GAS, ++fieldNum);
+    ADD_FIELD(CBlock, "hash", T_HASH, ++fieldNum);
     ADD_FIELD(CBlock, "logsBloom", T_BLOOM, ++fieldNum);
     ADD_FIELD(CBlock, "blockNumber", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CBlock, "parentHash", T_TEXT, ++fieldNum);
+    ADD_FIELD(CBlock, "parentHash", T_HASH, ++fieldNum);
     ADD_FIELD(CBlock, "timestamp", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CBlock, "transactions", T_TEXT|TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CBlock, "transactions", T_OBJECT|TS_ARRAY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CBlock, "schema");
