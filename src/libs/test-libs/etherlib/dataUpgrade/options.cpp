@@ -29,7 +29,7 @@ bool COptions::parseArguments(SFString& command) {
                 return usage("Invalid option: " + arg);
             }
         } else {
-            testNum = toUnsigned(arg);
+            testNum = (int32_t)toLong(arg);
         }
     }
     return true;

@@ -23,7 +23,7 @@ baseClass: CBaseNode
 	  hidden: 0
 	fieldName: balance
 	  fieldID: 1005
-	  fieldType: T_WEI TS_NUMERAL 65554
+	  fieldType: T_WEI TS_NUMERAL 4259858 TS_BIGNUM 4259858
 	  hidden: 0
 {
   "txDate": "1700-01-01 00:00:01 UTC",

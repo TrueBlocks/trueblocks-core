@@ -23,7 +23,7 @@ baseClass: CBaseNode
 	  hidden: 0
 	fieldName: gas
 	  fieldID: 1005
-	  fieldType: T_GAS TS_NUMERAL 65556
+	  fieldType: T_GAS TS_NUMERAL 4259860 TS_BIGNUM 4259860
 	  hidden: 0
 	fieldName: input
 	  fieldID: 1006
@@ -35,7 +35,7 @@ baseClass: CBaseNode
 	  hidden: 0
 	fieldName: value
 	  fieldID: 1008
-	  fieldType: T_WEI TS_NUMERAL 65554
+	  fieldType: T_WEI TS_NUMERAL 4259858 TS_BIGNUM 4259858
 	  hidden: 0
 	fieldName: address
 	  fieldID: 1009
@@ -43,7 +43,7 @@ baseClass: CBaseNode
 	  hidden: 0
 	fieldName: balance
 	  fieldID: 1010
-	  fieldType: T_WEI TS_NUMERAL 65554
+	  fieldType: T_WEI TS_NUMERAL 4259858 TS_BIGNUM 4259858
 	  hidden: 0
 	fieldName: refundAddress
 	  fieldID: 1011
