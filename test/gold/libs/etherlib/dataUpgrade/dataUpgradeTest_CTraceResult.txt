@@ -15,7 +15,7 @@ baseClass: CBaseNode
 	  hidden: 1
 	fieldName: gasUsed
 	  fieldID: 1003
-	  fieldType: T_GAS TS_NUMERAL 65556
+	  fieldType: T_GAS TS_NUMERAL 4259860 TS_BIGNUM 4259860
 	  hidden: 0
 	fieldName: output
 	  fieldID: 1004
