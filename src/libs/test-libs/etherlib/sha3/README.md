@@ -1,6 +1,7 @@
 ## sha3
 
 Testing only
+
 #### Usage
 
 `Usage:`    sha3 [-o|-t|-t|-v|-h]  
@@ -32,4 +33,5 @@ All QuickBlocks command-line tools support the following commands (although in s
 *For the `--file:fn` option, place a series of valid command lines in a file and use the above option. In some cases, this option may significantly improve performance. Use semi-colon make comments.*
 
 **Powered by QuickBlocks<sup>&reg;</sup>**
+
 

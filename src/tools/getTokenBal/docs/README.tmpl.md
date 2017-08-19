@@ -6,4 +6,4 @@ If the token contract(s) you're requesting are not ERC20 token standard contract
 
 `getTokenBal` retrieves a token's balance from the local running Ethereum node (not QuickBlocks). Use the `--accounting` option of an account monitor to retrieve the balances from QuickBlocks.
 
-[{COMMAND_HELP}]
+[{USAGE_TABLE}][{FOOTER}]

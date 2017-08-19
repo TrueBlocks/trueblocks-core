@@ -4,4 +4,4 @@
 
 If `whereBlock` return `remote` it went to Infura.
 
-[{COMMAND_HELP}]
+[{USAGE_TABLE}][{FOOTER}]

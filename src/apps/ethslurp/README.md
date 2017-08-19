@@ -2,10 +2,9 @@
 
 ethslurp
 
-Portions of this software are Powered by Etherscan.io APIs
 #### Usage
 
-`Usage:`    ethslurp [-a|-b|-d|-m|-n|-r|-f|-i|-e|-o|-l|-t|-v|-h] addr  
+`Usage:`    ethslurp [-a|-b|-d|-n|-r|-f|-i|-e|-o|-l|-t|-v|-h] addr  
 `Purpose:`  Fetches data off the Ethereum blockchain for an arbitrary account or smart contract. Optionally formats the output to your specification.
              
 `Where:`  
@@ -16,7 +15,6 @@ Portions of this software are Powered by Etherscan.io APIs
 | -a | --archive | filename of output (stdout otherwise) |
 | -b | --blocks | export records in block range (:0[:max]) |
 | -d | --dates | export records in date range (:yyyymmdd[hhmmss][:yyyymmdd[hhmmss]]) |
-| -m | --max | maximum transactions to slurp (:250000) |
 | -n | --name | name this address |
 | -r | --rerun | re-run the most recent slurp |
 | -f | --fmt | pretty print, optionally add ':txt,' ':csv,' or ':html' |
@@ -45,3 +43,4 @@ All QuickBlocks command-line tools support the following commands (although in s
 
 **Powered by QuickBlocks<sup>&reg;</sup>**
 
+Portions of this software are Powered by Etherscan.io APIs

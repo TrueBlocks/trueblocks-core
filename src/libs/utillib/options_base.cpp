@@ -219,7 +219,6 @@ namespace qblocks {
 
     static SFString sep = "  ";
     static SFString sep2 = "";
-    extern const char *STR_FILE_OPTION;
 
     //--------------------------------------------------------------------------------
     int usage(const SFString& errMsg) {
@@ -242,30 +241,10 @@ namespace qblocks {
         os << bYellow << sep << "Usage:" << sep2 << "    " << cOff << programName << " " << options() << "  \n";
         os << purpose();
         os << descriptions() << "\n";
-        if (COptionsBase::isReadme)
-            os << STR_FILE_OPTION;
-        os << bBlue << (COptionsBase::isReadme ? "**" : "  ") << "Powered by QuickBlocks" << (COptionsBase::isReadme ? "<sup>&reg;</sup>**" : "") << "\n" << cOff;
+        if (!COptionsBase::isReadme)
+            os << bBlue << "  Powered by QuickBlocks\n" << cOff;
         return os.str().c_str();
     }
-
-    //--------------------------------------------------------------------------------
-    const char *STR_FILE_OPTION =
-    "#### Other Options\n"
-    "\n"
-    "All QuickBlocks command-line tools support the following commands (although in some case, they have no meaning):\n"
-    "\n"
-    "    Command     |         Description\n"
-    "    -----------------------------------------------------------------------------\n"
-    "    --version   |   display the current version of the tool\n"
-    "    --nocolors  |   turn off colored display\n"
-    "    --wei       |   specify value in wei (the default)\n"
-    "    --ether     |   specify value in ether\n"
-    "    --dollars   |   specify value in US dollars\n"
-    "    --file:fn   |   specify multiple sets of command line options in a file.\n"
-    "\n"
-    "*For the `--file:fn` option, place a series of valid command lines in a file and use the above option. In some cases, "
-    "this option may significantly improve performance. Use semi-colon make comments.*\n"
-    "\n";
 
     //--------------------------------------------------------------------------------
     SFString options(void) {
