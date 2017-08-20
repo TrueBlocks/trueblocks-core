@@ -33,6 +33,11 @@ function(run_test testName)
 endfunction(run_test)
 
 # Enter one line for each individual test
+#
+#   NOTE: OTHER THAN EMPTY.TOML, THESE FILES HAVE NO
+#   PARTICULAR MEANING. I JUST COLLECTED THEM
+#
+run_test("tomlTest_empty"  "empty.toml")
 run_test("tomlTest_test00" "test00.toml")
 run_test("tomlTest_test01" "test01.toml")
 run_test("tomlTest_test02" "test02.toml")
