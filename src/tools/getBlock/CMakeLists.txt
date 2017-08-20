@@ -33,3 +33,10 @@ function(run_test testName)
 endfunction(run_test)
 
 # Enter one line for each individual test
+run_test("getBlock_README" "-th")
+run_test("getBlock_No_Params")
+run_test("getBlock_Empty"  "1001001")
+run_test("getBlock_Bloom"  "4000001")
+run_test("getBlock_Blooms" "1590000" "4000001" "4000002")
+run_test("getBlock_Range" "4000001-4000003")
+run_test("getBlock_BadData" "1590000" "4000001-400002")
