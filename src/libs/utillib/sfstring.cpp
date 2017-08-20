@@ -137,11 +137,48 @@ namespace qblocks {
     }
 
     //---------------------------------------------------------------------------------------
-    int string_q::compare(const char *str) const
+    int string_q::compare(const char* str) const
     {
         return strcmp(m_Values, str);
     }
 
+    //---------------------------------------------------------------------------------------
+    int string_q::compare(size_t pos, size_t len, const char* str) const
+    {
+        SFString compared = m_Values;
+        SFString comparing = str;
+        return compared.substr(pos,len).compare(comparing);
+    }
+
+    //---------------------------------------------------------------------------------------
+    int string_q::compare(size_t pos, size_t len, const char* str, size_t n) const
+    {
+        SFString compared = m_Values;
+        SFString comparing = str;
+        return compared.substr(pos,len).compare(comparing.substr(n));
+    }
+
+    //---------------------------------------------------------------------------------------
+    int string_q::compare(const string_q& str) const
+    {
+        return strcmp(m_Values, str.c_str());
+    }
+
+    //---------------------------------------------------------------------------------------
+    int string_q::compare(size_t pos, size_t len, const string_q& str) const
+    {
+        SFString compared = m_Values;
+        SFString comparing = str.c_str();
+        return compared.substr(pos,len).compare(comparing);
+    }
+
+    //---------------------------------------------------------------------------------------
+    int string_q::compare(size_t pos, size_t len, const string_q& str, size_t subpos, size_t sublen) const
+    {
+        SFString compared = m_Values;
+        SFString comparing = str.c_str();
+        return compared.substr(pos,len).compare(comparing.substr(subpos,sublen));
+    }
     //---------------------------------------------------------------------------------------
     size_t string_q::find(const char *str, size_t pos) const
     {
