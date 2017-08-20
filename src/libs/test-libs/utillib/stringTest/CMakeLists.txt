@@ -33,4 +33,7 @@ function(run_test testName)
 endfunction(run_test)
 
 # Enter one line for each individual test
-run_test("stringTest_00")
+run_test("stringTest_README"     "-th")
+run_test("stringTest_Relational"   "0")
+run_test("stringTest_Compare"      "1")
+run_test("stringTest_CStr"         "2")
