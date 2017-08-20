@@ -6,3 +6,4 @@ test06.toml
 [settings]
 	name=data/054_ChildDAO
 
+Done.
