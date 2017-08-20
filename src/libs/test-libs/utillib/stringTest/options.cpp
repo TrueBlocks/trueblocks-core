@@ -9,8 +9,8 @@
 
 //---------------------------------------------------------------------------------------------------
 CParams params[] = {
-    CParams("~mode", "either a number between 0 and 5, a C++ quickBlocks class name, the word 'upgradeTest'"),
-    CParams("",      "Test upgrading binary data to new format.\n"),
+    CParams("~mode", "a number between 0 and 2 inclusive"),
+    CParams("",      "Test 'c' library strings against quickBlocks strings.\n"),
 };
 uint32_t nParams = sizeof(params) / sizeof(CParams);
 
@@ -20,10 +20,7 @@ bool COptions::parseArguments(SFString& command) {
     Init();
     while (!command.empty()) {
         SFString arg = nextTokenClear(command, ' ');
-        if (arg.startsWith("C")) {
-            className = arg;
-
-        } else if (arg.startsWith('-')) {  // do not collapse
+        if (arg.startsWith('-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);

@@ -9,52 +9,69 @@
 #include <algorithm>
 #include "etherlib.h"
 
+// Changing this between qstring and SFString helps migrating away from quickBlocks code
 #define TEST_STR SFString
 
 //------------------------------------------------------------------------
-void testRelational(void) {
+class CThisTest : public testing::Test {
+public:
+    CThisTest(void) : Test() {}
+    virtual void SetUp() {
+    }
+    virtual void TearDown() {
+    }
+};
+
+//------------------------------------------------------------------------
+TEST_F(CThisTest, TestRelational) {
     string foo = "alpha"; TEST_STR xfoo(foo.c_str());
     string bar = "beta";  TEST_STR xbar(bar.c_str());
 
-    if ( foo ==  bar) cout << "foo and bar are equal\n";
-    if (xfoo == xbar) cout << "xfoo and xbar are equal\n";
+    cerr << "Running " << testName << "\n";
+    cerr << "\tc-string  -- foo:  " << foo  << " bar: " << bar << "\n";
+    cerr << "\tqb-string -- xfoo: " << xfoo << " xbar: " << xbar << "\n\n";
 
-    if ( foo !=  bar) cout << "foo and bar are not equal\n";
-    if (xfoo != xbar) cout << "xfoo and xbar are not equal\n";
+    ASSERT_NOT_EQ("c-string non-equality",        foo,  bar      );
+    ASSERT_NOT_EQ("qb-string non-equality",       xfoo, xbar     );
+    ASSERT_EQ    ("string equality",              foo.c_str(), xfoo);
+    ASSERT_TRUE  ("c-string less than",           (foo < bar)    );
+    ASSERT_TRUE  ("qb-string less than",          (xfoo < xbar)  );
+    ASSERT_FALSE ("c-string greater than",        (foo > bar)    );
+    ASSERT_FALSE ("qb-string greater than",       (xfoo > xbar)  );
+    ASSERT_TRUE  ("c-string less than or eq",     (foo <= bar)   );
+    ASSERT_TRUE  ("qb-string less than or eq",    (xfoo <= xbar) );
+    ASSERT_FALSE ("c-string greater than or eq",  (foo >= bar)   );
+    ASSERT_FALSE ("qb-string greater than or eq", (xfoo >= xbar) );
+    ASSERT_FALSE ("c-string min",                 (min(foo, bar) == bar) );
+    ASSERT_TRUE  ("c-string max",                 (max(foo, bar) == bar) );
+    ASSERT_FALSE ("qb-string min",                (min(xfoo, xbar) == xbar) );
+    ASSERT_TRUE  ("qb-string max",                (max(xfoo, xbar) == xbar) );
 
-    if ( foo  <  bar) cout << "foo is less than bar\n";
-    if (xfoo  < xbar) cout << "xfoo is less than xbar\n";
-
-    if ( foo  >  bar) cout << "foo is greater than bar\n";
-    if (xfoo  > xbar) cout << "xfoo is greater than xbar\n";
-
-    if ( foo <=  bar) cout << "foo is less than or equal to bar\n";
-    if (xfoo <= xbar) cout << "xfoo is less than or equal to xbar\n";
-
-    if ( foo >=  bar) cout << "foo is greater than or equal to bar\n";
-    if (xfoo >= xbar) cout << "xfoo is greater than or equal to xbar\n";
-
-    cout << (min(foo, bar) == bar ? "bar is min" : "foo is min") << "\n";
-    cout << (max(foo, bar) == bar ? "bar is max" : "foo is max") << "\n";
-}
+    return true;
+}}
 
 //------------------------------------------------------------------------
-void testCompare(void) {
+TEST_F(CThisTest, TestCompare) {
     string str1("green apple"); TEST_STR xstr1("green apple");
     string str2("red apple");   TEST_STR xstr2("red apple");
 
-    if ( str1.compare( str2)                    != 0) cout <<  str1 << " is not " <<  str2 << '\n';
-    if (xstr1.compare(xstr2)                    != 0) cout << xstr1 << " is not " << xstr2 << '\n';
+    cerr << "Running " << testName << "\n";
+    cerr << "\tc-string  -- str1:  " <<  str1  << " str2: "  << str2  << "\n";
+    cerr << "\tqb-string -- xstr1: " << xstr1 << " xstr2: " << xstr2 << "\n\n";
 
-    if ( str1.compare(6, 5, "apple") == 0) cout << "still, " <<  str1 << " is an apple\n";
-    // if (xstr1.compare(6, 5, "apple") == 0) cout << "still, " << xstr1 << " is an apple\n";
+    ASSERT_NOT_EQ("c-string compare",             str1.compare( str2 ), 0);
+    ASSERT_NOT_EQ("qb-string compare",           xstr1.compare( xstr2), 0);
+    ASSERT_NOT_EQ("c-string compare",             str1.compare( str2 ), 0);
+    ASSERT_NOT_EQ("qb-string compare",           xstr1.compare( xstr2), 0);
+    ASSERT_EQ    ("c-string partial compare",     str1.compare( 6, 5,"apple"),  0);
+    ASSERT_EQ    ("qb-string partial compare",   xstr1.compare( 6, 5,"apple"),  0);
+    ASSERT_EQ    ("c-string partial compare 2",   str2.compare( str2.size()-5,  5, "apple"), 0);
+    ASSERT_EQ    ("qb-string partial compare 2", xstr2.compare( str2.size()-5,  5, "apple"), 0);
+    ASSERT_EQ    ("c-string double partial",      str1.compare( 6, 5,  str2, 4, 5), 0);
+    ASSERT_EQ    ("qb-string double partial",    xstr1.compare( 6, 5, xstr2, 4, 5), 0);
 
-    if ( str2.compare(str2.size()-5, 5, "apple") == 0) cout << "and " <<  str2 << " is also an apple\n";
-    // if (xstr2.compare(str2.size()-5, 5, "apple") == 0) cout << "and " << xstr2 << " is also an apple\n";
-
-    if ( str1.compare(6, 5, str2, 4, 5) == 0) cout << "therefore, both are apples\n";
-    // if (xstr1.compare(6, 5, xstr2, 4, 5) == 0) cout << "therefore, both are apples\n";
-}
+    return true;
+}}
 
 //------------------------------------------------------------------------
 void testCStr(void) {
@@ -67,10 +84,30 @@ void testCStr(void) {
     }
 }
 
+#include "options.h"
 //------------------------------------------------------------------------
-int main(int argc, char *argv[]) {
-    testRelational();
-    testCompare();
-    testCStr();
-    return 0;
+int main(int argc, const char *argv[]) {
+
+    COptions options;
+    options.minArgs = 0;
+    if (!options.prepareArguments(argc, argv))
+        return 0;
+
+    while (!options.commandList.empty()) {
+        SFString command = nextTokenClear(options.commandList, '\n');
+        if (!options.parseArguments(command))
+            return false;
+
+        if (options.testNum == 0) {
+            LOAD_TEST(TestRelational);
+
+        } else if (options.testNum == 1) {
+            LOAD_TEST(TestCompare);
+
+        } else if (options.testNum == 2) {
+            testCStr();
+        }
+    }
+
+    return RUN_ALL_TESTS();
 }

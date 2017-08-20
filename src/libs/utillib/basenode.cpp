@@ -614,3 +614,6 @@ namespace qblocks {
         return "Field not found: " + str + "\n";
     }
 }  // namespace qblocks
+
+int testing::Test::nFuncs;
+testing::PF testing::Test::funcs[];
