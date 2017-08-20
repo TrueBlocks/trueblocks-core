@@ -9,16 +9,11 @@
 
 //---------------------------------------------------------------------------------------------------
 CParams params[] = {
-    CParams("~num",         "which block (or blocks if more than one) to retreive (or use [start-stop) for range)"),
-//    CParams("-check",       "pull the given block(s) from both cache and node, compare results, should be no output"),
-    CParams("-source",      "either :(c)ache or :(r)aw, source for data retrival. (shortcuts -c = qblocks, -r = node)"),
-    CParams("-fields",      "either :(a)ll, (m)ini, (c)ache or :(r)aw; which fields to include in output (all is default)"),
-    CParams("-parity",      "mimic parity output using quickBlocks (i.e. quoted hexidecimal for numbers)"),
-    CParams("-re(c)iept",   ""),
-    CParams("-terse",       "retreive transaction hashes instead of full transactions"),
-    CParams("-quiet",       "do not print results to screen, used for speed testing"),
-    CParams("@f(o)rce",     "force re-write of binary data"),
-    CParams("",             "Returns block(s) from local cache (the default) or directly from a running node.\n"),
+    CParams("~num",      "which bloom (or blooms if more than one) to retreive (or [start-stop) range)"),
+    CParams("-enhanced", "retrieve the enhanced bloom filter from the quickBlocks cache"),
+    CParams("-raw",      "retrieve the bloom filter directly from the running node (includes tx blooms)"),
+    CParams("-quiet",    "do not print results to screen (useful for performance measurements)"),
+    CParams("",          "Returns bloom filter(s) from local cache (the default) or directly from a running node.\n"),
 };
 uint32_t nParams = sizeof(params) / sizeof(CParams);
 

@@ -4,20 +4,17 @@
 
 #### Usage
 
-`Usage:`    getBloom [-s|-f|-p|-r|-t|-q|-v|-h] num  
-`Purpose:`  Returns block(s) from local cache (the default) or directly from a running node.
+`Usage:`    getBloom [-e|-r|-q|-v|-h] num  
+`Purpose:`  Returns bloom filter(s) from local cache (the default) or directly from a running node.
              
 `Where:`  
 
 | Option | Full Command | Description |
 | -------: | :------- | :------- |
-|  | num | which block (or blocks if more than one) to retreive (or use [start-stop) for range) |
-| -s | --source | either :(c)ache or :(r)aw, source for data retrival. (shortcuts -c = qblocks, -r = node) |
-| -f | --fields | either :(a)ll, (m)ini, (c)ache or :(r)aw; which fields to include in output (all is default) |
-| -p | --parity | mimic parity output using quickBlocks (i.e. quoted hexidecimal for numbers) |
-| -r | --reciept |  |
-| -t | --terse | retreive transaction hashes instead of full transactions |
-| -q | --quiet | do not print results to screen, used for speed testing |
+|  | num | which bloom (or blooms if more than one) to retreive (or [start-stop) range) |
+| -e | --enhanced | retrieve the enhanced bloom filter from the quickBlocks cache |
+| -r | --raw | retrieve the bloom filter directly from the running node |
+| -q | --quiet | do not print results to screen (useful for performance measurements) |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
