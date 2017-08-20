@@ -8,7 +8,7 @@
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
-    bool testNum;
+    int32_t testNum;
 
     COptions(void);
     ~COptions(void);
