@@ -2,25 +2,19 @@
 
 Testing only
 
-foo and bar are not equal
-xfoo and xbar are not equal
-foo is less than bar
-xfoo is less than xbar
-foo is less than or equal to bar
-xfoo is less than or equal to xbar
-foo is min
-bar is max
-green apple is not red apple
-green apple is not red apple
-still, green apple is an apple
-and red apple is also an apple
-therefore, both are apples
-Please
-split
-this
-sentence
-into
-tokens
+#### Usage
+
+`Usage:`    stringTest [-v|-h] mode  
+`Purpose:`  Test 'c' library strings against quickBlocks strings.
+             
+`Where:`  
+
+| Option | Full Command | Description |
+| -------: | :------- | :------- |
+|  | mode | a number between 0 and 2 inclusive |
+| -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
+| -h | --help | display this help screen |
+
 #### Other Options
 
 All QuickBlocks command-line tools support the following commands (although in some case, they have no meaning):
