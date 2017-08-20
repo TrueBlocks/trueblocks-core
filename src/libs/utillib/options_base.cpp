@@ -189,7 +189,7 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    CParams::CParams(const SFString& nameIn, const SFString& descr) {
+    CParams::CParams(const SFString& nameIn, const SFString& descr, bool opt) {
         SFString name = nameIn;
 
         description = descr;
@@ -215,6 +215,7 @@ namespace qblocks {
 //                shortName = "-" + hotKey;
             }
         }
+        hasOption = opt;
     }
 
     static SFString sep = "  ";
