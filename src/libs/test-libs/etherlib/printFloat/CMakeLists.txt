@@ -36,5 +36,17 @@ endfunction(run_test)
 #
 # There is no need to test the command line params on this code
 #
+run_test("printFloat_README" "-th")
 run_test("printFloat_00")
 run_test("printFloat_01" "-t:1")
+run_test("printFloat_02" "-t:2")
+run_test("printFloat_03" "-t:3")
+run_test("printFloat_long_01" "--testNum:1")
+run_test("printFloat_long_02" "--testNum:2")
+run_test("printFloat_long_03" "--testNum:3")
+run_test("printFloat_nc_01" "-t" " 1")
+run_test("printFloat_nc_02" "-t" " 2")
+run_test("printFloat_nc_03" "-t" " 3")
+run_test("printFloat_nc_long_01" "--testNum" " 1")
+run_test("printFloat_nc_long_02" "--testNum" " 2")
+run_test("printFloat_nc_long_03" "--testNum" " 3")

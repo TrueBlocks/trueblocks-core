@@ -9,8 +9,8 @@
 
 //---------------------------------------------------------------------------------------------------
 CParams params[] = {
-    CParams("-testNum:n", "which test to run"),
-    CParams("",           "This program tests floating point printing and conversions.\n"),
+    CParams("-testNum:[1|2]", "which test to run (either 1 and 2)"),
+    CParams("",               "This program tests floating point printing and conversions.\n"),
 };
 uint32_t nParams = sizeof(params) / sizeof(CParams);
 
@@ -21,11 +21,16 @@ bool COptions::parseArguments(SFString& command) {
     while (!command.empty()) {
         SFString arg = nextTokenClear(command, ' ');
         if (arg.startsWith("-t:") || arg.startsWith("--testNum:")) {
-            arg.ReplaceAny("-testNum:","");
-            testNum = toUnsigned(arg);
+            SFString orig = arg;
+            arg.ReplaceAny("--testNum:","");
+            arg.ReplaceAny("-t:","");
+            testNum = (int32_t)toLong(arg);
+            if (!testNum || testNum > 2)
+                return usage("Invalid argument: " + orig + ". Quitting...");
 
         } else {
             return usage("Invalid option: " + arg);
+
         }
     }
     return true;
@@ -36,7 +41,7 @@ void COptions::Init(void) {
     paramsPtr = params;
     nParamsRef = nParams;
 
-    testNum = 0;
+    testNum = -1;
 
     useVerbose = true;
     useTesting = false;
