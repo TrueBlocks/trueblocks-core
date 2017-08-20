@@ -26,6 +26,7 @@ int main(int argc, const char *argv[]) {
 
         CToml toml(options.filename);
         cout << options.filename << "\n" << toml << "\n";
+        cout << "Done.\n";
     }
     return 0;
 }
