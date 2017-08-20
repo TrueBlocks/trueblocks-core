@@ -33,3 +33,10 @@ function(run_test testName)
 endfunction(run_test)
 
 # Enter one line for each individual test
+run_test("getBloom_README" "-th")
+run_test("getBloom_No_Params")
+run_test("getBloom_Empty"  "1001001")
+run_test("getBloom_Bloom"  "4000001")
+run_test("getBloom_Blooms" "1590000" "4000001" "4000002")
+run_test("getBloom_Range" "4000001-4000003")
+run_test("getBloom_BadData" "1590000" "4000001-400002")
