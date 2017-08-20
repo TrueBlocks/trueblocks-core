@@ -38,8 +38,12 @@ namespace qblocks {
 
         void     clear    (void);
         size_t   length   (void) const;
-        int      compare  (const char *str) const;
-        int      compare  (const string_q& str) const { return compare(str.m_Values);}
+        int      compare  (const char* s) const;
+        int      compare  (size_t pos, size_t len, const char* s) const;
+        int      compare  (size_t pos, size_t len, const char* s, size_t n) const;
+        int      compare  (const string_q& str) const;
+        int      compare  (size_t pos, size_t len, const string_q& str) const;
+        int      compare  (size_t pos, size_t len, const string_q& str, size_t subpos, size_t sublen) const;
         void     reserve  (size_t n=0);
         bool     empty    (void) const;
         size_t   find     (const string_q& str, size_t pos=0) const;
