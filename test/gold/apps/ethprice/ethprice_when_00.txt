@@ -1,6 +1,6 @@
 ethprice argc: 2 [1:-w:14] 
 ethprice -w:14 
-Data not written because no new data, or no -freshen flag. Now : cnt records
+Now : cnt records
 [
 { "date": "2015-08-09 00:00:00 UTC", "price": "1.40000001" },
 { "date": "2015-08-09 02:00:00 UTC", "price": "1.40000001" },
