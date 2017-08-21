@@ -83,6 +83,8 @@ namespace qblocks {
                 stdInCmds += "\n";
         }
 
+        // Now we are done fixing up the arguments and expanding them we spin
+        // through them and handle the arguments that are applicable to all tools/apps
         SFString cmdFileName = "";
         for (SFUint32 i = 0 ; i < nArgs ; i++) {
             SFString arg = args[i];
@@ -104,6 +106,7 @@ namespace qblocks {
                 cerr << programName << " (quickBlocks) "
                     << MAJOR << "." << MINOR << "." << BUILD << "-" << SUBVERS
                     << "\n";
+                if (args) delete [] args;
                 return false;
 
             } else if (arg == "-h" || arg == "--help") {
