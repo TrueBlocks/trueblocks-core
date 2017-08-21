@@ -1,0 +1,19 @@
+cmdLineTest argc: 2 [1:-bool:false] 
+cmdLineTest -bool:false 
+
+  Invalid option: -bool:false
+
+  Usage:    cmdLineTest [-b<|-i|-u|-s|-r|-l|-v|-h]  
+  Purpose:  Tests various command line behaviour.
+             
+  Where:    
+	-b< (or --<0,1,true,faeither '0,' 'false,' '1,' or 'true'
+	-i  (or --int)        any number positive or negative
+	-u  (or --uint)       any number greater than or equal to zero
+	-s  (or --string)     all other values
+	-r  (or --range)      a range of positive numbers
+	-l  (or --list)       a list of values
+	-v  (or --verbose)    set verbose level. Either -v, --verbose or -v:n where 'n' is level
+	-h  (or --help)       display this help screen
+
+  Powered by QuickBlocks
