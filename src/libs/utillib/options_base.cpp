@@ -83,8 +83,18 @@ namespace qblocks {
                 stdInCmds += "\n";
         }
 
-        // Now we are done fixing up the arguments and expanding them we spin
-        // through them and handle the arguments that are applicable to all tools/apps
+#define MAJOR 0
+#define MINOR 2
+#define BUILD 0
+#define SUBVERS "alpha"
+
+        //-----------------------------------------------------------------------------------
+        // We now have 'nArgs' command line arguments stored in the array 'args.'  We spin
+        // through them doing one of two things
+        //
+        // (1) handle any arguments common to all programs and remove them from the array
+        // (2) identify any --file arguments and store them for later use
+        //-----------------------------------------------------------------------------------
         SFString cmdFileName = "";
         for (SFUint32 i = 0 ; i < nArgs ; i++) {
             SFString arg = args[i];
@@ -97,10 +107,6 @@ namespace qblocks {
                 }
 
             } else if (arg == "--version") {
-#define MAJOR 0
-#define MINOR 2
-#define BUILD 0
-#define SUBVERS "alpha"
                 SFString r1 = __DATE__;
                 SFString r2 = __TIME__;
                 cerr << programName << " (quickBlocks) "
@@ -143,6 +149,35 @@ namespace qblocks {
                 isTesting = true;
             }
         }
+
+        //-----------------------------------------------------------------------------------
+        // Collapse commands that have 'permitted' sub options (i.e. colon ":" args)
+        //-----------------------------------------------------------------------------------
+        uint32_t curArg = 0;
+        for (uint32_t i = 0 ; i < nArgs ; i++) {
+            SFString arg = args[i];
+            bool combine = false;
+            for (uint32_t j = 0 ; j < nParamsRef && !combine ; j++) {
+                if (!paramsPtr[j].permitted.empty()) {
+                    SFString shortName = paramsPtr[j].shortName;
+                    SFString longName  = "-"+paramsPtr[j].longName;
+                    if (shortName == arg ||
+                        longName.startsWith(arg))
+                    {
+                        // we want to pull the next parameter into this one since it's a ':' param
+                        combine = true;
+                    }
+                }
+            }
+            if (combine && i < (nArgs-1)) {
+                args[curArg++] = arg + ":" + args[i+1];
+                i++;
+                
+            } else {
+                args[curArg++] = arg;
+            }
+        }
+        nArgs = curArg;
 
         // If we have a command file, we will use it, if not we will creat one and pretend we have one.
         commandList = "";
@@ -202,9 +237,9 @@ namespace qblocks {
             name = nextTokenClear(permitted,':');
             // order matters
             if (permitted == "<range>")
-                dummy = " start-end";
+                dummy = " range";
             else if (permitted == "<list>")
-                dummy = " item1,item2,...";
+                dummy = " list";
             else if (!permitted.empty())
                 dummy = " value";
         }
@@ -311,18 +346,31 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    SFString description(const SFString& s, const SFString& l, const SFString& d, bool isMode, bool required) {
+const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
+    
+    SFString oneDescription(const SFString& sN, const SFString& lN, const SFString& d, bool isMode, bool required) {
         CStringExportContext ctx;
         if (COptionsBase::isReadme) {
-            ctx << "| " << s << " | " << (isMode ? "" : "-") << l << " | " << d.Substitute("|", "&#124;") << " |\n";
 
+            // When we are writing the readme file...
+            SFString line = STR_ONE_LINE;
+            line.Replace("{S}", sN);
+            line.Replace("{L}", (isMode ? "" : "-") + lN);
+            line.Replace("{D}", d.Substitute("|", "&#124;"));
+            ctx << line;
+                         
         } else {
-            ctx << "\t"
-                << (isMode ? "" : padRight(s, 3))
-                << padRight((l.empty() ? "" : (isMode ? l : " (or -" + l + ")")) , 19 + (isMode ? 3 : 0))
-                << d
-                << (required ? " (required)" : "")
-                << "\n";
+
+            // When we are writing to the command line...
+            SFString line = "\t" + SFString(STR_ONE_LINE).Substitute(" ","").Substitute("|","");
+            line.Replace("{S}", (isMode ? "" : padRight(sN, 3)));
+            if (isMode)
+                line.Replace("{L}", padRight(lN , 22));
+            else {
+                line.Replace("{L}", padRight((lN.empty() ? "" : " (-" + lN + ")") , 19));
+            }
+            line.Replace("{D}", d + (required ? " (required)" : ""));
+            ctx << line;
         }
         return ctx.str;
     }
@@ -351,15 +399,15 @@ namespace qblocks {
                 bool isReq = isMode && !lName.Contains('!');
                 sName = (isMode ? "" : sName);
                 lName = (isMode ? lName.Substitute('-', "") : lName).Substitute("!", "").Substitute("~", "");
-                ctx << description(sName, lName, descr, isMode, isReq);
+                ctx << oneDescription(sName, lName, descr, isMode, isReq);
             }
         }
 
         if (COptionsBase::useTesting)
-            ctx << description("-t", "-test", "generate intermediary files but do not execute the commands", false, false);
+            ctx << oneDescription("-t", "-test", "generate intermediary files but do not execute the commands", false, false);
         if (COptionsBase::useVerbose)
-            ctx << description("-v", "-verbose", "set verbose level. Either -v, --verbose or -v:n where 'n' is level", false, false);
-        ctx << description("-h", "-help", "display this help screen", false, false);
+            ctx << oneDescription("-v", "-verbose", "set verbose level. Either -v, --verbose or -v:n where 'n' is level", false, false);
+        ctx << oneDescription("-h", "-help", "display this help screen", false, false);
         return ctx.str;
     }
 

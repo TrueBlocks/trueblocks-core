@@ -8,13 +8,13 @@ getBlock 1590000 4000001-400002
              
   Where:    
 	num                   which block (or blocks if more than one) to retreive (or use [start-stop) for range) (required)
-	-s  (or --source)     either :(c)ache or :(r)aw, source for data retrival. (shortcuts -c = qblocks, -r = node)
-	-f  (or --fields)     either :(a)ll, (m)ini, (c)ache or :(r)aw; which fields to include in output (all is default)
-	-p  (or --parity)     mimic parity output using quickBlocks (i.e. quoted hexidecimal for numbers)
-	-r  (or --reciept)    
-	-t  (or --terse)      retreive transaction hashes instead of full transactions
-	-q  (or --quiet)      do not print results to screen, used for speed testing
-	-v  (or --verbose)    set verbose level. Either -v, --verbose or -v:n where 'n' is level
-	-h  (or --help)       display this help screen
+	-s  (--source)        either :(c)ache or :(r)aw, source for data retrival. (shortcuts -c = qblocks, -r = node)
+	-f  (--fields)        either :(a)ll, (m)ini, (c)ache or :(r)aw; which fields to include in output (all is default)
+	-p  (--parity)        mimic parity output using quickBlocks (i.e. quoted hexidecimal for numbers)
+	-r  (--reciept)       
+	-t  (--terse)         retreive transaction hashes instead of full transactions
+	-q  (--quiet)         do not print results to screen, used for speed testing
+	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
+	-h  (--help)          display this help screen
 
   Powered by QuickBlocks

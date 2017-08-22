@@ -6,10 +6,10 @@
              
   Where:    
 	num                   which bloom (or blooms if more than one) to retreive (or [start-stop) range) (required)
-	-e  (or --enhanced)   retrieve the enhanced bloom filter from the quickBlocks cache
-	-r  (or --raw)        retrieve the bloom filter directly from the running node (includes tx blooms)
-	-q  (or --quiet)      do not print results to screen (useful for performance measurements)
-	-v  (or --verbose)    set verbose level. Either -v, --verbose or -v:n where 'n' is level
-	-h  (or --help)       display this help screen
+	-e  (--enhanced)      retrieve the enhanced bloom filter from the quickBlocks cache
+	-r  (--raw)           retrieve the bloom filter directly from the running node (includes tx blooms)
+	-q  (--quiet)         do not print results to screen (useful for performance measurements)
+	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
+	-h  (--help)          display this help screen
 
   Powered by QuickBlocks

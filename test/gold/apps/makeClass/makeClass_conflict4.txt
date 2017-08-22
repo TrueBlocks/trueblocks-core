@@ -8,14 +8,14 @@ makeClass -c -r -e
              
   Where:    
 	className             name of C++ class(es) to process (required)
-	-e  (or --edit)       edit <className(s)> definition file in local folder
-	-f  (or --filter)     process only files with :filter in their names
-	-l  (or --list)       list all definition files found in the local folder
-	-n  (or --namespace)  surround the code with a --namespace:ns
-	-s  (or --silent)     on error (no classDefinition file) exit silently
-	-r  (or --run)        run the class maker on associated <className(s)>
-	-a  (or --all)        clear, edit, list, or run all class definitions found in the local folder
-	-v  (or --verbose)    set verbose level. Either -v, --verbose or -v:n where 'n' is level
-	-h  (or --help)       display this help screen
+	-e  (--edit)          edit <className(s)> definition file in local folder
+	-f  (--filter)        process only files with :filter in their names
+	-l  (--list)          list all definition files found in the local folder
+	-n  (--namespace)     surround the code with a --namespace:ns
+	-s  (--silent)        on error (no classDefinition file) exit silently
+	-r  (--run)           run the class maker on associated <className(s)>
+	-a  (--all)           clear, edit, list, or run all class definitions found in the local folder
+	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
+	-h  (--help)          display this help screen
 
   Powered by QuickBlocks

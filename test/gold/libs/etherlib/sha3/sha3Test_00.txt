@@ -5,10 +5,10 @@
   Purpose:  This is what the program does.
              
   Where:    
-	-o  (or --option1)    option one
-	-t  (or --thing)      option two
-	-t  (or --test)       generate intermediary files but do not execute the commands
-	-v  (or --verbose)    set verbose level. Either -v, --verbose or -v:n where 'n' is level
-	-h  (or --help)       display this help screen
+	-o  (--option1)       option one
+	-t  (--thing)         option two
+	-t  (--test)          generate intermediary files but do not execute the commands
+	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
+	-h  (--help)          display this help screen
 
   Powered by QuickBlocks
