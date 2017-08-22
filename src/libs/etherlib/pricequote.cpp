@@ -284,11 +284,13 @@ bool loadPriceData(CPriceQuoteArray& quotes, bool freshen, SFString& message, SF
     cerr.flush();
 #endif
     if (nextRead > now && !freshen) {
-        msg = "Price database is up-to-date as of ";
+        if (!isTestMode())
+            msg = "Price database is up-to-date as of ";
         verbose = false;
 
     } else {
-        msg = "Price database has been updated to ";
+        if (!isTestMode())
+            msg = "Price database has been updated to ";
         SFTime prevLast = lastRead;
         if (freshen) {
             timestamp_t start = toTimeStamp(nextRead);
@@ -369,7 +371,8 @@ bool loadPriceData(CPriceQuoteArray& quotes, bool freshen, SFString& message, SF
                 cerr << "(lastRead: " << lastRead << ").\n";
             }
         } else {
-            msg = "Data not written because no new data, or no -freshen flag. ";
+            if (!isTestMode())
+                msg = "Data not written because no new data, or no -freshen flag. ";
         }
     }
 
