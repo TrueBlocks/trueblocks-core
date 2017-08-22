@@ -1,4 +1,4 @@
 *.txt
 *.json
 *.toml
-cmd_file
+cmd_file*
