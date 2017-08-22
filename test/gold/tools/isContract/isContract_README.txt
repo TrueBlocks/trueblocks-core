@@ -9,7 +9,7 @@ isContract -th
 
 | Option | Full Command | Description |
 | -------: | :------- | :------- |
-|  | addr[s] | a list of Ethereum addresses from which to check for byte code |
+|  | addr[s] | a list of one or more Ethereum addresses to process |
 | -d | --display | display the actual code at the address(es) |
 | -n | --nodiff | return 'true' if (exactly) two Ethereum addresses have identical code |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |

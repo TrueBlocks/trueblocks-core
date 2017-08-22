@@ -14,8 +14,8 @@ cmdLineTest -th
 | -i | --int value | enter any numeric value |
 | -u | --uint value | enter any any numeric value greater than or equal to zero |
 | -s | --string value | enter any value |
-| -r | --range start-end | enter a range of numeric values |
-| -l | --list item1,item2,... | enter a list of value separated by commas (no spaces or quoted) |
+| -r | --range range | enter a range of numeric values |
+| -l | --list list | enter a list of value separated by commas (no spaces or quoted) |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 

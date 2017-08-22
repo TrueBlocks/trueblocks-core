@@ -8,10 +8,10 @@ isContract -dn 0x705f04a4f1e7a1e23caea390b8903bd43d96e18e 0x73cbe96839b723bc913d
   Purpose:  Returns 'true' or 'false' if the given address(es) hold byte code (or displays the code).
              
   Where:    
-	addr[s]               a list of Ethereum addresses from which to check for byte code (required)
-	-d  (or --display)    display the actual code at the address(es)
-	-n  (or --nodiff)     return 'true' if (exactly) two Ethereum addresses have identical code
-	-v  (or --verbose)    set verbose level. Either -v, --verbose or -v:n where 'n' is level
-	-h  (or --help)       display this help screen
+	addr[s]               a list of one or more Ethereum addresses to process (required)
+	-d  (--display)       display the actual code at the address(es)
+	-n  (--nodiff)        return 'true' if (exactly) two Ethereum addresses have identical code
+	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
+	-h  (--help)          display this help screen
 
   Powered by QuickBlocks
