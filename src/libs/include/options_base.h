@@ -46,8 +46,8 @@ namespace qblocks {
         SFString  longName;
         SFString  hotKey;
         SFString  description;
-        bool      hasOption;
-        CParams(const SFString& name, const SFString& descr, bool opt=false);
+        SFString  permitted;
+        CParams(const SFString& name, const SFString& descr);
     };
 
     //--------------------------------------------------------------------------------
