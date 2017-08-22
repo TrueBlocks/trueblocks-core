@@ -9,15 +9,15 @@
 
 //---------------------------------------------------------------------------------------------------
 CParams params[] = {
-    CParams("~addr",        "the address(es) of the smart contract(s) to grab"),
-    CParams("-canonical",   "convert all types to their canonical represenation and remove all spaces from display"),
-    CParams("-generate",    "generate C++ code into ':dir' for all functions and events found in the ABI"),
-    CParams("-encode",      "generate the encodings for the functions / events in the ABI"),
-    CParams("-noconst",     "generate encodings for non-constant functions and events only (always true when generating)"), // NOLINT
-    CParams("-open",        "open the ABI file for editing, download if not already present"),
-    CParams("@silent",      "If ABI cannot be acquired, fail silently (useful for scripting)"),
-    CParams("",             "Fetches the ABI for a smart contract. Optionally generates C++ source code "
-                            "representing that ABI.\n"),
+    CParams("~addr",              "the address(es) of the smart contract(s) to grab"),
+    CParams("-canonical",         "convert all types to their canonical represenation and remove all spaces from display"),
+    CParams("-generate:<string>", "generate C++ code into ':dir' for all functions and events found in the ABI"),
+    CParams("-encode",            "generate the encodings for the functions / events in the ABI"),
+    CParams("-noconst",           "generate encodings for non-constant functions and events only (always true when generating)"), // NOLINT
+    CParams("-open",              "open the ABI file for editing, download if not already present"),
+    CParams("@silent",            "If ABI cannot be acquired, fail silently (useful for scripting)"),
+    CParams("",                   "Fetches the ABI for a smart contract. Optionally generates C++ source code "
+                                  "representing that ABI.\n"),
 };
 uint32_t nParams = sizeof(params) / sizeof(CParams);
 

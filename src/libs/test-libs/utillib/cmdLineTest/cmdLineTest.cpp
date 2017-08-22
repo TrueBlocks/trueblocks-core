@@ -64,5 +64,5 @@ int main(int argc, const char *argv[]) {
         ret &= RUN_ALL_TESTS();
     }
     cout << "ret: " << ret << "\n";
-    return !ret;  // if all tests passes, return '0'
+    return ret;  // if all tests passes, return '0'
 }

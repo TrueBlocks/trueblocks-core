@@ -241,7 +241,7 @@ namespace qblocks {
             else if (permitted == "<list>")
                 dummy = " list";
             else if (!permitted.empty())
-                dummy = " value";
+                dummy = " val";
         }
         if (!name.empty()) {
             shortName = name.Left(2);
