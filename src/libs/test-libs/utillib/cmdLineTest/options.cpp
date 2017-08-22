@@ -9,13 +9,14 @@
 
 //---------------------------------------------------------------------------------------------------
 CParams params[] = {
-    CParams("-bool:<0,1,true,false>",    "either '0,' 'false,' '1,' or 'true'"),
-    CParams("-int",     "any number positive or negative"),
-    CParams("-uint",    "any number greater than or equal to zero"),
-    CParams("-string",  "all other values"),
-    CParams("-range",   "a range of positive numbers"),
-    CParams("-list",    "a list of values"),
-    CParams("",      "Tests various command line behaviour.\n"),
+    CParams("~testNum",         "the number of the test to run"),
+    CParams("-bool:<bool>",     "enter a boolean value (either `0`, `1`, `false`, or `true`)"),
+    CParams("-int:<int>",       "enter any numeric value"),
+    CParams("-uint:<uint>",     "enter any any numeric value greater than or equal to zero"),
+    CParams("-string:<string>", "enter any value"),
+    CParams("-range:<range>",   "enter a range of numeric values"),
+    CParams("-list:<list>",     "enter a list of value separated by commas (no spaces or quoted)"),
+    CParams("",                 "Tests various command line behaviour.\n"),
 };
 uint32_t nParams = sizeof(params) / sizeof(CParams);
 
@@ -28,19 +29,37 @@ bool COptions::parseArguments(SFString& command) {
         SFString orig = arg;
         if (arg.startsWith("-b:") || arg.startsWith("--bool:")) {
             arg = arg.Substitute("-b:","").Substitute("--bool:","");
-            if (arg == "1" || arg == "true")
+            if (arg == "1" || arg == "true") {
                 boolOption = true;
-            else if (arg == "0" || arg == "false")
+                boolSet = true;
+            } else if (arg == "0" || arg == "false") {
                 boolOption = false;
-            else
+                boolSet = true;
+            } else
                 usage("Invalid bool: " + orig);
-                
-        } else if (arg.startsWith('-')) {  // do not collapse
 
+        } else if (arg.startsWith("-i:") || arg.startsWith("--int:")) {
+            arg = arg.Substitute("-i:","").Substitute("--int:","");
+            if (arg.empty() || (arg[0] != '-' && arg[0] != '+' && !isdigit(arg[0])))
+                return usage("--int requires a number. Quitting");
+            numOption = toLong(arg);
+            
+        } else if (arg.startsWith("-u:") || arg.startsWith("--uint:")) {
+            arg = arg.Substitute("-u:","").Substitute("--uint:","");
+            if (arg.empty() || (arg[0] != '+' && !isdigit(arg[0]))) {
+                //return usage("--uint requires a non-negative number. Quitting");
+            } else {
+                numOption = toUnsigned(arg);
+            }
+            
+        } else if (arg.startsWith('-')) {  // do not collapse
+            
             if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);
             }
+
         } else {
+            testNum = (uint32_t)toLong(arg);
         }
     }
     return true;
@@ -52,8 +71,10 @@ void COptions::Init(void) {
     nParamsRef = nParams;
 
     boolOption = false;
-    numOption = -1;
+    boolSet = false;
+    numOption = NOPOS;
     stringOption = "";
+    testNum = -1;
 
     useVerbose = true;
     useTesting = false;
