@@ -104,7 +104,13 @@ function(define_lint_target)
 	add_custom_target(lint)
 endfunction(define_lint_target)
 
+# Define it
 define_lint_target()
+
+# ----------------------------------------------------------------------------------------
+# Define the install target
+install(CODE "MESSAGE(\"Installing the project ...\")")
+
 # ----------------------------------------------------------------------------------------
 # Compilation order for the subfolders
 add_subdirectory (libs)
