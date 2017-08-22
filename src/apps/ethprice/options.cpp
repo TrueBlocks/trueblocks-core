@@ -10,11 +10,11 @@
 
 //---------------------------------------------------------------------------------------------------
 CParams params[] = {
-    CParams("-at",      "Report the price since to the nearest five minutes to :ts (timestamp)"),
-    CParams("-freshen", "Freshen database (append new data)"),
-    CParams("-period",  "Display prices in this increment. Default 120 mins or :t where t is in [5|15|30|120|240|1440]"),
-    CParams("-when",    "Time of day to start the display. :h determines the hour to start"),
-    CParams("",         "Freshen and/or display price data for the Ethereum network and other purposes.\n"),
+    CParams("-at:<uint>",                      "Report the price since to the nearest five minutes to :ts (timestamp)"),
+    CParams("-freshen",                        "Freshen database (append new data)"),
+    CParams("-period:<5|15|30|120|240|1440>",  "Display prices in this increment. Default 120 mins or :t where t is in [5|15|30|120|240|1440]"),
+    CParams("-when:<0-23>",                    "Time of day to start the display. :h determines the hour to start"),
+    CParams("",                                "Freshen and/or display price data for the Ethereum network and other purposes.\n"),
 };
 uint32_t nParams = sizeof(params) / sizeof(CParams);
 

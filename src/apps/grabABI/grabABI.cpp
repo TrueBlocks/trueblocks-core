@@ -100,6 +100,7 @@ SFString acquireABI(CFunctionArray& functions, const SFAddress& addr, bool silen
             nextTokenClear(results, '[');
             results.ReplaceReverse("]}", "");
             cerr << "Caching abi in " << fileName << "\n";
+            establishFolder(fileName);
             stringToAsciiFile(fileName, "["+results+"]");
         } else {
             cerr << "Could not grab ABI for " + addr + " from etherscan.io.\n";

@@ -1,5 +1,5 @@
-grabABI argc: 7 [1:0xbb9bc244d798123fde783fcc1c72d3bb8c189413] [2:-t] [3:-v] [4:-n] [5:-e] [6:-g:code] 
-grabABI 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 -t -v -n -e -g:code 
+grabABI argc: 8 [1:0xbb9bc244d798123fde783fcc1c72d3bb8c189413] [2:-t] [3:-v] [4:-n] [5:-e] [6:-g] [7:code] 
+grabABI 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 -t -v -n -e -g code 
 
   Invalid option: -g:code
 
@@ -8,13 +8,13 @@ grabABI 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 -t -v -n -e -g:code
              
   Where:    
 	addr                  the address(es) of the smart contract(s) to grab (required)
-	-c  (--canonical)  convert all types to their canonical represenation and remove all spaces from display
-	-g  (--generate)   generate C++ code into ':dir' for all functions and events found in the ABI
-	-e  (--encode)     generate the encodings for the functions / events in the ABI
-	-n  (--noconst)    generate encodings for non-constant functions and events only (always true when generating)
-	-o  (--open)       open the ABI file for editing, download if not already present
-	-t  (--test)       generate intermediary files but do not execute the commands
-	-v  (--verbose)    set verbose level. Either -v, --verbose or -v:n where 'n' is level
-	-h  (--help)       display this help screen
+	-c  (--canonical)     convert all types to their canonical represenation and remove all spaces from display
+	-g  (--generate val)  generate C++ code into ':dir' for all functions and events found in the ABI
+	-e  (--encode)        generate the encodings for the functions / events in the ABI
+	-n  (--noconst)       generate encodings for non-constant functions and events only (always true when generating)
+	-o  (--open)          open the ABI file for editing, download if not already present
+	-t  (--test)          generate intermediary files but do not execute the commands
+	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
+	-h  (--help)          display this help screen
 
   Powered by QuickBlocks
