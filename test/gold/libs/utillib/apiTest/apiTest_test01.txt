@@ -5,8 +5,8 @@
   Purpose:  Test harness for quickBlocks.
              
   Where:    
-	-o  (or --option)     First option
-	-v  (or --verbose)    set verbose level. Either -v, --verbose or -v:n where 'n' is level
-	-h  (or --help)       display this help screen
+	-o  (--option)        First option
+	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
+	-h  (--help)          display this help screen
 
   Powered by QuickBlocks

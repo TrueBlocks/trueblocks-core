@@ -40,13 +40,13 @@ testNum: 8
              
   Where:    
 	testNum               the number of the test to run (required)
-	-b  (or --bool value) enter a boolean value (either `0`, `1`, `false`, or `true`)
-	-i  (or --int value)  enter any numeric value
-	-u  (or --uint value) enter any any numeric value greater than or equal to zero
-	-s  (or --string valueenter any value
-	-r  (or --range start-enter a range of numeric values
-	-l  (or --list item1,ienter a list of value separated by commas (no spaces or quoted)
-	-v  (or --verbose)    set verbose level. Either -v, --verbose or -v:n where 'n' is level
-	-h  (or --help)       display this help screen
+	-b  (--bool value)    enter a boolean value (either `0`, `1`, `false`, or `true`)
+	-i  (--int value)     enter any numeric value
+	-u  (--uint value)    enter any any numeric value greater than or equal to zero
+	-s  (--string value)  enter any value
+	-r  (--range range)   enter a range of numeric values
+	-l  (--list list)     enter a list of value separated by commas (no spaces or quoted)
+	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
+	-h  (--help)          display this help screen
 
   Powered by QuickBlocks
