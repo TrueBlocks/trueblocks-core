@@ -192,14 +192,27 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    CParams::CParams(const SFString& nameIn, const SFString& descr, bool opt) {
+    CParams::CParams(const SFString& nameIn, const SFString& descr) {
         SFString name = nameIn;
 
         description = descr;
+        SFString dummy;
+        if (name.Contains(":<") || name.Contains(":[")) {
+            permitted = name;
+            name = nextTokenClear(permitted,':');
+            // order matters
+            if (permitted == "<range>")
+                dummy = " start-end";
+            else if (permitted == "<list>")
+                dummy = " item1,item2,...";
+            else if (!permitted.empty())
+                dummy = " value";
+        }
         if (!name.empty()) {
             shortName = name.Left(2);
             if (name.length() > 2)
-                longName = name;
+                longName = name + dummy;
+
             if (name.Contains("{")) {
                 name.Replace("{", "|{");
                 nextTokenClear(name, '|');
@@ -208,8 +221,9 @@ namespace qblocks {
             } else if (name.Contains(":")) {
                 nextTokenClear(name, ':');
                 shortName += name[0];
-                longName = "-" + name;
+                longName = "-" + name + dummy;
             }
+            
             if (longName.Contains("(") && longName.Contains(")")) {
                 hotKey = longName;
                 nextTokenClear(hotKey,'(');
@@ -218,7 +232,6 @@ namespace qblocks {
 //                shortName = "-" + hotKey;
             }
         }
-        hasOption = opt;
     }
 
     static SFString sep = "  ";
@@ -305,11 +318,11 @@ namespace qblocks {
 
         } else {
             ctx << "\t"
-            << (isMode ? "" : padRight(s, 3))
-            << padRight((l.empty() ? "" : (isMode ? l : " (or -" + l + ")")) , 19 + (isMode ? 3 : 0))
-            << d
-            << (required ? " (required)" : "")
-            << "\n";
+                << (isMode ? "" : padRight(s, 3))
+                << padRight((l.empty() ? "" : (isMode ? l : " (or -" + l + ")")) , 19 + (isMode ? 3 : 0))
+                << d
+                << (required ? " (required)" : "")
+                << "\n";
         }
         return ctx.str;
     }
