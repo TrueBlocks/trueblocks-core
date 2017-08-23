@@ -59,12 +59,12 @@ SFString nextReceiptChunk(const SFString& fieldIn, bool& force, const void *data
                 if ( fieldIn % "logs" ) {
                     uint32_t cnt = rec->logs.getCount();
                     if (!cnt) return "";
-                    ret = "";
+                    SFString retS;
                     for (uint32_t i = 0 ; i < cnt ; i++) {
-                        ret += rec->logs[i].Format();
-                        ret += ((i < cnt - 1) ? ",\n" : "\n");
+                        retS += rec->logs[i].Format();
+                        retS += ((i < cnt - 1) ? ",\n" : "\n");
                     }
-                    return ret;
+                    return retS;
                 }
                 if ( fieldIn % "logsBloom" ) return fromBloom(rec->logsBloom);
                 break;

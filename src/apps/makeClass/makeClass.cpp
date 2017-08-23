@@ -556,12 +556,12 @@ const char* STR_CASE_CODE_ARRAY =
 " {\n"
 "[BTAB]\t\tuint32_t cnt = [{SHORT3}]->[{FIELD}].getCount();\n"
 "[BTAB]\t\tif (!cnt) return \"\";\n"
-"[BTAB]\t\tSFString ret;\n"
+"[BTAB]\t\tSFString retS;\n"
 "[BTAB]\t\tfor (uint32_t i = 0 ; i < cnt ; i++) {\n"
-"[BTAB]\t\t\tret += [{SHORT3}]->[{FIELD}][i].Format();\n"
-"[BTAB]\t\t\tret += ((i < cnt - 1) ? \",\\n\" : \"\\n\");\n"
+"[BTAB]\t\t\tretS += [{SHORT3}]->[{FIELD}][i].Format();\n"
+"[BTAB]\t\t\tretS += ((i < cnt - 1) ? \",\\n\" : \"\\n\");\n"
 "[BTAB]\t\t}\n"
-"[BTAB]\t\treturn ret;\n"
+"[BTAB]\t\treturn retS;\n"
 "[BTAB]\t}";
 
 //------------------------------------------------------------------------------------------------------------
@@ -569,12 +569,12 @@ const char* STR_CASE_CODE_STRINGARRAY =
 " {\n"
 "[BTAB]\t\tuint32_t cnt = [{SHORT3}]->[{FIELD}].getCount();\n"
 "[BTAB]\t\tif (!cnt) return \"\";\n"
-"[BTAB]\t\tSFString ret;\n"
+"[BTAB]\t\tSFString retS;\n"
 "[BTAB]\t\tfor (uint32_t i = 0 ; i < cnt ; i++) {\n"
-"[BTAB]\t\t\tret += indent() + (\"\\\"\" + [{SHORT3}]->[{FIELD}][i] + \"\\\"\");\n"
-"[BTAB]\t\t\tret += ((i < cnt-1) ? \",\\n\" : \"\\n\");\n"
+"[BTAB]\t\t\tretS += indent() + (\"\\\"\" + [{SHORT3}]->[{FIELD}][i] + \"\\\"\");\n"
+"[BTAB]\t\t\tretS += ((i < cnt-1) ? \",\\n\" : \"\\n\");\n"
 "[BTAB]\t\t}\n"
-"[BTAB]\t\treturn ret;\n"
+"[BTAB]\t\treturn retS;\n"
 "[BTAB]\t}";
 
 //------------------------------------------------------------------------------------------------------------

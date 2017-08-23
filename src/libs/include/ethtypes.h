@@ -68,6 +68,7 @@ inline uint32_t bitsTwiddled(SFBloom n) {
     return count;
 }
 
+// NEW_CODE
 inline bool isUnsigned(const SFString& in) { return in.length() && isdigit(in[0]); } // negative '-' will fail
 
 #define newTimestamp(a)   ((a).startsWith("0x") ? (timestamp_t)hex2Long((a)) : (timestamp_t)toLong ((a)))

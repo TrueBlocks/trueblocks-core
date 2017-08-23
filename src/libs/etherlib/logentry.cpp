@@ -22,7 +22,7 @@ extern SFString nextLogentryChunk(const SFString& fieldIn, bool& force, const vo
 static SFString nextLogentryChunk_custom(const SFString& fieldIn, bool& force, const void *data);
 
 //---------------------------------------------------------------------------
-void CLogEntry::Format(CExportContext& ctx, const SFString& fmtIn, void *data1) const {
+void CLogEntry::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
     if (!m_showing)
         return;
 
@@ -32,7 +32,7 @@ void CLogEntry::Format(CExportContext& ctx, const SFString& fmtIn, void *data1) 
     }
 
     SFString fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, data1))
+    if (handleCustomFormat(ctx, fmt, data))
         return;
 
     while (!fmt.empty())
@@ -62,12 +62,12 @@ SFString nextLogentryChunk(const SFString& fieldIn, bool& force, const void *dat
                 if ( fieldIn % "topics" ) {
                     uint32_t cnt = log->topics.getCount();
                     if (!cnt) return "";
-                    ret = "";
+                    SFString retS;
                     for (uint32_t i = 0 ; i < cnt ; i++) {
-                        ret += indent() + ("\"" + fromTopic(log->topics[i]) + "\"");
-                        ret += ((i < cnt-1) ? ",\n" : "\n");
+                        retS += indent() + ("\"" + fromTopic(log->topics[i]) + "\"");
+                        retS += ((i < cnt-1) ? ",\n" : "\n");
                     }
-                    return ret;
+                    return retS;
                 }
                 break;
         }
@@ -203,7 +203,7 @@ SFString nextLogentryChunk_custom(const SFString& fieldIn, bool& force, const vo
 }
 
 //---------------------------------------------------------------------------
-bool CLogEntry::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data1) const {
+bool CLogEntry::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;

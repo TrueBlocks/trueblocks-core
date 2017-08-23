@@ -166,8 +166,8 @@ namespace qblocks {
     private:
         // Don't allow default construction, copy construction or assignment
         SFListNode(void) { }
-        SFListNode(const SFListNode& ) { }
-        SFListNode& operator=(const SFListNode& ) { return *this; }
+        SFListNode(const SFListNode& node) { }
+        SFListNode& operator=(const SFListNode& node) { return *this; }
 
     public:
         SFListNode *m_Next;
