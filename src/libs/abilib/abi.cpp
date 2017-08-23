@@ -52,7 +52,7 @@ SFString nextAbiChunk(const SFString& fieldIn, bool& force, const void *data) {
                 if ( fieldIn % "abiByName" ) {
                     uint32_t cnt = abi->abiByName.getCount();
                     if (!cnt) return "";
-                    SFString ret;
+                    ret = "";
                     for (uint32_t i = 0 ; i < cnt ; i++) {
                         ret += abi->abiByName[i].Format();
                         ret += ((i < cnt - 1) ? ",\n" : "\n");
@@ -62,7 +62,7 @@ SFString nextAbiChunk(const SFString& fieldIn, bool& force, const void *data) {
                 if ( fieldIn % "abiByEncoding" ) {
                     uint32_t cnt = abi->abiByEncoding.getCount();
                     if (!cnt) return "";
-                    SFString ret;
+                    ret = "";
                     for (uint32_t i = 0 ; i < cnt ; i++) {
                         ret += abi->abiByEncoding[i].Format();
                         ret += ((i < cnt - 1) ? ",\n" : "\n");
@@ -320,12 +320,12 @@ bool CAbi::loadABI(const SFString& addr) {
     cerr << "\tLoading abi file: " << abiFilename << "...\n";
     if (loadABIFromFile(abiFilename)) {
 
-        SFString abis;
+        SFString abis1;
 
         // TODO(tjayrush): this is wrong. We should remove the need to use external 'ethabi' code to get the encodings
         for (uint32_t i=0;i<abiByName.getCount();i++) {
             getEncoding(abiFilename, addr, abiByName[i]);
-            abis += abiByName[i].Format("[{NAME}]|[{ENCODING}]\n");
+            abis1 += abiByName[i].Format("[{NAME}]|[{ENCODING}]\n");
         }
 
         // We need to do both since they are copies
@@ -333,8 +333,8 @@ bool CAbi::loadABI(const SFString& addr) {
             getEncoding(abiFilename, addr, abiByEncoding[i]);
         }
 
-        if (!fileExists(configPath("abis/"+addr+".abi")) && !abis.empty())
-            stringToAsciiFile(configPath("abis/"+addr+".abi"), abis);
+        if (!fileExists(configPath("abis/"+addr+".abi")) && !abis1.empty())
+            stringToAsciiFile(configPath("abis/"+addr+".abi"), abis1);
 
         if (verbose) {
             for (uint32_t i = 0 ; i < abiByName.getCount() ; i++) {
