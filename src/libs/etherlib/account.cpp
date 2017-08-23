@@ -71,12 +71,12 @@ SFString nextAccountChunk(const SFString& fieldIn, bool& force, const void *data
                 if ( fieldIn % "transactions" ) {
                     uint32_t cnt = acc->transactions.getCount();
                     if (!cnt) return "";
-                    ret = "";
+                    SFString retS;
                     for (uint32_t i = 0 ; i < cnt ; i++) {
-                        ret += acc->transactions[i].Format();
-                        ret += ((i < cnt - 1) ? ",\n" : "\n");
+                        retS += acc->transactions[i].Format();
+                        retS += ((i < cnt - 1) ? ",\n" : "\n");
                     }
-                    return ret;
+                    return retS;
                 }
                 break;
         }

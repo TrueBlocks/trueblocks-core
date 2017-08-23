@@ -68,12 +68,12 @@ SFString nextTraceChunk(const SFString& fieldIn, bool& force, const void *data) 
                 if ( fieldIn % "traceAddress" ) {
                     uint32_t cnt = tra->traceAddress.getCount();
                     if (!cnt) return "";
-                    ret = "";
+                    SFString retS;
                     for (uint32_t i = 0 ; i < cnt ; i++) {
-                        ret += indent() + ("\"" + tra->traceAddress[i] + "\"");
-                        ret += ((i < cnt-1) ? ",\n" : "\n");
+                        retS += indent() + ("\"" + tra->traceAddress[i] + "\"");
+                        retS += ((i < cnt-1) ? ",\n" : "\n");
                     }
-                    return ret;
+                    return retS;
                 }
                 if ( fieldIn % "transactionHash" ) return fromHash(tra->transactionHash);
                 if ( fieldIn % "transactionPosition" ) return asStringU(tra->transactionPosition);

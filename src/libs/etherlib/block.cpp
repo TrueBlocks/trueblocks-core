@@ -70,12 +70,12 @@ SFString nextBlockChunk(const SFString& fieldIn, bool& force, const void *data) 
                 if ( fieldIn % "transactions" ) {
                     uint32_t cnt = blo->transactions.getCount();
                     if (!cnt) return "";
-                    ret = "";
+                    SFString retS;
                     for (uint32_t i = 0 ; i < cnt ; i++) {
-                        ret += blo->transactions[i].Format();
-                        ret += ((i < cnt - 1) ? ",\n" : "\n");
+                        retS += blo->transactions[i].Format();
+                        retS += ((i < cnt - 1) ? ",\n" : "\n");
                     }
-                    return ret;
+                    return retS;
                 }
                 break;
         }
