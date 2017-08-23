@@ -178,7 +178,7 @@ extern SFString binaryFileToString(const SFString& filename);
     // Send a float representing seconds - adjust because Windows takes 1/1000 (thousandth)
     // of a second and Linux takes 1/1000000 (millionth)
     void qbSleep(float units) {
-        ::usleep(units * 1000000.);
+        ::usleep((useconds_t)(units * 1000000.));
     }
 
     //------------------------------------------------------------------
@@ -242,7 +242,12 @@ extern SFString binaryFileToString(const SFString& filename);
         tm unused;
         tm *t = localtime_r(&statBuf.st_ctime, &unused);
         ASSERT(t);
-        return SFTime(t->tm_year + 1900, t->tm_mon+1, t->tm_mday, t->tm_hour, t->tm_min, t->tm_sec);
+        return SFTime(  (uint32_t)t->tm_year + 1900,
+                        (uint32_t)t->tm_mon+1,
+                        (uint32_t)t->tm_mday,
+                        (uint32_t)t->tm_hour,
+                        (uint32_t)t->tm_min,
+                        (uint32_t)t->tm_sec);
     }
 
     //------------------------------------------------------------------
@@ -257,7 +262,12 @@ extern SFString binaryFileToString(const SFString& filename);
         tm unused;
         tm *t = localtime_r(&statBuf.st_mtime, &unused);
         ASSERT(t);
-        return SFTime(t->tm_year + 1900, t->tm_mon+1, t->tm_mday, t->tm_hour, t->tm_min, t->tm_sec);
+        return SFTime(  (uint32_t)t->tm_year + 1900,
+                        (uint32_t)t->tm_mon+1,
+                        (uint32_t)t->tm_mday,
+                        (uint32_t)t->tm_hour,
+                        (uint32_t)t->tm_min,
+                        (uint32_t)t->tm_sec);
     }
 
     //------------------------------------------------------------------
@@ -302,7 +312,7 @@ extern SFString binaryFileToString(const SFString& filename);
 
         struct stat statBuf;
         stat((const char *)filename, &statBuf);
-        return statBuf.st_size;
+        return (SFUint32)statBuf.st_size;
     }
 
     //----------------------------------------------------------------------------

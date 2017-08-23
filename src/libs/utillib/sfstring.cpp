@@ -184,7 +184,7 @@ namespace qblocks {
     {
         char *f = strstr(m_Values, str);
         if (f)
-            return (f-m_Values);
+            return size_t(f-m_Values);
         return NOPOS;
     }
 
@@ -193,7 +193,7 @@ namespace qblocks {
     {
         char *f = strchr(m_Values, ch);
         if (f)
-            return (f-m_Values);
+            return size_t(f-m_Values);
         return NOPOS;
     }
 
@@ -255,7 +255,7 @@ namespace qblocks {
     //--------------------------------------------------------------------
     char string_q::operator[](int index) const
     {
-        return at(index);
+        return at((size_t)index);
     }
 #endif
 
@@ -290,10 +290,10 @@ namespace qblocks {
 
         if (str && (strLen > start))
         {
-            reserve(len);
-            memcpy(m_Values, &str[start], len);
+            reserve((size_t)len);
+            memcpy(m_Values, &str[start], (size_t)len);
         }
-        m_nValues     = len;
+        m_nValues     = (size_t)len;
         m_Values[len] = '\0';
     }
 
@@ -302,13 +302,13 @@ namespace qblocks {
     {
         init();
 
-        int64_t len = lenIn;
+        int64_t len = (int64_t)lenIn;
         len = max((int64_t)0, len);
         if (len > 0)
         {
-            reserve(len);
-            memset(m_Values, ch, len);
-            m_nValues     = len;
+            reserve((size_t)len);
+            memset(m_Values, ch, (size_t)len);
+            m_nValues     = (size_t)len;
             m_Values[len] = '\0';
         }
     }
@@ -364,7 +364,7 @@ namespace qblocks {
         SFString test = toLower(SFString(search));
         char *f = strstr(me.m_Values, test.m_Values);
         if (f)
-            return (f-me.m_Values);
+            return size_t(f-me.m_Values);
         return NOPOS;
     }
 
@@ -372,14 +372,14 @@ namespace qblocks {
     size_t SFString::ReverseFind(char ch) const
     {
         char *f = strrchr(m_Values, ch);
-        return (f ? (f-m_Values) : NOPOS);
+        return (f ? size_t(f-m_Values) : NOPOS);
     }
 
     //---------------------------------------------------------------------------------------
     bool SFString::ContainsAny(const SFString& search) const
     {
         for (uint32_t i=0;i<search.length();i++)
-            if (Contains(search[i]))
+            if (Contains(search[(int)i]))
                 return true;
         return false;
     }
@@ -388,7 +388,7 @@ namespace qblocks {
     bool SFString::ContainsAll(const SFString& search) const
     {
         for (uint32_t i=0;i<search.length();i++)
-            if (!Contains(search[i]))
+            if (!Contains(search[(int)i]))
                 return false;
         return true;
     }
@@ -489,7 +489,7 @@ namespace qblocks {
     {
         size_t len = list.length();
         for (uint32_t i = 0 ; i < len ; i++)
-            ReplaceAll(list[i], with);
+            ReplaceAll(list[(int)i], with);
     }
 
     //---------------------------------------------------------------------------------------
@@ -890,7 +890,7 @@ namespace qblocks {
     bool endsWithAny(const SFString& haystack, const SFString& str)
     {
         for (uint32_t i = 0 ; i < str.length() ; i++)
-            if (haystack.endsWith(str[i]))
+            if (haystack.endsWith(str[(int)i]))
                 return true;
         return false;
     }
@@ -899,7 +899,7 @@ namespace qblocks {
     bool startsWithAny(const SFString& haystack, const SFString& str)
     {
         for (uint32_t i = 0 ; i < str.length() ; i++)
-            if (haystack.startsWith(str[i]))
+            if (haystack.startsWith(str[(int)i]))
                 return true;
         return false;
     }
@@ -917,7 +917,7 @@ namespace qblocks {
             int val = *s - '0';
             if (*s >= 'a' && *s <= 'f')
                 val = *s - 'a' + 10;
-            ret += (mult * val);
+            ret += (mult * (uint64_t)val);
             s++;mult*=16;
         }
 
@@ -930,9 +930,9 @@ namespace qblocks {
     unsigned char hex2Ascii(char *str)
     {
         unsigned char c;
-        c =  (char)((str[0] >= 'A' ? ((str[0]&0xDF)-'A')+10 : (str[0]-'0')));
+        c =  (unsigned char)((str[0] >= 'A' ? ((str[0]&0xDF)-'A')+10 : (str[0]-'0')));
         c *= 16;
-        c = (char)(c + (str[1] >= 'A' ? ((str[1]&0xDF)-'A')+10 : (str[1]-'0')));
+        c = (unsigned char)(c + (str[1] >= 'A' ? ((str[1]&0xDF)-'A')+10 : (str[1]-'0')));
         return c;
     }
 
@@ -944,7 +944,7 @@ namespace qblocks {
         {
             SFString nibble = in.Left(2);
             in = in.substr(2);
-            ret += hex2Ascii((char*)(const char*)nibble);
+            ret += (char)hex2Ascii((char*)(const char*)nibble);
         }
         return ret;
     }
@@ -971,7 +971,7 @@ namespace qblocks {
     {
         SFString ret;
         for (uint32_t i = 0 ; i < inAscii.length() ; i++)
-            ret += asHex(inAscii[i]);
+            ret += asHex(inAscii[(int)i]);
         return ret;
     }
 
