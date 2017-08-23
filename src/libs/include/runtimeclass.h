@@ -160,11 +160,11 @@ return archive; \
     //------------------------------------------------------------
     // Archive list containers
 #define IMPLEMENT_ARCHIVE_LIST(LIST_CLASS) \
-inline SFArchive& operator<<(SFArchive& archive, LIST_CLASS& array) \
+inline SFArchive& operator<<(SFArchive& archive, LIST_CLASS& ) \
 { \
 return archive; \
 } \
-inline SFArchive& operator>>(SFArchive& archive, LIST_CLASS& array) \
+inline SFArchive& operator>>(SFArchive& archive, LIST_CLASS& ) \
 { \
 return archive; \
 }

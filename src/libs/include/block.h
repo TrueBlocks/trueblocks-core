@@ -35,7 +35,7 @@ public:
     SFBloom logsBloom;
     SFUint32 blockNumber;
     SFHash parentHash;
-    SFUint32 timestamp;
+    timestamp_t timestamp;
     CTransactionArray transactions;
 
 public:
