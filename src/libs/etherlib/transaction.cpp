@@ -323,7 +323,7 @@ SFString nextTransactionChunk_custom(const SFString& fieldIn, bool& force, const
             case 'd':
                 if (fieldIn % "date")
                 {
-                    timestamp_t ts = toLongU(tra->getValueByName("timestamp"));
+                    timestamp_t ts = toLong(tra->getValueByName("timestamp"));
                     return dateFromTimeStamp(ts).Format(FMT_JSON);
                 }
                 break;
@@ -344,7 +344,7 @@ SFString nextTransactionChunk_custom(const SFString& fieldIn, bool& force, const
                 break;
             case 't':
                 if ( fieldIn % "timestamp" && tra->pBlock)
-                    return asStringU(tra->pBlock->timestamp);
+                    return asString(tra->pBlock->timestamp);
                 break;
             // EXISTING_CODE
             case 'p':
@@ -438,7 +438,7 @@ bool CTransaction::isFunction(const SFString& func) const
 SFString parse(const SFString& params, int nItems, SFString *types)
 {
     SFString ret;
-    for (int item=0;item<nItems;item++)
+    for (size_t item = 0 ; item < (size_t)nItems ; item++)
     {
         SFString t = types[item];
         bool isDynamic = (t=="string" || t=="bytes" || t.Contains("[]"));
@@ -456,9 +456,9 @@ SFString parse(const SFString& params, int nItems, SFString *types)
 
         if (val.Contains("off:"))
         {
-            long start = toLong(val.Substitute("off:","")) / 32;
-            long len   = grabBigNum(params,start);
-            if (len == -1)
+            size_t start = toLong32u(val.Substitute("off:","")) / (size_t)32;
+            size_t len   = grabBigNum(params,start);
+            if (len == NOPOS)
                 len = params.length()-start;
             if (t == "string")
                 val = hex2String(params.substr((start+1)*64,len*2)).Substitute("\n","\\n").Substitute("\r","");

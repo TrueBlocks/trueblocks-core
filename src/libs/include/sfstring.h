@@ -662,11 +662,7 @@ namespace qblocks {
     inline SFString StripAny(const SFString& str, const SFString& any) {
         SFString ret = str;
         while (endsWithAny(ret, any) || startsWithAny(ret, any)) {
-#ifdef NEW_CODE
             for (size_t i = 0 ; i < any.length() ; i++)
-#else
-            for (uint32_t i = 0 ; i < any.length() ; i++)
-#endif
                 ret = Strip(ret, any[(int)i]);
         }
         return ret;
