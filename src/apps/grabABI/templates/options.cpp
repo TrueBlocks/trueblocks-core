@@ -68,7 +68,7 @@ bool COptions::parseArguments(SFString& command) {
             CToml toml("./config.toml");
             visitor.loadWatches(toml);
             cout << "[";
-            for (int i=0;i<visitor.watches.getCount()-1;i++) {
+            for (uint32_t i=0;i<visitor.watches.getCount()-1;i++) {
                 cout << " { ";
                 cout << "\"address\": \""  << visitor.watches[i].color << visitor.watches[i].address    << cOff << "\", ";
                 cout << "\"firstBlock\": " << bRed                     << visitor.watches[i].firstBlock << cOff << ", ";
