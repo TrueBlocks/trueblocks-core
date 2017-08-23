@@ -35,6 +35,10 @@ function(run_test testName)
 endfunction(run_test)
 
 # Enter one line for each individual test
+run_test("ethslurp_no_params")
+run_test("ethslurp_help.txt" "-h")
+run_test("ethslurp_invalid_param_1.txt" "-x")
+run_test("ethslurp_invalid_param_2.txt" "--")
 
 #--------------------------------------------------------------------------------
 ## clean up prior tests
