@@ -16,7 +16,7 @@
 //-----------------------------------------------------------------------
 bool CVisitor::isTransactionOfInterest(CTransaction *trans, uint32_t& whichWatch) {
 
-    for (int i = 0; i < watches.getCount() ; i++) {
+    for (uint32_t i = 0; i < watches.getCount() ; i++) {
         if (trans->blockNumber >= watches[i].firstBlock && trans->blockNumber <= watches[i].lastBlock) {
             if (watches[i].isTransactionOfInterest(trans, nSigs, sigs)) {
                 whichWatch = i;
@@ -168,7 +168,7 @@ bool updateCacheUsingBlooms(const SFString& path, void *data) {
 
 //            cout << "Checking bloom " << path << "\r\n";
             bool hit = false;
-            for (int i = 0 ; i < visitor->watches.getCount()-1 && !hit; i++) { // don't check too many
+            for (uint32_t i = 0 ; i < visitor->watches.getCount()-1 && !hit; i++) { // don't check too many
                 if (isBloomHit(makeBloom(visitor->watches[i].address), bloom)) {
                     hit = true;
                 }
@@ -225,7 +225,7 @@ bool updateCache(CBlock& block, void *data) {
         cerr << "Quitting debugger.\r\n";
         return false; // return false since user hit 'quit' on debugger
     }
-    for (int i = 0 ; i < block.transactions.getCount() ; i++) {
+    for (uint32_t i = 0 ; i < block.transactions.getCount() ; i++) {
 
         CTransaction *trans = &block.transactions[i];
         trans->pBlock = &block;
@@ -264,7 +264,7 @@ bool updateCache(CBlock& block, void *data) {
     }
 
     timestamp_t tsOut = (block.timestamp == 0 ? toTimeStamp(Now()) : block.timestamp);
-    SFString endMsg = dateFromTimeStamp(tsOut).Format(FMT_JSON) + " (" + asString(block.blockNumber) + ")";
+    SFString endMsg = dateFromTimeStamp(tsOut).Format(FMT_JSON) + " (" + asStringU(block.blockNumber) + ")";
     blknum_t x = (visitor->blockStats.firstBlock >= block.blockNumber ? 0 : block.blockNumber - visitor->blockStats.firstBlock);
     progressBar(x, visitor->blockStats.nBlocks, endMsg);
     visitor->blockStats.prevBlock = block;
