@@ -29,7 +29,7 @@ static SFUint32 nDebugCmds = sizeof(debugCmds) / sizeof(CParams);
 //---------------------------------------------------------------------
 SFString completeCommand(const SFString& cmd) {
 
-    for (int i=0;i<nDebugCmds-1;i++) {
+    for (uint32_t i=0;i<nDebugCmds-1;i++) {
         if (debugCmds[i].longName.substr(1,cmd.length()) == cmd) {
             return debugCmds[i].longName.substr(1);
         }
@@ -50,7 +50,7 @@ bool CVisitor::enterDebugger(const CBlock& block) {
 
     static SFStringArray cmds;
     SFString curCmd;
-    int cursor=0;
+    uint32_t cursor=0;
     bool showKeys = false;
 
     cout << ">> ";
@@ -63,7 +63,7 @@ bool CVisitor::enterDebugger(const CBlock& block) {
         switch(ch) {
             case KEY_UP:
                 if (cursor < cmds.getCount()) {
-                    int index = cmds.getCount() - (++cursor);
+                    uint32_t index = cmds.getCount() - (++cursor);
                     curCmd = cmds[index];
                 }
                 break;
@@ -86,7 +86,7 @@ bool CVisitor::enterDebugger(const CBlock& block) {
                 break;
             case 10:  // 'enter'
                 if (curCmd == "c" || curCmd == "correct") {
-                    for (int i = 0 ; i < watches.getCount() ; i++)
+                    for (uint32_t i = 0 ; i < watches.getCount() ; i++)
                         watches[i].qbis.correct();
                     done = true;
                     history(curCmd);
@@ -125,7 +125,7 @@ bool CVisitor::enterDebugger(const CBlock& block) {
                 } else if (curCmd == "b" || curCmd == "buffer") {
                     if (tBuffer.getCount()) {
                         cout << "\r\nTransaction buffer:\r\n";
-                        for (int i=0;i<tBuffer.getCount();i++) {
+                        for (uint32_t i=0;i<tBuffer.getCount();i++) {
                             cout << "    " << tBuffer[i].bn << "." << tBuffer[i].tx << " " << tBuffer[i].hash << "\r\n";
                         }
                     } else {
@@ -136,7 +136,7 @@ bool CVisitor::enterDebugger(const CBlock& block) {
                 } else if (curCmd == "l" || curCmd == "list") {
                     cout << "\r\nAccounts:\r\n";
                     cout << "[";
-                    for (int i=0;i<watches.getCount()-1;i++) {
+                    for (uint32_t i=0;i<watches.getCount()-1;i++) {
                         cout << " { ";
                         cout << "\"address\": \""  << watches[i].color << watches[i].address    << cOff << "\", ";
                         cout << "\"firstBlock\": " << bRed                     << watches[i].firstBlock << cOff << ", ";
@@ -151,7 +151,7 @@ bool CVisitor::enterDebugger(const CBlock& block) {
                     curCmd.Replace("s ","");
                     curCmd.Replace("source:","");
                     curCmd.Replace("source ","");
-                    for (int i=0;i<watches.getCount();i++) {
+                    for (uint32_t i=0;i<watches.getCount();i++) {
                         if (watches[i].address == curCmd || watches[i].name == curCmd)
                             curCmd = watches[i].name + ".sol";
                     }
@@ -190,7 +190,7 @@ bool CVisitor::enterDebugger(const CBlock& block) {
 
                 } else if (curCmd == "h" || curCmd == "help") {
                     cout << "\r\n" << bBlue << "Help:" << cOff << "\r\n";
-                    for (int i=0;i<nDebugCmds;i++) {
+                    for (uint32_t i=0;i<nDebugCmds;i++) {
                         SFString name = debugCmds[i].longName;
                         SFString cmd;
                         if (name.length()) {
@@ -226,7 +226,7 @@ bool CVisitor::enterDebugger(const CBlock& block) {
                         (allowDigits && (isdelim(ch) || isdigit(ch))) ||
                         (allowHex    && (isdelim(ch) || isdigit(ch) || ishex(ch)))
                     )
-                    curCmd += ch;
+                    curCmd += (char)ch;
             }
         }
         cout << "\r>> " << curCmd;

@@ -120,7 +120,7 @@ int main(int argc, const char *argv[]) {
 
             // The cache may have been opened for reading during displayFromCache, so we
             // close it here, so we can open it back up as append only
-            visitor.cache.setForWriting();
+            visitor.cache.resetForWriting();
             if (visitor.cache.Lock(cacheFileName, "a+", LOCK_WAIT)) {
                 forEveryBloomFile(updateCacheUsingBlooms, &visitor, visitor.blockStats.firstBlock, visitor.blockStats.nBlocks);
                 visitor.cache.Release();
@@ -128,7 +128,7 @@ int main(int argc, const char *argv[]) {
 
             if (visitor.transStats.nFreshened) {
                 SFTime dt = dateFromTimeStamp(visitor.blockStats.prevBlock.timestamp);
-                progressBar(visitor.blockStats.nBlocks, visitor.blockStats.nBlocks, dt.Format(FMT_JSON) + " (" + asString(topOfChain) + ")");
+                progressBar(visitor.blockStats.nBlocks, visitor.blockStats.nBlocks, dt.Format(FMT_JSON) + " (" + asStringU(topOfChain) + ")");
                 cout << "\r\n";
             }
         }
