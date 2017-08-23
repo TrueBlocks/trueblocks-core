@@ -61,7 +61,7 @@ bool COptions::parseArguments(SFString& command) {
             // any other -f has the format attached  or is invalid
             prettyPrint = true;
             exportFormat = arg;
-            SFString arg = nextTokenClear(exportFormat,  ':');
+            arg = nextTokenClear(exportFormat,  ':');
             if (arg != "-f" && arg != "-fmt")
                 return usage("Unknown parameter: " + arg);
 
@@ -142,14 +142,14 @@ bool COptions::parseArguments(SFString& command) {
 
         } else if (arg.startsWith("-m")) {
             SFString val = arg;
-            SFString arg = nextTokenClear(val, ':');
+            arg = nextTokenClear(val, ':');
             if (arg != "-m" && arg != "-max")
                 return usage("Unknown parameter: " + arg);
             maxTransactions = toLong32u(val);
 
         } else if (arg.startsWith("-n")) {
             SFString val = arg;
-            SFString arg = nextTokenClear(val, ':');
+            arg = nextTokenClear(val, ':');
             if (arg != "-n" && arg != "-name")
                 return usage("Unknown parameter: " + arg);
             name = val;
