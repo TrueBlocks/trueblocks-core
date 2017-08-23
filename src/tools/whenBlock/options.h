@@ -12,10 +12,10 @@
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
-    SFUint32 blockNum;
+    blknum_t blockNum;
     SFTime   date;
     SFString special;
-    bool alone;
+    bool     alone;
 
     COptions(void);
     ~COptions(void);
@@ -25,5 +25,4 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-extern bool visitNonEmptyBlock(CBlock& node, void *data);
 extern SFStringArray specials;

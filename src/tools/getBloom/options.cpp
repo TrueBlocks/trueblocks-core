@@ -172,7 +172,7 @@ void COptions::Init(void) {
     isRange = false;
     terse   = false;
     quiet   = false;
-    nums[0]    = -1;
+    nums[0]    = NOPOS;
     nNums      = 0;  // we will set this to '1' later if user supplies no values
     start = stop = 0;
 

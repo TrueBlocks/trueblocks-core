@@ -31,7 +31,7 @@ int main(int argc, const char *argv[]) {
         CBlock block;
         if (options.blockNum != NOPOS) {
             if (verbose) { cout << "finding by block number\n"; }
-            queryBlock(block, asString(options.blockNum), false);
+            queryBlock(block, asStringU(options.blockNum), false);
 
         } else {
             if (verbose) { cout << "finding by date\n"; }
@@ -92,7 +92,7 @@ public:
 bool lookCloser(CBlock& block, void *data) {
 //    cout << "Checking block: " << block.blockNumber << " (" << dateFromTimeStamp(block.timestamp) << ")";
     CBlockFinder *bf = reinterpret_cast<CBlockFinder*>(data);
-    if ((timestamp_t)block.timestamp <= bf->ts) {
+    if (block.timestamp <= bf->ts) {
 //        cout << "...saved";
         bf->found = block.blockNumber;
 //        cout << "\n";
@@ -108,7 +108,7 @@ bool lookupDate(CBlock& block, const SFTime& date) {
         nBlocks = fileSize(miniBlockCache) / sizeof(CMiniBlock);
         blocks = new CMiniBlock[nBlocks];
         if (!blocks)
-            return usage("Could not allocate memory for the blocks (size needed: " + asString(nBlocks) + ").\n");
+            return usage("Could not allocate memory for the blocks (size needed: " + asStringU(nBlocks) + ").\n");
         bzero(blocks, sizeof(CMiniBlock)*(nBlocks));
         if (verbose)
             cerr << "Allocated room for " << nBlocks << " miniBlocks.\n";
@@ -130,14 +130,14 @@ bool lookupDate(CBlock& block, const SFTime& date) {
     mini.timestamp = toTimeStamp(date);
     CMiniBlock *found = reinterpret_cast<CMiniBlock*>(bsearch(&mini, blocks, nBlocks, sizeof(CMiniBlock), findFunc));
     if (found) {
-        queryBlock(block, asString(found->blockNumber), false);
+        queryBlock(block, asStringU(found->blockNumber), false);
         return true;
     }
 
     //  cout << mini.timestamp << " is somewhere between " << below << " and " << above << "\n";
     CBlockFinder finder(mini.timestamp);
     forEveryBlockOnDisc(lookCloser, &finder, below, above-below);
-    queryBlock(block, asString(finder.found), false);
+    queryBlock(block, asStringU(finder.found), false);
     return true;
 }
 
