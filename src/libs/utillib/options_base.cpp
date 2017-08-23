@@ -143,7 +143,7 @@ namespace qblocks {
                 arg.Replace("-v", "");
                 arg.Replace(":", "");
                 if (!arg.empty())
-                    verbose = toLong(arg);
+                    verbose = toLongU(arg);
 
             } else if (COptionsBase::useTesting && (arg == "-t" || arg == "--test")) {
                 isTesting = true;

@@ -171,9 +171,9 @@ static SFUint32 nTrans=0,nTraced=0;
 bool queryBlock(CBlock& block, const SFString& numIn, bool needTrace)
 {
     if (numIn=="latest")
-        return queryBlock(block, asString(getLatestBlockFromClient()), needTrace);
+        return queryBlock(block, asStringU(getLatestBlockFromClient()), needTrace);
 
-    long num = toLong(numIn);
+    SFUint32 num = toLongU(numIn);
     if ((qbGlobals::source.Contains("binary") || qbGlobals::source.Contains("nonemp")) && fileSize(getBinaryFilename1(num))>0) {
         //		if (verbose) { cerr << "Reading binary block: " << num << "\n"; cerr.flush(); }
         UNHIDE_FIELD(CTransaction, "receipt");
@@ -194,7 +194,7 @@ bool queryBlock(CBlock& block, const SFString& numIn, bool needTrace)
 
     //	if (verbose) { cerr << "Getting block from node: " << num << "\n"; cerr.flush(); }
     HIDE_FIELD(CTransaction, "receipt");
-    getObjectViaRPC(block, "eth_getBlockByNumber", "["+quote(asString(num))+",true]");
+    getObjectViaRPC(block, "eth_getBlockByNumber", "["+quote(asStringU(num))+",true]");
 
     // If there are no transactions, we're done
     if (!block.transactions.getCount())
@@ -229,11 +229,11 @@ bool queryBlock(CBlock& block, const SFString& numIn, bool needTrace)
     nTraced += nTraces;
     if (verbose)
     {
-        SFString fileName = getBinaryFilename1(toLong(numIn));
+        SFString fileName = getBinaryFilename1(toLongU(numIn));
         SFString fmt;
         fmt += SFString("Block ") + cYellow  + "#" + asStringU(block.blockNumber)  + cOff;
-        fmt += SFString(" (")     + cYellow  + padNum3T(block.transactions.getCount()) + "/" + asString(nTrans)  + cOff + " trans";
-        fmt +=                      cYellow  + padNum3T(nTraces)                       + "/" + asString(nTraced) + cOff + " traced) written to ";
+        fmt += SFString(" (")     + cYellow  + padNum3T((uint64_t)block.transactions.getCount()) + "/" + asStringU(nTrans)  + cOff + " trans";
+        fmt +=                      cYellow  + padNum3T((uint64_t)nTraces)                       + "/" + asStringU(nTraced) + cOff + " traced) written to ";
         fmt +=                      cMagenta + fileName.Substitute(blockFolder, "./")  + cOff + ".";
         fprintf(stderr, "%s\r", (const char*)fmt);
     }
@@ -511,7 +511,7 @@ void writeOneBloom(const SFString& fileName, const SFBloom& bloom) {
 bool verifyBlock(const CBlock& qBlock, SFString& result)
 {
     SFString nStr; // the node's block
-    queryRawBlock(nStr, asString(qBlock.blockNumber), true, expContext().hashesOnly);
+    queryRawBlock(nStr, asStringU(qBlock.blockNumber), true, expContext().hashesOnly);
     nStr = cleanUpJson((char*)(const char*)nStr);
 
     SFString qStr = qBlock.Format().Substitute("blockNumber","number"); // our block
@@ -532,12 +532,12 @@ bool verifyBlock(const CBlock& qBlock, SFString& result)
     while (!fields.empty())
     {
         SFString field = nextTokenClear(fields,'|');
-        long f1 = nStr.find(field);
+        size_t f1 = nStr.find(field);
         SFString tail = nStr.substr(f1);
-        long f2 = tail.find(",");
+        size_t f2 = tail.find(",");
         if (field=="transactions")
-            f2 = tail.find("],")+1;
-        SFString tField = tail.Left(f2==-1?tail.length():f2).Substitute("0x"+SFString('0',512),"0x0");
+            f2 = tail.find("],") + 1;
+        SFString tField = tail.Left(f2 == NOPOS ? tail.length() : f2).Substitute("0x"+SFString('0',512),"0x0");
         nnStr += (tField + ",");
 #if DEBUG_VERIFY
         cout << field << " = " << tField << "\n";
@@ -584,7 +584,7 @@ static SFString getFilename_local(SFUint32 numIn, bool asPath, bool asJson)
     char ret[512];
     bzero(ret,sizeof(ret));
 
-    SFString num = padLeft(asString(numIn),9,'0');
+    SFString num = padLeft(asStringU(numIn),9,'0');
     SFString fmt = (asPath ? "%s/%s/%s/" : "%s/%s/%s/%s");
     SFString fn  = (asPath ? "" : num + (asJson ? ".json" : ".bin"));
 
@@ -778,7 +778,7 @@ SFUint32 getLatestBlockFromCache(CSharedResource *res) {
     }
     ASSERT(pRes->isOpen());
 
-    pRes->Seek(-1*sizeof(SFUint32),SEEK_END);
+    pRes->Seek( (-1 * (long)sizeof(SFUint32)), SEEK_END);
     pRes->Read(ret);
     if (pRes != res)
         pRes->Release();
@@ -821,8 +821,8 @@ public:
         // transOnDisc
         transFile = miniTransCache;
 
-        nBlocks   = fileSize(blockFile) / sizeof(CMiniBlock);
-        nTrans    = fileSize(transFile) / sizeof(CMiniTrans);
+        nBlocks1   = fileSize(blockFile) / sizeof(CMiniBlock);
+        nTrans1    = fileSize(transFile) / sizeof(CMiniTrans);
 
         loaded = false;
     }
@@ -850,15 +850,15 @@ public:
         loaded = true; // only come through here once, even if we fail to load
 
         double startTime = qbNow();
-        blocks = new CMiniBlock[nBlocks];
+        blocks = new CMiniBlock[nBlocks1];
         if (!blocks)
         {
-            cerr << "Could not allocate memory for the blocks (size needed: " << nBlocks << ").\n";
+            cerr << "Could not allocate memory for the blocks (size needed: " << nBlocks1 << ").\n";
             return false;
         }
-        bzero(blocks, sizeof(CMiniBlock)*(nBlocks));
+        bzero(blocks, sizeof(CMiniBlock)*(nBlocks1));
         if (verbose)
-            cerr << TIMER() << "Allocated room for " << nBlocks << " miniBlocks.\n";
+            cerr << TIMER() << "Allocated room for " << nBlocks1 << " miniBlocks.\n";
 
         // Next, we try to open the mini-block database
         if (!blocksOnDisc.Lock(blockFile, binaryReadOnly, LOCK_WAIT))
@@ -869,9 +869,9 @@ public:
         blocksOnDisc.Seek(0, SEEK_SET);
 
         // Read the entire mini-block database into memory in one chunk
-        size_t nRead = blocksOnDisc.Read(blocks, nBlocks, sizeof(CMiniBlock));
+        size_t nRead = blocksOnDisc.Read(blocks, nBlocks1, sizeof(CMiniBlock));
         blocksOnDisc.Release();  // We're done with it
-        if (nRead != nBlocks)
+        if (nRead != nBlocks1)
         {
             cerr << "Error encountered reading mini-blocks database.\n Quitting...";
             return false;
@@ -882,16 +882,17 @@ public:
         // See if we can allocation enough space for the mini-transaction database
         SFUint32 fs = fileSize(transFile);
         SFUint32 ms = sizeof(CMiniTrans);
-        SFUint32 nTrans   = fs / ms;
-        trans = new CMiniTrans[nTrans];
+        //SFUint32 nTrans   = fs / ms;
+        nTrans1   = fs / ms;
+        trans = new CMiniTrans[nTrans1];
         if (!trans)
         {
-            cerr << "Could not allocate memory for the transactions (size needed: " << nTrans << ").\n";
+            cerr << "Could not allocate memory for the transactions (size needed: " << nTrans1 << ").\n";
             return false;
         }
-        bzero(trans, sizeof(CMiniTrans)*(nTrans));
+        bzero(trans, sizeof(CMiniTrans)*(nTrans1));
         if (verbose)
-            cerr << TIMER() << "Allocated room for " << nTrans << " transactions.\n";
+            cerr << TIMER() << "Allocated room for " << nTrans1 << " transactions.\n";
 
         // Next, we try to open the mini-transaction database
         if (!transOnDisc.Lock(transFile, binaryReadOnly, LOCK_WAIT))
@@ -904,18 +905,18 @@ public:
         // TODO: What is the correct value for this?
 #define READ_SIZE 204800
         nRead = 0;
-        while (nRead < nTrans)
+        while (nRead < nTrans1)
         {
             nRead += transOnDisc.Read(&trans[nRead], READ_SIZE, sizeof(CMiniTrans));
             if (verbose)
-                progressBar(nRead,nTrans,TIMER_T());
+                progressBar(nRead,nTrans1,TIMER_T());
         }
         transOnDisc.Release();
         cerr << "\n" << TIMER();
         return true;
     }
     SFUint32 firstBlock(void) { return 0; }
-    SFUint32 lastBlock (void) { return nBlocks; }
+    SFUint32 lastBlock (void) { return nBlocks1; }
 
 public:
     bool            loaded;
@@ -928,8 +929,8 @@ public:
     SFString        transFile;
 
 private:
-    SFUint32    nBlocks;
-    SFUint32    nTrans;
+    SFUint32    nBlocks1;
+    SFUint32    nTrans1;
     SFUint32    start;
     SFUint32    count;
 };

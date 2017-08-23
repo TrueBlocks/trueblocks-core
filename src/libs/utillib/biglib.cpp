@@ -124,11 +124,11 @@ namespace qblocks {
         this->base = base;
 
         // Get an upper bound on how much space we need
-        int maxBitLenOfX    = x.len * SFUintBN::N;
-        int minBitsPerDigit = bitLen(base) - 1;
+        int maxBitLenOfX    = (int)(x.len * SFUintBN::N);
+        int minBitsPerDigit = (int)bitLen(base) - 1;
         int maxDigitLenOfX  = (maxBitLenOfX + minBitsPerDigit - 1) / minBitsPerDigit;
 
-        len = maxDigitLenOfX; // Another change to comply with `staying in bounds'.
+        len = (unsigned int)maxDigitLenOfX; // Another change to comply with `staying in bounds'.
         allocate(len); // Get the space
 
         SFUintBN x2(x), buBase(base);
@@ -169,13 +169,13 @@ namespace qblocks {
             char theSymbol = s[symbolNumInString];
 
             if (theSymbol >= '0' && theSymbol <= '9')
-                blk[digitNum] = theSymbol - '0';
+                blk[digitNum] = (unsigned short)(theSymbol - '0');
 
             else if (theSymbol >= 'A' && theSymbol <= 'Z')
-                blk[digitNum] = theSymbol - 'A' + 10;
+                blk[digitNum] = (unsigned short)(theSymbol - 'A' + 10);
 
             else if (theSymbol >= 'a' && theSymbol <= 'z')
-                blk[digitNum] = theSymbol - 'a' + 10;
+                blk[digitNum] = (unsigned short)(theSymbol - 'a' + 10);
 
             else
                 throw "BigUnsignedInABase(string, unsigned short): Bad symbol in input.  Only 0-9, A-Z, a-z are accepted.";
@@ -327,10 +327,10 @@ namespace qblocks {
         SFString exponent = s.c_str();
         SFString decimals = nextTokenClear(exponent,'e');
         SFString num = nextTokenClear(decimals,'.');
-        long nD = decimals.length();
-        SFUint32 e = toLong(exponent);
+        long nD = (long)decimals.length();
+        SFUint32 e = toLongU(exponent);
         SFUintBN ee = 1;
-        SFUint32 power = e-nD;
+        SFUint32 power = e - (SFUint32)nD;
         for (SFUint32 i=0;i<power;i++)
             ee *= 10;
         num += decimals;
