@@ -10,10 +10,9 @@
 //--------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
-    bool freshen;
-    SFUint32 dispLevel;
-    SFUint32 freq;
-    SFUint32 hour;
+    bool        freshen;
+    uint32_t    freq;
+    uint32_t    hour;
     timestamp_t at;
 
     COptions(void);
