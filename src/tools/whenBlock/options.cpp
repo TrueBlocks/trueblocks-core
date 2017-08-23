@@ -87,8 +87,8 @@ bool COptions::parseArguments(SFString& command) {
         blknum_t latest = getLatestBlockFromClient();
         if (blockNum > latest) {
             if (special.empty()) {
-                return usage("Block number (" + asString(blockNum) + ") must be less than latest "
-                             "block: " + asString(latest));
+                return usage("Block number (" + asStringU(blockNum) + ") must be less than latest "
+                             "block: " + asStringU(latest));
 
             } else {
                 // For the cases where user's node is behind the head of the block and getLatestBlockFromClient
@@ -156,7 +156,7 @@ int sortByBlockNum(const void *v1, const void *v2) {
         return -1;
     nextTokenClear(b1, '|');
     nextTokenClear(b2, '|');
-    return toLong32u(b1) - toLong32u(b2);
+    return (int)(toLong32u(b1) - toLong32u(b2));
 }
 
 //--------------------------------------------------------------------------------

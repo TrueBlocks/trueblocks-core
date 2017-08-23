@@ -82,7 +82,7 @@ SFString doOneBloom(SFUint32 num, const COptions& opt) {
 
     CBlock gold;
     SFString result;
-    SFString numStr = asString(num);
+    SFString numStr = asStringU(num);
     if (opt.isRaw) {
 
         if (!queryRawBlock(result, numStr, true, opt.terse)) {
@@ -100,7 +100,7 @@ SFString doOneBloom(SFUint32 num, const COptions& opt) {
         if (curSource().Contains("Only")) {
             // --source::cache mode doesn't include timestamp in transactions
             for (txnum_t t = 0 ; t < gold.transactions.getCount() ; t++) {
-                gold.transactions[t].timestamp = gold.timestamp;
+                gold.transactions[t].timestamp = (SFUint32)gold.timestamp;
             }
 
         }
