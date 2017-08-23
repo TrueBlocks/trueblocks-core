@@ -221,13 +221,13 @@ SFArchive& operator>>(SFArchive& archive, CIncomeStatement& inc) {
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 ostream& operator<<(ostream& os, const CIncomeStatement& is) {
-    int width=22;
+    uint32_t width = 22;
     if (is.begBal == is.endBal && is.begBal == -1) {
-        os << padCenter("begBal",width) << "   "
-        << padCenter("inFlow",width) << "   "
-        << padCenter("outFlow",width) << "   "
-        << padCenter("gasCost",width) << "   "
-        << padCenter("endBal",width);
+        os << padCenter("begBal", width) << "   "
+        << padCenter("inFlow", width) << "   "
+        << padCenter("outFlow", width) << "   "
+        << padCenter("gasCost", width) << "   "
+        << padCenter("endBal", width);
     } else {
         os << (is.begBal>0?cGreen:bBlack) << padLeft(wei2Ether(to_string(is.begBal).c_str()),width) << bBlack << "   ";
         os << (is.inflow>0?cYellow:"") << padLeft(wei2Ether(to_string(is.inflow).c_str()),width) << bBlack << "   ";
@@ -238,8 +238,8 @@ ostream& operator<<(ostream& os, const CIncomeStatement& is) {
     return os;
 }
 //---------------------------------------------------------------------------
-bool CIncomeStatement::reconcile(const SFAddress& addr, blknum_t blockNum) {
-    nodeBal = getBalance(addr, blockNum, false);
+bool CIncomeStatement::reconcile(const SFAddress& addr, blknum_t blockNum1) {
+    nodeBal = getBalance(addr, blockNum1, false);
     return balanced();
 }
 // EXISTING_CODE

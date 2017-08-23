@@ -91,8 +91,8 @@ SFString nextPricequoteChunk(const SFString& fieldIn, bool& force, const void *d
 bool CPriceQuote::setValueByName(const SFString& fieldName, const SFString& fieldValue) {
     // EXISTING_CODE
     if ( fieldName % "date" || fieldName % "timestamp" ) {
-        timestamp = toLong(fieldValue);
-        date = dateFromTimeStamp(timestamp);
+        timestamp = toLongU(fieldValue);
+        date = dateFromTimeStamp((timestamp_t)timestamp);
         return true;
     }
     // EXISTING_CODE
@@ -131,7 +131,7 @@ bool CPriceQuote::setValueByName(const SFString& fieldName, const SFString& fiel
 //---------------------------------------------------------------------------------------------------
 void CPriceQuote::finishParse() {
     // EXISTING_CODE
-    date = dateFromTimeStamp(timestamp);
+    date = dateFromTimeStamp((timestamp_t)timestamp);
     // EXISTING_CODE
 }
 
@@ -337,7 +337,7 @@ bool loadPriceData(CPriceQuoteArray& quotes, bool freshen, SFString& message, SF
                 if (verbose > 1) {
                     cerr << "addToArray: " << addToArray
                     << " nFields: " << nFields
-                    << " quote: " << dateFromTimeStamp(quote.timestamp)
+                    << " quote: " << dateFromTimeStamp((timestamp_t)quote.timestamp)
                     << " lastRead: " << lastRead
                     << " lastRead(ts): " << dateFromTimeStamp(toTimeStamp(lastRead)) << "\n";
                 }
@@ -350,7 +350,7 @@ bool loadPriceData(CPriceQuoteArray& quotes, bool freshen, SFString& message, SF
 #ifdef DEBUGGING
                         cerr << quote.Format() << "\n";
 #endif
-                        lastRead = dateFromTimeStamp(quote.timestamp);
+                        lastRead = dateFromTimeStamp((timestamp_t)quote.timestamp);
                     }
                 }
             }
@@ -399,7 +399,7 @@ bool loadPriceData(CPriceQuoteArray& quotes, bool freshen, SFString& message, SF
 
 //-----------------------------------------------------------------------------------
 uint64_t indexFromTimeStamp(const CPriceQuoteArray& quotes, timestamp_t ts) {
-    timestamp_t first = quotes[0].timestamp;
+    timestamp_t first = (timestamp_t)quotes[0].timestamp;
     if (ts < first)
         return 0;
     timestamp_t since = ts - first;
