@@ -49,7 +49,7 @@ bool COptions::parseArguments(SFString& command) {
             if (arg.empty() || (arg[0] != '+' && !isdigit(arg[0]))) {
                 //return usage("--uint requires a non-negative number. Quitting");
             } else {
-                numOption = toUnsigned(arg);
+                numOption = toLong(arg);
             }
             
         } else if (arg.startsWith('-')) {  // do not collapse
@@ -59,7 +59,7 @@ bool COptions::parseArguments(SFString& command) {
             }
 
         } else {
-            testNum = (uint32_t)toLong(arg);
+            testNum = (int32_t)toLong(arg);
         }
     }
     return true;
@@ -72,7 +72,7 @@ void COptions::Init(void) {
 
     boolOption = false;
     boolSet = false;
-    numOption = NOPOS;
+    numOption = -1;
     stringOption = "";
     testNum = -1;
 

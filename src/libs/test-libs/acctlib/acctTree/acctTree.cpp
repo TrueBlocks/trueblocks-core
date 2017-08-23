@@ -8,7 +8,7 @@
 #include "options.h"
 #include "reporter.h"
 
-SFUint32 maxBlocks = 1000;
+SFUint32 maxBlocks = 500;
 //-----------------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
@@ -28,7 +28,6 @@ int main(int argc, const char *argv[]) {
         if (!options.parseArguments(command))
             return 0;
 
-        //verbose = 2;
         if (options.all) {
             options.startBlock = 4000000;
             maxBlocks = getLatestBlockFromClient();
@@ -41,11 +40,6 @@ int main(int argc, const char *argv[]) {
             reporter.startTimer("Accumulating accounts...");
             forEveryBlockOnDisc(buildTree, &reporter, options.startBlock, getLatestBlockFromClient());
             reporter.stopTimer();
-
-            //-----------------------------------------------
-//            cerr << "\nHit enter to continue...\n";
-//            if (!isTesting)
-//                getchar();
 
             //-----------------------------------------------
             reporter.startTimer("Displaying accounts...");
@@ -69,8 +63,8 @@ bool buildTree(CBlock& block, void *data) {
         if (SFString(tr->to).empty())
             tr->to = "0x0";
         r->nTransVisited++;
-        r->tree->insert(tr->from, asString(block.blockNumber));
-        r->tree->insert(tr->to, asString(block.blockNumber));
+        r->tree->insert(tr->from, asStringU(block.blockNumber));
+        r->tree->insert(tr->to, asStringU(block.blockNumber));
     }
     cerr << r->nBlocksVisited << ":" << block.blockNumber << "\r";
     cerr.flush();

@@ -16,11 +16,11 @@ int main(int argc, const char *argv[]) {
     SFString myStr = "my string";
     bool b = true;
     char c = 'c';
-    unsigned int ui = -1;
+    unsigned int ui = (unsigned int)-1;
     int i = -1;
     int64_t il = -1;
-    uint64_t uil = -1;
-    float f = 10.333;
+    uint64_t uil = (uint64_t)-1;
+    float f = (float)10.333;
     double d = 1001001010.01121112;
     SFTime t = SFTime(2017,10,12,1,14,12);
 
