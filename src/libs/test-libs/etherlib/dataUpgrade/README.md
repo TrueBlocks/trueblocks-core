@@ -4,14 +4,14 @@ Testing only
 
 #### Usage
 
-`Usage:`    dataUpgrade [-v|-h] mode  
+`Usage:`    dataUpgrade [-v|-h] mode val  
 `Purpose:`  Test upgrading binary data to new format.
              
 `Where:`  
 
 | Option | Full Command | Description |
 | -------: | :------- | :------- |
-|  | mode | either a number between 0 and 5, a C++ quickBlocks class name, the word 'upgradeTest' |
+|  | mode val | either a number between 0 and 5, a C++ quickBlocks class name, the word 'upgradeTest' |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 

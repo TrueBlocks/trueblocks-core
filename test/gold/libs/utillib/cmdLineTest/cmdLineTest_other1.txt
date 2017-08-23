@@ -31,7 +31,7 @@ numOption: -1
 stringOption: 
 testNum: 8
 0. Running Test1
-	000.000. 8. uint == -100 (false)          ==> passed '(opts.numOption == NOPOS)' is true
+	000.000. 8. uint == -100 (false)          ==> passed '(opts.numOption == (int64_t)NOPOS)' is true
 
   Invalid option: --string:String
 
