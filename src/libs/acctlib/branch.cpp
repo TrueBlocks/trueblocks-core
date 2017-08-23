@@ -339,7 +339,7 @@ bool CBranch::readBackLevel(SFArchive& archive) {
         (*func)(this, data);
         for (uint32_t i = 0; i < 16; ++i) {
             if (m_nodes[i]) {
-                vd->strs = vd->strs + "-" + idex(i);
+                vd->strs = vd->strs + "-" + idex((char)i);
                 m_nodes[i]->visitItems(func, data);
                 nextTokenClearReverse(vd->strs, '-');
             }

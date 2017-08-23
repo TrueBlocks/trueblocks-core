@@ -150,13 +150,13 @@ IMPLEMENT_ARCHIVE_LIST(CTreeRootList);
 // EXISTING_CODE
 //----------------------------------------------------------
 inline int nodeIndex(char c) {
-    char l = tolower(c);
+    char l = (char)tolower(c);
     int ret =  (l < 'a' ? l - '0' : l - 'a' + 10) % 16;
     return ret;
 }
 
 //------------------------------------------------------------------
-inline SFString idex(uint32_t n) {
+inline SFString idex(char n) {
     switch (n)     {
         case 0: return "0";
         case 1: return "1";
