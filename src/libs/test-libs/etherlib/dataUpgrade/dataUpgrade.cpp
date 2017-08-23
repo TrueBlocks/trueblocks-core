@@ -150,13 +150,13 @@ CBaseNode *getNode(const SFString& nodeType) {
 //--------------------------------------------------------------
 SFString baseTypeName(SFUint32 type) {
     SFString ret;
-    if (type & TS_NUMERAL) ret += (" TS_NUMERAL " + asString(type));
-    if (type & TS_STRING)  ret += (" TS_STRING "  + asString(type));
-    if (type & TS_DATE)    ret += (" TS_DATE "    + asString(type));
-    if (type & TS_ARRAY)   ret += (" TS_ARRAY "   + asString(type));
-    if (type & TS_OBJECT)  ret += (" TS_OBJECT "  + asString(type));
-    if (type & TS_POINTER) ret += (" TS_POINTER " + asString(type));
-    if (type & TS_BIGNUM)  ret += (" TS_BIGNUM "  + asString(type));
+    if (type & TS_NUMERAL) ret += (" TS_NUMERAL " + asStringU(type));
+    if (type & TS_STRING)  ret += (" TS_STRING "  + asStringU(type));
+    if (type & TS_DATE)    ret += (" TS_DATE "    + asStringU(type));
+    if (type & TS_ARRAY)   ret += (" TS_ARRAY "   + asStringU(type));
+    if (type & TS_OBJECT)  ret += (" TS_OBJECT "  + asStringU(type));
+    if (type & TS_POINTER) ret += (" TS_POINTER " + asStringU(type));
+    if (type & TS_BIGNUM)  ret += (" TS_BIGNUM "  + asStringU(type));
     return Strip(ret.Substitute("  "," "), ' ');
 }
 
@@ -182,7 +182,7 @@ SFString typeName(SFUint32 type) {
     if (type == (T_TEXT|TS_ARRAY))    return "T_TEXT|TS_ARRAY "    + baseTypeName(type);
     if (type == (T_ADDRESS|TS_ARRAY)) return "T_ADDRESS|TS_ARRAY " + baseTypeName(type);
 
-    return "Unknown" + asString(type);
+    return "Unknown" + asStringU(type);
 }
 
 //--------------------------------------------------------------
