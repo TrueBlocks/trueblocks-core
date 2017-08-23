@@ -68,4 +68,13 @@ inline uint32_t bitsTwiddled(SFBloom n) {
     return count;
 }
 
+inline bool isUnsigned(const SFString& in) { return in.length() && isdigit(in[0]); } // negative '-' will fail
+
+#define newTimestamp(a)   ((a).startsWith("0x") ? (timestamp_t)hex2Long((a)) : (timestamp_t)toLong ((a)))
+
+#define newUnsigned64(a)  ((a).startsWith("0x") ?    (uint64_t)hex2Long((a)) :    (uint64_t)toLongU((a)))
+#define newSigned64(a)    ((a).startsWith("0x") ?    ( int64_t)hex2Long((a)) :    ( int64_t)toLong ((a)))
+
+#define newUnsigned32(a)  ((a).startsWith("0x") ?    (uint32_t)hex2Long((a)) :    (uint32_t)toLongU((a)))
+#define newSigned32(a)    ((a).startsWith("0x") ?    ( int32_t)hex2Long((a)) :    ( int32_t)toLong ((a)))
 }  // namespace qblocks
