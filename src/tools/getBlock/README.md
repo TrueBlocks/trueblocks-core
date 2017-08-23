@@ -18,8 +18,8 @@ which would open the [etherscan](http://etherscan.io) website with the address a
 | Option | Full Command | Description |
 | -------: | :------- | :------- |
 |  | num | which block (or blocks if more than one) to retreive (or use [start-stop) for range) |
-| -s | --source | either :(c)ache or :(r)aw, source for data retrival. (shortcuts -c = qblocks, -r = node) |
-| -f | --fields | either :(a)ll, (m)ini, (c)ache or :(r)aw; which fields to include in output (all is default) |
+| -s | --source val | either :(c)ache or :(r)aw, source for data retrival. (shortcuts -c = qblocks, -r = node) |
+| -f | --fields val | either :(a)ll, (m)ini, (c)ache or :(r)aw; which fields to include in output (all is default) |
 | -p | --parity | mimic parity output using quickBlocks (i.e. quoted hexidecimal for numbers) |
 | -r | --reciept |  |
 | -t | --terse | retreive transaction hashes instead of full transactions |

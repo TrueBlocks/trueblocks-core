@@ -15,9 +15,9 @@ The format of the classDefinition file is described below.
 | -------: | :------- | :------- |
 |  | className | name of C++ class(es) to process |
 | -e | --edit | edit <className(s)> definition file in local folder |
-| -f | --filter | process only files with :filter in their names |
+| -f | --filter val | process only files with :filter in their names |
 | -l | --list | list all definition files found in the local folder |
-| -n | --namespace | surround the code with a --namespace:ns |
+| -n | --namespace val | surround the code with a --namespace:ns |
 | -s | --silent | on error (no classDefinition file) exit silently |
 | -r | --run | run the class maker on associated <className(s)> |
 | -a | --all | clear, edit, list, or run all class definitions found in the local folder |
