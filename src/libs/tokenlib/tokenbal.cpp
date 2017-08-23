@@ -21,7 +21,7 @@ SFUintBN getTokenBalance(const SFAddress& token, const SFAddress& holder, blknum
     SFString cmd = "[{\"to\": \"[TOKEN]\", \"data\": \"0x70a08231[HOLDER]\"}, \"[BLOCK]\"]";
     cmd.Replace("[TOKEN]",  "0x"+t);
     cmd.Replace("[HOLDER]", h);
-    cmd.Replace("[BLOCK]",  asString(blockNum));
+    cmd.Replace("[BLOCK]",  asStringU(blockNum));
 
     extern SFString callRPC(const SFString& method, const SFString& params, bool raw);
     SFString ret = callRPC("eth_call", cmd, false);
