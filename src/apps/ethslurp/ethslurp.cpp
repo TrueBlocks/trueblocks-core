@@ -254,7 +254,7 @@ bool CSlurperApp::Slurp(COptions& options, SFString& message) {
             trans.pParent = &theAccount;
             p = trans.parseJson(p, nFields);
             if (nFields) {
-                int64_t transBlock = trans.blockNumber;  // NOLINT
+                int64_t transBlock = (int64_t)trans.blockNumber;  // NOLINT
                 if (transBlock > theAccount.lastBlock) {  // add the new transaction if it's in a new block
                     theAccount.transactions[nextRecord++] = trans;
                     lastBlock = transBlock;
@@ -318,7 +318,7 @@ bool CSlurperApp::Filter(COptions& options, SFString& message) {
 
         // The -blocks and -dates filters are mutually exclusive, -dates predominates.
         if (options.firstDate != earliestDate || options.lastDate != latestDate) {
-            SFTime date = dateFromTimeStamp(trans->timestamp);
+            SFTime date = dateFromTimeStamp((timestamp_t)trans->timestamp);
             bool isVisible = (date >= options.firstDate && date <= options.lastDate);
             trans->m_showing = isVisible;
 
@@ -343,8 +343,8 @@ bool CSlurperApp::Filter(COptions& options, SFString& message) {
 
         if (!options.funcFilter.empty()) {
             bool show = false;
-            for (uint64_t i = 0 ; i < nFuncFilts ; i++)
-                show = (show || trans->isFunction(funcFilts[i]));
+            for (uint64_t jj = 0 ; jj < nFuncFilts ; jj++)
+                show = (show || trans->isFunction(funcFilts[jj]));
             trans->m_showing = show;
         }
 
@@ -357,7 +357,7 @@ bool CSlurperApp::Filter(COptions& options, SFString& message) {
         }
 
         theAccount.nVisible += trans->m_showing;
-        int64_t nFiltered = (theAccount.nVisible + 1);  // NOLINT
+        int64_t nFiltered = int64_t(theAccount.nVisible + 1);  // NOLINT
         if (!(nFiltered % REP_INFREQ)) {
             cerr << "\t" << "Filtering..." << nFiltered << " records passed." << (isTesting ? "\n" : "\r");
             cerr.flush();
@@ -513,15 +513,15 @@ void findBlockRange(const SFString& json, uint32_t& minBlock, uint32_t& maxBlock
     size_t len = search.length();
 
     minBlock = 0;
-    int64_t first = json.find(search);
+    int64_t first = (int64_t)json.find(search);
     if (first != (int64_t)NOPOS) {
-        SFString str = json.substr(first+len);
+        SFString str = json.substr(((size_t)first+len));
         minBlock = toLong32u(str);
     }
 
     SFString end = json.substr(json.ReverseFind('{'));  // pull off the last transaction
-    int64_t last = end.find(search);
-    if (last != (int64_t)NOPOS) {
+    size_t last = end.find(search);
+    if (last != NOPOS) {
         SFString str = end.substr(last+len);
         maxBlock = toLong32u(str);
     }
@@ -589,8 +589,7 @@ int sortReverseChron(const void *rr1, const void *rr2) {
     const CTransaction *tr1 = reinterpret_cast<const CTransaction*>(rr1);
     const CTransaction *tr2 = reinterpret_cast<const CTransaction*>(rr2);
 
-    int32_t ret;
-    ret = (uint32_t)(tr2->timestamp - tr1->timestamp);
+    int32_t ret = ((int32_t)tr2->timestamp - (int32_t)tr1->timestamp);
     if (ret != 0)
         return ret;
     return sortTransactionsForWrite(rr1, rr2);
