@@ -35,7 +35,7 @@ namespace qblocks {
     class CDefaultOptions : public COptionsBase {
     public:
         CDefaultOptions() {}
-        bool parseArguments(SFString& ) { return true; }
+        bool parseArguments(SFString& command) { return true; }
         void Init(void) {}
     };
 

@@ -61,12 +61,12 @@ SFString nextFunctionChunk(const SFString& fieldIn, bool& force, const void *dat
                 if ( fieldIn % "inputs" ) {
                     uint32_t cnt = fun->inputs.getCount();
                     if (!cnt) return "";
-                    ret = "";
+                    SFString retS;
                     for (uint32_t i = 0 ; i < cnt ; i++) {
-                        ret += fun->inputs[i].Format();
-                        ret += ((i < cnt - 1) ? ",\n" : "\n");
+                        retS += fun->inputs[i].Format();
+                        retS += ((i < cnt - 1) ? ",\n" : "\n");
                     }
-                    return ret;
+                    return retS;
                 }
                 break;
             case 'n':
@@ -76,12 +76,12 @@ SFString nextFunctionChunk(const SFString& fieldIn, bool& force, const void *dat
                 if ( fieldIn % "outputs" ) {
                     uint32_t cnt = fun->outputs.getCount();
                     if (!cnt) return "";
-                    ret = "";
+                    SFString retS;
                     for (uint32_t i = 0 ; i < cnt ; i++) {
-                        ret += fun->outputs[i].Format();
-                        ret += ((i < cnt - 1) ? ",\n" : "\n");
+                        retS += fun->outputs[i].Format();
+                        retS += ((i < cnt - 1) ? ",\n" : "\n");
                     }
-                    return ret;
+                    return retS;
                 }
                 break;
             case 'p':

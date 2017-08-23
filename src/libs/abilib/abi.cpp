@@ -52,22 +52,22 @@ SFString nextAbiChunk(const SFString& fieldIn, bool& force, const void *data) {
                 if ( fieldIn % "abiByName" ) {
                     uint32_t cnt = abi->abiByName.getCount();
                     if (!cnt) return "";
-                    ret = "";
+                    SFString retS;
                     for (uint32_t i = 0 ; i < cnt ; i++) {
-                        ret += abi->abiByName[i].Format();
-                        ret += ((i < cnt - 1) ? ",\n" : "\n");
+                        retS += abi->abiByName[i].Format();
+                        retS += ((i < cnt - 1) ? ",\n" : "\n");
                     }
-                    return ret;
+                    return retS;
                 }
                 if ( fieldIn % "abiByEncoding" ) {
                     uint32_t cnt = abi->abiByEncoding.getCount();
                     if (!cnt) return "";
-                    ret = "";
+                    SFString retS;
                     for (uint32_t i = 0 ; i < cnt ; i++) {
-                        ret += abi->abiByEncoding[i].Format();
-                        ret += ((i < cnt - 1) ? ",\n" : "\n");
+                        retS += abi->abiByEncoding[i].Format();
+                        retS += ((i < cnt - 1) ? ",\n" : "\n");
                     }
-                    return ret;
+                    return retS;
                 }
                 break;
         }

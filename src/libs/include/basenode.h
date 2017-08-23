@@ -46,14 +46,14 @@ namespace qblocks {
         static CRuntimeClass classCBaseNode;
         static CBaseNode *CreateObject(void);
         virtual CRuntimeClass *getRuntimeClass(void) const;
-        virtual SFString getValueByName(const SFString& ) const { return ""; }
-        virtual bool setValueByName(const SFString& , const SFString& ) { return false; }
-        virtual bool Serialize(SFArchive& ) { return false; }
-        virtual bool SerializeC(SFArchive& ) const { return false; }
+        virtual SFString getValueByName(const SFString& fieldName) const { return ""; }
+        virtual bool setValueByName(const SFString& fieldName, const SFString& fieldValue) { return false; }
+        virtual bool Serialize(SFArchive& archive) { return false; }
+        virtual bool SerializeC(SFArchive& archive) const { return false; }
         virtual void finishParse(void) { }
-        virtual void Format(CExportContext& , const SFString& , void * = NULL) const { }
-        virtual SFString Format(const SFString&  = "") const { return ""; }
-        virtual bool handleCustomFormat(CExportContext& , const SFString& , void * = NULL) const {
+        virtual void Format(CExportContext& ctx, const SFString& fmtIn, void *data = NULL) const { }
+        virtual SFString Format(const SFString& fmtIn = "") const { return ""; }
+        virtual bool handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data = NULL) const {
             return false;
         }
 

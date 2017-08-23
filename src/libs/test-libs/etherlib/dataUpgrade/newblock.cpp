@@ -76,7 +76,7 @@ SFString nextNewblockChunk(const SFString& fieldIn, bool& force, const void *dat
                 if ( fieldIn % "transactions" ) {
                     uint32_t cnt = newp->transactions.getCount();
                     if (!cnt) return "";
-                    SFString ret;
+                    ret = "";
                     for (uint32_t i = 0 ; i < cnt ; i++) {
                         ret += newp->transactions[i].Format();
                         ret += ((i < cnt - 1) ? ",\n" : "\n");

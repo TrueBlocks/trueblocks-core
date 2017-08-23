@@ -14,14 +14,14 @@ using namespace std;
 
 //----------------------------------------------------------------------
 #define TEST(expr,exp) do {\
-	string s,e;\
+	string s1,e1;\
 	try {\
-		s = to_string((expr));\
+		s1 = to_string((expr));\
 	} catch (const char *err) {\
-		s = "error";\
-		e = err;\
+		s1 = "error";\
+		e1 = err;\
 	}\
-	cout << "Test " << testID++ << ": " << s << e << " expected: " << (exp) << " " << ((s!=exp)?redX:greenCheck) << endl;\
+	cout << "Test " << testID++ << ": " << s1 << e1 << " expected: " << (exp) << " " << ((s1!=exp)?redX:greenCheck) << endl;\
 } while (0)
 
 //----------------------------------------------------------------------
