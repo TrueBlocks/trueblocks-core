@@ -47,9 +47,4 @@ run_test("ethprice_when_00"         "-w" " 14")
 run_test("ethprice_when_01"         "--when" " 19")
 run_test("ethprice_verbose_00"      "-v")
 run_test("ethprice_verbose_01"      "-v:1")
-
-# THESE TESTS PROBABLY WORK, BUT THEY TAKE VERY LONG
-#run_test("ethprice_clear" -c")
-#run_test("ethprice_freshen_00" "--freshen")
-#run_test("ethprice_invalid_param_2" "-" )
-#run_test("ethprice_freshen_invalid" "-f")
+run_test("ethprice_from_file"       "--file:cmd_file")

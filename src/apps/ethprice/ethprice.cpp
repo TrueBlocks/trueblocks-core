@@ -11,52 +11,59 @@
 //-----------------------------------------------------------------------------------
 int main(int argc, const char* argv[]) {
 
-    SFString message;
+    // Tell the system where the blocks are and which version to use
+    setStorageRoot(BLOCK_CACHE);
+    etherlib_init("fastest");
 
+    // Parse command line, allowing for command files
     COptions options;
-    if (options.prepareArguments(argc, argv)) {
+    if (!options.prepareArguments(argc, argv))
+        return 0;
 
-        if (options.parseArguments(options.commandList)) {
+    while (!options.commandList.empty()) {
+        SFString command = nextTokenClear(options.commandList, '\n');
+        if (!options.parseArguments(command))
+            return 0;
 
-            CPriceQuoteArray quotes;
-            if (loadPriceData(quotes, options.freshen, message) && quotes.getCount()) {
+        SFString message;
 
-                SFString fmt = "";
-                if (isTesting || options.dispLevel < 2)
-                    fmt = "{ \"date\": \"[{DATE}]\", \"price\": \"[{CLOSE}]\" }";
+        CPriceQuoteArray quotes;
+        if (loadPriceData(quotes, options.freshen, message) && quotes.getCount()) {
 
-                if (options.at) {
-                    cout << quotes[(uint32_t)indexFromTimeStamp(quotes, options.at)].Format(fmt);
+            SFString fmt = "";
+            if (isTesting || !verbose)
+                fmt = "{ \"date\": \"[{DATE}]\", \"price\": \"[{CLOSE}]\" }";
 
-                } else {
-                    cout << "[\n";
-                    uint32_t step = (uint32_t)options.freq / 5;
-                    bool done = false;
-                    for (uint32_t i = 0 ; i < quotes.getCount() && !done ; i = i + step) {
-
-                        timestamp_t ts = toUnsigned(quotes[i].Format("[{TIMESTAMP}]"));
-                        if (i > 0)
-                            cout << ",\n";
-                        if (i != indexFromTimeStamp(quotes, ts)) {
-                            cerr << cRed << "mismatch between 'i' ("
-                            << i << ") and 'index' ("
-                            << indexFromTimeStamp(quotes, ts) << "). Quitting.\n" << cOff;
-                            return 0;
-                        }
-                        cout << quotes[i].Format(fmt);
-
-                        if (isTestMode() && dateFromTimeStamp(ts) >= SFTime(2017,8,15,0,0,0))
-                            done = true;
-                    }
-                    cout << "\n]\n";
-                }
+            if (options.at) {
+                cout << quotes[(uint32_t)indexFromTimeStamp(quotes, options.at)].Format(fmt);
 
             } else {
-                return usage(message);
+                cout << "[\n";
+                uint32_t step = (uint32_t)options.freq / 5;
+                bool done = false;
+                for (uint32_t i = 0 ; i < quotes.getCount() && !done ; i = i + step) {
 
+                    timestamp_t ts = newTimestamp(quotes[i].Format("[{TIMESTAMP}]"));
+                    if (i > 0)
+                        cout << ",\n";
+                    if (i != indexFromTimeStamp(quotes, ts)) {
+                        cerr << cRed << "mismatch between 'i' ("
+                        << i << ") and 'index' ("
+                        << indexFromTimeStamp(quotes, ts) << "). Quitting.\n" << cOff;
+                        return 0;
+                    }
+                    cout << quotes[i].Format(fmt);
+
+                    if (isTestMode() && dateFromTimeStamp(ts) >= SFTime(2017,8,15,0,0,0))
+                        done = true;
+                }
+                cout << "\n]\n";
             }
+
+        } else {
+            return usage(message);
+
         }
     }
-
     return 0;
 }
