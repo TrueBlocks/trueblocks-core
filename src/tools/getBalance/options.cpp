@@ -52,7 +52,7 @@ bool COptions::parseArguments(SFString& command) {
         return usage("You must provide at least one Ethereum address.");
 
     if (blocks.empty())
-        blocks = asString(getLatestBlockFromClient());
+        blocks = asStringU(getLatestBlockFromClient());
 
     return true;
 }

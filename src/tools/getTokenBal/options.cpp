@@ -59,7 +59,7 @@ bool COptions::parseArguments(SFString& command) {
         return usage("You must provide at least one holder address.");
 
     if (blocks.empty())
-        blocks = asString(getLatestBlockFromClient());
+        blocks = asStringU(getLatestBlockFromClient());
 
     return true;
 }
