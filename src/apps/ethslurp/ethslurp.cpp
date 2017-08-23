@@ -300,6 +300,7 @@ bool CSlurperApp::Slurp(COptions& options, SFString& message) {
 
 //--------------------------------------------------------------------------------
 bool CSlurperApp::Filter(COptions& options, SFString& message) {
+    message = "";
     double start = qbNow();
 
     uint32_t nFuncFilts = 0;
@@ -378,6 +379,7 @@ bool CSlurperApp::Filter(COptions& options, SFString& message) {
 
 //---------------------------------------------------------------------------------------------------
 bool CSlurperApp::Display(COptions& options, SFString& message) {
+    message = "";
     double start = qbNow();
 
     if (options.reverseSort)
