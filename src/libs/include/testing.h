@@ -16,16 +16,17 @@ namespace qblocks {
 
 namespace testing {
 
-    typedef bool (*PF)(int testID);
+    typedef bool (*PF)(uint64_t testID);
     class Test {
     public:
         static PF funcs[100];
-        static int nFuncs;
-        Test(void)  { for (int i=0;i<100;i++) { funcs[i] = NULL; } }
+        static uint64_t nFuncs;
+        Test(void)  { for (uint32_t i=0;i<100;i++) { funcs[i] = NULL; } }
+        virtual ~Test(void) {}
         virtual void SetUp(void) = 0;
         virtual void TearDown(void) = 0;
         static void addFunc(PF func) {
-            for (int i=0;i<nFuncs;i++) {
+            for (uint32_t i=0;i<nFuncs;i++) {
                 if (funcs[i])
                     return;
             }
@@ -37,9 +38,9 @@ namespace testing {
 testing::Test::addFunc(func_##funcName);
 
 #define TEST_F(testClass, funcName) \
-extern bool func_##funcName(int testID); \
-bool func_##funcName(int testID) { \
-int subTestID = 0; \
+extern bool func_##funcName(uint64_t testID); \
+bool func_##funcName(uint64_t testID) { \
+uint64_t subTestID = 0; \
 SFString testName = #funcName; \
 
 #define ASSERT_TRUE(msg, test) { \
@@ -85,7 +86,7 @@ return false; \
 
 inline int RUN_ALL_TESTS(void) {
     bool result = false;
-    for (int i = 0 ; i < testing::Test::nFuncs ; i++)
+    for (uint32_t i = 0 ; i < testing::Test::nFuncs ; i++)
         if (testing::Test::funcs[i]) {
             cerr << i << ". ";
             result |= !((*(testing::Test::funcs[i]))(i));
