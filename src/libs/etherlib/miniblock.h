@@ -14,7 +14,7 @@ class CMiniBlock
 {
 public:
     SFUint32 blockNumber;
-    SFUint32 timestamp;
+    timestamp_t timestamp;
     SFUint32 firstTrans;
     SFUint32 nTrans;
 

@@ -286,9 +286,9 @@ bool CAccountWatch::getWatch(const CToml& toml, uint32_t n) {
 }
 
 //---------------------------------------------------------------------------
-SFString CAccountWatch::displayName(bool terse, int w1, int w2) const {
+SFString CAccountWatch::displayName(bool terse, uint32_t w1, uint32_t w2) const {
     if (address == "others") {
-        return padRight(name, w1+w2+1);
+        return padRight(name, w1 + w2 + 1);
     }
 
     if (terse) {

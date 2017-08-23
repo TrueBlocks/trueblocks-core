@@ -66,11 +66,11 @@ SFString nextBlockChunk(const SFString& fieldIn, bool& force, const void *data) 
                 if ( fieldIn % "parentHash" ) return fromHash(blo->parentHash);
                 break;
             case 't':
-                if ( fieldIn % "timestamp" ) return asStringU(blo->timestamp);
+                if ( fieldIn % "timestamp" ) return asString(blo->timestamp);
                 if ( fieldIn % "transactions" ) {
                     uint32_t cnt = blo->transactions.getCount();
                     if (!cnt) return "";
-                    SFString ret;
+                    ret = "";
                     for (uint32_t i = 0 ; i < cnt ; i++) {
                         ret += blo->transactions[i].Format();
                         ret += ((i < cnt - 1) ? ",\n" : "\n");
@@ -141,7 +141,11 @@ bool CBlock::setValueByName(const SFString& fieldName, const SFString& fieldValu
             if ( fieldName % "parentHash" ) { parentHash = toHash(fieldValue); return true; }
             break;
         case 't':
-            if ( fieldName % "timestamp" ) { timestamp = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "timestamp" )
+            {
+                timestamp = (timestamp_t)toUnsigned(fieldValue);
+                return true;
+            }
             if ( fieldName % "transactions" ) return true;
             break;
         default:
