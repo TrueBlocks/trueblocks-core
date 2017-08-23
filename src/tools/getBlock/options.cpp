@@ -9,16 +9,16 @@
 
 //---------------------------------------------------------------------------------------------------
 CParams params[] = {
-    CParams("~num",         "which block (or blocks if more than one) to retreive (or use [start-stop) for range)"),
-//    CParams("-check",       "pull the given block(s) from both cache and node, compare results, should be no output"),
-    CParams("-source",      "either :(c)ache or :(r)aw, source for data retrival. (shortcuts -c = qblocks, -r = node)"),
-    CParams("-fields",      "either :(a)ll, (m)ini, (c)ache or :(r)aw; which fields to include in output (all is default)"),
-    CParams("-parity",      "mimic parity output using quickBlocks (i.e. quoted hexidecimal for numbers)"),
-    CParams("-re(c)iept",   ""),
-    CParams("-terse",       "retreive transaction hashes instead of full transactions"),
-    CParams("-quiet",       "do not print results to screen, used for speed testing"),
-    CParams("@f(o)rce",     "force re-write of binary data"),
-    CParams("",             "Returns block(s) from local cache (the default) or directly from a running node.\n"),
+    CParams("~num",              "which block (or blocks if more than one) to retreive (or use [start-stop) for range)"),
+//    CParams("-check",          "pull the given block(s) from both cache and node, compare results, should be no output"),
+    CParams("-source:[c|r]",     "either :(c)ache or :(r)aw, source for data retrival. (shortcuts -c = qblocks, -r = node)"),
+    CParams("-fields:[a|m|c|r]", "either :(a)ll, (m)ini, (c)ache or :(r)aw; which fields to include in output (all is default)"),
+    CParams("-parity",           "mimic parity output using quickBlocks (i.e. quoted hexidecimal for numbers)"),
+    CParams("-re(c)iept",        ""),
+    CParams("-terse",            "retreive transaction hashes instead of full transactions"),
+    CParams("-quiet",            "do not print results to screen, used for speed testing"),
+    CParams("@f(o)rce",          "force re-write of binary data"),
+    CParams("",                  "Returns block(s) from local cache (the default) or directly from a running node.\n"),
 };
 uint32_t nParams = sizeof(params) / sizeof(CParams);
 
@@ -179,7 +179,7 @@ void COptions::Init(void) {
     terse   = false;
     quiet   = false;
     force   = false;
-    nums[0]    = -1;
+    nums[0]    = NOPOS;
     nNums      = 0;  // we will set this to '1' later if user supplies no values
     start = stop = 0;
 
