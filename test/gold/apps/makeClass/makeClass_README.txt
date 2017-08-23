@@ -11,7 +11,7 @@ makeClass -th
 | -------: | :------- | :------- |
 |  | className | name of C++ class(es) to process |
 | -e | --edit | edit <className(s)> definition file in local folder |
-| -f | --filter | process only files with :filter in their names |
+| -f | --filter val | process only files with :filter in their names |
 | -l | --list | list all definition files found in the local folder |
 | -n | --namespace val | surround the code with a --namespace:ns |
 | -s | --silent | on error (no classDefinition file) exit silently |
