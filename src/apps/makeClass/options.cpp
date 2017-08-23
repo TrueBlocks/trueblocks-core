@@ -12,7 +12,7 @@ CParams params[] = {
     CParams("~className",          "name of C++ class(es) to process"),
 //    CParams("-clean",            "remove generated .cpp and .h file from current folder (if found)"),
     CParams("-edit",               "edit <className(s)> definition file in local folder"),
-    CParams("-filter",             "process only files with :filter in their names"),
+    CParams("-filter:<string>",    "process only files with :filter in their names"),
     CParams("-list",               "list all definition files found in the local folder"),
     CParams("-namespace:<string>", "surround the code with a --namespace:ns"),
     CParams("-silent",             "on error (no classDefinition file) exit silently"),
