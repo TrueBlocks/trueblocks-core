@@ -72,7 +72,7 @@ SFString nextNewblockChunk(const SFString& fieldIn, bool& force, const void *dat
                 if ( fieldIn % "size" ) return asStringU(newp->size);
                 break;
             case 't':
-                if ( fieldIn % "timestamp" ) return asStringU(newp->timestamp);
+                if ( fieldIn % "timestamp" ) return asString(newp->timestamp);
                 if ( fieldIn % "transactions" ) {
                     uint32_t cnt = newp->transactions.getCount();
                     if (!cnt) return "";
@@ -153,7 +153,7 @@ bool CNewBlock::setValueByName(const SFString& fieldName, const SFString& fieldV
             if ( fieldName % "size" ) { size = toUnsigned(fieldValue); return true; }
             break;
         case 't':
-            if ( fieldName % "timestamp" ) { timestamp = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "timestamp" ) { timestamp = toLong(fieldValue); return true; }
             if ( fieldName % "transactions" ) return true;
             break;
         default:

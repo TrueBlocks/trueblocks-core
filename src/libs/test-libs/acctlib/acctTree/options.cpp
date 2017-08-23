@@ -9,10 +9,10 @@
 
 //---------------------------------------------------------------------------------------------------
 CParams params[] = {
-    CParams("-all",        "process all transactions from start of chain to latest block"),
-    CParams("-startBlock", "the first block to process"),
-    CParams("", "Build an account tree listing first transaction, latest transaction, and "
-                "proposed balance for each account.\n"),
+    CParams("-all",          "process all transactions from start of chain to latest block"),
+    CParams("-start:<uint>", "the first block to process"),
+    CParams("",              "Build an account tree listing first transaction, latest transaction, and "
+                             "node balance for each account.\n"),
 };
 uint32_t nParams = sizeof(params) / sizeof(CParams);
 
@@ -22,23 +22,22 @@ bool COptions::parseArguments(SFString& command) {
     Init();
     while (!command.empty()) {
         SFString arg = nextTokenClear(command, ' ');
+        SFString orig = arg;
         if (arg == "-a" || arg == "--all") {
             all = true;
 
-        } else if (arg == "-s" || arg == "--startBlock") {
-            startBlock = 1500000;
+        } else if (arg.startsWith("-s:") || arg.startsWith("--start:")) {
+            arg = orig.Substitute("-s:","").Substitute("--start:","");
+            startBlock = newUnsigned32(arg);
+            if (!isUnsigned(arg))
+                return usage("Positive block number expected: " + orig);
 
-        } else if (arg.startsWith('-')) {  // do not collapse
-
+        } else {
             if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);
             }
         }
     }
-
-    if (startBlock == 100)
-        return usage("Option 1 and option 2 cannot both be true.");
-
     return true;
 }
 
@@ -49,14 +48,12 @@ void COptions::Init(void) {
 
     all = false;
     startBlock = 0;
-
-    useVerbose = true;
-    useTesting = true;
-    minArgs = 0;
 }
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
+    useVerbose = true;
+    minArgs = 0;
     Init();
 }
 

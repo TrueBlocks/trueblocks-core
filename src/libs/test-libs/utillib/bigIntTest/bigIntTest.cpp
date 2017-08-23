@@ -37,9 +37,9 @@ int main(int argc, const char *argv[])
 
 	try
 	{
-		short pathologicalShort = ~((unsigned short)(~0) >> 1);
-		int   pathologicalInt   = ~((unsigned int)(~0) >> 1);
-		long  pathologicalLong  = ~((unsigned long)(~0) >> 1);
+		short pathologicalShort = (short)~((unsigned short)(~0) >> 1);
+		int   pathologicalInt   = (int)~((unsigned int)(~0) >> 1);
+		long  pathologicalLong  = (long)~((unsigned long)(~0) >> 1);
 		unsigned long testID = 0;
 
 		SFIntBN a;

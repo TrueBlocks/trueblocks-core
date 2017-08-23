@@ -9,8 +9,8 @@
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
-    bool all;
-    SFUint32 startBlock;
+    bool     all;
+    blknum_t startBlock;
 
     COptions(void);
     ~COptions(void);
@@ -18,7 +18,3 @@ public:
     bool parseArguments(SFString& command);
     void Init(void);
 };
-
-//-----------------------------------------------------------------------------
-extern bool visitNonEmptyBlock(CBlock& node, void *data);
-extern bool visitEmptyBlock(CBlock& node, void *data);
