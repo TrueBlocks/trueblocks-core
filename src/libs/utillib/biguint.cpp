@@ -735,8 +735,8 @@ namespace qblocks {
             }
         }
 
-        unsigned int shiftBlocks = b / N;
-        unsigned int shiftBits   = b % N;
+        unsigned int shiftBlocks = (unsigned int)b / N;
+        unsigned int shiftBits   = (unsigned int)b % N;
 
         // + 1: room for high bits nudged left into another block
         len = a.len + shiftBlocks + 1;
@@ -777,8 +777,8 @@ namespace qblocks {
         }
 
         // This calculation is wacky, but expressing the shift as a left bit shift within each block lets us use getShiftedBlock.
-        unsigned int rightShiftBlocks = (b + N - 1) / N;
-        unsigned int leftShiftBits    = N * rightShiftBlocks - b;
+        unsigned int rightShiftBlocks = ((unsigned int)b + N - 1) / N;
+        unsigned int leftShiftBits    = N * rightShiftBlocks - (unsigned int)b;
 
         // At this point (N * rightShiftBlocks - leftShiftBits) == b and 0 <= leftShiftBits < N.
         if (rightShiftBlocks >= a.len + 1)

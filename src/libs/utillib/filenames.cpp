@@ -40,7 +40,7 @@ namespace qblocks {
         struct passwd* pwdptr = &pd;
         struct passwd* tempPwdPtr;
         char pwdbuffer[200];
-        int pwdlinelen = sizeof(pwdbuffer);
+        size_t pwdlinelen = sizeof(pwdbuffer);
 
         if (getpwuid_r(getuid(), pwdptr, pwdbuffer, pwdlinelen, &tempPwdPtr) == 0)
             return SFString(pd.pw_dir) + "/";

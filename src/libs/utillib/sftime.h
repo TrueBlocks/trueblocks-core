@@ -11,7 +11,7 @@
 
 namespace qblocks {
 
-    using timestamp_t = time_t;
+    using timestamp_t = int64_t;
 
     class SFTime;
     enum MONTH {
