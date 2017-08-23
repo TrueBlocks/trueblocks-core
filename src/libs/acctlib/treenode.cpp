@@ -186,18 +186,18 @@ CTreeNode* CTreeNode::newBranch(
     CTreeNode* ret;
     if (_k1.length() == prefix) {
         if (verbose == 2) cerr << "k1 matches up to " << prefix << endl;
-        ret = new CBranch(_k2[prefix], new CLeaf(_k2.substr(prefix+1), _v2), _v1);
+        ret = new CBranch(_k2[(int)prefix], new CLeaf(_k2.substr(prefix+1), _v2), _v1);
 
     } else if (_k2.length() == prefix) {
         if (verbose == 2) cerr << "k2 matches up to " << prefix << endl;
-        ret = new CBranch(_k1[prefix], new CLeaf(_k1.substr(prefix+1), _v1), _v2);
+        ret = new CBranch(_k1[(int)prefix], new CLeaf(_k1.substr(prefix+1), _v1), _v2);
 
     } else {
         // both continue after split
         if (verbose == 2) cerr << "both keys continue past prefix " << prefix << endl;
-        ret = new CBranch(_k1[prefix],
+        ret = new CBranch(_k1[(int)prefix],
                           new CLeaf(_k1.substr(prefix+1), _v1),
-                          _k2[prefix],
+                          _k2[(int)prefix],
                           new CLeaf(_k2.substr(prefix+1), _v2));
     }
 

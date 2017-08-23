@@ -218,7 +218,7 @@ bool CLeaf::readBackLevel(SFArchive& archive) {
                 ret += ",";
         }
 #else
-        ret = asString(cnt);
+        ret = asStringU(cnt);
 #endif
         return ret;
     }
@@ -272,7 +272,7 @@ bool CLeaf::readBackLevel(SFArchive& archive) {
                         curVal += ",";
                 }
 #else
-                curVal = asString(cnt);
+                curVal = asStringU(cnt);
 #endif
             }
             CTreeNode *n = CTreeNode::newBranch(_key, _value, m_prefix, curVal);
