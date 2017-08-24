@@ -187,9 +187,6 @@ namespace qblocks {
     };
 
     //-----------------------------------------------------------------------------------
-    extern SFTime dateFromTimeStamp(timestamp_t tsIn);
-    extern timestamp_t toTimeStamp(const SFTime& timeIn);
-    extern SFTime snagDate(const SFString& str, int dir = 0);  // -1 BOD, 0 MIDDAY, 1 EOD
     extern SFTime Now(void);
 
     //---------------------------------------------------------------------------------------------
