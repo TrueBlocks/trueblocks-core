@@ -13,6 +13,7 @@
  *------------------------------------------------------------------------*/
 #include "basetypes.h"
 #include "biglib.h"
+#include "conversions.h"
 
 /*
  * A BigUnsignedInABase object represents a nonnegative integer of size limited

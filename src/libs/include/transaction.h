@@ -223,26 +223,6 @@ extern SFArchive& operator>>(SFArchive& archive, CTransaction& tra);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-#define toEther wei2Ether
-inline SFString wei2Ether(const SFString& _value) {
-    // Make sure the wei number is at least 18 characters long. Once it is,
-    // reverse it, put a decimal at the 18th position, reverse it back,
-    // strip leading '0's except the tens digit.
-    SFString ret = _value;
-    if (ret.length() < 18)
-        ret = padLeft(_value, 18).Substitute(" ", "0");
-    ret.Reverse();
-    ret = ret.Left(18) + "." + ret.substr(18);
-    ret.Reverse();
-    ret = StripLeading(ret, '0');
-    if (ret.startsWith('.'))
-        ret = "0" + ret;
-    if (ret.Contains("0-")) {
-        ret = "-" + ret.Substitute("0-","0");
-    }
-    ret = ret.Substitute("-.","-0.");
-    return ret;
-}
 extern int sortTransactionsForWrite(const void *rr1, const void *rr2);
 extern SFString parse(const SFString& params, int nItems, SFString *types);
 extern SFString nextBlockChunk(const SFString& fieldIn, bool& force, const void *data);

@@ -10,6 +10,7 @@
 #include "basenode.h"
 #include "sfarchive.h"
 #include "exportcontext.h"
+#include "conversions.h"
 
 namespace qblocks {
 

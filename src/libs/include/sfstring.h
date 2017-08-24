@@ -387,88 +387,6 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------
-    inline SFString formatFloat(double f, uint32_t nDecimals=10) {
-        char s[100], r[100];
-        memset(s,'\0',100);
-        memset(r,'\0',100);
-        sprintf(s, "%.*g", (int)nDecimals, ((int64_t)(  pow(10, nDecimals) * (  fabs(f) - labs( (int64_t) f )  )  + 0.5)) / pow(10,nDecimals));
-        if (strchr(s, 'e'))
-            s[1] = '\0';
-        sprintf(r, "%d%s", (int)f, s+1);
-        return SFString(r);
-    }
-#define fmtFloat(f) (const char*)formatFloat(f)
-#define fmtFloatp(f,p) (const char*)formatFloat(f, p)
-
-    //--------------------------------------------------------------------
-    extern uint64_t hex2Long(const SFString& inHex);
-    extern SFString hex2String(const SFString& inHex);
-    extern SFString string2Hex(const SFString& inAscii);
-    extern unsigned char hex2Ascii(char *str);
-
-    //--------------------------------------------------------------------
-    inline SFString asString(int64_t i) {
-#if 1
-        ostringstream os;
-        os << i;
-        return os.str().c_str();
-#else
-        char ret[128];
-        sprintf(ret, "%ld", (int64_t)i);
-        return SFString(ret);
-#endif
-    }
-
-    //--------------------------------------------------------------------
-    inline SFString asStringU(SFUint32 i) {
-#if 1
-        ostringstream os;
-        os << i;
-        return os.str().c_str();
-#else
-        char ret[128];
-        sprintf(ret, "%lu", (SFUint32)i);
-        return SFString(ret);
-#endif
-    }
-
-    //--------------------------------------------------------------------
-    inline SFString asStringULL(uint64_t i) {
-#if 1
-        ostringstream os;
-        os << i;
-        return os.str().c_str();
-#else
-        char ret[128];
-        sprintf(ret, "%lu", (uint64_t)i);
-        return SFString(ret);
-#endif
-    }
-
-    //--------------------------------------------------------------------
-    inline SFString asStringF(float f) {
-        return formatFloat(f, 10);
-    }
-
-    //--------------------------------------------------------------------
-    inline SFString asStringD(double d) {
-        return formatFloat(d, 10);
-    }
-
-    //--------------------------------------------------------------------
-    inline SFString asBitmap(uint64_t value) {
-        SFString ret;
-        for (int i=31;i>-1;i--) {
-            bool isOn = (value & (1<<i));
-            if (isOn)
-                ret += "1";
-            else
-                ret += "0";
-        }
-        return ret;
-    }
-
-    //--------------------------------------------------------------------
     extern SFString nextTokenClearReverse(SFString& str, char token);
     inline SFString nextTokenClear(SFString& line, char delim, bool doClear=true) {
         SFString ret;
@@ -514,48 +432,6 @@ namespace qblocks {
 
         return str.Left(len);
     }
-
-    //--------------------------------------------------------------------
-    inline SFString padNum2(uint64_t n) { return padLeft(asStringU((n)), 2, '0'); }
-    inline SFString padNum3(uint64_t n) { return padLeft(asStringU((n)), 3, '0'); }
-    inline SFString padNum4(uint64_t n) { return padLeft(asStringU((n)), 4, '0'); }
-    inline SFString padNum5(uint64_t n) { return padLeft(asStringU((n)), 5, '0'); }
-    inline SFString padNum6(uint64_t n) { return padLeft(asStringU((n)), 6, '0'); }
-    inline SFString padNum7(uint64_t n) { return padLeft(asStringU((n)), 7, '0'); }
-    inline SFString padNum8(uint64_t n) { return padLeft(asStringU((n)), 8, '0'); }
-    inline SFString padNum9(uint64_t n) { return padLeft(asStringU((n)), 9, '0'); }
-    
-    //--------------------------------------------------------------------
-    inline SFString padNum2T(uint64_t n) { return padLeft(asStringU((n)), 2); }
-    inline SFString padNum3T(uint64_t n) { return padLeft(asStringU((n)), 3); }
-    inline SFString padNum4T(uint64_t n) { return padLeft(asStringU((n)), 4); }
-    inline SFString padNum5T(uint64_t n) { return padLeft(asStringU((n)), 5); }
-    inline SFString padNum6T(uint64_t n) { return padLeft(asStringU((n)), 6); }
-    inline SFString padNum7T(uint64_t n) { return padLeft(asStringU((n)), 7); }
-    inline SFString padNum8T(uint64_t n) { return padLeft(asStringU((n)), 8); }
-    inline SFString padNum9T(uint64_t n) { return padLeft(asStringU((n)), 9); }
-    inline SFString padNum18T(uint64_t n) { return padLeft(asStringU((n)), 18); }
-
-    //--------------------------------------------------------------------
-    inline SFString padNum2(int64_t n) { return padLeft(asString((n)), 2, '0'); }
-    inline SFString padNum3i(int64_t n) { return padLeft(asString((n)), 3, '0'); }
-    inline SFString padNum4(int64_t n) { return padLeft(asString((n)), 4, '0'); }
-    inline SFString padNum5(int64_t n) { return padLeft(asString((n)), 5, '0'); }
-    inline SFString padNum6(int64_t n) { return padLeft(asString((n)), 6, '0'); }
-    inline SFString padNum7(int64_t n) { return padLeft(asString((n)), 7, '0'); }
-    inline SFString padNum8(int64_t n) { return padLeft(asString((n)), 8, '0'); }
-    inline SFString padNum9(int64_t n) { return padLeft(asString((n)), 9, '0'); }
-    
-    //--------------------------------------------------------------------
-    inline SFString padNum2T(int64_t n) { return padLeft(asString((n)), 2); }
-    inline SFString padNum3T(int64_t n) { return padLeft(asString((n)), 3); }
-    inline SFString padNum4T(int64_t n) { return padLeft(asString((n)), 4); }
-    inline SFString padNum5T(int64_t n) { return padLeft(asString((n)), 5); }
-    inline SFString padNum6T(int64_t n) { return padLeft(asString((n)), 6); }
-    inline SFString padNum7T(int64_t n) { return padLeft(asString((n)), 7); }
-    inline SFString padNum8T(int64_t n) { return padLeft(asString((n)), 8); }
-    inline SFString padNum9T(int64_t n) { return padLeft(asString((n)), 9); }
-    inline SFString padNum18T(int64_t n) { return padLeft(asString((n)), 18); }
 
     //--------------------------------------------------------------------
     extern SFString snagFieldClear     (      SFString& in, const SFString& tagName, const SFString& defVal="");
@@ -609,26 +485,6 @@ namespace qblocks {
 
     //--------------------------------------------------------------------
     extern void writeTheCode(const SFString& fileName, const SFString& code, const SFString& ns = "", bool spaces = true);
-
-    //-------------------------------------------------------------------------
-    inline int64_t toLong(const char *str)   { return strtol(str, NULL, 10); }
-    inline uint64_t toLongU(const char *str) { return strtoul(str, NULL, 10); }
-
-    //-------------------------------------------------------------------------
-    inline uint32_t toLong32u(const char *str) { return (uint32_t)strtoul((const char*)(str), NULL, 10); }
-    inline uint32_t toLong32u(char *str) { return (uint32_t)strtoul((const char*)(str), NULL, 10); }
-
-    //-------------------------------------------------------------------------
-    inline float toFloat(const char *str) { return (float)strtof((const char*)(str), NULL); }
-    inline float toFloat(char *str) { return (float)strtof((const char*)(str), NULL); }
-
-    //-------------------------------------------------------------------------
-    inline double toDouble(const char *str) { return (double)strtold((const char*)(str), NULL); }
-    inline double toDouble(char *str) { return (double)strtold((const char*)(str), NULL); }
-
-    //--------------------------------------------------------------------
-    inline bool toBool_in(const SFString& in) { return in%"true" || toLong(in)!=0; }
-#define toBool toBool_in
 
     //----------------------------------------------------------------------------
     inline SFString shorten(const SFString& in, size_t x) {
