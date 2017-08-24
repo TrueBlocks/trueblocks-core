@@ -168,20 +168,16 @@ void CNewBlock::finishParse() {
     // EXISTING_CODE
 }
 
-#define MAJOR 0
-#define MINOR 2
-#define BUILD 0
-#define CURRENT_SCHEMA ((MAJOR * 1000000) + (MINOR * 1000) + (BUILD))
 //---------------------------------------------------------------------------------------------------
 bool CNewBlock::Serialize(SFArchive& archive) {
-    m_schema = CURRENT_SCHEMA;
+    m_schema = currentSchema();
     if (!archive.isReading())
         return ((const CNewBlock*)this)->SerializeC(archive);
 
     if (!preSerialize(archive))
         return false;
 
-    if (m_schema < CURRENT_SCHEMA)
+    if (m_schema < currentSchema())
         return readBackLevel(archive);
 
     archive >> gasLimit;
