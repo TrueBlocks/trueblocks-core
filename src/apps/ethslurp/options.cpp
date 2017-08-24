@@ -154,12 +154,13 @@ bool COptions::parseArguments(SFString& command) {
                 return usage("Unknown parameter: " + arg);
             name = val;
 
-        } else if (arg.startsWith("-a")) {
-            SFString fileName = arg.Substitute("-a:", EMPTY).Substitute("-archive:", EMPTY);
+        } else if (arg == "-a" || arg.startsWith("-a:") || arg.startsWith("--archive:")) {
+            SFString fileName = arg.Substitute("-a:", "").Substitute("--archive:", "");
             if (fileName == "-a") {
                 // -a is acceptable but only if we get a -name (or we have only already)
                 // checked during slurp since we don't have an address yet
                 wantsArchive = true;
+                archiveFile = "";
 
             } else {
                 CFilename filename(fileName);
@@ -206,6 +207,8 @@ bool COptions::parseArguments(SFString& command) {
         }
     }
 
+    if (wantsArchive && archiveFile.empty() && name.empty())
+        return usage("If -a is provided without an archive name, -n must be provided. Quitting...");
     return true;
 }
 
