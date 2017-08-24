@@ -136,7 +136,6 @@ IMPLEMENT_ARCHIVE_LIST(CAbiList);
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 extern SFUint32 verbose;
-extern bool isTesting;
 #define REP_FREQ   11
 #define REP_INFREQ 563
 void clearAbis(void);

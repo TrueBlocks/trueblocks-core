@@ -76,7 +76,6 @@ void COptions::Init(void) {
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
-    useVerbose = true;
     needsOption = true;
     Init();
 }

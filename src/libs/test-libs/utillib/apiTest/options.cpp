@@ -40,10 +40,6 @@ bool COptions::parseArguments(SFString& command) {
 void COptions::Init(void) {
     paramsPtr = params;
     nParamsRef = nParams;
-
-    useVerbose = true;
-    useTesting = false;
-    //minArgs = 0;
 }
 
 //---------------------------------------------------------------------------------------------------

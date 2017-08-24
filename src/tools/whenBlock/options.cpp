@@ -112,9 +112,6 @@ void COptions::Init(void) {
     special = "";
     alone = false;
 
-    useVerbose = false;
-    useTesting = false;
-
     specials.Clear();
     specials[specials.getCount()] = "first|0";
     specials[specials.getCount()] = "iceage|200000";

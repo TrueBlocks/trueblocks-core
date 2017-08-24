@@ -20,23 +20,26 @@ int main(int argc, const char *argv[]) {
     if (!options.prepareArguments(argc, argv))
         return 0;
 
-    while (isTesting || !options.commandList.empty()) {
-        SFString command = nextTokenClear(options.commandList, '\n');
-        if (!options.parseArguments(command))
-            return 0;
-
-        if (isTesting)
-            doTests();
-        else
-            cout << getSha3(argv[1]) << "\n";
-        isTesting = false;
+    if (isTestMode()) {
+        doTests();
+    } else {
+        while (!options.commandList.empty()) {
+            SFString command = nextTokenClear(options.commandList, '\n');
+            if (!options.parseArguments(command))
+                return 0;
+            SFString in = argv[1];
+            cout << "in: " << in << "\n";
+            SFString hex = in.startsWith("0x") ? in : "0x" + string2Hex(in);
+            cout << "hex: " << hex << "\n";
+            SFString out = getSha3(hex);
+            cout << "out: " << out << "\n";
+        }
     }
     return 0;
 }
 
 //--------------------------------------------------------------
 extern const char* STR_TEST_DATA;
-
 //--------------------------------------------------------------
 void doTests(void) {
     SFString in;

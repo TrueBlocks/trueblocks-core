@@ -1,7 +1,7 @@
 
   Not enough arguments presented.
 
-  Usage:    ethslurp [-a|-b|-d|-n|-r|-f|-i|-e|-o|-l|-t|-v|-h] addr  
+  Usage:    ethslurp [-a|-b|-d|-n|-r|-f|-i|-e|-o|-l|-v|-h] addr  
   Purpose:  Fetches data off the Ethereum blockchain for an arbitrary account or smart contract. Optionally formats the output to your specification.
              
   Where:    
@@ -16,7 +16,6 @@
 	-e  (--expense)       include expenditures only
 	-o  (--open)          open the configuration file for editing
 	-l  (--list)          list previously slurped addresses in cache
-	-t  (--test)          generate intermediary files but do not execute the commands
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
 	-h  (--help)          display this help screen
 
