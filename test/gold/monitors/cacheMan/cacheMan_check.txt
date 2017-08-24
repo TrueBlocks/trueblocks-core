@@ -1,6 +1,6 @@
-cacheMan argc: 3 [1:-c] [2:0xDuplicate.bin] 
-cacheMan -c 0xDuplicate.bin 
-Checking cache: 0xDuplicate.bin
+cacheMan argc: 3 [1:-c] [2:Duplicate.cache] 
+cacheMan -c Duplicate.cache 
+Checking cache: Duplicate.cache
 	Duplicate at record 260, current 4162956.32.32, previous 4162956.32.32
 	The cache has 1 duplicates.
 

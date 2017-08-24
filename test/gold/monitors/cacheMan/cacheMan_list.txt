@@ -1,6 +1,6 @@
-cacheMan argc: 2 [1:0xDuplicate.bin] 
-cacheMan 0xDuplicate.bin 
-Listing cache: 0xDuplicate.bin
+cacheMan argc: 2 [1:Duplicate.cache] 
+cacheMan Duplicate.cache 
+Listing cache: Duplicate.cache
 blockNum: 001235820 transID: 00001 which: 00012
 blockNum: 001236136 transID: 00014 which: 00012
 blockNum: 001244925 transID: 00005 which: 00012
