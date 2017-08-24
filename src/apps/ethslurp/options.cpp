@@ -13,12 +13,12 @@ CFileExportContext outScreen;
 //---------------------------------------------------------------------------------------------------
 CParams params[] = {
     CParams("~addr",        "the address of the account or contract to slurp"),
-    CParams("-archive",     "filename of output (stdout otherwise)"),
-    CParams("-blocks",      "export records in block range (:0[:max])"),
-    CParams("-dates",       "export records in date range (:yyyymmdd[hhmmss][:yyyymmdd[hhmmss]])"),
-    CParams("-name",        "name this address"),
+    CParams("-archive:<str>","filename of output (stdout otherwise)"),
+    CParams("-blocks:<range>","export records in block range (:0[:max])"),
+    CParams("-dates:<date>","export records in date range (:yyyymmdd[hhmmss][:yyyymmdd[hhmmss]])"),
+    CParams("-name:<str>",  "name this address"),
     CParams("-rerun",       "re-run the most recent slurp"),
-    CParams("-fmt",         "pretty print, optionally add ':txt,' ':csv,' or ':html'"),
+    CParams("-fmt:<str>",   "pretty print, optionally add ':txt,' ':csv,' or ':html'"),
     CParams("-income",      "include income transactions only"),
     CParams("-expense",     "include expenditures only"),
     CParams("-open",        "open the configuration file for editing"),
@@ -198,6 +198,10 @@ bool COptions::parseArguments(SFString& command) {
                 if (arg[0] == '-')
                     return usage("Invalid option " + arg);
                 addr = arg;
+                if (!addr.startsWith("0x"))
+                    addr = "0x" + addr;
+                if (addr.length() != 42)
+                    return usage(addr + " appears to be an invalid address. Quitting");
             }
         }
     }
