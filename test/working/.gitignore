@@ -1,4 +1,5 @@
 *.txt
 *.json
 *.toml
+*.cache
 cmd_file*
