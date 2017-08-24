@@ -11,6 +11,7 @@
 #include "dates.h"
 #include "sfos.h"
 #include "filenames.h"
+#include "conversions.h"
 
 namespace qblocks {
 
