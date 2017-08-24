@@ -4,12 +4,11 @@ Testing only
 
 #### Usage
 
-`Usage:`    bigIntTest [-t|-v|-h]  
+`Usage:`    bigIntTest [-v|-h]  
 `Where:`  
 
 | Option | Full Command | Description |
 | -------: | :------- | :------- |
-| -t | --test | generate intermediary files but do not execute the commands |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 

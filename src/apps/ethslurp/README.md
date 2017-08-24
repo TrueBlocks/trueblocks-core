@@ -1,10 +1,18 @@
 ## ethslurp
 
-ethslurp
+Drink the blockchain (http://ethslurp.com)
+
+Watch a video tutorial <a href="https://www.youtube.com/watch?v=ZZDV1yAgces">here</a>
+
+Check out Great Hill Corporation on <a href="https://www.facebook.com/GreatHillCorporation/">Facebook</a> or <a href="https://twitter.com/ethslurp">Twitter</a>
+
+### Building from source
+
+Please see the <a href="https://github.com/Great-Hill-Corporation/ethslurp/blob/master/INSTALL.md">INSTALL.md</a> file for more information.
 
 #### Usage
 
-`Usage:`    ethslurp [-a|-b|-d|-n|-r|-f|-i|-e|-o|-l|-t|-v|-h] addr  
+`Usage:`    ethslurp [-a|-b|-d|-n|-r|-f|-i|-e|-o|-l|-v|-h] addr  
 `Purpose:`  Fetches data off the Ethereum blockchain for an arbitrary account or smart contract. Optionally formats the output to your specification.
              
 `Where:`  
@@ -12,17 +20,16 @@ ethslurp
 | Option | Full Command | Description |
 | -------: | :------- | :------- |
 |  | addr | the address of the account or contract to slurp |
-| -a | --archive | filename of output (stdout otherwise) |
-| -b | --blocks | export records in block range (:0[:max]) |
-| -d | --dates | export records in date range (:yyyymmdd[hhmmss][:yyyymmdd[hhmmss]]) |
-| -n | --name | name this address |
+| -a | --archive val | filename of output (stdout otherwise) |
+| -b | --blocks range | export records in block range (:0[:max]) |
+| -d | --dates val | export records in date range (:yyyymmdd[hhmmss][:yyyymmdd[hhmmss]]) |
+| -n | --name val | name this address |
 | -r | --rerun | re-run the most recent slurp |
-| -f | --fmt | pretty print, optionally add ':txt,' ':csv,' or ':html' |
+| -f | --fmt val | pretty print, optionally add ':txt,' ':csv,' or ':html' |
 | -i | --income | include income transactions only |
 | -e | --expense | include expenditures only |
 | -o | --open | open the configuration file for editing |
 | -l | --list | list previously slurped addresses in cache |
-| -t | --test | generate intermediary files but do not execute the commands |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
