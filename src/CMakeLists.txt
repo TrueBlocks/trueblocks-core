@@ -85,16 +85,6 @@ function(run_the_test testPath goldPath testName testExe) # Optional argv4 with 
 endfunction(run_the_test)
 
 # ----------------------------------------------------------------------------------------
-# Define the generic make lint command
-function(define_lint_target)
-	# TBD
-	add_custom_target(lint)
-endfunction(define_lint_target)
-
-# Define it
-define_lint_target()
-
-# ----------------------------------------------------------------------------------------
 # Define the install target
 install(CODE "MESSAGE(\"Installing the project ...\")")
 
