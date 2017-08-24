@@ -538,7 +538,7 @@ namespace qblocks {
 
     //--------------------------------------------------------------------
     inline SFString padNum2(int64_t n) { return padLeft(asString((n)), 2, '0'); }
-    inline SFString padNum3(int64_t n) { return padLeft(asString((n)), 3, '0'); }
+    inline SFString padNum3i(int64_t n) { return padLeft(asString((n)), 3, '0'); }
     inline SFString padNum4(int64_t n) { return padLeft(asString((n)), 4, '0'); }
     inline SFString padNum5(int64_t n) { return padLeft(asString((n)), 5, '0'); }
     inline SFString padNum6(int64_t n) { return padLeft(asString((n)), 6, '0'); }
