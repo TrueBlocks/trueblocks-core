@@ -15,6 +15,7 @@ set(EXECUTABLE_OUTPUT_PATH "${CMAKE_CURRENT_LIST_DIR}/bin")
 
 # Define the executable to be generated
 set(TOOL_NAME "[{PROJECT_NAME}]")
+set(PROJ_NAME "monitors")
 add_executable(${TOOL_NAME} ${SOURCE_FILES})
 
 # Add the project static libs at linking

@@ -12,6 +12,7 @@ set(EXECUTABLE_OUTPUT_PATH "${CMAKE_SOURCE_DIR}/../bin")
 
 # Define the executable to be generated
 set(TOOL_NAME "ethslurp")
+set(PROJ_NAME "apps")
 add_executable(${TOOL_NAME} ${SOURCE_FILES})
 
 # Add the project static libs at linking
@@ -35,10 +36,10 @@ function(run_test testName)
 endfunction(run_test)
 
 # Enter one line for each individual test
-run_test("ethslurp_no_params")
-run_test("ethslurp_help.txt" "-h")
-run_test("ethslurp_invalid_param_1.txt" "-x")
-run_test("ethslurp_invalid_param_2.txt" "--")
+run_test("ethslurp_no_params"            )
+run_test("ethslurp_help"             "-h")
+run_test("ethslurp_invalid_param_1"  "-x")
+run_test("ethslurp_invalid_param_2"  "--")
 
 #--------------------------------------------------------------------------------
 ## clean up prior tests

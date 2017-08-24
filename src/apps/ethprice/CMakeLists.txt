@@ -12,6 +12,7 @@ set(EXECUTABLE_OUTPUT_PATH "${CMAKE_SOURCE_DIR}/../bin")
 
 # Define the executable to be generated
 set(TOOL_NAME "ethprice")
+set(PROJ_NAME "apps")
 add_executable(${TOOL_NAME} ${SOURCE_FILES})
 
 # Add the project static libs at linking
@@ -20,7 +21,6 @@ target_link_libraries (${TOOL_NAME} wallet token ${BASE_LIBS})
 # Testing
 # Define paths to test folder and gold folder
 set(TEST_EXE "${EXECUTABLE_OUTPUT_PATH}/${TOOL_NAME}")
-set(PROJ_NAME "apps")
 set(TEST_PATH "${TEST_PATH}/${PROJ_NAME}/${TOOL_NAME}")
 set(GOLD_PATH "${GOLD_PATH}/${PROJ_NAME}/${TOOL_NAME}")
 
