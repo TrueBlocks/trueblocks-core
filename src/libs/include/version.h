@@ -7,7 +7,7 @@
  * The LICENSE at the root of this repo details your rights (if any)
  *------------------------------------------------------------------------*/
 
-#include "version.h"
+#include "conversions.h"
 
 namespace qblocks {
 
