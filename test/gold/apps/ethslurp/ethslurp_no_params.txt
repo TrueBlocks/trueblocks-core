@@ -6,12 +6,12 @@
              
   Where:    
 	addr                  the address of the account or contract to slurp (required)
-	-a  (--archive)       filename of output (stdout otherwise)
-	-b  (--blocks)        export records in block range (:0[:max])
-	-d  (--dates)         export records in date range (:yyyymmdd[hhmmss][:yyyymmdd[hhmmss]])
-	-n  (--name)          name this address
+	-a  (--archive val)   filename of output (stdout otherwise)
+	-b  (--blocks range)  export records in block range (:0[:max])
+	-d  (--dates val)     export records in date range (:yyyymmdd[hhmmss][:yyyymmdd[hhmmss]])
+	-n  (--name val)      name this address
 	-r  (--rerun)         re-run the most recent slurp
-	-f  (--fmt)           pretty print, optionally add ':txt,' ':csv,' or ':html'
+	-f  (--fmt val)       pretty print, optionally add ':txt,' ':csv,' or ':html'
 	-i  (--income)        include income transactions only
 	-e  (--expense)       include expenditures only
 	-o  (--open)          open the configuration file for editing
