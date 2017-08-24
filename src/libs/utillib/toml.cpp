@@ -8,6 +8,7 @@
 #include "basetypes.h"
 
 #include "toml.h"
+#include "conversions.h"
 
 namespace qblocks {
 

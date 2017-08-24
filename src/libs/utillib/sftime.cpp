@@ -10,6 +10,7 @@
 #include "sftime.h"
 #include "dates.h"
 #include "sfos.h"
+#include "conversions.h"
 
 namespace qblocks {
 

@@ -22,7 +22,7 @@ extern SFString nextLogentryChunk(const SFString& fieldIn, bool& force, const vo
 static SFString nextLogentryChunk_custom(const SFString& fieldIn, bool& force, const void *data);
 
 //---------------------------------------------------------------------------
-void CLogEntry::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+void CLogEntry::Format(CExportContext& ctx, const SFString& fmtIn, void *data1) const {
     if (!m_showing)
         return;
 
@@ -32,7 +32,7 @@ void CLogEntry::Format(CExportContext& ctx, const SFString& fmtIn, void *data) c
     }
 
     SFString fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, data))
+    if (handleCustomFormat(ctx, fmt, data1))
         return;
 
     while (!fmt.empty())
@@ -203,7 +203,7 @@ SFString nextLogentryChunk_custom(const SFString& fieldIn, bool& force, const vo
 }
 
 //---------------------------------------------------------------------------
-bool CLogEntry::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+bool CLogEntry::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data1) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
