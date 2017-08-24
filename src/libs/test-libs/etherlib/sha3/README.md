@@ -4,16 +4,13 @@ Testing only
 
 #### Usage
 
-`Usage:`    sha3 [-o|-t|-t|-v|-h]  
-`Purpose:`  This is what the program does.
+`Usage:`    sha3 [-v|-h]  
+`Purpose:`  Testing code for the sha3 functionality of etherlib.
              
 `Where:`  
 
 | Option | Full Command | Description |
 | -------: | :------- | :------- |
-| -o | --option1 | option one |
-| -t | --thing | option two |
-| -t | --test | generate intermediary files but do not execute the commands |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 

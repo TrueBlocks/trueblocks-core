@@ -106,7 +106,7 @@ bool COptions::parseArguments(SFString& command) {
         } else {
             SFString path = arg;
             filenames[filenames.getCount()] = path;
-            if (!fileExists(path)) // || !path.endsWith(".bin"))
+            if (!fileExists(path))
                 return usage("Cannot open file: " + path + ". Quitting.");
         }
     }
