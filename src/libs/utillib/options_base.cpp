@@ -83,11 +83,6 @@ namespace qblocks {
                 stdInCmds += "\n";
         }
 
-#define MAJOR 0
-#define MINOR 2
-#define BUILD 0
-#define SUBVERS "alpha"
-
         //-----------------------------------------------------------------------------------
         // We now have 'nArgs' command line arguments stored in the array 'args.'  We spin
         // through them doing one of two things
@@ -107,11 +102,7 @@ namespace qblocks {
                 }
 
             } else if (arg == "--version") {
-                SFString r1 = __DATE__;
-                SFString r2 = __TIME__;
-                cerr << programName << " (quickBlocks) "
-                    << MAJOR << "." << MINOR << "." << BUILD << "-" << SUBVERS
-                    << "\n";
+                cerr << programName << " (quickBlocks) " << getVersionStr() << "\n";
                 if (args) delete [] args;
                 return false;
 
