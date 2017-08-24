@@ -53,10 +53,6 @@ void COptions::Init(void) {
     hash = "";
     terse = false;
     raw = false;
-
-    useVerbose = true;
-    useTesting = false;
-//    minArgs = 0;
 }
 
 //---------------------------------------------------------------------------------------------------

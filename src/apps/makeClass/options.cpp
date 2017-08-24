@@ -123,9 +123,6 @@ void COptions::Init(void) {
     namesp = "";
     classNames = "";
     filter = "";
-
-    useVerbose = true;
-    useTesting = false;
 }
 
 //---------------------------------------------------------------------------------------------------

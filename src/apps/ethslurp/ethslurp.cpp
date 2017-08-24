@@ -215,7 +215,8 @@ bool CSlurperApp::Slurp(COptions& options, SFString& message) {
 
             uint64_t nRecords = countOf('}', thisPage) - 1;
             nRead += nRecords;
-            cerr << "\tDownloaded " << nRead << " potentially new transactions." << (isTesting?"\n":"\r");
+            if (!isTestMode())
+                cerr << "\tDownloaded " << nRead << " potentially new transactions.\r";
 
             // If we got a full page, there are more to come
             done = (nRecords < options.pageSize);
@@ -258,15 +259,14 @@ bool CSlurperApp::Slurp(COptions& options, SFString& message) {
                 if (transBlock > theAccount.lastBlock) {  // add the new transaction if it's in a new block
                     theAccount.transactions[nextRecord++] = trans;
                     lastBlock = transBlock;
-                    if (!(++nNewBlocks % REP_FREQ)) {
-                        cerr << "\tFound new transaction at block " << transBlock
-                                << ". Importing..." << (isTesting?"\n":"\r");
+                    if (!(++nNewBlocks % REP_FREQ) && !isTestMode()) {
+                        cerr << "\tFound new transaction at block " << transBlock << ". Importing...\r";
                         cerr.flush();
                     }
                 }
             }
         }
-        if (!isTesting && nNewBlocks) {
+        if (!isTestMode() && nNewBlocks) {
             cerr << "\tFound new transaction at block " << lastBlock << ". Importing...\n";
             cerr.flush();
         }
@@ -288,7 +288,7 @@ bool CSlurperApp::Slurp(COptions& options, SFString& message) {
         }
     }
 
-    if (!isTesting) {
+    if (!isTestMode()) {
         double stop = qbNow();
         double timeSpent = stop-start;
         fprintf(stderr, "\tLoaded %d total records in %f seconds\n", theAccount.transactions.getCount(), timeSpent);
@@ -359,13 +359,13 @@ bool CSlurperApp::Filter(COptions& options, SFString& message) {
 
         theAccount.nVisible += trans->m_showing;
         int64_t nFiltered = int64_t(theAccount.nVisible + 1);  // NOLINT
-        if (!(nFiltered % REP_INFREQ)) {
-            cerr << "\t" << "Filtering..." << nFiltered << " records passed." << (isTesting ? "\n" : "\r");
+        if (!(nFiltered % REP_INFREQ) && !isTestMode()) {
+            cerr << "\t" << "Filtering..." << nFiltered << " records passed.\r";
             cerr.flush();
         }
     }
 
-    if (!isTesting) {
+    if (!isTestMode()) {
         double stop = qbNow();
         double timeSpent = stop-start;
         cerr << "\tFilter passed " << theAccount.nVisible
@@ -395,7 +395,7 @@ bool CSlurperApp::Display(COptions& options, SFString& message) {
         theAccount.Format(outScreen, getFormatString(options, "file", false));
     }
 
-    if (!isTesting) {
+    if (!isTestMode()) {
         double stop = qbNow();
         double timeSpent = stop-start;
         cerr << "\tExported " << theAccount.nVisible

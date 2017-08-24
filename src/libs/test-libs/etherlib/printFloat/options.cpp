@@ -42,9 +42,6 @@ void COptions::Init(void) {
     nParamsRef = nParams;
 
     testNum = -1;
-
-    useVerbose = true;
-    useTesting = false;
     minArgs = 0;
 }
 

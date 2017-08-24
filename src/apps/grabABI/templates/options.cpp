@@ -140,9 +140,6 @@ void COptions::Init(void) {
     parse_on = false;
     autocorrect_on = false;
     kBlock = 0;
-
-    useVerbose = true;
-    useTesting = false;
     minArgs = 0;
 }
 

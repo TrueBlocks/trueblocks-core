@@ -31,9 +31,6 @@ void COptions::Init(void) {
     nParamsRef = nParams;
 
     filename = "";
-
-    useVerbose = true;
-    useTesting = false;
 }
 
 //---------------------------------------------------------------------------------------------------

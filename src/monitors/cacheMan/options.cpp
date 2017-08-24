@@ -157,9 +157,6 @@ void COptions::Init(void) {
     wantsStats = false;
     renums.Clear();
     skip = 1;
-
-    useVerbose = true;
-    useTesting = false;
 }
 
 //---------------------------------------------------------------------------------------------------

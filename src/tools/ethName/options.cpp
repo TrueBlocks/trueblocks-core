@@ -89,14 +89,9 @@ void COptions::Init(void) {
     list = false;
     addrOnly = false;
     count = false;
-
-    useVerbose = true;
-    useTesting = false;
 }
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
-    COptionsBase::useVerbose = true;
-    COptionsBase::useTesting = false;
     Init();
 }
