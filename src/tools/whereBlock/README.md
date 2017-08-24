@@ -6,7 +6,7 @@ If `whereBlock` return `remote` it went to Infura.
 
 #### Usage
 
-`Usage:`    whereBlock [-a|-b|-h]  
+`Usage:`    whereBlock [-a|-b|-v|-h]  
 `Purpose:`  Reports if a block was found in the cache.
              
 `Where:`  
@@ -15,6 +15,7 @@ If `whereBlock` return `remote` it went to Infura.
 | -------: | :------- | :------- |
 | -a | --alone | show the path alone |
 | -b | --block | which block to find |
+| -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
 #### Other Options

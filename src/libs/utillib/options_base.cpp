@@ -243,7 +243,7 @@ namespace qblocks {
                 shortName += name[0];
                 longName = "-" + name + dummy;
             }
-            
+
             if (longName.Contains("(") && longName.Contains(")")) {
                 hotKey = longName;
                 nextTokenClear(hotKey,'(');
@@ -279,7 +279,7 @@ namespace qblocks {
         os << purpose();
         os << descriptions() << "\n";
         if (!COptionsBase::isReadme)
-            os << bBlue << "  Powered by QuickBlocks\n" << cOff;
+            os << bBlue << "  Powered by QuickBlocks" << (isTestMode() ? "" : " (" + getVersionStr()) << ")\n" << cOff;
         return os.str().c_str();
     }
 

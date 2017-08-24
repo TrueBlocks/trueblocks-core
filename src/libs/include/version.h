@@ -23,11 +23,11 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    inline SFString getVersionStr(const SFString& sep=".") {
+    inline SFString getVersionStr(const SFString& sep1=".", const SFString& sep2="-") {
         uint32_t major, minor, build;
         SFString tag;
         getVersion(major, minor, build, tag);
-        return asStringU(major) + sep + asStringU(minor) + sep + asStringU(build) + sep + tag;
+        return asStringU(major) + sep1 + asStringU(minor) + sep1 + asStringU(build) + sep2 + tag;
     }
 
     //--------------------------------------------------------------------------------
