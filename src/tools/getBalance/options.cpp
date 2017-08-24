@@ -66,10 +66,6 @@ void COptions::Init(void) {
     blocks = "";
     asEther = false;
     asData = false;
-
-    useVerbose = true;
-    useTesting = false;
-//    minArgs = 0;
 }
 
 //---------------------------------------------------------------------------------------------------

@@ -94,9 +94,6 @@ void COptions::Init(void) {
         addrs[i] = "";
     }
     nAddrs = 0;
-
-    useVerbose = true;
-    useTesting = true;
 }
 
 //---------------------------------------------------------------------------------------------------

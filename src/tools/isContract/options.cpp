@@ -73,9 +73,6 @@ void COptions::Init(void) {
     nAddrs = 0;
     diff = false;
     display = false;
-
-    useVerbose = true;
-    useTesting = false;
 }
 
 //---------------------------------------------------------------------------------------------------

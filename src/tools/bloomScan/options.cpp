@@ -51,9 +51,6 @@ void COptions::Init(void)
 	nParamsRef = nParams;
 
 	mode = "";
-
-	useVerbose=true;
-	useTesting=false;
 }
 
 //---------------------------------------------------------------------------------------------------

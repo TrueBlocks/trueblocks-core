@@ -76,9 +76,6 @@ void COptions::Init(void) {
     queries = "";
     trace = false;
     verbose = true;
-
-    useVerbose = true;
-    useTesting = false;
 }
 
 //---------------------------------------------------------------------------------------------------

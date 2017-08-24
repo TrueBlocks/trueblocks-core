@@ -47,10 +47,6 @@ void COptions::Init(void) {
 
     block = NOPOS;
     alone = false;
-
-    useVerbose = false;
-    useTesting = false;
-//    minArgs = 0;
 }
 
 //---------------------------------------------------------------------------------------------------

@@ -173,7 +173,7 @@ bool COptions::parseArguments(SFString& command) {
         } else if (arg == "-o" || arg == "-open") {
             // open command stuff
             openFile = true;
-            if (isTesting) {
+            if (isTestMode()) {
                 outScreen << "Testing only for open command:\n"
                             << asciiFileToString(configPath("quickBlocks.toml")) << "\n";
             } else {
@@ -183,9 +183,9 @@ bool COptions::parseArguments(SFString& command) {
             exit(0);
 
         } else if (arg == "-c" || arg == "-clear") {
-            if (isTesting) {
-                removeFolder(cachePath());
-                cerr << "Cached slurp files were cleared\n";
+            if (isTestMode()) {
+                //removeFolder(cachePath());
+                cerr << "Cached slurp files were NOT cleared!\n";
             } else {
                 cerr << "Clearing the cache is not implemented. You may, if you wish, remove all\n";
                 cerr << "files in " << cachePath() << " to acheive the same thing. If you\n";

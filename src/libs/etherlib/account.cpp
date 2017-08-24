@@ -208,7 +208,7 @@ SFString nextAccountChunk_custom(const SFString& fieldIn, bool& force, const voi
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             case 'n':
-                if ( fieldIn % "now" ) return (isTesting ? "TESTING_TIME" : Now().Format(FMT_JSON));
+                if ( fieldIn % "now" ) return (isTestMode() ? "TESTING_TIME" : Now().Format(FMT_JSON));
                 break;
             case 'r':
                 if ( fieldIn % "records" ) return (acc->transactions.getCount() == 0 ? "No records" : "");
@@ -261,9 +261,10 @@ bool CAccount::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, vo
             cnt += transactions[i].m_showing;
             if (cnt && !(cnt % REP_INFREQ)) {
                 cerr << "\tExporting record " << cnt << " of " << nVisible;
-                cerr << (transactions.getCount() != nVisible ? " visible" : "") << " records"
-                        << (isTesting ? "\n" : "\r");
-                cerr.flush();
+                if (!isTestMode()) {
+                    cerr << (transactions.getCount() != nVisible ? " visible" : "") << " records\r";
+                    cerr.flush();
+                }
             }
 
             ((CTransaction*)&transactions[i])->pParent = this;

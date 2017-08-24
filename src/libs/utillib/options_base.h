@@ -12,7 +12,6 @@ namespace qblocks {
     class COptionsBase {
     public:
         static bool useVerbose;
-        static bool useTesting;
         static bool needsOption;
         static bool isReadme;
 
@@ -63,7 +62,6 @@ namespace qblocks {
 
     //--------------------------------------------------------------------------------
     extern SFUint32 verbose;
-    extern bool isTesting;
 
     //--------------------------------------------------------------------------------
     extern SFString configPath(const SFString& part = "");

@@ -144,9 +144,6 @@ namespace qblocks {
                 arg.Replace(":", "");
                 if (!arg.empty())
                     verbose = toLongU(arg);
-
-            } else if (COptionsBase::useTesting && (arg == "-t" || arg == "--test")) {
-                isTesting = true;
             }
         }
 
@@ -172,7 +169,7 @@ namespace qblocks {
             if (combine && i < (nArgs-1)) {
                 args[curArg++] = arg + ":" + args[i+1];
                 i++;
-                
+
             } else {
                 args[curArg++] = arg;
             }
@@ -191,8 +188,7 @@ namespace qblocks {
             fromFile = true;
             SFString contents =  asciiFileToString(cmdFileName).Substitute("\t", " ").
                                             Substitute("-v", "").Substitute("-h", "").
-                                            Substitute("-t", "").Substitute("  ", " ").
-                                            Substitute("\\ ", "{~}");
+                                            Substitute("  ", " ").Substitute("\\ ", "{~}");
             while (!contents.empty()) {
                 SFString command = StripAny(nextTokenClear(contents, '\n'), "\t\r\n ");
                 if (!command.empty() && !command.startsWith(";"))  // ignore comments
@@ -212,8 +208,6 @@ namespace qblocks {
         if (arg == "-v" || arg.startsWith("-v:") || arg.startsWith("--verbose"))
             return true;
         if (arg == "-h" || arg == "--help")
-            return true;
-        if (COptionsBase::useTesting && (arg == "-t" || arg == "--test"))
             return true;
         if (arg == "--version")
             return true;
@@ -316,8 +310,6 @@ namespace qblocks {
                 ctx << paramsPtr[i].shortName << "|";
             }
         }
-        if (COptionsBase::useTesting)
-            ctx << "-t|";
         if (COptionsBase::useVerbose)
             ctx << "-v|";
         ctx << "-h";
@@ -403,8 +395,6 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
             }
         }
 
-        if (COptionsBase::useTesting)
-            ctx << oneDescription("-t", "-test", "generate intermediary files but do not execute the commands", false, false);
         if (COptionsBase::useVerbose)
             ctx << oneDescription("-v", "-verbose", "set verbose level. Either -v, --verbose or -v:n where 'n' is level", false, false);
         ctx << oneDescription("-h", "-help", "display this help screen", false, false);
@@ -488,16 +478,14 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
 
     //--------------------------------------------------------------------------------
     bool COptionsBase::useVerbose = true;
-    bool COptionsBase::useTesting = true;
     bool COptionsBase::isReadme = false;
     bool COptionsBase::needsOption = false;
 
     //--------------------------------------------------------------------------------
     SFUint32 verbose = false;
-    bool isTesting = false;
 
     //---------------------------------------------------------------------------------------------------
     SFString configPath(const SFString& part) {
-        return getHomeFolder() + ".quickBlocks" + (isTesting ? ".test" : "") + "/" + part;
+        return getHomeFolder() + ".quickBlocks/" + part;
     }
 }  // namespace qblocks

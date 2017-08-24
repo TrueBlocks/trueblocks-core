@@ -31,7 +31,7 @@ int main(int argc, const char* argv[]) {
         if (loadPriceData(quotes, options.freshen, message) && quotes.getCount()) {
 
             SFString fmt = "";
-            if (isTesting || !verbose)
+            if (!verbose)
                 fmt = "{ \"date\": \"[{DATE}]\", \"price\": \"[{CLOSE}]\" }";
 
             if (options.at) {

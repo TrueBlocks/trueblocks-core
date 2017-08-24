@@ -43,9 +43,6 @@ void COptions::Init(void) {
     nParamsRef = nParams;
 
     fileName = "";
-
-    useVerbose = true;
-    useTesting = false;
     minArgs = 0;
 }
 

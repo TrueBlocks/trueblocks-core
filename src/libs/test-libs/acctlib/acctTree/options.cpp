@@ -48,12 +48,11 @@ void COptions::Init(void) {
 
     all = false;
     startBlock = 0;
+    minArgs = 0;
 }
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
-    useVerbose = true;
-    minArgs = 0;
     Init();
 }
 
