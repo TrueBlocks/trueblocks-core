@@ -95,8 +95,10 @@ int main(int argc, const char *argv[]) {
                             nRecords++;
                             bool isDup = (lastItem == item);
                             if (mode == "check") {
-                                cerr << "\tChecking block: " << asYellow(item.blockNum) << "\r";
-                                cerr.flush();
+                                if (!isTestMode()) {
+                                    cerr << "\tChecking block: " << asYellow(item.blockNum) << "\r";
+                                    cerr.flush();
+                                }
                                 if (isDup) {
                                     cout << "\tDuplicate at record " << asYellow(nRecords)
                                             << ", current " << asYellow(item)
@@ -140,8 +142,10 @@ int main(int argc, const char *argv[]) {
 
                                         fixed[fixed.getCount()] = item;
                                         lastItem = item;
-                                        cerr << "\tAccepted block: " << asYellow(item.blockNum) << "\r";
-                                        cerr.flush();
+                                        if (!isTestMode()) {
+                                            cerr << "\tAccepted block: " << asYellow(item.blockNum) << "\r";
+                                            cerr.flush();
+                                        }
 
                                     } else {
                                         nTruncs++;
