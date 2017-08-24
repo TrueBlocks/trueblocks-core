@@ -7,6 +7,7 @@
  *------------------------------------------------------------------------*/
 #include "basetypes.h"
 #include "sfstring.h"
+#include "conversions.h"
 
 namespace qblocks {
 
