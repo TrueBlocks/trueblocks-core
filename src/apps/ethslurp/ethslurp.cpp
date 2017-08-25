@@ -178,7 +178,8 @@ bool CSlurperApp::Slurp(COptions& options, SFString& message) {
         uint32_t origCount  = theAccount.transactions.getCount();
         uint32_t nNewBlocks = 0;
 
-        cerr << "\tSlurping new transactions from blockchain...\n";
+        if (!isTestMode())
+            cerr << "\tSlurping new transactions from blockchain...\n";
         uint32_t nextRecord = origCount;
         uint32_t nRead = 0;
         uint32_t nRequests = 0;
@@ -208,7 +209,7 @@ bool CSlurperApp::Slurp(COptions& options, SFString& message) {
             message = nextTokenClear(thisPage, '[');
             if (!message.Contains("{\"status\":\"1\",\"message\":\"OK\"")) {
                 if (message.Contains("{\"status\":\"0\",\"message\":\"No transactions found\",\"result\":"))
-                    message = "No transactions were found for address '" + theAccount.addr + "'. Is it correct?";
+                    message = "No transactions were found for address '" + theAccount.addr + "'.";
                 return options.fromFile;
             }
             contents += thisPage;
@@ -237,7 +238,8 @@ bool CSlurperApp::Slurp(COptions& options, SFString& message) {
         uint32_t minBlock = 0, maxBlock = 0;
         findBlockRange(contents, minBlock, maxBlock);
 #ifndef NO_INTERNET
-        cerr << "\n\tDownload contains blocks from " << minBlock << " to " << maxBlock << "\n";
+        if (!isTestMode())
+            cerr << "\n\tDownload contains blocks from " << minBlock << " to " << maxBlock << "\n";
 #endif
 
         // Keep track of which last full page we've read
@@ -275,7 +277,8 @@ bool CSlurperApp::Slurp(COptions& options, SFString& message) {
         // Write the data if we got new data
         uint32_t newRecords = (theAccount.transactions.getCount() - origCount);
         if (newRecords) {
-            cerr << "\tWriting " << newRecords << " new records to cache\n";
+            if (!isTestMode())
+                cerr << "\tWriting " << newRecords << " new records to cache\n";
             SFArchive archive(false, NO_SCHEMA, true);
             if (archive.Lock(cacheFilename, binaryWriteCreate, LOCK_CREATE)) {
                 theAccount.Serialize(archive);
