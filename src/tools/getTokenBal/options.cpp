@@ -31,7 +31,7 @@ bool COptions::parseArguments(SFString& command) {
             asData = true;
 
         } else if (arg.startsWith("0x")) {
-            if (arg.length() != 42)
+            if (!isAddress(arg))
                 return usage(arg + " does not appear to be a valid Ethereum address. Quitting...");
             if (token.empty())
                 token = arg;

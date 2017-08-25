@@ -7,11 +7,9 @@
  * The LICENSE at the root of this repo details your rights (if any)
  *------------------------------------------------------------------------*/
 
-#include "utillib.h"
-
 namespace qblocks {
 
-    // TODO:(tjayrush) Remove this file
-    // see utillib/conversions.h
+    using timestamp_t = int64_t;
+#define isHex(cc) (isdigit(cc) || (cc) == 'x' || ((cc) >= 'a' && (cc) <= 'f') || ((cc) >= 'A' && (cc) <= 'F'))
 
 }  // namespace qblocks

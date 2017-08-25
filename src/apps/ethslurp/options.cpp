@@ -195,13 +195,13 @@ bool COptions::parseArguments(SFString& command) {
             exit(1);
 
         } else {
+//#error
+//builtInCmd
             if (!arg.Contains("-v") && arg != "-t" && arg != "-h") {
                 if (arg[0] == '-')
                     return usage("Invalid option " + arg);
-                addr = arg;
-                if (!addr.startsWith("0x"))
-                    addr = "0x" + addr;
-                if (addr.length() != 42)
+                addr = fixAddress(arg);
+                if (!isAddress(addr))
                     return usage(addr + " appears to be an invalid address. Quitting");
             }
         }

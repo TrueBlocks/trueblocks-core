@@ -8,10 +8,9 @@
  *------------------------------------------------------------------------*/
 
 #include "sfos.h"
+#include "conversions_base.h"
 
 namespace qblocks {
-
-    using timestamp_t = int64_t;
 
     class SFTime;
     enum MONTH {

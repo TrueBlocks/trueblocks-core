@@ -422,6 +422,13 @@ bool CTransaction::isFunction(const SFString& func) const
     return (funcPtr ? funcPtr->name == func : false);
 }
 
+//--------------------------------------------------------------------
+inline SFString asStringULL(uint64_t i) {
+    ostringstream os;
+    os << i;
+    return os.str().c_str();
+}
+
 //------------------------------------------------------------------------------
 #define toBigNum2(a,b)      SFString(to_string(canonicalWei("0x"+grabPart(a,b))).c_str())
 #define grabPart(a,b)       StripLeading((a).substr(64*(b),64),'0')
