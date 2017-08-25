@@ -234,7 +234,6 @@ void generateCode(CToml& classFile, const SFString& dataFile, const SFString& ns
         } else if (fld->type == "uint256")      { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
         } else if (fld->type == "bbool")        { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_BOOL";
         } else if (fld->type == "bool")         { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_BOOL";
-        } else if (fld->type == "float")        { setFmt = "\t[{NAME}] = [{DEFF}];\n"; regType = "T_FLOAT";
         } else if (fld->type == "double")       { setFmt = "\t[{NAME}] = [{DEFF}];\n"; regType = "T_DOUBLE";
         } else if (fld->type == "time")         { setFmt = "\t[{NAME}] = [{DEFT}];\n"; regType = "T_DATE";
         } else if (fld->isPointer)              { setFmt = "\t[{NAME}] = [{DEFP}];\n"; regType = "T_POINTER";
@@ -417,11 +416,8 @@ SFString getCaseCode(const SFString& fieldCase) {
                     } else if (type == "int256") {
                         caseCode += " return asStringBN([{SHORT3}]->" + field + ");";
 
-                    } else if (type == "float") {
-                        caseCode += " return asStringF([{SHORT3}]->" + field + ");";
-
                     } else if (type == "double") {
-                        caseCode += " return asStringD([{SHORT3}]->" + field + ");";
+                        caseCode += " return fmtFloat([{SHORT3}]->" + field + ");";
 
                     } else if (type.Contains("SFStringArray")) {
                         SFString str = STR_CASE_CODE_STRINGARRAY;
@@ -511,9 +507,6 @@ SFString getCaseSetCode(const SFString& fieldCase) {
 
                     } else if (type == "uint256") {
                         caseCode +=  " { " + field + " = toUnsigned(fieldValue); return true; }";
-
-                    } else if (type == "float") {
-                        caseCode +=  " { " + field + " = toFloat(fieldValue); return true; }";
 
                     } else if (type == "double") {
                         caseCode +=  " { " + field + " = toDouble(fieldValue); return true; }";

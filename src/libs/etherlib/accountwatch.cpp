@@ -265,10 +265,8 @@ bool CAccountWatch::readBackLevel(SFArchive& archive) {
 // EXISTING_CODE
 bool CAccountWatch::getWatch(const CToml& toml, uint32_t n) {
     index = n;
-    address = toLower(toml.getConfigStr("watches", "address_"+asString(n), ""));
-    if (!address.startsWith("0x"))
-        address = "0x" + address;
-    if (address.length() != 42)
+    address = fixAddress(toLower(toml.getConfigStr("watches", "address_"+asString(n), "")));
+    if (!isAddress(address))
         return false;
     name = toml.getConfigStr("watches", "name_"+asString(n), "");
     if (name.empty())

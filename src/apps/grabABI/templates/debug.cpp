@@ -24,7 +24,6 @@ static SFUint32 nDebugCmds = sizeof(debugCmds) / sizeof(CParams);
 
 //---------------------------------------------------------------------
 #define isdelim(cc) ((cc) == ':' || (cc) == '.' || (cc) == ' ')
-#define ishex(cc)   ((cc) == 'x' || ((cc) >= 'a' && (cc) <= 'f') || ((cc) >= 'A' && (cc) <= 'F'))
 
 //---------------------------------------------------------------------
 SFString completeCommand(const SFString& cmd) {
@@ -224,7 +223,7 @@ bool CVisitor::enterDebugger(const CBlock& block) {
                 if (
                         (islower(ch)) ||
                         (allowDigits && (isdelim(ch) || isdigit(ch))) ||
-                        (allowHex    && (isdelim(ch) || isdigit(ch) || ishex(ch)))
+                        (allowHex    && (isdelim(ch) || isHex(ch)))
                     )
                     curCmd += (char)ch;
             }

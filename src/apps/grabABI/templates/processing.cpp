@@ -306,12 +306,10 @@ void loadWatches(const CToml& toml, CAccountWatchArray& array, const SFString& k
             bool okay = true;
             SFString msg;
             watch.index = cnt++;
-            watch.address = toLower(watch.address);
             watch.color = convertColor(watch.color);
-            if (!watch.address.startsWith("0x"))
-                watch.address = "0x" + watch.address;
+            watch.address = fixAddress(toLower(watch.address));
             watch.nodeBal = getBalance(watch.address, watch.firstBlock-1, false);
-            if (watch.address.length() != 42) {
+            if (!isAddress(watch.address)) {
                 okay = false;
                 msg = "invalid address " + watch.address;
             }
