@@ -60,10 +60,8 @@ bool COptions::parseArguments(SFString& command) {
                 return usage("You may provide at most " + asString(MAX_ADDRS) + " addresses");
             if (primaryAddr.empty())
                 primaryAddr = arg;
-            SFAddress addr = toLower(arg);
-            if (!addr.startsWith("0x"))
-                addr = "0x" + addr;
-            if (addr.length() != 42 && !addr.ContainsI("tokenlib") && !addr.ContainsI("walletlib"))
+            SFAddress addr = fixAddress(toLower(arg));
+            if (!isAddress(addr) && !addr.ContainsI("tokenlib") && !addr.ContainsI("walletlib"))
                 return usage("Invalid address `" + addr + "'. Length is not equal to 40 characters (20 bytes).\n");
             addrs[nAddrs++] = addr;
         }

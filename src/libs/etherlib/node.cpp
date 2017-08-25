@@ -288,23 +288,19 @@ bool queryRawLogs(SFUint32 fromBlock, SFUint32 toBlock, const SFAddress& addr, S
 }
 
 //-------------------------------------------------------------------------
-bool getTransaction(CTransaction& trans, const SFString& hash)
+bool getTransaction(CTransaction& trans, const SFString& hashIn)
 {
-    SFString h = hash.startsWith("0x") ? hash.substr(2) : hash;
-    h = padLeft(h, 64, '0');
-    getObjectViaRPC(trans, "eth_getTransactionByHash", "[\"0x" + h +"\"]");
+    getObjectViaRPC(trans, "eth_getTransactionByHash", "[\"" + fixHash(hashIn) +"\"]");
     trans.finishParse();
     return true;
 }
 
 //-------------------------------------------------------------------------
-bool getTransaction(CTransaction& trans, const SFString& hash, SFUint32 transID)
+bool getTransaction(CTransaction& trans, const SFString& hashIn, SFUint32 transID)
 {
-    SFString h = hash.startsWith("0x") ? hash.substr(2) : hash;
-    h = padLeft(h, 64, '0');
     SFUintBN t(transID);
     SFString ts = to_hex(t).c_str();
-    getObjectViaRPC(trans, "eth_getTransactionByBlockHashAndIndex", "[\"0x" + h +"\",\"0x" + ts + "\"]");
+    getObjectViaRPC(trans, "eth_getTransactionByBlockHashAndIndex", "[\"" + fixHash(hashIn) +"\",\"0x" + ts + "\"]");
     trans.finishParse();
     return true;
 }
@@ -322,11 +318,9 @@ bool getTransaction(CTransaction& trans, blknum_t blockNum, SFUint32 transID)
 }
 
 //-------------------------------------------------------------------------
-bool getReceipt(CReceipt& receipt, const SFString& hash)
+bool getReceipt(CReceipt& receipt, const SFString& hashIn)
 {
-    SFString h = hash.startsWith("0x") ? hash.substr(2) : hash;
-    h = padLeft(h, 64, '0');
-    getObjectViaRPC(receipt, "eth_getTransactionReceipt", "[\"0x" + h + "\"]");
+    getObjectViaRPC(receipt, "eth_getTransactionReceipt", "[\"" + fixHash(hashIn) + "\"]");
     return true;
 }
 
@@ -353,9 +347,7 @@ void getTraces(CTraceArray& traces, const SFHash& hash)
 //-------------------------------------------------------------------------
 bool queryRawTrace(SFString& trace, const SFString& hashIn)
 {
-    SFString h = hashIn.startsWith("0x") ? hashIn.substr(2) : hashIn;
-    h = padLeft(h, 64, '0');
-    trace = "[" + callRPC("trace_transaction", "[\"0x" + h +"\"]", true) + "]";
+    trace = "[" + callRPC("trace_transaction", "[\"" + fixHash(hashIn) +"\"]", true) + "]";
     return true;
 }
 

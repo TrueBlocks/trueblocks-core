@@ -50,28 +50,28 @@ SFString nextPricequoteChunk(const SFString& fieldIn, bool& force, const void *d
 
         switch (tolower(fieldIn[0])) {
             case 'c':
-                if ( fieldIn % "close" ) return asStringD(pri->close);
+                if ( fieldIn % "close" ) return fmtFloat(pri->close);
                 break;
             case 'h':
-                if ( fieldIn % "high" ) return asStringD(pri->high);
+                if ( fieldIn % "high" ) return fmtFloat(pri->high);
                 break;
             case 'l':
-                if ( fieldIn % "low" ) return asStringD(pri->low);
+                if ( fieldIn % "low" ) return fmtFloat(pri->low);
                 break;
             case 'o':
-                if ( fieldIn % "open" ) return asStringD(pri->open);
+                if ( fieldIn % "open" ) return fmtFloat(pri->open);
                 break;
             case 'q':
-                if ( fieldIn % "quoteVolume" ) return asStringD(pri->quoteVolume);
+                if ( fieldIn % "quoteVolume" ) return fmtFloat(pri->quoteVolume);
                 break;
             case 't':
                 if ( fieldIn % "timestamp" ) return asStringU(pri->timestamp);
                 break;
             case 'v':
-                if ( fieldIn % "volume" ) return asStringD(pri->volume);
+                if ( fieldIn % "volume" ) return fmtFloat(pri->volume);
                 break;
             case 'w':
-                if ( fieldIn % "weightedAvg" ) return asStringD(pri->weightedAvg);
+                if ( fieldIn % "weightedAvg" ) return fmtFloat(pri->weightedAvg);
                 break;
         }
 

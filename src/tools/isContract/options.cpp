@@ -39,12 +39,9 @@ bool COptions::parseArguments(SFString& command) {
 
              if (nAddrs >= MAX_ADDRS)
                  return usage("You may query at most " + asString(MAX_ADDRS) + " addresses. Quitting...");
-            SFString addr = toLower(arg);
-            if (!addr.startsWith("0x"))
-                addr = "0x" + addr;
-            if (addr.length() != 42)
-                return usage(arg + " does not appear to be a valid Ethereum address (must start "
-                                        "with '0x' and be 40 hex chars long).\n");
+            SFString addr = fixAddress(toLower(arg));
+            if (!isAddress(addr))
+                return usage(arg + " does not appear to be a valid Ethereum address.\n");
             addrs[nAddrs++] = addr;
 
         }

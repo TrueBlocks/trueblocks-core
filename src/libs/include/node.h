@@ -65,6 +65,9 @@ extern void     etherlib_init           (const SFString& client);
 extern void     etherlib_cleanup        (void);
 
 //-------------------------------------------------------------------------
+extern SFString callRPC                 (const SFString& method, const SFString& params, bool raw);
+
+//-------------------------------------------------------------------------
 extern void     setStorageRoot          (const SFString& path);
 extern SFString getStorageRoot          (void);
 extern SFString getJsonFilename1        (SFUint32 num);

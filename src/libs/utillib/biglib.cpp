@@ -323,35 +323,6 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    SFUintBN exp2BigUint(const string &s)
-    {
-        SFString exponent = s.c_str();
-        SFString decimals = nextTokenClear(exponent,'e');
-        SFString num = nextTokenClear(decimals,'.');
-        long nD = (long)decimals.length();
-        SFUint32 e = toLongU(exponent);
-        SFUintBN ee = 1;
-        SFUint32 power = e - (SFUint32)nD;
-        for (SFUint32 i=0;i<power;i++)
-            ee *= 10;
-        num += decimals;
-        return str2BigUint(num) * ee;
-    }
-
-    SFUintBN str2BigUint(const string &s)
-    {
-        return SFUintBN(BigUnsignedInABase(s, 10));
-    }
-    
-    //--------------------------------------------------------------------------------
-    SFIntBN str2BigInt(const string &s)
-    {
-        return (s[0] == '-') ? SFIntBN(str2BigUint(s.substr(1, s.length() - 1)), -1)
-        : (s[0] == '+') ? SFIntBN(str2BigUint(s.substr(1, s.length() - 1)))
-        : SFIntBN(str2BigUint(s));
-    }
-    
-    //--------------------------------------------------------------------------------
     ostream &operator <<(ostream &os, const SFUintBN& x)
     {
         unsigned short base;
@@ -387,5 +358,10 @@ namespace qblocks {
             os << '-';
         os << x.getMagnitude();
         return os;
+    }
+
+    //--------------------------------------------------------------------------------
+    SFUintBN str2BigUint(const string &s) {
+        return SFUintBN(BigUnsignedInABase(s, 10));
     }
 }
