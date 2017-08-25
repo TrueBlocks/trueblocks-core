@@ -12,27 +12,27 @@ CFileExportContext outScreen;
 
 //---------------------------------------------------------------------------------------------------
 CParams params[] = {
-    CParams("~addr",        "the address of the account or contract to slurp"),
-    CParams("-archive:<str>","filename of output (stdout otherwise)"),
-    CParams("-blocks:<range>","export records in block range (:0[:max])"),
-    CParams("-dates:<date>","export records in date range (:yyyymmdd[hhmmss][:yyyymmdd[hhmmss]])"),
-    CParams("-name:<str>",  "name this address"),
-    CParams("-rerun",       "re-run the most recent slurp"),
-    CParams("-fmt:<str>",   "pretty print, optionally add ':txt,' ':csv,' or ':html'"),
-    CParams("-income",      "include income transactions only"),
-    CParams("-expense",     "include expenditures only"),
-    CParams("-open",        "open the configuration file for editing"),
-    CParams("-list",        "list previously slurped addresses in cache"),
-    CParams("@--max",       "maximum transactions to slurp (:250000)"),
-    CParams("@--sleep",     "sleep for :x seconds"),
-    CParams("@--func",      "display only --func:functionName records"),
-    CParams("@--errFilt",   "display only non-error transactions or :errsOnly"),
-    CParams("@--reverse",   "display results sorted in reverse chronological order (chronological by default)"),
-    CParams("@--acct_id",   "for 'cache' mode, use this as the :acct_id for the cache (0 otherwise)"),
-    CParams("@--cache",     "write the data to a local QuickBlocks cache"),
-    CParams("@--clear",     "clear all previously cached slurps"),
-    CParams("",             "Fetches data off the Ethereum blockchain for an arbitrary account or smart contract. "
-                            "Optionally formats the output to your specification.\n"),
+    CParams("~addr",            "the address of the account or contract to slurp"),
+    CParams("-archive:<str>",   "filename of output (stdout otherwise)"),
+    CParams("-blocks:<range>",  "export records in block range (:0[:max])"),
+    CParams("-dates:<date>",    "export records in date range (:yyyymmdd[hhmmss][:yyyymmdd[hhmmss]])"),
+    CParams("-name:<str>",      "name this address"),
+    CParams("-rerun",           "re-run the most recent slurp"),
+    CParams("-fmt:<str>",       "pretty print, optionally add ':txt,' ':csv,' or ':html'"),
+    CParams("-income",          "include income transactions only"),
+    CParams("-expense",         "include expenditures only"),
+    CParams("-open",            "open the configuration file for editing"),
+    CParams("-list",            "list previously slurped addresses in cache"),
+    CParams("@--max:<val>",     "maximum transactions to slurp (:250000)"),
+    CParams("@--sleep:<val>",   "sleep for :x seconds"),
+    CParams("@--func:<str>",    "display only --func:functionName records"),
+    CParams("@--errFilt:<val>", "display only non-error transactions or only errors with :errsOnly"),
+    CParams("@--reverse",       "display results sorted in reverse chronological order (chronological by default)"),
+    CParams("@--acct_id:<val>", "for 'cache' mode, use this as the :acct_id for the cache (0 otherwise)"),
+    CParams("@--cache",         "write the data to a local QuickBlocks cache"),
+    CParams("@--clear",         "clear all previously cached slurps"),
+    CParams("",                 "Fetches data off the Ethereum blockchain for an arbitrary account or smart contract. "
+                                "Optionally formats the output to your specification.\n"),
 };
 uint32_t nParams = sizeof(params) / sizeof(CParams);
 
@@ -42,6 +42,7 @@ bool COptions::parseArguments(SFString& command) {
     Init();
     while (!command.empty()) {
         SFString arg = nextTokenClear(command, ' ');
+        SFString orig = arg;
         if (arg == "-i" || arg == "--income") {
             if (expenseOnly)
                 return usage("Only one of --income or --expense may be specified.");
@@ -57,25 +58,26 @@ bool COptions::parseArguments(SFString& command) {
             prettyPrint = true;
             exportFormat = "json";
 
-        } else if (arg.startsWith("-f")) {
-            // any other -f has the format attached  or is invalid
+        } else if (arg.startsWith("-f:") || arg.startsWith("--fmt:")) {
             prettyPrint = true;
-            exportFormat = arg;
-            arg = nextTokenClear(exportFormat,  ':');
-            if (arg != "-f" && arg != "-fmt")
-                return usage("Unknown parameter: " + arg);
+            exportFormat = arg.Substitute("-f:", "").Substitute("--fmt:", "");
+            if (exportFormat.empty())
+                return usage("Please provide a formatting option with " + orig + ". Quitting...");
 
-        } else if (arg.startsWith("--func")) {
-            funcFilter = arg.Substitute("--func:", EMPTY);
+        } else if (arg.startsWith("--func:")) {
+            funcFilter = arg.Substitute("--func:", "");
+            if (funcFilter.empty())
+                return usage("Please provide a function to filter on " + orig + ". Quitting...");
 
         } else if (arg.startsWith("--errFilt")) {
+            // weird, but 1 == no errors, 2 == errors only
             errFilt = true + arg.Contains(":errOnly");
 
         } else if (arg.startsWith("--reverse")) {
             reverseSort = true;
 
         } else if (arg.startsWith("--acct_id:")) {
-            arg.Replace("--acct_id:","");
+            arg = arg.Substitute("--acct_id:", "");
             acct_id = toLong32u(arg);
 
         } else if (arg.startsWith("--cache")) {
@@ -99,18 +101,20 @@ bool COptions::parseArguments(SFString& command) {
             return usage("Invalid option -b. This option must include :firstBlock or :first:lastBlock range.");
 
         } else if (arg.startsWith("-b:") || arg.startsWith("--blocks:")) {
-            arg = arg.Substitute("-b:", EMPTY).Substitute("--blocks:", EMPTY);
+            arg = arg.Substitute("-b:", "").Substitute("--blocks:", "");
             firstBlock2Read = max(0U, toLong32u(arg));
             if (arg.Contains(":")) {
                 nextTokenClear(arg, ':');
                 lastBlock2Read = max(firstBlock2Read, toLong32u(arg));
             }
+            if (lastBlock2Read < firstBlock2Read)
+                return usage("lastBlock must be after or at firstBlock here " + orig + ". Quitting...");
 
         } else if (arg == "-d") {
             return usage("Invalid option -d. This option must include :firstDate or :first:lastDate range.");
 
         } else if (arg.startsWith("-d:") || arg.startsWith("--dates:")) {
-            SFString lateStr = arg.Substitute("-d:", EMPTY).Substitute("--dates:", EMPTY);
+            SFString lateStr = arg.Substitute("-d:", "").Substitute("--dates:", "");
             SFString earlyStr = nextTokenClear(lateStr, ':');
 
             earlyStr.ReplaceAll("-", "");
@@ -133,7 +137,9 @@ bool COptions::parseArguments(SFString& command) {
             rerun = true;
 
         } else if (arg.startsWith("--sleep:")) {
-            nextTokenClear(arg, ':');
+            arg = arg.Substitute("--sleep:", "");
+            if (arg.empty() || !isdigit(arg[0]))
+                return usage("Sleep amount must be a numeral. Quitting...");
             uint32_t wait = toLong32u(arg);
             if (wait) {
                 cerr << "Sleeping " << wait << " seconds\n";
@@ -141,35 +147,32 @@ bool COptions::parseArguments(SFString& command) {
             }
 
         } else if (arg.startsWith("-m:") || arg.startsWith("-max:")) {
-            SFString val = arg;
-            arg = nextTokenClear(val, ':');
-            if (arg != "-m" && arg != "--max")
-                return usage("Unknown parameter: " + arg);
+            SFString val = arg.Substitute("-m:", "").Substitute("--max:", "");
+            if (val.empty() || !isdigit(val[0]))
+                return usage("Please supply a value with the --max: option. Quitting...");
             maxTransactions = toLong32u(val);
 
         } else if (arg.startsWith("-n:") || arg.startsWith("-name:")) {
-            SFString val = arg;
-            arg = nextTokenClear(val, ':');
-            if (arg != "-n" && arg != "--name")
-                return usage("Unknown parameter: " + arg);
+            SFString val = arg.Substitute("-m:", "").Substitute("--max:", "");
+            if (val.empty())
+                return usage("You must supply a name with the --name option. Quitting...");
             name = val;
 
-        } else if (arg == "-a" || arg.startsWith("-a:") || arg.startsWith("--archive:")) {
-            SFString fileName = arg.Substitute("-a:", "").Substitute("--archive:", "");
-            if (fileName == "-a") {
-                // -a is acceptable but only if we get a -name (or we have only already)
-                // checked during slurp since we don't have an address yet
-                wantsArchive = true;
-                archiveFile = "";
+        } else if (arg == "-a") {
+            // -a is acceptable but only if we get a -name (or we have only already)
+            // checked during slurp since we don't have an address yet
+            wantsArchive = true;
+            archiveFile = "";
 
-            } else {
-                CFilename filename(fileName);
-                if (!filename.getPath().startsWith('/'))
-                    return usage("Archive file '" + arg + "' does not resolve to a full path. "
-                                    "Use ./path/filename, ~/path/filename, or a fully qualified path.");
-                archiveFile = filename.getFullPath();
-                wantsArchive = true;
-            }
+        } else if (arg.startsWith("-a:") || arg.startsWith("--archive:")) {
+            SFString fileName = arg.Substitute("-a:", "").Substitute("--archive:", "");
+
+            CFilename filename(fileName);
+            if (!filename.getPath().startsWith('/'))
+                return usage("Archive file '" + arg + "' does not resolve to a full path. "
+                             "Use ./path/filename, ~/path/filename, or a fully qualified path.");
+            archiveFile = filename.getFullPath();
+            wantsArchive = true;
 
         } else if (arg == "-o" || arg == "--open") {
             // open command stuff
@@ -209,6 +212,7 @@ bool COptions::parseArguments(SFString& command) {
 
     if (wantsArchive && archiveFile.empty() && name.empty())
         return usage("If -a is provided without an archive name, -n must be provided. Quitting...");
+
     return true;
 }
 
