@@ -43,7 +43,29 @@ run_test("ethslurp_not_found_address"  "0x63c8c29af409bd31ec7ddeea58ff14f21e8980
 run_test("ethslurp_no_record_in_block_range"  "-b:0:1" "0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0")
 run_test("ethslurp_single_block_range"  "-b:4186279:4186279" "0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0")
 run_test("ethslurp_range_of_blocks"  "-b:4186279:4186301" "0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0")
-
+# Long options not implemented yet
+#run_test("ethslurp_no_record_in_block_range_long"  "--blocks:0:1" "0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0")
+#run_test("ethslurp_single_block_range_long"  "--blocks:4186279:4186279" "0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0")
+#run_test("ethslurp_range_of_blocks_long"  "--blocks:4186279:4186301" "0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0")
+run_test("ethslurp_invalid_date_range_1"  "-d "0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0")
+run_test("ethslurp_invalid_date_range_2"  "-da:b" "0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0")
+run_test("ethslurp_invalid_date_range_3"  "-d:a:b" "0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0")
+run_test("ethslurp_invalid_date_range_4"  "-d:201705191000" "0x1324e7b922b30B49Ab8EA81086341cc41C249346")
+run_test("ethslurp_invalid_date_range_5"  -d:20170519100000:201705190000"" "0x1324e7b922b30B49Ab8EA81086341cc41C249346")
+run_test("ethslurp_no_record_in_dates_range"  "-d:20170720:20170820" "0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0")
+run_test("ethslurp_single_date_range"  "-d:20170721:20170821" "0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0")
+run_test("ethslurp_date_range_1"  " -d:20170519:20170618" "0x1324e7b922b30B49Ab8EA81086341cc41C249346")
+run_test("ethslurp_date_range_2"  " -d:20170519:20170530" "0x1324e7b922b30B49Ab8EA81086341cc41C249346")
+run_test("ethslurp_in_tx_filter"  " -d:20170519:20170519" " -i" "0x1324e7b922b30B49Ab8EA81086341cc41C249346")
+run_test("ethslurp_out_tx_filter"  " -d:20170519:20170519" " -e" "0x1324e7b922b30B49Ab8EA81086341cc41C249346")
+# Pending bug here
+#run_test("ethslurp_invalid_format"  " -d:20170519:20170519" " -f:invalid" "0x1324e7b922b30B49Ab8EA81086341cc41C249346")
+run_test("ethslurp_out_txt_format"  " -d:20170519:20170519" " -f:txt" "0x1324e7b922b30B49Ab8EA81086341cc41C249346")
+run_test("ethslurp_out_csv_format"  " -d:20170519:20170519" " -f:csv" "0x1324e7b922b30B49Ab8EA81086341cc41C249346")
+run_test("ethslurp_out_html_format"  " -d:20170519:20170519" " -f:html" "0x1324e7b922b30B49Ab8EA81086341cc41C249346")
+run_test("ethslurp_options_combination_1"  " -d:20170519:20170519" " -f:html" " -i" " -b:0" "0x1324e7b922b30B49Ab8EA81086341cc41C249346")
+run_test("ethslurp_options_combination_2"  " -f:csv" " -i" " -b:3730547:3730547" "0x1324e7b922b30B49Ab8EA81086341cc41C249346")
+run_test("ethslurp_verbose_options"  " -f:csv" " -i" " -b:3730547:3730547" " -v" "0x1324e7b922b30B49Ab8EA81086341cc41C249346")
 #--------------------------------------------------------------------------------
 ## clean up prior tests
 #rm -fR ~/.quickBlocks.test
