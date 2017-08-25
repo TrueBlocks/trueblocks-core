@@ -101,14 +101,19 @@ bool COptions::parseArguments(SFString& command) {
             return usage("Invalid option -b. This option must include :firstBlock or :first:lastBlock range.");
 
         } else if (arg.startsWith("-b:") || arg.startsWith("--blocks:")) {
-            arg = arg.Substitute("-b:", "").Substitute("--blocks:", "");
-            firstBlock2Read = max(0U, toLong32u(arg));
-            if (arg.Contains(":")) {
-                nextTokenClear(arg, ':');
-                lastBlock2Read = max(firstBlock2Read, toLong32u(arg));
-            }
-            if (lastBlock2Read < firstBlock2Read)
-                return usage("lastBlock must be after or at firstBlock here " + orig + ". Quitting...");
+            SFString lastStr = arg.Substitute("-b:", "").Substitute("--blocks:", "");
+            if (lastStr.startsWith("0x"))
+                return usage("Invalid block specified (" + orig + "). Blocks must be integers. Quitting...");
+
+            SFString firstStr = nextTokenClear(lastStr, ':');
+            if (firstStr.startsWith("0x"))
+                return usage("Invalid block specified (" + orig + "). Blocks must be integers. Quitting...");
+
+            firstBlock2Read = max(toLongU("0"), toLongU(firstStr));
+            if (!lastStr.empty())
+                lastBlock2Read = max(firstBlock2Read, toLongU(lastStr));
+
+            // Don't have to check that last is later than first since the clamp
 
         } else if (arg == "-d") {
             return usage("Invalid option -d. This option must include :firstDate or :first:lastDate range.");
@@ -230,7 +235,7 @@ void COptions::Init(void) {
     errFilt = false;
     reverseSort = false;
     firstBlock2Read = 0;
-    lastBlock2Read = ((uint32_t)-1);
+    lastBlock2Read = NOPOS;
     firstDate = earliestDate;
     lastDate = latestDate;
     maxTransactions = 250000;
