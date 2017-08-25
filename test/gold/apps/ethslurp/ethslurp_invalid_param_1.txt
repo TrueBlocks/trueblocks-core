@@ -2,7 +2,7 @@ ethslurp argc: 2 [1:-x]
 ethslurp -x 
 Processing: -x
 
-  Invalid option -x
+  Invalid option: -x
 
   Usage:    ethslurp [-a|-b|-d|-n|-r|-f|-i|-e|-o|-l|-v|-h] addr  
   Purpose:  Fetches data off the Ethereum blockchain for an arbitrary account or smart contract. Optionally formats the output to your specification.

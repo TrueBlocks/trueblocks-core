@@ -194,16 +194,16 @@ bool COptions::parseArguments(SFString& command) {
             }
             exit(1);
 
-        } else {
-//#error
-//builtInCmd
-            if (!arg.Contains("-v") && arg != "-t" && arg != "-h") {
-                if (arg[0] == '-')
-                    return usage("Invalid option " + arg);
-                addr = fixAddress(arg);
-                if (!isAddress(addr))
-                    return usage(addr + " appears to be an invalid address. Quitting");
+        } else if (arg.startsWith('-')) {  // do not collapse
+            if (!builtInCmd(arg)) {
+                return usage("Invalid option: " + arg);
             }
+
+        } else {
+
+            addr = fixAddress(arg);
+            if (!isAddress(addr))
+                 return usage(addr + " appears to be an invalid address. Valid addresses start with '0x' and are 20 bytes long. Quitting...");
         }
     }
 
