@@ -42,14 +42,14 @@ bool COptions::parseArguments(SFString& command) {
     Init();
     while (!command.empty()) {
         SFString arg = nextTokenClear(command, ' ');
-        if (arg == "-i" || arg == "-income") {
+        if (arg == "-i" || arg == "--income") {
             if (expenseOnly)
-                return usage("Only one of -income or -expense may be specified.");
+                return usage("Only one of --income or --expense may be specified.");
             incomeOnly = true;
 
-        } else if (arg == "-e" || arg == "-expense") {
+        } else if (arg == "-e" || arg == "--expense") {
             if (incomeOnly)
-                return usage("Only one of -income or -expense may be specified.");
+                return usage("Only one of --income or --expense may be specified.");
             expenseOnly = true;
 
         } else if (arg == "-f") {
@@ -81,7 +81,7 @@ bool COptions::parseArguments(SFString& command) {
         } else if (arg.startsWith("--cache")) {
             cache = true;
 
-        } else if (arg == "-l" || arg == "-list") {
+        } else if (arg == "-l" || arg == "--list") {
             uint32_t nFiles = 0;
             listFilesOrFolders(nFiles, NULL, cachePath("*.*"));
             if (nFiles) {
@@ -98,8 +98,8 @@ bool COptions::parseArguments(SFString& command) {
         } else if (arg == "-b") {
             return usage("Invalid option -b. This option must include :firstBlock or :first:lastBlock range.");
 
-        } else if (arg.Left(3) == "-b:" || arg.Left(8) == "-blocks:") {
-            arg = arg.Substitute("-b:", EMPTY).Substitute("-blocks:", EMPTY);
+        } else if (arg.startsWith("-b:") || arg.startsWith("--blocks:")) {
+            arg = arg.Substitute("-b:", EMPTY).Substitute("--blocks:", EMPTY);
             firstBlock2Read = max(0U, toLong32u(arg));
             if (arg.Contains(":")) {
                 nextTokenClear(arg, ':');
@@ -109,8 +109,8 @@ bool COptions::parseArguments(SFString& command) {
         } else if (arg == "-d") {
             return usage("Invalid option -d. This option must include :firstDate or :first:lastDate range.");
 
-        } else if (arg.Left(3) == "-d:" || arg.Left(8) == "-dates:") {
-            SFString lateStr = arg.Substitute("-d:", EMPTY).Substitute("-dates:", EMPTY);
+        } else if (arg.startsWith("-d:") || arg.startsWith("--dates:")) {
+            SFString lateStr = arg.Substitute("-d:", EMPTY).Substitute("--dates:", EMPTY);
             SFString earlyStr = nextTokenClear(lateStr, ':');
 
             earlyStr.ReplaceAll("-", "");
@@ -129,7 +129,7 @@ bool COptions::parseArguments(SFString& command) {
             if (lastDate == earliestDate)  // the default
                 lastDate = latestDate;
 
-        } else if (arg == "-r" || arg == "-rerun") {
+        } else if (arg == "-r" || arg == "--rerun") {
             rerun = true;
 
         } else if (arg.startsWith("--sleep:")) {
@@ -140,17 +140,17 @@ bool COptions::parseArguments(SFString& command) {
                 qbSleep(wait);
             }
 
-        } else if (arg.startsWith("-m")) {
+        } else if (arg.startsWith("-m:") || arg.startsWith("-max:")) {
             SFString val = arg;
             arg = nextTokenClear(val, ':');
-            if (arg != "-m" && arg != "-max")
+            if (arg != "-m" && arg != "--max")
                 return usage("Unknown parameter: " + arg);
             maxTransactions = toLong32u(val);
 
-        } else if (arg.startsWith("-n")) {
+        } else if (arg.startsWith("-n:") || arg.startsWith("-name:")) {
             SFString val = arg;
             arg = nextTokenClear(val, ':');
-            if (arg != "-n" && arg != "-name")
+            if (arg != "-n" && arg != "--name")
                 return usage("Unknown parameter: " + arg);
             name = val;
 
@@ -171,7 +171,7 @@ bool COptions::parseArguments(SFString& command) {
                 wantsArchive = true;
             }
 
-        } else if (arg == "-o" || arg == "-open") {
+        } else if (arg == "-o" || arg == "--open") {
             // open command stuff
             openFile = true;
             if (isTestMode()) {
@@ -183,7 +183,7 @@ bool COptions::parseArguments(SFString& command) {
             }
             exit(0);
 
-        } else if (arg == "-c" || arg == "-clear") {
+        } else if (arg == "-c" || arg == "--clear") {
             if (isTestMode()) {
                 //removeFolder(cachePath());
                 cerr << "Cached slurp files were NOT cleared!\n";
