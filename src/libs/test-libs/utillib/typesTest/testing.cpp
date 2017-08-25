@@ -23,66 +23,27 @@ public:
 };
 
 //------------------------------------------------------------------------
-TEST_F(CThisTest, TestRelational) {
-    string foo = "alpha"; TEST_STR xfoo(foo.c_str());
-    string bar = "beta";  TEST_STR xbar(bar.c_str());
+TEST_F(CThisTest, Test01) {
 
     cerr << "Running " << testName << "\n";
-    cerr << "\tc-string  -- foo:  " << foo  << " bar: " << bar << "\n";
-    cerr << "\tqb-string -- xfoo: " << xfoo << " xbar: " << xbar << "\n\n";
 
-    ASSERT_NOT_EQ("c-string non-equality",        foo,  bar      );
-    ASSERT_NOT_EQ("qb-string non-equality",       xfoo, xbar     );
-    ASSERT_EQ    ("string equality",              foo.c_str(), xfoo);
-    ASSERT_TRUE  ("c-string less than",           (foo < bar)    );
-    ASSERT_TRUE  ("qb-string less than",          (xfoo < xbar)  );
-    ASSERT_FALSE ("c-string greater than",        (foo > bar)    );
-    ASSERT_FALSE ("qb-string greater than",       (xfoo > xbar)  );
-    ASSERT_TRUE  ("c-string less than or eq",     (foo <= bar)   );
-    ASSERT_TRUE  ("qb-string less than or eq",    (xfoo <= xbar) );
-    ASSERT_FALSE ("c-string greater than or eq",  (foo >= bar)   );
-    ASSERT_FALSE ("qb-string greater than or eq", (xfoo >= xbar) );
-    ASSERT_FALSE ("c-string min",                 (min(foo, bar) == bar) );
-    ASSERT_TRUE  ("c-string max",                 (max(foo, bar) == bar) );
-    ASSERT_FALSE ("qb-string min",                (min(xfoo, xbar) == xbar) );
-    ASSERT_TRUE  ("qb-string max",                (max(xfoo, xbar) == xbar) );
+    uint64_t val64u = uint64_t(-1);
+    SFString sValu = asStringU(val64u);
+    int64_t val64 = -1;
+    SFString sVal = asString(val64);
+
+    cout << "val64u: " << val64u << "\n";
+    cout << "sValu: "  << sValu  << "\n";
+    cout << "val64: "  << val64  << "\n";
+    cout << "sVal: "   << sVal   << "\n";
+
+    ASSERT_EQ("Testing 1",          val64u, toLongU(sValu));
+    ASSERT_EQ("Testing 2",          val64,  toLong(sVal));
+    ASSERT_EQ("Testing 3", (int64_t)val64u, -1);
+    ASSERT_EQ("Testing 4",          val64,  -1);
 
     return true;
 }}
-
-//------------------------------------------------------------------------
-TEST_F(CThisTest, TestCompare) {
-    string str1("green apple"); TEST_STR xstr1("green apple");
-    string str2("red apple");   TEST_STR xstr2("red apple");
-
-    cerr << "Running " << testName << "\n";
-    cerr << "\tc-string  -- str1:  " <<  str1  << " str2: "  << str2  << "\n";
-    cerr << "\tqb-string -- xstr1: " << xstr1 << " xstr2: " << xstr2 << "\n\n";
-
-    ASSERT_NOT_EQ("c-string compare",             str1.compare( str2 ), 0);
-    ASSERT_NOT_EQ("qb-string compare",           xstr1.compare( xstr2), 0);
-    ASSERT_NOT_EQ("c-string compare",             str1.compare( str2 ), 0);
-    ASSERT_NOT_EQ("qb-string compare",           xstr1.compare( xstr2), 0);
-    ASSERT_EQ    ("c-string partial compare",     str1.compare( 6, 5,"apple"),  0);
-    ASSERT_EQ    ("qb-string partial compare",   xstr1.compare( 6, 5,"apple"),  0);
-    ASSERT_EQ    ("c-string partial compare 2",   str2.compare( str2.size()-5,  5, "apple"), 0);
-    ASSERT_EQ    ("qb-string partial compare 2", xstr2.compare( str2.size()-5,  5, "apple"), 0);
-    ASSERT_EQ    ("c-string double partial",      str1.compare( 6, 5,  str2, 4, 5), 0);
-    ASSERT_EQ    ("qb-string double partial",    xstr1.compare( 6, 5, xstr2, 4, 5), 0);
-
-    return true;
-}}
-
-//------------------------------------------------------------------------
-void testCStr(void) {
-
-    char str[] = "Please split this sentence into tokens";
-    char *token;
-    char *rest = str;
-    while ((token = strtok_r(rest, " ", &rest))) {
-        cout << token << "\n";
-    }
-}
 
 #include "options.h"
 //------------------------------------------------------------------------
@@ -97,17 +58,8 @@ int main(int argc, const char *argv[]) {
         SFString command = nextTokenClear(options.commandList, '\n');
         if (!options.parseArguments(command))
             return false;
-
-        if (options.testNum == 0) {
-            LOAD_TEST(TestRelational);
-
-        } else if (options.testNum == 1) {
-            LOAD_TEST(TestCompare);
-
-        } else if (options.testNum == 2) {
-            testCStr();
-        }
     }
 
+    LOAD_TEST(Test01);
     return RUN_ALL_TESTS();
 }

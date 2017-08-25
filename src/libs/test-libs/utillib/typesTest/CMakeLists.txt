@@ -34,6 +34,4 @@ endfunction(run_test)
 
 # Enter one line for each individual test
 run_test("typesTest_README"  "-th")
-run_test("typesTest_01"      "0")
-run_test("typesTest_02"      "1")
-run_test("typesTest_03"      "2")
+run_test("typesTest_01")
