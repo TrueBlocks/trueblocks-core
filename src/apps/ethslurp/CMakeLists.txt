@@ -37,6 +37,13 @@ run_test("ethslurp_no_params"            )
 run_test("ethslurp_help"             "-h")
 run_test("ethslurp_invalid_param_1"  "-x")
 run_test("ethslurp_invalid_param_2"  "--")
+run_test("ethslurp_invalid_address_1"  "invalid")
+run_test("ethslurp_invalid_address_2"  "0x63c8c29af409bd31ec7ddeea58f")
+run_test("ethslurp_not_found_address"  "0x63c8c29af409bd31ec7ddeea58ff14f21e8980b5")
+#  These ones depend on seconds elapsed when we compare their output with gold copies
+#run_test("ethslurp_no_record_in_block_range"  "-b:0:1" "0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0")
+#run_test("ethslurp_single_block_range"  "-b:4186279:4186279" "0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0")
+#run_test("ethslurp_range_of_blocks"  "-b:4186279:4186301" "0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0")
 
 #--------------------------------------------------------------------------------
 ## clean up prior tests
