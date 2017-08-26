@@ -12,7 +12,7 @@ Please see the <a href="https://github.com/Great-Hill-Corporation/ethslurp/blob/
 
 #### Usage
 
-`Usage:`    ethslurp [-a|-b|-d|-n|-r|-f|-i|-e|-o|-l|-v|-h] addr  
+`Usage:`    ethslurp [-a|-b|-d|-r|-f|-i|-e|-o|-l|-v|-h] addr  
 `Purpose:`  Fetches data off the Ethereum blockchain for an arbitrary account or smart contract. Optionally formats the output to your specification.
              
 `Where:`  
@@ -23,7 +23,6 @@ Please see the <a href="https://github.com/Great-Hill-Corporation/ethslurp/blob/
 | -a | --archive val | filename of output (stdout otherwise) |
 | -b | --blocks range | export records in block range (:0[:max]) |
 | -d | --dates val | export records in date range (:yyyymmdd[hhmmss][:yyyymmdd[hhmmss]]) |
-| -n | --name val | name this address |
 | -r | --rerun | re-run the most recent slurp |
 | -f | --fmt val | pretty print, optionally add ':txt,' ':csv,' or ':html' |
 | -i | --income | include income transactions only |
