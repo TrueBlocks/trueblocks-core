@@ -16,7 +16,6 @@ CParams params[] = {
     CParams("-archive:<str>",   "filename of output (stdout otherwise)"),
     CParams("-blocks:<range>",  "export records in block range (:0[:max])"),
     CParams("-dates:<date>",    "export records in date range (:yyyymmdd[hhmmss][:yyyymmdd[hhmmss]])"),
-    CParams("-name:<str>",      "name this address"),
     CParams("-rerun",           "re-run the most recent slurp"),
     CParams("-fmt:<str>",       "pretty print, optionally add ':txt,' ':csv,' or ':html'"),
     CParams("-income",          "include income transactions only"),
@@ -31,6 +30,7 @@ CParams params[] = {
     CParams("@--acct_id:<val>", "for 'cache' mode, use this as the :acct_id for the cache (0 otherwise)"),
     CParams("@--cache",         "write the data to a local QuickBlocks cache"),
     CParams("@--clear",         "clear all previously cached slurps"),
+    CParams("@--name:<str>",    "name this address"),
     CParams("",                 "Fetches data off the Ethereum blockchain for an arbitrary account or smart contract. "
                                 "Optionally formats the output to your specification.\n"),
 };
@@ -101,6 +101,10 @@ bool COptions::parseArguments(SFString& command) {
             return usage("Invalid option -b. This option must include :firstBlock or :first:lastBlock range.");
 
         } else if (arg.startsWith("-b:") || arg.startsWith("--blocks:")) {
+
+            if (firstDate != earliestDate || lastDate != latestDate)
+                return usage("Specifiy either a date range or a block range, not both. Quitting...");
+
             SFString lastStr = arg.Substitute("-b:", "").Substitute("--blocks:", "");
             if (lastStr.startsWith("0x"))
                 return usage("Invalid block specified (" + orig + "). Blocks must be integers. Quitting...");
@@ -119,8 +123,16 @@ bool COptions::parseArguments(SFString& command) {
             return usage("Invalid option -d. This option must include :firstDate or :first:lastDate range.");
 
         } else if (arg.startsWith("-d:") || arg.startsWith("--dates:")) {
+
+            if (firstBlock2Read != 0 || lastBlock2Read != NOPOS)
+                return usage("Specifiy either a date range or a block range, not both. Quitting...");
+
             SFString lateStr = arg.Substitute("-d:", "").Substitute("--dates:", "");
             SFString earlyStr = nextTokenClear(lateStr, ':');
+            if (!earlyStr.empty() && !isNumeral(earlyStr))
+                return usage("Invalid date: " + orig + ". Quitting...");
+            if (!lateStr.empty() && !isNumeral(lateStr))
+                return usage("Invalid date: " + orig + ". Quitting...");
 
             earlyStr.ReplaceAll("-", "");
             lateStr.ReplaceAll("-", "");

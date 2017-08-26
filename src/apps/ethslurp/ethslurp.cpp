@@ -87,6 +87,10 @@ bool CSlurperApp::Initialize(COptions& options, SFString& message) {
         return false;
     }
 
+    // This seemingly out of place code dumps an error message if the fmt_X_file format
+    // string is not in the config file. Don't remove it.
+    getFormatString(options, "file", false);
+
     if (options.wantsArchive) {
         if (options.archiveFile.empty() && options.name.empty())
             return usage("-a and -n may not both be empty. Specify either an archive file or a name. Quitting...");
@@ -438,7 +442,7 @@ SFString CSlurperApp::getFormatString(COptions& options, const SFString& which, 
         errMsg = SFString("Mismatched brackets in display string '") + formatName + "': '" + ret + "'. Quiting...\n";
 
     } else if (ret.empty() && !ignoreBlank) {
-        errMsg = SFString("Empty display string '") + formatName + "'. Quiting...\n";
+        errMsg = usageStr("Empty display string '" + formatName + "'. Quiting...\n");
     }
 
     if (!errMsg.empty()) {

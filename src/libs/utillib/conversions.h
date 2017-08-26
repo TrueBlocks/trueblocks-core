@@ -21,6 +21,14 @@ namespace qblocks {
 #define newTimestamp(a)   ((a).startsWith("0x") ? (timestamp_t)hex2Long((a)) : (timestamp_t)toLong ((a)))
 
     //----------------------------------------------------------------------------
+    inline bool isNumeral(const SFString& test) {
+        for (int32_t i = 0 ; i < (int32_t)test.length() ; i++)
+            if (!isdigit(test[i]))
+                return false;
+        return true;
+    }
+
+    //----------------------------------------------------------------------------
     inline uint64_t hex2Long(const SFString& inHex)
     {
         SFString hex = toLower(inHex.startsWith("0x")?inHex.substr(2):inHex);
