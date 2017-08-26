@@ -137,7 +137,13 @@ SFString callRPC(const SFString& method, const SFString& params, bool raw)
     CURLcode res = curl_easy_perform(getCurl());
     if (res != CURLE_OK && !earlyAbort)
     {
-        fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
+        cerr << cYellow;
+        cerr << "\n";
+        cerr << "\tWarning:" << cOff << "The request to the Ethereum node ";
+        cerr << "resulted in\n\tfollowing error message: ";
+        cerr << bTeal << curl_easy_strerror(res) << cOff << ".\n";
+        cerr << "\tIt is impossible for QuickBlocks to proceed. Quitting...\n";
+        cerr << "\n";
         exit(0);
     }
 
