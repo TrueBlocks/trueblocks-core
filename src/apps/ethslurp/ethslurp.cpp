@@ -442,7 +442,11 @@ SFString CSlurperApp::getFormatString(COptions& options, const SFString& which, 
         errMsg = SFString("Mismatched brackets in display string '") + formatName + "': '" + ret + "'. Quiting...\n";
 
     } else if (ret.empty() && !ignoreBlank) {
-        errMsg = usageStr("Empty display string '" + formatName + "'. Quiting...\n");
+const char *ERR_NO_DISPLAY_STR =
+"You entered an empty display string with the --format (-f) option. The format string 'fmt_[{FMT}]_file`\n"
+"  was not found in the configuration file (which is stored here: ~/.quickBlocks/quickBlocks.toml).\n"
+"  Please see the full documenation for more information on display strings.";
+        errMsg = usageStr(SFString(ERR_NO_DISPLAY_STR).Substitute("[{FMT}]", options.exportFormat));
     }
 
     if (!errMsg.empty()) {
