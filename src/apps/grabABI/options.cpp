@@ -15,7 +15,8 @@ CParams params[] = {
     CParams("-encode",            "generate the encodings for the functions / events in the ABI"),
     CParams("-noconst",           "generate encodings for non-constant functions and events only (always true when generating)"), // NOLINT
     CParams("-open",              "open the ABI file for editing, download if not already present"),
-    CParams("@silent",            "If ABI cannot be acquired, fail silently (useful for scripting)"),
+    CParams("@-json",             "print the ABI to the screen as json"),
+    CParams("@-silent",           "If ABI cannot be acquired, fail silently (useful for scripting)"),
     CParams("",                   "Fetches the ABI for a smart contract. Optionally generates C++ source code "
                                   "representing that ABI.\n"),
 };
@@ -48,6 +49,9 @@ bool COptions::parseArguments(SFString& command) {
 
         } else if (arg == "-o" || arg == "--open") {
             open = true;
+
+        } else if (arg == "-j" || arg == "--json") {
+            asJson = true;
 
         } else if (arg.startsWith('-')) {  // do not collapse
 
@@ -88,6 +92,7 @@ void COptions::Init(void) {
     noconst = false;
     open = false;
     silent = false;
+    asJson = false;
     for (uint32_t i = 0 ; i < MAX_ADDRS ; i++) {
         addrs[i] = "";
     }

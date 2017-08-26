@@ -141,11 +141,7 @@ bool CBlock::setValueByName(const SFString& fieldName, const SFString& fieldValu
             if ( fieldName % "parentHash" ) { parentHash = toHash(fieldValue); return true; }
             break;
         case 't':
-            if ( fieldName % "timestamp" )
-            {
-                timestamp = (timestamp_t)toUnsigned(fieldValue);
-                return true;
-            }
+            if ( fieldName % "timestamp" ) { timestamp = (timestamp_t)toUnsigned(fieldValue); return true; }
             if ( fieldName % "transactions" ) return true;
             break;
         default:
