@@ -53,12 +53,12 @@ SFString nextLeafChunk(const SFString& fieldIn, bool& force, const void *data) {
 //                if ( fieldIn % "blocks" ) {
 //                    uint32_t cnt = lea->blocks.getCount();
 //                    if (!cnt) return "";
-//                    SFString ret;
+//                    SFString retS;
 //                    for (uint32_t i = 0 ; i < cnt ; i++) {
-//                        ret += lea->blocks[i].Format();
-//                        ret += ((i < cnt - 1) ? ",\n" : "\n");
+//                        retS += lea->blocks[i].Format();
+//                        retS += ((i < cnt - 1) ? ",\n" : "\n");
 //                    }
-//                    return ret;
+//                    return retS;
 //                }
                 break;
             case 'c':
@@ -139,7 +139,7 @@ void CLeaf::registerClass(void) {
     uint32_t fieldNum = 1000;
     ADD_FIELD(CLeaf, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CLeaf, "deleted", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CLeaf, "blocks", T_TEXT|TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CLeaf, "blocks", T_OBJECT|TS_ARRAY, ++fieldNum);
     ADD_FIELD(CLeaf, "cnt", T_NUMBER, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like

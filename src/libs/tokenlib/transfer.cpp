@@ -124,7 +124,7 @@ void QTransfer::registerClass(void) {
     uint32_t fieldNum = 1000;
     ADD_FIELD(QTransfer, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(QTransfer, "deleted", T_BOOL,  ++fieldNum);
-    ADD_FIELD(QTransfer, "_to", T_TEXT, ++fieldNum);
+    ADD_FIELD(QTransfer, "_to", T_ADDRESS, ++fieldNum);
     ADD_FIELD(QTransfer, "_value", T_NUMBER, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
