@@ -217,9 +217,9 @@ void generateCode(CToml& classFile, const SFString& dataFile, const SFString& ns
                if (fld->type == "bloom")        { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_BLOOM";
         } else if (fld->type == "wei")          { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_WEI";
         } else if (fld->type == "string")       { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_TEXT";
-        } else if (fld->type == "addr")         { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_TEXT";
-        } else if (fld->type == "address")      { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_TEXT";
-        } else if (fld->type == "hash")         { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_TEXT";
+        } else if (fld->type == "addr")         { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_ADDRESS";
+        } else if (fld->type == "address")      { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_ADDRESS";
+        } else if (fld->type == "hash")         { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_HASH";
         } else if (fld->type == "bytes32")      { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_TEXT";
         } else if (fld->type == "bytes")        { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_TEXT";
         } else if (fld->type == "int8")         { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
@@ -237,9 +237,16 @@ void generateCode(CToml& classFile, const SFString& dataFile, const SFString& ns
         } else if (fld->type == "double")       { setFmt = "\t[{NAME}] = [{DEFF}];\n"; regType = "T_DOUBLE";
         } else if (fld->type == "time")         { setFmt = "\t[{NAME}] = [{DEFT}];\n"; regType = "T_DATE";
         } else if (fld->isPointer)              { setFmt = "\t[{NAME}] = [{DEFP}];\n"; regType = "T_POINTER";
-        } else if (fld->type.Contains("Array")) { setFmt = "\t[{NAME}].Clear();\n";    regType = "T_TEXT|TS_ARRAY";
         } else if (fld->isObject)               { setFmt = "\t[{NAME}].Init();\n";     regType = "T_TEXT|TS_OBJECT";
         } else                                  { setFmt = badSet; regType = "T_TEXT"; }
+
+        if (fld->type.Contains("Array")) {
+            setFmt = "\t[{NAME}].Clear();\n";
+            if (fld->type.Contains("String"))
+                regType = "T_TEXT|TS_ARRAY";
+            else
+                regType = "T_OBJECT|TS_ARRAY";
+        }
 
 #define getDefault(a) (fld->strDefault.empty() ? (a) : fld->strDefault )
         setFmt.Replace("[{DEFS}]", getDefault("\"\""));

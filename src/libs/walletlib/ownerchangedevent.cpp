@@ -128,8 +128,8 @@ void QOwnerChangedEvent::registerClass(void) {
     uint32_t fieldNum = 1000;
     ADD_FIELD(QOwnerChangedEvent, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(QOwnerChangedEvent, "deleted", T_BOOL,  ++fieldNum);
-    ADD_FIELD(QOwnerChangedEvent, "oldOwner", T_TEXT, ++fieldNum);
-    ADD_FIELD(QOwnerChangedEvent, "newOwner", T_TEXT, ++fieldNum);
+    ADD_FIELD(QOwnerChangedEvent, "oldOwner", T_ADDRESS, ++fieldNum);
+    ADD_FIELD(QOwnerChangedEvent, "newOwner", T_ADDRESS, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(QOwnerChangedEvent, "schema");

@@ -153,6 +153,18 @@ int main(int argc, const char *argv[]) {
             return 0;
         }
 
+        if (options.asJson) {
+            for (uint64_t i = 0 ; i < options.nAddrs ; i++) {
+                SFString fileName = configPath("abis/" + options.addrs[i] + ".json");
+                if (!fileExists(fileName)) {
+                    cerr << "ABI for '" + options.addrs[i] + "' not found. Quitting...\n";
+                    return 0;
+                }
+                cout << asciiFileToString(fileName) << "\n";
+            }
+            return 0;
+        }
+
         CFunctionArray functions;
         SFString addrList;
         bool isGenerate = !options.classDir.empty();
