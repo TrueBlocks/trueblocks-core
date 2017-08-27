@@ -33,8 +33,14 @@ int main(int argc, const char * argv[]) {
             return usage(message);
 
         // Slurp the address...
-        if (!slurper.Slurp(options, message))
-            return usage(message);
+        if (!slurper.Slurp(options, message)) {
+            if (message.startsWith("No transactions")) {
+                // Fix for issue #252.
+                cerr << cRed << "\t" << message << cOff << "\n";
+                return 0;
+            } else
+                return usage(message);
+        }
 
         // Apply the filters if any...
         if (!slurper.Filter(options, message))
