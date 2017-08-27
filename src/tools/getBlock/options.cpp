@@ -10,14 +10,15 @@
 //---------------------------------------------------------------------------------------------------
 CParams params[] = {
     CParams("~num",              "which block (or blocks if more than one) to retreive (or use [start-stop) for range)"),
-//    CParams("-check",          "pull the given block(s) from both cache and node, compare results, should be no output"),
+    CParams("-chec(k)",          "pull block(s) using both cache and raw, compare results, report differences (should be none)"),
     CParams("-source:[c|r]",     "either :(c)ache or :(r)aw, source for data retrival. (shortcuts -c = qblocks, -r = node)"),
     CParams("-fields:[a|m|c|r]", "either :(a)ll, (m)ini, (c)ache or :(r)aw; which fields to include in output (all is default)"),
     CParams("-parity",           "mimic parity output using quickBlocks (i.e. quoted hexidecimal for numbers)"),
-    CParams("-re(c)iept",        ""),
     CParams("-terse",            "retreive transaction hashes instead of full transactions"),
-    CParams("-quiet",            "do not print results to screen, used for speed testing"),
+    CParams("-quiet",            "do not print results to screen, used for speed testing and data checking"),
+    CParams("@re(c)iept",        "include receipt (hidden)"),
     CParams("@f(o)rce",          "force re-write of binary data"),
+    CParams("@normalize",        "normalize (remove un-common fields and sort) for comparison with other results (testing)"),
     CParams("",                  "Returns block(s) from local cache (the default) or directly from a running node.\n"),
 };
 uint32_t nParams = sizeof(params) / sizeof(CParams);
@@ -31,20 +32,41 @@ bool COptions::parseArguments(SFString& command) {
         SFString arg = nextTokenClear(command, ' ');
 
         // shortcuts
-        if (arg == "-r") arg = "--source:raw";
-        if (arg == "-c") arg = "--source:cache";
+        if (arg == "-r") { arg = "--source:raw";   }
+        if (arg == "-c") { arg = "--source:cache"; }
 
-        if (arg == "-c" || arg == "--check") {
+        // do not collapse
+        if (arg == "-k" || arg == "--check") {
             isCheck = true;
+            quiet = true;
+            expContext().spcs = 4;
+            expContext().hexNums = true;
+            expContext().quoteNums = true;
+            CRuntimeClass *pClass = GETRUNTIME_CLASS(CBlock);
+            if (pClass) {
+                CFieldData *pField = pClass->FindField("blockNumber");
+                if (pField)
+                    pField->setName("number");
+            }
+            pClass = GETRUNTIME_CLASS(CBlock);
+            if (pClass) {
+                CFieldData *pField = pClass->FindField("hash");
+                if (pField)
+                    pField->setName("blockHash");
+            }
+            GETRUNTIME_CLASS(CBlock)->sortFieldList();
+            GETRUNTIME_CLASS(CTransaction)->sortFieldList();
+            GETRUNTIME_CLASS(CReceipt)->sortFieldList();
 
         } else if (arg == "-o" || arg == "--force") {
             etherlib_init("binary");
             force = true;
 
+        } else if (arg == "--normalize") {
+            normalize = true;
+
         } else if (arg.startsWith("-s:") || arg.startsWith("--source:")) {
-            SFString mode = arg;
-            mode.Replace("-s:","");
-            mode.Replace("--source:","");
+            SFString mode = arg.Substitute("-s:","").Substitute("--source:","");
             if (mode == "r" || mode == "raw") {
                 isRaw = true;
 
@@ -62,9 +84,7 @@ bool COptions::parseArguments(SFString& command) {
             quiet = true;
 
         } else if (arg.startsWith("-f:") || arg.startsWith("--fields:")) {
-            SFString mode = arg;
-            mode.Replace("-f:","");
-            mode.Replace("--fields:","");
+            SFString mode = arg.Substitute("-f:","").Substitute("--fields:","");
 
             if (mode == "a" || mode == "all") {
                 SHOW_ALL_FIELDS(CBlock);
@@ -173,12 +193,13 @@ void COptions::Init(void) {
     expContext().hexNums = false;
     expContext().quoteNums = false;
 
-    isCheck = false;
-    isRaw   = false;
-    isRange = false;
-    terse   = false;
-    quiet   = false;
-    force   = false;
+    isCheck    = false;
+    isRaw      = false;
+    isRange    = false;
+    terse      = false;
+    quiet      = false;
+    force      = false;
+    normalize  = false;
     nums[0]    = NOPOS;
     nNums      = 0;  // we will set this to '1' later if user supplies no values
     start = stop = 0;
@@ -186,6 +207,7 @@ void COptions::Init(void) {
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
+    useVerbose = true;
     Init();
 }
 
