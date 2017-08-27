@@ -55,6 +55,7 @@ namespace qblocks {
         SFString getName(void) const { return m_fieldName; }
         uint32_t getID  (void) const { return m_fieldID;   }
         uint32_t getType(void) const { return m_fieldType; }
+        void     setName(const SFString& str) { m_fieldName = str; }
 
         bool operator==(const CFieldData& data) {
             if (m_fieldName != data.m_fieldName) return false;

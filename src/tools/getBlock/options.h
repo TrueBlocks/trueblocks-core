@@ -18,6 +18,7 @@ public:
     bool terse;
     bool quiet;
     bool force;
+    bool normalize;
     SFUint32 nums[MAX_NUMS];
     SFUint32 nNums;
     SFUint32 start;
