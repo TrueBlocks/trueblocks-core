@@ -81,6 +81,8 @@ SFString nextBlockChunk(const SFString& fieldIn, bool& force, const void *data) 
         }
 
         // EXISTING_CODE
+        if ( isTestMode() && fieldIn % "blockHash" )
+            return fromHash(blo->hash);
         // EXISTING_CODE
 
         // Finally, give the parent class a chance
@@ -97,6 +99,9 @@ bool CBlock::setValueByName(const SFString& fieldName, const SFString& fieldValu
     // EXISTING_CODE
     if (fieldName % "number") {
         *(SFString*)&fieldName = "blockNumber";
+
+    } else if (isTestMode() && fieldName % "blockHash") {
+        *(SFString*)&fieldName = "hash";
 
     } else if (fieldName % "transactions") {
         // Transactions can come to us either as a JSON object (starts with '{') or a list
@@ -153,6 +158,8 @@ bool CBlock::setValueByName(const SFString& fieldName, const SFString& fieldValu
 //---------------------------------------------------------------------------------------------------
 void CBlock::finishParse() {
     // EXISTING_CODE
+    for (uint32_t i=0;i<transactions.getCount();i++)
+        transactions[i].pBlock = this;
     // EXISTING_CODE
 }
 

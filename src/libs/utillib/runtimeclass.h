@@ -116,6 +116,11 @@ CFieldData *f = GETRUNTIME_CLASS(CLASS_NAME)->FindField(FIELD_NAME); if (f) { f-
 }
 
     //------------------------------------------------------------
+#define RENAME_FIELD(CLASS_NAME, OLD_NAME, NEW_NAME) {\
+CFieldData *f = GETRUNTIME_CLASS(CLASS_NAME)->FindField(OLD_NAME); if (f) { f->setName(NEW_NAME); }\
+}
+
+    //------------------------------------------------------------
 #define HIDE_ALL_FIELDS(CLASS_NAME) \
 GETRUNTIME_CLASS(CLASS_NAME)->hideAllFields();
 

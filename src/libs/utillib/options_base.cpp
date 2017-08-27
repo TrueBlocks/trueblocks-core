@@ -249,7 +249,7 @@ namespace qblocks {
                 nextTokenClear(hotKey,'(');
                 hotKey = nextTokenClear(hotKey, ')');
                 longName.ReplaceAny("()","");
-//                shortName = "-" + hotKey;
+                shortName = SFString(shortName[0]) + hotKey;
             }
         }
     }
@@ -296,6 +296,9 @@ namespace qblocks {
 
             } else if (paramsPtr[i].shortName.startsWith('@')) {
                 // invisible option
+
+            } else if (!paramsPtr[i].shortName.empty()) {
+                ctx << paramsPtr[i].shortName << "|";
 
             } else if (!paramsPtr[i].shortName.empty()) {
                 ctx << paramsPtr[i].shortName << "|";
