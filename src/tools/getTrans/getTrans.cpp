@@ -40,6 +40,11 @@ int main(int argc, const char *argv[]) {
                 getTransaction(trans, (uint32_t)toLongU(hash), txID);  // blockHash.txID
             }
 
+            // We need to pick up some stuff from the block
+            CBlock block;
+            getBlock(block, trans.blockNumber);
+            trans.pBlock = &block;
+
             SFString fmt;
             if (!verbose)
                 fmt = "[{DATE}]\t[{TIMESTAMP}]\t[{BLOCKNUMBER}]\t[{TRANSACTIONINDEX}]\t[{HASH}]";

@@ -16,7 +16,7 @@ Read from old binary format and do nothing...
       "blockNumber": 262657,
       "transactionIndex": 0,
       "nonce": 26818,
-      "timestamp": 0,
+      "timestamp": 1442749586,
       "from": "0x1dcb8d1f0fcc8cbc8c2d76528e877f915e299fbe",
       "to": "0xb0bbf6b6889f1ac8939b07b07309e6f5124435b0",
       "value": 100418060000000000,
