@@ -10,7 +10,7 @@
 //---------------------------------------------------------------------------------------------------
 CParams params[] = {
     CParams("~hash",    "transaction hash of the requested transaction"),
-    CParams("-t(e)rse", "display the traces in a terse fashion"),
+    CParams("-terse",   "display the traces in a terse fashion"),
     CParams("-raw",     "return the trace directly from the node without processing"),
     CParams("",         "Retrieve the full trace of a transaction.\n"),
 };
