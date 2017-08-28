@@ -37,7 +37,6 @@ namespace qblocks {
         SFString to   = escapePath(toIn);
 
         const SFString copyCmd = "cp -pf";
-
         SFString command = copyCmd + " " + from + " " + to;
         if (system((const char *)command)) { }  // do not remove. The test just silences compiler warnings
         return static_cast<int>(fileExists(to));
