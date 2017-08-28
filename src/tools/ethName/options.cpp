@@ -14,7 +14,7 @@ CParams params[] = {
     CParams("~term [name]", "search terms"),
     CParams("-addrOnly",    "export only the associated address to be used as input to further commands"),
     CParams("-count",       "print only the count of the number of matches"),
-    CParams("-edit",        "edit the name database"),
+    CParams("-open",        "open the name database for editing"),
     CParams("-list",        "list all names in the database"),
     CParams("-matchCase",   "matches must agree in case (the default is to ignore case)"),
     CParams("-source",      "search 'source' field as well name and address (the default)"),
@@ -43,10 +43,8 @@ bool COptions::parseArguments(SFString& command) {
         } else if (arg == "-m" || arg == "--matchCase") {
             matchCase = true;
 
-        } else if (arg == "-e" || arg == "--edit") {
-            // open command stuff
-            command = ("nano -I " + configPath("configs/names.conf"));
-            if (system(command.c_str())) { }  // do not remove. The test just silences compiler warnings
+        } else if (arg == "-o" || arg == "--open") {
+            editFile(configPath("configs/names.conf"));
             exit(0);
 
         } else if (arg.startsWith('-')) {  // do not collapse
