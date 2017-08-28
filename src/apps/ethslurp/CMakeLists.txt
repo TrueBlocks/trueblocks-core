@@ -44,7 +44,7 @@ run_test("ethslurp_no_record_in_block_range"  " -b:0:1"             " 0x63c8c29a
 run_test("ethslurp_single_block_range"        " -b:4186279:4186279" " 0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0")
 run_test("ethslurp_range_of_blocks"           " -b:4186279:4186301" " 0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0")
 run_test("ethslurp_no_record_in_block_range_long"  " --blocks:0:1" " 0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0")
-run_test("ethslurp_single_block_range_long"  " --blocks:4186279:4186279" "0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0")
+run_test("ethslurp_single_block_range_long"  " --blocks:4186279:4186279" " 0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0")
 run_test("ethslurp_range_of_blocks_long"  " --blocks:4186279:4186301" " 0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0")
 run_test("ethslurp_invalid_date_range_1"      "-d"                             " 0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0")
 run_test("ethslurp_invalid_date_range_2"      "-da:b"                          " 0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0")
