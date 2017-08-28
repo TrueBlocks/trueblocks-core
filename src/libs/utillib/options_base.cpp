@@ -334,7 +334,7 @@ namespace qblocks {
 
     //--------------------------------------------------------------------------------
 const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
-    
+
     SFString oneDescription(const SFString& sN, const SFString& lN, const SFString& d, bool isMode, bool required) {
         CStringExportContext ctx;
         if (COptionsBase::isReadme) {
@@ -345,7 +345,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
             line.Replace("{L}", (isMode ? "" : "-") + lN);
             line.Replace("{D}", d.Substitute("|", "&#124;"));
             ctx << line;
-                         
+
         } else {
 
             // When we are writing to the command line...
