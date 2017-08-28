@@ -37,6 +37,7 @@ bool COptions::parseArguments(SFString& command) {
 
         // do not collapse
         if (arg == "-k" || arg == "--check") {
+            setenv("TEST_MODE", "true", true);
             isCheck = true;
             quiet = true;
             expContext().spcs = 4;
@@ -72,6 +73,7 @@ bool COptions::parseArguments(SFString& command) {
 
             } else if (mode == "c" || mode == "cache") {
                 etherlib_init("binaryOnly");
+                asks4Cache = true;
 
             } else {
                 return usage("Invalide source. Must be either '(r)aw' or '(c)ache'. Quitting...");
@@ -200,6 +202,7 @@ void COptions::Init(void) {
     quiet      = false;
     force      = false;
     normalize  = false;
+    asks4Cache = false;
     nums[0]    = NOPOS;
     nNums      = 0;  // we will set this to '1' later if user supplies no values
     start = stop = 0;
