@@ -189,7 +189,7 @@ SFString checkOneBlock(SFUint32 num, const COptions& opt) {
     if (verbose)
         cout << num << "\n";
     fromQblocks = normalizeBlock(qBlocks.Format(), true);
-    
+
     SFString result = "The strings are "; result += ((fromNode != fromQblocks) ? "different\n" : "the same\n");
     SFString diffA  = "In fromNode but not fromQblocks:\n" + diffStr(fromNode, fromQblocks);
     SFString diffB  = "In fromQblocks but not fromNode:\n" + diffStr(fromQblocks, fromNode);
