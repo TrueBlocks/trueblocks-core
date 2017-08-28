@@ -147,8 +147,7 @@ int main(int argc, const char *argv[]) {
                     cerr << "ABI for '" + options.addrs[i] + "' not found. Quitting...\n";
                     return 0;
                 }
-                SFString cmd = "open -a /Applications/TextEdit.app " + fileName;
-                doCommand(cmd);
+                editFile(fileName);
             }
             return 0;
         }

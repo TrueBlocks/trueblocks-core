@@ -192,15 +192,8 @@ bool COptions::parseArguments(SFString& command) {
             wantsArchive = true;
 
         } else if (arg == "-o" || arg == "--open") {
-            // open command stuff
-            openFile = true;
-            if (isTestMode()) {
-                outScreen << "Testing only for open command:\n"
-                            << asciiFileToString(configPath("quickBlocks.toml")) << "\n";
-            } else {
-                SFString cmd = "nano -I " + configPath("quickBlocks.toml");
-                if (system(cmd.c_str())) {}  // do not remove. Silences compiler warnings
-            }
+
+            editFile(configPath("quickBlocks.toml"));
             exit(0);
 
         } else if (arg == "-c" || arg == "--clear") {
