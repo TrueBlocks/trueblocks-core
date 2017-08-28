@@ -121,7 +121,7 @@ bool loadData(void) {
     if (!folderExists(configPath("configs/")))
         establishFolder(configPath("configs/"));
 
-    SFString contents = StripAny(asciiFileToString(configPath(NAMES_FILENAME)), "\t\n ");
+    SFString contents = StripAny(asciiFileToString(configPath(NAMES_FILENAME)), "\t\n ") + "\n";
     contents.ReplaceAll("\t\t", "\t");
     if (contents.empty()) {
         stringToAsciiFile(configPath(NAMES_FILENAME), STR_DEFAULT_DATA);
