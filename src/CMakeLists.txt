@@ -71,7 +71,6 @@ endfunction(build_readme)
 # ----------------------------------------------------------------------------------------
 # Runs test and checks output against expected gold file
 function(run_the_test testPath goldPath testName testExe) # Optional argv4 with command parameters
-	set(ENV{TEST_MODE} "true")
 	set(TEST_FILE "${testPath}/${testName}.txt")
 	set(GOLD_FILE "${goldPath}/${testName}.txt")
 #message (STATUS " ")
