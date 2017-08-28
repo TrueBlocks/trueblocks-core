@@ -151,12 +151,11 @@ bool COptions::parseArguments(SFString& command) {
             if (lastDate == earliestDate)  // the default
                 lastDate = latestDate;
 
-            if (firstDate > lastDate)
+            if (firstDate > lastDate) {
                 return usage("lastDate (" + lastDate.Format(FMT_DEFAULT) +
                              ") must be later than startDate (" + firstDate.Format(FMT_DEFAULT) +
                              "). Quitting...");
-            cout << firstDate << "\n";
-            cout << lastDate << "\n";
+            }
 
         } else if (arg == "-r" || arg == "--rerun") {
             rerun = true;
