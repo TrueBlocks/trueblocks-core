@@ -16,12 +16,12 @@ CParams params[] = {
     CParams("-archive:<str>",   "filename of output (stdout otherwise)"),
     CParams("-blocks:<range>",  "export records in block range (:0[:max])"),
     CParams("-dates:<date>",    "export records in date range (:yyyymmdd[hhmmss][:yyyymmdd[hhmmss]])"),
-    CParams("-rerun",           "re-run the most recent slurp"),
     CParams("-fmt:<str>",       "pretty print, optionally add ':txt,' ':csv,' or ':html'"),
     CParams("-income",          "include income transactions only"),
     CParams("-expense",         "include expenditures only"),
-    CParams("-open",            "open the configuration file for editing"),
-    CParams("-list",            "list previously slurped addresses in cache"),
+    CParams("@--rerun",         "re-run the most recent slurp"),
+    CParams("@--open",          "open the configuration file for editing"),
+    CParams("@--list",          "list previously slurped addresses in cache"),
     CParams("@--max:<val>",     "maximum transactions to slurp (:250000)"),
     CParams("@--sleep:<val>",   "sleep for :x seconds"),
     CParams("@--func:<str>",    "display only --func:functionName records"),
@@ -31,8 +31,9 @@ CParams params[] = {
     CParams("@--cache",         "write the data to a local QuickBlocks cache"),
     CParams("@--clear",         "clear all previously cached slurps"),
     CParams("@--name:<str>",    "name this address"),
-    CParams("",                 "Fetches data off the Ethereum blockchain for an arbitrary account or smart contract. "
-                                "Optionally formats the output to your specification.\n"),
+    CParams("",                 "Fetches data off the Ethereum blockchain for an arbitrary account or smart "
+                                "contract. Optionally formats the output to your specification. Note: --income "
+                                "and --expense are mutually exclusive as are --blocks and --dates.\n"),
 };
 uint32_t nParams = sizeof(params) / sizeof(CParams);
 
