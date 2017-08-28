@@ -66,8 +66,9 @@ namespace qblocks {
     extern SFUint32 verbose;
 
     //--------------------------------------------------------------------------------
+    extern void     editFile  (const SFString& fileName);
     extern SFString configPath(const SFString& part = "");
-    inline SFString cachePath(const SFString& part = "") { return configPath("slurps/") + part; }
+    inline SFString cachePath (const SFString& part = "") { return configPath("slurps/") + part; }
 
     //--------------------------------------------------------------------------------
     extern CParams *paramsPtr;

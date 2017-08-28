@@ -12,6 +12,7 @@
 #include "options_base.h"
 #include "colors.h"
 #include "filenames.h"
+#include "toml.h"
 
 namespace qblocks {
 
@@ -481,5 +482,19 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
     //---------------------------------------------------------------------------------------------------
     SFString configPath(const SFString& part) {
         return getHomeFolder() + ".quickBlocks/" + part;
+    }
+
+    //------------------------------------------------------------------
+    void editFile(const SFString& fileName) {
+        SFString configFile = configPath("quickBlocks.toml");
+        CToml toml(configFile);
+        SFString editor = toml.getConfigStr("settings", "editor", "open ");
+        SFString cmd = editor + " \"" + fileName + "\"";
+        if (isTestMode()) {
+            cout << "Testing editFile: " << cmd << "\n";
+            cout << asciiFileToString(fileName) << "\n";
+        } else {
+            if (system(cmd.c_str())) {}  // do not remove. Silences compiler warnings
+        }
     }
 }  // namespace qblocks

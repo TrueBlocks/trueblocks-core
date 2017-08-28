@@ -152,15 +152,13 @@ bool CVisitor::enterDebugger(const CBlock& block) {
                     curCmd.Replace("source ","");
                     for (uint32_t i=0;i<watches.getCount();i++) {
                         if (watches[i].address == curCmd || watches[i].name == curCmd)
-                            curCmd = watches[i].name + ".sol";
+                            curCmd = ("source/" + watches[i].name + ".sol");
                     }
-                    SFString cmd = "open source/" + curCmd;
-                    doCommand(cmd);
+                    editFile(curCmd);
 
                 } else if (curCmd == "g" || curCmd == "config") {
                     history(curCmd);
-                    SFString cmd = "open ./config.toml";
-                    doCommand(cmd);
+                    editFile("./config.toml");
 
                 } else if (curCmd.startsWith("e ") || curCmd.startsWith("e:") || curCmd.startsWith("ethscan")) {
                     history(curCmd);
@@ -168,7 +166,7 @@ bool CVisitor::enterDebugger(const CBlock& block) {
                     curCmd.Replace("e ","");
                     curCmd.Replace("ethscan:","");
                     curCmd.Replace("ethscan ","");
-                    SFString cmd = "ethscan " + curCmd;
+                    SFString cmd = "ethscan.py " + curCmd;
                     doCommand(cmd);
 
 // TODO(tjayrush): you can clean this up

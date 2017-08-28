@@ -54,12 +54,7 @@ int main(int argc, const char *argv[]) {
                     }
 
                 } else if (options.isEdit) {
-                    SFString cmd = "open \"" + fileName + "\"";
-                    if (isTestMode()) {
-                        cout << cmd << "\n";
-                    } else {
-                        if (system(cmd.c_str())) {}  // do not remove. Silences compiler warnings
-                    }
+                    editFile(fileName);
 
                 } else if (options.isRemove) {
                     if (isTestMode()) {
