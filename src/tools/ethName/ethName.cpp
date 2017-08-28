@@ -26,7 +26,7 @@ int main(int argc, const char *argv[]) {
             return 0;
 
         if (!loaded) {
-            usage(configPath("configs/names.conf") + " is empty. Use ethName -e to add some names. Quitting...");
+            usage(configPath(NAMES_FILENAME) + " is empty. Use ethName -e to add some names. Quitting...");
             exit(0);
         }
 
@@ -121,10 +121,22 @@ bool loadData(void) {
     if (!folderExists(configPath("configs/")))
         establishFolder(configPath("configs/"));
 
-    SFString contents = asciiFileToString(configPath("configs/names.conf"));
+    SFString contents = StripAny(asciiFileToString(configPath(NAMES_FILENAME)), "\t\n ");
     contents.ReplaceAll("\t\t", "\t");
     if (contents.empty()) {
-        stringToAsciiFile(configPath("configs/names.conf"), STR_DEFAULT_DATA);
+        stringToAsciiFile(configPath(NAMES_FILENAME), STR_DEFAULT_DATA);
+        contents = STR_DEFAULT_DATA;
+    }
+
+    SFString custom = asciiFileToString(configPath(CUSTOM_NAMES));
+    custom.ReplaceAll("\t\t", "\t");
+    if (!isTestMode()) {
+        contents += custom;
+    }
+
+    contents.ReplaceAll("\t\t", "\t");
+    if (contents.empty()) {
+        stringToAsciiFile(configPath(NAMES_FILENAME), STR_DEFAULT_DATA);
         contents = STR_DEFAULT_DATA;
     }
 
