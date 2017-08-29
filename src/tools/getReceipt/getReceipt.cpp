@@ -6,8 +6,28 @@
  * The LICENSE at the root of this repo details your rights (if any)
  *------------------------------------------------------------------------*/
 #include "etherlib.h"
+#include "options.h"
 
-int main(void) {
-    cout << "Hello world\n";
+//--------------------------------------------------------------
+int main(int argc, const char *argv[]) {
+    // Tell the system where the blocks are and which version to use
+    setStorageRoot(BLOCK_CACHE);
+    etherlib_init("binary");
+
+    if (isTestMode())
+        colorsOff();
+    return usage("The getReceipt tool is not yet implemented. Quitting...");
+#if 0
+    // Parse command line, allowing for command files
+    COptions options;
+    if (!options.prepareArguments(argc, argv))
+        return 0;
+
+    while (!options.commandList.empty()) {
+        SFString command = nextTokenClear(options.commandList, '\n');
+        if (!options.parseArguments(command))
+            return 0;
+    }
+#endif
     return 0;
 }
