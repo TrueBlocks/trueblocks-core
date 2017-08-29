@@ -14,7 +14,7 @@ getBlock -th
 | -s | --source val | either :(c)ache or :(r)aw, source for data retrival. (shortcuts -c = qblocks, -r = node) |
 | -f | --fields val | either :(a)ll, (m)ini, (c)ache or :(r)aw; which fields to include in output (all is default) |
 | -p | --parity | mimic parity output using quickBlocks (i.e. quoted hexidecimal for numbers) |
-| -t | --terse | retreive transaction hashes instead of full transactions |
+| -t | --terse | if source is raw, retreive transaction hashes instead of full transactions |
 | -q | --quiet | do not print results to screen, used for speed testing and data checking |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |

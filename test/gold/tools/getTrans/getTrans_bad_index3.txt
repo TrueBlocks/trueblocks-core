@@ -3,7 +3,7 @@ getTrans 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.0 -v
 
   The argument '0' is not properly formatted.
 
-  Usage:    getTrans [-f|-t|-v|-h] hash bn.transID bh.transID  
+  Usage:    getTrans [-f|-t|-v|-h] <hash|bn.transID|bh.transID>  
   Purpose:  Retrieve an Ethereum transaction from either QuickBlocks or a running node.
             --note: 'hash' and 'blockHash' must start with '0x'.  
   Where:    
