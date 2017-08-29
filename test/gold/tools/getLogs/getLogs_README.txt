@@ -3,7 +3,7 @@ getLogs -th
 #### Usage
 
 `Usage:`    getLogs [-f|-a|-v|-h] < hash | bn.transID | bh.transID | address >
-			-- note: This tool is incomplete.
+            -- note: This tool is incomplete.
   
 `Purpose:`  Retrieve logs from an Ethereum transaction using either QuickBlocks or a running node.
             --note: 'hash' and 'blockHash' must start with '0x'.  
