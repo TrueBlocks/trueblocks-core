@@ -54,7 +54,7 @@ inline void makeTheCode(const SFString& fn, const SFString& addr) {
 void addIfUnique(const SFString& addr, CFunctionArray& functions, CFunction& func)
 {
 //#error
-    if (func.name.empty())
+    if (func.name.empty() && func.type != "constructor")
         return;
 
     for (uint32_t i = 0 ; i < functions.getCount() ; i++) {
