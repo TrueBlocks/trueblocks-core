@@ -14,7 +14,7 @@ CParams params[] = {
     CParams("-source:[c|r]",     "either :(c)ache or :(r)aw, source for data retrival. (shortcuts -c = qblocks, -r = node)"),
     CParams("-fields:[a|m|c|r]", "either :(a)ll, (m)ini, (c)ache or :(r)aw; which fields to include in output (all is default)"),
     CParams("-parity",           "mimic parity output using quickBlocks (i.e. quoted hexidecimal for numbers)"),
-    CParams("-terse",            "retreive transaction hashes instead of full transactions"),
+    CParams("-terse",            "if source is raw, retreive transaction hashes instead of full transactions"),
     CParams("-quiet",            "do not print results to screen, used for speed testing and data checking"),
     CParams("@re(c)iept",        "include receipt (hidden)"),
     CParams("@f(o)rce",          "force re-write of binary data"),
@@ -181,6 +181,9 @@ bool COptions::parseArguments(SFString& command) {
 
     if (isRange) nNums = 0;  // if range is supplied, use the range
     else if (nNums == 0) nNums = 1;  // otherwise, if not list, use 'latest'
+
+    if (terse && !isRaw)
+        return usage("--terse options work only with --source:raw. Quitting...");
 
     return true;
 }

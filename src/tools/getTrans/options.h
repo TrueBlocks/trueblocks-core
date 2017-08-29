@@ -16,6 +16,7 @@ public:
 
     bool parseArguments(SFString& command);
     void Init(void);
+    SFString postProcess(const SFString& which, const SFString& str) const;
 };
 
 //-----------------------------------------------------------------------------
