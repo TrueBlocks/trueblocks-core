@@ -13,23 +13,7 @@
 extern bool     processMerge(COptions& options);
 extern SFUint32 processExtract(COptions& options);
 extern SFUint32 processRenumber(COptions& options);
-
-//--------------------------------------------------------------------------------
-SFString display(const SFString& msg, const COptions& opt, SFUint32 nRecords, const CAcctCacheItem& item, bool pad) {
-    CStringExportContext ctx;
-    if (opt.blockOnly) {
-        ctx << cYellow << (pad ? padNum9(item.blockNum) : asStringU(item.blockNum)) << cOff;
-
-    } else {
-        if (!msg.empty()) {
-            ctx << msg << cYellow << (pad ? padNum9(nRecords) : asStringU(nRecords)) << cOff << " ";
-        }
-        ctx << "blockNum: " << cYellow << (pad ? padNum9(item.blockNum) : asStringU(item.blockNum)) << cOff;
-        ctx << " transID: "  << cYellow << (pad ? padNum5(item.transIndex) : asStringU(item.transIndex)) << cOff;
-        ctx << " which: "    << cYellow << (pad ? padNum5((uint64_t)item.which) : asString(item.which)) << cOff;
-    }
-    return ctx.str;
-}
+extern SFString display(const SFString& msg, const COptions& opt, SFUint32 nRecords, const CAcctCacheItem& item, bool pad);
 
 //-------------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
@@ -353,4 +337,21 @@ SFUint32 processRenumber(COptions& options) {
         renum.Release();
     }
     return totalRenumered;
+}
+
+//--------------------------------------------------------------------------------
+SFString display(const SFString& msg, const COptions& opt, SFUint32 nRecords, const CAcctCacheItem& item, bool pad) {
+    CStringExportContext ctx;
+    if (opt.blockOnly) {
+        ctx << cYellow << (pad ? padNum9(item.blockNum) : asStringU(item.blockNum)) << cOff;
+
+    } else {
+        if (!msg.empty()) {
+            ctx << msg << cYellow << (pad ? padNum9(nRecords) : asStringU(nRecords)) << cOff << " ";
+        }
+        ctx << "blockNum: " << cYellow << (pad ? padNum9(item.blockNum) : asStringU(item.blockNum)) << cOff;
+        ctx << " transID: "  << cYellow << (pad ? padNum5(item.transIndex) : asStringU(item.transIndex)) << cOff;
+        ctx << " which: "    << cYellow << (pad ? padNum5((uint64_t)item.which) : asString(item.which)) << cOff;
+    }
+    return ctx.str;
 }
