@@ -27,6 +27,7 @@ namespace qblocks {
         bool prepareArguments(int argc, const char *argv[]);
         virtual bool parseArguments(SFString& command) = 0;
         bool builtInCmd(const SFString& arg);
+        virtual SFString postProcess(const SFString& which, const SFString& str) const { return str; }
 
     protected:
         virtual void Init(void) = 0;
@@ -73,6 +74,7 @@ namespace qblocks {
     //--------------------------------------------------------------------------------
     extern CParams *paramsPtr;
     extern uint32_t& nParamsRef;
+    extern COptionsBase *pOptions;
 
     #define curVersion ((uint64_t)0x00000201)
 }  // namespace qblocks

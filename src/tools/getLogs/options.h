@@ -5,17 +5,19 @@
  *------------------------------------------------------------------------*/
 #include "etherlib.h"
 
+#define MAX_ADDRS 10
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
-    bool option1;
-    bool option2;
+    SFString queries;
+    bool fromAddr;
 
     COptions(void);
     ~COptions(void);
 
     bool parseArguments(SFString& command);
     void Init(void);
+    SFString postProcess(const SFString& which, const SFString& str) const;
 };
 
 //-----------------------------------------------------------------------------

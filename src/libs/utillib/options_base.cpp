@@ -19,10 +19,12 @@ namespace qblocks {
     //--------------------------------------------------------------------------------
     static uint32_t nP = 0;
     static CParams ps[] = { };
+    static CDefaultOptions defOpts;
 
     //--------------------------------------------------------------------------------
     uint32_t& nParamsRef = nP;
     CParams *paramsPtr  = &ps[0];
+    COptionsBase *pOptions = &defOpts;
 
     //--------------------------------------------------------------------------------
     static SFString programName = "quickBlocks";
@@ -281,7 +283,9 @@ namespace qblocks {
         os << descriptions() << "\n";
         if (!COptionsBase::isReadme)
             os << bBlue << "  Powered by QuickBlocks" << (isTestMode() ? "" : " (" + getVersionStr() + ")") << "\n" << cOff;
-        return os.str().c_str();
+        SFString ret = os.str().c_str();
+        ASSERT(pOptions);
+        return pOptions->postProcess("usage", ret);
     }
 
     //--------------------------------------------------------------------------------
@@ -312,7 +316,8 @@ namespace qblocks {
             ctx << "]";
         ctx << required;
 
-        return ctx.str;
+        ASSERT(pOptions);
+        return pOptions->postProcess("options", ctx.str);
     }
 
     //--------------------------------------------------------------------------------
@@ -329,7 +334,8 @@ namespace qblocks {
                 << purpose.Substitute("\n", "\n           ") << "  \n";
         }
         ctx << bYellow << sep << "Where:" << sep << cOff << "  \n";
-        return ctx.str;
+        ASSERT(pOptions);
+        return pOptions->postProcess("purpose", ctx.str);
     }
 
     //--------------------------------------------------------------------------------
@@ -359,7 +365,8 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
             line.Replace("{D}", d + (required ? " (required)" : ""));
             ctx << line;
         }
-        return ctx.str;
+        ASSERT(pOptions);
+        return pOptions->postProcess("oneDescription", ctx.str);
     }
 
     //--------------------------------------------------------------------------------
@@ -393,7 +400,8 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
         if (COptionsBase::useVerbose)
             ctx << oneDescription("-v", "-verbose", "set verbose level. Either -v, --verbose or -v:n where 'n' is level", false, false);
         ctx << oneDescription("-h", "-help", "display this help screen", false, false);
-        return ctx.str;
+        ASSERT(pOptions);
+        return pOptions->postProcess("description", ctx.str);
     }
 
     //--------------------------------------------------------------------------------
