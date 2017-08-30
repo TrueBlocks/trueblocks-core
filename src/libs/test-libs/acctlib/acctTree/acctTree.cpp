@@ -8,7 +8,6 @@
 #include "options.h"
 #include "reporter.h"
 
-SFUint32 maxBlocks = 500;
 //-----------------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
@@ -29,16 +28,20 @@ int main(int argc, const char *argv[]) {
             return 0;
 
         if (options.all) {
-            options.startBlock = 4000000;
-            maxBlocks = getLatestBlockFromClient();
+            options.startBlock = 0;
+            options.nBlocks = getLatestBlockFromClient();
         }
 
         CReporter reporter;
         reporter.tree = new CTreeRoot;
         if (reporter.tree) {
             //-----------------------------------------------
-            reporter.startTimer("Accumulating accounts...");
-            forEveryBlockOnDisc(buildTree, &reporter, options.startBlock, getLatestBlockFromClient());
+            SFString msg = "Accumulating accounts between blocks " +
+                                asStringU(options.startBlock) + " and " +
+                                asStringU(options.startBlock+options.nBlocks) + " (nBlocks: " +
+                                asStringU(options.nBlocks) + ")";
+            reporter.startTimer(msg);
+            forEveryBlockOnDisc(buildTree, &reporter, options.startBlock, options.nBlocks);
             reporter.stopTimer();
 
             //-----------------------------------------------
@@ -66,9 +69,9 @@ bool buildTree(CBlock& block, void *data) {
         r->tree->insert(tr->from, asStringU(block.blockNumber));
         r->tree->insert(tr->to, asStringU(block.blockNumber));
     }
-    cerr << r->nBlocksVisited << ":" << block.blockNumber << "\r";
+    cerr << dateFromTimeStamp(block.timestamp) << " -- " << r->nBlocksVisited << ": " << r->nTransVisited << "\r";
     cerr.flush();
-    return (r->nBlocksVisited < maxBlocks);
+    return true;
 }
 
 //-----------------------------------------------------------------------------
@@ -88,6 +91,17 @@ bool printTree(const CTreeNode *node, void *data) {
         r->getNext = true;
         r->maxMatch1 = r->strs;
     }
+    if (r->type == T_LEAF) {
+        if (r->cnt < MAX_CNTS)
+            r->counters[r->cnt]++;
+        if (r->cnt > 5)
+            r->gtFive++;
+        if (r->cnt > r->maxCnt) {
+            r->maxCnt = r->cnt;
+            r->maxStr = r->strs;
+        }
+    }
+    r->cnt = 0;
 
     // print the report
     r->interumReport();

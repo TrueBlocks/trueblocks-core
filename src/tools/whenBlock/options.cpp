@@ -9,10 +9,10 @@
 
 //---------------------------------------------------------------------------------------------------
 CParams params[] = {
-    CParams("~date/block", "one of the special values listed below or YYYY-MM-DD-[HH[:MM[:SS]]] or a blockNumber"),
-    CParams("-alone",      "show the found block or found date unadorned (useful for scripting)"),
-    CParams("-list",       "list special blocks timestamps and dates"),
-    CParams("", "Finds the nearest block before the JSON-formatted date, or the date of the given block.\n"),
+    CParams("~date / block", "one of the special values listed below or YYYY-MM-DD-[HH[:MM[:SS]]] or a blockNumber"),
+    CParams("-alone",        "show the found block or found date unadorned (useful for scripting)"),
+    CParams("-list",         "list special blocks timestamps and dates"),
+    CParams("", "Finds the nearest block before the JSON-formatted date, or the nearest date before the given block.\n"),
 };
 uint32_t nParams = sizeof(params) / sizeof(CParams);
 

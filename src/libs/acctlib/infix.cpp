@@ -262,6 +262,7 @@ bool CInfix::readBackLevel(SFArchive& archive) {
         ASSERT(func);
         CVisitData *vd = reinterpret_cast<CVisitData*>(data);
         uint32_t save = vd->type;
+        vd->cnt = 0;
         vd->type = T_INFIX;
         vd->strs = vd->strs + "+" + m_prefix;
         (*func)(this, data);

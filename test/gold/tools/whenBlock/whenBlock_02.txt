@@ -21,11 +21,11 @@ block #1920000 : 1469020840 : 2016-07-20 13:20:40 UTC
 
   Argument mistake is not valid. Supply either JSON formatted date or blockNumber. Quitting...
 
-  Usage:    whenBlock [-a|-l|-v|-h] date/block  
-  Purpose:  Finds the nearest block before the JSON-formatted date, or the date of the given block.
+  Usage:    whenBlock [-a|-l|-v|-h] date / block  
+  Purpose:  Finds the nearest block before the JSON-formatted date, or the nearest date before the given block.
              
   Where:    
-	date/block            one of the special values listed below or YYYY-MM-DD-[HH[:MM[:SS]]] or a blockNumber (required)
+	date / block          one of the special values listed below or YYYY-MM-DD-[HH[:MM[:SS]]] or a blockNumber (required)
 	-a  (--alone)         show the found block or found date unadorned (useful for scripting)
 	-l  (--list)          list special blocks timestamps and dates
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level

@@ -305,6 +305,7 @@ bool CLeaf::readBackLevel(SFArchive& archive) {
         ASSERT(func);
         CVisitData *vd = reinterpret_cast<CVisitData*>(data);
         uint32_t save = vd->type;
+        vd->cnt = cnt;
         vd->type = T_LEAF;
         vd->strs = vd->strs + "+" + (cMagenta+m_prefix + cOff + "|" + cBlue + at(m_prefix) + cOff);
         (*func)(this, data);
