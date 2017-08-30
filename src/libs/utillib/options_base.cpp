@@ -494,8 +494,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
 
     //------------------------------------------------------------------
     void editFile(const SFString& fileName) {
-        SFString configFile = configPath("quickBlocks.toml");
-        CToml toml(configFile);
+        CToml toml(configPath("quickBlocks.toml"));
         SFString editor = toml.getConfigStr("settings", "editor", "open ");
         SFString cmd = editor + " \"" + fileName + "\"";
         if (isTestMode()) {
