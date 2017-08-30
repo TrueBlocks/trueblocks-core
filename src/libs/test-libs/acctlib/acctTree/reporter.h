@@ -7,10 +7,7 @@
  * The LICENSE at the root of this repo details your rights (if any)
  *------------------------------------------------------------------------*/
 
-//-----------------------------------------------------------------------------
-extern SFUint32 startBlock;
-extern SFUint32 nBlocks;
-
+#define MAX_CNTS 20
 //-----------------------------------------------------------------------------
 class CReporter : public CVisitData {
 public:
@@ -18,8 +15,8 @@ public:
     txnum_t nTransVisited;
     blknum_t nAccts;
     blknum_t maxDepth;
-    SFString maxMatch1;
-    SFString maxMatch2;
+    SFString maxMatch1, maxMatch2, maxStr;
+    blknum_t counters[MAX_CNTS], maxCnt, gtFive;
     bool getNext;
     double startLoad;
     double endLoad;
@@ -30,8 +27,11 @@ public:
 
     CReporter(void)
         : nBlocksVisited(0), nTransVisited(0),
-          nAccts(0), maxDepth(0), getNext(false),
-          startLoad(0), endLoad(0), startPrint(0), endPrint(0), stopping(30), tree(NULL) { }
+          nAccts(0), maxDepth(0), maxCnt(0), gtFive(0),
+          getNext(false), startLoad(0), endLoad(0),
+          startPrint(0), endPrint(0), stopping(30), tree(NULL) {
+              bzero(counters, sizeof(counters));
+          }
 
     ~CReporter(void) { if (tree) delete tree; }
 
@@ -46,11 +46,26 @@ public:
         else                endPrint = qbNow();
     }
 
+    SFString asPct(double _part, double _whole) {
+        double percent = 1.0;
+        if (_whole > 0)
+            percent = (_part / static_cast<double>(_whole));
+        return fmtFloatp(100.*percent, 3);
+    }
+
     void finalReport(void) {
+
+
         cout << "nAccts:    " << cGreen << nAccts         << cOff << "\n";
         cout << "maxDepth:  " << cGreen << maxDepth       << cOff << "\n";
         cout << "maxMatch1: " << cGreen << maxMatch1      << cOff << "\n";
         cout << "maxMatch2: " << cGreen << maxMatch2      << cOff << "\n";
+        for (uint32_t i = 0 ; i < MAX_CNTS ; i++) {
+            cout << padNum3(i) << ":    " << cGreen << counters[i] << " (" << asPct(counters[i], nTransVisited) << "%)" << cOff << "\n";
+        }
+        cout << "maxCnt:    " << cGreen << maxCnt         << " (" << asPct(maxCnt, nTransVisited) << "%)" << cOff << "\n";
+        cout << "gtFive:    " << cGreen << gtFive         << " (" << asPct(gtFive, nTransVisited) << "%)" << cOff << "\n";
+        cout << "maxStr:    " << cGreen << maxStr         << cOff << "\n";
         cout << "nBlocks:   " << cGreen << nBlocksVisited << cOff << "\n";
         cout << "nTrans:    " << cGreen << nTransVisited  << cOff << "\n";
         cout.flush();
@@ -58,7 +73,7 @@ public:
 
     void interumReport(void);
     bool isMax(void) {
-        if (strs.Contains("-0+-0+-0+-0+-0+-0+-0+-0+-0+-0+-0+000000000000000000000"))
+        if (strs.Contains("0x+-0+-0+-0+-0+-0+-0+-0+-0+-0+-0+-0+-0+000000000000"))
             return false;
         return (countOf('-', strs) > maxDepth);
     }

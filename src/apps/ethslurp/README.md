@@ -12,8 +12,8 @@ Please see the <a href="https://github.com/Great-Hill-Corporation/ethslurp/blob/
 
 #### Usage
 
-`Usage:`    ethslurp [-a|-b|-d|-r|-f|-i|-e|-o|-l|-v|-h] addr  
-`Purpose:`  Fetches data off the Ethereum blockchain for an arbitrary account or smart contract. Optionally formats the output to your specification.
+`Usage:`    ethslurp [-a|-b|-d|-f|-i|-e|-v|-h] addr  
+`Purpose:`  Fetches data off the Ethereum blockchain for an arbitrary account or smart contract. Optionally formats the output to your specification. Note: --income and --expense are mutually exclusive as are --blocks and --dates.
              
 `Where:`  
 
@@ -23,12 +23,9 @@ Please see the <a href="https://github.com/Great-Hill-Corporation/ethslurp/blob/
 | -a | --archive val | filename of output (stdout otherwise) |
 | -b | --blocks range | export records in block range (:0[:max]) |
 | -d | --dates val | export records in date range (:yyyymmdd[hhmmss][:yyyymmdd[hhmmss]]) |
-| -r | --rerun | re-run the most recent slurp |
 | -f | --fmt val | pretty print, optionally add ':txt,' ':csv,' or ':html' |
 | -i | --income | include income transactions only |
 | -e | --expense | include expenditures only |
-| -o | --open | open the configuration file for editing |
-| -l | --list | list previously slurped addresses in cache |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
