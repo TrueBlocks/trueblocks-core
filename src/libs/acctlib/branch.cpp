@@ -334,6 +334,7 @@ bool CBranch::readBackLevel(SFArchive& archive) {
         CVisitData *vd = reinterpret_cast<CVisitData*>(data);
         uint32_t save = vd->type;
         vd->type = T_BRANCH;
+        vd->cnt = 0;
         //        vd->strs = vd->strs + m_branchValue + "+";
         vd->strs = vd->strs + "+";
         (*func)(this, data);
