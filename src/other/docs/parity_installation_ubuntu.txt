@@ -1,21 +1,54 @@
-As root user:
-1) cd /tmp
-2) wget http://d1h4xl4cr1h0mo.cloudfront.net/v1.6.10/x86_64-unknown-linux-gnu/parity_1.6.10_amd64.deb
-3) md5sum parity_1.6.10_amd64.deb  (Check that we obtain the result: 78cd0d0da5e460b74d0c437676ff02af)
-4) As root: dpkg -i parity_1.6.10_amd64.deb
-5) To check what are the files that the package installs:
+Steps to setup an Ethereum node in Ubuntu 17.04
 
-   dpkg-deb -c parity_1.6.10_amd64.deb
+(References: https://www.atraura.com/how-to-set-up-an-ethereum-parity-node-in-digitalocean-ubuntu-14-04-4/)
 
-6) To check what are the files that it really installed:
+-------------------
+Requirements:
+-------------------
 
-   root@ubuntu-1gb-lon1-01:/tmp# dpkg-query -L parity
-	/.
-	/usr
-	/usr/bin
-	/usr/bin/parity-evm
-	/usr/bin/ethkey
-	/usr/bin/ethstore
-	/usr/bin/parity
+Ubuntu distribution 16.04 or above
 
-7) Parity installs 4 binaries (64 bits ones). We need to study its usage.
+root@ubuntu1:~# cat /etc/*rele*
+DISTRIB_ID=Ubuntu
+DISTRIB_RELEASE=17.04
+DISTRIB_CODENAME=zesty
+DISTRIB_DESCRIPTION="Ubuntu 17.04"
+NAME="Ubuntu"
+VERSION="17.04 (Zesty Zapus)"
+ID=ubuntu
+ID_LIKE=debian
+PRETTY_NAME="Ubuntu 17.04"
+VERSION_ID="17.04"
+HOME_URL="https://www.ubuntu.com/"
+SUPPORT_URL="https://help.ubuntu.com/"
+BUG_REPORT_URL="https://bugs.launchpad.net/ubuntu/"
+PRIVACY_POLICY_URL="https://www.ubuntu.com/legal/terms-and-policies/privacy-policy"
+VERSION_CODENAME=zesty
+UBUNTU_CODENAME=zesty
+
+---------------------
+Steps
+---------------------
+
+0) Update latest version of packages running:
+
+   > (sudo) apt-get update
+   > (sudo) apt-get upgrade
+
+1) Install basic development tools (just in case):
+
+   > (sudo) apt-get install build-essential
+
+2) Install RUST compilers
+
+  > (sudo) curl https://sh.rustup.rs -ssf | sh
+
+
+3) Install parity client
+
+  > (sudo) bash <(curl https://get.parity.io -kL)
+
+
+4) Handy command to run it interactively
+
+ parity --tracing on --pruning archive
