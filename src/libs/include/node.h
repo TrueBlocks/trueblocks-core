@@ -11,15 +11,6 @@
 
 namespace qblocks {
 
-#define BLOCK_CACHE SFString("/Volumes/Samsung_T3/scraper/")
-
-#define contractAddrs  (BLOCK_CACHE+"contracts.bin")
-#define fullBlockIndex (BLOCK_CACHE+"fullBlocks.bin")
-#define miniBlockCache (BLOCK_CACHE+"miniBlocks.bin")
-#define miniTransCache (BLOCK_CACHE+"miniTrans.bin")
-#define blockFolder    (BLOCK_CACHE+"blocks/")
-#define bloomFolder    (BLOCK_CACHE+"blooms/")
-
     //-----------------------------------------------------------------------
     extern bool     readOneBlock_fromJson   (      CBlock& block,   const SFString& fileName);
     extern bool     readOneBlock_fromBinary (      CBlock& block,   const SFString& fileName);
@@ -126,4 +117,14 @@ namespace qblocks {
     inline void   forEveryFullBlockInMemory  (BLOCKVISITFUNC     func, CBlockVisitor *bv) { forEveryFullBlockInMemory  (func, bv, bv->firstBlock(), bv->getCount()); }
     inline void   forEveryMiniBlockInMemory  (MINIBLOCKVISITFUNC func, CBlockVisitor *bv) { forEveryMiniBlockInMemory  (func, bv, bv->firstBlock(), bv->getCount()); }
     
+    extern SFString getBlockCacheFolder(void);
+
+#define BLOCK_CACHE    getBlockCacheFolder()
+#define contractAddrs  (BLOCK_CACHE+"contracts.bin")
+#define fullBlockIndex (BLOCK_CACHE+"fullBlocks.bin")
+#define miniBlockCache (BLOCK_CACHE+"miniBlocks.bin")
+#define miniTransCache (BLOCK_CACHE+"miniTrans.bin")
+#define blockFolder    (BLOCK_CACHE+"blocks/")
+#define bloomFolder    (BLOCK_CACHE+"blooms/")
+
 }  // namespace qblocks

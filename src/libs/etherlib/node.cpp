@@ -432,9 +432,8 @@ void writeToJson(const CBaseNode& node, const SFString& fileName)
 void writeToBinary(const CBaseNode& node, const SFString& fileName)
 {
     SFString created;
-    if (establishFolder(fileName,created))
-    {
-        if (!created.empty())
+    if (establishFolder(fileName,created)) {
+        if (!created.empty() && !isTestMode())
             cerr << "mkdir(" << created << ")" << SFString(' ',20) << "                                                     \n";
         SFArchive archive(false, curVersion, true);
         if (archive.Lock(fileName, binaryWriteCreate, LOCK_CREATE))
@@ -495,7 +494,7 @@ SFBloom readOneBloom(blknum_t bn) {
 void writeOneBloom(const SFString& fileName, const SFBloom& bloom) {
     SFString created;
     if (establishFolder(fileName,created)) {
-        if (!created.empty())
+        if (!created.empty() && !isTestMode())
             cerr << "mkdir(" << created << ")" << SFString(' ',20) << "                                                     \n";
         SFArchive archive(false, curVersion, true);
         if (archive.Lock(fileName, binaryWriteCreate, LOCK_CREATE)) {
@@ -1068,4 +1067,31 @@ bool forEveryBloomFile(FILEVISITOR func, void *data, SFUint32 start, SFUint32 co
     }
     return true;
 }
+
+//-------------------------------------------------------------------------
+SFString getBlockCacheFolder(void) {
+
+    static SFString blockCache;
+    if (blockCache.empty()) {
+        CToml toml(configPath("quickBlocks.toml"));
+        SFString path = toml.getConfigStr("settings", "blockCachePath", "<NOT_SET>");
+//cout << path << "\n";
+        if (path == "<NOT_SET>") {
+            path = configPath()+"cache/";
+            toml.setConfigStr("settings", "blockCachePath", path);
+            toml.writeFile();
+        	establishFolder(path);
+        }
+        if (!path.endsWith("/"))
+            path += "/";
+        CFilename folder(path);
+        if (!folder.isValid()) {
+            cerr << "Invalid path (" << folder.getFullPath() << ") in config file. Quitting...\n";
+            exit(0);
+        }
+        blockCache = folder.getFullPath();
+    }
+    return blockCache;
+}
+
 }  // namespace qblocks
