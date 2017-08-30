@@ -53,6 +53,8 @@ run_test("ethslurp_invalid_date_range_4"      "-d:201705191000"                "
 run_test("ethslurp_invalid_date_range_5"      "-d:20170519100000:201705190000" " 0x1324e7b922b30B49Ab8EA81086341cc41C249346")
 run_test("ethslurp_no_record_in_dates_range"  "-d:20170720:20170820"           " 0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0")
 run_test("ethslurp_single_date_range"         "-d:20170821:20170821"           " 0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0")
+# For the previous test case - set CACHE_ADDR at environment, this way we can clean the cache before running it
+set_property(TEST ethslurp_single_date_range PROPERTY ENVIRONMENT "CACHE_ADDR=0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0")
 run_test("ethslurp_date_range_1"              "-d:20170519:20170618"           " 0x1324e7b922b30B49Ab8EA81086341cc41C249346")
 run_test("ethslurp_date_range_2"              "-d:20170519:20170530"           " 0x1324e7b922b30B49Ab8EA81086341cc41C249346")
 run_test("ethslurp_invalid_date_range_1_long"      "--dates"                             " 0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0")
