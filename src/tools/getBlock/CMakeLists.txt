@@ -47,6 +47,9 @@ run_test("getBlock_raw_02"       "-s:r"           " 2768801" " 1995314" " 195801
 run_test("getBlock_raw_03"       "-s:raw"         " 2768801" " 1995314" " 1958017" " --normalize")
 run_test("getBlock_raw_04"       "-r"             " 2768801" " 1995314" " 1958017" " --normalize")
 
+# so that the test works, we must first bring these blocks onto the cache
+run_test("getBlock_force_01"    " 2768801" " 1995314" " 1958017" " --normalize" " -p" " -o")
+
 # display a bunch of blocks from cache
 run_test("getBlock_cache_01"     "--source:cache" " 2768801" " 1995314" " 1958017" " --normalize" " -p")
 run_test("getBlock_cache_02"     "-s:c"           " 2768801" " 1995314" " 1958017" " --normalize" " -p")
@@ -63,6 +66,7 @@ run_test("getBlock_parity_hex"   "--parity"       " 0x2e7721")
 run_test("getBlock_parity_num"   "-p"             " 728708")
 run_test("getBlock_parity_range" "-p"             " 358450-0x5785a")
 
+run_test("getBlock_force_02"    " 2769609" " 2799895" " 2872831" " 3076260" " -o")
 run_test("getBlock_multi1" "-pr" " 2769609" " 2799895" " 2872831" " 3076260")
 run_test("getBlock_multi2" "-pc" " 2769609" " 2799895" " 2872831" " 3076260")
 
