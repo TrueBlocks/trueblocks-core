@@ -2,7 +2,6 @@
 current=0.2.0
 
 [settings]
-cachePath=/Users/jrush/.quickBlocks/slurps/
 api_provider=EtherScan
 api_url=http://etherscan.io/apis
 api_key=<NOT_SET>
