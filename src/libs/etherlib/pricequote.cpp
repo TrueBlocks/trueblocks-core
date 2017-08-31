@@ -11,6 +11,7 @@
  */
 #include "pricequote.h"
 #include "transaction.h"
+#include "node.h"
 
 namespace qblocks {
 
@@ -240,15 +241,21 @@ bool CPriceQuote::readBackLevel(SFArchive& archive) {
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
+SFString priceDatabasePath(void) {
+    return blockCachePath("prices/poloniex.bin");
+}
+
+//---------------------------------------------------------------------------
 bool loadPriceData(CPriceQuoteArray& quotes, bool freshen, SFString& message, SFUint32 step) {
 
-    SFString cacheFile = configPath("prices/poloniex.bin");
+    SFString cacheFile = priceDatabasePath();
 
     // Load and possibly refresh the price database
     SFTime lastRead = SFTime(2015, 1, 1, 0, 0, 0);  // Ethereum didn't even exist before July 2015
     if (fileExists(cacheFile)) {
         SFArchive archive(true, NO_SCHEMA, true);
         if (archive.Lock(cacheFile, binaryReadOnly, LOCK_NOWAIT)) {
+            archive.readHeader();
             archive >> lastRead;
             archive >> quotes;
             archive.Close();
@@ -283,10 +290,11 @@ bool loadPriceData(CPriceQuoteArray& quotes, bool freshen, SFString& message, SF
     cerr << "nextRead: " << nextRead << "\n";
     cerr.flush();
 #endif
+    bool reportAtEnd = verbose;
     if (nextRead > now && !freshen) {
         if (!isTestMode())
             msg = "Price database is up-to-date as of ";
-        verbose = false;
+        reportAtEnd = false;
 
     } else {
         if (!isTestMode())
@@ -359,10 +367,11 @@ bool loadPriceData(CPriceQuoteArray& quotes, bool freshen, SFString& message, SF
         // Write the database to the cache
         if (prevLast != lastRead && freshen) {
             SFArchive archive(false, NO_SCHEMA, true);
-            if (!archive.Lock(cacheFile, binaryWriteCreate, LOCK_NOWAIT)) {
+            if (!archive.Lock(cacheFile, binaryWriteCreate, LOCK_WAIT)) {
                 message = "Could not open cache file for writing: '" + cacheFile + "'";
                 return false;
             }
+            archive.writeHeader();
             archive << lastRead;
             archive << quotes;
             archive.Close();
@@ -376,7 +385,7 @@ bool loadPriceData(CPriceQuoteArray& quotes, bool freshen, SFString& message, SF
         }
     }
 
-    if (!verbose) {
+    if (!reportAtEnd) {
         SFString date = lastRead.Format(FMT_DEFAULT);
         SFString count = asString(quotes.getCount());
         if (isTestMode()) {
@@ -428,4 +437,3 @@ SFString asDollars(timestamp_t ts, SFUintBN weiIn) {
 }
 // EXISTING_CODE
 }  // namespace qblocks
-
