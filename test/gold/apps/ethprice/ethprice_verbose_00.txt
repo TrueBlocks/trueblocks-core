@@ -1,6 +1,7 @@
 ethprice argc: 2 [1:-v] 
 ethprice -v 
 Read cnt existing price quotes (lastRead: Now)
+Now : cnt records
 [
 {
   "timestamp": 1439078400,
