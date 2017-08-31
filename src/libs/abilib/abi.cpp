@@ -256,7 +256,7 @@ void clearAbis(void) {
 //---------------------------------------------------------------------------
 SFString findEncoding(const SFString& addr, CFunction& func) {
     if (!nAbis) {
-        SFString contents = asciiFileToString(configPath("abis/"+addr+".abi"));
+        SFString contents = asciiFileToString(configPath("abis/" + addr + ".abi"));
         while (!contents.empty()) {
             abis[nAbis][1] = nextTokenClear(contents, '\n');
             abis[nAbis][0] = nextTokenClear(abis[nAbis][1], '|');
@@ -313,7 +313,7 @@ bool CAbi::loadABI(const SFString& addr) {
     if (abiByName.getCount() && abiByEncoding.getCount())
         return true;
 
-    SFString abiFilename = configPath("abis/"+addr+".json");
+    SFString abiFilename = configPath("abis/" + addr + ".json");
     if (!fileExists(abiFilename))
         return false;
 
@@ -333,8 +333,8 @@ bool CAbi::loadABI(const SFString& addr) {
             getEncoding(abiFilename, addr, abiByEncoding[i]);
         }
 
-        if (!fileExists(configPath("abis/"+addr+".abi")) && !abis1.empty())
-            stringToAsciiFile(configPath("abis/"+addr+".abi"), abis1);
+        if (!fileExists(configPath("abis/" + addr + ".abi")) && !abis1.empty())
+            stringToAsciiFile(configPath("abis/" + addr + ".abi"), abis1);
 
         if (verbose) {
             for (uint32_t i = 0 ; i < abiByName.getCount() ; i++) {

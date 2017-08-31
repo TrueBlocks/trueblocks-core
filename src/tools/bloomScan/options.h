@@ -31,7 +31,6 @@ inline SFString dateColor(SFUint32 bn)
 	return bYellow;
 }
 inline SFTime toDate(timestamp_t ts) { return dateFromTimeStamp(ts); }
-inline void etherlib_init(void) { setStorageRoot(BLOCK_CACHE); etherlib_init("binary"); }
 #define null ((void*)0)
 #define toSpaces dbgBloom
 #define forEveryBlock(a,b,c) forEveryNonEmptyBlockOnDisc(a, null, b, c)
