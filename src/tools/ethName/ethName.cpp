@@ -12,7 +12,6 @@
 int main(int argc, const char *argv[]) {
 
    // Tell the system where the blocks are and which version to use
-    setStorageRoot(BLOCK_CACHE);
     etherlib_init("fastest");
 
     COptions options;
@@ -26,7 +25,7 @@ int main(int argc, const char *argv[]) {
             return 0;
 
         if (!loaded) {
-            usage(configPath(NAMES_FILENAME) + " is empty. Use ethName -e to add some names. Quitting...");
+            usage(configPath("names/names.txt") + " is empty. Use ethName -e to add some names. Quitting...");
             exit(0);
         }
 
@@ -118,17 +117,17 @@ bool loadData(void) {
     if (accounts.getCount() > 0)
         return true;
 
-    if (!folderExists(configPath("configs/")))
-        establishFolder(configPath("configs/"));
+    if (!folderExists(configPath("names/")))
+        establishFolder(configPath("names/"));
 
-    SFString contents = StripAny(asciiFileToString(configPath(NAMES_FILENAME)), "\t\n ") + "\n";
+    SFString contents = StripAny(asciiFileToString(configPath("names/names.txt")), "\t\n ") + "\n";
     contents.ReplaceAll("\t\t", "\t");
     if (contents.empty()) {
-        stringToAsciiFile(configPath(NAMES_FILENAME), STR_DEFAULT_DATA);
+        stringToAsciiFile(configPath("names/names.txt"), STR_DEFAULT_DATA);
         contents = STR_DEFAULT_DATA;
     }
 
-    SFString custom = asciiFileToString(configPath(CUSTOM_NAMES));
+    SFString custom = asciiFileToString(configPath("names/custom_names.txt"));
     custom.ReplaceAll("\t\t", "\t");
     if (!isTestMode()) {
         contents += custom;
@@ -136,7 +135,7 @@ bool loadData(void) {
 
     contents.ReplaceAll("\t\t", "\t");
     if (contents.empty()) {
-        stringToAsciiFile(configPath(NAMES_FILENAME), STR_DEFAULT_DATA);
+        stringToAsciiFile(configPath("names/names.txt"), STR_DEFAULT_DATA);
         contents = STR_DEFAULT_DATA;
     }
 

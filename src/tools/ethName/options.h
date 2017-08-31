@@ -26,6 +26,3 @@ public:
     bool parseArguments(SFString& command);
     void Init(void);
 };
-
-#define NAMES_FILENAME SFString("configs/names.conf")
-#define CUSTOM_NAMES   SFString("configs/custom_names.conf")
