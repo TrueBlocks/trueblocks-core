@@ -22,7 +22,6 @@ SFString displayValue(SFUintBN valIn) {
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
     // Tell the system where the blocks are and which version to use
-    setStorageRoot(BLOCK_CACHE);
     etherlib_init("parity");
 
     // Parse command line, allowing for command files
