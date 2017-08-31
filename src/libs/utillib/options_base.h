@@ -68,8 +68,7 @@ namespace qblocks {
 
     //--------------------------------------------------------------------------------
     extern void     editFile  (const SFString& fileName);
-    extern SFString configPath(const SFString& part = "");
-    inline SFString cachePath (const SFString& part = "") { return configPath("slurps/") + part; }
+    extern SFString configPath(const SFString& part);
 
     //--------------------------------------------------------------------------------
     extern CParams *paramsPtr;
