@@ -10,7 +10,8 @@
 
 //---------------------------------------------------------------------------------------------------
 CParams params[] = {
-    CParams("-at:<timestamp>",                 "Report the price since nearest five mintes to the given timestamp"),
+    CParams("-at:<timestamp>",                 "Report the price since nearest five minutes to the given timestamp"),
+    CParams("-current",                        "Report on the current price (i.e. -at:now)"),
     CParams("-freshen",                        "Freshen database (append new data)"),
     CParams("-period:<5|15|30|*120|240|1440>", "Display prices in this increment. One of [5|15|30|120*|240|1440]"),
     CParams("-when:<0-23>",                    "Hour on which to start display. Integer between 0-23"),
@@ -25,15 +26,23 @@ bool COptions::parseArguments(SFString& command) {
     while (!command.empty()) {
 
         SFString arg  = nextTokenClear(command, ' ');
+        // do not collapse
+        if (arg == "-c" || arg == "--current")
+            arg = "-a:now";
         SFString orig = arg;
+
         if (arg == "-f" || arg == "--freshen") {
             freshen = true;
 
         } else if (arg.startsWith("-a:") || arg.startsWith("--at:")) {
             arg = orig.Substitute("-a:","").Substitute("--at:","");
-            at = newTimestamp(arg);
-            if (!isUnsigned(arg))
-                return usage("Timestamp expected: " + orig);
+            if (arg == "now") {
+                at = toTimeStamp(Now());
+            } else {
+                at = newTimestamp(arg);
+                if (!isUnsigned(arg))
+                    return usage("Timestamp expected: " + orig);
+            }
 
         } else if (arg.startsWith("-w:") || arg.startsWith("--when:")) {
             arg = orig.Substitute("-w:","").Substitute("--when:","");
@@ -54,12 +63,12 @@ bool COptions::parseArguments(SFString& command) {
         }
     }
 
-    SFString fileName = configPath("prices/poloniex.bin");
-    if (!fileExists(fileName)) {
+    if (!fileExists(priceDatabasePath())) {
         if (verbose)
-            cerr << "First run, establishing price cache folder.\n";
-        establishFolder(fileName);
+            cerr << "Establishing price database cache.\n";
+        establishFolder(priceDatabasePath());
     }
+
     return true;
 }
 
