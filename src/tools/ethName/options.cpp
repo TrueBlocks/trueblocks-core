@@ -44,7 +44,7 @@ bool COptions::parseArguments(SFString& command) {
             matchCase = true;
 
         } else if (arg == "-o" || arg == "--open") {
-            editFile(configPath(NAMES_FILENAME));
+            editFile(configPath("names/names.conf"));
             exit(0);
 
         } else if (arg.startsWith('-')) {  // do not collapse
