@@ -14,7 +14,6 @@ extern void unloadCache(void);
 
 //---------------------------------------------------------------
 int main(int argc, const char *argv[]) {
-    setStorageRoot(BLOCK_CACHE);
     etherlib_init("parity");
 
     // Parse command line, allowing for command files

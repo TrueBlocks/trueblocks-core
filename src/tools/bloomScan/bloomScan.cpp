@@ -12,7 +12,7 @@
 blknum_t tokenStart = 3700000;
 blknum_t tokenEnd   = 3900000;
 
-// gnosis
+// Gnosis
 //blknum_t tokenStart = 3593108;
 //blknum_t tokenEnd   = 3593475;
 
@@ -22,13 +22,14 @@ blknum_t pad = 500;
 //-------------------------------------------------------------
 int main(int argc, const char *argv[])
 {
-	etherlib_init();
+    etherlib_init("binary");
 
     forEveryNonEmptyBlockOnDisc(displayBloom, null, tokenStart - pad, tokenEnd - tokenStart + (pad*2), skip);
 
     return 0;
 }
 
+//-------------------------------------------------------------
 inline SFString toSpaces2(const SFBloom a) {
     SFString ret = bBlue+fromBloom(a).Substitute("0",cOff+"."+bBlue);
     SFString colors[] = {
@@ -55,31 +56,3 @@ bool displayBloom(CBlock& block, void *data)
 
     return true;
 }
-
-#if 0
-//-------------------------------------------------------------
-    if (green && block.blockNumber == 3593273) cout << bGreen << SFString('-',108) << cOff << "\n";
-    SFString s = fromBloom(block.logsBloom).substr(2).c_str();
-    uint32_t cnt=0;
-    for (int i=0;i<s.length();i++)
-    {
-        char ss[4];
-        ss[0] = '0';
-        ss[1] = 'x';
-        ss[2] = s[i];
-        ss[3] = '\0';
-        unsigned char x = (unsigned char)strtoul((const char*)&ss,NULL,16);
-//        if (std::bitset<8>(x).count() > 2)
-//            cout << s[i] << " : " << std::bitset<8>(x).count() << "          \n";
-        cnt += std::bitset<8>(x).count();
-    }
-//    cout << cnt << "\n";
-//    cout << cnt * 10000 << "\n";
-//    cout << (cnt * 10000 / 2048) << "\n";
-    float x = (2 * ((cnt * 10000 / 2048) / 100.) + 0.5);
-//    cout << x << "\n";
-//uint32_t pct = (uint32_t)((cnt * 100) / 2048. / 100.);
-    cout << block.blockNumber << " " << SFString('x',x).Substitute("x","░") << SFString('.',200-x) << "\n"; //\r";
-    if (green && block.blockNumber == 3593309) cout << bGreen << SFString('-',108) << cOff << "\n";
-    cout.flush();
-#endif
