@@ -209,7 +209,7 @@ run_test("ethslurp_verbose_options_long"           "--fmt:csv" " --income"  " --
 
 #--------------------------------------------------------------------------------
 #echo "test15: test list and cache clear options"                         | tee proposed/test15.txt
-#ls ~/.quickBlocks.test/slurps                                            >>proposed/test15.txt 2>&1
+#ls ~/.quickBlocks.test/slu rps                                            >>proposed/test15.txt 2>&1
 #ethslurp -t -l                                                           >>proposed/test15.txt 2>&1
 #ethslurp -t -c                                                           >>proposed/test15.txt 2>&1
 #find ~/.quickBlocks.test                                                 >>proposed/test15.txt 2>&1
