@@ -20,7 +20,7 @@
 //-----------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
-    parselib_init("binary");
+    parselib_init();
 
     registerQuitHandler(myQuitHandler);
     if (argc < 2)

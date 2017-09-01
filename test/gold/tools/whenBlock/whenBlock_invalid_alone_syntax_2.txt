@@ -1,16 +1,5 @@
+Should report prior to start of chain
 
-[0;31m  Could not open the mini-block database: /home/carlos/.quickBlocks/cache/miniBlocks.bin.
-
-
-[0;33m[1m  Usage:    [0mwhenBlock [-a|-l|-v|-h] date / block  
-[0;33m[1m  Purpose:  [0mFinds the nearest block before the JSON-formatted date, or the nearest date before the given block.
-             
-[0;33m[1m  Where:  [0m  
-	date / block          one of the special values listed below or YYYY-MM-DD-[HH[:MM[:SS]]] or a blockNumber (required)
-	-a  (--alone)         show the found block or found date unadorned (useful for scripting)
-	-l  (--list)          list special blocks timestamps and dates
-	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
-	-h  (--help)          display this help screen
-
-[0;34m[1m  Powered by QuickBlocks (0.2.0-alpha)
-[0m
+whenBlock argc: 3 [1:-a] [2:2015-03-02] 
+whenBlock -a 2015-03-02 
+0

@@ -68,7 +68,7 @@ bool CSlurperApp::Initialize(COptions& options, SFString& message) {
 
     // If this is the first time we've ever run, build the toml file
     if (!establishFolders(toml)) {
-        message = "Unable to create data folders at " + cachePath();
+        message = "Unable to create data folders at " + configPath("slurps/");
         return false;
     }
 
@@ -118,17 +118,13 @@ bool CSlurperApp::Initialize(COptions& options, SFString& message) {
     toml.writeFile();
 
     // Load per address configurations if any
-    SFString customConfig = configPath("configs/"+addr+".toml");
+    SFString customConfig = configPath("slurps/" + addr + ".toml");
     if (fileExists(customConfig) || !options.name.empty()) {
         CToml perAddr("");
         perAddr.setFilename(customConfig);
         if (fileExists(customConfig)) {
             perAddr.readFile(customConfig);
             toml.mergeFile(&perAddr);
-        }
-        if (!options.name.empty()) {
-            perAddr.setConfigStr("settings", "name", options.name);
-            perAddr.writeFile();
         }
     }
 
@@ -160,7 +156,7 @@ bool CSlurperApp::Slurp(COptions& options, SFString& message) {
     theAccount.abi.loadABI(theAccount.addr);
 
     // Do we have the data for this address cached?
-    SFString cacheFilename = cachePath(theAccount.addr+".bin");
+    SFString cacheFilename = configPath("slurps/" + theAccount.addr + ".bin");
     bool needToRead = fileExists(cacheFilename);
     if (options.rerun && theAccount.transactions.getCount())
         needToRead = false;
@@ -549,55 +545,45 @@ void findBlockRange(const SFString& json, uint32_t& minBlock, uint32_t& maxBlock
 //--------------------------------------------------------------------------------
 // Make sure our data folder exist, if not establish it
 bool establishFolders(CToml& toml) {
-    // Just double check we're in the right bracnh
-    if (getCWD().Contains("/src.GitHub.1")) {
-        cerr << "You're in src.GitHub.1 folder. Comment this code if you mean to be.\n";
-        exit(0);
-    }
 
-    SFString tomlFilename = configPath("quickBlocks.toml");
-    toml.setFilename(tomlFilename);
-    if (folderExists(cachePath()) && fileExists(tomlFilename)) {
-        toml.readFile(tomlFilename);
+    SFString configFilename = configPath("quickBlocks.toml");
+    toml.setFilename(configFilename);
+    if (folderExists(configPath("slurps/")) && fileExists(configFilename)) {
+        toml.readFile(configFilename);
         return true;
     }
 
     // create the main folder
-    mkdir((const char*)configPath(), (mode_t)0755);
-    if (!folderExists(configPath()))
+    mkdir((const char*)configPath(""), (mode_t)0755);
+    if (!folderExists(configPath("")))
         return false;
 
-    // create the folder for the slurps
-    mkdir(cachePath(), (mode_t)0755);
-    if (!folderExists(cachePath()))
+    // create the folder for the data
+    mkdir(configPath("slurps/"), (mode_t)0755);
+    if (!folderExists(configPath("slurps/")))
         return false;
 
-    toml.setConfigStr("version",     "current",           "0.2.0");
+    toml.setConfigStr("version",  "current",          getVersionStr());
 
-    toml.setConfigStr("settings",    "cachePath",         cachePath());
-    toml.setConfigStr("settings",    "api_key",           EMPTY);
+    toml.setConfigStr("settings", "api_key",          "<NOT_SET>");
+    toml.setConfigStr("settings", "blockCachePath",   "<NOT_SET>");
 
-    toml.setConfigStr("display", "fmt_fieldList",     EMPTY);
-
+    toml.setConfigStr("display", "fmt_fieldList",     "");
     toml.setConfigStr("display", "fmt_txt_file",      "[{HEADER}]\\n[{RECORDS}]");
     toml.setConfigStr("display", "fmt_txt_record",    "[{FIELDS}]\\n");
     toml.setConfigStr("display", "fmt_txt_field",     "\\t[{FIELD}]");
-
     toml.setConfigStr("display", "fmt_csv_file",      "[{HEADER}]\\n[{RECORDS}]");
     toml.setConfigStr("display", "fmt_csv_record",    "[{FIELDS}]\\n");
     toml.setConfigStr("display", "fmt_csv_field",     "[\"{FIELD}\"],");
-
     toml.setConfigStr("display", "fmt_html_file",     "<table>\\n[{HEADER}]\\n[{RECORDS}]</table>\\n");
     toml.setConfigStr("display", "fmt_html_record",   "\\t<tr>\\n[{FIELDS}]</tr>\\n");
     toml.setConfigStr("display", "fmt_html_field",    "\\t\\t<td>[{FIELD}]</td>\\n");
-
     toml.setConfigStr("display", "fmt_json_file",     "[{RECORDS}]\\n");
     toml.setConfigStr("display", "fmt_json_record",   "\\n        {\\n[{FIELDS}]        },");
     toml.setConfigStr("display", "fmt_json_field",    "\"[{p:FIELD}]\":\"[{FIELD}]\",");
-
-    toml.setConfigStr("display", "fmt_custom_file",   "file:custom_format_file.html");
-    toml.setConfigStr("display", "fmt_custom_record", "fmt_html_record");
-    toml.setConfigStr("display", "fmt_custom_field",  "fmt_html_field");
+    toml.setConfigStr("display", "fmt_custom_file",   "file:custom.txt");
+    toml.setConfigStr("display", "fmt_custom_record", "fmt_txt_record");
+    toml.setConfigStr("display", "fmt_custom_field",  "fmt_txt_field");
 
     toml.writeFile();
     return fileExists(toml.getFilename());

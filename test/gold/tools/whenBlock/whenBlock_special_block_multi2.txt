@@ -1,0 +1,7 @@
+Should report on junk special block
+
+whenBlock argc: 5 [1:stateclear] [2:iceage] [3:4001001] [4:junk] 
+whenBlock stateclear iceage 4001001 junk 
+
+	block #4001001 : 1499651592 : 2017-07-10 01:53:12 UTC
+

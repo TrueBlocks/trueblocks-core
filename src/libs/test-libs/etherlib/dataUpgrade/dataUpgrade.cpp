@@ -15,7 +15,6 @@ extern bool testUpgrade(COptions& options);
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
     // Tell the system where the blocks are and which version to use
-    setStorageRoot(BLOCK_CACHE);
     etherlib_init("binary");
 
     CNewBlock::registerClass();
