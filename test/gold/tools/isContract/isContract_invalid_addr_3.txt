@@ -1,0 +1,3 @@
+isContract argc: 2 [1:0xrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr] 
+isContract 0xrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr 
+isContract(0xrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr): false
