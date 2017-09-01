@@ -255,7 +255,9 @@ bool loadPriceData(CPriceQuoteArray& quotes, bool freshen, SFString& message, SF
     if (fileExists(cacheFile)) {
         SFArchive archive(true, NO_SCHEMA, true);
         if (archive.Lock(cacheFile, binaryReadOnly, LOCK_NOWAIT)) {
-            archive.readHeader();
+            archive.readHeader(); // we read the header even though it may not be the current version...
+            if (!archive.isSchema(NO_SCHEMA)) // ... if it's not the current version return to begin of file
+                archive.Seek(0, SEEK_SET);
             archive >> lastRead;
             archive >> quotes;
             archive.Close();
