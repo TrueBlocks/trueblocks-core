@@ -1,3 +1,5 @@
+Looks like an invalid input here
+
 whenBlock argc: 3 [1:-l] [2:2015-03-02] 
 whenBlock -l 2015-03-02 
 
