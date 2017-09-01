@@ -1,3 +1,5 @@
 whereBlock argc: 3 [1:-a] [2:-b] 
 whereBlock -a -b 
 The block 0 was not found in the cache.
+
+This is incorrect - it should report invalid option since we didn't get a block number

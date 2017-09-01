@@ -1,3 +1,4 @@
+This should show it's given parameters even though it correctly tripped out early from parseCommandLine
 
   Not enough arguments presented.
 
