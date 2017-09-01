@@ -1,5 +1,8 @@
-whenBlock argc: 3 [1:--list] [2:--a] 
-whenBlock --list --a 
+May want to report an error if any option is given with -l which should pre-dominate
+
+
+whenBlock argc: 3 [1:--list] [2:-a] 
+whenBlock --list -a 
 
 	Special blocks:
 	  first                0

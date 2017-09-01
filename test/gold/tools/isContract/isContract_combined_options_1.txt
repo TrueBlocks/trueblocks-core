@@ -1,7 +1,7 @@
-isContract argc: 5 [1:-n] [2:0x3003208e77edf3b088b122b5de3a6fc8c8ef679d] [3:0xab7c74abc0c4d48d1bdad5dcb26153fc8780f83e] [4:0xab7c74abc0c4d48d1bdad5dcb26153fc8780f83e] 
-isContract -n 0x3003208e77edf3b088b122b5de3a6fc8c8ef679d 0xab7c74abc0c4d48d1bdad5dcb26153fc8780f83e 0xab7c74abc0c4d48d1bdad5dcb26153fc8780f83e 
+isContract argc: 5 [1:--nodiff] [2:0x26c4e381ffbdc825be9b986c3ba40525f0771e8d] [3:0x26c4e381ffbdc825be9b986c3ba40525f0771e8d] [4:-d] 
+isContract --nodiff 0x26c4e381ffbdc825be9b986c3ba40525f0771e8d 0x26c4e381ffbdc825be9b986c3ba40525f0771e8d -d 
 
-  --nodiff command requires exactly two addresses.
+  Choose only one of --nodiff and --display.
 
 
   Usage:    isContract [-d|-n|-v|-h] addr[s]  

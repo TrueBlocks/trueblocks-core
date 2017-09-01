@@ -1,3 +1,5 @@
+Might want to report an incorrect -a entry here. -l pre-dominates
+
 whenBlock argc: 3 [1:-l] [2:-a] 
 whenBlock -l -a 
 
