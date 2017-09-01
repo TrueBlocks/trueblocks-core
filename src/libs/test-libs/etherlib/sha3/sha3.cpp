@@ -12,7 +12,6 @@ extern void doTests(void);
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
     // Tell the system where the blocks are and which version to use
-    setStorageRoot(BLOCK_CACHE);
     etherlib_init("binary");
 
     // Parse command line, allowing for command files

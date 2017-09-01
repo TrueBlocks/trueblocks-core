@@ -29,7 +29,6 @@ CParams params[] = {
     CParams("@--reverse",       "display results sorted in reverse chronological order (chronological by default)"),
     CParams("@--acct_id:<val>", "for 'cache' mode, use this as the :acct_id for the cache (0 otherwise)"),
     CParams("@--cache",         "write the data to a local QuickBlocks cache"),
-    CParams("@--clear",         "clear all previously cached slurps"),
     CParams("@--name:<str>",    "name this address"),
     CParams("",                 "Fetches data off the Ethereum blockchain for an arbitrary account or smart "
                                 "contract. Optionally formats the output to your specification. Note: --income "
@@ -86,15 +85,15 @@ bool COptions::parseArguments(SFString& command) {
 
         } else if (arg == "-l" || arg == "--list") {
             uint32_t nFiles = 0;
-            listFilesOrFolders(nFiles, NULL, cachePath("*.*"));
+            listFilesOrFolders(nFiles, NULL, configPath("slurps/*.bin"));
             if (nFiles) {
                 SFString *files = new SFString[nFiles];
-                listFilesOrFolders(nFiles, files, cachePath("*.*"));
+                listFilesOrFolders(nFiles, files, configPath("slurps/*.bin"));
                 for (uint32_t i = 0 ; i < nFiles ; i++)
                     outScreen << files[i] << "\n";
                 delete [] files;
             } else {
-                outScreen << "No files found in cache folder '" << cachePath() << "'\n";
+                outScreen << "No files found in cache folder '" << configPath("slurps/") << "'\n";
             }
             exit(0);
 
@@ -202,17 +201,6 @@ bool COptions::parseArguments(SFString& command) {
 
             editFile(configPath("quickBlocks.toml"));
             exit(0);
-
-        } else if (arg == "-c" || arg == "--clear") {
-            if (isTestMode()) {
-                //removeFolder(cachePath());
-                cerr << "Cached slurp files were NOT cleared!\n";
-            } else {
-                cerr << "Clearing the cache is not implemented. You may, if you wish, remove all\n";
-                cerr << "files in " << cachePath() << " to acheive the same thing. If you\n";
-                cerr << "do delete the cache, large contracts may take a very long time to re-generate.\n";
-            }
-            exit(1);
 
         } else if (arg.startsWith('-')) {  // do not collapse
             if (!builtInCmd(arg)) {

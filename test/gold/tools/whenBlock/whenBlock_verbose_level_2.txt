@@ -1,3 +1,5 @@
+Should report a bug since 'j' is not a number
+
 whenBlock argc: 3 [1:-v:j] [2:1000] 
 whenBlock -v:j 1000 
 

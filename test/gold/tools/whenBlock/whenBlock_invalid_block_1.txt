@@ -1,3 +1,7 @@
+This is not an invalid input. It's hex, which is fine for blocks
 
-	block [0;33m#0[0m : [0;33m1438269960[0m : [0;33m2015-07-30 15:26:00 UTC[0m
+whenBlock argc: 2 [1:0x0a] 
+whenBlock 0x0a 
+
+	block #0 : 1438269960 : 2015-07-30 15:26:00 UTC
 

@@ -5,7 +5,7 @@ current=0.2.0
 api_provider=EtherScan
 api_url=http://etherscan.io/apis
 api_key=<NOT_SET>
-block_data_path=<NOT_SET>
+blockCachePath=<NOT_SET>
 
 [display]
 fmt_fieldList=
