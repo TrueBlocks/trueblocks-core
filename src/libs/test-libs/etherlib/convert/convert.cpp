@@ -11,7 +11,6 @@
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
     // Tell the system where the blocks are and which version to use
-    setStorageRoot(BLOCK_CACHE);
     etherlib_init("binary");
 
     SFAddress addrs[] = { "", "0x", "0x0", "0x0000000000000000000000000000000000000000" };

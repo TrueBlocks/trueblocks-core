@@ -1,17 +1,7 @@
+If miniBlockIndex.bin does not exist, this reports and error on Carlos's machine. This should do an estimate instead
+
+More importantly it should report invalid date if earlier than start of chain.
+
 whenBlock argc: 3 [1:--alone] [2:2015-03-02] 
 whenBlock --alone 2015-03-02 
-
-  Could not open the mini-block database: /home/carlos/.quickBlocks/cache/miniBlocks.bin.
-
-
-  Usage:    whenBlock [-a|-l|-v|-h] date / block  
-  Purpose:  Finds the nearest block before the JSON-formatted date, or the nearest date before the given block.
-             
-  Where:    
-	date / block          one of the special values listed below or YYYY-MM-DD-[HH[:MM[:SS]]] or a blockNumber (required)
-	-a  (--alone)         show the found block or found date unadorned (useful for scripting)
-	-l  (--list)          list special blocks timestamps and dates
-	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
-	-h  (--help)          display this help screen
-
-  Powered by QuickBlocks
+0

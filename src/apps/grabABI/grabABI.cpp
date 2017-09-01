@@ -23,7 +23,7 @@ extern const char* STR_CODE_SIGS;
 extern const char* STR_BLOCK_PATH;
 
 //-----------------------------------------------------------------------
-SFString templateFolder = getHomeFolder() + ".quickBlocks/grabABI/";
+SFString templateFolder = configPath("grabABI/");
 
 //-----------------------------------------------------------------------
 int sortFunctionByName(const void *v1, const void *v2) {
@@ -312,7 +312,7 @@ int main(int argc, const char *argv[]) {
                             else
                                 cout << "Generating class for derived transaction type: '" << theClass << "'\n";
 
-                            SFString makeClassCmd = getHomeFolder() + ".quickBlocks/makeClass/makeClass -r ";
+                            SFString makeClassCmd = configPath("makeClass/makeClass") + " -r ";
                             SFString res = doCommand(makeClassCmd + toLower(name));
                             if (!res.empty())
                                 cout << "\t" << res << "\n";
@@ -325,7 +325,7 @@ int main(int argc, const char *argv[]) {
             if (!options.isBuiltin())
                 headers += ("#include \"processing.h\"\n");
             SFString headerCode = SFString(STR_HEADERFILE).Substitute("[{HEADERS}]", headers);
-            SFString parseInit = "parselib_init(const SFString& method)";
+            SFString parseInit = "parselib_init(void)";
             if (!options.isBuiltin())
                 headerCode.ReplaceAll("[{PREFIX}]_init(void)", parseInit);
             headerCode.ReplaceAll("[{ADDR}]", options.primaryAddr.Substitute("0x", ""));
@@ -354,7 +354,7 @@ int main(int argc, const char *argv[]) {
             factory2.Replace("} else ", "");
 
             SFString sourceCode = asciiFileToString(templateFolder + "parselib/parselib.cpp");
-            parseInit = "parselib_init(const SFString& method)";
+            parseInit = "parselib_init(void)";
             if (!options.isBuiltin())
                 sourceCode.ReplaceAll("[{PREFIX}]_init(void)", parseInit);
             if (options.isToken()) {
@@ -594,4 +594,4 @@ const char* STR_CODE_SIGS =
 "uint32_t nTopics = sizeof(topics) / sizeof(SFString);\n"
 "\n";
 
-const char* STR_BLOCK_PATH = "setStorageRoot(BLOCK_CACHE);\n\tetherlib_init(method);\n\n";
+const char* STR_BLOCK_PATH = "\tetherlib_init(\"binary\");\n\n";

@@ -61,6 +61,8 @@ CURL *getCurl(bool cleanup=false)
 //-------------------------------------------------------------------------
 void etherlib_init(const SFString& sourceIn)
 {
+    setStorageRoot(blockCachePath(""));
+
     // In case we create any lock files, so
     // they get cleaned up
     registerQuitHandler(defaultQuitHandler);
@@ -92,7 +94,7 @@ void etherlib_init(const SFString& sourceIn)
     // initialize curl
     getCurl();
 
-    establishFolder(configPath());
+    establishFolder(configPath(""));
 }
 
 //-------------------------------------------------------------------------
@@ -1069,7 +1071,7 @@ bool forEveryBloomFile(FILEVISITOR func, void *data, SFUint32 start, SFUint32 co
 }
 
 //-------------------------------------------------------------------------
-SFString getBlockCacheFolder(void) {
+SFString blockCachePath(const SFString& _part) {
 
     static SFString blockCache;
     if (blockCache.empty()) {
@@ -1077,7 +1079,7 @@ SFString getBlockCacheFolder(void) {
         SFString path = toml.getConfigStr("settings", "blockCachePath", "<NOT_SET>");
 //cout << path << "\n";
         if (path == "<NOT_SET>") {
-            path = configPath()+"cache/";
+            path = configPath("cache/");
             toml.setConfigStr("settings", "blockCachePath", path);
             toml.writeFile();
         	establishFolder(path);
@@ -1091,7 +1093,8 @@ SFString getBlockCacheFolder(void) {
         }
         blockCache = folder.getFullPath();
     }
-    return blockCache;
+    ASSERT(blockCache.endsWith("/"));
+    return blockCache + _part;
 }
 
 }  // namespace qblocks
