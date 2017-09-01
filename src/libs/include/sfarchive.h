@@ -55,7 +55,7 @@ namespace qblocks {
         }
 
         void writeHeader(void) {
-            Seek(SEEK_SET, 0);
+            Seek(0, SEEK_SET);
             m_header.m_lastWritten = toTimeStamp(Now());
             operator<<(m_header.m_archiveSchema);
             operator<<(m_header.m_lastWritten);
@@ -63,10 +63,14 @@ namespace qblocks {
         }
 
         void readHeader(void) {
-            Seek(SEEK_SET, 0);
+            Seek(0, SEEK_SET);
             operator>>(m_header.m_archiveSchema);
             operator>>(m_header.m_lastWritten);
             operator>>(m_header.m_writeDeleted);
+        }
+
+        bool isSchema(uint32_t testSchema) {
+            return (m_header.m_archiveSchema == testSchema);
         }
 
         void resetForWriting(void) {
