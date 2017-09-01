@@ -1,0 +1,4 @@
+isContract argc: 3 [1:0xrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr] [2:-d] 
+isContract 0xrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr -d 
+Code at address: 0xrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr:
+
