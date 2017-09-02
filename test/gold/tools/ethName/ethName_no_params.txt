@@ -1,3 +1,5 @@
+ethName argc: 1 
+ethName 
 
   Not enough arguments presented.
 

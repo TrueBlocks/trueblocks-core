@@ -1,3 +1,5 @@
+getTrans argc: 1 
+getTrans 
 
   Not enough arguments presented.
 
