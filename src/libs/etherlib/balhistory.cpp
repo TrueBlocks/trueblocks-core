@@ -15,7 +15,7 @@
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CBalHistory, CBaseNode, curVersion);
+IMPLEMENT_NODE(CBalHistory, CBaseNode, dataVersion);
 
 //---------------------------------------------------------------------------
 static SFString nextBalhistoryChunk(const SFString& fieldIn, bool& force, const void *data);
