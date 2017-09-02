@@ -45,11 +45,17 @@ int main(int argc, const char *argv[]) {
 
             } else if (mode == "date") {
                 if (verbose) { cout << "finding by date\n"; }
-                SFTime date = dateFromTimeStamp((timestamp_t)toUnsigned(value));
-                bool res = lookupDate(block, date);
-                if (!res) {
-                    unloadCache();
-                    return 0;
+
+                if (!fileExists(miniBlockCache)) {
+                    cout << "Lookup by date is not currently supported.\n";
+
+                } else {
+                    SFTime date = dateFromTimeStamp((timestamp_t)toUnsigned(value));
+                    bool res = lookupDate(block, date);
+                    if (!res) {
+                        unloadCache();
+                        return 0;
+                    }
                 }
             }
 
