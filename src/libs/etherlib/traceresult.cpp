@@ -15,7 +15,7 @@
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CTraceResult, CBaseNode, dataVersion);
+IMPLEMENT_NODE(CTraceResult, CBaseNode, dataSchema());
 
 //---------------------------------------------------------------------------
 static SFString nextTraceresultChunk(const SFString& fieldIn, bool& force, const void *data);

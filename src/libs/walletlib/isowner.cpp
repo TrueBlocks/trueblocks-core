@@ -13,7 +13,7 @@
 #include "etherlib.h"
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(QIsOwner, CTransaction, dataVersion);
+IMPLEMENT_NODE(QIsOwner, CTransaction, dataSchema());
 
 //---------------------------------------------------------------------------
 static SFString nextIsownerChunk(const SFString& fieldIn, bool& force, const void *data);

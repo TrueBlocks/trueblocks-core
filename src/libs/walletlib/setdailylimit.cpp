@@ -13,7 +13,7 @@
 #include "etherlib.h"
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(QSetDailyLimit, CTransaction, dataVersion);
+IMPLEMENT_NODE(QSetDailyLimit, CTransaction, dataSchema());
 
 //---------------------------------------------------------------------------
 static SFString nextSetdailylimitChunk(const SFString& fieldIn, bool& force, const void *data);
