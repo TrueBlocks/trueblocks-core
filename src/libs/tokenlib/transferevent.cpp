@@ -13,7 +13,7 @@
 #include "etherlib.h"
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(QTransferEvent, CLogEntry, dataVersion);
+IMPLEMENT_NODE(QTransferEvent, CLogEntry, dataSchema());
 
 //---------------------------------------------------------------------------
 static SFString nextTransfereventChunk(const SFString& fieldIn, bool& force, const void *data);

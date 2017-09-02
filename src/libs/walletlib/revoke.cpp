@@ -13,7 +13,7 @@
 #include "etherlib.h"
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(QRevoke, CTransaction, dataVersion);
+IMPLEMENT_NODE(QRevoke, CTransaction, dataSchema());
 
 //---------------------------------------------------------------------------
 static SFString nextRevokeChunk(const SFString& fieldIn, bool& force, const void *data);

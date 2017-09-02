@@ -13,7 +13,7 @@
 #include "etherlib.h"
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(QRevokeEvent, CLogEntry, dataVersion);
+IMPLEMENT_NODE(QRevokeEvent, CLogEntry, dataSchema());
 
 //---------------------------------------------------------------------------
 static SFString nextRevokeeventChunk(const SFString& fieldIn, bool& force, const void *data);

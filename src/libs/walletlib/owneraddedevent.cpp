@@ -13,7 +13,7 @@
 #include "etherlib.h"
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(QOwnerAddedEvent, CLogEntry, dataVersion);
+IMPLEMENT_NODE(QOwnerAddedEvent, CLogEntry, dataSchema());
 
 //---------------------------------------------------------------------------
 static SFString nextOwneraddedeventChunk(const SFString& fieldIn, bool& force, const void *data);

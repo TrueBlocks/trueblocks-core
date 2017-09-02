@@ -40,7 +40,7 @@ namespace qblocks {
         return getVersionNum(MAJOR, MINOR, BUILD);
     }
 
-#define dataVersion ((uint64_t)0x00000201)
+    extern uint32_t dataSchema(void);
 #define fileVersion ((uint64_t)0x00000201)
 
 }  // namespace qblocks

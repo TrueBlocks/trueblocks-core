@@ -13,7 +13,7 @@
 #include "etherlib.h"
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(QSingleTransactEvent, CLogEntry, dataVersion);
+IMPLEMENT_NODE(QSingleTransactEvent, CLogEntry, dataSchema());
 
 //---------------------------------------------------------------------------
 static SFString nextSingletransacteventChunk(const SFString& fieldIn, bool& force, const void *data);

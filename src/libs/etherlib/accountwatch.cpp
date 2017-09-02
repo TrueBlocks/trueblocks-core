@@ -15,7 +15,7 @@
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CAccountWatch, CBaseNode, dataVersion);
+IMPLEMENT_NODE(CAccountWatch, CBaseNode, dataSchema());
 
 //---------------------------------------------------------------------------
 static SFString nextAccountwatchChunk(const SFString& fieldIn, bool& force, const void *data);

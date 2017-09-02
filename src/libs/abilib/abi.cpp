@@ -14,7 +14,7 @@
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CAbi, CBaseNode, dataVersion);
+IMPLEMENT_NODE(CAbi, CBaseNode, dataSchema());
 
 //---------------------------------------------------------------------------
 static SFString nextAbiChunk(const SFString& fieldIn, bool& force, const void *data);

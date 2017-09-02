@@ -15,7 +15,7 @@
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CBlock, CBaseNode, dataVersion);
+IMPLEMENT_NODE(CBlock, CBaseNode, dataSchema());
 
 //---------------------------------------------------------------------------
 extern SFString nextBlockChunk(const SFString& fieldIn, bool& force, const void *data);
