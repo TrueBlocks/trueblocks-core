@@ -30,16 +30,16 @@ namespace qblocks {
         SFArchiveHeader  m_header;
         bool             m_isReading;
         const CBaseNode  *pParent;
-        VISITARCHIVEFUNC writeMsgFunc;
-        VISITARCHIVEFUNC readMsgFunc;
+        //VISITARCHIVEFUNC writeMsgFunc;
+        //VISITARCHIVEFUNC readMsgFunc;
 
         SFArchive(bool isReading, uint32_t schema, bool writeDeleted) {
             m_isReading              = isReading;
             m_header.m_archiveSchema = schema;
             m_header.m_writeDeleted  = writeDeleted;
             pParent                  = NULL;
-            writeMsgFunc             = NULL;
-            readMsgFunc              = NULL;
+            //writeMsgFunc           = NULL;
+            //readMsgFunc            = NULL;
         }
 
         bool writeDeleted(void) const {
