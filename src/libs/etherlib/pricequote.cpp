@@ -16,7 +16,7 @@
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CPriceQuote, CBaseNode, dataVersion);
+IMPLEMENT_NODE(CPriceQuote, CBaseNode, dataSchema());
 
 //---------------------------------------------------------------------------
 static SFString nextPricequoteChunk(const SFString& fieldIn, bool& force, const void *data);

@@ -15,7 +15,7 @@
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CReceipt, CBaseNode, dataVersion);
+IMPLEMENT_NODE(CReceipt, CBaseNode, dataSchema());
 
 //---------------------------------------------------------------------------
 extern SFString nextReceiptChunk(const SFString& fieldIn, bool& force, const void *data);

@@ -15,7 +15,7 @@
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CTraceAction, CBaseNode, dataVersion);
+IMPLEMENT_NODE(CTraceAction, CBaseNode, dataSchema());
 
 //---------------------------------------------------------------------------
 static SFString nextTraceactionChunk(const SFString& fieldIn, bool& force, const void *data);

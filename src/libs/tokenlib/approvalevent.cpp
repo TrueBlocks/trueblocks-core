@@ -13,7 +13,7 @@
 #include "etherlib.h"
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(QApprovalEvent, CLogEntry, dataVersion);
+IMPLEMENT_NODE(QApprovalEvent, CLogEntry, dataSchema());
 
 //---------------------------------------------------------------------------
 static SFString nextApprovaleventChunk(const SFString& fieldIn, bool& force, const void *data);

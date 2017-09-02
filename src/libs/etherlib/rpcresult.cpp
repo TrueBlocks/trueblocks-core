@@ -15,7 +15,7 @@
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CRPCResult, CBaseNode, dataVersion);
+IMPLEMENT_NODE(CRPCResult, CBaseNode, dataSchema());
 
 //---------------------------------------------------------------------------
 static SFString nextRpcresultChunk(const SFString& fieldIn, bool& force, const void *data);

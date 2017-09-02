@@ -13,7 +13,7 @@
 #include "etherlib.h"
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(QResetSpentToday, CTransaction, dataVersion);
+IMPLEMENT_NODE(QResetSpentToday, CTransaction, dataSchema());
 
 //---------------------------------------------------------------------------
 static SFString nextResetspenttodayChunk(const SFString& fieldIn, bool& force, const void *data);
