@@ -437,7 +437,7 @@ void writeToBinary(const CBaseNode& node, const SFString& fileName)
     if (establishFolder(fileName,created)) {
         if (!created.empty() && !isTestMode())
             cerr << "mkdir(" << created << ")" << SFString(' ',20) << "                                                     \n";
-        SFArchive archive(false, fileVersion, true);
+        SFArchive archive(false, fileSchema(), true);
         if (archive.Lock(fileName, binaryWriteCreate, LOCK_CREATE))
         {
             ((CBlock *)&node)->Serialize(archive);
@@ -450,7 +450,7 @@ void writeToBinary(const CBaseNode& node, const SFString& fileName)
 bool readOneBlock_fromBinary(CBlock& block, const SFString& fileName)
 {
     block = CBlock(); // reset
-    SFArchive archive(true, fileVersion, true);
+    SFArchive archive(true, fileSchema(), true);
     if (archive.Lock(fileName, binaryReadOnly, LOCK_NOWAIT))
     {
         block.Serialize(archive);
@@ -484,7 +484,7 @@ bool readOneBlock_fromJson(CBlock& block, const SFString& fileName)
 SFBloom readOneBloom(blknum_t bn) {
     SFBloom ret = 0;
     SFString fileName = getBinaryFilename1(bn).Substitute("/blocks/", "/blooms/");
-    SFArchive archive(true, fileVersion, true);
+    SFArchive archive(true, fileSchema(), true);
     if (archive.Lock(fileName, binaryReadOnly, LOCK_NOWAIT)) {
         archive >> ret;
         archive.Close();
@@ -498,7 +498,7 @@ void writeOneBloom(const SFString& fileName, const SFBloom& bloom) {
     if (establishFolder(fileName,created)) {
         if (!created.empty() && !isTestMode())
             cerr << "mkdir(" << created << ")" << SFString(' ',20) << "                                                     \n";
-        SFArchive archive(false, fileVersion, true);
+        SFArchive archive(false, fileSchema(), true);
         if (archive.Lock(fileName, binaryWriteCreate, LOCK_CREATE)) {
             archive << bloom;
             archive.Close();
