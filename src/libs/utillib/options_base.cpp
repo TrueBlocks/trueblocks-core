@@ -133,11 +133,12 @@ namespace qblocks {
 
             } else if (arg.startsWith("-v") || arg.startsWith("--verbose")) {
                 verbose = true;
-                arg.Replace("--verbose", "");
-                arg.Replace("-v", "");
-                arg.Replace(":", "");
-                if (!arg.empty())
-                    verbose = toLongU(arg);
+                arg = arg.Substitute("-v", "").Substitute("--verbose", "").Substitute(":", "");
+                if (!arg.empty()) {
+                    if (!isUnsigned(arg))
+                        return usage("Invalid verbose level '" + arg + "'. Quitting...");
+                    verbose = toUnsigned(arg);
+                }
             }
         }
 
@@ -182,7 +183,7 @@ namespace qblocks {
             fromFile = true;
             SFString contents =  asciiFileToString(cmdFileName).Substitute("\t", " ").
                                             Substitute("-v", "").Substitute("-h", "").
-                                            Substitute("  ", " ").Substitute("\\ ", "{~}");
+                                            Substitute("  ", " ").Substitute("\\\n", "");
             while (!contents.empty()) {
                 SFString command = StripAny(nextTokenClear(contents, '\n'), "\t\r\n ");
                 if (!command.empty() && !command.startsWith(";"))  // ignore comments
