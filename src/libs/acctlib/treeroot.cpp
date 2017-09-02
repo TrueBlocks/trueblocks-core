@@ -90,7 +90,7 @@ void CTreeRoot::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CTreeRoot::Serialize(SFArchive& archive) {
-    if (!archive.isReading())
+    if (archive.isWriting())
         return ((const CTreeRoot*)this)->SerializeC(archive);
 
     if (!preSerialize(archive))

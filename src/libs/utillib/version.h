@@ -31,8 +31,16 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    inline uint32_t currentSchema(void) {
-        return ((MAJOR * 1000000) + (MINOR * 1000) + (BUILD));
+    inline uint32_t getVersionNum(uint32_t major, uint32_t minor, uint32_t build) {
+        return ((major * 1000000) + (minor * 1000) + (build));
     }
+
+    //--------------------------------------------------------------------------------
+    inline uint32_t currentSchema(void) {
+        return getVersionNum(MAJOR, MINOR, BUILD);
+    }
+
+#define dataVersion ((uint64_t)0x00000201)
+#define fileVersion ((uint64_t)0x00000201)
 
 }  // namespace qblocks

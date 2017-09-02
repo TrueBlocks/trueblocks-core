@@ -13,7 +13,7 @@
 #include "etherlib.h"
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(QMultiTransactEvent, CLogEntry, curVersion);
+IMPLEMENT_NODE(QMultiTransactEvent, CLogEntry, dataVersion);
 
 //---------------------------------------------------------------------------
 static SFString nextMultitransacteventChunk(const SFString& fieldIn, bool& force, const void *data);
@@ -110,7 +110,7 @@ void QMultiTransactEvent::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool QMultiTransactEvent::Serialize(SFArchive& archive) {
-    if (!archive.isReading())
+    if (archive.isWriting())
         return ((const QMultiTransactEvent*)this)->SerializeC(archive);
 
     CLogEntry::Serialize(archive);

@@ -13,7 +13,7 @@
 [OTHER_INCS]
 [{NAMESPACE1}]
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE([{CLASS_NAME}], [{BASE_CLASS}], curVersion);
+IMPLEMENT_NODE([{CLASS_NAME}], [{BASE_CLASS}], dataVersion);
 
 //---------------------------------------------------------------------------
 [{SCOPE}] SFString next[{PROPER}]Chunk(const SFString& fieldIn, bool& force, const void *data);
@@ -80,7 +80,7 @@ void [{CLASS_NAME}]::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool [{CLASS_NAME}]::Serialize(SFArchive& archive) {
-    if (!archive.isReading())
+    if (archive.isWriting())
         return ((const [{CLASS_NAME}]*)this)->SerializeC(archive);
 
 [{PARENT_SER}][ARCHIVE_READ]	finishParse();

@@ -13,7 +13,7 @@
 #include "etherlib.h"
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(QIsOwner, CTransaction, curVersion);
+IMPLEMENT_NODE(QIsOwner, CTransaction, dataVersion);
 
 //---------------------------------------------------------------------------
 static SFString nextIsownerChunk(const SFString& fieldIn, bool& force, const void *data);
@@ -90,7 +90,7 @@ void QIsOwner::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool QIsOwner::Serialize(SFArchive& archive) {
-    if (!archive.isReading())
+    if (archive.isWriting())
         return ((const QIsOwner*)this)->SerializeC(archive);
 
     CTransaction::Serialize(archive);

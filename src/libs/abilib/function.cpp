@@ -185,7 +185,8 @@ void CFunction::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CFunction::Serialize(SFArchive& archive) {
-    if (!archive.isReading())
+    if (archive.isWriting())
+
         return ((const CFunction*)this)->SerializeC(archive);
 
     if (!preSerialize(archive))

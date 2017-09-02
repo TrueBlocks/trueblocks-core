@@ -15,7 +15,7 @@
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CTransaction, CBaseNode, curVersion);
+IMPLEMENT_NODE(CTransaction, CBaseNode, dataVersion);
 
 //---------------------------------------------------------------------------
 extern SFString nextTransactionChunk(const SFString& fieldIn, bool& force, const void *data);
@@ -208,7 +208,7 @@ void CTransaction::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CTransaction::Serialize(SFArchive& archive) {
-    if (!archive.isReading())
+    if (archive.isWriting())
         return ((const CTransaction*)this)->SerializeC(archive);
 
     if (!preSerialize(archive))

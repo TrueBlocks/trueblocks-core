@@ -13,7 +13,7 @@
 #include "etherlib.h"
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(QDepositEvent, CLogEntry, curVersion);
+IMPLEMENT_NODE(QDepositEvent, CLogEntry, dataVersion);
 
 //---------------------------------------------------------------------------
 static SFString nextDepositeventChunk(const SFString& fieldIn, bool& force, const void *data);
@@ -96,7 +96,7 @@ void QDepositEvent::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool QDepositEvent::Serialize(SFArchive& archive) {
-    if (!archive.isReading())
+    if (archive.isWriting())
         return ((const QDepositEvent*)this)->SerializeC(archive);
 
     CLogEntry::Serialize(archive);

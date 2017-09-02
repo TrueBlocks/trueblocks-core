@@ -13,7 +13,7 @@
 #include "etherlib.h"
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(QRemoveOwner, CTransaction, curVersion);
+IMPLEMENT_NODE(QRemoveOwner, CTransaction, dataVersion);
 
 //---------------------------------------------------------------------------
 static SFString nextRemoveownerChunk(const SFString& fieldIn, bool& force, const void *data);
@@ -90,7 +90,7 @@ void QRemoveOwner::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool QRemoveOwner::Serialize(SFArchive& archive) {
-    if (!archive.isReading())
+    if (archive.isWriting())
         return ((const QRemoveOwner*)this)->SerializeC(archive);
 
     CTransaction::Serialize(archive);

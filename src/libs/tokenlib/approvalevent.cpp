@@ -13,7 +13,7 @@
 #include "etherlib.h"
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(QApprovalEvent, CLogEntry, curVersion);
+IMPLEMENT_NODE(QApprovalEvent, CLogEntry, dataVersion);
 
 //---------------------------------------------------------------------------
 static SFString nextApprovaleventChunk(const SFString& fieldIn, bool& force, const void *data);
@@ -94,7 +94,7 @@ void QApprovalEvent::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool QApprovalEvent::Serialize(SFArchive& archive) {
-    if (!archive.isReading())
+    if (archive.isWriting())
         return ((const QApprovalEvent*)this)->SerializeC(archive);
 
     CLogEntry::Serialize(archive);

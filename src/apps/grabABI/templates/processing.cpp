@@ -160,7 +160,7 @@ bool updateCacheUsingBlooms(const SFString& path, void *data) {
 
             SFBloom bloom;
             visitor->bloomStats.bloomsChecked++;
-            SFArchive archive(true, curVersion, true);
+            SFArchive archive(true, fileVersion, true);
             if (archive.Lock(path, binaryReadOnly, LOCK_NOWAIT)) {
                 archive >> bloom;
                 archive.Close();
@@ -255,7 +255,7 @@ bool updateCache(CBlock& block, void *data) {
                 }
             }
 
-            ASSERT(!visitor->cache.m_isReading);
+            ASSERT(visitor->cache.isWriting());
             // Write the data even if we're not displaying it (flush to make sure it gets written)
             visitor->cache << whichWatch << trans->pBlock->blockNumber << trans->transactionIndex;
             visitor->cache.flush();

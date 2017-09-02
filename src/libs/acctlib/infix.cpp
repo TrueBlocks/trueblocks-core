@@ -94,7 +94,7 @@ void CInfix::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CInfix::Serialize(SFArchive& archive) {
-    if (!archive.isReading())
+    if (archive.isWriting())
         return ((const CInfix*)this)->SerializeC(archive);
 
     CTreeNode::Serialize(archive);

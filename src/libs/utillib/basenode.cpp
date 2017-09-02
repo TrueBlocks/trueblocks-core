@@ -269,18 +269,16 @@ namespace qblocks {
 
     //---------------------------------------------------------------------------
     bool CBaseNode::preSerialize(SFArchive& archive) {
-        if (!archive.isReading())
+        if (archive.isWriting())
             return ((const CBaseNode*)this)->preSerializeC(archive);
 
         archive.pParent = this;  // sets this value for items stored in lists or arrays -- read only
-        if (archive.isReading()) {
-            archive >> m_deleted;
-            archive >> m_schema;
-            archive >> m_showing;
-            SFString str;
-            archive >> str;
-            ASSERT(str == SFString(getRuntimeClass()->getClassNamePtr()));
-        }
+        archive >> m_deleted;
+        archive >> m_schema;
+        archive >> m_showing;
+        SFString str;
+        archive >> str;
+        ASSERT(str == SFString(getRuntimeClass()->getClassNamePtr()));
         return true;
     }
 

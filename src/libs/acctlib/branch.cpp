@@ -92,7 +92,7 @@ void CBranch::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CBranch::Serialize(SFArchive& archive) {
-    if (!archive.isReading())
+    if (archive.isWriting())
         return ((const CBranch*)this)->SerializeC(archive);
 
     CTreeNode::Serialize(archive);

@@ -165,7 +165,7 @@ void CBlock::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CBlock::Serialize(SFArchive& archive) {
-    if (!archive.isReading())
+    if (archive.isWriting())
         return ((const CBlock*)this)->SerializeC(archive);
 
     if (!preSerialize(archive))

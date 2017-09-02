@@ -101,7 +101,7 @@ void CBalHistory::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CBalHistory::Serialize(SFArchive& archive) {
-    if (!archive.isReading())
+    if (archive.isWriting())
         return ((const CBalHistory*)this)->SerializeC(archive);
 
     if (!preSerialize(archive))
