@@ -12,6 +12,7 @@
 
 extern bool testReadWrite(COptions& options);
 extern bool testUpgrade(COptions& options);
+extern void reportNode(CBaseNode *node);
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
     // Tell the system where the blocks are and which version to use
@@ -54,7 +55,7 @@ bool testReadWrite(COptions& options) {
             ASSERT(fileExists("./oldFmt.cache"));
             cout << "Read from old binary format and do nothing...\n";
             readOneBlock_fromBinary(block, "./oldFmt.cache");
-            cout << block.Format() << "\n";
+            reportNode(&block);
             break;
         }
         case 1: {
@@ -63,7 +64,7 @@ bool testReadWrite(COptions& options) {
             readOneBlock_fromBinary(block, "./oldFmt.cache");
             writeToJson(block, "./newFmt.json");
             ASSERT(fileExists("./newFmt.json"));
-            cout << block.Format() << "\n";
+            reportNode(&block);
             cout << asciiFileToString("./newFmt.json") << "\n";
             break;
         }
@@ -74,8 +75,8 @@ bool testReadWrite(COptions& options) {
             newBlock = CNewBlock(block);
             writeToBinary(newBlock, "./newFmt.cache");
             ASSERT(fileExists("./newFmt.cache"));
-            cout << block.Format() << "\n";
-            cout << newBlock.Format() << "\n";
+            reportNode(&block);
+            reportNode(&newBlock);
             break;
         }
         case 3: {
@@ -84,7 +85,7 @@ bool testReadWrite(COptions& options) {
             readOneNewBlock_fromBinary(newBlock, "./newFmt.cache");
             writeToJson(newBlock, "./newFmt2.json");
             ASSERT(fileExists("./newFmt2.json"));
-            cout << newBlock.Format() << "\n";
+            reportNode(&newBlock);
             cout << asciiFileToString("./newFmt2.json") << "\n";
             break;
         }
@@ -92,14 +93,14 @@ bool testReadWrite(COptions& options) {
             ASSERT(fileExists("./newFmt2.json"));
             cout << "Read from new JSON and we're done.\n";
             readOneNewBlock_fromJson(newBlock, "./newFmt2.json");
-            cout << newBlock.Format() << "\n";
+            reportNode(&newBlock);
             break;
         }
         case 5: {
             ASSERT(fileExists("./oldFmt.cache"));
             cout << "Read from old binary format, using new binary format...\n";
             readOneNewBlock_fromBinary(newBlock, "./oldFmt.cache");
-            cout << newBlock.Format() << "\n";
+            reportNode(&newBlock);
 
             // Clean up all but the original old format and make sure we did.
             ASSERT( fileExists("./newFmt.cache"));
@@ -190,30 +191,33 @@ SFString typeName(SFUint32 type) {
 }
 
 //--------------------------------------------------------------
+void reportNode(CBaseNode *node) {
+    CRuntimeClass *pClass = node->getRuntimeClass();
+
+    cout << SFString('-',80) << "\n";
+    cout << "className: " << pClass->m_ClassName << "\n";
+    cout << "objectSize: " << pClass->m_ObjectSize << "\n";
+    cout << "classSchema: " << pClass->m_classSchema << "\n";
+    cout << "baseClass: " << (pClass->m_BaseClass ? pClass->m_BaseClass->m_ClassName : "None") << "\n";
+    CFieldList *theList = pClass->m_FieldList;
+    LISTPOS pPos = theList->GetHeadPosition();
+    while (pPos) {
+        const CFieldData *item = theList->GetNext(pPos);
+        cout << "\tfieldName: " << item->getName()  << "\n";
+        cout << "\t  fieldID: "   << item->getID()    << "\n";
+        cout << "\t  fieldType: " << typeName(item->getType())  << "\n";
+        cout << "\t  hidden: "    << item->isHidden() << "\n";
+    }
+    cout << node->Format() << "\n";
+    cout << "\n";
+}
+
+//--------------------------------------------------------------
 bool testUpgrade(COptions& options) {
 
     CBaseNode *node = getNode(options.className);
     if (node) {
-
-        CRuntimeClass *pClass = node->getRuntimeClass();
-
-        cout << SFString('-',80) << "\n";
-        cout << "className: " << pClass->m_ClassName << "\n";
-        cout << "objectSize: " << pClass->m_ObjectSize << "\n";
-        cout << "classSchema: " << pClass->m_classSchema << "\n";
-        cout << "baseClass: " << (pClass->m_BaseClass ? pClass->m_BaseClass->m_ClassName : "None") << "\n";
-        CFieldList *theList = pClass->m_FieldList;
-        LISTPOS pPos = theList->GetHeadPosition();
-        while (pPos) {
-            const CFieldData *item = theList->GetNext(pPos);
-            cout << "\tfieldName: " << item->getName()  << "\n";
-            cout << "\t  fieldID: "   << item->getID()    << "\n";
-            cout << "\t  fieldType: " << typeName(item->getType())  << "\n";
-            cout << "\t  hidden: "    << item->isHidden() << "\n";
-        }
-        cout << node->Format() << "\n";
-        cout << "\n";
-
+        reportNode(node);
         delete node;
     }
 

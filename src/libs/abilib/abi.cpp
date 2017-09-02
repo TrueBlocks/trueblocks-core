@@ -108,7 +108,7 @@ void CAbi::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CAbi::Serialize(SFArchive& archive) {
-    if (!archive.isReading())
+    if (archive.isWriting())
         return ((const CAbi*)this)->SerializeC(archive);
 
     if (!preSerialize(archive))

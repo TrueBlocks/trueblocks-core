@@ -13,7 +13,7 @@
 #include "etherlib.h"
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(QChangeRequirement, CTransaction, curVersion);
+IMPLEMENT_NODE(QChangeRequirement, CTransaction, dataVersion);
 
 //---------------------------------------------------------------------------
 static SFString nextChangerequirementChunk(const SFString& fieldIn, bool& force, const void *data);
@@ -90,7 +90,7 @@ void QChangeRequirement::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool QChangeRequirement::Serialize(SFArchive& archive) {
-    if (!archive.isReading())
+    if (archive.isWriting())
         return ((const QChangeRequirement*)this)->SerializeC(archive);
 
     CTransaction::Serialize(archive);

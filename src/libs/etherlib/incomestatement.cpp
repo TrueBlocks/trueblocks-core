@@ -115,7 +115,7 @@ void CIncomeStatement::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CIncomeStatement::Serialize(SFArchive& archive) {
-    if (!archive.isReading())
+    if (archive.isWriting())
         return ((const CIncomeStatement*)this)->SerializeC(archive);
 
     if (!preSerialize(archive))

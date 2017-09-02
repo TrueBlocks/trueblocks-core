@@ -13,7 +13,7 @@
 #include "etherlib.h"
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(QAddOwner, CTransaction, curVersion);
+IMPLEMENT_NODE(QAddOwner, CTransaction, dataVersion);
 
 //---------------------------------------------------------------------------
 static SFString nextAddownerChunk(const SFString& fieldIn, bool& force, const void *data);
@@ -90,7 +90,7 @@ void QAddOwner::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool QAddOwner::Serialize(SFArchive& archive) {
-    if (!archive.isReading())
+    if (archive.isWriting())
         return ((const QAddOwner*)this)->SerializeC(archive);
 
     CTransaction::Serialize(archive);

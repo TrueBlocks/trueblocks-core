@@ -95,7 +95,7 @@ void CTreeNode::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CTreeNode::Serialize(SFArchive& archive) {
-    if (!archive.isReading())
+    if (archive.isWriting())
         return ((const CTreeNode*)this)->SerializeC(archive);
 
     if (!preSerialize(archive))

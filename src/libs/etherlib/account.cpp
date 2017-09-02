@@ -140,7 +140,7 @@ void CAccount::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CAccount::Serialize(SFArchive& archive) {
-    if (!archive.isReading())
+    if (archive.isWriting())
         return ((const CAccount*)this)->SerializeC(archive);
 
     if (!preSerialize(archive))

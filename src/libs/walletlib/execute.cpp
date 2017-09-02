@@ -13,7 +13,7 @@
 #include "etherlib.h"
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(QExecute, CTransaction, curVersion);
+IMPLEMENT_NODE(QExecute, CTransaction, dataVersion);
 
 //---------------------------------------------------------------------------
 static SFString nextExecuteChunk(const SFString& fieldIn, bool& force, const void *data);
@@ -94,7 +94,7 @@ void QExecute::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool QExecute::Serialize(SFArchive& archive) {
-    if (!archive.isReading())
+    if (archive.isWriting())
         return ((const QExecute*)this)->SerializeC(archive);
 
     CTransaction::Serialize(archive);

@@ -13,7 +13,7 @@
 #include "etherlib.h"
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(QKill, CTransaction, curVersion);
+IMPLEMENT_NODE(QKill, CTransaction, dataVersion);
 
 //---------------------------------------------------------------------------
 static SFString nextKillChunk(const SFString& fieldIn, bool& force, const void *data);
@@ -90,7 +90,7 @@ void QKill::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool QKill::Serialize(SFArchive& archive) {
-    if (!archive.isReading())
+    if (archive.isWriting())
         return ((const QKill*)this)->SerializeC(archive);
 
     CTransaction::Serialize(archive);

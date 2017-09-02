@@ -15,7 +15,7 @@
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CTraceResult, CBaseNode, curVersion);
+IMPLEMENT_NODE(CTraceResult, CBaseNode, dataVersion);
 
 //---------------------------------------------------------------------------
 static SFString nextTraceresultChunk(const SFString& fieldIn, bool& force, const void *data);
@@ -95,7 +95,7 @@ void CTraceResult::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CTraceResult::Serialize(SFArchive& archive) {
-    if (!archive.isReading())
+    if (archive.isWriting())
         return ((const CTraceResult*)this)->SerializeC(archive);
 
     if (!preSerialize(archive))
