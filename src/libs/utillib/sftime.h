@@ -193,4 +193,6 @@ namespace qblocks {
 
     extern const SFTime latestDate;
     extern const SFTime earliestDate;
+
+    typedef SFArrayBase<SFTime> SFTimeArray;
 }  // namespace qblocks

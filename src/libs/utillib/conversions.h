@@ -305,8 +305,19 @@ namespace qblocks {
         return count;
     }
 
-    // NEW_CODE
-inline bool isUnsigned(const SFString& in) { return in.length() && isdigit(in[0]); } // negative '-' will fail
+// NEW_CODE
+    //-------------------------------------------------------------------------
+    inline bool isUnsigned(const SFString& in) {
+        // empty string is not valid
+        if (in.empty())
+            return false;
+
+        // first character must be 0-9 (no negatives)
+        if (!isdigit(in[0]))
+            return false;
+
+        return (!in.startsWith("0x") || isHex(in.at(2)));
+    }
 
 #define newUnsigned64(a)  ((a).startsWith("0x") ?    (uint64_t)hex2Long((a)) :    (uint64_t)toLongU((a)))
 #define newSigned64(a)    ((a).startsWith("0x") ?    ( int64_t)hex2Long((a)) :    ( int64_t)toLong ((a)))

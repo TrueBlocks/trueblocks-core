@@ -1,5 +1,5 @@
 whenBlock argc: 2 [1:homestead] 
 whenBlock homestead 
 
-	block #1150000 : 1457981393 : 2016-03-14 18:49:53 UTC
+	block #1150000 (homestead) : 1457981393 : 2016-03-14 18:49:53 UTC
 

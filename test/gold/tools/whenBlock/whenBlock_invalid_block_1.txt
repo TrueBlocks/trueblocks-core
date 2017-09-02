@@ -1,7 +1,5 @@
-This is not an invalid input. It's hex, which is fine for blocks
-
 whenBlock argc: 2 [1:0x0a] 
 whenBlock 0x0a 
 
-	block #0 : 1438269960 : 2015-07-30 15:26:00 UTC
+	block #10 : 1438270128 : 2015-07-30 15:28:48 UTC
 

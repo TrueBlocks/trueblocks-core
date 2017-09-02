@@ -13,16 +13,17 @@ block #2500000 : 1477324790 : 2016-10-24 15:59:50 UTC
 block #2750000 : 1480910316 : 2016-12-05 03:58:36 UTC
 block #3000000 : 1484475035 : 2017-01-15 10:10:35 UTC
 block #3250000 : 1488052050 : 2017-02-25 19:47:30 UTC
-block #0 : 1438269960 : 2015-07-30 15:26:00 UTC
-block #200000 : 1441661589 : 2015-09-07 21:33:09 UTC
-block #1150000 : 1457981393 : 2016-03-14 18:49:53 UTC
-block #1718497 : 1466134488 : 2016-06-17 03:34:48 UTC
-block #1920000 : 1469020840 : 2016-07-20 13:20:40 UTC
+block #0 (first) : 1438269960 : 2015-07-30 15:26:00 UTC
+block #200000 (iceage) : 1441661589 : 2015-09-07 21:33:09 UTC
+block #1150000 (homestead) : 1457981393 : 2016-03-14 18:49:53 UTC
+block #1718497 (daohack) : 1466134488 : 2016-06-17 03:34:48 UTC
+block #1920000 (daofork) : 1469020840 : 2016-07-20 13:20:40 UTC
 
-  Argument mistake is not valid. Supply either JSON formatted date or blockNumber. Quitting...
+  Invalid argument: 'mistake'. Please supply either a JSON formatted date or a blockNumber. Quitting...
 
   Usage:    whenBlock [-a|-l|-v|-h] date / block  
-  Purpose:  Finds the nearest block before the JSON-formatted date, or the nearest date before the given block.
+  Purpose:  Finds the nearest block prior to a JSON-formatted date, or the nearest date prior to
+           the given block. Alternatively, search for one of the special blocks listed below.
              
   Where:    
 	date / block          one of the special values listed below or YYYY-MM-DD-[HH[:MM[:SS]]] or a blockNumber (required)

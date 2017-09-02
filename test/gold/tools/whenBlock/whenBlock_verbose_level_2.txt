@@ -1,7 +1,17 @@
-Should report a bug since 'j' is not a number
-
 whenBlock argc: 3 [1:-v:j] [2:1000] 
 whenBlock -v:j 1000 
 
-	block #1000 : 1438272138 : 2015-07-30 16:02:18 UTC
+  Invalid verbose level 'j'. Quitting...
 
+  Usage:    whenBlock [-a|-l|-v|-h] date / block  
+  Purpose:  Finds the nearest block prior to a JSON-formatted date, or the nearest date prior to
+           the given block. Alternatively, search for one of the special blocks listed below.
+             
+  Where:    
+	date / block          one of the special values listed below or YYYY-MM-DD-[HH[:MM[:SS]]] or a blockNumber (required)
+	-a  (--alone)         show the found block or found date unadorned (useful for scripting)
+	-l  (--list)          list special blocks timestamps and dates
+	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
+	-h  (--help)          display this help screen
+
+  Powered by QuickBlocks

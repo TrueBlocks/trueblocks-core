@@ -3,7 +3,8 @@ whenBlock -th
 #### Usage
 
 `Usage:`    whenBlock [-a|-l|-v|-h] date / block  
-`Purpose:`  Finds the nearest block before the JSON-formatted date, or the nearest date before the given block.
+`Purpose:`  Finds the nearest block prior to a JSON-formatted date, or the nearest date prior to
+           the given block. Alternatively, search for one of the special blocks listed below.
              
 `Where:`  
 

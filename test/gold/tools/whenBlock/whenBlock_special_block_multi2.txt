@@ -1,7 +1,17 @@
-Should report on junk special block
-
 whenBlock argc: 5 [1:stateclear] [2:iceage] [3:4001001] [4:junk] 
 whenBlock stateclear iceage 4001001 junk 
 
-	block #4001001 : 1499651592 : 2017-07-10 01:53:12 UTC
+  Invalid argument: 'junk'. Please supply either a JSON formatted date or a blockNumber. Quitting...
 
+  Usage:    whenBlock [-a|-l|-v|-h] date / block  
+  Purpose:  Finds the nearest block prior to a JSON-formatted date, or the nearest date prior to
+           the given block. Alternatively, search for one of the special blocks listed below.
+             
+  Where:    
+	date / block          one of the special values listed below or YYYY-MM-DD-[HH[:MM[:SS]]] or a blockNumber (required)
+	-a  (--alone)         show the found block or found date unadorned (useful for scripting)
+	-l  (--list)          list special blocks timestamps and dates
+	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
+	-h  (--help)          display this help screen
+
+  Powered by QuickBlocks
