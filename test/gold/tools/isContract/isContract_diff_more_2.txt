@@ -5,11 +5,11 @@ isContract 0x4671ebe586199456ca28ac050cc9473cbac829eb -n 0x48b4cb193b587c6f2dab1
 
 
   Usage:    isContract [-d|-n|-v|-h] addr[s]  
-  Purpose:  Returns 'true' or 'false' if the given address(es) hold byte code (or displays the code).
+  Purpose:  Returns 'true' or 'false' if the given address(es) holds byte code (optionally displays the code).
              
   Where:    
-	addr[s]               a list of one or more Ethereum addresses to process (required)
-	-d  (--display)       display the actual code at the address(es)
+	addr[s]               a space-separated list of one or more Ethereum addresses (required)
+	-d  (--display)       display the byte code at the address(es)
 	-n  (--nodiff)        return 'true' if (exactly) two Ethereum addresses have identical code
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
 	-h  (--help)          display this help screen
