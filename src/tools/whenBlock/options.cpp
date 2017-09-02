@@ -211,7 +211,7 @@ SFString COptions::listSpecials(bool terse) const {
 //--------------------------------------------------------------------------------
 SFString COptions::postProcess(const SFString& which, const SFString& str) const {
     if (which == "description")
-        return str; // + listSpecials(true);
+        return str + listSpecials(true);
     return str;
 }
 
