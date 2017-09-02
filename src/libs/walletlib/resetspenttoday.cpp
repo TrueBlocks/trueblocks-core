@@ -13,7 +13,7 @@
 #include "etherlib.h"
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(QResetSpentToday, CTransaction, curVersion);
+IMPLEMENT_NODE(QResetSpentToday, CTransaction, dataVersion);
 
 //---------------------------------------------------------------------------
 static SFString nextResetspenttodayChunk(const SFString& fieldIn, bool& force, const void *data);
@@ -84,7 +84,7 @@ void QResetSpentToday::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool QResetSpentToday::Serialize(SFArchive& archive) {
-    if (!archive.isReading())
+    if (archive.isWriting())
         return ((const QResetSpentToday*)this)->SerializeC(archive);
 
     CTransaction::Serialize(archive);

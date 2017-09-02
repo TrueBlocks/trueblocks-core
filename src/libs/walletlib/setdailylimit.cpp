@@ -13,7 +13,7 @@
 #include "etherlib.h"
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(QSetDailyLimit, CTransaction, curVersion);
+IMPLEMENT_NODE(QSetDailyLimit, CTransaction, dataVersion);
 
 //---------------------------------------------------------------------------
 static SFString nextSetdailylimitChunk(const SFString& fieldIn, bool& force, const void *data);
@@ -90,7 +90,7 @@ void QSetDailyLimit::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool QSetDailyLimit::Serialize(SFArchive& archive) {
-    if (!archive.isReading())
+    if (archive.isWriting())
         return ((const QSetDailyLimit*)this)->SerializeC(archive);
 
     CTransaction::Serialize(archive);

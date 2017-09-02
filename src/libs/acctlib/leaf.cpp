@@ -107,7 +107,7 @@ void CLeaf::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CLeaf::Serialize(SFArchive& archive) {
-    if (!archive.isReading())
+    if (archive.isWriting())
         return ((const CLeaf*)this)->SerializeC(archive);
 
     CTreeNode::Serialize(archive);

@@ -13,7 +13,7 @@
 #include "etherlib.h"
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(QRevokeEvent, CLogEntry, curVersion);
+IMPLEMENT_NODE(QRevokeEvent, CLogEntry, dataVersion);
 
 //---------------------------------------------------------------------------
 static SFString nextRevokeeventChunk(const SFString& fieldIn, bool& force, const void *data);
@@ -92,7 +92,7 @@ void QRevokeEvent::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool QRevokeEvent::Serialize(SFArchive& archive) {
-    if (!archive.isReading())
+    if (archive.isWriting())
         return ((const QRevokeEvent*)this)->SerializeC(archive);
 
     CLogEntry::Serialize(archive);

@@ -132,7 +132,7 @@ void CLogEntry::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CLogEntry::Serialize(SFArchive& archive) {
-    if (!archive.isReading())
+    if (archive.isWriting())
         return ((const CLogEntry*)this)->SerializeC(archive);
 
     if (!preSerialize(archive))

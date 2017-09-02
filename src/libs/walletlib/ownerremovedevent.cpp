@@ -13,7 +13,7 @@
 #include "etherlib.h"
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(QOwnerRemovedEvent, CLogEntry, curVersion);
+IMPLEMENT_NODE(QOwnerRemovedEvent, CLogEntry, dataVersion);
 
 //---------------------------------------------------------------------------
 static SFString nextOwnerremovedeventChunk(const SFString& fieldIn, bool& force, const void *data);
@@ -90,7 +90,7 @@ void QOwnerRemovedEvent::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool QOwnerRemovedEvent::Serialize(SFArchive& archive) {
-    if (!archive.isReading())
+    if (archive.isWriting())
         return ((const QOwnerRemovedEvent*)this)->SerializeC(archive);
 
     CLogEntry::Serialize(archive);

@@ -15,7 +15,7 @@
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CNewBlock, CBaseNode, curVersion);
+IMPLEMENT_NODE(CNewBlock, CBaseNode, dataVersion);
 
 //---------------------------------------------------------------------------
 extern SFString nextNewblockChunk(const SFString& fieldIn, bool& force, const void *data);
@@ -170,15 +170,14 @@ void CNewBlock::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CNewBlock::Serialize(SFArchive& archive) {
-    m_schema = currentSchema();
-    if (!archive.isReading())
+    if (archive.isWriting())
         return ((const CNewBlock*)this)->SerializeC(archive);
 
     if (!preSerialize(archive))
         return false;
 
-    if (m_schema < currentSchema())
-        return readBackLevel(archive);
+    if (readBackLevel(archive))
+        return true;
 
     archive >> gasLimit;
     archive >> gasUsed;
@@ -286,6 +285,10 @@ bool CNewBlock::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, v
 
 //---------------------------------------------------------------------------
 bool CNewBlock::readBackLevel(SFArchive& archive) {
+    // If they are the same, we are not a back level
+    if (archive.m_header.m_archiveSchema == m_schema)
+        return false;
+
     bool done = false;
     // EXISTING_CODE
     if (m_schema == 501) {
@@ -297,8 +300,8 @@ bool CNewBlock::readBackLevel(SFArchive& archive) {
         archive >> parentHash;
         archive >> timestamp;
         archive >> transactions;
-        miner = "NOTSET";
-        size = 0xdeadbeef;
+        miner = "0x0";
+        size = 0x0;
         finishParse();
         return true;
     }
@@ -336,7 +339,7 @@ CNewBlock::CNewBlock(const CBlock& block) {
 //-----------------------------------------------------------------------
 bool readOneNewBlock_fromBinary(CNewBlock& block, const SFString& fileName) {
     block = CNewBlock(); // reset
-    SFArchive archive(true, curVersion, true);
+    SFArchive archive(true, fileVersion, true);
     if (archive.Lock(fileName, binaryReadOnly, LOCK_NOWAIT))
     {
         block.Serialize(archive);

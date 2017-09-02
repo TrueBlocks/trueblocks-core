@@ -15,7 +15,7 @@
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CRPCResult, CBaseNode, curVersion);
+IMPLEMENT_NODE(CRPCResult, CBaseNode, dataVersion);
 
 //---------------------------------------------------------------------------
 static SFString nextRpcresultChunk(const SFString& fieldIn, bool& force, const void *data);
@@ -101,7 +101,7 @@ void CRPCResult::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CRPCResult::Serialize(SFArchive& archive) {
-    if (!archive.isReading())
+    if (archive.isWriting())
         return ((const CRPCResult*)this)->SerializeC(archive);
 
     if (!preSerialize(archive))

@@ -14,7 +14,7 @@
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CParameter, CBaseNode, curVersion);
+IMPLEMENT_NODE(CParameter, CBaseNode, dataVersion);
 
 //---------------------------------------------------------------------------
 static SFString nextParameterChunk(const SFString& fieldIn, bool& force, const void *data);
@@ -112,7 +112,7 @@ void CParameter::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CParameter::Serialize(SFArchive& archive) {
-    if (!archive.isReading())
+    if (archive.isWriting())
         return ((const CParameter*)this)->SerializeC(archive);
 
     if (!preSerialize(archive))

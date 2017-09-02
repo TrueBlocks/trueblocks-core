@@ -74,6 +74,4 @@ namespace qblocks {
     extern CParams *paramsPtr;
     extern uint32_t& nParamsRef;
     extern COptionsBase *pOptions;
-
-    #define curVersion ((uint64_t)0x00000201)
 }  // namespace qblocks

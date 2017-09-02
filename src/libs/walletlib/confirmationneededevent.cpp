@@ -13,7 +13,7 @@
 #include "etherlib.h"
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(QConfirmationNeededEvent, CLogEntry, curVersion);
+IMPLEMENT_NODE(QConfirmationNeededEvent, CLogEntry, dataVersion);
 
 //---------------------------------------------------------------------------
 static SFString nextConfirmationneededeventChunk(const SFString& fieldIn, bool& force, const void *data);
@@ -114,7 +114,7 @@ void QConfirmationNeededEvent::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool QConfirmationNeededEvent::Serialize(SFArchive& archive) {
-    if (!archive.isReading())
+    if (archive.isWriting())
         return ((const QConfirmationNeededEvent*)this)->SerializeC(archive);
 
     CLogEntry::Serialize(archive);

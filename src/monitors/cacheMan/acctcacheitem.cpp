@@ -12,7 +12,7 @@
 #include "acctcacheitem.h"
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CAcctCacheItem, CBaseNode, curVersion);
+IMPLEMENT_NODE(CAcctCacheItem, CBaseNode, dataVersion);
 
 //---------------------------------------------------------------------------
 static SFString nextAcctcacheitemChunk(const SFString& fieldIn, bool& force, const void *data);
@@ -98,7 +98,7 @@ void CAcctCacheItem::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CAcctCacheItem::Serialize(SFArchive& archive) {
-    if (!archive.isReading())
+    if (archive.isWriting())
         return ((const CAcctCacheItem*)this)->SerializeC(archive);
 
     if (!preSerialize(archive))

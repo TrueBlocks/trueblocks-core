@@ -12,7 +12,7 @@
 #include "accountname.h"
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CAccountName, CBaseNode, curVersion);
+IMPLEMENT_NODE(CAccountName, CBaseNode, dataVersion);
 
 //---------------------------------------------------------------------------
 static SFString nextAccountnameChunk(const SFString& fieldIn, bool& force, const void *data);
@@ -106,7 +106,7 @@ void CAccountName::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CAccountName::Serialize(SFArchive& archive) {
-    if (!archive.isReading())
+    if (archive.isWriting())
         return ((const CAccountName*)this)->SerializeC(archive);
 
     if (!preSerialize(archive))

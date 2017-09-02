@@ -15,7 +15,7 @@
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CReceipt, CBaseNode, curVersion);
+IMPLEMENT_NODE(CReceipt, CBaseNode, dataVersion);
 
 //---------------------------------------------------------------------------
 extern SFString nextReceiptChunk(const SFString& fieldIn, bool& force, const void *data);
@@ -142,7 +142,7 @@ void CReceipt::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CReceipt::Serialize(SFArchive& archive) {
-    if (!archive.isReading())
+    if (archive.isWriting())
         return ((const CReceipt*)this)->SerializeC(archive);
 
     if (!preSerialize(archive))

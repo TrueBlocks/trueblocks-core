@@ -13,7 +13,7 @@
 #include "etherlib.h"
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(QApprove, CTransaction, curVersion);
+IMPLEMENT_NODE(QApprove, CTransaction, dataVersion);
 
 //---------------------------------------------------------------------------
 static SFString nextApproveChunk(const SFString& fieldIn, bool& force, const void *data);
@@ -92,7 +92,7 @@ void QApprove::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool QApprove::Serialize(SFArchive& archive) {
-    if (!archive.isReading())
+    if (archive.isWriting())
         return ((const QApprove*)this)->SerializeC(archive);
 
     CTransaction::Serialize(archive);

@@ -13,7 +13,7 @@
 #include "etherlib.h"
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(QRequirementChangedEvent, CLogEntry, curVersion);
+IMPLEMENT_NODE(QRequirementChangedEvent, CLogEntry, dataVersion);
 
 //---------------------------------------------------------------------------
 static SFString nextRequirementchangedeventChunk(const SFString& fieldIn, bool& force, const void *data);
@@ -90,7 +90,7 @@ void QRequirementChangedEvent::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool QRequirementChangedEvent::Serialize(SFArchive& archive) {
-    if (!archive.isReading())
+    if (archive.isWriting())
         return ((const QRequirementChangedEvent*)this)->SerializeC(archive);
 
     CLogEntry::Serialize(archive);

@@ -16,7 +16,7 @@
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CPriceQuote, CBaseNode, curVersion);
+IMPLEMENT_NODE(CPriceQuote, CBaseNode, dataVersion);
 
 //---------------------------------------------------------------------------
 static SFString nextPricequoteChunk(const SFString& fieldIn, bool& force, const void *data);
@@ -138,7 +138,7 @@ void CPriceQuote::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CPriceQuote::Serialize(SFArchive& archive) {
-    if (!archive.isReading())
+    if (archive.isWriting())
         return ((const CPriceQuote*)this)->SerializeC(archive);
 
     if (!preSerialize(archive))
