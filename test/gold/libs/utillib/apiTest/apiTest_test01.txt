@@ -1,3 +1,5 @@
+apiTest argc: 1 
+apiTest 
 
   Not enough arguments presented.
 

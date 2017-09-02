@@ -1,3 +1,5 @@
+getBloom argc: 1 
+getBloom 
 
   Not enough arguments presented.
 

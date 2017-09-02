@@ -1,3 +1,5 @@
+cacheMan argc: 1 
+cacheMan 
 
   Not enough arguments presented.
 

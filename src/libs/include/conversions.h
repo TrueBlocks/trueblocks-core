@@ -273,7 +273,7 @@ namespace qblocks {
 
     //----------------------------------------------------------------------------------
     inline bool isAddress(const SFAddress& addrIn) {
-        return addrIn.length() == 42;
+        return (addrIn.length() == 42 && isHexStr(addrIn));
     }
 
     //------------------------------------------------------

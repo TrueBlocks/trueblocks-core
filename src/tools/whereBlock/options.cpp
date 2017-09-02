@@ -9,9 +9,9 @@
 
 //---------------------------------------------------------------------------------------------------
 CParams params[] = {
-    CParams("-alone", "show the path alone"),
-    CParams("-block", "which block to find"),
-    CParams("",       "Reports if a block was found in the cache.\n"),
+    CParams("~block[s]", "a space-separated list of one or more blocks to search for"),
+    CParams("-alone",    "show only the path of the block if it is found in the cache"),
+    CParams("",          "Reports if a block was found in the cache (and optionally its path).\n"),
 };
 uint32_t nParams = sizeof(params) / sizeof(CParams);
 
@@ -21,22 +21,33 @@ bool COptions::parseArguments(SFString& command) {
     Init();
     while (!command.empty()) {
         SFString arg = nextTokenClear(command, ' ');
-        if (arg == "-b" || arg == "--block" || isdigit(arg[0])) {
-            block = toUnsigned(arg);
+        SFString orig = arg;
 
-        } else if (arg == "-a" || arg == "--alone") {
+        if (arg == "-a" || arg == "--alone") {
             alone = true;
 
         } else if (arg.startsWith('-')) {  // do not collapse
             if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);
             }
+        } else {
+
+            if (isUnsigned(arg)) {
+                if (toUnsigned(arg) > getLatestBlockFromClient()) {
+                    cout << "The block number you requested (";
+                    cout << cTeal << orig << cOff;
+                    cout << ") is after the latest block (";
+                    cout << cTeal << (isTestMode() ? "TESTING" : asStringU(getLatestBlockFromClient())) << cOff;
+                    cout << "). Quitting...\n";
+                    return false;
+                }
+                blocks[blocks.getCount()] = toUnsigned(arg);
+            }
         }
     }
 
-    if (block == NOPOS)
-        return usage("You must supply a block.");
-
+    if (!blocks.getCount())
+        return usage("You must enter a valid block number. Quitting...");
     return true;
 }
 
@@ -45,7 +56,7 @@ void COptions::Init(void) {
     paramsPtr = params;
     nParamsRef = nParams;
 
-    block = NOPOS;
+    blocks.Clear();
     alone = false;
 }
 

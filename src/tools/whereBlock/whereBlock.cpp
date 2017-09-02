@@ -24,14 +24,16 @@ int main(int argc, const char *argv[]) {
         if (!options.parseArguments(command))
             return 0;
 
-        CFilename fileName(getBinaryFilename1(options.block));
-        bool exists = fileExists(fileName.getFullPath());
-        if (exists && options.alone) {
-            cout << fileName.getFullPath() << "\n";
-        } else if (exists) {
-            cout << "File " << fileName.relativePath(getStorageRoot()) << " found in cache.\n";
-        } else {
-            cout << "The block " << options.block << " was not found in the cache.\n";
+        for (uint32_t i = 0 ; i < options.blocks.getCount() ; i++ ) {
+            CFilename fileName(getBinaryFilename1(options.blocks[i]));
+            bool exists = fileExists(fileName.getFullPath());
+            if (exists && options.alone) {
+                cout << fileName.getFullPath() << "\n";
+            } else if (exists) {
+                cout << "File " << fileName.relativePath(getStorageRoot()) << " found in cache.\n";
+            } else {
+                cout << "The block " << options.blocks[i] << " was not found in the cache.\n";
+            }
         }
     }
     return 0;

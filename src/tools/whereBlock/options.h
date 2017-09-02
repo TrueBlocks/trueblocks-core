@@ -8,8 +8,8 @@
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
-    blknum_t block;
-    bool alone;
+    SFBlockArray blocks;
+    bool         alone;
 
     COptions(void);
     ~COptions(void);

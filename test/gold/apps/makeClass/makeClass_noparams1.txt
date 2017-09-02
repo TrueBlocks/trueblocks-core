@@ -1,3 +1,5 @@
+makeClass argc: 1 
+makeClass 
 
   Not enough arguments presented.
 

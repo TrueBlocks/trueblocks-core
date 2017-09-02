@@ -1,3 +1,5 @@
+getBlock argc: 1 
+getBlock 
 
   Not enough arguments presented.
 
