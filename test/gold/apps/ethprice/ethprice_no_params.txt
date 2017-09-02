@@ -1,3 +1,5 @@
+ethprice argc: 1 
+ethprice 
 
   Not enough arguments presented.
 

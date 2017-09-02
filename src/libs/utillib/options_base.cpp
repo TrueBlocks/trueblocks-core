@@ -36,9 +36,6 @@ namespace qblocks {
             colorsOff();
 
         programName = basename((char*)argv[0]);
-        if ((SFUint32)argc <= minArgs)  // the first arg is the program's name
-            return usage("Not enough arguments presented.");
-
         if (isTestMode()) {
             // we present the data once for clarity...
             cout << programName << " argc: " << argc << " ";
@@ -51,6 +48,9 @@ namespace qblocks {
                 cout << Strip(argv[i], ' ') << " ";
             cout << "\n";
         }
+
+        if ((SFUint32)argc <= minArgs)  // the first arg is the program's name
+            return usage("Not enough arguments presented.");
 
         int nChars = 0;
         for (int i=0; i<argc; i++) {

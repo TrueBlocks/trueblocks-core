@@ -1,3 +1,5 @@
+ethslurp argc: 1 
+ethslurp 
 
   Not enough arguments presented.
 

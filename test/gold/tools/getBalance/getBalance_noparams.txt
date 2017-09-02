@@ -1,3 +1,5 @@
+getBalance argc: 1 
+getBalance 
 
   Not enough arguments presented.
 

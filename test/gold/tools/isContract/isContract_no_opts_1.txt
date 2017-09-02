@@ -1,3 +1,5 @@
+isContract argc: 1 
+isContract 
 
   Not enough arguments presented.
 
