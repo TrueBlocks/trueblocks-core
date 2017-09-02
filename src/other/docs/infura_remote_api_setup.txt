@@ -1,0 +1,212 @@
+
+(IMPORTANT: Examples at this document are run from command line at Ubuntu box using CURL command)
+
+
+infura provides access to their ethereum networks using external API.
+
+1) First thing you need to do is to register here:
+
+https://infura.io/register.html
+
+You have to provide there:
+
+- Name
+- Surname
+- email
+- sign the register
+- Accept captha "I am not a bot"
+
+
+They provide you a token XXXXXXXXXXXXXXXXXX (personal key to use their API)
+
+You can use the random value generated or just delete it an create your own token value (API key)
+
+
+
+2) After registering you receive the following notification (by email & at site). Now you are ready to use the token provided to access infura networks at these URLs:
+
+
+Use your token value instead of xxxxxxxxxxxxxxxxxxxx
+
+==================================================================================================================================================
+
+Thank you for registering for early access to INFURA, we hope you enjoy our service and build incredible decentralized applications using INFURA as your engine!
+
+To get started, use the following provider URLs in your code (in place of localhost):
+
+Main Ethereum Network
+https://mainnet.infura.io/xxxxxxxxxxxxxxxxxx 
+
+Test Ethereum Network (Ropsten)
+https://ropsten.infura.io/xxxxxxxxxxxxxxxxxxx 
+
+Test Ethereum Network (Rinkeby)
+https://rinkeby.infura.io/xxxxxxxxxxxxxxxxxxxx 
+
+Test Ethereum Network (Kovan)
+https://kovan.infura.io/xxxxxxxxxxxxxxxxxxxxxxx 
+
+Test Ethereum Network (INFURAnet)
+https://infuranet.infura.io/xxxxxxxxxxxxxxxxxxxx 
+
+IPFS Gateway
+https://ipfs.infura.io 
+
+IPFS RPC
+https://ipfs.infura.io:5001 
+
+
+==================================================================================================================================================
+
+
+
+3) You can play around directly at website once you have your own token. You can do it at this URL:   http://docs.infura.apiary.io/#
+
+
+   - You have the documentation at the left and can launch a console to test your commands at the right side of the screen.
+
+
+4) You must select which network you want to use to launch your queries, selecting one of the URLs supplied above. It is not intuitive and recommended to play with curl at command line directly.
+
+
+
+5) If you want to see the supported RPC methods for a given network you can launch the following command (it will return those methods available with GET and POST):
+
+   
+
+$ curl -s https://api.infura.io/v1/jsonrpc/<network>/methods | json_pp   at network we can use: mainnet, ropsten, rinkeby, kovan, or infuranet
+
+
+
+{
+   "get" : [
+      "web3_clientVersion",
+      "net_version",
+      "net_listening",
+      "net_peerCount",
+      "eth_protocolVersion",
+      "eth_syncing",
+      "eth_mining",
+      "eth_hashrate",
+      "eth_gasPrice",
+      "eth_accounts",
+      "eth_blockNumber",
+      "eth_getBalance",
+      "eth_getStorageAt",
+      "eth_getTransactionCount",
+      "eth_getBlockTransactionCountByHash",
+      "eth_getBlockTransactionCountByNumber",
+      "eth_getUncleCountByBlockHash",
+      "eth_getUncleCountByBlockNumber",
+      "eth_getCode",
+      "eth_call",
+      "eth_getBlockByHash",
+      "eth_getBlockByNumber",
+      "eth_getTransactionByHash",
+      "eth_getTransactionByBlockHashAndIndex",
+      "eth_getTransactionByBlockNumberAndIndex",
+      "eth_getTransactionReceipt",
+      "eth_getUncleByBlockHashAndIndex",
+      "eth_getUncleByBlockNumberAndIndex",
+      "eth_getCompilers",
+      "eth_getLogs",
+      "eth_getWork",
+      "parity_pendingTransactions"
+   ],
+   "post" : [
+      "eth_sendRawTransaction",
+      "eth_estimateGas",
+      "eth_submitWork",
+      "eth_submitHashrate"
+   ]
+}
+
+
+
+
+6)  If you want to run a given method against a given network then you have to use your token to identify yourself as follows:
+
+
+
+ curl -s --data '{ json_method_data_here }' https://<network_url>/<your_token>/<method_to_be_invoked> | json_pp
+
+ Example: (for eth_getBlockByNumber, using token xxxxxxxxxxxxxxxxxxx and test network:  ropsten)
+
+ curl -s --data '{"jsonrpc":"2.0","method":"eth_getBlockByNumber","params":["0x1b4", true],"id":1}' https://ropsten.infura.io/xxxxxxxxxxxxxxxxxxxx | json_pp
+
+ {
+   "jsonrpc" : "2.0",
+   "id" : 1,
+   "result" : {
+      "number" : "0x1b4",
+      "extraData" : "0xd783010502846765746887676f312e362e33856c696e7578",
+      "gasUsed" : "0x0",
+      "timestamp" : "0x5831c32b",
+      "transactionsRoot" : "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
+      "stateRoot" : "0xba9f4d1af1371ab66551526776697af24d9df3492ac67bec3b913534fe85d95a",
+      "hash" : "0x4a89e885e0a6cc17b78d790320833299b550d47c36287b0d8d4fda97684a777a",
+      "totalDifficulty" : "0x16ae78d0",
+      "sha3Uncles" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+      "difficulty" : "0xe1bd4",
+      "parentHash" : "0x3a2e26193bf74178717951b6696e937607b62615bbf91dd6ae192001006bdb4a",
+      "logsBloom" : "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "receiptsRoot" : "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
+      "nonce" : "0x6188497bd6f143d9",
+      "gasLimit" : "0xa739b8",
+      "miner" : "0xc2fa6dcef5a1fbf70028c5636e7f64cd46e7cfd4",
+      "uncles" : [],
+      "size" : "0x219",
+      "mixHash" : "0x9ea5c067c1c19a170b349ae3c9f41285fb2c0a7cef92b117f25ed7ca6da86314",
+      "transactions" : []
+   }
+}
+
+
+
+7) More examples using other methods, test network: ropsten and xxxxxxxxxxxxxxxxxxx as token:
+
+Notice that for real values we need to use network = mainnet, for other type of stuff we can use the test networks (here I want to get a real block by hash so we use mainnet network)
+
+
+carlos@ubuntu-4gb-fra1-01:~$ curl -s --data '{"jsonrpc":"2.0","method":"eth_getBlockByHash","params":["0xdfe2e70d6c116a541101cecbb256d7402d62125f6ddc9b607d49edc989825c64", true],"id":1}' https://mainnet.infura.io/xxxxxxxxxxxxxxxxxx/ | json_pp
+{
+   "result" : {
+      "timestamp" : "0x55ba43eb",
+      "totalDifficulty" : "0x19b5afdc486",
+      "difficulty" : "0x42be722b6",
+      "gasLimit" : "0x1388",
+      "mixHash" : "0x5bb43c0772e58084b221c8e0c859a45950c103c712c5b8f11d9566ee078a4501",
+      "extraData" : "0x476574682f4c5649562f76312e302e302f6c696e75782f676f312e342e32",
+      "sha3Uncles" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+      "hash" : "0xdfe2e70d6c116a541101cecbb256d7402d62125f6ddc9b607d49edc989825c64",
+      "transactionsRoot" : "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
+      "uncles" : [],
+      "gasUsed" : "0x0",
+      "nonce" : "0x37129c7f29a9364b",
+      "receiptsRoot" : "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
+      "number" : "0x64",
+      "parentHash" : "0xdb10afd3efa45327eb284c83cc925bd9bd7966aea53067c1eebe0724d124ec1e",
+      "transactions" : [],
+      "logsBloom" : "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "size" : "0x21e",
+      "miner" : "0xbb7b8287f3f0a933474a79eae42cbca977791171",
+      "stateRoot" : "0x90c25f6d7fddeb31a6cc5668a6bba77adbadec705eb7aa5a51265c2d1e3bb7ac"
+   },
+   "jsonrpc" : "2.0",
+   "id" : 1
+}
+
+
+
+8) Antoher example:
+
+
+carlos@ubuntu-4gb-fra1-01:~$ curl -s --data '{"jsonrpc":"2.0","method":"eth_getBalance","params":["0x12e4a3c8bd57bd6e4a201556d0bbf357bc260259", "latest"],"id":1}' https://mainnet.infura.io/xxxxxxxxxxxxxxxxxxxxxx/ | json_pp
+{
+   "jsonrpc" : "2.0",
+   "result" : "0x1fb3baf598c8700000",
+   "id" : 1
+}
+
+
+  
