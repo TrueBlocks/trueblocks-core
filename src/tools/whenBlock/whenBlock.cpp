@@ -21,41 +21,62 @@ int main(int argc, const char *argv[]) {
     if (!options.prepareArguments(argc, argv))
         return 0;
 
-    bool vb = !options.commandList.Contains("\n");
+    bool oneCmd = !options.commandList.Contains("\n");
     while (!options.commandList.empty()) {
         SFString command = nextTokenClear(options.commandList, '\n');
         if (!options.parseArguments(command))
             return 0;
 
-        CBlock block;
-        if (options.blockNum != NOPOS) {
-            if (verbose) { cout << "finding by block number\n"; }
-            queryBlock(block, asStringU(options.blockNum), false);
+        for (uint32_t i = 0 ; i < options.requests.getCount() ; i++ ) {
 
-        } else {
-            if (verbose) { cout << "finding by date\n"; }
-            bool res = lookupDate(block, options.date);
-            if (!res) {
-                unloadCache();
-                return 0;
+            SFString value = options.requests[i];
+            SFString mode = nextTokenClear(value, ':');
+
+            SFString special;
+            if (mode == "special") {
+                mode = "block";
+                special = nextTokenClear(value,'|');
             }
-        }
 
-        // special case for the zero block
-        if (block.blockNumber == 0)
-            block.timestamp = 1438269960;
+            CBlock block;
+            if (mode == "block") {
+                if (verbose) { cout << "finding by block number\n"; }
+                queryBlock(block, value, false);
 
-        if (options.alone) {
-            if (options.blockNum != NOPOS) {
-                cout << dateFromTimeStamp(block.timestamp) << "\n";
+            } else if (mode == "date") {
+                if (verbose) { cout << "finding by date\n"; }
+                SFTime date = dateFromTimeStamp((timestamp_t)toUnsigned(value));
+                bool res = lookupDate(block, date);
+                if (!res) {
+                    unloadCache();
+                    return 0;
+                }
+            }
+
+            // special case for the zero block
+            if (block.blockNumber == 0)
+                block.timestamp = 1438269960;
+
+            if (options.alone) {
+                if (mode == "block") {
+                    cout << dateFromTimeStamp(block.timestamp) << "\n";
+                } else {
+                    cout << block.blockNumber << "\n";
+                }
+
             } else {
-                cout << block.blockNumber << "\n";
+                bool newLines = oneCmd && options.requests.getCount() == 1;
+                cout << (newLines ? "\n\t" : "") << "block ";
+                cout << cYellow << "#" << block.blockNumber << cOff;
+                if (!special.empty())
+                    cout << " (" << special << ")";
+                cout << " : ";
+                cout << cYellow << block.timestamp << cOff;
+                cout << " : ";
+                cout << cYellow << dateFromTimeStamp(block.timestamp) << cOff;
+                cout << (newLines ? "\n" : "");
+                cout << "\n";
             }
-
-        } else {
-            cout << (vb?"\n\t":"") << "block " << asYellow("#" << block.blockNumber)
-                << " : " << asYellow(block.timestamp) << " : "
-                << asYellow(dateFromTimeStamp(block.timestamp)) << (vb?"\n":"") << "\n";
         }
     }
 

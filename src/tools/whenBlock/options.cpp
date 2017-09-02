@@ -12,92 +12,105 @@ CParams params[] = {
     CParams("~date / block", "one of the special values listed below or YYYY-MM-DD-[HH[:MM[:SS]]] or a blockNumber"),
     CParams("-alone",        "show the found block or found date unadorned (useful for scripting)"),
     CParams("-list",         "list special blocks timestamps and dates"),
-    CParams("", "Finds the nearest block before the JSON-formatted date, or the nearest date before the given block.\n"),
+    CParams("", "Finds the nearest block prior to a JSON-formatted date, or the nearest date prior to\n"
+            "the given block. Alternatively, search for one of the special blocks listed below.\n"),
 };
 uint32_t nParams = sizeof(params) / sizeof(CParams);
 
+extern int sortByBlockNum(const void *v1, const void *v2);
+extern SFTime parseDate(const SFString& strIn);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(SFString& command) {
 
+    bool isList = false;
+    bool foundOne = false;
     Init();
     while (!command.empty()) {
         SFString arg = nextTokenClear(command, ' ');
-        arg.ReplaceAll("{~}", " ");
-        arg.ReplaceAll("T", " ");
+        SFString orig = arg;
 
-        if (arg == "-l" || arg == "--list") {
+        if (arg == "UTC") {
+            // do nothing
 
-            cout << cYellow << "\n\tSpecial blocks:";
-            for (uint32_t i = 0 ; i < specials.getCount() - 1 ; i++) {
-                SFString block = specials[i];
-                SFString name = nextTokenClear(block, '|');
-                cout << cOff << "\n\t  " << padRight(name, 12) << cTeal << padLeft(block, 10);
-            }
-            cout << cOff << "\n";
-            return false;
+        } else if (arg == "-l" || arg == "--list") {
+            isList = true;
 
         } else if (arg == "-a" || arg == "--alone") {
 
             alone = true;
 
         } else if (arg.ContainsAny(":-_ ") && !arg.startsWith("-")) {
+
+            if (isList)
+                return usage("The --list option must appear alone on the line. Quitting...");
+
+            // If we're here, we better have a good date, assume we don't
+            foundOne = false;
             SFString str = arg.Substitute(" ", ";").Substitute("-", ";").Substitute("_", ";")
-                                .Substitute(":", ";").Substitute("T", ";").Substitute(";UTC", "");
-            date = snagDate(str);
+                                .Substitute(":", ";").Substitute(";UTC", "");
+            SFTime date = parseDate(str);
+            if (date == earliestDate)
+                return usage("Invalid date: '" + orig + "'. Quitting...");
+            if (date < SFTime(2015,07,30,15,25,00)) { // first block was at 15:26:00
+                cout << "The date you specified (";
+                cout << cTeal << orig << cOff;
+                cout << ") is before the first block. Quitting...\n";
+                return false;
+            }
+            foundOne = true;
+            requests[requests.getCount()] = "date:" + asString(toTimeStamp(date));
 
         } else if (arg.startsWith('-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
-                return usage("Invalid option: " + arg);
+                return usage("Invalid option: '" + orig + "'. Quitting...");
             }
 
         } else {
 
-            if (arg == "latest") {
-                special = arg;
-                blockNum = getLatestBlockFromClient();
+            if (isList)
+                return usage("The --list option must appear alone on the line. Quitting...");
 
-            } else {
+            // if we're here, we better have a good block, assume we don't
+            foundOne = false;
+            for (uint32_t i = 0 ; i < specials.getCount() ; i++) {
+                SFString num = specials[i];
+                SFString special = nextTokenClear(num, '|');
+                if (special == arg) {
+                    requests[requests.getCount()] = "special:" + special + "|" + num;
+                    foundOne = true;
+                }
+            }
 
-                if (arg.length() && isdigit(arg[0])) {
-                    blockNum = toLongU(arg);
+            if (!foundOne) {
+                if (isUnsigned(arg)) {
 
+                    if (toUnsigned(arg) > getLatestBlockFromClient()) {
+                        cout << "The block number you requested (";
+                        cout << cTeal << orig << cOff;
+                        cout << ") is after the latest block (";
+                        cout << cTeal << (isTestMode() ? "TESTING" : asStringU(getLatestBlockFromClient())) << cOff;
+                        cout << "). Quitting...\n";
+                        return false;
+                    }
+                    requests[requests.getCount()] = "block:" + asStringU(toUnsigned(arg));
+                    foundOne = true;
                 } else {
-                    for (uint32_t i = 0 ; i < specials.getCount() ; i++) {
-                        SFString n = specials[i];
-                        SFString name = nextTokenClear(n, '|');
-                        if (name == arg) {
-                            special = arg;
-                            blockNum = toLongU(n);
-                        }
-                    }
-                    if (special.empty()) {
-                        return usage("Argument " + arg + " is not valid. Supply either JSON formatted date or blockNumber. Quitting...");
-                    }
+                    return usage("Invalid argument: '" + orig + "'. Please supply either a JSON formatted date or a blockNumber. Quitting...");
                 }
             }
         }
     }
 
-    if (blockNum == NOPOS) {
-        if (date == earliestDate)
-            return usage("Please supply either a JSON formatted date or a blockNumber. Quitting...");
-
-    } else {
-        blknum_t latest = getLatestBlockFromClient();
-        if (blockNum > latest) {
-            if (special.empty()) {
-                return usage("Block number (" + asStringU(blockNum) + ") must be less than latest "
-                             "block: " + asStringU(latest));
-
-            } else {
-                // For the cases where user's node is behind the head of the block and getLatestBlockFromClient
-                // returns a block number in the past, the only thing we can present is known block dates
-                cout << "\n\tSpecial block: " << cYellow << special << " " << blockNum << cOff << "\n\n";
-                return false;
-            }
-        }
+    if (isList) {
+        if (alone || requests.getCount())
+            return usage("The --list option must appear alone on the line. Quitting...");
+        cout << listSpecials(false);
+        return false;
     }
+
+    if (!foundOne)
+        return usage("Please supply either a JSON formatted date or a blockNumber. Quitting...");
 
     return true;
 }
@@ -106,10 +119,9 @@ bool COptions::parseArguments(SFString& command) {
 void COptions::Init(void) {
     paramsPtr  = params;
     nParamsRef = nParams;
+    pOptions = this;
 
-    blockNum = NOPOS;
-    date = earliestDate;
-    special = "";
+    requests.Clear();
     alone = false;
 
     specials.Clear();
@@ -138,8 +150,6 @@ void COptions::Init(void) {
             } while (!custom.empty());
         }
     }
-
-extern int sortByBlockNum(const void *v1, const void *v2);
     specials.Sort(sortByBlockNum);
 }
 
@@ -166,4 +176,72 @@ COptions::COptions(void) {
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
+}
+
+//--------------------------------------------------------------------------------
+SFString COptions::listSpecials(bool terse) const {
+    ostringstream os;
+    if (terse) {
+        os << bYellow << "\n  Notes:\n\t" << cOff;
+        os << "You may specify any of the following strings to represent 'special' blocks:\n\n\t    ";
+        for (uint32_t i = 0 ; i < specials.getCount(); i++) {
+            SFString block = specials[i];
+            SFString name = nextTokenClear(block, '|');
+            os << name;
+            if (name != "latest")
+                os << " (" << cTeal << block << cOff << ")";
+            if (i < specials.getCount()-1)
+                os << ", ";
+            if (!((i+1)%5))
+                os << "\n\t    ";
+        }
+        os << "\n\tSee the README for information on customizing this list.\n";
+    } else {
+        os << bYellow << "\n\tSpecial Blocks:" << cOff;
+        for (uint32_t i = 0 ; i < specials.getCount(); i++) {
+            SFString block = specials[i];
+            SFString name = nextTokenClear(block, '|');
+            os << cOff << "\n\t  " << padRight(name, 12) << cTeal << padLeft(block, 10);
+        }
+        os << "\n";
+    }
+    return os.str().c_str();
+}
+
+//--------------------------------------------------------------------------------
+SFString COptions::postProcess(const SFString& which, const SFString& str) const {
+    if (which == "description")
+        return str; // + listSpecials(true);
+    return str;
+}
+
+//--------------------------------------------------------------------------------
+SFTime parseDate(const SFString& strIn) {
+
+    if (strIn.empty()) {
+        return earliestDate;
+    }
+
+    SFString str = strIn.Substitute(";", "");
+    if (str.length() != 14 && str.length() != 8)
+        return earliestDate;
+
+    if (str.length() == 8)
+        str += "120000";
+
+#define NP ((uint32_t)-1)
+    uint32_t y, m, d, h, mn, s;
+    y = m = d = h = mn = s = NP;
+    if (isUnsigned(str.substr( 0,4))) { y  = toLong32u(str.substr( 0, 4)); }
+    if (isUnsigned(str.substr( 4,2))) { m  = toLong32u(str.substr( 4, 2)); }
+    if (isUnsigned(str.substr( 6,2))) { d  = toLong32u(str.substr( 6, 2)); }
+    if (isUnsigned(str.substr( 8,2))) { h  = toLong32u(str.substr( 8, 2)); }
+    if (isUnsigned(str.substr(10,2))) { mn = toLong32u(str.substr(10, 2)); }
+    if (isUnsigned(str.substr(12,2))) { s  = toLong32u(str.substr(12, 2)); }
+
+    // If any of them was not an unsigned int, it's a fail
+    if (y == NP || m == NP || d == NP || h == NP || mn == NP || s == NP)
+        return earliestDate;
+
+    return SFTime(y, m, d, h, mn, s);
 }

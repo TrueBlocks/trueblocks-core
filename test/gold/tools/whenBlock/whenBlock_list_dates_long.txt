@@ -1,7 +1,7 @@
 whenBlock argc: 2 [1:--list] 
 whenBlock --list 
 
-	Special blocks:
+	Special Blocks:
 	  first                0
 	  iceage          200000
 	  homestead      1150000
@@ -11,3 +11,4 @@ whenBlock --list
 	  tangerine      2463000
 	  spurious       2675000
 	  stateclear     2718436
+	  latest                
