@@ -15,7 +15,7 @@
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CLogEntry, CBaseNode, curVersion);
+IMPLEMENT_NODE(CLogEntry, CBaseNode, dataVersion);
 
 //---------------------------------------------------------------------------
 extern SFString nextLogentryChunk(const SFString& fieldIn, bool& force, const void *data);

@@ -14,7 +14,7 @@
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CAccount, CBaseNode, curVersion);
+IMPLEMENT_NODE(CAccount, CBaseNode, dataVersion);
 
 //---------------------------------------------------------------------------
 static SFString nextAccountChunk(const SFString& fieldIn, bool& force, const void *data);

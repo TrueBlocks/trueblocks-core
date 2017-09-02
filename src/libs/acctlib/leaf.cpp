@@ -15,7 +15,7 @@
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CLeaf, CTreeNode, curVersion);
+IMPLEMENT_NODE(CLeaf, CTreeNode, dataVersion);
 
 //---------------------------------------------------------------------------
 static SFString nextLeafChunk(const SFString& fieldIn, bool& force, const void *data);
