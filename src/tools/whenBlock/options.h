@@ -12,16 +12,16 @@
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
-    blknum_t blockNum;
-    SFTime   date;
-    SFString special;
-    bool     alone;
+    SFStringArray requests;
+    bool          alone;
 
     COptions(void);
     ~COptions(void);
 
     bool parseArguments(SFString& command);
     void Init(void);
+    SFString postProcess(const SFString& which, const SFString& str) const;
+    SFString listSpecials(bool terse) const;
 };
 
 //-----------------------------------------------------------------------------
