@@ -11,6 +11,9 @@
 extern int sortReverseChron(const void *rr1, const void *rr2);
 //--------------------------------------------------------------------------------
 int main(int argc, const char * argv[]) {
+
+    etherlib_init("binary");
+
     // We keep only a single slurper. If the user is using the --file option and they
     // are reading the same account repeatedly, we only need to read the cache once.
     CSlurperApp slurper;
