@@ -563,8 +563,6 @@ bool establishFolders(CToml& toml) {
     if (!folderExists(configPath("slurps/")))
         return false;
 
-    toml.setConfigStr("version",  "current",          getVersionStr());
-
     toml.setConfigStr("settings", "api_key",          "<NOT_SET>");
     toml.setConfigStr("settings", "blockCachePath",   "<NOT_SET>");
 
