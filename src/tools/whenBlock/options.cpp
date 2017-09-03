@@ -39,7 +39,7 @@ bool COptions::parseArguments(SFString& command) {
 
             alone = true;
 
-        } else if (arg.ContainsAny(":-_ ") && !arg.startsWith("-")) {
+        } else if (arg.ContainsAny(":- ") && !arg.startsWith("-")) {
 
             if (isList)
                 return usage("The --list option must appear alone on the line. Quitting...");
@@ -84,7 +84,6 @@ bool COptions::parseArguments(SFString& command) {
 
             if (!foundOne) {
                 if (isUnsigned(arg)) {
-
                     if (toUnsigned(arg) > getLatestBlockFromClient()) {
                         cout << "The block number you requested (";
                         cout << cTeal << orig << cOff;
@@ -123,34 +122,7 @@ void COptions::Init(void) {
 
     requests.Clear();
     alone = false;
-
-    specials.Clear();
-    specials[specials.getCount()] = "first|0";
-    specials[specials.getCount()] = "iceage|200000";
-    specials[specials.getCount()] = "homestead|1150000";
-    specials[specials.getCount()] = "daofund|1428756";
-    specials[specials.getCount()] = "daohack|1718497";
-    specials[specials.getCount()] = "daofork|1920000";
-    specials[specials.getCount()] = "tangerine|2463000";
-    specials[specials.getCount()] = "spurious|2675000";
-    specials[specials.getCount()] = "stateclear|2718436";
-    specials[specials.getCount()] = "latest|";
-
-    SFString custom = asciiFileToString(configPath("whenBlock.toml"));
-    while (!custom.empty()) {
-        SFString line = nextTokenClear(custom, '\n');
-        if (line == "[SPECIAL]") {
-            line = nextTokenClear(custom, '\n');
-            do {
-                SFString block = line;
-                SFString name = nextTokenClear(block, '=');
-                if (toLongU(block))  // non zero means it's a number
-                    specials[specials.getCount()] = Strip(name, ' ') + "|" + Strip(block, ' ');
-                line = nextTokenClear(custom, '\n');
-            } while (!custom.empty());
-        }
-    }
-    specials.Sort(sortByBlockNum);
+    loadSpecials();
 }
 
 //--------------------------------------------------------------------------------
@@ -165,9 +137,6 @@ int sortByBlockNum(const void *v1, const void *v2) {
     nextTokenClear(b2, '|');
     return (int)(toLong32u(b1) - toLong32u(b2));
 }
-
-//--------------------------------------------------------------------------------
-SFStringArray specials;
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
@@ -188,20 +157,21 @@ SFString COptions::listSpecials(bool terse) const {
             SFString block = specials[i];
             SFString name = nextTokenClear(block, '|');
             os << name;
-            if (name != "latest")
-                os << " (" << cTeal << block << cOff << ")";
+            os << " (" << cTeal << (isTestMode() && name=="latest" ? "" : block) << cOff << ")";
             if (i < specials.getCount()-1)
                 os << ", ";
             if (!((i+1)%5))
                 os << "\n\t    ";
         }
+        if (specials.getCount() % 5)
+            os << "\n";
         os << "\n\tSee the README for information on customizing this list.\n";
     } else {
         os << bYellow << "\n\tSpecial Blocks:" << cOff;
         for (uint32_t i = 0 ; i < specials.getCount(); i++) {
             SFString block = specials[i];
             SFString name = nextTokenClear(block, '|');
-            os << cOff << "\n\t  " << padRight(name, 12) << cTeal << padLeft(block, 10);
+            os << cOff << "\n\t  " << padRight(name, 12) << cTeal << (isTestMode() && name == "latest" ? "" : padLeft(block, 10));
         }
         os << "\n";
     }
@@ -245,3 +215,51 @@ SFTime parseDate(const SFString& strIn) {
 
     return SFTime(y, m, d, h, mn, s);
 }
+
+extern const char *STR_DEFAULT_SPECIALS;
+//-----------------------------------------------------------------------
+void COptions::loadSpecials(void) {
+
+    static CToml *toml = NULL;
+    if (!toml) {
+        static CToml theToml(configPath("quickBlocks.toml"));
+        toml = &theToml;
+    }
+    specials.Clear();
+
+    SFString specialsStr = toml->getConfigArray("specials", "list", "");
+    if (specialsStr.empty()) {
+        SFString in = asciiFileToString(configPath("quickBlocks.toml"));
+        stringToAsciiFile(configPath("quickBlocks.toml"), in + "\n" + STR_DEFAULT_SPECIALS);
+        specialsStr = toml->getConfigArray("specials", "list", "");
+    }
+    char *p = cleanUpJson((char *)specialsStr.c_str());
+    while (p && *p) {
+        CNameValue pair;
+        uint32_t nFields = 0;
+        p = pair.parseJson(p, nFields);
+        if (nFields) {
+            //cout << pair.Format() << "\n";
+            if (pair.name == "latest")
+                pair.value = asStringU(getLatestBlockFromClient());
+            specials[specials.getCount()] = pair.Format("[{NAME}]|[{VALUE}]");
+        }
+    }
+    specials.Sort(sortByBlockNum);
+    return;
+}
+
+const char *STR_DEFAULT_SPECIALS =
+"[[specials]]\n"
+"list = [\n"
+"\t{ name = \"first\",      value = \"0\"          },\n"
+"\t{ name = \"iceage\",     value = \"200000\"     },\n"
+"\t{ name = \"homestead\",  value = \"1150000\"    },\n"
+"\t{ name = \"daofund\",    value = \"1428756\"    },\n"
+"\t{ name = \"daohack\",    value = \"1718497\"    },\n"
+"\t{ name = \"daofork\",    value = \"1920000\"    },\n"
+"\t{ name = \"tangerine\",  value = \"2463000\"    },\n"
+"\t{ name = \"spurious\",   value = \"2675000\"    },\n"
+"\t{ name = \"stateclear\", value = \"2718436\"    },\n"
+"\t{ name = \"latest\",     value = \"\"           }\n"
+"]\n";

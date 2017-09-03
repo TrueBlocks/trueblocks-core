@@ -36,6 +36,14 @@ int main(int argc, const char *argv[]) {
             if (mode == "special") {
                 mode = "block";
                 special = nextTokenClear(value,'|');
+                if (toUnsigned(value) > getLatestBlockFromClient()) {
+                    cout << "The block number you requested (";
+                    cout << cTeal << special << ": " << value << cOff;
+                    cout << ") is after the latest block (";
+                    cout << cTeal << (isTestMode() ? "TESTING" : asStringU(getLatestBlockFromClient())) << cOff;
+                    cout << "). Quitting...\n";
+                    return false;
+                }
             }
 
             CBlock block;
