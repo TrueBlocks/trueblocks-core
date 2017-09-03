@@ -160,7 +160,7 @@ bool updateCacheUsingBlooms(const SFString& path, void *data) {
 
             SFBloom bloom;
             visitor->bloomStats.bloomsChecked++;
-            SFArchive archive(true, fileVersion, true);
+            SFArchive archive(true, fileSchema(), true);
             if (archive.Lock(path, binaryReadOnly, LOCK_NOWAIT)) {
                 archive >> bloom;
                 archive.Close();
