@@ -254,6 +254,10 @@ void COptions::Init(void) {
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
     Init();
+    UNHIDE_FIELD(CTransaction, "isError");
+    UNHIDE_FIELD(CTransaction, "isInternalTx");
+    UNHIDE_FIELD(CTransaction, "date");
+    UNHIDE_FIELD(CTransaction, "ether");
 }
 
 //--------------------------------------------------------------------------------

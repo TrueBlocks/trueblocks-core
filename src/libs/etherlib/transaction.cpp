@@ -307,6 +307,10 @@ void CTransaction::registerClass(void) {
     // Hide fields we don't want to show by default
     HIDE_FIELD(CTransaction, "function");
     HIDE_FIELD(CTransaction, "gasCost");
+    HIDE_FIELD(CTransaction, "isError");
+    HIDE_FIELD(CTransaction, "isInternalTx");
+    HIDE_FIELD(CTransaction, "date");
+    HIDE_FIELD(CTransaction, "ether");
     //    HIDE_FIELD(CTransaction, "receipt");
     // EXISTING_CODE
 }

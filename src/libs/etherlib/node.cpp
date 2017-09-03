@@ -30,13 +30,11 @@ CURL *getCurl(bool cleanup=false)
         }
 
         headers = curl_slist_append(headers, "Content-Type: application/json");
-
         if (qbGlobals::source == "infura")
         {
             // we have to use Infura
-            headers = curl_slist_append(headers, "Infura-Ethereum-Preferred-Client: parity");
             curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
-            curl_easy_setopt(curl, CURLOPT_URL,        "https://mainnet.infura.io/WkavvX9Hk5tvp34LhN7W");
+            curl_easy_setopt(curl, CURLOPT_URL,        "https://pmainnet.infura.io/");
 
         } else
         {
@@ -86,11 +84,6 @@ void etherlib_init(const SFString& sourceIn)
     CAccount::registerClass();
     CRPCResult::registerClass();
 
-    HIDE_FIELD(CTransaction, "isError");
-    HIDE_FIELD(CTransaction, "isInternalTx");
-    HIDE_FIELD(CTransaction, "date");
-    HIDE_FIELD(CTransaction, "ether");
-
     // initialize curl
     getCurl();
 
@@ -139,6 +132,25 @@ SFString callRPC(const SFString& method, const SFString& params, bool raw)
     CURLcode res = curl_easy_perform(getCurl());
     if (res != CURLE_OK && !earlyAbort)
     {
+        SFString currentSource = curSource();
+        SFString fallBack = "infura";
+        if (currentSource != fallBack) {
+            if (fallBack != "infura" || !method.startsWith("trace_")) {
+                id--;
+                qbGlobals::source = fallBack;
+                getCurl(true); getCurl();
+                // since we failed, we leave the new source, otherwise we would have to save
+                // the results and reset it here.
+                return callRPC(method, params, raw);
+            }
+            cerr << cYellow;
+            cerr << "\n";
+            cerr << "\tWarning:" << cOff << "A trace request was made to the fallback Infura\n";
+            cerr << "\tnode. Infura does not support tracing. It is impossible\n";
+            cerr << "\tfor QuickBlocks to proceed. Quitting...\n";
+            cerr << "\n";
+            exit(0);
+        }
         cerr << cYellow;
         cerr << "\n";
         cerr << "\tWarning:" << cOff << "The request to the Ethereum node ";
@@ -149,11 +161,21 @@ SFString callRPC(const SFString& method, const SFString& params, bool raw)
         exit(0);
     }
 
+    if (received.empty())
+    {
+        cerr << cYellow;
+        cerr << "\n";
+        cerr << "\tWarning:" << cOff << "The Ethereum node  resulted in an empty\n";
+        cerr << "\tresponse. It is impossible forQuickBlocks to proceed. Quitting...\n";
+        cerr << "\n";
+        exit(0);
+    }
+
 #ifdef DEBUG_RPC
 //    cout << "\n" << SFString('-',80) << "\n";
 //    cout << thePost << "\n";
     cout << SFString('=',60) << "\n";
-    cout << received << "\n";
+    cout << "received: " << received << "\n";
     cout.flush();
 #endif
 
@@ -437,7 +459,7 @@ void writeToBinary(const CBaseNode& node, const SFString& fileName)
     if (establishFolder(fileName,created)) {
         if (!created.empty() && !isTestMode())
             cerr << "mkdir(" << created << ")" << SFString(' ',20) << "                                                     \n";
-        SFArchive archive(false, fileVersion, true);
+        SFArchive archive(false, fileSchema(), true);
         if (archive.Lock(fileName, binaryWriteCreate, LOCK_CREATE))
         {
             ((CBlock *)&node)->Serialize(archive);
@@ -450,7 +472,7 @@ void writeToBinary(const CBaseNode& node, const SFString& fileName)
 bool readOneBlock_fromBinary(CBlock& block, const SFString& fileName)
 {
     block = CBlock(); // reset
-    SFArchive archive(true, fileVersion, true);
+    SFArchive archive(true, fileSchema(), true);
     if (archive.Lock(fileName, binaryReadOnly, LOCK_NOWAIT))
     {
         block.Serialize(archive);
@@ -484,7 +506,7 @@ bool readOneBlock_fromJson(CBlock& block, const SFString& fileName)
 SFBloom readOneBloom(blknum_t bn) {
     SFBloom ret = 0;
     SFString fileName = getBinaryFilename1(bn).Substitute("/blocks/", "/blooms/");
-    SFArchive archive(true, fileVersion, true);
+    SFArchive archive(true, fileSchema(), true);
     if (archive.Lock(fileName, binaryReadOnly, LOCK_NOWAIT)) {
         archive >> ret;
         archive.Close();
@@ -498,7 +520,7 @@ void writeOneBloom(const SFString& fileName, const SFBloom& bloom) {
     if (establishFolder(fileName,created)) {
         if (!created.empty() && !isTestMode())
             cerr << "mkdir(" << created << ")" << SFString(' ',20) << "                                                     \n";
-        SFArchive archive(false, fileVersion, true);
+        SFArchive archive(false, fileSchema(), true);
         if (archive.Lock(fileName, binaryWriteCreate, LOCK_CREATE)) {
             archive << bloom;
             archive.Close();
