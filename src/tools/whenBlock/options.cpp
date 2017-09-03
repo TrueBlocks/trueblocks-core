@@ -160,10 +160,10 @@ SFString COptions::listSpecials(bool terse) const {
             os << " (" << cTeal << (isTestMode() && name=="latest" ? "" : block) << cOff << ")";
             if (i < specials.getCount()-1)
                 os << ", ";
-            if (!((i+1)%5))
+            if (!((i+1)%4))
                 os << "\n\t    ";
         }
-        if (specials.getCount() % 5)
+        if (specials.getCount() % 4)
             os << "\n";
         os << "\n\tSee the README for information on customizing this list.\n";
     } else {
