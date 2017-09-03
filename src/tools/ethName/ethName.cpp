@@ -120,12 +120,14 @@ bool loadData(void) {
     if (!folderExists(configPath("names/")))
         establishFolder(configPath("names/"));
 
-    SFString contents = StripAny(asciiFileToString(configPath("names/names.txt")), "\t\n ") + "\n";
-    contents.ReplaceAll("\t\t", "\t");
+    SFString contents = StripAny(asciiFileToString(configPath("names/names.txt")), "\t\n ");
     if (contents.empty()) {
         stringToAsciiFile(configPath("names/names.txt"), STR_DEFAULT_DATA);
         contents = STR_DEFAULT_DATA;
     }
+    contents.ReplaceAll("\t\t", "\t");
+    if (!contents.endsWith("\n"))
+        contents += "\n";
 
     SFString custom = asciiFileToString(configPath("names/custom_names.txt"));
     custom.ReplaceAll("\t\t", "\t");
