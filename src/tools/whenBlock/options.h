@@ -12,9 +12,9 @@
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
-    SFStringArray requests;
-    bool          alone;
-    SFStringArray specials;
+    SFStringArray   requests;
+    bool            alone;
+    CNameValueArray specials;
 
     COptions(void);
     ~COptions(void);
