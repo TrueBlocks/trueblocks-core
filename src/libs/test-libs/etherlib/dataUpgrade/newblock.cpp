@@ -339,7 +339,7 @@ CNewBlock::CNewBlock(const CBlock& block) {
 //-----------------------------------------------------------------------
 bool readOneNewBlock_fromBinary(CNewBlock& block, const SFString& fileName) {
     block = CNewBlock(); // reset
-    SFArchive archive(true, fileVersion, true);
+    SFArchive archive(true, fileSchema(), true);
     if (archive.Lock(fileName, binaryReadOnly, LOCK_NOWAIT))
     {
         block.Serialize(archive);

@@ -72,8 +72,6 @@ SFString cleanAll(const SFString& str, bool remove) {
     SFString orig = str;
     orig.ReplaceAny("\t\r {}","");
     orig.ReplaceAll(",",",\n"); // put everything on its own line
-    orig.Replace("\"jsonrpc\":\"2.0\",", ""); // known junk
-    orig.Replace("\"id\":1", "");
     for (uint32_t i = 0 ; i < nRemoved ; i++) {
         SFString search = "\"" + removes[i] + "\":";
         while (orig.Contains(search)) {
@@ -86,10 +84,17 @@ SFString cleanAll(const SFString& str, bool remove) {
     orig.ReplaceAll("]", "");
     orig = StripAny(orig, "\t\n ");
     orig = orig.Substitute("\"result\":","").Substitute("\"transactions\":","").Substitute("\"logs\":","");
+    orig = orig.Substitute("\"jsonrpc\":","");
     orig = orig.Substitute("0x" + SFString('0',512), "0x0"); // minimize bloom filters
     orig.ReplaceAll("\n\n","\n");
-    SFString ret = Strip(orig.Substitute("\"\"","\"\n\"").Substitute("\n\n","\n"),'\n');
-    return ret;
+    // get rid of id
+    SFString ret;
+    while (!orig.empty()) {
+        SFString line = nextTokenClear(orig, '\n');
+        if (!line.startsWith("\"id\":"))
+            ret += (line + "\n");
+    }
+    return Strip(ret.Substitute("\"\"","\"\n\"").Substitute("\n\n","\n"),'\n');
 }
 
 //------------------------------------------------------------
