@@ -38,6 +38,11 @@ public:
     DECLARE_NODE(CNameValue);
 
     // EXISTING_CODE
+    SFString getValue  (void) const { return            value;  }
+    uint64_t getValueU (void) const { return toUnsigned(value); }
+    int64_t  getValueI (void) const { return toLong    (value); }
+    SFUintBN getValueBN(void) const { return toWei     (value); }
+    SFString getName   (void) const { return            name;   }
     // EXISTING_CODE
 
 protected:

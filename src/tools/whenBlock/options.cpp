@@ -74,8 +74,8 @@ bool COptions::parseArguments(SFString& command) {
             // if we're here, we better have a good block, assume we don't
             foundOne = false;
             for (uint32_t i = 0 ; i < specials.getCount() ; i++) {
-                SFString num = specials[i];
-                SFString special = nextTokenClear(num, '|');
+                SFString special = specials[i].getName();
+                SFString num     = specials[i].getValue();
                 if (special == arg) {
                     requests[requests.getCount()] = "special:" + special + "|" + num;
                     foundOne = true;
@@ -127,15 +127,13 @@ void COptions::Init(void) {
 
 //--------------------------------------------------------------------------------
 int sortByBlockNum(const void *v1, const void *v2) {
-    SFString b1 = *(SFString *)v1;  // NOLINT
-    SFString b2 = *(SFString *)v2;  // NOLINT
-    if (b1 == "latest|")
+    CNameValue *b1 = (CNameValue *)v1;  // NOLINT
+    CNameValue *b2 = (CNameValue *)v2;  // NOLINT
+    if (b1->getName() == "latest")
         return 1;
-    if (b2 == "latest|")
+    if (b2->getName() == "latest")
         return -1;
-    nextTokenClear(b1, '|');
-    nextTokenClear(b2, '|');
-    return (int)(toLong32u(b1) - toLong32u(b2));
+    return (int)(b1->getValueU() - b2->getValueU());
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -153,26 +151,39 @@ SFString COptions::listSpecials(bool terse) const {
     if (terse) {
         os << bYellow << "\n  Notes:\n\t" << cOff;
         os << "You may specify any of the following strings to represent 'special' blocks:\n\n\t    ";
-        for (uint32_t i = 0 ; i < specials.getCount(); i++) {
-            SFString block = specials[i];
-            SFString name = nextTokenClear(block, '|');
+    } else {
+        os << bYellow << "\n\tSpecial Blocks:" << cOff;
+    }
+
+    SFString extra;
+    for (uint32_t i = 0 ; i < specials.getCount(); i++) {
+
+        SFString name  = specials[i].getName();
+        SFString block = specials[i].getValue();
+        if (name == "latest") {
+            if (isTestMode()) {
+                block = "";
+            } else if (i > 0 && specials[i-1].getValueU() >= specials[i].getValueU()) {
+                extra = iWhite + " (syncing)" + cOff;
+            }
+        }
+
+        if (terse) {
             os << name;
-            os << " (" << cTeal << (isTestMode() && name=="latest" ? "" : block) << cOff << ")";
+            os << " (" << cTeal << block << extra << cOff << ")";
             if (i < specials.getCount()-1)
                 os << ", ";
             if (!((i+1)%4))
                 os << "\n\t    ";
+        } else {
+            os << "\n\t  " << padRight(name, 12) << cTeal << padLeft(block, 10) << cOff << extra ;
         }
+    }
+    if (terse) {
         if (specials.getCount() % 4)
             os << "\n";
         os << "\n\tSee the README for information on customizing this list.\n";
     } else {
-        os << bYellow << "\n\tSpecial Blocks:" << cOff;
-        for (uint32_t i = 0 ; i < specials.getCount(); i++) {
-            SFString block = specials[i];
-            SFString name = nextTokenClear(block, '|');
-            os << cOff << "\n\t  " << padRight(name, 12) << cTeal << (isTestMode() && name == "latest" ? "" : padLeft(block, 10));
-        }
         os << "\n";
     }
     return os.str().c_str();
@@ -240,11 +251,13 @@ void COptions::loadSpecials(void) {
         p = pair.parseJson(p, nFields);
         if (nFields) {
             //cout << pair.Format() << "\n";
-            if (pair.name == "latest")
+            if (pair.name == "latest") {
                 pair.value = asStringU(getLatestBlockFromClient());
-            specials[specials.getCount()] = pair.Format("[{NAME}]|[{VALUE}]");
+            }
+            specials[specials.getCount()] = pair;
         }
     }
+
     specials.Sort(sortByBlockNum);
     return;
 }
