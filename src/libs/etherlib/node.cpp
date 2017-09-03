@@ -83,6 +83,7 @@ void etherlib_init(const SFString& sourceIn)
     CParameter::registerClass();
     CAccount::registerClass();
     CRPCResult::registerClass();
+    CNameValue::registerClass();
 
     // initialize curl
     getCurl();
