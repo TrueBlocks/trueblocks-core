@@ -43,9 +43,6 @@ extern SFString getSha3(const SFString& hexIn);
         return isBloomHit(makeBloom(hexIn),filter);
     }
 
-    //-------------------------------------------------------------------------
-    extern SFString curSource(void);
-
     //----------------------------------------------------------------------------------
     extern SFBloom readOneBloom(blknum_t bn);
     extern void    writeOneBloom(const SFString& fileName, const SFBloom& bloom);

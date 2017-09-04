@@ -70,6 +70,10 @@ namespace qblocks {
     extern void     editFile  (const SFString& fileName);
     extern SFString configPath(const SFString& part);
 
+    //-------------------------------------------------------------------------
+    extern SFString getSource(void);
+    extern void     setSource(const SFString& src);
+
     //--------------------------------------------------------------------------------
     extern CParams *paramsPtr;
     extern uint32_t& nParamsRef;
