@@ -12,7 +12,7 @@
 int main(int argc, const char * argv[]) {
 
     // Tell the system where the blocks are and which version to use
-    etherlib_init("fastest");
+    etherlib_init("binary   ");
 
     // Parse command line, allowing for command files
     COptions options;
@@ -124,7 +124,7 @@ SFString doOneBlock(SFUint32 num, const COptions& opt) {
             writeToBinary(gold, fileName);
         }
 
-        if (curSource().Contains("Only")) {
+        if (getSource().Contains("Only")) {
             // --source::cache mode doesn't include timestamp in transactions
             for (txnum_t t = 0 ; t < gold.transactions.getCount() ; t++) {
                 gold.transactions[t].timestamp = (SFUint32)gold.timestamp;
