@@ -9,12 +9,6 @@
 
 namespace qblocks {
 
-namespace qbGlobals {
-    static SFString source;
-}
-//-------------------------------------------------------------------------
-SFString curSource(void) { return qbGlobals::source; }
-
 //-------------------------------------------------------------------------
 CURL *getCurl(bool cleanup=false)
 {
@@ -30,7 +24,7 @@ CURL *getCurl(bool cleanup=false)
         }
 
         headers = curl_slist_append(headers, "Content-Type: application/json");
-        if (qbGlobals::source == "infura")
+        if (getSource() == "infura")
         {
             // we have to use Infura
             curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
@@ -65,7 +59,7 @@ void etherlib_init(const SFString& sourceIn)
     // they get cleaned up
     registerQuitHandler(defaultQuitHandler);
 
-    qbGlobals::source = sourceIn;
+    setSource(sourceIn);
 
     CBlock::registerClass();
     CTransaction::registerClass();
@@ -133,24 +127,25 @@ SFString callRPC(const SFString& method, const SFString& params, bool raw)
     CURLcode res = curl_easy_perform(getCurl());
     if (res != CURLE_OK && !earlyAbort)
     {
-        SFString currentSource = curSource();
-        SFString fallBack = "infura";
-        if (currentSource != fallBack) {
-            if (fallBack != "infura" || !method.startsWith("trace_")) {
-                id--;
-                qbGlobals::source = fallBack;
-                getCurl(true); getCurl();
-                // since we failed, we leave the new source, otherwise we would have to save
-                // the results and reset it here.
-                return callRPC(method, params, raw);
+        SFString currentSource = getSource();
+        SFString fallBack = getenv("FALLBACK");
+        if (!fallBack.empty() && currentSource != fallBack) {
+            if (fallBack == "infura" && method.startsWith("trace_")) {
+                cerr << cYellow;
+                cerr << "\n";
+                cerr << "\tWarning:" << cOff << "A trace request was made to the fallback\n";
+                cerr << "\tnode. " << toProper(fallBack) << " does not support tracing. It ";
+                cerr << "is impossible\n\tfor QuickBlocks to proceed. Quitting...\n";
+                cerr << "\n";
+                exit(0);
             }
-            cerr << cYellow;
-            cerr << "\n";
-            cerr << "\tWarning:" << cOff << "A trace request was made to the fallback Infura\n";
-            cerr << "\tnode. Infura does not support tracing. It is impossible\n";
-            cerr << "\tfor QuickBlocks to proceed. Quitting...\n";
-            cerr << "\n";
-            exit(0);
+            id--;
+            setSource(fallBack);
+            // reset curl
+            getCurl(true); getCurl();
+            // since we failed, we leave the new source, otherwise we would have to save
+            // the results and reset it here.
+            return callRPC(method, params, raw);
         }
         cerr << cYellow;
         cerr << "\n";
@@ -205,17 +200,17 @@ bool queryBlock(CBlock& block, const SFString& numIn, bool needTrace)
         return queryBlock(block, asStringU(getLatestBlockFromClient()), needTrace);
 
     SFUint32 num = toLongU(numIn);
-    if ((qbGlobals::source.Contains("binary") || qbGlobals::source.Contains("nonemp")) && fileSize(getBinaryFilename1(num))>0) {
+    if ((getSource().Contains("binary") || getSource().Contains("nonemp")) && fileSize(getBinaryFilename1(num))>0) {
         //		if (verbose) { cerr << "Reading binary block: " << num << "\n"; cerr.flush(); }
         UNHIDE_FIELD(CTransaction, "receipt");
         return readOneBlock_fromBinary(block, getBinaryFilename1(num));
 
-    } else if (qbGlobals::source.Contains("Only")) {
+    } else if (getSource().Contains("Only")) {
         return false;
 
     }
 
-    if (qbGlobals::source == "json" && fileSize(getJsonFilename1(num))>0)
+    if (getSource() == "json" && fileSize(getJsonFilename1(num))>0)
     {
         //		if (verbose) { cerr << "Reading json block: " << num << "\n"; cerr.flush(); }
         UNHIDE_FIELD(CTransaction, "receipt");
@@ -276,11 +271,11 @@ bool queryBlock(CBlock& block, const SFString& numIn, bool needTrace)
 bool getBlock(CBlock& block, SFUint32 numIn)
 {
     // Use queryBlock if you just want to read the block (any method)
-    SFString save = qbGlobals::source;
-    if (qbGlobals::source=="fastest")
-        qbGlobals::source = (fileExists(getBinaryFilename1(numIn)) ? "binary" : "parity");
+    SFString save = getSource();
+    if (getSource() == "fastest")
+        setSource(fileExists(getBinaryFilename1(numIn)) ? "binary" : "parity");
     bool ret = queryBlock(block, asStringU(numIn), true);
-    qbGlobals::source = save;
+    setSource(save);
     return ret;
 }
 
@@ -665,8 +660,8 @@ bool forEveryEmptyBlockOnDisc(BLOCKVISITFUNC func, void *data, SFUint32 start, S
     if (!func)
         return false;
 
-    SFString save = qbGlobals::source;
-    qbGlobals::source = "parity"; // the empty blocks are not on disk, so we have to ask parity. Don't write them, though
+    SFString save = getSource();
+    setSource("parity"); // the empty blocks are not on disk, so we have to ask parity. Don't write them, though
 
     CSharedResource fullBlocks;
     if (!fullBlocks.Lock(fullBlockIndex, binaryReadOnly, LOCK_WAIT))
@@ -696,7 +691,7 @@ bool forEveryEmptyBlockOnDisc(BLOCKVISITFUNC func, void *data, SFUint32 start, S
                 getBlock(block,cnt);
                 if (!(*func)(block, data))
                 {
-                    qbGlobals::source = save;
+                    setSource(save);
                     delete [] contents;
                     return false;
                 }
@@ -706,7 +701,7 @@ bool forEveryEmptyBlockOnDisc(BLOCKVISITFUNC func, void *data, SFUint32 start, S
         }
         delete [] contents;
     }
-    qbGlobals::source = save;
+    setSource(save);
     return true;
 }
 
@@ -1012,7 +1007,7 @@ bool forEveryMiniBlockInMemory(MINIBLOCKVISITFUNC func, void *data, SFUint32 sta
 //--------------------------------------------------------------------------
 bool forEveryFullBlockInMemory(BLOCKVISITFUNC func, void *data, SFUint32 start, SFUint32 count)
 {
-    if (qbGlobals::source != "mem")
+    if (getSource() != "mem")
         return false;
     if (!theCache.Load(start,count))
         return false;

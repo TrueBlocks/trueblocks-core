@@ -505,4 +505,14 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
             if (system(cmd.c_str())) {}  // do not remove. Silences compiler warnings
         }
     }
+
+    //-------------------------------------------------------------------------
+    namespace qbGlobals {
+        static SFString source;
+    }
+
+    //-------------------------------------------------------------------------
+    SFString getSource(void) { return qbGlobals::source; }
+    void     setSource(const SFString& src) { qbGlobals::source = src; }
+
 }  // namespace qblocks
