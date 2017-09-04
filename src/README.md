@@ -1,11 +1,20 @@
-# quickBlocks
+## Source Code
 
-The `src` folder holds all the source code for QuickBlocks.
+*Welcome to the QuickBlocks source tree!*
 
-Under the `src` folder, the `app` folder holds program source code for the primary programs that implement the system. This consists of the block chain scraper (`blockScraper`), the miniBlock indexer (`miniBlocks`), and various other command-line tools used to query the Ethereum node.
+QuickBlocks is a collection of software libraries, applications, and command-line tools designed to give you quick access to the data provided by an Ethereum node.
 
-The `libs` folder holds code useful various code used across many applications and tools.
+Our source code is laid out to reflect this. There are primarily four folder:
 
-The `monitors` folder contains code that has specific meaning only to particular smart contracts. There are examples provided that 'monitor' a few popular smart contracts such as "The DAO", "SingularDTV" and the "ENS". This code is intended as an example of how to build your own QuickBlocks monitors for your own smart contracts.
+- **[The 'libs' folder.](./libs/README.md)** This folder holds the C++ library code that helps us build out various applications and command-line tools. All of this code is open source.
 
-The `tools` folder contains various tools that come in handy, for example, to manage the caches created by the `monitors`.
+- **[The 'apps' folder.](./apps/README.md)** This folder contains source code for the primary applications that comprise the system. Some of this source code is currenlty not open source.
+
+- **[The 'tools' folder.](./tools/README.md)** This folder contains source code for an open source collection of simple command line tools. These tools, while being very useful, serve primarily as sample code for the libraries.
+
+- **[The 'samples' folder.](./samples/README.md)** This folder contains other open source sample source code for the system. You can get a lot of ideas here, but many of these samples are incomplete. Please add to the list and/or feel free to expand any of these samples.
+
+- **[The 'other' folder.](./other/README.md)** This folder contains various other documents such as installation instructions, FAQs, and other tools you may find useful.
+
+- Finally, **[the 'monitors' folder.](./monitors/README.md)**, which holds propietary code for monitoring, recording, replaying, debuging and accounting for smart contracts and builds per-account lists of transactions.
+
