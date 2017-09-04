@@ -80,9 +80,12 @@ SFString acquireABI(CFunctionArray& functions, const SFAddress& addr, bool silen
 {
     SFString results, ret;
     SFString fileName = configPath("abis/" + addr + ".json");
+    SFString dispName = fileName.Substitute(configPath(""),"|");
+    nextTokenClear(dispName, '|');
+    dispName = "~/.quickBlocks/" + dispName;
     if (fileExists(fileName)) {
 
-        cerr << "Reading ABI from cache " + fileName + "\n";
+        cerr << "Reading ABI from cache " + dispName + "\n";
         results = asciiFileToString(fileName);
 
     } else {
@@ -99,7 +102,7 @@ SFString acquireABI(CFunctionArray& functions, const SFAddress& addr, bool silen
         if (!results.Contains("NOTOK")) {
             nextTokenClear(results, '[');
             results.ReplaceReverse("]}", "");
-            cerr << "Caching abi in " << fileName << "\n";
+            cerr << "Caching abi in " << dispName << "\n";
             establishFolder(fileName);
             stringToAsciiFile(fileName, "["+results+"]");
         } else {
