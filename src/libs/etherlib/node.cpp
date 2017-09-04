@@ -130,10 +130,19 @@ SFString callRPC(const SFString& method, const SFString& params, bool raw)
         SFString currentSource = getSource();
         SFString fallBack = getenv("FALLBACK");
         if (!fallBack.empty() && currentSource != fallBack) {
+            if (fallBack != "infura") {
+                cerr << cYellow;
+                cerr << "\n";
+                cerr << "\tWarning: " << cOff << "Only the 'infura' fallback is supported.\n";
+                cerr << "\tIt is impossible for QuickBlocks to proceed. Quitting...\n";
+                cerr << "\n";
+                exit(0);
+            }
+
             if (fallBack == "infura" && method.startsWith("trace_")) {
                 cerr << cYellow;
                 cerr << "\n";
-                cerr << "\tWarning:" << cOff << "A trace request was made to the fallback\n";
+                cerr << "\tWarning: " << cOff << "A trace request was made to the fallback\n";
                 cerr << "\tnode. " << toProper(fallBack) << " does not support tracing. It ";
                 cerr << "is impossible\n\tfor QuickBlocks to proceed. Quitting...\n";
                 cerr << "\n";
@@ -149,7 +158,7 @@ SFString callRPC(const SFString& method, const SFString& params, bool raw)
         }
         cerr << cYellow;
         cerr << "\n";
-        cerr << "\tWarning:" << cOff << "The request to the Ethereum node ";
+        cerr << "\tWarning: " << cOff << "The request to the Ethereum node ";
         cerr << "resulted in\n\tfollowing error message: ";
         cerr << bTeal << curl_easy_strerror(res) << cOff << ".\n";
         cerr << "\tIt is impossible for QuickBlocks to proceed. Quitting...\n";
