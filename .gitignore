@@ -41,9 +41,6 @@ src/tools/scripts/ethsed
 # Hidden files
 .DS_Store
 
-# bin generated
-bin
-
 fix
 issues_detected_ubuntu.txt
 src/setup_mongo.md
