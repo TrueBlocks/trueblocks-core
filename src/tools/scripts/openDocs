@@ -1,0 +1,13 @@
+open README.md
+open src/README.md
+open src/apps/README.md
+open src/libs/README.md
+open src/monitors/README.md
+open src/tools/README.md
+open src/samples/README.md
+open src/other/README.md
+open src/other/docs/README.md
+open src/other/papers/README.md
+open bin/README.md
+open docs/README.md
+open tests/README.md
