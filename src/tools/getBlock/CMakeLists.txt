@@ -75,3 +75,6 @@ run_test("getBlock_terse_yes_raw" "-t"  " -s:raw" " 4001001")
 
 run_test("getBlock_cmd_file1" "--file:cmd_file1")
 run_test("getBlock_cmd_file2" "--file:cmd_file2")
+
+# Installation steps
+install(TARGETS ${TOOL_NAME} RUNTIME DESTINATION bin)

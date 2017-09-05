@@ -15,3 +15,7 @@ add_subdirectory (acctlib)
 add_subdirectory (tokenlib)
 add_subdirectory (walletlib)
 add_subdirectory (test-libs)
+
+# Headers installation steps
+file(GLOB HEADER_FILES "include/*.h")
+install (FILES ${HEADER_FILES} DESTINATION include)
