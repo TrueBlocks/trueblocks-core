@@ -219,3 +219,6 @@ run_test("ethslurp_verbose_options_long"           "--fmt:csv" " --income"  " --
 #echo "Bring down EEAR contract just to keep track of it"                      | tee proposed/eear.txt
 #cat api_key | ethslurp -t -f:txt 0xbdace480953fc8260184bd625389ea20bbd0da9f   >>proposed/eear.txt 2>&1
 
+# Installation steps, this tool is renamed at installation
+install(TARGETS ${TOOL_NAME} RUNTIME DESTINATION bin)
+install(CODE "file(RENAME \"${CMAKE_INSTALL_PREFIX}/bin/${TOOL_NAME}\" \"${CMAKE_INSTALL_PREFIX}/bin/ethSlurp\")")    

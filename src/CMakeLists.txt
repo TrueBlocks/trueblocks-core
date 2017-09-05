@@ -5,6 +5,14 @@
 cmake_minimum_required (VERSION 2.6)
 
 # ----------------------------------------------------------------------------------------
+# Define default installation PATH
+if(NOT WIN32) 
+    set(CMAKE_INSTALL_PREFIX "/usr/local/quickblocks")
+else()
+    message(ERROR "Windows build is not supported yet")
+endif()
+
+# ----------------------------------------------------------------------------------------
 # folder project
 project (quickBlocks)
 
@@ -82,6 +90,16 @@ function(run_the_test testPath goldPath testName testExe) # Optional argv4 with 
 endfunction(run_the_test)
 
 # ----------------------------------------------------------------------------------------
+# Compilation order for the subfolders
+add_subdirectory (libs)
+add_subdirectory (apps)
+add_subdirectory (tools)
+add_subdirectory (samples)
+add_subdirectory (other)
+add_subdirectory (monitors)
+
+
+# ----------------------------------------------------------------------------------------
 # Define the install target
 set(QUICKBLOCKS_HOME "$ENV{HOME}/.quickblocks")
 set(OLD_EXT "old")
@@ -96,16 +114,8 @@ install(DIRECTORY DESTINATION "${QUICKBLOCKS_HOME}/chifra" DIRECTORY_PERMISSIONS
 set(QUICKBLOCKS_TOML_FILE "${QUICKBLOCKS_HOME}/quickBlocks.toml")
 install(CODE "if (EXISTS  \"${QUICKBLOCKS_TOML_FILE}\") 
     message (STATUS \"WARNING: File ${QUICKBLOCKS_TOML_FILE} exists, renamed to ${QUICKBLOCKS_TOML_FILE}.${OLD_EXT}\")
-    file(RENAME \"${QUICKBLOCKS_TOML_FILE}\" \"${QUICKBLOCKS_TOML_FILE}.${OLD_EXT}\") 
+        file(RENAME \"${QUICKBLOCKS_TOML_FILE}\" \"${QUICKBLOCKS_TOML_FILE}.${OLD_EXT}\") 
 endif() 
 ")
 install(FILES "${CMAKE_SOURCE_DIR}/other/install/quickBlocks.toml" DESTINATION "${QUICKBLOCKS_HOME}" PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
 
-# ----------------------------------------------------------------------------------------
-# Compilation order for the subfolders
-add_subdirectory (libs)
-add_subdirectory (apps)
-add_subdirectory (tools)
-add_subdirectory (samples)
-add_subdirectory (other)
-add_subdirectory (monitors)

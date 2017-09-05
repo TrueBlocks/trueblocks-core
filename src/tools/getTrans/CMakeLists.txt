@@ -48,3 +48,6 @@ run_test("getTrans_three_ways" "0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03b
 run_test("getTrans_by_file"    "--file:cmd_file")
 run_test("getTrans_by_file_long_v"  "--file:cmd_file" " --verbose")
 run_test("getTrans_by_file_v"  "--verbose" " --file:cmd_file")
+
+# Installation steps
+install(TARGETS ${TOOL_NAME} RUNTIME DESTINATION bin)

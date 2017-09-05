@@ -91,3 +91,6 @@ run_test("isContract_README"       "-th")
 run_test("isContract_combined_options_1" "--nodiff" " 0x26c4e381ffbdc825be9b986c3ba40525f0771e8d" " 0x26c4e381ffbdc825be9b986c3ba40525f0771e8d" " -d")
 run_test("isContract_combined_options_2" " 0x26c4e381ffbdc825be9b986c3ba40525f0771e8d" " 0x26c4e381ffbdc825be9b986c3ba40525f0771e8d" " --verbose" " --display")
 run_test("isContract_combined_options_3" "-dn" " 0x26c4e381ffbdc825be9b986c3ba40525f0771e8d" " 0x26c4e381ffbdc825be9b986c3ba40525f0771e8d")
+
+# Installation steps
+install(TARGETS ${TOOL_NAME} RUNTIME DESTINATION bin)

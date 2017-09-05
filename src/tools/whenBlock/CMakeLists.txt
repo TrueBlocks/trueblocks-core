@@ -119,3 +119,6 @@ run_test("whenBlock_help"                         "-h")
 run_test("whenBlock_long_help"                    "--help")
 run_test("whenBlock_02"                           "--file:blocks.txt")
 run_test("whenBlock_03"                           "--file:dates.txt")
+
+# Installation steps
+install(TARGETS ${TOOL_NAME} RUNTIME DESTINATION bin)
