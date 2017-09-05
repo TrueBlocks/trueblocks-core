@@ -277,6 +277,7 @@ bool loadPriceData(CPriceQuoteArray& quotes, bool freshen, SFString& message, SF
         }
 
     } else {
+        freshen=true;
         if (verbose)
             cerr << "Price database not found. Creating it.\n";
     }
@@ -303,6 +304,8 @@ bool loadPriceData(CPriceQuoteArray& quotes, bool freshen, SFString& message, SF
             msg = "Price database has been updated to ";
         SFTime prevLast = lastRead;
         if (freshen) {
+            if (verbose < 2)
+                cerr << "Retrieving data...\r"; cerr.flush();
             timestamp_t start = toTimeStamp(nextRead);
             // Polinex will give us as much as it has on the following day. Do this to account for time zones
             timestamp_t end   = toTimeStamp(EOD(BOND(now)));
@@ -350,6 +353,9 @@ bool loadPriceData(CPriceQuoteArray& quotes, bool freshen, SFString& message, SF
                     << " quote: " << dateFromTimeStamp((timestamp_t)quote.timestamp)
                     << " lastRead: " << lastRead
                     << " lastRead(ts): " << dateFromTimeStamp(toTimeStamp(lastRead)) << "\n";
+                } else {
+                    if (!isTestMode())
+                        cerr << dateFromTimeStamp((timestamp_t)quote.timestamp) << "\r";
                 }
 
                 // So as to not inadvertantly add records we already have
