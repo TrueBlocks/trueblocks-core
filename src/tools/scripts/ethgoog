@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-#
-# Opens Google searching for an Ethereum address but excludes well known block chains
-# scrapers from the results. This makes it much easier to find references to addresses
-# without getting lost in blockchain hex-hell
-
-open "https://www.google.com/?gws_rd=ssl#q=$1+-etherscan+-ethereumblocks+-etherchain+-gastracker+-classic+-etherx+-centraltickets"
