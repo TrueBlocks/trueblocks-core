@@ -270,7 +270,8 @@ bool queryBlock(CBlock& block, const SFString& numIn, bool needTrace)
         fmt += SFString(" (")     + cYellow  + padNum3T((uint64_t)block.transactions.getCount()) + "/" + asStringU(nTrans)  + cOff + " trans";
         fmt +=                      cYellow  + padNum3T((uint64_t)nTraces)                       + "/" + asStringU(nTraced) + cOff + " traced) written to ";
         fmt +=                      cMagenta + fileName.Substitute(blockFolder, "./")  + cOff + ".";
-        fprintf(stderr, "%s\r", (const char*)fmt);
+        if (!isTestMode())
+            fprintf(stderr, "%s\r", (const char*)fmt);
     }
 
     return true;
