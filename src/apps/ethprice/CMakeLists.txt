@@ -48,3 +48,7 @@ run_test("ethprice_when_01"         "--when" " 19")
 run_test("ethprice_verbose_00"      "-v")
 run_test("ethprice_verbose_01"      "-v:1")
 run_test("ethprice_from_file"       "--file:cmd_file")
+
+# Installation steps, this tool is renamed at installation
+install(TARGETS ${TOOL_NAME} RUNTIME DESTINATION bin)
+install(CODE "file(RENAME \"${CMAKE_INSTALL_PREFIX}/bin/${TOOL_NAME}\" \"${CMAKE_INSTALL_PREFIX}/bin/ethPrice\")") 

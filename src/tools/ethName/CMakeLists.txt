@@ -146,3 +146,6 @@ run_test("ethName_full_addr"                         "0xB64ef51C888972c908CFacf5
 run_test("ethName_simple_w_space"                    "etwork" " ")
 run_test("ethName_w_source"                          "etwork" " -s")
 run_test("ethName_too_many_terms"                    "88897" " torj" " scan" " etwork" " -s")
+
+# Installation steps
+install(TARGETS ${TOOL_NAME} RUNTIME DESTINATION bin)

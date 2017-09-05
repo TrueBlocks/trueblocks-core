@@ -70,3 +70,6 @@ run_test("getTrace_26" "0x8324490c68e6268db9eadcb4ce8303ee1d256e480f7637853bb13a
 run_test("getTrace_27" "0xf9d426284bd20415a53991a004122b3a3a619b295ea98d1d88a5fd3a4125408b" "-r")
 run_test("getTrace_28" "0xf9d426284bd20415a53991a004122b3a3a619b295ea98d1d88a5fd3a4125408b")
 
+
+# Installation steps
+install(TARGETS ${TOOL_NAME} RUNTIME DESTINATION bin)
