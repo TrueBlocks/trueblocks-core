@@ -33,3 +33,4 @@ function(run_test testName)
 endfunction(run_test)
 
 # Enter one line for each individual test
+run_test("getTokenBal_README" "-th")
