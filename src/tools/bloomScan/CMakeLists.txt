@@ -36,3 +36,6 @@ function(run_test testName)
 endfunction(run_test)
 
 # Enter one line for each individual test
+
+# Installation steps
+install(TARGETS ${TOOL_NAME} RUNTIME DESTINATION bin)
