@@ -24,6 +24,11 @@ set(TEST_EXE "${EXECUTABLE_OUTPUT_PATH}/${TOOL_NAME}")
 set(TEST_PATH "${TEST_PATH}/${PROJ_NAME}/${TOOL_NAME}")
 set(GOLD_PATH "${GOLD_PATH}/${PROJ_NAME}/${TOOL_NAME}")
 
+# copy some files needed for testing over
+file(COPY "tests/blocks.json" DESTINATION "${GOLD_PATH}/tests/" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
+file(COPY "tests/traces.json" DESTINATION "${GOLD_PATH}/tests/" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
+file(COPY "tests/random.json" DESTINATION "${GOLD_PATH}/tests/" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
+
 # Additional target to make the README.md
 build_readme(${CMAKE_CURRENT_SOURCE_DIR} ${TOOL_NAME})
 
@@ -34,6 +39,6 @@ endfunction(run_test)
 
 # Enter one line for each individual test
 run_test("jsonTest_nothing")
-run_test("jsonTest_test00"  "test.json")
-run_test("jsonTest_test01"  "test2.json")
-run_test("jsonTest_test02"  "test.json" " test2.json")
+run_test("jsonTest_test_blocks"  "tests/blocks.json")
+run_test("jsonTest_test_traces"  "tests/traces.json")
+run_test("jsonTest_test_random"  "tests/random.json")
