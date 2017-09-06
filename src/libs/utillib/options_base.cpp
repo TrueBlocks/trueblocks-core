@@ -65,8 +65,11 @@ namespace qblocks {
             arg.Replace("--verbose", "-v");
             while (!arg.empty()) {
                 SFString opt = expandOption(arg);  // handles case of -rf for example
-                if (isReadme)
+                if (isReadme) {
+                    if (args)
+                        delete [] args;
                     return usage();
+                }
                 if (opt == "-")
                     hasStdIn = true;
                 else if (!opt.empty())

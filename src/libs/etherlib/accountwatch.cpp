@@ -93,7 +93,8 @@ SFString nextAccountwatchChunk(const SFString& fieldIn, bool& force, const void 
     if (fieldIn.Contains(s)) {
         SFString f = fieldIn;
         f.ReplaceAll(s,"");
-        f = acc->qbis.Format("[{"+f+"}]");
+        if (acc)
+            f = acc->qbis.Format("[{"+f+"}]");
         return f;
     }
 
