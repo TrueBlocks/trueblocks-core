@@ -95,14 +95,16 @@ SFString nextTraceChunk(const SFString& fieldIn, bool& force, const void *data) 
     if (fieldIn.Contains(s)) {
         SFString f = fieldIn;
         f.ReplaceAll(s,"");
-        f = tra->action.Format("[{"+f+"}]");
+        if (tra)
+            f = tra->action.Format("[{"+f+"}]");
         return f;
     }
     s = toUpper(SFString("result")) + "::";
     if (fieldIn.Contains(s)) {
         SFString f = fieldIn;
         f.ReplaceAll(s,"");
-        f = tra->result.Format("[{"+f+"}]");
+        if (tra)
+            f = tra->result.Format("[{"+f+"}]");
         return f;
     }
 

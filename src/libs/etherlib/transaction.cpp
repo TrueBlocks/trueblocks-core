@@ -107,7 +107,8 @@ SFString nextTransactionChunk(const SFString& fieldIn, bool& force, const void *
     if (fieldIn.Contains(s)) {
         SFString f = fieldIn;
         f.ReplaceAll(s,"");
-        f = tra->receipt.Format("[{"+f+"}]");
+        if (tra)
+            f = tra->receipt.Format("[{"+f+"}]");
         return f;
     }
 
