@@ -98,6 +98,5 @@ add_subdirectory (samples)
 add_subdirectory (other)
 add_subdirectory (monitors)
 
-# ----------------------------------------------------------------------------------------
 # We create an specific target to deploy cache stuff
-add_custom_target(cache ALL COMMAND ${CMAKE_COMMAND} -P ${CMAKE_SOURCE_DIR}/cache_setup.cmake)
+add_custom_target(cache ALL COMMAND ${CMAKE_COMMAND} -P ${CMAKE_SOURCE_DIR}/other/install/cache_setup.cmake)
