@@ -26,8 +26,13 @@ int main(int argc, const char * argv[]) {
             return 0;
 
         while (!options.fileName.empty()) {
-            SFString file = nextTokenClear(options.fileName, '|');
-            cout << file << "\n";
+            SFString fileName = nextTokenClear(options.fileName, '|');
+            cout << fileName << "\n";
+            SFString contents = asciiFileToString(fileName);
+            while (!contents.empty()) {
+                SFString line = nextTokenClear(contents, '\n');
+                cout << line << "\n";
+            }
         }
     }
 
