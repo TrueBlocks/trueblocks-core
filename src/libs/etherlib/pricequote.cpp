@@ -304,8 +304,10 @@ bool loadPriceData(CPriceQuoteArray& quotes, bool freshen, SFString& message, SF
             msg = "Price database has been updated to ";
         SFTime prevLast = lastRead;
         if (freshen) {
-            if (verbose < 2)
-                cerr << "Retrieving data...\r"; cerr.flush();
+            if (verbose < 2) {
+                cerr << "Retrieving data...\r";
+                cerr.flush();
+            }
             timestamp_t start = toTimeStamp(nextRead);
             // Polinex will give us as much as it has on the following day. Do this to account for time zones
             timestamp_t end   = toTimeStamp(EOD(BOND(now)));
