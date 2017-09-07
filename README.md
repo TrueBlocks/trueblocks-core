@@ -8,6 +8,11 @@ QuickBlocks has the following external dependencies:
 
 1. Python
 2. CURL library
+3. API key from etherscan.io
+
+The API key is required to use the ethslurp tool provided by QuickBlocks. 
+
+This tool will not work until you get an API key from http://etherscan.io/apis (registering is required). Every time you run ethSlurp without an API key, it will ask you for one until you enter it.
 
 QuicBlocks has been tested under the following environments:
 
