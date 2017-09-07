@@ -23,11 +23,11 @@ Next sections describe in detail the steps required to install QuickBlocks under
 
 IMPORTANT: Those instructions that contain the (sudo) tag must be executed as root user or as sudoer.
 
-1. [Ubuntu installation](docs/UBUNTU_BUILD.md)
-2. [Fedora installation](docs/FEDORA_BUILD.md)
-3. [Centos installation](docs/CENTOS_BUILD.md)
-4. [Debian installation](docs/DEBIAN_BUILD.md)
-5. [FreeBSD installation](docs/FREEBSD_BUILD.md)
+1. [Ubuntu installation](src/other/install/UBUNTU_BUILD.md)
+2. [Fedora installation](src/other/install/FEDORA_BUILD.md)
+3. [Centos installation](src/other/install/CENTOS_BUILD.md)
+4. [Debian installation](src/other/install/DEBIAN_BUILD.md)
+5. [FreeBSD installation](src/other/install/FREEBSD_BUILD.md)
 
 ### More Quickly
 
