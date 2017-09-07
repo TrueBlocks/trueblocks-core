@@ -12,7 +12,9 @@
 class COptions : public COptionsBase
 {
 public:
-	SFString mode;
+    blknum_t start;
+    blknum_t stop;
+    blknum_t skip;
 
 	        COptions  (void);
 	       ~COptions  (void);
@@ -33,4 +35,3 @@ inline SFString dateColor(SFUint32 bn)
 inline SFTime toDate(timestamp_t ts) { return dateFromTimeStamp(ts); }
 #define null ((void*)0)
 #define toSpaces dbgBloom
-#define forEveryBlock(a,b,c) forEveryNonEmptyBlockOnDisc(a, null, b, c)
