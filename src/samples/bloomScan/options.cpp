@@ -9,10 +9,10 @@
 
 //---------------------------------------------------------------------------------------------------
 CParams params[] = {
-    CParams( "~source",      "source for the data"),
-    CParams( "~begin",       "block to start with"),
-    CParams( "~end",         "block to end on"),
-    CParams( "-skip:<uint>", "skip step (default 100)"),
+    CParams( "~source",  "source for the data"),
+    CParams( "~begin",   "block to start with"),
+    CParams( "~end",     "block to end on"),
+    CParams( "~@skip",   "optional skip step (default 100)"),
     CParams( "", "Scans blocks looking for saturated bloomFilters.\n"),
 };
 uint32_t nParams = sizeof(params) / sizeof(CParams);
@@ -25,13 +25,7 @@ bool COptions::parseArguments(SFString& command) {
     while (!command.empty()) {
         SFString arg = nextTokenClear(command,' ');
         SFString orig = arg;
-        if (arg.startsWith("-s:") || arg.startsWith("--skip:")) {
-            arg = arg.Substitute("-s:","").Substitute("--skip:","");
-            if (!isUnsigned(arg))
-                return usage("Incorrect value for skip. Quitting.");
-            skip = toUnsigned(arg);
-
-        } else if (arg.startsWith('-')) {  // do not collapse
+        if (arg.startsWith('-')) {  // do not collapse
             if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);
             }
@@ -46,6 +40,8 @@ bool COptions::parseArguments(SFString& command) {
                     start = toUnsigned(arg);
                 else if (stop == NOPOS)
                     stop = toUnsigned(arg);
+                else if (skip == NOPOS)
+                    skip = toUnsigned(arg);
                 else
                     return usage("Too many parameters");
             }
@@ -58,6 +54,8 @@ bool COptions::parseArguments(SFString& command) {
         return usage("Please provide both a start block and an end block. Quitting...");
     if (start >= stop)
         return usage("The end block must be greater than the start block. Quitting...");
+    if (skip == NOPOS)
+        skip = 100;
 
     return true;
 }
@@ -68,7 +66,7 @@ void COptions::Init(void) {
     nParamsRef = nParams;
     start = NOPOS;
     stop  = NOPOS;
-    skip  = 100;
+    skip  = NOPOS;
     useVerbose = false;
     minArgs = 2;
 }
