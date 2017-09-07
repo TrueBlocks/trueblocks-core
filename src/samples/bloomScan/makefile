@@ -6,9 +6,9 @@ cflags=-std=c++11 -Werror -Wall -O2 -I. -I$(qblocks)/include
 
 #-------------------------------------------------
 # for mac builds
-#libs=$(libraries)/*.a /usr/lib/libcurl.dylib
+libs=$(libraries)/*.a /usr/lib/libcurl.dylib
 # for ubuntu builds
-libs=$(libraries)/*.a -lcurl
+#libs=$(libraries)/*.a -lcurl
 
 #-------------------------------------------------
 exec=bloomScan
