@@ -25,9 +25,9 @@ int main(int argc, const char *argv[]) {
         if (!options.parseArguments(command))
             return 0;
         if (getSource() != "binary")
-            forEveryBlock(displayBloom, null, options.start, options.stop - options.start, 100); //options.skip);
+            forEveryBlock(displayBloom, null, options.start, options.stop - options.start, options.skip);
         else
-            forEveryNonEmptyBlockOnDisc(displayBloom, null, options.start, options.stop - options.start, 1); //options.skip);
+            forEveryNonEmptyBlockOnDisc(displayBloom, null, options.start, options.stop - options.start, options.skip);
     }
 
     return 0;
