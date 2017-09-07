@@ -97,3 +97,9 @@ add_subdirectory (tools)
 add_subdirectory (samples)
 add_subdirectory (monitors)
 add_subdirectory (other)
+
+# To run only specific tests, we define a target that only runs those tests with an specific LABEL "-L"
+# we must tag them with this label first at the place where they are defined
+# Something like this:   
+# set_property(TEST test1 PROPERTY LABELS SPECIAL_TEST)
+add_custom_target(test-all COMMAND ${CMAKE_CTEST_COMMAND} -L "SPECIAL_TEST")
