@@ -79,6 +79,9 @@ void etherlib_init(const SFString& sourceIn)
     CRPCResult::registerClass();
     CNameValue::registerClass();
 
+    // if curl has already been initialized, we want to clear it out
+    getCurl(true);
+
     // initialize curl
     getCurl();
 
@@ -719,6 +722,34 @@ bool forEveryEmptyBlockOnDisc(BLOCKVISITFUNC func, void *data, SFUint32 start, S
 template<class T>
 inline bool inRange(T val, T mn, T mx) {
     return (val >= mn && val <= mx);
+}
+
+//-------------------------------------------------------------------------
+bool forEveryBlock(BLOCKVISITFUNC func, void *data, SFUint32 start, SFUint32 count, SFUint32 skip) {
+    // Here we simply scan the numbers and either read from disc or query the node
+    if (!func)
+        return false;
+
+    SFString save = getSource();
+    setSource("fastest");
+
+    for (SFUint32 i = start ; i < start + count - 1 ; i = i + skip) {
+        SFString fileName = getBinaryFilename1(i);
+        CBlock block;
+        if (fileExists(fileName))
+            readOneBlock_fromBinary(block, fileName);
+        else
+            getBlock(block,i);
+
+        bool ret = (*func)(block, data);
+        if (!ret) {
+            // Cleanup and return if user tells us to
+            setSource(save);
+            return false;
+        }
+    }
+    setSource(save);
+    return true;
 }
 
 //-------------------------------------------------------------------------
