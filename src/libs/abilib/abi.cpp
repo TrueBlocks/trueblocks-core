@@ -14,7 +14,7 @@
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CAbi, CBaseNode, curVersion);
+IMPLEMENT_NODE(CAbi, CBaseNode, dataSchema());
 
 //---------------------------------------------------------------------------
 static SFString nextAbiChunk(const SFString& fieldIn, bool& force, const void *data);
@@ -51,23 +51,23 @@ SFString nextAbiChunk(const SFString& fieldIn, bool& force, const void *data) {
             case 'a':
                 if ( fieldIn % "abiByName" ) {
                     uint32_t cnt = abi->abiByName.getCount();
-                    if (!cnt) return EMPTY;
-                    SFString ret;
+                    if (!cnt) return "";
+                    SFString retS;
                     for (uint32_t i = 0 ; i < cnt ; i++) {
-                        ret += abi->abiByName[i].Format();
-                        ret += ((i < cnt - 1) ? ",\n" : "\n");
+                        retS += abi->abiByName[i].Format();
+                        retS += ((i < cnt - 1) ? ",\n" : "\n");
                     }
-                    return ret;
+                    return retS;
                 }
                 if ( fieldIn % "abiByEncoding" ) {
                     uint32_t cnt = abi->abiByEncoding.getCount();
-                    if (!cnt) return EMPTY;
-                    SFString ret;
+                    if (!cnt) return "";
+                    SFString retS;
                     for (uint32_t i = 0 ; i < cnt ; i++) {
-                        ret += abi->abiByEncoding[i].Format();
-                        ret += ((i < cnt - 1) ? ",\n" : "\n");
+                        retS += abi->abiByEncoding[i].Format();
+                        retS += ((i < cnt - 1) ? ",\n" : "\n");
                     }
-                    return ret;
+                    return retS;
                 }
                 break;
         }
@@ -108,7 +108,7 @@ void CAbi::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CAbi::Serialize(SFArchive& archive) {
-    if (!archive.isReading())
+    if (archive.isWriting())
         return ((const CAbi*)this)->SerializeC(archive);
 
     if (!preSerialize(archive))
@@ -138,10 +138,10 @@ void CAbi::registerClass(void) {
     been_here = true;
 
     uint32_t fieldNum = 1000;
-    ADD_FIELD(CAbi, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
-    ADD_FIELD(CAbi, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
-    ADD_FIELD(CAbi, "abiByName", T_TEXT|TS_ARRAY, ++fieldNum);
-    ADD_FIELD(CAbi, "abiByEncoding", T_TEXT|TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CAbi, "schema",  T_NUMBER, ++fieldNum);
+    ADD_FIELD(CAbi, "deleted", T_BOOL,  ++fieldNum);
+    ADD_FIELD(CAbi, "abiByName", T_OBJECT|TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CAbi, "abiByEncoding", T_OBJECT|TS_ARRAY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CAbi, "schema");
@@ -256,7 +256,7 @@ void clearAbis(void) {
 //---------------------------------------------------------------------------
 SFString findEncoding(const SFString& addr, CFunction& func) {
     if (!nAbis) {
-        SFString contents = asciiFileToString(configPath("abis/"+addr+".abi"));
+        SFString contents = asciiFileToString(configPath("abis/" + addr + ".abi"));
         while (!contents.empty()) {
             abis[nAbis][1] = nextTokenClear(contents, '\n');
             abis[nAbis][0] = nextTokenClear(abis[nAbis][1], '|');
@@ -313,19 +313,19 @@ bool CAbi::loadABI(const SFString& addr) {
     if (abiByName.getCount() && abiByEncoding.getCount())
         return true;
 
-    SFString abiFilename = configPath("abis/"+addr+".json");
+    SFString abiFilename = configPath("abis/" + addr + ".json");
     if (!fileExists(abiFilename))
         return false;
 
     cerr << "\tLoading abi file: " << abiFilename << "...\n";
     if (loadABIFromFile(abiFilename)) {
 
-        SFString abis;
+        SFString abis1;
 
         // TODO(tjayrush): this is wrong. We should remove the need to use external 'ethabi' code to get the encodings
         for (uint32_t i=0;i<abiByName.getCount();i++) {
             getEncoding(abiFilename, addr, abiByName[i]);
-            abis += abiByName[i].Format("[{NAME}]|[{ENCODING}]\n");
+            abis1 += abiByName[i].Format("[{NAME}]|[{ENCODING}]\n");
         }
 
         // We need to do both since they are copies
@@ -333,8 +333,8 @@ bool CAbi::loadABI(const SFString& addr) {
             getEncoding(abiFilename, addr, abiByEncoding[i]);
         }
 
-        if (!fileExists(configPath("abis/"+addr+".abi")) && !abis.empty())
-            stringToAsciiFile(configPath("abis/"+addr+".abi"), abis);
+        if (!fileExists(configPath("abis/" + addr + ".abi")) && !abis1.empty())
+            stringToAsciiFile(configPath("abis/" + addr + ".abi"), abis1);
 
         if (verbose) {
             for (uint32_t i = 0 ; i < abiByName.getCount() ; i++) {

@@ -15,7 +15,7 @@
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CAccountWatch, CBaseNode, curVersion);
+IMPLEMENT_NODE(CAccountWatch, CBaseNode, dataSchema());
 
 //---------------------------------------------------------------------------
 static SFString nextAccountwatchChunk(const SFString& fieldIn, bool& force, const void *data);
@@ -93,7 +93,8 @@ SFString nextAccountwatchChunk(const SFString& fieldIn, bool& force, const void 
     if (fieldIn.Contains(s)) {
         SFString f = fieldIn;
         f.ReplaceAll(s,"");
-        f = acc->qbis.Format("[{"+f+"}]");
+        if (acc)
+            f = acc->qbis.Format("[{"+f+"}]");
         return f;
     }
 
@@ -158,7 +159,7 @@ void CAccountWatch::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CAccountWatch::Serialize(SFArchive& archive) {
-    if (!archive.isReading())
+    if (archive.isWriting())
         return ((const CAccountWatch*)this)->SerializeC(archive);
 
     if (!preSerialize(archive))
@@ -204,18 +205,18 @@ void CAccountWatch::registerClass(void) {
     been_here = true;
 
     uint32_t fieldNum = 1000;
-    ADD_FIELD(CAccountWatch, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
-    ADD_FIELD(CAccountWatch, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
+    ADD_FIELD(CAccountWatch, "schema",  T_NUMBER, ++fieldNum);
+    ADD_FIELD(CAccountWatch, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CAccountWatch, "index", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CAccountWatch, "address", T_TEXT, ++fieldNum);
+    ADD_FIELD(CAccountWatch, "address", T_ADDRESS, ++fieldNum);
     ADD_FIELD(CAccountWatch, "name", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccountWatch, "color", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccountWatch, "firstBlock", T_NUMBER, ++fieldNum);
     ADD_FIELD(CAccountWatch, "lastBlock", T_NUMBER, ++fieldNum);
     ADD_FIELD(CAccountWatch, "status", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccountWatch, "deepScan", T_BOOL, ++fieldNum);
-    ADD_FIELD(CAccountWatch, "qbis", T_TEXT|TS_OBJECT, ++fieldNum);
-    ADD_FIELD(CAccountWatch, "nodeBal", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CAccountWatch, "qbis", T_OBJECT, ++fieldNum);
+    ADD_FIELD(CAccountWatch, "nodeBal", T_WEI, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CAccountWatch, "schema");
@@ -265,10 +266,8 @@ bool CAccountWatch::readBackLevel(SFArchive& archive) {
 // EXISTING_CODE
 bool CAccountWatch::getWatch(const CToml& toml, uint32_t n) {
     index = n;
-    address = toLower(toml.getConfigStr("watches", "address_"+asString(n), ""));
-    if (!address.startsWith("0x"))
-        address = "0x" + address;
-    if (address.length() != 42)
+    address = fixAddress(toLower(toml.getConfigStr("watches", "address_"+asString(n), "")));
+    if (!isAddress(address))
         return false;
     name = toml.getConfigStr("watches", "name_"+asString(n), "");
     if (name.empty())
@@ -286,9 +285,9 @@ bool CAccountWatch::getWatch(const CToml& toml, uint32_t n) {
 }
 
 //---------------------------------------------------------------------------
-SFString CAccountWatch::displayName(bool terse, int w1, int w2) const {
+SFString CAccountWatch::displayName(bool terse, uint32_t w1, uint32_t w2) const {
     if (address == "others") {
-        return padRight(name, w1+w2+1);
+        return padRight(name, w1 + w2 + 1);
     }
 
     if (terse) {

@@ -23,12 +23,14 @@ bool CWebAPI::checkKey(CToml& toml) {
     provider = toml.getConfigStr("settings", "api_provider", "EtherScan");
     url      = toml.getConfigStr("settings", "api_url",      "http://etherscan.io/apis");
 
-    if (!key.empty())
+    if (!key.empty() && key != "<NOT_SET>")
         return true;
 
     // Most web APIs require an API key. You will have to get one of these yourself. The
     // program will ask for an api key until it gets one. You only need to provide it once.
     char buffer[256];
+    bzero(buffer, sizeof(buffer));
+
     cerr
     << cRed << "\n  ***Warning***" << cOff << "\n"
     << "  " << cYellow
@@ -38,9 +40,10 @@ bool CWebAPI::checkKey(CToml& toml) {
     << "  > ";
     cerr.flush();
 
-    cin >> buffer;
+    if (!isTestMode())
+        cin >> buffer;
     key = buffer;
-    if (key % "exit" || key % "quit")
+    if (key % "exit" || key % "quit" || key.empty())
         exit(0);
 
     // TODO(jayrush): extend this to allow for other APIs

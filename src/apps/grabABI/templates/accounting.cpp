@@ -16,7 +16,7 @@ bool CVisitor::openIncomeStatement(const CBlock& block) {
     if (!opts.accounting_on)
         return true;
 
-    for (int i = 0 ; i < watches.getCount() ; i++) {
+    for (uint32_t i = 0 ; i < watches.getCount() ; i++) {
         CAccountWatch *w = &watches[i];
         w->qbis.inflow = w->qbis.outflow = w->qbis.gasCost = 0;
         if (i < watches.getCount()-1) {
@@ -48,7 +48,7 @@ bool CVisitor::accountForExtTransaction(const CBlock& block, const CTransaction 
     if (!opts.accounting_on)
         return true;
 
-    for (int t = 0 ; t < trans->traces.getCount() ; t++) {
+    for (uint32_t t = 0 ; t < trans->traces.getCount() ; t++) {
         const CTrace *tt = &trans->traces[t];
         if (t > 0) {
             CBlock unused;
@@ -61,7 +61,7 @@ bool CVisitor::accountForExtTransaction(const CBlock& block, const CTransaction 
     // find the contracts we have to account for...
     uint32_t tWhich = watches.getCount() - 1;
     uint32_t fWhich = watches.getCount() - 1;
-    for (int i = 0 ; i < watches.getCount() - 1 ; i++) {
+    for (uint32_t i = 0 ; i < watches.getCount() - 1 ; i++) {
         if (trans->to.ContainsI(watches[i].address))
             tWhich = i;
         if (trans->from.ContainsI(watches[i].address))
@@ -105,7 +105,7 @@ bool CVisitor::accountForIntTransaction(const CBlock& block, const CTransaction 
     // find the contracts we have to account for...
     uint32_t tWhich = watches.getCount() - 1;
     uint32_t fWhich = watches.getCount() - 1;
-    for (int i = 0 ; i < watches.getCount() - 1 ; i++) {
+    for (uint32_t i = 0 ; i < watches.getCount() - 1 ; i++) {
         if (trace->action.to.ContainsI(watches[i].address))
             tWhich = i;
         if (trace->action.from.ContainsI(watches[i].address))
@@ -134,7 +134,7 @@ bool CVisitor::closeIncomeStatement(const CBlock& block) {
     }
 
     CIncomeStatement total;
-    for (int i = 0 ; i < watches.getCount() ; i++) {
+    for (uint32_t i = 0 ; i < watches.getCount() ; i++) {
         total += watches[i].qbis;
     }
 
@@ -145,7 +145,7 @@ bool CVisitor::closeIncomeStatement(const CBlock& block) {
 
         cout << padCenter("",24) << header << "   " << padCenter("nodeBal",38) << "\r\n";
         cout << bBlack << SFString('-',180) << "\r\n";
-        for (int i = 0 ; i < watches.getCount() ; i++) {
+        for (uint32_t i = 0 ; i < watches.getCount() ; i++) {
             watches[i].qbis.blockNum = block.blockNumber;
             watches[i].qbis.begBal = watches[i].qbis.endBal;
             watches[i].qbis.endBal = (watches[i].qbis.begBal + watches[i].qbis.inflow - watches[i].qbis.outflow - watches[i].qbis.gasCost);
@@ -186,19 +186,19 @@ bool CVisitor::closeIncomeStatement(const CBlock& block) {
             cout << "\r\nHit enter to continue, 'c' to correct and continue, or 'q' to quit >> ";
         else
             cout << "\r\nHit enter to continue or 'q' to quit >> ";
-        char ch = getchar();
+        int ch = getchar();
         if (ch == 'q') {
             esc_hit = false;
             return false;
         } else if (ch == 'c') {
-            for (int i = 0 ; i < watches.getCount() ; i++)
+            for (uint32_t i = 0 ; i < watches.getCount() ; i++)
                 watches[i].qbis.correct();
         }
     }
 
     // TODO(tjayrush): when should auto correct be on or off?
     if (opts.autocorrect_on) {
-        for (int i = 0 ; i < watches.getCount() ; i++)
+        for (uint32_t i = 0 ; i < watches.getCount() ; i++)
             watches[i].qbis.correct();
     }
     esc_hit = false;

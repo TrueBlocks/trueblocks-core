@@ -1,0 +1,21 @@
+ethslurp argc: 3 [1:-d] [2:0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0] 
+ethslurp -d 0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0 
+Processing: -d:0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0
+
+  Invalid date: -d:0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0. Quitting...
+
+  Usage:    ethslurp [-a|-b|-d|-f|-i|-e|-v|-h] addr  
+  Purpose:  Fetches data off the Ethereum blockchain for an arbitrary account or smart contract. Optionally formats the output to your specification. Note: --income and --expense are mutually exclusive as are --blocks and --dates.
+             
+  Where:    
+	addr                  the address of the account or contract to slurp (required)
+	-a  (--archive val)   filename of output (stdout otherwise)
+	-b  (--blocks range)  export records in block range (:0[:max])
+	-d  (--dates val)     export records in date range (:yyyymmdd[hhmmss][:yyyymmdd[hhmmss]])
+	-f  (--fmt val)       pretty print, optionally add ':txt,' ':csv,' or ':html'
+	-i  (--income)        include income transactions only
+	-e  (--expense)       include expenditures only
+	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
+	-h  (--help)          display this help screen
+
+  Powered by QuickBlocks

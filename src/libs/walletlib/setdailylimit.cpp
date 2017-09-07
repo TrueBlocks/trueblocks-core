@@ -13,7 +13,7 @@
 #include "etherlib.h"
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(QSetDailyLimit, CTransaction, curVersion);
+IMPLEMENT_NODE(QSetDailyLimit, CTransaction, dataSchema());
 
 //---------------------------------------------------------------------------
 static SFString nextSetdailylimitChunk(const SFString& fieldIn, bool& force, const void *data);
@@ -90,7 +90,7 @@ void QSetDailyLimit::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool QSetDailyLimit::Serialize(SFArchive& archive) {
-    if (!archive.isReading())
+    if (archive.isWriting())
         return ((const QSetDailyLimit*)this)->SerializeC(archive);
 
     CTransaction::Serialize(archive);
@@ -118,8 +118,8 @@ void QSetDailyLimit::registerClass(void) {
     CTransaction::registerClass();
 
     uint32_t fieldNum = 1000;
-    ADD_FIELD(QSetDailyLimit, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
-    ADD_FIELD(QSetDailyLimit, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
+    ADD_FIELD(QSetDailyLimit, "schema",  T_NUMBER, ++fieldNum);
+    ADD_FIELD(QSetDailyLimit, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(QSetDailyLimit, "_newLimit", T_NUMBER, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like

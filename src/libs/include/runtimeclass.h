@@ -15,9 +15,6 @@ namespace qblocks {
     typedef CBaseNode* (*PFNV)(void);
 
     //----------------------------------------------------------------------------
-#define NO_SCHEMA 501
-
-    //----------------------------------------------------------------------------
     class CRuntimeClass;
     class CBuiltIn {
     public:
@@ -116,6 +113,11 @@ toUpper(SFString(a)) + "::" + toUpper(SFString(sf)) + "}\"" + (b ? ", ]" : "]")
     //------------------------------------------------------------
 #define UNHIDE_FIELD(CLASS_NAME, FIELD_NAME) {\
 CFieldData *f = GETRUNTIME_CLASS(CLASS_NAME)->FindField(FIELD_NAME); if (f) { f->setHidden(false); }\
+}
+
+    //------------------------------------------------------------
+#define RENAME_FIELD(CLASS_NAME, OLD_NAME, NEW_NAME) {\
+CFieldData *f = GETRUNTIME_CLASS(CLASS_NAME)->FindField(OLD_NAME); if (f) { f->setName(NEW_NAME); }\
 }
 
     //------------------------------------------------------------

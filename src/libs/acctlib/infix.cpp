@@ -15,7 +15,7 @@
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CInfix, CTreeNode, curVersion);
+IMPLEMENT_NODE(CInfix, CTreeNode, dataSchema());
 
 //---------------------------------------------------------------------------
 static SFString nextInfixChunk(const SFString& fieldIn, bool& force, const void *data);
@@ -50,7 +50,7 @@ SFString nextInfixChunk(const SFString& fieldIn, bool& force, const void *data) 
 
         switch (tolower(fieldIn[0])) {
             case 'm':
-            return EMPTY;
+            return "";
 //                if ( fieldIn % "m_next" ) { expContext().noFrst=true; return inf->m_next.Format(); }
                 break;
         }
@@ -94,7 +94,7 @@ void CInfix::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CInfix::Serialize(SFArchive& archive) {
-    if (!archive.isReading())
+    if (archive.isWriting())
         return ((const CInfix*)this)->SerializeC(archive);
 
     CTreeNode::Serialize(archive);
@@ -122,8 +122,8 @@ void CInfix::registerClass(void) {
     CTreeNode::registerClass();
 
     uint32_t fieldNum = 1000;
-    ADD_FIELD(CInfix, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
-    ADD_FIELD(CInfix, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
+    ADD_FIELD(CInfix, "schema",  T_NUMBER, ++fieldNum);
+    ADD_FIELD(CInfix, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CInfix, "m_next", T_POINTER, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
@@ -262,6 +262,7 @@ bool CInfix::readBackLevel(SFArchive& archive) {
         ASSERT(func);
         CVisitData *vd = reinterpret_cast<CVisitData*>(data);
         uint32_t save = vd->type;
+        vd->cnt = 0;
         vd->type = T_INFIX;
         vd->strs = vd->strs + "+" + m_prefix;
         (*func)(this, data);

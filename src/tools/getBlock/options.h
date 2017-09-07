@@ -14,10 +14,12 @@ class COptions : public COptionsBase {
 public:
     bool isCheck;
     bool isRaw;
+    bool asks4Cache;
     bool isRange;
     bool terse;
     bool quiet;
     bool force;
+    bool normalize;
     SFUint32 nums[MAX_NUMS];
     SFUint32 nNums;
     SFUint32 start;
@@ -32,6 +34,7 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-extern bool     visitNonEmptyBlock(CBlock& node, void *data);
-extern bool     visitEmptyBlock(CBlock& node, void *data);
-extern uint32_t foundFile(const SFString& path, void *data);
+extern SFString doOneBlock(SFUint32 num, const COptions& opt);
+extern SFString checkOneBlock(SFUint32 num, const COptions& opt);
+extern SFString normalizeBlock(const SFString& inIn, bool remove);
+extern SFString diffStr(const SFString& str1, const SFString& str2);

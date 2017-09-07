@@ -95,16 +95,16 @@ inline void CLogEntry::Clear(void) {
 inline void CLogEntry::Init(void) {
     CBaseNode::Init();
 
-//    address = EMPTY;
-//    data = EMPTY;
+    address = "";
+    data = "";
     logIndex = 0;
-//    topics = ??; /* unknown type: SFBigUintArray */
+    topics.Clear();
 
     // EXISTING_CODE
 #if 0
-    blockHash = EMPTY;
+    blockHash = "";
     blockNumber = 0;
-    transactionHash = EMPTY;
+    transactionHash = "";
     transactionIndex = 0;
 #endif
     pReceipt = NULL;

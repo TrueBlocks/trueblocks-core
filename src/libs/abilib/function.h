@@ -97,15 +97,15 @@ inline void CFunction::Clear(void) {
 inline void CFunction::Init(void) {
     CBaseNode::Init();
 
-//    name = EMPTY;
-//    type = EMPTY;
+    name = "";
+    type = "";
     anonymous = 0;
     constant = 0;
     payable = 0;
-//    signature = EMPTY;
-//    encoding = EMPTY;
-//    inputs = ??; /* unknown type: CParameterArray */
-//    outputs = ??; /* unknown type: CParameterArray */
+    signature = "";
+    encoding = "";
+    inputs.Clear();
+    outputs.Clear();
 
     // EXISTING_CODE
     hasAddrs = false;

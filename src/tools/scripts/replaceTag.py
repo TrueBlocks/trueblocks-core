@@ -3,13 +3,13 @@
 #########################################################################################################################################
 # This script receives parameters to do the replacement of a given tag within a text file
 #
-# USAGE: replaceTag.py input_file name content_file output_file
-# argv[0] The input file where we need to replace the usage table
-# argv[1] The name of the tool or app
-# argv[2] The file with the text we want to use in replacement (tag -> text)
-# argv[3] Name of the output file we obtain after doing the replacement
+# USAGE: replaceTag.py README.tmpl.md README.footer.md toolName usageFile README.md
 #
-# Example: replaceTag.py README.tmpl.md [[TOOL_NAME]] HELP.txt README.md
+# argv[0] The readme template file
+# argv[1] The readme footer file
+# argv[2] The name of the tool that produced the usage table
+# argv[3] help.txt (generated usage table)
+# argv[4] The output README.md file
 #
 #########################################################################################################################################
 
@@ -33,54 +33,53 @@ def printe(*args, **kwargs):
 # Check input parameters number
 param_number = len(sys.argv)
 
-# We need the following parameters:
-# 1) input file,
-# 2) the name of the tool/app
-# 3) the content file (we replace tag with the content of this file)
-# 4) the name of the output file we will generate after replacing the tag at input file
-if param_number <= 4:
+# Need at least four parameters
+if param_number <= 5:
     printe("ERROR: Invalid parameters number, at least 4 expected")
     exit(1)
 
 # Get the input parameters once checked that they are present
-input_file = sys.argv[1]
-name = sys.argv[2]
-content_file = sys.argv[3]
-output_file = sys.argv[4]
+templateFile = sys.argv[1]
+footerFile   = sys.argv[2]
+toolName     = sys.argv[3]
+usageFile    = sys.argv[4]
+outputFile   = sys.argv[5]
 
-#printe(input_file)
-#printe(name)
-#printe(content_file)
-#printe(output_file)
+#printe(templateFile)
+#printe(footerFile)
+#printe(toolName)
+#printe(usageFile)
+#printe(outputFile)
 
 # Check that input file is present
-if os.path.isfile(input_file) == False:
-    printe("ERROR: Could not find input file %s" % input_file)
+if os.path.isfile(templateFile) == False:
+    printe("ERROR: Could not find input file %s" % templateFile)
     exit(1)
 
 # Check that content file is present
-if os.path.isfile(content_file) == False:
-    printe("ERROR: Could not find content file %s" % content_file)
+if os.path.isfile(usageFile) == False:
+    printe("ERROR: Could not find content file %s" % usageFile)
     exit(1)
 
 # Check that output file is NOT present, remove it otherwise
-if os.path.isfile(output_file) == True:
-#    printe("WARNING: Output file already present %s (removed)" % output_file)
-    os.remove(output_file)
+if os.path.isfile(outputFile) == True:
+#   printe("WARNING: Output file already present %s (removed)" % outputFile)
+    os.remove(outputFile)
 
-# Open input file
-with open(input_file, 'r') as file :
-    input_data = file.read()
+# Get some data to use
+with open(templateFile, 'r') as file :
+    templateData = file.read()
 
-# Open content file
-with open(content_file, 'r') as file :
-     content_data = file.read()
+with open(footerFile, 'r') as file :
+    footerData = file.read()
 
-# Do the replacement
-output_data = input_data.replace("[{COMMAND_HELP}]", content_data)
-output_data = output_data.replace("[{NAME}]", name)
+with open(usageFile, 'r') as file :
+    usageData = file.read()
+
+# Do the replacements
+outputData = templateData.replace("[{USAGE_TABLE}]", usageData).replace("[{FOOTER}]", footerData).replace("[{NAME}]", toolName)
 
 # Generate output file
-with open(output_file, 'w') as file:
-    printe("Wrote file %s" % output_file)
-    file.write(output_data)
+with open(outputFile, 'w') as file:
+    printe("Wrote file %s" % outputFile)
+    file.write(outputData)

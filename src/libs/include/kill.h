@@ -81,7 +81,7 @@ inline void QKill::Clear(void) {
 inline void QKill::Init(void) {
     CTransaction::Init();
 
-//    _to = EMPTY;
+    _to = "";
 
     // EXISTING_CODE
     // EXISTING_CODE

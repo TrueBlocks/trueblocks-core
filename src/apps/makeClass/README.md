@@ -1,6 +1,9 @@
 ## makeClass
 
-`makeClass` is the heart of [chifra](../chifra). It builds C++ class and header files from a classDefinition.txt file.
+`makeClass` is the heart of [chifra](../chifra). It builds C++ class and header files from a classDefinition files. Class definitions files are placed in a folder called classDefinition in the folder one wishes the resulting C++ code to appear.
+
+The format of the classDefinition file is described below.
+
 #### Usage
 
 `Usage:`    makeClass [-e|-f|-l|-n|-s|-r|-a|-v|-h] className  
@@ -12,22 +15,30 @@
 | -------: | :------- | :------- |
 |  | className | name of C++ class(es) to process |
 | -e | --edit | edit <className(s)> definition file in local folder |
-| -f | --filter | process only files with :filter in their names |
+| -f | --filter val | process only files with :filter in their names |
 | -l | --list | list all definition files found in the local folder |
-| -n | --namespace | surround the code with a --namespace:ns |
+| -n | --namespace val | surround the code with a --namespace:ns |
 | -s | --silent | on error (no classDefinition file) exit silently |
 | -r | --run | run the class maker on associated <className(s)> |
 | -a | --all | clear, edit, list, or run all class definitions found in the local folder |
-| -v | --verbose | set verbose level. Follow with a number to set level (-v0 for silent) |
+| -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
 #### Other Options
 
-Enter `--version` to display the current version of the tool.  
-Enter `--nocolors` to turn off colored display.  
-Enter `--wei` (default), `--ether`, or `--dollars` to alter the way value is displayed.  
+All QuickBlocks command-line tools support the following commands (although in some case, they have no meaning):
 
-All `quickBlocks` command-line tools support the `--file:filename` option. Place valid commands, on separate lines, in a file and include the above option. In some cases, this option may significantly improve performance. Place a semi-colon at the start of a line to make it a comment.
+    Command     |         Description
+    -----------------------------------------------------------------------------
+    --version   |   display the current version of the tool
+    --nocolors  |   turn off colored display
+    --wei       |   specify value in wei (the default)
+    --ether     |   specify value in ether
+    --dollars   |   specify value in US dollars
+    --file:fn   |   specify multiple sets of command line options in a file.
 
-#### Powered by QuickBlocks&reg;
+*For the `--file:fn` option, place a series of valid command lines in a file and use the above option. In some cases, this option may significantly improve performance. Use semi-colon make comments.*
+
+**Powered by QuickBlocks<sup>&reg;</sup>**
+
 

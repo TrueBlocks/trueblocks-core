@@ -46,6 +46,7 @@ public:
     DECLARE_NODE(CTraceAction);
 
     // EXISTING_CODE
+    friend class CTrace;
     // EXISTING_CODE
 
 protected:
@@ -92,15 +93,15 @@ inline void CTraceAction::Clear(void) {
 inline void CTraceAction::Init(void) {
     CBaseNode::Init();
 
-//    callType = EMPTY;
-//    from = EMPTY;
+    callType = "";
+    from = "";
     gas = 0;
-//    input = EMPTY;
-//    to = EMPTY;
+    input = "";
+    to = "";
     value = 0;
-//    address = EMPTY;
+    address = "";
     balance = 0;
-//    refundAddress = EMPTY;
+    refundAddress = "";
 
     // EXISTING_CODE
     // EXISTING_CODE

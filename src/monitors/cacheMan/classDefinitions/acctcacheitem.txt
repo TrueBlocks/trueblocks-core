@@ -1,0 +1,4 @@
+[settings]
+class = CAcctCacheItem
+fields = uint32 blockNum|uint32 transIndex|int32 which
+includes = utillib.h|options.h

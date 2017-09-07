@@ -13,7 +13,6 @@ extern SFString doOneBloom(SFUint32 num, const COptions& opt);
 int main(int argc, const char * argv[]) {
 
     // Tell the system where the blocks are and which version to use
-    setStorageRoot(BLOCK_CACHE);
     etherlib_init("fastest");
 
     // Parse command line, allowing for command files
@@ -82,7 +81,7 @@ SFString doOneBloom(SFUint32 num, const COptions& opt) {
 
     CBlock gold;
     SFString result;
-    SFString numStr = asString(num);
+    SFString numStr = asStringU(num);
     if (opt.isRaw) {
 
         if (!queryRawBlock(result, numStr, true, opt.terse)) {
@@ -97,10 +96,10 @@ SFString doOneBloom(SFUint32 num, const COptions& opt) {
             writeToBinary(gold, fileName);
         }
 
-        if (curSource().Contains("Only")) {
+        if (getSource().Contains("Only")) {
             // --source::cache mode doesn't include timestamp in transactions
             for (txnum_t t = 0 ; t < gold.transactions.getCount() ; t++) {
-                gold.transactions[t].timestamp = gold.timestamp;
+                gold.transactions[t].timestamp = (SFUint32)gold.timestamp;
             }
 
         }

@@ -15,7 +15,7 @@
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CBranch, CTreeNode, curVersion);
+IMPLEMENT_NODE(CBranch, CTreeNode, dataSchema());
 
 //---------------------------------------------------------------------------
 static SFString nextBranchChunk(const SFString& fieldIn, bool& force, const void *data);
@@ -92,7 +92,7 @@ void CBranch::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CBranch::Serialize(SFArchive& archive) {
-    if (!archive.isReading())
+    if (archive.isWriting())
         return ((const CBranch*)this)->SerializeC(archive);
 
     CTreeNode::Serialize(archive);
@@ -120,8 +120,8 @@ void CBranch::registerClass(void) {
     CTreeNode::registerClass();
 
     uint32_t fieldNum = 1000;
-    ADD_FIELD(CBranch, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
-    ADD_FIELD(CBranch, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
+    ADD_FIELD(CBranch, "schema",  T_NUMBER, ++fieldNum);
+    ADD_FIELD(CBranch, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CBranch, "m_branchValue", T_TEXT, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
@@ -334,12 +334,13 @@ bool CBranch::readBackLevel(SFArchive& archive) {
         CVisitData *vd = reinterpret_cast<CVisitData*>(data);
         uint32_t save = vd->type;
         vd->type = T_BRANCH;
+        vd->cnt = 0;
         //        vd->strs = vd->strs + m_branchValue + "+";
         vd->strs = vd->strs + "+";
         (*func)(this, data);
         for (uint32_t i = 0; i < 16; ++i) {
             if (m_nodes[i]) {
-                vd->strs = vd->strs + "-" + idex(i);
+                vd->strs = vd->strs + "-" + idex((char)i);
                 m_nodes[i]->visitItems(func, data);
                 nextTokenClearReverse(vd->strs, '-');
             }

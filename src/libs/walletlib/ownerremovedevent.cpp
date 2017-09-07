@@ -13,7 +13,7 @@
 #include "etherlib.h"
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(QOwnerRemovedEvent, CLogEntry, curVersion);
+IMPLEMENT_NODE(QOwnerRemovedEvent, CLogEntry, dataSchema());
 
 //---------------------------------------------------------------------------
 static SFString nextOwnerremovedeventChunk(const SFString& fieldIn, bool& force, const void *data);
@@ -90,7 +90,7 @@ void QOwnerRemovedEvent::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool QOwnerRemovedEvent::Serialize(SFArchive& archive) {
-    if (!archive.isReading())
+    if (archive.isWriting())
         return ((const QOwnerRemovedEvent*)this)->SerializeC(archive);
 
     CLogEntry::Serialize(archive);
@@ -118,9 +118,9 @@ void QOwnerRemovedEvent::registerClass(void) {
     CLogEntry::registerClass();
 
     uint32_t fieldNum = 1000;
-    ADD_FIELD(QOwnerRemovedEvent, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
-    ADD_FIELD(QOwnerRemovedEvent, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
-    ADD_FIELD(QOwnerRemovedEvent, "oldOwner", T_TEXT, ++fieldNum);
+    ADD_FIELD(QOwnerRemovedEvent, "schema",  T_NUMBER, ++fieldNum);
+    ADD_FIELD(QOwnerRemovedEvent, "deleted", T_BOOL,  ++fieldNum);
+    ADD_FIELD(QOwnerRemovedEvent, "oldOwner", T_ADDRESS, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(QOwnerRemovedEvent, "schema");

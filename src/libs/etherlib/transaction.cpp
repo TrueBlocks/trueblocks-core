@@ -15,7 +15,7 @@
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CTransaction, CBaseNode, curVersion);
+IMPLEMENT_NODE(CTransaction, CBaseNode, dataSchema());
 
 //---------------------------------------------------------------------------
 extern SFString nextTransactionChunk(const SFString& fieldIn, bool& force, const void *data);
@@ -107,7 +107,8 @@ SFString nextTransactionChunk(const SFString& fieldIn, bool& force, const void *
     if (fieldIn.Contains(s)) {
         SFString f = fieldIn;
         f.ReplaceAll(s,"");
-        f = tra->receipt.Format("[{"+f+"}]");
+        if (tra)
+            f = tra->receipt.Format("[{"+f+"}]");
         return f;
     }
 
@@ -208,7 +209,7 @@ void CTransaction::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CTransaction::Serialize(SFArchive& archive) {
-    if (!archive.isReading())
+    if (archive.isWriting())
         return ((const CTransaction*)this)->SerializeC(archive);
 
     if (!preSerialize(archive))
@@ -266,24 +267,24 @@ void CTransaction::registerClass(void) {
     been_here = true;
 
     uint32_t fieldNum = 1000;
-    ADD_FIELD(CTransaction, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
-    ADD_FIELD(CTransaction, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
-    ADD_FIELD(CTransaction, "hash", T_TEXT, ++fieldNum);
-    ADD_FIELD(CTransaction, "blockHash", T_TEXT, ++fieldNum);
+    ADD_FIELD(CTransaction, "schema",  T_NUMBER, ++fieldNum);
+    ADD_FIELD(CTransaction, "deleted", T_BOOL,  ++fieldNum);
+    ADD_FIELD(CTransaction, "hash", T_HASH, ++fieldNum);
+    ADD_FIELD(CTransaction, "blockHash", T_HASH, ++fieldNum);
     ADD_FIELD(CTransaction, "blockNumber", T_NUMBER, ++fieldNum);
     ADD_FIELD(CTransaction, "transactionIndex", T_NUMBER, ++fieldNum);
     ADD_FIELD(CTransaction, "nonce", T_NUMBER, ++fieldNum);
     ADD_FIELD(CTransaction, "timestamp", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CTransaction, "from", T_TEXT, ++fieldNum);
-    ADD_FIELD(CTransaction, "to", T_TEXT, ++fieldNum);
+    ADD_FIELD(CTransaction, "from", T_ADDRESS, ++fieldNum);
+    ADD_FIELD(CTransaction, "to", T_ADDRESS, ++fieldNum);
     ADD_FIELD(CTransaction, "value", T_WEI, ++fieldNum);
-    ADD_FIELD(CTransaction, "gas", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CTransaction, "gasPrice", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CTransaction, "cumulativeGasUsed", T_WEI, ++fieldNum);
+    ADD_FIELD(CTransaction, "gas", T_GAS, ++fieldNum);
+    ADD_FIELD(CTransaction, "gasPrice", T_WEI, ++fieldNum);
+    ADD_FIELD(CTransaction, "cumulativeGasUsed", T_GAS, ++fieldNum);
     ADD_FIELD(CTransaction, "input", T_TEXT, ++fieldNum);
-    ADD_FIELD(CTransaction, "isError", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CTransaction, "isInternalTx", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CTransaction, "receipt", T_TEXT|TS_OBJECT, ++fieldNum);
+    ADD_FIELD(CTransaction, "isError", T_BOOL, ++fieldNum);
+    ADD_FIELD(CTransaction, "isInternalTx", T_BOOL, ++fieldNum);
+    ADD_FIELD(CTransaction, "receipt", T_OBJECT, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CTransaction, "schema");
@@ -298,15 +299,19 @@ void CTransaction::registerClass(void) {
     HIDE_FIELD(CTransaction, "confirmations");
 
     // Add custom fields
-    ADD_FIELD(CTransaction, "gasCost", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CTransaction, "gasCost", T_WEI, ++fieldNum);
     ADD_FIELD(CTransaction, "function", T_TEXT, ++fieldNum);
-    ADD_FIELD(CTransaction, "gasUsed", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CTransaction, "gasUsed", T_GAS, ++fieldNum);
     ADD_FIELD(CTransaction, "date", T_DATE, ++fieldNum);
-    ADD_FIELD(CTransaction, "ether", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CTransaction, "ether", T_ETHER, ++fieldNum);
 
     // Hide fields we don't want to show by default
     HIDE_FIELD(CTransaction, "function");
     HIDE_FIELD(CTransaction, "gasCost");
+    HIDE_FIELD(CTransaction, "isError");
+    HIDE_FIELD(CTransaction, "isInternalTx");
+    HIDE_FIELD(CTransaction, "date");
+    HIDE_FIELD(CTransaction, "ether");
     //    HIDE_FIELD(CTransaction, "receipt");
     // EXISTING_CODE
 }
@@ -323,7 +328,7 @@ SFString nextTransactionChunk_custom(const SFString& fieldIn, bool& force, const
             case 'd':
                 if (fieldIn % "date")
                 {
-                    timestamp_t ts = toLongU(tra->getValueByName("timestamp"));
+                    timestamp_t ts = toLong(tra->getValueByName("timestamp"));
                     return dateFromTimeStamp(ts).Format(FMT_JSON);
                 }
                 break;
@@ -344,7 +349,7 @@ SFString nextTransactionChunk_custom(const SFString& fieldIn, bool& force, const
                 break;
             case 't':
                 if ( fieldIn % "timestamp" && tra->pBlock)
-                    return asStringU(tra->pBlock->timestamp);
+                    return asString(tra->pBlock->timestamp);
                 break;
             // EXISTING_CODE
             case 'p':
@@ -422,6 +427,13 @@ bool CTransaction::isFunction(const SFString& func) const
     return (funcPtr ? funcPtr->name == func : false);
 }
 
+//--------------------------------------------------------------------
+inline SFString asStringULL(uint64_t i) {
+    ostringstream os;
+    os << i;
+    return os.str().c_str();
+}
+
 //------------------------------------------------------------------------------
 #define toBigNum2(a,b)      SFString(to_string(canonicalWei("0x"+grabPart(a,b))).c_str())
 #define grabPart(a,b)       StripLeading((a).substr(64*(b),64),'0')
@@ -438,7 +450,7 @@ bool CTransaction::isFunction(const SFString& func) const
 SFString parse(const SFString& params, int nItems, SFString *types)
 {
     SFString ret;
-    for (int item=0;item<nItems;item++)
+    for (size_t item = 0 ; item < (size_t)nItems ; item++)
     {
         SFString t = types[item];
         bool isDynamic = (t=="string" || t=="bytes" || t.Contains("[]"));
@@ -456,9 +468,9 @@ SFString parse(const SFString& params, int nItems, SFString *types)
 
         if (val.Contains("off:"))
         {
-            long start = toLong(val.Substitute("off:","")) / 32;
-            long len   = grabBigNum(params,start);
-            if (len == -1)
+            size_t start = toLong32u(val.Substitute("off:","")) / (size_t)32;
+            size_t len   = grabBigNum(params,start);
+            if (len == NOPOS)
                 len = params.length()-start;
             if (t == "string")
                 val = hex2String(params.substr((start+1)*64,len*2)).Substitute("\n","\\n").Substitute("\r","");

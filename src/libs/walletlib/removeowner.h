@@ -81,7 +81,7 @@ inline void QRemoveOwner::Clear(void) {
 inline void QRemoveOwner::Init(void) {
     CTransaction::Init();
 
-//    _owner = EMPTY;
+    _owner = "";
 
     // EXISTING_CODE
     // EXISTING_CODE

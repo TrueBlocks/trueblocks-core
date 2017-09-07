@@ -1,3 +1,3 @@
-# quickBlocks
+## Documentation
 
-Visit the quickBlocks [documentation](https://github.com/Great-Hill-Corporation/quickBlocks/wiki).
+[Visit the quickBlocks documentation here](https://github.com/Great-Hill-Corporation/quickBlocks/wiki).

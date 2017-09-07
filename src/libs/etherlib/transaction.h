@@ -121,37 +121,37 @@ inline void CTransaction::Clear(void) {
 inline void CTransaction::Init(void) {
     CBaseNode::Init();
 
-//    hash = EMPTY;
-//    blockHash = EMPTY;
+    hash = "";
+    blockHash = "";
     blockNumber = 0;
     transactionIndex = 0;
     nonce = 0;
     timestamp = 0;
-//    from = EMPTY;
-//    to = EMPTY;
+    from = "";
+    to = "";
     value = 0;
     gas = 0;
     gasPrice = 0;
     cumulativeGasUsed = 0;
-//    input = EMPTY;
+    input = "";
     isError = 0;
     isInternalTx = 0;
-//    receipt = ??; /* unknown type: CReceipt */
+    receipt.Init();
 
     // EXISTING_CODE
     pBlock = NULL;
-    function = EMPTY;
+    function = "";
     funcPtr = NULL;
     ether = 0.;
 #if 0
-    creates = EMPTY;
+    creates = "";
     confirmations = 0;
-    contractAddress = EMPTY;
-    r = EMPTY;
-    raw = EMPTY;
-    s = EMPTY;
-    v = EMPTY;
-    //    trace = ??; /* unknown type: CTrace */
+    contractAddress = "";
+    r = "";
+    raw = "";
+    s = "";
+    v = "";
+    trace.Init();
 #endif
     // EXISTING_CODE
 }
@@ -223,26 +223,6 @@ extern SFArchive& operator>>(SFArchive& archive, CTransaction& tra);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-#define toEther wei2Ether
-inline SFString wei2Ether(const SFString& _value) {
-    // Make sure the wei number is at least 18 characters long. Once it is,
-    // reverse it, put a decimal at the 18th position, reverse it back,
-    // strip leading '0's except the tens digit.
-    SFString ret = _value;
-    if (ret.length() < 18)
-        ret = padLeft(_value, 18).Substitute(" ", "0");
-    ret.Reverse();
-    ret = ret.Left(18) + "." + ret.substr(18);
-    ret.Reverse();
-    ret = StripLeading(ret, '0');
-    if (ret.startsWith('.'))
-        ret = "0" + ret;
-    if (ret.Contains("0-")) {
-        ret = "-" + ret.Substitute("0-","0");
-    }
-    ret = ret.Substitute("-.","-0.");
-    return ret;
-}
 extern int sortTransactionsForWrite(const void *rr1, const void *rr2);
 extern SFString parse(const SFString& params, int nItems, SFString *types);
 extern SFString nextBlockChunk(const SFString& fieldIn, bool& force, const void *data);

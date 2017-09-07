@@ -14,7 +14,7 @@ CParams params[] = {
     CParams("~term [name]", "search terms"),
     CParams("-addrOnly",    "export only the associated address to be used as input to further commands"),
     CParams("-count",       "print only the count of the number of matches"),
-    CParams("-edit",        "edit the name database"),
+    CParams("-open",        "open the name database for editing"),
     CParams("-list",        "list all names in the database"),
     CParams("-matchCase",   "matches must agree in case (the default is to ignore case)"),
     CParams("-source",      "search 'source' field as well name and address (the default)"),
@@ -43,10 +43,8 @@ bool COptions::parseArguments(SFString& command) {
         } else if (arg == "-m" || arg == "--matchCase") {
             matchCase = true;
 
-        } else if (arg == "-e" || arg == "--edit") {
-            // open command stuff
-            SFString command = ("nano -I " + configPath("configs/names.conf"));
-            if (system(command.c_str())) { }  // do not remove. The test just silences compiler warnings
+        } else if (arg == "-o" || arg == "--open") {
+            editFile(configPath("names/names.conf"));
             exit(0);
 
         } else if (arg.startsWith('-')) {  // do not collapse
@@ -58,7 +56,7 @@ bool COptions::parseArguments(SFString& command) {
         } else {
 
             if (!addr.empty() && !name.empty() && !source.empty())
-                return usage("Invalid option: " + arg);
+                return usage("You may search for at most three terms: " + arg);
             else if (!addr.empty() && !name.empty())
                 source = arg;
             else if (!addr.empty())
@@ -89,14 +87,9 @@ void COptions::Init(void) {
     list = false;
     addrOnly = false;
     count = false;
-
-    useVerbose = true;
-    useTesting = false;
 }
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
-    COptionsBase::useVerbose = true;
-    COptionsBase::useTesting = false;
     Init();
 }

@@ -1,0 +1,26 @@
+getTrace argc: 2 [1:0x96d28d6a3b272a40a112e3248a2dd887c250f0ed8df736171f5861421ed77227] 
+getTrace 0x96d28d6a3b272a40a112e3248a2dd887c250f0ed8df736171f5861421ed77227 
+[{
+    "blockHash": "0x759de0be90043e350377c7d1be2f639ead0953b06a16c32552265659bd134f2d",
+    "blockNumber": 2229051,
+    "subtraces": 0,
+    "traceAddress": [],
+    "transactionHash": "0x96d28d6a3b272a40a112e3248a2dd887c250f0ed8df736171f5861421ed77227",
+    "transactionPosition": 17,
+    "type": "call",
+    "action": {
+        "callType": "call",
+        "from": "0x00a711a721006b0ece769f7457bb78809b0b656f",
+        "gas": 100000,
+        "input": "0x",
+        "to": "0xae84293e973cd1df2e185ae3721ed8de91ceada0",
+        "value": 4250000000000000000,
+        "address": "0x0",
+        "balance": 0,
+        "refundAddress": "0x0"
+    },
+    "result": {
+        "gasUsed": 0,
+        "output": "0x"
+    }
+}]

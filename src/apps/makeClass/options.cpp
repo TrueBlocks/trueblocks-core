@@ -9,16 +9,16 @@
 #include "options.h"
 
 CParams params[] = {
-    CParams("~className",    "name of C++ class(es) to process"),
-//    CParams("-clean",        "remove generated .cpp and .h file from current folder (if found)"),
-    CParams("-edit",         "edit <className(s)> definition file in local folder"),
-    CParams("-filter",       "process only files with :filter in their names"),
-    CParams("-list",         "list all definition files found in the local folder"),
-    CParams("-namespace",    "surround the code with a --namespace:ns"),
-    CParams("-silent",       "on error (no classDefinition file) exit silently"),
-    CParams("-run",          "run the class maker on associated <className(s)>"),
-    CParams("-all",          "clear, edit, list, or run all class definitions found in the local folder"),
-    CParams("",              "Creates a C++ class based on definitions found in ./classDefinition/<className>.\n"),
+    CParams("~className",          "name of C++ class(es) to process"),
+//    CParams("-clean",            "remove generated .cpp and .h file from current folder (if found)"),
+    CParams("-edit",               "edit <className(s)> definition file in local folder"),
+    CParams("-filter:<string>",    "process only files with :filter in their names"),
+    CParams("-list",               "list all definition files found in the local folder"),
+    CParams("-namespace:<string>", "surround the code with a --namespace:ns"),
+    CParams("-silent",             "on error (no classDefinition file) exit silently"),
+    CParams("-run",                "run the class maker on associated <className(s)>"),
+    CParams("-all",                "clear, edit, list, or run all class definitions found in the local folder"),
+    CParams("",                    "Creates a C++ class based on definitions found in ./classDefinition/<className>.\n"),
 };
 uint32_t nParams = sizeof(params) / sizeof(CParams);
 
@@ -83,10 +83,10 @@ bool COptions::parseArguments(SFString& command) {
         errMsg = "./classDefinitions folder does not exist. Quitting...";
 
     if (!folderExists(configPath("makeClass/")))
-        errMsg = (configPath("makeClass") + " folder does not exist. Quitting...");
+        errMsg = (configPath("makeClass/") + " folder does not exist. Quitting...");
 
     if (isAll || isList) {
-        classNames = EMPTY;  // rebuild the class list from the classDefinitions folder
+        classNames = "";  // rebuild the class list from the classDefinitions folder
         forEveryFileInFolder("./classDefinitions/", listClasses, this);
     }
 
@@ -123,9 +123,6 @@ void COptions::Init(void) {
     namesp = "";
     classNames = "";
     filter = "";
-
-    useVerbose = true;
-    useTesting = false;
 }
 
 //---------------------------------------------------------------------------------------------------

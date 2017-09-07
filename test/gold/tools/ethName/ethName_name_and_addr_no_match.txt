@@ -1,2 +1,2 @@
-ethName argc: 3 [1:0x01] [2:rob] 
-ethName 0x01 rob 
+ethName argc: 3 [1:0x01] [2:torj] 
+ethName 0x01 torj 

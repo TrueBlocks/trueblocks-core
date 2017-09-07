@@ -13,7 +13,7 @@
 #include "etherlib.h"
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(QApprove, CTransaction, curVersion);
+IMPLEMENT_NODE(QApprove, CTransaction, dataSchema());
 
 //---------------------------------------------------------------------------
 static SFString nextApproveChunk(const SFString& fieldIn, bool& force, const void *data);
@@ -92,7 +92,7 @@ void QApprove::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool QApprove::Serialize(SFArchive& archive) {
-    if (!archive.isReading())
+    if (archive.isWriting())
         return ((const QApprove*)this)->SerializeC(archive);
 
     CTransaction::Serialize(archive);
@@ -122,9 +122,9 @@ void QApprove::registerClass(void) {
     CTransaction::registerClass();
 
     uint32_t fieldNum = 1000;
-    ADD_FIELD(QApprove, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
-    ADD_FIELD(QApprove, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
-    ADD_FIELD(QApprove, "_spender", T_TEXT, ++fieldNum);
+    ADD_FIELD(QApprove, "schema",  T_NUMBER, ++fieldNum);
+    ADD_FIELD(QApprove, "deleted", T_BOOL,  ++fieldNum);
+    ADD_FIELD(QApprove, "_spender", T_ADDRESS, ++fieldNum);
     ADD_FIELD(QApprove, "_value", T_NUMBER, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like

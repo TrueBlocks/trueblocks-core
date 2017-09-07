@@ -13,7 +13,7 @@
 #include "etherlib.h"
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(QApprovalEvent, CLogEntry, curVersion);
+IMPLEMENT_NODE(QApprovalEvent, CLogEntry, dataSchema());
 
 //---------------------------------------------------------------------------
 static SFString nextApprovaleventChunk(const SFString& fieldIn, bool& force, const void *data);
@@ -94,7 +94,7 @@ void QApprovalEvent::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool QApprovalEvent::Serialize(SFArchive& archive) {
-    if (!archive.isReading())
+    if (archive.isWriting())
         return ((const QApprovalEvent*)this)->SerializeC(archive);
 
     CLogEntry::Serialize(archive);
@@ -126,10 +126,10 @@ void QApprovalEvent::registerClass(void) {
     CLogEntry::registerClass();
 
     uint32_t fieldNum = 1000;
-    ADD_FIELD(QApprovalEvent, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
-    ADD_FIELD(QApprovalEvent, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
-    ADD_FIELD(QApprovalEvent, "_owner", T_TEXT, ++fieldNum);
-    ADD_FIELD(QApprovalEvent, "_spender", T_TEXT, ++fieldNum);
+    ADD_FIELD(QApprovalEvent, "schema",  T_NUMBER, ++fieldNum);
+    ADD_FIELD(QApprovalEvent, "deleted", T_BOOL,  ++fieldNum);
+    ADD_FIELD(QApprovalEvent, "_owner", T_ADDRESS, ++fieldNum);
+    ADD_FIELD(QApprovalEvent, "_spender", T_ADDRESS, ++fieldNum);
     ADD_FIELD(QApprovalEvent, "_value", T_NUMBER, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like

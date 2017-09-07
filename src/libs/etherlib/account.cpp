@@ -14,7 +14,7 @@
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CAccount, CBaseNode, curVersion);
+IMPLEMENT_NODE(CAccount, CBaseNode, dataSchema());
 
 //---------------------------------------------------------------------------
 static SFString nextAccountChunk(const SFString& fieldIn, bool& force, const void *data);
@@ -70,13 +70,13 @@ SFString nextAccountChunk(const SFString& fieldIn, bool& force, const void *data
             case 't':
                 if ( fieldIn % "transactions" ) {
                     uint32_t cnt = acc->transactions.getCount();
-                    if (!cnt) return EMPTY;
-                    SFString ret;
+                    if (!cnt) return "";
+                    SFString retS;
                     for (uint32_t i = 0 ; i < cnt ; i++) {
-                        ret += acc->transactions[i].Format();
-                        ret += ((i < cnt - 1) ? ",\n" : "\n");
+                        retS += acc->transactions[i].Format();
+                        retS += ((i < cnt - 1) ? ",\n" : "\n");
                     }
-                    return ret;
+                    return retS;
                 }
                 break;
         }
@@ -140,7 +140,7 @@ void CAccount::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CAccount::Serialize(SFArchive& archive) {
-    if (!archive.isReading())
+    if (archive.isWriting())
         return ((const CAccount*)this)->SerializeC(archive);
 
     if (!preSerialize(archive))
@@ -182,16 +182,16 @@ void CAccount::registerClass(void) {
     been_here = true;
 
     uint32_t fieldNum = 1000;
-    ADD_FIELD(CAccount, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
-    ADD_FIELD(CAccount, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
-    ADD_FIELD(CAccount, "addr", T_TEXT, ++fieldNum);
+    ADD_FIELD(CAccount, "schema",  T_NUMBER, ++fieldNum);
+    ADD_FIELD(CAccount, "deleted", T_BOOL,  ++fieldNum);
+    ADD_FIELD(CAccount, "addr", T_ADDRESS, ++fieldNum);
     ADD_FIELD(CAccount, "header", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccount, "displayString", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccount, "pageSize", T_NUMBER, ++fieldNum);
     ADD_FIELD(CAccount, "lastPage", T_NUMBER, ++fieldNum);
     ADD_FIELD(CAccount, "lastBlock", T_NUMBER, ++fieldNum);
     ADD_FIELD(CAccount, "nVisible", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CAccount, "transactions", T_TEXT|TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CAccount, "transactions", T_OBJECT|TS_ARRAY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CAccount, "schema");
@@ -208,7 +208,7 @@ SFString nextAccountChunk_custom(const SFString& fieldIn, bool& force, const voi
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             case 'n':
-                if ( fieldIn % "now" ) return (isTesting ? "TESTING_TIME" : Now().Format(FMT_JSON));
+                if ( fieldIn % "now" ) return (isTestMode() ? "TESTING_TIME" : Now().Format(FMT_JSON));
                 break;
             case 'r':
                 if ( fieldIn % "records" ) return (acc->transactions.getCount() == 0 ? "No records" : "");
@@ -261,9 +261,10 @@ bool CAccount::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, vo
             cnt += transactions[i].m_showing;
             if (cnt && !(cnt % REP_INFREQ)) {
                 cerr << "\tExporting record " << cnt << " of " << nVisible;
-                cerr << (transactions.getCount() != nVisible ? " visible" : "") << " records"
-                        << (isTesting ? "\n" : "\r");
-                cerr.flush();
+                if (!isTestMode()) {
+                    cerr << (transactions.getCount() != nVisible ? " visible" : "") << " records\r";
+                    cerr.flush();
+                }
             }
 
             ((CTransaction*)&transactions[i])->pParent = this;

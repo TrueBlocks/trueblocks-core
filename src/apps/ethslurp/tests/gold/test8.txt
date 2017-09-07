@@ -1,0 +1,103 @@
+test8: extract income records only
+Processing: -t -v -i -f 0x682e426ea761db77bacd5acdce33ca122175daea
+	Slurping 0x682e426ea761db77bacd5acdce33ca122175daea
+	Slurping new transactions from blockchain...
+	Downloaded 16 potentially new transactions.
+
+	Download contains blocks from 1491486 to 1690907
+	Found new transaction at block 1546613. Importing...
+	Writing 16 new records to cache
+	skipping expenditure 0xa49fcea1151d14a92b306fb692b4285c500d61e0c1d9fdbe80254511d213990d
+	skipping expenditure 0xe9b7813bf7d1b88d0bebd9d6c5256199b3dbee84e81523892be09208c85ff352
+	skipping expenditure 0x39f18cc88b57581a1fd5a071201e98dd277bf8d460b81b41916b543615a91736
+	skipping expenditure 0xaddfb04d3aeffdb5d8943dcf3aaec8b420490f73fd2ab5d03438dc96fea7c25f
+	skipping expenditure 0xc53a3dd41116fa22627ae493f07856357d54ecd36cc834560b0dff52dcb28575
+	skipping expenditure 0x92133fbfbf13d61f7e9861222ef74ec48f609c248c6f848e0bd5066242f9ce2d
+	skipping expenditure 0x4baf63f5309c3bdf8d858ef9452f18282bbb7d00f413cf330608f7ee8d7f0029
+	skipping expenditure 0xa2debb039d502ecd9a77625d23ca133b554d4d617f15273bf0701919ab7f6e47
+	skipping expenditure 0x0845bf57c94cc780ee05fb20dce30016c6de6faade95c4f637f1f45ab87efe1b
+	skipping expenditure 0xbc3f4de85cd60f189b1adb8eaa617745905b38d47919d722a50a29404ae37001
+	skipping expenditure 0x32fbd0fa57039df8e3f71155ad6bd45b9b575494a8ab981acdf62e9f82282be3
+	skipping expenditure 0xc631d67923bb90a04f73c5d60ee37bdb49a202a1751c69220421fcfbcaa48489
+
+        {
+            "hash": "0x515735de46790a8326a909f622122df3c9a57613e39831e47451b978b47745fe",
+            "blockHash": "0xa6857a2a6c90bd2701c67bd31c697b87a607421a9c75559141a7757ff02915c2",
+            "blockNumber": "1491486",
+            "transactionIndex": "0",
+            "nonce": "55258",
+            "timestamp": "1462880396",
+            "from": "0x32be343b94f860124dc4fee278fdcbd38c102d88",
+            "to": "0x682e426ea761db77bacd5acdce33ca122175daea",
+            "value": "990000000000000000",
+            "gas": "333333",
+            "gasPrice": "30000000000",
+            "cumulativeGasUsed": "21000",
+            "input": "0x",
+            "isError": "0",
+            "isInternalTx": "0",
+            "gasUsed": "21000",
+            "date": "2016-05-10 11:39:56 UTC",
+            "ether": "0.990000000000000000"
+        },
+        {
+            "hash": "0xf159cca7246933b5c3e31d850ee2c8e08d080c288f4e19b40f219d33d59acf34",
+            "blockHash": "0xae9664c41d42a5de3989cd0186aff8d54a3677603670bc3d7b81c23b74eca958",
+            "blockNumber": "1491506",
+            "transactionIndex": "0",
+            "nonce": "55259",
+            "timestamp": "1462880661",
+            "from": "0x32be343b94f860124dc4fee278fdcbd38c102d88",
+            "to": "0x682e426ea761db77bacd5acdce33ca122175daea",
+            "value": "210631973080000000000",
+            "gas": "333333",
+            "gasPrice": "30000000000",
+            "cumulativeGasUsed": "21000",
+            "input": "0x",
+            "isError": "0",
+            "isInternalTx": "0",
+            "gasUsed": "21000",
+            "date": "2016-05-10 11:44:21 UTC",
+            "ether": "210.631973080000000000"
+        },
+        {
+            "hash": "0xaf50938c5e69fbc0456259047646693d863db618419c434da57362c8b3d9b270",
+            "blockHash": "0x6240e3b5b4e7f2b643fa182d2a7cc4a69280b35392feac2d4859d05fb84ee585",
+            "blockNumber": "1546585",
+            "transactionIndex": "0",
+            "nonce": "68630",
+            "timestamp": "1463670698",
+            "from": "0x32be343b94f860124dc4fee278fdcbd38c102d88",
+            "to": "0x682e426ea761db77bacd5acdce33ca122175daea",
+            "value": "15990000000000000000",
+            "gas": "333333",
+            "gasPrice": "30000000000",
+            "cumulativeGasUsed": "21000",
+            "input": "0x",
+            "isError": "0",
+            "isInternalTx": "0",
+            "gasUsed": "21000",
+            "date": "2016-05-19 15:11:38 UTC",
+            "ether": "15.990000000000000000"
+        },
+        {
+            "hash": "0x3d02e43d55e44ec40d68896f7aabc12063c5ad3a4ded17b48bd7be4b7bd2dc61",
+            "blockHash": "0xaa563920abd7bb8783ecfc26cdb0ced5108be34441db996b056feb686a057e72",
+            "blockNumber": "1598669",
+            "transactionIndex": "1",
+            "nonce": "77870",
+            "timestamp": "1464418040",
+            "from": "0x32be343b94f860124dc4fee278fdcbd38c102d88",
+            "to": "0x682e426ea761db77bacd5acdce33ca122175daea",
+            "value": "116281545710000000000",
+            "gas": "333333",
+            "gasPrice": "30000000000",
+            "cumulativeGasUsed": "42000",
+            "input": "0x",
+            "isError": "0",
+            "isInternalTx": "0",
+            "gasUsed": "21000",
+            "date": "2016-05-28 06:47:20 UTC",
+            "ether": "116.281545710000000000"
+        },
+

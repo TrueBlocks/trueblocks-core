@@ -1,0 +1,61 @@
+dataUpgrade argc: 2 [1:CTraceAction] 
+dataUpgrade CTraceAction 
+--------------------------------------------------------------------------------
+className: CTraceAction
+objectSize: 224
+classSchema: 513
+baseClass: CBaseNode
+	fieldName: schema
+	  fieldID: 1001
+	  fieldType: T_NUMBER TS_NUMERAL 65548
+	  hidden: 1
+	fieldName: deleted
+	  fieldID: 1002
+	  fieldType: T_BOOL TS_NUMERAL 65546
+	  hidden: 1
+	fieldName: callType
+	  fieldID: 1003
+	  fieldType: T_TEXT TS_STRING 131096
+	  hidden: 0
+	fieldName: from
+	  fieldID: 1004
+	  fieldType: T_ADDRESS TS_STRING 131098
+	  hidden: 0
+	fieldName: gas
+	  fieldID: 1005
+	  fieldType: T_GAS TS_NUMERAL 4259860 TS_BIGNUM 4259860
+	  hidden: 0
+	fieldName: input
+	  fieldID: 1006
+	  fieldType: T_TEXT TS_STRING 131096
+	  hidden: 0
+	fieldName: to
+	  fieldID: 1007
+	  fieldType: T_ADDRESS TS_STRING 131098
+	  hidden: 0
+	fieldName: value
+	  fieldID: 1008
+	  fieldType: T_WEI TS_NUMERAL 4259858 TS_BIGNUM 4259858
+	  hidden: 0
+	fieldName: address
+	  fieldID: 1009
+	  fieldType: T_ADDRESS TS_STRING 131098
+	  hidden: 0
+	fieldName: balance
+	  fieldID: 1010
+	  fieldType: T_WEI TS_NUMERAL 4259858 TS_BIGNUM 4259858
+	  hidden: 0
+	fieldName: refundAddress
+	  fieldID: 1011
+	  fieldType: T_ADDRESS TS_STRING 131098
+	  hidden: 0
+{
+  "from": "0x0",
+  "gas": 0,
+  "to": "0x0",
+  "value": 0,
+  "address": "0x0",
+  "balance": 0,
+  "refundAddress": "0x0"
+}
+

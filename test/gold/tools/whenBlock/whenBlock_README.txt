@@ -2,24 +2,26 @@ whenBlock argc: 2 [1:-th]
 whenBlock -th 
 #### Usage
 
-`Usage:`    whenBlock [-a|-l|-h] date/block  
-`Purpose:`  Finds the nearest block before the JSON-formatted date, or the date of the given block.
+`Usage:`    whenBlock [-a|-l|-v|-h] date / block  
+`Purpose:`  Finds the nearest block prior to a JSON-formatted date, or the nearest date prior to
+           the given block. Alternatively, search for one of the special blocks listed below.
              
 `Where:`  
 
 | Option | Full Command | Description |
 | -------: | :------- | :------- |
-|  | date/block | one of the special values listed below or YYYY-MM-DD-[HH[:MM[:SS]]] or a blockNumber |
+|  | date / block | one of the special values listed below or YYYY-MM-DD-[HH[:MM[:SS]]] or a blockNumber |
 | -a | --alone | show the found block or found date unadorned (useful for scripting) |
 | -l | --list | list special blocks timestamps and dates |
+| -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
-#### Other Options
+  Notes:
+	You may specify any of the following strings to represent 'special' blocks:
 
-Enter `--version` to display the current version of the tool.  
-Enter `--nocolors` to turn off colored display.  
-Enter `--wei` (default), `--ether`, or `--dollars` to alter the way value is displayed.  
+	    first (0), iceage (200000), homestead (1150000), daofund (1428756), 
+	    daohack (1718497), daofork (1920000), tangerine (2463000), spurious (2675000), 
+	    stateclear (2718436), latest ()
 
-All `quickBlocks` command-line tools support the `--file:filename` option. Place valid commands, on separate lines, in a file and include the above option. In some cases, this option may significantly improve performance. Place a semi-colon at the start of a line to make it a comment.
+	See the README for information on customizing this list.
 
-#### Powered by QuickBlocks&reg;

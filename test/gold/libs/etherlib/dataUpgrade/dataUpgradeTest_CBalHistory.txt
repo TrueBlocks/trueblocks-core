@@ -1,0 +1,32 @@
+dataUpgrade argc: 2 [1:CBalHistory] 
+dataUpgrade CBalHistory 
+--------------------------------------------------------------------------------
+className: CBalHistory
+objectSize: 96
+classSchema: 513
+baseClass: CBaseNode
+	fieldName: schema
+	  fieldID: 1001
+	  fieldType: T_NUMBER TS_NUMERAL 65548
+	  hidden: 1
+	fieldName: deleted
+	  fieldID: 1002
+	  fieldType: T_BOOL TS_NUMERAL 65546
+	  hidden: 1
+	fieldName: recordID
+	  fieldID: 1003
+	  fieldType: T_TEXT TS_STRING 131096
+	  hidden: 0
+	fieldName: txDate
+	  fieldID: 1004
+	  fieldType: T_DATE TS_DATE 262150
+	  hidden: 0
+	fieldName: balance
+	  fieldID: 1005
+	  fieldType: T_WEI TS_NUMERAL 4259858 TS_BIGNUM 4259858
+	  hidden: 0
+{
+  "txDate": "1700-01-01 00:00:01 UTC",
+  "balance": 0
+}
+

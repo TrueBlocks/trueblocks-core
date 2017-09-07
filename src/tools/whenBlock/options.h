@@ -12,18 +12,16 @@
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
-    SFUint32 blockNum;
-    SFTime   date;
-    SFString special;
-    bool alone;
+    SFStringArray   requests;
+    bool            alone;
+    CNameValueArray specials;
 
     COptions(void);
     ~COptions(void);
 
     bool parseArguments(SFString& command);
     void Init(void);
+    SFString postProcess(const SFString& which, const SFString& str) const;
+    void     loadSpecials(void);
+    SFString listSpecials(bool terse) const;
 };
-
-//-----------------------------------------------------------------------------
-extern bool visitNonEmptyBlock(CBlock& node, void *data);
-extern SFStringArray specials;

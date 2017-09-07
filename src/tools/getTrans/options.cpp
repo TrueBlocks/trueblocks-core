@@ -72,13 +72,11 @@ bool COptions::parseArguments(SFString& command) {
 void COptions::Init(void) {
     paramsPtr = params;
     nParamsRef = nParams;
+    pOptions = this;
 
     queries = "";
     trace = false;
     verbose = true;
-
-    useVerbose = true;
-    useTesting = false;
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -88,4 +86,10 @@ COptions::COptions(void) {
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
+}
+
+SFString COptions::postProcess(const SFString& which, const SFString& str) const {
+    if (which == "options")
+        return str.Substitute("hash bn.transID bh.transID","<hash|bn.transID|bh.transID>");
+    return str;
 }

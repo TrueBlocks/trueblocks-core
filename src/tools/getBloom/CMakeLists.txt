@@ -33,3 +33,13 @@ function(run_test testName)
 endfunction(run_test)
 
 # Enter one line for each individual test
+run_test("getBloom_README" "-th")
+run_test("getBloom_no_params")
+run_test("getBloom_empty"  "1001001")
+run_test("getBloom_bloom"  "4000001")
+run_test("getBloom_blooms" "1590000" "4000001" "4000002")
+run_test("getBloom_range" "4000001-4000003")
+run_test("getBloom_baddata" "1590000" "4000001-400002")
+
+# Installation steps
+install(TARGETS ${TOOL_NAME} RUNTIME DESTINATION bin)

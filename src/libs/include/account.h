@@ -96,19 +96,17 @@ inline void CAccount::Clear(void) {
 inline void CAccount::Init(void) {
     CBaseNode::Init();
 
-//    addr = EMPTY;
-//    header = EMPTY;
-//    displayString = EMPTY;
+    addr = "";
+    header = "";
+    displayString = "";
     pageSize = 0;
     lastPage = 0;
     lastBlock = -1;
     nVisible = 0;
-//    transactions = ??; /* unknown type: CTransactionArray */
+    transactions.Clear();
 
     // EXISTING_CODE
-    //    abi = ??; /* unknown type: CAbi */
-    //    abi.abiByName.Clear();
-    //    abi.abiByEncoding.Clear();
+    abi.Init();
     // EXISTING_CODE
 }
 
@@ -157,7 +155,6 @@ IMPLEMENT_ARCHIVE_LIST(CAccountList);
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 extern SFUint32 verbose;
-extern bool isTesting;
 #define REP_FREQ   11
 #define REP_INFREQ 563
 // EXISTING_CODE

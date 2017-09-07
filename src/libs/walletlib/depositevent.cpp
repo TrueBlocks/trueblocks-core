@@ -13,7 +13,7 @@
 #include "etherlib.h"
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(QDepositEvent, CLogEntry, curVersion);
+IMPLEMENT_NODE(QDepositEvent, CLogEntry, dataSchema());
 
 //---------------------------------------------------------------------------
 static SFString nextDepositeventChunk(const SFString& fieldIn, bool& force, const void *data);
@@ -96,7 +96,7 @@ void QDepositEvent::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool QDepositEvent::Serialize(SFArchive& archive) {
-    if (!archive.isReading())
+    if (archive.isWriting())
         return ((const QDepositEvent*)this)->SerializeC(archive);
 
     CLogEntry::Serialize(archive);
@@ -126,9 +126,9 @@ void QDepositEvent::registerClass(void) {
     CLogEntry::registerClass();
 
     uint32_t fieldNum = 1000;
-    ADD_FIELD(QDepositEvent, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
-    ADD_FIELD(QDepositEvent, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
-    ADD_FIELD(QDepositEvent, "from", T_TEXT, ++fieldNum);
+    ADD_FIELD(QDepositEvent, "schema",  T_NUMBER, ++fieldNum);
+    ADD_FIELD(QDepositEvent, "deleted", T_BOOL,  ++fieldNum);
+    ADD_FIELD(QDepositEvent, "from", T_ADDRESS, ++fieldNum);
     ADD_FIELD(QDepositEvent, "value", T_NUMBER, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like

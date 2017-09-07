@@ -23,7 +23,7 @@ extern const char* STR_CODE_SIGS;
 extern const char* STR_BLOCK_PATH;
 
 //-----------------------------------------------------------------------
-SFString templateFolder = getHomeFolder() + ".quickBlocks/grabABI/";
+SFString templateFolder = configPath("grabABI/");
 
 //-----------------------------------------------------------------------
 int sortFunctionByName(const void *v1, const void *v2) {
@@ -36,7 +36,7 @@ SFString classDir;
 //-----------------------------------------------------------------------
 inline SFString projectName(void) {
     CFilename fn(classDir+"tmp");
-    SFString ret = fn.getPath().Substitute("parselib/","").Substitute("parseLib/","").Substitute("/""/","");
+    SFString ret = fn.getPath().Substitute("parselib/","").Substitute("parseLib/","").Substitute("//","");
     nextTokenClearReverse(ret,'/');
     ret = nextTokenClearReverse(ret,'/');
     return ret;
@@ -54,7 +54,7 @@ inline void makeTheCode(const SFString& fn, const SFString& addr) {
 void addIfUnique(const SFString& addr, CFunctionArray& functions, CFunction& func)
 {
 //#error
-    if (func.name.empty())
+    if (func.name.empty() && func.type != "constructor")
         return;
 
     for (uint32_t i = 0 ; i < functions.getCount() ; i++) {
@@ -80,9 +80,12 @@ SFString acquireABI(CFunctionArray& functions, const SFAddress& addr, bool silen
 {
     SFString results, ret;
     SFString fileName = configPath("abis/" + addr + ".json");
+    SFString dispName = fileName.Substitute(configPath(""),"|");
+    nextTokenClear(dispName, '|');
+    dispName = "~/.quickBlocks/" + dispName;
     if (fileExists(fileName)) {
 
-        cerr << "Reading ABI from cache " + fileName + "\n";
+        cerr << "Reading ABI from cache " + dispName + "\n";
         results = asciiFileToString(fileName);
 
     } else {
@@ -99,7 +102,8 @@ SFString acquireABI(CFunctionArray& functions, const SFAddress& addr, bool silen
         if (!results.Contains("NOTOK")) {
             nextTokenClear(results, '[');
             results.ReplaceReverse("]}", "");
-            cerr << "Caching abi in " << fileName << "\n";
+            cerr << "Caching abi in " << dispName << "\n";
+            establishFolder(fileName);
             stringToAsciiFile(fileName, "["+results+"]");
         } else {
             cerr << "Could not grab ABI for " + addr + " from etherscan.io.\n";
@@ -125,7 +129,7 @@ SFString acquireABI(CFunctionArray& functions, const SFAddress& addr, bool silen
 //-----------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
-    etherlib_init("");
+    etherlib_init("binary");
 
     // We keep only a single slurper. If the user is using the --file option and they
     // are reading the same account repeatedly, we only need to read the cache once.
@@ -142,8 +146,23 @@ int main(int argc, const char *argv[]) {
         if (options.open) {
             for (uint64_t i = 0 ; i < options.nAddrs ; i++) {
                 SFString fileName = configPath("abis/" + options.addrs[i] + ".json");
-                SFString cmd = "open -a /Applications/TextEdit.app " + fileName;
-                doCommand(cmd);
+                if (!fileExists(fileName)) {
+                    cerr << "ABI for '" + options.addrs[i] + "' not found. Quitting...\n";
+                    return 0;
+                }
+                editFile(fileName);
+            }
+            return 0;
+        }
+
+        if (options.asJson) {
+            for (uint64_t i = 0 ; i < options.nAddrs ; i++) {
+                SFString fileName = configPath("abis/" + options.addrs[i] + ".json");
+                if (!fileExists(fileName)) {
+                    cerr << "ABI for '" + options.addrs[i] + "' not found. Quitting...\n";
+                    return 0;
+                }
+                cout << asciiFileToString(fileName) << "\n";
             }
             return 0;
         }
@@ -296,7 +315,7 @@ int main(int argc, const char *argv[]) {
                             else
                                 cout << "Generating class for derived transaction type: '" << theClass << "'\n";
 
-                            SFString makeClassCmd = getHomeFolder() + ".quickBlocks/makeClass/makeClass -r ";
+                            SFString makeClassCmd = configPath("makeClass/makeClass") + " -r ";
                             SFString res = doCommand(makeClassCmd + toLower(name));
                             if (!res.empty())
                                 cout << "\t" << res << "\n";
@@ -309,7 +328,7 @@ int main(int argc, const char *argv[]) {
             if (!options.isBuiltin())
                 headers += ("#include \"processing.h\"\n");
             SFString headerCode = SFString(STR_HEADERFILE).Substitute("[{HEADERS}]", headers);
-            SFString parseInit = "parselib_init(const SFString& method)";
+            SFString parseInit = "parselib_init(void)";
             if (!options.isBuiltin())
                 headerCode.ReplaceAll("[{PREFIX}]_init(void)", parseInit);
             headerCode.ReplaceAll("[{ADDR}]", options.primaryAddr.Substitute("0x", ""));
@@ -318,9 +337,9 @@ int main(int argc, const char *argv[]) {
             SFString pprefix = (options.isBuiltin() ? toProper(options.prefix).Substitute("lib", "") : "Func");
             headerCode.ReplaceAll("[{PPREFIX}]", pprefix);
             headerCode.ReplaceAll("FuncEvent", "Event");
-            SFString comment = "/""/------------------------------------------------------------------------\n";
-            funcExterns = (funcExterns.empty() ? "/""/ No functions" : funcExterns);
-            evtExterns = (evtExterns.empty() ? "/""/ No events" : evtExterns);
+            SFString comment = "//------------------------------------------------------------------------\n";
+            funcExterns = (funcExterns.empty() ? "// No functions" : funcExterns);
+            evtExterns = (evtExterns.empty() ? "// No events" : evtExterns);
             headerCode.ReplaceAll("[{EXTERNS}]", comment+funcExterns+"\n"+comment+evtExterns);
             headerCode = headerCode.Substitute("{QB}", (options.isBuiltin() ? "_qb" : ""));
             writeTheCode(classDir + options.prefix + ".h", headerCode);
@@ -338,7 +357,7 @@ int main(int argc, const char *argv[]) {
             factory2.Replace("} else ", "");
 
             SFString sourceCode = asciiFileToString(templateFolder + "parselib/parselib.cpp");
-            parseInit = "parselib_init(const SFString& method)";
+            parseInit = "parselib_init(void)";
             if (!options.isBuiltin())
                 sourceCode.ReplaceAll("[{PREFIX}]_init(void)", parseInit);
             if (options.isToken()) {
@@ -357,8 +376,8 @@ int main(int argc, const char *argv[]) {
                                     "\twalletlib_init();\n" :
                                   (options.isWallet() ? "" : "\ttokenlib_init();\n"));
             sourceCode.ReplaceAll("[{CHAINLIB}]", chainInit);
-            sourceCode.ReplaceAll("[{FACTORY1}]", factory1.empty() ? "\t\t{\n\t\t\t/""/ No functions\n" : factory1);
-            sourceCode.ReplaceAll("[{FACTORY2}]", factory2.empty() ? "\t\t{\n\t\t\t/""/ No events\n" : factory2);
+            sourceCode.ReplaceAll("[{FACTORY1}]", factory1.empty() ? "\t\t{\n\t\t\t// No functions\n" : factory1);
+            sourceCode.ReplaceAll("[{FACTORY2}]", factory2.empty() ? "\t\t{\n\t\t\t// No events\n" : factory2);
 
             headers = ("#include \"tokenlib.h\"\n");
             headers += ("#include \"walletlib.h\"\n");
@@ -369,10 +388,10 @@ int main(int argc, const char *argv[]) {
             pprefix = (options.isBuiltin() ? toProper(options.prefix).Substitute("lib", "") : "Func");
             sourceCode.ReplaceAll("[{PPREFIX}]", pprefix);
             sourceCode.ReplaceAll("FuncEvent", "Event");
-            sourceCode.ReplaceAll("[{FUNC_DECLS}]", funcDecls.empty() ? "/""/ No functions" : funcDecls);
-            sourceCode.ReplaceAll("[{SIGS}]", sigs.empty() ? "\t/""/ No functions\n" : sigs);
-            sourceCode.ReplaceAll("[{EVENT_DECLS}]", evtDecls.empty() ? "/""/ No events" : evtDecls);
-            sourceCode.ReplaceAll("[{EVTS}]", evts.empty() ? "\t/""/ No events\n" : evts);
+            sourceCode.ReplaceAll("[{FUNC_DECLS}]", funcDecls.empty() ? "// No functions" : funcDecls);
+            sourceCode.ReplaceAll("[{SIGS}]", sigs.empty() ? "\t// No functions\n" : sigs);
+            sourceCode.ReplaceAll("[{EVENT_DECLS}]", evtDecls.empty() ? "// No events" : evtDecls);
+            sourceCode.ReplaceAll("[{EVTS}]", evts.empty() ? "\t// No events\n" : evts);
             sourceCode = sourceCode.Substitute("{QB}", (options.isBuiltin() ? "_qb" : ""));
             writeTheCode(classDir + options.prefix + ".cpp", sourceCode.Substitute("XXXX","[").Substitute("YYYY","]"));
 
@@ -469,8 +488,8 @@ SFString getEventAssign(const CParameter *p, SFUint32 which, SFUint32 nIndexed) 
 const char* STR_FACTORY1 =
 "\t\t} else if (encoding == func_[{LOWER}]{QB})\n"
 "\t\t{\n"
-"\t\t\t/""/ [{SIGNATURE}]\n"
-"\t\t\t/""/ [{ENCODING}]\n"
+"\t\t\t// [{SIGNATURE}]\n"
+"\t\t\t// [{ENCODING}]\n"
 "\t\t\t[{CLASS}] *a = new [{CLASS}];\n"
 "\t\t\t*(C[{BASE}]*)a = *p; // copy in\n"
 "[{ASSIGNS1}]"
@@ -483,8 +502,8 @@ const char* STR_FACTORY1 =
 const char* STR_FACTORY2 =
 "\t\t} else if (fromTopic(p->topics[0]) % evt_[{LOWER}]{QB})\n"
 "\t\t{\n"
-"\t\t\t/""/ [{SIGNATURE}]\n"
-"\t\t\t/""/ [{ENCODING}]\n"
+"\t\t\t// [{SIGNATURE}]\n"
+"\t\t\t// [{ENCODING}]\n"
 "\t\t\t[{CLASS}] *a = new [{CLASS}];\n"
 "\t\t\t*(C[{BASE}]*)a = *p; // copy in\n"
 "[{ASSIGNS2}]"
@@ -578,4 +597,4 @@ const char* STR_CODE_SIGS =
 "uint32_t nTopics = sizeof(topics) / sizeof(SFString);\n"
 "\n";
 
-const char* STR_BLOCK_PATH = "setStorageRoot(BLOCK_CACHE);\n\tetherlib_init(method);\n\n";
+const char* STR_BLOCK_PATH = "\tetherlib_init(\"binary\");\n\n";

@@ -15,7 +15,7 @@
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CTraceAction, CBaseNode, curVersion);
+IMPLEMENT_NODE(CTraceAction, CBaseNode, dataSchema());
 
 //---------------------------------------------------------------------------
 static SFString nextTraceactionChunk(const SFString& fieldIn, bool& force, const void *data);
@@ -137,7 +137,7 @@ void CTraceAction::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CTraceAction::Serialize(SFArchive& archive) {
-    if (!archive.isReading())
+    if (archive.isWriting())
         return ((const CTraceAction*)this)->SerializeC(archive);
 
     if (!preSerialize(archive))
@@ -181,17 +181,17 @@ void CTraceAction::registerClass(void) {
     been_here = true;
 
     uint32_t fieldNum = 1000;
-    ADD_FIELD(CTraceAction, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
-    ADD_FIELD(CTraceAction, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
+    ADD_FIELD(CTraceAction, "schema",  T_NUMBER, ++fieldNum);
+    ADD_FIELD(CTraceAction, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CTraceAction, "callType", T_TEXT, ++fieldNum);
-    ADD_FIELD(CTraceAction, "from", T_TEXT, ++fieldNum);
-    ADD_FIELD(CTraceAction, "gas", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CTraceAction, "from", T_ADDRESS, ++fieldNum);
+    ADD_FIELD(CTraceAction, "gas", T_GAS, ++fieldNum);
     ADD_FIELD(CTraceAction, "input", T_TEXT, ++fieldNum);
-    ADD_FIELD(CTraceAction, "to", T_TEXT, ++fieldNum);
+    ADD_FIELD(CTraceAction, "to", T_ADDRESS, ++fieldNum);
     ADD_FIELD(CTraceAction, "value", T_WEI, ++fieldNum);
-    ADD_FIELD(CTraceAction, "address", T_TEXT, ++fieldNum);
+    ADD_FIELD(CTraceAction, "address", T_ADDRESS, ++fieldNum);
     ADD_FIELD(CTraceAction, "balance", T_WEI, ++fieldNum);
-    ADD_FIELD(CTraceAction, "refundAddress", T_TEXT, ++fieldNum);
+    ADD_FIELD(CTraceAction, "refundAddress", T_ADDRESS, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CTraceAction, "schema");

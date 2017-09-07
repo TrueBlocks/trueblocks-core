@@ -38,8 +38,12 @@ namespace qblocks {
 
         void     clear    (void);
         size_t   length   (void) const;
-        int      compare  (const char *str) const;
-        int      compare  (const string_q& str) const { return compare(str.m_Values);}
+        int      compare  (const char* s) const;
+        int      compare  (size_t pos, size_t len, const char* s) const;
+        int      compare  (size_t pos, size_t len, const char* s, size_t n) const;
+        int      compare  (const string_q& str) const;
+        int      compare  (size_t pos, size_t len, const string_q& str) const;
+        int      compare  (size_t pos, size_t len, const string_q& str, size_t subpos, size_t sublen) const;
         void     reserve  (size_t n=0);
         bool     empty    (void) const;
         size_t   find     (const string_q& str, size_t pos=0) const;
@@ -383,88 +387,6 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------
-    inline SFString formatFloat(double f, uint32_t nDecimals=10) {
-        char s[100], r[100];
-        memset(s,'\0',100);
-        memset(r,'\0',100);
-        sprintf(s, "%.*g", (int)nDecimals, ((int64_t)(  pow(10, nDecimals) * (  fabs(f) - labs( (int64_t) f )  )  + 0.5)) / pow(10,nDecimals));
-        if (strchr(s, 'e'))
-            s[1] = '\0';
-        sprintf(r, "%d%s", (int)f, s+1);
-        return SFString(r);
-    }
-#define fmtFloat(f) (const char*)formatFloat(f)
-#define fmtFloatp(f,p) (const char*)formatFloat(f, p)
-
-    //--------------------------------------------------------------------
-    extern uint64_t hex2Long(const SFString& inHex);
-    extern SFString hex2String(const SFString& inHex);
-    extern SFString string2Hex(const SFString& inAscii);
-    extern unsigned char hex2Ascii(char *str);
-
-    //--------------------------------------------------------------------
-    inline SFString asString(int64_t i) {
-#if 1
-        ostringstream os;
-        os << i;
-        return os.str().c_str();
-#else
-        char ret[128];
-        sprintf(ret, "%ld", (int64_t)i);
-        return SFString(ret);
-#endif
-    }
-
-    //--------------------------------------------------------------------
-    inline SFString asStringU(SFUint32 i) {
-#if 1
-        ostringstream os;
-        os << i;
-        return os.str().c_str();
-#else
-        char ret[128];
-        sprintf(ret, "%lu", (SFUint32)i);
-        return SFString(ret);
-#endif
-    }
-
-    //--------------------------------------------------------------------
-    inline SFString asStringULL(uint64_t i) {
-#if 1
-        ostringstream os;
-        os << i;
-        return os.str().c_str();
-#else
-        char ret[128];
-        sprintf(ret, "%lu", (uint64_t)i);
-        return SFString(ret);
-#endif
-    }
-
-    //--------------------------------------------------------------------
-    inline SFString asStringF(float f) {
-        return formatFloat(f, 10);
-    }
-
-    //--------------------------------------------------------------------
-    inline SFString asStringD(double d) {
-        return formatFloat(d, 10);
-    }
-
-    //--------------------------------------------------------------------
-    inline SFString asBitmap(uint64_t value) {
-        SFString ret;
-        for (int i=31;i>-1;i--) {
-            bool isOn = (value & (1<<i));
-            if (isOn)
-                ret += "1";
-            else
-                ret += "0";
-        }
-        return ret;
-    }
-
-    //--------------------------------------------------------------------
     extern SFString nextTokenClearReverse(SFString& str, char token);
     inline SFString nextTokenClear(SFString& line, char delim, bool doClear=true) {
         SFString ret;
@@ -510,27 +432,6 @@ namespace qblocks {
 
         return str.Left(len);
     }
-
-    //--------------------------------------------------------------------
-#define padNum2(n) padLeft(asString((n)), 2, '0')
-#define padNum3(n) padLeft(asString((n)), 3, '0')
-#define padNum4(n) padLeft(asString((n)), 4, '0')
-#define padNum5(n) padLeft(asString((n)), 5, '0')
-#define padNum6(n) padLeft(asString((n)), 6, '0')
-#define padNum7(n) padLeft(asString((n)), 7, '0')
-#define padNum8(n) padLeft(asString((n)), 8, '0')
-#define padNum9(n) padLeft(asString((n)), 9, '0')
-
-    //--------------------------------------------------------------------
-#define padNum2T(n)  padLeft(asString((n)), 2)
-#define padNum3T(n)  padLeft(asString((n)), 3)
-#define padNum4T(n)  padLeft(asString((n)), 4)
-#define padNum5T(n)  padLeft(asString((n)), 5)
-#define padNum6T(n)  padLeft(asString((n)), 6)
-#define padNum7T(n)  padLeft(asString((n)), 7)
-#define padNum8T(n)  padLeft(asString((n)), 8)
-#define padNum9T(n)  padLeft(asString((n)), 9)
-#define padNum18T(n) padLeft(asString((n)), 18)
 
     //--------------------------------------------------------------------
     extern SFString snagFieldClear     (      SFString& in, const SFString& tagName, const SFString& defVal="");
@@ -585,26 +486,6 @@ namespace qblocks {
     //--------------------------------------------------------------------
     extern void writeTheCode(const SFString& fileName, const SFString& code, const SFString& ns = "", bool spaces = true);
 
-    //-------------------------------------------------------------------------
-    inline int64_t toLong(const char *str) { return strtol(str, NULL, 10); }
-    inline uint64_t toLongU(const char *str) { return strtoul(str, NULL, 10); }
-
-    //-------------------------------------------------------------------------
-    inline uint32_t toLong32u(const char *str) { return (uint32_t)strtoul((const char*)(str), NULL, 10); }
-    inline uint32_t toLong32u(char *str) { return (uint32_t)strtoul((const char*)(str), NULL, 10); }
-
-    //-------------------------------------------------------------------------
-    inline float toFloat(const char *str) { return (float)strtof((const char*)(str), NULL); }
-    inline float toFloat(char *str) { return (float)strtof((const char*)(str), NULL); }
-
-    //-------------------------------------------------------------------------
-    inline double toDouble(const char *str) { return (double)strtold((const char*)(str), NULL); }
-    inline double toDouble(char *str) { return (double)strtold((const char*)(str), NULL); }
-
-    //--------------------------------------------------------------------
-    inline bool toBool_in(const SFString& in) { return in%"true" || toLong(in)!=0; }
-#define toBool toBool_in
-
     //----------------------------------------------------------------------------
     inline SFString shorten(const SFString& in, size_t x) {
         return padRight(in.length()>x-3 ? in.Left(x-3) + "..." : in, (uint32_t)x);
@@ -637,8 +518,8 @@ namespace qblocks {
     inline SFString StripAny(const SFString& str, const SFString& any) {
         SFString ret = str;
         while (endsWithAny(ret, any) || startsWithAny(ret, any)) {
-            for (uint32_t i = 0 ; i < any.length() ; i++)
-                ret = Strip(ret, any[i]);
+            for (size_t i = 0 ; i < any.length() ; i++)
+                ret = Strip(ret, any[(int)i]);
         }
         return ret;
     }

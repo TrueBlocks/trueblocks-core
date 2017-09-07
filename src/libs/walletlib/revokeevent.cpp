@@ -13,7 +13,7 @@
 #include "etherlib.h"
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(QRevokeEvent, CLogEntry, curVersion);
+IMPLEMENT_NODE(QRevokeEvent, CLogEntry, dataSchema());
 
 //---------------------------------------------------------------------------
 static SFString nextRevokeeventChunk(const SFString& fieldIn, bool& force, const void *data);
@@ -92,7 +92,7 @@ void QRevokeEvent::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool QRevokeEvent::Serialize(SFArchive& archive) {
-    if (!archive.isReading())
+    if (archive.isWriting())
         return ((const QRevokeEvent*)this)->SerializeC(archive);
 
     CLogEntry::Serialize(archive);
@@ -122,9 +122,9 @@ void QRevokeEvent::registerClass(void) {
     CLogEntry::registerClass();
 
     uint32_t fieldNum = 1000;
-    ADD_FIELD(QRevokeEvent, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
-    ADD_FIELD(QRevokeEvent, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
-    ADD_FIELD(QRevokeEvent, "owner", T_TEXT, ++fieldNum);
+    ADD_FIELD(QRevokeEvent, "schema",  T_NUMBER, ++fieldNum);
+    ADD_FIELD(QRevokeEvent, "deleted", T_BOOL,  ++fieldNum);
+    ADD_FIELD(QRevokeEvent, "owner", T_ADDRESS, ++fieldNum);
     ADD_FIELD(QRevokeEvent, "operation", T_TEXT, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like

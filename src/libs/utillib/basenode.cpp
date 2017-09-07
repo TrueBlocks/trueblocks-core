@@ -10,6 +10,7 @@
 #include "basenode.h"
 #include "sfarchive.h"
 #include "exportcontext.h"
+#include "conversions.h"
 
 namespace qblocks {
 
@@ -268,18 +269,16 @@ namespace qblocks {
 
     //---------------------------------------------------------------------------
     bool CBaseNode::preSerialize(SFArchive& archive) {
-        if (!archive.isReading())
+        if (archive.isWriting())
             return ((const CBaseNode*)this)->preSerializeC(archive);
 
         archive.pParent = this;  // sets this value for items stored in lists or arrays -- read only
-        if (archive.isReading()) {
-            archive >> m_deleted;
-            archive >> m_schema;
-            archive >> m_showing;
-            SFString str;
-            archive >> str;
-            ASSERT(str == SFString(getRuntimeClass()->getClassNamePtr()));
-        }
+        archive >> m_deleted;
+        archive >> m_schema;
+        archive >> m_showing;
+        SFString str;
+        archive >> str;
+        ASSERT(str == SFString(getRuntimeClass()->getClassNamePtr()));
         return true;
     }
 
@@ -339,11 +338,11 @@ namespace qblocks {
         CRuntimeClass *pPar  = pThis->m_BaseClass;
         CRuntimeClass *pBase = GETRUNTIME_CLASS(CBaseNode);
         if (pPar != pBase) {
-            const CFieldList *fieldList = pPar->GetFieldList();
+            const CFieldList *fieldListA = pPar->GetFieldList();
             if (fieldList) {
-                LISTPOS lPos = fieldList->SFList<CFieldData *>::GetHeadPosition();
+                LISTPOS lPos = fieldListA->SFList<CFieldData *>::GetHeadPosition();
                 while (lPos) {
-                    CFieldData *fld = fieldList->GetNext(lPos);
+                    CFieldData *fld = fieldListA->GetNext(lPos);
                     if (!fld->isHidden())
                         theList.AddTail(fld);
                 }
@@ -422,7 +421,7 @@ namespace qblocks {
                     ret += "\"" + val + "\"";
 
 
-                } else if (fld->m_fieldType == T_NUMBER) {
+                } else if (fld->m_fieldType & TS_NUMERAL) {
                     if (expContext().quoteNums) ret += "\"";
                     ret += (expContext().hexNums) ? toHex2(val) : decBigNum(val);
                     if (expContext().quoteNums) ret += "\"";
@@ -497,8 +496,8 @@ namespace qblocks {
                     }
                     break;
                 case 's':
-                    if ( fieldIn % "schema" ) return asString(node->m_schema);
-                    if ( fieldIn % "showing" ) return asString(node->m_showing);
+                    if ( fieldIn % "schema" ) return asStringU(node->m_schema);
+                    if ( fieldIn % "showing" ) return asStringU(node->m_showing);
                     break;
                 default:
                     break;
@@ -614,3 +613,6 @@ namespace qblocks {
         return "Field not found: " + str + "\n";
     }
 }  // namespace qblocks
+
+uint64_t testing::Test::nFuncs;
+testing::PF testing::Test::funcs[];
