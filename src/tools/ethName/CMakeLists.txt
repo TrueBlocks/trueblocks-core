@@ -32,8 +32,13 @@ function(run_test testName)
      run_the_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
 endfunction(run_test)
 
+function(run_special_test testName)
+     run_the_special_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
+endfunction(run_special_test)
+
 # Enter one line for each individual test
-run_test("ethName_README"                            "-th")
+#run_test("ethName_README"                            "-th")
+run_special_test("ethName_README"                            "-th")
 run_test("ethName_no_params"                            )
 run_test("ethName_invalid_param_1"                   "-x" )
 run_test("ethName_invalid_param_2"                   "-x" " torj" )
@@ -149,3 +154,7 @@ run_test("ethName_too_many_terms"                    "88897" " torj" " scan" " e
 
 # Installation steps
 install(TARGETS ${TOOL_NAME} RUNTIME DESTINATION bin)
+
+# test-all target
+# To run only specific tests we define a test configuration named "test_all"
+add_custom_target(test-all ALL COMMAND ${CMAKE_CTEST_COMMAND} -C test_all)
