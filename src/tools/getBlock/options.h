@@ -20,6 +20,7 @@ public:
     bool quiet;
     bool force;
     bool normalize;
+    bool silent;
     SFUint32 nums[MAX_NUMS];
     SFUint32 nNums;
     SFUint32 start;
