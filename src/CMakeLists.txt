@@ -90,6 +90,25 @@ function(run_the_test testPath goldPath testName testExe) # Optional argv4 with 
 endfunction(run_the_test)
 
 # ----------------------------------------------------------------------------------------
+# Runs specials tests that are only run with "make test-all"
+function(run_the_special_test testPath goldPath testName testExe) # Optional argv4 with command parameters
+	set(TEST_FILE "${testPath}/${testName}.txt")
+        set(GOLD_FILE "${goldPath}/${testName}.txt")
+        if (NOT ${ARGV4} STREQUAL "" )
+        # In ARGV4 we receive the parameters to be passed to testExe  (optional)
+	add_test(NAME ${testName} COMMAND ${TEST_CHECK} ${testExe} ${ARGN} ${TEST_FILE} ${GOLD_FILE} CONFIGURATIONS test_all)
+        else()
+		add_test(NAME ${testName} COMMAND ${TEST_CHECK} ${testExe} ${TEST_FILE} ${GOLD_FILE} CONFIGURATIONS test_all)
+        endif()
+endfunction(run_the_special_test)
+
+# ----------------------------------------------------------------------------------------
+# test-all target
+# To run only specific tests we define a test configuration named "test_all"
+# Tests under this configuration are only run with "make test-all"
+add_custom_target(test-all ALL COMMAND ${CMAKE_CTEST_COMMAND} -C test_all)
+
+# ----------------------------------------------------------------------------------------
 # Compilation order for the subfolders
 add_subdirectory (libs)
 add_subdirectory (apps)
@@ -98,8 +117,3 @@ add_subdirectory (samples)
 add_subdirectory (monitors)
 add_subdirectory (other)
 
-# To run only specific tests, we define a target that only runs those tests with an specific LABEL "-L"
-# we must tag them with this label first at the place where they are defined
-# Something like this:   
-# set_property(TEST test1 PROPERTY LABELS SPECIAL_TEST)
-add_custom_target(test-all COMMAND ${CMAKE_CTEST_COMMAND} -L "SPECIAL_TEST")
