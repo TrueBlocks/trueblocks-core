@@ -11,6 +11,9 @@
 extern int sortReverseChron(const void *rr1, const void *rr2);
 //--------------------------------------------------------------------------------
 int main(int argc, const char * argv[]) {
+
+    etherlib_init("binary");
+
     // We keep only a single slurper. If the user is using the --file option and they
     // are reading the same account repeatedly, we only need to read the cache once.
     CSlurperApp slurper;
@@ -33,8 +36,14 @@ int main(int argc, const char * argv[]) {
             return usage(message);
 
         // Slurp the address...
-        if (!slurper.Slurp(options, message))
-            return usage(message);
+        if (!slurper.Slurp(options, message)) {
+            if (message.startsWith("No transactions")) {
+                // Fix for issue #252.
+                cerr << cRed << "\t" << message << cOff << "\n";
+                return 0;
+            } else
+                return usage(message);
+        }
 
         // Apply the filters if any...
         if (!slurper.Filter(options, message))
@@ -62,7 +71,7 @@ bool CSlurperApp::Initialize(COptions& options, SFString& message) {
 
     // If this is the first time we've ever run, build the toml file
     if (!establishFolders(toml)) {
-        message = "Unable to create data folders at " + cachePath();
+        message = "Unable to create data folders at " + configPath("slurps/");
         return false;
     }
 
@@ -87,6 +96,10 @@ bool CSlurperApp::Initialize(COptions& options, SFString& message) {
         return false;
     }
 
+    // This seemingly out of place code dumps an error message if the fmt_X_file format
+    // string is not in the config file. Don't remove it.
+    getFormatString(options, "file", false);
+
     if (options.wantsArchive) {
         if (options.archiveFile.empty() && options.name.empty())
             return usage("-a and -n may not both be empty. Specify either an archive file or a name. Quitting...");
@@ -108,17 +121,13 @@ bool CSlurperApp::Initialize(COptions& options, SFString& message) {
     toml.writeFile();
 
     // Load per address configurations if any
-    SFString customConfig = configPath("configs/"+addr+".toml");
+    SFString customConfig = configPath("slurps/" + addr + ".toml");
     if (fileExists(customConfig) || !options.name.empty()) {
         CToml perAddr("");
         perAddr.setFilename(customConfig);
         if (fileExists(customConfig)) {
             perAddr.readFile(customConfig);
             toml.mergeFile(&perAddr);
-        }
-        if (!options.name.empty()) {
-            perAddr.setConfigStr("settings", "name", options.name);
-            perAddr.writeFile();
         }
     }
 
@@ -150,7 +159,7 @@ bool CSlurperApp::Slurp(COptions& options, SFString& message) {
     theAccount.abi.loadABI(theAccount.addr);
 
     // Do we have the data for this address cached?
-    SFString cacheFilename = cachePath(theAccount.addr+".bin");
+    SFString cacheFilename = configPath("slurps/" + theAccount.addr + ".bin");
     bool needToRead = fileExists(cacheFilename);
     if (options.rerun && theAccount.transactions.getCount())
         needToRead = false;
@@ -178,7 +187,8 @@ bool CSlurperApp::Slurp(COptions& options, SFString& message) {
         uint32_t origCount  = theAccount.transactions.getCount();
         uint32_t nNewBlocks = 0;
 
-        cerr << "\tSlurping new transactions from blockchain...\n";
+        if (!isTestMode())
+            cerr << "\tSlurping new transactions from blockchain...\n";
         uint32_t nextRecord = origCount;
         uint32_t nRead = 0;
         uint32_t nRequests = 0;
@@ -208,14 +218,15 @@ bool CSlurperApp::Slurp(COptions& options, SFString& message) {
             message = nextTokenClear(thisPage, '[');
             if (!message.Contains("{\"status\":\"1\",\"message\":\"OK\"")) {
                 if (message.Contains("{\"status\":\"0\",\"message\":\"No transactions found\",\"result\":"))
-                    message = "No transactions were found for address '" + theAccount.addr + "'. Is it correct?";
+                    message = "No transactions were found for address '" + theAccount.addr + "'.";
                 return options.fromFile;
             }
             contents += thisPage;
 
             uint64_t nRecords = countOf('}', thisPage) - 1;
             nRead += nRecords;
-            cerr << "\tDownloaded " << nRead << " potentially new transactions." << (isTesting?"\n":"\r");
+            if (!isTestMode())
+                cerr << "\tDownloaded " << nRead << " potentially new transactions.\r";
 
             // If we got a full page, there are more to come
             done = (nRecords < options.pageSize);
@@ -236,7 +247,8 @@ bool CSlurperApp::Slurp(COptions& options, SFString& message) {
         uint32_t minBlock = 0, maxBlock = 0;
         findBlockRange(contents, minBlock, maxBlock);
 #ifndef NO_INTERNET
-        cerr << "\n\tDownload contains blocks from " << minBlock << " to " << maxBlock << "\n";
+        if (!isTestMode())
+            cerr << "\n\tDownload contains blocks from " << minBlock << " to " << maxBlock << "\n";
 #endif
 
         // Keep track of which last full page we've read
@@ -254,19 +266,18 @@ bool CSlurperApp::Slurp(COptions& options, SFString& message) {
             trans.pParent = &theAccount;
             p = trans.parseJson(p, nFields);
             if (nFields) {
-                int64_t transBlock = trans.blockNumber;  // NOLINT
+                int64_t transBlock = (int64_t)trans.blockNumber;  // NOLINT
                 if (transBlock > theAccount.lastBlock) {  // add the new transaction if it's in a new block
                     theAccount.transactions[nextRecord++] = trans;
                     lastBlock = transBlock;
-                    if (!(++nNewBlocks % REP_FREQ)) {
-                        cerr << "\tFound new transaction at block " << transBlock
-                                << ". Importing..." << (isTesting?"\n":"\r");
+                    if (!(++nNewBlocks % REP_FREQ) && !isTestMode()) {
+                        cerr << "\tFound new transaction at block " << transBlock << ". Importing...\r";
                         cerr.flush();
                     }
                 }
             }
         }
-        if (!isTesting && nNewBlocks) {
+        if (!isTestMode() && nNewBlocks) {
             cerr << "\tFound new transaction at block " << lastBlock << ". Importing...\n";
             cerr.flush();
         }
@@ -275,7 +286,8 @@ bool CSlurperApp::Slurp(COptions& options, SFString& message) {
         // Write the data if we got new data
         uint32_t newRecords = (theAccount.transactions.getCount() - origCount);
         if (newRecords) {
-            cerr << "\tWriting " << newRecords << " new records to cache\n";
+            if (!isTestMode())
+                cerr << "\tWriting " << newRecords << " new records to cache\n";
             SFArchive archive(false, NO_SCHEMA, true);
             if (archive.Lock(cacheFilename, binaryWriteCreate, LOCK_CREATE)) {
                 theAccount.Serialize(archive);
@@ -288,7 +300,7 @@ bool CSlurperApp::Slurp(COptions& options, SFString& message) {
         }
     }
 
-    if (!isTesting) {
+    if (!isTestMode()) {
         double stop = qbNow();
         double timeSpent = stop-start;
         fprintf(stderr, "\tLoaded %d total records in %f seconds\n", theAccount.transactions.getCount(), timeSpent);
@@ -300,6 +312,7 @@ bool CSlurperApp::Slurp(COptions& options, SFString& message) {
 
 //--------------------------------------------------------------------------------
 bool CSlurperApp::Filter(COptions& options, SFString& message) {
+    message = "";
     double start = qbNow();
 
     uint32_t nFuncFilts = 0;
@@ -318,7 +331,7 @@ bool CSlurperApp::Filter(COptions& options, SFString& message) {
 
         // The -blocks and -dates filters are mutually exclusive, -dates predominates.
         if (options.firstDate != earliestDate || options.lastDate != latestDate) {
-            SFTime date = dateFromTimeStamp(trans->timestamp);
+            SFTime date = dateFromTimeStamp((timestamp_t)trans->timestamp);
             bool isVisible = (date >= options.firstDate && date <= options.lastDate);
             trans->m_showing = isVisible;
 
@@ -343,8 +356,8 @@ bool CSlurperApp::Filter(COptions& options, SFString& message) {
 
         if (!options.funcFilter.empty()) {
             bool show = false;
-            for (uint64_t i = 0 ; i < nFuncFilts ; i++)
-                show = (show || trans->isFunction(funcFilts[i]));
+            for (uint64_t jj = 0 ; jj < nFuncFilts ; jj++)
+                show = (show || trans->isFunction(funcFilts[jj]));
             trans->m_showing = show;
         }
 
@@ -357,19 +370,20 @@ bool CSlurperApp::Filter(COptions& options, SFString& message) {
         }
 
         theAccount.nVisible += trans->m_showing;
-        int64_t nFiltered = (theAccount.nVisible + 1);  // NOLINT
-        if (!(nFiltered % REP_INFREQ)) {
-            cerr << "\t" << "Filtering..." << nFiltered << " records passed." << (isTesting ? "\n" : "\r");
+        int64_t nFiltered = int64_t(theAccount.nVisible + 1);  // NOLINT
+        if (!(nFiltered % REP_INFREQ) && !isTestMode()) {
+            cerr << "\t" << "Filtering..." << nFiltered << " records passed.\r";
             cerr.flush();
         }
     }
 
-    if (!isTesting) {
+    if (!isTestMode()) {
         double stop = qbNow();
         double timeSpent = stop-start;
-        fprintf(stderr, "\tFilter passed %lu visible records of %u in %f seconds\n",
-                    (unsigned long)theAccount.nVisible, theAccount.transactions.getCount(), timeSpent);
-        fflush(stderr);
+        cerr << "\tFilter passed " << theAccount.nVisible
+                << " visible records of " << theAccount.transactions.getCount()
+                << " in " << timeSpent << " seconds\n",
+        cerr.flush();
     }
 
     return true;
@@ -377,6 +391,7 @@ bool CSlurperApp::Filter(COptions& options, SFString& message) {
 
 //---------------------------------------------------------------------------------------------------
 bool CSlurperApp::Display(COptions& options, SFString& message) {
+    message = "";
     double start = qbNow();
 
     if (options.reverseSort)
@@ -392,11 +407,12 @@ bool CSlurperApp::Display(COptions& options, SFString& message) {
         theAccount.Format(outScreen, getFormatString(options, "file", false));
     }
 
-    if (!isTesting) {
+    if (!isTestMode()) {
         double stop = qbNow();
         double timeSpent = stop-start;
-        fprintf(stderr, "\tExported %lu records in %f seconds             \n\n", (unsigned long)theAccount.nVisible, timeSpent);
-        fflush(stderr);
+        cerr << "\tExported " << theAccount.nVisible
+                << " records in " << timeSpent << " seconds             \n\n",
+        cerr.flush();
     }
     return true;
 }
@@ -431,7 +447,11 @@ SFString CSlurperApp::getFormatString(COptions& options, const SFString& which, 
         errMsg = SFString("Mismatched brackets in display string '") + formatName + "': '" + ret + "'. Quiting...\n";
 
     } else if (ret.empty() && !ignoreBlank) {
-        errMsg = SFString("Empty display string '") + formatName + "'. Quiting...\n";
+const char *ERR_NO_DISPLAY_STR =
+"You entered an empty display string with the --format (-f) option. The format string 'fmt_[{FMT}]_file`\n"
+"  was not found in the configuration file (which is stored here: ~/.quickBlocks/quickBlocks.toml).\n"
+"  Please see the full documentation for more information on display strings.";
+        errMsg = usageStr(SFString(ERR_NO_DISPLAY_STR).Substitute("[{FMT}]", options.exportFormat));
     }
 
     if (!errMsg.empty()) {
@@ -511,15 +531,15 @@ void findBlockRange(const SFString& json, uint32_t& minBlock, uint32_t& maxBlock
     size_t len = search.length();
 
     minBlock = 0;
-    int64_t first = json.find(search);
+    int64_t first = (int64_t)json.find(search);
     if (first != (int64_t)NOPOS) {
-        SFString str = json.substr(first+len);
+        SFString str = json.substr(((size_t)first+len));
         minBlock = toLong32u(str);
     }
 
     SFString end = json.substr(json.ReverseFind('{'));  // pull off the last transaction
-    int64_t last = end.find(search);
-    if (last != (int64_t)NOPOS) {
+    size_t last = end.find(search);
+    if (last != NOPOS) {
         SFString str = end.substr(last+len);
         maxBlock = toLong32u(str);
     }
@@ -528,55 +548,43 @@ void findBlockRange(const SFString& json, uint32_t& minBlock, uint32_t& maxBlock
 //--------------------------------------------------------------------------------
 // Make sure our data folder exist, if not establish it
 bool establishFolders(CToml& toml) {
-    // Just double check we're in the right bracnh
-    if (getCWD().Contains("/src.GitHub.1")) {
-        cerr << "You're in src.GitHub.1 folder. Comment this code if you mean to be.\n";
-        exit(0);
-    }
 
-    SFString tomlFilename = configPath("quickBlocks.toml");
-    toml.setFilename(tomlFilename);
-    if (folderExists(cachePath()) && fileExists(tomlFilename)) {
-        toml.readFile(tomlFilename);
+    SFString configFilename = configPath("quickBlocks.toml");
+    toml.setFilename(configFilename);
+    if (folderExists(configPath("slurps/")) && fileExists(configFilename)) {
+        toml.readFile(configFilename);
         return true;
     }
 
     // create the main folder
-    mkdir((const char*)configPath(), (mode_t)0755);
-    if (!folderExists(configPath()))
+    mkdir((const char*)configPath(""), (mode_t)0755);
+    if (!folderExists(configPath("")))
         return false;
 
-    // create the folder for the slurps
-    mkdir(cachePath(), (mode_t)0755);
-    if (!folderExists(cachePath()))
+    // create the folder for the data
+    mkdir(configPath("slurps/"), (mode_t)0755);
+    if (!folderExists(configPath("slurps/")))
         return false;
 
-    toml.setConfigStr("version",     "current",           "0.2.0");
+    toml.setConfigStr("settings", "api_key",          "<NOT_SET>");
+    toml.setConfigStr("settings", "blockCachePath",   "<NOT_SET>");
 
-    toml.setConfigStr("settings",    "cachePath",         cachePath());
-    toml.setConfigStr("settings",    "api_key",           EMPTY);
-
-    toml.setConfigStr("display", "fmt_fieldList",     EMPTY);
-
+    toml.setConfigStr("display", "fmt_fieldList",     "");
     toml.setConfigStr("display", "fmt_txt_file",      "[{HEADER}]\\n[{RECORDS}]");
     toml.setConfigStr("display", "fmt_txt_record",    "[{FIELDS}]\\n");
     toml.setConfigStr("display", "fmt_txt_field",     "\\t[{FIELD}]");
-
     toml.setConfigStr("display", "fmt_csv_file",      "[{HEADER}]\\n[{RECORDS}]");
     toml.setConfigStr("display", "fmt_csv_record",    "[{FIELDS}]\\n");
     toml.setConfigStr("display", "fmt_csv_field",     "[\"{FIELD}\"],");
-
     toml.setConfigStr("display", "fmt_html_file",     "<table>\\n[{HEADER}]\\n[{RECORDS}]</table>\\n");
     toml.setConfigStr("display", "fmt_html_record",   "\\t<tr>\\n[{FIELDS}]</tr>\\n");
     toml.setConfigStr("display", "fmt_html_field",    "\\t\\t<td>[{FIELD}]</td>\\n");
-
     toml.setConfigStr("display", "fmt_json_file",     "[{RECORDS}]\\n");
     toml.setConfigStr("display", "fmt_json_record",   "\\n        {\\n[{FIELDS}]        },");
     toml.setConfigStr("display", "fmt_json_field",    "\"[{p:FIELD}]\":\"[{FIELD}]\",");
-
-    toml.setConfigStr("display", "fmt_custom_file",   "file:custom_format_file.html");
-    toml.setConfigStr("display", "fmt_custom_record", "fmt_html_record");
-    toml.setConfigStr("display", "fmt_custom_field",  "fmt_html_field");
+    toml.setConfigStr("display", "fmt_custom_file",   "file:custom.txt");
+    toml.setConfigStr("display", "fmt_custom_record", "fmt_txt_record");
+    toml.setConfigStr("display", "fmt_custom_field",  "fmt_txt_field");
 
     toml.writeFile();
     return fileExists(toml.getFilename());
@@ -587,8 +595,7 @@ int sortReverseChron(const void *rr1, const void *rr2) {
     const CTransaction *tr1 = reinterpret_cast<const CTransaction*>(rr1);
     const CTransaction *tr2 = reinterpret_cast<const CTransaction*>(rr2);
 
-    int32_t ret;
-    ret = (uint32_t)(tr2->timestamp - tr1->timestamp);
+    int32_t ret = ((int32_t)tr2->timestamp - (int32_t)tr1->timestamp);
     if (ret != 0)
         return ret;
     return sortTransactionsForWrite(rr1, rr2);

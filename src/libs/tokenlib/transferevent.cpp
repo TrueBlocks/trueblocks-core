@@ -13,7 +13,7 @@
 #include "etherlib.h"
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(QTransferEvent, CLogEntry, curVersion);
+IMPLEMENT_NODE(QTransferEvent, CLogEntry, dataSchema());
 
 //---------------------------------------------------------------------------
 static SFString nextTransfereventChunk(const SFString& fieldIn, bool& force, const void *data);
@@ -94,7 +94,7 @@ void QTransferEvent::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool QTransferEvent::Serialize(SFArchive& archive) {
-    if (!archive.isReading())
+    if (archive.isWriting())
         return ((const QTransferEvent*)this)->SerializeC(archive);
 
     CLogEntry::Serialize(archive);
@@ -126,10 +126,10 @@ void QTransferEvent::registerClass(void) {
     CLogEntry::registerClass();
 
     uint32_t fieldNum = 1000;
-    ADD_FIELD(QTransferEvent, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
-    ADD_FIELD(QTransferEvent, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
-    ADD_FIELD(QTransferEvent, "_from", T_TEXT, ++fieldNum);
-    ADD_FIELD(QTransferEvent, "_to", T_TEXT, ++fieldNum);
+    ADD_FIELD(QTransferEvent, "schema",  T_NUMBER, ++fieldNum);
+    ADD_FIELD(QTransferEvent, "deleted", T_BOOL,  ++fieldNum);
+    ADD_FIELD(QTransferEvent, "_from", T_ADDRESS, ++fieldNum);
+    ADD_FIELD(QTransferEvent, "_to", T_ADDRESS, ++fieldNum);
     ADD_FIELD(QTransferEvent, "_value", T_NUMBER, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like

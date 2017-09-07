@@ -34,8 +34,8 @@ class CFunction;
 #define SIG_ANONYMOUS (1<<9)
 #define SIG_PAYABLE   (1<<10)
 #define SIG_CANONICAL (SIG_FNAME|SIG_ITYPE)
-#define SIG_DEFAULT   (SIG_FTYPE|SIG_FNAME|SIG_FSPACE|SIG_ITYPE|SIG_INAME)
-#define SIG_DETAILS   (SIG_DEFAULT|SIG_IINDEXED|SIG_CONST|SIG_ANONYMOUS|SIG_PAYABLE|SIG_ENCODE)
+#define SIG_DEFAULT   (SIG_FTYPE|SIG_FNAME|SIG_FSPACE|SIG_ITYPE|SIG_INAME|SIG_IINDEXED)
+#define SIG_DETAILS   (SIG_DEFAULT|SIG_CONST|SIG_ANONYMOUS|SIG_PAYABLE|SIG_ENCODE)
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
@@ -105,12 +105,12 @@ inline void CParameter::Init(void) {
     CBaseNode::Init();
 
     indexed = 0;
-//    name = EMPTY;
-//    type = EMPTY;
+    name = "";
+    type = "";
     isPointer = 0;
     isArray = 0;
     isObject = 0;
-//    strDefault = EMPTY;
+    strDefault = "";
 
     // EXISTING_CODE
     // EXISTING_CODE

@@ -16,7 +16,7 @@
 //-----------------------------------------------------------------------
 bool CVisitor::isTransactionOfInterest(CTransaction *trans, uint32_t& whichWatch) {
 
-    for (int i = 0; i < watches.getCount() ; i++) {
+    for (uint32_t i = 0; i < watches.getCount() ; i++) {
         if (trans->blockNumber >= watches[i].firstBlock && trans->blockNumber <= watches[i].lastBlock) {
             if (watches[i].isTransactionOfInterest(trans, nSigs, sigs)) {
                 whichWatch = i;
@@ -160,7 +160,7 @@ bool updateCacheUsingBlooms(const SFString& path, void *data) {
 
             SFBloom bloom;
             visitor->bloomStats.bloomsChecked++;
-            SFArchive archive(true, curVersion, true);
+            SFArchive archive(true, fileSchema(), true);
             if (archive.Lock(path, binaryReadOnly, LOCK_NOWAIT)) {
                 archive >> bloom;
                 archive.Close();
@@ -168,7 +168,7 @@ bool updateCacheUsingBlooms(const SFString& path, void *data) {
 
 //            cout << "Checking bloom " << path << "\r\n";
             bool hit = false;
-            for (int i = 0 ; i < visitor->watches.getCount()-1 && !hit; i++) { // don't check too many
+            for (uint32_t i = 0 ; i < visitor->watches.getCount()-1 && !hit; i++) { // don't check too many
                 if (isBloomHit(makeBloom(visitor->watches[i].address), bloom)) {
                     hit = true;
                 }
@@ -225,7 +225,7 @@ bool updateCache(CBlock& block, void *data) {
         cerr << "Quitting debugger.\r\n";
         return false; // return false since user hit 'quit' on debugger
     }
-    for (int i = 0 ; i < block.transactions.getCount() ; i++) {
+    for (uint32_t i = 0 ; i < block.transactions.getCount() ; i++) {
 
         CTransaction *trans = &block.transactions[i];
         trans->pBlock = &block;
@@ -255,7 +255,7 @@ bool updateCache(CBlock& block, void *data) {
                 }
             }
 
-            ASSERT(!visitor->cache.m_isReading);
+            ASSERT(visitor->cache.isWriting());
             // Write the data even if we're not displaying it (flush to make sure it gets written)
             visitor->cache << whichWatch << trans->pBlock->blockNumber << trans->transactionIndex;
             visitor->cache.flush();
@@ -264,7 +264,7 @@ bool updateCache(CBlock& block, void *data) {
     }
 
     timestamp_t tsOut = (block.timestamp == 0 ? toTimeStamp(Now()) : block.timestamp);
-    SFString endMsg = dateFromTimeStamp(tsOut).Format(FMT_JSON) + " (" + asString(block.blockNumber) + ")";
+    SFString endMsg = dateFromTimeStamp(tsOut).Format(FMT_JSON) + " (" + asStringU(block.blockNumber) + ")";
     blknum_t x = (visitor->blockStats.firstBlock >= block.blockNumber ? 0 : block.blockNumber - visitor->blockStats.firstBlock);
     progressBar(x, visitor->blockStats.nBlocks, endMsg);
     visitor->blockStats.prevBlock = block;
@@ -306,12 +306,10 @@ void loadWatches(const CToml& toml, CAccountWatchArray& array, const SFString& k
             bool okay = true;
             SFString msg;
             watch.index = cnt++;
-            watch.address = toLower(watch.address);
             watch.color = convertColor(watch.color);
-            if (!watch.address.startsWith("0x"))
-                watch.address = "0x" + watch.address;
+            watch.address = fixAddress(toLower(watch.address));
             watch.nodeBal = getBalance(watch.address, watch.firstBlock-1, false);
-            if (watch.address.length() != 42) {
+            if (!isAddress(watch.address)) {
                 okay = false;
                 msg = "invalid address " + watch.address;
             }

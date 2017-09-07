@@ -84,10 +84,10 @@ inline void QSingleTransactEvent::Clear(void) {
 inline void QSingleTransactEvent::Init(void) {
     CLogEntry::Init();
 
-//    owner = EMPTY;
+    owner = "";
     value = 0;
-//    to = EMPTY;
-//    data = EMPTY;
+    to = "";
+    data = "";
 
     // EXISTING_CODE
     // EXISTING_CODE

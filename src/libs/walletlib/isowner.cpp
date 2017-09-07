@@ -13,7 +13,7 @@
 #include "etherlib.h"
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(QIsOwner, CTransaction, curVersion);
+IMPLEMENT_NODE(QIsOwner, CTransaction, dataSchema());
 
 //---------------------------------------------------------------------------
 static SFString nextIsownerChunk(const SFString& fieldIn, bool& force, const void *data);
@@ -90,7 +90,7 @@ void QIsOwner::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool QIsOwner::Serialize(SFArchive& archive) {
-    if (!archive.isReading())
+    if (archive.isWriting())
         return ((const QIsOwner*)this)->SerializeC(archive);
 
     CTransaction::Serialize(archive);
@@ -118,9 +118,9 @@ void QIsOwner::registerClass(void) {
     CTransaction::registerClass();
 
     uint32_t fieldNum = 1000;
-    ADD_FIELD(QIsOwner, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
-    ADD_FIELD(QIsOwner, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
-    ADD_FIELD(QIsOwner, "_addr", T_TEXT, ++fieldNum);
+    ADD_FIELD(QIsOwner, "schema",  T_NUMBER, ++fieldNum);
+    ADD_FIELD(QIsOwner, "deleted", T_BOOL,  ++fieldNum);
+    ADD_FIELD(QIsOwner, "_addr", T_ADDRESS, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(QIsOwner, "schema");

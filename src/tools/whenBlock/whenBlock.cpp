@@ -14,7 +14,6 @@ extern void unloadCache(void);
 
 //---------------------------------------------------------------
 int main(int argc, const char *argv[]) {
-    setStorageRoot(BLOCK_CACHE);
     etherlib_init("parity");
 
     // Parse command line, allowing for command files
@@ -22,41 +21,76 @@ int main(int argc, const char *argv[]) {
     if (!options.prepareArguments(argc, argv))
         return 0;
 
-    bool vb = !options.commandList.Contains("\n");
+    bool oneCmd = !options.commandList.Contains("\n");
     while (!options.commandList.empty()) {
         SFString command = nextTokenClear(options.commandList, '\n');
         if (!options.parseArguments(command))
             return 0;
 
-        CBlock block;
-        if (options.blockNum != NOPOS) {
-            if (verbose) { cout << "finding by block number\n"; }
-            queryBlock(block, asString(options.blockNum), false);
+        for (uint32_t i = 0 ; i < options.requests.getCount() ; i++ ) {
 
-        } else {
-            if (verbose) { cout << "finding by date\n"; }
-            bool res = lookupDate(block, options.date);
-            if (!res) {
-                unloadCache();
-                return 0;
+            SFString value = options.requests[i];
+            SFString mode = nextTokenClear(value, ':');
+
+            SFString special;
+            if (mode == "special") {
+                mode = "block";
+                special = nextTokenClear(value,'|');
+                if (toUnsigned(value) > getLatestBlockFromClient()) {
+                    cout << "The block number you requested (";
+                    cout << cTeal << special << ": " << value << cOff;
+                    cout << ") is after the latest block (";
+                    cout << cTeal << (isTestMode() ? "TESTING" : asStringU(getLatestBlockFromClient())) << cOff;
+                    cout << "). Quitting...\n";
+                    return false;
+                }
             }
-        }
 
-        // special case for the zero block
-        if (block.blockNumber == 0)
-            block.timestamp = 1438269960;
+            CBlock block;
+            if (mode == "block") {
+                if (verbose) { cout << "finding by block number\n"; }
+                queryBlock(block, value, false);
 
-        if (options.alone) {
-            if (options.blockNum != NOPOS) {
-                cout << dateFromTimeStamp(block.timestamp) << "\n";
+            } else if (mode == "date") {
+                if (verbose) { cout << "finding by date\n"; }
+
+                if (!fileExists(miniBlockCache)) {
+                    cout << "Lookup by date is not currently supported.\n";
+
+                } else {
+                    SFTime date = dateFromTimeStamp((timestamp_t)toUnsigned(value));
+                    bool res = lookupDate(block, date);
+                    if (!res) {
+                        unloadCache();
+                        return 0;
+                    }
+                }
+            }
+
+            // special case for the zero block
+            if (block.blockNumber == 0)
+                block.timestamp = 1438269960;
+
+            if (options.alone) {
+                if (mode == "block") {
+                    cout << dateFromTimeStamp(block.timestamp) << "\n";
+                } else {
+                    cout << block.blockNumber << "\n";
+                }
+
             } else {
-                cout << block.blockNumber << "\n";
+                bool newLines = oneCmd && options.requests.getCount() == 1;
+                cout << (newLines ? "\n\t" : "") << "block ";
+                cout << cYellow << "#" << block.blockNumber << cOff;
+                if (!special.empty())
+                    cout << " (" << special << ")";
+                cout << " : ";
+                cout << cYellow << block.timestamp << cOff;
+                cout << " : ";
+                cout << cYellow << dateFromTimeStamp(block.timestamp) << cOff;
+                cout << (newLines ? "\n" : "");
+                cout << "\n";
             }
-
-        } else {
-            cout << (vb?"\n\t":"") << "block " << asYellow("#" << block.blockNumber)
-                << " : " << asYellow(block.timestamp) << " : "
-                << asYellow(dateFromTimeStamp(block.timestamp)) << (vb?"\n":"") << "\n";
         }
     }
 
@@ -92,7 +126,7 @@ public:
 bool lookCloser(CBlock& block, void *data) {
 //    cout << "Checking block: " << block.blockNumber << " (" << dateFromTimeStamp(block.timestamp) << ")";
     CBlockFinder *bf = reinterpret_cast<CBlockFinder*>(data);
-    if ((timestamp_t)block.timestamp <= bf->ts) {
+    if (block.timestamp <= bf->ts) {
 //        cout << "...saved";
         bf->found = block.blockNumber;
 //        cout << "\n";
@@ -108,7 +142,7 @@ bool lookupDate(CBlock& block, const SFTime& date) {
         nBlocks = fileSize(miniBlockCache) / sizeof(CMiniBlock);
         blocks = new CMiniBlock[nBlocks];
         if (!blocks)
-            return usage("Could not allocate memory for the blocks (size needed: " + asString(nBlocks) + ").\n");
+            return usage("Could not allocate memory for the blocks (size needed: " + asStringU(nBlocks) + ").\n");
         bzero(blocks, sizeof(CMiniBlock)*(nBlocks));
         if (verbose)
             cerr << "Allocated room for " << nBlocks << " miniBlocks.\n";
@@ -130,14 +164,14 @@ bool lookupDate(CBlock& block, const SFTime& date) {
     mini.timestamp = toTimeStamp(date);
     CMiniBlock *found = reinterpret_cast<CMiniBlock*>(bsearch(&mini, blocks, nBlocks, sizeof(CMiniBlock), findFunc));
     if (found) {
-        queryBlock(block, asString(found->blockNumber), false);
+        queryBlock(block, asStringU(found->blockNumber), false);
         return true;
     }
 
     //  cout << mini.timestamp << " is somewhere between " << below << " and " << above << "\n";
     CBlockFinder finder(mini.timestamp);
     forEveryBlockOnDisc(lookCloser, &finder, below, above-below);
-    queryBlock(block, asString(finder.found), false);
+    queryBlock(block, asStringU(finder.found), false);
     return true;
 }
 

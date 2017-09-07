@@ -32,5 +32,19 @@ function(run_test testName)
      run_the_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
 endfunction(run_test)
 
+# weird, but we have to make sure the block is in the cache first
+run_the_test(${TEST_PATH} ${GOLD_PATH} "whereBlock_preload" ${EXECUTABLE_OUTPUT_PATH}/getBlock " 1001001" " -o")
+
 # Enter one line for each individual test
-run_test("whereBlock_README" "-th")
+run_test("whereBlock_README"            "-th")
+run_test("whereBlock_no_options")
+run_test("whereBlock_invalid_option_1"  "-x")
+run_test("whereBlock_invalid_option_2"  "--option")
+run_test("whereBlock_invalid_option_3"  "-a" " -b")
+run_test("whereBlock_help"              "-h")
+run_test("whereBlock_long_help"         "--help")
+run_test("whereBlock_notcached"         "45000")
+run_test("whereBlock_cached"            "1001001")
+
+# Installation steps
+install(TARGETS ${TOOL_NAME} RUNTIME DESTINATION bin)

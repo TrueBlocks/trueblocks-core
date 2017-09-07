@@ -8,8 +8,8 @@ A very useful way to use of this tools is to feed its output into another comman
 
 which would open the [etherscan](http://etherscan.io) website with the address associated with Fred's address(es).
 
-#### Notes
+[{USAGE_TABLE}]#### Notes
 
 With one search term, search in both `name` and `address` fields. With two terms, the first must match the `address` field, while the second must match the `name` field. When there are two search terms, both must match.
 
-[{COMMAND_HELP}]
+[{FOOTER}]

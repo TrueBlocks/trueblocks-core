@@ -8,21 +8,33 @@
  *------------------------------------------------------------------------*/
 
 #include "basetypes.h"
+#include "sfos.h"
 
 namespace qblocks {
 
     //----------------------------------------------------------------------------------
     class CFilename {
-    private:
+    protected:
         SFString path;
         SFString fileName;
         CFilename(void) {}  // cannot create default
 
     public:
         explicit CFilename(const SFString& fnIn);
+        virtual ~CFilename(void) { }
         SFString getPath(void) const;
         SFString getFilename(void) const;
         SFString getFullPath(void) const;
+        SFString relativePath(const SFString& relTo="") const;
+        virtual bool isValid(void) { return fileExists(getFullPath()); }
+    };
+    class CPath : public CFilename {
+    private:
+        CPath(void) : CFilename() { }  // cannot create default
+
+    public:
+        explicit CPath(const SFString& pathIn) : CFilename(pathIn) { ASSERT(fileName.empty()); }
+        virtual bool isValid(void) { return CFilename::isValid() && fileName.empty(); }
     };
 
     //----------------------------------------------------------------------------------

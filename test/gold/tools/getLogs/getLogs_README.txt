@@ -2,24 +2,21 @@ getLogs argc: 2 [1:-th]
 getLogs -th 
 #### Usage
 
-`Usage:`    getLogs [-o|-t|-v|-h]  
-`Purpose:`  This is what the program does.
-             
+`Usage:`    getLogs [-f|-a|-v|-h] < hash | bn.transID | bh.transID | address >
+            -- note: This tool is incomplete.
+  
+`Purpose:`  Retrieve logs from an Ethereum transaction using either QuickBlocks or a running node.
+            --note: 'hash' and 'blockHash' must start with '0x'.  
 `Where:`  
 
 | Option | Full Command | Description |
 | -------: | :------- | :------- |
-| -o | --option1 | option one |
-| -t | --thing | option two |
-| -v | --verbose | set verbose level. Follow with a number to set level (-v0 for silent) |
+|  | hash | one or more hashes of Ethereum transactions, or |
+|  | bn.transID | blockNumber.transactionID of one or more Ethereum transactions, or |
+|  | bh.transID | blockHash.transactionID of one or more Ethereum transactions, or |
+|  | address | if --address, then an Ethereum address |
+| -f | --fromNode | retrieve the transaction from the running node (from QuickBlocks otherwise) |
+| -a | --address | retrieve all logs (from node) given a list of one or more Ethereum addresses |
+| -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
-#### Other Options
-
-Enter `--version` to display the current version of the tool.  
-Enter `--nocolors` to turn off colored display.  
-Enter `--wei` (default), `--ether`, or `--dollars` to alter the way value is displayed.  
-
-All `quickBlocks` command-line tools support the `--file:filename` option. Place valid commands, on separate lines, in a file and include the above option. In some cases, this option may significantly improve performance. Place a semi-colon at the start of a line to make it a comment.
-
-#### Powered by QuickBlocks&reg;

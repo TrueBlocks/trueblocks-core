@@ -1,0 +1,6 @@
+5 --int:12
+6 --int:-100
+7 --uint:12
+8 --uint:-100
+9 --string:String
+10 --string:1212

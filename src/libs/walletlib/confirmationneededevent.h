@@ -85,11 +85,11 @@ inline void QConfirmationNeededEvent::Clear(void) {
 inline void QConfirmationNeededEvent::Init(void) {
     CLogEntry::Init();
 
-//    operation = EMPTY;
-//    initiator = EMPTY;
+    operation = "";
+    initiator = "";
     value = 0;
-//    to = EMPTY;
-//    data = EMPTY;
+    to = "";
+    data = "";
 
     // EXISTING_CODE
     // EXISTING_CODE

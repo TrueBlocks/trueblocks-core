@@ -9,6 +9,7 @@
 
 #include "exportcontext.h"
 #include "dates.h"
+#include "conversions.h"
 
 namespace qblocks {
 

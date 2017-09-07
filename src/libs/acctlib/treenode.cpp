@@ -15,7 +15,7 @@
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CTreeNode, CBaseNode, curVersion);
+IMPLEMENT_NODE(CTreeNode, CBaseNode, dataSchema());
 
 //---------------------------------------------------------------------------
 extern SFString nextTreenodeChunk(const SFString& fieldIn, bool& force, const void *data);
@@ -95,7 +95,7 @@ void CTreeNode::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CTreeNode::Serialize(SFArchive& archive) {
-    if (!archive.isReading())
+    if (archive.isWriting())
         return ((const CTreeNode*)this)->SerializeC(archive);
 
     if (!preSerialize(archive))
@@ -125,8 +125,8 @@ void CTreeNode::registerClass(void) {
     been_here = true;
 
     uint32_t fieldNum = 1000;
-    ADD_FIELD(CTreeNode, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
-    ADD_FIELD(CTreeNode, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
+    ADD_FIELD(CTreeNode, "schema",  T_NUMBER, ++fieldNum);
+    ADD_FIELD(CTreeNode, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CTreeNode, "index", T_NUMBER, ++fieldNum);
     ADD_FIELD(CTreeNode, "m_prefix", T_TEXT, ++fieldNum);
 
@@ -186,18 +186,18 @@ CTreeNode* CTreeNode::newBranch(
     CTreeNode* ret;
     if (_k1.length() == prefix) {
         if (verbose == 2) cerr << "k1 matches up to " << prefix << endl;
-        ret = new CBranch(_k2[prefix], new CLeaf(_k2.substr(prefix+1), _v2), _v1);
+        ret = new CBranch(_k2[(int)prefix], new CLeaf(_k2.substr(prefix+1), _v2), _v1);
 
     } else if (_k2.length() == prefix) {
         if (verbose == 2) cerr << "k2 matches up to " << prefix << endl;
-        ret = new CBranch(_k1[prefix], new CLeaf(_k1.substr(prefix+1), _v1), _v2);
+        ret = new CBranch(_k1[(int)prefix], new CLeaf(_k1.substr(prefix+1), _v1), _v2);
 
     } else {
         // both continue after split
         if (verbose == 2) cerr << "both keys continue past prefix " << prefix << endl;
-        ret = new CBranch(_k1[prefix],
+        ret = new CBranch(_k1[(int)prefix],
                           new CLeaf(_k1.substr(prefix+1), _v1),
-                          _k2[prefix],
+                          _k2[(int)prefix],
                           new CLeaf(_k2.substr(prefix+1), _v2));
     }
 

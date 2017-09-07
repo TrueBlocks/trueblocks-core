@@ -1,0 +1,58 @@
+dataUpgrade argc: 2 [1:CBlock] 
+dataUpgrade CBlock 
+--------------------------------------------------------------------------------
+className: CBlock
+objectSize: 152
+classSchema: 513
+baseClass: CBaseNode
+	fieldName: schema
+	  fieldID: 1001
+	  fieldType: T_NUMBER TS_NUMERAL 65548
+	  hidden: 1
+	fieldName: deleted
+	  fieldID: 1002
+	  fieldType: T_BOOL TS_NUMERAL 65546
+	  hidden: 1
+	fieldName: gasLimit
+	  fieldID: 1003
+	  fieldType: T_GAS TS_NUMERAL 4259860 TS_BIGNUM 4259860
+	  hidden: 0
+	fieldName: gasUsed
+	  fieldID: 1004
+	  fieldType: T_GAS TS_NUMERAL 4259860 TS_BIGNUM 4259860
+	  hidden: 0
+	fieldName: hash
+	  fieldID: 1005
+	  fieldType: T_HASH TS_STRING 131100
+	  hidden: 0
+	fieldName: logsBloom
+	  fieldID: 1006
+	  fieldType: T_BLOOM TS_STRING 131102
+	  hidden: 0
+	fieldName: blockNumber
+	  fieldID: 1007
+	  fieldType: T_NUMBER TS_NUMERAL 65548
+	  hidden: 0
+	fieldName: parentHash
+	  fieldID: 1008
+	  fieldType: T_HASH TS_STRING 131100
+	  hidden: 0
+	fieldName: timestamp
+	  fieldID: 1009
+	  fieldType: T_NUMBER TS_NUMERAL 65548
+	  hidden: 0
+	fieldName: transactions
+	  fieldID: 1010
+	  fieldType: T_OBJECT|TS_ARRAY TS_ARRAY 1572898 TS_OBJECT 1572898
+	  hidden: 0
+{
+  "gasLimit": 0,
+  "gasUsed": 0,
+  "hash": "0x0",
+  "logsBloom": "0x0",
+  "blockNumber": 0,
+  "parentHash": "0x0",
+  "timestamp": 0,
+  "transactions": []
+}
+

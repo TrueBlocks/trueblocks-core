@@ -32,6 +32,9 @@ function(run_test testName)
      run_the_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
 endfunction(run_test)
 
+# Weird, but we have to call the getBlock code to make sure the block is in the cache
+run_the_test(${TEST_PATH} ${GOLD_PATH} "getTrans_preload" ${EXECUTABLE_OUTPUT_PATH}/getBlock " 3657480" " -o")
+
 # Enter one line for each individual test
 run_test("getTrans_README"     "-th")
 run_test("getTrans_no_input"        )
@@ -45,3 +48,6 @@ run_test("getTrans_three_ways" "0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03b
 run_test("getTrans_by_file"    "--file:cmd_file")
 run_test("getTrans_by_file_long_v"  "--file:cmd_file" " --verbose")
 run_test("getTrans_by_file_v"  "--verbose" " --file:cmd_file")
+
+# Installation steps
+install(TARGETS ${TOOL_NAME} RUNTIME DESTINATION bin)

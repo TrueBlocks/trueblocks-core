@@ -1,3 +1,3 @@
-ethName argc: 3 [1:-v] [2:no_rob] 
-ethName -v no_rob 
-Address 'no_rob' not found
+ethName argc: 3 [1:-v] [2:no_torj] 
+ethName -v no_torj 
+Address 'no_torj' not found

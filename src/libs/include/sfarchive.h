@@ -9,6 +9,7 @@
 
 #include "exportcontext.h"
 #include "database.h"
+#include "conversions.h"
 
 namespace qblocks {
 
@@ -17,30 +18,77 @@ namespace qblocks {
 
     //-----------------------------------------------------------------------------------------
     class SFArchive : public CSharedResource {
+    private:
+        class SFArchiveHeader {
+        public:
+            bool         m_writeDeleted;
+            uint32_t     m_archiveSchema;
+            timestamp_t  m_lastWritten;
+        };
+
     public:
-        bool             m_writeDeleted;
-        uint32_t         m_archiveSchema;
+        SFArchiveHeader  m_header;
         bool             m_isReading;
         const CBaseNode  *pParent;
-        VISITARCHIVEFUNC writeMsgFunc;
-        VISITARCHIVEFUNC readMsgFunc;
+        //VISITARCHIVEFUNC writeMsgFunc;
+        //VISITARCHIVEFUNC readMsgFunc;
 
         SFArchive(bool isReading, uint32_t schema, bool writeDeleted) {
-            m_isReading    = isReading;
-            m_archiveSchema       = schema;
-            m_writeDeleted = writeDeleted;
-            pParent        = NULL;
-            writeMsgFunc   = NULL;
-            readMsgFunc    = NULL;
+            m_isReading              = isReading;
+            m_header.m_archiveSchema = schema;
+            m_header.m_writeDeleted  = writeDeleted;
+            pParent                  = NULL;
+            //writeMsgFunc           = NULL;
+            //readMsgFunc            = NULL;
         }
+
         bool writeDeleted(void) const {
-            return (m_writeDeleted);
+            return (m_header.m_writeDeleted);
         }
+
         bool isWriting(void) const {
             return !m_isReading;
         }
+
         bool isReading(void) const {
             return m_isReading;
+        }
+
+        void writeHeader(void) {
+            Seek(0, SEEK_SET);
+            m_header.m_lastWritten = toTimeStamp(Now());
+            operator<<(m_header.m_archiveSchema);
+            operator<<(m_header.m_lastWritten);
+            operator<<(m_header.m_writeDeleted);
+        }
+
+        void readHeader(void) {
+            Seek(0, SEEK_SET);
+            operator>>(m_header.m_archiveSchema);
+            operator>>(m_header.m_lastWritten);
+            operator>>(m_header.m_writeDeleted);
+        }
+
+        bool isSchema(uint32_t testSchema) {
+            return (m_header.m_archiveSchema == testSchema);
+        }
+
+        void resetForWriting(void) {
+            if (isOpen())
+                Release();
+            m_isReading = false;
+            // no reason to change these
+            // m_archiveSchema = NO_SCHEMA;
+            // m_writeDeleted = true;
+        }
+
+        void resetForReading(void) {
+            if (isOpen())
+                Release();
+            m_isReading = true;
+            // no reason to change these
+            // m_archiveSchema = NO_SCHEMA;
+            // m_writeDeleted = true;
         }
 
         SFArchive& operator<<(bool b);
@@ -76,5 +124,4 @@ namespace qblocks {
 
     extern SFArchive& operator>>(SFArchive& archive, SFStringArray& array);
     extern SFArchive& operator>>(SFArchive& archive, SFBigUintArray& array);
-
 }  // namespace qblocks

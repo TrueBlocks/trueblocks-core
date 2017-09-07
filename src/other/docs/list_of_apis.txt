@@ -1,0 +1,5 @@
+This is a list of API files one might need to run QuickBlocks
+
+Etherscan (needed for ethslurp)
+Infura (needed to run anything if one is not running a local node)
+Poloniex (may be needed in the future)

@@ -39,6 +39,7 @@ public:
     DECLARE_NODE(CTraceResult);
 
     // EXISTING_CODE
+    friend class CTrace;
     // EXISTING_CODE
 
 protected:
@@ -86,7 +87,7 @@ inline void CTraceResult::Init(void) {
     CBaseNode::Init();
 
     gasUsed = 0;
-//    output = EMPTY;
+    output = "";
 
     // EXISTING_CODE
     // EXISTING_CODE

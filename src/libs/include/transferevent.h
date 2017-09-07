@@ -83,8 +83,8 @@ inline void QTransferEvent::Clear(void) {
 inline void QTransferEvent::Init(void) {
     CLogEntry::Init();
 
-//    _from = EMPTY;
-//    _to = EMPTY;
+    _from = "";
+    _to = "";
     _value = 0;
 
     // EXISTING_CODE

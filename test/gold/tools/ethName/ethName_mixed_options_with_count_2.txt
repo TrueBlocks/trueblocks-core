@@ -1,3 +1,3 @@
-ethName argc: 6 [1:-c] [2:-s] [3:-a] [4:0x17] [5:rob] 
-ethName -c -s -a 0x17 rob 
+ethName argc: 6 [1:-c] [2:-s] [3:-a] [4:0xb6] [5:torj] 
+ethName -c -s -a 0xb6 torj 
 1 match

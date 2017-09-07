@@ -13,7 +13,7 @@
 #include "etherlib.h"
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(QKill, CTransaction, curVersion);
+IMPLEMENT_NODE(QKill, CTransaction, dataSchema());
 
 //---------------------------------------------------------------------------
 static SFString nextKillChunk(const SFString& fieldIn, bool& force, const void *data);
@@ -90,7 +90,7 @@ void QKill::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool QKill::Serialize(SFArchive& archive) {
-    if (!archive.isReading())
+    if (archive.isWriting())
         return ((const QKill*)this)->SerializeC(archive);
 
     CTransaction::Serialize(archive);
@@ -118,9 +118,9 @@ void QKill::registerClass(void) {
     CTransaction::registerClass();
 
     uint32_t fieldNum = 1000;
-    ADD_FIELD(QKill, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
-    ADD_FIELD(QKill, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
-    ADD_FIELD(QKill, "_to", T_TEXT, ++fieldNum);
+    ADD_FIELD(QKill, "schema",  T_NUMBER, ++fieldNum);
+    ADD_FIELD(QKill, "deleted", T_BOOL,  ++fieldNum);
+    ADD_FIELD(QKill, "_to", T_ADDRESS, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(QKill, "schema");

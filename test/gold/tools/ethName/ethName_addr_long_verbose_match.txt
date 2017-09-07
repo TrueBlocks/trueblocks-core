@@ -1,6 +1,4 @@
-ethName argc: 3 [1:--verbose] [2:0x17] 
-ethName --verbose 0x17 
-{ "addr": "0x1728039ce0d18a799c081c5c7fa2090dd365a8d0", "name": "Digx_Presale_Whale_03", "source": "SlackNation" }
-{ "addr": "0x1736303b570247313eb445d803185455779b91c7", "name": "@robrigo", "source": "Steem" }
-{ "addr": "0x17ef4acc1bf147e326749d10e677dcffd76f9e06", "name": "DAO_WHALE_23", "source": "WhaleWatch.io" }
-{ "addr": "0x17f8e4bd5a79f095d7b680317de6a617d202b235", "name": "OrderLifeCycle_id208_cnt59_3mo", "source": "Ether Camp" }
+ethName argc: 3 [1:--verbose] [2:0xb6] 
+ethName --verbose 0xb6 
+{ "symbol": "STORJ", "name": "StorjToken", "addr": "0xb64ef51c888972c908cfacf59b47c1afbc0ab8ac", "source": "Etherscan.io", "description": "Blockchain-based, end-to-end encrypted, distributed object storage, where only you have access to your data" }
+{ "symbol": "MCO", "name": "Monaco", "addr": "0xb63b606ac810a52cca15e44bb630fd42d8d1d83d", "source": "Etherscan.io", "description": "Monaco is a cryptocurrency card. Spend and send money globally at interbank exchange rates" }

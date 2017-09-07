@@ -12,20 +12,18 @@ namespace qblocks {
 //-------------------------------------------------------------------------
 SFUintBN getTokenBalance(const SFAddress& token, const SFAddress& holder, blknum_t blockNum) {
 
-    SFString t = token.substr(2);
-    t = padLeft(t, 40, '0');
+    ASSERT(isAddress(token));
+    ASSERT(isAddress(holder));
 
-    SFString h = holder.substr(2);
-    h = padLeft(h, 64, '0');
+    SFString t = "0x" + padLeft(token.substr(2), 40, '0');  // address to send the command to
+    SFString h =        padLeft(holder.substr(2), 64, '0'); // encoded data for the transaction
 
     SFString cmd = "[{\"to\": \"[TOKEN]\", \"data\": \"0x70a08231[HOLDER]\"}, \"[BLOCK]\"]";
     cmd.Replace("[TOKEN]",  "0x"+t);
     cmd.Replace("[HOLDER]", h);
-    cmd.Replace("[BLOCK]",  asString(blockNum));
+    cmd.Replace("[BLOCK]",  asStringU(blockNum));
 
-    extern SFString callRPC(const SFString& method, const SFString& params, bool raw);
-    SFString ret = callRPC("eth_call", cmd, false);
-    return toWei(ret);
+    return toWei(callRPC("eth_call", cmd, false));
 }
 
 }  // namespace qblocks

@@ -40,7 +40,7 @@ namespace qblocks {
         struct passwd* pwdptr = &pd;
         struct passwd* tempPwdPtr;
         char pwdbuffer[200];
-        int pwdlinelen = sizeof(pwdbuffer);
+        size_t pwdlinelen = sizeof(pwdbuffer);
 
         if (getpwuid_r(getuid(), pwdptr, pwdbuffer, pwdlinelen, &tempPwdPtr) == 0)
             return SFString(pd.pw_dir) + "/";
@@ -80,6 +80,12 @@ namespace qblocks {
     //----------------------------------------------------------------------------------
     SFString CFilename::getFullPath(void) const {
         return (path + fileName).Substitute("//", "/");
+    }
+
+    //----------------------------------------------------------------------------------
+    SFString CFilename::relativePath(const SFString& relTo) const {
+        SFString rel = (relTo.empty() ? getCWD() : relTo);
+        return getFullPath().Substitute(rel, "./");
     }
 
 }  // namespace qblocks

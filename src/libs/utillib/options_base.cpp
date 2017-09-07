@@ -12,16 +12,19 @@
 #include "options_base.h"
 #include "colors.h"
 #include "filenames.h"
+#include "toml.h"
 
 namespace qblocks {
 
     //--------------------------------------------------------------------------------
     static uint32_t nP = 0;
     static CParams ps[] = { };
+    static CDefaultOptions defOpts;
 
     //--------------------------------------------------------------------------------
     uint32_t& nParamsRef = nP;
     CParams *paramsPtr  = &ps[0];
+    COptionsBase *pOptions = &defOpts;
 
     //--------------------------------------------------------------------------------
     static SFString programName = "quickBlocks";
@@ -33,10 +36,7 @@ namespace qblocks {
             colorsOff();
 
         programName = basename((char*)argv[0]);
-        if ((SFUint32)argc <= minArgs)  // the first arg is the program's name
-            return usage("Not enough arguments presented.");
-
-        if (SFString(getenv("TEST_MODE")) == "true") {
+        if (isTestMode()) {
             // we present the data once for clarity...
             cout << programName << " argc: " << argc << " ";
             for (int i=1;i<argc;i++)
@@ -48,6 +48,9 @@ namespace qblocks {
                 cout << Strip(argv[i], ' ') << " ";
             cout << "\n";
         }
+
+        if ((SFUint32)argc <= minArgs)  // the first arg is the program's name
+            return usage("Not enough arguments presented.");
 
         int nChars = 0;
         for (int i=0; i<argc; i++) {
@@ -62,8 +65,11 @@ namespace qblocks {
             arg.Replace("--verbose", "-v");
             while (!arg.empty()) {
                 SFString opt = expandOption(arg);  // handles case of -rf for example
-                if (isReadme)
+                if (isReadme) {
+                    if (args)
+                        delete [] args;
                     return usage();
+                }
                 if (opt == "-")
                     hasStdIn = true;
                 else if (!opt.empty())
@@ -83,6 +89,13 @@ namespace qblocks {
                 stdInCmds += "\n";
         }
 
+        //-----------------------------------------------------------------------------------
+        // We now have 'nArgs' command line arguments stored in the array 'args.'  We spin
+        // through them doing one of two things
+        //
+        // (1) handle any arguments common to all programs and remove them from the array
+        // (2) identify any --file arguments and store them for later use
+        //-----------------------------------------------------------------------------------
         SFString cmdFileName = "";
         for (SFUint32 i = 0 ; i < nArgs ; i++) {
             SFString arg = args[i];
@@ -95,15 +108,8 @@ namespace qblocks {
                 }
 
             } else if (arg == "--version") {
-#define MAJOR 0
-#define MINOR 0
-#define BUILD 2
-#define SUBVERS "alpha"
-                SFString r1 = __DATE__;
-                SFString r2 = __TIME__;
-                cerr << programName << " (quickBlocks) "
-                    << MAJOR << "." << MINOR << "." << BUILD << "-" << SUBVERS
-                    << "\n";
+                cerr << programName << " (quickBlocks) " << getVersionStr() << "\n";
+                if (args) delete [] args;
                 return false;
 
             } else if (arg == "-h" || arg == "--help") {
@@ -130,16 +136,43 @@ namespace qblocks {
 
             } else if (arg.startsWith("-v") || arg.startsWith("--verbose")) {
                 verbose = true;
-                arg.Replace("--verbose", "");
-                arg.Replace("-v", "");
-                arg.Replace(":", "");
-                if (!arg.empty())
-                    verbose = toLong(arg);
-
-            } else if (COptionsBase::useTesting && (arg == "-t" || arg == "--test")) {
-                isTesting = true;
+                arg = arg.Substitute("-v", "").Substitute("--verbose", "").Substitute(":", "");
+                if (!arg.empty()) {
+                    if (!isUnsigned(arg))
+                        return usage("Invalid verbose level '" + arg + "'. Quitting...");
+                    verbose = toUnsigned(arg);
+                }
             }
         }
+
+        //-----------------------------------------------------------------------------------
+        // Collapse commands that have 'permitted' sub options (i.e. colon ":" args)
+        //-----------------------------------------------------------------------------------
+        uint32_t curArg = 0;
+        for (uint32_t i = 0 ; i < nArgs ; i++) {
+            SFString arg = args[i];
+            bool combine = false;
+            for (uint32_t j = 0 ; j < nParamsRef && !combine ; j++) {
+                if (!paramsPtr[j].permitted.empty()) {
+                    SFString shortName = paramsPtr[j].shortName;
+                    SFString longName  = "-"+paramsPtr[j].longName;
+                    if (shortName == arg ||
+                        longName.startsWith(arg))
+                    {
+                        // we want to pull the next parameter into this one since it's a ':' param
+                        combine = true;
+                    }
+                }
+            }
+            if (combine && i < (nArgs-1)) {
+                args[curArg++] = arg + ":" + args[i+1];
+                i++;
+
+            } else {
+                args[curArg++] = arg;
+            }
+        }
+        nArgs = curArg;
 
         // If we have a command file, we will use it, if not we will creat one and pretend we have one.
         commandList = "";
@@ -153,8 +186,7 @@ namespace qblocks {
             fromFile = true;
             SFString contents =  asciiFileToString(cmdFileName).Substitute("\t", " ").
                                             Substitute("-v", "").Substitute("-h", "").
-                                            Substitute("-t", "").Substitute("  ", " ").
-                                            Substitute("\\ ", "{~}");
+                                            Substitute("  ", " ").Substitute("\\\n", "");
             while (!contents.empty()) {
                 SFString command = StripAny(nextTokenClear(contents, '\n'), "\t\r\n ");
                 if (!command.empty() && !command.startsWith(";"))  // ignore comments
@@ -175,8 +207,6 @@ namespace qblocks {
             return true;
         if (arg == "-h" || arg == "--help")
             return true;
-        if (COptionsBase::useTesting && (arg == "-t" || arg == "--test"))
-            return true;
         if (arg == "--version")
             return true;
         if (arg == "--nocolors" || arg == "--nocolor")
@@ -193,10 +223,23 @@ namespace qblocks {
         SFString name = nameIn;
 
         description = descr;
+        SFString dummy;
+        if (name.Contains(":<") || name.Contains(":[")) {
+            permitted = name;
+            name = nextTokenClear(permitted,':');
+            // order matters
+            if (permitted == "<range>")
+                dummy = " range";
+            else if (permitted == "<list>")
+                dummy = " list";
+            else if (!permitted.empty())
+                dummy = " val";
+        }
         if (!name.empty()) {
             shortName = name.Left(2);
             if (name.length() > 2)
-                longName = name;
+                longName = name + dummy;
+
             if (name.Contains("{")) {
                 name.Replace("{", "|{");
                 nextTokenClear(name, '|');
@@ -205,21 +248,21 @@ namespace qblocks {
             } else if (name.Contains(":")) {
                 nextTokenClear(name, ':');
                 shortName += name[0];
-                longName = "-" + name;
+                longName = "-" + name + dummy;
             }
+
             if (longName.Contains("(") && longName.Contains(")")) {
                 hotKey = longName;
                 nextTokenClear(hotKey,'(');
                 hotKey = nextTokenClear(hotKey, ')');
                 longName.ReplaceAny("()","");
-//                shortName = "-" + hotKey;
+                shortName = SFString(shortName[0]) + hotKey;
             }
         }
     }
 
     static SFString sep = "  ";
     static SFString sep2 = "";
-    extern const char *STR_FILE_OPTION;
 
     //--------------------------------------------------------------------------------
     int usage(const SFString& errMsg) {
@@ -242,31 +285,20 @@ namespace qblocks {
         os << bYellow << sep << "Usage:" << sep2 << "    " << cOff << programName << " " << options() << "  \n";
         os << purpose();
         os << descriptions() << "\n";
-        if (COptionsBase::isReadme)
-            os << STR_FILE_OPTION;
-        os << bBlue << (COptionsBase::isReadme ? "#### " : "  ") << "Powered by QuickBlocks" << (COptionsBase::isReadme ? "&reg;" : "") << "\n" << cOff;
-        return os.str().c_str();
+        if (!COptionsBase::isReadme)
+            os << bBlue << "  Powered by QuickBlocks" << (isTestMode() ? "" : " (" + getVersionStr() + ")") << "\n" << cOff;
+        SFString ret = os.str().c_str();
+        ASSERT(pOptions);
+        return pOptions->postProcess("usage", ret);
     }
-
-    //--------------------------------------------------------------------------------
-    const char *STR_FILE_OPTION =
-    "#### Other Options\n"
-    "\n"
-    "Enter `--version` to display the current version of the tool.  \n"
-    "Enter `--nocolors` to turn off colored display.  \n"
-    "Enter `--wei` (default), `--ether`, or `--dollars` to alter the way value is displayed.  \n"
-    "\n"
-    "All `quickBlocks` command-line tools support the `--file:filename` option. Place valid commands, on separate "
-    "lines, in a file and include the above option. In some cases, this option may significantly improve "
-    "performance. Place a semi-colon at the start of a line to make it a comment.\n"
-    "\n";
 
     //--------------------------------------------------------------------------------
     SFString options(void) {
         SFString required;
 
         CStringExportContext ctx;
-        ctx << "[";
+        if (!COptionsBase::needsOption)
+            ctx << "[";
         for (SFUint32 i = 0 ; i < nParamsRef ; i++) {
             if (paramsPtr[i].shortName.startsWith('~')) {
                 required += (" " + paramsPtr[i].longName.substr(1).Substitute("!", ""));
@@ -276,16 +308,20 @@ namespace qblocks {
 
             } else if (!paramsPtr[i].shortName.empty()) {
                 ctx << paramsPtr[i].shortName << "|";
+
+            } else if (!paramsPtr[i].shortName.empty()) {
+                ctx << paramsPtr[i].shortName << "|";
             }
         }
-        if (COptionsBase::useTesting)
-            ctx << "-t|";
         if (COptionsBase::useVerbose)
             ctx << "-v|";
-        ctx << "-h]";
+        ctx << "-h";
+        if (!COptionsBase::needsOption)
+            ctx << "]";
         ctx << required;
 
-        return ctx.str;
+        ASSERT(pOptions);
+        return pOptions->postProcess("options", ctx.str);
     }
 
     //--------------------------------------------------------------------------------
@@ -302,24 +338,39 @@ namespace qblocks {
                 << purpose.Substitute("\n", "\n           ") << "  \n";
         }
         ctx << bYellow << sep << "Where:" << sep << cOff << "  \n";
-        return ctx.str;
+        ASSERT(pOptions);
+        return pOptions->postProcess("purpose", ctx.str);
     }
 
     //--------------------------------------------------------------------------------
-    SFString description(const SFString& s, const SFString& l, const SFString& d, bool isMode, bool required) {
+const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
+
+    SFString oneDescription(const SFString& sN, const SFString& lN, const SFString& d, bool isMode, bool required) {
         CStringExportContext ctx;
         if (COptionsBase::isReadme) {
-            ctx << "| " << s << " | " << (isMode ? "" : "-") << l << " | " << d.Substitute("|", "&#124;") << " |\n";
+
+            // When we are writing the readme file...
+            SFString line = STR_ONE_LINE;
+            line.Replace("{S}", sN);
+            line.Replace("{L}", (isMode ? "" : "-") + lN);
+            line.Replace("{D}", d.Substitute("|", "&#124;"));
+            ctx << line;
 
         } else {
-            ctx << "\t"
-            << (isMode ? "" : padRight(s, 3))
-            << padRight((l.empty() ? "" : (isMode ? l : " (or -" + l + ")")) , 19 + (isMode ? 3 : 0))
-            << d
-            << (required ? " (required)" : "")
-            << "\n";
+
+            // When we are writing to the command line...
+            SFString line = "\t" + SFString(STR_ONE_LINE).Substitute(" ","").Substitute("|","");
+            line.Replace("{S}", (isMode ? "" : padRight(sN, 3)));
+            if (isMode)
+                line.Replace("{L}", padRight(lN , 22));
+            else {
+                line.Replace("{L}", padRight((lN.empty() ? "" : " (-" + lN + ")") , 19));
+            }
+            line.Replace("{D}", d + (required ? " (required)" : ""));
+            ctx << line;
         }
-        return ctx.str;
+        ASSERT(pOptions);
+        return pOptions->postProcess("oneDescription", ctx.str);
     }
 
     //--------------------------------------------------------------------------------
@@ -346,17 +397,15 @@ namespace qblocks {
                 bool isReq = isMode && !lName.Contains('!');
                 sName = (isMode ? "" : sName);
                 lName = (isMode ? lName.Substitute('-', "") : lName).Substitute("!", "").Substitute("~", "");
-                ctx << description(sName, lName, descr, isMode, isReq);
+                ctx << oneDescription(sName, lName, descr, isMode, isReq);
             }
         }
 
-        if (COptionsBase::useTesting)
-            ctx << description("-t", "-test", "generate intermediary files but do not execute the commands", false, false);
         if (COptionsBase::useVerbose)
-            ctx << description("-v", "-verbose", "set verbose level. Follow with a number to set level "
-                               "(-v0 for silent)", false, false);
-        ctx << description("-h", "-help", "display this help screen", false, false);
-        return ctx.str;
+            ctx << oneDescription("-v", "-verbose", "set verbose level. Either -v, --verbose or -v:n where 'n' is level", false, false);
+        ctx << oneDescription("-h", "-help", "display this help screen", false, false);
+        ASSERT(pOptions);
+        return pOptions->postProcess("description", ctx.str);
     }
 
     //--------------------------------------------------------------------------------
@@ -435,19 +484,38 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-//    SFString COptionsBase::header = "";
-//    SFString COptionsBase::footer = "";
-//    SFString COptionsBase::seeAlso = "";
     bool COptionsBase::useVerbose = true;
-    bool COptionsBase::useTesting = true;
     bool COptionsBase::isReadme = false;
+    bool COptionsBase::needsOption = false;
 
     //--------------------------------------------------------------------------------
     SFUint32 verbose = false;
-    bool isTesting = false;
 
     //---------------------------------------------------------------------------------------------------
     SFString configPath(const SFString& part) {
-        return getHomeFolder() + ".quickBlocks" + (isTesting ? ".test" : "") + "/" + part;
+        return getHomeFolder() + ".quickBlocks/" + part;
     }
+
+    //------------------------------------------------------------------
+    void editFile(const SFString& fileName) {
+        CToml toml(configPath("quickBlocks.toml"));
+        SFString editor = toml.getConfigStr("settings", "editor", "open ");
+        SFString cmd = editor + " \"" + fileName + "\"";
+        if (isTestMode()) {
+            cout << "Testing editFile: " << cmd << "\n";
+            cout << asciiFileToString(fileName) << "\n";
+        } else {
+            if (system(cmd.c_str())) {}  // do not remove. Silences compiler warnings
+        }
+    }
+
+    //-------------------------------------------------------------------------
+    namespace qbGlobals {
+        static SFString source;
+    }
+
+    //-------------------------------------------------------------------------
+    SFString getSource(void) { return qbGlobals::source; }
+    void     setSource(const SFString& src) { qbGlobals::source = src; }
+
 }  // namespace qblocks

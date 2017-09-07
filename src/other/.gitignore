@@ -1,4 +1,3 @@
-CMakeLists.txt
 acctIndex
 addresses
 atexit
@@ -13,6 +12,7 @@ db
 docs.save
 ens_usage
 esc_key
+format
 gasHole
 genesis
 hatch.mak
@@ -25,19 +25,16 @@ mappingTest
 memmap
 newens
 papers.save
-printFloat
 scripts
 serialize
 single
 speedTest
 sql
-toJSON
-toRust
 toWei
 tokenFactory
 traceCheck
 tracingNeed
 transPer
 visitor
-zOldCode.tar.gz
 zOldCode
+zOldCode.tar.gz

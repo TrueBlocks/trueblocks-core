@@ -1,2 +1,2 @@
-ethName argc: 4 [1:-m] [2:0xfa] [3:roB] 
-ethName -m 0xfa roB 
+ethName argc: 4 [1:-m] [2:0xcb] [3:torJ] 
+ethName -m 0xcb torJ 

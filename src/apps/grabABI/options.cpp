@@ -9,15 +9,16 @@
 
 //---------------------------------------------------------------------------------------------------
 CParams params[] = {
-    CParams("~addr",        "the address(es) of the smart contract(s) to grab"),
-    CParams("-canonical",   "convert all types to their canonical represenation and remove all spaces from display"),
-    CParams("-generate",    "generate C++ code into ':dir' for all functions and events found in the ABI"),
-    CParams("-encode",      "generate the encodings for the functions / events in the ABI"),
-    CParams("-noconst",     "generate encodings for non-constant functions and events only (always true when generating)"), // NOLINT
-    CParams("-open",        "open the ABI file for editing, download if not already present"),
-    CParams("-silent",      "If ABI cannot be acquired, fail silently (useful for scripting)"),
-    CParams("",             "Fetches the ABI for a smart contract. Optionally generates C++ source code "
-                            "representing that ABI.\n"),
+    CParams("~addr",      "the address(es) of the smart contract(s) to grab"),
+    CParams("-canonical", "convert all types to their canonical represenation and remove all spaces from display"),
+    CParams("-generate",  "generate C++ code into the current folder for all functions and events found in the ABI"),
+    CParams("-encode",    "generate the encodings for the functions / events in the ABI"),
+    CParams("-noconst",   "generate encodings for non-constant functions and events only (always true when generating)"), // NOLINT
+    CParams("-open",      "open the ABI file for editing, download if not already present"),
+    CParams("@-json",     "print the ABI to the screen as json"),
+    CParams("@-silent",   "If ABI cannot be acquired, fail silently (useful for scripting)"),
+    CParams("",           "Fetches the ABI for a smart contract. Optionally generates C++ source code "
+                          "representing that ABI.\n"),
 };
 uint32_t nParams = sizeof(params) / sizeof(CParams);
 
@@ -49,20 +50,23 @@ bool COptions::parseArguments(SFString& command) {
         } else if (arg == "-o" || arg == "--open") {
             open = true;
 
-        } else if (arg.startsWith('-')) {
-            if (arg != "-h" && !arg.Contains("-v") && arg != "-t")
+        } else if (arg == "-j" || arg == "--json") {
+            asJson = true;
+
+        } else if (arg.startsWith('-')) {  // do not collapse
+
+            if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);
+            }
 
         } else {
             if (nAddrs>=MAX_ADDRS)
                 return usage("You may provide at most " + asString(MAX_ADDRS) + " addresses");
             if (primaryAddr.empty())
                 primaryAddr = arg;
-            SFAddress addr = toLower(arg);
-            if (!addr.startsWith("0x"))
-                addr = "0x" + addr;
-            if (addr.length() != 42 && !addr.ContainsI("tokenlib") && !addr.ContainsI("walletlib"))
-                return usage(addr + " does not appear to be a valid Ethereum address.\n");
+            SFAddress addr = fixAddress(toLower(arg));
+            if (!isAddress(addr) && !addr.ContainsI("tokenlib") && !addr.ContainsI("walletlib"))
+                return usage("Invalid address `" + addr + "'. Length is not equal to 40 characters (20 bytes).\n");
             addrs[nAddrs++] = addr;
         }
     }
@@ -88,17 +92,16 @@ void COptions::Init(void) {
     noconst = false;
     open = false;
     silent = false;
+    asJson = false;
     for (uint32_t i = 0 ; i < MAX_ADDRS ; i++) {
         addrs[i] = "";
     }
     nAddrs = 0;
-
-    useVerbose = true;
-    useTesting = true;
 }
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
+    useVerbose = false;
     Init();
 }
 

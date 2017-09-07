@@ -1,0 +1,74 @@
+getTrace argc: 2 [1:0x38a7b84d2f738b90c61ec3d25284dc586868584e5f7e6cc6d084b03a66e0206a] 
+getTrace 0x38a7b84d2f738b90c61ec3d25284dc586868584e5f7e6cc6d084b03a66e0206a 
+[{
+    "blockHash": "0x88b0df6131759efd9d5dfbbc21e21256a06a6b31d9f76ee7274de092d0913170",
+    "blockNumber": 2240372,
+    "subtraces": 2,
+    "traceAddress": [],
+    "transactionHash": "0x38a7b84d2f738b90c61ec3d25284dc586868584e5f7e6cc6d084b03a66e0206a",
+    "transactionPosition": 0,
+    "type": "call",
+    "action": {
+        "callType": "call",
+        "from": "0x0860df0aeb7fdd29c6da4dbc7aaed0da59325ddd",
+        "gas": 123833,
+        "input": "0xf3a44fe1",
+        "to": "0x1789f0ea2c96cde69c75e717b0568672c216d04a",
+        "value": 0,
+        "address": "0x0",
+        "balance": 0,
+        "refundAddress": "0x0"
+    },
+    "result": {
+        "gasUsed": 23833,
+        "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
+    }
+},
+{
+    "blockHash": "0x88b0df6131759efd9d5dfbbc21e21256a06a6b31d9f76ee7274de092d0913170",
+    "blockNumber": 2240372,
+    "subtraces": 0,
+    "traceAddress": [],
+    "transactionHash": "0x38a7b84d2f738b90c61ec3d25284dc586868584e5f7e6cc6d084b03a66e0206a",
+    "transactionPosition": 0,
+    "type": "call",
+    "action": {
+        "callType": "call",
+        "from": "0x1789f0ea2c96cde69c75e717b0568672c216d04a",
+        "gas": 82347,
+        "input": "0x720c4798",
+        "to": "0xde1dd1d3ab67f42be0588f7fd8e44e767379e0c3",
+        "value": 0,
+        "address": "0x0",
+        "balance": 0,
+        "refundAddress": "0x0"
+    },
+    "result": {
+        "gasUsed": 258,
+        "output": "0x000000000000000000000000c78310231aa53bd3d0fea2f8c705c67730929d8f"
+    }
+},
+{
+    "blockHash": "0x88b0df6131759efd9d5dfbbc21e21256a06a6b31d9f76ee7274de092d0913170",
+    "blockNumber": 2240372,
+    "subtraces": 0,
+    "traceAddress": [],
+    "transactionHash": "0x38a7b84d2f738b90c61ec3d25284dc586868584e5f7e6cc6d084b03a66e0206a",
+    "transactionPosition": 0,
+    "type": "call",
+    "action": {
+        "callType": "call",
+        "from": "0x1789f0ea2c96cde69c75e717b0568672c216d04a",
+        "gas": 2300,
+        "input": "0x",
+        "to": "0xc78310231aa53bd3d0fea2f8c705c67730929d8f",
+        "value": 722373333333530000,
+        "address": "0x0",
+        "balance": 0,
+        "refundAddress": "0x0"
+    },
+    "result": {
+        "gasUsed": 0,
+        "output": "0x"
+    }
+}]

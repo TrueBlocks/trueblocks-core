@@ -13,7 +13,7 @@
 #include "etherlib.h"
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(QRemoveOwner, CTransaction, curVersion);
+IMPLEMENT_NODE(QRemoveOwner, CTransaction, dataSchema());
 
 //---------------------------------------------------------------------------
 static SFString nextRemoveownerChunk(const SFString& fieldIn, bool& force, const void *data);
@@ -90,7 +90,7 @@ void QRemoveOwner::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool QRemoveOwner::Serialize(SFArchive& archive) {
-    if (!archive.isReading())
+    if (archive.isWriting())
         return ((const QRemoveOwner*)this)->SerializeC(archive);
 
     CTransaction::Serialize(archive);
@@ -118,9 +118,9 @@ void QRemoveOwner::registerClass(void) {
     CTransaction::registerClass();
 
     uint32_t fieldNum = 1000;
-    ADD_FIELD(QRemoveOwner, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
-    ADD_FIELD(QRemoveOwner, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
-    ADD_FIELD(QRemoveOwner, "_owner", T_TEXT, ++fieldNum);
+    ADD_FIELD(QRemoveOwner, "schema",  T_NUMBER, ++fieldNum);
+    ADD_FIELD(QRemoveOwner, "deleted", T_BOOL,  ++fieldNum);
+    ADD_FIELD(QRemoveOwner, "_owner", T_ADDRESS, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(QRemoveOwner, "schema");

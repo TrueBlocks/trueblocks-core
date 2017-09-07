@@ -14,7 +14,7 @@ class CMiniBlock
 {
 public:
     SFUint32 blockNumber;
-    SFUint32 timestamp;
+    timestamp_t timestamp;
     SFUint32 firstTrans;
     SFUint32 nTrans;
 
@@ -67,7 +67,7 @@ public:
         index = t->transactionIndex;
         gasUsed = t->receipt.gasUsed;
         gasPrice = t->gasPrice;
-        gas = canonicalWeiL(t->gas);
+        gas = t->gas;
         isError = t->isError;
         strncpy(from,  (const char*)fromAddress(t->from).substr(2), 40);from [40]='\0';
         strncpy(to,    (const char*)fromAddress(t->to).substr(2),   40);to   [40]='\0';

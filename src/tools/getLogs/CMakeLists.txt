@@ -34,4 +34,7 @@ endfunction(run_test)
 
 # Enter one line for each individual test
 run_test("getLogs_README"  "-th")
-run_test("getLogs_default" "a")
+run_test("getLogs_default" "--address" " 0xbb9bc244d798123fde783fcc1c72d3bb8c189413")
+
+# Installation steps
+install(TARGETS ${TOOL_NAME} RUNTIME DESTINATION bin)

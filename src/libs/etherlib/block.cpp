@@ -15,7 +15,7 @@
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CBlock, CBaseNode, curVersion);
+IMPLEMENT_NODE(CBlock, CBaseNode, dataSchema());
 
 //---------------------------------------------------------------------------
 extern SFString nextBlockChunk(const SFString& fieldIn, bool& force, const void *data);
@@ -66,21 +66,23 @@ SFString nextBlockChunk(const SFString& fieldIn, bool& force, const void *data) 
                 if ( fieldIn % "parentHash" ) return fromHash(blo->parentHash);
                 break;
             case 't':
-                if ( fieldIn % "timestamp" ) return asStringU(blo->timestamp);
+                if ( fieldIn % "timestamp" ) return asString(blo->timestamp);
                 if ( fieldIn % "transactions" ) {
                     uint32_t cnt = blo->transactions.getCount();
-                    if (!cnt) return EMPTY;
-                    SFString ret;
+                    if (!cnt) return "";
+                    SFString retS;
                     for (uint32_t i = 0 ; i < cnt ; i++) {
-                        ret += blo->transactions[i].Format();
-                        ret += ((i < cnt - 1) ? ",\n" : "\n");
+                        retS += blo->transactions[i].Format();
+                        retS += ((i < cnt - 1) ? ",\n" : "\n");
                     }
-                    return ret;
+                    return retS;
                 }
                 break;
         }
 
         // EXISTING_CODE
+        if ( isTestMode() && fieldIn % "blockHash" )
+            return fromHash(blo->hash);
         // EXISTING_CODE
 
         // Finally, give the parent class a chance
@@ -97,6 +99,9 @@ bool CBlock::setValueByName(const SFString& fieldName, const SFString& fieldValu
     // EXISTING_CODE
     if (fieldName % "number") {
         *(SFString*)&fieldName = "blockNumber";
+
+    } else if (isTestMode() && fieldName % "blockHash") {
+        *(SFString*)&fieldName = "hash";
 
     } else if (fieldName % "transactions") {
         // Transactions can come to us either as a JSON object (starts with '{') or a list
@@ -141,7 +146,7 @@ bool CBlock::setValueByName(const SFString& fieldName, const SFString& fieldValu
             if ( fieldName % "parentHash" ) { parentHash = toHash(fieldValue); return true; }
             break;
         case 't':
-            if ( fieldName % "timestamp" ) { timestamp = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "timestamp" ) { timestamp = (timestamp_t)toUnsigned(fieldValue); return true; }
             if ( fieldName % "transactions" ) return true;
             break;
         default:
@@ -153,12 +158,14 @@ bool CBlock::setValueByName(const SFString& fieldName, const SFString& fieldValu
 //---------------------------------------------------------------------------------------------------
 void CBlock::finishParse() {
     // EXISTING_CODE
+    for (uint32_t i=0;i<transactions.getCount();i++)
+        transactions[i].pBlock = this;
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------------------------------
 bool CBlock::Serialize(SFArchive& archive) {
-    if (!archive.isReading())
+    if (archive.isWriting())
         return ((const CBlock*)this)->SerializeC(archive);
 
     if (!preSerialize(archive))
@@ -200,16 +207,16 @@ void CBlock::registerClass(void) {
     been_here = true;
 
     uint32_t fieldNum = 1000;
-    ADD_FIELD(CBlock, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
-    ADD_FIELD(CBlock, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
-    ADD_FIELD(CBlock, "gasLimit", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CBlock, "gasUsed", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CBlock, "hash", T_TEXT, ++fieldNum);
+    ADD_FIELD(CBlock, "schema",  T_NUMBER, ++fieldNum);
+    ADD_FIELD(CBlock, "deleted", T_BOOL,  ++fieldNum);
+    ADD_FIELD(CBlock, "gasLimit", T_GAS, ++fieldNum);
+    ADD_FIELD(CBlock, "gasUsed", T_GAS, ++fieldNum);
+    ADD_FIELD(CBlock, "hash", T_HASH, ++fieldNum);
     ADD_FIELD(CBlock, "logsBloom", T_BLOOM, ++fieldNum);
     ADD_FIELD(CBlock, "blockNumber", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CBlock, "parentHash", T_TEXT, ++fieldNum);
+    ADD_FIELD(CBlock, "parentHash", T_HASH, ++fieldNum);
     ADD_FIELD(CBlock, "timestamp", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CBlock, "transactions", T_TEXT|TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CBlock, "transactions", T_OBJECT|TS_ARRAY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CBlock, "schema");

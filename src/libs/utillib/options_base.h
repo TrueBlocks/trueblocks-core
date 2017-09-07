@@ -7,24 +7,27 @@
  * The LICENSE at the root of this repo details your rights (if any)
  *------------------------------------------------------------------------*/
 
+#include "version.h"
+
 namespace qblocks {
 
     class COptionsBase {
     public:
         static bool useVerbose;
-        static bool useTesting;
+        static bool needsOption;
         static bool isReadme;
 
         SFString commandList;
         bool     fromFile;
         SFUint32 minArgs;
 
-        COptionsBase(void) { fromFile = false; minArgs = 1; isReadme = false; }
+        COptionsBase(void) { fromFile = false; minArgs = 1; isReadme = false; needsOption = false; }
         virtual ~COptionsBase(void) { }
 
         bool prepareArguments(int argc, const char *argv[]);
         virtual bool parseArguments(SFString& command) = 0;
         bool builtInCmd(const SFString& arg);
+        virtual SFString postProcess(const SFString& which, const SFString& str) const { return str; }
 
     protected:
         virtual void Init(void) = 0;
@@ -45,6 +48,7 @@ namespace qblocks {
         SFString  longName;
         SFString  hotKey;
         SFString  description;
+        SFString  permitted;
         CParams(const SFString& name, const SFString& descr);
     };
 
@@ -61,15 +65,17 @@ namespace qblocks {
 
     //--------------------------------------------------------------------------------
     extern SFUint32 verbose;
-    extern bool isTesting;
 
     //--------------------------------------------------------------------------------
-    extern SFString configPath(const SFString& part = "");
-    inline SFString cachePath(const SFString& part = "") { return configPath("slurps/") + part; }
+    extern void     editFile  (const SFString& fileName);
+    extern SFString configPath(const SFString& part);
+
+    //-------------------------------------------------------------------------
+    extern SFString getSource(void);
+    extern void     setSource(const SFString& src);
 
     //--------------------------------------------------------------------------------
     extern CParams *paramsPtr;
     extern uint32_t& nParamsRef;
-
-    #define curVersion ((uint64_t)0x00000201)
+    extern COptionsBase *pOptions;
 }  // namespace qblocks

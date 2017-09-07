@@ -93,7 +93,7 @@ inline void CLeaf::Clear(void) {
 inline void CLeaf::Init(void) {
     CTreeNode::Init();
 
-//    blocks = ??; /* unknown type: SFBlockArray */
+    blocks.Clear();
     cnt = 0;
 
     // EXISTING_CODE

@@ -15,7 +15,7 @@
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CReceipt, CBaseNode, curVersion);
+IMPLEMENT_NODE(CReceipt, CBaseNode, dataSchema());
 
 //---------------------------------------------------------------------------
 extern SFString nextReceiptChunk(const SFString& fieldIn, bool& force, const void *data);
@@ -58,13 +58,13 @@ SFString nextReceiptChunk(const SFString& fieldIn, bool& force, const void *data
             case 'l':
                 if ( fieldIn % "logs" ) {
                     uint32_t cnt = rec->logs.getCount();
-                    if (!cnt) return EMPTY;
-                    SFString ret;
+                    if (!cnt) return "";
+                    SFString retS;
                     for (uint32_t i = 0 ; i < cnt ; i++) {
-                        ret += rec->logs[i].Format();
-                        ret += ((i < cnt - 1) ? ",\n" : "\n");
+                        retS += rec->logs[i].Format();
+                        retS += ((i < cnt - 1) ? ",\n" : "\n");
                     }
-                    return ret;
+                    return retS;
                 }
                 if ( fieldIn % "logsBloom" ) return fromBloom(rec->logsBloom);
                 break;
@@ -142,7 +142,7 @@ void CReceipt::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CReceipt::Serialize(SFArchive& archive) {
-    if (!archive.isReading())
+    if (archive.isWriting())
         return ((const CReceipt*)this)->SerializeC(archive);
 
     if (!preSerialize(archive))
@@ -176,11 +176,11 @@ void CReceipt::registerClass(void) {
     been_here = true;
 
     uint32_t fieldNum = 1000;
-    ADD_FIELD(CReceipt, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
-    ADD_FIELD(CReceipt, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
-    ADD_FIELD(CReceipt, "contractAddress", T_TEXT, ++fieldNum);
-    ADD_FIELD(CReceipt, "gasUsed", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CReceipt, "logs", T_TEXT|TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CReceipt, "schema",  T_NUMBER, ++fieldNum);
+    ADD_FIELD(CReceipt, "deleted", T_BOOL,  ++fieldNum);
+    ADD_FIELD(CReceipt, "contractAddress", T_ADDRESS, ++fieldNum);
+    ADD_FIELD(CReceipt, "gasUsed", T_GAS, ++fieldNum);
+    ADD_FIELD(CReceipt, "logs", T_OBJECT|TS_ARRAY, ++fieldNum);
     ADD_FIELD(CReceipt, "logsBloom", T_BLOOM, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like

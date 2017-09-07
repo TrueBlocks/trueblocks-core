@@ -1,4 +1,4 @@
-ethName argc: 8 [1:-a] [2:-m] [3:-v] [4:-c] [5:-s] [6:0x17] [7:rob] 
-ethName -a -m -v -c -s 0x17 rob 
+ethName argc: 8 [1:-a] [2:-m] [3:-v] [4:-c] [5:-s] [6:0xb6] [7:torj] 
+ethName -a -m -v -c -s 0xb6 torj 
 1 match
-0x1736303b570247313eb445d803185455779b91c7
+0xb64ef51c888972c908cfacf59b47c1afbc0ab8ac

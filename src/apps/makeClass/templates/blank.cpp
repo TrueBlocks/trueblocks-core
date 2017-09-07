@@ -13,7 +13,7 @@
 [OTHER_INCS]
 [{NAMESPACE1}]
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE([{CLASS_NAME}], [{BASE_CLASS}], curVersion);
+IMPLEMENT_NODE([{CLASS_NAME}], [{BASE_CLASS}], dataSchema());
 
 //---------------------------------------------------------------------------
 [{SCOPE}] SFString next[{PROPER}]Chunk(const SFString& fieldIn, bool& force, const void *data);
@@ -80,7 +80,7 @@ void [{CLASS_NAME}]::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool [{CLASS_NAME}]::Serialize(SFArchive& archive) {
-    if (!archive.isReading())
+    if (archive.isWriting())
         return ((const [{CLASS_NAME}]*)this)->SerializeC(archive);
 
 [{PARENT_SER}][ARCHIVE_READ]	finishParse();
@@ -100,8 +100,8 @@ void [{CLASS_NAME}]::registerClass(void) {
     been_here = true;
 
     [{PARENT_REG}]uint32_t fieldNum = 1000;
-    ADD_FIELD([{CLASS_NAME}], "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
-    ADD_FIELD([{CLASS_NAME}], "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
+    ADD_FIELD([{CLASS_NAME}], "schema",  T_NUMBER, ++fieldNum);
+    ADD_FIELD([{CLASS_NAME}], "deleted", T_BOOL,  ++fieldNum);
 [REGISTER_FIELDS]
 
     // Hide our internal fields, user can turn them on if they like

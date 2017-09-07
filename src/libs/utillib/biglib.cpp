@@ -13,6 +13,7 @@
  *------------------------------------------------------------------------*/
 #include "basetypes.h"
 #include "biglib.h"
+#include "conversions.h"
 
 /*
  * A BigUnsignedInABase object represents a nonnegative integer of size limited
@@ -124,11 +125,11 @@ namespace qblocks {
         this->base = base;
 
         // Get an upper bound on how much space we need
-        int maxBitLenOfX    = x.len * SFUintBN::N;
-        int minBitsPerDigit = bitLen(base) - 1;
+        int maxBitLenOfX    = (int)(x.len * SFUintBN::N);
+        int minBitsPerDigit = (int)bitLen(base) - 1;
         int maxDigitLenOfX  = (maxBitLenOfX + minBitsPerDigit - 1) / minBitsPerDigit;
 
-        len = maxDigitLenOfX; // Another change to comply with `staying in bounds'.
+        len = (unsigned int)maxDigitLenOfX; // Another change to comply with `staying in bounds'.
         allocate(len); // Get the space
 
         SFUintBN x2(x), buBase(base);
@@ -169,13 +170,13 @@ namespace qblocks {
             char theSymbol = s[symbolNumInString];
 
             if (theSymbol >= '0' && theSymbol <= '9')
-                blk[digitNum] = theSymbol - '0';
+                blk[digitNum] = (unsigned short)(theSymbol - '0');
 
             else if (theSymbol >= 'A' && theSymbol <= 'Z')
-                blk[digitNum] = theSymbol - 'A' + 10;
+                blk[digitNum] = (unsigned short)(theSymbol - 'A' + 10);
 
             else if (theSymbol >= 'a' && theSymbol <= 'z')
-                blk[digitNum] = theSymbol - 'a' + 10;
+                blk[digitNum] = (unsigned short)(theSymbol - 'a' + 10);
 
             else
                 throw "BigUnsignedInABase(string, unsigned short): Bad symbol in input.  Only 0-9, A-Z, a-z are accepted.";
@@ -322,35 +323,6 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    SFUintBN exp2BigUint(const string &s)
-    {
-        SFString exponent = s.c_str();
-        SFString decimals = nextTokenClear(exponent,'e');
-        SFString num = nextTokenClear(decimals,'.');
-        long nD = decimals.length();
-        SFUint32 e = toLong(exponent);
-        SFUintBN ee = 1;
-        SFUint32 power = e-nD;
-        for (SFUint32 i=0;i<power;i++)
-            ee *= 10;
-        num += decimals;
-        return str2BigUint(num) * ee;
-    }
-
-    SFUintBN str2BigUint(const string &s)
-    {
-        return SFUintBN(BigUnsignedInABase(s, 10));
-    }
-    
-    //--------------------------------------------------------------------------------
-    SFIntBN str2BigInt(const string &s)
-    {
-        return (s[0] == '-') ? SFIntBN(str2BigUint(s.substr(1, s.length() - 1)), -1)
-        : (s[0] == '+') ? SFIntBN(str2BigUint(s.substr(1, s.length() - 1)))
-        : SFIntBN(str2BigUint(s));
-    }
-    
-    //--------------------------------------------------------------------------------
     ostream &operator <<(ostream &os, const SFUintBN& x)
     {
         unsigned short base;
@@ -386,5 +358,10 @@ namespace qblocks {
             os << '-';
         os << x.getMagnitude();
         return os;
+    }
+
+    //--------------------------------------------------------------------------------
+    SFUintBN str2BigUint(const string &s) {
+        return SFUintBN(BigUnsignedInABase(s, 10));
     }
 }

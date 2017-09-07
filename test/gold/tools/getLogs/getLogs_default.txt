@@ -1,5 +1,5 @@
-getLogs argc: 2 [1:a] 
-getLogs a 
+getLogs argc: 3 [1:--address] [2:0xbb9bc244d798123fde783fcc1c72d3bb8c189413] 
+getLogs --address 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 
 {"jsonrpc":"2.0","result":[],"id":1}
 
 1428757: {"jsonrpc":"2.0","result":[],"id":2}

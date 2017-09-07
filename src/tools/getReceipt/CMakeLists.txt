@@ -34,3 +34,6 @@ endfunction(run_test)
 
 # Enter one line for each individual test
 run_test("getReceipt_README"  "-th")
+
+# Installation steps
+install(TARGETS ${TOOL_NAME} RUNTIME DESTINATION bin)

@@ -11,7 +11,6 @@
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
     // Tell the system where the blocks are and which version to use
-    setStorageRoot(BLOCK_CACHE);
     etherlib_init("binary");
 
     // Parse command line, allowing for command files
@@ -39,6 +38,11 @@ int main(int argc, const char *argv[]) {
             } else {
                 getTransaction(trans, (uint32_t)toLongU(hash), txID);  // blockHash.txID
             }
+
+            // We need to pick up some stuff from the block
+            CBlock block;
+            getBlock(block, trans.blockNumber);
+            trans.pBlock = &block;
 
             SFString fmt;
             if (!verbose)

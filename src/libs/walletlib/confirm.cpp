@@ -13,7 +13,7 @@
 #include "etherlib.h"
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(QConfirm, CTransaction, curVersion);
+IMPLEMENT_NODE(QConfirm, CTransaction, dataSchema());
 
 //---------------------------------------------------------------------------
 static SFString nextConfirmChunk(const SFString& fieldIn, bool& force, const void *data);
@@ -90,7 +90,7 @@ void QConfirm::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool QConfirm::Serialize(SFArchive& archive) {
-    if (!archive.isReading())
+    if (archive.isWriting())
         return ((const QConfirm*)this)->SerializeC(archive);
 
     CTransaction::Serialize(archive);
@@ -118,8 +118,8 @@ void QConfirm::registerClass(void) {
     CTransaction::registerClass();
 
     uint32_t fieldNum = 1000;
-    ADD_FIELD(QConfirm, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
-    ADD_FIELD(QConfirm, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
+    ADD_FIELD(QConfirm, "schema",  T_NUMBER, ++fieldNum);
+    ADD_FIELD(QConfirm, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(QConfirm, "_h", T_TEXT, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like

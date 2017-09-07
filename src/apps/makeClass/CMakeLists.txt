@@ -45,4 +45,7 @@ run_test("makeClass_clear"      "-c" " function")
 run_test("makeClass_list"       "-l" " function")
 run_test("makeClass_edit"       "-e" " function")
 run_test("makeClass_run"        "-r" " block")
-run_test("makeClass_run_ns"     "-n:qblocks" " -r" " function")
+run_test("makeClass_run_ns"     "-n" " qblocks" " -r" " function")
+
+# Installation steps
+install(TARGETS ${TOOL_NAME} RUNTIME DESTINATION bin)
