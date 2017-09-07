@@ -15,7 +15,7 @@
 
 4. Install python:
 
-   > (sudo) dnf install python python-devel (as root or with sudo)
+   > (sudo) dnf install python python-devel 
 
 5. Install CURL
 
