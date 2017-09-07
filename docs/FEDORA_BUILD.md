@@ -23,11 +23,246 @@ Next sections describe in detail the steps required to install QuickBlocks under
 
 IMPORTANT: Those instructions that contain the (sudo) tag must be executed as root user or as sudoer.
 
-1. [Ubuntu installation](docs/UBUNTU_BUILD.md)
-2. [Fedora installation](docs/FEDORA_BUILD.md)
-3. [Centos installation](docs/CENTOS_BUILD.md)
-4. [Debian installation](docs/DEBIAN_BUILD.md)
-5. [FreeBSD installation](docs/FREEBSD_BUILD.md)
+#### Ubuntu installation
+
+
+1. Update latest version of packages running:
+
+   > (sudo) apt-get update
+   > (sudo) apt-get upgrade
+
+2. Install basic development tools (this package includes git client):
+
+
+   > (sudo) sudo apt-get install build-essential
+
+
+3. Install CURL dependencies:
+
+   > (sudo) apt-get install libcurl3-dev 
+
+
+4. Install cmake:
+
+   > (sudo) apt-get install cmake
+
+5. Install python:
+
+   > (sudo) apt-get install python python-dev
+
+6. Create the workspace folder. At command line execute:
+
+   > cd <USER_DIRECTORY>    (where USER_DIRECTORY is the directory we want to work at)
+   > mkdir workspace
+   > cd workspace
+   
+ 
+7. Clone github repository:
+
+   > git clone https://github.com/Great-Hill-Corporation/quickBlocks.git .
+
+
+8. Build QuickBlocks from sources:
+
+   >  mkdir build
+   >  cd build
+   >  cmake ../src
+   >  make
+
+9. Install QuickBlocks SDK in the local machine:
+
+   > (sudo) make install
+
+#### Fedora installation
+
+
+1. Install basic development tools (it includes git client):
+
+   > (sudo) dnf group install 'Development Tools'
+
+2. Install c++ compilers:
+
+   > (sudo) dnf install gcc-c++
+
+3. Install cmake:
+
+   > (sudo) dnf install cmake 
+
+4. Install python:
+
+   > (sudo) dnf install python python-devel (as root or with sudo)
+
+5. Install CURL
+
+   > (sudo) dnf install libcurl-devel 
+
+6. Create the workspace folder. At command line execute:
+
+   > cd <USER_DIRECTORY>    (where USER_DIRECTORY is the directory we want to work at)
+   > mkdir workspace
+   > cd workspace
+
+
+7. Clone github repository:
+
+   > git clone https://github.com/Great-Hill-Corporation/quickBlocks.git .
+
+
+8. Build QuickBlocks from sources:
+
+   >  mkdir build
+   >  cd build
+   >  cmake ../src
+   >  make
+
+9. Install QuickBlocks SDK in the local machine:
+
+   > (sudo) make install
+
+
+#### Centos installation
+
+1. Install basic development tools (this package includes git client):
+
+   > (sudo) yum groupinstall "Development Tools"
+
+2. Install cmake:
+
+   > (sudo) yum install cmake
+
+3. Install python:
+
+   > (sudo) yum install python python-devel
+
+4. Install CURL:
+
+   > (sudo) yum install libcurl-devel
+
+5. Create the workspace folder. At command line execute:
+
+   > cd <USER_DIRECTORY>    (where USER_DIRECTORY is the directory we want to work at)
+   > mkdir workspace
+   > cd workspace
+
+
+6. Clone github repository:
+
+   > git clone https://github.com/Great-Hill-Corporation/quickBlocks.git .
+
+
+7. Build QuickBlocks from sources:
+
+   >  mkdir build
+   >  cd build
+   >  cmake ../src
+   >  make
+
+8. Install QuickBlocks SDK in the local machine:
+
+   > (sudo) make install
+
+
+#### Debian installation
+
+1. Install basic development tools:
+
+   > (sudo) apt-get install build-essential
+
+
+2. Install cmake:
+
+   > (sudo) apt-get install cmake  
+
+
+3. Install git:
+
+   > (sudo) apt-get install git 
+
+
+4. Install CURL
+
+   > (sudo) apt-get install libcurl3-dev 
+
+
+5. Install python and its libs:
+
+   > (sudo) apt-get install  python python-dev  
+
+
+6. Create the workspace folder. At command line execute:
+
+   > cd <USER_DIRECTORY>    (where USER_DIRECTORY is the directory we want to work at)
+   > mkdir workspace
+   > cd workspace
+
+
+7. Clone github repository:
+
+   > git clone https://github.com/Great-Hill-Corporation/quickBlocks.git .
+
+
+8. Build QuickBlocks from sources:
+
+   >  mkdir build
+   >  cd build
+   >  cmake ../src
+   >  make
+
+9. Install QuickBlocks SDK in the local machine:
+
+   > (sudo) make install
+
+
+#### FreeBSD installation
+
+1. Install basic development tools (it includes git client):
+
+   > (sudo) pkg install lang/gcc49 
+
+2. Install git:
+
+   > (sudo) pkg install git
+
+3. Install cmake:
+
+   > (sudo) pkg install cmake 
+
+4. Install python:
+
+   > (sudo) pkg install python 
+
+5. Install CURL
+
+   >  (sudo) pkg install ftp/curl 
+   >  cd /usr/include
+   >  (sudo) ln -s ./usr/local/include/curl curl
+
+
+6. Create the workspace folder. At command line execute:
+
+   > cd <USER_DIRECTORY>    (where USER_DIRECTORY is the directory we want to work at)
+   > mkdir workspace
+   > cd workspace
+
+
+7. Clone github repository:
+
+   > git clone https://github.com/Great-Hill-Corporation/quickBlocks.git .
+
+
+8. Build QuickBlocks from sources:
+
+   >  mkdir build
+   >  cd build
+   >  cmake ../src
+   >  export CPLUS_INCLUDE_PATH=/usr/local/include/:${CPLUS_INCLUDE_PATH}
+   >  export LIBRARY_PATH=/usr/local/lib/:${LIBRARY_PATH}
+   >  make
+
+9. Install QuickBlocks SDK in the local machine:
+
+   > (sudo) make install
+
 
 ### More Quickly
 
