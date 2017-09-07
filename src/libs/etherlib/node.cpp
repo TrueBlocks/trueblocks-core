@@ -14,7 +14,7 @@ CURL *getCurl(bool cleanup=false)
 {
     static CURL *curl = NULL;
     static struct curl_slist *headers = NULL;
-    if (!curl)
+    if (!curl && !cleanup)
     {
         curl = curl_easy_init();
         if (!curl)
@@ -40,9 +40,9 @@ CURL *getCurl(bool cleanup=false)
     {
         if (headers)
             curl_slist_free_all(headers);
+        headers = NULL;
         if (curl)
             curl_easy_cleanup(curl);
-        headers = NULL;
         curl = NULL;
         return NULL;
     }
