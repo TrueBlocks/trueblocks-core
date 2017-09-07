@@ -1,0 +1,26 @@
+whenBlock argc: 3 [1:-v:j] [2:1000] 
+whenBlock -v:j 1000 
+
+  Invalid verbose level 'j'. Quitting...
+
+  Usage:    whenBlock [-a|-l|-v|-h] date / block  
+  Purpose:  Finds the nearest block prior to a JSON-formatted date, or the nearest date prior to
+           the given block. Alternatively, search for one of the special blocks listed below.
+             
+  Where:    
+	date / block          one of the special values listed below or YYYY-MM-DD-[HH[:MM[:SS]]] or a blockNumber (required)
+	-a  (--alone)         show the found block or found date unadorned (useful for scripting)
+	-l  (--list)          list special blocks timestamps and dates
+	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
+	-h  (--help)          display this help screen
+
+  Notes:
+	You may specify any of the following strings to represent 'special' blocks:
+
+	    first (0), iceage (200000), homestead (1150000), daofund (1428756), 
+	    daohack (1718497), daofork (1920000), tangerine (2463000), spurious (2675000), 
+	    stateclear (2718436), latest ()
+
+	See the README for information on customizing this list.
+
+  Powered by QuickBlocks

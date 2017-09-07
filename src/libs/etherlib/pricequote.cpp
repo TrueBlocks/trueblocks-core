@@ -11,11 +11,12 @@
  */
 #include "pricequote.h"
 #include "transaction.h"
+#include "node.h"
 
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CPriceQuote, CBaseNode, curVersion);
+IMPLEMENT_NODE(CPriceQuote, CBaseNode, dataSchema());
 
 //---------------------------------------------------------------------------
 static SFString nextPricequoteChunk(const SFString& fieldIn, bool& force, const void *data);
@@ -50,28 +51,28 @@ SFString nextPricequoteChunk(const SFString& fieldIn, bool& force, const void *d
 
         switch (tolower(fieldIn[0])) {
             case 'c':
-                if ( fieldIn % "close" ) return asStringD(pri->close);
+                if ( fieldIn % "close" ) return fmtFloat(pri->close);
                 break;
             case 'h':
-                if ( fieldIn % "high" ) return asStringD(pri->high);
+                if ( fieldIn % "high" ) return fmtFloat(pri->high);
                 break;
             case 'l':
-                if ( fieldIn % "low" ) return asStringD(pri->low);
+                if ( fieldIn % "low" ) return fmtFloat(pri->low);
                 break;
             case 'o':
-                if ( fieldIn % "open" ) return asStringD(pri->open);
+                if ( fieldIn % "open" ) return fmtFloat(pri->open);
                 break;
             case 'q':
-                if ( fieldIn % "quoteVolume" ) return asStringD(pri->quoteVolume);
+                if ( fieldIn % "quoteVolume" ) return fmtFloat(pri->quoteVolume);
                 break;
             case 't':
                 if ( fieldIn % "timestamp" ) return asStringU(pri->timestamp);
                 break;
             case 'v':
-                if ( fieldIn % "volume" ) return asStringD(pri->volume);
+                if ( fieldIn % "volume" ) return fmtFloat(pri->volume);
                 break;
             case 'w':
-                if ( fieldIn % "weightedAvg" ) return asStringD(pri->weightedAvg);
+                if ( fieldIn % "weightedAvg" ) return fmtFloat(pri->weightedAvg);
                 break;
         }
 
@@ -91,8 +92,8 @@ SFString nextPricequoteChunk(const SFString& fieldIn, bool& force, const void *d
 bool CPriceQuote::setValueByName(const SFString& fieldName, const SFString& fieldValue) {
     // EXISTING_CODE
     if ( fieldName % "date" || fieldName % "timestamp" ) {
-        timestamp = toLong(fieldValue);
-        date = dateFromTimeStamp(timestamp);
+        timestamp = toLongU(fieldValue);
+        date = dateFromTimeStamp((timestamp_t)timestamp);
         return true;
     }
     // EXISTING_CODE
@@ -131,13 +132,13 @@ bool CPriceQuote::setValueByName(const SFString& fieldName, const SFString& fiel
 //---------------------------------------------------------------------------------------------------
 void CPriceQuote::finishParse() {
     // EXISTING_CODE
-    date = dateFromTimeStamp(timestamp);
+    date = dateFromTimeStamp((timestamp_t)timestamp);
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------------------------------
 bool CPriceQuote::Serialize(SFArchive& archive) {
-    if (!archive.isReading())
+    if (archive.isWriting())
         return ((const CPriceQuote*)this)->SerializeC(archive);
 
     if (!preSerialize(archive))
@@ -179,8 +180,8 @@ void CPriceQuote::registerClass(void) {
     been_here = true;
 
     uint32_t fieldNum = 1000;
-    ADD_FIELD(CPriceQuote, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
-    ADD_FIELD(CPriceQuote, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
+    ADD_FIELD(CPriceQuote, "schema",  T_NUMBER, ++fieldNum);
+    ADD_FIELD(CPriceQuote, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CPriceQuote, "timestamp", T_NUMBER, ++fieldNum);
     ADD_FIELD(CPriceQuote, "open", T_DOUBLE, ++fieldNum);
     ADD_FIELD(CPriceQuote, "high", T_DOUBLE, ++fieldNum);
@@ -240,22 +241,35 @@ bool CPriceQuote::readBackLevel(SFArchive& archive) {
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-bool loadPriceData(CPriceQuoteArray& quotes, bool freshen, SFString& message, SFUint32 step) {
-    if (isTesting && !verbose)
-        verbose = 1;
+SFString priceDatabasePath(void) {
+    return blockCachePath("prices/poloniex.bin");
+}
 
-    SFString cacheFile = configPath("prices/poloniex.bin");
+//---------------------------------------------------------------------------
+bool loadPriceData(CPriceQuoteArray& quotes, bool freshen, SFString& message, SFUint32 step) {
+
+    SFString cacheFile = priceDatabasePath();
 
     // Load and possibly refresh the price database
     SFTime lastRead = SFTime(2015, 1, 1, 0, 0, 0);  // Ethereum didn't even exist before July 2015
     if (fileExists(cacheFile)) {
         SFArchive archive(true, NO_SCHEMA, true);
         if (archive.Lock(cacheFile, binaryReadOnly, LOCK_NOWAIT)) {
+            archive.readHeader(); // we read the header even though it may not be the current version...
+            if (!archive.isSchema(NO_SCHEMA)) // ... if it's not the current version return to begin of file
+                archive.Seek(0, SEEK_SET);
             archive >> lastRead;
             archive >> quotes;
             archive.Close();
-            if (verbose)
-                cerr << "Read " << quotes.getCount() << " existing price quotes (lastRead: " << lastRead << ")\n";
+            if (verbose) {
+                SFString date = lastRead.Format(FMT_DEFAULT);
+                SFString count = asString(quotes.getCount());
+                if (isTestMode()) {
+                    date = "Now";
+                    count = "cnt";
+                }
+                cerr << "Read " << count << " existing price quotes (lastRead: " << date << ")\n";
+            }
 
         } else {
             message = "Could not open cache file for reading: '" + cacheFile + "'";
@@ -263,6 +277,7 @@ bool loadPriceData(CPriceQuoteArray& quotes, bool freshen, SFString& message, SF
         }
 
     } else {
+        freshen=true;
         if (verbose)
             cerr << "Price database not found. Creating it.\n";
     }
@@ -278,19 +293,24 @@ bool loadPriceData(CPriceQuoteArray& quotes, bool freshen, SFString& message, SF
     cerr << "nextRead: " << nextRead << "\n";
     cerr.flush();
 #endif
+    bool reportAtEnd = verbose;
     if (nextRead > now && !freshen) {
-        msg = "Price database is up-to-date as of ";
-        verbose = false;
+        if (!isTestMode())
+            msg = "Price database is up-to-date as of ";
+        reportAtEnd = false;
 
     } else {
-        msg = "Price database has been updated to ";
+        if (!isTestMode())
+            msg = "Price database has been updated to ";
         SFTime prevLast = lastRead;
         if (freshen) {
+            if (verbose < 2) {
+                cerr << "Retrieving data...\r";
+                cerr.flush();
+            }
             timestamp_t start = toTimeStamp(nextRead);
             // Polinex will give us as much as it has on the following day. Do this to account for time zones
             timestamp_t end   = toTimeStamp(EOD(BOND(now)));
-            if (isTesting)
-                end = toTimeStamp(SFTime(2016, 8, 31, 23, 59, 59));
 
             if (verbose > 1) {
                 cerr << "start: " << dateFromTimeStamp(start) << "\n";
@@ -332,9 +352,12 @@ bool loadPriceData(CPriceQuoteArray& quotes, bool freshen, SFString& message, SF
                 if (verbose > 1) {
                     cerr << "addToArray: " << addToArray
                     << " nFields: " << nFields
-                    << " quote: " << dateFromTimeStamp(quote.timestamp)
+                    << " quote: " << dateFromTimeStamp((timestamp_t)quote.timestamp)
                     << " lastRead: " << lastRead
                     << " lastRead(ts): " << dateFromTimeStamp(toTimeStamp(lastRead)) << "\n";
+                } else {
+                    if (!isTestMode())
+                        cerr << dateFromTimeStamp((timestamp_t)quote.timestamp) << "\r";
                 }
 
                 // So as to not inadvertantly add records we already have
@@ -345,7 +368,7 @@ bool loadPriceData(CPriceQuoteArray& quotes, bool freshen, SFString& message, SF
 #ifdef DEBUGGING
                         cerr << quote.Format() << "\n";
 #endif
-                        lastRead = dateFromTimeStamp(quote.timestamp);
+                        lastRead = dateFromTimeStamp((timestamp_t)quote.timestamp);
                     }
                 }
             }
@@ -354,10 +377,11 @@ bool loadPriceData(CPriceQuoteArray& quotes, bool freshen, SFString& message, SF
         // Write the database to the cache
         if (prevLast != lastRead && freshen) {
             SFArchive archive(false, NO_SCHEMA, true);
-            if (!archive.Lock(cacheFile, binaryWriteCreate, LOCK_NOWAIT)) {
+            if (!archive.Lock(cacheFile, binaryWriteCreate, LOCK_WAIT)) {
                 message = "Could not open cache file for writing: '" + cacheFile + "'";
                 return false;
             }
+            archive.writeHeader();
             archive << lastRead;
             archive << quotes;
             archive.Close();
@@ -366,12 +390,20 @@ bool loadPriceData(CPriceQuoteArray& quotes, bool freshen, SFString& message, SF
                 cerr << "(lastRead: " << lastRead << ").\n";
             }
         } else {
-            msg = "Data not written because no new data, or no -freshen flag. ";
+            if (!isTestMode())
+                msg = "Data not written because no new data, or no -freshen flag. ";
         }
     }
 
-    if (!verbose)
-        cerr << msg << lastRead << " : " << quotes.getCount() << " records\n";
+    if (!reportAtEnd) {
+        SFString date = lastRead.Format(FMT_DEFAULT);
+        SFString count = asString(quotes.getCount());
+        if (isTestMode()) {
+            date = "Now";
+            count = "cnt";
+        }
+        cerr << msg << date << " : " << count << " records\n";
+    }
 
     if (step != 1) {
         CPriceQuoteArray ret;
@@ -386,7 +418,7 @@ bool loadPriceData(CPriceQuoteArray& quotes, bool freshen, SFString& message, SF
 
 //-----------------------------------------------------------------------------------
 uint64_t indexFromTimeStamp(const CPriceQuoteArray& quotes, timestamp_t ts) {
-    timestamp_t first = quotes[0].timestamp;
+    timestamp_t first = (timestamp_t)quotes[0].timestamp;
     if (ts < first)
         return 0;
     timestamp_t since = ts - first;
@@ -415,4 +447,3 @@ SFString asDollars(timestamp_t ts, SFUintBN weiIn) {
 }
 // EXISTING_CODE
 }  // namespace qblocks
-

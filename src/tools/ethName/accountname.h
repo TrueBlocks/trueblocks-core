@@ -25,9 +25,11 @@ typedef SFUniqueList<CAccountName*>       CAccountNameListU;
 //--------------------------------------------------------------------------
 class CAccountName : public CBaseNode {
 public:
-    SFString addr;
+    SFString symbol;
     SFString name;
+    SFString addr;
     SFString source;
+    SFString description;
 
 public:
     CAccountName(void);
@@ -38,11 +40,7 @@ public:
     DECLARE_NODE(CAccountName);
 
     // EXISTING_CODE
-    explicit CAccountName(SFString& nameIn) {
-        source = nameIn;
-        addr = toLower(nextTokenClear(source, '\t'));
-        name = nextTokenClear(source, '\t');
-    }
+    explicit CAccountName(SFString& nameIn);
     bool Match(const SFString& s1, const SFString& s2, const SFString& s3, bool matchCase, bool all);
     // EXISTING_CODE
 
@@ -90,9 +88,11 @@ inline void CAccountName::Clear(void) {
 inline void CAccountName::Init(void) {
     CBaseNode::Init();
 
-//    addr = EMPTY;
-//    name = EMPTY;
-//    source = EMPTY;
+    symbol = "";
+    name = "";
+    addr = "";
+    source = "";
+    description = "";
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -103,9 +103,11 @@ inline void CAccountName::Copy(const CAccountName& ac) {
     Clear();
     CBaseNode::Copy(ac);
 
-    addr = ac.addr;
+    symbol = ac.symbol;
     name = ac.name;
+    addr = ac.addr;
     source = ac.source;
+    description = ac.description;
 
     // EXISTING_CODE
     // EXISTING_CODE

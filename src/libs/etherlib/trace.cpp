@@ -14,7 +14,7 @@
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CTrace, CBaseNode, curVersion);
+IMPLEMENT_NODE(CTrace, CBaseNode, dataSchema());
 
 //---------------------------------------------------------------------------
 static SFString nextTraceChunk(const SFString& fieldIn, bool& force, const void *data);
@@ -67,13 +67,13 @@ SFString nextTraceChunk(const SFString& fieldIn, bool& force, const void *data) 
             case 't':
                 if ( fieldIn % "traceAddress" ) {
                     uint32_t cnt = tra->traceAddress.getCount();
-                    if (!cnt) return EMPTY;
-                    SFString ret;
+                    if (!cnt) return "";
+                    SFString retS;
                     for (uint32_t i = 0 ; i < cnt ; i++) {
-                        ret += indent() + ("\"" + tra->traceAddress[i] + "\"");
-                        ret += ((i < cnt-1) ? ",\n" : "\n");
+                        retS += indent() + ("\"" + tra->traceAddress[i] + "\"");
+                        retS += ((i < cnt-1) ? ",\n" : "\n");
                     }
-                    return ret;
+                    return retS;
                 }
                 if ( fieldIn % "transactionHash" ) return fromHash(tra->transactionHash);
                 if ( fieldIn % "transactionPosition" ) return asStringU(tra->transactionPosition);
@@ -95,14 +95,16 @@ SFString nextTraceChunk(const SFString& fieldIn, bool& force, const void *data) 
     if (fieldIn.Contains(s)) {
         SFString f = fieldIn;
         f.ReplaceAll(s,"");
-        f = tra->action.Format("[{"+f+"}]");
+        if (tra)
+            f = tra->action.Format("[{"+f+"}]");
         return f;
     }
     s = toUpper(SFString("result")) + "::";
     if (fieldIn.Contains(s)) {
         SFString f = fieldIn;
         f.ReplaceAll(s,"");
-        f = tra->result.Format("[{"+f+"}]");
+        if (tra)
+            f = tra->result.Format("[{"+f+"}]");
         return f;
     }
 
@@ -163,7 +165,7 @@ void CTrace::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CTrace::Serialize(SFArchive& archive) {
-    if (!archive.isReading())
+    if (archive.isWriting())
         return ((const CTrace*)this)->SerializeC(archive);
 
     if (!preSerialize(archive))
@@ -209,18 +211,18 @@ void CTrace::registerClass(void) {
     been_here = true;
 
     uint32_t fieldNum = 1000;
-    ADD_FIELD(CTrace, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
-    ADD_FIELD(CTrace, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
-    ADD_FIELD(CTrace, "blockHash", T_TEXT, ++fieldNum);
+    ADD_FIELD(CTrace, "schema",  T_NUMBER, ++fieldNum);
+    ADD_FIELD(CTrace, "deleted", T_BOOL,  ++fieldNum);
+    ADD_FIELD(CTrace, "blockHash", T_HASH, ++fieldNum);
     ADD_FIELD(CTrace, "blockNumber", T_NUMBER, ++fieldNum);
     ADD_FIELD(CTrace, "subtraces", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CTrace, "traceAddress", T_TEXT|TS_ARRAY, ++fieldNum);
-    ADD_FIELD(CTrace, "transactionHash", T_TEXT, ++fieldNum);
+    ADD_FIELD(CTrace, "traceAddress", T_ADDRESS|TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CTrace, "transactionHash", T_HASH, ++fieldNum);
     ADD_FIELD(CTrace, "transactionPosition", T_NUMBER, ++fieldNum);
     ADD_FIELD(CTrace, "type", T_TEXT, ++fieldNum);
     ADD_FIELD(CTrace, "error", T_TEXT, ++fieldNum);
-    ADD_FIELD(CTrace, "action", T_TEXT|TS_OBJECT, ++fieldNum);
-    ADD_FIELD(CTrace, "result", T_TEXT|TS_OBJECT, ++fieldNum);
+    ADD_FIELD(CTrace, "action", T_OBJECT, ++fieldNum);
+    ADD_FIELD(CTrace, "result", T_OBJECT, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CTrace, "schema");

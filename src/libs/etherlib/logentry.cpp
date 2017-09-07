@@ -15,14 +15,14 @@
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CLogEntry, CBaseNode, curVersion);
+IMPLEMENT_NODE(CLogEntry, CBaseNode, dataSchema());
 
 //---------------------------------------------------------------------------
 extern SFString nextLogentryChunk(const SFString& fieldIn, bool& force, const void *data);
 static SFString nextLogentryChunk_custom(const SFString& fieldIn, bool& force, const void *data);
 
 //---------------------------------------------------------------------------
-void CLogEntry::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+void CLogEntry::Format(CExportContext& ctx, const SFString& fmtIn, void *data1) const {
     if (!m_showing)
         return;
 
@@ -32,7 +32,7 @@ void CLogEntry::Format(CExportContext& ctx, const SFString& fmtIn, void *data) c
     }
 
     SFString fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, data))
+    if (handleCustomFormat(ctx, fmt, data1))
         return;
 
     while (!fmt.empty())
@@ -61,13 +61,13 @@ SFString nextLogentryChunk(const SFString& fieldIn, bool& force, const void *dat
             case 't':
                 if ( fieldIn % "topics" ) {
                     uint32_t cnt = log->topics.getCount();
-                    if (!cnt) return EMPTY;
-                    SFString ret;
+                    if (!cnt) return "";
+                    SFString retS;
                     for (uint32_t i = 0 ; i < cnt ; i++) {
-                        ret += indent() + ("\"" + fromTopic(log->topics[i]) + "\"");
-                        ret += ((i < cnt-1) ? ",\n" : "\n");
+                        retS += indent() + ("\"" + fromTopic(log->topics[i]) + "\"");
+                        retS += ((i < cnt-1) ? ",\n" : "\n");
                     }
-                    return ret;
+                    return retS;
                 }
                 break;
         }
@@ -132,7 +132,7 @@ void CLogEntry::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CLogEntry::Serialize(SFArchive& archive) {
-    if (!archive.isReading())
+    if (archive.isWriting())
         return ((const CLogEntry*)this)->SerializeC(archive);
 
     if (!preSerialize(archive))
@@ -166,9 +166,9 @@ void CLogEntry::registerClass(void) {
     been_here = true;
 
     uint32_t fieldNum = 1000;
-    ADD_FIELD(CLogEntry, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
-    ADD_FIELD(CLogEntry, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
-    ADD_FIELD(CLogEntry, "address", T_TEXT, ++fieldNum);
+    ADD_FIELD(CLogEntry, "schema",  T_NUMBER, ++fieldNum);
+    ADD_FIELD(CLogEntry, "deleted", T_BOOL,  ++fieldNum);
+    ADD_FIELD(CLogEntry, "address", T_ADDRESS, ++fieldNum);
     ADD_FIELD(CLogEntry, "data", T_TEXT, ++fieldNum);
     ADD_FIELD(CLogEntry, "logIndex", T_NUMBER, ++fieldNum);
     ADD_FIELD(CLogEntry, "topics", T_TEXT|TS_ARRAY, ++fieldNum);
@@ -203,7 +203,7 @@ SFString nextLogentryChunk_custom(const SFString& fieldIn, bool& force, const vo
 }
 
 //---------------------------------------------------------------------------
-bool CLogEntry::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+bool CLogEntry::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data1) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;

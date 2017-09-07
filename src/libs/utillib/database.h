@@ -73,8 +73,8 @@ namespace qblocks {
             return (m_fp != NULL);
         }
 
-        size_t Tell(void) const;
-        void Seek(size_t offset, size_t whence) const;
+        long Tell(void) const;
+        void Seek(long offset, int whence) const;
         bool Eof(void) const;
         char *ReadLine(char *buff, size_t maxBuff);
         void WriteLine(const SFString& str);

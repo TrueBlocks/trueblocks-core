@@ -10,6 +10,7 @@
 #include "sftime.h"
 #include "dates.h"
 #include "sfos.h"
+#include "conversions.h"
 
 namespace qblocks {
 
@@ -60,12 +61,16 @@ namespace qblocks {
     SFTime::SFTime(const tm& st, bool useDayOfWeek) {
         tm sysTime = st;
         if (!sysTime.tm_year)
-            sysTime.tm_year = Now().GetYear();
+            sysTime.tm_year = (int)Now().GetYear();
         ASSERT(sysTime.tm_year);
 
         if (useDayOfWeek) {
-            *this = SFTime(SFDate(sysTime.tm_year, sysTime.tm_mon, sysTime.tm_mday,
-                                  (sysTime.tm_wday+1)), SFTimeOfDay(sysTime));
+            *this = SFTime(SFDate(
+                                  (uint32_t)sysTime.tm_year,
+                                  (uint32_t)sysTime.tm_mon,
+                                  (uint32_t)sysTime.tm_mday,
+                                  (uint32_t)(sysTime.tm_wday+1)),
+                                  SFTimeOfDay(sysTime));
         } else {
             *this = SFTime(SFDate(sysTime), SFTimeOfDay(sysTime));
         }
@@ -550,7 +555,7 @@ namespace qblocks {
 
     //-------------------------------------------------------------------------
     SFString getPaddedDate(const SFTime& date) {
-        SFString ret = padNum2(date.GetMonth())+"_"+padNum2(date.GetDay());
+        SFString ret = padNum2((uint64_t)date.GetMonth())+"_"+padNum2((uint64_t)date.GetDay());
         if (date.GetDayOfWeek() == 1) ret += "Su";
         if (date.GetDayOfWeek() == 2) ret += "M";
         if (date.GetDayOfWeek() == 3) ret += "T";
@@ -586,7 +591,10 @@ namespace qblocks {
 
     //-------------------------------------------------------------------------
     SFTime::SFTimeOfDay::SFTimeOfDay(const tm& sysTime) {
-        m_nSeconds = sysTime.tm_hour * SECS_PER_HOUR + sysTime.tm_min * SECS_PER_MIN + sysTime.tm_sec;
+        m_nSeconds =
+                ((uint32_t)sysTime.tm_hour) * SECS_PER_HOUR +
+                (uint32_t)(sysTime.tm_min) * SECS_PER_MIN +
+                (uint32_t)(sysTime.tm_sec);
         m_nSeconds = min(SECS_PER_DAY, m_nSeconds);  // make it invalid of overrun
     }
 
@@ -633,7 +641,7 @@ namespace qblocks {
         SFString str = timeStr;  // 12:12:12 am for example
 
         for (uint32_t i = 0 ; i < 3 && str.length() > 0 ; i++) {
-            switch (fmtStr[i]) {
+            switch (fmtStr[(int)i]) {
                 case 'h':
                 case 'H':
                     hour = toLong32u(nextTokenClear(str, sep));
@@ -801,7 +809,7 @@ namespace qblocks {
     //-------------------------------------------------------------------------
     int64_t SFTime::SFDate::GetTotalDays() const {
         ASSERT(IsValid());
-        return m_nDays;
+        return (int64_t)m_nDays;
     }
 
     //-------------------------------------------------------------------------
@@ -811,14 +819,16 @@ namespace qblocks {
 
     //-------------------------------------------------------------------------
     SFTime::SFDate SFTime::SFDate::operator+(int32_t days) const {
-        int64_t res = m_nDays - 2000000000L;
+        int64_t res = ((int64_t)m_nDays) - 2000000000L;
         res += days;
         return SFDate(res);
     }
 
     //-------------------------------------------------------------------------
     SFTime::SFDate SFTime::SFDate::operator-(int32_t days) const {
-        return SFDate((m_nDays - 2000000000L) - days);
+        return SFDate(
+                      int64_t(m_nDays - 2000000000L) -
+                      days);
     }
 
     //-------------------------------------------------------------------------
@@ -899,12 +909,15 @@ namespace qblocks {
         if (days > 2146905911L)  // Largest valid GD N
             m_nDays = (SFUint32)LONG_MIN;
         else
-            m_nDays = days + 2000000000L;
+            m_nDays = (SFUint32)(((int64_t)days) + 2000000000L);
     }
 
     //-------------------------------------------------------------------------
     SFTime::SFDate::SFDate(const tm& sysTime) {
-        setValues(sysTime.tm_year, sysTime.tm_mon, sysTime.tm_mday);
+        setValues(
+                  (uint32_t)sysTime.tm_year,
+                  (uint32_t)sysTime.tm_mon,
+                  (uint32_t)sysTime.tm_mday);
     }
 
     //-------------------------------------------------------------------------
@@ -940,7 +953,7 @@ namespace qblocks {
 
         SFString str = dateStr;  // 12-10-1921 for example
         for (uint32_t i = 0 ; i < 3 && str.length() > 0 ; i++) {
-            switch (fmtStr[i]) {
+            switch (fmtStr[(int)i]) {
                 case 'd':
                 case 'D':
                     day = toLong32u(nextTokenClear(str, sep));
@@ -993,8 +1006,12 @@ namespace qblocks {
         if (m >= JANUARY && m <= DECEMBER && d <= DaysInMonth(y, m)) {
             // The following algorithm has been taken from from an article in
             // the March 1993 issue of the Windows / Dos Developers Journal.
-            m_nDays = (y-1) * 365 + lfloor((int32_t)(y-1), 4);
-            m_nDays += lfloor((int32_t)(y-1), 400) - lfloor((int32_t)(y-1), 100);
+            m_nDays = (y-1)
+                        * 365
+                        + (SFUint32)lfloor((int32_t)(y-1), 4);
+
+            m_nDays += (SFUint32)lfloor((int32_t)(y-1), 400) -
+                        (SFUint32)lfloor((int32_t)(y-1), 100);
 
             --m;
             while (m) {
@@ -1013,7 +1030,7 @@ namespace qblocks {
         ASSERT(IsValid());
 
         SFDateStruct ds;
-        int64_t gdn  = m_nDays - 1999422265;
+        int64_t gdn  = int64_t(m_nDays - 1999422265);
         int64_t y4   = 1461;
         int64_t y400 = 146100 - 3;
         int64_t y100 = 36525 - 1;

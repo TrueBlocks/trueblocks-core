@@ -14,7 +14,7 @@
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CTreeRoot, CBaseNode, curVersion);
+IMPLEMENT_NODE(CTreeRoot, CBaseNode, dataSchema());
 
 //---------------------------------------------------------------------------
 static SFString nextTreerootChunk(const SFString& fieldIn, bool& force, const void *data);
@@ -49,7 +49,7 @@ SFString nextTreerootChunk(const SFString& fieldIn, bool& force, const void *dat
 
         switch (tolower(fieldIn[0])) {
             case 'm':
-            return EMPTY;
+            return "";
 //                if ( fieldIn % "m_root" ) { expContext().noFrst=true; return tre->m_root.Format(); }
                 break;
         }
@@ -90,7 +90,7 @@ void CTreeRoot::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CTreeRoot::Serialize(SFArchive& archive) {
-    if (!archive.isReading())
+    if (archive.isWriting())
         return ((const CTreeRoot*)this)->SerializeC(archive);
 
     if (!preSerialize(archive))
@@ -118,8 +118,8 @@ void CTreeRoot::registerClass(void) {
     been_here = true;
 
     uint32_t fieldNum = 1000;
-    ADD_FIELD(CTreeRoot, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
-    ADD_FIELD(CTreeRoot, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
+    ADD_FIELD(CTreeRoot, "schema",  T_NUMBER, ++fieldNum);
+    ADD_FIELD(CTreeRoot, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CTreeRoot, "m_root", T_POINTER, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like

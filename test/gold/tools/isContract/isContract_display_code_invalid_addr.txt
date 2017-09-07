@@ -1,0 +1,17 @@
+isContract argc: 3 [1:0xrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr] [2:-d] 
+isContract 0xrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr -d 
+
+  0xrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr does not appear to be a valid Ethereum address.
+
+
+  Usage:    isContract [-d|-n|-v|-h] addr[s]  
+  Purpose:  Returns 'true' or 'false' if the given address(es) holds byte code (optionally displays the code).
+             
+  Where:    
+	addr[s]               a space-separated list of one or more Ethereum addresses (required)
+	-d  (--display)       display the byte code at the address(es)
+	-n  (--nodiff)        return 'true' if (exactly) two Ethereum addresses have identical code
+	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
+	-h  (--help)          display this help screen
+
+  Powered by QuickBlocks

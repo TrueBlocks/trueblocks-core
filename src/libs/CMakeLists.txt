@@ -8,9 +8,14 @@ project (libs)
 # message (WARNING  "*** Entering libs folder ***")
 
 # Compile the libraries in this order
-add_subdirectory(utillib)
-add_subdirectory(abilib)
-add_subdirectory(etherlib)
-add_subdirectory(acctlib)
-add_subdirectory(tokenlib)
-add_subdirectory(walletlib)
+add_subdirectory (utillib)
+add_subdirectory (abilib)
+add_subdirectory (etherlib)
+add_subdirectory (acctlib)
+add_subdirectory (tokenlib)
+add_subdirectory (walletlib)
+add_subdirectory (test-libs)
+
+# Headers installation steps
+file(GLOB HEADER_FILES "include/*.h")
+install (FILES ${HEADER_FILES} DESTINATION include)

@@ -13,7 +13,7 @@
 #include "etherlib.h"
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(QConfirmationNeededEvent, CLogEntry, curVersion);
+IMPLEMENT_NODE(QConfirmationNeededEvent, CLogEntry, dataSchema());
 
 //---------------------------------------------------------------------------
 static SFString nextConfirmationneededeventChunk(const SFString& fieldIn, bool& force, const void *data);
@@ -114,7 +114,7 @@ void QConfirmationNeededEvent::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool QConfirmationNeededEvent::Serialize(SFArchive& archive) {
-    if (!archive.isReading())
+    if (archive.isWriting())
         return ((const QConfirmationNeededEvent*)this)->SerializeC(archive);
 
     CLogEntry::Serialize(archive);
@@ -150,12 +150,12 @@ void QConfirmationNeededEvent::registerClass(void) {
     CLogEntry::registerClass();
 
     uint32_t fieldNum = 1000;
-    ADD_FIELD(QConfirmationNeededEvent, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
-    ADD_FIELD(QConfirmationNeededEvent, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
+    ADD_FIELD(QConfirmationNeededEvent, "schema",  T_NUMBER, ++fieldNum);
+    ADD_FIELD(QConfirmationNeededEvent, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(QConfirmationNeededEvent, "operation", T_TEXT, ++fieldNum);
-    ADD_FIELD(QConfirmationNeededEvent, "initiator", T_TEXT, ++fieldNum);
+    ADD_FIELD(QConfirmationNeededEvent, "initiator", T_ADDRESS, ++fieldNum);
     ADD_FIELD(QConfirmationNeededEvent, "value", T_NUMBER, ++fieldNum);
-    ADD_FIELD(QConfirmationNeededEvent, "to", T_TEXT, ++fieldNum);
+    ADD_FIELD(QConfirmationNeededEvent, "to", T_ADDRESS, ++fieldNum);
     ADD_FIELD(QConfirmationNeededEvent, "data", T_TEXT, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like

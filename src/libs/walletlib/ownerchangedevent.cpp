@@ -13,7 +13,7 @@
 #include "etherlib.h"
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(QOwnerChangedEvent, CLogEntry, curVersion);
+IMPLEMENT_NODE(QOwnerChangedEvent, CLogEntry, dataSchema());
 
 //---------------------------------------------------------------------------
 static SFString nextOwnerchangedeventChunk(const SFString& fieldIn, bool& force, const void *data);
@@ -96,7 +96,7 @@ void QOwnerChangedEvent::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool QOwnerChangedEvent::Serialize(SFArchive& archive) {
-    if (!archive.isReading())
+    if (archive.isWriting())
         return ((const QOwnerChangedEvent*)this)->SerializeC(archive);
 
     CLogEntry::Serialize(archive);
@@ -126,10 +126,10 @@ void QOwnerChangedEvent::registerClass(void) {
     CLogEntry::registerClass();
 
     uint32_t fieldNum = 1000;
-    ADD_FIELD(QOwnerChangedEvent, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
-    ADD_FIELD(QOwnerChangedEvent, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
-    ADD_FIELD(QOwnerChangedEvent, "oldOwner", T_TEXT, ++fieldNum);
-    ADD_FIELD(QOwnerChangedEvent, "newOwner", T_TEXT, ++fieldNum);
+    ADD_FIELD(QOwnerChangedEvent, "schema",  T_NUMBER, ++fieldNum);
+    ADD_FIELD(QOwnerChangedEvent, "deleted", T_BOOL,  ++fieldNum);
+    ADD_FIELD(QOwnerChangedEvent, "oldOwner", T_ADDRESS, ++fieldNum);
+    ADD_FIELD(QOwnerChangedEvent, "newOwner", T_ADDRESS, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(QOwnerChangedEvent, "schema");

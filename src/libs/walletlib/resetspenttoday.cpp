@@ -13,7 +13,7 @@
 #include "etherlib.h"
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(QResetSpentToday, CTransaction, curVersion);
+IMPLEMENT_NODE(QResetSpentToday, CTransaction, dataSchema());
 
 //---------------------------------------------------------------------------
 static SFString nextResetspenttodayChunk(const SFString& fieldIn, bool& force, const void *data);
@@ -84,7 +84,7 @@ void QResetSpentToday::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool QResetSpentToday::Serialize(SFArchive& archive) {
-    if (!archive.isReading())
+    if (archive.isWriting())
         return ((const QResetSpentToday*)this)->SerializeC(archive);
 
     CTransaction::Serialize(archive);
@@ -109,8 +109,8 @@ void QResetSpentToday::registerClass(void) {
     CTransaction::registerClass();
 
     uint32_t fieldNum = 1000;
-    ADD_FIELD(QResetSpentToday, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
-    ADD_FIELD(QResetSpentToday, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
+    ADD_FIELD(QResetSpentToday, "schema",  T_NUMBER, ++fieldNum);
+    ADD_FIELD(QResetSpentToday, "deleted", T_BOOL,  ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(QResetSpentToday, "schema");

@@ -1,0 +1,48 @@
+dataUpgrade argc: 2 [1:CIncomeStatement] 
+dataUpgrade CIncomeStatement 
+--------------------------------------------------------------------------------
+className: CIncomeStatement
+objectSize: 192
+classSchema: 513
+baseClass: CBaseNode
+	fieldName: schema
+	  fieldID: 1001
+	  fieldType: T_NUMBER TS_NUMERAL 65548
+	  hidden: 1
+	fieldName: deleted
+	  fieldID: 1002
+	  fieldType: T_BOOL TS_NUMERAL 65546
+	  hidden: 1
+	fieldName: begBal
+	  fieldID: 1003
+	  fieldType: T_WEI TS_NUMERAL 4259858 TS_BIGNUM 4259858
+	  hidden: 0
+	fieldName: inflow
+	  fieldID: 1004
+	  fieldType: T_WEI TS_NUMERAL 4259858 TS_BIGNUM 4259858
+	  hidden: 0
+	fieldName: outflow
+	  fieldID: 1005
+	  fieldType: T_WEI TS_NUMERAL 4259858 TS_BIGNUM 4259858
+	  hidden: 0
+	fieldName: gasCost
+	  fieldID: 1006
+	  fieldType: T_WEI TS_NUMERAL 4259858 TS_BIGNUM 4259858
+	  hidden: 0
+	fieldName: endBal
+	  fieldID: 1007
+	  fieldType: T_WEI TS_NUMERAL 4259858 TS_BIGNUM 4259858
+	  hidden: 0
+	fieldName: blockNum
+	  fieldID: 1008
+	  fieldType: T_NUMBER TS_NUMERAL 65548
+	  hidden: 0
+{
+  "begBal": 0,
+  "inflow": 0,
+  "outflow": 0,
+  "gasCost": 0,
+  "endBal": 0,
+  "blockNum": 0
+}
+

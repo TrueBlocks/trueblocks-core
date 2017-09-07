@@ -8,10 +8,9 @@
  *------------------------------------------------------------------------*/
 
 #include "sfos.h"
+#include "conversions_base.h"
 
 namespace qblocks {
-
-    using timestamp_t = time_t;
 
     class SFTime;
     enum MONTH {
@@ -187,9 +186,6 @@ namespace qblocks {
     };
 
     //-----------------------------------------------------------------------------------
-    extern SFTime dateFromTimeStamp(timestamp_t tsIn);
-    extern timestamp_t toTimeStamp(const SFTime& timeIn);
-    extern SFTime snagDate(const SFString& str, int dir = 0);  // -1 BOD, 0 MIDDAY, 1 EOD
     extern SFTime Now(void);
 
     //---------------------------------------------------------------------------------------------
@@ -197,4 +193,6 @@ namespace qblocks {
 
     extern const SFTime latestDate;
     extern const SFTime earliestDate;
+
+    typedef SFArrayBase<SFTime> SFTimeArray;
 }  // namespace qblocks

@@ -12,7 +12,7 @@
 #include "accountname.h"
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CAccountName, CBaseNode, curVersion);
+IMPLEMENT_NODE(CAccountName, CBaseNode, dataSchema());
 
 //---------------------------------------------------------------------------
 static SFString nextAccountnameChunk(const SFString& fieldIn, bool& force, const void *data);
@@ -49,10 +49,14 @@ SFString nextAccountnameChunk(const SFString& fieldIn, bool& force, const void *
             case 'a':
                 if ( fieldIn % "addr" ) return acc->addr;
                 break;
+            case 'd':
+                if ( fieldIn % "description" ) return acc->description;
+                break;
             case 'n':
                 if ( fieldIn % "name" ) return acc->name;
                 break;
             case 's':
+                if ( fieldIn % "symbol" ) return acc->symbol;
                 if ( fieldIn % "source" ) return acc->source;
                 break;
         }
@@ -78,10 +82,14 @@ bool CAccountName::setValueByName(const SFString& fieldName, const SFString& fie
         case 'a':
             if ( fieldName % "addr" ) { addr = fieldValue; return true; }
             break;
+        case 'd':
+            if ( fieldName % "description" ) { description = fieldValue; return true; }
+            break;
         case 'n':
             if ( fieldName % "name" ) { name = fieldValue; return true; }
             break;
         case 's':
+            if ( fieldName % "symbol" ) { symbol = fieldValue; return true; }
             if ( fieldName % "source" ) { source = fieldValue; return true; }
             break;
         default:
@@ -98,15 +106,17 @@ void CAccountName::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CAccountName::Serialize(SFArchive& archive) {
-    if (!archive.isReading())
+    if (archive.isWriting())
         return ((const CAccountName*)this)->SerializeC(archive);
 
     if (!preSerialize(archive))
         return false;
 
-    archive >> addr;
+    archive >> symbol;
     archive >> name;
+    archive >> addr;
     archive >> source;
+    archive >> description;
     finishParse();
     return true;
 }
@@ -116,9 +126,11 @@ bool CAccountName::SerializeC(SFArchive& archive) const {
     if (!preSerializeC(archive))
         return false;
 
-    archive << addr;
+    archive << symbol;
     archive << name;
+    archive << addr;
     archive << source;
+    archive << description;
 
     return true;
 }
@@ -130,11 +142,13 @@ void CAccountName::registerClass(void) {
     been_here = true;
 
     uint32_t fieldNum = 1000;
-    ADD_FIELD(CAccountName, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
-    ADD_FIELD(CAccountName, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
-    ADD_FIELD(CAccountName, "addr", T_TEXT, ++fieldNum);
+    ADD_FIELD(CAccountName, "schema",  T_NUMBER, ++fieldNum);
+    ADD_FIELD(CAccountName, "deleted", T_BOOL,  ++fieldNum);
+    ADD_FIELD(CAccountName, "symbol", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccountName, "name", T_TEXT, ++fieldNum);
+    ADD_FIELD(CAccountName, "addr", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccountName, "source", T_TEXT, ++fieldNum);
+    ADD_FIELD(CAccountName, "description", T_TEXT, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CAccountName, "schema");
@@ -182,5 +196,19 @@ bool CAccountName::readBackLevel(SFArchive& archive) {
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
+CAccountName::CAccountName(SFString& strIn) {
+    if (countOf('\t',strIn) == 2) {
+        // previous format
+        source = strIn;
+        addr = toLower(nextTokenClear(source, '\t'));
+        name = nextTokenClear(source, '\t');
+    } else {
+        description = strIn;
+        symbol = nextTokenClear(description, '\t');
+        name = nextTokenClear(description, '\t');
+        addr = toLower(nextTokenClear(description, '\t'));
+        source = nextTokenClear(description, '\t');
+    }
+}
 // EXISTING_CODE
 

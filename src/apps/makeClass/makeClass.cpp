@@ -5,11 +5,13 @@
  *
  * The LICENSE at the root of this repo details your rights (if any)
  *------------------------------------------------------------------------*/
-#include "makeClass.h"
+#include "abilib.h"
+#include "options.h"
 
 //------------------------------------------------------------------------------------------------------------
-extern void establishFiles(const SFString& className);
-extern void generateCode(CToml& classFile, const SFString& dataFile, const SFString& ns);
+extern void     establishFiles(const SFString& className);
+extern void     generateCode(CToml& classFile, const SFString& dataFile, const SFString& ns);
+extern SFString convertTypes(const SFString& inStr);
 extern SFString getCaseCode(const SFString& fieldCase);
 extern SFString getCaseSetCode(const SFString& fieldCase);
 extern SFString short3(const SFString& in);
@@ -52,15 +54,10 @@ int main(int argc, const char *argv[]) {
                     }
 
                 } else if (options.isEdit) {
-                    SFString cmd = "open \"" + fileName + "\"";
-                    if (SFString(getenv("TEST_MODE")) == "true") {
-                        cout << cmd << "\n";
-                    } else {
-                        if (system(cmd.c_str())) {}  // do not remove. Silences compiler warnings
-                    }
+                    editFile(fileName);
 
                 } else if (options.isRemove) {
-                    if (SFString(getenv("TEST_MODE")) == "true") {
+                    if (isTestMode()) {
                         cout << "Are you sure you want to remove " << className
                                 << ".cpp and " << className << ".h? (y=remove files, otherwise ignore): ";
                         cout << "Testing, but would have deleted " << className << ".[ch]*\n";
@@ -71,12 +68,12 @@ int main(int argc, const char *argv[]) {
                         return usage("Files not removed. Quitting...");
                     }
                 } else {
-                    if (SFString(getenv("TEST_MODE")) == "true")
+                    if (isTestMode())
                         cout << "Would run class definition file: " << className << " (not run, testing)\n";
                     else if (verbose)
                         cerr << "Running class definition file '" << className << "'\n";
 
-                    if (SFString(getenv("TEST_MODE")) != "true") {
+                    if (!isTestMode()) {
                         if (classFile.getConfigBool("settings", "disabled", false)) {
                             if (verbose)
                                 cerr << "Disabled class not processed " << className << "\n";
@@ -197,7 +194,7 @@ void generateCode(CToml& classFile, const SFString& dataFile, const SFString& ns
         SFString caseFmt = "[{TYPE}]+[{NAME}]-[{ISPOINTER}]~[{ISOBJECT}]|";
         SFString decFmt  = "\t[{TYPE}] *[{NAME}];\n";
         if (!fld->isPointer) {
-            decFmt.Replace("*", "\"\"");
+            decFmt.Replace("*", "");
         }
         SFString archFmt = "\tarchive >> [{NAME}];\n";
         if (fld->isPointer) {
@@ -207,38 +204,44 @@ void generateCode(CToml& classFile, const SFString& dataFile, const SFString& ns
         if (fld->isPointer) {
             copyFmt = "\tif ([+SHORT+.{NAME}])\n\t\t*[{NAME}] = *+SHORT+.[{NAME}];\n";
         }
-        SFString badSet = "/""/\t[{NAME}] = ??; /""* unknown type: [{TYPE}] */\n";
+        SFString badSet = "//\t[{NAME}] = ??; /""* unknown type: [{TYPE}] */\n";
         SFString setFmt = "\t[{NAME}]";
         SFString regFmt = "\tADD_FIELD(CL_NM, \"[{NAME}]\", T_TEXT, ++fieldNum);\n", regType;
         SFString subClsFmt = STR_SUBCLASS;
 
-               if (fld->type == "bloom")    { setFmt = "\t[{NAME}] = [{DEF}];\n"; regType = "T_BLOOM";
-        } else if (fld->type == "wei")      { setFmt = "\t[{NAME}] = [{DEF}];\n"; regType = "T_WEI";
-        } else if (fld->type == "string")   { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_TEXT";
-        } else if (fld->type == "addr")     { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_TEXT";
-        } else if (fld->type == "address")  { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_TEXT";
-        } else if (fld->type == "hash")     { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_TEXT";
-        } else if (fld->type == "bytes32")  { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_TEXT";
-        } else if (fld->type == "bytes")    { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_TEXT";
-        } else if (fld->type == "int8")     { setFmt = "\t[{NAME}] = [{DEF}];\n"; regType = "T_NUMBER";
-        } else if (fld->type == "int16")    { setFmt = "\t[{NAME}] = [{DEF}];\n"; regType = "T_NUMBER";
-        } else if (fld->type == "int32")    { setFmt = "\t[{NAME}] = [{DEF}];\n"; regType = "T_NUMBER";
-        } else if (fld->type == "int64")    { setFmt = "\t[{NAME}] = [{DEF}];\n"; regType = "T_NUMBER";
-        } else if (fld->type == "int256")   { setFmt = "\t[{NAME}] = [{DEF}];\n"; regType = "T_NUMBER";
-        } else if (fld->type == "uint8")    { setFmt = "\t[{NAME}] = [{DEF}];\n"; regType = "T_NUMBER";
-        } else if (fld->type == "uint16")   { setFmt = "\t[{NAME}] = [{DEF}];\n"; regType = "T_NUMBER";
-        } else if (fld->type == "uint32")   { setFmt = "\t[{NAME}] = [{DEF}];\n"; regType = "T_NUMBER";
-        } else if (fld->type == "uint64")   { setFmt = "\t[{NAME}] = [{DEF}];\n"; regType = "T_NUMBER";
-        } else if (fld->type == "uint256")  { setFmt = "\t[{NAME}] = [{DEF}];\n"; regType = "T_NUMBER";
-        } else if (fld->type == "bbool")    { setFmt = "\t[{NAME}] = [{DEF}];\n"; regType = "T_BOOL";
-        } else if (fld->type == "bool")     { setFmt = "\t[{NAME}] = [{DEF}];\n"; regType = "T_BOOL";
-        } else if (fld->type == "float")    { setFmt = "\t[{NAME}] = [{DEFF}];\n"; regType = "T_FLOAT";
-        } else if (fld->type == "double")   { setFmt = "\t[{NAME}] = [{DEFF}];\n"; regType = "T_DOUBLE";
-        } else if (fld->type == "time")     { setFmt = "\t[{NAME}] = [{DEFT}];\n"; regType = "T_DATE";
-        } else if (fld->isPointer)          { setFmt = "\t[{NAME}] = [{DEFP}];\n"; regType = "T_POINTER";
-        } else if (fld->type.Contains("Array")) { setFmt = badSet; regType = "T_TEXT|TS_ARRAY";
-        } else if (fld->isObject)           { setFmt = badSet; regType = "T_TEXT|TS_OBJECT";
-        } else                              { setFmt = badSet; regType = "T_TEXT"; }
+               if (fld->type == "bloom")        { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_BLOOM";
+        } else if (fld->type == "wei")          { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_WEI";
+        } else if (fld->type == "string")       { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_TEXT";
+        } else if (fld->type == "addr")         { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_ADDRESS";
+        } else if (fld->type == "address")      { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_ADDRESS";
+        } else if (fld->type == "hash")         { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_HASH";
+        } else if (fld->type == "bytes32")      { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_TEXT";
+        } else if (fld->type == "bytes")        { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_TEXT";
+        } else if (fld->type == "int8")         { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
+        } else if (fld->type == "int16")        { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
+        } else if (fld->type == "int32")        { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
+        } else if (fld->type == "int64")        { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
+        } else if (fld->type == "int256")       { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
+        } else if (fld->type == "uint8")        { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
+        } else if (fld->type == "uint16")       { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
+        } else if (fld->type == "uint32")       { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
+        } else if (fld->type == "uint64")       { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
+        } else if (fld->type == "uint256")      { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
+        } else if (fld->type == "bbool")        { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_BOOL";
+        } else if (fld->type == "bool")         { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_BOOL";
+        } else if (fld->type == "double")       { setFmt = "\t[{NAME}] = [{DEFF}];\n"; regType = "T_DOUBLE";
+        } else if (fld->type == "time")         { setFmt = "\t[{NAME}] = [{DEFT}];\n"; regType = "T_DATE";
+        } else if (fld->isPointer)              { setFmt = "\t[{NAME}] = [{DEFP}];\n"; regType = "T_POINTER";
+        } else if (fld->isObject)               { setFmt = "\t[{NAME}].Init();\n";     regType = "T_TEXT|TS_OBJECT";
+        } else                                  { setFmt = badSet; regType = "T_TEXT"; }
+
+        if (fld->type.Contains("Array")) {
+            setFmt = "\t[{NAME}].Clear();\n";
+            if (fld->type.Contains("String"))
+                regType = "T_TEXT|TS_ARRAY";
+            else
+                regType = "T_OBJECT|TS_ARRAY";
+        }
 
 #define getDefault(a) (fld->strDefault.empty() ? (a) : fld->strDefault )
         setFmt.Replace("[{DEFS}]", getDefault("\"\""));
@@ -246,11 +249,6 @@ void generateCode(CToml& classFile, const SFString& dataFile, const SFString& ns
         setFmt.Replace("[{DEFF}]", getDefault("0.0"));
         setFmt.Replace("[{DEFT}]", getDefault("earliestDate"));
         setFmt.Replace("[{DEFP}]", getDefault("NULL"));
-
-        // string types are already empty
-        setFmt.Replace("\t[{NAME}] = \"\";\n", "/""/\t[{NAME}] = \"\";\n");
-
-//        if (fld->type.Contains("Array")) regType += "|TS_ARRAY";
 
         fieldReg += fld->Format(regFmt).Substitute("T_TEXT", regType);
         fieldReg.ReplaceAll("CL_NM", "[{CLASS_NAME}]");
@@ -316,7 +314,7 @@ void generateCode(CToml& classFile, const SFString& dataFile, const SFString& ns
     headSource.ReplaceAll("[{SHORT}]",          baseLower.Left(2));
     headSource.ReplaceAll("[{SCOPE}]",          scope);
     headSource.ReplaceAll("[{NAMESPACE1}]",     (ns.empty() ? "" : "\nnamespace qblocks {\n\n"));
-    headSource.ReplaceAll("[{NAMESPACE2}]",     (ns.empty() ? "" : "}  /""/ namespace qblocks\n"));
+    headSource.ReplaceAll("[{NAMESPACE2}]",     (ns.empty() ? "" : "}  // namespace qblocks\n"));
     writeTheCode(headerFile, headSource, ns);
 
     //------------------------------------------------------------------------------------------------
@@ -359,7 +357,7 @@ void generateCode(CToml& classFile, const SFString& dataFile, const SFString& ns
     srcSource.ReplaceAll("[{SHORT}]",           baseLower.Left(2));
     srcSource.ReplaceAll("[{SCOPE}]",           scope);
     srcSource.ReplaceAll("[{NAMESPACE1}]",      (ns.empty() ? "" : "\nnamespace qblocks {\n\n"));
-    srcSource.ReplaceAll("[{NAMESPACE2}]",      (ns.empty() ? "" : "}  /""/ namespace qblocks\n"));
+    srcSource.ReplaceAll("[{NAMESPACE2}]",      (ns.empty() ? "" : "}  // namespace qblocks\n"));
     writeTheCode(srcFile, srcSource, ns);
 }
 
@@ -420,11 +418,8 @@ SFString getCaseCode(const SFString& fieldCase) {
                     } else if (type == "int256") {
                         caseCode += " return asStringBN([{SHORT3}]->" + field + ");";
 
-                    } else if (type == "float") {
-                        caseCode += " return asStringF([{SHORT3}]->" + field + ");";
-
                     } else if (type == "double") {
-                        caseCode += " return asStringD([{SHORT3}]->" + field + ");";
+                        caseCode += " return fmtFloat([{SHORT3}]->" + field + ");";
 
                     } else if (type.Contains("SFStringArray")) {
                         SFString str = STR_CASE_CODE_STRINGARRAY;
@@ -515,9 +510,6 @@ SFString getCaseSetCode(const SFString& fieldCase) {
                     } else if (type == "uint256") {
                         caseCode +=  " { " + field + " = toUnsigned(fieldValue); return true; }";
 
-                    } else if (type == "float") {
-                        caseCode +=  " { " + field + " = toFloat(fieldValue); return true; }";
-
                     } else if (type == "double") {
                         caseCode +=  " { " + field + " = toDouble(fieldValue); return true; }";
 
@@ -559,12 +551,12 @@ const char* STR_CASE_CODE_ARRAY =
 " {\n"
 "[BTAB]\t\tuint32_t cnt = [{SHORT3}]->[{FIELD}].getCount();\n"
 "[BTAB]\t\tif (!cnt) return \"\";\n"
-"[BTAB]\t\tSFString ret;\n"
+"[BTAB]\t\tSFString retS;\n"
 "[BTAB]\t\tfor (uint32_t i = 0 ; i < cnt ; i++) {\n"
-"[BTAB]\t\t\tret += [{SHORT3}]->[{FIELD}][i].Format();\n"
-"[BTAB]\t\t\tret += ((i < cnt - 1) ? \",\\n\" : \"\\n\");\n"
+"[BTAB]\t\t\tretS += [{SHORT3}]->[{FIELD}][i].Format();\n"
+"[BTAB]\t\t\tretS += ((i < cnt - 1) ? \",\\n\" : \"\\n\");\n"
 "[BTAB]\t\t}\n"
-"[BTAB]\t\treturn ret;\n"
+"[BTAB]\t\treturn retS;\n"
 "[BTAB]\t}";
 
 //------------------------------------------------------------------------------------------------------------
@@ -572,12 +564,12 @@ const char* STR_CASE_CODE_STRINGARRAY =
 " {\n"
 "[BTAB]\t\tuint32_t cnt = [{SHORT3}]->[{FIELD}].getCount();\n"
 "[BTAB]\t\tif (!cnt) return \"\";\n"
-"[BTAB]\t\tSFString ret;\n"
+"[BTAB]\t\tSFString retS;\n"
 "[BTAB]\t\tfor (uint32_t i = 0 ; i < cnt ; i++) {\n"
-"[BTAB]\t\t\tret += indent() + (\"\\\"\" + [{SHORT3}]->[{FIELD}][i] + \"\\\"\");\n"
-"[BTAB]\t\t\tret += ((i < cnt-1) ? \",\\n\" : \"\\n\");\n"
+"[BTAB]\t\t\tretS += indent() + (\"\\\"\" + [{SHORT3}]->[{FIELD}][i] + \"\\\"\");\n"
+"[BTAB]\t\t\tretS += ((i < cnt-1) ? \",\\n\" : \"\\n\");\n"
 "[BTAB]\t\t}\n"
-"[BTAB]\t\treturn ret;\n"
+"[BTAB]\t\treturn retS;\n"
 "[BTAB]\t}";
 
 //------------------------------------------------------------------------------------------------------------

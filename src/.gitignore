@@ -1,8 +1,7 @@
 bin
 build
 design.txt
-makefile
-other
+#makefile
 *.mak
 *.a
 *.twb

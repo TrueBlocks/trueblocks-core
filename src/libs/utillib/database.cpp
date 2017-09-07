@@ -11,6 +11,7 @@
 #include "dates.h"
 #include "sfos.h"
 #include "filenames.h"
+#include "conversions.h"
 
 namespace qblocks {
 
@@ -215,7 +216,7 @@ namespace qblocks {
         // In some cases (for example when can't open event file because it has not yet
         // been created) this may not be an error -- Lock should set an error flag
         // which this guy should read and do right
-        return asString(m_error) + ": " + m_errorMsg;
+        return asStringU(m_error) + ": " + m_errorMsg;
     }
 
     //----------------------------------------------------------------------
@@ -263,13 +264,13 @@ namespace qblocks {
     }
 
     //----------------------------------------------------------------------
-    void CSharedResource::Seek(size_t offset, size_t whence) const {
+    void CSharedResource::Seek(long offset, int whence) const {
         ASSERT(isOpen());
-        fseek(m_fp, offset, static_cast<int>(whence));
+        fseek(m_fp, offset, whence);
     }
 
     //----------------------------------------------------------------------
-    size_t CSharedResource::Tell(void) const {
+    long CSharedResource::Tell(void) const {
         ASSERT(isOpen());
         return ftell(m_fp);
     }
@@ -386,7 +387,7 @@ namespace qblocks {
             while (nLines < maxLines && lock.ReadLine(buff, 4096)) {
                 nChars += strlen(buff);
                 if (buffer) {
-                    int len = static_cast<int>(strlen(buff));
+                    size_t len = strlen(buff);
                     strncpy(s, buff, len);
                     s += len;
                 }
@@ -485,9 +486,10 @@ namespace qblocks {
         }
 
         SFString tabs;
-        int32_t nTabs = 4;
+        int nTabs = 4;
         while (nTabs >= 0) {
-            tabs = SFString('\t', nTabs--);
+            tabs = SFString('\t', (size_t)nTabs);
+            nTabs--;
             //--------------------------------------------------------------------------------------
             while (existingCode.Contains(tabs + "// EXISTING_CODE")) {
                 existingCode.Replace(tabs + "// EXISTING_CODE", "<code>");

@@ -15,7 +15,7 @@
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CTraceResult, CBaseNode, curVersion);
+IMPLEMENT_NODE(CTraceResult, CBaseNode, dataSchema());
 
 //---------------------------------------------------------------------------
 static SFString nextTraceresultChunk(const SFString& fieldIn, bool& force, const void *data);
@@ -95,7 +95,7 @@ void CTraceResult::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CTraceResult::Serialize(SFArchive& archive) {
-    if (!archive.isReading())
+    if (archive.isWriting())
         return ((const CTraceResult*)this)->SerializeC(archive);
 
     if (!preSerialize(archive))
@@ -125,9 +125,9 @@ void CTraceResult::registerClass(void) {
     been_here = true;
 
     uint32_t fieldNum = 1000;
-    ADD_FIELD(CTraceResult, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
-    ADD_FIELD(CTraceResult, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
-    ADD_FIELD(CTraceResult, "gasUsed", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CTraceResult, "schema",  T_NUMBER, ++fieldNum);
+    ADD_FIELD(CTraceResult, "deleted", T_BOOL,  ++fieldNum);
+    ADD_FIELD(CTraceResult, "gasUsed", T_GAS, ++fieldNum);
     ADD_FIELD(CTraceResult, "output", T_TEXT, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like

@@ -4,8 +4,6 @@ test00.toml
 [version]
 	version=0:9:0
 [settings]
-	cachePath=/Users/jrush/.quickBlocks/slurps/
-	api_key=68E1BQYW85ETVNHKWV27B8N5HYICEHEPH1
 	api_provider=EtherScan
 	api_url=http://etherscan.io/apis
 	update_freq=300
@@ -50,3 +48,4 @@ test00.toml
 	fmt_split_record=[{NAME}]\t[{FIELDS}]\n
 	fmt_split_field=\t[{FIELD}]
 
+Done.

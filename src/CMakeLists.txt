@@ -1,8 +1,16 @@
-# ----------------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------------------
 # This file belongs to the QuickBlocks project from QuickBlocks.io
-# ----------------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------------------
 # Minimum cmake version supported
 cmake_minimum_required (VERSION 2.6)
+
+# ----------------------------------------------------------------------------------------
+# Define default installation PATH
+if(NOT WIN32)
+    set(CMAKE_INSTALL_PREFIX "/usr/local/qblocks")
+else()
+    message(ERROR "Windows build is not supported yet")
+endif()
 
 # ----------------------------------------------------------------------------------------
 # folder project
@@ -27,6 +35,8 @@ find_package (PythonLibs REQUIRED)
 # ----------------------------------------------------------------------------------------
 # We require the CURL library to be installed for most apps and tools
 # if found add its include path to includes section and link with it
+#
+message (STATUS "======== LOOKING FOR CURL ========================")
 find_package (CURL REQUIRED)
 if (CURL_FOUND)
     include_directories(${CURL_INCLUDE_DIRS})
@@ -35,6 +45,9 @@ endif (CURL_FOUND)
 # ----------------------------------------------------------------------------------------
 # Globally available C++ settings
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Werror -Wall -O2")
+if(APPLE)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Werror -Wconversion -Wall -O2")
+endif()
 
 # ----------------------------------------------------------------------------------------
 # Linkable libraries
@@ -58,8 +71,9 @@ set (TAG_REPLACE "${SCRIPTS_DEST_PATH}/replaceTag.py")
 function(build_readme sourcePath toolName)
     set(README_FILE "${sourcePath}/README.md")
     set(TOOL_README_TEMPLATE "${sourcePath}/docs/README.tmpl.md")
+    set(README_FOOTER "${CMAKE_SOURCE_DIR}/../docs/README.footer.md")
     add_custom_command(OUTPUT help.txt COMMAND ${toolName} "-th" ">" help.txt "2>&1")
-    add_custom_target(readme COMMAND "${TAG_REPLACE}" "${TOOL_README_TEMPLATE}" "${toolName}" help.txt "${README_FILE}")
+    add_custom_target(readme COMMAND "${TAG_REPLACE}" "${TOOL_README_TEMPLATE}" "${README_FOOTER}" "${toolName}" help.txt "${README_FILE}" DEPENDS help.txt)
 endfunction(build_readme)
 
 # ----------------------------------------------------------------------------------------
@@ -67,26 +81,39 @@ endfunction(build_readme)
 function(run_the_test testPath goldPath testName testExe) # Optional argv4 with command parameters
 	set(TEST_FILE "${testPath}/${testName}.txt")
 	set(GOLD_FILE "${goldPath}/${testName}.txt")
-#message (STATUS " ")
-#message (STATUS "== IN ====== run_the_test ${testName} ========================")
 	if (NOT ${ARGV4} STREQUAL "" )
-		# In ARGV4 we receive the parameters to be passed to testExe  (optional)
+	    # In ARGV4 we receive the parameters to be passed to testExe  (optional)
 	    add_test(NAME ${testName} COMMAND ${TEST_CHECK} ${testExe} ${ARGN} ${TEST_FILE} ${GOLD_FILE})
-#        message(STATUS ${testName} " " COMMAND " " ${TEST_CHECK} " " ${testExe} " " ${ARGN} " " ${TEST_FILE} " " ${GOLD_FILE})
-        else()
+    else()
 	    add_test(NAME ${testName} COMMAND ${TEST_CHECK} ${testExe} ${TEST_FILE} ${GOLD_FILE})
-#        message(STATUS ${testName} " " COMMAND " " ${TEST_CHECK} " " ${testExe} " " ${TEST_FILE} " " ${GOLD_FILE})
-        endif()
-#message (STATUS "=== OUT ===== run_the_test ${testName} ========================")
-#message (STATUS "  ")
+    endif()
 endfunction(run_the_test)
+
+# ----------------------------------------------------------------------------------------
+# Runs specials tests that are only run with "make test-all"
+function(run_the_special_test testPath goldPath testName testExe) # Optional argv4 with command parameters
+	set(TEST_FILE "${testPath}/${testName}.txt")
+        set(GOLD_FILE "${goldPath}/${testName}.txt")
+        if (NOT ${ARGV4} STREQUAL "" )
+        # In ARGV4 we receive the parameters to be passed to testExe  (optional)
+	add_test(NAME ${testName} COMMAND ${TEST_CHECK} ${testExe} ${ARGN} ${TEST_FILE} ${GOLD_FILE} CONFIGURATIONS test_all)
+        else()
+		add_test(NAME ${testName} COMMAND ${TEST_CHECK} ${testExe} ${TEST_FILE} ${GOLD_FILE} CONFIGURATIONS test_all)
+        endif()
+endfunction(run_the_special_test)
+
+# ----------------------------------------------------------------------------------------
+# test-all target
+# To run only specific tests we define a test configuration named "test_all"
+# Tests under this configuration are only run with "make test-all"
+add_custom_target(test-all COMMAND ${CMAKE_CTEST_COMMAND} -C test_all)
 
 # ----------------------------------------------------------------------------------------
 # Compilation order for the subfolders
 add_subdirectory (libs)
-add_subdirectory (test-libs)
 add_subdirectory (apps)
 add_subdirectory (tools)
 add_subdirectory (samples)
-#add_subdirectory (monitors)
-#add_subdirectory (other)
+add_subdirectory (monitors)
+add_subdirectory (other)
+

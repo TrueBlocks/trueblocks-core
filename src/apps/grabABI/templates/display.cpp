@@ -43,7 +43,7 @@ void CVisitor::displayTrans(const CTransaction *theTrans) const {
         SFString transStr = promoted->Format(fmt);
 
         if (expContext().asDollars) {
-            timestamp_t ts = toUnsigned(promoted->Format("[{TIMESTAMP}]"));
+            timestamp_t ts = newTimestamp(promoted->Format("[{TIMESTAMP}]"));
             transStr.ReplaceAll("++USDV++",  asDollars(ts, toWei(promoted->Format("[{VALUE}]"))));
             transStr.ReplaceAll("++USDGP++", asDollars(ts, toWei(promoted->Format("[{GASPRICE}]"))));
             transStr.ReplaceAll("++USDGC++", asDollars(ts, toWei(promoted->Format("[{GASCOST}]"))));
@@ -64,7 +64,7 @@ void CVisitor::displayTrans(const CTransaction *theTrans) const {
     if (opts.logs_on || wantsEvents) {
         if (opts.logs_on)
             cout << "\r\n";
-        for (int i = 0 ; i < theTrans->receipt.logs.getCount() ; i++) {
+        for (uint32_t i = 0 ; i < theTrans->receipt.logs.getCount() ; i++) {
 
             // Try to promote it. If we can't promote it, revert to the original.
             const CLogEntry *l = &theTrans->receipt.logs[i];
@@ -92,12 +92,12 @@ void CVisitor::displayTrans(const CTransaction *theTrans) const {
         cout << iYellow << "[" << Strip(evtList, ',') << "]";
 
     if (opts.trace_on) {
-        timestamp_t ts = toUnsigned(theTrans->Format("[{TIMESTAMP}]"));
+        timestamp_t ts = newTimestamp(theTrans->Format("[{TIMESTAMP}]"));
         displayTrace(ts, theTrans->traces, theTrans->isError);
         if (opts.bloom_on && promoted->receipt.logsBloom != 0) {
             displayBloom(promoted->receipt.logsBloom, "Tx bloom:", "");
             cout << "\r\n";
-            for (int t=0;t<watches.getCount()-1;t++) {
+            for (uint32_t t=0;t<watches.getCount()-1;t++) {
                 SFBloom b = makeBloom(watches[t].address);
                 displayBloom(b,watches[t].color + padRight(watches[t].name.Left(9),9) + cOff, (isBloomHit(b, promoted->receipt.logsBloom) ? greenCheck : redX));
                 cout << "\r\n";
@@ -118,7 +118,7 @@ void CVisitor::displayTrans(const CTransaction *theTrans) const {
 //-----------------------------------------------------------------------
 void CVisitor::displayBloom(const SFBloom& bloom, const SFString& msg, const SFString& res) const {
     SFString bl = fromBloom(bloom).substr(2);
-    for (int i = 0 ; i < bl.length() ; i = i + 128) {
+    for (uint32_t i = 0 ; i < bl.length() ; i = i + 128) {
         SFString m = padLeft(" ",16);
         if (i == 0)
             m = "    " + msg + bBlack + " 0x";
@@ -129,7 +129,7 @@ void CVisitor::displayBloom(const SFBloom& bloom, const SFString& msg, const SFS
 //-----------------------------------------------------------------------
 void CVisitor::displayTrace(timestamp_t ts, const CTraceArray& traces, bool err) const {
 
-    for (int t = 0 ; t < traces.getCount() ; t++) {
+    for (uint32_t t = 0 ; t < traces.getCount() ; t++) {
         const CTrace *tt = &traces[t];
 
         SFString type = tt->Format("[{ACTION::CALLTYPE}]");
@@ -142,7 +142,7 @@ void CVisitor::displayTrace(timestamp_t ts, const CTraceArray& traces, bool err)
         if (traceAddress.empty())
             traceAddress = "[ ]";
 
-        for (int i = 0 ; i < watches.getCount()-1 ; i++) {
+        for (uint32_t i = 0 ; i < watches.getCount()-1 ; i++) {
             SFString c1 = watches[i].color, c2 = cOff;
             if (err) { c1 = c2 = biBlack; }
             from.Replace(watches[i].address, c1 + watches[i].address + c2);
@@ -152,7 +152,7 @@ void CVisitor::displayTrace(timestamp_t ts, const CTraceArray& traces, bool err)
         SFString c1 = biBlack, c2 = cOff, c3 = bRed;
         if (err) { c1 = c2 = c3 = biBlack; }
         if (from.length()) {
-            cout << c1 <<  "\r\n    " << padNum4(t) << ":" << c2;
+            cout << c1 <<  "\r\n    " << padNum4((uint64_t)t) << ":" << c2;
             // TODO(tjayrush) use formatting string here
             cout << c1 << " { \"type\": "           << c2 << type;
             cout << c1 <<  " \"from\": "         << c2 << annotate(from);
@@ -174,10 +174,10 @@ void CVisitor::displayTrace(timestamp_t ts, const CTraceArray& traces, bool err)
 //-----------------------------------------------------------------------
 SFString CVisitor::annotate(const SFString& strIn) const {
     SFString ret = strIn;
-    for (int i=0;i<watches.getCount();i++) {
+    for (uint32_t i=0;i<watches.getCount();i++) {
         ret = ret.Substitute(watches[i].address, watches[i].displayName(true,8));
     }
-    for (int i=0;i<named.getCount();i++) {
+    for (uint32_t i=0;i<named.getCount();i++) {
         ret = ret.Substitute(named[i].address, named[i].displayName(true,8));
     }
     return ret;

@@ -25,6 +25,7 @@
 #include "rpcresult.h"
 #include "miniblock.h"
 #include "node.h"
+#include "blooms.h"
 #include "accountwatch.h"
 #include "balhistory.h"
 

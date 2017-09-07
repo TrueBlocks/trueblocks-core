@@ -15,7 +15,7 @@
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CRPCResult, CBaseNode, curVersion);
+IMPLEMENT_NODE(CRPCResult, CBaseNode, dataSchema());
 
 //---------------------------------------------------------------------------
 static SFString nextRpcresultChunk(const SFString& fieldIn, bool& force, const void *data);
@@ -101,7 +101,7 @@ void CRPCResult::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CRPCResult::Serialize(SFArchive& archive) {
-    if (!archive.isReading())
+    if (archive.isWriting())
         return ((const CRPCResult*)this)->SerializeC(archive);
 
     if (!preSerialize(archive))
@@ -133,8 +133,8 @@ void CRPCResult::registerClass(void) {
     been_here = true;
 
     uint32_t fieldNum = 1000;
-    ADD_FIELD(CRPCResult, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
-    ADD_FIELD(CRPCResult, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
+    ADD_FIELD(CRPCResult, "schema",  T_NUMBER, ++fieldNum);
+    ADD_FIELD(CRPCResult, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CRPCResult, "jsonrpc", T_TEXT, ++fieldNum);
     ADD_FIELD(CRPCResult, "result", T_TEXT, ++fieldNum);
     ADD_FIELD(CRPCResult, "id", T_TEXT, ++fieldNum);

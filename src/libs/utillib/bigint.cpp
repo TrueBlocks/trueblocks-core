@@ -116,7 +116,7 @@ namespace qblocks {
     {
         /* UX(...) cast needed to stop short(-2^15), which negates to
          * itself, from sign-extending in the conversion to uint64_t. */
-        return ((uint64_t)(x < 0 ? UX(-x) : x));
+        return ((uint64_t)(x < 0 ? UX(-x) : (uint32_t)x));
     }
     template <class X>
     int signOf(X x) {

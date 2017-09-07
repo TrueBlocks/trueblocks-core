@@ -13,7 +13,7 @@
 #include "etherlib.h"
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(QChangeRequirement, CTransaction, curVersion);
+IMPLEMENT_NODE(QChangeRequirement, CTransaction, dataSchema());
 
 //---------------------------------------------------------------------------
 static SFString nextChangerequirementChunk(const SFString& fieldIn, bool& force, const void *data);
@@ -90,7 +90,7 @@ void QChangeRequirement::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool QChangeRequirement::Serialize(SFArchive& archive) {
-    if (!archive.isReading())
+    if (archive.isWriting())
         return ((const QChangeRequirement*)this)->SerializeC(archive);
 
     CTransaction::Serialize(archive);
@@ -118,8 +118,8 @@ void QChangeRequirement::registerClass(void) {
     CTransaction::registerClass();
 
     uint32_t fieldNum = 1000;
-    ADD_FIELD(QChangeRequirement, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
-    ADD_FIELD(QChangeRequirement, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
+    ADD_FIELD(QChangeRequirement, "schema",  T_NUMBER, ++fieldNum);
+    ADD_FIELD(QChangeRequirement, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(QChangeRequirement, "_newRequired", T_NUMBER, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like

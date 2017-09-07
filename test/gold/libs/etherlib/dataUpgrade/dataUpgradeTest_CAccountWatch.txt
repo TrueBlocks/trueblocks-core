@@ -1,0 +1,72 @@
+dataUpgrade argc: 2 [1:CAccountWatch] 
+dataUpgrade CAccountWatch 
+--------------------------------------------------------------------------------
+className: CAccountWatch
+objectSize: 376
+classSchema: 513
+baseClass: CBaseNode
+	fieldName: schema
+	  fieldID: 1001
+	  fieldType: T_NUMBER TS_NUMERAL 65548
+	  hidden: 1
+	fieldName: deleted
+	  fieldID: 1002
+	  fieldType: T_BOOL TS_NUMERAL 65546
+	  hidden: 1
+	fieldName: index
+	  fieldID: 1003
+	  fieldType: T_NUMBER TS_NUMERAL 65548
+	  hidden: 0
+	fieldName: address
+	  fieldID: 1004
+	  fieldType: T_ADDRESS TS_STRING 131098
+	  hidden: 0
+	fieldName: name
+	  fieldID: 1005
+	  fieldType: T_TEXT TS_STRING 131096
+	  hidden: 0
+	fieldName: color
+	  fieldID: 1006
+	  fieldType: T_TEXT TS_STRING 131096
+	  hidden: 0
+	fieldName: firstBlock
+	  fieldID: 1007
+	  fieldType: T_NUMBER TS_NUMERAL 65548
+	  hidden: 0
+	fieldName: lastBlock
+	  fieldID: 1008
+	  fieldType: T_NUMBER TS_NUMERAL 65548
+	  hidden: 0
+	fieldName: status
+	  fieldID: 1009
+	  fieldType: T_TEXT TS_STRING 131096
+	  hidden: 0
+	fieldName: deepScan
+	  fieldID: 1010
+	  fieldType: T_BOOL TS_NUMERAL 65546
+	  hidden: 0
+	fieldName: qbis
+	  fieldID: 1011
+	  fieldType: T_OBJECT TS_OBJECT 1048610
+	  hidden: 0
+	fieldName: nodeBal
+	  fieldID: 1012
+	  fieldType: T_WEI TS_NUMERAL 4259858 TS_BIGNUM 4259858
+	  hidden: 0
+{
+  "index": 0,
+  "address": "0x0",
+  "firstBlock": 0,
+  "lastBlock": 4294967295,
+  "deepScan": 0,
+  "qbis": {
+    "begBal": 0,
+    "inflow": 0,
+    "outflow": 0,
+    "gasCost": 0,
+    "endBal": 0,
+    "blockNum": 0
+  },
+  "nodeBal": 0
+}
+

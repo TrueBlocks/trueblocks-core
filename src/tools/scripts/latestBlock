@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-#
-# Uses the getBlock command to extract out the latest block. Can
-# accept all paraemters that are acceptable to getBlock command
-
-getBlock latest "$@" 2>&1 | sed 's/getBlock/latestBlock/'

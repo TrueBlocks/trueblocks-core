@@ -91,7 +91,7 @@ inline void CTreeNode::Init(void) {
     CBaseNode::Init();
 
     index = 0;
-//    m_prefix = EMPTY;
+    m_prefix = "";
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -134,11 +134,11 @@ IMPLEMENT_ARCHIVE_LIST(CTreeNodeList);
 // EXISTING_CODE
 //---------------------------------------------------------------------------
 inline unsigned commonPrefix(const SFString& _t, const SFString& _u) {
-    unsigned s = min((unsigned)_t.length(), (unsigned)_u.length());
-    for (unsigned i = 0 ; ; ++i)
+    int32_t s = (int32_t)min(_t.length(), _u.length());
+    for (int32_t i = 0 ; ; ++i)
         if (i == s || (_t[i] != _u[i]))
-            return i;
-    return s;
+            return (unsigned)i;
+    return (unsigned)s;
 }
 // EXISTING_CODE
 }  // namespace qblocks

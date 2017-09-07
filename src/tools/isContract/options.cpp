@@ -9,10 +9,11 @@
 
 //---------------------------------------------------------------------------------------------------
 CParams params[] = {
-    CParams("~addr[s]", "a list of Ethereum addresses from which to check for byte code"),
-    CParams("-display", "display the actual code at the address(es)"),
-    CParams("-nodiff",  "return 'true' if (exactly) two Ethereum addresses have identical code"),
-    CParams("",         "Returns 'true' or 'false' if the given address(es) hold byte code (or displays the code).\n"),
+    CParams("~addr[s]",  "a space-separated list of one or more Ethereum addresses"),
+    CParams("-display",  "display the byte code at the address(es)"),
+    CParams("-nodiff",   "return 'true' if (exactly) two Ethereum addresses have identical code"),
+    CParams("",          "Returns 'true' or 'false' if the given address(es) holds byte code "
+                         "(optionally displays the code).\n"),
 };
 uint32_t nParams = sizeof(params) / sizeof(CParams);
 
@@ -39,12 +40,9 @@ bool COptions::parseArguments(SFString& command) {
 
              if (nAddrs >= MAX_ADDRS)
                  return usage("You may query at most " + asString(MAX_ADDRS) + " addresses. Quitting...");
-            SFString addr = toLower(arg);
-            if (!addr.startsWith("0x"))
-                addr = "0x" + addr;
-            if (addr.length() != 42)
-                return usage(arg + " does not appear to be a valid Ethereum address (must start "
-                                        "with '0x' and be 40 hex chars long).\n");
+            SFString addr = fixAddress(toLower(arg));
+            if (!isAddress(addr))
+                return usage(arg + " does not appear to be a valid Ethereum address.\n");
             addrs[nAddrs++] = addr;
 
         }
@@ -73,9 +71,6 @@ void COptions::Init(void) {
     nAddrs = 0;
     diff = false;
     display = false;
-
-    useVerbose = true;
-    useTesting = false;
 }
 
 //---------------------------------------------------------------------------------------------------

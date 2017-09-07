@@ -13,7 +13,7 @@
 #include "etherlib.h"
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(QMultiTransactEvent, CLogEntry, curVersion);
+IMPLEMENT_NODE(QMultiTransactEvent, CLogEntry, dataSchema());
 
 //---------------------------------------------------------------------------
 static SFString nextMultitransacteventChunk(const SFString& fieldIn, bool& force, const void *data);
@@ -110,7 +110,7 @@ void QMultiTransactEvent::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool QMultiTransactEvent::Serialize(SFArchive& archive) {
-    if (!archive.isReading())
+    if (archive.isWriting())
         return ((const QMultiTransactEvent*)this)->SerializeC(archive);
 
     CLogEntry::Serialize(archive);
@@ -146,12 +146,12 @@ void QMultiTransactEvent::registerClass(void) {
     CLogEntry::registerClass();
 
     uint32_t fieldNum = 1000;
-    ADD_FIELD(QMultiTransactEvent, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
-    ADD_FIELD(QMultiTransactEvent, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
-    ADD_FIELD(QMultiTransactEvent, "owner", T_TEXT, ++fieldNum);
+    ADD_FIELD(QMultiTransactEvent, "schema",  T_NUMBER, ++fieldNum);
+    ADD_FIELD(QMultiTransactEvent, "deleted", T_BOOL,  ++fieldNum);
+    ADD_FIELD(QMultiTransactEvent, "owner", T_ADDRESS, ++fieldNum);
     ADD_FIELD(QMultiTransactEvent, "operation", T_TEXT, ++fieldNum);
     ADD_FIELD(QMultiTransactEvent, "value", T_NUMBER, ++fieldNum);
-    ADD_FIELD(QMultiTransactEvent, "to", T_TEXT, ++fieldNum);
+    ADD_FIELD(QMultiTransactEvent, "to", T_ADDRESS, ++fieldNum);
     ADD_FIELD(QMultiTransactEvent, "data", T_TEXT, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like

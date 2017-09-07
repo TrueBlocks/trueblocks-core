@@ -10,6 +10,7 @@
 #include "sfstring.h"
 #include "basenode.h"
 #include "biglib.h"
+#include "conversions.h"
 #include "dates.h"
 #include "sfos.h"
 #include "database.h"

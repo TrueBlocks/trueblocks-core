@@ -14,7 +14,7 @@
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CFunction, CBaseNode, curVersion);
+IMPLEMENT_NODE(CFunction, CBaseNode, dataSchema());
 
 //---------------------------------------------------------------------------
 static SFString nextFunctionChunk(const SFString& fieldIn, bool& force, const void *data);
@@ -60,13 +60,13 @@ SFString nextFunctionChunk(const SFString& fieldIn, bool& force, const void *dat
             case 'i':
                 if ( fieldIn % "inputs" ) {
                     uint32_t cnt = fun->inputs.getCount();
-                    if (!cnt) return EMPTY;
-                    SFString ret;
+                    if (!cnt) return "";
+                    SFString retS;
                     for (uint32_t i = 0 ; i < cnt ; i++) {
-                        ret += fun->inputs[i].Format();
-                        ret += ((i < cnt - 1) ? ",\n" : "\n");
+                        retS += fun->inputs[i].Format();
+                        retS += ((i < cnt - 1) ? ",\n" : "\n");
                     }
-                    return ret;
+                    return retS;
                 }
                 break;
             case 'n':
@@ -75,13 +75,13 @@ SFString nextFunctionChunk(const SFString& fieldIn, bool& force, const void *dat
             case 'o':
                 if ( fieldIn % "outputs" ) {
                     uint32_t cnt = fun->outputs.getCount();
-                    if (!cnt) return EMPTY;
-                    SFString ret;
+                    if (!cnt) return "";
+                    SFString retS;
                     for (uint32_t i = 0 ; i < cnt ; i++) {
-                        ret += fun->outputs[i].Format();
-                        ret += ((i < cnt - 1) ? ",\n" : "\n");
+                        retS += fun->outputs[i].Format();
+                        retS += ((i < cnt - 1) ? ",\n" : "\n");
                     }
-                    return ret;
+                    return retS;
                 }
                 break;
             case 'p':
@@ -185,7 +185,8 @@ void CFunction::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CFunction::Serialize(SFArchive& archive) {
-    if (!archive.isReading())
+    if (archive.isWriting())
+
         return ((const CFunction*)this)->SerializeC(archive);
 
     if (!preSerialize(archive))
@@ -229,8 +230,8 @@ void CFunction::registerClass(void) {
     been_here = true;
 
     uint32_t fieldNum = 1000;
-    ADD_FIELD(CFunction, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
-    ADD_FIELD(CFunction, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
+    ADD_FIELD(CFunction, "schema",  T_NUMBER, ++fieldNum);
+    ADD_FIELD(CFunction, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CFunction, "name", T_TEXT, ++fieldNum);
     ADD_FIELD(CFunction, "type", T_TEXT, ++fieldNum);
     ADD_FIELD(CFunction, "anonymous", T_BOOL, ++fieldNum);
@@ -238,8 +239,8 @@ void CFunction::registerClass(void) {
     ADD_FIELD(CFunction, "payable", T_BOOL, ++fieldNum);
     ADD_FIELD(CFunction, "signature", T_TEXT, ++fieldNum);
     ADD_FIELD(CFunction, "encoding", T_TEXT, ++fieldNum);
-    ADD_FIELD(CFunction, "inputs", T_TEXT|TS_ARRAY, ++fieldNum);
-    ADD_FIELD(CFunction, "outputs", T_TEXT|TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CFunction, "inputs", T_OBJECT|TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CFunction, "outputs", T_OBJECT|TS_ARRAY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CFunction, "schema");

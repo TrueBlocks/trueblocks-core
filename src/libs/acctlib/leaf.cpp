@@ -15,7 +15,7 @@
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CLeaf, CTreeNode, curVersion);
+IMPLEMENT_NODE(CLeaf, CTreeNode, dataSchema());
 
 //---------------------------------------------------------------------------
 static SFString nextLeafChunk(const SFString& fieldIn, bool& force, const void *data);
@@ -52,13 +52,13 @@ SFString nextLeafChunk(const SFString& fieldIn, bool& force, const void *data) {
             case 'b':
 //                if ( fieldIn % "blocks" ) {
 //                    uint32_t cnt = lea->blocks.getCount();
-//                    if (!cnt) return EMPTY;
-//                    SFString ret;
+//                    if (!cnt) return "";
+//                    SFString retS;
 //                    for (uint32_t i = 0 ; i < cnt ; i++) {
-//                        ret += lea->blocks[i].Format();
-//                        ret += ((i < cnt - 1) ? ",\n" : "\n");
+//                        retS += lea->blocks[i].Format();
+//                        retS += ((i < cnt - 1) ? ",\n" : "\n");
 //                    }
-//                    return ret;
+//                    return retS;
 //                }
                 break;
             case 'c':
@@ -107,7 +107,7 @@ void CLeaf::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CLeaf::Serialize(SFArchive& archive) {
-    if (!archive.isReading())
+    if (archive.isWriting())
         return ((const CLeaf*)this)->SerializeC(archive);
 
     CTreeNode::Serialize(archive);
@@ -137,9 +137,9 @@ void CLeaf::registerClass(void) {
     CTreeNode::registerClass();
 
     uint32_t fieldNum = 1000;
-    ADD_FIELD(CLeaf, "schema",  T_NUMBER|TS_LABEL, ++fieldNum);
-    ADD_FIELD(CLeaf, "deleted", T_BOOL|TS_LABEL,  ++fieldNum);
-    ADD_FIELD(CLeaf, "blocks", T_TEXT|TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CLeaf, "schema",  T_NUMBER, ++fieldNum);
+    ADD_FIELD(CLeaf, "deleted", T_BOOL,  ++fieldNum);
+    ADD_FIELD(CLeaf, "blocks", T_OBJECT|TS_ARRAY, ++fieldNum);
     ADD_FIELD(CLeaf, "cnt", T_NUMBER, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
@@ -218,7 +218,7 @@ bool CLeaf::readBackLevel(SFArchive& archive) {
                 ret += ",";
         }
 #else
-        ret = asString(cnt);
+        ret = asStringU(cnt);
 #endif
         return ret;
     }
@@ -272,7 +272,7 @@ bool CLeaf::readBackLevel(SFArchive& archive) {
                         curVal += ",";
                 }
 #else
-                curVal = asString(cnt);
+                curVal = asStringU(cnt);
 #endif
             }
             CTreeNode *n = CTreeNode::newBranch(_key, _value, m_prefix, curVal);
@@ -305,6 +305,7 @@ bool CLeaf::readBackLevel(SFArchive& archive) {
         ASSERT(func);
         CVisitData *vd = reinterpret_cast<CVisitData*>(data);
         uint32_t save = vd->type;
+        vd->cnt = cnt;
         vd->type = T_LEAF;
         vd->strs = vd->strs + "+" + (cMagenta+m_prefix + cOff + "|" + cBlue + at(m_prefix) + cOff);
         (*func)(this, data);
