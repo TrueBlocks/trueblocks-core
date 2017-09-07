@@ -27,6 +27,11 @@ CURL *getCurl(bool cleanup=false)
         if (getSource() == "infura")
         {
             // we have to use Infura
+#if 0
+            headers = curl_slist_append(headers, "Infura-Ethereum-Preferred-Client: parity");
+            curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
+            curl_easy_setopt(curl, CURLOPT_URL,        "https:/""/mainnet.infura.io/WkavvX9Hk5tvp34LhN7W");
+#endif
             curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
             curl_easy_setopt(curl, CURLOPT_URL,        "https://pmainnet.infura.io/");
 
@@ -59,8 +64,6 @@ void etherlib_init(const SFString& sourceIn)
     // they get cleaned up
     registerQuitHandler(defaultQuitHandler);
 
-    setSource(sourceIn);
-
     CBlock::registerClass();
     CTransaction::registerClass();
     CReceipt::registerClass();
@@ -79,9 +82,10 @@ void etherlib_init(const SFString& sourceIn)
     CRPCResult::registerClass();
     CNameValue::registerClass();
 
+    // TODO(tjayrush): Collapse curl initialation in setSource
+    setSource(sourceIn);
     // if curl has already been initialized, we want to clear it out
     getCurl(true);
-
     // initialize curl
     getCurl();
 
@@ -468,6 +472,7 @@ void writeToBinary(const CBaseNode& node, const SFString& fileName)
     if (establishFolder(fileName,created)) {
         if (!created.empty() && !isTestMode())
             cerr << "mkdir(" << created << ")" << SFString(' ',20) << "                                                     \n";
+        // TODO(tjayrush): Can I hide both schema and deleteOnWrite and make an enum?
         SFArchive archive(false, fileSchema(), true);
         if (archive.Lock(fileName, binaryWriteCreate, LOCK_CREATE))
         {
