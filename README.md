@@ -2,6 +2,212 @@
 
 QuickBlocks is a collection of software [libraries](src/libs), [applications](src/apps), [tools](src/tools), and [examples](src/tests) that allow you to retrieve Ethereum blockchain data (a) more quickly, (b) with higher information content, (c) in an fully decentralized way, (d) in a fully automated way, and (e) in a highly maintenance free way. (For information on building the project, [link here](BUILD.md).)
 
+### Installation
+
+QuickBlocks has the following external dependencies:
+
+1. Python
+2. CURL library
+
+QuicBlocks has been tested under the following environments:
+
+1. Linux (Ubuntu/Centos/Fedora/Debian/FreeBSD)
+2. Macintosh
+
+Next sections describe in detail the steps required to install QuickBlocks under each environment.
+
+IMPORTANT: Those instructions that contain the (sudo) tag must be executed as root user or as sudoer.
+
+#### Ubuntu installation
+
+
+1. Update latest version of packages running:
+
+   > (sudo) apt-get update
+   > (sudo) apt-get upgrade
+
+2. Install basic development tools (this package includes git client):
+
+
+   > (sudo) sudo apt-get install build-essential
+
+
+3. Install CURL dependencies:
+
+   > (sudo) apt-get install libcurl3-dev 
+
+
+4. Install cmake:
+
+   > (sudo) apt-get install cmake
+
+5. Install python:
+
+   > (sudo) apt-get install python python-dev
+
+6. Create the workspace folder. At command line execute:
+
+   > cd <USER_DIRECTORY>    (where USER_DIRECTORY is the directory we want to work at)
+   > mkdir workspace
+   > cd workspace
+   
+ 
+7. Clone github repository:
+
+   > git clone https://github.com/Great-Hill-Corporation/quickBlocks.git .
+
+
+8. Build QuickBlocks from sources:
+
+   >  mkdir build
+   >  cd build
+   >  cmake ../src
+   >  make
+
+9. Install QuickBlocks SDK in the local machine:
+
+   > (sudo) make install
+
+#### Fedora installation
+
+
+1. Install basic development tools (it includes git client):
+
+   > (sudo) dnf group install 'Development Tools'
+
+2. Install c++ compilers:
+
+   > (sudo) dnf install gcc-c++
+
+3. Install cmake:
+
+   > (sudo) dnf install cmake 
+
+4. Install python:
+
+   > (sudo) dnf install python python-devel (as root or with sudo)
+
+5. Install CURL
+
+   > (sudo) dnf install libcurl-devel 
+
+6. Create the workspace folder. At command line execute:
+
+   > cd <USER_DIRECTORY>    (where USER_DIRECTORY is the directory we want to work at)
+   > mkdir workspace
+   > cd workspace
+
+
+7. Clone github repository:
+
+   > git clone https://github.com/Great-Hill-Corporation/quickBlocks.git .
+
+
+8. Build QuickBlocks from sources:
+
+   >  mkdir build
+   >  cd build
+   >  cmake ../src
+   >  make
+
+9. Install QuickBlocks SDK in the local machine:
+
+   > (sudo) make install
+
+
+#### Centos installation
+
+1. Install basic development tools (this package includes git client):
+
+   > (sudo) yum groupinstall "Development Tools"
+
+2. Install cmake:
+
+   > (sudo) yum install cmake
+
+3. Install python:
+
+   > (sudo) yum install python python-devel
+
+4. Install CURL:
+
+   > (sudo) yum install libcurl-devel
+
+5. Create the workspace folder. At command line execute:
+
+   > cd <USER_DIRECTORY>    (where USER_DIRECTORY is the directory we want to work at)
+   > mkdir workspace
+   > cd workspace
+
+
+6. Clone github repository:
+
+   > git clone https://github.com/Great-Hill-Corporation/quickBlocks.git .
+
+
+7. Build QuickBlocks from sources:
+
+   >  mkdir build
+   >  cd build
+   >  cmake ../src
+   >  make
+
+8. Install QuickBlocks SDK in the local machine:
+
+   > (sudo) make install
+
+
+#### Debian installation
+
+1. Install basic development tools:
+
+   > (sudo) apt-get install build-essential
+
+
+2. Install cmake:
+
+   > (sudo) apt-get install cmake  
+
+
+3. Install git:
+
+   > (sudo) apt-get install git 
+
+
+4. Install CURL
+
+   > (sudo) apt-get install libcurl3-dev 
+
+
+5. Install python and its libs:
+
+   > (sudo) apt-get install  python python-dev  
+
+
+6. Create the workspace folder. At command line execute:
+
+   > cd <USER_DIRECTORY>    (where USER_DIRECTORY is the directory we want to work at)
+   > mkdir workspace
+   > cd workspace
+
+
+7. Clone github repository:
+
+   > git clone https://github.com/Great-Hill-Corporation/quickBlocks.git .
+
+
+8. Build QuickBlocks from sources:
+
+   >  mkdir build
+   >  cd build
+   >  cmake ../src
+   >  make
+
+9. Install QuickBlocks SDK in the local machine:
+
+   > (sudo) make install
+
+
 ### More Quickly
 
 QuickBlocks interacts with the Ethereum blockchain via the RPC interface to accumulate `blocks`, `transactions`, `receipts`, and event `logs`. Prior to storing the data, we optimize it for later retrieval. The primary goal of QuickBlocks is to return the data as quickly as possible while maintaining a fully decentralized stance. These optimizations include:
