@@ -33,7 +33,7 @@ bool COptions::parseArguments(SFString& command) {
             if (!isUnsigned(arg)) {
                 if (arg != "infura" && arg != "binary" && arg != "local")
                     return usage("Incorrect value (" + orig + ") for mode. Quitting.");
-                etherlib_init(arg);
+                etherlib_init(arg);  // infura, binary, local
                 source = arg; // infura, binary, or local
             } else {
                 if (start == NOPOS)
