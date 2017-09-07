@@ -131,7 +131,8 @@ SFString doOneBlock(SFUint32 num, const COptions& opt) {
             }
 
         }
-        result = gold.Format();
+        if (!opt.silent)
+            result = gold.Format();
     }
     return result;
 }
