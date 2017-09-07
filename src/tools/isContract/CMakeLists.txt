@@ -33,8 +33,6 @@ function(run_test testName)
 endfunction(run_test)
 
 # Enter one line for each individual test
-
-# Commented out old test cases while testing it again
 run_test("isContract_noparams"          )
 run_test("isContract_dash_d_1"     "0x000001f568875f378bf6d170b790967fe429c81a" " -d")
 run_test("isContract_dash_d_2"     "0x01d04122aeccab138a47103b500f7b3d3b356a27" " -d")
