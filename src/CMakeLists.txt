@@ -106,7 +106,7 @@ endfunction(run_the_special_test)
 # test-all target
 # To run only specific tests we define a test configuration named "test_all"
 # Tests under this configuration are only run with "make test-all"
-add_custom_target(test-all ALL COMMAND ${CMAKE_CTEST_COMMAND} -C test_all)
+add_custom_target(test-all COMMAND ${CMAKE_CTEST_COMMAND} -C test_all)
 
 # ----------------------------------------------------------------------------------------
 # Compilation order for the subfolders

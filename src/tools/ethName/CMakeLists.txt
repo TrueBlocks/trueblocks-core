@@ -157,4 +157,4 @@ install(TARGETS ${TOOL_NAME} RUNTIME DESTINATION bin)
 
 # test-all target
 # To run only specific tests we define a test configuration named "test_all"
-add_custom_target(test-all ALL COMMAND ${CMAKE_CTEST_COMMAND} -C test_all)
+add_custom_target(test-all COMMAND ${CMAKE_CTEST_COMMAND} -C test_all)
