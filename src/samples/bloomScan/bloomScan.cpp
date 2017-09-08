@@ -8,12 +8,11 @@
 #include "etherlib.h"
 #include "options.h"
 
+//#define VISUALIZER
+
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
-#ifdef ERROR
-#error
-#endif
     // Tell the system where the blocks are and which version to use
     etherlib_init("infura");
 
@@ -39,7 +38,7 @@ int main(int argc, const char *argv[]) {
 //-------------------------------------------------------------
 bool displayBloom(CBlock& block, void *data)
 {
-#if 1
+#ifdef VISUALIZER
     SFString b = fromBloom(block.logsBloom);
     b.ReplaceAny("0",      ".");
     b.ReplaceAny("1248",   ".");
