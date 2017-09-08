@@ -18,8 +18,8 @@ namespace qblocks {
 IMPLEMENT_NODE(CLogEntry, CBaseNode, dataSchema());
 
 //---------------------------------------------------------------------------
-extern SFString nextLogentryChunk(const SFString& fieldIn, bool& force, const void *data);
-static SFString nextLogentryChunk_custom(const SFString& fieldIn, bool& force, const void *data);
+extern SFString nextLogentryChunk(const SFString& fieldIn, const void *data);
+static SFString nextLogentryChunk_custom(const SFString& fieldIn, const void *data);
 
 //---------------------------------------------------------------------------
 void CLogEntry::Format(CExportContext& ctx, const SFString& fmtIn, void *data1) const {
@@ -40,7 +40,7 @@ void CLogEntry::Format(CExportContext& ctx, const SFString& fmtIn, void *data1) 
 }
 
 //---------------------------------------------------------------------------
-SFString nextLogentryChunk(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextLogentryChunk(const SFString& fieldIn, const void *data) {
     const CLogEntry *log = (const CLogEntry *)data;
     if (log) {
         // Give customized code a chance to override first
@@ -182,7 +182,7 @@ void CLogEntry::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextLogentryChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextLogentryChunk_custom(const SFString& fieldIn, const void *data) {
     const CLogEntry *log = (const CLogEntry *)data;
     if (log) {
         switch (tolower(fieldIn[0])) {

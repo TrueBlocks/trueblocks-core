@@ -16,8 +16,8 @@
 IMPLEMENT_NODE(QOwnerRemovedEvent, CLogEntry, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextOwnerremovedeventChunk(const SFString& fieldIn, bool& force, const void *data);
-static SFString nextOwnerremovedeventChunk_custom(const SFString& fieldIn, bool& force, const void *data);
+static SFString nextOwnerremovedeventChunk(const SFString& fieldIn, const void *data);
+static SFString nextOwnerremovedeventChunk_custom(const SFString& fieldIn, const void *data);
 
 //---------------------------------------------------------------------------
 void QOwnerRemovedEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
@@ -38,7 +38,7 @@ void QOwnerRemovedEvent::Format(CExportContext& ctx, const SFString& fmtIn, void
 }
 
 //---------------------------------------------------------------------------
-SFString nextOwnerremovedeventChunk(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextOwnerremovedeventChunk(const SFString& fieldIn, const void *data) {
     const QOwnerRemovedEvent *own = (const QOwnerRemovedEvent *)data;
     if (own) {
         // Give customized code a chance to override first
@@ -131,7 +131,7 @@ void QOwnerRemovedEvent::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextOwnerremovedeventChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextOwnerremovedeventChunk_custom(const SFString& fieldIn, const void *data) {
     const QOwnerRemovedEvent *own = (const QOwnerRemovedEvent *)data;
     if (own) {
         switch (tolower(fieldIn[0])) {

@@ -18,8 +18,8 @@ namespace qblocks {
 IMPLEMENT_NODE(CBlock, CBaseNode, dataSchema());
 
 //---------------------------------------------------------------------------
-extern SFString nextBlockChunk(const SFString& fieldIn, bool& force, const void *data);
-static SFString nextBlockChunk_custom(const SFString& fieldIn, bool& force, const void *data);
+extern SFString nextBlockChunk(const SFString& fieldIn, const void *data);
+static SFString nextBlockChunk_custom(const SFString& fieldIn, const void *data);
 
 //---------------------------------------------------------------------------
 void CBlock::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
@@ -40,7 +40,7 @@ void CBlock::Format(CExportContext& ctx, const SFString& fmtIn, void *data) cons
 }
 
 //---------------------------------------------------------------------------
-SFString nextBlockChunk(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextBlockChunk(const SFString& fieldIn, const void *data) {
     const CBlock *blo = (const CBlock *)data;
     if (blo) {
         // Give customized code a chance to override first
@@ -195,7 +195,7 @@ void CBlock::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextBlockChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextBlockChunk_custom(const SFString& fieldIn, const void *data) {
     const CBlock *blo = (const CBlock *)data;
     if (blo) {
         switch (tolower(fieldIn[0])) {

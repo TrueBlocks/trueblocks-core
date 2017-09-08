@@ -16,8 +16,8 @@
 IMPLEMENT_NODE(QTransferFrom, CTransaction, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextTransferfromChunk(const SFString& fieldIn, bool& force, const void *data);
-static SFString nextTransferfromChunk_custom(const SFString& fieldIn, bool& force, const void *data);
+static SFString nextTransferfromChunk(const SFString& fieldIn, const void *data);
+static SFString nextTransferfromChunk_custom(const SFString& fieldIn, const void *data);
 
 //---------------------------------------------------------------------------
 void QTransferFrom::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
@@ -38,7 +38,7 @@ void QTransferFrom::Format(CExportContext& ctx, const SFString& fmtIn, void *dat
 }
 
 //---------------------------------------------------------------------------
-SFString nextTransferfromChunk(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextTransferfromChunk(const SFString& fieldIn, const void *data) {
     const QTransferFrom *tra = (const QTransferFrom *)data;
     if (tra) {
         // Give customized code a chance to override first
@@ -58,7 +58,7 @@ SFString nextTransferfromChunk(const SFString& fieldIn, bool& force, const void 
         // EXISTING_CODE
 
         // Finally, give the parent class a chance
-        ret = nextTransactionChunk(fieldIn, force, tra);
+        ret = nextTransactionChunk(fieldIn, tra);
         if (!ret.empty())
             return ret;
     }
@@ -141,7 +141,7 @@ void QTransferFrom::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextTransferfromChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextTransferfromChunk_custom(const SFString& fieldIn, const void *data) {
     const QTransferFrom *tra = (const QTransferFrom *)data;
     if (tra) {
         switch (tolower(fieldIn[0])) {

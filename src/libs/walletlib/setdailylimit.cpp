@@ -16,8 +16,8 @@
 IMPLEMENT_NODE(QSetDailyLimit, CTransaction, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextSetdailylimitChunk(const SFString& fieldIn, bool& force, const void *data);
-static SFString nextSetdailylimitChunk_custom(const SFString& fieldIn, bool& force, const void *data);
+static SFString nextSetdailylimitChunk(const SFString& fieldIn, const void *data);
+static SFString nextSetdailylimitChunk_custom(const SFString& fieldIn, const void *data);
 
 //---------------------------------------------------------------------------
 void QSetDailyLimit::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
@@ -38,7 +38,7 @@ void QSetDailyLimit::Format(CExportContext& ctx, const SFString& fmtIn, void *da
 }
 
 //---------------------------------------------------------------------------
-SFString nextSetdailylimitChunk(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextSetdailylimitChunk(const SFString& fieldIn, const void *data) {
     const QSetDailyLimit *set = (const QSetDailyLimit *)data;
     if (set) {
         // Give customized code a chance to override first
@@ -56,7 +56,7 @@ SFString nextSetdailylimitChunk(const SFString& fieldIn, bool& force, const void
         // EXISTING_CODE
 
         // Finally, give the parent class a chance
-        ret = nextTransactionChunk(fieldIn, force, set);
+        ret = nextTransactionChunk(fieldIn, set);
         if (!ret.empty())
             return ret;
     }
@@ -131,7 +131,7 @@ void QSetDailyLimit::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextSetdailylimitChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextSetdailylimitChunk_custom(const SFString& fieldIn, const void *data) {
     const QSetDailyLimit *set = (const QSetDailyLimit *)data;
     if (set) {
         switch (tolower(fieldIn[0])) {

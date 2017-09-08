@@ -19,8 +19,8 @@ namespace qblocks {
 IMPLEMENT_NODE(CPriceQuote, CBaseNode, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextPricequoteChunk(const SFString& fieldIn, bool& force, const void *data);
-static SFString nextPricequoteChunk_custom(const SFString& fieldIn, bool& force, const void *data);
+static SFString nextPricequoteChunk(const SFString& fieldIn, const void *data);
+static SFString nextPricequoteChunk_custom(const SFString& fieldIn, const void *data);
 
 //---------------------------------------------------------------------------
 void CPriceQuote::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
@@ -41,7 +41,7 @@ void CPriceQuote::Format(CExportContext& ctx, const SFString& fmtIn, void *data)
 }
 
 //---------------------------------------------------------------------------
-SFString nextPricequoteChunk(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextPricequoteChunk(const SFString& fieldIn, const void *data) {
     const CPriceQuote *pri = (const CPriceQuote *)data;
     if (pri) {
         // Give customized code a chance to override first
@@ -201,7 +201,7 @@ void CPriceQuote::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextPricequoteChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextPricequoteChunk_custom(const SFString& fieldIn, const void *data) {
     const CPriceQuote *pri = (const CPriceQuote *)data;
     if (pri) {
         switch (tolower(fieldIn[0])) {

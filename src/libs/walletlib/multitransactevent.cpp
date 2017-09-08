@@ -16,8 +16,8 @@
 IMPLEMENT_NODE(QMultiTransactEvent, CLogEntry, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextMultitransacteventChunk(const SFString& fieldIn, bool& force, const void *data);
-static SFString nextMultitransacteventChunk_custom(const SFString& fieldIn, bool& force, const void *data);
+static SFString nextMultitransacteventChunk(const SFString& fieldIn, const void *data);
+static SFString nextMultitransacteventChunk_custom(const SFString& fieldIn, const void *data);
 
 //---------------------------------------------------------------------------
 void QMultiTransactEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
@@ -38,7 +38,7 @@ void QMultiTransactEvent::Format(CExportContext& ctx, const SFString& fmtIn, voi
 }
 
 //---------------------------------------------------------------------------
-SFString nextMultitransacteventChunk(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextMultitransacteventChunk(const SFString& fieldIn, const void *data) {
     const QMultiTransactEvent *mul = (const QMultiTransactEvent *)data;
     if (mul) {
         // Give customized code a chance to override first
@@ -163,7 +163,7 @@ void QMultiTransactEvent::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextMultitransacteventChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextMultitransacteventChunk_custom(const SFString& fieldIn, const void *data) {
     const QMultiTransactEvent *mul = (const QMultiTransactEvent *)data;
     if (mul) {
         switch (tolower(fieldIn[0])) {

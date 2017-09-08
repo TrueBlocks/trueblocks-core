@@ -16,8 +16,8 @@
 IMPLEMENT_NODE(QOwnerChangedEvent, CLogEntry, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextOwnerchangedeventChunk(const SFString& fieldIn, bool& force, const void *data);
-static SFString nextOwnerchangedeventChunk_custom(const SFString& fieldIn, bool& force, const void *data);
+static SFString nextOwnerchangedeventChunk(const SFString& fieldIn, const void *data);
+static SFString nextOwnerchangedeventChunk_custom(const SFString& fieldIn, const void *data);
 
 //---------------------------------------------------------------------------
 void QOwnerChangedEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
@@ -38,7 +38,7 @@ void QOwnerChangedEvent::Format(CExportContext& ctx, const SFString& fmtIn, void
 }
 
 //---------------------------------------------------------------------------
-SFString nextOwnerchangedeventChunk(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextOwnerchangedeventChunk(const SFString& fieldIn, const void *data) {
     const QOwnerChangedEvent *own = (const QOwnerChangedEvent *)data;
     if (own) {
         // Give customized code a chance to override first
@@ -140,7 +140,7 @@ void QOwnerChangedEvent::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextOwnerchangedeventChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextOwnerchangedeventChunk_custom(const SFString& fieldIn, const void *data) {
     const QOwnerChangedEvent *own = (const QOwnerChangedEvent *)data;
     if (own) {
         switch (tolower(fieldIn[0])) {

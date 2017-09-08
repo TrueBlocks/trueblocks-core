@@ -16,8 +16,8 @@
 IMPLEMENT_NODE(QTransferEvent, CLogEntry, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextTransfereventChunk(const SFString& fieldIn, bool& force, const void *data);
-static SFString nextTransfereventChunk_custom(const SFString& fieldIn, bool& force, const void *data);
+static SFString nextTransfereventChunk(const SFString& fieldIn, const void *data);
+static SFString nextTransfereventChunk_custom(const SFString& fieldIn, const void *data);
 
 //---------------------------------------------------------------------------
 void QTransferEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
@@ -38,7 +38,7 @@ void QTransferEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *da
 }
 
 //---------------------------------------------------------------------------
-SFString nextTransfereventChunk(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextTransfereventChunk(const SFString& fieldIn, const void *data) {
     const QTransferEvent *tra = (const QTransferEvent *)data;
     if (tra) {
         // Give customized code a chance to override first
@@ -141,7 +141,7 @@ void QTransferEvent::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextTransfereventChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextTransfereventChunk_custom(const SFString& fieldIn, const void *data) {
     const QTransferEvent *tra = (const QTransferEvent *)data;
     if (tra) {
         switch (tolower(fieldIn[0])) {

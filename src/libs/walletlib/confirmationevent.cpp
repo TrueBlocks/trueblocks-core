@@ -16,8 +16,8 @@
 IMPLEMENT_NODE(QConfirmationEvent, CLogEntry, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextConfirmationeventChunk(const SFString& fieldIn, bool& force, const void *data);
-static SFString nextConfirmationeventChunk_custom(const SFString& fieldIn, bool& force, const void *data);
+static SFString nextConfirmationeventChunk(const SFString& fieldIn, const void *data);
+static SFString nextConfirmationeventChunk_custom(const SFString& fieldIn, const void *data);
 
 //---------------------------------------------------------------------------
 void QConfirmationEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
@@ -38,7 +38,7 @@ void QConfirmationEvent::Format(CExportContext& ctx, const SFString& fmtIn, void
 }
 
 //---------------------------------------------------------------------------
-SFString nextConfirmationeventChunk(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextConfirmationeventChunk(const SFString& fieldIn, const void *data) {
     const QConfirmationEvent *con = (const QConfirmationEvent *)data;
     if (con) {
         // Give customized code a chance to override first
@@ -136,7 +136,7 @@ void QConfirmationEvent::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextConfirmationeventChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextConfirmationeventChunk_custom(const SFString& fieldIn, const void *data) {
     const QConfirmationEvent *con = (const QConfirmationEvent *)data;
     if (con) {
         switch (tolower(fieldIn[0])) {

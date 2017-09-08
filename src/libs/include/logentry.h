@@ -160,8 +160,8 @@ extern SFArchive& operator>>(SFArchive& archive, CLogEntry& log);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-extern SFString nextReceiptChunk(const SFString& fieldIn, bool& force, const void *data);
-extern SFString nextLogentryChunk(const SFString& fieldIn, bool& force, const void *data);
+extern SFString nextReceiptChunk(const SFString& fieldIn, const void *data);
+extern SFString nextLogentryChunk(const SFString& fieldIn, const void *data);
 // EXISTING_CODE
 }  // namespace qblocks
 

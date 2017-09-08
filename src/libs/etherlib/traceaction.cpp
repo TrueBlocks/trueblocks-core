@@ -18,8 +18,8 @@ namespace qblocks {
 IMPLEMENT_NODE(CTraceAction, CBaseNode, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextTraceactionChunk(const SFString& fieldIn, bool& force, const void *data);
-static SFString nextTraceactionChunk_custom(const SFString& fieldIn, bool& force, const void *data);
+static SFString nextTraceactionChunk(const SFString& fieldIn, const void *data);
+static SFString nextTraceactionChunk_custom(const SFString& fieldIn, const void *data);
 
 //---------------------------------------------------------------------------
 void CTraceAction::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
@@ -40,7 +40,7 @@ void CTraceAction::Format(CExportContext& ctx, const SFString& fmtIn, void *data
 }
 
 //---------------------------------------------------------------------------
-SFString nextTraceactionChunk(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextTraceactionChunk(const SFString& fieldIn, const void *data) {
     const CTraceAction *tra = (const CTraceAction *)data;
     if (tra) {
         // Give customized code a chance to override first
@@ -202,7 +202,7 @@ void CTraceAction::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextTraceactionChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextTraceactionChunk_custom(const SFString& fieldIn, const void *data) {
     const CTraceAction *tra = (const CTraceAction *)data;
     if (tra) {
         switch (tolower(fieldIn[0])) {

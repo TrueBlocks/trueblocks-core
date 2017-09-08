@@ -18,8 +18,8 @@ namespace qblocks {
 IMPLEMENT_NODE(CReceipt, CBaseNode, dataSchema());
 
 //---------------------------------------------------------------------------
-extern SFString nextReceiptChunk(const SFString& fieldIn, bool& force, const void *data);
-static SFString nextReceiptChunk_custom(const SFString& fieldIn, bool& force, const void *data);
+extern SFString nextReceiptChunk(const SFString& fieldIn, const void *data);
+static SFString nextReceiptChunk_custom(const SFString& fieldIn, const void *data);
 
 //---------------------------------------------------------------------------
 void CReceipt::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
@@ -40,7 +40,7 @@ void CReceipt::Format(CExportContext& ctx, const SFString& fmtIn, void *data) co
 }
 
 //---------------------------------------------------------------------------
-SFString nextReceiptChunk(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextReceiptChunk(const SFString& fieldIn, const void *data) {
     const CReceipt *rec = (const CReceipt *)data;
     if (rec) {
         // Give customized code a chance to override first
@@ -50,7 +50,7 @@ SFString nextReceiptChunk(const SFString& fieldIn, bool& force, const void *data
 
         // EXISTING_CODE
         // See if this field belongs to the item's container
-        ret = nextTransactionChunk(fieldIn, force, rec->pTrans);
+        ret = nextTransactionChunk(fieldIn, rec->pTrans);
         if (ret.Contains("Field not found"))
             ret = EMPTY;
         if (!ret.empty())
@@ -170,7 +170,7 @@ void CReceipt::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextReceiptChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextReceiptChunk_custom(const SFString& fieldIn, const void *data) {
     const CReceipt *rec = (const CReceipt *)data;
     if (rec) {
         switch (tolower(fieldIn[0])) {

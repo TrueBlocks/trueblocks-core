@@ -16,8 +16,8 @@
 IMPLEMENT_NODE(QExecute, CTransaction, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextExecuteChunk(const SFString& fieldIn, bool& force, const void *data);
-static SFString nextExecuteChunk_custom(const SFString& fieldIn, bool& force, const void *data);
+static SFString nextExecuteChunk(const SFString& fieldIn, const void *data);
+static SFString nextExecuteChunk_custom(const SFString& fieldIn, const void *data);
 
 //---------------------------------------------------------------------------
 void QExecute::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
@@ -38,7 +38,7 @@ void QExecute::Format(CExportContext& ctx, const SFString& fmtIn, void *data) co
 }
 
 //---------------------------------------------------------------------------
-SFString nextExecuteChunk(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextExecuteChunk(const SFString& fieldIn, const void *data) {
     const QExecute *exe = (const QExecute *)data;
     if (exe) {
         // Give customized code a chance to override first
@@ -58,7 +58,7 @@ SFString nextExecuteChunk(const SFString& fieldIn, bool& force, const void *data
         // EXISTING_CODE
 
         // Finally, give the parent class a chance
-        ret = nextTransactionChunk(fieldIn, force, exe);
+        ret = nextTransactionChunk(fieldIn, exe);
         if (!ret.empty())
             return ret;
     }
@@ -141,7 +141,7 @@ void QExecute::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextExecuteChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextExecuteChunk_custom(const SFString& fieldIn, const void *data) {
     const QExecute *exe = (const QExecute *)data;
     if (exe) {
         switch (tolower(fieldIn[0])) {

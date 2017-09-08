@@ -18,8 +18,8 @@ namespace qblocks {
 IMPLEMENT_NODE(CInfix, CTreeNode, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextInfixChunk(const SFString& fieldIn, bool& force, const void *data);
-static SFString nextInfixChunk_custom(const SFString& fieldIn, bool& force, const void *data);
+static SFString nextInfixChunk(const SFString& fieldIn, const void *data);
+static SFString nextInfixChunk_custom(const SFString& fieldIn, const void *data);
 
 //---------------------------------------------------------------------------
 void CInfix::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
@@ -40,7 +40,7 @@ void CInfix::Format(CExportContext& ctx, const SFString& fmtIn, void *data) cons
 }
 
 //---------------------------------------------------------------------------
-SFString nextInfixChunk(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextInfixChunk(const SFString& fieldIn, const void *data) {
     const CInfix *inf = (const CInfix *)data;
     if (inf) {
         // Give customized code a chance to override first
@@ -135,7 +135,7 @@ void CInfix::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextInfixChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextInfixChunk_custom(const SFString& fieldIn, const void *data) {
     const CInfix *inf = (const CInfix *)data;
     if (inf) {
         switch (tolower(fieldIn[0])) {
