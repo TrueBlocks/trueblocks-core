@@ -50,7 +50,7 @@ SFString nextTransactionChunk(const SFString& fieldIn, const void *data) {
 
         // EXISTING_CODE
         // See if this field belongs to the item's container
-        ret = nextBlockChunk(fieldIn, force, tra->pBlock);
+        ret = nextBlockChunk(fieldIn, tra->pBlock);
         if (ret.Contains("Field not found"))
             ret = EMPTY;
         if (!ret.empty())
