@@ -140,7 +140,7 @@ SFString nextIsownerChunk_custom(const SFString& fieldIn, bool& force, const voi
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn, force, iso);
+                    return nextBasenodeChunk(fieldIn, iso);
                 break;
 
             default:

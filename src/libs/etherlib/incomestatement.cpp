@@ -71,7 +71,7 @@ SFString nextIncomestatementChunk(const SFString& fieldIn, bool& force, const vo
         // EXISTING_CODE
 
         // Finally, give the parent class a chance
-        ret = nextBasenodeChunk(fieldIn, force, inc);
+        ret = nextBasenodeChunk(fieldIn, inc);
         if (!ret.empty())
             return ret;
     }
@@ -180,7 +180,7 @@ SFString nextIncomestatementChunk_custom(const SFString& fieldIn, bool& force, c
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn, force, inc);
+                    return nextBasenodeChunk(fieldIn, inc);
                 break;
 
             default:

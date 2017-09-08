@@ -145,7 +145,7 @@ SFString nextRevokeeventChunk_custom(const SFString& fieldIn, bool& force, const
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn, force, rev);
+                    return nextBasenodeChunk(fieldIn, rev);
                 break;
 
             default:

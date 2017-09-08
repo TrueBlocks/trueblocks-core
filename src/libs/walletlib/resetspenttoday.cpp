@@ -130,7 +130,7 @@ SFString nextResetspenttodayChunk_custom(const SFString& fieldIn, bool& force, c
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn, force, res);
+                    return nextBasenodeChunk(fieldIn, res);
                 break;
 
             default:

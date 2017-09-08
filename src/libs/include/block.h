@@ -185,12 +185,16 @@ inline CBlock& CBlock::operator=(const CBlock& bl) {
     return *this;
 }
 
+#define NEW_CODE
+#ifdef NEW_CODE
+#else
 //---------------------------------------------------------------------------
 inline SFString CBlock::getValueByName(const SFString& fieldName) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return Format("[{"+toUpper(fieldName)+"}]");
 }
+#endif
 
 //---------------------------------------------------------------------------
 IMPLEMENT_ARCHIVE_ARRAY(CBlockArray);

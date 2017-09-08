@@ -60,7 +60,7 @@ SFString nextNamevalueChunk(const SFString& fieldIn, bool& force, const void *da
         // EXISTING_CODE
 
         // Finally, give the parent class a chance
-        ret = nextBasenodeChunk(fieldIn, force, nam);
+        ret = nextBasenodeChunk(fieldIn, nam);
         if (!ret.empty())
             return ret;
     }
@@ -147,7 +147,7 @@ SFString nextNamevalueChunk_custom(const SFString& fieldIn, bool& force, const v
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn, force, nam);
+                    return nextBasenodeChunk(fieldIn, nam);
                 break;
 
             default:

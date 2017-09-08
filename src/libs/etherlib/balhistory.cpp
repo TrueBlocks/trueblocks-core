@@ -64,7 +64,7 @@ SFString nextBalhistoryChunk(const SFString& fieldIn, bool& force, const void *d
         // EXISTING_CODE
 
         // Finally, give the parent class a chance
-        ret = nextBasenodeChunk(fieldIn, force, bal);
+        ret = nextBasenodeChunk(fieldIn, bal);
         if (!ret.empty())
             return ret;
     }
@@ -157,7 +157,7 @@ SFString nextBalhistoryChunk_custom(const SFString& fieldIn, bool& force, const 
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn, force, bal);
+                    return nextBasenodeChunk(fieldIn, bal);
                 break;
 
             default:

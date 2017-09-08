@@ -144,7 +144,7 @@ SFString nextInfixChunk_custom(const SFString& fieldIn, bool& force, const void 
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn, force, inf);
+                    return nextBasenodeChunk(fieldIn, inf);
                 break;
 
             default:
