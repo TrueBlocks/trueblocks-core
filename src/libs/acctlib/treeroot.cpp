@@ -43,7 +43,7 @@ SFString nextTreerootChunk(const SFString& fieldIn, const void *data) {
     const CTreeRoot *tre = (const CTreeRoot *)data;
     if (tre) {
         // Give customized code a chance to override first
-        SFString ret = nextTreerootChunk_custom(fieldIn, force, data);
+        SFString ret = nextTreerootChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
 

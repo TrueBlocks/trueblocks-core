@@ -42,7 +42,7 @@ SFString nextApprovaleventChunk(const SFString& fieldIn, const void *data) {
     const QApprovalEvent *app = (const QApprovalEvent *)data;
     if (app) {
         // Give customized code a chance to override first
-        SFString ret = nextApprovaleventChunk_custom(fieldIn, force, data);
+        SFString ret = nextApprovaleventChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
 

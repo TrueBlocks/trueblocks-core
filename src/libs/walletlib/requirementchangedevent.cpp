@@ -42,7 +42,7 @@ SFString nextRequirementchangedeventChunk(const SFString& fieldIn, const void *d
     const QRequirementChangedEvent *req = (const QRequirementChangedEvent *)data;
     if (req) {
         // Give customized code a chance to override first
-        SFString ret = nextRequirementchangedeventChunk_custom(fieldIn, force, data);
+        SFString ret = nextRequirementchangedeventChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
 

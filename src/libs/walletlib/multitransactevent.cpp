@@ -42,7 +42,7 @@ SFString nextMultitransacteventChunk(const SFString& fieldIn, const void *data) 
     const QMultiTransactEvent *mul = (const QMultiTransactEvent *)data;
     if (mul) {
         // Give customized code a chance to override first
-        SFString ret = nextMultitransacteventChunk_custom(fieldIn, force, data);
+        SFString ret = nextMultitransacteventChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
 

@@ -42,7 +42,7 @@ SFString nextOwnerchangedeventChunk(const SFString& fieldIn, const void *data) {
     const QOwnerChangedEvent *own = (const QOwnerChangedEvent *)data;
     if (own) {
         // Give customized code a chance to override first
-        SFString ret = nextOwnerchangedeventChunk_custom(fieldIn, force, data);
+        SFString ret = nextOwnerchangedeventChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
 

@@ -43,7 +43,7 @@ SFString nextAccountChunk(const SFString& fieldIn, const void *data) {
     const CAccount *acc = (const CAccount *)data;
     if (acc) {
         // Give customized code a chance to override first
-        SFString ret = nextAccountChunk_custom(fieldIn, force, data);
+        SFString ret = nextAccountChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
 

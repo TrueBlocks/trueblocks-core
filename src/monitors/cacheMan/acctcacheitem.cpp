@@ -41,7 +41,7 @@ SFString nextAcctcacheitemChunk(const SFString& fieldIn, const void *data) {
     const CAcctCacheItem *acc = (const CAcctCacheItem *)data;
     if (acc) {
         // Give customized code a chance to override first
-        SFString ret = nextAcctcacheitemChunk_custom(fieldIn, force, data);
+        SFString ret = nextAcctcacheitemChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
 

@@ -44,7 +44,7 @@ SFString nextTreenodeChunk(const SFString& fieldIn, const void *data) {
     const CTreeNode *tre = (const CTreeNode *)data;
     if (tre) {
         // Give customized code a chance to override first
-        SFString ret = nextTreenodeChunk_custom(fieldIn, force, data);
+        SFString ret = nextTreenodeChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
 

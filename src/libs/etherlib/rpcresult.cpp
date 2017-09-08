@@ -44,7 +44,7 @@ SFString nextRpcresultChunk(const SFString& fieldIn, const void *data) {
     const CRPCResult *rpc = (const CRPCResult *)data;
     if (rpc) {
         // Give customized code a chance to override first
-        SFString ret = nextRpcresultChunk_custom(fieldIn, force, data);
+        SFString ret = nextRpcresultChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
 

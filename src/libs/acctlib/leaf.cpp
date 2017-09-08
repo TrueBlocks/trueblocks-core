@@ -44,7 +44,7 @@ SFString nextLeafChunk(const SFString& fieldIn, const void *data) {
     const CLeaf *lea = (const CLeaf *)data;
     if (lea) {
         // Give customized code a chance to override first
-        SFString ret = nextLeafChunk_custom(fieldIn, force, data);
+        SFString ret = nextLeafChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
 

@@ -45,7 +45,7 @@ SFString nextPricequoteChunk(const SFString& fieldIn, const void *data) {
     const CPriceQuote *pri = (const CPriceQuote *)data;
     if (pri) {
         // Give customized code a chance to override first
-        SFString ret = nextPricequoteChunk_custom(fieldIn, force, data);
+        SFString ret = nextPricequoteChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
 

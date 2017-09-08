@@ -42,7 +42,7 @@ SFString nextSingletransacteventChunk(const SFString& fieldIn, const void *data)
     const QSingleTransactEvent *sin = (const QSingleTransactEvent *)data;
     if (sin) {
         // Give customized code a chance to override first
-        SFString ret = nextSingletransacteventChunk_custom(fieldIn, force, data);
+        SFString ret = nextSingletransacteventChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
 

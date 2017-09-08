@@ -44,7 +44,7 @@ SFString nextAccountwatchChunk(const SFString& fieldIn, const void *data) {
     const CAccountWatch *acc = (const CAccountWatch *)data;
     if (acc) {
         // Give customized code a chance to override first
-        SFString ret = nextAccountwatchChunk_custom(fieldIn, force, data);
+        SFString ret = nextAccountwatchChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
 
