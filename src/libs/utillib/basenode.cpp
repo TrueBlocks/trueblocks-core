@@ -583,10 +583,8 @@ namespace qblocks {
 #define truncPadR(str, size) (size == 0xdeadbeef ? str : padLeft (str.Left(size), size))
 
         // Get the value of the field.  If the value of the field is empty we return empty for the entire token.
-        bool forceShow = false;
-        SFString fieldValue = (func)(fieldName, forceShow, data);
-        forceShow = (isPrompt?true:forceShow);
-        if (!forceShow && fieldValue.empty())
+        SFString fieldValue = (func)(fieldName, data);
+        if (!isPrompt && fieldValue.empty())
             return EMPTY;
         if (rightJust) {
             fieldValue = truncPadR(fieldValue, maxWidth);  // pad or truncate

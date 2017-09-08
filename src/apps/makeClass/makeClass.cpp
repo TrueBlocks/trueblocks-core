@@ -163,8 +163,8 @@ void generateCode(CToml& classFile, const SFString& dataFile, const SFString& ns
                         "" :
                         "[{BASE_CLASS}]::registerClass();\n\n\t";
     SFString parCnk = isBase ?
-                        "ret = next[{BASE_BASE}]Chunk(fieldIn, force, [{SHORT3}]);\n" :
-                        "ret = next[{BASE_BASE}]Chunk(fieldIn, force, [{SHORT3}]);\n";
+                        "ret = next[{BASE_BASE}]Chunk(fieldIn, [{SHORT3}]);\n" :
+                        "ret = next[{BASE_BASE}]Chunk(fieldIn, [{SHORT3}]);\n";
     SFString parSet = isBase?"":"\tif ([{BASE_CLASS}]::setValueByName(fieldName, fieldValue))\n\t\treturn true;\n\n";
 
     //------------------------------------------------------------------------------------------------

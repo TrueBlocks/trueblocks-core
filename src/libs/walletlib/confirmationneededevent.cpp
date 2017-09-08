@@ -68,7 +68,7 @@ SFString nextConfirmationneededeventChunk(const SFString& fieldIn, const void *d
         // EXISTING_CODE
 
         // Finally, give the parent class a chance
-        ret = nextLogentryChunk(fieldIn, force, con);
+        ret = nextLogentryChunk(fieldIn, con);
         if (!ret.empty())
             return ret;
     }

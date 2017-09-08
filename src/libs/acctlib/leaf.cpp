@@ -70,7 +70,7 @@ SFString nextLeafChunk(const SFString& fieldIn, const void *data) {
         // EXISTING_CODE
 
         // Finally, give the parent class a chance
-        ret = nextTreenodeChunk(fieldIn, force, lea);
+        ret = nextTreenodeChunk(fieldIn, lea);
         if (!ret.empty())
             return ret;
     }

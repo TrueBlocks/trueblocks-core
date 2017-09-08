@@ -74,7 +74,7 @@ SFString nextLogentryChunk(const SFString& fieldIn, const void *data) {
 
         // EXISTING_CODE
         // See if this field belongs to the item's container
-        ret = nextReceiptChunk(fieldIn, force, log->pReceipt);
+        ret = nextReceiptChunk(fieldIn, log->pReceipt);
         if (ret.Contains("Field not found"))
             ret = EMPTY;
         if (!ret.empty())

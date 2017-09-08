@@ -59,7 +59,7 @@ SFString nextDepositeventChunk(const SFString& fieldIn, const void *data) {
         // EXISTING_CODE
 
         // Finally, give the parent class a chance
-        ret = nextLogentryChunk(fieldIn, force, dep);
+        ret = nextLogentryChunk(fieldIn, dep);
         if (!ret.empty())
             return ret;
     }
