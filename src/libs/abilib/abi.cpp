@@ -43,7 +43,7 @@ SFString nextAbiChunk(const SFString& fieldIn, const void *data) {
     const CAbi *abi = (const CAbi *)data;
     if (abi) {
         // Give customized code a chance to override first
-        SFString ret = nextAbiChunk_custom(fieldIn, force, data);
+        SFString ret = nextAbiChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
 

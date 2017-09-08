@@ -42,7 +42,7 @@ SFString nextKillChunk(const SFString& fieldIn, const void *data) {
     const QKill *kil = (const QKill *)data;
     if (kil) {
         // Give customized code a chance to override first
-        SFString ret = nextKillChunk_custom(fieldIn, force, data);
+        SFString ret = nextKillChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
 

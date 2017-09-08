@@ -44,7 +44,7 @@ SFString nextLogentryChunk(const SFString& fieldIn, const void *data) {
     const CLogEntry *log = (const CLogEntry *)data;
     if (log) {
         // Give customized code a chance to override first
-        SFString ret = nextLogentryChunk_custom(fieldIn, force, data);
+        SFString ret = nextLogentryChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
 

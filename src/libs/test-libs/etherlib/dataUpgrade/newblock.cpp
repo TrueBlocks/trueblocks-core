@@ -44,7 +44,7 @@ SFString nextNewblockChunk(const SFString& fieldIn, const void *data) {
     const CNewBlock *newp = (const CNewBlock *)data;
     if (newp) {
         // Give customized code a chance to override first
-        SFString ret = nextNewblockChunk_custom(fieldIn, force, data);
+        SFString ret = nextNewblockChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
 

@@ -42,7 +42,7 @@ SFString nextOwnerremovedeventChunk(const SFString& fieldIn, const void *data) {
     const QOwnerRemovedEvent *own = (const QOwnerRemovedEvent *)data;
     if (own) {
         // Give customized code a chance to override first
-        SFString ret = nextOwnerremovedeventChunk_custom(fieldIn, force, data);
+        SFString ret = nextOwnerremovedeventChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
 

@@ -44,7 +44,7 @@ SFString nextInfixChunk(const SFString& fieldIn, const void *data) {
     const CInfix *inf = (const CInfix *)data;
     if (inf) {
         // Give customized code a chance to override first
-        SFString ret = nextInfixChunk_custom(fieldIn, force, data);
+        SFString ret = nextInfixChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
 

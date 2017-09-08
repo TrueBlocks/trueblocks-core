@@ -42,7 +42,7 @@ SFString nextAddownerChunk(const SFString& fieldIn, const void *data) {
     const QAddOwner *add = (const QAddOwner *)data;
     if (add) {
         // Give customized code a chance to override first
-        SFString ret = nextAddownerChunk_custom(fieldIn, force, data);
+        SFString ret = nextAddownerChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
 

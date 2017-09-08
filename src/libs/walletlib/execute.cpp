@@ -42,7 +42,7 @@ SFString nextExecuteChunk(const SFString& fieldIn, const void *data) {
     const QExecute *exe = (const QExecute *)data;
     if (exe) {
         // Give customized code a chance to override first
-        SFString ret = nextExecuteChunk_custom(fieldIn, force, data);
+        SFString ret = nextExecuteChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
 

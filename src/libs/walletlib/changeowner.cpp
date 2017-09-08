@@ -42,7 +42,7 @@ SFString nextChangeownerChunk(const SFString& fieldIn, const void *data) {
     const QChangeOwner *cha = (const QChangeOwner *)data;
     if (cha) {
         // Give customized code a chance to override first
-        SFString ret = nextChangeownerChunk_custom(fieldIn, force, data);
+        SFString ret = nextChangeownerChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
 

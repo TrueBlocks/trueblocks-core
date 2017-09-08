@@ -42,7 +42,7 @@ SFString nextConfirmationeventChunk(const SFString& fieldIn, const void *data) {
     const QConfirmationEvent *con = (const QConfirmationEvent *)data;
     if (con) {
         // Give customized code a chance to override first
-        SFString ret = nextConfirmationeventChunk_custom(fieldIn, force, data);
+        SFString ret = nextConfirmationeventChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
 

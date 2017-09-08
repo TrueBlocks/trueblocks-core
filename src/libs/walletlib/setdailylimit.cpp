@@ -42,7 +42,7 @@ SFString nextSetdailylimitChunk(const SFString& fieldIn, const void *data) {
     const QSetDailyLimit *set = (const QSetDailyLimit *)data;
     if (set) {
         // Give customized code a chance to override first
-        SFString ret = nextSetdailylimitChunk_custom(fieldIn, force, data);
+        SFString ret = nextSetdailylimitChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
 

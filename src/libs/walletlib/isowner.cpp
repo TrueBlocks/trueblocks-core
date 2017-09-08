@@ -42,7 +42,7 @@ SFString nextIsownerChunk(const SFString& fieldIn, const void *data) {
     const QIsOwner *iso = (const QIsOwner *)data;
     if (iso) {
         // Give customized code a chance to override first
-        SFString ret = nextIsownerChunk_custom(fieldIn, force, data);
+        SFString ret = nextIsownerChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
 

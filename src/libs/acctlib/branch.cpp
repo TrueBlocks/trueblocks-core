@@ -44,7 +44,7 @@ SFString nextBranchChunk(const SFString& fieldIn, const void *data) {
     const CBranch *bra = (const CBranch *)data;
     if (bra) {
         // Give customized code a chance to override first
-        SFString ret = nextBranchChunk_custom(fieldIn, force, data);
+        SFString ret = nextBranchChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
 

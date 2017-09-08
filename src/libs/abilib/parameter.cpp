@@ -43,7 +43,7 @@ SFString nextParameterChunk(const SFString& fieldIn, const void *data) {
     const CParameter *par = (const CParameter *)data;
     if (par) {
         // Give customized code a chance to override first
-        SFString ret = nextParameterChunk_custom(fieldIn, force, data);
+        SFString ret = nextParameterChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
 

@@ -43,7 +43,7 @@ SFString nextNamevalueChunk(const SFString& fieldIn, const void *data) {
     const CNameValue *nam = (const CNameValue *)data;
     if (nam) {
         // Give customized code a chance to override first
-        SFString ret = nextNamevalueChunk_custom(fieldIn, force, data);
+        SFString ret = nextNamevalueChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
 
