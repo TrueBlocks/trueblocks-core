@@ -58,7 +58,7 @@ SFString nextApprovaleventChunk(const SFString& fieldIn, const void *data) {
         // EXISTING_CODE
 
         // Finally, give the parent class a chance
-        ret = nextLogentryChunk(fieldIn, force, app);
+        ret = nextLogentryChunk(fieldIn, app);
         if (!ret.empty())
             return ret;
     }

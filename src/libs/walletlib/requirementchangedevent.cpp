@@ -56,7 +56,7 @@ SFString nextRequirementchangedeventChunk(const SFString& fieldIn, const void *d
         // EXISTING_CODE
 
         // Finally, give the parent class a chance
-        ret = nextLogentryChunk(fieldIn, force, req);
+        ret = nextLogentryChunk(fieldIn, req);
         if (!ret.empty())
             return ret;
     }

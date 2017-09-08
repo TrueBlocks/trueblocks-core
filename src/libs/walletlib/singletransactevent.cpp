@@ -65,7 +65,7 @@ SFString nextSingletransacteventChunk(const SFString& fieldIn, const void *data)
         // EXISTING_CODE
 
         // Finally, give the parent class a chance
-        ret = nextLogentryChunk(fieldIn, force, sin);
+        ret = nextLogentryChunk(fieldIn, sin);
         if (!ret.empty())
             return ret;
     }

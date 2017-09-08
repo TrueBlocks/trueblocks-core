@@ -57,7 +57,7 @@ SFString nextRevokeeventChunk(const SFString& fieldIn, const void *data) {
         // EXISTING_CODE
 
         // Finally, give the parent class a chance
-        ret = nextLogentryChunk(fieldIn, force, rev);
+        ret = nextLogentryChunk(fieldIn, rev);
         if (!ret.empty())
             return ret;
     }

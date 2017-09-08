@@ -56,7 +56,7 @@ SFString nextOwneraddedeventChunk(const SFString& fieldIn, const void *data) {
         // EXISTING_CODE
 
         // Finally, give the parent class a chance
-        ret = nextLogentryChunk(fieldIn, force, own);
+        ret = nextLogentryChunk(fieldIn, own);
         if (!ret.empty())
             return ret;
     }

@@ -58,7 +58,7 @@ SFString nextBranchChunk(const SFString& fieldIn, const void *data) {
         // EXISTING_CODE
 
         // Finally, give the parent class a chance
-        ret = nextTreenodeChunk(fieldIn, force, bra);
+        ret = nextTreenodeChunk(fieldIn, bra);
         if (!ret.empty())
             return ret;
     }

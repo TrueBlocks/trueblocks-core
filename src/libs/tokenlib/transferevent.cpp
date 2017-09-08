@@ -58,7 +58,7 @@ SFString nextTransfereventChunk(const SFString& fieldIn, const void *data) {
         // EXISTING_CODE
 
         // Finally, give the parent class a chance
-        ret = nextLogentryChunk(fieldIn, force, tra);
+        ret = nextLogentryChunk(fieldIn, tra);
         if (!ret.empty())
             return ret;
     }

@@ -59,7 +59,7 @@ SFString nextInfixChunk(const SFString& fieldIn, const void *data) {
         // EXISTING_CODE
 
         // Finally, give the parent class a chance
-        ret = nextTreenodeChunk(fieldIn, force, inf);
+        ret = nextTreenodeChunk(fieldIn, inf);
         if (!ret.empty())
             return ret;
     }
