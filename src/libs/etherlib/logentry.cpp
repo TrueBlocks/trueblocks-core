@@ -82,7 +82,7 @@ SFString nextLogentryChunk(const SFString& fieldIn, bool& force, const void *dat
         // EXISTING_CODE
 
         // Finally, give the parent class a chance
-        ret = nextBasenodeChunk(fieldIn, force, log);
+        ret = nextBasenodeChunk(fieldIn, log);
         if (!ret.empty())
             return ret;
     }
@@ -191,7 +191,7 @@ SFString nextLogentryChunk_custom(const SFString& fieldIn, bool& force, const vo
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn, force, log);
+                    return nextBasenodeChunk(fieldIn, log);
                 break;
 
             default:

@@ -44,48 +44,9 @@ SFString nextTransactionChunk(const SFString& fieldIn, bool& force, const void *
     const CTransaction *tra = (const CTransaction *)data;
     if (tra) {
         // Give customized code a chance to override first
-        SFString ret = nextTransactionChunk_custom(fieldIn, force, data);
+        SFString ret = tra->getValueByName(fieldIn);
         if (!ret.empty())
             return ret;
-
-        switch (tolower(fieldIn[0])) {
-            case 'b':
-                if ( fieldIn % "blockHash" ) return fromHash(tra->blockHash);
-                if ( fieldIn % "blockNumber" ) return asStringU(tra->blockNumber);
-                break;
-            case 'c':
-                if ( fieldIn % "cumulativeGasUsed" ) return fromWei(tra->cumulativeGasUsed);
-                break;
-            case 'f':
-                if ( fieldIn % "from" ) return fromAddress(tra->from);
-                break;
-            case 'g':
-                if ( fieldIn % "gas" ) return asStringU(tra->gas);
-                if ( fieldIn % "gasPrice" ) return asStringU(tra->gasPrice);
-                break;
-            case 'h':
-                if ( fieldIn % "hash" ) return fromHash(tra->hash);
-                break;
-            case 'i':
-                if ( fieldIn % "input" ) return tra->input;
-                if ( fieldIn % "isError" ) return asStringU(tra->isError);
-                if ( fieldIn % "isInternalTx" ) return asStringU(tra->isInternalTx);
-                break;
-            case 'n':
-                if ( fieldIn % "nonce" ) return asStringU(tra->nonce);
-                break;
-            case 'r':
-                if ( fieldIn % "receipt" ) { expContext().noFrst=true; return tra->receipt.Format(); }
-                break;
-            case 't':
-                if ( fieldIn % "transactionIndex" ) return asStringU(tra->transactionIndex);
-                if ( fieldIn % "timestamp" ) return asStringU(tra->timestamp);
-                if ( fieldIn % "to" ) return fromAddress(tra->to);
-                break;
-            case 'v':
-                if ( fieldIn % "value" ) return fromWei(tra->value);
-                break;
-        }
 
         // EXISTING_CODE
         // See if this field belongs to the item's container
@@ -97,7 +58,7 @@ SFString nextTransactionChunk(const SFString& fieldIn, bool& force, const void *
         // EXISTING_CODE
 
         // Finally, give the parent class a chance
-        ret = nextBasenodeChunk(fieldIn, force, tra);
+        ret = nextBasenodeChunk(fieldIn, tra);
         if (!ret.empty())
             return ret;
     }
@@ -355,7 +316,7 @@ SFString nextTransactionChunk_custom(const SFString& fieldIn, bool& force, const
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn, force, tra);
+                    return nextBasenodeChunk(fieldIn, tra);
                 break;
 
             default:
@@ -392,6 +353,59 @@ SFArchive& operator>>(SFArchive& archive, CTransaction& tra) {
     tra.Serialize(archive);
     return archive;
 }
+
+#define NEW_CODE
+#ifdef NEW_CODE
+//---------------------------------------------------------------------------
+SFString CTransaction::getValueByName(const SFString& fieldName) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    bool f = false;
+    SFString ret = nextTransactionChunk_custom(fieldName, f, (void*)this);
+    if (!ret.empty())
+        return ret;
+    switch (tolower(fieldName[0])) {
+        case 'b':
+            if ( fieldName % "blockHash" ) return fromHash(blockHash);
+            if ( fieldName % "blockNumber" ) return asStringU(blockNumber);
+            break;
+        case 'c':
+            if ( fieldName % "cumulativeGasUsed" ) return fromWei(cumulativeGasUsed);
+            break;
+        case 'f':
+            if ( fieldName % "from" ) return fromAddress(from);
+            break;
+        case 'g':
+            if ( fieldName % "gas" ) return asStringU(gas);
+            if ( fieldName % "gasPrice" ) return asStringU(gasPrice);
+            break;
+        case 'h':
+            if ( fieldName % "hash" ) return fromHash(hash);
+            break;
+        case 'i':
+            if ( fieldName % "input" ) return input;
+            if ( fieldName % "isError" ) return asStringU(isError);
+            if ( fieldName % "isInternalTx" ) return asStringU(isInternalTx);
+            break;
+        case 'n':
+            if ( fieldName % "nonce" ) return asStringU(nonce);
+            break;
+        case 'r':
+            if ( fieldName % "receipt" ) { expContext().noFrst=true; return receipt.Format(); }
+            break;
+        case 't':
+            if ( fieldName % "transactionIndex" ) return asStringU(transactionIndex);
+            if ( fieldName % "timestamp" ) return asStringU(timestamp);
+            if ( fieldName % "to" ) return fromAddress(to);
+            break;
+        case 'v':
+            if ( fieldName % "value" ) return fromWei(value);
+            break;
+    }
+    return "";
+}
+#else
+#endif
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

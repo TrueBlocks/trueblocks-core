@@ -167,7 +167,7 @@ SFString nextSingletransacteventChunk_custom(const SFString& fieldIn, bool& forc
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn, force, sin);
+                    return nextBasenodeChunk(fieldIn, sin);
                 break;
 
             default:

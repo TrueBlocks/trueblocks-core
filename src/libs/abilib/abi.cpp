@@ -76,7 +76,7 @@ SFString nextAbiChunk(const SFString& fieldIn, bool& force, const void *data) {
         // EXISTING_CODE
 
         // Finally, give the parent class a chance
-        ret = nextBasenodeChunk(fieldIn, force, abi);
+        ret = nextBasenodeChunk(fieldIn, abi);
         if (!ret.empty())
             return ret;
     }
@@ -161,7 +161,7 @@ SFString nextAbiChunk_custom(const SFString& fieldIn, bool& force, const void *d
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn, force, abi);
+                    return nextBasenodeChunk(fieldIn, abi);
                 break;
 
             default:

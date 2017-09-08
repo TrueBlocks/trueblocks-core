@@ -140,7 +140,7 @@ SFString nextChangerequirementChunk_custom(const SFString& fieldIn, bool& force,
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn, force, cha);
+                    return nextBasenodeChunk(fieldIn, cha);
                 break;
 
             default:
