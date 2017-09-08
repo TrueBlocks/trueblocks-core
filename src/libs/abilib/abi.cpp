@@ -17,8 +17,8 @@ namespace qblocks {
 IMPLEMENT_NODE(CAbi, CBaseNode, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextAbiChunk(const SFString& fieldIn, bool& force, const void *data);
-static SFString nextAbiChunk_custom(const SFString& fieldIn, bool& force, const void *data);
+static SFString nextAbiChunk(const SFString& fieldIn, const void *data);
+static SFString nextAbiChunk_custom(const SFString& fieldIn, const void *data);
 
 //---------------------------------------------------------------------------
 void CAbi::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
@@ -39,7 +39,7 @@ void CAbi::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const 
 }
 
 //---------------------------------------------------------------------------
-SFString nextAbiChunk(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextAbiChunk(const SFString& fieldIn, const void *data) {
     const CAbi *abi = (const CAbi *)data;
     if (abi) {
         // Give customized code a chance to override first
@@ -152,7 +152,7 @@ void CAbi::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextAbiChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextAbiChunk_custom(const SFString& fieldIn, const void *data) {
     const CAbi *abi = (const CAbi *)data;
     if (abi) {
         switch (tolower(fieldIn[0])) {

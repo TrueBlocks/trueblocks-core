@@ -16,8 +16,8 @@
 IMPLEMENT_NODE(QRemoveOwner, CTransaction, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextRemoveownerChunk(const SFString& fieldIn, bool& force, const void *data);
-static SFString nextRemoveownerChunk_custom(const SFString& fieldIn, bool& force, const void *data);
+static SFString nextRemoveownerChunk(const SFString& fieldIn, const void *data);
+static SFString nextRemoveownerChunk_custom(const SFString& fieldIn, const void *data);
 
 //---------------------------------------------------------------------------
 void QRemoveOwner::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
@@ -38,7 +38,7 @@ void QRemoveOwner::Format(CExportContext& ctx, const SFString& fmtIn, void *data
 }
 
 //---------------------------------------------------------------------------
-SFString nextRemoveownerChunk(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextRemoveownerChunk(const SFString& fieldIn, const void *data) {
     const QRemoveOwner *rem = (const QRemoveOwner *)data;
     if (rem) {
         // Give customized code a chance to override first
@@ -56,7 +56,7 @@ SFString nextRemoveownerChunk(const SFString& fieldIn, bool& force, const void *
         // EXISTING_CODE
 
         // Finally, give the parent class a chance
-        ret = nextTransactionChunk(fieldIn, force, rem);
+        ret = nextTransactionChunk(fieldIn, rem);
         if (!ret.empty())
             return ret;
     }
@@ -131,7 +131,7 @@ void QRemoveOwner::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextRemoveownerChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextRemoveownerChunk_custom(const SFString& fieldIn, const void *data) {
     const QRemoveOwner *rem = (const QRemoveOwner *)data;
     if (rem) {
         switch (tolower(fieldIn[0])) {

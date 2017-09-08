@@ -16,8 +16,8 @@
 IMPLEMENT_NODE(QRevokeEvent, CLogEntry, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextRevokeeventChunk(const SFString& fieldIn, bool& force, const void *data);
-static SFString nextRevokeeventChunk_custom(const SFString& fieldIn, bool& force, const void *data);
+static SFString nextRevokeeventChunk(const SFString& fieldIn, const void *data);
+static SFString nextRevokeeventChunk_custom(const SFString& fieldIn, const void *data);
 
 //---------------------------------------------------------------------------
 void QRevokeEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
@@ -38,7 +38,7 @@ void QRevokeEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *data
 }
 
 //---------------------------------------------------------------------------
-SFString nextRevokeeventChunk(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextRevokeeventChunk(const SFString& fieldIn, const void *data) {
     const QRevokeEvent *rev = (const QRevokeEvent *)data;
     if (rev) {
         // Give customized code a chance to override first
@@ -136,7 +136,7 @@ void QRevokeEvent::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextRevokeeventChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextRevokeeventChunk_custom(const SFString& fieldIn, const void *data) {
     const QRevokeEvent *rev = (const QRevokeEvent *)data;
     if (rev) {
         switch (tolower(fieldIn[0])) {

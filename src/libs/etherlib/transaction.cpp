@@ -18,8 +18,8 @@ namespace qblocks {
 IMPLEMENT_NODE(CTransaction, CBaseNode, dataSchema());
 
 //---------------------------------------------------------------------------
-extern SFString nextTransactionChunk(const SFString& fieldIn, bool& force, const void *data);
-static SFString nextTransactionChunk_custom(const SFString& fieldIn, bool& force, const void *data);
+extern SFString nextTransactionChunk(const SFString& fieldIn, const void *data);
+static SFString nextTransactionChunk_custom(const SFString& fieldIn, const void *data);
 
 //---------------------------------------------------------------------------
 void CTransaction::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
@@ -40,7 +40,7 @@ void CTransaction::Format(CExportContext& ctx, const SFString& fmtIn, void *data
 }
 
 //---------------------------------------------------------------------------
-SFString nextTransactionChunk(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextTransactionChunk(const SFString& fieldIn, const void *data) {
     const CTransaction *tra = (const CTransaction *)data;
     if (tra) {
         // Give customized code a chance to override first
@@ -278,7 +278,7 @@ void CTransaction::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextTransactionChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextTransactionChunk_custom(const SFString& fieldIn, const void *data) {
     const CTransaction *tra = (const CTransaction *)data;
     if (tra) {
         switch (tolower(fieldIn[0])) {

@@ -17,8 +17,8 @@ namespace qblocks {
 IMPLEMENT_NODE(CTreeRoot, CBaseNode, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextTreerootChunk(const SFString& fieldIn, bool& force, const void *data);
-static SFString nextTreerootChunk_custom(const SFString& fieldIn, bool& force, const void *data);
+static SFString nextTreerootChunk(const SFString& fieldIn, const void *data);
+static SFString nextTreerootChunk_custom(const SFString& fieldIn, const void *data);
 
 //---------------------------------------------------------------------------
 void CTreeRoot::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
@@ -39,7 +39,7 @@ void CTreeRoot::Format(CExportContext& ctx, const SFString& fmtIn, void *data) c
 }
 
 //---------------------------------------------------------------------------
-SFString nextTreerootChunk(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextTreerootChunk(const SFString& fieldIn, const void *data) {
     const CTreeRoot *tre = (const CTreeRoot *)data;
     if (tre) {
         // Give customized code a chance to override first
@@ -131,7 +131,7 @@ void CTreeRoot::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextTreerootChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextTreerootChunk_custom(const SFString& fieldIn, const void *data) {
     const CTreeRoot *tre = (const CTreeRoot *)data;
     if (tre) {
         switch (tolower(fieldIn[0])) {

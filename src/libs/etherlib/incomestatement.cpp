@@ -18,8 +18,8 @@ namespace qblocks {
 IMPLEMENT_NODE(CIncomeStatement, CBaseNode, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextIncomestatementChunk(const SFString& fieldIn, bool& force, const void *data);
-static SFString nextIncomestatementChunk_custom(const SFString& fieldIn, bool& force, const void *data);
+static SFString nextIncomestatementChunk(const SFString& fieldIn, const void *data);
+static SFString nextIncomestatementChunk_custom(const SFString& fieldIn, const void *data);
 
 //---------------------------------------------------------------------------
 void CIncomeStatement::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
@@ -40,7 +40,7 @@ void CIncomeStatement::Format(CExportContext& ctx, const SFString& fmtIn, void *
 }
 
 //---------------------------------------------------------------------------
-SFString nextIncomestatementChunk(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextIncomestatementChunk(const SFString& fieldIn, const void *data) {
     const CIncomeStatement *inc = (const CIncomeStatement *)data;
     if (inc) {
         // Give customized code a chance to override first
@@ -171,7 +171,7 @@ void CIncomeStatement::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextIncomestatementChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextIncomestatementChunk_custom(const SFString& fieldIn, const void *data) {
     const CIncomeStatement *inc = (const CIncomeStatement *)data;
     if (inc) {
         switch (tolower(fieldIn[0])) {

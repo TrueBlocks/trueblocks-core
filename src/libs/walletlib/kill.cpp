@@ -16,8 +16,8 @@
 IMPLEMENT_NODE(QKill, CTransaction, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextKillChunk(const SFString& fieldIn, bool& force, const void *data);
-static SFString nextKillChunk_custom(const SFString& fieldIn, bool& force, const void *data);
+static SFString nextKillChunk(const SFString& fieldIn, const void *data);
+static SFString nextKillChunk_custom(const SFString& fieldIn, const void *data);
 
 //---------------------------------------------------------------------------
 void QKill::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
@@ -38,7 +38,7 @@ void QKill::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const
 }
 
 //---------------------------------------------------------------------------
-SFString nextKillChunk(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextKillChunk(const SFString& fieldIn, const void *data) {
     const QKill *kil = (const QKill *)data;
     if (kil) {
         // Give customized code a chance to override first
@@ -56,7 +56,7 @@ SFString nextKillChunk(const SFString& fieldIn, bool& force, const void *data) {
         // EXISTING_CODE
 
         // Finally, give the parent class a chance
-        ret = nextTransactionChunk(fieldIn, force, kil);
+        ret = nextTransactionChunk(fieldIn, kil);
         if (!ret.empty())
             return ret;
     }
@@ -131,7 +131,7 @@ void QKill::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextKillChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextKillChunk_custom(const SFString& fieldIn, const void *data) {
     const QKill *kil = (const QKill *)data;
     if (kil) {
         switch (tolower(fieldIn[0])) {

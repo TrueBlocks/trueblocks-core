@@ -16,8 +16,8 @@
 IMPLEMENT_NODE(QSingleTransactEvent, CLogEntry, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextSingletransacteventChunk(const SFString& fieldIn, bool& force, const void *data);
-static SFString nextSingletransacteventChunk_custom(const SFString& fieldIn, bool& force, const void *data);
+static SFString nextSingletransacteventChunk(const SFString& fieldIn, const void *data);
+static SFString nextSingletransacteventChunk_custom(const SFString& fieldIn, const void *data);
 
 //---------------------------------------------------------------------------
 void QSingleTransactEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
@@ -38,7 +38,7 @@ void QSingleTransactEvent::Format(CExportContext& ctx, const SFString& fmtIn, vo
 }
 
 //---------------------------------------------------------------------------
-SFString nextSingletransacteventChunk(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextSingletransacteventChunk(const SFString& fieldIn, const void *data) {
     const QSingleTransactEvent *sin = (const QSingleTransactEvent *)data;
     if (sin) {
         // Give customized code a chance to override first
@@ -158,7 +158,7 @@ void QSingleTransactEvent::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextSingletransacteventChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextSingletransacteventChunk_custom(const SFString& fieldIn, const void *data) {
     const QSingleTransactEvent *sin = (const QSingleTransactEvent *)data;
     if (sin) {
         switch (tolower(fieldIn[0])) {

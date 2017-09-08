@@ -17,8 +17,8 @@ namespace qblocks {
 IMPLEMENT_NODE(CAccount, CBaseNode, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextAccountChunk(const SFString& fieldIn, bool& force, const void *data);
-static SFString nextAccountChunk_custom(const SFString& fieldIn, bool& force, const void *data);
+static SFString nextAccountChunk(const SFString& fieldIn, const void *data);
+static SFString nextAccountChunk_custom(const SFString& fieldIn, const void *data);
 
 //---------------------------------------------------------------------------
 void CAccount::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
@@ -39,7 +39,7 @@ void CAccount::Format(CExportContext& ctx, const SFString& fmtIn, void *data) co
 }
 
 //---------------------------------------------------------------------------
-SFString nextAccountChunk(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextAccountChunk(const SFString& fieldIn, const void *data) {
     const CAccount *acc = (const CAccount *)data;
     if (acc) {
         // Give customized code a chance to override first
@@ -202,7 +202,7 @@ void CAccount::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextAccountChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextAccountChunk_custom(const SFString& fieldIn, const void *data) {
     const CAccount *acc = (const CAccount *)data;
     if (acc) {
         switch (tolower(fieldIn[0])) {

@@ -16,8 +16,8 @@
 IMPLEMENT_NODE(QOwnerAddedEvent, CLogEntry, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextOwneraddedeventChunk(const SFString& fieldIn, bool& force, const void *data);
-static SFString nextOwneraddedeventChunk_custom(const SFString& fieldIn, bool& force, const void *data);
+static SFString nextOwneraddedeventChunk(const SFString& fieldIn, const void *data);
+static SFString nextOwneraddedeventChunk_custom(const SFString& fieldIn, const void *data);
 
 //---------------------------------------------------------------------------
 void QOwnerAddedEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
@@ -38,7 +38,7 @@ void QOwnerAddedEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *
 }
 
 //---------------------------------------------------------------------------
-SFString nextOwneraddedeventChunk(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextOwneraddedeventChunk(const SFString& fieldIn, const void *data) {
     const QOwnerAddedEvent *own = (const QOwnerAddedEvent *)data;
     if (own) {
         // Give customized code a chance to override first
@@ -131,7 +131,7 @@ void QOwnerAddedEvent::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextOwneraddedeventChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextOwneraddedeventChunk_custom(const SFString& fieldIn, const void *data) {
     const QOwnerAddedEvent *own = (const QOwnerAddedEvent *)data;
     if (own) {
         switch (tolower(fieldIn[0])) {

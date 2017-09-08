@@ -17,8 +17,8 @@ namespace qblocks {
 IMPLEMENT_NODE(CParameter, CBaseNode, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextParameterChunk(const SFString& fieldIn, bool& force, const void *data);
-static SFString nextParameterChunk_custom(const SFString& fieldIn, bool& force, const void *data);
+static SFString nextParameterChunk(const SFString& fieldIn, const void *data);
+static SFString nextParameterChunk_custom(const SFString& fieldIn, const void *data);
 
 //---------------------------------------------------------------------------
 void CParameter::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
@@ -39,7 +39,7 @@ void CParameter::Format(CExportContext& ctx, const SFString& fmtIn, void *data) 
 }
 
 //---------------------------------------------------------------------------
-SFString nextParameterChunk(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextParameterChunk(const SFString& fieldIn, const void *data) {
     const CParameter *par = (const CParameter *)data;
     if (par) {
         // Give customized code a chance to override first
@@ -171,7 +171,7 @@ void CParameter::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextParameterChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextParameterChunk_custom(const SFString& fieldIn, const void *data) {
     const CParameter *par = (const CParameter *)data;
     if (par) {
         switch (tolower(fieldIn[0])) {
