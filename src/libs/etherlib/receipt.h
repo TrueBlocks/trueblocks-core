@@ -177,7 +177,7 @@ extern SFArchive& operator>>(SFArchive& archive, CReceipt& rec);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-extern SFString nextTransactionChunk(const SFString& fieldIn, bool& force, const void *data);
+extern SFString nextTransactionChunk(const SFString& fieldIn, const void *data);
 // EXISTING_CODE
 }  // namespace qblocks
 

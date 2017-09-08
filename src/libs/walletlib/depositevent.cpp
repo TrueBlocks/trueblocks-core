@@ -16,8 +16,8 @@
 IMPLEMENT_NODE(QDepositEvent, CLogEntry, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextDepositeventChunk(const SFString& fieldIn, bool& force, const void *data);
-static SFString nextDepositeventChunk_custom(const SFString& fieldIn, bool& force, const void *data);
+static SFString nextDepositeventChunk(const SFString& fieldIn, const void *data);
+static SFString nextDepositeventChunk_custom(const SFString& fieldIn, const void *data);
 
 //---------------------------------------------------------------------------
 void QDepositEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
@@ -38,7 +38,7 @@ void QDepositEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *dat
 }
 
 //---------------------------------------------------------------------------
-SFString nextDepositeventChunk(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextDepositeventChunk(const SFString& fieldIn, const void *data) {
     const QDepositEvent *dep = (const QDepositEvent *)data;
     if (dep) {
         // Give customized code a chance to override first
@@ -140,7 +140,7 @@ void QDepositEvent::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextDepositeventChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextDepositeventChunk_custom(const SFString& fieldIn, const void *data) {
     const QDepositEvent *dep = (const QDepositEvent *)data;
     if (dep) {
         switch (tolower(fieldIn[0])) {

@@ -15,8 +15,8 @@
 IMPLEMENT_NODE(CAccountName, CBaseNode, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextAccountnameChunk(const SFString& fieldIn, bool& force, const void *data);
-static SFString nextAccountnameChunk_custom(const SFString& fieldIn, bool& force, const void *data);
+static SFString nextAccountnameChunk(const SFString& fieldIn, const void *data);
+static SFString nextAccountnameChunk_custom(const SFString& fieldIn, const void *data);
 
 //---------------------------------------------------------------------------
 void CAccountName::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
@@ -37,7 +37,7 @@ void CAccountName::Format(CExportContext& ctx, const SFString& fmtIn, void *data
 }
 
 //---------------------------------------------------------------------------
-SFString nextAccountnameChunk(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextAccountnameChunk(const SFString& fieldIn, const void *data) {
     const CAccountName *acc = (const CAccountName *)data;
     if (acc) {
         // Give customized code a chance to override first
@@ -159,7 +159,7 @@ void CAccountName::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextAccountnameChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextAccountnameChunk_custom(const SFString& fieldIn, const void *data) {
     const CAccountName *acc = (const CAccountName *)data;
     if (acc) {
         switch (tolower(fieldIn[0])) {

@@ -18,8 +18,8 @@ namespace qblocks {
 IMPLEMENT_NODE(CBranch, CTreeNode, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextBranchChunk(const SFString& fieldIn, bool& force, const void *data);
-static SFString nextBranchChunk_custom(const SFString& fieldIn, bool& force, const void *data);
+static SFString nextBranchChunk(const SFString& fieldIn, const void *data);
+static SFString nextBranchChunk_custom(const SFString& fieldIn, const void *data);
 
 //---------------------------------------------------------------------------
 void CBranch::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
@@ -40,7 +40,7 @@ void CBranch::Format(CExportContext& ctx, const SFString& fmtIn, void *data) con
 }
 
 //---------------------------------------------------------------------------
-SFString nextBranchChunk(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextBranchChunk(const SFString& fieldIn, const void *data) {
     const CBranch *bra = (const CBranch *)data;
     if (bra) {
         // Give customized code a chance to override first
@@ -133,7 +133,7 @@ void CBranch::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextBranchChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextBranchChunk_custom(const SFString& fieldIn, const void *data) {
     const CBranch *bra = (const CBranch *)data;
     if (bra) {
         switch (tolower(fieldIn[0])) {

@@ -18,8 +18,8 @@ namespace qblocks {
 IMPLEMENT_NODE(CAccountWatch, CBaseNode, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextAccountwatchChunk(const SFString& fieldIn, bool& force, const void *data);
-static SFString nextAccountwatchChunk_custom(const SFString& fieldIn, bool& force, const void *data);
+static SFString nextAccountwatchChunk(const SFString& fieldIn, const void *data);
+static SFString nextAccountwatchChunk_custom(const SFString& fieldIn, const void *data);
 
 //---------------------------------------------------------------------------
 void CAccountWatch::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
@@ -40,7 +40,7 @@ void CAccountWatch::Format(CExportContext& ctx, const SFString& fmtIn, void *dat
 }
 
 //---------------------------------------------------------------------------
-SFString nextAccountwatchChunk(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextAccountwatchChunk(const SFString& fieldIn, const void *data) {
     const CAccountWatch *acc = (const CAccountWatch *)data;
     if (acc) {
         // Give customized code a chance to override first
@@ -227,7 +227,7 @@ void CAccountWatch::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextAccountwatchChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextAccountwatchChunk_custom(const SFString& fieldIn, const void *data) {
     const CAccountWatch *acc = (const CAccountWatch *)data;
     if (acc) {
         switch (tolower(fieldIn[0])) {

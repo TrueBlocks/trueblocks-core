@@ -16,8 +16,8 @@
 IMPLEMENT_NODE(QApprovalEvent, CLogEntry, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextApprovaleventChunk(const SFString& fieldIn, bool& force, const void *data);
-static SFString nextApprovaleventChunk_custom(const SFString& fieldIn, bool& force, const void *data);
+static SFString nextApprovaleventChunk(const SFString& fieldIn, const void *data);
+static SFString nextApprovaleventChunk_custom(const SFString& fieldIn, const void *data);
 
 //---------------------------------------------------------------------------
 void QApprovalEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
@@ -38,7 +38,7 @@ void QApprovalEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *da
 }
 
 //---------------------------------------------------------------------------
-SFString nextApprovaleventChunk(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextApprovaleventChunk(const SFString& fieldIn, const void *data) {
     const QApprovalEvent *app = (const QApprovalEvent *)data;
     if (app) {
         // Give customized code a chance to override first
@@ -141,7 +141,7 @@ void QApprovalEvent::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextApprovaleventChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextApprovaleventChunk_custom(const SFString& fieldIn, const void *data) {
     const QApprovalEvent *app = (const QApprovalEvent *)data;
     if (app) {
         switch (tolower(fieldIn[0])) {

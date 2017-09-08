@@ -18,8 +18,8 @@ namespace qblocks {
 IMPLEMENT_NODE(CLeaf, CTreeNode, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextLeafChunk(const SFString& fieldIn, bool& force, const void *data);
-static SFString nextLeafChunk_custom(const SFString& fieldIn, bool& force, const void *data);
+static SFString nextLeafChunk(const SFString& fieldIn, const void *data);
+static SFString nextLeafChunk_custom(const SFString& fieldIn, const void *data);
 
 //---------------------------------------------------------------------------
 void CLeaf::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
@@ -40,7 +40,7 @@ void CLeaf::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const
 }
 
 //---------------------------------------------------------------------------
-SFString nextLeafChunk(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextLeafChunk(const SFString& fieldIn, const void *data) {
     const CLeaf *lea = (const CLeaf *)data;
     if (lea) {
         // Give customized code a chance to override first
@@ -151,7 +151,7 @@ void CLeaf::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextLeafChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextLeafChunk_custom(const SFString& fieldIn, const void *data) {
     const CLeaf *lea = (const CLeaf *)data;
     if (lea) {
         switch (tolower(fieldIn[0])) {

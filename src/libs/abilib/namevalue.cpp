@@ -17,8 +17,8 @@ namespace qblocks {
 IMPLEMENT_NODE(CNameValue, CBaseNode, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextNamevalueChunk(const SFString& fieldIn, bool& force, const void *data);
-static SFString nextNamevalueChunk_custom(const SFString& fieldIn, bool& force, const void *data);
+static SFString nextNamevalueChunk(const SFString& fieldIn, const void *data);
+static SFString nextNamevalueChunk_custom(const SFString& fieldIn, const void *data);
 
 //---------------------------------------------------------------------------
 void CNameValue::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
@@ -39,7 +39,7 @@ void CNameValue::Format(CExportContext& ctx, const SFString& fmtIn, void *data) 
 }
 
 //---------------------------------------------------------------------------
-SFString nextNamevalueChunk(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextNamevalueChunk(const SFString& fieldIn, const void *data) {
     const CNameValue *nam = (const CNameValue *)data;
     if (nam) {
         // Give customized code a chance to override first
@@ -138,7 +138,7 @@ void CNameValue::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextNamevalueChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextNamevalueChunk_custom(const SFString& fieldIn, const void *data) {
     const CNameValue *nam = (const CNameValue *)data;
     if (nam) {
         switch (tolower(fieldIn[0])) {

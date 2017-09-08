@@ -15,8 +15,8 @@
 IMPLEMENT_NODE(CAcctCacheItem, CBaseNode, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextAcctcacheitemChunk(const SFString& fieldIn, bool& force, const void *data);
-static SFString nextAcctcacheitemChunk_custom(const SFString& fieldIn, bool& force, const void *data);
+static SFString nextAcctcacheitemChunk(const SFString& fieldIn, const void *data);
+static SFString nextAcctcacheitemChunk_custom(const SFString& fieldIn, const void *data);
 
 //---------------------------------------------------------------------------
 void CAcctCacheItem::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
@@ -37,7 +37,7 @@ void CAcctCacheItem::Format(CExportContext& ctx, const SFString& fmtIn, void *da
 }
 
 //---------------------------------------------------------------------------
-SFString nextAcctcacheitemChunk(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextAcctcacheitemChunk(const SFString& fieldIn, const void *data) {
     const CAcctCacheItem *acc = (const CAcctCacheItem *)data;
     if (acc) {
         // Give customized code a chance to override first
@@ -145,7 +145,7 @@ void CAcctCacheItem::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextAcctcacheitemChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextAcctcacheitemChunk_custom(const SFString& fieldIn, const void *data) {
     const CAcctCacheItem *acc = (const CAcctCacheItem *)data;
     if (acc) {
         switch (tolower(fieldIn[0])) {

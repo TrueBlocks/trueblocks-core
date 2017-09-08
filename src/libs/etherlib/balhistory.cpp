@@ -18,8 +18,8 @@ namespace qblocks {
 IMPLEMENT_NODE(CBalHistory, CBaseNode, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextBalhistoryChunk(const SFString& fieldIn, bool& force, const void *data);
-static SFString nextBalhistoryChunk_custom(const SFString& fieldIn, bool& force, const void *data);
+static SFString nextBalhistoryChunk(const SFString& fieldIn, const void *data);
+static SFString nextBalhistoryChunk_custom(const SFString& fieldIn, const void *data);
 
 //---------------------------------------------------------------------------
 void CBalHistory::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
@@ -40,7 +40,7 @@ void CBalHistory::Format(CExportContext& ctx, const SFString& fmtIn, void *data)
 }
 
 //---------------------------------------------------------------------------
-SFString nextBalhistoryChunk(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextBalhistoryChunk(const SFString& fieldIn, const void *data) {
     const CBalHistory *bal = (const CBalHistory *)data;
     if (bal) {
         // Give customized code a chance to override first
@@ -148,7 +148,7 @@ void CBalHistory::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextBalhistoryChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextBalhistoryChunk_custom(const SFString& fieldIn, const void *data) {
     const CBalHistory *bal = (const CBalHistory *)data;
     if (bal) {
         switch (tolower(fieldIn[0])) {

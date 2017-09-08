@@ -16,8 +16,8 @@
 IMPLEMENT_NODE(QIsOwner, CTransaction, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextIsownerChunk(const SFString& fieldIn, bool& force, const void *data);
-static SFString nextIsownerChunk_custom(const SFString& fieldIn, bool& force, const void *data);
+static SFString nextIsownerChunk(const SFString& fieldIn, const void *data);
+static SFString nextIsownerChunk_custom(const SFString& fieldIn, const void *data);
 
 //---------------------------------------------------------------------------
 void QIsOwner::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
@@ -38,7 +38,7 @@ void QIsOwner::Format(CExportContext& ctx, const SFString& fmtIn, void *data) co
 }
 
 //---------------------------------------------------------------------------
-SFString nextIsownerChunk(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextIsownerChunk(const SFString& fieldIn, const void *data) {
     const QIsOwner *iso = (const QIsOwner *)data;
     if (iso) {
         // Give customized code a chance to override first
@@ -56,7 +56,7 @@ SFString nextIsownerChunk(const SFString& fieldIn, bool& force, const void *data
         // EXISTING_CODE
 
         // Finally, give the parent class a chance
-        ret = nextTransactionChunk(fieldIn, force, iso);
+        ret = nextTransactionChunk(fieldIn, iso);
         if (!ret.empty())
             return ret;
     }
@@ -131,7 +131,7 @@ void QIsOwner::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextIsownerChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextIsownerChunk_custom(const SFString& fieldIn, const void *data) {
     const QIsOwner *iso = (const QIsOwner *)data;
     if (iso) {
         switch (tolower(fieldIn[0])) {

@@ -16,8 +16,8 @@
 IMPLEMENT_NODE(QApprove, CTransaction, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextApproveChunk(const SFString& fieldIn, bool& force, const void *data);
-static SFString nextApproveChunk_custom(const SFString& fieldIn, bool& force, const void *data);
+static SFString nextApproveChunk(const SFString& fieldIn, const void *data);
+static SFString nextApproveChunk_custom(const SFString& fieldIn, const void *data);
 
 //---------------------------------------------------------------------------
 void QApprove::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
@@ -38,7 +38,7 @@ void QApprove::Format(CExportContext& ctx, const SFString& fmtIn, void *data) co
 }
 
 //---------------------------------------------------------------------------
-SFString nextApproveChunk(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextApproveChunk(const SFString& fieldIn, const void *data) {
     const QApprove *app = (const QApprove *)data;
     if (app) {
         // Give customized code a chance to override first
@@ -57,7 +57,7 @@ SFString nextApproveChunk(const SFString& fieldIn, bool& force, const void *data
         // EXISTING_CODE
 
         // Finally, give the parent class a chance
-        ret = nextTransactionChunk(fieldIn, force, app);
+        ret = nextTransactionChunk(fieldIn, app);
         if (!ret.empty())
             return ret;
     }
@@ -136,7 +136,7 @@ void QApprove::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextApproveChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextApproveChunk_custom(const SFString& fieldIn, const void *data) {
     const QApprove *app = (const QApprove *)data;
     if (app) {
         switch (tolower(fieldIn[0])) {

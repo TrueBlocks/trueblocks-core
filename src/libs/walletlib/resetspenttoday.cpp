@@ -16,8 +16,8 @@
 IMPLEMENT_NODE(QResetSpentToday, CTransaction, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextResetspenttodayChunk(const SFString& fieldIn, bool& force, const void *data);
-static SFString nextResetspenttodayChunk_custom(const SFString& fieldIn, bool& force, const void *data);
+static SFString nextResetspenttodayChunk(const SFString& fieldIn, const void *data);
+static SFString nextResetspenttodayChunk_custom(const SFString& fieldIn, const void *data);
 
 //---------------------------------------------------------------------------
 void QResetSpentToday::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
@@ -38,7 +38,7 @@ void QResetSpentToday::Format(CExportContext& ctx, const SFString& fmtIn, void *
 }
 
 //---------------------------------------------------------------------------
-SFString nextResetspenttodayChunk(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextResetspenttodayChunk(const SFString& fieldIn, const void *data) {
     const QResetSpentToday *res = (const QResetSpentToday *)data;
     if (res) {
         // Give customized code a chance to override first
@@ -53,7 +53,7 @@ SFString nextResetspenttodayChunk(const SFString& fieldIn, bool& force, const vo
         // EXISTING_CODE
 
         // Finally, give the parent class a chance
-        ret = nextTransactionChunk(fieldIn, force, res);
+        ret = nextTransactionChunk(fieldIn, res);
         if (!ret.empty())
             return ret;
     }
@@ -121,7 +121,7 @@ void QResetSpentToday::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextResetspenttodayChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextResetspenttodayChunk_custom(const SFString& fieldIn, const void *data) {
     const QResetSpentToday *res = (const QResetSpentToday *)data;
     if (res) {
         switch (tolower(fieldIn[0])) {

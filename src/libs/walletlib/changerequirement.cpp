@@ -16,8 +16,8 @@
 IMPLEMENT_NODE(QChangeRequirement, CTransaction, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextChangerequirementChunk(const SFString& fieldIn, bool& force, const void *data);
-static SFString nextChangerequirementChunk_custom(const SFString& fieldIn, bool& force, const void *data);
+static SFString nextChangerequirementChunk(const SFString& fieldIn, const void *data);
+static SFString nextChangerequirementChunk_custom(const SFString& fieldIn, const void *data);
 
 //---------------------------------------------------------------------------
 void QChangeRequirement::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
@@ -38,7 +38,7 @@ void QChangeRequirement::Format(CExportContext& ctx, const SFString& fmtIn, void
 }
 
 //---------------------------------------------------------------------------
-SFString nextChangerequirementChunk(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextChangerequirementChunk(const SFString& fieldIn, const void *data) {
     const QChangeRequirement *cha = (const QChangeRequirement *)data;
     if (cha) {
         // Give customized code a chance to override first
@@ -56,7 +56,7 @@ SFString nextChangerequirementChunk(const SFString& fieldIn, bool& force, const 
         // EXISTING_CODE
 
         // Finally, give the parent class a chance
-        ret = nextTransactionChunk(fieldIn, force, cha);
+        ret = nextTransactionChunk(fieldIn, cha);
         if (!ret.empty())
             return ret;
     }
@@ -131,7 +131,7 @@ void QChangeRequirement::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextChangerequirementChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextChangerequirementChunk_custom(const SFString& fieldIn, const void *data) {
     const QChangeRequirement *cha = (const QChangeRequirement *)data;
     if (cha) {
         switch (tolower(fieldIn[0])) {
