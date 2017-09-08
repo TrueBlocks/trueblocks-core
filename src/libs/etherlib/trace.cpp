@@ -43,7 +43,7 @@ SFString nextTraceChunk(const SFString& fieldIn, const void *data) {
     const CTrace *tra = (const CTrace *)data;
     if (tra) {
         // Give customized code a chance to override first
-        SFString ret = nextTraceChunk_custom(fieldIn, force, data);
+        SFString ret = nextTraceChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
 

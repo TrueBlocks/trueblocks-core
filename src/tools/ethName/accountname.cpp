@@ -41,7 +41,7 @@ SFString nextAccountnameChunk(const SFString& fieldIn, const void *data) {
     const CAccountName *acc = (const CAccountName *)data;
     if (acc) {
         // Give customized code a chance to override first
-        SFString ret = nextAccountnameChunk_custom(fieldIn, force, data);
+        SFString ret = nextAccountnameChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
 

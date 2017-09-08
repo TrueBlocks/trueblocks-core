@@ -44,7 +44,7 @@ SFString nextIncomestatementChunk(const SFString& fieldIn, const void *data) {
     const CIncomeStatement *inc = (const CIncomeStatement *)data;
     if (inc) {
         // Give customized code a chance to override first
-        SFString ret = nextIncomestatementChunk_custom(fieldIn, force, data);
+        SFString ret = nextIncomestatementChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
 

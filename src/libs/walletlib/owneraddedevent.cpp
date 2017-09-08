@@ -42,7 +42,7 @@ SFString nextOwneraddedeventChunk(const SFString& fieldIn, const void *data) {
     const QOwnerAddedEvent *own = (const QOwnerAddedEvent *)data;
     if (own) {
         // Give customized code a chance to override first
-        SFString ret = nextOwneraddedeventChunk_custom(fieldIn, force, data);
+        SFString ret = nextOwneraddedeventChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
 

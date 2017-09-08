@@ -42,7 +42,7 @@ SFString nextDepositeventChunk(const SFString& fieldIn, const void *data) {
     const QDepositEvent *dep = (const QDepositEvent *)data;
     if (dep) {
         // Give customized code a chance to override first
-        SFString ret = nextDepositeventChunk_custom(fieldIn, force, data);
+        SFString ret = nextDepositeventChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
 

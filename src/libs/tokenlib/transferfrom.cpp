@@ -42,7 +42,7 @@ SFString nextTransferfromChunk(const SFString& fieldIn, const void *data) {
     const QTransferFrom *tra = (const QTransferFrom *)data;
     if (tra) {
         // Give customized code a chance to override first
-        SFString ret = nextTransferfromChunk_custom(fieldIn, force, data);
+        SFString ret = nextTransferfromChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
 

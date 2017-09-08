@@ -44,7 +44,7 @@ SFString nextBalhistoryChunk(const SFString& fieldIn, const void *data) {
     const CBalHistory *bal = (const CBalHistory *)data;
     if (bal) {
         // Give customized code a chance to override first
-        SFString ret = nextBalhistoryChunk_custom(fieldIn, force, data);
+        SFString ret = nextBalhistoryChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
 

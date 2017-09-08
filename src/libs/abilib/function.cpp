@@ -43,7 +43,7 @@ SFString nextFunctionChunk(const SFString& fieldIn, const void *data) {
     const CFunction *fun = (const CFunction *)data;
     if (fun) {
         // Give customized code a chance to override first
-        SFString ret = nextFunctionChunk_custom(fieldIn, force, data);
+        SFString ret = nextFunctionChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
 

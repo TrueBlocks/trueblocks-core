@@ -42,7 +42,7 @@ SFString nextRevokeChunk(const SFString& fieldIn, const void *data) {
     const QRevoke *rev = (const QRevoke *)data;
     if (rev) {
         // Give customized code a chance to override first
-        SFString ret = nextRevokeChunk_custom(fieldIn, force, data);
+        SFString ret = nextRevokeChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
 

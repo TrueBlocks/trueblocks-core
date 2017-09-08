@@ -42,7 +42,7 @@ SFString next[{PROPER}]Chunk(const SFString& fieldIn, const void *data) {
     const [{CLASS_NAME}] *[{SHORT3}] = (const [{CLASS_NAME}] *)data;
     if ([{SHORT3}]) {
         // Give customized code a chance to override first
-        SFString ret = next[{PROPER}]Chunk_custom(fieldIn, force, data);
+        SFString ret = next[{PROPER}]Chunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
 

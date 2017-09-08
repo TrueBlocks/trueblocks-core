@@ -42,7 +42,7 @@ SFString nextResetspenttodayChunk(const SFString& fieldIn, const void *data) {
     const QResetSpentToday *res = (const QResetSpentToday *)data;
     if (res) {
         // Give customized code a chance to override first
-        SFString ret = nextResetspenttodayChunk_custom(fieldIn, force, data);
+        SFString ret = nextResetspenttodayChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
 
