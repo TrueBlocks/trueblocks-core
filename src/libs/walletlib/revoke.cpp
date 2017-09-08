@@ -16,8 +16,8 @@
 IMPLEMENT_NODE(QRevoke, CTransaction, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextRevokeChunk(const SFString& fieldIn, bool& force, const void *data);
-static SFString nextRevokeChunk_custom(const SFString& fieldIn, bool& force, const void *data);
+static SFString nextRevokeChunk(const SFString& fieldIn, const void *data);
+static SFString nextRevokeChunk_custom(const SFString& fieldIn, const void *data);
 
 //---------------------------------------------------------------------------
 void QRevoke::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
@@ -38,11 +38,11 @@ void QRevoke::Format(CExportContext& ctx, const SFString& fmtIn, void *data) con
 }
 
 //---------------------------------------------------------------------------
-SFString nextRevokeChunk(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextRevokeChunk(const SFString& fieldIn, const void *data) {
     const QRevoke *rev = (const QRevoke *)data;
     if (rev) {
         // Give customized code a chance to override first
-        SFString ret = nextRevokeChunk_custom(fieldIn, force, data);
+        SFString ret = nextRevokeChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
 
@@ -56,7 +56,7 @@ SFString nextRevokeChunk(const SFString& fieldIn, bool& force, const void *data)
         // EXISTING_CODE
 
         // Finally, give the parent class a chance
-        ret = nextTransactionChunk(fieldIn, force, rev);
+        ret = nextTransactionChunk(fieldIn, rev);
         if (!ret.empty())
             return ret;
     }
@@ -131,7 +131,7 @@ void QRevoke::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextRevokeChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextRevokeChunk_custom(const SFString& fieldIn, const void *data) {
     const QRevoke *rev = (const QRevoke *)data;
     if (rev) {
         switch (tolower(fieldIn[0])) {
@@ -140,7 +140,7 @@ SFString nextRevokeChunk_custom(const SFString& fieldIn, bool& force, const void
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn, force, rev);
+                    return nextBasenodeChunk(fieldIn, rev);
                 break;
 
             default:

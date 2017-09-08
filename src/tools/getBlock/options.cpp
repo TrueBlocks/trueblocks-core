@@ -19,6 +19,7 @@ CParams params[] = {
     CParams("@re(c)iept",        "include receipt (hidden)"),
     CParams("@f(o)rce",          "force re-write of binary data"),
     CParams("@normalize",        "normalize (remove un-common fields and sort) for comparison with other results (testing)"),
+    CParams("@silent",           "no output - useful for performance testing"),
     CParams("",                  "Returns block(s) from local cache (the default) or directly from a running node.\n"),
 };
 uint32_t nParams = sizeof(params) / sizeof(CParams);
@@ -65,6 +66,9 @@ bool COptions::parseArguments(SFString& command) {
 
         } else if (arg == "--normalize") {
             normalize = true;
+
+        } else if (arg == "--silent") {
+            silent = true;
 
         } else if (arg.startsWith("-s:") || arg.startsWith("--source:")) {
             SFString mode = arg.Substitute("-s:","").Substitute("--source:","");
@@ -205,6 +209,7 @@ void COptions::Init(void) {
     quiet      = false;
     force      = false;
     normalize  = false;
+    silent     = false;
     asks4Cache = false;
     nums[0]    = NOPOS;
     nNums      = 0;  // we will set this to '1' later if user supplies no values

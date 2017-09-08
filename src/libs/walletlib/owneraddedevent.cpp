@@ -16,8 +16,8 @@
 IMPLEMENT_NODE(QOwnerAddedEvent, CLogEntry, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextOwneraddedeventChunk(const SFString& fieldIn, bool& force, const void *data);
-static SFString nextOwneraddedeventChunk_custom(const SFString& fieldIn, bool& force, const void *data);
+static SFString nextOwneraddedeventChunk(const SFString& fieldIn, const void *data);
+static SFString nextOwneraddedeventChunk_custom(const SFString& fieldIn, const void *data);
 
 //---------------------------------------------------------------------------
 void QOwnerAddedEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
@@ -38,11 +38,11 @@ void QOwnerAddedEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *
 }
 
 //---------------------------------------------------------------------------
-SFString nextOwneraddedeventChunk(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextOwneraddedeventChunk(const SFString& fieldIn, const void *data) {
     const QOwnerAddedEvent *own = (const QOwnerAddedEvent *)data;
     if (own) {
         // Give customized code a chance to override first
-        SFString ret = nextOwneraddedeventChunk_custom(fieldIn, force, data);
+        SFString ret = nextOwneraddedeventChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
 
@@ -56,7 +56,7 @@ SFString nextOwneraddedeventChunk(const SFString& fieldIn, bool& force, const vo
         // EXISTING_CODE
 
         // Finally, give the parent class a chance
-        ret = nextLogentryChunk(fieldIn, force, own);
+        ret = nextLogentryChunk(fieldIn, own);
         if (!ret.empty())
             return ret;
     }
@@ -131,7 +131,7 @@ void QOwnerAddedEvent::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextOwneraddedeventChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextOwneraddedeventChunk_custom(const SFString& fieldIn, const void *data) {
     const QOwnerAddedEvent *own = (const QOwnerAddedEvent *)data;
     if (own) {
         switch (tolower(fieldIn[0])) {
@@ -140,7 +140,7 @@ SFString nextOwneraddedeventChunk_custom(const SFString& fieldIn, bool& force, c
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn, force, own);
+                    return nextBasenodeChunk(fieldIn, own);
                 break;
 
             default:

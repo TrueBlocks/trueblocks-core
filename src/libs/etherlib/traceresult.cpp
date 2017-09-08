@@ -18,8 +18,8 @@ namespace qblocks {
 IMPLEMENT_NODE(CTraceResult, CBaseNode, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextTraceresultChunk(const SFString& fieldIn, bool& force, const void *data);
-static SFString nextTraceresultChunk_custom(const SFString& fieldIn, bool& force, const void *data);
+static SFString nextTraceresultChunk(const SFString& fieldIn, const void *data);
+static SFString nextTraceresultChunk_custom(const SFString& fieldIn, const void *data);
 
 //---------------------------------------------------------------------------
 void CTraceResult::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
@@ -40,11 +40,11 @@ void CTraceResult::Format(CExportContext& ctx, const SFString& fmtIn, void *data
 }
 
 //---------------------------------------------------------------------------
-SFString nextTraceresultChunk(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextTraceresultChunk(const SFString& fieldIn, const void *data) {
     const CTraceResult *tra = (const CTraceResult *)data;
     if (tra) {
         // Give customized code a chance to override first
-        SFString ret = nextTraceresultChunk_custom(fieldIn, force, data);
+        SFString ret = nextTraceresultChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
 
@@ -61,7 +61,7 @@ SFString nextTraceresultChunk(const SFString& fieldIn, bool& force, const void *
         // EXISTING_CODE
 
         // Finally, give the parent class a chance
-        ret = nextBasenodeChunk(fieldIn, force, tra);
+        ret = nextBasenodeChunk(fieldIn, tra);
         if (!ret.empty())
             return ret;
     }
@@ -139,7 +139,7 @@ void CTraceResult::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextTraceresultChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextTraceresultChunk_custom(const SFString& fieldIn, const void *data) {
     const CTraceResult *tra = (const CTraceResult *)data;
     if (tra) {
         switch (tolower(fieldIn[0])) {
@@ -148,7 +148,7 @@ SFString nextTraceresultChunk_custom(const SFString& fieldIn, bool& force, const
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn, force, tra);
+                    return nextBasenodeChunk(fieldIn, tra);
                 break;
 
             default:

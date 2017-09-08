@@ -16,8 +16,8 @@
 IMPLEMENT_NODE(QTransferEvent, CLogEntry, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextTransfereventChunk(const SFString& fieldIn, bool& force, const void *data);
-static SFString nextTransfereventChunk_custom(const SFString& fieldIn, bool& force, const void *data);
+static SFString nextTransfereventChunk(const SFString& fieldIn, const void *data);
+static SFString nextTransfereventChunk_custom(const SFString& fieldIn, const void *data);
 
 //---------------------------------------------------------------------------
 void QTransferEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
@@ -38,11 +38,11 @@ void QTransferEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *da
 }
 
 //---------------------------------------------------------------------------
-SFString nextTransfereventChunk(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextTransfereventChunk(const SFString& fieldIn, const void *data) {
     const QTransferEvent *tra = (const QTransferEvent *)data;
     if (tra) {
         // Give customized code a chance to override first
-        SFString ret = nextTransfereventChunk_custom(fieldIn, force, data);
+        SFString ret = nextTransfereventChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
 
@@ -58,7 +58,7 @@ SFString nextTransfereventChunk(const SFString& fieldIn, bool& force, const void
         // EXISTING_CODE
 
         // Finally, give the parent class a chance
-        ret = nextLogentryChunk(fieldIn, force, tra);
+        ret = nextLogentryChunk(fieldIn, tra);
         if (!ret.empty())
             return ret;
     }
@@ -141,7 +141,7 @@ void QTransferEvent::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextTransfereventChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextTransfereventChunk_custom(const SFString& fieldIn, const void *data) {
     const QTransferEvent *tra = (const QTransferEvent *)data;
     if (tra) {
         switch (tolower(fieldIn[0])) {
@@ -150,7 +150,7 @@ SFString nextTransfereventChunk_custom(const SFString& fieldIn, bool& force, con
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn, force, tra);
+                    return nextBasenodeChunk(fieldIn, tra);
                 break;
 
             default:

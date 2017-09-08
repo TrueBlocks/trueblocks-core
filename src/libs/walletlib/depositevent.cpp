@@ -16,8 +16,8 @@
 IMPLEMENT_NODE(QDepositEvent, CLogEntry, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextDepositeventChunk(const SFString& fieldIn, bool& force, const void *data);
-static SFString nextDepositeventChunk_custom(const SFString& fieldIn, bool& force, const void *data);
+static SFString nextDepositeventChunk(const SFString& fieldIn, const void *data);
+static SFString nextDepositeventChunk_custom(const SFString& fieldIn, const void *data);
 
 //---------------------------------------------------------------------------
 void QDepositEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
@@ -38,11 +38,11 @@ void QDepositEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *dat
 }
 
 //---------------------------------------------------------------------------
-SFString nextDepositeventChunk(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextDepositeventChunk(const SFString& fieldIn, const void *data) {
     const QDepositEvent *dep = (const QDepositEvent *)data;
     if (dep) {
         // Give customized code a chance to override first
-        SFString ret = nextDepositeventChunk_custom(fieldIn, force, data);
+        SFString ret = nextDepositeventChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
 
@@ -59,7 +59,7 @@ SFString nextDepositeventChunk(const SFString& fieldIn, bool& force, const void 
         // EXISTING_CODE
 
         // Finally, give the parent class a chance
-        ret = nextLogentryChunk(fieldIn, force, dep);
+        ret = nextLogentryChunk(fieldIn, dep);
         if (!ret.empty())
             return ret;
     }
@@ -140,7 +140,7 @@ void QDepositEvent::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextDepositeventChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextDepositeventChunk_custom(const SFString& fieldIn, const void *data) {
     const QDepositEvent *dep = (const QDepositEvent *)data;
     if (dep) {
         switch (tolower(fieldIn[0])) {
@@ -149,7 +149,7 @@ SFString nextDepositeventChunk_custom(const SFString& fieldIn, bool& force, cons
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn, force, dep);
+                    return nextBasenodeChunk(fieldIn, dep);
                 break;
 
             default:

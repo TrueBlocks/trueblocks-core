@@ -16,8 +16,8 @@
 IMPLEMENT_NODE(QMultiTransactEvent, CLogEntry, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextMultitransacteventChunk(const SFString& fieldIn, bool& force, const void *data);
-static SFString nextMultitransacteventChunk_custom(const SFString& fieldIn, bool& force, const void *data);
+static SFString nextMultitransacteventChunk(const SFString& fieldIn, const void *data);
+static SFString nextMultitransacteventChunk_custom(const SFString& fieldIn, const void *data);
 
 //---------------------------------------------------------------------------
 void QMultiTransactEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
@@ -38,11 +38,11 @@ void QMultiTransactEvent::Format(CExportContext& ctx, const SFString& fmtIn, voi
 }
 
 //---------------------------------------------------------------------------
-SFString nextMultitransacteventChunk(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextMultitransacteventChunk(const SFString& fieldIn, const void *data) {
     const QMultiTransactEvent *mul = (const QMultiTransactEvent *)data;
     if (mul) {
         // Give customized code a chance to override first
-        SFString ret = nextMultitransacteventChunk_custom(fieldIn, force, data);
+        SFString ret = nextMultitransacteventChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
 
@@ -66,7 +66,7 @@ SFString nextMultitransacteventChunk(const SFString& fieldIn, bool& force, const
         // EXISTING_CODE
 
         // Finally, give the parent class a chance
-        ret = nextLogentryChunk(fieldIn, force, mul);
+        ret = nextLogentryChunk(fieldIn, mul);
         if (!ret.empty())
             return ret;
     }
@@ -163,7 +163,7 @@ void QMultiTransactEvent::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextMultitransacteventChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextMultitransacteventChunk_custom(const SFString& fieldIn, const void *data) {
     const QMultiTransactEvent *mul = (const QMultiTransactEvent *)data;
     if (mul) {
         switch (tolower(fieldIn[0])) {
@@ -172,7 +172,7 @@ SFString nextMultitransacteventChunk_custom(const SFString& fieldIn, bool& force
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn, force, mul);
+                    return nextBasenodeChunk(fieldIn, mul);
                 break;
 
             default:

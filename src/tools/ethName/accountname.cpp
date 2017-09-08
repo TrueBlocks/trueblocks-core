@@ -15,8 +15,8 @@
 IMPLEMENT_NODE(CAccountName, CBaseNode, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextAccountnameChunk(const SFString& fieldIn, bool& force, const void *data);
-static SFString nextAccountnameChunk_custom(const SFString& fieldIn, bool& force, const void *data);
+static SFString nextAccountnameChunk(const SFString& fieldIn, const void *data);
+static SFString nextAccountnameChunk_custom(const SFString& fieldIn, const void *data);
 
 //---------------------------------------------------------------------------
 void CAccountName::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
@@ -37,11 +37,11 @@ void CAccountName::Format(CExportContext& ctx, const SFString& fmtIn, void *data
 }
 
 //---------------------------------------------------------------------------
-SFString nextAccountnameChunk(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextAccountnameChunk(const SFString& fieldIn, const void *data) {
     const CAccountName *acc = (const CAccountName *)data;
     if (acc) {
         // Give customized code a chance to override first
-        SFString ret = nextAccountnameChunk_custom(fieldIn, force, data);
+        SFString ret = nextAccountnameChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
 
@@ -65,7 +65,7 @@ SFString nextAccountnameChunk(const SFString& fieldIn, bool& force, const void *
         // EXISTING_CODE
 
         // Finally, give the parent class a chance
-        ret = nextBasenodeChunk(fieldIn, force, acc);
+        ret = nextBasenodeChunk(fieldIn, acc);
         if (!ret.empty())
             return ret;
     }
@@ -159,7 +159,7 @@ void CAccountName::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextAccountnameChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextAccountnameChunk_custom(const SFString& fieldIn, const void *data) {
     const CAccountName *acc = (const CAccountName *)data;
     if (acc) {
         switch (tolower(fieldIn[0])) {
@@ -168,7 +168,7 @@ SFString nextAccountnameChunk_custom(const SFString& fieldIn, bool& force, const
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn, force, acc);
+                    return nextBasenodeChunk(fieldIn, acc);
                 break;
 
             default:

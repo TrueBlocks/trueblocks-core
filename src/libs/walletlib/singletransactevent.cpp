@@ -16,8 +16,8 @@
 IMPLEMENT_NODE(QSingleTransactEvent, CLogEntry, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextSingletransacteventChunk(const SFString& fieldIn, bool& force, const void *data);
-static SFString nextSingletransacteventChunk_custom(const SFString& fieldIn, bool& force, const void *data);
+static SFString nextSingletransacteventChunk(const SFString& fieldIn, const void *data);
+static SFString nextSingletransacteventChunk_custom(const SFString& fieldIn, const void *data);
 
 //---------------------------------------------------------------------------
 void QSingleTransactEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
@@ -38,11 +38,11 @@ void QSingleTransactEvent::Format(CExportContext& ctx, const SFString& fmtIn, vo
 }
 
 //---------------------------------------------------------------------------
-SFString nextSingletransacteventChunk(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextSingletransacteventChunk(const SFString& fieldIn, const void *data) {
     const QSingleTransactEvent *sin = (const QSingleTransactEvent *)data;
     if (sin) {
         // Give customized code a chance to override first
-        SFString ret = nextSingletransacteventChunk_custom(fieldIn, force, data);
+        SFString ret = nextSingletransacteventChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
 
@@ -65,7 +65,7 @@ SFString nextSingletransacteventChunk(const SFString& fieldIn, bool& force, cons
         // EXISTING_CODE
 
         // Finally, give the parent class a chance
-        ret = nextLogentryChunk(fieldIn, force, sin);
+        ret = nextLogentryChunk(fieldIn, sin);
         if (!ret.empty())
             return ret;
     }
@@ -158,7 +158,7 @@ void QSingleTransactEvent::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextSingletransacteventChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextSingletransacteventChunk_custom(const SFString& fieldIn, const void *data) {
     const QSingleTransactEvent *sin = (const QSingleTransactEvent *)data;
     if (sin) {
         switch (tolower(fieldIn[0])) {
@@ -167,7 +167,7 @@ SFString nextSingletransacteventChunk_custom(const SFString& fieldIn, bool& forc
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn, force, sin);
+                    return nextBasenodeChunk(fieldIn, sin);
                 break;
 
             default:

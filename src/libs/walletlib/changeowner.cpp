@@ -16,8 +16,8 @@
 IMPLEMENT_NODE(QChangeOwner, CTransaction, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextChangeownerChunk(const SFString& fieldIn, bool& force, const void *data);
-static SFString nextChangeownerChunk_custom(const SFString& fieldIn, bool& force, const void *data);
+static SFString nextChangeownerChunk(const SFString& fieldIn, const void *data);
+static SFString nextChangeownerChunk_custom(const SFString& fieldIn, const void *data);
 
 //---------------------------------------------------------------------------
 void QChangeOwner::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
@@ -38,11 +38,11 @@ void QChangeOwner::Format(CExportContext& ctx, const SFString& fmtIn, void *data
 }
 
 //---------------------------------------------------------------------------
-SFString nextChangeownerChunk(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextChangeownerChunk(const SFString& fieldIn, const void *data) {
     const QChangeOwner *cha = (const QChangeOwner *)data;
     if (cha) {
         // Give customized code a chance to override first
-        SFString ret = nextChangeownerChunk_custom(fieldIn, force, data);
+        SFString ret = nextChangeownerChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
 
@@ -57,7 +57,7 @@ SFString nextChangeownerChunk(const SFString& fieldIn, bool& force, const void *
         // EXISTING_CODE
 
         // Finally, give the parent class a chance
-        ret = nextTransactionChunk(fieldIn, force, cha);
+        ret = nextTransactionChunk(fieldIn, cha);
         if (!ret.empty())
             return ret;
     }
@@ -136,7 +136,7 @@ void QChangeOwner::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextChangeownerChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextChangeownerChunk_custom(const SFString& fieldIn, const void *data) {
     const QChangeOwner *cha = (const QChangeOwner *)data;
     if (cha) {
         switch (tolower(fieldIn[0])) {
@@ -145,7 +145,7 @@ SFString nextChangeownerChunk_custom(const SFString& fieldIn, bool& force, const
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn, force, cha);
+                    return nextBasenodeChunk(fieldIn, cha);
                 break;
 
             default:

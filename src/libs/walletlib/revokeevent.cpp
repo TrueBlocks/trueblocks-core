@@ -16,8 +16,8 @@
 IMPLEMENT_NODE(QRevokeEvent, CLogEntry, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextRevokeeventChunk(const SFString& fieldIn, bool& force, const void *data);
-static SFString nextRevokeeventChunk_custom(const SFString& fieldIn, bool& force, const void *data);
+static SFString nextRevokeeventChunk(const SFString& fieldIn, const void *data);
+static SFString nextRevokeeventChunk_custom(const SFString& fieldIn, const void *data);
 
 //---------------------------------------------------------------------------
 void QRevokeEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
@@ -38,11 +38,11 @@ void QRevokeEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *data
 }
 
 //---------------------------------------------------------------------------
-SFString nextRevokeeventChunk(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextRevokeeventChunk(const SFString& fieldIn, const void *data) {
     const QRevokeEvent *rev = (const QRevokeEvent *)data;
     if (rev) {
         // Give customized code a chance to override first
-        SFString ret = nextRevokeeventChunk_custom(fieldIn, force, data);
+        SFString ret = nextRevokeeventChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
 
@@ -57,7 +57,7 @@ SFString nextRevokeeventChunk(const SFString& fieldIn, bool& force, const void *
         // EXISTING_CODE
 
         // Finally, give the parent class a chance
-        ret = nextLogentryChunk(fieldIn, force, rev);
+        ret = nextLogentryChunk(fieldIn, rev);
         if (!ret.empty())
             return ret;
     }
@@ -136,7 +136,7 @@ void QRevokeEvent::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextRevokeeventChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextRevokeeventChunk_custom(const SFString& fieldIn, const void *data) {
     const QRevokeEvent *rev = (const QRevokeEvent *)data;
     if (rev) {
         switch (tolower(fieldIn[0])) {
@@ -145,7 +145,7 @@ SFString nextRevokeeventChunk_custom(const SFString& fieldIn, bool& force, const
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn, force, rev);
+                    return nextBasenodeChunk(fieldIn, rev);
                 break;
 
             default:

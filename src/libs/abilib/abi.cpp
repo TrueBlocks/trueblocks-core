@@ -17,8 +17,8 @@ namespace qblocks {
 IMPLEMENT_NODE(CAbi, CBaseNode, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextAbiChunk(const SFString& fieldIn, bool& force, const void *data);
-static SFString nextAbiChunk_custom(const SFString& fieldIn, bool& force, const void *data);
+static SFString nextAbiChunk(const SFString& fieldIn, const void *data);
+static SFString nextAbiChunk_custom(const SFString& fieldIn, const void *data);
 
 //---------------------------------------------------------------------------
 void CAbi::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
@@ -39,11 +39,11 @@ void CAbi::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const 
 }
 
 //---------------------------------------------------------------------------
-SFString nextAbiChunk(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextAbiChunk(const SFString& fieldIn, const void *data) {
     const CAbi *abi = (const CAbi *)data;
     if (abi) {
         // Give customized code a chance to override first
-        SFString ret = nextAbiChunk_custom(fieldIn, force, data);
+        SFString ret = nextAbiChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
 
@@ -76,7 +76,7 @@ SFString nextAbiChunk(const SFString& fieldIn, bool& force, const void *data) {
         // EXISTING_CODE
 
         // Finally, give the parent class a chance
-        ret = nextBasenodeChunk(fieldIn, force, abi);
+        ret = nextBasenodeChunk(fieldIn, abi);
         if (!ret.empty())
             return ret;
     }
@@ -152,7 +152,7 @@ void CAbi::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextAbiChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextAbiChunk_custom(const SFString& fieldIn, const void *data) {
     const CAbi *abi = (const CAbi *)data;
     if (abi) {
         switch (tolower(fieldIn[0])) {
@@ -161,7 +161,7 @@ SFString nextAbiChunk_custom(const SFString& fieldIn, bool& force, const void *d
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn, force, abi);
+                    return nextBasenodeChunk(fieldIn, abi);
                 break;
 
             default:

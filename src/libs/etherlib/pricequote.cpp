@@ -19,8 +19,8 @@ namespace qblocks {
 IMPLEMENT_NODE(CPriceQuote, CBaseNode, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextPricequoteChunk(const SFString& fieldIn, bool& force, const void *data);
-static SFString nextPricequoteChunk_custom(const SFString& fieldIn, bool& force, const void *data);
+static SFString nextPricequoteChunk(const SFString& fieldIn, const void *data);
+static SFString nextPricequoteChunk_custom(const SFString& fieldIn, const void *data);
 
 //---------------------------------------------------------------------------
 void CPriceQuote::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
@@ -41,11 +41,11 @@ void CPriceQuote::Format(CExportContext& ctx, const SFString& fmtIn, void *data)
 }
 
 //---------------------------------------------------------------------------
-SFString nextPricequoteChunk(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextPricequoteChunk(const SFString& fieldIn, const void *data) {
     const CPriceQuote *pri = (const CPriceQuote *)data;
     if (pri) {
         // Give customized code a chance to override first
-        SFString ret = nextPricequoteChunk_custom(fieldIn, force, data);
+        SFString ret = nextPricequoteChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
 
@@ -80,7 +80,7 @@ SFString nextPricequoteChunk(const SFString& fieldIn, bool& force, const void *d
         // EXISTING_CODE
 
         // Finally, give the parent class a chance
-        ret = nextBasenodeChunk(fieldIn, force, pri);
+        ret = nextBasenodeChunk(fieldIn, pri);
         if (!ret.empty())
             return ret;
     }
@@ -201,7 +201,7 @@ void CPriceQuote::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextPricequoteChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextPricequoteChunk_custom(const SFString& fieldIn, const void *data) {
     const CPriceQuote *pri = (const CPriceQuote *)data;
     if (pri) {
         switch (tolower(fieldIn[0])) {
@@ -213,7 +213,7 @@ SFString nextPricequoteChunk_custom(const SFString& fieldIn, bool& force, const 
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn, force, pri);
+                    return nextBasenodeChunk(fieldIn, pri);
                 break;
 
             default:

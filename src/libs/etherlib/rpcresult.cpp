@@ -18,8 +18,8 @@ namespace qblocks {
 IMPLEMENT_NODE(CRPCResult, CBaseNode, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextRpcresultChunk(const SFString& fieldIn, bool& force, const void *data);
-static SFString nextRpcresultChunk_custom(const SFString& fieldIn, bool& force, const void *data);
+static SFString nextRpcresultChunk(const SFString& fieldIn, const void *data);
+static SFString nextRpcresultChunk_custom(const SFString& fieldIn, const void *data);
 
 //---------------------------------------------------------------------------
 void CRPCResult::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
@@ -40,11 +40,11 @@ void CRPCResult::Format(CExportContext& ctx, const SFString& fmtIn, void *data) 
 }
 
 //---------------------------------------------------------------------------
-SFString nextRpcresultChunk(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextRpcresultChunk(const SFString& fieldIn, const void *data) {
     const CRPCResult *rpc = (const CRPCResult *)data;
     if (rpc) {
         // Give customized code a chance to override first
-        SFString ret = nextRpcresultChunk_custom(fieldIn, force, data);
+        SFString ret = nextRpcresultChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
 
@@ -64,7 +64,7 @@ SFString nextRpcresultChunk(const SFString& fieldIn, bool& force, const void *da
         // EXISTING_CODE
 
         // Finally, give the parent class a chance
-        ret = nextBasenodeChunk(fieldIn, force, rpc);
+        ret = nextBasenodeChunk(fieldIn, rpc);
         if (!ret.empty())
             return ret;
     }
@@ -148,7 +148,7 @@ void CRPCResult::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextRpcresultChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextRpcresultChunk_custom(const SFString& fieldIn, const void *data) {
     const CRPCResult *rpc = (const CRPCResult *)data;
     if (rpc) {
         switch (tolower(fieldIn[0])) {
@@ -157,7 +157,7 @@ SFString nextRpcresultChunk_custom(const SFString& fieldIn, bool& force, const v
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn, force, rpc);
+                    return nextBasenodeChunk(fieldIn, rpc);
                 break;
 
             default:

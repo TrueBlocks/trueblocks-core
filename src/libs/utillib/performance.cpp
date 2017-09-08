@@ -103,9 +103,9 @@ namespace qblocks {
     }
 
     CPerformanceClock CPerformanceClock::Now(void) {
-        struct timeb _t;
-        ftime(&_t);
-        return CPerformanceClock(_t.time, _t.millitm * 1000);
+        struct timeval tv;
+        gettimeofday(&tv, 0);
+        return CPerformanceClock(tv.tv_sec, tv.tv_usec * 1000);
     }
 
 }  // namespace qblocks

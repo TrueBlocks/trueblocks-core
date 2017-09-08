@@ -205,12 +205,16 @@ inline CTransaction& CTransaction::operator=(const CTransaction& tr) {
     return *this;
 }
 
+#define NEW_CODE
+#ifdef NEW_CODE
+#else
 //---------------------------------------------------------------------------
 inline SFString CTransaction::getValueByName(const SFString& fieldName) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return Format("[{"+toUpper(fieldName)+"}]");
 }
+#endif
 
 //---------------------------------------------------------------------------
 IMPLEMENT_ARCHIVE_ARRAY(CTransactionArray);
@@ -225,7 +229,7 @@ extern SFArchive& operator>>(SFArchive& archive, CTransaction& tra);
 // EXISTING_CODE
 extern int sortTransactionsForWrite(const void *rr1, const void *rr2);
 extern SFString parse(const SFString& params, int nItems, SFString *types);
-extern SFString nextBlockChunk(const SFString& fieldIn, bool& force, const void *data);
+extern SFString nextBlockChunk(const SFString& fieldIn, const void *data);
 // EXISTING_CODE
 }  // namespace qblocks
 

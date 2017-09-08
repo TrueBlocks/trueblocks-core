@@ -18,8 +18,8 @@ namespace qblocks {
 IMPLEMENT_NODE(CIncomeStatement, CBaseNode, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextIncomestatementChunk(const SFString& fieldIn, bool& force, const void *data);
-static SFString nextIncomestatementChunk_custom(const SFString& fieldIn, bool& force, const void *data);
+static SFString nextIncomestatementChunk(const SFString& fieldIn, const void *data);
+static SFString nextIncomestatementChunk_custom(const SFString& fieldIn, const void *data);
 
 //---------------------------------------------------------------------------
 void CIncomeStatement::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
@@ -40,11 +40,11 @@ void CIncomeStatement::Format(CExportContext& ctx, const SFString& fmtIn, void *
 }
 
 //---------------------------------------------------------------------------
-SFString nextIncomestatementChunk(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextIncomestatementChunk(const SFString& fieldIn, const void *data) {
     const CIncomeStatement *inc = (const CIncomeStatement *)data;
     if (inc) {
         // Give customized code a chance to override first
-        SFString ret = nextIncomestatementChunk_custom(fieldIn, force, data);
+        SFString ret = nextIncomestatementChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
 
@@ -71,7 +71,7 @@ SFString nextIncomestatementChunk(const SFString& fieldIn, bool& force, const vo
         // EXISTING_CODE
 
         // Finally, give the parent class a chance
-        ret = nextBasenodeChunk(fieldIn, force, inc);
+        ret = nextBasenodeChunk(fieldIn, inc);
         if (!ret.empty())
             return ret;
     }
@@ -171,7 +171,7 @@ void CIncomeStatement::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextIncomestatementChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextIncomestatementChunk_custom(const SFString& fieldIn, const void *data) {
     const CIncomeStatement *inc = (const CIncomeStatement *)data;
     if (inc) {
         switch (tolower(fieldIn[0])) {
@@ -180,7 +180,7 @@ SFString nextIncomestatementChunk_custom(const SFString& fieldIn, bool& force, c
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn, force, inc);
+                    return nextBasenodeChunk(fieldIn, inc);
                 break;
 
             default:

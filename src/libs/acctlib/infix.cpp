@@ -18,8 +18,8 @@ namespace qblocks {
 IMPLEMENT_NODE(CInfix, CTreeNode, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextInfixChunk(const SFString& fieldIn, bool& force, const void *data);
-static SFString nextInfixChunk_custom(const SFString& fieldIn, bool& force, const void *data);
+static SFString nextInfixChunk(const SFString& fieldIn, const void *data);
+static SFString nextInfixChunk_custom(const SFString& fieldIn, const void *data);
 
 //---------------------------------------------------------------------------
 void CInfix::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
@@ -40,11 +40,11 @@ void CInfix::Format(CExportContext& ctx, const SFString& fmtIn, void *data) cons
 }
 
 //---------------------------------------------------------------------------
-SFString nextInfixChunk(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextInfixChunk(const SFString& fieldIn, const void *data) {
     const CInfix *inf = (const CInfix *)data;
     if (inf) {
         // Give customized code a chance to override first
-        SFString ret = nextInfixChunk_custom(fieldIn, force, data);
+        SFString ret = nextInfixChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
 
@@ -59,7 +59,7 @@ SFString nextInfixChunk(const SFString& fieldIn, bool& force, const void *data) 
         // EXISTING_CODE
 
         // Finally, give the parent class a chance
-        ret = nextTreenodeChunk(fieldIn, force, inf);
+        ret = nextTreenodeChunk(fieldIn, inf);
         if (!ret.empty())
             return ret;
     }
@@ -135,7 +135,7 @@ void CInfix::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextInfixChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextInfixChunk_custom(const SFString& fieldIn, const void *data) {
     const CInfix *inf = (const CInfix *)data;
     if (inf) {
         switch (tolower(fieldIn[0])) {
@@ -144,7 +144,7 @@ SFString nextInfixChunk_custom(const SFString& fieldIn, bool& force, const void 
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn, force, inf);
+                    return nextBasenodeChunk(fieldIn, inf);
                 break;
 
             default:
