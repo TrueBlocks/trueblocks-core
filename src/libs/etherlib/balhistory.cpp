@@ -18,8 +18,8 @@ namespace qblocks {
 IMPLEMENT_NODE(CBalHistory, CBaseNode, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextBalhistoryChunk(const SFString& fieldIn, bool& force, const void *data);
-static SFString nextBalhistoryChunk_custom(const SFString& fieldIn, bool& force, const void *data);
+static SFString nextBalhistoryChunk(const SFString& fieldIn, const void *data);
+static SFString nextBalhistoryChunk_custom(const SFString& fieldIn, const void *data);
 
 //---------------------------------------------------------------------------
 void CBalHistory::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
@@ -40,11 +40,11 @@ void CBalHistory::Format(CExportContext& ctx, const SFString& fmtIn, void *data)
 }
 
 //---------------------------------------------------------------------------
-SFString nextBalhistoryChunk(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextBalhistoryChunk(const SFString& fieldIn, const void *data) {
     const CBalHistory *bal = (const CBalHistory *)data;
     if (bal) {
         // Give customized code a chance to override first
-        SFString ret = nextBalhistoryChunk_custom(fieldIn, force, data);
+        SFString ret = nextBalhistoryChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
 
@@ -64,7 +64,7 @@ SFString nextBalhistoryChunk(const SFString& fieldIn, bool& force, const void *d
         // EXISTING_CODE
 
         // Finally, give the parent class a chance
-        ret = nextBasenodeChunk(fieldIn, force, bal);
+        ret = nextBasenodeChunk(fieldIn, bal);
         if (!ret.empty())
             return ret;
     }
@@ -148,7 +148,7 @@ void CBalHistory::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextBalhistoryChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextBalhistoryChunk_custom(const SFString& fieldIn, const void *data) {
     const CBalHistory *bal = (const CBalHistory *)data;
     if (bal) {
         switch (tolower(fieldIn[0])) {
@@ -157,7 +157,7 @@ SFString nextBalhistoryChunk_custom(const SFString& fieldIn, bool& force, const 
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn, force, bal);
+                    return nextBasenodeChunk(fieldIn, bal);
                 break;
 
             default:

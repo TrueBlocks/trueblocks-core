@@ -17,8 +17,8 @@ namespace qblocks {
 IMPLEMENT_NODE(CTreeRoot, CBaseNode, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextTreerootChunk(const SFString& fieldIn, bool& force, const void *data);
-static SFString nextTreerootChunk_custom(const SFString& fieldIn, bool& force, const void *data);
+static SFString nextTreerootChunk(const SFString& fieldIn, const void *data);
+static SFString nextTreerootChunk_custom(const SFString& fieldIn, const void *data);
 
 //---------------------------------------------------------------------------
 void CTreeRoot::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
@@ -39,11 +39,11 @@ void CTreeRoot::Format(CExportContext& ctx, const SFString& fmtIn, void *data) c
 }
 
 //---------------------------------------------------------------------------
-SFString nextTreerootChunk(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextTreerootChunk(const SFString& fieldIn, const void *data) {
     const CTreeRoot *tre = (const CTreeRoot *)data;
     if (tre) {
         // Give customized code a chance to override first
-        SFString ret = nextTreerootChunk_custom(fieldIn, force, data);
+        SFString ret = nextTreerootChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
 
@@ -58,7 +58,7 @@ SFString nextTreerootChunk(const SFString& fieldIn, bool& force, const void *dat
         // EXISTING_CODE
 
         // Finally, give the parent class a chance
-        ret = nextBasenodeChunk(fieldIn, force, tre);
+        ret = nextBasenodeChunk(fieldIn, tre);
         if (!ret.empty())
             return ret;
     }
@@ -131,7 +131,7 @@ void CTreeRoot::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextTreerootChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextTreerootChunk_custom(const SFString& fieldIn, const void *data) {
     const CTreeRoot *tre = (const CTreeRoot *)data;
     if (tre) {
         switch (tolower(fieldIn[0])) {
@@ -140,7 +140,7 @@ SFString nextTreerootChunk_custom(const SFString& fieldIn, bool& force, const vo
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn, force, tre);
+                    return nextBasenodeChunk(fieldIn, tre);
                 break;
 
             default:

@@ -78,7 +78,7 @@ namespace qblocks {
     extern char *cleanUpJson(char *s);
 
     //--------------------------------------------------------------------------------------------------------------
-    typedef SFString (*NEXTCHUNKFUNC)(const SFString& fieldIn, bool& forceShow, const void *data);
+    typedef SFString (*NEXTCHUNKFUNC)(const SFString& fieldIn, const void *data);
 
     //--------------------------------------------------------------------------------------------------------------
     SFString getNextChunk(SFString& fmtOut, NEXTCHUNKFUNC func, const void *data);

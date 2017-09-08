@@ -16,8 +16,8 @@
 IMPLEMENT_NODE(QConfirm, CTransaction, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextConfirmChunk(const SFString& fieldIn, bool& force, const void *data);
-static SFString nextConfirmChunk_custom(const SFString& fieldIn, bool& force, const void *data);
+static SFString nextConfirmChunk(const SFString& fieldIn, const void *data);
+static SFString nextConfirmChunk_custom(const SFString& fieldIn, const void *data);
 
 //---------------------------------------------------------------------------
 void QConfirm::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
@@ -38,11 +38,11 @@ void QConfirm::Format(CExportContext& ctx, const SFString& fmtIn, void *data) co
 }
 
 //---------------------------------------------------------------------------
-SFString nextConfirmChunk(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextConfirmChunk(const SFString& fieldIn, const void *data) {
     const QConfirm *con = (const QConfirm *)data;
     if (con) {
         // Give customized code a chance to override first
-        SFString ret = nextConfirmChunk_custom(fieldIn, force, data);
+        SFString ret = nextConfirmChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
 
@@ -56,7 +56,7 @@ SFString nextConfirmChunk(const SFString& fieldIn, bool& force, const void *data
         // EXISTING_CODE
 
         // Finally, give the parent class a chance
-        ret = nextTransactionChunk(fieldIn, force, con);
+        ret = nextTransactionChunk(fieldIn, con);
         if (!ret.empty())
             return ret;
     }
@@ -131,7 +131,7 @@ void QConfirm::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextConfirmChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextConfirmChunk_custom(const SFString& fieldIn, const void *data) {
     const QConfirm *con = (const QConfirm *)data;
     if (con) {
         switch (tolower(fieldIn[0])) {
@@ -140,7 +140,7 @@ SFString nextConfirmChunk_custom(const SFString& fieldIn, bool& force, const voi
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn, force, con);
+                    return nextBasenodeChunk(fieldIn, con);
                 break;
 
             default:

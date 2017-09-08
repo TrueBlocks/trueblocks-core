@@ -16,8 +16,8 @@
 IMPLEMENT_NODE(QAddOwner, CTransaction, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextAddownerChunk(const SFString& fieldIn, bool& force, const void *data);
-static SFString nextAddownerChunk_custom(const SFString& fieldIn, bool& force, const void *data);
+static SFString nextAddownerChunk(const SFString& fieldIn, const void *data);
+static SFString nextAddownerChunk_custom(const SFString& fieldIn, const void *data);
 
 //---------------------------------------------------------------------------
 void QAddOwner::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
@@ -38,11 +38,11 @@ void QAddOwner::Format(CExportContext& ctx, const SFString& fmtIn, void *data) c
 }
 
 //---------------------------------------------------------------------------
-SFString nextAddownerChunk(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextAddownerChunk(const SFString& fieldIn, const void *data) {
     const QAddOwner *add = (const QAddOwner *)data;
     if (add) {
         // Give customized code a chance to override first
-        SFString ret = nextAddownerChunk_custom(fieldIn, force, data);
+        SFString ret = nextAddownerChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
 
@@ -56,7 +56,7 @@ SFString nextAddownerChunk(const SFString& fieldIn, bool& force, const void *dat
         // EXISTING_CODE
 
         // Finally, give the parent class a chance
-        ret = nextTransactionChunk(fieldIn, force, add);
+        ret = nextTransactionChunk(fieldIn, add);
         if (!ret.empty())
             return ret;
     }
@@ -131,7 +131,7 @@ void QAddOwner::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextAddownerChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextAddownerChunk_custom(const SFString& fieldIn, const void *data) {
     const QAddOwner *add = (const QAddOwner *)data;
     if (add) {
         switch (tolower(fieldIn[0])) {
@@ -140,7 +140,7 @@ SFString nextAddownerChunk_custom(const SFString& fieldIn, bool& force, const vo
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn, force, add);
+                    return nextBasenodeChunk(fieldIn, add);
                 break;
 
             default:

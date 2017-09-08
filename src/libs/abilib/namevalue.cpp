@@ -17,8 +17,8 @@ namespace qblocks {
 IMPLEMENT_NODE(CNameValue, CBaseNode, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextNamevalueChunk(const SFString& fieldIn, bool& force, const void *data);
-static SFString nextNamevalueChunk_custom(const SFString& fieldIn, bool& force, const void *data);
+static SFString nextNamevalueChunk(const SFString& fieldIn, const void *data);
+static SFString nextNamevalueChunk_custom(const SFString& fieldIn, const void *data);
 
 //---------------------------------------------------------------------------
 void CNameValue::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
@@ -39,11 +39,11 @@ void CNameValue::Format(CExportContext& ctx, const SFString& fmtIn, void *data) 
 }
 
 //---------------------------------------------------------------------------
-SFString nextNamevalueChunk(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextNamevalueChunk(const SFString& fieldIn, const void *data) {
     const CNameValue *nam = (const CNameValue *)data;
     if (nam) {
         // Give customized code a chance to override first
-        SFString ret = nextNamevalueChunk_custom(fieldIn, force, data);
+        SFString ret = nextNamevalueChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
 
@@ -60,7 +60,7 @@ SFString nextNamevalueChunk(const SFString& fieldIn, bool& force, const void *da
         // EXISTING_CODE
 
         // Finally, give the parent class a chance
-        ret = nextBasenodeChunk(fieldIn, force, nam);
+        ret = nextBasenodeChunk(fieldIn, nam);
         if (!ret.empty())
             return ret;
     }
@@ -138,7 +138,7 @@ void CNameValue::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextNamevalueChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextNamevalueChunk_custom(const SFString& fieldIn, const void *data) {
     const CNameValue *nam = (const CNameValue *)data;
     if (nam) {
         switch (tolower(fieldIn[0])) {
@@ -147,7 +147,7 @@ SFString nextNamevalueChunk_custom(const SFString& fieldIn, bool& force, const v
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn, force, nam);
+                    return nextBasenodeChunk(fieldIn, nam);
                 break;
 
             default:
