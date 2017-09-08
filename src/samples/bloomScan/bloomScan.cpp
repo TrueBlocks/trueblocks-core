@@ -11,6 +11,9 @@
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
+#ifdef ERROR
+#error
+#endif
     // Tell the system where the blocks are and which version to use
     etherlib_init("infura");
 
@@ -36,21 +39,20 @@ int main(int argc, const char *argv[]) {
 //-------------------------------------------------------------
 bool displayBloom(CBlock& block, void *data)
 {
-#if 0
+#if 1
     SFString b = fromBloom(block.logsBloom);
-    b.ReplaceAny("0"," ");
-//    b.ReplaceAny("1248",".");
-//    b.ReplaceAny("3569ac","-");
-    b.ReplaceAny("1248","░");
-    b.ReplaceAny("3569ac","▒");
-    b.ReplaceAny("7bdef","▓");
-    cout << block.blockNumber << " " << b << "\n";
+    b.ReplaceAny("0",      ".");
+    b.ReplaceAny("1248",   ".");
+    b.ReplaceAny("3569ac", "+");
+    b.ReplaceAny("7bdef",  bYellow+"▓"+cOff);
+    cout << block.blockNumber << ":" << b << "\n";
+#else
+    cout << block.blockNumber << "\r";
 #endif
-    if (block.transactions.getCount()) {
-        cout << block.blockNumber << "\r";
-        cout.flush();
-    }
+    cout.flush();
     return true;
 }
 
-
+//    b.ReplaceAny("1248","░");
+//    b.ReplaceAny("3569ac","▒");
+//    b.ReplaceAny("7bdef","▓");
