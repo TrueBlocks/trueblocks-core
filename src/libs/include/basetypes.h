@@ -23,7 +23,6 @@
 #include <stdlib.h>
 #include <sys/stat.h>
 #include <sys/time.h>
-#include <sys/timeb.h>
 #include <time.h>
 #include <unistd.h>
 #include <utime.h>
