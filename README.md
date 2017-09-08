@@ -28,6 +28,7 @@ IMPORTANT: Those instructions that contain the (sudo) tag must be executed as ro
 3. [Centos installation](src/other/install/CENTOS_BUILD.md)
 4. [Debian installation](src/other/install/DEBIAN_BUILD.md)
 5. [FreeBSD installation](src/other/install/FREEBSD_BUILD.md)
+6. [MAC OSX installation](src/other/install/MAC_BUILD.md)
 
 ### More Quickly
 
