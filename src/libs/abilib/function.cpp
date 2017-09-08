@@ -17,8 +17,8 @@ namespace qblocks {
 IMPLEMENT_NODE(CFunction, CBaseNode, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextFunctionChunk(const SFString& fieldIn, bool& force, const void *data);
-static SFString nextFunctionChunk_custom(const SFString& fieldIn, bool& force, const void *data);
+static SFString nextFunctionChunk(const SFString& fieldIn, const void *data);
+static SFString nextFunctionChunk_custom(const SFString& fieldIn, const void *data);
 
 //---------------------------------------------------------------------------
 void CFunction::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
@@ -39,11 +39,11 @@ void CFunction::Format(CExportContext& ctx, const SFString& fmtIn, void *data) c
 }
 
 //---------------------------------------------------------------------------
-SFString nextFunctionChunk(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextFunctionChunk(const SFString& fieldIn, const void *data) {
     const CFunction *fun = (const CFunction *)data;
     if (fun) {
         // Give customized code a chance to override first
-        SFString ret = nextFunctionChunk_custom(fieldIn, force, data);
+        SFString ret = nextFunctionChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
 
@@ -99,7 +99,7 @@ SFString nextFunctionChunk(const SFString& fieldIn, bool& force, const void *dat
         // EXISTING_CODE
 
         // Finally, give the parent class a chance
-        ret = nextBasenodeChunk(fieldIn, force, fun);
+        ret = nextBasenodeChunk(fieldIn, fun);
         if (!ret.empty())
             return ret;
     }
@@ -253,7 +253,7 @@ void CFunction::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextFunctionChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextFunctionChunk_custom(const SFString& fieldIn, const void *data) {
     const CFunction *fun = (const CFunction *)data;
     if (fun) {
         switch (tolower(fieldIn[0])) {
@@ -283,7 +283,7 @@ SFString nextFunctionChunk_custom(const SFString& fieldIn, bool& force, const vo
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn, force, fun);
+                    return nextBasenodeChunk(fieldIn, fun);
                 break;
 
             default:

@@ -16,8 +16,8 @@
 IMPLEMENT_NODE(QConfirmationNeededEvent, CLogEntry, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextConfirmationneededeventChunk(const SFString& fieldIn, bool& force, const void *data);
-static SFString nextConfirmationneededeventChunk_custom(const SFString& fieldIn, bool& force, const void *data);
+static SFString nextConfirmationneededeventChunk(const SFString& fieldIn, const void *data);
+static SFString nextConfirmationneededeventChunk_custom(const SFString& fieldIn, const void *data);
 
 //---------------------------------------------------------------------------
 void QConfirmationNeededEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
@@ -38,11 +38,11 @@ void QConfirmationNeededEvent::Format(CExportContext& ctx, const SFString& fmtIn
 }
 
 //---------------------------------------------------------------------------
-SFString nextConfirmationneededeventChunk(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextConfirmationneededeventChunk(const SFString& fieldIn, const void *data) {
     const QConfirmationNeededEvent *con = (const QConfirmationNeededEvent *)data;
     if (con) {
         // Give customized code a chance to override first
-        SFString ret = nextConfirmationneededeventChunk_custom(fieldIn, force, data);
+        SFString ret = nextConfirmationneededeventChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
 
@@ -68,7 +68,7 @@ SFString nextConfirmationneededeventChunk(const SFString& fieldIn, bool& force, 
         // EXISTING_CODE
 
         // Finally, give the parent class a chance
-        ret = nextLogentryChunk(fieldIn, force, con);
+        ret = nextLogentryChunk(fieldIn, con);
         if (!ret.empty())
             return ret;
     }
@@ -167,7 +167,7 @@ void QConfirmationNeededEvent::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextConfirmationneededeventChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextConfirmationneededeventChunk_custom(const SFString& fieldIn, const void *data) {
     const QConfirmationNeededEvent *con = (const QConfirmationNeededEvent *)data;
     if (con) {
         switch (tolower(fieldIn[0])) {
@@ -176,7 +176,7 @@ SFString nextConfirmationneededeventChunk_custom(const SFString& fieldIn, bool& 
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn, force, con);
+                    return nextBasenodeChunk(fieldIn, con);
                 break;
 
             default:

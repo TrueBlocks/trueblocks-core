@@ -18,8 +18,8 @@ namespace qblocks {
 IMPLEMENT_NODE(CAccountWatch, CBaseNode, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextAccountwatchChunk(const SFString& fieldIn, bool& force, const void *data);
-static SFString nextAccountwatchChunk_custom(const SFString& fieldIn, bool& force, const void *data);
+static SFString nextAccountwatchChunk(const SFString& fieldIn, const void *data);
+static SFString nextAccountwatchChunk_custom(const SFString& fieldIn, const void *data);
 
 //---------------------------------------------------------------------------
 void CAccountWatch::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
@@ -40,11 +40,11 @@ void CAccountWatch::Format(CExportContext& ctx, const SFString& fmtIn, void *dat
 }
 
 //---------------------------------------------------------------------------
-SFString nextAccountwatchChunk(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextAccountwatchChunk(const SFString& fieldIn, const void *data) {
     const CAccountWatch *acc = (const CAccountWatch *)data;
     if (acc) {
         // Give customized code a chance to override first
-        SFString ret = nextAccountwatchChunk_custom(fieldIn, force, data);
+        SFString ret = nextAccountwatchChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
 
@@ -83,7 +83,7 @@ SFString nextAccountwatchChunk(const SFString& fieldIn, bool& force, const void 
         // EXISTING_CODE
 
         // Finally, give the parent class a chance
-        ret = nextBasenodeChunk(fieldIn, force, acc);
+        ret = nextBasenodeChunk(fieldIn, acc);
         if (!ret.empty())
             return ret;
     }
@@ -227,7 +227,7 @@ void CAccountWatch::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextAccountwatchChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextAccountwatchChunk_custom(const SFString& fieldIn, const void *data) {
     const CAccountWatch *acc = (const CAccountWatch *)data;
     if (acc) {
         switch (tolower(fieldIn[0])) {
@@ -236,7 +236,7 @@ SFString nextAccountwatchChunk_custom(const SFString& fieldIn, bool& force, cons
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn, force, acc);
+                    return nextBasenodeChunk(fieldIn, acc);
                 break;
 
             default:

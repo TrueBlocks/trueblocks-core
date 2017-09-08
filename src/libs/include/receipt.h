@@ -155,12 +155,16 @@ inline CReceipt& CReceipt::operator=(const CReceipt& re) {
     return *this;
 }
 
+#define NEW_CODE
+#ifdef NEW_CODE
+#else
 //---------------------------------------------------------------------------
 inline SFString CReceipt::getValueByName(const SFString& fieldName) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return Format("[{"+toUpper(fieldName)+"}]");
 }
+#endif
 
 //---------------------------------------------------------------------------
 IMPLEMENT_ARCHIVE_ARRAY(CReceiptArray);
@@ -173,7 +177,7 @@ extern SFArchive& operator>>(SFArchive& archive, CReceipt& rec);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-extern SFString nextTransactionChunk(const SFString& fieldIn, bool& force, const void *data);
+extern SFString nextTransactionChunk(const SFString& fieldIn, const void *data);
 // EXISTING_CODE
 }  // namespace qblocks
 

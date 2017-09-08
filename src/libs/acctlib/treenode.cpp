@@ -18,8 +18,8 @@ namespace qblocks {
 IMPLEMENT_NODE(CTreeNode, CBaseNode, dataSchema());
 
 //---------------------------------------------------------------------------
-extern SFString nextTreenodeChunk(const SFString& fieldIn, bool& force, const void *data);
-static SFString nextTreenodeChunk_custom(const SFString& fieldIn, bool& force, const void *data);
+extern SFString nextTreenodeChunk(const SFString& fieldIn, const void *data);
+static SFString nextTreenodeChunk_custom(const SFString& fieldIn, const void *data);
 
 //---------------------------------------------------------------------------
 void CTreeNode::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
@@ -40,11 +40,11 @@ void CTreeNode::Format(CExportContext& ctx, const SFString& fmtIn, void *data) c
 }
 
 //---------------------------------------------------------------------------
-SFString nextTreenodeChunk(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextTreenodeChunk(const SFString& fieldIn, const void *data) {
     const CTreeNode *tre = (const CTreeNode *)data;
     if (tre) {
         // Give customized code a chance to override first
-        SFString ret = nextTreenodeChunk_custom(fieldIn, force, data);
+        SFString ret = nextTreenodeChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
 
@@ -61,7 +61,7 @@ SFString nextTreenodeChunk(const SFString& fieldIn, bool& force, const void *dat
         // EXISTING_CODE
 
         // Finally, give the parent class a chance
-        ret = nextBasenodeChunk(fieldIn, force, tre);
+        ret = nextBasenodeChunk(fieldIn, tre);
         if (!ret.empty())
             return ret;
     }
@@ -139,7 +139,7 @@ void CTreeNode::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextTreenodeChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextTreenodeChunk_custom(const SFString& fieldIn, const void *data) {
     const CTreeNode *tre = (const CTreeNode *)data;
     if (tre) {
         switch (tolower(fieldIn[0])) {
@@ -148,7 +148,7 @@ SFString nextTreenodeChunk_custom(const SFString& fieldIn, bool& force, const vo
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn, force, tre);
+                    return nextBasenodeChunk(fieldIn, tre);
                 break;
 
             default:

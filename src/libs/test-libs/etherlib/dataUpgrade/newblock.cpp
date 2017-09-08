@@ -18,8 +18,8 @@ namespace qblocks {
 IMPLEMENT_NODE(CNewBlock, CBaseNode, dataSchema());
 
 //---------------------------------------------------------------------------
-extern SFString nextNewblockChunk(const SFString& fieldIn, bool& force, const void *data);
-static SFString nextNewblockChunk_custom(const SFString& fieldIn, bool& force, const void *data);
+extern SFString nextNewblockChunk(const SFString& fieldIn, const void *data);
+static SFString nextNewblockChunk_custom(const SFString& fieldIn, const void *data);
 
 //---------------------------------------------------------------------------
 void CNewBlock::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
@@ -40,11 +40,11 @@ void CNewBlock::Format(CExportContext& ctx, const SFString& fmtIn, void *data) c
 }
 
 //---------------------------------------------------------------------------
-SFString nextNewblockChunk(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextNewblockChunk(const SFString& fieldIn, const void *data) {
     const CNewBlock *newp = (const CNewBlock *)data;
     if (newp) {
         // Give customized code a chance to override first
-        SFString ret = nextNewblockChunk_custom(fieldIn, force, data);
+        SFString ret = nextNewblockChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
 
@@ -90,7 +90,7 @@ SFString nextNewblockChunk(const SFString& fieldIn, bool& force, const void *dat
         // EXISTING_CODE
 
         // Finally, give the parent class a chance
-        ret = nextBasenodeChunk(fieldIn, force, newp);
+        ret = nextBasenodeChunk(fieldIn, newp);
         if (!ret.empty())
             return ret;
     }
@@ -241,7 +241,7 @@ void CNewBlock::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextNewblockChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextNewblockChunk_custom(const SFString& fieldIn, const void *data) {
     const CNewBlock *newp = (const CNewBlock *)data;
     if (newp) {
         switch (tolower(fieldIn[0])) {
@@ -265,7 +265,7 @@ SFString nextNewblockChunk_custom(const SFString& fieldIn, bool& force, const vo
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn, force, newp);
+                    return nextBasenodeChunk(fieldIn, newp);
                 break;
 
             default:

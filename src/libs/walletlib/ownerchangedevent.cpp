@@ -16,8 +16,8 @@
 IMPLEMENT_NODE(QOwnerChangedEvent, CLogEntry, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextOwnerchangedeventChunk(const SFString& fieldIn, bool& force, const void *data);
-static SFString nextOwnerchangedeventChunk_custom(const SFString& fieldIn, bool& force, const void *data);
+static SFString nextOwnerchangedeventChunk(const SFString& fieldIn, const void *data);
+static SFString nextOwnerchangedeventChunk_custom(const SFString& fieldIn, const void *data);
 
 //---------------------------------------------------------------------------
 void QOwnerChangedEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
@@ -38,11 +38,11 @@ void QOwnerChangedEvent::Format(CExportContext& ctx, const SFString& fmtIn, void
 }
 
 //---------------------------------------------------------------------------
-SFString nextOwnerchangedeventChunk(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextOwnerchangedeventChunk(const SFString& fieldIn, const void *data) {
     const QOwnerChangedEvent *own = (const QOwnerChangedEvent *)data;
     if (own) {
         // Give customized code a chance to override first
-        SFString ret = nextOwnerchangedeventChunk_custom(fieldIn, force, data);
+        SFString ret = nextOwnerchangedeventChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
 
@@ -59,7 +59,7 @@ SFString nextOwnerchangedeventChunk(const SFString& fieldIn, bool& force, const 
         // EXISTING_CODE
 
         // Finally, give the parent class a chance
-        ret = nextLogentryChunk(fieldIn, force, own);
+        ret = nextLogentryChunk(fieldIn, own);
         if (!ret.empty())
             return ret;
     }
@@ -140,7 +140,7 @@ void QOwnerChangedEvent::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextOwnerchangedeventChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextOwnerchangedeventChunk_custom(const SFString& fieldIn, const void *data) {
     const QOwnerChangedEvent *own = (const QOwnerChangedEvent *)data;
     if (own) {
         switch (tolower(fieldIn[0])) {
@@ -149,7 +149,7 @@ SFString nextOwnerchangedeventChunk_custom(const SFString& fieldIn, bool& force,
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn, force, own);
+                    return nextBasenodeChunk(fieldIn, own);
                 break;
 
             default:

@@ -15,8 +15,8 @@
 IMPLEMENT_NODE(CAcctCacheItem, CBaseNode, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextAcctcacheitemChunk(const SFString& fieldIn, bool& force, const void *data);
-static SFString nextAcctcacheitemChunk_custom(const SFString& fieldIn, bool& force, const void *data);
+static SFString nextAcctcacheitemChunk(const SFString& fieldIn, const void *data);
+static SFString nextAcctcacheitemChunk_custom(const SFString& fieldIn, const void *data);
 
 //---------------------------------------------------------------------------
 void CAcctCacheItem::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
@@ -37,11 +37,11 @@ void CAcctCacheItem::Format(CExportContext& ctx, const SFString& fmtIn, void *da
 }
 
 //---------------------------------------------------------------------------
-SFString nextAcctcacheitemChunk(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextAcctcacheitemChunk(const SFString& fieldIn, const void *data) {
     const CAcctCacheItem *acc = (const CAcctCacheItem *)data;
     if (acc) {
         // Give customized code a chance to override first
-        SFString ret = nextAcctcacheitemChunk_custom(fieldIn, force, data);
+        SFString ret = nextAcctcacheitemChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
 
@@ -61,7 +61,7 @@ SFString nextAcctcacheitemChunk(const SFString& fieldIn, bool& force, const void
         // EXISTING_CODE
 
         // Finally, give the parent class a chance
-        ret = nextBasenodeChunk(fieldIn, force, acc);
+        ret = nextBasenodeChunk(fieldIn, acc);
         if (!ret.empty())
             return ret;
     }
@@ -145,7 +145,7 @@ void CAcctCacheItem::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextAcctcacheitemChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextAcctcacheitemChunk_custom(const SFString& fieldIn, const void *data) {
     const CAcctCacheItem *acc = (const CAcctCacheItem *)data;
     if (acc) {
         switch (tolower(fieldIn[0])) {
@@ -154,7 +154,7 @@ SFString nextAcctcacheitemChunk_custom(const SFString& fieldIn, bool& force, con
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn, force, acc);
+                    return nextBasenodeChunk(fieldIn, acc);
                 break;
 
             default:

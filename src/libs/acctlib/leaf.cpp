@@ -18,8 +18,8 @@ namespace qblocks {
 IMPLEMENT_NODE(CLeaf, CTreeNode, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextLeafChunk(const SFString& fieldIn, bool& force, const void *data);
-static SFString nextLeafChunk_custom(const SFString& fieldIn, bool& force, const void *data);
+static SFString nextLeafChunk(const SFString& fieldIn, const void *data);
+static SFString nextLeafChunk_custom(const SFString& fieldIn, const void *data);
 
 //---------------------------------------------------------------------------
 void CLeaf::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
@@ -40,11 +40,11 @@ void CLeaf::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const
 }
 
 //---------------------------------------------------------------------------
-SFString nextLeafChunk(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextLeafChunk(const SFString& fieldIn, const void *data) {
     const CLeaf *lea = (const CLeaf *)data;
     if (lea) {
         // Give customized code a chance to override first
-        SFString ret = nextLeafChunk_custom(fieldIn, force, data);
+        SFString ret = nextLeafChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
 
@@ -70,7 +70,7 @@ SFString nextLeafChunk(const SFString& fieldIn, bool& force, const void *data) {
         // EXISTING_CODE
 
         // Finally, give the parent class a chance
-        ret = nextTreenodeChunk(fieldIn, force, lea);
+        ret = nextTreenodeChunk(fieldIn, lea);
         if (!ret.empty())
             return ret;
     }
@@ -151,7 +151,7 @@ void CLeaf::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextLeafChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextLeafChunk_custom(const SFString& fieldIn, const void *data) {
     const CLeaf *lea = (const CLeaf *)data;
     if (lea) {
         switch (tolower(fieldIn[0])) {
@@ -160,7 +160,7 @@ SFString nextLeafChunk_custom(const SFString& fieldIn, bool& force, const void *
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn, force, lea);
+                    return nextBasenodeChunk(fieldIn, lea);
                 break;
 
             default:

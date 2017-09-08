@@ -331,15 +331,15 @@ namespace qblocks {
         }
 
         // TODO(tjayrush): THIS PER DISPLAY LOOKUP IS SLOW - THIS SHOULD ONLY BE DONE ONCE
-        // If a class is not a direct decendent of CBaseNode we want to include that class's fields in here as well
-        CFieldList theList = *fieldList;
-
+        // If a class is not a direct decendent of CBaseNode we want to include the parent nodes' fields
+        // in the list as well
         CRuntimeClass *pThis = getRuntimeClass();
         CRuntimeClass *pPar  = pThis->m_BaseClass;
         CRuntimeClass *pBase = GETRUNTIME_CLASS(CBaseNode);
         if (pPar != pBase) {
+            CFieldList theList = *fieldList;
             const CFieldList *fieldListA = pPar->GetFieldList();
-            if (fieldList) {
+            if (fieldListA) {
                 LISTPOS lPos = fieldListA->SFList<CFieldData *>::GetHeadPosition();
                 while (lPos) {
                     CFieldData *fld = fieldListA->GetNext(lPos);
@@ -347,8 +347,9 @@ namespace qblocks {
                         theList.AddTail(fld);
                 }
             }
+            return toJson(&theList);
         }
-        return toJson(&theList);
+        return toJson(fieldList);
     }
 
     //--------------------------------------------------------------------------------
@@ -469,7 +470,7 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    SFString nextBasenodeChunk(const SFString& fieldIn, bool force, const CBaseNode *node) {
+    SFString nextBasenodeChunk(const SFString& fieldIn, const CBaseNode *node) {
         if (node) {
             SFString className = node->getRuntimeClass()->getClassNamePtr();
             switch (tolower(fieldIn[0])) {
@@ -582,10 +583,8 @@ namespace qblocks {
 #define truncPadR(str, size) (size == 0xdeadbeef ? str : padLeft (str.Left(size), size))
 
         // Get the value of the field.  If the value of the field is empty we return empty for the entire token.
-        bool forceShow = false;
-        SFString fieldValue = (func)(fieldName, forceShow, data);
-        forceShow = (isPrompt?true:forceShow);
-        if (!forceShow && fieldValue.empty())
+        SFString fieldValue = (func)(fieldName, data);
+        if (!isPrompt && fieldValue.empty())
             return EMPTY;
         if (rightJust) {
             fieldValue = truncPadR(fieldValue, maxWidth);  // pad or truncate

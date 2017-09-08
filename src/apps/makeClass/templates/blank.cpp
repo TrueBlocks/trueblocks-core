@@ -16,8 +16,8 @@
 IMPLEMENT_NODE([{CLASS_NAME}], [{BASE_CLASS}], dataSchema());
 
 //---------------------------------------------------------------------------
-[{SCOPE}] SFString next[{PROPER}]Chunk(const SFString& fieldIn, bool& force, const void *data);
-static SFString next[{PROPER}]Chunk_custom(const SFString& fieldIn, bool& force, const void *data);
+[{SCOPE}] SFString next[{PROPER}]Chunk(const SFString& fieldIn, const void *data);
+static SFString next[{PROPER}]Chunk_custom(const SFString& fieldIn, const void *data);
 
 //---------------------------------------------------------------------------
 void [{CLASS_NAME}]::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
@@ -38,11 +38,11 @@ void [{CLASS_NAME}]::Format(CExportContext& ctx, const SFString& fmtIn, void *da
 }
 
 //---------------------------------------------------------------------------
-SFString next[{PROPER}]Chunk(const SFString& fieldIn, bool& force, const void *data) {
+SFString next[{PROPER}]Chunk(const SFString& fieldIn, const void *data) {
     const [{CLASS_NAME}] *[{SHORT3}] = (const [{CLASS_NAME}] *)data;
     if ([{SHORT3}]) {
         // Give customized code a chance to override first
-        SFString ret = next[{PROPER}]Chunk_custom(fieldIn, force, data);
+        SFString ret = next[{PROPER}]Chunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
 
@@ -113,7 +113,7 @@ void [{CLASS_NAME}]::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString next[{PROPER}]Chunk_custom(const SFString& fieldIn, bool& force, const void *data) {
+SFString next[{PROPER}]Chunk_custom(const SFString& fieldIn, const void *data) {
     const [{CLASS_NAME}] *[{SHORT3}] = (const [{CLASS_NAME}] *)data;
     if ([{SHORT3}]) {
         switch (tolower(fieldIn[0])) {
@@ -122,7 +122,7 @@ SFString next[{PROPER}]Chunk_custom(const SFString& fieldIn, bool& force, const 
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn, force, [{SHORT3}]);
+                    return nextBasenodeChunk(fieldIn, [{SHORT3}]);
                 break;
 
             default:

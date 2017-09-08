@@ -16,8 +16,8 @@
 IMPLEMENT_NODE(QApprovalEvent, CLogEntry, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextApprovaleventChunk(const SFString& fieldIn, bool& force, const void *data);
-static SFString nextApprovaleventChunk_custom(const SFString& fieldIn, bool& force, const void *data);
+static SFString nextApprovaleventChunk(const SFString& fieldIn, const void *data);
+static SFString nextApprovaleventChunk_custom(const SFString& fieldIn, const void *data);
 
 //---------------------------------------------------------------------------
 void QApprovalEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
@@ -38,11 +38,11 @@ void QApprovalEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *da
 }
 
 //---------------------------------------------------------------------------
-SFString nextApprovaleventChunk(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextApprovaleventChunk(const SFString& fieldIn, const void *data) {
     const QApprovalEvent *app = (const QApprovalEvent *)data;
     if (app) {
         // Give customized code a chance to override first
-        SFString ret = nextApprovaleventChunk_custom(fieldIn, force, data);
+        SFString ret = nextApprovaleventChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
 
@@ -58,7 +58,7 @@ SFString nextApprovaleventChunk(const SFString& fieldIn, bool& force, const void
         // EXISTING_CODE
 
         // Finally, give the parent class a chance
-        ret = nextLogentryChunk(fieldIn, force, app);
+        ret = nextLogentryChunk(fieldIn, app);
         if (!ret.empty())
             return ret;
     }
@@ -141,7 +141,7 @@ void QApprovalEvent::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextApprovaleventChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextApprovaleventChunk_custom(const SFString& fieldIn, const void *data) {
     const QApprovalEvent *app = (const QApprovalEvent *)data;
     if (app) {
         switch (tolower(fieldIn[0])) {
@@ -150,7 +150,7 @@ SFString nextApprovaleventChunk_custom(const SFString& fieldIn, bool& force, con
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn, force, app);
+                    return nextBasenodeChunk(fieldIn, app);
                 break;
 
             default:

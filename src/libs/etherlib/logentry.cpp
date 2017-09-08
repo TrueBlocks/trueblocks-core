@@ -18,8 +18,8 @@ namespace qblocks {
 IMPLEMENT_NODE(CLogEntry, CBaseNode, dataSchema());
 
 //---------------------------------------------------------------------------
-extern SFString nextLogentryChunk(const SFString& fieldIn, bool& force, const void *data);
-static SFString nextLogentryChunk_custom(const SFString& fieldIn, bool& force, const void *data);
+extern SFString nextLogentryChunk(const SFString& fieldIn, const void *data);
+static SFString nextLogentryChunk_custom(const SFString& fieldIn, const void *data);
 
 //---------------------------------------------------------------------------
 void CLogEntry::Format(CExportContext& ctx, const SFString& fmtIn, void *data1) const {
@@ -40,11 +40,11 @@ void CLogEntry::Format(CExportContext& ctx, const SFString& fmtIn, void *data1) 
 }
 
 //---------------------------------------------------------------------------
-SFString nextLogentryChunk(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextLogentryChunk(const SFString& fieldIn, const void *data) {
     const CLogEntry *log = (const CLogEntry *)data;
     if (log) {
         // Give customized code a chance to override first
-        SFString ret = nextLogentryChunk_custom(fieldIn, force, data);
+        SFString ret = nextLogentryChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
 
@@ -74,7 +74,7 @@ SFString nextLogentryChunk(const SFString& fieldIn, bool& force, const void *dat
 
         // EXISTING_CODE
         // See if this field belongs to the item's container
-        ret = nextReceiptChunk(fieldIn, force, log->pReceipt);
+        ret = nextReceiptChunk(fieldIn, log->pReceipt);
         if (ret.Contains("Field not found"))
             ret = EMPTY;
         if (!ret.empty())
@@ -82,7 +82,7 @@ SFString nextLogentryChunk(const SFString& fieldIn, bool& force, const void *dat
         // EXISTING_CODE
 
         // Finally, give the parent class a chance
-        ret = nextBasenodeChunk(fieldIn, force, log);
+        ret = nextBasenodeChunk(fieldIn, log);
         if (!ret.empty())
             return ret;
     }
@@ -182,7 +182,7 @@ void CLogEntry::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextLogentryChunk_custom(const SFString& fieldIn, bool& force, const void *data) {
+SFString nextLogentryChunk_custom(const SFString& fieldIn, const void *data) {
     const CLogEntry *log = (const CLogEntry *)data;
     if (log) {
         switch (tolower(fieldIn[0])) {
@@ -191,7 +191,7 @@ SFString nextLogentryChunk_custom(const SFString& fieldIn, bool& force, const vo
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn, force, log);
+                    return nextBasenodeChunk(fieldIn, log);
                 break;
 
             default:
