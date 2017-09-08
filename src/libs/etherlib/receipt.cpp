@@ -44,31 +44,9 @@ SFString nextReceiptChunk(const SFString& fieldIn, bool& force, const void *data
     const CReceipt *rec = (const CReceipt *)data;
     if (rec) {
         // Give customized code a chance to override first
-        SFString ret = nextReceiptChunk_custom(fieldIn, force, data);
+        SFString ret = rec->getValueByName(fieldIn);
         if (!ret.empty())
             return ret;
-
-        switch (tolower(fieldIn[0])) {
-            case 'c':
-                if ( fieldIn % "contractAddress" ) return fromAddress(rec->contractAddress);
-                break;
-            case 'g':
-                if ( fieldIn % "gasUsed" ) return asStringU(rec->gasUsed);
-                break;
-            case 'l':
-                if ( fieldIn % "logs" ) {
-                    uint32_t cnt = rec->logs.getCount();
-                    if (!cnt) return "";
-                    SFString retS;
-                    for (uint32_t i = 0 ; i < cnt ; i++) {
-                        retS += rec->logs[i].Format();
-                        retS += ((i < cnt - 1) ? ",\n" : "\n");
-                    }
-                    return retS;
-                }
-                if ( fieldIn % "logsBloom" ) return fromBloom(rec->logsBloom);
-                break;
-        }
 
         // EXISTING_CODE
         // See if this field belongs to the item's container
@@ -80,7 +58,7 @@ SFString nextReceiptChunk(const SFString& fieldIn, bool& force, const void *data
         // EXISTING_CODE
 
         // Finally, give the parent class a chance
-        ret = nextBasenodeChunk(fieldIn, force, rec);
+        ret = nextBasenodeChunk(fieldIn, rec);
         if (!ret.empty())
             return ret;
     }
@@ -201,7 +179,7 @@ SFString nextReceiptChunk_custom(const SFString& fieldIn, bool& force, const voi
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn, force, rec);
+                    return nextBasenodeChunk(fieldIn, rec);
                 break;
 
             default:
@@ -239,7 +217,43 @@ SFArchive& operator>>(SFArchive& archive, CReceipt& rec) {
     return archive;
 }
 
+#define NEW_CODE
+#ifdef NEW_CODE
 //---------------------------------------------------------------------------
+SFString CReceipt::getValueByName(const SFString& fieldName) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    bool f = false;
+    SFString ret = nextReceiptChunk_custom(fieldName, f, (void*)this);
+    if (!ret.empty())
+        return ret;
+    switch (tolower(fieldName[0])) {
+        case 'c':
+            if ( fieldName % "contractAddress" ) return fromAddress(contractAddress);
+            break;
+        case 'g':
+            if ( fieldName % "gasUsed" ) return asStringU(gasUsed);
+            break;
+        case 'l':
+            if ( fieldName % "logs" ) {
+                uint32_t cnt = logs.getCount();
+                if (!cnt) return "";
+                SFString retS;
+                for (uint32_t i = 0 ; i < cnt ; i++) {
+                    retS += logs[i].Format();
+                    retS += ((i < cnt - 1) ? ",\n" : "\n");
+                }
+                return retS;
+            }
+            if ( fieldName % "logsBloom" ) return fromBloom(logsBloom);
+            break;
+    }
+    return "";
+}
+#else
+#endif
+
+    //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks

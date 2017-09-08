@@ -175,5 +175,5 @@ return archive; \
 }
 
     //---------------------------------------------------------------------------
-    extern SFString nextBasenodeChunk(const SFString& fieldIn, bool force, const CBaseNode *node);
+    extern SFString nextBasenodeChunk(const SFString& fieldIn, const CBaseNode *node);
 }  // namespace qblocks

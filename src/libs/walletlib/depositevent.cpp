@@ -149,7 +149,7 @@ SFString nextDepositeventChunk_custom(const SFString& fieldIn, bool& force, cons
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn, force, dep);
+                    return nextBasenodeChunk(fieldIn, dep);
                 break;
 
             default:

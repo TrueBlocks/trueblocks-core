@@ -99,7 +99,7 @@ SFString nextFunctionChunk(const SFString& fieldIn, bool& force, const void *dat
         // EXISTING_CODE
 
         // Finally, give the parent class a chance
-        ret = nextBasenodeChunk(fieldIn, force, fun);
+        ret = nextBasenodeChunk(fieldIn, fun);
         if (!ret.empty())
             return ret;
     }
@@ -283,7 +283,7 @@ SFString nextFunctionChunk_custom(const SFString& fieldIn, bool& force, const vo
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn, force, fun);
+                    return nextBasenodeChunk(fieldIn, fun);
                 break;
 
             default:

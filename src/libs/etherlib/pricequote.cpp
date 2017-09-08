@@ -80,7 +80,7 @@ SFString nextPricequoteChunk(const SFString& fieldIn, bool& force, const void *d
         // EXISTING_CODE
 
         // Finally, give the parent class a chance
-        ret = nextBasenodeChunk(fieldIn, force, pri);
+        ret = nextBasenodeChunk(fieldIn, pri);
         if (!ret.empty())
             return ret;
     }
@@ -213,7 +213,7 @@ SFString nextPricequoteChunk_custom(const SFString& fieldIn, bool& force, const 
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn, force, pri);
+                    return nextBasenodeChunk(fieldIn, pri);
                 break;
 
             default:

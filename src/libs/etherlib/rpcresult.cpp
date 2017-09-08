@@ -64,7 +64,7 @@ SFString nextRpcresultChunk(const SFString& fieldIn, bool& force, const void *da
         // EXISTING_CODE
 
         // Finally, give the parent class a chance
-        ret = nextBasenodeChunk(fieldIn, force, rpc);
+        ret = nextBasenodeChunk(fieldIn, rpc);
         if (!ret.empty())
             return ret;
     }
@@ -157,7 +157,7 @@ SFString nextRpcresultChunk_custom(const SFString& fieldIn, bool& force, const v
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn, force, rpc);
+                    return nextBasenodeChunk(fieldIn, rpc);
                 break;
 
             default:

@@ -140,7 +140,7 @@ SFString nextRemoveownerChunk_custom(const SFString& fieldIn, bool& force, const
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn, force, rem);
+                    return nextBasenodeChunk(fieldIn, rem);
                 break;
 
             default:

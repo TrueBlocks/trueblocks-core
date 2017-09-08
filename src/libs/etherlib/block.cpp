@@ -44,41 +44,9 @@ SFString nextBlockChunk(const SFString& fieldIn, bool& force, const void *data) 
     const CBlock *blo = (const CBlock *)data;
     if (blo) {
         // Give customized code a chance to override first
-        SFString ret = nextBlockChunk_custom(fieldIn, force, data);
+        SFString ret = blo->getValueByName(fieldIn);
         if (!ret.empty())
             return ret;
-
-        switch (tolower(fieldIn[0])) {
-            case 'b':
-                if ( fieldIn % "blockNumber" ) return asStringU(blo->blockNumber);
-                break;
-            case 'g':
-                if ( fieldIn % "gasLimit" ) return asStringU(blo->gasLimit);
-                if ( fieldIn % "gasUsed" ) return asStringU(blo->gasUsed);
-                break;
-            case 'h':
-                if ( fieldIn % "hash" ) return fromHash(blo->hash);
-                break;
-            case 'l':
-                if ( fieldIn % "logsBloom" ) return fromBloom(blo->logsBloom);
-                break;
-            case 'p':
-                if ( fieldIn % "parentHash" ) return fromHash(blo->parentHash);
-                break;
-            case 't':
-                if ( fieldIn % "timestamp" ) return asString(blo->timestamp);
-                if ( fieldIn % "transactions" ) {
-                    uint32_t cnt = blo->transactions.getCount();
-                    if (!cnt) return "";
-                    SFString retS;
-                    for (uint32_t i = 0 ; i < cnt ; i++) {
-                        retS += blo->transactions[i].Format();
-                        retS += ((i < cnt - 1) ? ",\n" : "\n");
-                    }
-                    return retS;
-                }
-                break;
-        }
 
         // EXISTING_CODE
         if ( isTestMode() && fieldIn % "blockHash" )
@@ -86,7 +54,7 @@ SFString nextBlockChunk(const SFString& fieldIn, bool& force, const void *data) 
         // EXISTING_CODE
 
         // Finally, give the parent class a chance
-        ret = nextBasenodeChunk(fieldIn, force, blo);
+        ret = nextBasenodeChunk(fieldIn, blo);
         if (!ret.empty())
             return ret;
     }
@@ -251,7 +219,7 @@ SFString nextBlockChunk_custom(const SFString& fieldIn, bool& force, const void 
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn, force, blo);
+                    return nextBasenodeChunk(fieldIn, blo);
                 break;
 
             default:
@@ -289,7 +257,53 @@ SFArchive& operator>>(SFArchive& archive, CBlock& blo) {
     return archive;
 }
 
+#define NEW_CODE
+#ifdef NEW_CODE
 //---------------------------------------------------------------------------
+SFString CBlock::getValueByName(const SFString& fieldName) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    bool f=false;
+    SFString ret = nextBlockChunk_custom(fieldName, f, (void*)this);
+    if (!ret.empty())
+        return ret;
+    switch (tolower(fieldName[0])) {
+        case 'b':
+            if ( fieldName % "blockNumber" ) return asStringU(blockNumber);
+            break;
+        case 'g':
+            if ( fieldName % "gasLimit" ) return asStringU(gasLimit);
+            if ( fieldName % "gasUsed" ) return asStringU(gasUsed);
+            break;
+        case 'h':
+            if ( fieldName % "hash" ) return fromHash(hash);
+            break;
+        case 'l':
+            if ( fieldName % "logsBloom" ) return fromBloom(logsBloom);
+            break;
+        case 'p':
+            if ( fieldName % "parentHash" ) return fromHash(parentHash);
+            break;
+        case 't':
+            if ( fieldName % "timestamp" ) return asString(timestamp);
+            if ( fieldName % "transactions" ) {
+                uint32_t cnt = transactions.getCount();
+                if (!cnt) return "";
+                SFString retS;
+                for (uint32_t i = 0 ; i < cnt ; i++) {
+                    retS += transactions[i].Format();
+                    retS += ((i < cnt - 1) ? ",\n" : "\n");
+                }
+                return retS;
+            }
+            break;
+    }
+    return "";
+}
+#else
+#endif
+
+    //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks

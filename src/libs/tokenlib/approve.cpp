@@ -145,7 +145,7 @@ SFString nextApproveChunk_custom(const SFString& fieldIn, bool& force, const voi
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn, force, app);
+                    return nextBasenodeChunk(fieldIn, app);
                 break;
 
             default:

@@ -83,7 +83,7 @@ SFString nextAccountwatchChunk(const SFString& fieldIn, bool& force, const void 
         // EXISTING_CODE
 
         // Finally, give the parent class a chance
-        ret = nextBasenodeChunk(fieldIn, force, acc);
+        ret = nextBasenodeChunk(fieldIn, acc);
         if (!ret.empty())
             return ret;
     }
@@ -236,7 +236,7 @@ SFString nextAccountwatchChunk_custom(const SFString& fieldIn, bool& force, cons
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn, force, acc);
+                    return nextBasenodeChunk(fieldIn, acc);
                 break;
 
             default:

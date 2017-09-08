@@ -205,12 +205,16 @@ inline CTransaction& CTransaction::operator=(const CTransaction& tr) {
     return *this;
 }
 
+#define NEW_CODE
+#ifdef NEW_CODE
+#else
 //---------------------------------------------------------------------------
 inline SFString CTransaction::getValueByName(const SFString& fieldName) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return Format("[{"+toUpper(fieldName)+"}]");
 }
+#endif
 
 //---------------------------------------------------------------------------
 IMPLEMENT_ARCHIVE_ARRAY(CTransactionArray);

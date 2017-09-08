@@ -160,7 +160,7 @@ SFString nextLeafChunk_custom(const SFString& fieldIn, bool& force, const void *
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn, force, lea);
+                    return nextBasenodeChunk(fieldIn, lea);
                 break;
 
             default:

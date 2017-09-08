@@ -61,7 +61,7 @@ SFString nextTraceresultChunk(const SFString& fieldIn, bool& force, const void *
         // EXISTING_CODE
 
         // Finally, give the parent class a chance
-        ret = nextBasenodeChunk(fieldIn, force, tra);
+        ret = nextBasenodeChunk(fieldIn, tra);
         if (!ret.empty())
             return ret;
     }
@@ -148,7 +148,7 @@ SFString nextTraceresultChunk_custom(const SFString& fieldIn, bool& force, const
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn, force, tra);
+                    return nextBasenodeChunk(fieldIn, tra);
                 break;
 
             default:

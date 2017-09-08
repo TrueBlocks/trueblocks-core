@@ -145,7 +145,7 @@ SFString nextTransferChunk_custom(const SFString& fieldIn, bool& force, const vo
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn, force, tra);
+                    return nextBasenodeChunk(fieldIn, tra);
                 break;
 
             default:
