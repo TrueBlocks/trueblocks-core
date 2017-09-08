@@ -223,8 +223,7 @@ SFArchive& operator>>(SFArchive& archive, CReceipt& rec) {
 SFString CReceipt::getValueByName(const SFString& fieldName) const {
     // EXISTING_CODE
     // EXISTING_CODE
-    bool f = false;
-    SFString ret = nextReceiptChunk_custom(fieldName, f, (void*)this);
+    SFString ret = nextReceiptChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
     switch (tolower(fieldName[0])) {

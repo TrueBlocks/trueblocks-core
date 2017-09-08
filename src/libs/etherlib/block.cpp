@@ -263,8 +263,7 @@ SFArchive& operator>>(SFArchive& archive, CBlock& blo) {
 SFString CBlock::getValueByName(const SFString& fieldName) const {
     // EXISTING_CODE
     // EXISTING_CODE
-    bool f=false;
-    SFString ret = nextBlockChunk_custom(fieldName, f, (void*)this);
+    SFString ret = nextBlockChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
     switch (tolower(fieldName[0])) {
