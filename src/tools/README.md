@@ -2,6 +2,10 @@
 
 The `tools` folder contains command-line tools that serve primarily as examples of using the QuickBlocks [libraries](../libs). You will find that the source code for each of the individual tools is quite simple.
 
+In a certain sense, each tool give you access to a different part of the Etheruem data structure.
+
+<img src="../../docs/data_structures.png" style="border:1px orange solid">
+
 While primarily illustrative, these tools are also useful. For example, you may find them useful in testing and scripting scenarios. Each is fully documented further in its own README.md file.
 
 #### Tools
