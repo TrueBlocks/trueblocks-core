@@ -27,18 +27,18 @@ set(GOLD_PATH "${GOLD_PATH}/${PROJ_NAME}/${TOOL_NAME}")
 # Additional target to make the README.md
 build_readme(${CMAKE_CURRENT_SOURCE_DIR} ${TOOL_NAME})
 
+# Function to run an special or slow test case
+function(run_special_test testName)
+    run_the_special_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
+endfunction(run_special_test)
+
 # Function to run an individual test case
 function(run_test testName)
      run_the_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
 endfunction(run_test)
 
-function(run_special_test testName)
-     run_the_special_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
-endfunction(run_special_test)
-
 # Enter one line for each individual test
-#run_test("ethName_README"                            "-th")
-run_special_test("ethName_README"                            "-th")
+run_test("ethName_README"                            "-th")
 run_test("ethName_no_params"                            )
 run_test("ethName_invalid_param_1"                   "-x" )
 run_test("ethName_invalid_param_2"                   "-x" " torj" )

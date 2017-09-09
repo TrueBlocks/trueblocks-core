@@ -32,6 +32,11 @@ file(COPY "tests/random.json" DESTINATION "${GOLD_PATH}/tests/" FILE_PERMISSIONS
 # Additional target to make the README.md
 build_readme(${CMAKE_CURRENT_SOURCE_DIR} ${TOOL_NAME})
 
+# Function to run an special or slow test case
+function(run_special_test testName)
+    run_the_special_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
+endfunction(run_special_test)
+
 # Function to run an individual test case
 function(run_test testName)
      run_the_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
