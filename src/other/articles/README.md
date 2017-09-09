@@ -1,7 +1,8 @@
 We've published a number of medium articles using data we've collected with QuickBlocks. Here's a list:
 
-[Is the Ice Age Affecting Block Production?](https://medium.com/@tjayrush/is-the-ice-age-effecting-block-production-4c943c835975)<br>
-<small><small>***August 30, 2017***</small></small>
+| Title | Date Published |
+|-------|----------------|
+| [Is the Ice Age Affecting Block Production?](https://medium.com/@tjayrush/is-the-ice-age-effecting-block-production-4c943c835975) | August 30, 2017 |
 
 [Be Careful Little Brain What You Code](https://medium.com/@tjayrush/be-careful-little-brain-what-you-code-6ad4d5fb9d9b)<br>
 <small><small>***August 3, 2017***</small></small>
