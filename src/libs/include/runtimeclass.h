@@ -86,7 +86,7 @@ void Format(CExportContext& ctx, const SFString& fmtIn, void *data = NULL) const
 SFString Format(const SFString& fmtIn = "") const override { \
     CStringExportContext ctx; Format(ctx, fmtIn, NULL); return ctx.str; } \
 SFString getClassName(void) const; \
-static void registerClass(void);
+static void registerClass(void)
 
     //------------------------------------------------------------
 #define IMPLEMENT_NODE(CLASS_NAME, BASECLASS_NAME, SCHEMA) \

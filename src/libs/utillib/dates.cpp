@@ -107,4 +107,18 @@ namespace qblocks {
         return SFTime(year, month, --day, hour, minute, sec);
     }
 
+    SFTime BOW(const SFTime& tm) {
+        SFTime ret = BOD(tm);
+        while (ret.GetDayOfWeek() > 1) // if it equals '1', it's Sunday at 00:00:01
+            ret = SubtractOneDay(ret);
+        return ret;
+    }
+
+    SFTime EOW(const SFTime& tm) {
+        SFTime ret = EOD(tm);
+        while (tm.GetDayOfWeek() < 7) // if it equals '7', it's Saturday 12:59:59
+            ret = AddOneDay(ret);
+        return ret;
+    }
+
 }  // namespace qblocks
