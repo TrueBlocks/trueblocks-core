@@ -19,7 +19,8 @@ namespace qblocks {
 
     extern uint32_t DaysInMonth(uint32_t year, uint32_t month);
     extern uint32_t DaysInMonth(const SFTime& date);
-    extern SFTime AddOneDay(const SFTime& date);
+    extern SFTime   AddOneDay(const SFTime& date);
+    extern SFTime   SubtractOneDay(const SFTime& date);
 
     inline SFTime BOH(const SFTime& date) {
         // H:00:00
@@ -40,6 +41,9 @@ namespace qblocks {
         // 11:59:59 pm
         return SFTime(date.GetYear(), date.GetMonth(), date.GetDay(), 23, 59, 59);
     }
+
+    extern SFTime BOW(const SFTime& tm);
+    extern SFTime EOW(const SFTime& tm);
 
     inline SFTime MIDDAY(const SFTime& date) {
         // 12:00 noon
