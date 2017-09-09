@@ -8,29 +8,15 @@
 #include "etherlib.h"
 #include "options.h"
 
-//#define VISUALIZER
-
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
-    // Tell the system where the blocks are and which version to use
-    etherlib_init("infura");
+    etherlib_init("");
 
-    // Parse command line, allowing for command files
-    COptions options;
-    if (!options.prepareArguments(argc, argv))
-        return 0;
+    COptions opt;
+    opt.parseArguments(argc, argv);
 
-    //while (!options.commandList.empty())
-    {
-        SFString command = nextTokenClear(options.commandList, '\n');
-        if (!options.parseArguments(command))
-            return 0;
-        if (getSource() != "binary")
-            forEveryBlock(displayBloom, null, options.start, options.stop - options.start, options.skip);
-        else
-            forEveryNonEmptyBlockOnDisc(displayBloom, null, options.start, options.stop - options.start, options.skip);
-    }
+    forEveryBlock ( displayBloom, &opt, opt.start, opt.nBlocks, opt.skip );
 
     return 0;
 }
@@ -38,20 +24,20 @@ int main(int argc, const char *argv[]) {
 //-------------------------------------------------------------
 bool displayBloom(CBlock& block, void *data)
 {
-#ifdef VISUALIZER
-    SFString b = fromBloom(block.logsBloom);
-    b.ReplaceAny("0",      ".");
-    b.ReplaceAny("1248",   ".");
-    b.ReplaceAny("3569ac", "+");
-    b.ReplaceAny("7bdef",  bYellow+"▓"+cOff);
-    cout << block.blockNumber << ":" << b << "\n";
-#else
-    cout << block.blockNumber << "\r";
-#endif
+    COptions *opt = (COptions *)data;
+
+    cout << block.blockNumber;
+    if (opt->display) {
+        SFString s = fromBloom(block.logsBloom);
+        s.ReplaceAny(     "0", " ");
+        s.ReplaceAny(  "1248", ".");
+        s.ReplaceAny("3569ac", "+");
+        s.ReplaceAny(  "7bde", yBox);
+        s.ReplaceAny(  "7bde", rBox);
+        cout << ": " << s;
+    }
+    cout << (opt->display ? "\n" : "\r");
     cout.flush();
+
     return true;
 }
-
-//    b.ReplaceAny("1248","░");
-//    b.ReplaceAny("3569ac","▒");
-//    b.ReplaceAny("7bdef","▓");
