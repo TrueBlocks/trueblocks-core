@@ -305,7 +305,8 @@ bool loadPriceData(CPriceQuoteArray& quotes, bool freshen, SFString& message, SF
         SFTime prevLast = lastRead;
         if (freshen) {
             if (verbose < 2) {
-                cerr << "Retrieving data...\r";
+                if (!isTestMode())
+                    cerr << "Retrieving data...\r";
                 cerr.flush();
             }
             timestamp_t start = toTimeStamp(nextRead);
@@ -402,7 +403,8 @@ bool loadPriceData(CPriceQuoteArray& quotes, bool freshen, SFString& message, SF
             date = "Now";
             count = "cnt";
         }
-        cerr << msg << date << " : " << count << " records\n";
+        if (!isTestMode())
+            cerr << msg << date << " : " << count << " records\n";
     }
 
     if (step != 1) {
