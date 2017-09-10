@@ -27,7 +27,7 @@ int main(int argc, const char * argv[]) {
         cerr << "Processing: " << command << "\n";
 
         if (!options.parseArguments(command))
-            return false;
+            return 0;
 
         SFString message;
 
@@ -53,7 +53,7 @@ int main(int argc, const char * argv[]) {
         if (!slurper.Display(options, message))
             return usage(message);
     }
-    return false;
+    return 0;
 }
 
 //---------------------------------------------------------------------------------------------------
