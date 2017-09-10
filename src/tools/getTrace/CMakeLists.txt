@@ -39,9 +39,9 @@ endfunction(run_test)
 
 # Enter one line for each individual test
 run_test("getTrace_README" "-th")
-run_test("getTrace_00" "0x0cc945824def6a5c81d86ca56848f92163838bbd480a3bd2ff85f6d5b13d72ab" "-r")
-run_test("getTrace_01" "0x27fe46968ee62ec01ccb5dd3cbabd479f03c0374c2b6897c0faabfc748367b12")
-run_test("getTrace_02" "0x34a585645dcadff7c1003fcfdf193d82fd507d27f02097a441f867438da58b94")
+run_special_test("getTrace_00" "0x0cc945824def6a5c81d86ca56848f92163838bbd480a3bd2ff85f6d5b13d72ab" "-r")
+run_special_test("getTrace_01" "0x27fe46968ee62ec01ccb5dd3cbabd479f03c0374c2b6897c0faabfc748367b12")
+run_special_test("getTrace_02" "0x34a585645dcadff7c1003fcfdf193d82fd507d27f02097a441f867438da58b94")
 run_special_test("getTrace_03" "0x38a7b84d2f738b90c61ec3d25284dc586868584e5f7e6cc6d084b03a66e0206a")
 run_special_test("getTrace_04" "0x3d762e5f4c2a5c4ed3f4678d81f9078ff68e9d236d87dbcf3eee024dbb11f497" "-r")
 run_special_test("getTrace_05" "0x409141e962166ceb967fa8cf8cded2394af088d6d270f1a0642c9bbfaf416348")
@@ -68,12 +68,12 @@ run_special_test("getTrace_24" "0xf0c6da6cac2a748129352d74db9c95b1278abe4945a49c
 # The next two tests are of contract suicides. I used to have a bug that wouldn't record these.
 
 # the contract suicided at this hash, my code had a bug that wouldn't record this properly
-run_test("getTrace_25" "0x8324490c68e6268db9eadcb4ce8303ee1d256e480f7637853bb13a3ae1fe1328" "-r")
-run_test("getTrace_26" "0x8324490c68e6268db9eadcb4ce8303ee1d256e480f7637853bb13a3ae1fe1328")
+run_special_test("getTrace_25" "0x8324490c68e6268db9eadcb4ce8303ee1d256e480f7637853bb13a3ae1fe1328" "-r")
+run_special_test("getTrace_26" "0x8324490c68e6268db9eadcb4ce8303ee1d256e480f7637853bb13a3ae1fe1328")
 
 # the contract suicided at this hash, my code had a bug that wouldn't record this properly
-run_test("getTrace_27" "0xf9d426284bd20415a53991a004122b3a3a619b295ea98d1d88a5fd3a4125408b" "-r")
-run_test("getTrace_28" "0xf9d426284bd20415a53991a004122b3a3a619b295ea98d1d88a5fd3a4125408b")
+run_special_test("getTrace_27" "0xf9d426284bd20415a53991a004122b3a3a619b295ea98d1d88a5fd3a4125408b" "-r")
+run_special_test("getTrace_28" "0xf9d426284bd20415a53991a004122b3a3a619b295ea98d1d88a5fd3a4125408b")
 
 
 # Installation steps
