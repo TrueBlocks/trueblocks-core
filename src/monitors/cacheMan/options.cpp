@@ -50,7 +50,7 @@ bool COptions::parseArguments(SFString& command) {
             if (!arg.startsWith(":"))
                 return usage("You must supply a block number with the --truncate:n command.");
             nextTokenClear(arg, ':');
-            trunc = max(0U, toLong32u(arg));
+            trunc = toLong32u(arg);
             if (trunc < 1)
                 return usage("You must supply a block number with the --truncate:n command.");
             if (trunc > getLatestBlockFromClient())

@@ -85,17 +85,20 @@ SFString acquireABI(CFunctionArray& functions, const SFAddress& addr, bool silen
     dispName = "~/.quickBlocks/" + dispName;
     if (fileExists(fileName)) {
 
-        cerr << "Reading ABI from cache " + dispName + "\n";
+        if (!isTestMode())
+            cerr << "Reading ABI from cache " + dispName + "\n";
         results = asciiFileToString(fileName);
 
     } else {
-        cerr << "Reading ABI from EtherScan\n";
+        if (!isTestMode())
+            cerr << "Reading ABI from EtherScan\n";
         SFString url = SFString("http:/")
                             + "/api.etherscan.io/api?module=contract&action=getabi&address="
                             + addr;
         results = urlToString(url).Substitute("\\", "").Substitute("\"[", "[").Substitute("]\"", "]");
         if (verbose) {
-            cout << verbose << "---------->" << results << "\n";
+            if (!isTestMode())
+                cout << verbose << "---------->" << results << "\n";
             cout.flush();
         }
 

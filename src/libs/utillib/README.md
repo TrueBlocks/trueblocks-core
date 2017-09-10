@@ -1,4 +1,4 @@
-# quickBlocks: utillib
+## utillib
 
 `utillib` provides various functionality in support of other libraries and applications that comprise quickBlocks. This includes:
 

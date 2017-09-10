@@ -1,5 +1,5 @@
-isContract argc: 5 [1:-n] [2:0x3003208e77edf3b088b122b5de3a6fc8c8ef679d] [3:0xab7c74abc0c4d48d1bdad5dcb26153fc8780f83e] [4:0xab7c74abc0c4d48d1bdad5dcb26153fc8780f83e] 
-isContract -n 0x3003208e77edf3b088b122b5de3a6fc8c8ef679d 0xab7c74abc0c4d48d1bdad5dcb26153fc8780f83e 0xab7c74abc0c4d48d1bdad5dcb26153fc8780f83e 
+isContract argc: 5 [1:0x3003208e77edf3b088b122b5de3a6fc8c8ef679d] [2:0xab7c74abc0c4d48d1bdad5dcb26153fc8780f83e] [3:0xab7c74abc0c4d48d1bdad5dcb26153fc8780f83e] [4:-n] 
+isContract 0x3003208e77edf3b088b122b5de3a6fc8c8ef679d 0xab7c74abc0c4d48d1bdad5dcb26153fc8780f83e 0xab7c74abc0c4d48d1bdad5dcb26153fc8780f83e -n 
 
   --nodiff command requires exactly two addresses.
 

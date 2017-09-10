@@ -1,3 +1,3 @@
-isContract argc: 4 [1:--nodiff] [2:0x3003208e77edf3b088b122b5de3a6fc8c8ef679d] [3:0x3003208e77edf3b088b122b5de3a6fc8c8ef6794] 
-isContract --nodiff 0x3003208e77edf3b088b122b5de3a6fc8c8ef679d 0x3003208e77edf3b088b122b5de3a6fc8c8ef6794 
+isContract argc: 4 [1:0x3003208e77edf3b088b122b5de3a6fc8c8ef679d] [2:0x3003208e77edf3b088b122b5de3a6fc8c8ef6794] [3:--nodiff] 
+isContract 0x3003208e77edf3b088b122b5de3a6fc8c8ef679d 0x3003208e77edf3b088b122b5de3a6fc8c8ef6794 --nodiff 
 Code at address '0x3003208e77edf3b088b122b5de3a6fc8c8ef679d) and ((0x3003208e77edf3b088b122b5de3a6fc8c8ef6794) are identical

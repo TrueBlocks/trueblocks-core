@@ -1,6 +1,6 @@
-ethslurp argc: 3 [1:-d] [2:0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0] 
-ethslurp -d 0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0 
-Processing: -d:0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0
+ethslurp argc: 4 [1:0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0] [2:-d] [3:0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0] 
+ethslurp 0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0 -d 0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0 
+Processing: 0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0 -d:0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0
 
   Invalid date: -d:0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0. Quitting...
 
