@@ -1,6 +1,6 @@
-ethslurp argc: 3 [1:--dates:a:b] [2:0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0] 
-ethslurp --dates:a:b 0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0 
-Processing: --dates:a:b 0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0
+ethslurp argc: 3 [1:0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0] [2:--dates:a:b] 
+ethslurp 0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0 --dates:a:b 
+Processing: 0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0 --dates:a:b
 
   Invalid date: --dates:a:b. Quitting...
 

@@ -273,7 +273,7 @@ extern SFString binaryFileToString(const SFString& filename);
     uint32_t nFiles(const SFString& path) {
         uint32_t count = 0;
         listFiles(count, NULL, path);
-        return max(0U, count);
+        return count;
     }
 
     //------------------------------------------------------------------

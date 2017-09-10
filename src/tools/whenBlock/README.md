@@ -32,7 +32,7 @@ The `hour`/`minute`/`second` portions of the date are optional, and if omitted, 
 
 	    first (0), iceage (200000), homestead (1150000), daofund (1428756), 
 	    daohack (1718497), daofork (1920000), tangerine (2463000), spurious (2675000), 
-	    stateclear (2718436), latest (4245164)
+	    stateclear (2718436), latest (4257508)
 
 	See the README for information on customizing this list.
 

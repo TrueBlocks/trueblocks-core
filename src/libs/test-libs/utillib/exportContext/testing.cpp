@@ -12,6 +12,11 @@
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
+    CDefaultOptions options;
+    options.minArgs = 0;
+    if (!options.prepareArguments(argc, argv))
+        return 0;
+
     string c_str = "regular 'c' string";
     SFString myStr = "my string";
     bool b = true;

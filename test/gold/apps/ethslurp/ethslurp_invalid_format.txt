@@ -1,6 +1,6 @@
-ethslurp argc: 4 [1:-d:20170519:20170519] [2:-f:invalid] [3:0x1324e7b922b30B49Ab8EA81086341cc41C249346] 
-ethslurp -d:20170519:20170519 -f:invalid 0x1324e7b922b30B49Ab8EA81086341cc41C249346 
-Processing: -d:20170519:20170519 -f:invalid 0x1324e7b922b30B49Ab8EA81086341cc41C249346
+ethslurp argc: 4 [1:0x1324e7b922b30B49Ab8EA81086341cc41C249346] [2:-d:20170519:20170519] [3:-f:invalid] 
+ethslurp 0x1324e7b922b30B49Ab8EA81086341cc41C249346 -d:20170519:20170519 -f:invalid 
+Processing: 0x1324e7b922b30B49Ab8EA81086341cc41C249346 -d:20170519:20170519 -f:invalid
 
   You entered an empty display string with the --format (-f) option. The format string 'fmt_invalid_file`
   was not found in the configuration file (which is stored here: ~/.quickBlocks/quickBlocks.toml).

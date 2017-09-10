@@ -1,5 +1,5 @@
-isContract argc: 5 [1:--nodiff] [2:0x26c4e381ffbdc825be9b986c3ba40525f0771e8d] [3:0x26c4e381ffbdc825be9b986c3ba40525f0771e8d] [4:-d] 
-isContract --nodiff 0x26c4e381ffbdc825be9b986c3ba40525f0771e8d 0x26c4e381ffbdc825be9b986c3ba40525f0771e8d -d 
+isContract argc: 5 [1:0x26c4e381ffbdc825be9b986c3ba40525f0771e8d] [2:0x26c4e381ffbdc825be9b986c3ba40525f0771e8d] [3:-d] [4:--nodiff] 
+isContract 0x26c4e381ffbdc825be9b986c3ba40525f0771e8d 0x26c4e381ffbdc825be9b986c3ba40525f0771e8d -d --nodiff 
 
   Choose only one of --nodiff and --display.
 

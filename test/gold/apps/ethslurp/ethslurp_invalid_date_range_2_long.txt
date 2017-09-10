@@ -1,6 +1,6 @@
-ethslurp argc: 3 [1:--datesa:b] [2:0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0] 
-ethslurp --datesa:b 0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0 
-Processing: --datesa:b 0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0
+ethslurp argc: 3 [1:0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0] [2:--datesa:b] 
+ethslurp 0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0 --datesa:b 
+Processing: 0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0 --datesa:b
 
   Invalid option: --datesa:b
 
