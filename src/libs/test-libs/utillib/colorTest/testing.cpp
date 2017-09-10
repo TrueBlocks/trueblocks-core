@@ -11,6 +11,11 @@
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
+    CDefaultOptions options;
+    options.minArgs = 0;
+    if (!options.prepareArguments(argc, argv))
+        return 0;
+
     ONE(cBlack); ONE(cRed); ONE(cGreen); ONE(cYellow); ONE(cBlue); ONE(cMagenta); ONE(cTeal); ONE(cWhite); ONE(bYellow + strikethru); cout << "\n";
     ONE(bBlack); ONE(bRed); ONE(bGreen); ONE(bYellow); ONE(bBlue); ONE(bMagenta); ONE(bTeal); ONE(bWhite); ONE(cGreen + strikethru ); cout << "\n";
     ONE(iBlack); ONE(iRed); ONE(iGreen); ONE(iYellow); ONE(iBlue); ONE(iMagenta); ONE(iTeal); ONE(iWhite); ONE(cBlue + strikethru + bbold); cout << "\n";

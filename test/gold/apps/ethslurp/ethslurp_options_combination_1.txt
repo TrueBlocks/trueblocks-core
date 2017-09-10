@@ -1,6 +1,6 @@
-ethslurp argc: 6 [1:-d:20170519:20170519] [2:-f:html] [3:-i] [4:-b:0] [5:0x1324e7b922b30B49Ab8EA81086341cc41C249346] 
-ethslurp -d:20170519:20170519 -f:html -i -b:0 0x1324e7b922b30B49Ab8EA81086341cc41C249346 
-Processing: -d:20170519:20170519 -f:html -i -b:0 0x1324e7b922b30B49Ab8EA81086341cc41C249346
+ethslurp argc: 6 [1:0x1324e7b922b30B49Ab8EA81086341cc41C249346] [2:-d:20170519:20170519] [3:-f:html] [4:-i] [5:-b:0] 
+ethslurp 0x1324e7b922b30B49Ab8EA81086341cc41C249346 -d:20170519:20170519 -f:html -i -b:0 
+Processing: 0x1324e7b922b30B49Ab8EA81086341cc41C249346 -d:20170519:20170519 -f:html -i -b:0
 
   Specifiy either a date range or a block range, not both. Quitting...
 

@@ -42,7 +42,7 @@ int main(int argc, const char *argv[]) {
                     cout << ") is after the latest block (";
                     cout << cTeal << (isTestMode() ? "TESTING" : asStringU(getLatestBlockFromClient())) << cOff;
                     cout << "). Quitting...\n";
-                    return false;
+                    return 0;
                 }
             }
 
