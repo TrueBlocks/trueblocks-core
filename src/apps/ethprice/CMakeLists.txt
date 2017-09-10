@@ -27,6 +27,9 @@ set(GOLD_PATH "${GOLD_PATH}/${PROJ_NAME}/${TOOL_NAME}")
 # Additional target to make the README.md
 build_readme(${CMAKE_CURRENT_SOURCE_DIR} ${TOOL_NAME})
 
+# To run only specific tests we define a test configuration named "test_all"
+#add_custom_target(test-all ALL COMMAND ${CMAKE_CTEST_COMMAND} -C test_all)
+
 # Function to run an special or slow test case
 function(run_special_test testName)
     run_the_special_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
@@ -42,18 +45,20 @@ run_test("ethprice_README"          "-th")
 run_test("ethprice_no_params"            )
 run_test("ethprice_invalid_param_1" "-x" )
 run_test("ethprice_at_invalid"      "-a")
-run_test("ethprice_at_00"           "-a" " 1438272138")
 run_test("ethprice_period_invalid"  "-p")
-run_test("ethprice_period_00"       "-p" " 60")
-run_test("ethprice_period_01"       "--period" " 240")
-run_test("ethprice_period_02"       "--period" " 12")
 run_test("ethprice_when_invalid"    "-w")
-run_test("ethprice_when_00"         "-w" " 14")
-run_test("ethprice_when_01"         "--when" " 19")
 run_test("ethprice_verbose_00"      "-v")
-run_test("ethprice_verbose_01"      "-v:1")
-run_test("ethprice_from_file"       "--file:cmd_file")
+
+# Slower tests
+run_special_test("ethprice_at_00"           "-a" " 1438272138")
+run_special_test("ethprice_period_00"       "-p" " 60")
+run_special_test("ethprice_period_01"       "--period" " 240")
+run_special_test("ethprice_period_02"       "--period" " 12")
+run_special_test("ethprice_when_00"         "-w" " 14")
+run_special_test("ethprice_when_01"         "--when" " 19")
+run_special_test("ethprice_verbose_01"      "-v:1")
+run_special_test("ethprice_from_file"       "--file:cmd_file")
 
 # Installation steps, this tool is renamed at installation
 install(TARGETS ${TOOL_NAME} RUNTIME DESTINATION bin)
-install(CODE "file(RENAME \"${CMAKE_INSTALL_PREFIX}/bin/${TOOL_NAME}\" \"${CMAKE_INSTALL_PREFIX}/bin/ethPrice\")") 
+install(CODE "file(RENAME \"${CMAKE_INSTALL_PREFIX}/bin/${TOOL_NAME}\" \"${CMAKE_INSTALL_PREFIX}/bin/ethPrice\")")
