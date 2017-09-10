@@ -10,8 +10,14 @@
 
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
+
     // Tell the system where the blocks are and which version to use
     etherlib_init("binary");
+
+    CDefaultOptions options;
+    options.minArgs = 0;
+    if (!options.prepareArguments(argc, argv))
+        return 0;
 
     SFAddress addrs[] = { "", "0x", "0x0", "0x0000000000000000000000000000000000000000" };
     uint32_t nAddrs = sizeof(addrs) / sizeof(SFAddress);
