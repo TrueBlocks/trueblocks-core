@@ -2,10 +2,16 @@
 
 Testing only
 
- : 0 : 24 : 16
-0x : 0 : 24 : 16
-0x0 : 0 : 24 : 16
-0x0000000000000000000000000000000000000000 : 0 : 24 : 16
+#### Usage
+
+`Usage:`    convert [-v|-h]  
+`Where:`  
+
+| Option | Full Command | Description |
+| -------: | :------- | :------- |
+| -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
+| -h | --help | display this help screen |
+
 #### Other Options
 
 All QuickBlocks command-line tools support the following commands (although in some case, they have no meaning):
