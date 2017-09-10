@@ -6,7 +6,8 @@ There are three fundamental libraries, as described first, and three libraries t
 
 - **[The utillib library](utillib/README.md)** - a library providing basic services such as string utilities, concurrency-protected storage of binary files, time and date management, file system dependencies, etc.
 
-- **[The abilib library](abilib/README.md)** - classes and functions needed to read, store and manipulate ABI files. This library supports much of the functionality in the [grabABI](../apps/grabABI/README.md) tool.
+- **[The abi lib library](etherlib/README.md)** - classes and functions needed to read, store and manipulate ABI files. This library supports much of the functionality in 
+the [grabABI](../apps/grabABI/README.md) tool.
 
 - **[The etherlib library](etherlib/README.md)** - the core of the core of the system, this library provides access to the blockchain blocks, transactions, receipts, and logs as well as providing the interface to your Ethereum node's RPC interface
 
