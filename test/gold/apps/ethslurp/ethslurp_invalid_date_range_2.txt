@@ -1,6 +1,6 @@
-ethslurp argc: 3 [1:-da:b] [2:0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0] 
-ethslurp -da:b 0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0 
-Processing: -da:b 0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0
+ethslurp argc: 3 [1:0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0] [2:-da:b] 
+ethslurp 0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0 -da:b 
+Processing: 0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0 -da:b
 
   Invalid option: -da:b
 
