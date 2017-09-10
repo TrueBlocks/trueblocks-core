@@ -52,13 +52,13 @@ int main(int argc, const char *argv[]) {
     opts.minArgs = 0;
     if (!opts.prepareArguments(argc, argv))
         return 0;
-    
+
     bool ret = true;
     LOAD_TEST(Test1);
     while (!opts.commandList.empty()) {
         SFString command = nextTokenClear(opts.commandList, '\n');
         if (!opts.parseArguments(command))
-            return false;
+            return 0;
         cout << SFString('-',80) << "\n";
         opts.output();
         ret &= RUN_ALL_TESTS();

@@ -333,7 +333,7 @@ SFString CFunction::getSignature(SFUint32 parts) const {
     CStringExportContext ctx;
     ctx << (parts & SIG_FTYPE  ? "\t"+type+" " : "");
     ctx << (parts & SIG_FNAME  ? name          : "");
-    ctx << (parts & SIG_FSPACE ? SFString(' ', max(0UL, 35-type.length()-name.length())) : "");
+    ctx << (parts & SIG_FSPACE ? SFString(' ', 35-type.length()-name.length()) : "");
     ctx << (parts & SIG_FTYPE || parts & SIG_FNAME  ? "("    : "");
     for (uint32_t j = 0 ; j < cnt ; j++) {
         ctx << (parts & SIG_ITYPE    ? inputs[j].type : "");
