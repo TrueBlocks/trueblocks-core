@@ -18,7 +18,7 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/libs")
 # Define the executable to be generated
 add_library(${PROJECT_NAME} STATIC ${SOURCE_FILES})
 
-# Headers required, it depends on utillib and abilib
+# Headers require
 target_include_directories(${PROJECT_NAME} PUBLIC "${CMAKE_SOURCE_DIR}/libs/utillib")
 target_include_directories(${PROJECT_NAME} PUBLIC "${CMAKE_SOURCE_DIR}/libs/abilib")
 

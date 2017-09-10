@@ -11,7 +11,7 @@
  * of 'EXISTING_CODE' tags.
  */
 #include "ethtypes.h"
-#include "abilib.h"
+#include "etherlib.h"
 #include "transaction.h"
 #include "block.h"
 
