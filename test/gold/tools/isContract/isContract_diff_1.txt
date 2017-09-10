@@ -1,3 +1,3 @@
-isContract argc: 4 [1:-n] [2:0x26c4e381ffbdc825be9b986c3ba40525f0771e8d] [3:0x26c4e381ffbdc825be9b986c3ba40525f0771e8d] 
-isContract -n 0x26c4e381ffbdc825be9b986c3ba40525f0771e8d 0x26c4e381ffbdc825be9b986c3ba40525f0771e8d 
+isContract argc: 4 [1:0x26c4e381ffbdc825be9b986c3ba40525f0771e8d] [2:0x26c4e381ffbdc825be9b986c3ba40525f0771e8d] [3:-n] 
+isContract 0x26c4e381ffbdc825be9b986c3ba40525f0771e8d 0x26c4e381ffbdc825be9b986c3ba40525f0771e8d -n 
 Code at address '0x26c4e381ffbdc825be9b986c3ba40525f0771e8d) and ((0x26c4e381ffbdc825be9b986c3ba40525f0771e8d) are identical

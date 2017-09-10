@@ -1,6 +1,6 @@
-ethslurp argc: 3 [1:--blocks:4186279:4186301] [2:0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0] 
-ethslurp --blocks:4186279:4186301 0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0 
-Processing: --blocks:4186279:4186301 0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0
+ethslurp argc: 3 [1:0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0] [2:--blocks:4186279:4186301] 
+ethslurp 0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0 --blocks:4186279:4186301 
+Processing: 0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0 --blocks:4186279:4186301
 	Slurping 0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0
 
         {
