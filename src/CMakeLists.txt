@@ -51,7 +51,7 @@ endif()
 
 # ----------------------------------------------------------------------------------------
 # Linkable libraries
-set (BASE_LIBS acct abi ether util ${CURL_LIBRARIES})
+set (BASE_LIBS acct ether abi util ${CURL_LIBRARIES})
 
 # ----------------------------------------------------------------------------------------
 # Folders for various purposes
@@ -102,11 +102,6 @@ function(run_the_special_test testPath goldPath testName testExe) # Optional arg
         endif()
 endfunction(run_the_special_test)
 
-# ----------------------------------------------------------------------------------------
-# test-all target
-# To run only specific tests we define a test configuration named "test_all"
-# Tests under this configuration are only run with "make test-all"
-add_custom_target(test-all COMMAND ${CMAKE_CTEST_COMMAND} -C test_all)
 
 # ----------------------------------------------------------------------------------------
 # Compilation order for the subfolders
