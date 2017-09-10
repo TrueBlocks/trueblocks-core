@@ -55,6 +55,7 @@ namespace qblocks {
     #define asYellow(a) cYellow << a << cOff
 
     extern void colorsOff(void);
+    extern void colorsOn(void);
 
     //-----------------------------------------------------------------------
     inline SFString convertColor(const SFString& colorIn) {

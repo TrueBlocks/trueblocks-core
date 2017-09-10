@@ -33,4 +33,23 @@ namespace qblocks {
         italic = underline = reversed = strikethru = "";
         greenCheck = "✓"; redX = "X";
     }
+
+    void colorsOn(void) {
+        cBlack     = "\e[0;30m";
+        cRed       = "\e[0;31m";
+        cGreen     = "\e[0;32m";
+        cYellow    = "\e[0;33m";
+        cBlue      = "\e[0;34m";
+        cMagenta   = "\e[0;35m";
+        cTeal      = "\e[0;36m";
+        cWhite     = "\e[0;37m";
+        cOff       = "\e[0m";
+        bbold      = "\e[1m";
+        italic     = "\e[3m";
+        underline  = "\e[4m";
+        reversed   = "\e[7m";
+        strikethru = "\e[7m";
+        greenCheck = "\e[0;32m✓\e[0m";
+        redX       = "\e[0;31mX\e[0m";
+    }
 }  // namespace qblocks
