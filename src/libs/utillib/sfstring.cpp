@@ -240,7 +240,7 @@ namespace qblocks {
     string_q string_q::extract(size_t start, size_t len) const
     {
         ASSERT((char*)(start+start+len) <= (char*)((int64_t)m_Values+strlen(m_Values)));
-        len = max(0UL, len);
+        //len = max(0UL, len);
 
         const char *strStart = m_Values;
         strStart += start;
