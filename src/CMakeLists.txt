@@ -51,7 +51,7 @@ endif()
 
 # ----------------------------------------------------------------------------------------
 # Linkable libraries
-set (BASE_LIBS acct ether abi util ${CURL_LIBRARIES})
+set (BASE_LIBS acct ether util ${CURL_LIBRARIES})
 
 # ----------------------------------------------------------------------------------------
 # Folders for various purposes
