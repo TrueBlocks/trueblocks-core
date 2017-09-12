@@ -98,20 +98,25 @@ bool COptions::parseArguments(SFString& command) {
             errMsg = "You must specify at least one className (or -a or -l)";
     }
 
-    if (!isList && !isEdit && !isRemove && !isRun)
+    if (!isList && !isEdit && !isRemove && !isRun) {
         errMsg = "You must specify at least one of --run, --list, --edit, or --clear";
+    }
 
-    if (silent && !errMsg.empty())
+    if (silent && !errMsg.empty()) {
         return false;
+    }
 
-    if (!errMsg.empty())
+    if (!errMsg.empty()) {
         return usage(errMsg);
-        
-	if (SFString(getenv("NO_HEADER")) == "true")
-	    writeSource = true;
+    }
 
-	if (SFString(getenv("NO_SOURCE")) == "true")
+	if (SFString(getenv("NO_HEADER")) == "true") {
+	    writeSource = true;
+    }
+
+	if (SFString(getenv("NO_SOURCE")) == "true") {
 	    writeHeader = true;
+    }
 
     // If neither is lit, light them both
     if (!writeHeader && !writeSource) {
