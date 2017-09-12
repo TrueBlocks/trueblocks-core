@@ -1,9 +1,9 @@
 makeClass argc: 3 [1:-c] [2:-r] 
 makeClass -c -r 
 
-  Unknown parameter: -c
+  You must specify at least one className (or -a or -l)
 
-  Usage:    makeClass [-e|-f|-l|-n|-s|-r|-a|-v|-h] className  
+  Usage:    makeClass [-e|-f|-l|-h|-c|-n|-s|-r|-a|-v|-h] className  
   Purpose:  Creates a C++ class based on definitions found in ./classDefinition/<className>.
              
   Where:    
@@ -11,6 +11,8 @@ makeClass -c -r
 	-e  (--edit)          edit <className(s)> definition file in local folder
 	-f  (--filter val)    process only files with :filter in their names
 	-l  (--list)          list all definition files found in the local folder
+	-h  (--header)        write headers files only
+	-c  (--source)        write source files only
 	-n  (--namespace val) surround the code with a --namespace:ns
 	-s  (--silent)        on error (no classDefinition file) exit silently
 	-r  (--run)           run the class maker on associated <className(s)>
