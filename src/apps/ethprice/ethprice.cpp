@@ -42,7 +42,7 @@ int main(int argc, const char* argv[]) {
                 bool done = false;
                 for (uint32_t i = 0 ; i < quotes.getCount() && !done ; i = i + step) {
 
-                    timestamp_t ts = newTimestamp(quotes[i].Format("[{TIMESTAMP}]"));
+                    timestamp_t ts = toTimestamp(quotes[i].Format("[{TIMESTAMP}]"));
                     if (i > 0)
                         cout << ",\n";
                     if (i != indexFromTimeStamp(quotes, ts)) {
