@@ -99,6 +99,7 @@ SFString convertTypes(const SFString& inStr) {
     .Substitute("bytes ",     "SFString ")
     .Substitute("bloom ",     "SFBloom ")
     .Substitute("wei ",       "SFWei ")
+    .Substitute("gas ",       "SFGas ")
     .Substitute("timestamp ", "timestamp_t ")
     .Substitute("uint256 ",   "SFUintBN ")
     .Substitute("int256 ",    "SFIntBN ")
@@ -215,6 +216,7 @@ void generateCode(const COptions& options, CToml& classFile, const SFString& dat
 
                if (fld->type == "bloom")        { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_BLOOM";
         } else if (fld->type == "wei")          { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_WEI";
+        } else if (fld->type == "gas")          { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_GAS";
         } else if (fld->type == "string")       { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_TEXT";
         } else if (fld->type == "addr")         { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_ADDRESS";
         } else if (fld->type == "address")      { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_ADDRESS";
@@ -408,6 +410,9 @@ SFString getCaseCode(const SFString& fieldCase, const SFString& ex) {
                     } else if (type == "wei") {
                         caseCode += " return fromWei([{PTR}]" + field + ");";
 
+                    } else if (type == "gas") {
+                        caseCode += " return fromGas([{PTR}]" + field + ");";
+
                     } else if (type == "addr" || type == "address") {
                         caseCode += " return fromAddress([{PTR}]" + field + ");";
 
@@ -499,6 +504,9 @@ SFString getCaseSetCode(const SFString& fieldCase) {
 
                     } else if (type == "wei") {
                         caseCode +=  " { " + field + " = toWei(fieldValue); return true; }";
+
+                    } else if (type == "gas") {
+                        caseCode +=  " { " + field + " = toGas(fieldValue); return true; }";
 
                     } else if (type == "addr" || type == "address") {
                         caseCode += " { " + field + " = toAddress(fieldValue); return true; }";

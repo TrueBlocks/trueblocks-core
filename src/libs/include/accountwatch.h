@@ -38,7 +38,7 @@ public:
     SFString status;
     bool deepScan;
     CIncomeStatement qbis;
-    SFUintBN nodeBal;
+    SFWei nodeBal;
 
 public:
     CAccountWatch(void);
