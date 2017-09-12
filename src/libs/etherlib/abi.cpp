@@ -17,11 +17,11 @@ namespace qblocks {
 IMPLEMENT_NODE(CAbi, CBaseNode, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextAbiChunk(const SFString& fieldIn, const void *data);
-static SFString nextAbiChunk_custom(const SFString& fieldIn, const void *data);
+static SFString nextAbiChunk(const SFString& fieldIn, const void *dataPtr);
+static SFString nextAbiChunk_custom(const SFString& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CAbi::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+void CAbi::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -31,7 +31,7 @@ void CAbi::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const 
     }
 
     SFString fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, data))
+    if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
     while (!fmt.empty())
@@ -39,8 +39,8 @@ void CAbi::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const 
 }
 
 //---------------------------------------------------------------------------
-SFString nextAbiChunk(const SFString& fieldIn, const void *data) {
-    const CAbi *abi = (const CAbi *)data;
+SFString nextAbiChunk(const SFString& fieldIn, const void *dataPtr) {
+    const CAbi *abi = (const CAbi *)dataPtr;
     if (abi) {
         // Give customized code a chance to override first
 #ifdef NEW_CODE
@@ -48,7 +48,7 @@ SFString nextAbiChunk(const SFString& fieldIn, const void *data) {
         if (!ret.empty())
             return ret;
 #else
-        SFString ret = nextAbiChunk_custom(fieldIn, data);
+        SFString ret = nextAbiChunk_custom(fieldIn, dataPtr);
         if (!ret.empty())
             return ret;
 
@@ -157,8 +157,8 @@ void CAbi::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextAbiChunk_custom(const SFString& fieldIn, const void *data) {
-    const CAbi *abi = (const CAbi *)data;
+SFString nextAbiChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+    const CAbi *abi = (const CAbi *)dataPtr;
     if (abi) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -178,7 +178,7 @@ SFString nextAbiChunk_custom(const SFString& fieldIn, const void *data) {
 }
 
 //---------------------------------------------------------------------------
-bool CAbi::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+bool CAbi::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;

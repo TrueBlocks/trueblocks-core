@@ -29,8 +29,8 @@ typedef SFUniqueList<CBlock*>       CBlockListU;
 //--------------------------------------------------------------------------
 class CBlock : public CBaseNode {
 public:
-    SFUint32 gasLimit;
-    SFUint32 gasUsed;
+    SFGas gasLimit;
+    SFGas gasUsed;
     SFHash hash;
     SFBloom logsBloom;
     SFUint32 blockNumber;

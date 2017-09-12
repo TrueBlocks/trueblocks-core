@@ -174,7 +174,7 @@ void generateCode(const COptions& options, CToml& classFile, const SFString& dat
 
     //------------------------------------------------------------------------------------------------
     CParameterList theList;
-    SFString allFields = classFile.getConfigStr("settings","fields","");
+    SFString allFields = classFile.getConfigStr("settings","fields","").Substitute("address[]","SFAddressArray");
     while (!allFields.empty()) {
         SFString fieldDef = nextTokenClear(allFields, '|');
         CParameter *f = new CParameter;
@@ -217,6 +217,7 @@ void generateCode(const COptions& options, CToml& classFile, const SFString& dat
                if (fld->type == "bloom")        { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_BLOOM";
         } else if (fld->type == "wei")          { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_WEI";
         } else if (fld->type == "gas")          { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_GAS";
+        } else if (fld->type == "timestamp")    { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_TIMESTAMP";
         } else if (fld->type == "string")       { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_TEXT";
         } else if (fld->type == "addr")         { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_ADDRESS";
         } else if (fld->type == "address")      { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_ADDRESS";
@@ -237,14 +238,15 @@ void generateCode(const COptions& options, CToml& classFile, const SFString& dat
         } else if (fld->type == "bool")         { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_BOOL";
         } else if (fld->type == "double")       { setFmt = "\t[{NAME}] = [{DEFF}];\n"; regType = "T_DOUBLE";
         } else if (fld->type == "time")         { setFmt = "\t[{NAME}] = [{DEFT}];\n"; regType = "T_DATE";
-        } else if (fld->type == "timestamp")    { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_TIMESTAMP";
         } else if (fld->isPointer)              { setFmt = "\t[{NAME}] = [{DEFP}];\n"; regType = "T_POINTER";
-        } else if (fld->isObject)               { setFmt = "\t[{NAME}].Init();\n";     regType = "T_TEXT|TS_OBJECT";
+        } else if (fld->isObject)               { setFmt = "\t[{NAME}].Init();\n";     regType = "T_OBJECT";
         } else                                  { setFmt = badSet; regType = "T_TEXT"; }
 
         if (fld->type.Contains("Array")) {
             setFmt = "\t[{NAME}].Clear();\n";
-            if (fld->type.Contains("String"))
+            if (fld->type.Contains("Address"))
+                regType = "T_ADDRESS|TS_ARRAY";
+            else if (fld->type.Contains("String"))
                 regType = "T_TEXT|TS_ARRAY";
             else
                 regType = "T_OBJECT|TS_ARRAY";
@@ -413,6 +415,9 @@ SFString getCaseCode(const SFString& fieldCase, const SFString& ex) {
                     } else if (type == "gas") {
                         caseCode += " return fromGas([{PTR}]" + field + ");";
 
+                    } else if (type == "timestamp") {
+                        caseCode += " return fromTimestamp([{PTR}]" + field + ");";
+
                     } else if (type == "addr" || type == "address") {
                         caseCode += " return fromAddress([{PTR}]" + field + ");";
 
@@ -437,7 +442,7 @@ SFString getCaseCode(const SFString& fieldCase, const SFString& ex) {
                     } else if (type == "double") {
                         caseCode += " return fmtFloat([{PTR}]" + field + ");";
 
-                    } else if (type.Contains("SFStringArray")) {
+                    } else if (type.Contains("SFStringArray") || type.Contains("SFAddressArray")) {
                         SFString str = STR_CASE_CODE_STRINGARRAY;
                         str.ReplaceAll("[{FIELD}]", field);
                         caseCode += str;
@@ -507,6 +512,9 @@ SFString getCaseSetCode(const SFString& fieldCase) {
 
                     } else if (type == "gas") {
                         caseCode +=  " { " + field + " = toGas(fieldValue); return true; }";
+
+                    } else if (type == "timestamp") {
+                        caseCode +=  " { " + field + " = toTimestamp(fieldValue); return true; }";
 
                     } else if (type == "addr" || type == "address") {
                         caseCode += " { " + field + " = toAddress(fieldValue); return true; }";
@@ -589,7 +597,7 @@ const char* STR_CASE_CODE_STRINGARRAY =
 "[BTAB]\t\tSFString retS;\n"
 "[BTAB]\t\tfor (uint32_t i = 0 ; i < cnt ; i++) {\n"
 "[BTAB]\t\t\tretS += indent() + (\"\\\"\" + [{PTR}][{FIELD}][i] + \"\\\"\");\n"
-"[BTAB]\t\t\tretS += ((i < cnt-1) ? \",\\n\" : \"\\n\");\n"
+"[BTAB]\t\t\tretS += ((i < cnt - 1) ? \",\\n\" : \"\\n\");\n"
 "[BTAB]\t\t}\n"
 "[BTAB]\t\treturn retS;\n"
 "[BTAB]\t}";

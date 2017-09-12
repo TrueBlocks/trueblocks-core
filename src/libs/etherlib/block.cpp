@@ -18,11 +18,11 @@ namespace qblocks {
 IMPLEMENT_NODE(CBlock, CBaseNode, dataSchema());
 
 //---------------------------------------------------------------------------
-extern SFString nextBlockChunk(const SFString& fieldIn, const void *data);
-static SFString nextBlockChunk_custom(const SFString& fieldIn, const void *data);
+extern SFString nextBlockChunk(const SFString& fieldIn, const void *dataPtr);
+static SFString nextBlockChunk_custom(const SFString& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CBlock::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+void CBlock::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -32,7 +32,7 @@ void CBlock::Format(CExportContext& ctx, const SFString& fmtIn, void *data) cons
     }
 
     SFString fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, data))
+    if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
     while (!fmt.empty())
@@ -40,8 +40,8 @@ void CBlock::Format(CExportContext& ctx, const SFString& fmtIn, void *data) cons
 }
 
 //---------------------------------------------------------------------------
-SFString nextBlockChunk(const SFString& fieldIn, const void *data) {
-    const CBlock *blo = (const CBlock *)data;
+SFString nextBlockChunk(const SFString& fieldIn, const void *dataPtr) {
+    const CBlock *blo = (const CBlock *)dataPtr;
     if (blo) {
         // Give customized code a chance to override first
 #ifdef NEW_CODE
@@ -49,7 +49,7 @@ SFString nextBlockChunk(const SFString& fieldIn, const void *data) {
         if (!ret.empty())
             return ret;
 #else
-        SFString ret = nextBlockChunk_custom(fieldIn, data);
+        SFString ret = nextBlockChunk_custom(fieldIn, dataPtr);
         if (!ret.empty())
             return ret;
 
@@ -58,8 +58,8 @@ SFString nextBlockChunk(const SFString& fieldIn, const void *data) {
                 if ( fieldIn % "blockNumber" ) return asStringU(blo->blockNumber);
                 break;
             case 'g':
-                if ( fieldIn % "gasLimit" ) return asStringU(blo->gasLimit);
-                if ( fieldIn % "gasUsed" ) return asStringU(blo->gasUsed);
+                if ( fieldIn % "gasLimit" ) return fromGas(blo->gasLimit);
+                if ( fieldIn % "gasUsed" ) return fromGas(blo->gasUsed);
                 break;
             case 'h':
                 if ( fieldIn % "hash" ) return fromHash(blo->hash);
@@ -138,8 +138,8 @@ bool CBlock::setValueByName(const SFString& fieldName, const SFString& fieldValu
             if ( fieldName % "blockNumber" ) { blockNumber = toUnsigned(fieldValue); return true; }
             break;
         case 'g':
-            if ( fieldName % "gasLimit" ) { gasLimit = toUnsigned(fieldValue); return true; }
-            if ( fieldName % "gasUsed" ) { gasUsed = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "gasLimit" ) { gasLimit = toGas(fieldValue); return true; }
+            if ( fieldName % "gasUsed" ) { gasUsed = toGas(fieldValue); return true; }
             break;
         case 'h':
             if ( fieldName % "hash" ) { hash = toHash(fieldValue); return true; }
@@ -232,8 +232,8 @@ void CBlock::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextBlockChunk_custom(const SFString& fieldIn, const void *data) {
-    const CBlock *blo = (const CBlock *)data;
+SFString nextBlockChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+    const CBlock *blo = (const CBlock *)dataPtr;
     if (blo) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -268,7 +268,7 @@ SFString nextBlockChunk_custom(const SFString& fieldIn, const void *data) {
 }
 
 //---------------------------------------------------------------------------
-bool CBlock::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+bool CBlock::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
@@ -310,8 +310,8 @@ SFString CBlock::getValueByName(const SFString& fieldName) const {
             if ( fieldName % "blockNumber" ) return asStringU(blockNumber);
             break;
         case 'g':
-            if ( fieldName % "gasLimit" ) return asStringU(gasLimit);
-            if ( fieldName % "gasUsed" ) return asStringU(gasUsed);
+            if ( fieldName % "gasLimit" ) return fromGas(gasLimit);
+            if ( fieldName % "gasUsed" ) return fromGas(gasUsed);
             break;
         case 'h':
             if ( fieldName % "hash" ) return fromHash(hash);

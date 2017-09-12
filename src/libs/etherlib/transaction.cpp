@@ -18,11 +18,11 @@ namespace qblocks {
 IMPLEMENT_NODE(CTransaction, CBaseNode, dataSchema());
 
 //---------------------------------------------------------------------------
-extern SFString nextTransactionChunk(const SFString& fieldIn, const void *data);
-static SFString nextTransactionChunk_custom(const SFString& fieldIn, const void *data);
+extern SFString nextTransactionChunk(const SFString& fieldIn, const void *dataPtr);
+static SFString nextTransactionChunk_custom(const SFString& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CTransaction::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+void CTransaction::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -32,7 +32,7 @@ void CTransaction::Format(CExportContext& ctx, const SFString& fmtIn, void *data
     }
 
     SFString fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, data))
+    if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
     while (!fmt.empty())
@@ -40,8 +40,8 @@ void CTransaction::Format(CExportContext& ctx, const SFString& fmtIn, void *data
 }
 
 //---------------------------------------------------------------------------
-SFString nextTransactionChunk(const SFString& fieldIn, const void *data) {
-    const CTransaction *tra = (const CTransaction *)data;
+SFString nextTransactionChunk(const SFString& fieldIn, const void *dataPtr) {
+    const CTransaction *tra = (const CTransaction *)dataPtr;
     if (tra) {
         // Give customized code a chance to override first
 #ifdef NEW_CODE
@@ -49,7 +49,7 @@ SFString nextTransactionChunk(const SFString& fieldIn, const void *data) {
         if (!ret.empty())
             return ret;
 #else
-        SFString ret = nextTransactionChunk_custom(fieldIn, data);
+        SFString ret = nextTransactionChunk_custom(fieldIn, dataPtr);
         if (!ret.empty())
             return ret;
 
@@ -322,8 +322,8 @@ void CTransaction::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextTransactionChunk_custom(const SFString& fieldIn, const void *data) {
-    const CTransaction *tra = (const CTransaction *)data;
+SFString nextTransactionChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+    const CTransaction *tra = (const CTransaction *)dataPtr;
     if (tra) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -372,7 +372,7 @@ SFString nextTransactionChunk_custom(const SFString& fieldIn, const void *data) 
 }
 
 //---------------------------------------------------------------------------
-bool CTransaction::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+bool CTransaction::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
