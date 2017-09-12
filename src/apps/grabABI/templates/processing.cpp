@@ -28,9 +28,9 @@ bool CVisitor::isTransactionOfInterest(CTransaction *trans, uint32_t& whichWatch
 }
 
 //-----------------------------------------------------------------------
-bool displayFromCache(const SFString& cacheFileName, SFUint32& blockNum, void *data) {
+bool displayFromCache(const SFString& cacheFileName, SFUint32& blockNum, void *dataPtr) {
 
-    CVisitor *visitor = reinterpret_cast<CVisitor*>(data);
+    CVisitor *visitor = reinterpret_cast<CVisitor*>(dataPtr);
     CBlock block;
 
     // If there is no cache, there's nothing to display
@@ -124,14 +124,14 @@ bool displayFromCache(const SFString& cacheFileName, SFUint32& blockNum, void *d
 blknum_t lastBloomHit = 0;
 SFUint32 nFound = 0;
 //-----------------------------------------------------------------------
-bool updateCacheUsingBlooms(const SFString& path, void *data) {
+bool updateCacheUsingBlooms(const SFString& path, void *dataPtr) {
 
-    CVisitor *visitor = reinterpret_cast<CVisitor*>(data);
+    CVisitor *visitor = reinterpret_cast<CVisitor*>(dataPtr);
     if (visitor->user_hit_q)
         return false;
-    
+
     if (path.endsWith("/")) {
-        forAllFiles(path + "*", updateCacheUsingBlooms, data);
+        forAllFiles(path + "*", updateCacheUsingBlooms, dataPtr);
 
     } else {
 
@@ -217,9 +217,9 @@ bool updateCacheUsingBlooms(const SFString& path, void *data) {
 }
 
 //-----------------------------------------------------------------------
-bool updateCache(CBlock& block, void *data) {
+bool updateCache(CBlock& block, void *dataPtr) {
 
-    CVisitor *visitor = reinterpret_cast<CVisitor*>(data);
+    CVisitor *visitor = reinterpret_cast<CVisitor*>(dataPtr);
 
     if (!visitor->openIncomeStatement(block))  {
         cerr << "Quitting debugger.\r\n";

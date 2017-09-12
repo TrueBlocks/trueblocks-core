@@ -18,11 +18,11 @@ namespace qblocks {
 IMPLEMENT_NODE(CReceipt, CBaseNode, dataSchema());
 
 //---------------------------------------------------------------------------
-extern SFString nextReceiptChunk(const SFString& fieldIn, const void *data);
-static SFString nextReceiptChunk_custom(const SFString& fieldIn, const void *data);
+extern SFString nextReceiptChunk(const SFString& fieldIn, const void *dataPtr);
+static SFString nextReceiptChunk_custom(const SFString& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CReceipt::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+void CReceipt::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -32,7 +32,7 @@ void CReceipt::Format(CExportContext& ctx, const SFString& fmtIn, void *data) co
     }
 
     SFString fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, data))
+    if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
     while (!fmt.empty())
@@ -40,8 +40,8 @@ void CReceipt::Format(CExportContext& ctx, const SFString& fmtIn, void *data) co
 }
 
 //---------------------------------------------------------------------------
-SFString nextReceiptChunk(const SFString& fieldIn, const void *data) {
-    const CReceipt *rec = (const CReceipt *)data;
+SFString nextReceiptChunk(const SFString& fieldIn, const void *dataPtr) {
+    const CReceipt *rec = (const CReceipt *)dataPtr;
     if (rec) {
         // Give customized code a chance to override first
 #ifdef NEW_CODE
@@ -49,7 +49,7 @@ SFString nextReceiptChunk(const SFString& fieldIn, const void *data) {
         if (!ret.empty())
             return ret;
 #else
-        SFString ret = nextReceiptChunk_custom(fieldIn, data);
+        SFString ret = nextReceiptChunk_custom(fieldIn, dataPtr);
         if (!ret.empty())
             return ret;
 
@@ -58,7 +58,7 @@ SFString nextReceiptChunk(const SFString& fieldIn, const void *data) {
                 if ( fieldIn % "contractAddress" ) return fromAddress(rec->contractAddress);
                 break;
             case 'g':
-                if ( fieldIn % "gasUsed" ) return asStringU(rec->gasUsed);
+                if ( fieldIn % "gasUsed" ) return fromGas(rec->gasUsed);
                 break;
             case 'l':
                 if ( fieldIn % "logs" ) {
@@ -127,7 +127,7 @@ bool CReceipt::setValueByName(const SFString& fieldName, const SFString& fieldVa
             if ( fieldName % "contractAddress" ) { contractAddress = toAddress(fieldValue); return true; }
             break;
         case 'g':
-            if ( fieldName % "gasUsed" ) { gasUsed = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "gasUsed" ) { gasUsed = toGas(fieldValue); return true; }
             break;
         case 'l':
             if ( fieldName % "logs" ) return true;
@@ -197,8 +197,8 @@ void CReceipt::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextReceiptChunk_custom(const SFString& fieldIn, const void *data) {
-    const CReceipt *rec = (const CReceipt *)data;
+SFString nextReceiptChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+    const CReceipt *rec = (const CReceipt *)dataPtr;
     if (rec) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -218,7 +218,7 @@ SFString nextReceiptChunk_custom(const SFString& fieldIn, const void *data) {
 }
 
 //---------------------------------------------------------------------------
-bool CReceipt::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+bool CReceipt::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
@@ -260,7 +260,7 @@ SFString CReceipt::getValueByName(const SFString& fieldName) const {
             if ( fieldName % "contractAddress" ) return fromAddress(contractAddress);
             break;
         case 'g':
-            if ( fieldName % "gasUsed" ) return asStringU(gasUsed);
+            if ( fieldName % "gasUsed" ) return fromGas(gasUsed);
             break;
         case 'l':
             if ( fieldName % "logs" ) {

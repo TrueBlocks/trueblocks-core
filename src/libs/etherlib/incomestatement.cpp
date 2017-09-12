@@ -18,11 +18,11 @@ namespace qblocks {
 IMPLEMENT_NODE(CIncomeStatement, CBaseNode, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextIncomestatementChunk(const SFString& fieldIn, const void *data);
-static SFString nextIncomestatementChunk_custom(const SFString& fieldIn, const void *data);
+static SFString nextIncomestatementChunk(const SFString& fieldIn, const void *dataPtr);
+static SFString nextIncomestatementChunk_custom(const SFString& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CIncomeStatement::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+void CIncomeStatement::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -32,7 +32,7 @@ void CIncomeStatement::Format(CExportContext& ctx, const SFString& fmtIn, void *
     }
 
     SFString fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, data))
+    if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
     while (!fmt.empty())
@@ -40,8 +40,8 @@ void CIncomeStatement::Format(CExportContext& ctx, const SFString& fmtIn, void *
 }
 
 //---------------------------------------------------------------------------
-SFString nextIncomestatementChunk(const SFString& fieldIn, const void *data) {
-    const CIncomeStatement *inc = (const CIncomeStatement *)data;
+SFString nextIncomestatementChunk(const SFString& fieldIn, const void *dataPtr) {
+    const CIncomeStatement *inc = (const CIncomeStatement *)dataPtr;
     if (inc) {
         // Give customized code a chance to override first
 #ifdef NEW_CODE
@@ -49,7 +49,7 @@ SFString nextIncomestatementChunk(const SFString& fieldIn, const void *data) {
         if (!ret.empty())
             return ret;
 #else
-        SFString ret = nextIncomestatementChunk_custom(fieldIn, data);
+        SFString ret = nextIncomestatementChunk_custom(fieldIn, dataPtr);
         if (!ret.empty())
             return ret;
 
@@ -176,8 +176,8 @@ void CIncomeStatement::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextIncomestatementChunk_custom(const SFString& fieldIn, const void *data) {
-    const CIncomeStatement *inc = (const CIncomeStatement *)data;
+SFString nextIncomestatementChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+    const CIncomeStatement *inc = (const CIncomeStatement *)dataPtr;
     if (inc) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -197,7 +197,7 @@ SFString nextIncomestatementChunk_custom(const SFString& fieldIn, const void *da
 }
 
 //---------------------------------------------------------------------------
-bool CIncomeStatement::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+bool CIncomeStatement::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;

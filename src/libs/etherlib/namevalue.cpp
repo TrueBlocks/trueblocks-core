@@ -17,11 +17,11 @@ namespace qblocks {
 IMPLEMENT_NODE(CNameValue, CBaseNode, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextNamevalueChunk(const SFString& fieldIn, const void *data);
-static SFString nextNamevalueChunk_custom(const SFString& fieldIn, const void *data);
+static SFString nextNamevalueChunk(const SFString& fieldIn, const void *dataPtr);
+static SFString nextNamevalueChunk_custom(const SFString& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CNameValue::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+void CNameValue::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -31,7 +31,7 @@ void CNameValue::Format(CExportContext& ctx, const SFString& fmtIn, void *data) 
     }
 
     SFString fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, data))
+    if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
     while (!fmt.empty())
@@ -39,8 +39,8 @@ void CNameValue::Format(CExportContext& ctx, const SFString& fmtIn, void *data) 
 }
 
 //---------------------------------------------------------------------------
-SFString nextNamevalueChunk(const SFString& fieldIn, const void *data) {
-    const CNameValue *nam = (const CNameValue *)data;
+SFString nextNamevalueChunk(const SFString& fieldIn, const void *dataPtr) {
+    const CNameValue *nam = (const CNameValue *)dataPtr;
     if (nam) {
         // Give customized code a chance to override first
 #ifdef NEW_CODE
@@ -48,7 +48,7 @@ SFString nextNamevalueChunk(const SFString& fieldIn, const void *data) {
         if (!ret.empty())
             return ret;
 #else
-        SFString ret = nextNamevalueChunk_custom(fieldIn, data);
+        SFString ret = nextNamevalueChunk_custom(fieldIn, dataPtr);
         if (!ret.empty())
             return ret;
 
@@ -143,8 +143,8 @@ void CNameValue::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextNamevalueChunk_custom(const SFString& fieldIn, const void *data) {
-    const CNameValue *nam = (const CNameValue *)data;
+SFString nextNamevalueChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+    const CNameValue *nam = (const CNameValue *)dataPtr;
     if (nam) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -164,7 +164,7 @@ SFString nextNamevalueChunk_custom(const SFString& fieldIn, const void *data) {
 }
 
 //---------------------------------------------------------------------------
-bool CNameValue::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+bool CNameValue::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;

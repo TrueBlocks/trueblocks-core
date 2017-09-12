@@ -18,11 +18,11 @@ namespace qblocks {
 IMPLEMENT_NODE(CBalHistory, CBaseNode, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextBalhistoryChunk(const SFString& fieldIn, const void *data);
-static SFString nextBalhistoryChunk_custom(const SFString& fieldIn, const void *data);
+static SFString nextBalhistoryChunk(const SFString& fieldIn, const void *dataPtr);
+static SFString nextBalhistoryChunk_custom(const SFString& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CBalHistory::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+void CBalHistory::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -32,7 +32,7 @@ void CBalHistory::Format(CExportContext& ctx, const SFString& fmtIn, void *data)
     }
 
     SFString fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, data))
+    if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
     while (!fmt.empty())
@@ -40,8 +40,8 @@ void CBalHistory::Format(CExportContext& ctx, const SFString& fmtIn, void *data)
 }
 
 //---------------------------------------------------------------------------
-SFString nextBalhistoryChunk(const SFString& fieldIn, const void *data) {
-    const CBalHistory *bal = (const CBalHistory *)data;
+SFString nextBalhistoryChunk(const SFString& fieldIn, const void *dataPtr) {
+    const CBalHistory *bal = (const CBalHistory *)dataPtr;
     if (bal) {
         // Give customized code a chance to override first
 #ifdef NEW_CODE
@@ -49,7 +49,7 @@ SFString nextBalhistoryChunk(const SFString& fieldIn, const void *data) {
         if (!ret.empty())
             return ret;
 #else
-        SFString ret = nextBalhistoryChunk_custom(fieldIn, data);
+        SFString ret = nextBalhistoryChunk_custom(fieldIn, dataPtr);
         if (!ret.empty())
             return ret;
 
@@ -153,8 +153,8 @@ void CBalHistory::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextBalhistoryChunk_custom(const SFString& fieldIn, const void *data) {
-    const CBalHistory *bal = (const CBalHistory *)data;
+SFString nextBalhistoryChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+    const CBalHistory *bal = (const CBalHistory *)dataPtr;
     if (bal) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -174,7 +174,7 @@ SFString nextBalhistoryChunk_custom(const SFString& fieldIn, const void *data) {
 }
 
 //---------------------------------------------------------------------------
-bool CBalHistory::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+bool CBalHistory::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
