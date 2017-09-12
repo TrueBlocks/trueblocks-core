@@ -108,13 +108,6 @@ inline QChangeRequirement& QChangeRequirement::operator=(const QChangeRequiremen
 }
 
 //---------------------------------------------------------------------------
-inline SFString QChangeRequirement::getValueByName(const SFString& fieldName) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
-    return Format("[{"+toUpper(fieldName)+"}]");
-}
-
-//---------------------------------------------------------------------------
 IMPLEMENT_ARCHIVE_ARRAY(QChangeRequirementArray);
 IMPLEMENT_ARCHIVE_ARRAY_C(QChangeRequirementArray);
 IMPLEMENT_ARCHIVE_LIST(QChangeRequirementList);
@@ -122,4 +115,5 @@ IMPLEMENT_ARCHIVE_LIST(QChangeRequirementList);
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
+#define NEW_CODE
 

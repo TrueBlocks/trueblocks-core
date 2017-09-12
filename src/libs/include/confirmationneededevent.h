@@ -120,13 +120,6 @@ inline QConfirmationNeededEvent& QConfirmationNeededEvent::operator=(const QConf
 }
 
 //---------------------------------------------------------------------------
-inline SFString QConfirmationNeededEvent::getValueByName(const SFString& fieldName) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
-    return Format("[{"+toUpper(fieldName)+"}]");
-}
-
-//---------------------------------------------------------------------------
 IMPLEMENT_ARCHIVE_ARRAY(QConfirmationNeededEventArray);
 IMPLEMENT_ARCHIVE_ARRAY_C(QConfirmationNeededEventArray);
 IMPLEMENT_ARCHIVE_LIST(QConfirmationNeededEventList);
@@ -134,4 +127,5 @@ IMPLEMENT_ARCHIVE_LIST(QConfirmationNeededEventList);
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
+#define NEW_CODE
 

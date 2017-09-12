@@ -9,8 +9,6 @@
 
 //---------------------------------------------------------------------------------------------------
 CParams params[] = {
-    CParams("-option1", "option one"),
-    CParams("-thing",   "option two"),
     CParams("",        "This is what the program does.\n"),
 };
 uint32_t nParams = sizeof(params) / sizeof(CParams);

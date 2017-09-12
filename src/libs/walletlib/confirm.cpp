@@ -42,6 +42,11 @@ SFString nextConfirmChunk(const SFString& fieldIn, const void *data) {
     const QConfirm *con = (const QConfirm *)data;
     if (con) {
         // Give customized code a chance to override first
+#ifdef NEW_CODE
+        SFString ret = con->getValueByName(fieldIn);
+        if (!ret.empty())
+            return ret;
+#else
         SFString ret = nextConfirmChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
@@ -51,7 +56,7 @@ SFString nextConfirmChunk(const SFString& fieldIn, const void *data) {
                 if ( fieldIn % "_h" ) return con->_h;
                 break;
         }
-
+#endif
         // EXISTING_CODE
         // EXISTING_CODE
 
@@ -164,6 +169,28 @@ bool QConfirm::readBackLevel(SFArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
+}
+
+//---------------------------------------------------------------------------
+SFString QConfirm::getValueByName(const SFString& fieldName) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+#ifdef NEW_CODE
+    // Give customized code a chance to override first
+    SFString ret = nextConfirmChunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    switch (tolower(fieldName[0])) {
+        case '_':
+            if ( fieldName % "_h" ) return _h;
+            break;
+    }
+    return "";
+#else
+    return Format("[{"+toUpper(fieldName)+"}]");
+#endif
 }
 
 //---------------------------------------------------------------------------

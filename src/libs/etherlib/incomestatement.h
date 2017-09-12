@@ -133,13 +133,6 @@ inline CIncomeStatement& CIncomeStatement::operator=(const CIncomeStatement& in)
 }
 
 //---------------------------------------------------------------------------
-inline SFString CIncomeStatement::getValueByName(const SFString& fieldName) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
-    return Format("[{"+toUpper(fieldName)+"}]");
-}
-
-//---------------------------------------------------------------------------
 IMPLEMENT_ARCHIVE_ARRAY(CIncomeStatementArray);
 IMPLEMENT_ARCHIVE_ARRAY_C(CIncomeStatementArray);
 IMPLEMENT_ARCHIVE_LIST(CIncomeStatementList);
@@ -162,5 +155,6 @@ extern SFArchive& operator>>(SFArchive& archive, CIncomeStatement& inc);
         blockNum = x.blockNum;
     }
 // EXISTING_CODE
+#define NEW_CODE
 }  // namespace qblocks
 

@@ -42,6 +42,11 @@ SFString nextConfirmationeventChunk(const SFString& fieldIn, const void *data) {
     const QConfirmationEvent *con = (const QConfirmationEvent *)data;
     if (con) {
         // Give customized code a chance to override first
+#ifdef NEW_CODE
+        SFString ret = con->getValueByName(fieldIn);
+        if (!ret.empty())
+            return ret;
+#else
         SFString ret = nextConfirmationeventChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
@@ -52,7 +57,7 @@ SFString nextConfirmationeventChunk(const SFString& fieldIn, const void *data) {
                 if ( fieldIn % "operation" ) return con->operation;
                 break;
         }
-
+#endif
         // EXISTING_CODE
         // EXISTING_CODE
 
@@ -169,6 +174,29 @@ bool QConfirmationEvent::readBackLevel(SFArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
+}
+
+//---------------------------------------------------------------------------
+SFString QConfirmationEvent::getValueByName(const SFString& fieldName) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+#ifdef NEW_CODE
+    // Give customized code a chance to override first
+    SFString ret = nextConfirmationeventChunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    switch (tolower(fieldName[0])) {
+        case 'o':
+            if ( fieldName % "owner" ) return fromAddress(owner);
+            if ( fieldName % "operation" ) return operation;
+            break;
+    }
+    return "";
+#else
+    return Format("[{"+toUpper(fieldName)+"}]");
+#endif
 }
 
 //---------------------------------------------------------------------------

@@ -60,7 +60,8 @@ void addIfUnique(const SFString& addr, CFunctionArray& functions, CFunction& fun
     for (uint32_t i = 0 ; i < functions.getCount() ; i++) {
         if (functions[i].encoding == func.encoding)
             return;
-#ifdef NEW_CODE
+#ifdef THE_NEW_CODE
+//#error
         // different encoding same name means a duplicate function name in the code. We won't build with
         // duplicate function names, so we need to modify the incoming function. We do this by appending
         // the first four characters of the contract's address.
@@ -244,6 +245,8 @@ int main(int argc, const char *argv[]) {
                         SFString fields, assigns1, assigns2, items1;
                         SFUint32 nIndexed = 0;
                         for (uint32_t j = 0 ; j < func->inputs.getCount() ; j++) {
+                            if (func->inputs[j].name == "data")
+                                func->inputs[j].name = "data1";
                             fields   += func->inputs[j].Format("[{TYPE}][ {NAME}]|");
                             assigns1 += func->inputs[j].Format(getAssign(&func->inputs[j], j));
                             items1   += "\t\t\titems[nItems++] = \"" + func->inputs[j].type + "\";\n";
@@ -600,4 +603,4 @@ const char* STR_CODE_SIGS =
 "uint32_t nTopics = sizeof(topics) / sizeof(SFString);\n"
 "\n";
 
-const char* STR_BLOCK_PATH = "\tetherlib_init(\"binary\");\n\n";
+const char* STR_BLOCK_PATH = "etherlib_init(\"binary\");\n\n";

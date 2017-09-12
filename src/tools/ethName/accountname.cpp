@@ -41,6 +41,11 @@ SFString nextAccountnameChunk(const SFString& fieldIn, const void *data) {
     const CAccountName *acc = (const CAccountName *)data;
     if (acc) {
         // Give customized code a chance to override first
+#ifdef NEW_CODE
+        SFString ret = acc->getValueByName(fieldIn);
+        if (!ret.empty())
+            return ret;
+#else
         SFString ret = nextAccountnameChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
@@ -60,7 +65,7 @@ SFString nextAccountnameChunk(const SFString& fieldIn, const void *data) {
                 if ( fieldIn % "source" ) return acc->source;
                 break;
         }
-
+#endif
         // EXISTING_CODE
         // EXISTING_CODE
 
@@ -192,6 +197,38 @@ bool CAccountName::readBackLevel(SFArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
+}
+
+//---------------------------------------------------------------------------
+SFString CAccountName::getValueByName(const SFString& fieldName) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+#ifdef NEW_CODE
+    // Give customized code a chance to override first
+    SFString ret = nextAccountnameChunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    switch (tolower(fieldName[0])) {
+        case 'a':
+            if ( fieldName % "addr" ) return addr;
+            break;
+        case 'd':
+            if ( fieldName % "description" ) return description;
+            break;
+        case 'n':
+            if ( fieldName % "name" ) return name;
+            break;
+        case 's':
+            if ( fieldName % "symbol" ) return symbol;
+            if ( fieldName % "source" ) return source;
+            break;
+    }
+    return "";
+#else
+    return Format("[{"+toUpper(fieldName)+"}]");
+#endif
 }
 
 //---------------------------------------------------------------------------

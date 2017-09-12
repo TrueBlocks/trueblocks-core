@@ -43,6 +43,11 @@ SFString nextFunctionChunk(const SFString& fieldIn, const void *data) {
     const CFunction *fun = (const CFunction *)data;
     if (fun) {
         // Give customized code a chance to override first
+#ifdef NEW_CODE
+        SFString ret = fun->getValueByName(fieldIn);
+        if (!ret.empty())
+            return ret;
+#else
         SFString ret = nextFunctionChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
@@ -94,7 +99,7 @@ SFString nextFunctionChunk(const SFString& fieldIn, const void *data) {
                 if ( fieldIn % "type" ) return fun->type;
                 break;
         }
-
+#endif
         // EXISTING_CODE
         // EXISTING_CODE
 
@@ -186,7 +191,6 @@ void CFunction::finishParse() {
 //---------------------------------------------------------------------------------------------------
 bool CFunction::Serialize(SFArchive& archive) {
     if (archive.isWriting())
-
         return ((const CFunction*)this)->SerializeC(archive);
 
     if (!preSerialize(archive))
@@ -307,6 +311,70 @@ bool CFunction::readBackLevel(SFArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
+}
+
+//---------------------------------------------------------------------------
+SFString CFunction::getValueByName(const SFString& fieldName) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+#ifdef NEW_CODE
+    // Give customized code a chance to override first
+    SFString ret = nextFunctionChunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    switch (tolower(fieldName[0])) {
+        case 'a':
+            if ( fieldName % "anonymous" ) return asString(anonymous);
+            break;
+        case 'c':
+            if ( fieldName % "constant" ) return asString(constant);
+            break;
+        case 'e':
+            if ( fieldName % "encoding" ) return encoding;
+            break;
+        case 'i':
+            if ( fieldName % "inputs" ) {
+                uint32_t cnt = inputs.getCount();
+                if (!cnt) return "";
+                SFString retS;
+                for (uint32_t i = 0 ; i < cnt ; i++) {
+                    retS += inputs[i].Format();
+                    retS += ((i < cnt - 1) ? ",\n" : "\n");
+                }
+                return retS;
+            }
+            break;
+        case 'n':
+            if ( fieldName % "name" ) return name;
+            break;
+        case 'o':
+            if ( fieldName % "outputs" ) {
+                uint32_t cnt = outputs.getCount();
+                if (!cnt) return "";
+                SFString retS;
+                for (uint32_t i = 0 ; i < cnt ; i++) {
+                    retS += outputs[i].Format();
+                    retS += ((i < cnt - 1) ? ",\n" : "\n");
+                }
+                return retS;
+            }
+            break;
+        case 'p':
+            if ( fieldName % "payable" ) return asString(payable);
+            break;
+        case 's':
+            if ( fieldName % "signature" ) return signature;
+            break;
+        case 't':
+            if ( fieldName % "type" ) return type;
+            break;
+    }
+    return "";
+#else
+    return Format("[{"+toUpper(fieldName)+"}]");
+#endif
 }
 
 //---------------------------------------------------------------------------

@@ -111,13 +111,6 @@ inline QOwnerChangedEvent& QOwnerChangedEvent::operator=(const QOwnerChangedEven
 }
 
 //---------------------------------------------------------------------------
-inline SFString QOwnerChangedEvent::getValueByName(const SFString& fieldName) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
-    return Format("[{"+toUpper(fieldName)+"}]");
-}
-
-//---------------------------------------------------------------------------
 IMPLEMENT_ARCHIVE_ARRAY(QOwnerChangedEventArray);
 IMPLEMENT_ARCHIVE_ARRAY_C(QOwnerChangedEventArray);
 IMPLEMENT_ARCHIVE_LIST(QOwnerChangedEventList);
@@ -125,4 +118,5 @@ IMPLEMENT_ARCHIVE_LIST(QOwnerChangedEventList);
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
+#define NEW_CODE
 

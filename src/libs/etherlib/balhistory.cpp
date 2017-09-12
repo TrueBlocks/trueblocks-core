@@ -44,6 +44,11 @@ SFString nextBalhistoryChunk(const SFString& fieldIn, const void *data) {
     const CBalHistory *bal = (const CBalHistory *)data;
     if (bal) {
         // Give customized code a chance to override first
+#ifdef NEW_CODE
+        SFString ret = bal->getValueByName(fieldIn);
+        if (!ret.empty())
+            return ret;
+#else
         SFString ret = nextBalhistoryChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
@@ -59,7 +64,7 @@ SFString nextBalhistoryChunk(const SFString& fieldIn, const void *data) {
                 if ( fieldIn % "txDate" ) return bal->txDate.Format(FMT_JSON);
                 break;
         }
-
+#endif
         // EXISTING_CODE
         // EXISTING_CODE
 
@@ -193,6 +198,34 @@ SFArchive& operator<<(SFArchive& archive, const CBalHistory& bal) {
 SFArchive& operator>>(SFArchive& archive, CBalHistory& bal) {
     bal.Serialize(archive);
     return archive;
+}
+
+//---------------------------------------------------------------------------
+SFString CBalHistory::getValueByName(const SFString& fieldName) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+#ifdef NEW_CODE
+    // Give customized code a chance to override first
+    SFString ret = nextBalhistoryChunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    switch (tolower(fieldName[0])) {
+        case 'b':
+            if ( fieldName % "balance" ) return asStringBN(balance);
+            break;
+        case 'r':
+            if ( fieldName % "recordID" ) return recordID;
+            break;
+        case 't':
+            if ( fieldName % "txDate" ) return txDate.Format(FMT_JSON);
+            break;
+    }
+    return "";
+#else
+    return Format("[{"+toUpper(fieldName)+"}]");
+#endif
 }
 
 //---------------------------------------------------------------------------

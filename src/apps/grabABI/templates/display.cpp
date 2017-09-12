@@ -43,7 +43,7 @@ void CVisitor::displayTrans(const CTransaction *theTrans) const {
         SFString transStr = promoted->Format(fmt);
 
         if (expContext().asDollars) {
-            timestamp_t ts = newTimestamp(promoted->Format("[{TIMESTAMP}]"));
+            timestamp_t ts = toTimestamp(promoted->Format("[{TIMESTAMP}]"));
             transStr.ReplaceAll("++USDV++",  asDollars(ts, toWei(promoted->Format("[{VALUE}]"))));
             transStr.ReplaceAll("++USDGP++", asDollars(ts, toWei(promoted->Format("[{GASPRICE}]"))));
             transStr.ReplaceAll("++USDGC++", asDollars(ts, toWei(promoted->Format("[{GASCOST}]"))));
@@ -92,7 +92,7 @@ void CVisitor::displayTrans(const CTransaction *theTrans) const {
         cout << iYellow << "[" << Strip(evtList, ',') << "]";
 
     if (opts.trace_on) {
-        timestamp_t ts = newTimestamp(theTrans->Format("[{TIMESTAMP}]"));
+        timestamp_t ts = toTimestamp(theTrans->Format("[{TIMESTAMP}]"));
         displayTrace(ts, theTrans->traces, theTrans->isError);
         if (opts.bloom_on && promoted->receipt.logsBloom != 0) {
             displayBloom(promoted->receipt.logsBloom, "Tx bloom:", "");

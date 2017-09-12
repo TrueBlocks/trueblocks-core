@@ -42,6 +42,11 @@ SFString nextAddownerChunk(const SFString& fieldIn, const void *data) {
     const QAddOwner *add = (const QAddOwner *)data;
     if (add) {
         // Give customized code a chance to override first
+#ifdef NEW_CODE
+        SFString ret = add->getValueByName(fieldIn);
+        if (!ret.empty())
+            return ret;
+#else
         SFString ret = nextAddownerChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
@@ -51,7 +56,7 @@ SFString nextAddownerChunk(const SFString& fieldIn, const void *data) {
                 if ( fieldIn % "_owner" ) return fromAddress(add->_owner);
                 break;
         }
-
+#endif
         // EXISTING_CODE
         // EXISTING_CODE
 
@@ -164,6 +169,28 @@ bool QAddOwner::readBackLevel(SFArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
+}
+
+//---------------------------------------------------------------------------
+SFString QAddOwner::getValueByName(const SFString& fieldName) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+#ifdef NEW_CODE
+    // Give customized code a chance to override first
+    SFString ret = nextAddownerChunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    switch (tolower(fieldName[0])) {
+        case '_':
+            if ( fieldName % "_owner" ) return fromAddress(_owner);
+            break;
+    }
+    return "";
+#else
+    return Format("[{"+toUpper(fieldName)+"}]");
+#endif
 }
 
 //---------------------------------------------------------------------------

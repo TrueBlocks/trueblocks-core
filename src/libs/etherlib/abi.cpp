@@ -43,6 +43,11 @@ SFString nextAbiChunk(const SFString& fieldIn, const void *data) {
     const CAbi *abi = (const CAbi *)data;
     if (abi) {
         // Give customized code a chance to override first
+#ifdef NEW_CODE
+        SFString ret = abi->getValueByName(fieldIn);
+        if (!ret.empty())
+            return ret;
+#else
         SFString ret = nextAbiChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
@@ -71,7 +76,7 @@ SFString nextAbiChunk(const SFString& fieldIn, const void *data) {
                 }
                 break;
         }
-
+#endif
         // EXISTING_CODE
         // EXISTING_CODE
 
@@ -185,6 +190,47 @@ bool CAbi::readBackLevel(SFArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
+}
+
+//---------------------------------------------------------------------------
+SFString CAbi::getValueByName(const SFString& fieldName) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+#ifdef NEW_CODE
+    // Give customized code a chance to override first
+    SFString ret = nextAbiChunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    switch (tolower(fieldName[0])) {
+        case 'a':
+            if ( fieldName % "abiByName" ) {
+                uint32_t cnt = abiByName.getCount();
+                if (!cnt) return "";
+                SFString retS;
+                for (uint32_t i = 0 ; i < cnt ; i++) {
+                    retS += abiByName[i].Format();
+                    retS += ((i < cnt - 1) ? ",\n" : "\n");
+                }
+                return retS;
+            }
+            if ( fieldName % "abiByEncoding" ) {
+                uint32_t cnt = abiByEncoding.getCount();
+                if (!cnt) return "";
+                SFString retS;
+                for (uint32_t i = 0 ; i < cnt ; i++) {
+                    retS += abiByEncoding[i].Format();
+                    retS += ((i < cnt - 1) ? ",\n" : "\n");
+                }
+                return retS;
+            }
+            break;
+    }
+    return "";
+#else
+    return Format("[{"+toUpper(fieldName)+"}]");
+#endif
 }
 
 //---------------------------------------------------------------------------

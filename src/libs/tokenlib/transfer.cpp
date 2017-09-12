@@ -42,6 +42,11 @@ SFString nextTransferChunk(const SFString& fieldIn, const void *data) {
     const QTransfer *tra = (const QTransfer *)data;
     if (tra) {
         // Give customized code a chance to override first
+#ifdef NEW_CODE
+        SFString ret = tra->getValueByName(fieldIn);
+        if (!ret.empty())
+            return ret;
+#else
         SFString ret = nextTransferChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
@@ -52,7 +57,7 @@ SFString nextTransferChunk(const SFString& fieldIn, const void *data) {
                 if ( fieldIn % "_value" ) return asStringBN(tra->_value);
                 break;
         }
-
+#endif
         // EXISTING_CODE
         // EXISTING_CODE
 
@@ -169,6 +174,29 @@ bool QTransfer::readBackLevel(SFArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
+}
+
+//---------------------------------------------------------------------------
+SFString QTransfer::getValueByName(const SFString& fieldName) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+#ifdef NEW_CODE
+    // Give customized code a chance to override first
+    SFString ret = nextTransferChunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    switch (tolower(fieldName[0])) {
+        case '_':
+            if ( fieldName % "_to" ) return fromAddress(_to);
+            if ( fieldName % "_value" ) return asStringBN(_value);
+            break;
+    }
+    return "";
+#else
+    return Format("[{"+toUpper(fieldName)+"}]");
+#endif
 }
 
 //---------------------------------------------------------------------------

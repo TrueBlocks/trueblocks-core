@@ -45,6 +45,11 @@ SFString nextPricequoteChunk(const SFString& fieldIn, const void *data) {
     const CPriceQuote *pri = (const CPriceQuote *)data;
     if (pri) {
         // Give customized code a chance to override first
+#ifdef NEW_CODE
+        SFString ret = pri->getValueByName(fieldIn);
+        if (!ret.empty())
+            return ret;
+#else
         SFString ret = nextPricequoteChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
@@ -75,7 +80,7 @@ SFString nextPricequoteChunk(const SFString& fieldIn, const void *data) {
                 if ( fieldIn % "weightedAvg" ) return fmtFloat(pri->weightedAvg);
                 break;
         }
-
+#endif
         // EXISTING_CODE
         // EXISTING_CODE
 
@@ -240,7 +245,51 @@ bool CPriceQuote::readBackLevel(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------
+SFString CPriceQuote::getValueByName(const SFString& fieldName) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+#ifdef NEW_CODE
+    // Give customized code a chance to override first
+    SFString ret = nextPricequoteChunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    switch (tolower(fieldName[0])) {
+        case 'c':
+            if ( fieldName % "close" ) return fmtFloat(close);
+            break;
+        case 'h':
+            if ( fieldName % "high" ) return fmtFloat(high);
+            break;
+        case 'l':
+            if ( fieldName % "low" ) return fmtFloat(low);
+            break;
+        case 'o':
+            if ( fieldName % "open" ) return fmtFloat(open);
+            break;
+        case 'q':
+            if ( fieldName % "quoteVolume" ) return fmtFloat(quoteVolume);
+            break;
+        case 't':
+            if ( fieldName % "timestamp" ) return asStringU(timestamp);
+            break;
+        case 'v':
+            if ( fieldName % "volume" ) return fmtFloat(volume);
+            break;
+        case 'w':
+            if ( fieldName % "weightedAvg" ) return fmtFloat(weightedAvg);
+            break;
+    }
+    return "";
+#else
+    return Format("[{"+toUpper(fieldName)+"}]");
+#endif
+}
+
+//---------------------------------------------------------------------------
 // EXISTING_CODE
+#include "node.h"
 SFString priceDatabasePath(void) {
     return blockCachePath("prices/poloniex.bin");
 }
@@ -309,9 +358,9 @@ bool loadPriceData(CPriceQuoteArray& quotes, bool freshen, SFString& message, SF
                     cerr << "Retrieving data...\r";
                 cerr.flush();
             }
-            timestamp_t start = toTimeStamp(nextRead);
+            timestamp_t start = toTimestamp(nextRead);
             // Polinex will give us as much as it has on the following day. Do this to account for time zones
-            timestamp_t end   = toTimeStamp(EOD(BOND(now)));
+            timestamp_t end   = toTimestamp(EOD(BOND(now)));
 
             if (verbose > 1) {
                 cerr << "start: " << dateFromTimeStamp(start) << "\n";
@@ -349,13 +398,13 @@ bool loadPriceData(CPriceQuoteArray& quotes, bool freshen, SFString& message, SF
                 CPriceQuote quote; uint32_t nFields = 0;
                 p = quote.parseJson(p, nFields);
 
-                bool addToArray = (timestamp_t)quote.timestamp > toTimeStamp(lastRead);
+                bool addToArray = (timestamp_t)quote.timestamp > toTimestamp(lastRead);
                 if (verbose > 1) {
                     cerr << "addToArray: " << addToArray
                     << " nFields: " << nFields
                     << " quote: " << dateFromTimeStamp((timestamp_t)quote.timestamp)
                     << " lastRead: " << lastRead
-                    << " lastRead(ts): " << dateFromTimeStamp(toTimeStamp(lastRead)) << "\n";
+                    << " lastRead(ts): " << dateFromTimeStamp(toTimestamp(lastRead)) << "\n";
                 } else {
                     if (!isTestMode())
                         cerr << dateFromTimeStamp((timestamp_t)quote.timestamp) << "\r";
@@ -449,3 +498,4 @@ SFString asDollars(timestamp_t ts, SFUintBN weiIn) {
 }
 // EXISTING_CODE
 }  // namespace qblocks
+

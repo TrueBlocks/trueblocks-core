@@ -44,6 +44,11 @@ SFString nextTraceresultChunk(const SFString& fieldIn, const void *data) {
     const CTraceResult *tra = (const CTraceResult *)data;
     if (tra) {
         // Give customized code a chance to override first
+#ifdef NEW_CODE
+        SFString ret = tra->getValueByName(fieldIn);
+        if (!ret.empty())
+            return ret;
+#else
         SFString ret = nextTraceresultChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
@@ -56,7 +61,7 @@ SFString nextTraceresultChunk(const SFString& fieldIn, const void *data) {
                 if ( fieldIn % "output" ) return tra->output;
                 break;
         }
-
+#endif
         // EXISTING_CODE
         // EXISTING_CODE
 
@@ -184,6 +189,31 @@ SFArchive& operator<<(SFArchive& archive, const CTraceResult& tra) {
 SFArchive& operator>>(SFArchive& archive, CTraceResult& tra) {
     tra.Serialize(archive);
     return archive;
+}
+
+//---------------------------------------------------------------------------
+SFString CTraceResult::getValueByName(const SFString& fieldName) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+#ifdef NEW_CODE
+    // Give customized code a chance to override first
+    SFString ret = nextTraceresultChunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    switch (tolower(fieldName[0])) {
+        case 'g':
+            if ( fieldName % "gasUsed" ) return asStringU(gasUsed);
+            break;
+        case 'o':
+            if ( fieldName % "output" ) return output;
+            break;
+    }
+    return "";
+#else
+    return Format("[{"+toUpper(fieldName)+"}]");
+#endif
 }
 
 //---------------------------------------------------------------------------
