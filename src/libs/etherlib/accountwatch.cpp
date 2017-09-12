@@ -18,11 +18,11 @@ namespace qblocks {
 IMPLEMENT_NODE(CAccountWatch, CBaseNode, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextAccountwatchChunk(const SFString& fieldIn, const void *data);
-static SFString nextAccountwatchChunk_custom(const SFString& fieldIn, const void *data);
+static SFString nextAccountwatchChunk(const SFString& fieldIn, const void *dataPtr);
+static SFString nextAccountwatchChunk_custom(const SFString& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CAccountWatch::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+void CAccountWatch::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -32,7 +32,7 @@ void CAccountWatch::Format(CExportContext& ctx, const SFString& fmtIn, void *dat
     }
 
     SFString fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, data))
+    if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
     while (!fmt.empty())
@@ -40,8 +40,8 @@ void CAccountWatch::Format(CExportContext& ctx, const SFString& fmtIn, void *dat
 }
 
 //---------------------------------------------------------------------------
-SFString nextAccountwatchChunk(const SFString& fieldIn, const void *data) {
-    const CAccountWatch *acc = (const CAccountWatch *)data;
+SFString nextAccountwatchChunk(const SFString& fieldIn, const void *dataPtr) {
+    const CAccountWatch *acc = (const CAccountWatch *)dataPtr;
     if (acc) {
         // Give customized code a chance to override first
 #ifdef NEW_CODE
@@ -49,7 +49,7 @@ SFString nextAccountwatchChunk(const SFString& fieldIn, const void *data) {
         if (!ret.empty())
             return ret;
 #else
-        SFString ret = nextAccountwatchChunk_custom(fieldIn, data);
+        SFString ret = nextAccountwatchChunk_custom(fieldIn, dataPtr);
         if (!ret.empty())
             return ret;
 
@@ -232,8 +232,8 @@ void CAccountWatch::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextAccountwatchChunk_custom(const SFString& fieldIn, const void *data) {
-    const CAccountWatch *acc = (const CAccountWatch *)data;
+SFString nextAccountwatchChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+    const CAccountWatch *acc = (const CAccountWatch *)dataPtr;
     if (acc) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -253,7 +253,7 @@ SFString nextAccountwatchChunk_custom(const SFString& fieldIn, const void *data)
 }
 
 //---------------------------------------------------------------------------
-bool CAccountWatch::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+bool CAccountWatch::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;

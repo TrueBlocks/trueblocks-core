@@ -17,11 +17,11 @@ namespace qblocks {
 IMPLEMENT_NODE(CTrace, CBaseNode, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextTraceChunk(const SFString& fieldIn, const void *data);
-static SFString nextTraceChunk_custom(const SFString& fieldIn, const void *data);
+static SFString nextTraceChunk(const SFString& fieldIn, const void *dataPtr);
+static SFString nextTraceChunk_custom(const SFString& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CTrace::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+void CTrace::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -31,7 +31,7 @@ void CTrace::Format(CExportContext& ctx, const SFString& fmtIn, void *data) cons
     }
 
     SFString fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, data))
+    if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
     while (!fmt.empty())
@@ -39,8 +39,8 @@ void CTrace::Format(CExportContext& ctx, const SFString& fmtIn, void *data) cons
 }
 
 //---------------------------------------------------------------------------
-SFString nextTraceChunk(const SFString& fieldIn, const void *data) {
-    const CTrace *tra = (const CTrace *)data;
+SFString nextTraceChunk(const SFString& fieldIn, const void *dataPtr) {
+    const CTrace *tra = (const CTrace *)dataPtr;
     if (tra) {
         // Give customized code a chance to override first
 #ifdef NEW_CODE
@@ -48,7 +48,7 @@ SFString nextTraceChunk(const SFString& fieldIn, const void *data) {
         if (!ret.empty())
             return ret;
 #else
-        SFString ret = nextTraceChunk_custom(fieldIn, data);
+        SFString ret = nextTraceChunk_custom(fieldIn, dataPtr);
         if (!ret.empty())
             return ret;
 
@@ -76,7 +76,7 @@ SFString nextTraceChunk(const SFString& fieldIn, const void *data) {
                     SFString retS;
                     for (uint32_t i = 0 ; i < cnt ; i++) {
                         retS += indent() + ("\"" + tra->traceAddress[i] + "\"");
-                        retS += ((i < cnt-1) ? ",\n" : "\n");
+                        retS += ((i < cnt - 1) ? ",\n" : "\n");
                     }
                     return retS;
                 }
@@ -238,8 +238,8 @@ void CTrace::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextTraceChunk_custom(const SFString& fieldIn, const void *data) {
-    const CTrace *tra = (const CTrace *)data;
+SFString nextTraceChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+    const CTrace *tra = (const CTrace *)dataPtr;
     if (tra) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -259,7 +259,7 @@ SFString nextTraceChunk_custom(const SFString& fieldIn, const void *data) {
 }
 
 //---------------------------------------------------------------------------
-bool CTrace::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+bool CTrace::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
@@ -308,7 +308,7 @@ SFString CTrace::getValueByName(const SFString& fieldName) const {
                 SFString retS;
                 for (uint32_t i = 0 ; i < cnt ; i++) {
                     retS += indent() + ("\"" + traceAddress[i] + "\"");
-                    retS += ((i < cnt-1) ? ",\n" : "\n");
+                    retS += ((i < cnt - 1) ? ",\n" : "\n");
                 }
                 return retS;
             }

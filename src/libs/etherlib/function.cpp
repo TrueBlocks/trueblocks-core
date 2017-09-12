@@ -17,11 +17,11 @@ namespace qblocks {
 IMPLEMENT_NODE(CFunction, CBaseNode, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextFunctionChunk(const SFString& fieldIn, const void *data);
-static SFString nextFunctionChunk_custom(const SFString& fieldIn, const void *data);
+static SFString nextFunctionChunk(const SFString& fieldIn, const void *dataPtr);
+static SFString nextFunctionChunk_custom(const SFString& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CFunction::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+void CFunction::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -31,7 +31,7 @@ void CFunction::Format(CExportContext& ctx, const SFString& fmtIn, void *data) c
     }
 
     SFString fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, data))
+    if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
     while (!fmt.empty())
@@ -39,8 +39,8 @@ void CFunction::Format(CExportContext& ctx, const SFString& fmtIn, void *data) c
 }
 
 //---------------------------------------------------------------------------
-SFString nextFunctionChunk(const SFString& fieldIn, const void *data) {
-    const CFunction *fun = (const CFunction *)data;
+SFString nextFunctionChunk(const SFString& fieldIn, const void *dataPtr) {
+    const CFunction *fun = (const CFunction *)dataPtr;
     if (fun) {
         // Give customized code a chance to override first
 #ifdef NEW_CODE
@@ -48,7 +48,7 @@ SFString nextFunctionChunk(const SFString& fieldIn, const void *data) {
         if (!ret.empty())
             return ret;
 #else
-        SFString ret = nextFunctionChunk_custom(fieldIn, data);
+        SFString ret = nextFunctionChunk_custom(fieldIn, dataPtr);
         if (!ret.empty())
             return ret;
 
@@ -257,8 +257,8 @@ void CFunction::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextFunctionChunk_custom(const SFString& fieldIn, const void *data) {
-    const CFunction *fun = (const CFunction *)data;
+SFString nextFunctionChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+    const CFunction *fun = (const CFunction *)dataPtr;
     if (fun) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -299,7 +299,7 @@ SFString nextFunctionChunk_custom(const SFString& fieldIn, const void *data) {
 }
 
 //---------------------------------------------------------------------------
-bool CFunction::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+bool CFunction::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;

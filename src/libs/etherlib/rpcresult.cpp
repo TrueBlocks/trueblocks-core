@@ -18,11 +18,11 @@ namespace qblocks {
 IMPLEMENT_NODE(CRPCResult, CBaseNode, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextRpcresultChunk(const SFString& fieldIn, const void *data);
-static SFString nextRpcresultChunk_custom(const SFString& fieldIn, const void *data);
+static SFString nextRpcresultChunk(const SFString& fieldIn, const void *dataPtr);
+static SFString nextRpcresultChunk_custom(const SFString& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CRPCResult::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+void CRPCResult::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -32,7 +32,7 @@ void CRPCResult::Format(CExportContext& ctx, const SFString& fmtIn, void *data) 
     }
 
     SFString fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, data))
+    if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
     while (!fmt.empty())
@@ -40,8 +40,8 @@ void CRPCResult::Format(CExportContext& ctx, const SFString& fmtIn, void *data) 
 }
 
 //---------------------------------------------------------------------------
-SFString nextRpcresultChunk(const SFString& fieldIn, const void *data) {
-    const CRPCResult *rpc = (const CRPCResult *)data;
+SFString nextRpcresultChunk(const SFString& fieldIn, const void *dataPtr) {
+    const CRPCResult *rpc = (const CRPCResult *)dataPtr;
     if (rpc) {
         // Give customized code a chance to override first
 #ifdef NEW_CODE
@@ -49,7 +49,7 @@ SFString nextRpcresultChunk(const SFString& fieldIn, const void *data) {
         if (!ret.empty())
             return ret;
 #else
-        SFString ret = nextRpcresultChunk_custom(fieldIn, data);
+        SFString ret = nextRpcresultChunk_custom(fieldIn, dataPtr);
         if (!ret.empty())
             return ret;
 
@@ -153,8 +153,8 @@ void CRPCResult::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextRpcresultChunk_custom(const SFString& fieldIn, const void *data) {
-    const CRPCResult *rpc = (const CRPCResult *)data;
+SFString nextRpcresultChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+    const CRPCResult *rpc = (const CRPCResult *)dataPtr;
     if (rpc) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -174,7 +174,7 @@ SFString nextRpcresultChunk_custom(const SFString& fieldIn, const void *data) {
 }
 
 //---------------------------------------------------------------------------
-bool CRPCResult::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+bool CRPCResult::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;

@@ -17,11 +17,11 @@ namespace qblocks {
 IMPLEMENT_NODE(CAccount, CBaseNode, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextAccountChunk(const SFString& fieldIn, const void *data);
-static SFString nextAccountChunk_custom(const SFString& fieldIn, const void *data);
+static SFString nextAccountChunk(const SFString& fieldIn, const void *dataPtr);
+static SFString nextAccountChunk_custom(const SFString& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CAccount::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+void CAccount::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -31,7 +31,7 @@ void CAccount::Format(CExportContext& ctx, const SFString& fmtIn, void *data) co
     }
 
     SFString fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, data))
+    if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
     while (!fmt.empty())
@@ -39,8 +39,8 @@ void CAccount::Format(CExportContext& ctx, const SFString& fmtIn, void *data) co
 }
 
 //---------------------------------------------------------------------------
-SFString nextAccountChunk(const SFString& fieldIn, const void *data) {
-    const CAccount *acc = (const CAccount *)data;
+SFString nextAccountChunk(const SFString& fieldIn, const void *dataPtr) {
+    const CAccount *acc = (const CAccount *)dataPtr;
     if (acc) {
         // Give customized code a chance to override first
 #ifdef NEW_CODE
@@ -48,7 +48,7 @@ SFString nextAccountChunk(const SFString& fieldIn, const void *data) {
         if (!ret.empty())
             return ret;
 #else
-        SFString ret = nextAccountChunk_custom(fieldIn, data);
+        SFString ret = nextAccountChunk_custom(fieldIn, dataPtr);
         if (!ret.empty())
             return ret;
 
@@ -207,8 +207,8 @@ void CAccount::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextAccountChunk_custom(const SFString& fieldIn, const void *data) {
-    const CAccount *acc = (const CAccount *)data;
+SFString nextAccountChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+    const CAccount *acc = (const CAccount *)dataPtr;
     if (acc) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -234,7 +234,7 @@ SFString nextAccountChunk_custom(const SFString& fieldIn, const void *data) {
 }
 
 //---------------------------------------------------------------------------
-bool CAccount::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+bool CAccount::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // Split the format string into three parts: pre, post and records.
     // If no records, just process as normal. We do this because it's so slow

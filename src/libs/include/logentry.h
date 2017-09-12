@@ -29,7 +29,7 @@ class CReceipt;
 class CLogEntry : public CBaseNode {
 public:
     SFAddress address;
-    SFString data;
+    SFString data1;
     SFUint32 logIndex;
     SFBigUintArray topics;
 
@@ -96,7 +96,7 @@ inline void CLogEntry::Init(void) {
     CBaseNode::Init();
 
     address = "";
-    data = "";
+    data1 = "";
     logIndex = 0;
     topics.Clear();
 
@@ -117,7 +117,7 @@ inline void CLogEntry::Copy(const CLogEntry& lo) {
     CBaseNode::Copy(lo);
 
     address = lo.address;
-    data = lo.data;
+    data1 = lo.data1;
     logIndex = lo.logIndex;
     topics = lo.topics;
 
