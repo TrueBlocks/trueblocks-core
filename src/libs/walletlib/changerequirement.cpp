@@ -16,11 +16,11 @@
 IMPLEMENT_NODE(QChangeRequirement, CTransaction, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextChangerequirementChunk(const SFString& fieldIn, const void *data);
-static SFString nextChangerequirementChunk_custom(const SFString& fieldIn, const void *data);
+static SFString nextChangerequirementChunk(const SFString& fieldIn, const void *dataPtr);
+static SFString nextChangerequirementChunk_custom(const SFString& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void QChangeRequirement::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+void QChangeRequirement::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -30,7 +30,7 @@ void QChangeRequirement::Format(CExportContext& ctx, const SFString& fmtIn, void
     }
 
     SFString fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, data))
+    if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
     while (!fmt.empty())
@@ -38,8 +38,8 @@ void QChangeRequirement::Format(CExportContext& ctx, const SFString& fmtIn, void
 }
 
 //---------------------------------------------------------------------------
-SFString nextChangerequirementChunk(const SFString& fieldIn, const void *data) {
-    const QChangeRequirement *cha = (const QChangeRequirement *)data;
+SFString nextChangerequirementChunk(const SFString& fieldIn, const void *dataPtr) {
+    const QChangeRequirement *cha = (const QChangeRequirement *)dataPtr;
     if (cha) {
         // Give customized code a chance to override first
 #ifdef NEW_CODE
@@ -47,7 +47,7 @@ SFString nextChangerequirementChunk(const SFString& fieldIn, const void *data) {
         if (!ret.empty())
             return ret;
 #else
-        SFString ret = nextChangerequirementChunk_custom(fieldIn, data);
+        SFString ret = nextChangerequirementChunk_custom(fieldIn, dataPtr);
         if (!ret.empty())
             return ret;
 
@@ -136,8 +136,8 @@ void QChangeRequirement::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextChangerequirementChunk_custom(const SFString& fieldIn, const void *data) {
-    const QChangeRequirement *cha = (const QChangeRequirement *)data;
+SFString nextChangerequirementChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+    const QChangeRequirement *cha = (const QChangeRequirement *)dataPtr;
     if (cha) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -157,7 +157,7 @@ SFString nextChangerequirementChunk_custom(const SFString& fieldIn, const void *
 }
 
 //---------------------------------------------------------------------------
-bool QChangeRequirement::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+bool QChangeRequirement::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;

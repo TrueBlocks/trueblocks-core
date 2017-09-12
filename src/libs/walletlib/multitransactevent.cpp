@@ -16,11 +16,11 @@
 IMPLEMENT_NODE(QMultiTransactEvent, CLogEntry, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextMultitransacteventChunk(const SFString& fieldIn, const void *data);
-static SFString nextMultitransacteventChunk_custom(const SFString& fieldIn, const void *data);
+static SFString nextMultitransacteventChunk(const SFString& fieldIn, const void *dataPtr);
+static SFString nextMultitransacteventChunk_custom(const SFString& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void QMultiTransactEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+void QMultiTransactEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -30,7 +30,7 @@ void QMultiTransactEvent::Format(CExportContext& ctx, const SFString& fmtIn, voi
     }
 
     SFString fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, data))
+    if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
     while (!fmt.empty())
@@ -38,8 +38,8 @@ void QMultiTransactEvent::Format(CExportContext& ctx, const SFString& fmtIn, voi
 }
 
 //---------------------------------------------------------------------------
-SFString nextMultitransacteventChunk(const SFString& fieldIn, const void *data) {
-    const QMultiTransactEvent *mul = (const QMultiTransactEvent *)data;
+SFString nextMultitransacteventChunk(const SFString& fieldIn, const void *dataPtr) {
+    const QMultiTransactEvent *mul = (const QMultiTransactEvent *)dataPtr;
     if (mul) {
         // Give customized code a chance to override first
 #ifdef NEW_CODE
@@ -47,7 +47,7 @@ SFString nextMultitransacteventChunk(const SFString& fieldIn, const void *data) 
         if (!ret.empty())
             return ret;
 #else
-        SFString ret = nextMultitransacteventChunk_custom(fieldIn, data);
+        SFString ret = nextMultitransacteventChunk_custom(fieldIn, dataPtr);
         if (!ret.empty())
             return ret;
 
@@ -168,8 +168,8 @@ void QMultiTransactEvent::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextMultitransacteventChunk_custom(const SFString& fieldIn, const void *data) {
-    const QMultiTransactEvent *mul = (const QMultiTransactEvent *)data;
+SFString nextMultitransacteventChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+    const QMultiTransactEvent *mul = (const QMultiTransactEvent *)dataPtr;
     if (mul) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -189,7 +189,7 @@ SFString nextMultitransacteventChunk_custom(const SFString& fieldIn, const void 
 }
 
 //---------------------------------------------------------------------------
-bool QMultiTransactEvent::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+bool QMultiTransactEvent::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;

@@ -16,11 +16,11 @@
 IMPLEMENT_NODE(QApprovalEvent, CLogEntry, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextApprovaleventChunk(const SFString& fieldIn, const void *data);
-static SFString nextApprovaleventChunk_custom(const SFString& fieldIn, const void *data);
+static SFString nextApprovaleventChunk(const SFString& fieldIn, const void *dataPtr);
+static SFString nextApprovaleventChunk_custom(const SFString& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void QApprovalEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+void QApprovalEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -30,7 +30,7 @@ void QApprovalEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *da
     }
 
     SFString fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, data))
+    if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
     while (!fmt.empty())
@@ -38,8 +38,8 @@ void QApprovalEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *da
 }
 
 //---------------------------------------------------------------------------
-SFString nextApprovaleventChunk(const SFString& fieldIn, const void *data) {
-    const QApprovalEvent *app = (const QApprovalEvent *)data;
+SFString nextApprovaleventChunk(const SFString& fieldIn, const void *dataPtr) {
+    const QApprovalEvent *app = (const QApprovalEvent *)dataPtr;
     if (app) {
         // Give customized code a chance to override first
 #ifdef NEW_CODE
@@ -47,7 +47,7 @@ SFString nextApprovaleventChunk(const SFString& fieldIn, const void *data) {
         if (!ret.empty())
             return ret;
 #else
-        SFString ret = nextApprovaleventChunk_custom(fieldIn, data);
+        SFString ret = nextApprovaleventChunk_custom(fieldIn, dataPtr);
         if (!ret.empty())
             return ret;
 
@@ -146,8 +146,8 @@ void QApprovalEvent::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextApprovaleventChunk_custom(const SFString& fieldIn, const void *data) {
-    const QApprovalEvent *app = (const QApprovalEvent *)data;
+SFString nextApprovaleventChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+    const QApprovalEvent *app = (const QApprovalEvent *)dataPtr;
     if (app) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -167,7 +167,7 @@ SFString nextApprovaleventChunk_custom(const SFString& fieldIn, const void *data
 }
 
 //---------------------------------------------------------------------------
-bool QApprovalEvent::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+bool QApprovalEvent::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;

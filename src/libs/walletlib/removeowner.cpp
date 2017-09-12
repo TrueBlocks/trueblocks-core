@@ -16,11 +16,11 @@
 IMPLEMENT_NODE(QRemoveOwner, CTransaction, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextRemoveownerChunk(const SFString& fieldIn, const void *data);
-static SFString nextRemoveownerChunk_custom(const SFString& fieldIn, const void *data);
+static SFString nextRemoveownerChunk(const SFString& fieldIn, const void *dataPtr);
+static SFString nextRemoveownerChunk_custom(const SFString& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void QRemoveOwner::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+void QRemoveOwner::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -30,7 +30,7 @@ void QRemoveOwner::Format(CExportContext& ctx, const SFString& fmtIn, void *data
     }
 
     SFString fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, data))
+    if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
     while (!fmt.empty())
@@ -38,8 +38,8 @@ void QRemoveOwner::Format(CExportContext& ctx, const SFString& fmtIn, void *data
 }
 
 //---------------------------------------------------------------------------
-SFString nextRemoveownerChunk(const SFString& fieldIn, const void *data) {
-    const QRemoveOwner *rem = (const QRemoveOwner *)data;
+SFString nextRemoveownerChunk(const SFString& fieldIn, const void *dataPtr) {
+    const QRemoveOwner *rem = (const QRemoveOwner *)dataPtr;
     if (rem) {
         // Give customized code a chance to override first
 #ifdef NEW_CODE
@@ -47,7 +47,7 @@ SFString nextRemoveownerChunk(const SFString& fieldIn, const void *data) {
         if (!ret.empty())
             return ret;
 #else
-        SFString ret = nextRemoveownerChunk_custom(fieldIn, data);
+        SFString ret = nextRemoveownerChunk_custom(fieldIn, dataPtr);
         if (!ret.empty())
             return ret;
 
@@ -136,8 +136,8 @@ void QRemoveOwner::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextRemoveownerChunk_custom(const SFString& fieldIn, const void *data) {
-    const QRemoveOwner *rem = (const QRemoveOwner *)data;
+SFString nextRemoveownerChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+    const QRemoveOwner *rem = (const QRemoveOwner *)dataPtr;
     if (rem) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -157,7 +157,7 @@ SFString nextRemoveownerChunk_custom(const SFString& fieldIn, const void *data) 
 }
 
 //---------------------------------------------------------------------------
-bool QRemoveOwner::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+bool QRemoveOwner::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;

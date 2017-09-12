@@ -16,11 +16,11 @@
 IMPLEMENT_NODE(QChangeOwner, CTransaction, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextChangeownerChunk(const SFString& fieldIn, const void *data);
-static SFString nextChangeownerChunk_custom(const SFString& fieldIn, const void *data);
+static SFString nextChangeownerChunk(const SFString& fieldIn, const void *dataPtr);
+static SFString nextChangeownerChunk_custom(const SFString& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void QChangeOwner::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+void QChangeOwner::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -30,7 +30,7 @@ void QChangeOwner::Format(CExportContext& ctx, const SFString& fmtIn, void *data
     }
 
     SFString fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, data))
+    if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
     while (!fmt.empty())
@@ -38,8 +38,8 @@ void QChangeOwner::Format(CExportContext& ctx, const SFString& fmtIn, void *data
 }
 
 //---------------------------------------------------------------------------
-SFString nextChangeownerChunk(const SFString& fieldIn, const void *data) {
-    const QChangeOwner *cha = (const QChangeOwner *)data;
+SFString nextChangeownerChunk(const SFString& fieldIn, const void *dataPtr) {
+    const QChangeOwner *cha = (const QChangeOwner *)dataPtr;
     if (cha) {
         // Give customized code a chance to override first
 #ifdef NEW_CODE
@@ -47,7 +47,7 @@ SFString nextChangeownerChunk(const SFString& fieldIn, const void *data) {
         if (!ret.empty())
             return ret;
 #else
-        SFString ret = nextChangeownerChunk_custom(fieldIn, data);
+        SFString ret = nextChangeownerChunk_custom(fieldIn, dataPtr);
         if (!ret.empty())
             return ret;
 
@@ -141,8 +141,8 @@ void QChangeOwner::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextChangeownerChunk_custom(const SFString& fieldIn, const void *data) {
-    const QChangeOwner *cha = (const QChangeOwner *)data;
+SFString nextChangeownerChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+    const QChangeOwner *cha = (const QChangeOwner *)dataPtr;
     if (cha) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -162,7 +162,7 @@ SFString nextChangeownerChunk_custom(const SFString& fieldIn, const void *data) 
 }
 
 //---------------------------------------------------------------------------
-bool QChangeOwner::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+bool QChangeOwner::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;

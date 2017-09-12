@@ -16,11 +16,11 @@
 IMPLEMENT_NODE(QAddOwner, CTransaction, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextAddownerChunk(const SFString& fieldIn, const void *data);
-static SFString nextAddownerChunk_custom(const SFString& fieldIn, const void *data);
+static SFString nextAddownerChunk(const SFString& fieldIn, const void *dataPtr);
+static SFString nextAddownerChunk_custom(const SFString& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void QAddOwner::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+void QAddOwner::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -30,7 +30,7 @@ void QAddOwner::Format(CExportContext& ctx, const SFString& fmtIn, void *data) c
     }
 
     SFString fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, data))
+    if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
     while (!fmt.empty())
@@ -38,8 +38,8 @@ void QAddOwner::Format(CExportContext& ctx, const SFString& fmtIn, void *data) c
 }
 
 //---------------------------------------------------------------------------
-SFString nextAddownerChunk(const SFString& fieldIn, const void *data) {
-    const QAddOwner *add = (const QAddOwner *)data;
+SFString nextAddownerChunk(const SFString& fieldIn, const void *dataPtr) {
+    const QAddOwner *add = (const QAddOwner *)dataPtr;
     if (add) {
         // Give customized code a chance to override first
 #ifdef NEW_CODE
@@ -47,7 +47,7 @@ SFString nextAddownerChunk(const SFString& fieldIn, const void *data) {
         if (!ret.empty())
             return ret;
 #else
-        SFString ret = nextAddownerChunk_custom(fieldIn, data);
+        SFString ret = nextAddownerChunk_custom(fieldIn, dataPtr);
         if (!ret.empty())
             return ret;
 
@@ -136,8 +136,8 @@ void QAddOwner::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextAddownerChunk_custom(const SFString& fieldIn, const void *data) {
-    const QAddOwner *add = (const QAddOwner *)data;
+SFString nextAddownerChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+    const QAddOwner *add = (const QAddOwner *)dataPtr;
     if (add) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -157,7 +157,7 @@ SFString nextAddownerChunk_custom(const SFString& fieldIn, const void *data) {
 }
 
 //---------------------------------------------------------------------------
-bool QAddOwner::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+bool QAddOwner::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;

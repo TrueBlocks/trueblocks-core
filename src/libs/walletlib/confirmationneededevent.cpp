@@ -16,11 +16,11 @@
 IMPLEMENT_NODE(QConfirmationNeededEvent, CLogEntry, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextConfirmationneededeventChunk(const SFString& fieldIn, const void *data);
-static SFString nextConfirmationneededeventChunk_custom(const SFString& fieldIn, const void *data);
+static SFString nextConfirmationneededeventChunk(const SFString& fieldIn, const void *dataPtr);
+static SFString nextConfirmationneededeventChunk_custom(const SFString& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void QConfirmationNeededEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+void QConfirmationNeededEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -30,7 +30,7 @@ void QConfirmationNeededEvent::Format(CExportContext& ctx, const SFString& fmtIn
     }
 
     SFString fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, data))
+    if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
     while (!fmt.empty())
@@ -38,8 +38,8 @@ void QConfirmationNeededEvent::Format(CExportContext& ctx, const SFString& fmtIn
 }
 
 //---------------------------------------------------------------------------
-SFString nextConfirmationneededeventChunk(const SFString& fieldIn, const void *data) {
-    const QConfirmationNeededEvent *con = (const QConfirmationNeededEvent *)data;
+SFString nextConfirmationneededeventChunk(const SFString& fieldIn, const void *dataPtr) {
+    const QConfirmationNeededEvent *con = (const QConfirmationNeededEvent *)dataPtr;
     if (con) {
         // Give customized code a chance to override first
 #ifdef NEW_CODE
@@ -47,7 +47,7 @@ SFString nextConfirmationneededeventChunk(const SFString& fieldIn, const void *d
         if (!ret.empty())
             return ret;
 #else
-        SFString ret = nextConfirmationneededeventChunk_custom(fieldIn, data);
+        SFString ret = nextConfirmationneededeventChunk_custom(fieldIn, dataPtr);
         if (!ret.empty())
             return ret;
 
@@ -172,8 +172,8 @@ void QConfirmationNeededEvent::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextConfirmationneededeventChunk_custom(const SFString& fieldIn, const void *data) {
-    const QConfirmationNeededEvent *con = (const QConfirmationNeededEvent *)data;
+SFString nextConfirmationneededeventChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+    const QConfirmationNeededEvent *con = (const QConfirmationNeededEvent *)dataPtr;
     if (con) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -193,7 +193,7 @@ SFString nextConfirmationneededeventChunk_custom(const SFString& fieldIn, const 
 }
 
 //---------------------------------------------------------------------------
-bool QConfirmationNeededEvent::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+bool QConfirmationNeededEvent::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;

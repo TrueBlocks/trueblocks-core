@@ -18,11 +18,11 @@ namespace qblocks {
 IMPLEMENT_NODE(CLeaf, CTreeNode, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextLeafChunk(const SFString& fieldIn, const void *data);
-static SFString nextLeafChunk_custom(const SFString& fieldIn, const void *data);
+static SFString nextLeafChunk(const SFString& fieldIn, const void *dataPtr);
+static SFString nextLeafChunk_custom(const SFString& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CLeaf::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+void CLeaf::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -32,7 +32,7 @@ void CLeaf::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const
     }
 
     SFString fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, data))
+    if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
     while (!fmt.empty())
@@ -40,8 +40,8 @@ void CLeaf::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const
 }
 
 //---------------------------------------------------------------------------
-SFString nextLeafChunk(const SFString& fieldIn, const void *data) {
-    const CLeaf *lea = (const CLeaf *)data;
+SFString nextLeafChunk(const SFString& fieldIn, const void *dataPtr) {
+    const CLeaf *lea = (const CLeaf *)dataPtr;
     if (lea) {
         // Give customized code a chance to override first
 #ifdef NEW_CODE
@@ -49,7 +49,7 @@ SFString nextLeafChunk(const SFString& fieldIn, const void *data) {
         if (!ret.empty())
             return ret;
 #else
-        SFString ret = nextLeafChunk_custom(fieldIn, data);
+        SFString ret = nextLeafChunk_custom(fieldIn, dataPtr);
         if (!ret.empty())
             return ret;
 
@@ -156,8 +156,8 @@ void CLeaf::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextLeafChunk_custom(const SFString& fieldIn, const void *data) {
-    const CLeaf *lea = (const CLeaf *)data;
+SFString nextLeafChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+    const CLeaf *lea = (const CLeaf *)dataPtr;
     if (lea) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -177,7 +177,7 @@ SFString nextLeafChunk_custom(const SFString& fieldIn, const void *data) {
 }
 
 //---------------------------------------------------------------------------
-bool CLeaf::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+bool CLeaf::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
