@@ -233,21 +233,25 @@ namespace qblocks {
 #define SFHash         SFString
 #define SFBloom        SFUintBN
 #define SFWei          SFUintBN
+#define SFGas          SFUint32
 #define blknum_t       uint64_t
 #define txnum_t        uint32_t
 #define lognum_t       uint32_t
 
+#define toUnsigned(a)  (SFUint32)((a).startsWith("0x")?hex2Long((a)):toLongU((a)))
+#define toSigned(a)    (int64_t)((a).startsWith("0x")?hex2Long((a)):toLongU((a)))
 #define toHash(a)      (a)
 #define toTopic(a)     canonicalWei(a)
 #define toBloom(a)     canonicalWei(a)
 #define toWei(a)       canonicalWei(a)
-#define toUnsigned(a)  (SFUint32)((a).startsWith("0x")?hex2Long((a)):toLongU((a)))
-#define toSigned(a)    (int64_t)((a).startsWith("0x")?hex2Long((a)):toLongU((a)))
+#define toGas(a)       toUnsigned(a)
 
 #define fromAddress(a)  ((a).empty() ? "0x0" : (a))
 #define fromHash(a)     ((a).empty() ? "0x0" : (a))
 #define fromWei(a)      to_string((a)).c_str()
 #define fromTopic(a)    ("0x"+padLeft(toLower(SFString(to_hex((a)).c_str())),64,'0'))
+#define fromGas(a)      asStringU(a)
+
 #ifndef NEW_CODE
 #define NEW_CODE
 #endif
@@ -337,7 +341,7 @@ namespace qblocks {
 
 #define newUnsigned32(a)  ((a).startsWith("0x") ?    (uint32_t)hex2Long((a)) :    (uint32_t)toLongU((a)))
 #define newSigned32(a)    ((a).startsWith("0x") ?    ( int32_t)hex2Long((a)) :    ( int32_t)toLong ((a)))
-    
+
     //--------------------------------------------------------------------
     inline SFString formatFloat(double f, uint32_t nDecimals=10) {
         char s[100], r[100];

@@ -29,7 +29,7 @@ class CTraceAction : public CBaseNode {
 public:
     SFString callType;
     SFAddress from;
-    SFUint32 gas;
+    SFGas gas;
     SFString input;
     SFAddress to;
     SFWei value;

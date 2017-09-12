@@ -27,7 +27,7 @@ typedef SFUniqueList<CTraceResult*>       CTraceResultListU;
 //--------------------------------------------------------------------------
 class CTraceResult : public CBaseNode {
 public:
-    SFUint32 gasUsed;
+    SFGas gasUsed;
     SFString output;
 
 public:
