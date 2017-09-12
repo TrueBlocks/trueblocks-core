@@ -13,13 +13,6 @@
 
 namespace qblocks {
 
-    //--------------------------------------------------------------------------------------------------------------
-    extern SFTime      dateFromTimeStamp(timestamp_t tsIn);
-    extern timestamp_t toTimeStamp(const SFTime& timeIn);
-    extern SFTime      snagDate(const SFString& str, int dir = 0);  // -1 BOD, 0 MIDDAY, 1 EOD
-
-#define newTimestamp(a)   ((a).startsWith("0x") ? (timestamp_t)hex2Long((a)) : (timestamp_t)toLong ((a)))
-
     //----------------------------------------------------------------------------
     inline bool isNumeral(const SFString& test) {
         for (int32_t i = 0 ; i < (int32_t)test.length() ; i++)
@@ -111,13 +104,17 @@ namespace qblocks {
     inline uint32_t toLong32u(char *str) { return (uint32_t)strtoul((const char*)(str), NULL, 10); }
 
     //-------------------------------------------------------------------------
+    inline int32_t toLong32(const char *str) { return (int32_t)strtol((const char*)(str), NULL, 10); }
+    inline int32_t toLong32(char *str) { return (int32_t)strtol((const char*)(str), NULL, 10); }
+
+    //-------------------------------------------------------------------------
     inline double toDouble(const char *str) { return (double)strtold((const char*)(str), NULL); }
     inline double toDouble(char *str) { return (double)strtold((const char*)(str), NULL); }
 
     //--------------------------------------------------------------------
     inline bool toBool_in(const SFString& in) { return in%"true" || toLong(in)!=0; }
 #define toBool toBool_in
-    
+
     //--------------------------------------------------------------------
     inline SFString padNum2(uint64_t n) { return padLeft(asStringU((n)), 2, '0'); }
     inline SFString padNum3(uint64_t n) { return padLeft(asStringU((n)), 3, '0'); }
@@ -245,6 +242,7 @@ namespace qblocks {
 #define toBloom(a)     canonicalWei(a)
 #define toWei(a)       canonicalWei(a)
 #define toUnsigned(a)  (SFUint32)((a).startsWith("0x")?hex2Long((a)):toLongU((a)))
+#define toSigned(a)    (int64_t)((a).startsWith("0x")?hex2Long((a)):toLongU((a)))
 
 #define fromAddress(a)  ((a).empty() ? "0x0" : (a))
 #define fromHash(a)     ((a).empty() ? "0x0" : (a))
@@ -259,6 +257,14 @@ namespace qblocks {
 #define fromBloom(a)    ((a)==0?"0x0":"0x"+padLeft(toLower(SFString(to_hex((a)).c_str())),512,'0'))
 #endif
 #define fromUnsigned(a) asStringU((a))
+
+    //--------------------------------------------------------------------------------------------------------------
+    extern SFTime      dateFromTimeStamp(timestamp_t tsIn);
+    extern SFTime      snagDate(const SFString& str, int dir = 0);  // -1 BOD, 0 MIDDAY, 1 EOD
+
+    extern timestamp_t toTimestamp(const SFTime&   timeIn);
+    extern timestamp_t toTimestamp(const SFString& timeIn);
+    inline SFString    fromTimestamp(timestamp_t ts) { return asString(ts); }
 
     //----------------------------------------------------------------------------------
     inline SFString fixHash(const SFString& hashIn) {

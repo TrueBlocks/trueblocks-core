@@ -56,7 +56,7 @@ namespace qblocks {
 
         void writeHeader(void) {
             Seek(0, SEEK_SET);
-            m_header.m_lastWritten = toTimeStamp(Now());
+            m_header.m_lastWritten = toTimestamp(Now());
             operator<<(m_header.m_archiveSchema);
             operator<<(m_header.m_lastWritten);
             operator<<(m_header.m_writeDeleted);
