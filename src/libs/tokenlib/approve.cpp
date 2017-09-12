@@ -16,11 +16,11 @@
 IMPLEMENT_NODE(QApprove, CTransaction, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextApproveChunk(const SFString& fieldIn, const void *data);
-static SFString nextApproveChunk_custom(const SFString& fieldIn, const void *data);
+static SFString nextApproveChunk(const SFString& fieldIn, const void *dataPtr);
+static SFString nextApproveChunk_custom(const SFString& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void QApprove::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+void QApprove::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -30,7 +30,7 @@ void QApprove::Format(CExportContext& ctx, const SFString& fmtIn, void *data) co
     }
 
     SFString fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, data))
+    if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
     while (!fmt.empty())
@@ -38,8 +38,8 @@ void QApprove::Format(CExportContext& ctx, const SFString& fmtIn, void *data) co
 }
 
 //---------------------------------------------------------------------------
-SFString nextApproveChunk(const SFString& fieldIn, const void *data) {
-    const QApprove *app = (const QApprove *)data;
+SFString nextApproveChunk(const SFString& fieldIn, const void *dataPtr) {
+    const QApprove *app = (const QApprove *)dataPtr;
     if (app) {
         // Give customized code a chance to override first
 #ifdef NEW_CODE
@@ -47,7 +47,7 @@ SFString nextApproveChunk(const SFString& fieldIn, const void *data) {
         if (!ret.empty())
             return ret;
 #else
-        SFString ret = nextApproveChunk_custom(fieldIn, data);
+        SFString ret = nextApproveChunk_custom(fieldIn, dataPtr);
         if (!ret.empty())
             return ret;
 
@@ -141,8 +141,8 @@ void QApprove::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextApproveChunk_custom(const SFString& fieldIn, const void *data) {
-    const QApprove *app = (const QApprove *)data;
+SFString nextApproveChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+    const QApprove *app = (const QApprove *)dataPtr;
     if (app) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -162,7 +162,7 @@ SFString nextApproveChunk_custom(const SFString& fieldIn, const void *data) {
 }
 
 //---------------------------------------------------------------------------
-bool QApprove::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+bool QApprove::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;

@@ -16,11 +16,11 @@
 IMPLEMENT_NODE(QOwnerChangedEvent, CLogEntry, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextOwnerchangedeventChunk(const SFString& fieldIn, const void *data);
-static SFString nextOwnerchangedeventChunk_custom(const SFString& fieldIn, const void *data);
+static SFString nextOwnerchangedeventChunk(const SFString& fieldIn, const void *dataPtr);
+static SFString nextOwnerchangedeventChunk_custom(const SFString& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void QOwnerChangedEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+void QOwnerChangedEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -30,7 +30,7 @@ void QOwnerChangedEvent::Format(CExportContext& ctx, const SFString& fmtIn, void
     }
 
     SFString fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, data))
+    if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
     while (!fmt.empty())
@@ -38,8 +38,8 @@ void QOwnerChangedEvent::Format(CExportContext& ctx, const SFString& fmtIn, void
 }
 
 //---------------------------------------------------------------------------
-SFString nextOwnerchangedeventChunk(const SFString& fieldIn, const void *data) {
-    const QOwnerChangedEvent *own = (const QOwnerChangedEvent *)data;
+SFString nextOwnerchangedeventChunk(const SFString& fieldIn, const void *dataPtr) {
+    const QOwnerChangedEvent *own = (const QOwnerChangedEvent *)dataPtr;
     if (own) {
         // Give customized code a chance to override first
 #ifdef NEW_CODE
@@ -47,7 +47,7 @@ SFString nextOwnerchangedeventChunk(const SFString& fieldIn, const void *data) {
         if (!ret.empty())
             return ret;
 #else
-        SFString ret = nextOwnerchangedeventChunk_custom(fieldIn, data);
+        SFString ret = nextOwnerchangedeventChunk_custom(fieldIn, dataPtr);
         if (!ret.empty())
             return ret;
 
@@ -145,8 +145,8 @@ void QOwnerChangedEvent::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextOwnerchangedeventChunk_custom(const SFString& fieldIn, const void *data) {
-    const QOwnerChangedEvent *own = (const QOwnerChangedEvent *)data;
+SFString nextOwnerchangedeventChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+    const QOwnerChangedEvent *own = (const QOwnerChangedEvent *)dataPtr;
     if (own) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -166,7 +166,7 @@ SFString nextOwnerchangedeventChunk_custom(const SFString& fieldIn, const void *
 }
 
 //---------------------------------------------------------------------------
-bool QOwnerChangedEvent::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+bool QOwnerChangedEvent::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;

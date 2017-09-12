@@ -18,11 +18,11 @@ namespace qblocks {
 IMPLEMENT_NODE(CBranch, CTreeNode, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextBranchChunk(const SFString& fieldIn, const void *data);
-static SFString nextBranchChunk_custom(const SFString& fieldIn, const void *data);
+static SFString nextBranchChunk(const SFString& fieldIn, const void *dataPtr);
+static SFString nextBranchChunk_custom(const SFString& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CBranch::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+void CBranch::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -32,7 +32,7 @@ void CBranch::Format(CExportContext& ctx, const SFString& fmtIn, void *data) con
     }
 
     SFString fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, data))
+    if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
     while (!fmt.empty())
@@ -40,8 +40,8 @@ void CBranch::Format(CExportContext& ctx, const SFString& fmtIn, void *data) con
 }
 
 //---------------------------------------------------------------------------
-SFString nextBranchChunk(const SFString& fieldIn, const void *data) {
-    const CBranch *bra = (const CBranch *)data;
+SFString nextBranchChunk(const SFString& fieldIn, const void *dataPtr) {
+    const CBranch *bra = (const CBranch *)dataPtr;
     if (bra) {
         // Give customized code a chance to override first
 #ifdef NEW_CODE
@@ -49,7 +49,7 @@ SFString nextBranchChunk(const SFString& fieldIn, const void *data) {
         if (!ret.empty())
             return ret;
 #else
-        SFString ret = nextBranchChunk_custom(fieldIn, data);
+        SFString ret = nextBranchChunk_custom(fieldIn, dataPtr);
         if (!ret.empty())
             return ret;
 
@@ -138,8 +138,8 @@ void CBranch::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextBranchChunk_custom(const SFString& fieldIn, const void *data) {
-    const CBranch *bra = (const CBranch *)data;
+SFString nextBranchChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+    const CBranch *bra = (const CBranch *)dataPtr;
     if (bra) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -162,7 +162,7 @@ SFString nextBranchChunk_custom(const SFString& fieldIn, const void *data) {
 }
 
 //---------------------------------------------------------------------------
-bool CBranch::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+bool CBranch::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;

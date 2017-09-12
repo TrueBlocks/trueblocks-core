@@ -16,11 +16,11 @@
 IMPLEMENT_NODE(QRequirementChangedEvent, CLogEntry, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextRequirementchangedeventChunk(const SFString& fieldIn, const void *data);
-static SFString nextRequirementchangedeventChunk_custom(const SFString& fieldIn, const void *data);
+static SFString nextRequirementchangedeventChunk(const SFString& fieldIn, const void *dataPtr);
+static SFString nextRequirementchangedeventChunk_custom(const SFString& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void QRequirementChangedEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+void QRequirementChangedEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -30,7 +30,7 @@ void QRequirementChangedEvent::Format(CExportContext& ctx, const SFString& fmtIn
     }
 
     SFString fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, data))
+    if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
     while (!fmt.empty())
@@ -38,8 +38,8 @@ void QRequirementChangedEvent::Format(CExportContext& ctx, const SFString& fmtIn
 }
 
 //---------------------------------------------------------------------------
-SFString nextRequirementchangedeventChunk(const SFString& fieldIn, const void *data) {
-    const QRequirementChangedEvent *req = (const QRequirementChangedEvent *)data;
+SFString nextRequirementchangedeventChunk(const SFString& fieldIn, const void *dataPtr) {
+    const QRequirementChangedEvent *req = (const QRequirementChangedEvent *)dataPtr;
     if (req) {
         // Give customized code a chance to override first
 #ifdef NEW_CODE
@@ -47,7 +47,7 @@ SFString nextRequirementchangedeventChunk(const SFString& fieldIn, const void *d
         if (!ret.empty())
             return ret;
 #else
-        SFString ret = nextRequirementchangedeventChunk_custom(fieldIn, data);
+        SFString ret = nextRequirementchangedeventChunk_custom(fieldIn, dataPtr);
         if (!ret.empty())
             return ret;
 
@@ -136,8 +136,8 @@ void QRequirementChangedEvent::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextRequirementchangedeventChunk_custom(const SFString& fieldIn, const void *data) {
-    const QRequirementChangedEvent *req = (const QRequirementChangedEvent *)data;
+SFString nextRequirementchangedeventChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+    const QRequirementChangedEvent *req = (const QRequirementChangedEvent *)dataPtr;
     if (req) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -157,7 +157,7 @@ SFString nextRequirementchangedeventChunk_custom(const SFString& fieldIn, const 
 }
 
 //---------------------------------------------------------------------------
-bool QRequirementChangedEvent::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+bool QRequirementChangedEvent::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;

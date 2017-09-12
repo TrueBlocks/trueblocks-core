@@ -16,11 +16,11 @@
 IMPLEMENT_NODE(QTransferEvent, CLogEntry, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextTransfereventChunk(const SFString& fieldIn, const void *data);
-static SFString nextTransfereventChunk_custom(const SFString& fieldIn, const void *data);
+static SFString nextTransfereventChunk(const SFString& fieldIn, const void *dataPtr);
+static SFString nextTransfereventChunk_custom(const SFString& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void QTransferEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+void QTransferEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -30,7 +30,7 @@ void QTransferEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *da
     }
 
     SFString fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, data))
+    if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
     while (!fmt.empty())
@@ -38,8 +38,8 @@ void QTransferEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *da
 }
 
 //---------------------------------------------------------------------------
-SFString nextTransfereventChunk(const SFString& fieldIn, const void *data) {
-    const QTransferEvent *tra = (const QTransferEvent *)data;
+SFString nextTransfereventChunk(const SFString& fieldIn, const void *dataPtr) {
+    const QTransferEvent *tra = (const QTransferEvent *)dataPtr;
     if (tra) {
         // Give customized code a chance to override first
 #ifdef NEW_CODE
@@ -47,7 +47,7 @@ SFString nextTransfereventChunk(const SFString& fieldIn, const void *data) {
         if (!ret.empty())
             return ret;
 #else
-        SFString ret = nextTransfereventChunk_custom(fieldIn, data);
+        SFString ret = nextTransfereventChunk_custom(fieldIn, dataPtr);
         if (!ret.empty())
             return ret;
 
@@ -146,8 +146,8 @@ void QTransferEvent::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextTransfereventChunk_custom(const SFString& fieldIn, const void *data) {
-    const QTransferEvent *tra = (const QTransferEvent *)data;
+SFString nextTransfereventChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+    const QTransferEvent *tra = (const QTransferEvent *)dataPtr;
     if (tra) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -167,7 +167,7 @@ SFString nextTransfereventChunk_custom(const SFString& fieldIn, const void *data
 }
 
 //---------------------------------------------------------------------------
-bool QTransferEvent::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+bool QTransferEvent::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;

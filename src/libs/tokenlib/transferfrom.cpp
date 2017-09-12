@@ -16,11 +16,11 @@
 IMPLEMENT_NODE(QTransferFrom, CTransaction, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextTransferfromChunk(const SFString& fieldIn, const void *data);
-static SFString nextTransferfromChunk_custom(const SFString& fieldIn, const void *data);
+static SFString nextTransferfromChunk(const SFString& fieldIn, const void *dataPtr);
+static SFString nextTransferfromChunk_custom(const SFString& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void QTransferFrom::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+void QTransferFrom::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -30,7 +30,7 @@ void QTransferFrom::Format(CExportContext& ctx, const SFString& fmtIn, void *dat
     }
 
     SFString fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, data))
+    if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
     while (!fmt.empty())
@@ -38,8 +38,8 @@ void QTransferFrom::Format(CExportContext& ctx, const SFString& fmtIn, void *dat
 }
 
 //---------------------------------------------------------------------------
-SFString nextTransferfromChunk(const SFString& fieldIn, const void *data) {
-    const QTransferFrom *tra = (const QTransferFrom *)data;
+SFString nextTransferfromChunk(const SFString& fieldIn, const void *dataPtr) {
+    const QTransferFrom *tra = (const QTransferFrom *)dataPtr;
     if (tra) {
         // Give customized code a chance to override first
 #ifdef NEW_CODE
@@ -47,7 +47,7 @@ SFString nextTransferfromChunk(const SFString& fieldIn, const void *data) {
         if (!ret.empty())
             return ret;
 #else
-        SFString ret = nextTransferfromChunk_custom(fieldIn, data);
+        SFString ret = nextTransferfromChunk_custom(fieldIn, dataPtr);
         if (!ret.empty())
             return ret;
 
@@ -146,8 +146,8 @@ void QTransferFrom::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextTransferfromChunk_custom(const SFString& fieldIn, const void *data) {
-    const QTransferFrom *tra = (const QTransferFrom *)data;
+SFString nextTransferfromChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+    const QTransferFrom *tra = (const QTransferFrom *)dataPtr;
     if (tra) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -167,7 +167,7 @@ SFString nextTransferfromChunk_custom(const SFString& fieldIn, const void *data)
 }
 
 //---------------------------------------------------------------------------
-bool QTransferFrom::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+bool QTransferFrom::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;

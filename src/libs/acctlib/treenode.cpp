@@ -18,11 +18,11 @@ namespace qblocks {
 IMPLEMENT_NODE(CTreeNode, CBaseNode, dataSchema());
 
 //---------------------------------------------------------------------------
-extern SFString nextTreenodeChunk(const SFString& fieldIn, const void *data);
-static SFString nextTreenodeChunk_custom(const SFString& fieldIn, const void *data);
+extern SFString nextTreenodeChunk(const SFString& fieldIn, const void *dataPtr);
+static SFString nextTreenodeChunk_custom(const SFString& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CTreeNode::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+void CTreeNode::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -32,7 +32,7 @@ void CTreeNode::Format(CExportContext& ctx, const SFString& fmtIn, void *data) c
     }
 
     SFString fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, data))
+    if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
     while (!fmt.empty())
@@ -40,8 +40,8 @@ void CTreeNode::Format(CExportContext& ctx, const SFString& fmtIn, void *data) c
 }
 
 //---------------------------------------------------------------------------
-SFString nextTreenodeChunk(const SFString& fieldIn, const void *data) {
-    const CTreeNode *tre = (const CTreeNode *)data;
+SFString nextTreenodeChunk(const SFString& fieldIn, const void *dataPtr) {
+    const CTreeNode *tre = (const CTreeNode *)dataPtr;
     if (tre) {
         // Give customized code a chance to override first
 #ifdef NEW_CODE
@@ -49,7 +49,7 @@ SFString nextTreenodeChunk(const SFString& fieldIn, const void *data) {
         if (!ret.empty())
             return ret;
 #else
-        SFString ret = nextTreenodeChunk_custom(fieldIn, data);
+        SFString ret = nextTreenodeChunk_custom(fieldIn, dataPtr);
         if (!ret.empty())
             return ret;
 
@@ -144,8 +144,8 @@ void CTreeNode::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextTreenodeChunk_custom(const SFString& fieldIn, const void *data) {
-    const CTreeNode *tre = (const CTreeNode *)data;
+SFString nextTreenodeChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+    const CTreeNode *tre = (const CTreeNode *)dataPtr;
     if (tre) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -165,7 +165,7 @@ SFString nextTreenodeChunk_custom(const SFString& fieldIn, const void *data) {
 }
 
 //---------------------------------------------------------------------------
-bool CTreeNode::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+bool CTreeNode::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;

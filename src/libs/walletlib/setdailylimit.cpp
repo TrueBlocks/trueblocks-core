@@ -16,11 +16,11 @@
 IMPLEMENT_NODE(QSetDailyLimit, CTransaction, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextSetdailylimitChunk(const SFString& fieldIn, const void *data);
-static SFString nextSetdailylimitChunk_custom(const SFString& fieldIn, const void *data);
+static SFString nextSetdailylimitChunk(const SFString& fieldIn, const void *dataPtr);
+static SFString nextSetdailylimitChunk_custom(const SFString& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void QSetDailyLimit::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+void QSetDailyLimit::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -30,7 +30,7 @@ void QSetDailyLimit::Format(CExportContext& ctx, const SFString& fmtIn, void *da
     }
 
     SFString fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, data))
+    if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
     while (!fmt.empty())
@@ -38,8 +38,8 @@ void QSetDailyLimit::Format(CExportContext& ctx, const SFString& fmtIn, void *da
 }
 
 //---------------------------------------------------------------------------
-SFString nextSetdailylimitChunk(const SFString& fieldIn, const void *data) {
-    const QSetDailyLimit *set = (const QSetDailyLimit *)data;
+SFString nextSetdailylimitChunk(const SFString& fieldIn, const void *dataPtr) {
+    const QSetDailyLimit *set = (const QSetDailyLimit *)dataPtr;
     if (set) {
         // Give customized code a chance to override first
 #ifdef NEW_CODE
@@ -47,7 +47,7 @@ SFString nextSetdailylimitChunk(const SFString& fieldIn, const void *data) {
         if (!ret.empty())
             return ret;
 #else
-        SFString ret = nextSetdailylimitChunk_custom(fieldIn, data);
+        SFString ret = nextSetdailylimitChunk_custom(fieldIn, dataPtr);
         if (!ret.empty())
             return ret;
 
@@ -136,8 +136,8 @@ void QSetDailyLimit::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextSetdailylimitChunk_custom(const SFString& fieldIn, const void *data) {
-    const QSetDailyLimit *set = (const QSetDailyLimit *)data;
+SFString nextSetdailylimitChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+    const QSetDailyLimit *set = (const QSetDailyLimit *)dataPtr;
     if (set) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -157,7 +157,7 @@ SFString nextSetdailylimitChunk_custom(const SFString& fieldIn, const void *data
 }
 
 //---------------------------------------------------------------------------
-bool QSetDailyLimit::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+bool QSetDailyLimit::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;

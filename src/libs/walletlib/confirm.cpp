@@ -16,11 +16,11 @@
 IMPLEMENT_NODE(QConfirm, CTransaction, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextConfirmChunk(const SFString& fieldIn, const void *data);
-static SFString nextConfirmChunk_custom(const SFString& fieldIn, const void *data);
+static SFString nextConfirmChunk(const SFString& fieldIn, const void *dataPtr);
+static SFString nextConfirmChunk_custom(const SFString& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void QConfirm::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+void QConfirm::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -30,7 +30,7 @@ void QConfirm::Format(CExportContext& ctx, const SFString& fmtIn, void *data) co
     }
 
     SFString fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, data))
+    if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
     while (!fmt.empty())
@@ -38,8 +38,8 @@ void QConfirm::Format(CExportContext& ctx, const SFString& fmtIn, void *data) co
 }
 
 //---------------------------------------------------------------------------
-SFString nextConfirmChunk(const SFString& fieldIn, const void *data) {
-    const QConfirm *con = (const QConfirm *)data;
+SFString nextConfirmChunk(const SFString& fieldIn, const void *dataPtr) {
+    const QConfirm *con = (const QConfirm *)dataPtr;
     if (con) {
         // Give customized code a chance to override first
 #ifdef NEW_CODE
@@ -47,7 +47,7 @@ SFString nextConfirmChunk(const SFString& fieldIn, const void *data) {
         if (!ret.empty())
             return ret;
 #else
-        SFString ret = nextConfirmChunk_custom(fieldIn, data);
+        SFString ret = nextConfirmChunk_custom(fieldIn, dataPtr);
         if (!ret.empty())
             return ret;
 
@@ -136,8 +136,8 @@ void QConfirm::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextConfirmChunk_custom(const SFString& fieldIn, const void *data) {
-    const QConfirm *con = (const QConfirm *)data;
+SFString nextConfirmChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+    const QConfirm *con = (const QConfirm *)dataPtr;
     if (con) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -157,7 +157,7 @@ SFString nextConfirmChunk_custom(const SFString& fieldIn, const void *data) {
 }
 
 //---------------------------------------------------------------------------
-bool QConfirm::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+bool QConfirm::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;

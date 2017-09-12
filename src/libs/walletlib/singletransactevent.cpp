@@ -16,11 +16,11 @@
 IMPLEMENT_NODE(QSingleTransactEvent, CLogEntry, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextSingletransacteventChunk(const SFString& fieldIn, const void *data);
-static SFString nextSingletransacteventChunk_custom(const SFString& fieldIn, const void *data);
+static SFString nextSingletransacteventChunk(const SFString& fieldIn, const void *dataPtr);
+static SFString nextSingletransacteventChunk_custom(const SFString& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void QSingleTransactEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+void QSingleTransactEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -30,7 +30,7 @@ void QSingleTransactEvent::Format(CExportContext& ctx, const SFString& fmtIn, vo
     }
 
     SFString fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, data))
+    if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
     while (!fmt.empty())
@@ -38,8 +38,8 @@ void QSingleTransactEvent::Format(CExportContext& ctx, const SFString& fmtIn, vo
 }
 
 //---------------------------------------------------------------------------
-SFString nextSingletransacteventChunk(const SFString& fieldIn, const void *data) {
-    const QSingleTransactEvent *sin = (const QSingleTransactEvent *)data;
+SFString nextSingletransacteventChunk(const SFString& fieldIn, const void *dataPtr) {
+    const QSingleTransactEvent *sin = (const QSingleTransactEvent *)dataPtr;
     if (sin) {
         // Give customized code a chance to override first
 #ifdef NEW_CODE
@@ -47,7 +47,7 @@ SFString nextSingletransacteventChunk(const SFString& fieldIn, const void *data)
         if (!ret.empty())
             return ret;
 #else
-        SFString ret = nextSingletransacteventChunk_custom(fieldIn, data);
+        SFString ret = nextSingletransacteventChunk_custom(fieldIn, dataPtr);
         if (!ret.empty())
             return ret;
 
@@ -163,8 +163,8 @@ void QSingleTransactEvent::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextSingletransacteventChunk_custom(const SFString& fieldIn, const void *data) {
-    const QSingleTransactEvent *sin = (const QSingleTransactEvent *)data;
+SFString nextSingletransacteventChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+    const QSingleTransactEvent *sin = (const QSingleTransactEvent *)dataPtr;
     if (sin) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -184,7 +184,7 @@ SFString nextSingletransacteventChunk_custom(const SFString& fieldIn, const void
 }
 
 //---------------------------------------------------------------------------
-bool QSingleTransactEvent::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+bool QSingleTransactEvent::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;

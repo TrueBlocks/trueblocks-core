@@ -16,11 +16,11 @@
 IMPLEMENT_NODE(QIsOwner, CTransaction, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextIsownerChunk(const SFString& fieldIn, const void *data);
-static SFString nextIsownerChunk_custom(const SFString& fieldIn, const void *data);
+static SFString nextIsownerChunk(const SFString& fieldIn, const void *dataPtr);
+static SFString nextIsownerChunk_custom(const SFString& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void QIsOwner::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+void QIsOwner::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -30,7 +30,7 @@ void QIsOwner::Format(CExportContext& ctx, const SFString& fmtIn, void *data) co
     }
 
     SFString fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, data))
+    if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
     while (!fmt.empty())
@@ -38,8 +38,8 @@ void QIsOwner::Format(CExportContext& ctx, const SFString& fmtIn, void *data) co
 }
 
 //---------------------------------------------------------------------------
-SFString nextIsownerChunk(const SFString& fieldIn, const void *data) {
-    const QIsOwner *iso = (const QIsOwner *)data;
+SFString nextIsownerChunk(const SFString& fieldIn, const void *dataPtr) {
+    const QIsOwner *iso = (const QIsOwner *)dataPtr;
     if (iso) {
         // Give customized code a chance to override first
 #ifdef NEW_CODE
@@ -47,7 +47,7 @@ SFString nextIsownerChunk(const SFString& fieldIn, const void *data) {
         if (!ret.empty())
             return ret;
 #else
-        SFString ret = nextIsownerChunk_custom(fieldIn, data);
+        SFString ret = nextIsownerChunk_custom(fieldIn, dataPtr);
         if (!ret.empty())
             return ret;
 
@@ -136,8 +136,8 @@ void QIsOwner::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextIsownerChunk_custom(const SFString& fieldIn, const void *data) {
-    const QIsOwner *iso = (const QIsOwner *)data;
+SFString nextIsownerChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+    const QIsOwner *iso = (const QIsOwner *)dataPtr;
     if (iso) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -157,7 +157,7 @@ SFString nextIsownerChunk_custom(const SFString& fieldIn, const void *data) {
 }
 
 //---------------------------------------------------------------------------
-bool QIsOwner::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+bool QIsOwner::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
