@@ -161,7 +161,7 @@ bool lookupDate(CBlock& block, const SFTime& date) {
     }
 
     CMiniBlock mini;
-    mini.timestamp = toTimeStamp(date);
+    mini.timestamp = toTimestamp(date);
     CMiniBlock *found = reinterpret_cast<CMiniBlock*>(bsearch(&mini, blocks, nBlocks, sizeof(CMiniBlock), findFunc));
     if (found) {
         queryBlock(block, asStringU(found->blockNumber), false);
