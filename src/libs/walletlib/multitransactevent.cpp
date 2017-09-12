@@ -42,6 +42,11 @@ SFString nextMultitransacteventChunk(const SFString& fieldIn, const void *data) 
     const QMultiTransactEvent *mul = (const QMultiTransactEvent *)data;
     if (mul) {
         // Give customized code a chance to override first
+#ifdef NEW_CODE
+        SFString ret = mul->getValueByName(fieldIn);
+        if (!ret.empty())
+            return ret;
+#else
         SFString ret = nextMultitransacteventChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
@@ -61,7 +66,7 @@ SFString nextMultitransacteventChunk(const SFString& fieldIn, const void *data) 
                 if ( fieldIn % "value" ) return asStringBN(mul->value);
                 break;
         }
-
+#endif
         // EXISTING_CODE
         // EXISTING_CODE
 
@@ -196,6 +201,38 @@ bool QMultiTransactEvent::readBackLevel(SFArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
+}
+
+//---------------------------------------------------------------------------
+SFString QMultiTransactEvent::getValueByName(const SFString& fieldName) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+#ifdef NEW_CODE
+    // Give customized code a chance to override first
+    SFString ret = nextMultitransacteventChunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    switch (tolower(fieldName[0])) {
+        case 'd':
+            if ( fieldName % "data" ) return data;
+            break;
+        case 'o':
+            if ( fieldName % "owner" ) return fromAddress(owner);
+            if ( fieldName % "operation" ) return operation;
+            break;
+        case 't':
+            if ( fieldName % "to" ) return fromAddress(to);
+            break;
+        case 'v':
+            if ( fieldName % "value" ) return asStringBN(value);
+            break;
+    }
+    return "";
+#else
+    return Format("[{"+toUpper(fieldName)+"}]");
+#endif
 }
 
 //---------------------------------------------------------------------------

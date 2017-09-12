@@ -105,13 +105,6 @@ inline [{CLASS_NAME}]& [{CLASS_NAME}]::operator=(const [{CLASS_NAME}]& [{SHORT}]
 }
 
 //---------------------------------------------------------------------------
-inline SFString [{CLASS_NAME}]::getValueByName(const SFString& fieldName) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
-    return Format("[{"+toUpper(fieldName)+"}]");
-}
-
-//---------------------------------------------------------------------------
 IMPLEMENT_ARCHIVE_ARRAY([{CLASS_NAME}]Array);
 IMPLEMENT_ARCHIVE_ARRAY_C([{CLASS_NAME}]Array);
 IMPLEMENT_ARCHIVE_LIST([{CLASS_NAME}]List);
@@ -119,4 +112,5 @@ IMPLEMENT_ARCHIVE_LIST([{CLASS_NAME}]List);
 [{OPERATORS}]//---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
+#define NEW_CODE
 [{NAMESPACE2}]

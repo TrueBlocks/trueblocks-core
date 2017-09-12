@@ -44,6 +44,11 @@ SFString nextIncomestatementChunk(const SFString& fieldIn, const void *data) {
     const CIncomeStatement *inc = (const CIncomeStatement *)data;
     if (inc) {
         // Give customized code a chance to override first
+#ifdef NEW_CODE
+        SFString ret = inc->getValueByName(fieldIn);
+        if (!ret.empty())
+            return ret;
+#else
         SFString ret = nextIncomestatementChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
@@ -66,7 +71,7 @@ SFString nextIncomestatementChunk(const SFString& fieldIn, const void *data) {
                 if ( fieldIn % "outflow" ) return asStringBN(inc->outflow);
                 break;
         }
-
+#endif
         // EXISTING_CODE
         // EXISTING_CODE
 
@@ -155,11 +160,11 @@ void CIncomeStatement::registerClass(void) {
     uint32_t fieldNum = 1000;
     ADD_FIELD(CIncomeStatement, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CIncomeStatement, "deleted", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CIncomeStatement, "begBal", T_WEI, ++fieldNum);
-    ADD_FIELD(CIncomeStatement, "inflow", T_WEI, ++fieldNum);
-    ADD_FIELD(CIncomeStatement, "outflow", T_WEI, ++fieldNum);
-    ADD_FIELD(CIncomeStatement, "gasCost", T_WEI, ++fieldNum);
-    ADD_FIELD(CIncomeStatement, "endBal", T_WEI, ++fieldNum);
+    ADD_FIELD(CIncomeStatement, "begBal", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CIncomeStatement, "inflow", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CIncomeStatement, "outflow", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CIncomeStatement, "gasCost", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CIncomeStatement, "endBal", T_NUMBER, ++fieldNum);
     ADD_FIELD(CIncomeStatement, "blockNum", T_NUMBER, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
@@ -216,6 +221,41 @@ SFArchive& operator<<(SFArchive& archive, const CIncomeStatement& inc) {
 SFArchive& operator>>(SFArchive& archive, CIncomeStatement& inc) {
     inc.Serialize(archive);
     return archive;
+}
+
+//---------------------------------------------------------------------------
+SFString CIncomeStatement::getValueByName(const SFString& fieldName) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+#ifdef NEW_CODE
+    // Give customized code a chance to override first
+    SFString ret = nextIncomestatementChunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    switch (tolower(fieldName[0])) {
+        case 'b':
+            if ( fieldName % "begBal" ) return asStringBN(begBal);
+            if ( fieldName % "blockNum" ) return asStringU(blockNum);
+            break;
+        case 'e':
+            if ( fieldName % "endBal" ) return asStringBN(endBal);
+            break;
+        case 'g':
+            if ( fieldName % "gasCost" ) return asStringBN(gasCost);
+            break;
+        case 'i':
+            if ( fieldName % "inflow" ) return asStringBN(inflow);
+            break;
+        case 'o':
+            if ( fieldName % "outflow" ) return asStringBN(outflow);
+            break;
+    }
+    return "";
+#else
+    return Format("[{"+toUpper(fieldName)+"}]");
+#endif
 }
 
 //---------------------------------------------------------------------------

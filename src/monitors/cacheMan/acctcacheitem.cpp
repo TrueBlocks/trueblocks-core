@@ -41,6 +41,11 @@ SFString nextAcctcacheitemChunk(const SFString& fieldIn, const void *data) {
     const CAcctCacheItem *acc = (const CAcctCacheItem *)data;
     if (acc) {
         // Give customized code a chance to override first
+#ifdef NEW_CODE
+        SFString ret = acc->getValueByName(fieldIn);
+        if (!ret.empty())
+            return ret;
+#else
         SFString ret = nextAcctcacheitemChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
@@ -56,7 +61,7 @@ SFString nextAcctcacheitemChunk(const SFString& fieldIn, const void *data) {
                 if ( fieldIn % "which" ) return asString(acc->which);
                 break;
         }
-
+#endif
         // EXISTING_CODE
         // EXISTING_CODE
 
@@ -82,7 +87,7 @@ bool CAcctCacheItem::setValueByName(const SFString& fieldName, const SFString& f
             if ( fieldName % "transIndex" ) { transIndex = toUnsigned(fieldValue); return true; }
             break;
         case 'w':
-            if ( fieldName % "which" ) { which = (int32_t)toLong(fieldValue); return true; }
+            if ( fieldName % "which" ) { which = toLong32(fieldValue); return true; }
             break;
         default:
             break;
@@ -178,6 +183,34 @@ bool CAcctCacheItem::readBackLevel(SFArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
+}
+
+//---------------------------------------------------------------------------
+SFString CAcctCacheItem::getValueByName(const SFString& fieldName) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+#ifdef NEW_CODE
+    // Give customized code a chance to override first
+    SFString ret = nextAcctcacheitemChunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    switch (tolower(fieldName[0])) {
+        case 'b':
+            if ( fieldName % "blockNum" ) return asStringU(blockNum);
+            break;
+        case 't':
+            if ( fieldName % "transIndex" ) return asStringU(transIndex);
+            break;
+        case 'w':
+            if ( fieldName % "which" ) return asString(which);
+            break;
+    }
+    return "";
+#else
+    return Format("[{"+toUpper(fieldName)+"}]");
+#endif
 }
 
 //---------------------------------------------------------------------------

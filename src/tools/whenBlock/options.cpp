@@ -58,7 +58,7 @@ bool COptions::parseArguments(SFString& command) {
                 return false;
             }
             foundOne = true;
-            requests[requests.getCount()] = "date:" + asString(toTimeStamp(date));
+            requests[requests.getCount()] = "date:" + asString(toTimestamp(date));
 
         } else if (arg.startsWith('-')) {  // do not collapse
 

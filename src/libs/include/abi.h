@@ -122,13 +122,6 @@ inline CAbi& CAbi::operator=(const CAbi& ab) {
 }
 
 //---------------------------------------------------------------------------
-inline SFString CAbi::getValueByName(const SFString& fieldName) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
-    return Format("[{"+toUpper(fieldName)+"}]");
-}
-
-//---------------------------------------------------------------------------
 IMPLEMENT_ARCHIVE_ARRAY(CAbiArray);
 IMPLEMENT_ARCHIVE_ARRAY_C(CAbiArray);
 IMPLEMENT_ARCHIVE_LIST(CAbiList);
@@ -141,5 +134,6 @@ extern SFUint32 verbose;
 void clearAbis(void);
 extern ostream& operator<<(ostream& os, const CAbi& t);
 // EXISTING_CODE
+#define NEW_CODE
 }  // namespace qblocks
 

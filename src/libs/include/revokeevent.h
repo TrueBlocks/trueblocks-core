@@ -111,13 +111,6 @@ inline QRevokeEvent& QRevokeEvent::operator=(const QRevokeEvent& re) {
 }
 
 //---------------------------------------------------------------------------
-inline SFString QRevokeEvent::getValueByName(const SFString& fieldName) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
-    return Format("[{"+toUpper(fieldName)+"}]");
-}
-
-//---------------------------------------------------------------------------
 IMPLEMENT_ARCHIVE_ARRAY(QRevokeEventArray);
 IMPLEMENT_ARCHIVE_ARRAY_C(QRevokeEventArray);
 IMPLEMENT_ARCHIVE_LIST(QRevokeEventList);
@@ -125,4 +118,5 @@ IMPLEMENT_ARCHIVE_LIST(QRevokeEventList);
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
+#define NEW_CODE
 

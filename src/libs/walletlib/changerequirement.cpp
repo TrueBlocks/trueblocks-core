@@ -42,6 +42,11 @@ SFString nextChangerequirementChunk(const SFString& fieldIn, const void *data) {
     const QChangeRequirement *cha = (const QChangeRequirement *)data;
     if (cha) {
         // Give customized code a chance to override first
+#ifdef NEW_CODE
+        SFString ret = cha->getValueByName(fieldIn);
+        if (!ret.empty())
+            return ret;
+#else
         SFString ret = nextChangerequirementChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
@@ -51,7 +56,7 @@ SFString nextChangerequirementChunk(const SFString& fieldIn, const void *data) {
                 if ( fieldIn % "_newRequired" ) return asStringBN(cha->_newRequired);
                 break;
         }
-
+#endif
         // EXISTING_CODE
         // EXISTING_CODE
 
@@ -164,6 +169,28 @@ bool QChangeRequirement::readBackLevel(SFArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
+}
+
+//---------------------------------------------------------------------------
+SFString QChangeRequirement::getValueByName(const SFString& fieldName) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+#ifdef NEW_CODE
+    // Give customized code a chance to override first
+    SFString ret = nextChangerequirementChunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    switch (tolower(fieldName[0])) {
+        case '_':
+            if ( fieldName % "_newRequired" ) return asStringBN(_newRequired);
+            break;
+    }
+    return "";
+#else
+    return Format("[{"+toUpper(fieldName)+"}]");
+#endif
 }
 
 //---------------------------------------------------------------------------

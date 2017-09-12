@@ -10,9 +10,9 @@
 
 //------------------------------------------------------------------------------------------------------------
 extern void     establishFiles(const SFString& className);
-extern void     generateCode(CToml& classFile, const SFString& dataFile, const SFString& ns);
+extern void     generateCode(const COptions& options, CToml& classFile, const SFString& dataFile, const SFString& ns);
 extern SFString convertTypes(const SFString& inStr);
-extern SFString getCaseCode(const SFString& fieldCase);
+extern SFString getCaseCode(const SFString& fieldCase, const SFString& ex);
 extern SFString getCaseSetCode(const SFString& fieldCase);
 extern SFString short3(const SFString& in);
 
@@ -78,7 +78,7 @@ int main(int argc, const char *argv[]) {
                             if (verbose)
                                 cerr << "Disabled class not processed " << className << "\n";
                         } else {
-                            generateCode(classFile, fileName, options.namesp);
+                            generateCode(options, classFile, fileName, options.namesp);
                         }
                     }
                 }
@@ -93,29 +93,32 @@ int main(int argc, const char *argv[]) {
 SFString convertTypes(const SFString& inStr) {
     // Note: Watch out for trailing spaces. They are here to make sure it
     // matches only the types and not the field names.
-    return inStr.Substitute("address ", "SFAddress ")
-    .Substitute("bytes32 ", "SFString ")
-    .Substitute("bytes ",   "SFString ")
-    .Substitute("bloom ",   "SFBloom ")
-    .Substitute("wei ",     "SFWei ")
-    .Substitute("uint256 ", "SFUintBN ")
-    .Substitute("int256 ",  "SFIntBN ")
-    .Substitute("uint8 ",   "SFUxnt32 ")
-    .Substitute("uint16 ",  "SFUxnt32 ")
-    .Substitute("uint32 ",  "SFUxnt32 ")
-    .Substitute("uint64 ",  "SFUxnt32 ")
-    .Substitute("hash ",    "SFHash ")
-    .Substitute("string ",  "SFString ")
-    .Substitute("bbool ",   "xool ")
-    .Substitute("bool ",    "bool ")
-    .Substitute("time ",    "SFTime ")
-    .Substitute("int8 ",    "int32_t ")
-    .Substitute("int16 ",   "int32_t ")
-    .Substitute("int32 ",   "int32_t ")
-    .Substitute("int64 ",   "int64_t ")
+    return inStr
+    .Substitute("address ",   "SFAddress ")
+    .Substitute("bytes32 ",   "SFString ")
+    .Substitute("bytes ",     "SFString ")
+    .Substitute("bloom ",     "SFBloom ")
+    .Substitute("wei ",       "SFWei ")
+    .Substitute("gas ",       "SFGas ")
+    .Substitute("timestamp ", "timestamp_t ")
+    .Substitute("uint256 ",   "SFUintBN ")
+    .Substitute("int256 ",    "SFIntBN ")
+    .Substitute("uint8 ",     "SFUxnt32 ")
+    .Substitute("uint16 ",    "SFUxnt32 ")
+    .Substitute("uint32 ",    "SFUxnt32 ")
+    .Substitute("uint64 ",    "SFUxnt32 ")
+    .Substitute("hash ",      "SFHash ")
+    .Substitute("string ",    "SFString ")
+    .Substitute("bbool ",     "xool ")
+    .Substitute("bool ",      "bool ")
+    .Substitute("time ",      "SFTime ")
+    .Substitute("int8 ",      "int32_t ")
+    .Substitute("int16 ",     "int32_t ")
+    .Substitute("int32 ",     "int32_t ")
+    .Substitute("int64 ",     "int64_t ")
 
-    .Substitute("xool ",    "bool ")
-    .Substitute("xnt32 ",   "int32 ");
+    .Substitute("xool ",      "bool ")
+    .Substitute("xnt32 ",     "int32 ");
 }
 
 //------------------------------------------------------------------------------------------------------------
@@ -126,11 +129,13 @@ extern const char* STR_CASE_CODE_STRINGARRAY;
 extern const char* STR_OPERATOR_H;
 extern const char* STR_OPERATOR_C;
 extern const char* STR_SUBCLASS;
+extern const char* STR_GETVALUE1;
+extern const char* STR_GETVALUE2;
 
 SFString tab = SFString("\t");
 
 //------------------------------------------------------------------------------------------------------------
-void generateCode(CToml& classFile, const SFString& dataFile, const SFString& ns) {
+void generateCode(const COptions& options, CToml& classFile, const SFString& dataFile, const SFString& ns) {
     //------------------------------------------------------------------------------------------------
     SFString className  = classFile.getConfigStr("settings","class","");
     SFString baseClass  = classFile.getConfigStr("settings","baseClass",""); if (baseClass.empty()) { baseClass = "CBaseNode"; }
@@ -211,6 +216,7 @@ void generateCode(CToml& classFile, const SFString& dataFile, const SFString& ns
 
                if (fld->type == "bloom")        { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_BLOOM";
         } else if (fld->type == "wei")          { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_WEI";
+        } else if (fld->type == "gas")          { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_GAS";
         } else if (fld->type == "string")       { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_TEXT";
         } else if (fld->type == "addr")         { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_ADDRESS";
         } else if (fld->type == "address")      { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_ADDRESS";
@@ -231,6 +237,7 @@ void generateCode(CToml& classFile, const SFString& dataFile, const SFString& ns
         } else if (fld->type == "bool")         { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_BOOL";
         } else if (fld->type == "double")       { setFmt = "\t[{NAME}] = [{DEFF}];\n"; regType = "T_DOUBLE";
         } else if (fld->type == "time")         { setFmt = "\t[{NAME}] = [{DEFT}];\n"; regType = "T_DATE";
+        } else if (fld->type == "timestamp")    { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_TIMESTAMP";
         } else if (fld->isPointer)              { setFmt = "\t[{NAME}] = [{DEFP}];\n"; regType = "T_POINTER";
         } else if (fld->isObject)               { setFmt = "\t[{NAME}].Init();\n";     regType = "T_TEXT|TS_OBJECT";
         } else                                  { setFmt = badSet; regType = "T_TEXT"; }
@@ -259,7 +266,7 @@ void generateCode(CToml& classFile, const SFString& dataFile, const SFString& ns
         if (fld->isObject && !fld->isPointer && !fld->type.Contains("Array")) {
             SFString fmt = subClsFmt;
             fmt.ReplaceAll("[FNAME]",fld->name);
-            fmt.Replace("[SH3]",short3(baseLower));
+            fmt.ReplaceAll("[SH3]",short3(baseLower));
             SFString fldStr = fld->Format(fmt);
             fldStr.Replace("++", "[{");
             fldStr.Replace("++", "}]");
@@ -276,7 +283,6 @@ void generateCode(CToml& classFile, const SFString& dataFile, const SFString& ns
     SFString operatorC = SFString(serialize ? STR_OPERATOR_C : "\n");
 
     //------------------------------------------------------------------------------------------------
-    SFString caseCodeStr    = getCaseCode(fieldCase);
     SFString caseSetCodeStr = getCaseSetCode(fieldCase);
     SFString subClsCodeStr  = fieldSubCls;
 
@@ -315,16 +321,22 @@ void generateCode(CToml& classFile, const SFString& dataFile, const SFString& ns
     headSource.ReplaceAll("[{SCOPE}]",          scope);
     headSource.ReplaceAll("[{NAMESPACE1}]",     (ns.empty() ? "" : "\nnamespace qblocks {\n\n"));
     headSource.ReplaceAll("[{NAMESPACE2}]",     (ns.empty() ? "" : "}  // namespace qblocks\n"));
-    writeTheCode(headerFile, headSource, ns);
+    if (options.writeHeader)
+        writeTheCode(headerFile, headSource, ns);
 
     //------------------------------------------------------------------------------------------------
+    SFString fieldStr1 = getCaseCode(fieldCase, tab).Substitute("fieldName","fieldIn").Substitute("[{PTR}]","[{SHORT3}]->");
+    SFString fieldStr2 = getCaseCode(fieldCase, "" ).Substitute("[{PTR}]","");
+
     SFString srcFile    = dataFile.Substitute(".txt", ".cpp").Substitute("./classDefinitions/", "./");
     SFString srcSource  = asciiFileToString(configPath("makeClass/blank.cpp"));
     srcSource.ReplaceAll("[ARCHIVE_READ]",      fieldArchiveRead);
     srcSource.ReplaceAll("[ARCHIVE_WRITE]",     fieldArchiveWrite);
     srcSource.ReplaceAll("[{OPERATORS}]",       operatorC);
     srcSource.ReplaceAll("[REGISTER_FIELDS]",   fieldReg);
-    srcSource.ReplaceAll("[FIELD_CASE]",        caseCodeStr);
+    srcSource.ReplaceAll("[{GETVALUE}]",        (theList.GetCount() ? STR_GETVALUE1 : STR_GETVALUE2));
+    srcSource.Replace   ("[FIELD_CASE]",        fieldStr1);
+    srcSource.Replace   ("[FIELD_CASE]",        fieldStr2);
     srcSource.ReplaceAll("[OTHER_INCS]",        otherIncs);
     srcSource.ReplaceAll("[FIELD_SETCASE]",     caseSetCodeStr);
     srcSource.ReplaceAll("[{SUBCLASSFLDS}]",    subClsCodeStr);
@@ -358,12 +370,13 @@ void generateCode(CToml& classFile, const SFString& dataFile, const SFString& ns
     srcSource.ReplaceAll("[{SCOPE}]",           scope);
     srcSource.ReplaceAll("[{NAMESPACE1}]",      (ns.empty() ? "" : "\nnamespace qblocks {\n\n"));
     srcSource.ReplaceAll("[{NAMESPACE2}]",      (ns.empty() ? "" : "}  // namespace qblocks\n"));
-    writeTheCode(srcFile, srcSource, ns);
+    if (options.writeSource)
+        writeTheCode(srcFile, srcSource, ns);
 }
 
 //------------------------------------------------------------------------------------------------
-SFString getCaseCode(const SFString& fieldCase) {
-    SFString baseTab = (tab+tab+tab);
+SFString getCaseCode(const SFString& fieldCase, const SFString& ex) {
+    SFString baseTab = (tab+tab+ex);
     SFString caseCode;
     for (char ch = '_' ; ch < 'z' + 1 ; ch++) {
         if (fieldCase.ContainsI("+"+SFString(ch))) {
@@ -379,47 +392,50 @@ SFString getCaseCode(const SFString& fieldCase) {
 
                 if (tolower(field[0]) == ch) {
                     if (type.Contains("List") || isPointer)
-                        caseCode += "\t\t\treturn \"\";\n//";
-                    caseCode += baseTab + tab + "if ( fieldIn % \"" + field + "\" )";
+                        caseCode += (baseTab + "return \"\";\n//");
+                    caseCode += baseTab + tab + "if ( fieldName % \"" + field + "\" )";
 
                     if (type == "time") {
-                        caseCode += " return [{SHORT3}]->" + field + ".Format(FMT_JSON);";
+                        caseCode += " return [{PTR}]" + field + ".Format(FMT_JSON);";
 
                     } else if (type == "bbool") {
-                        caseCode += " return asString([{SHORT3}]->" + field + ");";
+                        caseCode += " return asString([{PTR}]" + field + ");";
 
                     } else if (type == "bool") {
-                        caseCode += " return asString([{SHORT3}]->" + field + ");";
+                        caseCode += " return asString([{PTR}]" + field + ");";
 
                     } else if (type == "bloom") {
-                        caseCode += " return fromBloom([{SHORT3}]->" + field + ");";
+                        caseCode += " return fromBloom([{PTR}]" + field + ");";
 
                     } else if (type == "wei") {
-                        caseCode += " return fromWei([{SHORT3}]->" + field + ");";
+                        caseCode += " return fromWei([{PTR}]" + field + ");";
+
+                    } else if (type == "gas") {
+                        caseCode += " return fromGas([{PTR}]" + field + ");";
 
                     } else if (type == "addr" || type == "address") {
-                        caseCode += " return fromAddress([{SHORT3}]->" + field + ");";
+                        caseCode += " return fromAddress([{PTR}]" + field + ");";
 
                     } else if (type == "hash") {
-                        caseCode += " return fromHash([{SHORT3}]->" + field + ");";
+                        caseCode += " return fromHash([{PTR}]" + field + ");";
 
                     } else if (type == "bytes" || type == "bytes32") {
-                        caseCode += " return [{SHORT3}]->" + field + ";";
+                        caseCode += " return [{PTR}]" + field + ";";
 
                     } else if (type == "uint8" || type == "uint16" || type == "uint32" || type == "uint64") {
-                        caseCode += " return asStringU([{SHORT3}]->" + field + ");";
+                        caseCode += " return asStringU([{PTR}]" + field + ");";
 
                     } else if (type == "uint256") {
-                        caseCode += " return asStringBN([{SHORT3}]->" + field + ");";
+                        caseCode += " return asStringBN([{PTR}]" + field + ");";
 
                     } else if (type == "int8" || type == "int16" || type == "int32" || type == "int64") {
-                        caseCode += " return asString([{SHORT3}]->" + field + ");";
+                        caseCode += " return asString([{PTR}]" + field + ");";
 
                     } else if (type == "int256") {
-                        caseCode += " return asStringBN([{SHORT3}]->" + field + ");";
+                        caseCode += " return asStringBN([{PTR}]" + field + ");";
 
                     } else if (type == "double") {
-                        caseCode += " return fmtFloat([{SHORT3}]->" + field + ");";
+                        caseCode += " return fmtFloat([{PTR}]" + field + ");";
 
                     } else if (type.Contains("SFStringArray")) {
                         SFString str = STR_CASE_CODE_STRINGARRAY;
@@ -431,7 +447,7 @@ SFString getCaseCode(const SFString& fieldCase) {
                         // hack for getCount clause
                         str.Replace("[{FIELD}]", field);
                         // hack for the array access
-                        str.Replace("[{SHORT3}]->[{FIELD}][i]", "fromTopic([{SHORT3}]->"+field+"[i])");
+                        str.Replace("[{FIELD}][i]", "fromTopic("+field+"[i])");
                         caseCode += str;
 
                     } else if (type.Contains("Array")) {
@@ -440,10 +456,10 @@ SFString getCaseCode(const SFString& fieldCase) {
                         caseCode += str;
 
                     } else if (isObject) {
-                        caseCode += " { expContext().noFrst=true; return [{SHORT3}]->" + field + ".Format(); }";
+                        caseCode += " { expContext().noFrst=true; return [{PTR}]" + field + ".Format(); }";
 
                     } else {
-                        caseCode += " return [{SHORT3}]->" + field + ";";
+                        caseCode += " return [{PTR}]" + field + ";";
                     }
 
                     caseCode += "\n";
@@ -489,6 +505,9 @@ SFString getCaseSetCode(const SFString& fieldCase) {
                     } else if (type == "wei") {
                         caseCode +=  " { " + field + " = toWei(fieldValue); return true; }";
 
+                    } else if (type == "gas") {
+                        caseCode +=  " { " + field + " = toGas(fieldValue); return true; }";
+
                     } else if (type == "addr" || type == "address") {
                         caseCode += " { " + field + " = toAddress(fieldValue); return true; }";
 
@@ -498,7 +517,10 @@ SFString getCaseSetCode(const SFString& fieldCase) {
                     } else if (type.Contains("bytes")) {
                         caseCode += " { " + field + " = toLower(fieldValue); return true; }";
 
-                    } else if (type == "int8" || type == "int16" || type == "int32" || type == "int64") {
+                    } else if (type == "int8" || type == "int16" || type == "int32") {
+                        caseCode +=  " { " + field + " = toLong32(fieldValue); return true; }";
+
+                    } else if (type == "int64") {
                         caseCode +=  " { " + field + " = toLong(fieldValue); return true; }";
 
                     } else if (type == "int256") {
@@ -549,11 +571,11 @@ const char* STR_CLASSFILE =
 //------------------------------------------------------------------------------------------------------------
 const char* STR_CASE_CODE_ARRAY =
 " {\n"
-"[BTAB]\t\tuint32_t cnt = [{SHORT3}]->[{FIELD}].getCount();\n"
+"[BTAB]\t\tuint32_t cnt = [{PTR}][{FIELD}].getCount();\n"
 "[BTAB]\t\tif (!cnt) return \"\";\n"
 "[BTAB]\t\tSFString retS;\n"
 "[BTAB]\t\tfor (uint32_t i = 0 ; i < cnt ; i++) {\n"
-"[BTAB]\t\t\tretS += [{SHORT3}]->[{FIELD}][i].Format();\n"
+"[BTAB]\t\t\tretS += [{PTR}][{FIELD}][i].Format();\n"
 "[BTAB]\t\t\tretS += ((i < cnt - 1) ? \",\\n\" : \"\\n\");\n"
 "[BTAB]\t\t}\n"
 "[BTAB]\t\treturn retS;\n"
@@ -562,11 +584,11 @@ const char* STR_CASE_CODE_ARRAY =
 //------------------------------------------------------------------------------------------------------------
 const char* STR_CASE_CODE_STRINGARRAY =
 " {\n"
-"[BTAB]\t\tuint32_t cnt = [{SHORT3}]->[{FIELD}].getCount();\n"
+"[BTAB]\t\tuint32_t cnt = [{PTR}][{FIELD}].getCount();\n"
 "[BTAB]\t\tif (!cnt) return \"\";\n"
 "[BTAB]\t\tSFString retS;\n"
 "[BTAB]\t\tfor (uint32_t i = 0 ; i < cnt ; i++) {\n"
-"[BTAB]\t\t\tretS += indent() + (\"\\\"\" + [{SHORT3}]->[{FIELD}][i] + \"\\\"\");\n"
+"[BTAB]\t\t\tretS += indent() + (\"\\\"\" + [{PTR}][{FIELD}][i] + \"\\\"\");\n"
 "[BTAB]\t\t\tretS += ((i < cnt-1) ? \",\\n\" : \"\\n\");\n"
 "[BTAB]\t\t}\n"
 "[BTAB]\t\treturn retS;\n"
@@ -604,9 +626,26 @@ const char* STR_SUBCLASS =
 "\tif (fieldIn.Contains(s)) {\n"
 "\t\tSFString f = fieldIn;\n"
 "\t\tf.ReplaceAll(s,\"\");\n"
-"\t\tf = [SH3]->[FNAME].Format(\"++\"+f+\"++\");\n"
+"\t\tif ([SH3])\n"
+"\t\t\tf = [SH3]->[FNAME].Format(\"++\"+f+\"++\");\n"
 "\t\treturn f;\n"
 "\t}\n";
+
+//------------------------------------------------------------------------------------------------------------
+const char* STR_GETVALUE1 =
+"\t/""/ Give customized code a chance to override first\n"
+"\tSFString ret = next[{PROPER}]Chunk_custom(fieldName, this);\n"
+"\tif (!ret.empty())\n"
+"\t\treturn ret;\n"
+"\n"
+"\tswitch (tolower(fieldName[0])) {\n"
+"[FIELD_CASE]\t}\n"
+"\treturn \"\";\n";
+
+//------------------------------------------------------------------------------------------------------------
+const char* STR_GETVALUE2 =
+"\t/""/ Nothing to return expect perhaps custom fields\n"
+"\treturn next[{PROPER}]Chunk_custom(fieldName, this);\n";
 
 //------------------------------------------------------------------------------------------------------------
 SFString short3(const SFString& str) {

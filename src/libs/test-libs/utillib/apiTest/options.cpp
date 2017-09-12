@@ -9,7 +9,6 @@
 
 //---------------------------------------------------------------------------------------------------
 CParams params[] = {
-    CParams("-option", "First option"),
     CParams("",        "Test harness for quickBlocks.\n"),
 };
 uint32_t nParams = sizeof(params) / sizeof(CParams);

@@ -42,13 +42,18 @@ SFString nextResetspenttodayChunk(const SFString& fieldIn, const void *data) {
     const QResetSpentToday *res = (const QResetSpentToday *)data;
     if (res) {
         // Give customized code a chance to override first
+#ifdef NEW_CODE
+        SFString ret = res->getValueByName(fieldIn);
+        if (!ret.empty())
+            return ret;
+#else
         SFString ret = nextResetspenttodayChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
 
         switch (tolower(fieldIn[0])) {
         }
-
+#endif
         // EXISTING_CODE
         // EXISTING_CODE
 
@@ -154,6 +159,19 @@ bool QResetSpentToday::readBackLevel(SFArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
+}
+
+//---------------------------------------------------------------------------
+SFString QResetSpentToday::getValueByName(const SFString& fieldName) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+#ifdef NEW_CODE
+    // Nothing to return expect perhaps custom fields
+    return nextResetspenttodayChunk_custom(fieldName, this);
+#else
+    return Format("[{"+toUpper(fieldName)+"}]");
+#endif
 }
 
 //---------------------------------------------------------------------------

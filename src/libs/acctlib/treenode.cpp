@@ -44,6 +44,11 @@ SFString nextTreenodeChunk(const SFString& fieldIn, const void *data) {
     const CTreeNode *tre = (const CTreeNode *)data;
     if (tre) {
         // Give customized code a chance to override first
+#ifdef NEW_CODE
+        SFString ret = tre->getValueByName(fieldIn);
+        if (!ret.empty())
+            return ret;
+#else
         SFString ret = nextTreenodeChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
@@ -56,7 +61,7 @@ SFString nextTreenodeChunk(const SFString& fieldIn, const void *data) {
                 if ( fieldIn % "m_prefix" ) return tre->m_prefix;
                 break;
         }
-
+#endif
         // EXISTING_CODE
         // EXISTING_CODE
 
@@ -172,6 +177,31 @@ bool CTreeNode::readBackLevel(SFArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
+}
+
+//---------------------------------------------------------------------------
+SFString CTreeNode::getValueByName(const SFString& fieldName) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+#ifdef NEW_CODE
+    // Give customized code a chance to override first
+    SFString ret = nextTreenodeChunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    switch (tolower(fieldName[0])) {
+        case 'i':
+            if ( fieldName % "index" ) return asStringU(index);
+            break;
+        case 'm':
+            if ( fieldName % "m_prefix" ) return m_prefix;
+            break;
+    }
+    return "";
+#else
+    return Format("[{"+toUpper(fieldName)+"}]");
+#endif
 }
 
 //---------------------------------------------------------------------------

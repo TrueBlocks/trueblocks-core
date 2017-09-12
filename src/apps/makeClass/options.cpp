@@ -10,10 +10,11 @@
 
 CParams params[] = {
     CParams("~className",          "name of C++ class(es) to process"),
-//    CParams("-clean",            "remove generated .cpp and .h file from current folder (if found)"),
     CParams("-edit",               "edit <className(s)> definition file in local folder"),
     CParams("-filter:<string>",    "process only files with :filter in their names"),
     CParams("-list",               "list all definition files found in the local folder"),
+    CParams("-header",             "write headers files only"),
+    CParams("-sour(c)e",           "write source files only"),
     CParams("-namespace:<string>", "surround the code with a --namespace:ns"),
     CParams("-silent",             "on error (no classDefinition file) exit silently"),
     CParams("-run",                "run the class maker on associated <className(s)>"),
@@ -34,11 +35,11 @@ bool COptions::parseArguments(SFString& command) {
             isEdit = true;
             isRemove = isList = false;  // last in wins
 
-//        } else if (arg == "-c" || arg == "-clean") {
-//            if (isRun)
-//                return usage("Incompatible options '-r' and '-c'. Choose one or the other.");
-//            isRemove = true;
-//            isEdit = isList = false;  // last in wins
+        } else if (arg == "-c" || arg == "--source") {
+            writeSource = true;
+
+        } else if (arg == "-h" || arg == "--header") {
+            writeHeader = true;
 
         } else if (arg == "-l" || arg == "-list") {
             if (isRun)
@@ -97,14 +98,30 @@ bool COptions::parseArguments(SFString& command) {
             errMsg = "You must specify at least one className (or -a or -l)";
     }
 
-    if (!isList && !isEdit && !isRemove && !isRun)
+    if (!isList && !isEdit && !isRemove && !isRun) {
         errMsg = "You must specify at least one of --run, --list, --edit, or --clear";
+    }
 
-    if (silent && !errMsg.empty())
+    if (silent && !errMsg.empty()) {
         return false;
+    }
 
-    if (!errMsg.empty())
+    if (!errMsg.empty()) {
         return usage(errMsg);
+    }
+
+	if (SFString(getenv("NO_HEADER")) == "true") {
+	    writeSource = true;
+    }
+
+	if (SFString(getenv("NO_SOURCE")) == "true") {
+	    writeHeader = true;
+    }
+
+    // If neither is lit, light them both
+    if (!writeHeader && !writeSource) {
+        writeHeader = writeSource = true;
+    }
 
     return true;
 }
@@ -123,6 +140,8 @@ void COptions::Init(void) {
     namesp = "";
     classNames = "";
     filter = "";
+    writeHeader = false;
+    writeSource = false;
 }
 
 //---------------------------------------------------------------------------------------------------
