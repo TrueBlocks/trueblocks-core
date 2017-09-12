@@ -143,13 +143,6 @@ inline CLogEntry& CLogEntry::operator=(const CLogEntry& lo) {
 }
 
 //---------------------------------------------------------------------------
-inline SFString CLogEntry::getValueByName(const SFString& fieldName) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
-    return Format("[{"+toUpper(fieldName)+"}]");
-}
-
-//---------------------------------------------------------------------------
 IMPLEMENT_ARCHIVE_ARRAY(CLogEntryArray);
 IMPLEMENT_ARCHIVE_ARRAY_C(CLogEntryArray);
 IMPLEMENT_ARCHIVE_LIST(CLogEntryList);
@@ -163,5 +156,6 @@ extern SFArchive& operator>>(SFArchive& archive, CLogEntry& log);
 extern SFString nextReceiptChunk(const SFString& fieldIn, const void *data);
 extern SFString nextLogentryChunk(const SFString& fieldIn, const void *data);
 // EXISTING_CODE
+#define NEW_CODE
 }  // namespace qblocks
 

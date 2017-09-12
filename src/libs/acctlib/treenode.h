@@ -119,13 +119,6 @@ inline CTreeNode& CTreeNode::operator=(const CTreeNode& tr) {
 }
 
 //---------------------------------------------------------------------------
-inline SFString CTreeNode::getValueByName(const SFString& fieldName) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
-    return Format("[{"+toUpper(fieldName)+"}]");
-}
-
-//---------------------------------------------------------------------------
 IMPLEMENT_ARCHIVE_ARRAY(CTreeNodeArray);
 IMPLEMENT_ARCHIVE_ARRAY_C(CTreeNodeArray);
 IMPLEMENT_ARCHIVE_LIST(CTreeNodeList);
@@ -141,5 +134,6 @@ inline unsigned commonPrefix(const SFString& _t, const SFString& _u) {
     return (unsigned)s;
 }
 // EXISTING_CODE
+#define NEW_CODE
 }  // namespace qblocks
 

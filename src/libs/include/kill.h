@@ -108,13 +108,6 @@ inline QKill& QKill::operator=(const QKill& ki) {
 }
 
 //---------------------------------------------------------------------------
-inline SFString QKill::getValueByName(const SFString& fieldName) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
-    return Format("[{"+toUpper(fieldName)+"}]");
-}
-
-//---------------------------------------------------------------------------
 IMPLEMENT_ARCHIVE_ARRAY(QKillArray);
 IMPLEMENT_ARCHIVE_ARRAY_C(QKillArray);
 IMPLEMENT_ARCHIVE_LIST(QKillList);
@@ -122,4 +115,5 @@ IMPLEMENT_ARCHIVE_LIST(QKillList);
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
+#define NEW_CODE
 

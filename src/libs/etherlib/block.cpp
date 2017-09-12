@@ -44,10 +44,47 @@ SFString nextBlockChunk(const SFString& fieldIn, const void *data) {
     const CBlock *blo = (const CBlock *)data;
     if (blo) {
         // Give customized code a chance to override first
+#ifdef NEW_CODE
         SFString ret = blo->getValueByName(fieldIn);
         if (!ret.empty())
             return ret;
+#else
+        SFString ret = nextBlockChunk_custom(fieldIn, data);
+        if (!ret.empty())
+            return ret;
 
+        switch (tolower(fieldIn[0])) {
+            case 'b':
+                if ( fieldIn % "blockNumber" ) return asStringU(blo->blockNumber);
+                break;
+            case 'g':
+                if ( fieldIn % "gasLimit" ) return asStringU(blo->gasLimit);
+                if ( fieldIn % "gasUsed" ) return asStringU(blo->gasUsed);
+                break;
+            case 'h':
+                if ( fieldIn % "hash" ) return fromHash(blo->hash);
+                break;
+            case 'l':
+                if ( fieldIn % "logsBloom" ) return fromBloom(blo->logsBloom);
+                break;
+            case 'p':
+                if ( fieldIn % "parentHash" ) return fromHash(blo->parentHash);
+                break;
+            case 't':
+                if ( fieldIn % "timestamp" ) return fromTimestamp(blo->timestamp);
+                if ( fieldIn % "transactions" ) {
+                    uint32_t cnt = blo->transactions.getCount();
+                    if (!cnt) return "";
+                    SFString retS;
+                    for (uint32_t i = 0 ; i < cnt ; i++) {
+                        retS += blo->transactions[i].Format();
+                        retS += ((i < cnt - 1) ? ",\n" : "\n");
+                    }
+                    return retS;
+                }
+                break;
+        }
+#endif
         // EXISTING_CODE
         if ( isTestMode() && fieldIn % "blockHash" )
             return fromHash(blo->hash);
@@ -114,7 +151,7 @@ bool CBlock::setValueByName(const SFString& fieldName, const SFString& fieldValu
             if ( fieldName % "parentHash" ) { parentHash = toHash(fieldValue); return true; }
             break;
         case 't':
-            if ( fieldName % "timestamp" ) { timestamp = (timestamp_t)toUnsigned(fieldValue); return true; }
+            if ( fieldName % "timestamp" ) { timestamp = toTimestamp(fieldValue); return true; }
             if ( fieldName % "transactions" ) return true;
             break;
         default:
@@ -183,7 +220,7 @@ void CBlock::registerClass(void) {
     ADD_FIELD(CBlock, "logsBloom", T_BLOOM, ++fieldNum);
     ADD_FIELD(CBlock, "blockNumber", T_NUMBER, ++fieldNum);
     ADD_FIELD(CBlock, "parentHash", T_HASH, ++fieldNum);
-    ADD_FIELD(CBlock, "timestamp", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CBlock, "timestamp", T_TIMESTAMP, ++fieldNum);
     ADD_FIELD(CBlock, "transactions", T_OBJECT|TS_ARRAY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
@@ -257,15 +294,17 @@ SFArchive& operator>>(SFArchive& archive, CBlock& blo) {
     return archive;
 }
 
-#define NEW_CODE
-#ifdef NEW_CODE
 //---------------------------------------------------------------------------
 SFString CBlock::getValueByName(const SFString& fieldName) const {
     // EXISTING_CODE
     // EXISTING_CODE
+
+#ifdef NEW_CODE
+    // Give customized code a chance to override first
     SFString ret = nextBlockChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
+
     switch (tolower(fieldName[0])) {
         case 'b':
             if ( fieldName % "blockNumber" ) return asStringU(blockNumber);
@@ -284,7 +323,7 @@ SFString CBlock::getValueByName(const SFString& fieldName) const {
             if ( fieldName % "parentHash" ) return fromHash(parentHash);
             break;
         case 't':
-            if ( fieldName % "timestamp" ) return asString(timestamp);
+            if ( fieldName % "timestamp" ) return fromTimestamp(timestamp);
             if ( fieldName % "transactions" ) {
                 uint32_t cnt = transactions.getCount();
                 if (!cnt) return "";
@@ -298,11 +337,12 @@ SFString CBlock::getValueByName(const SFString& fieldName) const {
             break;
     }
     return "";
-}
 #else
+    return Format("[{"+toUpper(fieldName)+"}]");
 #endif
+}
 
-    //---------------------------------------------------------------------------
+//---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks

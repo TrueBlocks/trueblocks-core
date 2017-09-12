@@ -114,13 +114,6 @@ inline QExecute& QExecute::operator=(const QExecute& ex) {
 }
 
 //---------------------------------------------------------------------------
-inline SFString QExecute::getValueByName(const SFString& fieldName) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
-    return Format("[{"+toUpper(fieldName)+"}]");
-}
-
-//---------------------------------------------------------------------------
 IMPLEMENT_ARCHIVE_ARRAY(QExecuteArray);
 IMPLEMENT_ARCHIVE_ARRAY_C(QExecuteArray);
 IMPLEMENT_ARCHIVE_LIST(QExecuteList);
@@ -128,4 +121,5 @@ IMPLEMENT_ARCHIVE_LIST(QExecuteList);
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
+#define NEW_CODE
 

@@ -111,13 +111,6 @@ inline QTransfer& QTransfer::operator=(const QTransfer& tr) {
 }
 
 //---------------------------------------------------------------------------
-inline SFString QTransfer::getValueByName(const SFString& fieldName) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
-    return Format("[{"+toUpper(fieldName)+"}]");
-}
-
-//---------------------------------------------------------------------------
 IMPLEMENT_ARCHIVE_ARRAY(QTransferArray);
 IMPLEMENT_ARCHIVE_ARRAY_C(QTransferArray);
 IMPLEMENT_ARCHIVE_LIST(QTransferList);
@@ -125,4 +118,5 @@ IMPLEMENT_ARCHIVE_LIST(QTransferList);
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
+#define NEW_CODE
 

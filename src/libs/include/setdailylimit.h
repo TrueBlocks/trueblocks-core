@@ -108,13 +108,6 @@ inline QSetDailyLimit& QSetDailyLimit::operator=(const QSetDailyLimit& se) {
 }
 
 //---------------------------------------------------------------------------
-inline SFString QSetDailyLimit::getValueByName(const SFString& fieldName) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
-    return Format("[{"+toUpper(fieldName)+"}]");
-}
-
-//---------------------------------------------------------------------------
 IMPLEMENT_ARCHIVE_ARRAY(QSetDailyLimitArray);
 IMPLEMENT_ARCHIVE_ARRAY_C(QSetDailyLimitArray);
 IMPLEMENT_ARCHIVE_LIST(QSetDailyLimitList);
@@ -122,4 +115,5 @@ IMPLEMENT_ARCHIVE_LIST(QSetDailyLimitList);
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
+#define NEW_CODE
 

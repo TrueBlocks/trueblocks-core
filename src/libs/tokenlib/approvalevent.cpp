@@ -42,6 +42,11 @@ SFString nextApprovaleventChunk(const SFString& fieldIn, const void *data) {
     const QApprovalEvent *app = (const QApprovalEvent *)data;
     if (app) {
         // Give customized code a chance to override first
+#ifdef NEW_CODE
+        SFString ret = app->getValueByName(fieldIn);
+        if (!ret.empty())
+            return ret;
+#else
         SFString ret = nextApprovaleventChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
@@ -53,7 +58,7 @@ SFString nextApprovaleventChunk(const SFString& fieldIn, const void *data) {
                 if ( fieldIn % "_value" ) return asStringBN(app->_value);
                 break;
         }
-
+#endif
         // EXISTING_CODE
         // EXISTING_CODE
 
@@ -174,6 +179,30 @@ bool QApprovalEvent::readBackLevel(SFArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
+}
+
+//---------------------------------------------------------------------------
+SFString QApprovalEvent::getValueByName(const SFString& fieldName) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+#ifdef NEW_CODE
+    // Give customized code a chance to override first
+    SFString ret = nextApprovaleventChunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    switch (tolower(fieldName[0])) {
+        case '_':
+            if ( fieldName % "_owner" ) return fromAddress(_owner);
+            if ( fieldName % "_spender" ) return fromAddress(_spender);
+            if ( fieldName % "_value" ) return asStringBN(_value);
+            break;
+    }
+    return "";
+#else
+    return Format("[{"+toUpper(fieldName)+"}]");
+#endif
 }
 
 //---------------------------------------------------------------------------

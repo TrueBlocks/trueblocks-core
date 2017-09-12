@@ -141,13 +141,6 @@ inline CTrace& CTrace::operator=(const CTrace& tr) {
 }
 
 //---------------------------------------------------------------------------
-inline SFString CTrace::getValueByName(const SFString& fieldName) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
-    return Format("[{"+toUpper(fieldName)+"}]");
-}
-
-//---------------------------------------------------------------------------
 IMPLEMENT_ARCHIVE_ARRAY(CTraceArray);
 IMPLEMENT_ARCHIVE_ARRAY_C(CTraceArray);
 IMPLEMENT_ARCHIVE_LIST(CTraceList);
@@ -155,5 +148,6 @@ IMPLEMENT_ARCHIVE_LIST(CTraceList);
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
+#define NEW_CODE
 }  // namespace qblocks
 

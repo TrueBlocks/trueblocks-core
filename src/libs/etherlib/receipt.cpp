@@ -44,10 +44,37 @@ SFString nextReceiptChunk(const SFString& fieldIn, const void *data) {
     const CReceipt *rec = (const CReceipt *)data;
     if (rec) {
         // Give customized code a chance to override first
+#ifdef NEW_CODE
         SFString ret = rec->getValueByName(fieldIn);
         if (!ret.empty())
             return ret;
+#else
+        SFString ret = nextReceiptChunk_custom(fieldIn, data);
+        if (!ret.empty())
+            return ret;
 
+        switch (tolower(fieldIn[0])) {
+            case 'c':
+                if ( fieldIn % "contractAddress" ) return fromAddress(rec->contractAddress);
+                break;
+            case 'g':
+                if ( fieldIn % "gasUsed" ) return asStringU(rec->gasUsed);
+                break;
+            case 'l':
+                if ( fieldIn % "logs" ) {
+                    uint32_t cnt = rec->logs.getCount();
+                    if (!cnt) return "";
+                    SFString retS;
+                    for (uint32_t i = 0 ; i < cnt ; i++) {
+                        retS += rec->logs[i].Format();
+                        retS += ((i < cnt - 1) ? ",\n" : "\n");
+                    }
+                    return retS;
+                }
+                if ( fieldIn % "logsBloom" ) return fromBloom(rec->logsBloom);
+                break;
+        }
+#endif
         // EXISTING_CODE
         // See if this field belongs to the item's container
         ret = nextTransactionChunk(fieldIn, rec->pTrans);
@@ -217,15 +244,17 @@ SFArchive& operator>>(SFArchive& archive, CReceipt& rec) {
     return archive;
 }
 
-#define NEW_CODE
-#ifdef NEW_CODE
 //---------------------------------------------------------------------------
 SFString CReceipt::getValueByName(const SFString& fieldName) const {
     // EXISTING_CODE
     // EXISTING_CODE
+
+#ifdef NEW_CODE
+    // Give customized code a chance to override first
     SFString ret = nextReceiptChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
+
     switch (tolower(fieldName[0])) {
         case 'c':
             if ( fieldName % "contractAddress" ) return fromAddress(contractAddress);
@@ -248,11 +277,12 @@ SFString CReceipt::getValueByName(const SFString& fieldName) const {
             break;
     }
     return "";
-}
 #else
+    return Format("[{"+toUpper(fieldName)+"}]");
 #endif
+}
 
-    //---------------------------------------------------------------------------
+//---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks

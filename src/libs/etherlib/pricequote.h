@@ -136,13 +136,6 @@ inline CPriceQuote& CPriceQuote::operator=(const CPriceQuote& pr) {
 }
 
 //---------------------------------------------------------------------------
-inline SFString CPriceQuote::getValueByName(const SFString& fieldName) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
-    return Format("[{"+toUpper(fieldName)+"}]");
-}
-
-//---------------------------------------------------------------------------
 IMPLEMENT_ARCHIVE_ARRAY(CPriceQuoteArray);
 IMPLEMENT_ARCHIVE_ARRAY_C(CPriceQuoteArray);
 IMPLEMENT_ARCHIVE_LIST(CPriceQuoteList);
@@ -154,5 +147,6 @@ extern uint64_t indexFromTimeStamp(const CPriceQuoteArray& quotes, timestamp_t t
 extern SFString asDollars(timestamp_t ts, SFUintBN weiIn);
 extern SFString priceDatabasePath(void);
 // EXISTING_CODE
+#define NEW_CODE
 }  // namespace qblocks
 

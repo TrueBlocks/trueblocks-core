@@ -43,6 +43,11 @@ SFString nextTreerootChunk(const SFString& fieldIn, const void *data) {
     const CTreeRoot *tre = (const CTreeRoot *)data;
     if (tre) {
         // Give customized code a chance to override first
+#ifdef NEW_CODE
+        SFString ret = tre->getValueByName(fieldIn);
+        if (!ret.empty())
+            return ret;
+#else
         SFString ret = nextTreerootChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
@@ -53,7 +58,7 @@ SFString nextTreerootChunk(const SFString& fieldIn, const void *data) {
 //                if ( fieldIn % "m_root" ) { expContext().noFrst=true; return tre->m_root.Format(); }
                 break;
         }
-
+#endif
         // EXISTING_CODE
         // EXISTING_CODE
 
@@ -164,6 +169,29 @@ bool CTreeRoot::readBackLevel(SFArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
+}
+
+//---------------------------------------------------------------------------
+SFString CTreeRoot::getValueByName(const SFString& fieldName) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+#ifdef NEW_CODE
+    // Give customized code a chance to override first
+    SFString ret = nextTreerootChunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    switch (tolower(fieldName[0])) {
+        case 'm':
+        return "";
+//            if ( fieldName % "m_root" ) { expContext().noFrst=true; return m_root.Format(); }
+            break;
+    }
+    return "";
+#else
+    return Format("[{"+toUpper(fieldName)+"}]");
+#endif
 }
 
 //---------------------------------------------------------------------------
