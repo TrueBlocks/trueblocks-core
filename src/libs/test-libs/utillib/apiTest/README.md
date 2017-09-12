@@ -4,14 +4,13 @@ Testing only
 
 #### Usage
 
-`Usage:`    apiTest [-o|-v|-h]  
+`Usage:`    apiTest [-v|-h]  
 `Purpose:`  Test harness for quickBlocks.
              
 `Where:`  
 
 | Option | Full Command | Description |
 | -------: | :------- | :------- |
-| -o | --option | First option |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 

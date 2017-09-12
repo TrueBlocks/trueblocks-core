@@ -42,6 +42,11 @@ SFString nextRevokeChunk(const SFString& fieldIn, const void *data) {
     const QRevoke *rev = (const QRevoke *)data;
     if (rev) {
         // Give customized code a chance to override first
+#ifdef NEW_CODE
+        SFString ret = rev->getValueByName(fieldIn);
+        if (!ret.empty())
+            return ret;
+#else
         SFString ret = nextRevokeChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
@@ -51,7 +56,7 @@ SFString nextRevokeChunk(const SFString& fieldIn, const void *data) {
                 if ( fieldIn % "_operation" ) return rev->_operation;
                 break;
         }
-
+#endif
         // EXISTING_CODE
         // EXISTING_CODE
 
@@ -164,6 +169,28 @@ bool QRevoke::readBackLevel(SFArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
+}
+
+//---------------------------------------------------------------------------
+SFString QRevoke::getValueByName(const SFString& fieldName) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+#ifdef NEW_CODE
+    // Give customized code a chance to override first
+    SFString ret = nextRevokeChunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    switch (tolower(fieldName[0])) {
+        case '_':
+            if ( fieldName % "_operation" ) return _operation;
+            break;
+    }
+    return "";
+#else
+    return Format("[{"+toUpper(fieldName)+"}]");
+#endif
 }
 
 //---------------------------------------------------------------------------

@@ -117,13 +117,6 @@ inline QSingleTransactEvent& QSingleTransactEvent::operator=(const QSingleTransa
 }
 
 //---------------------------------------------------------------------------
-inline SFString QSingleTransactEvent::getValueByName(const SFString& fieldName) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
-    return Format("[{"+toUpper(fieldName)+"}]");
-}
-
-//---------------------------------------------------------------------------
 IMPLEMENT_ARCHIVE_ARRAY(QSingleTransactEventArray);
 IMPLEMENT_ARCHIVE_ARRAY_C(QSingleTransactEventArray);
 IMPLEMENT_ARCHIVE_LIST(QSingleTransactEventList);
@@ -131,4 +124,5 @@ IMPLEMENT_ARCHIVE_LIST(QSingleTransactEventList);
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
+#define NEW_CODE
 

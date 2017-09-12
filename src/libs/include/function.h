@@ -144,13 +144,6 @@ inline CFunction& CFunction::operator=(const CFunction& fu) {
 }
 
 //---------------------------------------------------------------------------
-inline SFString CFunction::getValueByName(const SFString& fieldName) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
-    return Format("[{"+toUpper(fieldName)+"}]");
-}
-
-//---------------------------------------------------------------------------
 IMPLEMENT_ARCHIVE_ARRAY(CFunctionArray);
 IMPLEMENT_ARCHIVE_ARRAY_C(CFunctionArray);
 IMPLEMENT_ARCHIVE_LIST(CFunctionList);
@@ -158,5 +151,6 @@ IMPLEMENT_ARCHIVE_LIST(CFunctionList);
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
+#define NEW_CODE
 }  // namespace qblocks
 

@@ -42,6 +42,11 @@ SFString nextIsownerChunk(const SFString& fieldIn, const void *data) {
     const QIsOwner *iso = (const QIsOwner *)data;
     if (iso) {
         // Give customized code a chance to override first
+#ifdef NEW_CODE
+        SFString ret = iso->getValueByName(fieldIn);
+        if (!ret.empty())
+            return ret;
+#else
         SFString ret = nextIsownerChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
@@ -51,7 +56,7 @@ SFString nextIsownerChunk(const SFString& fieldIn, const void *data) {
                 if ( fieldIn % "_addr" ) return fromAddress(iso->_addr);
                 break;
         }
-
+#endif
         // EXISTING_CODE
         // EXISTING_CODE
 
@@ -164,6 +169,28 @@ bool QIsOwner::readBackLevel(SFArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
+}
+
+//---------------------------------------------------------------------------
+SFString QIsOwner::getValueByName(const SFString& fieldName) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+#ifdef NEW_CODE
+    // Give customized code a chance to override first
+    SFString ret = nextIsownerChunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    switch (tolower(fieldName[0])) {
+        case '_':
+            if ( fieldName % "_addr" ) return fromAddress(_addr);
+            break;
+    }
+    return "";
+#else
+    return Format("[{"+toUpper(fieldName)+"}]");
+#endif
 }
 
 //---------------------------------------------------------------------------

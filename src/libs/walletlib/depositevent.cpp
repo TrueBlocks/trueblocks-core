@@ -42,6 +42,11 @@ SFString nextDepositeventChunk(const SFString& fieldIn, const void *data) {
     const QDepositEvent *dep = (const QDepositEvent *)data;
     if (dep) {
         // Give customized code a chance to override first
+#ifdef NEW_CODE
+        SFString ret = dep->getValueByName(fieldIn);
+        if (!ret.empty())
+            return ret;
+#else
         SFString ret = nextDepositeventChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
@@ -54,7 +59,7 @@ SFString nextDepositeventChunk(const SFString& fieldIn, const void *data) {
                 if ( fieldIn % "value" ) return asStringBN(dep->value);
                 break;
         }
-
+#endif
         // EXISTING_CODE
         // EXISTING_CODE
 
@@ -173,6 +178,31 @@ bool QDepositEvent::readBackLevel(SFArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
+}
+
+//---------------------------------------------------------------------------
+SFString QDepositEvent::getValueByName(const SFString& fieldName) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+#ifdef NEW_CODE
+    // Give customized code a chance to override first
+    SFString ret = nextDepositeventChunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    switch (tolower(fieldName[0])) {
+        case 'f':
+            if ( fieldName % "from" ) return fromAddress(from);
+            break;
+        case 'v':
+            if ( fieldName % "value" ) return asStringBN(value);
+            break;
+    }
+    return "";
+#else
+    return Format("[{"+toUpper(fieldName)+"}]");
+#endif
 }
 
 //---------------------------------------------------------------------------

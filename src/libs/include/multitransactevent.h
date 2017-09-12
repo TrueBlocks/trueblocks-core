@@ -120,13 +120,6 @@ inline QMultiTransactEvent& QMultiTransactEvent::operator=(const QMultiTransactE
 }
 
 //---------------------------------------------------------------------------
-inline SFString QMultiTransactEvent::getValueByName(const SFString& fieldName) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
-    return Format("[{"+toUpper(fieldName)+"}]");
-}
-
-//---------------------------------------------------------------------------
 IMPLEMENT_ARCHIVE_ARRAY(QMultiTransactEventArray);
 IMPLEMENT_ARCHIVE_ARRAY_C(QMultiTransactEventArray);
 IMPLEMENT_ARCHIVE_LIST(QMultiTransactEventList);
@@ -134,4 +127,5 @@ IMPLEMENT_ARCHIVE_LIST(QMultiTransactEventList);
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
+#define NEW_CODE
 
