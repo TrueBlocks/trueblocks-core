@@ -8,43 +8,43 @@ classSchema: 513
 baseClass: CBaseNode
 	fieldName: schema
 	  fieldID: 1001
-	  fieldType: T_NUMBER TS_NUMERAL 65548
+	  fieldType: T_NUMBER TS_NUMERAL 65561
 	  hidden: 1
 	fieldName: deleted
 	  fieldID: 1002
-	  fieldType: T_BOOL TS_NUMERAL 65546
+	  fieldType: T_BOOL TS_NUMERAL 65556
 	  hidden: 1
 	fieldName: gasLimit
 	  fieldID: 1003
-	  fieldType: T_GAS TS_NUMERAL 4259860 TS_BIGNUM 4259860
+	  fieldType: T_GAS TS_NUMERAL 4259880 TS_BIGNUM 4259880
 	  hidden: 0
 	fieldName: gasUsed
 	  fieldID: 1004
-	  fieldType: T_GAS TS_NUMERAL 4259860 TS_BIGNUM 4259860
+	  fieldType: T_GAS TS_NUMERAL 4259880 TS_BIGNUM 4259880
 	  hidden: 0
 	fieldName: hash
 	  fieldID: 1005
-	  fieldType: T_HASH TS_STRING 131100
+	  fieldType: T_HASH TS_STRING 131132
 	  hidden: 0
 	fieldName: logsBloom
 	  fieldID: 1006
-	  fieldType: T_BLOOM TS_STRING 131102
+	  fieldType: T_BLOOM TS_STRING 131137
 	  hidden: 0
 	fieldName: blockNumber
 	  fieldID: 1007
-	  fieldType: T_NUMBER TS_NUMERAL 65548
+	  fieldType: T_NUMBER TS_NUMERAL 65561
 	  hidden: 0
 	fieldName: parentHash
 	  fieldID: 1008
-	  fieldType: T_HASH TS_STRING 131100
+	  fieldType: T_HASH TS_STRING 131132
 	  hidden: 0
 	fieldName: timestamp
 	  fieldID: 1009
-	  fieldType: T_NUMBER TS_NUMERAL 65548
+	  fieldType: T_TIMESPAN TS_NUMERAL 65551
 	  hidden: 0
 	fieldName: transactions
 	  fieldID: 1010
-	  fieldType: T_OBJECT|TS_ARRAY TS_ARRAY 1572898 TS_OBJECT 1572898
+	  fieldType: T_OBJECT|TS_ARRAY TS_ARRAY 1572939 TS_OBJECT 1572939
 	  hidden: 0
 {
   "gasLimit": 3141592,

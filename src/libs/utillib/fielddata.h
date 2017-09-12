@@ -22,7 +22,7 @@ namespace qblocks {
 
     #define T_DATE      ( 5 | TS_DATE   )
     #define T_TIME      (10 | TS_DATE   )
-    #define T_TIMESTAMP (15 | TS_DATE   )
+    #define T_TIMESTAMP (15 | TS_NUMERAL)
     #define T_BOOL      (20 | TS_NUMERAL)
     #define T_NUMBER    (25 | TS_NUMERAL)
     #define T_DOUBLE    (30 | TS_NUMERAL)
