@@ -74,7 +74,7 @@ SFString nextAccountwatchChunk(const SFString& fieldIn, const void *data) {
                 break;
             case 'n':
                 if ( fieldIn % "name" ) return acc->name;
-                if ( fieldIn % "nodeBal" ) return asStringBN(acc->nodeBal);
+                if ( fieldIn % "nodeBal" ) return fromWei(acc->nodeBal);
                 break;
             case 'q':
                 if ( fieldIn % "qbis" ) { expContext().noFrst=true; return acc->qbis.Format(); }
@@ -142,7 +142,7 @@ bool CAccountWatch::setValueByName(const SFString& fieldName, const SFString& fi
             break;
         case 'n':
             if ( fieldName % "name" ) { name = fieldValue; return true; }
-            if ( fieldName % "nodeBal" ) { nodeBal = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "nodeBal" ) { nodeBal = toWei(fieldValue); return true; }
             break;
         case 'q':
             if ( fieldName % "qbis" ) { /* qbis = fieldValue; */ return false; }
@@ -299,7 +299,7 @@ SFString CAccountWatch::getValueByName(const SFString& fieldName) const {
             break;
         case 'n':
             if ( fieldName % "name" ) return name;
-            if ( fieldName % "nodeBal" ) return asStringBN(nodeBal);
+            if ( fieldName % "nodeBal" ) return fromWei(nodeBal);
             break;
         case 'q':
             if ( fieldName % "qbis" ) { expContext().noFrst=true; return qbis.Format(); }

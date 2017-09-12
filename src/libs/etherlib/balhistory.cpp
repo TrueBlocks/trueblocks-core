@@ -142,7 +142,7 @@ void CBalHistory::registerClass(void) {
     ADD_FIELD(CBalHistory, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CBalHistory, "recordID", T_TEXT, ++fieldNum);
     ADD_FIELD(CBalHistory, "txDate", T_DATE, ++fieldNum);
-    ADD_FIELD(CBalHistory, "balance", T_WEI, ++fieldNum);
+    ADD_FIELD(CBalHistory, "balance", T_NUMBER, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CBalHistory, "schema");

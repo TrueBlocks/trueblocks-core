@@ -67,7 +67,7 @@ SFString nextTraceactionChunk(const SFString& fieldIn, const void *data) {
                 if ( fieldIn % "from" ) return fromAddress(tra->from);
                 break;
             case 'g':
-                if ( fieldIn % "gas" ) return asStringU(tra->gas);
+                if ( fieldIn % "gas" ) return fromGas(tra->gas);
                 break;
             case 'i':
                 if ( fieldIn % "input" ) return tra->input;
@@ -114,7 +114,7 @@ bool CTraceAction::setValueByName(const SFString& fieldName, const SFString& fie
             if ( fieldName % "from" ) { from = toAddress(fieldValue); return true; }
             break;
         case 'g':
-            if ( fieldName % "gas" ) { gas = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "gas" ) { gas = toGas(fieldValue); return true; }
             break;
         case 'i':
             if ( fieldName % "input" ) { input = fieldValue; return true; }
@@ -279,7 +279,7 @@ SFString CTraceAction::getValueByName(const SFString& fieldName) const {
             if ( fieldName % "from" ) return fromAddress(from);
             break;
         case 'g':
-            if ( fieldName % "gas" ) return asStringU(gas);
+            if ( fieldName % "gas" ) return fromGas(gas);
             break;
         case 'i':
             if ( fieldName % "input" ) return input;

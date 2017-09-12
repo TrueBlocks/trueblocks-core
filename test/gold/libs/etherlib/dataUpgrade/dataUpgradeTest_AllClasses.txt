@@ -277,7 +277,7 @@ baseClass: CBaseNode
 	  hidden: 0
 	fieldName: balance
 	  fieldID: 1005
-	  fieldType: T_WEI TS_NUMERAL 4259875 TS_BIGNUM 4259875
+	  fieldType: T_NUMBER TS_NUMERAL 65561
 	  hidden: 0
 {
   "txDate": "1700-01-01 00:00:01 UTC",
@@ -355,23 +355,23 @@ baseClass: CBaseNode
 	  hidden: 1
 	fieldName: begBal
 	  fieldID: 1003
-	  fieldType: T_WEI TS_NUMERAL 4259875 TS_BIGNUM 4259875
+	  fieldType: T_NUMBER TS_NUMERAL 65561
 	  hidden: 0
 	fieldName: inflow
 	  fieldID: 1004
-	  fieldType: T_WEI TS_NUMERAL 4259875 TS_BIGNUM 4259875
+	  fieldType: T_NUMBER TS_NUMERAL 65561
 	  hidden: 0
 	fieldName: outflow
 	  fieldID: 1005
-	  fieldType: T_WEI TS_NUMERAL 4259875 TS_BIGNUM 4259875
+	  fieldType: T_NUMBER TS_NUMERAL 65561
 	  hidden: 0
 	fieldName: gasCost
 	  fieldID: 1006
-	  fieldType: T_WEI TS_NUMERAL 4259875 TS_BIGNUM 4259875
+	  fieldType: T_NUMBER TS_NUMERAL 65561
 	  hidden: 0
 	fieldName: endBal
 	  fieldID: 1007
-	  fieldType: T_WEI TS_NUMERAL 4259875 TS_BIGNUM 4259875
+	  fieldType: T_NUMBER TS_NUMERAL 65561
 	  hidden: 0
 	fieldName: blockNum
 	  fieldID: 1008

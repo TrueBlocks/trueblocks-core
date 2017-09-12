@@ -438,6 +438,7 @@ SFString getAssign(const CParameter *p, SFUint32 which) {
     }
 
     if (type == "uint" || type == "uint256") { ass = "toWei(\"0x\"+[{VAL}]);";
+    } else if (type.Contains("gas")) { ass = "toGas([{VAL}]);";
     } else if (type.Contains("uint")) { ass = "toLongU([{VAL}]);";
     } else if (type.Contains("int") || type.Contains("bool")) { ass = "toLong([{VAL}]);";
     } else if (type.Contains("address")) { ass = "toAddress([{VAL}]);";
@@ -452,6 +453,7 @@ SFString getAssign(const CParameter *p, SFUint32 which) {
 SFString getEventAssign(const CParameter *p, SFUint32 which, SFUint32 nIndexed) {
     SFString type = p->Format("[{TYPE}]"), ass;
     if (type == "uint" || type == "uint256") { ass = "toWei([{VAL}]);";
+    } else if (type.Contains("gas")) { ass = "toGas([{VAL}]);";
     } else if (type.Contains("uint")) { ass = "toLongU([{VAL}]);";
     } else if (type.Contains("int") || type.Contains("bool")) { ass = "toLong([{VAL}]);";
     } else if (type.Contains("address")) { ass = "toAddress([{VAL}]);";

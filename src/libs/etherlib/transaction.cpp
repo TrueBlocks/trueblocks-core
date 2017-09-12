@@ -333,8 +333,7 @@ SFString nextTransactionChunk_custom(const SFString& fieldIn, const void *data) 
             case 'd':
                 if (fieldIn % "date")
                 {
-                    timestamp_t ts = toLong(tra->CTransaction::getValueByName("timestamp"));
-//                    timestamp_t ts = toLong(tra->getValueByName("timestamp"));
+                    timestamp_t ts = toTimestamp(tra->CTransaction::getValueByName("timestamp"));
                     return dateFromTimeStamp(ts).Format(FMT_JSON);
                 }
                 break;

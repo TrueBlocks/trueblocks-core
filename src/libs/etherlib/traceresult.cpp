@@ -55,7 +55,7 @@ SFString nextTraceresultChunk(const SFString& fieldIn, const void *data) {
 
         switch (tolower(fieldIn[0])) {
             case 'g':
-                if ( fieldIn % "gasUsed" ) return asStringU(tra->gasUsed);
+                if ( fieldIn % "gasUsed" ) return fromGas(tra->gasUsed);
                 break;
             case 'o':
                 if ( fieldIn % "output" ) return tra->output;
@@ -81,7 +81,7 @@ bool CTraceResult::setValueByName(const SFString& fieldName, const SFString& fie
 
     switch (tolower(fieldName[0])) {
         case 'g':
-            if ( fieldName % "gasUsed" ) { gasUsed = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "gasUsed" ) { gasUsed = toGas(fieldValue); return true; }
             break;
         case 'o':
             if ( fieldName % "output" ) { output = fieldValue; return true; }
@@ -204,7 +204,7 @@ SFString CTraceResult::getValueByName(const SFString& fieldName) const {
 
     switch (tolower(fieldName[0])) {
         case 'g':
-            if ( fieldName % "gasUsed" ) return asStringU(gasUsed);
+            if ( fieldName % "gasUsed" ) return fromGas(gasUsed);
             break;
         case 'o':
             if ( fieldName % "output" ) return output;
