@@ -27,7 +27,7 @@ baseClass: CBaseNode
 	  hidden: 0
 	fieldName: topics
 	  fieldID: 1006
-	  fieldType: T_TEXT|TS_ARRAY TS_STRING 655410 TS_ARRAY 655410
+	  fieldType: T_OBJECT|TS_ARRAY TS_ARRAY 1572939 TS_OBJECT 1572939
 	  hidden: 0
 {
   "address": "0x0",
