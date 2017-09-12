@@ -29,7 +29,7 @@ class CTraceAction : public CBaseNode {
 public:
     SFString callType;
     SFAddress from;
-    SFUint32 gas;
+    SFGas gas;
     SFString input;
     SFAddress to;
     SFWei value;
@@ -136,13 +136,6 @@ inline CTraceAction& CTraceAction::operator=(const CTraceAction& tr) {
 }
 
 //---------------------------------------------------------------------------
-inline SFString CTraceAction::getValueByName(const SFString& fieldName) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
-    return Format("[{"+toUpper(fieldName)+"}]");
-}
-
-//---------------------------------------------------------------------------
 IMPLEMENT_ARCHIVE_ARRAY(CTraceActionArray);
 IMPLEMENT_ARCHIVE_ARRAY_C(CTraceActionArray);
 IMPLEMENT_ARCHIVE_LIST(CTraceActionList);
@@ -154,5 +147,6 @@ extern SFArchive& operator>>(SFArchive& archive, CTraceAction& tra);
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
+#define NEW_CODE
 }  // namespace qblocks
 

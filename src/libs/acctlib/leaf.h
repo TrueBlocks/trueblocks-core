@@ -122,13 +122,6 @@ inline CLeaf& CLeaf::operator=(const CLeaf& le) {
 }
 
 //---------------------------------------------------------------------------
-inline SFString CLeaf::getValueByName(const SFString& fieldName) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
-    return Format("[{"+toUpper(fieldName)+"}]");
-}
-
-//---------------------------------------------------------------------------
 IMPLEMENT_ARCHIVE_ARRAY(CLeafArray);
 IMPLEMENT_ARCHIVE_ARRAY_C(CLeafArray);
 IMPLEMENT_ARCHIVE_LIST(CLeafList);
@@ -137,5 +130,6 @@ IMPLEMENT_ARCHIVE_LIST(CLeafList);
 // EXISTING_CODE
 extern SFString nextTreenodeChunk(const SFString& fieldIn, const void *data);
 // EXISTING_CODE
+#define NEW_CODE
 }  // namespace qblocks
 

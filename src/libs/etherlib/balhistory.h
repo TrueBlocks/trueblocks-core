@@ -118,13 +118,6 @@ inline CBalHistory& CBalHistory::operator=(const CBalHistory& ba) {
 }
 
 //---------------------------------------------------------------------------
-inline SFString CBalHistory::getValueByName(const SFString& fieldName) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
-    return Format("[{"+toUpper(fieldName)+"}]");
-}
-
-//---------------------------------------------------------------------------
 IMPLEMENT_ARCHIVE_ARRAY(CBalHistoryArray);
 IMPLEMENT_ARCHIVE_ARRAY_C(CBalHistoryArray);
 IMPLEMENT_ARCHIVE_LIST(CBalHistoryList);
@@ -139,5 +132,6 @@ inline SFString toRecordID(const SFString& addr, blknum_t bn, SFUint32 tn) {
     return addr + "_" + padNum9(bn) + "_" + padNum5(tn);
 }
 // EXISTING_CODE
+#define NEW_CODE
 }  // namespace qblocks
 

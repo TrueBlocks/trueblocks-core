@@ -44,10 +44,54 @@ SFString nextTransactionChunk(const SFString& fieldIn, const void *data) {
     const CTransaction *tra = (const CTransaction *)data;
     if (tra) {
         // Give customized code a chance to override first
-        SFString ret = tra->getValueByName(fieldIn);
+#ifdef NEW_CODE
+        SFString ret = tra->CTransaction::getValueByName(fieldIn);
+        if (!ret.empty())
+            return ret;
+#else
+        SFString ret = nextTransactionChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
 
+        switch (tolower(fieldIn[0])) {
+            case 'b':
+                if ( fieldIn % "blockHash" ) return fromHash(tra->blockHash);
+                if ( fieldIn % "blockNumber" ) return asStringU(tra->blockNumber);
+                break;
+            case 'c':
+                if ( fieldIn % "cumulativeGasUsed" ) return fromWei(tra->cumulativeGasUsed);
+                break;
+            case 'f':
+                if ( fieldIn % "from" ) return fromAddress(tra->from);
+                break;
+            case 'g':
+                if ( fieldIn % "gas" ) return asStringU(tra->gas);
+                if ( fieldIn % "gasPrice" ) return asStringU(tra->gasPrice);
+                break;
+            case 'h':
+                if ( fieldIn % "hash" ) return fromHash(tra->hash);
+                break;
+            case 'i':
+                if ( fieldIn % "input" ) return tra->input;
+                if ( fieldIn % "isError" ) return asStringU(tra->isError);
+                if ( fieldIn % "isInternalTx" ) return asStringU(tra->isInternalTx);
+                break;
+            case 'n':
+                if ( fieldIn % "nonce" ) return asStringU(tra->nonce);
+                break;
+            case 'r':
+                if ( fieldIn % "receipt" ) { expContext().noFrst=true; return tra->receipt.Format(); }
+                break;
+            case 't':
+                if ( fieldIn % "transactionIndex" ) return asStringU(tra->transactionIndex);
+                if ( fieldIn % "timestamp" ) return asStringU(tra->timestamp);
+                if ( fieldIn % "to" ) return fromAddress(tra->to);
+                break;
+            case 'v':
+                if ( fieldIn % "value" ) return fromWei(tra->value);
+                break;
+        }
+#endif
         // EXISTING_CODE
         // See if this field belongs to the item's container
         ret = nextBlockChunk(fieldIn, tra->pBlock);
@@ -289,7 +333,7 @@ SFString nextTransactionChunk_custom(const SFString& fieldIn, const void *data) 
             case 'd':
                 if (fieldIn % "date")
                 {
-                    timestamp_t ts = toLong(tra->getValueByName("timestamp"));
+                    timestamp_t ts = toTimestamp(tra->CTransaction::getValueByName("timestamp"));
                     return dateFromTimeStamp(ts).Format(FMT_JSON);
                 }
                 break;
@@ -354,15 +398,17 @@ SFArchive& operator>>(SFArchive& archive, CTransaction& tra) {
     return archive;
 }
 
-#define NEW_CODE
-#ifdef NEW_CODE
 //---------------------------------------------------------------------------
 SFString CTransaction::getValueByName(const SFString& fieldName) const {
     // EXISTING_CODE
     // EXISTING_CODE
+
+#ifdef NEW_CODE
+    // Give customized code a chance to override first
     SFString ret = nextTransactionChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
+
     switch (tolower(fieldName[0])) {
         case 'b':
             if ( fieldName % "blockHash" ) return fromHash(blockHash);
@@ -402,9 +448,10 @@ SFString CTransaction::getValueByName(const SFString& fieldName) const {
             break;
     }
     return "";
-}
 #else
+    return Format("[{"+toUpper(fieldName)+"}]");
 #endif
+}
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

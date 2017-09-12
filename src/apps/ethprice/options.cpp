@@ -37,9 +37,9 @@ bool COptions::parseArguments(SFString& command) {
         } else if (arg.startsWith("-a:") || arg.startsWith("--at:")) {
             arg = orig.Substitute("-a:","").Substitute("--at:","");
             if (arg == "now") {
-                at = toTimeStamp(Now());
+                at = toTimestamp(Now());
             } else {
-                at = newTimestamp(arg);
+                at = toTimestamp(arg);
                 if (!isUnsigned(arg))
                     return usage("Timestamp expected: " + orig);
             }

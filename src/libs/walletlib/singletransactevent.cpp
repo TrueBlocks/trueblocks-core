@@ -42,6 +42,11 @@ SFString nextSingletransacteventChunk(const SFString& fieldIn, const void *data)
     const QSingleTransactEvent *sin = (const QSingleTransactEvent *)data;
     if (sin) {
         // Give customized code a chance to override first
+#ifdef NEW_CODE
+        SFString ret = sin->getValueByName(fieldIn);
+        if (!ret.empty())
+            return ret;
+#else
         SFString ret = nextSingletransacteventChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
@@ -60,7 +65,7 @@ SFString nextSingletransacteventChunk(const SFString& fieldIn, const void *data)
                 if ( fieldIn % "value" ) return asStringBN(sin->value);
                 break;
         }
-
+#endif
         // EXISTING_CODE
         // EXISTING_CODE
 
@@ -191,6 +196,37 @@ bool QSingleTransactEvent::readBackLevel(SFArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
+}
+
+//---------------------------------------------------------------------------
+SFString QSingleTransactEvent::getValueByName(const SFString& fieldName) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+#ifdef NEW_CODE
+    // Give customized code a chance to override first
+    SFString ret = nextSingletransacteventChunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    switch (tolower(fieldName[0])) {
+        case 'd':
+            if ( fieldName % "data" ) return data;
+            break;
+        case 'o':
+            if ( fieldName % "owner" ) return fromAddress(owner);
+            break;
+        case 't':
+            if ( fieldName % "to" ) return fromAddress(to);
+            break;
+        case 'v':
+            if ( fieldName % "value" ) return asStringBN(value);
+            break;
+    }
+    return "";
+#else
+    return Format("[{"+toUpper(fieldName)+"}]");
+#endif
 }
 
 //---------------------------------------------------------------------------

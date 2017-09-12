@@ -111,13 +111,6 @@ inline QDepositEvent& QDepositEvent::operator=(const QDepositEvent& de) {
 }
 
 //---------------------------------------------------------------------------
-inline SFString QDepositEvent::getValueByName(const SFString& fieldName) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
-    return Format("[{"+toUpper(fieldName)+"}]");
-}
-
-//---------------------------------------------------------------------------
 IMPLEMENT_ARCHIVE_ARRAY(QDepositEventArray);
 IMPLEMENT_ARCHIVE_ARRAY_C(QDepositEventArray);
 IMPLEMENT_ARCHIVE_LIST(QDepositEventList);
@@ -125,4 +118,5 @@ IMPLEMENT_ARCHIVE_LIST(QDepositEventList);
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
+#define NEW_CODE
 

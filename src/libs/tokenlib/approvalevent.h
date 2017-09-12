@@ -114,13 +114,6 @@ inline QApprovalEvent& QApprovalEvent::operator=(const QApprovalEvent& ap) {
 }
 
 //---------------------------------------------------------------------------
-inline SFString QApprovalEvent::getValueByName(const SFString& fieldName) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
-    return Format("[{"+toUpper(fieldName)+"}]");
-}
-
-//---------------------------------------------------------------------------
 IMPLEMENT_ARCHIVE_ARRAY(QApprovalEventArray);
 IMPLEMENT_ARCHIVE_ARRAY_C(QApprovalEventArray);
 IMPLEMENT_ARCHIVE_LIST(QApprovalEventList);
@@ -128,4 +121,5 @@ IMPLEMENT_ARCHIVE_LIST(QApprovalEventList);
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
+#define NEW_CODE
 

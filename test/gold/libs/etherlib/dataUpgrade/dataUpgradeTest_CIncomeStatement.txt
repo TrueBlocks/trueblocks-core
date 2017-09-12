@@ -7,35 +7,35 @@ classSchema: 513
 baseClass: CBaseNode
 	fieldName: schema
 	  fieldID: 1001
-	  fieldType: T_NUMBER TS_NUMERAL 65548
+	  fieldType: T_NUMBER TS_NUMERAL 65561
 	  hidden: 1
 	fieldName: deleted
 	  fieldID: 1002
-	  fieldType: T_BOOL TS_NUMERAL 65546
+	  fieldType: T_BOOL TS_NUMERAL 65556
 	  hidden: 1
 	fieldName: begBal
 	  fieldID: 1003
-	  fieldType: T_WEI TS_NUMERAL 4259858 TS_BIGNUM 4259858
+	  fieldType: T_NUMBER TS_NUMERAL 65561
 	  hidden: 0
 	fieldName: inflow
 	  fieldID: 1004
-	  fieldType: T_WEI TS_NUMERAL 4259858 TS_BIGNUM 4259858
+	  fieldType: T_NUMBER TS_NUMERAL 65561
 	  hidden: 0
 	fieldName: outflow
 	  fieldID: 1005
-	  fieldType: T_WEI TS_NUMERAL 4259858 TS_BIGNUM 4259858
+	  fieldType: T_NUMBER TS_NUMERAL 65561
 	  hidden: 0
 	fieldName: gasCost
 	  fieldID: 1006
-	  fieldType: T_WEI TS_NUMERAL 4259858 TS_BIGNUM 4259858
+	  fieldType: T_NUMBER TS_NUMERAL 65561
 	  hidden: 0
 	fieldName: endBal
 	  fieldID: 1007
-	  fieldType: T_WEI TS_NUMERAL 4259858 TS_BIGNUM 4259858
+	  fieldType: T_NUMBER TS_NUMERAL 65561
 	  hidden: 0
 	fieldName: blockNum
 	  fieldID: 1008
-	  fieldType: T_NUMBER TS_NUMERAL 65548
+	  fieldType: T_NUMBER TS_NUMERAL 65561
 	  hidden: 0
 {
   "begBal": 0,

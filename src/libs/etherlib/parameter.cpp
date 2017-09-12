@@ -43,6 +43,11 @@ SFString nextParameterChunk(const SFString& fieldIn, const void *data) {
     const CParameter *par = (const CParameter *)data;
     if (par) {
         // Give customized code a chance to override first
+#ifdef NEW_CODE
+        SFString ret = par->getValueByName(fieldIn);
+        if (!ret.empty())
+            return ret;
+#else
         SFString ret = nextParameterChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
@@ -64,7 +69,7 @@ SFString nextParameterChunk(const SFString& fieldIn, const void *data) {
                 if ( fieldIn % "type" ) return par->type;
                 break;
         }
-
+#endif
         // EXISTING_CODE
         // EXISTING_CODE
 
@@ -204,6 +209,40 @@ bool CParameter::readBackLevel(SFArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
+}
+
+//---------------------------------------------------------------------------
+SFString CParameter::getValueByName(const SFString& fieldName) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+#ifdef NEW_CODE
+    // Give customized code a chance to override first
+    SFString ret = nextParameterChunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    switch (tolower(fieldName[0])) {
+        case 'i':
+            if ( fieldName % "indexed" ) return asString(indexed);
+            if ( fieldName % "isPointer" ) return asString(isPointer);
+            if ( fieldName % "isArray" ) return asString(isArray);
+            if ( fieldName % "isObject" ) return asString(isObject);
+            break;
+        case 'n':
+            if ( fieldName % "name" ) return name;
+            break;
+        case 's':
+            if ( fieldName % "strDefault" ) return strDefault;
+            break;
+        case 't':
+            if ( fieldName % "type" ) return type;
+            break;
+    }
+    return "";
+#else
+    return Format("[{"+toUpper(fieldName)+"}]");
+#endif
 }
 
 //---------------------------------------------------------------------------

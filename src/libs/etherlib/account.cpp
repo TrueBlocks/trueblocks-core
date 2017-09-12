@@ -43,6 +43,11 @@ SFString nextAccountChunk(const SFString& fieldIn, const void *data) {
     const CAccount *acc = (const CAccount *)data;
     if (acc) {
         // Give customized code a chance to override first
+#ifdef NEW_CODE
+        SFString ret = acc->getValueByName(fieldIn);
+        if (!ret.empty())
+            return ret;
+#else
         SFString ret = nextAccountChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
@@ -80,7 +85,7 @@ SFString nextAccountChunk(const SFString& fieldIn, const void *data) {
                 }
                 break;
         }
-
+#endif
         // EXISTING_CODE
         // EXISTING_CODE
 
@@ -287,6 +292,56 @@ bool CAccount::readBackLevel(SFArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
+}
+
+//---------------------------------------------------------------------------
+SFString CAccount::getValueByName(const SFString& fieldName) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+#ifdef NEW_CODE
+    // Give customized code a chance to override first
+    SFString ret = nextAccountChunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    switch (tolower(fieldName[0])) {
+        case 'a':
+            if ( fieldName % "addr" ) return fromAddress(addr);
+            break;
+        case 'd':
+            if ( fieldName % "displayString" ) return displayString;
+            break;
+        case 'h':
+            if ( fieldName % "header" ) return header;
+            break;
+        case 'l':
+            if ( fieldName % "lastPage" ) return asStringU(lastPage);
+            if ( fieldName % "lastBlock" ) return asString(lastBlock);
+            break;
+        case 'n':
+            if ( fieldName % "nVisible" ) return asStringU(nVisible);
+            break;
+        case 'p':
+            if ( fieldName % "pageSize" ) return asStringU(pageSize);
+            break;
+        case 't':
+            if ( fieldName % "transactions" ) {
+                uint32_t cnt = transactions.getCount();
+                if (!cnt) return "";
+                SFString retS;
+                for (uint32_t i = 0 ; i < cnt ; i++) {
+                    retS += transactions[i].Format();
+                    retS += ((i < cnt - 1) ? ",\n" : "\n");
+                }
+                return retS;
+            }
+            break;
+    }
+    return "";
+#else
+    return Format("[{"+toUpper(fieldName)+"}]");
+#endif
 }
 
 //---------------------------------------------------------------------------

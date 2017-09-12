@@ -118,13 +118,6 @@ inline CNameValue& CNameValue::operator=(const CNameValue& na) {
 }
 
 //---------------------------------------------------------------------------
-inline SFString CNameValue::getValueByName(const SFString& fieldName) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
-    return Format("[{"+toUpper(fieldName)+"}]");
-}
-
-//---------------------------------------------------------------------------
 IMPLEMENT_ARCHIVE_ARRAY(CNameValueArray);
 IMPLEMENT_ARCHIVE_ARRAY_C(CNameValueArray);
 IMPLEMENT_ARCHIVE_LIST(CNameValueList);
@@ -132,5 +125,6 @@ IMPLEMENT_ARCHIVE_LIST(CNameValueList);
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
+#define NEW_CODE
 }  // namespace qblocks
 

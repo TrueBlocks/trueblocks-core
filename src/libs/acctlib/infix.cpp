@@ -44,6 +44,11 @@ SFString nextInfixChunk(const SFString& fieldIn, const void *data) {
     const CInfix *inf = (const CInfix *)data;
     if (inf) {
         // Give customized code a chance to override first
+#ifdef NEW_CODE
+        SFString ret = inf->getValueByName(fieldIn);
+        if (!ret.empty())
+            return ret;
+#else
         SFString ret = nextInfixChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
@@ -54,7 +59,7 @@ SFString nextInfixChunk(const SFString& fieldIn, const void *data) {
 //                if ( fieldIn % "m_next" ) { expContext().noFrst=true; return inf->m_next.Format(); }
                 break;
         }
-
+#endif
         // EXISTING_CODE
         // EXISTING_CODE
 
@@ -168,6 +173,29 @@ bool CInfix::readBackLevel(SFArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
+}
+
+//---------------------------------------------------------------------------
+SFString CInfix::getValueByName(const SFString& fieldName) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+#ifdef NEW_CODE
+    // Give customized code a chance to override first
+    SFString ret = nextInfixChunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    switch (tolower(fieldName[0])) {
+        case 'm':
+        return "";
+//            if ( fieldName % "m_next" ) { expContext().noFrst=true; return m_next.Format(); }
+            break;
+    }
+    return "";
+#else
+    return Format("[{"+toUpper(fieldName)+"}]");
+#endif
 }
 
 //---------------------------------------------------------------------------

@@ -43,6 +43,11 @@ SFString nextNamevalueChunk(const SFString& fieldIn, const void *data) {
     const CNameValue *nam = (const CNameValue *)data;
     if (nam) {
         // Give customized code a chance to override first
+#ifdef NEW_CODE
+        SFString ret = nam->getValueByName(fieldIn);
+        if (!ret.empty())
+            return ret;
+#else
         SFString ret = nextNamevalueChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
@@ -55,7 +60,7 @@ SFString nextNamevalueChunk(const SFString& fieldIn, const void *data) {
                 if ( fieldIn % "value" ) return nam->value;
                 break;
         }
-
+#endif
         // EXISTING_CODE
         // EXISTING_CODE
 
@@ -94,7 +99,7 @@ void CNameValue::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CNameValue::Serialize(SFArchive& archive) {
-    if (!archive.isReading())
+    if (archive.isWriting())
         return ((const CNameValue*)this)->SerializeC(archive);
 
     if (!preSerialize(archive))
@@ -171,6 +176,31 @@ bool CNameValue::readBackLevel(SFArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
+}
+
+//---------------------------------------------------------------------------
+SFString CNameValue::getValueByName(const SFString& fieldName) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+#ifdef NEW_CODE
+    // Give customized code a chance to override first
+    SFString ret = nextNamevalueChunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    switch (tolower(fieldName[0])) {
+        case 'n':
+            if ( fieldName % "name" ) return name;
+            break;
+        case 'v':
+            if ( fieldName % "value" ) return value;
+            break;
+    }
+    return "";
+#else
+    return Format("[{"+toUpper(fieldName)+"}]");
+#endif
 }
 
 //---------------------------------------------------------------------------
