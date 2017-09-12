@@ -16,11 +16,11 @@
 IMPLEMENT_NODE(QRevokeEvent, CLogEntry, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextRevokeeventChunk(const SFString& fieldIn, const void *data);
-static SFString nextRevokeeventChunk_custom(const SFString& fieldIn, const void *data);
+static SFString nextRevokeeventChunk(const SFString& fieldIn, const void *dataPtr);
+static SFString nextRevokeeventChunk_custom(const SFString& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void QRevokeEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+void QRevokeEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -30,7 +30,7 @@ void QRevokeEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *data
     }
 
     SFString fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, data))
+    if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
     while (!fmt.empty())
@@ -38,8 +38,8 @@ void QRevokeEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *data
 }
 
 //---------------------------------------------------------------------------
-SFString nextRevokeeventChunk(const SFString& fieldIn, const void *data) {
-    const QRevokeEvent *rev = (const QRevokeEvent *)data;
+SFString nextRevokeeventChunk(const SFString& fieldIn, const void *dataPtr) {
+    const QRevokeEvent *rev = (const QRevokeEvent *)dataPtr;
     if (rev) {
         // Give customized code a chance to override first
 #ifdef NEW_CODE
@@ -47,7 +47,7 @@ SFString nextRevokeeventChunk(const SFString& fieldIn, const void *data) {
         if (!ret.empty())
             return ret;
 #else
-        SFString ret = nextRevokeeventChunk_custom(fieldIn, data);
+        SFString ret = nextRevokeeventChunk_custom(fieldIn, dataPtr);
         if (!ret.empty())
             return ret;
 
@@ -141,8 +141,8 @@ void QRevokeEvent::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextRevokeeventChunk_custom(const SFString& fieldIn, const void *data) {
-    const QRevokeEvent *rev = (const QRevokeEvent *)data;
+SFString nextRevokeeventChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+    const QRevokeEvent *rev = (const QRevokeEvent *)dataPtr;
     if (rev) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -162,7 +162,7 @@ SFString nextRevokeeventChunk_custom(const SFString& fieldIn, const void *data) 
 }
 
 //---------------------------------------------------------------------------
-bool QRevokeEvent::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+bool QRevokeEvent::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;

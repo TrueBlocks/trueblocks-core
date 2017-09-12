@@ -15,11 +15,11 @@
 IMPLEMENT_NODE(CAccountName, CBaseNode, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextAccountnameChunk(const SFString& fieldIn, const void *data);
-static SFString nextAccountnameChunk_custom(const SFString& fieldIn, const void *data);
+static SFString nextAccountnameChunk(const SFString& fieldIn, const void *dataPtr);
+static SFString nextAccountnameChunk_custom(const SFString& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CAccountName::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+void CAccountName::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -29,7 +29,7 @@ void CAccountName::Format(CExportContext& ctx, const SFString& fmtIn, void *data
     }
 
     SFString fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, data))
+    if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
     while (!fmt.empty())
@@ -37,8 +37,8 @@ void CAccountName::Format(CExportContext& ctx, const SFString& fmtIn, void *data
 }
 
 //---------------------------------------------------------------------------
-SFString nextAccountnameChunk(const SFString& fieldIn, const void *data) {
-    const CAccountName *acc = (const CAccountName *)data;
+SFString nextAccountnameChunk(const SFString& fieldIn, const void *dataPtr) {
+    const CAccountName *acc = (const CAccountName *)dataPtr;
     if (acc) {
         // Give customized code a chance to override first
 #ifdef NEW_CODE
@@ -46,7 +46,7 @@ SFString nextAccountnameChunk(const SFString& fieldIn, const void *data) {
         if (!ret.empty())
             return ret;
 #else
-        SFString ret = nextAccountnameChunk_custom(fieldIn, data);
+        SFString ret = nextAccountnameChunk_custom(fieldIn, dataPtr);
         if (!ret.empty())
             return ret;
 
@@ -164,8 +164,8 @@ void CAccountName::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextAccountnameChunk_custom(const SFString& fieldIn, const void *data) {
-    const CAccountName *acc = (const CAccountName *)data;
+SFString nextAccountnameChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+    const CAccountName *acc = (const CAccountName *)dataPtr;
     if (acc) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -185,7 +185,7 @@ SFString nextAccountnameChunk_custom(const SFString& fieldIn, const void *data) 
 }
 
 //---------------------------------------------------------------------------
-bool CAccountName::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+bool CAccountName::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;

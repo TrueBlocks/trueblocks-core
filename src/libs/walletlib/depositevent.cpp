@@ -16,11 +16,11 @@
 IMPLEMENT_NODE(QDepositEvent, CLogEntry, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextDepositeventChunk(const SFString& fieldIn, const void *data);
-static SFString nextDepositeventChunk_custom(const SFString& fieldIn, const void *data);
+static SFString nextDepositeventChunk(const SFString& fieldIn, const void *dataPtr);
+static SFString nextDepositeventChunk_custom(const SFString& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void QDepositEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+void QDepositEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -30,7 +30,7 @@ void QDepositEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *dat
     }
 
     SFString fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, data))
+    if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
     while (!fmt.empty())
@@ -38,8 +38,8 @@ void QDepositEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *dat
 }
 
 //---------------------------------------------------------------------------
-SFString nextDepositeventChunk(const SFString& fieldIn, const void *data) {
-    const QDepositEvent *dep = (const QDepositEvent *)data;
+SFString nextDepositeventChunk(const SFString& fieldIn, const void *dataPtr) {
+    const QDepositEvent *dep = (const QDepositEvent *)dataPtr;
     if (dep) {
         // Give customized code a chance to override first
 #ifdef NEW_CODE
@@ -47,7 +47,7 @@ SFString nextDepositeventChunk(const SFString& fieldIn, const void *data) {
         if (!ret.empty())
             return ret;
 #else
-        SFString ret = nextDepositeventChunk_custom(fieldIn, data);
+        SFString ret = nextDepositeventChunk_custom(fieldIn, dataPtr);
         if (!ret.empty())
             return ret;
 
@@ -145,8 +145,8 @@ void QDepositEvent::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextDepositeventChunk_custom(const SFString& fieldIn, const void *data) {
-    const QDepositEvent *dep = (const QDepositEvent *)data;
+SFString nextDepositeventChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+    const QDepositEvent *dep = (const QDepositEvent *)dataPtr;
     if (dep) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -166,7 +166,7 @@ SFString nextDepositeventChunk_custom(const SFString& fieldIn, const void *data)
 }
 
 //---------------------------------------------------------------------------
-bool QDepositEvent::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+bool QDepositEvent::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;

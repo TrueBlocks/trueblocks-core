@@ -18,11 +18,11 @@ namespace qblocks {
 IMPLEMENT_NODE(CInfix, CTreeNode, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextInfixChunk(const SFString& fieldIn, const void *data);
-static SFString nextInfixChunk_custom(const SFString& fieldIn, const void *data);
+static SFString nextInfixChunk(const SFString& fieldIn, const void *dataPtr);
+static SFString nextInfixChunk_custom(const SFString& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CInfix::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+void CInfix::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -32,7 +32,7 @@ void CInfix::Format(CExportContext& ctx, const SFString& fmtIn, void *data) cons
     }
 
     SFString fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, data))
+    if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
     while (!fmt.empty())
@@ -40,8 +40,8 @@ void CInfix::Format(CExportContext& ctx, const SFString& fmtIn, void *data) cons
 }
 
 //---------------------------------------------------------------------------
-SFString nextInfixChunk(const SFString& fieldIn, const void *data) {
-    const CInfix *inf = (const CInfix *)data;
+SFString nextInfixChunk(const SFString& fieldIn, const void *dataPtr) {
+    const CInfix *inf = (const CInfix *)dataPtr;
     if (inf) {
         // Give customized code a chance to override first
 #ifdef NEW_CODE
@@ -49,7 +49,7 @@ SFString nextInfixChunk(const SFString& fieldIn, const void *data) {
         if (!ret.empty())
             return ret;
 #else
-        SFString ret = nextInfixChunk_custom(fieldIn, data);
+        SFString ret = nextInfixChunk_custom(fieldIn, dataPtr);
         if (!ret.empty())
             return ret;
 
@@ -140,8 +140,8 @@ void CInfix::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextInfixChunk_custom(const SFString& fieldIn, const void *data) {
-    const CInfix *inf = (const CInfix *)data;
+SFString nextInfixChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+    const CInfix *inf = (const CInfix *)dataPtr;
     if (inf) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -161,7 +161,7 @@ SFString nextInfixChunk_custom(const SFString& fieldIn, const void *data) {
 }
 
 //---------------------------------------------------------------------------
-bool CInfix::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+bool CInfix::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
