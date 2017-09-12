@@ -168,20 +168,21 @@ SFString baseTypeName(SFUint32 type) {
 //--------------------------------------------------------------
 SFString typeName(SFUint32 type) {
 
-    if (type == T_DATE)    return "T_DATE "    + baseTypeName(type);
-    if (type == T_TIME)    return "T_TIME "    + baseTypeName(type);
-    if (type == T_BOOL)    return "T_BOOL "    + baseTypeName(type);
-    if (type == T_NUMBER)  return "T_NUMBER "  + baseTypeName(type);
-    if (type == T_DOUBLE)  return "T_DOUBLE "  + baseTypeName(type);
-    if (type == T_WEI)     return "T_WEI "     + baseTypeName(type);
-    if (type == T_GAS)     return "T_GAS "     + baseTypeName(type);
-    if (type == T_ETHER)   return "T_ETHER "   + baseTypeName(type);
-    if (type == T_TEXT)    return "T_TEXT "    + baseTypeName(type);
-    if (type == T_ADDRESS) return "T_ADDRESS " + baseTypeName(type);
-    if (type == T_HASH)    return "T_HASH "    + baseTypeName(type);
-    if (type == T_BLOOM)   return "T_BLOOM "   + baseTypeName(type);
-    if (type == T_POINTER) return "T_POINTER " + baseTypeName(type);
-    if (type == T_OBJECT)  return "T_OBJECT "  + baseTypeName(type);
+    if (type == T_DATE)      return "T_DATE "    + baseTypeName(type);
+    if (type == T_TIME)      return "T_TIME "    + baseTypeName(type);
+    if (type == T_BOOL)      return "T_BOOL "    + baseTypeName(type);
+    if (type == T_NUMBER)    return "T_NUMBER "  + baseTypeName(type);
+    if (type == T_DOUBLE)    return "T_DOUBLE "  + baseTypeName(type);
+    if (type == T_WEI)       return "T_WEI "     + baseTypeName(type);
+    if (type == T_GAS)       return "T_GAS "     + baseTypeName(type);
+    if (type == T_ETHER)     return "T_ETHER "   + baseTypeName(type);
+    if (type == T_TEXT)      return "T_TEXT "    + baseTypeName(type);
+    if (type == T_ADDRESS)   return "T_ADDRESS " + baseTypeName(type);
+    if (type == T_TIMESTAMP) return "T_TIMESPAN "+ baseTypeName(type);
+    if (type == T_HASH)      return "T_HASH "    + baseTypeName(type);
+    if (type == T_BLOOM)     return "T_BLOOM "   + baseTypeName(type);
+    if (type == T_POINTER)   return "T_POINTER " + baseTypeName(type);
+    if (type == T_OBJECT)    return "T_OBJECT "  + baseTypeName(type);
 
     if (type == (T_OBJECT|TS_ARRAY))  return "T_OBJECT|TS_ARRAY "  + baseTypeName(type);
     if (type == (T_TEXT|TS_ARRAY))    return "T_TEXT|TS_ARRAY "    + baseTypeName(type);
