@@ -42,6 +42,11 @@ SFString nextSetdailylimitChunk(const SFString& fieldIn, const void *data) {
     const QSetDailyLimit *set = (const QSetDailyLimit *)data;
     if (set) {
         // Give customized code a chance to override first
+#ifdef NEW_CODE
+        SFString ret = set->getValueByName(fieldIn);
+        if (!ret.empty())
+            return ret;
+#else
         SFString ret = nextSetdailylimitChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
@@ -51,7 +56,7 @@ SFString nextSetdailylimitChunk(const SFString& fieldIn, const void *data) {
                 if ( fieldIn % "_newLimit" ) return asStringBN(set->_newLimit);
                 break;
         }
-
+#endif
         // EXISTING_CODE
         // EXISTING_CODE
 
@@ -164,6 +169,28 @@ bool QSetDailyLimit::readBackLevel(SFArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
+}
+
+//---------------------------------------------------------------------------
+SFString QSetDailyLimit::getValueByName(const SFString& fieldName) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+#ifdef NEW_CODE
+    // Give customized code a chance to override first
+    SFString ret = nextSetdailylimitChunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    switch (tolower(fieldName[0])) {
+        case '_':
+            if ( fieldName % "_newLimit" ) return asStringBN(_newLimit);
+            break;
+    }
+    return "";
+#else
+    return Format("[{"+toUpper(fieldName)+"}]");
+#endif
 }
 
 //---------------------------------------------------------------------------

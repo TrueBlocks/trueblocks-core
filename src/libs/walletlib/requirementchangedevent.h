@@ -108,13 +108,6 @@ inline QRequirementChangedEvent& QRequirementChangedEvent::operator=(const QRequ
 }
 
 //---------------------------------------------------------------------------
-inline SFString QRequirementChangedEvent::getValueByName(const SFString& fieldName) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
-    return Format("[{"+toUpper(fieldName)+"}]");
-}
-
-//---------------------------------------------------------------------------
 IMPLEMENT_ARCHIVE_ARRAY(QRequirementChangedEventArray);
 IMPLEMENT_ARCHIVE_ARRAY_C(QRequirementChangedEventArray);
 IMPLEMENT_ARCHIVE_LIST(QRequirementChangedEventList);
@@ -122,4 +115,5 @@ IMPLEMENT_ARCHIVE_LIST(QRequirementChangedEventList);
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
+#define NEW_CODE
 

@@ -123,13 +123,6 @@ inline CInfix& CInfix::operator=(const CInfix& in) {
 }
 
 //---------------------------------------------------------------------------
-inline SFString CInfix::getValueByName(const SFString& fieldName) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
-    return Format("[{"+toUpper(fieldName)+"}]");
-}
-
-//---------------------------------------------------------------------------
 IMPLEMENT_ARCHIVE_ARRAY(CInfixArray);
 IMPLEMENT_ARCHIVE_ARRAY_C(CInfixArray);
 IMPLEMENT_ARCHIVE_LIST(CInfixList);
@@ -138,5 +131,6 @@ IMPLEMENT_ARCHIVE_LIST(CInfixList);
 // EXISTING_CODE
 extern SFString nextTreenodeChunk(const SFString& fieldIn, const void *data);
 // EXISTING_CODE
+#define NEW_CODE
 }  // namespace qblocks
 

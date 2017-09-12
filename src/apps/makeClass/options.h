@@ -17,6 +17,8 @@ public:
     bool isList;
     bool silent;
     SFString namesp;
+    bool writeHeader;
+    bool writeSource;
 
     SFString classNames;
     SFString filter;

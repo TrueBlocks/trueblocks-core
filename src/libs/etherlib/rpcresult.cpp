@@ -44,6 +44,11 @@ SFString nextRpcresultChunk(const SFString& fieldIn, const void *data) {
     const CRPCResult *rpc = (const CRPCResult *)data;
     if (rpc) {
         // Give customized code a chance to override first
+#ifdef NEW_CODE
+        SFString ret = rpc->getValueByName(fieldIn);
+        if (!ret.empty())
+            return ret;
+#else
         SFString ret = nextRpcresultChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
@@ -59,7 +64,7 @@ SFString nextRpcresultChunk(const SFString& fieldIn, const void *data) {
                 if ( fieldIn % "result" ) return rpc->result;
                 break;
         }
-
+#endif
         // EXISTING_CODE
         // EXISTING_CODE
 
@@ -181,6 +186,34 @@ bool CRPCResult::readBackLevel(SFArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
+}
+
+//---------------------------------------------------------------------------
+SFString CRPCResult::getValueByName(const SFString& fieldName) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+#ifdef NEW_CODE
+    // Give customized code a chance to override first
+    SFString ret = nextRpcresultChunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    switch (tolower(fieldName[0])) {
+        case 'i':
+            if ( fieldName % "id" ) return id;
+            break;
+        case 'j':
+            if ( fieldName % "jsonrpc" ) return jsonrpc;
+            break;
+        case 'r':
+            if ( fieldName % "result" ) return result;
+            break;
+    }
+    return "";
+#else
+    return Format("[{"+toUpper(fieldName)+"}]");
+#endif
 }
 
 //---------------------------------------------------------------------------

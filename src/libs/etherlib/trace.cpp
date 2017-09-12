@@ -43,6 +43,11 @@ SFString nextTraceChunk(const SFString& fieldIn, const void *data) {
     const CTrace *tra = (const CTrace *)data;
     if (tra) {
         // Give customized code a chance to override first
+#ifdef NEW_CODE
+        SFString ret = tra->getValueByName(fieldIn);
+        if (!ret.empty())
+            return ret;
+#else
         SFString ret = nextTraceChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
@@ -80,7 +85,7 @@ SFString nextTraceChunk(const SFString& fieldIn, const void *data) {
                 if ( fieldIn % "type" ) return tra->type;
                 break;
         }
-
+#endif
         // EXISTING_CODE
         // EXISTING_CODE
 
@@ -266,6 +271,56 @@ bool CTrace::readBackLevel(SFArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
+}
+
+//---------------------------------------------------------------------------
+SFString CTrace::getValueByName(const SFString& fieldName) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+#ifdef NEW_CODE
+    // Give customized code a chance to override first
+    SFString ret = nextTraceChunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    switch (tolower(fieldName[0])) {
+        case 'a':
+            if ( fieldName % "action" ) { expContext().noFrst=true; return action.Format(); }
+            break;
+        case 'b':
+            if ( fieldName % "blockHash" ) return fromHash(blockHash);
+            if ( fieldName % "blockNumber" ) return asStringU(blockNumber);
+            break;
+        case 'e':
+            if ( fieldName % "error" ) return error;
+            break;
+        case 'r':
+            if ( fieldName % "result" ) { expContext().noFrst=true; return result.Format(); }
+            break;
+        case 's':
+            if ( fieldName % "subtraces" ) return asStringU(subtraces);
+            break;
+        case 't':
+            if ( fieldName % "traceAddress" ) {
+                uint32_t cnt = traceAddress.getCount();
+                if (!cnt) return "";
+                SFString retS;
+                for (uint32_t i = 0 ; i < cnt ; i++) {
+                    retS += indent() + ("\"" + traceAddress[i] + "\"");
+                    retS += ((i < cnt-1) ? ",\n" : "\n");
+                }
+                return retS;
+            }
+            if ( fieldName % "transactionHash" ) return fromHash(transactionHash);
+            if ( fieldName % "transactionPosition" ) return asStringU(transactionPosition);
+            if ( fieldName % "type" ) return type;
+            break;
+    }
+    return "";
+#else
+    return Format("[{"+toUpper(fieldName)+"}]");
+#endif
 }
 
 //---------------------------------------------------------------------------

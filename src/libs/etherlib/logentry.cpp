@@ -22,7 +22,7 @@ extern SFString nextLogentryChunk(const SFString& fieldIn, const void *data);
 static SFString nextLogentryChunk_custom(const SFString& fieldIn, const void *data);
 
 //---------------------------------------------------------------------------
-void CLogEntry::Format(CExportContext& ctx, const SFString& fmtIn, void *data1) const {
+void CLogEntry::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
     if (!m_showing)
         return;
 
@@ -32,7 +32,7 @@ void CLogEntry::Format(CExportContext& ctx, const SFString& fmtIn, void *data1) 
     }
 
     SFString fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, data1))
+    if (handleCustomFormat(ctx, fmt, data))
         return;
 
     while (!fmt.empty())
@@ -44,6 +44,11 @@ SFString nextLogentryChunk(const SFString& fieldIn, const void *data) {
     const CLogEntry *log = (const CLogEntry *)data;
     if (log) {
         // Give customized code a chance to override first
+#ifdef NEW_CODE
+        SFString ret = log->getValueByName(fieldIn);
+        if (!ret.empty())
+            return ret;
+#else
         SFString ret = nextLogentryChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
@@ -64,14 +69,14 @@ SFString nextLogentryChunk(const SFString& fieldIn, const void *data) {
                     if (!cnt) return "";
                     SFString retS;
                     for (uint32_t i = 0 ; i < cnt ; i++) {
-                        retS += indent() + ("\"" + fromTopic(log->topics[i]) + "\"");
+                        retS += indent() + ("\"" + log->fromTopic(topics[i]) + "\"");
                         retS += ((i < cnt-1) ? ",\n" : "\n");
                     }
                     return retS;
                 }
                 break;
         }
-
+#endif
         // EXISTING_CODE
         // See if this field belongs to the item's container
         ret = nextReceiptChunk(fieldIn, log->pReceipt);
@@ -203,7 +208,7 @@ SFString nextLogentryChunk_custom(const SFString& fieldIn, const void *data) {
 }
 
 //---------------------------------------------------------------------------
-bool CLogEntry::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data1) const {
+bool CLogEntry::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
@@ -227,6 +232,46 @@ SFArchive& operator<<(SFArchive& archive, const CLogEntry& log) {
 SFArchive& operator>>(SFArchive& archive, CLogEntry& log) {
     log.Serialize(archive);
     return archive;
+}
+
+//---------------------------------------------------------------------------
+SFString CLogEntry::getValueByName(const SFString& fieldName) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+#ifdef NEW_CODE
+    // Give customized code a chance to override first
+    SFString ret = nextLogentryChunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    switch (tolower(fieldName[0])) {
+        case 'a':
+            if ( fieldName % "address" ) return fromAddress(address);
+            break;
+        case 'd':
+            if ( fieldName % "data" ) return data;
+            break;
+        case 'l':
+            if ( fieldName % "logIndex" ) return asStringU(logIndex);
+            break;
+        case 't':
+            if ( fieldName % "topics" ) {
+                uint32_t cnt = topics.getCount();
+                if (!cnt) return "";
+                SFString retS;
+                for (uint32_t i = 0 ; i < cnt ; i++) {
+                    retS += indent() + ("\"" + fromTopic(topics[i]) + "\"");
+                    retS += ((i < cnt-1) ? ",\n" : "\n");
+                }
+                return retS;
+            }
+            break;
+    }
+    return "";
+#else
+    return Format("[{"+toUpper(fieldName)+"}]");
+#endif
 }
 
 //---------------------------------------------------------------------------

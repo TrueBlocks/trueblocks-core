@@ -42,6 +42,11 @@ SFString nextExecuteChunk(const SFString& fieldIn, const void *data) {
     const QExecute *exe = (const QExecute *)data;
     if (exe) {
         // Give customized code a chance to override first
+#ifdef NEW_CODE
+        SFString ret = exe->getValueByName(fieldIn);
+        if (!ret.empty())
+            return ret;
+#else
         SFString ret = nextExecuteChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
@@ -53,7 +58,7 @@ SFString nextExecuteChunk(const SFString& fieldIn, const void *data) {
                 if ( fieldIn % "_data" ) return exe->_data;
                 break;
         }
-
+#endif
         // EXISTING_CODE
         // EXISTING_CODE
 
@@ -174,6 +179,30 @@ bool QExecute::readBackLevel(SFArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
+}
+
+//---------------------------------------------------------------------------
+SFString QExecute::getValueByName(const SFString& fieldName) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+#ifdef NEW_CODE
+    // Give customized code a chance to override first
+    SFString ret = nextExecuteChunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    switch (tolower(fieldName[0])) {
+        case '_':
+            if ( fieldName % "_to" ) return fromAddress(_to);
+            if ( fieldName % "_value" ) return asStringBN(_value);
+            if ( fieldName % "_data" ) return _data;
+            break;
+    }
+    return "";
+#else
+    return Format("[{"+toUpper(fieldName)+"}]");
+#endif
 }
 
 //---------------------------------------------------------------------------

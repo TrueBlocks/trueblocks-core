@@ -44,6 +44,11 @@ SFString nextAccountwatchChunk(const SFString& fieldIn, const void *data) {
     const CAccountWatch *acc = (const CAccountWatch *)data;
     if (acc) {
         // Give customized code a chance to override first
+#ifdef NEW_CODE
+        SFString ret = acc->getValueByName(fieldIn);
+        if (!ret.empty())
+            return ret;
+#else
         SFString ret = nextAccountwatchChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
@@ -78,7 +83,7 @@ SFString nextAccountwatchChunk(const SFString& fieldIn, const void *data) {
                 if ( fieldIn % "status" ) return acc->status;
                 break;
         }
-
+#endif
         // EXISTING_CODE
         // EXISTING_CODE
 
@@ -260,6 +265,53 @@ bool CAccountWatch::readBackLevel(SFArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
+}
+
+//---------------------------------------------------------------------------
+SFString CAccountWatch::getValueByName(const SFString& fieldName) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+#ifdef NEW_CODE
+    // Give customized code a chance to override first
+    SFString ret = nextAccountwatchChunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    switch (tolower(fieldName[0])) {
+        case 'a':
+            if ( fieldName % "address" ) return fromAddress(address);
+            break;
+        case 'c':
+            if ( fieldName % "color" ) return color;
+            break;
+        case 'd':
+            if ( fieldName % "deepScan" ) return asString(deepScan);
+            break;
+        case 'f':
+            if ( fieldName % "firstBlock" ) return asStringU(firstBlock);
+            break;
+        case 'i':
+            if ( fieldName % "index" ) return asStringU(index);
+            break;
+        case 'l':
+            if ( fieldName % "lastBlock" ) return asStringU(lastBlock);
+            break;
+        case 'n':
+            if ( fieldName % "name" ) return name;
+            if ( fieldName % "nodeBal" ) return asStringBN(nodeBal);
+            break;
+        case 'q':
+            if ( fieldName % "qbis" ) { expContext().noFrst=true; return qbis.Format(); }
+            break;
+        case 's':
+            if ( fieldName % "status" ) return status;
+            break;
+    }
+    return "";
+#else
+    return Format("[{"+toUpper(fieldName)+"}]");
+#endif
 }
 
 //---------------------------------------------------------------------------

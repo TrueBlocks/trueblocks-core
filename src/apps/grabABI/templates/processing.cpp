@@ -263,7 +263,7 @@ bool updateCache(CBlock& block, void *data) {
         }
     }
 
-    timestamp_t tsOut = (block.timestamp == 0 ? toTimeStamp(Now()) : block.timestamp);
+    timestamp_t tsOut = (block.timestamp == 0 ? toTimestamp(Now()) : block.timestamp);
     SFString endMsg = dateFromTimeStamp(tsOut).Format(FMT_JSON) + " (" + asStringU(block.blockNumber) + ")";
     blknum_t x = (visitor->blockStats.firstBlock >= block.blockNumber ? 0 : block.blockNumber - visitor->blockStats.firstBlock);
     progressBar(x, visitor->blockStats.nBlocks, endMsg);

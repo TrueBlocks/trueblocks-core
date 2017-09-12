@@ -44,6 +44,11 @@ SFString nextLeafChunk(const SFString& fieldIn, const void *data) {
     const CLeaf *lea = (const CLeaf *)data;
     if (lea) {
         // Give customized code a chance to override first
+#ifdef NEW_CODE
+        SFString ret = lea->getValueByName(fieldIn);
+        if (!ret.empty())
+            return ret;
+#else
         SFString ret = nextLeafChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
@@ -65,7 +70,7 @@ SFString nextLeafChunk(const SFString& fieldIn, const void *data) {
                 if ( fieldIn % "cnt" ) return asStringU(lea->cnt);
                 break;
         }
-
+#endif
         // EXISTING_CODE
         // EXISTING_CODE
 
@@ -184,6 +189,40 @@ bool CLeaf::readBackLevel(SFArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
+}
+
+//---------------------------------------------------------------------------
+SFString CLeaf::getValueByName(const SFString& fieldName) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+#ifdef NEW_CODE
+    // Give customized code a chance to override first
+    SFString ret = nextLeafChunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    switch (tolower(fieldName[0])) {
+        case 'b':
+//            if ( fieldName % "blocks" ) {
+//                uint32_t cnt = blocks.getCount();
+//                if (!cnt) return "";
+//                SFString retS;
+//                for (uint32_t i = 0 ; i < cnt ; i++) {
+//                    retS += blocks[i].Format();
+//                    retS += ((i < cnt - 1) ? ",\n" : "\n");
+//                }
+//                return retS;
+//            }
+            break;
+        case 'c':
+            if ( fieldName % "cnt" ) return asStringU(cnt);
+            break;
+    }
+    return "";
+#else
+    return Format("[{"+toUpper(fieldName)+"}]");
+#endif
 }
 
 //---------------------------------------------------------------------------

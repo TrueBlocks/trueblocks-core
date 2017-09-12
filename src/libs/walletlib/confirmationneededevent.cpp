@@ -42,6 +42,11 @@ SFString nextConfirmationneededeventChunk(const SFString& fieldIn, const void *d
     const QConfirmationNeededEvent *con = (const QConfirmationNeededEvent *)data;
     if (con) {
         // Give customized code a chance to override first
+#ifdef NEW_CODE
+        SFString ret = con->getValueByName(fieldIn);
+        if (!ret.empty())
+            return ret;
+#else
         SFString ret = nextConfirmationneededeventChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
@@ -63,7 +68,7 @@ SFString nextConfirmationneededeventChunk(const SFString& fieldIn, const void *d
                 if ( fieldIn % "value" ) return asStringBN(con->value);
                 break;
         }
-
+#endif
         // EXISTING_CODE
         // EXISTING_CODE
 
@@ -200,6 +205,40 @@ bool QConfirmationNeededEvent::readBackLevel(SFArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
+}
+
+//---------------------------------------------------------------------------
+SFString QConfirmationNeededEvent::getValueByName(const SFString& fieldName) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+#ifdef NEW_CODE
+    // Give customized code a chance to override first
+    SFString ret = nextConfirmationneededeventChunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    switch (tolower(fieldName[0])) {
+        case 'd':
+            if ( fieldName % "data" ) return data;
+            break;
+        case 'i':
+            if ( fieldName % "initiator" ) return fromAddress(initiator);
+            break;
+        case 'o':
+            if ( fieldName % "operation" ) return operation;
+            break;
+        case 't':
+            if ( fieldName % "to" ) return fromAddress(to);
+            break;
+        case 'v':
+            if ( fieldName % "value" ) return asStringBN(value);
+            break;
+    }
+    return "";
+#else
+    return Format("[{"+toUpper(fieldName)+"}]");
+#endif
 }
 
 //---------------------------------------------------------------------------

@@ -42,13 +42,18 @@ SFString next[{PROPER}]Chunk(const SFString& fieldIn, const void *data) {
     const [{CLASS_NAME}] *[{SHORT3}] = (const [{CLASS_NAME}] *)data;
     if ([{SHORT3}]) {
         // Give customized code a chance to override first
+#ifdef NEW_CODE
+        SFString ret = [{SHORT3}]->getValueByName(fieldIn);
+        if (!ret.empty())
+            return ret;
+#else
         SFString ret = next[{PROPER}]Chunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
 
         switch (tolower(fieldIn[0])) {
-[FIELD_CASE]		}
-
+[FIELD_CASE]        }
+#endif
         // EXISTING_CODE
         // EXISTING_CODE
 
@@ -148,7 +153,19 @@ bool [{CLASS_NAME}]::readBackLevel(SFArchive& archive) {
     return done;
 }
 
-[{OPERATORS}]//---------------------------------------------------------------------------
+[{OPERATORS}]
+//---------------------------------------------------------------------------
+SFString [{CLASS_NAME}]::getValueByName(const SFString& fieldName) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+#ifdef NEW_CODE
+[{GETVALUE}]#else
+    return Format("[{"+toUpper(fieldName)+"}]");
+#endif
+}
+
+//---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
 [{NAMESPACE2}]

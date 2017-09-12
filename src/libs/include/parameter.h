@@ -143,13 +143,6 @@ inline CParameter& CParameter::operator=(const CParameter& pa) {
 }
 
 //---------------------------------------------------------------------------
-inline SFString CParameter::getValueByName(const SFString& fieldName) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
-    return Format("[{"+toUpper(fieldName)+"}]");
-}
-
-//---------------------------------------------------------------------------
 IMPLEMENT_ARCHIVE_ARRAY(CParameterArray);
 IMPLEMENT_ARCHIVE_ARRAY_C(CParameterArray);
 IMPLEMENT_ARCHIVE_LIST(CParameterList);
@@ -157,5 +150,6 @@ IMPLEMENT_ARCHIVE_LIST(CParameterList);
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
+#define NEW_CODE
 }  // namespace qblocks
 

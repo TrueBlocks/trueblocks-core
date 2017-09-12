@@ -111,13 +111,6 @@ inline QChangeOwner& QChangeOwner::operator=(const QChangeOwner& ch) {
 }
 
 //---------------------------------------------------------------------------
-inline SFString QChangeOwner::getValueByName(const SFString& fieldName) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
-    return Format("[{"+toUpper(fieldName)+"}]");
-}
-
-//---------------------------------------------------------------------------
 IMPLEMENT_ARCHIVE_ARRAY(QChangeOwnerArray);
 IMPLEMENT_ARCHIVE_ARRAY_C(QChangeOwnerArray);
 IMPLEMENT_ARCHIVE_LIST(QChangeOwnerList);
@@ -125,4 +118,5 @@ IMPLEMENT_ARCHIVE_LIST(QChangeOwnerList);
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
+#define NEW_CODE
 

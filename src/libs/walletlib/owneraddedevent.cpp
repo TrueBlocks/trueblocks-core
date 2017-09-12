@@ -42,6 +42,11 @@ SFString nextOwneraddedeventChunk(const SFString& fieldIn, const void *data) {
     const QOwnerAddedEvent *own = (const QOwnerAddedEvent *)data;
     if (own) {
         // Give customized code a chance to override first
+#ifdef NEW_CODE
+        SFString ret = own->getValueByName(fieldIn);
+        if (!ret.empty())
+            return ret;
+#else
         SFString ret = nextOwneraddedeventChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
@@ -51,7 +56,7 @@ SFString nextOwneraddedeventChunk(const SFString& fieldIn, const void *data) {
                 if ( fieldIn % "newOwner" ) return fromAddress(own->newOwner);
                 break;
         }
-
+#endif
         // EXISTING_CODE
         // EXISTING_CODE
 
@@ -164,6 +169,28 @@ bool QOwnerAddedEvent::readBackLevel(SFArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
+}
+
+//---------------------------------------------------------------------------
+SFString QOwnerAddedEvent::getValueByName(const SFString& fieldName) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+#ifdef NEW_CODE
+    // Give customized code a chance to override first
+    SFString ret = nextOwneraddedeventChunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    switch (tolower(fieldName[0])) {
+        case 'n':
+            if ( fieldName % "newOwner" ) return fromAddress(newOwner);
+            break;
+    }
+    return "";
+#else
+    return Format("[{"+toUpper(fieldName)+"}]");
+#endif
 }
 
 //---------------------------------------------------------------------------

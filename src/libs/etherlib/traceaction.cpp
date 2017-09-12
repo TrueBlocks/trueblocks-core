@@ -44,6 +44,11 @@ SFString nextTraceactionChunk(const SFString& fieldIn, const void *data) {
     const CTraceAction *tra = (const CTraceAction *)data;
     if (tra) {
         // Give customized code a chance to override first
+#ifdef NEW_CODE
+        SFString ret = tra->getValueByName(fieldIn);
+        if (!ret.empty())
+            return ret;
+#else
         SFString ret = nextTraceactionChunk_custom(fieldIn, data);
         if (!ret.empty())
             return ret;
@@ -77,7 +82,7 @@ SFString nextTraceactionChunk(const SFString& fieldIn, const void *data) {
                 if ( fieldIn % "value" ) return fromWei(tra->value);
                 break;
         }
-
+#endif
         // EXISTING_CODE
         // EXISTING_CODE
 
@@ -247,6 +252,52 @@ SFArchive& operator<<(SFArchive& archive, const CTraceAction& tra) {
 SFArchive& operator>>(SFArchive& archive, CTraceAction& tra) {
     tra.Serialize(archive);
     return archive;
+}
+
+//---------------------------------------------------------------------------
+SFString CTraceAction::getValueByName(const SFString& fieldName) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+#ifdef NEW_CODE
+    // Give customized code a chance to override first
+    SFString ret = nextTraceactionChunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    switch (tolower(fieldName[0])) {
+        case 'a':
+            if ( fieldName % "address" ) return fromAddress(address);
+            break;
+        case 'b':
+            if ( fieldName % "balance" ) return fromWei(balance);
+            break;
+        case 'c':
+            if ( fieldName % "callType" ) return callType;
+            break;
+        case 'f':
+            if ( fieldName % "from" ) return fromAddress(from);
+            break;
+        case 'g':
+            if ( fieldName % "gas" ) return asStringU(gas);
+            break;
+        case 'i':
+            if ( fieldName % "input" ) return input;
+            break;
+        case 'r':
+            if ( fieldName % "refundAddress" ) return fromAddress(refundAddress);
+            break;
+        case 't':
+            if ( fieldName % "to" ) return fromAddress(to);
+            break;
+        case 'v':
+            if ( fieldName % "value" ) return fromWei(value);
+            break;
+    }
+    return "";
+#else
+    return Format("[{"+toUpper(fieldName)+"}]");
+#endif
 }
 
 //---------------------------------------------------------------------------
