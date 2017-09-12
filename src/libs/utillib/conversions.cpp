@@ -51,4 +51,39 @@ namespace qblocks {
         return "0x0";
     }
 
+    //----------------------------------------------------------------------------------------------------
+    timestamp_t toTimestamp(const SFString& timeIn) {
+        return (timeIn.startsWith("0x") ? (timestamp_t)hex2Long(timeIn) : (timestamp_t)toLong(timeIn));
+    }
+
+    //----------------------------------------------------------------------------------------------------
+    timestamp_t toTimestamp(const SFTime& timeIn) {
+        SFTime  jan1970(1970, 1, 1, 0, 0, 0);
+        if (timeIn < jan1970)
+            return 0;
+
+        int64_t j70 = jan1970.GetTotalSeconds();
+        int64_t t   = timeIn.GetTotalSeconds();
+        return (t - j70);
+    }
+
+    //----------------------------------------------------------------------------------------------------
+    SFTime dateFromTimeStamp(timestamp_t tsIn) {
+        time_t utc = tsIn;
+        tm unused;
+        struct tm *ret = gmtime_r(&utc, &unused);
+
+        char retStr[40];
+        strftime(retStr, sizeof(retStr), "%Y-%m-%d %H:%M:%S UTC", ret);
+
+        SFString str = retStr;
+        uint32_t y = toLong32u(nextTokenClear(str, '-'));
+        uint32_t m = toLong32u(nextTokenClear(str, '-'));
+        uint32_t d = toLong32u(nextTokenClear(str, ' '));
+        uint32_t h = toLong32u(nextTokenClear(str, ':'));
+        uint32_t mn = toLong32u(nextTokenClear(str, ':'));
+        uint32_t s = toLong32u(nextTokenClear(str, ' '));
+        return SFTime(y, m, d, h, mn, s);
+    }
+
 }  // namespace qblocks
