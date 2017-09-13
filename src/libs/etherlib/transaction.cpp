@@ -101,8 +101,8 @@ bool CTransaction::setValueByName(const SFString& fieldName, const SFString& fie
             if ( fieldName % "from" ) { from = toAddress(fieldValue); return true; }
             break;
         case 'g':
-            if ( fieldName % "gas" ) { gas = toUnsigned(fieldValue); return true; }
-            if ( fieldName % "gasPrice" ) { gasPrice = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "gas" ) { gas = toGas(fieldValue); return true; }
+            if ( fieldName % "gasPrice" ) { gasPrice = toGas(fieldValue); return true; }
             break;
         case 'h':
             if ( fieldName % "hash" ) { hash = toHash(fieldValue); return true; }
@@ -214,11 +214,11 @@ void CTransaction::registerClass(void) {
     ADD_FIELD(CTransaction, "to", T_ADDRESS, ++fieldNum);
     ADD_FIELD(CTransaction, "value", T_WEI, ++fieldNum);
     ADD_FIELD(CTransaction, "gas", T_GAS, ++fieldNum);
-    ADD_FIELD(CTransaction, "gasPrice", T_WEI, ++fieldNum);
+    ADD_FIELD(CTransaction, "gasPrice", T_GAS, ++fieldNum);
     ADD_FIELD(CTransaction, "cumulativeGasUsed", T_WEI, ++fieldNum);
     ADD_FIELD(CTransaction, "input", T_TEXT, ++fieldNum);
-    ADD_FIELD(CTransaction, "isError", T_BOOL, ++fieldNum);
-    ADD_FIELD(CTransaction, "isInternalTx", T_BOOL, ++fieldNum);
+    ADD_FIELD(CTransaction, "isError", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CTransaction, "isInternalTx", T_NUMBER, ++fieldNum);
     ADD_FIELD(CTransaction, "receipt", T_OBJECT, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
@@ -351,8 +351,8 @@ SFString CTransaction::getValueByName(const SFString& fieldName) const {
             if ( fieldName % "from" ) return fromAddress(from);
             break;
         case 'g':
-            if ( fieldName % "gas" ) return asStringU(gas);
-            if ( fieldName % "gasPrice" ) return asStringU(gasPrice);
+            if ( fieldName % "gas" ) return fromGas(gas);
+            if ( fieldName % "gasPrice" ) return fromGas(gasPrice);
             break;
         case 'h':
             if ( fieldName % "hash" ) return fromHash(hash);
