@@ -39,29 +39,11 @@ void QResetSpentToday::Format(CExportContext& ctx, const SFString& fmtIn, void *
 
 //---------------------------------------------------------------------------
 SFString nextResetspenttodayChunk(const SFString& fieldIn, const void *dataPtr) {
-    const QResetSpentToday *res = (const QResetSpentToday *)dataPtr;
-    if (res) {
-        // Give customized code a chance to override first
-#ifdef NEW_CODE
-        SFString ret = res->getValueByName(fieldIn);
-        if (!ret.empty())
-            return ret;
-#else
-        SFString ret = nextResetspenttodayChunk_custom(fieldIn, dataPtr);
-        if (!ret.empty())
-            return ret;
+    if (dataPtr)
+        return ((const QResetSpentToday *)dataPtr)->getValueByName(fieldIn);
 
-        switch (tolower(fieldIn[0])) {
-        }
-#endif
-        // EXISTING_CODE
-        // EXISTING_CODE
-
-        // Finally, give the parent class a chance
-        ret = nextTransactionChunk(fieldIn, res);
-        if (!ret.empty())
-            return ret;
-    }
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return fldNotFound(fieldIn);
 }
@@ -163,15 +145,19 @@ bool QResetSpentToday::readBackLevel(SFArchive& archive) {
 
 //---------------------------------------------------------------------------
 SFString QResetSpentToday::getValueByName(const SFString& fieldName) const {
+
+    // Give customized code a chance to override first
+    SFString ret = nextResetspenttodayChunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    // No fields
+
     // EXISTING_CODE
     // EXISTING_CODE
 
-#ifdef NEW_CODE
-    // Nothing to return expect perhaps custom fields
-    return nextResetspenttodayChunk_custom(fieldName, this);
-#else
-    return Format("[{"+toUpper(fieldName)+"}]");
-#endif
+    // Finally, give the parent class a chance
+    return CTransaction::getValueByName(fieldName);
 }
 
 //---------------------------------------------------------------------------

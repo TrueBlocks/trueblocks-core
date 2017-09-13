@@ -168,8 +168,8 @@ void generateCode(const COptions& options, CToml& classFile, const SFString& dat
                         "" :
                         "[{BASE_CLASS}]::registerClass();\n\n\t";
     SFString parCnk = isBase ?
-                        "ret = next[{BASE_BASE}]Chunk(fieldIn, [{SHORT3}]);\n" :
-                        "ret = next[{BASE_BASE}]Chunk(fieldIn, [{SHORT3}]);\n";
+                        "ret = next[{BASE_BASE}]Chunk(fieldName, this);\n" :
+                        "ret = next[{BASE_BASE}]Chunk(fieldName, this);\n";
     SFString parSet = isBase?"":"\tif ([{BASE_CLASS}]::setValueByName(fieldName, fieldValue))\n\t\treturn true;\n\n";
 
     //------------------------------------------------------------------------------------------------
@@ -327,8 +327,7 @@ void generateCode(const COptions& options, CToml& classFile, const SFString& dat
         writeTheCode(headerFile, headSource, ns);
 
     //------------------------------------------------------------------------------------------------
-    SFString fieldStr1 = getCaseCode(fieldCase, tab).Substitute("fieldName","fieldIn").Substitute("[{PTR}]","[{SHORT3}]->");
-    SFString fieldStr2 = getCaseCode(fieldCase, "" ).Substitute("[{PTR}]","");
+    SFString fieldStr = theList.GetCount() ? getCaseCode(fieldCase, "" ).Substitute("[{PTR}]","") : "/""/ No fields";
 
     SFString srcFile    = dataFile.Substitute(".txt", ".cpp").Substitute("./classDefinitions/", "./");
     SFString srcSource  = asciiFileToString(configPath("makeClass/blank.cpp"));
@@ -336,9 +335,7 @@ void generateCode(const COptions& options, CToml& classFile, const SFString& dat
     srcSource.ReplaceAll("[ARCHIVE_WRITE]",     fieldArchiveWrite);
     srcSource.ReplaceAll("[{OPERATORS}]",       operatorC);
     srcSource.ReplaceAll("[REGISTER_FIELDS]",   fieldReg);
-    srcSource.ReplaceAll("[{GETVALUE}]",        (theList.GetCount() ? STR_GETVALUE1 : STR_GETVALUE2));
-    srcSource.Replace   ("[FIELD_CASE]",        fieldStr1);
-    srcSource.Replace   ("[FIELD_CASE]",        fieldStr2);
+    srcSource.ReplaceAll("[{FIELD_CASE}]",      fieldStr);
     srcSource.ReplaceAll("[OTHER_INCS]",        otherIncs);
     srcSource.ReplaceAll("[FIELD_SETCASE]",     caseSetCodeStr);
     srcSource.ReplaceAll("[{SUBCLASSFLDS}]",    subClsCodeStr);
@@ -474,6 +471,7 @@ SFString getCaseCode(const SFString& fieldCase, const SFString& ex) {
         }
     }
     caseCode.ReplaceAll("[BTAB]", baseTab);
+    caseCode = "/""/ If the class has any fields, return them\n\tswitch (tolower(fieldName[0])) {\n" + caseCode + "\t}\n";
     return caseCode;
 }
 
@@ -631,29 +629,12 @@ const char* STR_OPERATOR_C =
 //------------------------------------------------------------------------------------------------------------
 const char* STR_SUBCLASS =
 "\ts = toUpper(SFString(\"[FNAME]\")) + \"::\";\n"
-"\tif (fieldIn.Contains(s)) {\n"
-"\t\tSFString f = fieldIn;\n"
+"\tif (fieldName.Contains(s)) {\n"
+"\t\tSFString f = fieldName;\n"
 "\t\tf.ReplaceAll(s,\"\");\n"
-"\t\tif ([SH3])\n"
-"\t\t\tf = [SH3]->[FNAME].Format(\"++\"+f+\"++\");\n"
+"\t\tf = [FNAME].getValueByName(f);\n"
 "\t\treturn f;\n"
-"\t}\n";
-
-//------------------------------------------------------------------------------------------------------------
-const char* STR_GETVALUE1 =
-"\t/""/ Give customized code a chance to override first\n"
-"\tSFString ret = next[{PROPER}]Chunk_custom(fieldName, this);\n"
-"\tif (!ret.empty())\n"
-"\t\treturn ret;\n"
-"\n"
-"\tswitch (tolower(fieldName[0])) {\n"
-"[FIELD_CASE]\t}\n"
-"\treturn \"\";\n";
-
-//------------------------------------------------------------------------------------------------------------
-const char* STR_GETVALUE2 =
-"\t/""/ Nothing to return expect perhaps custom fields\n"
-"\treturn next[{PROPER}]Chunk_custom(fieldName, this);\n";
+"\t}\n\n";
 
 //------------------------------------------------------------------------------------------------------------
 SFString short3(const SFString& str) {

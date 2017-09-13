@@ -39,44 +39,11 @@ void QConfirmationNeededEvent::Format(CExportContext& ctx, const SFString& fmtIn
 
 //---------------------------------------------------------------------------
 SFString nextConfirmationneededeventChunk(const SFString& fieldIn, const void *dataPtr) {
-    const QConfirmationNeededEvent *con = (const QConfirmationNeededEvent *)dataPtr;
-    if (con) {
-        // Give customized code a chance to override first
-#ifdef NEW_CODE
-        SFString ret = con->getValueByName(fieldIn);
-        if (!ret.empty())
-            return ret;
-#else
-        SFString ret = nextConfirmationneededeventChunk_custom(fieldIn, dataPtr);
-        if (!ret.empty())
-            return ret;
+    if (dataPtr)
+        return ((const QConfirmationNeededEvent *)dataPtr)->getValueByName(fieldIn);
 
-        switch (tolower(fieldIn[0])) {
-            case 'd':
-                if ( fieldIn % "data" ) return con->data;
-                break;
-            case 'i':
-                if ( fieldIn % "initiator" ) return fromAddress(con->initiator);
-                break;
-            case 'o':
-                if ( fieldIn % "operation" ) return con->operation;
-                break;
-            case 't':
-                if ( fieldIn % "to" ) return fromAddress(con->to);
-                break;
-            case 'v':
-                if ( fieldIn % "value" ) return asStringBN(con->value);
-                break;
-        }
-#endif
-        // EXISTING_CODE
-        // EXISTING_CODE
-
-        // Finally, give the parent class a chance
-        ret = nextLogentryChunk(fieldIn, con);
-        if (!ret.empty())
-            return ret;
-    }
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return fldNotFound(fieldIn);
 }
@@ -209,15 +176,13 @@ bool QConfirmationNeededEvent::readBackLevel(SFArchive& archive) {
 
 //---------------------------------------------------------------------------
 SFString QConfirmationNeededEvent::getValueByName(const SFString& fieldName) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
 
-#ifdef NEW_CODE
     // Give customized code a chance to override first
     SFString ret = nextConfirmationneededeventChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
+    // If the class has any fields, return them
     switch (tolower(fieldName[0])) {
         case 'd':
             if ( fieldName % "data" ) return data;
@@ -235,10 +200,12 @@ SFString QConfirmationNeededEvent::getValueByName(const SFString& fieldName) con
             if ( fieldName % "value" ) return asStringBN(value);
             break;
     }
-    return "";
-#else
-    return Format("[{"+toUpper(fieldName)+"}]");
-#endif
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CLogEntry::getValueByName(fieldName);
 }
 
 //---------------------------------------------------------------------------

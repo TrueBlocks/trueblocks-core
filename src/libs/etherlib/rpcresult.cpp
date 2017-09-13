@@ -41,38 +41,11 @@ void CRPCResult::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPt
 
 //---------------------------------------------------------------------------
 SFString nextRpcresultChunk(const SFString& fieldIn, const void *dataPtr) {
-    const CRPCResult *rpc = (const CRPCResult *)dataPtr;
-    if (rpc) {
-        // Give customized code a chance to override first
-#ifdef NEW_CODE
-        SFString ret = rpc->getValueByName(fieldIn);
-        if (!ret.empty())
-            return ret;
-#else
-        SFString ret = nextRpcresultChunk_custom(fieldIn, dataPtr);
-        if (!ret.empty())
-            return ret;
+    if (dataPtr)
+        return ((const CRPCResult *)dataPtr)->getValueByName(fieldIn);
 
-        switch (tolower(fieldIn[0])) {
-            case 'i':
-                if ( fieldIn % "id" ) return rpc->id;
-                break;
-            case 'j':
-                if ( fieldIn % "jsonrpc" ) return rpc->jsonrpc;
-                break;
-            case 'r':
-                if ( fieldIn % "result" ) return rpc->result;
-                break;
-        }
-#endif
-        // EXISTING_CODE
-        // EXISTING_CODE
-
-        // Finally, give the parent class a chance
-        ret = nextBasenodeChunk(fieldIn, rpc);
-        if (!ret.empty())
-            return ret;
-    }
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return fldNotFound(fieldIn);
 }
@@ -190,15 +163,13 @@ bool CRPCResult::readBackLevel(SFArchive& archive) {
 
 //---------------------------------------------------------------------------
 SFString CRPCResult::getValueByName(const SFString& fieldName) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
 
-#ifdef NEW_CODE
     // Give customized code a chance to override first
     SFString ret = nextRpcresultChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
+    // If the class has any fields, return them
     switch (tolower(fieldName[0])) {
         case 'i':
             if ( fieldName % "id" ) return id;
@@ -210,10 +181,12 @@ SFString CRPCResult::getValueByName(const SFString& fieldName) const {
             if ( fieldName % "result" ) return result;
             break;
     }
-    return "";
-#else
-    return Format("[{"+toUpper(fieldName)+"}]");
-#endif
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CBaseNode::getValueByName(fieldName);
 }
 
 //---------------------------------------------------------------------------

@@ -59,7 +59,7 @@ baseClass: CBaseNode
 	  hidden: 0
 	fieldName: cumulativeGasUsed
 	  fieldID: 1014
-	  fieldType: T_GAS TS_NUMERAL 4259880 TS_BIGNUM 4259880
+	  fieldType: T_WEI TS_NUMERAL 4259875 TS_BIGNUM 4259875
 	  hidden: 0
 	fieldName: input
 	  fieldID: 1015

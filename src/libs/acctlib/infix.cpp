@@ -41,33 +41,11 @@ void CInfix::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) c
 
 //---------------------------------------------------------------------------
 SFString nextInfixChunk(const SFString& fieldIn, const void *dataPtr) {
-    const CInfix *inf = (const CInfix *)dataPtr;
-    if (inf) {
-        // Give customized code a chance to override first
-#ifdef NEW_CODE
-        SFString ret = inf->getValueByName(fieldIn);
-        if (!ret.empty())
-            return ret;
-#else
-        SFString ret = nextInfixChunk_custom(fieldIn, dataPtr);
-        if (!ret.empty())
-            return ret;
+    if (dataPtr)
+        return ((const CInfix *)dataPtr)->getValueByName(fieldIn);
 
-        switch (tolower(fieldIn[0])) {
-            case 'm':
-            return "";
-//                if ( fieldIn % "m_next" ) { expContext().noFrst=true; return inf->m_next.Format(); }
-                break;
-        }
-#endif
-        // EXISTING_CODE
-        // EXISTING_CODE
-
-        // Finally, give the parent class a chance
-        ret = nextTreenodeChunk(fieldIn, inf);
-        if (!ret.empty())
-            return ret;
-    }
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return fldNotFound(fieldIn);
 }
@@ -177,25 +155,25 @@ bool CInfix::readBackLevel(SFArchive& archive) {
 
 //---------------------------------------------------------------------------
 SFString CInfix::getValueByName(const SFString& fieldName) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
 
-#ifdef NEW_CODE
     // Give customized code a chance to override first
     SFString ret = nextInfixChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
+    // If the class has any fields, return them
     switch (tolower(fieldName[0])) {
         case 'm':
         return "";
 //            if ( fieldName % "m_next" ) { expContext().noFrst=true; return m_next.Format(); }
             break;
     }
-    return "";
-#else
-    return Format("[{"+toUpper(fieldName)+"}]");
-#endif
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CTreeNode::getValueByName(fieldName);
 }
 
 //---------------------------------------------------------------------------

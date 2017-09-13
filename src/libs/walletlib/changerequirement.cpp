@@ -39,32 +39,11 @@ void QChangeRequirement::Format(CExportContext& ctx, const SFString& fmtIn, void
 
 //---------------------------------------------------------------------------
 SFString nextChangerequirementChunk(const SFString& fieldIn, const void *dataPtr) {
-    const QChangeRequirement *cha = (const QChangeRequirement *)dataPtr;
-    if (cha) {
-        // Give customized code a chance to override first
-#ifdef NEW_CODE
-        SFString ret = cha->getValueByName(fieldIn);
-        if (!ret.empty())
-            return ret;
-#else
-        SFString ret = nextChangerequirementChunk_custom(fieldIn, dataPtr);
-        if (!ret.empty())
-            return ret;
+    if (dataPtr)
+        return ((const QChangeRequirement *)dataPtr)->getValueByName(fieldIn);
 
-        switch (tolower(fieldIn[0])) {
-            case '_':
-                if ( fieldIn % "_newRequired" ) return asStringBN(cha->_newRequired);
-                break;
-        }
-#endif
-        // EXISTING_CODE
-        // EXISTING_CODE
-
-        // Finally, give the parent class a chance
-        ret = nextTransactionChunk(fieldIn, cha);
-        if (!ret.empty())
-            return ret;
-    }
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return fldNotFound(fieldIn);
 }
@@ -173,24 +152,24 @@ bool QChangeRequirement::readBackLevel(SFArchive& archive) {
 
 //---------------------------------------------------------------------------
 SFString QChangeRequirement::getValueByName(const SFString& fieldName) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
 
-#ifdef NEW_CODE
     // Give customized code a chance to override first
     SFString ret = nextChangerequirementChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
+    // If the class has any fields, return them
     switch (tolower(fieldName[0])) {
         case '_':
             if ( fieldName % "_newRequired" ) return asStringBN(_newRequired);
             break;
     }
-    return "";
-#else
-    return Format("[{"+toUpper(fieldName)+"}]");
-#endif
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CTransaction::getValueByName(fieldName);
 }
 
 //---------------------------------------------------------------------------

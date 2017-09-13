@@ -41,45 +41,11 @@ void CIncomeStatement::Format(CExportContext& ctx, const SFString& fmtIn, void *
 
 //---------------------------------------------------------------------------
 SFString nextIncomestatementChunk(const SFString& fieldIn, const void *dataPtr) {
-    const CIncomeStatement *inc = (const CIncomeStatement *)dataPtr;
-    if (inc) {
-        // Give customized code a chance to override first
-#ifdef NEW_CODE
-        SFString ret = inc->getValueByName(fieldIn);
-        if (!ret.empty())
-            return ret;
-#else
-        SFString ret = nextIncomestatementChunk_custom(fieldIn, dataPtr);
-        if (!ret.empty())
-            return ret;
+    if (dataPtr)
+        return ((const CIncomeStatement *)dataPtr)->getValueByName(fieldIn);
 
-        switch (tolower(fieldIn[0])) {
-            case 'b':
-                if ( fieldIn % "begBal" ) return asStringBN(inc->begBal);
-                if ( fieldIn % "blockNum" ) return asStringU(inc->blockNum);
-                break;
-            case 'e':
-                if ( fieldIn % "endBal" ) return asStringBN(inc->endBal);
-                break;
-            case 'g':
-                if ( fieldIn % "gasCost" ) return asStringBN(inc->gasCost);
-                break;
-            case 'i':
-                if ( fieldIn % "inflow" ) return asStringBN(inc->inflow);
-                break;
-            case 'o':
-                if ( fieldIn % "outflow" ) return asStringBN(inc->outflow);
-                break;
-        }
-#endif
-        // EXISTING_CODE
-        // EXISTING_CODE
-
-        // Finally, give the parent class a chance
-        ret = nextBasenodeChunk(fieldIn, inc);
-        if (!ret.empty())
-            return ret;
-    }
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return fldNotFound(fieldIn);
 }
@@ -225,15 +191,13 @@ SFArchive& operator>>(SFArchive& archive, CIncomeStatement& inc) {
 
 //---------------------------------------------------------------------------
 SFString CIncomeStatement::getValueByName(const SFString& fieldName) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
 
-#ifdef NEW_CODE
     // Give customized code a chance to override first
     SFString ret = nextIncomestatementChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
+    // If the class has any fields, return them
     switch (tolower(fieldName[0])) {
         case 'b':
             if ( fieldName % "begBal" ) return asStringBN(begBal);
@@ -252,10 +216,12 @@ SFString CIncomeStatement::getValueByName(const SFString& fieldName) const {
             if ( fieldName % "outflow" ) return asStringBN(outflow);
             break;
     }
-    return "";
-#else
-    return Format("[{"+toUpper(fieldName)+"}]");
-#endif
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CBaseNode::getValueByName(fieldName);
 }
 
 //---------------------------------------------------------------------------

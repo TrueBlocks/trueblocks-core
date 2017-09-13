@@ -39,33 +39,11 @@ void QChangeOwner::Format(CExportContext& ctx, const SFString& fmtIn, void *data
 
 //---------------------------------------------------------------------------
 SFString nextChangeownerChunk(const SFString& fieldIn, const void *dataPtr) {
-    const QChangeOwner *cha = (const QChangeOwner *)dataPtr;
-    if (cha) {
-        // Give customized code a chance to override first
-#ifdef NEW_CODE
-        SFString ret = cha->getValueByName(fieldIn);
-        if (!ret.empty())
-            return ret;
-#else
-        SFString ret = nextChangeownerChunk_custom(fieldIn, dataPtr);
-        if (!ret.empty())
-            return ret;
+    if (dataPtr)
+        return ((const QChangeOwner *)dataPtr)->getValueByName(fieldIn);
 
-        switch (tolower(fieldIn[0])) {
-            case '_':
-                if ( fieldIn % "_from" ) return fromAddress(cha->_from);
-                if ( fieldIn % "_to" ) return fromAddress(cha->_to);
-                break;
-        }
-#endif
-        // EXISTING_CODE
-        // EXISTING_CODE
-
-        // Finally, give the parent class a chance
-        ret = nextTransactionChunk(fieldIn, cha);
-        if (!ret.empty())
-            return ret;
-    }
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return fldNotFound(fieldIn);
 }
@@ -178,25 +156,25 @@ bool QChangeOwner::readBackLevel(SFArchive& archive) {
 
 //---------------------------------------------------------------------------
 SFString QChangeOwner::getValueByName(const SFString& fieldName) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
 
-#ifdef NEW_CODE
     // Give customized code a chance to override first
     SFString ret = nextChangeownerChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
+    // If the class has any fields, return them
     switch (tolower(fieldName[0])) {
         case '_':
             if ( fieldName % "_from" ) return fromAddress(_from);
             if ( fieldName % "_to" ) return fromAddress(_to);
             break;
     }
-    return "";
-#else
-    return Format("[{"+toUpper(fieldName)+"}]");
-#endif
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CTransaction::getValueByName(fieldName);
 }
 
 //---------------------------------------------------------------------------
