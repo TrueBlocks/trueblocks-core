@@ -38,42 +38,11 @@ void CAccountName::Format(CExportContext& ctx, const SFString& fmtIn, void *data
 
 //---------------------------------------------------------------------------
 SFString nextAccountnameChunk(const SFString& fieldIn, const void *dataPtr) {
-    const CAccountName *acc = (const CAccountName *)dataPtr;
-    if (acc) {
-        // Give customized code a chance to override first
-#ifdef NEW_CODE
-        SFString ret = acc->getValueByName(fieldIn);
-        if (!ret.empty())
-            return ret;
-#else
-        SFString ret = nextAccountnameChunk_custom(fieldIn, dataPtr);
-        if (!ret.empty())
-            return ret;
+    if (dataPtr)
+        return ((const CAccountName *)dataPtr)->getValueByName(fieldIn);
 
-        switch (tolower(fieldIn[0])) {
-            case 'a':
-                if ( fieldIn % "addr" ) return acc->addr;
-                break;
-            case 'd':
-                if ( fieldIn % "description" ) return acc->description;
-                break;
-            case 'n':
-                if ( fieldIn % "name" ) return acc->name;
-                break;
-            case 's':
-                if ( fieldIn % "symbol" ) return acc->symbol;
-                if ( fieldIn % "source" ) return acc->source;
-                break;
-        }
-#endif
-        // EXISTING_CODE
-        // EXISTING_CODE
-
-        // Finally, give the parent class a chance
-        ret = nextBasenodeChunk(fieldIn, acc);
-        if (!ret.empty())
-            return ret;
-    }
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return fldNotFound(fieldIn);
 }
@@ -201,15 +170,13 @@ bool CAccountName::readBackLevel(SFArchive& archive) {
 
 //---------------------------------------------------------------------------
 SFString CAccountName::getValueByName(const SFString& fieldName) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
 
-#ifdef NEW_CODE
     // Give customized code a chance to override first
     SFString ret = nextAccountnameChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
+    // If the class has any fields, return them
     switch (tolower(fieldName[0])) {
         case 'a':
             if ( fieldName % "addr" ) return addr;
@@ -225,10 +192,12 @@ SFString CAccountName::getValueByName(const SFString& fieldName) const {
             if ( fieldName % "source" ) return source;
             break;
     }
-    return "";
-#else
-    return Format("[{"+toUpper(fieldName)+"}]");
-#endif
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CBaseNode::getValueByName(fieldName);
 }
 
 //---------------------------------------------------------------------------

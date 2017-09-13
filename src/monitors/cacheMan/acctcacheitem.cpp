@@ -38,38 +38,11 @@ void CAcctCacheItem::Format(CExportContext& ctx, const SFString& fmtIn, void *da
 
 //---------------------------------------------------------------------------
 SFString nextAcctcacheitemChunk(const SFString& fieldIn, const void *dataPtr) {
-    const CAcctCacheItem *acc = (const CAcctCacheItem *)dataPtr;
-    if (acc) {
-        // Give customized code a chance to override first
-#ifdef NEW_CODE
-        SFString ret = acc->getValueByName(fieldIn);
-        if (!ret.empty())
-            return ret;
-#else
-        SFString ret = nextAcctcacheitemChunk_custom(fieldIn, dataPtr);
-        if (!ret.empty())
-            return ret;
+    if (dataPtr)
+        return ((const CAcctCacheItem *)dataPtr)->getValueByName(fieldIn);
 
-        switch (tolower(fieldIn[0])) {
-            case 'b':
-                if ( fieldIn % "blockNum" ) return asStringU(acc->blockNum);
-                break;
-            case 't':
-                if ( fieldIn % "transIndex" ) return asStringU(acc->transIndex);
-                break;
-            case 'w':
-                if ( fieldIn % "which" ) return asString(acc->which);
-                break;
-        }
-#endif
-        // EXISTING_CODE
-        // EXISTING_CODE
-
-        // Finally, give the parent class a chance
-        ret = nextBasenodeChunk(fieldIn, acc);
-        if (!ret.empty())
-            return ret;
-    }
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return fldNotFound(fieldIn);
 }
@@ -187,15 +160,13 @@ bool CAcctCacheItem::readBackLevel(SFArchive& archive) {
 
 //---------------------------------------------------------------------------
 SFString CAcctCacheItem::getValueByName(const SFString& fieldName) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
 
-#ifdef NEW_CODE
     // Give customized code a chance to override first
     SFString ret = nextAcctcacheitemChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
+    // If the class has any fields, return them
     switch (tolower(fieldName[0])) {
         case 'b':
             if ( fieldName % "blockNum" ) return asStringU(blockNum);
@@ -207,10 +178,12 @@ SFString CAcctCacheItem::getValueByName(const SFString& fieldName) const {
             if ( fieldName % "which" ) return asString(which);
             break;
     }
-    return "";
-#else
-    return Format("[{"+toUpper(fieldName)+"}]");
-#endif
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CBaseNode::getValueByName(fieldName);
 }
 
 //---------------------------------------------------------------------------

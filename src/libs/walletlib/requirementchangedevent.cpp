@@ -39,32 +39,11 @@ void QRequirementChangedEvent::Format(CExportContext& ctx, const SFString& fmtIn
 
 //---------------------------------------------------------------------------
 SFString nextRequirementchangedeventChunk(const SFString& fieldIn, const void *dataPtr) {
-    const QRequirementChangedEvent *req = (const QRequirementChangedEvent *)dataPtr;
-    if (req) {
-        // Give customized code a chance to override first
-#ifdef NEW_CODE
-        SFString ret = req->getValueByName(fieldIn);
-        if (!ret.empty())
-            return ret;
-#else
-        SFString ret = nextRequirementchangedeventChunk_custom(fieldIn, dataPtr);
-        if (!ret.empty())
-            return ret;
+    if (dataPtr)
+        return ((const QRequirementChangedEvent *)dataPtr)->getValueByName(fieldIn);
 
-        switch (tolower(fieldIn[0])) {
-            case 'n':
-                if ( fieldIn % "newRequirement" ) return asStringBN(req->newRequirement);
-                break;
-        }
-#endif
-        // EXISTING_CODE
-        // EXISTING_CODE
-
-        // Finally, give the parent class a chance
-        ret = nextLogentryChunk(fieldIn, req);
-        if (!ret.empty())
-            return ret;
-    }
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return fldNotFound(fieldIn);
 }
@@ -173,24 +152,24 @@ bool QRequirementChangedEvent::readBackLevel(SFArchive& archive) {
 
 //---------------------------------------------------------------------------
 SFString QRequirementChangedEvent::getValueByName(const SFString& fieldName) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
 
-#ifdef NEW_CODE
     // Give customized code a chance to override first
     SFString ret = nextRequirementchangedeventChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
+    // If the class has any fields, return them
     switch (tolower(fieldName[0])) {
         case 'n':
             if ( fieldName % "newRequirement" ) return asStringBN(newRequirement);
             break;
     }
-    return "";
-#else
-    return Format("[{"+toUpper(fieldName)+"}]");
-#endif
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CLogEntry::getValueByName(fieldName);
 }
 
 //---------------------------------------------------------------------------

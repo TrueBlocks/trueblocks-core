@@ -41,35 +41,11 @@ void CTraceResult::Format(CExportContext& ctx, const SFString& fmtIn, void *data
 
 //---------------------------------------------------------------------------
 SFString nextTraceresultChunk(const SFString& fieldIn, const void *dataPtr) {
-    const CTraceResult *tra = (const CTraceResult *)dataPtr;
-    if (tra) {
-        // Give customized code a chance to override first
-#ifdef NEW_CODE
-        SFString ret = tra->getValueByName(fieldIn);
-        if (!ret.empty())
-            return ret;
-#else
-        SFString ret = nextTraceresultChunk_custom(fieldIn, dataPtr);
-        if (!ret.empty())
-            return ret;
+    if (dataPtr)
+        return ((const CTraceResult *)dataPtr)->getValueByName(fieldIn);
 
-        switch (tolower(fieldIn[0])) {
-            case 'g':
-                if ( fieldIn % "gasUsed" ) return fromGas(tra->gasUsed);
-                break;
-            case 'o':
-                if ( fieldIn % "output" ) return tra->output;
-                break;
-        }
-#endif
-        // EXISTING_CODE
-        // EXISTING_CODE
-
-        // Finally, give the parent class a chance
-        ret = nextBasenodeChunk(fieldIn, tra);
-        if (!ret.empty())
-            return ret;
-    }
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return fldNotFound(fieldIn);
 }
@@ -193,15 +169,13 @@ SFArchive& operator>>(SFArchive& archive, CTraceResult& tra) {
 
 //---------------------------------------------------------------------------
 SFString CTraceResult::getValueByName(const SFString& fieldName) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
 
-#ifdef NEW_CODE
     // Give customized code a chance to override first
     SFString ret = nextTraceresultChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
+    // If the class has any fields, return them
     switch (tolower(fieldName[0])) {
         case 'g':
             if ( fieldName % "gasUsed" ) return fromGas(gasUsed);
@@ -210,10 +184,12 @@ SFString CTraceResult::getValueByName(const SFString& fieldName) const {
             if ( fieldName % "output" ) return output;
             break;
     }
-    return "";
-#else
-    return Format("[{"+toUpper(fieldName)+"}]");
-#endif
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CBaseNode::getValueByName(fieldName);
 }
 
 //---------------------------------------------------------------------------

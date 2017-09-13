@@ -40,33 +40,11 @@ void CTreeRoot::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr
 
 //---------------------------------------------------------------------------
 SFString nextTreerootChunk(const SFString& fieldIn, const void *dataPtr) {
-    const CTreeRoot *tre = (const CTreeRoot *)dataPtr;
-    if (tre) {
-        // Give customized code a chance to override first
-#ifdef NEW_CODE
-        SFString ret = tre->getValueByName(fieldIn);
-        if (!ret.empty())
-            return ret;
-#else
-        SFString ret = nextTreerootChunk_custom(fieldIn, dataPtr);
-        if (!ret.empty())
-            return ret;
+    if (dataPtr)
+        return ((const CTreeRoot *)dataPtr)->getValueByName(fieldIn);
 
-        switch (tolower(fieldIn[0])) {
-            case 'm':
-            return "";
-//                if ( fieldIn % "m_root" ) { expContext().noFrst=true; return tre->m_root.Format(); }
-                break;
-        }
-#endif
-        // EXISTING_CODE
-        // EXISTING_CODE
-
-        // Finally, give the parent class a chance
-        ret = nextBasenodeChunk(fieldIn, tre);
-        if (!ret.empty())
-            return ret;
-    }
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return fldNotFound(fieldIn);
 }
@@ -173,25 +151,25 @@ bool CTreeRoot::readBackLevel(SFArchive& archive) {
 
 //---------------------------------------------------------------------------
 SFString CTreeRoot::getValueByName(const SFString& fieldName) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
 
-#ifdef NEW_CODE
     // Give customized code a chance to override first
     SFString ret = nextTreerootChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
+    // If the class has any fields, return them
     switch (tolower(fieldName[0])) {
         case 'm':
         return "";
 //            if ( fieldName % "m_root" ) { expContext().noFrst=true; return m_root.Format(); }
             break;
     }
-    return "";
-#else
-    return Format("[{"+toUpper(fieldName)+"}]");
-#endif
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CBaseNode::getValueByName(fieldName);
 }
 
 //---------------------------------------------------------------------------

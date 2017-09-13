@@ -39,32 +39,11 @@ void QSetDailyLimit::Format(CExportContext& ctx, const SFString& fmtIn, void *da
 
 //---------------------------------------------------------------------------
 SFString nextSetdailylimitChunk(const SFString& fieldIn, const void *dataPtr) {
-    const QSetDailyLimit *set = (const QSetDailyLimit *)dataPtr;
-    if (set) {
-        // Give customized code a chance to override first
-#ifdef NEW_CODE
-        SFString ret = set->getValueByName(fieldIn);
-        if (!ret.empty())
-            return ret;
-#else
-        SFString ret = nextSetdailylimitChunk_custom(fieldIn, dataPtr);
-        if (!ret.empty())
-            return ret;
+    if (dataPtr)
+        return ((const QSetDailyLimit *)dataPtr)->getValueByName(fieldIn);
 
-        switch (tolower(fieldIn[0])) {
-            case '_':
-                if ( fieldIn % "_newLimit" ) return asStringBN(set->_newLimit);
-                break;
-        }
-#endif
-        // EXISTING_CODE
-        // EXISTING_CODE
-
-        // Finally, give the parent class a chance
-        ret = nextTransactionChunk(fieldIn, set);
-        if (!ret.empty())
-            return ret;
-    }
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return fldNotFound(fieldIn);
 }
@@ -173,24 +152,24 @@ bool QSetDailyLimit::readBackLevel(SFArchive& archive) {
 
 //---------------------------------------------------------------------------
 SFString QSetDailyLimit::getValueByName(const SFString& fieldName) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
 
-#ifdef NEW_CODE
     // Give customized code a chance to override first
     SFString ret = nextSetdailylimitChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
+    // If the class has any fields, return them
     switch (tolower(fieldName[0])) {
         case '_':
             if ( fieldName % "_newLimit" ) return asStringBN(_newLimit);
             break;
     }
-    return "";
-#else
-    return Format("[{"+toUpper(fieldName)+"}]");
-#endif
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CTransaction::getValueByName(fieldName);
 }
 
 //---------------------------------------------------------------------------

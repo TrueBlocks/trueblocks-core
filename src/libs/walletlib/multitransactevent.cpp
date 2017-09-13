@@ -39,42 +39,11 @@ void QMultiTransactEvent::Format(CExportContext& ctx, const SFString& fmtIn, voi
 
 //---------------------------------------------------------------------------
 SFString nextMultitransacteventChunk(const SFString& fieldIn, const void *dataPtr) {
-    const QMultiTransactEvent *mul = (const QMultiTransactEvent *)dataPtr;
-    if (mul) {
-        // Give customized code a chance to override first
-#ifdef NEW_CODE
-        SFString ret = mul->getValueByName(fieldIn);
-        if (!ret.empty())
-            return ret;
-#else
-        SFString ret = nextMultitransacteventChunk_custom(fieldIn, dataPtr);
-        if (!ret.empty())
-            return ret;
+    if (dataPtr)
+        return ((const QMultiTransactEvent *)dataPtr)->getValueByName(fieldIn);
 
-        switch (tolower(fieldIn[0])) {
-            case 'd':
-                if ( fieldIn % "data" ) return mul->data;
-                break;
-            case 'o':
-                if ( fieldIn % "owner" ) return fromAddress(mul->owner);
-                if ( fieldIn % "operation" ) return mul->operation;
-                break;
-            case 't':
-                if ( fieldIn % "to" ) return fromAddress(mul->to);
-                break;
-            case 'v':
-                if ( fieldIn % "value" ) return asStringBN(mul->value);
-                break;
-        }
-#endif
-        // EXISTING_CODE
-        // EXISTING_CODE
-
-        // Finally, give the parent class a chance
-        ret = nextLogentryChunk(fieldIn, mul);
-        if (!ret.empty())
-            return ret;
-    }
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return fldNotFound(fieldIn);
 }
@@ -205,15 +174,13 @@ bool QMultiTransactEvent::readBackLevel(SFArchive& archive) {
 
 //---------------------------------------------------------------------------
 SFString QMultiTransactEvent::getValueByName(const SFString& fieldName) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
 
-#ifdef NEW_CODE
     // Give customized code a chance to override first
     SFString ret = nextMultitransacteventChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
+    // If the class has any fields, return them
     switch (tolower(fieldName[0])) {
         case 'd':
             if ( fieldName % "data" ) return data;
@@ -229,10 +196,12 @@ SFString QMultiTransactEvent::getValueByName(const SFString& fieldName) const {
             if ( fieldName % "value" ) return asStringBN(value);
             break;
     }
-    return "";
-#else
-    return Format("[{"+toUpper(fieldName)+"}]");
-#endif
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CLogEntry::getValueByName(fieldName);
 }
 
 //---------------------------------------------------------------------------

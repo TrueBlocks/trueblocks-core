@@ -39,32 +39,11 @@ void QOwnerAddedEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *
 
 //---------------------------------------------------------------------------
 SFString nextOwneraddedeventChunk(const SFString& fieldIn, const void *dataPtr) {
-    const QOwnerAddedEvent *own = (const QOwnerAddedEvent *)dataPtr;
-    if (own) {
-        // Give customized code a chance to override first
-#ifdef NEW_CODE
-        SFString ret = own->getValueByName(fieldIn);
-        if (!ret.empty())
-            return ret;
-#else
-        SFString ret = nextOwneraddedeventChunk_custom(fieldIn, dataPtr);
-        if (!ret.empty())
-            return ret;
+    if (dataPtr)
+        return ((const QOwnerAddedEvent *)dataPtr)->getValueByName(fieldIn);
 
-        switch (tolower(fieldIn[0])) {
-            case 'n':
-                if ( fieldIn % "newOwner" ) return fromAddress(own->newOwner);
-                break;
-        }
-#endif
-        // EXISTING_CODE
-        // EXISTING_CODE
-
-        // Finally, give the parent class a chance
-        ret = nextLogentryChunk(fieldIn, own);
-        if (!ret.empty())
-            return ret;
-    }
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return fldNotFound(fieldIn);
 }
@@ -173,24 +152,24 @@ bool QOwnerAddedEvent::readBackLevel(SFArchive& archive) {
 
 //---------------------------------------------------------------------------
 SFString QOwnerAddedEvent::getValueByName(const SFString& fieldName) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
 
-#ifdef NEW_CODE
     // Give customized code a chance to override first
     SFString ret = nextOwneraddedeventChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
+    // If the class has any fields, return them
     switch (tolower(fieldName[0])) {
         case 'n':
             if ( fieldName % "newOwner" ) return fromAddress(newOwner);
             break;
     }
-    return "";
-#else
-    return Format("[{"+toUpper(fieldName)+"}]");
-#endif
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CLogEntry::getValueByName(fieldName);
 }
 
 //---------------------------------------------------------------------------

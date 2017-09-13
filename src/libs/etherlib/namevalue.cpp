@@ -40,35 +40,11 @@ void CNameValue::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPt
 
 //---------------------------------------------------------------------------
 SFString nextNamevalueChunk(const SFString& fieldIn, const void *dataPtr) {
-    const CNameValue *nam = (const CNameValue *)dataPtr;
-    if (nam) {
-        // Give customized code a chance to override first
-#ifdef NEW_CODE
-        SFString ret = nam->getValueByName(fieldIn);
-        if (!ret.empty())
-            return ret;
-#else
-        SFString ret = nextNamevalueChunk_custom(fieldIn, dataPtr);
-        if (!ret.empty())
-            return ret;
+    if (dataPtr)
+        return ((const CNameValue *)dataPtr)->getValueByName(fieldIn);
 
-        switch (tolower(fieldIn[0])) {
-            case 'n':
-                if ( fieldIn % "name" ) return nam->name;
-                break;
-            case 'v':
-                if ( fieldIn % "value" ) return nam->value;
-                break;
-        }
-#endif
-        // EXISTING_CODE
-        // EXISTING_CODE
-
-        // Finally, give the parent class a chance
-        ret = nextBasenodeChunk(fieldIn, nam);
-        if (!ret.empty())
-            return ret;
-    }
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return fldNotFound(fieldIn);
 }
@@ -180,15 +156,13 @@ bool CNameValue::readBackLevel(SFArchive& archive) {
 
 //---------------------------------------------------------------------------
 SFString CNameValue::getValueByName(const SFString& fieldName) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
 
-#ifdef NEW_CODE
     // Give customized code a chance to override first
     SFString ret = nextNamevalueChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
+    // If the class has any fields, return them
     switch (tolower(fieldName[0])) {
         case 'n':
             if ( fieldName % "name" ) return name;
@@ -197,10 +171,12 @@ SFString CNameValue::getValueByName(const SFString& fieldName) const {
             if ( fieldName % "value" ) return value;
             break;
     }
-    return "";
-#else
-    return Format("[{"+toUpper(fieldName)+"}]");
-#endif
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CBaseNode::getValueByName(fieldName);
 }
 
 //---------------------------------------------------------------------------
