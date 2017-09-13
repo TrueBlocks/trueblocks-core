@@ -16,11 +16,11 @@
 IMPLEMENT_NODE(QApprove, CTransaction, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextApproveChunk(const SFString& fieldIn, const void *data);
-static SFString nextApproveChunk_custom(const SFString& fieldIn, const void *data);
+static SFString nextApproveChunk(const SFString& fieldIn, const void *dataPtr);
+static SFString nextApproveChunk_custom(const SFString& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void QApprove::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+void QApprove::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -30,7 +30,7 @@ void QApprove::Format(CExportContext& ctx, const SFString& fmtIn, void *data) co
     }
 
     SFString fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, data))
+    if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
     while (!fmt.empty())
@@ -38,34 +38,12 @@ void QApprove::Format(CExportContext& ctx, const SFString& fmtIn, void *data) co
 }
 
 //---------------------------------------------------------------------------
-SFString nextApproveChunk(const SFString& fieldIn, const void *data) {
-    const QApprove *app = (const QApprove *)data;
-    if (app) {
-        // Give customized code a chance to override first
-#ifdef NEW_CODE
-        SFString ret = app->getValueByName(fieldIn);
-        if (!ret.empty())
-            return ret;
-#else
-        SFString ret = nextApproveChunk_custom(fieldIn, data);
-        if (!ret.empty())
-            return ret;
+SFString nextApproveChunk(const SFString& fieldIn, const void *dataPtr) {
+    if (dataPtr)
+        return ((const QApprove *)dataPtr)->getValueByName(fieldIn);
 
-        switch (tolower(fieldIn[0])) {
-            case '_':
-                if ( fieldIn % "_spender" ) return fromAddress(app->_spender);
-                if ( fieldIn % "_value" ) return asStringBN(app->_value);
-                break;
-        }
-#endif
-        // EXISTING_CODE
-        // EXISTING_CODE
-
-        // Finally, give the parent class a chance
-        ret = nextTransactionChunk(fieldIn, app);
-        if (!ret.empty())
-            return ret;
-    }
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return fldNotFound(fieldIn);
 }
@@ -141,8 +119,8 @@ void QApprove::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextApproveChunk_custom(const SFString& fieldIn, const void *data) {
-    const QApprove *app = (const QApprove *)data;
+SFString nextApproveChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+    const QApprove *app = (const QApprove *)dataPtr;
     if (app) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -162,7 +140,7 @@ SFString nextApproveChunk_custom(const SFString& fieldIn, const void *data) {
 }
 
 //---------------------------------------------------------------------------
-bool QApprove::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+bool QApprove::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
@@ -178,25 +156,25 @@ bool QApprove::readBackLevel(SFArchive& archive) {
 
 //---------------------------------------------------------------------------
 SFString QApprove::getValueByName(const SFString& fieldName) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
 
-#ifdef NEW_CODE
     // Give customized code a chance to override first
     SFString ret = nextApproveChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
+    // If the class has any fields, return them
     switch (tolower(fieldName[0])) {
         case '_':
             if ( fieldName % "_spender" ) return fromAddress(_spender);
             if ( fieldName % "_value" ) return asStringBN(_value);
             break;
     }
-    return "";
-#else
-    return Format("[{"+toUpper(fieldName)+"}]");
-#endif
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CTransaction::getValueByName(fieldName);
 }
 
 //---------------------------------------------------------------------------

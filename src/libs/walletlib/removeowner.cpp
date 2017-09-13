@@ -16,11 +16,11 @@
 IMPLEMENT_NODE(QRemoveOwner, CTransaction, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextRemoveownerChunk(const SFString& fieldIn, const void *data);
-static SFString nextRemoveownerChunk_custom(const SFString& fieldIn, const void *data);
+static SFString nextRemoveownerChunk(const SFString& fieldIn, const void *dataPtr);
+static SFString nextRemoveownerChunk_custom(const SFString& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void QRemoveOwner::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+void QRemoveOwner::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -30,7 +30,7 @@ void QRemoveOwner::Format(CExportContext& ctx, const SFString& fmtIn, void *data
     }
 
     SFString fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, data))
+    if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
     while (!fmt.empty())
@@ -38,33 +38,12 @@ void QRemoveOwner::Format(CExportContext& ctx, const SFString& fmtIn, void *data
 }
 
 //---------------------------------------------------------------------------
-SFString nextRemoveownerChunk(const SFString& fieldIn, const void *data) {
-    const QRemoveOwner *rem = (const QRemoveOwner *)data;
-    if (rem) {
-        // Give customized code a chance to override first
-#ifdef NEW_CODE
-        SFString ret = rem->getValueByName(fieldIn);
-        if (!ret.empty())
-            return ret;
-#else
-        SFString ret = nextRemoveownerChunk_custom(fieldIn, data);
-        if (!ret.empty())
-            return ret;
+SFString nextRemoveownerChunk(const SFString& fieldIn, const void *dataPtr) {
+    if (dataPtr)
+        return ((const QRemoveOwner *)dataPtr)->getValueByName(fieldIn);
 
-        switch (tolower(fieldIn[0])) {
-            case '_':
-                if ( fieldIn % "_owner" ) return fromAddress(rem->_owner);
-                break;
-        }
-#endif
-        // EXISTING_CODE
-        // EXISTING_CODE
-
-        // Finally, give the parent class a chance
-        ret = nextTransactionChunk(fieldIn, rem);
-        if (!ret.empty())
-            return ret;
-    }
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return fldNotFound(fieldIn);
 }
@@ -136,8 +115,8 @@ void QRemoveOwner::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextRemoveownerChunk_custom(const SFString& fieldIn, const void *data) {
-    const QRemoveOwner *rem = (const QRemoveOwner *)data;
+SFString nextRemoveownerChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+    const QRemoveOwner *rem = (const QRemoveOwner *)dataPtr;
     if (rem) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -157,7 +136,7 @@ SFString nextRemoveownerChunk_custom(const SFString& fieldIn, const void *data) 
 }
 
 //---------------------------------------------------------------------------
-bool QRemoveOwner::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+bool QRemoveOwner::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
@@ -173,24 +152,24 @@ bool QRemoveOwner::readBackLevel(SFArchive& archive) {
 
 //---------------------------------------------------------------------------
 SFString QRemoveOwner::getValueByName(const SFString& fieldName) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
 
-#ifdef NEW_CODE
     // Give customized code a chance to override first
     SFString ret = nextRemoveownerChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
+    // If the class has any fields, return them
     switch (tolower(fieldName[0])) {
         case '_':
             if ( fieldName % "_owner" ) return fromAddress(_owner);
             break;
     }
-    return "";
-#else
-    return Format("[{"+toUpper(fieldName)+"}]");
-#endif
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CTransaction::getValueByName(fieldName);
 }
 
 //---------------------------------------------------------------------------

@@ -32,7 +32,7 @@ public:
     SFHash blockHash;
     SFUint32 blockNumber;
     SFUint32 subtraces;
-    SFStringArray traceAddress;
+    SFAddressArray traceAddress;
     SFHash transactionHash;
     SFUint32 transactionPosition;
     SFString type;

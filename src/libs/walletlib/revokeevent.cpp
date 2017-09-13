@@ -16,11 +16,11 @@
 IMPLEMENT_NODE(QRevokeEvent, CLogEntry, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextRevokeeventChunk(const SFString& fieldIn, const void *data);
-static SFString nextRevokeeventChunk_custom(const SFString& fieldIn, const void *data);
+static SFString nextRevokeeventChunk(const SFString& fieldIn, const void *dataPtr);
+static SFString nextRevokeeventChunk_custom(const SFString& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void QRevokeEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+void QRevokeEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -30,7 +30,7 @@ void QRevokeEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *data
     }
 
     SFString fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, data))
+    if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
     while (!fmt.empty())
@@ -38,34 +38,12 @@ void QRevokeEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *data
 }
 
 //---------------------------------------------------------------------------
-SFString nextRevokeeventChunk(const SFString& fieldIn, const void *data) {
-    const QRevokeEvent *rev = (const QRevokeEvent *)data;
-    if (rev) {
-        // Give customized code a chance to override first
-#ifdef NEW_CODE
-        SFString ret = rev->getValueByName(fieldIn);
-        if (!ret.empty())
-            return ret;
-#else
-        SFString ret = nextRevokeeventChunk_custom(fieldIn, data);
-        if (!ret.empty())
-            return ret;
+SFString nextRevokeeventChunk(const SFString& fieldIn, const void *dataPtr) {
+    if (dataPtr)
+        return ((const QRevokeEvent *)dataPtr)->getValueByName(fieldIn);
 
-        switch (tolower(fieldIn[0])) {
-            case 'o':
-                if ( fieldIn % "owner" ) return fromAddress(rev->owner);
-                if ( fieldIn % "operation" ) return rev->operation;
-                break;
-        }
-#endif
-        // EXISTING_CODE
-        // EXISTING_CODE
-
-        // Finally, give the parent class a chance
-        ret = nextLogentryChunk(fieldIn, rev);
-        if (!ret.empty())
-            return ret;
-    }
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return fldNotFound(fieldIn);
 }
@@ -141,8 +119,8 @@ void QRevokeEvent::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextRevokeeventChunk_custom(const SFString& fieldIn, const void *data) {
-    const QRevokeEvent *rev = (const QRevokeEvent *)data;
+SFString nextRevokeeventChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+    const QRevokeEvent *rev = (const QRevokeEvent *)dataPtr;
     if (rev) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -162,7 +140,7 @@ SFString nextRevokeeventChunk_custom(const SFString& fieldIn, const void *data) 
 }
 
 //---------------------------------------------------------------------------
-bool QRevokeEvent::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+bool QRevokeEvent::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
@@ -178,25 +156,25 @@ bool QRevokeEvent::readBackLevel(SFArchive& archive) {
 
 //---------------------------------------------------------------------------
 SFString QRevokeEvent::getValueByName(const SFString& fieldName) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
 
-#ifdef NEW_CODE
     // Give customized code a chance to override first
     SFString ret = nextRevokeeventChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
+    // If the class has any fields, return them
     switch (tolower(fieldName[0])) {
         case 'o':
             if ( fieldName % "owner" ) return fromAddress(owner);
             if ( fieldName % "operation" ) return operation;
             break;
     }
-    return "";
-#else
-    return Format("[{"+toUpper(fieldName)+"}]");
-#endif
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CLogEntry::getValueByName(fieldName);
 }
 
 //---------------------------------------------------------------------------

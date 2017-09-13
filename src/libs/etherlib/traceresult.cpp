@@ -18,11 +18,11 @@ namespace qblocks {
 IMPLEMENT_NODE(CTraceResult, CBaseNode, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextTraceresultChunk(const SFString& fieldIn, const void *data);
-static SFString nextTraceresultChunk_custom(const SFString& fieldIn, const void *data);
+static SFString nextTraceresultChunk(const SFString& fieldIn, const void *dataPtr);
+static SFString nextTraceresultChunk_custom(const SFString& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CTraceResult::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+void CTraceResult::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -32,7 +32,7 @@ void CTraceResult::Format(CExportContext& ctx, const SFString& fmtIn, void *data
     }
 
     SFString fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, data))
+    if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
     while (!fmt.empty())
@@ -40,36 +40,12 @@ void CTraceResult::Format(CExportContext& ctx, const SFString& fmtIn, void *data
 }
 
 //---------------------------------------------------------------------------
-SFString nextTraceresultChunk(const SFString& fieldIn, const void *data) {
-    const CTraceResult *tra = (const CTraceResult *)data;
-    if (tra) {
-        // Give customized code a chance to override first
-#ifdef NEW_CODE
-        SFString ret = tra->getValueByName(fieldIn);
-        if (!ret.empty())
-            return ret;
-#else
-        SFString ret = nextTraceresultChunk_custom(fieldIn, data);
-        if (!ret.empty())
-            return ret;
+SFString nextTraceresultChunk(const SFString& fieldIn, const void *dataPtr) {
+    if (dataPtr)
+        return ((const CTraceResult *)dataPtr)->getValueByName(fieldIn);
 
-        switch (tolower(fieldIn[0])) {
-            case 'g':
-                if ( fieldIn % "gasUsed" ) return fromGas(tra->gasUsed);
-                break;
-            case 'o':
-                if ( fieldIn % "output" ) return tra->output;
-                break;
-        }
-#endif
-        // EXISTING_CODE
-        // EXISTING_CODE
-
-        // Finally, give the parent class a chance
-        ret = nextBasenodeChunk(fieldIn, tra);
-        if (!ret.empty())
-            return ret;
-    }
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return fldNotFound(fieldIn);
 }
@@ -144,8 +120,8 @@ void CTraceResult::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextTraceresultChunk_custom(const SFString& fieldIn, const void *data) {
-    const CTraceResult *tra = (const CTraceResult *)data;
+SFString nextTraceresultChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+    const CTraceResult *tra = (const CTraceResult *)dataPtr;
     if (tra) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -165,7 +141,7 @@ SFString nextTraceresultChunk_custom(const SFString& fieldIn, const void *data) 
 }
 
 //---------------------------------------------------------------------------
-bool CTraceResult::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+bool CTraceResult::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
@@ -193,15 +169,13 @@ SFArchive& operator>>(SFArchive& archive, CTraceResult& tra) {
 
 //---------------------------------------------------------------------------
 SFString CTraceResult::getValueByName(const SFString& fieldName) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
 
-#ifdef NEW_CODE
     // Give customized code a chance to override first
     SFString ret = nextTraceresultChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
+    // If the class has any fields, return them
     switch (tolower(fieldName[0])) {
         case 'g':
             if ( fieldName % "gasUsed" ) return fromGas(gasUsed);
@@ -210,10 +184,12 @@ SFString CTraceResult::getValueByName(const SFString& fieldName) const {
             if ( fieldName % "output" ) return output;
             break;
     }
-    return "";
-#else
-    return Format("[{"+toUpper(fieldName)+"}]");
-#endif
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CBaseNode::getValueByName(fieldName);
 }
 
 //---------------------------------------------------------------------------

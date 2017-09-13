@@ -39,8 +39,8 @@ public:
     SFAddress from;
     SFAddress to;
     SFWei value;
-    SFUint32 gas;
-    SFUint32 gasPrice;
+    SFGas gas;
+    SFGas gasPrice;
     SFWei cumulativeGasUsed;
     SFString input;
     SFUint32 isError;

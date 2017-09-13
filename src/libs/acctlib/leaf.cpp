@@ -18,11 +18,11 @@ namespace qblocks {
 IMPLEMENT_NODE(CLeaf, CTreeNode, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextLeafChunk(const SFString& fieldIn, const void *data);
-static SFString nextLeafChunk_custom(const SFString& fieldIn, const void *data);
+static SFString nextLeafChunk(const SFString& fieldIn, const void *dataPtr);
+static SFString nextLeafChunk_custom(const SFString& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CLeaf::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+void CLeaf::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -32,7 +32,7 @@ void CLeaf::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const
     }
 
     SFString fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, data))
+    if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
     while (!fmt.empty())
@@ -40,45 +40,12 @@ void CLeaf::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const
 }
 
 //---------------------------------------------------------------------------
-SFString nextLeafChunk(const SFString& fieldIn, const void *data) {
-    const CLeaf *lea = (const CLeaf *)data;
-    if (lea) {
-        // Give customized code a chance to override first
-#ifdef NEW_CODE
-        SFString ret = lea->getValueByName(fieldIn);
-        if (!ret.empty())
-            return ret;
-#else
-        SFString ret = nextLeafChunk_custom(fieldIn, data);
-        if (!ret.empty())
-            return ret;
+SFString nextLeafChunk(const SFString& fieldIn, const void *dataPtr) {
+    if (dataPtr)
+        return ((const CLeaf *)dataPtr)->getValueByName(fieldIn);
 
-        switch (tolower(fieldIn[0])) {
-            case 'b':
-//                if ( fieldIn % "blocks" ) {
-//                    uint32_t cnt = lea->blocks.getCount();
-//                    if (!cnt) return "";
-//                    SFString retS;
-//                    for (uint32_t i = 0 ; i < cnt ; i++) {
-//                        retS += lea->blocks[i].Format();
-//                        retS += ((i < cnt - 1) ? ",\n" : "\n");
-//                    }
-//                    return retS;
-//                }
-                break;
-            case 'c':
-                if ( fieldIn % "cnt" ) return asStringU(lea->cnt);
-                break;
-        }
-#endif
-        // EXISTING_CODE
-        // EXISTING_CODE
-
-        // Finally, give the parent class a chance
-        ret = nextTreenodeChunk(fieldIn, lea);
-        if (!ret.empty())
-            return ret;
-    }
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return fldNotFound(fieldIn);
 }
@@ -156,8 +123,8 @@ void CLeaf::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextLeafChunk_custom(const SFString& fieldIn, const void *data) {
-    const CLeaf *lea = (const CLeaf *)data;
+SFString nextLeafChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+    const CLeaf *lea = (const CLeaf *)dataPtr;
     if (lea) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -177,7 +144,7 @@ SFString nextLeafChunk_custom(const SFString& fieldIn, const void *data) {
 }
 
 //---------------------------------------------------------------------------
-bool CLeaf::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+bool CLeaf::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
@@ -193,36 +160,36 @@ bool CLeaf::readBackLevel(SFArchive& archive) {
 
 //---------------------------------------------------------------------------
 SFString CLeaf::getValueByName(const SFString& fieldName) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
 
-#ifdef NEW_CODE
     // Give customized code a chance to override first
     SFString ret = nextLeafChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
+    // If the class has any fields, return them
     switch (tolower(fieldName[0])) {
         case 'b':
-//            if ( fieldName % "blocks" ) {
-//                uint32_t cnt = blocks.getCount();
-//                if (!cnt) return "";
-//                SFString retS;
-//                for (uint32_t i = 0 ; i < cnt ; i++) {
-//                    retS += blocks[i].Format();
-//                    retS += ((i < cnt - 1) ? ",\n" : "\n");
-//                }
-//                return retS;
-//            }
+            if ( fieldName % "blocks" ) {
+                uint32_t cnt = blocks.getCount();
+                if (!cnt) return "";
+                SFString retS;
+                for (uint32_t i = 0 ; i < cnt ; i++) {
+                    retS += asStringU(blocks[i]);
+                    retS += ((i < cnt - 1) ? ",\n" : "\n");
+                }
+                return retS;
+            }
             break;
         case 'c':
             if ( fieldName % "cnt" ) return asStringU(cnt);
             break;
     }
-    return "";
-#else
-    return Format("[{"+toUpper(fieldName)+"}]");
-#endif
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CTreeNode::getValueByName(fieldName);
 }
 
 //---------------------------------------------------------------------------

@@ -18,11 +18,11 @@ namespace qblocks {
 IMPLEMENT_NODE(CBalHistory, CBaseNode, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextBalhistoryChunk(const SFString& fieldIn, const void *data);
-static SFString nextBalhistoryChunk_custom(const SFString& fieldIn, const void *data);
+static SFString nextBalhistoryChunk(const SFString& fieldIn, const void *dataPtr);
+static SFString nextBalhistoryChunk_custom(const SFString& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CBalHistory::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+void CBalHistory::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -32,7 +32,7 @@ void CBalHistory::Format(CExportContext& ctx, const SFString& fmtIn, void *data)
     }
 
     SFString fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, data))
+    if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
     while (!fmt.empty())
@@ -40,39 +40,12 @@ void CBalHistory::Format(CExportContext& ctx, const SFString& fmtIn, void *data)
 }
 
 //---------------------------------------------------------------------------
-SFString nextBalhistoryChunk(const SFString& fieldIn, const void *data) {
-    const CBalHistory *bal = (const CBalHistory *)data;
-    if (bal) {
-        // Give customized code a chance to override first
-#ifdef NEW_CODE
-        SFString ret = bal->getValueByName(fieldIn);
-        if (!ret.empty())
-            return ret;
-#else
-        SFString ret = nextBalhistoryChunk_custom(fieldIn, data);
-        if (!ret.empty())
-            return ret;
+SFString nextBalhistoryChunk(const SFString& fieldIn, const void *dataPtr) {
+    if (dataPtr)
+        return ((const CBalHistory *)dataPtr)->getValueByName(fieldIn);
 
-        switch (tolower(fieldIn[0])) {
-            case 'b':
-                if ( fieldIn % "balance" ) return asStringBN(bal->balance);
-                break;
-            case 'r':
-                if ( fieldIn % "recordID" ) return bal->recordID;
-                break;
-            case 't':
-                if ( fieldIn % "txDate" ) return bal->txDate.Format(FMT_JSON);
-                break;
-        }
-#endif
-        // EXISTING_CODE
-        // EXISTING_CODE
-
-        // Finally, give the parent class a chance
-        ret = nextBasenodeChunk(fieldIn, bal);
-        if (!ret.empty())
-            return ret;
-    }
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return fldNotFound(fieldIn);
 }
@@ -153,8 +126,8 @@ void CBalHistory::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextBalhistoryChunk_custom(const SFString& fieldIn, const void *data) {
-    const CBalHistory *bal = (const CBalHistory *)data;
+SFString nextBalhistoryChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+    const CBalHistory *bal = (const CBalHistory *)dataPtr;
     if (bal) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -174,7 +147,7 @@ SFString nextBalhistoryChunk_custom(const SFString& fieldIn, const void *data) {
 }
 
 //---------------------------------------------------------------------------
-bool CBalHistory::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+bool CBalHistory::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
@@ -202,15 +175,13 @@ SFArchive& operator>>(SFArchive& archive, CBalHistory& bal) {
 
 //---------------------------------------------------------------------------
 SFString CBalHistory::getValueByName(const SFString& fieldName) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
 
-#ifdef NEW_CODE
     // Give customized code a chance to override first
     SFString ret = nextBalhistoryChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
+    // If the class has any fields, return them
     switch (tolower(fieldName[0])) {
         case 'b':
             if ( fieldName % "balance" ) return asStringBN(balance);
@@ -222,10 +193,12 @@ SFString CBalHistory::getValueByName(const SFString& fieldName) const {
             if ( fieldName % "txDate" ) return txDate.Format(FMT_JSON);
             break;
     }
-    return "";
-#else
-    return Format("[{"+toUpper(fieldName)+"}]");
-#endif
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CBaseNode::getValueByName(fieldName);
 }
 
 //---------------------------------------------------------------------------

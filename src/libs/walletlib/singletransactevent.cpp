@@ -16,11 +16,11 @@
 IMPLEMENT_NODE(QSingleTransactEvent, CLogEntry, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextSingletransacteventChunk(const SFString& fieldIn, const void *data);
-static SFString nextSingletransacteventChunk_custom(const SFString& fieldIn, const void *data);
+static SFString nextSingletransacteventChunk(const SFString& fieldIn, const void *dataPtr);
+static SFString nextSingletransacteventChunk_custom(const SFString& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void QSingleTransactEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+void QSingleTransactEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -30,7 +30,7 @@ void QSingleTransactEvent::Format(CExportContext& ctx, const SFString& fmtIn, vo
     }
 
     SFString fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, data))
+    if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
     while (!fmt.empty())
@@ -38,42 +38,12 @@ void QSingleTransactEvent::Format(CExportContext& ctx, const SFString& fmtIn, vo
 }
 
 //---------------------------------------------------------------------------
-SFString nextSingletransacteventChunk(const SFString& fieldIn, const void *data) {
-    const QSingleTransactEvent *sin = (const QSingleTransactEvent *)data;
-    if (sin) {
-        // Give customized code a chance to override first
-#ifdef NEW_CODE
-        SFString ret = sin->getValueByName(fieldIn);
-        if (!ret.empty())
-            return ret;
-#else
-        SFString ret = nextSingletransacteventChunk_custom(fieldIn, data);
-        if (!ret.empty())
-            return ret;
+SFString nextSingletransacteventChunk(const SFString& fieldIn, const void *dataPtr) {
+    if (dataPtr)
+        return ((const QSingleTransactEvent *)dataPtr)->getValueByName(fieldIn);
 
-        switch (tolower(fieldIn[0])) {
-            case 'd':
-                if ( fieldIn % "data" ) return sin->data;
-                break;
-            case 'o':
-                if ( fieldIn % "owner" ) return fromAddress(sin->owner);
-                break;
-            case 't':
-                if ( fieldIn % "to" ) return fromAddress(sin->to);
-                break;
-            case 'v':
-                if ( fieldIn % "value" ) return asStringBN(sin->value);
-                break;
-        }
-#endif
-        // EXISTING_CODE
-        // EXISTING_CODE
-
-        // Finally, give the parent class a chance
-        ret = nextLogentryChunk(fieldIn, sin);
-        if (!ret.empty())
-            return ret;
-    }
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return fldNotFound(fieldIn);
 }
@@ -163,8 +133,8 @@ void QSingleTransactEvent::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextSingletransacteventChunk_custom(const SFString& fieldIn, const void *data) {
-    const QSingleTransactEvent *sin = (const QSingleTransactEvent *)data;
+SFString nextSingletransacteventChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+    const QSingleTransactEvent *sin = (const QSingleTransactEvent *)dataPtr;
     if (sin) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -184,7 +154,7 @@ SFString nextSingletransacteventChunk_custom(const SFString& fieldIn, const void
 }
 
 //---------------------------------------------------------------------------
-bool QSingleTransactEvent::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+bool QSingleTransactEvent::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
@@ -200,15 +170,13 @@ bool QSingleTransactEvent::readBackLevel(SFArchive& archive) {
 
 //---------------------------------------------------------------------------
 SFString QSingleTransactEvent::getValueByName(const SFString& fieldName) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
 
-#ifdef NEW_CODE
     // Give customized code a chance to override first
     SFString ret = nextSingletransacteventChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
+    // If the class has any fields, return them
     switch (tolower(fieldName[0])) {
         case 'd':
             if ( fieldName % "data" ) return data;
@@ -223,10 +191,12 @@ SFString QSingleTransactEvent::getValueByName(const SFString& fieldName) const {
             if ( fieldName % "value" ) return asStringBN(value);
             break;
     }
-    return "";
-#else
-    return Format("[{"+toUpper(fieldName)+"}]");
-#endif
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CLogEntry::getValueByName(fieldName);
 }
 
 //---------------------------------------------------------------------------

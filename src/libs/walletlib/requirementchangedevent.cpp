@@ -16,11 +16,11 @@
 IMPLEMENT_NODE(QRequirementChangedEvent, CLogEntry, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextRequirementchangedeventChunk(const SFString& fieldIn, const void *data);
-static SFString nextRequirementchangedeventChunk_custom(const SFString& fieldIn, const void *data);
+static SFString nextRequirementchangedeventChunk(const SFString& fieldIn, const void *dataPtr);
+static SFString nextRequirementchangedeventChunk_custom(const SFString& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void QRequirementChangedEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+void QRequirementChangedEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -30,7 +30,7 @@ void QRequirementChangedEvent::Format(CExportContext& ctx, const SFString& fmtIn
     }
 
     SFString fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, data))
+    if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
     while (!fmt.empty())
@@ -38,33 +38,12 @@ void QRequirementChangedEvent::Format(CExportContext& ctx, const SFString& fmtIn
 }
 
 //---------------------------------------------------------------------------
-SFString nextRequirementchangedeventChunk(const SFString& fieldIn, const void *data) {
-    const QRequirementChangedEvent *req = (const QRequirementChangedEvent *)data;
-    if (req) {
-        // Give customized code a chance to override first
-#ifdef NEW_CODE
-        SFString ret = req->getValueByName(fieldIn);
-        if (!ret.empty())
-            return ret;
-#else
-        SFString ret = nextRequirementchangedeventChunk_custom(fieldIn, data);
-        if (!ret.empty())
-            return ret;
+SFString nextRequirementchangedeventChunk(const SFString& fieldIn, const void *dataPtr) {
+    if (dataPtr)
+        return ((const QRequirementChangedEvent *)dataPtr)->getValueByName(fieldIn);
 
-        switch (tolower(fieldIn[0])) {
-            case 'n':
-                if ( fieldIn % "newRequirement" ) return asStringBN(req->newRequirement);
-                break;
-        }
-#endif
-        // EXISTING_CODE
-        // EXISTING_CODE
-
-        // Finally, give the parent class a chance
-        ret = nextLogentryChunk(fieldIn, req);
-        if (!ret.empty())
-            return ret;
-    }
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return fldNotFound(fieldIn);
 }
@@ -136,8 +115,8 @@ void QRequirementChangedEvent::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextRequirementchangedeventChunk_custom(const SFString& fieldIn, const void *data) {
-    const QRequirementChangedEvent *req = (const QRequirementChangedEvent *)data;
+SFString nextRequirementchangedeventChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+    const QRequirementChangedEvent *req = (const QRequirementChangedEvent *)dataPtr;
     if (req) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -157,7 +136,7 @@ SFString nextRequirementchangedeventChunk_custom(const SFString& fieldIn, const 
 }
 
 //---------------------------------------------------------------------------
-bool QRequirementChangedEvent::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+bool QRequirementChangedEvent::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
@@ -173,24 +152,24 @@ bool QRequirementChangedEvent::readBackLevel(SFArchive& archive) {
 
 //---------------------------------------------------------------------------
 SFString QRequirementChangedEvent::getValueByName(const SFString& fieldName) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
 
-#ifdef NEW_CODE
     // Give customized code a chance to override first
     SFString ret = nextRequirementchangedeventChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
+    // If the class has any fields, return them
     switch (tolower(fieldName[0])) {
         case 'n':
             if ( fieldName % "newRequirement" ) return asStringBN(newRequirement);
             break;
     }
-    return "";
-#else
-    return Format("[{"+toUpper(fieldName)+"}]");
-#endif
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CLogEntry::getValueByName(fieldName);
 }
 
 //---------------------------------------------------------------------------
