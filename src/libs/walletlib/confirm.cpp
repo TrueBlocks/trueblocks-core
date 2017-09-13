@@ -16,11 +16,11 @@
 IMPLEMENT_NODE(QConfirm, CTransaction, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextConfirmChunk(const SFString& fieldIn, const void *data);
-static SFString nextConfirmChunk_custom(const SFString& fieldIn, const void *data);
+static SFString nextConfirmChunk(const SFString& fieldIn, const void *dataPtr);
+static SFString nextConfirmChunk_custom(const SFString& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void QConfirm::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+void QConfirm::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -30,7 +30,7 @@ void QConfirm::Format(CExportContext& ctx, const SFString& fmtIn, void *data) co
     }
 
     SFString fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, data))
+    if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
     while (!fmt.empty())
@@ -38,33 +38,12 @@ void QConfirm::Format(CExportContext& ctx, const SFString& fmtIn, void *data) co
 }
 
 //---------------------------------------------------------------------------
-SFString nextConfirmChunk(const SFString& fieldIn, const void *data) {
-    const QConfirm *con = (const QConfirm *)data;
-    if (con) {
-        // Give customized code a chance to override first
-#ifdef NEW_CODE
-        SFString ret = con->getValueByName(fieldIn);
-        if (!ret.empty())
-            return ret;
-#else
-        SFString ret = nextConfirmChunk_custom(fieldIn, data);
-        if (!ret.empty())
-            return ret;
+SFString nextConfirmChunk(const SFString& fieldIn, const void *dataPtr) {
+    if (dataPtr)
+        return ((const QConfirm *)dataPtr)->getValueByName(fieldIn);
 
-        switch (tolower(fieldIn[0])) {
-            case '_':
-                if ( fieldIn % "_h" ) return con->_h;
-                break;
-        }
-#endif
-        // EXISTING_CODE
-        // EXISTING_CODE
-
-        // Finally, give the parent class a chance
-        ret = nextTransactionChunk(fieldIn, con);
-        if (!ret.empty())
-            return ret;
-    }
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return fldNotFound(fieldIn);
 }
@@ -136,8 +115,8 @@ void QConfirm::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextConfirmChunk_custom(const SFString& fieldIn, const void *data) {
-    const QConfirm *con = (const QConfirm *)data;
+SFString nextConfirmChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+    const QConfirm *con = (const QConfirm *)dataPtr;
     if (con) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -157,7 +136,7 @@ SFString nextConfirmChunk_custom(const SFString& fieldIn, const void *data) {
 }
 
 //---------------------------------------------------------------------------
-bool QConfirm::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+bool QConfirm::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
@@ -173,24 +152,24 @@ bool QConfirm::readBackLevel(SFArchive& archive) {
 
 //---------------------------------------------------------------------------
 SFString QConfirm::getValueByName(const SFString& fieldName) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
 
-#ifdef NEW_CODE
     // Give customized code a chance to override first
     SFString ret = nextConfirmChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
+    // If the class has any fields, return them
     switch (tolower(fieldName[0])) {
         case '_':
             if ( fieldName % "_h" ) return _h;
             break;
     }
-    return "";
-#else
-    return Format("[{"+toUpper(fieldName)+"}]");
-#endif
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CTransaction::getValueByName(fieldName);
 }
 
 //---------------------------------------------------------------------------

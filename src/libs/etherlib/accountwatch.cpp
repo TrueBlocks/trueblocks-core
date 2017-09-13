@@ -18,11 +18,11 @@ namespace qblocks {
 IMPLEMENT_NODE(CAccountWatch, CBaseNode, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextAccountwatchChunk(const SFString& fieldIn, const void *data);
-static SFString nextAccountwatchChunk_custom(const SFString& fieldIn, const void *data);
+static SFString nextAccountwatchChunk(const SFString& fieldIn, const void *dataPtr);
+static SFString nextAccountwatchChunk_custom(const SFString& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CAccountWatch::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+void CAccountWatch::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -32,7 +32,7 @@ void CAccountWatch::Format(CExportContext& ctx, const SFString& fmtIn, void *dat
     }
 
     SFString fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, data))
+    if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
     while (!fmt.empty())
@@ -40,68 +40,12 @@ void CAccountWatch::Format(CExportContext& ctx, const SFString& fmtIn, void *dat
 }
 
 //---------------------------------------------------------------------------
-SFString nextAccountwatchChunk(const SFString& fieldIn, const void *data) {
-    const CAccountWatch *acc = (const CAccountWatch *)data;
-    if (acc) {
-        // Give customized code a chance to override first
-#ifdef NEW_CODE
-        SFString ret = acc->getValueByName(fieldIn);
-        if (!ret.empty())
-            return ret;
-#else
-        SFString ret = nextAccountwatchChunk_custom(fieldIn, data);
-        if (!ret.empty())
-            return ret;
+SFString nextAccountwatchChunk(const SFString& fieldIn, const void *dataPtr) {
+    if (dataPtr)
+        return ((const CAccountWatch *)dataPtr)->getValueByName(fieldIn);
 
-        switch (tolower(fieldIn[0])) {
-            case 'a':
-                if ( fieldIn % "address" ) return fromAddress(acc->address);
-                break;
-            case 'c':
-                if ( fieldIn % "color" ) return acc->color;
-                break;
-            case 'd':
-                if ( fieldIn % "deepScan" ) return asString(acc->deepScan);
-                break;
-            case 'f':
-                if ( fieldIn % "firstBlock" ) return asStringU(acc->firstBlock);
-                break;
-            case 'i':
-                if ( fieldIn % "index" ) return asStringU(acc->index);
-                break;
-            case 'l':
-                if ( fieldIn % "lastBlock" ) return asStringU(acc->lastBlock);
-                break;
-            case 'n':
-                if ( fieldIn % "name" ) return acc->name;
-                if ( fieldIn % "nodeBal" ) return fromWei(acc->nodeBal);
-                break;
-            case 'q':
-                if ( fieldIn % "qbis" ) { expContext().noFrst=true; return acc->qbis.Format(); }
-                break;
-            case 's':
-                if ( fieldIn % "status" ) return acc->status;
-                break;
-        }
-#endif
-        // EXISTING_CODE
-        // EXISTING_CODE
-
-        // Finally, give the parent class a chance
-        ret = nextBasenodeChunk(fieldIn, acc);
-        if (!ret.empty())
-            return ret;
-    }
-
-    SFString s;
-    s = toUpper(SFString("qbis")) + "::";
-    if (fieldIn.Contains(s)) {
-        SFString f = fieldIn;
-        f.ReplaceAll(s,"");
-        if (acc)
-            f = acc->qbis.Format("[{"+f+"}]");
-        return f;
-    }
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return fldNotFound(fieldIn);
 }
@@ -232,8 +176,8 @@ void CAccountWatch::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextAccountwatchChunk_custom(const SFString& fieldIn, const void *data) {
-    const CAccountWatch *acc = (const CAccountWatch *)data;
+SFString nextAccountwatchChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+    const CAccountWatch *acc = (const CAccountWatch *)dataPtr;
     if (acc) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -253,7 +197,7 @@ SFString nextAccountwatchChunk_custom(const SFString& fieldIn, const void *data)
 }
 
 //---------------------------------------------------------------------------
-bool CAccountWatch::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+bool CAccountWatch::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
@@ -269,15 +213,13 @@ bool CAccountWatch::readBackLevel(SFArchive& archive) {
 
 //---------------------------------------------------------------------------
 SFString CAccountWatch::getValueByName(const SFString& fieldName) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
 
-#ifdef NEW_CODE
     // Give customized code a chance to override first
     SFString ret = nextAccountwatchChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
+    // If the class has any fields, return them
     switch (tolower(fieldName[0])) {
         case 'a':
             if ( fieldName % "address" ) return fromAddress(address);
@@ -308,10 +250,21 @@ SFString CAccountWatch::getValueByName(const SFString& fieldName) const {
             if ( fieldName % "status" ) return status;
             break;
     }
-    return "";
-#else
-    return Format("[{"+toUpper(fieldName)+"}]");
-#endif
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    SFString s;
+    s = toUpper(SFString("qbis")) + "::";
+    if (fieldName.Contains(s)) {
+        SFString f = fieldName;
+        f.ReplaceAll(s,"");
+        f = qbis.getValueByName(f);
+        return f;
+    }
+
+    // Finally, give the parent class a chance
+    return CBaseNode::getValueByName(fieldName);
 }
 
 //---------------------------------------------------------------------------

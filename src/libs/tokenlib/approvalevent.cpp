@@ -16,11 +16,11 @@
 IMPLEMENT_NODE(QApprovalEvent, CLogEntry, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextApprovaleventChunk(const SFString& fieldIn, const void *data);
-static SFString nextApprovaleventChunk_custom(const SFString& fieldIn, const void *data);
+static SFString nextApprovaleventChunk(const SFString& fieldIn, const void *dataPtr);
+static SFString nextApprovaleventChunk_custom(const SFString& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void QApprovalEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+void QApprovalEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -30,7 +30,7 @@ void QApprovalEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *da
     }
 
     SFString fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, data))
+    if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
     while (!fmt.empty())
@@ -38,35 +38,12 @@ void QApprovalEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *da
 }
 
 //---------------------------------------------------------------------------
-SFString nextApprovaleventChunk(const SFString& fieldIn, const void *data) {
-    const QApprovalEvent *app = (const QApprovalEvent *)data;
-    if (app) {
-        // Give customized code a chance to override first
-#ifdef NEW_CODE
-        SFString ret = app->getValueByName(fieldIn);
-        if (!ret.empty())
-            return ret;
-#else
-        SFString ret = nextApprovaleventChunk_custom(fieldIn, data);
-        if (!ret.empty())
-            return ret;
+SFString nextApprovaleventChunk(const SFString& fieldIn, const void *dataPtr) {
+    if (dataPtr)
+        return ((const QApprovalEvent *)dataPtr)->getValueByName(fieldIn);
 
-        switch (tolower(fieldIn[0])) {
-            case '_':
-                if ( fieldIn % "_owner" ) return fromAddress(app->_owner);
-                if ( fieldIn % "_spender" ) return fromAddress(app->_spender);
-                if ( fieldIn % "_value" ) return asStringBN(app->_value);
-                break;
-        }
-#endif
-        // EXISTING_CODE
-        // EXISTING_CODE
-
-        // Finally, give the parent class a chance
-        ret = nextLogentryChunk(fieldIn, app);
-        if (!ret.empty())
-            return ret;
-    }
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return fldNotFound(fieldIn);
 }
@@ -146,8 +123,8 @@ void QApprovalEvent::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextApprovaleventChunk_custom(const SFString& fieldIn, const void *data) {
-    const QApprovalEvent *app = (const QApprovalEvent *)data;
+SFString nextApprovaleventChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+    const QApprovalEvent *app = (const QApprovalEvent *)dataPtr;
     if (app) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -167,7 +144,7 @@ SFString nextApprovaleventChunk_custom(const SFString& fieldIn, const void *data
 }
 
 //---------------------------------------------------------------------------
-bool QApprovalEvent::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+bool QApprovalEvent::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
@@ -183,15 +160,13 @@ bool QApprovalEvent::readBackLevel(SFArchive& archive) {
 
 //---------------------------------------------------------------------------
 SFString QApprovalEvent::getValueByName(const SFString& fieldName) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
 
-#ifdef NEW_CODE
     // Give customized code a chance to override first
     SFString ret = nextApprovaleventChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
+    // If the class has any fields, return them
     switch (tolower(fieldName[0])) {
         case '_':
             if ( fieldName % "_owner" ) return fromAddress(_owner);
@@ -199,10 +174,12 @@ SFString QApprovalEvent::getValueByName(const SFString& fieldName) const {
             if ( fieldName % "_value" ) return asStringBN(_value);
             break;
     }
-    return "";
-#else
-    return Format("[{"+toUpper(fieldName)+"}]");
-#endif
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CLogEntry::getValueByName(fieldName);
 }
 
 //---------------------------------------------------------------------------

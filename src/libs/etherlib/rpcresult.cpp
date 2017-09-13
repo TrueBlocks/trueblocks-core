@@ -18,11 +18,11 @@ namespace qblocks {
 IMPLEMENT_NODE(CRPCResult, CBaseNode, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextRpcresultChunk(const SFString& fieldIn, const void *data);
-static SFString nextRpcresultChunk_custom(const SFString& fieldIn, const void *data);
+static SFString nextRpcresultChunk(const SFString& fieldIn, const void *dataPtr);
+static SFString nextRpcresultChunk_custom(const SFString& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CRPCResult::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+void CRPCResult::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -32,7 +32,7 @@ void CRPCResult::Format(CExportContext& ctx, const SFString& fmtIn, void *data) 
     }
 
     SFString fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, data))
+    if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
     while (!fmt.empty())
@@ -40,39 +40,12 @@ void CRPCResult::Format(CExportContext& ctx, const SFString& fmtIn, void *data) 
 }
 
 //---------------------------------------------------------------------------
-SFString nextRpcresultChunk(const SFString& fieldIn, const void *data) {
-    const CRPCResult *rpc = (const CRPCResult *)data;
-    if (rpc) {
-        // Give customized code a chance to override first
-#ifdef NEW_CODE
-        SFString ret = rpc->getValueByName(fieldIn);
-        if (!ret.empty())
-            return ret;
-#else
-        SFString ret = nextRpcresultChunk_custom(fieldIn, data);
-        if (!ret.empty())
-            return ret;
+SFString nextRpcresultChunk(const SFString& fieldIn, const void *dataPtr) {
+    if (dataPtr)
+        return ((const CRPCResult *)dataPtr)->getValueByName(fieldIn);
 
-        switch (tolower(fieldIn[0])) {
-            case 'i':
-                if ( fieldIn % "id" ) return rpc->id;
-                break;
-            case 'j':
-                if ( fieldIn % "jsonrpc" ) return rpc->jsonrpc;
-                break;
-            case 'r':
-                if ( fieldIn % "result" ) return rpc->result;
-                break;
-        }
-#endif
-        // EXISTING_CODE
-        // EXISTING_CODE
-
-        // Finally, give the parent class a chance
-        ret = nextBasenodeChunk(fieldIn, rpc);
-        if (!ret.empty())
-            return ret;
-    }
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return fldNotFound(fieldIn);
 }
@@ -153,8 +126,8 @@ void CRPCResult::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextRpcresultChunk_custom(const SFString& fieldIn, const void *data) {
-    const CRPCResult *rpc = (const CRPCResult *)data;
+SFString nextRpcresultChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+    const CRPCResult *rpc = (const CRPCResult *)dataPtr;
     if (rpc) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -174,7 +147,7 @@ SFString nextRpcresultChunk_custom(const SFString& fieldIn, const void *data) {
 }
 
 //---------------------------------------------------------------------------
-bool CRPCResult::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+bool CRPCResult::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
@@ -190,15 +163,13 @@ bool CRPCResult::readBackLevel(SFArchive& archive) {
 
 //---------------------------------------------------------------------------
 SFString CRPCResult::getValueByName(const SFString& fieldName) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
 
-#ifdef NEW_CODE
     // Give customized code a chance to override first
     SFString ret = nextRpcresultChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
+    // If the class has any fields, return them
     switch (tolower(fieldName[0])) {
         case 'i':
             if ( fieldName % "id" ) return id;
@@ -210,10 +181,12 @@ SFString CRPCResult::getValueByName(const SFString& fieldName) const {
             if ( fieldName % "result" ) return result;
             break;
     }
-    return "";
-#else
-    return Format("[{"+toUpper(fieldName)+"}]");
-#endif
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CBaseNode::getValueByName(fieldName);
 }
 
 //---------------------------------------------------------------------------

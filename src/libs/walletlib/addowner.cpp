@@ -16,11 +16,11 @@
 IMPLEMENT_NODE(QAddOwner, CTransaction, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextAddownerChunk(const SFString& fieldIn, const void *data);
-static SFString nextAddownerChunk_custom(const SFString& fieldIn, const void *data);
+static SFString nextAddownerChunk(const SFString& fieldIn, const void *dataPtr);
+static SFString nextAddownerChunk_custom(const SFString& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void QAddOwner::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+void QAddOwner::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -30,7 +30,7 @@ void QAddOwner::Format(CExportContext& ctx, const SFString& fmtIn, void *data) c
     }
 
     SFString fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, data))
+    if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
     while (!fmt.empty())
@@ -38,33 +38,12 @@ void QAddOwner::Format(CExportContext& ctx, const SFString& fmtIn, void *data) c
 }
 
 //---------------------------------------------------------------------------
-SFString nextAddownerChunk(const SFString& fieldIn, const void *data) {
-    const QAddOwner *add = (const QAddOwner *)data;
-    if (add) {
-        // Give customized code a chance to override first
-#ifdef NEW_CODE
-        SFString ret = add->getValueByName(fieldIn);
-        if (!ret.empty())
-            return ret;
-#else
-        SFString ret = nextAddownerChunk_custom(fieldIn, data);
-        if (!ret.empty())
-            return ret;
+SFString nextAddownerChunk(const SFString& fieldIn, const void *dataPtr) {
+    if (dataPtr)
+        return ((const QAddOwner *)dataPtr)->getValueByName(fieldIn);
 
-        switch (tolower(fieldIn[0])) {
-            case '_':
-                if ( fieldIn % "_owner" ) return fromAddress(add->_owner);
-                break;
-        }
-#endif
-        // EXISTING_CODE
-        // EXISTING_CODE
-
-        // Finally, give the parent class a chance
-        ret = nextTransactionChunk(fieldIn, add);
-        if (!ret.empty())
-            return ret;
-    }
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return fldNotFound(fieldIn);
 }
@@ -136,8 +115,8 @@ void QAddOwner::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextAddownerChunk_custom(const SFString& fieldIn, const void *data) {
-    const QAddOwner *add = (const QAddOwner *)data;
+SFString nextAddownerChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+    const QAddOwner *add = (const QAddOwner *)dataPtr;
     if (add) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -157,7 +136,7 @@ SFString nextAddownerChunk_custom(const SFString& fieldIn, const void *data) {
 }
 
 //---------------------------------------------------------------------------
-bool QAddOwner::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+bool QAddOwner::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
@@ -173,24 +152,24 @@ bool QAddOwner::readBackLevel(SFArchive& archive) {
 
 //---------------------------------------------------------------------------
 SFString QAddOwner::getValueByName(const SFString& fieldName) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
 
-#ifdef NEW_CODE
     // Give customized code a chance to override first
     SFString ret = nextAddownerChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
+    // If the class has any fields, return them
     switch (tolower(fieldName[0])) {
         case '_':
             if ( fieldName % "_owner" ) return fromAddress(_owner);
             break;
     }
-    return "";
-#else
-    return Format("[{"+toUpper(fieldName)+"}]");
-#endif
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CTransaction::getValueByName(fieldName);
 }
 
 //---------------------------------------------------------------------------

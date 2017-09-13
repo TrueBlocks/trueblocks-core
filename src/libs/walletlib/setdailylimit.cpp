@@ -16,11 +16,11 @@
 IMPLEMENT_NODE(QSetDailyLimit, CTransaction, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextSetdailylimitChunk(const SFString& fieldIn, const void *data);
-static SFString nextSetdailylimitChunk_custom(const SFString& fieldIn, const void *data);
+static SFString nextSetdailylimitChunk(const SFString& fieldIn, const void *dataPtr);
+static SFString nextSetdailylimitChunk_custom(const SFString& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void QSetDailyLimit::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+void QSetDailyLimit::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -30,7 +30,7 @@ void QSetDailyLimit::Format(CExportContext& ctx, const SFString& fmtIn, void *da
     }
 
     SFString fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, data))
+    if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
     while (!fmt.empty())
@@ -38,33 +38,12 @@ void QSetDailyLimit::Format(CExportContext& ctx, const SFString& fmtIn, void *da
 }
 
 //---------------------------------------------------------------------------
-SFString nextSetdailylimitChunk(const SFString& fieldIn, const void *data) {
-    const QSetDailyLimit *set = (const QSetDailyLimit *)data;
-    if (set) {
-        // Give customized code a chance to override first
-#ifdef NEW_CODE
-        SFString ret = set->getValueByName(fieldIn);
-        if (!ret.empty())
-            return ret;
-#else
-        SFString ret = nextSetdailylimitChunk_custom(fieldIn, data);
-        if (!ret.empty())
-            return ret;
+SFString nextSetdailylimitChunk(const SFString& fieldIn, const void *dataPtr) {
+    if (dataPtr)
+        return ((const QSetDailyLimit *)dataPtr)->getValueByName(fieldIn);
 
-        switch (tolower(fieldIn[0])) {
-            case '_':
-                if ( fieldIn % "_newLimit" ) return asStringBN(set->_newLimit);
-                break;
-        }
-#endif
-        // EXISTING_CODE
-        // EXISTING_CODE
-
-        // Finally, give the parent class a chance
-        ret = nextTransactionChunk(fieldIn, set);
-        if (!ret.empty())
-            return ret;
-    }
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return fldNotFound(fieldIn);
 }
@@ -136,8 +115,8 @@ void QSetDailyLimit::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextSetdailylimitChunk_custom(const SFString& fieldIn, const void *data) {
-    const QSetDailyLimit *set = (const QSetDailyLimit *)data;
+SFString nextSetdailylimitChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+    const QSetDailyLimit *set = (const QSetDailyLimit *)dataPtr;
     if (set) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -157,7 +136,7 @@ SFString nextSetdailylimitChunk_custom(const SFString& fieldIn, const void *data
 }
 
 //---------------------------------------------------------------------------
-bool QSetDailyLimit::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+bool QSetDailyLimit::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
@@ -173,24 +152,24 @@ bool QSetDailyLimit::readBackLevel(SFArchive& archive) {
 
 //---------------------------------------------------------------------------
 SFString QSetDailyLimit::getValueByName(const SFString& fieldName) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
 
-#ifdef NEW_CODE
     // Give customized code a chance to override first
     SFString ret = nextSetdailylimitChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
+    // If the class has any fields, return them
     switch (tolower(fieldName[0])) {
         case '_':
             if ( fieldName % "_newLimit" ) return asStringBN(_newLimit);
             break;
     }
-    return "";
-#else
-    return Format("[{"+toUpper(fieldName)+"}]");
-#endif
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CTransaction::getValueByName(fieldName);
 }
 
 //---------------------------------------------------------------------------

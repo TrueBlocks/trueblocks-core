@@ -16,11 +16,11 @@
 IMPLEMENT_NODE(QOwnerAddedEvent, CLogEntry, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextOwneraddedeventChunk(const SFString& fieldIn, const void *data);
-static SFString nextOwneraddedeventChunk_custom(const SFString& fieldIn, const void *data);
+static SFString nextOwneraddedeventChunk(const SFString& fieldIn, const void *dataPtr);
+static SFString nextOwneraddedeventChunk_custom(const SFString& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void QOwnerAddedEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+void QOwnerAddedEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -30,7 +30,7 @@ void QOwnerAddedEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *
     }
 
     SFString fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, data))
+    if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
     while (!fmt.empty())
@@ -38,33 +38,12 @@ void QOwnerAddedEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *
 }
 
 //---------------------------------------------------------------------------
-SFString nextOwneraddedeventChunk(const SFString& fieldIn, const void *data) {
-    const QOwnerAddedEvent *own = (const QOwnerAddedEvent *)data;
-    if (own) {
-        // Give customized code a chance to override first
-#ifdef NEW_CODE
-        SFString ret = own->getValueByName(fieldIn);
-        if (!ret.empty())
-            return ret;
-#else
-        SFString ret = nextOwneraddedeventChunk_custom(fieldIn, data);
-        if (!ret.empty())
-            return ret;
+SFString nextOwneraddedeventChunk(const SFString& fieldIn, const void *dataPtr) {
+    if (dataPtr)
+        return ((const QOwnerAddedEvent *)dataPtr)->getValueByName(fieldIn);
 
-        switch (tolower(fieldIn[0])) {
-            case 'n':
-                if ( fieldIn % "newOwner" ) return fromAddress(own->newOwner);
-                break;
-        }
-#endif
-        // EXISTING_CODE
-        // EXISTING_CODE
-
-        // Finally, give the parent class a chance
-        ret = nextLogentryChunk(fieldIn, own);
-        if (!ret.empty())
-            return ret;
-    }
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return fldNotFound(fieldIn);
 }
@@ -136,8 +115,8 @@ void QOwnerAddedEvent::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextOwneraddedeventChunk_custom(const SFString& fieldIn, const void *data) {
-    const QOwnerAddedEvent *own = (const QOwnerAddedEvent *)data;
+SFString nextOwneraddedeventChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+    const QOwnerAddedEvent *own = (const QOwnerAddedEvent *)dataPtr;
     if (own) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -157,7 +136,7 @@ SFString nextOwneraddedeventChunk_custom(const SFString& fieldIn, const void *da
 }
 
 //---------------------------------------------------------------------------
-bool QOwnerAddedEvent::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+bool QOwnerAddedEvent::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
@@ -173,24 +152,24 @@ bool QOwnerAddedEvent::readBackLevel(SFArchive& archive) {
 
 //---------------------------------------------------------------------------
 SFString QOwnerAddedEvent::getValueByName(const SFString& fieldName) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
 
-#ifdef NEW_CODE
     // Give customized code a chance to override first
     SFString ret = nextOwneraddedeventChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
+    // If the class has any fields, return them
     switch (tolower(fieldName[0])) {
         case 'n':
             if ( fieldName % "newOwner" ) return fromAddress(newOwner);
             break;
     }
-    return "";
-#else
-    return Format("[{"+toUpper(fieldName)+"}]");
-#endif
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CLogEntry::getValueByName(fieldName);
 }
 
 //---------------------------------------------------------------------------

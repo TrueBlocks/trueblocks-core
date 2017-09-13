@@ -17,11 +17,11 @@ namespace qblocks {
 IMPLEMENT_NODE(CAccount, CBaseNode, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextAccountChunk(const SFString& fieldIn, const void *data);
-static SFString nextAccountChunk_custom(const SFString& fieldIn, const void *data);
+static SFString nextAccountChunk(const SFString& fieldIn, const void *dataPtr);
+static SFString nextAccountChunk_custom(const SFString& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CAccount::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+void CAccount::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -31,7 +31,7 @@ void CAccount::Format(CExportContext& ctx, const SFString& fmtIn, void *data) co
     }
 
     SFString fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, data))
+    if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
     while (!fmt.empty())
@@ -39,61 +39,12 @@ void CAccount::Format(CExportContext& ctx, const SFString& fmtIn, void *data) co
 }
 
 //---------------------------------------------------------------------------
-SFString nextAccountChunk(const SFString& fieldIn, const void *data) {
-    const CAccount *acc = (const CAccount *)data;
-    if (acc) {
-        // Give customized code a chance to override first
-#ifdef NEW_CODE
-        SFString ret = acc->getValueByName(fieldIn);
-        if (!ret.empty())
-            return ret;
-#else
-        SFString ret = nextAccountChunk_custom(fieldIn, data);
-        if (!ret.empty())
-            return ret;
+SFString nextAccountChunk(const SFString& fieldIn, const void *dataPtr) {
+    if (dataPtr)
+        return ((const CAccount *)dataPtr)->getValueByName(fieldIn);
 
-        switch (tolower(fieldIn[0])) {
-            case 'a':
-                if ( fieldIn % "addr" ) return fromAddress(acc->addr);
-                break;
-            case 'd':
-                if ( fieldIn % "displayString" ) return acc->displayString;
-                break;
-            case 'h':
-                if ( fieldIn % "header" ) return acc->header;
-                break;
-            case 'l':
-                if ( fieldIn % "lastPage" ) return asStringU(acc->lastPage);
-                if ( fieldIn % "lastBlock" ) return asString(acc->lastBlock);
-                break;
-            case 'n':
-                if ( fieldIn % "nVisible" ) return asStringU(acc->nVisible);
-                break;
-            case 'p':
-                if ( fieldIn % "pageSize" ) return asStringU(acc->pageSize);
-                break;
-            case 't':
-                if ( fieldIn % "transactions" ) {
-                    uint32_t cnt = acc->transactions.getCount();
-                    if (!cnt) return "";
-                    SFString retS;
-                    for (uint32_t i = 0 ; i < cnt ; i++) {
-                        retS += acc->transactions[i].Format();
-                        retS += ((i < cnt - 1) ? ",\n" : "\n");
-                    }
-                    return retS;
-                }
-                break;
-        }
-#endif
-        // EXISTING_CODE
-        // EXISTING_CODE
-
-        // Finally, give the parent class a chance
-        ret = nextBasenodeChunk(fieldIn, acc);
-        if (!ret.empty())
-            return ret;
-    }
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return fldNotFound(fieldIn);
 }
@@ -207,8 +158,8 @@ void CAccount::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextAccountChunk_custom(const SFString& fieldIn, const void *data) {
-    const CAccount *acc = (const CAccount *)data;
+SFString nextAccountChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+    const CAccount *acc = (const CAccount *)dataPtr;
     if (acc) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -234,7 +185,7 @@ SFString nextAccountChunk_custom(const SFString& fieldIn, const void *data) {
 }
 
 //---------------------------------------------------------------------------
-bool CAccount::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+bool CAccount::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // Split the format string into three parts: pre, post and records.
     // If no records, just process as normal. We do this because it's so slow
@@ -296,15 +247,13 @@ bool CAccount::readBackLevel(SFArchive& archive) {
 
 //---------------------------------------------------------------------------
 SFString CAccount::getValueByName(const SFString& fieldName) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
 
-#ifdef NEW_CODE
     // Give customized code a chance to override first
     SFString ret = nextAccountChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
+    // If the class has any fields, return them
     switch (tolower(fieldName[0])) {
         case 'a':
             if ( fieldName % "addr" ) return fromAddress(addr);
@@ -338,10 +287,12 @@ SFString CAccount::getValueByName(const SFString& fieldName) const {
             }
             break;
     }
-    return "";
-#else
-    return Format("[{"+toUpper(fieldName)+"}]");
-#endif
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CBaseNode::getValueByName(fieldName);
 }
 
 //---------------------------------------------------------------------------

@@ -17,11 +17,11 @@ namespace qblocks {
 IMPLEMENT_NODE(CTreeRoot, CBaseNode, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextTreerootChunk(const SFString& fieldIn, const void *data);
-static SFString nextTreerootChunk_custom(const SFString& fieldIn, const void *data);
+static SFString nextTreerootChunk(const SFString& fieldIn, const void *dataPtr);
+static SFString nextTreerootChunk_custom(const SFString& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CTreeRoot::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+void CTreeRoot::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -31,7 +31,7 @@ void CTreeRoot::Format(CExportContext& ctx, const SFString& fmtIn, void *data) c
     }
 
     SFString fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, data))
+    if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
     while (!fmt.empty())
@@ -39,34 +39,12 @@ void CTreeRoot::Format(CExportContext& ctx, const SFString& fmtIn, void *data) c
 }
 
 //---------------------------------------------------------------------------
-SFString nextTreerootChunk(const SFString& fieldIn, const void *data) {
-    const CTreeRoot *tre = (const CTreeRoot *)data;
-    if (tre) {
-        // Give customized code a chance to override first
-#ifdef NEW_CODE
-        SFString ret = tre->getValueByName(fieldIn);
-        if (!ret.empty())
-            return ret;
-#else
-        SFString ret = nextTreerootChunk_custom(fieldIn, data);
-        if (!ret.empty())
-            return ret;
+SFString nextTreerootChunk(const SFString& fieldIn, const void *dataPtr) {
+    if (dataPtr)
+        return ((const CTreeRoot *)dataPtr)->getValueByName(fieldIn);
 
-        switch (tolower(fieldIn[0])) {
-            case 'm':
-            return "";
-//                if ( fieldIn % "m_root" ) { expContext().noFrst=true; return tre->m_root.Format(); }
-                break;
-        }
-#endif
-        // EXISTING_CODE
-        // EXISTING_CODE
-
-        // Finally, give the parent class a chance
-        ret = nextBasenodeChunk(fieldIn, tre);
-        if (!ret.empty())
-            return ret;
-    }
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return fldNotFound(fieldIn);
 }
@@ -136,8 +114,8 @@ void CTreeRoot::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextTreerootChunk_custom(const SFString& fieldIn, const void *data) {
-    const CTreeRoot *tre = (const CTreeRoot *)data;
+SFString nextTreerootChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+    const CTreeRoot *tre = (const CTreeRoot *)dataPtr;
     if (tre) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -157,7 +135,7 @@ SFString nextTreerootChunk_custom(const SFString& fieldIn, const void *data) {
 }
 
 //---------------------------------------------------------------------------
-bool CTreeRoot::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+bool CTreeRoot::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
@@ -173,25 +151,25 @@ bool CTreeRoot::readBackLevel(SFArchive& archive) {
 
 //---------------------------------------------------------------------------
 SFString CTreeRoot::getValueByName(const SFString& fieldName) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
 
-#ifdef NEW_CODE
     // Give customized code a chance to override first
     SFString ret = nextTreerootChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
+    // If the class has any fields, return them
     switch (tolower(fieldName[0])) {
         case 'm':
         return "";
 //            if ( fieldName % "m_root" ) { expContext().noFrst=true; return m_root.Format(); }
             break;
     }
-    return "";
-#else
-    return Format("[{"+toUpper(fieldName)+"}]");
-#endif
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CBaseNode::getValueByName(fieldName);
 }
 
 //---------------------------------------------------------------------------

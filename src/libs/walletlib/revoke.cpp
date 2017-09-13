@@ -16,11 +16,11 @@
 IMPLEMENT_NODE(QRevoke, CTransaction, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextRevokeChunk(const SFString& fieldIn, const void *data);
-static SFString nextRevokeChunk_custom(const SFString& fieldIn, const void *data);
+static SFString nextRevokeChunk(const SFString& fieldIn, const void *dataPtr);
+static SFString nextRevokeChunk_custom(const SFString& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void QRevoke::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+void QRevoke::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -30,7 +30,7 @@ void QRevoke::Format(CExportContext& ctx, const SFString& fmtIn, void *data) con
     }
 
     SFString fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, data))
+    if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
     while (!fmt.empty())
@@ -38,33 +38,12 @@ void QRevoke::Format(CExportContext& ctx, const SFString& fmtIn, void *data) con
 }
 
 //---------------------------------------------------------------------------
-SFString nextRevokeChunk(const SFString& fieldIn, const void *data) {
-    const QRevoke *rev = (const QRevoke *)data;
-    if (rev) {
-        // Give customized code a chance to override first
-#ifdef NEW_CODE
-        SFString ret = rev->getValueByName(fieldIn);
-        if (!ret.empty())
-            return ret;
-#else
-        SFString ret = nextRevokeChunk_custom(fieldIn, data);
-        if (!ret.empty())
-            return ret;
+SFString nextRevokeChunk(const SFString& fieldIn, const void *dataPtr) {
+    if (dataPtr)
+        return ((const QRevoke *)dataPtr)->getValueByName(fieldIn);
 
-        switch (tolower(fieldIn[0])) {
-            case '_':
-                if ( fieldIn % "_operation" ) return rev->_operation;
-                break;
-        }
-#endif
-        // EXISTING_CODE
-        // EXISTING_CODE
-
-        // Finally, give the parent class a chance
-        ret = nextTransactionChunk(fieldIn, rev);
-        if (!ret.empty())
-            return ret;
-    }
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return fldNotFound(fieldIn);
 }
@@ -136,8 +115,8 @@ void QRevoke::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextRevokeChunk_custom(const SFString& fieldIn, const void *data) {
-    const QRevoke *rev = (const QRevoke *)data;
+SFString nextRevokeChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+    const QRevoke *rev = (const QRevoke *)dataPtr;
     if (rev) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -157,7 +136,7 @@ SFString nextRevokeChunk_custom(const SFString& fieldIn, const void *data) {
 }
 
 //---------------------------------------------------------------------------
-bool QRevoke::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+bool QRevoke::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
@@ -173,24 +152,24 @@ bool QRevoke::readBackLevel(SFArchive& archive) {
 
 //---------------------------------------------------------------------------
 SFString QRevoke::getValueByName(const SFString& fieldName) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
 
-#ifdef NEW_CODE
     // Give customized code a chance to override first
     SFString ret = nextRevokeChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
+    // If the class has any fields, return them
     switch (tolower(fieldName[0])) {
         case '_':
             if ( fieldName % "_operation" ) return _operation;
             break;
     }
-    return "";
-#else
-    return Format("[{"+toUpper(fieldName)+"}]");
-#endif
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CTransaction::getValueByName(fieldName);
 }
 
 //---------------------------------------------------------------------------

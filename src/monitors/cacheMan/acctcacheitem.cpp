@@ -15,11 +15,11 @@
 IMPLEMENT_NODE(CAcctCacheItem, CBaseNode, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextAcctcacheitemChunk(const SFString& fieldIn, const void *data);
-static SFString nextAcctcacheitemChunk_custom(const SFString& fieldIn, const void *data);
+static SFString nextAcctcacheitemChunk(const SFString& fieldIn, const void *dataPtr);
+static SFString nextAcctcacheitemChunk_custom(const SFString& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CAcctCacheItem::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+void CAcctCacheItem::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -29,7 +29,7 @@ void CAcctCacheItem::Format(CExportContext& ctx, const SFString& fmtIn, void *da
     }
 
     SFString fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, data))
+    if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
     while (!fmt.empty())
@@ -37,39 +37,12 @@ void CAcctCacheItem::Format(CExportContext& ctx, const SFString& fmtIn, void *da
 }
 
 //---------------------------------------------------------------------------
-SFString nextAcctcacheitemChunk(const SFString& fieldIn, const void *data) {
-    const CAcctCacheItem *acc = (const CAcctCacheItem *)data;
-    if (acc) {
-        // Give customized code a chance to override first
-#ifdef NEW_CODE
-        SFString ret = acc->getValueByName(fieldIn);
-        if (!ret.empty())
-            return ret;
-#else
-        SFString ret = nextAcctcacheitemChunk_custom(fieldIn, data);
-        if (!ret.empty())
-            return ret;
+SFString nextAcctcacheitemChunk(const SFString& fieldIn, const void *dataPtr) {
+    if (dataPtr)
+        return ((const CAcctCacheItem *)dataPtr)->getValueByName(fieldIn);
 
-        switch (tolower(fieldIn[0])) {
-            case 'b':
-                if ( fieldIn % "blockNum" ) return asStringU(acc->blockNum);
-                break;
-            case 't':
-                if ( fieldIn % "transIndex" ) return asStringU(acc->transIndex);
-                break;
-            case 'w':
-                if ( fieldIn % "which" ) return asString(acc->which);
-                break;
-        }
-#endif
-        // EXISTING_CODE
-        // EXISTING_CODE
-
-        // Finally, give the parent class a chance
-        ret = nextBasenodeChunk(fieldIn, acc);
-        if (!ret.empty())
-            return ret;
-    }
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return fldNotFound(fieldIn);
 }
@@ -150,8 +123,8 @@ void CAcctCacheItem::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextAcctcacheitemChunk_custom(const SFString& fieldIn, const void *data) {
-    const CAcctCacheItem *acc = (const CAcctCacheItem *)data;
+SFString nextAcctcacheitemChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+    const CAcctCacheItem *acc = (const CAcctCacheItem *)dataPtr;
     if (acc) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -171,7 +144,7 @@ SFString nextAcctcacheitemChunk_custom(const SFString& fieldIn, const void *data
 }
 
 //---------------------------------------------------------------------------
-bool CAcctCacheItem::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+bool CAcctCacheItem::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
@@ -187,15 +160,13 @@ bool CAcctCacheItem::readBackLevel(SFArchive& archive) {
 
 //---------------------------------------------------------------------------
 SFString CAcctCacheItem::getValueByName(const SFString& fieldName) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
 
-#ifdef NEW_CODE
     // Give customized code a chance to override first
     SFString ret = nextAcctcacheitemChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
+    // If the class has any fields, return them
     switch (tolower(fieldName[0])) {
         case 'b':
             if ( fieldName % "blockNum" ) return asStringU(blockNum);
@@ -207,10 +178,12 @@ SFString CAcctCacheItem::getValueByName(const SFString& fieldName) const {
             if ( fieldName % "which" ) return asString(which);
             break;
     }
-    return "";
-#else
-    return Format("[{"+toUpper(fieldName)+"}]");
-#endif
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CBaseNode::getValueByName(fieldName);
 }
 
 //---------------------------------------------------------------------------

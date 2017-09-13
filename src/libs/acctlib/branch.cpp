@@ -18,11 +18,11 @@ namespace qblocks {
 IMPLEMENT_NODE(CBranch, CTreeNode, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextBranchChunk(const SFString& fieldIn, const void *data);
-static SFString nextBranchChunk_custom(const SFString& fieldIn, const void *data);
+static SFString nextBranchChunk(const SFString& fieldIn, const void *dataPtr);
+static SFString nextBranchChunk_custom(const SFString& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CBranch::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+void CBranch::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -32,7 +32,7 @@ void CBranch::Format(CExportContext& ctx, const SFString& fmtIn, void *data) con
     }
 
     SFString fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, data))
+    if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
     while (!fmt.empty())
@@ -40,33 +40,12 @@ void CBranch::Format(CExportContext& ctx, const SFString& fmtIn, void *data) con
 }
 
 //---------------------------------------------------------------------------
-SFString nextBranchChunk(const SFString& fieldIn, const void *data) {
-    const CBranch *bra = (const CBranch *)data;
-    if (bra) {
-        // Give customized code a chance to override first
-#ifdef NEW_CODE
-        SFString ret = bra->getValueByName(fieldIn);
-        if (!ret.empty())
-            return ret;
-#else
-        SFString ret = nextBranchChunk_custom(fieldIn, data);
-        if (!ret.empty())
-            return ret;
+SFString nextBranchChunk(const SFString& fieldIn, const void *dataPtr) {
+    if (dataPtr)
+        return ((const CBranch *)dataPtr)->getValueByName(fieldIn);
 
-        switch (tolower(fieldIn[0])) {
-            case 'm':
-                if ( fieldIn % "m_branchValue" ) return bra->m_branchValue;
-                break;
-        }
-#endif
-        // EXISTING_CODE
-        // EXISTING_CODE
-
-        // Finally, give the parent class a chance
-        ret = nextTreenodeChunk(fieldIn, bra);
-        if (!ret.empty())
-            return ret;
-    }
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return fldNotFound(fieldIn);
 }
@@ -138,8 +117,8 @@ void CBranch::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextBranchChunk_custom(const SFString& fieldIn, const void *data) {
-    const CBranch *bra = (const CBranch *)data;
+SFString nextBranchChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+    const CBranch *bra = (const CBranch *)dataPtr;
     if (bra) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -162,7 +141,7 @@ SFString nextBranchChunk_custom(const SFString& fieldIn, const void *data) {
 }
 
 //---------------------------------------------------------------------------
-bool CBranch::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+bool CBranch::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
@@ -178,24 +157,24 @@ bool CBranch::readBackLevel(SFArchive& archive) {
 
 //---------------------------------------------------------------------------
 SFString CBranch::getValueByName(const SFString& fieldName) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
 
-#ifdef NEW_CODE
     // Give customized code a chance to override first
     SFString ret = nextBranchChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
+    // If the class has any fields, return them
     switch (tolower(fieldName[0])) {
         case 'm':
             if ( fieldName % "m_branchValue" ) return m_branchValue;
             break;
     }
-    return "";
-#else
-    return Format("[{"+toUpper(fieldName)+"}]");
-#endif
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CTreeNode::getValueByName(fieldName);
 }
 
 //---------------------------------------------------------------------------

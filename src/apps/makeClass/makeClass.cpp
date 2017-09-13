@@ -168,13 +168,13 @@ void generateCode(const COptions& options, CToml& classFile, const SFString& dat
                         "" :
                         "[{BASE_CLASS}]::registerClass();\n\n\t";
     SFString parCnk = isBase ?
-                        "ret = next[{BASE_BASE}]Chunk(fieldIn, [{SHORT3}]);\n" :
-                        "ret = next[{BASE_BASE}]Chunk(fieldIn, [{SHORT3}]);\n";
+                        "ret = next[{BASE_BASE}]Chunk(fieldName, this);\n" :
+                        "ret = next[{BASE_BASE}]Chunk(fieldName, this);\n";
     SFString parSet = isBase?"":"\tif ([{BASE_CLASS}]::setValueByName(fieldName, fieldValue))\n\t\treturn true;\n\n";
 
     //------------------------------------------------------------------------------------------------
     CParameterList theList;
-    SFString allFields = classFile.getConfigStr("settings","fields","");
+    SFString allFields = classFile.getConfigStr("settings","fields","").Substitute("address[]","SFAddressArray");
     while (!allFields.empty()) {
         SFString fieldDef = nextTokenClear(allFields, '|');
         CParameter *f = new CParameter;
@@ -217,6 +217,7 @@ void generateCode(const COptions& options, CToml& classFile, const SFString& dat
                if (fld->type == "bloom")        { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_BLOOM";
         } else if (fld->type == "wei")          { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_WEI";
         } else if (fld->type == "gas")          { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_GAS";
+        } else if (fld->type == "timestamp")    { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_TIMESTAMP";
         } else if (fld->type == "string")       { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_TEXT";
         } else if (fld->type == "addr")         { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_ADDRESS";
         } else if (fld->type == "address")      { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_ADDRESS";
@@ -237,14 +238,15 @@ void generateCode(const COptions& options, CToml& classFile, const SFString& dat
         } else if (fld->type == "bool")         { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_BOOL";
         } else if (fld->type == "double")       { setFmt = "\t[{NAME}] = [{DEFF}];\n"; regType = "T_DOUBLE";
         } else if (fld->type == "time")         { setFmt = "\t[{NAME}] = [{DEFT}];\n"; regType = "T_DATE";
-        } else if (fld->type == "timestamp")    { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_TIMESTAMP";
         } else if (fld->isPointer)              { setFmt = "\t[{NAME}] = [{DEFP}];\n"; regType = "T_POINTER";
-        } else if (fld->isObject)               { setFmt = "\t[{NAME}].Init();\n";     regType = "T_TEXT|TS_OBJECT";
+        } else if (fld->isObject)               { setFmt = "\t[{NAME}].Init();\n";     regType = "T_OBJECT";
         } else                                  { setFmt = badSet; regType = "T_TEXT"; }
 
         if (fld->type.Contains("Array")) {
             setFmt = "\t[{NAME}].Clear();\n";
-            if (fld->type.Contains("String"))
+            if (fld->type.Contains("Address"))
+                regType = "T_ADDRESS|TS_ARRAY";
+            else if (fld->type.Contains("String"))
                 regType = "T_TEXT|TS_ARRAY";
             else
                 regType = "T_OBJECT|TS_ARRAY";
@@ -325,8 +327,7 @@ void generateCode(const COptions& options, CToml& classFile, const SFString& dat
         writeTheCode(headerFile, headSource, ns);
 
     //------------------------------------------------------------------------------------------------
-    SFString fieldStr1 = getCaseCode(fieldCase, tab).Substitute("fieldName","fieldIn").Substitute("[{PTR}]","[{SHORT3}]->");
-    SFString fieldStr2 = getCaseCode(fieldCase, "" ).Substitute("[{PTR}]","");
+    SFString fieldStr = theList.GetCount() ? getCaseCode(fieldCase, "" ).Substitute("[{PTR}]","") : "/""/ No fields";
 
     SFString srcFile    = dataFile.Substitute(".txt", ".cpp").Substitute("./classDefinitions/", "./");
     SFString srcSource  = asciiFileToString(configPath("makeClass/blank.cpp"));
@@ -334,9 +335,7 @@ void generateCode(const COptions& options, CToml& classFile, const SFString& dat
     srcSource.ReplaceAll("[ARCHIVE_WRITE]",     fieldArchiveWrite);
     srcSource.ReplaceAll("[{OPERATORS}]",       operatorC);
     srcSource.ReplaceAll("[REGISTER_FIELDS]",   fieldReg);
-    srcSource.ReplaceAll("[{GETVALUE}]",        (theList.GetCount() ? STR_GETVALUE1 : STR_GETVALUE2));
-    srcSource.Replace   ("[FIELD_CASE]",        fieldStr1);
-    srcSource.Replace   ("[FIELD_CASE]",        fieldStr2);
+    srcSource.ReplaceAll("[{FIELD_CASE}]",      fieldStr);
     srcSource.ReplaceAll("[OTHER_INCS]",        otherIncs);
     srcSource.ReplaceAll("[FIELD_SETCASE]",     caseSetCodeStr);
     srcSource.ReplaceAll("[{SUBCLASSFLDS}]",    subClsCodeStr);
@@ -413,6 +412,9 @@ SFString getCaseCode(const SFString& fieldCase, const SFString& ex) {
                     } else if (type == "gas") {
                         caseCode += " return fromGas([{PTR}]" + field + ");";
 
+                    } else if (type == "timestamp") {
+                        caseCode += " return fromTimestamp([{PTR}]" + field + ");";
+
                     } else if (type == "addr" || type == "address") {
                         caseCode += " return fromAddress([{PTR}]" + field + ");";
 
@@ -437,7 +439,7 @@ SFString getCaseCode(const SFString& fieldCase, const SFString& ex) {
                     } else if (type == "double") {
                         caseCode += " return fmtFloat([{PTR}]" + field + ");";
 
-                    } else if (type.Contains("SFStringArray")) {
+                    } else if (type.Contains("SFStringArray") || type.Contains("SFAddressArray")) {
                         SFString str = STR_CASE_CODE_STRINGARRAY;
                         str.ReplaceAll("[{FIELD}]", field);
                         caseCode += str;
@@ -469,6 +471,7 @@ SFString getCaseCode(const SFString& fieldCase, const SFString& ex) {
         }
     }
     caseCode.ReplaceAll("[BTAB]", baseTab);
+    caseCode = "/""/ If the class has any fields, return them\n\tswitch (tolower(fieldName[0])) {\n" + caseCode + "\t}\n";
     return caseCode;
 }
 
@@ -507,6 +510,9 @@ SFString getCaseSetCode(const SFString& fieldCase) {
 
                     } else if (type == "gas") {
                         caseCode +=  " { " + field + " = toGas(fieldValue); return true; }";
+
+                    } else if (type == "timestamp") {
+                        caseCode +=  " { " + field + " = toTimestamp(fieldValue); return true; }";
 
                     } else if (type == "addr" || type == "address") {
                         caseCode += " { " + field + " = toAddress(fieldValue); return true; }";
@@ -589,7 +595,7 @@ const char* STR_CASE_CODE_STRINGARRAY =
 "[BTAB]\t\tSFString retS;\n"
 "[BTAB]\t\tfor (uint32_t i = 0 ; i < cnt ; i++) {\n"
 "[BTAB]\t\t\tretS += indent() + (\"\\\"\" + [{PTR}][{FIELD}][i] + \"\\\"\");\n"
-"[BTAB]\t\t\tretS += ((i < cnt-1) ? \",\\n\" : \"\\n\");\n"
+"[BTAB]\t\t\tretS += ((i < cnt - 1) ? \",\\n\" : \"\\n\");\n"
 "[BTAB]\t\t}\n"
 "[BTAB]\t\treturn retS;\n"
 "[BTAB]\t}";
@@ -623,29 +629,12 @@ const char* STR_OPERATOR_C =
 //------------------------------------------------------------------------------------------------------------
 const char* STR_SUBCLASS =
 "\ts = toUpper(SFString(\"[FNAME]\")) + \"::\";\n"
-"\tif (fieldIn.Contains(s)) {\n"
-"\t\tSFString f = fieldIn;\n"
+"\tif (fieldName.Contains(s)) {\n"
+"\t\tSFString f = fieldName;\n"
 "\t\tf.ReplaceAll(s,\"\");\n"
-"\t\tif ([SH3])\n"
-"\t\t\tf = [SH3]->[FNAME].Format(\"++\"+f+\"++\");\n"
+"\t\tf = [FNAME].getValueByName(f);\n"
 "\t\treturn f;\n"
-"\t}\n";
-
-//------------------------------------------------------------------------------------------------------------
-const char* STR_GETVALUE1 =
-"\t/""/ Give customized code a chance to override first\n"
-"\tSFString ret = next[{PROPER}]Chunk_custom(fieldName, this);\n"
-"\tif (!ret.empty())\n"
-"\t\treturn ret;\n"
-"\n"
-"\tswitch (tolower(fieldName[0])) {\n"
-"[FIELD_CASE]\t}\n"
-"\treturn \"\";\n";
-
-//------------------------------------------------------------------------------------------------------------
-const char* STR_GETVALUE2 =
-"\t/""/ Nothing to return expect perhaps custom fields\n"
-"\treturn next[{PROPER}]Chunk_custom(fieldName, this);\n";
+"\t}\n\n";
 
 //------------------------------------------------------------------------------------------------------------
 SFString short3(const SFString& str) {

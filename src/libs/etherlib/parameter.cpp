@@ -17,11 +17,11 @@ namespace qblocks {
 IMPLEMENT_NODE(CParameter, CBaseNode, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextParameterChunk(const SFString& fieldIn, const void *data);
-static SFString nextParameterChunk_custom(const SFString& fieldIn, const void *data);
+static SFString nextParameterChunk(const SFString& fieldIn, const void *dataPtr);
+static SFString nextParameterChunk_custom(const SFString& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CParameter::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+void CParameter::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -31,7 +31,7 @@ void CParameter::Format(CExportContext& ctx, const SFString& fmtIn, void *data) 
     }
 
     SFString fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, data))
+    if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
     while (!fmt.empty())
@@ -39,45 +39,12 @@ void CParameter::Format(CExportContext& ctx, const SFString& fmtIn, void *data) 
 }
 
 //---------------------------------------------------------------------------
-SFString nextParameterChunk(const SFString& fieldIn, const void *data) {
-    const CParameter *par = (const CParameter *)data;
-    if (par) {
-        // Give customized code a chance to override first
-#ifdef NEW_CODE
-        SFString ret = par->getValueByName(fieldIn);
-        if (!ret.empty())
-            return ret;
-#else
-        SFString ret = nextParameterChunk_custom(fieldIn, data);
-        if (!ret.empty())
-            return ret;
+SFString nextParameterChunk(const SFString& fieldIn, const void *dataPtr) {
+    if (dataPtr)
+        return ((const CParameter *)dataPtr)->getValueByName(fieldIn);
 
-        switch (tolower(fieldIn[0])) {
-            case 'i':
-                if ( fieldIn % "indexed" ) return asString(par->indexed);
-                if ( fieldIn % "isPointer" ) return asString(par->isPointer);
-                if ( fieldIn % "isArray" ) return asString(par->isArray);
-                if ( fieldIn % "isObject" ) return asString(par->isObject);
-                break;
-            case 'n':
-                if ( fieldIn % "name" ) return par->name;
-                break;
-            case 's':
-                if ( fieldIn % "strDefault" ) return par->strDefault;
-                break;
-            case 't':
-                if ( fieldIn % "type" ) return par->type;
-                break;
-        }
-#endif
-        // EXISTING_CODE
-        // EXISTING_CODE
-
-        // Finally, give the parent class a chance
-        ret = nextBasenodeChunk(fieldIn, par);
-        if (!ret.empty())
-            return ret;
-    }
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return fldNotFound(fieldIn);
 }
@@ -176,8 +143,8 @@ void CParameter::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextParameterChunk_custom(const SFString& fieldIn, const void *data) {
-    const CParameter *par = (const CParameter *)data;
+SFString nextParameterChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+    const CParameter *par = (const CParameter *)dataPtr;
     if (par) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -197,7 +164,7 @@ SFString nextParameterChunk_custom(const SFString& fieldIn, const void *data) {
 }
 
 //---------------------------------------------------------------------------
-bool CParameter::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+bool CParameter::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
@@ -213,15 +180,13 @@ bool CParameter::readBackLevel(SFArchive& archive) {
 
 //---------------------------------------------------------------------------
 SFString CParameter::getValueByName(const SFString& fieldName) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
 
-#ifdef NEW_CODE
     // Give customized code a chance to override first
     SFString ret = nextParameterChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
+    // If the class has any fields, return them
     switch (tolower(fieldName[0])) {
         case 'i':
             if ( fieldName % "indexed" ) return asString(indexed);
@@ -239,10 +204,12 @@ SFString CParameter::getValueByName(const SFString& fieldName) const {
             if ( fieldName % "type" ) return type;
             break;
     }
-    return "";
-#else
-    return Format("[{"+toUpper(fieldName)+"}]");
-#endif
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CBaseNode::getValueByName(fieldName);
 }
 
 //---------------------------------------------------------------------------

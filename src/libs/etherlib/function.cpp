@@ -17,11 +17,11 @@ namespace qblocks {
 IMPLEMENT_NODE(CFunction, CBaseNode, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextFunctionChunk(const SFString& fieldIn, const void *data);
-static SFString nextFunctionChunk_custom(const SFString& fieldIn, const void *data);
+static SFString nextFunctionChunk(const SFString& fieldIn, const void *dataPtr);
+static SFString nextFunctionChunk_custom(const SFString& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CFunction::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+void CFunction::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -31,7 +31,7 @@ void CFunction::Format(CExportContext& ctx, const SFString& fmtIn, void *data) c
     }
 
     SFString fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, data))
+    if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
     while (!fmt.empty())
@@ -39,75 +39,12 @@ void CFunction::Format(CExportContext& ctx, const SFString& fmtIn, void *data) c
 }
 
 //---------------------------------------------------------------------------
-SFString nextFunctionChunk(const SFString& fieldIn, const void *data) {
-    const CFunction *fun = (const CFunction *)data;
-    if (fun) {
-        // Give customized code a chance to override first
-#ifdef NEW_CODE
-        SFString ret = fun->getValueByName(fieldIn);
-        if (!ret.empty())
-            return ret;
-#else
-        SFString ret = nextFunctionChunk_custom(fieldIn, data);
-        if (!ret.empty())
-            return ret;
+SFString nextFunctionChunk(const SFString& fieldIn, const void *dataPtr) {
+    if (dataPtr)
+        return ((const CFunction *)dataPtr)->getValueByName(fieldIn);
 
-        switch (tolower(fieldIn[0])) {
-            case 'a':
-                if ( fieldIn % "anonymous" ) return asString(fun->anonymous);
-                break;
-            case 'c':
-                if ( fieldIn % "constant" ) return asString(fun->constant);
-                break;
-            case 'e':
-                if ( fieldIn % "encoding" ) return fun->encoding;
-                break;
-            case 'i':
-                if ( fieldIn % "inputs" ) {
-                    uint32_t cnt = fun->inputs.getCount();
-                    if (!cnt) return "";
-                    SFString retS;
-                    for (uint32_t i = 0 ; i < cnt ; i++) {
-                        retS += fun->inputs[i].Format();
-                        retS += ((i < cnt - 1) ? ",\n" : "\n");
-                    }
-                    return retS;
-                }
-                break;
-            case 'n':
-                if ( fieldIn % "name" ) return fun->name;
-                break;
-            case 'o':
-                if ( fieldIn % "outputs" ) {
-                    uint32_t cnt = fun->outputs.getCount();
-                    if (!cnt) return "";
-                    SFString retS;
-                    for (uint32_t i = 0 ; i < cnt ; i++) {
-                        retS += fun->outputs[i].Format();
-                        retS += ((i < cnt - 1) ? ",\n" : "\n");
-                    }
-                    return retS;
-                }
-                break;
-            case 'p':
-                if ( fieldIn % "payable" ) return asString(fun->payable);
-                break;
-            case 's':
-                if ( fieldIn % "signature" ) return fun->signature;
-                break;
-            case 't':
-                if ( fieldIn % "type" ) return fun->type;
-                break;
-        }
-#endif
-        // EXISTING_CODE
-        // EXISTING_CODE
-
-        // Finally, give the parent class a chance
-        ret = nextBasenodeChunk(fieldIn, fun);
-        if (!ret.empty())
-            return ret;
-    }
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return fldNotFound(fieldIn);
 }
@@ -257,8 +194,8 @@ void CFunction::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextFunctionChunk_custom(const SFString& fieldIn, const void *data) {
-    const CFunction *fun = (const CFunction *)data;
+SFString nextFunctionChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+    const CFunction *fun = (const CFunction *)dataPtr;
     if (fun) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -299,7 +236,7 @@ SFString nextFunctionChunk_custom(const SFString& fieldIn, const void *data) {
 }
 
 //---------------------------------------------------------------------------
-bool CFunction::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+bool CFunction::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
@@ -315,15 +252,13 @@ bool CFunction::readBackLevel(SFArchive& archive) {
 
 //---------------------------------------------------------------------------
 SFString CFunction::getValueByName(const SFString& fieldName) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
 
-#ifdef NEW_CODE
     // Give customized code a chance to override first
     SFString ret = nextFunctionChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
+    // If the class has any fields, return them
     switch (tolower(fieldName[0])) {
         case 'a':
             if ( fieldName % "anonymous" ) return asString(anonymous);
@@ -371,10 +306,12 @@ SFString CFunction::getValueByName(const SFString& fieldName) const {
             if ( fieldName % "type" ) return type;
             break;
     }
-    return "";
-#else
-    return Format("[{"+toUpper(fieldName)+"}]");
-#endif
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CBaseNode::getValueByName(fieldName);
 }
 
 //---------------------------------------------------------------------------

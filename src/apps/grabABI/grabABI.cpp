@@ -21,6 +21,7 @@ extern const char* STR_HEADERFILE;
 extern const char* STR_HEADER_SIGS;
 extern const char* STR_CODE_SIGS;
 extern const char* STR_BLOCK_PATH;
+extern const char* STR_ITEMS;
 
 //-----------------------------------------------------------------------
 SFString templateFolder = configPath("grabABI/");
@@ -245,8 +246,6 @@ int main(int argc, const char *argv[]) {
                         SFString fields, assigns1, assigns2, items1;
                         SFUint32 nIndexed = 0;
                         for (uint32_t j = 0 ; j < func->inputs.getCount() ; j++) {
-                            if (func->inputs[j].name == "data")
-                                func->inputs[j].name = "data1";
                             fields   += func->inputs[j].Format("[{TYPE}][ {NAME}]|");
                             assigns1 += func->inputs[j].Format(getAssign(&func->inputs[j], j));
                             items1   += "\t\t\titems[nItems++] = \"" + func->inputs[j].type + "\";\n";
@@ -381,9 +380,10 @@ int main(int argc, const char *argv[]) {
             SFString chainInit = (options.isToken() ?
                                     "\twalletlib_init();\n" :
                                   (options.isWallet() ? "" : "\ttokenlib_init();\n"));
-            sourceCode.ReplaceAll("[{CHAINLIB}]", chainInit);
-            sourceCode.ReplaceAll("[{FACTORY1}]", factory1.empty() ? "\t\t{\n\t\t\t// No functions\n" : factory1);
-            sourceCode.ReplaceAll("[{FACTORY2}]", factory2.empty() ? "\t\t{\n\t\t\t// No events\n" : factory2);
+            sourceCode.ReplaceAll("[{CHAINLIB}]",  chainInit);
+            sourceCode.ReplaceAll("[{FACTORY1}]",  factory1.empty() ? "\t\t{\n\t\t\t// No functions\n" : factory1);
+            sourceCode.ReplaceAll("[{INIT_CODE}]", factory1.empty() ? "" : STR_ITEMS);
+            sourceCode.ReplaceAll("[{FACTORY2}]",  factory2.empty() ? "\t\t{\n\t\t\t// No events\n" : factory2);
 
             headers = ("#include \"tokenlib.h\"\n");
             headers += ("#include \"walletlib.h\"\n");
@@ -606,3 +606,11 @@ const char* STR_CODE_SIGS =
 "\n";
 
 const char* STR_BLOCK_PATH = "etherlib_init(\"binary\");\n\n";
+
+const char* STR_ITEMS =
+"\t\tSFString items[256];\n"
+"\t\tint nItems=0;\n"
+"\n"
+"\t\tSFString encoding = p->input.Left(10);\n"
+"\t\tSFString params   = p->input.substr(10);\n";
+

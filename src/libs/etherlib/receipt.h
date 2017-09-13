@@ -30,7 +30,7 @@ class CTransaction;
 class CReceipt : public CBaseNode {
 public:
     SFAddress contractAddress;
-    SFUint32 gasUsed;
+    SFGas gasUsed;
     CLogEntryArray logs;
     SFBloom logsBloom;
 

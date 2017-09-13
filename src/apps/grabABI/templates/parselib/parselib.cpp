@@ -25,12 +25,7 @@ const CTransaction *promoteTo[{PPREFIX}](const CTransaction *p)
 {
     if (p && (p->input.length()>=10 || p->input == "0x"))
     {
-        SFString items[256];
-        int nItems=0;
-
-        SFString encoding = p->input.Left(10);
-        SFString params   = p->input.substr(10);
-        // EXISTING_CODE
+[{INIT_CODE}]        // EXISTING_CODE
         // EXISTING_CODE
 
 [{FACTORY1}]

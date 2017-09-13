@@ -18,11 +18,11 @@ namespace qblocks {
 IMPLEMENT_NODE(CLogEntry, CBaseNode, dataSchema());
 
 //---------------------------------------------------------------------------
-extern SFString nextLogentryChunk(const SFString& fieldIn, const void *data);
-static SFString nextLogentryChunk_custom(const SFString& fieldIn, const void *data);
+extern SFString nextLogentryChunk(const SFString& fieldIn, const void *dataPtr);
+static SFString nextLogentryChunk_custom(const SFString& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CLogEntry::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+void CLogEntry::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -32,7 +32,7 @@ void CLogEntry::Format(CExportContext& ctx, const SFString& fmtIn, void *data) c
     }
 
     SFString fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, data))
+    if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
     while (!fmt.empty())
@@ -40,57 +40,12 @@ void CLogEntry::Format(CExportContext& ctx, const SFString& fmtIn, void *data) c
 }
 
 //---------------------------------------------------------------------------
-SFString nextLogentryChunk(const SFString& fieldIn, const void *data) {
-    const CLogEntry *log = (const CLogEntry *)data;
-    if (log) {
-        // Give customized code a chance to override first
-#ifdef NEW_CODE
-        SFString ret = log->getValueByName(fieldIn);
-        if (!ret.empty())
-            return ret;
-#else
-        SFString ret = nextLogentryChunk_custom(fieldIn, data);
-        if (!ret.empty())
-            return ret;
+SFString nextLogentryChunk(const SFString& fieldIn, const void *dataPtr) {
+    if (dataPtr)
+        return ((const CLogEntry *)dataPtr)->getValueByName(fieldIn);
 
-        switch (tolower(fieldIn[0])) {
-            case 'a':
-                if ( fieldIn % "address" ) return fromAddress(log->address);
-                break;
-            case 'd':
-                if ( fieldIn % "data" ) return log->data;
-                break;
-            case 'l':
-                if ( fieldIn % "logIndex" ) return asStringU(log->logIndex);
-                break;
-            case 't':
-                if ( fieldIn % "topics" ) {
-                    uint32_t cnt = log->topics.getCount();
-                    if (!cnt) return "";
-                    SFString retS;
-                    for (uint32_t i = 0 ; i < cnt ; i++) {
-                        retS += indent() + ("\"" + log->fromTopic(topics[i]) + "\"");
-                        retS += ((i < cnt-1) ? ",\n" : "\n");
-                    }
-                    return retS;
-                }
-                break;
-        }
-#endif
-        // EXISTING_CODE
-        // See if this field belongs to the item's container
-        ret = nextReceiptChunk(fieldIn, log->pReceipt);
-        if (ret.Contains("Field not found"))
-            ret = EMPTY;
-        if (!ret.empty())
-            return ret;
-        // EXISTING_CODE
-
-        // Finally, give the parent class a chance
-        ret = nextBasenodeChunk(fieldIn, log);
-        if (!ret.empty())
-            return ret;
-    }
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return fldNotFound(fieldIn);
 }
@@ -176,7 +131,7 @@ void CLogEntry::registerClass(void) {
     ADD_FIELD(CLogEntry, "address", T_ADDRESS, ++fieldNum);
     ADD_FIELD(CLogEntry, "data", T_TEXT, ++fieldNum);
     ADD_FIELD(CLogEntry, "logIndex", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CLogEntry, "topics", T_TEXT|TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CLogEntry, "topics", T_OBJECT|TS_ARRAY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CLogEntry, "schema");
@@ -187,8 +142,8 @@ void CLogEntry::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextLogentryChunk_custom(const SFString& fieldIn, const void *data) {
-    const CLogEntry *log = (const CLogEntry *)data;
+SFString nextLogentryChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+    const CLogEntry *log = (const CLogEntry *)dataPtr;
     if (log) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -208,7 +163,7 @@ SFString nextLogentryChunk_custom(const SFString& fieldIn, const void *data) {
 }
 
 //---------------------------------------------------------------------------
-bool CLogEntry::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+bool CLogEntry::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
@@ -236,15 +191,13 @@ SFArchive& operator>>(SFArchive& archive, CLogEntry& log) {
 
 //---------------------------------------------------------------------------
 SFString CLogEntry::getValueByName(const SFString& fieldName) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
 
-#ifdef NEW_CODE
     // Give customized code a chance to override first
     SFString ret = nextLogentryChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
+    // If the class has any fields, return them
     switch (tolower(fieldName[0])) {
         case 'a':
             if ( fieldName % "address" ) return fromAddress(address);
@@ -262,16 +215,24 @@ SFString CLogEntry::getValueByName(const SFString& fieldName) const {
                 SFString retS;
                 for (uint32_t i = 0 ; i < cnt ; i++) {
                     retS += indent() + ("\"" + fromTopic(topics[i]) + "\"");
-                    retS += ((i < cnt-1) ? ",\n" : "\n");
+                    retS += ((i < cnt - 1) ? ",\n" : "\n");
                 }
                 return retS;
             }
             break;
     }
-    return "";
-#else
-    return Format("[{"+toUpper(fieldName)+"}]");
-#endif
+
+    // EXISTING_CODE
+    // See if this field belongs to the item's container
+    ret = nextReceiptChunk(fieldName, pReceipt);
+    if (ret.Contains("Field not found"))
+        ret = EMPTY;
+    if (!ret.empty())
+        return ret;
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CBaseNode::getValueByName(fieldName);
 }
 
 //---------------------------------------------------------------------------
