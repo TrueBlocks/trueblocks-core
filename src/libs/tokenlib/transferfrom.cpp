@@ -182,6 +182,12 @@ SFString QTransferFrom::getValueByName(const SFString& fieldName) const {
     return CTransaction::getValueByName(fieldName);
 }
 
+//-------------------------------------------------------------------------
+ostream& operator<<(ostream& os, const QTransferFrom& item) {
+    os << item.Format() << "\n";
+    return os;
+}
+
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE

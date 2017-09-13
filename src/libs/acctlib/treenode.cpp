@@ -180,6 +180,12 @@ SFString CTreeNode::getValueByName(const SFString& fieldName) const {
     return CBaseNode::getValueByName(fieldName);
 }
 
+//-------------------------------------------------------------------------
+ostream& operator<<(ostream& os, const CTreeNode& item) {
+    os << item.Format() << "\n";
+    return os;
+}
+
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 CTreeNode* CTreeNode::newBranch(

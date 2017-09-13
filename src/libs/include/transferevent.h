@@ -38,6 +38,7 @@ public:
 
     // EXISTING_CODE
     // EXISTING_CODE
+    friend ostream& operator<<(ostream& os, const QTransferEvent& item);
 
 protected:
     void Clear(void);

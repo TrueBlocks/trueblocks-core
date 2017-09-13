@@ -55,6 +55,7 @@ public:
     SFString displayName(bool terse, uint32_t w1=20, uint32_t w2=8) const;
     bool isTransactionOfInterest(CTransaction *trans, uint64_t nSigs, SFString sigs[]) const;
     // EXISTING_CODE
+    friend ostream& operator<<(ostream& os, const CAccountWatch& item);
 
 protected:
     void Clear(void);

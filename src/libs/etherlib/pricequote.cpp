@@ -244,6 +244,12 @@ SFString CPriceQuote::getValueByName(const SFString& fieldName) const {
     return CBaseNode::getValueByName(fieldName);
 }
 
+//-------------------------------------------------------------------------
+ostream& operator<<(ostream& os, const CPriceQuote& item) {
+    os << item.Format() << "\n";
+    return os;
+}
+
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 #include "node.h"

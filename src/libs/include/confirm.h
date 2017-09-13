@@ -36,6 +36,7 @@ public:
 
     // EXISTING_CODE
     // EXISTING_CODE
+    friend ostream& operator<<(ostream& os, const QConfirm& item);
 
 protected:
     void Clear(void);

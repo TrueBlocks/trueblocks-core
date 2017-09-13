@@ -40,6 +40,7 @@ public:
 
     // EXISTING_CODE
     // EXISTING_CODE
+    friend ostream& operator<<(ostream& os, const QConfirmationNeededEvent& item);
 
 protected:
     void Clear(void);

@@ -36,6 +36,7 @@ public:
 
     // EXISTING_CODE
     // EXISTING_CODE
+    friend ostream& operator<<(ostream& os, const QSetDailyLimit& item);
 
 protected:
     void Clear(void);

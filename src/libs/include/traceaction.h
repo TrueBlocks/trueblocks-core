@@ -48,6 +48,7 @@ public:
     // EXISTING_CODE
     friend class CTrace;
     // EXISTING_CODE
+    friend ostream& operator<<(ostream& os, const CTraceAction& item);
 
 protected:
     void Clear(void);

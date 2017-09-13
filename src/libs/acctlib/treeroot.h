@@ -60,6 +60,7 @@ public:
     void remove(const SFString& _key);
     bool visitItems(ACCTVISITOR func, void *data) const;
     // EXISTING_CODE
+    friend ostream& operator<<(ostream& os, const CTreeRoot& item);
 
 protected:
     void Clear(void);

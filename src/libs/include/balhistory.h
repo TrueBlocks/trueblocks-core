@@ -42,6 +42,7 @@ public:
     // EXISTING_CODE
     CBalHistory(const SFString& _recID, SFIntBN bal) : recordID(_recID), balance(bal) { }
     // EXISTING_CODE
+    friend ostream& operator<<(ostream& os, const CBalHistory& item);
 
 protected:
     void Clear(void);
