@@ -172,6 +172,12 @@ SFString QSetDailyLimit::getValueByName(const SFString& fieldName) const {
     return CTransaction::getValueByName(fieldName);
 }
 
+//-------------------------------------------------------------------------
+ostream& operator<<(ostream& os, const QSetDailyLimit& item) {
+    os << item.Format() << "\n";
+    return os;
+}
+
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE

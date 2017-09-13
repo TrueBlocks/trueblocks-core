@@ -199,6 +199,12 @@ SFString QSingleTransactEvent::getValueByName(const SFString& fieldName) const {
     return CLogEntry::getValueByName(fieldName);
 }
 
+//-------------------------------------------------------------------------
+ostream& operator<<(ostream& os, const QSingleTransactEvent& item) {
+    os << item.Format() << "\n";
+    return os;
+}
+
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE

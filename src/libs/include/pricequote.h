@@ -47,6 +47,7 @@ public:
     // EXISTING_CODE
     SFTime date;
     // EXISTING_CODE
+    friend ostream& operator<<(ostream& os, const CPriceQuote& item);
 
 protected:
     void Clear(void);

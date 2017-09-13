@@ -45,6 +45,7 @@ public:
     virtual bool visitItems(ACCTVISITOR func, void *data) const { return true; }
     CTreeNode* newBranch(const SFString& _k1, const SFString& _v1, const SFString& _k2, const SFString& _v2);
     // EXISTING_CODE
+    friend ostream& operator<<(ostream& os, const CTreeNode& item);
 
 protected:
     void Clear(void);

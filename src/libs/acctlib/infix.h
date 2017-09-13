@@ -47,6 +47,7 @@ public:
     bool visitItems(ACCTVISITOR func, void *data) const override;
     bool contains(const SFString& _key) const;
     // EXISTING_CODE
+    friend ostream& operator<<(ostream& os, const CInfix& item);
 
 protected:
     void Clear(void);

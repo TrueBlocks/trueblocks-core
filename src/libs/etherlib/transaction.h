@@ -75,6 +75,7 @@ public:
     CTrace trace;
 #endif
     // EXISTING_CODE
+    friend ostream& operator<<(ostream& os, const CTransaction& item);
 
 protected:
     void Clear(void);

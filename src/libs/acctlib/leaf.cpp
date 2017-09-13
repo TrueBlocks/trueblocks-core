@@ -192,6 +192,12 @@ SFString CLeaf::getValueByName(const SFString& fieldName) const {
     return CTreeNode::getValueByName(fieldName);
 }
 
+//-------------------------------------------------------------------------
+ostream& operator<<(ostream& os, const CLeaf& item) {
+    os << item.Format() << "\n";
+    return os;
+}
+
 //---------------------------------------------------------------------------
 // EXISTING_CODE
     //-----------------------------------------------------------------------------

@@ -51,6 +51,7 @@ private:
     char activeBranch() const;
     CTreeNode *rejig();
     // EXISTING_CODE
+    friend ostream& operator<<(ostream& os, const CBranch& item);
 
 protected:
     void Clear(void);
