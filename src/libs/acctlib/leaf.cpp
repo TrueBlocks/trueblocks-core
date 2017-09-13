@@ -169,16 +169,16 @@ SFString CLeaf::getValueByName(const SFString& fieldName) const {
     // If the class has any fields, return them
     switch (tolower(fieldName[0])) {
         case 'b':
-//            if ( fieldName % "blocks" ) {
-//                uint32_t cnt = blocks.getCount();
-//                if (!cnt) return "";
-//                SFString retS;
-//                for (uint32_t i = 0 ; i < cnt ; i++) {
-//                    retS += blocks[i].Format();
-//                    retS += ((i < cnt - 1) ? ",\n" : "\n");
-//                }
-//                return retS;
-//            }
+            if ( fieldName % "blocks" ) {
+                uint32_t cnt = blocks.getCount();
+                if (!cnt) return "";
+                SFString retS;
+                for (uint32_t i = 0 ; i < cnt ; i++) {
+                    retS += asStringU(blocks[i]);
+                    retS += ((i < cnt - 1) ? ",\n" : "\n");
+                }
+                return retS;
+            }
             break;
         case 'c':
             if ( fieldName % "cnt" ) return asStringU(cnt);

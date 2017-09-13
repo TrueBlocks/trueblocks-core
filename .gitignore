@@ -8,6 +8,7 @@ backups
 quickBlocks Facts
 src/tools/speedTest/
 build
+monitors
 qb-app
 
 # Compiled Object files
