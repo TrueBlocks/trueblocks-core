@@ -43,6 +43,7 @@ public:
     explicit CAccountName(SFString& nameIn);
     bool Match(const SFString& s1, const SFString& s2, const SFString& s3, bool matchCase, bool all);
     // EXISTING_CODE
+    friend ostream& operator<<(ostream& os, const CAccountName& item);
 
 protected:
     void Clear(void);

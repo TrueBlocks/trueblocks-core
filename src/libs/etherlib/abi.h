@@ -46,6 +46,7 @@ public:
     CFunction *findFunctionByEncoding(const SFString& search);
     friend class CAccount;
     // EXISTING_CODE
+    friend ostream& operator<<(ostream& os, const CAbi& item);
 
 protected:
     void Clear(void);
@@ -132,7 +133,6 @@ extern SFUint32 verbose;
 #define REP_FREQ   11
 #define REP_INFREQ 563
 void clearAbis(void);
-extern ostream& operator<<(ostream& os, const CAbi& t);
 // EXISTING_CODE
 #define NEW_CODE
 }  // namespace qblocks

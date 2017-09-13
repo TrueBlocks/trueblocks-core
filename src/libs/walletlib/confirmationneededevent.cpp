@@ -208,6 +208,12 @@ SFString QConfirmationNeededEvent::getValueByName(const SFString& fieldName) con
     return CLogEntry::getValueByName(fieldName);
 }
 
+//-------------------------------------------------------------------------
+ostream& operator<<(ostream& os, const QConfirmationNeededEvent& item) {
+    os << item.Format() << "\n";
+    return os;
+}
+
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE

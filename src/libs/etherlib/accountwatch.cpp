@@ -267,6 +267,12 @@ SFString CAccountWatch::getValueByName(const SFString& fieldName) const {
     return CBaseNode::getValueByName(fieldName);
 }
 
+//-------------------------------------------------------------------------
+ostream& operator<<(ostream& os, const CAccountWatch& item) {
+    os << item.Format() << "\n";
+    return os;
+}
+
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 bool CAccountWatch::getWatch(const CToml& toml, uint32_t n) {

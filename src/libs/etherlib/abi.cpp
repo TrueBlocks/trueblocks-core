@@ -193,6 +193,17 @@ SFString CAbi::getValueByName(const SFString& fieldName) const {
     return CBaseNode::getValueByName(fieldName);
 }
 
+//-------------------------------------------------------------------------
+ostream& operator<<(ostream& os, const CAbi& item) {
+    for (uint32_t i = 0 ; i < item.abiByName.getCount() ; i++ ) {
+        os << item.abiByName[i].Format() << "\n";
+    }
+    for (uint32_t i = 0 ; i < item.abiByEncoding.getCount() ; i++ ) {
+        os << item.abiByEncoding[i].Format() << "\n";
+    }
+    return os;
+}
+
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 //---------------------------------------------------------------------------
@@ -351,17 +362,6 @@ bool CAbi::loadABI(const SFString& addr) {
         }
     }
     return abiByName.getCount();
-}
-
-//---------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const CAbi& abi) {
-    for (uint32_t i = 0 ; i < abi.abiByName.getCount() ; i++ ) {
-        os << abi.abiByName[i].Format() << "\n";
-    }
-    for (uint32_t i = 0 ; i < abi.abiByEncoding.getCount() ; i++ ) {
-        os << abi.abiByEncoding[i].Format() << "\n";
-    }
-    return os;
 }
 // EXISTING_CODE
 }  // namespace qblocks

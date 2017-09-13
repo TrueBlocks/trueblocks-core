@@ -186,11 +186,13 @@ SFString CAcctCacheItem::getValueByName(const SFString& fieldName) const {
     return CBaseNode::getValueByName(fieldName);
 }
 
-//---------------------------------------------------------------------------
-// EXISTING_CODE
-ostream& operator<<(ostream& os, const CAcctCacheItem& cacheItem) {
-    os << cacheItem.blockNum << "." << cacheItem.transIndex << "." << cacheItem.which;
+//-------------------------------------------------------------------------
+ostream& operator<<(ostream& os, const CAcctCacheItem& item) {
+    os << item.blockNum << "." << item.transIndex << "." << item.which;
     return os;
 }
+
+//---------------------------------------------------------------------------
+// EXISTING_CODE
 // EXISTING_CODE
 

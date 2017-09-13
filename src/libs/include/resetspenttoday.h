@@ -35,6 +35,7 @@ public:
 
     // EXISTING_CODE
     // EXISTING_CODE
+    friend ostream& operator<<(ostream& os, const QResetSpentToday& item);
 
 protected:
     void Clear(void);

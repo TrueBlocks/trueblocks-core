@@ -51,6 +51,7 @@ public:
     // EXISTING_CODE
     bool isError(void) const;
     // EXISTING_CODE
+    friend ostream& operator<<(ostream& os, const CTrace& item);
 
 protected:
     void Clear(void);
