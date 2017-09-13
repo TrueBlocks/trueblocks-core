@@ -39,32 +39,11 @@ void QKill::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) co
 
 //---------------------------------------------------------------------------
 SFString nextKillChunk(const SFString& fieldIn, const void *dataPtr) {
-    const QKill *kil = (const QKill *)dataPtr;
-    if (kil) {
-        // Give customized code a chance to override first
-#ifdef NEW_CODE
-        SFString ret = kil->getValueByName(fieldIn);
-        if (!ret.empty())
-            return ret;
-#else
-        SFString ret = nextKillChunk_custom(fieldIn, dataPtr);
-        if (!ret.empty())
-            return ret;
+    if (dataPtr)
+        return ((const QKill *)dataPtr)->getValueByName(fieldIn);
 
-        switch (tolower(fieldIn[0])) {
-            case '_':
-                if ( fieldIn % "_to" ) return fromAddress(kil->_to);
-                break;
-        }
-#endif
-        // EXISTING_CODE
-        // EXISTING_CODE
-
-        // Finally, give the parent class a chance
-        ret = nextTransactionChunk(fieldIn, kil);
-        if (!ret.empty())
-            return ret;
-    }
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return fldNotFound(fieldIn);
 }
@@ -173,24 +152,24 @@ bool QKill::readBackLevel(SFArchive& archive) {
 
 //---------------------------------------------------------------------------
 SFString QKill::getValueByName(const SFString& fieldName) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
 
-#ifdef NEW_CODE
     // Give customized code a chance to override first
     SFString ret = nextKillChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
+    // If the class has any fields, return them
     switch (tolower(fieldName[0])) {
         case '_':
             if ( fieldName % "_to" ) return fromAddress(_to);
             break;
     }
-    return "";
-#else
-    return Format("[{"+toUpper(fieldName)+"}]");
-#endif
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CTransaction::getValueByName(fieldName);
 }
 
 //---------------------------------------------------------------------------

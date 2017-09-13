@@ -41,60 +41,11 @@ void CBlock::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) c
 
 //---------------------------------------------------------------------------
 SFString nextBlockChunk(const SFString& fieldIn, const void *dataPtr) {
-    const CBlock *blo = (const CBlock *)dataPtr;
-    if (blo) {
-        // Give customized code a chance to override first
-#ifdef NEW_CODE
-        SFString ret = blo->getValueByName(fieldIn);
-        if (!ret.empty())
-            return ret;
-#else
-        SFString ret = nextBlockChunk_custom(fieldIn, dataPtr);
-        if (!ret.empty())
-            return ret;
+    if (dataPtr)
+        return ((const CBlock *)dataPtr)->getValueByName(fieldIn);
 
-        switch (tolower(fieldIn[0])) {
-            case 'b':
-                if ( fieldIn % "blockNumber" ) return asStringU(blo->blockNumber);
-                break;
-            case 'g':
-                if ( fieldIn % "gasLimit" ) return fromGas(blo->gasLimit);
-                if ( fieldIn % "gasUsed" ) return fromGas(blo->gasUsed);
-                break;
-            case 'h':
-                if ( fieldIn % "hash" ) return fromHash(blo->hash);
-                break;
-            case 'l':
-                if ( fieldIn % "logsBloom" ) return fromBloom(blo->logsBloom);
-                break;
-            case 'p':
-                if ( fieldIn % "parentHash" ) return fromHash(blo->parentHash);
-                break;
-            case 't':
-                if ( fieldIn % "timestamp" ) return fromTimestamp(blo->timestamp);
-                if ( fieldIn % "transactions" ) {
-                    uint32_t cnt = blo->transactions.getCount();
-                    if (!cnt) return "";
-                    SFString retS;
-                    for (uint32_t i = 0 ; i < cnt ; i++) {
-                        retS += blo->transactions[i].Format();
-                        retS += ((i < cnt - 1) ? ",\n" : "\n");
-                    }
-                    return retS;
-                }
-                break;
-        }
-#endif
-        // EXISTING_CODE
-        if ( isTestMode() && fieldIn % "blockHash" )
-            return fromHash(blo->hash);
-        // EXISTING_CODE
-
-        // Finally, give the parent class a chance
-        ret = nextBasenodeChunk(fieldIn, blo);
-        if (!ret.empty())
-            return ret;
-    }
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return fldNotFound(fieldIn);
 }
@@ -296,15 +247,13 @@ SFArchive& operator>>(SFArchive& archive, CBlock& blo) {
 
 //---------------------------------------------------------------------------
 SFString CBlock::getValueByName(const SFString& fieldName) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
 
-#ifdef NEW_CODE
     // Give customized code a chance to override first
     SFString ret = nextBlockChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
+    // If the class has any fields, return them
     switch (tolower(fieldName[0])) {
         case 'b':
             if ( fieldName % "blockNumber" ) return asStringU(blockNumber);
@@ -336,10 +285,14 @@ SFString CBlock::getValueByName(const SFString& fieldName) const {
             }
             break;
     }
-    return "";
-#else
-    return Format("[{"+toUpper(fieldName)+"}]");
-#endif
+
+    // EXISTING_CODE
+    if ( isTestMode() && fieldName % "blockHash" )
+        return fromHash(hash);
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CBaseNode::getValueByName(fieldName);
 }
 
 //---------------------------------------------------------------------------

@@ -39,30 +39,12 @@ void [{CLASS_NAME}]::Format(CExportContext& ctx, const SFString& fmtIn, void *da
 
 //---------------------------------------------------------------------------
 SFString next[{PROPER}]Chunk(const SFString& fieldIn, const void *dataPtr) {
-    const [{CLASS_NAME}] *[{SHORT3}] = (const [{CLASS_NAME}] *)dataPtr;
-    if ([{SHORT3}]) {
-        // Give customized code a chance to override first
-#ifdef NEW_CODE
-        SFString ret = [{SHORT3}]->getValueByName(fieldIn);
-        if (!ret.empty())
-            return ret;
-#else
-        SFString ret = next[{PROPER}]Chunk_custom(fieldIn, dataPtr);
-        if (!ret.empty())
-            return ret;
+    if (dataPtr)
+        return ((const [{CLASS_NAME}] *)dataPtr)->getValueByName(fieldIn);
 
-        switch (tolower(fieldIn[0])) {
-[FIELD_CASE]        }
-#endif
-        // EXISTING_CODE
-        // EXISTING_CODE
+    // EXISTING_CODE
+    // EXISTING_CODE
 
-        // Finally, give the parent class a chance
-        [{PARENT_CHNK}]
-        if (!ret.empty())
-            return ret;
-    }
-[{SUBCLASSFLDS}]
     return fldNotFound(fieldIn);
 }
 
@@ -156,13 +138,19 @@ bool [{CLASS_NAME}]::readBackLevel(SFArchive& archive) {
 [{OPERATORS}]
 //---------------------------------------------------------------------------
 SFString [{CLASS_NAME}]::getValueByName(const SFString& fieldName) const {
+
+    // Give customized code a chance to override first
+    SFString ret = next[{PROPER}]Chunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    [{FIELD_CASE}]
+
     // EXISTING_CODE
     // EXISTING_CODE
 
-#ifdef NEW_CODE
-[{GETVALUE}]#else
-    return Format("[{"+toUpper(fieldName)+"}]");
-#endif
+[{SUBCLASSFLDS}]    // Finally, give the parent class a chance
+    return [{BASE_CLASS}]::getValueByName(fieldName);
 }
 
 //---------------------------------------------------------------------------

@@ -39,35 +39,11 @@ void QDepositEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *dat
 
 //---------------------------------------------------------------------------
 SFString nextDepositeventChunk(const SFString& fieldIn, const void *dataPtr) {
-    const QDepositEvent *dep = (const QDepositEvent *)dataPtr;
-    if (dep) {
-        // Give customized code a chance to override first
-#ifdef NEW_CODE
-        SFString ret = dep->getValueByName(fieldIn);
-        if (!ret.empty())
-            return ret;
-#else
-        SFString ret = nextDepositeventChunk_custom(fieldIn, dataPtr);
-        if (!ret.empty())
-            return ret;
+    if (dataPtr)
+        return ((const QDepositEvent *)dataPtr)->getValueByName(fieldIn);
 
-        switch (tolower(fieldIn[0])) {
-            case 'f':
-                if ( fieldIn % "from" ) return fromAddress(dep->from);
-                break;
-            case 'v':
-                if ( fieldIn % "value" ) return asStringBN(dep->value);
-                break;
-        }
-#endif
-        // EXISTING_CODE
-        // EXISTING_CODE
-
-        // Finally, give the parent class a chance
-        ret = nextLogentryChunk(fieldIn, dep);
-        if (!ret.empty())
-            return ret;
-    }
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return fldNotFound(fieldIn);
 }
@@ -182,15 +158,13 @@ bool QDepositEvent::readBackLevel(SFArchive& archive) {
 
 //---------------------------------------------------------------------------
 SFString QDepositEvent::getValueByName(const SFString& fieldName) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
 
-#ifdef NEW_CODE
     // Give customized code a chance to override first
     SFString ret = nextDepositeventChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
+    // If the class has any fields, return them
     switch (tolower(fieldName[0])) {
         case 'f':
             if ( fieldName % "from" ) return fromAddress(from);
@@ -199,10 +173,12 @@ SFString QDepositEvent::getValueByName(const SFString& fieldName) const {
             if ( fieldName % "value" ) return asStringBN(value);
             break;
     }
-    return "";
-#else
-    return Format("[{"+toUpper(fieldName)+"}]");
-#endif
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CLogEntry::getValueByName(fieldName);
 }
 
 //---------------------------------------------------------------------------

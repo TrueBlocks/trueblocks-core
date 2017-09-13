@@ -40,78 +40,11 @@ void CTrace::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) c
 
 //---------------------------------------------------------------------------
 SFString nextTraceChunk(const SFString& fieldIn, const void *dataPtr) {
-    const CTrace *tra = (const CTrace *)dataPtr;
-    if (tra) {
-        // Give customized code a chance to override first
-#ifdef NEW_CODE
-        SFString ret = tra->getValueByName(fieldIn);
-        if (!ret.empty())
-            return ret;
-#else
-        SFString ret = nextTraceChunk_custom(fieldIn, dataPtr);
-        if (!ret.empty())
-            return ret;
+    if (dataPtr)
+        return ((const CTrace *)dataPtr)->getValueByName(fieldIn);
 
-        switch (tolower(fieldIn[0])) {
-            case 'a':
-                if ( fieldIn % "action" ) { expContext().noFrst=true; return tra->action.Format(); }
-                break;
-            case 'b':
-                if ( fieldIn % "blockHash" ) return fromHash(tra->blockHash);
-                if ( fieldIn % "blockNumber" ) return asStringU(tra->blockNumber);
-                break;
-            case 'e':
-                if ( fieldIn % "error" ) return tra->error;
-                break;
-            case 'r':
-                if ( fieldIn % "result" ) { expContext().noFrst=true; return tra->result.Format(); }
-                break;
-            case 's':
-                if ( fieldIn % "subtraces" ) return asStringU(tra->subtraces);
-                break;
-            case 't':
-                if ( fieldIn % "traceAddress" ) {
-                    uint32_t cnt = tra->traceAddress.getCount();
-                    if (!cnt) return "";
-                    SFString retS;
-                    for (uint32_t i = 0 ; i < cnt ; i++) {
-                        retS += indent() + ("\"" + tra->traceAddress[i] + "\"");
-                        retS += ((i < cnt - 1) ? ",\n" : "\n");
-                    }
-                    return retS;
-                }
-                if ( fieldIn % "transactionHash" ) return fromHash(tra->transactionHash);
-                if ( fieldIn % "transactionPosition" ) return asStringU(tra->transactionPosition);
-                if ( fieldIn % "type" ) return tra->type;
-                break;
-        }
-#endif
-        // EXISTING_CODE
-        // EXISTING_CODE
-
-        // Finally, give the parent class a chance
-        ret = nextBasenodeChunk(fieldIn, tra);
-        if (!ret.empty())
-            return ret;
-    }
-
-    SFString s;
-    s = toUpper(SFString("action")) + "::";
-    if (fieldIn.Contains(s)) {
-        SFString f = fieldIn;
-        f.ReplaceAll(s,"");
-        if (tra)
-            f = tra->action.Format("[{"+f+"}]");
-        return f;
-    }
-    s = toUpper(SFString("result")) + "::";
-    if (fieldIn.Contains(s)) {
-        SFString f = fieldIn;
-        f.ReplaceAll(s,"");
-        if (tra)
-            f = tra->result.Format("[{"+f+"}]");
-        return f;
-    }
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return fldNotFound(fieldIn);
 }
@@ -275,15 +208,13 @@ bool CTrace::readBackLevel(SFArchive& archive) {
 
 //---------------------------------------------------------------------------
 SFString CTrace::getValueByName(const SFString& fieldName) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
 
-#ifdef NEW_CODE
     // Give customized code a chance to override first
     SFString ret = nextTraceChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
+    // If the class has any fields, return them
     switch (tolower(fieldName[0])) {
         case 'a':
             if ( fieldName % "action" ) { expContext().noFrst=true; return action.Format(); }
@@ -317,10 +248,29 @@ SFString CTrace::getValueByName(const SFString& fieldName) const {
             if ( fieldName % "type" ) return type;
             break;
     }
-    return "";
-#else
-    return Format("[{"+toUpper(fieldName)+"}]");
-#endif
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    SFString s;
+    s = toUpper(SFString("action")) + "::";
+    if (fieldName.Contains(s)) {
+        SFString f = fieldName;
+        f.ReplaceAll(s,"");
+        f = action.getValueByName(f);
+        return f;
+    }
+
+    s = toUpper(SFString("result")) + "::";
+    if (fieldName.Contains(s)) {
+        SFString f = fieldName;
+        f.ReplaceAll(s,"");
+        f = result.getValueByName(f);
+        return f;
+    }
+
+    // Finally, give the parent class a chance
+    return CBaseNode::getValueByName(fieldName);
 }
 
 //---------------------------------------------------------------------------

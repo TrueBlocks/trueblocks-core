@@ -39,33 +39,11 @@ void QTransfer::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr
 
 //---------------------------------------------------------------------------
 SFString nextTransferChunk(const SFString& fieldIn, const void *dataPtr) {
-    const QTransfer *tra = (const QTransfer *)dataPtr;
-    if (tra) {
-        // Give customized code a chance to override first
-#ifdef NEW_CODE
-        SFString ret = tra->getValueByName(fieldIn);
-        if (!ret.empty())
-            return ret;
-#else
-        SFString ret = nextTransferChunk_custom(fieldIn, dataPtr);
-        if (!ret.empty())
-            return ret;
+    if (dataPtr)
+        return ((const QTransfer *)dataPtr)->getValueByName(fieldIn);
 
-        switch (tolower(fieldIn[0])) {
-            case '_':
-                if ( fieldIn % "_to" ) return fromAddress(tra->_to);
-                if ( fieldIn % "_value" ) return asStringBN(tra->_value);
-                break;
-        }
-#endif
-        // EXISTING_CODE
-        // EXISTING_CODE
-
-        // Finally, give the parent class a chance
-        ret = nextTransactionChunk(fieldIn, tra);
-        if (!ret.empty())
-            return ret;
-    }
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return fldNotFound(fieldIn);
 }
@@ -178,25 +156,25 @@ bool QTransfer::readBackLevel(SFArchive& archive) {
 
 //---------------------------------------------------------------------------
 SFString QTransfer::getValueByName(const SFString& fieldName) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
 
-#ifdef NEW_CODE
     // Give customized code a chance to override first
     SFString ret = nextTransferChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
+    // If the class has any fields, return them
     switch (tolower(fieldName[0])) {
         case '_':
             if ( fieldName % "_to" ) return fromAddress(_to);
             if ( fieldName % "_value" ) return asStringBN(_value);
             break;
     }
-    return "";
-#else
-    return Format("[{"+toUpper(fieldName)+"}]");
-#endif
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CTransaction::getValueByName(fieldName);
 }
 
 //---------------------------------------------------------------------------

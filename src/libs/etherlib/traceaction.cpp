@@ -41,56 +41,11 @@ void CTraceAction::Format(CExportContext& ctx, const SFString& fmtIn, void *data
 
 //---------------------------------------------------------------------------
 SFString nextTraceactionChunk(const SFString& fieldIn, const void *dataPtr) {
-    const CTraceAction *tra = (const CTraceAction *)dataPtr;
-    if (tra) {
-        // Give customized code a chance to override first
-#ifdef NEW_CODE
-        SFString ret = tra->getValueByName(fieldIn);
-        if (!ret.empty())
-            return ret;
-#else
-        SFString ret = nextTraceactionChunk_custom(fieldIn, dataPtr);
-        if (!ret.empty())
-            return ret;
+    if (dataPtr)
+        return ((const CTraceAction *)dataPtr)->getValueByName(fieldIn);
 
-        switch (tolower(fieldIn[0])) {
-            case 'a':
-                if ( fieldIn % "address" ) return fromAddress(tra->address);
-                break;
-            case 'b':
-                if ( fieldIn % "balance" ) return fromWei(tra->balance);
-                break;
-            case 'c':
-                if ( fieldIn % "callType" ) return tra->callType;
-                break;
-            case 'f':
-                if ( fieldIn % "from" ) return fromAddress(tra->from);
-                break;
-            case 'g':
-                if ( fieldIn % "gas" ) return fromGas(tra->gas);
-                break;
-            case 'i':
-                if ( fieldIn % "input" ) return tra->input;
-                break;
-            case 'r':
-                if ( fieldIn % "refundAddress" ) return fromAddress(tra->refundAddress);
-                break;
-            case 't':
-                if ( fieldIn % "to" ) return fromAddress(tra->to);
-                break;
-            case 'v':
-                if ( fieldIn % "value" ) return fromWei(tra->value);
-                break;
-        }
-#endif
-        // EXISTING_CODE
-        // EXISTING_CODE
-
-        // Finally, give the parent class a chance
-        ret = nextBasenodeChunk(fieldIn, tra);
-        if (!ret.empty())
-            return ret;
-    }
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return fldNotFound(fieldIn);
 }
@@ -256,15 +211,13 @@ SFArchive& operator>>(SFArchive& archive, CTraceAction& tra) {
 
 //---------------------------------------------------------------------------
 SFString CTraceAction::getValueByName(const SFString& fieldName) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
 
-#ifdef NEW_CODE
     // Give customized code a chance to override first
     SFString ret = nextTraceactionChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
+    // If the class has any fields, return them
     switch (tolower(fieldName[0])) {
         case 'a':
             if ( fieldName % "address" ) return fromAddress(address);
@@ -294,10 +247,12 @@ SFString CTraceAction::getValueByName(const SFString& fieldName) const {
             if ( fieldName % "value" ) return fromWei(value);
             break;
     }
-    return "";
-#else
-    return Format("[{"+toUpper(fieldName)+"}]");
-#endif
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CBaseNode::getValueByName(fieldName);
 }
 
 //---------------------------------------------------------------------------
