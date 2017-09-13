@@ -55,7 +55,7 @@ baseClass: CBaseNode
 	  hidden: 0
 	fieldName: gasPrice
 	  fieldID: 1013
-	  fieldType: T_WEI TS_NUMERAL 4259875 TS_BIGNUM 4259875
+	  fieldType: T_GAS TS_NUMERAL 4259880 TS_BIGNUM 4259880
 	  hidden: 0
 	fieldName: cumulativeGasUsed
 	  fieldID: 1014
@@ -67,11 +67,11 @@ baseClass: CBaseNode
 	  hidden: 0
 	fieldName: isError
 	  fieldID: 1016
-	  fieldType: T_BOOL TS_NUMERAL 65556
+	  fieldType: T_NUMBER TS_NUMERAL 65561
 	  hidden: 1
 	fieldName: isInternalTx
 	  fieldID: 1017
-	  fieldType: T_BOOL TS_NUMERAL 65556
+	  fieldType: T_NUMBER TS_NUMERAL 65561
 	  hidden: 1
 	fieldName: receipt
 	  fieldID: 1018
