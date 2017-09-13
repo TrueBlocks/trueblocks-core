@@ -153,6 +153,12 @@ SFString [{CLASS_NAME}]::getValueByName(const SFString& fieldName) const {
     return [{BASE_CLASS}]::getValueByName(fieldName);
 }
 
+//-------------------------------------------------------------------------
+ostream& operator<<(ostream& os, const [{CLASS_NAME}]& item) {
+    os << item.Format() << "\n";
+    return os;
+}
+
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE

@@ -43,8 +43,8 @@ public:
         return (blockNum == item.blockNum && transIndex == item.transIndex); // && which == item.which);
     }
     bool operator!=(const CAcctCacheItem& item) { return !operator==(item); }
-    friend ostream& operator<<(ostream& os, const CAcctCacheItem& cacheItem);
     // EXISTING_CODE
+    friend ostream& operator<<(ostream& os, const CAcctCacheItem& item);
 
 protected:
     void Clear(void);

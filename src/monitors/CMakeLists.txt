@@ -10,7 +10,7 @@ project (monitors)
 # Compilation order of the src subdirectories
 add_subdirectory(cacheMan)
 
-if(0)
+if(1)
 add_subdirectory(bloomMan)
 add_subdirectory(scripts)
 
@@ -39,4 +39,4 @@ add_subdirectory(paritySMS)
 add_subdirectory(singular)
 add_subdirectory(tenX)
 add_subdirectory(whiteHat)
-endif(0)
+endif(1)

@@ -52,6 +52,7 @@ public:
     SFString encodeItem(void) const;
     bool isBuiltin;
     // EXISTING_CODE
+    friend ostream& operator<<(ostream& os, const CFunction& item);
 
 protected:
     void Clear(void);
