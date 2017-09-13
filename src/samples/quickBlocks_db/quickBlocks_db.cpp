@@ -15,10 +15,13 @@ extern double testRetrieve(void);
 //--------------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
-    etherlib_init("binary");
+    etherlib_init("infura");
 
-    cout << "Time to build:    " << testBuild()    << " seconds\n";
-    cout << "Time to retreive: " << testRetrieve() << " seconds\n";
+    double buildTime = testBuild();
+    double retrieveTime = testRetrieve();
+
+    cout << "Time to build:    " << buildTime    << " seconds\n";
+    cout << "Time to retreive: " << retrieveTime << " seconds\n";
 
     return 0;
 }
@@ -28,7 +31,7 @@ double testBuild(void) {
     double start = qbNow();
     establishFolder("./cache/");
     for (blknum_t b = FIRST ; b < FIRST+NBLKS ; b++) {
-        SFString fileName = "./cache/" + asString(b) + ".bin";
+        SFString fileName = "./cache/" + asStringU(b) + ".bin";
         CBlock block;
         getBlock(block, b);
         if (!fileExists(fileName))
@@ -44,7 +47,7 @@ double testBuild(void) {
 double testRetrieve(void) {
     double start = qbNow();
     for (blknum_t b = FIRST ; b < FIRST+NBLKS ; b++) {
-        SFString fileName = "./cache/" + asString(b) + ".bin";
+        SFString fileName = "./cache/" + asStringU(b) + ".bin";
         CBlock block;
         readOneBlock_fromBinary(block, fileName);
         cerr << "Reading " << block.blockNumber << "\r";
