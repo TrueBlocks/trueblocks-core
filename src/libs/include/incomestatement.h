@@ -51,6 +51,7 @@ public:
     void correct(void) { endBal = nodeBal; }
     friend class CAccountWatch;
     // EXISTING_CODE
+    friend ostream& operator<<(ostream& os, const CIncomeStatement& item);
 
 protected:
     void Clear(void);
@@ -143,17 +144,16 @@ extern SFArchive& operator>>(SFArchive& archive, CIncomeStatement& inc);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-    extern ostream& operator<<(ostream& os, const CIncomeStatement& t);
-    //------------------------------------------------------------
-    inline void CIncomeStatement::operator+=(const CIncomeStatement &x)
-    {
-        begBal += x.begBal;
-        inflow += x.inflow;
-        outflow += x.outflow;
-        gasCost += x.gasCost;
-        endBal += x.endBal;
-        blockNum = x.blockNum;
-    }
+//------------------------------------------------------------
+inline void CIncomeStatement::operator+=(const CIncomeStatement &x)
+{
+    begBal += x.begBal;
+    inflow += x.inflow;
+    outflow += x.outflow;
+    gasCost += x.gasCost;
+    endBal += x.endBal;
+    blockNum = x.blockNum;
+}
 // EXISTING_CODE
 #define NEW_CODE
 }  // namespace qblocks

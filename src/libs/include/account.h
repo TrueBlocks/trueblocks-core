@@ -49,6 +49,7 @@ public:
     CAbi abi;
     uint32_t deleteNotShowing(void);
     // EXISTING_CODE
+    friend ostream& operator<<(ostream& os, const CAccount& item);
 
 protected:
     void Clear(void);

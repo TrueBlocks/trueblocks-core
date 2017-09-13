@@ -37,6 +37,7 @@ public:
 
     // EXISTING_CODE
     // EXISTING_CODE
+    friend ostream& operator<<(ostream& os, const QRevokeEvent& item);
 
 protected:
     void Clear(void);

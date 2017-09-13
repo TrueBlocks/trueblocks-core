@@ -48,6 +48,7 @@ public:
 private:
     bool contains(const SFString& _key) const;
     // EXISTING_CODE
+    friend ostream& operator<<(ostream& os, const CLeaf& item);
 
 protected:
     void Clear(void);

@@ -66,6 +66,7 @@ public:
     SFStringArray uncles;
 #endif
     // EXISTING_CODE
+    friend ostream& operator<<(ostream& os, const CBlock& item);
 
 protected:
     void Clear(void);

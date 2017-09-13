@@ -50,6 +50,7 @@ public:
     uint32_t transactionIndex;
 #endif
     // EXISTING_CODE
+    friend ostream& operator<<(ostream& os, const CLogEntry& item);
 
 protected:
     void Clear(void);
