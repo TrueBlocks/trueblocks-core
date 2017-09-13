@@ -32,6 +32,12 @@ namespace qblocks {
     }
 
     //------------------------------------------------------------------
+    static int globErrFunc(const char *epath, int eerrno) {
+        //  perror(epath);
+        return 0;
+    }
+
+    //------------------------------------------------------------------
     int copyFile(const SFString& fromIn, const SFString& toIn) {
         SFString from = escapePath(fromIn);
         SFString to   = escapePath(toIn);
@@ -40,12 +46,6 @@ namespace qblocks {
         SFString command = copyCmd + " " + from + " " + to;
         if (system((const char *)command)) { }  // do not remove. The test just silences compiler warnings
         return static_cast<int>(fileExists(to));
-    }
-
-    //------------------------------------------------------------------
-    static int globErrFunc(const char *epath, int eerrno) {
-        //  perror(epath);
-        return 0;
     }
 
     //------------------------------------------------------------------
@@ -313,14 +313,18 @@ extern SFString binaryFileToString(const SFString& filename);
         stat((const char *)filename, &statBuf);
         return (SFUint32)statBuf.st_size;
     }
+} // namespace qblocks
 
+#include "filenames.h"
+
+namespace qblocks {
     //----------------------------------------------------------------------------
     bool establishFolder(const SFString& path, SFString& created) {
         if (fileExists(path) || folderExists(path))
             return true;
 
-        SFString targetFolder = path;
-
+        CFilename fullPath(path);
+        SFString targetFolder = fullPath.getFullPath();
         size_t find = targetFolder.ReverseFind('/');
         targetFolder = targetFolder.Left(find) + "/";
         SFString folder = targetFolder;

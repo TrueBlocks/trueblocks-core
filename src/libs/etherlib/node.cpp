@@ -998,29 +998,38 @@ private:
     SFUint32    count;
 };
 
-static CInMemoryCache theCache;
+static CInMemoryCache *theCache = NULL;
 //--------------------------------------------------------------------------
-void clearInMemoryCache(void)
-{
-    theCache.Clear();
+void clearInMemoryCache(void) {
+    if (theCache)
+        theCache->Clear();
+    theCache = NULL;
 }
+//--------------------------------------------------------------------------
+CInMemoryCache *getTheCache(void) {
+    if (!theCache)
+        theCache = new CInMemoryCache();
+    return theCache;
+}
+
 //--------------------------------------------------------------------------
 bool forEveryMiniBlockInMemory(MINIBLOCKVISITFUNC func, void *data, SFUint32 start, SFUint32 count)
 {
-    if (!theCache.Load(start,count))
+    CInMemoryCache *cache = getTheCache();
+    if (!cache->Load(start,count))
         return false;
-    SFUint32 first = theCache.firstBlock();
-    SFUint32 last = theCache.lastBlock();
+    SFUint32 first = cache->firstBlock();
+    SFUint32 last = cache->lastBlock();
 
     bool done=false;
     for (SFUint32 i=first;i<last&&!done;i++)
     {
-        if (inRange((SFUint32)theCache.blocks[i].blockNumber, start, start+count-1))
+        if (inRange((SFUint32)cache->blocks[i].blockNumber, start, start+count-1))
         {
-            if (!(*func)(theCache.blocks[i], &theCache.trans[0], data))
+            if (!(*func)(cache->blocks[i], &cache->trans[0], data))
                 return false;
 
-        } else if (theCache.blocks[i].blockNumber >= start+count)
+        } else if (cache->blocks[i].blockNumber >= start+count)
         {
             done=true;
 
@@ -1053,26 +1062,27 @@ bool forEveryMiniBlockInMemory(MINIBLOCKVISITFUNC func, void *data, SFUint32 sta
 //--------------------------------------------------------------------------
 bool forEveryFullBlockInMemory(BLOCKVISITFUNC func, void *data, SFUint32 start, SFUint32 count)
 {
+    CInMemoryCache *cache = getTheCache();
     if (getSource() != "mem")
         return false;
-    if (!theCache.Load(start,count))
+    if (!cache->Load(start,count))
         return false;
 
-    SFUint32 first = theCache.firstBlock();
-    SFUint32 last = theCache.lastBlock();
+    SFUint32 first = cache->firstBlock();
+    SFUint32 last = cache->lastBlock();
 
     bool done=false;
     for (SFUint32 i=first;i<last&&!done;i++)
     {
-        if (inRange((SFUint32)theCache.blocks[i].blockNumber, start, start+count-1))
+        if (inRange((SFUint32)cache->blocks[i].blockNumber, start, start+count-1))
         {
             CBlock block;
-            theCache.blocks[i].toBlock(block);
+            cache->blocks[i].toBlock(block);
             SFUint32 gasUsed=0;
-            for (SFUint32 tr=theCache.blocks[i].firstTrans;tr<theCache.blocks[i].firstTrans+theCache.blocks[i].nTrans;tr++)
+            for (SFUint32 tr=cache->blocks[i].firstTrans;tr<cache->blocks[i].firstTrans+cache->blocks[i].nTrans;tr++)
             {
                 CTransaction tt;
-                theCache.trans[tr].toTrans(tt);
+                cache->trans[tr].toTrans(tt);
                 gasUsed += tt.receipt.gasUsed;
                 block.transactions[block.transactions.getCount()] = tt;
             }
@@ -1080,7 +1090,7 @@ bool forEveryFullBlockInMemory(BLOCKVISITFUNC func, void *data, SFUint32 start, 
             if (!(*func)(block, data))
                 return false;
 
-        } else if (theCache.blocks[i].blockNumber >= start+count)
+        } else if (cache->blocks[i].blockNumber >= start+count)
         {
             done=true;
 
