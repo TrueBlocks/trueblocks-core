@@ -18,11 +18,11 @@ namespace qblocks {
 IMPLEMENT_NODE(CReceipt, CBaseNode, dataSchema());
 
 //---------------------------------------------------------------------------
-extern SFString nextReceiptChunk(const SFString& fieldIn, const void *data);
-static SFString nextReceiptChunk_custom(const SFString& fieldIn, const void *data);
+extern SFString nextReceiptChunk(const SFString& fieldIn, const void *dataPtr);
+static SFString nextReceiptChunk_custom(const SFString& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CReceipt::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+void CReceipt::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -32,7 +32,7 @@ void CReceipt::Format(CExportContext& ctx, const SFString& fmtIn, void *data) co
     }
 
     SFString fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, data))
+    if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
     while (!fmt.empty())
@@ -40,55 +40,12 @@ void CReceipt::Format(CExportContext& ctx, const SFString& fmtIn, void *data) co
 }
 
 //---------------------------------------------------------------------------
-SFString nextReceiptChunk(const SFString& fieldIn, const void *data) {
-    const CReceipt *rec = (const CReceipt *)data;
-    if (rec) {
-        // Give customized code a chance to override first
-#ifdef NEW_CODE
-        SFString ret = rec->getValueByName(fieldIn);
-        if (!ret.empty())
-            return ret;
-#else
-        SFString ret = nextReceiptChunk_custom(fieldIn, data);
-        if (!ret.empty())
-            return ret;
+SFString nextReceiptChunk(const SFString& fieldIn, const void *dataPtr) {
+    if (dataPtr)
+        return ((const CReceipt *)dataPtr)->getValueByName(fieldIn);
 
-        switch (tolower(fieldIn[0])) {
-            case 'c':
-                if ( fieldIn % "contractAddress" ) return fromAddress(rec->contractAddress);
-                break;
-            case 'g':
-                if ( fieldIn % "gasUsed" ) return asStringU(rec->gasUsed);
-                break;
-            case 'l':
-                if ( fieldIn % "logs" ) {
-                    uint32_t cnt = rec->logs.getCount();
-                    if (!cnt) return "";
-                    SFString retS;
-                    for (uint32_t i = 0 ; i < cnt ; i++) {
-                        retS += rec->logs[i].Format();
-                        retS += ((i < cnt - 1) ? ",\n" : "\n");
-                    }
-                    return retS;
-                }
-                if ( fieldIn % "logsBloom" ) return fromBloom(rec->logsBloom);
-                break;
-        }
-#endif
-        // EXISTING_CODE
-        // See if this field belongs to the item's container
-        ret = nextTransactionChunk(fieldIn, rec->pTrans);
-        if (ret.Contains("Field not found"))
-            ret = EMPTY;
-        if (!ret.empty())
-            return ret;
-        // EXISTING_CODE
-
-        // Finally, give the parent class a chance
-        ret = nextBasenodeChunk(fieldIn, rec);
-        if (!ret.empty())
-            return ret;
-    }
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return fldNotFound(fieldIn);
 }
@@ -127,7 +84,7 @@ bool CReceipt::setValueByName(const SFString& fieldName, const SFString& fieldVa
             if ( fieldName % "contractAddress" ) { contractAddress = toAddress(fieldValue); return true; }
             break;
         case 'g':
-            if ( fieldName % "gasUsed" ) { gasUsed = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "gasUsed" ) { gasUsed = toGas(fieldValue); return true; }
             break;
         case 'l':
             if ( fieldName % "logs" ) return true;
@@ -197,8 +154,8 @@ void CReceipt::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextReceiptChunk_custom(const SFString& fieldIn, const void *data) {
-    const CReceipt *rec = (const CReceipt *)data;
+SFString nextReceiptChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+    const CReceipt *rec = (const CReceipt *)dataPtr;
     if (rec) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -218,7 +175,7 @@ SFString nextReceiptChunk_custom(const SFString& fieldIn, const void *data) {
 }
 
 //---------------------------------------------------------------------------
-bool CReceipt::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+bool CReceipt::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
@@ -246,21 +203,19 @@ SFArchive& operator>>(SFArchive& archive, CReceipt& rec) {
 
 //---------------------------------------------------------------------------
 SFString CReceipt::getValueByName(const SFString& fieldName) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
 
-#ifdef NEW_CODE
     // Give customized code a chance to override first
     SFString ret = nextReceiptChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
+    // If the class has any fields, return them
     switch (tolower(fieldName[0])) {
         case 'c':
             if ( fieldName % "contractAddress" ) return fromAddress(contractAddress);
             break;
         case 'g':
-            if ( fieldName % "gasUsed" ) return asStringU(gasUsed);
+            if ( fieldName % "gasUsed" ) return fromGas(gasUsed);
             break;
         case 'l':
             if ( fieldName % "logs" ) {
@@ -276,10 +231,18 @@ SFString CReceipt::getValueByName(const SFString& fieldName) const {
             if ( fieldName % "logsBloom" ) return fromBloom(logsBloom);
             break;
     }
-    return "";
-#else
-    return Format("[{"+toUpper(fieldName)+"}]");
-#endif
+
+    // EXISTING_CODE
+    // See if this field belongs to the item's container
+    ret = nextTransactionChunk(fieldName, pTrans);
+    if (ret.Contains("Field not found"))
+        ret = EMPTY;
+    if (!ret.empty())
+        return ret;
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CBaseNode::getValueByName(fieldName);
 }
 
 //---------------------------------------------------------------------------

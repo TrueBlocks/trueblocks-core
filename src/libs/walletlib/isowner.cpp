@@ -16,11 +16,11 @@
 IMPLEMENT_NODE(QIsOwner, CTransaction, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextIsownerChunk(const SFString& fieldIn, const void *data);
-static SFString nextIsownerChunk_custom(const SFString& fieldIn, const void *data);
+static SFString nextIsownerChunk(const SFString& fieldIn, const void *dataPtr);
+static SFString nextIsownerChunk_custom(const SFString& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void QIsOwner::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+void QIsOwner::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -30,7 +30,7 @@ void QIsOwner::Format(CExportContext& ctx, const SFString& fmtIn, void *data) co
     }
 
     SFString fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, data))
+    if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
     while (!fmt.empty())
@@ -38,33 +38,12 @@ void QIsOwner::Format(CExportContext& ctx, const SFString& fmtIn, void *data) co
 }
 
 //---------------------------------------------------------------------------
-SFString nextIsownerChunk(const SFString& fieldIn, const void *data) {
-    const QIsOwner *iso = (const QIsOwner *)data;
-    if (iso) {
-        // Give customized code a chance to override first
-#ifdef NEW_CODE
-        SFString ret = iso->getValueByName(fieldIn);
-        if (!ret.empty())
-            return ret;
-#else
-        SFString ret = nextIsownerChunk_custom(fieldIn, data);
-        if (!ret.empty())
-            return ret;
+SFString nextIsownerChunk(const SFString& fieldIn, const void *dataPtr) {
+    if (dataPtr)
+        return ((const QIsOwner *)dataPtr)->getValueByName(fieldIn);
 
-        switch (tolower(fieldIn[0])) {
-            case '_':
-                if ( fieldIn % "_addr" ) return fromAddress(iso->_addr);
-                break;
-        }
-#endif
-        // EXISTING_CODE
-        // EXISTING_CODE
-
-        // Finally, give the parent class a chance
-        ret = nextTransactionChunk(fieldIn, iso);
-        if (!ret.empty())
-            return ret;
-    }
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return fldNotFound(fieldIn);
 }
@@ -136,8 +115,8 @@ void QIsOwner::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextIsownerChunk_custom(const SFString& fieldIn, const void *data) {
-    const QIsOwner *iso = (const QIsOwner *)data;
+SFString nextIsownerChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+    const QIsOwner *iso = (const QIsOwner *)dataPtr;
     if (iso) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -157,7 +136,7 @@ SFString nextIsownerChunk_custom(const SFString& fieldIn, const void *data) {
 }
 
 //---------------------------------------------------------------------------
-bool QIsOwner::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+bool QIsOwner::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
@@ -173,24 +152,24 @@ bool QIsOwner::readBackLevel(SFArchive& archive) {
 
 //---------------------------------------------------------------------------
 SFString QIsOwner::getValueByName(const SFString& fieldName) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
 
-#ifdef NEW_CODE
     // Give customized code a chance to override first
     SFString ret = nextIsownerChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
+    // If the class has any fields, return them
     switch (tolower(fieldName[0])) {
         case '_':
             if ( fieldName % "_addr" ) return fromAddress(_addr);
             break;
     }
-    return "";
-#else
-    return Format("[{"+toUpper(fieldName)+"}]");
-#endif
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CTransaction::getValueByName(fieldName);
 }
 
 //---------------------------------------------------------------------------

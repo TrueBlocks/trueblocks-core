@@ -16,11 +16,11 @@
 IMPLEMENT_NODE(QTransferEvent, CLogEntry, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextTransfereventChunk(const SFString& fieldIn, const void *data);
-static SFString nextTransfereventChunk_custom(const SFString& fieldIn, const void *data);
+static SFString nextTransfereventChunk(const SFString& fieldIn, const void *dataPtr);
+static SFString nextTransfereventChunk_custom(const SFString& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void QTransferEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+void QTransferEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -30,7 +30,7 @@ void QTransferEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *da
     }
 
     SFString fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, data))
+    if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
     while (!fmt.empty())
@@ -38,35 +38,12 @@ void QTransferEvent::Format(CExportContext& ctx, const SFString& fmtIn, void *da
 }
 
 //---------------------------------------------------------------------------
-SFString nextTransfereventChunk(const SFString& fieldIn, const void *data) {
-    const QTransferEvent *tra = (const QTransferEvent *)data;
-    if (tra) {
-        // Give customized code a chance to override first
-#ifdef NEW_CODE
-        SFString ret = tra->getValueByName(fieldIn);
-        if (!ret.empty())
-            return ret;
-#else
-        SFString ret = nextTransfereventChunk_custom(fieldIn, data);
-        if (!ret.empty())
-            return ret;
+SFString nextTransfereventChunk(const SFString& fieldIn, const void *dataPtr) {
+    if (dataPtr)
+        return ((const QTransferEvent *)dataPtr)->getValueByName(fieldIn);
 
-        switch (tolower(fieldIn[0])) {
-            case '_':
-                if ( fieldIn % "_from" ) return fromAddress(tra->_from);
-                if ( fieldIn % "_to" ) return fromAddress(tra->_to);
-                if ( fieldIn % "_value" ) return asStringBN(tra->_value);
-                break;
-        }
-#endif
-        // EXISTING_CODE
-        // EXISTING_CODE
-
-        // Finally, give the parent class a chance
-        ret = nextLogentryChunk(fieldIn, tra);
-        if (!ret.empty())
-            return ret;
-    }
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return fldNotFound(fieldIn);
 }
@@ -146,8 +123,8 @@ void QTransferEvent::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextTransfereventChunk_custom(const SFString& fieldIn, const void *data) {
-    const QTransferEvent *tra = (const QTransferEvent *)data;
+SFString nextTransfereventChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+    const QTransferEvent *tra = (const QTransferEvent *)dataPtr;
     if (tra) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -167,7 +144,7 @@ SFString nextTransfereventChunk_custom(const SFString& fieldIn, const void *data
 }
 
 //---------------------------------------------------------------------------
-bool QTransferEvent::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+bool QTransferEvent::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
@@ -183,15 +160,13 @@ bool QTransferEvent::readBackLevel(SFArchive& archive) {
 
 //---------------------------------------------------------------------------
 SFString QTransferEvent::getValueByName(const SFString& fieldName) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
 
-#ifdef NEW_CODE
     // Give customized code a chance to override first
     SFString ret = nextTransfereventChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
+    // If the class has any fields, return them
     switch (tolower(fieldName[0])) {
         case '_':
             if ( fieldName % "_from" ) return fromAddress(_from);
@@ -199,10 +174,12 @@ SFString QTransferEvent::getValueByName(const SFString& fieldName) const {
             if ( fieldName % "_value" ) return asStringBN(_value);
             break;
     }
-    return "";
-#else
-    return Format("[{"+toUpper(fieldName)+"}]");
-#endif
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CLogEntry::getValueByName(fieldName);
 }
 
 //---------------------------------------------------------------------------

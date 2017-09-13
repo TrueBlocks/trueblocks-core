@@ -109,7 +109,8 @@ int main(int argc, const char *argv[]) {
             visitor.blockStats.lastBlock  = min(topOfChain, visitor.blockStats.maxWatchBlock);
             visitor.blockStats.firstBlock = min(blockNum,   visitor.blockStats.lastBlock);
             visitor.blockStats.nBlocks    = visitor.blockStats.lastBlock - visitor.blockStats.firstBlock;
-            cerr << "Freshening from " << visitor.blockStats.firstBlock << " to " << visitor.blockStats.lastBlock << " (" << visitor.blockStats.nBlocks << " blocks)\r\n";
+            SFString systemName = toml.getConfigStr("settings", "name", "") + " ";
+            cerr << "Freshening " << systemName << "from " << visitor.blockStats.firstBlock << " to " << visitor.blockStats.lastBlock << " (" << visitor.blockStats.nBlocks << " blocks)\r\n";
             cerr.flush();
 
             if (!upToDate) {  // we're not starting at the beginning

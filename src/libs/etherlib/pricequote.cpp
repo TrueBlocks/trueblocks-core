@@ -18,11 +18,11 @@ namespace qblocks {
 IMPLEMENT_NODE(CPriceQuote, CBaseNode, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextPricequoteChunk(const SFString& fieldIn, const void *data);
-static SFString nextPricequoteChunk_custom(const SFString& fieldIn, const void *data);
+static SFString nextPricequoteChunk(const SFString& fieldIn, const void *dataPtr);
+static SFString nextPricequoteChunk_custom(const SFString& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CPriceQuote::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+void CPriceQuote::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -32,7 +32,7 @@ void CPriceQuote::Format(CExportContext& ctx, const SFString& fmtIn, void *data)
     }
 
     SFString fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, data))
+    if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
     while (!fmt.empty())
@@ -40,54 +40,12 @@ void CPriceQuote::Format(CExportContext& ctx, const SFString& fmtIn, void *data)
 }
 
 //---------------------------------------------------------------------------
-SFString nextPricequoteChunk(const SFString& fieldIn, const void *data) {
-    const CPriceQuote *pri = (const CPriceQuote *)data;
-    if (pri) {
-        // Give customized code a chance to override first
-#ifdef NEW_CODE
-        SFString ret = pri->getValueByName(fieldIn);
-        if (!ret.empty())
-            return ret;
-#else
-        SFString ret = nextPricequoteChunk_custom(fieldIn, data);
-        if (!ret.empty())
-            return ret;
+SFString nextPricequoteChunk(const SFString& fieldIn, const void *dataPtr) {
+    if (dataPtr)
+        return ((const CPriceQuote *)dataPtr)->getValueByName(fieldIn);
 
-        switch (tolower(fieldIn[0])) {
-            case 'c':
-                if ( fieldIn % "close" ) return fmtFloat(pri->close);
-                break;
-            case 'h':
-                if ( fieldIn % "high" ) return fmtFloat(pri->high);
-                break;
-            case 'l':
-                if ( fieldIn % "low" ) return fmtFloat(pri->low);
-                break;
-            case 'o':
-                if ( fieldIn % "open" ) return fmtFloat(pri->open);
-                break;
-            case 'q':
-                if ( fieldIn % "quoteVolume" ) return fmtFloat(pri->quoteVolume);
-                break;
-            case 't':
-                if ( fieldIn % "timestamp" ) return asStringU(pri->timestamp);
-                break;
-            case 'v':
-                if ( fieldIn % "volume" ) return fmtFloat(pri->volume);
-                break;
-            case 'w':
-                if ( fieldIn % "weightedAvg" ) return fmtFloat(pri->weightedAvg);
-                break;
-        }
-#endif
-        // EXISTING_CODE
-        // EXISTING_CODE
-
-        // Finally, give the parent class a chance
-        ret = nextBasenodeChunk(fieldIn, pri);
-        if (!ret.empty())
-            return ret;
-    }
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return fldNotFound(fieldIn);
 }
@@ -205,8 +163,8 @@ void CPriceQuote::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextPricequoteChunk_custom(const SFString& fieldIn, const void *data) {
-    const CPriceQuote *pri = (const CPriceQuote *)data;
+SFString nextPricequoteChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+    const CPriceQuote *pri = (const CPriceQuote *)dataPtr;
     if (pri) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -229,7 +187,7 @@ SFString nextPricequoteChunk_custom(const SFString& fieldIn, const void *data) {
 }
 
 //---------------------------------------------------------------------------
-bool CPriceQuote::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+bool CPriceQuote::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
@@ -245,15 +203,13 @@ bool CPriceQuote::readBackLevel(SFArchive& archive) {
 
 //---------------------------------------------------------------------------
 SFString CPriceQuote::getValueByName(const SFString& fieldName) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
 
-#ifdef NEW_CODE
     // Give customized code a chance to override first
     SFString ret = nextPricequoteChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
+    // If the class has any fields, return them
     switch (tolower(fieldName[0])) {
         case 'c':
             if ( fieldName % "close" ) return fmtFloat(close);
@@ -280,10 +236,12 @@ SFString CPriceQuote::getValueByName(const SFString& fieldName) const {
             if ( fieldName % "weightedAvg" ) return fmtFloat(weightedAvg);
             break;
     }
-    return "";
-#else
-    return Format("[{"+toUpper(fieldName)+"}]");
-#endif
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CBaseNode::getValueByName(fieldName);
 }
 
 //---------------------------------------------------------------------------

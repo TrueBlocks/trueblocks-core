@@ -16,11 +16,11 @@
 IMPLEMENT_NODE(QExecute, CTransaction, dataSchema());
 
 //---------------------------------------------------------------------------
-static SFString nextExecuteChunk(const SFString& fieldIn, const void *data);
-static SFString nextExecuteChunk_custom(const SFString& fieldIn, const void *data);
+static SFString nextExecuteChunk(const SFString& fieldIn, const void *dataPtr);
+static SFString nextExecuteChunk_custom(const SFString& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void QExecute::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+void QExecute::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -30,7 +30,7 @@ void QExecute::Format(CExportContext& ctx, const SFString& fmtIn, void *data) co
     }
 
     SFString fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, data))
+    if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
     while (!fmt.empty())
@@ -38,35 +38,12 @@ void QExecute::Format(CExportContext& ctx, const SFString& fmtIn, void *data) co
 }
 
 //---------------------------------------------------------------------------
-SFString nextExecuteChunk(const SFString& fieldIn, const void *data) {
-    const QExecute *exe = (const QExecute *)data;
-    if (exe) {
-        // Give customized code a chance to override first
-#ifdef NEW_CODE
-        SFString ret = exe->getValueByName(fieldIn);
-        if (!ret.empty())
-            return ret;
-#else
-        SFString ret = nextExecuteChunk_custom(fieldIn, data);
-        if (!ret.empty())
-            return ret;
+SFString nextExecuteChunk(const SFString& fieldIn, const void *dataPtr) {
+    if (dataPtr)
+        return ((const QExecute *)dataPtr)->getValueByName(fieldIn);
 
-        switch (tolower(fieldIn[0])) {
-            case '_':
-                if ( fieldIn % "_to" ) return fromAddress(exe->_to);
-                if ( fieldIn % "_value" ) return asStringBN(exe->_value);
-                if ( fieldIn % "_data" ) return exe->_data;
-                break;
-        }
-#endif
-        // EXISTING_CODE
-        // EXISTING_CODE
-
-        // Finally, give the parent class a chance
-        ret = nextTransactionChunk(fieldIn, exe);
-        if (!ret.empty())
-            return ret;
-    }
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return fldNotFound(fieldIn);
 }
@@ -146,8 +123,8 @@ void QExecute::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextExecuteChunk_custom(const SFString& fieldIn, const void *data) {
-    const QExecute *exe = (const QExecute *)data;
+SFString nextExecuteChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+    const QExecute *exe = (const QExecute *)dataPtr;
     if (exe) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -167,7 +144,7 @@ SFString nextExecuteChunk_custom(const SFString& fieldIn, const void *data) {
 }
 
 //---------------------------------------------------------------------------
-bool QExecute::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+bool QExecute::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
@@ -183,15 +160,13 @@ bool QExecute::readBackLevel(SFArchive& archive) {
 
 //---------------------------------------------------------------------------
 SFString QExecute::getValueByName(const SFString& fieldName) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
 
-#ifdef NEW_CODE
     // Give customized code a chance to override first
     SFString ret = nextExecuteChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
+    // If the class has any fields, return them
     switch (tolower(fieldName[0])) {
         case '_':
             if ( fieldName % "_to" ) return fromAddress(_to);
@@ -199,10 +174,12 @@ SFString QExecute::getValueByName(const SFString& fieldName) const {
             if ( fieldName % "_data" ) return _data;
             break;
     }
-    return "";
-#else
-    return Format("[{"+toUpper(fieldName)+"}]");
-#endif
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CTransaction::getValueByName(fieldName);
 }
 
 //---------------------------------------------------------------------------
