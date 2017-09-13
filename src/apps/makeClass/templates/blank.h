@@ -35,6 +35,7 @@ public:
 
     // EXISTING_CODE
     // EXISTING_CODE
+    friend ostream& operator<<(ostream& os, const [{CLASS_NAME}]& item);
 
 protected:
     void Clear(void);
@@ -113,4 +114,5 @@ IMPLEMENT_ARCHIVE_LIST([{CLASS_NAME}]List);
 // EXISTING_CODE
 // EXISTING_CODE
 #define NEW_CODE
+
 [{NAMESPACE2}]

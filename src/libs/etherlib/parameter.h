@@ -59,6 +59,7 @@ public:
 
     // EXISTING_CODE
     // EXISTING_CODE
+    friend ostream& operator<<(ostream& os, const CParameter& item);
 
 protected:
     void Clear(void);

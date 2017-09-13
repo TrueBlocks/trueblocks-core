@@ -172,6 +172,12 @@ SFString QIsOwner::getValueByName(const SFString& fieldName) const {
     return CTransaction::getValueByName(fieldName);
 }
 
+//-------------------------------------------------------------------------
+ostream& operator<<(ostream& os, const QIsOwner& item) {
+    os << item.Format() << "\n";
+    return os;
+}
+
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE

@@ -38,6 +38,7 @@ public:
 
     // EXISTING_CODE
     // EXISTING_CODE
+    friend ostream& operator<<(ostream& os, const QApprovalEvent& item);
 
 protected:
     void Clear(void);

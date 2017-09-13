@@ -224,25 +224,27 @@ SFString CIncomeStatement::getValueByName(const SFString& fieldName) const {
     return CBaseNode::getValueByName(fieldName);
 }
 
-//---------------------------------------------------------------------------
-// EXISTING_CODE
-ostream& operator<<(ostream& os, const CIncomeStatement& is) {
+//-------------------------------------------------------------------------
+ostream& operator<<(ostream& os, const CIncomeStatement& item) {
     uint32_t width = 22;
-    if (is.begBal == is.endBal && is.begBal == -1) {
+    if (item.begBal == item.endBal && item.begBal == -1) {
         os << padCenter("begBal", width) << "   "
         << padCenter("inFlow", width) << "   "
         << padCenter("outFlow", width) << "   "
         << padCenter("gasCost", width) << "   "
         << padCenter("endBal", width);
     } else {
-        os << (is.begBal>0?cGreen:bBlack) << padLeft(wei2Ether(to_string(is.begBal).c_str()),width) << bBlack << "   ";
-        os << (is.inflow>0?cYellow:"") << padLeft(wei2Ether(to_string(is.inflow).c_str()),width) << bBlack << "   ";
-        os << (is.outflow>0?cYellow:"") << padLeft(wei2Ether(to_string(is.outflow).c_str()),width) << bBlack << "   ";
-        os << (is.gasCost>0?cYellow:"") << padLeft(wei2Ether(to_string(is.gasCost).c_str()),width) << cOff << "   ";
-        os << (is.endBal>0?cGreen:bBlack) << padLeft(wei2Ether(to_string(is.endBal).c_str()),width);
+        os << (item.begBal>0?cGreen:bBlack) << padLeft(wei2Ether(to_string(item.begBal).c_str()),width) << bBlack << "   ";
+        os << (item.inflow>0?cYellow:"") << padLeft(wei2Ether(to_string(item.inflow).c_str()),width) << bBlack << "   ";
+        os << (item.outflow>0?cYellow:"") << padLeft(wei2Ether(to_string(item.outflow).c_str()),width) << bBlack << "   ";
+        os << (item.gasCost>0?cYellow:"") << padLeft(wei2Ether(to_string(item.gasCost).c_str()),width) << cOff << "   ";
+        os << (item.endBal>0?cGreen:bBlack) << padLeft(wei2Ether(to_string(item.endBal).c_str()),width);
     }
     return os;
 }
+
+//---------------------------------------------------------------------------
+// EXISTING_CODE
 //---------------------------------------------------------------------------
 bool CIncomeStatement::reconcile(const SFAddress& addr, blknum_t blockNum1) {
     nodeBal = getBalance(addr, blockNum1, false);

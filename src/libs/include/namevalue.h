@@ -44,6 +44,7 @@ public:
     SFUintBN getValueBN(void) const { return toWei     (value); }
     SFString getName   (void) const { return            name;   }
     // EXISTING_CODE
+    friend ostream& operator<<(ostream& os, const CNameValue& item);
 
 protected:
     void Clear(void);
