@@ -149,13 +149,6 @@ return archive; \
 inline SFArchive& operator<<(SFArchive& archive, const ARRAY_CLASS& array) \
 { \
 uint64_t count = array.getCount(); \
-if (!archive.writeDeleted()) { \
-for (uint32_t i = 0 ; i < array.getCount() ; i++) { \
-if (array[i].isDeleted()) {\
-count--; \
-} \
-} \
-} \
 archive << count; \
 for (uint32_t i = 0 ; i < array.getCount() ; i++) \
 array[i].SerializeC(archive); \

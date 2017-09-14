@@ -104,7 +104,7 @@ public:
     CVisitor(void) :
         opts(), bloomStats(), transStats(), blockStats(), tBuffer(),
 //      watches, named,
-        cache(true, NO_SCHEMA, false),
+        cache(READING_ARCHIVE),
         screenFmt(""), esc_hit(false), user_hit_q(false)
     { barLen(80); }
 
