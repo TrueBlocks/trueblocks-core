@@ -89,13 +89,13 @@ SFString getClassName(void) const; \
 static void registerClass(void)
 
     //------------------------------------------------------------
-#define IMPLEMENT_NODE(CLASS_NAME, BASECLASS_NAME, SCHEMA) \
+#define IMPLEMENT_NODE(CLASS_NAME, BASECLASS_NAME) \
 CRuntimeClass CLASS_NAME::class##CLASS_NAME; \
 CRuntimeClass *CLASS_NAME::getRuntimeClass(void) const { return &CLASS_NAME::class##CLASS_NAME; } \
 SFString CLASS_NAME::getClassName(void) const { return CLASS_NAME::class##CLASS_NAME.getClassNamePtr(); } \
 CBaseNode* CLASS_NAME::CreateObject(void) { return new CLASS_NAME; } \
 static CBuiltIn _bi##CLASS_NAME(&CLASS_NAME::class##CLASS_NAME, #CLASS_NAME, sizeof(CLASS_NAME), \
-CLASS_NAME::CreateObject, GETRUNTIME_CLASS(BASECLASS_NAME), SCHEMA);
+CLASS_NAME::CreateObject, GETRUNTIME_CLASS(BASECLASS_NAME), fileSchema());
 
     //------------------------------------------------------------
 #define ADD_FIELD(CLASS_NAME, FIELD_NAME, FIELD_TYPE, FIELD_ID) \

@@ -12,7 +12,7 @@
 #include "acctcacheitem.h"
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CAcctCacheItem, CBaseNode, dataSchema());
+IMPLEMENT_NODE(CAcctCacheItem, CBaseNode);
 
 //---------------------------------------------------------------------------
 static SFString nextAcctcacheitemChunk(const SFString& fieldIn, const void *dataPtr);

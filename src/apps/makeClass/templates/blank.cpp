@@ -13,7 +13,7 @@
 [OTHER_INCS]
 [{NAMESPACE1}]
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE([{CLASS_NAME}], [{BASE_CLASS}], dataSchema());
+IMPLEMENT_NODE([{CLASS_NAME}], [{BASE_CLASS}]);
 
 //---------------------------------------------------------------------------
 [{SCOPE}] SFString next[{PROPER}]Chunk(const SFString& fieldIn, const void *dataPtr);

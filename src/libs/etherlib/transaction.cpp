@@ -15,7 +15,7 @@
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CTransaction, CBaseNode, dataSchema());
+IMPLEMENT_NODE(CTransaction, CBaseNode);
 
 //---------------------------------------------------------------------------
 extern SFString nextTransactionChunk(const SFString& fieldIn, const void *dataPtr);
