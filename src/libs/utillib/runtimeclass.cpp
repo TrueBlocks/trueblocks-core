@@ -32,6 +32,7 @@ namespace qblocks {
         return false;
     }
 
+#if 0
     //-------------------------------------------------------------------------
     void CRuntimeClass::Initialize(const SFString& protoName) {
         SFString copy = protoName;
@@ -39,12 +40,12 @@ namespace qblocks {
             m_ClassName = strdup(copy.c_str());
 
         m_ObjectSize    = 0;
-        // Signifies that we were created with Initialize so we can cleanup (i.e. the class is not builtin)
-        m_classSchema   = 0xFFFA;
+        m_version       = 0xFFFA;
         m_BaseClass     = NULL;
         m_FieldList     = NULL;
         m_CreateFunc    = NULL;
     }
+#endif
 
     //-------------------------------------------------------------------------
     void CRuntimeClass::ClearFieldList(void) {
@@ -146,8 +147,7 @@ namespace qblocks {
             pClass->m_ClassName = strdup(copy.c_str());
 
         pClass->m_ObjectSize    = size;
-        // Signifies that we were created with Initialize so we can cleanup (i.e. the class is not builtin)
-        pClass->m_classSchema   = schema;
+        pClass->m_version       = schema;
         pClass->m_BaseClass     = pBase;
         pClass->m_FieldList     = NULL;
         pClass->m_CreateFunc    = createFunc;

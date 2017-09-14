@@ -472,7 +472,6 @@ void writeToBinary(const CBaseNode& node, const SFString& fileName)
     if (establishFolder(fileName,created)) {
         if (!created.empty() && !isTestMode())
             cerr << "mkdir(" << created << ")" << SFString(' ',20) << "                                                     \n";
-        // TODO(tjayrush): Can I hide both schema and deleteOnWrite and make an enum?
         SFArchive archive(WRITING_ARCHIVE);
         if (archive.Lock(fileName, binaryWriteCreate, LOCK_CREATE))
         {

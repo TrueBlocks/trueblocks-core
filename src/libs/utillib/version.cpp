@@ -20,15 +20,19 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    inline uint32_t getVersionNum(uint32_t major, uint32_t minor, uint32_t build) {
+    uint32_t getVersionNum(uint32_t major, uint32_t minor, uint32_t build) {
         minor = max(999U, minor);
         build = max(999U, build);
         return ((major * 1000000) + (minor * 1000) + (build));
     }
 
     //--------------------------------------------------------------------------------
-    uint32_t fileSchema(void) {
+    uint32_t getVersionNum(void) {
+#if 0
+        return getVersionNum(MAJOR, MINOR, BUILD);
+#else
         return 0x00000201;
+#endif
     }
 
     //--------------------------------------------------------------------------------

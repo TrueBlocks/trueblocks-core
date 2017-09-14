@@ -198,7 +198,7 @@ void reportNode(CBaseNode *node) {
     cout << SFString('-',80) << "\n";
     cout << "className: " << pClass->m_ClassName << "\n";
     cout << "objectSize: " << pClass->m_ObjectSize << "\n";
-    cout << "classSchema: " << pClass->m_classSchema << "\n";
+    cout << "version: " << pClass->m_version << "\n";
     cout << "baseClass: " << (pClass->m_BaseClass ? pClass->m_BaseClass->m_ClassName : "None") << "\n";
     CFieldList *theList = pClass->m_FieldList;
     LISTPOS pPos = theList->GetHeadPosition();
