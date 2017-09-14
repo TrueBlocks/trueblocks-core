@@ -13,7 +13,7 @@
 #include "etherlib.h"
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(QRemoveOwner, CTransaction, dataSchema());
+IMPLEMENT_NODE(QRemoveOwner, CTransaction);
 
 //---------------------------------------------------------------------------
 static SFString nextRemoveownerChunk(const SFString& fieldIn, const void *dataPtr);

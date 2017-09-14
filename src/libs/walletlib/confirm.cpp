@@ -13,7 +13,7 @@
 #include "etherlib.h"
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(QConfirm, CTransaction, dataSchema());
+IMPLEMENT_NODE(QConfirm, CTransaction);
 
 //---------------------------------------------------------------------------
 static SFString nextConfirmChunk(const SFString& fieldIn, const void *dataPtr);

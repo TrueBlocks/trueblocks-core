@@ -13,7 +13,7 @@
 #include "etherlib.h"
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(QMultiTransactEvent, CLogEntry, dataSchema());
+IMPLEMENT_NODE(QMultiTransactEvent, CLogEntry);
 
 //---------------------------------------------------------------------------
 static SFString nextMultitransacteventChunk(const SFString& fieldIn, const void *dataPtr);

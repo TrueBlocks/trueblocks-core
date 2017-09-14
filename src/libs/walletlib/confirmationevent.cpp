@@ -13,7 +13,7 @@
 #include "etherlib.h"
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(QConfirmationEvent, CLogEntry, dataSchema());
+IMPLEMENT_NODE(QConfirmationEvent, CLogEntry);
 
 //---------------------------------------------------------------------------
 static SFString nextConfirmationeventChunk(const SFString& fieldIn, const void *dataPtr);

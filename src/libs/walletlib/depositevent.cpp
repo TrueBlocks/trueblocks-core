@@ -13,7 +13,7 @@
 #include "etherlib.h"
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(QDepositEvent, CLogEntry, dataSchema());
+IMPLEMENT_NODE(QDepositEvent, CLogEntry);
 
 //---------------------------------------------------------------------------
 static SFString nextDepositeventChunk(const SFString& fieldIn, const void *dataPtr);

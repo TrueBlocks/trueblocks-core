@@ -15,7 +15,7 @@
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CInfix, CTreeNode, dataSchema());
+IMPLEMENT_NODE(CInfix, CTreeNode);
 
 //---------------------------------------------------------------------------
 static SFString nextInfixChunk(const SFString& fieldIn, const void *dataPtr);

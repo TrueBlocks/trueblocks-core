@@ -13,7 +13,7 @@
 #include "etherlib.h"
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(QAddOwner, CTransaction, dataSchema());
+IMPLEMENT_NODE(QAddOwner, CTransaction);
 
 //---------------------------------------------------------------------------
 static SFString nextAddownerChunk(const SFString& fieldIn, const void *dataPtr);
