@@ -38,7 +38,7 @@ namespace qblocks {
 
         SFArchive(bool isReading) {
             m_isReading              = isReading;
-            m_header.m_archiveSchema = fileSchema();
+            m_header.m_archiveSchema = getVersionNum();
             pParent                  = NULL;
             //writeMsgFunc           = NULL;
             //readMsgFunc            = NULL;
@@ -69,26 +69,16 @@ namespace qblocks {
             operator>>(unused);
         }
 
-        bool isSchema(uint32_t testSchema) {
-            return (m_header.m_archiveSchema == testSchema);
-        }
-
         void resetForWriting(void) {
             if (isOpen())
                 Release();
             m_isReading = false;
-            // no reason to change these
-            // m_archiveSchema = NO_SCHEMA;
-            // m_writeDeleted = true;
         }
 
         void resetForReading(void) {
             if (isOpen())
                 Release();
             m_isReading = true;
-            // no reason to change these
-            // m_archiveSchema = NO_SCHEMA;
-            // m_writeDeleted = true;
         }
 
         SFArchive& operator<<(bool b);

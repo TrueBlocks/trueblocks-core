@@ -13,6 +13,6 @@ namespace qblocks {
 
     //--------------------------------------------------------------------------------
     extern SFString getVersionStr(const SFString& sep1=".", const SFString& sep2="-");
-    extern uint32_t fileSchema   (void);
+    extern uint32_t getVersionNum(void);
 
 }  // namespace qblocks

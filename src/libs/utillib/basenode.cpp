@@ -11,12 +11,13 @@
 #include "sfarchive.h"
 #include "exportcontext.h"
 #include "conversions.h"
+#include "version.h"
 
 namespace qblocks {
 
     //--------------------------------------------------------------------------------
     CRuntimeClass CBaseNode::classCBaseNode;
-    static CBuiltIn _biBaseNode(&CBaseNode::classCBaseNode, "CBaseNode", sizeof(CBaseNode), NULL, NULL, NO_SCHEMA);
+    static CBuiltIn _biBaseNode(&CBaseNode::classCBaseNode, "CBaseNode", sizeof(CBaseNode), NULL, NULL, getVersionNum());
 
     //--------------------------------------------------------------------------------
     CBaseNode::CBaseNode(void) {
@@ -30,7 +31,7 @@ namespace qblocks {
     //--------------------------------------------------------------------------------
     void CBaseNode::Init(void) {
         m_deleted  = false;
-        m_schema = NO_SCHEMA;
+        m_schema = getVersionNum();
         m_showing = true;
         pParent = NULL;
     }
