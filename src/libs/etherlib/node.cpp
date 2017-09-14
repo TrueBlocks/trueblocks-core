@@ -473,7 +473,7 @@ void writeToBinary(const CBaseNode& node, const SFString& fileName)
         if (!created.empty() && !isTestMode())
             cerr << "mkdir(" << created << ")" << SFString(' ',20) << "                                                     \n";
         // TODO(tjayrush): Can I hide both schema and deleteOnWrite and make an enum?
-        SFArchive archive(false, fileSchema(), true);
+        SFArchive archive(WRITING_ARCHIVE);
         if (archive.Lock(fileName, binaryWriteCreate, LOCK_CREATE))
         {
             ((CBlock *)&node)->Serialize(archive);
@@ -486,7 +486,7 @@ void writeToBinary(const CBaseNode& node, const SFString& fileName)
 bool readOneBlock_fromBinary(CBlock& block, const SFString& fileName)
 {
     block = CBlock(); // reset
-    SFArchive archive(true, fileSchema(), true);
+    SFArchive archive(READING_ARCHIVE);
     if (archive.Lock(fileName, binaryReadOnly, LOCK_NOWAIT))
     {
         block.Serialize(archive);
@@ -520,7 +520,7 @@ bool readOneBlock_fromJson(CBlock& block, const SFString& fileName)
 SFBloom readOneBloom(blknum_t bn) {
     SFBloom ret = 0;
     SFString fileName = getBinaryFilename1(bn).Substitute("/blocks/", "/blooms/");
-    SFArchive archive(true, fileSchema(), true);
+    SFArchive archive(READING_ARCHIVE);
     if (archive.Lock(fileName, binaryReadOnly, LOCK_NOWAIT)) {
         archive >> ret;
         archive.Close();
@@ -534,7 +534,7 @@ void writeOneBloom(const SFString& fileName, const SFBloom& bloom) {
     if (establishFolder(fileName,created)) {
         if (!created.empty() && !isTestMode())
             cerr << "mkdir(" << created << ")" << SFString(' ',20) << "                                                     \n";
-        SFArchive archive(false, fileSchema(), true);
+        SFArchive archive(WRITING_ARCHIVE);
         if (archive.Lock(fileName, binaryWriteCreate, LOCK_CREATE)) {
             archive << bloom;
             archive.Close();

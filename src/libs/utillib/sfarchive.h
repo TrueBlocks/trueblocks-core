@@ -10,8 +10,12 @@
 #include "exportcontext.h"
 #include "database.h"
 #include "conversions.h"
+#include "version.h"
 
 namespace qblocks {
+
+    #define READING_ARCHIVE true
+    #define WRITING_ARCHIVE false
 
     class CBaseNode;
     typedef bool (*VISITARCHIVEFUNC)(CBaseNode& node, void *data);
@@ -21,7 +25,6 @@ namespace qblocks {
     private:
         class SFArchiveHeader {
         public:
-            bool         m_writeDeleted;
             uint32_t     m_archiveSchema;
             timestamp_t  m_lastWritten;
         };
@@ -33,17 +36,12 @@ namespace qblocks {
         //VISITARCHIVEFUNC writeMsgFunc;
         //VISITARCHIVEFUNC readMsgFunc;
 
-        SFArchive(bool isReading, uint32_t schema, bool writeDeleted) {
+        SFArchive(bool isReading) {
             m_isReading              = isReading;
-            m_header.m_archiveSchema = schema;
-            m_header.m_writeDeleted  = writeDeleted;
+            m_header.m_archiveSchema = fileSchema();
             pParent                  = NULL;
             //writeMsgFunc           = NULL;
             //readMsgFunc            = NULL;
-        }
-
-        bool writeDeleted(void) const {
-            return (m_header.m_writeDeleted);
         }
 
         bool isWriting(void) const {
@@ -59,14 +57,16 @@ namespace qblocks {
             m_header.m_lastWritten = toTimestamp(Now());
             operator<<(m_header.m_archiveSchema);
             operator<<(m_header.m_lastWritten);
-            operator<<(m_header.m_writeDeleted);
+            bool unused = false;
+            operator<<(unused);
         }
 
         void readHeader(void) {
             Seek(0, SEEK_SET);
             operator>>(m_header.m_archiveSchema);
             operator>>(m_header.m_lastWritten);
-            operator>>(m_header.m_writeDeleted);
+            bool unused = false;
+            operator>>(unused);
         }
 
         bool isSchema(uint32_t testSchema) {

@@ -167,7 +167,7 @@ bool CSlurperApp::Slurp(COptions& options, SFString& message) {
         // Once a transaction is on the blockchain, it will never change
         // therefore, we can store them in a binary cache. Here we read
         // from a previously stored cache.
-        SFArchive archive(true, NO_SCHEMA, true);
+        SFArchive archive(READING_ARCHIVE);
         if (!archive.Lock(cacheFilename, binaryReadOnly, LOCK_NOWAIT)) {
             message = "Could not open file: '" + cacheFilename + "'\n";
             return options.fromFile;
@@ -288,7 +288,7 @@ bool CSlurperApp::Slurp(COptions& options, SFString& message) {
         if (newRecords) {
             if (!isTestMode())
                 cerr << "\tWriting " << newRecords << " new records to cache\n";
-            SFArchive archive(false, NO_SCHEMA, true);
+            SFArchive archive(WRITING_ARCHIVE);
             if (archive.Lock(cacheFilename, binaryWriteCreate, LOCK_CREATE)) {
                 theAccount.Serialize(archive);
                 archive.Close();

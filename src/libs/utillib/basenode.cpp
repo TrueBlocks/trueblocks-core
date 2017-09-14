@@ -285,8 +285,6 @@ namespace qblocks {
     //---------------------------------------------------------------------------
     bool CBaseNode::preSerializeC(SFArchive& archive) const {
         archive.pParent = this;  // sets this value for items stored in lists or arrays -- read only
-        if (m_deleted && !archive.writeDeleted())
-            return false;
         archive << m_deleted;
         archive << m_schema;
         archive << m_showing;
