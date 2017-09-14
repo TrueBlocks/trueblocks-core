@@ -265,7 +265,7 @@ bool loadPriceData(CPriceQuoteArray& quotes, bool freshen, SFString& message, SF
     // Load and possibly refresh the price database
     SFTime lastRead = SFTime(2015, 1, 1, 0, 0, 0);  // Ethereum didn't even exist before July 2015
     if (fileExists(cacheFile)) {
-        SFArchive archive(true, NO_SCHEMA, true);
+        SFArchive archive(READING_ARCHIVE);
         if (archive.Lock(cacheFile, binaryReadOnly, LOCK_NOWAIT)) {
             archive.readHeader(); // we read the header even though it may not be the current version...
             if (!archive.isSchema(NO_SCHEMA)) // ... if it's not the current version return to begin of file
@@ -389,7 +389,7 @@ bool loadPriceData(CPriceQuoteArray& quotes, bool freshen, SFString& message, SF
 
         // Write the database to the cache
         if (prevLast != lastRead && freshen) {
-            SFArchive archive(false, NO_SCHEMA, true);
+            SFArchive archive(WRITING_ARCHIVE);
             if (!archive.Lock(cacheFile, binaryWriteCreate, LOCK_WAIT)) {
                 message = "Could not open cache file for writing: '" + cacheFile + "'";
                 return false;
