@@ -15,7 +15,7 @@
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CIncomeStatement, CBaseNode, dataSchema());
+IMPLEMENT_NODE(CIncomeStatement, CBaseNode);
 
 //---------------------------------------------------------------------------
 static SFString nextIncomestatementChunk(const SFString& fieldIn, const void *dataPtr);

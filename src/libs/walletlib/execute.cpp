@@ -13,7 +13,7 @@
 #include "etherlib.h"
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(QExecute, CTransaction, dataSchema());
+IMPLEMENT_NODE(QExecute, CTransaction);
 
 //---------------------------------------------------------------------------
 static SFString nextExecuteChunk(const SFString& fieldIn, const void *dataPtr);

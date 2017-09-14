@@ -14,7 +14,7 @@
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CParameter, CBaseNode, dataSchema());
+IMPLEMENT_NODE(CParameter, CBaseNode);
 
 //---------------------------------------------------------------------------
 static SFString nextParameterChunk(const SFString& fieldIn, const void *dataPtr);

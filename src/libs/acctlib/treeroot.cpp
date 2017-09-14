@@ -14,7 +14,7 @@
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CTreeRoot, CBaseNode, dataSchema());
+IMPLEMENT_NODE(CTreeRoot, CBaseNode);
 
 //---------------------------------------------------------------------------
 static SFString nextTreerootChunk(const SFString& fieldIn, const void *dataPtr);

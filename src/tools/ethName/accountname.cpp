@@ -12,7 +12,7 @@
 #include "accountname.h"
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CAccountName, CBaseNode, dataSchema());
+IMPLEMENT_NODE(CAccountName, CBaseNode);
 
 //---------------------------------------------------------------------------
 static SFString nextAccountnameChunk(const SFString& fieldIn, const void *dataPtr);
