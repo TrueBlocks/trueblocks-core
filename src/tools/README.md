@@ -22,7 +22,7 @@ While primarily illustrative, these tools are also useful. For example, you may 
 
 + [ethName](ethName) - This simple tool provides a rudimentary service attaching Ethereum address to names and visa versa. It may be used as a simple reminder of ethereum addresses vs. user-specified names. In the future, we will connect this to the ENS system.
 
-+ [bloomScan](../../src/samples/bloomScan) - This simple tool provides a simple visualization of the blockchain's bloom filters in an effort to understand if the chain is "filling up".
++ [bloomScan](../src/samples/bloomScan) - This simple tool provides a simple visualization of the blockchain's bloom filters in an effort to understand if the chain is "filling up".
 
 #### Scripts
 
