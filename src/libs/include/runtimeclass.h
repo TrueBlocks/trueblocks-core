@@ -19,8 +19,7 @@ namespace qblocks {
     class CBuiltIn {
     public:
         const CRuntimeClass *m_pClass;
-        CBuiltIn(CRuntimeClass *pClass, const SFString& className, uint32_t size, PFNV createFunc,
-                 CRuntimeClass *pBase, uint32_t schema);
+        CBuiltIn(CRuntimeClass *pClass, const SFString& className, uint32_t size, PFNV createFunc, CRuntimeClass *pBase);
     };
 
     //----------------------------------------------------------------------------
@@ -28,7 +27,6 @@ namespace qblocks {
     public:
         char *m_ClassName;
         uint32_t m_ObjectSize;
-        uint32_t m_version;
         PFNV m_CreateFunc;
         CRuntimeClass *m_BaseClass;
         CFieldList *m_FieldList;
@@ -95,7 +93,7 @@ CRuntimeClass *CLASS_NAME::getRuntimeClass(void) const { return &CLASS_NAME::cla
 SFString CLASS_NAME::getClassName(void) const { return CLASS_NAME::class##CLASS_NAME.getClassNamePtr(); } \
 CBaseNode* CLASS_NAME::CreateObject(void) { return new CLASS_NAME; } \
 static CBuiltIn _bi##CLASS_NAME(&CLASS_NAME::class##CLASS_NAME, #CLASS_NAME, sizeof(CLASS_NAME), \
-CLASS_NAME::CreateObject, GETRUNTIME_CLASS(BASECLASS_NAME), getVersionNum());
+CLASS_NAME::CreateObject, GETRUNTIME_CLASS(BASECLASS_NAME));
 
     //------------------------------------------------------------
 #define ADD_FIELD(CLASS_NAME, FIELD_NAME, FIELD_TYPE, FIELD_ID) \

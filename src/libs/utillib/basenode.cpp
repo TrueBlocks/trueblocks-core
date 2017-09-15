@@ -17,7 +17,7 @@ namespace qblocks {
 
     //--------------------------------------------------------------------------------
     CRuntimeClass CBaseNode::classCBaseNode;
-    static CBuiltIn _biBaseNode(&CBaseNode::classCBaseNode, "CBaseNode", sizeof(CBaseNode), NULL, NULL, getVersionNum());
+    static CBuiltIn _biBaseNode(&CBaseNode::classCBaseNode, "CBaseNode", sizeof(CBaseNode), NULL, NULL);
 
     //--------------------------------------------------------------------------------
     CBaseNode::CBaseNode(void) {

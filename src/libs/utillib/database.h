@@ -56,7 +56,6 @@ namespace qblocks {
             // m_lockingUser = "";
             // m_mode = "";
             // m_errorMsg = "";
-            // m_version (leave it unset so we will only use it if its explicitly set)
             m_isascii  = false;
         }
 
