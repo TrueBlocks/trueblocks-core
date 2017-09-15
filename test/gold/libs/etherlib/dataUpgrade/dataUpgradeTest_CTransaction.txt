@@ -3,7 +3,6 @@ dataUpgrade CTransaction
 --------------------------------------------------------------------------------
 className: CTransaction
 objectSize: 432
-classSchema: 513
 baseClass: CBaseNode
 	fieldName: schema
 	  fieldID: 1001

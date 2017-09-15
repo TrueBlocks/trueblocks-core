@@ -3,7 +3,6 @@ dataUpgrade CAccount
 --------------------------------------------------------------------------------
 className: CAccount
 objectSize: 232
-classSchema: 513
 baseClass: CBaseNode
 	fieldName: schema
 	  fieldID: 1001

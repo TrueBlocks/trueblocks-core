@@ -4,7 +4,6 @@ Read from old binary format, write to JSON...
 --------------------------------------------------------------------------------
 className: CBlock
 objectSize: 152
-classSchema: 513
 baseClass: CBaseNode
 	fieldName: schema
 	  fieldID: 1001
