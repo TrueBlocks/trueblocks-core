@@ -4,7 +4,6 @@ Read from new binary format, write to JSON...
 --------------------------------------------------------------------------------
 className: CNewBlock
 objectSize: 184
-classSchema: 513
 baseClass: CBaseNode
 	fieldName: schema
 	  fieldID: 1001

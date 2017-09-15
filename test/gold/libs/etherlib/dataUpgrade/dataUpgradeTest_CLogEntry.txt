@@ -3,7 +3,6 @@ dataUpgrade CLogEntry
 --------------------------------------------------------------------------------
 className: CLogEntry
 objectSize: 120
-classSchema: 513
 baseClass: CBaseNode
 	fieldName: schema
 	  fieldID: 1001

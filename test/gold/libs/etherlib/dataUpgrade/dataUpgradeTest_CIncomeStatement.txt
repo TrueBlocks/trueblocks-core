@@ -3,7 +3,6 @@ dataUpgrade CIncomeStatement
 --------------------------------------------------------------------------------
 className: CIncomeStatement
 objectSize: 192
-classSchema: 513
 baseClass: CBaseNode
 	fieldName: schema
 	  fieldID: 1001

@@ -3,7 +3,6 @@ dataUpgrade --file:cmd_file2
 --------------------------------------------------------------------------------
 className: CAbi
 objectSize: 72
-classSchema: 513
 baseClass: CBaseNode
 	fieldName: schema
 	  fieldID: 1001
@@ -29,7 +28,6 @@ baseClass: CBaseNode
 --------------------------------------------------------------------------------
 className: CFunction
 objectSize: 184
-classSchema: 513
 baseClass: CBaseNode
 	fieldName: schema
 	  fieldID: 1001
@@ -85,7 +83,6 @@ baseClass: CBaseNode
 --------------------------------------------------------------------------------
 className: CParameter
 objectSize: 128
-classSchema: 513
 baseClass: CBaseNode
 	fieldName: schema
 	  fieldID: 1001
@@ -133,7 +130,6 @@ baseClass: CBaseNode
 --------------------------------------------------------------------------------
 className: CAccount
 objectSize: 232
-classSchema: 513
 baseClass: CBaseNode
 	fieldName: schema
 	  fieldID: 1001
@@ -187,7 +183,6 @@ baseClass: CBaseNode
 --------------------------------------------------------------------------------
 className: CAccountWatch
 objectSize: 376
-classSchema: 513
 baseClass: CBaseNode
 	fieldName: schema
 	  fieldID: 1001
@@ -257,7 +252,6 @@ baseClass: CBaseNode
 --------------------------------------------------------------------------------
 className: CBalHistory
 objectSize: 96
-classSchema: 513
 baseClass: CBaseNode
 	fieldName: schema
 	  fieldID: 1001
@@ -287,7 +281,6 @@ baseClass: CBaseNode
 --------------------------------------------------------------------------------
 className: CBlock
 objectSize: 152
-classSchema: 513
 baseClass: CBaseNode
 	fieldName: schema
 	  fieldID: 1001
@@ -343,7 +336,6 @@ baseClass: CBaseNode
 --------------------------------------------------------------------------------
 className: CIncomeStatement
 objectSize: 192
-classSchema: 513
 baseClass: CBaseNode
 	fieldName: schema
 	  fieldID: 1001
@@ -389,7 +381,6 @@ baseClass: CBaseNode
 --------------------------------------------------------------------------------
 className: CLogEntry
 objectSize: 120
-classSchema: 513
 baseClass: CBaseNode
 	fieldName: schema
 	  fieldID: 1001
@@ -424,7 +415,6 @@ baseClass: CBaseNode
 --------------------------------------------------------------------------------
 className: CPriceQuote
 objectSize: 112
-classSchema: 513
 baseClass: CBaseNode
 	fieldName: schema
 	  fieldID: 1001
@@ -485,7 +475,6 @@ baseClass: CBaseNode
 --------------------------------------------------------------------------------
 className: CReceipt
 objectSize: 112
-classSchema: 513
 baseClass: CBaseNode
 	fieldName: schema
 	  fieldID: 1001
@@ -521,7 +510,6 @@ baseClass: CBaseNode
 --------------------------------------------------------------------------------
 className: CRPCResult
 objectSize: 112
-classSchema: 513
 baseClass: CBaseNode
 	fieldName: schema
 	  fieldID: 1001
@@ -549,7 +537,6 @@ baseClass: CBaseNode
 --------------------------------------------------------------------------------
 className: CTrace
 objectSize: 472
-classSchema: 513
 baseClass: CBaseNode
 	fieldName: schema
 	  fieldID: 1001
@@ -623,7 +610,6 @@ baseClass: CBaseNode
 --------------------------------------------------------------------------------
 className: CTraceAction
 objectSize: 224
-classSchema: 513
 baseClass: CBaseNode
 	fieldName: schema
 	  fieldID: 1001
@@ -682,7 +668,6 @@ baseClass: CBaseNode
 --------------------------------------------------------------------------------
 className: CTraceResult
 objectSize: 72
-classSchema: 513
 baseClass: CBaseNode
 	fieldName: schema
 	  fieldID: 1001
@@ -707,7 +692,6 @@ baseClass: CBaseNode
 --------------------------------------------------------------------------------
 className: CTransaction
 objectSize: 432
-classSchema: 513
 baseClass: CBaseNode
 	fieldName: schema
 	  fieldID: 1001
@@ -830,7 +814,6 @@ baseClass: CBaseNode
 --------------------------------------------------------------------------------
 className: CNewBlock
 objectSize: 184
-classSchema: 513
 baseClass: CBaseNode
 	fieldName: schema
 	  fieldID: 1001
