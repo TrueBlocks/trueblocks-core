@@ -18,4 +18,4 @@ Each of these programs is explained further in its own individual README.md file
 
 2. [makeClass](makeClass) - This tool is used by `grabABI` to write the actual C++ code generated during the `chafra` process. Many of the source files found in `etherlib` are also generated automatically using this tool.
 
-3. [cacheMan](cacheMan) - This tool allows one to explore the a monitor's binary cache data file. It preforms various checks on the data. The tool provides options for truncating the cache and/or merging two caches into one which may be useful in certain circumstances.
+3. [cacheMan](src/monitors/cacheMan) - This tool allows one to explore the a monitor's binary cache data file. It preforms various checks on the data. The tool provides options for truncating the cache and/or merging two caches into one which may be useful in certain circumstances.
