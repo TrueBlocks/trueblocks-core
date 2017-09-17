@@ -180,7 +180,7 @@ Test 164: 1000000000000000000 expected: 1000000000000000000 ✓
 Test 165: 1000000000000000000 expected: 1000000000000000000 ✓
 #### Other Options
 
-All QuickBlocks command-line tools support the following commands (although in some case, they have no meaning):
+All **quickBlocks** command-line tools support the following commands (although in some case, they have no meaning):
 
     Command     |     Description
     -----------------------------------------------------------------------------
@@ -191,7 +191,7 @@ All QuickBlocks command-line tools support the following commands (although in s
     --dollars   |   specify value in US dollars
     --file:fn   |   specify multiple sets of command line options in a file.
 
-<small>*For the `--file:fn` option, place a series of valid command lines in a file and use the above option. In some cases, this option may significantly improve performance. A semi-colon at the start of a line makes that line a comment.*</small>
+<small>*For the `--file:fn` option, place a series of valid command lines in a file and use the above options. In some cases, this option may significantly improve performance. A semi-colon at the start of a line makes that line a comment.*</small>
 
 **Powered by QuickBlocks<sup>&reg;</sup>**
 
