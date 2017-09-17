@@ -30,7 +30,7 @@ public:
 public:
     QRevokeEvent(void);
     QRevokeEvent(const QRevokeEvent& re);
-    ~QRevokeEvent(void);
+    virtual ~QRevokeEvent(void);
     QRevokeEvent& operator=(const QRevokeEvent& re);
 
     DECLARE_NODE(QRevokeEvent);
@@ -43,7 +43,7 @@ protected:
     void Clear(void);
     void Init(void);
     void Copy(const QRevokeEvent& re);
-    bool readBackLevel(SFArchive& archive);
+    bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -119,5 +119,4 @@ IMPLEMENT_ARCHIVE_LIST(QRevokeEventList);
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
-#define NEW_CODE
 

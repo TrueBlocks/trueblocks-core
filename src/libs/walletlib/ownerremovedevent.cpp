@@ -74,10 +74,13 @@ void QOwnerRemovedEvent::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool QOwnerRemovedEvent::Serialize(SFArchive& archive) {
+
     if (archive.isWriting())
         return ((const QOwnerRemovedEvent*)this)->SerializeC(archive);
 
-    CLogEntry::Serialize(archive);
+    // If we're reading a back level, read the whole thing and we're done.
+    if (readBackLevel(archive))
+        return true;
 
     archive >> oldOwner;
     finishParse();
@@ -86,6 +89,8 @@ bool QOwnerRemovedEvent::Serialize(SFArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool QOwnerRemovedEvent::SerializeC(SFArchive& archive) const {
+
+    // Writing always write the latest version of the data
     CLogEntry::SerializeC(archive);
 
     archive << oldOwner;
@@ -144,6 +149,8 @@ bool QOwnerRemovedEvent::handleCustomFormat(CExportContext& ctx, const SFString&
 
 //---------------------------------------------------------------------------
 bool QOwnerRemovedEvent::readBackLevel(SFArchive& archive) {
+
+    CLogEntry::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -174,6 +181,9 @@ SFString QOwnerRemovedEvent::getValueByName(const SFString& fieldName) const {
 
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const QOwnerRemovedEvent& item) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
     os << item.Format() << "\n";
     return os;
 }

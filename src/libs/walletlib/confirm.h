@@ -29,7 +29,7 @@ public:
 public:
     QConfirm(void);
     QConfirm(const QConfirm& co);
-    ~QConfirm(void);
+    virtual ~QConfirm(void);
     QConfirm& operator=(const QConfirm& co);
 
     DECLARE_NODE(QConfirm);
@@ -42,7 +42,7 @@ protected:
     void Clear(void);
     void Init(void);
     void Copy(const QConfirm& co);
-    bool readBackLevel(SFArchive& archive);
+    bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -116,5 +116,4 @@ IMPLEMENT_ARCHIVE_LIST(QConfirmList);
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
-#define NEW_CODE
 

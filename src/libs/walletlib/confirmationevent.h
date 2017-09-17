@@ -30,7 +30,7 @@ public:
 public:
     QConfirmationEvent(void);
     QConfirmationEvent(const QConfirmationEvent& co);
-    ~QConfirmationEvent(void);
+    virtual ~QConfirmationEvent(void);
     QConfirmationEvent& operator=(const QConfirmationEvent& co);
 
     DECLARE_NODE(QConfirmationEvent);
@@ -43,7 +43,7 @@ protected:
     void Clear(void);
     void Init(void);
     void Copy(const QConfirmationEvent& co);
-    bool readBackLevel(SFArchive& archive);
+    bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -119,5 +119,4 @@ IMPLEMENT_ARCHIVE_LIST(QConfirmationEventList);
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
-#define NEW_CODE
 

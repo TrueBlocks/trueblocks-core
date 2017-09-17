@@ -74,10 +74,13 @@ void QRemoveOwner::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool QRemoveOwner::Serialize(SFArchive& archive) {
+
     if (archive.isWriting())
         return ((const QRemoveOwner*)this)->SerializeC(archive);
 
-    CTransaction::Serialize(archive);
+    // If we're reading a back level, read the whole thing and we're done.
+    if (readBackLevel(archive))
+        return true;
 
     archive >> _owner;
     finishParse();
@@ -86,6 +89,8 @@ bool QRemoveOwner::Serialize(SFArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool QRemoveOwner::SerializeC(SFArchive& archive) const {
+
+    // Writing always write the latest version of the data
     CTransaction::SerializeC(archive);
 
     archive << _owner;
@@ -144,6 +149,8 @@ bool QRemoveOwner::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn
 
 //---------------------------------------------------------------------------
 bool QRemoveOwner::readBackLevel(SFArchive& archive) {
+
+    CTransaction::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -174,6 +181,9 @@ SFString QRemoveOwner::getValueByName(const SFString& fieldName) const {
 
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const QRemoveOwner& item) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
     os << item.Format() << "\n";
     return os;
 }
