@@ -1,0 +1,4 @@
+[settings]
+class    = CPerson
+fields   = string name|uint32 age|CPerson *next
+includes = etherlib.h
