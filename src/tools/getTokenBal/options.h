@@ -8,11 +8,11 @@
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
-    SFString token;
+    SFString tokens;
     SFString holders;
     SFString blocks;
-    bool asEther;
     bool asData;
+    bool byAccount;
 
     COptions(void);
     ~COptions(void);

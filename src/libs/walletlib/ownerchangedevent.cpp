@@ -13,7 +13,7 @@
 #include "etherlib.h"
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(QOwnerChangedEvent, CLogEntry, dataSchema());
+IMPLEMENT_NODE(QOwnerChangedEvent, CLogEntry);
 
 //---------------------------------------------------------------------------
 static SFString nextOwnerchangedeventChunk(const SFString& fieldIn, const void *dataPtr);
@@ -77,10 +77,13 @@ void QOwnerChangedEvent::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool QOwnerChangedEvent::Serialize(SFArchive& archive) {
+
     if (archive.isWriting())
         return ((const QOwnerChangedEvent*)this)->SerializeC(archive);
 
-    CLogEntry::Serialize(archive);
+    // If we're reading a back level, read the whole thing and we're done.
+    if (readBackLevel(archive))
+        return true;
 
     archive >> oldOwner;
     archive >> newOwner;
@@ -90,6 +93,8 @@ bool QOwnerChangedEvent::Serialize(SFArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool QOwnerChangedEvent::SerializeC(SFArchive& archive) const {
+
+    // Writing always write the latest version of the data
     CLogEntry::SerializeC(archive);
 
     archive << oldOwner;
@@ -150,6 +155,8 @@ bool QOwnerChangedEvent::handleCustomFormat(CExportContext& ctx, const SFString&
 
 //---------------------------------------------------------------------------
 bool QOwnerChangedEvent::readBackLevel(SFArchive& archive) {
+
+    CLogEntry::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -183,6 +190,9 @@ SFString QOwnerChangedEvent::getValueByName(const SFString& fieldName) const {
 
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const QOwnerChangedEvent& item) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
     os << item.Format() << "\n";
     return os;
 }

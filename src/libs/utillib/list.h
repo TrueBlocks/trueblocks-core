@@ -577,5 +577,5 @@ namespace qblocks {
     typedef SFList<SFString> SFStringList;
     typedef SFArrayBase<uint64_t> SFUintArray;
     typedef SFArrayBase<int64_t> SFIntArray;
-    using SFBlockArray = SFUintArray;
+#define SFBlockArray SFUintArray
 }  // namespace qblocks

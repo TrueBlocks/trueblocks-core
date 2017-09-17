@@ -7,9 +7,6 @@
  * The LICENSE at the root of this repo details your rights (if any)
  *------------------------------------------------------------------------*/
 
-#define CONVERT_TO_PARITY
-//#define FULL_BLOCKS
-
 #include "abilib.h"
 #include "ethtypes.h"
 #include "block.h"
@@ -28,5 +25,6 @@
 #include "blooms.h"
 #include "accountwatch.h"
 #include "balhistory.h"
+#include "accountname.h"
 
 using namespace qblocks;

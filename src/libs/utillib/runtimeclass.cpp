@@ -33,20 +33,6 @@ namespace qblocks {
     }
 
     //-------------------------------------------------------------------------
-    void CRuntimeClass::Initialize(const SFString& protoName) {
-        SFString copy = protoName;
-        if (!copy.empty())
-            m_ClassName = strdup(copy.c_str());
-
-        m_ObjectSize    = 0;
-        // Signifies that we were created with Initialize so we can cleanup (i.e. the class is not builtin)
-        m_classSchema   = 0xFFFA;
-        m_BaseClass     = NULL;
-        m_FieldList     = NULL;
-        m_CreateFunc    = NULL;
-    }
-
-    //-------------------------------------------------------------------------
     void CRuntimeClass::ClearFieldList(void) {
         if (m_FieldList) {
             LISTPOS p = m_FieldList->GetHeadPosition();
@@ -139,15 +125,13 @@ namespace qblocks {
 
     //-------------------------------------------------------------------------
     CBuiltIn::CBuiltIn(CRuntimeClass *pClass, const SFString& className, uint32_t size,
-                       PFNV createFunc, CRuntimeClass *pBase, uint32_t schema) {
+                       PFNV createFunc, CRuntimeClass *pBase) {
         m_pClass = pClass;
         SFString copy = className;
         if (!copy.empty())
             pClass->m_ClassName = strdup(copy.c_str());
 
         pClass->m_ObjectSize    = size;
-        // Signifies that we were created with Initialize so we can cleanup (i.e. the class is not builtin)
-        pClass->m_classSchema   = schema;
         pClass->m_BaseClass     = pBase;
         pClass->m_FieldList     = NULL;
         pClass->m_CreateFunc    = createFunc;

@@ -37,7 +37,7 @@ public:
 public:
     CIncomeStatement(void);
     CIncomeStatement(const CIncomeStatement& in);
-    ~CIncomeStatement(void);
+    virtual ~CIncomeStatement(void);
     CIncomeStatement& operator=(const CIncomeStatement& in);
 
     DECLARE_NODE(CIncomeStatement);
@@ -57,7 +57,7 @@ protected:
     void Clear(void);
     void Init(void);
     void Copy(const CIncomeStatement& in);
-    bool readBackLevel(SFArchive& archive);
+    bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -155,6 +155,5 @@ inline void CIncomeStatement::operator+=(const CIncomeStatement &x)
     blockNum = x.blockNum;
 }
 // EXISTING_CODE
-#define NEW_CODE
 }  // namespace qblocks
 

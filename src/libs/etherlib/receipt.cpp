@@ -15,7 +15,7 @@
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CReceipt, CBaseNode, dataSchema());
+IMPLEMENT_NODE(CReceipt, CBaseNode);
 
 //---------------------------------------------------------------------------
 extern SFString nextReceiptChunk(const SFString& fieldIn, const void *dataPtr);
@@ -56,24 +56,6 @@ bool CReceipt::setValueByName(const SFString& fieldName, const SFString& fieldVa
     if (fieldName == "contractAddress" && fieldValue == "null")
         *((SFString*)&fieldValue) = "0";
 
-    if (fieldName % "logs")
-    {
-        char *p = (char *)(const char*)fieldValue;
-        while (p && *p)
-        {
-            CLogEntry log;uint32_t nFields=0;
-            p = log.parseJson(p,nFields);
-            if (nFields)
-            {
-#ifdef CONVERT_TO_PARITY
-                log.logIndex = logs.getCount();
-#endif
-                logs[logs.getCount()] = log;
-            }
-        }
-        return true;
-    }
-
     if (pTrans)
         if (((CTransaction*)pTrans)->setValueByName(fieldName, fieldValue))
             return true;
@@ -87,7 +69,17 @@ bool CReceipt::setValueByName(const SFString& fieldName, const SFString& fieldVa
             if ( fieldName % "gasUsed" ) { gasUsed = toGas(fieldValue); return true; }
             break;
         case 'l':
-            if ( fieldName % "logs" ) return true;
+            if ( fieldName % "logs" ) {
+                char *p = (char *)fieldValue.c_str();
+                while (p && *p) {
+                    CLogEntry item;
+                    uint32_t nFields = 0;
+                    p = item.parseJson(p, nFields);
+                    if (nFields)
+                        logs[logs.getCount()] = item;
+                }
+                return true;
+            }
             if ( fieldName % "logsBloom" ) { logsBloom = toBloom(fieldValue); return true; }
             break;
         default:
@@ -104,11 +96,13 @@ void CReceipt::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CReceipt::Serialize(SFArchive& archive) {
+
     if (archive.isWriting())
         return ((const CReceipt*)this)->SerializeC(archive);
 
-    if (!preSerialize(archive))
-        return false;
+    // If we're reading a back level, read the whole thing and we're done.
+    if (readBackLevel(archive))
+        return true;
 
     archive >> contractAddress;
     archive >> gasUsed;
@@ -120,9 +114,9 @@ bool CReceipt::Serialize(SFArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool CReceipt::SerializeC(SFArchive& archive) const {
-    if (!preSerializeC(archive))
-        return false;
 
+    // Writing always write the latest version of the data
+    CBaseNode::SerializeC(archive);
     archive << contractAddress;
     archive << gasUsed;
     archive << logs;
@@ -183,6 +177,8 @@ bool CReceipt::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, vo
 
 //---------------------------------------------------------------------------
 bool CReceipt::readBackLevel(SFArchive& archive) {
+
+    CBaseNode::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -247,6 +243,9 @@ SFString CReceipt::getValueByName(const SFString& fieldName) const {
 
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const CReceipt& item) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
     os << item.Format() << "\n";
     return os;
 }

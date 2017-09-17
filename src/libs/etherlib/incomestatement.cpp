@@ -15,7 +15,7 @@
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CIncomeStatement, CBaseNode, dataSchema());
+IMPLEMENT_NODE(CIncomeStatement, CBaseNode);
 
 //---------------------------------------------------------------------------
 static SFString nextIncomestatementChunk(const SFString& fieldIn, const void *dataPtr);
@@ -86,11 +86,13 @@ void CIncomeStatement::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CIncomeStatement::Serialize(SFArchive& archive) {
+
     if (archive.isWriting())
         return ((const CIncomeStatement*)this)->SerializeC(archive);
 
-    if (!preSerialize(archive))
-        return false;
+    // If we're reading a back level, read the whole thing and we're done.
+    if (readBackLevel(archive))
+        return true;
 
     archive >> begBal;
     archive >> inflow;
@@ -104,9 +106,9 @@ bool CIncomeStatement::Serialize(SFArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool CIncomeStatement::SerializeC(SFArchive& archive) const {
-    if (!preSerializeC(archive))
-        return false;
 
+    // Writing always write the latest version of the data
+    CBaseNode::SerializeC(archive);
     archive << begBal;
     archive << inflow;
     archive << outflow;
@@ -171,6 +173,8 @@ bool CIncomeStatement::handleCustomFormat(CExportContext& ctx, const SFString& f
 
 //---------------------------------------------------------------------------
 bool CIncomeStatement::readBackLevel(SFArchive& archive) {
+
+    CBaseNode::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -226,6 +230,7 @@ SFString CIncomeStatement::getValueByName(const SFString& fieldName) const {
 
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const CIncomeStatement& item) {
+    // EXISTING_CODE
     uint32_t width = 22;
     if (item.begBal == item.endBal && item.begBal == -1) {
         os << padCenter("begBal", width) << "   "
@@ -240,6 +245,10 @@ ostream& operator<<(ostream& os, const CIncomeStatement& item) {
         os << (item.gasCost>0?cYellow:"") << padLeft(wei2Ether(to_string(item.gasCost).c_str()),width) << cOff << "   ";
         os << (item.endBal>0?cGreen:bBlack) << padLeft(wei2Ether(to_string(item.endBal).c_str()),width);
     }
+    { return os; }
+    // EXISTING_CODE
+
+    os << item.Format() << "\n";
     return os;
 }
 

@@ -13,7 +13,7 @@
 #include "etherlib.h"
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(QTransferFrom, CTransaction, dataSchema());
+IMPLEMENT_NODE(QTransferFrom, CTransaction);
 
 //---------------------------------------------------------------------------
 static SFString nextTransferfromChunk(const SFString& fieldIn, const void *dataPtr);
@@ -76,10 +76,13 @@ void QTransferFrom::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool QTransferFrom::Serialize(SFArchive& archive) {
+
     if (archive.isWriting())
         return ((const QTransferFrom*)this)->SerializeC(archive);
 
-    CTransaction::Serialize(archive);
+    // If we're reading a back level, read the whole thing and we're done.
+    if (readBackLevel(archive))
+        return true;
 
     archive >> _from;
     archive >> _to;
@@ -90,6 +93,8 @@ bool QTransferFrom::Serialize(SFArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool QTransferFrom::SerializeC(SFArchive& archive) const {
+
+    // Writing always write the latest version of the data
     CTransaction::SerializeC(archive);
 
     archive << _from;
@@ -152,6 +157,8 @@ bool QTransferFrom::handleCustomFormat(CExportContext& ctx, const SFString& fmtI
 
 //---------------------------------------------------------------------------
 bool QTransferFrom::readBackLevel(SFArchive& archive) {
+
+    CTransaction::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -184,6 +191,9 @@ SFString QTransferFrom::getValueByName(const SFString& fieldName) const {
 
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const QTransferFrom& item) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
     os << item.Format() << "\n";
     return os;
 }

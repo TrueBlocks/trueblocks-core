@@ -10,8 +10,8 @@
 //---------------------------------------------------------------------------------------------------
 CParams params[] = {
     CParams("~block[s]", "a space-separated list of one or more blocks to search for"),
-    CParams("-alone",    "show only the path of the block if it is found in the cache"),
-    CParams("",          "Reports if a block was found in the cache (and optionally its path).\n"),
+    CParams("-alone",    "display the path(s) of the blocks if found in the cache"),
+    CParams("",          "Reports if a block was found in the cache or at a local or remote node.\n"),
 };
 uint32_t nParams = sizeof(params) / sizeof(CParams);
 

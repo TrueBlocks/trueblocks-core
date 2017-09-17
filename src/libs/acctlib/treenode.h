@@ -51,7 +51,7 @@ protected:
     void Clear(void);
     void Init(void);
     void Copy(const CTreeNode& tr);
-    bool readBackLevel(SFArchive& archive);
+    bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -135,6 +135,5 @@ inline unsigned commonPrefix(const SFString& _t, const SFString& _u) {
     return (unsigned)s;
 }
 // EXISTING_CODE
-#define NEW_CODE
 }  // namespace qblocks
 

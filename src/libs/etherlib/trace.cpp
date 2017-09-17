@@ -14,7 +14,7 @@
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CTrace, CBaseNode, dataSchema());
+IMPLEMENT_NODE(CTrace, CBaseNode);
 
 //---------------------------------------------------------------------------
 static SFString nextTraceChunk(const SFString& fieldIn, const void *dataPtr);
@@ -84,7 +84,13 @@ bool CTrace::setValueByName(const SFString& fieldName, const SFString& fieldValu
             if ( fieldName % "subtraces" ) { subtraces = toUnsigned(fieldValue); return true; }
             break;
         case 't':
-            if ( fieldName % "traceAddress" ) return true;
+            if ( fieldName % "traceAddress" ) {
+                SFString str = fieldValue;
+                while (!str.empty()) {
+                    traceAddress[traceAddress.getCount()] = toAddress(nextTokenClear(str,','));
+                }
+                return true;
+            }
             if ( fieldName % "transactionHash" ) { transactionHash = toHash(fieldValue); return true; }
             if ( fieldName % "transactionPosition" ) { transactionPosition = toUnsigned(fieldValue); return true; }
             if ( fieldName % "type" ) { type = fieldValue; return true; }
@@ -103,11 +109,13 @@ void CTrace::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CTrace::Serialize(SFArchive& archive) {
+
     if (archive.isWriting())
         return ((const CTrace*)this)->SerializeC(archive);
 
-    if (!preSerialize(archive))
-        return false;
+    // If we're reading a back level, read the whole thing and we're done.
+    if (readBackLevel(archive))
+        return true;
 
     archive >> blockHash;
     archive >> blockNumber;
@@ -125,9 +133,9 @@ bool CTrace::Serialize(SFArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool CTrace::SerializeC(SFArchive& archive) const {
-    if (!preSerializeC(archive))
-        return false;
 
+    // Writing always write the latest version of the data
+    CBaseNode::SerializeC(archive);
     archive << blockHash;
     archive << blockNumber;
     archive << subtraces;
@@ -200,6 +208,8 @@ bool CTrace::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void
 
 //---------------------------------------------------------------------------
 bool CTrace::readBackLevel(SFArchive& archive) {
+
+    CBaseNode::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -275,6 +285,9 @@ SFString CTrace::getValueByName(const SFString& fieldName) const {
 
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const CTrace& item) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
     os << item.Format() << "\n";
     return os;
 }

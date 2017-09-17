@@ -11,9 +11,9 @@
 CParams params[] = {
     CParams("~date / block", "one of the special values listed below or YYYY-MM-DD-[HH[:MM[:SS]]] or a blockNumber"),
     CParams("-alone",        "show the found block or found date unadorned (useful for scripting)"),
-    CParams("-list",         "list special blocks timestamps and dates"),
+    CParams("-list",         "list the names and block numbers of special blocks"),
     CParams("", "Finds the nearest block prior to a JSON-formatted date, or the nearest date prior to\n"
-            "the given block. Alternatively, search for one of the special blocks listed below.\n"),
+                " the given block. Alternatively, search for one of the special blocks listed below.\n"),
 };
 uint32_t nParams = sizeof(params) / sizeof(CParams);
 
@@ -182,7 +182,6 @@ SFString COptions::listSpecials(bool terse) const {
     if (terse) {
         if (specials.getCount() % 4)
             os << "\n";
-        os << "\n\tSee the README for information on customizing this list.\n";
     } else {
         os << "\n";
     }

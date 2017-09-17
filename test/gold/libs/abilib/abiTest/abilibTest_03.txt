@@ -20,7 +20,7 @@ ABI of test1.json
   "signature": "vote(uint256,bool)",
   "encoding": "0xc9d27afe",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "_proposalID",
       "type": "uint256",
@@ -28,7 +28,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "_supportsProposal",
       "type": "bool",
@@ -38,7 +38,7 @@ ABI of test1.json
     }
   ],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "name": "_voteID",
       "type": "uint256",
@@ -57,7 +57,7 @@ ABI of test1.json
   "encoding": "0x2632bf20",
   "inputs": [],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "type": "bool",
       "isPointer": 0,
@@ -85,7 +85,7 @@ ABI of test1.json
   "encoding": "0xfdf97cb2",
   "inputs": [],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "type": "address",
       "isPointer": 0,
@@ -102,7 +102,7 @@ ABI of test1.json
   "signature": "transferWithoutReward(address,uint256)",
   "encoding": "0x4e10c3ee",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "_to",
       "type": "address",
@@ -110,7 +110,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "_value",
       "type": "uint256",
@@ -120,7 +120,7 @@ ABI of test1.json
     }
   ],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "name": "success",
       "type": "bool",
@@ -138,7 +138,7 @@ ABI of test1.json
   "signature": "transferFromWithoutReward(address,address,uint256)",
   "encoding": "0xdbde1988",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "_from",
       "type": "address",
@@ -146,7 +146,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "_to",
       "type": "address",
@@ -154,7 +154,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "_value",
       "type": "uint256",
@@ -164,7 +164,7 @@ ABI of test1.json
     }
   ],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "name": "success",
       "type": "bool",
@@ -182,7 +182,7 @@ ABI of test1.json
   "signature": "transferFrom(address,address,uint256)",
   "encoding": "0x23b872dd",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "_from",
       "type": "address",
@@ -190,7 +190,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "_to",
       "type": "address",
@@ -198,7 +198,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "_value",
       "type": "uint256",
@@ -208,7 +208,7 @@ ABI of test1.json
     }
   ],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "name": "success",
       "type": "bool",
@@ -226,7 +226,7 @@ ABI of test1.json
   "signature": "transfer(address,uint256)",
   "encoding": "0xa9059cbb",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "_to",
       "type": "address",
@@ -234,7 +234,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "_value",
       "type": "uint256",
@@ -244,7 +244,7 @@ ABI of test1.json
     }
   ],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "name": "success",
       "type": "bool",
@@ -263,7 +263,7 @@ ABI of test1.json
   "encoding": "0x18160ddd",
   "inputs": [],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "type": "uint256",
       "isPointer": 0,
@@ -281,7 +281,7 @@ ABI of test1.json
   "encoding": "0x34145808",
   "inputs": [],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "type": "uint256",
       "isPointer": 0,
@@ -298,7 +298,7 @@ ABI of test1.json
   "signature": "splitDAO(uint256,address)",
   "encoding": "0x82661dc4",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "_proposalID",
       "type": "uint256",
@@ -306,7 +306,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "_newCurator",
       "type": "address",
@@ -316,7 +316,7 @@ ABI of test1.json
     }
   ],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "name": "_success",
       "type": "bool",
@@ -334,7 +334,7 @@ ABI of test1.json
   "signature": "rewardToken(address)",
   "encoding": "0xcdef91d0",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "param_0",
       "type": "address",
@@ -344,7 +344,7 @@ ABI of test1.json
     }
   ],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "type": "uint256",
       "isPointer": 0,
@@ -362,7 +362,7 @@ ABI of test1.json
   "encoding": "0x0e708203",
   "inputs": [],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "type": "address",
       "isPointer": 0,
@@ -379,7 +379,7 @@ ABI of test1.json
   "signature": "retrieveDAOReward(bool)",
   "encoding": "0xa1da2fb9",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "_toMembers",
       "type": "bool",
@@ -389,7 +389,7 @@ ABI of test1.json
     }
   ],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "name": "_success",
       "type": "bool",
@@ -418,7 +418,7 @@ ABI of test1.json
   "encoding": "0xa3912ec8",
   "inputs": [],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "type": "bool",
       "isPointer": 0,
@@ -435,7 +435,7 @@ ABI of test1.json
   "signature": "proposals(uint256)",
   "encoding": "0x013cf08b",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "param_0",
       "type": "uint256",
@@ -445,7 +445,7 @@ ABI of test1.json
     }
   ],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "name": "recipient",
       "type": "address",
@@ -453,7 +453,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "amount",
       "type": "uint256",
@@ -461,7 +461,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "description",
       "type": "string",
@@ -469,7 +469,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "votingDeadline",
       "type": "uint256",
@@ -477,7 +477,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "open",
       "type": "bool",
@@ -485,7 +485,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "proposalPassed",
       "type": "bool",
@@ -493,7 +493,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "proposalHash",
       "type": "bytes32",
@@ -501,7 +501,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "proposalDeposit",
       "type": "uint256",
@@ -509,7 +509,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "newCurator",
       "type": "bool",
@@ -517,7 +517,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "yea",
       "type": "uint256",
@@ -525,7 +525,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "nay",
       "type": "uint256",
@@ -533,7 +533,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "creator",
       "type": "address",
@@ -552,7 +552,7 @@ ABI of test1.json
   "encoding": "0x8b15a605",
   "inputs": [],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "type": "uint256",
       "isPointer": 0,
@@ -570,7 +570,7 @@ ABI of test1.json
   "encoding": "0xf8c80d26",
   "inputs": [],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "type": "address",
       "isPointer": 0,
@@ -587,7 +587,7 @@ ABI of test1.json
   "signature": "paidOut(address)",
   "encoding": "0x81f03fcb",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "param_0",
       "type": "address",
@@ -597,7 +597,7 @@ ABI of test1.json
     }
   ],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "type": "uint256",
       "isPointer": 0,
@@ -615,7 +615,7 @@ ABI of test1.json
   "encoding": "0x8d7af473",
   "inputs": [],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "name": "_numberOfProposals",
       "type": "uint256",
@@ -633,7 +633,7 @@ ABI of test1.json
   "signature": "newProposal(address,uint256,string,bytes,uint256,bool)",
   "encoding": "0x612e45a3",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "_recipient",
       "type": "address",
@@ -641,7 +641,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "_amount",
       "type": "uint256",
@@ -649,7 +649,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "_description",
       "type": "string",
@@ -657,7 +657,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "_transactionData",
       "type": "bytes",
@@ -665,7 +665,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "_debatingPeriod",
       "type": "uint256",
@@ -673,7 +673,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "_newCurator",
       "type": "bool",
@@ -683,7 +683,7 @@ ABI of test1.json
     }
   ],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "name": "_proposalID",
       "type": "uint256",
@@ -701,7 +701,7 @@ ABI of test1.json
   "signature": "newContract(address)",
   "encoding": "0x6837ff1e",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "_newContract",
       "type": "address",
@@ -721,7 +721,7 @@ ABI of test1.json
   "encoding": "0x0c3b7b96",
   "inputs": [],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "type": "uint256",
       "isPointer": 0,
@@ -739,7 +739,7 @@ ABI of test1.json
   "encoding": "0x674ed066",
   "inputs": [],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "type": "uint256",
       "isPointer": 0,
@@ -757,7 +757,7 @@ ABI of test1.json
   "encoding": "0xeedcf50a",
   "inputs": [],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "type": "address",
       "isPointer": 0,
@@ -775,7 +775,7 @@ ABI of test1.json
   "encoding": "0x96d7f3f5",
   "inputs": [],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "type": "uint256",
       "isPointer": 0,
@@ -793,7 +793,7 @@ ABI of test1.json
   "encoding": "0xb7bc2c84",
   "inputs": [],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "type": "bool",
       "isPointer": 0,
@@ -811,7 +811,7 @@ ABI of test1.json
   "encoding": "0x78524b2e",
   "inputs": [],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "name": "_success",
       "type": "bool",
@@ -829,7 +829,7 @@ ABI of test1.json
   "signature": "getNewDAOAddress(uint256)",
   "encoding": "0xbe7c29c1",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "_proposalID",
       "type": "uint256",
@@ -839,7 +839,7 @@ ABI of test1.json
     }
   ],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "name": "_newDAO",
       "type": "address",
@@ -858,7 +858,7 @@ ABI of test1.json
   "encoding": "0xcc9ae3f6",
   "inputs": [],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "name": "_success",
       "type": "bool",
@@ -877,7 +877,7 @@ ABI of test1.json
   "encoding": "0x21b5b8dd",
   "inputs": [],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "type": "address",
       "isPointer": 0,
@@ -894,7 +894,7 @@ ABI of test1.json
   "signature": "executeProposal(uint256,bytes)",
   "encoding": "0x237e9492",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "_proposalID",
       "type": "uint256",
@@ -902,7 +902,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "_transactionData",
       "type": "bytes",
@@ -912,7 +912,7 @@ ABI of test1.json
     }
   ],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "name": "_success",
       "type": "bool",
@@ -931,7 +931,7 @@ ABI of test1.json
   "encoding": "0x1f2dc5ef",
   "inputs": [],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "name": "divisor",
       "type": "uint256",
@@ -950,7 +950,7 @@ ABI of test1.json
   "encoding": "0x149acf9a",
   "inputs": [],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "type": "address",
       "isPointer": 0,
@@ -968,7 +968,7 @@ ABI of test1.json
   "encoding": "0xe66f53b7",
   "inputs": [],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "type": "address",
       "isPointer": 0,
@@ -985,7 +985,7 @@ ABI of test1.json
   "signature": "createTokenProxy(address)",
   "encoding": "0xbaac5300",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "_tokenHolder",
       "type": "address",
@@ -995,7 +995,7 @@ ABI of test1.json
     }
   ],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "name": "success",
       "type": "bool",
@@ -1014,7 +1014,7 @@ ABI of test1.json
   "encoding": "0x4b6753bc",
   "inputs": [],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "type": "uint256",
       "isPointer": 0,
@@ -1031,7 +1031,7 @@ ABI of test1.json
   "signature": "checkProposalCode(uint256,address,uint256,bytes)",
   "encoding": "0xeceb2945",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "_proposalID",
       "type": "uint256",
@@ -1039,7 +1039,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "_recipient",
       "type": "address",
@@ -1047,7 +1047,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "_amount",
       "type": "uint256",
@@ -1055,7 +1055,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "_transactionData",
       "type": "bytes",
@@ -1065,7 +1065,7 @@ ABI of test1.json
     }
   ],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "name": "_codeChecksOut",
       "type": "bool",
@@ -1083,7 +1083,7 @@ ABI of test1.json
   "signature": "changeProposalDeposit(uint256)",
   "encoding": "0xe33734fd",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "_proposalDeposit",
       "type": "uint256",
@@ -1102,7 +1102,7 @@ ABI of test1.json
   "signature": "changeAllowedRecipients(address,bool)",
   "encoding": "0x749f9889",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "_recipient",
       "type": "address",
@@ -1110,7 +1110,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "_allowed",
       "type": "bool",
@@ -1120,7 +1120,7 @@ ABI of test1.json
     }
   ],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "name": "_success",
       "type": "bool",
@@ -1138,7 +1138,7 @@ ABI of test1.json
   "signature": "blocked(address)",
   "encoding": "0xe5962195",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "param_0",
       "type": "address",
@@ -1148,7 +1148,7 @@ ABI of test1.json
     }
   ],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "type": "uint256",
       "isPointer": 0,
@@ -1165,7 +1165,7 @@ ABI of test1.json
   "signature": "balanceOf(address)",
   "encoding": "0x70a08231",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "_owner",
       "type": "address",
@@ -1175,7 +1175,7 @@ ABI of test1.json
     }
   ],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "name": "balance",
       "type": "uint256",
@@ -1193,7 +1193,7 @@ ABI of test1.json
   "signature": "approve(address,uint256)",
   "encoding": "0x095ea7b3",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "_spender",
       "type": "address",
@@ -1201,7 +1201,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "_amount",
       "type": "uint256",
@@ -1211,7 +1211,7 @@ ABI of test1.json
     }
   ],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "name": "success",
       "type": "bool",
@@ -1229,7 +1229,7 @@ ABI of test1.json
   "signature": "allowedRecipients(address)",
   "encoding": "0x4df6d6cc",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "param_0",
       "type": "address",
@@ -1239,7 +1239,7 @@ ABI of test1.json
     }
   ],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "type": "bool",
       "isPointer": 0,
@@ -1256,7 +1256,7 @@ ABI of test1.json
   "signature": "allowance(address,address)",
   "encoding": "0xdd62ed3e",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "_owner",
       "type": "address",
@@ -1264,7 +1264,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "_spender",
       "type": "address",
@@ -1274,7 +1274,7 @@ ABI of test1.json
     }
   ],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "name": "remaining",
       "type": "uint256",
@@ -1293,7 +1293,7 @@ ABI of test1.json
   "encoding": "0x39d1f908",
   "inputs": [],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "name": "_actualBalance",
       "type": "uint256",
@@ -1311,7 +1311,7 @@ ABI of test1.json
   "signature": "Voted(uint256,bool,address)",
   "encoding": "0x86abfce99b7dd908bec0169288797f85049ec73cbe046ed9de818fab3a497ae0",
   "inputs": [
-{    
+    {
       "indexed": 1,
       "name": "proposalID",
       "type": "uint256",
@@ -1319,7 +1319,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "position",
       "type": "bool",
@@ -1327,7 +1327,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 1,
       "name": "voter",
       "type": "address",
@@ -1346,7 +1346,7 @@ ABI of test1.json
   "signature": "Transfer(address,address,uint256)",
   "encoding": "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
   "inputs": [
-{    
+    {
       "indexed": 1,
       "name": "_from",
       "type": "address",
@@ -1354,7 +1354,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 1,
       "name": "_to",
       "type": "address",
@@ -1362,7 +1362,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "_amount",
       "type": "uint256",
@@ -1381,7 +1381,7 @@ ABI of test1.json
   "signature": "Refund(address,uint256)",
   "encoding": "0xbb28353e4598c3b9199101a66e0989549b659a59a54d2c27fbb183f1932c8e6d",
   "inputs": [
-{    
+    {
       "indexed": 1,
       "name": "to",
       "type": "address",
@@ -1389,7 +1389,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "value",
       "type": "uint256",
@@ -1408,7 +1408,7 @@ ABI of test1.json
   "signature": "ProposalTallied(uint256,bool,uint256)",
   "encoding": "0xdfc78bdca8e3e0b18c16c5c99323c6cb9eb5e00afde190b4e7273f5158702b07",
   "inputs": [
-{    
+    {
       "indexed": 1,
       "name": "proposalID",
       "type": "uint256",
@@ -1416,7 +1416,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "result",
       "type": "bool",
@@ -1424,7 +1424,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "quorum",
       "type": "uint256",
@@ -1443,7 +1443,7 @@ ABI of test1.json
   "signature": "ProposalAdded(uint256,address,uint256,bool,string)",
   "encoding": "0x5790de2c279e58269b93b12828f56fd5f2bc8ad15e61ce08572585c81a38756f",
   "inputs": [
-{    
+    {
       "indexed": 1,
       "name": "proposalID",
       "type": "uint256",
@@ -1451,7 +1451,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "recipient",
       "type": "address",
@@ -1459,7 +1459,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "amount",
       "type": "uint256",
@@ -1467,7 +1467,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "newCurator",
       "type": "bool",
@@ -1475,7 +1475,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "description",
       "type": "string",
@@ -1494,7 +1494,7 @@ ABI of test1.json
   "signature": "NewCurator(address)",
   "encoding": "0x9046fefd66f538ab35263248a44217dcb70e2eb2cd136629e141b8b8f9f03b60",
   "inputs": [
-{    
+    {
       "indexed": 1,
       "name": "_newCurator",
       "type": "address",
@@ -1513,7 +1513,7 @@ ABI of test1.json
   "signature": "FuelingToDate(uint256)",
   "encoding": "0xf381a3e2428fdda36615919e8d9c35878d9eb0cf85ac6edf575088e80e4c147e",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "value",
       "type": "uint256",
@@ -1533,7 +1533,7 @@ ABI of test1.json
   "encoding": "0x82bf6464",
   "inputs": [],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "type": "address",
       "isPointer": 0,
@@ -1550,7 +1550,7 @@ ABI of test1.json
   "signature": "DAOpaidOut(address)",
   "encoding": "0x643f7cdd",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "param_0",
       "type": "address",
@@ -1560,7 +1560,7 @@ ABI of test1.json
     }
   ],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "type": "uint256",
       "isPointer": 0,
@@ -1577,7 +1577,7 @@ ABI of test1.json
   "signature": "CreatedToken(address,uint256)",
   "encoding": "0xdbccb92686efceafb9bb7e0394df7f58f71b954061b81afb57109bf247d3d75a",
   "inputs": [
-{    
+    {
       "indexed": 1,
       "name": "to",
       "type": "address",
@@ -1585,7 +1585,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "amount",
       "type": "uint256",
@@ -1604,7 +1604,7 @@ ABI of test1.json
   "signature": "Approval(address,address,uint256)",
   "encoding": "0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925",
   "inputs": [
-{    
+    {
       "indexed": 1,
       "name": "_owner",
       "type": "address",
@@ -1612,7 +1612,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 1,
       "name": "_spender",
       "type": "address",
@@ -1620,7 +1620,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "_amount",
       "type": "uint256",
@@ -1639,7 +1639,7 @@ ABI of test1.json
   "signature": "AllowedRecipientChanged(address,bool)",
   "encoding": "0x73ad2a153c8b67991df9459024950b318a609782cee8c7eeda47b905f9baa91f",
   "inputs": [
-{    
+    {
       "indexed": 1,
       "name": "_recipient",
       "type": "address",
@@ -1647,7 +1647,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "_allowed",
       "type": "bool",
@@ -1665,7 +1665,7 @@ ABI of test1.json
   "signature": "(address,address,uint256,uint256,uint256,address)",
   "encoding": "0xd9fdb088",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "_curator",
       "type": "address",
@@ -1673,7 +1673,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "_daoCreator",
       "type": "address",
@@ -1681,7 +1681,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "_proposalDeposit",
       "type": "uint256",
@@ -1689,7 +1689,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "_minTokensToCreate",
       "type": "uint256",
@@ -1697,7 +1697,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "_closingTime",
       "type": "uint256",
@@ -1705,7 +1705,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "_privateCreation",
       "type": "address",
@@ -1725,7 +1725,7 @@ ABI of test1.json
   "encoding": "0xfdf97cb2",
   "inputs": [],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "type": "address",
       "isPointer": 0,
@@ -1743,7 +1743,7 @@ ABI of test1.json
   "encoding": "0xf8c80d26",
   "inputs": [],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "type": "address",
       "isPointer": 0,
@@ -1760,7 +1760,7 @@ ABI of test1.json
   "signature": "FuelingToDate(uint256)",
   "encoding": "0xf381a3e2428fdda36615919e8d9c35878d9eb0cf85ac6edf575088e80e4c147e",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "value",
       "type": "uint256",
@@ -1780,7 +1780,7 @@ ABI of test1.json
   "encoding": "0xeedcf50a",
   "inputs": [],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "type": "address",
       "isPointer": 0,
@@ -1797,7 +1797,7 @@ ABI of test1.json
   "signature": "checkProposalCode(uint256,address,uint256,bytes)",
   "encoding": "0xeceb2945",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "_proposalID",
       "type": "uint256",
@@ -1805,7 +1805,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "_recipient",
       "type": "address",
@@ -1813,7 +1813,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "_amount",
       "type": "uint256",
@@ -1821,7 +1821,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "_transactionData",
       "type": "bytes",
@@ -1831,7 +1831,7 @@ ABI of test1.json
     }
   ],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "name": "_codeChecksOut",
       "type": "bool",
@@ -1850,7 +1850,7 @@ ABI of test1.json
   "encoding": "0xe66f53b7",
   "inputs": [],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "type": "address",
       "isPointer": 0,
@@ -1867,7 +1867,7 @@ ABI of test1.json
   "signature": "blocked(address)",
   "encoding": "0xe5962195",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "param_0",
       "type": "address",
@@ -1877,7 +1877,7 @@ ABI of test1.json
     }
   ],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "type": "uint256",
       "isPointer": 0,
@@ -1894,7 +1894,7 @@ ABI of test1.json
   "signature": "changeProposalDeposit(uint256)",
   "encoding": "0xe33734fd",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "_proposalDeposit",
       "type": "uint256",
@@ -1913,7 +1913,7 @@ ABI of test1.json
   "signature": "ProposalTallied(uint256,bool,uint256)",
   "encoding": "0xdfc78bdca8e3e0b18c16c5c99323c6cb9eb5e00afde190b4e7273f5158702b07",
   "inputs": [
-{    
+    {
       "indexed": 1,
       "name": "proposalID",
       "type": "uint256",
@@ -1921,7 +1921,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "result",
       "type": "bool",
@@ -1929,7 +1929,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "quorum",
       "type": "uint256",
@@ -1948,7 +1948,7 @@ ABI of test1.json
   "signature": "Transfer(address,address,uint256)",
   "encoding": "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
   "inputs": [
-{    
+    {
       "indexed": 1,
       "name": "_from",
       "type": "address",
@@ -1956,7 +1956,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 1,
       "name": "_to",
       "type": "address",
@@ -1964,7 +1964,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "_amount",
       "type": "uint256",
@@ -1983,7 +1983,7 @@ ABI of test1.json
   "signature": "allowance(address,address)",
   "encoding": "0xdd62ed3e",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "_owner",
       "type": "address",
@@ -1991,7 +1991,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "_spender",
       "type": "address",
@@ -2001,7 +2001,7 @@ ABI of test1.json
     }
   ],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "name": "remaining",
       "type": "uint256",
@@ -2019,7 +2019,7 @@ ABI of test1.json
   "signature": "transferFromWithoutReward(address,address,uint256)",
   "encoding": "0xdbde1988",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "_from",
       "type": "address",
@@ -2027,7 +2027,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "_to",
       "type": "address",
@@ -2035,7 +2035,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "_value",
       "type": "uint256",
@@ -2045,7 +2045,7 @@ ABI of test1.json
     }
   ],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "name": "success",
       "type": "bool",
@@ -2063,7 +2063,7 @@ ABI of test1.json
   "signature": "CreatedToken(address,uint256)",
   "encoding": "0xdbccb92686efceafb9bb7e0394df7f58f71b954061b81afb57109bf247d3d75a",
   "inputs": [
-{    
+    {
       "indexed": 1,
       "name": "to",
       "type": "address",
@@ -2071,7 +2071,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "amount",
       "type": "uint256",
@@ -2089,7 +2089,7 @@ ABI of test1.json
   "signature": "(address,address,uint256,uint256,uint256,address)",
   "encoding": "0xd9fdb088",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "_curator",
       "type": "address",
@@ -2097,7 +2097,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "_daoCreator",
       "type": "address",
@@ -2105,7 +2105,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "_proposalDeposit",
       "type": "uint256",
@@ -2113,7 +2113,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "_minTokensToCreate",
       "type": "uint256",
@@ -2121,7 +2121,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "_closingTime",
       "type": "uint256",
@@ -2129,7 +2129,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "_privateCreation",
       "type": "address",
@@ -2148,7 +2148,7 @@ ABI of test1.json
   "signature": "rewardToken(address)",
   "encoding": "0xcdef91d0",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "param_0",
       "type": "address",
@@ -2158,7 +2158,7 @@ ABI of test1.json
     }
   ],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "type": "uint256",
       "isPointer": 0,
@@ -2176,7 +2176,7 @@ ABI of test1.json
   "encoding": "0xcc9ae3f6",
   "inputs": [],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "name": "_success",
       "type": "bool",
@@ -2194,7 +2194,7 @@ ABI of test1.json
   "signature": "vote(uint256,bool)",
   "encoding": "0xc9d27afe",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "_proposalID",
       "type": "uint256",
@@ -2202,7 +2202,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "_supportsProposal",
       "type": "bool",
@@ -2212,7 +2212,7 @@ ABI of test1.json
     }
   ],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "name": "_voteID",
       "type": "uint256",
@@ -2230,7 +2230,7 @@ ABI of test1.json
   "signature": "getNewDAOAddress(uint256)",
   "encoding": "0xbe7c29c1",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "_proposalID",
       "type": "uint256",
@@ -2240,7 +2240,7 @@ ABI of test1.json
     }
   ],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "name": "_newDAO",
       "type": "address",
@@ -2258,7 +2258,7 @@ ABI of test1.json
   "signature": "Refund(address,uint256)",
   "encoding": "0xbb28353e4598c3b9199101a66e0989549b659a59a54d2c27fbb183f1932c8e6d",
   "inputs": [
-{    
+    {
       "indexed": 1,
       "name": "to",
       "type": "address",
@@ -2266,7 +2266,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "value",
       "type": "uint256",
@@ -2285,7 +2285,7 @@ ABI of test1.json
   "signature": "createTokenProxy(address)",
   "encoding": "0xbaac5300",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "_tokenHolder",
       "type": "address",
@@ -2295,7 +2295,7 @@ ABI of test1.json
     }
   ],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "name": "success",
       "type": "bool",
@@ -2314,7 +2314,7 @@ ABI of test1.json
   "encoding": "0xb7bc2c84",
   "inputs": [],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "type": "bool",
       "isPointer": 0,
@@ -2331,7 +2331,7 @@ ABI of test1.json
   "signature": "transfer(address,uint256)",
   "encoding": "0xa9059cbb",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "_to",
       "type": "address",
@@ -2339,7 +2339,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "_value",
       "type": "uint256",
@@ -2349,7 +2349,7 @@ ABI of test1.json
     }
   ],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "name": "success",
       "type": "bool",
@@ -2368,7 +2368,7 @@ ABI of test1.json
   "encoding": "0xa3912ec8",
   "inputs": [],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "type": "bool",
       "isPointer": 0,
@@ -2385,7 +2385,7 @@ ABI of test1.json
   "signature": "retrieveDAOReward(bool)",
   "encoding": "0xa1da2fb9",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "_toMembers",
       "type": "bool",
@@ -2395,7 +2395,7 @@ ABI of test1.json
     }
   ],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "name": "_success",
       "type": "bool",
@@ -2414,7 +2414,7 @@ ABI of test1.json
   "encoding": "0x96d7f3f5",
   "inputs": [],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "type": "uint256",
       "isPointer": 0,
@@ -2431,7 +2431,7 @@ ABI of test1.json
   "signature": "NewCurator(address)",
   "encoding": "0x9046fefd66f538ab35263248a44217dcb70e2eb2cd136629e141b8b8f9f03b60",
   "inputs": [
-{    
+    {
       "indexed": 1,
       "name": "_newCurator",
       "type": "address",
@@ -2451,7 +2451,7 @@ ABI of test1.json
   "encoding": "0x8d7af473",
   "inputs": [],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "name": "_numberOfProposals",
       "type": "uint256",
@@ -2469,7 +2469,7 @@ ABI of test1.json
   "signature": "Approval(address,address,uint256)",
   "encoding": "0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925",
   "inputs": [
-{    
+    {
       "indexed": 1,
       "name": "_owner",
       "type": "address",
@@ -2477,7 +2477,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 1,
       "name": "_spender",
       "type": "address",
@@ -2485,7 +2485,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "_amount",
       "type": "uint256",
@@ -2505,7 +2505,7 @@ ABI of test1.json
   "encoding": "0x8b15a605",
   "inputs": [],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "type": "uint256",
       "isPointer": 0,
@@ -2522,7 +2522,7 @@ ABI of test1.json
   "signature": "Voted(uint256,bool,address)",
   "encoding": "0x86abfce99b7dd908bec0169288797f85049ec73cbe046ed9de818fab3a497ae0",
   "inputs": [
-{    
+    {
       "indexed": 1,
       "name": "proposalID",
       "type": "uint256",
@@ -2530,7 +2530,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "position",
       "type": "bool",
@@ -2538,7 +2538,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 1,
       "name": "voter",
       "type": "address",
@@ -2558,7 +2558,7 @@ ABI of test1.json
   "encoding": "0x82bf6464",
   "inputs": [],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "type": "address",
       "isPointer": 0,
@@ -2575,7 +2575,7 @@ ABI of test1.json
   "signature": "splitDAO(uint256,address)",
   "encoding": "0x82661dc4",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "_proposalID",
       "type": "uint256",
@@ -2583,7 +2583,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "_newCurator",
       "type": "address",
@@ -2593,7 +2593,7 @@ ABI of test1.json
     }
   ],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "name": "_success",
       "type": "bool",
@@ -2611,7 +2611,7 @@ ABI of test1.json
   "signature": "paidOut(address)",
   "encoding": "0x81f03fcb",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "param_0",
       "type": "address",
@@ -2621,7 +2621,7 @@ ABI of test1.json
     }
   ],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "type": "uint256",
       "isPointer": 0,
@@ -2639,7 +2639,7 @@ ABI of test1.json
   "encoding": "0x78524b2e",
   "inputs": [],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "name": "_success",
       "type": "bool",
@@ -2657,7 +2657,7 @@ ABI of test1.json
   "signature": "changeAllowedRecipients(address,bool)",
   "encoding": "0x749f9889",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "_recipient",
       "type": "address",
@@ -2665,7 +2665,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "_allowed",
       "type": "bool",
@@ -2675,7 +2675,7 @@ ABI of test1.json
     }
   ],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "name": "_success",
       "type": "bool",
@@ -2693,7 +2693,7 @@ ABI of test1.json
   "signature": "AllowedRecipientChanged(address,bool)",
   "encoding": "0x73ad2a153c8b67991df9459024950b318a609782cee8c7eeda47b905f9baa91f",
   "inputs": [
-{    
+    {
       "indexed": 1,
       "name": "_recipient",
       "type": "address",
@@ -2701,7 +2701,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "_allowed",
       "type": "bool",
@@ -2720,7 +2720,7 @@ ABI of test1.json
   "signature": "balanceOf(address)",
   "encoding": "0x70a08231",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "_owner",
       "type": "address",
@@ -2730,7 +2730,7 @@ ABI of test1.json
     }
   ],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "name": "balance",
       "type": "uint256",
@@ -2748,7 +2748,7 @@ ABI of test1.json
   "signature": "newContract(address)",
   "encoding": "0x6837ff1e",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "_newContract",
       "type": "address",
@@ -2768,7 +2768,7 @@ ABI of test1.json
   "encoding": "0x674ed066",
   "inputs": [],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "type": "uint256",
       "isPointer": 0,
@@ -2785,7 +2785,7 @@ ABI of test1.json
   "signature": "DAOpaidOut(address)",
   "encoding": "0x643f7cdd",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "param_0",
       "type": "address",
@@ -2795,7 +2795,7 @@ ABI of test1.json
     }
   ],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "type": "uint256",
       "isPointer": 0,
@@ -2812,7 +2812,7 @@ ABI of test1.json
   "signature": "newProposal(address,uint256,string,bytes,uint256,bool)",
   "encoding": "0x612e45a3",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "_recipient",
       "type": "address",
@@ -2820,7 +2820,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "_amount",
       "type": "uint256",
@@ -2828,7 +2828,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "_description",
       "type": "string",
@@ -2836,7 +2836,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "_transactionData",
       "type": "bytes",
@@ -2844,7 +2844,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "_debatingPeriod",
       "type": "uint256",
@@ -2852,7 +2852,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "_newCurator",
       "type": "bool",
@@ -2862,7 +2862,7 @@ ABI of test1.json
     }
   ],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "name": "_proposalID",
       "type": "uint256",
@@ -2890,7 +2890,7 @@ ABI of test1.json
   "signature": "ProposalAdded(uint256,address,uint256,bool,string)",
   "encoding": "0x5790de2c279e58269b93b12828f56fd5f2bc8ad15e61ce08572585c81a38756f",
   "inputs": [
-{    
+    {
       "indexed": 1,
       "name": "proposalID",
       "type": "uint256",
@@ -2898,7 +2898,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "recipient",
       "type": "address",
@@ -2906,7 +2906,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "amount",
       "type": "uint256",
@@ -2914,7 +2914,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "newCurator",
       "type": "bool",
@@ -2922,7 +2922,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "description",
       "type": "string",
@@ -2941,7 +2941,7 @@ ABI of test1.json
   "signature": "transferWithoutReward(address,uint256)",
   "encoding": "0x4e10c3ee",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "_to",
       "type": "address",
@@ -2949,7 +2949,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "_value",
       "type": "uint256",
@@ -2959,7 +2959,7 @@ ABI of test1.json
     }
   ],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "name": "success",
       "type": "bool",
@@ -2977,7 +2977,7 @@ ABI of test1.json
   "signature": "allowedRecipients(address)",
   "encoding": "0x4df6d6cc",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "param_0",
       "type": "address",
@@ -2987,7 +2987,7 @@ ABI of test1.json
     }
   ],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "type": "bool",
       "isPointer": 0,
@@ -3005,7 +3005,7 @@ ABI of test1.json
   "encoding": "0x4b6753bc",
   "inputs": [],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "type": "uint256",
       "isPointer": 0,
@@ -3033,7 +3033,7 @@ ABI of test1.json
   "encoding": "0x39d1f908",
   "inputs": [],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "name": "_actualBalance",
       "type": "uint256",
@@ -3052,7 +3052,7 @@ ABI of test1.json
   "encoding": "0x34145808",
   "inputs": [],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "type": "uint256",
       "isPointer": 0,
@@ -3080,7 +3080,7 @@ ABI of test1.json
   "encoding": "0x2632bf20",
   "inputs": [],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "type": "bool",
       "isPointer": 0,
@@ -3097,7 +3097,7 @@ ABI of test1.json
   "signature": "transferFrom(address,address,uint256)",
   "encoding": "0x23b872dd",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "_from",
       "type": "address",
@@ -3105,7 +3105,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "_to",
       "type": "address",
@@ -3113,7 +3113,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "_value",
       "type": "uint256",
@@ -3123,7 +3123,7 @@ ABI of test1.json
     }
   ],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "name": "success",
       "type": "bool",
@@ -3141,7 +3141,7 @@ ABI of test1.json
   "signature": "executeProposal(uint256,bytes)",
   "encoding": "0x237e9492",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "_proposalID",
       "type": "uint256",
@@ -3149,7 +3149,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "_transactionData",
       "type": "bytes",
@@ -3159,7 +3159,7 @@ ABI of test1.json
     }
   ],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "name": "_success",
       "type": "bool",
@@ -3178,7 +3178,7 @@ ABI of test1.json
   "encoding": "0x21b5b8dd",
   "inputs": [],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "type": "address",
       "isPointer": 0,
@@ -3196,7 +3196,7 @@ ABI of test1.json
   "encoding": "0x1f2dc5ef",
   "inputs": [],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "name": "divisor",
       "type": "uint256",
@@ -3215,7 +3215,7 @@ ABI of test1.json
   "encoding": "0x18160ddd",
   "inputs": [],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "type": "uint256",
       "isPointer": 0,
@@ -3233,7 +3233,7 @@ ABI of test1.json
   "encoding": "0x149acf9a",
   "inputs": [],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "type": "address",
       "isPointer": 0,
@@ -3251,7 +3251,7 @@ ABI of test1.json
   "encoding": "0x0e708203",
   "inputs": [],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "type": "address",
       "isPointer": 0,
@@ -3269,7 +3269,7 @@ ABI of test1.json
   "encoding": "0x0c3b7b96",
   "inputs": [],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "type": "uint256",
       "isPointer": 0,
@@ -3286,7 +3286,7 @@ ABI of test1.json
   "signature": "approve(address,uint256)",
   "encoding": "0x095ea7b3",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "_spender",
       "type": "address",
@@ -3294,7 +3294,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "_amount",
       "type": "uint256",
@@ -3304,7 +3304,7 @@ ABI of test1.json
     }
   ],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "name": "success",
       "type": "bool",
@@ -3322,7 +3322,7 @@ ABI of test1.json
   "signature": "proposals(uint256)",
   "encoding": "0x013cf08b",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "param_0",
       "type": "uint256",
@@ -3332,7 +3332,7 @@ ABI of test1.json
     }
   ],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "name": "recipient",
       "type": "address",
@@ -3340,7 +3340,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "amount",
       "type": "uint256",
@@ -3348,7 +3348,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "description",
       "type": "string",
@@ -3356,7 +3356,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "votingDeadline",
       "type": "uint256",
@@ -3364,7 +3364,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "open",
       "type": "bool",
@@ -3372,7 +3372,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "proposalPassed",
       "type": "bool",
@@ -3380,7 +3380,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "proposalHash",
       "type": "bytes32",
@@ -3388,7 +3388,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "proposalDeposit",
       "type": "uint256",
@@ -3396,7 +3396,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "newCurator",
       "type": "bool",
@@ -3404,7 +3404,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "yea",
       "type": "uint256",
@@ -3412,7 +3412,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "nay",
       "type": "uint256",
@@ -3420,7 +3420,7 @@ ABI of test1.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "creator",
       "type": "address",
@@ -3440,7 +3440,7 @@ ABI of test2.json
   "signature": "unsealBid(bytes32,address,uint256,bytes32)",
   "encoding": "0xaefc8c72",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "param_0",
       "type": "bytes32",
@@ -3448,7 +3448,7 @@ ABI of test2.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "param_1",
       "type": "address",
@@ -3456,7 +3456,7 @@ ABI of test2.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "param_2",
       "type": "uint256",
@@ -3464,7 +3464,7 @@ ABI of test2.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "param_3",
       "type": "bytes32",
@@ -3483,7 +3483,7 @@ ABI of test2.json
   "signature": "ttl(bytes32)",
   "encoding": "0x16a25cbd",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "param_0",
       "type": "bytes32",
@@ -3493,7 +3493,7 @@ ABI of test2.json
     }
   ],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "type": "uint64",
       "isPointer": 0,
@@ -3510,7 +3510,7 @@ ABI of test2.json
   "signature": "transferRegistrars(bytes32)",
   "encoding": "0x5ddae283",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "param_0",
       "type": "bytes32",
@@ -3529,7 +3529,7 @@ ABI of test2.json
   "signature": "transfer(bytes32,address)",
   "encoding": "0x79ce9fac",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "param_0",
       "type": "bytes32",
@@ -3537,7 +3537,7 @@ ABI of test2.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "param_1",
       "type": "address",
@@ -3556,7 +3556,7 @@ ABI of test2.json
   "signature": "state(bytes32)",
   "encoding": "0x61d585da",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "param_0",
       "type": "bytes32",
@@ -3566,7 +3566,7 @@ ABI of test2.json
     }
   ],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "type": "uint8",
       "isPointer": 0,
@@ -3583,7 +3583,7 @@ ABI of test2.json
   "signature": "startAuctions(bytes32[])",
   "encoding": "0xe27fe50f",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "param_0",
       "type": "bytes32[]",
@@ -3602,7 +3602,7 @@ ABI of test2.json
   "signature": "startAuction(bytes32)",
   "encoding": "0xede8acdb",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "param_0",
       "type": "bytes32",
@@ -3621,7 +3621,7 @@ ABI of test2.json
   "signature": "shaBid(bytes32,address,uint256,bytes32)",
   "encoding": "0x22ec1244",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "param_0",
       "type": "bytes32",
@@ -3629,7 +3629,7 @@ ABI of test2.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "param_1",
       "type": "address",
@@ -3637,7 +3637,7 @@ ABI of test2.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "param_2",
       "type": "uint256",
@@ -3645,7 +3645,7 @@ ABI of test2.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "param_3",
       "type": "bytes32",
@@ -3655,7 +3655,7 @@ ABI of test2.json
     }
   ],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "type": "bytes32",
       "isPointer": 0,
@@ -3672,7 +3672,7 @@ ABI of test2.json
   "signature": "setTTL(bytes32,uint64)",
   "encoding": "0x14ab9038",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "param_0",
       "type": "bytes32",
@@ -3680,7 +3680,7 @@ ABI of test2.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "param_1",
       "type": "uint64",
@@ -3699,7 +3699,7 @@ ABI of test2.json
   "signature": "setSubnodeOwner(bytes32,bytes32,address)",
   "encoding": "0x06ab5923",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "param_0",
       "type": "bytes32",
@@ -3707,7 +3707,7 @@ ABI of test2.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "param_1",
       "type": "bytes32",
@@ -3715,7 +3715,7 @@ ABI of test2.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "param_2",
       "type": "address",
@@ -3734,7 +3734,7 @@ ABI of test2.json
   "signature": "setResolver(bytes32,address)",
   "encoding": "0x1896f70a",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "param_0",
       "type": "bytes32",
@@ -3742,7 +3742,7 @@ ABI of test2.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "param_1",
       "type": "address",
@@ -3761,7 +3761,7 @@ ABI of test2.json
   "signature": "setOwner(bytes32,address)",
   "encoding": "0x5b0fc9c3",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "param_0",
       "type": "bytes32",
@@ -3769,7 +3769,7 @@ ABI of test2.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "param_1",
       "type": "address",
@@ -3788,7 +3788,7 @@ ABI of test2.json
   "signature": "sealedBids(address,bytes32)",
   "encoding": "0x5e431709",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "param_0",
       "type": "address",
@@ -3796,7 +3796,7 @@ ABI of test2.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "param_1",
       "type": "bytes32",
@@ -3806,7 +3806,7 @@ ABI of test2.json
     }
   ],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "type": "address",
       "isPointer": 0,
@@ -3824,7 +3824,7 @@ ABI of test2.json
   "encoding": "0xfaff50a8",
   "inputs": [],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "type": "bytes32",
       "isPointer": 0,
@@ -3841,7 +3841,7 @@ ABI of test2.json
   "signature": "resolver(bytes32)",
   "encoding": "0x0178b8bf",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "param_0",
       "type": "bytes32",
@@ -3851,7 +3851,7 @@ ABI of test2.json
     }
   ],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "type": "address",
       "isPointer": 0,
@@ -3868,7 +3868,7 @@ ABI of test2.json
   "signature": "releaseDeed(bytes32)",
   "encoding": "0x0230a07c",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "param_0",
       "type": "bytes32",
@@ -3888,7 +3888,7 @@ ABI of test2.json
   "encoding": "0x9c67f06f",
   "inputs": [],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "type": "uint256",
       "isPointer": 0,
@@ -3905,7 +3905,7 @@ ABI of test2.json
   "signature": "owner(bytes32)",
   "encoding": "0x02571be3",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "param_0",
       "type": "bytes32",
@@ -3915,7 +3915,7 @@ ABI of test2.json
     }
   ],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "type": "address",
       "isPointer": 0,
@@ -3932,7 +3932,7 @@ ABI of test2.json
   "signature": "newBid(bytes32)",
   "encoding": "0xce92dced",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "param_0",
       "type": "bytes32",
@@ -3951,7 +3951,7 @@ ABI of test2.json
   "signature": "invalidateName(string)",
   "encoding": "0x15f73331",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "param_0",
       "type": "string",
@@ -3970,7 +3970,7 @@ ABI of test2.json
   "signature": "finalizeAuction(bytes32)",
   "encoding": "0x983b94fb",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "param_0",
       "type": "bytes32",
@@ -3989,7 +3989,7 @@ ABI of test2.json
   "signature": "entries(bytes32)",
   "encoding": "0x267b6922",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "param_0",
       "type": "bytes32",
@@ -3999,35 +3999,35 @@ ABI of test2.json
     }
   ],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "type": "uint8",
       "isPointer": 0,
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "type": "address",
       "isPointer": 0,
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "type": "uint256",
       "isPointer": 0,
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "type": "uint256",
       "isPointer": 0,
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "type": "uint256",
       "isPointer": 0,
@@ -4045,7 +4045,7 @@ ABI of test2.json
   "encoding": "0x3f15457f",
   "inputs": [],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "type": "address",
       "isPointer": 0,
@@ -4062,7 +4062,7 @@ ABI of test2.json
   "signature": "cancelBid(address,bytes32)",
   "encoding": "0x2525f5c1",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "param_0",
       "type": "address",
@@ -4070,7 +4070,7 @@ ABI of test2.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "param_1",
       "type": "bytes32",
@@ -4089,7 +4089,7 @@ ABI of test2.json
   "signature": "Transfer(bytes32,address)",
   "encoding": "0xd4735d920b0f87494915f556dd9b54c8f309026070caea5c737245152564d266",
   "inputs": [
-{    
+    {
       "indexed": 1,
       "name": "param_0",
       "type": "bytes32",
@@ -4097,7 +4097,7 @@ ABI of test2.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "param_1",
       "type": "address",
@@ -4116,7 +4116,7 @@ ABI of test2.json
   "signature": "NewTTL(bytes32,uint64)",
   "encoding": "0x1d4f9bbfc9cab89d66e1a1562f2233ccbf1308cb4f63de2ead5787adddb8fa68",
   "inputs": [
-{    
+    {
       "indexed": 1,
       "name": "param_0",
       "type": "bytes32",
@@ -4124,7 +4124,7 @@ ABI of test2.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "param_1",
       "type": "uint64",
@@ -4143,7 +4143,7 @@ ABI of test2.json
   "signature": "NewResolver(bytes32,address)",
   "encoding": "0x335721b01866dc23fbee8b6b2c7b1e14d6f05c28cd35a2c934239f94095602a0",
   "inputs": [
-{    
+    {
       "indexed": 1,
       "name": "param_0",
       "type": "bytes32",
@@ -4151,7 +4151,7 @@ ABI of test2.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "param_1",
       "type": "address",
@@ -4170,7 +4170,7 @@ ABI of test2.json
   "signature": "NewOwner(bytes32,bytes32,address)",
   "encoding": "0xce0457fe73731f824cc272376169235128c118b49d344817417c6d108d155e82",
   "inputs": [
-{    
+    {
       "indexed": 1,
       "name": "param_0",
       "type": "bytes32",
@@ -4178,7 +4178,7 @@ ABI of test2.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 1,
       "name": "param_1",
       "type": "bytes32",
@@ -4186,7 +4186,7 @@ ABI of test2.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "param_2",
       "type": "address",
@@ -4205,7 +4205,7 @@ ABI of test2.json
   "signature": "NewBid(bytes32,address,uint256)",
   "encoding": "0xb556ff269c1b6714f432c36431e2041d28436a73b6c3f19c021827bbdc6bfc29",
   "inputs": [
-{    
+    {
       "indexed": 1,
       "name": "param_0",
       "type": "bytes32",
@@ -4213,7 +4213,7 @@ ABI of test2.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 1,
       "name": "param_1",
       "type": "address",
@@ -4221,7 +4221,7 @@ ABI of test2.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "param_2",
       "type": "uint256",
@@ -4240,7 +4240,7 @@ ABI of test2.json
   "signature": "HashReleased(bytes32,uint256)",
   "encoding": "0x292b79b9246fa2c8e77d3fe195b251f9cb839d7d038e667c069ee7708c631e16",
   "inputs": [
-{    
+    {
       "indexed": 1,
       "name": "param_0",
       "type": "bytes32",
@@ -4248,7 +4248,7 @@ ABI of test2.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "param_1",
       "type": "uint256",
@@ -4267,7 +4267,7 @@ ABI of test2.json
   "signature": "HashRegistered(bytes32,address,uint256,uint256)",
   "encoding": "0x0f0c27adfd84b60b6f456b0e87cdccb1e5fb9603991588d87fa99f5b6b61e670",
   "inputs": [
-{    
+    {
       "indexed": 1,
       "name": "param_0",
       "type": "bytes32",
@@ -4275,7 +4275,7 @@ ABI of test2.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 1,
       "name": "param_1",
       "type": "address",
@@ -4283,7 +4283,7 @@ ABI of test2.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "param_2",
       "type": "uint256",
@@ -4291,7 +4291,7 @@ ABI of test2.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "param_3",
       "type": "uint256",
@@ -4310,7 +4310,7 @@ ABI of test2.json
   "signature": "HashInvalidated(bytes32,string,uint256,uint256)",
   "encoding": "0x1f9c649fe47e58bb60f4e52f0d90e4c47a526c9f90c5113df842c025970b66ad",
   "inputs": [
-{    
+    {
       "indexed": 1,
       "name": "param_0",
       "type": "bytes32",
@@ -4318,7 +4318,7 @@ ABI of test2.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 1,
       "name": "param_1",
       "type": "string",
@@ -4326,7 +4326,7 @@ ABI of test2.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "param_2",
       "type": "uint256",
@@ -4334,7 +4334,7 @@ ABI of test2.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "param_3",
       "type": "uint256",
@@ -4353,7 +4353,7 @@ ABI of test2.json
   "signature": "BidRevealed(bytes32,address,uint256,uint8)",
   "encoding": "0x7b6c4b278d165a6b33958f8ea5dfb00c8c9d4d0acf1985bef5d10786898bc3e7",
   "inputs": [
-{    
+    {
       "indexed": 1,
       "name": "param_0",
       "type": "bytes32",
@@ -4361,7 +4361,7 @@ ABI of test2.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 1,
       "name": "param_1",
       "type": "address",
@@ -4369,7 +4369,7 @@ ABI of test2.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "param_2",
       "type": "uint256",
@@ -4377,7 +4377,7 @@ ABI of test2.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "param_3",
       "type": "uint8",
@@ -4396,7 +4396,7 @@ ABI of test2.json
   "signature": "AuctionStarted(bytes32,uint256)",
   "encoding": "0x87e97e825a1d1fa0c54e1d36c7506c1dea8b1efd451fe68b000cf96f7cf40003",
   "inputs": [
-{    
+    {
       "indexed": 1,
       "name": "param_0",
       "type": "bytes32",
@@ -4404,7 +4404,7 @@ ABI of test2.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "param_1",
       "type": "uint256",
@@ -4422,7 +4422,7 @@ ABI of test2.json
   "signature": "(address,bytes32,uint256)",
   "encoding": "0x98ba8a57",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "param_0",
       "type": "address",
@@ -4430,7 +4430,7 @@ ABI of test2.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "param_1",
       "type": "bytes32",
@@ -4438,7 +4438,7 @@ ABI of test2.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "param_2",
       "type": "uint256",
@@ -4458,7 +4458,7 @@ ABI of test2.json
   "encoding": "0xfaff50a8",
   "inputs": [],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "type": "bytes32",
       "isPointer": 0,
@@ -4475,7 +4475,7 @@ ABI of test2.json
   "signature": "startAuction(bytes32)",
   "encoding": "0xede8acdb",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "param_0",
       "type": "bytes32",
@@ -4494,7 +4494,7 @@ ABI of test2.json
   "signature": "startAuctions(bytes32[])",
   "encoding": "0xe27fe50f",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "param_0",
       "type": "bytes32[]",
@@ -4513,7 +4513,7 @@ ABI of test2.json
   "signature": "Transfer(bytes32,address)",
   "encoding": "0xd4735d920b0f87494915f556dd9b54c8f309026070caea5c737245152564d266",
   "inputs": [
-{    
+    {
       "indexed": 1,
       "name": "param_0",
       "type": "bytes32",
@@ -4521,7 +4521,7 @@ ABI of test2.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "param_1",
       "type": "address",
@@ -4540,7 +4540,7 @@ ABI of test2.json
   "signature": "newBid(bytes32)",
   "encoding": "0xce92dced",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "param_0",
       "type": "bytes32",
@@ -4559,7 +4559,7 @@ ABI of test2.json
   "signature": "NewOwner(bytes32,bytes32,address)",
   "encoding": "0xce0457fe73731f824cc272376169235128c118b49d344817417c6d108d155e82",
   "inputs": [
-{    
+    {
       "indexed": 1,
       "name": "param_0",
       "type": "bytes32",
@@ -4567,7 +4567,7 @@ ABI of test2.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 1,
       "name": "param_1",
       "type": "bytes32",
@@ -4575,7 +4575,7 @@ ABI of test2.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "param_2",
       "type": "address",
@@ -4594,7 +4594,7 @@ ABI of test2.json
   "signature": "NewBid(bytes32,address,uint256)",
   "encoding": "0xb556ff269c1b6714f432c36431e2041d28436a73b6c3f19c021827bbdc6bfc29",
   "inputs": [
-{    
+    {
       "indexed": 1,
       "name": "param_0",
       "type": "bytes32",
@@ -4602,7 +4602,7 @@ ABI of test2.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 1,
       "name": "param_1",
       "type": "address",
@@ -4610,7 +4610,7 @@ ABI of test2.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "param_2",
       "type": "uint256",
@@ -4629,7 +4629,7 @@ ABI of test2.json
   "signature": "unsealBid(bytes32,address,uint256,bytes32)",
   "encoding": "0xaefc8c72",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "param_0",
       "type": "bytes32",
@@ -4637,7 +4637,7 @@ ABI of test2.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "param_1",
       "type": "address",
@@ -4645,7 +4645,7 @@ ABI of test2.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "param_2",
       "type": "uint256",
@@ -4653,7 +4653,7 @@ ABI of test2.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "param_3",
       "type": "bytes32",
@@ -4673,7 +4673,7 @@ ABI of test2.json
   "encoding": "0x9c67f06f",
   "inputs": [],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "type": "uint256",
       "isPointer": 0,
@@ -4689,7 +4689,7 @@ ABI of test2.json
   "signature": "(address,bytes32,uint256)",
   "encoding": "0x98ba8a57",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "param_0",
       "type": "address",
@@ -4697,7 +4697,7 @@ ABI of test2.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "param_1",
       "type": "bytes32",
@@ -4705,7 +4705,7 @@ ABI of test2.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "param_2",
       "type": "uint256",
@@ -4724,7 +4724,7 @@ ABI of test2.json
   "signature": "finalizeAuction(bytes32)",
   "encoding": "0x983b94fb",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "param_0",
       "type": "bytes32",
@@ -4743,7 +4743,7 @@ ABI of test2.json
   "signature": "AuctionStarted(bytes32,uint256)",
   "encoding": "0x87e97e825a1d1fa0c54e1d36c7506c1dea8b1efd451fe68b000cf96f7cf40003",
   "inputs": [
-{    
+    {
       "indexed": 1,
       "name": "param_0",
       "type": "bytes32",
@@ -4751,7 +4751,7 @@ ABI of test2.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "param_1",
       "type": "uint256",
@@ -4770,7 +4770,7 @@ ABI of test2.json
   "signature": "BidRevealed(bytes32,address,uint256,uint8)",
   "encoding": "0x7b6c4b278d165a6b33958f8ea5dfb00c8c9d4d0acf1985bef5d10786898bc3e7",
   "inputs": [
-{    
+    {
       "indexed": 1,
       "name": "param_0",
       "type": "bytes32",
@@ -4778,7 +4778,7 @@ ABI of test2.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 1,
       "name": "param_1",
       "type": "address",
@@ -4786,7 +4786,7 @@ ABI of test2.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "param_2",
       "type": "uint256",
@@ -4794,7 +4794,7 @@ ABI of test2.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "param_3",
       "type": "uint8",
@@ -4813,7 +4813,7 @@ ABI of test2.json
   "signature": "transfer(bytes32,address)",
   "encoding": "0x79ce9fac",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "param_0",
       "type": "bytes32",
@@ -4821,7 +4821,7 @@ ABI of test2.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "param_1",
       "type": "address",
@@ -4840,7 +4840,7 @@ ABI of test2.json
   "signature": "state(bytes32)",
   "encoding": "0x61d585da",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "param_0",
       "type": "bytes32",
@@ -4850,7 +4850,7 @@ ABI of test2.json
     }
   ],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "type": "uint8",
       "isPointer": 0,
@@ -4867,7 +4867,7 @@ ABI of test2.json
   "signature": "sealedBids(address,bytes32)",
   "encoding": "0x5e431709",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "param_0",
       "type": "address",
@@ -4875,7 +4875,7 @@ ABI of test2.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "param_1",
       "type": "bytes32",
@@ -4885,7 +4885,7 @@ ABI of test2.json
     }
   ],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "type": "address",
       "isPointer": 0,
@@ -4902,7 +4902,7 @@ ABI of test2.json
   "signature": "transferRegistrars(bytes32)",
   "encoding": "0x5ddae283",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "param_0",
       "type": "bytes32",
@@ -4921,7 +4921,7 @@ ABI of test2.json
   "signature": "setOwner(bytes32,address)",
   "encoding": "0x5b0fc9c3",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "param_0",
       "type": "bytes32",
@@ -4929,7 +4929,7 @@ ABI of test2.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "param_1",
       "type": "address",
@@ -4949,7 +4949,7 @@ ABI of test2.json
   "encoding": "0x3f15457f",
   "inputs": [],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "type": "address",
       "isPointer": 0,
@@ -4966,7 +4966,7 @@ ABI of test2.json
   "signature": "NewResolver(bytes32,address)",
   "encoding": "0x335721b01866dc23fbee8b6b2c7b1e14d6f05c28cd35a2c934239f94095602a0",
   "inputs": [
-{    
+    {
       "indexed": 1,
       "name": "param_0",
       "type": "bytes32",
@@ -4974,7 +4974,7 @@ ABI of test2.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "param_1",
       "type": "address",
@@ -4993,7 +4993,7 @@ ABI of test2.json
   "signature": "HashReleased(bytes32,uint256)",
   "encoding": "0x292b79b9246fa2c8e77d3fe195b251f9cb839d7d038e667c069ee7708c631e16",
   "inputs": [
-{    
+    {
       "indexed": 1,
       "name": "param_0",
       "type": "bytes32",
@@ -5001,7 +5001,7 @@ ABI of test2.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "param_1",
       "type": "uint256",
@@ -5020,7 +5020,7 @@ ABI of test2.json
   "signature": "entries(bytes32)",
   "encoding": "0x267b6922",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "param_0",
       "type": "bytes32",
@@ -5030,35 +5030,35 @@ ABI of test2.json
     }
   ],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "type": "uint8",
       "isPointer": 0,
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "type": "address",
       "isPointer": 0,
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "type": "uint256",
       "isPointer": 0,
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "type": "uint256",
       "isPointer": 0,
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "type": "uint256",
       "isPointer": 0,
@@ -5075,7 +5075,7 @@ ABI of test2.json
   "signature": "cancelBid(address,bytes32)",
   "encoding": "0x2525f5c1",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "param_0",
       "type": "address",
@@ -5083,7 +5083,7 @@ ABI of test2.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "param_1",
       "type": "bytes32",
@@ -5102,7 +5102,7 @@ ABI of test2.json
   "signature": "shaBid(bytes32,address,uint256,bytes32)",
   "encoding": "0x22ec1244",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "param_0",
       "type": "bytes32",
@@ -5110,7 +5110,7 @@ ABI of test2.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "param_1",
       "type": "address",
@@ -5118,7 +5118,7 @@ ABI of test2.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "param_2",
       "type": "uint256",
@@ -5126,7 +5126,7 @@ ABI of test2.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "param_3",
       "type": "bytes32",
@@ -5136,7 +5136,7 @@ ABI of test2.json
     }
   ],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "type": "bytes32",
       "isPointer": 0,
@@ -5153,7 +5153,7 @@ ABI of test2.json
   "signature": "HashInvalidated(bytes32,string,uint256,uint256)",
   "encoding": "0x1f9c649fe47e58bb60f4e52f0d90e4c47a526c9f90c5113df842c025970b66ad",
   "inputs": [
-{    
+    {
       "indexed": 1,
       "name": "param_0",
       "type": "bytes32",
@@ -5161,7 +5161,7 @@ ABI of test2.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 1,
       "name": "param_1",
       "type": "string",
@@ -5169,7 +5169,7 @@ ABI of test2.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "param_2",
       "type": "uint256",
@@ -5177,7 +5177,7 @@ ABI of test2.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "param_3",
       "type": "uint256",
@@ -5196,7 +5196,7 @@ ABI of test2.json
   "signature": "NewTTL(bytes32,uint64)",
   "encoding": "0x1d4f9bbfc9cab89d66e1a1562f2233ccbf1308cb4f63de2ead5787adddb8fa68",
   "inputs": [
-{    
+    {
       "indexed": 1,
       "name": "param_0",
       "type": "bytes32",
@@ -5204,7 +5204,7 @@ ABI of test2.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "param_1",
       "type": "uint64",
@@ -5223,7 +5223,7 @@ ABI of test2.json
   "signature": "setResolver(bytes32,address)",
   "encoding": "0x1896f70a",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "param_0",
       "type": "bytes32",
@@ -5231,7 +5231,7 @@ ABI of test2.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "param_1",
       "type": "address",
@@ -5250,7 +5250,7 @@ ABI of test2.json
   "signature": "ttl(bytes32)",
   "encoding": "0x16a25cbd",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "param_0",
       "type": "bytes32",
@@ -5260,7 +5260,7 @@ ABI of test2.json
     }
   ],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "type": "uint64",
       "isPointer": 0,
@@ -5277,7 +5277,7 @@ ABI of test2.json
   "signature": "invalidateName(string)",
   "encoding": "0x15f73331",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "param_0",
       "type": "string",
@@ -5296,7 +5296,7 @@ ABI of test2.json
   "signature": "setTTL(bytes32,uint64)",
   "encoding": "0x14ab9038",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "param_0",
       "type": "bytes32",
@@ -5304,7 +5304,7 @@ ABI of test2.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "param_1",
       "type": "uint64",
@@ -5323,7 +5323,7 @@ ABI of test2.json
   "signature": "HashRegistered(bytes32,address,uint256,uint256)",
   "encoding": "0x0f0c27adfd84b60b6f456b0e87cdccb1e5fb9603991588d87fa99f5b6b61e670",
   "inputs": [
-{    
+    {
       "indexed": 1,
       "name": "param_0",
       "type": "bytes32",
@@ -5331,7 +5331,7 @@ ABI of test2.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 1,
       "name": "param_1",
       "type": "address",
@@ -5339,7 +5339,7 @@ ABI of test2.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "param_2",
       "type": "uint256",
@@ -5347,7 +5347,7 @@ ABI of test2.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "param_3",
       "type": "uint256",
@@ -5366,7 +5366,7 @@ ABI of test2.json
   "signature": "setSubnodeOwner(bytes32,bytes32,address)",
   "encoding": "0x06ab5923",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "param_0",
       "type": "bytes32",
@@ -5374,7 +5374,7 @@ ABI of test2.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "param_1",
       "type": "bytes32",
@@ -5382,7 +5382,7 @@ ABI of test2.json
       "isArray": 0,
       "isObject": 0
     },
-{    
+    {
       "indexed": 0,
       "name": "param_2",
       "type": "address",
@@ -5401,7 +5401,7 @@ ABI of test2.json
   "signature": "owner(bytes32)",
   "encoding": "0x02571be3",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "param_0",
       "type": "bytes32",
@@ -5411,7 +5411,7 @@ ABI of test2.json
     }
   ],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "type": "address",
       "isPointer": 0,
@@ -5428,7 +5428,7 @@ ABI of test2.json
   "signature": "releaseDeed(bytes32)",
   "encoding": "0x0230a07c",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "param_0",
       "type": "bytes32",
@@ -5447,7 +5447,7 @@ ABI of test2.json
   "signature": "resolver(bytes32)",
   "encoding": "0x0178b8bf",
   "inputs": [
-{    
+    {
       "indexed": 0,
       "name": "param_0",
       "type": "bytes32",
@@ -5457,7 +5457,7 @@ ABI of test2.json
     }
   ],
   "outputs": [
-{    
+    {
       "indexed": 0,
       "type": "address",
       "isPointer": 0,

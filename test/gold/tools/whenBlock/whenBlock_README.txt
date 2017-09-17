@@ -4,7 +4,7 @@ whenBlock -th
 
 `Usage:`    whenBlock [-a|-l|-v|-h] date / block  
 `Purpose:`  Finds the nearest block prior to a JSON-formatted date, or the nearest date prior to
-           the given block. Alternatively, search for one of the special blocks listed below.
+            the given block. Alternatively, search for one of the special blocks listed below.
              
 `Where:`  
 
@@ -12,7 +12,7 @@ whenBlock -th
 | -------: | :------- | :------- |
 |  | date / block | one of the special values listed below or YYYY-MM-DD-[HH[:MM[:SS]]] or a blockNumber |
 | -a | --alone | show the found block or found date unadorned (useful for scripting) |
-| -l | --list | list special blocks timestamps and dates |
+| -l | --list | list the names and block numbers of special blocks |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
@@ -22,6 +22,4 @@ whenBlock -th
 	    first (0), iceage (200000), homestead (1150000), daofund (1428756), 
 	    daohack (1718497), daofork (1920000), tangerine (2463000), spurious (2675000), 
 	    stateclear (2718436), latest ()
-
-	See the README for information on customizing this list.
 

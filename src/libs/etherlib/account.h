@@ -40,7 +40,7 @@ public:
 public:
     CAccount(void);
     CAccount(const CAccount& ac);
-    ~CAccount(void);
+    virtual ~CAccount(void);
     CAccount& operator=(const CAccount& ac);
 
     DECLARE_NODE(CAccount);
@@ -55,7 +55,7 @@ protected:
     void Clear(void);
     void Init(void);
     void Copy(const CAccount& ac);
-    bool readBackLevel(SFArchive& archive);
+    bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -152,6 +152,5 @@ extern SFUint32 verbose;
 #define REP_FREQ   11
 #define REP_INFREQ 563
 // EXISTING_CODE
-#define NEW_CODE
 }  // namespace qblocks
 

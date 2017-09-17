@@ -3,7 +3,6 @@ dataUpgrade CTraceAction
 --------------------------------------------------------------------------------
 className: CTraceAction
 objectSize: 224
-classSchema: 513
 baseClass: CBaseNode
 	fieldName: schema
 	  fieldID: 1001

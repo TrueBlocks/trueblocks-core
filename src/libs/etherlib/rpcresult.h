@@ -33,7 +33,7 @@ public:
 public:
     CRPCResult(void);
     CRPCResult(const CRPCResult& rp);
-    ~CRPCResult(void);
+    virtual ~CRPCResult(void);
     CRPCResult& operator=(const CRPCResult& rp);
 
     DECLARE_NODE(CRPCResult);
@@ -46,7 +46,7 @@ protected:
     void Clear(void);
     void Init(void);
     void Copy(const CRPCResult& rp);
-    bool readBackLevel(SFArchive& archive);
+    bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -124,6 +124,5 @@ IMPLEMENT_ARCHIVE_LIST(CRPCResultList);
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
-#define NEW_CODE
 }  // namespace qblocks
 

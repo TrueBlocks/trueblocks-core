@@ -31,7 +31,7 @@ public:
 public:
     QApprovalEvent(void);
     QApprovalEvent(const QApprovalEvent& ap);
-    ~QApprovalEvent(void);
+    virtual ~QApprovalEvent(void);
     QApprovalEvent& operator=(const QApprovalEvent& ap);
 
     DECLARE_NODE(QApprovalEvent);
@@ -44,7 +44,7 @@ protected:
     void Clear(void);
     void Init(void);
     void Copy(const QApprovalEvent& ap);
-    bool readBackLevel(SFArchive& archive);
+    bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -122,5 +122,4 @@ IMPLEMENT_ARCHIVE_LIST(QApprovalEventList);
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
-#define NEW_CODE
 

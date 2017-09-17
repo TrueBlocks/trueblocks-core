@@ -13,7 +13,7 @@
 #include "etherlib.h"
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(QApprove, CTransaction, dataSchema());
+IMPLEMENT_NODE(QApprove, CTransaction);
 
 //---------------------------------------------------------------------------
 static SFString nextApproveChunk(const SFString& fieldIn, const void *dataPtr);
@@ -75,10 +75,13 @@ void QApprove::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool QApprove::Serialize(SFArchive& archive) {
+
     if (archive.isWriting())
         return ((const QApprove*)this)->SerializeC(archive);
 
-    CTransaction::Serialize(archive);
+    // If we're reading a back level, read the whole thing and we're done.
+    if (readBackLevel(archive))
+        return true;
 
     archive >> _spender;
     archive >> _value;
@@ -88,6 +91,8 @@ bool QApprove::Serialize(SFArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool QApprove::SerializeC(SFArchive& archive) const {
+
+    // Writing always write the latest version of the data
     CTransaction::SerializeC(archive);
 
     archive << _spender;
@@ -148,6 +153,8 @@ bool QApprove::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, vo
 
 //---------------------------------------------------------------------------
 bool QApprove::readBackLevel(SFArchive& archive) {
+
+    CTransaction::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -179,6 +186,9 @@ SFString QApprove::getValueByName(const SFString& fieldName) const {
 
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const QApprove& item) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
     os << item.Format() << "\n";
     return os;
 }

@@ -15,7 +15,7 @@
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CLogEntry, CBaseNode, dataSchema());
+IMPLEMENT_NODE(CLogEntry, CBaseNode);
 
 //---------------------------------------------------------------------------
 extern SFString nextLogentryChunk(const SFString& fieldIn, const void *dataPtr);
@@ -53,13 +53,6 @@ SFString nextLogentryChunk(const SFString& fieldIn, const void *dataPtr) {
 //---------------------------------------------------------------------------------------------------
 bool CLogEntry::setValueByName(const SFString& fieldName, const SFString& fieldValue) {
     // EXISTING_CODE
-    if (fieldName % "topics")
-    {
-        SFString str = fieldValue;
-        while (!str.empty())
-            topics[topics.getCount()] = toTopic(nextTokenClear(str,','));
-        return true;
-    }
     if (pReceipt)
         if (((CReceipt*)pReceipt)->setValueByName(fieldName, fieldValue))
             return true;
@@ -76,7 +69,13 @@ bool CLogEntry::setValueByName(const SFString& fieldName, const SFString& fieldV
             if ( fieldName % "logIndex" ) { logIndex = toUnsigned(fieldValue); return true; }
             break;
         case 't':
-            if ( fieldName % "topics" ) return true;
+            if ( fieldName % "topics" ) {
+                SFString str = fieldValue;
+                while (!str.empty()) {
+                    topics[topics.getCount()] = toTopic(nextTokenClear(str,','));
+                }
+                return true;
+            }
             break;
         default:
             break;
@@ -92,11 +91,13 @@ void CLogEntry::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CLogEntry::Serialize(SFArchive& archive) {
+
     if (archive.isWriting())
         return ((const CLogEntry*)this)->SerializeC(archive);
 
-    if (!preSerialize(archive))
-        return false;
+    // If we're reading a back level, read the whole thing and we're done.
+    if (readBackLevel(archive))
+        return true;
 
     archive >> address;
     archive >> data;
@@ -108,9 +109,9 @@ bool CLogEntry::Serialize(SFArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool CLogEntry::SerializeC(SFArchive& archive) const {
-    if (!preSerializeC(archive))
-        return false;
 
+    // Writing always write the latest version of the data
+    CBaseNode::SerializeC(archive);
     archive << address;
     archive << data;
     archive << logIndex;
@@ -171,6 +172,8 @@ bool CLogEntry::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, v
 
 //---------------------------------------------------------------------------
 bool CLogEntry::readBackLevel(SFArchive& archive) {
+
+    CBaseNode::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -214,8 +217,8 @@ SFString CLogEntry::getValueByName(const SFString& fieldName) const {
                 if (!cnt) return "";
                 SFString retS;
                 for (uint32_t i = 0 ; i < cnt ; i++) {
-                    retS += indent() + ("\"" + fromTopic(topics[i]) + "\"");
-                    retS += ((i < cnt - 1) ? ",\n" : "\n");
+                    retS += ("\"" + fromTopic(topics[i]) + "\"");
+                    retS += ((i < cnt - 1) ? ",\n" + indent() : "\n");
                 }
                 return retS;
             }
@@ -237,6 +240,9 @@ SFString CLogEntry::getValueByName(const SFString& fieldName) const {
 
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const CLogEntry& item) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
     os << item.Format() << "\n";
     return os;
 }

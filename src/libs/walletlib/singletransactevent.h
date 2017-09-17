@@ -32,7 +32,7 @@ public:
 public:
     QSingleTransactEvent(void);
     QSingleTransactEvent(const QSingleTransactEvent& si);
-    ~QSingleTransactEvent(void);
+    virtual ~QSingleTransactEvent(void);
     QSingleTransactEvent& operator=(const QSingleTransactEvent& si);
 
     DECLARE_NODE(QSingleTransactEvent);
@@ -45,7 +45,7 @@ protected:
     void Clear(void);
     void Init(void);
     void Copy(const QSingleTransactEvent& si);
-    bool readBackLevel(SFArchive& archive);
+    bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -125,5 +125,4 @@ IMPLEMENT_ARCHIVE_LIST(QSingleTransactEventList);
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
-#define NEW_CODE
 

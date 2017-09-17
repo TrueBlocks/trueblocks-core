@@ -33,7 +33,7 @@ public:
 public:
     QMultiTransactEvent(void);
     QMultiTransactEvent(const QMultiTransactEvent& mu);
-    ~QMultiTransactEvent(void);
+    virtual ~QMultiTransactEvent(void);
     QMultiTransactEvent& operator=(const QMultiTransactEvent& mu);
 
     DECLARE_NODE(QMultiTransactEvent);
@@ -46,7 +46,7 @@ protected:
     void Clear(void);
     void Init(void);
     void Copy(const QMultiTransactEvent& mu);
-    bool readBackLevel(SFArchive& archive);
+    bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -128,5 +128,4 @@ IMPLEMENT_ARCHIVE_LIST(QMultiTransactEventList);
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
-#define NEW_CODE
 

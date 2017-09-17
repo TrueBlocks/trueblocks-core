@@ -3,7 +3,6 @@ dataUpgrade CAccountWatch
 --------------------------------------------------------------------------------
 className: CAccountWatch
 objectSize: 376
-classSchema: 513
 baseClass: CBaseNode
 	fieldName: schema
 	  fieldID: 1001

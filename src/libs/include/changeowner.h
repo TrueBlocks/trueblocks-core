@@ -30,7 +30,7 @@ public:
 public:
     QChangeOwner(void);
     QChangeOwner(const QChangeOwner& ch);
-    ~QChangeOwner(void);
+    virtual ~QChangeOwner(void);
     QChangeOwner& operator=(const QChangeOwner& ch);
 
     DECLARE_NODE(QChangeOwner);
@@ -43,7 +43,7 @@ protected:
     void Clear(void);
     void Init(void);
     void Copy(const QChangeOwner& ch);
-    bool readBackLevel(SFArchive& archive);
+    bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -119,5 +119,4 @@ IMPLEMENT_ARCHIVE_LIST(QChangeOwnerList);
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
-#define NEW_CODE
 

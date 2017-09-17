@@ -15,7 +15,7 @@
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CBlock, CBaseNode, dataSchema());
+IMPLEMENT_NODE(CBlock, CBaseNode);
 
 //---------------------------------------------------------------------------
 extern SFString nextBlockChunk(const SFString& fieldIn, const void *dataPtr);
@@ -60,27 +60,18 @@ bool CBlock::setValueByName(const SFString& fieldName, const SFString& fieldValu
         *(SFString*)&fieldName = "hash";
 
     } else if (fieldName % "transactions") {
-        // Transactions can come to us either as a JSON object (starts with '{') or a list
-        // of hashes (i.e. a string array).
-        if (fieldValue.Contains("{")) {
-            char *p = (char *)fieldValue.c_str();
-            while (p && *p) {
-                CTransaction trans;
-                uint32_t nFields = 0;
-                p = trans.parseJson(p, nFields);
-                if (nFields)
-                    transactions[transactions.getCount()] = trans;
-            }
-
-        } else {
+        // Transactions come to us either as a JSON objects or lists
+        // of hashes (i.e. a string array). JSON objects have 'from'
+        
+        if (!fieldValue.Contains("from")) {
             SFString str = fieldValue;
             while (!str.empty()) {
                 CTransaction trans;
                 trans.hash = toAddress(nextTokenClear(str, ','));
                 transactions[transactions.getCount()] = trans;
             }
+            return true;
         }
-        return true;
     }
     // EXISTING_CODE
 
@@ -103,7 +94,17 @@ bool CBlock::setValueByName(const SFString& fieldName, const SFString& fieldValu
             break;
         case 't':
             if ( fieldName % "timestamp" ) { timestamp = toTimestamp(fieldValue); return true; }
-            if ( fieldName % "transactions" ) return true;
+            if ( fieldName % "transactions" ) {
+                char *p = (char *)fieldValue.c_str();
+                while (p && *p) {
+                    CTransaction item;
+                    uint32_t nFields = 0;
+                    p = item.parseJson(p, nFields);
+                    if (nFields)
+                        transactions[transactions.getCount()] = item;
+                }
+                return true;
+            }
             break;
         default:
             break;
@@ -121,11 +122,13 @@ void CBlock::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CBlock::Serialize(SFArchive& archive) {
+
     if (archive.isWriting())
         return ((const CBlock*)this)->SerializeC(archive);
 
-    if (!preSerialize(archive))
-        return false;
+    // If we're reading a back level, read the whole thing and we're done.
+    if (readBackLevel(archive))
+        return true;
 
     archive >> gasLimit;
     archive >> gasUsed;
@@ -141,9 +144,9 @@ bool CBlock::Serialize(SFArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool CBlock::SerializeC(SFArchive& archive) const {
-    if (!preSerializeC(archive))
-        return false;
 
+    // Writing always write the latest version of the data
+    CBaseNode::SerializeC(archive);
     archive << gasLimit;
     archive << gasUsed;
     archive << hash;
@@ -227,6 +230,8 @@ bool CBlock::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void
 
 //---------------------------------------------------------------------------
 bool CBlock::readBackLevel(SFArchive& archive) {
+
+    CBaseNode::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -297,6 +302,9 @@ SFString CBlock::getValueByName(const SFString& fieldName) const {
 
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const CBlock& item) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
     os << item.Format() << "\n";
     return os;
 }

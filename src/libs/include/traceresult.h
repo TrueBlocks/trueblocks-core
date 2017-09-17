@@ -33,7 +33,7 @@ public:
 public:
     CTraceResult(void);
     CTraceResult(const CTraceResult& tr);
-    ~CTraceResult(void);
+    virtual ~CTraceResult(void);
     CTraceResult& operator=(const CTraceResult& tr);
 
     DECLARE_NODE(CTraceResult);
@@ -47,7 +47,7 @@ protected:
     void Clear(void);
     void Init(void);
     void Copy(const CTraceResult& tr);
-    bool readBackLevel(SFArchive& archive);
+    bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -127,6 +127,5 @@ extern SFArchive& operator>>(SFArchive& archive, CTraceResult& tra);
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
-#define NEW_CODE
 }  // namespace qblocks
 

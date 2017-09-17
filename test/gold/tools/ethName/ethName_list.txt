@@ -43,4 +43,5 @@ ethName -l
 { "symbol": "SWT", "name": "Swarm City Token", "addr": "0xb9e7f8568e08d5659f5d29c4997173d84cdf2607", "source": "Etherscan.io", "description": "Swarm City is a decentralized peer to peer sharing economy" }
 { "symbol": "BCAP", "name": "Blockchain Capital", "addr": "0xff3519eeeea3e76f1f699ccce5e23ee0bdda41ac", "source": "Etherscan.io", "description": "Blockchain Capital is a pioneer and the premier venture capital firm investing in Blockchain enabled technology" }
 { "symbol": "PLU", "name": "Pluton", "addr": "0xd8912c10681d8b21fd3742244f44658dba12264e", "source": "Etherscan.io", "description": "With Plutus Tap & Pay, you can pay at any NFC-enabled merchant" }
+{ "symbol": "UNI", "name": "Unicorns", "addr": "0x89205a3a3b2a69de6dbf7f01ed13b2108b2c43e7", "source": "Ethereum.org", "description": "Ethereum tip jar unicorn tokens" }
 { "symbol": "EEAR", "name": "Eth Early Adoption Registry", "addr": "0x713b73c3994442b533e6a083ec968e40606810ec", "source": "quickBlocks.io", "description": "An early, known-dead address useful for testing" }

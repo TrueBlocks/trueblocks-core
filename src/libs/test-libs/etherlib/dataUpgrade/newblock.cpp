@@ -12,17 +12,15 @@
 #include "newblock.h"
 #include "etherlib.h"
 
-namespace qblocks {
+//---------------------------------------------------------------------------
+IMPLEMENT_NODE(CNewBlock, CBaseNode);
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CNewBlock, CBaseNode, dataSchema());
+extern SFString nextNewblockChunk(const SFString& fieldIn, const void *dataPtr);
+static SFString nextNewblockChunk_custom(const SFString& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-extern SFString nextNewblockChunk(const SFString& fieldIn, const void *data);
-static SFString nextNewblockChunk_custom(const SFString& fieldIn, const void *data);
-
-//---------------------------------------------------------------------------
-void CNewBlock::Format(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+void CNewBlock::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -32,7 +30,7 @@ void CNewBlock::Format(CExportContext& ctx, const SFString& fmtIn, void *data) c
     }
 
     SFString fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, data))
+    if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
     while (!fmt.empty())
@@ -40,60 +38,12 @@ void CNewBlock::Format(CExportContext& ctx, const SFString& fmtIn, void *data) c
 }
 
 //---------------------------------------------------------------------------
-SFString nextNewblockChunk(const SFString& fieldIn, const void *data) {
-    const CNewBlock *newp = (const CNewBlock *)data;
-    if (newp) {
-        // Give customized code a chance to override first
-        SFString ret = nextNewblockChunk_custom(fieldIn, data);
-        if (!ret.empty())
-            return ret;
+SFString nextNewblockChunk(const SFString& fieldIn, const void *dataPtr) {
+    if (dataPtr)
+        return ((const CNewBlock *)dataPtr)->getValueByName(fieldIn);
 
-        switch (tolower(fieldIn[0])) {
-            case 'b':
-                if ( fieldIn % "blockNumber" ) return asStringU(newp->blockNumber);
-                break;
-            case 'g':
-                if ( fieldIn % "gasLimit" ) return asStringU(newp->gasLimit);
-                if ( fieldIn % "gasUsed" ) return asStringU(newp->gasUsed);
-                break;
-            case 'h':
-                if ( fieldIn % "hash" ) return fromHash(newp->hash);
-                break;
-            case 'l':
-                if ( fieldIn % "logsBloom" ) return fromBloom(newp->logsBloom);
-                break;
-            case 'm':
-                if ( fieldIn % "miner" ) return fromAddress(newp->miner);
-                break;
-            case 'p':
-                if ( fieldIn % "parentHash" ) return fromHash(newp->parentHash);
-                break;
-            case 's':
-                if ( fieldIn % "size" ) return asStringU(newp->size);
-                break;
-            case 't':
-                if ( fieldIn % "timestamp" ) return asString(newp->timestamp);
-                if ( fieldIn % "transactions" ) {
-                    uint32_t cnt = newp->transactions.getCount();
-                    if (!cnt) return "";
-                    ret = "";
-                    for (uint32_t i = 0 ; i < cnt ; i++) {
-                        ret += newp->transactions[i].Format();
-                        ret += ((i < cnt - 1) ? ",\n" : "\n");
-                    }
-                    return ret;
-                }
-                break;
-        }
-
-        // EXISTING_CODE
-        // EXISTING_CODE
-
-        // Finally, give the parent class a chance
-        ret = nextBasenodeChunk(fieldIn, newp);
-        if (!ret.empty())
-            return ret;
-    }
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return fldNotFound(fieldIn);
 }
@@ -105,27 +55,18 @@ bool CNewBlock::setValueByName(const SFString& fieldName, const SFString& fieldV
         *(SFString*)&fieldName = "blockNumber";
 
     } else if (fieldName % "transactions") {
-        // Transactions can come to us either as a JSON object (starts with '{') or a list
-        // of hashes (i.e. a string array).
-        if (fieldValue.Contains("{")) {
-            char *p = (char *)fieldValue.c_str();
-            while (p && *p) {
-                CTransaction trans;
-                uint32_t nFields = 0;
-                p = trans.parseJson(p, nFields);
-                if (nFields)
-                    transactions[transactions.getCount()] = trans;
-            }
-
-        } else {
+        // Transactions come to us either as a JSON objects or lists
+        // of hashes (i.e. a string array). JSON objects have 'from'
+        // We handle those as normal below
+        if (!fieldValue.Contains("from")) {
             SFString str = fieldValue;
             while (!str.empty()) {
                 CTransaction trans;
                 trans.hash = toAddress(nextTokenClear(str, ','));
                 transactions[transactions.getCount()] = trans;
             }
+            return true;
         }
-        return true;
     }
     // EXISTING_CODE
 
@@ -134,8 +75,8 @@ bool CNewBlock::setValueByName(const SFString& fieldName, const SFString& fieldV
             if ( fieldName % "blockNumber" ) { blockNumber = toUnsigned(fieldValue); return true; }
             break;
         case 'g':
-            if ( fieldName % "gasLimit" ) { gasLimit = toUnsigned(fieldValue); return true; }
-            if ( fieldName % "gasUsed" ) { gasUsed = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "gasLimit" ) { gasLimit = toGas(fieldValue); return true; }
+            if ( fieldName % "gasUsed" ) { gasUsed = toGas(fieldValue); return true; }
             break;
         case 'h':
             if ( fieldName % "hash" ) { hash = toHash(fieldValue); return true; }
@@ -153,8 +94,18 @@ bool CNewBlock::setValueByName(const SFString& fieldName, const SFString& fieldV
             if ( fieldName % "size" ) { size = toUnsigned(fieldValue); return true; }
             break;
         case 't':
-            if ( fieldName % "timestamp" ) { timestamp = toLong(fieldValue); return true; }
-            if ( fieldName % "transactions" ) return true;
+            if ( fieldName % "timestamp" ) { timestamp = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "transactions" ) {
+                char *p = (char *)fieldValue.c_str();
+                while (p && *p) {
+                    CTransaction item;
+                    uint32_t nFields = 0;
+                    p = item.parseJson(p, nFields);
+                    if (nFields)
+                        transactions[transactions.getCount()] = item;
+                }
+                return true;
+            }
             break;
         default:
             break;
@@ -165,17 +116,18 @@ bool CNewBlock::setValueByName(const SFString& fieldName, const SFString& fieldV
 //---------------------------------------------------------------------------------------------------
 void CNewBlock::finishParse() {
     // EXISTING_CODE
+    for (uint32_t i=0;i<transactions.getCount();i++)
+        transactions[i].pBlock = (CBlock*)this;
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------------------------------
 bool CNewBlock::Serialize(SFArchive& archive) {
+
     if (archive.isWriting())
         return ((const CNewBlock*)this)->SerializeC(archive);
 
-    if (!preSerialize(archive))
-        return false;
-
+    // If we're reading a back level, read the whole thing and we're done.
     if (readBackLevel(archive))
         return true;
 
@@ -195,9 +147,9 @@ bool CNewBlock::Serialize(SFArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool CNewBlock::SerializeC(SFArchive& archive) const {
-    if (!preSerializeC(archive))
-        return false;
 
+    // Writing always write the latest version of the data
+    CBaseNode::SerializeC(archive);
     archive << gasLimit;
     archive << gasUsed;
     archive << hash;
@@ -241,8 +193,8 @@ void CNewBlock::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextNewblockChunk_custom(const SFString& fieldIn, const void *data) {
-    const CNewBlock *newp = (const CNewBlock *)data;
+SFString nextNewblockChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+    const CNewBlock *newp = (const CNewBlock *)dataPtr;
     if (newp) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -277,7 +229,7 @@ SFString nextNewblockChunk_custom(const SFString& fieldIn, const void *data) {
 }
 
 //---------------------------------------------------------------------------
-bool CNewBlock::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data) const {
+bool CNewBlock::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
@@ -285,10 +237,8 @@ bool CNewBlock::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, v
 
 //---------------------------------------------------------------------------
 bool CNewBlock::readBackLevel(SFArchive& archive) {
-    // If they are the same, we are not a back level
-    if (archive.m_header.m_archiveSchema == m_schema)
-        return false;
 
+    CBaseNode::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
     if (m_schema == 501) {
@@ -303,7 +253,7 @@ bool CNewBlock::readBackLevel(SFArchive& archive) {
         miner = "0x0";
         size = 0x0;
         finishParse();
-        return true;
+        done = true;
     }
     // EXISTING_CODE
     return done;
@@ -322,6 +272,69 @@ SFArchive& operator>>(SFArchive& archive, CNewBlock& newp) {
 }
 
 //---------------------------------------------------------------------------
+SFString CNewBlock::getValueByName(const SFString& fieldName) const {
+
+    // Give customized code a chance to override first
+    SFString ret = nextNewblockChunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    // If the class has any fields, return them
+    switch (tolower(fieldName[0])) {
+        case 'b':
+            if ( fieldName % "blockNumber" ) return asStringU(blockNumber);
+            break;
+        case 'g':
+            if ( fieldName % "gasLimit" ) return fromGas(gasLimit);
+            if ( fieldName % "gasUsed" ) return fromGas(gasUsed);
+            break;
+        case 'h':
+            if ( fieldName % "hash" ) return fromHash(hash);
+            break;
+        case 'l':
+            if ( fieldName % "logsBloom" ) return fromBloom(logsBloom);
+            break;
+        case 'm':
+            if ( fieldName % "miner" ) return fromAddress(miner);
+            break;
+        case 'p':
+            if ( fieldName % "parentHash" ) return fromHash(parentHash);
+            break;
+        case 's':
+            if ( fieldName % "size" ) return asStringU(size);
+            break;
+        case 't':
+            if ( fieldName % "timestamp" ) return asStringU(timestamp);
+            if ( fieldName % "transactions" ) {
+                uint32_t cnt = transactions.getCount();
+                if (!cnt) return "";
+                SFString retS;
+                for (uint32_t i = 0 ; i < cnt ; i++) {
+                    retS += transactions[i].Format();
+                    retS += ((i < cnt - 1) ? ",\n" : "\n");
+                }
+                return retS;
+            }
+            break;
+    }
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CBaseNode::getValueByName(fieldName);
+}
+
+//-------------------------------------------------------------------------
+ostream& operator<<(ostream& os, const CNewBlock& item) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    os << item.Format() << "\n";
+    return os;
+}
+
+//---------------------------------------------------------------------------
 // EXISTING_CODE
 CNewBlock::CNewBlock(const CBlock& block) {
     gasLimit = block.gasLimit;
@@ -330,16 +343,16 @@ CNewBlock::CNewBlock(const CBlock& block) {
     logsBloom = block.logsBloom;
     blockNumber = block.blockNumber;
     parentHash = block.parentHash;
-    timestamp = block.timestamp;
+    timestamp = (SFUint32)block.timestamp;
     transactions = block.transactions;
-    // miner;
-    // size;
+    miner = "0x0";
+    size = 0;
 }
 
 //-----------------------------------------------------------------------
 bool readOneNewBlock_fromBinary(CNewBlock& block, const SFString& fileName) {
     block = CNewBlock(); // reset
-    SFArchive archive(true, fileSchema(), true);
+    SFArchive archive(READING_ARCHIVE);
     if (archive.Lock(fileName, binaryReadOnly, LOCK_NOWAIT))
     {
         block.Serialize(archive);
@@ -368,5 +381,4 @@ bool readOneNewBlock_fromJson(CNewBlock& block, const SFString& fileName) {
     return nFields;
 }
 // EXISTING_CODE
-}  // namespace qblocks
 

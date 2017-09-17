@@ -13,7 +13,7 @@
 #include "etherlib.h"
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(QChangeRequirement, CTransaction, dataSchema());
+IMPLEMENT_NODE(QChangeRequirement, CTransaction);
 
 //---------------------------------------------------------------------------
 static SFString nextChangerequirementChunk(const SFString& fieldIn, const void *dataPtr);
@@ -74,10 +74,13 @@ void QChangeRequirement::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool QChangeRequirement::Serialize(SFArchive& archive) {
+
     if (archive.isWriting())
         return ((const QChangeRequirement*)this)->SerializeC(archive);
 
-    CTransaction::Serialize(archive);
+    // If we're reading a back level, read the whole thing and we're done.
+    if (readBackLevel(archive))
+        return true;
 
     archive >> _newRequired;
     finishParse();
@@ -86,6 +89,8 @@ bool QChangeRequirement::Serialize(SFArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool QChangeRequirement::SerializeC(SFArchive& archive) const {
+
+    // Writing always write the latest version of the data
     CTransaction::SerializeC(archive);
 
     archive << _newRequired;
@@ -144,6 +149,8 @@ bool QChangeRequirement::handleCustomFormat(CExportContext& ctx, const SFString&
 
 //---------------------------------------------------------------------------
 bool QChangeRequirement::readBackLevel(SFArchive& archive) {
+
+    CTransaction::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -174,6 +181,9 @@ SFString QChangeRequirement::getValueByName(const SFString& fieldName) const {
 
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const QChangeRequirement& item) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
     os << item.Format() << "\n";
     return os;
 }

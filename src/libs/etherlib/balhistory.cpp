@@ -15,7 +15,7 @@
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CBalHistory, CBaseNode, dataSchema());
+IMPLEMENT_NODE(CBalHistory, CBaseNode);
 
 //---------------------------------------------------------------------------
 static SFString nextBalhistoryChunk(const SFString& fieldIn, const void *dataPtr);
@@ -79,11 +79,13 @@ void CBalHistory::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CBalHistory::Serialize(SFArchive& archive) {
+
     if (archive.isWriting())
         return ((const CBalHistory*)this)->SerializeC(archive);
 
-    if (!preSerialize(archive))
-        return false;
+    // If we're reading a back level, read the whole thing and we're done.
+    if (readBackLevel(archive))
+        return true;
 
     archive >> recordID;
     archive >> txDate;
@@ -94,9 +96,9 @@ bool CBalHistory::Serialize(SFArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool CBalHistory::SerializeC(SFArchive& archive) const {
-    if (!preSerializeC(archive))
-        return false;
 
+    // Writing always write the latest version of the data
+    CBaseNode::SerializeC(archive);
     archive << recordID;
     archive << txDate;
     archive << balance;
@@ -155,6 +157,8 @@ bool CBalHistory::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn,
 
 //---------------------------------------------------------------------------
 bool CBalHistory::readBackLevel(SFArchive& archive) {
+
+    CBaseNode::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -203,6 +207,9 @@ SFString CBalHistory::getValueByName(const SFString& fieldName) const {
 
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const CBalHistory& item) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
     os << item.Format() << "\n";
     return os;
 }

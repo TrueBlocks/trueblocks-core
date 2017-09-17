@@ -14,7 +14,7 @@
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CAbi, CBaseNode, dataSchema());
+IMPLEMENT_NODE(CAbi, CBaseNode);
 
 //---------------------------------------------------------------------------
 static SFString nextAbiChunk(const SFString& fieldIn, const void *dataPtr);
@@ -56,8 +56,28 @@ bool CAbi::setValueByName(const SFString& fieldName, const SFString& fieldValue)
 
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "abiByName" ) return true;
-            if ( fieldName % "abiByEncoding" ) return true;
+            if ( fieldName % "abiByName" ) {
+                char *p = (char *)fieldValue.c_str();
+                while (p && *p) {
+                    CFunction item;
+                    uint32_t nFields = 0;
+                    p = item.parseJson(p, nFields);
+                    if (nFields)
+                        abiByName[abiByName.getCount()] = item;
+                }
+                return true;
+            }
+            if ( fieldName % "abiByEncoding" ) {
+                char *p = (char *)fieldValue.c_str();
+                while (p && *p) {
+                    CFunction item;
+                    uint32_t nFields = 0;
+                    p = item.parseJson(p, nFields);
+                    if (nFields)
+                        abiByEncoding[abiByEncoding.getCount()] = item;
+                }
+                return true;
+            }
             break;
         default:
             break;
@@ -73,11 +93,13 @@ void CAbi::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CAbi::Serialize(SFArchive& archive) {
+
     if (archive.isWriting())
         return ((const CAbi*)this)->SerializeC(archive);
 
-    if (!preSerialize(archive))
-        return false;
+    // If we're reading a back level, read the whole thing and we're done.
+    if (readBackLevel(archive))
+        return true;
 
     archive >> abiByName;
     archive >> abiByEncoding;
@@ -87,9 +109,9 @@ bool CAbi::Serialize(SFArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool CAbi::SerializeC(SFArchive& archive) const {
-    if (!preSerializeC(archive))
-        return false;
 
+    // Writing always write the latest version of the data
+    CBaseNode::SerializeC(archive);
     archive << abiByName;
     archive << abiByEncoding;
 
@@ -146,6 +168,8 @@ bool CAbi::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *
 
 //---------------------------------------------------------------------------
 bool CAbi::readBackLevel(SFArchive& archive) {
+
+    CBaseNode::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -195,12 +219,17 @@ SFString CAbi::getValueByName(const SFString& fieldName) const {
 
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const CAbi& item) {
+    // EXISTING_CODE
     for (uint32_t i = 0 ; i < item.abiByName.getCount() ; i++ ) {
         os << item.abiByName[i].Format() << "\n";
     }
     for (uint32_t i = 0 ; i < item.abiByEncoding.getCount() ; i++ ) {
         os << item.abiByEncoding[i].Format() << "\n";
     }
+    { return os; }
+    // EXISTING_CODE
+
+    os << item.Format() << "\n";
     return os;
 }
 

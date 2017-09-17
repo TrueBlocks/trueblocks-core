@@ -472,8 +472,7 @@ void writeToBinary(const CBaseNode& node, const SFString& fileName)
     if (establishFolder(fileName,created)) {
         if (!created.empty() && !isTestMode())
             cerr << "mkdir(" << created << ")" << SFString(' ',20) << "                                                     \n";
-        // TODO(tjayrush): Can I hide both schema and deleteOnWrite and make an enum?
-        SFArchive archive(false, fileSchema(), true);
+        SFArchive archive(WRITING_ARCHIVE);
         if (archive.Lock(fileName, binaryWriteCreate, LOCK_CREATE))
         {
             ((CBlock *)&node)->Serialize(archive);
@@ -486,7 +485,7 @@ void writeToBinary(const CBaseNode& node, const SFString& fileName)
 bool readOneBlock_fromBinary(CBlock& block, const SFString& fileName)
 {
     block = CBlock(); // reset
-    SFArchive archive(true, fileSchema(), true);
+    SFArchive archive(READING_ARCHIVE);
     if (archive.Lock(fileName, binaryReadOnly, LOCK_NOWAIT))
     {
         block.Serialize(archive);
@@ -499,6 +498,10 @@ bool readOneBlock_fromBinary(CBlock& block, const SFString& fileName)
 //-----------------------------------------------------------------------
 bool readOneBlock_fromJson(CBlock& block, const SFString& fileName)
 {
+    if (!fileExists(fileName)) {
+        cerr << "File not found " << fileName << "\n";
+        return false;
+    }
     block = CBlock(); // reset
     SFString contents = asciiFileToString(fileName);
     if (contents.Contains("null"))
@@ -520,7 +523,7 @@ bool readOneBlock_fromJson(CBlock& block, const SFString& fileName)
 SFBloom readOneBloom(blknum_t bn) {
     SFBloom ret = 0;
     SFString fileName = getBinaryFilename1(bn).Substitute("/blocks/", "/blooms/");
-    SFArchive archive(true, fileSchema(), true);
+    SFArchive archive(READING_ARCHIVE);
     if (archive.Lock(fileName, binaryReadOnly, LOCK_NOWAIT)) {
         archive >> ret;
         archive.Close();
@@ -534,7 +537,7 @@ void writeOneBloom(const SFString& fileName, const SFBloom& bloom) {
     if (establishFolder(fileName,created)) {
         if (!created.empty() && !isTestMode())
             cerr << "mkdir(" << created << ")" << SFString(' ',20) << "                                                     \n";
-        SFArchive archive(false, fileSchema(), true);
+        SFArchive archive(WRITING_ARCHIVE);
         if (archive.Lock(fileName, binaryWriteCreate, LOCK_CREATE)) {
             archive << bloom;
             archive.Close();
@@ -998,29 +1001,38 @@ private:
     SFUint32    count;
 };
 
-static CInMemoryCache theCache;
+static CInMemoryCache *theCache = NULL;
 //--------------------------------------------------------------------------
-void clearInMemoryCache(void)
-{
-    theCache.Clear();
+void clearInMemoryCache(void) {
+    if (theCache)
+        theCache->Clear();
+    theCache = NULL;
 }
+//--------------------------------------------------------------------------
+CInMemoryCache *getTheCache(void) {
+    if (!theCache)
+        theCache = new CInMemoryCache();
+    return theCache;
+}
+
 //--------------------------------------------------------------------------
 bool forEveryMiniBlockInMemory(MINIBLOCKVISITFUNC func, void *data, SFUint32 start, SFUint32 count)
 {
-    if (!theCache.Load(start,count))
+    CInMemoryCache *cache = getTheCache();
+    if (!cache->Load(start,count))
         return false;
-    SFUint32 first = theCache.firstBlock();
-    SFUint32 last = theCache.lastBlock();
+    SFUint32 first = cache->firstBlock();
+    SFUint32 last = cache->lastBlock();
 
     bool done=false;
     for (SFUint32 i=first;i<last&&!done;i++)
     {
-        if (inRange((SFUint32)theCache.blocks[i].blockNumber, start, start+count-1))
+        if (inRange((SFUint32)cache->blocks[i].blockNumber, start, start+count-1))
         {
-            if (!(*func)(theCache.blocks[i], &theCache.trans[0], data))
+            if (!(*func)(cache->blocks[i], &cache->trans[0], data))
                 return false;
 
-        } else if (theCache.blocks[i].blockNumber >= start+count)
+        } else if (cache->blocks[i].blockNumber >= start+count)
         {
             done=true;
 
@@ -1053,26 +1065,27 @@ bool forEveryMiniBlockInMemory(MINIBLOCKVISITFUNC func, void *data, SFUint32 sta
 //--------------------------------------------------------------------------
 bool forEveryFullBlockInMemory(BLOCKVISITFUNC func, void *data, SFUint32 start, SFUint32 count)
 {
+    CInMemoryCache *cache = getTheCache();
     if (getSource() != "mem")
         return false;
-    if (!theCache.Load(start,count))
+    if (!cache->Load(start,count))
         return false;
 
-    SFUint32 first = theCache.firstBlock();
-    SFUint32 last = theCache.lastBlock();
+    SFUint32 first = cache->firstBlock();
+    SFUint32 last = cache->lastBlock();
 
     bool done=false;
     for (SFUint32 i=first;i<last&&!done;i++)
     {
-        if (inRange((SFUint32)theCache.blocks[i].blockNumber, start, start+count-1))
+        if (inRange((SFUint32)cache->blocks[i].blockNumber, start, start+count-1))
         {
             CBlock block;
-            theCache.blocks[i].toBlock(block);
+            cache->blocks[i].toBlock(block);
             SFUint32 gasUsed=0;
-            for (SFUint32 tr=theCache.blocks[i].firstTrans;tr<theCache.blocks[i].firstTrans+theCache.blocks[i].nTrans;tr++)
+            for (SFUint32 tr=cache->blocks[i].firstTrans;tr<cache->blocks[i].firstTrans+cache->blocks[i].nTrans;tr++)
             {
                 CTransaction tt;
-                theCache.trans[tr].toTrans(tt);
+                cache->trans[tr].toTrans(tt);
                 gasUsed += tt.receipt.gasUsed;
                 block.transactions[block.transactions.getCount()] = tt;
             }
@@ -1080,7 +1093,7 @@ bool forEveryFullBlockInMemory(BLOCKVISITFUNC func, void *data, SFUint32 start, 
             if (!(*func)(block, data))
                 return false;
 
-        } else if (theCache.blocks[i].blockNumber >= start+count)
+        } else if (cache->blocks[i].blockNumber >= start+count)
         {
             done=true;
 

@@ -1,10 +1,10 @@
 ## ethName
 
-`ethName` provides a very simple, poorly-done method by which to keep track of 'real life' names and their associated Ethereum addresses. While the tools needs a lot of work, it has come in handy as we've been writing **quickBlocks**. Eventually a feature such as this will be replaced with ENS (or an equivalent), but in the mean time, `ethname` works well to help you remember who is associated with which addresses.
+`ethName` provides a very simple, wholy-inadequate method to keep track of 'real life' names and their associated Ethereum addresses. While this tool needs a lot of work, it does come in handy. Eventually, we will transition this tool to use ENS (or an equivalent).
 
-A very useful way to use of this tools is to feed its output into another command-line tool's input. For example to following command would open the [etherscan](http://etherscan.io) website to the transactions associated with Fred's address:
+One way to use this tool is to feed its output into another tool's input. For example, the following command would open the [EtherScan](http://etherscan.io) website to the address associated with The DAO:
 
-    ethname -a 'FredJones' | ethscan
+    ethscan.py `ethName -a DAO`
 
 #### Usage
 
@@ -27,18 +27,24 @@ A very useful way to use of this tools is to feed its output into another comman
 
 #### Notes
 
-With one search term, search in both `name` and `address` fields. With two terms, the first must match the `address` field, while the second must match the `name` field. When there are two search terms, both must match.
+With a single search term, the tool searches both `name` and `address`. With two search terms, the first must match the `address` field, and the second must match the `name` field. When there are two search terms, both must match.
 
-If one mixes options, the `edit` option always predominates. If present, the program opens the database and then quits. The `--list` option predominates otherwise. If 
-present the tool will display a list of all items. The `--count` option works with any other option and will simply display the number of matches or '0 matches' if 
-none. The `--matchCase` option requires case sensitive matching. It works with all other options. The `--addrOnly` option modifies the display output and therefore 
-works with any other options.
+If one mixes options, the `--edit` option always predominates (i.e. the program opens the database and then quits).
+
+The `--list` option predominates otherwise. If present, the tool displays a list of stored names and addresses and then quits.
+
+The `--count` option works with any other option and will simply display the number of matches or '0 matches' if 
+none.
+
+The `--matchCase` option requires case sensitive matching. It works with all other options.
+
+The `--addrOnly` option modifies the display output and therefore works with any other options.
 
 #### Other Options
 
-All QuickBlocks command-line tools support the following commands (although in some case, they have no meaning):
+All **quickBlocks** command-line tools support the following commands (although in some case, they have no meaning):
 
-    Command     |         Description
+    Command     |     Description
     -----------------------------------------------------------------------------
     --version   |   display the current version of the tool
     --nocolors  |   turn off colored display
@@ -47,7 +53,7 @@ All QuickBlocks command-line tools support the following commands (although in s
     --dollars   |   specify value in US dollars
     --file:fn   |   specify multiple sets of command line options in a file.
 
-*For the `--file:fn` option, place a series of valid command lines in a file and use the above option. In some cases, this option may significantly improve performance. Use semi-colon make comments.*
+<small>*For the `--file:fn` option, place a series of valid command lines in a file and use the above options. In some cases, this option may significantly improve performance. A semi-colon at the start of a line makes that line a comment.*</small>
 
 **Powered by QuickBlocks<sup>&reg;</sup>**
 
