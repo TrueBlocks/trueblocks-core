@@ -20,6 +20,8 @@ int main(int argc, const char *argv[]) {
     // Tell the system where the blocks are and which version to use
     etherlib_init("binary");
 
+    CAcctCacheItem::registerClass();
+
     // Parse command line, allowing for command files
     COptions options;
     if (!options.prepareArguments(argc, argv))
@@ -66,7 +68,7 @@ int main(int argc, const char *argv[]) {
                 CAcctCacheItem lastItem(0,0,0);
                 CAcctCacheItemArray fixed;
 
-                SFArchive archive(true, NO_SCHEMA, true);  // we only ever read the current cache
+                SFArchive archive(READING_ARCHIVE);  // we only ever read the current cache
                 if (archive.Lock(options.filenames[fn], binaryReadOnly, LOCK_NOWAIT)) {
 
                     cout << toProper(mode)+"ing cache: " << options.filenames[fn] << "\n";
@@ -171,7 +173,7 @@ int main(int argc, const char *argv[]) {
                     cout << "backup " << backFile << ": " << fileExists(backFile) << "\n";
 #else
                     removeFile(options.filenames[fn]);
-                    SFArchive archive1(false, NO_SCHEMA, true);
+                    SFArchive archive1(WRITING_ARCHIVE);
                     if (archive1.Lock(options.filenames[fn], "wb", LOCK_NOWAIT)) {
                         cout << "\tRe-writing " << asYellow(fixed.getCount())
                                 << " of " << nRecords << " records to cache: "
@@ -246,7 +248,7 @@ bool processMerge(COptions& options) {
     CAcctCacheItemArray merged;
     for (uint32_t i = 0 ; i < options.filenames.getCount() ; i++) {
         cerr << "\tMerging file: " << options.filenames[i] << "\n";
-        SFArchive cache(true, NO_SCHEMA, true);
+        SFArchive cache(READING_ARCHIVE);
         if (!cache.Lock(options.filenames[i], binaryReadOnly, LOCK_NOWAIT))
             return usage("Could not open file: " + options.filenames[i] + ". Quitting.");
         while (!cache.Eof()) {
@@ -258,7 +260,7 @@ bool processMerge(COptions& options) {
     }
     merged.Sort(sortTheCache);
 
-    SFArchive mergeFile(false, NO_SCHEMA, true);
+    SFArchive mergeFile(WRITING_ARCHIVE);
     if (!mergeFile.Lock("./merged.bin", binaryWriteCreate, LOCK_WAIT))
         return usage("Could not open merge file: ./merged.bin. Quitting.");
     for (uint32_t i = 0 ; i < merged.getCount() ; i++)
@@ -283,7 +285,7 @@ SFUint32 processExtract(COptions& options) {
     CAcctCacheItemArray extract;
     for (uint32_t i = 0 ; i < options.filenames.getCount() ; i++) {
         cerr << "\tExtracting from file: " << options.filenames[i] << "\n";
-        SFArchive cache(true, NO_SCHEMA, true);
+        SFArchive cache(READING_ARCHIVE);
         if (!cache.Lock(options.filenames[i], binaryReadOnly, LOCK_NOWAIT))
             return (SFUint32)usage("Could not open file: " + options.filenames[i] + ". Quitting.");
         while (!cache.Eof()) {
@@ -295,7 +297,7 @@ SFUint32 processExtract(COptions& options) {
         cache.Release();
     }
 
-    SFArchive extractFile(false, NO_SCHEMA, true);
+    SFArchive extractFile(WRITING_ARCHIVE);
     if (!extractFile.Lock("./extract.bin", binaryWriteCreate, LOCK_WAIT))
         return (SFUint32)usage("Could not open extract file: ./extract.bin. Quitting.");
     for (uint32_t i = 0 ; i < extract.getCount() ; i++)
@@ -314,10 +316,10 @@ SFUint32 processRenumber(COptions& options) {
         SFString rn = options.filenames[i].Substitute(".bin","_renum.bin");
         cerr << "\tRenumbering file " << fn << " to " << rn << "\n";
 
-        SFArchive cache(true, NO_SCHEMA, true);
+        SFArchive cache(READING_ARCHIVE);
         if (!cache.Lock(fn, binaryReadOnly, LOCK_NOWAIT))
             return (SFUint32)usage("Could not open file: " + fn + ". Quitting.");
-        SFArchive renum(false, NO_SCHEMA, true);
+        SFArchive renum(WRITING_ARCHIVE);
         if (!renum.Lock(rn, binaryWriteCreate, LOCK_WAIT))
             return (SFUint32)usage("Could not open file: " + rn + ". Quitting.");
 

@@ -10,6 +10,8 @@
 
 class COptions : public COptionsBase {
 public:
+    CAccountNameArray accounts;
+    CFilename namesFile;
     SFString addr;
     SFString name;
     SFString source;
@@ -19,10 +21,13 @@ public:
     bool open;
     bool list;
     bool addrOnly;
+    bool isEdit;
 
     COptions(void);
     ~COptions(void) {}
 
     bool parseArguments(SFString& command);
     void Init(void);
+    bool loadData(void);
+    SFString showName(void);
 };

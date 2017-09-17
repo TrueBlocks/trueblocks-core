@@ -15,7 +15,7 @@
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CPriceQuote, CBaseNode, dataSchema());
+IMPLEMENT_NODE(CPriceQuote, CBaseNode);
 
 //---------------------------------------------------------------------------
 static SFString nextPricequoteChunk(const SFString& fieldIn, const void *dataPtr);
@@ -100,11 +100,13 @@ void CPriceQuote::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CPriceQuote::Serialize(SFArchive& archive) {
+
     if (archive.isWriting())
         return ((const CPriceQuote*)this)->SerializeC(archive);
 
-    if (!preSerialize(archive))
-        return false;
+    // If we're reading a back level, read the whole thing and we're done.
+    if (readBackLevel(archive))
+        return true;
 
     archive >> timestamp;
     archive >> open;
@@ -120,9 +122,9 @@ bool CPriceQuote::Serialize(SFArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool CPriceQuote::SerializeC(SFArchive& archive) const {
-    if (!preSerializeC(archive))
-        return false;
 
+    // Writing always write the latest version of the data
+    CBaseNode::SerializeC(archive);
     archive << timestamp;
     archive << open;
     archive << high;
@@ -195,6 +197,8 @@ bool CPriceQuote::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn,
 
 //---------------------------------------------------------------------------
 bool CPriceQuote::readBackLevel(SFArchive& archive) {
+
+    CBaseNode::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -246,6 +250,9 @@ SFString CPriceQuote::getValueByName(const SFString& fieldName) const {
 
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const CPriceQuote& item) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
     os << item.Format() << "\n";
     return os;
 }
@@ -265,11 +272,9 @@ bool loadPriceData(CPriceQuoteArray& quotes, bool freshen, SFString& message, SF
     // Load and possibly refresh the price database
     SFTime lastRead = SFTime(2015, 1, 1, 0, 0, 0);  // Ethereum didn't even exist before July 2015
     if (fileExists(cacheFile)) {
-        SFArchive archive(true, NO_SCHEMA, true);
+        SFArchive archive(READING_ARCHIVE);
         if (archive.Lock(cacheFile, binaryReadOnly, LOCK_NOWAIT)) {
             archive.readHeader(); // we read the header even though it may not be the current version...
-            if (!archive.isSchema(NO_SCHEMA)) // ... if it's not the current version return to begin of file
-                archive.Seek(0, SEEK_SET);
             archive >> lastRead;
             archive >> quotes;
             archive.Close();
@@ -389,7 +394,7 @@ bool loadPriceData(CPriceQuoteArray& quotes, bool freshen, SFString& message, SF
 
         // Write the database to the cache
         if (prevLast != lastRead && freshen) {
-            SFArchive archive(false, NO_SCHEMA, true);
+            SFArchive archive(WRITING_ARCHIVE);
             if (!archive.Lock(cacheFile, binaryWriteCreate, LOCK_WAIT)) {
                 message = "Could not open cache file for writing: '" + cacheFile + "'";
                 return false;

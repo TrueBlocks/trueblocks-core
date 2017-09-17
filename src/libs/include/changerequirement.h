@@ -29,7 +29,7 @@ public:
 public:
     QChangeRequirement(void);
     QChangeRequirement(const QChangeRequirement& ch);
-    ~QChangeRequirement(void);
+    virtual ~QChangeRequirement(void);
     QChangeRequirement& operator=(const QChangeRequirement& ch);
 
     DECLARE_NODE(QChangeRequirement);
@@ -42,7 +42,7 @@ protected:
     void Clear(void);
     void Init(void);
     void Copy(const QChangeRequirement& ch);
-    bool readBackLevel(SFArchive& archive);
+    bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -116,5 +116,4 @@ IMPLEMENT_ARCHIVE_LIST(QChangeRequirementList);
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
-#define NEW_CODE
 

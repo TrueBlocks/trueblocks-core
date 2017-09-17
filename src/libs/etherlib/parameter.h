@@ -52,7 +52,7 @@ public:
 public:
     CParameter(void);
     CParameter(const CParameter& pa);
-    ~CParameter(void);
+    virtual ~CParameter(void);
     CParameter& operator=(const CParameter& pa);
 
     DECLARE_NODE(CParameter);
@@ -65,7 +65,7 @@ protected:
     void Clear(void);
     void Init(void);
     void Copy(const CParameter& pa);
-    bool readBackLevel(SFArchive& archive);
+    bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -151,6 +151,5 @@ IMPLEMENT_ARCHIVE_LIST(CParameterList);
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
-#define NEW_CODE
 }  // namespace qblocks
 

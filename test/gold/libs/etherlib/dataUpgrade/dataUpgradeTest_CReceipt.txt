@@ -3,7 +3,6 @@ dataUpgrade CReceipt
 --------------------------------------------------------------------------------
 className: CReceipt
 objectSize: 112
-classSchema: 513
 baseClass: CBaseNode
 	fieldName: schema
 	  fieldID: 1001

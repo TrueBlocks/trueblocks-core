@@ -13,7 +13,7 @@
 #include "etherlib.h"
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(QRevoke, CTransaction, dataSchema());
+IMPLEMENT_NODE(QRevoke, CTransaction);
 
 //---------------------------------------------------------------------------
 static SFString nextRevokeChunk(const SFString& fieldIn, const void *dataPtr);
@@ -74,10 +74,13 @@ void QRevoke::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool QRevoke::Serialize(SFArchive& archive) {
+
     if (archive.isWriting())
         return ((const QRevoke*)this)->SerializeC(archive);
 
-    CTransaction::Serialize(archive);
+    // If we're reading a back level, read the whole thing and we're done.
+    if (readBackLevel(archive))
+        return true;
 
     archive >> _operation;
     finishParse();
@@ -86,6 +89,8 @@ bool QRevoke::Serialize(SFArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool QRevoke::SerializeC(SFArchive& archive) const {
+
+    // Writing always write the latest version of the data
     CTransaction::SerializeC(archive);
 
     archive << _operation;
@@ -144,6 +149,8 @@ bool QRevoke::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, voi
 
 //---------------------------------------------------------------------------
 bool QRevoke::readBackLevel(SFArchive& archive) {
+
+    CTransaction::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -174,6 +181,9 @@ SFString QRevoke::getValueByName(const SFString& fieldName) const {
 
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const QRevoke& item) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
     os << item.Format() << "\n";
     return os;
 }

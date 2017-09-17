@@ -39,7 +39,7 @@ public:
 public:
     CPriceQuote(void);
     CPriceQuote(const CPriceQuote& pr);
-    ~CPriceQuote(void);
+    virtual ~CPriceQuote(void);
     CPriceQuote& operator=(const CPriceQuote& pr);
 
     DECLARE_NODE(CPriceQuote);
@@ -53,7 +53,7 @@ protected:
     void Clear(void);
     void Init(void);
     void Copy(const CPriceQuote& pr);
-    bool readBackLevel(SFArchive& archive);
+    bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -148,6 +148,5 @@ extern uint64_t indexFromTimeStamp(const CPriceQuoteArray& quotes, timestamp_t t
 extern SFString asDollars(timestamp_t ts, SFUintBN weiIn);
 extern SFString priceDatabasePath(void);
 // EXISTING_CODE
-#define NEW_CODE
 }  // namespace qblocks
 

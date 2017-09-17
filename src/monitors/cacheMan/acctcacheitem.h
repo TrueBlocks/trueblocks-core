@@ -32,7 +32,7 @@ public:
 public:
     CAcctCacheItem(void);
     CAcctCacheItem(const CAcctCacheItem& ac);
-    ~CAcctCacheItem(void);
+    virtual ~CAcctCacheItem(void);
     CAcctCacheItem& operator=(const CAcctCacheItem& ac);
 
     DECLARE_NODE(CAcctCacheItem);
@@ -50,7 +50,7 @@ protected:
     void Clear(void);
     void Init(void);
     void Copy(const CAcctCacheItem& ac);
-    bool readBackLevel(SFArchive& archive);
+    bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -128,5 +128,4 @@ IMPLEMENT_ARCHIVE_LIST(CAcctCacheItemList);
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
-#define NEW_CODE
 

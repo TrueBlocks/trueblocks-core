@@ -31,7 +31,7 @@ public:
 public:
     QExecute(void);
     QExecute(const QExecute& ex);
-    ~QExecute(void);
+    virtual ~QExecute(void);
     QExecute& operator=(const QExecute& ex);
 
     DECLARE_NODE(QExecute);
@@ -44,7 +44,7 @@ protected:
     void Clear(void);
     void Init(void);
     void Copy(const QExecute& ex);
-    bool readBackLevel(SFArchive& archive);
+    bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -122,5 +122,4 @@ IMPLEMENT_ARCHIVE_LIST(QExecuteList);
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
-#define NEW_CODE
 

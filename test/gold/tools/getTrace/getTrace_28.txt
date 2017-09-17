@@ -28,7 +28,9 @@ getTrace 0xf9d426284bd20415a53991a004122b3a3a619b295ea98d1d88a5fd3a4125408b
     "blockHash": "0x9ffade8b2d130070ce1d45ffe06bdab963993d597b8a7851320c1789c579b857",
     "blockNumber": 3191290,
     "subtraces": 0,
-    "traceAddress": [],
+    "traceAddress": [
+                "0x0"
+    ],
     "transactionHash": "0xf9d426284bd20415a53991a004122b3a3a619b295ea98d1d88a5fd3a4125408b",
     "transactionPosition": 11,
     "type": "suicide",

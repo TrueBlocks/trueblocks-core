@@ -13,7 +13,7 @@
 #include "etherlib.h"
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(QConfirmationNeededEvent, CLogEntry, dataSchema());
+IMPLEMENT_NODE(QConfirmationNeededEvent, CLogEntry);
 
 //---------------------------------------------------------------------------
 static SFString nextConfirmationneededeventChunk(const SFString& fieldIn, const void *dataPtr);
@@ -86,10 +86,13 @@ void QConfirmationNeededEvent::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool QConfirmationNeededEvent::Serialize(SFArchive& archive) {
+
     if (archive.isWriting())
         return ((const QConfirmationNeededEvent*)this)->SerializeC(archive);
 
-    CLogEntry::Serialize(archive);
+    // If we're reading a back level, read the whole thing and we're done.
+    if (readBackLevel(archive))
+        return true;
 
     archive >> operation;
     archive >> initiator;
@@ -102,6 +105,8 @@ bool QConfirmationNeededEvent::Serialize(SFArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool QConfirmationNeededEvent::SerializeC(SFArchive& archive) const {
+
+    // Writing always write the latest version of the data
     CLogEntry::SerializeC(archive);
 
     archive << operation;
@@ -168,6 +173,8 @@ bool QConfirmationNeededEvent::handleCustomFormat(CExportContext& ctx, const SFS
 
 //---------------------------------------------------------------------------
 bool QConfirmationNeededEvent::readBackLevel(SFArchive& archive) {
+
+    CLogEntry::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -210,6 +217,9 @@ SFString QConfirmationNeededEvent::getValueByName(const SFString& fieldName) con
 
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const QConfirmationNeededEvent& item) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
     os << item.Format() << "\n";
     return os;
 }

@@ -6,7 +6,7 @@ The format of the classDefinition file is described below.
 
 #### Usage
 
-`Usage:`    makeClass [-e|-f|-l|-n|-s|-r|-a|-v|-h] className  
+`Usage:`    makeClass [-e|-f|-l|-h|-c|-n|-s|-r|-a|-v|-h] className  
 `Purpose:`  Creates a C++ class based on definitions found in ./classDefinition/<className>.
              
 `Where:`  
@@ -17,6 +17,8 @@ The format of the classDefinition file is described below.
 | -e | --edit | edit <className(s)> definition file in local folder |
 | -f | --filter val | process only files with :filter in their names |
 | -l | --list | list all definition files found in the local folder |
+| -h | --header | write headers files only |
+| -c | --source | write source files only |
 | -n | --namespace val | surround the code with a --namespace:ns |
 | -s | --silent | on error (no classDefinition file) exit silently |
 | -r | --run | run the class maker on associated <className(s)> |
@@ -26,9 +28,9 @@ The format of the classDefinition file is described below.
 
 #### Other Options
 
-All QuickBlocks command-line tools support the following commands (although in some case, they have no meaning):
+All **quickBlocks** command-line tools support the following commands (although in some case, they have no meaning):
 
-    Command     |         Description
+    Command     |     Description
     -----------------------------------------------------------------------------
     --version   |   display the current version of the tool
     --nocolors  |   turn off colored display
@@ -37,7 +39,7 @@ All QuickBlocks command-line tools support the following commands (although in s
     --dollars   |   specify value in US dollars
     --file:fn   |   specify multiple sets of command line options in a file.
 
-*For the `--file:fn` option, place a series of valid command lines in a file and use the above option. In some cases, this option may significantly improve performance. Use semi-colon make comments.*
+<small>*For the `--file:fn` option, place a series of valid command lines in a file and use the above options. In some cases, this option may significantly improve performance. A semi-colon at the start of a line makes that line a comment.*</small>
 
 **Powered by QuickBlocks<sup>&reg;</sup>**
 

@@ -15,7 +15,7 @@
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CTraceResult, CBaseNode, dataSchema());
+IMPLEMENT_NODE(CTraceResult, CBaseNode);
 
 //---------------------------------------------------------------------------
 static SFString nextTraceresultChunk(const SFString& fieldIn, const void *dataPtr);
@@ -76,11 +76,13 @@ void CTraceResult::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CTraceResult::Serialize(SFArchive& archive) {
+
     if (archive.isWriting())
         return ((const CTraceResult*)this)->SerializeC(archive);
 
-    if (!preSerialize(archive))
-        return false;
+    // If we're reading a back level, read the whole thing and we're done.
+    if (readBackLevel(archive))
+        return true;
 
     archive >> gasUsed;
     archive >> output;
@@ -90,9 +92,9 @@ bool CTraceResult::Serialize(SFArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool CTraceResult::SerializeC(SFArchive& archive) const {
-    if (!preSerializeC(archive))
-        return false;
 
+    // Writing always write the latest version of the data
+    CBaseNode::SerializeC(archive);
     archive << gasUsed;
     archive << output;
 
@@ -149,6 +151,8 @@ bool CTraceResult::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn
 
 //---------------------------------------------------------------------------
 bool CTraceResult::readBackLevel(SFArchive& archive) {
+
+    CBaseNode::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -194,6 +198,9 @@ SFString CTraceResult::getValueByName(const SFString& fieldName) const {
 
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const CTraceResult& item) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
     os << item.Format() << "\n";
     return os;
 }

@@ -15,7 +15,7 @@
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CTransaction, CBaseNode, dataSchema());
+IMPLEMENT_NODE(CTransaction, CBaseNode);
 
 //---------------------------------------------------------------------------
 extern SFString nextTransactionChunk(const SFString& fieldIn, const void *dataPtr);
@@ -144,11 +144,13 @@ void CTransaction::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CTransaction::Serialize(SFArchive& archive) {
+
     if (archive.isWriting())
         return ((const CTransaction*)this)->SerializeC(archive);
 
-    if (!preSerialize(archive))
-        return false;
+    // If we're reading a back level, read the whole thing and we're done.
+    if (readBackLevel(archive))
+        return true;
 
     archive >> hash;
     archive >> blockHash;
@@ -172,9 +174,9 @@ bool CTransaction::Serialize(SFArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool CTransaction::SerializeC(SFArchive& archive) const {
-    if (!preSerializeC(archive))
-        return false;
 
+    // Writing always write the latest version of the data
+    CBaseNode::SerializeC(archive);
     archive << hash;
     archive << blockHash;
     archive << blockNumber;
@@ -312,6 +314,8 @@ bool CTransaction::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn
 
 //---------------------------------------------------------------------------
 bool CTransaction::readBackLevel(SFArchive& archive) {
+
+    CBaseNode::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -402,6 +406,9 @@ SFString CTransaction::getValueByName(const SFString& fieldName) const {
 
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const CTransaction& item) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
     os << item.Format() << "\n";
     return os;
 }

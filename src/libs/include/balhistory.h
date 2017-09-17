@@ -34,7 +34,7 @@ public:
 public:
     CBalHistory(void);
     CBalHistory(const CBalHistory& ba);
-    ~CBalHistory(void);
+    virtual ~CBalHistory(void);
     CBalHistory& operator=(const CBalHistory& ba);
 
     DECLARE_NODE(CBalHistory);
@@ -48,7 +48,7 @@ protected:
     void Clear(void);
     void Init(void);
     void Copy(const CBalHistory& ba);
-    bool readBackLevel(SFArchive& archive);
+    bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -133,6 +133,5 @@ inline SFString toRecordID(const SFString& addr, blknum_t bn, SFUint32 tn) {
     return addr + "_" + padNum9(bn) + "_" + padNum5(tn);
 }
 // EXISTING_CODE
-#define NEW_CODE
 }  // namespace qblocks
 

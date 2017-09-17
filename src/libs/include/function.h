@@ -40,13 +40,12 @@ public:
 public:
     CFunction(void);
     CFunction(const CFunction& fu);
-    ~CFunction(void);
+    virtual ~CFunction(void);
     CFunction& operator=(const CFunction& fu);
 
     DECLARE_NODE(CFunction);
 
     // EXISTING_CODE
-    void parseParams(bool input, const SFString& value);
     bool hasAddrs;
     SFString getSignature(SFUint32 parts) const;
     SFString encodeItem(void) const;
@@ -58,7 +57,7 @@ protected:
     void Clear(void);
     void Init(void);
     void Copy(const CFunction& fu);
-    bool readBackLevel(SFArchive& archive);
+    bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -152,6 +151,5 @@ IMPLEMENT_ARCHIVE_LIST(CFunctionList);
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
-#define NEW_CODE
 }  // namespace qblocks
 

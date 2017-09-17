@@ -9,7 +9,7 @@ getBlock -pc 2769609 2799895 2872831 3076260
     "parentHash": "0x1fa2fd84ee6d2cd02212350aa2e38b7117e20ba8a66aefdaad08637d29f96261",
     "timestamp": "0x58492c18",
     "transactions": [
-{        
+        {
             "blockHash": "0x549eb23a472504a498b07a122b8461121cec1a25a8b5ee8831917b426a99e3d7",
             "blockNumber": "0x2a42c9",
             "cumulativeGasUsed": "0x0",
@@ -31,7 +31,7 @@ getBlock -pc 2769609 2799895 2872831 3076260
             "transactionIndex": "0x0",
             "value": "0xe99746d1fb60000"
         },
-{        
+        {
             "blockHash": "0x549eb23a472504a498b07a122b8461121cec1a25a8b5ee8831917b426a99e3d7",
             "blockNumber": "0x2a42c9",
             "cumulativeGasUsed": "0x0",
@@ -53,7 +53,7 @@ getBlock -pc 2769609 2799895 2872831 3076260
             "transactionIndex": "0x1",
             "value": "0x14f049a817f0862"
         },
-{        
+        {
             "blockHash": "0x549eb23a472504a498b07a122b8461121cec1a25a8b5ee8831917b426a99e3d7",
             "blockNumber": "0x2a42c9",
             "cumulativeGasUsed": "0x0",
@@ -68,7 +68,7 @@ getBlock -pc 2769609 2799895 2872831 3076260
                 "contractAddress": "0x0",
                 "gasUsed": "0x91ee",
                 "logs": [
-{                    
+                    {
                         "address": "0x37a9679c41e99db270bda88de8ff50c0cd23f326",
                         "data": "0x00000000000000000000000000000000000000000000000003d9e0c79d2bc000",
                         "logIndex": "0x0",
@@ -86,7 +86,7 @@ getBlock -pc 2769609 2799895 2872831 3076260
             "transactionIndex": "0x2",
             "value": "0x0"
         },
-{        
+        {
             "blockHash": "0x549eb23a472504a498b07a122b8461121cec1a25a8b5ee8831917b426a99e3d7",
             "blockNumber": "0x2a42c9",
             "cumulativeGasUsed": "0x0",
@@ -108,7 +108,7 @@ getBlock -pc 2769609 2799895 2872831 3076260
             "transactionIndex": "0x3",
             "value": "0xe012d25d421bf5c"
         },
-{        
+        {
             "blockHash": "0x549eb23a472504a498b07a122b8461121cec1a25a8b5ee8831917b426a99e3d7",
             "blockNumber": "0x2a42c9",
             "cumulativeGasUsed": "0x0",
@@ -130,7 +130,7 @@ getBlock -pc 2769609 2799895 2872831 3076260
             "transactionIndex": "0x4",
             "value": "0x4e8de9ea7cccd8000"
         },
-{        
+        {
             "blockHash": "0x549eb23a472504a498b07a122b8461121cec1a25a8b5ee8831917b426a99e3d7",
             "blockNumber": "0x2a42c9",
             "cumulativeGasUsed": "0x0",
@@ -152,7 +152,7 @@ getBlock -pc 2769609 2799895 2872831 3076260
             "transactionIndex": "0x5",
             "value": "0x3425c4075c2090000"
         },
-{        
+        {
             "blockHash": "0x549eb23a472504a498b07a122b8461121cec1a25a8b5ee8831917b426a99e3d7",
             "blockNumber": "0x2a42c9",
             "cumulativeGasUsed": "0x0",
@@ -167,10 +167,10 @@ getBlock -pc 2769609 2799895 2872831 3076260
                 "contractAddress": "0x0",
                 "gasUsed": "0x5974",
                 "logs": [
-{                    
+                    {
                         "address": "0x3d5fb40d096ff8327ba7b8885ad3b6bb3c1c4533",
                         "data": "0x0000000000000000000000000000000000000000000000000deac214732f9558",
-                        "logIndex": "0x0",
+                        "logIndex": "0x1",
                         "topics": [
                             "0x90890809c654f11d6e72a28fa60149770a0d11ec6c92319d6ceb2bb0a4ea1a15",
                             "0x0000000000000000000000001e9939daaad6924ad004c2560e90804164900341",
