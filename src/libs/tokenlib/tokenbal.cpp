@@ -19,7 +19,7 @@ SFUintBN getTokenBalance(const SFAddress& token, const SFAddress& holder, blknum
     SFString h =        padLeft(holder.substr(2), 64, '0'); // encoded data for the transaction
 
     SFString cmd = "[{\"to\": \"[TOKEN]\", \"data\": \"0x70a08231[HOLDER]\"}, \"[BLOCK]\"]";
-    cmd.Replace("[TOKEN]",  "0x"+t);
+    cmd.Replace("[TOKEN]",  t);
     cmd.Replace("[HOLDER]", h);
     cmd.Replace("[BLOCK]",  asStringU(blockNum));
 

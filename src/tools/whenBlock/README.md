@@ -29,7 +29,7 @@ You may name your own blocks (for example, to denote the start of an ICO perhaps
 
 	    first (0), iceage (200000), homestead (1150000), daofund (1428756), 
 	    daohack (1718497), daofork (1920000), tangerine (2463000), spurious (2675000), 
-	    stateclear (2718436), latest (4284904)
+	    stateclear (2718436), latest (4285472)
 
 #### Other Options
 

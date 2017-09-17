@@ -9,11 +9,11 @@
 
 //---------------------------------------------------------------------------------------------------
 CParams params[] = {
-    CParams("~addr[s]",  "a space-separated list of one or more Ethereum addresses"),
-    CParams("-display",  "display the byte code at the address(es)"),
-    CParams("-nodiff",   "return 'true' if (exactly) two Ethereum addresses have identical code"),
-    CParams("",          "Returns 'true' or 'false' if the given address(es) holds byte code "
-                         "(optionally displays the code).\n"),
+    CParams("~address[es]", "a space-separated list of one or more Ethereum addresses"),
+    CParams("-display",     "display the byte code at the address(es)"),
+    CParams("-nodiff",      "return 'true' if (exactly) two Ethereum addresses have identical code"),
+    CParams("",             "Returns 'true' or 'false' if the given address(es) holds byte code "
+                            "(optionally displays the code).\n"),
 };
 uint32_t nParams = sizeof(params) / sizeof(CParams);
 

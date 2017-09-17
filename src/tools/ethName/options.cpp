@@ -151,4 +151,5 @@ const char *STR_DEFAULT_DATA =
 "SWT	Swarm City Token		0xB9e7F8568e08d5659f5D29C4997173d84CdF2607	Etherscan.io	Swarm City is a decentralized peer to peer sharing economy\n"
 "BCAP	Blockchain Capital		0xFf3519eeeEA3e76F1F699CCcE5E23ee0bdDa41aC	Etherscan.io	Blockchain Capital is a pioneer and the premier venture capital firm investing in Blockchain enabled technology\n"
 "PLU	Pluton				0xD8912C10681D8B21Fd3742244f44658dBA12264E	Etherscan.io	With Plutus Tap & Pay, you can pay at any NFC-enabled merchant\n"
-"EEAR	Eth Early Adoption Registry		0x713b73c3994442b533e6a083ec968e40606810ec	quickBlocks.io	An early, known-dead address useful for testing\n";
+"UNI	Unicorns			0x89205A3A3b2A69De6Dbf7f01ED13B2108B2c43e7	Ethereum.org	Ethereum tip jar unicorn tokens\n"
+"EEAR	Eth Early Adoption Registry	0x713b73c3994442b533e6a083ec968e40606810ec	quickBlocks.io	An early, known-dead address useful for testing\n";
