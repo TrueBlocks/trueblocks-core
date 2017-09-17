@@ -76,11 +76,13 @@ void CAcctCacheItem::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CAcctCacheItem::Serialize(SFArchive& archive) {
+
     if (archive.isWriting())
         return ((const CAcctCacheItem*)this)->SerializeC(archive);
 
-    if (!preSerialize(archive))
-        return false;
+    // If we're reading a back level, read the whole thing and we're done.
+    if (readBackLevel(archive))
+        return true;
 
     archive >> blockNum;
     archive >> transIndex;
@@ -91,9 +93,9 @@ bool CAcctCacheItem::Serialize(SFArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool CAcctCacheItem::SerializeC(SFArchive& archive) const {
-    if (!preSerializeC(archive))
-        return false;
 
+    // Writing always write the latest version of the data
+    CBaseNode::SerializeC(archive);
     archive << blockNum;
     archive << transIndex;
     archive << which;
@@ -152,6 +154,8 @@ bool CAcctCacheItem::handleCustomFormat(CExportContext& ctx, const SFString& fmt
 
 //---------------------------------------------------------------------------
 bool CAcctCacheItem::readBackLevel(SFArchive& archive) {
+
+    CBaseNode::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -188,7 +192,12 @@ SFString CAcctCacheItem::getValueByName(const SFString& fieldName) const {
 
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const CAcctCacheItem& item) {
+    // EXISTING_CODE
     os << item.blockNum << "." << item.transIndex << "." << item.which;
+    return os;
+    // EXISTING_CODE
+
+    os << item.Format() << "\n";
     return os;
 }
 

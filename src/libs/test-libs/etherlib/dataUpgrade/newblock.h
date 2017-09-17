@@ -11,11 +11,8 @@
  * of 'EXISTING_CODE' tags.
  */
 #include "ethtypes.h"
-#include "etherlib.h"
+#include "abilib.h"
 #include "transaction.h"
-#include "block.h"
-
-namespace qblocks {
 
 //--------------------------------------------------------------------------
 class CNewBlock;
@@ -29,13 +26,13 @@ typedef SFUniqueList<CNewBlock*>       CNewBlockListU;
 //--------------------------------------------------------------------------
 class CNewBlock : public CBaseNode {
 public:
-    SFUint32 gasLimit;
-    SFUint32 gasUsed;
+    SFGas gasLimit;
+    SFGas gasUsed;
     SFHash hash;
     SFBloom logsBloom;
     SFUint32 blockNumber;
     SFHash parentHash;
-    timestamp_t timestamp;
+    SFUint32 timestamp;
     CTransactionArray transactions;
     SFAddress miner;
     SFUint32 size;
@@ -43,7 +40,7 @@ public:
 public:
     CNewBlock(void);
     CNewBlock(const CNewBlock& ne);
-    ~CNewBlock(void);
+    virtual ~CNewBlock(void);
     CNewBlock& operator=(const CNewBlock& ne);
 
     DECLARE_NODE(CNewBlock);
@@ -51,12 +48,13 @@ public:
     // EXISTING_CODE
     CNewBlock(const CBlock& block);
     // EXISTING_CODE
+    friend ostream& operator<<(ostream& os, const CNewBlock& item);
 
 protected:
     void Clear(void);
     void Init(void);
     void Copy(const CNewBlock& ne);
-    bool readBackLevel(SFArchive& archive);
+    bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -124,6 +122,8 @@ inline void CNewBlock::Copy(const CNewBlock& ne) {
     parentHash = ne.parentHash;
     timestamp = ne.timestamp;
     transactions = ne.transactions;
+    miner = ne.miner;
+    size = ne.size;
 
     // EXISTING_CODE
 #if 0
@@ -156,13 +156,6 @@ inline CNewBlock& CNewBlock::operator=(const CNewBlock& ne) {
 }
 
 //---------------------------------------------------------------------------
-inline SFString CNewBlock::getValueByName(const SFString& fieldName) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
-    return Format("[{"+toUpper(fieldName)+"}]");
-}
-
-//---------------------------------------------------------------------------
 IMPLEMENT_ARCHIVE_ARRAY(CNewBlockArray);
 IMPLEMENT_ARCHIVE_ARRAY_C(CNewBlockArray);
 IMPLEMENT_ARCHIVE_LIST(CNewBlockList);
@@ -176,5 +169,4 @@ extern SFArchive& operator>>(SFArchive& archive, CNewBlock& newp);
 bool readOneNewBlock_fromBinary(CNewBlock& block, const SFString& fileName);
 bool readOneNewBlock_fromJson(CNewBlock& block, const SFString& fileName);
 // EXISTING_CODE
-}  // namespace qblocks
 

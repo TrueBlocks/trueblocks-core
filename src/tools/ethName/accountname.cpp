@@ -80,11 +80,13 @@ void CAccountName::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CAccountName::Serialize(SFArchive& archive) {
+
     if (archive.isWriting())
         return ((const CAccountName*)this)->SerializeC(archive);
 
-    if (!preSerialize(archive))
-        return false;
+    // If we're reading a back level, read the whole thing and we're done.
+    if (readBackLevel(archive))
+        return true;
 
     archive >> symbol;
     archive >> name;
@@ -97,9 +99,9 @@ bool CAccountName::Serialize(SFArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool CAccountName::SerializeC(SFArchive& archive) const {
-    if (!preSerializeC(archive))
-        return false;
 
+    // Writing always write the latest version of the data
+    CBaseNode::SerializeC(archive);
     archive << symbol;
     archive << name;
     archive << addr;
@@ -162,6 +164,8 @@ bool CAccountName::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn
 
 //---------------------------------------------------------------------------
 bool CAccountName::readBackLevel(SFArchive& archive) {
+
+    CBaseNode::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -202,6 +206,9 @@ SFString CAccountName::getValueByName(const SFString& fieldName) const {
 
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const CAccountName& item) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
     os << item.Format() << "\n";
     return os;
 }
