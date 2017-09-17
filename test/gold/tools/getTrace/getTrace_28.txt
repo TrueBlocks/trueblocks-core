@@ -29,7 +29,7 @@ getTrace 0xf9d426284bd20415a53991a004122b3a3a619b295ea98d1d88a5fd3a4125408b
     "blockNumber": 3191290,
     "subtraces": 0,
     "traceAddress": [
-        "0x0"
+                "0x0"
     ],
     "transactionHash": "0xf9d426284bd20415a53991a004122b3a3a619b295ea98d1d88a5fd3a4125408b",
     "transactionPosition": 11,
