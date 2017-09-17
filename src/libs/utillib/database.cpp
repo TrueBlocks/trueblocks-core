@@ -166,6 +166,10 @@ namespace qblocks {
             ASSERT(lockType == LOCK_CREATE || lockType == LOCK_WAIT);
             // TODO(tjayrush): revisit this
             openIt = createLock(lockType != LOCK_WAIT);
+            if (!openIt) {
+                m_error = LK_NO_CREATE_LOCK_FILE;
+                m_errorMsg = "Could not create lock file: " + m_filename + ".lck";
+            }
 
         } else {
             m_error = LK_BAD_OPEN_MODE;
@@ -480,6 +484,7 @@ namespace qblocks {
     void writeTheCode(const SFString& fileName, const SFString& codeOutIn, const SFString& ns, bool spaces) {
         SFString codeOut = codeOutIn;
         SFString existingCode = asciiFileToString(fileName);
+        SFString orig = existingCode;
         if (spaces) {
             existingCode.ReplaceAll("    ", "\t");
             codeOut     .ReplaceAll("    ", "\t");
@@ -515,7 +520,9 @@ namespace qblocks {
         if (codeOut.Contains("virtual") || codeOut.Contains("override"))
             codeOut.Replace("~", "virtual ~");
 
-        stringToAsciiFile(fileName, codeOut);
+        // If we don't write it because it's identical, it won't force a rebuild
+        if (orig != codeOut)
+            stringToAsciiFile(fileName, codeOut);
     }
 
     //-----------------------------------------------------------------------
