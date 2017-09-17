@@ -1,21 +1,18 @@
 ## whenBlock
 
-The `whenBlock` tool answers one of two questions: (1) "When did a given block occur?" or (2) "What block occurred at or before a given date and time?"
+The `whenBlock` tool answers one of two questions: (1) "At what date and time did a given block occur?" or (2) "What block occurred at or before a given date and time?"
 
-In the first case, one simply supplies a block number and the date and time of that block is displayed. In the later case, one provides a date (and optionally time) and the block number that 
-occurred at or just prior to that date and time is displayed.
+In the first case, one simply supplies a block number and the date and time of that block is displayed. In the later case, one provides a date (and optionally a time) and the block number that occurred at or just prior to that date and time is displayed.
 
-Name your own blocks by editing '~./quickBlocks/whenBlock.toml' and placing `name=blockNum` pairs under the [SPECIAL] section of that file (create it if not present).
+The values for `date` and `time` are specified in JSON format. The `hour`/`minute`/`second` portions of the date are optional, and if omitted, default to zero in each case. Block numbers may be specified as either integers or hexidecimal values. You may specify any number of dates or blocks per invocation.
 
-The `hour`/`minute`/`second` portions of the date are optional, and if omitted, default to zero in each case.
-
-   Special values: [ iceage | homestead | daofund | daohack | daofork | tangerine | spurious | stateclear | latest ]
+You may name your own blocks (for example, to denote the start of an ICO perhaps) by editing '~/.quickBlocks/quickBlocks.toml' and placing `name=blockNum` pairs under the `[special]` section of that file (create the file if it is not already present). Special blocks are detailed below.
 
 #### Usage
 
 `Usage:`    whenBlock [-a|-l|-v|-h] date / block  
 `Purpose:`  Finds the nearest block prior to a JSON-formatted date, or the nearest date prior to
-           the given block. Alternatively, search for one of the special blocks listed below.
+            the given block. Alternatively, search for one of the special blocks listed below.
              
 `Where:`  
 
@@ -23,7 +20,7 @@ The `hour`/`minute`/`second` portions of the date are optional, and if omitted, 
 | -------: | :------- | :------- |
 |  | date / block | one of the special values listed below or YYYY-MM-DD-[HH[:MM[:SS]]] or a blockNumber |
 | -a | --alone | show the found block or found date unadorned (useful for scripting) |
-| -l | --list | list special blocks timestamps and dates |
+| -l | --list | list the names and block numbers of special blocks |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
@@ -32,13 +29,11 @@ The `hour`/`minute`/`second` portions of the date are optional, and if omitted, 
 
 	    first (0), iceage (200000), homestead (1150000), daofund (1428756), 
 	    daohack (1718497), daofork (1920000), tangerine (2463000), spurious (2675000), 
-	    stateclear (2718436), latest (4284824)
-
-	See the README for information on customizing this list.
+	    stateclear (2718436), latest (4284904)
 
 #### Other Options
 
-All QuickBlocks command-line tools support the following commands (although in some case, they have no meaning):
+All **quickBlocks** command-line tools support the following commands (although in some case, they have no meaning):
 
     Command     |     Description
     -----------------------------------------------------------------------------
@@ -49,7 +44,7 @@ All QuickBlocks command-line tools support the following commands (although in s
     --dollars   |   specify value in US dollars
     --file:fn   |   specify multiple sets of command line options in a file.
 
-<small>*For the `--file:fn` option, place a series of valid command lines in a file and use the above option. In some cases, this option may significantly improve performance. A semi-colon at the start of a line makes that line a comment.*</small>
+<small>*For the `--file:fn` option, place a series of valid command lines in a file and use the above options. In some cases, this option may significantly improve performance. A semi-colon at the start of a line makes that line a comment.*</small>
 
 **Powered by QuickBlocks<sup>&reg;</sup>**
 

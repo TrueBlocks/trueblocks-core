@@ -1,14 +1,11 @@
 ## [{NAME}]
 
-The `whenBlock` tool answers one of two questions: (1) "When did a given block occur?" or (2) "What block occurred at or before a given date and time?"
+The `whenBlock` tool answers one of two questions: (1) "At what date and time did a given block occur?" or (2) "What block occurred at or before a given date and time?"
 
-In the first case, one simply supplies a block number and the date and time of that block is displayed. In the later case, one provides a date (and optionally time) and the block number that 
-occurred at or just prior to that date and time is displayed.
+In the first case, one simply supplies a block number and the date and time of that block is displayed. In the later case, one provides a date (and optionally a time) and the block number that occurred at or just prior to that date and time is displayed.
 
-Name your own blocks by editing '~./quickBlocks/whenBlock.toml' and placing `name=blockNum` pairs under the [SPECIAL] section of that file (create it if not present).
+The values for `date` and `time` are specified in JSON format. The `hour`/`minute`/`second` portions of the date are optional, and if omitted, default to zero in each case. Block numbers may be specified as either integers or hexidecimal values. You may specify any number of dates or blocks per invocation.
 
-The `hour`/`minute`/`second` portions of the date are optional, and if omitted, default to zero in each case.
-
-   Special values: [ iceage | homestead | daofund | daohack | daofork | tangerine | spurious | stateclear | latest ]
+You may name your own blocks (for example, to denote the start of an ICO perhaps) by editing '~/.quickBlocks/quickBlocks.toml' and placing `name=blockNum` pairs under the `[special]` section of that file (create the file if it is not already present). Special blocks are detailed below.
 
 [{USAGE_TABLE}][{FOOTER}]
