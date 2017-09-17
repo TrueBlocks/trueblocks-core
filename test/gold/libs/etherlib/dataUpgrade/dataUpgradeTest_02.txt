@@ -54,7 +54,7 @@ baseClass: CBaseNode
   "parentHash": "0xd2c56db29797324c22d9808cc58d80fc0c53f034f1e215fb077abb223e3bdd9b",
   "timestamp": 1442749586,
   "transactions": [
-{    
+    {
       "hash": "0x1ecac1c9697c0a7d4d3d1b159a96f1c5c5510683d706e2074068ae234e8d2ea5",
       "blockHash": "0xc74ff6a94b10ae4057f5da6ec1ea913ea09501205e5d94998f2823c082b97108",
       "blockNumber": 262657,
@@ -140,7 +140,7 @@ baseClass: CBaseNode
   "parentHash": "0xd2c56db29797324c22d9808cc58d80fc0c53f034f1e215fb077abb223e3bdd9b",
   "timestamp": 1442749586,
   "transactions": [
-{    
+    {
       "hash": "0x1ecac1c9697c0a7d4d3d1b159a96f1c5c5510683d706e2074068ae234e8d2ea5",
       "blockHash": "0xc74ff6a94b10ae4057f5da6ec1ea913ea09501205e5d94998f2823c082b97108",
       "blockNumber": 262657,

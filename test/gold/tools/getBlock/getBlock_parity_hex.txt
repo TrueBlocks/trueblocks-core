@@ -9,7 +9,7 @@ getBlock --parity 0x2e7721
     "parentHash": "0x74a7b7ed731f1a1ff41e97de97ec255908e6ca341ff1f7498e4df55e792d163d",
     "timestamp": "0x58852147",
     "transactions": [
-{        
+        {
             "blockHash": "0x662bd2bfc5ccbff1712f38354bba6075242fd3d0ef20ffafa2221ca03a56bfff",
             "blockNumber": "0x2e7721",
             "cumulativeGasUsed": "0x0",
@@ -31,7 +31,7 @@ getBlock --parity 0x2e7721
             "transactionIndex": "0x0",
             "value": "0x1688af52e2566100"
         },
-{        
+        {
             "blockHash": "0x662bd2bfc5ccbff1712f38354bba6075242fd3d0ef20ffafa2221ca03a56bfff",
             "blockNumber": "0x2e7721",
             "cumulativeGasUsed": "0x0",
@@ -53,7 +53,7 @@ getBlock --parity 0x2e7721
             "transactionIndex": "0x1",
             "value": "0x417d1bdae3a879e"
         },
-{        
+        {
             "blockHash": "0x662bd2bfc5ccbff1712f38354bba6075242fd3d0ef20ffafa2221ca03a56bfff",
             "blockNumber": "0x2e7721",
             "cumulativeGasUsed": "0x0",
@@ -68,7 +68,7 @@ getBlock --parity 0x2e7721
                 "contractAddress": "0x0",
                 "gasUsed": "0x6ec8",
                 "logs": [
-{                    
+                    {
                         "address": "0xecf8f87f810ecf450940c9f60066b4a7a501d6a7",
                         "data": "0x0000000000000000000000000000000000000000000000001bc16d674ec80000",
                         "logIndex": "0x0",
@@ -85,7 +85,7 @@ getBlock --parity 0x2e7721
             "transactionIndex": "0x2",
             "value": "0x1bc16d674ec80000"
         },
-{        
+        {
             "blockHash": "0x662bd2bfc5ccbff1712f38354bba6075242fd3d0ef20ffafa2221ca03a56bfff",
             "blockNumber": "0x2e7721",
             "cumulativeGasUsed": "0x0",
@@ -107,7 +107,7 @@ getBlock --parity 0x2e7721
             "transactionIndex": "0x3",
             "value": "0xf79535ab01d2d38"
         },
-{        
+        {
             "blockHash": "0x662bd2bfc5ccbff1712f38354bba6075242fd3d0ef20ffafa2221ca03a56bfff",
             "blockNumber": "0x2e7721",
             "cumulativeGasUsed": "0x0",
@@ -129,7 +129,7 @@ getBlock --parity 0x2e7721
             "transactionIndex": "0x4",
             "value": "0x6b47b63c747fb80"
         },
-{        
+        {
             "blockHash": "0x662bd2bfc5ccbff1712f38354bba6075242fd3d0ef20ffafa2221ca03a56bfff",
             "blockNumber": "0x2e7721",
             "cumulativeGasUsed": "0x0",
@@ -151,7 +151,7 @@ getBlock --parity 0x2e7721
             "transactionIndex": "0x5",
             "value": "0x2bde38c85d305c0"
         },
-{        
+        {
             "blockHash": "0x662bd2bfc5ccbff1712f38354bba6075242fd3d0ef20ffafa2221ca03a56bfff",
             "blockNumber": "0x2e7721",
             "cumulativeGasUsed": "0x0",
@@ -173,7 +173,7 @@ getBlock --parity 0x2e7721
             "transactionIndex": "0x6",
             "value": "0x2c9c9501175e7ce"
         },
-{        
+        {
             "blockHash": "0x662bd2bfc5ccbff1712f38354bba6075242fd3d0ef20ffafa2221ca03a56bfff",
             "blockNumber": "0x2e7721",
             "cumulativeGasUsed": "0x0",
@@ -195,7 +195,7 @@ getBlock --parity 0x2e7721
             "transactionIndex": "0x7",
             "value": "0x53cbc5ed732be80"
         },
-{        
+        {
             "blockHash": "0x662bd2bfc5ccbff1712f38354bba6075242fd3d0ef20ffafa2221ca03a56bfff",
             "blockNumber": "0x2e7721",
             "cumulativeGasUsed": "0x0",
@@ -217,7 +217,7 @@ getBlock --parity 0x2e7721
             "transactionIndex": "0x8",
             "value": "0xe171f573001dddc"
         },
-{        
+        {
             "blockHash": "0x662bd2bfc5ccbff1712f38354bba6075242fd3d0ef20ffafa2221ca03a56bfff",
             "blockNumber": "0x2e7721",
             "cumulativeGasUsed": "0x0",
@@ -239,7 +239,7 @@ getBlock --parity 0x2e7721
             "transactionIndex": "0x9",
             "value": "0x3486043f8535f9c"
         },
-{        
+        {
             "blockHash": "0x662bd2bfc5ccbff1712f38354bba6075242fd3d0ef20ffafa2221ca03a56bfff",
             "blockNumber": "0x2e7721",
             "cumulativeGasUsed": "0x0",
@@ -261,7 +261,7 @@ getBlock --parity 0x2e7721
             "transactionIndex": "0xa",
             "value": "0xa6d65dc5ace5b00"
         },
-{        
+        {
             "blockHash": "0x662bd2bfc5ccbff1712f38354bba6075242fd3d0ef20ffafa2221ca03a56bfff",
             "blockNumber": "0x2e7721",
             "cumulativeGasUsed": "0x0",
@@ -283,7 +283,7 @@ getBlock --parity 0x2e7721
             "transactionIndex": "0xb",
             "value": "0x563f0848acdad80"
         },
-{        
+        {
             "blockHash": "0x662bd2bfc5ccbff1712f38354bba6075242fd3d0ef20ffafa2221ca03a56bfff",
             "blockNumber": "0x2e7721",
             "cumulativeGasUsed": "0x0",
@@ -305,7 +305,7 @@ getBlock --parity 0x2e7721
             "transactionIndex": "0xc",
             "value": "0x37cf29d0285fff4"
         },
-{        
+        {
             "blockHash": "0x662bd2bfc5ccbff1712f38354bba6075242fd3d0ef20ffafa2221ca03a56bfff",
             "blockNumber": "0x2e7721",
             "cumulativeGasUsed": "0x0",
@@ -327,7 +327,7 @@ getBlock --parity 0x2e7721
             "transactionIndex": "0xd",
             "value": "0xfce1606c007e710"
         },
-{        
+        {
             "blockHash": "0x662bd2bfc5ccbff1712f38354bba6075242fd3d0ef20ffafa2221ca03a56bfff",
             "blockNumber": "0x2e7721",
             "cumulativeGasUsed": "0x0",
