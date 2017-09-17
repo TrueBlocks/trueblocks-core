@@ -447,9 +447,10 @@ namespace qblocks {
                     ret += "%";
                 if (fld->isArray()) {
                     incIndent();
-                    val = getValueByName(fld->m_fieldName);
-                    ret += (val.empty() ? "[]" : "[\n" + indent() + val + "  ]");
+                    val = getValueByName(fld->m_fieldName).Substitute("\n{","\n"+indent()+"{");
+                    ret += (val.empty() ? "[]" : "[\n" + indent() + val);
                     decIndent();
+                    ret += (val.empty() ? "" : indent() + "]");
 
                 } else if (fld->isObject()) {
                     ret += val;
