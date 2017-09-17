@@ -29,7 +29,7 @@ public:
 public:
     QRequirementChangedEvent(void);
     QRequirementChangedEvent(const QRequirementChangedEvent& re);
-    ~QRequirementChangedEvent(void);
+    virtual ~QRequirementChangedEvent(void);
     QRequirementChangedEvent& operator=(const QRequirementChangedEvent& re);
 
     DECLARE_NODE(QRequirementChangedEvent);
@@ -42,7 +42,7 @@ protected:
     void Clear(void);
     void Init(void);
     void Copy(const QRequirementChangedEvent& re);
-    bool readBackLevel(SFArchive& archive);
+    bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -116,5 +116,4 @@ IMPLEMENT_ARCHIVE_LIST(QRequirementChangedEventList);
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
-#define NEW_CODE
 

@@ -29,7 +29,7 @@ public:
 public:
     QRemoveOwner(void);
     QRemoveOwner(const QRemoveOwner& re);
-    ~QRemoveOwner(void);
+    virtual ~QRemoveOwner(void);
     QRemoveOwner& operator=(const QRemoveOwner& re);
 
     DECLARE_NODE(QRemoveOwner);
@@ -42,7 +42,7 @@ protected:
     void Clear(void);
     void Init(void);
     void Copy(const QRemoveOwner& re);
-    bool readBackLevel(SFArchive& archive);
+    bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -116,5 +116,4 @@ IMPLEMENT_ARCHIVE_LIST(QRemoveOwnerList);
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
-#define NEW_CODE
 

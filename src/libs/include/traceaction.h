@@ -40,7 +40,7 @@ public:
 public:
     CTraceAction(void);
     CTraceAction(const CTraceAction& tr);
-    ~CTraceAction(void);
+    virtual ~CTraceAction(void);
     CTraceAction& operator=(const CTraceAction& tr);
 
     DECLARE_NODE(CTraceAction);
@@ -54,7 +54,7 @@ protected:
     void Clear(void);
     void Init(void);
     void Copy(const CTraceAction& tr);
-    bool readBackLevel(SFArchive& archive);
+    bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -148,6 +148,5 @@ extern SFArchive& operator>>(SFArchive& archive, CTraceAction& tra);
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
-#define NEW_CODE
 }  // namespace qblocks
 

@@ -54,7 +54,7 @@ protected:
     void Clear(void);
     void Init(void);
     void Copy(const CLeaf& le);
-    bool readBackLevel(SFArchive& archive);
+    bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -131,6 +131,5 @@ IMPLEMENT_ARCHIVE_LIST(CLeafList);
 // EXISTING_CODE
 extern SFString nextTreenodeChunk(const SFString& fieldIn, const void *data);
 // EXISTING_CODE
-#define NEW_CODE
 }  // namespace qblocks
 

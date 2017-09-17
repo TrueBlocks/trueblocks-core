@@ -50,7 +50,7 @@ public:
 public:
     CTransaction(void);
     CTransaction(const CTransaction& tr);
-    ~CTransaction(void);
+    virtual ~CTransaction(void);
     CTransaction& operator=(const CTransaction& tr);
 
     DECLARE_NODE(CTransaction);
@@ -81,7 +81,7 @@ protected:
     void Clear(void);
     void Init(void);
     void Copy(const CTransaction& tr);
-    bool readBackLevel(SFArchive& archive);
+    bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
     friend int sortTransactionsForWrite(const void *rr1, const void *rr2);
@@ -221,6 +221,5 @@ extern int sortTransactionsForWrite(const void *rr1, const void *rr2);
 extern SFString parse(const SFString& params, int nItems, SFString *types);
 extern SFString nextBlockChunk(const SFString& fieldIn, const void *data);
 // EXISTING_CODE
-#define NEW_CODE
 }  // namespace qblocks
 
