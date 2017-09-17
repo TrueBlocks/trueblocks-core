@@ -29,7 +29,7 @@ public:
 public:
     QIsOwner(void);
     QIsOwner(const QIsOwner& is);
-    ~QIsOwner(void);
+    virtual ~QIsOwner(void);
     QIsOwner& operator=(const QIsOwner& is);
 
     DECLARE_NODE(QIsOwner);
@@ -42,7 +42,7 @@ protected:
     void Clear(void);
     void Init(void);
     void Copy(const QIsOwner& is);
-    bool readBackLevel(SFArchive& archive);
+    bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -116,5 +116,4 @@ IMPLEMENT_ARCHIVE_LIST(QIsOwnerList);
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
-#define NEW_CODE
 

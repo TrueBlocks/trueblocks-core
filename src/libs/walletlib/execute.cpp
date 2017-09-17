@@ -76,10 +76,13 @@ void QExecute::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool QExecute::Serialize(SFArchive& archive) {
+
     if (archive.isWriting())
         return ((const QExecute*)this)->SerializeC(archive);
 
-    CTransaction::Serialize(archive);
+    // If we're reading a back level, read the whole thing and we're done.
+    if (readBackLevel(archive))
+        return true;
 
     archive >> _to;
     archive >> _value;
@@ -90,6 +93,8 @@ bool QExecute::Serialize(SFArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool QExecute::SerializeC(SFArchive& archive) const {
+
+    // Writing always write the latest version of the data
     CTransaction::SerializeC(archive);
 
     archive << _to;
@@ -152,6 +157,8 @@ bool QExecute::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, vo
 
 //---------------------------------------------------------------------------
 bool QExecute::readBackLevel(SFArchive& archive) {
+
+    CTransaction::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -184,6 +191,9 @@ SFString QExecute::getValueByName(const SFString& fieldName) const {
 
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const QExecute& item) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
     os << item.Format() << "\n";
     return os;
 }

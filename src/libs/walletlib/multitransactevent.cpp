@@ -84,10 +84,13 @@ void QMultiTransactEvent::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool QMultiTransactEvent::Serialize(SFArchive& archive) {
+
     if (archive.isWriting())
         return ((const QMultiTransactEvent*)this)->SerializeC(archive);
 
-    CLogEntry::Serialize(archive);
+    // If we're reading a back level, read the whole thing and we're done.
+    if (readBackLevel(archive))
+        return true;
 
     archive >> owner;
     archive >> operation;
@@ -100,6 +103,8 @@ bool QMultiTransactEvent::Serialize(SFArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool QMultiTransactEvent::SerializeC(SFArchive& archive) const {
+
+    // Writing always write the latest version of the data
     CLogEntry::SerializeC(archive);
 
     archive << owner;
@@ -166,6 +171,8 @@ bool QMultiTransactEvent::handleCustomFormat(CExportContext& ctx, const SFString
 
 //---------------------------------------------------------------------------
 bool QMultiTransactEvent::readBackLevel(SFArchive& archive) {
+
+    CLogEntry::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -206,6 +213,9 @@ SFString QMultiTransactEvent::getValueByName(const SFString& fieldName) const {
 
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const QMultiTransactEvent& item) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
     os << item.Format() << "\n";
     return os;
 }

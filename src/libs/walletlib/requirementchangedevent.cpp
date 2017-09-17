@@ -74,10 +74,13 @@ void QRequirementChangedEvent::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool QRequirementChangedEvent::Serialize(SFArchive& archive) {
+
     if (archive.isWriting())
         return ((const QRequirementChangedEvent*)this)->SerializeC(archive);
 
-    CLogEntry::Serialize(archive);
+    // If we're reading a back level, read the whole thing and we're done.
+    if (readBackLevel(archive))
+        return true;
 
     archive >> newRequirement;
     finishParse();
@@ -86,6 +89,8 @@ bool QRequirementChangedEvent::Serialize(SFArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool QRequirementChangedEvent::SerializeC(SFArchive& archive) const {
+
+    // Writing always write the latest version of the data
     CLogEntry::SerializeC(archive);
 
     archive << newRequirement;
@@ -144,6 +149,8 @@ bool QRequirementChangedEvent::handleCustomFormat(CExportContext& ctx, const SFS
 
 //---------------------------------------------------------------------------
 bool QRequirementChangedEvent::readBackLevel(SFArchive& archive) {
+
+    CLogEntry::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -174,6 +181,9 @@ SFString QRequirementChangedEvent::getValueByName(const SFString& fieldName) con
 
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const QRequirementChangedEvent& item) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
     os << item.Format() << "\n";
     return os;
 }
