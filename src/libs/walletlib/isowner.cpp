@@ -74,10 +74,13 @@ void QIsOwner::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool QIsOwner::Serialize(SFArchive& archive) {
+
     if (archive.isWriting())
         return ((const QIsOwner*)this)->SerializeC(archive);
 
-    CTransaction::Serialize(archive);
+    // If we're reading a back level, read the whole thing and we're done.
+    if (readBackLevel(archive))
+        return true;
 
     archive >> _addr;
     finishParse();
@@ -86,6 +89,8 @@ bool QIsOwner::Serialize(SFArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool QIsOwner::SerializeC(SFArchive& archive) const {
+
+    // Writing always write the latest version of the data
     CTransaction::SerializeC(archive);
 
     archive << _addr;
@@ -144,6 +149,8 @@ bool QIsOwner::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, vo
 
 //---------------------------------------------------------------------------
 bool QIsOwner::readBackLevel(SFArchive& archive) {
+
+    CTransaction::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -174,6 +181,9 @@ SFString QIsOwner::getValueByName(const SFString& fieldName) const {
 
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const QIsOwner& item) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
     os << item.Format() << "\n";
     return os;
 }

@@ -75,10 +75,13 @@ void QConfirmationEvent::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool QConfirmationEvent::Serialize(SFArchive& archive) {
+
     if (archive.isWriting())
         return ((const QConfirmationEvent*)this)->SerializeC(archive);
 
-    CLogEntry::Serialize(archive);
+    // If we're reading a back level, read the whole thing and we're done.
+    if (readBackLevel(archive))
+        return true;
 
     archive >> owner;
     archive >> operation;
@@ -88,6 +91,8 @@ bool QConfirmationEvent::Serialize(SFArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool QConfirmationEvent::SerializeC(SFArchive& archive) const {
+
+    // Writing always write the latest version of the data
     CLogEntry::SerializeC(archive);
 
     archive << owner;
@@ -148,6 +153,8 @@ bool QConfirmationEvent::handleCustomFormat(CExportContext& ctx, const SFString&
 
 //---------------------------------------------------------------------------
 bool QConfirmationEvent::readBackLevel(SFArchive& archive) {
+
+    CLogEntry::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -179,6 +186,9 @@ SFString QConfirmationEvent::getValueByName(const SFString& fieldName) const {
 
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const QConfirmationEvent& item) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
     os << item.Format() << "\n";
     return os;
 }
