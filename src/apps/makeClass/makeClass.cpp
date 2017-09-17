@@ -125,10 +125,13 @@ SFString convertTypes(const SFString& inStr) {
 extern const char* STR_COMMENT_LINE;
 extern const char* STR_CLASSFILE;
 extern const char* STR_CASE_CODE_ARRAY;
+extern const char* STR_CASE_SET_CODE_ARRAY;
 extern const char* STR_CASE_CODE_STRINGARRAY;
 extern const char* STR_OPERATOR_H;
 extern const char* STR_OPERATOR_C;
 extern const char* STR_SUBCLASS;
+extern const char* PTR_SET_CASE;
+extern const char* PTR_CASE;
 extern const char* STR_GETVALUE1;
 extern const char* STR_GETVALUE2;
 
@@ -147,7 +150,7 @@ void generateCode(const COptions& options, CToml& classFile, const SFString& dat
     bool     serialize  = classFile.getConfigBool("settings", "serialize", false);
 
     //------------------------------------------------------------------------------------------------
-    SFString fieldDec, fieldSet, fieldCopy, fieldArchiveRead, fieldArchiveWrite;
+    SFString fieldDec, fieldSet, fieldClear, fieldCopy, fieldArchiveRead, fieldArchiveWrite;
     SFString fieldReg, fieldCase, fieldSubCls;
 
     //------------------------------------------------------------------------------------------------
@@ -161,8 +164,11 @@ void generateCode(const COptions& options, CToml& classFile, const SFString& dat
 
     //------------------------------------------------------------------------------------------------
     bool isBase = (baseClass == "CBaseNode");
+    SFString parFnc = isBase ?
+                        "readBackLevel" :
+                        "readBackLevel";
     SFString parSer = isBase ?
-                        "\tif (!preSerialize(archive))\n\t\treturn false;\n\n" :
+                        "\t[{BASE_CLASS}]::Serialize(archive);\n" :
                         "\t[{BASE_CLASS}]::Serialize(archive);\n\n";
     SFString parReg = isBase ?
                         "" :
@@ -202,16 +208,13 @@ void generateCode(const COptions& options, CToml& classFile, const SFString& dat
             decFmt.Replace("*", "");
         }
         SFString archFmt = "\tarchive >> [{NAME}];\n";
-        if (fld->isPointer) {
-            archFmt = "//" + archFmt;
-        }
         SFString copyFmt = "\t[{NAME}] = +SHORT+.[{NAME}];\n";
-        if (fld->isPointer) {
-            copyFmt = "\tif ([+SHORT+.{NAME}])\n\t\t*[{NAME}] = *+SHORT+.[{NAME}];\n";
-        }
-        SFString badSet = "//\t[{NAME}] = ??; /""* unknown type: [{TYPE}] */\n";
-        SFString setFmt = "\t[{NAME}]";
-        SFString regFmt = "\tADD_FIELD(CL_NM, \"[{NAME}]\", T_TEXT, ++fieldNum);\n", regType;
+        if (fld->isPointer)
+            copyFmt = "\tif ([+SHORT+.{NAME}]) {\n\t\t[{NAME}] = new [{TYPE}];\n\t\t*[{NAME}] = *[+SHORT+.{NAME}];\n\t}\n";
+        SFString badSet   = "//\t[{NAME}] = ??; /""* unknown type: [{TYPE}] */\n";
+        SFString setFmt   = "\t[{NAME}]";
+        SFString regFmt   = "\tADD_FIELD(CL_NM, \"[{NAME}]\", T_TEXT, ++fieldNum);\n", regType;
+        SFString clearFmt = "\tif ([{NAME}])\n\t\tdelete [{NAME}];\n\t[{NAME}] = NULL;\n";
         SFString subClsFmt = STR_SUBCLASS;
 
                if (fld->type == "bloom")        { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_BLOOM";
@@ -263,8 +266,9 @@ void generateCode(const COptions& options, CToml& classFile, const SFString& dat
         fieldReg.ReplaceAll("CL_NM", "[{CLASS_NAME}]");
         fieldCase += fld->Format(caseFmt);
         fieldDec += convertTypes(fld->Format(decFmt));
-        fieldCopy += fld->Format(copyFmt).Substitute("+SHORT+", "[{SHORT}]");
+        fieldCopy += fld->Format(copyFmt).Substitute("+SHORT+", "[{SHORT}]").Substitute("++CLASS++", "[{CLASS_NAME}]");
         fieldSet += fld->Format(setFmt);
+        fieldClear += (fld->isPointer ? fld->Format(clearFmt) : "");
         if (fld->isObject && !fld->isPointer && !fld->type.Contains("Array")) {
             SFString fmt = subClsFmt;
             fmt.ReplaceAll("[FNAME]",fld->name);
@@ -276,8 +280,25 @@ void generateCode(const COptions& options, CToml& classFile, const SFString& dat
                 fieldSubCls = "\n\tSFString s;\n";
             fieldSubCls += fldStr;
         }
-        fieldArchiveRead += fld->Format(archFmt);
-        fieldArchiveWrite += fld->Format(archFmt.Substitute(">>", "<<"));
+
+SFString ptrReadFmt =
+        "\t[{NAME}] = NULL;\n"
+        "\tbool has_[{NAME}] = false;\n"
+        "\tarchive >> has_[{NAME}];\n"
+        "\tif (has_[{NAME}]) {\n"
+        "\t\t[{NAME}] = new [{TYPE}];\n"
+        "\t\tif (![{NAME}])\n"
+        "\t\t\treturn false;\n"
+        "\t\t[{NAME}]->Serialize(archive);\n"
+        "\t}\n";
+
+SFString ptrWriteFmt =
+        "\tarchive << ([{NAME}] != NULL);\n"
+        "\tif ([{NAME}])\n"
+        "\t\t[{NAME}]->SerializeC(archive);\n";
+
+        fieldArchiveRead  += fld->Format(fld->isPointer ? ptrReadFmt  : archFmt);
+        fieldArchiveWrite += fld->Format(fld->isPointer ? ptrWriteFmt : archFmt.Substitute(">>", "<<"));
     }
 
     //------------------------------------------------------------------------------------------------
@@ -301,6 +322,7 @@ void generateCode(const COptions& options, CToml& classFile, const SFString& dat
     headSource.ReplaceAll("[FIELD_COPY]",       fieldCopy);
     headSource.ReplaceAll("[FIELD_DEC]",        fieldDec);
     headSource.ReplaceAll("[FIELD_SET]",        fieldSet);
+    headSource.ReplaceAll("[FIELD_CLEAR]",      fieldClear);
     headSource.ReplaceAll("[H_INCLUDES]",       hIncs);
     headSource.ReplaceAll("[{OPERATORS}]",      operatorH);
     headSource.ReplaceAll("[{BASE_CLASS}]",     baseClass);
@@ -339,11 +361,12 @@ void generateCode(const COptions& options, CToml& classFile, const SFString& dat
     srcSource.ReplaceAll("[OTHER_INCS]",        otherIncs);
     srcSource.ReplaceAll("[FIELD_SETCASE]",     caseSetCodeStr);
     srcSource.ReplaceAll("[{SUBCLASSFLDS}]",    subClsCodeStr);
-    srcSource.ReplaceAll("[{PARENT_SER}]",      parSer);
-    srcSource.ReplaceAll("[{PARENT_SER1}]",     parSer.Substitute("Serialize", "SerializeC"));
+    srcSource.ReplaceAll("[{PARENT_SER1}]",     parSer);
+    srcSource.ReplaceAll("[{PARENT_SER2}]",     parSer.Substitute("Serialize", "SerializeC"));
     srcSource.ReplaceAll("[{PARENT_REG}]",      parReg);
     srcSource.ReplaceAll("[{PARENT_CHNK}]\n",   parCnk);
     srcSource.ReplaceAll("[{PARENT_SET}]\n",    parSet);
+    srcSource.ReplaceAll("[{PAR_READ_HEAD}]",   parFnc);
     srcSource.ReplaceAll("[{BASE_CLASS}]",      baseClass);
     srcSource.ReplaceAll("[{BASE_BASE}]",       baseBase);
     srcSource.ReplaceAll("[{BASE}]",            baseUpper);
@@ -390,11 +413,14 @@ SFString getCaseCode(const SFString& fieldCase, const SFString& ex) {
                 bool     isObject = atoi((const char*)isObj);
 
                 if (tolower(field[0]) == ch) {
-                    if (type.Contains("List") || isPointer)
-                        caseCode += (baseTab + "return \"\";\n//");
                     caseCode += baseTab + tab + "if ( fieldName % \"" + field + "\" )";
+                    if (type.Contains("List") || isPointer) {
+                        SFString ptrCase = PTR_CASE;
+                        ptrCase.ReplaceAll("[{NAME}]", field);
+                        ptrCase.ReplaceAll("[{TYPE}]", type);
+                        caseCode += ptrCase;
 
-                    if (type == "time") {
+                    } else if (type == "time") {
                         caseCode += " return [{PTR}]" + field + ".Format(FMT_JSON);";
 
                     } else if (type == "bbool") {
@@ -454,6 +480,8 @@ SFString getCaseCode(const SFString& fieldCase, const SFString& ex) {
 
                     } else if (type.Contains("Array")) {
                         SFString str = STR_CASE_CODE_ARRAY;
+                        if (type.Contains("SFUint") || type.Contains("SFBlock"))
+                            str.ReplaceAll("[{PTR}][{FIELD}][i].Format()","asStringU([{PTR}][{FIELD}][i])");
                         str.ReplaceAll("[{FIELD}]", field);
                         caseCode += str;
 
@@ -475,6 +503,15 @@ SFString getCaseCode(const SFString& fieldCase, const SFString& ex) {
     return caseCode;
 }
 
+SFString strArraySet =
+" {\n"
+"\t\t\t\tSFString str = fieldValue;\n"
+"\t\t\t\twhile (!str.empty()) {\n"
+"\t\t\t\t\t[{NAME}][[{NAME}].getCount()] = nextTokenClear(str,',');\n"
+"\t\t\t\t}\n"
+"\t\t\t\treturn true;\n"
+"\t\t\t}";
+
 //------------------------------------------------------------------------------------------------
 SFString getCaseSetCode(const SFString& fieldCase) {
     SFString baseTab = (tab+tab);
@@ -492,11 +529,14 @@ SFString getCaseSetCode(const SFString& fieldCase) {
                 bool     isObject = atoi((const char*)isObj);
 
                 if (tolower(field[0]) == ch) {
-                    if (type.Contains("List") || isPointer)
-                        caseCode += "\t\t\treturn true;\n//";
                     caseCode += baseTab + tab + "if ( fieldName % \"" + field + "\" )";
+                    if (type.Contains("List") || isPointer) {
+                        SFString ptrCase = PTR_SET_CASE;
+                        ptrCase.ReplaceAll("[{NAME}]", field);
+                        ptrCase.ReplaceAll("[{TYPE}]", type);
+                        caseCode += ptrCase;
 
-                    if (type == "time") {
+                    } else if (type == "time") {
                         caseCode += " { " + field + " = snagDate(fieldValue); return true; }";
 
                     } else if (type == "bool" || type == "bbool") {
@@ -541,15 +581,25 @@ SFString getCaseSetCode(const SFString& fieldCase) {
                     } else if (type == "double") {
                         caseCode +=  " { " + field + " = toDouble(fieldValue); return true; }";
 
-//                  } else if (type.Contains("SFStringArray")) {
-//                      caseCode += "\n\t\t\t{\n\t\t\t\treturn \"\";\n//\t\t\t\tSFStringArray not returned\n\t\t\t}";
+                    } else if (type.Contains("SFStringArray") || type.Contains("SFBlockArray")) {
+                        SFString str = strArraySet;
+                        str.ReplaceAll("[{NAME}]", field);
+                        if (type.Contains("SFBlockArray"))
+                        	str.ReplaceAll("nextTokenClear(str,',')", "toUnsigned(nextTokenClear(str,','))");
+                        caseCode += str;
+
+                    } else if (type.Contains("SFAddressArray") || type.Contains("SFBigUintArray")) {
+                        SFString str = strArraySet;
+                        str.ReplaceAll("[{NAME}]", field);
+                        str.ReplaceAll("nextTokenClear(str,',')", "to[{TYPE}](nextTokenClear(str,','))");
+                        str.ReplaceAll("[{TYPE}]", type.substr(2).Substitute("BigUint","Topic").Substitute("Array",""));
+                        caseCode += str;
 
                     } else if (type.Contains("Array")) {
-//                      SFString str = STR_CASE_CODE_ARRAY;
-//                      str.ReplaceAll("[{FIELD}]", field);
-//                      str.ReplaceAll("[{TYPE}]", toUpper(type.substr(1).Substitute("Array","")));
-//                      caseCode += str;
-                        caseCode += " return true;";
+                        SFString str = STR_CASE_SET_CODE_ARRAY;
+                        str.ReplaceAll("[{NAME}]", field);
+                        str.ReplaceAll("[{TYPE}]", type.Substitute("Array",""));
+                        caseCode += str;
 
                     } else if (isObject) {
                         caseCode +=  " { /* " + field + " = fieldValue; */ return false; }";
@@ -573,6 +623,20 @@ const char* STR_CLASSFILE =
 "class:\t\t[CLASS_NAME]\n"
 "fields:\t\tbool dataField1|int dataField2|string dataField3|Array dataField4\n"
 "includes:\tnone\n";
+
+//------------------------------------------------------------------------------------------------------------
+const char* STR_CASE_SET_CODE_ARRAY =
+" {\n"
+"\t\t\t\tchar *p = (char *)fieldValue.c_str();\n"
+"\t\t\t\twhile (p && *p) {\n"
+"\t\t\t\t\t[{TYPE}] item;\n"
+"\t\t\t\t\tuint32_t nFields = 0;\n"
+"\t\t\t\t\tp = item.parseJson(p, nFields);\n"
+"\t\t\t\t\tif (nFields)\n"
+"\t\t\t\t\t\t[{NAME}][[{NAME}].getCount()] = item;\n"
+"\t\t\t\t}\n"
+"\t\t\t\treturn true;\n"
+"\t\t\t}";
 
 //------------------------------------------------------------------------------------------------------------
 const char* STR_CASE_CODE_ARRAY =
@@ -635,6 +699,28 @@ const char* STR_SUBCLASS =
 "\t\tf = [FNAME].getValueByName(f);\n"
 "\t\treturn f;\n"
 "\t}\n\n";
+
+//------------------------------------------------------------------------------------------------------------
+const char *PTR_CASE =
+" {\n"
+"\t\t\t\tif ([{NAME}])\n"
+"\t\t\t\t\treturn [{NAME}]->Format();\n"
+"\t\t\t\treturn \"\";\n"
+"\t\t\t}";
+
+//------------------------------------------------------------------------------------------------------------
+const char* PTR_SET_CASE =
+" {\n"
+"\t\t\t\tClear();\n"
+"\t\t\t\t[{NAME}] = new [{TYPE}];\n"
+"\t\t\t\tif ([{NAME}]) {\n"
+"\t\t\t\t\tchar *p = cleanUpJson((char *)fieldValue.c_str());\n"
+"\t\t\t\t\tuint32_t nFields = 0;\n"
+"\t\t\t\t\t[{NAME}]->parseJson(p, nFields);\n"
+"\t\t\t\t\treturn true;\n"
+"\t\t\t\t}\n"
+"\t\t\t\treturn false;\n"
+"\t\t\t}";
 
 //------------------------------------------------------------------------------------------------------------
 SFString short3(const SFString& str) {
