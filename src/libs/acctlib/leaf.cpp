@@ -60,7 +60,13 @@ bool CLeaf::setValueByName(const SFString& fieldName, const SFString& fieldValue
 
     switch (tolower(fieldName[0])) {
         case 'b':
-            if ( fieldName % "blocks" ) return true;
+            if ( fieldName % "blocks" ) {
+                SFString str = fieldValue;
+                while (!str.empty()) {
+                    blocks[blocks.getCount()] = toUnsigned(nextTokenClear(str,','));
+                }
+                return true;
+            }
             break;
         case 'c':
             if ( fieldName % "cnt" ) { cnt = toUnsigned(fieldValue); return true; }
@@ -79,12 +85,15 @@ void CLeaf::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CLeaf::Serialize(SFArchive& archive) {
+
     if (archive.isWriting())
         return ((const CLeaf*)this)->SerializeC(archive);
 
-    CTreeNode::Serialize(archive);
+    // If we're reading a back level, read the whole thing and we're done.
+    if (readBackLevel(archive))
+        return true;
 
-//    archive >> blocks;
+    archive >> blocks;
     archive >> cnt;
     finishParse();
     return true;
@@ -92,9 +101,11 @@ bool CLeaf::Serialize(SFArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool CLeaf::SerializeC(SFArchive& archive) const {
+
+    // Writing always write the latest version of the data
     CTreeNode::SerializeC(archive);
 
-//    archive << blocks;
+    archive << blocks;
     archive << cnt;
 
     return true;
@@ -152,6 +163,8 @@ bool CLeaf::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void 
 
 //---------------------------------------------------------------------------
 bool CLeaf::readBackLevel(SFArchive& archive) {
+
+    CTreeNode::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -194,6 +207,9 @@ SFString CLeaf::getValueByName(const SFString& fieldName) const {
 
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const CLeaf& item) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
     os << item.Format() << "\n";
     return os;
 }

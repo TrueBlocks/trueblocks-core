@@ -76,10 +76,13 @@ void CBranch::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CBranch::Serialize(SFArchive& archive) {
+
     if (archive.isWriting())
         return ((const CBranch*)this)->SerializeC(archive);
 
-    CTreeNode::Serialize(archive);
+    // If we're reading a back level, read the whole thing and we're done.
+    if (readBackLevel(archive))
+        return true;
 
     archive >> m_branchValue;
     finishParse();
@@ -88,6 +91,8 @@ bool CBranch::Serialize(SFArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool CBranch::SerializeC(SFArchive& archive) const {
+
+    // Writing always write the latest version of the data
     CTreeNode::SerializeC(archive);
 
     archive << m_branchValue;
@@ -149,6 +154,8 @@ bool CBranch::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, voi
 
 //---------------------------------------------------------------------------
 bool CBranch::readBackLevel(SFArchive& archive) {
+
+    CTreeNode::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -179,6 +186,9 @@ SFString CBranch::getValueByName(const SFString& fieldName) const {
 
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const CBranch& item) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
     os << item.Format() << "\n";
     return os;
 }
