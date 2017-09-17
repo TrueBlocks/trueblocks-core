@@ -33,7 +33,7 @@ public:
 public:
     QConfirmationNeededEvent(void);
     QConfirmationNeededEvent(const QConfirmationNeededEvent& co);
-    ~QConfirmationNeededEvent(void);
+    virtual ~QConfirmationNeededEvent(void);
     QConfirmationNeededEvent& operator=(const QConfirmationNeededEvent& co);
 
     DECLARE_NODE(QConfirmationNeededEvent);
@@ -46,7 +46,7 @@ protected:
     void Clear(void);
     void Init(void);
     void Copy(const QConfirmationNeededEvent& co);
-    bool readBackLevel(SFArchive& archive);
+    bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -128,5 +128,4 @@ IMPLEMENT_ARCHIVE_LIST(QConfirmationNeededEventList);
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
-#define NEW_CODE
 

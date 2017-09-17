@@ -29,7 +29,7 @@ public:
 public:
     QKill(void);
     QKill(const QKill& ki);
-    ~QKill(void);
+    virtual ~QKill(void);
     QKill& operator=(const QKill& ki);
 
     DECLARE_NODE(QKill);
@@ -42,7 +42,7 @@ protected:
     void Clear(void);
     void Init(void);
     void Copy(const QKill& ki);
-    bool readBackLevel(SFArchive& archive);
+    bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -116,5 +116,4 @@ IMPLEMENT_ARCHIVE_LIST(QKillList);
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
-#define NEW_CODE
 

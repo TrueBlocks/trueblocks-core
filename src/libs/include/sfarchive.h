@@ -25,7 +25,7 @@ namespace qblocks {
     private:
         class SFArchiveHeader {
         public:
-            uint32_t     m_archiveSchema;
+            uint32_t     m_unused;
             timestamp_t  m_lastWritten;
         };
 
@@ -37,11 +37,11 @@ namespace qblocks {
         //VISITARCHIVEFUNC readMsgFunc;
 
         SFArchive(bool isReading) {
-            m_isReading              = isReading;
-            m_header.m_archiveSchema = getVersionNum();
-            pParent                  = NULL;
-            //writeMsgFunc           = NULL;
-            //readMsgFunc            = NULL;
+            m_isReading       = isReading;
+            m_header.m_unused = getVersionNum();
+            pParent           = NULL;
+            //writeMsgFunc    = NULL;
+            //readMsgFunc     = NULL;
         }
 
         bool isWriting(void) const {
@@ -55,7 +55,7 @@ namespace qblocks {
         void writeHeader(void) {
             Seek(0, SEEK_SET);
             m_header.m_lastWritten = toTimestamp(Now());
-            operator<<(m_header.m_archiveSchema);
+            operator<<(m_header.m_unused);
             operator<<(m_header.m_lastWritten);
             bool unused = false;
             operator<<(unused);
@@ -63,7 +63,7 @@ namespace qblocks {
 
         void readHeader(void) {
             Seek(0, SEEK_SET);
-            operator>>(m_header.m_archiveSchema);
+            operator>>(m_header.m_unused);
             operator>>(m_header.m_lastWritten);
             bool unused = false;
             operator>>(unused);
@@ -111,7 +111,9 @@ namespace qblocks {
 
     extern SFArchive& operator<<(SFArchive& archive, const SFStringArray& array);
     extern SFArchive& operator<<(SFArchive& archive, const SFBigUintArray& array);
+    extern SFArchive& operator<<(SFArchive& archive, const SFUintArray& array);
 
     extern SFArchive& operator>>(SFArchive& archive, SFStringArray& array);
     extern SFArchive& operator>>(SFArchive& archive, SFBigUintArray& array);
+    extern SFArchive& operator>>(SFArchive& archive, SFUintArray& array);
 }  // namespace qblocks

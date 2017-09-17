@@ -53,7 +53,7 @@ protected:
     void Clear(void);
     void Init(void);
     void Copy(const CInfix& in);
-    bool readBackLevel(SFArchive& archive);
+    bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -85,10 +85,10 @@ inline CInfix::~CInfix(void) {
 
 //--------------------------------------------------------------------------
 inline void CInfix::Clear(void) {
-    // EXISTING_CODE
     if (m_next)
         delete m_next;
     m_next = NULL;
+    // EXISTING_CODE
     // EXISTING_CODE
 }
 
@@ -107,8 +107,10 @@ inline void CInfix::Copy(const CInfix& in) {
     Clear();
     CTreeNode::Copy(in);
 
-    if (in.m_next)
+    if (in.m_next) {
+        m_next = new CTreeNode;
         *m_next = *in.m_next;
+    }
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -132,6 +134,5 @@ IMPLEMENT_ARCHIVE_LIST(CInfixList);
 // EXISTING_CODE
 extern SFString nextTreenodeChunk(const SFString& fieldIn, const void *data);
 // EXISTING_CODE
-#define NEW_CODE
 }  // namespace qblocks
 
