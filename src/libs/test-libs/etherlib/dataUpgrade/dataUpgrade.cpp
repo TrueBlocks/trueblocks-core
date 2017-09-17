@@ -53,24 +53,28 @@ bool testReadWrite(COptions& options) {
     switch (options.testNum) {
         case 0: {
             ASSERT(fileExists("./oldFmt.cache"));
-            cout << "Read from old binary format and do nothing...\n";
+            cout << "0. Read from old binary format and do nothing...\n";
+            cout.flush();
             readOneBlock_fromBinary(block, "./oldFmt.cache");
             reportNode(&block);
             break;
         }
         case 1: {
             ASSERT(fileExists("./oldFmt.cache"));
-            cout << "Read from old binary format, write to JSON...\n";
+            cout << "1. Read from old binary format, write to JSON...\n";
+            cout.flush();
             readOneBlock_fromBinary(block, "./oldFmt.cache");
             writeToJson(block, "./newFmt.json");
             ASSERT(fileExists("./newFmt.json"));
             reportNode(&block);
             cout << asciiFileToString("./newFmt.json") << "\n";
+            cout.flush();
             break;
         }
         case 2: {
             ASSERT(fileExists("./newFmt.json"));
-            cout << "Read from JSON, write to new binary format...\n";
+            cout << "2. Read from JSON, write to new binary format...\n";
+            cout.flush();
             readOneBlock_fromJson(block, "./newFmt.json");
             newBlock = CNewBlock(block);
             writeToBinary(newBlock, "./newFmt.cache");
@@ -81,24 +85,28 @@ bool testReadWrite(COptions& options) {
         }
         case 3: {
             ASSERT(fileExists("./newFmt.cache"));
-            cout << "Read from new binary format, write to JSON...\n";
+            cout << "3. Read from new binary format, write to JSON...\n";
+            cout.flush();
             readOneNewBlock_fromBinary(newBlock, "./newFmt.cache");
             writeToJson(newBlock, "./newFmt2.json");
             ASSERT(fileExists("./newFmt2.json"));
             reportNode(&newBlock);
             cout << asciiFileToString("./newFmt2.json") << "\n";
+            cout.flush();
             break;
         }
         case 4: {
             ASSERT(fileExists("./newFmt2.json"));
-            cout << "Read from new JSON and we're done.\n";
+            cout << "4. Read from new JSON and we're done.\n";
+            cout.flush();
             readOneNewBlock_fromJson(newBlock, "./newFmt2.json");
             reportNode(&newBlock);
             break;
         }
         case 5: {
             ASSERT(fileExists("./oldFmt.cache"));
-            cout << "Read from old binary format, using new binary format...\n";
+            cout << "5. Read from old binary format, using new binary format...\n";
+            cout.flush();
             readOneNewBlock_fromBinary(newBlock, "./oldFmt.cache");
             reportNode(&newBlock);
 
@@ -210,6 +218,7 @@ void reportNode(CBaseNode *node) {
     }
     cout << node->Format() << "\n";
     cout << "\n";
+    cout.flush();
 }
 
 //--------------------------------------------------------------
