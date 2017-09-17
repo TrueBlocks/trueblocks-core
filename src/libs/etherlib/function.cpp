@@ -52,15 +52,7 @@ SFString nextFunctionChunk(const SFString& fieldIn, const void *dataPtr) {
 //---------------------------------------------------------------------------------------------------
 bool CFunction::setValueByName(const SFString& fieldName, const SFString& fieldValue) {
     // EXISTING_CODE
-    if ( fieldName % "inputs" ) {
-        parseParams(true, fieldValue);
-        return true;
-
-    } else if ( fieldName % "outputs" ) {
-        parseParams(false, fieldValue);
-        return true;
-
-    } else if ( fieldName % "signature" ) {
+    if ( fieldName % "signature" ) {
         signature = getSignature(SIG_CANONICAL);
         return true;
     }
@@ -77,13 +69,33 @@ bool CFunction::setValueByName(const SFString& fieldName, const SFString& fieldV
             if ( fieldName % "encoding" ) { encoding = fieldValue; return true; }
             break;
         case 'i':
-            if ( fieldName % "inputs" ) return true;
+            if ( fieldName % "inputs" ) {
+                char *p = (char *)fieldValue.c_str();
+                while (p && *p) {
+                    CParameter item;
+                    uint32_t nFields = 0;
+                    p = item.parseJson(p, nFields);
+                    if (nFields)
+                        inputs[inputs.getCount()] = item;
+                }
+                return true;
+            }
             break;
         case 'n':
             if ( fieldName % "name" ) { name = fieldValue; return true; }
             break;
         case 'o':
-            if ( fieldName % "outputs" ) return true;
+            if ( fieldName % "outputs" ) {
+                char *p = (char *)fieldValue.c_str();
+                while (p && *p) {
+                    CParameter item;
+                    uint32_t nFields = 0;
+                    p = item.parseJson(p, nFields);
+                    if (nFields)
+                        outputs[outputs.getCount()] = item;
+                }
+                return true;
+            }
             break;
         case 'p':
             if ( fieldName % "payable" ) { payable = toBool(fieldValue); return true; }
@@ -127,11 +139,13 @@ void CFunction::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CFunction::Serialize(SFArchive& archive) {
+
     if (archive.isWriting())
         return ((const CFunction*)this)->SerializeC(archive);
 
-    if (!preSerialize(archive))
-        return false;
+    // If we're reading a back level, read the whole thing and we're done.
+    if (readBackLevel(archive))
+        return true;
 
     archive >> name;
     archive >> type;
@@ -148,9 +162,9 @@ bool CFunction::Serialize(SFArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool CFunction::SerializeC(SFArchive& archive) const {
-    if (!preSerializeC(archive))
-        return false;
 
+    // Writing always write the latest version of the data
+    CBaseNode::SerializeC(archive);
     archive << name;
     archive << type;
     archive << anonymous;
@@ -244,6 +258,8 @@ bool CFunction::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, v
 
 //---------------------------------------------------------------------------
 bool CFunction::readBackLevel(SFArchive& archive) {
+
+    CBaseNode::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -316,27 +332,15 @@ SFString CFunction::getValueByName(const SFString& fieldName) const {
 
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const CFunction& item) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
     os << item.Format() << "\n";
     return os;
 }
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-void CFunction::parseParams(bool input, const SFString& contents) {
-    char *p = (char *)contents.c_str();
-    while (p && *p) {
-        CParameter param;
-        uint32_t nFields = 0;
-        p = param.parseJson(p, nFields);
-        if (nFields) {
-            if (input)
-                inputs[inputs.getCount()] = param;
-            else
-                outputs[outputs.getCount()] = param;
-        }
-    }
-}
-
 //---------------------------------------------------------------------------
 SFString CFunction::getSignature(SFUint32 parts) const {
     uint32_t cnt = inputs.getCount();

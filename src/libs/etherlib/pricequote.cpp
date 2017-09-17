@@ -100,11 +100,13 @@ void CPriceQuote::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CPriceQuote::Serialize(SFArchive& archive) {
+
     if (archive.isWriting())
         return ((const CPriceQuote*)this)->SerializeC(archive);
 
-    if (!preSerialize(archive))
-        return false;
+    // If we're reading a back level, read the whole thing and we're done.
+    if (readBackLevel(archive))
+        return true;
 
     archive >> timestamp;
     archive >> open;
@@ -120,9 +122,9 @@ bool CPriceQuote::Serialize(SFArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool CPriceQuote::SerializeC(SFArchive& archive) const {
-    if (!preSerializeC(archive))
-        return false;
 
+    // Writing always write the latest version of the data
+    CBaseNode::SerializeC(archive);
     archive << timestamp;
     archive << open;
     archive << high;
@@ -195,6 +197,8 @@ bool CPriceQuote::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn,
 
 //---------------------------------------------------------------------------
 bool CPriceQuote::readBackLevel(SFArchive& archive) {
+
+    CBaseNode::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -246,6 +250,9 @@ SFString CPriceQuote::getValueByName(const SFString& fieldName) const {
 
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const CPriceQuote& item) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
     os << item.Format() << "\n";
     return os;
 }

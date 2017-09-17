@@ -84,11 +84,13 @@ void CParameter::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CParameter::Serialize(SFArchive& archive) {
+
     if (archive.isWriting())
         return ((const CParameter*)this)->SerializeC(archive);
 
-    if (!preSerialize(archive))
-        return false;
+    // If we're reading a back level, read the whole thing and we're done.
+    if (readBackLevel(archive))
+        return true;
 
     archive >> indexed;
     archive >> name;
@@ -103,9 +105,9 @@ bool CParameter::Serialize(SFArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool CParameter::SerializeC(SFArchive& archive) const {
-    if (!preSerializeC(archive))
-        return false;
 
+    // Writing always write the latest version of the data
+    CBaseNode::SerializeC(archive);
     archive << indexed;
     archive << name;
     archive << type;
@@ -172,6 +174,8 @@ bool CParameter::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, 
 
 //---------------------------------------------------------------------------
 bool CParameter::readBackLevel(SFArchive& archive) {
+
+    CBaseNode::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -214,6 +218,9 @@ SFString CParameter::getValueByName(const SFString& fieldName) const {
 
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const CParameter& item) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
     os << item.Format() << "\n";
     return os;
 }

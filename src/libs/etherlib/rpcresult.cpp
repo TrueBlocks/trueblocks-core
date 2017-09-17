@@ -79,11 +79,13 @@ void CRPCResult::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CRPCResult::Serialize(SFArchive& archive) {
+
     if (archive.isWriting())
         return ((const CRPCResult*)this)->SerializeC(archive);
 
-    if (!preSerialize(archive))
-        return false;
+    // If we're reading a back level, read the whole thing and we're done.
+    if (readBackLevel(archive))
+        return true;
 
     archive >> jsonrpc;
     archive >> result;
@@ -94,9 +96,9 @@ bool CRPCResult::Serialize(SFArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool CRPCResult::SerializeC(SFArchive& archive) const {
-    if (!preSerializeC(archive))
-        return false;
 
+    // Writing always write the latest version of the data
+    CBaseNode::SerializeC(archive);
     archive << jsonrpc;
     archive << result;
     archive << id;
@@ -155,6 +157,8 @@ bool CRPCResult::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, 
 
 //---------------------------------------------------------------------------
 bool CRPCResult::readBackLevel(SFArchive& archive) {
+
+    CBaseNode::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -191,6 +195,9 @@ SFString CRPCResult::getValueByName(const SFString& fieldName) const {
 
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const CRPCResult& item) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
     os << item.Format() << "\n";
     return os;
 }

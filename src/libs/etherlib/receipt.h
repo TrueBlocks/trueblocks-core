@@ -37,7 +37,7 @@ public:
 public:
     CReceipt(void);
     CReceipt(const CReceipt& re);
-    ~CReceipt(void);
+    virtual ~CReceipt(void);
     CReceipt& operator=(const CReceipt& re);
 
     DECLARE_NODE(CReceipt);
@@ -62,7 +62,7 @@ protected:
     void Clear(void);
     void Init(void);
     void Copy(const CReceipt& re);
-    bool readBackLevel(SFArchive& archive);
+    bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -169,6 +169,5 @@ extern SFArchive& operator>>(SFArchive& archive, CReceipt& rec);
 // EXISTING_CODE
 extern SFString nextTransactionChunk(const SFString& fieldIn, const void *data);
 // EXISTING_CODE
-#define NEW_CODE
 }  // namespace qblocks
 
