@@ -61,7 +61,7 @@ void addIfUnique(const SFString& addr, CFunctionArray& functions, CFunction& fun
     for (uint32_t i = 0 ; i < functions.getCount() ; i++) {
         if (functions[i].encoding == func.encoding)
             return;
-#ifdef THE_NEW_CODE
+#ifdef NEW_CODE
 //#error
         // different encoding same name means a duplicate function name in the code. We won't build with
         // duplicate function names, so we need to modify the incoming function. We do this by appending

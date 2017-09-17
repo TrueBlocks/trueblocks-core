@@ -41,7 +41,7 @@ protected:
     void Clear(void);
     void Init(void);
     void Copy(const [{CLASS_NAME}]& [{SHORT}]);
-    bool readBackLevel(SFArchive& archive);
+    bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -73,7 +73,7 @@ inline [{CLASS_NAME}]::~[{CLASS_NAME}](void) {
 
 //--------------------------------------------------------------------------
 inline void [{CLASS_NAME}]::Clear(void) {
-    // EXISTING_CODE
+[FIELD_CLEAR]    // EXISTING_CODE
     // EXISTING_CODE
 }
 
@@ -113,6 +113,5 @@ IMPLEMENT_ARCHIVE_LIST([{CLASS_NAME}]List);
 [{OPERATORS}]//---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
-#define NEW_CODE
 
 [{NAMESPACE2}]
