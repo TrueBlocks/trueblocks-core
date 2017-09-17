@@ -269,10 +269,27 @@ namespace qblocks {
     }
 
     //---------------------------------------------------------------------------
+    bool CBaseNode::readBackLevel(SFArchive& archive) {
+
+        // pParent is use for array items to reach up into it's container
+        archive.pParent = this;
+
+        // The following code assumes we do not change the format of the header
+        archive >> m_deleted;
+        archive >> m_schema;
+        archive >> m_showing;
+        SFString str;
+        archive >> str;
+        ASSERT(str == SFString(getRuntimeClass()->getClassNamePtr()));
+
+        // Return true if this is a back level version
+        return true;
+    }
+
+    //---------------------------------------------------------------------------
     bool CBaseNode::preSerialize(SFArchive& archive) {
         if (archive.isWriting())
             return ((const CBaseNode*)this)->preSerializeC(archive);
-
         archive.pParent = this;  // sets this value for items stored in lists or arrays -- read only
         archive >> m_deleted;
         archive >> m_schema;
@@ -284,6 +301,18 @@ namespace qblocks {
     }
 
     //---------------------------------------------------------------------------
+    bool CBaseNode::Serialize(SFArchive& archive) {
+        archive.pParent = this;  // sets this value for items stored in lists or arrays -- read only
+        archive >> m_deleted;
+        archive >> m_schema;
+        archive >> m_showing;
+        SFString str;
+        archive >> str;
+        ASSERT(str == SFString(getRuntimeClass()->getClassNamePtr()));
+        return false;
+    }
+
+    //---------------------------------------------------------------------------
     bool CBaseNode::preSerializeC(SFArchive& archive) const {
         archive.pParent = this;  // sets this value for items stored in lists or arrays -- read only
         archive << m_deleted;
@@ -291,6 +320,16 @@ namespace qblocks {
         archive << m_showing;
         archive << getRuntimeClass()->getClassNamePtr();
         return true;
+    }
+
+    //---------------------------------------------------------------------------
+    bool CBaseNode::SerializeC(SFArchive& archive) const {
+        archive.pParent = this;  // sets this value for items stored in lists or arrays -- read only
+        archive << m_deleted;
+        archive << m_schema;
+        archive << m_showing;
+        archive << getRuntimeClass()->getClassNamePtr();
+        return false;
     }
 
     //---------------------------------------------------------------------------
@@ -407,12 +446,10 @@ namespace qblocks {
                 if (expContext().colored)
                     ret += "%";
                 if (fld->isArray()) {
-                    ret += "[";
                     incIndent();
                     val = getValueByName(fld->m_fieldName);
+                    ret += (val.empty() ? "[]" : "[\n" + indent() + val + "  ]");
                     decIndent();
-                    ret += (val.Contains("\n") ? "\n" + val + indent() : val);
-                    ret += "]";
 
                 } else if (fld->isObject()) {
                     ret += val;
@@ -444,7 +481,7 @@ namespace qblocks {
         ASSERT(fieldList);
         SFString ret;
         ret += "{";
-        ret += toJsonFldList(fieldList);
+        ret += Strip(toJsonFldList(fieldList),' ');
         ret += "\n";
         ret += indent();
         ret += "}";
