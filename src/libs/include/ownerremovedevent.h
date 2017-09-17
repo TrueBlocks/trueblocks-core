@@ -29,7 +29,7 @@ public:
 public:
     QOwnerRemovedEvent(void);
     QOwnerRemovedEvent(const QOwnerRemovedEvent& ow);
-    ~QOwnerRemovedEvent(void);
+    virtual ~QOwnerRemovedEvent(void);
     QOwnerRemovedEvent& operator=(const QOwnerRemovedEvent& ow);
 
     DECLARE_NODE(QOwnerRemovedEvent);
@@ -42,7 +42,7 @@ protected:
     void Clear(void);
     void Init(void);
     void Copy(const QOwnerRemovedEvent& ow);
-    bool readBackLevel(SFArchive& archive);
+    bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -116,5 +116,4 @@ IMPLEMENT_ARCHIVE_LIST(QOwnerRemovedEventList);
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
-#define NEW_CODE
 

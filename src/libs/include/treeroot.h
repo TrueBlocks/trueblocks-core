@@ -49,7 +49,7 @@ public:
 public:
     CTreeRoot(void);
     CTreeRoot(const CTreeRoot& tr);
-    ~CTreeRoot(void);
+    virtual ~CTreeRoot(void);
     CTreeRoot& operator=(const CTreeRoot& tr);
 
     DECLARE_NODE(CTreeRoot);
@@ -66,7 +66,7 @@ protected:
     void Clear(void);
     void Init(void);
     void Copy(const CTreeRoot& tr);
-    bool readBackLevel(SFArchive& archive);
+    bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -98,10 +98,10 @@ inline CTreeRoot::~CTreeRoot(void) {
 
 //--------------------------------------------------------------------------
 inline void CTreeRoot::Clear(void) {
-    // EXISTING_CODE
     if (m_root)
         delete m_root;
     m_root = NULL;
+    // EXISTING_CODE
     // EXISTING_CODE
 }
 
@@ -120,8 +120,10 @@ inline void CTreeRoot::Copy(const CTreeRoot& tr) {
     Clear();
     CBaseNode::Copy(tr);
 
-    if (tr.m_root)
+    if (tr.m_root) {
+        m_root = new CTreeNode;
         *m_root = *tr.m_root;
+    }
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -179,6 +181,5 @@ inline SFString idex(char n) {
 bool forEveryAccount(CTreeRoot *trie, ACCTVISITOR func, void *data);
 extern SFString idnt;
 // EXISTING_CODE
-#define NEW_CODE
 }  // namespace qblocks
 

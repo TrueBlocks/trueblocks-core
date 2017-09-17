@@ -32,7 +32,7 @@ public:
 public:
     CNameValue(void);
     CNameValue(const CNameValue& na);
-    ~CNameValue(void);
+    virtual ~CNameValue(void);
     CNameValue& operator=(const CNameValue& na);
 
     DECLARE_NODE(CNameValue);
@@ -50,7 +50,7 @@ protected:
     void Clear(void);
     void Init(void);
     void Copy(const CNameValue& na);
-    bool readBackLevel(SFArchive& archive);
+    bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -126,6 +126,5 @@ IMPLEMENT_ARCHIVE_LIST(CNameValueList);
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
-#define NEW_CODE
 }  // namespace qblocks
 

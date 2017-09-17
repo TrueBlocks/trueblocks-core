@@ -28,7 +28,7 @@ public:
 public:
     QResetSpentToday(void);
     QResetSpentToday(const QResetSpentToday& re);
-    ~QResetSpentToday(void);
+    virtual ~QResetSpentToday(void);
     QResetSpentToday& operator=(const QResetSpentToday& re);
 
     DECLARE_NODE(QResetSpentToday);
@@ -41,7 +41,7 @@ protected:
     void Clear(void);
     void Init(void);
     void Copy(const QResetSpentToday& re);
-    bool readBackLevel(SFArchive& archive);
+    bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -111,5 +111,4 @@ IMPLEMENT_ARCHIVE_LIST(QResetSpentTodayList);
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
-#define NEW_CODE
 
