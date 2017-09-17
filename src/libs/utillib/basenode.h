@@ -48,8 +48,9 @@ namespace qblocks {
         virtual CRuntimeClass *getRuntimeClass(void) const;
         virtual SFString getValueByName(const SFString& fieldName) const { return ""; }
         virtual bool setValueByName(const SFString& fieldName, const SFString& fieldValue) { return false; }
-        virtual bool Serialize(SFArchive& archive) { return false; }
-        virtual bool SerializeC(SFArchive& archive) const { return false; }
+        virtual bool Serialize(SFArchive& archive);
+        virtual bool SerializeC(SFArchive& archive) const;
+        virtual bool readBackLevel(SFArchive& archive);
         virtual void finishParse(void) { }
         virtual void Format(CExportContext& ctx, const SFString& fmtIn, void *data = NULL) const { }
         virtual SFString Format(const SFString& fmtIn = "") const { return ""; }
@@ -59,9 +60,7 @@ namespace qblocks {
 
     protected:
         bool preSerialize(SFArchive& archive);
-        bool postSerialize(SFArchive& archive);
         bool preSerializeC(SFArchive& archive) const;
-        bool postSerializeC(SFArchive& archive) const;
 
         void Init(void);
         void Copy(const CBaseNode& bn);
