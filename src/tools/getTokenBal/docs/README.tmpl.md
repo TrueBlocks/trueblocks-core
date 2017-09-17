@@ -1,9 +1,15 @@
 ## [{NAME}]
 
-For the given list of token contracts, retrieve the holders' token balance at the given block(s). You may specify multiple contracts, holder addresses, or blocks on the line, but not more than one multiple. `block`, if not specified, defaults to `latest`.
+Given a list of Ethereum addresses, report token holdings for a single `account` from one or more `token contracts`. Alternatively, report token balances for one or more `accounts` from a single `token contract`.
 
-If the token contract(s) you're requesting are not ERC20 token standard contracts, the return values are undefined.
+In normal operation the *last item* in the `address_list` is considered the account for which to report token balances from each of the preceeding token contracts in `address_list`.
 
-`getTokenBal` retrieves a token's balance from the local running Ethereum node (not QuickBlocks). Use the `--accounting` option of an account monitor to retrieve the balances from QuickBlocks.
+In `--flip` mode, the *first item* in `address_list` is considered the token contract from which to report token balances for the remaining accounts in the list. At least two addresses are required in `address_list`.
 
-[{USAGE_TABLE}][{FOOTER}]
+You may optionally specify one or more blocks at which to report token balances. If empty, `block_list` defaults to `latest`.
+
+[{USAGE_TABLE}]`Notes:`
+
+- If an address does not own tokens at an address, the tool reports a zero balance.
+- If the token contract(s) from which you request balances are not ERC20 token contracts, the return values are undefined.
+- This tool retrieves information from a locally running Ethereum node or the $(FALLBACK) node, if enabled.[{FOOTER}]
