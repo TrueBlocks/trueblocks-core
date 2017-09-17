@@ -41,7 +41,7 @@ public:
 public:
     CBlock(void);
     CBlock(const CBlock& bl);
-    ~CBlock(void);
+    virtual ~CBlock(void);
     CBlock& operator=(const CBlock& bl);
 
     DECLARE_NODE(CBlock);
@@ -72,7 +72,7 @@ protected:
     void Clear(void);
     void Init(void);
     void Copy(const CBlock& bl);
-    bool readBackLevel(SFArchive& archive);
+    bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -198,6 +198,5 @@ extern SFArchive& operator>>(SFArchive& archive, CBlock& blo);
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
-#define NEW_CODE
 }  // namespace qblocks
 

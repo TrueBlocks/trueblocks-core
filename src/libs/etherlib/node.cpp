@@ -498,6 +498,10 @@ bool readOneBlock_fromBinary(CBlock& block, const SFString& fileName)
 //-----------------------------------------------------------------------
 bool readOneBlock_fromJson(CBlock& block, const SFString& fileName)
 {
+    if (!fileExists(fileName)) {
+        cerr << "File not found " << fileName << "\n";
+        return false;
+    }
     block = CBlock(); // reset
     SFString contents = asciiFileToString(fileName);
     if (contents.Contains("null"))

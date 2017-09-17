@@ -33,7 +33,7 @@ public:
 public:
     CAbi(void);
     CAbi(const CAbi& ab);
-    ~CAbi(void);
+    virtual ~CAbi(void);
     CAbi& operator=(const CAbi& ab);
 
     DECLARE_NODE(CAbi);
@@ -52,7 +52,7 @@ protected:
     void Clear(void);
     void Init(void);
     void Copy(const CAbi& ab);
-    bool readBackLevel(SFArchive& archive);
+    bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -134,6 +134,5 @@ extern SFUint32 verbose;
 #define REP_INFREQ 563
 void clearAbis(void);
 // EXISTING_CODE
-#define NEW_CODE
 }  // namespace qblocks
 

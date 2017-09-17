@@ -75,7 +75,17 @@ bool CAccount::setValueByName(const SFString& fieldName, const SFString& fieldVa
             if ( fieldName % "pageSize" ) { pageSize = toUnsigned(fieldValue); return true; }
             break;
         case 't':
-            if ( fieldName % "transactions" ) return true;
+            if ( fieldName % "transactions" ) {
+                char *p = (char *)fieldValue.c_str();
+                while (p && *p) {
+                    CTransaction item;
+                    uint32_t nFields = 0;
+                    p = item.parseJson(p, nFields);
+                    if (nFields)
+                        transactions[transactions.getCount()] = item;
+                }
+                return true;
+            }
             break;
         default:
             break;
@@ -96,11 +106,13 @@ void CAccount::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CAccount::Serialize(SFArchive& archive) {
+
     if (archive.isWriting())
         return ((const CAccount*)this)->SerializeC(archive);
 
-    if (!preSerialize(archive))
-        return false;
+    // If we're reading a back level, read the whole thing and we're done.
+    if (readBackLevel(archive))
+        return true;
 
     archive >> addr;
     archive >> header;
@@ -116,9 +128,9 @@ bool CAccount::Serialize(SFArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool CAccount::SerializeC(SFArchive& archive) const {
-    if (!preSerializeC(archive))
-        return false;
 
+    // Writing always write the latest version of the data
+    CBaseNode::SerializeC(archive);
     archive << addr;
     archive << header;
     archive << displayString;
@@ -239,6 +251,8 @@ bool CAccount::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, vo
 
 //---------------------------------------------------------------------------
 bool CAccount::readBackLevel(SFArchive& archive) {
+
+    CBaseNode::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -297,6 +311,9 @@ SFString CAccount::getValueByName(const SFString& fieldName) const {
 
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const CAccount& item) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
     os << item.Format() << "\n";
     return os;
 }

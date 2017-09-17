@@ -108,11 +108,13 @@ void CAccountWatch::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CAccountWatch::Serialize(SFArchive& archive) {
+
     if (archive.isWriting())
         return ((const CAccountWatch*)this)->SerializeC(archive);
 
-    if (!preSerialize(archive))
-        return false;
+    // If we're reading a back level, read the whole thing and we're done.
+    if (readBackLevel(archive))
+        return true;
 
     archive >> index;
     archive >> address;
@@ -130,9 +132,9 @@ bool CAccountWatch::Serialize(SFArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool CAccountWatch::SerializeC(SFArchive& archive) const {
-    if (!preSerializeC(archive))
-        return false;
 
+    // Writing always write the latest version of the data
+    CBaseNode::SerializeC(archive);
     archive << index;
     archive << address;
     archive << name;
@@ -205,6 +207,8 @@ bool CAccountWatch::handleCustomFormat(CExportContext& ctx, const SFString& fmtI
 
 //---------------------------------------------------------------------------
 bool CAccountWatch::readBackLevel(SFArchive& archive) {
+
+    CBaseNode::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -269,6 +273,9 @@ SFString CAccountWatch::getValueByName(const SFString& fieldName) const {
 
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const CAccountWatch& item) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
     os << item.Format() << "\n";
     return os;
 }
