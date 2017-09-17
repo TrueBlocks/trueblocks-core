@@ -1,6 +1,6 @@
 dataUpgrade argc: 2 [1:3] 
 dataUpgrade 3 
-Read from new binary format, write to JSON...
+3. Read from new binary format, write to JSON...
 --------------------------------------------------------------------------------
 className: CNewBlock
 objectSize: 184
