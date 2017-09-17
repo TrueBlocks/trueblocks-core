@@ -75,11 +75,13 @@ void CNameValue::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CNameValue::Serialize(SFArchive& archive) {
+
     if (archive.isWriting())
         return ((const CNameValue*)this)->SerializeC(archive);
 
-    if (!preSerialize(archive))
-        return false;
+    // If we're reading a back level, read the whole thing and we're done.
+    if (readBackLevel(archive))
+        return true;
 
     archive >> name;
     archive >> value;
@@ -89,9 +91,9 @@ bool CNameValue::Serialize(SFArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool CNameValue::SerializeC(SFArchive& archive) const {
-    if (!preSerializeC(archive))
-        return false;
 
+    // Writing always write the latest version of the data
+    CBaseNode::SerializeC(archive);
     archive << name;
     archive << value;
 
@@ -148,6 +150,8 @@ bool CNameValue::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, 
 
 //---------------------------------------------------------------------------
 bool CNameValue::readBackLevel(SFArchive& archive) {
+
+    CBaseNode::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -181,6 +185,9 @@ SFString CNameValue::getValueByName(const SFString& fieldName) const {
 
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const CNameValue& item) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
     os << item.Format() << "\n";
     return os;
 }

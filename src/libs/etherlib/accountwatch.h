@@ -43,7 +43,7 @@ public:
 public:
     CAccountWatch(void);
     CAccountWatch(const CAccountWatch& ac);
-    ~CAccountWatch(void);
+    virtual ~CAccountWatch(void);
     CAccountWatch& operator=(const CAccountWatch& ac);
 
     DECLARE_NODE(CAccountWatch);
@@ -61,7 +61,7 @@ protected:
     void Clear(void);
     void Init(void);
     void Copy(const CAccountWatch& ac);
-    bool readBackLevel(SFArchive& archive);
+    bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -154,6 +154,5 @@ IMPLEMENT_ARCHIVE_LIST(CAccountWatchList);
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
-#define NEW_CODE
 }  // namespace qblocks
 

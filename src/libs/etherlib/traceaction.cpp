@@ -97,11 +97,13 @@ void CTraceAction::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CTraceAction::Serialize(SFArchive& archive) {
+
     if (archive.isWriting())
         return ((const CTraceAction*)this)->SerializeC(archive);
 
-    if (!preSerialize(archive))
-        return false;
+    // If we're reading a back level, read the whole thing and we're done.
+    if (readBackLevel(archive))
+        return true;
 
     archive >> callType;
     archive >> from;
@@ -118,9 +120,9 @@ bool CTraceAction::Serialize(SFArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool CTraceAction::SerializeC(SFArchive& archive) const {
-    if (!preSerializeC(archive))
-        return false;
 
+    // Writing always write the latest version of the data
+    CBaseNode::SerializeC(archive);
     archive << callType;
     archive << from;
     archive << gas;
@@ -191,6 +193,8 @@ bool CTraceAction::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn
 
 //---------------------------------------------------------------------------
 bool CTraceAction::readBackLevel(SFArchive& archive) {
+
+    CBaseNode::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -257,6 +261,9 @@ SFString CTraceAction::getValueByName(const SFString& fieldName) const {
 
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const CTraceAction& item) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
     os << item.Format() << "\n";
     return os;
 }
