@@ -39,6 +39,9 @@ endfunction(run_test)
 
 # Enter one line for each individual test
 run_test("getTokenBal_README" "-th")
+run_test("getTokenBal_top_three_swarm1" "0xb9e7f8568e08d5659f5d29c4997173d84cdf2607" " 0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98" " 0x6b65353ac052f6c3a0c9688911b078bd025d6ab3" " 0xa25d04fa348f107428708ba19c95d1c79b3744bf" " 4285364" " 3510999" " 2510010" "--byAcct")
+run_test("getTokenBal_top_three_swarm2" "0xb9e7f8568e08d5659f5d29c4997173d84cdf2607" " 0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98" " 0x6b65353ac052f6c3a0c9688911b078bd025d6ab3" " 0xa25d04fa348f107428708ba19c95d1c79b3744bf" " 4285364" " 3510999" " 2510010")
+run_test("getTokenBal_top_three_swarm3" "0xb9e7f8568e08d5659f5d29c4997173d84cdf2607" " 0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98" " 0x6b65353ac052f6c3a0c9688911b078bd025d6ab3" " 0xa25d04fa348f107428708ba19c95d1c79b3744bf" " 4285364" " 3510999" " 2510010" " --ether")
 
 # Installation steps
 install(TARGETS ${TOOL_NAME} RUNTIME DESTINATION bin)
