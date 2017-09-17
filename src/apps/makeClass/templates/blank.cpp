@@ -67,16 +67,23 @@ void [{CLASS_NAME}]::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool [{CLASS_NAME}]::Serialize(SFArchive& archive) {
+
     if (archive.isWriting())
         return ((const [{CLASS_NAME}]*)this)->SerializeC(archive);
 
-[{PARENT_SER}][ARCHIVE_READ]	finishParse();
+    // If we're reading a back level, read the whole thing and we're done.
+    if (readBackLevel(archive))
+        return true;
+
+[ARCHIVE_READ]	finishParse();
     return true;
 }
 
 //---------------------------------------------------------------------------------------------------
 bool [{CLASS_NAME}]::SerializeC(SFArchive& archive) const {
-[{PARENT_SER1}][ARCHIVE_WRITE]
+
+    // Writing always write the latest version of the data
+[{PARENT_SER2}][ARCHIVE_WRITE]
     return true;
 }
 
@@ -129,6 +136,8 @@ bool [{CLASS_NAME}]::handleCustomFormat(CExportContext& ctx, const SFString& fmt
 
 //---------------------------------------------------------------------------
 bool [{CLASS_NAME}]::readBackLevel(SFArchive& archive) {
+
+    [{BASE_CLASS}]::[{PAR_READ_HEAD}](archive);
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -155,6 +164,9 @@ SFString [{CLASS_NAME}]::getValueByName(const SFString& fieldName) const {
 
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const [{CLASS_NAME}]& item) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
     os << item.Format() << "\n";
     return os;
 }
