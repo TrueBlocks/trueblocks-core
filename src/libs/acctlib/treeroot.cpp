@@ -56,8 +56,17 @@ bool CTreeRoot::setValueByName(const SFString& fieldName, const SFString& fieldV
 
     switch (tolower(fieldName[0])) {
         case 'm':
-            return true;
-//            if ( fieldName % "m_root" ) { /* m_root = fieldValue; */ return false; }
+            if ( fieldName % "m_root" ) {
+                Clear();
+                m_root = new CTreeNode;
+                if (m_root) {
+                    char *p = cleanUpJson((char *)fieldValue.c_str());
+                    uint32_t nFields = 0;
+                    m_root->parseJson(p, nFields);
+                    return true;
+                }
+                return false;
+            }
             break;
         default:
             break;
@@ -73,23 +82,35 @@ void CTreeRoot::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CTreeRoot::Serialize(SFArchive& archive) {
+
     if (archive.isWriting())
         return ((const CTreeRoot*)this)->SerializeC(archive);
 
-    if (!preSerialize(archive))
-        return false;
+    // If we're reading a back level, read the whole thing and we're done.
+    if (readBackLevel(archive))
+        return true;
 
-//    archive >> m_root;
+    m_root = NULL;
+    bool has_m_root = false;
+    archive >> has_m_root;
+    if (has_m_root) {
+        m_root = new CTreeNode;
+        if (!m_root)
+            return false;
+        m_root->Serialize(archive);
+    }
     finishParse();
     return true;
 }
 
 //---------------------------------------------------------------------------------------------------
 bool CTreeRoot::SerializeC(SFArchive& archive) const {
-    if (!preSerializeC(archive))
-        return false;
 
-//    archive << m_root;
+    // Writing always write the latest version of the data
+    CBaseNode::SerializeC(archive);
+    archive << (m_root != NULL);
+    if (m_root)
+        m_root->SerializeC(archive);
 
     return true;
 }
@@ -143,6 +164,8 @@ bool CTreeRoot::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, v
 
 //---------------------------------------------------------------------------
 bool CTreeRoot::readBackLevel(SFArchive& archive) {
+
+    CBaseNode::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -160,8 +183,11 @@ SFString CTreeRoot::getValueByName(const SFString& fieldName) const {
     // If the class has any fields, return them
     switch (tolower(fieldName[0])) {
         case 'm':
-        return "";
-//            if ( fieldName % "m_root" ) { expContext().noFrst=true; return m_root.Format(); }
+            if ( fieldName % "m_root" ) {
+                if (m_root)
+                    return m_root->Format();
+                return "";
+            }
             break;
     }
 
@@ -174,6 +200,9 @@ SFString CTreeRoot::getValueByName(const SFString& fieldName) const {
 
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const CTreeRoot& item) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
     os << item.Format() << "\n";
     return os;
 }

@@ -76,11 +76,13 @@ void CTreeNode::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CTreeNode::Serialize(SFArchive& archive) {
+
     if (archive.isWriting())
         return ((const CTreeNode*)this)->SerializeC(archive);
 
-    if (!preSerialize(archive))
-        return false;
+    // If we're reading a back level, read the whole thing and we're done.
+    if (readBackLevel(archive))
+        return true;
 
     archive >> index;
     archive >> m_prefix;
@@ -90,9 +92,9 @@ bool CTreeNode::Serialize(SFArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool CTreeNode::SerializeC(SFArchive& archive) const {
-    if (!preSerializeC(archive))
-        return false;
 
+    // Writing always write the latest version of the data
+    CBaseNode::SerializeC(archive);
     archive << index;
     archive << m_prefix;
 
@@ -149,6 +151,8 @@ bool CTreeNode::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, v
 
 //---------------------------------------------------------------------------
 bool CTreeNode::readBackLevel(SFArchive& archive) {
+
+    CBaseNode::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -182,6 +186,9 @@ SFString CTreeNode::getValueByName(const SFString& fieldName) const {
 
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const CTreeNode& item) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
     os << item.Format() << "\n";
     return os;
 }
