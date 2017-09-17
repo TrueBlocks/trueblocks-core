@@ -36,7 +36,7 @@ public:
 public:
     CLogEntry(void);
     CLogEntry(const CLogEntry& lo);
-    ~CLogEntry(void);
+    virtual ~CLogEntry(void);
     CLogEntry& operator=(const CLogEntry& lo);
 
     DECLARE_NODE(CLogEntry);
@@ -56,7 +56,7 @@ protected:
     void Clear(void);
     void Init(void);
     void Copy(const CLogEntry& lo);
-    bool readBackLevel(SFArchive& archive);
+    bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -157,6 +157,5 @@ extern SFArchive& operator>>(SFArchive& archive, CLogEntry& log);
 extern SFString nextReceiptChunk(const SFString& fieldIn, const void *data);
 extern SFString nextLogentryChunk(const SFString& fieldIn, const void *data);
 // EXISTING_CODE
-#define NEW_CODE
 }  // namespace qblocks
 

@@ -29,7 +29,7 @@ public:
 public:
     QAddOwner(void);
     QAddOwner(const QAddOwner& ad);
-    ~QAddOwner(void);
+    virtual ~QAddOwner(void);
     QAddOwner& operator=(const QAddOwner& ad);
 
     DECLARE_NODE(QAddOwner);
@@ -42,7 +42,7 @@ protected:
     void Clear(void);
     void Init(void);
     void Copy(const QAddOwner& ad);
-    bool readBackLevel(SFArchive& archive);
+    bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -116,5 +116,4 @@ IMPLEMENT_ARCHIVE_LIST(QAddOwnerList);
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
-#define NEW_CODE
 

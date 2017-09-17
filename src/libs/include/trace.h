@@ -43,7 +43,7 @@ public:
 public:
     CTrace(void);
     CTrace(const CTrace& tr);
-    ~CTrace(void);
+    virtual ~CTrace(void);
     CTrace& operator=(const CTrace& tr);
 
     DECLARE_NODE(CTrace);
@@ -57,7 +57,7 @@ protected:
     void Clear(void);
     void Init(void);
     void Copy(const CTrace& tr);
-    bool readBackLevel(SFArchive& archive);
+    bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -149,6 +149,5 @@ IMPLEMENT_ARCHIVE_LIST(CTraceList);
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
-#define NEW_CODE
 }  // namespace qblocks
 

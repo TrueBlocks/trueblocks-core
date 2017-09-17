@@ -19,8 +19,7 @@ namespace qblocks {
     class CBuiltIn {
     public:
         const CRuntimeClass *m_pClass;
-        CBuiltIn(CRuntimeClass *pClass, const SFString& className, uint32_t size, PFNV createFunc,
-                 CRuntimeClass *pBase, uint32_t schema);
+        CBuiltIn(CRuntimeClass *pClass, const SFString& className, uint32_t size, PFNV createFunc, CRuntimeClass *pBase);
     };
 
     //----------------------------------------------------------------------------
@@ -28,7 +27,6 @@ namespace qblocks {
     public:
         char *m_ClassName;
         uint32_t m_ObjectSize;
-        uint32_t m_classSchema;
         PFNV m_CreateFunc;
         CRuntimeClass *m_BaseClass;
         CFieldList *m_FieldList;
@@ -89,13 +87,13 @@ SFString getClassName(void) const; \
 static void registerClass(void)
 
     //------------------------------------------------------------
-#define IMPLEMENT_NODE(CLASS_NAME, BASECLASS_NAME, SCHEMA) \
+#define IMPLEMENT_NODE(CLASS_NAME, BASECLASS_NAME) \
 CRuntimeClass CLASS_NAME::class##CLASS_NAME; \
 CRuntimeClass *CLASS_NAME::getRuntimeClass(void) const { return &CLASS_NAME::class##CLASS_NAME; } \
 SFString CLASS_NAME::getClassName(void) const { return CLASS_NAME::class##CLASS_NAME.getClassNamePtr(); } \
 CBaseNode* CLASS_NAME::CreateObject(void) { return new CLASS_NAME; } \
 static CBuiltIn _bi##CLASS_NAME(&CLASS_NAME::class##CLASS_NAME, #CLASS_NAME, sizeof(CLASS_NAME), \
-CLASS_NAME::CreateObject, GETRUNTIME_CLASS(BASECLASS_NAME), SCHEMA);
+CLASS_NAME::CreateObject, GETRUNTIME_CLASS(BASECLASS_NAME));
 
     //------------------------------------------------------------
 #define ADD_FIELD(CLASS_NAME, FIELD_NAME, FIELD_TYPE, FIELD_ID) \
@@ -149,13 +147,6 @@ return archive; \
 inline SFArchive& operator<<(SFArchive& archive, const ARRAY_CLASS& array) \
 { \
 uint64_t count = array.getCount(); \
-if (!archive.writeDeleted()) { \
-for (uint32_t i = 0 ; i < array.getCount() ; i++) { \
-if (array[i].isDeleted()) {\
-count--; \
-} \
-} \
-} \
 archive << count; \
 for (uint32_t i = 0 ; i < array.getCount() ; i++) \
 array[i].SerializeC(archive); \

@@ -13,7 +13,7 @@
 #include "etherlib.h"
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(QDepositEvent, CLogEntry, dataSchema());
+IMPLEMENT_NODE(QDepositEvent, CLogEntry);
 
 //---------------------------------------------------------------------------
 static SFString nextDepositeventChunk(const SFString& fieldIn, const void *dataPtr);
@@ -77,10 +77,13 @@ void QDepositEvent::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool QDepositEvent::Serialize(SFArchive& archive) {
+
     if (archive.isWriting())
         return ((const QDepositEvent*)this)->SerializeC(archive);
 
-    CLogEntry::Serialize(archive);
+    // If we're reading a back level, read the whole thing and we're done.
+    if (readBackLevel(archive))
+        return true;
 
     archive >> from;
     archive >> value;
@@ -90,6 +93,8 @@ bool QDepositEvent::Serialize(SFArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool QDepositEvent::SerializeC(SFArchive& archive) const {
+
+    // Writing always write the latest version of the data
     CLogEntry::SerializeC(archive);
 
     archive << from;
@@ -150,6 +155,8 @@ bool QDepositEvent::handleCustomFormat(CExportContext& ctx, const SFString& fmtI
 
 //---------------------------------------------------------------------------
 bool QDepositEvent::readBackLevel(SFArchive& archive) {
+
+    CLogEntry::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -183,6 +190,9 @@ SFString QDepositEvent::getValueByName(const SFString& fieldName) const {
 
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const QDepositEvent& item) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
     os << item.Format() << "\n";
     return os;
 }

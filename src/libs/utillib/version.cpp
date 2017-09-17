@@ -15,32 +15,17 @@ namespace qblocks {
 #define BUILD 0
 #define SUBVERS "alpha"
     //--------------------------------------------------------------------------------
-    inline void getVersion(uint32_t& major, uint32_t& minor, uint32_t& build, SFString& tag) {
-        major = MAJOR; minor = MINOR; build = BUILD; tag = SUBVERS;
-    }
-
-    //--------------------------------------------------------------------------------
-    inline uint32_t getVersionNum(uint32_t major, uint32_t minor, uint32_t build) {
-        minor = max(999U, minor);
-        build = max(999U, build);
-        return ((major * 1000000) + (minor * 1000) + (build));
-    }
-
-    //--------------------------------------------------------------------------------
-    uint32_t dataSchema(void) {
+    uint32_t getVersionNum(void) {
+#if 0
+        return ((MAJOR * 1000000) + (MINOR * 1000) + (BUILD));
+#else
         return 0x00000201;
-    }
-
-    //--------------------------------------------------------------------------------
-    uint32_t fileSchema(void) {
-        return 0x00000201;
+#endif
     }
 
     //--------------------------------------------------------------------------------
     SFString getVersionStr(const SFString& sep1, const SFString& sep2) {
-        uint32_t major, minor, build; SFString tag;
-        getVersion(major, minor, build, tag);
-        return asStringU(major) + sep1 + asStringU(minor) + sep1 + asStringU(build) + sep2 + tag;
+        return asStringU(MAJOR) + sep1 + asStringU(MINOR) + sep1 + asStringU(BUILD) + sep2 + SUBVERS;
     }
 
 }  // namespace qblocks

@@ -3,7 +3,6 @@ dataUpgrade CTraceResult
 --------------------------------------------------------------------------------
 className: CTraceResult
 objectSize: 72
-classSchema: 513
 baseClass: CBaseNode
 	fieldName: schema
 	  fieldID: 1001

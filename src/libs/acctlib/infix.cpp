@@ -15,7 +15,7 @@
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CInfix, CTreeNode, dataSchema());
+IMPLEMENT_NODE(CInfix, CTreeNode);
 
 //---------------------------------------------------------------------------
 static SFString nextInfixChunk(const SFString& fieldIn, const void *dataPtr);
@@ -60,8 +60,17 @@ bool CInfix::setValueByName(const SFString& fieldName, const SFString& fieldValu
 
     switch (tolower(fieldName[0])) {
         case 'm':
-            return true;
-//            if ( fieldName % "m_next" ) { /* m_next = fieldValue; */ return false; }
+            if ( fieldName % "m_next" ) {
+                Clear();
+                m_next = new CTreeNode;
+                if (m_next) {
+                    char *p = cleanUpJson((char *)fieldValue.c_str());
+                    uint32_t nFields = 0;
+                    m_next->parseJson(p, nFields);
+                    return true;
+                }
+                return false;
+            }
             break;
         default:
             break;
@@ -77,21 +86,36 @@ void CInfix::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CInfix::Serialize(SFArchive& archive) {
+
     if (archive.isWriting())
         return ((const CInfix*)this)->SerializeC(archive);
 
-    CTreeNode::Serialize(archive);
+    // If we're reading a back level, read the whole thing and we're done.
+    if (readBackLevel(archive))
+        return true;
 
-//    archive >> m_next;
+    m_next = NULL;
+    bool has_m_next = false;
+    archive >> has_m_next;
+    if (has_m_next) {
+        m_next = new CTreeNode;
+        if (!m_next)
+            return false;
+        m_next->Serialize(archive);
+    }
     finishParse();
     return true;
 }
 
 //---------------------------------------------------------------------------------------------------
 bool CInfix::SerializeC(SFArchive& archive) const {
+
+    // Writing always write the latest version of the data
     CTreeNode::SerializeC(archive);
 
-//    archive << m_next;
+    archive << (m_next != NULL);
+    if (m_next)
+        m_next->SerializeC(archive);
 
     return true;
 }
@@ -147,6 +171,8 @@ bool CInfix::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void
 
 //---------------------------------------------------------------------------
 bool CInfix::readBackLevel(SFArchive& archive) {
+
+    CTreeNode::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -164,8 +190,11 @@ SFString CInfix::getValueByName(const SFString& fieldName) const {
     // If the class has any fields, return them
     switch (tolower(fieldName[0])) {
         case 'm':
-        return "";
-//            if ( fieldName % "m_next" ) { expContext().noFrst=true; return m_next.Format(); }
+            if ( fieldName % "m_next" ) {
+                if (m_next)
+                    return m_next->Format();
+                return "";
+            }
             break;
     }
 
@@ -178,6 +207,9 @@ SFString CInfix::getValueByName(const SFString& fieldName) const {
 
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const CInfix& item) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
     os << item.Format() << "\n";
     return os;
 }

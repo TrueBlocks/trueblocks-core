@@ -3,7 +3,6 @@ dataUpgrade CParameter
 --------------------------------------------------------------------------------
 className: CParameter
 objectSize: 128
-classSchema: 513
 baseClass: CBaseNode
 	fieldName: schema
 	  fieldID: 1001

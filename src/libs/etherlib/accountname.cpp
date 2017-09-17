@@ -12,7 +12,7 @@
 #include "accountname.h"
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CAccountName, CBaseNode, dataSchema());
+IMPLEMENT_NODE(CAccountName, CBaseNode);
 
 //---------------------------------------------------------------------------
 static SFString nextAccountnameChunk(const SFString& fieldIn, const void *dataPtr);
@@ -80,11 +80,13 @@ void CAccountName::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CAccountName::Serialize(SFArchive& archive) {
+
     if (archive.isWriting())
         return ((const CAccountName*)this)->SerializeC(archive);
 
-    if (!preSerialize(archive))
-        return false;
+    // If we're reading a back level, read the whole thing and we're done.
+    if (readBackLevel(archive))
+        return true;
 
     archive >> symbol;
     archive >> name;
@@ -97,9 +99,9 @@ bool CAccountName::Serialize(SFArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool CAccountName::SerializeC(SFArchive& archive) const {
-    if (!preSerializeC(archive))
-        return false;
 
+    // Writing always write the latest version of the data
+    CBaseNode::SerializeC(archive);
     archive << symbol;
     archive << name;
     archive << addr;
@@ -162,6 +164,8 @@ bool CAccountName::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn
 
 //---------------------------------------------------------------------------
 bool CAccountName::readBackLevel(SFArchive& archive) {
+
+    CBaseNode::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -202,6 +206,9 @@ SFString CAccountName::getValueByName(const SFString& fieldName) const {
 
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const CAccountName& item) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
     os << item.Format() << "\n";
     return os;
 }
@@ -221,6 +228,32 @@ CAccountName::CAccountName(SFString& strIn) {
         addr = toLower(nextTokenClear(description, '\t'));
         source = nextTokenClear(description, '\t');
     }
+}
+
+//---------------------------------------------------------------------------
+bool CAccountName::Match(const SFString& s1, const SFString& s2, const SFString& s3, bool matchCase, bool all) {
+
+    SFString theAddr   = addr;
+    SFString theName   = name + " " + symbol;
+    SFString theSource = source;
+
+    bool m11 = (matchCase ? theAddr.Contains(s1)   : theAddr.ContainsI(s1));
+    bool m12 = (matchCase ? theName.Contains(s1)   : theName.ContainsI(s1));
+    bool m13 = (matchCase ? theSource.Contains(s1) : theSource.ContainsI(s1));
+    bool m2  = (matchCase ? theName.Contains(s2)   : theName.ContainsI(s2));
+    bool m3  = (matchCase ? theSource.Contains(s3) : theSource.ContainsI(s3));
+
+    if (!s1.empty() && !s2.empty() && !s3.empty())
+        return m11 && m2 && m3;  // all three must match
+
+    if (!s1.empty() && !s2.empty())
+        return m11 && m2;  // addr and name must both match
+
+    if (s1.empty())
+        return false;  // nothing matches
+
+    // We have only s1
+    return (all ? m11 || m12 || m13 : m11 || m12);
 }
 // EXISTING_CODE
 

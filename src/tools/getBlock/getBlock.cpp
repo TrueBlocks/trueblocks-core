@@ -12,7 +12,7 @@
 int main(int argc, const char * argv[]) {
 
     // Tell the system where the blocks are and which version to use
-    etherlib_init("binary   ");
+    etherlib_init("binary");
 
     // Parse command line, allowing for command files
     COptions options;
@@ -108,6 +108,15 @@ SFString doOneBlock(SFUint32 num, const COptions& opt) {
 
         if (!queryRawBlock(result, numStr, true, opt.terse)) {
             result = "Could not query raw block " + numStr + ". Is an Ethereum node running?";
+        } else {
+            if (opt.force) { // turn this on to force a write of the block to the disc
+                CRPCResult generic;
+                generic.parseJson(cleanUpJson((char*)(const char*)result));
+                result = generic.result;
+                gold.parseJson((char*)(const char*)result);
+                SFString fileName = getBinaryFilename1(num);
+                writeToBinary(gold, fileName);
+            }
         }
 
     } else {

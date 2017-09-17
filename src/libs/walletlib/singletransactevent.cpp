@@ -13,7 +13,7 @@
 #include "etherlib.h"
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(QSingleTransactEvent, CLogEntry, dataSchema());
+IMPLEMENT_NODE(QSingleTransactEvent, CLogEntry);
 
 //---------------------------------------------------------------------------
 static SFString nextSingletransacteventChunk(const SFString& fieldIn, const void *dataPtr);
@@ -83,10 +83,13 @@ void QSingleTransactEvent::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool QSingleTransactEvent::Serialize(SFArchive& archive) {
+
     if (archive.isWriting())
         return ((const QSingleTransactEvent*)this)->SerializeC(archive);
 
-    CLogEntry::Serialize(archive);
+    // If we're reading a back level, read the whole thing and we're done.
+    if (readBackLevel(archive))
+        return true;
 
     archive >> owner;
     archive >> value;
@@ -98,6 +101,8 @@ bool QSingleTransactEvent::Serialize(SFArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool QSingleTransactEvent::SerializeC(SFArchive& archive) const {
+
+    // Writing always write the latest version of the data
     CLogEntry::SerializeC(archive);
 
     archive << owner;
@@ -162,6 +167,8 @@ bool QSingleTransactEvent::handleCustomFormat(CExportContext& ctx, const SFStrin
 
 //---------------------------------------------------------------------------
 bool QSingleTransactEvent::readBackLevel(SFArchive& archive) {
+
+    CLogEntry::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -201,6 +208,9 @@ SFString QSingleTransactEvent::getValueByName(const SFString& fieldName) const {
 
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const QSingleTransactEvent& item) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
     os << item.Format() << "\n";
     return os;
 }

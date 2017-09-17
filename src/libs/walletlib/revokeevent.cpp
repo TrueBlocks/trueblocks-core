@@ -13,7 +13,7 @@
 #include "etherlib.h"
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(QRevokeEvent, CLogEntry, dataSchema());
+IMPLEMENT_NODE(QRevokeEvent, CLogEntry);
 
 //---------------------------------------------------------------------------
 static SFString nextRevokeeventChunk(const SFString& fieldIn, const void *dataPtr);
@@ -75,10 +75,13 @@ void QRevokeEvent::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool QRevokeEvent::Serialize(SFArchive& archive) {
+
     if (archive.isWriting())
         return ((const QRevokeEvent*)this)->SerializeC(archive);
 
-    CLogEntry::Serialize(archive);
+    // If we're reading a back level, read the whole thing and we're done.
+    if (readBackLevel(archive))
+        return true;
 
     archive >> owner;
     archive >> operation;
@@ -88,6 +91,8 @@ bool QRevokeEvent::Serialize(SFArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool QRevokeEvent::SerializeC(SFArchive& archive) const {
+
+    // Writing always write the latest version of the data
     CLogEntry::SerializeC(archive);
 
     archive << owner;
@@ -148,6 +153,8 @@ bool QRevokeEvent::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn
 
 //---------------------------------------------------------------------------
 bool QRevokeEvent::readBackLevel(SFArchive& archive) {
+
+    CLogEntry::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -179,6 +186,9 @@ SFString QRevokeEvent::getValueByName(const SFString& fieldName) const {
 
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const QRevokeEvent& item) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
     os << item.Format() << "\n";
     return os;
 }

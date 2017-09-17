@@ -31,7 +31,7 @@ public:
 public:
     QTransferFrom(void);
     QTransferFrom(const QTransferFrom& tr);
-    ~QTransferFrom(void);
+    virtual ~QTransferFrom(void);
     QTransferFrom& operator=(const QTransferFrom& tr);
 
     DECLARE_NODE(QTransferFrom);
@@ -44,7 +44,7 @@ protected:
     void Clear(void);
     void Init(void);
     void Copy(const QTransferFrom& tr);
-    bool readBackLevel(SFArchive& archive);
+    bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -122,5 +122,4 @@ IMPLEMENT_ARCHIVE_LIST(QTransferFromList);
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
-#define NEW_CODE
 

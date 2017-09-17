@@ -29,7 +29,7 @@ public:
 public:
     QSetDailyLimit(void);
     QSetDailyLimit(const QSetDailyLimit& se);
-    ~QSetDailyLimit(void);
+    virtual ~QSetDailyLimit(void);
     QSetDailyLimit& operator=(const QSetDailyLimit& se);
 
     DECLARE_NODE(QSetDailyLimit);
@@ -42,7 +42,7 @@ protected:
     void Clear(void);
     void Init(void);
     void Copy(const QSetDailyLimit& se);
-    bool readBackLevel(SFArchive& archive);
+    bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -116,5 +116,4 @@ IMPLEMENT_ARCHIVE_LIST(QSetDailyLimitList);
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
-#define NEW_CODE
 

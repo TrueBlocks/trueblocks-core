@@ -11,7 +11,6 @@
  * of 'EXISTING_CODE' tags.
  */
 #include "utillib.h"
-#include "options.h"
 
 //--------------------------------------------------------------------------
 class CAccountName;
@@ -34,7 +33,7 @@ public:
 public:
     CAccountName(void);
     CAccountName(const CAccountName& ac);
-    ~CAccountName(void);
+    virtual ~CAccountName(void);
     CAccountName& operator=(const CAccountName& ac);
 
     DECLARE_NODE(CAccountName);
@@ -49,7 +48,7 @@ protected:
     void Clear(void);
     void Init(void);
     void Copy(const CAccountName& ac);
-    bool readBackLevel(SFArchive& archive);
+    bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -130,11 +129,5 @@ IMPLEMENT_ARCHIVE_LIST(CAccountNameList);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-extern bool loadData(void);
-extern uint32_t countOf(const SFString& addr);
-extern SFString showName(const COptions& options);
-extern SFString setName(const SFString& addr, const SFString& name);
-extern CAccountNameArray accounts;
 // EXISTING_CODE
-#define NEW_CODE
 

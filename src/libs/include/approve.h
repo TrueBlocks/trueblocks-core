@@ -30,7 +30,7 @@ public:
 public:
     QApprove(void);
     QApprove(const QApprove& ap);
-    ~QApprove(void);
+    virtual ~QApprove(void);
     QApprove& operator=(const QApprove& ap);
 
     DECLARE_NODE(QApprove);
@@ -43,7 +43,7 @@ protected:
     void Clear(void);
     void Init(void);
     void Copy(const QApprove& ap);
-    bool readBackLevel(SFArchive& archive);
+    bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -119,5 +119,4 @@ IMPLEMENT_ARCHIVE_LIST(QApproveList);
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
-#define NEW_CODE
 
