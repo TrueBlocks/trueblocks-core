@@ -75,10 +75,13 @@ void QTransfer::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool QTransfer::Serialize(SFArchive& archive) {
+
     if (archive.isWriting())
         return ((const QTransfer*)this)->SerializeC(archive);
 
-    CTransaction::Serialize(archive);
+    // If we're reading a back level, read the whole thing and we're done.
+    if (readBackLevel(archive))
+        return true;
 
     archive >> _to;
     archive >> _value;
@@ -88,6 +91,8 @@ bool QTransfer::Serialize(SFArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool QTransfer::SerializeC(SFArchive& archive) const {
+
+    // Writing always write the latest version of the data
     CTransaction::SerializeC(archive);
 
     archive << _to;
@@ -148,6 +153,8 @@ bool QTransfer::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, v
 
 //---------------------------------------------------------------------------
 bool QTransfer::readBackLevel(SFArchive& archive) {
+
+    CTransaction::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -179,6 +186,9 @@ SFString QTransfer::getValueByName(const SFString& fieldName) const {
 
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const QTransfer& item) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+
     os << item.Format() << "\n";
     return os;
 }
