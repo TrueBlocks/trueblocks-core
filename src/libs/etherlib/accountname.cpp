@@ -229,5 +229,31 @@ CAccountName::CAccountName(SFString& strIn) {
         source = nextTokenClear(description, '\t');
     }
 }
+
+//---------------------------------------------------------------------------
+bool CAccountName::Match(const SFString& s1, const SFString& s2, const SFString& s3, bool matchCase, bool all) {
+
+    SFString theAddr   = addr;
+    SFString theName   = name + " " + symbol;
+    SFString theSource = source;
+
+    bool m11 = (matchCase ? theAddr.Contains(s1)   : theAddr.ContainsI(s1));
+    bool m12 = (matchCase ? theName.Contains(s1)   : theName.ContainsI(s1));
+    bool m13 = (matchCase ? theSource.Contains(s1) : theSource.ContainsI(s1));
+    bool m2  = (matchCase ? theName.Contains(s2)   : theName.ContainsI(s2));
+    bool m3  = (matchCase ? theSource.Contains(s3) : theSource.ContainsI(s3));
+
+    if (!s1.empty() && !s2.empty() && !s3.empty())
+        return m11 && m2 && m3;  // all three must match
+
+    if (!s1.empty() && !s2.empty())
+        return m11 && m2;  // addr and name must both match
+
+    if (s1.empty())
+        return false;  // nothing matches
+
+    // We have only s1
+    return (all ? m11 || m12 || m13 : m11 || m12);
+}
 // EXISTING_CODE
 

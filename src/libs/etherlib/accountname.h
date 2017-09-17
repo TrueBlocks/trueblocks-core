@@ -11,7 +11,6 @@
  * of 'EXISTING_CODE' tags.
  */
 #include "utillib.h"
-#include "options.h"
 
 //--------------------------------------------------------------------------
 class CAccountName;
@@ -130,10 +129,5 @@ IMPLEMENT_ARCHIVE_LIST(CAccountNameList);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-extern bool loadData(void);
-extern uint32_t countOf(const SFString& addr);
-extern SFString showName(const COptions& options);
-extern SFString setName(const SFString& addr, const SFString& name);
-extern CAccountNameArray accounts;
 // EXISTING_CODE
 
