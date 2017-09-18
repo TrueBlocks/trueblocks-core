@@ -12,40 +12,44 @@ baseClass: CBaseNode
 	  fieldID: 1002
 	  fieldType: T_BOOL TS_NUMERAL 65556
 	  hidden: 1
-	fieldName: callType
+	fieldName: showing
 	  fieldID: 1003
+	  fieldType: T_BOOL TS_NUMERAL 65556
+	  hidden: 1
+	fieldName: callType
+	  fieldID: 1004
 	  fieldType: T_TEXT TS_STRING 131122
 	  hidden: 0
 	fieldName: from
-	  fieldID: 1004
+	  fieldID: 1005
 	  fieldType: T_ADDRESS TS_STRING 131127
 	  hidden: 0
 	fieldName: gas
-	  fieldID: 1005
+	  fieldID: 1006
 	  fieldType: T_GAS TS_NUMERAL 4259880 TS_BIGNUM 4259880
 	  hidden: 0
 	fieldName: input
-	  fieldID: 1006
+	  fieldID: 1007
 	  fieldType: T_TEXT TS_STRING 131122
 	  hidden: 0
 	fieldName: to
-	  fieldID: 1007
+	  fieldID: 1008
 	  fieldType: T_ADDRESS TS_STRING 131127
 	  hidden: 0
 	fieldName: value
-	  fieldID: 1008
+	  fieldID: 1009
 	  fieldType: T_WEI TS_NUMERAL 4259875 TS_BIGNUM 4259875
 	  hidden: 0
 	fieldName: address
-	  fieldID: 1009
+	  fieldID: 1010
 	  fieldType: T_ADDRESS TS_STRING 131127
 	  hidden: 0
 	fieldName: balance
-	  fieldID: 1010
+	  fieldID: 1011
 	  fieldType: T_WEI TS_NUMERAL 4259875 TS_BIGNUM 4259875
 	  hidden: 0
 	fieldName: refundAddress
-	  fieldID: 1011
+	  fieldID: 1012
 	  fieldType: T_ADDRESS TS_STRING 131127
 	  hidden: 0
 {

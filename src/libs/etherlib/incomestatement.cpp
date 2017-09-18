@@ -128,6 +128,7 @@ void CIncomeStatement::registerClass(void) {
     uint32_t fieldNum = 1000;
     ADD_FIELD(CIncomeStatement, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CIncomeStatement, "deleted", T_BOOL,  ++fieldNum);
+    ADD_FIELD(CIncomeStatement, "showing", T_BOOL,  ++fieldNum);
     ADD_FIELD(CIncomeStatement, "begBal", T_NUMBER, ++fieldNum);
     ADD_FIELD(CIncomeStatement, "inflow", T_NUMBER, ++fieldNum);
     ADD_FIELD(CIncomeStatement, "outflow", T_NUMBER, ++fieldNum);
@@ -138,6 +139,7 @@ void CIncomeStatement::registerClass(void) {
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CIncomeStatement, "schema");
     HIDE_FIELD(CIncomeStatement, "deleted");
+    HIDE_FIELD(CIncomeStatement, "showing");
 
     // EXISTING_CODE
     // EXISTING_CODE

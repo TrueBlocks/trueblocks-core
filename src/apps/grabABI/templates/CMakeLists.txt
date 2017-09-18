@@ -11,7 +11,7 @@ include_directories("${CMAKE_CURRENT_LIST_DIR}/parselib" "${CMAKE_CURRENT_LIST_D
 file(GLOB SOURCE_FILES "*.cpp")
 
 # Output
-set(EXECUTABLE_OUTPUT_PATH "${CMAKE_CURRENT_LIST_DIR}/bin")
+set(EXECUTABLE_OUTPUT_PATH "${CMAKE_SOURCE_DIR}/../monitors/${PROJECT_NAME}/bin")
 
 # Define the executable to be generated
 set(TOOL_NAME "[{PROJECT_NAME}]")

@@ -112,6 +112,7 @@ void CAcctCacheItem::registerClass(void) {
     uint32_t fieldNum = 1000;
     ADD_FIELD(CAcctCacheItem, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CAcctCacheItem, "deleted", T_BOOL,  ++fieldNum);
+    ADD_FIELD(CAcctCacheItem, "showing", T_BOOL,  ++fieldNum);
     ADD_FIELD(CAcctCacheItem, "blockNum", T_NUMBER, ++fieldNum);
     ADD_FIELD(CAcctCacheItem, "transIndex", T_NUMBER, ++fieldNum);
     ADD_FIELD(CAcctCacheItem, "which", T_NUMBER, ++fieldNum);
@@ -119,6 +120,7 @@ void CAcctCacheItem::registerClass(void) {
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CAcctCacheItem, "schema");
     HIDE_FIELD(CAcctCacheItem, "deleted");
+    HIDE_FIELD(CAcctCacheItem, "showing");
 
     // EXISTING_CODE
     // EXISTING_CODE

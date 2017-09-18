@@ -122,12 +122,14 @@ void CLeaf::registerClass(void) {
     uint32_t fieldNum = 1000;
     ADD_FIELD(CLeaf, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CLeaf, "deleted", T_BOOL,  ++fieldNum);
+    ADD_FIELD(CLeaf, "showing", T_BOOL,  ++fieldNum);
     ADD_FIELD(CLeaf, "blocks", T_OBJECT|TS_ARRAY, ++fieldNum);
     ADD_FIELD(CLeaf, "cnt", T_NUMBER, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CLeaf, "schema");
     HIDE_FIELD(CLeaf, "deleted");
+    HIDE_FIELD(CLeaf, "showing");
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -218,7 +220,7 @@ ostream& operator<<(ostream& os, const CLeaf& item) {
 // EXISTING_CODE
     //-----------------------------------------------------------------------------
     CLeaf::CLeaf(const SFString& _key, const SFString& _value) {
-#ifdef OLD_CODE
+#ifdef OLD_CODE_Y
         SFString last = _value;
         SFString first = nextTokenClear(last, '|');
         if (!first.empty()) {
@@ -239,7 +241,7 @@ ostream& operator<<(ostream& os, const CLeaf& item) {
             return "";
 
         SFString ret;
-#ifdef OLD_CODE
+#ifdef OLD_CODE_Y
         for (int i = 0 ; i < blocks.getCount() ; i++) {
             ret += asString(blocks[i]);
             if (i < blocks.getCount()-1)
@@ -278,7 +280,7 @@ ostream& operator<<(ostream& os, const CLeaf& item) {
                 if (verbose) cerr << "\t\tReplacing leaf contents " << _key << " at " << _value
 //                    << " (" << m_first << ")"
                     << "\n";
-#ifdef OLD_CODE
+#ifdef OLD_CODE_Y
                 blocks[blocks.getCount()] = toUnsigned(_value);
 #else
                 cnt++;
@@ -293,7 +295,7 @@ ostream& operator<<(ostream& os, const CLeaf& item) {
             if (!contains(_key) || blocks.getCount() == 0) {
                 curVal = "";
             } else {
-#ifdef OLD_CODE
+#ifdef OLD_CODE_Y
                 for (int i = 0 ; i < blocks.getCount() ; i++) {
                     curVal += asString(blocks[i]);
                     if (i < blocks.getCount()-1)

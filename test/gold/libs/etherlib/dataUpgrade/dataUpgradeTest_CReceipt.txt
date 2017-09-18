@@ -12,20 +12,24 @@ baseClass: CBaseNode
 	  fieldID: 1002
 	  fieldType: T_BOOL TS_NUMERAL 65556
 	  hidden: 1
-	fieldName: contractAddress
+	fieldName: showing
 	  fieldID: 1003
+	  fieldType: T_BOOL TS_NUMERAL 65556
+	  hidden: 1
+	fieldName: contractAddress
+	  fieldID: 1004
 	  fieldType: T_ADDRESS TS_STRING 131127
 	  hidden: 0
 	fieldName: gasUsed
-	  fieldID: 1004
+	  fieldID: 1005
 	  fieldType: T_GAS TS_NUMERAL 4259880 TS_BIGNUM 4259880
 	  hidden: 0
 	fieldName: logs
-	  fieldID: 1005
+	  fieldID: 1006
 	  fieldType: T_OBJECT|TS_ARRAY TS_ARRAY 1572939 TS_OBJECT 1572939
 	  hidden: 0
 	fieldName: logsBloom
-	  fieldID: 1006
+	  fieldID: 1007
 	  fieldType: T_BLOOM TS_STRING 131137
 	  hidden: 0
 {

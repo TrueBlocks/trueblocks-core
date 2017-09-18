@@ -12,40 +12,44 @@ baseClass: CBaseNode
 	  fieldID: 1002
 	  fieldType: T_BOOL TS_NUMERAL 65556
 	  hidden: 1
-	fieldName: name
+	fieldName: showing
 	  fieldID: 1003
-	  fieldType: T_TEXT TS_STRING 131122
-	  hidden: 0
-	fieldName: type
+	  fieldType: T_BOOL TS_NUMERAL 65556
+	  hidden: 1
+	fieldName: name
 	  fieldID: 1004
 	  fieldType: T_TEXT TS_STRING 131122
 	  hidden: 0
-	fieldName: anonymous
+	fieldName: type
 	  fieldID: 1005
+	  fieldType: T_TEXT TS_STRING 131122
+	  hidden: 0
+	fieldName: anonymous
+	  fieldID: 1006
 	  fieldType: T_BOOL TS_NUMERAL 65556
 	  hidden: 1
 	fieldName: constant
-	  fieldID: 1006
-	  fieldType: T_BOOL TS_NUMERAL 65556
-	  hidden: 0
-	fieldName: payable
 	  fieldID: 1007
 	  fieldType: T_BOOL TS_NUMERAL 65556
 	  hidden: 0
-	fieldName: signature
+	fieldName: payable
 	  fieldID: 1008
-	  fieldType: T_TEXT TS_STRING 131122
+	  fieldType: T_BOOL TS_NUMERAL 65556
 	  hidden: 0
-	fieldName: encoding
+	fieldName: signature
 	  fieldID: 1009
 	  fieldType: T_TEXT TS_STRING 131122
 	  hidden: 0
-	fieldName: inputs
+	fieldName: encoding
 	  fieldID: 1010
+	  fieldType: T_TEXT TS_STRING 131122
+	  hidden: 0
+	fieldName: inputs
+	  fieldID: 1011
 	  fieldType: T_OBJECT|TS_ARRAY TS_ARRAY 1572939 TS_OBJECT 1572939
 	  hidden: 0
 	fieldName: outputs
-	  fieldID: 1011
+	  fieldID: 1012
 	  fieldType: T_OBJECT|TS_ARRAY TS_ARRAY 1572939 TS_OBJECT 1572939
 	  hidden: 0
 {

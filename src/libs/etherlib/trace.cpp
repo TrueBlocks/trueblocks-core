@@ -159,6 +159,7 @@ void CTrace::registerClass(void) {
     uint32_t fieldNum = 1000;
     ADD_FIELD(CTrace, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CTrace, "deleted", T_BOOL,  ++fieldNum);
+    ADD_FIELD(CTrace, "showing", T_BOOL,  ++fieldNum);
     ADD_FIELD(CTrace, "blockHash", T_HASH, ++fieldNum);
     ADD_FIELD(CTrace, "blockNumber", T_NUMBER, ++fieldNum);
     ADD_FIELD(CTrace, "subtraces", T_NUMBER, ++fieldNum);
@@ -173,6 +174,7 @@ void CTrace::registerClass(void) {
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CTrace, "schema");
     HIDE_FIELD(CTrace, "deleted");
+    HIDE_FIELD(CTrace, "showing");
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -248,8 +250,8 @@ SFString CTrace::getValueByName(const SFString& fieldName) const {
                 if (!cnt) return "";
                 SFString retS;
                 for (uint32_t i = 0 ; i < cnt ; i++) {
-                    retS += indent() + ("\"" + traceAddress[i] + "\"");
-                    retS += ((i < cnt - 1) ? ",\n" : "\n");
+                    retS += ("\"" + traceAddress[i] + "\"");
+                    retS += ((i < cnt - 1) ? ",\n" + indent() : "\n");
                 }
                 return retS;
             }
