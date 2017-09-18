@@ -114,12 +114,14 @@ void QDepositEvent::registerClass(void) {
     uint32_t fieldNum = 1000;
     ADD_FIELD(QDepositEvent, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(QDepositEvent, "deleted", T_BOOL,  ++fieldNum);
+    ADD_FIELD(QDepositEvent, "showing", T_BOOL,  ++fieldNum);
     ADD_FIELD(QDepositEvent, "from", T_ADDRESS, ++fieldNum);
     ADD_FIELD(QDepositEvent, "value", T_NUMBER, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(QDepositEvent, "schema");
     HIDE_FIELD(QDepositEvent, "deleted");
+    HIDE_FIELD(QDepositEvent, "showing");
 
     // EXISTING_CODE
     // EXISTING_CODE

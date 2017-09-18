@@ -46,7 +46,7 @@ namespace qblocks {
         static CRuntimeClass classCBaseNode;
         static CBaseNode *CreateObject(void);
         virtual CRuntimeClass *getRuntimeClass(void) const;
-        virtual SFString getValueByName(const SFString& fieldName) const { return ""; }
+        virtual SFString getValueByName(const SFString& fieldName) const;
         virtual bool setValueByName(const SFString& fieldName, const SFString& fieldValue) { return false; }
         virtual bool Serialize(SFArchive& archive);
         virtual bool SerializeC(SFArchive& archive) const;

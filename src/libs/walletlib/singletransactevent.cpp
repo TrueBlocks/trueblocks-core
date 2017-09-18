@@ -124,6 +124,7 @@ void QSingleTransactEvent::registerClass(void) {
     uint32_t fieldNum = 1000;
     ADD_FIELD(QSingleTransactEvent, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(QSingleTransactEvent, "deleted", T_BOOL,  ++fieldNum);
+    ADD_FIELD(QSingleTransactEvent, "showing", T_BOOL,  ++fieldNum);
     ADD_FIELD(QSingleTransactEvent, "owner", T_ADDRESS, ++fieldNum);
     ADD_FIELD(QSingleTransactEvent, "value", T_NUMBER, ++fieldNum);
     ADD_FIELD(QSingleTransactEvent, "to", T_ADDRESS, ++fieldNum);
@@ -132,6 +133,7 @@ void QSingleTransactEvent::registerClass(void) {
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(QSingleTransactEvent, "schema");
     HIDE_FIELD(QSingleTransactEvent, "deleted");
+    HIDE_FIELD(QSingleTransactEvent, "showing");
 
     // EXISTING_CODE
     // EXISTING_CODE

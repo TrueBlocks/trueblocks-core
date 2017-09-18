@@ -12,6 +12,8 @@
  */
 #include "utillib.h"
 
+namespace qblocks {
+
 //--------------------------------------------------------------------------
 class CAccountName;
 typedef SFArrayBase<CAccountName>         CAccountNameArray;
@@ -130,4 +132,5 @@ IMPLEMENT_ARCHIVE_LIST(CAccountNameList);
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
+}  // namespace qblocks
 
