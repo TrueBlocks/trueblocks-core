@@ -10,12 +10,15 @@
 //---------------------------------------------------------------------------------------------------
 CParams params[] = {
     CParams("~file(s)", "One or more files to parse"),
-    CParams("",     "Test the json parsing facility in quickBlocks.\n"),
+    CParams("",         "Test the json parsing facility in quickBlocks.\n"),
 };
 uint32_t nParams = sizeof(params) / sizeof(CParams);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(SFString& command) {
+
+    if (!standardOptions(command))
+        return false;
 
     Init();
     while (!command.empty()) {

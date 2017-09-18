@@ -14,12 +14,15 @@ CParams params[] = {
     CParams( "~end",     "block to end on"),
     CParams( "~@skip",   "optional skip step (default 100)"),
     CParams( "-display", "display the bloom filters visually"),
-    CParams( "", "Scans blocks looking for saturated bloomFilters.\n"),
+    CParams( "",         "Scans blocks looking for saturated bloomFilters.\n"),
 };
 uint32_t nParams = sizeof(params) / sizeof(CParams);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(SFString& command) {
+
+    if (!standardOptions(command))
+        return false;
 
     Init();
     SFString source;
