@@ -1,9 +1,8 @@
 ## [{NAME}]
 
-Retrieve the balance of an address (or more than one) at the given block(s). You may specify multiple addresses or multiple blocks on the line, but not 
-both. `block`, if not specified, defaults to `latest`.
+Retrieve the balance of an Ethereum address (or addresses) at the given block(s). You may specify multiple addresses and/or multiple blocks on the line with at least one address. `block_list`, if not specified, defaults to `latest`.
 
-`getBalance` retrieves the balance from the local Ethereum node (not QuickBlocks). Use the `--accounting` option of an account monitor to retrieve the 
-balance from QuickBlocks.
+[{USAGE_TABLE}]`Notes:`
 
-[{USAGE_TABLE}][{FOOTER}]
+- If an address has no ether at a block, the tool reports a zero balance.
+- This tool retrieves information from a locally running Ethereum node or the $(FALLBACK) node, if enabled.[{FOOTER}]
