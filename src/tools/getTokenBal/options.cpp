@@ -11,7 +11,9 @@
 CParams params[] = {
     CParams("~address_list", "two or more address (0x...), the first is an ERC20 token, balances for the remaining accounts are reported"),
     CParams("~block_list",   "a list of one or more blocks at which to report balances, if empty defaults to 'latest'"),
-    CParams("-byAcct",       "if enabled, all but the last address is considered an ERC20 token, balances for each for the last address are reported."),
+    CParams("-byAcct",       "if enabled, all but the last address is considered an ERC20 token, balances for each for the last address are reported"),
+    CParams("-list:<addrs>", "an alternative way to specify an address_list. One address per line"),
+    CParams("-noZero",       "suppress the display of zero balance accounts"),
     CParams("-data",         "render results as tab delimited data (for example, to build a cap table)"),
     CParams("",              "Retrieve token balances from a series of ERC20 token contracts for an account or visa versa.\n"),
 };
@@ -27,11 +29,31 @@ bool COptions::parseArguments(SFString& command) {
     SFString address_list;
     while (!command.empty()) {
         SFString arg = nextTokenClear(command, ' ');
+        SFString orig = arg;
         if (arg == "-d" || arg == "--data") {
             asData = true;
 
         } else if (arg == "-b" || arg == "--byAcct") {
             byAccount = true;
+
+        } else if (arg == "-n" || arg == "--noZero") {
+            noZero = true;
+
+        } else if (arg.startsWith("-l:") || arg.startsWith("--list:")) {
+            CFilename fileName(arg.Substitute("-l:","").Substitute("--list:",""));
+            if (!fileName.isValid())
+                return usage("Not a valid filename: " + orig + ". Quitting...");
+            if (!fileExists(fileName.getFullPath()))
+                return usage("File " + fileName.relativePath() + " not found. Quitting...");
+            SFString contents = asciiFileToString(fileName.getFullPath());
+            if (contents.empty())
+                return usage("No addresses were found in file " + fileName.relativePath() + ". Quitting...");
+            while (!contents.empty()) {
+                SFString line = nextTokenClear(contents, '\n');
+                if (!isAddress(line))
+                    return usage(line + " does not appear to be a valid Ethereum address. Quitting...");
+                address_list += line + "|";
+            }
 
         } else if (arg.startsWith("0x")) {
             if (!isAddress(arg))
@@ -87,6 +109,7 @@ void COptions::Init(void) {
     blocks = "";
     asData = false;
     byAccount = false;
+    noZero = false;
 }
 
 //---------------------------------------------------------------------------------------------------
