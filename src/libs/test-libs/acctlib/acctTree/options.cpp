@@ -21,6 +21,9 @@ uint32_t nParams = sizeof(params) / sizeof(CParams);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(SFString& command) {
 
+    if (!standardOptions(command))
+        return false;
+
     bool hasN = false;
     Init();
     while (!command.empty()) {

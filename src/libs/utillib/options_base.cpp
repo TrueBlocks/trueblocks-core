@@ -106,34 +106,6 @@ namespace qblocks {
                     if (args) delete [] args;
                     return usage("--file: '" + cmdFileName + "' not found. Quitting.");
                 }
-
-            } else if (arg == "--version") {
-                cerr << programName << " (quickBlocks) " << getVersionStr() << "\n";
-                if (args) delete [] args;
-                return false;
-
-            } else if (arg == "-h" || arg == "--help") {
-                if (args) delete [] args;
-                return usage();
-
-            } else if (arg == "--nocolors" || arg == "--nocolor") {
-                colorsOff();
-
-            } else if (arg == "--ether") {
-                expContext().asEther = true;
-                expContext().asDollars = false;
-                expContext().asWei = false;
-
-            } else if (arg == "--wei") {
-                expContext().asEther = false;
-                expContext().asDollars = false;
-                expContext().asWei = true;
-
-            } else if (arg == "--dollars") {
-                expContext().asEther = false;
-                expContext().asDollars = true;
-                expContext().asWei = false;
-
             } else if (arg.startsWith("-v") || arg.startsWith("--verbose")) {
                 verbose = true;
                 arg = arg.Substitute("-v", "").Substitute("--verbose", "").Substitute(":", "");
@@ -199,6 +171,44 @@ namespace qblocks {
 
         if (args) delete [] args;
         return 1;
+    }
+
+    //--------------------------------------------------------------------------------
+    bool COptionsBase::standardOptions(SFString& cmdLine) {
+        cmdLine += " ";
+        if (cmdLine.Contains("--version ")) {
+            cerr << programName << " (quickBlocks) " << getVersionStr() << "\n";
+            exit(0);
+
+        } else if (cmdLine.Contains("-h ") || cmdLine.Contains("--help ")) {
+            usage();
+            exit(0);
+
+        } else if (cmdLine.Contains("--nocolors ") || cmdLine.Contains("--nocolor ")) {
+            cmdLine.ReplaceAll("--nocolors ","");
+            cmdLine.ReplaceAll("--nocolor ","");
+            colorsOff();
+
+        } else if (cmdLine.Contains("--ether " )) {
+            cmdLine.ReplaceAll("--ether ","");
+            expContext().asEther = true;
+            expContext().asDollars = false;
+            expContext().asWei = false;
+
+        } else if (cmdLine.Contains("--wei ")) {
+            cmdLine.ReplaceAll("--wei ","");
+            expContext().asEther = false;
+            expContext().asDollars = false;
+            expContext().asWei = true;
+
+        } else if (cmdLine.Contains("--dollars ")) {
+            cmdLine.ReplaceAll("--dollars ","");
+            expContext().asEther = false;
+            expContext().asDollars = true;
+            expContext().asWei = false;
+        }
+        cmdLine = Strip(cmdLine, ' ');
+        return true;
     }
 
     //--------------------------------------------------------------------------------
