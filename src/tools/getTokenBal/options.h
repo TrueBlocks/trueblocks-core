@@ -13,6 +13,7 @@ public:
     SFString blocks;
     bool asData;
     bool byAccount;
+    bool noZero;
 
     COptions(void);
     ~COptions(void);
