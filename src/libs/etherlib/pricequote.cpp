@@ -64,26 +64,8 @@ bool CPriceQuote::setValueByName(const SFString& fieldName, const SFString& fiel
         case 'c':
             if ( fieldName % "close" ) { close = toDouble(fieldValue); return true; }
             break;
-        case 'h':
-            if ( fieldName % "high" ) { high = toDouble(fieldValue); return true; }
-            break;
-        case 'l':
-            if ( fieldName % "low" ) { low = toDouble(fieldValue); return true; }
-            break;
-        case 'o':
-            if ( fieldName % "open" ) { open = toDouble(fieldValue); return true; }
-            break;
-        case 'q':
-            if ( fieldName % "quoteVolume" ) { quoteVolume = toDouble(fieldValue); return true; }
-            break;
         case 't':
             if ( fieldName % "timestamp" ) { timestamp = toUnsigned(fieldValue); return true; }
-            break;
-        case 'v':
-            if ( fieldName % "volume" ) { volume = toDouble(fieldValue); return true; }
-            break;
-        case 'w':
-            if ( fieldName % "weightedAvg" ) { weightedAvg = toDouble(fieldValue); return true; }
             break;
         default:
             break;
@@ -109,13 +91,7 @@ bool CPriceQuote::Serialize(SFArchive& archive) {
         return true;
 
     archive >> timestamp;
-    archive >> open;
-    archive >> high;
-    archive >> low;
     archive >> close;
-    archive >> quoteVolume;
-    archive >> volume;
-    archive >> weightedAvg;
     finishParse();
     return true;
 }
@@ -124,15 +100,10 @@ bool CPriceQuote::Serialize(SFArchive& archive) {
 bool CPriceQuote::SerializeC(SFArchive& archive) const {
 
     // Writing always write the latest version of the data
+	((CPriceQuote*)this)->m_schema = 2000;
     CBaseNode::SerializeC(archive);
     archive << timestamp;
-    archive << open;
-    archive << high;
-    archive << low;
     archive << close;
-    archive << quoteVolume;
-    archive << volume;
-    archive << weightedAvg;
 
     return true;
 }
@@ -148,13 +119,7 @@ void CPriceQuote::registerClass(void) {
     ADD_FIELD(CPriceQuote, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CPriceQuote, "showing", T_BOOL,  ++fieldNum);
     ADD_FIELD(CPriceQuote, "timestamp", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CPriceQuote, "open", T_DOUBLE, ++fieldNum);
-    ADD_FIELD(CPriceQuote, "high", T_DOUBLE, ++fieldNum);
-    ADD_FIELD(CPriceQuote, "low", T_DOUBLE, ++fieldNum);
     ADD_FIELD(CPriceQuote, "close", T_DOUBLE, ++fieldNum);
-    ADD_FIELD(CPriceQuote, "quoteVolume", T_DOUBLE, ++fieldNum);
-    ADD_FIELD(CPriceQuote, "volume", T_DOUBLE, ++fieldNum);
-    ADD_FIELD(CPriceQuote, "weightedAvg", T_DOUBLE, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CPriceQuote, "schema");
@@ -203,6 +168,22 @@ bool CPriceQuote::readBackLevel(SFArchive& archive) {
     CBaseNode::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
+    if (m_schema < 2000)
+    {
+        // timestamp, open, high, low, close, quoteVolume, volume, weightedAvg
+        double junk;
+        archive >> timestamp;
+        archive >> junk;
+        archive >> junk;
+        archive >> junk;
+        archive >> close;
+        archive >> junk;
+        archive >> junk;
+        archive >> junk;
+        finishParse();
+        done = true;
+
+    }
     // EXISTING_CODE
     return done;
 }
@@ -220,26 +201,8 @@ SFString CPriceQuote::getValueByName(const SFString& fieldName) const {
         case 'c':
             if ( fieldName % "close" ) return fmtFloat(close);
             break;
-        case 'h':
-            if ( fieldName % "high" ) return fmtFloat(high);
-            break;
-        case 'l':
-            if ( fieldName % "low" ) return fmtFloat(low);
-            break;
-        case 'o':
-            if ( fieldName % "open" ) return fmtFloat(open);
-            break;
-        case 'q':
-            if ( fieldName % "quoteVolume" ) return fmtFloat(quoteVolume);
-            break;
         case 't':
             if ( fieldName % "timestamp" ) return asStringU(timestamp);
-            break;
-        case 'v':
-            if ( fieldName % "volume" ) return fmtFloat(volume);
-            break;
-        case 'w':
-            if ( fieldName % "weightedAvg" ) return fmtFloat(weightedAvg);
             break;
     }
 
