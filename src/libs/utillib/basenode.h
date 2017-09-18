@@ -59,9 +59,6 @@ namespace qblocks {
         }
 
     protected:
-        bool preSerialize(SFArchive& archive);
-        bool preSerializeC(SFArchive& archive) const;
-
         void Init(void);
         void Copy(const CBaseNode& bn);
     };
