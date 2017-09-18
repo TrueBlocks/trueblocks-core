@@ -27,6 +27,7 @@ namespace qblocks {
         bool prepareArguments(int argc, const char *argv[]);
         virtual bool parseArguments(SFString& command) = 0;
         bool builtInCmd(const SFString& arg);
+        bool standardOptions(SFString& cmdLine);
         virtual SFString postProcess(const SFString& which, const SFString& str) const { return str; }
 
     protected:

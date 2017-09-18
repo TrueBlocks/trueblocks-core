@@ -12,8 +12,8 @@ CParams params[] = {
     CParams("~date / block", "one of the special values listed below or YYYY-MM-DD-[HH[:MM[:SS]]] or a blockNumber"),
     CParams("-alone",        "show the found block or found date unadorned (useful for scripting)"),
     CParams("-list",         "list the names and block numbers of special blocks"),
-    CParams("", "Finds the nearest block prior to a JSON-formatted date, or the nearest date prior to\n"
-                " the given block. Alternatively, search for one of the special blocks listed below.\n"),
+    CParams("",              "Finds the nearest block prior to a JSON-formatted date, or the nearest date prior to\n"
+                             " the given block. Alternatively, search for one of the special blocks listed below.\n"),
 };
 uint32_t nParams = sizeof(params) / sizeof(CParams);
 
@@ -21,6 +21,9 @@ extern int sortByBlockNum(const void *v1, const void *v2);
 extern SFTime parseDate(const SFString& strIn);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(SFString& command) {
+
+    if (!standardOptions(command))
+        return false;
 
     bool isList = false;
     bool foundOne = false;
