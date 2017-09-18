@@ -63,13 +63,23 @@ void reportByToken(const COptions& options) {
                 if (expContext().asEther)
                     sBal = wei2Ether(to_string(bal).c_str());
 
-                if (options.asData) {
-                    cout << block << "\t" << token << "\t" << holder << "\t" << sBal << "\n";
+                if (bal > 0 || !options.noZero) {
+                    if (options.asData) {
+                        cout << block << "\t" << token << "\t" << holder << "\t" << sBal << "\n";
+                    } else {
+                        cout << "    Balance for account " << cGreen << holder << cOff;
+                        cout << " at block " << cTeal << block << cOff;
+                        cout << " is " << cYellow << sBal << cOff << "\n";
+                    }
                 } else {
-                    cout << "    Balance for account " << cGreen << holder << cOff;
-                    cout << " at block " << cTeal << block << cOff;
-                    cout << " is " << cYellow << sBal << cOff << "\n";
+                    if (options.asData) {
+                        cerr << block << "\t" << token << "\t" << holder << "         \r";
+                    } else {
+                        cerr << "    Balance for account " << cGreen << holder << cOff;
+                        cerr << " at block " << cTeal << block << cOff << "           \r";
+                    }
                 }
+                cerr.flush();
                 cout.flush();
             }
         }
@@ -101,13 +111,23 @@ void reportByAccount(const COptions& options) {
                 if (expContext().asEther)
                     sBal = wei2Ether(to_string(bal).c_str());
 
-                if (options.asData) {
-                    cout << block << "\t" << token << "\t" << holder << "\t" << sBal << "\n";
+                if (bal > 0 || !options.noZero) {
+                    if (options.asData) {
+                        cout << block << "\t" << token << "\t" << holder << "\t" << sBal << "\n";
+                    } else {
+                        cout << "    Balance of token contract " << cGreen << token << cOff;
+                        cout << " at block " << cTeal << block << cOff;
+                        cout << " is " << cYellow << sBal << cOff << "\n";
+                    }
                 } else {
-                    cout << "    Balance of token contract " << cGreen << token << cOff;
-                    cout << " at block " << cTeal << block << cOff;
-                    cout << " is " << cYellow << sBal << cOff << "\n";
+                    if (options.asData) {
+                        cout << block << "\t" << token << "\t" << holder << "\n";
+                    } else {
+                        cout << "    Balance of token contract " << cGreen << token << cOff;
+                        cout << " at block " << cTeal << block << cOff << "\n";
+                    }
                 }
+                cerr.flush();
                 cout.flush();
             }
         }
