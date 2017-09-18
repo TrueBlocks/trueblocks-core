@@ -12,16 +12,20 @@ baseClass: CBaseNode
 	  fieldID: 1002
 	  fieldType: T_BOOL TS_NUMERAL 65556
 	  hidden: 1
-	fieldName: recordID
+	fieldName: showing
 	  fieldID: 1003
+	  fieldType: T_BOOL TS_NUMERAL 65556
+	  hidden: 1
+	fieldName: recordID
+	  fieldID: 1004
 	  fieldType: T_TEXT TS_STRING 131122
 	  hidden: 0
 	fieldName: txDate
-	  fieldID: 1004
+	  fieldID: 1005
 	  fieldType: T_DATE TS_DATE 262149
 	  hidden: 0
 	fieldName: balance
-	  fieldID: 1005
+	  fieldID: 1006
 	  fieldType: T_NUMBER TS_NUMERAL 65561
 	  hidden: 0
 {

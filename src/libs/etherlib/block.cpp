@@ -168,6 +168,7 @@ void CBlock::registerClass(void) {
     uint32_t fieldNum = 1000;
     ADD_FIELD(CBlock, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CBlock, "deleted", T_BOOL,  ++fieldNum);
+    ADD_FIELD(CBlock, "showing", T_BOOL,  ++fieldNum);
     ADD_FIELD(CBlock, "gasLimit", T_GAS, ++fieldNum);
     ADD_FIELD(CBlock, "gasUsed", T_GAS, ++fieldNum);
     ADD_FIELD(CBlock, "hash", T_HASH, ++fieldNum);
@@ -180,6 +181,7 @@ void CBlock::registerClass(void) {
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CBlock, "schema");
     HIDE_FIELD(CBlock, "deleted");
+    HIDE_FIELD(CBlock, "showing");
 
     // EXISTING_CODE
     // EXISTING_CODE

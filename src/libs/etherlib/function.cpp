@@ -187,6 +187,7 @@ void CFunction::registerClass(void) {
     uint32_t fieldNum = 1000;
     ADD_FIELD(CFunction, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CFunction, "deleted", T_BOOL,  ++fieldNum);
+    ADD_FIELD(CFunction, "showing", T_BOOL,  ++fieldNum);
     ADD_FIELD(CFunction, "name", T_TEXT, ++fieldNum);
     ADD_FIELD(CFunction, "type", T_TEXT, ++fieldNum);
     ADD_FIELD(CFunction, "anonymous", T_BOOL, ++fieldNum);
@@ -200,6 +201,7 @@ void CFunction::registerClass(void) {
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CFunction, "schema");
     HIDE_FIELD(CFunction, "deleted");
+    HIDE_FIELD(CFunction, "showing");
 
     // EXISTING_CODE
     HIDE_FIELD(CFunction, "indexed");

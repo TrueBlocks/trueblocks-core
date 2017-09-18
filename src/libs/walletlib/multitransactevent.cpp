@@ -127,6 +127,7 @@ void QMultiTransactEvent::registerClass(void) {
     uint32_t fieldNum = 1000;
     ADD_FIELD(QMultiTransactEvent, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(QMultiTransactEvent, "deleted", T_BOOL,  ++fieldNum);
+    ADD_FIELD(QMultiTransactEvent, "showing", T_BOOL,  ++fieldNum);
     ADD_FIELD(QMultiTransactEvent, "owner", T_ADDRESS, ++fieldNum);
     ADD_FIELD(QMultiTransactEvent, "operation", T_TEXT, ++fieldNum);
     ADD_FIELD(QMultiTransactEvent, "value", T_NUMBER, ++fieldNum);
@@ -136,6 +137,7 @@ void QMultiTransactEvent::registerClass(void) {
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(QMultiTransactEvent, "schema");
     HIDE_FIELD(QMultiTransactEvent, "deleted");
+    HIDE_FIELD(QMultiTransactEvent, "showing");
 
     // EXISTING_CODE
     // EXISTING_CODE

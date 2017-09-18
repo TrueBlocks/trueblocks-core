@@ -158,6 +158,7 @@ void CAccountWatch::registerClass(void) {
     uint32_t fieldNum = 1000;
     ADD_FIELD(CAccountWatch, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CAccountWatch, "deleted", T_BOOL,  ++fieldNum);
+    ADD_FIELD(CAccountWatch, "showing", T_BOOL,  ++fieldNum);
     ADD_FIELD(CAccountWatch, "index", T_NUMBER, ++fieldNum);
     ADD_FIELD(CAccountWatch, "address", T_ADDRESS, ++fieldNum);
     ADD_FIELD(CAccountWatch, "name", T_TEXT, ++fieldNum);
@@ -172,6 +173,7 @@ void CAccountWatch::registerClass(void) {
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CAccountWatch, "schema");
     HIDE_FIELD(CAccountWatch, "deleted");
+    HIDE_FIELD(CAccountWatch, "showing");
 
     // EXISTING_CODE
     // EXISTING_CODE
