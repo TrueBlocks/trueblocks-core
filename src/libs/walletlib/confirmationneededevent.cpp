@@ -129,6 +129,7 @@ void QConfirmationNeededEvent::registerClass(void) {
     uint32_t fieldNum = 1000;
     ADD_FIELD(QConfirmationNeededEvent, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(QConfirmationNeededEvent, "deleted", T_BOOL,  ++fieldNum);
+    ADD_FIELD(QConfirmationNeededEvent, "showing", T_BOOL,  ++fieldNum);
     ADD_FIELD(QConfirmationNeededEvent, "operation", T_TEXT, ++fieldNum);
     ADD_FIELD(QConfirmationNeededEvent, "initiator", T_ADDRESS, ++fieldNum);
     ADD_FIELD(QConfirmationNeededEvent, "value", T_NUMBER, ++fieldNum);
@@ -138,6 +139,7 @@ void QConfirmationNeededEvent::registerClass(void) {
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(QConfirmationNeededEvent, "schema");
     HIDE_FIELD(QConfirmationNeededEvent, "deleted");
+    HIDE_FIELD(QConfirmationNeededEvent, "showing");
 
     // EXISTING_CODE
     // EXISTING_CODE

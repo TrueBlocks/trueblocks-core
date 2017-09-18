@@ -122,12 +122,14 @@ void CLeaf::registerClass(void) {
     uint32_t fieldNum = 1000;
     ADD_FIELD(CLeaf, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CLeaf, "deleted", T_BOOL,  ++fieldNum);
+    ADD_FIELD(CLeaf, "showing", T_BOOL,  ++fieldNum);
     ADD_FIELD(CLeaf, "blocks", T_OBJECT|TS_ARRAY, ++fieldNum);
     ADD_FIELD(CLeaf, "cnt", T_NUMBER, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CLeaf, "schema");
     HIDE_FIELD(CLeaf, "deleted");
+    HIDE_FIELD(CLeaf, "showing");
 
     // EXISTING_CODE
     // EXISTING_CODE

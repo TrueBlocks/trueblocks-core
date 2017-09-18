@@ -110,12 +110,14 @@ void CTreeNode::registerClass(void) {
     uint32_t fieldNum = 1000;
     ADD_FIELD(CTreeNode, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CTreeNode, "deleted", T_BOOL,  ++fieldNum);
+    ADD_FIELD(CTreeNode, "showing", T_BOOL,  ++fieldNum);
     ADD_FIELD(CTreeNode, "index", T_NUMBER, ++fieldNum);
     ADD_FIELD(CTreeNode, "m_prefix", T_TEXT, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CTreeNode, "schema");
     HIDE_FIELD(CTreeNode, "deleted");
+    HIDE_FIELD(CTreeNode, "showing");
 
     // EXISTING_CODE
     // EXISTING_CODE

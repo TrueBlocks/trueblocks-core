@@ -152,6 +152,7 @@ void CAccount::registerClass(void) {
     uint32_t fieldNum = 1000;
     ADD_FIELD(CAccount, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CAccount, "deleted", T_BOOL,  ++fieldNum);
+    ADD_FIELD(CAccount, "showing", T_BOOL,  ++fieldNum);
     ADD_FIELD(CAccount, "addr", T_ADDRESS, ++fieldNum);
     ADD_FIELD(CAccount, "header", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccount, "displayString", T_TEXT, ++fieldNum);
@@ -164,6 +165,7 @@ void CAccount::registerClass(void) {
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CAccount, "schema");
     HIDE_FIELD(CAccount, "deleted");
+    HIDE_FIELD(CAccount, "showing");
 
     // EXISTING_CODE
     // EXISTING_CODE

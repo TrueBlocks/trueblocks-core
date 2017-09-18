@@ -145,6 +145,7 @@ void CTraceAction::registerClass(void) {
     uint32_t fieldNum = 1000;
     ADD_FIELD(CTraceAction, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CTraceAction, "deleted", T_BOOL,  ++fieldNum);
+    ADD_FIELD(CTraceAction, "showing", T_BOOL,  ++fieldNum);
     ADD_FIELD(CTraceAction, "callType", T_TEXT, ++fieldNum);
     ADD_FIELD(CTraceAction, "from", T_ADDRESS, ++fieldNum);
     ADD_FIELD(CTraceAction, "gas", T_GAS, ++fieldNum);
@@ -158,6 +159,7 @@ void CTraceAction::registerClass(void) {
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CTraceAction, "schema");
     HIDE_FIELD(CTraceAction, "deleted");
+    HIDE_FIELD(CTraceAction, "showing");
 
     // EXISTING_CODE
     // EXISTING_CODE

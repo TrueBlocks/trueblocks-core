@@ -115,6 +115,7 @@ void QTransferEvent::registerClass(void) {
     uint32_t fieldNum = 1000;
     ADD_FIELD(QTransferEvent, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(QTransferEvent, "deleted", T_BOOL,  ++fieldNum);
+    ADD_FIELD(QTransferEvent, "showing", T_BOOL,  ++fieldNum);
     ADD_FIELD(QTransferEvent, "_from", T_ADDRESS, ++fieldNum);
     ADD_FIELD(QTransferEvent, "_to", T_ADDRESS, ++fieldNum);
     ADD_FIELD(QTransferEvent, "_value", T_NUMBER, ++fieldNum);
@@ -122,6 +123,7 @@ void QTransferEvent::registerClass(void) {
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(QTransferEvent, "schema");
     HIDE_FIELD(QTransferEvent, "deleted");
+    HIDE_FIELD(QTransferEvent, "showing");
 
     // EXISTING_CODE
     // EXISTING_CODE
