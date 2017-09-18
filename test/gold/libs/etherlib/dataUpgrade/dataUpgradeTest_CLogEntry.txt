@@ -12,20 +12,24 @@ baseClass: CBaseNode
 	  fieldID: 1002
 	  fieldType: T_BOOL TS_NUMERAL 65556
 	  hidden: 1
-	fieldName: address
+	fieldName: showing
 	  fieldID: 1003
+	  fieldType: T_BOOL TS_NUMERAL 65556
+	  hidden: 1
+	fieldName: address
+	  fieldID: 1004
 	  fieldType: T_ADDRESS TS_STRING 131127
 	  hidden: 0
 	fieldName: data
-	  fieldID: 1004
+	  fieldID: 1005
 	  fieldType: T_TEXT TS_STRING 131122
 	  hidden: 0
 	fieldName: logIndex
-	  fieldID: 1005
+	  fieldID: 1006
 	  fieldType: T_NUMBER TS_NUMERAL 65561
 	  hidden: 0
 	fieldName: topics
-	  fieldID: 1006
+	  fieldID: 1007
 	  fieldType: T_OBJECT|TS_ARRAY TS_ARRAY 1572939 TS_OBJECT 1572939
 	  hidden: 0
 {

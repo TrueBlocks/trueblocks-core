@@ -66,6 +66,22 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
+    SFString CBaseNode::getValueByName(const SFString& fieldName) const {
+
+        switch (tolower(fieldName[0])) {
+            case 'd':
+                if ( fieldName % "deleted" ) return asStringU(m_deleted);
+                break;
+            case 's':
+                if ( fieldName % "schema" ) return asStringU(m_schema);
+                if ( fieldName % "showing" ) return asStringU(m_showing);
+                break;
+        }
+        
+        return "";
+    }
+
+    //--------------------------------------------------------------------------------
     char *CBaseNode::parseCSV(char *s, uint32_t& nFields, const SFString *fields) {
         nFields = 0;
 

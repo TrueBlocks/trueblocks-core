@@ -131,11 +131,13 @@ void CInfix::registerClass(void) {
     uint32_t fieldNum = 1000;
     ADD_FIELD(CInfix, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CInfix, "deleted", T_BOOL,  ++fieldNum);
+    ADD_FIELD(CInfix, "showing", T_BOOL,  ++fieldNum);
     ADD_FIELD(CInfix, "m_next", T_POINTER, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CInfix, "schema");
     HIDE_FIELD(CInfix, "deleted");
+    HIDE_FIELD(CInfix, "showing");
 
     // EXISTING_CODE
     // EXISTING_CODE

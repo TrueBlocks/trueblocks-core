@@ -112,12 +112,14 @@ void QApprove::registerClass(void) {
     uint32_t fieldNum = 1000;
     ADD_FIELD(QApprove, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(QApprove, "deleted", T_BOOL,  ++fieldNum);
+    ADD_FIELD(QApprove, "showing", T_BOOL,  ++fieldNum);
     ADD_FIELD(QApprove, "_spender", T_ADDRESS, ++fieldNum);
     ADD_FIELD(QApprove, "_value", T_NUMBER, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(QApprove, "schema");
     HIDE_FIELD(QApprove, "deleted");
+    HIDE_FIELD(QApprove, "showing");
 
     // EXISTING_CODE
     // EXISTING_CODE

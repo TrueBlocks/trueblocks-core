@@ -110,12 +110,14 @@ void CTraceResult::registerClass(void) {
     uint32_t fieldNum = 1000;
     ADD_FIELD(CTraceResult, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CTraceResult, "deleted", T_BOOL,  ++fieldNum);
+    ADD_FIELD(CTraceResult, "showing", T_BOOL,  ++fieldNum);
     ADD_FIELD(CTraceResult, "gasUsed", T_GAS, ++fieldNum);
     ADD_FIELD(CTraceResult, "output", T_TEXT, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CTraceResult, "schema");
     HIDE_FIELD(CTraceResult, "deleted");
+    HIDE_FIELD(CTraceResult, "showing");
 
     // EXISTING_CODE
     // EXISTING_CODE

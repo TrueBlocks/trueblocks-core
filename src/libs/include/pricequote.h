@@ -28,13 +28,7 @@ typedef SFUniqueList<CPriceQuote*>       CPriceQuoteListU;
 class CPriceQuote : public CBaseNode {
 public:
     SFUint32 timestamp;
-    double open;
-    double high;
-    double low;
     double close;
-    double quoteVolume;
-    double volume;
-    double weightedAvg;
 
 public:
     CPriceQuote(void);
@@ -63,7 +57,6 @@ protected:
 inline CPriceQuote::CPriceQuote(void) {
     Init();
     // EXISTING_CODE
-    extern bool loadPriceData(CPriceQuoteArray& quotes, bool freshen, SFString& message, SFUint32 step = 1);
     // EXISTING_CODE
 }
 
@@ -95,13 +88,7 @@ inline void CPriceQuote::Init(void) {
     CBaseNode::Init();
 
     timestamp = 0;
-    open = 0.0;
-    high = 0.0;
-    low = 0.0;
     close = 0.0;
-    quoteVolume = 0.0;
-    volume = 0.0;
-    weightedAvg = 0.0;
 
     // EXISTING_CODE
     date = earliestDate;
@@ -114,13 +101,7 @@ inline void CPriceQuote::Copy(const CPriceQuote& pr) {
     CBaseNode::Copy(pr);
 
     timestamp = pr.timestamp;
-    open = pr.open;
-    high = pr.high;
-    low = pr.low;
     close = pr.close;
-    quoteVolume = pr.quoteVolume;
-    volume = pr.volume;
-    weightedAvg = pr.weightedAvg;
 
     // EXISTING_CODE
     date = pr.date;

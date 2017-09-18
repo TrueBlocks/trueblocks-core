@@ -11,6 +11,8 @@
  */
 #include "accountname.h"
 
+namespace qblocks {
+
 //---------------------------------------------------------------------------
 IMPLEMENT_NODE(CAccountName, CBaseNode);
 
@@ -120,6 +122,7 @@ void CAccountName::registerClass(void) {
     uint32_t fieldNum = 1000;
     ADD_FIELD(CAccountName, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CAccountName, "deleted", T_BOOL,  ++fieldNum);
+    ADD_FIELD(CAccountName, "showing", T_BOOL,  ++fieldNum);
     ADD_FIELD(CAccountName, "symbol", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccountName, "name", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccountName, "addr", T_TEXT, ++fieldNum);
@@ -129,6 +132,7 @@ void CAccountName::registerClass(void) {
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CAccountName, "schema");
     HIDE_FIELD(CAccountName, "deleted");
+    HIDE_FIELD(CAccountName, "showing");
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -256,4 +260,5 @@ bool CAccountName::Match(const SFString& s1, const SFString& s2, const SFString&
     return (all ? m11 || m12 || m13 : m11 || m12);
 }
 // EXISTING_CODE
+}  // namespace qblocks
 

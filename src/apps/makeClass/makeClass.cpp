@@ -658,8 +658,8 @@ const char* STR_CASE_CODE_STRINGARRAY =
 "[BTAB]\t\tif (!cnt) return \"\";\n"
 "[BTAB]\t\tSFString retS;\n"
 "[BTAB]\t\tfor (uint32_t i = 0 ; i < cnt ; i++) {\n"
-"[BTAB]\t\t\tretS += indent() + (\"\\\"\" + [{PTR}][{FIELD}][i] + \"\\\"\");\n"
-"[BTAB]\t\t\tretS += ((i < cnt - 1) ? \",\\n\" : \"\\n\");\n"
+"[BTAB]\t\t\tretS += (\"\\\"\" + [{PTR}][{FIELD}][i] + \"\\\"\");\n"
+"[BTAB]\t\t\tretS += ((i < cnt - 1) ? \",\\n\" + indent() : \"\\n\");\n"
 "[BTAB]\t\t}\n"
 "[BTAB]\t\treturn retS;\n"
 "[BTAB]\t}";
