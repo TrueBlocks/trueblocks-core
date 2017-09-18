@@ -37,6 +37,8 @@ int main(int argc, const char* argv[]) {
                 cout << quotes[(uint32_t)indexFromTimeStamp(quotes, options.at)].Format(fmt);
 
             } else {
+                if (verbose > 1)
+                    UNHIDE_FIELD(CPriceQuote, "schema");
                 cout << "[\n";
                 uint32_t step = (uint32_t)options.freq / 5;
                 bool done = false;
