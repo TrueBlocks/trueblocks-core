@@ -287,20 +287,6 @@ namespace qblocks {
     }
 
     //---------------------------------------------------------------------------
-    bool CBaseNode::preSerialize(SFArchive& archive) {
-        if (archive.isWriting())
-            return ((const CBaseNode*)this)->preSerializeC(archive);
-        archive.pParent = this;  // sets this value for items stored in lists or arrays -- read only
-        archive >> m_deleted;
-        archive >> m_schema;
-        archive >> m_showing;
-        SFString str;
-        archive >> str;
-        ASSERT(str == SFString(getRuntimeClass()->getClassNamePtr()));
-        return true;
-    }
-
-    //---------------------------------------------------------------------------
     bool CBaseNode::Serialize(SFArchive& archive) {
         archive.pParent = this;  // sets this value for items stored in lists or arrays -- read only
         archive >> m_deleted;
@@ -310,16 +296,6 @@ namespace qblocks {
         archive >> str;
         ASSERT(str == SFString(getRuntimeClass()->getClassNamePtr()));
         return false;
-    }
-
-    //---------------------------------------------------------------------------
-    bool CBaseNode::preSerializeC(SFArchive& archive) const {
-        archive.pParent = this;  // sets this value for items stored in lists or arrays -- read only
-        archive << m_deleted;
-        archive << m_schema;
-        archive << m_showing;
-        archive << getRuntimeClass()->getClassNamePtr();
-        return true;
     }
 
     //---------------------------------------------------------------------------
