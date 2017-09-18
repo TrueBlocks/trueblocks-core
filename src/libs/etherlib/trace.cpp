@@ -250,8 +250,8 @@ SFString CTrace::getValueByName(const SFString& fieldName) const {
                 if (!cnt) return "";
                 SFString retS;
                 for (uint32_t i = 0 ; i < cnt ; i++) {
-                    retS += indent() + ("\"" + traceAddress[i] + "\"");
-                    retS += ((i < cnt - 1) ? ",\n" : "\n");
+                    retS += ("\"" + traceAddress[i] + "\"");
+                    retS += ((i < cnt - 1) ? ",\n" + indent() : "\n");
                 }
                 return retS;
             }
