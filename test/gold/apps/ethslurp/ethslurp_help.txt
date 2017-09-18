@@ -1,5 +1,6 @@
 ethslurp argc: 2 [1:-h] 
 ethslurp -h 
+Processing: -h
 
   Usage:    ethslurp [-a|-b|-d|-f|-i|-e|-v|-h] addr  
   Purpose:  Fetches data off the Ethereum blockchain for an arbitrary account or smart contract. Optionally formats the output to your specification. Note: --income and --expense are mutually exclusive as are --blocks and --dates.

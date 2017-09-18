@@ -23,6 +23,9 @@ uint32_t nParams = sizeof(params) / sizeof(CParams);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(SFString& command) {
 
+    if (!standardOptions(command))
+        return false;
+
     Init();
     while (!command.empty()) {
         SFString arg = nextTokenClear(command, ' ');
@@ -43,7 +46,7 @@ bool COptions::parseArguments(SFString& command) {
             if (arg.empty() || (arg[0] != '-' && arg[0] != '+' && !isdigit(arg[0])))
                 return usage("--int requires a number. Quitting");
             numOption = toLong(arg);
-            
+
         } else if (arg.startsWith("-u:") || arg.startsWith("--uint:")) {
             arg = arg.Substitute("-u:","").Substitute("--uint:","");
             if (arg.empty() || (arg[0] != '+' && !isdigit(arg[0]))) {
