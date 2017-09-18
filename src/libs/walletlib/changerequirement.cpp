@@ -109,11 +109,13 @@ void QChangeRequirement::registerClass(void) {
     uint32_t fieldNum = 1000;
     ADD_FIELD(QChangeRequirement, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(QChangeRequirement, "deleted", T_BOOL,  ++fieldNum);
+    ADD_FIELD(QChangeRequirement, "showing", T_BOOL,  ++fieldNum);
     ADD_FIELD(QChangeRequirement, "_newRequired", T_NUMBER, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(QChangeRequirement, "schema");
     HIDE_FIELD(QChangeRequirement, "deleted");
+    HIDE_FIELD(QChangeRequirement, "showing");
 
     // EXISTING_CODE
     // EXISTING_CODE

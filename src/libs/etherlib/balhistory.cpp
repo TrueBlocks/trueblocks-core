@@ -115,6 +115,7 @@ void CBalHistory::registerClass(void) {
     uint32_t fieldNum = 1000;
     ADD_FIELD(CBalHistory, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CBalHistory, "deleted", T_BOOL,  ++fieldNum);
+    ADD_FIELD(CBalHistory, "showing", T_BOOL,  ++fieldNum);
     ADD_FIELD(CBalHistory, "recordID", T_TEXT, ++fieldNum);
     ADD_FIELD(CBalHistory, "txDate", T_DATE, ++fieldNum);
     ADD_FIELD(CBalHistory, "balance", T_NUMBER, ++fieldNum);
@@ -122,6 +123,7 @@ void CBalHistory::registerClass(void) {
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CBalHistory, "schema");
     HIDE_FIELD(CBalHistory, "deleted");
+    HIDE_FIELD(CBalHistory, "showing");
 
     // EXISTING_CODE
     // EXISTING_CODE

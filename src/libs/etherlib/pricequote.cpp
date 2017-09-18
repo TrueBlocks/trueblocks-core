@@ -146,6 +146,7 @@ void CPriceQuote::registerClass(void) {
     uint32_t fieldNum = 1000;
     ADD_FIELD(CPriceQuote, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CPriceQuote, "deleted", T_BOOL,  ++fieldNum);
+    ADD_FIELD(CPriceQuote, "showing", T_BOOL,  ++fieldNum);
     ADD_FIELD(CPriceQuote, "timestamp", T_NUMBER, ++fieldNum);
     ADD_FIELD(CPriceQuote, "open", T_DOUBLE, ++fieldNum);
     ADD_FIELD(CPriceQuote, "high", T_DOUBLE, ++fieldNum);
@@ -158,6 +159,7 @@ void CPriceQuote::registerClass(void) {
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CPriceQuote, "schema");
     HIDE_FIELD(CPriceQuote, "deleted");
+    HIDE_FIELD(CPriceQuote, "showing");
 
     // EXISTING_CODE
     ADD_FIELD(CPriceQuote, "date", T_DATE, ++fieldNum);

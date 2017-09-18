@@ -12,44 +12,48 @@ baseClass: CBaseNode
 	  fieldID: 1002
 	  fieldType: T_BOOL TS_NUMERAL 65556
 	  hidden: 1
-	fieldName: blockHash
+	fieldName: showing
 	  fieldID: 1003
+	  fieldType: T_BOOL TS_NUMERAL 65556
+	  hidden: 1
+	fieldName: blockHash
+	  fieldID: 1004
 	  fieldType: T_HASH TS_STRING 131132
 	  hidden: 0
 	fieldName: blockNumber
-	  fieldID: 1004
-	  fieldType: T_NUMBER TS_NUMERAL 65561
-	  hidden: 0
-	fieldName: subtraces
 	  fieldID: 1005
 	  fieldType: T_NUMBER TS_NUMERAL 65561
 	  hidden: 0
-	fieldName: traceAddress
+	fieldName: subtraces
 	  fieldID: 1006
+	  fieldType: T_NUMBER TS_NUMERAL 65561
+	  hidden: 0
+	fieldName: traceAddress
+	  fieldID: 1007
 	  fieldType: T_ADDRESS|TS_ARRAY TS_STRING 655415 TS_ARRAY 655415
 	  hidden: 0
 	fieldName: transactionHash
-	  fieldID: 1007
+	  fieldID: 1008
 	  fieldType: T_HASH TS_STRING 131132
 	  hidden: 0
 	fieldName: transactionPosition
-	  fieldID: 1008
+	  fieldID: 1009
 	  fieldType: T_NUMBER TS_NUMERAL 65561
 	  hidden: 0
 	fieldName: type
-	  fieldID: 1009
-	  fieldType: T_TEXT TS_STRING 131122
-	  hidden: 0
-	fieldName: error
 	  fieldID: 1010
 	  fieldType: T_TEXT TS_STRING 131122
 	  hidden: 0
-	fieldName: action
+	fieldName: error
 	  fieldID: 1011
+	  fieldType: T_TEXT TS_STRING 131122
+	  hidden: 0
+	fieldName: action
+	  fieldID: 1012
 	  fieldType: T_OBJECT TS_OBJECT 1048651
 	  hidden: 0
 	fieldName: result
-	  fieldID: 1012
+	  fieldID: 1013
 	  fieldType: T_OBJECT TS_OBJECT 1048651
 	  hidden: 0
 {

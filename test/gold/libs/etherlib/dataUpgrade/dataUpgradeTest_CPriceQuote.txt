@@ -12,40 +12,44 @@ baseClass: CBaseNode
 	  fieldID: 1002
 	  fieldType: T_BOOL TS_NUMERAL 65556
 	  hidden: 1
-	fieldName: timestamp
+	fieldName: showing
 	  fieldID: 1003
+	  fieldType: T_BOOL TS_NUMERAL 65556
+	  hidden: 1
+	fieldName: timestamp
+	  fieldID: 1004
 	  fieldType: T_NUMBER TS_NUMERAL 65561
 	  hidden: 0
 	fieldName: open
-	  fieldID: 1004
-	  fieldType: T_DOUBLE TS_NUMERAL 65566
-	  hidden: 0
-	fieldName: high
 	  fieldID: 1005
 	  fieldType: T_DOUBLE TS_NUMERAL 65566
 	  hidden: 0
-	fieldName: low
+	fieldName: high
 	  fieldID: 1006
 	  fieldType: T_DOUBLE TS_NUMERAL 65566
 	  hidden: 0
-	fieldName: close
+	fieldName: low
 	  fieldID: 1007
 	  fieldType: T_DOUBLE TS_NUMERAL 65566
 	  hidden: 0
-	fieldName: quoteVolume
+	fieldName: close
 	  fieldID: 1008
 	  fieldType: T_DOUBLE TS_NUMERAL 65566
 	  hidden: 0
-	fieldName: volume
+	fieldName: quoteVolume
 	  fieldID: 1009
 	  fieldType: T_DOUBLE TS_NUMERAL 65566
 	  hidden: 0
-	fieldName: weightedAvg
+	fieldName: volume
 	  fieldID: 1010
 	  fieldType: T_DOUBLE TS_NUMERAL 65566
 	  hidden: 0
-	fieldName: date
+	fieldName: weightedAvg
 	  fieldID: 1011
+	  fieldType: T_DOUBLE TS_NUMERAL 65566
+	  hidden: 0
+	fieldName: date
+	  fieldID: 1012
 	  fieldType: T_DATE TS_DATE 262149
 	  hidden: 0
 {

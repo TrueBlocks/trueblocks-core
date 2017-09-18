@@ -96,11 +96,13 @@ void [{CLASS_NAME}]::registerClass(void) {
     [{PARENT_REG}]uint32_t fieldNum = 1000;
     ADD_FIELD([{CLASS_NAME}], "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD([{CLASS_NAME}], "deleted", T_BOOL,  ++fieldNum);
+    ADD_FIELD([{CLASS_NAME}], "showing", T_BOOL,  ++fieldNum);
 [REGISTER_FIELDS]
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD([{CLASS_NAME}], "schema");
     HIDE_FIELD([{CLASS_NAME}], "deleted");
+    HIDE_FIELD([{CLASS_NAME}], "showing");
 
     // EXISTING_CODE
     // EXISTING_CODE

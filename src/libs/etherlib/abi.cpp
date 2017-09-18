@@ -127,12 +127,14 @@ void CAbi::registerClass(void) {
     uint32_t fieldNum = 1000;
     ADD_FIELD(CAbi, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CAbi, "deleted", T_BOOL,  ++fieldNum);
+    ADD_FIELD(CAbi, "showing", T_BOOL,  ++fieldNum);
     ADD_FIELD(CAbi, "abiByName", T_OBJECT|TS_ARRAY, ++fieldNum);
     ADD_FIELD(CAbi, "abiByEncoding", T_OBJECT|TS_ARRAY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CAbi, "schema");
     HIDE_FIELD(CAbi, "deleted");
+    HIDE_FIELD(CAbi, "showing");
 
     // EXISTING_CODE
     // EXISTING_CODE

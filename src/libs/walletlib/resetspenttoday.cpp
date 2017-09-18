@@ -103,10 +103,12 @@ void QResetSpentToday::registerClass(void) {
     uint32_t fieldNum = 1000;
     ADD_FIELD(QResetSpentToday, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(QResetSpentToday, "deleted", T_BOOL,  ++fieldNum);
+    ADD_FIELD(QResetSpentToday, "showing", T_BOOL,  ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(QResetSpentToday, "schema");
     HIDE_FIELD(QResetSpentToday, "deleted");
+    HIDE_FIELD(QResetSpentToday, "showing");
 
     // EXISTING_CODE
     // EXISTING_CODE

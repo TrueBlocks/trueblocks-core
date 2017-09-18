@@ -206,6 +206,7 @@ void CTransaction::registerClass(void) {
     uint32_t fieldNum = 1000;
     ADD_FIELD(CTransaction, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CTransaction, "deleted", T_BOOL,  ++fieldNum);
+    ADD_FIELD(CTransaction, "showing", T_BOOL,  ++fieldNum);
     ADD_FIELD(CTransaction, "hash", T_HASH, ++fieldNum);
     ADD_FIELD(CTransaction, "blockHash", T_HASH, ++fieldNum);
     ADD_FIELD(CTransaction, "blockNumber", T_NUMBER, ++fieldNum);
@@ -226,6 +227,7 @@ void CTransaction::registerClass(void) {
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CTransaction, "schema");
     HIDE_FIELD(CTransaction, "deleted");
+    HIDE_FIELD(CTransaction, "showing");
 
     // EXISTING_CODE
     // These are 'phony' fields needed because etherscan.io sends them
