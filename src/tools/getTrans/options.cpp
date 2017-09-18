@@ -12,15 +12,18 @@ CParams params[] = {
     CParams("~!hash",        "one or more hashes of Ethereum transactions, or"),
     CParams("~!bn.transID",  "blockNumber.transactionID of one or more Ethereum transactions, or"),
     CParams("~!bh.transID",  "blockHash.transactionID of one or more Ethereum transactions"),
-    CParams("-fromNode",    "retrieve the transaction from the running node (from QuickBlocks otherwise)"),
-    CParams("-trace",       "return the trace of the transaction in addition to regular details"),
-    CParams("",             "Retrieve an Ethereum transaction from either QuickBlocks or a running node.\n"
-                            " --note: 'hash' and 'blockHash' must start with '0x'."),
+    CParams("-fromNode",     "retrieve the transaction from the running node (from QuickBlocks otherwise)"),
+    CParams("-trace",        "return the trace of the transaction in addition to regular details"),
+    CParams("",              "Retrieve an Ethereum transaction from either QuickBlocks or a running node.\n"
+                             " --note: 'hash' and 'blockHash' must start with '0x'."),
 };
 uint32_t nParams = sizeof(params) / sizeof(CParams);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(SFString& command) {
+
+    if (!standardOptions(command))
+        return false;
 
     Init();
     while (!command.empty()) {

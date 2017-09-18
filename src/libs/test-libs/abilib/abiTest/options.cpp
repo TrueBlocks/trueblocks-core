@@ -10,12 +10,15 @@
 //---------------------------------------------------------------------------------------------------
 CParams params[] = {
     CParams("~mode", "Mode of operation. One or more of 'encoding' or 'generation'.\n"),
-    CParams("", "Simple program to illustrate how to encode function and event signatures.\n"),
+    CParams("",      "Simple program to illustrate how to encode function and event signatures.\n"),
 };
 uint32_t nParams = sizeof(params) / sizeof(CParams);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(SFString& command) {
+
+    if (!standardOptions(command))
+        return false;
 
     Init();
     while (!command.empty()) {
