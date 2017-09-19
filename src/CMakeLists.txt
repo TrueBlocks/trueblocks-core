@@ -54,6 +54,15 @@ endif()
 set (BASE_LIBS acct ether util ${CURL_LIBRARIES})
 
 # ----------------------------------------------------------------------------------------
+# Base included paths
+set (BASE_INCLUDE 
+     "${CMAKE_SOURCE_DIR}/libs/utillib"
+     "${CMAKE_SOURCE_DIR}/libs/etherlib"
+     "${CMAKE_SOURCE_DIR}/libs/acctlib"
+     "${CMAKE_SOURCE_DIR}/libs/tokenlib"
+     "${CMAKE_SOURCE_DIR}/libs/wallelib")
+
+# ----------------------------------------------------------------------------------------
 # Folders for various purposes
 set (SCRIPTS_DEST_PATH "${CMAKE_SOURCE_DIR}/../bin")
 
