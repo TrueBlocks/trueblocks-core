@@ -320,8 +320,12 @@ int main(int argc, const char *argv[]) {
                             else
                                 cout << "Generating class for derived transaction type: '" << theClass << "'\n";
 
-                            SFString makeClassCmd = configPath("makeClass/makeClass") + " -r ";
-                            SFString res = doCommand(makeClassCmd + toLower(name));
+                            SFString makeClass = configPath("makeClass/makeClass");
+                            if (!fileExists(makeClass)) {
+                                cerr << makeClass << " was not found. This executable is required to run grabABI. Quitting...\n";
+                                exit(0);
+                            }
+                            SFString res = doCommand(makeClass + " -r " + toLower(name));
                             if (!res.empty())
                                 cout << "\t" << res << "\n";
                         }
