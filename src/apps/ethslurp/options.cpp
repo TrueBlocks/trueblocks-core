@@ -21,7 +21,6 @@ CParams params[] = {
     CParams("-expense",         "include expenditures only"),
     CParams("@--rerun",         "re-run the most recent slurp"),
     CParams("@--open",          "open the configuration file for editing"),
-    CParams("@--list",          "list previously slurped addresses in cache"),
     CParams("@--max:<val>",     "maximum transactions to slurp (:250000)"),
     CParams("@--sleep:<val>",   "sleep for :x seconds"),
     CParams("@--func:<str>",    "display only --func:functionName records"),
@@ -85,20 +84,6 @@ bool COptions::parseArguments(SFString& command) {
 
         } else if (arg.startsWith("--cache")) {
             cache = true;
-
-        } else if (arg == "-l" || arg == "--list") {
-            uint32_t nFiles = 0;
-            listFilesOrFolders(nFiles, NULL, configPath("slurps/*.bin"));
-            if (nFiles) {
-                SFString *files = new SFString[nFiles];
-                listFilesOrFolders(nFiles, files, configPath("slurps/*.bin"));
-                for (uint32_t i = 0 ; i < nFiles ; i++)
-                    outScreen << files[i] << "\n";
-                delete [] files;
-            } else {
-                outScreen << "No files found in cache folder '" << configPath("slurps/") << "'\n";
-            }
-            exit(0);
 
         } else if (arg == "-b") {
             return usage("Invalid option -b. This option must include :firstBlock or :first:lastBlock range.");
