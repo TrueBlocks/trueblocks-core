@@ -1,3 +1,5 @@
+BREAK: this depends on ~/.quickBlocks/configs, ~/.quickBlocks/slurps, ~/.quickBlocks/abi exist. These have been moved to binary caches
+
 clear
 
 # clean up prior tests
