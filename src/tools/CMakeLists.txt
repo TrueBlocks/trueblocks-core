@@ -5,7 +5,7 @@ cmake_minimum_required (VERSION 2.6)
 project (tools)
 
 # Path to library include files
-include_directories("${CMAKE_SOURCE_DIR}/libs/include")
+include_directories(${BASE_INCLUDE})
 
 # messaging
 # message (WARNING  "*** Entering tools folder ***")

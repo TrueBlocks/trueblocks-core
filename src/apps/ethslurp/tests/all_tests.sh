@@ -1,3 +1,6 @@
+BREAK: this depends on ~/.quickBlocks/configs, ~/.quickBlocks/slurps, ~/.quickBlocks/abi exist. These have been moved to binary caches
+
+
 ./init.sh
 
 echo "test2: slurp on known dead account"                                | tee proposed/test2.txt
