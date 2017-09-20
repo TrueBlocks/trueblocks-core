@@ -71,7 +71,7 @@ bool CSlurperApp::Initialize(COptions& options, SFString& message) {
 
     // If this is the first time we've ever run, build the toml file
     if (!establishFolders(toml)) {
-        message = "Unable to create data folders at " + configPath("slurps/");
+        message = "Unable to create data folders at " + blockCachePath("slurps/");
         return false;
     }
 
@@ -121,7 +121,7 @@ bool CSlurperApp::Initialize(COptions& options, SFString& message) {
     toml.writeFile();
 
     // Load per address configurations if any
-    SFString customConfig = configPath("slurps/" + addr + ".toml");
+    SFString customConfig = blockCachePath("slurps/" + addr + ".toml");
     if (fileExists(customConfig) || !options.name.empty()) {
         CToml perAddr("");
         perAddr.setFilename(customConfig);
@@ -159,7 +159,7 @@ bool CSlurperApp::Slurp(COptions& options, SFString& message) {
     theAccount.abi.loadABI(theAccount.addr);
 
     // Do we have the data for this address cached?
-    SFString cacheFilename = configPath("slurps/" + theAccount.addr + ".bin");
+    SFString cacheFilename = blockCachePath("slurps/" + theAccount.addr + ".bin");
     bool needToRead = fileExists(cacheFilename);
     if (options.rerun && theAccount.transactions.getCount())
         needToRead = false;
@@ -551,7 +551,7 @@ bool establishFolders(CToml& toml) {
 
     SFString configFilename = configPath("quickBlocks.toml");
     toml.setFilename(configFilename);
-    if (folderExists(configPath("slurps/")) && fileExists(configFilename)) {
+    if (folderExists(blockCachePath("slurps/")) && fileExists(configFilename)) {
         toml.readFile(configFilename);
         return true;
     }
@@ -562,8 +562,8 @@ bool establishFolders(CToml& toml) {
         return false;
 
     // create the folder for the data
-    mkdir(configPath("slurps/"), (mode_t)0755);
-    if (!folderExists(configPath("slurps/")))
+    mkdir(blockCachePath("slurps/"), (mode_t)0755);
+    if (!folderExists(blockCachePath("slurps/")))
         return false;
 
     toml.setConfigStr("settings", "api_key",          "<NOT_SET>");
