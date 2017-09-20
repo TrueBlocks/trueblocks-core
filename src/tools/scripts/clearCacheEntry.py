@@ -50,6 +50,11 @@ if len(sys.argv) != 2:
 addr = sys.argv[1]
 
 # Define the path where we expect the quickblocks cache files
+#
+# NOTE: THIS IS BROKEN SINCE WE MOVED ./slurps AND ./abis INTO
+#       THE BINARY CACHES. FOR THIS TO WORK IT WOULD HAVE TO READ
+#       THE TOML FILE AND USE BINARY CACHE PATH TO FIND THESE FOLDERS
+#
 QUICKBLOCKS_DIR_NAME = '.quickBlocks'
 SLURP_DIR_NAME = 'slurps'
 ABIS_DIR_NAME = 'abis'
