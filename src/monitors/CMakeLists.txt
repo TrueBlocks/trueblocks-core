@@ -4,6 +4,9 @@ cmake_minimum_required (VERSION 2.6)
 # folder project
 project (monitors)
 
+# Path to library include files
+include_directories(${BASE_INCLUDE})
+
 # messaging
 # message (WARNING  "*** Entering monitor folder ***")
 
