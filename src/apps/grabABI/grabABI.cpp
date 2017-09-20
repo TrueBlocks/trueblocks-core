@@ -81,7 +81,7 @@ void addIfUnique(const SFString& addr, CFunctionArray& functions, CFunction& fun
 SFString acquireABI(CFunctionArray& functions, const SFAddress& addr, bool silent, bool builtIn=false)
 {
     SFString results, ret;
-    SFString fileName = configPath("abis/" + addr + ".json");
+    SFString fileName = blockCachePath("abis/" + addr + ".json");
     SFString dispName = fileName.Substitute(configPath(""),"|");
     nextTokenClear(dispName, '|');
     dispName = "~/.quickBlocks/" + dispName;
@@ -150,7 +150,7 @@ int main(int argc, const char *argv[]) {
 
         if (options.open) {
             for (uint64_t i = 0 ; i < options.nAddrs ; i++) {
-                SFString fileName = configPath("abis/" + options.addrs[i] + ".json");
+                SFString fileName = blockCachePath("abis/" + options.addrs[i] + ".json");
                 if (!fileExists(fileName)) {
                     cerr << "ABI for '" + options.addrs[i] + "' not found. Quitting...\n";
                     return 0;
@@ -162,7 +162,7 @@ int main(int argc, const char *argv[]) {
 
         if (options.asJson) {
             for (uint64_t i = 0 ; i < options.nAddrs ; i++) {
-                SFString fileName = configPath("abis/" + options.addrs[i] + ".json");
+                SFString fileName = blockCachePath("abis/" + options.addrs[i] + ".json");
                 if (!fileExists(fileName)) {
                     cerr << "ABI for '" + options.addrs[i] + "' not found. Quitting...\n";
                     return 0;
