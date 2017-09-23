@@ -43,7 +43,7 @@ bool COptions::parseArguments(SFString& command) {
         if (arg == "-k" || arg == "--check") {
             setenv("TEST_MODE", "true", true);
             isCheck = true;
-            quiet = true;
+            quiet++; // if both --check and --quiet are present, be very quiet...
             expContext().spcs = 4;
             expContext().hexNums = true;
             expContext().quoteNums = true;
@@ -90,7 +90,7 @@ bool COptions::parseArguments(SFString& command) {
             terse = true;
 
         } else if (arg == "-q" || arg == "--quiet") {
-            quiet = true;
+            quiet++; // if both --check and --quiet are present, be very quiet...
 
         } else if (arg.startsWith("-f:") || arg.startsWith("--fields:")) {
             SFString mode = arg.Substitute("-f:","").Substitute("--fields:","");
@@ -209,11 +209,11 @@ void COptions::Init(void) {
     isRaw      = false;
     isRange    = false;
     terse      = false;
-    quiet      = false;
     force      = false;
     normalize  = false;
     silent     = false;
     asks4Cache = false;
+    quiet      = 0; // quiet has levels
     nums[0]    = NOPOS;
     nNums      = 0;  // we will set this to '1' later if user supplies no values
     start = stop = 0;

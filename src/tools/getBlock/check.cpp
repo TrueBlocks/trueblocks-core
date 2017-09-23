@@ -82,6 +82,7 @@ SFString cleanAll(const SFString& str, bool remove) {
     orig.ReplaceAll(",", "");
     orig.ReplaceAll("[", "");
     orig.ReplaceAll("]", "");
+    orig.ReplaceAll("\"to\":null","\"to\":\"0x0\"");
     orig = StripAny(orig, "\t\n ");
     orig = orig.Substitute("\"result\":","").Substitute("\"transactions\":","").Substitute("\"logs\":","");
     orig = orig.Substitute("\"jsonrpc\":","");
