@@ -17,10 +17,10 @@ public:
     bool asks4Cache;
     bool isRange;
     bool terse;
-    bool quiet;
     bool force;
     bool normalize;
     bool silent;
+    int quiet;
     SFUint32 nums[MAX_NUMS];
     SFUint32 nNums;
     SFUint32 start;
