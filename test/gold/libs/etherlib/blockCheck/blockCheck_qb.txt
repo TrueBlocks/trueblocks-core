@@ -1,2 +1,0 @@
-blockCheck argc: 2 [1:--qblocks] 
-blockCheck --qblocks 
