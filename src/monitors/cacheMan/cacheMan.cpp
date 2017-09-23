@@ -157,9 +157,10 @@ int main(int argc, const char *argv[]) {
                 } else if (nReversals) {
                     cout << cMagenta << "\tThe cache has " << nReversals << " reversals.\n" << cOff;
                 } else if (mode == "check") {
-                    cout << cMagenta << "\tNo problems found.               \n" << cOff;
+                    cout << cMagenta << "\tNo problems found (" << lastItem.blockNum << ").               \n" << cOff;
                 }
 
+                blknum_t lastBlock = 0;
                 if (nFixed || nTruncs) {
                     SFString backFile = options.filenames[fn]+".bak";
                     copyFile(options.filenames[fn], backFile);
@@ -178,7 +179,6 @@ int main(int argc, const char *argv[]) {
                         cout << "\tRe-writing " << asYellow(fixed.getCount())
                                 << " of " << nRecords << " records to cache: "
                                 << asYellow(options.filenames[fn]) << " (" << nTruncs << " truncated)\n";
-                        blknum_t lastBlock = 0;
                         for (uint32_t i=0 ; i < fixed.getCount() ; i++) {
                             archive1 << fixed[i].which << fixed[i].blockNum << fixed[i].transIndex;
                             lastBlock = fixed[i].blockNum;
@@ -194,7 +194,10 @@ int main(int argc, const char *argv[]) {
 #endif
                     cout << cMagenta << "\tThe cache was repaired and a backup created.\n" << cOff;
                 } else if (mode == "fix") {
-                    cout << cMagenta << "\tThere was nothing to fix.\n" << cOff;
+                    cout << cMagenta << "\tThere was nothing to fix (" << lastItem.blockNum << ").\n" << cOff;
+                    // write the last block to file
+                    CFilename lbFn(options.filenames[fn]);
+                    stringToAsciiFile(lbFn.getPath() + "lastBlock.txt", asStringU(lastItem.blockNum) + "\r\n");
                 }
                 cout << "\n";
             }

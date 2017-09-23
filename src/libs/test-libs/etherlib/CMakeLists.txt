@@ -8,6 +8,7 @@ project (test-etherlib)
 # message (WARNING  "*** Entering libs folder ***")
 
 # Compile the libraries in this order
+add_subdirectory(blockCheck)
 add_subdirectory(sha3)
 add_subdirectory(convert)
 add_subdirectory(printFloat)
