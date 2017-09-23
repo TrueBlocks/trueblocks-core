@@ -2,6 +2,7 @@ acctIndex
 addresses
 atexit
 bitsTwiddled
+blockCheck
 bloom
 bloomDao
 bloomTester
