@@ -31,14 +31,14 @@ int main(int argc, const char *argv[]) {
     // Parse command line, allowing for command files
     CVisitor visitor;
     if (!visitor.opts.prepareArguments(argc, argv)) {
-        return false;
+        return 0;
     }
 
     // while (!visitor.opts.commandList.empty())
     {
         SFString command = nextTokenClear(visitor.opts.commandList, '\n');
         if (!visitor.opts.parseArguments(command)) {
-            return false;
+            return 0;
         }
 
         CToml toml("./config.toml");
@@ -64,7 +64,7 @@ int main(int argc, const char *argv[]) {
                             "\tfile: " + cacheFileName + ".lck'. Quitting...")
                     .Substitute("\n", "\r\n");
             cout.flush();cerr.flush();getchar();
-            return false;
+            return 0;
         }
 
         // Figure out which block to start on. Use earliest block from the watches. Note that
@@ -158,7 +158,7 @@ int main(int argc, const char *argv[]) {
         visitor.enterDebugger(block);
     }
 
-    return false;
+    return 0;
 }
 
 //-----------------------------------------------------------------------

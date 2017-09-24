@@ -101,16 +101,15 @@ endfunction(run_the_test)
 # ----------------------------------------------------------------------------------------
 # Runs specials tests that are only run with "make test-all"
 function(run_the_special_test testPath goldPath testName testExe) # Optional argv4 with command parameters
-	set(TEST_FILE "${testPath}/${testName}.txt")
-        set(GOLD_FILE "${goldPath}/${testName}.txt")
-        if (NOT ${ARGV4} STREQUAL "" )
-            # In ARGV4 we receive the parameters to be passed to testExe  (optional)
-            add_test(NAME ${testName} COMMAND ${TEST_CHECK} ${testExe} ${ARGN} ${TEST_FILE} ${GOLD_FILE} CONFIGURATIONS test_all)
-        else()
-            add_test(NAME ${testName} COMMAND ${TEST_CHECK} ${testExe} ${TEST_FILE} ${GOLD_FILE} CONFIGURATIONS test_all)
-        endif()
+    set(TEST_FILE "${testPath}/${testName}.txt")
+    set(GOLD_FILE "${goldPath}/${testName}.txt")
+    if (NOT ${ARGV4} STREQUAL "" )
+        # In ARGV4 we receive the parameters to be passed to testExe  (optional)
+        add_test(NAME ${testName} COMMAND ${TEST_CHECK} ${testExe} ${ARGN} ${TEST_FILE} ${GOLD_FILE} CONFIGURATIONS test_all)
+    else()
+        add_test(NAME ${testName} COMMAND ${TEST_CHECK} ${testExe} ${TEST_FILE} ${GOLD_FILE} CONFIGURATIONS test_all)
+    endif()
 endfunction(run_the_special_test)
-
 
 # ----------------------------------------------------------------------------------------
 # Compilation order for the subfolders
