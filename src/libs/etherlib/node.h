@@ -16,6 +16,8 @@ namespace qblocks {
     extern bool     readOneBlock_fromBinary (      CBlock& block,   const SFString& fileName);
     extern void     writeToJson             (const CBaseNode& node, const SFString& fileName);
     extern void     writeToBinary           (const CBaseNode& node, const SFString& fileName);
+    extern bool     readFromJson            (      CBaseNode& node, const SFString& fileName);
+    extern bool     readFromBinary          (      CBaseNode& node, const SFString& fileName);
     extern bool     verifyBlock             (const CBlock& block,   SFString& result);
 
     //-------------------------------------------------------------------------
@@ -46,8 +48,8 @@ namespace qblocks {
     //-------------------------------------------------------------------------
     extern bool     queryBlock              (CBlock& block,       const SFString& num, bool needTrace);
     extern bool     queryRawBlock           (SFString& block,     const SFString& num, bool needTrace, bool hashesOnly);
-    extern bool     queryRawTransaction     (const SFHash& txHash, SFString& results);
-    extern bool     queryRawReceipt         (const SFHash& txHash, SFString& results);
+    extern bool     queryRawTransaction     (SFString& results,   const SFHash& txHash);
+    extern bool     queryRawReceipt         (SFString& results,   const SFHash& txHash);
     extern bool     queryRawLogs            (SFUint32 fromBlock, SFUint32 toBlock, const SFAddress& addr, SFString& results);
     extern bool     queryRawTrace           (SFString& trace,     const SFString& hashIn);
 

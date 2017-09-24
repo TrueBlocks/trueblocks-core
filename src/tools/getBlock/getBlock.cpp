@@ -91,8 +91,10 @@ int main(int argc, const char * argv[]) {
         if (!options.quiet)
             cout << (options.isMulti() ? "]" : "");
 
-        if (options.isCheck)
-            cout << checkResults << "\n";
+        if (options.isCheck) {
+            cout << checkResults << (options.quiet > 1 ? "" : "\n");
+            cout.flush();
+        }
     }
 
     return 0;
@@ -149,6 +151,10 @@ SFString doOneBlock(SFUint32 num, const COptions& opt) {
 //------------------------------------------------------------
 SFString checkOneBlock(SFUint32 num, const COptions& opt) {
 
+    if (opt.quiet == 2) {
+        cout << "Checking block " + cYellow + asStringU(num) + cOff + "...       \r";
+        cout.flush();
+    }
     SFString numStr = asStringU(num);
 
     // Get the block raw from the node...
@@ -181,6 +187,17 @@ SFString checkOneBlock(SFUint32 num, const COptions& opt) {
 
     // return the results
     SFString head = "\n" + SFString('-',80) + "\n";
+    if (opt.quiet == 2) {
+        // only report results if we're being very quiet
+        if (fromNode != fromQblocks)
+            return "Difference at block " + cYellow + asStringU(num) + cOff + ".\n" +
+            "\t" + diffStr(fromNode, fromQblocks) + "\t" + diffStr(fromQblocks, fromNode);
+        cout << "Checking block " + cYellow + asStringU(num) + cOff + "...";
+        cout << greenCheck << "         \r";
+        cout.flush();
+        return "";
+    }
+
     return head + "from Node:\n" + fromNode +
             head + "from Quickblocks:\n" + fromQblocks +
             head + result +
