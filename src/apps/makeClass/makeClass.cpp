@@ -145,7 +145,7 @@ void generateCode(const COptions& options, CToml& classFile, const SFString& dat
     SFString baseBase   = toProper(baseClass.substr(1));
     SFString baseName   = className.substr(1);
     SFString baseProper = toProper(baseName), baseLower = toLower(baseName), baseUpper = toUpper(baseName);
-    SFString otherIncs  = classFile.getConfigStr("settings", "cIncs", "");
+    SFString otherIncs  = classFile.getConfigStr("settings", "cIncs", "").Substitute("|","\n");
     SFString scope      = classFile.getConfigStr("settings", "scope", "static");
     bool     serialize  = classFile.getConfigBool("settings", "serialize", false);
 

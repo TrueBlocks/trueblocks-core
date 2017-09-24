@@ -1,6 +1,7 @@
 acctIndex
 addresses
 atexit
+below0050000
 bitsTwiddled
 blockCheck
 bloom
@@ -26,6 +27,7 @@ mappingTest
 memmap
 newens
 papers.save
+random
 scripts
 serialize
 single
@@ -39,4 +41,3 @@ transPer
 visitor
 zOldCode
 zOldCode.tar.gz
-random

@@ -311,11 +311,19 @@ SFString hexxy(SFUint32 x)
 }
 
 //-------------------------------------------------------------------------
-bool queryRawReceipt(const SFHash& txHash, SFString& results)
+bool queryRawReceipt(SFString& results, const SFHash& txHash)
 {
     SFString data = "[\"[HASH]\"]";
     data.Replace("[HASH]", txHash);
     results = callRPC("eth_getTransactionReceipt", data, true);
+    return true;
+}
+
+//-------------------------------------------------------------------------
+bool queryRawTransaction(SFString& results, const SFHash& txHash) {
+    SFString data = "[\"[HASH]\"]";
+    data.Replace("[HASH]", txHash);
+    results = callRPC("eth_getTransactionByHash", data, true);
     return true;
 }
 
@@ -453,32 +461,43 @@ size_t write_callback(char *ptr, size_t size, size_t nmemb, void *userdata)
 }
 
 //-----------------------------------------------------------------------
-void writeToJson(const CBaseNode& node, const SFString& fileName)
-{
-    if (establishFolder(fileName))
-    {
+void writeToJson(const CBaseNode& node, const SFString& fileName) {
+    if (establishFolder(fileName)) {
         std::ofstream out(fileName);
-        SFString fmt = node.Format();
-        fmt.ReplaceAll("\"to\": \"0x\"","\"to\": null");
-        out << fmt << "\n";
+        out << node.Format() << "\n";
         out.close();
     }
 }
 
 //-----------------------------------------------------------------------
-void writeToBinary(const CBaseNode& node, const SFString& fileName)
-{
+void writeToBinary(const CBaseNode& node, const SFString& fileName) {
     SFString created;
     if (establishFolder(fileName,created)) {
         if (!created.empty() && !isTestMode())
             cerr << "mkdir(" << created << ")" << SFString(' ',20) << "                                                     \n";
         SFArchive archive(WRITING_ARCHIVE);
-        if (archive.Lock(fileName, binaryWriteCreate, LOCK_CREATE))
-        {
+        if (archive.Lock(fileName, binaryWriteCreate, LOCK_CREATE)) {
             ((CBlock *)&node)->Serialize(archive);
             archive.Close();
         }
     }
+}
+
+//-----------------------------------------------------------------------
+bool readFromJson(CBaseNode& node, const SFString& fileName) {
+    return false;
+};
+
+//-----------------------------------------------------------------------
+bool readFromBinary(CBaseNode& item, const SFString& fileName) {
+    // Assumes that the item is clear, so no Init
+    SFArchive archive(READING_ARCHIVE);
+    if (archive.Lock(fileName, binaryReadOnly, LOCK_NOWAIT)) {
+        item.Serialize(archive);
+        archive.Close();
+        return true;
+    }
+    return false;
 }
 
 //-----------------------------------------------------------------------
