@@ -146,6 +146,7 @@ bool CBlock::Serialize(SFArchive& archive) {
 bool CBlock::SerializeC(SFArchive& archive) const {
 
     // Writing always write the latest version of the data
+    ((CBlock*)this)->m_schema = getVersionNum();
     CBaseNode::SerializeC(archive);
     archive << gasLimit;
     archive << gasUsed;
@@ -236,6 +237,23 @@ bool CBlock::readBackLevel(SFArchive& archive) {
     CBaseNode::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
+#ifdef UPGRADING
+    if (m_schema < 514) {
+        CBlock_513 old;
+        archive >> old.gasLimit;
+        archive >> old.gasUsed;
+        archive >> old.hash;
+        archive >> old.logsBloom;
+        archive >> old.blockNumber;
+        archive >> old.parentHash;
+        archive >> old.timestamp;
+        archive >> old.transactions;
+        old.finishParse();
+        *this = old;
+        finishParse();
+        done = true;
+    }
+#endif
     // EXISTING_CODE
     return done;
 }
@@ -280,8 +298,10 @@ SFString CBlock::getValueByName(const SFString& fieldName) const {
             break;
         case 't':
             if ( fieldName % "timestamp" ) return fromTimestamp(timestamp);
-            if ( fieldName % "transactions" ) {
+            if ( fieldName % "transactions" || fieldName % "transactionsCnt" ) {
                 uint32_t cnt = transactions.getCount();
+                if (fieldName.endsWith("Cnt"))
+                    return asStringU(cnt);
                 if (!cnt) return "";
                 SFString retS;
                 for (uint32_t i = 0 ; i < cnt ; i++) {
@@ -312,7 +332,41 @@ ostream& operator<<(ostream& os, const CBlock& item) {
 }
 
 //---------------------------------------------------------------------------
+const CBaseNode *CBlock::getObjectAt(const SFString& name, uint32_t i) const {
+    if (name % "transactions")
+        return &transactions[i];
+    return NULL;
+}
+
+//---------------------------------------------------------------------------
 // EXISTING_CODE
+#ifdef UPGRADING
+CBlock& CBlock::operator=(const CBlock_513& old) {
+
+    // Pick up the missing stuff...
+    SFString results;
+    queryRawBlock(results, asStringU(blockNumber), false, false);
+    CRPCResult generic;
+    char *p = cleanUpJson((char*)(const char*)results);
+    generic.parseJson(p);
+    p = cleanUpJson((char *)generic.result.c_str());
+    parseJson(p);
+
+    // The old stuff should be identical, but we assign it anyway
+    gasLimit = old.gasLimit;
+    gasUsed = old.gasUsed;
+    hash = old.hash;
+    logsBloom = old.logsBloom;
+    blockNumber = old.blockNumber;
+    parentHash = old.parentHash;
+    timestamp = old.timestamp;
+    transactions.Clear();
+    for (uint32_t i = 0 ; i < old.transactions.getCount(); i++) {
+        transactions[transactions.getCount()] = old.transactions[i];
+    }
+    return *this;
+}
+#endif
 // EXISTING_CODE
 }  // namespace qblocks
 
