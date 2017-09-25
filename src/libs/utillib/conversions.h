@@ -252,7 +252,7 @@ namespace qblocks {
 #define fromTopic(a)    ("0x"+padLeft(toLower(SFString(to_hex((a)).c_str())),64,'0'))
 #define fromGas(a)      asStringU(a)
 
-	extern  SFString   fromBloom(SFBloom bl);
+	extern  SFString   fromBloom(const SFBloom& bl);
 #define fromUnsigned(a) asStringU((a))
 
     //--------------------------------------------------------------------------------------------------------------
