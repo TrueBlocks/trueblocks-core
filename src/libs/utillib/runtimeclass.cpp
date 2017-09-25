@@ -92,16 +92,22 @@ namespace qblocks {
     //-------------------------------------------------------------------------
     void CRuntimeClass::sortFieldList(void) {
         if (m_FieldList) {
-            CFieldList list;
+
+            // Sort it into a temporary list...
+            CFieldList tmpList;
             LISTPOS p = m_FieldList->GetHeadPosition();
             while (p) {
                 CFieldData *field = m_FieldList->GetNext(p);
-                list.AddSorted(field, sortFieldsByName);
+                tmpList.AddSorted(field, sortFieldsByName);
             }
+
+            // ...clear it out...
             *m_FieldList = CFieldList();
-            p = list.GetHeadPosition();
+
+            // ...sort it into the original list
+            p = tmpList.GetHeadPosition();
             while (p) {
-                CFieldData *field = list.GetNext(p);
+                CFieldData *field = tmpList.GetNext(p);
                 m_FieldList->AddTail(field);
             }
         }
