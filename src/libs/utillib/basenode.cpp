@@ -77,7 +77,7 @@ namespace qblocks {
                 if ( fieldName % "showing" ) return asStringU(m_showing);
                 break;
         }
-        
+
         return "";
     }
 
@@ -640,7 +640,68 @@ namespace qblocks {
     SFString fldNotFound(const SFString& str) {
         return "Field not found: " + str + "\n";
     }
+
+    //--------------------------------------------------------------------------------
+    void CBaseNode::doExport(ostream& os) const {
+        //getRuntimeClass()->sortFieldList();
+        CFieldList *list = getRuntimeClass()->GetFieldList();
+        LISTPOS pos = list->GetHeadPosition();
+        os << "{\n";
+        incIndent();
+        while (pos) {
+            CFieldData *field = list->GetNext(pos);
+            if (!field->isHidden()) {
+                SFString name = field->getName();
+                os << indent() << "\"" << name << "\": ";
+                if (field->isArray()) {
+                    uint64_t cnt = toLongU(getValueByName(name+"Cnt"));
+                    os << "[";
+                    if (cnt) {
+                        incIndent();
+                        os << "\n";
+                        for (uint32_t i = 0 ; i < cnt ; i++) {
+                            const CBaseNode *node = getObjectAt(name, i);
+                            if (node) {
+                                os << indent();
+                                node->doExport(os);
+                                if (i < cnt-1)
+                                    os << ",";
+                                os << "\n";
+                            }
+                        }
+                        decIndent();
+                        os << indent();
+                    }
+                    os << "]";
+                    if (pos)
+                        os << ",";
+                    os << "\n";
+                } else if (field->isObject()) {
+                    os << getValueByName(name);
+                    if (pos)
+                        os << ",";
+                    os << "\n";
+                } else {
+                    SFString val = getValueByName(name);
+                    if (val != "null")
+                        os << "\"";
+                    os << val;
+                    if (val != "null")
+                        os << "\"";
+                    if (pos)
+                        os << ",";
+                    os << "\n";
+                }
+            }
+        }
+        decIndent();
+        os << indent();
+        os << "}";
+        if (indent().empty())
+            os << "\n";
+    }
 }  // namespace qblocks
 
 uint64_t testing::Test::nFuncs;
 testing::PF testing::Test::funcs[];
+
