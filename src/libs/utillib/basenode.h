@@ -54,10 +54,17 @@ namespace qblocks {
         virtual void finishParse(void) { }
         virtual void Format(CExportContext& ctx, const SFString& fmtIn, void *data = NULL) const { }
         virtual SFString Format(const SFString& fmtIn = "") const { return ""; }
+        virtual const CBaseNode *getObjectAt(const SFString& name, uint32_t i) const { return NULL; }
+        virtual const SFString   getStringAt(const SFString& name, uint32_t i) const { return ""; }
         virtual bool handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data = NULL) const {
             return false;
         }
 
+<<<<<<< HEAD
+=======
+        void doExport(ostream& os) const;
+
+>>>>>>> develop
     protected:
         void Init(void);
         void Copy(const CBaseNode& bn);
