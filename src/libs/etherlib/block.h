@@ -23,7 +23,9 @@ typedef SFList<CBlock*>             CBlockList;
 typedef SFUniqueList<CBlock*>       CBlockListU;
 
 // EXISTING_CODE
-// TODO(tjayrush): The fields here are the least stuff QuickBlocks needs, I should create a MegaBlock that contains all
+#ifdef UPGRADING
+#define CBlock_513 CBlock
+#endif
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
@@ -46,7 +48,12 @@ public:
 
     DECLARE_NODE(CBlock);
 
+    const CBaseNode *getObjectAt(const SFString& name, uint32_t i) const override;
+
     // EXISTING_CODE
+#ifdef UPGRADING
+    CBlock& operator=(const CBlock_513& ne);
+#endif
 #if 0
     SFAddress author;
     SFString difficulty;
