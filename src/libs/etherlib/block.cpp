@@ -146,7 +146,7 @@ bool CBlock::Serialize(SFArchive& archive) {
 bool CBlock::SerializeC(SFArchive& archive) const {
 
     // Writing always write the latest version of the data
-    ((CBlock*)this)->m_schema = getVersionNum();
+//    ((CBlock*)this)->m_schema = getVersionNum();
     CBaseNode::SerializeC(archive);
     archive << gasLimit;
     archive << gasUsed;
