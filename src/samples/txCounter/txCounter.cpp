@@ -9,8 +9,8 @@
 
 #if 0
 #define START_BLOCK 4030000
-#define N_FULL 2633521
 #define N_EMPTY 1396479
+#define N_FULL 2633521
 #define N_TRANS 38086242
 #define N_TRACES 0
 #else
@@ -75,7 +75,7 @@ void CCounter::countOne(const CBlock &block) {
     nEmpty = (block.blockNumber - nFull);
     nTrans += tCount;
 
-#if 0
+#ifdef SUBTOTAL_EVERY_X_BLOCKS
     static blknum_t last = START_BLOCK;
     blknum_t thisOne = (block.blockNumber / 10000) * 10000;
 #else
@@ -83,13 +83,10 @@ void CCounter::countOne(const CBlock &block) {
     SFTime thisOne = SubtractOneDay(SubtractOneDay(BOW(dateFromTimeStamp(block.timestamp))));
 #endif
 
-    if (last != thisOne) {
-
-        cout << thisOne << sep;
-    } else {
-        cout << block.blockNumber << sep;
-    }
-    cout
+    ostream *os = &cerr;
+    if (last != thisOne)
+        os = &cout;
+    *os << block.blockNumber << sep
         << dateFromTimeStamp(block.timestamp) << sep
         << nEmpty << sep
         << nFull << sep
@@ -100,14 +97,11 @@ void CCounter::countOne(const CBlock &block) {
         << nTraces;
 
     if (last != thisOne) {
-        cout << "          \n";
-    } else {
-        cout << "\r";
-    }
-
-    if (last != thisOne) {
+        *os << "          \n";
         last = thisOne;
+    } else {
+        *os << "\r";
     }
-
-    cout.flush();
+    os->flush();
 }
+
