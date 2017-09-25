@@ -60,11 +60,8 @@ namespace qblocks {
             return false;
         }
 
-<<<<<<< HEAD
-=======
         void doExport(ostream& os) const;
 
->>>>>>> develop
     protected:
         void Init(void);
         void Copy(const CBaseNode& bn);
