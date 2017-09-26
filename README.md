@@ -3,6 +3,7 @@
 ### Installing QuickBlocks
 
 First things first. We start with the [installation instructions](src/other/install/INSTALL.md).
+<img src=docs/logo.png>
 
 ### What is QuickBlocks?
 
