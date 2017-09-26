@@ -1,10 +1,9 @@
 ## Monitors
 
-This folder contains examples of monitors built for particular smart contracts. In each case, the 'parselib' folder has been automatically generated from the provided smart contract address. Please see the makefile for information on creating and building the 'parselib' code. The main.cpp file in each case shows different possibilities when interacting with a smart contract off line.
+The monitor folder is a private repo that holds software built to monitor particular smart contracts systems. This allows us to build accounting, auditing, forcasting, and analytics programs for use in a variety of applications.
 
-1. [tokenlib](../../src/libs/tokenlib) - the is basically a 'default' monitor library that provides support for the ERC 20 token interface. By providing this as a base library, we 
-allows en$
-2. [walletlib](../../src/libs/walletlib) - in the same way we provide support for ERC 20 tokens, we provide support for the basic wallet functions. This allows the 
-per-smart-contract 
-code t$
+A monitor is fully customizable and may be directed to `watch` multiple smart contract and/or external Ethereum addresses. One may even watch multiple smart contract systems together giving unparalleled insight into what's going on in your systems.
 
+Monitors take advantage of the [apps](), [tools]() and [libraries]() that comprise the system.
+
+Do you have a smart contract system that you would like us to monitor for you? Can we help you build your own smart contract monitors? Please contact us to explore the possibilities.
