@@ -1,34 +1,12 @@
 ## QuickBlocks
 
+### Installing QuickBlocks
+
+First things first. We start with the [installation instructions](src/other/install/INSTALL.md).
+
+### What is QuickBlocks?
+
 QuickBlocks is a collection of software [libraries](src/libs), [applications](src/apps), [tools](src/tools), and [examples](src/samples) that allow you to retrieve Ethereum blockchain data (a) more quickly, (b) with higher information content, (c) in an fully decentralized way, (d) in a fully automated way, and (e) in a highly maintenance free way. The many potential use cases for QuickBlocks are described [here](https://github.com/Great-Hill-Corporation/quickBlocks/blob/master/docs/README_use_cases.md).
-
-### Installation
-
-QuickBlocks has the following external dependencies:
-
-1. Python
-2. CURL library
-3. API key from etherscan.io
-
-The API key is required to use the ethslurp tool provided by QuickBlocks. 
-
-This tool will not work until you get an API key from http://etherscan.io/apis (registering is required). Every time you run ethSlurp without an API key, it will ask you for one until you enter it.
-
-QuicBlocks has been tested under the following environments:
-
-1. Linux (Ubuntu/Centos/Fedora/Debian/FreeBSD)
-2. Macintosh
-
-Next sections describe in detail the steps required to install QuickBlocks under each environment.
-
-IMPORTANT: Those instructions that contain the (sudo) tag must be executed as root user or as sudoer.
-
-1. [Ubuntu installation](src/other/install/UBUNTU_BUILD.md)
-2. [Fedora installation](src/other/install/FEDORA_BUILD.md)
-3. [Centos installation](src/other/install/CENTOS_BUILD.md)
-4. [Debian installation](src/other/install/DEBIAN_BUILD.md)
-5. [FreeBSD installation](src/other/install/FREEBSD_BUILD.md)
-6. [MAC OSX installation](src/other/install/MAC_BUILD.md)
 
 ### More Quickly
 
