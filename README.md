@@ -1,4 +1,4 @@
-<table><tr><td><h2 style="display:inline">QuickBlocks</h2></td><td><img height=80px src=docs/logo.png></td></tr></table>
+<table><tr><td><big><big><b>QuickBlocks</h2></td><td><img height=80px src=docs/logo.png></td></tr></table>
 
 #### Installing QuickBlocks
 
