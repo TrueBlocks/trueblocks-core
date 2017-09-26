@@ -125,7 +125,7 @@ bool COptions::loadData(void) {
 
     SFArchive archive(WRITING_ARCHIVE);
     if (archive.Lock(binFile, binaryWriteCreate, LOCK_CREATE)) {
-        if (verbose)
+        if (verbose && !isTestMode())
             cout << "Writing binary cache\n";
         archive << accounts;
         archive.Release();

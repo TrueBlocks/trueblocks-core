@@ -107,7 +107,8 @@ SFString acquireABI(CFunctionArray& functions, const SFAddress& addr, bool silen
         if (!results.Contains("NOTOK")) {
             nextTokenClear(results, '[');
             results.ReplaceReverse("]}", "");
-            cerr << "Caching abi in " << dispName << "\n";
+            if (!isTestMode())
+                cerr << "Caching abi in " << dispName << "\n";
             establishFolder(fileName);
             stringToAsciiFile(fileName, "["+results+"]");
         } else {
