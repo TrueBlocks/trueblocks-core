@@ -81,9 +81,9 @@ The [ethslurp tool](../../apps/ethslurp/README.md) will not run without an API k
 
 [Continue below](#finish) to build and install QuickBlocks
 
-***
 <a name="finish" href=""></a>
-### To build QuickBlocks and complete installation on all platforms
+***
+## To Build QuickBlocks and Finish Installation (all platforms)
 
 Open a terminal and change to whatever folder you normally store GitHub repos. Then:
 
