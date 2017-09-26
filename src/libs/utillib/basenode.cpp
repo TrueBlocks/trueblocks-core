@@ -77,6 +77,7 @@ namespace qblocks {
                 if ( fieldName % "showing" ) return asStringU(m_showing);
                 break;
         }
+
         return "";
     }
 
