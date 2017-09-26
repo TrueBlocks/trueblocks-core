@@ -41,6 +41,8 @@ public:
 
     DECLARE_NODE(CLogEntry);
 
+    const SFString getStringAt(const SFString& name, uint32_t i) const override;
+
     // EXISTING_CODE
     const CReceipt *pReceipt;
 #if 0
