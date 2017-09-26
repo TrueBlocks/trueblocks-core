@@ -13,3 +13,7 @@ QuickBlocks is a collection of software libraries, applications, and command-lin
 - [**The other folder**](./other/README.md): This folder contains various other documents such as installation instructions, FAQs, and other tools you may find useful.
 
 - [**The monitors folder**](./monitors/README.md): This folder holds proprietary code for monitoring, recording, replaying, debugging and accounting for smart contracts and builds per-account lists of transactions.
+
+#### Architecture
+
+<img src=../docs/architecture.png>
