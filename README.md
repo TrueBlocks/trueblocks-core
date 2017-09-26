@@ -1,9 +1,8 @@
-## QuickBlocks
+## QuickBlocks <img style="float:right;margin:0 0 10px 10px;" height=50px src=docs/logo.png>
 
 ### Installing QuickBlocks
 
 First things first. We start with the [installation instructions](src/other/install/INSTALL.md).
-<img style="float:right;margin:0 0 10px 10px;" height=50px src=docs/logo.png>
 
 ### What is QuickBlocks?
 
