@@ -1,4 +1,4 @@
-<center><table><tr><td align=center><img height=300px src=docs/headpage.png></td></tr></table></center>
+<center><table><tr><td align=center><img height=250px src=docs/headpage.png></td></tr></table></center>
 
 #### Installing QuickBlocks
 
