@@ -79,10 +79,10 @@ Continue below to build and install QuickBlocks
    > Install `cmake` [using these instructions](https://cmake.org/download/).  
    > Install `git` [using these instructions](https://git-scm.com/download/mac).
 
-Continue below to build and install QuickBlocks
+[Continue below](#finish) to build and install QuickBlocks
 
 ***
-
+<a name="finish" href=""></a>
 ### To build QuickBlocks and complete installation on all platforms
 
 Open a terminal and change to whatever folder you normally store GitHub repos. Then:
