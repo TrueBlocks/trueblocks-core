@@ -660,27 +660,28 @@ namespace qblocks {
                         incIndent();
                         os << "\n";
                         for (uint32_t i = 0 ; i < cnt ; i++) {
+                            os << indent();
                             const CBaseNode *node = getObjectAt(name, i);
                             if (node) {
-                                os << indent();
                                 node->doExport(os);
-                                if (i < cnt-1)
-                                    os << ",";
-                                os << "\n";
+                            } else {
+                                os << "\"" << getStringAt(name, i) << "\"";
                             }
+                            if (i < cnt-1)
+                                os << ",";
+                            os << "\n";
                         }
                         decIndent();
                         os << indent();
                     }
                     os << "]";
-                    if (pos)
-                        os << ",";
-                    os << "\n";
                 } else if (field->isObject()) {
-                    os << getValueByName(name);
-                    if (pos)
-                        os << ",";
-                    os << "\n";
+                    const CBaseNode *node = getObjectAt(name, 0);
+                    if (node) {
+                        node->doExport(os);
+                    } else {
+                        os << getValueByName(name);
+                    }
                 } else {
                     SFString val = getValueByName(name);
                     if (val != "null")
@@ -688,10 +689,10 @@ namespace qblocks {
                     os << val;
                     if (val != "null")
                         os << "\"";
-                    if (pos)
-                        os << ",";
-                    os << "\n";
                 }
+                if (pos)
+                    os << ",";
+                os << "\n";
             }
         }
         decIndent();
