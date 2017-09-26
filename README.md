@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-<center><table><tr><td align=center><big><big><big><big><b>QuickBlocks</b></big></big></big></big><br><img height=80px src=docs/logo.png></td></tr></table></center>
-=======
 <center><table><tr><td align=center><img height=300px src=docs/headpage.png></td></tr></table></center>
->>>>>>> develop
 
 #### Installing QuickBlocks
 
