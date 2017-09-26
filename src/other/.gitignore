@@ -3,6 +3,7 @@ addresses
 atexit
 below0050000
 bitsTwiddled
+blockFill
 blockCheck
 bloom
 bloomDao
