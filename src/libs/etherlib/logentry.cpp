@@ -214,8 +214,10 @@ SFString CLogEntry::getValueByName(const SFString& fieldName) const {
             if ( fieldName % "logIndex" ) return asStringU(logIndex);
             break;
         case 't':
-            if ( fieldName % "topics" ) {
+            if ( fieldName % "topics" || fieldName % "topicsCnt") {
                 uint32_t cnt = topics.getCount();
+                if (fieldName % "topicsCnt")
+                    return asStringU(cnt);
                 if (!cnt) return "";
                 SFString retS;
                 for (uint32_t i = 0 ; i < cnt ; i++) {
@@ -247,6 +249,13 @@ ostream& operator<<(ostream& os, const CLogEntry& item) {
 
     os << item.Format() << "\n";
     return os;
+}
+
+//---------------------------------------------------------------------------
+const SFString CLogEntry::getStringAt(const SFString& name, uint32_t i) const {
+    if (name % "topics" && i < topics.getCount())
+        return fromTopic(topics[i]);
+    return "";
 }
 
 //---------------------------------------------------------------------------
