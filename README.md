@@ -1,4 +1,4 @@
-| <h2>QuickBlocks</h2> | <img height=80px src=docs/logo.png> |
+| <h2 style="display:inline">QuickBlocks</h2> | <img height=80px src=docs/logo.png> |
 
 #### Installing QuickBlocks
 
