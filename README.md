@@ -1,5 +1,5 @@
-<table width=80%><tr>
-<td><big>QuickBlocks</big></td><td><img style="float:right;margin:0 0 10px 10px;" height=50px src=docs/logo.png></td>
+<table width=100%><tr>
+<td><big><big><b>QuickBlocks</b></big></big>&nbps;&nbps;&nbps;&nbps;&nbps;&nbps;&nbps;&nbps;&nbps;&nbps;</td><td><img style="float:right;margin:0 0 10px 10px;" height=50px src=docs/logo.png></td>
 </tr></table>
 
 ### Installing QuickBlocks
