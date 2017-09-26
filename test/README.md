@@ -1,13 +1,3 @@
-# tests
+# Tests Folder
 
-The remainder of the list are useful for testing, experimentation, and to teach various simple concepts used elsewhere in the system.
-
-6. [abiTest](abiTest) - This tool localizes the task of encoding and decoding the function and event signatures from an ABI. If you're looking to understand how to encode function or event signatures, study this code. It's very simple.
-
-7. [speedTest](speedTest) - This code performs a series of speed tests to make sure we maintain quick access to the data as we develop the software.
-
-8. [acctTree](acctTree) - This simple demonstration code builds a 16-way radix-tree of accounts, accumulating each account's first block, most recent block, and 'naive' balance. The 'naive' balance can be checked against the balance stored for that account in the node. If they differ, the account has been the recipient of an internal transaction.
-
-9. [sha3](sha3) - A simple demonstration of using the node to perform sha3 calculations.
-
-10. [bytesUsed](bytesUsed) - A very simple tool to keep track of how much disk space the QuickBlocks system is consuming.
+This folder holds the results of the test cases that you may run from ./build by entering `make test`. If you're running a fully-synchronized local node, all the tests should pass. If you are not running a local node, you may still run these tests, but many of them will fail. As a fallback for those not running a local node, you may preceed the testing command with an environment variable that will cause QuickBlocks to 'fallback' to [Infura](http://infrua.io): `FALLBACK=infura make test`.
