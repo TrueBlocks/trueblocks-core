@@ -1,6 +1,6 @@
 ## QuickBlocks
 
-<center><img height=50px src=docs/logo.png></center>
+<center><img height=80px src=docs/logo.png></center>
 
 #### Installing QuickBlocks
 
