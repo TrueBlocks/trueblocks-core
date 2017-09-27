@@ -15,7 +15,7 @@ The [ethslurp tool](../../apps/ethslurp/README.md) will not run without an API k
    > (sudo) yum install python python-devel  
    > (sudo) yum install libcurl-devel 
 
-Continue below to build and install QuickBlocks
+[Continue below](#finish) to build and install QuickBlocks
 
 ***
 
@@ -27,7 +27,7 @@ Continue below to build and install QuickBlocks
    > (sudo) apt-get install python python-dev  
    > (sudo) apt-get install libcurl3-dev   
 
-Continue below to build and install QuickBlocks
+[Continue below](#finish) to build and install QuickBlocks
 
 ***
 
@@ -39,7 +39,7 @@ Continue below to build and install QuickBlocks
    > (sudo) dnf install python python-devel   
    > (sudo) dnf install libcurl-devel   
 
-Continue below to build and install QuickBlocks
+[Continue below](#finish) to build and install QuickBlocks
 
 ***
 
@@ -56,7 +56,7 @@ Continue below to build and install QuickBlocks
    >  export CPLUS\_INCLUDE\_PATH=/usr/local/include/:${CPLUS\_INCLUDE\_PATH}  
    >  export LIBRARY\_PATH=/usr/local/lib/:${LIBRARY\_PATH}  
 
-Continue below to build and install QuickBlocks
+[Continue below](#finish) to build and install QuickBlocks
 
 ***
 
@@ -69,7 +69,7 @@ Continue below to build and install QuickBlocks
    > (sudo) apt-get install cmake  
    > (sudo) apt-get install python python-dev  
 
-Continue below to build and install QuickBlocks
+[Continue below](#finish) to build and install QuickBlocks
 
 ***
 
@@ -79,11 +79,11 @@ Continue below to build and install QuickBlocks
    > Install `cmake` [using these instructions](https://cmake.org/download/).  
    > Install `git` [using these instructions](https://git-scm.com/download/mac).
 
-Continue below to build and install QuickBlocks
+[Continue below](#finish) to build and install QuickBlocks
 
+<a name="finish" href=""></a>
 ***
-
-### To build QuickBlocks and complete installation on all platforms
+## To Build QuickBlocks and Finish Installation (all platforms)
 
 Open a terminal and change to whatever folder you normally store GitHub repos. Then:
 
