@@ -1,5 +1,3 @@
-<center><table><tr><td align=center><img height=250px src=docs/headpage.png></td></tr></table></center>
-
 #### Installing QuickBlocks
 
 First things first. We start with the [installation instructions](src/other/install/INSTALL.md).
