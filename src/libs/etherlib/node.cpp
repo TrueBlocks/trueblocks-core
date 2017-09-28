@@ -339,6 +339,14 @@ bool queryRawLogs(SFUint32 fromBlock, SFUint32 toBlock, const SFAddress& addr, S
 }
 
 //-------------------------------------------------------------------------
+bool getAccounts(SFAddressArray& addrs) {
+    SFString results = callRPC("eth_accounts", "[]", false);
+    while (!results.empty())
+        addrs[addrs.getCount()] = nextTokenClear(results,',');
+    return true;
+}
+
+    //-------------------------------------------------------------------------
 bool getTransaction(CTransaction& trans, const SFString& hashIn)
 {
     getObjectViaRPC(trans, "eth_getTransactionByHash", "[\"" + fixHash(hashIn) +"\"]");

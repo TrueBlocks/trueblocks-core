@@ -33,11 +33,11 @@ bool COptions::parseArguments(SFString& command) {
         if (arg == "-d" || arg == "--data") {
             asData = true;
 
-        } else if (arg == "-b" || arg == "--byAcct") {
-            byAccount = true;
-
         } else if (arg == "-n" || arg == "--noZero") {
             noZero = true;
+
+        } else if (arg == "-b" || arg == "--byAcct") {
+            byAccount = true;
 
         } else if (arg.startsWith("-l:") || arg.startsWith("--list:")) {
             CFilename fileName(arg.Substitute("-l:","").Substitute("--list:",""));
@@ -108,8 +108,8 @@ void COptions::Init(void) {
     holders = "";
     blocks = "";
     asData = false;
-    byAccount = false;
     noZero = false;
+    byAccount = false;
 }
 
 //---------------------------------------------------------------------------------------------------
