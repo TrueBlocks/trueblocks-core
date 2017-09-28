@@ -27,7 +27,8 @@ int main(int argc, const char *argv[]) {
         if (!options.parseArguments(command))
             return 0;
 
-        cout << "block\ttoken\tholder\ttoken balance\n";
+        if (options.asData)
+            cout << "block\ttoken\tholder\ttoken balance\n";
         if (options.byAccount)
             reportByAccount(options);
         else
