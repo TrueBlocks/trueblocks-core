@@ -13,10 +13,11 @@ int main(int argc, const char *argv[]) {
     // Tell the system where the blocks are and which version to use
     etherlib_init("binary");
 
+#if 0
     if (isTestMode())
         colorsOff();
     return usage("The getReceipt tool is not yet implemented. Quitting...");
-#if 0
+#else
     // Parse command line, allowing for command files
     COptions options;
     if (!options.prepareArguments(argc, argv))
