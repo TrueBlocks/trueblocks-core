@@ -9,11 +9,11 @@
 
 //---------------------------------------------------------------------------------------------------
 CParams params[] = {
-    CParams("~addr(s)",     "Ethereum address (starting with '0x') from which to retrieve the balance"),
-    CParams("~block(s)",    "the block at which to retrieve the balance (defaults to 'latest')"),
-    CParams("-data",        "render results as tab delimited data"),
-    CParams("-ether",       "return the balance in Ether instead of Wei"),
-    CParams("",             "Retrieve the balance for an account at a block.\n"),
+    CParams("~address_list", "One or more Ethereum addresses (starting with '0x') from which to retrieve balances"),
+    CParams("~block_list",   "a list of one or more blocks at which to report balances, if empty defaults to 'latest'"),
+    CParams("-noZero",       "suppress the display of zero balance accounts"),
+    CParams("-data",         "render results as tab delimited data"),
+    CParams("",              "Retrieve the balance(s) for one or more accounts at one or more blocks.\n"),
 };
 uint32_t nParams = sizeof(params) / sizeof(CParams);
 
@@ -26,11 +26,12 @@ bool COptions::parseArguments(SFString& command) {
     Init();
     while (!command.empty()) {
         SFString arg = nextTokenClear(command, ' ');
-        if (arg == "-e" || arg == "--ether") {
-            asEther = true;
-
-        } else if (arg == "-d" || arg == "--data") {
+        SFString orig = arg;
+        if (arg == "-d" || arg == "--data") {
             asData = true;
+
+        } else if (arg == "-n" || arg == "--noZero") {
+            noZero = true;
 
         } else if (arg.startsWith("0x")) {
             if (!isAddress(arg))
@@ -46,7 +47,7 @@ bool COptions::parseArguments(SFString& command) {
         } else {
 
             if (toLong(arg) < 0)
-                return usage(arg + " does not appear to be a valid address. Quitting...");
+                return usage(arg + " does not appear to be a valid block. Quitting...");
             blocks += arg + "|";
         }
     }
@@ -67,8 +68,8 @@ void COptions::Init(void) {
 
     addrs = "";
     blocks = "";
-    asEther = false;
     asData = false;
+    noZero = false;
 }
 
 //---------------------------------------------------------------------------------------------------

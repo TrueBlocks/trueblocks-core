@@ -10,8 +10,8 @@ class COptions : public COptionsBase {
 public:
     SFString addrs;
     SFString blocks;
-    bool asEther;
     bool asData;
+    bool noZero;
 
     COptions(void);
     ~COptions(void);

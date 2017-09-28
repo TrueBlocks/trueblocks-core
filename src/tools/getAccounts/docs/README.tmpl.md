@@ -1,24 +1,23 @@
 ## [{NAME}]
 
-`ethName` provides a very simple, wholy-inadequate method to keep track of 'real life' names and their associated Ethereum addresses. While this tool needs a lot of work, it does come in handy. Eventually, we will transition this tool to use ENS (or an equivalent).
+`getAccounts` is a very simple tool that simply reports the list of addresses that the local node holds in its keystore. It can be used to self-report on your holdings.
 
-One way to use this tool is to feed its output into another tool's input. For example, the following command would open the [EtherScan](http://etherscan.io) website to the address associated with The DAO:
+A simple way to effectively use this tool is to feed its output through either getBalance or getTokenBal to report on current holdings. Using the --ether or --dollars command line options give more information. For example, you can do these commands:
 
-    ethscan.py `ethName -a DAO`
+List accounts on the local node:
 
-[{USAGE_TABLE}]#### Notes
+    getAccounts
 
-With a single search term, the tool searches both `name` and `address`. With two search terms, the first must match the `address` field, and the second must match the `name` field. When there are two search terms, both must match.
+List balances of the local node's accounts:
 
-If one mixes options, the `--edit` option always predominates (i.e. the program opens the database and then quits).
+    getBalance `getAccounts | xargs`
+    
+List balances of the local node's accounts in US dollars:
 
-The `--list` option predominates otherwise. If present, the tool displays a list of stored names and addresses and then quits.
+    getBalance `getAccounts | xargs` --dollars
 
-The `--count` option works with any other option and will simply display the number of matches or '0 matches' if 
-none.
+List token balances on the Singular DTV token for the local node's accounts in ether:
 
-The `--matchCase` option requires case sensitive matching. It works with all other options.
+    getTokenBal `ethName -a singular` `getAccounts | xargs` --ether
 
-The `--addrOnly` option modifies the display output and therefore works with any other options.
-
-[{FOOTER}]
+[{USAGE_TABLE}][{FOOTER}]

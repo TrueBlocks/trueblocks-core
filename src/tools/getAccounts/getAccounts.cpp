@@ -27,17 +27,7 @@ int main(int argc, const char *argv[]) {
         getAccounts(addrs);
 
         for (uint32_t i = 0 ; i < addrs.getCount() ; i++)
-        if (bal > 0 || !options.noZero) {
-            if (options.asData) {
-                cout << block << "\t" << token << "\t" << holder << "\t" << sBal << "\n";
-            } else {
-                cout << "    Balance for account " << cGreen << holder << cOff;
-                cout << " at block " << cTeal << block << cOff;
-                cout << " is " << cYellow << sBal << cOff << "\n";
-            }
-
             cout << addrs[i] << "\n";
     }
-
     return 0;
 }

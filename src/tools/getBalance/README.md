@@ -4,17 +4,17 @@ Retrieve the balance of an Ethereum address (or addresses) at the given block(s)
 
 #### Usage
 
-`Usage:`    getBalance [-d|-e|-v|-h] addrs blocks  
-`Purpose:`  Retrieve the balance for an account at a block.
+`Usage:`    getBalance [-n|-d|-v|-h] address_list block_list  
+`Purpose:`  Retrieve the balance(s) for one or more accounts at one or more blocks.
              
 `Where:`  
 
 | Option | Full Command | Description |
 | -------: | :------- | :------- |
-|  | addrs | Ethereum address (starting with '0x') from which to retrieve the balance |
-|  | blocks | the block at which to retrieve the balance (defaults to 'latest') |
+|  | address_list | One or more Ethereum addresses (starting with '0x') from which to retrieve balances |
+|  | block_list | a list of one or more blocks at which to report balances, if empty defaults to 'latest' |
+| -n | --noZero | suppress the display of zero balance accounts |
 | -d | --data | render results as tab delimited data |
-| -e | --ether | return the balance in Ether instead of Wei |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
