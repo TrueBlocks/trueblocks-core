@@ -1,44 +1,36 @@
-## ethName
+## getAccounts
 
-`ethName` provides a very simple, wholy-inadequate method to keep track of 'real life' names and their associated Ethereum addresses. While this tool needs a lot of work, it does come in handy. Eventually, we will transition this tool to use ENS (or an equivalent).
+`getAccounts` is a very simple tool that simply reports the list of addresses that the local node holds in its keystore. It can be used to self-report on your holdings.
 
-One way to use this tool is to feed its output into another tool's input. For example, the following command would open the [EtherScan](http://etherscan.io) website to the address associated with The DAO:
+A simple way to effectively use this tool is to feed its output through either getBalance or getTokenBal to report on current holdings. Using the --ether or --dollars command line options give more information. For example, you can do these commands:
 
-    ethscan.py `ethName -a DAO`
+List accounts on the local node:
+
+    getAccounts
+
+List balances of the local node's accounts:
+
+    getBalance `getAccounts | xargs`
+    
+List balances of the local node's accounts in US dollars:
+
+    getBalance `getAccounts | xargs` --dollars
+
+List token balances on the Singular DTV token for the local node's accounts in ether:
+
+    getTokenBal `ethName -a singular` `getAccounts | xargs` --ether
 
 #### Usage
 
-`Usage:`    ethName [-a|-c|-o|-l|-m|-s|-v|-h] term [name]  
-`Purpose:`  Find a name given an Ethereum address, or find an address given a name.
-             
+`Usage:`    getAccounts [-a|-v|-h]  
+`Purpose:`  Show the list of Ethereum accounts known to the local node.  
 `Where:`  
 
 | Option | Full Command | Description |
 | -------: | :------- | :------- |
-|  | term [name] | search terms |
-| -a | --addrOnly | export only the associated address to be used as input to further commands |
-| -c | --count | print only the count of the number of matches |
-| -o | --open | open the name database for editing |
-| -l | --list | list all names in the database |
-| -m | --matchCase | matches must agree in case (the default is to ignore case) |
-| -s | --source | search 'source' field as well name and address (the default) |
+| -a | --alone | Show only the addresses for use in scripting |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
-
-#### Notes
-
-With a single search term, the tool searches both `name` and `address`. With two search terms, the first must match the `address` field, and the second must match the `name` field. When there are two search terms, both must match.
-
-If one mixes options, the `--edit` option always predominates (i.e. the program opens the database and then quits).
-
-The `--list` option predominates otherwise. If present, the tool displays a list of stored names and addresses and then quits.
-
-The `--count` option works with any other option and will simply display the number of matches or '0 matches' if 
-none.
-
-The `--matchCase` option requires case sensitive matching. It works with all other options.
-
-The `--addrOnly` option modifies the display output and therefore works with any other options.
 
 #### Other Options
 
