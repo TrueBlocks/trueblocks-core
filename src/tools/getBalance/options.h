@@ -19,7 +19,3 @@ public:
     bool parseArguments(SFString& command);
     void Init(void);
 };
-
-//-----------------------------------------------------------------------------
-extern bool visitNonEmptyBlock(CBlock& node, void *data);
-extern bool visitEmptyBlock(CBlock& node, void *data);
