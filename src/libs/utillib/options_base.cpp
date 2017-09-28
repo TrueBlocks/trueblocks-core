@@ -189,19 +189,19 @@ namespace qblocks {
             cmdLine.ReplaceAll("--nocolor ","");
             colorsOff();
 
-        } else if (cmdLine.Contains("--ether " )) {
+        } else if (isEnabled(OPT_DENOM) && cmdLine.Contains("--ether " )) {
             cmdLine.ReplaceAll("--ether ","");
             expContext().asEther = true;
             expContext().asDollars = false;
             expContext().asWei = false;
 
-        } else if (cmdLine.Contains("--wei ")) {
+        } else if (isEnabled(OPT_DENOM) && cmdLine.Contains("--wei ")) {
             cmdLine.ReplaceAll("--wei ","");
             expContext().asEther = false;
             expContext().asDollars = false;
             expContext().asWei = true;
 
-        } else if (cmdLine.Contains("--dollars ")) {
+        } else if (isEnabled(OPT_DENOM) && cmdLine.Contains("--dollars ")) {
             cmdLine.ReplaceAll("--dollars ","");
             expContext().asEther = false;
             expContext().asDollars = true;
@@ -213,15 +213,15 @@ namespace qblocks {
 
     //--------------------------------------------------------------------------------
     bool COptionsBase::builtInCmd(const SFString& arg) {
-        if (arg == "-v" || arg.startsWith("-v:") || arg.startsWith("--verbose"))
+        if (isEnabled(OPT_VERBOSE) && (arg == "-v" || arg.startsWith("-v:") || arg.startsWith("--verbose")))
+            return true;
+        if (isEnabled(OPT_DENOM) && (arg == "--ether" || arg == "--wei" || arg == "--dollars"))
             return true;
         if (arg == "-h" || arg == "--help")
             return true;
         if (arg == "--version")
             return true;
         if (arg == "--nocolors" || arg == "--nocolor")
-            return true;
-        if (arg == "--ether" || arg == "--wei" || arg == "--dollars")
             return true;
         if (arg == "null")
             return true;
@@ -323,7 +323,7 @@ namespace qblocks {
                 ctx << paramsPtr[i].shortName << "|";
             }
         }
-        if (COptionsBase::useVerbose)
+        if (isEnabled(OPT_VERBOSE))
             ctx << "-v|";
         ctx << "-h";
         if (!COptionsBase::needsOption)
@@ -411,7 +411,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
             }
         }
 
-        if (COptionsBase::useVerbose)
+        if (isEnabled(OPT_VERBOSE))
             ctx << oneDescription("-v", "-verbose", "set verbose level. Either -v, --verbose or -v:n where 'n' is level", false, false);
         ctx << oneDescription("-h", "-help", "display this help screen", false, false);
         ASSERT(pOptions);
@@ -494,7 +494,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
     }
 
     //--------------------------------------------------------------------------------
-    bool COptionsBase::useVerbose = true;
+    uint32_t COptionsBase::enableBits = OPT_DEFAULT;
     bool COptionsBase::isReadme = false;
     bool COptionsBase::needsOption = false;
 
@@ -522,6 +522,19 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
     //-------------------------------------------------------------------------
     namespace qbGlobals {
         static SFString source;
+    }
+
+    //-------------------------------------------------------------------------
+    bool isEnabled(uint32_t q) {
+        return COptionsBase::enableBits & q;
+    }
+
+    void optionOff(uint32_t q) {
+        COptionsBase::enableBits &= (~q);
+    }
+
+    void optionOn (uint32_t q) {
+        COptionsBase::enableBits |= q;
     }
 
     //-------------------------------------------------------------------------

@@ -61,6 +61,7 @@ void COptions::Init(void) {
 
     blocks.Clear();
     alone = false;
+    optionOff(OPT_DENOM);
 }
 
 //---------------------------------------------------------------------------------------------------
