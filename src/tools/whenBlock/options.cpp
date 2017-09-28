@@ -126,6 +126,7 @@ void COptions::Init(void) {
     requests.Clear();
     alone = false;
     loadSpecials();
+    optionOff(OPT_DENOM);
 }
 
 //--------------------------------------------------------------------------------

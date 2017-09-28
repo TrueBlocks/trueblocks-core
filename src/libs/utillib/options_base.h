@@ -9,11 +9,18 @@
 
 #include "version.h"
 
+// Bit flags to enable / disable various options
+#define OPT_VERBOSE (1<<1)
+#define OPT_DENOM   (1<<2)
+#define OPT_BLOCKS  (1<<3)
+#define OPT_ADDRS   (1<<4)
+#define OPT_DEFAULT (OPT_VERBOSE|OPT_DENOM|OPT_BLOCKS|OPT_ADDRS)
+
 namespace qblocks {
 
     class COptionsBase {
     public:
-        static bool useVerbose;
+        static uint32_t enableBits;
         static bool needsOption;
         static bool isReadme;
 
@@ -79,4 +86,8 @@ namespace qblocks {
     extern CParams *paramsPtr;
     extern uint32_t& nParamsRef;
     extern COptionsBase *pOptions;
+
+    extern bool isEnabled(uint32_t q);
+    extern void optionOff(uint32_t q);
+    extern void optionOn (uint32_t q);
 }  // namespace qblocks

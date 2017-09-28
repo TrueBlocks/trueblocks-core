@@ -75,7 +75,7 @@ void COptions::Init(void) {
     stop  = NOPOS;
     skip  = NOPOS;
     display = false;
-    useVerbose = false;
+    optionOff(OPT_VERBOSE);
     minArgs = 2;
 }
 
