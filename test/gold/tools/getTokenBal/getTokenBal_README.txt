@@ -2,19 +2,28 @@ getTokenBal argc: 2 [1:-th]
 getTokenBal -th 
 #### Usage
 
-`Usage:`    getTokenBal [-b|-l|-n|-d|-v|-h] <address> <address> [address...] [blocks...]  
-`Purpose:`  Retrieve the token balance(s) for one or more addresses at the latest or a list of blocks.
+`Usage:`    getTokenBal [-b|-l|-n|-d|-v|-h] &lt;address&gt; &lt;address&gt; [address...] [block...]  
+`Purpose:`  Retrieve the token balance(s) for one or more addresses at the given (or latest) block(s).
              
 `Where:`  
 
 | Option | Full Command | Description |
 | -------: | :------- | :------- |
-|  | address_list | two or more addresses (0x...), the first is an ERC20 token, balances for the remaining accounts are reported |
-|  | block_list | optional list of one or more blocks at which to report balances, if empty defaults to 'latest' |
-| -b | --byAcct | if enabled, all addresses (except the last) are considered ERC20 tokens, balances for each are reported the final address |
-| -l | --list fn | an alternative way to specify an address_list. Place one address per line in the file 'fn' |
+|  | address_list | two or more addresses (0x...), the first is an ERC20 token, balances for the rest are reported |
+|  | block_list | optional list of one or more blocks at which to report balances, see notes |
+| -b | --byAcct | consider each address an ERC20 token except the last, whose balance is reported for each token |
+| -l | --list fn | an alternative way to specify an address_list, place one address per line in the file 'fn' |
 | -n | --noZero | suppress the display of zero balance accounts |
 | -d | --data | render results as tab delimited data (for example, to build a cap table) |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
+`Notes:`
+
+- `addresses` must start with '0x' and be forty characters long
+- `block_list` may be space-separated list of values, a [start-end) range, a `special`, or any combination
+- this tool retrieves information from the local node or the ${FALLBACK} node, if configured
+- if the token contract(s) from which you request balances are not ERC20 compliant, the results are undefined.
+- if the queried node does not store historical state, the results are undefined.
+- `special` blocks are detailed under `whenBlock --help`
+  

@@ -28,8 +28,8 @@ int main(int argc, const char * argv[]) {
         // There can be more than one thing to do...
         if (!options.quiet)
             cout << (options.isMulti() ? "[" : "");
-        if (options.isRange) {
-            for (SFUint32 i = options.start ; i < options.stop ; i++) {
+        if (options.blocks.isRange) {
+            for (SFUint32 i = options.blocks.start ; i < options.blocks.stop ; i++) {
                 if (options.isCheck) {
                     checkResults += checkOneBlock(i, options);
 
@@ -42,48 +42,35 @@ int main(int argc, const char * argv[]) {
                     }
                     if (!options.quiet) {
                         cout << result;
-                        if (i < options.stop-1)
+                        if (i < options.blocks.stop-1)
                             cout << ",";
                         cout << "\n";
 
-                    } else if (!(i%150)) {
-                        cerr << ".";
-                        cerr.flush();
-
-                    } else if (!(i%1000)) {
-                        cerr << "+";
-                        cerr.flush();
+                    } else {
+                        interumReport(cerr, i);
                     }
                 }
             }
         } else {
-            for (SFUint32 i = 0 ; i < options.nNums ; i++) {
+            for (SFUint32 i = 0 ; i < options.blocks.nNums ; i++) {
                 if (options.isCheck) {
-                    checkResults += checkOneBlock(options.nums[i], options);
+                    checkResults += checkOneBlock(options.blocks.nums[i], options);
 
                 } else {
-                    SFString result = doOneBlock(options.nums[i], options);
+                    SFString result = doOneBlock(options.blocks.nums[i], options);
                     if (options.normalize) {
                         if (verbose)
-                            cout << options.nums[i] << "\n";
+                            cout << options.blocks.nums[i] << "\n";
                         result = normalizeBlock(result, false);
                     }
                     if (!options.quiet) {
                         cout << result;
-                        if (i < options.nNums - 1)
+                        if (i < options.blocks.nNums - 1)
                             cout << ",";
                         cout << "\n";
-                        if (options.isCheck) {
-                            // TODO(any): read 'raw' and compare result with gold
-                        }
 
-                    } else if (!(i%150)) {
-                        cerr << ".";
-                        cerr.flush();
-
-                    } else if (!(i%1000)) {
-                        cerr << "+";
-                        cerr.flush();
+                    } else {
+                        interumReport(cerr, i);
                     }
                 }
             }
@@ -204,3 +191,11 @@ SFString checkOneBlock(SFUint32 num, const COptions& opt) {
             head + diffA +
             head + diffB;
 }
+
+//------------------------------------------------------------
+void interumReport(ostream& os, blknum_t i) {
+    os << (!(i%150) ? "." : (!(i%1000)) ? "+" : "");  // dots '.' at every 150, '+' at every 1000
+    os.flush();
+}
+
+
