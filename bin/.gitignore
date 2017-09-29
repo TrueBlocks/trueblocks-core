@@ -6,6 +6,7 @@ blockScrape
 bloomMan
 build
 bytesUsed
+buildAll
 cacheMan
 chifra
 clearCacheEntry.py
