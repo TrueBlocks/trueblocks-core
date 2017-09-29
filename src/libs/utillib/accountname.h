@@ -10,7 +10,9 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
-#include "utillib.h"
+#include "basetypes.h"
+#include "basenode.h"
+#include "sfarchive.h"
 
 namespace qblocks {
 
