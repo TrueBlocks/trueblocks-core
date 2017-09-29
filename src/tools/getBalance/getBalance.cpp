@@ -18,6 +18,7 @@ int main(int argc, const char *argv[]) {
     if (!options.prepareArguments(argc, argv))
         return 0;
 
+    bool needsNewline = true;
     while (!options.commandList.empty()) {
 
         SFString command = nextTokenClear(options.commandList, '\n');
@@ -26,6 +27,8 @@ int main(int argc, const char *argv[]) {
 
         if (!options.parseArguments(command))
             return 0;
+
+        blknum_t latestBlock = getLatestBlockFromClient();
 
         // For each address
         while (!options.addrs.empty()) {
@@ -36,11 +39,15 @@ int main(int argc, const char *argv[]) {
             while (!blocks.empty()) {
 
                 blknum_t block = toLongU(nextTokenClear(blocks, '|'));
+                if (block > latestBlock)
+                    return usage("Block " + asStringU(block) + " is later than the last valid block " + asStringU(latestBlock) + ". Quitting...");
+
                 SFUintBN bal = getBalance(addr, block, false);
                 SFString sBal = to_string(bal).c_str();
                 if (expContext().asEther)
                     sBal = wei2Ether(to_string(bal).c_str());
 
+                needsNewline = true;
                 if (bal > 0 || !options.noZero) {
                     if (options.asData) {
                         cout << block << "\t" << addr << "\t" << sBal << "\n";
@@ -49,6 +56,7 @@ int main(int argc, const char *argv[]) {
                         cout << " at block " << cTeal << block << cOff;
                         cout << " is " << cYellow << sBal << cOff << "\n";
                     }
+                    needsNewline = false;
                 } else {
                     if (options.asData) {
                         cerr << block << "\t" << addr << "         \r";
@@ -62,5 +70,7 @@ int main(int argc, const char *argv[]) {
             }
         }
     }
+    if (needsNewline)
+        cerr << "                                                                                              \n";
     return 0;
 }
