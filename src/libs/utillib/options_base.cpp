@@ -242,6 +242,8 @@ namespace qblocks {
                 dummy = " range";
             else if (permitted == "<list>")
                 dummy = " list";
+            else if (permitted == "<fn>")
+                dummy = " fn";
             else if (!permitted.empty())
                 dummy = " val";
         }

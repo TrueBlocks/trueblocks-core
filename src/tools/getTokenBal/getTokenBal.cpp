@@ -41,12 +41,15 @@ int main(int argc, const char *argv[]) {
 //--------------------------------------------------------------
 void reportByToken(const COptions& options) {
 
+    bool needsNewline = true;
     // For each token contract
     SFString tokens = options.tokens;
     while (!tokens.empty()) {
         SFAddress token = nextTokenClear(tokens, '|');
         if (!options.asData)
             cout << "\n  For token contract: " << bBlue << token << cOff << "\n";
+
+        blknum_t latestBlock = getLatestBlockFromClient();
 
         // For each holder
         SFString holders = options.holders;
@@ -58,12 +61,17 @@ void reportByToken(const COptions& options) {
             while (!blocks.empty()) {
 
                 blknum_t block = toLongU(nextTokenClear(blocks, '|'));
+                if (block > latestBlock) {
+                    cerr << usageStr("Block " + asStringU(block) + " is later than the last valid block " + asStringU(latestBlock) + ". Quitting...");
+                    return;
+                }
 
                 SFUintBN bal = getTokenBalance(token, holder, block);
                 SFString sBal = to_string(bal).c_str();
                 if (expContext().asEther)
                     sBal = wei2Ether(to_string(bal).c_str());
 
+                needsNewline = true;
                 if (bal > 0 || !options.noZero) {
                     if (options.asData) {
                         cout << block << "\t" << token << "\t" << holder << "\t" << sBal << "\n";
@@ -72,6 +80,7 @@ void reportByToken(const COptions& options) {
                         cout << " at block " << cTeal << block << cOff;
                         cout << " is " << cYellow << sBal << cOff << "\n";
                     }
+                    needsNewline = false;
                 } else {
                     if (options.asData) {
                         cerr << block << "\t" << token << "\t" << holder << "         \r";
@@ -85,16 +94,22 @@ void reportByToken(const COptions& options) {
             }
         }
     }
+    if (needsNewline)
+        cerr << "                                                                                              \n";
 }
 
 //--------------------------------------------------------------
 void reportByAccount(const COptions& options) {
+
+    bool needsNewline = true;
     // For each holder
     SFString holders = options.holders;
     while (!holders.empty()) {
         SFAddress holder = nextTokenClear(holders, '|');
         if (!options.asData)
             cout << "\n  For account: " << bBlue << holder << cOff << "\n";
+
+        blknum_t latestBlock = getLatestBlockFromClient();
 
         // For each token contract
         SFString tokens = options.tokens;
@@ -106,12 +121,17 @@ void reportByAccount(const COptions& options) {
             while (!blocks.empty()) {
 
                 blknum_t block = toLongU(nextTokenClear(blocks, '|'));
+                if (block > latestBlock) {
+                    cerr << usageStr("Block " + asStringU(block) + " is later than the last valid block " + asStringU(latestBlock) + ". Quitting...");
+                    return;
+                }
 
                 SFUintBN bal = getTokenBalance(token, holder, block);
                 SFString sBal = to_string(bal).c_str();
                 if (expContext().asEther)
                     sBal = wei2Ether(to_string(bal).c_str());
 
+                needsNewline = true;
                 if (bal > 0 || !options.noZero) {
                     if (options.asData) {
                         cout << block << "\t" << token << "\t" << holder << "\t" << sBal << "\n";
@@ -120,12 +140,13 @@ void reportByAccount(const COptions& options) {
                         cout << " at block " << cTeal << block << cOff;
                         cout << " is " << cYellow << sBal << cOff << "\n";
                     }
+                    needsNewline = false;
                 } else {
                     if (options.asData) {
-                        cout << block << "\t" << token << "\t" << holder << "\n";
+                        cout << block << "\t" << token << "\t" << holder << "\r";
                     } else {
                         cout << "    Balance of token contract " << cGreen << token << cOff;
-                        cout << " at block " << cTeal << block << cOff << "\n";
+                        cout << " at block " << cTeal << block << cOff << "\r";
                     }
                 }
                 cerr.flush();
@@ -133,4 +154,6 @@ void reportByAccount(const COptions& options) {
             }
         }
     }
+    if (needsNewline)
+        cerr << "                                                                                              \n";
 }

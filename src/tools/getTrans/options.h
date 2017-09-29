@@ -18,7 +18,3 @@ public:
     void Init(void);
     SFString postProcess(const SFString& which, const SFString& str) const;
 };
-
-//-----------------------------------------------------------------------------
-extern bool visitNonEmptyBlock(CBlock& node, void *data);
-extern bool visitEmptyBlock(CBlock& node, void *data);
