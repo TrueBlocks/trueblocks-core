@@ -60,33 +60,41 @@ void reportByToken(const COptions& options) {
             SFString blocks = options.blocks;
             while (!blocks.empty()) {
 
-                blknum_t block = toLongU(nextTokenClear(blocks, '|'));
-                if (block > latestBlock) {
-                    cerr << usageStr("Block " + asStringU(block) + " is later than the last valid block " + asStringU(latestBlock) + ". Quitting...");
+                blknum_t blockNum = toLongU(nextTokenClear(blocks, '|'));
+                if (blockNum > latestBlock) {
+                    SFString late = (isTestMode() ? "--" : asStringU(latestBlock));
+                    cerr << usageStr("Block " + asStringU(blockNum) + " is later than the last valid block " + late + ". Quitting...");
                     return;
                 }
 
-                SFUintBN bal = getTokenBalance(token, holder, block);
+                SFUintBN bal = getTokenBalance(token, holder, blockNum);
                 SFString sBal = to_string(bal).c_str();
-                if (expContext().asEther)
+                if (expContext().asEther) {
                     sBal = wei2Ether(to_string(bal).c_str());
+                } else if (expContext().asDollars) {
+                    CBlock blk;
+                    getBlock(blk, blockNum);
+                    sBal = asDollars(blk.timestamp, bal);
+                    if (sBal.empty())
+                        sBal = "$0.00";
+                }
 
                 needsNewline = true;
                 if (bal > 0 || !options.noZero) {
                     if (options.asData) {
-                        cout << block << "\t" << token << "\t" << holder << "\t" << sBal << "\n";
+                        cout << blockNum << "\t" << token << "\t" << holder << "\t" << sBal << "\n";
                     } else {
                         cout << "    Balance for account " << cGreen << holder << cOff;
-                        cout << " at block " << cTeal << block << cOff;
+                        cout << " at block " << cTeal << blockNum << cOff;
                         cout << " is " << cYellow << sBal << cOff << "\n";
                     }
                     needsNewline = false;
                 } else {
                     if (options.asData) {
-                        cerr << block << "\t" << token << "\t" << holder << "         \r";
+                        cerr << blockNum << "\t" << token << "\t" << holder << "         \r";
                     } else {
                         cerr << "    Balance for account " << cGreen << holder << cOff;
-                        cerr << " at block " << cTeal << block << cOff << "           \r";
+                        cerr << " at block " << cTeal << blockNum << cOff << "           \r";
                     }
                 }
                 cerr.flush();
@@ -120,33 +128,41 @@ void reportByAccount(const COptions& options) {
             SFString blocks = options.blocks;
             while (!blocks.empty()) {
 
-                blknum_t block = toLongU(nextTokenClear(blocks, '|'));
-                if (block > latestBlock) {
-                    cerr << usageStr("Block " + asStringU(block) + " is later than the last valid block " + asStringU(latestBlock) + ". Quitting...");
+                blknum_t blockNum = toLongU(nextTokenClear(blocks, '|'));
+                if (blockNum > latestBlock) {
+                    SFString late = (isTestMode() ? "--" : asStringU(latestBlock));
+                    cerr << usageStr("Block " + asStringU(blockNum) + " is later than the last valid block " + late + ". Quitting...");
                     return;
                 }
 
-                SFUintBN bal = getTokenBalance(token, holder, block);
+                SFUintBN bal = getTokenBalance(token, holder, blockNum);
                 SFString sBal = to_string(bal).c_str();
-                if (expContext().asEther)
+                if (expContext().asEther) {
                     sBal = wei2Ether(to_string(bal).c_str());
+                } else if (expContext().asDollars) {
+                    CBlock blk;
+                    getBlock(blk, blockNum);
+                    sBal = asDollars(blk.timestamp, bal);
+                    if (sBal.empty())
+                        sBal = "$0.00";
+                }
 
                 needsNewline = true;
                 if (bal > 0 || !options.noZero) {
                     if (options.asData) {
-                        cout << block << "\t" << token << "\t" << holder << "\t" << sBal << "\n";
+                        cout << blockNum << "\t" << token << "\t" << holder << "\t" << sBal << "\n";
                     } else {
                         cout << "    Balance of token contract " << cGreen << token << cOff;
-                        cout << " at block " << cTeal << block << cOff;
+                        cout << " at block " << cTeal << blockNum << cOff;
                         cout << " is " << cYellow << sBal << cOff << "\n";
                     }
                     needsNewline = false;
                 } else {
                     if (options.asData) {
-                        cout << block << "\t" << token << "\t" << holder << "\r";
+                        cout << blockNum << "\t" << token << "\t" << holder << "\r";
                     } else {
                         cout << "    Balance of token contract " << cGreen << token << cOff;
-                        cout << " at block " << cTeal << block << cOff << "\r";
+                        cout << " at block " << cTeal << blockNum << cOff << "\r";
                     }
                 }
                 cerr.flush();
