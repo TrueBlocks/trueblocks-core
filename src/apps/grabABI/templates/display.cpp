@@ -13,6 +13,12 @@
 #include "debug.h"
 
 //-----------------------------------------------------------------------
+inline asDollars2(timestamp_t ts, const SFString& weiIn) {
+    SFString ret = asDollars(ts, weiIn);
+    return " (" + ret + ")";
+}
+
+//-----------------------------------------------------------------------
 void CVisitor::displayTrans(const CTransaction *theTrans) const {
 
     const CTransaction *promoted = promoteToFunc(theTrans);
@@ -44,9 +50,9 @@ void CVisitor::displayTrans(const CTransaction *theTrans) const {
 
         if (expContext().asDollars) {
             timestamp_t ts = toTimestamp(promoted->Format("[{TIMESTAMP}]"));
-            transStr.ReplaceAll("++USDV++",  asDollars(ts, toWei(promoted->Format("[{VALUE}]"))));
-            transStr.ReplaceAll("++USDGP++", asDollars(ts, toWei(promoted->Format("[{GASPRICE}]"))));
-            transStr.ReplaceAll("++USDGC++", asDollars(ts, toWei(promoted->Format("[{GASCOST}]"))));
+            transStr.ReplaceAll("++USDV++",  asDollars2(ts, toWei(promoted->Format("[{VALUE}]"))));
+            transStr.ReplaceAll("++USDGP++", asDollars2(ts, toWei(promoted->Format("[{GASPRICE}]"))));
+            transStr.ReplaceAll("++USDGC++", asDollars2(ts, toWei(promoted->Format("[{GASCOST}]"))));
         }
         transStr = annotate(transStr);
         cout << cOff << transStr;
@@ -164,7 +170,7 @@ void CVisitor::displayTrace(timestamp_t ts, const CTraceArray& traces, bool err)
             SFUintBN wei = canonicalWei(value);
             cout << c1 << ", \"value\": ";
             cout << (wei == 0 ? cOff : c3);
-            cout << wei2Ether(asStringBN(wei)) << (expContext().asDollars ? asDollars(ts, wei) : "") << c2;
+            cout << wei2Ether(asStringBN(wei)) << (expContext().asDollars ? asDollars2(ts, wei) : "") << c2;
             cout << c1 << " }" << cOff;
         }
     }

@@ -427,7 +427,7 @@ SFString asDollars(timestamp_t ts, SFUintBN weiIn) {
     uint64_t pInt = (uint64_t)price;
     weiIn *= pInt;
     weiIn /= 100;
-    return " ($" + wei2Ether(to_string(weiIn).c_str()) + ")";
+    return "$" + wei2Ether(to_string(weiIn).c_str());
 }
 // EXISTING_CODE
 }  // namespace qblocks
