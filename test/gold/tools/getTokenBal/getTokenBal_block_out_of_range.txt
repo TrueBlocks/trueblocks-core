@@ -1,0 +1,21 @@
+getTokenBal argc: 5 [1:0xd26114cd6EE289AccF82350c8d8487fedB8A0C07] [2:0x5e44c3e467a49c9ca0296a9f130fc433041aaa28] [3:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98] [4:6000000] 
+getTokenBal 0xd26114cd6EE289AccF82350c8d8487fedB8A0C07 0x5e44c3e467a49c9ca0296a9f130fc433041aaa28 0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98 6000000 
+
+  For token contract: 0xd26114cd6EE289AccF82350c8d8487fedB8A0C07
+
+  Block 6000000 is later than the last valid block 4165754. Quitting...
+
+  Usage:    getTokenBal [-b|-l|-n|-d|-v|-h] <address> <address> [address...] [blocks...]  
+  Purpose:  Retrieve the token balance(s) for one or more addresses at the latest or a list of blocks.
+             
+  Where:    
+	address_list          two or more addresses (0x...), the first is an ERC20 token, balances for the remaining accounts are reported (required)
+	block_list            optional list of one or more blocks at which to report balances, if empty defaults to 'latest'
+	-b  (--byAcct)        if enabled, all addresses (except the last) are considered ERC20 tokens, balances for each are reported the final address
+	-l  (--list fn)       an alternative way to specify an address_list. Place one address per line in the file 'fn'
+	-n  (--noZero)        suppress the display of zero balance accounts
+	-d  (--data)          render results as tab delimited data (for example, to build a cap table)
+	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
+	-h  (--help)          display this help screen
+
+  Powered by QuickBlocks
