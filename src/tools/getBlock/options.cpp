@@ -31,6 +31,7 @@ bool COptions::parseArguments(SFString& command) {
         return false;
 
     Init();
+    blknum_t latestBlock = getLatestBlockFromClient();
     while (!command.empty()) {
 
         SFString arg = nextTokenClear(command, ' ');
@@ -150,44 +151,24 @@ bool COptions::parseArguments(SFString& command) {
                 return usage("Invalid option: " + arg);
             }
 
+        } else if (arg == "latest") {
+            SFUint32 cache, client;
+            getLatestBlocks(cache, client);
+            cout << "\n\tFrom client: " << asYellow(client)
+                  << " inCache: " << asYellow(cache)
+                  << " Behind (maybe empty): " << asYellow(client-cache) << "\n\n";
+            exit(0);
+
         } else {
 
-            if (arg == "latest") {
-                SFUint32 cache, client;
-                getLatestBlocks(cache, client);
-                cout << "\n\tFrom client: " << asYellow(client)
-                        << " inCache: " << asYellow(cache)
-                        << " Behind (maybe empty): " << asYellow(client-cache) << "\n\n";
-                exit(0);
-
-            } else if (arg.Contains("-")) {
-
-                SFString arg1 = nextTokenClear(arg, '-');
-                if (arg1 == "latest")
-                    return usage("Cannot start range with 'latest'");
-
-                start = toUnsigned(arg1);
-                stop  = toUnsigned(arg);
-                if (arg == "latest")
-                    stop = getLatestBlockFromClient();
-                if (stop <= start)
-                    return usage("'stop' must be strictly larger than 'start'");
-                isRange = true;
-
-            } else {
-                SFUint32 num = toUnsigned(arg);
-                if (arg == "latest")
-                    num = getLatestBlockFromClient();
-                if (nNums < MAX_NUMS)
-                    nums[nNums++] = num;
-                else
-                    return usage("Too many blocks in list. Max is " + asString(MAX_NUMS));
-            }
+            SFString ret = blocks.parseBlockList(arg, latestBlock);
+            if (!ret.empty())
+                return usage(ret);
         }
     }
 
-    if (isRange) nNums = 0;  // if range is supplied, use the range
-    else if (nNums == 0) nNums = 1;  // otherwise, if not list, use 'latest'
+    if (blocks.isRange) blocks.nNums = 0;  // if range is supplied, use the range
+    else if (blocks.nNums == 0) blocks.nNums = 1;  // otherwise, if not list, use 'latest'
 
     if (terse && !isRaw)
         return usage("--terse options work only with --source:raw. Quitting...");
@@ -199,6 +180,7 @@ bool COptions::parseArguments(SFString& command) {
 void COptions::Init(void) {
     paramsPtr  = params;
     nParamsRef = nParams;
+    pOptions = this;
 
     // Mimics python -m json.tool indenting.
     expContext().spcs = 4;
@@ -207,16 +189,13 @@ void COptions::Init(void) {
 
     isCheck    = false;
     isRaw      = false;
-    isRange    = false;
     terse      = false;
     force      = false;
     normalize  = false;
     silent     = false;
     asks4Cache = false;
     quiet      = 0; // quiet has levels
-    nums[0]    = NOPOS;
-    nNums      = 0;  // we will set this to '1' later if user supplies no values
-    start = stop = 0;
+    blocks.Init();
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -230,7 +209,7 @@ COptions::~COptions(void) {
 
 //--------------------------------------------------------------------------------
 bool COptions::isMulti(void) const {
-    if (isRange)
-        return (stop - start) > 1;
-    return nNums > 1;
+    if (blocks.isRange)
+        return (blocks.stop - blocks.start) > 1;
+    return blocks.nNums > 1;
 }

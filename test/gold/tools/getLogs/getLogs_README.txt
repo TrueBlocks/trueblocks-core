@@ -2,7 +2,7 @@ getLogs argc: 2 [1:-th]
 getLogs -th 
 #### Usage
 
-`Usage:`    getLogs [-f|-a|-v|-h] < hash | bn.transID | bh.transID | address >
+`Usage:`    getLogs [-f|-a|-v|-h] &lt; hash | bn.transID | bh.transID | address &gt;
             -- note: This tool is incomplete.
   
 `Purpose:`  Retrieve logs from an Ethereum transaction using either QuickBlocks or a running node.

@@ -164,6 +164,7 @@ bool COptions::parseArguments(SFString& command) {
 void COptions::Init(void) {
     paramsPtr  = params;
     nParamsRef = nParams;
+    pOptions = this;
 
     // Mimics python -m json.tool indenting.
     expContext().spcs = 4;
