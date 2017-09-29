@@ -9,6 +9,8 @@
 
 #include "version.h"
 #include "namevalue.h"
+#include "accountname.h"
+#include "filenames.h"
 
 // Bit flags to enable / disable various options
 #define OPT_VERBOSE (1<<1)
@@ -28,9 +30,8 @@ namespace qblocks {
         SFString commandList;
         bool     fromFile;
         SFUint32 minArgs;
-        CNameValueArray specials;
 
-        COptionsBase(void) { fromFile = false; minArgs = 1; isReadme = false; needsOption = false; }
+        COptionsBase(void);
         virtual ~COptionsBase(void) { }
 
         bool prepareArguments(int argc, const char *argv[]);
@@ -39,9 +40,16 @@ namespace qblocks {
         bool standardOptions(SFString& cmdLine);
         virtual SFString postProcess(const SFString& which, const SFString& str) const { return str; }
 
+        // supporting special block names
+        CNameValueArray specials;
         void     loadSpecials(void);
         SFString listSpecials(bool terse) const;
         uint32_t findSpecial (const SFString& arg) const;
+
+        // supporting named accounts
+        CAccountNameArray namedAccounts;
+        CFilename namesFile;
+        bool loadNames(void);
 
     protected:
         virtual void Init(void) = 0;
@@ -111,4 +119,5 @@ namespace qblocks {
         COptionsBlockList(void);
     };
 
+    extern const char *STR_DEFAULT_DATA;
 }  // namespace qblocks
