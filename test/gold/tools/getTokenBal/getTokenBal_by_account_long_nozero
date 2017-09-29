@@ -1,6 +1,0 @@
-getTokenBal argc: 8 [1:0xb9e7f8568e08d5659f5d29c4997173d84cdf2607] [2:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98] [3:0x6b65353ac052f6c3a0c9688911b078bd025d6ab3] [4:0xa25d04fa348f107428708ba19c95d1c79b3744bf] [5:--byAcct] [6:-n] [7:4000000] 
-getTokenBal 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98 0x6b65353ac052f6c3a0c9688911b078bd025d6ab3 0xa25d04fa348f107428708ba19c95d1c79b3744bf --byAcct -n 4000000 
-
-  For account: 0xa25d04fa348f107428708ba19c95d1c79b3744bf
-    Balance of token contract 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 at block 4000000 is 435000000000000000000000
-    Balance of token contract 0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98 at block 4000000    Balance of token contract 0x6b65353ac052f6c3a0c9688911b078bd025d6ab3 at block 4000000                                                                                              
