@@ -8,6 +8,7 @@
  *------------------------------------------------------------------------*/
 
 #include "version.h"
+#include "namevalue.h"
 
 // Bit flags to enable / disable various options
 #define OPT_VERBOSE (1<<1)
@@ -27,6 +28,7 @@ namespace qblocks {
         SFString commandList;
         bool     fromFile;
         SFUint32 minArgs;
+        CNameValueArray specials;
 
         COptionsBase(void) { fromFile = false; minArgs = 1; isReadme = false; needsOption = false; }
         virtual ~COptionsBase(void) { }
@@ -36,6 +38,10 @@ namespace qblocks {
         bool builtInCmd(const SFString& arg);
         bool standardOptions(SFString& cmdLine);
         virtual SFString postProcess(const SFString& which, const SFString& str) const { return str; }
+
+        void     loadSpecials(void);
+        SFString listSpecials(bool terse) const;
+        uint32_t findSpecial (const SFString& arg) const;
 
     protected:
         virtual void Init(void) = 0;
@@ -65,6 +71,7 @@ namespace qblocks {
     extern SFString usageStr(const SFString& errMsg = "");
     extern SFString options(void);
     extern SFString descriptions(void);
+    extern SFString notes(void);
     extern SFString purpose(void);
 
     //--------------------------------------------------------------------------------
@@ -90,4 +97,18 @@ namespace qblocks {
     extern bool isEnabled(uint32_t q);
     extern void optionOff(uint32_t q);
     extern void optionOn (uint32_t q);
+
+#define MAX_BLOCK_LIST 100
+    class COptionsBlockList {
+    public:
+        bool isRange;
+        SFUint32 nums[MAX_BLOCK_LIST];
+        SFUint32 nNums;
+        SFUint32 start;
+        SFUint32 stop;
+        void Init(void);
+        SFString parseBlockList(const SFString& arg, blknum_t latest);
+        COptionsBlockList(void);
+    };
+
 }  // namespace qblocks

@@ -13,6 +13,7 @@
 #include "colors.h"
 #include "filenames.h"
 #include "toml.h"
+#include "namevalue.h"
 
 namespace qblocks {
 
@@ -297,6 +298,7 @@ namespace qblocks {
         os << bYellow << sep << "Usage:" << sep2 << "    " << cOff << programName << " " << options() << "  \n";
         os << purpose();
         os << descriptions() << "\n";
+        os << notes();
         if (!COptionsBase::isReadme)
             os << bBlue << "  Powered by QuickBlocks" << (isTestMode() ? "" : " (" + getVersionStr() + ")") << "\n" << cOff;
         SFString ret = os.str().c_str();
@@ -333,7 +335,10 @@ namespace qblocks {
         ctx << required;
 
         ASSERT(pOptions);
-        return pOptions->postProcess("options", ctx.str);
+        SFString ret = pOptions->postProcess("options", ctx.str);
+        if (COptionsBase::isReadme)
+            ret = ret.Substitute("<", "&lt;").Substitute(">", "&gt;");
+        return ret;
     }
 
     //--------------------------------------------------------------------------------
@@ -349,7 +354,6 @@ namespace qblocks {
             ctx << bYellow << sep << "Purpose:" << sep2 << "  " << cOff
                 << purpose.Substitute("\n", "\n           ") << "  \n";
         }
-        ctx << bYellow << sep << "Where:" << sep << cOff << "  \n";
         ASSERT(pOptions);
         return pOptions->postProcess("purpose", ctx.str);
     }
@@ -386,10 +390,23 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
     }
 
     //--------------------------------------------------------------------------------
+    SFString notes(void) {
+        CStringExportContext ctx;
+        ASSERT(pOptions);
+        SFString ret = pOptions->postProcess("notes", "");
+        if (!ret.empty()) {
+            ctx << bYellow << sep << "Notes:" << sep << cOff << "\n";
+            ctx << (COptionsBase::isReadme ? "\n" : "");
+            ctx << ret << "  \n";
+        }
+        return ctx.str;
+    }
+
+    //--------------------------------------------------------------------------------
     SFString descriptions(void) {
         SFString required;
         CStringExportContext ctx;
-
+        ctx << bYellow << sep << "Where:" << sep << cOff << "  \n";
         if (COptionsBase::isReadme) {
             ctx << "\n";
             ctx << "| Option | Full Command | Description |\n";
@@ -543,4 +560,173 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
     SFString getSource(void) { return qbGlobals::source; }
     void     setSource(const SFString& src) { qbGlobals::source = src; }
 
+    //--------------------------------------------------------------------------------
+    SFString COptionsBlockList::parseBlockList(const SFString& argIn, blknum_t latest) {
+        SFString arg = argIn;
+        if (arg.Contains("-")) {
+
+            SFString arg1 = nextTokenClear(arg, '-');
+            if (arg1 == "latest")
+                return "Cannot start range with 'latest'";
+
+            start = toUnsigned(arg1);
+            stop  = toUnsigned(arg);
+            if (arg == "latest")
+                stop = latest;
+            if (stop <= start)
+                return "'stop' must be strictly larger than 'start'";
+            isRange = true;
+
+        } else {
+            SFUint32 num = toUnsigned(arg);
+            if (arg == "latest")
+                num = latest;
+            if (nNums < MAX_BLOCK_LIST)
+                nums[nNums++] = num;
+            else
+                return "Too many blocks in list. Max is " + asString(MAX_BLOCK_LIST);
+        }
+        return "";
+    }
+
+    //--------------------------------------------------------------------------------
+    void COptionsBlockList::Init(void) {
+        isRange    = false;
+        nums[0]    = NOPOS;
+        nNums      = 0;  // we will set this to '1' later if user supplies no values
+        start = stop = 0;
+    }
+
+    //--------------------------------------------------------------------------------
+    COptionsBlockList::COptionsBlockList(void) {
+        Init();
+    }
+
+    //--------------------------------------------------------------------------------
+    int sortByBlockNum(const void *v1, const void *v2) {
+        CNameValue *b1 = (CNameValue *)v1;  // NOLINT
+        CNameValue *b2 = (CNameValue *)v2;  // NOLINT
+        if (b1->getName() == "latest")
+            return 1;
+        if (b2->getName() == "latest")
+            return -1;
+        if (b1->getValue().startsWith("tbd") && b1->getValue().startsWith("tbd"))
+            return b1->getValue().compare(b2->getValue());
+        if (b1->getValue().startsWith("tbd"))
+            return 1;
+        if (b2->getValue().startsWith("tbd"))
+            return -1;
+        return (int)(b1->getValueU() - b2->getValueU());
+    }
+
+    extern const char *STR_DEFAULT_SPECIALS;
+    //-----------------------------------------------------------------------
+    void COptionsBase::loadSpecials(void) {
+
+        static CToml *toml = NULL;
+        if (!toml) {
+            static CToml theToml(configPath("quickBlocks.toml"));
+            toml = &theToml;
+        }
+        specials.Clear();
+
+        SFString specialsStr = toml->getConfigArray("specials", "list", "");
+        if (specialsStr.empty()) {
+            SFString in = asciiFileToString(configPath("quickBlocks.toml"));
+            stringToAsciiFile(configPath("quickBlocks.toml"), in + "\n" + STR_DEFAULT_SPECIALS);
+            specialsStr = toml->getConfigArray("specials", "list", "");
+        }
+        char *p = cleanUpJson((char *)specialsStr.c_str());
+        while (p && *p) {
+            CNameValue pair;
+            uint32_t nFields = 0;
+            p = pair.parseJson(p, nFields);
+            if (nFields) {
+                //cout << pair.Format() << "\n";
+                if (pair.name == "latest") {
+                    pair.value = "[{LATEST}]";
+                }
+                specials[specials.getCount()] = pair;
+            }
+        }
+
+        specials.Sort(sortByBlockNum);
+        return;
+    }
+
+    //--------------------------------------------------------------------------------
+    SFString COptionsBase::listSpecials(bool terse) const {
+        if (specials.getCount() == 0)
+            ((COptionsBase*)this)->loadSpecials();
+        ostringstream os;
+        if (terse) {
+            os << bYellow << "\n  Notes:\n\t" << cOff;
+            os << "You may specify any of the following strings to represent 'special' blocks:\n\n\t    ";
+        } else {
+            os << bYellow << "\n\tSpecial Blocks:" << cOff;
+        }
+
+        SFString extra;
+        for (uint32_t i = 0 ; i < specials.getCount(); i++) {
+
+            SFString name  = specials[i].getName();
+            SFString block = specials[i].getValue();
+            if (name == "latest") {
+                if (isTestMode()) {
+                    block = "";
+                } else if (COptionsBase::isReadme) {
+                    block = "--";
+                } else if (i > 0 && specials[i-1].getValueU() >= specials[i].getValueU()) {
+                    extra = iWhite + " (syncing)" + cOff;
+                }
+            }
+
+            if (terse) {
+                os << name;
+                os << " (" << cTeal << block << extra << cOff << ")";
+                if (i < specials.getCount()-1)
+                    os << ", ";
+                if (!((i+1)%4))
+                    os << "\n\t    ";
+            } else {
+                os << "\n\t  " << padRight(name, 15) << cTeal << padLeft(block, 10) << cOff << extra ;
+            }
+        }
+        if (terse) {
+            if (specials.getCount() % 4)
+                os << "\n";
+        } else {
+            os << "\n";
+        }
+        return os.str().c_str();
+    }
+
+    //--------------------------------------------------------------------------------
+    uint32_t COptionsBase::findSpecial(const SFString& arg) const {
+        if (specials.getCount() == 0)
+            ((COptionsBase*)this)->loadSpecials();
+        for (uint32_t i = 0 ; i < specials.getCount() ; i++) {
+            if (arg == specials[i].getName())
+                return i;
+        }
+        return (uint32_t)-1;
+    }
+
+    //--------------------------------------------------------------------------------
+    const char *STR_DEFAULT_SPECIALS =
+    "[[specials]]\n"
+    "list = [\n"
+    "\t{ name = \"first\",          value = \"0\"          },\n"
+    "\t{ name = \"iceage\",         value = \"200000\"     },\n"
+    "\t{ name = \"homestead\",      value = \"1150000\"    },\n"
+    "\t{ name = \"daofund\",        value = \"1428756\"    },\n"
+    "\t{ name = \"daohack\",        value = \"1718497\"    },\n"
+    "\t{ name = \"daofork\",        value = \"1920000\"    },\n"
+    "\t{ name = \"tangerine\",      value = \"2463000\"    },\n"
+    "\t{ name = \"spurious\",       value = \"2675000\"    },\n"
+    "\t{ name = \"stateclear\",     value = \"2718436\"    },\n"
+    "\t{ name = \"byzantium\",      value = \"tbd\"        },\n"
+    "\t{ name = \"constantinople\", value = \"tbd\"        },\n"
+    "\t{ name = \"latest\",         value = \"\"           }\n"
+    "]\n";
 }  // namespace qblocks
