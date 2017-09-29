@@ -4,7 +4,7 @@
 
 #### Usage
 
-`Usage:`    getReceipt [-f|-a|-v|-h] < txhash | bn.transID | bh.transID | address >
+`Usage:`    getReceipt [-f|-a|-v|-h] &lt; txhash | bn.transID | bh.transID | address &gt;
   
 `Purpose:`  Retrieve a transaction's receipt using either QuickBlocks or a running node.
             --note: 'hash' and 'blockHash' must start with '0x'.  
