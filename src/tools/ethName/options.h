@@ -20,7 +20,7 @@ public:
     bool matchCase;
     bool open;
     bool list;
-    bool addrOnly;
+    bool alone;
     bool isEdit;
 
     COptions(void);
