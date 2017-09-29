@@ -9,6 +9,8 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include "basetypes.h"
+#include "basenode.h"
 #include "accountname.h"
 
 namespace qblocks {
