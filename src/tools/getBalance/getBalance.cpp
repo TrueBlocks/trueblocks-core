@@ -38,31 +38,40 @@ int main(int argc, const char *argv[]) {
             SFString blocks = options.blocks;
             while (!blocks.empty()) {
 
-                blknum_t block = toLongU(nextTokenClear(blocks, '|'));
-                if (block > latestBlock)
-                    return usage("Block " + asStringU(block) + " is later than the last valid block " + asStringU(latestBlock) + ". Quitting...");
+                blknum_t blockNum = toLongU(nextTokenClear(blocks, '|'));
+                if (blockNum > latestBlock) {
+                    SFString late = (isTestMode() ? "--" : asStringU(latestBlock));
+                    return usage("Block " + asStringU(blockNum) + " is later than the last valid block " + late + ". Quitting...");
+                }
 
-                SFUintBN bal = getBalance(addr, block, false);
+                SFUintBN bal = getBalance(addr, blockNum, false);
                 SFString sBal = to_string(bal).c_str();
-                if (expContext().asEther)
+                if (expContext().asEther) {
                     sBal = wei2Ether(to_string(bal).c_str());
+                } else if (expContext().asDollars) {
+                    CBlock blk;
+                    getBlock(blk, blockNum);
+                    sBal = asDollars(blk.timestamp, bal);
+                    if (sBal.empty())
+                        sBal = "$0.00";
+                }
 
                 needsNewline = true;
                 if (bal > 0 || !options.noZero) {
                     if (options.asData) {
-                        cout << block << "\t" << addr << "\t" << sBal << "\n";
+                        cout << blockNum << "\t" << addr << "\t" << sBal << "\n";
                     } else {
                         cout << "    Balance for account " << cGreen << addr << cOff;
-                        cout << " at block " << cTeal << block << cOff;
+                        cout << " at block " << cTeal << blockNum << cOff;
                         cout << " is " << cYellow << sBal << cOff << "\n";
                     }
                     needsNewline = false;
                 } else {
                     if (options.asData) {
-                        cerr << block << "\t" << addr << "         \r";
+                        cerr << blockNum << "\t" << addr << "         \r";
                     } else {
                         cerr << "    Balance for account " << cGreen << addr << cOff;
-                        cerr << " at block " << cTeal << block << cOff << "           \r";
+                        cerr << " at block " << cTeal << blockNum << cOff << "           \r";
                     }
                 }
                 cerr.flush();

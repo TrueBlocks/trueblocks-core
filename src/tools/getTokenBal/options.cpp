@@ -9,13 +9,13 @@
 
 //---------------------------------------------------------------------------------------------------
 CParams params[] = {
-    CParams("~address_list", "two or more addresses (0x...), the first is an ERC20 token, balances for the remaining accounts are reported"),
-    CParams("~!block_list",  "optional list of one or more blocks at which to report balances, if empty defaults to 'latest'"),
-    CParams("-byAcct",       "if enabled, all addresses (except the last) are considered ERC20 tokens, balances for each are reported the final address"),
-    CParams("-list:<fn>",    "an alternative way to specify an address_list. Place one address per line in the file 'fn'"),
+    CParams("~address_list", "two or more addresses (0x...), the first is an ERC20 token, balances for the rest are reported"),
+    CParams("~!block_list",  "optional list of one or more blocks at which to report balances, see notes"),
+    CParams("-byAcct",       "consider each address an ERC20 token except the last, whose balance is reported for each token"),
+    CParams("-list:<fn>",    "an alternative way to specify an address_list, place one address per line in the file 'fn'"),
     CParams("-noZero",       "suppress the display of zero balance accounts"),
     CParams("-data",         "render results as tab delimited data (for example, to build a cap table)"),
-    CParams("",              "Retrieve the token balance(s) for one or more addresses at the latest or a list of blocks.\n"),
+    CParams("",              "Retrieve the token balance(s) for one or more addresses at the given (or latest) block(s).\n"),
 };
 uint32_t nParams = sizeof(params) / sizeof(CParams);
 
@@ -124,7 +124,37 @@ COptions::~COptions(void) {
 
 //--------------------------------------------------------------------------------
 SFString COptions::postProcess(const SFString& which, const SFString& str) const {
-    if (which == "options")
-        return str.Substitute("address_list block_list", "<address> <address> [address...] [blocks...]");
+
+    if (which == "options") {
+        return str.Substitute("address_list block_list", "<address> <address> [address...] [block...]");
+
+    } else if (which == "notes" && (verbose || COptions::isReadme)) {
+
+        SFString tick = "- ";
+        SFString lead = "\t";
+        SFString trail = "\n";
+        SFString sep1, sep2;
+        if (COptionsBase::isReadme) {
+            sep1 = sep2 = "`";
+            lead = "";
+            trail = "\n";
+        }
+        SFString ad = sep1 + "addresses" + sep2;
+        SFString bl = sep1 + "block_list" + sep2;
+        SFString sp = sep1 + "special" + sep2;
+        SFString wb = sep1 + "whenBlock --help" + sep2;
+        SFString en = sep1 + "ethName" + sep2;
+
+        CStringExportContext ctx;
+// TODO(tjayrush): allow specifying ethereum addresses by name
+//        ctx << lead << tick << ad << " must start with '0x' and be forty characters long or be $named as per " << en << ".\n";
+        ctx << lead << tick << ad << " must start with '0x' and be forty characters long\n";
+        ctx << lead << tick << bl << " may be space-separated list of values, a [start-end) range, a " << sp << ", or any combination\n";
+        ctx << lead << tick << "this tool retrieves information from the local node or the ${FALLBACK} node, if configured\n";
+        ctx << lead << tick << "if the token contract(s) from which you request balances are not ERC20 compliant, the results are undefined.\n";
+        ctx << lead << tick << "if the queried node does not store historical state, the results are undefined.\n";
+        ctx << lead << tick << sp << " blocks are detailed under " << cTeal << wb << cOff << "\n";
+        return ctx.str;
+    }
     return str;
 }
