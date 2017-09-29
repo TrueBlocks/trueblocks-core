@@ -12,7 +12,7 @@
 //---------------------------------------------------------------------------------------------------
 CParams params[] = {
     CParams("~term [name]", "search terms"),
-    CParams("-addrOnly",    "export only the associated address to be used as input to further commands"),
+    CParams("-alone",       "export only the associated address (may be used in scripting)"),
     CParams("-count",       "print only the count of the number of matches"),
     CParams("-open",        "open the name database for editing"),
     CParams("-list",        "list all names in the database"),
@@ -37,8 +37,8 @@ bool COptions::parseArguments(SFString& command) {
         } else if (arg == "-c" || arg == "--count") {
             count = true;
 
-        } else if (arg == "-a" || arg == "--addrOnly") {
-            addrOnly = true;
+        } else if (arg == "-a" || arg == "--alone") {
+            alone = true;
 
         } else if (arg == "-l" || arg == "--list") {
             list = true;
@@ -87,7 +87,7 @@ void COptions::Init(void) {
     all = false;
     matchCase = false;
     list = false;
-    addrOnly = false;
+    alone = false;
     count = false;
     isEdit = false;
 }

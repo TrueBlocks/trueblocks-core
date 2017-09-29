@@ -34,7 +34,7 @@ int main(int argc, const char *argv[]) {
             exit(0);
         }
 
-        SFString fmt = (options.addrOnly ? "[{ADDR}]" : "");
+        SFString fmt = (options.alone ? "[{ADDR}]" : "");
         if (options.list) {
             if (options.count)
                 cout << options.accounts.getCount() << " items\n";
@@ -58,7 +58,7 @@ int main(int argc, const char *argv[]) {
 SFString COptions::showName(void) {
     SFString ret;
     uint32_t hits = 0;
-    SFString fmt = (addrOnly ? "[{ADDR}]" : "");
+    SFString fmt = (alone ? "[{ADDR}]" : "");
     for (uint32_t i = 0 ; i < accounts.getCount() ; i++) {
         if (accounts[i].Match(addr, name, source, matchCase, all)) {
             ret += (accounts[i].Format(fmt).Substitute("\n", " ").Substitute("  ", " ") + "\n");
