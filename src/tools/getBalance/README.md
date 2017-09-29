@@ -21,9 +21,7 @@ Retrieve the balance of an Ethereum address (or addresses) at the given block(s)
 `Notes:`
 
 - If an address has no ether at a block, the tool reports a zero balance.
-- This tool retrieves information from a locally running Ethereum node or the $(FALLBACK) node, if enabled.
-
-#### Other Options
+- This tool retrieves information from a locally running Ethereum node or the $(FALLBACK) node, if enabled.#### Other Options
 
 All **quickBlocks** command-line tools support the following commands (although in some case, they have no meaning):
 
