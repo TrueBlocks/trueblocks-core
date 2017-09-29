@@ -2,16 +2,26 @@
 
 `getReceipt` returns a transaction's receipt.
 
+#### Usage
 
-[0;31m  The getReceipt tool is not yet implemented. Quitting...
+`Usage:`    getReceipt [-f|-a|-v|-h] < txhash | bn.transID | bh.transID | address >
+  
+`Purpose:`  Retrieve a transaction's receipt using either QuickBlocks or a running node.
+            --note: 'hash' and 'blockHash' must start with '0x'.  
+`Where:`  
 
-[0;33m[1m  Usage:    [0mquickBlocks [-v|-h]  
-[0;33m[1m  Where:  [0m  
-	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
-	-h  (--help)          display this help screen
+| Option | Full Command | Description |
+| -------: | :------- | :------- |
+|  | txhash | one or more hashes of Ethereum transactions, or |
+|  | bn.transID | blockNumber.transactionID of one or more Ethereum transactions, or |
+|  | bh.transID | blockHash.transactionID of one or more Ethereum transactions, or |
+|  | address | if --address, then an Ethereum address |
+| -f | --fromNode | retrieve the transaction from the running node (from QuickBlocks otherwise) |
+| -a | --address | retrieve all logs (from node) given a list of one or more Ethereum addresses |
+| -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
+| -h | --help | display this help screen |
 
-[0;34m[1m  Powered by QuickBlocks (0.2.0-alpha)
-[0m
+
 #### Other Options
 
 All **quickBlocks** command-line tools support the following commands (although in some case, they have no meaning):

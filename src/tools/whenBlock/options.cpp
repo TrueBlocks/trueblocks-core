@@ -167,6 +167,8 @@ SFString COptions::listSpecials(bool terse) const {
         if (name == "latest") {
             if (isTestMode()) {
                 block = "";
+            } else if (COptionsBase::isReadme) {
+                block = "--";
             } else if (i > 0 && specials[i-1].getValueU() >= specials[i].getValueU()) {
                 extra = iWhite + " (syncing)" + cOff;
             }
