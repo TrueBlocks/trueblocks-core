@@ -1,7 +1,7 @@
 whenBlock argc: 3 [1:-a] [2:pppppp1] 
 whenBlock -a pppppp1 
 
-  Invalid argument: 'pppppp1'. Please supply either a JSON formatted date or a blockNumber. Quitting...
+  'pppppp1' does not appear to be a valid block. Quitting...
 
   Usage:    whenBlock [-a|-l|-v|-h] date / block  
   Purpose:  Finds the nearest block prior to a JSON-formatted date, or the nearest date prior to
@@ -19,6 +19,6 @@ whenBlock -a pppppp1
 
 	    first (0), iceage (200000), homestead (1150000), daofund (1428756), 
 	    daohack (1718497), daofork (1920000), tangerine (2463000), spurious (2675000), 
-	    stateclear (2718436), latest ()
-
+	    stateclear (2718436), byzantium (tbd), constantinople (tbd), latest ()
+	    
   Powered by QuickBlocks

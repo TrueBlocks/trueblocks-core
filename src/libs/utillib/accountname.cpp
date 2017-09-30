@@ -9,6 +9,8 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include "basetypes.h"
+#include "basenode.h"
 #include "accountname.h"
 
 namespace qblocks {
@@ -235,7 +237,7 @@ CAccountName::CAccountName(SFString& strIn) {
 }
 
 //---------------------------------------------------------------------------
-bool CAccountName::Match(const SFString& s1, const SFString& s2, const SFString& s3, bool matchCase, bool all) {
+bool CAccountName::Match(const SFString& s1, const SFString& s2, const SFString& s3, bool matchCase, bool all) const {
 
     SFString theAddr   = addr;
     SFString theName   = name + " " + symbol;

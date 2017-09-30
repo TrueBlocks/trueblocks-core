@@ -1,28 +1,33 @@
 ## getBalance
 
-Retrieve the balance of an Ethereum address (or addresses) at the given block(s). You may specify multiple addresses and/or multiple blocks on the line with at least one address. `block_list`, if not specified, defaults to `latest`.
+Retrieve the balance (in wei) of an address (or list of addresses) at a given block(s). You may specify multiple addresses and/or multiple blocks, but you must 
+specify at least one address.
 
 #### Usage
 
-`Usage:`    getBalance [-d|-e|-v|-h] addrs blocks  
-`Purpose:`  Retrieve the balance for an account at a block.
+`Usage:`    getBalance [-l|-n|-d|-v|-h] &lt;address&gt; [address...] [block...]  
+`Purpose:`  Retrieve the balance (in wei) for one or more addresses at the given block(s).
              
 `Where:`  
 
 | Option | Full Command | Description |
 | -------: | :------- | :------- |
-|  | addrs | Ethereum address (starting with '0x') from which to retrieve the balance |
-|  | blocks | the block at which to retrieve the balance (defaults to 'latest') |
+|  | address_list | one or more addresses (0x...) from which to retrieve balances |
+|  | block_list | optional list of one or more blocks at which to report balances, see notes |
+| -l | --list fn | an alternative way to specify an address_list; place one address per line in the file 'fn' |
+| -n | --noZero | suppress the display of zero balance accounts |
 | -d | --data | render results as tab delimited data |
-| -e | --ether | return the balance in Ether instead of Wei |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
 `Notes:`
 
-- If an address has no ether at a block, the tool reports a zero balance.
-- This tool retrieves information from a locally running Ethereum node or the $(FALLBACK) node, if enabled.
-
+- `addresses` must start with '0x' and be forty characters long
+- `block_list` may be space-separated list of values, a [start-end) range, a `special`, or any combination
+- this tool retrieves information from the local node or the ${FALLBACK} node, if configured
+- if the queried node does not store historical state, the results are undefined
+- `special` blocks are detailed under `whenBlock --help`
+  
 #### Other Options
 
 All **quickBlocks** command-line tools support the following commands (although in some case, they have no meaning):

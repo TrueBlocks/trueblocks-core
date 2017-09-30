@@ -19,7 +19,7 @@ block #1150000 (homestead) : 1457981393 : 2016-03-14 18:49:53 UTC
 block #1718497 (daohack) : 1466134488 : 2016-06-17 03:34:48 UTC
 block #1920000 (daofork) : 1469020840 : 2016-07-20 13:20:40 UTC
 
-  Invalid argument: 'mistake'. Please supply either a JSON formatted date or a blockNumber. Quitting...
+  'mistake' does not appear to be a valid block. Quitting...
 
   Usage:    whenBlock [-a|-l|-v|-h] date / block  
   Purpose:  Finds the nearest block prior to a JSON-formatted date, or the nearest date prior to
@@ -37,6 +37,6 @@ block #1920000 (daofork) : 1469020840 : 2016-07-20 13:20:40 UTC
 
 	    first (0), iceage (200000), homestead (1150000), daofund (1428756), 
 	    daohack (1718497), daofork (1920000), tangerine (2463000), spurious (2675000), 
-	    stateclear (2718436), latest ()
-
+	    stateclear (2718436), byzantium (tbd), constantinople (tbd), latest ()
+	    
   Powered by QuickBlocks

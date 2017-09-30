@@ -9,13 +9,13 @@
 
 //---------------------------------------------------------------------------------------------------
 CParams params[] = {
-    CParams("~!hash",       "one or more hashes of Ethereum transactions, or"),
+    CParams("~!txhash",       "one or more hashes of Ethereum transactions, or"),
     CParams("~!bn.transID", "blockNumber.transactionID of one or more Ethereum transactions, or"),
     CParams("~!bh.transID", "blockHash.transactionID of one or more Ethereum transactions, or"),
     CParams("~!address",    "if --address, then an Ethereum address"),
     CParams("-fromNode",    "retrieve the transaction from the running node (from QuickBlocks otherwise)"),
     CParams("-address",     "retrieve all logs (from node) given a list of one or more Ethereum addresses"),
-    CParams("",             "Retrieve logs from an Ethereum transaction using either QuickBlocks or a running node.\n"
+    CParams("",             "Retrieve a transaction's receipt using either QuickBlocks or a running node.\n"
                             " --note: 'hash' and 'blockHash' must start with '0x'."),
 };
 uint32_t nParams = sizeof(params) / sizeof(CParams);
@@ -101,7 +101,6 @@ COptions::~COptions(void) {
 //--------------------------------------------------------------------------------
 SFString COptions::postProcess(const SFString& which, const SFString& str) const {
     if (which == "options")
-        return str.Substitute("hash bn.transID bh.transID address","< hash | bn.transID | bh.transID | address >"
-                              "\n            -- note: This tool is incomplete.\n");
+        return str.Substitute("txhash bn.transID bh.transID address","< txhash | bn.transID | bh.transID | address >\n");
     return str;
 }

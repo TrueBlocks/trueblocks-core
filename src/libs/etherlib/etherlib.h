@@ -25,6 +25,5 @@
 #include "blooms.h"
 #include "accountwatch.h"
 #include "balhistory.h"
-#include "accountname.h"
 
 using namespace qblocks;

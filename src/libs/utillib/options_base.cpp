@@ -13,6 +13,8 @@
 #include "colors.h"
 #include "filenames.h"
 #include "toml.h"
+#include "namevalue.h"
+#include "accountname.h"
 
 namespace qblocks {
 
@@ -189,19 +191,19 @@ namespace qblocks {
             cmdLine.ReplaceAll("--nocolor ","");
             colorsOff();
 
-        } else if (cmdLine.Contains("--ether " )) {
+        } else if (isEnabled(OPT_DENOM) && cmdLine.Contains("--ether " )) {
             cmdLine.ReplaceAll("--ether ","");
             expContext().asEther = true;
             expContext().asDollars = false;
             expContext().asWei = false;
 
-        } else if (cmdLine.Contains("--wei ")) {
+        } else if (isEnabled(OPT_DENOM) && cmdLine.Contains("--wei ")) {
             cmdLine.ReplaceAll("--wei ","");
             expContext().asEther = false;
             expContext().asDollars = false;
             expContext().asWei = true;
 
-        } else if (cmdLine.Contains("--dollars ")) {
+        } else if (isEnabled(OPT_DENOM) && cmdLine.Contains("--dollars ")) {
             cmdLine.ReplaceAll("--dollars ","");
             expContext().asEther = false;
             expContext().asDollars = true;
@@ -213,15 +215,15 @@ namespace qblocks {
 
     //--------------------------------------------------------------------------------
     bool COptionsBase::builtInCmd(const SFString& arg) {
-        if (arg == "-v" || arg.startsWith("-v:") || arg.startsWith("--verbose"))
+        if (isEnabled(OPT_VERBOSE) && (arg == "-v" || arg.startsWith("-v:") || arg.startsWith("--verbose")))
+            return true;
+        if (isEnabled(OPT_DENOM) && (arg == "--ether" || arg == "--wei" || arg == "--dollars"))
             return true;
         if (arg == "-h" || arg == "--help")
             return true;
         if (arg == "--version")
             return true;
         if (arg == "--nocolors" || arg == "--nocolor")
-            return true;
-        if (arg == "--ether" || arg == "--wei" || arg == "--dollars")
             return true;
         if (arg == "null")
             return true;
@@ -242,6 +244,8 @@ namespace qblocks {
                 dummy = " range";
             else if (permitted == "<list>")
                 dummy = " list";
+            else if (permitted == "<fn>")
+                dummy = " fn";
             else if (!permitted.empty())
                 dummy = " val";
         }
@@ -295,6 +299,7 @@ namespace qblocks {
         os << bYellow << sep << "Usage:" << sep2 << "    " << cOff << programName << " " << options() << "  \n";
         os << purpose();
         os << descriptions() << "\n";
+        os << notes();
         if (!COptionsBase::isReadme)
             os << bBlue << "  Powered by QuickBlocks" << (isTestMode() ? "" : " (" + getVersionStr() + ")") << "\n" << cOff;
         SFString ret = os.str().c_str();
@@ -323,7 +328,7 @@ namespace qblocks {
                 ctx << paramsPtr[i].shortName << "|";
             }
         }
-        if (COptionsBase::useVerbose)
+        if (isEnabled(OPT_VERBOSE))
             ctx << "-v|";
         ctx << "-h";
         if (!COptionsBase::needsOption)
@@ -331,7 +336,10 @@ namespace qblocks {
         ctx << required;
 
         ASSERT(pOptions);
-        return pOptions->postProcess("options", ctx.str);
+        SFString ret = pOptions->postProcess("options", ctx.str);
+        if (COptionsBase::isReadme)
+            ret = ret.Substitute("<", "&lt;").Substitute(">", "&gt;");
+        return ret;
     }
 
     //--------------------------------------------------------------------------------
@@ -347,7 +355,6 @@ namespace qblocks {
             ctx << bYellow << sep << "Purpose:" << sep2 << "  " << cOff
                 << purpose.Substitute("\n", "\n           ") << "  \n";
         }
-        ctx << bYellow << sep << "Where:" << sep << cOff << "  \n";
         ASSERT(pOptions);
         return pOptions->postProcess("purpose", ctx.str);
     }
@@ -384,10 +391,23 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
     }
 
     //--------------------------------------------------------------------------------
+    SFString notes(void) {
+        CStringExportContext ctx;
+        ASSERT(pOptions);
+        SFString ret = pOptions->postProcess("notes", "");
+        if (!ret.empty()) {
+            ctx << bYellow << sep << "Notes:" << sep << cOff << "\n";
+            ctx << (COptionsBase::isReadme ? "\n" : "");
+            ctx << ret << "  \n";
+        }
+        return ctx.str;
+    }
+
+    //--------------------------------------------------------------------------------
     SFString descriptions(void) {
         SFString required;
         CStringExportContext ctx;
-
+        ctx << bYellow << sep << "Where:" << sep << cOff << "  \n";
         if (COptionsBase::isReadme) {
             ctx << "\n";
             ctx << "| Option | Full Command | Description |\n";
@@ -411,7 +431,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
             }
         }
 
-        if (COptionsBase::useVerbose)
+        if (isEnabled(OPT_VERBOSE))
             ctx << oneDescription("-v", "-verbose", "set verbose level. Either -v, --verbose or -v:n where 'n' is level", false, false);
         ctx << oneDescription("-h", "-help", "display this help screen", false, false);
         ASSERT(pOptions);
@@ -494,7 +514,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
     }
 
     //--------------------------------------------------------------------------------
-    bool COptionsBase::useVerbose = true;
+    uint32_t COptionsBase::enableBits = OPT_DEFAULT;
     bool COptionsBase::isReadme = false;
     bool COptionsBase::needsOption = false;
 
@@ -525,7 +545,363 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
     }
 
     //-------------------------------------------------------------------------
+    bool isEnabled(uint32_t q) {
+        return COptionsBase::enableBits & q;
+    }
+
+    void optionOff(uint32_t q) {
+        COptionsBase::enableBits &= (~q);
+    }
+
+    void optionOn (uint32_t q) {
+        COptionsBase::enableBits |= q;
+    }
+
+    //-------------------------------------------------------------------------
     SFString getSource(void) { return qbGlobals::source; }
     void     setSource(const SFString& src) { qbGlobals::source = src; }
 
+    //--------------------------------------------------------------------------------
+    SFString COptionsBlockList::parseBlockList(const SFString& argIn, blknum_t lastBlock) {
+        SFString arg = argIn;
+        if (arg.Contains("-")) {
+
+            SFString arg1 = nextTokenClear(arg, '-');
+            if (arg1 == "latest")
+                return "Cannot start range with 'latest'";
+
+            start = toUnsigned(arg1);
+            stop  = toUnsigned(arg);
+            if (arg == "latest")
+                stop = lastBlock;
+            if (stop <= start)
+                return "'stop' must be strictly larger than 'start'";
+            isRange = true;
+
+        } else {
+
+            blknum_t num = toUnsigned(arg);
+            CNameValue spec;
+            if (pOptions && pOptions->findSpecial(spec, arg)) {
+                if (spec.getName() == "latest") {
+                    num = lastBlock;
+                } else {
+                    num = toUnsigned(spec.getValue());
+                }
+            }
+
+            if (num == 0 && !arg.startsWith("0") && !isNumeral(arg))
+                return "'" + arg + "' does not appear to be a valid block. Quitting...";
+
+            if (num > lastBlock) {
+                SFString lateStr = (isTestMode() ? "--" : asStringU(lastBlock));
+                return "Block " + arg + " is later than the last valid block " + lateStr + ". Quitting...\n";
+            }
+
+            if (nNums >= MAX_BLOCK_LIST)
+                return "Too many blocks in list. Max is " + asString(MAX_BLOCK_LIST);
+
+            nums[nNums++] = num;
+        }
+        latest = lastBlock;
+        return "";
+    }
+
+    //--------------------------------------------------------------------------------
+    void COptionsBlockList::Init(void) {
+        isRange    = false;
+        nums[0]    = NOPOS;
+        nNums      = 0;  // we will set this to '1' later if user supplies no values
+        start = stop = 0;
+    }
+
+    //--------------------------------------------------------------------------------
+    COptionsBlockList::COptionsBlockList(void) {
+        Init();
+    }
+
+    //--------------------------------------------------------------------------------
+    SFString COptionsBlockList::toString(void) const {
+        SFString ret;
+        if (isRange) {
+            for (SFUint32 i = start ; i < stop ; i++)
+                ret += (asStringU(i) + "|");
+        } else {
+            for (SFUint32 i = 0 ; i < nNums ; i++)
+                ret += (asStringU(nums[i]) + "|");
+        }
+        return ret;
+    }
+
+    //--------------------------------------------------------------------------------
+    int sortByBlockNum(const void *v1, const void *v2) {
+        CNameValue *b1 = (CNameValue *)v1;  // NOLINT
+        CNameValue *b2 = (CNameValue *)v2;  // NOLINT
+        if (b1->getName() == "latest")
+            return 1;
+        if (b2->getName() == "latest")
+            return -1;
+        if (b1->getValue().startsWith("tbd") && b1->getValue().startsWith("tbd"))
+            return b1->getValue().compare(b2->getValue());
+        if (b1->getValue().startsWith("tbd"))
+            return 1;
+        if (b2->getValue().startsWith("tbd"))
+            return -1;
+        return (int)(b1->getValueU() - b2->getValueU());
+    }
+
+    extern const char *STR_DEFAULT_SPECIALS;
+    //-----------------------------------------------------------------------
+    void COptionsBase::loadSpecials(void) {
+
+        static CToml *toml = NULL;
+        if (!toml) {
+            static CToml theToml(configPath("quickBlocks.toml"));
+            toml = &theToml;
+        }
+        specials.Clear();
+
+        SFString specialsStr = toml->getConfigArray("specials", "list", "");
+        if (specialsStr.empty()) {
+            SFString in = asciiFileToString(configPath("quickBlocks.toml"));
+            stringToAsciiFile(configPath("quickBlocks.toml"), in + "\n" + STR_DEFAULT_SPECIALS);
+            specialsStr = toml->getConfigArray("specials", "list", "");
+        }
+        char *p = cleanUpJson((char *)specialsStr.c_str());
+        while (p && *p) {
+            CNameValue pair;
+            uint32_t nFields = 0;
+            p = pair.parseJson(p, nFields);
+            if (nFields) {
+                //cout << pair.Format() << "\n";
+                if (pair.name == "latest") {
+                    pair.value = "[{LATEST}]";
+                }
+                specials[specials.getCount()] = pair;
+            }
+        }
+
+        specials.Sort(sortByBlockNum);
+        return;
+    }
+
+    //--------------------------------------------------------------------------------
+    SFString COptionsBase::listSpecials(bool terse) const {
+        if (specials.getCount() == 0)
+            ((COptionsBase*)this)->loadSpecials();
+        ostringstream os;
+        if (terse) {
+            os << bYellow << "\n  Notes:\n\t" << cOff;
+            os << "You may specify any of the following strings to represent 'special' blocks:\n\n\t    ";
+        } else {
+            os << bYellow << "\n\tSpecial Blocks:" << cOff;
+        }
+
+        SFString extra;
+        for (uint32_t i = 0 ; i < specials.getCount(); i++) {
+
+            SFString name  = specials[i].getName();
+            SFString block = specials[i].getValue();
+            if (name == "latest") {
+                if (isTestMode()) {
+                    block = "";
+                } else if (COptionsBase::isReadme) {
+                    block = "--";
+                } else if (i > 0 && specials[i-1].getValueU() >= specials[i].getValueU()) {
+                    extra = iWhite + " (syncing)" + cOff;
+                }
+            }
+
+            if (terse) {
+                os << name;
+                os << " (" << cTeal << block << extra << cOff << ")";
+                if (i < specials.getCount()-1)
+                    os << ", ";
+                if (!((i+1)%4))
+                    os << "\n\t    ";
+            } else {
+                os << "\n\t  " << padRight(name, 15) << cTeal << padLeft(block, 10) << cOff << extra ;
+            }
+        }
+        if (terse) {
+            if (specials.getCount() % 4)
+                os << "\n";
+        } else {
+            os << "\n";
+        }
+        return os.str().c_str();
+    }
+
+    //--------------------------------------------------------------------------------
+    bool COptionsBase::findSpecial(CNameValue& pair, const SFString& arg) const {
+        if (specials.getCount() == 0)
+            ((COptionsBase*)this)->loadSpecials();
+        for (uint32_t i = 0 ; i < specials.getCount() ; i++) {
+            if (arg == specials[i].getName()) {
+                pair = specials[i];
+                return true;
+            }
+        }
+        return false;
+    }
+
+    //--------------------------------------------------------------------------------
+    const char *STR_DEFAULT_SPECIALS =
+    "[[specials]]\n"
+    "list = [\n"
+    "\t{ name = \"first\",          value = \"0\"          },\n"
+    "\t{ name = \"iceage\",         value = \"200000\"     },\n"
+    "\t{ name = \"homestead\",      value = \"1150000\"    },\n"
+    "\t{ name = \"daofund\",        value = \"1428756\"    },\n"
+    "\t{ name = \"daohack\",        value = \"1718497\"    },\n"
+    "\t{ name = \"daofork\",        value = \"1920000\"    },\n"
+    "\t{ name = \"tangerine\",      value = \"2463000\"    },\n"
+    "\t{ name = \"spurious\",       value = \"2675000\"    },\n"
+    "\t{ name = \"stateclear\",     value = \"2718436\"    },\n"
+    "\t{ name = \"byzantium\",      value = \"tbd\"        },\n"
+    "\t{ name = \"constantinople\", value = \"tbd\"        },\n"
+    "\t{ name = \"latest\",         value = \"\"           }\n"
+    "]\n";
+
+    //---------------------------------------------------------------------------------------------------
+    COptionsBase::COptionsBase(void) : namesFile("") {
+        fromFile = false;
+        minArgs = 1;
+        isReadme = false;
+        needsOption = false;
+    }
+
+    //-----------------------------------------------------------------------
+    bool COptionsBase::getNamedAccount(CAccountName& acct, const SFString& addr) const {
+        if (namedAccounts.getCount() == 0) {
+            uint64_t save = verbose;
+            verbose = false;
+            ((COptionsBase*)this)->loadNames();
+            verbose = save;
+        }
+
+        for (uint32_t i = 0 ; i < namedAccounts.getCount() ; i++) {
+            if (namedAccounts[i].addr % addr) {
+                acct = namedAccounts[i];
+                return true;
+            }
+        }
+        return false;
+    }
+
+    //-----------------------------------------------------------------------
+    bool COptionsBase::loadNames(void) {
+
+        // If we're already loaded or editing, return
+        if (namedAccounts.getCount() > 0)
+            return true;
+
+        SFString textFile = namesFile.getFullPath();
+        SFString binFile  = textFile.Substitute(".txt",".bin");
+
+        SFTime txtDate = fileLastModifyDate(textFile);
+        SFTime binDate = fileLastModifyDate(binFile);
+
+        if (verbose && !isTestMode())
+            cout << "txtDate: " << txtDate << " binDate: " << binDate << "\n";
+
+        if (binDate > txtDate) {
+            SFArchive archive(READING_ARCHIVE);
+            if (archive.Lock(binFile, binaryReadOnly, LOCK_NOWAIT)) {
+                if (verbose && !isTestMode())
+                    cout << "Reading from binary cache\n";
+                archive >> namedAccounts;
+                archive.Release();
+                return true;
+            }
+        }
+
+        if (verbose && !isTestMode())
+            cout << "Reading from text database\n";
+
+        // Read the data from the names database and clean it up if needed
+        SFString contents = StripAny(asciiFileToString(textFile), "\t\n ");
+        contents.ReplaceAll("\t\t", "\t");
+        if (!contents.endsWith("\n"))
+            contents += "\n";
+
+        // Parse out the data....
+        while (!contents.empty()) {
+            SFString line = nextTokenClear(contents, '\n');
+            if (!line.startsWith("#")) {
+                if (countOf('\t', line) < 2) {
+                    cerr << "Line " << line << " does not contain two tabs.\n";
+
+                } else {
+                    CAccountName account(line);
+                    namedAccounts[namedAccounts.getCount()] = account;
+                }
+            }
+        }
+
+        SFArchive archive(WRITING_ARCHIVE);
+        if (archive.Lock(binFile, binaryWriteCreate, LOCK_CREATE)) {
+            if (verbose && !isTestMode())
+                cout << "Writing binary cache\n";
+            archive << namedAccounts;
+            archive.Release();
+        }
+
+        return true;
+    }
+
+    const char *STR_DEFAULT_DATA =
+    "#---------------------------------------------------------------------------------------------------\n"
+    "#  This is the ethName database. Format records as tab seperated lines with the following format:\n"
+    "#\n"
+    "#      Optional Symbol <tab> Name <tab> Address <tab> Source of the data <tab> Description <newline>\n"
+    "#\n"
+    "#---------------------------------------------------------------------------------------------------------------\n"
+    "# Sym    Name                Address                        Source        Description\n"
+    "#---------------------------------------------------------------------------------------------------------------\n"
+    "DAO   |The DAO                |0xbb9bc244d798123fde783fcc1c72d3bb8c189413 |Etherscan.io   |The infamous DAO smart contract\n"
+    "QTUM  |Qtum                   |0x9a642d6b3368ddc662CA244bAdf32cDA716005BC |Etherscan.io   |Build Decentralized Applications that mobile devices\n"
+    "OMG   |OMGToken               |0xd26114cd6EE289AccF82350c8d8487fedB8A0C07 |Etherscan.io   |A public Ethereum-based financial technology for use in mainstream digital wallets\n"
+    "EOS   |EOS                    |0x86Fa049857E0209aa7D9e616F7eb3b3B78ECfdb0 |Etherscan.io   |Infrastructure for Decentralized Applications\n"
+    "PAY   |TenX Pay Token         |0xB97048628DB6B661D4C2aA833e95Dbe1A905B280 |Etherscan.io   |TenX connects your blockchain assets for everyday use.\n"
+    "ICN   |ICONOMI                |0x888666CA69E0f178DED6D75b5726Cee99A87D698 |Etherscan.io   |Digital Assets Management platform enables simple access to a variety of digital assets and combined Digital Asset Arrays\n"
+    "GNT   |Golem Network Token    |0xa74476443119A942dE498590Fe1f2454d7D4aC0d |Etherscan.io   |Golem is going to create the first decentralized global market for computing power\n"
+    "REP   |Augur (Reputation)     |0xE94327D07Fc17907b4DB788E5aDf2ed424adDff6 |Etherscan.io   |Augur combines the magic of prediction markets with the power of a decentralized network\n"
+    "MKR   |Maker                  |0xC66eA802717bFb9833400264Dd12c2bCeAa34a6d |Etherscan.io   |Maker is a Decentralized Autonomous Organization that creates and insures the dai stablecoin on the Ethereum blockchain\n"
+    "SNT   |Status Network Token   |0x744d70FDBE2Ba4CF95131626614a1763DF805B9E |Etherscan.io   |Status is an open source messaging platform and mobile browser to interact with decentralized applications\n"
+    "CVC   |Civic                  |0x41e5560054824eA6B0732E656E3Ad64E20e94E45 |Etherscan.io   |Giving businesses and individuals the tools to control and protect identities\n"
+    "GNO   |Gnosis Token           |0x6810e776880C02933D47DB1b9fc05908e5386b96 |Etherscan.io   |Crowd Sourced Wisdom - The next generation blockchain network. Speculate on anything with an easy-to-use prediction market\n"
+    "BAT   |Basic Attention Token  |0x0D8775F648430679A709E98d2b0Cb6250d2887EF |Etherscan.io   |The Basic Attention Token is the new token for the digital advertising industry\n"
+    "DGD   |Digix Global           |0xE0B7927c4aF23765Cb51314A0E0521A9645F0E2A |Etherscan.io   |Every asset represents a unique bullion bar sitting in designated securitised custodial vaults\n"
+    "BNT   |Bancor Network Token   |0x1F573D6Fb3F13d689FF844B4cE37794d79a7FF1C |Etherscan.io   |Bancor Protocol is a standard for a new generation of cryptocurrencies called Smart Tokens\n"
+    "STORJ |StorjToken             |0xB64ef51C888972c908CFacf59B47C1AfBC0Ab8aC |Etherscan.io   |Blockchain-based, end-to-end encrypted, distributed object storage, where only you have access to your data\n"
+    "FUN   |FunFair                |0x419D0d8BdD9aF5e606Ae2232ed285Aff190E711b |Etherscan.io   |FunFair is a decentralised gaming platform powered by Ethereum smart contracts\n"
+    "SNGLS |SingularDTV            |0xaeC2E87E0A235266D9C5ADc9DEb4b2E29b54D009 |Etherscan.io   |A Blockchain Entertainment Studio, Smart Contract Rights Management Platform and Video On-Demand Portal\n"
+    "DNT   |district0x Token       |0x0AbdAce70D3790235af448C88547603b945604ea |Etherscan.io   |A network of decentralized markets and communities. Create, operate, and govern. Powered by Ethereum, Aragon, and IPFS\n"
+    "ANT   |Aragon Network Token   |0x960b236A07cf122663c4303350609A66A7B288C0 |Etherscan.io   |Aragon lets you manage entire organizations using the blockchain. Aragon organizations more efficient than counterparties\n"
+    "EDG   |Edgeless               |0x08711D3B02C8758F2FB3ab4e80228418a7F8e39c |Etherscan.io   |The Ethereum smart contract-based that offers a 0% house edge and solves the transparency question once and for all\n"
+    "1ST   |FirstBlood Token       |0xAf30D2a7E90d7DC361c8C4585e9BB7D2F6f15bc7 |Etherscan.io   |FirstBlood.io is a decentralized Esports gaming platform that is powered by the blockchain\n"
+    "RLC   |iEx.ec Network Token   |0x607F4C5BB672230e8672085532f7e901544a7375 |Etherscan.io   |Blockchain Based distributed cloud computing\n"
+    "WINGS |Wings                  |0x667088b212ce3d06a1b553a7221E1fD19000d9aF |Etherscan.io   |A decentralized platform to create, join and manage projects\n"
+    "BQX   |Bitquence              |0x5Af2Be193a6ABCa9c8817001F45744777Db30756 |Etherscan.io   |People-powered cryptocurrency services for the blockchain\n"
+    "MLN   |Melon Token            |0xBEB9eF514a379B997e0798FDcC901Ee474B6D9A1 |Etherscan.io   |The Melon protocol is a blockchain protocol for digital asset management built on the Ethereum platform\n"
+    "ROL   |Etheroll (Dice)        |0x2e071D2966Aa7D8dECB1005885bA1977D6038A65 |Etherscan.io   |Provably fair online Ether gaming on the Ethereum Blockchain\n"
+    "LUN   |Lunyr Token            |0xfa05A73FfE78ef8f1a739473e462c54bae6567D9 |Etherscan.io   |Lunyr is an decentralized world knowledge base which rewards users with app tokens for peer-reviewing information\n"
+    "      |AdToken                |0xD0D6D6C5Fe4a677D343cC433536BB717bAe167dD |Etherscan.io   |adChain is a browser agnostic solution for digital advertising that integrates with pre-existing programmatic standards\n"
+    "MCO   |Monaco                 |0xB63B606Ac810a52cCa15e44bB630fd42D8d1d83d |Etherscan.io   |Monaco is a cryptocurrency card. Spend and send money globally at interbank exchange rates\n"
+    "vSlice|vSlice Token           |0x5c543e7AE0A1104f78406C340E9C64FD9fCE5170 |Etherscan.io   |An Ethereum Gaming Platform Token\n"
+    "HMQ   |Humaniq                |0xcbCC0F036ED4788F63FC0fEE32873d6A7487b908 |Etherscan.io   |Humaniq aims to be a simple and secure 4th generation mobile bank\n"
+    "TAAS  |Token-as-a-Service     |0xE7775A6e9Bcf904eb39DA2b68c5efb4F9360e08C |Etherscan.io   |TaaS a tokenized closed-end fund designed to reduce the risks and technical barriers of investing in the blockchain space\n"
+    "TKN   |Monolith TKN           |0xaAAf91D9b90dF800Df4F55c205fd6989c977E73a |Etherscan.io   |The All Powerful Smart Contract Powered Debit Card\n"
+    "TRST  |WeTrust (Trustcoin)    |0xCb94be6f13A1182E4A4B6140cb7bf2025d28e41B |Etherscan.io   |A platform for Trusted Lending Circles, powered by people and blockchain\n"
+    "XAUR  |Xaurum                 |0x4DF812F6064def1e5e029f1ca858777CC98D2D81 |Etherscan.io   |Xaurum represents an increasing amount of gold and can be exchanged for it by melting\n"
+    "TIME  |ChronoBank (Time Token)|0x6531f133e6DeeBe7F2dcE5A0441aA7ef330B4e53 |Etherscan.io   |ChronoBank.io is a wide-ranging blockchain project, aimed at disrupting the HR/recruitment/finance industries\n"
+    "SAN   |SANtiment Network Token|0x7C5A0CE9267ED19B22F8cae653F198e3E8daf098 |Etherscan.io   |A Better Way to Trade Crypto-Markets - Market Datafeeds, Newswires, and Crowd Sentiment Insights for the Blockchain World\n"
+    "NET   |Nimiq Network Token    |0xcfb98637bcae43C13323EAa1731cED2B716962fD |Etherscan.io   |NimiqNetwork World's first Browser-based Blockchain & Ecosystem\n"
+    "GUP   |Matchpool (Guppy)      |0xf7B098298f7C69Fc14610bf71d5e02c60792894C |Etherscan.io   |Matchpool is a platform that creates human connections\n"
+    "SWT   |Swarm City Token       |0xB9e7F8568e08d5659f5D29C4997173d84CdF2607 |Etherscan.io   |Swarm City is a decentralized peer to peer sharing economy\n"
+    "BCAP  |Blockchain Capital     |0xFf3519eeeEA3e76F1F699CCcE5E23ee0bdDa41aC |Etherscan.io   |Blockchain Capital is a pioneer and the premier venture capital firm investing in Blockchain enabled technology\n"
+    "PLU   |Pluton                 |0xD8912C10681D8B21Fd3742244f44658dBA12264E |Etherscan.io   |With Plutus Tap & Pay, you can pay at any NFC-enabled merchant\n"
+    "UNI   |Unicorns               |0x89205A3A3b2A69De6Dbf7f01ED13B2108B2c43e7 |Ethereum.org   |Ethereum tip jar unicorn tokens\n"
+    "EEAR  |Eth Early Adoption Reg |0x713b73c3994442b533e6a083ec968e40606810ec |quickBlocks.io |An early, known-dead address useful for testing\n";
 }  // namespace qblocks

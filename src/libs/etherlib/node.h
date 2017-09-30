@@ -23,6 +23,7 @@ namespace qblocks {
     //-------------------------------------------------------------------------
     extern SFString compileSolidity         (const SFString& sol);
     extern SFString getVersionFromClient    (void);
+    extern bool     getAccounts             (SFAddressArray& addrs);
     extern SFUint32 getLatestBlockFromClient(void);
     extern SFUint32 getLatestBlockFromCache (CSharedResource *res=NULL);
     extern SFUint32 getLatestBloomFromCache (void);
