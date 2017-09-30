@@ -237,7 +237,7 @@ CAccountName::CAccountName(SFString& strIn) {
 }
 
 //---------------------------------------------------------------------------
-bool CAccountName::Match(const SFString& s1, const SFString& s2, const SFString& s3, bool matchCase, bool all) {
+bool CAccountName::Match(const SFString& s1, const SFString& s2, const SFString& s3, bool matchCase, bool all) const {
 
     SFString theAddr   = addr;
     SFString theName   = name + " " + symbol;

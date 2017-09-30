@@ -41,8 +41,12 @@ function(run_test testName)
 endfunction(run_test)
 
 # Enter one line for each individual test
-run_test("getAccounts_README" "-th")
-run_test("getAccounts_run"    "-a" )
+run_test("getAccounts_README"        "-th")
+run_test("getAccounts_run"           "" )
+run_test("getAccounts_verbose"       "-v" )
+run_test("getAccounts_named"         "--named" )
+run_test("getAccounts_named_verbose" "--named" " -v" )
+run_test("getAccounts_bad_option"    "-a" )
 
 # Installation steps
 install(TARGETS ${TOOL_NAME} RUNTIME DESTINATION bin)

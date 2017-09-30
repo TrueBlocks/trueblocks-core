@@ -44,7 +44,7 @@ public:
 
     // EXISTING_CODE
     explicit CAccountName(SFString& nameIn);
-    bool Match(const SFString& s1, const SFString& s2, const SFString& s3, bool matchCase, bool all);
+    bool Match(const SFString& s1, const SFString& s2, const SFString& s3, bool matchCase, bool all) const;
     // EXISTING_CODE
     friend ostream& operator<<(ostream& os, const CAccountName& item);
 
