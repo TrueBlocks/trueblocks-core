@@ -9,11 +9,11 @@
 
 //---------------------------------------------------------------------------------------------------
 CParams params[] = {
-    CParams("~address[es]", "a space-separated list of one or more Ethereum addresses"),
-    CParams("-display",     "display the byte code at the address(es)"),
-    CParams("-nodiff",      "return 'true' if (exactly) two Ethereum addresses have identical code"),
-    CParams("",             "Returns 'true' or 'false' if the given address(es) holds byte code "
-                            "(optionally displays the code).\n"),
+    CParams("~address_list", "a space-separated list of one or more Ethereum addresses"),
+    CParams("-display",      "display the byte code at the address(es)"),
+    CParams("-nodiff",       "return 'true' if (exactly) two Ethereum addresses have identical code"),
+    CParams("",              "Returns 'true' or 'false' if the given address(es) holds byte code "
+                             "(optionally displays the code).\n"),
 };
 uint32_t nParams = sizeof(params) / sizeof(CParams);
 
@@ -67,6 +67,7 @@ bool COptions::parseArguments(SFString& command) {
 void COptions::Init(void) {
     paramsPtr = params;
     nParamsRef = nParams;
+    pOptions = this;
 
     for (uint32_t i = 0 ; i < MAX_ADDRS ; i++) {
         addrs[i] = "";
@@ -83,4 +84,11 @@ COptions::COptions(void) {
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
+}
+
+//--------------------------------------------------------------------------------
+SFString COptions::postProcess(const SFString& which, const SFString& str) const {
+    if (which == "options")
+        return str.Substitute("address_list", "<address> [address...]");
+    return str;
 }

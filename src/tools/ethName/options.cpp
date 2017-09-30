@@ -10,7 +10,7 @@
 
 //---------------------------------------------------------------------------------------------------
 CParams params[] = {
-    CParams("~term [name]", "search terms"),
+    CParams("~terms",       "one or more search terms"),
     CParams("-alone",       "export only the associated address (may be used in scripting)"),
     CParams("-count",       "print only the count of the number of matches"),
     CParams("-open",        "open the name database for editing"),
@@ -76,9 +76,9 @@ bool COptions::parseArguments(SFString& command) {
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
 
-    CAccountName::registerClass();
     paramsPtr = params;
     nParamsRef = nParams;
+    pOptions = this;
 
     addr = "";
     name = "";
@@ -102,3 +102,9 @@ COptions::COptions(void) {
     Init();
 }
 
+//--------------------------------------------------------------------------------
+SFString COptions::postProcess(const SFString& which, const SFString& str) const {
+    if (which == "options")
+        return str.Substitute("terms", "<term> [term...]");
+    return str;
+}

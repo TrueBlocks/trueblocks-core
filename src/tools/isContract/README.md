@@ -1,17 +1,19 @@
 ## isContract
 
+*Published: Saturday, Sept. 29, 2017 - 12:03 am*
+
 This simple program may be used to query an Ethereum address to determine if it is a `smart contract` or simply a regular `external account`. It may also be used to retrieve the byte-code from an address (if present). Finally, it may be used to compare the byte code found at two addresses to determine if they hold identical code. You may specify multiple addresses on a line.
 
 #### Usage
 
-`Usage:`    isContract [-d|-n|-v|-h] address[es]  
+`Usage:`    isContract [-d|-n|-v|-h] &lt;address&gt; [address...]  
 `Purpose:`  Returns 'true' or 'false' if the given address(es) holds byte code (optionally displays the code).
              
 `Where:`  
 
 | Option | Full Command | Description |
 | -------: | :------- | :------- |
-|  | address[es] | a space-separated list of one or more Ethereum addresses |
+|  | address_list | a space-separated list of one or more Ethereum addresses |
 | -d | --display | display the byte code at the address(es) |
 | -n | --nodiff | return 'true' if (exactly) two Ethereum addresses have identical code |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
