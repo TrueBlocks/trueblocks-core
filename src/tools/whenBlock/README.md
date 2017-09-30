@@ -29,8 +29,8 @@ You may name your own blocks (for example, to denote the start of an ICO perhaps
 
 	    first (0), iceage (200000), homestead (1150000), daofund (1428756), 
 	    daohack (1718497), daofork (1920000), tangerine (2463000), spurious (2675000), 
-	    stateclear (2718436), latest (--)
-
+	    stateclear (2718436), byzantium (tbd), constantinople (tbd), latest (--)
+	    
 #### Other Options
 
 All **quickBlocks** command-line tools support the following commands (although in some case, they have no meaning):

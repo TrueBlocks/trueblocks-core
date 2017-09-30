@@ -8,12 +8,22 @@
  *------------------------------------------------------------------------*/
 
 #include "version.h"
+#include "namevalue.h"
+#include "accountname.h"
+#include "filenames.h"
+
+// Bit flags to enable / disable various options
+#define OPT_VERBOSE (1<<1)
+#define OPT_DENOM   (1<<2)
+#define OPT_BLOCKS  (1<<3)
+#define OPT_ADDRS   (1<<4)
+#define OPT_DEFAULT (OPT_VERBOSE|OPT_DENOM|OPT_BLOCKS|OPT_ADDRS)
 
 namespace qblocks {
 
     class COptionsBase {
     public:
-        static bool useVerbose;
+        static uint32_t enableBits;
         static bool needsOption;
         static bool isReadme;
 
@@ -21,7 +31,7 @@ namespace qblocks {
         bool     fromFile;
         SFUint32 minArgs;
 
-        COptionsBase(void) { fromFile = false; minArgs = 1; isReadme = false; needsOption = false; }
+        COptionsBase(void);
         virtual ~COptionsBase(void) { }
 
         bool prepareArguments(int argc, const char *argv[]);
@@ -29,6 +39,18 @@ namespace qblocks {
         bool builtInCmd(const SFString& arg);
         bool standardOptions(SFString& cmdLine);
         virtual SFString postProcess(const SFString& which, const SFString& str) const { return str; }
+
+        // supporting special block names
+        CNameValueArray specials;
+        void     loadSpecials(void);
+        SFString listSpecials(bool terse) const;
+        bool     findSpecial(CNameValue& pair, const SFString& arg) const;
+
+        // supporting named accounts
+        CAccountNameArray namedAccounts;
+        CFilename namesFile;
+        bool loadNames(void);
+        bool getNamedAccount(CAccountName& acct, const SFString& addr) const;
 
     protected:
         virtual void Init(void) = 0;
@@ -58,6 +80,7 @@ namespace qblocks {
     extern SFString usageStr(const SFString& errMsg = "");
     extern SFString options(void);
     extern SFString descriptions(void);
+    extern SFString notes(void);
     extern SFString purpose(void);
 
     //--------------------------------------------------------------------------------
@@ -79,4 +102,25 @@ namespace qblocks {
     extern CParams *paramsPtr;
     extern uint32_t& nParamsRef;
     extern COptionsBase *pOptions;
+
+    extern bool isEnabled(uint32_t q);
+    extern void optionOff(uint32_t q);
+    extern void optionOn (uint32_t q);
+
+#define MAX_BLOCK_LIST 100
+    class COptionsBlockList {
+    public:
+        bool isRange;
+        blknum_t nums[MAX_BLOCK_LIST];
+        blknum_t nNums;
+        blknum_t start;
+        blknum_t stop;
+        blknum_t latest;
+        void Init(void);
+        SFString parseBlockList(const SFString& arg, blknum_t latest);
+        COptionsBlockList(void);
+        SFString toString(void) const;
+    };
+
+    extern const char *STR_DEFAULT_DATA;
 }  // namespace qblocks

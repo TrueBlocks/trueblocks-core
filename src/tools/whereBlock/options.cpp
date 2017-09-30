@@ -58,9 +58,11 @@ bool COptions::parseArguments(SFString& command) {
 void COptions::Init(void) {
     paramsPtr = params;
     nParamsRef = nParams;
+    pOptions = this;
 
     blocks.Clear();
     alone = false;
+    optionOff(OPT_DENOM);
 }
 
 //---------------------------------------------------------------------------------------------------

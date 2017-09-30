@@ -10,7 +10,9 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
-#include "utillib.h"
+#include "basetypes.h"
+#include "basenode.h"
+#include "sfarchive.h"
 
 namespace qblocks {
 
@@ -42,7 +44,7 @@ public:
 
     // EXISTING_CODE
     explicit CAccountName(SFString& nameIn);
-    bool Match(const SFString& s1, const SFString& s2, const SFString& s3, bool matchCase, bool all);
+    bool Match(const SFString& s1, const SFString& s2, const SFString& s3, bool matchCase, bool all) const;
     // EXISTING_CODE
     friend ostream& operator<<(ostream& os, const CAccountName& item);
 
