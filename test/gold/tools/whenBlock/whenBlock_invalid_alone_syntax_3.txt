@@ -9,7 +9,7 @@ whenBlock -a pppppp1
              
   Where:    
 	block                 one or more block numbers (or a 'special' block), or...
-	date                  one or more dates formatted as YYYY-MM-DDT[HH[:MM[:SS]]]
+	date                  one or more dates formatted as YYYY-MM-DD[THH[:MM[:SS]]]
 	-a  (--alone)         display the result unadorned (useful for scripting)
 	-l  (--list)          list names and block numbers for special blocks
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level

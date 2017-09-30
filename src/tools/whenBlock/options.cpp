@@ -10,7 +10,7 @@
 //---------------------------------------------------------------------------------------------------
 CParams params[] = {
     CParams("~!block", "one or more block numbers (or a 'special' block), or..."),
-    CParams("~!date",  "one or more dates formatted as YYYY-MM-DDT[HH[:MM[:SS]]]"),
+    CParams("~!date",  "one or more dates formatted as YYYY-MM-DD[THH[:MM[:SS]]]"),
     CParams("-alone",  "display the result unadorned (useful for scripting)"),
     CParams("-list",   "list names and block numbers for special blocks"),
     CParams("",        "Finds the nearest block prior to a date, or the nearest date prior to a block.\n"
@@ -52,7 +52,8 @@ bool COptions::parseArguments(SFString& command) {
             // If we're here, we better have a good date, assume we don't
             foundOne = false;
             SFString str = arg.Substitute(" ", ";").Substitute("-", ";").Substitute("_", ";")
-                            .Substitute(":", ";").Substitute(";UTC", "").Substitute("T", ";");
+                                .Substitute(":", ";").Substitute(";UTC", "").Substitute("T", ";");
+            str = nextTokenClear(str,'.');
             SFTime date = parseDate(str);
             if (date == earliestDate)
                 return usage("Invalid date: '" + orig + "'. Quitting...");
