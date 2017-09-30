@@ -24,3 +24,19 @@ fmt_json_field="[{p:FIELD}]":"[{FIELD}]",
 fmt_custom_file=file:custom.txt
 fmt_custom_record=fmt_txt_record
 fmt_custom_field=fmt_txt_field
+
+[[specials]]
+list = [
+	{ name = "first",          value = "0"       },
+	{ name = "iceage",         value = "200000"  },
+	{ name = "homestead",      value = "1150000" },
+	{ name = "daofund",        value = "1428756" },
+	{ name = "daohack",        value = "1718497" },
+	{ name = "daofork",        value = "1920000" },
+	{ name = "tangerine",      value = "2463000" },
+	{ name = "spurious",       value = "2675000" },
+	{ name = "stateclear",     value = "2718436" },
+	{ name = "byzantium",      value = "4370000" },
+	{ name = "constantinople", value = "tbd"     },
+	{ name = "latest",         value = ""        }
+]

@@ -1,24 +1,24 @@
 ## whereBlock
 
-`whereBlock` reports on the location of a **quickBlocks** block (or blocks). It will return either `cache`, `node`, `remote`, or `none` depending on where it finds the block.
+*Published: Saturday, Sept. 29, 2017 - 12:03 am*
 
-If it finds the block in its own cache, it reports the path to the file in the `cache`. If it finds the block on a locally-running node, it reports `local` followed by the name and version of the locally running node. If the block is not found (that is, the block is not in the cache and there is no locally-running node), it reports 'remote' if the value of the environment variable `$(FALLBACK)` is set and a remote node is found. Otherwise, `whereBlock` reports `none`.
+`whereBlock` reports on the location of a block (or blocks) in the cache. It reports on one of four situations: `cache`, `node`, `fallback`, or `none` depending on where the block is found.
 
-When `whereBlock` reports `remote`, it is reporting on the running node found at the value of the `$(FALLBACK)` environment variable, which currently accepts only a value of `infura`.
+If `whereBlock` finds the block in the QuickBlocks cache, it reports the path to that block's file. If the block is not in the cache, but there is a locally running node, `whereBlock` returns `node` plus the name and version info from the running node. Otherwise, `whereBlock` returns the setting of the `${FALLBACK}` envirnment variable (if it's set), or `none` otherwise. The `${FALLBACK}` environment variable currently only accepts a value of `infura`.
 
-This tool is intended mostly as an aid in developing and debugging **quickBlocks** and related tools.
+This tool is intended mostly as an aid in developing and debugging  QuickBlocks tools.
 
 #### Usage
 
-`Usage:`    whereBlock [-a|-v|-h] block[s]  
+`Usage:`    whereBlock [-a|-v|-h] &lt;block&gt; [block...]  
 `Purpose:`  Reports if a block was found in the cache or at a local or remote node.
              
 `Where:`  
 
 | Option | Full Command | Description |
 | -------: | :------- | :------- |
-|  | block[s] | a space-separated list of one or more blocks to search for |
-| -a | --alone | display the path(s) of the blocks if found in the cache |
+|  | block_list | a space-separated list of one or more blocks to search for |
+| -a | --alone | if the block(s) is/are found in the cache, display the path(s) to those blocks |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 

@@ -1,11 +1,9 @@
 ## [{NAME}]
 
-`whereBlock` reports on the location of a **quickBlocks** block (or blocks). It will return either `cache`, `node`, `remote`, or `none` depending on where it finds the block.
+`whereBlock` reports on the location of a block (or blocks) in the cache. It reports on one of four situations: `cache`, `node`, `fallback`, or `none` depending on where the block is found.
 
-If it finds the block in its own cache, it reports the path to the file in the `cache`. If it finds the block on a locally-running node, it reports `local` followed by the name and version of the locally running node. If the block is not found (that is, the block is not in the cache and there is no locally-running node), it reports 'remote' if the value of the environment variable `$(FALLBACK)` is set and a remote node is found. Otherwise, `whereBlock` reports `none`.
+If `whereBlock` finds the block in the QuickBlocks cache, it reports the path to that block's file. If the block is not in the cache, but there is a locally running node, `whereBlock` returns `node` plus the name and version info from the running node. Otherwise, `whereBlock` returns the setting of the `${FALLBACK}` envirnment variable (if it's set), or `none` otherwise. The `${FALLBACK}` environment variable currently only accepts a value of `infura`.
 
-When `whereBlock` reports `remote`, it is reporting on the running node found at the value of the `$(FALLBACK)` environment variable, which currently accepts only a value of `infura`.
-
-This tool is intended mostly as an aid in developing and debugging **quickBlocks** and related tools.
+This tool is intended mostly as an aid in developing and debugging  QuickBlocks tools.
 
 [{USAGE_TABLE}][{FOOTER}]

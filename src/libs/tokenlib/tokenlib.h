@@ -22,7 +22,6 @@
 #include "approve.h"
 #include "transfer.h"
 #include "transferfrom.h"
-#include "tokenbal.h"
 
 //------------------------------------------------------------------------
 extern void tokenlib_init(void);
