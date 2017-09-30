@@ -3,11 +3,11 @@ ethName -x torj
 
   Invalid option: -x
 
-  Usage:    ethName [-a|-c|-o|-l|-m|-s|-v|-h] term [name]  
+  Usage:    ethName [-a|-c|-o|-l|-m|-s|-v|-h] <term> [term...]  
   Purpose:  Find a name given an Ethereum address, or find an address given a name.
              
   Where:    
-	term [name]           search terms (required)
+	terms                 one or more search terms (required)
 	-a  (--alone)         export only the associated address (may be used in scripting)
 	-c  (--count)         print only the count of the number of matches
 	-o  (--open)          open the name database for editing
