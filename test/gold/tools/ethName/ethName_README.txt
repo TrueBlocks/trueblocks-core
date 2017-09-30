@@ -2,14 +2,14 @@ ethName argc: 2 [1:-th]
 ethName -th 
 #### Usage
 
-`Usage:`    ethName [-a|-c|-o|-l|-m|-s|-v|-h] term [name]  
+`Usage:`    ethName [-a|-c|-o|-l|-m|-s|-v|-h] &lt;term&gt; [term...]  
 `Purpose:`  Find a name given an Ethereum address, or find an address given a name.
              
 `Where:`  
 
 | Option | Full Command | Description |
 | -------: | :------- | :------- |
-|  | term [name] | search terms |
+|  | terms | one or more search terms |
 | -a | --alone | export only the associated address (may be used in scripting) |
 | -c | --count | print only the count of the number of matches |
 | -o | --open | open the name database for editing |

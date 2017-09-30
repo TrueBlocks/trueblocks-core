@@ -43,7 +43,6 @@ namespace qblocks {
         // supporting special block names
         CNameValueArray specials;
         void     loadSpecials(void);
-        SFString listSpecials(bool terse) const;
         bool     findSpecial(CNameValue& pair, const SFString& arg) const;
 
         // supporting named accounts
