@@ -49,24 +49,16 @@ void reportByToken(const COptions& options) {
         if (!options.asData)
             cout << "\n  For token contract: " << bBlue << token << cOff << "\n";
 
-        blknum_t latestBlock = getLatestBlockFromClient();
-
         // For each holder
         SFString holders = options.holders;
         while (!holders.empty()) {
             SFAddress holder = nextTokenClear(holders, '|');
 
             // For each block
-            SFString blocks = options.blocks;
+            SFString blocks = options.blocks.toString();
             while (!blocks.empty()) {
 
                 blknum_t blockNum = toLongU(nextTokenClear(blocks, '|'));
-                if (blockNum > latestBlock) {
-                    SFString late = (isTestMode() ? "--" : asStringU(latestBlock));
-                    cerr << usageStr("Block " + asStringU(blockNum) + " is later than the last valid block " + late + ". Quitting...");
-                    return;
-                }
-
                 SFUintBN bal = getTokenBalance(token, holder, blockNum);
                 SFString sBal = to_string(bal).c_str();
                 if (expContext().asEther) {
@@ -117,24 +109,16 @@ void reportByAccount(const COptions& options) {
         if (!options.asData)
             cout << "\n  For account: " << bBlue << holder << cOff << "\n";
 
-        blknum_t latestBlock = getLatestBlockFromClient();
-
         // For each token contract
         SFString tokens = options.tokens;
         while (!tokens.empty()) {
             SFAddress token = nextTokenClear(tokens, '|');
 
             // For each block
-            SFString blocks = options.blocks;
+            SFString blocks = options.blocks.toString();
             while (!blocks.empty()) {
 
                 blknum_t blockNum = toLongU(nextTokenClear(blocks, '|'));
-                if (blockNum > latestBlock) {
-                    SFString late = (isTestMode() ? "--" : asStringU(latestBlock));
-                    cerr << usageStr("Block " + asStringU(blockNum) + " is later than the last valid block " + late + ". Quitting...");
-                    return;
-                }
-
                 SFUintBN bal = getTokenBalance(token, holder, blockNum);
                 SFString sBal = to_string(bal).c_str();
                 if (expContext().asEther) {

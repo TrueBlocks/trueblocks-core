@@ -10,10 +10,10 @@ class COptions : public COptionsBase {
 public:
     SFString tokens;
     SFString holders;
-    SFString blocks;
     bool asData;
     bool byAccount;
     bool noZero;
+    COptionsBlockList blocks;
 
     COptions(void);
     ~COptions(void);
