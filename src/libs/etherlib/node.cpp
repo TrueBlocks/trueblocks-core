@@ -100,6 +100,7 @@ void etherlib_cleanup(void)
     getCurl(true);
 }
 
+//-------------------------------------------------------------------------
 extern size_t write_callback(char *ptr, size_t size, size_t nmemb, void *userdata);
 static bool earlyAbort=false;
 //-------------------------------------------------------------------------
@@ -174,8 +175,7 @@ SFString callRPC(const SFString& method, const SFString& params, bool raw)
         exit(0);
     }
 
-    if (received.empty())
-    {
+    if (received.empty()) {
         cerr << cYellow;
         cerr << "\n";
         cerr << "\tWarning:" << cOff << "The Ethereum node  resulted in an empty\n";
@@ -201,8 +201,28 @@ SFString callRPC(const SFString& method, const SFString& params, bool raw)
 }
 
 //-------------------------------------------------------------------------
-bool getObjectViaRPC(CBaseNode &node, const SFString& method, const SFString& params)
-{
+bool isNodeRunning(void) {
+    static uint32_t id = 1;
+    SFString thePost, received;
+    SFString method = "web3_clientVersion";
+    SFString params = "[]";
+    thePost += "{";
+    thePost +=  quote("jsonrpc") + ":"  + quote("2.0")  + ",";
+    thePost +=  quote("method")  + ":"  + quote(method) + ",";
+    thePost +=  quote("params")  + ":"  + params        + ",";
+    thePost +=  quote("id")      + ":"  + quote(asString(id++));
+    thePost += "}";
+    curl_easy_setopt(getCurl(), CURLOPT_POSTFIELDS,    (const char*)thePost);
+    curl_easy_setopt(getCurl(), CURLOPT_POSTFIELDSIZE, thePost.length());
+    curl_easy_setopt(getCurl(), CURLOPT_WRITEDATA,     &received);
+    curl_easy_setopt(getCurl(), CURLOPT_WRITEFUNCTION, write_callback);
+    earlyAbort = false;
+    CURLcode res = curl_easy_perform(getCurl());
+    return (res == CURLE_OK);
+}
+
+//-------------------------------------------------------------------------
+bool getObjectViaRPC(CBaseNode &node, const SFString& method, const SFString& params) {
     SFString ret = callRPC(method, params, false);
     node.parseJson((char *)(const char*)ret);
     return true;
@@ -433,6 +453,23 @@ SFUintBN getBalance(const SFString& addr, blknum_t blockNum, bool isDemo)
     a = padLeft(a,40,'0');
     SFString ret = callRPC("eth_getBalance", "[\"0x" + a +"\","+quote(asStringU(blockNum))+"]", false);
     return toWei(ret);
+}
+
+//-------------------------------------------------------------------------
+SFUintBN getTokenBalance(const SFAddress& token, const SFAddress& holder, blknum_t blockNum) {
+
+    ASSERT(isAddress(token));
+    ASSERT(isAddress(holder));
+
+    SFString t = "0x" + padLeft(token.substr(2), 40, '0');  // address to send the command to
+    SFString h =        padLeft(holder.substr(2), 64, '0'); // encoded data for the transaction
+
+    SFString cmd = "[{\"to\": \"[TOKEN]\", \"data\": \"0x70a08231[HOLDER]\"}, \"[BLOCK]\"]";
+    cmd.Replace("[TOKEN]",  t);
+    cmd.Replace("[HOLDER]", h);
+    cmd.Replace("[BLOCK]",  asStringU(blockNum));
+
+    return toWei(callRPC("eth_call", cmd, false));
 }
 
 //-------------------------------------------------------------------------
