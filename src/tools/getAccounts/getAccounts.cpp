@@ -31,10 +31,11 @@ int main(int argc, const char *argv[]) {
         } else {
             getAccounts(addrs);
             if (isTestMode()) {
-                for (uint32_t i = 0 ; i < addrs.getCount() ; i++) {
-                    addrs[i].Reverse();
-                    addrs[i] = "0x" + addrs[i].substr(10,10) + addrs[i].substr(2,10) + addrs[i].substr(15,20);
-                }
+               addrs.Clear();
+               addrs[addrs.getCount()] = "0x0000000000000000000000000000000000000000";
+               addrs[addrs.getCount()] = "0x0000000000000000000000000000000000000001";
+               addrs[addrs.getCount()] = "0x0000000000000000000000000000000000000002";
+               addrs[addrs.getCount()] = "0x0000000000000000000000000000000000000003";
             }
         }
 
