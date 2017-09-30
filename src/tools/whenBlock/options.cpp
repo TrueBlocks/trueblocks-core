@@ -28,6 +28,7 @@ bool COptions::parseArguments(SFString& command) {
     bool isList = false;
     bool foundOne = false;
     Init();
+    blknum_t latestBlock = getLatestBlockFromClient();
     while (!command.empty()) {
         SFString arg = nextTokenClear(command, ' ');
         SFString orig = arg;
@@ -75,31 +76,29 @@ bool COptions::parseArguments(SFString& command) {
                 return usage("The --list option must appear alone on the line. Quitting...");
 
             // if we're here, we better have a good block, assume we don't
-            foundOne = false;
-            for (uint32_t i = 0 ; i < specials.getCount() ; i++) {
-                SFString special = specials[i].getName();
-                SFString num     = specials[i].getValue();
-                if (special == arg) {
-                    requests[requests.getCount()] = "special:" + special + "|" + num;
-                    foundOne = true;
-                }
-            }
+            CNameValue spec;
+            if (findSpecial(spec, arg)) {
+                SFString val = spec.getValue();
+                if (spec.getName() == "latest")
+                    val = asStringU(getLatestBlockFromClient());
+                requests[requests.getCount()] = "special:" + spec.getName() + "|" + val;
+                foundOne = true;
 
-            if (!foundOne) {
-                if (isUnsigned(arg)) {
-                    if (toUnsigned(arg) > getLatestBlockFromClient()) {
-                        cout << "The block number you requested (";
-                        cout << cTeal << orig << cOff;
-                        cout << ") is after the latest block (";
-                        cout << cTeal << (isTestMode() ? "TESTING" : asStringU(getLatestBlockFromClient())) << cOff;
-                        cout << "). Quitting...\n";
-                        return false;
-                    }
-                    requests[requests.getCount()] = "block:" + asStringU(toUnsigned(arg));
-                    foundOne = true;
-                } else {
-                    return usage("Invalid argument: '" + orig + "'. Please supply either a JSON formatted date or a blockNumber. Quitting...");
+            } else  {
+
+                SFString ret = blocks.parseBlockList(arg, latestBlock);
+                if (ret.endsWith("\n")) {
+                    cerr << "\n  " << ret << "\n";
+                    return false;
+                } else if (!ret.empty()) {
+                    return usage(ret);
                 }
+                SFString blockList = blocks.toString();
+                blocks.Init();
+                while (!blockList.empty()) {
+                    requests[requests.getCount()] = "block:" + nextTokenClear(blockList,'|');
+                }
+                foundOne = true;
             }
         }
     }
@@ -107,7 +106,7 @@ bool COptions::parseArguments(SFString& command) {
     if (isList) {
         if (alone || requests.getCount())
             return usage("The --list option must appear alone on the line. Quitting...");
-        cout << listSpecials(false);
+        cout << listSpecials(false).Substitute("[{LATEST}]", asStringU(getLatestBlockFromClient()));
         return false;
     }
 
@@ -125,18 +124,7 @@ void COptions::Init(void) {
 
     requests.Clear();
     alone = false;
-    loadSpecials();
-}
-
-//--------------------------------------------------------------------------------
-int sortByBlockNum(const void *v1, const void *v2) {
-    CNameValue *b1 = (CNameValue *)v1;  // NOLINT
-    CNameValue *b2 = (CNameValue *)v2;  // NOLINT
-    if (b1->getName() == "latest")
-        return 1;
-    if (b2->getName() == "latest")
-        return -1;
-    return (int)(b1->getValueU() - b2->getValueU());
+    optionOff(OPT_DENOM);
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -149,52 +137,9 @@ COptions::~COptions(void) {
 }
 
 //--------------------------------------------------------------------------------
-SFString COptions::listSpecials(bool terse) const {
-    ostringstream os;
-    if (terse) {
-        os << bYellow << "\n  Notes:\n\t" << cOff;
-        os << "You may specify any of the following strings to represent 'special' blocks:\n\n\t    ";
-    } else {
-        os << bYellow << "\n\tSpecial Blocks:" << cOff;
-    }
-
-    SFString extra;
-    for (uint32_t i = 0 ; i < specials.getCount(); i++) {
-
-        SFString name  = specials[i].getName();
-        SFString block = specials[i].getValue();
-        if (name == "latest") {
-            if (isTestMode()) {
-                block = "";
-            } else if (i > 0 && specials[i-1].getValueU() >= specials[i].getValueU()) {
-                extra = iWhite + " (syncing)" + cOff;
-            }
-        }
-
-        if (terse) {
-            os << name;
-            os << " (" << cTeal << block << extra << cOff << ")";
-            if (i < specials.getCount()-1)
-                os << ", ";
-            if (!((i+1)%4))
-                os << "\n\t    ";
-        } else {
-            os << "\n\t  " << padRight(name, 12) << cTeal << padLeft(block, 10) << cOff << extra ;
-        }
-    }
-    if (terse) {
-        if (specials.getCount() % 4)
-            os << "\n";
-    } else {
-        os << "\n";
-    }
-    return os.str().c_str();
-}
-
-//--------------------------------------------------------------------------------
 SFString COptions::postProcess(const SFString& which, const SFString& str) const {
     if (which == "description")
-        return str + listSpecials(true);
+        return str + listSpecials(true).Substitute("[{LATEST}]", asStringU(getLatestBlockFromClient()));
     return str;
 }
 
@@ -229,52 +174,3 @@ SFTime parseDate(const SFString& strIn) {
     return SFTime(y, m, d, h, mn, s);
 }
 
-extern const char *STR_DEFAULT_SPECIALS;
-//-----------------------------------------------------------------------
-void COptions::loadSpecials(void) {
-
-    static CToml *toml = NULL;
-    if (!toml) {
-        static CToml theToml(configPath("quickBlocks.toml"));
-        toml = &theToml;
-    }
-    specials.Clear();
-
-    SFString specialsStr = toml->getConfigArray("specials", "list", "");
-    if (specialsStr.empty()) {
-        SFString in = asciiFileToString(configPath("quickBlocks.toml"));
-        stringToAsciiFile(configPath("quickBlocks.toml"), in + "\n" + STR_DEFAULT_SPECIALS);
-        specialsStr = toml->getConfigArray("specials", "list", "");
-    }
-    char *p = cleanUpJson((char *)specialsStr.c_str());
-    while (p && *p) {
-        CNameValue pair;
-        uint32_t nFields = 0;
-        p = pair.parseJson(p, nFields);
-        if (nFields) {
-            //cout << pair.Format() << "\n";
-            if (pair.name == "latest") {
-                pair.value = asStringU(getLatestBlockFromClient());
-            }
-            specials[specials.getCount()] = pair;
-        }
-    }
-
-    specials.Sort(sortByBlockNum);
-    return;
-}
-
-const char *STR_DEFAULT_SPECIALS =
-"[[specials]]\n"
-"list = [\n"
-"\t{ name = \"first\",      value = \"0\"          },\n"
-"\t{ name = \"iceage\",     value = \"200000\"     },\n"
-"\t{ name = \"homestead\",  value = \"1150000\"    },\n"
-"\t{ name = \"daofund\",    value = \"1428756\"    },\n"
-"\t{ name = \"daohack\",    value = \"1718497\"    },\n"
-"\t{ name = \"daofork\",    value = \"1920000\"    },\n"
-"\t{ name = \"tangerine\",  value = \"2463000\"    },\n"
-"\t{ name = \"spurious\",   value = \"2675000\"    },\n"
-"\t{ name = \"stateclear\", value = \"2718436\"    },\n"
-"\t{ name = \"latest\",     value = \"\"           }\n"
-"]\n";

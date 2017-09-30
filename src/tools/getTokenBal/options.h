@@ -10,18 +10,15 @@ class COptions : public COptionsBase {
 public:
     SFString tokens;
     SFString holders;
-    SFString blocks;
     bool asData;
     bool byAccount;
     bool noZero;
+    COptionsBlockList blocks;
 
     COptions(void);
     ~COptions(void);
 
-    bool parseArguments(SFString& command);
-    void Init(void);
+    bool parseArguments(SFString& command) override;
+    void Init(void) override;
+    SFString postProcess(const SFString& which, const SFString& str) const override;
 };
-
-//-----------------------------------------------------------------------------
-extern bool visitNonEmptyBlock(CBlock& node, void *data);
-extern bool visitEmptyBlock(CBlock& node, void *data);

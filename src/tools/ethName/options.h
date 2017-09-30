@@ -10,8 +10,6 @@
 
 class COptions : public COptionsBase {
 public:
-    CAccountNameArray accounts;
-    CFilename namesFile;
     SFString addr;
     SFString name;
     SFString source;
@@ -20,7 +18,7 @@ public:
     bool matchCase;
     bool open;
     bool list;
-    bool addrOnly;
+    bool alone;
     bool isEdit;
 
     COptions(void);
@@ -28,6 +26,5 @@ public:
 
     bool parseArguments(SFString& command);
     void Init(void);
-    bool loadData(void);
-    SFString showName(void);
+    SFString showMatches(void);
 };

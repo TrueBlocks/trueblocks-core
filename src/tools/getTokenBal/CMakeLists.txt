@@ -38,6 +38,31 @@ function(run_test testName)
 endfunction(run_test)
 
 # Enter one line for each individual test
+# In most of the tests we need to fix the block to compare with static and inmutable results
+run_test("getTokenBal_no_params")
+run_test("getTokenBal_invalid_params_1" "a" " b" " c")
+run_test("getTokenBal_invalid_params_2" "0xd26114cd6EE289AccF82350c8d8487fedB8A0C07" " 21321321312321")
+run_test("getTokenBal_invalid_params_3" "21321321312321" " 0xd26114cd6EE289AccF82350c8d8487fedB8A0C07" )
+run_test("getTokenBal_invalid_token" "0xd26114cd6EE289AccF82350c8d8487fedB8A0C" " 0x5e44c3e467a49c9ca0296a9f130fc433041aaa28") # token length is not correct
+run_test("getTokenBal_invalid_addr" "0xd26114cd6EE289AccF82350c8d8487fedB8A0C07" " 0x5e44c3e467a49c9ca0296a9f130fc433041aaa") # account address length is not correct
+run_test("getTokenBal_token_does_not_exist" "0xd26114cd6EE289AccF82350c8d84870000000000" " 0x5e44c3e467a49c9ca0296a9f130fc433041aaa28" " 4000000")
+run_test("getTokenBal_acccount_does_not_exist" "0xd26114cd6EE289AccF82350c8d8487fedB8A0C07" " 0x5e44c3e467a49c9ca0296a9f130fc43304000000" " 4000000")
+run_test("getTokenBal_single_account" "0xd26114cd6EE289AccF82350c8d8487fedB8A0C07" " 0x5e44c3e467a49c9ca0296a9f130fc433041aaa28" " 4000000")
+run_test("getTokenBal_multiple_token_accounts" " 0xd26114cd6EE289AccF82350c8d8487fedB8A0C07" " 0x5e44c3e467a49c9ca0296a9f130fc433041aaa28" " 0xd26114cd6ee289accf82350c8d8487fedb8a0c07" " 4000000")
+run_test("getTokenBal_multiple_single_block" "0xd26114cd6EE289AccF82350c8d8487fedB8A0C07" " 0x5e44c3e467a49c9ca0296a9f130fc433041aaa28" " 0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"  " 4150000") 
+run_test("getTokenBal_multiple_multiblock" "0xd26114cd6EE289AccF82350c8d8487fedB8A0C07" " 0x5e44c3e467a49c9ca0296a9f130fc433041aaa28" " 0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98" " 4141000" " 4151000" ) 
+run_test("getTokenBal_block_out_of_range" "0xd26114cd6EE289AccF82350c8d8487fedB8A0C07" " 0x5e44c3e467a49c9ca0296a9f130fc433041aaa28" " 0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98" " 6000000" ) 
+run_test("getTokenBal_by_account" "0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 " "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"  " 0x6b65353ac052f6c3a0c9688911b078bd025d6ab3" " 0xa25d04fa348f107428708ba19c95d1c79b3744bf" " -b" " 4000000") 
+run_test("getTokenBal_by_account_long" "0xb9e7f8568e08d5659f5d29c4997173d84cdf2607" " 0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"  " 0x6b65353ac052f6c3a0c9688911b078bd025d6ab3" " 0xa25d04fa348f107428708ba19c95d1c79b3744bf" " --byAcct" " 4000000")
+run_test("getTokenBal_by_account_long_nozero" "0xb9e7f8568e08d5659f5d29c4997173d84cdf2607" " 0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"  " 0x6b65353ac052f6c3a0c9688911b078bd025d6ab3" " 0xa25d04fa348f107428708ba19c95d1c79b3744bf" " --byAcct" " -n" " 4000000")
+run_test("getTokenBal_by_account_long_nozero_long" "0xb9e7f8568e08d5659f5d29c4997173d84cdf2607" " 0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"  " 0x6b65353ac052f6c3a0c9688911b078bd025d6ab3" " 0xa25d04fa348f107428708ba19c95d1c79b3744bf" " --byAcct" " --noZero" " 4000000")
+run_test("getTokenBal_by_account_table" "0xb9e7f8568e08d5659f5d29c4997173d84cdf2607" " 0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"  " 0x6b65353ac052f6c3a0c9688911b078bd025d6ab3" " 0xa25d04fa348f107428708ba19c95d1c79b3744bf" " --byAcct" " -d" " 4000000")
+run_test("getTokenBal_by_account_table_long" "0xb9e7f8568e08d5659f5d29c4997173d84cdf2607" " 0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"  " 0x6b65353ac052f6c3a0c9688911b078bd025d6ab3" " 0xa25d04fa348f107428708ba19c95d1c79b3744bf" " --byAcct" " --data" " 4000000")
+run_test("getTokenBal_by_account_table_verbose" "0xb9e7f8568e08d5659f5d29c4997173d84cdf2607" " 0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"  " 0x6b65353ac052f6c3a0c9688911b078bd025d6ab3" " 0xa25d04fa348f107428708ba19c95d1c79b3744bf" " --byAcct" " -d" " -v" " 4000000")
+run_test("getTokenBal_by_account_table_verbose_long" "0xb9e7f8568e08d5659f5d29c4997173d84cdf2607" " 0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"  " 0x6b65353ac052f6c3a0c9688911b078bd025d6ab3" " 0xa25d04fa348f107428708ba19c95d1c79b3744bf" " --byAcct" " -d" " --verbose" " 4000000")
+run_test("getTokenBal_help" "-h")
+run_test("getTokenBal_help_long" "--help")
+
 run_test("getTokenBal_README" "-th")
 run_test("getTokenBal_top_three_swarm1" "0xb9e7f8568e08d5659f5d29c4997173d84cdf2607" " 0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98" " 0x6b65353ac052f6c3a0c9688911b078bd025d6ab3" " 0xa25d04fa348f107428708ba19c95d1c79b3744bf" " 4285364" " 3510999" " 2510010" "--byAcct")
 run_test("getTokenBal_top_three_swarm2" "0xb9e7f8568e08d5659f5d29c4997173d84cdf2607" " 0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98" " 0x6b65353ac052f6c3a0c9688911b078bd025d6ab3" " 0xa25d04fa348f107428708ba19c95d1c79b3744bf" " 4285364" " 3510999" " 2510010")

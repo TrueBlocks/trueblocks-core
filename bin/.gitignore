@@ -6,6 +6,7 @@ blockScrape
 bloomMan
 build
 bytesUsed
+buildAll
 cacheMan
 chifra
 clearCacheEntry.py
@@ -30,6 +31,7 @@ fixProj
 fixProj.1
 fixProj2
 freshen
+getAccounts
 getBalance
 getBlock
 getBloom

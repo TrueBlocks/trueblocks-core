@@ -3,14 +3,15 @@ getBalance 12
 
   You must provide at least one Ethereum address.
 
-  Usage:    getBalance [-d|-e|-v|-h] addrs blocks  
-  Purpose:  Retrieve the balance for an account at a block.
+  Usage:    getBalance [-l|-n|-d|-v|-h] <address> [address...] [block...]  
+  Purpose:  Retrieve the balance (in wei) for one or more addresses at the given block(s).
              
   Where:    
-	addrs                 Ethereum address (starting with '0x') from which to retrieve the balance (required)
-	blocks                the block at which to retrieve the balance (defaults to 'latest') (required)
+	address_list          one or more addresses (0x...) from which to retrieve balances (required)
+	block_list            optional list of one or more blocks at which to report balances, see notes
+	-l  (--list fn)       an alternative way to specify an address_list; place one address per line in the file 'fn'
+	-n  (--noZero)        suppress the display of zero balance accounts
 	-d  (--data)          render results as tab delimited data
-	-e  (--ether)         return the balance in Ether instead of Wei
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
 	-h  (--help)          display this help screen
 

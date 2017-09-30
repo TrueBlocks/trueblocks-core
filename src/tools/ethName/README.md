@@ -16,7 +16,7 @@ One way to use this tool is to feed its output into another tool's input. For ex
 | Option | Full Command | Description |
 | -------: | :------- | :------- |
 |  | term [name] | search terms |
-| -a | --addrOnly | export only the associated address to be used as input to further commands |
+| -a | --alone | export only the associated address (may be used in scripting) |
 | -c | --count | print only the count of the number of matches |
 | -o | --open | open the name database for editing |
 | -l | --list | list all names in the database |

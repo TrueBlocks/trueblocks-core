@@ -1,4 +1,3 @@
-
 #pragma once
 /*-------------------------------------------------------------------------
  * This source code is confidential proprietary information which is
@@ -12,9 +11,9 @@
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
-    SFStringArray   requests;
-    bool            alone;
-    CNameValueArray specials;
+    SFStringArray     requests;
+    bool              alone;
+    COptionsBlockList blocks;
 
     COptions(void);
     ~COptions(void);
@@ -22,6 +21,4 @@ public:
     bool parseArguments(SFString& command);
     void Init(void);
     SFString postProcess(const SFString& which, const SFString& str) const;
-    void     loadSpecials(void);
-    SFString listSpecials(bool terse) const;
 };
