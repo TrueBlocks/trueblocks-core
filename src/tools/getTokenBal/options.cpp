@@ -26,6 +26,7 @@ bool COptions::parseArguments(SFString& command) {
         return false;
 
     Init();
+    blknum_t latestBlock = getLatestBlockFromClient();
     SFString address_list;
     while (!command.empty()) {
         SFString arg = nextTokenClear(command, ' ');
@@ -68,9 +69,13 @@ bool COptions::parseArguments(SFString& command) {
 
         } else {
 
-            if (!isNumeral(arg))
-                return usage(arg + " does not appear to be a valid block. Quitting...");
-            blocks += arg + "|";
+            SFString ret = blocks.parseBlockList(arg, latestBlock);
+            if (ret.endsWith("\n")) {
+                cerr << "\n  " << ret << "\n";
+                return false;
+            } else if (!ret.empty()) {
+                return usage(ret);
+            }
         }
     }
 
@@ -93,8 +98,14 @@ bool COptions::parseArguments(SFString& command) {
         tokens.Reverse(); holders.Reverse();
     }
 
-    if (blocks.empty())
-        blocks = asStringU(getLatestBlockFromClient());
+    if (blocks.isRange) {
+        // if range is supplied, use the range
+        blocks.nNums = 0;
+
+    } else if (blocks.nNums == 0) {
+        // otherwise, if not list, use 'latest'
+        blocks.nums[blocks.nNums++] = latestBlock;
+    }
 
     return true;
 }
@@ -107,10 +118,10 @@ void COptions::Init(void) {
 
     tokens = "";
     holders = "";
-    blocks = "";
     asData = false;
     noZero = false;
     byAccount = false;
+    blocks.Init();
 }
 
 //---------------------------------------------------------------------------------------------------
