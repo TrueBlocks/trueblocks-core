@@ -9,11 +9,12 @@
 
 //---------------------------------------------------------------------------------------------------
 CParams params[] = {
-    CParams("~date / block", "one of the special values listed below or YYYY-MM-DD-[HH[:MM[:SS]]] or a blockNumber"),
-    CParams("-alone",        "show the found block or found date unadorned (useful for scripting)"),
-    CParams("-list",         "list the names and block numbers of special blocks"),
-    CParams("",              "Finds the nearest block prior to a JSON-formatted date, or the nearest date prior to\n"
-                             " the given block. Alternatively, search for one of the special blocks listed below.\n"),
+    CParams("~!block", "one or more block numbers (or a 'special' block), or..."),
+    CParams("~!date",  "one or more dates formatted as YYYY-MM-DDT[HH[:MM[:SS]]]"),
+    CParams("-alone",  "display the result unadorned (useful for scripting)"),
+    CParams("-list",   "list names and block numbers for special blocks"),
+    CParams("",        "Finds the nearest block prior to a date, or the nearest date prior to a block.\n"
+                       " Alternatively, search for one of special 'named' blocks.\n"),
 };
 uint32_t nParams = sizeof(params) / sizeof(CParams);
 
@@ -43,7 +44,7 @@ bool COptions::parseArguments(SFString& command) {
 
             alone = true;
 
-        } else if (arg.ContainsAny(":- ") && !arg.startsWith("-")) {
+        } else if (arg.ContainsAny(":- ") && countOf('-',arg) > 1 && !arg.startsWith("-")) {
 
             if (isList)
                 return usage("The --list option must appear alone on the line. Quitting...");
@@ -51,10 +52,12 @@ bool COptions::parseArguments(SFString& command) {
             // If we're here, we better have a good date, assume we don't
             foundOne = false;
             SFString str = arg.Substitute(" ", ";").Substitute("-", ";").Substitute("_", ";")
-                                .Substitute(":", ";").Substitute(";UTC", "");
+                            .Substitute(":", ";").Substitute(";UTC", "").Substitute("T", ";");
             SFTime date = parseDate(str);
             if (date == earliestDate)
                 return usage("Invalid date: '" + orig + "'. Quitting...");
+            if (date > Now())
+                return usage("Date '" + date.Format(FMT_JSON) + "' is in the future. No such block found. Quitting...");
             if (date < SFTime(2015,07,30,15,25,00)) { // first block was at 15:26:00
                 cout << "The date you specified (";
                 cout << cTeal << orig << cOff;
@@ -138,8 +141,10 @@ COptions::~COptions(void) {
 
 //--------------------------------------------------------------------------------
 SFString COptions::postProcess(const SFString& which, const SFString& str) const {
+    if (which == "options")
+        return str.Substitute("block date", "< block | date > [ block... | date... ]");
     if (which == "description")
-        return str + listSpecials(true);
+        return str + "####Notes:\n" + listSpecials(true);
     return str;
 }
 
@@ -182,10 +187,9 @@ SFString COptions::listSpecials(bool terse) const {
     ostringstream os;
     if (!alone) {
         if (terse) {
-            os << bYellow << "\n  Notes:\n\t" << cOff;
-            os << "You may specify any of the following strings to represent 'special' blocks:\n\n\t    ";
+            os << "\t- Use the following names to represent `special` blocks:\n\t  - ";
         } else {
-            os << bYellow << "\n\tSpecial Blocks:" << cOff;
+            os << bYellow << "\n  Blocks:" << cOff;
         }
     }
 
@@ -206,18 +210,20 @@ SFString COptions::listSpecials(bool terse) const {
         }
 
         if (alone) {
-            if (block != "tbd")
+            if (!block.Contains("tbd"))
                 os << block << " ";
         } else {
             if (terse) {
                 os << name;
                 os << " (" << cTeal << block << extra << cOff << ")";
-                if (i < specials.getCount()-1)
+                if (!((i+1)%4)) {
+                    os << "\n\t";
+                    if (i < specials.getCount()-1)
+                        os << "  - ";
+                } else if (i < specials.getCount()-1)
                     os << ", ";
-                if (!((i+1)%4))
-                    os << "\n\t    ";
             } else {
-                os << "\n\t  " << padRight(name, 15) << cTeal << padLeft(block, 10) << cOff << extra ;
+                os << "\n      - " << padRight(name, 15) << cTeal << block << cOff << extra ;
             }
         }
     }
@@ -230,4 +236,3 @@ SFString COptions::listSpecials(bool terse) const {
     SFString ret = os.str().c_str();
     return ret;
 }
-
