@@ -97,7 +97,8 @@ COptions::COptions(void) {
     namesFile = CFilename(blockCachePath("names/names.txt"));
     establishFolder(namesFile.getPath());
     if (!fileExists(namesFile.getFullPath()))
-        stringToAsciiFile(namesFile.getFullPath(), STR_DEFAULT_DATA);
+        stringToAsciiFile(namesFile.getFullPath(), SFString(STR_DEFAULT_DATA).Substitute(" |","|").Substitute("|","\t"));
+    loadNames();
     Init();
 }
 
