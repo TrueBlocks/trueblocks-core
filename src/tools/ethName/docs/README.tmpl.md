@@ -1,6 +1,6 @@
 ## [{NAME}]
 
-`ethName` provides a very simple, wholy-inadequate method to keep track of 'real life' names and their associated Ethereum addresses. While this tool needs a lot of work, it does come in handy. Eventually, we will transition this tool to use ENS (or an equivalent).
+`ethName` provides a simple way to keep track of 'real life' names and their associated Ethereum addresses. While this tool is incomplete, it does come in handy. Eventually, this tool will use the ENS (or an equivalent) to find and manage names.
 
 One way to use this tool is to feed its output into another tool's input. For example, the following command would open the [EtherScan](http://etherscan.io) website to the address associated with The DAO:
 
