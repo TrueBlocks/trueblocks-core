@@ -576,6 +576,9 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
                 stop = lastBlock;
             if (stop <= start)
                 return "'stop' must be strictly larger than 'start'";
+            if (stop - start + 1 > MAX_BLOCK_LIST)
+                return "The range you specified (" + argIn + ") is too broad. Ranges may be at "
+                        "most " + asStringU(MAX_BLOCK_LIST) + " blocks long. Quitting...";
             isRange = true;
 
         } else {
@@ -641,11 +644,11 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
             return 1;
         if (b2->getName() == "latest")
             return -1;
-        if (b1->getValue().startsWith("tbd") && b1->getValue().startsWith("tbd"))
+        if (b1->getValue().Contains("tbd") && b1->getValue().Contains("tbd"))
             return b1->getValue().compare(b2->getValue());
-        if (b1->getValue().startsWith("tbd"))
+        if (b1->getValue().Contains("tbd"))
             return 1;
-        if (b2->getValue().startsWith("tbd"))
+        if (b2->getValue().Contains("tbd"))
             return -1;
         return (int)(b1->getValueU() - b2->getValueU());
     }
@@ -698,18 +701,18 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
     const char *STR_DEFAULT_SPECIALS =
     "[[specials]]\n"
     "list = [\n"
-    "\t{ name = \"first\",          value = \"0\"          },\n"
-    "\t{ name = \"iceage\",         value = \"200000\"     },\n"
-    "\t{ name = \"homestead\",      value = \"1150000\"    },\n"
-    "\t{ name = \"daofund\",        value = \"1428756\"    },\n"
-    "\t{ name = \"daohack\",        value = \"1718497\"    },\n"
-    "\t{ name = \"daofork\",        value = \"1920000\"    },\n"
-    "\t{ name = \"tangerine\",      value = \"2463000\"    },\n"
-    "\t{ name = \"spurious\",       value = \"2675000\"    },\n"
-    "\t{ name = \"stateclear\",     value = \"2718436\"    },\n"
-    "\t{ name = \"byzantium\",      value = \"tbd\"        },\n"
-    "\t{ name = \"constantinople\", value = \"tbd\"        },\n"
-    "\t{ name = \"latest\",         value = \"\"           }\n"
+    "\t{ name = \"first\",          value = \"0\"           },\n"
+    "\t{ name = \"iceage\",         value = \"200000\"      },\n"
+    "\t{ name = \"homestead\",      value = \"1150000\"     },\n"
+    "\t{ name = \"daofund\",        value = \"1428756\"     },\n"
+    "\t{ name = \"daohack\",        value = \"1718497\"     },\n"
+    "\t{ name = \"daofork\",        value = \"1920000\"     },\n"
+    "\t{ name = \"tangerine\",      value = \"2463000\"     },\n"
+    "\t{ name = \"spurious\",       value = \"2675000\"     },\n"
+    "\t{ name = \"stateclear\",     value = \"2718436\"     },\n"
+    "\t{ name = \"byzantium\",      value = \"4370000 tbd\" },\n"
+    "\t{ name = \"constantinople\", value = \"tbd\"         },\n"
+    "\t{ name = \"latest\",         value = \"\"            }\n"
     "]\n";
 
     //---------------------------------------------------------------------------------------------------

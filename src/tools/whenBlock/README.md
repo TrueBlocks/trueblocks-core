@@ -12,27 +12,26 @@ You may name your own blocks (for example, to denote the start of an ICO perhaps
 
 #### Usage
 
-`Usage:`    whenBlock [-a|-l|-v|-h] date / block  
-`Purpose:`  Finds the nearest block prior to a JSON-formatted date, or the nearest date prior to
-            the given block. Alternatively, search for one of the special blocks listed below.
+`Usage:`    whenBlock [-a|-l|-v|-h] &lt; block | date &gt; [ block... | date... ]  
+`Purpose:`  Finds the nearest block prior to a date, or the nearest date prior to a block.
+            Alternatively, search for one of special 'named' blocks.
              
 `Where:`  
 
 | Option | Full Command | Description |
 | -------: | :------- | :------- |
-|  | date / block | one of the special values listed below or YYYY-MM-DD-[HH[:MM[:SS]]] or a blockNumber |
-| -a | --alone | show the found block or found date unadorned (useful for scripting) |
-| -l | --list | list the names and block numbers of special blocks |
+|  | block | one or more block numbers (or a 'special' block), or... |
+|  | date | one or more dates formatted as YYYY-MM-DDT[HH[:MM[:SS]]] |
+| -a | --alone | display the result unadorned (useful for scripting) |
+| -l | --list | list names and block numbers for special blocks |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
-
-  Notes:
-	You may specify any of the following strings to represent 'special' blocks:
-
-	    first (0), iceage (200000), homestead (1150000), daofund (1428756), 
-	    daohack (1718497), daofork (1920000), tangerine (2463000), spurious (2675000), 
-	    stateclear (2718436), byzantium (tbd), constantinople (tbd), latest (--)
-	    
+####Notes:
+	- Use the following names to represent `special` blocks:
+	  - first (0), iceage (200000), homestead (1150000), daofund (1428756)
+	  - daohack (1718497), daofork (1920000), tangerine (2463000), spurious (2675000)
+	  - stateclear (2718436), byzantium (4370000), constantinople (tbd), latest (--)
+	
 #### Other Options
 
 All **quickBlocks** command-line tools support the following commands (although in some case, they have no meaning):
