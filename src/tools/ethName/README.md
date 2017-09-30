@@ -1,6 +1,8 @@
 ## ethName
 
-`ethName` provides a very simple, wholy-inadequate method to keep track of 'real life' names and their associated Ethereum addresses. While this tool needs a lot of work, it does come in handy. Eventually, we will transition this tool to use ENS (or an equivalent).
+*Published: Saturday, Sept. 29, 2017 - 12:03 am*
+
+`ethName` provides a simple way to keep track of 'real life' names and their associated Ethereum addresses. While this tool is incomplete, it does come in handy. Eventually, this tool will use the ENS (or an equivalent) to find and manage names.
 
 One way to use this tool is to feed its output into another tool's input. For example, the following command would open the [EtherScan](http://etherscan.io) website to the address associated with The DAO:
 
@@ -8,14 +10,14 @@ One way to use this tool is to feed its output into another tool's input. For ex
 
 #### Usage
 
-`Usage:`    ethName [-a|-c|-o|-l|-m|-s|-v|-h] term [name]  
+`Usage:`    ethName [-a|-c|-o|-l|-m|-s|-v|-h] &lt;term&gt; [term...]  
 `Purpose:`  Find a name given an Ethereum address, or find an address given a name.
              
 `Where:`  
 
 | Option | Full Command | Description |
 | -------: | :------- | :------- |
-|  | term [name] | search terms |
+|  | terms | one or more search terms |
 | -a | --alone | export only the associated address (may be used in scripting) |
 | -c | --count | print only the count of the number of matches |
 | -o | --open | open the name database for editing |
