@@ -44,12 +44,13 @@ namespace qblocks {
         CNameValueArray specials;
         void     loadSpecials(void);
         SFString listSpecials(bool terse) const;
-        uint32_t findSpecial (const SFString& arg) const;
+        bool     findSpecial(CNameValue& pair, const SFString& arg) const;
 
         // supporting named accounts
         CAccountNameArray namedAccounts;
         CFilename namesFile;
         bool loadNames(void);
+        bool getNamedAccount(CAccountName& acct, const SFString& addr) const;
 
     protected:
         virtual void Init(void) = 0;
@@ -110,13 +111,15 @@ namespace qblocks {
     class COptionsBlockList {
     public:
         bool isRange;
-        SFUint32 nums[MAX_BLOCK_LIST];
-        SFUint32 nNums;
-        SFUint32 start;
-        SFUint32 stop;
+        blknum_t nums[MAX_BLOCK_LIST];
+        blknum_t nNums;
+        blknum_t start;
+        blknum_t stop;
+        blknum_t latest;
         void Init(void);
         SFString parseBlockList(const SFString& arg, blknum_t latest);
         COptionsBlockList(void);
+        SFString toString(void) const;
     };
 
     extern const char *STR_DEFAULT_DATA;

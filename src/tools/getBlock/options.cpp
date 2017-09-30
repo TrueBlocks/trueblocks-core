@@ -162,13 +162,23 @@ bool COptions::parseArguments(SFString& command) {
         } else {
 
             SFString ret = blocks.parseBlockList(arg, latestBlock);
-            if (!ret.empty())
+            if (ret.endsWith("\n")) {
+                cerr << "\n  " << ret << "\n";
+                return false;
+            } else if (!ret.empty()) {
                 return usage(ret);
+            }
         }
     }
 
-    if (blocks.isRange) blocks.nNums = 0;  // if range is supplied, use the range
-    else if (blocks.nNums == 0) blocks.nNums = 1;  // otherwise, if not list, use 'latest'
+    if (blocks.isRange) {
+        // if range is supplied, use the range
+        blocks.nNums = 0;
+
+    } else if (blocks.nNums == 0) {
+        // otherwise, if not list, use 'latest'
+        blocks.nums[blocks.nNums++] = latestBlock;
+    }
 
     if (terse && !isRaw)
         return usage("--terse options work only with --source:raw. Quitting...");
