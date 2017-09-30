@@ -24,6 +24,7 @@ namespace qblocks {
     extern SFString compileSolidity         (const SFString& sol);
     extern SFString getVersionFromClient    (void);
     extern bool     getAccounts             (SFAddressArray& addrs);
+    extern bool     isNodeRunning           (void);
     extern SFUint32 getLatestBlockFromClient(void);
     extern SFUint32 getLatestBlockFromCache (CSharedResource *res=NULL);
     extern SFUint32 getLatestBloomFromCache (void);
@@ -34,6 +35,7 @@ namespace qblocks {
     inline SFString getCode                 (const SFAddress& addr) { SFString ret; getCode(addr, ret); return ret; }
     inline bool     isContract              (const SFAddress& addr) { return !getCode(addr).Substitute("0x","").empty(); }
     extern SFUintBN getBalance              (const SFAddress& addr, blknum_t blockNum, bool isDemo);
+    extern SFUintBN getTokenBalance         (const SFAddress& token, const SFAddress& holder, blknum_t blockNum);
     extern bool     getSha3                 (const SFString& hexIn, SFString& shaOut);
     inline SFString getSha3                 (const SFString& hexIn) { SFString ret; getSha3(hexIn,ret); return ret; }
 
@@ -57,9 +59,6 @@ namespace qblocks {
     //-------------------------------------------------------------------------
     extern void     etherlib_init           (const SFString& client);
     extern void     etherlib_cleanup        (void);
-
-    //-------------------------------------------------------------------------
-    extern SFString callRPC                 (const SFString& method, const SFString& params, bool raw);
 
     //-------------------------------------------------------------------------
     extern void     setStorageRoot          (const SFString& path);
