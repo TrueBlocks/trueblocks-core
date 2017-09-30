@@ -1,7 +1,7 @@
 whenBlock argc: 2 [1:a] 
 whenBlock a 
 
-  Invalid argument: 'a'. Please supply either a JSON formatted date or a blockNumber. Quitting...
+  'a' does not appear to be a valid block. Quitting...
 
   Usage:    whenBlock [-a|-l|-v|-h] date / block  
   Purpose:  Finds the nearest block prior to a JSON-formatted date, or the nearest date prior to
