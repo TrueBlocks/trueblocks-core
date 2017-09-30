@@ -8,7 +8,7 @@ List accounts held in the local node's keystore:
 
     getAccounts
 
-List balances of those accounts (not 'xargs' puts the results on a single line):
+List balances of those accounts (note 'xargs' puts the results on a single line):
 
     getBalance `getAccounts | xargs`
     
