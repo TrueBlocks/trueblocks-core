@@ -1,7 +1,7 @@
 whenBlock argc: 2 [1:idonotexist] 
 whenBlock idonotexist 
 
-  Invalid argument: 'idonotexist'. Please supply either a JSON formatted date or a blockNumber. Quitting...
+  'idonotexist' does not appear to be a valid block. Quitting...
 
   Usage:    whenBlock [-a|-l|-v|-h] date / block  
   Purpose:  Finds the nearest block prior to a JSON-formatted date, or the nearest date prior to

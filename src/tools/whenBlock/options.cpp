@@ -28,6 +28,7 @@ bool COptions::parseArguments(SFString& command) {
     bool isList = false;
     bool foundOne = false;
     Init();
+    blknum_t latestBlock = getLatestBlockFromClient();
     while (!command.empty()) {
         SFString arg = nextTokenClear(command, ' ');
         SFString orig = arg;
@@ -75,29 +76,29 @@ bool COptions::parseArguments(SFString& command) {
                 return usage("The --list option must appear alone on the line. Quitting...");
 
             // if we're here, we better have a good block, assume we don't
-            uint32_t blk = findSpecial(arg);
-            if (blk != (uint32_t)-1) {
-                SFString val = specials[blk].getValue();
-                if (specials[blk].getName() == "latest")
+            CNameValue spec;
+            if (findSpecial(spec, arg)) {
+                SFString val = spec.getValue();
+                if (spec.getName() == "latest")
                     val = asStringU(getLatestBlockFromClient());
-                requests[requests.getCount()] = "special:" + specials[blk].getName() + "|" + val;
+                requests[requests.getCount()] = "special:" + spec.getName() + "|" + val;
                 foundOne = true;
 
             } else  {
-                if (isUnsigned(arg)) {
-                    if (toUnsigned(arg) > getLatestBlockFromClient()) {
-                        cout << "The block number you requested (";
-                        cout << cTeal << orig << cOff;
-                        cout << ") is after the latest block (";
-                        cout << cTeal << (isTestMode() ? "TESTING" : asStringU(getLatestBlockFromClient())) << cOff;
-                        cout << "). Quitting...\n";
-                        return false;
-                    }
-                    requests[requests.getCount()] = "block:" + asStringU(toUnsigned(arg));
-                    foundOne = true;
-                } else {
-                    return usage("Invalid argument: '" + orig + "'. Please supply either a JSON formatted date or a blockNumber. Quitting...");
+
+                SFString ret = blocks.parseBlockList(arg, latestBlock);
+                if (ret.endsWith("\n")) {
+                    cerr << "\n  " << ret << "\n";
+                    return false;
+                } else if (!ret.empty()) {
+                    return usage(ret);
                 }
+                SFString blockList = blocks.toString();
+                blocks.Init();
+                while (!blockList.empty()) {
+                    requests[requests.getCount()] = "block:" + nextTokenClear(blockList,'|');
+                }
+                foundOne = true;
             }
         }
     }

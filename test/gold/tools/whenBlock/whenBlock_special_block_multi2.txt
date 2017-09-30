@@ -1,7 +1,7 @@
 whenBlock argc: 5 [1:stateclear] [2:iceage] [3:4001001] [4:junk] 
 whenBlock stateclear iceage 4001001 junk 
 
-  Invalid argument: 'junk'. Please supply either a JSON formatted date or a blockNumber. Quitting...
+  'junk' does not appear to be a valid block. Quitting...
 
   Usage:    whenBlock [-a|-l|-v|-h] date / block  
   Purpose:  Finds the nearest block prior to a JSON-formatted date, or the nearest date prior to

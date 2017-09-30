@@ -1,4 +1,3 @@
-
 #pragma once
 /*-------------------------------------------------------------------------
  * This source code is confidential proprietary information which is
@@ -12,8 +11,9 @@
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
-    SFStringArray   requests;
-    bool            alone;
+    SFStringArray     requests;
+    bool              alone;
+    COptionsBlockList blocks;
 
     COptions(void);
     ~COptions(void);
