@@ -1,3 +1,5 @@
 whenBlock argc: 2 [1:40000000000000000000000000000] 
 whenBlock 40000000000000000000000000000 
-The block number you requested (40000000000000000000000000000) is after the latest block (TESTING). Quitting...
+
+  Block 40000000000000000000000000000 is later than the last valid block --. Quitting...
+
