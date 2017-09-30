@@ -25,6 +25,7 @@ bool COptions::parseArguments(SFString& command) {
         return false;
 
     Init();
+    blknum_t latestBlock = getLatestBlockFromClient();
     SFString address_list;
     while (!command.empty()) {
         SFString arg = nextTokenClear(command, ' ');
@@ -36,6 +37,7 @@ bool COptions::parseArguments(SFString& command) {
             noZero = true;
 
         } else if (arg.startsWith("-l:") || arg.startsWith("--list:")) {
+
             CFilename fileName(arg.Substitute("-l:","").Substitute("--list:",""));
             if (!fileName.isValid())
                 return usage("Not a valid filename: " + orig + ". Quitting...");
@@ -58,15 +60,20 @@ bool COptions::parseArguments(SFString& command) {
             }
 
         } else if (arg.startsWith("0x")) {
+
             if (!isAddress(arg))
                 return usage(arg + " does not appear to be a valid Ethereum address. Quitting...");
             address_list += arg + "|";
 
         } else {
 
-            if (!isNumeral(arg))
-                return usage(arg + " does not appear to be a valid block. Quitting...");
-            blocks += arg + "|";
+            SFString ret = blocks.parseBlockList(arg, latestBlock);
+            if (ret.endsWith("\n")) {
+                cerr << "\n  " << ret << "\n";
+                return false;
+            } else if (!ret.empty()) {
+                return usage(ret);
+            }
         }
     }
 
@@ -74,8 +81,14 @@ bool COptions::parseArguments(SFString& command) {
         return usage("You must provide at least one Ethereum address.");
     addrs = address_list;
 
-    if (blocks.empty())
-        blocks = asStringU(getLatestBlockFromClient());
+    if (blocks.isRange) {
+        // if range is supplied, use the range
+        blocks.nNums = 0;
+
+    } else if (blocks.nNums == 0) {
+        // otherwise, if not list, use 'latest'
+        blocks.nums[blocks.nNums++] = latestBlock;
+    }
 
     return true;
 }
@@ -87,9 +100,9 @@ void COptions::Init(void) {
     pOptions = this;
 
     addrs = "";
-    blocks = "";
     asData = false;
     noZero = false;
+    blocks.Init();
 }
 
 //---------------------------------------------------------------------------------------------------

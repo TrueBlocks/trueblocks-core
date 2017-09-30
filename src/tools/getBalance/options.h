@@ -9,9 +9,9 @@
 class COptions : public COptionsBase {
 public:
     SFString addrs;
-    SFString blocks;
     bool asData;
     bool noZero;
+    COptionsBlockList blocks;
 
     COptions(void);
     ~COptions(void);
