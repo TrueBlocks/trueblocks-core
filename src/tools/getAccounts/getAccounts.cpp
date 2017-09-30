@@ -24,10 +24,26 @@ int main(int argc, const char *argv[]) {
             return 0;
 
         SFAddressArray addrs;
-        getAccounts(addrs);
+        if (options.named) {
+            for (uint32_t i = 0 ; i < options.namedAccounts.getCount() ; i++)
+                addrs[addrs.getCount()] = options.namedAccounts[i].addr;
 
-        for (uint32_t i = 0 ; i < addrs.getCount() ; i++)
-            cout << addrs[i] << "\n";
+        } else {
+            getAccounts(addrs);
+            if (isTestMode()) {
+                for (uint32_t i = 0 ; i < addrs.getCount() ; i++) {
+                    addrs[i].Reverse();
+                    addrs[i] = "0x" + addrs[i].substr(10,10) + addrs[i].substr(2,10) + addrs[i].substr(15,20);
+                }
+            }
+        }
+
+        for (uint32_t i = 0 ; i < addrs.getCount() ; i++) {
+            CAccountName acct;
+            bool found = verbose && options.getNamedAccount(acct, addrs[i]);
+            cout << addrs[i] << (found ? acct.Format(" ([{NAME}])") : "") << "\n";
+        }
     }
     return 0;
 }
+

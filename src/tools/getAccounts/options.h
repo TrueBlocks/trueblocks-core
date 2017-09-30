@@ -10,7 +10,7 @@
 
 class COptions : public COptionsBase {
 public:
-    bool alone;
+    bool named;
 
     COptions(void);
     ~COptions(void) {}
