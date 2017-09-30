@@ -24,15 +24,30 @@ int main(int argc, const char *argv[]) {
         if (!options.parseArguments(command))
             return 0;
 
+        if (!options.alone)
+            cout << cYellow << "\nReport on block locations:" << cOff << (verbose ? "" : "\n  (cache folder: " + blockCachePath("") + ")") << "\n";
         for (uint32_t i = 0 ; i < options.blocks.getCount() ; i++ ) {
-            CFilename fileName(getBinaryFilename1(options.blocks[i]));
+
+            blknum_t block = options.blocks[i];
+            CFilename fileName(getBinaryFilename1(block));
             bool exists = fileExists(fileName.getFullPath());
-            if (exists && options.alone) {
-                cout << fileName.getFullPath() << "\n";
-            } else if (exists) {
-                cout << "File " << fileName.relativePath(getStorageRoot()) << " found in cache.\n";
+
+            if (options.alone) {
+                // When running in 'alone' mode, only report items in the cache
+                if (exists)
+                    cout << fileName.getFullPath() << "\n";
+
             } else {
-                cout << "The block " << options.blocks[i] << " was not found in the cache.\n";
+
+                SFString path = (verbose ? fileName.getFullPath() : fileName.relativePath(getStorageRoot()));
+                SFString fallback = getenv("FALLBACK");
+                bool running_node = isNodeRunning();
+
+                cout << "\tblock " << cTeal << padLeft(asStringU(block),9) << cOff << " ";
+                     if (exists)            cout << "found at cache:  " << cTeal << path << cOff << "\n";
+                else if (running_node)      cout << "found at node:   " << getVersionFromClient() << "\n";
+                else if (!fallback.empty()) cout << "found at remote: " << fallback << "\n";
+                else                        cout << "was not found\n";
             }
         }
     }
