@@ -20,5 +20,6 @@ public:
 
     bool parseArguments(SFString& command);
     void Init(void);
+    SFString listSpecials(bool terse) const;
     SFString postProcess(const SFString& which, const SFString& str) const;
 };

@@ -673,63 +673,12 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
             uint32_t nFields = 0;
             p = pair.parseJson(p, nFields);
             if (nFields) {
-                //cout << pair.Format() << "\n";
-                if (pair.name == "latest") {
-                    pair.value = "[{LATEST}]";
-                }
                 specials[specials.getCount()] = pair;
             }
         }
 
         specials.Sort(sortByBlockNum);
         return;
-    }
-
-    //--------------------------------------------------------------------------------
-    SFString COptionsBase::listSpecials(bool terse) const {
-        if (specials.getCount() == 0)
-            ((COptionsBase*)this)->loadSpecials();
-        ostringstream os;
-        if (terse) {
-            os << bYellow << "\n  Notes:\n\t" << cOff;
-            os << "You may specify any of the following strings to represent 'special' blocks:\n\n\t    ";
-        } else {
-            os << bYellow << "\n\tSpecial Blocks:" << cOff;
-        }
-
-        SFString extra;
-        for (uint32_t i = 0 ; i < specials.getCount(); i++) {
-
-            SFString name  = specials[i].getName();
-            SFString block = specials[i].getValue();
-            if (name == "latest") {
-                if (isTestMode()) {
-                    block = "";
-                } else if (COptionsBase::isReadme) {
-                    block = "--";
-                } else if (i > 0 && specials[i-1].getValueU() >= specials[i].getValueU()) {
-                    extra = iWhite + " (syncing)" + cOff;
-                }
-            }
-
-            if (terse) {
-                os << name;
-                os << " (" << cTeal << block << extra << cOff << ")";
-                if (i < specials.getCount()-1)
-                    os << ", ";
-                if (!((i+1)%4))
-                    os << "\n\t    ";
-            } else {
-                os << "\n\t  " << padRight(name, 15) << cTeal << padLeft(block, 10) << cOff << extra ;
-            }
-        }
-        if (terse) {
-            if (specials.getCount() % 4)
-                os << "\n";
-        } else {
-            os << "\n";
-        }
-        return os.str().c_str();
     }
 
     //--------------------------------------------------------------------------------

@@ -104,9 +104,9 @@ bool COptions::parseArguments(SFString& command) {
     }
 
     if (isList) {
-        if (alone || requests.getCount())
+        if (requests.getCount())
             return usage("The --list option must appear alone on the line. Quitting...");
-        cout << listSpecials(false).Substitute("[{LATEST}]", asStringU(getLatestBlockFromClient()));
+        cout << listSpecials(false);
         return false;
     }
 
@@ -139,7 +139,7 @@ COptions::~COptions(void) {
 //--------------------------------------------------------------------------------
 SFString COptions::postProcess(const SFString& which, const SFString& str) const {
     if (which == "description")
-        return str + listSpecials(true).Substitute("[{LATEST}]", asStringU(getLatestBlockFromClient()));
+        return str + listSpecials(true);
     return str;
 }
 
@@ -172,5 +172,62 @@ SFTime parseDate(const SFString& strIn) {
         return earliestDate;
 
     return SFTime(y, m, d, h, mn, s);
+}
+
+//--------------------------------------------------------------------------------
+SFString COptions::listSpecials(bool terse) const {
+    if (specials.getCount() == 0)
+        ((COptionsBase*)this)->loadSpecials();
+
+    ostringstream os;
+    if (!alone) {
+        if (terse) {
+            os << bYellow << "\n  Notes:\n\t" << cOff;
+            os << "You may specify any of the following strings to represent 'special' blocks:\n\n\t    ";
+        } else {
+            os << bYellow << "\n\tSpecial Blocks:" << cOff;
+        }
+    }
+
+    SFString extra;
+    for (uint32_t i = 0 ; i < specials.getCount(); i++) {
+
+        SFString name  = specials[i].getName();
+        SFString block = specials[i].getValue();
+        if (name == "latest") {
+            block = asStringU(getLatestBlockFromClient());
+            if (isTestMode()) {
+                block = "";
+            } else if (COptionsBase::isReadme) {
+                block = "--";
+            } else if (i > 0 && specials[i-1].getValueU() >= getLatestBlockFromClient()) {
+                extra = iWhite + " (syncing)" + cOff;
+            }
+        }
+
+        if (alone) {
+            if (block != "tbd")
+                os << block << " ";
+        } else {
+            if (terse) {
+                os << name;
+                os << " (" << cTeal << block << extra << cOff << ")";
+                if (i < specials.getCount()-1)
+                    os << ", ";
+                if (!((i+1)%4))
+                    os << "\n\t    ";
+            } else {
+                os << "\n\t  " << padRight(name, 15) << cTeal << padLeft(block, 10) << cOff << extra ;
+            }
+        }
+    }
+    if (terse) {
+        if (specials.getCount() % 4)
+            os << "\n";
+    } else {
+        os << "\n";
+    }
+    SFString ret = os.str().c_str();
+    return ret;
 }
 
