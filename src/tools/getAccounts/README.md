@@ -1,14 +1,14 @@
 ## getAccounts
 
-`getAccounts` is a very simple tool that simply reports the list of addresses that the local node holds in its keystore. It can be used to self-report on your holdings.
+`getAccounts` lists the addresses found in your local node's keystore. It can be used to report your ether holdings, for example. It also lists known, named accounts from [ethName](../ethName/README.md).
 
-A simple way to effectively use this tool is to feed its output through either getBalance or getTokenBal to report on current holdings. Using the --ether or --dollars command line options give more information. For example, you can do these commands:
+One way to use this tool is to feed its output through the [getBalance](../getBalance/README.md) or [getTokenBal](../getTokenBal/README.md). This will give you the balances of your ether holdings or token holings. For example, you can do these commands:
 
-List accounts on the local node:
+List accounts held in the local node's keystore:
 
     getAccounts
 
-List balances of the local node's accounts:
+List balances of those accounts (not 'xargs' puts the results on a single line):
 
     getBalance `getAccounts | xargs`
     
@@ -16,19 +16,23 @@ List balances of the local node's accounts in US dollars:
 
     getBalance `getAccounts | xargs` --dollars
 
-List token balances on the Singular DTV token for the local node's accounts in ether:
+Using ethName to find Singular's address, list token balances held by your accounts:
 
-    getTokenBal `ethName -a singular` `getAccounts | xargs` --ether
+    getTokenBal `ethName -a singular` `getAccounts | xargs`
+
+Using ethName to find Singular's address, list tokens held by other token accounts:
+
+    getTokenBal `ethName -a singular` `getAccounts -n | xargs`
 
 #### Usage
 
-`Usage:`    getAccounts [-a|-v|-h]  
-`Purpose:`  Show the list of Ethereum accounts known to the local node.  
+`Usage:`    getAccounts [-n|-v|-h]  
+`Purpose:`  Show the list of Ethereum accounts known to the local node or named accounts.  
 `Where:`  
 
 | Option | Full Command | Description |
 | -------: | :------- | :------- |
-| -a | --alone | Show only the addresses for use in scripting |
+| -n | --named | Show addresses from named accounts as per ethName |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 

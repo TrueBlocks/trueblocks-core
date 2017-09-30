@@ -10,8 +10,8 @@
 
 //---------------------------------------------------------------------------------------------------
 CParams params[] = {
-    CParams("-alone",    "Show only the addresses for use in scripting"),
-    CParams("",          "Show the list of Ethereum accounts known to the local node."),
+    CParams("-named",    "Show addresses from named accounts as per ethName"),
+    CParams("",          "Show the list of Ethereum accounts known to the local node or named accounts."),
 };
 uint32_t nParams = sizeof(params) / sizeof(CParams);
 
@@ -24,15 +24,16 @@ bool COptions::parseArguments(SFString& command) {
     Init();
     while (!command.empty()) {
         SFString arg = nextTokenClear(command, ' ');
-        if (arg == "-a" || arg == "--alone") {
-            alone = true;
+        if (arg == "-n" || arg == "--named") {
+            named = true;
 
         } else if (arg.startsWith('-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);
             }
-
+        } else {
+            return usage("Invalid option '" + arg + "'. Quitting...");
         }
     }
 
@@ -45,11 +46,17 @@ void COptions::Init(void) {
     paramsPtr = params;
     nParamsRef = nParams;
 
-    alone = false;
+    named = false;
     minArgs = 0;
 }
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
+    // If you need the names file, you have to add it in the constructor
+    namesFile = CFilename(blockCachePath("names/names.txt"));
+    establishFolder(namesFile.getPath());
+    if (!fileExists(namesFile.getFullPath()))
+        stringToAsciiFile(namesFile.getFullPath(), SFString(STR_DEFAULT_DATA).Substitute(" |","|").Substitute("|","\t"));
+    loadNames();
     Init();
 }

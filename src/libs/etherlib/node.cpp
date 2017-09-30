@@ -81,6 +81,7 @@ void etherlib_init(const SFString& sourceIn)
     CAccount::registerClass();
     CRPCResult::registerClass();
     CNameValue::registerClass();
+    CAccountName::registerClass();
 
     // TODO(tjayrush): Collapse curl initialation in setSource
     setSource(sourceIn);
