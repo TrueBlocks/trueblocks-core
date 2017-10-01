@@ -69,7 +69,7 @@ run_test("getBalance_help" "-h")
 run_test("getBalance_help_long" "--help")
 run_test("getBalance_special_block_1"    "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359" " iceage")
 run_test("getBalance_special_block_2"    "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359" " stateclear")
-#run_test("getBalance_special_block_3"    "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359" " first")
+run_test("getBalance_special_block_3"    "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359" " first")
 run_test("getBalance_wei"    "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359" " 4000000" " --wei")
 run_test("getBalance_ether"    "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359" " 4000000" " --ether")
 
