@@ -94,6 +94,8 @@ bool CIncomeStatement::Serialize(SFArchive& archive) {
     if (readBackLevel(archive))
         return true;
 
+    // EXISTING_CODE
+    // EXISTING_CODE
     archive >> begBal;
     archive >> inflow;
     archive >> outflow;
@@ -107,6 +109,8 @@ bool CIncomeStatement::Serialize(SFArchive& archive) {
 //---------------------------------------------------------------------------------------------------
 bool CIncomeStatement::SerializeC(SFArchive& archive) const {
 
+    // EXISTING_CODE
+    // EXISTING_CODE
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
     archive << begBal;

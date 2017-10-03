@@ -116,6 +116,8 @@ bool CAccountWatch::Serialize(SFArchive& archive) {
     if (readBackLevel(archive))
         return true;
 
+    // EXISTING_CODE
+    // EXISTING_CODE
     archive >> index;
     archive >> address;
     archive >> name;
@@ -133,6 +135,8 @@ bool CAccountWatch::Serialize(SFArchive& archive) {
 //---------------------------------------------------------------------------------------------------
 bool CAccountWatch::SerializeC(SFArchive& archive) const {
 
+    // EXISTING_CODE
+    // EXISTING_CODE
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
     archive << index;
@@ -280,6 +284,13 @@ ostream& operator<<(ostream& os, const CAccountWatch& item) {
 
     os << item.Format() << "\n";
     return os;
+}
+
+//---------------------------------------------------------------------------
+const CBaseNode *CAccountWatch::getObjectAt(const SFString& name, uint32_t i) const {
+    if ( name % "qbis" )
+        return &qbis;
+    return NULL;
 }
 
 //---------------------------------------------------------------------------

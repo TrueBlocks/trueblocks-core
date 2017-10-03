@@ -152,6 +152,8 @@ bool CTransaction::Serialize(SFArchive& archive) {
     if (readBackLevel(archive))
         return true;
 
+    // EXISTING_CODE
+    // EXISTING_CODE
     archive >> hash;
     archive >> blockHash;
     archive >> blockNumber;
@@ -175,6 +177,8 @@ bool CTransaction::Serialize(SFArchive& archive) {
 //---------------------------------------------------------------------------------------------------
 bool CTransaction::SerializeC(SFArchive& archive) const {
 
+    // EXISTING_CODE
+    // EXISTING_CODE
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
     archive << hash;
@@ -413,6 +417,13 @@ ostream& operator<<(ostream& os, const CTransaction& item) {
 
     os << item.Format() << "\n";
     return os;
+}
+
+//---------------------------------------------------------------------------
+const CBaseNode *CTransaction::getObjectAt(const SFString& name, uint32_t i) const {
+    if ( name % "receipt" )
+        return &receipt;
+    return NULL;
 }
 
 //---------------------------------------------------------------------------

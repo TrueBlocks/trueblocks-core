@@ -33,7 +33,7 @@ public:
 
     DECLARE_NODE([{CLASS_NAME}]);
 
-    // EXISTING_CODE
+[{GET_OBJ}][{GET_STR}]    // EXISTING_CODE
     // EXISTING_CODE
     friend ostream& operator<<(ostream& os, const [{CLASS_NAME}]& item);
 

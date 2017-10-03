@@ -90,6 +90,8 @@ bool CPriceQuote::Serialize(SFArchive& archive) {
     if (readBackLevel(archive))
         return true;
 
+    // EXISTING_CODE
+    // EXISTING_CODE
     archive >> timestamp;
     archive >> close;
     finishParse();
@@ -99,8 +101,14 @@ bool CPriceQuote::Serialize(SFArchive& archive) {
 //---------------------------------------------------------------------------------------------------
 bool CPriceQuote::SerializeC(SFArchive& archive) const {
 
+    // EXISTING_CODE
+    // EXISTING_CODE
     // Writing always write the latest version of the data
-	((CPriceQuote*)this)->m_schema = 2000;
+#define MAJOR 0
+#define MINOR 2
+#define BUILD 0
+    uint32_t vers = ((MAJOR * 1000000) + (MINOR * 1000) + (BUILD));
+    ((CPriceQuote*)this)->m_schema = vers;
     CBaseNode::SerializeC(archive);
     archive << timestamp;
     archive << close;
@@ -428,6 +436,14 @@ SFString asDollars(timestamp_t ts, SFUintBN weiIn) {
     weiIn *= pInt;
     weiIn /= 100;
     return "$" + wei2Ether(to_string(weiIn).c_str());
+}
+
+//-----------------------------------------------------------------------
+SFString dispDollars(timestamp_t ts, SFUintBN weiIn) {
+    SFString sBal = asDollars(ts, weiIn);
+    SFString d = nextTokenClear(sBal,'.');
+    sBal = (sBal.empty() ? "$0.00" : d + "." + sBal.substr(0,2));
+    return sBal;
 }
 // EXISTING_CODE
 }  // namespace qblocks
