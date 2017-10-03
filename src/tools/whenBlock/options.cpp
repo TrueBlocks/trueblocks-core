@@ -52,7 +52,7 @@ bool COptions::parseArguments(SFString& command) {
             // If we're here, we better have a good date, assume we don't
             foundOne = false;
             SFString str = arg.Substitute(" ", ";").Substitute("-", ";").Substitute("_", ";")
-                                .Substitute(":", ";").Substitute(";UTC", "").Substitute("T", ";");
+                                .Substitute(":", ";").Substitute(";UTC", "");
             str = nextTokenClear(str,'.');
             SFTime date = parseDate(str);
             if (date == earliestDate)
@@ -157,11 +157,14 @@ SFTime parseDate(const SFString& strIn) {
     }
 
     SFString str = strIn.Substitute(";", "");
-    if (str.length() != 14 && str.length() != 8)
-        return earliestDate;
-
-    if (str.length() == 8)
-        str += "120000";
+    if (str.Contains("T")) {
+        str.Replace("T","");
+        if      (str.length() == 10) str += "0000";
+        else if (str.length() == 12) str += "00";
+        else if (str.length() != 14) { cerr << "Bad: " << str << "\n"; return earliestDate; }
+    } else {
+        str += "000000";
+    }
 
 #define NP ((uint32_t)-1)
     uint32_t y, m, d, h, mn, s;
