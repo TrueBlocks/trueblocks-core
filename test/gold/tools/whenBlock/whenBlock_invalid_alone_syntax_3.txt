@@ -15,5 +15,5 @@ whenBlock -a pppppp1
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
 	-h  (--help)          display this help screen
 ####Notes:
-0 200000 1150000 1428756 1718497 1920000 2463000 2675000 2718436 4370000  
+0 200000 1150000 1428756 1718497 1920000 2463000 2675000 2718436  
   Powered by QuickBlocks
