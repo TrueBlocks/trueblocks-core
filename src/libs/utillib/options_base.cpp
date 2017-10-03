@@ -593,7 +593,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
                 }
             }
 
-            if (num == 0 && !arg.startsWith("0") && !isNumeral(arg))
+            if (num == 0 && arg != "first" && !arg.startsWith("0") && !isNumeral(arg))
                 return "'" + arg + "' does not appear to be a valid block. Quitting...";
 
             if (num > lastBlock) {

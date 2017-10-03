@@ -64,7 +64,7 @@ int main(int argc, const char *argv[]) {
                         cout << " is " << cYellow << sBal << cOff << "\n";
                     }
                     needsNewline = false;
-                } else {
+                } else if (!isTestMode()) {
                     if (options.asData) {
                         cerr << blockNum << "\t" << addr << "         \r";
                     } else {
