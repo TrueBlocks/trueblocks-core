@@ -51,9 +51,7 @@ int main(int argc, const char *argv[]) {
                 } else if (expContext().asDollars) {
                     CBlock blk;
                     getBlock(blk, blockNum);
-                    sBal = asDollars(blk.timestamp, bal);
-                    if (sBal.empty())
-                        sBal = "$0.00";
+                    sBal = padLeft(dispDollars(blk.timestamp, bal),14);
                 }
 
                 needsNewline = true;
