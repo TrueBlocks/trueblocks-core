@@ -82,6 +82,8 @@ bool QSetDailyLimit::Serialize(SFArchive& archive) {
     if (readBackLevel(archive))
         return true;
 
+    // EXISTING_CODE
+    // EXISTING_CODE
     archive >> _newLimit;
     finishParse();
     return true;
@@ -90,6 +92,8 @@ bool QSetDailyLimit::Serialize(SFArchive& archive) {
 //---------------------------------------------------------------------------------------------------
 bool QSetDailyLimit::SerializeC(SFArchive& archive) const {
 
+    // EXISTING_CODE
+    // EXISTING_CODE
     // Writing always write the latest version of the data
     CTransaction::SerializeC(archive);
 
