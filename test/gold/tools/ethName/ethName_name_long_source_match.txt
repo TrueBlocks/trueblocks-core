@@ -2,7 +2,7 @@ ethName argc: 3 [1:--source] [2:Ether]
 ethName --source Ether 
 { "symbol": "DAO", "name": "The DAO", "addr": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413", "source": "Etherscan.io", "description": "The infamous DAO smart contract" }
 { "symbol": "QTUM", "name": "Qtum", "addr": "0x9a642d6b3368ddc662ca244badf32cda716005bc", "source": "Etherscan.io", "description": "Build Decentralized Applications that mobile devices" }
-{ "symbol": "OMG", "name": "OMGToken", "addr": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07", "source": "Etherscan.io", "description": "A public Ethereum-based financial technology for use in mainstream digital wallets" }
+{ "symbol": "OMG", "name": "OmisiGo", "addr": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07", "source": "Etherscan.io", "description": "A public Ethereum-based financial technology for use in mainstream digital wallets" }
 { "symbol": "EOS", "name": "EOS", "addr": "0x86fa049857e0209aa7d9e616f7eb3b3b78ecfdb0", "source": "Etherscan.io", "description": "Infrastructure for Decentralized Applications" }
 { "symbol": "PAY", "name": "TenX Pay Token", "addr": "0xb97048628db6b661d4c2aa833e95dbe1a905b280", "source": "Etherscan.io", "description": "TenX connects your blockchain assets for everyday use." }
 { "symbol": "ICN", "name": "ICONOMI", "addr": "0x888666ca69e0f178ded6d75b5726cee99a87d698", "source": "Etherscan.io", "description": "Digital Assets Management platform enables simple access to a variety of digital assets and combined Digital Asset Arrays" }
