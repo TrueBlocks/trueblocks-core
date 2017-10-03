@@ -45,6 +45,8 @@ public:
 
     DECLARE_NODE(CAccount);
 
+    const CBaseNode *getObjectAt(const SFString& name, uint32_t i) const override;
+
     // EXISTING_CODE
     CAbi abi;
     uint32_t deleteNotShowing(void);

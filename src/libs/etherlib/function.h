@@ -45,6 +45,8 @@ public:
 
     DECLARE_NODE(CFunction);
 
+    const CBaseNode *getObjectAt(const SFString& name, uint32_t i) const override;
+
     // EXISTING_CODE
     bool hasAddrs;
     SFString getSignature(SFUint32 parts) const;
