@@ -114,6 +114,8 @@ bool CAccount::Serialize(SFArchive& archive) {
     if (readBackLevel(archive))
         return true;
 
+    // EXISTING_CODE
+    // EXISTING_CODE
     archive >> addr;
     archive >> header;
     archive >> displayString;
@@ -129,6 +131,8 @@ bool CAccount::Serialize(SFArchive& archive) {
 //---------------------------------------------------------------------------------------------------
 bool CAccount::SerializeC(SFArchive& archive) const {
 
+    // EXISTING_CODE
+    // EXISTING_CODE
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
     archive << addr;
@@ -291,8 +295,10 @@ SFString CAccount::getValueByName(const SFString& fieldName) const {
             if ( fieldName % "pageSize" ) return asStringU(pageSize);
             break;
         case 't':
-            if ( fieldName % "transactions" ) {
+            if ( fieldName % "transactions" || fieldName % "transactionsCnt" ) {
                 uint32_t cnt = transactions.getCount();
+                if (fieldName.endsWith("Cnt"))
+                    return asStringU(cnt);
                 if (!cnt) return "";
                 SFString retS;
                 for (uint32_t i = 0 ; i < cnt ; i++) {
@@ -318,6 +324,13 @@ ostream& operator<<(ostream& os, const CAccount& item) {
 
     os << item.Format() << "\n";
     return os;
+}
+
+//---------------------------------------------------------------------------
+const CBaseNode *CAccount::getObjectAt(const SFString& name, uint32_t i) const {
+    if ( name % "transactions" && i < transactions.getCount() )
+        return &transactions[i];
+    return NULL;
 }
 
 //---------------------------------------------------------------------------

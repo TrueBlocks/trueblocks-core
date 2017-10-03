@@ -48,6 +48,8 @@ public:
 
     DECLARE_NODE(CAccountWatch);
 
+    const CBaseNode *getObjectAt(const SFString& name, uint32_t i) const override;
+
     // EXISTING_CODE
     CAccountWatch(uint32_t _id, const SFString& _addr, const SFString& _name, blknum_t fB, blknum_t lB, const SFString& _color)
     : index(_id), address(toLower(_addr)), name(_name), color(_color), firstBlock(fB), lastBlock(lB), status("") { }

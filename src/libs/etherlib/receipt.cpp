@@ -104,6 +104,8 @@ bool CReceipt::Serialize(SFArchive& archive) {
     if (readBackLevel(archive))
         return true;
 
+    // EXISTING_CODE
+    // EXISTING_CODE
     archive >> contractAddress;
     archive >> gasUsed;
     archive >> logs;
@@ -115,6 +117,8 @@ bool CReceipt::Serialize(SFArchive& archive) {
 //---------------------------------------------------------------------------------------------------
 bool CReceipt::SerializeC(SFArchive& archive) const {
 
+    // EXISTING_CODE
+    // EXISTING_CODE
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
     archive << contractAddress;
@@ -216,8 +220,10 @@ SFString CReceipt::getValueByName(const SFString& fieldName) const {
             if ( fieldName % "gasUsed" ) return fromGas(gasUsed);
             break;
         case 'l':
-            if ( fieldName % "logs" ) {
+            if ( fieldName % "logs" || fieldName % "logsCnt" ) {
                 uint32_t cnt = logs.getCount();
+                if (fieldName.endsWith("Cnt"))
+                    return asStringU(cnt);
                 if (!cnt) return "";
                 SFString retS;
                 for (uint32_t i = 0 ; i < cnt ; i++) {
@@ -250,6 +256,13 @@ ostream& operator<<(ostream& os, const CReceipt& item) {
 
     os << item.Format() << "\n";
     return os;
+}
+
+//---------------------------------------------------------------------------
+const CBaseNode *CReceipt::getObjectAt(const SFString& name, uint32_t i) const {
+    if ( name % "logs" && i < logs.getCount() )
+        return &logs[i];
+    return NULL;
 }
 
 //---------------------------------------------------------------------------
