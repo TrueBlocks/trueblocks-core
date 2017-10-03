@@ -2,7 +2,7 @@ getAccounts argc: 3 [1:--named] [2:-v]
 getAccounts --named -v 
 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 (The DAO)
 0x9a642d6b3368ddc662ca244badf32cda716005bc (Qtum)
-0xd26114cd6ee289accf82350c8d8487fedb8a0c07 (OMGToken)
+0xd26114cd6ee289accf82350c8d8487fedb8a0c07 (OmisiGo)
 0x86fa049857e0209aa7d9e616f7eb3b3b78ecfdb0 (EOS)
 0xb97048628db6b661d4c2aa833e95dbe1a905b280 (TenX Pay Token)
 0x888666ca69e0f178ded6d75b5726cee99a87d698 (ICONOMI)

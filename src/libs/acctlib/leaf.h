@@ -38,6 +38,8 @@ public:
 
     DECLARE_NODE(CLeaf);
 
+    const SFString getStringAt(const SFString& name, uint32_t i) const override;
+
     // EXISTING_CODE
     CLeaf(const SFString& _key, const SFString& _value);
     SFString at(const SFString& _key) const override;

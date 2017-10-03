@@ -67,6 +67,11 @@ run_test("getTokenBal_README" "-th")
 run_test("getTokenBal_top_three_swarm1" "0xb9e7f8568e08d5659f5d29c4997173d84cdf2607" " 0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98" " 0x6b65353ac052f6c3a0c9688911b078bd025d6ab3" " 0xa25d04fa348f107428708ba19c95d1c79b3744bf" " 4285364" " 3510999" " 2510010" "--byAcct")
 run_test("getTokenBal_top_three_swarm2" "0xb9e7f8568e08d5659f5d29c4997173d84cdf2607" " 0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98" " 0x6b65353ac052f6c3a0c9688911b078bd025d6ab3" " 0xa25d04fa348f107428708ba19c95d1c79b3744bf" " 4285364" " 3510999" " 2510010")
 run_test("getTokenBal_top_three_swarm3" "0xb9e7f8568e08d5659f5d29c4997173d84cdf2607" " 0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98" " 0x6b65353ac052f6c3a0c9688911b078bd025d6ab3" " 0xa25d04fa348f107428708ba19c95d1c79b3744bf" " 4285364" " 3510999" " 2510010" " --ether")
+run_test("getTokenBal_wei" "0xd26114cd6EE289AccF82350c8d8487fedB8A0C07" " 0x5e44c3e467a49c9ca0296a9f130fc433041aaa28" " 0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"  " 4150000"  " --wei")
+run_test("getTokenBal_special_1" "0xd26114cd6EE289AccF82350c8d8487fedB8A0C07" " 0x5e44c3e467a49c9ca0296a9f130fc433041aaa28" " 0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"  " first")
+run_test("getTokenBal_special_2" "0xd26114cd6EE289AccF82350c8d8487fedB8A0C07" " 0x5e44c3e467a49c9ca0296a9f130fc433041aaa28" " 0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"  "  stateclear")
+run_test("getTokenBal_special_3" "0xd26114cd6EE289AccF82350c8d8487fedB8A0C07" " 0x5e44c3e467a49c9ca0296a9f130fc433041aaa28" " 0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"  "  stateclear" " daofund")
+run_test("getTokenBal_special_and_block_combination" "0xd26114cd6EE289AccF82350c8d8487fedB8A0C07" " 0x5e44c3e467a49c9ca0296a9f130fc433041aaa28" " 0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"  "  stateclear" " daofund" " 4225341")
 
 # Installation steps
 install(TARGETS ${TOOL_NAME} RUNTIME DESTINATION bin)

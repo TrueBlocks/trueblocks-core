@@ -82,6 +82,8 @@ bool QChangeRequirement::Serialize(SFArchive& archive) {
     if (readBackLevel(archive))
         return true;
 
+    // EXISTING_CODE
+    // EXISTING_CODE
     archive >> _newRequired;
     finishParse();
     return true;
@@ -90,6 +92,8 @@ bool QChangeRequirement::Serialize(SFArchive& archive) {
 //---------------------------------------------------------------------------------------------------
 bool QChangeRequirement::SerializeC(SFArchive& archive) const {
 
+    // EXISTING_CODE
+    // EXISTING_CODE
     // Writing always write the latest version of the data
     CTransaction::SerializeC(archive);
 

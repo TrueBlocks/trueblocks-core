@@ -147,6 +147,8 @@ bool CFunction::Serialize(SFArchive& archive) {
     if (readBackLevel(archive))
         return true;
 
+    // EXISTING_CODE
+    // EXISTING_CODE
     archive >> name;
     archive >> type;
     archive >> anonymous;
@@ -163,6 +165,8 @@ bool CFunction::Serialize(SFArchive& archive) {
 //---------------------------------------------------------------------------------------------------
 bool CFunction::SerializeC(SFArchive& archive) const {
 
+    // EXISTING_CODE
+    // EXISTING_CODE
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
     archive << name;
@@ -288,8 +292,10 @@ SFString CFunction::getValueByName(const SFString& fieldName) const {
             if ( fieldName % "encoding" ) return encoding;
             break;
         case 'i':
-            if ( fieldName % "inputs" ) {
+            if ( fieldName % "inputs" || fieldName % "inputsCnt" ) {
                 uint32_t cnt = inputs.getCount();
+                if (fieldName.endsWith("Cnt"))
+                    return asStringU(cnt);
                 if (!cnt) return "";
                 SFString retS;
                 for (uint32_t i = 0 ; i < cnt ; i++) {
@@ -303,8 +309,10 @@ SFString CFunction::getValueByName(const SFString& fieldName) const {
             if ( fieldName % "name" ) return name;
             break;
         case 'o':
-            if ( fieldName % "outputs" ) {
+            if ( fieldName % "outputs" || fieldName % "outputsCnt" ) {
                 uint32_t cnt = outputs.getCount();
+                if (fieldName.endsWith("Cnt"))
+                    return asStringU(cnt);
                 if (!cnt) return "";
                 SFString retS;
                 for (uint32_t i = 0 ; i < cnt ; i++) {
@@ -339,6 +347,15 @@ ostream& operator<<(ostream& os, const CFunction& item) {
 
     os << item.Format() << "\n";
     return os;
+}
+
+//---------------------------------------------------------------------------
+const CBaseNode *CFunction::getObjectAt(const SFString& name, uint32_t i) const {
+    if ( name % "inputs" && i < inputs.getCount() )
+        return &inputs[i];
+    if ( name % "outputs" && i < outputs.getCount() )
+        return &outputs[i];
+    return NULL;
 }
 
 //---------------------------------------------------------------------------

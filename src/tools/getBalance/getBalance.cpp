@@ -51,9 +51,7 @@ int main(int argc, const char *argv[]) {
                 } else if (expContext().asDollars) {
                     CBlock blk;
                     getBlock(blk, blockNum);
-                    sBal = asDollars(blk.timestamp, bal);
-                    if (sBal.empty())
-                        sBal = "$0.00";
+                    sBal = padLeft(dispDollars(blk.timestamp, bal),14);
                 }
 
                 needsNewline = true;
@@ -66,7 +64,7 @@ int main(int argc, const char *argv[]) {
                         cout << " is " << cYellow << sBal << cOff << "\n";
                     }
                     needsNewline = false;
-                } else {
+                } else if (!isTestMode()) {
                     if (options.asData) {
                         cerr << blockNum << "\t" << addr << "         \r";
                     } else {

@@ -67,6 +67,7 @@ namespace qblocks {
     extern SFString getBinaryFilename1      (SFUint32 num);
     extern SFString getJsonPath1            (SFUint32 num);
     extern SFString getBinaryPath1          (SFUint32 num);
+    extern void     setNoTracing            (bool val);
 
     //-------------------------------------------------------------------------
     typedef bool (*BLOCKVISITFUNC)(CBlock& block, void *data);
