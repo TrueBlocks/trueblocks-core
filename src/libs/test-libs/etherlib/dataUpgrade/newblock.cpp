@@ -131,6 +131,8 @@ bool CNewBlock::Serialize(SFArchive& archive) {
     if (readBackLevel(archive))
         return true;
 
+    // EXISTING_CODE
+    // EXISTING_CODE
     archive >> gasLimit;
     archive >> gasUsed;
     archive >> hash;
@@ -148,7 +150,14 @@ bool CNewBlock::Serialize(SFArchive& archive) {
 //---------------------------------------------------------------------------------------------------
 bool CNewBlock::SerializeC(SFArchive& archive) const {
 
+    // EXISTING_CODE
+    // EXISTING_CODE
     // Writing always write the latest version of the data
+#define MAJOR 0
+#define MINOR 2
+#define BUILD 0
+    uint32_t vers = ((MAJOR * 1000000) + (MINOR * 1000) + (BUILD));
+    ((CNewBlock*)this)->m_schema = vers;
     CBaseNode::SerializeC(archive);
     archive << gasLimit;
     archive << gasUsed;
@@ -307,8 +316,10 @@ SFString CNewBlock::getValueByName(const SFString& fieldName) const {
             break;
         case 't':
             if ( fieldName % "timestamp" ) return asStringU(timestamp);
-            if ( fieldName % "transactions" ) {
+            if ( fieldName % "transactions" || fieldName % "transactionsCnt" ) {
                 uint32_t cnt = transactions.getCount();
+                if (fieldName.endsWith("Cnt"))
+                    return asStringU(cnt);
                 if (!cnt) return "";
                 SFString retS;
                 for (uint32_t i = 0 ; i < cnt ; i++) {
@@ -334,6 +345,13 @@ ostream& operator<<(ostream& os, const CNewBlock& item) {
 
     os << item.Format() << "\n";
     return os;
+}
+
+//---------------------------------------------------------------------------
+const CBaseNode *CNewBlock::getObjectAt(const SFString& name, uint32_t i) const {
+    if ( name % "transactions" && i < transactions.getCount() )
+        return &transactions[i];
+    return NULL;
 }
 
 //---------------------------------------------------------------------------

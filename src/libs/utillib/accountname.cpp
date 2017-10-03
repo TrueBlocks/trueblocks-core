@@ -9,8 +9,6 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
-#include "basetypes.h"
-#include "basenode.h"
 #include "accountname.h"
 
 namespace qblocks {
@@ -92,6 +90,8 @@ bool CAccountName::Serialize(SFArchive& archive) {
     if (readBackLevel(archive))
         return true;
 
+    // EXISTING_CODE
+    // EXISTING_CODE
     archive >> symbol;
     archive >> name;
     archive >> addr;
@@ -104,6 +104,8 @@ bool CAccountName::Serialize(SFArchive& archive) {
 //---------------------------------------------------------------------------------------------------
 bool CAccountName::SerializeC(SFArchive& archive) const {
 
+    // EXISTING_CODE
+    // EXISTING_CODE
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
     archive << symbol;
