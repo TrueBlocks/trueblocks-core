@@ -13,8 +13,8 @@
 #include "debug.h"
 
 //-----------------------------------------------------------------------
-inline asDollars2(timestamp_t ts, const SFString& weiIn) {
-    SFString ret = asDollars(ts, weiIn);
+inline SFString asDollars2(timestamp_t ts, const SFUintBN& weiIn) {
+    SFString ret = ::asDollars(ts, weiIn);
     return " (" + ret + ")";
 }
 

@@ -83,6 +83,8 @@ bool QRevokeEvent::Serialize(SFArchive& archive) {
     if (readBackLevel(archive))
         return true;
 
+    // EXISTING_CODE
+    // EXISTING_CODE
     archive >> owner;
     archive >> operation;
     finishParse();
@@ -92,6 +94,8 @@ bool QRevokeEvent::Serialize(SFArchive& archive) {
 //---------------------------------------------------------------------------------------------------
 bool QRevokeEvent::SerializeC(SFArchive& archive) const {
 
+    // EXISTING_CODE
+    // EXISTING_CODE
     // Writing always write the latest version of the data
     CLogEntry::SerializeC(archive);
 

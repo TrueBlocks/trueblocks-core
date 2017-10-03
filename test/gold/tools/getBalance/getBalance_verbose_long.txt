@@ -1,0 +1,4 @@
+getBalance argc: 4 [1:0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359] [2:4000000] [3:--verbose] 
+getBalance 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 4000000 --verbose 
+running command: 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 4000000 -v
+    Balance for account 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 at block 4000000 is 4098334073083150747787

@@ -91,6 +91,8 @@ bool QSingleTransactEvent::Serialize(SFArchive& archive) {
     if (readBackLevel(archive))
         return true;
 
+    // EXISTING_CODE
+    // EXISTING_CODE
     archive >> owner;
     archive >> value;
     archive >> to;
@@ -102,6 +104,8 @@ bool QSingleTransactEvent::Serialize(SFArchive& archive) {
 //---------------------------------------------------------------------------------------------------
 bool QSingleTransactEvent::SerializeC(SFArchive& archive) const {
 
+    // EXISTING_CODE
+    // EXISTING_CODE
     // Writing always write the latest version of the data
     CLogEntry::SerializeC(archive);
 

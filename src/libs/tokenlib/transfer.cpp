@@ -83,6 +83,8 @@ bool QTransfer::Serialize(SFArchive& archive) {
     if (readBackLevel(archive))
         return true;
 
+    // EXISTING_CODE
+    // EXISTING_CODE
     archive >> _to;
     archive >> _value;
     finishParse();
@@ -92,6 +94,8 @@ bool QTransfer::Serialize(SFArchive& archive) {
 //---------------------------------------------------------------------------------------------------
 bool QTransfer::SerializeC(SFArchive& archive) const {
 
+    // EXISTING_CODE
+    // EXISTING_CODE
     // Writing always write the latest version of the data
     CTransaction::SerializeC(archive);
 
