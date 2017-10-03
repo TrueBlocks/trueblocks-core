@@ -21,7 +21,7 @@ You may name your own blocks (for example, to denote the start of an ICO perhaps
 | Option | Full Command | Description |
 | -------: | :------- | :------- |
 |  | block | one or more block numbers (or a 'special' block), or... |
-|  | date | one or more dates formatted as YYYY-MM-DDT[HH[:MM[:SS]]] |
+|  | date | one or more dates formatted as YYYY-MM-DD[THH[:MM[:SS]]] |
 | -a | --alone | display the result unadorned (useful for scripting) |
 | -l | --list | list names and block numbers for special blocks |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
@@ -30,7 +30,7 @@ You may name your own blocks (for example, to denote the start of an ICO perhaps
 	- Use the following names to represent `special` blocks:
 	  - first (0), iceage (200000), homestead (1150000), daofund (1428756)
 	  - daohack (1718497), daofork (1920000), tangerine (2463000), spurious (2675000)
-	  - stateclear (2718436), byzantium (4370000), constantinople (tbd), latest (--)
+	  - stateclear (2718436), byzantium (4370000tbd), constantinople (tbd), latest (--)
 	
 #### Other Options
 
