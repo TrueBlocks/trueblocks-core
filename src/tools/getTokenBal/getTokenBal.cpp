@@ -79,7 +79,7 @@ void reportByToken(const COptions& options) {
                         cout << " is " << cYellow << sBal << cOff << "\n";
                     }
                     needsNewline = false;
-                } else {
+                } else if (!isTestMode()) {
                     if (options.asData) {
                         cerr << blockNum << "\t" << token << "\t" << holder << "         \r";
                     } else {
@@ -137,7 +137,7 @@ void reportByAccount(const COptions& options) {
                         cout << " is " << cYellow << sBal << cOff << "\n";
                     }
                     needsNewline = false;
-                } else {
+                } else if (!isTestMode()) {
                     if (options.asData) {
                         cout << blockNum << "\t" << token << "\t" << holder << "\r";
                     } else {
