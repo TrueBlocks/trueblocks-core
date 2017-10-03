@@ -94,6 +94,8 @@ bool CInfix::Serialize(SFArchive& archive) {
     if (readBackLevel(archive))
         return true;
 
+    // EXISTING_CODE
+    // EXISTING_CODE
     m_next = NULL;
     bool has_m_next = false;
     archive >> has_m_next;
@@ -110,6 +112,8 @@ bool CInfix::Serialize(SFArchive& archive) {
 //---------------------------------------------------------------------------------------------------
 bool CInfix::SerializeC(SFArchive& archive) const {
 
+    // EXISTING_CODE
+    // EXISTING_CODE
     // Writing always write the latest version of the data
     CTreeNode::SerializeC(archive);
 
