@@ -66,9 +66,7 @@ void reportByToken(const COptions& options) {
                 } else if (expContext().asDollars) {
                     CBlock blk;
                     getBlock(blk, blockNum);
-                    sBal = asDollars(blk.timestamp, bal);
-                    if (sBal.empty())
-                        sBal = "$0.00";
+                    sBal = padLeft(dispDollars(blk.timestamp, bal),14);
                 }
 
                 needsNewline = true;
@@ -81,7 +79,7 @@ void reportByToken(const COptions& options) {
                         cout << " is " << cYellow << sBal << cOff << "\n";
                     }
                     needsNewline = false;
-                } else {
+                } else if (!isTestMode()) {
                     if (options.asData) {
                         cerr << blockNum << "\t" << token << "\t" << holder << "         \r";
                     } else {
@@ -126,9 +124,7 @@ void reportByAccount(const COptions& options) {
                 } else if (expContext().asDollars) {
                     CBlock blk;
                     getBlock(blk, blockNum);
-                    sBal = asDollars(blk.timestamp, bal);
-                    if (sBal.empty())
-                        sBal = "$0.00";
+                    sBal = padLeft(dispDollars(blk.timestamp, bal),14);
                 }
 
                 needsNewline = true;
@@ -141,7 +137,7 @@ void reportByAccount(const COptions& options) {
                         cout << " is " << cYellow << sBal << cOff << "\n";
                     }
                     needsNewline = false;
-                } else {
+                } else if (!isTestMode()) {
                     if (options.asData) {
                         cout << blockNum << "\t" << token << "\t" << holder << "\r";
                     } else {

@@ -82,6 +82,8 @@ bool QOwnerRemovedEvent::Serialize(SFArchive& archive) {
     if (readBackLevel(archive))
         return true;
 
+    // EXISTING_CODE
+    // EXISTING_CODE
     archive >> oldOwner;
     finishParse();
     return true;
@@ -90,6 +92,8 @@ bool QOwnerRemovedEvent::Serialize(SFArchive& archive) {
 //---------------------------------------------------------------------------------------------------
 bool QOwnerRemovedEvent::SerializeC(SFArchive& archive) const {
 
+    // EXISTING_CODE
+    // EXISTING_CODE
     // Writing always write the latest version of the data
     CLogEntry::SerializeC(archive);
 

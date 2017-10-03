@@ -24,8 +24,13 @@ int main(int argc, const char *argv[]) {
         if (!options.parseArguments(command))
             return 0;
 
-        if (!options.alone)
-            cout << cYellow << "\nReport on block locations:" << cOff << (verbose ? "" : "\n  (cache folder: " + blockCachePath("") + ")") << "\n";
+        if (!options.alone) {
+            SFString cachePath = blockCachePath("");
+            if (isTestMode())
+                cachePath = "--";
+            cout << cYellow << "\nReport on block locations:" << cOff << (verbose ? "" : "\n  (cache folder: " + cachePath + ")") << "\n";
+        }
+
         for (uint32_t i = 0 ; i < options.blocks.getCount() ; i++ ) {
 
             blknum_t block = options.blocks[i];
@@ -40,12 +45,17 @@ int main(int argc, const char *argv[]) {
             } else {
 
                 SFString path = (verbose ? fileName.getFullPath() : fileName.relativePath(getStorageRoot()));
+                SFString vers = getVersionFromClient();
+                if (isTestMode() && verbose)
+                    path = "--";
+                if (isTestMode())
+                    vers = "--";
                 SFString fallback = getenv("FALLBACK");
                 bool running_node = isNodeRunning();
 
                 cout << "\tblock " << cTeal << padLeft(asStringU(block),9) << cOff << " ";
                      if (exists)            cout << "found at cache:  " << cTeal << path << cOff << "\n";
-                else if (running_node)      cout << "found at node:   " << getVersionFromClient() << "\n";
+                else if (running_node)      cout << "found at node:   " << vers << "\n";
                 else if (!fallback.empty()) cout << "found at remote: " << fallback << "\n";
                 else                        cout << "was not found\n";
             }

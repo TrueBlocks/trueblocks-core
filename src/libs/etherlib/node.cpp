@@ -230,6 +230,8 @@ bool getObjectViaRPC(CBaseNode &node, const SFString& method, const SFString& pa
 
 // TODO: remove golobal data
 static SFUint32 nTrans=0,nTraced=0;
+static bool no_tracing=false;
+void setNoTracing(bool val) { no_tracing = val; }
 //-------------------------------------------------------------------------
 bool queryBlock(CBlock& block, const SFString& numIn, bool needTrace)
 {
@@ -260,7 +262,7 @@ bool queryBlock(CBlock& block, const SFString& numIn, bool needTrace)
     getObjectViaRPC(block, "eth_getBlockByNumber", "["+quote(asStringU(num))+",true]");
 
     // If there are no transactions, we're done
-    if (!block.transactions.getCount())
+    if (!block.transactions.getCount() || no_tracing)
     {
         // We only write binary if there are transactions
         //writeToBinary(block, getBinaryFilename1(num));

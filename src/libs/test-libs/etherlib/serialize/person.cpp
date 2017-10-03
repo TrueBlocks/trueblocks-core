@@ -92,6 +92,8 @@ bool CPerson::Serialize(SFArchive& archive) {
     if (readBackLevel(archive))
         return true;
 
+    // EXISTING_CODE
+    // EXISTING_CODE
     archive >> name;
     archive >> age;
     next = NULL;
@@ -110,6 +112,8 @@ bool CPerson::Serialize(SFArchive& archive) {
 //---------------------------------------------------------------------------------------------------
 bool CPerson::SerializeC(SFArchive& archive) const {
 
+    // EXISTING_CODE
+    // EXISTING_CODE
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
     archive << name;

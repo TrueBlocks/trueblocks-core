@@ -87,6 +87,8 @@ bool CRPCResult::Serialize(SFArchive& archive) {
     if (readBackLevel(archive))
         return true;
 
+    // EXISTING_CODE
+    // EXISTING_CODE
     archive >> jsonrpc;
     archive >> result;
     archive >> id;
@@ -97,6 +99,8 @@ bool CRPCResult::Serialize(SFArchive& archive) {
 //---------------------------------------------------------------------------------------------------
 bool CRPCResult::SerializeC(SFArchive& archive) const {
 
+    // EXISTING_CODE
+    // EXISTING_CODE
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
     archive << jsonrpc;

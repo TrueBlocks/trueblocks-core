@@ -130,6 +130,8 @@ bool CBlock::Serialize(SFArchive& archive) {
     if (readBackLevel(archive))
         return true;
 
+    // EXISTING_CODE
+    // EXISTING_CODE
     archive >> gasLimit;
     archive >> gasUsed;
     archive >> hash;
@@ -145,8 +147,9 @@ bool CBlock::Serialize(SFArchive& archive) {
 //---------------------------------------------------------------------------------------------------
 bool CBlock::SerializeC(SFArchive& archive) const {
 
+    // EXISTING_CODE
+    // EXISTING_CODE
     // Writing always write the latest version of the data
-//    ((CBlock*)this)->m_schema = getVersionNum();
     CBaseNode::SerializeC(archive);
     archive << gasLimit;
     archive << gasUsed;
@@ -333,7 +336,7 @@ ostream& operator<<(ostream& os, const CBlock& item) {
 
 //---------------------------------------------------------------------------
 const CBaseNode *CBlock::getObjectAt(const SFString& name, uint32_t i) const {
-    if (name % "transactions")
+    if ( name % "transactions" && i < transactions.getCount() )
         return &transactions[i];
     return NULL;
 }

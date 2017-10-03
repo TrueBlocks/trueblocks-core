@@ -84,6 +84,8 @@ bool CBranch::Serialize(SFArchive& archive) {
     if (readBackLevel(archive))
         return true;
 
+    // EXISTING_CODE
+    // EXISTING_CODE
     archive >> m_branchValue;
     finishParse();
     return true;
@@ -92,6 +94,8 @@ bool CBranch::Serialize(SFArchive& archive) {
 //---------------------------------------------------------------------------------------------------
 bool CBranch::SerializeC(SFArchive& archive) const {
 
+    // EXISTING_CODE
+    // EXISTING_CODE
     // Writing always write the latest version of the data
     CTreeNode::SerializeC(archive);
 

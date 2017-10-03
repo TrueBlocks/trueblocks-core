@@ -38,6 +38,8 @@ public:
 
     DECLARE_NODE(CAbi);
 
+    const CBaseNode *getObjectAt(const SFString& name, uint32_t i) const override;
+
     // EXISTING_CODE
     void clearABI(void);
     bool loadABI(const SFString& addr);
