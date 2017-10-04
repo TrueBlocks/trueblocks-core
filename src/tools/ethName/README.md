@@ -15,7 +15,7 @@ One way to use this tool is to feed its output into another tool's input. For ex
              
 `Where:`  
 
-| Option | Full Command | Description |
+| Short Cut | Option | Description |
 | -------: | :------- | :------- |
 |  | terms | one or more search terms |
 | -a | --alone | export only the associated address (may be used in scripting) |

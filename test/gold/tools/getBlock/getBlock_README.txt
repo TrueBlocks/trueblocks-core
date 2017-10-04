@@ -7,7 +7,7 @@ getBlock -th
              
 `Where:`  
 
-| Option | Full Command | Description |
+| Short Cut | Option | Description |
 | -------: | :------- | :------- |
 |  | num | which block (or blocks if more than one) to retreive (or use [start-stop) for range) |
 | -k | --check | pull block(s) using both cache and raw, compare results, report differences (should be none) |

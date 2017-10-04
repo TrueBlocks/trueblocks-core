@@ -9,7 +9,7 @@
              
 `Where:`  
 
-| Option | Full Command | Description |
+| Short Cut | Option | Description |
 | -------: | :------- | :------- |
 |  | num | which bloom (or blooms if more than one) to retreive (or [start-stop) range) |
 | -e | --enhanced | retrieve the enhanced bloom filter from the quickBlocks cache |

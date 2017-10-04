@@ -9,7 +9,7 @@ Testing only
              
 `Where:`  
 
-| Option | Full Command | Description |
+| Short Cut | Option | Description |
 | -------: | :------- | :------- |
 | -a | --all | process all transactions from start of chain to latest block |
 | -s | --start val | the first block to process |
