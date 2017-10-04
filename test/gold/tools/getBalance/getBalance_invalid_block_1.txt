@@ -3,12 +3,12 @@ getBalance 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 fdfsdf
 
   'fdfsdf' does not appear to be a valid block. Quitting...
 
-  Usage:    getBalance [-l|-n|-d|-v|-h] <address> [address...] [block...]  
+  Usage:    getBalance [-l fn|-n|-d|-v|-h] <address> [address...] [block...]  
   Purpose:  Retrieve the balance (in wei) for one or more addresses at the given block(s).
              
   Where:    
 	address_list          one or more addresses (0x...) from which to retrieve balances (required)
-	block_list            optional list of one or more blocks at which to report balances, see notes
+	block_list            an optional list of one or more blocks at which to report balances, defaults to 'latest'
 	-l  (--list fn)       an alternative way to specify an address_list; place one address per line in the file 'fn'
 	-n  (--noZero)        suppress the display of zero balance accounts
 	-d  (--data)          render results as tab delimited data
