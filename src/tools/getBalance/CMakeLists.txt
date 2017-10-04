@@ -67,6 +67,7 @@ run_test("getBalance_verbose" "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359" " 400
 run_test("getBalance_verbose_long" "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359" " 4000000" " --verbose")
 run_test("getBalance_help" "-h")
 run_test("getBalance_help_long" "--help")
+run_test("getBalance_help_verbose" "--help" " -v")
 run_test("getBalance_special_block_1"    "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359" " iceage")
 run_test("getBalance_special_block_2"    "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359" " stateclear")
 run_test("getBalance_special_block_3"    "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359" " first")

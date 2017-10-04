@@ -62,6 +62,7 @@ run_test("getTokenBal_by_account_table_verbose" "0xb9e7f8568e08d5659f5d29c499717
 run_test("getTokenBal_by_account_table_verbose_long" "0xb9e7f8568e08d5659f5d29c4997173d84cdf2607" " 0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"  " 0x6b65353ac052f6c3a0c9688911b078bd025d6ab3" " 0xa25d04fa348f107428708ba19c95d1c79b3744bf" " --byAcct" " -d" " --verbose" " 4000000")
 run_test("getTokenBal_help" "-h")
 run_test("getTokenBal_help_long" "--help")
+run_test("getTokenBal_help_verbose" "--help" " -v")
 
 run_test("getTokenBal_README" "-th")
 run_test("getTokenBal_top_three_swarm1" "0xb9e7f8568e08d5659f5d29c4997173d84cdf2607" " 0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98" " 0x6b65353ac052f6c3a0c9688911b078bd025d6ab3" " 0xa25d04fa348f107428708ba19c95d1c79b3744bf" " 4285364" " 3510999" " 2510010" "--byAcct")
