@@ -1,5 +1,5 @@
-getAccounts argc: 2 [1:--named] 
-getAccounts --named 
+getAccounts argc: 2 [1:-n] 
+getAccounts -n 
 0xbb9bc244d798123fde783fcc1c72d3bb8c189413
 0x9a642d6b3368ddc662ca244badf32cda716005bc
 0xd26114cd6ee289accf82350c8d8487fedb8a0c07
