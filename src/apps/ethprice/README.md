@@ -8,7 +8,7 @@ The `ethprice` tool provides Ethereum price data to various **quickBlocks** tool
              
 `Where:`  
 
-| Option | Full Command | Description |
+| Short Cut | Option | Description |
 | -------: | :------- | :------- |
 | -a | --at val | Report the price since nearest five minutes to the given timestamp |
 | -c | --current | Report on the current price (i.e. -at:now) |

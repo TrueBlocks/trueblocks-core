@@ -7,7 +7,7 @@ printFloat -th
              
 `Where:`  
 
-| Option | Full Command | Description |
+| Short Cut | Option | Description |
 | -------: | :------- | :------- |
 | -t | --testNum val | which test to run (either 1 and 2) |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |

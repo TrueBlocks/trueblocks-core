@@ -18,7 +18,7 @@ You may name your own blocks (for example, to denote the start of an ICO perhaps
              
 `Where:`  
 
-| Option | Full Command | Description |
+| Short Cut | Option | Description |
 | -------: | :------- | :------- |
 |  | block | one or more block numbers (or a 'special' block), or... |
 |  | date | one or more dates formatted as YYYY-MM-DD[THH[:MM[:SS]]] |

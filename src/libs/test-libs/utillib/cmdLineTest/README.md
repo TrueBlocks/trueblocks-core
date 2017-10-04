@@ -9,7 +9,7 @@ Testing only
              
 `Where:`  
 
-| Option | Full Command | Description |
+| Short Cut | Option | Description |
 | -------: | :------- | :------- |
 |  | testNum | the number of the test to run |
 | -b | --bool val | enter a boolean value (either `0`, `1`, `false`, or `true`) |

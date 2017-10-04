@@ -9,7 +9,7 @@ Testing only
              
 `Where:`  
 
-| Option | Full Command | Description |
+| Short Cut | Option | Description |
 | -------: | :------- | :------- |
 |  | mode val | either a number between 0 and 5, a C++ quickBlocks class name, the word 'upgradeTest' |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
