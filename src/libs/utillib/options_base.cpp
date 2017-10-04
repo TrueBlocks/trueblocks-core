@@ -161,6 +161,9 @@ namespace qblocks {
             SFString contents =  asciiFileToString(cmdFileName).Substitute("\t", " ").
                                             Substitute("-v", "").Substitute("-h", "").
                                             Substitute("  ", " ").Substitute("\\\n", "");
+            if (contents.empty()) {
+                return usage("Command file '" + cmdFileName + "' is empty. Quitting...");
+            }
             while (!contents.empty()) {
                 SFString command = StripAny(nextTokenClear(contents, '\n'), "\t\r\n ");
                 if (!command.empty() && !command.startsWith(";"))  // ignore comments
