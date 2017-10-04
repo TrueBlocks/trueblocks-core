@@ -12,9 +12,9 @@ include_directories(${BASE_INCLUDE})
 
 # Compilation order of the src subdirectories
 add_subdirectory(cacheMan)
-add_subdirectory(scripts)
 
 if(0)
+add_subdirectory(scripts)
 add_subdirectory(bloomMan)
 
 add_subdirectory(accts/parselib)
