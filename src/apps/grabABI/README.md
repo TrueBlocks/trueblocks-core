@@ -9,7 +9,7 @@
              
 `Where:`  
 
-| Option | Full Command | Description |
+| Short Cut | Option | Description |
 | -------: | :------- | :------- |
 |  | addr | the address(es) of the smart contract(s) to grab |
 | -c | --canonical | convert all types to their canonical represenation and remove all spaces from display |

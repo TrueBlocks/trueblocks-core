@@ -9,7 +9,7 @@ Testing only
              
 `Where:`  
 
-| Option | Full Command | Description |
+| Short Cut | Option | Description |
 | -------: | :------- | :------- |
 |  | files | One or more files to parse |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |

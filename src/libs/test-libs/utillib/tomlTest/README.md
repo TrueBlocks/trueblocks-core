@@ -9,7 +9,7 @@ Testing only
              
 `Where:`  
 
-| Option | Full Command | Description |
+| Short Cut | Option | Description |
 | -------: | :------- | :------- |
 |  | filename | toml filename to test |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |

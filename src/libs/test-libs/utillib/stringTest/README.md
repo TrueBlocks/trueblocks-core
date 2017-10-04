@@ -9,7 +9,7 @@ Testing only
              
 `Where:`  
 
-| Option | Full Command | Description |
+| Short Cut | Option | Description |
 | -------: | :------- | :------- |
 |  | mode | a number between 0 and 2 inclusive |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |

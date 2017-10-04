@@ -10,7 +10,7 @@ errors. Use the tool with caution, and please make sure to backup your data befo
              
 `Where:`  
 
-| Option | Full Command | Description |
+| Short Cut | Option | Description |
 | -------: | :------- | :------- |
 |  | filenames | path(s) of files to check, merge, fix or display (default=display) |
 | -b | --blockOnly | in 'list' mode, render block number only (used for testing) |
