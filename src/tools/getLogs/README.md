@@ -11,7 +11,7 @@
             --note: 'hash' and 'blockHash' must start with '0x'.  
 `Where:`  
 
-| Option | Full Command | Description |
+| Short Cut | Option | Description |
 | -------: | :------- | :------- |
 |  | hash | one or more hashes of Ethereum transactions, or |
 |  | bn.transID | blockNumber.transactionID of one or more Ethereum transactions, or |
