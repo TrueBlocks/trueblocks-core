@@ -17,7 +17,7 @@ Please see the <a href="https://github.com/Great-Hill-Corporation/ethslurp/blob/
              
 `Where:`  
 
-| Option | Full Command | Description |
+| Short Cut | Option | Description |
 | -------: | :------- | :------- |
 |  | addr | the address of the account or contract to slurp |
 | -a | --archive val | filename of output (stdout otherwise) |

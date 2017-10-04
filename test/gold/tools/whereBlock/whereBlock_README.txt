@@ -7,7 +7,7 @@ whereBlock -th
              
 `Where:`  
 
-| Option | Full Command | Description |
+| Short Cut | Option | Description |
 | -------: | :------- | :------- |
 |  | block_list | a space-separated list of one or more blocks to search for |
 | -a | --alone | if the block(s) is/are found in the cache, display the path(s) to those blocks |

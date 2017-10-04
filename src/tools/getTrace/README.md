@@ -9,7 +9,7 @@
              
 `Where:`  
 
-| Option | Full Command | Description |
+| Short Cut | Option | Description |
 | -------: | :------- | :------- |
 |  | hash | transaction hash of the requested transaction |
 | -t | --terse | display the traces in a terse fashion |
