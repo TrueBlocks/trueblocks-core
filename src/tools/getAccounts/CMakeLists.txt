@@ -50,8 +50,8 @@ run_test("getAccounts_named"               "-n" )
 run_test("getAccounts_named_long"          "--named" )
 run_test("getAccounts_named_verbose"       "--named" " -v" )
 run_test("getAccounts_bad_option"          "-a" )
-run_test("getAccounts_help                 "-h")
-run_test("getAccounts_help_long            "--help")
+run_test("getAccounts_help"                "-h")
+run_test("getAccounts_help_long"           "--help")
 
 # Installation steps
 install(TARGETS ${TOOL_NAME} RUNTIME DESTINATION bin)
