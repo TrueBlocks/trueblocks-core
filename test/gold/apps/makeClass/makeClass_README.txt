@@ -7,7 +7,7 @@ makeClass -th
              
 `Where:`  
 
-| Option | Full Command | Description |
+| Short Cut | Option | Description |
 | -------: | :------- | :------- |
 |  | className | name of C++ class(es) to process |
 | -e | --edit | edit <className(s)> definition file in local folder |

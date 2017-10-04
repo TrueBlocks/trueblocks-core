@@ -7,15 +7,15 @@ specify at least one address.
 
 #### Usage
 
-`Usage:`    getBalance [-l|-n|-d|-v|-h] &lt;address&gt; [address...] [block...]  
+`Usage:`    getBalance [-l fn|-n|-d|-v|-h] &lt;address&gt; [address...] [block...]  
 `Purpose:`  Retrieve the balance (in wei) for one or more addresses at the given block(s).
              
 `Where:`  
 
-| Option | Full Command | Description |
+| Short Cut | Option | Description |
 | -------: | :------- | :------- |
 |  | address_list | one or more addresses (0x...) from which to retrieve balances |
-|  | block_list | optional list of one or more blocks at which to report balances, see notes |
+|  | block_list | an optional list of one or more blocks at which to report balances, defaults to 'latest' |
 | -l | --list fn | an alternative way to specify an address_list; place one address per line in the file 'fn' |
 | -n | --noZero | suppress the display of zero balance accounts |
 | -d | --data | render results as tab delimited data |
@@ -25,11 +25,11 @@ specify at least one address.
 `Notes:`
 
 - `addresses` must start with '0x' and be forty characters long
-- `block_list` may be space-separated list of values, a [start-end) range, a `special`, or any combination
-- this tool retrieves information from the local node or the ${FALLBACK} node, if configured
+- `block_list` may be a space-separated list of values, a start-end range, a `special`, or any combination
+- this tool retrieves information from the local node or the ${FALLBACK} node, if configured (see the documentation)
 - if the queried node does not store historical state, the results are undefined
-- `special` blocks are detailed under `whenBlock --help`
-  
+- `special` blocks are detailed under `whenBlock --list`
+
 #### Other Options
 
 All **quickBlocks** command-line tools support the following commands (although in some case, they have no meaning):
