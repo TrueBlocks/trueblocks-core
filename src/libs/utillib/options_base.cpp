@@ -399,9 +399,25 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
         ASSERT(pOptions);
         SFString ret = pOptions->postProcess("notes", "");
         if (!ret.empty()) {
+            SFString tick = "- ";
+            SFString lead = "\t";
+            SFString trail = "\n";
+            SFString sep1, sep2;
+            if (COptionsBase::isReadme) {
+                sep1 = sep2 = "`";
+                lead = "";
+                trail = "\n";
+            }
+            ret.ReplaceAll("[{", sep1);
+            ret.ReplaceAll("}]", sep2);
+
             ctx << bYellow << sep << "Notes:" << sep << cOff << "\n";
             ctx << (COptionsBase::isReadme ? "\n" : "");
-            ctx << ret << "  \n";
+            while (!ret.empty()) {
+                SFString line = nextTokenClear(ret,'\n');
+                ctx << lead << tick << line << "\n";
+            }
+            ctx << "\n";
         }
         return ctx.str;
     }
@@ -413,7 +429,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
         ctx << bYellow << sep << "Where:" << sep << cOff << "  \n";
         if (COptionsBase::isReadme) {
             ctx << "\n";
-            ctx << "| Option | Full Command | Description |\n";
+            ctx << "| Short Cut | Option | Description |\n";
             ctx << "| -------: | :------- | :------- |\n";
         }
 

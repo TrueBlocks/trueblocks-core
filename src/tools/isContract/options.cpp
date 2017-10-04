@@ -88,7 +88,16 @@ COptions::~COptions(void) {
 
 //--------------------------------------------------------------------------------
 SFString COptions::postProcess(const SFString& which, const SFString& str) const {
-    if (which == "options")
+    if (which == "options") {
         return str.Substitute("address_list", "<address> [address...]");
+
+    } else if (which == "notes" && (verbose || COptions::isReadme)) {
+        SFString ret;
+        ret += "[{addresses}] must start with '0x' and be forty characters long\n";
+        ret += "this tool retrieves information from the local node or the ${FALLBACK} node, if configured\n";
+        ret += "if the queried node does not store historical state, the results are undefined\n";
+        ret += "[{special}] blocks are detailed under " + cTeal + "[{whenBlock --list}]" + cOff + "\n";
+        return ret;
+    }
     return str;
 }
