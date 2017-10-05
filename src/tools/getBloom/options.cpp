@@ -9,7 +9,7 @@
 
 //---------------------------------------------------------------------------------------------------
 CParams params[] = {
-    CParams("~num",      "which bloom (or blooms if more than one) to retreive (or [start-stop) range)"),
+    CParams("~num",      "which bloom (or blooms if more than one) to retrieve (or [start-stop) range)"),
     CParams("-enhanced", "retrieve the enhanced bloom filter from the quickBlocks cache"),
     CParams("-raw",      "retrieve the bloom filter directly from the running node (includes tx blooms)"),
     CParams("-quiet",    "do not print results to screen (useful for performance measurements)"),

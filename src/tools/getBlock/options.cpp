@@ -9,12 +9,12 @@
 
 //---------------------------------------------------------------------------------------------------
 CParams params[] = {
-    CParams("~num",              "which block (or blocks if more than one) to retreive (or use [start-stop) for range)"),
+    CParams("~num",              "which block (or blocks if more than one) to retrieve (or use [start-stop) for range)"),
     CParams("-chec(k)",          "pull block(s) using both cache and raw, compare results, report differences (should be none)"),
-    CParams("-source:[c|r]",     "either :(c)ache or :(r)aw, source for data retrival. (shortcuts -c = qblocks, -r = node)"),
+    CParams("-source:[c|r]",     "either :(c)ache or :(r)aw, source for data retrieval. (shortcuts -c = qblocks, -r = node)"),
     CParams("-fields:[a|m|c|r]", "either :(a)ll, (m)ini, (c)ache or :(r)aw; which fields to include in output (all is default)"),
-    CParams("-parity",           "mimic parity output using quickBlocks (i.e. quoted hexidecimal for numbers)"),
-    CParams("-terse",            "if source is raw, retreive transaction hashes instead of full transactions"),
+    CParams("-parity",           "mimic parity output using quickBlocks (i.e. quoted hexadecimal for numbers)"),
+    CParams("-terse",            "if source is raw, retrieve transaction hashes instead of full transactions"),
     CParams("-quiet",            "do not print results to screen, used for speed testing and data checking"),
     CParams("@re(c)iept",        "include receipt (hidden)"),
     CParams("@f(o)rce",          "force re-write of binary data"),
