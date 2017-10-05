@@ -823,7 +823,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
 
     const char *STR_DEFAULT_DATA =
     "#---------------------------------------------------------------------------------------------------\n"
-    "#  This is the ethName database. Format records as tab seperated lines with the following format:\n"
+    "#  This is the ethName database. Format records as tab separated lines with the following format:\n"
     "#\n"
     "#      Optional Symbol <tab> Name <tab> Address <tab> Source of the data <tab> Description <newline>\n"
     "#\n"

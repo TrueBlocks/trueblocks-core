@@ -12,11 +12,11 @@ CParams params[] = {
     CParams("~testNum",         "the number of the test to run"),
     CParams("-bool:<bool>",     "enter a boolean value (either `0`, `1`, `false`, or `true`)"),
     CParams("-int:<int>",       "enter any numeric value"),
-    CParams("-uint:<uint>",     "enter any any numeric value greater than or equal to zero"),
+    CParams("-uint:<uint>",     "enter any numeric value greater than or equal to zero"),
     CParams("-string:<string>", "enter any value"),
     CParams("-range:<range>",   "enter a range of numeric values"),
     CParams("-list:<list>",     "enter a list of value separated by commas (no spaces or quoted)"),
-    CParams("",                 "Tests various command line behaviour.\n"),
+    CParams("",                 "Tests various command line behavior.\n"),
 };
 uint32_t nParams = sizeof(params) / sizeof(CParams);
 
