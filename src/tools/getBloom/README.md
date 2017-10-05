@@ -11,7 +11,7 @@
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
-|  | num | which bloom (or blooms if more than one) to retreive (or [start-stop) range) |
+|  | num | which bloom (or blooms if more than one) to retrieve (or [start-stop) range) |
 | -e | --enhanced | retrieve the enhanced bloom filter from the quickBlocks cache |
 | -r | --raw | retrieve the bloom filter directly from the running node (includes tx blooms) |
 | -q | --quiet | do not print results to screen (useful for performance measurements) |
