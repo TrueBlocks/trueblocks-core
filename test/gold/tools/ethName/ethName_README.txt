@@ -19,3 +19,12 @@ ethName -th
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
+`Notes:`
+
+- With a single search term, the tool searches both `name` and `address`. With two search terms, the first term must match the `address` field, and the second term must match the `name` field. When there are two search terms, both must match.
+- If one mixes options, the `--edit` option always predominates (i.e. the program opens the database and then quits).
+- The `--list` option predominates otherwise. If present, the tool displays a list of stored names and addresses and then quits.
+- The `--count` option works with any other option and will simply display the number of matches or '0 matches' if none.
+- The `--matchCase` option requires case sensitive matching. It works with all other options.
+- The `--addrOnly` option modifies the display output and therefore works with any other options.
+
