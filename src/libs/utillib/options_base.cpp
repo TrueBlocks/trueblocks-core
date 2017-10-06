@@ -402,14 +402,14 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
             SFString tick = "- ";
             SFString lead = "\t";
             SFString trail = "\n";
-            SFString sep1, sep2;
+            SFString sepy1, sepy2;
             if (COptionsBase::isReadme) {
-                sep1 = sep2 = "`";
+                sepy1 = sepy2 = "`";
                 lead = "";
                 trail = "\n";
             }
-            ret.ReplaceAll("[{", sep1);
-            ret.ReplaceAll("}]", sep2);
+            ret.ReplaceAll("[{", sepy1);
+            ret.ReplaceAll("}]", sepy2);
 
             ctx << bYellow << sep << "Notes:" << sep << cOff << "\n";
             ctx << (COptionsBase::isReadme ? "\n" : "");

@@ -9,13 +9,13 @@
 
 //---------------------------------------------------------------------------------------------------
 CParams params[] = {
-    CParams("~num",              "which block (or blocks if more than one) to retrieve (or use [start-stop) for range)"),
-    CParams("-chec(k)",          "pull block(s) using both cache and raw, compare results, report differences (should be none)"),
-    CParams("-source:[c|r]",     "either :(c)ache or :(r)aw, source for data retrieval. (shortcuts -c = qblocks, -r = node)"),
+    CParams("~block_list",       "a list of one or more blocks to retrieve, defaults to 'latest'"),
+    CParams("-chec(k)",          "pull block(s) using both cache and raw, compare results, report differences"),
+    CParams("-source:[c|r]",     "either :(c)ache or :(r)aw, source for data retrival. (shortcuts -c = qblocks, -r = node)"),
     CParams("-fields:[a|m|c|r]", "either :(a)ll, (m)ini, (c)ache or :(r)aw; which fields to include in output (all is default)"),
-    CParams("-parity",           "mimic parity output using quickBlocks (i.e. quoted hexadecimal for numbers)"),
-    CParams("-terse",            "if source is raw, retrieve transaction hashes instead of full transactions"),
-    CParams("-quiet",            "do not print results to screen, used for speed testing and data checking"),
+    CParams("-parity",           "mimic parity output using quickBlocks (i.e. quoted hexidecimal for numbers)"),
+    CParams("-terse",            "if source is raw, retreive transaction hashes instead of full transactions"),
+    CParams("@quiet",            "do not print results to screen, used for speed testing and data checking"),
     CParams("@re(c)iept",        "include receipt (hidden)"),
     CParams("@f(o)rce",          "force re-write of binary data"),
     CParams("@normalize",        "normalize (remove un-common fields and sort) for comparison with other results (testing)"),
@@ -222,4 +222,23 @@ bool COptions::isMulti(void) const {
     if (blocks.isRange)
         return (blocks.stop - blocks.start) > 1;
     return blocks.nNums > 1;
+}
+
+//--------------------------------------------------------------------------------
+SFString COptions::postProcess(const SFString& which, const SFString& str) const {
+
+    if (which == "options") {
+        return
+            str.Substitute("block_list", "<block> [block...]")
+                .Substitute("-l|", "-l fn|");
+
+    } else if (which == "notes" && (verbose || COptions::isReadme)) {
+
+        SFString ret;
+        ret += "[{block_list}] is a space-separated list of values, a start-end range, a [{special}], or any combination\n";
+        ret += "this tool retrieves information from the local node or the ${FALLBACK} node, if configured (see the documentation)\n";
+        ret += "[{special}] blocks are detailed under " + cTeal + "[{whenBlock --list}]" + cOff + "\n";
+        return ret;
+    }
+    return str;
 }
