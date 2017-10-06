@@ -103,6 +103,8 @@ void etherlib_cleanup(void)
 //-------------------------------------------------------------------------
 extern size_t write_callback(char *ptr, size_t size, size_t nmemb, void *userdata);
 static bool earlyAbort=false;
+static int ticker=0;
+static bool useTicker=false;
 //-------------------------------------------------------------------------
 // Use 'curl' to make an arbitrary rpc call
 //-------------------------------------------------------------------------
@@ -130,6 +132,9 @@ SFString callRPC(const SFString& method, const SFString& params, bool raw)
     curl_easy_setopt(getCurl(), CURLOPT_POSTFIELDSIZE, thePost.length());
 
     curl_easy_setopt(getCurl(), CURLOPT_WRITEDATA,     &received);
+    ticker=0;
+    if (useTicker)
+        cout << "starting retrieval";
     curl_easy_setopt(getCurl(), CURLOPT_WRITEFUNCTION, write_callback);
 
     earlyAbort = false;
@@ -192,11 +197,17 @@ SFString callRPC(const SFString& method, const SFString& params, bool raw)
     cout.flush();
 #endif
 
+    if (useTicker)
+        cout << "done retrieval...\n";
     if (raw)
         return received;
     CRPCResult generic;
     char *p = cleanUpJson((char*)(const char*)received);
+    if (useTicker)
+        cout << "starting parse...";
     generic.parseJson(p);
+    if (useTicker)
+        cout << "done parse\n";
     return generic.result;
 }
 
@@ -215,6 +226,7 @@ bool isNodeRunning(void) {
     curl_easy_setopt(getCurl(), CURLOPT_POSTFIELDS,    (const char*)thePost);
     curl_easy_setopt(getCurl(), CURLOPT_POSTFIELDSIZE, thePost.length());
     curl_easy_setopt(getCurl(), CURLOPT_WRITEDATA,     &received);
+    ticker=0;
     curl_easy_setopt(getCurl(), CURLOPT_WRITEFUNCTION, write_callback);
     earlyAbort = false;
     CURLcode res = curl_easy_perform(getCurl());
@@ -503,7 +515,13 @@ size_t write_callback(char *ptr, size_t size, size_t nmemb, void *userdata)
         earlyAbort = true;
         return 0;
     }
-//    cerr << s << "\n";
+
+    ticker++;
+    if (useTicker && ticker>2) {
+        cout << ".";
+        if (!(ticker%5))
+            cout.flush();
+    }
 
     return size*nmemb;
 }
