@@ -1,0 +1,163 @@
+getBloom argc: 3 [1:-p] [2:358450-0x5785a] 
+getBloom -p 358450-0x5785a 
+[{
+    "blockNumber": "0x57832",
+    "logsBloom": "0x0"
+},
+{
+    "blockNumber": "0x57833",
+    "logsBloom": "0x0"
+},
+{
+    "blockNumber": "0x57834",
+    "logsBloom": "0x0"
+},
+{
+    "blockNumber": "0x57835",
+    "logsBloom": "0x0"
+},
+{
+    "blockNumber": "0x57836",
+    "logsBloom": "0x0"
+},
+{
+    "blockNumber": "0x57837",
+    "logsBloom": "0x0"
+},
+{
+    "blockNumber": "0x57838",
+    "logsBloom": "0x0"
+},
+{
+    "blockNumber": "0x57839",
+    "logsBloom": "0x0"
+},
+{
+    "blockNumber": "0x5783a",
+    "logsBloom": "0x0"
+},
+{
+    "blockNumber": "0x5783b",
+    "logsBloom": "0x0"
+},
+{
+    "blockNumber": "0x5783c",
+    "logsBloom": "0x0"
+},
+{
+    "blockNumber": "0x5783d",
+    "logsBloom": "0x0"
+},
+{
+    "blockNumber": "0x5783e",
+    "logsBloom": "0x0"
+},
+{
+    "blockNumber": "0x5783f",
+    "logsBloom": "0x0"
+},
+{
+    "blockNumber": "0x57840",
+    "logsBloom": "0x0"
+},
+{
+    "blockNumber": "0x57841",
+    "logsBloom": "0x0"
+},
+{
+    "blockNumber": "0x57842",
+    "logsBloom": "0x0"
+},
+{
+    "blockNumber": "0x57843",
+    "logsBloom": "0x0"
+},
+{
+    "blockNumber": "0x57844",
+    "logsBloom": "0x0"
+},
+{
+    "blockNumber": "0x57845",
+    "logsBloom": "0x0"
+},
+{
+    "blockNumber": "0x57846",
+    "logsBloom": "0x0"
+},
+{
+    "blockNumber": "0x57847",
+    "logsBloom": "0x0"
+},
+{
+    "blockNumber": "0x57848",
+    "logsBloom": "0x0"
+},
+{
+    "blockNumber": "0x57849",
+    "logsBloom": "0x0"
+},
+{
+    "blockNumber": "0x5784a",
+    "logsBloom": "0x0"
+},
+{
+    "blockNumber": "0x5784b",
+    "logsBloom": "0x0"
+},
+{
+    "blockNumber": "0x5784c",
+    "logsBloom": "0x0"
+},
+{
+    "blockNumber": "0x5784d",
+    "logsBloom": "0x0"
+},
+{
+    "blockNumber": "0x5784e",
+    "logsBloom": "0x0"
+},
+{
+    "blockNumber": "0x5784f",
+    "logsBloom": "0x0"
+},
+{
+    "blockNumber": "0x57850",
+    "logsBloom": "0x0"
+},
+{
+    "blockNumber": "0x57851",
+    "logsBloom": "0x0"
+},
+{
+    "blockNumber": "0x57852",
+    "logsBloom": "0x0"
+},
+{
+    "blockNumber": "0x57853",
+    "logsBloom": "0x0"
+},
+{
+    "blockNumber": "0x57854",
+    "logsBloom": "0x0"
+},
+{
+    "blockNumber": "0x57855",
+    "logsBloom": "0x0"
+},
+{
+    "blockNumber": "0x57856",
+    "logsBloom": "0x0"
+},
+{
+    "blockNumber": "0x57857",
+    "logsBloom": "0x0"
+},
+{
+    "blockNumber": "0x57858",
+    "logsBloom": "0x0"
+},
+{
+    "blockNumber": "0x57859",
+    "logsBloom": "0x0"
+}
+]
