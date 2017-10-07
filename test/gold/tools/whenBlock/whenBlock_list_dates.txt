@@ -11,6 +11,6 @@ whenBlock -l
       - tangerine      2463000
       - spurious       2675000
       - stateclear     2718436
-      - byzantium      4370000tbd
+      - byzantium      4370000
       - constantinople tbd
       - latest         

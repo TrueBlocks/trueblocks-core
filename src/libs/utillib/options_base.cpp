@@ -249,6 +249,8 @@ namespace qblocks {
                 dummy = " list";
             else if (permitted == "<fn>")
                 dummy = " fn";
+            else if (permitted == "<mode>")
+                dummy = " mode";
             else if (!permitted.empty())
                 dummy = " val";
         }
@@ -585,6 +587,10 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
         SFString arg = argIn;
         if (arg.Contains("-")) {
 
+            // If we already have a range, bail
+            if (start != stop)
+                return "Specify only a single block range at a time.";
+
             SFString arg1 = nextTokenClear(arg, '-');
             if (arg1 == "latest")
                 return "Cannot start range with 'latest'";
@@ -598,7 +604,6 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
             if (stop - start + 1 > MAX_BLOCK_LIST)
                 return "The range you specified (" + argIn + ") is too broad. Ranges may be at "
                         "most " + asStringU(MAX_BLOCK_LIST) + " blocks long. Quitting...";
-            isRange = true;
 
         } else {
 
@@ -631,7 +636,6 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
 
     //--------------------------------------------------------------------------------
     void COptionsBlockList::Init(void) {
-        isRange    = false;
         nums[0]    = NOPOS;
         nNums      = 0;  // we will set this to '1' later if user supplies no values
         start = stop = 0;
@@ -645,13 +649,10 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
     //--------------------------------------------------------------------------------
     SFString COptionsBlockList::toString(void) const {
         SFString ret;
-        if (isRange) {
-            for (SFUint32 i = start ; i < stop ; i++)
-                ret += (asStringU(i) + "|");
-        } else {
-            for (SFUint32 i = 0 ; i < nNums ; i++)
-                ret += (asStringU(nums[i]) + "|");
-        }
+        for (SFUint32 i = start ; i < stop ; i++)
+            ret += (asStringU(i) + "|");
+        for (SFUint32 i = 0 ; i < nNums ; i++)
+            ret += (asStringU(nums[i]) + "|");
         return ret;
     }
 
