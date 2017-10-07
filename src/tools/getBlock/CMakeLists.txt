@@ -56,12 +56,12 @@ run_test("getBlock_raw_03"       "-s:raw"         " 2768801" " 1995314" " 195801
 run_test("getBlock_raw_04"       "-r"             " 2768801" " 1995314" " 1958017" " --normalize")
 run_test("getBlock_raw_05"       "--raw"          " 2768801" " 1995314" " 1958017" " --normalize")
 
-# so that the test works, we must first bring these blocks onto the cache
-run_test("getBlock_force_01"    " 2768801" " 1995314" " 1958017" " --normalize" " -p" " -o")
+# so that the test works, we must first bring these blocks onto the cache (uses undocumented options)
+run_the_test(${TEST_PATH} ${GOLD_PATH} "getBlock_force_01" ${EXECUTABLE_OUTPUT_PATH}/getBlock " 2768801" " 1995314" " 1958017" " -o")
 
 # display a bunch of blocks from cache
 run_test("getBlock_cache_01"     "--source:cache" " 2768801" " 1995314" " 1958017" " --normalize" " -p")
-run_test("getBlock_cache_02"     "-s:c"           " 2768801" " 1995314" " 1958017" " --normalize" " -p")
+run_test("getBlock_cache_02"     "-s:c"           " 2768801" " 1995314" " 1958017" " --normalize" " --parity")
 run_test("getBlock_cache_03"     "-s:cache"       " 2768801" " 1995314" " 1958017" " --normalize" " -p")
 run_test("getBlock_cache_04"     "-a"             " 2768801" " 1995314" " 1958017" " --normalize" " -p")
 

@@ -10,26 +10,25 @@ which would open the [etherscan](http://etherscan.io) website with the address a
 
 #### Usage
 
-`Usage:`    getBlock [-k|-s|-f|-p|-t|-v|-h] &lt;block&gt; [block...]  
-`Purpose:`  Returns block(s) from local cache (the default) or directly from a running node.
+`Usage:`    getBlock [-r|-p|-t|-c|-v|-h] &lt;block&gt; [block...]  
+`Purpose:`  Returns block(s) from local cache or directly from a running node.
              
 `Where:`  
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
-|  | block_list | a list of one or more blocks to retrieve, defaults to 'latest' |
-| -k | --check | pull block(s) using both cache and raw, compare results, report differences |
-| -s | --source val | either :(c)ache or :(r)aw, source for data retrival. (shortcuts -c = qblocks, -r = node) |
-| -f | --fields val | either :(a)ll, (m)ini, (c)ache or :(r)aw; which fields to include in output (all is default) |
-| -p | --parity | mimic parity output using quickBlocks (i.e. quoted hexidecimal for numbers) |
-| -t | --terse | if source is raw, retreive transaction hashes instead of full transactions |
+|  | block_list | a space-separated list of one or more blocks to retrieve |
+| -r | --raw | pull the block data from the running Ethereum node (no cache) |
+| -p | --parity | mimic parity output (i.e. quoted hexidecimal for numbers, etc.) |
+| -t | --terse | display only transaction hashes, default is to display full transaction details |
+| -c | --check | compare results between qblocks and Ethereum node, report differences, if any |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
 `Notes:`
 
 - `block_list` is a space-separated list of values, a start-end range, a `special`, or any combination
-- this tool retrieves information from the local node or the ${FALLBACK} node, if configured (see the documentation)
+- this tool retrieves information from the local node or the ${FALLBACK} node, if configured (see documentation)
 - `special` blocks are detailed under `whenBlock --list`
 
 #### Notes
