@@ -402,14 +402,14 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
             SFString tick = "- ";
             SFString lead = "\t";
             SFString trail = "\n";
-            SFString sep1, sep2;
+            SFString sepy1, sepy2;
             if (COptionsBase::isReadme) {
-                sep1 = sep2 = "`";
+                sepy1 = sepy2 = "`";
                 lead = "";
                 trail = "\n";
             }
-            ret.ReplaceAll("[{", sep1);
-            ret.ReplaceAll("}]", sep2);
+            ret.ReplaceAll("[{", sepy1);
+            ret.ReplaceAll("}]", sepy2);
 
             ctx << bYellow << sep << "Notes:" << sep << cOff << "\n";
             ctx << (COptionsBase::isReadme ? "\n" : "");
@@ -720,18 +720,18 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
     const char *STR_DEFAULT_SPECIALS =
     "[[specials]]\n"
     "list = [\n"
-    "\t{ name = \"first\",          value = \"0\"           },\n"
-    "\t{ name = \"iceage\",         value = \"200000\"      },\n"
-    "\t{ name = \"homestead\",      value = \"1150000\"     },\n"
-    "\t{ name = \"daofund\",        value = \"1428756\"     },\n"
-    "\t{ name = \"daohack\",        value = \"1718497\"     },\n"
-    "\t{ name = \"daofork\",        value = \"1920000\"     },\n"
-    "\t{ name = \"tangerine\",      value = \"2463000\"     },\n"
-    "\t{ name = \"spurious\",       value = \"2675000\"     },\n"
-    "\t{ name = \"stateclear\",     value = \"2718436\"     },\n"
-    "\t{ name = \"byzantium\",      value = \"4370000 tbd\" },\n"
-    "\t{ name = \"constantinople\", value = \"tbd\"         },\n"
-    "\t{ name = \"latest\",         value = \"\"            }\n"
+    "\t{ name = \"first\",          value = \"0\"       },\n"
+    "\t{ name = \"iceage\",         value = \"200000\"  },\n"
+    "\t{ name = \"homestead\",      value = \"1150000\" },\n"
+    "\t{ name = \"daofund\",        value = \"1428756\" },\n"
+    "\t{ name = \"daohack\",        value = \"1718497\" },\n"
+    "\t{ name = \"daofork\",        value = \"1920000\" },\n"
+    "\t{ name = \"tangerine\",      value = \"2463000\" },\n"
+    "\t{ name = \"spurious\",       value = \"2675000\" },\n"
+    "\t{ name = \"stateclear\",     value = \"2718436\" },\n"
+    "\t{ name = \"byzantium\",      value = \"4370000\" },\n"
+    "\t{ name = \"constantinople\", value = \"tbd\"     },\n"
+    "\t{ name = \"latest\",         value = \"\"        }\n"
     "]\n";
 
     //---------------------------------------------------------------------------------------------------
@@ -823,7 +823,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
 
     const char *STR_DEFAULT_DATA =
     "#---------------------------------------------------------------------------------------------------\n"
-    "#  This is the ethName database. Format records as tab seperated lines with the following format:\n"
+    "#  This is the ethName database. Format records as tab separated lines with the following format:\n"
     "#\n"
     "#      Optional Symbol <tab> Name <tab> Address <tab> Source of the data <tab> Description <newline>\n"
     "#\n"
