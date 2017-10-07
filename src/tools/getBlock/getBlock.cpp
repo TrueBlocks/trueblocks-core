@@ -28,53 +28,52 @@ int main(int argc, const char * argv[]) {
         // There can be more than one thing to do...
         if (!options.quiet)
             cout << (options.isMulti() ? "[" : "");
-        if (options.blocks.isRange) {
-            for (SFUint32 i = options.blocks.start ; i < options.blocks.stop ; i++) {
-                if (options.isCheck) {
-                    checkResults += checkOneBlock(i, options);
+        for (SFUint32 i = options.blocks.start ; i < options.blocks.stop ; i++) {
+            if (options.isCheck) {
+                checkResults += checkOneBlock(i, options);
 
-                } else {
-                    SFString result = doOneBlock(i, options);
-                    if (options.normalize) {
-                        if (verbose)
-                            cout << i << "\n";
-                        result = normalizeBlock(result, false);
-                    }
-                    if (!options.quiet) {
-                        cout << result;
-                        if (i < options.blocks.stop-1)
-                            cout << ",";
-                        cout << "\n";
-
-                    } else {
-                        interumReport(cerr, i);
-                    }
+            } else {
+                SFString result = doOneBlock(i, options);
+                if (options.normalize) {
+                    if (verbose)
+                        cout << i << "\n";
+                    result = normalizeBlock(result, false);
                 }
-            }
-        } else {
-            for (SFUint32 i = 0 ; i < options.blocks.nNums ; i++) {
-                if (options.isCheck) {
-                    checkResults += checkOneBlock(options.blocks.nums[i], options);
+                if (!options.quiet) {
+                    cout << result;
+                    if (i < options.blocks.stop-1)
+                        cout << ",";
+                    cout << "\n";
 
-                } else {
-                    SFString result = doOneBlock(options.blocks.nums[i], options);
-                    if (options.normalize) {
-                        if (verbose)
-                            cout << options.blocks.nums[i] << "\n";
-                        result = normalizeBlock(result, false);
-                    }
-                    if (!options.quiet) {
-                        cout << result;
-                        if (i < options.blocks.nNums - 1)
-                            cout << ",";
-                        cout << "\n";
-
-                    } else {
-                        interumReport(cerr, i);
-                    }
+                 } else {
+                    interumReport(cerr, i);
                 }
             }
         }
+
+        for (SFUint32 i = 0 ; i < options.blocks.nNums ; i++) {
+            if (options.isCheck) {
+                checkResults += checkOneBlock(options.blocks.nums[i], options);
+
+            } else {
+                SFString result = doOneBlock(options.blocks.nums[i], options);
+                if (options.normalize) {
+                    if (verbose)
+                        cout << options.blocks.nums[i] << "\n";
+                    result = normalizeBlock(result, false);
+                }
+                if (!options.quiet) {
+                    cout << result;
+                    if (i < options.blocks.nNums - 1)
+                        cout << ",";
+                     cout << "\n";
+
+                } else {
+                    interumReport(cerr, i);
+                }
+            }
+        }
+
         if (!options.quiet)
             cout << (options.isMulti() ? "]" : "");
 
