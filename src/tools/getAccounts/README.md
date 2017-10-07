@@ -32,7 +32,7 @@ Using ethName to find Singular's address, list tokens held by other token accoun
 `Purpose:`  Show the list of Ethereum accounts known to the local node or named accounts.  
 `Where:`  
 
-| Option | Full Command | Description |
+| Short Cut | Option | Description |
 | -------: | :------- | :------- |
 | -n | --named | Show addresses from named accounts as per ethName |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |

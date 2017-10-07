@@ -28,11 +28,11 @@ int main(int argc, const char * argv[]) {
         // There can be more than one thing to do...
         if (!options.quiet)
             cout << (options.isMulti() ? "[" : "");
-        if (options.isRange) {
-            for (SFUint32 i = options.start ; i < options.stop ; i++) {
+        if (options.blocks.isRange) {
+            for (SFUint32 i = options.blocks.start ; i < options.blocks.stop ; i++) {
                 cout << doOneBloom(i, options);
                 if (!options.quiet) {
-                    if (i < options.stop-1)
+                    if (i < options.blocks.stop-1)
                         cout << ",";
                     cout << "\n";
                     if (options.isCheck) {
@@ -49,10 +49,10 @@ int main(int argc, const char * argv[]) {
                 }
             }
         } else {
-            for (SFUint32 i = 0 ; i < options.nNums ; i++) {
-                cout << doOneBloom(options.nums[i], options);
+            for (SFUint32 i = 0 ; i < options.blocks.nNums ; i++) {
+                cout << doOneBloom(options.blocks.nums[i], options);
                 if (!options.quiet) {
-                    if (i < options.nNums - 1)
+                    if (i < options.blocks.nNums - 1)
                         cout << ",";
                     cout << "\n";
                     if (options.isCheck) {
