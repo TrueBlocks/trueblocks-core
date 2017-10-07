@@ -109,7 +109,6 @@ namespace qblocks {
 #define MAX_BLOCK_LIST 100
     class COptionsBlockList {
     public:
-        bool isRange;
         blknum_t nums[MAX_BLOCK_LIST];
         blknum_t nNums;
         blknum_t start;
@@ -119,6 +118,7 @@ namespace qblocks {
         SFString parseBlockList(const SFString& arg, blknum_t latest);
         COptionsBlockList(void);
         SFString toString(void) const;
+        bool hasBlocks(void) const { return (nNums || (start != stop)); }
     };
 
     extern const char *STR_DEFAULT_DATA;

@@ -98,12 +98,8 @@ bool COptions::parseArguments(SFString& command) {
         tokens.Reverse(); holders.Reverse();
     }
 
-    if (blocks.isRange) {
-        // if range is supplied, use the range
-        blocks.nNums = 0;
-
-    } else if (blocks.nNums == 0) {
-        // otherwise, if not list, use 'latest'
+    if (!blocks.hasBlocks()) {
+        // use 'latest'
         blocks.nums[blocks.nNums++] = latestBlock;
     }
 
@@ -146,7 +142,7 @@ SFString COptions::postProcess(const SFString& which, const SFString& str) const
         SFString ret;
         ret += "[{addresses}] must start with '0x' and be forty characters long\n";
         ret += "[{block_list}] may be space-separated list of values, a start-end range, a [{special}], or any combination\n";
-        ret += "this tool retrieves information from the local node or the ${FALLBACK} node, if configured (see the documentation)\n";
+        ret += "this tool retrieves information from the local node or the ${FALLBACK} node, if configured (see documentation)\n";
         ret += "if the token contract(s) from which you request balances are not ERC20 compliant, the results are undefined\n";
         ret += "if the queried node does not store historical state, the results are undefined\n";
         ret += "[{special}] blocks are detailed under " + cTeal + "[{whenBlock --list}]" + cOff + "\n";
