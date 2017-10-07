@@ -1,7 +1,5 @@
 ## [{NAME}]
 
-*Published: Saturday, Sept. 29, 2017 - 12:03 am*
-
 Given the address of an ERC20 token contract, report token balances for one or more accounts. Alternatively, report token balances for multiple ERC20 contracts for a single account.
 
 In normal operation the **first item** in the `address_list` is considered to be an ERC20 token contract whose balances are queried, whereas the remainder of the list is assumed to be accounts on which to report.
