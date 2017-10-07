@@ -116,9 +116,9 @@ bool COptions::parseArguments(SFString& command) {
 
             } else if (mode == "r" || mode == "raw") {
             } else if (mode == "c" || mode == "cache") {
-                SHOW_ALL_FIELDS(CBlock);
-                SHOW_ALL_FIELDS(CTransaction);
-                SHOW_ALL_FIELDS(CReceipt);
+                HIDE_ALL_FIELDS(CBlock);
+                HIDE_ALL_FIELDS(CTransaction);
+                HIDE_ALL_FIELDS(CReceipt);
                 UNHIDE_FIELD(CBlock, "blockNumber");
                 UNHIDE_FIELD(CBlock, "timestamp");
                 UNHIDE_FIELD(CBlock, "transactions");
