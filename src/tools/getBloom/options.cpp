@@ -9,14 +9,16 @@
 
 //---------------------------------------------------------------------------------------------------
 CParams params[] = {
-    CParams("~block_list",  "a space-separated list of one or more blocks from which to retrieve blooms"),
-    CParams("-raw",         "pull the bloom filter from the running Ethereum node (no cache)"),
-    CParams("-enhanced",    "retrieve the enhanced bloom filter for a given block (see documentation)"),
-    CParams("-receipts",    "display receipt level blooms, default is to display only block-level blooms"),
-    CParams("-check",       "compare results between qblocks and Ethereum node, report differences, if any"),
-    CParams("@force",       "force a re-write of the bloom to the cache"),
-    CParams("@quiet",       "do not print results to screen (useful for performance measurements)"),
-    CParams("",             "Returns bloom filter(s) from local cache or directly from a running node.\n"),
+    CParams("~block_list",       "a space-separated list of one or more blocks from which to retrieve blooms"),
+    CParams("-raw",              "pull the bloom filter from the running Ethereum node (no cache)"),
+    CParams("-enhanced",         "retrieve the enhanced bloom filter for a given block (see documentation)"),
+    CParams("-r(e)ceipts",       "display receipt level blooms, default is to display only block-level blooms"),
+    CParams("-check",            "compare results between qblocks and Ethereum node, report differences, if any"),
+    CParams("@force",            "force a re-write of the bloom to the cache"),
+    CParams("@quiet",            "do not print results to screen (useful for performance measurements)"),
+    CParams("@source:[c|r]",     "either :c(a)che or :(r)aw, source for data retrival. (shortcuts -c = qblocks, -r = node)"),
+//    CParams("@fields:[a|m|c|r]", "either :(a)ll, (m)ini, (c)ache or :(r)aw; which fields to include in output (all is default)"),
+    CParams("",                  "Returns bloom filter(s) from local cache or directly from a running node.\n"),
 };
 uint32_t nParams = sizeof(params) / sizeof(CParams);
 
@@ -33,11 +35,11 @@ bool COptions::parseArguments(SFString& command) {
         SFString arg = nextTokenClear(command, ' ');
 
         // shortcuts
-        if (arg == "-r") { arg = "--source:raw";   }
-        if (arg == "-c") { arg = "--source:cache"; }
+        if (arg == "-r" || arg == "--raw")   { arg = "--source:raw";   }
+        if (arg == "-a" || arg == "--cache") { arg = "--source:cache"; }
 
         // do not collapse
-        if (arg == "-k" || arg == "--check") {
+        if (arg == "-c" || arg == "--check") {
             setenv("TEST_MODE", "true", true);
             isCheck = true;
             quiet++; // if both --check and --quiet are present, be very quiet...
@@ -60,7 +62,7 @@ bool COptions::parseArguments(SFString& command) {
             GETRUNTIME_CLASS(CTransaction)->sortFieldList();
             GETRUNTIME_CLASS(CReceipt)->sortFieldList();
 
-        } else if (arg == "-f" || arg == "--force") {
+        } else if (arg == "-o" || arg == "--force") {
             etherlib_init("binary");
             force = true;
 
@@ -71,61 +73,20 @@ bool COptions::parseArguments(SFString& command) {
 
             } else if (mode == "c" || mode == "cache") {
                 etherlib_init("binaryOnly");
-                asks4Cache = true;
 
             } else {
                 return usage("Invalide source. Must be either '(r)aw' or '(c)ache'. Quitting...");
             }
 
-        } else if (arg == "-t" || arg == "--terse") {
-            terse = true;
+        } else if (arg == "-e" || arg == "--receipt") {
+            UNHIDE_FIELD(CBlock,       "transactions");
+            UNHIDE_FIELD(CTransaction, "receipt");
+            UNHIDE_FIELD(CTransaction, "transactionIndex");
+            UNHIDE_FIELD(CReceipt,     "logsBloom");
+            receipt = true;
 
         } else if (arg == "-q" || arg == "--quiet") {
             quiet++; // if both --check and --quiet are present, be very quiet...
-
-        } else if (arg.startsWith("-f:") || arg.startsWith("--fields:")) {
-            SFString mode = arg.Substitute("-f:","").Substitute("--fields:","");
-
-            if (mode == "a" || mode == "all") {
-                SHOW_ALL_FIELDS(CBlock);
-                SHOW_ALL_FIELDS(CTransaction);
-                SHOW_ALL_FIELDS(CReceipt);
-
-            } else if (mode == "m" || mode == "mini") {
-                HIDE_ALL_FIELDS(CBlock);
-                HIDE_ALL_FIELDS(CTransaction);
-                HIDE_ALL_FIELDS(CReceipt);
-                UNHIDE_FIELD(CBlock, "blockNumber");
-                UNHIDE_FIELD(CBlock, "timestamp");
-                UNHIDE_FIELD(CBlock, "transactions");
-                UNHIDE_FIELD(CTransaction, "receipt");
-                UNHIDE_FIELD(CTransaction, "transactionIndex");
-                UNHIDE_FIELD(CTransaction, "gasPrice");
-                UNHIDE_FIELD(CTransaction, "gas");
-                UNHIDE_FIELD(CTransaction, "isError");
-                UNHIDE_FIELD(CTransaction, "from");
-                UNHIDE_FIELD(CTransaction, "to");
-                UNHIDE_FIELD(CTransaction, "value");
-                UNHIDE_FIELD(CReceipt, "gasUsed");
-
-            } else if (mode == "r" || mode == "raw") {
-            } else if (mode == "c" || mode == "cache") {
-                SHOW_ALL_FIELDS(CBlock);
-                SHOW_ALL_FIELDS(CTransaction);
-                SHOW_ALL_FIELDS(CReceipt);
-                UNHIDE_FIELD(CBlock, "blockNumber");
-                UNHIDE_FIELD(CBlock, "timestamp");
-                UNHIDE_FIELD(CBlock, "transactions");
-                UNHIDE_FIELD(CTransaction, "receipt");
-                UNHIDE_FIELD(CTransaction, "transactionIndex");
-                UNHIDE_FIELD(CTransaction, "gasPrice");
-                UNHIDE_FIELD(CTransaction, "gas");
-                UNHIDE_FIELD(CTransaction, "isError");
-                UNHIDE_FIELD(CTransaction, "from");
-                UNHIDE_FIELD(CTransaction, "to");
-                UNHIDE_FIELD(CTransaction, "value");
-                UNHIDE_FIELD(CReceipt, "gasUsed");
-            }
 
         } else if (arg == "-p" || arg == "--parity") {
             expContext().spcs = 4;
@@ -161,9 +122,6 @@ bool COptions::parseArguments(SFString& command) {
         }
     }
 
-    if (terse && !isRaw)
-        return usage("--terse options work only with --source:raw. Quitting...");
-
     if (!blocks.hasBlocks())
         return usage("You must specify at least one block.");
 
@@ -183,15 +141,19 @@ void COptions::Init(void) {
 
     isCheck    = false;
     isRaw      = false;
-    terse      = false;
     force      = false;
-    asks4Cache = false;
+    receipt    = false;
     quiet      = 0; // quiet has levels
     blocks.Init();
 }
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
+    HIDE_ALL_FIELDS(CBlock);
+    HIDE_ALL_FIELDS(CTransaction);
+    HIDE_ALL_FIELDS(CReceipt);
+    UNHIDE_FIELD(CBlock, "blockNumber");
+    UNHIDE_FIELD(CBlock, "logsBloom");
     Init();
 }
 

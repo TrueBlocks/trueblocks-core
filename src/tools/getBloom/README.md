@@ -4,23 +4,25 @@
 
 #### Usage
 
-`Usage:`    getBloom [-e|-r|-v|-h] &lt;block&gt; [block...]  
-`Purpose:`  Returns bloom filter(s) from local cache (the default) or directly from a running node.
+`Usage:`    getBloom [-r|-e|-e|-c|-v|-h] &lt;block&gt; [block...]  
+`Purpose:`  Returns bloom filter(s) from local cache or directly from a running node.
              
 `Where:`  
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
-|  | block_list | a list of one or more blocks at which to report balances, defaults to 'latest' |
-| -e | --enhanced | retrieve the enhanced bloom filter from the quickBlocks cache |
-| -r | --raw | retrieve the bloom filter directly from the running node (includes tx blooms) |
+|  | block_list | a space-separated list of one or more blocks from which to retrieve blooms |
+| -r | --raw | pull the bloom filter from the running Ethereum node (no cache) |
+| -e | --enhanced | retrieve the enhanced bloom filter for a given block (see documentation) |
+| -e | --receipts | display receipt level blooms, default is to display only block-level blooms |
+| -c | --check | compare results between qblocks and Ethereum node, report differences, if any |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
 `Notes:`
 
 - `block_list` is a space-separated list of values, a start-end range, a `special`, or any combination
-- this tool retrieves information from the local node or the ${FALLBACK} node, if configured (see the documentation)
+- this tool retrieves information from the local node or the ${FALLBACK} node, if configured (see documentation)
 - `special` blocks are detailed under `whenBlock --list`
 
 #### Other Options
