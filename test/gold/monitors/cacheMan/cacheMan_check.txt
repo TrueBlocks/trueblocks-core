@@ -1,6 +1,5 @@
 cacheMan argc: 3 [1:-c] [2:Duplicate.cache] 
 cacheMan -c Duplicate.cache 
-Waiting for lock to clear
 Checking cache: Duplicate.cache
 	Duplicate at record 260, current 4162956.32.32, previous 4162956.32.32
 	The cache has 1 duplicates.

@@ -1,4 +1,4 @@
 getBalance argc: 5 [1:0xbb9bc244d798123fde783fcc1c72d3bb8c189413] [2:$tip] [3:1500000] [4:--ether] 
 getBalance 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 $tip 1500000 --ether 
-Balance of address 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 at block 0: 0.000000000000000000
-Balance of address 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 at block 1500000: 4420466.920675732108465682
+    Balance for account 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 at block 0 is 0.000000000000000000
+    Balance for account 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 at block 1500000 is 4420466.920675732108465682
