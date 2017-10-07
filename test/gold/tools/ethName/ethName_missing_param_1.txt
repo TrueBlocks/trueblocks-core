@@ -4,10 +4,10 @@ ethName -m
   You must supply at least one of 'addr,' or 'name.' Quitting...
 
   Usage:    ethName [-a|-c|-o|-l|-m|-s|-v|-h] <term> [term...]  
-  Purpose:  Find a name given an Ethereum address, or find an address given a name.
+  Purpose:  Query Ethereum addresses and/or names making it easy to remember accounts.
              
   Where:    
-	terms                 one or more search terms (required)
+	terms                 a space separated list of one or more search terms (required)
 	-a  (--alone)         export only the associated address (may be used in scripting)
 	-c  (--count)         print only the count of the number of matches
 	-o  (--open)          open the name database for editing
