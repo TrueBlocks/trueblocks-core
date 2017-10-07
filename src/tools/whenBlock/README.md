@@ -1,7 +1,5 @@
 ## whenBlock
 
-*Published: Saturday, Sept. 29, 2017 - 12:03 am*
-
 The `whenBlock` tool answers one of two questions: (1) "At what date and time did a given block occur?" or (2) "What block occurred at or before a given date and time?"
 
 In the first case, one simply supplies a block number and the date and time of that block is displayed. In the later case, one provides a date (and optionally a time) and the block number that occurred at or just prior to that date and time is displayed.
