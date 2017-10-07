@@ -9,11 +9,14 @@
 
 //---------------------------------------------------------------------------------------------------
 CParams params[] = {
-    CParams("~block_list",       "a list of one or more blocks at which to report balances, defaults to 'latest'"),
-    CParams("-enhanced", "retrieve the enhanced bloom filter from the quickBlocks cache"),
-    CParams("-raw",      "retrieve the bloom filter directly from the running node (includes tx blooms)"),
-    CParams("@quiet",    "do not print results to screen (useful for performance measurements)"),
-    CParams("",          "Returns bloom filter(s) from local cache (the default) or directly from a running node.\n"),
+    CParams("~block_list",  "a space-separated list of one or more blocks from which to retrieve blooms"),
+    CParams("-raw",         "pull the bloom filter from the running Ethereum node (no cache)"),
+    CParams("-enhanced",    "retrieve the enhanced bloom filter for a given block (see documentation)"),
+    CParams("-receipts",    "display receipt level blooms, default is to display only block-level blooms"),
+    CParams("-check",       "compare results between qblocks and Ethereum node, report differences, if any"),
+    CParams("@force",       "force a re-write of the bloom to the cache"),
+    CParams("@quiet",       "do not print results to screen (useful for performance measurements)"),
+    CParams("",             "Returns bloom filter(s) from local cache or directly from a running node.\n"),
 };
 uint32_t nParams = sizeof(params) / sizeof(CParams);
 
@@ -57,15 +60,9 @@ bool COptions::parseArguments(SFString& command) {
             GETRUNTIME_CLASS(CTransaction)->sortFieldList();
             GETRUNTIME_CLASS(CReceipt)->sortFieldList();
 
-        } else if (arg == "-o" || arg == "--force") {
+        } else if (arg == "-f" || arg == "--force") {
             etherlib_init("binary");
-            //force = true;
-
-        } else if (arg == "--normalize") {
-            //normalize = true;
-
-        } else if (arg == "--silent") {
-            //silent = true;
+            force = true;
 
         } else if (arg.startsWith("-s:") || arg.startsWith("--source:")) {
             SFString mode = arg.Substitute("-s:","").Substitute("--source:","");
@@ -74,7 +71,7 @@ bool COptions::parseArguments(SFString& command) {
 
             } else if (mode == "c" || mode == "cache") {
                 etherlib_init("binaryOnly");
-                //asks4Cache = true;
+                asks4Cache = true;
 
             } else {
                 return usage("Invalide source. Must be either '(r)aw' or '(c)ache'. Quitting...");
@@ -164,17 +161,11 @@ bool COptions::parseArguments(SFString& command) {
         }
     }
 
-    if (blocks.isRange) {
-        // if range is supplied, use the range
-        blocks.nNums = 0;
-
-    } else if (blocks.nNums == 0) {
-        // otherwise, if not list, use 'latest'
-        blocks.nums[blocks.nNums++] = latestBlock;
-    }
-
     if (terse && !isRaw)
         return usage("--terse options work only with --source:raw. Quitting...");
+
+    if (!blocks.hasBlocks())
+        return usage("You must specify at least one block.");
 
     return true;
 }
@@ -193,10 +184,8 @@ void COptions::Init(void) {
     isCheck    = false;
     isRaw      = false;
     terse      = false;
-    //force      = false;
-    //normalize  = false;
-    //silent     = false;
-    //asks4Cache = false;
+    force      = false;
+    asks4Cache = false;
     quiet      = 0; // quiet has levels
     blocks.Init();
 }
@@ -212,9 +201,7 @@ COptions::~COptions(void) {
 
 //--------------------------------------------------------------------------------
 bool COptions::isMulti(void) const {
-    if (blocks.isRange)
-        return (blocks.stop - blocks.start) > 1;
-    return blocks.nNums > 1;
+    return ((blocks.stop - blocks.start) > 1 || blocks.nNums > 1);
 }
 
 //--------------------------------------------------------------------------------
@@ -229,7 +216,7 @@ SFString COptions::postProcess(const SFString& which, const SFString& str) const
 
         SFString ret;
         ret += "[{block_list}] is a space-separated list of values, a start-end range, a [{special}], or any combination\n";
-        ret += "this tool retrieves information from the local node or the ${FALLBACK} node, if configured (see the documentation)\n";
+        ret += "this tool retrieves information from the local node or the ${FALLBACK} node, if configured (see documentation)\n";
         ret += "[{special}] blocks are detailed under " + cTeal + "[{whenBlock --list}]" + cOff + "\n";
         return ret;
     }
