@@ -9,18 +9,17 @@
 
 //---------------------------------------------------------------------------------------------------
 CParams params[] = {
-    CParams("~block_list",       "a list of one or more blocks to retrieve, defaults to 'latest'"),
-    CParams("-chec(k)",          "pull block(s) using both cache and raw, compare results, report differences"),
-    CParams("-source:[c|r]",     "either :(c)ache or :(r)aw, source for data retrival. (shortcuts -c = qblocks, -r = node)"),
-    CParams("-fields:[a|m|c|r]", "either :(a)ll, (m)ini, (c)ache or :(r)aw; which fields to include in output (all is default)"),
-    CParams("-parity",           "mimic parity output using quickBlocks (i.e. quoted hexidecimal for numbers)"),
-    CParams("-terse",            "if source is raw, retreive transaction hashes instead of full transactions"),
+    CParams("~block_list",       "a space-separated list of one or more blocks to retrieve"),
+    CParams("-raw",              "pull the block data from the running Ethereum node (no cache)"),
+    CParams("-parity",           "mimic parity output (i.e. quoted hexidecimal for numbers, etc.)"),
+    CParams("-terse",            "display only transaction hashes, default is to display full transaction details"),
+    CParams("-check",            "compare results between qblocks and Ethereum node, report differences, if any"),
+    CParams("@force",            "force a re-write of the block to the cache"),
     CParams("@quiet",            "do not print results to screen, used for speed testing and data checking"),
-    CParams("@re(c)iept",        "include receipt (hidden)"),
-    CParams("@f(o)rce",          "force re-write of binary data"),
+    CParams("@source:[c|r]",     "either :c(a)che or :(r)aw, source for data retrival. (shortcuts -c = qblocks, -r = node)"),
+    CParams("@fields:[a|m|c|r]", "either :(a)ll, (m)ini, (c)ache or :(r)aw; which fields to include in output (all is default)"),
     CParams("@normalize",        "normalize (remove un-common fields and sort) for comparison with other results (testing)"),
-    CParams("@silent",           "no output - useful for performance testing"),
-    CParams("",                  "Returns block(s) from local cache (the default) or directly from a running node.\n"),
+    CParams("",                  "Returns block(s) from local cache or directly from a running node.\n"),
 };
 uint32_t nParams = sizeof(params) / sizeof(CParams);
 
@@ -37,11 +36,11 @@ bool COptions::parseArguments(SFString& command) {
         SFString arg = nextTokenClear(command, ' ');
 
         // shortcuts
-        if (arg == "-r") { arg = "--source:raw";   }
-        if (arg == "-c") { arg = "--source:cache"; }
+        if (arg == "-r" || arg == "--raw")   { arg = "--source:raw";   }
+        if (arg == "-a" || arg == "--cache") { arg = "--source:cache"; }
 
         // do not collapse
-        if (arg == "-k" || arg == "--check") {
+        if (arg == "-c" || arg == "--check") {
             setenv("TEST_MODE", "true", true);
             isCheck = true;
             quiet++; // if both --check and --quiet are present, be very quiet...
@@ -70,9 +69,6 @@ bool COptions::parseArguments(SFString& command) {
 
         } else if (arg == "--normalize") {
             normalize = true;
-
-        } else if (arg == "--silent") {
-            silent = true;
 
         } else if (arg.startsWith("-s:") || arg.startsWith("--source:")) {
             SFString mode = arg.Substitute("-s:","").Substitute("--source:","");
@@ -171,17 +167,11 @@ bool COptions::parseArguments(SFString& command) {
         }
     }
 
-    if (blocks.isRange) {
-        // if range is supplied, use the range
-        blocks.nNums = 0;
-
-    } else if (blocks.nNums == 0) {
-        // otherwise, if not list, use 'latest'
-        blocks.nums[blocks.nNums++] = latestBlock;
-    }
-
     if (terse && !isRaw)
         return usage("--terse options work only with --source:raw. Quitting...");
+
+    if (!blocks.hasBlocks())
+        return usage("You must specify at least one block.");
 
     return true;
 }
@@ -202,7 +192,6 @@ void COptions::Init(void) {
     terse      = false;
     force      = false;
     normalize  = false;
-    silent     = false;
     asks4Cache = false;
     quiet      = 0; // quiet has levels
     blocks.Init();
@@ -219,9 +208,7 @@ COptions::~COptions(void) {
 
 //--------------------------------------------------------------------------------
 bool COptions::isMulti(void) const {
-    if (blocks.isRange)
-        return (blocks.stop - blocks.start) > 1;
-    return blocks.nNums > 1;
+    return ((blocks.stop - blocks.start) > 1 || blocks.nNums > 1);
 }
 
 //--------------------------------------------------------------------------------
@@ -236,7 +223,7 @@ SFString COptions::postProcess(const SFString& which, const SFString& str) const
 
         SFString ret;
         ret += "[{block_list}] is a space-separated list of values, a start-end range, a [{special}], or any combination\n";
-        ret += "this tool retrieves information from the local node or the ${FALLBACK} node, if configured (see the documentation)\n";
+        ret += "this tool retrieves information from the local node or the ${FALLBACK} node, if configured (see documentation)\n";
         ret += "[{special}] blocks are detailed under " + cTeal + "[{whenBlock --list}]" + cOff + "\n";
         return ret;
     }

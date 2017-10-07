@@ -13,7 +13,10 @@ class COptions : public COptionsBase {
 public:
     bool isCheck;
     bool isRaw;
+    bool asks4Cache;
     bool terse;
+    bool force;
+    bool silent;
     int quiet;
     COptionsBlockList blocks;
 
