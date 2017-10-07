@@ -234,7 +234,9 @@ ostream& operator<<(ostream& os, const CPriceQuote& item) {
 // EXISTING_CODE
 #include "node.h"
 SFString priceDatabasePath(void) {
-    return blockCachePath("prices/poloniex.bin");
+    SFString ret = blockCachePath("prices/poloniex.bin");
+    establishFolder(ret);
+    return ret;
 }
 
 //---------------------------------------------------------------------------
@@ -296,7 +298,7 @@ bool loadPriceData(CPriceQuoteArray& quotes, bool freshen, SFString& message, SF
         if (freshen) {
             if (verbose < 2) {
                 if (!isTestMode())
-                    cerr << "Retrieving data...\r";
+                    cerr << "Retrieving price history data...\r";
                 cerr.flush();
             }
             timestamp_t start = toTimestamp(nextRead);
