@@ -28,47 +28,46 @@ int main(int argc, const char * argv[]) {
         // There can be more than one thing to do...
         if (!options.quiet)
             cout << (options.isMulti() ? "[" : "");
-        if (options.blocks.isRange) {
-            for (SFUint32 i = options.blocks.start ; i < options.blocks.stop ; i++) {
-                cout << doOneBloom(i, options);
-                if (!options.quiet) {
-                    if (i < options.blocks.stop-1)
-                        cout << ",";
-                    cout << "\n";
-                    if (options.isCheck) {
-                        // TODO(any): read 'raw' and compare result with gold
-                    }
-
-                } else if (!(i%150)) {
-                    cout << ".";
-                    cout.flush();
-
-                } else if (!(i%1000)) {
-                    cout << "+";
-                    cout.flush();
+        for (SFUint32 i = options.blocks.start ; i < options.blocks.stop ; i++) {
+            cout << doOneBloom(i, options);
+            if (!options.quiet) {
+                if (i < options.blocks.stop-1)
+                    cout << ",";
+                cout << "\n";
+                if (options.isCheck) {
+                    // TODO(any): read 'raw' and compare result with gold
                 }
-            }
-        } else {
-            for (SFUint32 i = 0 ; i < options.blocks.nNums ; i++) {
-                cout << doOneBloom(options.blocks.nums[i], options);
-                if (!options.quiet) {
-                    if (i < options.blocks.nNums - 1)
-                        cout << ",";
-                    cout << "\n";
-                    if (options.isCheck) {
-                        // TODO(any): read 'raw' and compare result with gold
-                    }
 
-                } else if (!(i%150)) {
-                    cout << ".";
-                    cout.flush();
+            } else if (!(i%150)) {
+                cout << ".";
+                cout.flush();
 
-                } else if (!(i%1000)) {
-                    cout << "+";
-                    cout.flush();
-                }
+            } else if (!(i%1000)) {
+                cout << "+";
+                cout.flush();
             }
         }
+
+        for (SFUint32 i = 0 ; i < options.blocks.nNums ; i++) {
+            cout << doOneBloom(options.blocks.nums[i], options);
+            if (!options.quiet) {
+                if (i < options.blocks.nNums - 1)
+                    cout << ",";
+                cout << "\n";
+                if (options.isCheck) {
+                    // TODO(any): read 'raw' and compare result with gold
+                }
+
+            } else if (!(i%150)) {
+                cout << ".";
+                cout.flush();
+
+            } else if (!(i%1000)) {
+                cout << "+";
+                cout.flush();
+            }
+        }
+
         if (!options.quiet)
             cout << (options.isMulti() ? "]" : "");
     }

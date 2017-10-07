@@ -1,0 +1,18 @@
+getBloom argc: 5 [1:1590000] [2:4000001-4000002] [3:1001001-1001100] [4:1234567] 
+getBloom 1590000 4000001-4000002 1001001-1001100 1234567 
+
+  Specify only a single block range at a time.
+
+  Usage:    getBloom [-r|-e|-r|-c|-v|-h] <block> [block...]  
+  Purpose:  Returns bloom filter(s) from local cache or directly from a running node.
+             
+  Where:    
+	block_list            a space-separated list of one or more blocks from which to retrieve blooms (required)
+	-r  (--raw)           pull the bloom filter from the running Ethereum node (no cache)
+	-e  (--enhanced)      retrieve the enhanced bloom filter for a given block (see documentation)
+	-r  (--receipts)      display receipt level blooms, default is to display only block-level blooms
+	-c  (--check)         compare results between qblocks and Ethereum node, report differences, if any
+	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
+	-h  (--help)          display this help screen
+
+  Powered by QuickBlocks
