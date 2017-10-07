@@ -100,11 +100,30 @@ void etherlib_cleanup(void)
     getCurl(true);
 }
 
+//--------------------------------------------------------------------------
+inline SFString TIMER_IN(double& startTime) {
+    CStringExportContext ctx;
+    ctx << (qbNow()-startTime) << ": ";
+    startTime = qbNow();
+    return ctx.str;
+}
+inline SFString TIMER_TICK(double startTime) {
+    CStringExportContext ctx;
+    ctx << "in " << cGreen << (qbNow()-startTime) << cOff << " seconds.";
+    return ctx.str;
+}
+#define TIMER()  TIMER_IN(startTime)
+#define TIMER_T() TIMER_TICK(startTime)
+
 //-------------------------------------------------------------------------
 extern size_t write_callback(char *ptr, size_t size, size_t nmemb, void *userdata);
 static bool earlyAbort=false;
 static int ticker=0;
-static bool useTicker=false;
+double startTime = qbNow();
+bool is_error=false;
+bool is_tracing=false;
+blknum_t bln = 0;
+blknum_t trn = 0;
 //-------------------------------------------------------------------------
 // Use 'curl' to make an arbitrary rpc call
 //-------------------------------------------------------------------------
@@ -133,8 +152,10 @@ SFString callRPC(const SFString& method, const SFString& params, bool raw)
 
     curl_easy_setopt(getCurl(), CURLOPT_WRITEDATA,     &received);
     ticker=0;
-    if (useTicker)
-        cout << "starting retrieval";
+    if (verbose > 1) {
+        cout << bln << "." << trn << "." << ticker << " ";
+        cout << "start: " << TIMER();
+    }
     curl_easy_setopt(getCurl(), CURLOPT_WRITEFUNCTION, write_callback);
 
     earlyAbort = false;
@@ -180,7 +201,7 @@ SFString callRPC(const SFString& method, const SFString& params, bool raw)
         exit(0);
     }
 
-    if (received.empty()) {
+    if (!is_tracing && received.empty()) {
         cerr << cYellow;
         cerr << "\n";
         cerr << "\tWarning:" << cOff << "The Ethereum node  resulted in an empty\n";
@@ -197,17 +218,13 @@ SFString callRPC(const SFString& method, const SFString& params, bool raw)
     cout.flush();
 #endif
 
-    if (useTicker)
-        cout << "done retrieval...\n";
+    if (verbose > 1)
+        cout << "done retrieval..." << TIMER_T() << "\r";
     if (raw)
         return received;
     CRPCResult generic;
     char *p = cleanUpJson((char*)(const char*)received);
-    if (useTicker)
-        cout << "starting parse...";
     generic.parseJson(p);
-    if (useTicker)
-        cout << "done parse\n";
     return generic.result;
 }
 
@@ -296,8 +313,16 @@ bool queryBlock(CBlock& block, const SFString& numIn, bool needTrace)
         if (needTrace && trans->gas == receipt.gasUsed)
         {
             SFString trace;
+            is_error = false;
+            is_tracing = true;
+            if (verbose > 1)
+            {
+                bln = block.blockNumber;
+                trn = trans->transactionIndex;
+            }
             queryRawTrace(trace, trans->hash);
-            trans->isError = trace.ContainsI("error");
+            is_tracing = false;
+            trans->isError = is_error;
             nTraces++;
         }
     }
@@ -308,7 +333,7 @@ bool queryBlock(CBlock& block, const SFString& numIn, bool needTrace)
     {
         SFString fileName = getBinaryFilename1(toLongU(numIn));
         SFString fmt;
-        fmt += SFString("Block ") + cYellow  + "#" + asStringU(block.blockNumber)  + cOff;
+        fmt += SFString("\rBlock ") + cYellow  + "#" + asStringU(block.blockNumber)  + cOff;
         fmt += SFString(" (")     + cYellow  + padNum3T((uint64_t)block.transactions.getCount()) + "/" + asStringU(nTrans)  + cOff + " trans";
         fmt +=                      cYellow  + padNum3T((uint64_t)nTraces)                       + "/" + asStringU(nTraced) + cOff + " traced) written to ";
         fmt +=                      cMagenta + fileName.Substitute(blockFolder, "./")  + cOff + ".";
@@ -496,33 +521,44 @@ bool getSha3(const SFString& hexIn, SFString& shaOut)
 //-------------------------------------------------------------------------
 size_t write_callback(char *ptr, size_t size, size_t nmemb, void *userdata)
 {
-    ASSERT(userdata);
-    SFString part;
-    part.reserve(size*nmemb+1);
-    char *s = (char*)(const char*)part;
-    strncpy(s,ptr,size*nmemb);
-    s[size*nmemb]='\0';
-    (*(SFString*)userdata) += s;
-
-    // At block 3804005, there was a hack wherein the byte code
-    // 5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b repeated
-    // thousands of time and doing nothing. If we don't handle this it
-    // dominates the scanning for no reason
-    if (strstr(s, "5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b") != NULL) {
-        // This is the hack trace (there are many), so skip it
-        cerr << "Curl response contains '5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b'. Aborting.\n";
-        cerr.flush();
-        earlyAbort = true;
-        return 0;
+    if (is_tracing) {
+        ptr[size*nmemb-1] = '\0';
+        if (strstr(ptr,"erro")!=NULL) {
+            is_error = true;
+            earlyAbort = true;
+            return 0;
+        }
+    } else {
+        ASSERT(userdata);
+        SFString part;
+        part.reserve(size*nmemb+1);
+        char *s = (char*)(const char*)part;
+        strncpy(s,ptr,size*nmemb);
+        s[size*nmemb]='\0';
+        (*(SFString*)userdata) += s;
+        
+        // At block 3804005, there was a hack wherein the byte code
+        // 5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b repeated
+        // thousands of time and doing nothing. If we don't handle this it
+        // dominates the scanning for no reason
+        if (strstr(s, "5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b") != NULL) {
+            // This is the hack trace (there are many), so skip it
+            cerr << "Curl response contains '5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b'. Aborting.\n";
+            cerr.flush();
+            earlyAbort = true;
+            return 0;
+        }
     }
-
     ticker++;
-    if (useTicker && ticker>2) {
+    if (verbose > 2 && ticker>2) {
         cout << ".";
+        if (!(ticker%80)) {
+            cout << "\r";
+            cout << bln << "." << trn << "." << ticker << "\t\t";
+        }
         if (!(ticker%5))
-            cout.flush();
+             cout.flush();
     }
-
     return size*nmemb;
 }
 
@@ -945,21 +981,6 @@ bool getLatestBlocks(SFUint32& cache, SFUint32& client, CSharedResource *res)
 }
 
 //--------------------------------------------------------------------------
-inline SFString TIMER_IN(double& startTime) {
-    CStringExportContext ctx;
-    ctx << (qbNow()-startTime) << ": ";
-    startTime = qbNow();
-    return ctx.str;
-}
-inline SFString TIMER_TICK(double startTime) {
-    CStringExportContext ctx;
-    ctx << "in " << cGreen << (qbNow()-startTime) << cOff << " seconds.";
-    return ctx.str;
-}
-#define TIMER()  TIMER_IN(startTime)
-#define TIMER_T() TIMER_TICK(startTime)
-
-//--------------------------------------------------------------------------
 class CInMemoryCache
 {
 public:
@@ -1000,7 +1021,7 @@ public:
             return true;
         loaded = true; // only come through here once, even if we fail to load
 
-        double startTime = qbNow();
+        startTime = qbNow();
         blocks = new CMiniBlock[nBlocks1];
         if (!blocks)
         {
