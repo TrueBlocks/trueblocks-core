@@ -9,10 +9,10 @@
 
 //---------------------------------------------------------------------------------------------------
 CParams params[] = {
-    CParams("~num",      "which bloom (or blooms if more than one) to retreive (or [start-stop) range)"),
+    CParams("~block_list",       "a list of one or more blocks at which to report balances, defaults to 'latest'"),
     CParams("-enhanced", "retrieve the enhanced bloom filter from the quickBlocks cache"),
     CParams("-raw",      "retrieve the bloom filter directly from the running node (includes tx blooms)"),
-    CParams("-quiet",    "do not print results to screen (useful for performance measurements)"),
+    CParams("@quiet",    "do not print results to screen (useful for performance measurements)"),
     CParams("",          "Returns bloom filter(s) from local cache (the default) or directly from a running node.\n"),
 };
 uint32_t nParams = sizeof(params) / sizeof(CParams);
@@ -24,29 +24,57 @@ bool COptions::parseArguments(SFString& command) {
         return false;
 
     Init();
+    blknum_t latestBlock = getLatestBlockFromClient();
     while (!command.empty()) {
 
         SFString arg = nextTokenClear(command, ' ');
 
         // shortcuts
-        if (arg == "-r") arg = "--source:raw";
-        if (arg == "-c") arg = "--source:cache";
+        if (arg == "-r") { arg = "--source:raw";   }
+        if (arg == "-c") { arg = "--source:cache"; }
 
-        if (arg == "-c" || arg == "--check") {
+        // do not collapse
+        if (arg == "-k" || arg == "--check") {
+            setenv("TEST_MODE", "true", true);
             isCheck = true;
+            quiet++; // if both --check and --quiet are present, be very quiet...
+            expContext().spcs = 4;
+            expContext().hexNums = true;
+            expContext().quoteNums = true;
+            CRuntimeClass *pClass = GETRUNTIME_CLASS(CBlock);
+            if (pClass) {
+                CFieldData *pField = pClass->FindField("blockNumber");
+                if (pField)
+                    pField->setName("number");
+            }
+            pClass = GETRUNTIME_CLASS(CBlock);
+            if (pClass) {
+                CFieldData *pField = pClass->FindField("hash");
+                if (pField)
+                    pField->setName("blockHash");
+            }
+            GETRUNTIME_CLASS(CBlock)->sortFieldList();
+            GETRUNTIME_CLASS(CTransaction)->sortFieldList();
+            GETRUNTIME_CLASS(CReceipt)->sortFieldList();
 
         } else if (arg == "-o" || arg == "--force") {
             etherlib_init("binary");
+            //force = true;
+
+        } else if (arg == "--normalize") {
+            //normalize = true;
+
+        } else if (arg == "--silent") {
+            //silent = true;
 
         } else if (arg.startsWith("-s:") || arg.startsWith("--source:")) {
-            SFString mode = arg;
-            mode.Replace("-s:","");
-            mode.Replace("--source:","");
+            SFString mode = arg.Substitute("-s:","").Substitute("--source:","");
             if (mode == "r" || mode == "raw") {
                 isRaw = true;
 
             } else if (mode == "c" || mode == "cache") {
                 etherlib_init("binaryOnly");
+                //asks4Cache = true;
 
             } else {
                 return usage("Invalide source. Must be either '(r)aw' or '(c)ache'. Quitting...");
@@ -56,12 +84,10 @@ bool COptions::parseArguments(SFString& command) {
             terse = true;
 
         } else if (arg == "-q" || arg == "--quiet") {
-            quiet = true;
+            quiet++; // if both --check and --quiet are present, be very quiet...
 
         } else if (arg.startsWith("-f:") || arg.startsWith("--fields:")) {
-            SFString mode = arg;
-            mode.Replace("-f:","");
-            mode.Replace("--fields:","");
+            SFString mode = arg.Substitute("-f:","").Substitute("--fields:","");
 
             if (mode == "a" || mode == "all") {
                 SHOW_ALL_FIELDS(CBlock);
@@ -118,44 +144,37 @@ bool COptions::parseArguments(SFString& command) {
                 return usage("Invalid option: " + arg);
             }
 
+        } else if (arg == "latest") {
+            SFUint32 cache, client;
+            getLatestBlocks(cache, client);
+            cout << "\n\tFrom client: " << asYellow(client)
+                  << " inCache: " << asYellow(cache)
+                  << " Behind (maybe empty): " << asYellow(client-cache) << "\n\n";
+            exit(0);
+
         } else {
 
-            if (arg == "latest") {
-                SFUint32 cache, client;
-                getLatestBlocks(cache, client);
-                cout << "\n\tFrom client: " << asYellow(client)
-                        << " inCache: " << asYellow(cache)
-                        << " Behind (maybe empty): " << asYellow(client-cache) << "\n\n";
-                exit(0);
-
-            } else if (arg.Contains("-")) {
-
-                SFString arg1 = nextTokenClear(arg, '-');
-                if (arg1 == "latest")
-                    return usage("Cannot start range with 'latest'");
-
-                start = toUnsigned(arg1);
-                stop  = toUnsigned(arg);
-                if (arg == "latest")
-                    stop = getLatestBlockFromClient();
-                if (stop <= start)
-                    return usage("'stop' must be strictly larger than 'start'");
-                isRange = true;
-
-            } else {
-                SFUint32 num = toUnsigned(arg);
-                if (arg == "latest")
-                    num = getLatestBlockFromClient();
-                if (nNums < MAX_NUMS)
-                    nums[nNums++] = num;
-                else
-                    return usage("Too many blocks in list. Max is " + asString(MAX_NUMS));
+            SFString ret = blocks.parseBlockList(arg, latestBlock);
+            if (ret.endsWith("\n")) {
+                cerr << "\n  " << ret << "\n";
+                return false;
+            } else if (!ret.empty()) {
+                return usage(ret);
             }
         }
     }
 
-    if (isRange) nNums = 0;  // if range is supplied, use the range
-    else if (nNums == 0) nNums = 1;  // otherwise, if not list, use 'latest'
+    if (blocks.isRange) {
+        // if range is supplied, use the range
+        blocks.nNums = 0;
+
+    } else if (blocks.nNums == 0) {
+        // otherwise, if not list, use 'latest'
+        blocks.nums[blocks.nNums++] = latestBlock;
+    }
+
+    if (terse && !isRaw)
+        return usage("--terse options work only with --source:raw. Quitting...");
 
     return true;
 }
@@ -171,14 +190,15 @@ void COptions::Init(void) {
     expContext().hexNums = false;
     expContext().quoteNums = false;
 
-    isCheck = false;
-    isRaw   = false;
-    isRange = false;
-    terse   = false;
-    quiet   = false;
-    nums[0]    = NOPOS;
-    nNums      = 0;  // we will set this to '1' later if user supplies no values
-    start = stop = 0;
+    isCheck    = false;
+    isRaw      = false;
+    terse      = false;
+    //force      = false;
+    //normalize  = false;
+    //silent     = false;
+    //asks4Cache = false;
+    quiet      = 0; // quiet has levels
+    blocks.Init();
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -192,7 +212,26 @@ COptions::~COptions(void) {
 
 //--------------------------------------------------------------------------------
 bool COptions::isMulti(void) const {
-    if (isRange)
-        return (stop - start) > 1;
-    return nNums > 1;
+    if (blocks.isRange)
+        return (blocks.stop - blocks.start) > 1;
+    return blocks.nNums > 1;
+}
+
+//--------------------------------------------------------------------------------
+SFString COptions::postProcess(const SFString& which, const SFString& str) const {
+
+    if (which == "options") {
+        return
+            str.Substitute("block_list", "<block> [block...]")
+                .Substitute("-l|", "-l fn|");
+
+    } else if (which == "notes" && (verbose || COptions::isReadme)) {
+
+        SFString ret;
+        ret += "[{block_list}] is a space-separated list of values, a start-end range, a [{special}], or any combination\n";
+        ret += "this tool retrieves information from the local node or the ${FALLBACK} node, if configured (see the documentation)\n";
+        ret += "[{special}] blocks are detailed under " + cTeal + "[{whenBlock --list}]" + cOff + "\n";
+        return ret;
+    }
+    return str;
 }
