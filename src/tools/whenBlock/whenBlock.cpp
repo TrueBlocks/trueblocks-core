@@ -51,7 +51,7 @@ int main(int argc, const char *argv[]) {
             CBlock block;
             if (mode == "block") {
                 if (verbose) { cout << "finding by block number\n"; }
-                queryBlock(block, value, false);
+                queryBlock(block, value, false, false);
 
             } else if (mode == "date") {
                 if (verbose) { cout << "finding by date\n"; }
@@ -166,14 +166,14 @@ bool lookupDate(CBlock& block, const SFTime& date) {
     mini.timestamp = toTimestamp(date);
     CMiniBlock *found = reinterpret_cast<CMiniBlock*>(bsearch(&mini, blocks, nBlocks, sizeof(CMiniBlock), findFunc));
     if (found) {
-        queryBlock(block, asStringU(found->blockNumber), false);
+        queryBlock(block, asStringU(found->blockNumber), false, false);
         return true;
     }
 
     //  cout << mini.timestamp << " is somewhere between " << below << " and " << above << "\n";
     CBlockFinder finder(mini.timestamp);
     forEveryBlockOnDisc(lookCloser, &finder, below, above-below);
-    queryBlock(block, asStringU(finder.found), false);
+    queryBlock(block, asStringU(finder.found), false, false);
     return true;
 }
 

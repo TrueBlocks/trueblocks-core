@@ -20,10 +20,10 @@ getTokenBal -th
 
 `Notes:`
 
-- `addresses` must start with '0x' and be forty characters long
-- `block_list` may be space-separated list of values, a start-end range, a `special`, or any combination
-- this tool retrieves information from the local node or the ${FALLBACK} node, if configured (see documentation)
-- if the token contract(s) from which you request balances are not ERC20 compliant, the results are undefined
-- if the queried node does not store historical state, the results are undefined
-- `special` blocks are detailed under `whenBlock --list`
+- `Addresses` must start with '0x' and be forty characters long.
+- `Block_list` may be space-separated list of values, a start-end range, a `special`, or any combination.
+- This tool retrieves information from the local node or the ${FALLBACK} node, if configured (see documentation).
+- If the token contract(s) from which you request balances are not ERC20 compliant, the results are undefined.
+- If the queried node does not store historical state, the results are undefined.
+- `Special` blocks are detailed under `whenBlock --list`.
 
