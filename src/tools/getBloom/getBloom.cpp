@@ -99,7 +99,7 @@ SFString doOneBloom(SFUint32 num, const COptions& opt) {
 
     } else {
         // queryBlock returns false if there are no transactions, so ignore the return value
-        queryBlock(gold, numStr, true);
+        queryBlock(gold, numStr, true, false);
         if (/* DISABLES CODE */ (false)) { // turn this on to force a write of the block to the disc
             SFString fileName = getBinaryFilename1(gold.blockNumber);
             writeToBinary(gold, fileName);
