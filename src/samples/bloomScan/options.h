@@ -44,5 +44,3 @@ inline bool COptions::parseArguments(int argc, const char *argv[]) {
     nBlocks = stop - start;
     return true;
 }
-#define yBox bYellow+"@"+cOff
-#define rBox bRed+"@"+cOff
