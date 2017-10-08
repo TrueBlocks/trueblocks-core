@@ -26,15 +26,18 @@ bool displayBloom(CBlock& block, void *data)
 {
     COptions *opt = (COptions *)data;
 
+#define wBox (".")
+#define yBox ("+")
+#define rBox ("@")
+
     cout << block.blockNumber;
     if (opt->display) {
         SFString s = fromBloom(block.logsBloom);
-        s.ReplaceAny(     "0", " ");
-        s.ReplaceAny(  "1248", ".");
-        s.ReplaceAny("3569ac", "+");
-        s.ReplaceAny(  "7bde", yBox);
-        s.ReplaceAny(  "7bde", rBox);
-        cout << ": " << s;
+        s.ReplaceAny("0x1248", "");
+        s.ReplaceAny("3569ac", wBox);
+        s.ReplaceAny("7bde",   yBox);
+        s.ReplaceAny("f",      rBox);
+        cout << s;
     }
     cout << (opt->display ? "\n" : "\r");
     cout.flush();
