@@ -88,14 +88,6 @@ bool COptions::parseArguments(SFString& command) {
         } else if (arg == "-q" || arg == "--quiet") {
             quiet++; // if both --check and --quiet are present, be very quiet...
 
-        } else if (arg == "-p" || arg == "--parity") {
-            expContext().spcs = 4;
-            expContext().hexNums = true;
-            expContext().quoteNums = true;
-            GETRUNTIME_CLASS(CBlock)->sortFieldList();
-            GETRUNTIME_CLASS(CTransaction)->sortFieldList();
-            GETRUNTIME_CLASS(CReceipt)->sortFieldList();
-
         } else if (arg.startsWith('-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
@@ -134,11 +126,6 @@ void COptions::Init(void) {
     nParamsRef = nParams;
     pOptions = this;
 
-    // Mimics python -m json.tool indenting.
-    expContext().spcs = 4;
-    expContext().hexNums = false;
-    expContext().quoteNums = false;
-
     isCheck    = false;
     isRaw      = false;
     force      = false;
@@ -149,6 +136,16 @@ void COptions::Init(void) {
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
+    // Mimics python -m json.tool indenting.
+    expContext().spcs = 4;
+    expContext().hexNums = false;
+    expContext().quoteNums = false;
+
+    // will sort the fields in these classes if --parity is given
+    sorts[0] = GETRUNTIME_CLASS(CBlock);
+    sorts[1] = GETRUNTIME_CLASS(CTransaction);
+    sorts[2] = GETRUNTIME_CLASS(CReceipt);
+
     HIDE_ALL_FIELDS(CBlock);
     HIDE_ALL_FIELDS(CTransaction);
     HIDE_ALL_FIELDS(CReceipt);
@@ -177,9 +174,9 @@ SFString COptions::postProcess(const SFString& which, const SFString& str) const
     } else if (which == "notes" && (verbose || COptions::isReadme)) {
 
         SFString ret;
-        ret += "[{block_list}] is a space-separated list of values, a start-end range, a [{special}], or any combination\n";
-        ret += "this tool retrieves information from the local node or the ${FALLBACK} node, if configured (see documentation)\n";
-        ret += "[{special}] blocks are detailed under " + cTeal + "[{whenBlock --list}]" + cOff + "\n";
+        ret += "[{Block_list}] is a space-separated list of values, a start-end range, a [{special}], or any combination.\n";
+        ret += "This tool retrieves information from the local node or the ${FALLBACK} node, if configured (see documentation).\n";
+        ret += "[{Special}] blocks are detailed under " + cTeal + "[{whenBlock --list}]" + cOff + ".\n";
         return ret;
     }
     return str;

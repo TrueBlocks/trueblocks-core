@@ -11,7 +11,6 @@
 CParams params[] = {
     CParams("~block_list",       "a space-separated list of one or more blocks to retrieve"),
     CParams("-raw",              "pull the block data from the running Ethereum node (no cache)"),
-    CParams("-parity",           "mimic parity output (i.e. quoted hexidecimal for numbers, etc.)"),
     CParams("-terse",            "display only transaction hashes, default is to display full transaction details"),
     CParams("-check",            "compare results between qblocks and Ethereum node, report differences, if any"),
     CParams("@force",            "force a re-write of the block to the cache"),
@@ -133,14 +132,6 @@ bool COptions::parseArguments(SFString& command) {
                 UNHIDE_FIELD(CReceipt, "gasUsed");
             }
 
-        } else if (arg == "-p" || arg == "--parity") {
-            expContext().spcs = 4;
-            expContext().hexNums = true;
-            expContext().quoteNums = true;
-            GETRUNTIME_CLASS(CBlock)->sortFieldList();
-            GETRUNTIME_CLASS(CTransaction)->sortFieldList();
-            GETRUNTIME_CLASS(CReceipt)->sortFieldList();
-
         } else if (arg.startsWith('-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
@@ -182,11 +173,6 @@ void COptions::Init(void) {
     nParamsRef = nParams;
     pOptions = this;
 
-    // Mimics python -m json.tool indenting.
-    expContext().spcs = 4;
-    expContext().hexNums = false;
-    expContext().quoteNums = false;
-
     isCheck    = false;
     isRaw      = false;
     terse      = false;
@@ -199,6 +185,16 @@ void COptions::Init(void) {
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
+    // Mimics python -m json.tool indenting.
+    expContext().spcs = 4;
+    expContext().hexNums = false;
+    expContext().quoteNums = false;
+
+    // will sort the fields in these classes if --parity is given
+    sorts[0] = GETRUNTIME_CLASS(CBlock);
+    sorts[1] = GETRUNTIME_CLASS(CTransaction);
+    sorts[2] = GETRUNTIME_CLASS(CReceipt);
+
     Init();
 }
 
@@ -222,9 +218,9 @@ SFString COptions::postProcess(const SFString& which, const SFString& str) const
     } else if (which == "notes" && (verbose || COptions::isReadme)) {
 
         SFString ret;
-        ret += "[{block_list}] is a space-separated list of values, a start-end range, a [{special}], or any combination\n";
-        ret += "this tool retrieves information from the local node or the ${FALLBACK} node, if configured (see documentation)\n";
-        ret += "[{special}] blocks are detailed under " + cTeal + "[{whenBlock --list}]" + cOff + "\n";
+        ret += "[{Block_list}] is a space-separated list of values, a start-end range, a [{special}], or any combination.\n";
+        ret += "This tool retrieves information from the local node or the ${FALLBACK} node, if configured (see documentation).\n";
+        ret += "[{Special}] blocks are detailed under " + cTeal + "[{whenBlock --list}]" + cOff + ".\n";
         return ret;
     }
     return str;

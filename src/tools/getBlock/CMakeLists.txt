@@ -60,10 +60,10 @@ run_test("getBlock_raw_05"       "--raw"          " 2768801" " 1995314" " 195801
 run_the_test(${TEST_PATH} ${GOLD_PATH} "getBlock_force_01" ${EXECUTABLE_OUTPUT_PATH}/getBlock " 2768801" " 1995314" " 1958017" " -o")
 
 # display a bunch of blocks from cache
-run_test("getBlock_cache_01"     "--source:cache" " 2768801" " 1995314" " 1958017" " --normalize" " -p")
+run_test("getBlock_cache_01"     "--source:cache" " 2768801" " 1995314" " 1958017" " --normalize" " --parity")
 run_test("getBlock_cache_02"     "-s:c"           " 2768801" " 1995314" " 1958017" " --normalize" " --parity")
-run_test("getBlock_cache_03"     "-s:cache"       " 2768801" " 1995314" " 1958017" " --normalize" " -p")
-run_test("getBlock_cache_04"     "-a"             " 2768801" " 1995314" " 1958017" " --normalize" " -p")
+run_test("getBlock_cache_03"     "-s:cache"       " 2768801" " 1995314" " 1958017" " --normalize" " --parity")
+run_test("getBlock_cache_04"     "-a"             " 2768801" " 1995314" " 1958017" " --normalize" " --parity")
 
 # now check them
 run_test("getBlock_check_01"     "2768801"        " -c")
@@ -72,12 +72,12 @@ run_test("getBlock_check_03"     "1958017"        " -c")
 run_test("getBlock_chk_245001"   "245001"         " --check")
 
 run_test("getBlock_parity_hex"   "--parity"       " 0x2e7721")
-run_test("getBlock_parity_num"   "-p"             " 728708")
-run_test("getBlock_parity_range" "-p"             " 358450-0x5785a")
+run_test("getBlock_parity_num"   "--parity"       " 728708")
+run_test("getBlock_parity_range" "--parity"       " 358450-0x5785a")
 
-run_test("getBlock_force_02"       " 2769609" " 2799895" " 2872831" " 3076260" " -o")
-run_test("getBlock_multi1"   "-pr" " 2769609" " 2799895" " 2872831" " 3076260")
-run_test("getBlock_multi2"   "-pa" " 2769609" " 2799895" " 2872831" " 3076260")
+run_test("getBlock_force_02"                  " 2769609" " 2799895" " 2872831" " 3076260" " -o")
+run_test("getBlock_multi1"   "--parity" " -r" " 2769609" " 2799895" " 2872831" " 3076260")
+run_test("getBlock_multi2"   "--parity" " -a" " 2769609" " 2799895" " 2872831" " 3076260")
 
 run_test("getBlock_terse_no_raw"  "-t"           " 4001001")
 run_test("getBlock_terse_yes_raw" "-t" " -s:raw" " 4001001")

@@ -60,10 +60,10 @@ run_test("getBloom_raw_05"       "--raw"          " 2768801" " 1995314" " 195801
 run_the_test(${TEST_PATH} ${GOLD_PATH} "getBloom_force_01" ${EXECUTABLE_OUTPUT_PATH}/getBlock " 2768801" " 1995314" " 1958017" " -o")
 
 # display a bunch of blocks from cache
-run_test("getBloom_cache_01"     "--source:cache" " 2768801" " 1995314" " 1958017" " -p")
+run_test("getBloom_cache_01"     "--source:cache" " 2768801" " 1995314" " 1958017" " --parity")
 run_test("getBloom_cache_02"     "-s:c"           " 2768801" " 1995314" " 1958017" " --parity")
-run_test("getBloom_cache_03"     "-s:cache"       " 2768801" " 1995314" " 1958017" " -p")
-run_test("getBloom_cache_04"     "-a"             " 2768801" " 1995314" " 1958017" " -p")
+run_test("getBloom_cache_03"     "-s:cache"       " 2768801" " 1995314" " 1958017" " --parity")
+run_test("getBloom_cache_04"     "-a"             " 2768801" " 1995314" " 1958017" " --parity")
 
 # now check them
 #run_test("getBloom_check_01"     "2768801"        " -c")
@@ -72,12 +72,12 @@ run_test("getBloom_cache_04"     "-a"             " 2768801" " 1995314" " 195801
 #run_test("getBloom_chk_245001"   "245001"         " --check")
 
 run_test("getBloom_parity_hex"   "--parity"       " 0x2e7721" " --receipt")
-run_test("getBloom_parity_num"   "-p"             " 728708")
-run_test("getBloom_parity_range" "-p"             " 358450-0x5785a")
+run_test("getBloom_parity_num"   "--parity"       " 728708")
+run_test("getBloom_parity_range" "--parity"       " 358450-0x5785a")
 
-run_test("getBloom_force_02"       " 2769609" " 2799895" " 2872831" " 3076260" " -o")
-run_test("getBloom_multi1"   "-pr" " 2769609" " 2799895" " 2872831" " 3076260")
-run_test("getBloom_multi2"   "-pa" " 2769609" " 2799895" " 2872831" " 3076260")
+run_test("getBloom_force_02"                  " 2769609" " 2799895" " 2872831" " 3076260" " -o")
+run_test("getBloom_multi1"   "--parity" " -r" " 2769609" " 2799895" " 2872831" " 3076260")
+run_test("getBloom_multi2"   "--parity" " -a" " 2769609" " 2799895" " 2872831" " 3076260")
 
 run_test("getBloom_short_receipt" "-e"        " 4001001")
 run_test("getBloom_long_receipt"  "--receipt" " 4001001")
