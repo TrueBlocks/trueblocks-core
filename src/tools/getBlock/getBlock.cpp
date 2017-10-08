@@ -28,6 +28,7 @@ int main(int argc, const char * argv[]) {
         // There can be more than one thing to do...
         if (!options.quiet)
             cout << (options.isMulti() ? "[" : "");
+
         for (SFUint32 i = options.blocks.start ; i < options.blocks.stop ; i++) {
             if (options.isCheck) {
                 checkResults += checkOneBlock(i, options);
@@ -115,7 +116,7 @@ SFString doOneBlock(SFUint32 num, const COptions& opt) {
                 exit(0);
             }
         }
-        queryBlock(gold, numStr, true);
+        queryBlock(gold, numStr, true, false);
         if (opt.force) { // turn this on to force a write of the block to the disc
             SFString fileName = getBinaryFilename1(gold.blockNumber);
             writeToBinary(gold, fileName);
@@ -154,7 +155,7 @@ SFString checkOneBlock(SFUint32 num, const COptions& opt) {
     // Now get the same block from quickBlocks
     SFString fromQblocks;
     CBlock qBlocks;
-    queryBlock(qBlocks, numStr, true);
+    queryBlock(qBlocks, numStr, true, false);
     for (uint32_t i = 0 ; i < qBlocks.transactions.getCount() ; i++) {
         // quickBlocks pulls the receipt for each transaction, but the RPC does
         // not. Therefore, we must set the transactions' gasUsed and logsBloom
@@ -196,5 +197,4 @@ void interumReport(ostream& os, blknum_t i) {
     os << (!(i%150) ? "." : (!(i%1000)) ? "+" : "");  // dots '.' at every 150, '+' at every 1000
     os.flush();
 }
-
 
