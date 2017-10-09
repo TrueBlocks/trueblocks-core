@@ -17,8 +17,8 @@ isContract -th
 
 `Notes:`
 
-- `Addresses` must start with '0x' and be forty characters long.
+- `addresses` must start with '0x' and be forty characters long.
 - This tool retrieves information from the local node or the ${FALLBACK} node, if configured.
 - If the queried node does not store historical state, the results are undefined.
-- `Special` blocks are detailed under `whenBlock --list`.
+- `special` blocks are detailed under `whenBlock --list`.
 
