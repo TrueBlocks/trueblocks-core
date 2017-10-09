@@ -22,9 +22,9 @@ The tool may also be used to double check that the results produced from the Qui
 
 `Notes:`
 
-- `Block_list` is a space-separated list of values, a start-end range, a `special`, or any combination.
+- `block_list` is a space-separated list of values, a start-end range, a `special`, or any combination.
 - This tool retrieves information from the local node or the ${FALLBACK} node, if configured (see documentation).
-- `Special` blocks are detailed under `whenBlock --list`.
+- `special` blocks are detailed under `whenBlock --list`.
 
 #### Other Options
 
