@@ -262,10 +262,10 @@ static SFUint32 nTrans=0,nTraced=0;
 static bool no_tracing=false;
 void setNoTracing(bool val) { no_tracing = val; }
 //-------------------------------------------------------------------------
-bool queryBlock(CBlock& block, const SFString& numIn, bool needTrace)
+bool queryBlock(CBlock& block, const SFString& numIn, bool needTrace, bool byHash)
 {
     if (numIn=="latest")
-        return queryBlock(block, asStringU(getLatestBlockFromClient()), needTrace);
+        return queryBlock(block, asStringU(getLatestBlockFromClient()), needTrace, false);
 
     SFUint32 num = toLongU(numIn);
     if ((getSource().Contains("binary") || getSource().Contains("nonemp")) && fileSize(getBinaryFilename1(num))>0) {
@@ -347,12 +347,18 @@ bool queryBlock(CBlock& block, const SFString& numIn, bool needTrace)
 //-------------------------------------------------------------------------
 bool getBlock(CBlock& block, SFUint32 numIn)
 {
-    // Use queryBlock if you just want to read the block (any method)
     SFString save = getSource();
     if (getSource() == "fastest")
         setSource(fileExists(getBinaryFilename1(numIn)) ? "binary" : "parity");
-    bool ret = queryBlock(block, asStringU(numIn), true);
+    bool ret = queryBlock(block, asStringU(numIn), true, false);
     setSource(save);
+    return ret;
+}
+
+//-------------------------------------------------------------------------
+bool getBlock(CBlock& block, const SFHash& hash) {
+//TODO(tjayrush) not done -- use eth_getBlockByHash
+    bool ret = queryBlock(block, hash, true, true);
     return ret;
 }
 
@@ -388,7 +394,7 @@ bool queryRawTransaction(SFString& results, const SFHash& txHash) {
 }
 
 //-------------------------------------------------------------------------
-bool queryRawLogs(SFUint32 fromBlock, SFUint32 toBlock, const SFAddress& addr, SFString& results)
+bool queryRawLogs(SFString& results, const SFAddress& addr, SFUint32 fromBlock, SFUint32 toBlock)
 {
     SFString data = "[{\"fromBlock\":\"0x[START]\",\"toBlock\":\"0x[STOP]\", \"address\": \"[ADDR]\"}]";
     data.Replace("[START]", hexxy(fromBlock));
@@ -1213,26 +1219,46 @@ bool forEveryFullBlockInMemory(BLOCKVISITFUNC func, void *data, SFUint32 start, 
 }
 
 //-------------------------------------------------------------------------
-bool forEveryTransaction(TRANSVISITFUNC func, void *data, SFUint32 start, SFUint32 count)
-{
-    if (!func)
-        return false;
+bool forEveryBlock(BLOCKVISITFUNC func, void *data, const SFString& block_list) {
     return true;
 }
 
 //-------------------------------------------------------------------------
-bool forEveryTransactionTo(TRANSVISITFUNC func, void *data, SFUint32 start, SFUint32 count)
+bool forEveryTransaction(TRANSVISITFUNC func, void *data, const SFString& trans_list)
 {
     if (!func)
         return false;
-    return true;
-}
 
-//-------------------------------------------------------------------------
-bool forEveryTransactionFrom(TRANSVISITFUNC func, void *data, SFUint32 start, SFUint32 count)
-{
-    if (!func)
-        return false;
+    // trans_list is a list of tx_hash, blk_hash.tx_id, or blk_num.tx_id, or any combination
+    SFString list = trans_list;
+    while (!list.empty()) {
+        SFString item = nextTokenClear(list, '|');
+        bool hasDot = item.Contains(".");
+
+        SFString hash = nextTokenClear(item, '.');
+        SFUint32 txID = toLongU(item);
+
+        CTransaction trans;
+        if (hash.startsWith("0x")) {
+            if (hasDot) {
+                // We are not fully formed, we have to ask the node for the receipt
+                getTransaction(trans, hash, txID);  // blockHash.txID
+            } else {
+                // We are not fully formed, we have to ask the node for the receipt
+                getTransaction(trans, hash);  // transHash
+            }
+        } else {
+            getTransaction(trans, (uint32_t)toLongU(hash), txID);  // blockHash.txID
+        }
+        CBlock block;
+        trans.pBlock = &block;
+        getBlock(block, trans.blockNumber);
+        getReceipt(trans.receipt, trans.getValueByName("hash"));
+        trans.receipt.pTrans = &trans;
+        trans.finishParse();
+        if (!(*func)(trans, data))
+            return false;
+    }
     return true;
 }
 

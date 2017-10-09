@@ -211,6 +211,15 @@ namespace qblocks {
             expContext().asEther = false;
             expContext().asDollars = true;
             expContext().asWei = false;
+
+        } else if (isEnabled(OPT_PARITY) && cmdLine.Contains("--parity ")) {
+            cmdLine.ReplaceAll("--parity ","");
+            expContext().spcs = 4;
+            expContext().hexNums = true;
+            expContext().quoteNums = true;
+            for (int i=0;i<5;i++)
+                if (sorts[i])
+                    sorts[i]->sortFieldList();
         }
         cmdLine = Strip(cmdLine, ' ');
         return true;
@@ -221,6 +230,8 @@ namespace qblocks {
         if (isEnabled(OPT_VERBOSE) && (arg == "-v" || arg.startsWith("-v:") || arg.startsWith("--verbose")))
             return true;
         if (isEnabled(OPT_DENOM) && (arg == "--ether" || arg == "--wei" || arg == "--dollars"))
+            return true;
+        if (isEnabled(OPT_PARITY) && (arg == "--parity"))
             return true;
         if (arg == "-h" || arg == "--help")
             return true;
@@ -404,7 +415,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
             SFString tick = "- ";
             SFString lead = "\t";
             SFString trail = "\n";
-            SFString sepy1, sepy2;
+            SFString sepy1 = cTeal, sepy2 = cOff;
             if (COptionsBase::isReadme) {
                 sepy1 = sepy2 = "`";
                 lead = "";
@@ -416,7 +427,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
             ctx << bYellow << sep << "Notes:" << sep << cOff << "\n";
             ctx << (COptionsBase::isReadme ? "\n" : "");
             while (!ret.empty()) {
-                SFString line = nextTokenClear(ret,'\n');
+                SFString line = nextTokenClear(ret,'\n').Substitute("|","\n" + lead + "  ");
                 ctx << lead << tick << line << "\n";
             }
             ctx << "\n";
@@ -583,80 +594,6 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
     void     setSource(const SFString& src) { qbGlobals::source = src; }
 
     //--------------------------------------------------------------------------------
-    SFString COptionsBlockList::parseBlockList(const SFString& argIn, blknum_t lastBlock) {
-        SFString arg = argIn;
-        if (arg.Contains("-")) {
-
-            // If we already have a range, bail
-            if (start != stop)
-                return "Specify only a single block range at a time.";
-
-            SFString arg1 = nextTokenClear(arg, '-');
-            if (arg1 == "latest")
-                return "Cannot start range with 'latest'";
-
-            start = toUnsigned(arg1);
-            stop  = toUnsigned(arg);
-            if (arg == "latest")
-                stop = lastBlock;
-            if (stop <= start)
-                return "'stop' must be strictly larger than 'start'";
-            if (stop - start + 1 > MAX_BLOCK_LIST)
-                return "The range you specified (" + argIn + ") is too broad. Ranges may be at "
-                        "most " + asStringU(MAX_BLOCK_LIST) + " blocks long. Quitting...";
-
-        } else {
-
-            blknum_t num = toUnsigned(arg);
-            CNameValue spec;
-            if (pOptions && pOptions->findSpecial(spec, arg)) {
-                if (spec.getName() == "latest") {
-                    num = lastBlock;
-                } else {
-                    num = toUnsigned(spec.getValue());
-                }
-            }
-
-            if (num == 0 && arg != "first" && !arg.startsWith("0") && !isNumeral(arg))
-                return "'" + arg + "' does not appear to be a valid block. Quitting...";
-
-            if (num > lastBlock) {
-                SFString lateStr = (isTestMode() ? "--" : asStringU(lastBlock));
-                return "Block " + arg + " is later than the last valid block " + lateStr + ". Quitting...\n";
-            }
-
-            if (nNums >= MAX_BLOCK_LIST)
-                return "Too many blocks in list. Max is " + asString(MAX_BLOCK_LIST);
-
-            nums[nNums++] = num;
-        }
-        latest = lastBlock;
-        return "";
-    }
-
-    //--------------------------------------------------------------------------------
-    void COptionsBlockList::Init(void) {
-        nums[0]    = NOPOS;
-        nNums      = 0;  // we will set this to '1' later if user supplies no values
-        start = stop = 0;
-    }
-
-    //--------------------------------------------------------------------------------
-    COptionsBlockList::COptionsBlockList(void) {
-        Init();
-    }
-
-    //--------------------------------------------------------------------------------
-    SFString COptionsBlockList::toString(void) const {
-        SFString ret;
-        for (SFUint32 i = start ; i < stop ; i++)
-            ret += (asStringU(i) + "|");
-        for (SFUint32 i = 0 ; i < nNums ; i++)
-            ret += (asStringU(nums[i]) + "|");
-        return ret;
-    }
-
-    //--------------------------------------------------------------------------------
     int sortByBlockNum(const void *v1, const void *v2) {
         CNameValue *b1 = (CNameValue *)v1;  // NOLINT
         CNameValue *b2 = (CNameValue *)v2;  // NOLINT
@@ -741,6 +678,8 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
         minArgs = 1;
         isReadme = false;
         needsOption = false;
+        for (int i=0;i<5;i++)
+            sorts[i] = NULL;
     }
 
     //-----------------------------------------------------------------------

@@ -1,18 +1,24 @@
 getTrans argc: 3 [1:0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.0] [2:-v] 
 getTrans 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.0 -v 
-
-  The argument '0' is not properly formatted.
-
-  Usage:    getTrans [-f|-t|-v|-h] <hash|bn.transID|bh.transID>  
-  Purpose:  Retrieve an Ethereum transaction from either QuickBlocks or a running node.
-            --note: 'hash' and 'blockHash' must start with '0x'.  
-  Where:    
-	hash                  one or more hashes of Ethereum transactions, or
-	bn.transID            blockNumber.transactionID of one or more Ethereum transactions, or
-	bh.transID            blockHash.transactionID of one or more Ethereum transactions
-	-f  (--fromNode)      retrieve the transaction from the running node (from QuickBlocks otherwise)
-	-t  (--trace)         return the trace of the transaction in addition to regular details
-	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
-	-h  (--help)          display this help screen
-
-  Powered by QuickBlocks
+{
+  "hash": "0x03bc1a50a23d3f373b935268aea0230c06d9e314bae32625e2f648f22df5d26a",
+  "blockHash": "0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9",
+  "blockNumber": 3657480,
+  "transactionIndex": 0,
+  "nonce": 1,
+  "timestamp": 1494031419,
+  "from": "0xeaf1cdc60802dd9b704e473786abc623c798f408",
+  "to": "0x3faa0e837fd0822eb081ed60a959687ee0a84707",
+  "value": 7000000000000000000,
+  "gas": 21000,
+  "gasPrice": 21000000000,
+  "cumulativeGasUsed": 0,
+  "input": "0x",
+  "receipt": {
+    "contractAddress": "0x0",
+    "gasUsed": 0,
+    "logs": [],
+    "logsBloom": "0x0"
+  },
+  "gasUsed": 0
+}
