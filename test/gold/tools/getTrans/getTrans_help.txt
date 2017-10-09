@@ -1,7 +1,5 @@
-getTrans argc: 2 [1:0x0012] 
-getTrans 0x0012 
-
-  Please specify at least one transaction identifier.
+getTrans argc: 2 [1:-h] 
+getTrans -h 
 
   Usage:    getTrans [-r|-v|-h] <transID> [transID...]  
   Purpose:  Retrieve an Ethereum transaction from the local cache or a running node.  
