@@ -218,9 +218,9 @@ SFString COptions::postProcess(const SFString& which, const SFString& str) const
     } else if (which == "notes" && (verbose || COptions::isReadme)) {
 
         SFString ret;
-        ret += "[{Block_list}] is a space-separated list of values, a start-end range, a [{special}], or any combination.\n";
+        ret += "[{block_list}] is a space-separated list of values, a start-end range, a [{special}], or any combination.\n";
         ret += "This tool retrieves information from the local node or the ${FALLBACK} node, if configured (see documentation).\n";
-        ret += "[{Special}] blocks are detailed under " + cTeal + "[{whenBlock --list}]" + cOff + ".\n";
+        ret += "[{special}] blocks are detailed under " + cTeal + "[{whenBlock --list}]" + cOff + ".\n";
         return ret;
     }
     return str;
