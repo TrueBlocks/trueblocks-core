@@ -13,11 +13,16 @@
 #include "filenames.h"
 
 // Bit flags to enable / disable various options
-#define OPT_VERBOSE (1<<1)
-#define OPT_DENOM   (1<<2)
-#define OPT_BLOCKS  (1<<3)
-#define OPT_ADDRS   (1<<4)
-#define OPT_DEFAULT (OPT_VERBOSE|OPT_DENOM|OPT_BLOCKS|OPT_ADDRS)
+#define OPT_VERBOSE (1<<2)
+#define OPT_DOLLARS (1<<3)
+#define OPT_WEI     (1<<4)
+#define OPT_ETHER   (1<<5)
+#define OPT_DENOM   (OPT_DOLLARS|OPT_WEI|OPT_ETHER)
+#define OPT_PARITY  (1<<6)
+#define OPT_BLOCKS  (1<<8)
+#define OPT_TRANS   (1<<10)
+#define OPT_ADDRS   (1<<12)
+#define OPT_DEFAULT (OPT_VERBOSE|OPT_DENOM|OPT_BLOCKS|OPT_ADDRS|OPT_PARITY)
 
 namespace qblocks {
 
@@ -30,6 +35,7 @@ namespace qblocks {
         SFString commandList;
         bool     fromFile;
         SFUint32 minArgs;
+        CRuntimeClass *sorts[5];
 
         COptionsBase(void);
         virtual ~COptionsBase(void) { }
@@ -107,6 +113,7 @@ namespace qblocks {
     extern void optionOn (uint32_t q);
 
 #define MAX_BLOCK_LIST 100
+#define MAX_BLOCK_RANGE 1000
     class COptionsBlockList {
     public:
         blknum_t nums[MAX_BLOCK_LIST];
@@ -119,6 +126,16 @@ namespace qblocks {
         COptionsBlockList(void);
         SFString toString(void) const;
         bool hasBlocks(void) const { return (nNums || (start != stop)); }
+    };
+
+    class COptionsTransList {
+    public:
+        SFString queries;
+        void Init(void);
+        SFString parseTransList(const SFString& arg);
+        COptionsTransList(void);
+        SFString toString(void) const;
+        bool hasTrans(void) const { return !queries.empty(); }
     };
 
     extern const char *STR_DEFAULT_DATA;

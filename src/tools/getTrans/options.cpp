@@ -9,13 +9,9 @@
 
 //---------------------------------------------------------------------------------------------------
 CParams params[] = {
-    CParams("~!hash",        "one or more hashes of Ethereum transactions, or"),
-    CParams("~!bn.transID",  "blockNumber.transactionID of one or more Ethereum transactions, or"),
-    CParams("~!bh.transID",  "blockHash.transactionID of one or more Ethereum transactions"),
-    CParams("-fromNode",     "retrieve the transaction from the running node (from QuickBlocks otherwise)"),
-    CParams("-trace",        "return the trace of the transaction in addition to regular details"),
-    CParams("",              "Retrieve an Ethereum transaction from either QuickBlocks or a running node.\n"
-                             " --note: 'hash' and 'blockHash' must start with '0x'."),
+    CParams("~!trans_list", "a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)"),
+    CParams("-raw",         "retrieve raw transaction directly from the running node"),
+    CParams("",             "Retrieve an Ethereum transaction from the local cache or a running node."),
 };
 uint32_t nParams = sizeof(params) / sizeof(CParams);
 
@@ -28,9 +24,8 @@ bool COptions::parseArguments(SFString& command) {
     Init();
     while (!command.empty()) {
         SFString arg = nextTokenClear(command, ' ');
-        if (arg == "-t" || arg == "--trace") {
-
-            trace = true;
+        if (arg == "-r" || arg == "--raw") {
+            isRaw = true;
 
         } else if (arg.startsWith('-')) {  // do not collapse
 
@@ -40,33 +35,18 @@ bool COptions::parseArguments(SFString& command) {
 
         } else {
 
-            if (arg.startsWith("0x")) {
+            SFString ret = transList.parseTransList(arg);
+            if (!ret.empty())
+                return usage(ret);
 
-                if (arg.Contains(".")) {
-
-                    SFString hash = nextTokenClear(arg, '.');
-                    if (hash.length() != 66 || toLong(arg) < 1)
-                        return usage("The argument '" + arg + "' is not properly formatted.");
-                    queries += (hash + "." + arg + "|");  // blockHash.transID
-
-                } else if (arg.length() == 66) {
-
-                    queries += (arg + "|");  // transHash
-                }
-
-            } else if (arg.Contains(".")) {
-
-                queries += (arg + "|");  // blockNum.transID
-
-            } else {
-
-                return usage("The argument '" + arg + "' is not properly formatted.");
-            }
         }
     }
 
-    if (queries.empty())
-        return usage("Invalid input.");
+    if (!transList.hasTrans())
+        return usage("Please specify at least one transaction identifier.");
+
+//    if (address && !isAddress(address))
+//        return usage("Bad address.");
 
     return true;
 }
@@ -77,13 +57,18 @@ void COptions::Init(void) {
     nParamsRef = nParams;
     pOptions = this;
 
-    queries = "";
-    trace = false;
-    verbose = true;
+    transList.Init();
+    isRaw = false;
 }
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
+    // will sort the fields in these classes if --parity is given
+    sorts[0] = GETRUNTIME_CLASS(CBlock);
+    sorts[1] = GETRUNTIME_CLASS(CTransaction);
+    sorts[2] = GETRUNTIME_CLASS(CReceipt);
+    HIDE_FIELD(CTransaction, "cumulativeGasUsed");
+
     Init();
 }
 
@@ -93,7 +78,19 @@ COptions::~COptions(void) {
 
 //--------------------------------------------------------------------------------
 SFString COptions::postProcess(const SFString& which, const SFString& str) const {
-    if (which == "options")
-        return str.Substitute("hash bn.transID bh.transID","<hash|bn.transID|bh.transID>");
+    if (which == "options") {
+        return str.Substitute("trans_list","<transID> [transID...]");
+
+    } else if (which == "notes" && (verbose || COptions::isReadme)) {
+
+        SFString ret;
+        ret += "[{trans_list}] is one or more space-separated identifiers which may be either a transaction hash,|"
+                "a blockNumber.transactionID pair, or a blockHash.transactionID pair, or any combination.\n";
+        ret += "This tool checks for valid input sytax, but does not check that the transaction requested exists.\n";
+        ret += "This tool retrieves information from the local node or the ${FALLBACK} node, if configured (see documentation).\n";
+        ret += "If the queried node does not store historical state, the results may be undefined.\n";
+        return ret;
+    }
     return str;
 }
+

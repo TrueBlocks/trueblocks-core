@@ -8,16 +8,12 @@
 #include "etherlib.h"
 #include "options.h"
 
+extern bool visitTransaction(CTransaction& trans, void *data);
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
     // Tell the system where the blocks are and which version to use
     etherlib_init("binary");
 
-#if 0
-    if (isTestMode())
-        colorsOff();
-    return usage("The getReceipt tool is not yet implemented. Quitting...");
-#else
     // Parse command line, allowing for command files
     COptions options;
     if (!options.prepareArguments(argc, argv))
@@ -27,7 +23,24 @@ int main(int argc, const char *argv[]) {
         SFString command = nextTokenClear(options.commandList, '\n');
         if (!options.parseArguments(command))
             return 0;
+        forEveryTransaction(visitTransaction, &options, options.transList.queries);
     }
-#endif
     return 0;
+}
+
+//--------------------------------------------------------------
+bool visitTransaction(CTransaction& trans, void *data) {
+    const COptions *opt = (const COptions*)data;
+
+    if (opt->isRaw) {
+        SFString results;
+        queryRawReceipt(results, trans.getValueByName("hash"));
+        cout << results << "\n";
+        return true;
+    }
+
+    trans.receipt.doExport(cout);
+	cout << "\n";
+
+    return true;
 }

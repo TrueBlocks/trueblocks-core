@@ -40,20 +40,21 @@ namespace qblocks {
     inline SFString getSha3                 (const SFString& hexIn) { SFString ret; getSha3(hexIn,ret); return ret; }
 
     //-------------------------------------------------------------------------
-    extern bool     getBlock                (CBlock& block,       SFUint32 num);
-    extern bool     getTransaction          (CTransaction& trans, const SFString& hash);
-    extern bool     getTransaction          (CTransaction& trans, const SFString& hash, SFUint32 transID);
+    extern bool     getBlock                (CBlock& block,       blknum_t num);
+    extern bool     getBlock                (CBlock& block,       const SFHash& hash);
+    extern bool     getTransaction          (CTransaction& trans, const SFHash& hash);
+    extern bool     getTransaction          (CTransaction& trans, const SFHash& hash, SFUint32 transID);
     extern bool     getTransaction          (CTransaction& trans, blknum_t blockNum, SFUint32 transID);
     extern bool     getReceipt              (CReceipt& receipt,   const SFString& hash);
     extern bool     getLogEntry             (CLogEntry& log,      const SFString& hash);
     extern void     getTraces               (CTraceArray& traces, const SFHash& hash);
 
     //-------------------------------------------------------------------------
-    extern bool     queryBlock              (CBlock& block,       const SFString& num, bool needTrace);
+    extern bool     queryBlock              (CBlock& block,       const SFString& num, bool needTrace, bool byHash);
     extern bool     queryRawBlock           (SFString& block,     const SFString& num, bool needTrace, bool hashesOnly);
     extern bool     queryRawTransaction     (SFString& results,   const SFHash& txHash);
     extern bool     queryRawReceipt         (SFString& results,   const SFHash& txHash);
-    extern bool     queryRawLogs            (SFUint32 fromBlock, SFUint32 toBlock, const SFAddress& addr, SFString& results);
+    extern bool     queryRawLogs            (const SFString& results, const SFAddress& addr, SFUint32 fromBlock, SFUint32 toBlock);
     extern bool     queryRawTrace           (SFString& trace,     const SFString& hashIn);
 
     //-------------------------------------------------------------------------
@@ -78,6 +79,7 @@ namespace qblocks {
     typedef bool (*MINITRANSVISITFUNC)(CMiniTrans& trans, void *data);
 
     //-------------------------------------------------------------------------
+    extern bool forEveryBlock                (BLOCKVISITFUNC func, void *data, const SFString& block_list);
     extern bool forEveryBlockOnDisc          (BLOCKVISITFUNC func, void *data, SFUint32 start=0, SFUint32 count=(SFUint32)-1, SFUint32 skip=1);
     extern bool forEveryEmptyBlockOnDisc     (BLOCKVISITFUNC func, void *data, SFUint32 start=0, SFUint32 count=(SFUint32)-1, SFUint32 skip=1);
     extern bool forEveryNonEmptyBlockOnDisc  (BLOCKVISITFUNC func, void *data, SFUint32 start=0, SFUint32 count=(SFUint32)-1, SFUint32 skip=1);
@@ -86,9 +88,7 @@ namespace qblocks {
     extern bool forEveryBloomFile            (FILEVISITOR func,    void *data, SFUint32 start=0, SFUint32 count=(SFUint32)-1, SFUint32 skip=1);
 
     //-------------------------------------------------------------------------
-    extern bool forEveryTransaction          (TRANSVISITFUNC func, void *data, SFUint32 start=0, SFUint32 count=(SFUint32)-1);
-    extern bool forEveryTransactionTo        (TRANSVISITFUNC func, void *data, SFUint32 start=0, SFUint32 count=(SFUint32)-1);
-    extern bool forEveryTransactionFrom      (TRANSVISITFUNC func, void *data, SFUint32 start=0, SFUint32 count=(SFUint32)-1);
+    extern bool forEveryTransaction          (TRANSVISITFUNC func, void *data, const SFString& trans_list);
 
     //-------------------------------------------------------------------------
     extern bool forEveryFullBlockInMemory    (BLOCKVISITFUNC     func, void *data, SFUint32 start=0, SFUint32 count=(SFUint32)-1);
