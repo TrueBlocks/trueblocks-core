@@ -122,6 +122,11 @@ void COptions::Init(void) {
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
+    // will sort the fields in these classes if --parity is given
+    sorts[0] = GETRUNTIME_CLASS(CBlock);
+    sorts[1] = GETRUNTIME_CLASS(CTransaction);
+    sorts[2] = GETRUNTIME_CLASS(CReceipt);
+
     Init();
 }
 
@@ -140,12 +145,12 @@ SFString COptions::postProcess(const SFString& which, const SFString& str) const
     } else if (which == "notes" && (verbose || COptions::isReadme)) {
 
         SFString ret;
-        ret += "[{addresses}] must start with '0x' and be forty characters long\n";
-        ret += "[{block_list}] may be space-separated list of values, a start-end range, a [{special}], or any combination\n";
-        ret += "this tool retrieves information from the local node or the ${FALLBACK} node, if configured (see documentation)\n";
-        ret += "if the token contract(s) from which you request balances are not ERC20 compliant, the results are undefined\n";
-        ret += "if the queried node does not store historical state, the results are undefined\n";
-        ret += "[{special}] blocks are detailed under " + cTeal + "[{whenBlock --list}]" + cOff + "\n";
+        ret += "[{addresses}] must start with '0x' and be forty characters long.\n";
+        ret += "[{block_list}] may be space-separated list of values, a start-end range, a [{special}], or any combination.\n";
+        ret += "This tool retrieves information from the local node or the ${FALLBACK} node, if configured (see documentation).\n";
+        ret += "If the token contract(s) from which you request balances are not ERC20 compliant, the results are undefined.\n";
+        ret += "If the queried node does not store historical state, the results are undefined.\n";
+        ret += "[{special}] blocks are detailed under " + cTeal + "[{whenBlock --list}]" + cOff + ".\n";
         return ret;
     }
     return str;

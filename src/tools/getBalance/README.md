@@ -22,11 +22,11 @@ specify at least one address.
 
 `Notes:`
 
-- `addresses` must start with '0x' and be forty characters long
-- `block_list` may be a space-separated list of values, a start-end range, a `special`, or any combination
-- this tool retrieves information from the local node or the ${FALLBACK} node, if configured (see the documentation)
-- if the queried node does not store historical state, the results are undefined
-- `special` blocks are detailed under `whenBlock --list`
+- `addresses` must start with '0x' and be forty characters long.
+- `block_list` may be a space-separated list of values, a start-end range, a `special`, or any combination.
+- This tool retrieves information from the local node or the ${FALLBACK} node, if configured (see documentation).
+- If the queried node does not store historical state, the results are undefined.
+- `special` blocks are detailed under `whenBlock --list`.
 
 #### Other Options
 

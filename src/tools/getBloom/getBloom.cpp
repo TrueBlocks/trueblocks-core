@@ -8,6 +8,7 @@
 #include "etherlib.h"
 #include "options.h"
 
+extern const char *STR_FMT_BLOOMS_OUT;
 extern SFString doOneBloom(SFUint32 num, const COptions& opt);
 //------------------------------------------------------------
 int main(int argc, const char * argv[]) {
@@ -31,7 +32,7 @@ int main(int argc, const char * argv[]) {
         for (SFUint32 i = options.blocks.start ; i < options.blocks.stop ; i++) {
             cout << doOneBloom(i, options);
             if (!options.quiet) {
-                if (i < options.blocks.stop-1)
+                if (i < options.blocks.stop-1 || options.blocks.nNums)
                     cout << ",";
                 cout << "\n";
                 if (options.isCheck) {
@@ -83,13 +84,22 @@ SFString doOneBloom(SFUint32 num, const COptions& opt) {
     SFString numStr = asStringU(num);
     if (opt.isRaw) {
 
-        if (!queryRawBlock(result, numStr, true, opt.terse)) {
+        if (!queryRawBlock(result, numStr, true, false)) {
             result = "Could not query raw block " + numStr + ". Is an Ethereum node running?";
         }
+        result.ReplaceAll(",",",\n");
+        SFString ret;
+        while (!result.empty()) {
+            SFString line = nextTokenClear(result,'\n');
+            if (line.Contains("logsBloom") || line.Contains("number")) {
+                ret += line + "\n";
+            }
+        }
+        result = "{" + Strip(ret.Substitute(",\n",","),',') + "}";
 
     } else {
         // queryBlock returns false if there are no transactions, so ignore the return value
-        queryBlock(gold, numStr, true);
+        queryBlock(gold, numStr, true, false);
         if (/* DISABLES CODE */ (false)) { // turn this on to force a write of the block to the disc
             SFString fileName = getBinaryFilename1(gold.blockNumber);
             writeToBinary(gold, fileName);
@@ -107,3 +117,4 @@ SFString doOneBloom(SFUint32 num, const COptions& opt) {
 
     return (opt.quiet ? "" : result);
 }
+

@@ -286,6 +286,11 @@ namespace qblocks {
         return (addrIn.length() == 42 && isHexStr(addrIn));
     }
 
+    //----------------------------------------------------------------------------------
+    inline bool isHash(const SFAddress& hashIn) {
+        return (hashIn.length() == 66 && isHexStr(hashIn));
+    }
+
     //------------------------------------------------------
     inline SFAddress toAddress(const SFString& strIn)
     {

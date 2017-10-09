@@ -643,11 +643,21 @@ namespace qblocks {
 
     //--------------------------------------------------------------------------------
     void CBaseNode::doExport(ostream& os) const {
-        //getRuntimeClass()->sortFieldList();
+
         CFieldList *list = getRuntimeClass()->GetFieldList();
-        LISTPOS pos = list->GetHeadPosition();
+        LISTPOS pos;
+
+        CFieldData *lastVisible = NULL;
+        pos = list->GetHeadPosition();
+        while (pos) {
+            CFieldData *field = list->GetNext(pos);
+            if (!field->isHidden())
+                lastVisible = field;
+        }
+
         os << "{\n";
         incIndent();
+        pos = list->GetHeadPosition();
         while (pos) {
             CFieldData *field = list->GetNext(pos);
             if (!field->isHidden()) {
@@ -684,13 +694,17 @@ namespace qblocks {
                     }
                 } else {
                     SFString val = getValueByName(name);
-                    if (val != "null")
+                    bool isNum = field->m_fieldType & TS_NUMERAL;
+                    if (isNum && expContext().hexNums && !val.startsWith("0x"))
+                        val = toHex2(val);
+                    bool quote = (!isNum || expContext().quoteNums) && val != "null";
+                    if (quote)
                         os << "\"";
                     os << val;
-                    if (val != "null")
+                    if (quote)
                         os << "\"";
                 }
-                if (pos)
+                if (field != lastVisible)
                     os << ",";
                 os << "\n";
             }
@@ -698,8 +712,6 @@ namespace qblocks {
         decIndent();
         os << indent();
         os << "}";
-        if (indent().empty())
-            os << "\n";
     }
 }  // namespace qblocks
 

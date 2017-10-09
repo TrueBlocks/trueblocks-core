@@ -1,0 +1,5 @@
+getLogs argc: 4 [1:--file:cmd_file] [2:--verbose] [3:--parity] 
+getLogs --file:cmd_file --verbose --parity 
+[]
+[]
+[]

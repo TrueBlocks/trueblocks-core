@@ -1,5 +1,5 @@
-getBlock argc: 3 [1:-p] [2:728708] 
-getBlock -p 728708 
+getBlock argc: 3 [1:--parity] [2:728708] 
+getBlock --parity 728708 
 {
     "blockNumber": "0xb1e84",
     "gasLimit": "0x2fefd8",
