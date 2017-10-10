@@ -1,7 +1,7 @@
 whenBlock argc: 5 [1:stateclear] [2:iceage] [3:4001001] [4:junk] 
 whenBlock stateclear iceage 4001001 junk 
 
-  'junk' does not appear to be a valid block. Quitting...
+  The given value 'junk' is not a numeral or a special named block. Quitting...
 
   Usage:    whenBlock [-a|-l|-v|-h] < block | date > [ block... | date... ]  
   Purpose:  Finds the nearest block prior to a date, or the nearest date prior to a block.
