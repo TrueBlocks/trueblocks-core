@@ -1291,11 +1291,10 @@ SFString blockCachePath(const SFString& _part) {
             path = configPath("cache/");
             toml.setConfigStr("settings", "blockCachePath", path);
             toml.writeFile();
-        	establishFolder(path);
         }
-        if (!path.endsWith("/"))
-            path += "/";
         CFilename folder(path);
+        if (!folderExists(folder.getFullPath()))
+            establishFolder(folder.getFullPath());
         if (!folder.isValid()) {
             cerr << "Invalid path (" << folder.getFullPath() << ") in config file. Quitting...\n";
             exit(0);
