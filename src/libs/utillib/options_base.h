@@ -113,7 +113,7 @@ namespace qblocks {
     extern void optionOn (uint32_t q);
 
 #define MAX_BLOCK_LIST 100
-#define MAX_BLOCK_RANGE 1000
+#define MAX_BLOCK_RANGE 10000
     class COptionsBlockList {
     public:
         blknum_t nums[MAX_BLOCK_LIST];
@@ -126,6 +126,7 @@ namespace qblocks {
         COptionsBlockList(void);
         SFString toString(void) const;
         bool hasBlocks(void) const { return (nNums || (start != stop)); }
+        blknum_t parseBlockOption(SFString& msg, blknum_t lastBlock) const;
     };
 
     class COptionsTransList {
