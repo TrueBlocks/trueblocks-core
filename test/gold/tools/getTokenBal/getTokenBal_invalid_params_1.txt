@@ -1,7 +1,7 @@
 getTokenBal argc: 4 [1:a] [2:b] [3:c] 
 getTokenBal a b c 
 
-  'a' does not appear to be a valid block. Quitting...
+  The given value 'a' is not a numeral or a special named block. Quitting...
 
   Usage:    getTokenBal [-b|-l fn|-n|-d|-v|-h] <address> <address> [address...] [block...]  
   Purpose:  Retrieve the token balance(s) for one or more addresses at the given (or latest) block(s).

@@ -159,7 +159,7 @@ bool COptions::parseArguments(SFString& command) {
     }
 
     if (terse && !isRaw)
-        return usage("--terse options work only with --source:raw. Quitting...");
+        return usage("The --terse option works only with --raw. Quitting...");
 
     if (!blocks.hasBlocks())
         return usage("You must specify at least one block.");

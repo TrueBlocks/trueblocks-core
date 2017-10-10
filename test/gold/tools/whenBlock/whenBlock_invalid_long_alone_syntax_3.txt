@@ -1,7 +1,7 @@
 whenBlock argc: 3 [1:--alone] [2:pppppp1] 
 whenBlock --alone pppppp1 
 
-  'pppppp1' does not appear to be a valid block. Quitting...
+  The given value 'pppppp1' is not a numeral or a special named block. Quitting...
 
   Usage:    whenBlock [-a|-l|-v|-h] < block | date > [ block... | date... ]  
   Purpose:  Finds the nearest block prior to a date, or the nearest date prior to a block.
