@@ -138,14 +138,6 @@ bool COptions::parseArguments(SFString& command) {
                 return usage("Invalid option: " + arg);
             }
 
-        } else if (arg == "latest") {
-            SFUint32 cache, client;
-            getLatestBlocks(cache, client);
-            cout << "\n\tFrom client: " << asYellow(client)
-                  << " inCache: " << asYellow(cache)
-                  << " Behind (maybe empty): " << asYellow(client-cache) << "\n\n";
-            exit(0);
-
         } else {
 
             SFString ret = blocks.parseBlockList(arg, latestBlock);
