@@ -41,6 +41,7 @@ endfunction(run_test)
 run_test("getBloom_README"    "-th")
 run_test("getBloom_no_params"      )
 run_test("getBloom_empty"     "1001001")
+run_test("getBloom_invalid_option"  "-x")
 run_test("getBloom_bloom"     "4000001")
 run_test("getBloom_blooms"    "1590000" " 4000001" "4000002")
 run_test("getBloom_range"     "4000001-4000003")
@@ -82,8 +83,14 @@ run_test("getBloom_multi2"   "--parity" " -a" " 2769609" " 2799895" " 2872831" "
 run_test("getBloom_short_receipt" "-e"        " 4001001")
 run_test("getBloom_long_receipt"  "--receipt" " 4001001")
 
+# Special blocks
+run_test("getBloom_special_1" "first")
+run_test("getBloom_special_2" "stateclear")
+
 run_special_test("getBloom_cmd_file1" "--file:cmd_file1")
 run_special_test("getBloom_cmd_file2" "--file:cmd_file2")
+
+
 
 # Installation steps
 install(TARGETS ${TOOL_NAME} RUNTIME DESTINATION bin)

@@ -1,7 +1,7 @@
 getBalance argc: 3 [1:$doa] [2:0x12] 
 getBalance $doa 0x12 
 
-  '$doa' does not appear to be a valid block. Quitting...
+  The given value '$doa' is not a numeral or a special named block. Quitting...
 
   Usage:    getBalance [-l fn|-n|-d|-v|-h] <address> [address...] [block...]  
   Purpose:  Retrieve the balance (in wei) for one or more addresses at the given block(s).

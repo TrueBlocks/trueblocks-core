@@ -1,7 +1,7 @@
 whenBlock argc: 2 [1:idonotexist] 
 whenBlock idonotexist 
 
-  'idonotexist' does not appear to be a valid block. Quitting...
+  The given value 'idonotexist' is not a numeral or a special named block. Quitting...
 
   Usage:    whenBlock [-a|-l|-v|-h] < block | date > [ block... | date... ]  
   Purpose:  Finds the nearest block prior to a date, or the nearest date prior to a block.

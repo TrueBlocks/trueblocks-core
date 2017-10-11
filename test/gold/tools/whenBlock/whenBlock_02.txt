@@ -19,7 +19,7 @@ block #1150000 (homestead) : 1457981393 : 2016-03-14 18:49:53 UTC
 block #1718497 (daohack) : 1466134488 : 2016-06-17 03:34:48 UTC
 block #1920000 (daofork) : 1469020840 : 2016-07-20 13:20:40 UTC
 
-  'mistake' does not appear to be a valid block. Quitting...
+  The given value 'mistake' is not a numeral or a special named block. Quitting...
 
   Usage:    whenBlock [-a|-l|-v|-h] < block | date > [ block... | date... ]  
   Purpose:  Finds the nearest block prior to a date, or the nearest date prior to a block.
