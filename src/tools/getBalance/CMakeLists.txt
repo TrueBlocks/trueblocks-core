@@ -74,11 +74,12 @@ run_test("getBalance_special_block_3"    "0xfb6916095ca1df60bb79ce92ce3ea74c37c5
 run_test("getBalance_wei"    "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359" " 4000000" " --wei")
 run_test("getBalance_ether"    "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359" " 4000000" " --ether")
 
+set(TIPJAR   "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359")
+set(MYETHTIP "0x7cb57b5a97eabe94205c07890be4c1ad31e486a8")
 
-# Don't run these test since the --ether option is not implemented
-#run_test("getBalance_e_dao_1500000" "0xbb9bc244d798123fde783fcc1c72d3bb8c189413" " 1500000" " --ether")
-#run_test("getBalance_e_two_accts"   "0xbb9bc244d798123fde783fcc1c72d3bb8c189413" " $tip" " 1500000" " --ether")
-#run_test("getBalance_e_tip_4"       "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359" " 1500000" " 2000000" " 2500000" " 3000000" " --ether")
+run_test("getBalance_e_dao_1500000" "0xbb9bc244d798123fde783fcc1c72d3bb8c189413" " 1500000" " --ether")
+run_test("getBalance_e_two_accts"   "0xbb9bc244d798123fde783fcc1c72d3bb8c189413" " ${TIPJAR}" " ${MYETHTIP}" " 1500000" " --ether")
+run_test("getBalance_e_tip_4"       "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359" " 1500000" " 2000000" " 2500000" " 3000000" " --ether")
 
 # Don't run this test since it defaults to latest block which chages at every 14 seconds
 #run_test("getBalance_no_block"    "0xbb9bc244d798123fde783fcc1c72d3bb8c189413")

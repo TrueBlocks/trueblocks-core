@@ -1,5 +1,5 @@
 ## [{NAME}]
 
-Testing only
+Please refer to the source code of the test case for information on this folder.
 
-[{USAGE_TABLE}][{FOOTER}]
+**Powered by QuickBlocks<sup>&reg;</sup>**

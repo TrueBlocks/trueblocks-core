@@ -1,7 +1,7 @@
-getBlock argc: 4 [1:1590000] [2:4000001-4000002] [3:x400x001] 
-getBlock 1590000 4000001-4000002 x400x001 
+getBlock argc: 3 [1:-s] [2:1001001] 
+getBlock -s 1001001 
 
-  The given value 'x400x001' is not a numeral or a special named block. Quitting...
+  Invalid option: -s
 
   Usage:    getBlock [-r|-t|-c|-v|-h] <block> [block...]  
   Purpose:  Returns block(s) from local cache or directly from a running node.
