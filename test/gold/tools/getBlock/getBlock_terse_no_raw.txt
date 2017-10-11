@@ -1,7 +1,7 @@
 getBlock argc: 3 [1:-t] [2:4001001] 
 getBlock -t 4001001 
 
-  --terse options work only with --source:raw. Quitting...
+  The --terse option works only with --raw. Quitting...
 
   Usage:    getBlock [-r|-t|-c|-v|-h] <block> [block...]  
   Purpose:  Returns block(s) from local cache or directly from a running node.
