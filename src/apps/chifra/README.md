@@ -12,7 +12,7 @@
 | -------: | :------- | :------- |
 |  | folder | name of the folder into which to store the monitor |
 |  | addrs | a list of one or more addresses to monitor (must start with '0x') |
-| -s | --silent | supress all output from chifra (normally chifra is quite verbose) |
+| -s | --silent | suppress all output from chifra (normally chifra is quite verbose) |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
