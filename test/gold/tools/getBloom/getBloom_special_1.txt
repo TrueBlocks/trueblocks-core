@@ -1,0 +1,6 @@
+getBloom argc: 2 [1:first] 
+getBloom first 
+{
+    "logsBloom": "0x0",
+    "blockNumber": 0
+}
