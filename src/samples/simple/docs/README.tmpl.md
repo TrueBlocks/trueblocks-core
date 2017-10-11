@@ -1,5 +1,3 @@
 ## [{NAME}]
 
-single - Testing only
-[{USAGE_TABLE}]
-[{FOOTER}]
+Please refer to the source code of the test case for information on this folder.
