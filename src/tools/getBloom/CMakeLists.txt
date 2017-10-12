@@ -80,7 +80,7 @@ run_test("getBloom_force_02"                  " 2769609" " 2799895" " 2872831" "
 run_test("getBloom_multi1"   "--parity" " -r" " 2769609" " 2799895" " 2872831" " 3076260")
 run_test("getBloom_multi2"   "--parity" " -a" " 2769609" " 2799895" " 2872831" " 3076260")
 
-run_test("getBloom_short_receipt" "-e"        " 4001001")
+run_test("getBloom_short_receipt" "-p"        " 4001001")
 run_test("getBloom_long_receipt"  "--receipt" " 4001001")
 
 # Special blocks
