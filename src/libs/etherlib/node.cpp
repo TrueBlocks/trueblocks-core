@@ -132,11 +132,12 @@ SFString callRPC(const SFString& method, const SFString& params, bool raw)
     static uint32_t id = 1;
     SFString thePost, received;
 
+    uint32_t theID = (isTestMode() ? 1 : id++);
     thePost += "{";
     thePost +=  quote("jsonrpc") + ":"  + quote("2.0")  + ",";
     thePost +=  quote("method")  + ":"  + quote(method) + ",";
     thePost +=  quote("params")  + ":"  + params        + ",";
-    thePost +=  quote("id")      + ":"  + quote(asString(id++));
+    thePost +=  quote("id")      + ":"  + quote(asString(theID));
     thePost += "}";
 
 //#define DEBUG_RPC
