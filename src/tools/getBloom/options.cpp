@@ -11,9 +11,9 @@
 CParams params[] = {
     CParams("~block_list",       "a space-separated list of one or more blocks from which to retrieve blooms"),
     CParams("-raw",              "pull the bloom filter from the running Ethereum node (no cache)"),
-    CParams("-enhanced",         "retrieve the enhanced bloom filter for a given block (see documentation)"),
-    CParams("-r(e)ceipts",       "display receipt level blooms, default is to display only block-level blooms"),
-    CParams("-check",            "compare results between qblocks and Ethereum node, report differences, if any"),
+//    CParams("-enhanced",         "retrieve the enhanced bloom filter for a given block (see documentation)"),
+    CParams("-recei(p)t",        "display receipt level blooms, default is to display only block-level blooms"),
+    CParams("@-check",            "compare results between qblocks and Ethereum node, report differences, if any"),
     CParams("@force",            "force a re-write of the bloom to the cache"),
     CParams("@quiet",            "do not print results to screen (useful for performance measurements)"),
     CParams("@source:[c|r]",     "either :c(a)che or :(r)aw, source for data retrival. (shortcuts -c = qblocks, -r = node)"),
@@ -39,6 +39,7 @@ bool COptions::parseArguments(SFString& command) {
         if (arg == "-a" || arg == "--cache") { arg = "--source:cache"; }
 
         // do not collapse
+#if 0
         if (arg == "-c" || arg == "--check") {
             setenv("TEST_MODE", "true", true);
             isCheck = true;
@@ -62,7 +63,9 @@ bool COptions::parseArguments(SFString& command) {
             GETRUNTIME_CLASS(CTransaction)->sortFieldList();
             GETRUNTIME_CLASS(CReceipt)->sortFieldList();
 
-        } else if (arg == "-o" || arg == "--force") {
+        } else
+#endif
+        if (arg == "-o" || arg == "--force") {
             etherlib_init("binary");
             force = true;
 
@@ -78,7 +81,7 @@ bool COptions::parseArguments(SFString& command) {
                 return usage("Invalide source. Must be either '(r)aw' or '(c)ache'. Quitting...");
             }
 
-        } else if (arg == "-e" || arg == "--receipt") {
+        } else if (arg == "-p" || arg == "--receipt") {
             UNHIDE_FIELD(CBlock,       "transactions");
             UNHIDE_FIELD(CTransaction, "receipt");
             UNHIDE_FIELD(CTransaction, "transactionIndex");
