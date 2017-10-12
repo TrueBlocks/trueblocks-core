@@ -1,19 +1,9 @@
+## [{NAME}]
 
-`Usage:`    bin/[{PROGNAME}] [-f|-c|-s|-l|-a|-n|-r|-v|-h]  
-`Purpose:`  Index transactions for a given Ethereum address (or series of addresses).
-             
-`Where:`  
+This folder contains a QuickBlocks monitor. QuickBlocks monitors pull transactions from the Ethereum blockchain for a given (or a series of) Ethereum addresses.
 
-| Option | Full Command | Description |
-| -------: | :------- | :------- |
-| -f | --freshenOnly | freshen only -- default (do not display transactions from the cache) |
-| -c | --cacheOnly | display transactions from the cache only (do not freshen) |
-| -s | --showCache | show transactions from the cache, and then freshen |
-| -l | --logs | display smart contract events (logs) |
-| -a | --accounting | display credits and debits and reconcilation per block |
-| -r | --rebuild | clear cache and reprocess all transcations (may take a long time) |
-| -v | --verbose | set verbose level. Follow with a number to set level (-v0 for silent) |
-| -h | --help | display this help screen |
+Below we present the command line interface to this tool, although the tool itself is not available under open source. While the tool is in active development, QuickBlocks monitors already produce very useful results. For example, we use QuickBlocks monitors to account for and analyze all transactions on a given smart contract. We present [this example](http://dao.quickblocks.io).
 
-  Powered by QuickBlocks.io
+Please contact us at [sales@greathill.com](mailto:sales@greathill.com) for more information.
 
+[{USAGE_TABLE}][{FOOTER}]
