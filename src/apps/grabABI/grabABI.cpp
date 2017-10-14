@@ -78,14 +78,14 @@ void addIfUnique(const SFString& addr, CFunctionArray& functions, CFunction& fun
 }
 
 //-----------------------------------------------------------------------
-SFString acquireABI(CFunctionArray& functions, const SFAddress& addr, bool silent, bool builtIn=false)
-{
+SFString acquireABI(CFunctionArray& functions, const SFAddress& addr, const COptions& opt, bool builtIn) {
+
     SFString results, ret;
     SFString fileName = blockCachePath("abis/" + addr + ".json");
     SFString dispName = fileName.Substitute(configPath(""),"|");
     nextTokenClear(dispName, '|');
     dispName = "~/.quickBlocks/" + dispName;
-    if (fileExists(fileName)) {
+    if (fileExists(fileName) && !opt.raw) {
 
         if (!isTestMode())
             cerr << "Reading ABI from cache " + dispName + "\n";
@@ -97,14 +97,16 @@ SFString acquireABI(CFunctionArray& functions, const SFAddress& addr, bool silen
         SFString url = SFString("http:/")
                             + "/api.etherscan.io/api?module=contract&action=getabi&address="
                             + addr;
-        results = urlToString(url).Substitute("\\", "").Substitute("\"[", "[").Substitute("]\"", "]");
-        if (verbose) {
-            if (!isTestMode())
-                cout << verbose << "---------->" << results << "\n";
-            cout.flush();
-        }
-
+        results = urlToString(url).Substitute("\\", "");
         if (!results.Contains("NOTOK")) {
+        	// strip RPC wrapper
+        	results.Replace("{\"status\":\"1\",\"message\":\"OK\",\"result\":\"","");
+        	results.ReplaceReverse("]\"}","");
+        	if (verbose) {
+            	if (!isTestMode())
+                	cout << verbose << "---------->" << results << "\n";
+            	cout.flush();
+        	}
             nextTokenClear(results, '[');
             results.ReplaceReverse("]}", "");
             if (!isTestMode())
@@ -112,8 +114,9 @@ SFString acquireABI(CFunctionArray& functions, const SFAddress& addr, bool silen
             establishFolder(fileName);
             stringToAsciiFile(fileName, "["+results+"]");
         } else {
+			cerr << "Etherscan returned " << results << "\n";
             cerr << "Could not grab ABI for " + addr + " from etherscan.io.\n";
-            if (!silent)
+            if (!opt.silent)
                 exit(0);
         }
     }
@@ -178,12 +181,12 @@ int main(int argc, const char *argv[]) {
         bool isGenerate = !options.classDir.empty();
         if (options.addrs[0] != "0xTokenLib" && options.addrs[0] != "0xWalletLib" && isGenerate)
         {
-            acquireABI(functions, "0xTokenLib",  options.silent, true);
-            acquireABI(functions, "0xWalletLib", options.silent, true);
+            acquireABI(functions, "0xTokenLib",  options, true);
+            acquireABI(functions, "0xWalletLib", options, true);
         }
         for (uint64_t i = 0 ; i < options.nAddrs ; i++) {
             options.theABI += ("ABI for addr : " + options.addrs[i] + "\n");
-            options.theABI += acquireABI(functions, options.addrs[i], options.silent) + "\n\n";
+            options.theABI += acquireABI(functions, options.addrs[i], options, false) + "\n\n";
             addrList += (options.addrs[i] + "|");
         }
 

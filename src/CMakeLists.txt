@@ -112,6 +112,27 @@ function(run_the_special_test testPath goldPath testName testExe) # Optional arg
 endfunction(run_the_special_test)
 
 # ----------------------------------------------------------------------------------------
+## Function to Concatenate multiple files in a single output file
+## Rename or move to root CMakeLists.txt if you cosider it handy
+## Parameters :
+## input_list - input files (list)
+## output_file - output file
+#function(concatenate_files input_list output_file)
+#    file(WRITE ${OUT} "")
+#    foreach(FILENAME ${input_list})
+#        file(READ ${FILENAME} CONTENTS)
+#    file(APPEND ${output_file} "${CONTENTS}")
+#    endforeach()
+#endfunction(concatenate_files)
+## We need to generate for test 01 the input files blocks.txt and dates.txt. How?
+## NOTE FROM JAY: I PUT THESE FILES IN THE GOLD FOLDER AND CHANGE CWD TO GOLD TO RUN THE TEST
+## Group them in a list
+##set(INPUT_LIST "/path/to/blocks.txt" "/path/To/dates.txt")
+## Once we have them we can concatenate both files using the function concatenate_files
+## set(OUTPUT_TEST_FILE "/path/to/results.txt")
+##add_custom_command(OUTPUT ${OUTPUT_TEST_FILE} COMMAND concatenate_files ${INPUT_LIST} ${OUTPUT_TEST_FILE})
+
+# ----------------------------------------------------------------------------------------
 # Compilation order for the subfolders
 add_subdirectory (libs)
 add_subdirectory (apps)
