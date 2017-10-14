@@ -535,6 +535,7 @@ size_t write_callback(char *ptr, size_t size, size_t nmemb, void *userdata)
             earlyAbort = true;
             return 0;
         }
+
     } else {
         ASSERT(userdata);
         SFString part;
@@ -543,7 +544,7 @@ size_t write_callback(char *ptr, size_t size, size_t nmemb, void *userdata)
         strncpy(s,ptr,size*nmemb);
         s[size*nmemb]='\0';
         (*(SFString*)userdata) += s;
-        
+
         // At block 3804005, there was a hack wherein the byte code
         // 5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b repeated
         // thousands of time and doing nothing. If we don't handle this it
