@@ -1,0 +1,16 @@
+grabABI argc: 3 [1:0x6810e776880c02933d47db1b9fc05908e5386b96] [2:--raw] 
+grabABI 0x6810e776880c02933d47db1b9fc05908e5386b96 --raw 
+ABI for address 0x6810e776880c02933d47db1b9fc05908e5386b96
+	function name                       ()
+	function approve                    (address _spender,uint256 _value)
+	function totalSupply                ()
+	function transferFrom               (address _from,address _to,uint256 _value)
+	function decimals                   ()
+	function balanceOf                  (address _owner)
+	function symbol                     ()
+	function transfer                   (address _to,uint256 _value)
+	function allowance                  (address _owner,address _spender)
+	constructor                         (address dutchAuction,address[] owners,uint256[] tokens)
+	event Transfer                      (address indexed from,address indexed to,uint256 value)
+	event Approval                      (address indexed owner,address indexed spender,uint256 value)
+
