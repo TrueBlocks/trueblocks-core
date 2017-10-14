@@ -16,4 +16,4 @@ QuickBlocks is a collection of software libraries, applications, and command-lin
 
 #### Architecture
 
-<img src=../docs/architecture.png>
+<img src=other/images/architecture.png>
