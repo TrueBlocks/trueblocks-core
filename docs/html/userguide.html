@@ -95,35 +95,10 @@
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">User Guide</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#registering-a-name-with-the-fifs-registrar">Registering a name with the FIFS registrar</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#registering-a-name-with-the-auction-registrar">Registering a name with the auction registrar</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#starting-an-auction">Starting an auction</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#placing-a-bid">Placing a bid</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#revealing-your-bid">Revealing your bid</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#checking-auctions">Checking auctions</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#finalizing-the-auction">Finalizing the auction</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#managing-ownership">Managing Ownership</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#interacting-with-the-ens-registry">Interacting with the ENS registry</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#getting-the-owner-of-a-name">Getting the owner of a name</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#getting-the-resolver-for-a-name">Getting the resolver for a name</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#setting-a-name-s-resolver">Setting a name’s resolver</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#transferring-a-name">Transferring a name</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#creating-a-subdomain">Creating a subdomain</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#resolving-names">Resolving Names</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#interacting-with-ens-from-a-dapp">Interacting with ENS from a DApp</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#interacting-with-ens-from-a-contract">Interacting with ENS from a contract</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#resolving-ens-names">Resolving ENS names</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#step-by-step">Step by step</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#oneliner">Oneliner</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#reverse-name-resolution">Reverse name resolution</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#claiming-your-account">Claiming your account</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#setting-up-a-reverse-name-for-your-address">Setting up a reverse name for your address</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#using-the-command-line-tools">Using the Command Line Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#using-the-applications">Using the Applications</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#subsection-header">SubSection Header</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#doing-some-stuff">Doing some stuff</a></li>
 </ul>
 </li>
 </ul>
@@ -179,8 +154,6 @@
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="_sources/userguide.rst.txt" rel="nofollow"> View page source</a>
-          
         
       </li>
     
@@ -194,280 +167,45 @@
             
   <div class="section" id="user-guide">
 <h1>User Guide<a class="headerlink" href="#user-guide" title="Permalink to this headline">¶</a></h1>
-<p>This user guide is intended for anyone wanting to register, configure, and update ENS names using a Javascript console and web3.js. Before starting, open up a geth console, download <a class="reference external" href="https://github.com/ethereum/ens/blob/master/ensutils.js">ensutils.js</a> or <a class="reference external" href="https://github.com/ethereum/ens/blob/master/ensutils-testnet.js">ensutils-testnet.js</a> to your local machine, and import it into a running Ethereum console:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">loadScript</span><span class="p">(</span><span class="s1">&#39;/path/to/ensutils.js&#39;</span><span class="p">);</span>
+<p>This user guide is intended for anyone wanting to use QuickBlocks</p>
+<div class="section" id="using-the-command-line-tools">
+<span id="cmds"></span><h2>Using the Command Line Tools<a class="headerlink" href="#using-the-command-line-tools" title="Permalink to this headline">¶</a></h2>
+<p>Instructions for using the command line tools.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">some</span> <span class="n">code</span>
 </pre></div>
 </div>
-<div class="section" id="registering-a-name-with-the-fifs-registrar">
-<span id="fifs"></span><h2>Registering a name with the FIFS registrar<a class="headerlink" href="#registering-a-name-with-the-fifs-registrar" title="Permalink to this headline">¶</a></h2>
-<p>The public ENS deployment on Ropsten uses a first-in-first served registrar for the ‘.test’ top level domain. Domains on this TLD are configured to expire, allowing anyone else to claim them, 28 days after registration.</p>
-<p>ensutils.js defines an object <cite>testRegistrar</cite>, for interacting with the registrar for the <cite>.test</cite> TLD. If you want to interact with a different first-in-first-served registrar, you can instantiate it with:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">var</span> <span class="n">myRegistrar</span> <span class="o">=</span> <span class="n">fifsRegistrarContract</span><span class="o">.</span><span class="n">at</span><span class="p">(</span><span class="n">address</span><span class="p">);</span>
+<p>Some more text</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">some</span> <span class="n">more</span> <span class="n">code</span>
 </pre></div>
 </div>
-<p>Before registering, check that nobody owns the name you want to register:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">new</span> <span class="n">Date</span><span class="p">(</span><span class="n">testRegistrar</span><span class="o">.</span><span class="n">expiryTimes</span><span class="p">(</span><span class="n">web3</span><span class="o">.</span><span class="n">sha3</span><span class="p">(</span><span class="s1">&#39;myname&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">toNumber</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)</span>
+<p>More text</p>
+</div>
+<div class="section" id="using-the-applications">
+<span id="library"></span><h2>Using the Applications<a class="headerlink" href="#using-the-applications" title="Permalink to this headline">¶</a></h2>
+<p>Testing</p>
+<div class="section" id="subsection-header">
+<h3>SubSection Header<a class="headerlink" href="#subsection-header" title="Permalink to this headline">¶</a></h3>
+<p>Sub Section text</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">code</span>
 </pre></div>
 </div>
-<p>If this line returns a date earlier than the current date, the name is available and you’re good to go.</p>
-<p>The FIFS registrar’s interface is extremely simple, and exposes a method called <cite>register</cite> that you can call with the (hashed) name you want to register and the address you want to own the name. To register a name, simply call that method to send a registration transaction:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">testRegistrar</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">web3</span><span class="o">.</span><span class="n">sha3</span><span class="p">(</span><span class="s1">&#39;myname&#39;</span><span class="p">),</span> <span class="n">eth</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">{</span><span class="n">from</span><span class="p">:</span> <span class="n">eth</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">]});</span>
-</pre></div>
-</div>
-<p>Once this transaction is mined, assuming the name was not already assigned, it will be assigned to you, and you can proceed to <a class="reference internal" href="#interacting"><span class="std std-ref">Interacting with the ENS registry</span></a>.</p>
-</div>
-<div class="section" id="registering-a-name-with-the-auction-registrar">
-<span id="auctions"></span><h2>Registering a name with the auction registrar<a class="headerlink" href="#registering-a-name-with-the-auction-registrar" title="Permalink to this headline">¶</a></h2>
-<p>Once deployed on mainnet, ENS names will be handed out via an auction process, on the ‘.eth’ top-level domain. A preview of this is available on the Ropsten testnet, and you can register names via it right now. Any names you register will persist until launch on mainnet, at which point the auction registrar on Ropsten will be deprecated and eventually deleted.</p>
-<p>This registrar implements a blind auction, and is described in <a class="reference external" href="https://github.com/ethereum/EIPs/issues/162">EIP162</a>. Names are initially required to be at least 7 characters long.</p>
-<p>Registering a name with the auction registrar is a multi-step process.</p>
-<div class="section" id="starting-an-auction">
-<h3>Starting an auction<a class="headerlink" href="#starting-an-auction" title="Permalink to this headline">¶</a></h3>
-<p>Before placing a bid, you need to check if the name is available. Run this code to check:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">ethRegistrar</span><span class="o">.</span><span class="n">entries</span><span class="p">(</span><span class="n">web3</span><span class="o">.</span><span class="n">sha3</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">))[</span><span class="mi">0</span><span class="p">];</span>
-</pre></div>
-</div>
-<p>This will return a single integer between 0 and 5. The full solidity data structure for this can be viewed <a class="reference external" href="https://github.com/ethereum/ens/blob/master/contracts/HashRegistrarSimplified.sol#L110">here</a> in the Registrar contract. The numbers represent different ‘states’ a name is currently in.</p>
+<p>Whatever</p>
 <ul class="simple">
-<li>0 - Name is available and the auction hasn’t started</li>
-<li>1 - Name is available and the auction has been started</li>
-<li>2 - Name is taken and currently owned by someone</li>
-<li>3 - Name is forbidden</li>
-<li>4 - Name is currently in the ‘reveal’ stage of the auction</li>
-<li>5 - Name is not yet available due to the ‘soft launch’ of names.</li>
+<li>0 - Item 1</li>
+<li>1 - Item 2</li>
 </ul>
-<p>If the returned value is <cite>5</cite>, and is in the ‘soft launch’ is in effect; you can check when it will be available for auction with:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">new</span> <span class="n">Date</span><span class="p">(</span><span class="n">ethRegistrar</span><span class="o">.</span><span class="n">getAllowedTime</span><span class="p">(</span><span class="n">web3</span><span class="o">.</span><span class="n">sha3</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">))</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">);</span>
-</pre></div>
-</div>
-<p>To start an auction for a name that’s not already up for auction, call <cite>startAuction</cite>:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">ethRegistrar</span><span class="o">.</span><span class="n">startAuction</span><span class="p">(</span><span class="n">web3</span><span class="o">.</span><span class="n">sha3</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">),</span> <span class="p">{</span><span class="n">from</span><span class="p">:</span> <span class="n">eth</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">gas</span><span class="p">:</span> <span class="mi">100000</span><span class="p">});</span>
-</pre></div>
-</div>
-<p>You can also start auctions for several names simultaneously, to disguise which name you’re actually interested in registering:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">ethRegistrar</span><span class="o">.</span><span class="n">startAuctions</span><span class="p">([</span><span class="n">web3</span><span class="o">.</span><span class="n">sha3</span><span class="p">(</span><span class="s1">&#39;decoy1&#39;</span><span class="p">),</span> <span class="n">web3</span><span class="o">.</span><span class="n">sha3</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">),</span> <span class="n">web3</span><span class="o">.</span><span class="n">sha3</span><span class="p">(</span><span class="s1">&#39;decoy2&#39;</span><span class="p">)],</span> <span class="p">{</span><span class="n">from</span><span class="p">:</span> <span class="n">eth</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">gas</span><span class="p">:</span> <span class="mi">1000000</span><span class="p">});</span>
-</pre></div>
-</div>
-<p>Auctions normally run for 5 days: 3 days of bidding and 2 days of reveal phase. When initially deployed, there’s a “soft start” phase during which names are released for bidding gradually; this soft start lasts 4 weeks on ropsten, and 13 weeks on mainnet.</p>
-<p>When a name is under auction, you can check the end time of the auction as follows:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">new</span> <span class="n">Date</span><span class="p">(</span><span class="n">ethRegistrar</span><span class="o">.</span><span class="n">entries</span><span class="p">(</span><span class="n">web3</span><span class="o">.</span><span class="n">sha3</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">))[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">toNumber</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)</span>
+<p>Text with <cite>some back quoted stuff</cite></p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">forEveryBlock</span>
 </pre></div>
 </div>
 </div>
-<div class="section" id="placing-a-bid">
-<h3>Placing a bid<a class="headerlink" href="#placing-a-bid" title="Permalink to this headline">¶</a></h3>
-<p>Bids can be placed at any time during an auction except in the last 48 hours (the ‘reveal period’). Before trying to place a bid, make sure an auction is currently underway, as described above, and has more than 48 hours left to run.</p>
-<p>To bid on an open auction, you need several pieces of data:</p>
-<blockquote>
-<div><ul class="simple">
-<li>The name you want to register</li>
-<li>The account you are sending the bid from</li>
-<li>The maximum amount you’re willing to pay for the name</li>
-<li>A random ‘salt’ value</li>
-</ul>
-</div></blockquote>
-<p>In addition, you need to decide how much Ether you want to deposit with the bid. This must be at least as much as the value of your bid, but can be more, in order to disguise the true value of the bid.</p>
-<p>First, start by generating a secret value. An easy way to do this is to use <a class="reference external" href="https://www.random.org/strings/?num=1&amp;len=20&amp;digits=on&amp;upperalpha=on&amp;loweralpha=on&amp;unique=off&amp;format=html&amp;rnd=new">random.org</a>. Store this value somewhere secure - if you lose it, you lose your deposit, and your chance at winning the auction!</p>
-<p>Now, you can generate your ‘sealed’ bid, with the following code:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">var</span> <span class="n">bid</span> <span class="o">=</span> <span class="n">ethRegistrar</span><span class="o">.</span><span class="n">shaBid</span><span class="p">(</span><span class="n">web3</span><span class="o">.</span><span class="n">sha3</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">),</span> <span class="n">eth</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">web3</span><span class="o">.</span><span class="n">toWei</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;ether&#39;</span><span class="p">),</span> <span class="n">web3</span><span class="o">.</span><span class="n">sha3</span><span class="p">(</span><span class="s1">&#39;secret&#39;</span><span class="p">));</span>
+<div class="section" id="doing-some-stuff">
+<h3>Doing some stuff<a class="headerlink" href="#doing-some-stuff" title="Permalink to this headline">¶</a></h3>
+<p>Here’s some text about doing some stuff</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">more</span> <span class="n">code</span>
 </pre></div>
 </div>
-<p>The arguments are, in order, the name you want to register, the account you are sending the bid from, your maximum bid, and the secret value you generated earlier. Note that the bidding account will become the owner. You will lose funds if you seal with one account and send the bid with another!</p>
-<p>Next, submit your bid to the registrar:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">ethRegistrar</span><span class="o">.</span><span class="n">newBid</span><span class="p">(</span><span class="n">bid</span><span class="p">,</span> <span class="p">{</span><span class="n">from</span><span class="p">:</span> <span class="n">eth</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">value</span><span class="p">:</span> <span class="n">web3</span><span class="o">.</span><span class="n">toWei</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;ether&#39;</span><span class="p">),</span> <span class="n">gas</span><span class="p">:</span> <span class="mi">500000</span><span class="p">});</span>
-</pre></div>
-</div>
-<p>In the example above, we’re sending 2 ether, even though our maximum bid is 1 ether; this is to disguise the true value of our bid. When we reveal our bid later, we will get the extra 1 ether back; the most we can pay for the name is 1 ether, as we specified when generating the bid.</p>
-<p>Now it’s a matter of waiting until the reveal period before revealing your bid. Run the command to check the expiration date of the auction again, and make sure to come back in the final 48 hours of the auction:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">new</span> <span class="n">Date</span><span class="p">(</span><span class="n">ethRegistrar</span><span class="o">.</span><span class="n">entries</span><span class="p">(</span><span class="n">web3</span><span class="o">.</span><span class="n">sha3</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">))[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">toNumber</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="revealing-your-bid">
-<h3>Revealing your bid<a class="headerlink" href="#revealing-your-bid" title="Permalink to this headline">¶</a></h3>
-<p>In order to win an auction, you must ‘reveal’ your bid. This is only possible during the ‘reveal’ phase, the last 48 hours of the auction, at which point new bids are prohibited. If you don’t reveal your bid by the time the auction ends, your deposit is forfeit - so make sure you store your salt in a safe place, and come back before the auction ends in order to reveal your bid.</p>
-<p>To reveal, call the <cite>unsealBid</cite> function with the same values you provided earlier:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">ethRegistrar</span><span class="o">.</span><span class="n">unsealBid</span><span class="p">(</span><span class="n">web3</span><span class="o">.</span><span class="n">sha3</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">),</span> <span class="n">web3</span><span class="o">.</span><span class="n">toWei</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;ether&#39;</span><span class="p">),</span> <span class="n">web3</span><span class="o">.</span><span class="n">sha3</span><span class="p">(</span><span class="s1">&#39;secret&#39;</span><span class="p">),</span> <span class="p">{</span><span class="n">from</span><span class="p">:</span> <span class="n">eth</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">gas</span><span class="p">:</span> <span class="mi">500000</span><span class="p">});</span>
-</pre></div>
-</div>
-<p>The arguments to <cite>unsealBid</cite> have the same order and meaning as those to <cite>shaBid</cite>, described in the bidding step, except that you don’t need to supply the account - it’s derived from your sending address.</p>
-<p>After revealing your bid, the auction will be updated.</p>
-<p>If your bid is less than a previously revealed bid, you will be refunded the whole amount of your bid.</p>
-<p>If your bid is the largest revealed so far, you will be set as the current leading bidder. The difference between the actual amount of your bid and the amount you sent will be refunded immediately. The remainder - the actual bid - will stay locked. If you are later outbid it will be sent back to you.</p>
-</div>
-<div class="section" id="checking-auctions">
-<h3>Checking auctions<a class="headerlink" href="#checking-auctions" title="Permalink to this headline">¶</a></h3>
-<p>At any time, you can check the current winning bidder with:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">deedContract</span><span class="o">.</span><span class="n">at</span><span class="p">(</span><span class="n">ethRegistrar</span><span class="o">.</span><span class="n">entries</span><span class="p">(</span><span class="n">web3</span><span class="o">.</span><span class="n">sha3</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">))[</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">owner</span><span class="p">();</span>
-</pre></div>
-</div>
-<p>and the value of the current winning bid with</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">web3</span><span class="o">.</span><span class="n">fromWei</span><span class="p">(</span><span class="n">ethRegistrar</span><span class="o">.</span><span class="n">entries</span><span class="p">(</span><span class="n">web3</span><span class="o">.</span><span class="n">sha3</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">))[</span><span class="mi">4</span><span class="p">],</span> <span class="s1">&#39;ether&#39;</span><span class="p">);</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="finalizing-the-auction">
-<h3>Finalizing the auction<a class="headerlink" href="#finalizing-the-auction" title="Permalink to this headline">¶</a></h3>
-<p>Once the auction has completed, it must be finalized in order for the name to be assigned to the winning bidder. Only the winning bidder can do this. To finalize, call the <cite>finalizeAuction</cite> function like so:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">ethRegistrar</span><span class="o">.</span><span class="n">finalizeAuction</span><span class="p">(</span><span class="n">web3</span><span class="o">.</span><span class="n">sha3</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">),</span> <span class="p">{</span><span class="n">from</span><span class="p">:</span> <span class="n">eth</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">gas</span><span class="p">:</span> <span class="mi">500000</span><span class="p">});</span>
-</pre></div>
-</div>
-<p>Once called, the winning bidder will be refunded the difference between their bid and the next highest bidder. If you’re the only bidder, you get back all but 0.01 eth of your bid. The winner is then assigned the name in ENS.</p>
-<p>If you are the winning bidder, congratulations!</p>
-</div>
-<div class="section" id="managing-ownership">
-<span id="id1"></span><h3>Managing Ownership<a class="headerlink" href="#managing-ownership" title="Permalink to this headline">¶</a></h3>
-<p>After finalizing, your account now owns both the name in ENS and the deed in the Auction Registrar.</p>
-<p>As the name owner, your account can manage the name using examples in “Interacting with the ENS registry”. For example, you can use <code class="code docutils literal"><span class="pre">ens.setOwner</span></code> to transfer administration of the name to another account. The new name owner can manage that domain and all subdomains now. None of those actions affect your ownership of the deed.</p>
-<p>As the deed owner, your account has the right to reset name ownership back to itself at any time, by using <code class="code docutils literal"><span class="pre">ethRegistrar.finalizeAuction</span></code> again. You can also choose to transfer the deed to another account with:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">ethRegistrar</span><span class="o">.</span><span class="n">transfer</span><span class="p">(</span><span class="n">web3</span><span class="o">.</span><span class="n">sha3</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">),</span> <span class="n">newDeedOwnerAddress</span><span class="p">,</span> <span class="p">{</span><span class="n">from</span><span class="p">:</span> <span class="n">currentDeedOwnerAddress</span><span class="p">})</span>
-</pre></div>
-</div>
-<div class="admonition caution">
-<p class="first admonition-title">Caution</p>
-<p class="last">Transferring the deed is <strong>irrevocable</strong>. Be sure that you have verified the correct address for the new owner. Additionally, the ether you paid to win the auction will be transferred with the deed to the new owner.</p>
-</div>
-</div>
-</div>
-<div class="section" id="interacting-with-the-ens-registry">
-<span id="interacting"></span><h2>Interacting with the ENS registry<a class="headerlink" href="#interacting-with-the-ens-registry" title="Permalink to this headline">¶</a></h2>
-<p>The ENS registry forms the central component of ENS, mapping from hashed names to resolvers, as well as the owners of the names and their TTL (caching time-to-live).</p>
-<p>Before you can make any changes to the ENS registry, you need to control an account that has ownership of a name in ENS. To obtain an ENS name on the Ropsten testnet, see <a class="reference internal" href="#auctions"><span class="std std-ref">Registering a name with the auction registrar</span></a> for ‘.eth’, or <a class="reference internal" href="#fifs"><span class="std std-ref">Registering a name with the FIFS registrar</span></a> for ‘.test’. Names on ‘.test’ are temporary, and can be claimed by someone else 28 days later.</p>
-<p>Alternately, you can obtain a subdomain from someone else who owns a domain, or <span class="xref std std-doc">deploying</span>. Note that while anyone can deploy their own ENS registry, those names will only be resolvable by users who reference that registry in their code.</p>
-<div class="section" id="getting-the-owner-of-a-name">
-<h3>Getting the owner of a name<a class="headerlink" href="#getting-the-owner-of-a-name" title="Permalink to this headline">¶</a></h3>
-<p>You can retrieve the address of a name’s owner using the <cite>owner</cite> function:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">ens</span><span class="o">.</span><span class="n">owner</span><span class="p">(</span><span class="n">namehash</span><span class="p">(</span><span class="s1">&#39;somename.eth&#39;</span><span class="p">));</span>
-<span class="s2">&quot;0xa303ddc620aa7d1390baccc8a495508b183fab59&quot;</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="getting-the-resolver-for-a-name">
-<h3>Getting the resolver for a name<a class="headerlink" href="#getting-the-resolver-for-a-name" title="Permalink to this headline">¶</a></h3>
-<p>You can retrieve the address of a name’s resolver using the <cite>resolver</cite> function:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">ens</span><span class="o">.</span><span class="n">resolver</span><span class="p">(</span><span class="n">namehash</span><span class="p">(</span><span class="s1">&#39;somename.eth&#39;</span><span class="p">));</span>
-<span class="s2">&quot;0xc68de5b43c3d980b0c110a77a5f78d3c4c4d63b4&quot;</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="setting-a-name-s-resolver">
-<h3>Setting a name’s resolver<a class="headerlink" href="#setting-a-name-s-resolver" title="Permalink to this headline">¶</a></h3>
-<p>You can set the resolver contract for a name using <cite>setResolver</cite>:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">ens</span><span class="o">.</span><span class="n">setResolver</span><span class="p">(</span><span class="n">namehash</span><span class="p">(</span><span class="s1">&#39;somename.eth&#39;</span><span class="p">),</span> <span class="n">resolverAddress</span><span class="p">,</span> <span class="p">{</span><span class="n">from</span><span class="p">:</span> <span class="n">eth</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">]});</span>
-</pre></div>
-</div>
-<p>A resolver is any contract that implements the resolver interface specified in <a class="reference external" href="https://github.com/ethereum/EIPs/blob/master/EIPS/eip-137.md">EIP137</a>. You can deploy your own resolver, or you can use a publicly available one; on the mainnet, a simple resolver that supports ‘address’ records and is usable by anyone is available; ensutils.js exposes it as <cite>publicResolver</cite>. To use it, first set it as the resolver for your name:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">ens</span><span class="o">.</span><span class="n">setResolver</span><span class="p">(</span><span class="n">namehash</span><span class="p">(</span><span class="s1">&#39;somename.eth&#39;</span><span class="p">),</span> <span class="n">publicResolver</span><span class="o">.</span><span class="n">address</span><span class="p">,</span> <span class="p">{</span><span class="n">from</span><span class="p">:</span> <span class="n">eth</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">]});</span>
-</pre></div>
-</div>
-<p>Then, call the resolver’s <cite>setAddr</cite> method to set the address the name resolves to:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">publicResolver</span><span class="o">.</span><span class="n">setAddr</span><span class="p">(</span><span class="n">namehash</span><span class="p">(</span><span class="s1">&#39;somename.eth&#39;</span><span class="p">),</span> <span class="n">eth</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">{</span><span class="n">from</span><span class="p">:</span> <span class="n">eth</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">]})</span>
-</pre></div>
-</div>
-<p>The above example configures ‘somename.eth’ to resolve to the address of your primary account.</p>
-</div>
-<div class="section" id="transferring-a-name">
-<h3>Transferring a name<a class="headerlink" href="#transferring-a-name" title="Permalink to this headline">¶</a></h3>
-<p>You can transfer ownership of a name you own in the ENS registry to another account using <cite>setOwner</cite>:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">ens</span><span class="o">.</span><span class="n">setOwner</span><span class="p">(</span><span class="n">namehash</span><span class="p">(</span><span class="s1">&#39;somename.eth&#39;</span><span class="p">),</span> <span class="n">newOwner</span><span class="p">,</span> <span class="p">{</span><span class="n">from</span><span class="p">:</span> <span class="n">eth</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">]});</span>
-</pre></div>
-</div>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p>If the name was acquired through a registrar, such as through a ‘.eth’ auction process, this will not transfer ownership of the locked bid. It will also not perform any administrative tasks that a registrar might want to do.</p>
-<p class="last">In general, to perform a complete transfer of a name acquired through a registrar, that particular registrar should be used as the interface. For the ‘.eth’ registrar, see <a class="reference internal" href="#managing-ownership"><span class="std std-ref">Managing Ownership</span></a>.</p>
-</div>
-</div>
-<div class="section" id="creating-a-subdomain">
-<h3>Creating a subdomain<a class="headerlink" href="#creating-a-subdomain" title="Permalink to this headline">¶</a></h3>
-<p>You can assign ownership of subdomains of any name you own with the <cite>setSubnodeOwner</cite> function. For instance, to create a subdomain ‘foo.somename.eth’ and set yourself as the owner:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">ens</span><span class="o">.</span><span class="n">setSubnodeOwner</span><span class="p">(</span><span class="n">namehash</span><span class="p">(</span><span class="s1">&#39;somename.eth&#39;</span><span class="p">),</span> <span class="n">web3</span><span class="o">.</span><span class="n">sha3</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">),</span> <span class="n">eth</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">{</span><span class="n">from</span><span class="p">:</span> <span class="n">eth</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">]});</span>
-</pre></div>
-</div>
-<p>Or, to assign someone else as the owner:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">ens</span><span class="o">.</span><span class="n">setSubnodeOwner</span><span class="p">(</span><span class="n">namehash</span><span class="p">(</span><span class="s1">&#39;somename.eth&#39;</span><span class="p">),</span> <span class="n">web3</span><span class="o">.</span><span class="n">sha3</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">),</span> <span class="n">someAccount</span><span class="p">,</span> <span class="p">{</span><span class="n">from</span><span class="p">:</span> <span class="n">eth</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">]});</span>
-</pre></div>
-</div>
-<p>Note the use of <cite>web3.sha3()</cite> instead of <cite>namehash()</cite> when specifying the subdomain being allocated.</p>
-<p>The owner of a name can reassign ownership of subdomains at any time, even if they’re owned by someone else.</p>
-</div>
-<div class="section" id="resolving-names">
-<h3>Resolving Names<a class="headerlink" href="#resolving-names" title="Permalink to this headline">¶</a></h3>
-<p>Now you’re ready to resolve your newly created name. For details how, read <a class="reference internal" href="#resolving"><span class="std std-ref">Resolving ENS names</span></a>.</p>
-</div>
-<div class="section" id="interacting-with-ens-from-a-dapp">
-<h3>Interacting with ENS from a DApp<a class="headerlink" href="#interacting-with-ens-from-a-dapp" title="Permalink to this headline">¶</a></h3>
-<p>An NPM module, <a class="reference external" href="https://www.npmjs.com/package/ethereum-ens">ethereum-ens</a>, is available to facilitate interacting with the ENS from Javascript-based DApps.</p>
-</div>
-<div class="section" id="interacting-with-ens-from-a-contract">
-<h3>Interacting with ENS from a contract<a class="headerlink" href="#interacting-with-ens-from-a-contract" title="Permalink to this headline">¶</a></h3>
-<p>The <a class="reference external" href="https://github.com/ethereum/ens/blob/master/contracts/AbstractENS.sol">ENS registry interface</a> provides a Solidity definition of the methods available for interacting with the ENS. Using this, and the address of the ENS registry, contracts can read and write the ENS registry directly.</p>
-<p>A Solidity library to facilitate this will be available soon.</p>
-</div>
-</div>
-<div class="section" id="resolving-ens-names">
-<span id="resolving"></span><h2>Resolving ENS names<a class="headerlink" href="#resolving-ens-names" title="Permalink to this headline">¶</a></h2>
-<p>This page describes how ENS name resolution works at the contract level. For convenient use in DApps, an NPM package, <a class="reference external" href="https://www.npmjs.com/package/ethereum-ens">ethereum-ens</a> is available which abstracts away much of the detail and makes name resolution a straightforward process.</p>
-<div class="section" id="step-by-step">
-<h3>Step by step<a class="headerlink" href="#step-by-step" title="Permalink to this headline">¶</a></h3>
-<p>Get the node ID (namehash output) for the name you want to resolve:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">var</span> <span class="n">node</span> <span class="o">=</span> <span class="n">namehash</span><span class="p">(</span><span class="s1">&#39;myname.eth&#39;</span><span class="p">);</span>
-</pre></div>
-</div>
-<p>Ask the ENS registry for the resolver responsible for that node:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">var</span> <span class="n">resolverAddress</span> <span class="o">=</span> <span class="n">ens</span><span class="o">.</span><span class="n">resolver</span><span class="p">(</span><span class="n">node</span><span class="p">);</span>
-</pre></div>
-</div>
-<p>Create an instance of a resolver contract at that address:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">var</span> <span class="n">resolver</span> <span class="o">=</span> <span class="n">resolverContract</span><span class="o">.</span><span class="n">at</span><span class="p">(</span><span class="n">resolverAddress</span><span class="p">);</span>
-</pre></div>
-</div>
-<p>Finally, ask the resolver what the address is:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">resolver</span><span class="o">.</span><span class="n">addr</span><span class="p">(</span><span class="n">node</span><span class="p">);</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="oneliner">
-<h3>Oneliner<a class="headerlink" href="#oneliner" title="Permalink to this headline">¶</a></h3>
-<p>This statement is equivalent to all of the above:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">resolverContract</span><span class="o">.</span><span class="n">at</span><span class="p">(</span><span class="n">ens</span><span class="o">.</span><span class="n">resolver</span><span class="p">(</span><span class="n">namehash</span><span class="p">(</span><span class="s1">&#39;myname.eth&#39;</span><span class="p">)))</span><span class="o">.</span><span class="n">addr</span><span class="p">(</span><span class="n">namehash</span><span class="p">(</span><span class="s1">&#39;myname.eth&#39;</span><span class="p">));</span>
-</pre></div>
-</div>
-<p>For convenience, ensutils.js provides a function, <cite>getAddr</cite> that does all of this for you with the default ENS registry:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">getAddr</span><span class="p">(</span><span class="s1">&#39;myname.eth&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="section" id="reverse-name-resolution">
-<span id="reverse"></span><h2>Reverse name resolution<a class="headerlink" href="#reverse-name-resolution" title="Permalink to this headline">¶</a></h2>
-<p>ENS also supports reverse resolution of Ethereum addresses. This allows an account (contract or external) to associate metadata with itself, such as its canonical name - ‘Ethereum caller ID’ if you will.</p>
-<p>Reverse records are in the format <cite>&lt;ethereum address&gt;.addr.reverse</cite> - for instance, the official registry would have its reverse records at <cite>314159265dd8dbb310642f98f50c066173c1259b.addr.reverse</cite>.</p>
-<p><cite>addr.reverse</cite> has a registrar with <cite>claim</cite>, <cite>claimWithResolver</cite>, and <cite>setName</cite> functions.</p>
-<p>The claim function takes one argument, the Ethereum address that should own the reverse record.</p>
-<p>This permits a very simple pattern for contracts that wish to delegate control of their reverse record to their creator; they simply need to add this function call to their constructor:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">reverseRegistrar</span><span class="o">.</span><span class="n">claim</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">sender</span><span class="p">)</span>
-</pre></div>
-</div>
-<div class="section" id="claiming-your-account">
-<h3>Claiming your account<a class="headerlink" href="#claiming-your-account" title="Permalink to this headline">¶</a></h3>
-<p>Call the <cite>claim</cite> function on the <cite>reverseRegistrar</cite> object:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">reverseRegistrar</span><span class="o">.</span><span class="n">claim</span><span class="p">(</span><span class="n">eth</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">{</span><span class="n">from</span><span class="p">:</span> <span class="n">eth</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">]});</span>
-</pre></div>
-</div>
-<p>After that transaction is mined, the appropriate reverse record is now owned by your account, and, you can deploy a resolver and set records on it; see <a class="reference internal" href="#interacting"><span class="std std-ref">Interacting with the ENS registry</span></a> for details.</p>
-<p>Alternately, you can claim and set the resolver record in one operation:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">reverseRegistrar</span><span class="o">.</span><span class="n">claimWithResolver</span><span class="p">(</span><span class="n">eth</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">publicResolver</span><span class="o">.</span><span class="n">address</span><span class="p">,</span> <span class="p">{</span><span class="n">from</span><span class="p">:</span> <span class="n">eth</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">]});</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="setting-up-a-reverse-name-for-your-address">
-<h3>Setting up a reverse name for your address<a class="headerlink" href="#setting-up-a-reverse-name-for-your-address" title="Permalink to this headline">¶</a></h3>
-<p>If you just want to set up a reverse resolver with a name record, a quick convenience function is available in the reverse registrar:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">reverseRegistrar</span><span class="o">.</span><span class="n">setName</span><span class="p">(</span><span class="s1">&#39;myname.eth&#39;</span><span class="p">,</span> <span class="p">{</span><span class="n">from</span><span class="p">:</span> <span class="n">eth</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">]});</span>
-</pre></div>
-</div>
-<p>This function points your reverse record at a default resolver, then sets the name record on that resolver for you - everything you need to set up ‘caller ID’ in a single transaction.</p>
+<p>More text</p>
 </div>
 </div>
 </div>
@@ -494,7 +232,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Thomas Jay Rush &lt;jrush@quickblocks.io&gt;.
+        &copy; Copyright 2018, QuickBlocks &lt;info@quickblocks.io&gt;.
 
     </p>
   </div>
