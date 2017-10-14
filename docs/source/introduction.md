@@ -19,6 +19,8 @@ This is the overview section
 Architecture
 ============
 
+.. index:: ‹utillib›, ‹etherlib›
+
 This is the architecture section.
 
 Terminology
