@@ -1,0 +1,342 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Introduction &mdash; QuickBlocks 0.2.0 beta documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="QuickBlocks 0.2.0 beta documentation" href="index.html"/>
+        <link rel="next" title="Quickstart" href="quickstart.html"/>
+        <link rel="prev" title="Welcome to QuickBlock’s documentation!" href="index.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> QuickBlocks
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.2.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#architecture">Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#namehash">Namehash</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#terminology">Terminology</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#algorithm">Algorithm</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#ens-on-ethereum">ENS on Ethereum</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#resources">Resources</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="userguide.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">QuickBlocks</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Introduction</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/introduction.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
+<a class="reference internal image-reference" href="_images/logo.png"><img alt="QuickBlocks logo" class="align-right" src="_images/logo.png" style="width: 150.0px; height: 175.5px;" /></a>
+<p>ENS is the Ethereum Name Service, a distributed, open, and extensible naming system based on the Ethereum blockchain.</p>
+<p>ENS can be used to resolve a wide variety of resources. The initial standard for ENS defines resolution for Ethereum addresses, but the system is extensible by design, allowing more resource types to be resolved in future without the core components of ENS requiring upgrades.</p>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>The primary goal of ENS is to resolve human-readable names, like ‘myname.eth’, into machine-readable identifiers, including Ethereum addresses, Swarm and IPFS content hashes, and other identifiers. A secondary purpose is to provide metadata about names, such as ABIs for contracts, and whois information for users.</p>
+<p>ENS has similar goals to DNS, the Internet’s Domain Name Service, but has significantly different architecture, due to the capabilities and constraints provided by the Ethereum blockchain. Like DNS, ENS operates on a system of dot-separated hierarchial names called domains, with the owner of a domain having full control over the distribution of subdomains.</p>
+<p>Top-level domains, like ‘.eth’ and ‘.test’ are owned by smart contracts called registrars, which specify rules governing the allocation of their subdomains. Anyone may, by following the rules imposed by these registrar contracts, obtain ownership of a second-level domain for their own use.</p>
+</div>
+<div class="section" id="architecture">
+<h2>Architecture<a class="headerlink" href="#architecture" title="Permalink to this headline">¶</a></h2>
+<p>ENS has two principal components: the registry, and resolvers.</p>
+<p>The ENS registry consists of a single central contract that maintains a list of all domains and subdomains, and stores three critical pieces of information about each:</p>
+<blockquote>
+<div><ul class="simple">
+<li>The owner of the domain</li>
+<li>The resolver for the domain</li>
+<li>The time-to-live for all records under the domain</li>
+</ul>
+</div></blockquote>
+<p>The owner of a domain may be either an external account (a user) or a smart contract. A registrar is simply a smart contract that owns a domain, and issues subdomains of that domain to users that follow some set of rules defined in the contract.</p>
+<p>Owners of domains in the ENS registry may:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Set the resolver and TTL for the domain</li>
+<li>Transfer ownership of the domain to another address</li>
+<li>Change the ownership of subdomains</li>
+</ul>
+</div></blockquote>
+<p>The ENS registry is deliberately straightforward, and exists only to map from a name to the resolver responsible for it.</p>
+<p>Resolvers are responsible for the actual process of translating names into addresses. Any contract that implements the relevant standards may act as a resolver in ENS. General-purpose resolver implementations are offered for users whose requirements are straightforward, such as serving an infrequently changed address for a name.</p>
+<p>Each record type - Ethereum address, Swarm content hash, and so forth - defines a method or methods that a resolver must implement in order to provide records of that kind. New record types may be defined at any time via the EIP standardisation process, with no need to make changes to the ENS registry or to existing resolvers in order to support them.</p>
+</div>
+<div class="section" id="namehash">
+<span id="id1"></span><h2>Namehash<a class="headerlink" href="#namehash" title="Permalink to this headline">¶</a></h2>
+<p>Names in ENS are represented as 32 byte hashes, rather than as plain text. This simplifies processing and storage, while permitting arbitrary length domain names, and preserves the privacy of names onchain. The algorithm used to translate domain names into hashes is called namehash. Namehash is defined in <a class="reference external" href="https://github.com/ethereum/EIPs/issues/137">EIP137</a>.</p>
+<p>In order to preserve the hierarchal nature of names, namehash is defined recursively, making it possible to derive the hash of a subdomain from the hash of the parent domain and the name or hash of the subdomain.</p>
+<div class="section" id="terminology">
+<h3>Terminology<a class="headerlink" href="#terminology" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li><strong>domain</strong> - the complete, human-readable form of a name; eg, <cite>‘vitalik.wallet.eth’</cite>.</li>
+<li><strong>label</strong> - a single component of a domain; eg, <cite>‘vitalik’</cite>, <cite>‘wallet’</cite>, or <cite>‘eth’</cite>. A label may not contain a period (‘.’).</li>
+<li><strong>label hash</strong> - the output of the keccak-256 function applied to a label; eg, <cite>keccak256(‘eth’) = 0x4f5b812789fc606be1b3b16908db13fc7a9adf7ca72641f84d75b47069d3d7f0</cite>.</li>
+<li><strong>node</strong> - the output of the namehash function, used to uniquely identify a name in ENS.</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="algorithm">
+<h3>Algorithm<a class="headerlink" href="#algorithm" title="Permalink to this headline">¶</a></h3>
+<p>First, a domain is divided into labels by splitting on periods (‘.’). So, ‘vitalik.wallet.eth’ becomes the list [‘vitalik’, ‘wallet’, ‘eth’].</p>
+<p>The namehash function is then defined recursively as follows:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>namehash([]) = 0x0000000000000000000000000000000000000000000000000000000000000000
+namehash([label, …]) = keccak256(namehash(…), keccak256(label))
+</pre></div>
+</div>
+<p>A sample implementation in Python is provided below.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">namehash</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+  <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+    <span class="k">return</span> <span class="s1">&#39;</span><span class="se">\0</span><span class="s1">&#39;</span> <span class="o">*</span> <span class="mi">32</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="n">label</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">remainder</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="n">partition</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">sha3</span><span class="p">(</span><span class="n">namehash</span><span class="p">(</span><span class="n">remainder</span><span class="p">)</span> <span class="o">+</span> <span class="n">sha3</span><span class="p">(</span><span class="n">label</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="ens-on-ethereum">
+<h2>ENS on Ethereum<a class="headerlink" href="#ens-on-ethereum" title="Permalink to this headline">¶</a></h2>
+<p>ENS is deployed on mainnet at <a class="reference external" href="https://etherscan.io/address/0x314159265dd8dbb310642f98f50c066173c1259b">0x314159265dd8dbb310642f98f50c066173c1259b</a>, where users may register names under the eth TLD, which uses an auction based registrar.</p>
+<p>ENS is also deployed on the Ropsten testnet at <a class="reference external" href="https://ropsten.etherscan.io/address/0x112234455c3a32fd11230c42e7bccd4a84e02010">0x112234455c3a32fd11230c42e7bccd4a84e02010</a>. Users may register names under two top level domains:</p>
+<blockquote>
+<div><ul class="simple">
+<li>.eth, which uses an auction based registrar with the same functionality as the main network, and allows users to keep names indefinitely; see <a class="reference internal" href="userguide.html#auctions"><span class="std std-ref">Registering a name with the auction registrar</span></a>.</li>
+<li>.test, which allows anyone to claim an unused name for test purposes, which expires after 28 days; see <a class="reference internal" href="userguide.html#fifs"><span class="std std-ref">Registering a name with the FIFS registrar</span></a>.</li>
+</ul>
+</div></blockquote>
+<p>ENS is also deployed on the Rinkeby testnet at <a class="reference external" href="https://rinkeby.etherscan.io/address/0xe7410170f87102df0055eb195163a03b7f2bff4a">0xe7410170f87102df0055eb195163a03b7f2bff4a</a>, where only the .test top level domain is supported.</p>
+</div>
+<div class="section" id="resources">
+<h2>Resources<a class="headerlink" href="#resources" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference external" href="https://github.com/ethereum/EIPs/issues/137">EIP137</a> - Ethereum Name Service</li>
+<li><a class="reference external" href="https://github.com/ethereum/EIPs/issues/162">EIP162</a> - Initial ENS Registrar Specification</li>
+<li><a class="reference external" href="https://www.npmjs.com/package/ethereum-ens">ethereum-ens</a> Javascript library</li>
+<li>Nick’s talk on ENS at DevCon 2: <a class="reference external" href="https://www.youtube.com/watch?v=pLDDbCZXvTE">https://www.youtube.com/watch?v=pLDDbCZXvTE</a></li>
+<li>DevCon 2 talk slides: <a class="reference external" href="https://arachnid.github.io/devcon2/#/title">https://arachnid.github.io/devcon2/#/title</a></li>
+<li>Web interface for Ethereum enabled browsers: <a class="reference external" href="https://registrar.ens.domains">https://registrar.ens.domains</a></li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="quickstart.html" class="btn btn-neutral float-right" title="Quickstart" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral" title="Welcome to QuickBlock’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Thomas Jay Rush &lt;jrush@quickblocks.io&gt;.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.2.0 beta',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
