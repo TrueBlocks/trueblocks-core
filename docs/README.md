@@ -1,3 +1,3 @@
 ## Documentation
 
-[Visit the quickBlocks documentation here](http://quickblocks.io/docs).
+<a href="http://quickblocks.io" target=_top>Visit the quickBlocks documentation here</a>
