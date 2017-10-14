@@ -146,8 +146,6 @@
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="_sources/quickstart.rst.txt" rel="nofollow"> View page source</a>
-          
         
       </li>
     
@@ -161,45 +159,15 @@
             
   <div class="section" id="quickstart">
 <h1>Quickstart<a class="headerlink" href="#quickstart" title="Permalink to this headline">¶</a></h1>
-<p>Just want to get a name and make it resolve to something? Here’s how.</p>
-<p>First, download <a class="reference external" href="https://github.com/ethereum/ens/blob/master/ensutils-testnet.js">ensutils-testnet.js</a> to your local machine, and import it into an Ethereum console on a node synced to ropsten or rinkeby:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">loadScript</span><span class="p">(</span><span class="s1">&#39;/path/to/ensutils-testnet.js&#39;</span><span class="p">);</span>
-</pre></div>
-</div>
-<p>Before registering, check that nobody owns the name you want to register:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">new</span> <span class="n">Date</span><span class="p">(</span><span class="n">testRegistrar</span><span class="o">.</span><span class="n">expiryTimes</span><span class="p">(</span><span class="n">web3</span><span class="o">.</span><span class="n">sha3</span><span class="p">(</span><span class="s1">&#39;myname&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">toNumber</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>If this line returns a date earlier than the current date, the name is available and you’re good to go. You can register the domain for yourself by running:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">testRegistrar</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">web3</span><span class="o">.</span><span class="n">sha3</span><span class="p">(</span><span class="s1">&#39;myname&#39;</span><span class="p">),</span> <span class="n">eth</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">{</span><span class="n">from</span><span class="p">:</span> <span class="n">eth</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">]})</span>
-</pre></div>
-</div>
-<p>Next, tell the ENS registry to use the public resolver for your name:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">ens</span><span class="o">.</span><span class="n">setResolver</span><span class="p">(</span><span class="n">namehash</span><span class="p">(</span><span class="s1">&#39;myname.test&#39;</span><span class="p">),</span> <span class="n">publicResolver</span><span class="o">.</span><span class="n">address</span><span class="p">,</span> <span class="p">{</span><span class="n">from</span><span class="p">:</span> <span class="n">eth</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">]});</span>
-</pre></div>
-</div>
-<p>Once that transaction is mined, tell the resolver to resolve that name to your account:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">publicResolver</span><span class="o">.</span><span class="n">setAddr</span><span class="p">(</span><span class="n">namehash</span><span class="p">(</span><span class="s1">&#39;myname.test&#39;</span><span class="p">),</span> <span class="n">eth</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">{</span><span class="n">from</span><span class="p">:</span> <span class="n">eth</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">]});</span>
-</pre></div>
-</div>
-<p>…or any other address:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">publicResolver</span><span class="o">.</span><span class="n">setAddr</span><span class="p">(</span><span class="n">namehash</span><span class="p">(</span><span class="s1">&#39;myname.test&#39;</span><span class="p">),</span> <span class="s1">&#39;0x1234...&#39;</span><span class="p">,</span> <span class="p">{</span><span class="n">from</span><span class="p">:</span> <span class="n">eth</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">]});</span>
-</pre></div>
-</div>
-<p>If you want, create a subdomain and do the whole thing all over again:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">ens</span><span class="o">.</span><span class="n">setSubnodeOwner</span><span class="p">(</span><span class="n">namehash</span><span class="p">(</span><span class="s1">&#39;myname.test&#39;</span><span class="p">),</span> <span class="n">web3</span><span class="o">.</span><span class="n">sha3</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">),</span> <span class="n">eth</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="p">{</span><span class="n">from</span><span class="p">:</span> <span class="n">eth</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">]});</span>
-<span class="n">ens</span><span class="o">.</span><span class="n">setResolver</span><span class="p">(</span><span class="n">namehash</span><span class="p">(</span><span class="s1">&#39;foo.myname.test&#39;</span><span class="p">),</span> <span class="n">publicResolver</span><span class="o">.</span><span class="n">address</span><span class="p">,</span> <span class="p">{</span><span class="n">from</span><span class="p">:</span> <span class="n">eth</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">1</span><span class="p">]});</span>
-<span class="o">...</span>
-</pre></div>
-</div>
-<p>Finally, you can resolve your newly created name:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">getAddr</span><span class="p">(</span><span class="s1">&#39;myname.test&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>which is shorthand for:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">resolverContract</span><span class="o">.</span><span class="n">at</span><span class="p">(</span><span class="n">ens</span><span class="o">.</span><span class="n">resolver</span><span class="p">(</span><span class="n">namehash</span><span class="p">(</span><span class="s1">&#39;myname.test&#39;</span><span class="p">)))</span><span class="o">.</span><span class="n">addr</span><span class="p">(</span><span class="n">namehash</span><span class="p">(</span><span class="s1">&#39;myname.test&#39;</span><span class="p">))</span>
-</pre></div>
-</div>
+<p>Some stuff <cite>quickBlocks quicStart</cite>.</p>
+<blockquote>
+<div>some code</div></blockquote>
+<p>Some text</p>
+<blockquote>
+<div>some code</div></blockquote>
+<p>More text:</p>
+<blockquote>
+<div>more code</div></blockquote>
 </div>
 
 
@@ -224,7 +192,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Thomas Jay Rush &lt;jrush@quickblocks.io&gt;.
+        &copy; Copyright 2018, QuickBlocks &lt;info@quickblocks.io&gt;.
 
     </p>
   </div>
