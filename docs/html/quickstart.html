@@ -1,0 +1,278 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Quickstart &mdash; QuickBlocks 0.2.0 beta documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="QuickBlocks 0.2.0 beta documentation" href="index.html"/>
+        <link rel="next" title="User Guide" href="userguide.html"/>
+        <link rel="prev" title="Introduction" href="introduction.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> QuickBlocks
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.2.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="userguide.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">QuickBlocks</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Quickstart</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/quickstart.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="quickstart">
+<h1>Quickstart<a class="headerlink" href="#quickstart" title="Permalink to this headline">¶</a></h1>
+<p>Just want to get a name and make it resolve to something? Here’s how.</p>
+<p>First, download <a class="reference external" href="https://github.com/ethereum/ens/blob/master/ensutils-testnet.js">ensutils-testnet.js</a> to your local machine, and import it into an Ethereum console on a node synced to ropsten or rinkeby:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">loadScript</span><span class="p">(</span><span class="s1">&#39;/path/to/ensutils-testnet.js&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Before registering, check that nobody owns the name you want to register:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">new</span> <span class="n">Date</span><span class="p">(</span><span class="n">testRegistrar</span><span class="o">.</span><span class="n">expiryTimes</span><span class="p">(</span><span class="n">web3</span><span class="o">.</span><span class="n">sha3</span><span class="p">(</span><span class="s1">&#39;myname&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">toNumber</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If this line returns a date earlier than the current date, the name is available and you’re good to go. You can register the domain for yourself by running:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">testRegistrar</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">web3</span><span class="o">.</span><span class="n">sha3</span><span class="p">(</span><span class="s1">&#39;myname&#39;</span><span class="p">),</span> <span class="n">eth</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">{</span><span class="n">from</span><span class="p">:</span> <span class="n">eth</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">]})</span>
+</pre></div>
+</div>
+<p>Next, tell the ENS registry to use the public resolver for your name:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">ens</span><span class="o">.</span><span class="n">setResolver</span><span class="p">(</span><span class="n">namehash</span><span class="p">(</span><span class="s1">&#39;myname.test&#39;</span><span class="p">),</span> <span class="n">publicResolver</span><span class="o">.</span><span class="n">address</span><span class="p">,</span> <span class="p">{</span><span class="n">from</span><span class="p">:</span> <span class="n">eth</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">]});</span>
+</pre></div>
+</div>
+<p>Once that transaction is mined, tell the resolver to resolve that name to your account:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">publicResolver</span><span class="o">.</span><span class="n">setAddr</span><span class="p">(</span><span class="n">namehash</span><span class="p">(</span><span class="s1">&#39;myname.test&#39;</span><span class="p">),</span> <span class="n">eth</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">{</span><span class="n">from</span><span class="p">:</span> <span class="n">eth</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">]});</span>
+</pre></div>
+</div>
+<p>…or any other address:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">publicResolver</span><span class="o">.</span><span class="n">setAddr</span><span class="p">(</span><span class="n">namehash</span><span class="p">(</span><span class="s1">&#39;myname.test&#39;</span><span class="p">),</span> <span class="s1">&#39;0x1234...&#39;</span><span class="p">,</span> <span class="p">{</span><span class="n">from</span><span class="p">:</span> <span class="n">eth</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">]});</span>
+</pre></div>
+</div>
+<p>If you want, create a subdomain and do the whole thing all over again:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">ens</span><span class="o">.</span><span class="n">setSubnodeOwner</span><span class="p">(</span><span class="n">namehash</span><span class="p">(</span><span class="s1">&#39;myname.test&#39;</span><span class="p">),</span> <span class="n">web3</span><span class="o">.</span><span class="n">sha3</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">),</span> <span class="n">eth</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="p">{</span><span class="n">from</span><span class="p">:</span> <span class="n">eth</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">]});</span>
+<span class="n">ens</span><span class="o">.</span><span class="n">setResolver</span><span class="p">(</span><span class="n">namehash</span><span class="p">(</span><span class="s1">&#39;foo.myname.test&#39;</span><span class="p">),</span> <span class="n">publicResolver</span><span class="o">.</span><span class="n">address</span><span class="p">,</span> <span class="p">{</span><span class="n">from</span><span class="p">:</span> <span class="n">eth</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">1</span><span class="p">]});</span>
+<span class="o">...</span>
+</pre></div>
+</div>
+<p>Finally, you can resolve your newly created name:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">getAddr</span><span class="p">(</span><span class="s1">&#39;myname.test&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>which is shorthand for:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">resolverContract</span><span class="o">.</span><span class="n">at</span><span class="p">(</span><span class="n">ens</span><span class="o">.</span><span class="n">resolver</span><span class="p">(</span><span class="n">namehash</span><span class="p">(</span><span class="s1">&#39;myname.test&#39;</span><span class="p">)))</span><span class="o">.</span><span class="n">addr</span><span class="p">(</span><span class="n">namehash</span><span class="p">(</span><span class="s1">&#39;myname.test&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="userguide.html" class="btn btn-neutral float-right" title="User Guide" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="introduction.html" class="btn btn-neutral" title="Introduction" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Thomas Jay Rush &lt;jrush@quickblocks.io&gt;.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.2.0 beta',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
