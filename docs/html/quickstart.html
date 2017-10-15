@@ -36,7 +36,7 @@
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
     <link rel="top" title="QuickBlocks 0.2.0 beta documentation" href="index.html"/>
-        <link rel="next" title="User’s Guide" href="userguide.html"/>
+        <link rel="next" title="Use Cases" href="usecases.html"/>
         <link rel="prev" title="Introduction" href="introduction.html"/> 
 
   
@@ -94,7 +94,7 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Quickstart</a></li>
-<li class="toctree-l1"><a class="reference internal" href="userguide.html">User’s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usecases.html">Use Cases</a></li>
 <li class="toctree-l1"><a class="reference internal" href="techref.html">Technical Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="faq.html">FAQ</a></li>
 </ul>
@@ -162,15 +162,51 @@
             
   <div class="section" id="quickstart">
 <h1>Quickstart<a class="headerlink" href="#quickstart" title="Permalink to this headline">¶</a></h1>
-<p>Some stuff <cite>quickBlocks quicStart</cite>.</p>
-<blockquote>
-<div>some code</div></blockquote>
-<p>Some text</p>
-<blockquote>
-<div>some code</div></blockquote>
-<p>More text:</p>
-<blockquote>
-<div>more code</div></blockquote>
+<p>Start with the <a class="reference external" href="https://github.com/Great-Hill-Corporation/quickBlocks/blob/master/src/other/install/INSTALL.md">installation instructions</a> (which are slightly different per operating system). Here’s the instructions for Ubuntu:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">sudo</span><span class="p">)</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">update</span>
+<span class="p">(</span><span class="n">sudo</span><span class="p">)</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">upgrade</span>
+<span class="p">(</span><span class="n">sudo</span><span class="p">)</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">build</span><span class="o">-</span><span class="n">essential</span>
+<span class="p">(</span><span class="n">sudo</span><span class="p">)</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">libcurl3</span><span class="o">-</span><span class="n">dev</span>
+<span class="p">(</span><span class="n">sudo</span><span class="p">)</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">cmake</span>
+<span class="p">(</span><span class="n">sudo</span><span class="p">)</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">python</span> <span class="n">python</span><span class="o">-</span><span class="n">dev</span>
+</pre></div>
+</div>
+<p>Next compile, build, and install the executable files:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">Great</span><span class="o">-</span><span class="n">Hill</span><span class="o">-</span><span class="n">Corporation</span><span class="o">/</span><span class="n">quickBlocks</span><span class="o">.</span><span class="n">git</span> <span class="o">.</span>
+<span class="n">cd</span> <span class="n">quickBlocks</span>
+<span class="n">mkdir</span> <span class="n">build</span>
+<span class="n">cd</span> <span class="n">build</span>
+<span class="n">cmake</span> <span class="o">../</span><span class="n">src</span>
+<span class="n">make</span>
+<span class="p">(</span><span class="n">sudo</span><span class="p">)</span> <span class="n">make</span> <span class="n">install</span>
+</pre></div>
+</div>
+<p>Finally, play with some <a class="reference external" href="https://github.com/Great-Hill-Corporation/quickBlocks/blob/master/src/samples">sample code</a>. Here’s some sample code that uses one of QuickBlocks’ <cite>forEvery</cite> functions to visit each block in the chain and print out its logsBloom. We present it with no explanation.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">#include &quot;etherlib.h&quot;</span>
+<span class="c1">#include &quot;options.h&quot;</span>
+
+<span class="o">//--------------------------------------------------------------</span>
+<span class="nb">int</span> <span class="n">main</span><span class="p">(</span><span class="nb">int</span> <span class="n">argc</span><span class="p">,</span> <span class="n">const</span> <span class="n">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span> <span class="p">{</span>
+
+    <span class="n">etherlib_init</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">);</span>
+
+    <span class="n">COptions</span> <span class="n">opt</span><span class="p">;</span>
+    <span class="n">opt</span><span class="o">.</span><span class="n">parseArguments</span><span class="p">(</span><span class="n">argc</span><span class="p">,</span> <span class="n">argv</span><span class="p">);</span>
+
+    <span class="n">forEveryBlock</span> <span class="p">(</span> <span class="n">displayBloom</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">opt</span><span class="p">,</span> <span class="n">opt</span><span class="o">.</span><span class="n">start</span><span class="p">,</span> <span class="n">opt</span><span class="o">.</span><span class="n">nBlocks</span><span class="p">,</span> <span class="n">opt</span><span class="o">.</span><span class="n">skip</span> <span class="p">);</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="o">//-------------------------------------------------------------</span>
+<span class="nb">bool</span> <span class="n">displayBloom</span><span class="p">(</span><span class="n">CBlock</span><span class="o">&amp;</span> <span class="n">block</span><span class="p">,</span> <span class="n">void</span> <span class="o">*</span><span class="n">data</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">block</span><span class="o">.</span><span class="n">blockNumber</span> <span class="o">&lt;&lt;</span> <span class="n">fromBloom</span><span class="p">(</span><span class="n">block</span><span class="o">.</span><span class="n">logsBloom</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="n">true</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 </div>
 
 
@@ -183,7 +219,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="userguide.html" class="btn btn-neutral float-right" title="User’s Guide" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="usecases.html" class="btn btn-neutral float-right" title="Use Cases" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="introduction.html" class="btn btn-neutral" title="Introduction" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
@@ -195,7 +231,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, QuickBlocks &lt;info@quickblocks.io&gt;.
+        &copy; Copyright 2018, QuickBlocks® &lt;info@quickblocks.io&gt;.
 
     </p>
   </div>
