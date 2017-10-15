@@ -189,8 +189,7 @@ namespace qblocks {
             usage();
             exit(0);
 
-        } else if (cmdLine.Contains("--nocolors ") || cmdLine.Contains("--nocolor ")) {
-            cmdLine.ReplaceAll("--nocolors ","");
+        } else if (cmdLine.Contains("--nocolor ")) {
             cmdLine.ReplaceAll("--nocolor ","");
             colorsOff();
 
@@ -237,7 +236,7 @@ namespace qblocks {
             return true;
         if (arg == "--version")
             return true;
-        if (arg == "--nocolors" || arg == "--nocolor")
+        if (arg == "--nocolor")
             return true;
         if (arg == "null")
             return true;
