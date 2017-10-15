@@ -3,15 +3,13 @@ getBloom 1590000 4000001-4000002 x400x001
 
   The given value 'x400x001' is not a numeral or a special named block. Quitting...
 
-  Usage:    getBloom [-r|-e|-e|-c|-v|-h] <block> [block...]  
+  Usage:    getBloom [-r|-p|-v|-h] <block> [block...]  
   Purpose:  Returns bloom filter(s) from local cache or directly from a running node.
              
   Where:    
 	block_list            a space-separated list of one or more blocks from which to retrieve blooms (required)
 	-r  (--raw)           pull the bloom filter from the running Ethereum node (no cache)
-	-e  (--enhanced)      retrieve the enhanced bloom filter for a given block (see documentation)
-	-e  (--receipts)      display receipt level blooms, default is to display only block-level blooms
-	-c  (--check)         compare results between qblocks and Ethereum node, report differences, if any
+	-p  (--receipt)       display receipt level blooms, default is to display only block-level blooms
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
 	-h  (--help)          display this help screen
 

@@ -2,7 +2,7 @@
 
 The `tools` folder contains command-line programs that serve primarily as examples of using the QuickBlocks [libraries](../libs). You will find that the source code for each of the individual tools is quite simple. In a certain sense, each tool give you access to a different part of the Ethereum data structure.
 
-<img src="../../docs/data_structures.png" style="border:1px orange solid">
+<img src="../other/images/data_structures.png" style="border:1px orange solid">
 
 While primarily illustrative, these tools are also useful. For example, you may use them in testing and scripting scenarios. Each is fully documented further in its own README.md file.
 

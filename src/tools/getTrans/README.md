@@ -1,8 +1,6 @@
 ## getTrans
 
-The `getTrans` tool retrieves transactions from the running Ethereum node (using the `--fromNode` option) or from QuickBlocks (the default). You may provide a transaction `hash`, a `blockNumber.transactionID` pair, or a `blockHash.transactionID` pair (or any combination) to specify the transaction(s).
-
-Use the `--trace` option to display a trace of the transaction as well.
+The `getTrans` tool retrieves transactions from the running Ethereum node (using the `--raw` option) or from QuickBlocks (the default). You may provide a transaction `hash`, a `blockNumber.transactionID` pair, or a `blockHash.transactionID` pair (or any combination) to specify the transaction(s).
 
 #### Usage
 
@@ -21,7 +19,7 @@ Use the `--trace` option to display a trace of the transaction as well.
 
 - `trans_list` is one or more space-separated identifiers which may be either a transaction hash,
   a blockNumber.transactionID pair, or a blockHash.transactionID pair, or any combination.
-- This tool checks for valid input sytax, but does not check that the transaction requested exists.
+- This tool checks for valid input syntax, but does not check that the transaction requested exists.
 - This tool retrieves information from the local node or the ${FALLBACK} node, if configured (see documentation).
 - If the queried node does not store historical state, the results may be undefined.
 
@@ -37,7 +35,7 @@ All **quickBlocks** command-line tools support the following commands (although 
     Command     |     Description
     -----------------------------------------------------------------------------
     --version   |   display the current version of the tool
-    --nocolors  |   turn off colored display
+    --nocolor   |   turn off colored display
     --wei       |   specify value in wei (the default)
     --ether     |   specify value in ether
     --dollars   |   specify value in US dollars
