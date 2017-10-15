@@ -51,7 +51,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'QuickBlocks'
-copyright = u'2018, QuickBlocks <info@quickblocks.io>'
+copyright = u'2018, QuickBlocks® <info@quickblocks.io>'
 author = u'QuickBlocks <info@quickblocks.io>'
 
 # The version info for the project you're documenting, acts as replacement for
