@@ -3,7 +3,7 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to QuickBlocks!
+Welcome to QuickBlocks®!
 =========================
 
 .. toctree::
@@ -12,7 +12,7 @@ Welcome to QuickBlocks!
 
    introduction
    quickstart
-   userguide
+   usecases
    techref
    faq
 
