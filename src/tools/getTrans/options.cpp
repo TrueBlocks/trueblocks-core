@@ -86,7 +86,7 @@ SFString COptions::postProcess(const SFString& which, const SFString& str) const
         SFString ret;
         ret += "[{trans_list}] is one or more space-separated identifiers which may be either a transaction hash,|"
                 "a blockNumber.transactionID pair, or a blockHash.transactionID pair, or any combination.\n";
-        ret += "This tool checks for valid input sytax, but does not check that the transaction requested exists.\n";
+        ret += "This tool checks for valid input syntax, but does not check that the transaction requested exists.\n";
         ret += "This tool retrieves information from the local node or the ${FALLBACK} node, if configured (see documentation).\n";
         ret += "If the queried node does not store historical state, the results may be undefined.\n";
         return ret;

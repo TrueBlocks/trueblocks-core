@@ -4,7 +4,7 @@
 
 #### Usage
 
-`Usage:`    getBloom [-r|-e|-e|-c|-v|-h] &lt;block&gt; [block...]  
+`Usage:`    getBloom [-r|-p|-v|-h] &lt;block&gt; [block...]  
 `Purpose:`  Returns bloom filter(s) from local cache or directly from a running node.
              
 `Where:`  
@@ -13,9 +13,7 @@
 | -------: | :------- | :------- |
 |  | block_list | a space-separated list of one or more blocks from which to retrieve blooms |
 | -r | --raw | pull the bloom filter from the running Ethereum node (no cache) |
-| -e | --enhanced | retrieve the enhanced bloom filter for a given block (see documentation) |
-| -e | --receipts | display receipt level blooms, default is to display only block-level blooms |
-| -c | --check | compare results between qblocks and Ethereum node, report differences, if any |
+| -p | --receipt | display receipt level blooms, default is to display only block-level blooms |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
@@ -32,7 +30,7 @@ All **quickBlocks** command-line tools support the following commands (although 
     Command     |     Description
     -----------------------------------------------------------------------------
     --version   |   display the current version of the tool
-    --nocolors  |   turn off colored display
+    --nocolor   |   turn off colored display
     --wei       |   specify value in wei (the default)
     --ether     |   specify value in ether
     --dollars   |   specify value in US dollars

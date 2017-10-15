@@ -15,6 +15,7 @@ public:
     bool noconst;
     bool open;
     bool asJson;
+    bool raw;
     SFAddress addrs[MAX_ADDRS+2];
     SFUint32 nAddrs;
     SFString primaryAddr;
