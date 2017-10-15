@@ -13,6 +13,7 @@ Welcome to QuickBlocks!
    introduction
    quickstart
    userguide
+   techref
    faq
 
 Indices and tables
