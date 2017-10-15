@@ -1,6 +1,6 @@
-**********
-User Guide
-**********
+*************
+User's Guide
+*************
 
 This user guide is intended for anyone wanting to use QuickBlocks
 

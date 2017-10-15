@@ -42,6 +42,9 @@ templates_path = ['_templates']
 # You can specify multiple suffix as a list of string:
 #
 source_suffix = ['.rst', '.md']
+#source_parsers = {
+#   '.md': 'recommonmark.parser.CommonMarkParser',
+#}
 
 # The master toctree document.
 master_doc = 'index'
@@ -87,7 +90,7 @@ todo_include_todos = True
 #html_theme = 'alabaster'
 html_theme = 'sphinx_rtd_theme'
 html_static_path = ['_static']
-html_show_sourcelink = False
+#html_show_sourcelink = False
 
 # Custom sidebar templates, must be a dictionary that maps document names
 # to template names.
