@@ -10,7 +10,7 @@ The current version of QuickBlocks stores block data in its cache only when a bl
 
 If you ask QuickBlocks to retrieve every block (as we do), every block is written to the cache. In our case, we want to do system-wide data analytics, and the QuickBlocks cache takes up an additional 500 GB.
 
-We store our QuickBlocks cache on an external SSD hard drive. We've found [this SSD drive](https://www.amazon.com/Samsung-T5-Portable-SSD-MU-PA1T0B/dp/B073H552FJ/ref=sr_1_sc_3?ie=UTF8&qid=1507691185&sr=8-3-spell&keywords=Samsubg+1tb+ssd) to be quite execllent for this purpose. [Blockchain on a Stick](https://medium.com/@tjayrush/accounting-for-the-revolution-8822b28ccc16).
+We store our QuickBlocks cache on an external SSD hard drive. We've found [this SSD drive](https://www.amazon.com/Samsung-T5-Portable-SSD-MU-PA1T0B/dp/B073H552FJ/ref=sr_1_sc_3?ie=UTF8&qid=1507691185&sr=8-3-spell&keywords=Samsubg+1tb+ssd) to be quite excellent for this purpose. [Blockchain on a Stick](https://medium.com/@tjayrush/accounting-for-the-revolution-8822b28ccc16).
 
 ## Not Running an Ethereum Node
 

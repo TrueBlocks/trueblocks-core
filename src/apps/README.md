@@ -8,9 +8,9 @@ The following applications are open source and available at our git hub:
 
 - [**ethslurp**](ethslurp): This program pulls data from the http://etherscan.io APIs. It may be used to verify results from QuickBlocks, checking that they are consistent with EtherScan. Ultimately, this tool is incomplete in two ways: (1) it pulls data from a centralized source as opposed to a locally-running node, and (2) it ignores internal smart contract message calls.
 
-- [**grabABI**](grabABI): This is the basis of the `chifra` application. Given an Etheruem address, this tool first grabs an ABI from one of numerous sources (http://etherscan.io, ENS, etc.). It then parses the ABI and automatically writes the C++ source code necessary to build an Ethereum address monitor. `chafra` uses `grabABI` and `makeClass` extensively.
+- [**grabABI**](grabABI): This is the basis of the `chifra` application. Given an Etheruem address, this tool first grabs an ABI from one of numerous sources (http://etherscan.io, ENS, etc.). It then parses the ABI and automatically writes the C++ source code necessary to build an Ethereum address monitor. `chifra` uses `grabABI` and `makeClass` extensively.
 
-- [**makeClass**](makeClass): This tool is used by `grabABI` to write the actual C++ code generated during the `chafra` process. Many of the source files found in `etherlib` were  generated automatically using this tool.
+- [**makeClass**](makeClass): This tool is used by `grabABI` to write the actual C++ code generated during the `chifra` process. Many of the source files found in `etherlib` were  generated automatically using this tool.
 
 - [**cacheMan**](../../src/monitors/cacheMan): This tool allows one to explore the a monitor's binary cache data file. It preforms various checks on the data. The tool provides options for truncating the cache and/or merging two caches into one which may be useful in certain circumstances.
 
