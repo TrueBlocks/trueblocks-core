@@ -20,8 +20,7 @@ Indices and tables
 ==================
 
 * :ref:`genindex`
-* :ref:`modindex`
 * :ref:`search`
 
-This document is licensed under the @emph{Creative Commons Attribution License}. To
+This document is licensed under the **Creative Commons Attribution License**. To
 view a copy of this license, visit http://creativecommons.org/licenses/by/2.0/
