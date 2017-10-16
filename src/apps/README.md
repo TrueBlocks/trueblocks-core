@@ -1,21 +1,22 @@
 ## Apps
 
-The `apps` folder contains the primary applications built on the QuickBlocks libraries. This includes the decentralized blockchain scrapers `blockScrape`, `blockAcct` and `miniBlocks`; `chifra`, an automated way to create smart contract monitors given an ABI; `ethprice` which pulls US dollar price data from the Internet; `ethslurp` which is a down-and-dirty centralized command line scraper utilizing http://etherscan.io. Ethslurp is very fast, but ultimately centralized and incomplete.
+The `apps` folder contains the primary applications built on the QuickBlocks libraries. This includes the decentralized blockchain scrapers `blockScrape`; `chifra`, an automated way to create smart contract monitors; `ethprice` which pulls US dollar price data from remote sources; `ethslurp` which is a down-and-dirty centralized command line scraper utilizing http://etherscan.io; and `cacheMan` which helps manage [account monitors](../monitors/README.md).
 
-- [**blockScrape**](blockScrape): The primary component of the QuickBlocks decentralized blockchain scraper. `blockScrape` runs periodically and retrieves blocks from the node software. After processing, this program then stores the blocks locally in a speed-optimized format.
+The following applications are open source and available at our git hub:
 
-- [**miniBlocks**](miniBlocks): Compresses the transactional data found in each block removing as much unnecessary data as possible so that later retrieval of the transactions is as quick as possible.
+- [**ethprice**](ethprice): A simple utility that pulls price data local from various sources. It is configurable to retrieve its data from any of a number of price feeds and collate or average the feeds. US Dollar prices can be used in tax reporting and current balance reporting tools.
 
-- [**chifra**](chifra): `chifra` builds parsing libraries for particular sets of blockchain addresses. Developers may later link to these libraries to fully parse transactional input and event data.
+- [**ethslurp**](ethslurp): This program pulls data from the http://etherscan.io APIs. It may be used to verify results from QuickBlocks, checking that they are consistent with EtherScan. Ultimately, this tool is incomplete in two ways: (1) it pulls data from a centralized source as opposed to a locally-running node, and (2) it ignores internal smart contract message calls.
 
-- [**ethprice**](ethprice): `Ethprice` is a simple utility that pulls price data local to the hard drive for quicker retrieval. It is configurable to retrieve its data from any of five price feeds and collate or average the feeds.
+- [**grabABI**](grabABI): This is the basis of the `chifra` application. Given an Etheruem address, this tool first grabs an ABI from one of numerous sources (http://etherscan.io, ENS, etc.). It then parses the ABI and automatically writes the C++ source code necessary to build an Ethereum address monitor. `chafra` uses `grabABI` and `makeClass` extensively.
 
-- [**ethslurp**](ethslurp): This program pulls data from the http://etherscan.io APIs. It can be used in testing to verify that the results from QuickBlocks and the results from EtherScan are consistent.
-
-Each of these programs is explained further in its own individual README.md files.
-
-- [**grabABI**](grabABI): This is the basis of the `chafra` application. Given an Etheruem address, this tool first grabs the ABI from where ever it can find it (http://etherscan.io, ENS, etc.). It then parses the ABI and writes all the C++ necessary to build an Ethereum address monitor. `chafra` uses this tool extensively.
-
-- [**makeClass**](makeClass): This tool is used by `grabABI` to write the actual C++ code generated during the `chafra` process. Many of the source files found in `etherlib` are also generated automatically using this tool.
+- [**makeClass**](makeClass): This tool is used by `grabABI` to write the actual C++ code generated during the `chafra` process. Many of the source files found in `etherlib` were  generated automatically using this tool.
 
 - [**cacheMan**](../../src/monitors/cacheMan): This tool allows one to explore the a monitor's binary cache data file. It preforms various checks on the data. The tool provides options for truncating the cache and/or merging two caches into one which may be useful in certain circumstances.
+
+The following tools are not available as open source. We intend to sell or license them through our website:
+
+- [**blockScrape**](blockScrape): The primary component of the QuickBlocks decentralized blockchain scraper. `blockScrape` runs periodically and retrieves blocks from a locally-running Ethereum node. After processing, this program stores the blocks locally in a speed-optimized format. **Note:** This application will be delivered through our [website](http://quickblocks.io).
+
+- [**chifra**](chifra): `chifra` builds parsing libraries for particular sets of blockchain addresses. Developers may later link to these libraries to fully parse transactional input and event data from the contract. We've called this data `articulated data` elsewhere. **Note:** This application will be delivered through our [website](http://quickblocks.io).
+
