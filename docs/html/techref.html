@@ -106,7 +106,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#blockscraper-application">blockScraper application</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#grababi-application">grabABI application</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#makeclass-application">makeClass application</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#smart-contract-monitors">Smart contract monitors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#smart-contract-monitors-transaction-debuggers">Smart contract monitors / transaction debuggers</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#libraries">Libraries</a><ul>
@@ -192,7 +192,7 @@
 of block numbers, special named blocks (see <a class="reference external" href="https://github.com/Great-Hill-Corporation/quickBlocks/blob/master/src/tools/whenBlock/README.md">whenBlock</a>), or any combination. Each of these
 tools is open source. The block-related tools are:</p>
 <blockquote>
-<div><a class="reference external" href="https://github.com/Great-Hill-Corporation/quickBlocks/blob/master/src/tools/getBloom/README.md">getBlock</a>,
+<div><a class="reference external" href="https://github.com/Great-Hill-Corporation/quickBlocks/blob/master/src/tools/getBlock/README.md">getBlock</a>,
 <a class="reference external" href="https://github.com/Great-Hill-Corporation/quickBlocks/blob/master/src/tools/getBloom/README.md">getBloom</a>,
 <a class="reference external" href="https://github.com/Great-Hill-Corporation/quickBlocks/blob/master/src/tools/whenBlock/README.md">whenBlock</a>,
 <a class="reference external" href="https://github.com/Great-Hill-Corporation/quickBlocks/blob/master/src/tools/whereBlock/README.md">whereBlock</a>,</div></blockquote>
@@ -246,9 +246,32 @@ needed to fully parse the blockchain data returned through the RPC. This tool is
 </div>
 <div class="section" id="makeclass-application">
 <h3>makeClass application<a class="headerlink" href="#makeclass-application" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div>The <strong>makeClass</strong> application takes a class definition file and generates a fully detailed, self describing, easily serializable C++ class that carries all the information necessary to
+store the entire Ethereum blockchain. Surprisingly, nearly 75% of all of the code that makes up the QuickBlocks libraries is generated automatically through the use of the <strong>makeClass</strong>
+application. In conjunction with the <strong>grabABI</strong> application an <strong>makeClass</strong> all of the code in both the token library and the wallet library was generated automatically with from
+simple configuration files. An important thing to note is that <strong>grabABI</strong> and <strong>makeClass</strong> can be used to create a full parsing / monitoring library for your smart contracts. With a simple
+command line pointing to your ABI file, a full feature smart contract monitor / transaction debugger may be created. Here is an example of a <strong>makeClass</strong> class definition file:</div></blockquote>
+<div class="highlight-default"><div class="highlight"><pre><span></span>[settings]
+class      = CBlock
+fields     = gas gasLimit|gas gasUsed|hash hash|bloom logsBloom|uint32 blockNumber|hash parentHash|timestamp timestamp|CTransactionArray transactions
+includes   = ethtypes.h|abilib.h|transaction.h
+c_includes = etherlib.h
+scope      = extern
+serialize  = true
+</pre></div>
 </div>
-<div class="section" id="smart-contract-monitors">
-<h3>Smart contract monitors<a class="headerlink" href="#smart-contract-monitors" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="smart-contract-monitors-transaction-debuggers">
+<h3>Smart contract monitors / transaction debuggers<a class="headerlink" href="#smart-contract-monitors-transaction-debuggers" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div>While not yet fully ready, QuickBlocks provides a very powerful technology that we call smart contract monitors or transactional debuggers. After recording the full history of every internal
+and external transactions on your smart contracts (or collection of smart contracts and other addresses), a QuickBlocks monitor is able to replay the transactions step by step. At each block,
+the monitor may do a full “bank reconciliation” asking the node for account balances and double checking those balances against the transaction history of those accounts. At any block, if the
+account balances don’t match, then the most likely cause is a bug in our code–in fact, finding these kind of mismatches allows us to improve our code. We highly doubt we will find a bug in
+the Ethereum node (but, boy, wouldn’t that be amazing?). We do however think that there are bugs to be found in the various smart contracts. We believe QuickBlocks monitors can find and
+warn users about various types of smart contract bugs by doing a token reconciliation at the end of each block. The recursive DAO bug exhibited an incorrect relationship on the first block
+of the hack. Humans didn’t notice it for six hours. QuickBlocks could have identified it on the first block.</div></blockquote>
 </div>
 </div>
 <div class="section" id="libraries">
