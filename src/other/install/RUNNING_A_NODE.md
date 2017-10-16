@@ -1,10 +1,10 @@
 ## Running an Ethereum Node
 
-The greatest benefit from the Ethereum blockchain comes from running your own local node because the data is local and under consensus; however, this benefit comes at a huge price in disc space usage, processing requirements, and hassle. The QuickBlocks software assumes you are running a full local node. In fact, it assumes you are running a archive Parity node started with the following command line:
+The greatest benefit from the Ethereum blockchain comes from running your own local node because the data is local and under consensus; however, this benefit comes at a huge price in disc space usage, processing requirements, and hassle. The QuickBlocks software assumes you are running a full local node. In fact, it assumes you are running an archive Parity node started with the following command line:
 
     parity --tracing on --pruning archive
 
-Generally speaking this requires a fairly capable machine, although we've seen it run on Mac laptop. The blockchain's data itself takes up over 500 GB disc space. An SSD hard drive is strongly encouraged.
+Generally speaking this requires a fairly capable machine, although we've seen it run on Mac laptop. The blockchain's data itself takes up nearly 500 GB disc space (as of Nov. 2017). An SSD hard drive is strongly encouraged.
 
 The current version of QuickBlocks stores block data in its cache only when a block is requested. If you request ten blocks, only ten blocks are be written to the cache. In this way, a minimum imposition is made in addition to the blockchain.
 
@@ -22,7 +22,7 @@ In order to use this mode, you must run in a shell that has an environment varia
     
 which will return block 1001001 even if you're not running a local node. You may also set this variable in your shell init code.
 
-By default, so as to not over burden your hard drive, QuickBlocks does not cache every request. For example, the `getBlock` command only caches if you tell it to with the `--force` option, thus:
+By default, so as to not over burden your hard drive, QuickBlocks does not cache every request. For example, the `getBlock` command only caches if you tell it to with the [currently undocumented] `--force` option:
 
     FALLBACK=infura getBlock 1001001 --force
     
