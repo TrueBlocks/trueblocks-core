@@ -100,6 +100,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#can-i-trust-the-data-quickblocks-produces">Can I trust the data QuickBlocks produces?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#what-is-the-distinction-between-a-tool-and-an-application">What is the distinction between a tool and an application?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#are-there-any-tutorials-or-samples">Are there any tutorials or samples?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#more-questions">More Questions…</a></li>
 </ul>
 </li>
 </ul>
@@ -209,6 +210,36 @@ example) and a file called options.cpp. Options.cpp handles all the command line
 <div class="section" id="are-there-any-tutorials-or-samples">
 <h2>Are there any tutorials or samples?<a class="headerlink" href="#are-there-any-tutorials-or-samples" title="Permalink to this headline">¶</a></h2>
 <p>Please see our <a class="reference external" href="http://quickblocks.io/docs/quickstart.html">Quick Start Guide</a> for information on getting started.</p>
+</div>
+<div class="section" id="more-questions">
+<h2>More Questions…<a class="headerlink" href="#more-questions" title="Permalink to this headline">¶</a></h2>
+<p><strong>Q: Do I need any API keys to run QuickBlocks?</strong></p>
+<blockquote>
+<div>QuickBlocks itself currently does not require any API keys (it runs locally after all), but one tool, called <cite>ethslurp</cite> does. (The reasons for this are long and varied, but let’s just say “legacy”.) You may
+get the API key you need for <cite>ethslurp</cite> at the website <a class="reference external" href="http://etherscan.io/api">http://etherscan.io/api</a>. Please follow the instructions there. Once you get a key, open a command line and type
+<cite>ethslurp &lt;address&gt;</cite> (replace &lt;address&gt; with any valid Ethereum address). The program will ask you for your key.</div></blockquote>
+<p><strong>Q: May I use QuickBlocks on 32-bits machines?</strong></p>
+<blockquote>
+<div>We know of no reason why not, but we’ve done exactly zero testing on 32-bit machines. If you find it works or you fix anything related to this, please post a PR.</div></blockquote>
+<p><strong>Q: What are the hardware requirements to run quickBlocks using a local node?</strong></p>
+<blockquote>
+<div>As of November, 2017 we are able to run both a full archive Parity node (started with <cite>parity –tracing on –pruning archive</cite>) on an Apple Macintosh laptop with a 1 TB internal SSD (where we
+store the entire Ethereum blockchain data) and a 1 TB Samsung external SSD (where we store QuickBlocks’ caches). The blockchain data takes up about 400 GB, with occasional spikes up to around
+900 GB. The QuickBlocks cache currently takes up about 500 GB with no spiking, but in the future, when we implement a future feature we call minimal impact, it will take up magnificently (three
+orders of magnitude?) less space.</div></blockquote>
+<p><strong>Q: What operating systems are supported?</strong></p>
+<blockquote>
+<div>Mac OSX, Ubuntu, Fedora, Debian, CentOS, FreeBSD. Please see the <a class="reference external" href="https://github.com/Great-Hill-Corporation/quickBlocks/blob/master/src/other/install/INSTALL.md">installation instructions</a> for
+more information. We currently do not have a Windows version, but if you want to make a pull request, we’re all ears.</div></blockquote>
+<p><strong>Q: Is the product open source or must I buy a license?</strong></p>
+<blockquote>
+<div>A little bit of both. The SDK libraries and the command-line tools are free and open source. You may use them as you wish. Other parts of QuickBlocks (the applications) must be licensed as either
+installed software (if you wish to run it locally) or via an annual subscription (where we deliver the data to your application via a web API). The first scenario imposes the burden on you to run a node but
+is more secure. The second scenario takes that burden off your hands, but is less secure (because what happens your business if we disappear?) More information will be available on
+<a class="reference external" href="http://quickblocks.io">our website</a> shortly.</div></blockquote>
+<p><strong>Q: How may I contact you?</strong></p>
+<blockquote>
+<div>Please visit our website for <a class="reference external" href="http://quickBlocks.io">contact information</a>.</div></blockquote>
 </div>
 </div>
 
