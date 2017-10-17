@@ -72,7 +72,7 @@ bool CLogEntry::setValueByName(const SFString& fieldName, const SFString& fieldV
             if ( fieldName % "topics" ) {
                 SFString str = fieldValue;
                 while (!str.empty()) {
-                    topics[topics.getCount()] = toTopic(nextTokenClear(str,','));
+                    topics[topics.getCount()] = toBigUint(nextTokenClear(str,','));
                 }
                 return true;
             }
@@ -206,7 +206,7 @@ SFString CLogEntry::getValueByName(const SFString& fieldName) const {
     if (!ret.empty())
         return ret;
 
-    // If the class has any fields, return them
+    // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
             if ( fieldName % "address" ) return fromAddress(address);
