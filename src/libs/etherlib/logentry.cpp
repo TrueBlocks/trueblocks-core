@@ -72,7 +72,7 @@ bool CLogEntry::setValueByName(const SFString& fieldName, const SFString& fieldV
             if ( fieldName % "topics" ) {
                 SFString str = fieldValue;
                 while (!str.empty()) {
-                    topics[topics.getCount()] = toBigUint(nextTokenClear(str,','));
+                    topics[topics.getCount()] = toTopic(nextTokenClear(str,','));
                 }
                 return true;
             }
