@@ -110,14 +110,12 @@ SFString convertTypes(const SFString& inStr) {
         .Substitute("uint64 ",    "SFUxnt32 ")
         .Substitute("hash ",      "SFHash ")
         .Substitute("string ",    "SFString ")
-        .Substitute("bbool ",     "xool ")
         .Substitute("bool ",      "bool ")
         .Substitute("time ",      "SFTime ")
         .Substitute("int8 ",      "int32_t ")
         .Substitute("int16 ",     "int32_t ")
         .Substitute("int32 ",     "int32_t ")
         .Substitute("int64 ",     "int64_t ")
-        .Substitute("xool ",      "bool ")
         .Substitute("xnt32 ",     "int32 ");
 
     if (SFString(getenv("TRACING")) == "true")
@@ -256,7 +254,6 @@ void generateCode(const COptions& options, CToml& classFile, const SFString& dat
         } else if (fld->type == "uint32")       { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
         } else if (fld->type == "uint64")       { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
         } else if (fld->type == "uint256")      { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
-        } else if (fld->type == "bbool")        { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_BOOL";
         } else if (fld->type == "bool")         { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_BOOL";
         } else if (fld->type == "double")       { setFmt = "\t[{NAME}] = [{DEFF}];\n"; regType = "T_DOUBLE";
         } else if (fld->type == "time")         { setFmt = "\t[{NAME}] = [{DEFT}];\n"; regType = "T_DATE";
@@ -481,8 +478,6 @@ SFString getCaseCode(const SFString& fieldCase, const SFString& ex) {
                     } else if (type == "time") {
                         caseCode += " return [{PTR}]" + field + ".Format(FMT_JSON);";
 
-                    } else if (type == "bbool") {
-                        caseCode += " return asString([{PTR}]" + field + ");";
 
                     } else if (type == "bool") {
                         caseCode += " return asString([{PTR}]" + field + ");";
@@ -597,8 +592,6 @@ SFString getCaseSetCode(const SFString& fieldCase) {
                     } else if (type == "time") {
                         caseCode += " { " + field + " = snagDate(fieldValue); return true; }";
 
-                    } else if (type == "bool" || type == "bbool") {
-                        caseCode +=  " { " + field + " = toBool(fieldValue); return true; }";
 
                     } else if (type == "bloom") {
                         caseCode +=  " { " + field + " = toBloom(fieldValue); return true; }";
@@ -650,7 +643,6 @@ SFString getCaseSetCode(const SFString& fieldCase) {
                         SFString str = strArraySet;
                         str.ReplaceAll("[{NAME}]", field);
                         str.ReplaceAll("nextTokenClear(str,',')", "to[{TYPE}](nextTokenClear(str,','))");
-// str.ReplaceAll("[{TYPE}]", type.substr(2).Substitute("BigUint", "Topic").Substitute("Array", ""));
                         str.ReplaceAll("[{TYPE}]", type.substr(2).Substitute("Array", ""));
                         caseCode += str;
 
