@@ -281,7 +281,7 @@ SFString CBlock::getValueByName(const SFString& fieldName) const {
     if (!ret.empty())
         return ret;
 
-    // If the class has any fields, return them
+    // Return field values
     switch (tolower(fieldName[0])) {
         case 'b':
             if ( fieldName % "blockNumber" ) return asStringU(blockNumber);
