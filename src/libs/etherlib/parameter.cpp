@@ -196,7 +196,7 @@ SFString CParameter::getValueByName(const SFString& fieldName) const {
     if (!ret.empty())
         return ret;
 
-    // If the class has any fields, return them
+    // Return field values
     switch (tolower(fieldName[0])) {
         case 'i':
             if ( fieldName % "indexed" ) return asString(indexed);

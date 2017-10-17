@@ -211,7 +211,7 @@ SFString CReceipt::getValueByName(const SFString& fieldName) const {
     if (!ret.empty())
         return ret;
 
-    // If the class has any fields, return them
+    // Return field values
     switch (tolower(fieldName[0])) {
         case 'c':
             if ( fieldName % "contractAddress" ) return fromAddress(contractAddress);
