@@ -14,6 +14,7 @@ Welcome to QuickBlocks®!
    quickstart
    usecases
    techref
+   contributing
    faq
 
 Indices and tables

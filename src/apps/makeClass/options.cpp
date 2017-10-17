@@ -19,7 +19,7 @@ CParams params[] = {
     CParams("-silent",             "on error (no classDefinition file) exit silently"),
     CParams("-run",                "run the class maker on associated <className(s)>"),
     CParams("-all",                "clear, edit, list, or run all class definitions found in the local folder"),
-    CParams("",                    "Creates a C++ class based on definitions found in ./classDefinition/<className>.\n"),
+    CParams("",                    "Creates C++ code based on definition file at ./classDefinition/<className>.\n"),
 };
 uint32_t nParams = sizeof(params) / sizeof(CParams);
 
@@ -75,7 +75,7 @@ bool COptions::parseArguments(SFString& command) {
         } else if (!arg.startsWith('-')) {
             if (!classNames.empty())
                 classNames += "|";
-            classNames += arg.Substitute("classDefinitions/","").Substitute(".txt","");
+            classNames += arg.Substitute("classDefinitions/", "").Substitute(".txt", "");
 
         } else if (arg != "-t" && arg != "-h" && !arg.Contains("-v")) {
             return usage("Unknown parameter: " + arg);
@@ -113,12 +113,12 @@ bool COptions::parseArguments(SFString& command) {
         return usage(errMsg);
     }
 
-	if (SFString(getenv("NO_HEADER")) == "true") {
-	    writeSource = true;
+    if (SFString(getenv("NO_HEADER")) == "true") {
+        writeSource = true;
     }
 
-	if (SFString(getenv("NO_SOURCE")) == "true") {
-	    writeHeader = true;
+    if (SFString(getenv("NO_SOURCE")) == "true") {
+        writeHeader = true;
     }
 
     // If neither is lit, light them both
