@@ -23,6 +23,7 @@ typedef SFUniqueList<CLogEntry*>       CLogEntryListU;
 
 // EXISTING_CODE
 class CReceipt;
+#define SFTopicArray SFBigUintArray
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
@@ -31,7 +32,7 @@ public:
     SFAddress address;
     SFString data;
     uint64_t logIndex;
-    SFBigUintArray topics;
+    SFTopicArray topics;
 
 public:
     CLogEntry(void);

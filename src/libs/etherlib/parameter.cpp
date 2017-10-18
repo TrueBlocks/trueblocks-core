@@ -233,6 +233,18 @@ ostream& operator<<(ostream& os, const CParameter& item) {
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
+//---------------------------------------------------------------------------
+CParameter::CParameter(SFString& textIn) {
+    if (textIn.Contains("=")) {
+        strDefault = textIn;
+        textIn = nextTokenClear(strDefault, '=');
+    }
+    type       = nextTokenClear(textIn, ' ');
+    isPointer  = textIn.Contains("*");
+    isArray    = textIn.Contains("Array");
+    isObject   = !isArray && type.startsWith('C');
+    name       = textIn.Substitute("*", "");
+}
 // EXISTING_CODE
 }  // namespace qblocks
 
