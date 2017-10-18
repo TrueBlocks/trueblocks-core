@@ -55,6 +55,30 @@ CURL *getCurl(bool cleanup=false)
     return curl;
 }
 
+//--------------------------------------------------------------------------
+inline SFString TIMER_IN(double& startTime) {
+    CStringExportContext ctx;
+    ctx << (qbNow()-startTime) << ": ";
+    startTime = qbNow();
+    return ctx.str;
+}
+
+//-------------------------------------------------------------------------
+inline SFString TIMER_TICK(double startTime) {
+    CStringExportContext ctx;
+    ctx << "in " << cGreen << (qbNow()-startTime) << cOff << " seconds.";
+    return ctx.str;
+}
+
+//-------------------------------------------------------------------------
+extern size_t write_callback(char *ptr, size_t size, size_t nmemb, void *userdata);
+static bool earlyAbort=false;
+static int ticker=0;
+double startTime = qbNow();
+bool is_error=false;
+bool is_tracing=false;
+blknum_t bln = 0;
+blknum_t trn = 0;
 //-------------------------------------------------------------------------
 void etherlib_init(const SFString& sourceIn)
 {
@@ -91,6 +115,7 @@ void etherlib_init(const SFString& sourceIn)
     getCurl();
 
     establishFolder(configPath(""));
+    startTime = qbNow();
 }
 
 //-------------------------------------------------------------------------
@@ -100,30 +125,6 @@ void etherlib_cleanup(void)
     getCurl(true);
 }
 
-//--------------------------------------------------------------------------
-inline SFString TIMER_IN(double& startTime) {
-    CStringExportContext ctx;
-    ctx << (qbNow()-startTime) << ": ";
-    startTime = qbNow();
-    return ctx.str;
-}
-inline SFString TIMER_TICK(double startTime) {
-    CStringExportContext ctx;
-    ctx << "in " << cGreen << (qbNow()-startTime) << cOff << " seconds.";
-    return ctx.str;
-}
-#define TIMER()  TIMER_IN(startTime)
-#define TIMER_T() TIMER_TICK(startTime)
-
-//-------------------------------------------------------------------------
-extern size_t write_callback(char *ptr, size_t size, size_t nmemb, void *userdata);
-static bool earlyAbort=false;
-static int ticker=0;
-double startTime = qbNow();
-bool is_error=false;
-bool is_tracing=false;
-blknum_t bln = 0;
-blknum_t trn = 0;
 //-------------------------------------------------------------------------
 // Use 'curl' to make an arbitrary rpc call
 //-------------------------------------------------------------------------
@@ -155,7 +156,7 @@ SFString callRPC(const SFString& method, const SFString& params, bool raw)
     ticker=0;
     if (verbose > 1) {
         cout << bln << "." << trn << "." << ticker << " ";
-        cout << "start: " << TIMER();
+        cout << "start: " << TIMER_IN(startTime);
     }
     curl_easy_setopt(getCurl(), CURLOPT_WRITEFUNCTION, write_callback);
 
@@ -220,7 +221,7 @@ SFString callRPC(const SFString& method, const SFString& params, bool raw)
 #endif
 
     if (verbose > 1)
-        cout << "done retrieval..." << TIMER_T() << "\r";
+        cout << "done retrieval..." << TIMER_TICK(startTime) << "\r";
     if (raw)
         return received;
     CRPCResult generic;
@@ -1038,7 +1039,7 @@ public:
         }
         bzero(blocks, sizeof(CMiniBlock)*(nBlocks1));
         if (verbose)
-            cerr << TIMER() << "Allocated room for " << nBlocks1 << " miniBlocks.\n";
+            cerr << TIMER_IN(startTime) << "Allocated room for " << nBlocks1 << " miniBlocks.\n";
 
         // Next, we try to open the mini-block database
         if (!blocksOnDisc.Lock(blockFile, binaryReadOnly, LOCK_WAIT))
@@ -1057,7 +1058,7 @@ public:
             return false;
         }
         if (verbose)
-            cerr << TIMER() << "Read " << nRead << " miniBlocks into memory.\n";
+            cerr << TIMER_IN(startTime) << "Read " << nRead << " miniBlocks into memory.\n";
 
         // See if we can allocation enough space for the mini-transaction database
         SFUint32 fs = fileSize(transFile);
@@ -1072,7 +1073,7 @@ public:
         }
         bzero(trans, sizeof(CMiniTrans)*(nTrans1));
         if (verbose)
-            cerr << TIMER() << "Allocated room for " << nTrans1 << " transactions.\n";
+            cerr << TIMER_IN(startTime) << "Allocated room for " << nTrans1 << " transactions.\n";
 
         // Next, we try to open the mini-transaction database
         if (!transOnDisc.Lock(transFile, binaryReadOnly, LOCK_WAIT))
@@ -1089,10 +1090,10 @@ public:
         {
             nRead += transOnDisc.Read(&trans[nRead], READ_SIZE, sizeof(CMiniTrans));
             if (verbose)
-                progressBar(nRead,nTrans1,TIMER_T());
+                progressBar(nRead, nTrans1, qbNow() - startTime);
         }
         transOnDisc.Release();
-        cerr << "\n" << TIMER();
+        cerr << "\n" << TIMER_IN(startTime);
         return true;
     }
     SFUint32 firstBlock(void) { return 0; }
