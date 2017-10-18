@@ -102,9 +102,19 @@ namespace qblocks {
     }
 
     //-----------------------------------------------------------------------
-    inline void progressBar(SFUint32 _part, SFUint32 _whole, int _tim = 0) {
+    inline void progressBar(SFUint32 _part, SFUint32 _whole, double _tim) {
+        static double val = -1.0;
+        if (_part == 0 && _whole == 0) {
+            // reset
+            val = 0.;
+            return;
+        }
+
         CStringExportContext ctx;
-        ctx << " in " << cGreen << asString(_tim) << cOff << " seconds.";
-        progressBar(_part, _whole, (_tim == 0 ? "" : ctx.str));
+        if (_tim > 0.) {
+            val = max(val, _tim);  // keep it monotonic
+            ctx << " in " << cGreen << val << cOff << " seconds.";
+        }
+        progressBar(_part, _whole, ctx.str);
     }
 }  // namespace qblocks
