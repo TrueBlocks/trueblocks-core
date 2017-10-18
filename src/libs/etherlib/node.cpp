@@ -1168,7 +1168,7 @@ bool forEveryMiniBlockInMemory(MINIBLOCKVISITFUNC func, void *data, SFUint32 sta
         SFAddress address;
         SFString data;
         SFUint32 logIndex;
-        SFBigUintArray topics;
+        SFTopicArray topics;
         CTrace
             SFStringArray traceAddress;
             CTraceAction action;
