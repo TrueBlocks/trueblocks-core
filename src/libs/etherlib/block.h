@@ -35,7 +35,7 @@ public:
     SFGas gasUsed;
     SFHash hash;
     SFBloom logsBloom;
-    SFUint32 blockNumber;
+    blknum_t blockNumber;
     SFHash parentHash;
     timestamp_t timestamp;
     CTransactionArray transactions;

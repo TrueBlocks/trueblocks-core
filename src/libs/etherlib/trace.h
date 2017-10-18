@@ -30,11 +30,11 @@ typedef SFUniqueList<CTrace*>       CTraceListU;
 class CTrace : public CBaseNode {
 public:
     SFHash blockHash;
-    SFUint32 blockNumber;
-    SFUint32 subtraces;
+    blknum_t blockNumber;
+    uint64_t subtraces;
     SFAddressArray traceAddress;
     SFHash transactionHash;
-    SFUint32 transactionPosition;
+    uint64_t transactionPosition;
     SFString type;
     SFString error;
     CTraceAction action;

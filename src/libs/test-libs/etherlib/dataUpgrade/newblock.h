@@ -30,12 +30,12 @@ public:
     SFGas gasUsed;
     SFHash hash;
     SFBloom logsBloom;
-    SFUint32 blockNumber;
+    blknum_t blockNumber;
     SFHash parentHash;
-    SFUint32 timestamp;
+    timestamp_t timestamp;
     CTransactionArray transactions;
     SFAddress miner;
-    SFUint32 size;
+    uint64_t size;
 
 public:
     CNewBlock(void);

@@ -31,10 +31,10 @@ public:
     SFAddress addr;
     SFString header;
     SFString displayString;
-    SFUint32 pageSize;
-    SFUint32 lastPage;
+    uint64_t pageSize;
+    uint64_t lastPage;
     int64_t lastBlock;
-    SFUint32 nVisible;
+    uint64_t nVisible;
     CTransactionArray transactions;
 
 public:

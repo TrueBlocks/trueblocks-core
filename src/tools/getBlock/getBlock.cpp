@@ -125,7 +125,7 @@ SFString doOneBlock(SFUint32 num, const COptions& opt) {
         if (getSource().Contains("Only")) {
             // --source::cache mode doesn't include timestamp in transactions
             for (txnum_t t = 0 ; t < gold.transactions.getCount() ; t++) {
-                gold.transactions[t].timestamp = (SFUint32)gold.timestamp;
+                gold.transactions[t].timestamp = gold.timestamp;
             }
 
         }

@@ -120,7 +120,7 @@ bool CTransaction::setValueByName(const SFString& fieldName, const SFString& fie
             break;
         case 't':
             if ( fieldName % "transactionIndex" ) { transactionIndex = toUnsigned(fieldValue); return true; }
-            if ( fieldName % "timestamp" ) { timestamp = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "timestamp" ) { timestamp = toTimestamp(fieldValue); return true; }
             if ( fieldName % "to" ) { to = toAddress(fieldValue); return true; }
             break;
         case 'v':
@@ -216,7 +216,7 @@ void CTransaction::registerClass(void) {
     ADD_FIELD(CTransaction, "blockNumber", T_NUMBER, ++fieldNum);
     ADD_FIELD(CTransaction, "transactionIndex", T_NUMBER, ++fieldNum);
     ADD_FIELD(CTransaction, "nonce", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CTransaction, "timestamp", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CTransaction, "timestamp", T_TIMESTAMP, ++fieldNum);
     ADD_FIELD(CTransaction, "from", T_ADDRESS, ++fieldNum);
     ADD_FIELD(CTransaction, "to", T_ADDRESS, ++fieldNum);
     ADD_FIELD(CTransaction, "value", T_WEI, ++fieldNum);
@@ -380,7 +380,7 @@ SFString CTransaction::getValueByName(const SFString& fieldName) const {
             break;
         case 't':
             if ( fieldName % "transactionIndex" ) return asStringU(transactionIndex);
-            if ( fieldName % "timestamp" ) return asStringU(timestamp);
+            if ( fieldName % "timestamp" ) return fromTimestamp(timestamp);
             if ( fieldName % "to" ) return fromAddress(to);
             break;
         case 'v':
