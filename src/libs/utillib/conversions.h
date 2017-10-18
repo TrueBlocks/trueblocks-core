@@ -239,7 +239,7 @@ namespace qblocks {
 #define lognum_t       uint32_t
 
 #define toUnsigned(a)  (SFUint32)((a).startsWith("0x")?hex2Long((a)):toLongU((a)))
-#define toSigned(a)    (int64_t)((a).startsWith("0x")?hex2Long((a)):toLongU((a)))
+#define toSigned(a)    (int64_t)((a).startsWith("0x")?hex2Long((a)):toLong((a)))
 #define toHash(a)      (a)
 #define toTopic(a)     canonicalWei(a)
 #define toBloom(a)     canonicalWei(a)

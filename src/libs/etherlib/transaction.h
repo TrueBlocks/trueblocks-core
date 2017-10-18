@@ -32,10 +32,10 @@ class CTransaction : public CBaseNode {
 public:
     SFHash hash;
     SFHash blockHash;
-    SFUint32 blockNumber;
-    SFUint32 transactionIndex;
-    SFUint32 nonce;
-    SFUint32 timestamp;
+    blknum_t blockNumber;
+    uint64_t transactionIndex;
+    uint64_t nonce;
+    timestamp_t timestamp;
     SFAddress from;
     SFAddress to;
     SFWei value;
@@ -43,8 +43,8 @@ public:
     SFGas gasPrice;
     SFWei cumulativeGasUsed;
     SFString input;
-    SFUint32 isError;
-    SFUint32 isInternalTx;
+    uint64_t isError;
+    uint64_t isInternalTx;
     CReceipt receipt;
 
 public:

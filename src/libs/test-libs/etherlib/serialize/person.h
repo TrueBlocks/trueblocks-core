@@ -25,7 +25,7 @@ typedef SFUniqueList<CPerson*>       CPersonListU;
 class CPerson : public CBaseNode {
 public:
     SFString name;
-    SFUint32 age;
+    uint64_t age;
     CPerson *next;
 
 public:

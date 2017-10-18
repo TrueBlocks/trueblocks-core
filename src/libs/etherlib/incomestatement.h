@@ -32,7 +32,7 @@ public:
     SFIntBN outflow;
     SFIntBN gasCost;
     SFIntBN endBal;
-    SFUint32 blockNum;
+    blknum_t blockNum;
 
 public:
     CIncomeStatement(void);
