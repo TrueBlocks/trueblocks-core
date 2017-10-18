@@ -30,7 +30,7 @@ class CLogEntry : public CBaseNode {
 public:
     SFAddress address;
     SFString data;
-    SFUint32 logIndex;
+    uint64_t logIndex;
     SFBigUintArray topics;
 
 public:

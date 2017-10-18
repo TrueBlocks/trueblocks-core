@@ -25,8 +25,8 @@ typedef SFUniqueList<CAcctCacheItem*>       CAcctCacheItemListU;
 //--------------------------------------------------------------------------
 class CAcctCacheItem : public CBaseNode {
 public:
-    SFUint32 blockNum;
-    SFUint32 transIndex;
+    uint64_t blockNum;
+    uint64_t transIndex;
     int32_t which;
 
 public:

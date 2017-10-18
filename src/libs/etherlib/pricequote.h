@@ -27,7 +27,7 @@ typedef SFUniqueList<CPriceQuote*>       CPriceQuoteListU;
 //--------------------------------------------------------------------------
 class CPriceQuote : public CBaseNode {
 public:
-    SFUint32 timestamp;
+    timestamp_t timestamp;
     double close;
 
 public:
