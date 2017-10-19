@@ -1,7 +1,7 @@
 ## chifra
 
 ***
-**Note:** This tool is availble through [our website](http://quickblocks.io). Contact us at [sales@greathill.com](mailto:sales@greathill.com) for more information.
+**Note:** This tool is available through [our website](http://quickblocks.io). Contact us at [sales@greathill.com](mailto:sales@greathill.com) for more information.
 ***
 
 `chifra` is an command line tool that builds [QuickBlocks account monitors](../../monitors/README.md) through a series of interactive questions.
