@@ -94,6 +94,7 @@ bool COptions::parseArguments(SFString& command) {
 void COptions::Init(void) {
     paramsPtr = params;
     nParamsRef = nParams;
+    pOptions = this;
 
     parts = SIG_DEFAULT;
     noconst = false;
@@ -114,6 +115,19 @@ COptions::COptions(void) {
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
+}
+
+//--------------------------------------------------------------------------------
+SFString COptions::postProcess(const SFString& which, const SFString& str) const {
+    if (which == "options") {
+        return str;
+
+    } else if (which == "notes" && (verbose || COptions::isReadme)) {
+        SFString ret;
+        ret += "Use the [{--silent}] option, which displays fewer messages, for scripting.\n";
+        return ret;
+    }
+    return str;
 }
 
 //--------------------------------------------------------------------------------

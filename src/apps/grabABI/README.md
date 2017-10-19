@@ -1,6 +1,6 @@
 ## grabABI
 
-`grabABI` retreives an ABI file either from a local cache, from the Ethereum Name Service (ENS), or from [Etherscan](http://etherscan.io). Once retreived, `grabABI` generates the classDefinition files needed by [makeClass](../makeClass) to generate a parselib for each [Ethereum address monitor](../../monitors).
+`grabABI` retrieves an ABI file either from a local cache, from the Ethereum Name Service (ENS), or from [Etherscan](http://etherscan.io). Once retrieved, `grabABI` generates the classDefinition files needed by [makeClass](../makeClass/README.md) to generate a parselib for each [Ethereum address monitor](../../monitors/README.md).
 
 #### Usage
 
@@ -21,10 +21,10 @@
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
+`Notes:`
 
-** Notes: **
+- Use the `--silent` option, which displays fewer messages, for scripting.
 
-There is also an option`--silent` that is useful for scripting. It causes the app to display fewer messages.
 #### Other Options
 
 All **quickBlocks** command-line tools support the following commands (although in some case, they have no meaning):
