@@ -196,7 +196,6 @@ bool CVisitor::closeIncomeStatement(const CBlock& block) {
         }
     }
 
-    // TODO(tjayrush): when should auto correct be on or off?
     if (opts.autocorrect_on) {
         for (uint32_t i = 0 ; i < watches.getCount() ; i++)
             watches[i].qbis.correct();
