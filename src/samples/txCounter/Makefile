@@ -26,11 +26,11 @@ LDFLAGS=$(QBLOCKS_LDFLAGS)  -lcurl
 #---------------------------------------------------------------------------
 # Program sources and name
 #---------------------------------------------------------------------------
-SRCS=options.cpp bloomScan.cpp
+SRCS=txCounter.cpp
 OBJS_PATH=objs
 OBJS=$(patsubst %.cpp,$(OBJS_PATH)/%.o,$(SRCS))
 
-EXE_NAME=bloomScan
+EXE_NAME=txCounter
 EXE_PATH=bin
 
 
