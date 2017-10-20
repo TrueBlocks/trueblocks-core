@@ -1,6 +1,6 @@
 ## Installation Instructions
 
-The only dependancies for QuickBlocks are (1) a locally-running Ethereum node (or a remote Ethereum node such as [Infura](http://infura.io)), (2) the `curl` libraries, and (3) build tools such as `git`, `cmake`, and `python`.  Below we give specific instructions for your operating sytem. Following that are instructions for how to build and install QuickBlocks and further steps.
+The only dependencies for QuickBlocks are (1) a locally-running Ethereum node (or a remote Ethereum node such as [Infura](http://infura.io)), (2) the `curl` libraries, and (3) build tools such as `git`, `cmake`, and `python`.  Below we give specific instructions for your operating sytem. Following that are instructions for how to build and install QuickBlocks and further steps.
 
 If you are the `root` user on your system, you do not need to use `sudo` below. If you are *not* the `root`, you will need to use `sudo`.
 
