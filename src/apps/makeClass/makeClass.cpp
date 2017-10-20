@@ -62,7 +62,7 @@ int main(int argc, const char *argv[]) {
                                 << ".cpp and " << className << ".h? (y=remove files, otherwise ignore): ";
                         cout << "Testing, but would have deleted " << className << ".[ch]*\n";
                     } else {
-                        // TODO(tjayrush): Doesn't work on purpose
+                        // This does not work on purpose
                         cout << "Are you sure you want to remove " << className
                                 << ".cpp and " << className << ".h? (y=remove files, otherwise ignore): ";
                         return usage("Files not removed. Quitting...");
