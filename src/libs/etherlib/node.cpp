@@ -73,12 +73,9 @@ inline SFString TIMER_TICK(double startTime) {
 //-------------------------------------------------------------------------
 extern size_t write_callback(char *ptr, size_t size, size_t nmemb, void *userdata);
 static bool earlyAbort=false;
-static int ticker=0;
 double startTime = qbNow();
 bool is_error=false;
 bool is_tracing=false;
-blknum_t bln = 0;
-blknum_t trn = 0;
 //-------------------------------------------------------------------------
 void etherlib_init(const SFString& sourceIn)
 {
@@ -125,14 +122,40 @@ void etherlib_cleanup(void)
 }
 
 //-------------------------------------------------------------------------
+SFString getCurlID(void) {
+    static uint32_t id = 1;
+    return asString(isTestMode() ? 1 : id++);
+}
+
+//-------------------------------------------------------------------------
+class CCurlData {
+public:
+    SFString url;
+    SFString result;
+    CCurlData(const SFString& method, const SFString& params) {
+        url += "{";
+        url +=  quote("jsonrpc") + ":"  + quote("2.0")  + ",";
+        url +=  quote("method")  + ":"  + quote(method) + ",";
+        url +=  quote("params")  + ":"  + params + ",";
+        url +=  quote("id")      + ":"  + quote(getCurlID());
+        url += "}";
+    }
+};
+
+//-------------------------------------------------------------------------
+extern size_t nullCallback(char *ptr, size_t size, size_t nmemb, void *userdata) {
+    return size*nmemb;
+}
+
+//-------------------------------------------------------------------------
 // Use 'curl' to make an arbitrary rpc call
 //-------------------------------------------------------------------------
 SFString callRPC(const SFString& method, const SFString& params, bool raw)
 {
     static uint32_t id = 1;
-    SFString thePost, received;
-
     uint32_t theID = (isTestMode() ? 1 : id++);
+
+    SFString thePost, received;
     thePost += "{";
     thePost +=  quote("jsonrpc") + ":"  + quote("2.0")  + ",";
     thePost +=  quote("method")  + ":"  + quote(method) + ",";
@@ -152,11 +175,6 @@ SFString callRPC(const SFString& method, const SFString& params, bool raw)
     curl_easy_setopt(getCurl(), CURLOPT_POSTFIELDSIZE, thePost.length());
 
     curl_easy_setopt(getCurl(), CURLOPT_WRITEDATA,     &received);
-    ticker=0;
-    if (verbose > 1) {
-        cout << bln << "." << trn << "." << ticker << " ";
-        cout << "start: " << TIMER_IN(startTime);
-    }
     curl_easy_setopt(getCurl(), CURLOPT_WRITEFUNCTION, write_callback);
 
     earlyAbort = false;
@@ -219,8 +237,6 @@ SFString callRPC(const SFString& method, const SFString& params, bool raw)
     cout.flush();
 #endif
 
-    if (verbose > 1)
-        cout << "done retrieval..." << TIMER_TICK(startTime) << "\r";
     if (raw)
         return received;
     CRPCResult generic;
@@ -231,24 +247,12 @@ SFString callRPC(const SFString& method, const SFString& params, bool raw)
 
 //-------------------------------------------------------------------------
 bool isNodeRunning(void) {
-    static uint32_t id = 1;
-    SFString thePost, received;
-    SFString method = "web3_clientVersion";
-    SFString params = "[]";
-    thePost += "{";
-    thePost +=  quote("jsonrpc") + ":"  + quote("2.0")  + ",";
-    thePost +=  quote("method")  + ":"  + quote(method) + ",";
-    thePost +=  quote("params")  + ":"  + params        + ",";
-    thePost +=  quote("id")      + ":"  + quote(asString(id++));
-    thePost += "}";
-    curl_easy_setopt(getCurl(), CURLOPT_POSTFIELDS,    (const char*)thePost);
-    curl_easy_setopt(getCurl(), CURLOPT_POSTFIELDSIZE, thePost.length());
-    curl_easy_setopt(getCurl(), CURLOPT_WRITEDATA,     &received);
-    ticker=0;
-    curl_easy_setopt(getCurl(), CURLOPT_WRITEFUNCTION, write_callback);
-    earlyAbort = false;
-    CURLcode res = curl_easy_perform(getCurl());
-    return (res == CURLE_OK);
+    CCurlData curlData("web3_clientVersion", "[]");
+    curl_easy_setopt(getCurl(), CURLOPT_POSTFIELDS,    (const char*)curlData.url);
+    curl_easy_setopt(getCurl(), CURLOPT_POSTFIELDSIZE, curlData.url.length());
+    curl_easy_setopt(getCurl(), CURLOPT_WRITEDATA,     &curlData);
+    curl_easy_setopt(getCurl(), CURLOPT_WRITEFUNCTION, nullCallback);
+    return (curl_easy_perform(getCurl()) == CURLE_OK);
 }
 
 //-------------------------------------------------------------------------
@@ -270,7 +274,6 @@ bool queryBlock(CBlock& block, const SFString& numIn, bool needTrace, bool byHas
 
     SFUint32 num = toLongU(numIn);
     if ((getSource().Contains("binary") || getSource().Contains("nonemp")) && fileSize(getBinaryFilename1(num))>0) {
-        //		if (verbose) { cerr << "Reading binary block: " << num << "\n"; cerr.flush(); }
         UNHIDE_FIELD(CTransaction, "receipt");
         return readOneBlock_fromBinary(block, getBinaryFilename1(num));
 
@@ -281,13 +284,11 @@ bool queryBlock(CBlock& block, const SFString& numIn, bool needTrace, bool byHas
 
     if (getSource() == "json" && fileSize(getJsonFilename1(num))>0)
     {
-        //		if (verbose) { cerr << "Reading json block: " << num << "\n"; cerr.flush(); }
         UNHIDE_FIELD(CTransaction, "receipt");
         return readOneBlock_fromJson(block, getJsonFilename1(num));
 
     }
 
-    //	if (verbose) { cerr << "Getting block from node: " << num << "\n"; cerr.flush(); }
     HIDE_FIELD(CTransaction, "receipt");
     getObjectViaRPC(block, "eth_getBlockByNumber", "["+quote(asStringU(num))+",true]");
 
@@ -316,11 +317,6 @@ bool queryBlock(CBlock& block, const SFString& numIn, bool needTrace, bool byHas
             SFString trace;
             is_error = false;
             is_tracing = true;
-            if (verbose > 1)
-            {
-                bln = block.blockNumber;
-                trn = trans->transactionIndex;
-            }
             queryRawTrace(trace, trans->hash);
             is_tracing = false;
             trans->isError = is_error;
@@ -529,6 +525,7 @@ bool getSha3(const SFString& hexIn, SFString& shaOut)
 size_t write_callback(char *ptr, size_t size, size_t nmemb, void *userdata)
 {
     if (is_tracing) {
+        // Curl does not close the string, so we have to
         ptr[size*nmemb-1] = '\0';
         if (strstr(ptr,"erro")!=NULL) {
             is_error = true;
@@ -544,29 +541,19 @@ size_t write_callback(char *ptr, size_t size, size_t nmemb, void *userdata)
         strncpy(s,ptr,size*nmemb);
         s[size*nmemb]='\0';
         (*(SFString*)userdata) += s;
-
-        // At block 3804005, there was a hack wherein the byte code
-        // 5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b repeated
-        // thousands of time and doing nothing. If we don't handle this it
-        // dominates the scanning for no reason
+        // Starting around block 3804005, there was a hack wherein the byte code 5b5b5b5b5b5b5b5b5b5b5b5b
+        // repeated thousands of times, doing nothing. If we don't handle this, it dominates the scanning
+        // for no reason
         if (strstr(s, "5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b") != NULL) {
             // This is the hack trace (there are many), so skip it
-            cerr << "Curl response contains '5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b'. Aborting.\n";
+            cerr << "Curl response contains '5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b'. Aborting.";
+            cerr << "sizeof: " << ((SFString*)userdata)->length() << "\n";
             cerr.flush();
             earlyAbort = true;
             return 0;
         }
     }
-    ticker++;
-    if (verbose > 2 && ticker>2) {
-        cout << ".";
-        if (!(ticker%80)) {
-            cout << "\r";
-            cout << bln << "." << trn << "." << ticker << "\t\t";
-        }
-        if (!(ticker%5))
-             cout.flush();
-    }
+
     return size*nmemb;
 }
 
@@ -915,11 +902,8 @@ bool forEveryNonEmptyBlockOnDisc(BLOCKVISITFUNC func, void *data, SFUint32 start
         for (SFUint32 i = 0 ; i < nItems ; i = i + skip)
         {
             // TODO: This should be a binary search not a scan. This is why it appears to wait
-//cout << "inRange(" << contents[i] << ", " << start << ", " << start+count-1 << "): ";
             if (inRange((SFUint32)contents[i], start, start+count-1))
             {
-//cout << "true\n";
-//              if (verbose) { cerr << "Getting block " << contents[i] << "\n"; cerr.flush(); }
                 CBlock block;
                 if (getBlock(block,contents[i]))
                 {
@@ -932,9 +916,7 @@ bool forEveryNonEmptyBlockOnDisc(BLOCKVISITFUNC func, void *data, SFUint32 start
                     }
                 }
             } else {
-//cout << "false\n";
             }
-//cout.flush();
         }
         delete [] contents;
     }
@@ -1062,7 +1044,6 @@ public:
         // See if we can allocation enough space for the mini-transaction database
         SFUint32 fs = fileSize(transFile);
         SFUint32 ms = sizeof(CMiniTrans);
-        //SFUint32 nTrans   = fs / ms;
         nTrans1   = fs / ms;
         trans = new CMiniTrans[nTrans1];
         if (!trans)
