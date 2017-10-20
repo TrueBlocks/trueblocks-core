@@ -146,7 +146,7 @@ extern const char* STR_GETSTR_CODE;
 extern const char* STR_GETSTR_CODE_FIELD;
 extern const char* STR_GETOBJ_HEAD;
 extern const char* STR_GETSTR_HEAD;
-extern const char* STR_NEW_CODE;
+extern const char* STR_UPGRADE_CODE;
 
 SFString tab = SFString("\t");
 
@@ -400,7 +400,7 @@ SFString ptrWriteFmt =
     SFString srcFile    = dataFile.Substitute(".txt", ".cpp").Substitute("./classDefinitions/", "./");
     SFString srcSource  = asciiFileToString(configPath("makeClass/blank.cpp"));
     if ((className.startsWith("CNew") || className == "CPriceQuote") && !getCWD().Contains("parse"))
-        srcSource.Replace("version of the data\n", STR_NEW_CODE);
+        srcSource.Replace("version of the data\n", STR_UPGRADE_CODE);
     srcSource.ReplaceAll("[{GET_OBJ}]",         fieldGetObj);
     srcSource.ReplaceAll("[{GET_STR}]",         fieldGetStr);
     srcSource.ReplaceAll("[ARCHIVE_READ]",      fieldArchiveRead);
@@ -814,7 +814,7 @@ const char *STR_GETSTR_CODE =
 "}\n\n";
 
 //------------------------------------------------------------------------------------------------------------
-const char *STR_NEW_CODE =
+const char *STR_UPGRADE_CODE =
 "version of the data\n"
 "#define MAJOR 0\n"
 "#define MINOR 2\n"
