@@ -12,7 +12,7 @@ We've published a number of medium articles using data we've collected with Quic
 | [Accounting for the Revolution](https://medium.com/@tjayrush/accounting-for-the-revolution-8822b28ccc16) | March 12, 2017 |
 | [A Eulogy for the DAO - Part II](https://medium.com/@tjayrush/a-eulogy-for-the-dao-74a55b9afd92) | September 29, 2016 |
 | [A Eulogy for the DAO - Part I](https://medium.com/@tjayrush/a-eulogy-for-the-dao-74a55b9afd92) | September 13, 2016 |
-| [A Neglected Aspect of Smart Contract Security: Auditability](https://medium.com/@tjayrush/a-eulogy-for-the-dao-74a55b9afd92) | Auguest 24, 2016 |
+| [A Neglected Aspect of Smart Contract Security: Auditability](https://medium.com/@tjayrush/a-eulogy-for-the-dao-74a55b9afd92) | August 24, 2016 |
 | [Knowing the Future and Proving You Know It](https://medium.com/@tjayrush/what-the-f-is-a-finney-8e727f29e77f) | July 12, 2016 |
 | [A Clue About the DAO Attacker's Location](https://medium.com/@tjayrush/what-the-f-is-a-finney-8e727f29e77f) | June 20, 2016 |
 | [Downloading the DAO](https://medium.com/@tjayrush/what-the-f-is-a-finney-8e727f29e77f) | June 10, 2016 |
