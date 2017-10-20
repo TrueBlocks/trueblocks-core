@@ -8,7 +8,6 @@
  *------------------------------------------------------------------------*/
 
 #include "abilib.h"
-#include "ethtypes.h"
 #include "block.h"
 #include "transaction.h"
 #include "account.h"

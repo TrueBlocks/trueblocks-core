@@ -10,7 +10,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
-#include "ethtypes.h"
+#include "utillib.h"
 #include "abilib.h"
 #include "logentry.h"
 
