@@ -95,7 +95,6 @@ namespace qblocks {
 
     //---------------------------------------------------------------------------------------
     bool CToml::readFile(const SFString& filename) {
-        // TODO(tjayrush): This is a very inadequate TOML parser. Should be replaced with full featured parser
         SFString curGroup;
         Clear();
 
