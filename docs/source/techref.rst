@@ -55,7 +55,7 @@ blockScraper application
 -------------------------
 
     The **blockScrape** application scrapes the Ethereum blockchain creating three different databases that help the other tools and applications quickly access and deliver the
-    Ethereum shared ledger to your applications. This process is fully described in our `three white papers <https://github.com/Great-Hill-Corporation/quickBlocks/blob/master/src/other/papers/README.md>`_,.
+    Ethereum shared ledger to your applications. This process is fully described in our `three white papers <https://github.com/Great-Hill-Corporation/quickBlocks/blob/master/src/other/papers/README.md>`_.
     This tool is not open source. It is available for purchase from our website.
 
 grabABI application

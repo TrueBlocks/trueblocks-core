@@ -26,7 +26,7 @@ In a manner very similar to the way web3.js works, QuickBlocks sits between a lo
 ..  image:: img/architecture.png
    :alt: QuickBlocks logo
 
-Whereas the web3.js library delivers nearly identical data as is retrieved from the RPC interface, making it difficult for any but the most well versed in the data to easily use it, QuickBlocks stands between the node and your application improving the data significantly in two ways: (1) it's way faster, and (2) it's translated into the language of the smart contract. See `this FAQ item <file:///Users/jrush/src.GitHub/quickBlocks/docs/html/faq.html#how-can-i-trust-the-data-quickblocks-produces>`_, in response the nagging question in your head about the quality and accuracy of the data.
+Whereas the web3.js library delivers nearly identical data as is retrieved from the RPC interface, making it difficult for any but the most well versed in the data to easily use it, QuickBlocks stands between the node and your application improving the data significantly in two ways: (1) it's way faster, and (2) it's translated into the language of the smart contract. See `this FAQ item <http://quickblocks.io/docs/faq.html#can-i-trust-the-data-quickblocks-produces>`_, in response the nagging question in your head about the quality and accuracy of the data.
 
 Terminology
 -----------
