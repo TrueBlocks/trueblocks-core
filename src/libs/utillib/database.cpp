@@ -164,7 +164,6 @@ namespace qblocks {
                    m_mode == asciiWriteCreate) {
 
             ASSERT(lockType == LOCK_CREATE || lockType == LOCK_WAIT);
-            // TODO(tjayrush): revisit this
             openIt = createLock(lockType != LOCK_WAIT);
             if (!openIt) {
                 m_error = LK_NO_CREATE_LOCK_FILE;
