@@ -113,14 +113,6 @@ namespace qblocks {
         CBlockVisitor(void) : m_firstBlock(0), m_cnt(0) { }
     };
 
-    // Syntactic Sugar (TODO: These should be removed from the library)
-    //-------------------------------------------------------------------------
-    inline void   forEveryBlockFromClient    (BLOCKVISITFUNC     func, CBlockVisitor *bv) { forEveryBlockOnDisc        (func, bv, bv->firstBlock(), bv->getCount()); }
-    inline void   forEveryBlockOnDisc        (BLOCKVISITFUNC     func, CBlockVisitor *bv) { forEveryBlockOnDisc        (func, bv, bv->firstBlock(), bv->getCount()); }
-    inline void   forEveryNonEmptyBlockOnDisc(BLOCKVISITFUNC     func, CBlockVisitor *bv) { forEveryNonEmptyBlockOnDisc(func, bv, bv->firstBlock(), bv->getCount()); }
-    inline void   forEveryFullBlockInMemory  (BLOCKVISITFUNC     func, CBlockVisitor *bv) { forEveryFullBlockInMemory  (func, bv, bv->firstBlock(), bv->getCount()); }
-    inline void   forEveryMiniBlockInMemory  (MINIBLOCKVISITFUNC func, CBlockVisitor *bv) { forEveryMiniBlockInMemory  (func, bv, bv->firstBlock(), bv->getCount()); }
-
     extern SFString blockCachePath(const SFString& _part);
 
 #define fullBlockIndex (blockCachePath("fullBlocks.bin"))

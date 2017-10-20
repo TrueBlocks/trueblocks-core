@@ -1036,4 +1036,3 @@ namespace qblocks {
     }
 #endif
 }  // namespace qblocks
-// TODO(tjayrush): Can I remove Compare (capital) for compare (lower)?
