@@ -169,22 +169,6 @@ bool CVisitor::enterDebugger(const CBlock& block) {
                     SFString cmd = "ethscan.py " + curCmd;
                     doCommand(cmd);
 
-// TODO(tjayrush): you can clean this up
-//                } else if (curCmd.startsWith("t:") || curCmd.startsWith("t ") || curCmd.startsWith("trace:")) {
-//                    history(curCmd);
-//                    curCmd.Replace("t:","");
-//                    curCmd.Replace("t ","");
-//                    curCmd.Replace("trace:","");
-//                    curCmd.Replace("trace ","");
-//                    SFUint32 bn = toLongU(nextTokenClear(curCmd,'.'));
-//                    SFUint32 tn = toLongU(curCmd);
-//
-//                    CTransaction trans;
-//                    getTransaction(trans,bn,tn);
-//                    getTraces(trans.traces, trans.hash);
-//                    timestamp_t ts = toUnsigned(trans.Format("[{TIMESTAMP}]"));
-//                    displayTrace(ts, trans.traces, trans.isError);
-
                 } else if (curCmd == "h" || curCmd == "help") {
                     cout << "\r\n" << bBlue << "Help:" << cOff << "\r\n";
                     for (uint32_t i=0;i<nDebugCmds;i++) {
