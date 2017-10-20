@@ -5,7 +5,7 @@
  *------------------------------------------------------------------------*/
 #include "etherlib.h"
 
-#define MAX_ADDRS 100
+#define MAX_ADDRS 1000
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
