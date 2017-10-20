@@ -107,7 +107,6 @@ void etherlib_init(const SFString& sourceIn)
     CNameValue::registerClass();
     CAccountName::registerClass();
 
-    // TODO(tjayrush): Collapse curl initialation in setSource
     setSource(sourceIn);
     // if curl has already been initialized, we want to clear it out
     getCurl(true);
@@ -259,7 +258,7 @@ bool getObjectViaRPC(CBaseNode &node, const SFString& method, const SFString& pa
     return true;
 }
 
-// TODO: remove golobal data
+// TODO: remove global data
 static SFUint32 nTrans=0,nTraced=0;
 static bool no_tracing=false;
 void setNoTracing(bool val) { no_tracing = val; }
@@ -359,7 +358,7 @@ bool getBlock(CBlock& block, SFUint32 numIn)
 
 //-------------------------------------------------------------------------
 bool getBlock(CBlock& block, const SFHash& hash) {
-//TODO(tjayrush) not done -- use eth_getBlockByHash
+    // TODO: Note--this does not work because queryBlock takes blockNum in second param
     bool ret = queryBlock(block, hash, true, true);
     return ret;
 }

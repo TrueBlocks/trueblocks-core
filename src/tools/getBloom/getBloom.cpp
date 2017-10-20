@@ -36,7 +36,7 @@ int main(int argc, const char * argv[]) {
                     cout << ",";
                 cout << "\n";
                 if (options.isCheck) {
-                    // TODO(any): read 'raw' and compare result with gold
+                    // Not implemented
                 }
 
             } else if (!(i%150)) {
@@ -56,7 +56,7 @@ int main(int argc, const char * argv[]) {
                     cout << ",";
                 cout << "\n";
                 if (options.isCheck) {
-                    // TODO(any): read 'raw' and compare result with gold
+                    // Not implemented
                 }
 
             } else if (!(i%150)) {
