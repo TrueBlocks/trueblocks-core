@@ -121,10 +121,10 @@ void etherlib_cleanup(void)
     getCurl(true);
 }
 
+static uint32_t theID = 1;
 //-------------------------------------------------------------------------
 SFString getCurlID(void) {
-    static uint32_t id = 1;
-    return asString(isTestMode() ? 1 : id++);
+    return asString(isTestMode() ? 1 : theID++);
 }
 
 //-------------------------------------------------------------------------
@@ -143,25 +143,11 @@ public:
 };
 
 //-------------------------------------------------------------------------
-extern size_t nullCallback(char *ptr, size_t size, size_t nmemb, void *userdata) {
-    return size*nmemb;
-}
-
-//-------------------------------------------------------------------------
 // Use 'curl' to make an arbitrary rpc call
 //-------------------------------------------------------------------------
 SFString callRPC(const SFString& method, const SFString& params, bool raw)
 {
-    static uint32_t id = 1;
-    uint32_t theID = (isTestMode() ? 1 : id++);
-
-    SFString thePost, received;
-    thePost += "{";
-    thePost +=  quote("jsonrpc") + ":"  + quote("2.0")  + ",";
-    thePost +=  quote("method")  + ":"  + quote(method) + ",";
-    thePost +=  quote("params")  + ":"  + params        + ",";
-    thePost +=  quote("id")      + ":"  + quote(asString(theID));
-    thePost += "}";
+    CCurlData curlData(method, params);
 
 //#define DEBUG_RPC
 #ifdef DEBUG_RPC
@@ -171,10 +157,10 @@ SFString callRPC(const SFString& method, const SFString& params, bool raw)
     cerr.flush();
 #endif
 
-    curl_easy_setopt(getCurl(), CURLOPT_POSTFIELDS,    (const char*)thePost);
-    curl_easy_setopt(getCurl(), CURLOPT_POSTFIELDSIZE, thePost.length());
+    curl_easy_setopt(getCurl(), CURLOPT_POSTFIELDS,    (const char*)curlData.url);
+    curl_easy_setopt(getCurl(), CURLOPT_POSTFIELDSIZE, curlData.url.length());
 
-    curl_easy_setopt(getCurl(), CURLOPT_WRITEDATA,     &received);
+    curl_easy_setopt(getCurl(), CURLOPT_WRITEDATA,     &curlData);
     curl_easy_setopt(getCurl(), CURLOPT_WRITEFUNCTION, write_callback);
 
     earlyAbort = false;
@@ -202,7 +188,7 @@ SFString callRPC(const SFString& method, const SFString& params, bool raw)
                 cerr << "\n";
                 exit(0);
             }
-            id--;
+            theID--;
             setSource(fallBack);
             // reset curl
             getCurl(true); getCurl();
@@ -220,7 +206,7 @@ SFString callRPC(const SFString& method, const SFString& params, bool raw)
         exit(0);
     }
 
-    if (!is_tracing && received.empty()) {
+    if (!is_tracing && curlData.result.empty()) {
         cerr << cYellow;
         cerr << "\n";
         cerr << "\tWarning:" << cOff << "The Ethereum node  resulted in an empty\n";
@@ -233,16 +219,21 @@ SFString callRPC(const SFString& method, const SFString& params, bool raw)
 //    cout << "\n" << SFString('-',80) << "\n";
 //    cout << thePost << "\n";
     cout << SFString('=',60) << "\n";
-    cout << "received: " << received << "\n";
+    cout << "received: " << curlData.result << "\n";
     cout.flush();
 #endif
 
     if (raw)
-        return received;
+        return curlData.result;
     CRPCResult generic;
-    char *p = cleanUpJson((char*)(const char*)received);
+    char *p = cleanUpJson((char*)(const char*)curlData.result);
     generic.parseJson(p);
     return generic.result;
+}
+
+//-------------------------------------------------------------------------
+extern size_t nullCallback(char *ptr, size_t size, size_t nmemb, void *userdata) {
+    return size*nmemb;
 }
 
 //-------------------------------------------------------------------------
@@ -326,16 +317,14 @@ bool queryBlock(CBlock& block, const SFString& numIn, bool needTrace, bool byHas
 
     nTrans  += block.transactions.getCount();
     nTraced += nTraces;
-    if (verbose)
-    {
+    if (verbose) {
         SFString fileName = getBinaryFilename1(toLongU(numIn));
         SFString fmt;
         fmt += SFString("\rBlock ") + cYellow  + "#" + asStringU(block.blockNumber)  + cOff;
         fmt += SFString(" (")     + cYellow  + padNum3T((uint64_t)block.transactions.getCount()) + "/" + asStringU(nTrans)  + cOff + " trans";
         fmt +=                      cYellow  + padNum3T((uint64_t)nTraces)                       + "/" + asStringU(nTraced) + cOff + " traced) written to ";
         fmt +=                      cMagenta + fileName.Substitute(blockFolder, "./")  + cOff + ".";
-        if (!isTestMode())
-            fprintf(stderr, "%s\r", (const char*)fmt);
+        fprintf(stderr, "%s\r", (const char*)fmt);
     }
 
     return true;
@@ -534,20 +523,20 @@ size_t write_callback(char *ptr, size_t size, size_t nmemb, void *userdata)
         }
 
     } else {
-        ASSERT(userdata);
         SFString part;
         part.reserve(size*nmemb+1);
         char *s = (char*)(const char*)part;
         strncpy(s,ptr,size*nmemb);
         s[size*nmemb]='\0';
-        (*(SFString*)userdata) += s;
+        ASSERT(userdata);
+        CCurlData *data = (CCurlData*)userdata;
+        data->result += s;
         // Starting around block 3804005, there was a hack wherein the byte code 5b5b5b5b5b5b5b5b5b5b5b5b
         // repeated thousands of times, doing nothing. If we don't handle this, it dominates the scanning
         // for no reason
         if (strstr(s, "5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b") != NULL) {
             // This is the hack trace (there are many), so skip it
-            cerr << "Curl response contains '5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b'. Aborting.";
-            cerr << "sizeof: " << ((SFString*)userdata)->length() << "\n";
+            cerr << "Curl response contains '5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b'. Aborting.\n";
             cerr.flush();
             earlyAbort = true;
             return 0;

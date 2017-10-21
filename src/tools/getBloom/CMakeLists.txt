@@ -63,8 +63,8 @@ run_the_test(${TEST_PATH} ${GOLD_PATH} "getBloom_force_01" ${EXECUTABLE_OUTPUT_P
 # display a bunch of blocks from cache
 run_test("getBloom_cache_01"     "--source:cache" " 2768801" " 1995314" " 1958017" " --parity")
 run_test("getBloom_cache_02"     "-s:c"           " 2768801" " 1995314" " 1958017" " --parity")
-run_test("getBloom_cache_03"     "-s:cache"       " 2768801" " 1995314" " 1958017" " --parity")
-run_test("getBloom_cache_04"     "-a"             " 2768801" " 1995314" " 1958017" " --parity")
+run_test("getBloom_cache_03"     "-s:cache"       " 2768801" " 1995314" " 1958017" " --parity" " -v")
+run_test("getBloom_cache_04"     "-a"             " 2768801" " 1995314" " 1958017" " --parity" " --verbose")
 
 # now check them
 #run_test("getBloom_check_01"     "2768801"        " -c")
