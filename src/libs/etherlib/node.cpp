@@ -254,12 +254,17 @@ bool getObjectViaRPC(CBaseNode &node, const SFString& method, const SFString& pa
 }
 
 // TODO: remove global data
-static SFUint32 nTrans=0,nTraced=0;
 static bool no_tracing=false;
 void setNoTracing(bool val) { no_tracing = val; }
 //-------------------------------------------------------------------------
-bool queryBlock(CBlock& block, const SFString& numIn, bool needTrace, bool byHash)
-{
+bool queryBlock(CBlock& block, const SFString& numIn, bool needTrace, bool byHash) {
+    uint32_t unused = 0;
+    return queryBlock(block, numIn, needTrace, byHash, unused);
+}
+
+//-------------------------------------------------------------------------
+bool queryBlock(CBlock& block, const SFString& numIn, bool needTrace, bool byHash, uint32_t& nTraces) {
+
     if (numIn=="latest")
         return queryBlock(block, asStringU(getLatestBlockFromClient()), needTrace, false);
 
@@ -293,7 +298,7 @@ bool queryBlock(CBlock& block, const SFString& numIn, bool needTrace, bool byHas
     }
 
     // We have the transactions, but we also want the receipts
-    SFUint32 nTraces=0;
+    nTraces=0;
     for (uint32_t i=0;i<block.transactions.getCount();i++)
     {
         CTransaction *trans = &block.transactions[i];
@@ -313,18 +318,6 @@ bool queryBlock(CBlock& block, const SFString& numIn, bool needTrace, bool byHas
             trans->isError = is_error;
             nTraces++;
         }
-    }
-
-    nTrans  += block.transactions.getCount();
-    nTraced += nTraces;
-    if (verbose) {
-        SFString fileName = getBinaryFilename1(toLongU(numIn));
-        SFString fmt;
-        fmt += SFString("\rBlock ") + cYellow  + "#" + asStringU(block.blockNumber)  + cOff;
-        fmt += SFString(" (")     + cYellow  + padNum3T((uint64_t)block.transactions.getCount()) + "/" + asStringU(nTrans)  + cOff + " trans";
-        fmt +=                      cYellow  + padNum3T((uint64_t)nTraces)                       + "/" + asStringU(nTraced) + cOff + " traced) written to ";
-        fmt +=                      cMagenta + fileName.Substitute(blockFolder, "./")  + cOff + ".";
-        fprintf(stderr, "%s\r", (const char*)fmt);
     }
 
     return true;
