@@ -50,6 +50,7 @@ namespace qblocks {
     extern void     getTraces               (CTraceArray& traces, const SFHash& hash);
 
     //-------------------------------------------------------------------------
+    extern bool     queryBlock              (CBlock& block,       const SFString& num, bool needTrace, bool byHash, uint32_t& nTraces);
     extern bool     queryBlock              (CBlock& block,       const SFString& num, bool needTrace, bool byHash);
     extern bool     queryRawBlock           (SFString& block,     const SFString& num, bool needTrace, bool hashesOnly);
     extern bool     queryRawTransaction     (SFString& results,   const SFHash& txHash);
