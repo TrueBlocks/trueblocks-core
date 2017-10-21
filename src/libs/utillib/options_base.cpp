@@ -216,6 +216,7 @@ namespace qblocks {
             expContext().spcs = 4;
             expContext().hexNums = true;
             expContext().quoteNums = true;
+            expContext().isParity = true;
             for (int i=0;i<5;i++)
                 if (sorts[i])
                     sorts[i]->sortFieldList();

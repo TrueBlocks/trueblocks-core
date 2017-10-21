@@ -25,6 +25,7 @@ namespace qblocks {
         bool asEther;
         bool asDollars;
         bool asWei;
+        bool isParity;
         CExportOptions(void) {
             noFrst = false;
             lev = 0; spcs = 2;
@@ -36,6 +37,7 @@ namespace qblocks {
             asEther = false;
             asDollars = false;
             asWei = true;
+            isParity = false;
         }
     };
     extern CExportOptions& expContext(void);
