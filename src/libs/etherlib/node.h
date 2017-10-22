@@ -94,6 +94,8 @@ namespace qblocks {
     //-------------------------------------------------------------------------
     extern bool forEveryFullBlockInMemory    (BLOCKVISITFUNC     func, void *data, SFUint32 start=0, SFUint32 count=(SFUint32)-1);
     extern bool forEveryMiniBlockInMemory    (MINIBLOCKVISITFUNC func, void *data, SFUint32 start=0, SFUint32 count=(SFUint32)-1);
+    extern bool forOnlyMiniBlocks            (MINIBLOCKVISITFUNC func, void *data, SFUint32 start=0, SFUint32 count=(SFUint32)-1);
+    extern bool forOnlyMiniTransactions      (MINITRANSVISITFUNC func, void *data, SFUint32 start=0, SFUint32 count=(SFUint32)-1);
     extern void clearInMemoryCache           (void);
 
     //-------------------------------------------------------------------------
@@ -121,5 +123,20 @@ namespace qblocks {
 #define miniTransCache (blockCachePath("miniTrans.bin"))
 #define blockFolder    (blockCachePath("blocks/"))
 #define bloomFolder    (blockCachePath("blooms/"))
+
+    //--------------------------------------------------------------------------
+    inline SFString TIMER_IN(double& startTime) {
+        CStringExportContext ctx;
+        ctx << (qbNow()-startTime) << ": ";
+        startTime = qbNow();
+        return ctx.str;
+    }
+
+    //-------------------------------------------------------------------------
+    inline SFString TIMER_TICK(double startTime) {
+        CStringExportContext ctx;
+        ctx << "in " << cGreen << (qbNow()-startTime) << cOff << " seconds.";
+        return ctx.str;
+    }
 
 }  // namespace qblocks
