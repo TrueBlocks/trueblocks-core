@@ -118,6 +118,27 @@ namespace qblocks {
         return;
     }
 
+#ifdef NEW_CODE
+    //---------------------------------------------------------------------------------------
+    void string_q::resize(size_t newSize, char c) {
+        if (newSize <= m_buffSize) {
+            // Return is string is shrinking. Not exactly c++ sematics, but it's
+            // okay since we're replacing this class
+            return;
+        }
+
+        // Note: normally we wouldn't be able to use realloc with a 'new' allocated memory,
+        // but because these are just characters, it's okay
+        m_Values = (char*)realloc(m_Values, newSize);
+        if (m_Values) {
+            m_buffSize = newSize;
+        } else {
+            m_buffSize = 0;
+        }
+        return;
+    }
+#endif
+
     //---------------------------------------------------------------------------------------
     void string_q::clear(void)
     {
@@ -1036,4 +1057,4 @@ namespace qblocks {
     }
 #endif
 }  // namespace qblocks
-// TODO(tjayrush): Can I remove Compare (capital) for compare (lower)?
+

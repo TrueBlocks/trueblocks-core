@@ -94,7 +94,7 @@ bool CNewBlock::setValueByName(const SFString& fieldName, const SFString& fieldV
             if ( fieldName % "size" ) { size = toUnsigned(fieldValue); return true; }
             break;
         case 't':
-            if ( fieldName % "timestamp" ) { timestamp = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "timestamp" ) { timestamp = toTimestamp(fieldValue); return true; }
             if ( fieldName % "transactions" ) {
                 char *p = (char *)fieldValue.c_str();
                 while (p && *p) {
@@ -189,7 +189,7 @@ void CNewBlock::registerClass(void) {
     ADD_FIELD(CNewBlock, "logsBloom", T_BLOOM, ++fieldNum);
     ADD_FIELD(CNewBlock, "blockNumber", T_NUMBER, ++fieldNum);
     ADD_FIELD(CNewBlock, "parentHash", T_HASH, ++fieldNum);
-    ADD_FIELD(CNewBlock, "timestamp", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CNewBlock, "timestamp", T_TIMESTAMP, ++fieldNum);
     ADD_FIELD(CNewBlock, "transactions", T_OBJECT|TS_ARRAY, ++fieldNum);
     ADD_FIELD(CNewBlock, "miner", T_ADDRESS, ++fieldNum);
     ADD_FIELD(CNewBlock, "size", T_NUMBER, ++fieldNum);
@@ -290,7 +290,7 @@ SFString CNewBlock::getValueByName(const SFString& fieldName) const {
     if (!ret.empty())
         return ret;
 
-    // If the class has any fields, return them
+    // Return field values
     switch (tolower(fieldName[0])) {
         case 'b':
             if ( fieldName % "blockNumber" ) return asStringU(blockNumber);
@@ -315,7 +315,7 @@ SFString CNewBlock::getValueByName(const SFString& fieldName) const {
             if ( fieldName % "size" ) return asStringU(size);
             break;
         case 't':
-            if ( fieldName % "timestamp" ) return asStringU(timestamp);
+            if ( fieldName % "timestamp" ) return fromTimestamp(timestamp);
             if ( fieldName % "transactions" || fieldName % "transactionsCnt" ) {
                 uint32_t cnt = transactions.getCount();
                 if (fieldName.endsWith("Cnt"))
@@ -363,7 +363,7 @@ CNewBlock::CNewBlock(const CBlock& block) {
     logsBloom = block.logsBloom;
     blockNumber = block.blockNumber;
     parentHash = block.parentHash;
-    timestamp = (SFUint32)block.timestamp;
+    timestamp = block.timestamp;
     transactions = block.transactions;
     miner = "0x0";
     size = 0;

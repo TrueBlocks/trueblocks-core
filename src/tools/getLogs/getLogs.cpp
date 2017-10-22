@@ -33,12 +33,13 @@ int main(int argc, const char *argv[]) {
 bool visitTransaction(CTransaction& trans, void *data) {
     const COptions *opt = (const COptions*)data;
 
-    //TODO(tjayrush) NOT LOOKING AT ADDRESS
     if (opt->isRaw) {
 //        SFString results;
 //        queryRawLogs(results, trans.getValueByName("hash"));
 //        cout << results << "\n";
 //        return true;
+        cout << "Raw option is not implemented.\n";
+        exit(0);
     }
 
 	cout << "[";

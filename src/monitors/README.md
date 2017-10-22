@@ -4,6 +4,6 @@ The monitor folder is a private repo that holds software built to monitor partic
 
 A monitor is fully customizable and may be directed to `watch` multiple smart contract and/or external Ethereum addresses. One may even watch multiple smart contract systems together giving unparalleled insight into what's going on in your systems.
 
-Monitors take advantage of the [apps](), [tools]() and [libraries]() that comprise the system.
+Monitors take advantage of the [apps](../apps/README.md), [tools](../tools/README.md) and [libraries](../libs/README.md) that comprise the system.
 
 Do you have a smart contract system that you would like us to monitor for you? Can we help you build your own smart contract monitors? Please contact us to explore the possibilities.

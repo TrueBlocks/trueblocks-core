@@ -9,96 +9,77 @@
 
 namespace qblocks {
 
-//------------------------------------------------------------------------
-class CMiniBlock
-{
-public:
-    SFUint32 blockNumber;
-    timestamp_t timestamp;
-    SFUint32 firstTrans;
-    SFUint32 nTrans;
+    //--------------------------------------------------------------------------
+    typedef enum {
+        miniBlock=(0x1<<1),
+        miniTrans=(0x1<<2),
+        miniBlocks=(miniBlock|miniTrans)
+    } miniBlockType;
 
-    CMiniBlock(CBlock *block) {
-        bzero(this, sizeof(CMiniBlock));
-        blockNumber = block->blockNumber;
-        timestamp = block->timestamp;
-        firstTrans = 0;
-        nTrans = 0;
-    }
+    //------------------------------------------------------------------------
+    class CMiniBlock {
+    public:
+        blknum_t    blockNumber;
+        timestamp_t timestamp;
+        txnum_t     firstTrans;
+        txnum_t     nTrans;
 
-    void toBlock(CBlock& block) const {
-        block.blockNumber = blockNumber;
-        block.timestamp = timestamp;
-        return;
-    }
+                 CMiniBlock (void);
+                 CMiniBlock (CBlock *block);
+        bool     operator== (const CBlock& b) const;
+        void     toBlock    (CBlock& block) const;
+        SFString Format     (void) const;
+    };
 
-    SFString Format(void) const {
-        CStringExportContext ctx;
-        ctx << "blockNumber: " << blockNumber << " timestamp: " << timestamp << " firstTrans: " << firstTrans << " nTrans: " << nTrans;
-        return ctx.str;
-    }
+    //------------------------------------------------------------------------
+    class CMiniTrans {
+    public:
+        uint32_t index;
+        SFGas    gasUsed;
+        SFGas    gasPrice;
+        SFGas    gasAllowed;
+        bool     isError;
+        char     from [41];
+        char     to   [41];
+        char     value[41];
 
-    bool operator==(const CBlock& b) const {
-        if (b.blockNumber != blockNumber) return false;
-        if (b.timestamp != timestamp) return false;
-        if (b.transactions.getCount() != nTrans) return false;
-        return true;
-    }
+                 CMiniTrans (void);
+                 CMiniTrans (CTransaction *t);
+        void     toTrans    (CTransaction& trans) const;
+        SFString Format     (void) const;
+    };
 
-    CMiniBlock() { }
-};
+    //--------------------------------------------------------------------------
+    class CInMemoryCache {
+    public:
+                 CInMemoryCache (void);
+                ~CInMemoryCache (void);
 
-//------------------------------------------------------------------------
-class CMiniTrans
-{
-public:
-    SFUint32  index;
-    SFUint32  gasUsed;
-    SFUint32  gasPrice;
-    SFUint32  gas;
-    SFUint32  isError;
-    char      from [41];
-    char      to   [41];
-    char      value[41];
+        void     Init           (void);
+        void     Clear          (void);
 
-    CMiniTrans(CTransaction *t)
-    {
-        bzero(this, sizeof(CMiniTrans));
-        index = t->transactionIndex;
-        gasUsed = t->receipt.gasUsed;
-        gasPrice = t->gasPrice;
-        gas = t->gas;
-        isError = t->isError;
-        strncpy(from,  (const char*)fromAddress(t->from).substr(2), 40);from [40]='\0';
-        strncpy(to,    (const char*)fromAddress(t->to).substr(2),   40);to   [40]='\0';
-        strncpy(value, (const char*)fromWei(t->value),              40);value[40]='\0';
-    }
+        bool     Load           (blknum_t _start, blknum_t _count);
+        blknum_t firstBlock     (void);
+        blknum_t lastBlock      (void);
 
-    void toTrans(CTransaction& trans) const {
-        trans.transactionIndex = index;
-        trans.gas = gas;
-        trans.receipt.gasUsed = gasUsed;
-        trans.gasPrice = gasPrice;
-        trans.isError = isError;
-        trans.from = toAddress(from);
-        trans.to = toAddress(to);
-        trans.value = toWei(value);
-        return;
-    }
+    public:
+        bool            isLoaded;
 
-    SFString Format(void) const {
-        CStringExportContext ctx;
-        ctx << "index: " << index
-        << " from: " << from
-        << " to: " << to
-        << " value: " << value
-        << " isError: " << isError
-        << " gas: " << gas
-        << " gasUsed: " << gasUsed
-        << " gasPrice: " << gasPrice;
-        return ctx.str;
-    }
+        CSharedResource blocksOnDisc;
+        CSharedResource transOnDisc;
 
-    CMiniTrans() {}
-};
+        SFString        blockFile;
+        SFString        transFile;
+
+        CMiniBlock     *blocks;
+        CMiniTrans     *trans;
+
+    private:
+        blknum_t        nBlocks;
+        txnum_t         nTrans;
+        uint64_t        start;
+        uint64_t        count;
+    };
+
 }  // namespace qblocks
+

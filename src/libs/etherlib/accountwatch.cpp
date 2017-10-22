@@ -229,7 +229,7 @@ SFString CAccountWatch::getValueByName(const SFString& fieldName) const {
     if (!ret.empty())
         return ret;
 
-    // If the class has any fields, return them
+    // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
             if ( fieldName % "address" ) return fromAddress(address);
@@ -341,15 +341,12 @@ bool CAccountWatch::isTransactionOfInterest(CTransaction *trans, uint64_t nSigs,
 
     // If this is a contract and this is its birth block, that's a hit
     if (trans->receipt.contractAddress == address) {
-        trans->isInternalTx = true;  // TODO(tjayrush) - handle contract creation correctly (change to data)
+        trans->isInternalTx = true;
         return true;
     }
 
     // Next, we check the receipt logs to see if the address appears either in
     // the log's 'address' field or in one of the data items
-    //
-    // TODO(tjayrush): We should do a 'deep trace' here (or when the block is first read)
-    // to see if there was a 'call,' to our address.
     for (uint32_t i = 0 ; i < trans->receipt.logs.getCount() ; i++) {
         SFString acc = address;
         CLogEntry *l = reinterpret_cast<CLogEntry *>(&trans->receipt.logs[i]);

@@ -191,7 +191,7 @@ SFString CAbi::getValueByName(const SFString& fieldName) const {
     if (!ret.empty())
         return ret;
 
-    // If the class has any fields, return them
+    // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
             if ( fieldName % "abiByName" || fieldName % "abiByNameCnt" ) {
@@ -388,7 +388,7 @@ bool CAbi::loadABI(const SFString& addr) {
 
         SFString abis1;
 
-        // TODO(tjayrush): this is wrong. We should remove the need to use external 'ethabi' code to get the encodings
+        // Get the encodings (question: does this use 'ethabi'? It shouldn't
         for (uint32_t i=0;i<abiByName.getCount();i++) {
             getEncoding(abiFilename, addr, abiByName[i]);
             abis1 += abiByName[i].Format("[{NAME}]|[{ENCODING}]\n");

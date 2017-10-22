@@ -10,7 +10,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
-#include "ethtypes.h"
+#include "utillib.h"
 #include "abilib.h"
 #include "transaction.h"
 #include "incomestatement.h"
@@ -29,12 +29,12 @@ typedef SFUniqueList<CAccountWatch*>       CAccountWatchListU;
 //--------------------------------------------------------------------------
 class CAccountWatch : public CBaseNode {
 public:
-    SFUint32 index;
+    uint64_t index;
     SFAddress address;
     SFString name;
     SFString color;
-    SFUint32 firstBlock;
-    SFUint32 lastBlock;
+    blknum_t firstBlock;
+    blknum_t lastBlock;
     SFString status;
     bool deepScan;
     CIncomeStatement qbis;
