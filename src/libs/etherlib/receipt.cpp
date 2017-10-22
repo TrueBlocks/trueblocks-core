@@ -53,8 +53,12 @@ SFString nextReceiptChunk(const SFString& fieldIn, const void *dataPtr) {
 //---------------------------------------------------------------------------------------------------
 bool CReceipt::setValueByName(const SFString& fieldName, const SFString& fieldValue) {
     // EXISTING_CODE
-    if (fieldName == "contractAddress" && fieldValue == "null")
+    if (fieldName == "contractAddress" && fieldValue == "null") {
         *((SFString*)&fieldValue) = "0";
+    } else if (fieldName == "status") {
+        isError = (fieldValue == "0");
+        return true;
+    }
 
     if (pTrans)
         if (((CTransaction*)pTrans)->setValueByName(fieldName, fieldValue))
@@ -159,6 +163,11 @@ SFString nextReceiptChunk_custom(const SFString& fieldIn, const void *dataPtr) {
     if (rec) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
+            case 'i':
+                // Display only the fields of this node, not it's parent type
+                if ( fieldIn % "isError" )
+                    return asStringU(rec->isError);
+                break;
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type

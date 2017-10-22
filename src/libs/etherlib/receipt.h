@@ -47,6 +47,7 @@ public:
     // EXISTING_CODE
     const CTransaction *pTrans;
     friend class CTransaction;
+    bool isError;
 #if 0
     uint32_t cumulativeGasUsed;
     SFAddress from12;
@@ -111,6 +112,7 @@ inline void CReceipt::Init(void) {
 
     // EXISTING_CODE
     pTrans = NULL;
+    isError = false;
 #if 0
     blockHash = "";
     blockNumber = 0;
@@ -136,6 +138,7 @@ inline void CReceipt::Copy(const CReceipt& re) {
 
     // EXISTING_CODE
     pTrans = re.pTrans; // no deep copy becuase it's const
+    isError = re.isError;
 #if 0
     blockHash = re.blockHash;
     blockNumber = re.blockNumber;
