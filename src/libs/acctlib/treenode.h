@@ -27,7 +27,7 @@ using ACCTVISITOR = bool (*)(const CTreeNode *v, void *data);
 //--------------------------------------------------------------------------
 class CTreeNode : public CBaseNode {
 public:
-    SFUint32 index;
+    uint64_t index;
     SFString m_prefix;
 
 public:

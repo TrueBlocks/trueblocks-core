@@ -45,6 +45,10 @@ namespace qblocks {
         int      compare  (size_t pos, size_t len, const string_q& str) const;
         int      compare  (size_t pos, size_t len, const string_q& str, size_t subpos, size_t sublen) const;
         void     reserve  (size_t n=0);
+#ifdef NEW_CODE
+        void     resize   (size_t n) { resize(n, '\0'); }
+        void     resize   (size_t n, char c);
+#endif
         bool     empty    (void) const;
         size_t   find     (const string_q& str, size_t pos=0) const;
         size_t   find     (const char* s, size_t pos=0) const;

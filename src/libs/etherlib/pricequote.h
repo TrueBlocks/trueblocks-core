@@ -10,7 +10,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
-#include "ethtypes.h"
+#include "utillib.h"
 #include "abilib.h"
 
 namespace qblocks {
@@ -27,7 +27,7 @@ typedef SFUniqueList<CPriceQuote*>       CPriceQuoteListU;
 //--------------------------------------------------------------------------
 class CPriceQuote : public CBaseNode {
 public:
-    SFUint32 timestamp;
+    timestamp_t timestamp;
     double close;
 
 public:

@@ -50,6 +50,7 @@ namespace qblocks {
     extern void     getTraces               (CTraceArray& traces, const SFHash& hash);
 
     //-------------------------------------------------------------------------
+    extern bool     queryBlock              (CBlock& block,       const SFString& num, bool needTrace, bool byHash, uint32_t& nTraces);
     extern bool     queryBlock              (CBlock& block,       const SFString& num, bool needTrace, bool byHash);
     extern bool     queryRawBlock           (SFString& block,     const SFString& num, bool needTrace, bool hashesOnly);
     extern bool     queryRawTransaction     (SFString& results,   const SFHash& txHash);
@@ -93,6 +94,8 @@ namespace qblocks {
     //-------------------------------------------------------------------------
     extern bool forEveryFullBlockInMemory    (BLOCKVISITFUNC     func, void *data, SFUint32 start=0, SFUint32 count=(SFUint32)-1);
     extern bool forEveryMiniBlockInMemory    (MINIBLOCKVISITFUNC func, void *data, SFUint32 start=0, SFUint32 count=(SFUint32)-1);
+    extern bool forOnlyMiniBlocks            (MINIBLOCKVISITFUNC func, void *data, SFUint32 start=0, SFUint32 count=(SFUint32)-1);
+    extern bool forOnlyMiniTransactions      (MINITRANSVISITFUNC func, void *data, SFUint32 start=0, SFUint32 count=(SFUint32)-1);
     extern void clearInMemoryCache           (void);
 
     //-------------------------------------------------------------------------
@@ -113,14 +116,6 @@ namespace qblocks {
         CBlockVisitor(void) : m_firstBlock(0), m_cnt(0) { }
     };
 
-    // Syntactic Sugar (TODO: These should be removed from the library)
-    //-------------------------------------------------------------------------
-    inline void   forEveryBlockFromClient    (BLOCKVISITFUNC     func, CBlockVisitor *bv) { forEveryBlockOnDisc        (func, bv, bv->firstBlock(), bv->getCount()); }
-    inline void   forEveryBlockOnDisc        (BLOCKVISITFUNC     func, CBlockVisitor *bv) { forEveryBlockOnDisc        (func, bv, bv->firstBlock(), bv->getCount()); }
-    inline void   forEveryNonEmptyBlockOnDisc(BLOCKVISITFUNC     func, CBlockVisitor *bv) { forEveryNonEmptyBlockOnDisc(func, bv, bv->firstBlock(), bv->getCount()); }
-    inline void   forEveryFullBlockInMemory  (BLOCKVISITFUNC     func, CBlockVisitor *bv) { forEveryFullBlockInMemory  (func, bv, bv->firstBlock(), bv->getCount()); }
-    inline void   forEveryMiniBlockInMemory  (MINIBLOCKVISITFUNC func, CBlockVisitor *bv) { forEveryMiniBlockInMemory  (func, bv, bv->firstBlock(), bv->getCount()); }
-
     extern SFString blockCachePath(const SFString& _part);
 
 #define fullBlockIndex (blockCachePath("fullBlocks.bin"))
@@ -128,5 +123,20 @@ namespace qblocks {
 #define miniTransCache (blockCachePath("miniTrans.bin"))
 #define blockFolder    (blockCachePath("blocks/"))
 #define bloomFolder    (blockCachePath("blooms/"))
+
+    //--------------------------------------------------------------------------
+    inline SFString TIMER_IN(double& startTime) {
+        CStringExportContext ctx;
+        ctx << (qbNow()-startTime) << ": ";
+        startTime = qbNow();
+        return ctx.str;
+    }
+
+    //-------------------------------------------------------------------------
+    inline SFString TIMER_TICK(double startTime) {
+        CStringExportContext ctx;
+        ctx << "in " << cGreen << (qbNow()-startTime) << cOff << " seconds.";
+        return ctx.str;
+    }
 
 }  // namespace qblocks

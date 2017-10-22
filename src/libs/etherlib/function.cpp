@@ -125,15 +125,6 @@ void CFunction::finishParse() {
         if (inputs[i].name.empty())
             inputs[i].name = "param_" + asString(cnt++);
     }
-    // TODO(tjayrush): Do we need names for output params?
-    //cnt = 0;
-    //for (int i = 0 ; i < outputs.getCount() ; i++) {
-    //    if (outputs[i].name.empty()) {
-    //        SFString type = outputs[i].type;
-    //        type.ReplaceAny("0123456789","");
-    //        outputs[i].name = type + "_" + asString(cnt++);
-    //    }
-    //}
     // EXISTING_CODE
 }
 
@@ -280,7 +271,7 @@ SFString CFunction::getValueByName(const SFString& fieldName) const {
     if (!ret.empty())
         return ret;
 
-    // If the class has any fields, return them
+    // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
             if ( fieldName % "anonymous" ) return asString(anonymous);

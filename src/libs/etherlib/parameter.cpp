@@ -196,7 +196,7 @@ SFString CParameter::getValueByName(const SFString& fieldName) const {
     if (!ret.empty())
         return ret;
 
-    // If the class has any fields, return them
+    // Return field values
     switch (tolower(fieldName[0])) {
         case 'i':
             if ( fieldName % "indexed" ) return asString(indexed);
@@ -233,6 +233,18 @@ ostream& operator<<(ostream& os, const CParameter& item) {
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
+//---------------------------------------------------------------------------
+CParameter::CParameter(SFString& textIn) {
+    if (textIn.Contains("=")) {
+        strDefault = textIn;
+        textIn = nextTokenClear(strDefault, '=');
+    }
+    type       = nextTokenClear(textIn, ' ');
+    isPointer  = textIn.Contains("*");
+    isArray    = textIn.Contains("Array");
+    isObject   = !isArray && type.startsWith('C');
+    name       = textIn.Substitute("*", "");
+}
 // EXISTING_CODE
 }  // namespace qblocks
 

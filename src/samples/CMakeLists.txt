@@ -8,4 +8,4 @@ project (samples)
 # message (WARNING  "*** Entering samples folder ***")
 
 # Compilation order of the src subdirectories
-add_subdirectory(lostEther)
+#add_subdirectory(lostEther)

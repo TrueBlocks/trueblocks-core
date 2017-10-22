@@ -22,7 +22,6 @@ public:
 
     SFString classNames;
     SFString filter;
-    SFString dataFile;
     CToml classFile;
 
     COptions(void);

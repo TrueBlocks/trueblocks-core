@@ -150,6 +150,19 @@ bool COptions::parseArguments(SFString& command) {
         }
     }
 
+    if (expContext().isParity) {
+        HIDE_FIELD(CTransaction, "cumulativeGasUsed");
+        HIDE_FIELD(CTransaction, "gasUsed");
+        HIDE_FIELD(CTransaction, "timestamp");
+        CRuntimeClass *pClass = GETRUNTIME_CLASS(CBlock);
+        if (pClass) {
+            CFieldData *pField = pClass->FindField("blockNumber");
+            if (pField)
+                pField->setName("number");
+            pClass->sortFieldList();
+        }
+    }
+
     if (terse && !isRaw)
         return usage("The --terse option works only with --raw. Quitting...");
 
