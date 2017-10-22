@@ -484,7 +484,7 @@ baseClass: CBaseNode
 
 --------------------------------------------------------------------------------
 className: CReceipt
-objectSize: 112
+objectSize: 120
 baseClass: CBaseNode
 	fieldName: schema
 	  fieldID: 1001
@@ -721,7 +721,7 @@ baseClass: CBaseNode
 
 --------------------------------------------------------------------------------
 className: CTransaction
-objectSize: 432
+objectSize: 440
 baseClass: CBaseNode
 	fieldName: schema
 	  fieldID: 1001
