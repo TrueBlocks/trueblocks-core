@@ -773,7 +773,7 @@ bool forEveryEmptyBlockOnDisc(BLOCKVISITFUNC func, void *data, SFUint32 start, S
     CSharedResource fullBlocks;
     if (!fullBlocks.Lock(fullBlockIndex, binaryReadOnly, LOCK_WAIT))
     {
-        cerr << "forEveryNonEmptyBlockOnDisc failed: " << fullBlocks.LockFailure() << "\n";
+        cerr << "forEveryEmptyBlockOnDisc failed: " << fullBlocks.LockFailure() << "\n";
         return false;
     }
     ASSERT(fullBlocks.isOpen());
@@ -841,45 +841,41 @@ bool forEveryBlock(BLOCKVISITFUNC func, void *data, SFUint32 start, SFUint32 cou
 }
 
 //-------------------------------------------------------------------------
-bool forEveryNonEmptyBlockOnDisc(BLOCKVISITFUNC func, void *data, SFUint32 start, SFUint32 count, SFUint32 skip)
-{
+bool forEveryNonEmptyBlockOnDisc(BLOCKVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip) {
+
     // Read the non-empty block index file and spit it out only non-empty blocks
     if (!func)
         return false;
 
     CSharedResource fullBlocks;
-    if (!fullBlocks.Lock(fullBlockIndex, binaryReadOnly, LOCK_WAIT))
-    {
+    if (!fullBlocks.Lock(fullBlockIndex, binaryReadOnly, LOCK_WAIT)) {
         cerr << "forEveryNonEmptyBlockOnDisc failed: " << fullBlocks.LockFailure() << "\n";
         return false;
     }
     ASSERT(fullBlocks.isOpen());
 
-    SFUint32 nItems = fileSize(fullBlockIndex) / sizeof(SFUint32);
-    SFUint32 *contents = new SFUint32[nItems];
-    if (contents)
-    {
+    uint64_t nItems = fileSize(fullBlockIndex) / sizeof(uint64_t);
+    uint64_t *contents = new uint64_t[nItems];
+    if (contents) {
         // read the entire full block index
-        fullBlocks.Read(contents, sizeof(SFUint32), nItems);
+        fullBlocks.Read(contents, sizeof(uint64_t), nItems);
         fullBlocks.Release();  // release it since we don't need it any longer
 
-        for (SFUint32 i = 0 ; i < nItems ; i = i + skip)
-        {
+        for (uint64_t i = 0 ; i < nItems ; i = i + skip) {
             // TODO: This should be a binary search not a scan. This is why it appears to wait
-            if (inRange((SFUint32)contents[i], start, start+count-1))
-            {
+            uint64_t item = contents[i];
+            if (inRange(item, start, start+count-1)) {
                 CBlock block;
-                if (getBlock(block,contents[i]))
-                {
+                if (getBlock(block,contents[i])) {
                     bool ret = (*func)(block, data);
-                    if (!ret)
-                    {
+                    if (!ret) {
                         // Cleanup and return if user tells us to
                         delete [] contents;
                         return false;
                     }
                 }
             } else {
+                // do nothing
             }
         }
         delete [] contents;
