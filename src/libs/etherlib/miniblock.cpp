@@ -138,25 +138,25 @@ namespace qblocks {
     //--------------------------------------------------------------------------
     bool CInMemoryCache::Load(blknum_t _start, blknum_t _count) {
 
-        if (fileExists(miniBlockCache + ".lck")) {
+        // Only come through here once, even if we fail to load
+        if (isLoaded)
+            return true;
+        isLoaded = true;
+
+        // Cannot process anything if the files are locked.
+        if (isFileLocked(miniBlockCache)) {
             cerr << "The miniBlockCache (" << miniBlockCache << ") is locked. The program cannot be run. Quitting...\n";
             cerr.flush();
             exit(0);
-        }
-
-        if (fileExists(miniTransCache + ".lck")) {
+        } else if (isFileLocked(miniTransCache)) {
             cerr << "The miniTransCache (" << miniTransCache << ") is locked. The program cannot be run. Quitting...\n";
             cerr.flush();
             exit(0);
         }
 
         blknum_t latestBlock = getLatestBlockFromCache();
-
         start = min(_start,          latestBlock);
         count = min(_start + _count, latestBlock) - _start;
-        if (isLoaded)
-            return true;
-        isLoaded = true; // only come through here once, even if we fail to load
 
         double startTime = qbNow();
         blocks = new CMiniBlock[nBlocks];
