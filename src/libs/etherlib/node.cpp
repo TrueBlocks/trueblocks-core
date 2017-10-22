@@ -55,21 +55,6 @@ CURL *getCurl(bool cleanup=false)
     return curl;
 }
 
-//--------------------------------------------------------------------------
-inline SFString TIMER_IN(double& startTime) {
-    CStringExportContext ctx;
-    ctx << (qbNow()-startTime) << ": ";
-    startTime = qbNow();
-    return ctx.str;
-}
-
-//-------------------------------------------------------------------------
-inline SFString TIMER_TICK(double startTime) {
-    CStringExportContext ctx;
-    ctx << "in " << cGreen << (qbNow()-startTime) << cOff << " seconds.";
-    return ctx.str;
-}
-
 //-------------------------------------------------------------------------
 extern size_t write_callback(char *ptr, size_t size, size_t nmemb, void *userdata);
 static bool earlyAbort=false;
@@ -262,6 +247,7 @@ bool queryBlock(CBlock& block, const SFString& numIn, bool needTrace, bool byHas
     return queryBlock(block, numIn, needTrace, byHash, unused);
 }
 
+#define byzantiumBlock 4370000
 //-------------------------------------------------------------------------
 bool queryBlock(CBlock& block, const SFString& numIn, bool needTrace, bool byHash, uint32_t& nTraces) {
 
@@ -308,8 +294,10 @@ bool queryBlock(CBlock& block, const SFString& numIn, bool needTrace, bool byHas
         CReceipt receipt;
         getReceipt(receipt, trans->hash);
         trans->receipt = receipt; // deep copy
-        if (needTrace && trans->gas == receipt.gasUsed)
-        {
+        if (num >= byzantiumBlock) {
+            trans->isError = receipt.isError;
+
+        } else if (needTrace && trans->gas == receipt.gasUsed) {
             SFString trace;
             is_error = false;
             is_tracing = true;
@@ -825,12 +813,6 @@ bool forEveryEmptyBlockOnDisc(BLOCKVISITFUNC func, void *data, SFUint32 start, S
 }
 
 //-------------------------------------------------------------------------
-template<class T>
-inline bool inRange(T val, T mn, T mx) {
-    return (val >= mn && val <= mx);
-}
-
-//-------------------------------------------------------------------------
 bool forEveryBlock(BLOCKVISITFUNC func, void *data, SFUint32 start, SFUint32 count, SFUint32 skip) {
     // Here we simply scan the numbers and either read from disc or query the node
     if (!func)
@@ -949,237 +931,6 @@ bool getLatestBlocks(SFUint32& cache, SFUint32& client, CSharedResource *res)
 {
     client = getLatestBlockFromClient();
     cache  = getLatestBlockFromCache(res);
-    return true;
-}
-
-//--------------------------------------------------------------------------
-class CInMemoryCache
-{
-public:
-    CInMemoryCache(void) {
-        blocks    = NULL;
-        // blocksOnDisc;
-        blockFile = miniBlockCache;
-
-        trans     = NULL;
-        // transOnDisc
-        transFile = miniTransCache;
-
-        nBlocks1   = fileSize(blockFile) / sizeof(CMiniBlock);
-        nTrans1    = fileSize(transFile) / sizeof(CMiniTrans);
-
-        loaded = false;
-    }
-
-    ~CInMemoryCache(void) {
-        Clear();
-    }
-
-    void Clear(void) {
-        if ( blocks   ) delete [] blocks;
-        blocks = NULL;
-        if ( trans    ) delete [] trans;
-        trans = NULL;
-        blocksOnDisc.Release();
-        transOnDisc.Release();
-        loaded = false;
-    }
-
-    bool Load(SFUint32 _start, SFUint32 _count)
-    {
-        start = min(_start,        getLatestBlockFromCache());
-        count = min(_start+_count, getLatestBlockFromCache()) - _start;
-        if (loaded)
-            return true;
-        loaded = true; // only come through here once, even if we fail to load
-
-        startTime = qbNow();
-        blocks = new CMiniBlock[nBlocks1];
-        if (!blocks)
-        {
-            cerr << "Could not allocate memory for the blocks (size needed: " << nBlocks1 << ").\n";
-            return false;
-        }
-        bzero(blocks, sizeof(CMiniBlock)*(nBlocks1));
-        if (verbose)
-            cerr << TIMER_IN(startTime) << "Allocated room for " << nBlocks1 << " miniBlocks.\n";
-
-        // Next, we try to open the mini-block database
-        if (!blocksOnDisc.Lock(blockFile, binaryReadOnly, LOCK_WAIT))
-        {
-            cerr << "Could not open the mini-block database: " << blockFile << ".\n";
-            return false;
-        }
-        blocksOnDisc.Seek(0, SEEK_SET);
-
-        // Read the entire mini-block database into memory in one chunk
-        size_t nRead = blocksOnDisc.Read(blocks, nBlocks1, sizeof(CMiniBlock));
-        blocksOnDisc.Release();  // We're done with it
-        if (nRead != nBlocks1)
-        {
-            cerr << "Error encountered reading mini-blocks database.\n Quitting...";
-            return false;
-        }
-        if (verbose)
-            cerr << TIMER_IN(startTime) << "Read " << nRead << " miniBlocks into memory.\n";
-
-        // See if we can allocation enough space for the mini-transaction database
-        SFUint32 fs = fileSize(transFile);
-        SFUint32 ms = sizeof(CMiniTrans);
-        nTrans1   = fs / ms;
-        trans = new CMiniTrans[nTrans1];
-        if (!trans)
-        {
-            cerr << "Could not allocate memory for the transactions (size needed: " << nTrans1 << ").\n";
-            return false;
-        }
-        bzero(trans, sizeof(CMiniTrans)*(nTrans1));
-        if (verbose)
-            cerr << TIMER_IN(startTime) << "Allocated room for " << nTrans1 << " transactions.\n";
-
-        // Next, we try to open the mini-transaction database
-        if (!transOnDisc.Lock(transFile, binaryReadOnly, LOCK_WAIT))
-        {
-            cerr << "Could not open the mini-transaction database: " << transFile << ".\n";
-            return false;
-        }
-
-        // Read the entire mini-transaction database into memory in one chunk
-        // TODO: What is the correct value for this?
-#define READ_SIZE 204800
-        nRead = 0;
-        while (nRead < nTrans1)
-        {
-            nRead += transOnDisc.Read(&trans[nRead], READ_SIZE, sizeof(CMiniTrans));
-            if (verbose)
-                progressBar(nRead, nTrans1, qbNow() - startTime);
-        }
-        transOnDisc.Release();
-        cerr << "\n" << TIMER_IN(startTime);
-        return true;
-    }
-    SFUint32 firstBlock(void) { return 0; }
-    SFUint32 lastBlock (void) { return nBlocks1; }
-
-public:
-    bool            loaded;
-    CMiniBlock     *blocks;
-    CSharedResource blocksOnDisc;
-    SFString        blockFile;
-
-    CMiniTrans     *trans;
-    CSharedResource transOnDisc;
-    SFString        transFile;
-
-private:
-    SFUint32    nBlocks1;
-    SFUint32    nTrans1;
-    SFUint32    start;
-    SFUint32    count;
-};
-
-static CInMemoryCache *theCache = NULL;
-//--------------------------------------------------------------------------
-void clearInMemoryCache(void) {
-    if (theCache)
-        theCache->Clear();
-    theCache = NULL;
-}
-//--------------------------------------------------------------------------
-CInMemoryCache *getTheCache(void) {
-    if (!theCache)
-        theCache = new CInMemoryCache();
-    return theCache;
-}
-
-//--------------------------------------------------------------------------
-bool forEveryMiniBlockInMemory(MINIBLOCKVISITFUNC func, void *data, SFUint32 start, SFUint32 count)
-{
-    CInMemoryCache *cache = getTheCache();
-    if (!cache->Load(start,count))
-        return false;
-    SFUint32 first = cache->firstBlock();
-    SFUint32 last = cache->lastBlock();
-
-    bool done=false;
-    for (SFUint32 i=first;i<last&&!done;i++)
-    {
-        if (inRange((SFUint32)cache->blocks[i].blockNumber, start, start+count-1))
-        {
-            if (!(*func)(cache->blocks[i], &cache->trans[0], data))
-                return false;
-
-        } else if (cache->blocks[i].blockNumber >= start+count)
-        {
-            done=true;
-
-        } else
-        {
-            // do nothing
-        }
-    }
-
-    return true;
-}
-
-/*
- SFAddress from;
- SFAddress to;
- CReceipt
-    SFAddress contractAddress;
-    CLogEntryArray logs;
-        SFAddress address;
-        SFString data;
-        SFUint32 logIndex;
-        SFTopicArray topics;
-        CTrace
-            SFStringArray traceAddress;
-            CTraceAction action;
-                SFAddress from;
-                SFAddress to;
- */
-
-//--------------------------------------------------------------------------
-bool forEveryFullBlockInMemory(BLOCKVISITFUNC func, void *data, SFUint32 start, SFUint32 count)
-{
-    CInMemoryCache *cache = getTheCache();
-    if (getSource() != "mem")
-        return false;
-    if (!cache->Load(start,count))
-        return false;
-
-    SFUint32 first = cache->firstBlock();
-    SFUint32 last = cache->lastBlock();
-
-    bool done=false;
-    for (SFUint32 i=first;i<last&&!done;i++)
-    {
-        if (inRange((SFUint32)cache->blocks[i].blockNumber, start, start+count-1))
-        {
-            CBlock block;
-            cache->blocks[i].toBlock(block);
-            SFUint32 gasUsed=0;
-            for (SFUint32 tr=cache->blocks[i].firstTrans;tr<cache->blocks[i].firstTrans+cache->blocks[i].nTrans;tr++)
-            {
-                CTransaction tt;
-                cache->trans[tr].toTrans(tt);
-                gasUsed += tt.receipt.gasUsed;
-                block.transactions[block.transactions.getCount()] = tt;
-            }
-            block.gasUsed = gasUsed;
-            if (!(*func)(block, data))
-                return false;
-
-        } else if (cache->blocks[i].blockNumber >= start+count)
-        {
-            done=true;
-
-        } else
-        {
-            // do nothing
-        }
-    }
-
     return true;
 }
 
