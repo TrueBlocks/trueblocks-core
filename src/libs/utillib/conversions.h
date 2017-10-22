@@ -233,10 +233,9 @@ namespace qblocks {
 #define SFHash         SFString
 #define SFBloom        SFUintBN
 #define SFWei          SFUintBN
-#define SFGas          SFUint32
+#define SFGas          uint64_t
 #define blknum_t       uint64_t
-#define txnum_t        uint32_t
-#define lognum_t       uint32_t
+#define txnum_t        uint64_t
 
 #define toUnsigned(a)  (SFUint32)((a).startsWith("0x")?hex2Long((a)):toLongU((a)))
 #define toSigned(a)    (int64_t)((a).startsWith("0x")?hex2Long((a)):toLong((a)))
