@@ -10,7 +10,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
-#include "ethtypes.h"
+#include "utillib.h"
 #include "abilib.h"
 #include "transaction.h"
 
@@ -35,7 +35,7 @@ public:
     SFGas gasUsed;
     SFHash hash;
     SFBloom logsBloom;
-    SFUint32 blockNumber;
+    blknum_t blockNumber;
     SFHash parentHash;
     timestamp_t timestamp;
     CTransactionArray transactions;

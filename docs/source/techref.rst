@@ -19,7 +19,7 @@ Block-related tools
         `getBlock <https://github.com/Great-Hill-Corporation/quickBlocks/blob/master/src/tools/getBlock/README.md>`_,
         `getBloom <https://github.com/Great-Hill-Corporation/quickBlocks/blob/master/src/tools/getBloom/README.md>`_,
         `whenBlock <https://github.com/Great-Hill-Corporation/quickBlocks/blob/master/src/tools/whenBlock/README.md>`_,
-        `whereBlock <https://github.com/Great-Hill-Corporation/quickBlocks/blob/master/src/tools/whereBlock/README.md>`_,
+        `whereBlock <https://github.com/Great-Hill-Corporation/quickBlocks/blob/master/src/tools/whereBlock/README.md>`_
 
 Transaction-related tools
 --------------------------
@@ -30,7 +30,7 @@ Transaction-related tools
         `getTrans <https://github.com/Great-Hill-Corporation/quickBlocks/blob/master/src/tools/getTrans/README.md>`_,
         `getTrace <https://github.com/Great-Hill-Corporation/quickBlocks/blob/master/src/tools/getTrace/README.md>`_,
         `getLogs <https://github.com/Great-Hill-Corporation/quickBlocks/blob/master/src/tools/getLogs/README.md>`_,
-        `getReceipt <https://github.com/Great-Hill-Corporation/quickBlocks/blob/master/src/tools/getReceipt/README.md>`_,
+        `getReceipt <https://github.com/Great-Hill-Corporation/quickBlocks/blob/master/src/tools/getReceipt/README.md>`_
 
 Account-related tools
 ----------------------
@@ -42,7 +42,7 @@ Account-related tools
         `getAccounts <https://github.com/Great-Hill-Corporation/quickBlocks/blob/master/src/tools/getAccounts/README.md>`_,
         `getBalance <https://github.com/Great-Hill-Corporation/quickBlocks/blob/master/src/tools/getBalance/README.md>`_,
         `getTokenBal <https://github.com/Great-Hill-Corporation/quickBlocks/blob/master/src/tools/getTokenBal/README.md>`_,
-        `isContract <https://github.com/Great-Hill-Corporation/quickBlocks/blob/master/src/tools/isContract/README.md>`_,
+        `isContract <https://github.com/Great-Hill-Corporation/quickBlocks/blob/master/src/tools/isContract/README.md>`_
 
 Applications
 =============
@@ -55,7 +55,7 @@ blockScraper application
 -------------------------
 
     The **blockScrape** application scrapes the Ethereum blockchain creating three different databases that help the other tools and applications quickly access and deliver the
-    Ethereum shared ledger to your applications. This process is fully described in our `three white papers <https://github.com/Great-Hill-Corporation/quickBlocks/blob/master/src/other/papers/README.md>`_,.
+    Ethereum shared ledger to your applications. This process is fully described in our `three white papers <https://github.com/Great-Hill-Corporation/quickBlocks/blob/master/src/other/papers/README.md>`_.
     This tool is not open source. It is available for purchase from our website.
 
 grabABI application

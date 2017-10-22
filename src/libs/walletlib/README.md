@@ -30,4 +30,4 @@ The tokenlib and walletlib are provided so as to support parsing of a small coll
 absence of a smart contract’s ABI definition.
 
 In other words, any smart contract that implements the ERC 20 token interface may be successfully promoted even without its ABI. In the presence of an ABI, an even more useful and 
-valuable promotion of transactions and events may be accomplished. This feature is described in the next session.
+valuable promotion of transactions and events may be accomplished.

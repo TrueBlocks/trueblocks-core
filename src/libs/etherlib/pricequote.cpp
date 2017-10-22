@@ -54,7 +54,7 @@ SFString nextPricequoteChunk(const SFString& fieldIn, const void *dataPtr) {
 bool CPriceQuote::setValueByName(const SFString& fieldName, const SFString& fieldValue) {
     // EXISTING_CODE
     if ( fieldName % "date" || fieldName % "timestamp" ) {
-        timestamp = toLongU(fieldValue);
+        timestamp = toLong(fieldValue);
         date = dateFromTimeStamp((timestamp_t)timestamp);
         return true;
     }
@@ -65,7 +65,7 @@ bool CPriceQuote::setValueByName(const SFString& fieldName, const SFString& fiel
             if ( fieldName % "close" ) { close = toDouble(fieldValue); return true; }
             break;
         case 't':
-            if ( fieldName % "timestamp" ) { timestamp = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "timestamp" ) { timestamp = toTimestamp(fieldValue); return true; }
             break;
         default:
             break;
@@ -126,7 +126,7 @@ void CPriceQuote::registerClass(void) {
     ADD_FIELD(CPriceQuote, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CPriceQuote, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CPriceQuote, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CPriceQuote, "timestamp", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CPriceQuote, "timestamp", T_TIMESTAMP, ++fieldNum);
     ADD_FIELD(CPriceQuote, "close", T_DOUBLE, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
@@ -204,13 +204,13 @@ SFString CPriceQuote::getValueByName(const SFString& fieldName) const {
     if (!ret.empty())
         return ret;
 
-    // If the class has any fields, return them
+    // Return field values
     switch (tolower(fieldName[0])) {
         case 'c':
             if ( fieldName % "close" ) return fmtFloat(close);
             break;
         case 't':
-            if ( fieldName % "timestamp" ) return asStringU(timestamp);
+            if ( fieldName % "timestamp" ) return fromTimestamp(timestamp);
             break;
     }
 

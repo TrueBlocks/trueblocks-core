@@ -58,6 +58,7 @@ public:
     DECLARE_NODE(CParameter);
 
     // EXISTING_CODE
+    CParameter(SFString& txtIn);
     // EXISTING_CODE
     friend ostream& operator<<(ostream& os, const CParameter& item);
 

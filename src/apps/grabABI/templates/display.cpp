@@ -159,7 +159,6 @@ void CVisitor::displayTrace(timestamp_t ts, const CTraceArray& traces, bool err)
         if (err) { c1 = c2 = c3 = biBlack; }
         if (from.length()) {
             cout << c1 <<  "\r\n    " << padNum4((uint64_t)t) << ":" << c2;
-            // TODO(tjayrush) use formatting string here
             cout << c1 << " { \"type\": "           << c2 << type;
             cout << c1 <<  " \"from\": "         << c2 << annotate(from);
             cout << c1 << ", \"to\": "           << c2 << annotate(to);

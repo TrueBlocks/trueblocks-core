@@ -1,7 +1,7 @@
 ## blockScrape
 
 ***
-**Note:** This tool is availble through [our website](http://quickblocks.io). Contact us at [sales@greathill.com](mailto:sales@greathill.com) for more information.
+**Note:** This tool is available through [our website](http://quickblocks.io). Contact us at [sales@greathill.com](mailto:sales@greathill.com) for more information.
 ***
 
 The `blockScrape` app queries your local node (or the ${FALLBACK} node if configured) using the RPC interface reading each block from any EVM-based blockchain. After extensive optimizations to the data, including <img width=500px align="right" src="docs/image.png"> determining each transaction's error status and expanding internal message calls, the blocks are stored in a speed-optimized database for fast retrieval. By doing as much work as possible prior to storage, QuickBlocks is able to achieve significant increases in speed of retrieval over the node.
@@ -48,4 +48,3 @@ All **quickBlocks** command-line tools support the following commands (although 
 **Powered by QuickBlocks<sup>&reg;</sup>**
 
 
-w

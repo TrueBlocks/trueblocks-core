@@ -1,10 +1,10 @@
 ## grabABI
 
-`grabABI` retreives an ABI file either from a local cache, from the Ethereum Name Service (ENS), or from [Etherscan](http://etherscan.io). Once retreived, `grabABI` generates the classDefinition files needed by [makeClass](../makeClass) to generate a parselib for each [Ethereum address monitor](../../monitors).
+`grabABI` retrieves an ABI file either from a local cache, from the Ethereum Name Service (ENS), or from [Etherscan](http://etherscan.io). Once retrieved, `grabABI` generates the classDefinition files needed by [makeClass](../makeClass/README.md) to generate a parselib for each [Ethereum address monitor](../../monitors/README.md).
 
 #### Usage
 
-`Usage:`    grabABI [-c|-g|-e|-n|-o|-v|-h] addr  
+`Usage:`    grabABI [-c|-g|-e|-n|-o|-r|-v|-h] addr  
 `Purpose:`  Fetches the ABI for a smart contract. Optionally generates C++ source code representing that ABI.
              
 `Where:`  
@@ -17,13 +17,14 @@
 | -e | --encode | generate the encodings for the functions / events in the ABI |
 | -n | --noconst | generate encodings for non-constant functions and events only (always true when generating) |
 | -o | --open | open the ABI file for editing, download if not already present |
+| -r | --raw | force retrieval of ABI from etherscan (ignoring cache) |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
+`Notes:`
 
-** Notes: **
+- Use the `--silent` option, which displays fewer messages, for scripting.
 
-There is also an option`--silent` that is useful for scripting. It causes the app to display fewer messages.
 #### Other Options
 
 All **quickBlocks** command-line tools support the following commands (although in some case, they have no meaning):

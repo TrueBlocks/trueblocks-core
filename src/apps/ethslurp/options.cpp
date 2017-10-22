@@ -213,6 +213,7 @@ bool COptions::parseArguments(SFString& command) {
 void COptions::Init(void) {
     paramsPtr = params;
     nParamsRef = nParams;
+    pOptions = this;
 
     prettyPrint = false;
     rerun = false;
@@ -253,3 +254,19 @@ COptions::~COptions(void) {
     outScreen.setOutput(stdout);  // flushes and clears archive file if any
     output = NULL;
 }
+
+//--------------------------------------------------------------------------------
+SFString COptions::postProcess(const SFString& which, const SFString& str) const {
+
+    if (which == "options") {
+        return str;
+
+    } else if (which == "notes" && (verbose || COptions::isReadme)) {
+
+        SFString ret;
+        ret += "Portions of this software are Powered by Etherscan.io APIs.\n";
+        return ret;
+    }
+    return str;
+}
+

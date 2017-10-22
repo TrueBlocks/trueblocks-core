@@ -24,13 +24,34 @@ Depending on the use case, QuickBlocks is able to achieve more than 150 times sp
 
 #### Higher Information Content
 
-An Ethereum node knows nothing about Solidity source code. It can only return hexadecimal bytes. In order to make the data useful, each user must re-translate the 
-data back into the language of the smart contract. For example, [this complicated RPC data](docs/example.json) is simply [a yes vote on a proposal](docs/vote.json). 
-While QuickBlocks is able to return raw hexadecimal data identical to the RPC, by default it returns what we call `articulated data`.
+An Ethereum node knows nothing about Solidity source code. It only deals with byte code and therefore can only return hexadecimal bytes. In order to make the data useful, each user must translate the data back into the language of the smart contract. For example, this data:
+
+    {
+      "hash": "0xb9f174f61ef78661df519dba92f7a724593d1376e18edc8f2cc477684f089d13",
+      "blockNumber": 2243947,
+      "transactionIndex": 9,
+      "timestamp": 1473657968,
+      "from": "0x80f10e72de8a35d57efe477c1d1bd147be50307d",
+      "to": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
+      "value": 0,
+      "input": "0xc9d27afe00000000000000000000000000000000000000000000000000000000000001290000000000000000000000000000000000000000000000000000000000000001",
+    }
+
+is simply vote on a DAO contract:
+
+    {
+      "from": "0x80f10e72de8a35d57efe477c1d1bd147be50307d",
+      "vote": {
+        "proposal": 297,
+        "supports": 1
+      } 
+    }
+
+By default, QuickBlocks returns the raw hexadecimal data identical to the RPC, but with a simple switch, it can return what we call `articulated data` or data in the language of your smart contract.
 
 QuickBlocks is able to articulate the data by using the smart contract's ABI file. If available, an ABI file contains all the information necessary to translate the 
-RPC data back into the language of the smart contract. This functionality is implemented in the `abilib libary` (non public code) and the [grabABI](src/apps/grabABI) 
-app. Instead of dealing with **hashes** and **merkel roots** and **sha3**, you deal with **votes** and **transfers** and **withdrawals**.
+RPC data back into the language of the smart contract. This functionality is implemented in the open source [grabABI](src/apps/grabABI) 
+application. Instead of dealing with **hashes** and **merkel roots** and **sha3**, you deal with **votes** and **transfers** and **withdrawals**.
 
 #### Fully Decentralized
 
