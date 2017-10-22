@@ -67,14 +67,13 @@ namespace qblocks {
         void Copy(const CBaseNode& bn);
     };
 
-    //----------------------------------------------------------------------------
-    #undef ghDELETE
-    #define ghDELETE(_nodE) \
-    if ((_nodE)) \
-    if ((_nodE)->Dereference()) \
-    delete (_nodE); \
-    (_nodE) = NULL;
+    //-------------------------------------------------------------------------
+    template<class T>
+    inline bool inRange(T val, T mn, T mx) {
+        return (val >= mn && val <= mx);
+    }
 
+    //-------------------------------------------------------------------------
     extern char *cleanUpJson(char *s);
 
     //--------------------------------------------------------------------------------------------------------------
@@ -83,4 +82,5 @@ namespace qblocks {
     //--------------------------------------------------------------------------------------------------------------
     SFString getNextChunk(SFString& fmtOut, NEXTCHUNKFUNC func, const void *data);
     SFString fldNotFound(const SFString& str);
+
 }  // namespace qblocks
