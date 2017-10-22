@@ -68,9 +68,6 @@ namespace qblocks {
         CSharedResource blocksOnDisc;
         CSharedResource transOnDisc;
 
-        SFString        blockFile;
-        SFString        transFile;
-
         CMiniBlock     *blocks;
         CMiniTrans     *trans;
 

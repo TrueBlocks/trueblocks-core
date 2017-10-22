@@ -111,11 +111,8 @@ namespace qblocks {
         blocks    = NULL;
         trans     = NULL;
 
-        blockFile = miniBlockCache;
-        transFile = miniTransCache;
-
-        nBlocks   = fileSize(blockFile) / sizeof(CMiniBlock);
-        nTrans    = fileSize(transFile) / sizeof(CMiniTrans);
+        nBlocks   = fileSize(miniBlockCache) / sizeof(CMiniBlock);
+        nTrans    = fileSize(miniTransCache) / sizeof(CMiniTrans);
         start     = 0;
         count     = 0;
 
@@ -140,6 +137,19 @@ namespace qblocks {
 
     //--------------------------------------------------------------------------
     bool CInMemoryCache::Load(blknum_t _start, blknum_t _count) {
+
+        if (fileExists(miniBlockCache + ".lck")) {
+            cerr << "The miniBlockCache (" << miniBlockCache << ") is locked. The program cannot be run. Quitting...\n";
+            cerr.flush();
+            exit(0);
+        }
+
+        if (fileExists(miniTransCache + ".lck")) {
+            cerr << "The miniTransCache (" << miniTransCache << ") is locked. The program cannot be run. Quitting...\n";
+            cerr.flush();
+            exit(0);
+        }
+
         blknum_t latestBlock = getLatestBlockFromCache();
 
         start = min(_start,          latestBlock);
@@ -159,8 +169,8 @@ namespace qblocks {
             cerr << TIMER_IN(startTime) << "Allocated room for " << nBlocks << " miniBlocks.\n";
 
         // Next, we try to open the mini-block database
-        if (!blocksOnDisc.Lock(blockFile, binaryReadOnly, LOCK_WAIT)) {
-            cerr << "Could not open the mini-block database: " << blockFile << ".\n";
+        if (!blocksOnDisc.Lock(miniBlockCache, binaryReadOnly, LOCK_WAIT)) {
+            cerr << "Could not open the mini-block database: " << miniBlockCache << ".\n";
             return false;
         }
         blocksOnDisc.Seek(0, SEEK_SET);
@@ -176,7 +186,7 @@ namespace qblocks {
             cerr << TIMER_IN(startTime) << "Read " << nRead << " miniBlocks into memory.\n";
 
         // See if we can allocation enough space for the mini-transaction database
-        SFUint32 fs = fileSize(transFile);
+        SFUint32 fs = fileSize(miniTransCache);
         SFUint32 ms = sizeof(CMiniTrans);
         nTrans   = fs / ms;
         trans = new CMiniTrans[nTrans];
@@ -189,8 +199,8 @@ namespace qblocks {
             cerr << TIMER_IN(startTime) << "Allocated room for " << nTrans << " transactions.\n";
 
         // Next, we try to open the mini-transaction database
-        if (!transOnDisc.Lock(transFile, binaryReadOnly, LOCK_WAIT)) {
-            cerr << "Could not open the mini-transaction database: " << transFile << ".\n";
+        if (!transOnDisc.Lock(miniTransCache, binaryReadOnly, LOCK_WAIT)) {
+            cerr << "Could not open the mini-transaction database: " << miniTransCache << ".\n";
             return false;
         }
 

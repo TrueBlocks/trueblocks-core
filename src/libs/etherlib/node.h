@@ -81,21 +81,21 @@ namespace qblocks {
 
     //-------------------------------------------------------------------------
     extern bool forEveryBlock                (BLOCKVISITFUNC func, void *data, const SFString& block_list);
-    extern bool forEveryBlockOnDisc          (BLOCKVISITFUNC func, void *data, SFUint32 start=0, SFUint32 count=(SFUint32)-1, SFUint32 skip=1);
-    extern bool forEveryEmptyBlockOnDisc     (BLOCKVISITFUNC func, void *data, SFUint32 start=0, SFUint32 count=(SFUint32)-1, SFUint32 skip=1);
-    extern bool forEveryNonEmptyBlockOnDisc  (BLOCKVISITFUNC func, void *data, SFUint32 start=0, SFUint32 count=(SFUint32)-1, SFUint32 skip=1);
-    extern bool forEveryFullBlockIndex       (BLOCKVISITFUNC func, void *data, SFUint32 start=0, SFUint32 count=(SFUint32)-1, SFUint32 skip=1);
-    extern bool forEveryBlock                (BLOCKVISITFUNC func, void *data, SFUint32 start=0, SFUint32 count=(SFUint32)-1, SFUint32 skip=1);
-    extern bool forEveryBloomFile            (FILEVISITOR func,    void *data, SFUint32 start=0, SFUint32 count=(SFUint32)-1, SFUint32 skip=1);
+    extern bool forEveryBlockOnDisc          (BLOCKVISITFUNC func, void *data, SFUint32 start, SFUint32 count, SFUint32 skip=1);
+    extern bool forEveryEmptyBlockOnDisc     (BLOCKVISITFUNC func, void *data, SFUint32 start, SFUint32 count, SFUint32 skip=1);
+    extern bool forEveryNonEmptyBlockOnDisc  (BLOCKVISITFUNC func, void *data, SFUint32 start, SFUint32 count, SFUint32 skip=1);
+    extern bool forEveryFullBlockIndex       (BLOCKVISITFUNC func, void *data, SFUint32 start, SFUint32 count, SFUint32 skip=1);
+    extern bool forEveryBlock                (BLOCKVISITFUNC func, void *data, SFUint32 start, SFUint32 count, SFUint32 skip=1);
+    extern bool forEveryBloomFile            (FILEVISITOR func,    void *data, SFUint32 start, SFUint32 count, SFUint32 skip=1);
 
     //-------------------------------------------------------------------------
     extern bool forEveryTransaction          (TRANSVISITFUNC func, void *data, const SFString& trans_list);
 
     //-------------------------------------------------------------------------
-    extern bool forEveryFullBlockInMemory    (BLOCKVISITFUNC     func, void *data, SFUint32 start=0, SFUint32 count=(SFUint32)-1);
-    extern bool forEveryMiniBlockInMemory    (MINIBLOCKVISITFUNC func, void *data, SFUint32 start=0, SFUint32 count=(SFUint32)-1);
-    extern bool forOnlyMiniBlocks            (MINIBLOCKVISITFUNC func, void *data, SFUint32 start=0, SFUint32 count=(SFUint32)-1);
-    extern bool forOnlyMiniTransactions      (MINITRANSVISITFUNC func, void *data, SFUint32 start=0, SFUint32 count=(SFUint32)-1);
+    extern bool forEveryFullBlockInMemory    (BLOCKVISITFUNC     func, void *data, SFUint32 start, SFUint32 count);
+    extern bool forEveryMiniBlockInMemory    (MINIBLOCKVISITFUNC func, void *data, SFUint32 start, SFUint32 count);
+    extern bool forOnlyMiniBlocks            (MINIBLOCKVISITFUNC func, void *data, SFUint32 start, SFUint32 count);
+    extern bool forOnlyMiniTransactions      (MINITRANSVISITFUNC func, void *data, SFUint32 start, SFUint32 count);
     extern void clearInMemoryCache           (void);
 
     //-------------------------------------------------------------------------
