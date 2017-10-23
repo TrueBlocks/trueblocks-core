@@ -16,7 +16,6 @@ public:
     blknum_t stop;
     blknum_t skip;
     blknum_t nBlocks;
-    bool     display;
 
 	        COptions  (void);
 	       ~COptions  (void);
