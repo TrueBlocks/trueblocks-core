@@ -74,11 +74,7 @@ int main(int argc, const char *argv[]) {
                 block.timestamp = 1438269960;
 
             if (options.alone) {
-                if (mode == "block") {
-                    cout << dateFromTimeStamp(block.timestamp) << "\n";
-                } else {
-                    cout << block.blockNumber << "\n";
-                }
+                cout << block.blockNumber << "\t" << dateFromTimeStamp(block.timestamp) << "\n";
 
             } else {
                 bool newLines = oneCmd && options.requests.getCount() == 1;
