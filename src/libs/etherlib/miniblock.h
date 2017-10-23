@@ -49,6 +49,7 @@ namespace qblocks {
         SFString Format     (void) const;
     };
 
+#define NEW_CODE
     //--------------------------------------------------------------------------
     class CInMemoryCache {
     public:
@@ -68,8 +69,13 @@ namespace qblocks {
         CSharedResource blocksOnDisc;
         CSharedResource transOnDisc;
 
-        CMiniBlock     *blocks;
-        CMiniTrans     *trans;
+#ifdef NEW_CODE
+        CMiniBlock *blocks;
+        const CMiniTrans *trans;
+#else
+        CMiniBlock *blocks;
+        CMiniTrans *trans;
+#endif
 
     private:
         blknum_t        nBlocks;

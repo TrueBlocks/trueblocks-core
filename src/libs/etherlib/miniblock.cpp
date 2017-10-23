@@ -138,6 +138,9 @@ namespace qblocks {
     //--------------------------------------------------------------------------
     bool CInMemoryCache::Load(blknum_t _start, blknum_t _count) {
 
+        double startTime = qbNow();
+
+        //--------------------------------------------------------------------------
         // Only come through here once, even if we fail to load
         if (isLoaded)
             return true;
@@ -158,7 +161,11 @@ namespace qblocks {
         start = min(_start,          latestBlock);
         count = min(_start + _count, latestBlock) - _start;
 
-        double startTime = qbNow();
+#ifdef NEW_CODE
+        CMemMapFile blockFile(miniBlockCache.c_str(),  CMemMapFile::WholeFile, CMemMapFile::SequentialScan);
+        blocks = (CMiniBlock*)(blockFile.getData());
+#else
+        //--------------------------------------------------------------------------
         blocks = new CMiniBlock[nBlocks];
         if (!blocks) {
             cerr << "Could not allocate memory for the blocks (size needed: " << nBlocks << ").\n";
@@ -185,10 +192,17 @@ namespace qblocks {
         if (verbose)
             cerr << TIMER_IN(startTime) << "Read " << nRead << " miniBlocks into memory.\n";
 
+        //--------------------------------------------------------------------------
         // See if we can allocation enough space for the mini-transaction database
         SFUint32 fs = fileSize(miniTransCache);
         SFUint32 ms = sizeof(CMiniTrans);
         nTrans   = fs / ms;
+#endif
+
+#ifdef NEW_CODE
+        CMemMapFile transFile(miniTransCache.c_str(),  CMemMapFile::WholeFile, CMemMapFile::SequentialScan);
+        trans  = reinterpret_cast<const CMiniTrans *>(transFile.getData());
+#else
         trans = new CMiniTrans[nTrans];
         if (!trans) {
             cerr << "Could not allocate memory for the transactions (size needed: " << nTrans << ").\n";
@@ -214,6 +228,7 @@ namespace qblocks {
                 progressBar(nRead, nTrans, qbNow() - startTime);
         }
         transOnDisc.Release();
+#endif
 
         cerr << "\n" << TIMER_IN(startTime);
         return true;
