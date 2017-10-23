@@ -10,11 +10,10 @@
 
 //---------------------------------------------------------------------------------------------------
 CParams params[] = {
-    CParams( "~source",  "source for the data"),
+    CParams( "~source",  "source for the data (either 'infura', 'local', or 'binary')"),
     CParams( "~begin",   "block to start with"),
     CParams( "~end",     "block to end on"),
     CParams( "~@skip",   "optional skip step (default 100)"),
-    CParams( "-display", "display the bloom filters visually"),
     CParams( "",         "Scans blocks looking for saturated bloomFilters.\n"),
 };
 uint32_t nParams = sizeof(params) / sizeof(CParams);
@@ -30,10 +29,7 @@ bool COptions::parseArguments(SFString& command) {
     while (!command.empty()) {
         SFString arg = nextTokenClear(command,' ');
         SFString orig = arg;
-        if (arg == "-d" || arg == "--display") {
-            display = true;
-
-        } else if (arg.startsWith('-')) {  // do not collapse
+        if (arg.startsWith('-')) {  // do not collapse
             if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);
             }
@@ -75,7 +71,6 @@ void COptions::Init(void) {
     start = NOPOS;
     stop  = NOPOS;
     skip  = NOPOS;
-    display = false;
     optionOff(OPT_VERBOSE);
     minArgs = 2;
 }
