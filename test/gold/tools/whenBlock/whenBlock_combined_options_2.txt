@@ -1,4 +1,4 @@
-whenBlock argc: 4 [1:-a] [2:--verbose] [3:10000] 
-whenBlock -a --verbose 10000 
+whenBlock argc: 4 [1:-d] [2:--verbose] [3:10000] 
+whenBlock -d --verbose 10000 
 finding by block number
-2015-07-31 09:23:47 UTC
+10000	2015-07-31 09:23:47 UTC

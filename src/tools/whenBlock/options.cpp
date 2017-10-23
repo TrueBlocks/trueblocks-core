@@ -11,7 +11,7 @@
 CParams params[] = {
     CParams("~!block", "one or more block numbers (or a 'special' block), or..."),
     CParams("~!date",  "one or more dates formatted as YYYY-MM-DD[THH[:MM[:SS]]]"),
-    CParams("-alone",  "display the result unadorned (useful for scripting)"),
+    CParams("-data",   "display the result as data (tab delimited; useful for scripting)"),
     CParams("-list",   "list names and block numbers for special blocks"),
     CParams("",        "Finds the nearest block prior to a date, or the nearest date prior to a block.\n"
                        " Alternatively, search for one of special 'named' blocks.\n"),
@@ -40,7 +40,7 @@ bool COptions::parseArguments(SFString& command) {
         } else if (arg == "-l" || arg == "--list") {
             isList = true;
 
-        } else if (arg == "-a" || arg == "--alone") {
+        } else if (arg == "-d" || arg == "--data") {
 
             alone = true;
 

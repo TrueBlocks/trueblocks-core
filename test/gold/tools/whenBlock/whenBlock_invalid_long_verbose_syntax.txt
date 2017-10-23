@@ -3,14 +3,14 @@ whenBlock --verbose
 
   Please supply either a JSON formatted date or a blockNumber. Quitting...
 
-  Usage:    whenBlock [-a|-l|-v|-h] < block | date > [ block... | date... ]  
+  Usage:    whenBlock [-d|-l|-v|-h] < block | date > [ block... | date... ]  
   Purpose:  Finds the nearest block prior to a date, or the nearest date prior to a block.
             Alternatively, search for one of special 'named' blocks.
              
   Where:    
 	block                 one or more block numbers (or a 'special' block), or...
 	date                  one or more dates formatted as YYYY-MM-DD[THH[:MM[:SS]]]
-	-a  (--alone)         display the result unadorned (useful for scripting)
+	-d  (--data)          display the result as data (tab delimited; useful for scripting)
 	-l  (--list)          list names and block numbers for special blocks
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
 	-h  (--help)          display this help screen
