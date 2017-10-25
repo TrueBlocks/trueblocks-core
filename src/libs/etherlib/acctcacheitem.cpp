@@ -11,6 +11,8 @@
  */
 #include "acctcacheitem.h"
 
+namespace qblocks {
+
 //---------------------------------------------------------------------------
 IMPLEMENT_NODE(CAcctCacheItem, CBaseNode);
 
@@ -209,5 +211,17 @@ ostream& operator<<(ostream& os, const CAcctCacheItem& item) {
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
+    CAcctCacheItem::CAcctCacheItem(SFString& line) {
+        SFString s = nextTokenClear(line,'\t');
+        uint64_t x    = toUnsigned(s);
+        blockNum = x;
+        s = nextTokenClear(line,'\t');
+        x    = toUnsigned(s);
+        transIndex = x;
+        s = nextTokenClear(line,'\t');
+        x    = toUnsigned(s);
+        which = (int32_t)x;
+    }
 // EXISTING_CODE
+}  // namespace qblocks
 

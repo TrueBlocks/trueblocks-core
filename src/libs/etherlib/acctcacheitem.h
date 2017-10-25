@@ -10,8 +10,9 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
-#include "utillib.h"
-#include "options.h"
+#include "etherlib.h"
+
+namespace qblocks {
 
 //--------------------------------------------------------------------------
 class CAcctCacheItem;
@@ -39,6 +40,7 @@ public:
 
     // EXISTING_CODE
     CAcctCacheItem(SFUint32 b, SFUint32 t, int32_t w) : blockNum(b), transIndex(t), which(w) {}
+    CAcctCacheItem(SFString& str);
     bool operator==(const CAcctCacheItem& item) {
         return (blockNum == item.blockNum && transIndex == item.transIndex); // && which == item.which);
     }
@@ -128,4 +130,5 @@ IMPLEMENT_ARCHIVE_LIST(CAcctCacheItemList);
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
+}  // namespace qblocks
 
