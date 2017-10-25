@@ -104,7 +104,6 @@ bool CPriceQuote::SerializeC(SFArchive& archive) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // Writing always write the latest version of the data
-// UPGRADING
 #define MAJOR 0
 #define MINOR 2
 #define BUILD 0
