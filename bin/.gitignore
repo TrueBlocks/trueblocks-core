@@ -68,3 +68,4 @@ watchContracts
 whenBlock
 whereBlock
 rmBlock
+watchContract.py
