@@ -104,6 +104,7 @@ bool CPriceQuote::SerializeC(SFArchive& archive) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // Writing always write the latest version of the data
+// UPGRADING
 #define MAJOR 0
 #define MINOR 2
 #define BUILD 0
@@ -176,9 +177,12 @@ bool CPriceQuote::readBackLevel(SFArchive& archive) {
     CBaseNode::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
-    if (m_schema < 2000)
-    {
-        // timestamp, open, high, low, close, quoteVolume, volume, weightedAvg
+    if (m_schema < 2000) {
+        //
+        // we used to store a lot more data than we do now, so
+        // we have to read this older format old format was:
+        // timestamp, open, high, low, close, quoteVolume, volume,
+        // weightedAvg but now we read only timstamp and close
         double junk;
         archive >> timestamp;
         archive >> junk;
