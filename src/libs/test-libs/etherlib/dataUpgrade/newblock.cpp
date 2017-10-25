@@ -252,7 +252,7 @@ bool CNewBlock::readBackLevel(SFArchive& archive) {
     CBaseNode::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
-    if (m_schema == 501) {
+    if (m_schema < 502) {
         archive >> gasLimit;
         archive >> gasUsed;
         archive >> hash;

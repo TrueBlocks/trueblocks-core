@@ -10,51 +10,46 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
-#include "etherlib.h"
-#include "transaction.h"
+#include "abilib.h"
+#include "logentry.h"
 
 //--------------------------------------------------------------------------
-class CNewBlock;
-typedef SFArrayBase<CNewBlock>         CNewBlockArray;
-typedef SFList<CNewBlock*>             CNewBlockList;
-typedef SFUniqueList<CNewBlock*>       CNewBlockListU;
+class CNewReceipt;
+typedef SFArrayBase<CNewReceipt>         CNewReceiptArray;
+typedef SFList<CNewReceipt*>             CNewReceiptList;
+typedef SFUniqueList<CNewReceipt*>       CNewReceiptListU;
 
 // EXISTING_CODE
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CNewBlock : public CBaseNode {
+class CNewReceipt : public CBaseNode {
 public:
-    SFGas gasLimit;
+    SFAddress contractAddress;
     SFGas gasUsed;
-    SFHash hash;
+    CLogEntryArray logs;
     SFBloom logsBloom;
-    blknum_t blockNumber;
-    SFHash parentHash;
-    timestamp_t timestamp;
-    CTransactionArray transactions;
-    SFAddress miner;
-    uint64_t size;
+    bool isError;
 
 public:
-    CNewBlock(void);
-    CNewBlock(const CNewBlock& ne);
-    virtual ~CNewBlock(void);
-    CNewBlock& operator=(const CNewBlock& ne);
+    CNewReceipt(void);
+    CNewReceipt(const CNewReceipt& ne);
+    virtual ~CNewReceipt(void);
+    CNewReceipt& operator=(const CNewReceipt& ne);
 
-    DECLARE_NODE(CNewBlock);
+    DECLARE_NODE(CNewReceipt);
 
     const CBaseNode *getObjectAt(const SFString& name, uint32_t i) const override;
 
     // EXISTING_CODE
-    CNewBlock(const CBlock& block);
+    friend class CTransaction;
     // EXISTING_CODE
-    friend ostream& operator<<(ostream& os, const CNewBlock& item);
+    friend ostream& operator<<(ostream& os, const CNewReceipt& item);
 
 protected:
     void Clear(void);
     void Init(void);
-    void Copy(const CNewBlock& ne);
+    void Copy(const CNewReceipt& ne);
     bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
@@ -62,14 +57,14 @@ protected:
 };
 
 //--------------------------------------------------------------------------
-inline CNewBlock::CNewBlock(void) {
+inline CNewReceipt::CNewReceipt(void) {
     Init();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CNewBlock::CNewBlock(const CNewBlock& ne) {
+inline CNewReceipt::CNewReceipt(const CNewReceipt& ne) {
     // EXISTING_CODE
     // EXISTING_CODE
     Copy(ne);
@@ -79,77 +74,50 @@ inline CNewBlock::CNewBlock(const CNewBlock& ne) {
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline CNewBlock::~CNewBlock(void) {
+inline CNewReceipt::~CNewReceipt(void) {
     Clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CNewBlock::Clear(void) {
+inline void CNewReceipt::Clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CNewBlock::Init(void) {
+inline void CNewReceipt::Init(void) {
     CBaseNode::Init();
 
-    gasLimit = 0;
+    contractAddress = "";
     gasUsed = 0;
-    hash = "";
+    logs.Clear();
     logsBloom = 0;
-    blockNumber = 0;
-    parentHash = "";
-    timestamp = 0;
-    transactions.Clear();
-    miner = "";
-    size = 0;
+    isError = 0;
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CNewBlock::Copy(const CNewBlock& ne) {
+inline void CNewReceipt::Copy(const CNewReceipt& ne) {
     Clear();
     CBaseNode::Copy(ne);
 
-    gasLimit = ne.gasLimit;
+    contractAddress = ne.contractAddress;
     gasUsed = ne.gasUsed;
-    hash = ne.hash;
+    logs = ne.logs;
     logsBloom = ne.logsBloom;
-    blockNumber = ne.blockNumber;
-    parentHash = ne.parentHash;
-    timestamp = ne.timestamp;
-    transactions = ne.transactions;
-    miner = ne.miner;
-    size = ne.size;
+    isError = ne.isError;
 
     // EXISTING_CODE
-#if 0
-    author = ne.author;
-    difficulty = ne.difficulty;
-    extraData = ne.extraData;
-    miner = ne.miner;
-    mixHash = ne.mixHash;
-    nonce = ne.nonce;
-    receiptRoot = ne.receiptRoot;
-    receiptsRoot = ne.receiptsRoot;
-    sealFields = ne.sealFields;
-    sha3Uncles = ne.sha3Uncles;
-    size = ne.size;
-    stateRoot = ne.stateRoot;
-    totalDifficulty = ne.totalDifficulty;
-    transactionsRoot = ne.transactionsRoot;
-    uncles = ne.uncles;
-#endif
     // EXISTING_CODE
     finishParse();
 }
 
 //--------------------------------------------------------------------------
-inline CNewBlock& CNewBlock::operator=(const CNewBlock& ne) {
+inline CNewReceipt& CNewReceipt::operator=(const CNewReceipt& ne) {
     Copy(ne);
     // EXISTING_CODE
     // EXISTING_CODE
@@ -157,17 +125,15 @@ inline CNewBlock& CNewBlock::operator=(const CNewBlock& ne) {
 }
 
 //---------------------------------------------------------------------------
-IMPLEMENT_ARCHIVE_ARRAY(CNewBlockArray);
-IMPLEMENT_ARCHIVE_ARRAY_C(CNewBlockArray);
-IMPLEMENT_ARCHIVE_LIST(CNewBlockList);
+IMPLEMENT_ARCHIVE_ARRAY(CNewReceiptArray);
+IMPLEMENT_ARCHIVE_ARRAY_C(CNewReceiptArray);
+IMPLEMENT_ARCHIVE_LIST(CNewReceiptList);
 
 //---------------------------------------------------------------------------
-extern SFArchive& operator<<(SFArchive& archive, const CNewBlock& newp);
-extern SFArchive& operator>>(SFArchive& archive, CNewBlock& newp);
+extern SFArchive& operator<<(SFArchive& archive, const CNewReceipt& newp);
+extern SFArchive& operator>>(SFArchive& archive, CNewReceipt& newp);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-bool readOneNewBlock_fromBinary(CNewBlock& block, const SFString& fileName);
-bool readOneNewBlock_fromJson(CNewBlock& block, const SFString& fileName);
 // EXISTING_CODE
 

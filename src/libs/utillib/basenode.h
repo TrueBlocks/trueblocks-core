@@ -67,6 +67,15 @@ namespace qblocks {
         void Copy(const CBaseNode& bn);
     };
 
+    //------------------------------------------------------------------
+    template<class T>
+    T RandomValue(T a, T b) {
+        T range = (a > b ? a - b : b - a);
+        if (range == 0)
+            return a;
+        return min(a, b) + (((T)rand()) % range);
+    }
+
     //-------------------------------------------------------------------------
     template<class T>
     inline bool inRange(T val, T mn, T mx) {
