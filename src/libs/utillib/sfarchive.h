@@ -25,7 +25,9 @@ namespace qblocks {
     private:
         class SFArchiveHeader {
         public:
-            uint32_t     m_unused;
+            // This data structure is sometimes written at the head of a
+            // file. Don't remove it or change its size;
+            uint32_t     m_version;
             timestamp_t  m_lastWritten;
         };
 
@@ -37,11 +39,11 @@ namespace qblocks {
         //VISITARCHIVEFUNC readMsgFunc;
 
         SFArchive(bool isReading) {
-            m_isReading       = isReading;
-            m_header.m_unused = getVersionNum();
-            pParent           = NULL;
-            //writeMsgFunc    = NULL;
-            //readMsgFunc     = NULL;
+            m_isReading        = isReading;
+            m_header.m_version = getVersionNum();
+            pParent            = NULL;
+            //writeMsgFunc     = NULL;
+            //readMsgFunc      = NULL;
         }
 
         bool isWriting(void) const {
@@ -55,7 +57,7 @@ namespace qblocks {
         void writeHeader(void) {
             Seek(0, SEEK_SET);
             m_header.m_lastWritten = toTimestamp(Now());
-            operator<<(m_header.m_unused);
+            operator<<(m_header.m_version);
             operator<<(m_header.m_lastWritten);
             bool unused = false;
             operator<<(unused);
@@ -63,7 +65,7 @@ namespace qblocks {
 
         void readHeader(void) {
             Seek(0, SEEK_SET);
-            operator>>(m_header.m_unused);
+            operator>>(m_header.m_version);
             operator>>(m_header.m_lastWritten);
             bool unused = false;
             operator>>(unused);
