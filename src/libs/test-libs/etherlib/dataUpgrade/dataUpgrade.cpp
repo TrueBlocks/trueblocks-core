@@ -9,6 +9,7 @@
 #include "acctlib.h"
 #include "options.h"
 #include "newblock.h"
+#include "newreceipt.h"
 
 extern bool testReadWrite(COptions& options);
 extern bool testUpgrade(COptions& options);
@@ -154,6 +155,7 @@ CBaseNode *getNode(const SFString& nodeType) {
     else if (nodeType == "CTraceResult")     node = CTraceResult::CreateObject();
     else if (nodeType == "CTransaction")     node = CTransaction::CreateObject();
     else if (nodeType == "CNewBlock")        node = CNewBlock::CreateObject();
+    else if (nodeType == "CNewReceipt")      node = CNewReceipt::CreateObject();
     //    else if (nodeType == "CInfuraStats")     node = CInfuraStats::CreateObject();
     //    else if (nodeType == "CPerson")          node = CPerson::CreateObject();
     //    else if (nodeType == "CAccountName")     node = CAccountName::CreateObject();
@@ -228,6 +230,8 @@ bool testUpgrade(COptions& options) {
     if (node) {
         reportNode(node);
         delete node;
+    } else {
+        cout << "Unknown node of type " << options.className << " not created.\n";
     }
 
     return true;
