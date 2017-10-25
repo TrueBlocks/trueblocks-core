@@ -7,6 +7,13 @@ import time
 import signal
 
 #---------------------------------------------------------------------------------------------
+# Signals handler, to deal with Ctrl+C stuff
+#---------------------------------------------------------------------------------------------
+def signal_handler(signal, frame):
+    print('You pressed Ctrl+C!')
+    sys.exit(0)
+
+#---------------------------------------------------------------------------------------------
 # Get the filesystem path for current directory (where we are currently executing the script)
 #---------------------------------------------------------------------------------------------
 def getmount(path):
@@ -16,6 +23,23 @@ def getmount(path):
             return path
         path = os.path.abspath(os.path.join(path, os.pardir))
         return path
+
+
+#---------------------------------------------------------------------------------------------
+# Watch a given contract. This script needs to know the following paths:
+# 1) Where are the contracts directories (contracts_path)
+# 2) Where is the bin under each contract (contracts_bin_subpath)
+# These paths are configured at CONFIGURATION section
+#---------------------------------------------------------------------------------------------
+def watchcontract(contract):
+    oldpath = os.getcwd()
+    newpath = contracts_path + '/' + contract 
+    os.chdir(newpath)
+    contract_cmd = contracts_bin_subpath + '/' + contract + ' -freshen -v'
+    #print("Running command {0} at path {1}".format(contract_cmd, os.getcwd())) # debugging
+    os.system(contract_cmd)
+    # return to the original path
+    os.chdir(oldpath)
 
 #---------------------------------------------------------------------------------------------
 # Run watcher commands
@@ -29,15 +53,18 @@ def runwatcher():
     os.system('blockAcct  variable')
     os.system('miniBlocks  freshen')
 
-    # What is the purpose of this line??? not clear
-    ##time make -f freshen.mak
+    # Create the vector of contracts we want to watch
+    contracts = ['augur', 'btn', 'dao', 'ENS', 'firstBlood', 'gnosis', 'singular']
+
+    for contract in contracts:
+        watchcontract(contract)
 
 #---------------------------------------------------------------------------------------------
 # Checks if parity is already running. Returns true/false
 #---------------------------------------------------------------------------------------------
 def is_parity_running():
     s = subprocess.check_output('ps axco command', shell=True)
-    print s
+    # print s # debugging
     if parity_proc_name in s:
         return True
     else:
@@ -57,10 +84,17 @@ startup_timeout = 10
 percentage_threshold = 10
 # Parity process name
 parity_proc_name = 'parity'
+# Contracts and bin paths (can be absolute or relative path, by default using relative one present at bash script)
+contracts_path = '.'
+contracts_bin_subpath = 'bin'
 
 #---------------------
 # EXECUTION
 #---------------------
+
+# Define a signals handler to capture at least Ctrl+C
+signal.signal(signal.SIGINT, signal_handler)
+
 # Check input parameters number
 if len(sys.argv) != 2:
     print("\nERROR: Invalid arguments, expected a timeout value(seconds) as parameter\nUSAGE: {0} <timeout>\n".format(sys.argv[0]))
@@ -77,7 +111,7 @@ else:
      exit(2)
 
 while True:
-    # Start running if it is running, otherwise start watching logic directly
+    # Start parity if it is NOT running, otherwise start watching logic directly (parity is alread running)
     if(is_parity_running() != True):
         print("Starting Parity...")
         proc = subprocess.Popen([parity_proc_name, '--tracing', 'on', '--pruning', 'archive'])
