@@ -85,7 +85,7 @@ percentage_threshold = 10
 # Parity process name
 parity_proc_name = 'parity'
 # Contracts and bin paths (can be absolute or relative path, by default using relative one present at bash script)
-contracts_path = '.'
+contracts_path = '../monitors'
 contracts_bin_subpath = 'bin'
 
 #---------------------
