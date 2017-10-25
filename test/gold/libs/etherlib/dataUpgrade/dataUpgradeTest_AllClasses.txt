@@ -914,3 +914,47 @@ baseClass: CBaseNode
   "size": 0
 }
 
+--------------------------------------------------------------------------------
+className: CNewReceipt
+objectSize: 112
+baseClass: CBaseNode
+	fieldName: schema
+	  fieldID: 1001
+	  fieldType: T_NUMBER TS_NUMERAL 65561
+	  hidden: 1
+	fieldName: deleted
+	  fieldID: 1002
+	  fieldType: T_BOOL TS_NUMERAL 65556
+	  hidden: 1
+	fieldName: showing
+	  fieldID: 1003
+	  fieldType: T_BOOL TS_NUMERAL 65556
+	  hidden: 1
+	fieldName: contractAddress
+	  fieldID: 1004
+	  fieldType: T_ADDRESS TS_STRING 131127
+	  hidden: 0
+	fieldName: gasUsed
+	  fieldID: 1005
+	  fieldType: T_GAS TS_NUMERAL 4259880 TS_BIGNUM 4259880
+	  hidden: 0
+	fieldName: logs
+	  fieldID: 1006
+	  fieldType: T_OBJECT|TS_ARRAY TS_ARRAY 1572939 TS_OBJECT 1572939
+	  hidden: 0
+	fieldName: logsBloom
+	  fieldID: 1007
+	  fieldType: T_BLOOM TS_STRING 131137
+	  hidden: 0
+	fieldName: isError
+	  fieldID: 1008
+	  fieldType: T_BOOL TS_NUMERAL 65556
+	  hidden: 0
+{
+  "contractAddress": "0x0",
+  "gasUsed": 0,
+  "logs": [],
+  "logsBloom": "0x0",
+  "isError": 0
+}
+
