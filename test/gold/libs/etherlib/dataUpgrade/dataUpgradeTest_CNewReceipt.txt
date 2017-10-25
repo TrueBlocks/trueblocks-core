@@ -1,0 +1,2 @@
+dataUpgrade argc: 2 [1:CNewReceipt] 
+dataUpgrade CNewReceipt 
