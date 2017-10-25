@@ -170,9 +170,4 @@ namespace qblocks {
         asciiFileToBuffer(filename, &contents);
         return contents;
     }
-
-    inline bool isFileLocked(const SFString& fileName) {
-        return fileExists(fileName + ".lck");
-    }
-
 }  // namespace qblocks
