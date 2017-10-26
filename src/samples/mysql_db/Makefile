@@ -1,43 +1,49 @@
-#-----------------------------------------
-# Compiler to be used
-#-----------------------------------------
-CC=g++
+#---------------------------------------------------------------------------
+# NOTE: This makefile assumes that quickBlocks is installed at default path:
+# /usr/local/qblocks
+# Update the variable QBLOCKS_INSTALL_PATH otherwise
+#---------------------------------------------------------------------------
 
-#-----------------------------------------
-# Compiler flags
-#-----------------------------------------
-CFLAGS = -g -Wall -W -Werror -Wno-unused-function -std=c++11 -I.  -I/usr/include/mysql
-QBLOCKS_LIBS = -L/usr/local/qblocks/lib -lether -lacct -lwallet -ltoken -lutil
-CURL_LIBS = -lcurl
-MYSQL_LIBS = -lmysqlclient 
-LDFLAGS = $(MYSQL_LIBS) $(QBLOCKS_LIBS) $(CURL_LIBS)
+#---------------------------------------------------------------------------
+# Quickblocks stuff
+#---------------------------------------------------------------------------
+QBLOCKS_INSTALL_PATH = /usr/local/qblocks
+QBLOCKS_INCLUDE_PATH = $(QBLOCKS_INSTALL_PATH)/include
+QBLOCKS_LIB_PATH     = $(QBLOCKS_INSTALL_PATH)/lib
 
-#-----------------------------------------
-# Program name
-#-----------------------------------------
-SAMPLE_EXE=mysql_db
+QBLOCKS_STATIC_LIBS  = -lwallet -ltoken -lacct -lether -lutil
+QBLOCKS_LDFLAGS      = -L$(QBLOCKS_LIB_PATH) $(QBLOCKS_STATIC_LIBS)
 
-#-----------------------------------------
-# Makefile rules
-#-----------------------------------------
+#---------------------------------------------------------------------------
+# Compiler/linker flags
+#---------------------------------------------------------------------------
+CXX=g++
+CFLAGS=-std=c++11 -Werror -Wall -O2 -I. -I$(QBLOCKS_INCLUDE_PATH) -I/usr/include/mysql
+LDFLAGS=$(QBLOCKS_LDFLAGS) -lcurl -L/usr/local/Cellar/mysql-connector-c/6.1.11/lib/ -lmysqlclient
 
-#-----------------------------------------
-# Default rule (when typed only "make")
-#-----------------------------------------
-default: all
+#---------------------------------------------------------------------------
+# Program sources and name
+#---------------------------------------------------------------------------
+SRCS=mysql_db.cpp
+OBJS_PATH=objs
+OBJS=$(patsubst %.cpp,$(OBJS_PATH)/%.o,$(SRCS))
 
-all: $(SAMPLE_EXE)
+EXE_NAME=mysql_db
+EXE_PATH=bin
 
-#-----------------------------------------
-# Compilation rule for each .cpp file
-#-----------------------------------------
-mysql_db.o: mysql_db.cpp
-	$(CC) -c $(CFLAGS) mysql_db.cpp -o mysql_db.o
+#---------------------------------------------------------------------------
+# Rules
+#---------------------------------------------------------------------------
+all: $(EXE_NAME)
 
+$(OBJS_PATH)/%.o: %.cpp 
+	@mkdir -p $(OBJS_PATH)
+	$(CXX) $(CFLAGS) -c $< -o $@
 
-#-----------------------------------------
-$(SAMPLE_EXE): mysql_db.o
-	$(CC) -o $(SAMPLE_EXE) mysql_db.o  $(LDFLAGS)
-#-----------------------------------------
+$(EXE_NAME): $(OBJS)
+	$(CXX) -o $(EXE_NAME) $(OBJS) $(LDFLAGS)
+	@mkdir -p $(EXE_PATH)
+	mv $(EXE_NAME) $(EXE_PATH)
+
 clean:
-	rm -f $(SAMPLE_EXE) mysql_db.o
+	$(RM) -rf $(OBJS_PATH) $(EXE_PATH)
