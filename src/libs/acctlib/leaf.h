@@ -28,7 +28,7 @@ typedef SFUniqueList<CLeaf*>       CLeafListU;
 class CLeaf : public CTreeNode {
 public:
     SFBlockArray blocks;
-    uint64_t cnt;
+    uint32_t cnt;
 
 public:
     CLeaf(void);

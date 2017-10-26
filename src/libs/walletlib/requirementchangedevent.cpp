@@ -58,7 +58,7 @@ bool QRequirementChangedEvent::setValueByName(const SFString& fieldName, const S
 
     switch (tolower(fieldName[0])) {
         case 'n':
-            if ( fieldName % "newRequirement" ) { newRequirement = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "newRequirement" ) { newRequirement = toWei(fieldValue); return true; }
             break;
         default:
             break;

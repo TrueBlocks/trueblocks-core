@@ -112,7 +112,7 @@ SFString convertTypes(const SFString& inStr) {
         .Substitute("bool ",      "bool "       )
         .Substitute("uint8 ",     "32uint "     )
         .Substitute("uint16 ",    "32uint "     )
-        .Substitute("uint32 ",    "64uint "     )
+        .Substitute("uint32 ",    "32uint "     )
         .Substitute("uint64 ",    "64uint "     )
         .Substitute("int8 ",      "int32_t "    )
         .Substitute("int16 ",     "int32_t "    )
@@ -624,11 +624,14 @@ SFString getCaseSetCode(const SFString& fieldCase) {
                     } else if (type == "int256") {
                         caseCode +=  " { " + field + " = toLong(fieldValue); return true; }";
 
-                    } else if (type == "uint8" || type == "uint16" || type == "uint32" || type == "uint64") {
+                    } else if (type == "uint8" || type == "uint16" || type == "uint32") {
+                        caseCode +=  " { " + field + " = toLong32u(fieldValue); return true; }";
+
+                    } else if (type == "uint64") {
                         caseCode +=  " { " + field + " = toUnsigned(fieldValue); return true; }";
 
                     } else if (type == "uint256") {
-                        caseCode +=  " { " + field + " = toUnsigned(fieldValue); return true; }";
+                        caseCode +=  " { " + field + " = toWei(fieldValue); return true; }";
 
                     } else if (type == "blknum") {
                         caseCode +=  " { " + field + " = toUnsigned(fieldValue); return true; }";

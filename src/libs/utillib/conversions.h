@@ -237,13 +237,14 @@ namespace qblocks {
 #define blknum_t       uint64_t
 #define txnum_t        uint64_t
 
-#define toUnsigned(a)  (SFUint32)((a).startsWith("0x")?hex2Long((a)):toLongU((a)))
+#define toUnsigned(a)  (uint64_t)((a).startsWith("0x")?hex2Long((a)):toLongU((a)))
 #define toSigned(a)    (int64_t)((a).startsWith("0x")?hex2Long((a)):toLong((a)))
 #define toHash(a)      (a)
 #define toTopic(a)     canonicalWei(a)
 #define toBloom(a)     canonicalWei(a)
 #define toWei(a)       canonicalWei(a)
 #define toGas(a)       toUnsigned(a)
+#define addr2BN        toWei
 
 #define fromAddress(a)  ((a).empty() ? "0x0" : (a))
 #define fromHash(a)     ((a).empty() ? "0x0" : (a))
@@ -268,7 +269,6 @@ namespace qblocks {
         return "0x" + padLeft(ret, 32 * 2, '0');
     }
 
-#define addr2BN toWei
     //----------------------------------------------------------------------------------
     inline bool zeroAddr(const SFAddress& addr) {
         return (addr2BN(addr) == 0);

@@ -70,7 +70,7 @@ bool QConfirmationNeededEvent::setValueByName(const SFString& fieldName, const S
             if ( fieldName % "to" ) { to = toAddress(fieldValue); return true; }
             break;
         case 'v':
-            if ( fieldName % "value" ) { value = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "value" ) { value = toWei(fieldValue); return true; }
             break;
         default:
             break;
