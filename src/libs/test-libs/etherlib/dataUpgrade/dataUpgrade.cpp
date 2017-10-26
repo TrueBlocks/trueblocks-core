@@ -20,6 +20,7 @@ int main(int argc, const char *argv[]) {
     etherlib_init("binary");
 
     CNewBlock::registerClass();
+    CNewReceipt::registerClass();
 
     COptions options;
     if (!options.prepareArguments(argc, argv))
@@ -210,16 +211,20 @@ void reportNode(CBaseNode *node) {
     cout << "objectSize: " << pClass->m_ObjectSize << "\n";
     cout << "baseClass: " << (pClass->m_BaseClass ? pClass->m_BaseClass->m_ClassName : "None") << "\n";
     CFieldList *theList = pClass->m_FieldList;
-    LISTPOS pPos = theList->GetHeadPosition();
-    while (pPos) {
-        const CFieldData *item = theList->GetNext(pPos);
-        cout << "\tfieldName: " << item->getName()  << "\n";
-        cout << "\t  fieldID: "   << item->getID()    << "\n";
-        cout << "\t  fieldType: " << typeName(item->getType())  << "\n";
-        cout << "\t  hidden: "    << item->isHidden() << "\n";
+    if (!theList) {
+        cout << "Field list not found for " << pClass->m_ClassName << "\n";
+    } else {
+        LISTPOS pPos = theList->GetHeadPosition();
+        while (pPos) {
+            const CFieldData *item = theList->GetNext(pPos);
+            cout << "\tfieldName: " << item->getName()  << "\n";
+            cout << "\t  fieldID: "   << item->getID()    << "\n";
+            cout << "\t  fieldType: " << typeName(item->getType())  << "\n";
+            cout << "\t  hidden: "    << item->isHidden() << "\n";
+        }
+        cout << node->Format() << "\n";
+        cout << "\n";
     }
-    cout << node->Format() << "\n";
-    cout << "\n";
     cout.flush();
 }
 
