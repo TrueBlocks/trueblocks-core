@@ -20,8 +20,8 @@ MYSQL *conn = NULL;
 
 // connection credentials, normally at config file
 std::string host = "localhost";
-std::string user = "root";
-std::string password = "Sep2017$";
+std::string user = ""; //root
+std::string password = ""; //Sep2017$
 
 //--------------------------------------------------------------------------
 extern int runQuery(const char* query);
