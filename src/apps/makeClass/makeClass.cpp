@@ -815,7 +815,7 @@ const char *STR_GETSTR_CODE =
 
 //------------------------------------------------------------------------------------------------------------
 const char *STR_UPGRADE_CODE =
-"\t(([{CLASS_NAME}]*)this)->m_schema = getVersionNum();\n";
+"version of the data\n\t(([{CLASS_NAME}]*)this)->m_schema = getVersionNum();\n";
 
 //------------------------------------------------------------------------------------------------------------
 SFString short3(const SFString& str) {
