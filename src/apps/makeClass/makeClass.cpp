@@ -815,12 +815,7 @@ const char *STR_GETSTR_CODE =
 
 //------------------------------------------------------------------------------------------------------------
 const char *STR_UPGRADE_CODE =
-"version of the data\n"
-"#define MAJOR 0\n"
-"#define MINOR 2\n"
-"#define BUILD 0\n"
-"\tuint32_t vers = ((MAJOR * 1000000) + (MINOR * 1000) + (BUILD));\n"
-"\t(([{CLASS_NAME}]*)this)->m_schema = vers;\n";
+"version of the data\n\t(([{CLASS_NAME}]*)this)->m_schema = getVersionNum();\n";
 
 //------------------------------------------------------------------------------------------------------------
 SFString short3(const SFString& str) {

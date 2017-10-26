@@ -103,13 +103,9 @@ bool CPriceQuote::SerializeC(SFArchive& archive) const {
 
     // EXISTING_CODE
     // EXISTING_CODE
+
     // Writing always write the latest version of the data
-// UPGRADING
-#define MAJOR 0
-#define MINOR 2
-#define BUILD 0
-    uint32_t vers = ((MAJOR * 1000000) + (MINOR * 1000) + (BUILD));
-    ((CPriceQuote*)this)->m_schema = vers;
+    ((CPriceQuote*)this)->m_schema = getVersionNum();
     CBaseNode::SerializeC(archive);
     archive << timestamp;
     archive << close;

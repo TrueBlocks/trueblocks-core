@@ -101,6 +101,7 @@ bool CBalHistory::SerializeC(SFArchive& archive) const {
 
     // EXISTING_CODE
     // EXISTING_CODE
+
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
     archive << recordID;
