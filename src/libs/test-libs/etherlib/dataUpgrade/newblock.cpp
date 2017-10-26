@@ -152,12 +152,9 @@ bool CNewBlock::SerializeC(SFArchive& archive) const {
 
     // EXISTING_CODE
     // EXISTING_CODE
+
     // Writing always write the latest version of the data
-#define MAJOR 0
-#define MINOR 2
-#define BUILD 0
-    uint32_t vers = ((MAJOR * 1000000) + (MINOR * 1000) + (BUILD));
-    ((CNewBlock*)this)->m_schema = vers;
+    ((CNewBlock*)this)->m_schema = getVersionNum();
     CBaseNode::SerializeC(archive);
     archive << gasLimit;
     archive << gasUsed;
