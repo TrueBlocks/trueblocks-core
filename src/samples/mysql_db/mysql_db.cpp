@@ -129,7 +129,8 @@ int initDb() {
     			fromAddr VARCHAR(256), \
     			toAddr VARCHAR(256), \
     			value VARCHAR(256), \
-    			input VARCHAR(256) \
+    			input VARCHAR(256), \
+    			FOREIGN KEY (blockNumber) REFERENCES Blocks(blockNumber) \
     		);";
 
     if(createTable(query.c_str())) {
