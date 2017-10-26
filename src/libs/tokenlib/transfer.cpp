@@ -59,7 +59,7 @@ bool QTransfer::setValueByName(const SFString& fieldName, const SFString& fieldV
     switch (tolower(fieldName[0])) {
         case '_':
             if ( fieldName % "_to" ) { _to = toAddress(fieldValue); return true; }
-            if ( fieldName % "_value" ) { _value = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "_value" ) { _value = toWei(fieldValue); return true; }
             break;
         default:
             break;

@@ -40,6 +40,7 @@ def watchcontract(contract):
     os.system(contract_cmd)
     # return to the original path
     os.chdir(oldpath)
+    print(" ")
 
 #---------------------------------------------------------------------------------------------
 # Run watcher commands

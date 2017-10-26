@@ -54,7 +54,7 @@ bool CPerson::setValueByName(const SFString& fieldName, const SFString& fieldVal
 
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "age" ) { age = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "age" ) { age = toLong32u(fieldValue); return true; }
             break;
         case 'n':
             if ( fieldName % "name" ) { name = fieldValue; return true; }
