@@ -59,7 +59,7 @@ bool QExecute::setValueByName(const SFString& fieldName, const SFString& fieldVa
     switch (tolower(fieldName[0])) {
         case '_':
             if ( fieldName % "_to" ) { _to = toAddress(fieldValue); return true; }
-            if ( fieldName % "_value" ) { _value = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "_value" ) { _value = toWei(fieldValue); return true; }
             if ( fieldName % "_data" ) { _data = toLower(fieldValue); return true; }
             break;
         default:

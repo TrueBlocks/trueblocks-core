@@ -69,7 +69,7 @@ bool CLeaf::setValueByName(const SFString& fieldName, const SFString& fieldValue
             }
             break;
         case 'c':
-            if ( fieldName % "cnt" ) { cnt = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "cnt" ) { cnt = toLong32u(fieldValue); return true; }
             break;
         default:
             break;

@@ -79,7 +79,7 @@ bool CAccountWatch::setValueByName(const SFString& fieldName, const SFString& fi
             if ( fieldName % "firstBlock" ) { firstBlock = toUnsigned(fieldValue); return true; }
             break;
         case 'i':
-            if ( fieldName % "index" ) { index = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "index" ) { index = toLong32u(fieldValue); return true; }
             break;
         case 'l':
             if ( fieldName % "lastBlock" ) { lastBlock = toUnsigned(fieldValue); return true; }

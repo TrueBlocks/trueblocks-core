@@ -58,7 +58,7 @@ bool QChangeRequirement::setValueByName(const SFString& fieldName, const SFStrin
 
     switch (tolower(fieldName[0])) {
         case '_':
-            if ( fieldName % "_newRequired" ) { _newRequired = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "_newRequired" ) { _newRequired = toWei(fieldValue); return true; }
             break;
         default:
             break;
