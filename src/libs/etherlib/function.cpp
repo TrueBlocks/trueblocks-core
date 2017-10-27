@@ -211,6 +211,11 @@ SFString nextFunctionChunk_custom(const SFString& fieldIn, const void *dataPtr) 
     if (fun) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
+            case 'd':
+                if ( fieldIn % "dupName" ) {
+                    return asString(fun->dupName);
+                }
+                break;
             case 'h':
                 if ( fieldIn % "hex" ) {
                     SFString ret = fun->name + "(";
@@ -356,10 +361,13 @@ const CBaseNode *CFunction::getObjectAt(const SFString& name, uint32_t i) const 
 SFString CFunction::getSignature(SFUint32 parts) const {
     uint32_t cnt = inputs.getCount();
 
+    SFString nm = name;
+    if (dupName)
+        nm = name.Left(name.length()-4);
     CStringExportContext ctx;
     ctx << (parts & SIG_FTYPE  ? "\t"+type+" " : "");
-    ctx << (parts & SIG_FNAME  ? name          : "");
-    ctx << (parts & SIG_FSPACE ? SFString(' ', 35-type.length()-name.length()) : "");
+    ctx << (parts & SIG_FNAME  ? nm            : "");
+    ctx << (parts & SIG_FSPACE ? SFString(' ', 35-type.length()-nm.length()) : "");
     ctx << (parts & SIG_FTYPE || parts & SIG_FNAME  ? "("    : "");
     for (uint32_t j = 0 ; j < cnt ; j++) {
         ctx << (parts & SIG_ITYPE    ? inputs[j].type : "");
