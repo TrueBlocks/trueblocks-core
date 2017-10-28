@@ -410,7 +410,6 @@ namespace qblocks {
         return toJson(&theList);
     }
 
-#define toHex2(a)  ("0x"+toLower(SFString(to_hex(str2BigUint(a)).c_str())))
     //--------------------------------------------------------------------------------
     SFString CBaseNode::toJsonFldList(const CFieldList *fieldList) const {
         SFString ret;

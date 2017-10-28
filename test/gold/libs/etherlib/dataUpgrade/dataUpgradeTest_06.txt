@@ -76,7 +76,8 @@ baseClass: CBaseNode
         "contractAddress": "0x0",
         "gasUsed": 21000,
         "logs": [],
-        "logsBloom": "0x0"
+        "logsBloom": "0x0",
+        "status": null
       },
       "gasUsed": 21000
     }
@@ -159,7 +160,8 @@ baseClass: CBaseNode
         "contractAddress": "0x0",
         "gasUsed": 21000,
         "logs": [],
-        "logsBloom": "0x0"
+        "logsBloom": "0x0",
+        "status": null
       },
       "gasUsed": 21000
     }
@@ -193,7 +195,8 @@ baseClass: CBaseNode
         "contractAddress": "0x0",
         "gasUsed": 21000,
         "logs": [],
-        "logsBloom": "0x0"
+        "logsBloom": "0x0",
+        "status": null
       },
       "gasUsed": 21000
     }
@@ -276,7 +279,8 @@ baseClass: CBaseNode
         "contractAddress": "0x0",
         "gasUsed": 21000,
         "logs": [],
-        "logsBloom": "0x0"
+        "logsBloom": "0x0",
+        "status": null
       },
       "gasUsed": 21000
     }
@@ -366,7 +370,8 @@ baseClass: CBaseNode
         "contractAddress": "0x0",
         "gasUsed": 21000,
         "logs": [],
-        "logsBloom": "0x0"
+        "logsBloom": "0x0",
+        "status": null
       },
       "gasUsed": 21000
     }
@@ -459,7 +464,8 @@ baseClass: CBaseNode
         "contractAddress": "0x0",
         "gasUsed": 21000,
         "logs": [],
-        "logsBloom": "0x0"
+        "logsBloom": "0x0",
+        "status": null
       },
       "gasUsed": 21000
     }
@@ -495,7 +501,8 @@ baseClass: CBaseNode
         "contractAddress": "0x0",
         "gasUsed": 21000,
         "logs": [],
-        "logsBloom": "0x0"
+        "logsBloom": "0x0",
+        "status": null
       },
       "gasUsed": 21000
     }
@@ -588,7 +595,8 @@ baseClass: CBaseNode
         "contractAddress": "0x0",
         "gasUsed": 21000,
         "logs": [],
-        "logsBloom": "0x0"
+        "logsBloom": "0x0",
+        "status": null
       },
       "gasUsed": 21000
     }
@@ -681,7 +689,8 @@ baseClass: CBaseNode
         "contractAddress": "0x0",
         "gasUsed": 21000,
         "logs": [],
-        "logsBloom": "0x0"
+        "logsBloom": "0x0",
+        "status": null
       },
       "gasUsed": 21000
     }
