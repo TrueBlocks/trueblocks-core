@@ -55,9 +55,6 @@ bool CReceipt::setValueByName(const SFString& fieldName, const SFString& fieldVa
     // EXISTING_CODE
     if (fieldName == "contractAddress" && fieldValue == "null") {
         *((SFString*)&fieldValue) = "0";
-    } else if (fieldName == "status") {
-        isError = (fieldValue == "0");
-        return true;
     }
 
     if (pTrans)
@@ -85,6 +82,9 @@ bool CReceipt::setValueByName(const SFString& fieldName, const SFString& fieldVa
                 return true;
             }
             if ( fieldName % "logsBloom" ) { logsBloom = toBloom(fieldValue); return true; }
+            break;
+        case 's':
+            if ( fieldName % "status" ) { status = toLong32u(fieldValue); return true; }
             break;
         default:
             break;
@@ -114,6 +114,7 @@ bool CReceipt::Serialize(SFArchive& archive) {
     archive >> gasUsed;
     archive >> logs;
     archive >> logsBloom;
+//    archive >> status;
     finishParse();
     return true;
 }
@@ -130,6 +131,7 @@ bool CReceipt::SerializeC(SFArchive& archive) const {
     archive << gasUsed;
     archive << logs;
     archive << logsBloom;
+//    archive << status;
 
     return true;
 }
@@ -148,6 +150,7 @@ void CReceipt::registerClass(void) {
     ADD_FIELD(CReceipt, "gasUsed", T_GAS, ++fieldNum);
     ADD_FIELD(CReceipt, "logs", T_OBJECT|TS_ARRAY, ++fieldNum);
     ADD_FIELD(CReceipt, "logsBloom", T_BLOOM, ++fieldNum);
+    ADD_FIELD(CReceipt, "status", T_NUMBER, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CReceipt, "schema");
@@ -164,10 +167,16 @@ SFString nextReceiptChunk_custom(const SFString& fieldIn, const void *dataPtr) {
     if (rec) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
-            case 'i':
-                // Display only the fields of this node, not it's parent type
-                if ( fieldIn % "isError" )
-                    return asStringU(rec->isError);
+            case 's':
+                if ( fieldIn % "status" ) {
+                    if (rec->status == (uint32_t)-1) {
+                        return "null";
+                    } else if (rec->pTrans &&
+                               rec->pTrans->pBlock &&
+                               rec->pTrans->pBlock->blockNumber < byzantiumBlockNum) {
+                        return "null";
+                    }
+                }
                 break;
             // EXISTING_CODE
             case 'p':
@@ -243,6 +252,9 @@ SFString CReceipt::getValueByName(const SFString& fieldName) const {
                 return retS;
             }
             if ( fieldName % "logsBloom" ) return fromBloom(logsBloom);
+            break;
+        case 's':
+            if ( fieldName % "status" ) return asStringU(status);
             break;
     }
 

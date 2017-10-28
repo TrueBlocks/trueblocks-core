@@ -32,6 +32,7 @@ public:
     SFGas gasUsed;
     CLogEntryArray logs;
     SFBloom logsBloom;
+    uint32_t status;
 
 public:
     CReceipt(void);
@@ -46,7 +47,6 @@ public:
     // EXISTING_CODE
     const CTransaction *pTrans;
     friend class CTransaction;
-    bool isError;
 #if 0
     uint32_t cumulativeGasUsed;
     SFAddress from12;
@@ -108,10 +108,10 @@ inline void CReceipt::Init(void) {
     gasUsed = 0;
     logs.Clear();
     logsBloom = 0;
+    status = (uint32_t)-1;
 
     // EXISTING_CODE
     pTrans = NULL;
-    isError = false;
 #if 0
     blockHash = "";
     blockNumber = 0;
@@ -134,10 +134,10 @@ inline void CReceipt::Copy(const CReceipt& re) {
     gasUsed = re.gasUsed;
     logs = re.logs;
     logsBloom = re.logsBloom;
+    status = re.status;
 
     // EXISTING_CODE
     pTrans = re.pTrans; // no deep copy becuase it's const
-    isError = re.isError;
 #if 0
     blockHash = re.blockHash;
     blockNumber = re.blockNumber;
@@ -172,6 +172,7 @@ extern SFArchive& operator>>(SFArchive& archive, CReceipt& rec);
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 extern SFString nextTransactionChunk(const SFString& fieldIn, const void *data);
+#define byzantiumBlockNum 4370000
 // EXISTING_CODE
 }  // namespace qblocks
 

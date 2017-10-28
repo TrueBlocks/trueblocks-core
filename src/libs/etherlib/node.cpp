@@ -295,7 +295,7 @@ bool queryBlock(CBlock& block, const SFString& numIn, bool needTrace, bool byHas
         getReceipt(receipt, trans->hash);
         trans->receipt = receipt; // deep copy
         if (num >= byzantiumBlock) {
-            trans->isError = receipt.isError;
+            trans->isError = (receipt.status == 0);
 
         } else if (needTrace && trans->gas == receipt.gasUsed) {
             SFString trace;
