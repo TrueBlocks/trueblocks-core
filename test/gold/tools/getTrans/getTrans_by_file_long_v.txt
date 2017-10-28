@@ -17,7 +17,8 @@ getTrans --file:cmd_file --verbose --parity
     "contractAddress": "0x0",
     "gasUsed": 21000,
     "logs": [],
-    "logsBloom": "0x0"
+    "logsBloom": "0x0",
+    "status": null
   },
   "gasUsed": 21000
 }
@@ -38,7 +39,8 @@ getTrans --file:cmd_file --verbose --parity
     "contractAddress": "0x0",
     "gasUsed": 21000,
     "logs": [],
-    "logsBloom": "0x0"
+    "logsBloom": "0x0",
+    "status": null
   },
   "gasUsed": 21000
 }
@@ -56,7 +58,8 @@ getTrans --file:cmd_file --verbose --parity
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "logsBloom": "0x0"
+        "logsBloom": "0x0",
+        "status": null
     },
     "timestamp": "0x590d1c3b",
     "to": "0x85ac33fe36a146ca3651693c16fbb45b3832b3f6",
