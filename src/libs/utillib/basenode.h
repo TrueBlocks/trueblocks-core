@@ -92,4 +92,5 @@ namespace qblocks {
     SFString getNextChunk(SFString& fmtOut, NEXTCHUNKFUNC func, const void *data);
     SFString fldNotFound(const SFString& str);
 
+#define byzantiumBlock 4370000
 }  // namespace qblocks

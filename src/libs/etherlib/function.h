@@ -52,6 +52,7 @@ public:
     SFString getSignature(SFUint32 parts) const;
     SFString encodeItem(void) const;
     bool isBuiltin;
+    bool dupName;
     // EXISTING_CODE
     friend ostream& operator<<(ostream& os, const CFunction& item);
 
@@ -112,6 +113,7 @@ inline void CFunction::Init(void) {
     // EXISTING_CODE
     hasAddrs = false;
     isBuiltin = false;
+    dupName = false;
     // EXISTING_CODE
 }
 
@@ -133,6 +135,7 @@ inline void CFunction::Copy(const CFunction& fu) {
     // EXISTING_CODE
     hasAddrs = fu.hasAddrs;
     isBuiltin = fu.isBuiltin;
+    dupName = fu.dupName;
     // EXISTING_CODE
     finishParse();
 }

@@ -92,5 +92,7 @@ run_test("getBlock_cmd_file2" "--file:cmd_file2")
 run_test("getBlock_help" "-h")
 run_test("getBlock_help_long" "--help")
 
+run_test("getBlock_byzantium_1" " 4369999" " 4370000" " 4380101")
+
 # Installation steps
 install(TARGETS ${TOOL_NAME} RUNTIME DESTINATION bin)

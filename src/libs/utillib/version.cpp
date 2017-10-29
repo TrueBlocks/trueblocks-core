@@ -16,11 +16,12 @@ namespace qblocks {
 #define SUBVERS "alpha"
     //--------------------------------------------------------------------------------
     uint32_t getVersionNum(void) {
-#if 0
-        return ((MAJOR * 1000000) + (MINOR * 1000) + (BUILD));
-#else
-        return 0x00000201;
-#endif
+        return getVersionNum(MAJOR, MINOR, BUILD);
+    }
+
+    //--------------------------------------------------------------------------------
+    uint32_t getVersionNum(uint16_t maj, uint16_t min, uint16_t build) {
+        return ((maj * 1000000) + (min * 1000) + (build));
     }
 
     //--------------------------------------------------------------------------------

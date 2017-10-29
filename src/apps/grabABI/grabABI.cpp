@@ -54,24 +54,20 @@ inline void makeTheCode(const SFString& fn, const SFString& addr) {
 //-----------------------------------------------------------------------
 void addIfUnique(const SFString& addr, CFunctionArray& functions, CFunction& func)
 {
-//#error
     if (func.name.empty() && func.type != "constructor")
         return;
 
     for (uint32_t i = 0 ; i < functions.getCount() ; i++) {
         if (functions[i].encoding == func.encoding)
             return;
-#ifdef NEW_CODE
-//#error
+
         // different encoding same name means a duplicate function name in the code. We won't build with
         // duplicate function names, so we need to modify the incoming function. We do this by appending
         // the first four characters of the contract's address.
-        if (functions[i].name == func.name)
-            func.name += "_" + (addr.startsWith("0x") ? addr.substr(2,4) : addr.substr(0,4));
-#else
-        if (functions[i].name == func.name)
-            functions[i].name += "1";
-#endif
+        if (functions[i].name == func.name) {
+            func.dupName = true;
+            func.name += (addr.startsWith("0x") ? addr.substr(2,4) : addr.substr(0,4));
+        }
     }
 
     functions[functions.getCount()] = func;
@@ -447,7 +443,8 @@ SFString getAssign(const CParameter *p, SFUint32 which) {
 
     if (type == "uint" || type == "uint256") { ass = "toWei(\"0x\"+[{VAL}]);";
     } else if (type.Contains("gas")) { ass = "toGas([{VAL}]);";
-    } else if (type.Contains("uint")) { ass = "toLongU([{VAL}]);";
+    } else if (type.Contains("uint64")) { ass = "toLongU([{VAL}]);";
+    } else if (type.Contains("uint")) { ass = "toLong32u([{VAL}]);";
     } else if (type.Contains("int") || type.Contains("bool")) { ass = "toLong([{VAL}]);";
     } else if (type.Contains("address")) { ass = "toAddress([{VAL}]);";
     } else { ass = "[{VAL}];";
@@ -462,7 +459,8 @@ SFString getEventAssign(const CParameter *p, SFUint32 which, SFUint32 nIndexed) 
     SFString type = p->Format("[{TYPE}]"), ass;
     if (type == "uint" || type == "uint256") { ass = "toWei([{VAL}]);";
     } else if (type.Contains("gas")) { ass = "toGas([{VAL}]);";
-    } else if (type.Contains("uint")) { ass = "toLongU([{VAL}]);";
+    } else if (type.Contains("uint64")) { ass = "toLongU([{VAL}]);";
+    } else if (type.Contains("uint")) { ass = "toLong32u([{VAL}]);";
     } else if (type.Contains("int") || type.Contains("bool")) { ass = "toLong([{VAL}]);";
     } else if (type.Contains("address")) { ass = "toAddress([{VAL}]);";
     } else { ass = "[{VAL}];";
@@ -621,4 +619,3 @@ const char* STR_ITEMS =
 "\n"
 "\t\tSFString encoding = p->input.Left(10);\n"
 "\t\tSFString params   = p->input.substr(10);\n";
-

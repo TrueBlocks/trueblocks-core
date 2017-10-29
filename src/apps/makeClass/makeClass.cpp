@@ -112,7 +112,7 @@ SFString convertTypes(const SFString& inStr) {
         .Substitute("bool ",      "bool "       )
         .Substitute("uint8 ",     "32uint "     )
         .Substitute("uint16 ",    "32uint "     )
-        .Substitute("uint32 ",    "64uint "     )
+        .Substitute("uint32 ",    "32uint "     )
         .Substitute("uint64 ",    "64uint "     )
         .Substitute("int8 ",      "int32_t "    )
         .Substitute("int16 ",     "int32_t "    )
@@ -624,11 +624,14 @@ SFString getCaseSetCode(const SFString& fieldCase) {
                     } else if (type == "int256") {
                         caseCode +=  " { " + field + " = toLong(fieldValue); return true; }";
 
-                    } else if (type == "uint8" || type == "uint16" || type == "uint32" || type == "uint64") {
+                    } else if (type == "uint8" || type == "uint16" || type == "uint32") {
+                        caseCode +=  " { " + field + " = toLong32u(fieldValue); return true; }";
+
+                    } else if (type == "uint64") {
                         caseCode +=  " { " + field + " = toUnsigned(fieldValue); return true; }";
 
                     } else if (type == "uint256") {
-                        caseCode +=  " { " + field + " = toUnsigned(fieldValue); return true; }";
+                        caseCode +=  " { " + field + " = toWei(fieldValue); return true; }";
 
                     } else if (type == "blknum") {
                         caseCode +=  " { " + field + " = toUnsigned(fieldValue); return true; }";
@@ -815,12 +818,7 @@ const char *STR_GETSTR_CODE =
 
 //------------------------------------------------------------------------------------------------------------
 const char *STR_UPGRADE_CODE =
-"version of the data\n"
-"#define MAJOR 0\n"
-"#define MINOR 2\n"
-"#define BUILD 0\n"
-"\tuint32_t vers = ((MAJOR * 1000000) + (MINOR * 1000) + (BUILD));\n"
-"\t(([{CLASS_NAME}]*)this)->m_schema = vers;\n";
+"version of the data\n\t(([{CLASS_NAME}]*)this)->m_schema = getVersionNum();\n";
 
 //------------------------------------------------------------------------------------------------------------
 SFString short3(const SFString& str) {

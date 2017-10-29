@@ -115,8 +115,16 @@ bool CBlock::setValueByName(const SFString& fieldName, const SFString& fieldValu
 //---------------------------------------------------------------------------------------------------
 void CBlock::finishParse() {
     // EXISTING_CODE
-    for (uint32_t i=0;i<transactions.getCount();i++)
-        transactions[i].pBlock = this;
+    for (uint32_t i=0;i<transactions.getCount();i++) {
+        CTransaction *trans = &transactions[i];
+        trans->pBlock = this;
+        if (blockNumber >= byzantiumBlock && trans->receipt.status == NO_STATUS) {
+            // If we have NO_STATUS in a receipt after the byzantium block, we have to pick it up.
+            CReceipt rec;
+            getReceipt(rec, trans->hash);
+            trans->receipt.status = rec.status;
+        }
+    }
     // EXISTING_CODE
 }
 
@@ -149,6 +157,7 @@ bool CBlock::SerializeC(SFArchive& archive) const {
 
     // EXISTING_CODE
     // EXISTING_CODE
+
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
     archive << gasLimit;

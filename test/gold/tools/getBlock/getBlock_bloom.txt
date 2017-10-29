@@ -27,7 +27,8 @@ getBlock 4000001
                 "contractAddress": "0x0",
                 "gasUsed": 21000,
                 "logs": [],
-                "logsBloom": "0x0"
+                "logsBloom": "0x0",
+                "status": null
             },
             "gasUsed": 21000
         },
@@ -49,7 +50,8 @@ getBlock 4000001
                 "contractAddress": "0x0",
                 "gasUsed": 21000,
                 "logs": [],
-                "logsBloom": "0x0"
+                "logsBloom": "0x0",
+                "status": null
             },
             "gasUsed": 21000
         },
@@ -71,7 +73,8 @@ getBlock 4000001
                 "contractAddress": "0x0",
                 "gasUsed": 21000,
                 "logs": [],
-                "logsBloom": "0x0"
+                "logsBloom": "0x0",
+                "status": null
             },
             "gasUsed": 21000
         },
@@ -93,7 +96,8 @@ getBlock 4000001
                 "contractAddress": "0x0",
                 "gasUsed": 21000,
                 "logs": [],
-                "logsBloom": "0x0"
+                "logsBloom": "0x0",
+                "status": null
             },
             "gasUsed": 21000
         },
@@ -115,7 +119,8 @@ getBlock 4000001
                 "contractAddress": "0x0",
                 "gasUsed": 21000,
                 "logs": [],
-                "logsBloom": "0x0"
+                "logsBloom": "0x0",
+                "status": null
             },
             "gasUsed": 21000
         },
@@ -137,7 +142,8 @@ getBlock 4000001
                 "contractAddress": "0x0",
                 "gasUsed": 21000,
                 "logs": [],
-                "logsBloom": "0x0"
+                "logsBloom": "0x0",
+                "status": null
             },
             "gasUsed": 21000
         },
@@ -159,7 +165,8 @@ getBlock 4000001
                 "contractAddress": "0x0",
                 "gasUsed": 21000,
                 "logs": [],
-                "logsBloom": "0x0"
+                "logsBloom": "0x0",
+                "status": null
             },
             "gasUsed": 21000
         },
@@ -181,7 +188,8 @@ getBlock 4000001
                 "contractAddress": "0x0",
                 "gasUsed": 21000,
                 "logs": [],
-                "logsBloom": "0x0"
+                "logsBloom": "0x0",
+                "status": null
             },
             "gasUsed": 21000
         },
@@ -203,7 +211,8 @@ getBlock 4000001
                 "contractAddress": "0x0",
                 "gasUsed": 21000,
                 "logs": [],
-                "logsBloom": "0x0"
+                "logsBloom": "0x0",
+                "status": null
             },
             "gasUsed": 21000
         },
@@ -225,7 +234,8 @@ getBlock 4000001
                 "contractAddress": "0x0",
                 "gasUsed": 21000,
                 "logs": [],
-                "logsBloom": "0x0"
+                "logsBloom": "0x0",
+                "status": null
             },
             "gasUsed": 21000
         },
@@ -258,7 +268,8 @@ getBlock 4000001
                         ]
                     }
                 ],
-                "logsBloom": "0x00000000000000000000000000000000000000000400000000000000000000000000000000000000000000000080000028000000000000000000000000000000000000000000000000000000000000000001000000000000000000000000040000000000000000000000000000000000000000000000000000000080000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002000000000000000000008000000000000000000000000000000000000000000000000000004100000000000000000000000000000400000000000000000000000"
+                "logsBloom": "0x00000000000000000000000000000000000000000400000000000000000000000000000000000000000000000080000028000000000000000000000000000000000000000000000000000000000000000001000000000000000000000000040000000000000000000000000000000000000000000000000000000080000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002000000000000000000008000000000000000000000000000000000000000000000000000004100000000000000000000000000000400000000000000000000000",
+                "status": null
             },
             "gasUsed": 22966
         },
@@ -280,7 +291,8 @@ getBlock 4000001
                 "contractAddress": "0x0",
                 "gasUsed": 21000,
                 "logs": [],
-                "logsBloom": "0x0"
+                "logsBloom": "0x0",
+                "status": null
             },
             "gasUsed": 21000
         },
@@ -302,7 +314,8 @@ getBlock 4000001
                 "contractAddress": "0x0",
                 "gasUsed": 21000,
                 "logs": [],
-                "logsBloom": "0x0"
+                "logsBloom": "0x0",
+                "status": null
             },
             "gasUsed": 21000
         },
@@ -324,7 +337,8 @@ getBlock 4000001
                 "contractAddress": "0x0",
                 "gasUsed": 21000,
                 "logs": [],
-                "logsBloom": "0x0"
+                "logsBloom": "0x0",
+                "status": null
             },
             "gasUsed": 21000
         },
@@ -346,7 +360,8 @@ getBlock 4000001
                 "contractAddress": "0x0",
                 "gasUsed": 21000,
                 "logs": [],
-                "logsBloom": "0x0"
+                "logsBloom": "0x0",
+                "status": null
             },
             "gasUsed": 21000
         },
@@ -368,7 +383,8 @@ getBlock 4000001
                 "contractAddress": "0x0",
                 "gasUsed": 21000,
                 "logs": [],
-                "logsBloom": "0x0"
+                "logsBloom": "0x0",
+                "status": null
             },
             "gasUsed": 21000
         }
