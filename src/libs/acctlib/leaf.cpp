@@ -69,7 +69,7 @@ bool CLeaf::setValueByName(const SFString& fieldName, const SFString& fieldValue
             }
             break;
         case 'c':
-            if ( fieldName % "cnt" ) { cnt = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "cnt" ) { cnt = toLong32u(fieldValue); return true; }
             break;
         default:
             break;
@@ -106,6 +106,7 @@ bool CLeaf::SerializeC(SFArchive& archive) const {
 
     // EXISTING_CODE
     // EXISTING_CODE
+
     // Writing always write the latest version of the data
     CTreeNode::SerializeC(archive);
 

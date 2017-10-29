@@ -28,7 +28,7 @@ typedef SFUniqueList<CAccountWatch*>       CAccountWatchListU;
 //--------------------------------------------------------------------------
 class CAccountWatch : public CBaseNode {
 public:
-    uint64_t index;
+    uint32_t index;
     SFAddress address;
     SFString name;
     SFString color;
