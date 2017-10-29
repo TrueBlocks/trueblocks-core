@@ -23,6 +23,7 @@ typedef SFUniqueList<CReceipt*>       CReceiptListU;
 
 // EXISTING_CODE
 class CTransaction;
+#define NO_STATUS ((uint32_t)-1)
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
@@ -108,7 +109,7 @@ inline void CReceipt::Init(void) {
     gasUsed = 0;
     logs.Clear();
     logsBloom = 0;
-    status = (uint32_t)-1;
+    status = NO_STATUS;
 
     // EXISTING_CODE
     pTrans = NULL;
@@ -172,7 +173,6 @@ extern SFArchive& operator>>(SFArchive& archive, CReceipt& rec);
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 extern SFString nextTransactionChunk(const SFString& fieldIn, const void *data);
-#define byzantiumBlockNum 4370000
 // EXISTING_CODE
 }  // namespace qblocks
 
