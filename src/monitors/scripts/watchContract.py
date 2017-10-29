@@ -35,11 +35,12 @@ def watchcontract(contract):
     oldpath = os.getcwd()
     newpath = contracts_path + '/' + contract 
     os.chdir(newpath)
-    contract_cmd = contracts_bin_subpath + '/' + contract + ' -freshen -v'
+    contract_cmd = contracts_bin_subpath + '/' + contract + ' --freshen -v'
     #print("Running command {0} at path {1}".format(contract_cmd, os.getcwd())) # debugging
     os.system(contract_cmd)
     # return to the original path
     os.chdir(oldpath)
+    print(" ")
 
 #---------------------------------------------------------------------------------------------
 # Run watcher commands
@@ -54,8 +55,7 @@ def runwatcher():
     os.system('miniBlocks  freshen')
 
     # Create the vector of contracts we want to watch
-    contracts = ['augur', 'btn', 'dao', 'ENS', 'firstBlood', 'gnosis', 'singular']
-
+    contracts = [ 'accts', 'augur', 'bnt', 'dao', 'etherTip', 'ENS', 'firstBlood', 'gnosis', 'mothership', 'paritySMS', 'singular', 'tenX', 'whiteHat']
     for contract in contracts:
         watchcontract(contract)
 
@@ -79,7 +79,7 @@ def is_parity_running():
 # CONFIGURATION
 #---------------------
 # Guard timeout while parity is starting
-startup_timeout = 10
+startup_timeout = 5
 # Threshold to restart parity (When space left percentage is less than this value)
 percentage_threshold = 10
 # Parity process name
@@ -121,7 +121,6 @@ while True:
         print("Parity is already running")
 
     while True:
-        time.sleep(float(timeout))
         # Get the occupation percentage at current filesystem (in GB)
         s = os.statvfs(getmount('.'))
         gigs_left = (s.f_bavail * s.f_frsize) / 1024 / 1024 / 1024
@@ -133,6 +132,7 @@ while True:
         else:
             # we can run the watcher
             runwatcher()
+            time.sleep(float(timeout))
     print("Restarting Parity...")
     os.kill(proc.pid, signal.SIGINT)
     proc.wait()

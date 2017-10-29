@@ -27,7 +27,8 @@ getBlock 1001001 -o
                 "contractAddress": "0x0",
                 "gasUsed": 21000,
                 "logs": [],
-                "logsBloom": "0x0"
+                "logsBloom": "0x0",
+                "status": null
             },
             "gasUsed": 21000
         },
@@ -49,7 +50,8 @@ getBlock 1001001 -o
                 "contractAddress": "0x0",
                 "gasUsed": 21000,
                 "logs": [],
-                "logsBloom": "0x0"
+                "logsBloom": "0x0",
+                "status": null
             },
             "gasUsed": 21000
         },
@@ -71,7 +73,8 @@ getBlock 1001001 -o
                 "contractAddress": "0x0",
                 "gasUsed": 21000,
                 "logs": [],
-                "logsBloom": "0x0"
+                "logsBloom": "0x0",
+                "status": null
             },
             "gasUsed": 21000
         },
@@ -93,7 +96,8 @@ getBlock 1001001 -o
                 "contractAddress": "0x0",
                 "gasUsed": 21000,
                 "logs": [],
-                "logsBloom": "0x0"
+                "logsBloom": "0x0",
+                "status": null
             },
             "gasUsed": 21000
         }

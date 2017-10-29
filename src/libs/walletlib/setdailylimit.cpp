@@ -58,7 +58,7 @@ bool QSetDailyLimit::setValueByName(const SFString& fieldName, const SFString& f
 
     switch (tolower(fieldName[0])) {
         case '_':
-            if ( fieldName % "_newLimit" ) { _newLimit = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "_newLimit" ) { _newLimit = toWei(fieldValue); return true; }
             break;
         default:
             break;
@@ -94,6 +94,7 @@ bool QSetDailyLimit::SerializeC(SFArchive& archive) const {
 
     // EXISTING_CODE
     // EXISTING_CODE
+
     // Writing always write the latest version of the data
     CTransaction::SerializeC(archive);
 

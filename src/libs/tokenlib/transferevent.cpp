@@ -60,7 +60,7 @@ bool QTransferEvent::setValueByName(const SFString& fieldName, const SFString& f
         case '_':
             if ( fieldName % "_from" ) { _from = toAddress(fieldValue); return true; }
             if ( fieldName % "_to" ) { _to = toAddress(fieldValue); return true; }
-            if ( fieldName % "_value" ) { _value = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "_value" ) { _value = toWei(fieldValue); return true; }
             break;
         default:
             break;
@@ -98,6 +98,7 @@ bool QTransferEvent::SerializeC(SFArchive& archive) const {
 
     // EXISTING_CODE
     // EXISTING_CODE
+
     // Writing always write the latest version of the data
     CLogEntry::SerializeC(archive);
 

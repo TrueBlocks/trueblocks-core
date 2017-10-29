@@ -38,7 +38,7 @@ int main(int argc, const char * argv[]) {
                 if (options.normalize) {
                     if (verbose)
                         cout << i << "\n";
-                    result = normalizeBlock(result, false);
+                    result = normalizeBlock(result, false, i >= byzantiumBlock);
                 }
                 if (!options.quiet) {
                     cout << result;
@@ -61,7 +61,7 @@ int main(int argc, const char * argv[]) {
                 if (options.normalize) {
                     if (verbose)
                         cout << options.blocks.nums[i] << "\n";
-                    result = normalizeBlock(result, false);
+                    result = normalizeBlock(result, false, options.blocks.nums[i] >= byzantiumBlock);
                 }
                 if (!options.quiet) {
                     cout << result;
@@ -150,7 +150,7 @@ SFString checkOneBlock(SFUint32 num, const COptions& opt) {
     fromNode.Replace("\"hash\":","\"blockHash\":");
     if (verbose)
         cout << num << "\n";
-    fromNode = normalizeBlock(fromNode, true);
+    fromNode = normalizeBlock(fromNode, true, num > byzantiumBlock);
 
     // Now get the same block from quickBlocks
     SFString fromQblocks;
@@ -166,7 +166,7 @@ SFString checkOneBlock(SFUint32 num, const COptions& opt) {
     }
     if (verbose)
         cout << num << "\n";
-    fromQblocks = normalizeBlock(qBlocks.Format(), true);
+    fromQblocks = normalizeBlock(qBlocks.Format(), true, num > byzantiumBlock);
 
     SFString result = "The strings are "; result += ((fromNode != fromQblocks) ? "different\n" : "the same\n");
     SFString diffA  = "In fromNode but not fromQblocks:\n" + diffStr(fromNode, fromQblocks);

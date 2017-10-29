@@ -70,7 +70,7 @@ bool QConfirmationNeededEvent::setValueByName(const SFString& fieldName, const S
             if ( fieldName % "to" ) { to = toAddress(fieldValue); return true; }
             break;
         case 'v':
-            if ( fieldName % "value" ) { value = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "value" ) { value = toWei(fieldValue); return true; }
             break;
         default:
             break;
@@ -110,6 +110,7 @@ bool QConfirmationNeededEvent::SerializeC(SFArchive& archive) const {
 
     // EXISTING_CODE
     // EXISTING_CODE
+
     // Writing always write the latest version of the data
     CLogEntry::SerializeC(archive);
 
