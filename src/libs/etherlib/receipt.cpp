@@ -55,9 +55,11 @@ bool CReceipt::setValueByName(const SFString& fieldName, const SFString& fieldVa
     // EXISTING_CODE
     if (fieldName == "contractAddress" && fieldValue == "null") {
         *((SFString*)&fieldValue) = "0";
+    } else if (fieldName == "status" && (fieldValue == "null" || fieldValue == "0x")) {
+        *((SFString*)&fieldValue) = asStringU(NO_STATUS);
     }
 
-    if (pTrans)
+    if (pTrans && fieldName != "logsBloom")
         if (((CTransaction*)pTrans)->setValueByName(fieldName, fieldValue))
             return true;
     // EXISTING_CODE
@@ -95,7 +97,10 @@ bool CReceipt::setValueByName(const SFString& fieldName, const SFString& fieldVa
 //---------------------------------------------------------------------------------------------------
 void CReceipt::finishParse() {
     // EXISTING_CODE
-    // EXISTING_CODE
+    for (uint32_t i = 0 ; i < logs.getCount() ; i++) {
+        logs[i].pReceipt = this;
+    }
+   // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -114,7 +119,7 @@ bool CReceipt::Serialize(SFArchive& archive) {
     archive >> gasUsed;
     archive >> logs;
     archive >> logsBloom;
-//    archive >> status;
+	archive >> status;
     finishParse();
     return true;
 }
@@ -131,7 +136,7 @@ bool CReceipt::SerializeC(SFArchive& archive) const {
     archive << gasUsed;
     archive << logs;
     archive << logsBloom;
-//    archive << status;
+	archive << status;
 
     return true;
 }
@@ -169,11 +174,11 @@ SFString nextReceiptChunk_custom(const SFString& fieldIn, const void *dataPtr) {
             // EXISTING_CODE
             case 's':
                 if ( fieldIn % "status" ) {
-                    if (rec->status == (uint32_t)-1) {
+                    if (rec->status == NO_STATUS) {
                         return "null";
                     } else if (rec->pTrans &&
                                rec->pTrans->pBlock &&
-                               rec->pTrans->pBlock->blockNumber < byzantiumBlockNum) {
+                               rec->pTrans->pBlock->blockNumber < byzantiumBlock) {
                         return "null";
                     }
                 }
@@ -206,6 +211,18 @@ bool CReceipt::readBackLevel(SFArchive& archive) {
     CBaseNode::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
+    if (m_schema < getVersionNum(0,2,0)) {
+        archive >> contractAddress;
+        archive >> gasUsed;
+        archive >> logs;
+        archive >> logsBloom;
+        // The `status` field will be corrected in CBlock::finishParse() once we have a block
+        // number. We set status here to NO_STATUS assuming pre-byzantium. After byzantium, we
+        // have to pick up the value (0 or 1) from the node
+        status = NO_STATUS;
+        finishParse();
+        done = true;
+    }
     // EXISTING_CODE
     return done;
 }

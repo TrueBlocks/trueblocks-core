@@ -247,7 +247,6 @@ bool queryBlock(CBlock& block, const SFString& numIn, bool needTrace, bool byHas
     return queryBlock(block, numIn, needTrace, byHash, unused);
 }
 
-#define byzantiumBlock 4370000
 //-------------------------------------------------------------------------
 bool queryBlock(CBlock& block, const SFString& numIn, bool needTrace, bool byHash, uint32_t& nTraces) {
 
@@ -966,7 +965,6 @@ bool forEveryTransaction(TRANSVISITFUNC func, void *data, const SFString& trans_
         trans.pBlock = &block;
         getBlock(block, trans.blockNumber);
         getReceipt(trans.receipt, trans.getValueByName("hash"));
-        trans.receipt.pTrans = &trans;
         trans.finishParse();
         if (!(*func)(trans, data))
             return false;

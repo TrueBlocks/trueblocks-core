@@ -316,7 +316,14 @@ namespace qblocks {
 
     //---------------------------------------------------------------------------
     bool CBaseNode::SerializeC(SFArchive& archive) const {
-        archive.pParent = this;  // sets this value for items stored in lists or arrays -- read only
+
+        // Not happy with this, but we must set the schema to the latest before we write data
+        // since we always write the latest version to the hard drive.
+        ((CBaseNode*)this)->m_schema = getVersionNum();
+
+        // This sets this value to be used by contained items (such as array items). It's read only
+        archive.pParent = this;
+
         archive << m_deleted;
         archive << m_schema;
         archive << m_showing;
