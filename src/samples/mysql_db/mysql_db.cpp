@@ -19,8 +19,8 @@
 MYSQL *conn = NULL;
 
 // connection credentials, normally at config file
-std::string host = "localhost";
-std::string user = ""; //root
+std::string host = "127.0.0.1";
+std::string user = "root"; //root
 std::string password = ""; //Sep2017$
 
 //--------------------------------------------------------------------------
@@ -63,7 +63,7 @@ int connectServer() {
 	// connect to mysql server at socket level
 	conn = mysql_init(NULL);
 
-	if (!mysql_real_connect(conn, host.c_str(), user.c_str(), password.c_str(), NULL, 0, NULL, 0)) {
+	if (!mysql_real_connect(conn, host.c_str(), user.c_str(), password.c_str(), NULL, 3306, NULL, 0)) {
 		cerr << "Unable to connect to mysql. Error: " << mysql_error(conn) << "\n";
 		return 1;
 	}
