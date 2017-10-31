@@ -100,7 +100,7 @@ void CReceipt::finishParse() {
     for (uint32_t i = 0 ; i < logs.getCount() ; i++) {
         logs[i].pReceipt = this;
     }
-   // EXISTING_CODE
+    // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -119,7 +119,7 @@ bool CReceipt::Serialize(SFArchive& archive) {
     archive >> gasUsed;
     archive >> logs;
     archive >> logsBloom;
-	archive >> status;
+    archive >> status;
     finishParse();
     return true;
 }
@@ -136,7 +136,7 @@ bool CReceipt::SerializeC(SFArchive& archive) const {
     archive << gasUsed;
     archive << logs;
     archive << logsBloom;
-	archive << status;
+    archive << status;
 
     return true;
 }
