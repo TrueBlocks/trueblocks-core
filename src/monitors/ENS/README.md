@@ -8,7 +8,7 @@ Please contact us at [sales@greathill.com](mailto:sales@greathill.com) for more 
 
 #### Usage
 
-`Usage:`    ENS [-f|-s|-c|-k|-p|-g|-t|-b|-a|-l|-d|-s|-r|-v|-h]  
+`Usage:`    ENS [-f|-s|-c|-k|-o|-p|-g|-t|-b|-a|-l|-d|-s|-r|-v|-h]  
 `Purpose:`  Index transactions for a given Ethereum address (or series of addresses).
              
 `Where:`  
@@ -18,7 +18,8 @@ Please contact us at [sales@greathill.com](mailto:sales@greathill.com) for more 
 | -f | --freshen | mode: freshen only -- default (do not display transactions from the cache) |
 | -s | --showCache | mode: show transactions from the cache, and then freshen |
 | -c | --cacheOnly | mode: display transactions from the cache only (do not freshen) |
-| -k | --kBlock | start processing at block :k |
+| -k | --kBlock val | start processing at block :k |
+| -o | --offset val | offset to kBlock |
 | -p | --parse | display parsed input data |
 | -g | --logs | display smart contract lo(g)s or events |
 | -t | --trace | display smart contract internal traces |
