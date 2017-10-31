@@ -21,6 +21,9 @@ inline SFString asDollars2(timestamp_t ts, const SFUintBN& weiIn) {
 //-----------------------------------------------------------------------
 void CVisitor::displayTrans(const CTransaction *theTrans) const {
 
+    if (theTrans->isError)
+        colorsDim();
+
     const CTransaction *promoted = promoteToFunc(theTrans);
     if (!promoted)
         promoted = theTrans;  // revert to the original
@@ -118,6 +121,8 @@ void CVisitor::displayTrans(const CTransaction *theTrans) const {
     cout << cOff;
     cout << "\r\n";
     cout.flush();
+
+    colorsOn();
     return;
 }
 
