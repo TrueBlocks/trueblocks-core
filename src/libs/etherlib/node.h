@@ -41,7 +41,7 @@ namespace qblocks {
 
     //-------------------------------------------------------------------------
     extern bool     getBlock                (CBlock& block,       blknum_t num);
-    extern bool     getBlock                (CBlock& block,       const SFHash& hash);
+//    extern bool     getBlock                (CBlock& block,       const SFHash& hash);
     extern bool     getTransaction          (CTransaction& trans, const SFHash& hash);
     extern bool     getTransaction          (CTransaction& trans, const SFHash& hash, SFUint32 transID);
     extern bool     getTransaction          (CTransaction& trans, blknum_t blockNum, SFUint32 transID);
