@@ -341,16 +341,8 @@ SFString findEncoding(const SFString& addr, CFunction& func) {
 static bool getEncoding(const SFString& abiFilename, const SFString& addr, CFunction& func) {
     if (func.type != "function")
         return false;
-
-    SFString fullName = func.name;  // we need the signature for ethabi
-    func.name     = nextTokenClear(func.name, '(');  // Cleanup because we only need the name, not the signature
+    func.name     = nextTokenClear(func.name, '(');
     func.encoding = findEncoding(addr, func);
-    if (func.encoding.empty() && fileExists("/usr/local/bin/ethabi")) {
-        // When we call ethabi, we want the full function declaration (if it's present)
-        SFString cmd = "/usr/local/bin/ethabi encode function \"" +
-                            abiFilename + "\" " + fullName.Substitute("(", "\\(").Substitute(")", "\\)");
-        func.encoding = doCommand(cmd);
-    }
     return !func.encoding.empty();
 }
 

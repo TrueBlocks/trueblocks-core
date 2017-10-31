@@ -65,7 +65,7 @@ void addIfUnique(const SFString& addr, CFunctionArray& functions, CFunction& fun
         // duplicate function names, so we need to modify the incoming function. We do this by appending
         // the first four characters of the contract's address.
         if (functions[i].name == func.name) {
-            func.dupName = true;
+            func.origName = func.name;
             func.name += (addr.startsWith("0x") ? addr.substr(2,4) : addr.substr(0,4));
         }
     }
@@ -412,6 +412,7 @@ int main(int argc, const char *argv[]) {
                 makeTheCode("debug.h",        options.primaryAddr);
                 makeTheCode("debug.cpp",      options.primaryAddr);
                 makeTheCode("options.cpp",    options.primaryAddr);
+                makeTheCode("options.h",      options.primaryAddr);
                 makeTheCode("main.cpp",       options.primaryAddr);
                 makeTheCode("accounting.cpp", options.primaryAddr);
                 makeTheCode("display.cpp",    options.primaryAddr);

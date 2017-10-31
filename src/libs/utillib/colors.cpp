@@ -20,12 +20,20 @@ namespace qblocks {
     SFString cOff       = "\e[0m";
 
     SFString bbold      = "\e[1m";
+    SFString dim        = "\e[2m";
     SFString italic     = "\e[3m";
     SFString underline  = "\e[4m";
     SFString reversed   = "\e[7m";
     SFString strikethru = "\e[7m";
     SFString greenCheck = "\e[0;32m✓\e[0m";
     SFString redX       = "\e[0;31mX\e[0m";
+
+    void colorsDim(void) {
+        cWhite = (cWhite+dim+italic);
+        cGreen = cYellow = cBlue = cMagenta = cTeal = cOff = cBlack = cWhite;
+        bbold = italic = underline = reversed = strikethru = "";
+        greenCheck = "✓"; redX = "X";
+    }
 
     void colorsOff(void) {
         cBlack = cRed = cGreen = cYellow = cBlue = "";

@@ -19,8 +19,8 @@
 MYSQL *conn = NULL;
 
 // connection credentials, normally at config file
-std::string host = "localhost";
-std::string user = ""; //root
+std::string host = "127.0.0.1";
+std::string user = "root"; //root
 std::string password = ""; //Sep2017$
 
 //--------------------------------------------------------------------------
