@@ -321,12 +321,14 @@ bool getBlock(CBlock& block, SFUint32 numIn)
     return ret;
 }
 
+/*
 //-------------------------------------------------------------------------
 bool getBlock(CBlock& block, const SFHash& hash) {
     // TODO: Note--this does not work because queryBlock takes blockNum in second param
     bool ret = queryBlock(block, hash, true, true);
     return ret;
 }
+*/
 
 //-------------------------------------------------------------------------
 bool queryRawBlock(SFString& block, const SFString& numIn, bool needTrace, bool hashesOnly)
