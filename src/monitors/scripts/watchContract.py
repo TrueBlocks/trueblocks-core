@@ -9,9 +9,9 @@ import signal
 #---------------------------------------------------------------------------------------------
 # Signals handler, to deal with Ctrl+C stuff
 #---------------------------------------------------------------------------------------------
-def signal_handler(signal, frame):
-    print('You pressed Ctrl+C!')
-    sys.exit(0)
+#def signal_handler(signal, frame):
+#    print('You pressed Ctrl+C!')
+#    sys.exit(0)
 
 #---------------------------------------------------------------------------------------------
 # Get the filesystem path for current directory (where we are currently executing the script)
@@ -55,7 +55,7 @@ def runwatcher():
     os.system('miniBlocks  freshen')
 
     # Create the vector of contracts we want to watch
-    contracts = [ 'accts', 'augur', 'bnt', 'dao', 'etherTip', 'ENS', 'firstBlood', 'gnosis', 'mothership', 'paritySMS', 'singular', 'tenX', 'whiteHat']
+    contracts = [ 'accts', 'augur', 'bnt', 'dao', 'etherTip', 'ENS', 'firstBlood', 'gnosis', 'mothership', 'paritySMS', 'singular', 'tenX', 'whiteHat', 'tierion']
     for contract in contracts:
         watchcontract(contract)
 
@@ -93,7 +93,7 @@ contracts_bin_subpath = 'bin'
 #---------------------
 
 # Define a signals handler to capture at least Ctrl+C
-signal.signal(signal.SIGINT, signal_handler)
+#signal.signal(signal.SIGINT, signal_handler)
 
 # Check input parameters number
 if len(sys.argv) != 2:

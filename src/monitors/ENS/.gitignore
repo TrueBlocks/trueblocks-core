@@ -9,3 +9,4 @@ parselib
 processing.cpp
 processing.h
 rebuild
+options.h

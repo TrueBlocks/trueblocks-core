@@ -211,11 +211,6 @@ SFString nextFunctionChunk_custom(const SFString& fieldIn, const void *dataPtr) 
     if (fun) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
-            case 'd':
-                if ( fieldIn % "dupName" ) {
-                    return asString(fun->dupName);
-                }
-                break;
             case 'h':
                 if ( fieldIn % "hex" ) {
                     SFString ret = fun->name + "(";
@@ -235,6 +230,11 @@ SFString nextFunctionChunk_custom(const SFString& fieldIn, const void *dataPtr) 
             case 'i':
                 if ( fieldIn % "isBuiltin" ) {
                     return asString(fun->isBuiltin);
+                }
+                break;
+            case 'o':
+                if ( fieldIn % "origName" ) {
+                    return fun->origName;
                 }
                 break;
             // EXISTING_CODE
@@ -361,9 +361,7 @@ const CBaseNode *CFunction::getObjectAt(const SFString& name, uint32_t i) const 
 SFString CFunction::getSignature(SFUint32 parts) const {
     uint32_t cnt = inputs.getCount();
 
-    SFString nm = name;
-    if (dupName)
-        nm = name.Left(name.length()-4);
+    SFString nm = (origName.empty() ? name : origName);
     CStringExportContext ctx;
     ctx << (parts & SIG_FTYPE  ? "\t"+type+" " : "");
     ctx << (parts & SIG_FNAME  ? nm            : "");
