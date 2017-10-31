@@ -128,18 +128,19 @@ namespace qblocks {
     //--------------------------------------------------------------------
     inline SFString padNum3T(uint64_t n) { return padLeft(asStringU((n)), 3); }
     inline SFString padNum5T(uint64_t n) { return padLeft(asStringU((n)), 5); }
+    inline SFString padNum6T(uint64_t n) { return padLeft(asStringU((n)), 6); }
     inline SFString padNum7T(uint64_t n) { return padLeft(asStringU((n)), 7); }
     inline SFString padNum8T(uint64_t n) { return padLeft(asStringU((n)), 8); }
 
     //--------------------------------------------------------------------
-    inline SFString padNum2(int64_t n) { return padLeft(asString((n)), 2, '0'); }
+    inline SFString padNum2 (int64_t n) { return padLeft(asString((n)), 2, '0'); }
     inline SFString padNum3i(int64_t n) { return padLeft(asString((n)), 3, '0'); }
-    inline SFString padNum4(int64_t n) { return padLeft(asString((n)), 4, '0'); }
-    inline SFString padNum5(int64_t n) { return padLeft(asString((n)), 5, '0'); }
-    inline SFString padNum6(int64_t n) { return padLeft(asString((n)), 6, '0'); }
-    inline SFString padNum7(int64_t n) { return padLeft(asString((n)), 7, '0'); }
-    inline SFString padNum8(int64_t n) { return padLeft(asString((n)), 8, '0'); }
-    inline SFString padNum9(int64_t n) { return padLeft(asString((n)), 9, '0'); }
+    inline SFString padNum4 (int64_t n) { return padLeft(asString((n)), 4, '0'); }
+    inline SFString padNum5 (int64_t n) { return padLeft(asString((n)), 5, '0'); }
+    inline SFString padNum6 (int64_t n) { return padLeft(asString((n)), 6, '0'); }
+    inline SFString padNum7 (int64_t n) { return padLeft(asString((n)), 7, '0'); }
+    inline SFString padNum8 (int64_t n) { return padLeft(asString((n)), 8, '0'); }
+    inline SFString padNum9 (int64_t n) { return padLeft(asString((n)), 9, '0'); }
 
     //--------------------------------------------------------------------
     inline SFString padNum3T(int64_t n) { return padLeft(asString((n)), 3); }
