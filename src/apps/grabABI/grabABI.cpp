@@ -412,6 +412,7 @@ int main(int argc, const char *argv[]) {
                 makeTheCode("debug.h",        options.primaryAddr);
                 makeTheCode("debug.cpp",      options.primaryAddr);
                 makeTheCode("options.cpp",    options.primaryAddr);
+                makeTheCode("options.h",      options.primaryAddr);
                 makeTheCode("main.cpp",       options.primaryAddr);
                 makeTheCode("accounting.cpp", options.primaryAddr);
                 makeTheCode("display.cpp",    options.primaryAddr);
