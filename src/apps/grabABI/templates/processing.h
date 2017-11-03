@@ -105,7 +105,7 @@ public:
 };
 
 //-----------------------------------------------------------------------
-extern bool displayFromCache      (const SFString& fileName, SFUint32& blockNum, void *dataPtr);
+extern bool displayFromCache      (const SFString& fileName, uint64_t& blockNum, void *dataPtr);
 extern bool updateCacheUsingBlooms(const SFString& str, void *dataPtr);
 extern bool updateCache           (CBlock& block, void *dataPtr);
 extern void myQuitHandler         (int s);

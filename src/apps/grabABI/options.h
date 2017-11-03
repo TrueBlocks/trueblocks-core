@@ -11,13 +11,13 @@
 #define MAX_ADDRS 40
 class COptions : public COptionsBase {
 public:
-    SFUint32 parts;
+    uint64_t parts;
     bool noconst;
     bool open;
     bool asJson;
     bool raw;
     SFAddress addrs[MAX_ADDRS+2];
-    SFUint32 nAddrs;
+    uint64_t nAddrs;
     SFString primaryAddr;
     SFString classDir;
     SFString prefix;
