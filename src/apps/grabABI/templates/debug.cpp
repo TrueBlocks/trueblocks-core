@@ -20,7 +20,7 @@ static CParams debugCmds[] = {
     CParams("-(h)elp",        "Display this screen"),
     CParams("",               "Press enter to continue without correction, up or down arrows to recall commands"),
 };
-static SFUint32 nDebugCmds = sizeof(debugCmds) / sizeof(CParams);
+static uint64_t nDebugCmds = sizeof(debugCmds) / sizeof(CParams);
 
 //---------------------------------------------------------------------
 #define isdelim(cc) ((cc) == ':' || (cc) == '.' || (cc) == ' ')
