@@ -929,7 +929,7 @@ namespace qblocks {
     //---------------------------------------------------------------------------------------
     void SFString::ReplaceExact(const SFString& what, const SFString& with, char sep, const SFString& replaceables)
     {
-        SFInt32 i = findExact(what, sep, replaceables);
+        int64_t i = findExact(what, sep, replaceables);
         if (i != NOPOS)
         {
             *this = Left(i) + with + substr(i + what.length());
@@ -939,7 +939,7 @@ namespace qblocks {
     //---------------------------------------------------------------------------------------
     void SFString::ReplaceExactI(const SFString& what, const SFString& with, char sep, const SFString& replaceables)
     {
-        SFInt32 i = findExactI(what, sep, replaceables);
+        int64_t i = findExactI(what, sep, replaceables);
         if (i != NOPOS)
         {
             *this = Left(i) + with + substr(i + what.length());
@@ -960,7 +960,7 @@ namespace qblocks {
             return;
         }
         
-        SFInt32 i = findExact(what, sep, replaceables);
+        int64_t i = findExact(what, sep, replaceables);
         while (i != NOPOS)
         {
             ReplaceExact(what, with, sep, replaceables);
@@ -982,7 +982,7 @@ namespace qblocks {
             return;
         }
 
-        SFInt32 i = findExactI(what, sep, replaceables);
+        int64_t i = findExactI(what, sep, replaceables);
         while (i != NOPOS)
         {
             ReplaceExactI(what, with, sep, replaceables);
@@ -1048,7 +1048,7 @@ namespace qblocks {
             return;
         }
 
-        SFInt32 i = findI(what);
+        int64_t i = findI(what);
         while (i != NOPOS)
         {
             ReplaceI(what, with);

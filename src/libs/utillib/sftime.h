@@ -41,7 +41,7 @@ namespace qblocks {
     private:
         class SFDate {
             // Count of days since 15 October 1582 (start of Gregorian Calendar)
-            SFUint32 m_nDays;
+            uint64_t m_nDays;
 
             SFDate(void);
             SFDate(const SFDate& dt);

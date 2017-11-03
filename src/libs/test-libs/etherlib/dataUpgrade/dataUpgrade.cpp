@@ -164,7 +164,7 @@ CBaseNode *getNode(const SFString& nodeType) {
 }
 
 //--------------------------------------------------------------
-SFString baseTypeName(SFUint32 type) {
+SFString baseTypeName(uint64_t type) {
     SFString ret;
     if (type & TS_NUMERAL) ret += (" TS_NUMERAL " + asStringU(type));
     if (type & TS_STRING)  ret += (" TS_STRING "  + asStringU(type));
@@ -177,7 +177,7 @@ SFString baseTypeName(SFUint32 type) {
 }
 
 //--------------------------------------------------------------
-SFString typeName(SFUint32 type) {
+SFString typeName(uint64_t type) {
 
     if (type == T_DATE)      return "T_DATE "    + baseTypeName(type);
     if (type == T_TIME)      return "T_TIME "    + baseTypeName(type);

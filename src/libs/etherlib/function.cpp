@@ -358,7 +358,7 @@ const CBaseNode *CFunction::getObjectAt(const SFString& name, uint32_t i) const 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 //---------------------------------------------------------------------------
-SFString CFunction::getSignature(SFUint32 parts) const {
+SFString CFunction::getSignature(uint64_t parts) const {
     uint32_t cnt = inputs.getCount();
 
     SFString nm = (origName.empty() ? name : origName);
