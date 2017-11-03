@@ -9,7 +9,7 @@
 #include "options.h"
 
 extern const char *STR_FMT_BLOOMS_OUT;
-extern SFString doOneBloom(SFUint32 num, const COptions& opt);
+extern SFString doOneBloom(uint64_t num, const COptions& opt);
 //------------------------------------------------------------
 int main(int argc, const char * argv[]) {
 
@@ -29,7 +29,7 @@ int main(int argc, const char * argv[]) {
         // There can be more than one thing to do...
         if (!options.quiet)
             cout << (options.isMulti() ? "[" : "");
-        for (SFUint32 i = options.blocks.start ; i < options.blocks.stop ; i++) {
+        for (uint64_t i = options.blocks.start ; i < options.blocks.stop ; i++) {
             cout << doOneBloom(i, options);
             if (!options.quiet) {
                 if (i < options.blocks.stop-1 || options.blocks.nNums)
@@ -49,7 +49,7 @@ int main(int argc, const char * argv[]) {
             }
         }
 
-        for (SFUint32 i = 0 ; i < options.blocks.nNums ; i++) {
+        for (uint64_t i = 0 ; i < options.blocks.nNums ; i++) {
             cout << doOneBloom(options.blocks.nums[i], options);
             if (!options.quiet) {
                 if (i < options.blocks.nNums - 1)
@@ -77,7 +77,7 @@ int main(int argc, const char * argv[]) {
 }
 
 //------------------------------------------------------------
-SFString doOneBloom(SFUint32 num, const COptions& opt) {
+SFString doOneBloom(uint64_t num, const COptions& opt) {
 
     CBlock gold;
     SFString result;
