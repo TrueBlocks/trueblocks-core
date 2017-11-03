@@ -29,7 +29,7 @@ int main(int argc, const char * argv[]) {
         if (!options.quiet)
             cout << (options.isMulti() ? "[" : "");
 
-        for (SFUint32 i = options.blocks.start ; i < options.blocks.stop ; i++) {
+        for (uint64_t i = options.blocks.start ; i < options.blocks.stop ; i++) {
             if (options.isCheck) {
                 checkResults += checkOneBlock(i, options);
 
@@ -52,7 +52,7 @@ int main(int argc, const char * argv[]) {
             }
         }
 
-        for (SFUint32 i = 0 ; i < options.blocks.nNums ; i++) {
+        for (uint64_t i = 0 ; i < options.blocks.nNums ; i++) {
             if (options.isCheck) {
                 checkResults += checkOneBlock(options.blocks.nums[i], options);
 
@@ -88,7 +88,7 @@ int main(int argc, const char * argv[]) {
 }
 
 //------------------------------------------------------------
-SFString doOneBlock(SFUint32 num, const COptions& opt) {
+SFString doOneBlock(uint64_t num, const COptions& opt) {
 
     CBlock gold;
     SFString result;
@@ -136,7 +136,7 @@ SFString doOneBlock(SFUint32 num, const COptions& opt) {
 }
 
 //------------------------------------------------------------
-SFString checkOneBlock(SFUint32 num, const COptions& opt) {
+SFString checkOneBlock(uint64_t num, const COptions& opt) {
 
     if (opt.quiet == 2) {
         cout << "Checking block " + cYellow + asStringU(num) + cOff + "...       \r";

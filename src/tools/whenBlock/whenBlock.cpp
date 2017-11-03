@@ -98,9 +98,9 @@ int main(int argc, const char *argv[]) {
 
 //---------------------------------------------------------------
 static CMiniBlock *blocks = NULL;
-static SFUint32 nBlocks = 0;
-static SFUint32 below = ULONG_MAX;
-static SFUint32 above = 0;
+static uint64_t nBlocks = 0;
+static uint64_t below = ULONG_MAX;
+static uint64_t above = 0;
 #define tD(a) dateFromTimeStamp(a)
 
 //---------------------------------------------------------------
@@ -116,7 +116,7 @@ int findFunc(const void *v1, const void *v2) {
 class CBlockFinder {
 public:
     timestamp_t ts;
-    SFUint32 found;
+    uint64_t found;
     explicit CBlockFinder(timestamp_t t) : ts(t), found(0) { }
 };
 
