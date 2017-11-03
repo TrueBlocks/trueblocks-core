@@ -31,8 +31,8 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-extern SFString doOneBlock(SFUint32 num, const COptions& opt);
-extern SFString checkOneBlock(SFUint32 num, const COptions& opt);
+extern SFString doOneBlock(uint64_t num, const COptions& opt);
+extern SFString checkOneBlock(uint64_t num, const COptions& opt);
 extern SFString normalizeBlock(const SFString& inIn, bool remove, bool isByzan);
 extern SFString diffStr(const SFString& str1, const SFString& str2);
 extern void interumReport(ostream& os, blknum_t i);
