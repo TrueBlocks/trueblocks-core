@@ -18,7 +18,7 @@ public:
     bool blockOnly;
     bool wantsStats;
     SFIntArray renums;
-    SFUint32 skip;
+    uint64_t skip;
 
     COptions(void);
     ~COptions(void);
