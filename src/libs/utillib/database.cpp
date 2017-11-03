@@ -383,7 +383,7 @@ namespace qblocks {
 
         CSharedResource lock;
         if (lock.Lock(filename, asciiReadOnly, LOCK_NOWAIT)) {  // do not wait for lock - read only file
-            SFUint32 nLines = 0;
+            uint64_t nLines = 0;
 
             ASSERT(lock.isOpen());
             char buff[4096];

@@ -51,7 +51,7 @@ namespace qblocks {
             cout << "\n";
         }
 
-        if ((SFUint32)argc <= minArgs)  // the first arg is the program's name
+        if ((uint64_t)argc <= minArgs)  // the first arg is the program's name
             return usage("Not enough arguments presented.");
 
         int nChars = 0;
@@ -99,7 +99,7 @@ namespace qblocks {
         // (2) identify any --file arguments and store them for later use
         //-----------------------------------------------------------------------------------
         SFString cmdFileName = "";
-        for (SFUint32 i = 0 ; i < nArgs ; i++) {
+        for (uint64_t i = 0 ; i < nArgs ; i++) {
             SFString arg = args[i];
             if (arg.startsWith("--file:")) {
                 cmdFileName = arg.Substitute("--file:", "");
@@ -152,7 +152,7 @@ namespace qblocks {
         commandList = "";
         fromFile = false;
         if (cmdFileName.empty()) {
-            for (SFUint32 i = 0 ; i < nArgs ; i++)
+            for (uint64_t i = 0 ; i < nArgs ; i++)
                 commandList += (args[i] + " ");
             commandList += '\n';
 
@@ -330,7 +330,7 @@ namespace qblocks {
         CStringExportContext ctx;
         if (!COptionsBase::needsOption)
             ctx << "[";
-        for (SFUint32 i = 0 ; i < nParamsRef ; i++) {
+        for (uint64_t i = 0 ; i < nParamsRef ; i++) {
             if (paramsPtr[i].shortName.startsWith('~')) {
                 required += (" " + paramsPtr[i].longName.substr(1).Substitute("!", ""));
 
@@ -361,7 +361,7 @@ namespace qblocks {
     //--------------------------------------------------------------------------------
     SFString purpose(void) {
         SFString purpose;
-        for (SFUint32 i = 0 ; i < nParamsRef ; i++)
+        for (uint64_t i = 0 ; i < nParamsRef ; i++)
             if (paramsPtr[i].shortName.empty())
                 purpose += ("\n           " + paramsPtr[i].description);
 
@@ -446,7 +446,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
             ctx << "| -------: | :------- | :------- |\n";
         }
 
-        for (SFUint32 i = 0 ; i < nParamsRef ; i++) {
+        for (uint64_t i = 0 ; i < nParamsRef ; i++) {
             SFString sName = paramsPtr[i].shortName;
             SFString lName = paramsPtr[i].longName;
             SFString descr = Strip(paramsPtr[i].description, ' ');
@@ -477,7 +477,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
 
         // Check that we don't have a regular command with a single dash, which
         // should report an error in client code
-        for (SFUint32 i = 0 ; i < nParamsRef ; i++) {
+        for (uint64_t i = 0 ; i < nParamsRef ; i++) {
             if (paramsPtr[i].longName == arg) {
                 arg = "";
                 return ret;
@@ -551,7 +551,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
     bool COptionsBase::needsOption = false;
 
     //--------------------------------------------------------------------------------
-    SFUint32 verbose = false;
+    uint64_t verbose = false;
 
     //---------------------------------------------------------------------------------------------------
     SFString configPath(const SFString& part) {

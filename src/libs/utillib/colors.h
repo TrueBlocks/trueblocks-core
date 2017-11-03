@@ -76,46 +76,7 @@ namespace qblocks {
     }
 
     //-----------------------------------------------------------------------
-    inline SFUint32 barLen(SFUint32 newLen = 0) {
-        static SFUint32 _barLen = 100;
-        if (newLen)
-            _barLen = newLen;
-        return _barLen;
-    }
-
-    //-----------------------------------------------------------------------
-    inline void progressBar(SFUint32 _part, SFUint32 _whole, const SFString& _tim = "") {
-
-        double percent = 1.0;
-        if (_whole > 0)
-            percent = (_part / static_cast<double>(_whole));
-        SFUint32 len = (SFUint32)(barLen() * percent);
-
-        cout << " [" << SFString('x', len).Substitute("x", "░");
-        cout << SFString(' ', max((SFUint32)0, barLen() - len));
-        cout << "] ";
-        cout << cYellow << _part << cOff << " of " << cYellow << _whole << cOff;
-        cout << " (" << cBlue << fmtFloatp(100.*percent, 1) << cOff << "%)";
-        if (!_tim.empty())
-            cout << " " << _tim;
-        cout << "\r";
-        cout.flush();
-    }
-
-    static double pb_Value = -1.0;
-    //-----------------------------------------------------------------------
-    inline void progressBar(SFUint32 _part, SFUint32 _whole, double _tim) {
-        if (_part == 0 && _whole == 0) {
-            // reset
-            pb_Value = 0.;
-            return;
-        }
-
-        CStringExportContext ctx;
-        if (_tim > 0.) {
-            pb_Value = max(pb_Value, _tim);  // keep it monotonic
-            ctx << " in " << cYellow << pb_Value << cOff << " seconds.";
-        }
-        progressBar(_part, _whole, ctx.str);
-    }
+    extern void progressBar(uint64_t _part, uint64_t _whole, const SFString& msgs);
+    extern void progressBar(uint64_t _part, uint64_t _whole, double _tim, const SFString& msgs);
+    extern uint64_t barLen(uint64_t newLen = 0);
 }  // namespace qblocks

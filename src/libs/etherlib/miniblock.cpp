@@ -194,8 +194,8 @@ namespace qblocks {
 
         //--------------------------------------------------------------------------
         // See if we can allocation enough space for the mini-transaction database
-        SFUint32 fs = fileSize(miniTransCache);
-        SFUint32 ms = sizeof(CMiniTrans);
+        uint64_t fs = fileSize(miniTransCache);
+        uint64_t ms = sizeof(CMiniTrans);
         nTrans   = fs / ms;
 #endif
 

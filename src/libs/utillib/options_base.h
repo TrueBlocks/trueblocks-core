@@ -34,7 +34,7 @@ namespace qblocks {
 
         SFString commandList;
         bool     fromFile;
-        SFUint32 minArgs;
+        uint64_t minArgs;
         CRuntimeClass *sorts[5];
 
         COptionsBase(void);
@@ -93,7 +93,7 @@ namespace qblocks {
     extern SFString expandOption(SFString& arg);
 
     //--------------------------------------------------------------------------------
-    extern SFUint32 verbose;
+    extern uint64_t verbose;
 
     //--------------------------------------------------------------------------------
     extern void     editFile  (const SFString& fileName);

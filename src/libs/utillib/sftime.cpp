@@ -83,7 +83,7 @@ namespace qblocks {
     }
 
     //----------------------------------------------------------------------------------------------------
-    SFString toMonthName(SFUint32 mon, bool full) {
+    SFString toMonthName(uint64_t mon, bool full) {
         SFString months[] = {
             "", "January", "February", "March", "April", "May", "June",
             "July", "August", "September", "October", "November", "December", };
@@ -91,7 +91,7 @@ namespace qblocks {
     }
 
     //----------------------------------------------------------------------------------------------------
-    SFString toDayName(SFUint32 day, bool full) {
+    SFString toDayName(uint64_t day, bool full) {
         SFString days[] = { "", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", };
         return (full ? days[day] : days[day].Left(3));
     }
@@ -814,7 +814,7 @@ namespace qblocks {
 
     //-------------------------------------------------------------------------
     bool SFTime::SFDate::IsValid() const {
-        return (m_nDays != (SFUint32)LONG_MIN);
+        return (m_nDays != (uint64_t)LONG_MIN);
     }
 
     //-------------------------------------------------------------------------
@@ -875,7 +875,7 @@ namespace qblocks {
 
     //-------------------------------------------------------------------------
     SFTime::SFDate::SFDate(void) {
-        m_nDays = (SFUint32)LONG_MIN;
+        m_nDays = (uint64_t)LONG_MIN;
     }
 
     //-------------------------------------------------------------------------
@@ -891,7 +891,7 @@ namespace qblocks {
     //-------------------------------------------------------------------------
     SFTime::SFDate::SFDate(uint32_t y, uint32_t m, uint32_t weekInMonth, uint32_t dayOfWeek) {
         // assume it fails
-        m_nDays = (SFUint32)LONG_MIN;
+        m_nDays = (uint64_t)LONG_MIN;
 
         // assume any year is OK
         if ((m >= 1 && m <= 12) && (weekInMonth >= 1 && weekInMonth <= 4) && (dayOfWeek >= 1 && dayOfWeek <= 7)) {
@@ -907,9 +907,9 @@ namespace qblocks {
     //-------------------------------------------------------------------------
     SFTime::SFDate::SFDate(int64_t days) {
         if (days > 2146905911L)  // Largest valid GD N
-            m_nDays = (SFUint32)LONG_MIN;
+            m_nDays = (uint64_t)LONG_MIN;
         else
-            m_nDays = (SFUint32)(((int64_t)days) + 2000000000L);
+            m_nDays = (uint64_t)(((int64_t)days) + 2000000000L);
     }
 
     //-------------------------------------------------------------------------
@@ -939,7 +939,7 @@ namespace qblocks {
     // as entered in a masked edit field or from a parsed report.
     //-------------------------------------------------------------------------
     SFTime::SFDate::SFDate(const SFString& dateStr, const SFString& fmtStr) {
-        m_nDays  = (SFUint32)LONG_MIN;
+        m_nDays  = (uint64_t)LONG_MIN;
         if (fmtStr.length() != 5) {
             *this = SFDate(Now().GetYear(), Now().GetMonth(), Now().GetDay());
             return;
@@ -1002,16 +1002,16 @@ namespace qblocks {
 
     //-------------------------------------------------------------------------
     SFTime::SFDate& SFTime::SFDate::setValues(uint32_t y, uint32_t m, uint32_t d) {
-        m_nDays = (SFUint32)LONG_MIN;
+        m_nDays = (uint64_t)LONG_MIN;
         if (m >= JANUARY && m <= DECEMBER && d <= DaysInMonth(y, m)) {
             // The following algorithm has been taken from from an article in
             // the March 1993 issue of the Windows / Dos Developers Journal.
             m_nDays = (y-1)
                         * 365
-                        + (SFUint32)lfloor((int32_t)(y-1), 4);
+                        + (uint64_t)lfloor((int32_t)(y-1), 4);
 
-            m_nDays += (SFUint32)lfloor((int32_t)(y-1), 400) -
-                        (SFUint32)lfloor((int32_t)(y-1), 100);
+            m_nDays += (uint64_t)lfloor((int32_t)(y-1), 400) -
+                        (uint64_t)lfloor((int32_t)(y-1), 100);
 
             --m;
             while (m) {

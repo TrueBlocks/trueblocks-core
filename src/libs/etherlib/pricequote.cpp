@@ -240,7 +240,7 @@ SFString priceDatabasePath(void) {
 }
 
 //---------------------------------------------------------------------------
-bool loadPriceData(CPriceQuoteArray& quotes, bool freshen, SFString& message, SFUint32 step) {
+bool loadPriceData(CPriceQuoteArray& quotes, bool freshen, SFString& message, uint64_t step) {
 
     SFString cacheFile = priceDatabasePath();
 

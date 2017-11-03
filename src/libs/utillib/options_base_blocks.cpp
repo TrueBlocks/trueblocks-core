@@ -111,9 +111,9 @@ namespace qblocks {
     //--------------------------------------------------------------------------------
     SFString COptionsBlockList::toString(void) const {
         SFString ret;
-        for (SFUint32 i = start ; i < stop ; i++)
+        for (uint64_t i = start ; i < stop ; i++)
             ret += (asStringU(i) + "|");
-        for (SFUint32 i = 0 ; i < nNums ; i++)
+        for (uint64_t i = 0 ; i < nNums ; i++)
             ret += (asStringU(nums[i]) + "|");
         return ret;
     }

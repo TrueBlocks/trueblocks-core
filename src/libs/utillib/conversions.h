@@ -89,7 +89,7 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------
-    inline SFString asStringU(SFUint32 i) {
+    inline SFString asStringU(uint64_t i) {
         ostringstream os;
         os << i;
         return os.str().c_str();
@@ -189,10 +189,10 @@ namespace qblocks {
         SFString decimals = nextTokenClear(exponent,'e');
         SFString num = nextTokenClear(decimals,'.');
         long nD = (long)decimals.length();
-        SFUint32 e = toLongU(exponent);
+        uint64_t e = toLongU(exponent);
         SFUintBN ee = 1;
-        SFUint32 power = e - (SFUint32)nD;
-        for (SFUint32 i=0;i<power;i++)
+        uint64_t power = e - (uint64_t)nD;
+        for (uint64_t i=0;i<power;i++)
             ee *= 10;
         num += decimals;
         return str2BigUint(num) * ee;
@@ -206,7 +206,7 @@ namespace qblocks {
     }
 
     //-------------------------------------------------------------------------
-    inline SFUintBN canonicalWei(SFUint32 _value)
+    inline SFUintBN canonicalWei(uint64_t _value)
     {
         return SFUintBN(_value);
     }
