@@ -10,8 +10,8 @@
 
 //-----------------------------------------------------------------------
 extern void addDefaultFuncs(CFunctionArray& funcs);
-extern SFString getAssign(const CParameter *p, SFUint32 which);
-extern SFString getEventAssign(const CParameter *p, SFUint32 which, SFUint32 prevIdxs);
+extern SFString getAssign(const CParameter *p, uint64_t which);
+extern SFString getEventAssign(const CParameter *p, uint64_t which, uint64_t prevIdxs);
 
 //-----------------------------------------------------------------------
 extern const char* STR_FACTORY1;
@@ -244,7 +244,7 @@ int main(int argc, const char *argv[]) {
                             }
                         }
                         SFString fields, assigns1, assigns2, items1;
-                        SFUint32 nIndexed = 0;
+                        uint64_t nIndexed = 0;
                         for (uint32_t j = 0 ; j < func->inputs.getCount() ; j++) {
                             fields   += func->inputs[j].Format("[{TYPE}][ {NAME}]|");
                             assigns1 += func->inputs[j].Format(getAssign(&func->inputs[j], j));
@@ -426,7 +426,7 @@ int main(int argc, const char *argv[]) {
 }
 
 //-----------------------------------------------------------------------
-SFString getAssign(const CParameter *p, SFUint32 which) {
+SFString getAssign(const CParameter *p, uint64_t which) {
 
     SFString ass;
     SFString type = p->Format("[{TYPE}]");
@@ -456,7 +456,7 @@ SFString getAssign(const CParameter *p, SFUint32 which) {
 }
 
 //-----------------------------------------------------------------------
-SFString getEventAssign(const CParameter *p, SFUint32 which, SFUint32 nIndexed) {
+SFString getEventAssign(const CParameter *p, uint64_t which, uint64_t nIndexed) {
     SFString type = p->Format("[{TYPE}]"), ass;
     if (type == "uint" || type == "uint256") { ass = "toWei([{VAL}]);";
     } else if (type.Contains("gas")) { ass = "toGas([{VAL}]);";

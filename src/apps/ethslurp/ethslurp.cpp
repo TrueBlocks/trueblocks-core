@@ -336,7 +336,7 @@ bool CSlurperApp::Filter(COptions& options, SFString& message) {
             trans->m_showing = isVisible;
 
         } else if (options.firstBlock2Read != 0 || options.lastBlock2Read != ((uint32_t)-1)) {
-            SFUint32 bN = trans->blockNumber;
+            uint64_t bN = trans->blockNumber;
             bool isVisible = (bN >= options.firstBlock2Read && bN <= options.lastBlock2Read);
             trans->m_showing = isVisible;
         }

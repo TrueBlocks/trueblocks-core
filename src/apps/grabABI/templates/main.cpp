@@ -26,7 +26,7 @@ int main(int argc, const char *argv[]) {
     if (argc < 2)
         verbose = true;
 
-    SFUint32 topOfChain = getLatestBloomFromCache();
+    uint64_t topOfChain = getLatestBloomFromCache();
 
     // Parse command line, allowing for command files
     CVisitor visitor;
@@ -55,6 +55,7 @@ int main(int argc, const char *argv[]) {
         visitor.opts.single_on     = toml.getConfigBool("display", "single", false) || visitor.opts.single_on;
         visitor.opts.kBlock        = visitor.opts.kBlock;
         visitor.opts.mode          = visitor.opts.mode;
+        visitor.opts.monitorName   = toml.getConfigStr("settings", "name", "") + " ";
 
         // Showing the cache file (if told to...)
         SFString cacheFileName = "./cache/" + visitor.watches[0].address + ".acct.bin";
@@ -70,7 +71,7 @@ int main(int argc, const char *argv[]) {
         // Figure out which block to start on. Use earliest block from the watches. Note that
         // 'displayFromCache' may modify this to lastest visited block
         bool upToDate = false;
-        SFUint32 blockNum = visitor.blockStats.minWatchBlock-1;
+        uint64_t blockNum = visitor.blockStats.minWatchBlock-1;
         if (visitor.opts.kBlock) {  // we're not starting at the beginning
             blockNum = visitor.opts.kBlock;
             for (uint32_t i = 0 ; i < visitor.watches.getCount() ; i++) {
@@ -103,14 +104,13 @@ int main(int argc, const char *argv[]) {
         // Freshening the cache (if the user tells us to...)
         if (visitor.opts.mode.Contains("freshen")) {
 
-            SFUint32 lastVisit  = toLongU(asciiFileToString("./cache/lastBlock.txt"));
+            uint64_t lastVisit  = toLongU(asciiFileToString("./cache/lastBlock.txt"));
             blockNum = max(blockNum, lastVisit) + 1;
 
             visitor.blockStats.lastBlock  = min(topOfChain, visitor.blockStats.maxWatchBlock);
             visitor.blockStats.firstBlock = min(blockNum,   visitor.blockStats.lastBlock);
             visitor.blockStats.nBlocks    = visitor.blockStats.lastBlock - visitor.blockStats.firstBlock;
-            SFString systemName = toml.getConfigStr("settings", "name", "") + " ";
-            cerr << "Freshening " << systemName << "from " << visitor.blockStats.firstBlock << " to " << visitor.blockStats.lastBlock << " (" << visitor.blockStats.nBlocks << " blocks)\r\n";
+            cerr << "Freshening " << visitor.opts.monitorName << "from " << visitor.blockStats.firstBlock << " to " << visitor.blockStats.lastBlock << " (" << visitor.blockStats.nBlocks << " blocks)\r\n";
             cerr.flush();
 
             if (!upToDate) {  // we're not starting at the beginning
@@ -129,7 +129,7 @@ int main(int argc, const char *argv[]) {
 
             if (visitor.transStats.nFreshened) {
                 SFTime dt = dateFromTimeStamp(visitor.blockStats.prevBlock.timestamp);
-                progressBar(visitor.blockStats.nBlocks, visitor.blockStats.nBlocks, dt.Format(FMT_JSON) + " (" + asStringU(topOfChain) + ")");
+                progressBar(visitor.blockStats.nBlocks, visitor.blockStats.nBlocks, visitor.opts.monitorName+"|"+dt.Format(FMT_JSON) + " (" + asStringU(topOfChain) + ")");
                 cout << "\r\n";
             }
         }
