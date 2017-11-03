@@ -253,7 +253,7 @@ bool queryBlock(CBlock& block, const SFString& numIn, bool needTrace, bool byHas
     if (numIn=="latest")
         return queryBlock(block, asStringU(getLatestBlockFromClient()), needTrace, false);
 
-    SFUint32 num = toLongU(numIn);
+    uint64_t num = toLongU(numIn);
     if ((getSource().Contains("binary") || getSource().Contains("nonemp")) && fileSize(getBinaryFilename1(num))>0) {
         UNHIDE_FIELD(CTransaction, "receipt");
         return readOneBlock_fromBinary(block, getBinaryFilename1(num));
@@ -311,7 +311,7 @@ bool queryBlock(CBlock& block, const SFString& numIn, bool needTrace, bool byHas
 }
 
 //-------------------------------------------------------------------------
-bool getBlock(CBlock& block, SFUint32 numIn)
+bool getBlock(CBlock& block, uint64_t numIn)
 {
     SFString save = getSource();
     if (getSource() == "fastest")
@@ -338,7 +338,7 @@ bool queryRawBlock(SFString& block, const SFString& numIn, bool needTrace, bool 
 }
 
 //-------------------------------------------------------------------------
-SFString hexxy(SFUint32 x)
+SFString hexxy(uint64_t x)
 {
     SFUintBN bn = x;
     return toLower(SFString(to_hex(bn).c_str()));
@@ -362,7 +362,7 @@ bool queryRawTransaction(SFString& results, const SFHash& txHash) {
 }
 
 //-------------------------------------------------------------------------
-bool queryRawLogs(SFString& results, const SFAddress& addr, SFUint32 fromBlock, SFUint32 toBlock)
+bool queryRawLogs(SFString& results, const SFAddress& addr, uint64_t fromBlock, uint64_t toBlock)
 {
     SFString data = "[{\"fromBlock\":\"0x[START]\",\"toBlock\":\"0x[STOP]\", \"address\": \"[ADDR]\"}]";
     data.Replace("[START]", hexxy(fromBlock));
@@ -389,7 +389,7 @@ bool getTransaction(CTransaction& trans, const SFString& hashIn)
 }
 
 //-------------------------------------------------------------------------
-bool getTransaction(CTransaction& trans, const SFString& hashIn, SFUint32 transID)
+bool getTransaction(CTransaction& trans, const SFString& hashIn, uint64_t transID)
 {
     SFUintBN t(transID);
     SFString ts = to_hex(t).c_str();
@@ -399,7 +399,7 @@ bool getTransaction(CTransaction& trans, const SFString& hashIn, SFUint32 transI
 }
 
 //-------------------------------------------------------------------------
-bool getTransaction(CTransaction& trans, blknum_t blockNum, SFUint32 transID)
+bool getTransaction(CTransaction& trans, blknum_t blockNum, uint64_t transID)
 {
     SFUintBN h(blockNum);
     SFUintBN t(transID);
@@ -698,7 +698,7 @@ SFString getStorageRoot(void) {
 }
 
 //-------------------------------------------------------------------------
-static SFString getFilename_local(SFUint32 numIn, bool asPath, bool asJson)
+static SFString getFilename_local(uint64_t numIn, bool asPath, bool asJson)
 {
     if (storagePath.empty())
     {
@@ -718,13 +718,13 @@ static SFString getFilename_local(SFUint32 numIn, bool asPath, bool asJson)
 }
 
 //-------------------------------------------------------------------------
-SFString getJsonFilename1(SFUint32 num)
+SFString getJsonFilename1(uint64_t num)
 {
     return getFilename_local(num, false, true);
 }
 
 //-------------------------------------------------------------------------
-SFString getBinaryFilename1(SFUint32 num)
+SFString getBinaryFilename1(uint64_t num)
 {
     SFString ret = getFilename_local(num, false, false);
     ret.Replace("/00/",  "/blocks/00/"); // can't use Substitute because it will change them all
@@ -732,13 +732,13 @@ SFString getBinaryFilename1(SFUint32 num)
 }
 
 //-------------------------------------------------------------------------
-SFString getJsonPath1(SFUint32 num)
+SFString getJsonPath1(uint64_t num)
 {
     return getFilename_local(num, true, true);
 }
 
 //-------------------------------------------------------------------------
-SFString getBinaryPath1(SFUint32 num)
+SFString getBinaryPath1(uint64_t num)
 {
     SFString ret = getFilename_local(num, true, false);
     ret.Replace("/00/",  "/blocks/00/"); // can't use Substitute because it will change them all
@@ -746,13 +746,13 @@ SFString getBinaryPath1(SFUint32 num)
 }
 
 //-------------------------------------------------------------------------
-bool forEveryBlockOnDisc(BLOCKVISITFUNC func, void *data, SFUint32 start, SFUint32 count, SFUint32 skip)
+bool forEveryBlockOnDisc(BLOCKVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip)
 {
     if (!func)
         return false;
 
     // Read every block from number start to start+count
-    for (SFUint32 i = start ; i < start + count ; i = i + skip)
+    for (uint64_t i = start ; i < start + count ; i = i + skip)
     {
         CBlock block;
         getBlock(block,i);
@@ -763,7 +763,7 @@ bool forEveryBlockOnDisc(BLOCKVISITFUNC func, void *data, SFUint32 start, SFUint
 }
 
 //-------------------------------------------------------------------------
-bool forEveryEmptyBlockOnDisc(BLOCKVISITFUNC func, void *data, SFUint32 start, SFUint32 count, SFUint32 skip)
+bool forEveryEmptyBlockOnDisc(BLOCKVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip)
 {
     if (!func)
         return false;
@@ -779,17 +779,17 @@ bool forEveryEmptyBlockOnDisc(BLOCKVISITFUNC func, void *data, SFUint32 start, S
     }
     ASSERT(fullBlocks.isOpen());
 
-    SFUint32 nItems = fileSize(fullBlockIndex) / sizeof(SFUint32) + 1;  // we need an extra one for item '0'
-    SFUint32 *contents = new SFUint32[nItems+2];  // extra space
+    uint64_t nItems = fileSize(fullBlockIndex) / sizeof(uint64_t) + 1;  // we need an extra one for item '0'
+    uint64_t *contents = new uint64_t[nItems+2];  // extra space
     if (contents)
     {
         // read the entire full block index
-        fullBlocks.Read(&contents[0], sizeof(SFUint32), nItems-1);  // one less since we asked for an extra one
+        fullBlocks.Read(&contents[0], sizeof(uint64_t), nItems-1);  // one less since we asked for an extra one
         fullBlocks.Release();  // release it since we don't need it any longer
 
         contents[0] = 0;  // the starting point (needed because we are build the empty list from the non-empty list
-        SFUint32 cnt = start;
-        for (SFUint32 i = 1 ; i < nItems ; i = i + skip) // first one (at index '0') is assumed to be the '0' block
+        uint64_t cnt = start;
+        for (uint64_t i = 1 ; i < nItems ; i = i + skip) // first one (at index '0') is assumed to be the '0' block
         {
             while (cnt<contents[i])
             {
@@ -814,7 +814,7 @@ bool forEveryEmptyBlockOnDisc(BLOCKVISITFUNC func, void *data, SFUint32 start, S
 }
 
 //-------------------------------------------------------------------------
-bool forEveryBlock(BLOCKVISITFUNC func, void *data, SFUint32 start, SFUint32 count, SFUint32 skip) {
+bool forEveryBlock(BLOCKVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip) {
     // Here we simply scan the numbers and either read from disc or query the node
     if (!func)
         return false;
@@ -822,7 +822,7 @@ bool forEveryBlock(BLOCKVISITFUNC func, void *data, SFUint32 start, SFUint32 cou
     SFString save = getSource();
     setSource("fastest");
 
-    for (SFUint32 i = start ; i < start + count - 1 ; i = i + skip) {
+    for (uint64_t i = start ; i < start + count - 1 ; i = i + skip) {
         SFString fileName = getBinaryFilename1(i);
         CBlock block;
         if (fileExists(fileName))
@@ -885,7 +885,7 @@ bool forEveryNonEmptyBlockOnDisc(BLOCKVISITFUNC func, void *data, uint64_t start
 }
 
 //-------------------------------------------------------------------------
-SFUint32 getLatestBlockFromClient(void)
+uint64_t getLatestBlockFromClient(void)
 {
     CBlock block;
     getObjectViaRPC(block, "eth_getBlockByNumber", "[\"latest\",true]");
@@ -893,14 +893,14 @@ SFUint32 getLatestBlockFromClient(void)
 }
 
 //--------------------------------------------------------------------------
-SFUint32 getLatestBloomFromCache(void) {
+uint64_t getLatestBloomFromCache(void) {
     return toLongU(asciiFileToString(bloomFolder + "lastBloom.txt"));
 }
 
 //--------------------------------------------------------------------------
-SFUint32 getLatestBlockFromCache(CSharedResource *res) {
+uint64_t getLatestBlockFromCache(CSharedResource *res) {
 
-    SFUint32 ret = 0;
+    uint64_t ret = 0;
 
     CSharedResource fullBlocks; // Don't move--need the scope
     CSharedResource *pRes = res;
@@ -916,7 +916,7 @@ SFUint32 getLatestBlockFromCache(CSharedResource *res) {
     }
     ASSERT(pRes->isOpen());
 
-    pRes->Seek( (-1 * (long)sizeof(SFUint32)), SEEK_END);
+    pRes->Seek( (-1 * (long)sizeof(uint64_t)), SEEK_END);
     pRes->Read(ret);
     if (pRes != res)
         pRes->Release();
@@ -924,7 +924,7 @@ SFUint32 getLatestBlockFromCache(CSharedResource *res) {
 }
 
 //--------------------------------------------------------------------------
-bool getLatestBlocks(SFUint32& cache, SFUint32& client, CSharedResource *res)
+bool getLatestBlocks(uint64_t& cache, uint64_t& client, CSharedResource *res)
 {
     client = getLatestBlockFromClient();
     cache  = getLatestBlockFromCache(res);
@@ -949,7 +949,7 @@ bool forEveryTransaction(TRANSVISITFUNC func, void *data, const SFString& trans_
         bool hasDot = item.Contains(".");
 
         SFString hash = nextTokenClear(item, '.');
-        SFUint32 txID = toLongU(item);
+        uint64_t txID = toLongU(item);
 
         CTransaction trans;
         if (hash.startsWith("0x")) {
@@ -975,8 +975,8 @@ bool forEveryTransaction(TRANSVISITFUNC func, void *data, const SFString& trans_
 }
 
 //-------------------------------------------------------------------------
-bool forEveryBloomFile(FILEVISITOR func, void *data, SFUint32 start, SFUint32 count, SFUint32 skip) {
-    if (start == 0 || count == (SFUint32)-1) { // visit everything since we're given the default
+bool forEveryBloomFile(FILEVISITOR func, void *data, uint64_t start, uint64_t count, uint64_t skip) {
+    if (start == 0 || count == (uint64_t)-1) { // visit everything since we're given the default
         forEveryFileInFolder(bloomFolder, func, data);
         return true;
     }

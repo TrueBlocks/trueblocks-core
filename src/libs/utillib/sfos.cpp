@@ -305,13 +305,13 @@ extern SFString binaryFileToString(const SFString& filename);
     }
 
     //------------------------------------------------------------------
-    SFUint32 fileSize(const SFString& filename) {
+    uint64_t fileSize(const SFString& filename) {
         if (!fileExists(filename))
             return 0;
 
         struct stat statBuf;
         stat((const char *)filename, &statBuf);
-        return (SFUint32)statBuf.st_size;
+        return (uint64_t)statBuf.st_size;
     }
 } // namespace qblocks
 

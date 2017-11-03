@@ -128,7 +128,7 @@ extern SFArchive& operator>>(SFArchive& archive, CBalHistory& bal);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-inline SFString toRecordID(const SFString& addr, blknum_t bn, SFUint32 tn) {
+inline SFString toRecordID(const SFString& addr, blknum_t bn, uint64_t tn) {
     return addr + "_" + padNum9(bn) + "_" + padNum5(tn);
 }
 // EXISTING_CODE
