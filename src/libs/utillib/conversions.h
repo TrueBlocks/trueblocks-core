@@ -259,7 +259,7 @@ namespace qblocks {
 
     //--------------------------------------------------------------------------------------------------------------
     extern SFTime      dateFromTimeStamp(timestamp_t tsIn);
-    extern SFTime      snagDate(const SFString& str, int dir = 0);  // -1 BOD, 0 MIDDAY, 1 EOD
+    extern SFTime      parseDate(const SFString& str, int dir = 0);  // -1 BOD, 0 MIDDAY, 1 EOD
 
     extern timestamp_t toTimestamp(const SFTime&   timeIn);
     extern timestamp_t toTimestamp(const SFString& timeIn);

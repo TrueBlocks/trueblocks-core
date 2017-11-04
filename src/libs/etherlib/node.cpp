@@ -1013,7 +1013,8 @@ SFString blockCachePath(const SFString& _part) {
         }
         blockCache = folder.getFullPath();
     }
-    ASSERT(blockCache.endsWith("/"));
+    if (!blockCache.endsWith("/"))
+        blockCache += "/";
     return blockCache + _part;
 }
 

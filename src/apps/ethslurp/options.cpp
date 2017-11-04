@@ -133,8 +133,8 @@ bool COptions::parseArguments(SFString& command) {
                 return usage("Option -d: Invalid date format for endDate. "
                                 "Format must be either yyyymmdd or yyyymmddhhmmss.");
 
-            firstDate = snagDate(earlyStr, -1);
-            lastDate = snagDate(lateStr, 1);
+            firstDate = parseDate(earlyStr, -1);
+            lastDate = parseDate(lateStr, 1);
             if (lastDate == earliestDate)  // the default
                 lastDate = latestDate;
 

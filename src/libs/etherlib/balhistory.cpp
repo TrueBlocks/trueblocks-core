@@ -63,7 +63,7 @@ bool CBalHistory::setValueByName(const SFString& fieldName, const SFString& fiel
             if ( fieldName % "recordID" ) { recordID = fieldValue; return true; }
             break;
         case 't':
-            if ( fieldName % "txDate" ) { txDate = snagDate(fieldValue); return true; }
+            if ( fieldName % "txDate" ) { txDate = parseDate(fieldValue); return true; }
             break;
         default:
             break;

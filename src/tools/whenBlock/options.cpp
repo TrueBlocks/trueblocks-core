@@ -19,7 +19,7 @@ CParams params[] = {
 uint32_t nParams = sizeof(params) / sizeof(CParams);
 
 extern int sortByBlockNum(const void *v1, const void *v2);
-extern SFTime parseDate(const SFString& strIn);
+extern SFTime grabDate(const SFString& strIn);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(SFString& command) {
 
@@ -54,7 +54,7 @@ bool COptions::parseArguments(SFString& command) {
             SFString str = arg.Substitute(" ", ";").Substitute("-", ";").Substitute("_", ";")
                                 .Substitute(":", ";").Substitute(";UTC", "");
             str = nextTokenClear(str,'.');
-            SFTime date = parseDate(str);
+            SFTime date = grabDate(str);
             if (date == earliestDate)
                 return usage("Invalid date: '" + orig + "'. Quitting...");
             if (date > Now())
@@ -155,7 +155,7 @@ SFString COptions::postProcess(const SFString& which, const SFString& str) const
 }
 
 //--------------------------------------------------------------------------------
-SFTime parseDate(const SFString& strIn) {
+SFTime grabDate(const SFString& strIn) {
 
     if (strIn.empty()) {
         return earliestDate;

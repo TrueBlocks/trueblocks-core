@@ -381,7 +381,7 @@ bool CAbi::loadABI(const SFString& addr) {
 
         SFString abis1;
 
-        // Get the encodings (question: does this use 'ethabi'? It shouldn't
+        // Get the encodings
         for (uint32_t i=0;i<abiByName.getCount();i++) {
             getEncoding(abiFilename, addr, abiByName[i]);
             abis1 += abiByName[i].Format("[{NAME}]|[{ENCODING}]\n");
