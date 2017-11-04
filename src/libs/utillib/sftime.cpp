@@ -1182,7 +1182,7 @@ namespace qblocks {
     }
 
     //---------------------------------------------------------------------------------------
-    SFTime snagDate(const SFString& strIn, int dir) {
+    SFTime parseDate(const SFString& strIn, int dir) {
         if (strIn.empty())
             return earliestDate;
 
