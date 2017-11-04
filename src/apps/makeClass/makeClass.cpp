@@ -589,7 +589,7 @@ SFString getCaseSetCode(const SFString& fieldCase) {
                         caseCode += ptrCase;
 
                     } else if (type == "time") {
-                        caseCode += " { " + field + " = snagDate(fieldValue); return true; }";
+                        caseCode += " { " + field + " = parseDate(fieldValue); return true; }";
 
                     } else if (type == "bbool" || type == "bool") {
                         caseCode +=  " { " + field + " = toBool(fieldValue); return true; }";
