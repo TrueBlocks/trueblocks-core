@@ -1,3 +1,6 @@
+[settings]
+[{NAME}]
+
 [display]
 accounting = false
 debug = false
