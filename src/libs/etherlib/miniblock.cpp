@@ -253,6 +253,7 @@ namespace qblocks {
             theCache->Clear();
         theCache = NULL;
     }
+
     //--------------------------------------------------------------------------
     CInMemoryCache *getTheCache(void) {
         if (!theCache)
@@ -260,6 +261,17 @@ namespace qblocks {
         return theCache;
     }
 
+    //--------------------------------------------------------------------------
+    class CCacheCleanup {
+    public:
+         CCacheCleanup(void) {}
+        ~CCacheCleanup(void) {
+            clearInMemoryCache();
+        }
+    };
+    // When this goes out of scope (i.e. the program quits) it cleans up the cache
+    static CCacheCleanup cleanup;
+   
     //--------------------------------------------------------------------------
     bool forEveryMiniBlockInMemory(MINIBLOCKVISITFUNC func, void *data, blknum_t start, blknum_t count) {
 
