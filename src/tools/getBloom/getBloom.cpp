@@ -26,46 +26,32 @@ int main(int argc, const char * argv[]) {
         if (!options.parseArguments(command))
             return 0;
 
-        // There can be more than one thing to do...
         if (!options.quiet)
             cout << (options.isMulti() ? "[" : "");
-        for (uint64_t i = options.blocks.start ; i < options.blocks.stop ; i++) {
-            cout << doOneBloom(i, options);
-            if (!options.quiet) {
-                if (i < options.blocks.stop-1 || options.blocks.nNums)
-                    cout << ",";
-                cout << "\n";
-                if (options.isCheck) {
-                    // Not implemented
+
+        int cnt=0;
+        SFString list = options.getBlockNumList();
+        while (!list.empty()) {
+            blknum_t bn = toLongU(nextTokenClear(list, '|'));
+            SFString result = doOneBloom(bn, options);
+            if (options.isCheck) {
+                // Not implemented
+            } else {
+                if (!options.quiet) {
+                    cout << result;
+                    if (!list.empty())
+                        cout << ",";
+                    cout << "\n";
+
+                } else if (!(cnt%150)) {
+                    cout << ".";
+                    cout.flush();
+
+                } else if (!(cnt%1000)) {
+                    cout << "+";
+                    cout.flush();
                 }
-
-            } else if (!(i%150)) {
-                cout << ".";
-                cout.flush();
-
-            } else if (!(i%1000)) {
-                cout << "+";
-                cout.flush();
-            }
-        }
-
-        for (uint64_t i = 0 ; i < options.blocks.nNums ; i++) {
-            cout << doOneBloom(options.blocks.nums[i], options);
-            if (!options.quiet) {
-                if (i < options.blocks.nNums - 1)
-                    cout << ",";
-                cout << "\n";
-                if (options.isCheck) {
-                    // Not implemented
-                }
-
-            } else if (!(i%150)) {
-                cout << ".";
-                cout.flush();
-
-            } else if (!(i%1000)) {
-                cout << "+";
-                cout.flush();
+                cnt++;
             }
         }
 

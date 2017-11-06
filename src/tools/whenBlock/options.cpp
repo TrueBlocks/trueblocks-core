@@ -97,7 +97,7 @@ bool COptions::parseArguments(SFString& command) {
                 } else if (!ret.empty()) {
                     return usage(ret);
                 }
-                SFString blockList = blocks.toString();
+                SFString blockList = getBlockNumList();
                 blocks.Init();
                 while (!blockList.empty()) {
                     requests[requests.getCount()] = "block:" + nextTokenClear(blockList,'|');

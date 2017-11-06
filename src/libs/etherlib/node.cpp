@@ -242,36 +242,42 @@ bool getObjectViaRPC(CBaseNode &node, const SFString& method, const SFString& pa
 static bool no_tracing=false;
 void setNoTracing(bool val) { no_tracing = val; }
 //-------------------------------------------------------------------------
-bool queryBlock(CBlock& block, const SFString& numIn, bool needTrace, bool byHash) {
+bool queryBlock(CBlock& block, const SFString& datIn, bool needTrace, bool byHash) {
     uint32_t unused = 0;
-    return queryBlock(block, numIn, needTrace, byHash, unused);
+    return queryBlock(block, datIn, needTrace, byHash, unused);
 }
 
 //-------------------------------------------------------------------------
-bool queryBlock(CBlock& block, const SFString& numIn, bool needTrace, bool byHash, uint32_t& nTraces) {
+bool queryBlock(CBlock& block, const SFString& datIn, bool needTrace, bool byHash, uint32_t& nTraces) {
 
-    if (numIn=="latest")
+    if (datIn == "latest")
         return queryBlock(block, asStringU(getLatestBlockFromClient()), needTrace, false);
 
-    uint64_t num = toLongU(numIn);
-    if ((getSource().Contains("binary") || getSource().Contains("nonemp")) && fileSize(getBinaryFilename1(num))>0) {
-        UNHIDE_FIELD(CTransaction, "receipt");
-        return readOneBlock_fromBinary(block, getBinaryFilename1(num));
+    if (isHash(datIn)) {
+        HIDE_FIELD(CTransaction, "receipt");
+        getObjectViaRPC(block, "eth_getBlockByHash", "["+quote(datIn)+",true]");
 
-    } else if (getSource().Contains("Only")) {
-        return false;
+    } else {
+        uint64_t num = toLongU(datIn);
+        if ((getSource().Contains("binary") || getSource().Contains("nonemp")) && fileSize(getBinaryFilename1(num))>0) {
+            UNHIDE_FIELD(CTransaction, "receipt");
+            return readOneBlock_fromBinary(block, getBinaryFilename1(num));
 
+        } else if (getSource().Contains("Only")) {
+            return false;
+
+        }
+
+        if (getSource() == "json" && fileSize(getJsonFilename1(num))>0)
+        {
+            UNHIDE_FIELD(CTransaction, "receipt");
+            return readOneBlock_fromJson(block, getJsonFilename1(num));
+
+        }
+
+        HIDE_FIELD(CTransaction, "receipt");
+        getObjectViaRPC(block, "eth_getBlockByNumber", "["+quote(asStringU(num))+",true]");
     }
-
-    if (getSource() == "json" && fileSize(getJsonFilename1(num))>0)
-    {
-        UNHIDE_FIELD(CTransaction, "receipt");
-        return readOneBlock_fromJson(block, getJsonFilename1(num));
-
-    }
-
-    HIDE_FIELD(CTransaction, "receipt");
-    getObjectViaRPC(block, "eth_getBlockByNumber", "["+quote(asStringU(num))+",true]");
 
     // If there are no transactions, we're done
     if (!block.transactions.getCount() || no_tracing)
@@ -293,7 +299,7 @@ bool queryBlock(CBlock& block, const SFString& numIn, bool needTrace, bool byHas
         CReceipt receipt;
         getReceipt(receipt, trans->hash);
         trans->receipt = receipt; // deep copy
-        if (num >= byzantiumBlock) {
+        if (block.blockNumber >= byzantiumBlock) {
             trans->isError = (receipt.status == 0);
 
         } else if (needTrace && trans->gas == receipt.gasUsed) {
@@ -311,42 +317,39 @@ bool queryBlock(CBlock& block, const SFString& numIn, bool needTrace, bool byHas
 }
 
 //-------------------------------------------------------------------------
-bool getBlock(CBlock& block, uint64_t numIn)
-{
+bool getBlock(CBlock& block, uint64_t datIn) {
     SFString save = getSource();
     if (getSource() == "fastest")
-        setSource(fileExists(getBinaryFilename1(numIn)) ? "binary" : "parity");
-    bool ret = queryBlock(block, asStringU(numIn), true, false);
+        setSource(fileExists(getBinaryFilename1(datIn)) ? "binary" : "parity");
+    bool ret = queryBlock(block, asStringU(datIn), true, false);
     setSource(save);
     return ret;
 }
 
-/*
 //-------------------------------------------------------------------------
 bool getBlock(CBlock& block, const SFHash& hash) {
-    // TODO: Note--this does not work because queryBlock takes blockNum in second param
-    bool ret = queryBlock(block, hash, true, true);
-    return ret;
+    return queryBlock(block, hash, true, true);
 }
-*/
 
 //-------------------------------------------------------------------------
-bool queryRawBlock(SFString& block, const SFString& numIn, bool needTrace, bool hashesOnly)
-{
-    block = callRPC("eth_getBlockByNumber", "["+quote(numIn)+","+(hashesOnly?"false":"true")+"]", true);
+bool queryRawBlock(SFString& blockStr, const SFString& datIn, bool needTrace, bool hashesOnly) {
+
+    if (isHash(datIn)) {
+        blockStr = callRPC("eth_getBlockByHash", "["+quote(datIn)+","+(hashesOnly?"false":"true")+"]", true);
+    } else {
+        blockStr = callRPC("eth_getBlockByNumber", "["+quote(datIn)+","+(hashesOnly?"false":"true")+"]", true);
+    }
     return true;
 }
 
 //-------------------------------------------------------------------------
-SFString hexxy(uint64_t x)
-{
+SFString hexxy(uint64_t x) {
     SFUintBN bn = x;
     return toLower(SFString(to_hex(bn).c_str()));
 }
 
 //-------------------------------------------------------------------------
-bool queryRawReceipt(SFString& results, const SFHash& txHash)
-{
+bool queryRawReceipt(SFString& results, const SFHash& txHash) {
     SFString data = "[\"[HASH]\"]";
     data.Replace("[HASH]", txHash);
     results = callRPC("eth_getTransactionReceipt", data, true);

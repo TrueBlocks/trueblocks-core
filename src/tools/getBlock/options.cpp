@@ -209,7 +209,7 @@ COptions::~COptions(void) {
 
 //--------------------------------------------------------------------------------
 bool COptions::isMulti(void) const {
-    return ((blocks.stop - blocks.start) > 1 || blocks.nNums > 1);
+    return ((blocks.stop - blocks.start) > 1 || blocks.hashList.getCount() > 1 || blocks.numList.getCount() > 1);
 }
 
 //--------------------------------------------------------------------------------
@@ -229,4 +229,24 @@ SFString COptions::postProcess(const SFString& which, const SFString& str) const
         return ret;
     }
     return str;
+}
+
+//--------------------------------------------------------------------------------
+SFString COptions::getBlockNumList(void) const {
+    SFString ret;
+    SFString list = blocks.toString();
+    while (!list.empty()) {
+        SFString val = nextTokenClear(list, '|');
+        blknum_t bn = toLongU(val);
+        if (isHash(val)) {
+            CBlock block;
+            if (!getBlock(block, val)) {
+                cerr << "Block hash '" << val << "' does not appear to be a valid block hash. Quitting...";
+                exit(0);
+            }
+            bn = block.blockNumber;
+        }
+        ret += asStringU(bn) + "|";
+    }
+    return ret;
 }
