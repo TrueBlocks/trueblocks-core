@@ -157,14 +157,14 @@ bool COptions::parseArguments(SFString& command) {
                 qbSleep(wait);
             }
 
-        } else if (arg.startsWith("-m:") || arg.startsWith("-max:")) {
+        } else if (arg.startsWith("-m:") || arg.startsWith("--max:")) {
             SFString val = arg.Substitute("-m:", "").Substitute("--max:", "");
             if (val.empty() || !isdigit(val[0]))
                 return usage("Please supply a value with the --max: option. Quitting...");
             maxTransactions = toLong32u(val);
 
-        } else if (arg.startsWith("-n:") || arg.startsWith("-name:")) {
-            SFString val = arg.Substitute("-m:", "").Substitute("--max:", "");
+        } else if (arg.startsWith("-n:") || arg.startsWith("--name:")) {
+            SFString val = arg.Substitute("-n:", "").Substitute("--name:", "");
             if (val.empty())
                 return usage("You must supply a name with the --name option. Quitting...");
             name = val;
