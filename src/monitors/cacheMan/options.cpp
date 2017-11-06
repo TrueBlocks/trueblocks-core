@@ -67,7 +67,7 @@ bool COptions::parseArguments(SFString& command) {
             extractID = toLong32u(arg);
             mode = "extract";  // 'extract' must be stand alone
 
-        } else if (arg.startsWith("-r") || arg.startsWith("-renum")) {
+        } else if (arg.startsWith("-r") || arg.startsWith("--renum")) {
             arg = arg.Substitute("-r", "").Substitute("--renum", "");
             if (!arg.startsWith(":"))
                 return usage("You must supply both an old and new contract id: --renum:old-new.");
