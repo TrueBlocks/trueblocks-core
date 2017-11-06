@@ -54,9 +54,9 @@ bool COptions::parseArguments(SFString& command) {
             } else {
                 numOption = toLong(arg);
             }
-            
+
         } else if (arg.startsWith('-')) {  // do not collapse
-            
+
             if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);
             }
