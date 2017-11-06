@@ -35,9 +35,8 @@ int main(int argc, const char *argv[]) {
             SFAddress addr = nextTokenClear(options.addrs, '|');
 
             // For each block
-            SFString blocks = options.blocks.toString();
+            SFString blocks = options.getBlockNumList();
             while (!blocks.empty()) {
-
                 blknum_t blockNum = toLongU(nextTokenClear(blocks, '|'));
                 if (blockNum > latestBlock) {
                     SFString late = (isTestMode() ? "--" : asStringU(latestBlock));

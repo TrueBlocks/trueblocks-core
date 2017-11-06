@@ -22,7 +22,6 @@ bool COptions::parseArguments(SFString& command) {
         return false;
 
     Init();
-    COptionsBlockList block_list;
     blknum_t latestBlock = isNodeRunning() ? getLatestBlockFromClient() : 7000000;
     while (!command.empty()) {
         SFString arg = nextTokenClear(command, ' ');
@@ -37,7 +36,7 @@ bool COptions::parseArguments(SFString& command) {
             }
         } else {
 
-            SFString ret = block_list.parseBlockList(arg, latestBlock);
+            SFString ret = blocks.parseBlockList(arg, latestBlock);
             if (ret.endsWith("\n")) {
                 cerr << "\n  " << ret << "\n";
                 return false;
@@ -47,13 +46,7 @@ bool COptions::parseArguments(SFString& command) {
         }
     }
 
-    SFString theList = block_list.toString();
-    while (!theList.empty()) {
-        SFString val = nextTokenClear(theList, '|');
-        blocks[blocks.getCount()] = toUnsigned(val);
-    }
-
-    if (!blocks.getCount())
+    if (!blocks.hasBlocks())
         return usage("You must enter a valid block number. Quitting...");
 
     if (alone && !isNodeRunning())
@@ -68,7 +61,6 @@ void COptions::Init(void) {
     nParamsRef = nParams;
     pOptions = this;
 
-    blocks.Clear();
     alone = false;
     optionOff(OPT_DENOM);
 }

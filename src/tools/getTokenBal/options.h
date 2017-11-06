@@ -6,14 +6,13 @@
 #include "etherlib.h"
 
 //-----------------------------------------------------------------------------
-class COptions : public COptionsBase {
+class COptions : public CBlockOptions {
 public:
     SFString tokens;
     SFString holders;
     bool asData;
     bool byAccount;
     bool noZero;
-    COptionsBlockList blocks;
 
     COptions(void);
     ~COptions(void);

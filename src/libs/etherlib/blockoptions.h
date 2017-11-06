@@ -6,19 +6,13 @@
  *
  * The LICENSE at the root of this repo details your rights (if any)
  *------------------------------------------------------------------------*/
-#include "etherlib.h"
+#include "utillib.h"
 
 //-----------------------------------------------------------------------------
-class COptions : public CBlockOptions {
+class CBlockOptions : public COptionsBase {
 public:
-    SFStringArray     requests;
-    bool              alone;
+    COptionsBlockList blocks;
 
-    COptions(void);
-    ~COptions(void);
-
-    SFString postProcess(const SFString& which, const SFString& str) const override;
-    bool parseArguments(SFString& command) override;
-    void Init(void) override;
-    SFString listSpecials(bool terse) const;
+    CBlockOptions(void);
+    SFString getBlockNumList(void) const;
 };

@@ -25,5 +25,6 @@
 #include "accountwatch.h"
 #include "balhistory.h"
 #include "acctcacheitem.h"
+#include "blockoptions.h"
 
 using namespace qblocks;

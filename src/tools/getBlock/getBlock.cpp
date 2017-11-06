@@ -29,48 +29,26 @@ int main(int argc, const char * argv[]) {
         if (!options.quiet)
             cout << (options.isMulti() ? "[" : "");
 
-        for (uint64_t i = options.blocks.start ; i < options.blocks.stop ; i++) {
+        SFString list = options.getBlockNumList();
+        while (!list.empty()) {
+            blknum_t bn = toLongU(nextTokenClear(list, '|'));
             if (options.isCheck) {
-                checkResults += checkOneBlock(i, options);
-
+                checkResults += checkOneBlock(bn, options);
             } else {
-                SFString result = doOneBlock(i, options);
+                SFString result = doOneBlock(bn, options);
                 if (options.normalize) {
                     if (verbose)
-                        cout << i << "\n";
-                    result = normalizeBlock(result, false, i >= byzantiumBlock);
+                        cout << bn << "\n";
+                    result = normalizeBlock(result, false, bn >= byzantiumBlock);
                 }
                 if (!options.quiet) {
                     cout << result;
-                    if (i < options.blocks.stop-1)
+                    if (!list.empty())
                         cout << ",";
                     cout << "\n";
 
-                 } else {
-                    interumReport(cerr, i);
-                }
-            }
-        }
-
-        for (uint64_t i = 0 ; i < options.blocks.nNums ; i++) {
-            if (options.isCheck) {
-                checkResults += checkOneBlock(options.blocks.nums[i], options);
-
-            } else {
-                SFString result = doOneBlock(options.blocks.nums[i], options);
-                if (options.normalize) {
-                    if (verbose)
-                        cout << options.blocks.nums[i] << "\n";
-                    result = normalizeBlock(result, false, options.blocks.nums[i] >= byzantiumBlock);
-                }
-                if (!options.quiet) {
-                    cout << result;
-                    if (i < options.blocks.nNums - 1)
-                        cout << ",";
-                     cout << "\n";
-
                 } else {
-                    interumReport(cerr, i);
+                    interumReport(cerr, bn);
                 }
             }
         }
