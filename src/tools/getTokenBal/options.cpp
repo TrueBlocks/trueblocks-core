@@ -100,7 +100,7 @@ bool COptions::parseArguments(SFString& command) {
 
     if (!blocks.hasBlocks()) {
         // use 'latest'
-        blocks.nums[blocks.nNums++] = latestBlock;
+        blocks.numList[blocks.numList.getCount()] = latestBlock;
     }
 
     return true;

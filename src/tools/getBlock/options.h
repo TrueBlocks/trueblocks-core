@@ -28,6 +28,7 @@ public:
     bool parseArguments(SFString& command) override;
     void Init(void) override;
     bool isMulti(void) const;
+    SFString getBlockNumList(void) const;
 };
 
 //-----------------------------------------------------------------------------

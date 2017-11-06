@@ -74,22 +74,23 @@ namespace qblocks {
                 return "'stop' must be strictly larger than 'start'";
 
             blknum_t width = (stop - start + 1);
+#define MAX_BLOCK_RANGE 10000
             if (width > MAX_BLOCK_RANGE)
                 return "The range you specified (" + argIn + ") is too broad (" + asStringU(width) + "). "
                         "Ranges may be at most " + asStringU(MAX_BLOCK_RANGE) + " blocks long. Quitting...";
 
         } else {
 
-            if (nNums >= MAX_BLOCK_LIST)
-                return "Too many blocks in list. Max is " + asString(MAX_BLOCK_LIST);
+            if (isHash(arg)) {
+                hashList[hashList.getCount()] = arg;
 
-            SFString msg = arg;
-            blknum_t num = parseBlockOption(msg, lastBlock);
-            if (!msg.empty())
-                return msg;
-
-            nums[nNums++] = num;
-
+            } else {
+                SFString msg = arg;
+                blknum_t num = parseBlockOption(msg, lastBlock);
+                if (!msg.empty())
+                    return msg;
+                numList[numList.getCount()] = num;
+            }
         }
 
         latest = lastBlock;
@@ -98,8 +99,8 @@ namespace qblocks {
 
     //--------------------------------------------------------------------------------
     void COptionsBlockList::Init(void) {
-        nums[0]    = NOPOS;
-        nNums      = 0;  // we will set this to '1' later if user supplies no values
+        numList.Clear();
+        hashList.Clear();
         start = stop = 0;
     }
 
@@ -113,8 +114,10 @@ namespace qblocks {
         SFString ret;
         for (uint64_t i = start ; i < stop ; i++)
             ret += (asStringU(i) + "|");
-        for (uint64_t i = 0 ; i < nNums ; i++)
-            ret += (asStringU(nums[i]) + "|");
+        for (uint32_t i = 0 ; i < numList.getCount() ; i++)
+            ret += (asStringU(numList[i]) + "|");
+        for (uint32_t i = 0 ; i < hashList.getCount() ; i++)
+            ret += (hashList[i] + "|");
         return ret;
     }
 

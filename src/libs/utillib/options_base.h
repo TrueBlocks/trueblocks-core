@@ -112,12 +112,10 @@ namespace qblocks {
     extern void optionOff(uint32_t q);
     extern void optionOn (uint32_t q);
 
-#define MAX_BLOCK_LIST 100
-#define MAX_BLOCK_RANGE 10000
     class COptionsBlockList {
     public:
-        blknum_t nums[MAX_BLOCK_LIST];
-        blknum_t nNums;
+        SFBlockArray numList;
+        SFStringArray hashList;
         blknum_t start;
         blknum_t stop;
         blknum_t latest;
@@ -125,7 +123,7 @@ namespace qblocks {
         SFString parseBlockList(const SFString& arg, blknum_t latest);
         COptionsBlockList(void);
         SFString toString(void) const;
-        bool hasBlocks(void) const { return (nNums || (start != stop)); }
+        bool hasBlocks(void) const { return (hashList.getCount() || numList.getCount() || (start != stop)); }
         blknum_t parseBlockOption(SFString& msg, blknum_t lastBlock) const;
     };
 

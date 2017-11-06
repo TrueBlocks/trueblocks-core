@@ -55,9 +55,8 @@ void reportByToken(const COptions& options) {
             SFAddress holder = nextTokenClear(holders, '|');
 
             // For each block
-            SFString blocks = options.blocks.toString();
+            SFString blocks = options.getBlockNumList();
             while (!blocks.empty()) {
-
                 blknum_t blockNum = toLongU(nextTokenClear(blocks, '|'));
                 SFUintBN bal = getTokenBalance(token, holder, blockNum);
                 SFString sBal = to_string(bal).c_str();
@@ -113,7 +112,7 @@ void reportByAccount(const COptions& options) {
             SFAddress token = nextTokenClear(tokens, '|');
 
             // For each block
-            SFString blocks = options.blocks.toString();
+            SFString blocks = options.getBlockNumList();
             while (!blocks.empty()) {
 
                 blknum_t blockNum = toLongU(nextTokenClear(blocks, '|'));
