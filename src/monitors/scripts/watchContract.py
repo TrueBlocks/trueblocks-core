@@ -71,6 +71,13 @@ def is_parity_running():
         # Not running
         return False
 
+def get_parity_pid():
+    #pid = os.system('pidof %s' % parity_proc_name)
+    # Get PID from name, this is only valid under Linux like environments
+    pid = subprocess.check_output("pgrep " + parity_proc_name, shell=True)
+    #print(pid)
+    return pid
+
 #---------------------------------------------------------------------------------------------
 #  Main program
 #---------------------------------------------------------------------------------------------
@@ -134,5 +141,7 @@ while True:
             runwatcher()
             time.sleep(float(timeout))
     print("Restarting Parity...")
-    os.kill(proc.pid, signal.SIGINT)
+    #os.kill(proc.pid, signal.SIGINT)
+    # Get PID based on process name, this way we can also kill it when already running
+    os.kill(get_parity_pid(), signal.SIGINT) #Always running at this point
     proc.wait()
