@@ -71,6 +71,10 @@ def is_parity_running():
         # Not running
         return False
 
+
+#---------------------------------------------------------------------------------------------
+# Gets the PID of the current parity process running at the system
+#---------------------------------------------------------------------------------------------
 def get_parity_pid():
     #pid = os.system('pidof %s' % parity_proc_name)
     # Get PID from name, this is only valid under Linux like environments
