@@ -197,6 +197,8 @@ void CBlock::registerClass(void) {
     HIDE_FIELD(CBlock, "showing");
 
     // EXISTING_CODE
+    ADD_FIELD(CBlock, "date", T_DATE, ++fieldNum);
+    HIDE_FIELD(CBlock, "date");
     // EXISTING_CODE
 }
 
@@ -206,6 +208,13 @@ SFString nextBlockChunk_custom(const SFString& fieldIn, const void *dataPtr) {
     if (blo) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
+            case 'd':
+                if (fieldIn % "date")
+                {
+                    timestamp_t ts = (timestamp_t)blo->timestamp;
+                    return dateFromTimeStamp(ts).Format(FMT_JSON);
+                }
+                break;
             case 'n':
                 if ( fieldIn % "number" ) return asStringU(blo->blockNumber);
                 break;
