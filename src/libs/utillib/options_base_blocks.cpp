@@ -33,7 +33,7 @@ namespace qblocks {
                     ret = toUnsigned(spec.getValue());
                 }
             } else {
-                msg = "The given value '" + arg + "' is not a numeral or a special named block. Quitting...";
+                msg = "The given value '" + arg + "' is not a numeral or a special named block. Quitting...\n";
                 return NOPOS;
             }
         }

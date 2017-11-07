@@ -431,6 +431,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
                 ctx << lead << tick << line << "\n";
             }
             ctx << "\n";
+            ctx.str.ReplaceAll("-   ","  - ");
         }
         return ctx.str;
     }

@@ -57,7 +57,8 @@ int main(int argc, const char *argv[]) {
                 if (verbose) { cout << "finding by date\n"; }
 
                 if (!fileExists(miniBlockCache)) {
-                    cout << "Lookup by date is not currently supported.\n";
+                    cout << "Looking up blocks by date is not supported without a miniBlock ";
+                    cout << "database, which is an advanced feature.\n";
 
                 } else {
                     SFTime date = dateFromTimeStamp((timestamp_t)toUnsigned(value));

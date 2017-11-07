@@ -147,10 +147,18 @@ COptions::~COptions(void) {
 
 //--------------------------------------------------------------------------------
 SFString COptions::postProcess(const SFString& which, const SFString& str) const {
-    if (which == "options")
+
+    if (which == "options") {
         return str.Substitute("block date", "< block | date > [ block... | date... ]");
-    if (which == "description")
-        return str + "####Notes:\n" + listSpecials(true);
+
+    } else if (which == "notes") {
+        SFString ret = str;
+        if (verbose || COptions::isReadme) {
+            ret += "Add custom special blocks by editing ~/.quickBlocks/quickBlocks.toml.\n";
+        }
+        ret += listSpecials(true);
+        return ret;
+    }
     return str;
 }
 
@@ -196,7 +204,7 @@ SFString COptions::listSpecials(bool terse) const {
     ostringstream os;
     if (!alone) {
         if (terse) {
-            os << "\t- Use the following names to represent `special` blocks:\n\t  - ";
+            os << "Use the following names to represent `special` blocks:\n  ";
         } else {
             os << bYellow << "\n  Blocks:" << cOff;
         }
@@ -206,33 +214,43 @@ SFString COptions::listSpecials(bool terse) const {
     for (uint32_t i = 0 ; i < specials.getCount(); i++) {
 
         SFString name  = specials[i].getName();
-        SFString block = specials[i].getValue();
+        SFString bn = specials[i].getValue();
         if (name == "latest") {
-            block = asStringU(getLatestBlockFromClient());
+            bn = asStringU(getLatestBlockFromClient());
             if (isTestMode()) {
-                block = "";
+                bn = "";
             } else if (COptionsBase::isReadme) {
-                block = "--";
+                bn = "--";
             } else if (i > 0 && specials[i-1].getValueU() >= getLatestBlockFromClient()) {
                 extra = iWhite + " (syncing)" + cOff;
             }
         }
 
         if (alone) {
-            if (!block.Contains("tbd"))
-                os << block << " ";
+            if (!bn.Contains("tbd"))
+                os << bn << " ";
         } else {
             if (terse) {
                 os << name;
-                os << " (" << cTeal << block << extra << cOff << ")";
+                os << " (" << cTeal << bn << extra << cOff << ")";
                 if (!((i+1)%4)) {
-                    os << "\n\t";
                     if (i < specials.getCount()-1)
-                        os << "  - ";
+                        os << "\n  ";
                 } else if (i < specials.getCount()-1)
                     os << ", ";
             } else {
-                os << "\n      - " << padRight(name, 15) << cTeal << block << cOff << extra ;
+                os << "\n      - " << padRight(name, 15);
+                os << cTeal << padLeft(bn,9) << cOff;
+                if (verbose) {
+                    CBlock block;
+                    getBlock(block, bn);
+                    block.timestamp = (block.blockNumber == 0 ? 1438269973 : block.timestamp);
+                    if (block.timestamp != 0) {
+                        UNHIDE_FIELD(CBlock, "date");
+                        os << block.Format(" [{DATE}] ([{TIMESTAMP}])");
+                    }
+                }
+                os << extra ;
             }
         }
     }
@@ -242,6 +260,5 @@ SFString COptions::listSpecials(bool terse) const {
     } else {
         os << "\n";
     }
-    SFString ret = os.str().c_str();
-    return ret;
+    return os.str().c_str();
 }
