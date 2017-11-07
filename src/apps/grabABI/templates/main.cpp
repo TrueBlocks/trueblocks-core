@@ -41,6 +41,12 @@ int main(int argc, const char *argv[]) {
             return 0;
         }
 
+        if (!fileExists("./config.toml")) {
+            cerr << "The config.toml file was not found. Are you in the right folder? Quitting...\n";
+            cerr.flush();
+            return 0;
+        }
+
         CToml toml("./config.toml");
         visitor.loadWatches(toml);
 
