@@ -154,7 +154,7 @@ SFString COptions::postProcess(const SFString& which, const SFString& str) const
     } else if (which == "notes") {
         SFString ret = str;
         if (verbose || COptions::isReadme) {
-            ret += "Add custom special blocks by editing ~/.quickBlocks/quickBlocks.toml.\n";
+            ret += "Add custom special blocks by editing ~/.quickBlocks/whenBlock.toml.\n";
         }
         ret += listSpecials(true);
         return ret;
@@ -213,7 +213,7 @@ SFString COptions::listSpecials(bool terse) const {
     SFString extra;
     for (uint32_t i = 0 ; i < specials.getCount(); i++) {
 
-        SFString name  = specials[i].getName();
+        SFString name = specials[i].getName();
         SFString bn = specials[i].getValue();
         if (name == "latest") {
             bn = asStringU(getLatestBlockFromClient());
@@ -226,7 +226,7 @@ SFString COptions::listSpecials(bool terse) const {
             }
         }
 
-        if (alone) {
+        if (alone && !terse) {
             if (!bn.Contains("tbd"))
                 os << bn << " ";
         } else {
