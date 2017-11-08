@@ -40,7 +40,8 @@ namespace qblocks {
         class CTomlGroup {
         public:
             SFString  groupName;
-            bool      comment;
+            bool      isArray;
+            bool      isComment;
             CTomlKeyList keys;
 
             CTomlGroup(void);
@@ -61,7 +62,7 @@ namespace qblocks {
         typedef SFList<CTomlGroup*> CTomlGroupList;
 
     protected:
-        CTomlGroup *addGroup(const SFString& group, bool commented);
+        CTomlGroup *addGroup(const SFString& group, bool commented, bool array);
         CTomlGroup *findGroup(const SFString& group) const;
 
         CTomlKey *addKey(const SFString& group, const SFString& key, const SFString& val, bool commented);

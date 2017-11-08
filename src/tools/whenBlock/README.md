@@ -27,7 +27,7 @@ You may name your own blocks (for example, to denote the start of an ICO perhaps
 
 `Notes:`
 
-- Add custom special blocks by editing ~/.quickBlocks/quickBlocks.toml.
+- Add custom special blocks by editing ~/.quickBlocks/whenBlock.toml.
 - Use the following names to represent `special` blocks:
   - first (0), iceage (200000), homestead (1150000), daofund (1428756)
   - daohack (1718497), daofork (1920000), tangerine (2463000), spurious (2675000)
