@@ -12,7 +12,6 @@
 #include "options_base.h"
 #include "colors.h"
 #include "filenames.h"
-#include "toml.h"
 #include "namevalue.h"
 #include "accountname.h"
 
@@ -611,23 +610,42 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
         return (int)(b1->getValueU() - b2->getValueU());
     }
 
-    extern const char *STR_DEFAULT_SPECIALS;
     //-----------------------------------------------------------------------
-    void COptionsBase::loadSpecials(void) {
-
+    const CToml *getGlobalConfig(const SFString& name) {
         static CToml *toml = NULL;
+        static SFString components = "quickBlocks|";
         if (!toml) {
             static CToml theToml(configPath("quickBlocks.toml"));
             toml = &theToml;
+            // Always load the program's custom config if it exists
+            SFString fileName = configPath(programName+".toml");
+            if (fileExists(fileName) && !components.Contains(programName+"|")) {
+                components += programName+"|";
+                CToml custom(fileName);
+                toml->mergeFile(&custom);
+            }
         }
-        specials.Clear();
 
-        SFString specialsStr = toml->getConfigArray("specials", "list", "");
-        if (specialsStr.empty()) {
-            SFString in = asciiFileToString(configPath("quickBlocks.toml"));
-            stringToAsciiFile(configPath("quickBlocks.toml"), in + "\n" + STR_DEFAULT_SPECIALS);
-            specialsStr = toml->getConfigArray("specials", "list", "");
+        // If we're told explicitly to load another config, do that here
+        if (!name.empty()) {
+            SFString fileName = configPath(name+".toml");
+            if (fileExists(fileName) && !components.Contains(name+"|")) {
+                components += name+"|";
+                CToml custom(fileName);
+                toml->mergeFile(&custom);
+            }
         }
+
+        return toml;
+    }
+
+    //-----------------------------------------------------------------------
+    void COptionsBase::loadSpecials(void) {
+
+        const CToml *toml = getGlobalConfig("whenBlock");
+
+        specials.Clear();
+        SFString specialsStr = toml->getConfigStr("specials", "list", "");
         char *p = cleanUpJson((char *)specialsStr.c_str());
         while (p && *p) {
             CNameValue pair;
@@ -637,7 +655,6 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
                 specials[specials.getCount()] = pair;
             }
         }
-
         specials.Sort(sortByBlockNum);
         return;
     }
@@ -654,24 +671,6 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
         }
         return false;
     }
-
-    //--------------------------------------------------------------------------------
-    const char *STR_DEFAULT_SPECIALS =
-    "[[specials]]\n"
-    "list = [\n"
-    "\t{ name = \"first\",          value = \"0\"       },\n"
-    "\t{ name = \"iceage\",         value = \"200000\"  },\n"
-    "\t{ name = \"homestead\",      value = \"1150000\" },\n"
-    "\t{ name = \"daofund\",        value = \"1428756\" },\n"
-    "\t{ name = \"daohack\",        value = \"1718497\" },\n"
-    "\t{ name = \"daofork\",        value = \"1920000\" },\n"
-    "\t{ name = \"tangerine\",      value = \"2463000\" },\n"
-    "\t{ name = \"spurious\",       value = \"2675000\" },\n"
-    "\t{ name = \"stateclear\",     value = \"2718436\" },\n"
-    "\t{ name = \"byzantium\",      value = \"4370000\" },\n"
-    "\t{ name = \"constantinople\", value = \"tbd\"     },\n"
-    "\t{ name = \"latest\",         value = \"\"        }\n"
-    "]\n";
 
     //---------------------------------------------------------------------------------------------------
     COptionsBase::COptionsBase(void) : namesFile("") {

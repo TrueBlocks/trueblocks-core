@@ -11,6 +11,7 @@
 #include "namevalue.h"
 #include "accountname.h"
 #include "filenames.h"
+#include "toml.h"
 
 // Bit flags to enable / disable various options
 #define OPT_VERBOSE (1<<2)
@@ -111,6 +112,9 @@ namespace qblocks {
     extern bool isEnabled(uint32_t q);
     extern void optionOff(uint32_t q);
     extern void optionOn (uint32_t q);
+
+    //--------------------------------------------------------------------------------
+    extern const CToml *getGlobalConfig(const SFString& name="");
 
     class COptionsBlockList {
     public:
