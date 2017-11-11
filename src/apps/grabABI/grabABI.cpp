@@ -618,5 +618,5 @@ const char* STR_ITEMS =
 "\t\tSFString items[256];\n"
 "\t\tint nItems=0;\n"
 "\n"
-"\t\tSFString encoding = p->input.Left(10);\n"
+"\t\tSFString encoding = p->input.substr(0,10);\n"
 "\t\tSFString params   = p->input.substr(10);\n";

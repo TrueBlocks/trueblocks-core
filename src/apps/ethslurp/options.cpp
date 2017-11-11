@@ -133,14 +133,14 @@ bool COptions::parseArguments(SFString& command) {
                 return usage("Option -d: Invalid date format for endDate. "
                                 "Format must be either yyyymmdd or yyyymmddhhmmss.");
 
-            firstDate = parseDate(earlyStr, -1);
-            lastDate = parseDate(lateStr, 1);
+            firstDate = BOD(parseDate(earlyStr));
+            lastDate  = EOD(parseDate(lateStr));
             if (lastDate == earliestDate)  // the default
                 lastDate = latestDate;
 
             if (firstDate > lastDate) {
-                return usage("lastDate (" + lastDate.Format(FMT_DEFAULT) +
-                             ") must be later than startDate (" + firstDate.Format(FMT_DEFAULT) +
+                return usage("lastDate (" + lastDate.Format(FMT_JSON) +
+                             ") must be later than startDate (" + firstDate.Format(FMT_JSON) +
                              "). Quitting...");
             }
 

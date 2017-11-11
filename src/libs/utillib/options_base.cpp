@@ -265,7 +265,7 @@ namespace qblocks {
                 dummy = " val";
         }
         if (!name.empty()) {
-            shortName = name.Left(2);
+            shortName = name.substr(0,2);
             if (name.length() > 2)
                 longName = name + dummy;
 
@@ -515,7 +515,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
 
         // This may be a command with two -a -b (or more) single options
         if (arg.length()>2 && arg[2] == ' ') {
-            ret = arg.Left(2);
+            ret = arg.substr(0,2);
             arg = arg.substr(3);
             return ret;
         }
@@ -529,7 +529,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
 
         // This is a ganged-up option. We need to pull it apart by returning
         // the first two chars, and saving the rest for later.
-        ret = arg.Left(2);
+        ret = arg.substr(0,2);
         arg = "-"+arg.substr(2);
         return ret;
     }

@@ -665,7 +665,7 @@ bool verifyBlock(const CBlock& qBlock, SFString& result)
         size_t f2 = tail.find(",");
         if (field=="transactions")
             f2 = tail.find("],") + 1;
-        SFString tField = tail.Left(f2 == NOPOS ? tail.length() : f2).Substitute("0x"+SFString('0',512),"0x0");
+        SFString tField = tail.substr(0,f2 == NOPOS ? tail.length() : f2).Substitute("0x"+SFString('0',512),"0x0");
         nnStr += (tField + ",");
 #if DEBUG_VERIFY
         cout << field << " = " << tField << "\n";
@@ -716,7 +716,7 @@ static SFString getFilename_local(uint64_t numIn, bool asPath, bool asJson)
     SFString fmt = (asPath ? "%s/%s/%s/" : "%s/%s/%s/%s");
     SFString fn  = (asPath ? "" : num + (asJson ? ".json" : ".bin"));
 
-    sprintf(ret, (const char*)(storagePath+fmt), (const char*)num.Left(2), (const char*)num.substr(2,2), (const char*)num.substr(4,2), (const char*)fn);
+    sprintf(ret, (const char*)(storagePath+fmt), (const char*)num.substr(0,2), (const char*)num.substr(2,2), (const char*)num.substr(4,2), (const char*)fn);
     return ret;
 }
 

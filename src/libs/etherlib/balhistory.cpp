@@ -63,7 +63,7 @@ bool CBalHistory::setValueByName(const SFString& fieldName, const SFString& fiel
             if ( fieldName % "recordID" ) { recordID = fieldValue; return true; }
             break;
         case 't':
-            if ( fieldName % "txDate" ) { txDate = parseDate(fieldValue); return true; }
+            if ( fieldName % "timestamp" ) { timestamp = toTimestamp(fieldValue); return true; }
             break;
         default:
             break;
@@ -90,7 +90,7 @@ bool CBalHistory::Serialize(SFArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     archive >> recordID;
-    archive >> txDate;
+    archive >> timestamp;
     archive >> balance;
     finishParse();
     return true;
@@ -105,7 +105,7 @@ bool CBalHistory::SerializeC(SFArchive& archive) const {
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
     archive << recordID;
-    archive << txDate;
+    archive << timestamp;
     archive << balance;
 
     return true;
@@ -122,7 +122,7 @@ void CBalHistory::registerClass(void) {
     ADD_FIELD(CBalHistory, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CBalHistory, "showing", T_BOOL,  ++fieldNum);
     ADD_FIELD(CBalHistory, "recordID", T_TEXT, ++fieldNum);
-    ADD_FIELD(CBalHistory, "txDate", T_DATE, ++fieldNum);
+    ADD_FIELD(CBalHistory, "timestamp", T_TIMESTAMP, ++fieldNum);
     ADD_FIELD(CBalHistory, "balance", T_NUMBER, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
@@ -201,7 +201,7 @@ SFString CBalHistory::getValueByName(const SFString& fieldName) const {
             if ( fieldName % "recordID" ) return recordID;
             break;
         case 't':
-            if ( fieldName % "txDate" ) return txDate.Format(FMT_JSON);
+            if ( fieldName % "timestamp" ) return fromTimestamp(timestamp);
             break;
     }
 

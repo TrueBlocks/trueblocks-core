@@ -87,7 +87,7 @@ void CVisitor::displayTrans(const CTransaction *theTrans) const {
             if (opts.logs_on) {
                 cout << iYellow << "  "
                         << padLeft(asString(i),2) << ". "
-                        << padRight(eventType.Left(15),15) << " "
+                        << padRight(eventType.substr(0,15),15) << " "
                         << evtStr << cOff << "\r\n";
             }
             evtList += eventType + ",";
@@ -108,7 +108,7 @@ void CVisitor::displayTrans(const CTransaction *theTrans) const {
             cout << "\r\n";
             for (uint32_t t=0;t<watches.getCount()-1;t++) {
                 SFBloom b = makeBloom(watches[t].address);
-                displayBloom(b,watches[t].color + padRight(watches[t].name.Left(9),9) + cOff, (isBloomHit(b, promoted->receipt.logsBloom) ? greenCheck : redX));
+                displayBloom(b,watches[t].color + padRight(watches[t].name.substr(0,9),9) + cOff, (isBloomHit(b, promoted->receipt.logsBloom) ? greenCheck : redX));
                 cout << "\r\n";
             }
         }

@@ -87,13 +87,13 @@ namespace qblocks {
         SFString months[] = {
             "", "January", "February", "March", "April", "May", "June",
             "July", "August", "September", "October", "November", "December", };
-        return (full ? months[mon] : months[mon].Left(3));
+        return (full ? months[mon] : months[mon].substr(0,3));
     }
 
     //----------------------------------------------------------------------------------------------------
     SFString toDayName(uint64_t day, bool full) {
         SFString days[] = { "", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", };
-        return (full ? days[day] : days[day].Left(3));
+        return (full ? days[day] : days[day].substr(0,3));
     }
 
     //----------------------------------------------------------------------------------------------------
@@ -316,49 +316,6 @@ namespace qblocks {
         }
 
         return ret;
-    }
-
-    //----------------------------------------------------------------------------------------------------
-    static const SFString fmts[] = {
-        "%#m/%#d/%Y %#h:%M:%S%P",     // FMT_DEFAULT - 0
-        "%#h%P",                      // FMT_TIMENOMINS
-        "%#h:%M%P",                   // FMT_TIME
-        "%#h:%M%p",                   // FMT_TIMESH
-        "%#m/%#d",                    // FMT_DATENOYEAR
-        "%#m/%#d/%Y",                 // FMT_DATE - 5
-        "%A, %B %#d, %Y",             // FMT_DAY
-        "%b %#d, %y",                 // FMT_DAYSH
-        "Week of %A, %B %#d, %Y",     // FMT_WEEK
-        "Week of %b %#d, %y",         // FMT_WEEKSH
-        "Wk of %a, %b %#d, %Y",       // FMT_WEEKSHDATE - 10
-        "%a, %b %#d, %Y",             // FMT_DATEFMT
-        "%a %#d",                     // FMT_DAYNAMEDAY
-        "%B %Y",                      // FMT_MONTH
-        "%b %y",                      // FMT_MONTHSH
-        "%Y",                         // FMT_YEAR - 15
-        "%y",                         // FMT_YEARSH
-        "%A",                         // FMT_DAYNAME
-        "%a",                         // FMT_DAYNAMESH
-        "%B",                         // FMT_MONTHNAME
-        "%b",                         // FMT_MONTHNAMESH - 20
-        "%Q",                         // FMT_SECSTODAY
-        "%#d",                        // FMT_DAYNUMBER
-        "%Y%m%d",                     // FMT_SORTYYYYMMDD
-        "%A %#d",                     // FMT_DAYNAMEDAYL
-        "%#h:%M %P",                  // FMT_TIME_EXPORT - 25
-        "%#m/%#d/%Y %#h:%M:%S %P",    // FMT_DEFAULT_EXPORT
-        "%Y%m%d%H%M%S",               // FMT_SORTALL
-        "%A, %B %#d. %Y - %#h:%M%P",  // FMT_TIMESTAMP
-        "%b %#d",                     // FMT_DAYSH_NOYEAR
-        "%Y%m%dT%H%M%S",              // FMT_VCAL_DATE - 30
-        "%Y;%m;%d;%H;%M;%S;",         // FMT_SEMI_SEP
-        "%Y-%m-%d %H:%M:%S UTC",      // FMT_JSON
-    };
-
-    //----------------------------------------------------------------------------------------------------
-    SFString SFTime::Format(uint32_t fmt) const {
-        ASSERT(fmt > -1);
-        return SFTime::Format(fmts[fmt]);
     }
 
     //----------------------------------------------------------------------------------------------------
@@ -1182,19 +1139,17 @@ namespace qblocks {
     }
 
     //---------------------------------------------------------------------------------------
-    SFTime parseDate(const SFString& strIn, int dir) {
+    SFTime parseDate(const SFString& strIn) {
         if (strIn.empty())
             return earliestDate;
 
         SFString str = strIn;
         str.ReplaceAll(";", EMPTY);
         if (str.length() != 14) {
-            if (dir == -1) str += "000001";
-            if (dir ==  0) str += "120000";
-            if (dir ==  1) str += "235959";
+            str += "120000";
         }
 
-        uint32_t y  = toLong32u(str.Left(4));
+        uint32_t y  = toLong32u(str.substr(0, 4));
         uint32_t m  = toLong32u(str.substr(4, 2));
         uint32_t d  = toLong32u(str.substr(6, 2));
         uint32_t h  = toLong32u(str.substr(8, 2));
