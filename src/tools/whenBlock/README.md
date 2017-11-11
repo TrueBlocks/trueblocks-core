@@ -29,9 +29,11 @@ You may name your own blocks (for example, to denote the start of an ICO perhaps
 
 - Add custom special blocks by editing ~/.quickBlocks/whenBlock.toml.
 - Use the following names to represent `special` blocks:
-  - first (0), iceage (200000), homestead (1150000), daofund (1428756)
-  - daohack (1718497), daofork (1920000), tangerine (2463000), spurious (2675000)
-  - stateclear (2718436), byzantium (4370000), constantinople (tbd), latest (--)
+  - first (0), iceage (200000), devcon1 (543626), homestead (1150000)
+  - daofund (1428756), daohack (1718497), daofork (1920000), devcon2 (2286910)
+  - tangerine (2463000), spurious (2675000), stateclear (2718436), eea (3265360)
+  - ens2 (3327417), parityhack1 (4041179), byzantium (4370000), devcon3 (4469339)
+  - parityhack2 (4501969), constantinople (tbd), latest (--)
 
 #### Other Options
 
