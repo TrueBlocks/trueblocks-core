@@ -70,7 +70,7 @@ namespace qblocks {
         char tmp[20];
         sprintf(tmp, "%02x", (unsigned int)(char)val);
         SFString ret = tmp;
-        return ret.Right(2);
+        return ret.substr(ret.length()-2,2);
     }
     //----------------------------------------------------------------------------
     inline SFString string2Hex(const SFString& inAscii)

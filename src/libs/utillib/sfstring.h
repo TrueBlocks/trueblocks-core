@@ -239,7 +239,6 @@ namespace qblocks {
         SFString        substr        (size_t first, size_t len) const;
         SFString        substr        (size_t first) const;
 
-        SFString        Right         (size_t len) const;
         SFString        Center        (size_t width) const;
         void            Reverse       (void);
 
@@ -342,7 +341,7 @@ namespace qblocks {
     inline bool SFString::endsWith(const SFString& str) const {
         if (empty())
             return false;
-        return (Right(str.length()) == str);
+        return (substr(length()-str.length(),str.length()) == str);
     }
 
     //--------------------------------------------------------------------
