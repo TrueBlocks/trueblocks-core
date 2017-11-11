@@ -1,5 +1,5 @@
-whenBlock argc: 2 [1:--file:blocks.txt] 
-whenBlock --file:blocks.txt 
+whenBlock argc: 3 [1:--file:blocks.txt] [2:-v] 
+whenBlock --file:blocks.txt -v 
 block #250000 : 1442534024 : 2015-09-17 23:53:44 UTC
 block #500000 : 1446832865 : 2015-11-06 18:01:05 UTC
 block #750000 : 1451117502 : 2015-12-26 08:11:42 UTC
