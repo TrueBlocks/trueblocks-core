@@ -788,24 +788,6 @@ namespace qblocks {
     }
 
     //---------------------------------------------------------------------------------------
-    SFString SFString::Center(size_t width) const
-    {
-        SFString str = *this;
-        size_t len = str.length();
-
-        size_t n = 1;
-        if (len < width)
-            n = (width - len) >> 1;
-
-        SFString space;
-        for (size_t i=0;i<n;i++)
-            space += "&nbsp;";
-        SFString ret = space + str.substr(0,min(width, len)) + space;
-
-        return ret;
-    }
-
-    //---------------------------------------------------------------------------------------
     int SFString::Icompare(const char *str) const
     {
         return strcasecmp(m_Values, str);
