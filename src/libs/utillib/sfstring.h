@@ -239,7 +239,6 @@ namespace qblocks {
         SFString        substr        (size_t first, size_t len) const;
         SFString        substr        (size_t first) const;
 
-        SFString        Center        (size_t width) const;
         void            Reverse       (void);
 
         void            Format        (const char *lpszFormat, ...) const;
