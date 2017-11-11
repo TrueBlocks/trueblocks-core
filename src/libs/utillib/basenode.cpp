@@ -162,13 +162,14 @@ namespace qblocks {
     //--------------------------------------------------------------------------------
     char *CBaseNode::parseJson(char *s, uint32_t& nFields) {
 #ifdef DEBUG_PARSER
+        SFString ss = s;
+        SFString tt('-',25);
+        tt += "\n";
+        cout << tt << s << "\n" << tt;
+        cout << tt << ss.substr(ss.find("{"), 300)) << "\n" << tt;
+        cout << tt << ss.substr(substr.length()-300,300) << "\n" << tt;
+        cout.flush();
         tbs+="\t";
-        printf("--------------------------\n%s\n-----------------------------\n", s);
-        fflush(stdout);
-        printf("--------------------------\n%s\n-----------------------------\n",
-               (const char*)SFString(s).substr(SFString(s).find("{"), 300));
-        printf("--------------------------\n%s\n-----------------------------\n",
-               (const char*)SFString(s).Right(300));
 #endif
         typedef enum { OUTSIDE = 0, IN_NAME, IN_VAL } parseState;
         parseState state = OUTSIDE;
