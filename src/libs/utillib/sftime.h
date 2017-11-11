@@ -173,7 +173,6 @@ namespace qblocks {
 
         bool onTheHour(void) const;
 
-        SFString Format(uint32_t fmt) const;
         SFString Format(const SFString& fmt) const;
 
         SFDate getDatePart(void) const;

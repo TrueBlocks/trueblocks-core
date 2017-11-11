@@ -39,7 +39,7 @@ const CTransaction *promoteToToken(const CTransaction *p)
         SFString items[256];
         int nItems=0;
 
-        SFString encoding = p->input.Left(10);
+        SFString encoding = p->input.substr(0,10);
         SFString params   = p->input.substr(10);
         // EXISTING_CODE
         // EXISTING_CODE

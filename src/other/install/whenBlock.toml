@@ -1,6 +1,9 @@
 [version]
 current=0.3.0
 
+[display]
+terse=[{BLOCKNUMBER}\t][{DATE}\n]
+
 [[specials]]
 list = [
 	{ name = "first",          value = "0"       },
@@ -23,3 +26,4 @@ list = [
 	{ name = "constantinople", value = "tbd"     },
 	{ name = "latest",         value = ""        }
 ]
+

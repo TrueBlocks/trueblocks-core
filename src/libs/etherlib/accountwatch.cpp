@@ -325,10 +325,10 @@ SFString CAccountWatch::displayName(bool terse, uint32_t w1, uint32_t w2) const 
     if (terse) {
         uint64_t len = name.length();
         uint64_t need = 42 - len - 6; // " (" and "...)"
-        return color + name.Left(42-6) + " (" + address.Left(need) + "...)" + cOff;
+        return color + name.substr(0,42-6) + " (" + address.substr(0,need) + "...)" + cOff;
     }
 
-    return padRight(name.Left(w1),w1) + " " + address.Left(w2) + " ";
+    return padRight(name.substr(0,w1),w1) + " " + address.substr(0,w2) + " ";
 }
 
 //---------------------------------------------------------------------------
