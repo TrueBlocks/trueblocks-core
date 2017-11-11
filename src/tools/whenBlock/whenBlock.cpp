@@ -23,7 +23,6 @@ int main(int argc, const char *argv[]) {
     if (!options.prepareArguments(argc, argv))
         return 0;
 
-    bool oneCmd = !options.commandList.Contains("\n");
     while (!options.commandList.empty()) {
         SFString command = nextTokenClear(options.commandList, '\n');
         if (!options.parseArguments(command))
@@ -48,13 +47,14 @@ int main(int argc, const char *argv[]) {
                 }
             }
 
+            bool vv = !isTestMode() && verbose && !options.alone;
             CBlock block;
             if (mode == "block") {
-                if (verbose) { cout << "finding by block number\n"; }
+                if (vv) { cerr << "finding by block number\n"; }
                 queryBlock(block, value, false, false);
 
             } else if (mode == "date") {
-                if (verbose) { cout << "finding by date\n"; }
+                if (vv) { cerr << "finding by date\n"; }
 
                 if (!fileExists(miniBlockCache)) {
                     cout << "Looking up blocks by date is not supported without a miniBlock ";
@@ -62,8 +62,8 @@ int main(int argc, const char *argv[]) {
 
                 } else {
                     SFTime date = dateFromTimeStamp((timestamp_t)toUnsigned(value));
-                    bool res = lookupDate(block, date);
-                    if (!res) {
+                    bool found = lookupDate(block, date);
+                    if (!found) {
                         unloadCache();
                         return 0;
                     }
@@ -74,22 +74,21 @@ int main(int argc, const char *argv[]) {
             if (block.blockNumber == 0)
                 block.timestamp = 1438269960;
 
+            SFString fmt = getGlobalConfig()->getConfigStr("display", "format", "<not_set>");
+            if (fmt == "<not_set>")
+                fmt = "block #[{BLOCKNUMBER}][ : {TIMESTAMP}][ : {DATE}]";
             if (options.alone) {
-                cout << block.blockNumber << "\t" << dateFromTimeStamp(block.timestamp) << "\n";
+                fmt = getGlobalConfig()->getConfigStr("display", "terse", "[{BLOCKNUMBER}\t][{DATE}]");
 
-            } else {
-                bool newLines = oneCmd && options.requests.getCount() == 1;
-                cout << (newLines ? "\n\t" : "") << "block ";
-                cout << cYellow << "#" << block.blockNumber << cOff;
-                if (!special.empty())
-                    cout << " (" << special << ")";
-                cout << " : ";
-                cout << cYellow << block.timestamp << cOff;
-                cout << " : ";
-                cout << cYellow << dateFromTimeStamp(block.timestamp) << cOff;
-                cout << (newLines ? "\n" : "");
-                cout << "\n";
+            } else  {
+                fmt.ReplaceAll("{", cTeal+"{");
+                fmt.ReplaceAll("}", "}"+cOff);
             }
+            if (verbose && !special.empty()) {
+                SFString sp = "(" + special + ")";
+                fmt.Replace("{BLOCKNUMBER}", "{BLOCKNUMBER} " + sp); //cout << " (" << special << ")";
+            }
+            cout << block.Format(cleanFmt(fmt)) << "\n";
         }
     }
 
@@ -123,15 +122,12 @@ public:
 
 //---------------------------------------------------------------
 bool lookCloser(CBlock& block, void *data) {
-//    cout << "Checking block: " << block.blockNumber << " (" << dateFromTimeStamp(block.timestamp) << ")";
+
     CBlockFinder *bf = reinterpret_cast<CBlockFinder*>(data);
     if (block.timestamp <= bf->ts) {
-//        cout << "...saved";
         bf->found = block.blockNumber;
-//        cout << "\n";
         return true;
     }
-//    cout << "\n";
     return false;
 }
 

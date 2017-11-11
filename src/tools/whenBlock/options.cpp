@@ -44,35 +44,38 @@ bool COptions::parseArguments(SFString& command) {
 
             alone = true;
 
-        } else if (arg.ContainsAny(":- ") && countOf('-',arg) > 1 && !arg.startsWith("-")) {
-
-            if (isList)
-                return usage("The --list option must appear alone on the line. Quitting...");
-
-            // If we're here, we better have a good date, assume we don't
-            foundOne = false;
-            SFString str = arg.Substitute(" ", ";").Substitute("-", ";").Substitute("_", ";")
-                                .Substitute(":", ";").Substitute(";UTC", "");
-            str = nextTokenClear(str,'.');
-            SFTime date = grabDate(str);
-            if (date == earliestDate)
-                return usage("Invalid date: '" + orig + "'. Quitting...");
-            if (date > Now())
-                return usage("Date '" + date.Format(FMT_JSON) + "' is in the future. No such block found. Quitting...");
-            if (date < SFTime(2015,07,30,15,25,00)) { // first block was at 15:26:00
-                cout << "The date you specified (";
-                cout << cTeal << orig << cOff;
-                cout << ") is before the first block. Quitting...\n";
-                return false;
-            }
-            foundOne = true;
-            requests[requests.getCount()] = "date:" + asString(toTimestamp(date));
-
         } else if (arg.startsWith('-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
                 return usage("Invalid option: '" + orig + "'. Quitting...");
             }
+
+        } else if (arg.ContainsAny(":- ") && countOf('-',arg) > 1) {
+
+            ASSERT(!arg.startsWith("-"));
+            if (isList)
+                return usage("The --list option must appear alone on the line. Quitting...");
+
+            SFTime date = grabDate(arg);
+            if (date == earliestDate) {
+                return usage("Invalid date: '" + orig + "'. Quitting...");
+
+            } else if (date > Now()) {
+                cout << "The date you specified (";
+                cout << cTeal << orig << cOff;
+                cout << ") is in the future. No such block. Quitting...\n";
+                return false;
+
+            } else if (date < SFTime(2015,07,30,15,25,00)) {
+                // first block was at 15:26:00
+                cout << "The date you specified (";
+                cout << cTeal << orig << cOff;
+                cout << ") is before the first block. Quitting...\n";
+                return false;
+            }
+
+            foundOne = true;
+            requests[requests.getCount()] = "date:" + asString(toTimestamp(date));
 
         } else {
 
@@ -169,7 +172,15 @@ SFTime grabDate(const SFString& strIn) {
         return earliestDate;
     }
 
-    SFString str = strIn.Substitute(";", "");
+//#error
+    SFString str = strIn;
+    str.ReplaceAny(" -:",";");
+    str.Replace(";UTC", "");
+    str = nextTokenClear(str,'.');
+
+    // Expects four number year, two number month and day at a minimum. Fields may be separated by '-' or ';'
+    //    YYYYMMDD or YYYY;MM;DD
+    str.ReplaceAll(";","");
     if (str.Contains("T")) {
         str.Replace("T","");
         if      (str.length() == 10) str += "0000";
@@ -192,6 +203,12 @@ SFTime grabDate(const SFString& strIn) {
     // If any of them was not an unsigned int, it's a fail
     if (y == NP || m == NP || d == NP || h == NP || mn == NP || s == NP)
         return earliestDate;
+
+    if (m > 12) return earliestDate;
+    if (d > 31) return earliestDate;
+    if (h > 23) return earliestDate;
+    if (mn > 59) return earliestDate;
+    if (s > 59) return earliestDate;
 
     return SFTime(y, m, d, h, mn, s);
 }
