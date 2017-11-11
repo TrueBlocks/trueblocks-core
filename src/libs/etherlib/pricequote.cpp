@@ -254,7 +254,7 @@ bool loadPriceData(CPriceQuoteArray& quotes, bool freshen, SFString& message, ui
             archive >> quotes;
             archive.Close();
             if (verbose) {
-                SFString date = lastRead.Format(FMT_DEFAULT);
+                SFString date = lastRead.Format(FMT_JSON);
                 SFString count = asString(quotes.getCount());
                 if (isTestMode()) {
                     date = "Now";
@@ -389,7 +389,7 @@ bool loadPriceData(CPriceQuoteArray& quotes, bool freshen, SFString& message, ui
     }
 
     if (!reportAtEnd) {
-        SFString date = lastRead.Format(FMT_DEFAULT);
+        SFString date = lastRead.Format(FMT_JSON);
         SFString count = asString(quotes.getCount());
         if (isTestMode()) {
             date = "Now";

@@ -57,7 +57,7 @@ namespace qblocks {
         SFString ret, in = inHex.startsWith("0x") ? inHex.substr(2) : inHex;
         while (!in.empty())
         {
-            SFString nibble = in.Left(2);
+            SFString nibble = in.substr(0,2);
             in = in.substr(2);
             ret += (char)hex2Ascii((char*)(const char*)nibble);
         }
@@ -157,7 +157,7 @@ namespace qblocks {
         if (ret.length() < 18)
             ret = padLeft(_value, 18).Substitute(" ", "0");
         ret.Reverse();
-        ret = ret.Left(18) + "." + ret.substr(18);
+        ret = ret.substr(0,18) + "." + ret.substr(18);
         ret.Reverse();
         ret = StripLeading(ret, '0');
         if (ret.startsWith('.'))
@@ -259,7 +259,7 @@ namespace qblocks {
 
     //--------------------------------------------------------------------------------------------------------------
     extern SFTime      dateFromTimeStamp(timestamp_t tsIn);
-    extern SFTime      parseDate(const SFString& str, int dir = 0);  // -1 BOD, 0 MIDDAY, 1 EOD
+    extern SFTime      parseDate(const SFString& str);
 
     extern timestamp_t toTimestamp(const SFTime&   timeIn);
     extern timestamp_t toTimestamp(const SFString& timeIn);

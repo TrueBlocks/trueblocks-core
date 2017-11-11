@@ -289,16 +289,16 @@ baseClass: CBaseNode
 	  fieldID: 1004
 	  fieldType: T_TEXT TS_STRING 131122
 	  hidden: 0
-	fieldName: txDate
+	fieldName: timestamp
 	  fieldID: 1005
-	  fieldType: T_DATE TS_DATE 262149
+	  fieldType: T_TIMESPAN TS_NUMERAL 65551
 	  hidden: 0
 	fieldName: balance
 	  fieldID: 1006
 	  fieldType: T_NUMBER TS_NUMERAL 65561
 	  hidden: 0
 {
-  "txDate": "1700-01-01 00:00:01 UTC",
+  "timestamp": 0,
   "balance": 0
 }
 

@@ -394,7 +394,7 @@ SFString CFunction::encodeItem(void) const {
     SFString ret;
 extern bool getSha3(const SFString& hexIn, SFString& shaOut);
     getSha3(hex, ret);
-    ret = (type == "event" ? ret : ret.Left(10));
+    ret = (type == "event" ? ret : ret.substr(0,10));
     return ret;
 }
 // EXISTING_CODE

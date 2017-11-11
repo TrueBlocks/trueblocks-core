@@ -15,9 +15,6 @@
 //EXISTING_CODE
 
 //-----------------------------------------------------------------------
-#define cleanFmt(str) ((str).Substitute("\\n\\\n", "\\n").Substitute("\n", "").Substitute("\\n", "\r\n").Substitute("\\t", "\t"))
-
-//-----------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
     parselib_init();

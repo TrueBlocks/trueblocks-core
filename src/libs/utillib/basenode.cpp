@@ -491,15 +491,15 @@ namespace qblocks {
     SFString decBigNum(const SFString& str) {
         SFString ret = str;
         size_t len = ret.length();
-        if (len > 29) ret = ret.Left(1) + "." + StripTrailing(ret.substr(1), '0') + "e+29";
-        else if (len >28) ret = ret.Left(1) + "." + StripTrailing(ret.substr(1), '0') + "e+28";
-        else if (len > 27) ret = ret.Left(1) + "." + StripTrailing(ret.substr(1), '0') + "e+27";
-        else if (len > 26) ret = ret.Left(1) + "." + StripTrailing(ret.substr(1), '0') + "e+26";
-        else if (len > 25) ret = ret.Left(1) + "." + StripTrailing(ret.substr(1), '0') + "e+25";
-        else if (len > 24) ret = ret.Left(1) + "." + StripTrailing(ret.substr(1), '0') + "e+24";
-        else if (len > 23) ret = ret.Left(1) + "." + StripTrailing(ret.substr(1), '0') + "e+23";
-        else if (len > 22) ret = ret.Left(1) + "." + StripTrailing(ret.substr(1), '0') + "e+22";
-        else if (len > 21) ret = ret.Left(1) + "." + StripTrailing(ret.substr(1), '0') + "e+21";
+        if (len > 29) ret = ret.substr(0,1) + "." + StripTrailing(ret.substr(1), '0') + "e+29";
+        else if (len >28) ret = ret.substr(0,1) + "." + StripTrailing(ret.substr(1), '0') + "e+28";
+        else if (len > 27) ret = ret.substr(0,1) + "." + StripTrailing(ret.substr(1), '0') + "e+27";
+        else if (len > 26) ret = ret.substr(0,1) + "." + StripTrailing(ret.substr(1), '0') + "e+26";
+        else if (len > 25) ret = ret.substr(0,1) + "." + StripTrailing(ret.substr(1), '0') + "e+25";
+        else if (len > 24) ret = ret.substr(0,1) + "." + StripTrailing(ret.substr(1), '0') + "e+24";
+        else if (len > 23) ret = ret.substr(0,1) + "." + StripTrailing(ret.substr(1), '0') + "e+23";
+        else if (len > 22) ret = ret.substr(0,1) + "." + StripTrailing(ret.substr(1), '0') + "e+22";
+        else if (len > 21) ret = ret.substr(0,1) + "." + StripTrailing(ret.substr(1), '0') + "e+21";
         ret.Replace(".e+", "e+");
         return ret;
     }
@@ -601,12 +601,12 @@ namespace qblocks {
         uint32_t maxWidth = 0xdeadbeef;
         bool rightJust = false;
         if (fieldName.ContainsI("w:")) {
-            ASSERT(fieldName.Left(2) % "w:");  // must be first modifier in the string
+            ASSERT(fieldName.substr(0,2) % "w:");  // must be first modifier in the string
             fieldName.ReplaceI("w:", EMPTY);   // get rid of the 'w:'
             maxWidth = toLong32u(fieldName);   // grab the width
             nextTokenClear(fieldName, ':');    // skip to the start of the fieldname
         } else if (fieldName.ContainsI("r:")) {
-            ASSERT(fieldName.Left(2) % "r:");  // must be first modifier in the string
+            ASSERT(fieldName.substr(0,2) % "r:");  // must be first modifier in the string
             fieldName.ReplaceI("r:", EMPTY);   // get rid of the 'w:'
             maxWidth = toLong32u(fieldName);   // grab the width
             nextTokenClear(fieldName, ':');    // skip to the start of the fieldname
@@ -614,8 +614,8 @@ namespace qblocks {
         }
 
         //--------------------------------------------------------------------
-#define truncPad(str, size)  (size == 0xdeadbeef ? str : padRight(str.Left(size), size))
-#define truncPadR(str, size) (size == 0xdeadbeef ? str : padLeft (str.Left(size), size))
+#define truncPad(str, size)  (size == 0xdeadbeef ? str : padRight(str.substr(0,size), size))
+#define truncPadR(str, size) (size == 0xdeadbeef ? str : padLeft (str.substr(0,size), size))
 
         // Get the value of the field.  If the value of the field is empty we return empty for the entire token.
         SFString fieldValue = (func)(fieldName, data);

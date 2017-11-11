@@ -98,7 +98,7 @@ void CAccount::finishParse() {
     // EXISTING_CODE
     for (uint32_t i = 0 ; i < transactions.getCount() ; i++) {
         CTransaction *t = &transactions[i];
-        SFString encoding = t->input.Left(10);
+        SFString encoding = t->input.substr(0,10);
         t->funcPtr = abi.findFunctionByEncoding(encoding);
     }
     // EXISTING_CODE

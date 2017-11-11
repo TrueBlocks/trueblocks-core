@@ -368,14 +368,6 @@ namespace qblocks {
     }
 
     //---------------------------------------------------------------------------------------
-    SFString SFString::Left(size_t len) const
-    {
-        len = min(length(),len);
-        SFString ret = extract(0, len).c_str();
-        return ret;
-    }
-
-    //---------------------------------------------------------------------------------------
     // Find functions
 
     //---------------------------------------------------------------------------------------
@@ -459,7 +451,7 @@ namespace qblocks {
         size_t i = find(what);
         if (i != NOPOS)
         {
-            *this = Left(i) + with + substr(i + what.length());
+            *this = substr(0,i) + with + substr(i + what.length());
         }
     }
 
@@ -468,7 +460,7 @@ namespace qblocks {
     {
         size_t i = findI(what);
         if (i != NOPOS)
-            *this = Left(i) + with + substr(i + what.length());
+            *this = substr(0,i) + with + substr(i + what.length());
     }
 
     //---------------------------------------------------------------------------------------
@@ -816,7 +808,7 @@ namespace qblocks {
         SFString space;
         for (size_t i=0;i<n;i++)
             space += "&nbsp;";
-        SFString ret = space + str.Left(min(width, len)) + space;
+        SFString ret = space + str.substr(0,min(width, len)) + space;
 
         return ret;
     }
@@ -852,7 +844,7 @@ namespace qblocks {
         }
 #endif
         SFString f1 = "</" + field + ">";
-        SFString ret = in.Left(in.find(f1));
+        SFString ret = in.substr(0,in.find(f1));
 
         SFString f2 = "<" + field + ">";
         ret = ret.substr(ret.find(f2)+f2.length());
@@ -880,7 +872,7 @@ namespace qblocks {
         }
 #endif
         SFString f = "</" + field + ">";
-        SFString ret = in.Left(in.find(f));
+        SFString ret = in.substr(0,in.find(f));
 
         f.Replace("</", "<");
         ret = ret.substr(ret.find(f)+f.length());
@@ -932,26 +924,26 @@ namespace qblocks {
         int64_t i = findExact(what, sep, replaceables);
         if (i != NOPOS)
         {
-            *this = Left(i) + with + substr(i + what.length());
+            *this = substr(0,i) + with + substr(i + what.length());
         }
     }
-    
+
     //---------------------------------------------------------------------------------------
     void SFString::ReplaceExactI(const SFString& what, const SFString& with, char sep, const SFString& replaceables)
     {
         int64_t i = findExactI(what, sep, replaceables);
         if (i != NOPOS)
         {
-            *this = Left(i) + with + substr(i + what.length());
+            *this = substr(0,i) + with + substr(i + what.length());
         }
     }
-    
+
     //---------------------------------------------------------------------------------------
     void SFString::ReplaceAllExact(const SFString& what, const SFString& with, char sep, const SFString& replaceables)
     {
         if (what.empty())
             return;
-        
+
         if (with.ContainsExact(what, sep, replaceables))
         {
             // may cause endless recursions so do it in two steps instead
@@ -959,7 +951,7 @@ namespace qblocks {
             ReplaceAllExact("]QXXQX[", with, sep, replaceables);
             return;
         }
-        
+
         int64_t i = findExact(what, sep, replaceables);
         while (i != NOPOS)
         {
@@ -967,13 +959,13 @@ namespace qblocks {
             i = findExact(what, sep, replaceables);
         }
     }
-    
+
     //---------------------------------------------------------------------------------------
     void SFString::ReplaceAllExactI(const SFString& what, const SFString& with, char sep, const SFString& replaceables)
     {
         if (what.empty())
             return;
-        
+
         if (with.ContainsExactI(what, sep, replaceables))
         {
             // may cause endless recursions so do it in two steps instead
@@ -1057,4 +1049,3 @@ namespace qblocks {
     }
 #endif
 }  // namespace qblocks
-
