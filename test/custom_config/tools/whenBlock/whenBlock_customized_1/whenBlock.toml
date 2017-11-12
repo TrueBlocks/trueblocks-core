@@ -1,0 +1,7 @@
+[version]
+current=0.3.0
+
+[[specials]]
+list = [
+	{ name = "myblock",          value = "666"       },
+]
