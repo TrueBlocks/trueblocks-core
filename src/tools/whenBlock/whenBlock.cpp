@@ -47,15 +47,11 @@ int main(int argc, const char *argv[]) {
                 }
             }
 
-            bool vv = !isTestMode() && verbose && !options.alone;
             CBlock block;
             if (mode == "block") {
-                if (vv) { cerr << "finding by block number\n"; }
                 queryBlock(block, value, false, false);
 
             } else if (mode == "date") {
-                if (vv) { cerr << "finding by date\n"; }
-
                 if (!fileExists(miniBlockCache)) {
                     cout << "Looking up blocks by date is not supported without a miniBlock ";
                     cout << "database, which is an advanced feature.\n";
@@ -86,7 +82,7 @@ int main(int argc, const char *argv[]) {
             }
             if (verbose && !special.empty()) {
                 SFString sp = "(" + special + ")";
-                fmt.Replace("{BLOCKNUMBER}", "{BLOCKNUMBER} " + sp); //cout << " (" << special << ")";
+                fmt.Replace("{BLOCKNUMBER}", "{BLOCKNUMBER} " + sp);
             }
             cout << block.Format(cleanFmt(fmt)) << "\n";
         }
