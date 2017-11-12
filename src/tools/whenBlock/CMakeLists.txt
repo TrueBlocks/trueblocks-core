@@ -48,6 +48,7 @@ run_test("whenBlock_special_block_daohack"        "daohack" " -v")
 run_test("whenBlock_special_block_daofork"        "daofork" " -v")
 run_test("whenBlock_special_block_spurious"       "spurious")
 run_test("whenBlock_special_block_not_found"      "idonotexist")
+run_test("whenBlock_customized_1" "myblock")
 
 run_special_test("whenBlock_02"                           "--file:blocks.txt" " -v")
 run_special_test("whenBlock_03"                           "--file:dates.txt")

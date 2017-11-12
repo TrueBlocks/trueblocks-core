@@ -23,6 +23,7 @@ import sys
 import subprocess
 import filecmp
 import errno
+import shutil
 
 #-------------------------------------------------------
 # Print to standard error
@@ -52,6 +53,46 @@ def delete_file(file):
             exit(2)
 
 #-------------------------------------------------------
+# Do a file copy passing src and destination
+#-------------------------------------------------------
+def copy_file(srcfile, destfile):
+    shutil.copyfile(srcfile, destfile)
+
+#-------------------------------------------------------
+# Update qblocks configuration with custom one (if defined)
+#-------------------------------------------------------
+def set_custom_config(custompath):
+    if os.path.exists(custompath):
+
+        for file in CUSTOM_FILES:
+            # Build customized file path
+            customfilepath = custompath + file
+            qbfilepath = QUICKBLOCKS_PATH + file
+
+            if os.path.isfile(customfilepath) and os.path.isfile(qbfilepath):
+                qbfilepath_tmp = qbfilepath + TMP_EXT
+                copy_file(qbfilepath, qbfilepath_tmp)
+                copy_file(customfilepath, qbfilepath)
+
+            # else - not present - use default
+    # else  - No custom configuration defined - use default one
+
+#-------------------------------------------------------
+# Restore original qblocks configuration once test run
+# Any tmp file is restored 
+#-------------------------------------------------------
+def restore_qblocks_config(custompath):
+    for file in CUSTOM_FILES:
+        qbfilepath = QUICKBLOCKS_PATH + file
+        qbfilepath_tmp = qbfilepath + TMP_EXT
+
+        if os.path.isfile(qbfilepath) and os.path.isfile(qbfilepath_tmp):
+            copy_file(qbfilepath_tmp, qbfilepath)
+            delete_file(qbfilepath_tmp)
+
+        # else - not present - do nothing
+
+#-------------------------------------------------------
 # Delete any cache files for input addr
 #-------------------------------------------------------
 def clear_cache(addr):
@@ -60,16 +101,15 @@ def clear_cache(addr):
     # NOTE: THIS IS BROKEN SINCE WE MOVED ./slurp AND ./abis TO
     #       THE BINARY CACHE. THIS WON'T WORK
     #
-    QUICKBLOCKS_DIR_NAME = '.quickblocks'
     SLURP_DIR_NAME = 'slurps'
     ABIS_DIR_NAME = 'abis'
 
     home = os.environ['HOME']
 
     # Build cache files path for input address
-    slurp_cache = home + '/' + QUICKBLOCKS_DIR_NAME + '/' + SLURP_DIR_NAME + '/' + addr + '.bin'
-    abi_cache = home + '/' + QUICKBLOCKS_DIR_NAME + '/' + ABIS_DIR_NAME + '/' + addr + '.abi'
-    json_cache = home + '/' + QUICKBLOCKS_DIR_NAME + '/' + ABIS_DIR_NAME + '/' + addr + '.json'
+    slurp_cache = QUICKBLOCKS_PATH + SLURP_DIR_NAME + '/' + addr + '.bin'
+    abi_cache = QUICKBLOCKS_PATH + ABIS_DIR_NAME + '/' + addr + '.abi'
+    json_cache = QUICKBLOCKS_PATH + ABIS_DIR_NAME + '/' + addr + '.json'
 
     # Delete them
     delete_file(slurp_cache)
@@ -83,8 +123,14 @@ def clear_cache(addr):
 # Main program
 #-------------------------------------------------------
 
-# Debugging input array
-# printe(sys.argv)
+# We define here the array of files that we can customize, add more to this array in the future
+CUSTOM_FILES = [ 'whenBlock.toml' ]
+
+# Cache path
+QUICKBLOCKS_PATH = os.environ['HOME'] + '/.quickBlocks/'
+
+# TMP extension for files
+TMP_EXT = '.tmp'
 
 # When at environment we have defined an address, we clear its cache before running the test
 cache_addr = os.getenv('CACHE_ADDR')
@@ -117,8 +163,14 @@ if os.path.isfile(gold_file) == False:
 # Then add the output file and redirections
 command = sys.argv[1:-2]
 
-# Debug only
-# printe(command)
+# Before running the test, update custom configuration (if required)
+# The custom configurations are expected at the same level than "gold/working" folders inside "custom_config" folder
+# We keep the same structure of directories, but we need to define an additional subfolder per customized test
+# Example: <path>/test/custom_config/tools/whenBlock/whenBlock_custom1/whenBlock.toml  ("whenBlock_custom1" intermediate folder is required)
+test_name = os.path.splitext(os.path.basename(gold_file))[0]
+custom_config_path = os.path.dirname(gold_file).replace("gold", "custom_config", 1) + '/' + test_name + '/'
+
+set_custom_config(custom_config_path)
 
 # Open output file and execute the command with redirections
 with open(output_file, 'w') as f:
@@ -127,6 +179,9 @@ with open(output_file, 'w') as f:
     os.environ["TEST_MODE"] = "true"
     os.environ["NO_COLOR"] = "true"
     result = subprocess.call(command, stdout=f, stderr=subprocess.STDOUT)
+
+# Once test is executed, restore qblocks default config if it changed
+restore_qblocks_config(custom_config_path)
 
 if result:
     printe("ERROR: Command execution failed with error %d" % result)
