@@ -97,10 +97,6 @@ def restore_qblocks_config(custompath):
 #-------------------------------------------------------
 def clear_cache(addr):
     # Define the path where we expect the quickblocks cache files
-    #
-    # NOTE: THIS IS BROKEN SINCE WE MOVED ./slurp AND ./abis TO
-    #       THE BINARY CACHE. THIS WON'T WORK
-    #
     SLURP_DIR_NAME = 'slurps'
     ABIS_DIR_NAME = 'abis'
 
