@@ -55,6 +55,7 @@ def runwatcher():
     os.system('miniBlocks  freshen')
 
     # Create the vector of contracts we want to watch
+#    contracts = [ 'augur', 'bnt', 'dao', 'etherTip', 'ENS', 'firstBlood', 'gnosis', 'paritySMS', 'singular', 'tenX', 'whiteHat', 'tierion']
     contracts = [ 'accts', 'augur', 'bnt', 'dao', 'etherTip', 'ENS', 'firstBlood', 'gnosis', 'paritySMS', 'singular', 'tenX', 'whiteHat', 'tierion']
     for contract in contracts:
         watchcontract(contract)
