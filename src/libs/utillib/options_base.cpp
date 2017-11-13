@@ -33,7 +33,8 @@ namespace qblocks {
     //--------------------------------------------------------------------------------
     bool COptionsBase::prepareArguments(int argc, const char *argv[]) {
 
-        if (SFString(getenv("NO_COLOR")) == "true")
+        SFString env = getenv("NO_COLOR");
+        if (SFString(env) == "true")
             colorsOff();
 
         programName = basename((char*)argv[0]);
