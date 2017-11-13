@@ -14,7 +14,6 @@ CParams params[] = {
     CParams("-current",                        "Report on the current price (i.e. -at:now)"),
     CParams("-freshen",                        "Freshen database (append new data)"),
     CParams("-period:<5|15|30|*120|240|1440>", "Display prices in this increment. One of [5|15|30|120*|240|1440]"),
-//    CParams("-when:<0-23>",                    "Hour on which to start display. Integer between 0-23"),
     CParams("",                                "Freshen and/or display Ethereum price data and other purposes.\n"),
 };
 uint32_t nParams = sizeof(params) / sizeof(CParams);
@@ -46,12 +45,6 @@ bool COptions::parseArguments(SFString& command) {
                 if (!isUnsigned(arg))
                     return usage("Timestamp expected: " + orig);
             }
-
-//        } else if (arg.startsWith("-w:") || arg.startsWith("--when:")) {
-//            arg = orig.Substitute("-w:","").Substitute("--when:","");
-//            hour = newUnsigned32(arg);
-//            if (!isUnsigned(arg) || hour > 23)
-//                return usage("Number between 0 and 23 expected: " + orig);
 
         } else if (arg.startsWith("-p:") || arg.startsWith("--period:")) {
             arg = orig.Substitute("-p:","").Substitute("--period:","");
