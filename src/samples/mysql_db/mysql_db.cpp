@@ -35,30 +35,30 @@ extern int displayDbData(void);
 //--------------------------------------------------------------------------
 int main() {
 
-       // Stablish connection with mysql server
-       if(connectServer()) {
-           return -1;
-       }
+    // Stablish connection with mysql server
+    if(connectServer()) {
+        return -1;
+    }
 
-       // Create db and tables
-       if(initDb()) {
-           disconnectServer();
-           return -1;
-       }
+    // Create db and tables
+    if(initDb()) {
+        disconnectServer();
+        return -1;
+    }
 
-       // Insert some dummy data
-       if(addDbData()) {
-           disconnectServer();
-           return -1;
-       }
+    // Insert some dummy data
+    if(addDbData()) {
+        disconnectServer();
+        return -1;
+    }
 
-       // Display entries
-       displayDbData();
+    // Display entries
+    displayDbData();
 
-       // Disconnect from server
-       disconnectServer();
+    // Disconnect from server
+    disconnectServer();
 
-       return 0;
+    return 0;
 }
 
 //--------------------------------------------------------------------------
