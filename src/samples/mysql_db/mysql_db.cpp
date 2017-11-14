@@ -181,10 +181,8 @@ int displayDbData() {
 
     if(result) {
         // Get now the rows information present in result
-        // row will be an array with as many fields as select filter (we request '*' = 2
-        fields )
+        // row will be an array with as many fields as select filter (we request '*' = 2 fields )
         MYSQL_ROW row;
-
         while ((row = mysql_fetch_row(result)))  {
             cout << "BlockNum: " << row[0] << ", timestamp: " << row[1] << endl;
         }
