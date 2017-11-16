@@ -169,6 +169,11 @@ bool COptions::parseArguments(SFString& command) {
     if (!blocks.hasBlocks())
         return usage("You must specify at least one block.");
 
+    format = getGlobalConfig()->getDisplayStr(false, "");
+    if (format.Contains("{PRICE:CLOSE}")) {
+//        priceBlocks = true;
+    }
+
     return true;
 }
 
@@ -178,13 +183,15 @@ void COptions::Init(void) {
     nParamsRef = nParams;
     pOptions = this;
 
-    isCheck    = false;
-    isRaw      = false;
-    terse      = false;
-    force      = false;
-    normalize  = false;
-    asks4Cache = false;
-    quiet      = 0; // quiet has levels
+    isCheck     = false;
+    isRaw       = false;
+    terse       = false;
+    force       = false;
+    normalize   = false;
+    asks4Cache  = false;
+    quiet       = 0; // quiet has levels
+    format      = "";
+    priceBlocks = false;
     blocks.Init();
 }
 
