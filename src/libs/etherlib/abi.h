@@ -135,6 +135,8 @@ extern uint64_t verbose;
 #define REP_FREQ   11
 #define REP_INFREQ 563
 void clearAbis(void);
+void rebuildFourByteDB(void);
+CFunction *findFunctionByEncoding(const SFString& encoding);
 // EXISTING_CODE
 }  // namespace qblocks
 
