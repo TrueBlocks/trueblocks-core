@@ -13,7 +13,8 @@
 extern bool     processMerge(COptions& options);
 extern uint64_t processExtract(COptions& options);
 extern uint64_t processRenumber(COptions& options);
-extern SFString display(const SFString& msg, const COptions& opt, uint64_t nRecords, const CAcctCacheItem& item, bool pad);
+extern const char *STR_DEFAULT_DISPLAY;
+extern const char *STR_TERSE_DISPLAY;
 
 //-------------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
@@ -32,6 +33,9 @@ int main(int argc, const char *argv[]) {
         SFString command = nextTokenClear(options.commandList, '\n');
         if (!options.parseArguments(command))
             return 0;
+
+        SFString def = (options.asData ? STR_TERSE_DISPLAY : STR_DEFAULT_DISPLAY);
+        SFString fmtStr = getGlobalConfig()->getDisplayStr(options.asData, def);
 
         // If this is a merge, do the merge and then quit...
         if (!processMerge(options))
@@ -99,11 +103,9 @@ int main(int argc, const char *argv[]) {
 
                                 } else if (item.blockNum > latest) {
                                     cout << "\tcur: " << asYellow(item) << " prev: " << asYellow(lastItem) << "\n";
-                                    cout << display("\tBlock number larger than latestBlock (" + asStringU(latest) + ") found at record: ",
-                                                    options,
-                                                    nRecords,
-                                                    item,
-                                                    false) << ". Quitting...\n";
+                                    cout << "\tBlock number larger than latestBlock (" << latest
+                                            << ") found at record: " << asYellow(nRecords)
+                                            << " current: " << asYellow(item) << ". Quitting...\n";
                                     return 0;
                                 }
                                 lastItem = item;
@@ -139,8 +141,10 @@ int main(int argc, const char *argv[]) {
                                 }
 
                             } else if (mode == "list") {
-                                if (!(nRecords % options.skip))
-                                    cout << display("", options, nRecords, item, true) << "\n";
+                                if (!(nRecords % options.skip)) {
+                                    cout << item.Format(fmtStr);
+                                }
+
                             } else {
                                 return usage("Unknown mode: " + mode + ". Quitting...\n");
                             }
@@ -343,19 +347,8 @@ uint64_t processRenumber(COptions& options) {
     return totalRenumered;
 }
 
-//--------------------------------------------------------------------------------
-SFString display(const SFString& msg, const COptions& opt, uint64_t nRecords, const CAcctCacheItem& item, bool pad) {
-    CStringExportContext ctx;
-    if (opt.blockOnly) {
-        ctx << cYellow << (pad ? padNum9(item.blockNum) : asStringU(item.blockNum)) << cOff;
+//-------------------------------------------------------------------------
+const char *STR_DEFAULT_DISPLAY = "blockNum: [{BLOCKNUM}] transID: [{TRANSINDEX}] which: [{WHICH}]\\n";
 
-    } else {
-        if (!msg.empty()) {
-            ctx << msg << cYellow << (pad ? padNum9(nRecords) : asStringU(nRecords)) << cOff << " ";
-        }
-        ctx << "blockNum: " << cYellow << (pad ? padNum9(item.blockNum) : asStringU(item.blockNum)) << cOff;
-        ctx << " transID: "  << cYellow << (pad ? padNum5(item.transIndex) : asStringU(item.transIndex)) << cOff;
-        ctx << " which: "    << cYellow << (pad ? padNum5((uint64_t)item.which) : asString(item.which)) << cOff;
-    }
-    return ctx.str;
-}
+//-------------------------------------------------------------------------
+const char *STR_TERSE_DISPLAY = "[{BLOCKNUM}]|[{TRANSINDEX}]|[{WHICH}]\\n";

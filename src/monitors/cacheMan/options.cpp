@@ -10,8 +10,8 @@
 //---------------------------------------------------------------------------------------------------
 CParams params[] = {
     CParams("~filenames",      "path(s) of files to check, merge, fix or display (default=display)"),
-    CParams("-blockOnly",      "in 'list' mode, render block number only (used for testing)"),
     CParams("-check",          "check for duplicates and other problems in the cache"),
+    CParams("-data",           "in 'list' mode, render results as data (i.e export mode)"),
     CParams("-fix",            "remove duplicates from the cache (if any)"),
     CParams("-list",           "list the contents of the cache (the default if no other option)"),
     CParams("-stats",          "report statistics on the cache"),
@@ -27,6 +27,9 @@ uint32_t nParams = sizeof(params) / sizeof(CParams);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(SFString& command) {
+
+    if (!standardOptions(command))
+        return false;
 
     Init();
     while (!command.empty()) {
@@ -89,8 +92,9 @@ bool COptions::parseArguments(SFString& command) {
         } else if (arg == "-m" || arg == "--merge") {
             isMerge = true;
 
-        } else if (arg == "-b" || arg == "--blockOnly") {
-            blockOnly = true;
+        } else if (arg == "-d" || arg == "--data") {
+            asData = true;
+            colorsOff();
 
         } else if (arg.startsWith("-k:") || arg.startsWith("--skip:")) {
             SFString arg1 = arg.Substitute("-k:","").Substitute("--skip:","");
@@ -153,7 +157,7 @@ void COptions::Init(void) {
     trunc = 0;
     extractID = NOPOS;
     isMerge = false;
-    blockOnly = false;
+    asData = false;
     wantsStats = false;
     renums.Clear();
     skip = 1;

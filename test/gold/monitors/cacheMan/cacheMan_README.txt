@@ -2,7 +2,7 @@ cacheMan argc: 2 [1:-th]
 cacheMan -th 
 #### Usage
 
-`Usage:`    cacheMan [-b|-c|-f|-l|-s|-e|-t|-m|-v|-h] filenames  
+`Usage:`    cacheMan [-c|-d|-f|-l|-s|-e|-t|-m|-v|-h] filenames  
 `Purpose:`  Show the contents of an account cache and/or fix it by removing duplicate records.
              
 `Where:`  
@@ -10,8 +10,8 @@ cacheMan -th
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
 |  | filenames | path(s) of files to check, merge, fix or display (default=display) |
-| -b | --blockOnly | in 'list' mode, render block number only (used for testing) |
 | -c | --check | check for duplicates and other problems in the cache |
+| -d | --data | in 'list' mode, render results as data (i.e export mode) |
 | -f | --fix | remove duplicates from the cache (if any) |
 | -l | --list | list the contents of the cache (the default if no other option) |
 | -s | --stats | report statistics on the cache |

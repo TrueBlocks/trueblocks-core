@@ -15,7 +15,7 @@ public:
     blknum_t trunc;
     uint64_t extractID;
     bool isMerge;
-    bool blockOnly;
+    bool asData;
     bool wantsStats;
     SFIntArray renums;
     uint64_t skip;
