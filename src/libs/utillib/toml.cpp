@@ -197,6 +197,16 @@ extern SFString collapseArrays(const SFString& inStr);
     }
 
     //-------------------------------------------------------------------------
+    SFString CToml::getDisplayStr(bool terse, const SFString& def, const SFString& color) const {
+        SFString fmt = getConfigStr("display", (terse ? "terse" : "format"), "<not_set>");
+        if (fmt == "<not_set>")
+            fmt = def;
+        fmt.ReplaceAll("{", color+"{");
+        fmt.ReplaceAll("}", "}"+cOff);
+        return cleanFmt(fmt);
+    }
+
+    //-------------------------------------------------------------------------
     void CToml::setConfigStr(const SFString& group, const SFString& keyIn, const SFString& value) {
         bool comment = keyIn.startsWith('#');
         SFString key = (comment ? keyIn.substr(1) : keyIn);
