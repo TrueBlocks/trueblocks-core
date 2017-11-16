@@ -11,9 +11,9 @@
 
 //-------------------------------------------------------------------------
 extern bool     processMerge(COptions& options);
-extern SFUint32 processExtract(COptions& options);
-extern SFUint32 processRenumber(COptions& options);
-extern SFString display(const SFString& msg, const COptions& opt, SFUint32 nRecords, const CAcctCacheItem& item, bool pad);
+extern uint64_t processExtract(COptions& options);
+extern uint64_t processRenumber(COptions& options);
+extern SFString display(const SFString& msg, const COptions& opt, uint64_t nRecords, const CAcctCacheItem& item, bool pad);
 
 //-------------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
@@ -44,7 +44,7 @@ int main(int argc, const char *argv[]) {
             if (mode == "extract")
             {
                 // returns the number of transactions extracted
-                SFUint32 n = processExtract(options);
+                uint64_t n = processExtract(options);
                 if (!n)
                     return usage("No records were extracted for contact: " + asStringU(options.extractID) + "\n");
                 cerr << "\t" << asStringU(n) << " records were extracted into ./extract.bin\n";
@@ -54,7 +54,7 @@ int main(int argc, const char *argv[]) {
             if (mode == "renum")
             {
                 // returns the number of transactions renumbered
-                SFUint32 n = processRenumber(options);
+                uint64_t n = processRenumber(options);
                 if (!n)
                     return usage("No records were renumberd\n");
                 cerr << "\t" << asStringU(n) << " records were renumbered into ./<fn>_renum.bin\n";
@@ -64,7 +64,7 @@ int main(int argc, const char *argv[]) {
             blknum_t latest = getLatestBlockFromCache();
             for (uint32_t fn=0 ; fn < options.filenames.getCount() ; fn++) {
 
-                SFUint32 nDups = 0, nReversals = 0, nFixed = 0, nRecords = 0, nTruncs = 0;
+                uint64_t nDups = 0, nReversals = 0, nFixed = 0, nRecords = 0, nTruncs = 0;
                 CAcctCacheItem lastItem(0,0,0);
                 CAcctCacheItemArray fixed;
 
@@ -255,7 +255,7 @@ bool processMerge(COptions& options) {
         if (!cache.Lock(options.filenames[i], binaryReadOnly, LOCK_NOWAIT))
             return usage("Could not open file: " + options.filenames[i] + ". Quitting.");
         while (!cache.Eof()) {
-            uint32_t which = 0; SFUint32 blockNum = 0, transID = 0;
+            uint32_t which = 0; uint64_t blockNum = 0, transID = 0;
             cache >> which >> blockNum >> transID;
             merged[merged.getCount()] = CAcctCacheItem(blockNum, transID, renumber ? (int32_t)i : (int32_t)which);
         }
@@ -283,16 +283,16 @@ bool processMerge(COptions& options) {
 }
 
 //-------------------------------------------------------------------------
-SFUint32 processExtract(COptions& options) {
+uint64_t processExtract(COptions& options) {
     cerr << "Transactions for contract " << options.extractID << " are being extracted.\n";
     CAcctCacheItemArray extract;
     for (uint32_t i = 0 ; i < options.filenames.getCount() ; i++) {
         cerr << "\tExtracting from file: " << options.filenames[i] << "\n";
         SFArchive cache(READING_ARCHIVE);
         if (!cache.Lock(options.filenames[i], binaryReadOnly, LOCK_NOWAIT))
-            return (SFUint32)usage("Could not open file: " + options.filenames[i] + ". Quitting.");
+            return (uint64_t)usage("Could not open file: " + options.filenames[i] + ". Quitting.");
         while (!cache.Eof()) {
-            uint32_t which = 0; SFUint32 blockNum = 0, transID = 0;
+            uint32_t which = 0; uint64_t blockNum = 0, transID = 0;
             cache >> which >> blockNum >> transID;
             if (which == options.extractID)
                 extract[extract.getCount()] = CAcctCacheItem(blockNum, transID, (int32_t)which);
@@ -302,7 +302,7 @@ SFUint32 processExtract(COptions& options) {
 
     SFArchive extractFile(WRITING_ARCHIVE);
     if (!extractFile.Lock("./extract.bin", binaryWriteCreate, LOCK_WAIT))
-        return (SFUint32)usage("Could not open extract file: ./extract.bin. Quitting.");
+        return (uint64_t)usage("Could not open extract file: ./extract.bin. Quitting.");
     for (uint32_t i = 0 ; i < extract.getCount() ; i++)
         extractFile << extract[i].which << extract[i].blockNum << extract[i].transIndex;
     extractFile.Release();
@@ -311,9 +311,9 @@ SFUint32 processExtract(COptions& options) {
 }
 
 //-------------------------------------------------------------------------
-SFUint32 processRenumber(COptions& options) {
+uint64_t processRenumber(COptions& options) {
     cerr << "Transactions are being renumbered.\n";
-    SFUint32 totalRenumered = 0;
+    uint64_t totalRenumered = 0;
     for (uint32_t i = 0 ; i < options.filenames.getCount() ; i++) {
         SFString fn = options.filenames[i];
         SFString rn = options.filenames[i].Substitute(".bin","_renum.bin");
@@ -321,13 +321,13 @@ SFUint32 processRenumber(COptions& options) {
 
         SFArchive cache(READING_ARCHIVE);
         if (!cache.Lock(fn, binaryReadOnly, LOCK_NOWAIT))
-            return (SFUint32)usage("Could not open file: " + fn + ". Quitting.");
+            return (uint64_t)usage("Could not open file: " + fn + ". Quitting.");
         SFArchive renum(WRITING_ARCHIVE);
         if (!renum.Lock(rn, binaryWriteCreate, LOCK_WAIT))
-            return (SFUint32)usage("Could not open file: " + rn + ". Quitting.");
+            return (uint64_t)usage("Could not open file: " + rn + ". Quitting.");
 
         while (!cache.Eof()) {
-            uint32_t which = 0; SFUint32 blockNum = 0, transID = 0;
+            uint32_t which = 0; uint64_t blockNum = 0, transID = 0;
             cache >> which >> blockNum >> transID;
             for (uint32_t jj = 0 ; jj < options.renums.getCount() ; jj += 2) {
                 if (which == options.renums[jj]) {
@@ -344,7 +344,7 @@ SFUint32 processRenumber(COptions& options) {
 }
 
 //--------------------------------------------------------------------------------
-SFString display(const SFString& msg, const COptions& opt, SFUint32 nRecords, const CAcctCacheItem& item, bool pad) {
+SFString display(const SFString& msg, const COptions& opt, uint64_t nRecords, const CAcctCacheItem& item, bool pad) {
     CStringExportContext ctx;
     if (opt.blockOnly) {
         ctx << cYellow << (pad ? padNum9(item.blockNum) : asStringU(item.blockNum)) << cOff;

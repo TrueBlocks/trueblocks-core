@@ -1,17 +1,13 @@
 getTrans argc: 2 [1:0x0012] 
 getTrans 0x0012 
 
-  Invalid input.
+  Please specify at least one transaction identifier.
 
-  Usage:    getTrans [-f|-t|-v|-h] <hash|bn.transID|bh.transID>  
-  Purpose:  Retrieve an Ethereum transaction from either QuickBlocks or a running node.
-            --note: 'hash' and 'blockHash' must start with '0x'.  
+  Usage:    getTrans [-r|-v|-h] <transID> [transID...]  
+  Purpose:  Retrieve an Ethereum transaction from the local cache or a running node.  
   Where:    
-	hash                  one or more hashes of Ethereum transactions, or
-	bn.transID            blockNumber.transactionID of one or more Ethereum transactions, or
-	bh.transID            blockHash.transactionID of one or more Ethereum transactions
-	-f  (--fromNode)      retrieve the transaction from the running node (from QuickBlocks otherwise)
-	-t  (--trace)         return the trace of the transaction in addition to regular details
+	trans_list            a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)
+	-r  (--raw)           retrieve raw transaction directly from the running node
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
 	-h  (--help)          display this help screen
 

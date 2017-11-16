@@ -9,20 +9,21 @@
 
 //---------------------------------------------------------------------------------------------------
 CParams params[] = {
-    CParams("-freshen",     "mode: freshen only -- default (do not display transactions from the cache)"),
-    CParams("-showCache",   "mode: show transactions from the cache, and then freshen"),
-    CParams("-cacheOnly",   "mode: display transactions from the cache only (do not freshen)"),
-    CParams("-kBlock",      "start processing at block :k"),
-    CParams("-parse",       "display parsed input data"),
-    CParams("-lo(g)s",      "display smart contract lo(g)s or events"),
-    CParams("-trace",       "display smart contract internal traces"),
-    CParams("-bloom",       "display bloom filter matching"),
-    CParams("-accounting",  "display credits and debits per account and reconcile at each block"),
-    CParams("-list",        "display list of monitored accounts"),
-    CParams("-debug",       "enter debug mode (pause after each transaction)"),
-    CParams("-single",      "if debugging is enable, single step through transactions"),
-    CParams("-rebuild",     "clear cache and reprocess all transcations (may take a long time)"),
-    CParams("",             "Index transactions for a given Ethereum address (or series of addresses).\r\n"),
+    CParams("-freshen",      "mode: freshen only -- default (do not display transactions from the cache)"),
+    CParams("-showCache",    "mode: show transactions from the cache, and then freshen"),
+    CParams("-cacheOnly",    "mode: display transactions from the cache only (do not freshen)"),
+    CParams("-kBlock:<num>", "start processing at block :k"),
+    CParams("-offset:<num>", "offset to kBlock"),
+    CParams("-parse",        "display parsed input data"),
+    CParams("-lo(g)s",       "display smart contract lo(g)s or events"),
+    CParams("-trace",        "display smart contract internal traces"),
+    CParams("-bloom",        "display bloom filter matching"),
+    CParams("-accounting",   "display credits and debits per account and reconcile at each block"),
+    CParams("-list",         "display list of monitored accounts"),
+    CParams("-debug",        "enter debug mode (pause after each transaction)"),
+    CParams("-single",       "if debugging is enable, single step through transactions"),
+    CParams("-rebuild",      "clear cache and reprocess all transcations (may take a long time)"),
+    CParams("",              "Index transactions for a given Ethereum address (or series of addresses).\r\n"),
 };
 uint32_t nParams = sizeof(params) / sizeof(CParams);
 
@@ -40,14 +41,23 @@ bool COptions::parseArguments(SFString& command) {
             // do nothing -- this is the default
             mode = "freshen|";  // last in wins
 
-        } else if (arg.Contains("-k:") || arg.Contains("-kBlock:")) {
+        } else if (arg.Contains("-k:") || arg.Contains("--kBlock:")) {
 
-            arg = arg.Substitute("-k:","").Substitute("-kBlock:","");
-            kBlock = toLongU(arg);
-            if (!kBlock) {
-                cerr << usageStr("You must specify a block number").Substitute("\n","\r\n");
+            arg = arg.Substitute("-k:","").Substitute("--kBlock:","");
+            if (!isNumeral(arg)) {
+                cerr << usageStr("You must specify a block number (" + arg + ")").Substitute("\n","\r\n");
                 return false;
             }
+            kBlock = toLongU(arg);
+
+        } else if (arg.Contains("-o:") || arg.Contains("--offset:")) {
+
+            arg = arg.Substitute("-o:","").Substitute("--offset:","");
+            if (!isNumeral(arg)) {
+                cerr << usageStr("You must specify a number for offset (" + arg + ")").Substitute("\n","\r\n");
+                return false;
+            }
+            offset = toLongU(arg);
 
         } else if (arg == "-c" || arg == "--cacheOnly") {
             mode = "showCache|";  // last in wins
@@ -125,6 +135,8 @@ bool COptions::parseArguments(SFString& command) {
     if (debugger_on && !accounting_on)
         return usage("If you want to use the debugger, you must use the --accounting option as well.");
 
+    kBlock = max((blknum_t)0, kBlock-offset);
+
     return true;
 }
 
@@ -143,6 +155,7 @@ void COptions::Init(void) {
     parse_on = false;
     autocorrect_on = false;
     kBlock = 0;
+    offset = 0;
     minArgs = 0;
 }
 

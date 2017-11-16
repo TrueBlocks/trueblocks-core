@@ -9,6 +9,7 @@
 #include "acctlib.h"
 #include "options.h"
 #include "newblock.h"
+#include "newreceipt.h"
 
 extern bool testReadWrite(COptions& options);
 extern bool testUpgrade(COptions& options);
@@ -19,6 +20,7 @@ int main(int argc, const char *argv[]) {
     etherlib_init("binary");
 
     CNewBlock::registerClass();
+    CNewReceipt::registerClass();
 
     COptions options;
     if (!options.prepareArguments(argc, argv))
@@ -154,6 +156,7 @@ CBaseNode *getNode(const SFString& nodeType) {
     else if (nodeType == "CTraceResult")     node = CTraceResult::CreateObject();
     else if (nodeType == "CTransaction")     node = CTransaction::CreateObject();
     else if (nodeType == "CNewBlock")        node = CNewBlock::CreateObject();
+    else if (nodeType == "CNewReceipt")      node = CNewReceipt::CreateObject();
     //    else if (nodeType == "CInfuraStats")     node = CInfuraStats::CreateObject();
     //    else if (nodeType == "CPerson")          node = CPerson::CreateObject();
     //    else if (nodeType == "CAccountName")     node = CAccountName::CreateObject();
@@ -161,7 +164,7 @@ CBaseNode *getNode(const SFString& nodeType) {
 }
 
 //--------------------------------------------------------------
-SFString baseTypeName(SFUint32 type) {
+SFString baseTypeName(uint64_t type) {
     SFString ret;
     if (type & TS_NUMERAL) ret += (" TS_NUMERAL " + asStringU(type));
     if (type & TS_STRING)  ret += (" TS_STRING "  + asStringU(type));
@@ -174,7 +177,7 @@ SFString baseTypeName(SFUint32 type) {
 }
 
 //--------------------------------------------------------------
-SFString typeName(SFUint32 type) {
+SFString typeName(uint64_t type) {
 
     if (type == T_DATE)      return "T_DATE "    + baseTypeName(type);
     if (type == T_TIME)      return "T_TIME "    + baseTypeName(type);
@@ -208,16 +211,20 @@ void reportNode(CBaseNode *node) {
     cout << "objectSize: " << pClass->m_ObjectSize << "\n";
     cout << "baseClass: " << (pClass->m_BaseClass ? pClass->m_BaseClass->m_ClassName : "None") << "\n";
     CFieldList *theList = pClass->m_FieldList;
-    LISTPOS pPos = theList->GetHeadPosition();
-    while (pPos) {
-        const CFieldData *item = theList->GetNext(pPos);
-        cout << "\tfieldName: " << item->getName()  << "\n";
-        cout << "\t  fieldID: "   << item->getID()    << "\n";
-        cout << "\t  fieldType: " << typeName(item->getType())  << "\n";
-        cout << "\t  hidden: "    << item->isHidden() << "\n";
+    if (!theList) {
+        cout << "Field list not found for " << pClass->m_ClassName << "\n";
+    } else {
+        LISTPOS pPos = theList->GetHeadPosition();
+        while (pPos) {
+            const CFieldData *item = theList->GetNext(pPos);
+            cout << "\tfieldName: " << item->getName()  << "\n";
+            cout << "\t  fieldID: "   << item->getID()    << "\n";
+            cout << "\t  fieldType: " << typeName(item->getType())  << "\n";
+            cout << "\t  hidden: "    << item->isHidden() << "\n";
+        }
+        cout << node->Format() << "\n";
+        cout << "\n";
     }
-    cout << node->Format() << "\n";
-    cout << "\n";
     cout.flush();
 }
 
@@ -228,6 +235,8 @@ bool testUpgrade(COptions& options) {
     if (node) {
         reportNode(node);
         delete node;
+    } else {
+        cout << "Unknown node of type " << options.className << " not created.\n";
     }
 
     return true;

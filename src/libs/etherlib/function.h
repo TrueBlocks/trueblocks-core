@@ -45,11 +45,14 @@ public:
 
     DECLARE_NODE(CFunction);
 
+    const CBaseNode *getObjectAt(const SFString& name, uint32_t i) const override;
+
     // EXISTING_CODE
     bool hasAddrs;
-    SFString getSignature(SFUint32 parts) const;
+    SFString getSignature(uint64_t parts) const;
     SFString encodeItem(void) const;
     bool isBuiltin;
+    SFString origName;
     // EXISTING_CODE
     friend ostream& operator<<(ostream& os, const CFunction& item);
 
@@ -110,6 +113,7 @@ inline void CFunction::Init(void) {
     // EXISTING_CODE
     hasAddrs = false;
     isBuiltin = false;
+    origName = "";
     // EXISTING_CODE
 }
 
@@ -131,6 +135,7 @@ inline void CFunction::Copy(const CFunction& fu) {
     // EXISTING_CODE
     hasAddrs = fu.hasAddrs;
     isBuiltin = fu.isBuiltin;
+    origName = fu.origName;
     // EXISTING_CODE
     finishParse();
 }

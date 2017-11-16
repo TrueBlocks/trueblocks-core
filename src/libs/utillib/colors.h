@@ -56,6 +56,7 @@ namespace qblocks {
 
     extern void colorsOff(void);
     extern void colorsOn(void);
+    extern void colorsDim(void);
 
     //-----------------------------------------------------------------------
     inline SFString convertColor(const SFString& colorIn) {
@@ -75,36 +76,7 @@ namespace qblocks {
     }
 
     //-----------------------------------------------------------------------
-    inline SFUint32 barLen(SFUint32 newLen = 0) {
-        static SFUint32 _barLen = 100;
-        if (newLen)
-            _barLen = newLen;
-        return _barLen;
-    }
-
-    //-----------------------------------------------------------------------
-    inline void progressBar(SFUint32 _part, SFUint32 _whole, const SFString& _tim = "") {
-
-        double percent = 1.0;
-        if (_whole > 0)
-            percent = (_part / static_cast<double>(_whole));
-        SFUint32 len = (SFUint32)(barLen() * percent);
-
-        cout << cYellow << _part << cOff << " of " << cYellow << _whole << cOff;
-        cout << " (" << cBlue << padLeft(fmtFloatp(100.*percent, 1), 5, ' ') << cOff << "%)";
-        cout << " [" << SFString('x', len).Substitute("x", "░");
-        cout << SFString(' ', max((SFUint32)0, barLen() - len));
-        cout << "]";
-        if (!_tim.empty())
-            cout << " " << _tim;
-        cout << "\r";
-        cout.flush();
-    }
-
-    //-----------------------------------------------------------------------
-    inline void progressBar(SFUint32 _part, SFUint32 _whole, int _tim = 0) {
-        CStringExportContext ctx;
-        ctx << " in " << cGreen << asString(_tim) << cOff << " seconds.";
-        progressBar(_part, _whole, (_tim == 0 ? "" : ctx.str));
-    }
+    extern void progressBar(uint64_t _part, uint64_t _whole, const SFString& msgs);
+    extern void progressBar(uint64_t _part, uint64_t _whole, double _tim, const SFString& msgs);
+    extern uint64_t barLen(uint64_t newLen = 0);
 }  // namespace qblocks

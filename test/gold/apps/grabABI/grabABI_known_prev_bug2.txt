@@ -1,0 +1,20 @@
+grabABI argc: 3 [1:0x5f742383b6d1298980030d6af943b76cdd902143] [2:--raw] 
+grabABI 0x5f742383b6d1298980030d6af943b76cdd902143 --raw 
+ABI for address 0x5f742383b6d1298980030d6af943b76cdd902143
+	function _setBugFixVersion          (string gameID,uint32 version,bytes32 codeHash,uint32 numBlockAllowedForPastVersion)
+	function _setDepositAccount         (address newDepositAccount)
+	function _setLagParams              (string gameID,uint16 lag,uint8 numPastBlocks)
+	function submit                     (string gameID,uint64 seed,uint32 score,uint32 durationRoundedDown,bytes32 proofHash)
+	function getPlayerSubmissionFromCompetition(string gameID,uint8 competitionIndex,address playerAddress)
+	function increaseJackpot            (string gameID)
+	function _setOrganiser              (address newOrganiser)
+	function start                      (string gameID,uint64 blockNumber,uint8 competitionIndex,uint32 version)
+	function _startNextCompetition      (string gameID,uint32 version,uint88 price,uint8 numPastBlocks,uint8 houseDivider,uint16 lag,uint64 duration,uint32 verificationWaitTime,bytes32 codeHash,uint32[] rewardsDistribution)
+	function getSeedAndState            (string gameID,address player)
+	function getCompetitionValues       (string gameID,uint8 competitionIndex)
+	function getPlayersFromCompetition  (string gameID,uint8 competitionIndex)
+	function getCurrentCompetitionValues(string gameID)
+	function _rewardWinners             (string gameID,uint8 competitionIndex,address[] winners)
+	constructor                         ()
+	event VersionChange                 (string indexed gameID,uint32 indexed version,bytes32 codeHash)
+

@@ -1,14 +1,8 @@
 ## ethslurp
 
-Drink the blockchain (http://ethslurp.com)
+`ethslurp` is one of our older command line tools. It even has its [own website](http://ethslurp.com) and [video tutorial] (https://www.youtube.com/watch?v=ZZDV1yAgces). While this tool is very useful, it has two significant flaws. First, it is not decentralized--in fact it is fully centralized, pulling its data from [http://etherscan.io](http://etherscan.io) as it does. The tool's second major flaw is that it does not pull every transaction from the chain for a given account as our [account monitors](../../monitors/README.md) do. This is because of `internal transactions` which, believe us, is too complicated to be worth taking the time to explain.
 
-Watch a video tutorial <a href="https://www.youtube.com/watch?v=ZZDV1yAgces">here</a>
-
-Check out Great Hill Corporation on <a href="https://www.facebook.com/GreatHillCorporation/">Facebook</a> or <a href="https://twitter.com/ethslurp">Twitter</a>
-
-### Building from source
-
-Please see the <a href="https://github.com/Great-Hill-Corporation/ethslurp/blob/master/INSTALL.md">INSTALL.md</a> file for more information.
+While `ethslurp` does have its shortcomings, it also provides some nice features. You can use it to pull all externally generated transactions against an account. You may also use the tool's fully customizable formatting options to export data into any format you wish. Visit the above referenced website for more information.
 
 #### Usage
 
@@ -17,7 +11,7 @@ Please see the <a href="https://github.com/Great-Hill-Corporation/ethslurp/blob/
              
 `Where:`  
 
-| Option | Full Command | Description |
+| Short Cut | Option | Description |
 | -------: | :------- | :------- |
 |  | addr | the address of the account or contract to slurp |
 | -a | --archive val | filename of output (stdout otherwise) |
@@ -29,6 +23,10 @@ Please see the <a href="https://github.com/Great-Hill-Corporation/ethslurp/blob/
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
+`Notes:`
+
+- Portions of this software are Powered by Etherscan.io APIs.
+
 #### Other Options
 
 All **quickBlocks** command-line tools support the following commands (although in some case, they have no meaning):
@@ -36,7 +34,7 @@ All **quickBlocks** command-line tools support the following commands (although 
     Command     |     Description
     -----------------------------------------------------------------------------
     --version   |   display the current version of the tool
-    --nocolors  |   turn off colored display
+    --nocolor   |   turn off colored display
     --wei       |   specify value in wei (the default)
     --ether     |   specify value in ether
     --dollars   |   specify value in US dollars
@@ -46,4 +44,4 @@ All **quickBlocks** command-line tools support the following commands (although 
 
 **Powered by QuickBlocks<sup>&reg;</sup>**
 
-Portions of this software are Powered by Etherscan.io APIs
+

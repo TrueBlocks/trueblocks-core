@@ -36,7 +36,7 @@ Processing: -t -d -r -f:txt 0x713B73c3994442b533e6A083eC968e40606810Ec
 
 Enter --version to display the current version of the tool.
 
-Enter --nocolors to turn off colored display.
+Enter --nocolor to turn off colored display.
 
 All `quickBlocks` command-line tools support the `--file:filename` option. Place valid commands, on separate lines, in a file and include the above option. In some cases, this option may significantly improve performance. Place a semi-colon at the start of a line to make it a comment.
 

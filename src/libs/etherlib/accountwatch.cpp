@@ -79,7 +79,7 @@ bool CAccountWatch::setValueByName(const SFString& fieldName, const SFString& fi
             if ( fieldName % "firstBlock" ) { firstBlock = toUnsigned(fieldValue); return true; }
             break;
         case 'i':
-            if ( fieldName % "index" ) { index = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "index" ) { index = toLong32u(fieldValue); return true; }
             break;
         case 'l':
             if ( fieldName % "lastBlock" ) { lastBlock = toUnsigned(fieldValue); return true; }
@@ -116,6 +116,8 @@ bool CAccountWatch::Serialize(SFArchive& archive) {
     if (readBackLevel(archive))
         return true;
 
+    // EXISTING_CODE
+    // EXISTING_CODE
     archive >> index;
     archive >> address;
     archive >> name;
@@ -132,6 +134,9 @@ bool CAccountWatch::Serialize(SFArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool CAccountWatch::SerializeC(SFArchive& archive) const {
+
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
@@ -225,7 +230,7 @@ SFString CAccountWatch::getValueByName(const SFString& fieldName) const {
     if (!ret.empty())
         return ret;
 
-    // If the class has any fields, return them
+    // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
             if ( fieldName % "address" ) return fromAddress(address);
@@ -283,6 +288,13 @@ ostream& operator<<(ostream& os, const CAccountWatch& item) {
 }
 
 //---------------------------------------------------------------------------
+const CBaseNode *CAccountWatch::getObjectAt(const SFString& name, uint32_t i) const {
+    if ( name % "qbis" )
+        return &qbis;
+    return NULL;
+}
+
+//---------------------------------------------------------------------------
 // EXISTING_CODE
 bool CAccountWatch::getWatch(const CToml& toml, uint32_t n) {
     index = n;
@@ -313,10 +325,10 @@ SFString CAccountWatch::displayName(bool terse, uint32_t w1, uint32_t w2) const 
     if (terse) {
         uint64_t len = name.length();
         uint64_t need = 42 - len - 6; // " (" and "...)"
-        return color + name.Left(42-6) + " (" + address.Left(need) + "...)" + cOff;
+        return color + name.substr(0,42-6) + " (" + address.substr(0,need) + "...)" + cOff;
     }
 
-    return padRight(name.Left(w1),w1) + " " + address.Left(w2) + " ";
+    return padRight(name.substr(0,w1),w1) + " " + address.substr(0,w2) + " ";
 }
 
 //---------------------------------------------------------------------------
@@ -330,15 +342,12 @@ bool CAccountWatch::isTransactionOfInterest(CTransaction *trans, uint64_t nSigs,
 
     // If this is a contract and this is its birth block, that's a hit
     if (trans->receipt.contractAddress == address) {
-        trans->isInternalTx = true;  // TODO(tjayrush) - handle contract creation correctly (change to data)
+        trans->isInternalTx = true;
         return true;
     }
 
     // Next, we check the receipt logs to see if the address appears either in
     // the log's 'address' field or in one of the data items
-    //
-    // TODO(tjayrush): We should do a 'deep trace' here (or when the block is first read)
-    // to see if there was a 'call,' to our address.
     for (uint32_t i = 0 ; i < trans->receipt.logs.getCount() ; i++) {
         SFString acc = address;
         CLogEntry *l = reinterpret_cast<CLogEntry *>(&trans->receipt.logs[i]);

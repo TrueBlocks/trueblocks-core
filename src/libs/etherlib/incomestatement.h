@@ -10,7 +10,6 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
-#include "ethtypes.h"
 #include "abilib.h"
 
 namespace qblocks {
@@ -32,7 +31,7 @@ public:
     SFIntBN outflow;
     SFIntBN gasCost;
     SFIntBN endBal;
-    SFUint32 blockNum;
+    blknum_t blockNum;
 
 public:
     CIncomeStatement(void);

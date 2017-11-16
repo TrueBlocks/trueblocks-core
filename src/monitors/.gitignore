@@ -1,4 +1,3 @@
-ENS
 accts
 augur
 bloomMan
@@ -6,13 +5,16 @@ bnt
 chifra.txt
 dao
 etherTip
+#---- this one is included, but only some files, not all
+#ENS
 firstBlood
 freshen.mak
 gnosis
 hatch.mak
 other
 paritySMS
-scripts
 singular
 tenX
 whiteHat
+mothership
+tierion

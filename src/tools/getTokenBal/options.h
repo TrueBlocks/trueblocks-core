@@ -6,11 +6,10 @@
 #include "etherlib.h"
 
 //-----------------------------------------------------------------------------
-class COptions : public COptionsBase {
+class COptions : public CBlockOptions {
 public:
     SFString tokens;
     SFString holders;
-    SFString blocks;
     bool asData;
     bool byAccount;
     bool noZero;
@@ -18,10 +17,7 @@ public:
     COptions(void);
     ~COptions(void);
 
-    bool parseArguments(SFString& command);
-    void Init(void);
+    bool parseArguments(SFString& command) override;
+    void Init(void) override;
+    SFString postProcess(const SFString& which, const SFString& str) const override;
 };
-
-//-----------------------------------------------------------------------------
-extern bool visitNonEmptyBlock(CBlock& node, void *data);
-extern bool visitEmptyBlock(CBlock& node, void *data);

@@ -1,3 +1,6 @@
+[settings]
+[{NAME}]
+
 [display]
 accounting = false
 debug = false
@@ -22,3 +25,5 @@ verbose_fmt = [{HEAD}]\n\
 
 [[watches]]
 [{JSON_WATCH}]
+
+# make sure to always put arrays at the end of the file

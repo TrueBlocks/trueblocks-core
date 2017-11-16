@@ -56,6 +56,12 @@ CURL *getCurl(bool cleanup=false)
 }
 
 //-------------------------------------------------------------------------
+extern size_t write_callback(char *ptr, size_t size, size_t nmemb, void *userdata);
+static bool earlyAbort=false;
+double startTime = qbNow();
+bool is_error=false;
+bool is_tracing=false;
+//-------------------------------------------------------------------------
 void etherlib_init(const SFString& sourceIn)
 {
     setStorageRoot(blockCachePath(""));
@@ -81,8 +87,8 @@ void etherlib_init(const SFString& sourceIn)
     CAccount::registerClass();
     CRPCResult::registerClass();
     CNameValue::registerClass();
+    CAccountName::registerClass();
 
-    // TODO(tjayrush): Collapse curl initialation in setSource
     setSource(sourceIn);
     // if curl has already been initialized, we want to clear it out
     getCurl(true);
@@ -90,6 +96,7 @@ void etherlib_init(const SFString& sourceIn)
     getCurl();
 
     establishFolder(configPath(""));
+    startTime = qbNow();
 }
 
 //-------------------------------------------------------------------------
@@ -99,22 +106,33 @@ void etherlib_cleanup(void)
     getCurl(true);
 }
 
-extern size_t write_callback(char *ptr, size_t size, size_t nmemb, void *userdata);
-static bool earlyAbort=false;
+static uint32_t theID = 1;
+//-------------------------------------------------------------------------
+SFString getCurlID(void) {
+    return asString(isTestMode() ? 1 : theID++);
+}
+
+//-------------------------------------------------------------------------
+class CCurlData {
+public:
+    SFString url;
+    SFString result;
+    CCurlData(const SFString& method, const SFString& params) {
+        url += "{";
+        url +=  quote("jsonrpc") + ":"  + quote("2.0")  + ",";
+        url +=  quote("method")  + ":"  + quote(method) + ",";
+        url +=  quote("params")  + ":"  + params + ",";
+        url +=  quote("id")      + ":"  + quote(getCurlID());
+        url += "}";
+    }
+};
+
 //-------------------------------------------------------------------------
 // Use 'curl' to make an arbitrary rpc call
 //-------------------------------------------------------------------------
 SFString callRPC(const SFString& method, const SFString& params, bool raw)
 {
-    static uint32_t id = 1;
-    SFString thePost, received;
-
-    thePost += "{";
-    thePost +=  quote("jsonrpc") + ":"  + quote("2.0")  + ",";
-    thePost +=  quote("method")  + ":"  + quote(method) + ",";
-    thePost +=  quote("params")  + ":"  + params        + ",";
-    thePost +=  quote("id")      + ":"  + quote(asString(id++));
-    thePost += "}";
+    CCurlData curlData(method, params);
 
 //#define DEBUG_RPC
 #ifdef DEBUG_RPC
@@ -124,10 +142,10 @@ SFString callRPC(const SFString& method, const SFString& params, bool raw)
     cerr.flush();
 #endif
 
-    curl_easy_setopt(getCurl(), CURLOPT_POSTFIELDS,    (const char*)thePost);
-    curl_easy_setopt(getCurl(), CURLOPT_POSTFIELDSIZE, thePost.length());
+    curl_easy_setopt(getCurl(), CURLOPT_POSTFIELDS,    (const char*)curlData.url);
+    curl_easy_setopt(getCurl(), CURLOPT_POSTFIELDSIZE, curlData.url.length());
 
-    curl_easy_setopt(getCurl(), CURLOPT_WRITEDATA,     &received);
+    curl_easy_setopt(getCurl(), CURLOPT_WRITEDATA,     &curlData);
     curl_easy_setopt(getCurl(), CURLOPT_WRITEFUNCTION, write_callback);
 
     earlyAbort = false;
@@ -155,7 +173,7 @@ SFString callRPC(const SFString& method, const SFString& params, bool raw)
                 cerr << "\n";
                 exit(0);
             }
-            id--;
+            theID--;
             setSource(fallBack);
             // reset curl
             getCurl(true); getCurl();
@@ -173,8 +191,7 @@ SFString callRPC(const SFString& method, const SFString& params, bool raw)
         exit(0);
     }
 
-    if (received.empty())
-    {
+    if (!is_tracing && curlData.result.empty()) {
         cerr << cYellow;
         cerr << "\n";
         cerr << "\tWarning:" << cOff << "The Ethereum node  resulted in an empty\n";
@@ -187,59 +204,83 @@ SFString callRPC(const SFString& method, const SFString& params, bool raw)
 //    cout << "\n" << SFString('-',80) << "\n";
 //    cout << thePost << "\n";
     cout << SFString('=',60) << "\n";
-    cout << "received: " << received << "\n";
+    cout << "received: " << curlData.result << "\n";
     cout.flush();
 #endif
 
     if (raw)
-        return received;
+        return curlData.result;
     CRPCResult generic;
-    char *p = cleanUpJson((char*)(const char*)received);
+    char *p = cleanUpJson((char*)(const char*)curlData.result);
     generic.parseJson(p);
     return generic.result;
 }
 
 //-------------------------------------------------------------------------
-bool getObjectViaRPC(CBaseNode &node, const SFString& method, const SFString& params)
-{
+extern size_t nullCallback(char *ptr, size_t size, size_t nmemb, void *userdata) {
+    return size*nmemb;
+}
+
+//-------------------------------------------------------------------------
+bool isNodeRunning(void) {
+    CCurlData curlData("web3_clientVersion", "[]");
+    curl_easy_setopt(getCurl(), CURLOPT_POSTFIELDS,    (const char*)curlData.url);
+    curl_easy_setopt(getCurl(), CURLOPT_POSTFIELDSIZE, curlData.url.length());
+    curl_easy_setopt(getCurl(), CURLOPT_WRITEDATA,     &curlData);
+    curl_easy_setopt(getCurl(), CURLOPT_WRITEFUNCTION, nullCallback);
+    return (curl_easy_perform(getCurl()) == CURLE_OK);
+}
+
+//-------------------------------------------------------------------------
+bool getObjectViaRPC(CBaseNode &node, const SFString& method, const SFString& params) {
     SFString ret = callRPC(method, params, false);
     node.parseJson((char *)(const char*)ret);
     return true;
 }
 
-// TODO: remove golobal data
-static SFUint32 nTrans=0,nTraced=0;
+// TODO: remove global data
+static bool no_tracing=false;
+void setNoTracing(bool val) { no_tracing = val; }
 //-------------------------------------------------------------------------
-bool queryBlock(CBlock& block, const SFString& numIn, bool needTrace)
-{
-    if (numIn=="latest")
-        return queryBlock(block, asStringU(getLatestBlockFromClient()), needTrace);
+bool queryBlock(CBlock& block, const SFString& datIn, bool needTrace, bool byHash) {
+    uint32_t unused = 0;
+    return queryBlock(block, datIn, needTrace, byHash, unused);
+}
 
-    SFUint32 num = toLongU(numIn);
-    if ((getSource().Contains("binary") || getSource().Contains("nonemp")) && fileSize(getBinaryFilename1(num))>0) {
-        //		if (verbose) { cerr << "Reading binary block: " << num << "\n"; cerr.flush(); }
-        UNHIDE_FIELD(CTransaction, "receipt");
-        return readOneBlock_fromBinary(block, getBinaryFilename1(num));
+//-------------------------------------------------------------------------
+bool queryBlock(CBlock& block, const SFString& datIn, bool needTrace, bool byHash, uint32_t& nTraces) {
 
-    } else if (getSource().Contains("Only")) {
-        return false;
+    if (datIn == "latest")
+        return queryBlock(block, asStringU(getLatestBlockFromClient()), needTrace, false);
 
+    if (isHash(datIn)) {
+        HIDE_FIELD(CTransaction, "receipt");
+        getObjectViaRPC(block, "eth_getBlockByHash", "["+quote(datIn)+",true]");
+
+    } else {
+        uint64_t num = toLongU(datIn);
+        if ((getSource().Contains("binary") || getSource().Contains("nonemp")) && fileSize(getBinaryFilename1(num))>0) {
+            UNHIDE_FIELD(CTransaction, "receipt");
+            return readOneBlock_fromBinary(block, getBinaryFilename1(num));
+
+        } else if (getSource().Contains("Only")) {
+            return false;
+
+        }
+
+        if (getSource() == "json" && fileSize(getJsonFilename1(num))>0)
+        {
+            UNHIDE_FIELD(CTransaction, "receipt");
+            return readOneBlock_fromJson(block, getJsonFilename1(num));
+
+        }
+
+        HIDE_FIELD(CTransaction, "receipt");
+        getObjectViaRPC(block, "eth_getBlockByNumber", "["+quote(asStringU(num))+",true]");
     }
-
-    if (getSource() == "json" && fileSize(getJsonFilename1(num))>0)
-    {
-        //		if (verbose) { cerr << "Reading json block: " << num << "\n"; cerr.flush(); }
-        UNHIDE_FIELD(CTransaction, "receipt");
-        return readOneBlock_fromJson(block, getJsonFilename1(num));
-
-    }
-
-    //	if (verbose) { cerr << "Getting block from node: " << num << "\n"; cerr.flush(); }
-    HIDE_FIELD(CTransaction, "receipt");
-    getObjectViaRPC(block, "eth_getBlockByNumber", "["+quote(asStringU(num))+",true]");
 
     // If there are no transactions, we're done
-    if (!block.transactions.getCount())
+    if (!block.transactions.getCount() || no_tracing)
     {
         // We only write binary if there are transactions
         //writeToBinary(block, getBinaryFilename1(num));
@@ -248,7 +289,7 @@ bool queryBlock(CBlock& block, const SFString& numIn, bool needTrace)
     }
 
     // We have the transactions, but we also want the receipts
-    SFUint32 nTraces=0;
+    nTraces=0;
     for (uint32_t i=0;i<block.transactions.getCount();i++)
     {
         CTransaction *trans = &block.transactions[i];
@@ -258,61 +299,57 @@ bool queryBlock(CBlock& block, const SFString& numIn, bool needTrace)
         CReceipt receipt;
         getReceipt(receipt, trans->hash);
         trans->receipt = receipt; // deep copy
-        if (needTrace && trans->gas == receipt.gasUsed)
-        {
+        if (block.blockNumber >= byzantiumBlock) {
+            trans->isError = (receipt.status == 0);
+
+        } else if (needTrace && trans->gas == receipt.gasUsed) {
             SFString trace;
+            is_error = false;
+            is_tracing = true;
             queryRawTrace(trace, trans->hash);
-            trans->isError = trace.ContainsI("error");
+            is_tracing = false;
+            trans->isError = is_error;
             nTraces++;
         }
-    }
-
-    nTrans  += block.transactions.getCount();
-    nTraced += nTraces;
-    if (verbose)
-    {
-        SFString fileName = getBinaryFilename1(toLongU(numIn));
-        SFString fmt;
-        fmt += SFString("Block ") + cYellow  + "#" + asStringU(block.blockNumber)  + cOff;
-        fmt += SFString(" (")     + cYellow  + padNum3T((uint64_t)block.transactions.getCount()) + "/" + asStringU(nTrans)  + cOff + " trans";
-        fmt +=                      cYellow  + padNum3T((uint64_t)nTraces)                       + "/" + asStringU(nTraced) + cOff + " traced) written to ";
-        fmt +=                      cMagenta + fileName.Substitute(blockFolder, "./")  + cOff + ".";
-        if (!isTestMode())
-            fprintf(stderr, "%s\r", (const char*)fmt);
     }
 
     return true;
 }
 
 //-------------------------------------------------------------------------
-bool getBlock(CBlock& block, SFUint32 numIn)
-{
-    // Use queryBlock if you just want to read the block (any method)
+bool getBlock(CBlock& block, uint64_t datIn) {
     SFString save = getSource();
     if (getSource() == "fastest")
-        setSource(fileExists(getBinaryFilename1(numIn)) ? "binary" : "parity");
-    bool ret = queryBlock(block, asStringU(numIn), true);
+        setSource(fileExists(getBinaryFilename1(datIn)) ? "binary" : "parity");
+    bool ret = queryBlock(block, asStringU(datIn), true, false);
     setSource(save);
     return ret;
 }
 
 //-------------------------------------------------------------------------
-bool queryRawBlock(SFString& block, const SFString& numIn, bool needTrace, bool hashesOnly)
-{
-    block = callRPC("eth_getBlockByNumber", "["+quote(numIn)+","+(hashesOnly?"false":"true")+"]", true);
+bool getBlock(CBlock& block, const SFHash& hash) {
+    return queryBlock(block, hash, true, true);
+}
+
+//-------------------------------------------------------------------------
+bool queryRawBlock(SFString& blockStr, const SFString& datIn, bool needTrace, bool hashesOnly) {
+
+    if (isHash(datIn)) {
+        blockStr = callRPC("eth_getBlockByHash", "["+quote(datIn)+","+(hashesOnly?"false":"true")+"]", true);
+    } else {
+        blockStr = callRPC("eth_getBlockByNumber", "["+quote(datIn)+","+(hashesOnly?"false":"true")+"]", true);
+    }
     return true;
 }
 
 //-------------------------------------------------------------------------
-SFString hexxy(SFUint32 x)
-{
+SFString hexxy(uint64_t x) {
     SFUintBN bn = x;
     return toLower(SFString(to_hex(bn).c_str()));
 }
 
 //-------------------------------------------------------------------------
-bool queryRawReceipt(SFString& results, const SFHash& txHash)
-{
+bool queryRawReceipt(SFString& results, const SFHash& txHash) {
     SFString data = "[\"[HASH]\"]";
     data.Replace("[HASH]", txHash);
     results = callRPC("eth_getTransactionReceipt", data, true);
@@ -328,7 +365,7 @@ bool queryRawTransaction(SFString& results, const SFHash& txHash) {
 }
 
 //-------------------------------------------------------------------------
-bool queryRawLogs(SFUint32 fromBlock, SFUint32 toBlock, const SFAddress& addr, SFString& results)
+bool queryRawLogs(SFString& results, const SFAddress& addr, uint64_t fromBlock, uint64_t toBlock)
 {
     SFString data = "[{\"fromBlock\":\"0x[START]\",\"toBlock\":\"0x[STOP]\", \"address\": \"[ADDR]\"}]";
     data.Replace("[START]", hexxy(fromBlock));
@@ -339,6 +376,14 @@ bool queryRawLogs(SFUint32 fromBlock, SFUint32 toBlock, const SFAddress& addr, S
 }
 
 //-------------------------------------------------------------------------
+bool getAccounts(SFAddressArray& addrs) {
+    SFString results = callRPC("eth_accounts", "[]", false);
+    while (!results.empty())
+        addrs[addrs.getCount()] = nextTokenClear(results,',');
+    return true;
+}
+
+    //-------------------------------------------------------------------------
 bool getTransaction(CTransaction& trans, const SFString& hashIn)
 {
     getObjectViaRPC(trans, "eth_getTransactionByHash", "[\"" + fixHash(hashIn) +"\"]");
@@ -347,7 +392,7 @@ bool getTransaction(CTransaction& trans, const SFString& hashIn)
 }
 
 //-------------------------------------------------------------------------
-bool getTransaction(CTransaction& trans, const SFString& hashIn, SFUint32 transID)
+bool getTransaction(CTransaction& trans, const SFString& hashIn, uint64_t transID)
 {
     SFUintBN t(transID);
     SFString ts = to_hex(t).c_str();
@@ -357,7 +402,7 @@ bool getTransaction(CTransaction& trans, const SFString& hashIn, SFUint32 transI
 }
 
 //-------------------------------------------------------------------------
-bool getTransaction(CTransaction& trans, blknum_t blockNum, SFUint32 transID)
+bool getTransaction(CTransaction& trans, blknum_t blockNum, uint64_t transID)
 {
     SFUintBN h(blockNum);
     SFUintBN t(transID);
@@ -427,6 +472,23 @@ SFUintBN getBalance(const SFString& addr, blknum_t blockNum, bool isDemo)
 }
 
 //-------------------------------------------------------------------------
+SFUintBN getTokenBalance(const SFAddress& token, const SFAddress& holder, blknum_t blockNum) {
+
+    ASSERT(isAddress(token));
+    ASSERT(isAddress(holder));
+
+    SFString t = "0x" + padLeft(token.substr(2), 40, '0');  // address to send the command to
+    SFString h =        padLeft(holder.substr(2), 64, '0'); // encoded data for the transaction
+
+    SFString cmd = "[{\"to\": \"[TOKEN]\", \"data\": \"0x70a08231[HOLDER]\"}, \"[BLOCK]\"]";
+    cmd.Replace("[TOKEN]",  t);
+    cmd.Replace("[HOLDER]", h);
+    cmd.Replace("[BLOCK]",  asStringU(blockNum));
+
+    return toWei(callRPC("eth_call", cmd, false));
+}
+
+//-------------------------------------------------------------------------
 bool getSha3(const SFString& hexIn, SFString& shaOut)
 {
     shaOut = callRPC("web3_sha3", "[\"" + hexIn + "\"]", false);
@@ -436,26 +498,35 @@ bool getSha3(const SFString& hexIn, SFString& shaOut)
 //-------------------------------------------------------------------------
 size_t write_callback(char *ptr, size_t size, size_t nmemb, void *userdata)
 {
-    ASSERT(userdata);
-    SFString part;
-    part.reserve(size*nmemb+1);
-    char *s = (char*)(const char*)part;
-    strncpy(s,ptr,size*nmemb);
-    s[size*nmemb]='\0';
-    (*(SFString*)userdata) += s;
+    if (is_tracing) {
+        // Curl does not close the string, so we have to
+        ptr[size*nmemb-1] = '\0';
+        if (strstr(ptr,"erro")!=NULL) {
+            is_error = true;
+            earlyAbort = true;
+            return 0;
+        }
 
-    // At block 3804005, there was a hack wherein the byte code
-    // 5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b repeated
-    // thousands of time and doing nothing. If we don't handle this it
-    // dominates the scanning for no reason
-    if (strstr(s, "5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b") != NULL) {
-        // This is the hack trace (there are many), so skip it
-        cerr << "Curl response contains '5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b'. Aborting.\n";
-        cerr.flush();
-        earlyAbort = true;
-        return 0;
+    } else {
+        SFString part;
+        part.reserve(size*nmemb+1);
+        char *s = (char*)(const char*)part;
+        strncpy(s,ptr,size*nmemb);
+        s[size*nmemb]='\0';
+        ASSERT(userdata);
+        CCurlData *data = (CCurlData*)userdata;
+        data->result += s;
+        // Starting around block 3804005, there was a hack wherein the byte code 5b5b5b5b5b5b5b5b5b5b5b5b
+        // repeated thousands of times, doing nothing. If we don't handle this, it dominates the scanning
+        // for no reason
+        if (strstr(s, "5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b") != NULL) {
+            // This is the hack trace (there are many), so skip it
+            cerr << "Curl response contains '5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b'. Aborting.\n";
+            cerr.flush();
+            earlyAbort = true;
+            return 0;
+        }
     }
-//    cerr << s << "\n";
 
     return size*nmemb;
 }
@@ -594,7 +665,7 @@ bool verifyBlock(const CBlock& qBlock, SFString& result)
         size_t f2 = tail.find(",");
         if (field=="transactions")
             f2 = tail.find("],") + 1;
-        SFString tField = tail.Left(f2 == NOPOS ? tail.length() : f2).Substitute("0x"+SFString('0',512),"0x0");
+        SFString tField = tail.substr(0,f2 == NOPOS ? tail.length() : f2).Substitute("0x"+SFString('0',512),"0x0");
         nnStr += (tField + ",");
 #if DEBUG_VERIFY
         cout << field << " = " << tField << "\n";
@@ -630,7 +701,7 @@ SFString getStorageRoot(void) {
 }
 
 //-------------------------------------------------------------------------
-static SFString getFilename_local(SFUint32 numIn, bool asPath, bool asJson)
+static SFString getFilename_local(uint64_t numIn, bool asPath, bool asJson)
 {
     if (storagePath.empty())
     {
@@ -645,18 +716,18 @@ static SFString getFilename_local(SFUint32 numIn, bool asPath, bool asJson)
     SFString fmt = (asPath ? "%s/%s/%s/" : "%s/%s/%s/%s");
     SFString fn  = (asPath ? "" : num + (asJson ? ".json" : ".bin"));
 
-    sprintf(ret, (const char*)(storagePath+fmt), (const char*)num.Left(2), (const char*)num.substr(2,2), (const char*)num.substr(4,2), (const char*)fn);
+    sprintf(ret, (const char*)(storagePath+fmt), (const char*)num.substr(0,2), (const char*)num.substr(2,2), (const char*)num.substr(4,2), (const char*)fn);
     return ret;
 }
 
 //-------------------------------------------------------------------------
-SFString getJsonFilename1(SFUint32 num)
+SFString getJsonFilename1(uint64_t num)
 {
     return getFilename_local(num, false, true);
 }
 
 //-------------------------------------------------------------------------
-SFString getBinaryFilename1(SFUint32 num)
+SFString getBinaryFilename1(uint64_t num)
 {
     SFString ret = getFilename_local(num, false, false);
     ret.Replace("/00/",  "/blocks/00/"); // can't use Substitute because it will change them all
@@ -664,13 +735,13 @@ SFString getBinaryFilename1(SFUint32 num)
 }
 
 //-------------------------------------------------------------------------
-SFString getJsonPath1(SFUint32 num)
+SFString getJsonPath1(uint64_t num)
 {
     return getFilename_local(num, true, true);
 }
 
 //-------------------------------------------------------------------------
-SFString getBinaryPath1(SFUint32 num)
+SFString getBinaryPath1(uint64_t num)
 {
     SFString ret = getFilename_local(num, true, false);
     ret.Replace("/00/",  "/blocks/00/"); // can't use Substitute because it will change them all
@@ -678,13 +749,13 @@ SFString getBinaryPath1(SFUint32 num)
 }
 
 //-------------------------------------------------------------------------
-bool forEveryBlockOnDisc(BLOCKVISITFUNC func, void *data, SFUint32 start, SFUint32 count, SFUint32 skip)
+bool forEveryBlockOnDisc(BLOCKVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip)
 {
     if (!func)
         return false;
 
     // Read every block from number start to start+count
-    for (SFUint32 i = start ; i < start + count ; i = i + skip)
+    for (uint64_t i = start ; i < start + count ; i = i + skip)
     {
         CBlock block;
         getBlock(block,i);
@@ -695,7 +766,7 @@ bool forEveryBlockOnDisc(BLOCKVISITFUNC func, void *data, SFUint32 start, SFUint
 }
 
 //-------------------------------------------------------------------------
-bool forEveryEmptyBlockOnDisc(BLOCKVISITFUNC func, void *data, SFUint32 start, SFUint32 count, SFUint32 skip)
+bool forEveryEmptyBlockOnDisc(BLOCKVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip)
 {
     if (!func)
         return false;
@@ -706,22 +777,22 @@ bool forEveryEmptyBlockOnDisc(BLOCKVISITFUNC func, void *data, SFUint32 start, S
     CSharedResource fullBlocks;
     if (!fullBlocks.Lock(fullBlockIndex, binaryReadOnly, LOCK_WAIT))
     {
-        cerr << "forEveryNonEmptyBlockOnDisc failed: " << fullBlocks.LockFailure() << "\n";
+        cerr << "forEveryEmptyBlockOnDisc failed: " << fullBlocks.LockFailure() << "\n";
         return false;
     }
     ASSERT(fullBlocks.isOpen());
 
-    SFUint32 nItems = fileSize(fullBlockIndex) / sizeof(SFUint32) + 1;  // we need an extra one for item '0'
-    SFUint32 *contents = new SFUint32[nItems+2];  // extra space
+    uint64_t nItems = fileSize(fullBlockIndex) / sizeof(uint64_t) + 1;  // we need an extra one for item '0'
+    uint64_t *contents = new uint64_t[nItems+2];  // extra space
     if (contents)
     {
         // read the entire full block index
-        fullBlocks.Read(&contents[0], sizeof(SFUint32), nItems-1);  // one less since we asked for an extra one
+        fullBlocks.Read(&contents[0], sizeof(uint64_t), nItems-1);  // one less since we asked for an extra one
         fullBlocks.Release();  // release it since we don't need it any longer
 
         contents[0] = 0;  // the starting point (needed because we are build the empty list from the non-empty list
-        SFUint32 cnt = start;
-        for (SFUint32 i = 1 ; i < nItems ; i = i + skip) // first one (at index '0') is assumed to be the '0' block
+        uint64_t cnt = start;
+        for (uint64_t i = 1 ; i < nItems ; i = i + skip) // first one (at index '0') is assumed to be the '0' block
         {
             while (cnt<contents[i])
             {
@@ -746,13 +817,7 @@ bool forEveryEmptyBlockOnDisc(BLOCKVISITFUNC func, void *data, SFUint32 start, S
 }
 
 //-------------------------------------------------------------------------
-template<class T>
-inline bool inRange(T val, T mn, T mx) {
-    return (val >= mn && val <= mx);
-}
-
-//-------------------------------------------------------------------------
-bool forEveryBlock(BLOCKVISITFUNC func, void *data, SFUint32 start, SFUint32 count, SFUint32 skip) {
+bool forEveryBlock(BLOCKVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip) {
     // Here we simply scan the numbers and either read from disc or query the node
     if (!func)
         return false;
@@ -760,7 +825,7 @@ bool forEveryBlock(BLOCKVISITFUNC func, void *data, SFUint32 start, SFUint32 cou
     SFString save = getSource();
     setSource("fastest");
 
-    for (SFUint32 i = start ; i < start + count - 1 ; i = i + skip) {
+    for (uint64_t i = start ; i < start + count - 1 ; i = i + skip) {
         SFString fileName = getBinaryFilename1(i);
         CBlock block;
         if (fileExists(fileName))
@@ -780,51 +845,42 @@ bool forEveryBlock(BLOCKVISITFUNC func, void *data, SFUint32 start, SFUint32 cou
 }
 
 //-------------------------------------------------------------------------
-bool forEveryNonEmptyBlockOnDisc(BLOCKVISITFUNC func, void *data, SFUint32 start, SFUint32 count, SFUint32 skip)
-{
+bool forEveryNonEmptyBlockOnDisc(BLOCKVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip) {
+
     // Read the non-empty block index file and spit it out only non-empty blocks
     if (!func)
         return false;
 
     CSharedResource fullBlocks;
-    if (!fullBlocks.Lock(fullBlockIndex, binaryReadOnly, LOCK_WAIT))
-    {
+    if (!fullBlocks.Lock(fullBlockIndex, binaryReadOnly, LOCK_WAIT)) {
         cerr << "forEveryNonEmptyBlockOnDisc failed: " << fullBlocks.LockFailure() << "\n";
         return false;
     }
     ASSERT(fullBlocks.isOpen());
 
-    SFUint32 nItems = fileSize(fullBlockIndex) / sizeof(SFUint32);
-    SFUint32 *contents = new SFUint32[nItems];
-    if (contents)
-    {
+    uint64_t nItems = fileSize(fullBlockIndex) / sizeof(uint64_t);
+    uint64_t *contents = new uint64_t[nItems];
+    if (contents) {
         // read the entire full block index
-        fullBlocks.Read(contents, sizeof(SFUint32), nItems);
+        fullBlocks.Read(contents, sizeof(uint64_t), nItems);
         fullBlocks.Release();  // release it since we don't need it any longer
 
-        for (SFUint32 i = 0 ; i < nItems ; i = i + skip)
-        {
+        for (uint64_t i = 0 ; i < nItems ; i = i + skip) {
             // TODO: This should be a binary search not a scan. This is why it appears to wait
-//cout << "inRange(" << contents[i] << ", " << start << ", " << start+count-1 << "): ";
-            if (inRange((SFUint32)contents[i], start, start+count-1))
-            {
-//cout << "true\n";
-//              if (verbose) { cerr << "Getting block " << contents[i] << "\n"; cerr.flush(); }
+            uint64_t item = contents[i];
+            if (inRange(item, start, start+count-1)) {
                 CBlock block;
-                if (getBlock(block,contents[i]))
-                {
+                if (getBlock(block,contents[i])) {
                     bool ret = (*func)(block, data);
-                    if (!ret)
-                    {
+                    if (!ret) {
                         // Cleanup and return if user tells us to
                         delete [] contents;
                         return false;
                     }
                 }
             } else {
-//cout << "false\n";
+                // do nothing
             }
-//cout.flush();
         }
         delete [] contents;
     }
@@ -832,7 +888,7 @@ bool forEveryNonEmptyBlockOnDisc(BLOCKVISITFUNC func, void *data, SFUint32 start
 }
 
 //-------------------------------------------------------------------------
-SFUint32 getLatestBlockFromClient(void)
+uint64_t getLatestBlockFromClient(void)
 {
     CBlock block;
     getObjectViaRPC(block, "eth_getBlockByNumber", "[\"latest\",true]");
@@ -840,14 +896,14 @@ SFUint32 getLatestBlockFromClient(void)
 }
 
 //--------------------------------------------------------------------------
-SFUint32 getLatestBloomFromCache(void) {
+uint64_t getLatestBloomFromCache(void) {
     return toLongU(asciiFileToString(bloomFolder + "lastBloom.txt"));
 }
 
 //--------------------------------------------------------------------------
-SFUint32 getLatestBlockFromCache(CSharedResource *res) {
+uint64_t getLatestBlockFromCache(CSharedResource *res) {
 
-    SFUint32 ret = 0;
+    uint64_t ret = 0;
 
     CSharedResource fullBlocks; // Don't move--need the scope
     CSharedResource *pRes = res;
@@ -863,7 +919,7 @@ SFUint32 getLatestBlockFromCache(CSharedResource *res) {
     }
     ASSERT(pRes->isOpen());
 
-    pRes->Seek( (-1 * (long)sizeof(SFUint32)), SEEK_END);
+    pRes->Seek( (-1 * (long)sizeof(uint64_t)), SEEK_END);
     pRes->Read(ret);
     if (pRes != res)
         pRes->Release();
@@ -871,287 +927,59 @@ SFUint32 getLatestBlockFromCache(CSharedResource *res) {
 }
 
 //--------------------------------------------------------------------------
-bool getLatestBlocks(SFUint32& cache, SFUint32& client, CSharedResource *res)
+bool getLatestBlocks(uint64_t& cache, uint64_t& client, CSharedResource *res)
 {
     client = getLatestBlockFromClient();
     cache  = getLatestBlockFromCache(res);
     return true;
 }
 
-//--------------------------------------------------------------------------
-inline SFString TIMER_IN(double& startTime) {
-    CStringExportContext ctx;
-    ctx << (qbNow()-startTime) << ": ";
-    startTime = qbNow();
-    return ctx.str;
-}
-inline SFString TIMER_TICK(double startTime) {
-    CStringExportContext ctx;
-    ctx << "in " << cGreen << (qbNow()-startTime) << cOff << " seconds.";
-    return ctx.str;
-}
-#define TIMER()  TIMER_IN(startTime)
-#define TIMER_T() TIMER_TICK(startTime)
-
-//--------------------------------------------------------------------------
-class CInMemoryCache
-{
-public:
-    CInMemoryCache(void) {
-        blocks    = NULL;
-        // blocksOnDisc;
-        blockFile = miniBlockCache;
-
-        trans     = NULL;
-        // transOnDisc
-        transFile = miniTransCache;
-
-        nBlocks1   = fileSize(blockFile) / sizeof(CMiniBlock);
-        nTrans1    = fileSize(transFile) / sizeof(CMiniTrans);
-
-        loaded = false;
-    }
-
-    ~CInMemoryCache(void) {
-        Clear();
-    }
-
-    void Clear(void) {
-        if ( blocks   ) delete [] blocks;
-        blocks = NULL;
-        if ( trans    ) delete [] trans;
-        trans = NULL;
-        blocksOnDisc.Release();
-        transOnDisc.Release();
-        loaded = false;
-    }
-
-    bool Load(SFUint32 _start, SFUint32 _count)
-    {
-        start = min(_start,        getLatestBlockFromCache());
-        count = min(_start+_count, getLatestBlockFromCache()) - _start;
-        if (loaded)
-            return true;
-        loaded = true; // only come through here once, even if we fail to load
-
-        double startTime = qbNow();
-        blocks = new CMiniBlock[nBlocks1];
-        if (!blocks)
-        {
-            cerr << "Could not allocate memory for the blocks (size needed: " << nBlocks1 << ").\n";
-            return false;
-        }
-        bzero(blocks, sizeof(CMiniBlock)*(nBlocks1));
-        if (verbose)
-            cerr << TIMER() << "Allocated room for " << nBlocks1 << " miniBlocks.\n";
-
-        // Next, we try to open the mini-block database
-        if (!blocksOnDisc.Lock(blockFile, binaryReadOnly, LOCK_WAIT))
-        {
-            cerr << "Could not open the mini-block database: " << blockFile << ".\n";
-            return false;
-        }
-        blocksOnDisc.Seek(0, SEEK_SET);
-
-        // Read the entire mini-block database into memory in one chunk
-        size_t nRead = blocksOnDisc.Read(blocks, nBlocks1, sizeof(CMiniBlock));
-        blocksOnDisc.Release();  // We're done with it
-        if (nRead != nBlocks1)
-        {
-            cerr << "Error encountered reading mini-blocks database.\n Quitting...";
-            return false;
-        }
-        if (verbose)
-            cerr << TIMER() << "Read " << nRead << " miniBlocks into memory.\n";
-
-        // See if we can allocation enough space for the mini-transaction database
-        SFUint32 fs = fileSize(transFile);
-        SFUint32 ms = sizeof(CMiniTrans);
-        //SFUint32 nTrans   = fs / ms;
-        nTrans1   = fs / ms;
-        trans = new CMiniTrans[nTrans1];
-        if (!trans)
-        {
-            cerr << "Could not allocate memory for the transactions (size needed: " << nTrans1 << ").\n";
-            return false;
-        }
-        bzero(trans, sizeof(CMiniTrans)*(nTrans1));
-        if (verbose)
-            cerr << TIMER() << "Allocated room for " << nTrans1 << " transactions.\n";
-
-        // Next, we try to open the mini-transaction database
-        if (!transOnDisc.Lock(transFile, binaryReadOnly, LOCK_WAIT))
-        {
-            cerr << "Could not open the mini-transaction database: " << transFile << ".\n";
-            return false;
-        }
-
-        // Read the entire mini-transaction database into memory in one chunk
-        // TODO: What is the correct value for this?
-#define READ_SIZE 204800
-        nRead = 0;
-        while (nRead < nTrans1)
-        {
-            nRead += transOnDisc.Read(&trans[nRead], READ_SIZE, sizeof(CMiniTrans));
-            if (verbose)
-                progressBar(nRead,nTrans1,TIMER_T());
-        }
-        transOnDisc.Release();
-        cerr << "\n" << TIMER();
-        return true;
-    }
-    SFUint32 firstBlock(void) { return 0; }
-    SFUint32 lastBlock (void) { return nBlocks1; }
-
-public:
-    bool            loaded;
-    CMiniBlock     *blocks;
-    CSharedResource blocksOnDisc;
-    SFString        blockFile;
-
-    CMiniTrans     *trans;
-    CSharedResource transOnDisc;
-    SFString        transFile;
-
-private:
-    SFUint32    nBlocks1;
-    SFUint32    nTrans1;
-    SFUint32    start;
-    SFUint32    count;
-};
-
-static CInMemoryCache *theCache = NULL;
-//--------------------------------------------------------------------------
-void clearInMemoryCache(void) {
-    if (theCache)
-        theCache->Clear();
-    theCache = NULL;
-}
-//--------------------------------------------------------------------------
-CInMemoryCache *getTheCache(void) {
-    if (!theCache)
-        theCache = new CInMemoryCache();
-    return theCache;
-}
-
-//--------------------------------------------------------------------------
-bool forEveryMiniBlockInMemory(MINIBLOCKVISITFUNC func, void *data, SFUint32 start, SFUint32 count)
-{
-    CInMemoryCache *cache = getTheCache();
-    if (!cache->Load(start,count))
-        return false;
-    SFUint32 first = cache->firstBlock();
-    SFUint32 last = cache->lastBlock();
-
-    bool done=false;
-    for (SFUint32 i=first;i<last&&!done;i++)
-    {
-        if (inRange((SFUint32)cache->blocks[i].blockNumber, start, start+count-1))
-        {
-            if (!(*func)(cache->blocks[i], &cache->trans[0], data))
-                return false;
-
-        } else if (cache->blocks[i].blockNumber >= start+count)
-        {
-            done=true;
-
-        } else
-        {
-            // do nothing
-        }
-    }
-
+//-------------------------------------------------------------------------
+bool forEveryBlock(BLOCKVISITFUNC func, void *data, const SFString& block_list) {
     return true;
 }
 
-/*
- SFAddress from;
- SFAddress to;
- CReceipt
-    SFAddress contractAddress;
-    CLogEntryArray logs;
-        SFAddress address;
-        SFString data;
-        SFUint32 logIndex;
-        SFBigUintArray topics;
-        CTrace
-            SFStringArray traceAddress;
-            CTraceAction action;
-                SFAddress from;
-                SFAddress to;
- */
-
-//--------------------------------------------------------------------------
-bool forEveryFullBlockInMemory(BLOCKVISITFUNC func, void *data, SFUint32 start, SFUint32 count)
+//-------------------------------------------------------------------------
+bool forEveryTransaction(TRANSVISITFUNC func, void *data, const SFString& trans_list)
 {
-    CInMemoryCache *cache = getTheCache();
-    if (getSource() != "mem")
-        return false;
-    if (!cache->Load(start,count))
+    if (!func)
         return false;
 
-    SFUint32 first = cache->firstBlock();
-    SFUint32 last = cache->lastBlock();
+    // trans_list is a list of tx_hash, blk_hash.tx_id, or blk_num.tx_id, or any combination
+    SFString list = trans_list;
+    while (!list.empty()) {
+        SFString item = nextTokenClear(list, '|');
+        bool hasDot = item.Contains(".");
 
-    bool done=false;
-    for (SFUint32 i=first;i<last&&!done;i++)
-    {
-        if (inRange((SFUint32)cache->blocks[i].blockNumber, start, start+count-1))
-        {
-            CBlock block;
-            cache->blocks[i].toBlock(block);
-            SFUint32 gasUsed=0;
-            for (SFUint32 tr=cache->blocks[i].firstTrans;tr<cache->blocks[i].firstTrans+cache->blocks[i].nTrans;tr++)
-            {
-                CTransaction tt;
-                cache->trans[tr].toTrans(tt);
-                gasUsed += tt.receipt.gasUsed;
-                block.transactions[block.transactions.getCount()] = tt;
+        SFString hash = nextTokenClear(item, '.');
+        uint64_t txID = toLongU(item);
+
+        CTransaction trans;
+        if (hash.startsWith("0x")) {
+            if (hasDot) {
+                // We are not fully formed, we have to ask the node for the receipt
+                getTransaction(trans, hash, txID);  // blockHash.txID
+            } else {
+                // We are not fully formed, we have to ask the node for the receipt
+                getTransaction(trans, hash);  // transHash
             }
-            block.gasUsed = gasUsed;
-            if (!(*func)(block, data))
-                return false;
-
-        } else if (cache->blocks[i].blockNumber >= start+count)
-        {
-            done=true;
-
-        } else
-        {
-            // do nothing
+        } else {
+            getTransaction(trans, (uint32_t)toLongU(hash), txID);  // blockHash.txID
         }
+        CBlock block;
+        trans.pBlock = &block;
+        getBlock(block, trans.blockNumber);
+        getReceipt(trans.receipt, trans.getValueByName("hash"));
+        trans.finishParse();
+        if (!(*func)(trans, data))
+            return false;
     }
-
     return true;
 }
 
 //-------------------------------------------------------------------------
-bool forEveryTransaction(TRANSVISITFUNC func, void *data, SFUint32 start, SFUint32 count)
-{
-    if (!func)
-        return false;
-    return true;
-}
-
-//-------------------------------------------------------------------------
-bool forEveryTransactionTo(TRANSVISITFUNC func, void *data, SFUint32 start, SFUint32 count)
-{
-    if (!func)
-        return false;
-    return true;
-}
-
-//-------------------------------------------------------------------------
-bool forEveryTransactionFrom(TRANSVISITFUNC func, void *data, SFUint32 start, SFUint32 count)
-{
-    if (!func)
-        return false;
-    return true;
-}
-
-//-------------------------------------------------------------------------
-bool forEveryBloomFile(FILEVISITOR func, void *data, SFUint32 start, SFUint32 count, SFUint32 skip) {
-    if (start == 0 || count == (SFUint32)-1) { // visit everything since we're given the default
+bool forEveryBloomFile(FILEVISITOR func, void *data, uint64_t start, uint64_t count, uint64_t skip) {
+    if (start == 0 || count == (uint64_t)-1) { // visit everything since we're given the default
         forEveryFileInFolder(bloomFolder, func, data);
         return true;
     }
@@ -1178,18 +1006,18 @@ SFString blockCachePath(const SFString& _part) {
             path = configPath("cache/");
             toml.setConfigStr("settings", "blockCachePath", path);
             toml.writeFile();
-        	establishFolder(path);
         }
-        if (!path.endsWith("/"))
-            path += "/";
         CFilename folder(path);
+        if (!folderExists(folder.getFullPath()))
+            establishFolder(folder.getFullPath());
         if (!folder.isValid()) {
             cerr << "Invalid path (" << folder.getFullPath() << ") in config file. Quitting...\n";
             exit(0);
         }
         blockCache = folder.getFullPath();
     }
-    ASSERT(blockCache.endsWith("/"));
+    if (!blockCache.endsWith("/"))
+        blockCache += "/";
     return blockCache + _part;
 }
 

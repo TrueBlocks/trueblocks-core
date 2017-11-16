@@ -1,52 +1,55 @@
-getTrace argc: 2 [1:0x590c575213aeec61ac15949f65b941ef2fb863479eb28a75d3a190278d88d1e7] 
-getTrace 0x590c575213aeec61ac15949f65b941ef2fb863479eb28a75d3a190278d88d1e7 
+getTrace argc: 3 [1:0x590c575213aeec61ac15949f65b941ef2fb863479eb28a75d3a190278d88d1e7] [2:--parity] 
+getTrace 0x590c575213aeec61ac15949f65b941ef2fb863479eb28a75d3a190278d88d1e7 --parity 
 [{
     "blockHash": "0x759de0be90043e350377c7d1be2f639ead0953b06a16c32552265659bd134f2d",
-    "blockNumber": 2229051,
-    "subtraces": 1,
+    "blockNumber": "0x22033b",
+    "subtraces": "0x1",
     "traceAddress": [],
     "transactionHash": "0x590c575213aeec61ac15949f65b941ef2fb863479eb28a75d3a190278d88d1e7",
-    "transactionPosition": 1,
+    "transactionPosition": "0x1",
     "type": "call",
+    "error": "",
     "action": {
         "callType": "call",
         "from": "0xa0041de2c4411f6cb5721c47e129f7a6e534557e",
-        "gas": 228728,
+        "gas": "0x37d78",
         "input": "0xfc735e99",
         "to": "0x19ad2660ca7c239df82d2cb24b1cb9a8717ffc35",
-        "value": 0,
+        "value": "0x0",
         "address": "0x0",
-        "balance": 0,
+        "balance": "0x0",
         "refundAddress": "0x0"
     },
     "result": {
-        "gasUsed": 45820,
+        "gasUsed": "0xb2fc",
         "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
     }
 },
 {
     "blockHash": "0x759de0be90043e350377c7d1be2f639ead0953b06a16c32552265659bd134f2d",
-    "blockNumber": 2229051,
-    "subtraces": 0,
+    "blockNumber": "0x22033b",
+    "subtraces": "0x0",
     "traceAddress": [
         "0x0"
     ],
     "transactionHash": "0x590c575213aeec61ac15949f65b941ef2fb863479eb28a75d3a190278d88d1e7",
-    "transactionPosition": 1,
+    "transactionPosition": "0x1",
     "type": "call",
+    "error": "",
     "action": {
         "callType": "call",
         "from": "0x19ad2660ca7c239df82d2cb24b1cb9a8717ffc35",
-        "gas": 2300,
+        "gas": "0x8fc",
         "input": "0x",
         "to": "0x46bafdde80bd641d9c5a3dc9f0f96e25f5477ae8",
-        "value": 200000000000000,
+        "value": "0xb5e620f48000",
         "address": "0x0",
-        "balance": 0,
+        "balance": "0x0",
         "refundAddress": "0x0"
     },
     "result": {
-        "gasUsed": 0,
+        "gasUsed": "0x0",
         "output": "0x"
     }
-}]
+}
+]

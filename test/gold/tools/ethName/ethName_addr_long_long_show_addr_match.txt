@@ -1,4 +1,4 @@
-ethName argc: 3 [1:--addrOnly] [2:0xb6] 
-ethName --addrOnly 0xb6 
+ethName argc: 3 [1:--alone] [2:0xb6] 
+ethName --alone 0xb6 
 0xb64ef51c888972c908cfacf59b47c1afbc0ab8ac
 0xb63b606ac810a52cca15e44bb630fd42d8d1d83d

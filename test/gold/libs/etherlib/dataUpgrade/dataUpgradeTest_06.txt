@@ -49,6 +49,10 @@ baseClass: CBaseNode
 	  fieldID: 1011
 	  fieldType: T_OBJECT|TS_ARRAY TS_ARRAY 1572939 TS_OBJECT 1572939
 	  hidden: 0
+	fieldName: date
+	  fieldID: 1012
+	  fieldType: T_DATE TS_DATE 262149
+	  hidden: 1
 {
   "gasLimit": 3141592,
   "gasUsed": 21000,
@@ -76,7 +80,8 @@ baseClass: CBaseNode
         "contractAddress": "0x0",
         "gasUsed": 21000,
         "logs": [],
-        "logsBloom": "0x0"
+        "logsBloom": "0x0",
+        "status": null
       },
       "gasUsed": 21000
     }
@@ -132,6 +137,10 @@ baseClass: CBaseNode
 	  fieldID: 1011
 	  fieldType: T_OBJECT|TS_ARRAY TS_ARRAY 1572939 TS_OBJECT 1572939
 	  hidden: 0
+	fieldName: date
+	  fieldID: 1012
+	  fieldType: T_DATE TS_DATE 262149
+	  hidden: 1
 {
   "gasLimit": 3141592,
   "gasUsed": 21000,
@@ -159,7 +168,8 @@ baseClass: CBaseNode
         "contractAddress": "0x0",
         "gasUsed": 21000,
         "logs": [],
-        "logsBloom": "0x0"
+        "logsBloom": "0x0",
+        "status": null
       },
       "gasUsed": 21000
     }
@@ -193,7 +203,8 @@ baseClass: CBaseNode
         "contractAddress": "0x0",
         "gasUsed": 21000,
         "logs": [],
-        "logsBloom": "0x0"
+        "logsBloom": "0x0",
+        "status": null
       },
       "gasUsed": 21000
     }
@@ -249,6 +260,10 @@ baseClass: CBaseNode
 	  fieldID: 1011
 	  fieldType: T_OBJECT|TS_ARRAY TS_ARRAY 1572939 TS_OBJECT 1572939
 	  hidden: 0
+	fieldName: date
+	  fieldID: 1012
+	  fieldType: T_DATE TS_DATE 262149
+	  hidden: 1
 {
   "gasLimit": 3141592,
   "gasUsed": 21000,
@@ -276,7 +291,8 @@ baseClass: CBaseNode
         "contractAddress": "0x0",
         "gasUsed": 21000,
         "logs": [],
-        "logsBloom": "0x0"
+        "logsBloom": "0x0",
+        "status": null
       },
       "gasUsed": 21000
     }
@@ -325,7 +341,7 @@ baseClass: CBaseNode
 	  hidden: 0
 	fieldName: timestamp
 	  fieldID: 1010
-	  fieldType: T_NUMBER TS_NUMERAL 65561
+	  fieldType: T_TIMESPAN TS_NUMERAL 65551
 	  hidden: 0
 	fieldName: transactions
 	  fieldID: 1011
@@ -366,7 +382,8 @@ baseClass: CBaseNode
         "contractAddress": "0x0",
         "gasUsed": 21000,
         "logs": [],
-        "logsBloom": "0x0"
+        "logsBloom": "0x0",
+        "status": null
       },
       "gasUsed": 21000
     }
@@ -418,7 +435,7 @@ baseClass: CBaseNode
 	  hidden: 0
 	fieldName: timestamp
 	  fieldID: 1010
-	  fieldType: T_NUMBER TS_NUMERAL 65561
+	  fieldType: T_TIMESPAN TS_NUMERAL 65551
 	  hidden: 0
 	fieldName: transactions
 	  fieldID: 1011
@@ -459,7 +476,8 @@ baseClass: CBaseNode
         "contractAddress": "0x0",
         "gasUsed": 21000,
         "logs": [],
-        "logsBloom": "0x0"
+        "logsBloom": "0x0",
+        "status": null
       },
       "gasUsed": 21000
     }
@@ -495,7 +513,8 @@ baseClass: CBaseNode
         "contractAddress": "0x0",
         "gasUsed": 21000,
         "logs": [],
-        "logsBloom": "0x0"
+        "logsBloom": "0x0",
+        "status": null
       },
       "gasUsed": 21000
     }
@@ -547,7 +566,7 @@ baseClass: CBaseNode
 	  hidden: 0
 	fieldName: timestamp
 	  fieldID: 1010
-	  fieldType: T_NUMBER TS_NUMERAL 65561
+	  fieldType: T_TIMESPAN TS_NUMERAL 65551
 	  hidden: 0
 	fieldName: transactions
 	  fieldID: 1011
@@ -588,7 +607,8 @@ baseClass: CBaseNode
         "contractAddress": "0x0",
         "gasUsed": 21000,
         "logs": [],
-        "logsBloom": "0x0"
+        "logsBloom": "0x0",
+        "status": null
       },
       "gasUsed": 21000
     }
@@ -640,7 +660,7 @@ baseClass: CBaseNode
 	  hidden: 0
 	fieldName: timestamp
 	  fieldID: 1010
-	  fieldType: T_NUMBER TS_NUMERAL 65561
+	  fieldType: T_TIMESPAN TS_NUMERAL 65551
 	  hidden: 0
 	fieldName: transactions
 	  fieldID: 1011
@@ -681,7 +701,8 @@ baseClass: CBaseNode
         "contractAddress": "0x0",
         "gasUsed": 21000,
         "logs": [],
-        "logsBloom": "0x0"
+        "logsBloom": "0x0",
+        "status": null
       },
       "gasUsed": 21000
     }

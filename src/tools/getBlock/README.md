@@ -1,35 +1,30 @@
 ## getBlock
 
-`ethName` provides a very simple, poorly-done method by which to keep track of 'real life' names and their associated Ethereum addresses. While the tools needs a lot of work, it has come in handy as we've been writing **quickBlocks**. Eventually a feature such as this will be replaced with ENS (or an equivalent), but in the mean time, `ethname` works well to help you remember who is associated with which addresses.
+The `getBlock` tool retrieves Ethereum block data from a running node or, if previously retrieved, the QuickBlocks cache. It optionally retrieves the hashes that denote the transactions in the block or the full transactional data as a default.
 
-A very useful way to use of this tools is to feed its output into another command-line tool's input. For example, you could make a command such as:
-
-    ethname -a 'FredJones' | ethscan
-
-which would open the [etherscan](http://etherscan.io) website with the address associated with Fred's address(es).
+The tool may also be used to double check that the results produced from the QuickBlocks cache and the results as retrieved directly from the running node are identical (modulo the fact that QuickBlocks does not store every data field from the node). You may accomplish this `check` with the --check option.
 
 #### Usage
 
-`Usage:`    getBlock [-k|-s|-f|-p|-t|-q|-v|-h] num  
-`Purpose:`  Returns block(s) from local cache (the default) or directly from a running node.
+`Usage:`    getBlock [-r|-t|-c|-v|-h] &lt;block&gt; [block...]  
+`Purpose:`  Returns block(s) from local cache or directly from a running node.
              
 `Where:`  
 
-| Option | Full Command | Description |
+| Short Cut | Option | Description |
 | -------: | :------- | :------- |
-|  | num | which block (or blocks if more than one) to retreive (or use [start-stop) for range) |
-| -k | --check | pull block(s) using both cache and raw, compare results, report differences (should be none) |
-| -s | --source val | either :(c)ache or :(r)aw, source for data retrival. (shortcuts -c = qblocks, -r = node) |
-| -f | --fields val | either :(a)ll, (m)ini, (c)ache or :(r)aw; which fields to include in output (all is default) |
-| -p | --parity | mimic parity output using quickBlocks (i.e. quoted hexidecimal for numbers) |
-| -t | --terse | if source is raw, retreive transaction hashes instead of full transactions |
-| -q | --quiet | do not print results to screen, used for speed testing and data checking |
+|  | block_list | a space-separated list of one or more blocks to retrieve |
+| -r | --raw | pull the block data from the running Ethereum node (no cache) |
+| -t | --terse | display only transaction hashes, default is to display full transaction details |
+| -c | --check | compare results between qblocks and Ethereum node, report differences, if any |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
-#### Notes
+`Notes:`
 
-With one search term, search in both `name` and `address` fields. With two terms, the first must match the `address` field, while the second must match the `name` field. When there are two search terms, both must match.
+- `block_list` is a space-separated list of values, a start-end range, a `special`, or any combination.
+- This tool retrieves information from the local node or the ${FALLBACK} node, if configured (see documentation).
+- `special` blocks are detailed under `whenBlock --list`.
 
 #### Other Options
 
@@ -38,7 +33,7 @@ All **quickBlocks** command-line tools support the following commands (although 
     Command     |     Description
     -----------------------------------------------------------------------------
     --version   |   display the current version of the tool
-    --nocolors  |   turn off colored display
+    --nocolor   |   turn off colored display
     --wei       |   specify value in wei (the default)
     --ether     |   specify value in ether
     --dollars   |   specify value in US dollars

@@ -35,10 +35,11 @@ namespace qblocks {
     }
 
     //-------------------------------------------------------------------------
-    CToml::CTomlGroup *CToml::addGroup(const SFString& group, bool commented) {
+    CToml::CTomlGroup *CToml::addGroup(const SFString& group, bool commented, bool array) {
         ASSERT(!findGroup(group));
         CTomlGroup *newGroup = new CTomlGroup;
-        newGroup->comment = commented;
+        newGroup->isArray = array;
+        newGroup->isComment = commented;
         newGroup->groupName = group;
         groups.AddTail(newGroup);
         return newGroup;
@@ -94,24 +95,25 @@ namespace qblocks {
     }
 
     //---------------------------------------------------------------------------------------
+extern SFString stripFullLineComments(const SFString& inStr);
+extern SFString collapseArrays(const SFString& inStr);
     bool CToml::readFile(const SFString& filename) {
-        // TODO(tjayrush): This is a very inadequate TOML parser. Should be replaced with full featured parser
         SFString curGroup;
         Clear();
 
         SFString contents = asciiFileToString(filename)
                             .Substitute("\\\n ", "\\\n").Substitute("\\\n", "").Substitute("\\\r\n", "");
-extern SFString stripFullLineComments(const SFString& inStr);
-        contents = stripFullLineComments(contents);
+        contents = collapseArrays(stripFullLineComments(contents));
         while (!contents.empty()) {
             SFString value = StripAny(nextTokenClear(contents, '\n'), " \t");
             bool comment = value.startsWith('#');
             if (comment)
                 value = value.substr(1);
             if (!value.empty()) {
+                bool isArray = value.Contains("[[");
                 if (value.startsWith('[')) {  // it's a group
                     value = StripAny(value.Substitute("[", "").Substitute("]", ""), " \t");
-                    addGroup(value, comment);
+                    addGroup(value, comment, isArray);
                     curGroup = value;
 
                 } else {
@@ -143,13 +145,15 @@ extern SFString stripFullLineComments(const SFString& inStr);
             CTomlGroup *group = groups.GetNext(gPos);
             ASSERT(group);
 
-            SFString str = (first?EMPTY:"\n") + (group->comment?"#":EMPTY) + "[" + group->groupName + "]\n";
+            ostringstream os;
+            os << (first?"":"\n") << (group->isComment?"#":"");
+            os << (group->isArray?"[[":"[") << group->groupName << (group->isArray?"]]":"]") << "\n";
             LISTPOS kPos = group->keys.GetHeadPosition();
             while (kPos) {
                 CTomlKey *key = group->keys.GetNext(kPos);
-                str += (key->comment?"#":EMPTY) + key->keyName + "=" + key->value + "\n";
+                os << (key->comment?"#":EMPTY) << key->keyName << "=" << key->value << "\n";
             }
-            WriteLine(str);
+            WriteLine(os.str().c_str());
             first = false;
         }
         Release();
@@ -181,25 +185,6 @@ extern SFString stripFullLineComments(const SFString& inStr);
     }
 
     //---------------------------------------------------------------------------------------
-    SFString CToml::getConfigArray(const SFString& group, const SFString& key, const SFString& def) const {
-
-        SFString contents = asciiFileToString(getFilename());
-        contents.ReplaceAll(" =","=");
-        contents.ReplaceAll("= ","=");
-        uint64_t fnd = contents.find(key+"=");
-        if (fnd == (SFUint32)-1)
-            return "";
-        SFString ret = contents.substr(fnd+key.length()+1);
-        fnd = ret.find("]");
-        if (fnd == (SFUint32)-1)
-            return "";
-        ret.ReplaceAll("=",":");
-extern char *cleanUpJson(char *s);
-        ret = cleanUpJson((char*)ret.substr(0,fnd).c_str());
-        return ret;
-    }
-
-    //---------------------------------------------------------------------------------------
     SFString CToml::getConfigStr(const SFString& group, const SFString& key, const SFString& def) const {
         SFString ret = def;
         CTomlGroup *grp = findGroup(group);
@@ -218,7 +203,7 @@ extern char *cleanUpJson(char *s);
 
         CTomlGroup *grp = findGroup(group);
         if (!grp) {
-            addGroup(group, false);
+            addGroup(group, false, false);
             addKey(group, key, value, comment);
 
         } else {
@@ -238,7 +223,7 @@ extern char *cleanUpJson(char *s);
         LISTPOS gPos = tomlIn.groups.GetHeadPosition();
         while (gPos) {
             const CToml::CTomlGroup *grp = tomlIn.groups.GetNext(gPos);
-            os << "[" << grp->groupName << (grp->comment?":comment ":"") << "]\n";
+            os << (grp->isArray?"[[":"[") << grp->groupName << (grp->isComment?":comment ":"") << (grp->isArray?"]]":"]") << "\n";
             LISTPOS kPos = grp->keys.GetHeadPosition();
             while (kPos) {
                 const CToml::CTomlKey *key = grp->keys.GetNext(kPos);
@@ -288,7 +273,8 @@ extern char *cleanUpJson(char *s);
     //-------------------------------------------------------------------------
     void CToml::CTomlGroup::Clear(void) {
         groupName = EMPTY;
-        comment = false;
+        isComment = false;
+        isArray = false;
         LISTPOS kPos = keys.GetHeadPosition();
         while (kPos) {
             CTomlKey *key = keys.GetNext(kPos);
@@ -302,7 +288,8 @@ extern char *cleanUpJson(char *s);
         Clear();
 
         groupName = group.groupName;
-        comment = group.comment;
+        isComment = group.isComment;
+        isArray   = group.isArray;
 
         LISTPOS kPos = group.keys.GetHeadPosition();
         while (kPos) {
@@ -334,6 +321,7 @@ extern char *cleanUpJson(char *s);
         return NULL;
     }
 
+    //---------------------------------------------------------------------------------------
     SFString stripFullLineComments(const SFString& inStr) {
         SFString str = inStr;
         SFString ret;
@@ -344,5 +332,36 @@ extern char *cleanUpJson(char *s);
             }
         }
         return ret;
+    }
+
+    //---------------------------------------------------------------------------------------
+    SFString collapseArrays(const SFString& inStr) {
+        if (!inStr.Contains("[[") && !inStr.Contains("]]"))
+            return inStr;
+
+        SFString ret;
+        SFString str = inStr.Substitute("  "," ");
+        str.Replace("[[","`");
+        SFString front = nextTokenClear(str, '`');
+        str = "[[" + str;
+        str = str.Substitute("[[","<array>");
+        str = str.Substitute("]]","</array>\n<name>");
+        str = str.Substitute("[","</name>\n<value>");
+        str = str.Substitute("]","</value>\n<name>");
+        str.ReplaceReverse("<name>","");
+        str.ReplaceAll("<name>\n","<name>");
+        str.ReplaceAll(" = </name>","</name>");
+        while (str.Contains("</array>")) {
+            SFString array = snagFieldClear(str,"array");
+            SFString vals;
+            while (str.Contains("</value>")) {
+                SFString name = snagFieldClear(str,"name").Substitute("=","").Substitute("\n","");
+                SFString value = snagFieldClear(str,"value").Substitute("\n","").Substitute("=",":");
+                vals += name + " = [ " + value + " ]\n";
+            }
+            SFString line = "[[" + array + "]]\n" + vals;
+            ret += line;
+        }
+        return front + ret;
     }
 }  // namespace qblocks

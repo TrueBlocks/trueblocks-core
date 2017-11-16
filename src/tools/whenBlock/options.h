@@ -1,4 +1,3 @@
-
 #pragma once
 /*-------------------------------------------------------------------------
  * This source code is confidential proprietary information which is
@@ -10,18 +9,16 @@
 #include "etherlib.h"
 
 //-----------------------------------------------------------------------------
-class COptions : public COptionsBase {
+class COptions : public CBlockOptions {
 public:
-    SFStringArray   requests;
-    bool            alone;
-    CNameValueArray specials;
+    SFStringArray     requests;
+    bool              alone;
 
     COptions(void);
     ~COptions(void);
 
-    bool parseArguments(SFString& command);
-    void Init(void);
-    SFString postProcess(const SFString& which, const SFString& str) const;
-    void     loadSpecials(void);
+    SFString postProcess(const SFString& which, const SFString& str) const override;
+    bool parseArguments(SFString& command) override;
+    void Init(void) override;
     SFString listSpecials(bool terse) const;
 };

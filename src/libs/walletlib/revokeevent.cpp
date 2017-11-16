@@ -83,6 +83,8 @@ bool QRevokeEvent::Serialize(SFArchive& archive) {
     if (readBackLevel(archive))
         return true;
 
+    // EXISTING_CODE
+    // EXISTING_CODE
     archive >> owner;
     archive >> operation;
     finishParse();
@@ -91,6 +93,9 @@ bool QRevokeEvent::Serialize(SFArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool QRevokeEvent::SerializeC(SFArchive& archive) const {
+
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     // Writing always write the latest version of the data
     CLogEntry::SerializeC(archive);
@@ -171,7 +176,7 @@ SFString QRevokeEvent::getValueByName(const SFString& fieldName) const {
     if (!ret.empty())
         return ret;
 
-    // If the class has any fields, return them
+    // Return field values
     switch (tolower(fieldName[0])) {
         case 'o':
             if ( fieldName % "owner" ) return fromAddress(owner);

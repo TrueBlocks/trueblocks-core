@@ -10,26 +10,30 @@ You may name your own blocks (for example, to denote the start of an ICO perhaps
 
 #### Usage
 
-`Usage:`    whenBlock [-a|-l|-v|-h] date / block  
-`Purpose:`  Finds the nearest block prior to a JSON-formatted date, or the nearest date prior to
-            the given block. Alternatively, search for one of the special blocks listed below.
+`Usage:`    whenBlock [-d|-l|-v|-h] &lt; block | date &gt; [ block... | date... ]  
+`Purpose:`  Finds the nearest block prior to a date, or the nearest date prior to a block.
+            Alternatively, search for one of special 'named' blocks.
              
 `Where:`  
 
-| Option | Full Command | Description |
+| Short Cut | Option | Description |
 | -------: | :------- | :------- |
-|  | date / block | one of the special values listed below or YYYY-MM-DD-[HH[:MM[:SS]]] or a blockNumber |
-| -a | --alone | show the found block or found date unadorned (useful for scripting) |
-| -l | --list | list the names and block numbers of special blocks |
+|  | block | one or more block numbers (or a 'special' block), or... |
+|  | date | one or more dates formatted as YYYY-MM-DD[THH[:MM[:SS]]] |
+| -d | --data | display the result as data (tab delimited; useful for scripting) |
+| -l | --list | list names and block numbers for special blocks |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
-  Notes:
-	You may specify any of the following strings to represent 'special' blocks:
+`Notes:`
 
-	    first (0), iceage (200000), homestead (1150000), daofund (1428756), 
-	    daohack (1718497), daofork (1920000), tangerine (2463000), spurious (2675000), 
-	    stateclear (2718436), latest (--)
+- Add custom special blocks by editing ~/.quickBlocks/whenBlock.toml.
+- Use the following names to represent `special` blocks:
+  - first (0), iceage (200000), devcon1 (543626), homestead (1150000)
+  - daofund (1428756), daohack (1718497), daofork (1920000), devcon2 (2286910)
+  - tangerine (2463000), spurious (2675000), stateclear (2718436), eea (3265360)
+  - ens2 (3327417), parityhack1 (4041179), byzantium (4370000), devcon3 (4469339)
+  - parityhack2 (4501969), constantinople (tbd), latest (--)
 
 #### Other Options
 
@@ -38,7 +42,7 @@ All **quickBlocks** command-line tools support the following commands (although 
     Command     |     Description
     -----------------------------------------------------------------------------
     --version   |   display the current version of the tool
-    --nocolors  |   turn off colored display
+    --nocolor   |   turn off colored display
     --wei       |   specify value in wei (the default)
     --ether     |   specify value in ether
     --dollars   |   specify value in US dollars

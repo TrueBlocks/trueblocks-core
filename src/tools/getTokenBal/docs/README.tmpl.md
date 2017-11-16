@@ -1,17 +1,11 @@
 ## [{NAME}]
 
-Given a list of Ethereum addresses, report token holdings for a single `account` from one or more `token contracts`. Alternatively, report token balances for one or more `accounts` from a single `token contract`.
+Given the address of an ERC20 token contract, report token balances for one or more accounts. Alternatively, report token balances for multiple ERC20 contracts for a single account.
 
-In normal operation the *first item* in the `address_list` is considered to be a token smart contract whose token balances are queried, whereas the remainder of addresses in the list are accounts on which to report.
+In normal operation the **first item** in the `address_list` is considered to be an ERC20 token contract whose balances are queried, whereas the remainder of the list is assumed to be accounts on which to report.
 
-In `--byAcct` mode, the *last item* in `address_list` is considered a regular account whereas the preceeding items are all considered to be ERC20 token contracts from which to report token balances.
+In `--byAcct` mode, **all items** in the `address_list` are assumed to be token contracts, except the last which is the account whose token balances are reported.
 
-You may optionally specify one or more blocks at which to report token balances. If empty, `block_list` defaults to `latest`.
+You may optionally specify one or more blocks at which to report.
 
-[{USAGE_TABLE}]`Notes:`
-
-- If an address does not own tokens at an address, the tool reports a zero balance.
-- If the token contract(s) from which you request balances are not ERC20 token contracts, the return values are undefined.
-- This tool retrieves information from a locally running Ethereum node or the $(FALLBACK) node, if enabled.
-
-[{FOOTER}]
+[{USAGE_TABLE}][{FOOTER}]

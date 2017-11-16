@@ -1,7 +1,6 @@
-cacheMan
+## cacheMan
 
-The `cacheMan` program allows you to  manage the various monitor cache files. For example, you may check for duplicate or invalid entries, remove them or correct any 
-errors. Use the tool with caution, and please make sure to backup your data before you proceed.
+The `cacheMan` program allows one to  manage and explore [monitor cache files](../../monitors/README.md). You may list cache entries, check for duplicate or invalid cache entries (and optionally remove them), and merge or unmerge one or more caches. Use the tool with caution and please make sure to backup your data before proceeding.
 
 #### Usage
 
@@ -10,7 +9,7 @@ errors. Use the tool with caution, and please make sure to backup your data befo
              
 `Where:`  
 
-| Option | Full Command | Description |
+| Short Cut | Option | Description |
 | -------: | :------- | :------- |
 |  | filenames | path(s) of files to check, merge, fix or display (default=display) |
 | -b | --blockOnly | in 'list' mode, render block number only (used for testing) |
@@ -31,7 +30,7 @@ All **quickBlocks** command-line tools support the following commands (although 
     Command     |     Description
     -----------------------------------------------------------------------------
     --version   |   display the current version of the tool
-    --nocolors  |   turn off colored display
+    --nocolor   |   turn off colored display
     --wei       |   specify value in wei (the default)
     --ether     |   specify value in ether
     --dollars   |   specify value in US dollars

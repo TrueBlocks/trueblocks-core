@@ -1,5 +1,5 @@
 whenBlock argc: 2 [1:1ppppppp] 
 whenBlock 1ppppppp 
 
-	block #1 : 1438269988 : 2015-07-30 15:26:28 UTC
+  The given value '1ppppppp' is not a numeral or a special named block. Quitting...
 

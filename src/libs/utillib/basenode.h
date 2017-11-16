@@ -18,9 +18,9 @@ namespace qblocks {
     //----------------------------------------------------------------------------
     class CBaseNode {
     public:
-        SFUint32 m_deleted;
-        SFUint32 m_schema;
-        SFUint32 m_showing;
+        uint64_t m_deleted;
+        uint64_t m_schema;
+        uint64_t m_showing;
 
     public:
         const CBaseNode *pParent;
@@ -67,14 +67,22 @@ namespace qblocks {
         void Copy(const CBaseNode& bn);
     };
 
-    //----------------------------------------------------------------------------
-    #undef ghDELETE
-    #define ghDELETE(_nodE) \
-    if ((_nodE)) \
-    if ((_nodE)->Dereference()) \
-    delete (_nodE); \
-    (_nodE) = NULL;
+    //------------------------------------------------------------------
+    template<class T>
+    T RandomValue(T a, T b) {
+        T range = (a > b ? a - b : b - a);
+        if (range == 0)
+            return a;
+        return min(a, b) + (((T)rand()) % range);
+    }
 
+    //-------------------------------------------------------------------------
+    template<class T>
+    inline bool inRange(T val, T mn, T mx) {
+        return (val >= mn && val <= mx);
+    }
+
+    //-------------------------------------------------------------------------
     extern char *cleanUpJson(char *s);
 
     //--------------------------------------------------------------------------------------------------------------
@@ -83,4 +91,7 @@ namespace qblocks {
     //--------------------------------------------------------------------------------------------------------------
     SFString getNextChunk(SFString& fmtOut, NEXTCHUNKFUNC func, const void *data);
     SFString fldNotFound(const SFString& str);
+
+#define byzantiumBlock 4370000
+#define cleanFmt(str) ((str).Substitute("\\n\\\n", "\\n").Substitute("\n", "").Substitute("\\n", "\r\n").Substitute("\\t", "\t"))
 }  // namespace qblocks

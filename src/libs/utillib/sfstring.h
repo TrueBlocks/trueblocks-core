@@ -45,6 +45,10 @@ namespace qblocks {
         int      compare  (size_t pos, size_t len, const string_q& str) const;
         int      compare  (size_t pos, size_t len, const string_q& str, size_t subpos, size_t sublen) const;
         void     reserve  (size_t n=0);
+#ifdef NEW_CODE
+        void     resize   (size_t n) { resize(n, '\0'); }
+        void     resize   (size_t n, char c);
+#endif
         bool     empty    (void) const;
         size_t   find     (const string_q& str, size_t pos=0) const;
         size_t   find     (const char* s, size_t pos=0) const;
@@ -235,9 +239,6 @@ namespace qblocks {
         SFString        substr        (size_t first, size_t len) const;
         SFString        substr        (size_t first) const;
 
-        SFString        Left          (size_t len) const;
-        SFString        Right         (size_t len) const;
-        SFString        Center        (size_t width) const;
         void            Reverse       (void);
 
         void            Format        (const char *lpszFormat, ...) const;
@@ -339,14 +340,14 @@ namespace qblocks {
     inline bool SFString::endsWith(const SFString& str) const {
         if (empty())
             return false;
-        return (Right(str.length()) == str);
+        return (substr(length()-str.length(),str.length()) == str);
     }
 
     //--------------------------------------------------------------------
     inline bool SFString::startsWith(const SFString& str) const {
         if (empty())
             return false;
-        return (Left(str.length()) == str);
+        return (substr(0,str.length()) == str);
     }
 
     //--------------------------------------------------------------------
@@ -393,7 +394,7 @@ namespace qblocks {
 
         size_t find = line.find(delim);
         if (find!=NOPOS) {
-            ret  = line.Left(find);
+            ret  = line.substr(0,find);
             line = line.substr(find+1);
 
         } else if (!line.empty()) {
@@ -411,16 +412,14 @@ namespace qblocks {
     inline SFString padRight(const SFString& str, uint32_t len, char p=' ') {
         if (len > str.length())
             return str + SFString(p, len-str.length());
-
-        return str.Left(len);
+        return str.substr(0,len);
     }
 
     //--------------------------------------------------------------------
     inline SFString padLeft(const SFString& str, uint32_t len, char p=' ') {
         if (len > str.length())
             return SFString(p, len-str.length()) + str;
-
-        return str.Left(len);
+        return str.substr(0,len);
     }
 
     //--------------------------------------------------------------------
@@ -429,8 +428,7 @@ namespace qblocks {
             size_t padding = (len-str.length()) / 2;
             return SFString(p, padding) + str + SFString(p, padding);
         }
-
-        return str.Left(len);
+        return str.substr(0,len);
     }
 
     //--------------------------------------------------------------------
@@ -488,14 +486,14 @@ namespace qblocks {
 
     //----------------------------------------------------------------------------
     inline SFString shorten(const SFString& in, size_t x) {
-        return padRight(in.length()>x-3 ? in.Left(x-3) + "..." : in, (uint32_t)x);
+        return padRight(in.length()>x-3 ? in.substr(0,x-3) + "..." : in, (uint32_t)x);
     }
 
     //--------------------------------------------------------------------
     inline SFString StripTrailing(const SFString& str, char c) {
         SFString ret = str;
         while (ret.endsWith(c))
-            ret = ret.Left(ret.length()-1);
+            ret = ret.substr(0,ret.length()-1);
 
         return ret;
     }

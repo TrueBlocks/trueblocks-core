@@ -118,6 +118,27 @@ namespace qblocks {
         return;
     }
 
+#ifdef NEW_CODE
+    //---------------------------------------------------------------------------------------
+    void string_q::resize(size_t newSize, char c) {
+        if (newSize <= m_buffSize) {
+            // Return is string is shrinking. Not exactly c++ sematics, but it's
+            // okay since we're replacing this class
+            return;
+        }
+
+        // Note: normally we wouldn't be able to use realloc with a 'new' allocated memory,
+        // but because these are just characters, it's okay
+        m_Values = (char*)realloc(m_Values, newSize);
+        if (m_Values) {
+            m_buffSize = newSize;
+        } else {
+            m_buffSize = 0;
+        }
+        return;
+    }
+#endif
+
     //---------------------------------------------------------------------------------------
     void string_q::clear(void)
     {
@@ -339,22 +360,6 @@ namespace qblocks {
     }
 
     //---------------------------------------------------------------------------------------
-    SFString SFString::Right(size_t len) const
-    {
-        len = min(length(),len);
-        SFString ret = extract(length()-len, len).c_str();
-        return ret;
-    }
-
-    //---------------------------------------------------------------------------------------
-    SFString SFString::Left(size_t len) const
-    {
-        len = min(length(),len);
-        SFString ret = extract(0, len).c_str();
-        return ret;
-    }
-
-    //---------------------------------------------------------------------------------------
     // Find functions
 
     //---------------------------------------------------------------------------------------
@@ -438,7 +443,7 @@ namespace qblocks {
         size_t i = find(what);
         if (i != NOPOS)
         {
-            *this = Left(i) + with + substr(i + what.length());
+            *this = substr(0,i) + with + substr(i + what.length());
         }
     }
 
@@ -447,7 +452,7 @@ namespace qblocks {
     {
         size_t i = findI(what);
         if (i != NOPOS)
-            *this = Left(i) + with + substr(i + what.length());
+            *this = substr(0,i) + with + substr(i + what.length());
     }
 
     //---------------------------------------------------------------------------------------
@@ -783,24 +788,6 @@ namespace qblocks {
     }
 
     //---------------------------------------------------------------------------------------
-    SFString SFString::Center(size_t width) const
-    {
-        SFString str = *this;
-        size_t len = str.length();
-
-        size_t n = 1;
-        if (len < width)
-            n = (width - len) >> 1;
-
-        SFString space;
-        for (size_t i=0;i<n;i++)
-            space += "&nbsp;";
-        SFString ret = space + str.Left(min(width, len)) + space;
-
-        return ret;
-    }
-
-    //---------------------------------------------------------------------------------------
     int SFString::Icompare(const char *str) const
     {
         return strcasecmp(m_Values, str);
@@ -831,7 +818,7 @@ namespace qblocks {
         }
 #endif
         SFString f1 = "</" + field + ">";
-        SFString ret = in.Left(in.find(f1));
+        SFString ret = in.substr(0,in.find(f1));
 
         SFString f2 = "<" + field + ">";
         ret = ret.substr(ret.find(f2)+f2.length());
@@ -859,7 +846,7 @@ namespace qblocks {
         }
 #endif
         SFString f = "</" + field + ">";
-        SFString ret = in.Left(in.find(f));
+        SFString ret = in.substr(0,in.find(f));
 
         f.Replace("</", "<");
         ret = ret.substr(ret.find(f)+f.length());
@@ -908,29 +895,29 @@ namespace qblocks {
     //---------------------------------------------------------------------------------------
     void SFString::ReplaceExact(const SFString& what, const SFString& with, char sep, const SFString& replaceables)
     {
-        SFInt32 i = findExact(what, sep, replaceables);
+        int64_t i = findExact(what, sep, replaceables);
         if (i != NOPOS)
         {
-            *this = Left(i) + with + substr(i + what.length());
+            *this = substr(0,i) + with + substr(i + what.length());
         }
     }
-    
+
     //---------------------------------------------------------------------------------------
     void SFString::ReplaceExactI(const SFString& what, const SFString& with, char sep, const SFString& replaceables)
     {
-        SFInt32 i = findExactI(what, sep, replaceables);
+        int64_t i = findExactI(what, sep, replaceables);
         if (i != NOPOS)
         {
-            *this = Left(i) + with + substr(i + what.length());
+            *this = substr(0,i) + with + substr(i + what.length());
         }
     }
-    
+
     //---------------------------------------------------------------------------------------
     void SFString::ReplaceAllExact(const SFString& what, const SFString& with, char sep, const SFString& replaceables)
     {
         if (what.empty())
             return;
-        
+
         if (with.ContainsExact(what, sep, replaceables))
         {
             // may cause endless recursions so do it in two steps instead
@@ -938,21 +925,21 @@ namespace qblocks {
             ReplaceAllExact("]QXXQX[", with, sep, replaceables);
             return;
         }
-        
-        SFInt32 i = findExact(what, sep, replaceables);
+
+        int64_t i = findExact(what, sep, replaceables);
         while (i != NOPOS)
         {
             ReplaceExact(what, with, sep, replaceables);
             i = findExact(what, sep, replaceables);
         }
     }
-    
+
     //---------------------------------------------------------------------------------------
     void SFString::ReplaceAllExactI(const SFString& what, const SFString& with, char sep, const SFString& replaceables)
     {
         if (what.empty())
             return;
-        
+
         if (with.ContainsExactI(what, sep, replaceables))
         {
             // may cause endless recursions so do it in two steps instead
@@ -961,7 +948,7 @@ namespace qblocks {
             return;
         }
 
-        SFInt32 i = findExactI(what, sep, replaceables);
+        int64_t i = findExactI(what, sep, replaceables);
         while (i != NOPOS)
         {
             ReplaceExactI(what, with, sep, replaceables);
@@ -1027,7 +1014,7 @@ namespace qblocks {
             return;
         }
 
-        SFInt32 i = findI(what);
+        int64_t i = findI(what);
         while (i != NOPOS)
         {
             ReplaceI(what, with);
@@ -1036,4 +1023,3 @@ namespace qblocks {
     }
 #endif
 }  // namespace qblocks
-// TODO(tjayrush): Can I remove Compare (capital) for compare (lower)?

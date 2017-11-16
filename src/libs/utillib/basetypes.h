@@ -27,6 +27,8 @@
 #include <unistd.h>
 #include <utime.h>
 #include <string.h>
+#include <sys/mman.h>
+#include <fcntl.h>
 #include <algorithm>
 #include <cstdint>
 #include <fstream>
@@ -36,9 +38,6 @@
 
 //-------------------------------------------------------------------------
 using namespace std;  // NOLINT
-
-//-------------------------------------------------------------------------
-using SFUint32 = uint64_t;
 
 //-------------------------------------------------------------------------
 #ifdef _DEBUG

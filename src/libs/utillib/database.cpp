@@ -164,7 +164,6 @@ namespace qblocks {
                    m_mode == asciiWriteCreate) {
 
             ASSERT(lockType == LOCK_CREATE || lockType == LOCK_WAIT);
-            // TODO(tjayrush): revisit this
             openIt = createLock(lockType != LOCK_WAIT);
             if (!openIt) {
                 m_error = LK_NO_CREATE_LOCK_FILE;
@@ -384,7 +383,7 @@ namespace qblocks {
 
         CSharedResource lock;
         if (lock.Lock(filename, asciiReadOnly, LOCK_NOWAIT)) {  // do not wait for lock - read only file
-            SFUint32 nLines = 0;
+            uint64_t nLines = 0;
 
             ASSERT(lock.isOpen());
             char buff[4096];

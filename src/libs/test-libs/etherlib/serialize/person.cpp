@@ -54,7 +54,7 @@ bool CPerson::setValueByName(const SFString& fieldName, const SFString& fieldVal
 
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "age" ) { age = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "age" ) { age = toLong32u(fieldValue); return true; }
             break;
         case 'n':
             if ( fieldName % "name" ) { name = fieldValue; return true; }
@@ -92,6 +92,8 @@ bool CPerson::Serialize(SFArchive& archive) {
     if (readBackLevel(archive))
         return true;
 
+    // EXISTING_CODE
+    // EXISTING_CODE
     archive >> name;
     archive >> age;
     next = NULL;
@@ -109,6 +111,9 @@ bool CPerson::Serialize(SFArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool CPerson::SerializeC(SFArchive& archive) const {
+
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
@@ -190,7 +195,7 @@ SFString CPerson::getValueByName(const SFString& fieldName) const {
     if (!ret.empty())
         return ret;
 
-    // If the class has any fields, return them
+    // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
             if ( fieldName % "age" ) return asStringU(age);

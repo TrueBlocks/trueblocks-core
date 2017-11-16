@@ -90,6 +90,8 @@ bool CTreeRoot::Serialize(SFArchive& archive) {
     if (readBackLevel(archive))
         return true;
 
+    // EXISTING_CODE
+    // EXISTING_CODE
     m_root = NULL;
     bool has_m_root = false;
     archive >> has_m_root;
@@ -105,6 +107,9 @@ bool CTreeRoot::Serialize(SFArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool CTreeRoot::SerializeC(SFArchive& archive) const {
+
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
@@ -182,7 +187,7 @@ SFString CTreeRoot::getValueByName(const SFString& fieldName) const {
     if (!ret.empty())
         return ret;
 
-    // If the class has any fields, return them
+    // Return field values
     switch (tolower(fieldName[0])) {
         case 'm':
             if ( fieldName % "m_root" ) {

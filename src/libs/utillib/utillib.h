@@ -26,5 +26,8 @@
 #include "performance.h"
 #include "options_base.h"
 #include "filenames.h"
+#include "namevalue.h"
+#include "accountname.h"
+#include "memmap.h"
 
 using namespace qblocks;  // NOLINT

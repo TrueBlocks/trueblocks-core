@@ -10,7 +10,6 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
-#include "ethtypes.h"
 #include "abilib.h"
 #include "receipt.h"
 #include "trace.h"
@@ -32,10 +31,10 @@ class CTransaction : public CBaseNode {
 public:
     SFHash hash;
     SFHash blockHash;
-    SFUint32 blockNumber;
-    SFUint32 transactionIndex;
-    SFUint32 nonce;
-    SFUint32 timestamp;
+    blknum_t blockNumber;
+    uint64_t transactionIndex;
+    uint64_t nonce;
+    timestamp_t timestamp;
     SFAddress from;
     SFAddress to;
     SFWei value;
@@ -43,8 +42,8 @@ public:
     SFGas gasPrice;
     SFWei cumulativeGasUsed;
     SFString input;
-    SFUint32 isError;
-    SFUint32 isInternalTx;
+    uint64_t isError;
+    uint64_t isInternalTx;
     CReceipt receipt;
 
 public:
@@ -54,6 +53,8 @@ public:
     CTransaction& operator=(const CTransaction& tr);
 
     DECLARE_NODE(CTransaction);
+
+    const CBaseNode *getObjectAt(const SFString& name, uint32_t i) const override;
 
     // EXISTING_CODE
     const CBlock *pBlock;

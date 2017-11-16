@@ -24,15 +24,40 @@ int main(int argc, const char *argv[]) {
         if (!options.parseArguments(command))
             return 0;
 
-        for (uint32_t i = 0 ; i < options.blocks.getCount() ; i++ ) {
-            CFilename fileName(getBinaryFilename1(options.blocks[i]));
+        if (!options.alone) {
+            SFString cachePath = blockCachePath("");
+            if (isTestMode())
+                cachePath = "--";
+            cout << cYellow << "\nReport on block locations:" << cOff << (verbose ? "" : "\n  (cache folder: " + cachePath + ")") << "\n";
+        }
+
+        SFString list = options.getBlockNumList();
+        while (!list.empty()) {
+            blknum_t bn = toLongU(nextTokenClear(list, '|'));
+            CFilename fileName(getBinaryFilename1(bn));
             bool exists = fileExists(fileName.getFullPath());
-            if (exists && options.alone) {
-                cout << fileName.getFullPath() << "\n";
-            } else if (exists) {
-                cout << "File " << fileName.relativePath(getStorageRoot()) << " found in cache.\n";
+
+            if (options.alone) {
+                // When running in 'alone' mode, only report items in the cache
+                if (exists)
+                    cout << fileName.getFullPath() << "\n";
+
             } else {
-                cout << "The block " << options.blocks[i] << " was not found in the cache.\n";
+
+                SFString path = (verbose ? fileName.getFullPath() : fileName.relativePath(getStorageRoot()));
+                SFString vers = getVersionFromClient();
+                if (isTestMode() && verbose)
+                    path = "--";
+                if (isTestMode())
+                    vers = "--";
+                SFString fallback = getenv("FALLBACK");
+                bool running_node = isNodeRunning();
+
+                cout << "\tblock " << cTeal << padLeft(asStringU(bn),9) << cOff << " ";
+                     if (exists)            cout << "found at cache:  " << cTeal << path << cOff << "\n";
+                else if (running_node)      cout << "found at node:   " << vers << "\n";
+                else if (!fallback.empty()) cout << "found at remote: " << fallback << "\n";
+                else                        cout << "was not found\n";
             }
         }
     }

@@ -28,7 +28,7 @@ typedef SFUniqueList<CLeaf*>       CLeafListU;
 class CLeaf : public CTreeNode {
 public:
     SFBlockArray blocks;
-    SFUint32 cnt;
+    uint32_t cnt;
 
 public:
     CLeaf(void);
@@ -37,6 +37,8 @@ public:
     CLeaf& operator=(const CLeaf& le);
 
     DECLARE_NODE(CLeaf);
+
+    const SFString getStringAt(const SFString& name, uint32_t i) const override;
 
     // EXISTING_CODE
     CLeaf(const SFString& _key, const SFString& _value);

@@ -8,13 +8,7 @@
 #include "etherlib.h"
 #include "options.h"
 
-// #define ADDR "0x33990122638b9132ca29c723bdf037f1a891a70c"
-// #define ADDR "0xc78310231aa53bd3d0fea2f8c705c67730929d8f"
-// #define ADDR "0xaec2e87e0a235266d9c5adc9deb4b2e29b54d009"
-#define ADDR "0xbb9bc244d798123fde783fcc1c72d3bb8c189413"
-#define N 20
-#define BL 4000
-// 500000
+extern bool visitTransaction(CTransaction& trans, void *data);
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
     // Tell the system where the blocks are and which version to use
@@ -30,16 +24,30 @@ int main(int argc, const char *argv[]) {
         if (!options.parseArguments(command))
             return 0;
 
-        SFUint32 start = 1428757;  // 2364414; // end - 100000;
-        SFUint32 end = start + BL;  // getLatestBlockFromClient();
-        for (uint32_t bn = (uint32_t)start ; bn < (uint32_t)end ; bn = bn + N) {
-            SFString res;
-            queryRawLogs(bn, bn+N, ADDR, res);
-            if (!res.empty())
-                cout << res << "\n";
-            cerr << bn << ": " << "\r";
-            cerr.flush();
-        }
+        forEveryTransaction(visitTransaction, &options, options.transList.queries);
     }
     return 0;
+}
+
+//--------------------------------------------------------------
+bool visitTransaction(CTransaction& trans, void *data) {
+    const COptions *opt = (const COptions*)data;
+
+    if (opt->isRaw) {
+//        SFString results;
+//        queryRawLogs(results, trans.getValueByName("hash"));
+//        cout << results << "\n";
+//        return true;
+        cout << "Raw option is not implemented.\n";
+        exit(0);
+    }
+
+	cout << "[";
+	for (uint32_t i = 0 ; i < trans.receipt.logs.getCount() ; i++) {
+		trans.receipt.logs[i].doExport(cout);
+		cout << (i < trans.receipt.logs.getCount()-1 ? ",\n" : "\n");
+	}
+	cout << "]\n";
+
+    return true;
 }

@@ -10,8 +10,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
-#include "ethtypes.h"
-#include "abilib.h"
+#include "etherlib.h"
 #include "transaction.h"
 
 //--------------------------------------------------------------------------
@@ -30,12 +29,12 @@ public:
     SFGas gasUsed;
     SFHash hash;
     SFBloom logsBloom;
-    SFUint32 blockNumber;
+    blknum_t blockNumber;
     SFHash parentHash;
-    SFUint32 timestamp;
+    timestamp_t timestamp;
     CTransactionArray transactions;
     SFAddress miner;
-    SFUint32 size;
+    uint64_t size;
 
 public:
     CNewBlock(void);
@@ -44,6 +43,8 @@ public:
     CNewBlock& operator=(const CNewBlock& ne);
 
     DECLARE_NODE(CNewBlock);
+
+    const CBaseNode *getObjectAt(const SFString& name, uint32_t i) const override;
 
     // EXISTING_CODE
     CNewBlock(const CBlock& block);

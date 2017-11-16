@@ -14,7 +14,6 @@ CParams params[] = {
     CParams("-current",                        "Report on the current price (i.e. -at:now)"),
     CParams("-freshen",                        "Freshen database (append new data)"),
     CParams("-period:<5|15|30|*120|240|1440>", "Display prices in this increment. One of [5|15|30|120*|240|1440]"),
-    CParams("-when:<0-23>",                    "Hour on which to start display. Integer between 0-23"),
     CParams("",                                "Freshen and/or display Ethereum price data and other purposes.\n"),
 };
 uint32_t nParams = sizeof(params) / sizeof(CParams);
@@ -46,12 +45,6 @@ bool COptions::parseArguments(SFString& command) {
                 if (!isUnsigned(arg))
                     return usage("Timestamp expected: " + orig);
             }
-
-        } else if (arg.startsWith("-w:") || arg.startsWith("--when:")) {
-            arg = orig.Substitute("-w:","").Substitute("--when:","");
-            hour = newUnsigned32(arg);
-            if (!isUnsigned(arg) || hour > 23)
-                return usage("Number between 0 and 23 expected: " + orig);
 
         } else if (arg.startsWith("-p:") || arg.startsWith("--period:")) {
             arg = orig.Substitute("-p:","").Substitute("--period:","");
@@ -90,4 +83,24 @@ void COptions::Init(void) {
 COptions::COptions(void) {
     needsOption = true;
     Init();
+}
+
+//--------------------------------------------------------------------------------
+SFString COptions::postProcess(const SFString& which, const SFString& str) const {
+
+    if (which == "options") {
+        //return str.Substitute("address_list block_list", "<address> [address...] [block...]")
+        //        .Substitute("-l|", "-l fn|");
+
+    } else if (which == "notes" && (verbose || COptions::isReadme)) {
+
+        //SFString ret;
+        //ret += "[{addresses}] must start with '0x' and be forty characters long.\n";
+        //ret += "[{block_list}] may be a space-separated list of values, a start-end range, a [{special}], or any combination.\n";
+        //ret += "This tool retrieves information from the local node or the ${FALLBACK} node, if configured (see documentation).\n";
+        //ret += "If the queried node does not store historical state, the results are undefined.\n";
+        //ret += "[{special}] blocks are detailed under " + cTeal + "[{whenBlock --list}]" + cOff + ".\n";
+        //return ret;
+    }
+    return str;
 }

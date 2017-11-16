@@ -58,7 +58,7 @@ bool QChangeRequirement::setValueByName(const SFString& fieldName, const SFStrin
 
     switch (tolower(fieldName[0])) {
         case '_':
-            if ( fieldName % "_newRequired" ) { _newRequired = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "_newRequired" ) { _newRequired = toWei(fieldValue); return true; }
             break;
         default:
             break;
@@ -82,6 +82,8 @@ bool QChangeRequirement::Serialize(SFArchive& archive) {
     if (readBackLevel(archive))
         return true;
 
+    // EXISTING_CODE
+    // EXISTING_CODE
     archive >> _newRequired;
     finishParse();
     return true;
@@ -89,6 +91,9 @@ bool QChangeRequirement::Serialize(SFArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool QChangeRequirement::SerializeC(SFArchive& archive) const {
+
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     // Writing always write the latest version of the data
     CTransaction::SerializeC(archive);
@@ -167,7 +172,7 @@ SFString QChangeRequirement::getValueByName(const SFString& fieldName) const {
     if (!ret.empty())
         return ret;
 
-    // If the class has any fields, return them
+    // Return field values
     switch (tolower(fieldName[0])) {
         case '_':
             if ( fieldName % "_newRequired" ) return asStringBN(_newRequired);
