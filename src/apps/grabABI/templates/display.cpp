@@ -19,10 +19,10 @@ inline SFString asDollars2(timestamp_t ts, const SFUintBN& weiIn) {
 }
 
 //-----------------------------------------------------------------------
-void CVisitor::displayTrans(const CTransaction *theTrans) const {
+void CVisitor::displayTrans(uint32_t which, const CTransaction *theTrans) const {
 
-    if (theTrans->isError)
-        colorsDim();
+//    if (!colorsDisabled() && theTrans->isError)
+//        colorsDim();
 
     const CTransaction *promoted = promoteToFunc(theTrans);
     if (!promoted)
@@ -33,6 +33,7 @@ void CVisitor::displayTrans(const CTransaction *theTrans) const {
     bool wantsEvents = theFmt.Contains("[{EVENTS}]");
     bool wantsParse  = theFmt.Contains("[{PARSE}]");
     SFString format  = theFmt.Substitute("[{EVENTS}]","").Substitute("[{PARSE}]","");
+    format.Replace("[{WHICH}]",watches[which].address);
     if (true) { //!format.empty()) {
 
         SFString func = promoted->function;
@@ -57,7 +58,8 @@ void CVisitor::displayTrans(const CTransaction *theTrans) const {
             transStr.ReplaceAll("++USDGP++", asDollars2(ts, toWei(promoted->Format("[{GASPRICE}]"))));
             transStr.ReplaceAll("++USDGC++", asDollars2(ts, toWei(promoted->Format("[{GASCOST}]"))));
         }
-        transStr = annotate(transStr);
+        if (!screenFmt.Contains("[{WHICH}]"))
+            transStr = annotate(transStr);
         cout << cOff << transStr;
     }
 
@@ -97,20 +99,22 @@ void CVisitor::displayTrans(const CTransaction *theTrans) const {
                 delete promotedLog;
         }
     }
+
     if (wantsEvents)
         cout << iYellow << "[" << Strip(evtList, ',') << "]";
 
     if (opts.trace_on) {
         timestamp_t ts = toTimestamp(theTrans->Format("[{TIMESTAMP}]"));
         displayTrace(ts, theTrans->traces, theTrans->isError);
-        if (opts.bloom_on && promoted->receipt.logsBloom != 0) {
-            displayBloom(promoted->receipt.logsBloom, "Tx bloom:", "");
+    }
+
+    if (opts.bloom_on && promoted->receipt.logsBloom != 0) {
+        displayBloom(promoted->receipt.logsBloom, "Tx bloom:", "");
+        cout << "\r\n";
+        for (uint32_t t=0;t<watches.getCount()-1;t++) {
+            SFBloom b = makeBloom(watches[t].address);
+            displayBloom(b,watches[t].color + padRight(watches[t].name.substr(0,9),9) + cOff, (isBloomHit(b, promoted->receipt.logsBloom) ? greenCheck : redX));
             cout << "\r\n";
-            for (uint32_t t=0;t<watches.getCount()-1;t++) {
-                SFBloom b = makeBloom(watches[t].address);
-                displayBloom(b,watches[t].color + padRight(watches[t].name.substr(0,9),9) + cOff, (isBloomHit(b, promoted->receipt.logsBloom) ? greenCheck : redX));
-                cout << "\r\n";
-            }
         }
     }
 
@@ -122,7 +126,8 @@ void CVisitor::displayTrans(const CTransaction *theTrans) const {
     cout << "\r\n";
     cout.flush();
 
-    colorsOn();
+//    if (!colorsDisabled())
+//      colorsOn();
     return;
 }
 
@@ -183,6 +188,7 @@ void CVisitor::displayTrace(timestamp_t ts, const CTraceArray& traces, bool err)
 
 //-----------------------------------------------------------------------
 SFString CVisitor::annotate(const SFString& strIn) const {
+
     SFString ret = strIn;
     for (uint32_t i=0;i<watches.getCount();i++) {
         ret = ret.Substitute(watches[i].address, watches[i].displayName(true,8));

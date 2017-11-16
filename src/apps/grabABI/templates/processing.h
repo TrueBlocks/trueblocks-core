@@ -96,10 +96,12 @@ public:
     bool closeIncomeStatement     (const CBlock& block);
     bool enterDebugger            (const CBlock& block);
 
-    blknum_t loadWatches(const CToml& toml);
-    SFString annotate   (const SFString& strIn) const;
+    blknum_t loadWatches    (const CToml& toml);
+    SFString annotate       (const SFString& strIn) const;
+    CAccountWatch *findWatch(SFAddress addr);
+    uint32_t checkForImport (void);
 
-    void displayTrans (const CTransaction *theTrans) const;
+    void displayTrans (uint32_t which, const CTransaction *theTrans) const;
     void displayTrace (timestamp_t ts, const CTraceArray& traces, bool err) const;
     void displayBloom (const SFBloom& bloom, const SFString& msg, const SFString& res) const;
 };

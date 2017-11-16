@@ -1,3 +1,4 @@
+THIS CODE MAY NOT WORK BECAUSE OF RECENT CHANGE TO READING ARRAYS IN TOML CODE
 /*-------------------------------------------------------------------------
  * This source code is confidential proprietary information which is
  * Copyright (c) 2017 by Great Hill Corporation.
@@ -106,6 +107,8 @@ int main(int argc, const char *argv[]) {
 
         // Freshening the cache (if the user tells us to...)
         if (visitor.opts.mode.Contains("freshen")) {
+
+            visitor.checkForImport();
 
             uint64_t lastVisit  = toLongU(asciiFileToString("./cache/lastBlock.txt"));
             blockNum = max(blockNum, lastVisit) + 1;
