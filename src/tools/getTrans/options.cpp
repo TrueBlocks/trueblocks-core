@@ -47,6 +47,7 @@ bool COptions::parseArguments(SFString& command) {
 
 //    if (address && !isAddress(address))
 //        return usage("Bad address.");
+    format = getGlobalConfig()->getDisplayStr(!verbose, (verbose ? "" : "[{DATE}][\t{TIMESTAMP}][\t{BLOCKNUMBER}][\t{TRANSACTIONINDEX}][\t{HASH}]\n"));
 
     return true;
 }
@@ -59,6 +60,7 @@ void COptions::Init(void) {
 
     transList.Init();
     isRaw = false;
+    format = "";
 }
 
 //---------------------------------------------------------------------------------------------------
