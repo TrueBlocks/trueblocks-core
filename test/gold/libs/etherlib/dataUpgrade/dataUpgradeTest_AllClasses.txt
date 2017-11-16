@@ -31,7 +31,7 @@ baseClass: CBaseNode
 
 --------------------------------------------------------------------------------
 className: CFunction
-objectSize: 184
+objectSize: 208
 baseClass: CBaseNode
 	fieldName: schema
 	  fieldID: 1001
@@ -289,16 +289,16 @@ baseClass: CBaseNode
 	  fieldID: 1004
 	  fieldType: T_TEXT TS_STRING 131122
 	  hidden: 0
-	fieldName: txDate
+	fieldName: timestamp
 	  fieldID: 1005
-	  fieldType: T_DATE TS_DATE 262149
+	  fieldType: T_TIMESPAN TS_NUMERAL 65551
 	  hidden: 0
 	fieldName: balance
 	  fieldID: 1006
 	  fieldType: T_NUMBER TS_NUMERAL 65561
 	  hidden: 0
 {
-  "txDate": "1700-01-01 00:00:01 UTC",
+  "timestamp": 0,
   "balance": 0
 }
 
@@ -350,6 +350,10 @@ baseClass: CBaseNode
 	  fieldID: 1011
 	  fieldType: T_OBJECT|TS_ARRAY TS_ARRAY 1572939 TS_OBJECT 1572939
 	  hidden: 0
+	fieldName: date
+	  fieldID: 1012
+	  fieldType: T_DATE TS_DATE 262149
+	  hidden: 1
 {
   "gasLimit": 0,
   "gasUsed": 0,
@@ -466,7 +470,7 @@ baseClass: CBaseNode
 	  hidden: 1
 	fieldName: timestamp
 	  fieldID: 1004
-	  fieldType: T_NUMBER TS_NUMERAL 65561
+	  fieldType: T_TIMESPAN TS_NUMERAL 65551
 	  hidden: 0
 	fieldName: close
 	  fieldID: 1005
@@ -484,7 +488,7 @@ baseClass: CBaseNode
 
 --------------------------------------------------------------------------------
 className: CReceipt
-objectSize: 112
+objectSize: 120
 baseClass: CBaseNode
 	fieldName: schema
 	  fieldID: 1001
@@ -514,11 +518,16 @@ baseClass: CBaseNode
 	  fieldID: 1007
 	  fieldType: T_BLOOM TS_STRING 131137
 	  hidden: 0
+	fieldName: status
+	  fieldID: 1008
+	  fieldType: T_NUMBER TS_NUMERAL 65561
+	  hidden: 0
 {
   "contractAddress": "0x0",
   "gasUsed": 0,
   "logs": [],
-  "logsBloom": "0x0"
+  "logsBloom": "0x0",
+  "status": null
 }
 
 --------------------------------------------------------------------------------
@@ -721,7 +730,7 @@ baseClass: CBaseNode
 
 --------------------------------------------------------------------------------
 className: CTransaction
-objectSize: 432
+objectSize: 440
 baseClass: CBaseNode
 	fieldName: schema
 	  fieldID: 1001
@@ -757,7 +766,7 @@ baseClass: CBaseNode
 	  hidden: 0
 	fieldName: timestamp
 	  fieldID: 1009
-	  fieldType: T_NUMBER TS_NUMERAL 65561
+	  fieldType: T_TIMESPAN TS_NUMERAL 65551
 	  hidden: 0
 	fieldName: from
 	  fieldID: 1010
@@ -840,7 +849,8 @@ baseClass: CBaseNode
     "contractAddress": "0x0",
     "gasUsed": 0,
     "logs": [],
-    "logsBloom": "0x0"
+    "logsBloom": "0x0",
+    "status": null
   },
   "gasUsed": 0
 }
@@ -887,7 +897,7 @@ baseClass: CBaseNode
 	  hidden: 0
 	fieldName: timestamp
 	  fieldID: 1010
-	  fieldType: T_NUMBER TS_NUMERAL 65561
+	  fieldType: T_TIMESPAN TS_NUMERAL 65551
 	  hidden: 0
 	fieldName: transactions
 	  fieldID: 1011
@@ -912,5 +922,49 @@ baseClass: CBaseNode
   "transactions": [],
   "miner": "0x0",
   "size": 0
+}
+
+--------------------------------------------------------------------------------
+className: CNewReceipt
+objectSize: 112
+baseClass: CBaseNode
+	fieldName: schema
+	  fieldID: 1001
+	  fieldType: T_NUMBER TS_NUMERAL 65561
+	  hidden: 1
+	fieldName: deleted
+	  fieldID: 1002
+	  fieldType: T_BOOL TS_NUMERAL 65556
+	  hidden: 1
+	fieldName: showing
+	  fieldID: 1003
+	  fieldType: T_BOOL TS_NUMERAL 65556
+	  hidden: 1
+	fieldName: contractAddress
+	  fieldID: 1004
+	  fieldType: T_ADDRESS TS_STRING 131127
+	  hidden: 0
+	fieldName: gasUsed
+	  fieldID: 1005
+	  fieldType: T_GAS TS_NUMERAL 4259880 TS_BIGNUM 4259880
+	  hidden: 0
+	fieldName: logs
+	  fieldID: 1006
+	  fieldType: T_OBJECT|TS_ARRAY TS_ARRAY 1572939 TS_OBJECT 1572939
+	  hidden: 0
+	fieldName: logsBloom
+	  fieldID: 1007
+	  fieldType: T_BLOOM TS_STRING 131137
+	  hidden: 0
+	fieldName: isError
+	  fieldID: 1008
+	  fieldType: T_BOOL TS_NUMERAL 65556
+	  hidden: 0
+{
+  "contractAddress": "0x0",
+  "gasUsed": 0,
+  "logs": [],
+  "logsBloom": "0x0",
+  "isError": 0
 }
 

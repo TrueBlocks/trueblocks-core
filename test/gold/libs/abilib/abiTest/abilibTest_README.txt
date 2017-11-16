@@ -7,7 +7,7 @@ abiTest -th
              
 `Where:`  
 
-| Option | Full Command | Description |
+| Short Cut | Option | Description |
 | -------: | :------- | :------- |
 |  | mode | Mode of operation. One or more of 'encoding' or 'generation'.
  |

@@ -16,8 +16,9 @@ public:
     timestamp_t at;
 
     COptions(void);
-    ~COptions(void) {}
+    ~COptions(void) {};
 
-    bool parseArguments(SFString& command);
-    void Init(void);
+    bool parseArguments(SFString& command) override;
+    void Init(void) override;
+    SFString postProcess(const SFString& which, const SFString& str) const override;
 };

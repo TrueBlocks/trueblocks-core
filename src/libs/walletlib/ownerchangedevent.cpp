@@ -85,6 +85,8 @@ bool QOwnerChangedEvent::Serialize(SFArchive& archive) {
     if (readBackLevel(archive))
         return true;
 
+    // EXISTING_CODE
+    // EXISTING_CODE
     archive >> oldOwner;
     archive >> newOwner;
     finishParse();
@@ -93,6 +95,9 @@ bool QOwnerChangedEvent::Serialize(SFArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool QOwnerChangedEvent::SerializeC(SFArchive& archive) const {
+
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     // Writing always write the latest version of the data
     CLogEntry::SerializeC(archive);
@@ -173,7 +178,7 @@ SFString QOwnerChangedEvent::getValueByName(const SFString& fieldName) const {
     if (!ret.empty())
         return ret;
 
-    // If the class has any fields, return them
+    // Return field values
     switch (tolower(fieldName[0])) {
         case 'n':
             if ( fieldName % "newOwner" ) return fromAddress(newOwner);

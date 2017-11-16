@@ -184,7 +184,6 @@ namespace qblocks {
     //------------------------------------------------------------
     inline SFIntBN SFIntBN::operator/(const SFIntBN &x) const
     {
-        //TODO: Why not use mag.len==0 for test for zero to be consistent?
         if (sign==0)
             throw "SFIntBN::operator /: division by zero";
         SFIntBN q, r;
@@ -196,7 +195,6 @@ namespace qblocks {
     //------------------------------------------------------------
     inline SFIntBN SFIntBN::operator%(const SFIntBN &x) const
     {
-        //TODO: Why not use mag.len==0 for test for zero to be consistent?
         if (x.sign==0)
             throw "SFIntBN::operator %: division by zero";
         SFIntBN q, r;
@@ -224,29 +222,27 @@ namespace qblocks {
     {
         subtract(*this, x);
     }
-    
+
     //------------------------------------------------------------
     inline void SFIntBN::operator*=(const SFIntBN &x)
     {
         multiply(*this, x);
     }
-    
+
     //------------------------------------------------------------
     inline void SFIntBN::operator/=(const SFIntBN &x)
     {
-        //TODO: Why not use mag.len==0 for test for zero to be consistent?
         if (x.sign==0)
             throw "SFIntBN::operator /=: division by zero";
-        
+
         SFIntBN q;
         divide(x, q);
         *this = q;
     }
-    
+
     //------------------------------------------------------------
     inline void SFIntBN::operator %=(const SFIntBN &x)
     {
-        //TODO: Why not use mag.len==0 for test for zero to be consistent?
         if (x.sign==0)
             throw "SFIntBN::operator %=: division by zero";
         SFIntBN q;

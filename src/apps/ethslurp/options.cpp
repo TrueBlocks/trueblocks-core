@@ -133,14 +133,14 @@ bool COptions::parseArguments(SFString& command) {
                 return usage("Option -d: Invalid date format for endDate. "
                                 "Format must be either yyyymmdd or yyyymmddhhmmss.");
 
-            firstDate = snagDate(earlyStr, -1);
-            lastDate = snagDate(lateStr, 1);
+            firstDate = BOD(parseDate(earlyStr));
+            lastDate  = EOD(parseDate(lateStr));
             if (lastDate == earliestDate)  // the default
                 lastDate = latestDate;
 
             if (firstDate > lastDate) {
-                return usage("lastDate (" + lastDate.Format(FMT_DEFAULT) +
-                             ") must be later than startDate (" + firstDate.Format(FMT_DEFAULT) +
+                return usage("lastDate (" + lastDate.Format(FMT_JSON) +
+                             ") must be later than startDate (" + firstDate.Format(FMT_JSON) +
                              "). Quitting...");
             }
 
@@ -157,14 +157,14 @@ bool COptions::parseArguments(SFString& command) {
                 qbSleep(wait);
             }
 
-        } else if (arg.startsWith("-m:") || arg.startsWith("-max:")) {
+        } else if (arg.startsWith("-m:") || arg.startsWith("--max:")) {
             SFString val = arg.Substitute("-m:", "").Substitute("--max:", "");
             if (val.empty() || !isdigit(val[0]))
                 return usage("Please supply a value with the --max: option. Quitting...");
             maxTransactions = toLong32u(val);
 
-        } else if (arg.startsWith("-n:") || arg.startsWith("-name:")) {
-            SFString val = arg.Substitute("-m:", "").Substitute("--max:", "");
+        } else if (arg.startsWith("-n:") || arg.startsWith("--name:")) {
+            SFString val = arg.Substitute("-n:", "").Substitute("--name:", "");
             if (val.empty())
                 return usage("You must supply a name with the --name option. Quitting...");
             name = val;
@@ -213,6 +213,7 @@ bool COptions::parseArguments(SFString& command) {
 void COptions::Init(void) {
     paramsPtr = params;
     nParamsRef = nParams;
+    pOptions = this;
 
     prettyPrint = false;
     rerun = false;
@@ -253,3 +254,19 @@ COptions::~COptions(void) {
     outScreen.setOutput(stdout);  // flushes and clears archive file if any
     output = NULL;
 }
+
+//--------------------------------------------------------------------------------
+SFString COptions::postProcess(const SFString& which, const SFString& str) const {
+
+    if (which == "options") {
+        return str;
+
+    } else if (which == "notes" && (verbose || COptions::isReadme)) {
+
+        SFString ret;
+        ret += "Portions of this software are Powered by Etherscan.io APIs.\n";
+        return ret;
+    }
+    return str;
+}
+

@@ -1,10 +1,12 @@
 ## Installation Instructions
 
-The only depenencies for QuickBlocks are (1) a locally-running Ethereum node (or a remote Ethereum node such as [Infura](http://infura.io)), (2) the `curl` libraries, and (3) some build tools such as `git`, `cmake`, and `python`.  Below we give specific instructions for your operating sytem followed by instructions for how to build and install QuickBlocks in the final section.
+The only dependencies for QuickBlocks are (1) a locally-running Ethereum node (or a remote Ethereum node such as [Infura](http://infura.io)), (2) the `curl` libraries, and (3) build tools such as `git`, `cmake`, and `python`.  Below we give specific instructions for your operating sytem. Following that are instructions for how to build and install QuickBlocks and further steps.
 
-If you are the `root` user on your system, you do not need to use `sudo` below. If you are *not* the `root`, you will need to use `sudo` below.
+If you are the `root` user on your system, you do not need to use `sudo` below. If you are *not* the `root`, you will need to use `sudo`.
 
-The [ethslurp tool](../../apps/ethslurp/README.md) will not run without an API key from [EtherScan.io](http://etherscan.io/apis) (registration is required). The tool will requst a key from that site before running.
+The [ethslurp tool](../../apps/ethslurp/README.md) will not run without an API key from [EtherScan.io](http://etherscan.io/apis) (registration is required). The tool will request a key from that site before running.
+
+Please see [this important information](RUNNING_A_NODE.md) about running or not running the Ethereum node.
 
 ***
 
@@ -15,7 +17,7 @@ The [ethslurp tool](../../apps/ethslurp/README.md) will not run without an API k
    > (sudo) yum install python python-devel  
    > (sudo) yum install libcurl-devel 
 
-Continue below to build and install QuickBlocks
+[Continue below](#finish) to build and install QuickBlocks
 
 ***
 
@@ -27,7 +29,7 @@ Continue below to build and install QuickBlocks
    > (sudo) apt-get install python python-dev  
    > (sudo) apt-get install libcurl3-dev   
 
-Continue below to build and install QuickBlocks
+[Continue below](#finish) to build and install QuickBlocks
 
 ***
 
@@ -39,7 +41,7 @@ Continue below to build and install QuickBlocks
    > (sudo) dnf install python python-devel   
    > (sudo) dnf install libcurl-devel   
 
-Continue below to build and install QuickBlocks
+[Continue below](#finish) to build and install QuickBlocks
 
 ***
 
@@ -56,7 +58,7 @@ Continue below to build and install QuickBlocks
    >  export CPLUS\_INCLUDE\_PATH=/usr/local/include/:${CPLUS\_INCLUDE\_PATH}  
    >  export LIBRARY\_PATH=/usr/local/lib/:${LIBRARY\_PATH}  
 
-Continue below to build and install QuickBlocks
+[Continue below](#finish) to build and install QuickBlocks
 
 ***
 
@@ -69,7 +71,7 @@ Continue below to build and install QuickBlocks
    > (sudo) apt-get install cmake  
    > (sudo) apt-get install python python-dev  
 
-Continue below to build and install QuickBlocks
+[Continue below](#finish) to build and install QuickBlocks
 
 ***
 
@@ -79,11 +81,11 @@ Continue below to build and install QuickBlocks
    > Install `cmake` [using these instructions](https://cmake.org/download/).  
    > Install `git` [using these instructions](https://git-scm.com/download/mac).
 
-Continue below to build and install QuickBlocks
+[Continue below](#finish) to build and install QuickBlocks
 
+<a name="finish" href=""></a>
 ***
-
-### To build QuickBlocks and complete installation on all platforms
+## To Build QuickBlocks and Finish Installation (all platforms)
 
 Open a terminal and change to whatever folder you normally store GitHub repos. Then:
 
@@ -94,4 +96,10 @@ Open a terminal and change to whatever folder you normally store GitHub repos. T
    > cmake ../src  
    > make  
    > (sudo) make install  
+   
+The installation installs the QuickBlocks command line tools in the folder /usr/local/qblocks/bin. You may wish to add this path to your ${PATH} environment variable.
 
+***
+## After Building...on To the Samples
+
+After you're done building and installing the library and tools, you may wish to try your hand at building some QuickBlocks applications or tools. We've provided a number of simple samples to help you get started. Please follow [this link](../../samples/README.md).

@@ -92,6 +92,8 @@ bool CParameter::Serialize(SFArchive& archive) {
     if (readBackLevel(archive))
         return true;
 
+    // EXISTING_CODE
+    // EXISTING_CODE
     archive >> indexed;
     archive >> name;
     archive >> type;
@@ -105,6 +107,9 @@ bool CParameter::Serialize(SFArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool CParameter::SerializeC(SFArchive& archive) const {
+
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
@@ -192,7 +197,7 @@ SFString CParameter::getValueByName(const SFString& fieldName) const {
     if (!ret.empty())
         return ret;
 
-    // If the class has any fields, return them
+    // Return field values
     switch (tolower(fieldName[0])) {
         case 'i':
             if ( fieldName % "indexed" ) return asString(indexed);
@@ -229,6 +234,18 @@ ostream& operator<<(ostream& os, const CParameter& item) {
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
+//---------------------------------------------------------------------------
+CParameter::CParameter(SFString& textIn) {
+    if (textIn.Contains("=")) {
+        strDefault = textIn;
+        textIn = nextTokenClear(strDefault, '=');
+    }
+    type       = nextTokenClear(textIn, ' ');
+    isPointer  = textIn.Contains("*");
+    isArray    = textIn.Contains("Array");
+    isObject   = !isArray && type.startsWith('C');
+    name       = textIn.Substitute("*", "");
+}
 // EXISTING_CODE
 }  // namespace qblocks
 

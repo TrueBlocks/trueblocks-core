@@ -10,7 +10,6 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
-#include "ethtypes.h"
 #include "abilib.h"
 
 namespace qblocks {
@@ -27,7 +26,7 @@ typedef SFUniqueList<CPriceQuote*>       CPriceQuoteListU;
 //--------------------------------------------------------------------------
 class CPriceQuote : public CBaseNode {
 public:
-    SFUint32 timestamp;
+    timestamp_t timestamp;
     double close;
 
 public:
@@ -124,9 +123,10 @@ IMPLEMENT_ARCHIVE_LIST(CPriceQuoteList);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-extern bool loadPriceData(CPriceQuoteArray& quotes, bool freshen, SFString& message, SFUint32 step = 1);
+extern bool loadPriceData(CPriceQuoteArray& quotes, bool freshen, SFString& message, uint64_t step = 1);
 extern uint64_t indexFromTimeStamp(const CPriceQuoteArray& quotes, timestamp_t ts);
 extern SFString asDollars(timestamp_t ts, SFUintBN weiIn);
+extern SFString dispDollars(timestamp_t ts, SFUintBN weiIn);
 extern SFString priceDatabasePath(void);
 // EXISTING_CODE
 }  // namespace qblocks

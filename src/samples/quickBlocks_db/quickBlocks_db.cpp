@@ -21,7 +21,7 @@ int main(int argc, const char *argv[]) {
     double retrieveTime = testRetrieve();
 
     cout << "Time to build:    " << buildTime    << " seconds\n";
-    cout << "Time to retreive: " << retrieveTime << " seconds\n";
+    cout << "Time to retrieve: " << retrieveTime << " seconds\n";
 
     return 0;
 }

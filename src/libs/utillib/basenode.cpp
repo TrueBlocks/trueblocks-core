@@ -162,13 +162,14 @@ namespace qblocks {
     //--------------------------------------------------------------------------------
     char *CBaseNode::parseJson(char *s, uint32_t& nFields) {
 #ifdef DEBUG_PARSER
+        SFString ss = s;
+        SFString tt('-',25);
+        tt += "\n";
+        cout << tt << s << "\n" << tt;
+        cout << tt << ss.substr(ss.find("{"), 300)) << "\n" << tt;
+        cout << tt << ss.substr(substr.length()-300,300) << "\n" << tt;
+        cout.flush();
         tbs+="\t";
-        printf("--------------------------\n%s\n-----------------------------\n", s);
-        fflush(stdout);
-        printf("--------------------------\n%s\n-----------------------------\n",
-               (const char*)SFString(s).substr(SFString(s).find("{"), 300));
-        printf("--------------------------\n%s\n-----------------------------\n",
-               (const char*)SFString(s).Right(300));
 #endif
         typedef enum { OUTSIDE = 0, IN_NAME, IN_VAL } parseState;
         parseState state = OUTSIDE;
@@ -316,7 +317,14 @@ namespace qblocks {
 
     //---------------------------------------------------------------------------
     bool CBaseNode::SerializeC(SFArchive& archive) const {
-        archive.pParent = this;  // sets this value for items stored in lists or arrays -- read only
+
+        // Not happy with this, but we must set the schema to the latest before we write data
+        // since we always write the latest version to the hard drive.
+        ((CBaseNode*)this)->m_schema = getVersionNum();
+
+        // This sets this value to be used by contained items (such as array items). It's read only
+        archive.pParent = this;
+
         archive << m_deleted;
         archive << m_schema;
         archive << m_showing;
@@ -410,7 +418,6 @@ namespace qblocks {
         return toJson(&theList);
     }
 
-#define toHex2(a)  ("0x"+toLower(SFString(to_hex(str2BigUint(a)).c_str())))
     //--------------------------------------------------------------------------------
     SFString CBaseNode::toJsonFldList(const CFieldList *fieldList) const {
         SFString ret;
@@ -485,15 +492,15 @@ namespace qblocks {
     SFString decBigNum(const SFString& str) {
         SFString ret = str;
         size_t len = ret.length();
-        if (len > 29) ret = ret.Left(1) + "." + StripTrailing(ret.substr(1), '0') + "e+29";
-        else if (len >28) ret = ret.Left(1) + "." + StripTrailing(ret.substr(1), '0') + "e+28";
-        else if (len > 27) ret = ret.Left(1) + "." + StripTrailing(ret.substr(1), '0') + "e+27";
-        else if (len > 26) ret = ret.Left(1) + "." + StripTrailing(ret.substr(1), '0') + "e+26";
-        else if (len > 25) ret = ret.Left(1) + "." + StripTrailing(ret.substr(1), '0') + "e+25";
-        else if (len > 24) ret = ret.Left(1) + "." + StripTrailing(ret.substr(1), '0') + "e+24";
-        else if (len > 23) ret = ret.Left(1) + "." + StripTrailing(ret.substr(1), '0') + "e+23";
-        else if (len > 22) ret = ret.Left(1) + "." + StripTrailing(ret.substr(1), '0') + "e+22";
-        else if (len > 21) ret = ret.Left(1) + "." + StripTrailing(ret.substr(1), '0') + "e+21";
+        if (len > 29) ret = ret.substr(0,1) + "." + StripTrailing(ret.substr(1), '0') + "e+29";
+        else if (len >28) ret = ret.substr(0,1) + "." + StripTrailing(ret.substr(1), '0') + "e+28";
+        else if (len > 27) ret = ret.substr(0,1) + "." + StripTrailing(ret.substr(1), '0') + "e+27";
+        else if (len > 26) ret = ret.substr(0,1) + "." + StripTrailing(ret.substr(1), '0') + "e+26";
+        else if (len > 25) ret = ret.substr(0,1) + "." + StripTrailing(ret.substr(1), '0') + "e+25";
+        else if (len > 24) ret = ret.substr(0,1) + "." + StripTrailing(ret.substr(1), '0') + "e+24";
+        else if (len > 23) ret = ret.substr(0,1) + "." + StripTrailing(ret.substr(1), '0') + "e+23";
+        else if (len > 22) ret = ret.substr(0,1) + "." + StripTrailing(ret.substr(1), '0') + "e+22";
+        else if (len > 21) ret = ret.substr(0,1) + "." + StripTrailing(ret.substr(1), '0') + "e+21";
         ret.Replace(".e+", "e+");
         return ret;
     }
@@ -595,12 +602,12 @@ namespace qblocks {
         uint32_t maxWidth = 0xdeadbeef;
         bool rightJust = false;
         if (fieldName.ContainsI("w:")) {
-            ASSERT(fieldName.Left(2) % "w:");  // must be first modifier in the string
+            ASSERT(fieldName.substr(0,2) % "w:");  // must be first modifier in the string
             fieldName.ReplaceI("w:", EMPTY);   // get rid of the 'w:'
             maxWidth = toLong32u(fieldName);   // grab the width
             nextTokenClear(fieldName, ':');    // skip to the start of the fieldname
         } else if (fieldName.ContainsI("r:")) {
-            ASSERT(fieldName.Left(2) % "r:");  // must be first modifier in the string
+            ASSERT(fieldName.substr(0,2) % "r:");  // must be first modifier in the string
             fieldName.ReplaceI("r:", EMPTY);   // get rid of the 'w:'
             maxWidth = toLong32u(fieldName);   // grab the width
             nextTokenClear(fieldName, ':');    // skip to the start of the fieldname
@@ -608,8 +615,8 @@ namespace qblocks {
         }
 
         //--------------------------------------------------------------------
-#define truncPad(str, size)  (size == 0xdeadbeef ? str : padRight(str.Left(size), size))
-#define truncPadR(str, size) (size == 0xdeadbeef ? str : padLeft (str.Left(size), size))
+#define truncPad(str, size)  (size == 0xdeadbeef ? str : padRight(str.substr(0,size), size))
+#define truncPadR(str, size) (size == 0xdeadbeef ? str : padLeft (str.substr(0,size), size))
 
         // Get the value of the field.  If the value of the field is empty we return empty for the entire token.
         SFString fieldValue = (func)(fieldName, data);
@@ -643,11 +650,21 @@ namespace qblocks {
 
     //--------------------------------------------------------------------------------
     void CBaseNode::doExport(ostream& os) const {
-        //getRuntimeClass()->sortFieldList();
+
         CFieldList *list = getRuntimeClass()->GetFieldList();
-        LISTPOS pos = list->GetHeadPosition();
+        LISTPOS pos;
+
+        CFieldData *lastVisible = NULL;
+        pos = list->GetHeadPosition();
+        while (pos) {
+            CFieldData *field = list->GetNext(pos);
+            if (!field->isHidden())
+                lastVisible = field;
+        }
+
         os << "{\n";
         incIndent();
+        pos = list->GetHeadPosition();
         while (pos) {
             CFieldData *field = list->GetNext(pos);
             if (!field->isHidden()) {
@@ -684,13 +701,17 @@ namespace qblocks {
                     }
                 } else {
                     SFString val = getValueByName(name);
-                    if (val != "null")
+                    bool isNum = field->m_fieldType & TS_NUMERAL;
+                    if (isNum && expContext().hexNums && !val.startsWith("0x"))
+                        val = toHex2(val);
+                    bool quote = (!isNum || expContext().quoteNums) && val != "null";
+                    if (quote)
                         os << "\"";
                     os << val;
-                    if (val != "null")
+                    if (quote)
                         os << "\"";
                 }
-                if (pos)
+                if (field != lastVisible)
                     os << ",";
                 os << "\n";
             }
@@ -698,8 +719,6 @@ namespace qblocks {
         decIndent();
         os << indent();
         os << "}";
-        if (indent().empty())
-            os << "\n";
     }
 }  // namespace qblocks
 

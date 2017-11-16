@@ -75,12 +75,17 @@ bool [{CLASS_NAME}]::Serialize(SFArchive& archive) {
     if (readBackLevel(archive))
         return true;
 
+    // EXISTING_CODE
+    // EXISTING_CODE
 [ARCHIVE_READ]	finishParse();
     return true;
 }
 
 //---------------------------------------------------------------------------------------------------
 bool [{CLASS_NAME}]::SerializeC(SFArchive& archive) const {
+
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     // Writing always write the latest version of the data
 [{PARENT_SER2}][ARCHIVE_WRITE]
@@ -173,7 +178,7 @@ ostream& operator<<(ostream& os, const [{CLASS_NAME}]& item) {
     return os;
 }
 
-//---------------------------------------------------------------------------
+[{GET_OBJ}][{GET_STR}]//---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
 [{NAMESPACE2}]

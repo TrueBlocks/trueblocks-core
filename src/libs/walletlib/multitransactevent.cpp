@@ -68,7 +68,7 @@ bool QMultiTransactEvent::setValueByName(const SFString& fieldName, const SFStri
             if ( fieldName % "to" ) { to = toAddress(fieldValue); return true; }
             break;
         case 'v':
-            if ( fieldName % "value" ) { value = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "value" ) { value = toWei(fieldValue); return true; }
             break;
         default:
             break;
@@ -92,6 +92,8 @@ bool QMultiTransactEvent::Serialize(SFArchive& archive) {
     if (readBackLevel(archive))
         return true;
 
+    // EXISTING_CODE
+    // EXISTING_CODE
     archive >> owner;
     archive >> operation;
     archive >> value;
@@ -103,6 +105,9 @@ bool QMultiTransactEvent::Serialize(SFArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool QMultiTransactEvent::SerializeC(SFArchive& archive) const {
+
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     // Writing always write the latest version of the data
     CLogEntry::SerializeC(archive);
@@ -189,7 +194,7 @@ SFString QMultiTransactEvent::getValueByName(const SFString& fieldName) const {
     if (!ret.empty())
         return ret;
 
-    // If the class has any fields, return them
+    // Return field values
     switch (tolower(fieldName[0])) {
         case 'd':
             if ( fieldName % "data" ) return data;

@@ -84,6 +84,8 @@ bool CBranch::Serialize(SFArchive& archive) {
     if (readBackLevel(archive))
         return true;
 
+    // EXISTING_CODE
+    // EXISTING_CODE
     archive >> m_branchValue;
     finishParse();
     return true;
@@ -91,6 +93,9 @@ bool CBranch::Serialize(SFArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool CBranch::SerializeC(SFArchive& archive) const {
+
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     // Writing always write the latest version of the data
     CTreeNode::SerializeC(archive);
@@ -172,7 +177,7 @@ SFString CBranch::getValueByName(const SFString& fieldName) const {
     if (!ret.empty())
         return ret;
 
-    // If the class has any fields, return them
+    // Return field values
     switch (tolower(fieldName[0])) {
         case 'm':
             if ( fieldName % "m_branchValue" ) return m_branchValue;

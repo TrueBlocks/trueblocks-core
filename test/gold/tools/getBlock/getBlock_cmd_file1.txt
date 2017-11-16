@@ -20,6 +20,7 @@ getBlock --file:cmd_file1
 "nonce":3113
 "parentHash":"0x85f082ce9d5cb8b3c16e0eb8ba5152927a02d1a2c9dc5ddf49a643f48bbe6d15"
 "receipt":
+"status":null
 "timestamp":1458022602
 "to":"0x8ee897fd165f3979137ac1d0ea7244c8c98a2fa9"
 "to":"0xf1915bb49d8c5905cb473e7e49b1633727949b0c"
@@ -102,6 +103,7 @@ getBlock --file:cmd_file1
 "nonce":98475
 "parentHash":"0x5e48c48213ede8ed9b7e9f5411564f4f996015c2d93636d7b2b7c60b230b0c20"
 "receipt":
+"status":null
 "timestamp":1458213990
 "to":"0x05232cef5c73335299750432e4ffeaab9932b4f4"
 "to":"0x06516b4243ec57df81252e94779a5ab406200e16"
@@ -193,6 +195,7 @@ getBlock --file:cmd_file1
 "nonce":13
 "parentHash":"0xeb35ba146384965b444191fa6354bdddbe0dcdc89319b2ab202422591213b24d"
 "receipt":
+"status":null
 "timestamp":1459980885
 "to":"0xba6284ca128d72b25f1353fadd06aa145d9095af"
 "transactionIndex":0
@@ -284,6 +287,7 @@ getBlock --file:cmd_file1
 "nonce":900706
 "parentHash":"0x1adf11a3b8d0c2e75605a34a9adb883268ad48531c541ce3c98a42dce8f688b3"
 "receipt":
+"status":null
 "timestamp":1467296018
 "to":"0x0b954635512f75edc168515aef7e086d02ea6ad5"
 "to":"0x4252672e258530daf201f49a6b737514841af30f"
@@ -434,6 +438,7 @@ getBlock --file:cmd_file1
 "nonce":728
 "parentHash":"0xd6f07877d475d957c7d2154db7b2b6e769ec4428be56e0690a7ead297aa7cd39"
 "receipt":
+"status":null
 "timestamp":1471990847
 "to":"0x301e1262d00c8d2b166bbbb1d72c88fbec67f97a"
 "to":"0x415fbe62f215127cc6088c95d1b4b7535a5ef03f"
@@ -521,6 +526,7 @@ getBlock --file:cmd_file1
 "nonce":4
 "parentHash":"0xf482445c37a2b92cf4dc1507b3e8661f600dcd0980a79c910df6eaf6d7f9e555"
 "receipt":
+"status":null
 "timestamp":1473930294
 "to":"0x3c789ef4a917b92826689d5f45b322bb414584d7"
 "transactionIndex":0
@@ -542,6 +548,7 @@ getBlock --file:cmd_file1
 "nonce":98
 "parentHash":"0x5e58ba96ebc9c4cfce21733bdf243a8dd090b881ac233c0e0fe08ef16e8f02ac"
 "receipt":
+"status":null
 "timestamp":1474007546
 "to":"0x093ca92b37b169036bea03d4b43dca502e8d9a58"
 "transactionIndex":0
@@ -574,6 +581,7 @@ getBlock --file:cmd_file1
 "nonce":1393992
 "parentHash":"0x4c2f8369342b33445927fd1bba6f34d5f7c84e2903df18db56503df2ffde99c7"
 "receipt":
+"status":null
 "timestamp":1475329719
 "to":"0x0091927803c4fb5a9f6dbd2d2373268e654cd3c7"
 "to":"0x5bb27bc1d724cbe566ef7cc645a389d22504c9c0"
@@ -618,6 +626,7 @@ getBlock --file:cmd_file1
 "nonce":2334
 "parentHash":"0xbad0aa3ba8fdfa7d205627a2b8fded3427f030fa1427076c47acf04ee33334af"
 "receipt":
+"status":null
 "timestamp":1478169571
 "to":"0xb6119d117ea95e316e9cd19ee5e08f54c1fbc187"
 "transactionIndex":0

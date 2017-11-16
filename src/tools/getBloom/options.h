@@ -8,29 +8,24 @@
  *------------------------------------------------------------------------*/
 #include "etherlib.h"
 
-#define MAX_NUMS 100
 //-----------------------------------------------------------------------------
-class COptions : public COptionsBase {
+class COptions : public CBlockOptions {
 public:
     bool isCheck;
     bool isRaw;
-    bool isRange;
-    bool terse;
-    bool quiet;
-    SFUint32 nums[MAX_NUMS];
-    SFUint32 nNums;
-    SFUint32 start;
-    SFUint32 stop;
+    bool receipt;
+    bool force;
+    bool silent;
+    int quiet;
 
     COptions(void);
     ~COptions(void);
 
-    bool parseArguments(SFString& command);
-    void Init(void);
+    SFString postProcess(const SFString& which, const SFString& str) const override;
+    bool parseArguments(SFString& command) override;
+    void Init(void) override;
     bool isMulti(void) const;
 };
 
 //-----------------------------------------------------------------------------
-extern bool     visitNonEmptyBlock(CBlock& node, void *data);
-extern bool     visitEmptyBlock(CBlock& node, void *data);
 extern uint32_t foundFile(const SFString& path, void *data);

@@ -13,7 +13,16 @@
 #include "debug.h"
 
 //-----------------------------------------------------------------------
+inline SFString asDollars2(timestamp_t ts, const SFUintBN& weiIn) {
+    SFString ret = ::asDollars(ts, weiIn);
+    return " (" + ret + ")";
+}
+
+//-----------------------------------------------------------------------
 void CVisitor::displayTrans(const CTransaction *theTrans) const {
+
+    if (theTrans->isError)
+        colorsDim();
 
     const CTransaction *promoted = promoteToFunc(theTrans);
     if (!promoted)
@@ -44,9 +53,9 @@ void CVisitor::displayTrans(const CTransaction *theTrans) const {
 
         if (expContext().asDollars) {
             timestamp_t ts = toTimestamp(promoted->Format("[{TIMESTAMP}]"));
-            transStr.ReplaceAll("++USDV++",  asDollars(ts, toWei(promoted->Format("[{VALUE}]"))));
-            transStr.ReplaceAll("++USDGP++", asDollars(ts, toWei(promoted->Format("[{GASPRICE}]"))));
-            transStr.ReplaceAll("++USDGC++", asDollars(ts, toWei(promoted->Format("[{GASCOST}]"))));
+            transStr.ReplaceAll("++USDV++",  asDollars2(ts, toWei(promoted->Format("[{VALUE}]"))));
+            transStr.ReplaceAll("++USDGP++", asDollars2(ts, toWei(promoted->Format("[{GASPRICE}]"))));
+            transStr.ReplaceAll("++USDGC++", asDollars2(ts, toWei(promoted->Format("[{GASCOST}]"))));
         }
         transStr = annotate(transStr);
         cout << cOff << transStr;
@@ -78,7 +87,7 @@ void CVisitor::displayTrans(const CTransaction *theTrans) const {
             if (opts.logs_on) {
                 cout << iYellow << "  "
                         << padLeft(asString(i),2) << ". "
-                        << padRight(eventType.Left(15),15) << " "
+                        << padRight(eventType.substr(0,15),15) << " "
                         << evtStr << cOff << "\r\n";
             }
             evtList += eventType + ",";
@@ -99,7 +108,7 @@ void CVisitor::displayTrans(const CTransaction *theTrans) const {
             cout << "\r\n";
             for (uint32_t t=0;t<watches.getCount()-1;t++) {
                 SFBloom b = makeBloom(watches[t].address);
-                displayBloom(b,watches[t].color + padRight(watches[t].name.Left(9),9) + cOff, (isBloomHit(b, promoted->receipt.logsBloom) ? greenCheck : redX));
+                displayBloom(b,watches[t].color + padRight(watches[t].name.substr(0,9),9) + cOff, (isBloomHit(b, promoted->receipt.logsBloom) ? greenCheck : redX));
                 cout << "\r\n";
             }
         }
@@ -112,6 +121,8 @@ void CVisitor::displayTrans(const CTransaction *theTrans) const {
     cout << cOff;
     cout << "\r\n";
     cout.flush();
+
+    colorsOn();
     return;
 }
 
@@ -153,7 +164,6 @@ void CVisitor::displayTrace(timestamp_t ts, const CTraceArray& traces, bool err)
         if (err) { c1 = c2 = c3 = biBlack; }
         if (from.length()) {
             cout << c1 <<  "\r\n    " << padNum4((uint64_t)t) << ":" << c2;
-            // TODO(tjayrush) use formatting string here
             cout << c1 << " { \"type\": "           << c2 << type;
             cout << c1 <<  " \"from\": "         << c2 << annotate(from);
             cout << c1 << ", \"to\": "           << c2 << annotate(to);
@@ -164,7 +174,7 @@ void CVisitor::displayTrace(timestamp_t ts, const CTraceArray& traces, bool err)
             SFUintBN wei = canonicalWei(value);
             cout << c1 << ", \"value\": ";
             cout << (wei == 0 ? cOff : c3);
-            cout << wei2Ether(asStringBN(wei)) << (expContext().asDollars ? asDollars(ts, wei) : "") << c2;
+            cout << wei2Ether(asStringBN(wei)) << (expContext().asDollars ? asDollars2(ts, wei) : "") << c2;
             cout << c1 << " }" << cOff;
         }
     }

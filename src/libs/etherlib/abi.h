@@ -38,6 +38,8 @@ public:
 
     DECLARE_NODE(CAbi);
 
+    const CBaseNode *getObjectAt(const SFString& name, uint32_t i) const override;
+
     // EXISTING_CODE
     void clearABI(void);
     bool loadABI(const SFString& addr);
@@ -129,7 +131,7 @@ IMPLEMENT_ARCHIVE_LIST(CAbiList);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-extern SFUint32 verbose;
+extern uint64_t verbose;
 #define REP_FREQ   11
 #define REP_INFREQ 563
 void clearAbis(void);

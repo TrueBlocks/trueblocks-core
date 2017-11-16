@@ -10,7 +10,6 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
-#include "ethtypes.h"
 #include "abilib.h"
 #include "logentry.h"
 
@@ -24,6 +23,7 @@ typedef SFUniqueList<CReceipt*>       CReceiptListU;
 
 // EXISTING_CODE
 class CTransaction;
+#define NO_STATUS ((uint32_t)-1)
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
@@ -33,6 +33,7 @@ public:
     SFGas gasUsed;
     CLogEntryArray logs;
     SFBloom logsBloom;
+    uint32_t status;
 
 public:
     CReceipt(void);
@@ -41,6 +42,8 @@ public:
     CReceipt& operator=(const CReceipt& re);
 
     DECLARE_NODE(CReceipt);
+
+    const CBaseNode *getObjectAt(const SFString& name, uint32_t i) const override;
 
     // EXISTING_CODE
     const CTransaction *pTrans;
@@ -106,6 +109,7 @@ inline void CReceipt::Init(void) {
     gasUsed = 0;
     logs.Clear();
     logsBloom = 0;
+    status = NO_STATUS;
 
     // EXISTING_CODE
     pTrans = NULL;
@@ -131,6 +135,7 @@ inline void CReceipt::Copy(const CReceipt& re) {
     gasUsed = re.gasUsed;
     logs = re.logs;
     logsBloom = re.logsBloom;
+    status = re.status;
 
     // EXISTING_CODE
     pTrans = re.pTrans; // no deep copy becuase it's const

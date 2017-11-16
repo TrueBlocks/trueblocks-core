@@ -12,7 +12,8 @@
 #include "options_base.h"
 #include "colors.h"
 #include "filenames.h"
-#include "toml.h"
+#include "namevalue.h"
+#include "accountname.h"
 
 namespace qblocks {
 
@@ -32,7 +33,8 @@ namespace qblocks {
     //--------------------------------------------------------------------------------
     bool COptionsBase::prepareArguments(int argc, const char *argv[]) {
 
-        if (SFString(getenv("NO_COLOR")) == "true")
+        SFString env = getenv("NO_COLOR");
+        if (SFString(env) == "true")
             colorsOff();
 
         programName = basename((char*)argv[0]);
@@ -49,7 +51,7 @@ namespace qblocks {
             cout << "\n";
         }
 
-        if ((SFUint32)argc <= minArgs)  // the first arg is the program's name
+        if ((uint64_t)argc <= minArgs)  // the first arg is the program's name
             return usage("Not enough arguments presented.");
 
         int nChars = 0;
@@ -97,7 +99,7 @@ namespace qblocks {
         // (2) identify any --file arguments and store them for later use
         //-----------------------------------------------------------------------------------
         SFString cmdFileName = "";
-        for (SFUint32 i = 0 ; i < nArgs ; i++) {
+        for (uint64_t i = 0 ; i < nArgs ; i++) {
             SFString arg = args[i];
             if (arg.startsWith("--file:")) {
                 cmdFileName = arg.Substitute("--file:", "");
@@ -150,7 +152,7 @@ namespace qblocks {
         commandList = "";
         fromFile = false;
         if (cmdFileName.empty()) {
-            for (SFUint32 i = 0 ; i < nArgs ; i++)
+            for (uint64_t i = 0 ; i < nArgs ; i++)
                 commandList += (args[i] + " ");
             commandList += '\n';
 
@@ -159,6 +161,9 @@ namespace qblocks {
             SFString contents =  asciiFileToString(cmdFileName).Substitute("\t", " ").
                                             Substitute("-v", "").Substitute("-h", "").
                                             Substitute("  ", " ").Substitute("\\\n", "");
+            if (contents.empty()) {
+                return usage("Command file '" + cmdFileName + "' is empty. Quitting...");
+            }
             while (!contents.empty()) {
                 SFString command = StripAny(nextTokenClear(contents, '\n'), "\t\r\n ");
                 if (!command.empty() && !command.startsWith(";"))  // ignore comments
@@ -184,28 +189,37 @@ namespace qblocks {
             usage();
             exit(0);
 
-        } else if (cmdLine.Contains("--nocolors ") || cmdLine.Contains("--nocolor ")) {
-            cmdLine.ReplaceAll("--nocolors ","");
+        } else if (cmdLine.Contains("--nocolor ")) {
             cmdLine.ReplaceAll("--nocolor ","");
             colorsOff();
 
-        } else if (cmdLine.Contains("--ether " )) {
+        } else if (isEnabled(OPT_DENOM) && cmdLine.Contains("--ether " )) {
             cmdLine.ReplaceAll("--ether ","");
             expContext().asEther = true;
             expContext().asDollars = false;
             expContext().asWei = false;
 
-        } else if (cmdLine.Contains("--wei ")) {
+        } else if (isEnabled(OPT_DENOM) && cmdLine.Contains("--wei ")) {
             cmdLine.ReplaceAll("--wei ","");
             expContext().asEther = false;
             expContext().asDollars = false;
             expContext().asWei = true;
 
-        } else if (cmdLine.Contains("--dollars ")) {
+        } else if (isEnabled(OPT_DENOM) && cmdLine.Contains("--dollars ")) {
             cmdLine.ReplaceAll("--dollars ","");
             expContext().asEther = false;
             expContext().asDollars = true;
             expContext().asWei = false;
+
+        } else if (isEnabled(OPT_PARITY) && cmdLine.Contains("--parity ")) {
+            cmdLine.ReplaceAll("--parity ","");
+            expContext().spcs = 4;
+            expContext().hexNums = true;
+            expContext().quoteNums = true;
+            expContext().isParity = true;
+            for (int i=0;i<5;i++)
+                if (sorts[i])
+                    sorts[i]->sortFieldList();
         }
         cmdLine = Strip(cmdLine, ' ');
         return true;
@@ -213,15 +227,17 @@ namespace qblocks {
 
     //--------------------------------------------------------------------------------
     bool COptionsBase::builtInCmd(const SFString& arg) {
-        if (arg == "-v" || arg.startsWith("-v:") || arg.startsWith("--verbose"))
+        if (isEnabled(OPT_VERBOSE) && (arg == "-v" || arg.startsWith("-v:") || arg.startsWith("--verbose")))
+            return true;
+        if (isEnabled(OPT_DENOM) && (arg == "--ether" || arg == "--wei" || arg == "--dollars"))
+            return true;
+        if (isEnabled(OPT_PARITY) && (arg == "--parity"))
             return true;
         if (arg == "-h" || arg == "--help")
             return true;
         if (arg == "--version")
             return true;
-        if (arg == "--nocolors" || arg == "--nocolor")
-            return true;
-        if (arg == "--ether" || arg == "--wei" || arg == "--dollars")
+        if (arg == "--nocolor")
             return true;
         if (arg == "null")
             return true;
@@ -242,11 +258,15 @@ namespace qblocks {
                 dummy = " range";
             else if (permitted == "<list>")
                 dummy = " list";
+            else if (permitted == "<fn>")
+                dummy = " fn";
+            else if (permitted == "<mode>")
+                dummy = " mode";
             else if (!permitted.empty())
                 dummy = " val";
         }
         if (!name.empty()) {
-            shortName = name.Left(2);
+            shortName = name.substr(0,2);
             if (name.length() > 2)
                 longName = name + dummy;
 
@@ -295,6 +315,7 @@ namespace qblocks {
         os << bYellow << sep << "Usage:" << sep2 << "    " << cOff << programName << " " << options() << "  \n";
         os << purpose();
         os << descriptions() << "\n";
+        os << notes();
         if (!COptionsBase::isReadme)
             os << bBlue << "  Powered by QuickBlocks" << (isTestMode() ? "" : " (" + getVersionStr() + ")") << "\n" << cOff;
         SFString ret = os.str().c_str();
@@ -309,7 +330,7 @@ namespace qblocks {
         CStringExportContext ctx;
         if (!COptionsBase::needsOption)
             ctx << "[";
-        for (SFUint32 i = 0 ; i < nParamsRef ; i++) {
+        for (uint64_t i = 0 ; i < nParamsRef ; i++) {
             if (paramsPtr[i].shortName.startsWith('~')) {
                 required += (" " + paramsPtr[i].longName.substr(1).Substitute("!", ""));
 
@@ -323,7 +344,7 @@ namespace qblocks {
                 ctx << paramsPtr[i].shortName << "|";
             }
         }
-        if (COptionsBase::useVerbose)
+        if (isEnabled(OPT_VERBOSE))
             ctx << "-v|";
         ctx << "-h";
         if (!COptionsBase::needsOption)
@@ -331,13 +352,16 @@ namespace qblocks {
         ctx << required;
 
         ASSERT(pOptions);
-        return pOptions->postProcess("options", ctx.str);
+        SFString ret = pOptions->postProcess("options", ctx.str);
+        if (COptionsBase::isReadme)
+            ret = ret.Substitute("<", "&lt;").Substitute(">", "&gt;");
+        return ret;
     }
 
     //--------------------------------------------------------------------------------
     SFString purpose(void) {
         SFString purpose;
-        for (SFUint32 i = 0 ; i < nParamsRef ; i++)
+        for (uint64_t i = 0 ; i < nParamsRef ; i++)
             if (paramsPtr[i].shortName.empty())
                 purpose += ("\n           " + paramsPtr[i].description);
 
@@ -347,7 +371,6 @@ namespace qblocks {
             ctx << bYellow << sep << "Purpose:" << sep2 << "  " << cOff
                 << purpose.Substitute("\n", "\n           ") << "  \n";
         }
-        ctx << bYellow << sep << "Where:" << sep << cOff << "  \n";
         ASSERT(pOptions);
         return pOptions->postProcess("purpose", ctx.str);
     }
@@ -384,17 +407,47 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
     }
 
     //--------------------------------------------------------------------------------
+    SFString notes(void) {
+        CStringExportContext ctx;
+        ASSERT(pOptions);
+        SFString ret = pOptions->postProcess("notes", "");
+        if (!ret.empty()) {
+            SFString tick = "- ";
+            SFString lead = "\t";
+            SFString trail = "\n";
+            SFString sepy1 = cTeal, sepy2 = cOff;
+            if (COptionsBase::isReadme) {
+                sepy1 = sepy2 = "`";
+                lead = "";
+                trail = "\n";
+            }
+            ret.ReplaceAll("[{", sepy1);
+            ret.ReplaceAll("}]", sepy2);
+
+            ctx << bYellow << sep << "Notes:" << sep << cOff << "\n";
+            ctx << (COptionsBase::isReadme ? "\n" : "");
+            while (!ret.empty()) {
+                SFString line = nextTokenClear(ret,'\n').Substitute("|","\n" + lead + "  ");
+                ctx << lead << tick << line << "\n";
+            }
+            ctx << "\n";
+            ctx.str.ReplaceAll("-   ","  - ");
+        }
+        return ctx.str;
+    }
+
+    //--------------------------------------------------------------------------------
     SFString descriptions(void) {
         SFString required;
         CStringExportContext ctx;
-
+        ctx << bYellow << sep << "Where:" << sep << cOff << "  \n";
         if (COptionsBase::isReadme) {
             ctx << "\n";
-            ctx << "| Option | Full Command | Description |\n";
+            ctx << "| Short Cut | Option | Description |\n";
             ctx << "| -------: | :------- | :------- |\n";
         }
 
-        for (SFUint32 i = 0 ; i < nParamsRef ; i++) {
+        for (uint64_t i = 0 ; i < nParamsRef ; i++) {
             SFString sName = paramsPtr[i].shortName;
             SFString lName = paramsPtr[i].longName;
             SFString descr = Strip(paramsPtr[i].description, ' ');
@@ -411,7 +464,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
             }
         }
 
-        if (COptionsBase::useVerbose)
+        if (isEnabled(OPT_VERBOSE))
             ctx << oneDescription("-v", "-verbose", "set verbose level. Either -v, --verbose or -v:n where 'n' is level", false, false);
         ctx << oneDescription("-h", "-help", "display this help screen", false, false);
         ASSERT(pOptions);
@@ -425,7 +478,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
 
         // Check that we don't have a regular command with a single dash, which
         // should report an error in client code
-        for (SFUint32 i = 0 ; i < nParamsRef ; i++) {
+        for (uint64_t i = 0 ; i < nParamsRef ; i++) {
             if (paramsPtr[i].longName == arg) {
                 arg = "";
                 return ret;
@@ -463,7 +516,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
 
         // This may be a command with two -a -b (or more) single options
         if (arg.length()>2 && arg[2] == ' ') {
-            ret = arg.Left(2);
+            ret = arg.substr(0,2);
             arg = arg.substr(3);
             return ret;
         }
@@ -477,7 +530,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
 
         // This is a ganged-up option. We need to pull it apart by returning
         // the first two chars, and saving the rest for later.
-        ret = arg.Left(2);
+        ret = arg.substr(0,2);
         arg = "-"+arg.substr(2);
         return ret;
     }
@@ -494,12 +547,12 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
     }
 
     //--------------------------------------------------------------------------------
-    bool COptionsBase::useVerbose = true;
+    uint32_t COptionsBase::enableBits = OPT_DEFAULT;
     bool COptionsBase::isReadme = false;
     bool COptionsBase::needsOption = false;
 
     //--------------------------------------------------------------------------------
-    SFUint32 verbose = false;
+    uint64_t verbose = false;
 
     //---------------------------------------------------------------------------------------------------
     SFString configPath(const SFString& part) {
@@ -525,7 +578,200 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
     }
 
     //-------------------------------------------------------------------------
+    bool isEnabled(uint32_t q) {
+        return COptionsBase::enableBits & q;
+    }
+
+    void optionOff(uint32_t q) {
+        COptionsBase::enableBits &= (~q);
+    }
+
+    void optionOn (uint32_t q) {
+        COptionsBase::enableBits |= q;
+    }
+
+    //-------------------------------------------------------------------------
     SFString getSource(void) { return qbGlobals::source; }
     void     setSource(const SFString& src) { qbGlobals::source = src; }
+
+    //--------------------------------------------------------------------------------
+    int sortByBlockNum(const void *v1, const void *v2) {
+        CNameValue *b1 = (CNameValue *)v1;  // NOLINT
+        CNameValue *b2 = (CNameValue *)v2;  // NOLINT
+        if (b1->getName() == "latest")
+            return 1;
+        if (b2->getName() == "latest")
+            return -1;
+        if (b1->getValue().Contains("tbd") && b1->getValue().Contains("tbd"))
+            return b1->getValue().compare(b2->getValue());
+        if (b1->getValue().Contains("tbd"))
+            return 1;
+        if (b2->getValue().Contains("tbd"))
+            return -1;
+        return (int)(b1->getValueU() - b2->getValueU());
+    }
+
+    //-----------------------------------------------------------------------
+    const CToml *getGlobalConfig(const SFString& name) {
+        static CToml *toml = NULL;
+        static SFString components = "quickBlocks|";
+        if (!toml) {
+            static CToml theToml(configPath("quickBlocks.toml"));
+            toml = &theToml;
+            // Always load the program's custom config if it exists
+            SFString fileName = configPath(programName+".toml");
+            if (fileExists(fileName) && !components.Contains(programName+"|")) {
+                components += programName+"|";
+                CToml custom(fileName);
+                toml->mergeFile(&custom);
+            }
+        }
+
+        // If we're told explicitly to load another config, do that here
+        if (!name.empty()) {
+            SFString fileName = configPath(name+".toml");
+            if (fileExists(fileName) && !components.Contains(name+"|")) {
+                components += name+"|";
+                CToml custom(fileName);
+                toml->mergeFile(&custom);
+            }
+        }
+
+        return toml;
+    }
+
+    //-----------------------------------------------------------------------
+    void COptionsBase::loadSpecials(void) {
+
+        const CToml *toml = getGlobalConfig("whenBlock");
+
+        specials.Clear();
+        SFString specialsStr = toml->getConfigStr("specials", "list", "");
+        char *p = cleanUpJson((char *)specialsStr.c_str());
+        while (p && *p) {
+            CNameValue pair;
+            uint32_t nFields = 0;
+            p = pair.parseJson(p, nFields);
+            if (nFields) {
+                specials[specials.getCount()] = pair;
+            }
+        }
+        specials.Sort(sortByBlockNum);
+        return;
+    }
+
+    //--------------------------------------------------------------------------------
+    bool COptionsBase::findSpecial(CNameValue& pair, const SFString& arg) const {
+        if (specials.getCount() == 0)
+            ((COptionsBase*)this)->loadSpecials();
+        for (uint32_t i = 0 ; i < specials.getCount() ; i++) {
+            if (arg == specials[i].getName()) {
+                pair = specials[i];
+                return true;
+            }
+        }
+        return false;
+    }
+
+    //---------------------------------------------------------------------------------------------------
+    COptionsBase::COptionsBase(void) : namesFile("") {
+        fromFile = false;
+        minArgs = 1;
+        isReadme = false;
+        needsOption = false;
+        for (int i=0;i<5;i++)
+            sorts[i] = NULL;
+    }
+
+    //-----------------------------------------------------------------------
+    bool COptionsBase::getNamedAccount(CAccountName& acct, const SFString& addr) const {
+        if (namedAccounts.getCount() == 0) {
+            uint64_t save = verbose;
+            verbose = false;
+            ((COptionsBase*)this)->loadNames();
+            verbose = save;
+        }
+
+        for (uint32_t i = 0 ; i < namedAccounts.getCount() ; i++) {
+            if (namedAccounts[i].addr % addr) {
+                acct = namedAccounts[i];
+                return true;
+            }
+        }
+        return false;
+    }
+
+    //-----------------------------------------------------------------------
+    bool COptionsBase::loadNames(void) {
+
+        // If we're already loaded or editing, return
+        if (namedAccounts.getCount() > 0)
+            return true;
+
+        SFString textFile = namesFile.getFullPath();
+        SFString binFile  = textFile.Substitute(".txt",".bin");
+
+        SFTime txtDate = fileLastModifyDate(textFile);
+        SFTime binDate = fileLastModifyDate(binFile);
+
+        if (verbose && !isTestMode())
+            cout << "txtDate: " << txtDate << " binDate: " << binDate << "\n";
+
+        if (binDate > txtDate) {
+            SFArchive archive(READING_ARCHIVE);
+            if (archive.Lock(binFile, binaryReadOnly, LOCK_NOWAIT)) {
+                if (verbose && !isTestMode())
+                    cout << "Reading from binary cache\n";
+                archive >> namedAccounts;
+                archive.Release();
+                return true;
+            }
+        }
+
+        if (verbose && !isTestMode())
+            cout << "Reading from text database\n";
+
+        // Read the data from the names database and clean it up if needed
+        SFString contents = StripAny(asciiFileToString(textFile), "\t\n ");
+        contents.ReplaceAll("\t\t", "\t");
+        if (!contents.endsWith("\n"))
+            contents += "\n";
+
+        // Parse out the data....
+        while (!contents.empty()) {
+            SFString line = nextTokenClear(contents, '\n');
+            if (!line.startsWith("#")) {
+                if (countOf('\t', line) < 2) {
+                    cerr << "Line " << line << " does not contain two tabs.\n";
+
+                } else {
+                    CAccountName account(line);
+                    namedAccounts[namedAccounts.getCount()] = account;
+                }
+            }
+        }
+
+        SFArchive archive(WRITING_ARCHIVE);
+        if (archive.Lock(binFile, binaryWriteCreate, LOCK_CREATE)) {
+            if (verbose && !isTestMode())
+                cout << "Writing binary cache\n";
+            archive << namedAccounts;
+            archive.Release();
+        }
+
+        return true;
+    }
+
+    const char *STR_DEFAULT_DATA =
+    "#---------------------------------------------------------------------------------------------------\n"
+    "#  This is the ethName database. Format records as tab separated lines with the following format:\n"
+    "#\n"
+    "#      Optional Symbol <tab> Name <tab> Address <tab> Source of the data <tab> Description <newline>\n"
+    "#\n"
+    "#---------------------------------------------------------------------------------------------------------------\n"
+    "# Sym    Name                Address                        Source        Description\n"
+    "#---------------------------------------------------------------------------------------------------------------\n"
+    "#\n"
+    "#Add your names here\n";
 
 }  // namespace qblocks

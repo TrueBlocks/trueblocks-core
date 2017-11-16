@@ -1,0 +1,23 @@
+getReceipt argc: 3 [1:--verbose] [2:--file:cmd_file] 
+getReceipt --verbose --file:cmd_file 
+{
+  "contractAddress": "0x0",
+  "gasUsed": 21000,
+  "logs": [],
+  "logsBloom": "0x0",
+  "status": null
+}
+{
+  "contractAddress": "0x0",
+  "gasUsed": 21000,
+  "logs": [],
+  "logsBloom": "0x0",
+  "status": null
+}
+{
+    "contractAddress": "0x0",
+    "gasUsed": "0x5208",
+    "logs": [],
+    "logsBloom": "0x0",
+    "status": null
+}

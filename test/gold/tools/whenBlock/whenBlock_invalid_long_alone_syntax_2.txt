@@ -1,3 +1,3 @@
-whenBlock argc: 3 [1:--alone] [2:2015-03-02] 
-whenBlock --alone 2015-03-02 
+whenBlock argc: 3 [1:--data] [2:2015-03-02] 
+whenBlock --data 2015-03-02 
 The date you specified (2015-03-02) is before the first block. Quitting...

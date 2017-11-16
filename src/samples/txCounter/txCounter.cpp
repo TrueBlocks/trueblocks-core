@@ -8,16 +8,16 @@
 #include "etherlib.h"
 
 #if 0
-#define START_BLOCK 4030000
-#define N_EMPTY 1396479
-#define N_FULL 2633521
-#define N_TRANS 38086242
+#define START_BLOCK 4369903
+#define N_EMPTY 1397928
+#define N_FULL 2834172
+#define N_TRANS 53065764
 #define N_TRACES 0
 #else
-#define START_BLOCK 1
-#define N_FULL 0
-#define N_EMPTY 0
-#define N_TRANS 0
+#define START_BLOCK 4366423
+#define N_EMPTY 1398230
+#define N_FULL 2968193
+#define N_TRANS 67567161
 #define N_TRACES 0
 #endif
 
@@ -80,7 +80,9 @@ void CCounter::countOne(const CBlock &block) {
     blknum_t thisOne = (block.blockNumber / 10000) * 10000;
 #else
     static SFTime last = earliestDate;
-    SFTime thisOne = SubtractOneDay(SubtractOneDay(BOW(dateFromTimeStamp(block.timestamp))));
+    //SFTime thisOne = SubtractOneDay(SubtractOneDay(BOW(dateFromTimeStamp(block.timestamp))));
+    SFTime thisOne = dateFromTimeStamp(block.timestamp);
+    thisOne = SFTime(thisOne.GetYear(),thisOne.GetMonth(),thisOne.GetDay(),thisOne.GetHour(),thisOne.GetMinute()/5,0);
 #endif
 
     ostream *os = &cerr;

@@ -1,5 +1,3 @@
-whenBlock argc: 2 [1:daofund] 
-whenBlock daofund 
-
-	block #1428756 (daofund) : 1461980573 : 2016-04-30 01:42:53 UTC
-
+whenBlock argc: 3 [1:daofund] [2:-v] 
+whenBlock daofund -v 
+block #1428756 (daofund) : 1461980573 : 2016-04-30 01:42:53 UTC

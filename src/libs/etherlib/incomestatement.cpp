@@ -94,6 +94,8 @@ bool CIncomeStatement::Serialize(SFArchive& archive) {
     if (readBackLevel(archive))
         return true;
 
+    // EXISTING_CODE
+    // EXISTING_CODE
     archive >> begBal;
     archive >> inflow;
     archive >> outflow;
@@ -106,6 +108,9 @@ bool CIncomeStatement::Serialize(SFArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool CIncomeStatement::SerializeC(SFArchive& archive) const {
+
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
@@ -203,7 +208,7 @@ SFString CIncomeStatement::getValueByName(const SFString& fieldName) const {
     if (!ret.empty())
         return ret;
 
-    // If the class has any fields, return them
+    // Return field values
     switch (tolower(fieldName[0])) {
         case 'b':
             if ( fieldName % "begBal" ) return asStringBN(begBal);

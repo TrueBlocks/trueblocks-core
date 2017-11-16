@@ -10,8 +10,6 @@
 
 class COptions : public COptionsBase {
 public:
-    CAccountNameArray accounts;
-    CFilename namesFile;
     SFString addr;
     SFString name;
     SFString source;
@@ -20,14 +18,15 @@ public:
     bool matchCase;
     bool open;
     bool list;
-    bool addrOnly;
+    bool alone;
     bool isEdit;
 
     COptions(void);
     ~COptions(void) {}
 
-    bool parseArguments(SFString& command);
-    void Init(void);
-    bool loadData(void);
-    SFString showName(void);
+    SFString postProcess(const SFString& which, const SFString& str) const override;
+    bool parseArguments(SFString& command) override;
+    void Init(void) override;
+
+    SFString showMatches(void);
 };

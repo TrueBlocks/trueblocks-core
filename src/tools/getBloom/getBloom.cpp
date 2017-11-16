@@ -8,7 +8,8 @@
 #include "etherlib.h"
 #include "options.h"
 
-extern SFString doOneBloom(SFUint32 num, const COptions& opt);
+extern const char *STR_FMT_BLOOMS_OUT;
+extern SFString doOneBloom(uint64_t num, const COptions& opt);
 //------------------------------------------------------------
 int main(int argc, const char * argv[]) {
 
@@ -25,50 +26,35 @@ int main(int argc, const char * argv[]) {
         if (!options.parseArguments(command))
             return 0;
 
-        // There can be more than one thing to do...
         if (!options.quiet)
             cout << (options.isMulti() ? "[" : "");
-        if (options.isRange) {
-            for (SFUint32 i = options.start ; i < options.stop ; i++) {
-                cout << doOneBloom(i, options);
+
+        int cnt=0;
+        SFString list = options.getBlockNumList();
+        while (!list.empty()) {
+            blknum_t bn = toLongU(nextTokenClear(list, '|'));
+            SFString result = doOneBloom(bn, options);
+            if (options.isCheck) {
+                // Not implemented
+            } else {
                 if (!options.quiet) {
-                    if (i < options.stop-1)
+                    cout << result;
+                    if (!list.empty())
                         cout << ",";
                     cout << "\n";
-                    if (options.isCheck) {
-                        // TODO(any): read 'raw' and compare result with gold
-                    }
 
-                } else if (!(i%150)) {
+                } else if (!(cnt%150)) {
                     cout << ".";
                     cout.flush();
 
-                } else if (!(i%1000)) {
+                } else if (!(cnt%1000)) {
                     cout << "+";
                     cout.flush();
                 }
-            }
-        } else {
-            for (SFUint32 i = 0 ; i < options.nNums ; i++) {
-                cout << doOneBloom(options.nums[i], options);
-                if (!options.quiet) {
-                    if (i < options.nNums - 1)
-                        cout << ",";
-                    cout << "\n";
-                    if (options.isCheck) {
-                        // TODO(any): read 'raw' and compare result with gold
-                    }
-
-                } else if (!(i%150)) {
-                    cout << ".";
-                    cout.flush();
-
-                } else if (!(i%1000)) {
-                    cout << "+";
-                    cout.flush();
-                }
+                cnt++;
             }
         }
+
         if (!options.quiet)
             cout << (options.isMulti() ? "]" : "");
     }
@@ -77,20 +63,29 @@ int main(int argc, const char * argv[]) {
 }
 
 //------------------------------------------------------------
-SFString doOneBloom(SFUint32 num, const COptions& opt) {
+SFString doOneBloom(uint64_t num, const COptions& opt) {
 
     CBlock gold;
     SFString result;
     SFString numStr = asStringU(num);
     if (opt.isRaw) {
 
-        if (!queryRawBlock(result, numStr, true, opt.terse)) {
+        if (!queryRawBlock(result, numStr, true, false)) {
             result = "Could not query raw block " + numStr + ". Is an Ethereum node running?";
         }
+        result.ReplaceAll(",",",\n");
+        SFString ret;
+        while (!result.empty()) {
+            SFString line = nextTokenClear(result,'\n');
+            if (line.Contains("logsBloom") || line.Contains("number")) {
+                ret += line + "\n";
+            }
+        }
+        result = "{" + Strip(ret.Substitute(",\n",","),',') + "}";
 
     } else {
         // queryBlock returns false if there are no transactions, so ignore the return value
-        queryBlock(gold, numStr, true);
+        queryBlock(gold, numStr, true, false);
         if (/* DISABLES CODE */ (false)) { // turn this on to force a write of the block to the disc
             SFString fileName = getBinaryFilename1(gold.blockNumber);
             writeToBinary(gold, fileName);
@@ -98,8 +93,8 @@ SFString doOneBloom(SFUint32 num, const COptions& opt) {
 
         if (getSource().Contains("Only")) {
             // --source::cache mode doesn't include timestamp in transactions
-            for (txnum_t t = 0 ; t < gold.transactions.getCount() ; t++) {
-                gold.transactions[t].timestamp = (SFUint32)gold.timestamp;
+            for (uint32_t t = 0 ; t < gold.transactions.getCount() ; t++) {
+                gold.transactions[t].timestamp = gold.timestamp;
             }
 
         }
@@ -108,3 +103,4 @@ SFString doOneBloom(SFUint32 num, const COptions& opt) {
 
     return (opt.quiet ? "" : result);
 }
+

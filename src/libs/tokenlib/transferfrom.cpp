@@ -60,7 +60,7 @@ bool QTransferFrom::setValueByName(const SFString& fieldName, const SFString& fi
         case '_':
             if ( fieldName % "_from" ) { _from = toAddress(fieldValue); return true; }
             if ( fieldName % "_to" ) { _to = toAddress(fieldValue); return true; }
-            if ( fieldName % "_value" ) { _value = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "_value" ) { _value = toWei(fieldValue); return true; }
             break;
         default:
             break;
@@ -84,6 +84,8 @@ bool QTransferFrom::Serialize(SFArchive& archive) {
     if (readBackLevel(archive))
         return true;
 
+    // EXISTING_CODE
+    // EXISTING_CODE
     archive >> _from;
     archive >> _to;
     archive >> _value;
@@ -93,6 +95,9 @@ bool QTransferFrom::Serialize(SFArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool QTransferFrom::SerializeC(SFArchive& archive) const {
+
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     // Writing always write the latest version of the data
     CTransaction::SerializeC(archive);
@@ -175,7 +180,7 @@ SFString QTransferFrom::getValueByName(const SFString& fieldName) const {
     if (!ret.empty())
         return ret;
 
-    // If the class has any fields, return them
+    // Return field values
     switch (tolower(fieldName[0])) {
         case '_':
             if ( fieldName % "_from" ) return fromAddress(_from);

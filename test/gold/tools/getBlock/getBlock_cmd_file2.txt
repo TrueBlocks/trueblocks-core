@@ -80,6 +80,7 @@ getBlock --file:cmd_file2
 "nonce":40520
 "parentHash":"0xe68c10d9a9e99e40a9a2407f3f0e4ea5af8e278cbc579dcdaa255e2d5b8a6ee1"
 "receipt":
+"status":null
 "timestamp":1448545183
 "to":"0x1abf4691de073851dd4f0dd7f998681b15622a6c"
 "transactionIndex":0
@@ -101,6 +102,7 @@ getBlock --file:cmd_file2
 "nonce":42839
 "parentHash":"0x0d2b3f5e0b2a1b81c381afeb5893522c242d9bbbc105a631db0f174c1c939dbb"
 "receipt":
+"status":null
 "timestamp":1449158435
 "to":"0xdc60738e53ec598aafdf2c22076306cf2ac19932"
 "transactionIndex":0
@@ -138,6 +140,7 @@ getBlock --file:cmd_file2
 "nonce":58875
 "parentHash":"0xdee8ee13c9faf7269a067d3d15f89814911112c4143d3a9f6122ab5aad8d2b25"
 "receipt":
+"status":null
 "timestamp":1451947020
 "to":"0xc55e3a3d54f5d549b9fca583fd0ec1e4d812d154"
 "transactionIndex":0
@@ -159,6 +162,7 @@ getBlock --file:cmd_file2
 "nonce":4006
 "parentHash":"0x4e58b0efa837a31649b0dbb6d80eda44e3aea16220c49ae0253c19ba454f8080"
 "receipt":
+"status":null
 "timestamp":1452855767
 "to":"0xa6f0c214afc1b7495a26b377c4b8f2b4d7e55b23"
 "transactionIndex":0
@@ -183,6 +187,7 @@ getBlock --file:cmd_file2
 "nonce":190369
 "parentHash":"0xe59390f361d17456ead12f999848b2d7cf78d49503ac8c5ada05374eb1728467"
 "receipt":
+"status":null
 "timestamp":1455850443
 "to":"0x74d1766f9953591e5d8895dd378118c58a0af583"
 "to":"0x93ebe7033bb03e0d0aa097846867913d905f15f8"
@@ -246,6 +251,7 @@ getBlock --file:cmd_file2
 "nonce":700
 "parentHash":"0x11f2029c702ec830a0f2b25f542d49d45ec0529d1f9905a20bb242be3b47eee7"
 "receipt":
+"status":null
 "timestamp":1455872128
 "to":"0x32be343b94f860124dc4fee278fdcbd38c102d88"
 "to":"0x9af09991ad63814e53ffc1bccf213ee74027608b"
@@ -300,6 +306,7 @@ getBlock --file:cmd_file2
 "nonce":95581
 "parentHash":"0x334f6a841735572f7b683837cd7e3eade9147b3eae88a088eadaf7c13c37a06d"
 "receipt":
+"status":null
 "timestamp":1456761851
 "to":"0x02f0249d0f5321b651a88b9d2177517d53c97789"
 "to":"0x053bc97eb6e8be0757d3eea3a9240d6302669a62"
@@ -338,6 +345,7 @@ getBlock --file:cmd_file2
 "nonce":3113
 "parentHash":"0x85f082ce9d5cb8b3c16e0eb8ba5152927a02d1a2c9dc5ddf49a643f48bbe6d15"
 "receipt":
+"status":null
 "timestamp":1458022602
 "to":"0x8ee897fd165f3979137ac1d0ea7244c8c98a2fa9"
 "to":"0xf1915bb49d8c5905cb473e7e49b1633727949b0c"

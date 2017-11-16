@@ -9,14 +9,9 @@
 
 //---------------------------------------------------------------------------------------------------
 CParams params[] = {
-    CParams("~!hash",       "one or more hashes of Ethereum transactions, or"),
-    CParams("~!bn.transID", "blockNumber.transactionID of one or more Ethereum transactions, or"),
-    CParams("~!bh.transID", "blockHash.transactionID of one or more Ethereum transactions, or"),
-    CParams("~!address",    "if --address, then an Ethereum address"),
-    CParams("-fromNode",    "retrieve the transaction from the running node (from QuickBlocks otherwise)"),
-    CParams("-address",     "retrieve all logs (from node) given a list of one or more Ethereum addresses"),
-    CParams("",             "Retrieve logs from an Ethereum transaction using either QuickBlocks or a running node.\n"
-                            " --note: 'hash' and 'blockHash' must start with '0x'."),
+    CParams("~!trans_list", "a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)"),
+    CParams("-raw",         "retrieve raw transaction directly from the running node"),
+    CParams("",             "Retrieve a transaction's receipt from the local cache or a running node."),
 };
 uint32_t nParams = sizeof(params) / sizeof(CParams);
 
@@ -29,8 +24,8 @@ bool COptions::parseArguments(SFString& command) {
     Init();
     while (!command.empty()) {
         SFString arg = nextTokenClear(command, ' ');
-        if (arg == "-a" || arg == "--address") {
-            fromAddr = true;
+        if (arg == "-r" || arg == "--raw") {
+            isRaw = true;
 
         } else if (arg.startsWith('-')) {  // do not collapse
 
@@ -40,42 +35,20 @@ bool COptions::parseArguments(SFString& command) {
 
         } else {
 
-            if (arg.startsWith("0x") || arg.Contains(".")) {
-                queries += (arg + "|");  // blockNum.transID
+            SFString ret = transList.parseTransList(arg);
+            if (!ret.empty())
+                return usage(ret);
 
-            } else {
-
-                return usage("The argument '" + arg + "' is not properly formatted.");
-            }
         }
     }
 
-    if (queries.empty())
-        return usage("Please provide at least one transaction or address. Quitting...");
+    if (!transList.hasTrans())
+        return usage("Please specify at least one transaction identifier.");
 
-    SFString check = queries;
-    while (!check.empty()) {
-        SFString arg = nextTokenClear(check, '|');
-        SFString orig = arg;
-        if (arg.startsWith("0x")) {
-            if (arg.Contains(".")) {
-                // blockHash.transID okay
-                SFString hash = nextTokenClear(arg, '.');
-                if (hash.length() != 66 || !isNumeral(arg))
-                    return usage("The argument '" + orig + "' is not properly formatted.");
-            } else if (arg.length() != 66 && arg.length() != 42) {
-                // transaction hash or address okay
-                return usage("The argument '" + orig + "' is not properly formatted.");
-            }
-        } else if (!arg.Contains(".")) {
-            SFString blockNum = nextTokenClear(arg, '.');
-            if (!isNumeral(blockNum) || !isNumeral(arg))
-                return usage("The argument '" + orig + "' is not properly formatted.");
-        }
-    }
+//    if (address && !isAddress(address))
+//        return usage("Bad address.");
 
-    return usage("This tools is not implemented. Quitting...");
-//    return true;
+    return true;
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -84,13 +57,17 @@ void COptions::Init(void) {
     nParamsRef = nParams;
     pOptions = this;
 
-    queries = "";
-    fromAddr = false;
-    verbose = true;
+    transList.Init();
+    isRaw = false;
 }
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
+    // will sort the fields in these classes if --parity is given
+    sorts[0] = GETRUNTIME_CLASS(CBlock);
+    sorts[1] = GETRUNTIME_CLASS(CTransaction);
+    sorts[2] = GETRUNTIME_CLASS(CReceipt);
+
     Init();
 }
 
@@ -100,8 +77,19 @@ COptions::~COptions(void) {
 
 //--------------------------------------------------------------------------------
 SFString COptions::postProcess(const SFString& which, const SFString& str) const {
-    if (which == "options")
-        return str.Substitute("hash bn.transID bh.transID address","< hash | bn.transID | bh.transID | address >"
-                              "\n            -- note: This tool is incomplete.\n");
+    if (which == "options") {
+        return str.Substitute("trans_list","<transID> [transID...]");
+
+    } else if (which == "notes" && (verbose || COptions::isReadme)) {
+
+        SFString ret;
+        ret += "[{trans_list}] is one or more space-separated identifiers which may be either a transaction hash,|"
+                "a blockNumber.transactionID pair, or a blockHash.transactionID pair, or any combination.\n";
+        ret += "This tool checks for valid input syntax, but does not check that the transaction requested exists.\n";
+        ret += "This tool retrieves information from the local node or the ${FALLBACK} node, if configured (see documentation).\n";
+        ret += "If the queried node does not store historical state, the results may be undefined.\n";
+        return ret;
+    }
     return str;
 }
+

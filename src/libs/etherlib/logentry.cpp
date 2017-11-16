@@ -99,6 +99,8 @@ bool CLogEntry::Serialize(SFArchive& archive) {
     if (readBackLevel(archive))
         return true;
 
+    // EXISTING_CODE
+    // EXISTING_CODE
     archive >> address;
     archive >> data;
     archive >> logIndex;
@@ -109,6 +111,9 @@ bool CLogEntry::Serialize(SFArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool CLogEntry::SerializeC(SFArchive& archive) const {
+
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
@@ -202,7 +207,7 @@ SFString CLogEntry::getValueByName(const SFString& fieldName) const {
     if (!ret.empty())
         return ret;
 
-    // If the class has any fields, return them
+    // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
             if ( fieldName % "address" ) return fromAddress(address);
@@ -214,9 +219,9 @@ SFString CLogEntry::getValueByName(const SFString& fieldName) const {
             if ( fieldName % "logIndex" ) return asStringU(logIndex);
             break;
         case 't':
-            if ( fieldName % "topics" || fieldName % "topicsCnt") {
+            if ( fieldName % "topics" || fieldName % "topicsCnt" ) {
                 uint32_t cnt = topics.getCount();
-                if (fieldName % "topicsCnt")
+                if (fieldName.endsWith("Cnt"))
                     return asStringU(cnt);
                 if (!cnt) return "";
                 SFString retS;
@@ -253,7 +258,7 @@ ostream& operator<<(ostream& os, const CLogEntry& item) {
 
 //---------------------------------------------------------------------------
 const SFString CLogEntry::getStringAt(const SFString& name, uint32_t i) const {
-    if (name % "topics" && i < topics.getCount())
+    if ( name % "topics" && i < topics.getCount() )
         return fromTopic(topics[i]);
     return "";
 }

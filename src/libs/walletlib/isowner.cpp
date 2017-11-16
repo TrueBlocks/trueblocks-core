@@ -82,6 +82,8 @@ bool QIsOwner::Serialize(SFArchive& archive) {
     if (readBackLevel(archive))
         return true;
 
+    // EXISTING_CODE
+    // EXISTING_CODE
     archive >> _addr;
     finishParse();
     return true;
@@ -89,6 +91,9 @@ bool QIsOwner::Serialize(SFArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool QIsOwner::SerializeC(SFArchive& archive) const {
+
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     // Writing always write the latest version of the data
     CTransaction::SerializeC(archive);
@@ -167,7 +172,7 @@ SFString QIsOwner::getValueByName(const SFString& fieldName) const {
     if (!ret.empty())
         return ret;
 
-    // If the class has any fields, return them
+    // Return field values
     switch (tolower(fieldName[0])) {
         case '_':
             if ( fieldName % "_addr" ) return fromAddress(_addr);

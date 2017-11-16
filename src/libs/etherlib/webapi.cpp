@@ -46,8 +46,6 @@ bool CWebAPI::checkKey(CToml& toml) {
     if (key % "exit" || key % "quit" || key.empty())
         exit(0);
 
-    // TODO(jayrush): extend this to allow for other APIs
-
     // save the key for later
     toml.setConfigStr("settings", "api_key",      key);
     toml.setConfigStr("settings", "api_provider", "EtherScan");

@@ -54,20 +54,22 @@ SFString removeField(const SFString& strIn, const SFString& field) {
 }
 
 //------------------------------------------------------------
-SFString cleanAll(const SFString& str, bool remove) {
+SFString cleanAll(const SFString& str, bool remove, bool isByzan) {
 
     static const SFString removes[] = {
         // fields in RPC but not in QuickBlocks
-        "author", "condition", "creates", "difficulty", "extraData", "miner", "mixHash", "networkId",
+        "author", "condition", "creates", "difficulty", "extraData", "miner", "mixHash", "networkId", "chainId",
         "nonce", "nonce", // NOT A DUP--IT NEEDS TO BE HERE BECAUSE THERE ARE TWO DIFFERENT NONCES
         "publicKey", "r", "raw", "receiptsRoot", "s", "sealFields", "sha3Uncles", "size", "standardV", "stateRoot",
         "totalDifficulty", "transactionsRoot", "uncles", "v",
         // fields in QuickBlocks but not in RPC
-        "contractAddress", "cumulativeGasUsed", "receipt", "address", "data", "logIndex", "topics",
+        "contractAddress", "cumulativeGasUsed", "receipt", "address", "data", "logIndex", "topics", "status", // status must be last because we only use it after byzan
     };
     uint32_t nRemoved = sizeof(removes) / sizeof(SFString);
     if (!remove)
         nRemoved = 0;
+    else if (isByzan)
+        nRemoved--; // don't remove status if were post-byzantium
 
     SFString orig = str;
     orig.ReplaceAny("\t\r {}","");
@@ -121,6 +123,6 @@ SFString sorted(const SFString& inIn) {
 }
 
 //------------------------------------------------------------
-SFString normalizeBlock(const SFString& inIn, bool remove) {
-    return sorted(cleanAll(inIn, remove));
+SFString normalizeBlock(const SFString& inIn, bool remove, bool isByzan) {
+    return sorted(cleanAll(inIn, remove, isByzan));
 }

@@ -82,6 +82,8 @@ bool QConfirm::Serialize(SFArchive& archive) {
     if (readBackLevel(archive))
         return true;
 
+    // EXISTING_CODE
+    // EXISTING_CODE
     archive >> _h;
     finishParse();
     return true;
@@ -89,6 +91,9 @@ bool QConfirm::Serialize(SFArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool QConfirm::SerializeC(SFArchive& archive) const {
+
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     // Writing always write the latest version of the data
     CTransaction::SerializeC(archive);
@@ -167,7 +172,7 @@ SFString QConfirm::getValueByName(const SFString& fieldName) const {
     if (!ret.empty())
         return ret;
 
-    // If the class has any fields, return them
+    // Return field values
     switch (tolower(fieldName[0])) {
         case '_':
             if ( fieldName % "_h" ) return _h;

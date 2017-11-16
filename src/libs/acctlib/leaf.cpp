@@ -69,7 +69,7 @@ bool CLeaf::setValueByName(const SFString& fieldName, const SFString& fieldValue
             }
             break;
         case 'c':
-            if ( fieldName % "cnt" ) { cnt = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "cnt" ) { cnt = toLong32u(fieldValue); return true; }
             break;
         default:
             break;
@@ -93,6 +93,8 @@ bool CLeaf::Serialize(SFArchive& archive) {
     if (readBackLevel(archive))
         return true;
 
+    // EXISTING_CODE
+    // EXISTING_CODE
     archive >> blocks;
     archive >> cnt;
     finishParse();
@@ -101,6 +103,9 @@ bool CLeaf::Serialize(SFArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool CLeaf::SerializeC(SFArchive& archive) const {
+
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     // Writing always write the latest version of the data
     CTreeNode::SerializeC(archive);
@@ -181,11 +186,13 @@ SFString CLeaf::getValueByName(const SFString& fieldName) const {
     if (!ret.empty())
         return ret;
 
-    // If the class has any fields, return them
+    // Return field values
     switch (tolower(fieldName[0])) {
         case 'b':
-            if ( fieldName % "blocks" ) {
+            if ( fieldName % "blocks" || fieldName % "blocksCnt" ) {
                 uint32_t cnt = blocks.getCount();
+                if (fieldName.endsWith("Cnt"))
+                    return asStringU(cnt);
                 if (!cnt) return "";
                 SFString retS;
                 for (uint32_t i = 0 ; i < cnt ; i++) {
@@ -214,6 +221,13 @@ ostream& operator<<(ostream& os, const CLeaf& item) {
 
     os << item.Format() << "\n";
     return os;
+}
+
+//---------------------------------------------------------------------------
+const SFString CLeaf::getStringAt(const SFString& name, uint32_t i) const {
+    if ( name % "blocks" && i < blocks.getCount() )
+        return asStringU(blocks[i]);
+    return "";
 }
 
 //---------------------------------------------------------------------------
