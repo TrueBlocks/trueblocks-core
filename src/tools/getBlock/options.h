@@ -19,6 +19,8 @@ public:
     bool normalize;
     bool silent;
     int quiet;
+    SFString format;
+    bool priceBlocks;
     COptionsBlockList blocks;
 
     COptions(void);
