@@ -832,6 +832,10 @@ baseClass: CBaseNode
 	  fieldID: 1025
 	  fieldType: T_ETHER TS_NUMERAL 4259885 TS_BIGNUM 4259885
 	  hidden: 1
+	fieldName: encoding
+	  fieldID: 1026
+	  fieldType: T_TEXT TS_STRING 131122
+	  hidden: 1
 {
   "hash": "0x0",
   "blockHash": "0x0",
