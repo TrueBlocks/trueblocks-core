@@ -70,21 +70,13 @@ int main(int argc, const char *argv[]) {
             if (block.blockNumber == 0)
                 block.timestamp = 1438269960;
 
-            SFString fmt = getGlobalConfig()->getConfigStr("display", "format", "<not_set>");
-            if (fmt == "<not_set>")
-                fmt = "block #[{BLOCKNUMBER}][ : {TIMESTAMP}][ : {DATE}]";
-            if (options.alone) {
-                fmt = getGlobalConfig()->getConfigStr("display", "terse", "[{BLOCKNUMBER}\t][{DATE}]");
-
-            } else  {
-                fmt.ReplaceAll("{", cTeal+"{");
-                fmt.ReplaceAll("}", "}"+cOff);
-            }
+            SFString def = (options.alone ? "[{BLOCKNUMBER}\\t][{DATE}]\\n" : "block #[{BLOCKNUMBER}][ : {TIMESTAMP}][ : {DATE}]\\n");
+            SFString fmt = getGlobalConfig()->getDisplayStr(options.alone, def);
             if (verbose && !special.empty()) {
                 SFString sp = "(" + special + ")";
                 fmt.Replace("{BLOCKNUMBER}", "{BLOCKNUMBER} " + sp);
             }
-            cout << block.Format(cleanFmt(fmt)) << "\n";
+            cout << block.Format(fmt);
         }
     }
 

@@ -964,7 +964,7 @@ bool forEveryTransaction(TRANSVISITFUNC func, void *data, const SFString& trans_
                 getTransaction(trans, hash);  // transHash
             }
         } else {
-            getTransaction(trans, (uint32_t)toLongU(hash), txID);  // blockHash.txID
+            getTransaction(trans, (uint32_t)toLongU(hash), txID);  // blockNum.txID
         }
         CBlock block;
         trans.pBlock = &block;
