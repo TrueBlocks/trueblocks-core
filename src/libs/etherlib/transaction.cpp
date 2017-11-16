@@ -249,9 +249,11 @@ void CTransaction::registerClass(void) {
     ADD_FIELD(CTransaction, "gasUsed", T_GAS, ++fieldNum);
     ADD_FIELD(CTransaction, "date", T_DATE, ++fieldNum);
     ADD_FIELD(CTransaction, "ether", T_ETHER, ++fieldNum);
+    ADD_FIELD(CTransaction, "encoding", T_TEXT, ++fieldNum);
 
     // Hide fields we don't want to show by default
     HIDE_FIELD(CTransaction, "function");
+    HIDE_FIELD(CTransaction, "encoding");
     HIDE_FIELD(CTransaction, "gasCost");
     HIDE_FIELD(CTransaction, "isError");
     HIDE_FIELD(CTransaction, "isInternalTx");
@@ -281,6 +283,9 @@ SFString nextTransactionChunk_custom(const SFString& fieldIn, const void *dataPt
                 break;
             case 'e':
                 if ( fieldIn % "ether" ) return wei2Ether(asStringBN(tra->value));
+                if ( fieldIn % "encoding" ) {
+                    return tra->input.substr(0,10);
+                }
                 break;
             case 'f':
                 if ( fieldIn % "function" )
@@ -291,7 +296,7 @@ SFString nextTransactionChunk_custom(const SFString& fieldIn, const void *dataPt
                 if ( fieldIn % "gasCost" ) {
                     SFUintBN used = tra->receipt.gasUsed;
                     SFUintBN price = tra->gasPrice;
-                    return asStringBN(used * price);
+                    return wei2Ether(to_string(used * price).c_str());
                 }
                 break;
             case 't':
