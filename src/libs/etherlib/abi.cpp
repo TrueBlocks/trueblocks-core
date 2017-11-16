@@ -405,6 +405,84 @@ bool CAbi::loadABI(const SFString& addr) {
     }
     return abiByName.getCount();
 }
+
+//---------------------------------------------------------------------------
+bool visitABIs(const SFString& path, void *dataPtr) {
+
+    if (path.endsWith(".json")) {
+        SFString *str = (SFString*)dataPtr;
+        *str += (path+"\n");
+    }
+    return true;
+}
+
+//---------------------------------------------------------------------------
+void rebuildFourByteDB(void) {
+
+    SFString fileList;
+    SFString abiPath = blockCachePath("abis/");
+    cout << abiPath << "\n";
+    forEveryFileInFolder(abiPath+"*", visitABIs, &fileList);
+
+    CFunctionArray funcArray;
+    while (!fileList.empty()) {
+        SFString fileName = nextTokenClear(fileList, '\n');
+        CAbi abi;
+        abi.loadABIFromFile(fileName);
+        for (uint32_t f = 0 ; f < abi.abiByEncoding.getCount() ; f++) {
+            funcArray[funcArray.getCount()] = abi.abiByEncoding[f];
+            cout << abi.abiByEncoding[f].encoding << " : " << abi.abiByEncoding[f].name << " : " << abi.abiByEncoding[f].signature << "\n";
+        }
+    }
+    funcArray.Sort(sortFuncTableByEncoding);
+    SFArchive archive(WRITING_ARCHIVE);
+    if (archive.Lock(abiPath+"abis.bin", binaryWriteCreate, LOCK_CREATE)) {
+        archive << funcArray;
+        archive.Release();
+    }
+}
+
+//---------------------------------------------------------------------------
+static CFunctionArray *getABIArray(void) {
+
+    static CFunctionArray *theArrayPtr = NULL;
+    if (!theArrayPtr) {
+        static CFunctionArray theArray;
+        SFString abiPath = blockCachePath("abis/abis.bin");
+        SFArchive archive(READING_ARCHIVE);
+        if (archive.Lock(abiPath, binaryReadOnly, LOCK_WAIT)) {
+            archive >> theArray;
+            archive.Release();
+        }
+        theArrayPtr = &theArray;
+    }
+    return theArrayPtr;
+}
+
+//---------------------------------------------------------------------------
+int cleanCompareI(const SFString& s1, const SFString& s2) {
+    SFString ss1 = toLower(s1.startsWith("0x") ? s1.substr(2,8) : s1.substr(0,8));
+    SFString ss2 = toLower(s2.startsWith("0x") ? s2.substr(2,8) : s2.substr(0,8));
+    return ss2.compare(ss1);
+}
+
+//---------------------------------------------------------------------------
+int findByEncodingI(const void *rr1, const void *rr2) {
+    CFunction *f1 = (CFunction*)rr1;
+    CFunction *f2 = (CFunction*)rr2;
+    return cleanCompareI(f1->encoding, f2->encoding);
+}
+
+//---------------------------------------------------------------------------
+CFunction *findFunctionByEncoding(const SFString& encoding) {
+    CFunctionArray *array = getABIArray();
+    if (array) {
+        CFunction search;
+        search.encoding = encoding;
+        return array->Find(&search, findByEncodingI);
+    }
+    return NULL;
+}
 // EXISTING_CODE
 }  // namespace qblocks
 
