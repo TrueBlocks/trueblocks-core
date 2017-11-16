@@ -9,9 +9,9 @@
 
 //---------------------------------------------------------------------------------------------------
 CParams params[] = {
-    CParams("~block[s]", "a space-separated list of one or more blocks to search for"),
-    CParams("-alone",    "display the path(s) of the blocks if found in the cache"),
-    CParams("",          "Reports if a block was found in the cache or at a local or remote node.\n"),
+    CParams("~block_list", "a space-separated list of one or more blocks to search for"),
+    CParams("-alone",      "if the block(s) is/are found in the cache, display the path(s) to those blocks"),
+    CParams("",            "Reports if a block was found in the cache or at a local or remote node.\n"),
 };
 uint32_t nParams = sizeof(params) / sizeof(CParams);
 
@@ -22,6 +22,7 @@ bool COptions::parseArguments(SFString& command) {
         return false;
 
     Init();
+    blknum_t latestBlock = isNodeRunning() ? getLatestBlockFromClient() : 7000000;
     while (!command.empty()) {
         SFString arg = nextTokenClear(command, ' ');
         SFString orig = arg;
@@ -35,22 +36,22 @@ bool COptions::parseArguments(SFString& command) {
             }
         } else {
 
-            if (isUnsigned(arg)) {
-                if (toUnsigned(arg) > getLatestBlockFromClient()) {
-                    cout << "The block number you requested (";
-                    cout << cTeal << orig << cOff;
-                    cout << ") is after the latest block (";
-                    cout << cTeal << (isTestMode() ? "TESTING" : asStringU(getLatestBlockFromClient())) << cOff;
-                    cout << "). Quitting...\n";
-                    return false;
-                }
-                blocks[blocks.getCount()] = toUnsigned(arg);
+            SFString ret = blocks.parseBlockList(arg, latestBlock);
+            if (ret.endsWith("\n")) {
+                cerr << "\n  " << ret << "\n";
+                return false;
+            } else if (!ret.empty()) {
+                return usage(ret);
             }
         }
     }
 
-    if (!blocks.getCount())
+    if (!blocks.hasBlocks())
         return usage("You must enter a valid block number. Quitting...");
+
+    if (alone && !isNodeRunning())
+        alone = false;
+
     return true;
 }
 
@@ -58,16 +59,29 @@ bool COptions::parseArguments(SFString& command) {
 void COptions::Init(void) {
     paramsPtr = params;
     nParamsRef = nParams;
+    pOptions = this;
 
-    blocks.Clear();
     alone = false;
+    optionOff(OPT_DENOM);
 }
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
+    // will sort the fields in these classes if --parity is given
+    sorts[0] = GETRUNTIME_CLASS(CBlock);
+    sorts[1] = GETRUNTIME_CLASS(CTransaction);
+    sorts[2] = GETRUNTIME_CLASS(CReceipt);
+
     Init();
 }
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
+}
+
+//--------------------------------------------------------------------------------
+SFString COptions::postProcess(const SFString& which, const SFString& str) const {
+    if (which == "options")
+        return str.Substitute("block_list", "<block> [block...]");
+    return str;
 }

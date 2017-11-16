@@ -13,7 +13,7 @@ namespace qblocks {
     class SFTime;
 
     //-------------------------------------------------------------------------------
-    extern SFUint32 fileSize(const SFString& file);
+    extern uint64_t fileSize(const SFString& file);
 
     extern uint32_t nFiles(const SFString& path);
     extern uint32_t nFolders(const SFString& path);

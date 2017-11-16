@@ -52,17 +52,17 @@ namespace qblocks {
         SFString fn = fnIn;
         if (!fn.startsWith('/') && !fn.startsWith('.') && !fn.startsWith('~'))
             fn = "./" + fn;  // assume cwd
-        fn.Replace("../", getCWD() + "xx/");
+        fn.Replace("../", getCWD() + "$%^&#*/");
         fn.Replace("./",  getCWD());
         fn.Replace("~/",  getHomeFolder());
-        fn.Replace("xx/", "../");
+        fn.Replace("$%^&#*/", "../");
 
         if (fn.endsWith('/')) {
             path = fn;
             fileName = EMPTY;
 
         } else {
-            path = fn.Left(fn.ReverseFind('/')+1);
+            path = fn.substr(0,fn.ReverseFind('/')+1);
             fileName = fn.Substitute(path, EMPTY);
         }
     }

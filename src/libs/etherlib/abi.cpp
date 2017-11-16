@@ -102,6 +102,8 @@ bool CAbi::Serialize(SFArchive& archive) {
     if (readBackLevel(archive))
         return true;
 
+    // EXISTING_CODE
+    // EXISTING_CODE
     archive >> abiByName;
     archive >> abiByEncoding;
     finishParse();
@@ -110,6 +112,9 @@ bool CAbi::Serialize(SFArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool CAbi::SerializeC(SFArchive& archive) const {
+
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
@@ -187,11 +192,13 @@ SFString CAbi::getValueByName(const SFString& fieldName) const {
     if (!ret.empty())
         return ret;
 
-    // If the class has any fields, return them
+    // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "abiByName" ) {
+            if ( fieldName % "abiByName" || fieldName % "abiByNameCnt" ) {
                 uint32_t cnt = abiByName.getCount();
+                if (fieldName.endsWith("Cnt"))
+                    return asStringU(cnt);
                 if (!cnt) return "";
                 SFString retS;
                 for (uint32_t i = 0 ; i < cnt ; i++) {
@@ -200,8 +207,10 @@ SFString CAbi::getValueByName(const SFString& fieldName) const {
                 }
                 return retS;
             }
-            if ( fieldName % "abiByEncoding" ) {
+            if ( fieldName % "abiByEncoding" || fieldName % "abiByEncodingCnt" ) {
                 uint32_t cnt = abiByEncoding.getCount();
+                if (fieldName.endsWith("Cnt"))
+                    return asStringU(cnt);
                 if (!cnt) return "";
                 SFString retS;
                 for (uint32_t i = 0 ; i < cnt ; i++) {
@@ -234,6 +243,15 @@ ostream& operator<<(ostream& os, const CAbi& item) {
 
     os << item.Format() << "\n";
     return os;
+}
+
+//---------------------------------------------------------------------------
+const CBaseNode *CAbi::getObjectAt(const SFString& name, uint32_t i) const {
+    if ( name % "abiByName" && i < abiByName.getCount() )
+        return &abiByName[i];
+    if ( name % "abiByEncoding" && i < abiByEncoding.getCount() )
+        return &abiByEncoding[i];
+    return NULL;
 }
 
 //---------------------------------------------------------------------------
@@ -323,16 +341,8 @@ SFString findEncoding(const SFString& addr, CFunction& func) {
 static bool getEncoding(const SFString& abiFilename, const SFString& addr, CFunction& func) {
     if (func.type != "function")
         return false;
-
-    SFString fullName = func.name;  // we need the signature for ethabi
-    func.name     = nextTokenClear(func.name, '(');  // Cleanup because we only need the name, not the signature
+    func.name     = nextTokenClear(func.name, '(');
     func.encoding = findEncoding(addr, func);
-    if (func.encoding.empty() && fileExists("/usr/local/bin/ethabi")) {
-        // When we call ethabi, we want the full function declaration (if it's present)
-        SFString cmd = "/usr/local/bin/ethabi encode function \"" +
-                            abiFilename + "\" " + fullName.Substitute("(", "\\(").Substitute(")", "\\)");
-        func.encoding = doCommand(cmd);
-    }
     return !func.encoding.empty();
 }
 
@@ -371,7 +381,7 @@ bool CAbi::loadABI(const SFString& addr) {
 
         SFString abis1;
 
-        // TODO(tjayrush): this is wrong. We should remove the need to use external 'ethabi' code to get the encodings
+        // Get the encodings
         for (uint32_t i=0;i<abiByName.getCount();i++) {
             getEncoding(abiFilename, addr, abiByName[i]);
             abis1 += abiByName[i].Format("[{NAME}]|[{ENCODING}]\n");

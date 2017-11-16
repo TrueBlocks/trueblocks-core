@@ -16,28 +16,8 @@
 
 //-----------------------------------------------------------------------
 #include "etherlib.h"
+#include "options.h"
 #include "debug.h"
-
-//-----------------------------------------------------------------------------
-class COptions : public COptionsBase {
-public:
-    SFString mode;
-    bool single_on;
-    bool accounting_on;
-    bool logs_on;
-    bool trace_on;
-    bool bloom_on;
-    bool debugger_on;
-    bool parse_on;
-    bool autocorrect_on;
-    blknum_t kBlock;
-
-    COptions(void);
-    ~COptions(void);
-
-    bool parseArguments(SFString& command);
-    void Init(void);
-};
 
 //-----------------------------------------------------------------------
 class CBlockStats {
@@ -125,7 +105,7 @@ public:
 };
 
 //-----------------------------------------------------------------------
-extern bool displayFromCache      (const SFString& fileName, SFUint32& blockNum, void *dataPtr);
+extern bool displayFromCache      (const SFString& fileName, uint64_t& blockNum, void *dataPtr);
 extern bool updateCacheUsingBlooms(const SFString& str, void *dataPtr);
 extern bool updateCache           (CBlock& block, void *dataPtr);
 extern void myQuitHandler         (int s);

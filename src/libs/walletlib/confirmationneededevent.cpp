@@ -70,7 +70,7 @@ bool QConfirmationNeededEvent::setValueByName(const SFString& fieldName, const S
             if ( fieldName % "to" ) { to = toAddress(fieldValue); return true; }
             break;
         case 'v':
-            if ( fieldName % "value" ) { value = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "value" ) { value = toWei(fieldValue); return true; }
             break;
         default:
             break;
@@ -94,6 +94,8 @@ bool QConfirmationNeededEvent::Serialize(SFArchive& archive) {
     if (readBackLevel(archive))
         return true;
 
+    // EXISTING_CODE
+    // EXISTING_CODE
     archive >> operation;
     archive >> initiator;
     archive >> value;
@@ -105,6 +107,9 @@ bool QConfirmationNeededEvent::Serialize(SFArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool QConfirmationNeededEvent::SerializeC(SFArchive& archive) const {
+
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     // Writing always write the latest version of the data
     CLogEntry::SerializeC(archive);
@@ -191,7 +196,7 @@ SFString QConfirmationNeededEvent::getValueByName(const SFString& fieldName) con
     if (!ret.empty())
         return ret;
 
-    // If the class has any fields, return them
+    // Return field values
     switch (tolower(fieldName[0])) {
         case 'd':
             if ( fieldName % "data" ) return data;

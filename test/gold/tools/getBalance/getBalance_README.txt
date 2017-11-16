@@ -2,17 +2,26 @@ getBalance argc: 2 [1:-th]
 getBalance -th 
 #### Usage
 
-`Usage:`    getBalance [-d|-e|-v|-h] addrs blocks  
-`Purpose:`  Retrieve the balance for an account at a block.
+`Usage:`    getBalance [-l fn|-n|-d|-v|-h] &lt;address&gt; [address...] [block...]  
+`Purpose:`  Retrieve the balance (in wei) for one or more addresses at the given block(s).
              
 `Where:`  
 
-| Option | Full Command | Description |
+| Short Cut | Option | Description |
 | -------: | :------- | :------- |
-|  | addrs | Ethereum address (starting with '0x') from which to retrieve the balance |
-|  | blocks | the block at which to retrieve the balance (defaults to 'latest') |
+|  | address_list | one or more addresses (0x...) from which to retrieve balances |
+|  | block_list | an optional list of one or more blocks at which to report balances, defaults to 'latest' |
+| -l | --list fn | an alternative way to specify an address_list; place one address per line in the file 'fn' |
+| -n | --noZero | suppress the display of zero balance accounts |
 | -d | --data | render results as tab delimited data |
-| -e | --ether | return the balance in Ether instead of Wei |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
+
+`Notes:`
+
+- `addresses` must start with '0x' and be forty characters long.
+- `block_list` may be a space-separated list of values, a start-end range, a `special`, or any combination.
+- This tool retrieves information from the local node or the ${FALLBACK} node, if configured (see documentation).
+- If the queried node does not store historical state, the results are undefined.
+- `special` blocks are detailed under `whenBlock --list`.
 

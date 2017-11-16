@@ -115,8 +115,16 @@ bool CBlock::setValueByName(const SFString& fieldName, const SFString& fieldValu
 //---------------------------------------------------------------------------------------------------
 void CBlock::finishParse() {
     // EXISTING_CODE
-    for (uint32_t i=0;i<transactions.getCount();i++)
-        transactions[i].pBlock = this;
+    for (uint32_t i=0;i<transactions.getCount();i++) {
+        CTransaction *trans = &transactions[i];
+        trans->pBlock = this;
+        if (blockNumber >= byzantiumBlock && trans->receipt.status == NO_STATUS) {
+            // If we have NO_STATUS in a receipt after the byzantium block, we have to pick it up.
+            CReceipt rec;
+            getReceipt(rec, trans->hash);
+            trans->receipt.status = rec.status;
+        }
+    }
     // EXISTING_CODE
 }
 
@@ -130,6 +138,8 @@ bool CBlock::Serialize(SFArchive& archive) {
     if (readBackLevel(archive))
         return true;
 
+    // EXISTING_CODE
+    // EXISTING_CODE
     archive >> gasLimit;
     archive >> gasUsed;
     archive >> hash;
@@ -145,8 +155,10 @@ bool CBlock::Serialize(SFArchive& archive) {
 //---------------------------------------------------------------------------------------------------
 bool CBlock::SerializeC(SFArchive& archive) const {
 
+    // EXISTING_CODE
+    // EXISTING_CODE
+
     // Writing always write the latest version of the data
-//    ((CBlock*)this)->m_schema = getVersionNum();
     CBaseNode::SerializeC(archive);
     archive << gasLimit;
     archive << gasUsed;
@@ -185,6 +197,8 @@ void CBlock::registerClass(void) {
     HIDE_FIELD(CBlock, "showing");
 
     // EXISTING_CODE
+    ADD_FIELD(CBlock, "date", T_DATE, ++fieldNum);
+    HIDE_FIELD(CBlock, "date");
     // EXISTING_CODE
 }
 
@@ -194,6 +208,13 @@ SFString nextBlockChunk_custom(const SFString& fieldIn, const void *dataPtr) {
     if (blo) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
+            case 'd':
+                if (fieldIn % "date")
+                {
+                    timestamp_t ts = (timestamp_t)blo->timestamp;
+                    return dateFromTimeStamp(ts).Format(FMT_JSON);
+                }
+                break;
             case 'n':
                 if ( fieldIn % "number" ) return asStringU(blo->blockNumber);
                 break;
@@ -278,7 +299,7 @@ SFString CBlock::getValueByName(const SFString& fieldName) const {
     if (!ret.empty())
         return ret;
 
-    // If the class has any fields, return them
+    // Return field values
     switch (tolower(fieldName[0])) {
         case 'b':
             if ( fieldName % "blockNumber" ) return asStringU(blockNumber);
@@ -333,7 +354,7 @@ ostream& operator<<(ostream& os, const CBlock& item) {
 
 //---------------------------------------------------------------------------
 const CBaseNode *CBlock::getObjectAt(const SFString& name, uint32_t i) const {
-    if (name % "transactions")
+    if ( name % "transactions" && i < transactions.getCount() )
         return &transactions[i];
     return NULL;
 }

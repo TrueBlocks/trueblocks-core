@@ -60,7 +60,7 @@ namespace qblocks {
 
             case  1:
             case -1:
-                sign = ((mag.len==0) ? 0 : sgn); // TODO: This is stupid. If we don't beleive in the 'zero' case, why believe it here?
+                sign = ((mag.len==0) ? 0 : sgn);
                 break;
 
             default:
@@ -83,7 +83,7 @@ namespace qblocks {
             case  1:
             case -1:
                 // If the magnitude is zero, force the sign to zero.
-                sign = ((mag.len==0) ? 0 : sgn); // TODO: This is stupid. If we don't beleive in the 'zero' case, why believe it here?
+                sign = ((mag.len==0) ? 0 : sgn);
                 break;
 
             default:

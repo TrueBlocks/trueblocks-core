@@ -4,18 +4,26 @@ This simple program may be used to query an Ethereum address to determine if it 
 
 #### Usage
 
-`Usage:`    isContract [-d|-n|-v|-h] address[es]  
+`Usage:`    isContract [-d|-b|-n|-v|-h] &lt;address&gt; [address...]  
 `Purpose:`  Returns 'true' or 'false' if the given address(es) holds byte code (optionally displays the code).
              
 `Where:`  
 
-| Option | Full Command | Description |
+| Short Cut | Option | Description |
 | -------: | :------- | :------- |
-|  | address[es] | a space-separated list of one or more Ethereum addresses |
-| -d | --display | display the byte code at the address(es) |
+|  | address_list | a space-separated list of one or more Ethereum addresses |
+| -d | --data | display results as data (addr <tab> is_contract) |
+| -b | --bytes | display the byte code at the address(es) |
 | -n | --nodiff | return 'true' if (exactly) two Ethereum addresses have identical code |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
+
+`Notes:`
+
+- `addresses` must start with '0x' and be forty characters long.
+- This tool retrieves information from the local node or the ${FALLBACK} node, if configured.
+- If the queried node does not store historical state, the results are undefined.
+- `special` blocks are detailed under `whenBlock --list`.
 
 `See Also`: This command-line tool implements the [eth_getCode](https://github.com/paritytech/parity/wiki/JSONRPC-eth-module#eth_getcode) RPC interface.
 
@@ -26,7 +34,7 @@ All **quickBlocks** command-line tools support the following commands (although 
     Command     |     Description
     -----------------------------------------------------------------------------
     --version   |   display the current version of the tool
-    --nocolors  |   turn off colored display
+    --nocolor   |   turn off colored display
     --wei       |   specify value in wei (the default)
     --ether     |   specify value in ether
     --dollars   |   specify value in US dollars

@@ -9,12 +9,12 @@
 #include "options.h"
 
 //------------------------------------------------------------------------------------------------------------
-extern void     establishFiles(const SFString& className);
-extern void     generateCode(const COptions& options, CToml& classFile, const SFString& dataFile, const SFString& ns);
-extern SFString convertTypes(const SFString& inStr);
-extern SFString getCaseCode(const SFString& fieldCase, const SFString& ex);
+extern void     generateCode  (const COptions& options, CToml& toml, const SFString& dataFile, const SFString& ns);
+extern SFString getCaseCode   (const SFString& fieldCase, const SFString& ex);
 extern SFString getCaseSetCode(const SFString& fieldCase);
-extern SFString short3(const SFString& in);
+extern SFString short3        (const SFString& in);
+extern SFString checkType     (const SFString& typeIn);
+extern SFString convertTypes  (const SFString& inStr);
 
 //-----------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
@@ -41,16 +41,16 @@ int main(int argc, const char *argv[]) {
                 return usage("No class definition file found at " + fileName + "\n");
 
             } else {
-                CToml classFile("");
-                classFile.readFile(fileName);
+                CToml toml(fileName);
+                toml.readFile(fileName);
 
                 if (options.isList) {
                     if (verbose) {
                         cout << SFString('-', 80) << "\nFile (dest): " << fileName << "\n";
-                        cout << classFile << "\n";
+                        cout << toml << "\n";
 
-                    } else if (!classFile.getConfigBool("settings", "disabled", false)) {
-                        cout << "\t" << classFile.getConfigStr("settings","class","") << "\n";
+                    } else if (!toml.getConfigBool("settings", "disabled", false)) {
+                        cout << "\t" << toml.getConfigStr("settings", "class", "") << "\n";
                     }
 
                 } else if (options.isEdit) {
@@ -62,7 +62,7 @@ int main(int argc, const char *argv[]) {
                                 << ".cpp and " << className << ".h? (y=remove files, otherwise ignore): ";
                         cout << "Testing, but would have deleted " << className << ".[ch]*\n";
                     } else {
-                        // TODO(tjayrush): Doesn't work on purpose
+                        // This does not work on purpose
                         cout << "Are you sure you want to remove " << className
                                 << ".cpp and " << className << ".h? (y=remove files, otherwise ignore): ";
                         return usage("Files not removed. Quitting...");
@@ -74,11 +74,11 @@ int main(int argc, const char *argv[]) {
                         cerr << "Running class definition file '" << className << "'\n";
 
                     if (!isTestMode()) {
-                        if (classFile.getConfigBool("settings", "disabled", false)) {
+                        if (toml.getConfigBool("settings", "disabled", false)) {
                             if (verbose)
                                 cerr << "Disabled class not processed " << className << "\n";
                         } else {
-                            generateCode(options, classFile, fileName, options.namesp);
+                            generateCode(options, toml, fileName, options.namesp);
                         }
                     }
                 }
@@ -91,34 +91,40 @@ int main(int argc, const char *argv[]) {
 
 //------------------------------------------------------------------------------------------------------------
 SFString convertTypes(const SFString& inStr) {
+
     // Note: Watch out for trailing spaces. They are here to make sure it
     // matches only the types and not the field names.
-    return inStr
-    .Substitute("address ",   "SFAddress ")
-    .Substitute("bytes32 ",   "SFString ")
-    .Substitute("bytes ",     "SFString ")
-    .Substitute("bloom ",     "SFBloom ")
-    .Substitute("wei ",       "SFWei ")
-    .Substitute("gas ",       "SFGas ")
-    .Substitute("timestamp ", "timestamp_t ")
-    .Substitute("uint256 ",   "SFUintBN ")
-    .Substitute("int256 ",    "SFIntBN ")
-    .Substitute("uint8 ",     "SFUxnt32 ")
-    .Substitute("uint16 ",    "SFUxnt32 ")
-    .Substitute("uint32 ",    "SFUxnt32 ")
-    .Substitute("uint64 ",    "SFUxnt32 ")
-    .Substitute("hash ",      "SFHash ")
-    .Substitute("string ",    "SFString ")
-    .Substitute("bbool ",     "xool ")
-    .Substitute("bool ",      "bool ")
-    .Substitute("time ",      "SFTime ")
-    .Substitute("int8 ",      "int32_t ")
-    .Substitute("int16 ",     "int32_t ")
-    .Substitute("int32 ",     "int32_t ")
-    .Substitute("int64 ",     "int64_t ")
+    SFString outStr = inStr
+        .Substitute("address ",   "SFAddress "  )
+        .Substitute("bytes32 ",   "SFString "   )
+        .Substitute("bytes ",     "SFString "   )
+        .Substitute("bloom ",     "SFBloom "    )
+        .Substitute("wei ",       "SFWei "      )
+        .Substitute("gas ",       "SFGas "      )
+        .Substitute("hash ",      "SFHash "     )
+        .Substitute("string ",    "SFString "   )
+        .Substitute("time ",      "SFTime "     )
+        .Substitute("uint256 ",   "SFUintBN "   )
+        .Substitute("int256 ",    "SFIntBN "    )
+        .Substitute("blknum ",    "blknum_t "   )
+        .Substitute("timestamp ", "timestamp_t ")
+        .Substitute("bbool ",     "bool "       )
+        .Substitute("bool ",      "bool "       )
+        .Substitute("uint8 ",     "32uint "     )
+        .Substitute("uint16 ",    "32uint "     )
+        .Substitute("uint32 ",    "32uint "     )
+        .Substitute("uint64 ",    "64uint "     )
+        .Substitute("int8 ",      "int32_t "    )
+        .Substitute("int16 ",     "int32_t "    )
+        .Substitute("int32 ",     "int32_t "    )
+        .Substitute("int64 ",     "int64_t "    )
+        .Substitute("32uint ",    "uint32_t "   )
+        .Substitute("64uint ",    "uint64_t "   );
 
-    .Substitute("xool ",      "bool ")
-    .Substitute("xnt32 ",     "int32 ");
+    if (SFString(getenv("TRACING")) == "true")
+        cerr << "\tconvert: " << padRight(inStr, 30) << " ==> " << outStr << "\n";
+
+    return outStr;
 }
 
 //------------------------------------------------------------------------------------------------------------
@@ -131,35 +137,46 @@ extern const char* STR_OPERATOR_H;
 extern const char* STR_OPERATOR_C;
 extern const char* STR_SUBCLASS;
 extern const char* PTR_SET_CASE;
-extern const char* PTR_CASE;
+extern const char* PTR_GET_CASE;
 extern const char* STR_GETVALUE1;
 extern const char* STR_GETVALUE2;
+extern const char* STR_GETOBJ_CODE;
+extern const char* STR_GETOBJ_CODE_FIELD;
+extern const char* STR_GETSTR_CODE;
+extern const char* STR_GETSTR_CODE_FIELD;
+extern const char* STR_GETOBJ_HEAD;
+extern const char* STR_GETSTR_HEAD;
+extern const char* STR_UPGRADE_CODE;
 
 SFString tab = SFString("\t");
 
 //------------------------------------------------------------------------------------------------------------
-void generateCode(const COptions& options, CToml& classFile, const SFString& dataFile, const SFString& ns) {
+void generateCode(const COptions& options, CToml& toml, const SFString& dataFile, const SFString& ns) {
+
     //------------------------------------------------------------------------------------------------
-    SFString className  = classFile.getConfigStr("settings","class","");
-    SFString baseClass  = classFile.getConfigStr("settings","baseClass",""); if (baseClass.empty()) { baseClass = "CBaseNode"; }
+    SFString className  = toml.getConfigStr ("settings", "class", "");
+    SFString baseClass  = toml.getConfigStr ("settings", "baseClass", "CBaseNode");
+    SFString otherIncs  = toml.getConfigStr ("settings", "cIncs", "").Substitute("|", "\n");
+    SFString scope      = toml.getConfigStr ("settings", "scope", "static");
+    SFString hIncludes  = toml.getConfigStr ("settings", "includes", "");
+    bool     serialize  = toml.getConfigBool("settings", "serialize", false);
+
+    //------------------------------------------------------------------------------------------------
     SFString baseBase   = toProper(baseClass.substr(1));
     SFString baseName   = className.substr(1);
-    SFString baseProper = toProper(baseName), baseLower = toLower(baseName), baseUpper = toUpper(baseName);
-    SFString otherIncs  = classFile.getConfigStr("settings", "cIncs", "").Substitute("|","\n");
-    SFString scope      = classFile.getConfigStr("settings", "scope", "static");
-    bool     serialize  = classFile.getConfigBool("settings", "serialize", false);
+    SFString baseProper = toProper(baseName);
+    SFString baseLower  = toLower(baseName);
+    SFString baseUpper  = toUpper(baseName);
 
     //------------------------------------------------------------------------------------------------
-    SFString fieldDec, fieldSet, fieldClear, fieldCopy, fieldArchiveRead, fieldArchiveWrite;
-    SFString fieldReg, fieldCase, fieldSubCls;
+    SFString fieldDec, fieldSet,  fieldClear,  fieldCopy, fieldGetObj, fieldGetStr, fieldArchiveRead;
+    SFString fieldArchiveWrite,   fieldReg,    fieldCase, fieldSubCls, headerIncs;
 
     //------------------------------------------------------------------------------------------------
-    SFString hIncs;
-    SFString hIncludes = classFile.getConfigStr("settings","includes","");
     while (!hIncludes.empty()) {
         SFString line = nextTokenClear(hIncludes, '|');
         if (line != "none")
-            hIncs += "#include \"" + line + "\"\n";
+            headerIncs += "#include \"" + line + "\"\n";
     }
 
     //------------------------------------------------------------------------------------------------
@@ -176,85 +193,78 @@ void generateCode(const COptions& options, CToml& classFile, const SFString& dat
     SFString parCnk = isBase ?
                         "ret = next[{BASE_BASE}]Chunk(fieldName, this);\n" :
                         "ret = next[{BASE_BASE}]Chunk(fieldName, this);\n";
-    SFString parSet = isBase?"":"\tif ([{BASE_CLASS}]::setValueByName(fieldName, fieldValue))\n\t\treturn true;\n\n";
+    SFString parSet = isBase ?
+                        "" :
+                        "\tif ([{BASE_CLASS}]::setValueByName(fieldName, fieldValue))\n\t\treturn true;\n\n";
 
     //------------------------------------------------------------------------------------------------
-    CParameterList theList;
-    SFString allFields = classFile.getConfigStr("settings","fields","").Substitute("address[]","SFAddressArray");
-    while (!allFields.empty()) {
-        SFString fieldDef = nextTokenClear(allFields, '|');
-        CParameter *f = new CParameter;
-        if (fieldDef.Contains("=")) {
-            f->strDefault = fieldDef;
-            fieldDef = nextTokenClear(f->strDefault, '=');
-        }
-        f->type       = nextTokenClear(fieldDef, ' ');
-        f->isPointer  = fieldDef.Contains("*"); fieldDef.Replace("*", "");
-        f->isArray    = fieldDef.Contains("Array");
-        f->isObject   = !f->isArray && f->type.startsWith('C');
-        f->name       = fieldDef.Substitute("*", "");
-        theList.AddTail(f);
+    // build the field list from the config file string
+    SFString fields = toml.getConfigStr("settings", "fields", "").Substitute("address[]", "SFAddressArray");
+    CParameterList fieldList;
+    while (!fields.empty()) {
+        SFString fieldDef = nextTokenClear(fields, '|');
+        CParameter *f = new CParameter(fieldDef);
+        fieldList.AddTail(f);
     }
 
     //------------------------------------------------------------------------------------------------
-    LISTPOS lPos = theList.GetHeadPosition();
+    LISTPOS lPos = fieldList.GetHeadPosition();
     while (lPos) {
-        CParameter *fld = theList.GetNext(lPos);
-        SFString nameUpper = toUpper(fld->name);
+        CParameter *fld = fieldList.GetNext(lPos);
 
-        SFString caseFmt = "[{TYPE}]+[{NAME}]-[{ISPOINTER}]~[{ISOBJECT}]|";
-        SFString decFmt  = "\t[{TYPE}] *[{NAME}];\n";
+        SFString decFmt  = "\t[{TYPE}] *[{NAME}];";
         if (!fld->isPointer) {
             decFmt.Replace("*", "");
         }
-        SFString archFmt = "\tarchive >> [{NAME}];\n";
         SFString copyFmt = "\t[{NAME}] = +SHORT+.[{NAME}];\n";
         if (fld->isPointer)
-            copyFmt = "\tif ([+SHORT+.{NAME}]) {\n\t\t[{NAME}] = new [{TYPE}];\n\t\t*[{NAME}] = *[+SHORT+.{NAME}];\n\t}\n";
+            copyFmt = "\tif ([+SHORT+.{NAME}]) {\n\t\t[{NAME}] = new [{TYPE}];\n"
+                        "\t\t*[{NAME}] = *[+SHORT+.{NAME}];\n\t}\n";
         SFString badSet   = "//\t[{NAME}] = ??; /""* unknown type: [{TYPE}] */\n";
         SFString setFmt   = "\t[{NAME}]";
         SFString regFmt   = "\tADD_FIELD(CL_NM, \"[{NAME}]\", T_TEXT, ++fieldNum);\n", regType;
         SFString clearFmt = "\tif ([{NAME}])\n\t\tdelete [{NAME}];\n\t[{NAME}] = NULL;\n";
         SFString subClsFmt = STR_SUBCLASS;
 
-               if (fld->type == "bloom")        { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_BLOOM";
-        } else if (fld->type == "wei")          { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_WEI";
-        } else if (fld->type == "gas")          { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_GAS";
-        } else if (fld->type == "timestamp")    { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_TIMESTAMP";
-        } else if (fld->type == "string")       { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_TEXT";
-        } else if (fld->type == "addr")         { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_ADDRESS";
-        } else if (fld->type == "address")      { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_ADDRESS";
-        } else if (fld->type == "hash")         { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_HASH";
-        } else if (fld->type == "bytes32")      { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_TEXT";
-        } else if (fld->type == "bytes")        { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_TEXT";
-        } else if (fld->type == "int8")         { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
-        } else if (fld->type == "int16")        { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
-        } else if (fld->type == "int32")        { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
-        } else if (fld->type == "int64")        { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
-        } else if (fld->type == "int256")       { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
-        } else if (fld->type == "uint8")        { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
-        } else if (fld->type == "uint16")       { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
-        } else if (fld->type == "uint32")       { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
-        } else if (fld->type == "uint64")       { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
-        } else if (fld->type == "uint256")      { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
-        } else if (fld->type == "bbool")        { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_BOOL";
-        } else if (fld->type == "bool")         { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_BOOL";
-        } else if (fld->type == "double")       { setFmt = "\t[{NAME}] = [{DEFF}];\n"; regType = "T_DOUBLE";
-        } else if (fld->type == "time")         { setFmt = "\t[{NAME}] = [{DEFT}];\n"; regType = "T_DATE";
-        } else if (fld->isPointer)              { setFmt = "\t[{NAME}] = [{DEFP}];\n"; regType = "T_POINTER";
-        } else if (fld->isObject)               { setFmt = "\t[{NAME}].Init();\n";     regType = "T_OBJECT";
-        } else                                  { setFmt = badSet; regType = "T_TEXT"; }
+               if (fld->type == "bloom")     { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_BLOOM";
+        } else if (fld->type == "wei")       { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_WEI";
+        } else if (fld->type == "gas")       { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_GAS";
+        } else if (fld->type == "timestamp") { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_TIMESTAMP";
+        } else if (fld->type == "blknum")    { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
+        } else if (fld->type == "string")    { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_TEXT";
+        } else if (fld->type == "addr")      { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_ADDRESS";
+        } else if (fld->type == "address")   { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_ADDRESS";
+        } else if (fld->type == "hash")      { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_HASH";
+        } else if (fld->type == "bytes32")   { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_TEXT";
+        } else if (fld->type == "bytes")     { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_TEXT";
+        } else if (fld->type == "int8")      { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
+        } else if (fld->type == "int16")     { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
+        } else if (fld->type == "int32")     { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
+        } else if (fld->type == "int64")     { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
+        } else if (fld->type == "int256")    { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
+        } else if (fld->type == "uint8")     { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
+        } else if (fld->type == "uint16")    { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
+        } else if (fld->type == "uint32")    { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
+        } else if (fld->type == "uint64")    { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
+        } else if (fld->type == "uint256")   { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
+        } else if (fld->type == "bbool")     { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_BOOL";
+        } else if (fld->type == "bool")      { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_BOOL";
+        } else if (fld->type == "double")    { setFmt = "\t[{NAME}] = [{DEFF}];\n"; regType = "T_DOUBLE";
+        } else if (fld->type == "time")      { setFmt = "\t[{NAME}] = [{DEFT}];\n"; regType = "T_DATE";
+        } else if (fld->isPointer)           { setFmt = "\t[{NAME}] = [{DEFP}];\n"; regType = "T_POINTER";
+        } else if (fld->isObject)            { setFmt = "\t[{NAME}].Init();\n";     regType = "T_OBJECT";
+        } else                               { setFmt = badSet;                     regType = "T_TEXT"; }
 
         if (fld->type.Contains("Array")) {
             setFmt = "\t[{NAME}].Clear();\n";
-            if (fld->type.Contains("Address"))
+            if (fld->type.Contains("Address")) {
                 regType = "T_ADDRESS|TS_ARRAY";
-            else if (fld->type.Contains("String"))
+            } else if (fld->type.Contains("String")) {
                 regType = "T_TEXT|TS_ARRAY";
-            else
+            } else {
                 regType = "T_OBJECT|TS_ARRAY";
+            }
         }
-
 #define getDefault(a) (fld->strDefault.empty() ? (a) : fld->strDefault )
         setFmt.Replace("[{DEFS}]", getDefault("\"\""));
         setFmt.Replace("[{DEF}]",  getDefault("0"));
@@ -262,17 +272,43 @@ void generateCode(const COptions& options, CToml& classFile, const SFString& dat
         setFmt.Replace("[{DEFT}]", getDefault("earliestDate"));
         setFmt.Replace("[{DEFP}]", getDefault("NULL"));
 
-        fieldReg += fld->Format(regFmt).Substitute("T_TEXT", regType);
-        fieldReg.ReplaceAll("CL_NM", "[{CLASS_NAME}]");
-        fieldCase += fld->Format(caseFmt);
-        fieldDec += convertTypes(fld->Format(decFmt));
-        fieldCopy += fld->Format(copyFmt).Substitute("+SHORT+", "[{SHORT}]").Substitute("++CLASS++", "[{CLASS_NAME}]");
-        fieldSet += fld->Format(setFmt);
+        if (fld->type.Contains("Array") || (fld->isObject && !fld->isPointer)) {
+
+            if (fld->type.Contains("SFStringArray")  ||
+                fld->type.Contains("SFBlockArray")   ||
+                fld->type.Contains("SFAddressArray") ||
+                fld->type.Contains("SFBigUintArray") ||
+                fld->type.Contains("SFTopicArray")) {
+
+                fieldGetStr += STR_GETSTR_CODE_FIELD;
+                fieldGetStr.ReplaceAll("[{FIELD}]", fld->name);
+                if (fld->name == "topics") {
+                    fieldGetStr.ReplaceAll("THING", "fromTopic");
+                } else if (fld->type.Contains("SFBlockArray")) {
+                    fieldGetStr.ReplaceAll("THING", "asStringU");
+                } else {
+                    fieldGetStr.ReplaceAll("THING", "");
+                }
+            } else {
+                fieldGetObj += STR_GETOBJ_CODE_FIELD;
+                if (!fld->type.Contains("Array")) {
+                    fieldGetObj.Replace(" && i < [{FIELD}].getCount()", "");
+                    fieldGetObj.Replace("[i]", "");
+                }
+                fieldGetObj.ReplaceAll("[{FIELD}]", fld->name);
+            }
+        }
+
+        fieldReg   += fld->Format(regFmt).Substitute("T_TEXT", regType); fieldReg.ReplaceAll("CL_NM", "[{CLASS_NAME}]");
+        fieldCase  += fld->Format("[{TYPE}]+[{NAME}]-[{ISPOINTER}]~[{ISOBJECT}]|");
+        fieldDec   += (convertTypes(fld->Format(decFmt)) + "\n");
+        fieldCopy  += fld->Format(copyFmt).Substitute("+SHORT+", "[{SHORT}]").Substitute("++CLASS++", "[{CLASS_NAME}]");
+        fieldSet   += fld->Format(setFmt);
         fieldClear += (fld->isPointer ? fld->Format(clearFmt) : "");
         if (fld->isObject && !fld->isPointer && !fld->type.Contains("Array")) {
             SFString fmt = subClsFmt;
-            fmt.ReplaceAll("[FNAME]",fld->name);
-            fmt.ReplaceAll("[SH3]",short3(baseLower));
+            fmt.ReplaceAll("[FNAME]", fld->name);
+            fmt.ReplaceAll("[SH3]", short3(baseLower));
             SFString fldStr = fld->Format(fmt);
             fldStr.Replace("++", "[{");
             fldStr.Replace("++", "}]");
@@ -282,24 +318,32 @@ void generateCode(const COptions& options, CToml& classFile, const SFString& dat
         }
 
 SFString ptrReadFmt =
-        "\t[{NAME}] = NULL;\n"
-        "\tbool has_[{NAME}] = false;\n"
-        "\tarchive >> has_[{NAME}];\n"
-        "\tif (has_[{NAME}]) {\n"
-        "\t\t[{NAME}] = new [{TYPE}];\n"
-        "\t\tif (![{NAME}])\n"
-        "\t\t\treturn false;\n"
-        "\t\t[{NAME}]->Serialize(archive);\n"
-        "\t}\n";
+"    [{NAME}] = NULL;\n"
+"    bool has_[{NAME}] = false;\n"
+"    archive >> has_[{NAME}];\n"
+"    if (has_[{NAME}]) {\n"
+"        [{NAME}] = new [{TYPE}];\n"
+"        if (![{NAME}])\n"
+"            return false;\n"
+"        [{NAME}]->Serialize(archive);\n"
+"    }\n";
 
 SFString ptrWriteFmt =
-        "\tarchive << ([{NAME}] != NULL);\n"
-        "\tif ([{NAME}])\n"
-        "\t\t[{NAME}]->SerializeC(archive);\n";
+"    archive << ([{NAME}] != NULL);\n"
+"    if ([{NAME}])\n"
+"        [{NAME}]->SerializeC(archive);\n";
 
-        fieldArchiveRead  += fld->Format(fld->isPointer ? ptrReadFmt  : archFmt);
-        fieldArchiveWrite += fld->Format(fld->isPointer ? ptrWriteFmt : archFmt.Substitute(">>", "<<"));
+        fieldArchiveRead  += fld->Format(fld->isPointer ? ptrReadFmt  : "\tarchive >> [{NAME}];\n");
+        fieldArchiveWrite += fld->Format(fld->isPointer ? ptrWriteFmt : "\tarchive << [{NAME}];\n");
     }
+
+    //------------------------------------------------------------------------------------------------
+    bool hasObjGetter = !fieldGetObj.empty();
+    if (hasObjGetter)
+        fieldGetObj = SFString(STR_GETOBJ_CODE).Substitute("[{FIELDS}]", fieldGetObj);
+    bool hasStrGetter = !fieldGetStr.empty();
+    if (hasStrGetter)
+        fieldGetStr = SFString(STR_GETSTR_CODE).Substitute("[{FIELDS}]", fieldGetStr);
 
     //------------------------------------------------------------------------------------------------
     SFString operatorH = SFString(serialize ? STR_OPERATOR_H : "");
@@ -310,8 +354,8 @@ SFString ptrWriteFmt =
     SFString subClsCodeStr  = fieldSubCls;
 
     //------------------------------------------------------------------------------------------------
-    SFString sorts[4] = { baseLower.Left(2)+"_Name", "", baseLower+"ID", "" };
-    SFString sortString = classFile.getConfigStr("settings","sort","");
+    SFString sorts[4] = { baseLower.substr(0,2)+"_Name", "", baseLower+"ID", "" };
+    SFString sortString = toml.getConfigStr("settings", "sort", "");
     uint32_t cnt = 0;
     while (!sortString.empty())
         sorts[cnt++] = nextTokenClear(sortString, '|');
@@ -319,40 +363,46 @@ SFString ptrWriteFmt =
     //------------------------------------------------------------------------------------------------
     SFString headerFile = dataFile.Substitute(".txt", ".h").Substitute("./classDefinitions/", "./");
     SFString headSource = asciiFileToString(configPath("makeClass/blank.h"));
-    headSource.ReplaceAll("[FIELD_COPY]",       fieldCopy);
-    headSource.ReplaceAll("[FIELD_DEC]",        fieldDec);
-    headSource.ReplaceAll("[FIELD_SET]",        fieldSet);
-    headSource.ReplaceAll("[FIELD_CLEAR]",      fieldClear);
-    headSource.ReplaceAll("[H_INCLUDES]",       hIncs);
-    headSource.ReplaceAll("[{OPERATORS}]",      operatorH);
-    headSource.ReplaceAll("[{BASE_CLASS}]",     baseClass);
-    headSource.ReplaceAll("[{BASE_BASE}]",      baseBase);
-    headSource.ReplaceAll("[{BASE}]",           baseUpper);
-    headSource.ReplaceAll("[{CLASS_NAME}]",     className);
-    headSource.ReplaceAll("[{COMMENT_LINE}]",   STR_COMMENT_LINE);
-    headSource.ReplaceAll("[{LONG}]",           baseLower);
-    headSource.ReplaceAll("[{PROPER}]",         baseProper);
-    headSource.ReplaceAll("[{SHORT}]",          baseLower.Left(2));
-    headSource.ReplaceAll("[{BASE_CLASS}]",     baseClass);
-    headSource.ReplaceAll("[{BASE_BASE}]",      baseBase);
-    headSource.ReplaceAll("[{BASE}]",           baseUpper);
-    headSource.ReplaceAll("[{CLASS_NAME}]",     className);
-    headSource.ReplaceAll("[{COMMENT_LINE}]",   STR_COMMENT_LINE);
-    headSource.ReplaceAll("[{LONG}]",           baseLower);
-    headSource.ReplaceAll("[{PROPER}]",         baseProper);
-    headSource.ReplaceAll("[{SHORT3}]",         short3(baseLower));
-    headSource.ReplaceAll("[{SHORT}]",          baseLower.Left(2));
-    headSource.ReplaceAll("[{SCOPE}]",          scope);
-    headSource.ReplaceAll("[{NAMESPACE1}]",     (ns.empty() ? "" : "\nnamespace qblocks {\n\n"));
-    headSource.ReplaceAll("[{NAMESPACE2}]",     (ns.empty() ? "" : "}  // namespace qblocks\n"));
+    headSource.ReplaceAll("[{GET_OBJ}]",      (hasObjGetter ? SFString(STR_GETOBJ_HEAD)+(hasStrGetter?"":"\n") : ""));
+    headSource.ReplaceAll("[{GET_STR}]",      (hasStrGetter ? SFString(STR_GETSTR_HEAD)+"\n" : ""));
+    headSource.ReplaceAll("[FIELD_COPY]",     fieldCopy);
+    headSource.ReplaceAll("[FIELD_DEC]",      fieldDec);
+    headSource.ReplaceAll("[FIELD_SET]",      fieldSet);
+    headSource.ReplaceAll("[FIELD_CLEAR]",    fieldClear);
+    headSource.ReplaceAll("[H_INCLUDES]",     headerIncs);
+    headSource.ReplaceAll("[{OPERATORS}]",    operatorH);
+    headSource.ReplaceAll("[{BASE_CLASS}]",   baseClass);
+    headSource.ReplaceAll("[{BASE_BASE}]",    baseBase);
+    headSource.ReplaceAll("[{BASE}]",         baseUpper);
+    headSource.ReplaceAll("[{CLASS_NAME}]",   className);
+    headSource.ReplaceAll("[{COMMENT_LINE}]", STR_COMMENT_LINE);
+    headSource.ReplaceAll("[{LONG}]",         baseLower);
+    headSource.ReplaceAll("[{PROPER}]",       baseProper);
+    headSource.ReplaceAll("[{SHORT}]",        baseLower.substr(0,2));
+    headSource.ReplaceAll("[{BASE_CLASS}]",   baseClass);
+    headSource.ReplaceAll("[{BASE_BASE}]",    baseBase);
+    headSource.ReplaceAll("[{BASE}]",         baseUpper);
+    headSource.ReplaceAll("[{CLASS_NAME}]",   className);
+    headSource.ReplaceAll("[{COMMENT_LINE}]", STR_COMMENT_LINE);
+    headSource.ReplaceAll("[{LONG}]",         baseLower);
+    headSource.ReplaceAll("[{PROPER}]",       baseProper);
+    headSource.ReplaceAll("[{SHORT3}]",       short3(baseLower));
+    headSource.ReplaceAll("[{SHORT}]",        baseLower.substr(0,2));
+    headSource.ReplaceAll("[{SCOPE}]",        scope);
+    headSource.ReplaceAll("[{NAMESPACE1}]",   (ns.empty() ? "" : "\nnamespace qblocks {\n\n"));
+    headSource.ReplaceAll("[{NAMESPACE2}]",   (ns.empty() ? "" : "}  // namespace qblocks\n"));
     if (options.writeHeader)
         writeTheCode(headerFile, headSource, ns);
 
     //------------------------------------------------------------------------------------------------
-    SFString fieldStr = theList.GetCount() ? getCaseCode(fieldCase, "" ).Substitute("[{PTR}]","") : "/""/ No fields";
+    SFString fieldStr = fieldList.GetCount() ? getCaseCode(fieldCase, "").Substitute("[{PTR}]", "") : "// No fields";
 
     SFString srcFile    = dataFile.Substitute(".txt", ".cpp").Substitute("./classDefinitions/", "./");
     SFString srcSource  = asciiFileToString(configPath("makeClass/blank.cpp"));
+    if ((className.startsWith("CNew") || className == "CPriceQuote") && !getCWD().Contains("parse"))
+        srcSource.Replace("version of the data\n", STR_UPGRADE_CODE);
+    srcSource.ReplaceAll("[{GET_OBJ}]",         fieldGetObj);
+    srcSource.ReplaceAll("[{GET_STR}]",         fieldGetStr);
     srcSource.ReplaceAll("[ARCHIVE_READ]",      fieldArchiveRead);
     srcSource.ReplaceAll("[ARCHIVE_WRITE]",     fieldArchiveWrite);
     srcSource.ReplaceAll("[{OPERATORS}]",       operatorC);
@@ -374,8 +424,7 @@ SFString ptrWriteFmt =
     srcSource.ReplaceAll("[{COMMENT_LINE}]",    STR_COMMENT_LINE);
     srcSource.ReplaceAll("[{LONG}]",            baseLower);
     srcSource.ReplaceAll("[{PROPER}]",          baseProper);
-    srcSource.ReplaceAll("[{SHORT3}]",          short3(baseLower));
-    srcSource.ReplaceAll("[{SHORT}]",           baseLower.Left(2));
+    srcSource.ReplaceAll("[{SHORT}]",           baseLower.substr(0,2));
     srcSource.ReplaceAll("[{NAME_SORT1}]",      sorts[0]);
     srcSource.ReplaceAll("[{NAME_SORT2}]",      sorts[1]);
     srcSource.ReplaceAll("[{ID_SORT1}]",        sorts[2]);
@@ -388,7 +437,7 @@ SFString ptrWriteFmt =
     srcSource.ReplaceAll("[{LONG}]",            baseLower);
     srcSource.ReplaceAll("[{PROPER}]",          baseProper);
     srcSource.ReplaceAll("[{SHORT3}]",          short3(baseLower));
-    srcSource.ReplaceAll("[{SHORT}]",           baseLower.Left(2));
+    srcSource.ReplaceAll("[{SHORT}]",           baseLower.substr(0,2));
     srcSource.ReplaceAll("[{SCOPE}]",           scope);
     srcSource.ReplaceAll("[{NAMESPACE1}]",      (ns.empty() ? "" : "\nnamespace qblocks {\n\n"));
     srcSource.ReplaceAll("[{NAMESPACE2}]",      (ns.empty() ? "" : "}  // namespace qblocks\n"));
@@ -413,9 +462,12 @@ SFString getCaseCode(const SFString& fieldCase, const SFString& ex) {
                 bool     isObject = atoi((const char*)isObj);
 
                 if (tolower(field[0]) == ch) {
-                    caseCode += baseTab + tab + "if ( fieldName % \"" + field + "\" )";
+                    caseCode += baseTab + tab + "if ( fieldName % \"" + field + "\"";
+                    if (type.Contains("Array"))
+                        caseCode += " || fieldName % \"" + field + "Cnt\"";
+                    caseCode += " )";
                     if (type.Contains("List") || isPointer) {
-                        SFString ptrCase = PTR_CASE;
+                        SFString ptrCase = PTR_GET_CASE;
                         ptrCase.ReplaceAll("[{NAME}]", field);
                         ptrCase.ReplaceAll("[{TYPE}]", type);
                         caseCode += ptrCase;
@@ -423,10 +475,7 @@ SFString getCaseCode(const SFString& fieldCase, const SFString& ex) {
                     } else if (type == "time") {
                         caseCode += " return [{PTR}]" + field + ".Format(FMT_JSON);";
 
-                    } else if (type == "bbool") {
-                        caseCode += " return asString([{PTR}]" + field + ");";
-
-                    } else if (type == "bool") {
+                    } else if (type == "bbool" || type == "bool") {
                         caseCode += " return asString([{PTR}]" + field + ");";
 
                     } else if (type == "bloom") {
@@ -453,6 +502,9 @@ SFString getCaseCode(const SFString& fieldCase, const SFString& ex) {
                     } else if (type == "uint8" || type == "uint16" || type == "uint32" || type == "uint64") {
                         caseCode += " return asStringU([{PTR}]" + field + ");";
 
+                    } else if (type == "blknum") {
+                        caseCode += " return asStringU([{PTR}]" + field + ");";
+
                     } else if (type == "uint256") {
                         caseCode += " return asStringBN([{PTR}]" + field + ");";
 
@@ -470,7 +522,7 @@ SFString getCaseCode(const SFString& fieldCase, const SFString& ex) {
                         str.ReplaceAll("[{FIELD}]", field);
                         caseCode += str;
 
-                    } else if (type.Contains("SFBigUintArray")) {
+                    } else if (type.Contains("SFBigUintArray") || type.Contains("SFTopicArray")) {
                         SFString str = STR_CASE_CODE_STRINGARRAY;
                         // hack for getCount clause
                         str.Replace("[{FIELD}]", field);
@@ -481,7 +533,7 @@ SFString getCaseCode(const SFString& fieldCase, const SFString& ex) {
                     } else if (type.Contains("Array")) {
                         SFString str = STR_CASE_CODE_ARRAY;
                         if (type.Contains("SFUint") || type.Contains("SFBlock"))
-                            str.ReplaceAll("[{PTR}][{FIELD}][i].Format()","asStringU([{PTR}][{FIELD}][i])");
+                            str.ReplaceAll("[{PTR}][{FIELD}][i].Format()", "asStringU([{PTR}][{FIELD}][i])");
                         str.ReplaceAll("[{FIELD}]", field);
                         caseCode += str;
 
@@ -499,7 +551,7 @@ SFString getCaseCode(const SFString& fieldCase, const SFString& ex) {
         }
     }
     caseCode.ReplaceAll("[BTAB]", baseTab);
-    caseCode = "/""/ If the class has any fields, return them\n\tswitch (tolower(fieldName[0])) {\n" + caseCode + "\t}\n";
+    caseCode = "// Return field values\n\tswitch (tolower(fieldName[0])) {\n" + caseCode + "\t}\n";
     return caseCode;
 }
 
@@ -537,9 +589,9 @@ SFString getCaseSetCode(const SFString& fieldCase) {
                         caseCode += ptrCase;
 
                     } else if (type == "time") {
-                        caseCode += " { " + field + " = snagDate(fieldValue); return true; }";
+                        caseCode += " { " + field + " = parseDate(fieldValue); return true; }";
 
-                    } else if (type == "bool" || type == "bbool") {
+                    } else if (type == "bbool" || type == "bool") {
                         caseCode +=  " { " + field + " = toBool(fieldValue); return true; }";
 
                     } else if (type == "bloom") {
@@ -572,10 +624,16 @@ SFString getCaseSetCode(const SFString& fieldCase) {
                     } else if (type == "int256") {
                         caseCode +=  " { " + field + " = toLong(fieldValue); return true; }";
 
-                    } else if (type == "uint8" || type == "uint16" || type == "uint32" || type == "uint64") {
+                    } else if (type == "uint8" || type == "uint16" || type == "uint32") {
+                        caseCode +=  " { " + field + " = toLong32u(fieldValue); return true; }";
+
+                    } else if (type == "uint64") {
                         caseCode +=  " { " + field + " = toUnsigned(fieldValue); return true; }";
 
                     } else if (type == "uint256") {
+                        caseCode +=  " { " + field + " = toWei(fieldValue); return true; }";
+
+                    } else if (type == "blknum") {
                         caseCode +=  " { " + field + " = toUnsigned(fieldValue); return true; }";
 
                     } else if (type == "double") {
@@ -585,20 +643,20 @@ SFString getCaseSetCode(const SFString& fieldCase) {
                         SFString str = strArraySet;
                         str.ReplaceAll("[{NAME}]", field);
                         if (type.Contains("SFBlockArray"))
-                        	str.ReplaceAll("nextTokenClear(str,',')", "toUnsigned(nextTokenClear(str,','))");
+                            str.ReplaceAll("nextTokenClear(str,',')", "toUnsigned(nextTokenClear(str,','))");
                         caseCode += str;
 
-                    } else if (type.Contains("SFAddressArray") || type.Contains("SFBigUintArray")) {
+                    } else if (type.Contains("SFAddressArray") || type.Contains("SFBigUintArray") || type.Contains("SFTopicArray")) {
                         SFString str = strArraySet;
                         str.ReplaceAll("[{NAME}]", field);
                         str.ReplaceAll("nextTokenClear(str,',')", "to[{TYPE}](nextTokenClear(str,','))");
-                        str.ReplaceAll("[{TYPE}]", type.substr(2).Substitute("BigUint","Topic").Substitute("Array",""));
+                        str.ReplaceAll("[{TYPE}]", type.substr(2).Substitute("Array", ""));
                         caseCode += str;
 
                     } else if (type.Contains("Array")) {
                         SFString str = STR_CASE_SET_CODE_ARRAY;
                         str.ReplaceAll("[{NAME}]", field);
-                        str.ReplaceAll("[{TYPE}]", type.Substitute("Array",""));
+                        str.ReplaceAll("[{TYPE}]", type.Substitute("Array", ""));
                         caseCode += str;
 
                     } else if (isObject) {
@@ -642,6 +700,8 @@ const char* STR_CASE_SET_CODE_ARRAY =
 const char* STR_CASE_CODE_ARRAY =
 " {\n"
 "[BTAB]\t\tuint32_t cnt = [{PTR}][{FIELD}].getCount();\n"
+"[BTAB]\t\tif (fieldName.endsWith(\"Cnt\"))\n"
+"[BTAB]\t\t\treturn asStringU(cnt);\n"
 "[BTAB]\t\tif (!cnt) return \"\";\n"
 "[BTAB]\t\tSFString retS;\n"
 "[BTAB]\t\tfor (uint32_t i = 0 ; i < cnt ; i++) {\n"
@@ -655,6 +715,8 @@ const char* STR_CASE_CODE_ARRAY =
 const char* STR_CASE_CODE_STRINGARRAY =
 " {\n"
 "[BTAB]\t\tuint32_t cnt = [{PTR}][{FIELD}].getCount();\n"
+"[BTAB]\t\tif (fieldName.endsWith(\"Cnt\"))\n"
+"[BTAB]\t\t\treturn asStringU(cnt);\n"
 "[BTAB]\t\tif (!cnt) return \"\";\n"
 "[BTAB]\t\tSFString retS;\n"
 "[BTAB]\t\tfor (uint32_t i = 0 ; i < cnt ; i++) {\n"
@@ -701,7 +763,7 @@ const char* STR_SUBCLASS =
 "\t}\n\n";
 
 //------------------------------------------------------------------------------------------------------------
-const char *PTR_CASE =
+const char *PTR_GET_CASE =
 " {\n"
 "\t\t\t\tif ([{NAME}])\n"
 "\t\t\t\t\treturn [{NAME}]->Format();\n"
@@ -723,11 +785,69 @@ const char* PTR_SET_CASE =
 "\t\t\t}";
 
 //------------------------------------------------------------------------------------------------------------
+const char *STR_GETOBJ_HEAD =
+"\tconst CBaseNode *getObjectAt(const SFString& name, uint32_t i) const override;\n";
+
+//------------------------------------------------------------------------------------------------------------
+const char *STR_GETOBJ_CODE_FIELD =
+"\tif ( name % \"[{FIELD}]\" && i < [{FIELD}].getCount() )\n"
+"\t\treturn &[{FIELD}][i];\n";
+
+//------------------------------------------------------------------------------------------------------------
+const char *STR_GETOBJ_CODE =
+"//---------------------------------------------------------------------------\n"
+"const CBaseNode *[{CLASS_NAME}]::getObjectAt(const SFString& name, uint32_t i) const {\n"
+"[{FIELDS}]\treturn NULL;\n"
+"}\n\n";
+
+//------------------------------------------------------------------------------------------------------------
+const char *STR_GETSTR_HEAD =
+"\tconst SFString getStringAt(const SFString& name, uint32_t i) const override;\n";
+
+//------------------------------------------------------------------------------------------------------------
+const char *STR_GETSTR_CODE_FIELD =
+"\tif ( name % \"[{FIELD}]\" && i < [{FIELD}].getCount() )\n"
+"\t\treturn THING([{FIELD}][i]);\n";
+
+//------------------------------------------------------------------------------------------------------------
+const char *STR_GETSTR_CODE =
+"//---------------------------------------------------------------------------\n"
+"const SFString [{CLASS_NAME}]::getStringAt(const SFString& name, uint32_t i) const {\n"
+"[{FIELDS}]\treturn \"\";\n"
+"}\n\n";
+
+//------------------------------------------------------------------------------------------------------------
+const char *STR_UPGRADE_CODE =
+"version of the data\n\t(([{CLASS_NAME}]*)this)->m_schema = getVersionNum();\n";
+
+//------------------------------------------------------------------------------------------------------------
 SFString short3(const SFString& str) {
-    SFString ret = str.Left(3);
+    SFString ret = str.substr(0,3);
     if (ret == "new")
         ret = "newp";
     if (ret == "ret")
         ret = "retp";
     return ret;
+}
+
+//---------------------------------------------------------------------------
+SFString checkType(const SFString& typeIn) {
+    if (typeIn.startsWith("C")) return typeIn;
+    if (typeIn.endsWith("Array")) return typeIn;
+
+    SFString keywords[] = {
+        "address", "bloom",  "bool",  "bytes",     "bytes32",
+        "double",  "gas",    "hash",  "int256",    "int32",
+        "int64",   "string", "time",  "timestamp", "uint256",
+        "uint32",  "uint64", "uint8", "wei",       "blknum",
+    };
+    uint32_t cnt = sizeof(keywords) / sizeof(SFString);
+    for (uint32_t i=0;i<cnt;i++) {
+        if (keywords[i] == typeIn)
+            return typeIn;
+    }
+    cerr << "Invalid type: " << typeIn << ". Quitting...(hit enter)\n";
+    cerr.flush();
+    getchar();
+    exit(0);
 }

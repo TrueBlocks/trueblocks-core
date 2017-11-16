@@ -60,7 +60,7 @@ bool QApprovalEvent::setValueByName(const SFString& fieldName, const SFString& f
         case '_':
             if ( fieldName % "_owner" ) { _owner = toAddress(fieldValue); return true; }
             if ( fieldName % "_spender" ) { _spender = toAddress(fieldValue); return true; }
-            if ( fieldName % "_value" ) { _value = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "_value" ) { _value = toWei(fieldValue); return true; }
             break;
         default:
             break;
@@ -84,6 +84,8 @@ bool QApprovalEvent::Serialize(SFArchive& archive) {
     if (readBackLevel(archive))
         return true;
 
+    // EXISTING_CODE
+    // EXISTING_CODE
     archive >> _owner;
     archive >> _spender;
     archive >> _value;
@@ -93,6 +95,9 @@ bool QApprovalEvent::Serialize(SFArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool QApprovalEvent::SerializeC(SFArchive& archive) const {
+
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     // Writing always write the latest version of the data
     CLogEntry::SerializeC(archive);
@@ -175,7 +180,7 @@ SFString QApprovalEvent::getValueByName(const SFString& fieldName) const {
     if (!ret.empty())
         return ret;
 
-    // If the class has any fields, return them
+    // Return field values
     switch (tolower(fieldName[0])) {
         case '_':
             if ( fieldName % "_owner" ) return fromAddress(_owner);

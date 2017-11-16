@@ -125,15 +125,6 @@ void CFunction::finishParse() {
         if (inputs[i].name.empty())
             inputs[i].name = "param_" + asString(cnt++);
     }
-    // TODO(tjayrush): Do we need names for output params?
-    //cnt = 0;
-    //for (int i = 0 ; i < outputs.getCount() ; i++) {
-    //    if (outputs[i].name.empty()) {
-    //        SFString type = outputs[i].type;
-    //        type.ReplaceAny("0123456789","");
-    //        outputs[i].name = type + "_" + asString(cnt++);
-    //    }
-    //}
     // EXISTING_CODE
 }
 
@@ -147,6 +138,8 @@ bool CFunction::Serialize(SFArchive& archive) {
     if (readBackLevel(archive))
         return true;
 
+    // EXISTING_CODE
+    // EXISTING_CODE
     archive >> name;
     archive >> type;
     archive >> anonymous;
@@ -162,6 +155,9 @@ bool CFunction::Serialize(SFArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool CFunction::SerializeC(SFArchive& archive) const {
+
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
@@ -236,6 +232,11 @@ SFString nextFunctionChunk_custom(const SFString& fieldIn, const void *dataPtr) 
                     return asString(fun->isBuiltin);
                 }
                 break;
+            case 'o':
+                if ( fieldIn % "origName" ) {
+                    return fun->origName;
+                }
+                break;
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
@@ -276,7 +277,7 @@ SFString CFunction::getValueByName(const SFString& fieldName) const {
     if (!ret.empty())
         return ret;
 
-    // If the class has any fields, return them
+    // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
             if ( fieldName % "anonymous" ) return asString(anonymous);
@@ -288,8 +289,10 @@ SFString CFunction::getValueByName(const SFString& fieldName) const {
             if ( fieldName % "encoding" ) return encoding;
             break;
         case 'i':
-            if ( fieldName % "inputs" ) {
+            if ( fieldName % "inputs" || fieldName % "inputsCnt" ) {
                 uint32_t cnt = inputs.getCount();
+                if (fieldName.endsWith("Cnt"))
+                    return asStringU(cnt);
                 if (!cnt) return "";
                 SFString retS;
                 for (uint32_t i = 0 ; i < cnt ; i++) {
@@ -303,8 +306,10 @@ SFString CFunction::getValueByName(const SFString& fieldName) const {
             if ( fieldName % "name" ) return name;
             break;
         case 'o':
-            if ( fieldName % "outputs" ) {
+            if ( fieldName % "outputs" || fieldName % "outputsCnt" ) {
                 uint32_t cnt = outputs.getCount();
+                if (fieldName.endsWith("Cnt"))
+                    return asStringU(cnt);
                 if (!cnt) return "";
                 SFString retS;
                 for (uint32_t i = 0 ; i < cnt ; i++) {
@@ -342,15 +347,25 @@ ostream& operator<<(ostream& os, const CFunction& item) {
 }
 
 //---------------------------------------------------------------------------
+const CBaseNode *CFunction::getObjectAt(const SFString& name, uint32_t i) const {
+    if ( name % "inputs" && i < inputs.getCount() )
+        return &inputs[i];
+    if ( name % "outputs" && i < outputs.getCount() )
+        return &outputs[i];
+    return NULL;
+}
+
+//---------------------------------------------------------------------------
 // EXISTING_CODE
 //---------------------------------------------------------------------------
-SFString CFunction::getSignature(SFUint32 parts) const {
+SFString CFunction::getSignature(uint64_t parts) const {
     uint32_t cnt = inputs.getCount();
 
+    SFString nm = (origName.empty() ? name : origName);
     CStringExportContext ctx;
     ctx << (parts & SIG_FTYPE  ? "\t"+type+" " : "");
-    ctx << (parts & SIG_FNAME  ? name          : "");
-    ctx << (parts & SIG_FSPACE ? SFString(' ', 35-type.length()-name.length()) : "");
+    ctx << (parts & SIG_FNAME  ? nm            : "");
+    ctx << (parts & SIG_FSPACE ? SFString(' ', 35-type.length()-nm.length()) : "");
     ctx << (parts & SIG_FTYPE || parts & SIG_FNAME  ? "("    : "");
     for (uint32_t j = 0 ; j < cnt ; j++) {
         ctx << (parts & SIG_ITYPE    ? inputs[j].type : "");
@@ -379,7 +394,7 @@ SFString CFunction::encodeItem(void) const {
     SFString ret;
 extern bool getSha3(const SFString& hexIn, SFString& shaOut);
     getSha3(hex, ret);
-    ret = (type == "event" ? ret : ret.Left(10));
+    ret = (type == "event" ? ret : ret.substr(0,10));
     return ret;
 }
 // EXISTING_CODE

@@ -1,3 +1,3 @@
-whenBlock argc: 3 [1:-a] [2:2015-03-02] 
-whenBlock -a 2015-03-02 
+whenBlock argc: 3 [1:-d] [2:2015-03-02] 
+whenBlock -d 2015-03-02 
 The date you specified (2015-03-02) is before the first block. Quitting...

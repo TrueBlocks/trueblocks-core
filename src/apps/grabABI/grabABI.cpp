@@ -10,8 +10,8 @@
 
 //-----------------------------------------------------------------------
 extern void addDefaultFuncs(CFunctionArray& funcs);
-extern SFString getAssign(const CParameter *p, SFUint32 which);
-extern SFString getEventAssign(const CParameter *p, SFUint32 which, SFUint32 prevIdxs);
+extern SFString getAssign(const CParameter *p, uint64_t which);
+extern SFString getEventAssign(const CParameter *p, uint64_t which, uint64_t prevIdxs);
 
 //-----------------------------------------------------------------------
 extern const char* STR_FACTORY1;
@@ -54,38 +54,34 @@ inline void makeTheCode(const SFString& fn, const SFString& addr) {
 //-----------------------------------------------------------------------
 void addIfUnique(const SFString& addr, CFunctionArray& functions, CFunction& func)
 {
-//#error
     if (func.name.empty() && func.type != "constructor")
         return;
 
     for (uint32_t i = 0 ; i < functions.getCount() ; i++) {
         if (functions[i].encoding == func.encoding)
             return;
-#ifdef NEW_CODE
-//#error
+
         // different encoding same name means a duplicate function name in the code. We won't build with
         // duplicate function names, so we need to modify the incoming function. We do this by appending
         // the first four characters of the contract's address.
-        if (functions[i].name == func.name)
-            func.name += "_" + (addr.startsWith("0x") ? addr.substr(2,4) : addr.substr(0,4));
-#else
-        if (functions[i].name == func.name)
-            functions[i].name += "1";
-#endif
+        if (functions[i].name == func.name) {
+            func.origName = func.name;
+            func.name += (addr.startsWith("0x") ? addr.substr(2,4) : addr.substr(0,4));
+        }
     }
 
     functions[functions.getCount()] = func;
 }
 
 //-----------------------------------------------------------------------
-SFString acquireABI(CFunctionArray& functions, const SFAddress& addr, bool silent, bool builtIn=false)
-{
+SFString acquireABI(CFunctionArray& functions, const SFAddress& addr, const COptions& opt, bool builtIn) {
+
     SFString results, ret;
     SFString fileName = blockCachePath("abis/" + addr + ".json");
     SFString dispName = fileName.Substitute(configPath(""),"|");
     nextTokenClear(dispName, '|');
     dispName = "~/.quickBlocks/" + dispName;
-    if (fileExists(fileName)) {
+    if (fileExists(fileName) && !opt.raw) {
 
         if (!isTestMode())
             cerr << "Reading ABI from cache " + dispName + "\n";
@@ -97,22 +93,26 @@ SFString acquireABI(CFunctionArray& functions, const SFAddress& addr, bool silen
         SFString url = SFString("http:/")
                             + "/api.etherscan.io/api?module=contract&action=getabi&address="
                             + addr;
-        results = urlToString(url).Substitute("\\", "").Substitute("\"[", "[").Substitute("]\"", "]");
-        if (verbose) {
-            if (!isTestMode())
-                cout << verbose << "---------->" << results << "\n";
-            cout.flush();
-        }
-
+        results = urlToString(url).Substitute("\\", "");
         if (!results.Contains("NOTOK")) {
+        	// strip RPC wrapper
+        	results.Replace("{\"status\":\"1\",\"message\":\"OK\",\"result\":\"","");
+        	results.ReplaceReverse("]\"}","");
+        	if (verbose) {
+            	if (!isTestMode())
+                	cout << verbose << "---------->" << results << "\n";
+            	cout.flush();
+        	}
             nextTokenClear(results, '[');
             results.ReplaceReverse("]}", "");
-            cerr << "Caching abi in " << dispName << "\n";
+            if (!isTestMode())
+                cerr << "Caching abi in " << dispName << "\n";
             establishFolder(fileName);
             stringToAsciiFile(fileName, "["+results+"]");
         } else {
+			cerr << "Etherscan returned " << results << "\n";
             cerr << "Could not grab ABI for " + addr + " from etherscan.io.\n";
-            if (!silent)
+            if (!opt.silent)
                 exit(0);
         }
     }
@@ -177,12 +177,12 @@ int main(int argc, const char *argv[]) {
         bool isGenerate = !options.classDir.empty();
         if (options.addrs[0] != "0xTokenLib" && options.addrs[0] != "0xWalletLib" && isGenerate)
         {
-            acquireABI(functions, "0xTokenLib",  options.silent, true);
-            acquireABI(functions, "0xWalletLib", options.silent, true);
+            acquireABI(functions, "0xTokenLib",  options, true);
+            acquireABI(functions, "0xWalletLib", options, true);
         }
         for (uint64_t i = 0 ; i < options.nAddrs ; i++) {
             options.theABI += ("ABI for addr : " + options.addrs[i] + "\n");
-            options.theABI += acquireABI(functions, options.addrs[i], options.silent) + "\n\n";
+            options.theABI += acquireABI(functions, options.addrs[i], options, false) + "\n\n";
             addrList += (options.addrs[i] + "|");
         }
 
@@ -244,7 +244,7 @@ int main(int argc, const char *argv[]) {
                             }
                         }
                         SFString fields, assigns1, assigns2, items1;
-                        SFUint32 nIndexed = 0;
+                        uint64_t nIndexed = 0;
                         for (uint32_t j = 0 ; j < func->inputs.getCount() ; j++) {
                             fields   += func->inputs[j].Format("[{TYPE}][ {NAME}]|");
                             assigns1 += func->inputs[j].Format(getAssign(&func->inputs[j], j));
@@ -412,6 +412,7 @@ int main(int argc, const char *argv[]) {
                 makeTheCode("debug.h",        options.primaryAddr);
                 makeTheCode("debug.cpp",      options.primaryAddr);
                 makeTheCode("options.cpp",    options.primaryAddr);
+                makeTheCode("options.h",      options.primaryAddr);
                 makeTheCode("main.cpp",       options.primaryAddr);
                 makeTheCode("accounting.cpp", options.primaryAddr);
                 makeTheCode("display.cpp",    options.primaryAddr);
@@ -425,7 +426,7 @@ int main(int argc, const char *argv[]) {
 }
 
 //-----------------------------------------------------------------------
-SFString getAssign(const CParameter *p, SFUint32 which) {
+SFString getAssign(const CParameter *p, uint64_t which) {
 
     SFString ass;
     SFString type = p->Format("[{TYPE}]");
@@ -443,7 +444,8 @@ SFString getAssign(const CParameter *p, SFUint32 which) {
 
     if (type == "uint" || type == "uint256") { ass = "toWei(\"0x\"+[{VAL}]);";
     } else if (type.Contains("gas")) { ass = "toGas([{VAL}]);";
-    } else if (type.Contains("uint")) { ass = "toLongU([{VAL}]);";
+    } else if (type.Contains("uint64")) { ass = "toLongU([{VAL}]);";
+    } else if (type.Contains("uint")) { ass = "toLong32u([{VAL}]);";
     } else if (type.Contains("int") || type.Contains("bool")) { ass = "toLong([{VAL}]);";
     } else if (type.Contains("address")) { ass = "toAddress([{VAL}]);";
     } else { ass = "[{VAL}];";
@@ -454,11 +456,12 @@ SFString getAssign(const CParameter *p, SFUint32 which) {
 }
 
 //-----------------------------------------------------------------------
-SFString getEventAssign(const CParameter *p, SFUint32 which, SFUint32 nIndexed) {
+SFString getEventAssign(const CParameter *p, uint64_t which, uint64_t nIndexed) {
     SFString type = p->Format("[{TYPE}]"), ass;
     if (type == "uint" || type == "uint256") { ass = "toWei([{VAL}]);";
     } else if (type.Contains("gas")) { ass = "toGas([{VAL}]);";
-    } else if (type.Contains("uint")) { ass = "toLongU([{VAL}]);";
+    } else if (type.Contains("uint64")) { ass = "toLongU([{VAL}]);";
+    } else if (type.Contains("uint")) { ass = "toLong32u([{VAL}]);";
     } else if (type.Contains("int") || type.Contains("bool")) { ass = "toLong([{VAL}]);";
     } else if (type.Contains("address")) { ass = "toAddress([{VAL}]);";
     } else { ass = "[{VAL}];";
@@ -615,6 +618,5 @@ const char* STR_ITEMS =
 "\t\tSFString items[256];\n"
 "\t\tint nItems=0;\n"
 "\n"
-"\t\tSFString encoding = p->input.Left(10);\n"
+"\t\tSFString encoding = p->input.substr(0,10);\n"
 "\t\tSFString params   = p->input.substr(10);\n";
-

@@ -1,26 +1,28 @@
 getTrace argc: 2 [1:0x8732bfb0c257c82c1d7964cd5f7b560b83b6ba3a32a808499dfd868633d115ad] 
 getTrace 0x8732bfb0c257c82c1d7964cd5f7b560b83b6ba3a32a808499dfd868633d115ad 
 [{
-    "blockHash": "0x88b0df6131759efd9d5dfbbc21e21256a06a6b31d9f76ee7274de092d0913170",
-    "blockNumber": 2240372,
-    "subtraces": 0,
-    "traceAddress": [],
-    "transactionHash": "0x8732bfb0c257c82c1d7964cd5f7b560b83b6ba3a32a808499dfd868633d115ad",
-    "transactionPosition": 1,
-    "type": "call",
-    "action": {
-        "callType": "call",
-        "from": "0xbd26c502ed292d6e86cdce6396711b9507546591",
-        "gas": 0,
-        "input": "0x",
-        "to": "0x96fc4553a00c117c5b0bed950dd625d1c16dc894",
-        "value": 29999580000000000000,
-        "address": "0x0",
-        "balance": 0,
-        "refundAddress": "0x0"
-    },
-    "result": {
-        "gasUsed": 0,
-        "output": "0x"
-    }
-}]
+  "blockHash": "0x88b0df6131759efd9d5dfbbc21e21256a06a6b31d9f76ee7274de092d0913170",
+  "blockNumber": 2240372,
+  "subtraces": 0,
+  "traceAddress": [],
+  "transactionHash": "0x8732bfb0c257c82c1d7964cd5f7b560b83b6ba3a32a808499dfd868633d115ad",
+  "transactionPosition": 1,
+  "type": "call",
+  "error": "",
+  "action": {
+    "callType": "call",
+    "from": "0xbd26c502ed292d6e86cdce6396711b9507546591",
+    "gas": 0,
+    "input": "0x",
+    "to": "0x96fc4553a00c117c5b0bed950dd625d1c16dc894",
+    "value": 29999580000000000000,
+    "address": "0x0",
+    "balance": 0,
+    "refundAddress": "0x0"
+  },
+  "result": {
+    "gasUsed": 0,
+    "output": "0x"
+  }
+}
+]

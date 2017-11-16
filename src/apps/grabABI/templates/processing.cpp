@@ -28,7 +28,7 @@ bool CVisitor::isTransactionOfInterest(CTransaction *trans, uint32_t& whichWatch
 }
 
 //-----------------------------------------------------------------------
-bool displayFromCache(const SFString& cacheFileName, SFUint32& blockNum, void *dataPtr) {
+bool displayFromCache(const SFString& cacheFileName, uint64_t& blockNum, void *dataPtr) {
 
     CVisitor *visitor = reinterpret_cast<CVisitor*>(dataPtr);
     CBlock block;
@@ -37,13 +37,13 @@ bool displayFromCache(const SFString& cacheFileName, SFUint32& blockNum, void *d
     if (!fileExists(cacheFileName))
         return true; // return true if we want to continue on to updateCache
 
-    SFUint32 orig = blockNum, lastBlock = 0;
+    uint64_t orig = blockNum, lastBlock = 0;
 
     if (visitor->cache.Lock(cacheFileName, binaryReadOnly, LOCK_NOWAIT)) {
 
         while (!visitor->cache.Eof()) {
 
-            SFUint32 transID;
+            uint64_t transID;
             uint32_t whichWatch;
             visitor->cache >> whichWatch;
             if (visitor->cache.Eof()) {
@@ -122,7 +122,7 @@ bool displayFromCache(const SFString& cacheFileName, SFUint32& blockNum, void *d
 }
 
 blknum_t lastBloomHit = 0;
-SFUint32 nFound = 0;
+uint64_t nFound = 0;
 //-----------------------------------------------------------------------
 bool updateCacheUsingBlooms(const SFString& path, void *dataPtr) {
 
@@ -152,10 +152,14 @@ bool updateCacheUsingBlooms(const SFString& path, void *dataPtr) {
                 }
                 lastBloomHit = bloomNum;
                 return true; // continue
-            }
-            if (bloomNum >= visitor->blockStats.firstBlock + visitor->blockStats.nBlocks) {
+
+            } else if (bloomNum >= visitor->blockStats.firstBlock + visitor->blockStats.nBlocks) {
                 stringToAsciiFile("./cache/lastBlock.txt", asStringU(bloomNum) + "\r\n");
                 return false; // don't continue
+
+            } else {
+                if (lastBloomHit ==0)
+                    lastBloomHit = visitor->blockStats.firstBlock;
             }
 
             SFBloom bloom;
@@ -266,7 +270,7 @@ bool updateCache(CBlock& block, void *dataPtr) {
     timestamp_t tsOut = (block.timestamp == 0 ? toTimestamp(Now()) : block.timestamp);
     SFString endMsg = dateFromTimeStamp(tsOut).Format(FMT_JSON) + " (" + asStringU(block.blockNumber) + ")";
     blknum_t x = (visitor->blockStats.firstBlock >= block.blockNumber ? 0 : block.blockNumber - visitor->blockStats.firstBlock);
-    progressBar(x, visitor->blockStats.nBlocks, endMsg);
+    progressBar(x, visitor->blockStats.nBlocks, visitor->opts.monitorName+"|"+endMsg);
     visitor->blockStats.prevBlock = block;
 
     // Write this to the file so we know which block to start on next time the monitor is run

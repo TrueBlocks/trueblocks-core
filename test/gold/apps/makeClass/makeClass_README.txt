@@ -3,11 +3,11 @@ makeClass -th
 #### Usage
 
 `Usage:`    makeClass [-e|-f|-l|-h|-c|-n|-s|-r|-a|-v|-h] className  
-`Purpose:`  Creates a C++ class based on definitions found in ./classDefinition/<className>.
+`Purpose:`  Creates C++ code based on definition file at ./classDefinition/<className>.
              
 `Where:`  
 
-| Option | Full Command | Description |
+| Short Cut | Option | Description |
 | -------: | :------- | :------- |
 |  | className | name of C++ class(es) to process |
 | -e | --edit | edit <className(s)> definition file in local folder |

@@ -1,17 +1,5 @@
-getBloom argc: 3 [1:1590000] [2:4000001-400002] 
-getBloom 1590000 4000001-400002 
+getBloom argc: 4 [1:1590000] [2:4000001-4000002] [3:x400x001] 
+getBloom 1590000 4000001-4000002 x400x001 
 
-  'stop' must be strictly larger than 'start'
+  The given value 'x400x001' is not a numeral or a special named block. Quitting...
 
-  Usage:    getBloom [-e|-r|-q|-v|-h] num  
-  Purpose:  Returns bloom filter(s) from local cache (the default) or directly from a running node.
-             
-  Where:    
-	num                   which bloom (or blooms if more than one) to retreive (or [start-stop) range) (required)
-	-e  (--enhanced)      retrieve the enhanced bloom filter from the quickBlocks cache
-	-r  (--raw)           retrieve the bloom filter directly from the running node (includes tx blooms)
-	-q  (--quiet)         do not print results to screen (useful for performance measurements)
-	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
-	-h  (--help)          display this help screen
-
-  Powered by QuickBlocks

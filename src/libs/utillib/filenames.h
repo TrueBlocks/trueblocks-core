@@ -28,6 +28,8 @@ namespace qblocks {
         SFString relativePath(const SFString& relTo="") const;
         virtual bool isValid(void) { return fileExists(getFullPath()); }
     };
+
+    //----------------------------------------------------------------------------------
     class CPath : public CFilename {
     private:
         CPath(void) : CFilename() { }  // cannot create default

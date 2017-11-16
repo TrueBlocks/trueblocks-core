@@ -24,19 +24,16 @@ int main(int argc, const char *argv[]) {
 //-------------------------------------------------------------
 bool displayBloom(CBlock& block, void *data)
 {
-    COptions *opt = (COptions *)data;
-
     cout << block.blockNumber;
-    if (opt->display) {
-        SFString s = fromBloom(block.logsBloom);
-        s.ReplaceAny(     "0", " ");
-        s.ReplaceAny(  "1248", ".");
-        s.ReplaceAny("3569ac", "+");
-        s.ReplaceAny(  "7bde", yBox);
-        s.ReplaceAny(  "7bde", rBox);
-        cout << ": " << s;
-    }
-    cout << (opt->display ? "\n" : "\r");
+
+    SFString s = fromBloom(block.logsBloom);
+    s.ReplaceAny("0x",     "");
+    s.ReplaceAny("1248",   ".");
+    s.ReplaceAny("3569ac", ".");
+    s.ReplaceAny("7bde",   "+");
+    s.ReplaceAny("f",      "@");
+    cout << s << "\n";
+
     cout.flush();
 
     return true;

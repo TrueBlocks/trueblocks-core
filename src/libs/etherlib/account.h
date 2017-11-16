@@ -10,7 +10,6 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
-#include "ethtypes.h"
 #include "abilib.h"
 #include "transaction.h"
 
@@ -31,10 +30,10 @@ public:
     SFAddress addr;
     SFString header;
     SFString displayString;
-    SFUint32 pageSize;
-    SFUint32 lastPage;
+    uint64_t pageSize;
+    uint64_t lastPage;
     int64_t lastBlock;
-    SFUint32 nVisible;
+    uint64_t nVisible;
     CTransactionArray transactions;
 
 public:
@@ -44,6 +43,8 @@ public:
     CAccount& operator=(const CAccount& ac);
 
     DECLARE_NODE(CAccount);
+
+    const CBaseNode *getObjectAt(const SFString& name, uint32_t i) const override;
 
     // EXISTING_CODE
     CAbi abi;
@@ -148,7 +149,7 @@ IMPLEMENT_ARCHIVE_LIST(CAccountList);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-extern SFUint32 verbose;
+extern uint64_t verbose;
 #define REP_FREQ   11
 #define REP_INFREQ 563
 // EXISTING_CODE

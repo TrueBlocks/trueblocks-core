@@ -57,7 +57,7 @@ namespace qblocks {
         SFString ret, in = inHex.startsWith("0x") ? inHex.substr(2) : inHex;
         while (!in.empty())
         {
-            SFString nibble = in.Left(2);
+            SFString nibble = in.substr(0,2);
             in = in.substr(2);
             ret += (char)hex2Ascii((char*)(const char*)nibble);
         }
@@ -70,7 +70,7 @@ namespace qblocks {
         char tmp[20];
         sprintf(tmp, "%02x", (unsigned int)(char)val);
         SFString ret = tmp;
-        return ret.Right(2);
+        return ret.substr(ret.length()-2,2);
     }
     //----------------------------------------------------------------------------
     inline SFString string2Hex(const SFString& inAscii)
@@ -89,7 +89,7 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------
-    inline SFString asStringU(SFUint32 i) {
+    inline SFString asStringU(uint64_t i) {
         ostringstream os;
         os << i;
         return os.str().c_str();
@@ -128,18 +128,19 @@ namespace qblocks {
     //--------------------------------------------------------------------
     inline SFString padNum3T(uint64_t n) { return padLeft(asStringU((n)), 3); }
     inline SFString padNum5T(uint64_t n) { return padLeft(asStringU((n)), 5); }
+    inline SFString padNum6T(uint64_t n) { return padLeft(asStringU((n)), 6); }
     inline SFString padNum7T(uint64_t n) { return padLeft(asStringU((n)), 7); }
     inline SFString padNum8T(uint64_t n) { return padLeft(asStringU((n)), 8); }
 
     //--------------------------------------------------------------------
-    inline SFString padNum2(int64_t n) { return padLeft(asString((n)), 2, '0'); }
+    inline SFString padNum2 (int64_t n) { return padLeft(asString((n)), 2, '0'); }
     inline SFString padNum3i(int64_t n) { return padLeft(asString((n)), 3, '0'); }
-    inline SFString padNum4(int64_t n) { return padLeft(asString((n)), 4, '0'); }
-    inline SFString padNum5(int64_t n) { return padLeft(asString((n)), 5, '0'); }
-    inline SFString padNum6(int64_t n) { return padLeft(asString((n)), 6, '0'); }
-    inline SFString padNum7(int64_t n) { return padLeft(asString((n)), 7, '0'); }
-    inline SFString padNum8(int64_t n) { return padLeft(asString((n)), 8, '0'); }
-    inline SFString padNum9(int64_t n) { return padLeft(asString((n)), 9, '0'); }
+    inline SFString padNum4 (int64_t n) { return padLeft(asString((n)), 4, '0'); }
+    inline SFString padNum5 (int64_t n) { return padLeft(asString((n)), 5, '0'); }
+    inline SFString padNum6 (int64_t n) { return padLeft(asString((n)), 6, '0'); }
+    inline SFString padNum7 (int64_t n) { return padLeft(asString((n)), 7, '0'); }
+    inline SFString padNum8 (int64_t n) { return padLeft(asString((n)), 8, '0'); }
+    inline SFString padNum9 (int64_t n) { return padLeft(asString((n)), 9, '0'); }
 
     //--------------------------------------------------------------------
     inline SFString padNum3T(int64_t n) { return padLeft(asString((n)), 3); }
@@ -156,7 +157,7 @@ namespace qblocks {
         if (ret.length() < 18)
             ret = padLeft(_value, 18).Substitute(" ", "0");
         ret.Reverse();
-        ret = ret.Left(18) + "." + ret.substr(18);
+        ret = ret.substr(0,18) + "." + ret.substr(18);
         ret.Reverse();
         ret = StripLeading(ret, '0');
         if (ret.startsWith('.'))
@@ -188,10 +189,10 @@ namespace qblocks {
         SFString decimals = nextTokenClear(exponent,'e');
         SFString num = nextTokenClear(decimals,'.');
         long nD = (long)decimals.length();
-        SFUint32 e = toLongU(exponent);
+        uint64_t e = toLongU(exponent);
         SFUintBN ee = 1;
-        SFUint32 power = e - (SFUint32)nD;
-        for (SFUint32 i=0;i<power;i++)
+        uint64_t power = e - (uint64_t)nD;
+        for (uint64_t i=0;i<power;i++)
             ee *= 10;
         num += decimals;
         return str2BigUint(num) * ee;
@@ -205,7 +206,7 @@ namespace qblocks {
     }
 
     //-------------------------------------------------------------------------
-    inline SFUintBN canonicalWei(SFUint32 _value)
+    inline SFUintBN canonicalWei(uint64_t _value)
     {
         return SFUintBN(_value);
     }
@@ -233,31 +234,32 @@ namespace qblocks {
 #define SFHash         SFString
 #define SFBloom        SFUintBN
 #define SFWei          SFUintBN
-#define SFGas          SFUint32
+#define SFGas          uint64_t
 #define blknum_t       uint64_t
-#define txnum_t        uint32_t
-#define lognum_t       uint32_t
+#define txnum_t        uint64_t
 
-#define toUnsigned(a)  (SFUint32)((a).startsWith("0x")?hex2Long((a)):toLongU((a)))
-#define toSigned(a)    (int64_t)((a).startsWith("0x")?hex2Long((a)):toLongU((a)))
+#define toUnsigned(a)  (uint64_t)((a).startsWith("0x")?hex2Long((a)):toLongU((a)))
+#define toSigned(a)    (int64_t)((a).startsWith("0x")?hex2Long((a)):toLong((a)))
 #define toHash(a)      (a)
 #define toTopic(a)     canonicalWei(a)
 #define toBloom(a)     canonicalWei(a)
 #define toWei(a)       canonicalWei(a)
 #define toGas(a)       toUnsigned(a)
+#define addr2BN        toWei
 
 #define fromAddress(a)  ((a).empty() ? "0x0" : (a))
 #define fromHash(a)     ((a).empty() ? "0x0" : (a))
 #define fromWei(a)      to_string((a)).c_str()
 #define fromTopic(a)    ("0x"+padLeft(toLower(SFString(to_hex((a)).c_str())),64,'0'))
 #define fromGas(a)      asStringU(a)
+#define toHex2(a)       (a == "null" ? "null" : ("0x"+toLower(SFString(to_hex(str2BigUint(a)).c_str()))))
 
 	extern  SFString   fromBloom(const SFBloom& bl);
 #define fromUnsigned(a) asStringU((a))
 
     //--------------------------------------------------------------------------------------------------------------
     extern SFTime      dateFromTimeStamp(timestamp_t tsIn);
-    extern SFTime      snagDate(const SFString& str, int dir = 0);  // -1 BOD, 0 MIDDAY, 1 EOD
+    extern SFTime      parseDate(const SFString& str);
 
     extern timestamp_t toTimestamp(const SFTime&   timeIn);
     extern timestamp_t toTimestamp(const SFString& timeIn);
@@ -269,7 +271,6 @@ namespace qblocks {
         return "0x" + padLeft(ret, 32 * 2, '0');
     }
 
-#define addr2BN toWei
     //----------------------------------------------------------------------------------
     inline bool zeroAddr(const SFAddress& addr) {
         return (addr2BN(addr) == 0);
@@ -284,6 +285,11 @@ namespace qblocks {
     //----------------------------------------------------------------------------------
     inline bool isAddress(const SFAddress& addrIn) {
         return (addrIn.length() == 42 && isHexStr(addrIn));
+    }
+
+    //----------------------------------------------------------------------------------
+    inline bool isHash(const SFAddress& hashIn) {
+        return (hashIn.length() == 66 && isHexStr(hashIn));
     }
 
     //------------------------------------------------------

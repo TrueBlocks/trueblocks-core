@@ -58,7 +58,7 @@ bool QSetDailyLimit::setValueByName(const SFString& fieldName, const SFString& f
 
     switch (tolower(fieldName[0])) {
         case '_':
-            if ( fieldName % "_newLimit" ) { _newLimit = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "_newLimit" ) { _newLimit = toWei(fieldValue); return true; }
             break;
         default:
             break;
@@ -82,6 +82,8 @@ bool QSetDailyLimit::Serialize(SFArchive& archive) {
     if (readBackLevel(archive))
         return true;
 
+    // EXISTING_CODE
+    // EXISTING_CODE
     archive >> _newLimit;
     finishParse();
     return true;
@@ -89,6 +91,9 @@ bool QSetDailyLimit::Serialize(SFArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool QSetDailyLimit::SerializeC(SFArchive& archive) const {
+
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     // Writing always write the latest version of the data
     CTransaction::SerializeC(archive);
@@ -167,7 +172,7 @@ SFString QSetDailyLimit::getValueByName(const SFString& fieldName) const {
     if (!ret.empty())
         return ret;
 
-    // If the class has any fields, return them
+    // Return field values
     switch (tolower(fieldName[0])) {
         case '_':
             if ( fieldName % "_newLimit" ) return asStringBN(_newLimit);

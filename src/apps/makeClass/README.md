@@ -7,11 +7,11 @@ The format of the classDefinition file is described below.
 #### Usage
 
 `Usage:`    makeClass [-e|-f|-l|-h|-c|-n|-s|-r|-a|-v|-h] className  
-`Purpose:`  Creates a C++ class based on definitions found in ./classDefinition/<className>.
+`Purpose:`  Creates C++ code based on definition file at ./classDefinition/<className>.
              
 `Where:`  
 
-| Option | Full Command | Description |
+| Short Cut | Option | Description |
 | -------: | :------- | :------- |
 |  | className | name of C++ class(es) to process |
 | -e | --edit | edit <className(s)> definition file in local folder |
@@ -33,7 +33,7 @@ All **quickBlocks** command-line tools support the following commands (although 
     Command     |     Description
     -----------------------------------------------------------------------------
     --version   |   display the current version of the tool
-    --nocolors  |   turn off colored display
+    --nocolor   |   turn off colored display
     --wei       |   specify value in wei (the default)
     --ether     |   specify value in ether
     --dollars   |   specify value in US dollars

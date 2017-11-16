@@ -8,34 +8,32 @@
  *------------------------------------------------------------------------*/
 #include "etherlib.h"
 
-#define MAX_NUMS 100
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
     bool isCheck;
     bool isRaw;
     bool asks4Cache;
-    bool isRange;
     bool terse;
     bool force;
     bool normalize;
     bool silent;
     int quiet;
-    SFUint32 nums[MAX_NUMS];
-    SFUint32 nNums;
-    SFUint32 start;
-    SFUint32 stop;
+    COptionsBlockList blocks;
 
     COptions(void);
     ~COptions(void);
 
-    bool parseArguments(SFString& command);
-    void Init(void);
+    SFString postProcess(const SFString& which, const SFString& str) const override;
+    bool parseArguments(SFString& command) override;
+    void Init(void) override;
     bool isMulti(void) const;
+    SFString getBlockNumList(void) const;
 };
 
 //-----------------------------------------------------------------------------
-extern SFString doOneBlock(SFUint32 num, const COptions& opt);
-extern SFString checkOneBlock(SFUint32 num, const COptions& opt);
-extern SFString normalizeBlock(const SFString& inIn, bool remove);
+extern SFString doOneBlock(uint64_t num, const COptions& opt);
+extern SFString checkOneBlock(uint64_t num, const COptions& opt);
+extern SFString normalizeBlock(const SFString& inIn, bool remove, bool isByzan);
 extern SFString diffStr(const SFString& str1, const SFString& str2);
+extern void interumReport(ostream& os, blknum_t i);

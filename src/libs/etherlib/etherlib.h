@@ -8,7 +8,6 @@
  *------------------------------------------------------------------------*/
 
 #include "abilib.h"
-#include "ethtypes.h"
 #include "block.h"
 #include "transaction.h"
 #include "account.h"
@@ -25,6 +24,7 @@
 #include "blooms.h"
 #include "accountwatch.h"
 #include "balhistory.h"
-#include "accountname.h"
+#include "acctcacheitem.h"
+#include "blockoptions.h"
 
 using namespace qblocks;

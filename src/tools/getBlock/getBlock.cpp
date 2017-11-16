@@ -28,66 +28,31 @@ int main(int argc, const char * argv[]) {
         // There can be more than one thing to do...
         if (!options.quiet)
             cout << (options.isMulti() ? "[" : "");
-        if (options.isRange) {
-            for (SFUint32 i = options.start ; i < options.stop ; i++) {
-                if (options.isCheck) {
-                    checkResults += checkOneBlock(i, options);
 
-                } else {
-                    SFString result = doOneBlock(i, options);
-                    if (options.normalize) {
-                        if (verbose)
-                            cout << i << "\n";
-                        result = normalizeBlock(result, false);
-                    }
-                    if (!options.quiet) {
-                        cout << result;
-                        if (i < options.stop-1)
-                            cout << ",";
-                        cout << "\n";
-
-                    } else if (!(i%150)) {
-                        cerr << ".";
-                        cerr.flush();
-
-                    } else if (!(i%1000)) {
-                        cerr << "+";
-                        cerr.flush();
-                    }
+        SFString list = options.getBlockNumList();
+        while (!list.empty()) {
+            blknum_t bn = toLongU(nextTokenClear(list, '|'));
+            if (options.isCheck) {
+                checkResults += checkOneBlock(bn, options);
+            } else {
+                SFString result = doOneBlock(bn, options);
+                if (options.normalize) {
+                    if (verbose)
+                        cout << bn << "\n";
+                    result = normalizeBlock(result, false, bn >= byzantiumBlock);
                 }
-            }
-        } else {
-            for (SFUint32 i = 0 ; i < options.nNums ; i++) {
-                if (options.isCheck) {
-                    checkResults += checkOneBlock(options.nums[i], options);
+                if (!options.quiet) {
+                    cout << result;
+                    if (!list.empty())
+                        cout << ",";
+                    cout << "\n";
 
                 } else {
-                    SFString result = doOneBlock(options.nums[i], options);
-                    if (options.normalize) {
-                        if (verbose)
-                            cout << options.nums[i] << "\n";
-                        result = normalizeBlock(result, false);
-                    }
-                    if (!options.quiet) {
-                        cout << result;
-                        if (i < options.nNums - 1)
-                            cout << ",";
-                        cout << "\n";
-                        if (options.isCheck) {
-                            // TODO(any): read 'raw' and compare result with gold
-                        }
-
-                    } else if (!(i%150)) {
-                        cerr << ".";
-                        cerr.flush();
-
-                    } else if (!(i%1000)) {
-                        cerr << "+";
-                        cerr.flush();
-                    }
+                    interumReport(cerr, bn);
                 }
             }
         }
+
         if (!options.quiet)
             cout << (options.isMulti() ? "]" : "");
 
@@ -101,7 +66,7 @@ int main(int argc, const char * argv[]) {
 }
 
 //------------------------------------------------------------
-SFString doOneBlock(SFUint32 num, const COptions& opt) {
+SFString doOneBlock(uint64_t num, const COptions& opt) {
 
     CBlock gold;
     SFString result;
@@ -129,7 +94,7 @@ SFString doOneBlock(SFUint32 num, const COptions& opt) {
                 exit(0);
             }
         }
-        queryBlock(gold, numStr, true);
+        queryBlock(gold, numStr, true, false);
         if (opt.force) { // turn this on to force a write of the block to the disc
             SFString fileName = getBinaryFilename1(gold.blockNumber);
             writeToBinary(gold, fileName);
@@ -137,8 +102,8 @@ SFString doOneBlock(SFUint32 num, const COptions& opt) {
 
         if (getSource().Contains("Only")) {
             // --source::cache mode doesn't include timestamp in transactions
-            for (txnum_t t = 0 ; t < gold.transactions.getCount() ; t++) {
-                gold.transactions[t].timestamp = (SFUint32)gold.timestamp;
+            for (uint32_t t = 0 ; t < gold.transactions.getCount() ; t++) {
+                gold.transactions[t].timestamp = gold.timestamp;
             }
 
         }
@@ -149,7 +114,7 @@ SFString doOneBlock(SFUint32 num, const COptions& opt) {
 }
 
 //------------------------------------------------------------
-SFString checkOneBlock(SFUint32 num, const COptions& opt) {
+SFString checkOneBlock(uint64_t num, const COptions& opt) {
 
     if (opt.quiet == 2) {
         cout << "Checking block " + cYellow + asStringU(num) + cOff + "...       \r";
@@ -163,12 +128,12 @@ SFString checkOneBlock(SFUint32 num, const COptions& opt) {
     fromNode.Replace("\"hash\":","\"blockHash\":");
     if (verbose)
         cout << num << "\n";
-    fromNode = normalizeBlock(fromNode, true);
+    fromNode = normalizeBlock(fromNode, true, num > byzantiumBlock);
 
     // Now get the same block from quickBlocks
     SFString fromQblocks;
     CBlock qBlocks;
-    queryBlock(qBlocks, numStr, true);
+    queryBlock(qBlocks, numStr, true, false);
     for (uint32_t i = 0 ; i < qBlocks.transactions.getCount() ; i++) {
         // quickBlocks pulls the receipt for each transaction, but the RPC does
         // not. Therefore, we must set the transactions' gasUsed and logsBloom
@@ -179,7 +144,7 @@ SFString checkOneBlock(SFUint32 num, const COptions& opt) {
     }
     if (verbose)
         cout << num << "\n";
-    fromQblocks = normalizeBlock(qBlocks.Format(), true);
+    fromQblocks = normalizeBlock(qBlocks.Format(), true, num > byzantiumBlock);
 
     SFString result = "The strings are "; result += ((fromNode != fromQblocks) ? "different\n" : "the same\n");
     SFString diffA  = "In fromNode but not fromQblocks:\n" + diffStr(fromNode, fromQblocks);
@@ -204,3 +169,10 @@ SFString checkOneBlock(SFUint32 num, const COptions& opt) {
             head + diffA +
             head + diffB;
 }
+
+//------------------------------------------------------------
+void interumReport(ostream& os, blknum_t i) {
+    os << (!(i%150) ? "." : (!(i%1000)) ? "+" : "");  // dots '.' at every 150, '+' at every 1000
+    os.flush();
+}
+

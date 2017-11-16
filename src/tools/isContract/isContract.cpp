@@ -24,22 +24,27 @@ int main(int argc, const char *argv[]) {
             return 0;
 
         for (uint64_t i = 0 ; i < options.nAddrs ; i++) {
+            SFString code1 = getCode(options.addrs[i]);
+            bool hasCode = code1.length() > 2;
+
             if (options.diff) {
-                SFString code1 = getCode(options.addrs[i]);
                 SFString code2 = getCode(options.addrs[i+1]);
                 cout << "Code at address '" << options.addrs[i] << ") and (" << "(" << options.addrs[i+1] + ") are "
                         << (code1 == code2 ? "identical" : "different") << "\n";
                 break;
 
-            } else if (options.display) {
+            } else if (options.showBytes) {
+
                 cout << "Code at address: " << options.addrs[i] << ":\n";
-                cout << getCode(options.addrs[i]) << "\n";
+                cout << code1 << "\n";
+
+            } else if (options.asData) {
+                cout << options.addrs[i] << "\t" << (hasCode ? "true" : "false") << "\n";
 
             } else {
-                cout << "isContract(" << options.addrs[i] << "): "
-                        << (getCode(options.addrs[i]).length() <= 2 ? "false" : "true") << "\n";
+                cout << "isContract(" << options.addrs[i] << "): " << (hasCode ? "true" : "false") << "\n";
                 if (verbose)
-                    cout << getCode(options.addrs[i]) << "\n";
+                    cout << code1 << "\n";
 
             }
         }

@@ -1,0 +1,5 @@
+getTokenBal argc: 3 [1:21321321312321] [2:0xd26114cd6EE289AccF82350c8d8487fedB8A0C07] 
+getTokenBal 21321321312321 0xd26114cd6EE289AccF82350c8d8487fedB8A0C07 
+
+  Block 21321321312321 is later than the last valid block --. Quitting...
+

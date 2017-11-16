@@ -9,17 +9,6 @@
 #include "options.h"
 
 //--------------------------------------------------------------
-SFString displayValue(SFUintBN valIn) {
-    if (expContext().asEther) {
-        return wei2Ether(asStringBN(valIn));
-    } else if (expContext().asDollars) {
-//        return asDollars(valIn);
-    }
-    ASSERT(expContext().asWei);
-    return asStringBN(valIn);
-}
-
-//--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
     // Tell the system where the blocks are and which version to use
     etherlib_init("fastest");
@@ -29,6 +18,7 @@ int main(int argc, const char *argv[]) {
     if (!options.prepareArguments(argc, argv))
         return 0;
 
+    bool needsNewline = true;
     while (!options.commandList.empty()) {
 
         SFString command = nextTokenClear(options.commandList, '\n');
@@ -38,19 +28,55 @@ int main(int argc, const char *argv[]) {
         if (!options.parseArguments(command))
             return 0;
 
+        blknum_t latestBlock = getLatestBlockFromClient();
+
+        // For each address
         while (!options.addrs.empty()) {
             SFAddress addr = nextTokenClear(options.addrs, '|');
-            SFString blocks = options.blocks;
+
+            // For each block
+            SFString blocks = options.getBlockNumList();
             while (!blocks.empty()) {
-                blknum_t block = toLongU(nextTokenClear(blocks, '|'));
-                SFUintBN bal = getBalance(addr, block, false);  // isDemo);
-                if (options.asData)
-                    cout << block << "\t" << addr << "\t" << displayValue(bal) << "\n";
-                else
-                    cout << "Balance of address " << addr << " at block " << block << ": " << displayValue(bal) << "\n";
+                blknum_t blockNum = toLongU(nextTokenClear(blocks, '|'));
+                if (blockNum > latestBlock) {
+                    SFString late = (isTestMode() ? "--" : asStringU(latestBlock));
+                    return usage("Block " + asStringU(blockNum) + " is later than the last valid block " + late + ". Quitting...");
+                }
+
+                SFUintBN bal = getBalance(addr, blockNum, false);
+                SFString sBal = to_string(bal).c_str();
+                if (expContext().asEther) {
+                    sBal = wei2Ether(to_string(bal).c_str());
+                } else if (expContext().asDollars) {
+                    CBlock blk;
+                    getBlock(blk, blockNum);
+                    sBal = padLeft(dispDollars(blk.timestamp, bal),14);
+                }
+
+                needsNewline = true;
+                if (bal > 0 || !options.noZero) {
+                    if (options.asData) {
+                        cout << blockNum << "\t" << addr << "\t" << sBal << "\n";
+                    } else {
+                        cout << "    Balance for account " << cGreen << addr << cOff;
+                        cout << " at block " << cTeal << blockNum << cOff;
+                        cout << " is " << cYellow << sBal << cOff << "\n";
+                    }
+                    needsNewline = false;
+                } else if (!isTestMode()) {
+                    if (options.asData) {
+                        cerr << blockNum << "\t" << addr << "         \r";
+                    } else {
+                        cerr << "    Balance for account " << cGreen << addr << cOff;
+                        cerr << " at block " << cTeal << blockNum << cOff << "           \r";
+                    }
+                }
+                cerr.flush();
                 cout.flush();
             }
         }
     }
+    if (needsNewline)
+        cerr << "                                                                                              \n";
     return 0;
 }

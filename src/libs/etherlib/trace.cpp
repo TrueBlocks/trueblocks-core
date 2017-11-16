@@ -117,6 +117,8 @@ bool CTrace::Serialize(SFArchive& archive) {
     if (readBackLevel(archive))
         return true;
 
+    // EXISTING_CODE
+    // EXISTING_CODE
     archive >> blockHash;
     archive >> blockNumber;
     archive >> subtraces;
@@ -133,6 +135,9 @@ bool CTrace::Serialize(SFArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool CTrace::SerializeC(SFArchive& archive) const {
+
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
@@ -226,7 +231,7 @@ SFString CTrace::getValueByName(const SFString& fieldName) const {
     if (!ret.empty())
         return ret;
 
-    // If the class has any fields, return them
+    // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
             if ( fieldName % "action" ) { expContext().noFrst=true; return action.Format(); }
@@ -245,8 +250,10 @@ SFString CTrace::getValueByName(const SFString& fieldName) const {
             if ( fieldName % "subtraces" ) return asStringU(subtraces);
             break;
         case 't':
-            if ( fieldName % "traceAddress" ) {
+            if ( fieldName % "traceAddress" || fieldName % "traceAddressCnt" ) {
                 uint32_t cnt = traceAddress.getCount();
+                if (fieldName.endsWith("Cnt"))
+                    return asStringU(cnt);
                 if (!cnt) return "";
                 SFString retS;
                 for (uint32_t i = 0 ; i < cnt ; i++) {
@@ -292,6 +299,22 @@ ostream& operator<<(ostream& os, const CTrace& item) {
 
     os << item.Format() << "\n";
     return os;
+}
+
+//---------------------------------------------------------------------------
+const CBaseNode *CTrace::getObjectAt(const SFString& name, uint32_t i) const {
+    if ( name % "action" )
+        return &action;
+    if ( name % "result" )
+        return &result;
+    return NULL;
+}
+
+//---------------------------------------------------------------------------
+const SFString CTrace::getStringAt(const SFString& name, uint32_t i) const {
+    if ( name % "traceAddress" && i < traceAddress.getCount() )
+        return (traceAddress[i]);
+    return "";
 }
 
 //---------------------------------------------------------------------------

@@ -10,7 +10,6 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
-#include "ethtypes.h"
 #include "abilib.h"
 
 namespace qblocks {
@@ -23,6 +22,7 @@ typedef SFUniqueList<CLogEntry*>       CLogEntryListU;
 
 // EXISTING_CODE
 class CReceipt;
+#define SFTopicArray SFBigUintArray
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
@@ -30,8 +30,8 @@ class CLogEntry : public CBaseNode {
 public:
     SFAddress address;
     SFString data;
-    SFUint32 logIndex;
-    SFBigUintArray topics;
+    uint64_t logIndex;
+    SFTopicArray topics;
 
 public:
     CLogEntry(void);

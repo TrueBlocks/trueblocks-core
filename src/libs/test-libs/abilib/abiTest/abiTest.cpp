@@ -56,7 +56,7 @@ bool test_encodings(void) {
             SFString myHex = "0x"+string2Hex(text);
             SFString mySha = getSha3(myHex);
             if (type == "function")
-                mySha = mySha.Left(10);
+                mySha = mySha.substr(0,10);
             bool result = mySha == expected;
             cout << "\t" << type << ": " << text << " "
                     << "encoding: " << mySha << " "

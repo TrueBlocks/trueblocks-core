@@ -1,34 +1,39 @@
 ## getTokenBal
 
-Given a list of Ethereum addresses, report token holdings for a single `account` from one or more `token contracts`. Alternatively, report token balances for one or more `accounts` from a single `token contract`.
+Given the address of an ERC20 token contract, report token balances for one or more accounts. Alternatively, report token balances for multiple ERC20 contracts for a single account.
 
-In normal operation the *first item* in the `address_list` is considered to be a token smart contract whose token balances are queried, whereas the remainder of addresses in the list are accounts on which to report.
+In normal operation the **first item** in the `address_list` is considered to be an ERC20 token contract whose balances are queried, whereas the remainder of the list is assumed to be accounts on which to report.
 
-In `--byAcct` mode, the *last item* in `address_list` is considered a regular account whereas the preceeding items are all considered to be ERC20 token contracts from which to report token balances.
+In `--byAcct` mode, **all items** in the `address_list` are assumed to be token contracts, except the last which is the account whose token balances are reported.
 
-You may optionally specify one or more blocks at which to report token balances. If empty, `block_list` defaults to `latest`.
+You may optionally specify one or more blocks at which to report.
 
 #### Usage
 
-`Usage:`    getTokenBal [-b|-d|-v|-h] address_list block_list  
-`Purpose:`  Retrieve token balances from a series of ERC20 token contracts for an account or visa versa.
+`Usage:`    getTokenBal [-b|-l fn|-n|-d|-v|-h] &lt;address&gt; &lt;address&gt; [address...] [block...]  
+`Purpose:`  Retrieve the token balance(s) for one or more addresses at the given (or latest) block(s).
              
 `Where:`  
 
-| Option | Full Command | Description |
+| Short Cut | Option | Description |
 | -------: | :------- | :------- |
-|  | address_list | two or more address (0x...), the first is an ERC20 token, balances for the remaining accounts are reported |
-|  | block_list | a list of one or more blocks at which to report balances, if empty defaults to 'latest' |
-| -b | --byAcct | if enabled, all but the last address is considered an ERC20 token, balances for each for the last address are reported. |
+|  | address_list | two or more addresses (0x...), the first is an ERC20 token, balances for the rest are reported |
+|  | block_list | an optional list of one or more blocks at which to report balances, defaults to 'latest' |
+| -b | --byAcct | consider each address an ERC20 token except the last, whose balance is reported for each token |
+| -l | --list fn | an alternative way to specify an address_list, place one address per line in the file 'fn' |
+| -n | --noZero | suppress the display of zero balance accounts |
 | -d | --data | render results as tab delimited data (for example, to build a cap table) |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
 `Notes:`
 
-- If an address does not own tokens at an address, the tool reports a zero balance.
-- If the token contract(s) from which you request balances are not ERC20 token contracts, the return values are undefined.
-- This tool retrieves information from a locally running Ethereum node or the $(FALLBACK) node, if enabled.
+- `addresses` must start with '0x' and be forty characters long.
+- `block_list` may be space-separated list of values, a start-end range, a `special`, or any combination.
+- This tool retrieves information from the local node or the ${FALLBACK} node, if configured (see documentation).
+- If the token contract(s) from which you request balances are not ERC20 compliant, the results are undefined.
+- If the queried node does not store historical state, the results are undefined.
+- `special` blocks are detailed under `whenBlock --list`.
 
 #### Other Options
 
@@ -37,7 +42,7 @@ All **quickBlocks** command-line tools support the following commands (although 
     Command     |     Description
     -----------------------------------------------------------------------------
     --version   |   display the current version of the tool
-    --nocolors  |   turn off colored display
+    --nocolor   |   turn off colored display
     --wei       |   specify value in wei (the default)
     --ether     |   specify value in ether
     --dollars   |   specify value in US dollars

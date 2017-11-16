@@ -1,22 +1,22 @@
 ## ethName
 
-`ethName` provides a very simple, wholy-inadequate method to keep track of 'real life' names and their associated Ethereum addresses. While this tool needs a lot of work, it does come in handy. Eventually, we will transition this tool to use ENS (or an equivalent).
+`ethName` provides a simple way to keep track of 'real life' names and their associated Ethereum addresses. While this tool will eventually use the [Ethereum Name Service](http://ens.domains) directly to find and manage names, it currently uses a locally-editable text database to build a name-address map.
 
-One way to use this tool is to feed its output into another tool's input. For example, the following command would open the [EtherScan](http://etherscan.io) website to the address associated with The DAO:
+You may feed the output of this tool into another tool's input. For example, the following command would open the [EtherScan](http://etherscan.io) website to the address associated with The DAO:
 
     ethscan.py `ethName -a DAO`
 
 #### Usage
 
-`Usage:`    ethName [-a|-c|-o|-l|-m|-s|-v|-h] term [name]  
-`Purpose:`  Find a name given an Ethereum address, or find an address given a name.
+`Usage:`    ethName [-a|-c|-o|-l|-m|-s|-v|-h] &lt;term&gt; [term...]  
+`Purpose:`  Query Ethereum addresses and/or names making it easy to remember accounts.
              
 `Where:`  
 
-| Option | Full Command | Description |
+| Short Cut | Option | Description |
 | -------: | :------- | :------- |
-|  | term [name] | search terms |
-| -a | --addrOnly | export only the associated address to be used as input to further commands |
+|  | terms | a space separated list of one or more search terms |
+| -a | --alone | export only the associated address (may be used in scripting) |
 | -c | --count | print only the count of the number of matches |
 | -o | --open | open the name database for editing |
 | -l | --list | list all names in the database |
@@ -25,20 +25,16 @@ One way to use this tool is to feed its output into another tool's input. For ex
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
-#### Notes
+`Notes:`
 
-With a single search term, the tool searches both `name` and `address`. With two search terms, the first must match the `address` field, and the second must match the `name` field. When there are two search terms, both must match.
-
-If one mixes options, the `--edit` option always predominates (i.e. the program opens the database and then quits).
-
-The `--list` option predominates otherwise. If present, the tool displays a list of stored names and addresses and then quits.
-
-The `--count` option works with any other option and will simply display the number of matches or '0 matches' if 
-none.
-
-The `--matchCase` option requires case sensitive matching. It works with all other options.
-
-The `--addrOnly` option modifies the display output and therefore works with any other options.
+- With a single search term, the tool searches both `name` and `address`.
+- With two search terms, the first term must match the `address` field, and the second term must match the `name` field.
+- When there are two search terms, both must match.
+- If one mixes options, the `--edit` option predominates (i.e. the program opens the database and then quits).
+- The `--list` option predominates otherwise. If present, the tool displays a list of stored names and addresses and then quits.
+- The `--count` option works with any other option and will simply display the number of matches.
+- The `--matchCase` option requires case sensitive matching. It works with all other options.
+- The `--addrOnly` option modifies the display output and therefore works with any other options.
 
 #### Other Options
 
@@ -47,7 +43,7 @@ All **quickBlocks** command-line tools support the following commands (although 
     Command     |     Description
     -----------------------------------------------------------------------------
     --version   |   display the current version of the tool
-    --nocolors  |   turn off colored display
+    --nocolor   |   turn off colored display
     --wei       |   specify value in wei (the default)
     --ether     |   specify value in ether
     --dollars   |   specify value in US dollars

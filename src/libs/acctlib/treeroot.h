@@ -35,7 +35,7 @@ typedef SFUniqueList<CTreeRoot*>       CTreeRootListU;
 class CVisitData {
 public:
     uint32_t type;
-    SFUint32 cnt;
+    uint64_t cnt;
     SFString strs;
     CVisitData(void) : type(0), cnt(0) { }
 };
