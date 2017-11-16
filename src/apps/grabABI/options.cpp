@@ -12,12 +12,15 @@ CParams params[] = {
     CParams("~addr",      "the address(es) of the smart contract(s) to grab"),
     CParams("-canonical", "convert all types to their canonical represenation and remove all spaces from display"),
     CParams("-generate",  "generate C++ code into the current folder for all functions and events found in the ABI"),
+    CParams("-data",      "export the display as data"),
     CParams("-encode",    "generate the encodings for the functions / events in the ABI"),
     CParams("-noconst",   "generate encodings for non-constant functions and events only (always true when generating)"), // NOLINT
     CParams("-open",      "open the ABI file for editing, download if not already present"),
     CParams("-raw",       "force retrieval of ABI from etherscan (ignoring cache)"),
     CParams("@-json",     "print the ABI to the screen as json"),
-    CParams("@-silent",   "If ABI cannot be acquired, fail silently (useful for scripting)"),
+    CParams("@-silent",   "if ABI cannot be acquired, fail silently (useful for scripting)"),
+    CParams("@-nodec",    "do not decorate duplicate names"),
+    CParams("@-freshen",  "regenerate the binary database version of all ABIs in the abi cache"),
     CParams("",           "Fetches the ABI for a smart contract. Optionally generates C++ source code "
                           "representing that ABI.\n"),
 };
@@ -45,11 +48,22 @@ bool COptions::parseArguments(SFString& command) {
         } else if (arg == "-e" || arg == "--encode") {
             parts |= SIG_ENCODE;
 
+        } else if (arg == "-d" || arg == "--data") {
+            parts |= SIG_FTYPE;
+            asData = true;
+
         } else if (arg == "-s" || arg == "--silent") {
             silent = true;
 
         } else if (arg == "-n" || arg == "--noconst") {
             noconst = true;
+
+        } else if (arg == "-f" || arg == "--freshen") {
+            rebuildFourByteDB();
+            exit(0);
+
+        } else if (arg == "--nodec") {
+            decNames = false;
 
         } else if (arg == "-r" || arg == "--raw") {
             raw = true;
@@ -87,6 +101,10 @@ bool COptions::parseArguments(SFString& command) {
     if (!nAddrs)
         return usage("Please supply at least one Ethereum address.\n");
 
+    bool isGenerate = !classDir.empty();
+    if (isGenerate && asData)
+        return usage("Incompatible options --generate and --data. Quitting...");
+
     return true;
 }
 
@@ -102,6 +120,7 @@ void COptions::Init(void) {
     silent = false;
     asJson = false;
     raw = false;
+    decNames = true;
     for (uint32_t i = 0 ; i < MAX_ADDRS ; i++) {
         addrs[i] = "";
     }

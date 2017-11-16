@@ -134,9 +134,10 @@ bool CVisitor::enterDebugger(const CBlock& block) {
 
                 } else if (curCmd == "l" || curCmd == "list") {
                     cout << "\r\nAccounts:\r\n";
-                    cout << "[";
+                    cout << cOff << "[";
                     for (uint32_t i=0;i<watches.getCount()-1;i++) {
                         cout << " { ";
+                        cout << "\"index\": \""    <<                     watches[i].index              << "\", ";
                         cout << "\"address\": \""  << watches[i].color << watches[i].address    << cOff << "\", ";
                         cout << "\"firstBlock\": " << bRed                     << watches[i].firstBlock << cOff << ", ";
                         cout << "\"name\": \""     << watches[i].color << watches[i].name       << cOff << "\"";

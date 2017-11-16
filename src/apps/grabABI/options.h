@@ -8,7 +8,7 @@
  *------------------------------------------------------------------------*/
 #include "etherlib.h"
 
-#define MAX_ADDRS 40
+#define MAX_ADDRS 400
 class COptions : public COptionsBase {
 public:
     uint64_t parts;
@@ -16,6 +16,8 @@ public:
     bool open;
     bool asJson;
     bool raw;
+    bool asData;
+    bool decNames;
     SFAddress addrs[MAX_ADDRS+2];
     uint64_t nAddrs;
     SFString primaryAddr;
