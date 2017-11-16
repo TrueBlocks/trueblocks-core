@@ -33,7 +33,7 @@ def getmount(path):
 #---------------------------------------------------------------------------------------------
 def watchcontract(contract):
     oldpath = os.getcwd()
-    newpath = contracts_path + '/' + contract 
+    newpath = contracts_path + '/' + contract
     os.chdir(newpath)
     contract_cmd = contracts_bin_subpath + '/' + contract + ' --freshen -v'
     #print("Running command {0} at path {1}".format(contract_cmd, os.getcwd())) # debugging
