@@ -12,7 +12,8 @@ public:
     SFAddress addrs[MAX_ADDRS];
     uint64_t nAddrs;
     bool diff;
-    bool display;
+    bool asData;
+    bool showBytes;
 
     COptions(void);
     ~COptions(void);
