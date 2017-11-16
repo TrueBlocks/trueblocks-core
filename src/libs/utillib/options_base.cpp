@@ -164,10 +164,15 @@ namespace qblocks {
             if (contents.empty()) {
                 return usage("Command file '" + cmdFileName + "' is empty. Quitting...");
             }
-            while (!contents.empty()) {
-                SFString command = StripAny(nextTokenClear(contents, '\n'), "\t\r\n ");
-                if (!command.empty() && !command.startsWith(";"))  // ignore comments
-                    commandList += (command+"\n");
+            if (contents.startsWith("NOPARSE\n")) {
+                commandList = contents;
+                nextTokenClear(commandList,'\n');
+            } else {
+                while (!contents.empty()) {
+                    SFString command = StripAny(nextTokenClear(contents, '\n'), "\t\r\n ");
+                    if (!command.empty() && !command.startsWith(";"))  // ignore comments
+                        commandList += (command+"\n");
+                }
             }
         }
         commandList += stdInCmds;
