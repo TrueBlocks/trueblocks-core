@@ -93,5 +93,4 @@ namespace qblocks {
     SFString fldNotFound(const SFString& str);
 
 #define byzantiumBlock 4370000
-#define cleanFmt(str) ((str).Substitute("\\n\\\n", "\\n").Substitute("\n", "").Substitute("\\n", "\r\n").Substitute("\\t", "\t"))
 }  // namespace qblocks
