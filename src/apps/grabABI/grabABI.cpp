@@ -22,6 +22,7 @@ extern const char* STR_HEADER_SIGS;
 extern const char* STR_CODE_SIGS;
 extern const char* STR_BLOCK_PATH;
 extern const char* STR_ITEMS;
+extern const char* STR_FORMAT_FUNCDATA;
 
 //-----------------------------------------------------------------------
 SFString templateFolder = configPath("grabABI/");
@@ -52,9 +53,9 @@ inline void makeTheCode(const SFString& fn, const SFString& addr) {
 }
 
 //-----------------------------------------------------------------------
-void addIfUnique(const SFString& addr, CFunctionArray& functions, CFunction& func)
+void addIfUnique(const SFString& addr, CFunctionArray& functions, CFunction& func, bool decorateNames)
 {
-    if (func.name.empty() && func.type != "constructor")
+    if (func.name.empty()) // && func.type != "constructor")
         return;
 
     for (uint32_t i = 0 ; i < functions.getCount() ; i++) {
@@ -64,7 +65,7 @@ void addIfUnique(const SFString& addr, CFunctionArray& functions, CFunction& fun
         // different encoding same name means a duplicate function name in the code. We won't build with
         // duplicate function names, so we need to modify the incoming function. We do this by appending
         // the first four characters of the contract's address.
-        if (functions[i].name == func.name) {
+        if (decorateNames && functions[i].name == func.name) {
             func.origName = func.name;
             func.name += (addr.startsWith("0x") ? addr.substr(2,4) : addr.substr(0,4));
         }
@@ -83,13 +84,17 @@ SFString acquireABI(CFunctionArray& functions, const SFAddress& addr, const COpt
     dispName = "~/.quickBlocks/" + dispName;
     if (fileExists(fileName) && !opt.raw) {
 
-        if (!isTestMode())
-            cerr << "Reading ABI from cache " + dispName + "\n";
+        if (!isTestMode()) {
+            cerr << "Reading ABI for " << addr << " from cache " + dispName + "\r";
+            cerr.flush();
+        }
         results = asciiFileToString(fileName);
 
     } else {
-        if (!isTestMode())
-            cerr << "Reading ABI from EtherScan\n";
+        if (!isTestMode()) {
+            cerr << "Reading ABI for " << addr << " from EtherScan\r";
+            cerr.flush();
+        }
         SFString url = SFString("http:/")
                             + "/api.etherscan.io/api?module=contract&action=getabi&address="
                             + addr;
@@ -105,15 +110,21 @@ SFString acquireABI(CFunctionArray& functions, const SFAddress& addr, const COpt
         	}
             nextTokenClear(results, '[');
             results.ReplaceReverse("]}", "");
-            if (!isTestMode())
+            if (!isTestMode()) {
                 cerr << "Caching abi in " << dispName << "\n";
+            }
             establishFolder(fileName);
             stringToAsciiFile(fileName, "["+results+"]");
         } else {
-			cerr << "Etherscan returned " << results << "\n";
-            cerr << "Could not grab ABI for " + addr + " from etherscan.io.\n";
-            if (!opt.silent)
+            if (!opt.silent) {
+                cerr << "Etherscan returned " << results << "\n";
+                cerr << "Could not grab ABI for " + addr + " from etherscan.io.\n";
                 exit(0);
+            }
+            // TODO: If we store the ABI here even if empty, we won't have to get it again, but then what happens
+            // if user later posts the ABI? Need a 'refresh' option or clear cache option
+            establishFolder(fileName);
+            stringToAsciiFile(fileName, "[]");
         }
     }
 
@@ -125,7 +136,7 @@ SFString acquireABI(CFunctionArray& functions, const SFAddress& addr, const COpt
         uint32_t nFields = 0;
         p = func.parseJson(p, nFields);
         func.isBuiltin = builtIn;
-        addIfUnique(addr, functions, func);
+        addIfUnique(addr, functions, func, opt.decNames);
     }
 
     return ret;
@@ -187,14 +198,26 @@ int main(int argc, const char *argv[]) {
         }
 
         if (!isGenerate) {
-            // print to a buffer because we have to modify it before we print it
-            cout << "ABI for address " << options.primaryAddr << (options.nAddrs>1 ? " and others" : "") << "\n";
-            for (uint32_t i = 0 ; i < functions.getCount() ; i++) {
-                CFunction *func = &functions[i];
-                if (!func->constant || !options.noconst)
-                    cout << func->getSignature(options.parts) << "\n";
+
+            if (options.asData) {
+                for (uint32_t i = 0 ; i < functions.getCount() ; i++) {
+                    CFunction *func = &functions[i];
+                    if (!func->constant || !options.noconst) {
+                        SFString format = getGlobalConfig()->getDisplayStr(false, STR_FORMAT_FUNCDATA);
+                        cout << func->Format(format);
+                    }
+                }
+
+            } else {
+                // print to a buffer because we have to modify it before we print it
+                cout << "ABI for address " << options.primaryAddr << (options.nAddrs>1 ? " and others" : "") << "\n";
+                for (uint32_t i = 0 ; i < functions.getCount() ; i++) {
+                    CFunction *func = &functions[i];
+                    if (!func->constant || !options.noconst)
+                        cout << func->getSignature(options.parts) << "\n";
+                }
+                cout << "\n";
             }
-            cout << "\n";
 
         } else {
             verbose = false;
@@ -558,6 +581,7 @@ const char* STR_HEADERFILE =
 "extern const CLogEntry *promoteTo[{PPREFIX}]Event(const CLogEntry *p);\n"
 "\n[{EXTERNS}][{HEADER_SIGS}]\n";
 
+//-----------------------------------------------------------------------
 const char* STR_HEADER_SIGS =
 "\n\n//-----------------------------------------------------------------------------\n"
 "extern SFString sigs[];\n"
@@ -566,6 +590,7 @@ const char* STR_HEADER_SIGS =
 "extern uint32_t nSigs;\n"
 "extern uint32_t nTopics;";
 
+//-----------------------------------------------------------------------
 const char* STR_CODE_SIGS =
 "\n\n//-----------------------------------------------------------------------------\n"
 "SFString sigs[] = {\n"
@@ -612,11 +637,25 @@ const char* STR_CODE_SIGS =
 "uint32_t nTopics = sizeof(topics) / sizeof(SFString);\n"
 "\n";
 
+//-----------------------------------------------------------------------
 const char* STR_BLOCK_PATH = "etherlib_init(\"binary\");\n\n";
 
+//-----------------------------------------------------------------------
 const char* STR_ITEMS =
 "\t\tSFString items[256];\n"
 "\t\tint nItems=0;\n"
 "\n"
 "\t\tSFString encoding = p->input.substr(0,10);\n"
 "\t\tSFString params   = p->input.substr(10);\n";
+
+//-----------------------------------------------------------------------
+const char* STR_FORMAT_FUNCDATA =
+"[{name}]\t"
+"[{type}]\t"
+"[{anonymous}]\t"
+"[{constant}]\t"
+"[{payable}]\t"
+"[{signature}]\t"
+"[{encoding}]\t"
+"[{inputs}]\t"
+"[{outputs}]\n";
