@@ -43,7 +43,7 @@ bool visitTransaction(CTransaction& trans, void *data) {
         trans.doExport(cout);
         cout << "\n";
     } else {
-        cout << trans.Format("[{DATE}][\t{TIMESTAMP}][\t{BLOCKNUMBER}][\t{TRANSACTIONINDEX}][\t{HASH}]\n");
+        cout << trans.Format(opt->format);
     }
 
     return true;
