@@ -70,6 +70,9 @@ namespace qblocks {
         CSharedResource transOnDisc;
 
 #ifdef NEW_CODE
+        // Very important note: the two pointers are not allocated. They are pointers to a location
+        // in the memory mapped file. They appear to be allocated array pointers, but they are
+        // actually FILE pointers and should not be cleaned up.
         CMiniBlock *blocks;
         const CMiniTrans *trans;
 #else

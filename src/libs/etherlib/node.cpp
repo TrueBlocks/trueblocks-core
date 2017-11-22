@@ -104,6 +104,7 @@ void etherlib_cleanup(void)
 {
     // cleanup curl
     getCurl(true);
+    clearInMemoryCache();
 }
 
 static uint32_t theID = 1;
