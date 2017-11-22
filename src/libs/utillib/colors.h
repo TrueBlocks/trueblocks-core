@@ -79,4 +79,5 @@ namespace qblocks {
     extern void progressBar(uint64_t _part, uint64_t _whole, const SFString& msgs);
     extern void progressBar(uint64_t _part, uint64_t _whole, double _tim, const SFString& msgs);
     extern uint64_t barLen(uint64_t newLen = 0);
+    extern double getProgBarVal(void);
 }  // namespace qblocks
