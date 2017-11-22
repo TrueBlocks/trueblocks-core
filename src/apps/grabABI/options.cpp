@@ -121,6 +121,7 @@ void COptions::Init(void) {
     asJson = false;
     raw = false;
     decNames = true;
+    asData = false;
     for (uint32_t i = 0 ; i < MAX_ADDRS ; i++) {
         addrs[i] = "";
     }

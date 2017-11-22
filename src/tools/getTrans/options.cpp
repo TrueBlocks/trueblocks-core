@@ -47,7 +47,8 @@ bool COptions::parseArguments(SFString& command) {
 
 //    if (address && !isAddress(address))
 //        return usage("Bad address.");
-    format = getGlobalConfig()->getDisplayStr(!verbose, (verbose ? "" : "[{DATE}][\t{TIMESTAMP}][\t{BLOCKNUMBER}][\t{TRANSACTIONINDEX}][\t{HASH}]\n"));
+extern const char* STR_DISPLAY_FORMAT;
+    format = getGlobalConfig()->getDisplayStr(!verbose, (verbose ? "" : STR_DISPLAY_FORMAT));
 
     return true;
 }
@@ -96,3 +97,5 @@ SFString COptions::postProcess(const SFString& which, const SFString& str) const
     return str;
 }
 
+//--------------------------------------------------------------------------------
+const char* STR_DISPLAY_FORMAT = "[{DATE}][\t{TIMESTAMP}][\t{BLOCKNUMBER}][\t{TRANSACTIONINDEX}][\t{HASH}]\\n";

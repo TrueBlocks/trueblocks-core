@@ -55,7 +55,7 @@ inline void makeTheCode(const SFString& fn, const SFString& addr) {
 //-----------------------------------------------------------------------
 void addIfUnique(const SFString& addr, CFunctionArray& functions, CFunction& func, bool decorateNames)
 {
-    if (func.name.empty()) // && func.type != "constructor")
+    if (func.name.empty() && func.type != "constructor")
         return;
 
     for (uint32_t i = 0 ; i < functions.getCount() ; i++) {
@@ -249,8 +249,8 @@ int main(int argc, const char *argv[]) {
                     bool isConst = func->constant;
                     bool isEmpty = name.empty() || func->type.empty();
                     bool isLog = name.ContainsI("logentry");
-                    bool isConstructor = func->type % "constructor";
-                    if (!isConst && !isEmpty && !isLog && !isConstructor) {
+//                    bool isConstructor = func->type % "constructor";
+                    if (!isConst && !isEmpty && !isLog) { // && !isConstructor) {
                         if (name != "DefFunction") {
                             if (func->type == "event") {
                                 evtExterns += func->Format("extern const SFString evt_[{NAME}]{QB};\n");
