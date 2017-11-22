@@ -80,7 +80,7 @@ namespace qblocks {
         if (_whole > 0)
             percent = (_part / static_cast<double>(_whole));
         uint64_t len = (uint64_t)(barLen() * percent);
-        
+
         cout << begMsg << (begMsg.empty() ? " " : "");
         cout << " [" << SFString('x', len).Substitute("x", "░");
         cout << SFString(' ', max((uint64_t)0, barLen() - len));
@@ -91,16 +91,18 @@ namespace qblocks {
         cout << "\r";
         cout.flush();
     }
-    
+
     static double pb_Value = -1.0;
+    double getProgBarVal(void) { return pb_Value; }
+
     //-----------------------------------------------------------------------
-    inline void progressBar(uint64_t _part, uint64_t _whole, double _tim, const SFString& begMsg) {
+    void progressBar(uint64_t _part, uint64_t _whole, double _tim, const SFString& begMsg) {
         if (_part == 0 && _whole == 0) {
             // reset
             pb_Value = 0.;
             return;
         }
-        
+
         CStringExportContext ctx;
         if (_tim > 0.) {
             pb_Value = max(pb_Value, _tim);  // keep it monotonic
