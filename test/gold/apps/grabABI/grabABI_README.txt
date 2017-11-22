@@ -2,7 +2,7 @@ grabABI argc: 2 [1:-th]
 grabABI -th 
 #### Usage
 
-`Usage:`    grabABI [-c|-g|-e|-n|-o|-r|-v|-h] addr  
+`Usage:`    grabABI [-c|-g|-d|-e|-n|-o|-r|-v|-h] addr  
 `Purpose:`  Fetches the ABI for a smart contract. Optionally generates C++ source code representing that ABI.
              
 `Where:`  
@@ -12,6 +12,7 @@ grabABI -th
 |  | addr | the address(es) of the smart contract(s) to grab |
 | -c | --canonical | convert all types to their canonical represenation and remove all spaces from display |
 | -g | --generate | generate C++ code into the current folder for all functions and events found in the ABI |
+| -d | --data | export the display as data |
 | -e | --encode | generate the encodings for the functions / events in the ABI |
 | -n | --noconst | generate encodings for non-constant functions and events only (always true when generating) |
 | -o | --open | open the ABI file for editing, download if not already present |
