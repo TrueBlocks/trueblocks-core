@@ -437,14 +437,29 @@ SFString asDollars(timestamp_t ts, SFUintBN weiIn) {
     uint64_t pInt = (uint64_t)price;
     weiIn *= pInt;
     weiIn /= 100;
-    return "$" + wei2Ether(to_string(weiIn).c_str());
+    return wei2Ether(to_string(weiIn).c_str());
+}
+
+//-----------------------------------------------------------------------
+SFString insertCommas(const SFString& dIn) {
+    SFString d = dIn;
+    d.Reverse();
+    SFString ret;
+    while (!d.empty()) {
+        SFString three = d.substr(0,3);
+        d = d.substr(3);
+        three.Reverse();
+        ret = (d.empty()?"":",") + three + ret;
+    }
+    return ret;
 }
 
 //-----------------------------------------------------------------------
 SFString dispDollars(timestamp_t ts, SFUintBN weiIn) {
     SFString sBal = asDollars(ts, weiIn);
     SFString d = nextTokenClear(sBal,'.');
-    sBal = (sBal.empty() ? "$0.00" : d + "." + sBal.substr(0,2));
+    d = insertCommas(d);
+    sBal = (sBal.empty() ? "0.00" : d + "." + sBal.substr(0,2));
     return sBal;
 }
 // EXISTING_CODE

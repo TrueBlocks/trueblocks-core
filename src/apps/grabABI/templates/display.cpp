@@ -14,7 +14,7 @@
 
 //-----------------------------------------------------------------------
 inline SFString asDollars2(timestamp_t ts, const SFUintBN& weiIn) {
-    SFString ret = ::asDollars(ts, weiIn);
+    SFString ret = "$" + ::asDollars(ts, weiIn);
     return " (" + ret + ")";
 }
 
