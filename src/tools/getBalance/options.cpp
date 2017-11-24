@@ -11,9 +11,10 @@
 CParams params[] = {
     CParams("~address_list", "one or more addresses (0x...) from which to retrieve balances"),
     CParams("~!block_list",  "an optional list of one or more blocks at which to report balances, defaults to 'latest'"),
+    CParams("-data",         "render results as tab delimited data"),
     CParams("-list:<fn>",    "an alternative way to specify an address_list; place one address per line in the file 'fn'"),
     CParams("-noZero",       "suppress the display of zero balance accounts"),
-    CParams("-data",         "render results as tab delimited data"),
+    CParams("-total",        "if more than one balance is requested, display a total as well."),
     CParams("",              "Retrieve the balance (in wei) for one or more addresses at the given block(s).\n"),
 };
 uint32_t nParams = sizeof(params) / sizeof(CParams);
@@ -35,6 +36,9 @@ bool COptions::parseArguments(SFString& command) {
 
         } else if (arg == "-n" || arg == "--noZero") {
             noZero = true;
+
+        } else if (arg == "-t" || arg == "--total") {
+            total = true;
 
         } else if (arg.startsWith("-l:") || arg.startsWith("--list:")) {
 
@@ -77,6 +81,9 @@ bool COptions::parseArguments(SFString& command) {
         }
     }
 
+    if (asData && total)
+        return usage("Totalling is not available when exporting data.");
+
     if (address_list.empty())
         return usage("You must provide at least one Ethereum address.");
     addrs = address_list;
@@ -98,6 +105,7 @@ void COptions::Init(void) {
     addrs = "";
     asData = false;
     noZero = false;
+    total = false;
     blocks.Init();
 }
 

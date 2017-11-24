@@ -29,6 +29,9 @@ int main(int argc, const char *argv[]) {
             return 0;
 
         blknum_t latestBlock = getLatestBlockFromClient();
+        SFUintBN totalVal = 0;
+        uint64_t nAccts = countOf('|', options.addrs) + 1;
+        bool needsTotal = (nAccts > 1 && options.total);
 
         // For each address
         while (!options.addrs.empty()) {
@@ -44,13 +47,14 @@ int main(int argc, const char *argv[]) {
                 }
 
                 SFUintBN bal = getBalance(addr, blockNum, false);
+                totalVal += bal;
                 SFString sBal = to_string(bal).c_str();
                 if (expContext().asEther) {
                     sBal = wei2Ether(to_string(bal).c_str());
                 } else if (expContext().asDollars) {
                     CBlock blk;
                     getBlock(blk, blockNum);
-                    sBal = padLeft(dispDollars(blk.timestamp, bal),14);
+                    sBal = padLeft("$" + dispDollars(blk.timestamp, bal),14);
                 }
 
                 needsNewline = true;
@@ -68,14 +72,30 @@ int main(int argc, const char *argv[]) {
                         cerr << blockNum << "\t" << addr << "         \r";
                     } else {
                         cerr << "    Balance for account " << cGreen << addr << cOff;
-                        cerr << " at block " << cTeal << blockNum << cOff << "           \r";
+                        cerr << " at block " << cTeal << blockNum << cOff;
+                        cerr << " is " << cYellow << sBal << cOff << "           \r";
                     }
                 }
                 cerr.flush();
                 cout.flush();
             }
         }
+
+        if (needsTotal) {
+            SFString sBal = to_string(totalVal).c_str();
+            if (expContext().asEther) {
+                sBal = wei2Ether(to_string(totalVal).c_str());
+            } else if (expContext().asDollars) {
+                CBlock blk;
+                getBlock(blk, getLatestBlockFromClient());
+                sBal = padLeft("$" + dispDollars(blk.timestamp, totalVal),14);
+            }
+            cout << "        Total for " << cGreen << nAccts << cOff;
+            cout << " accounts at " << cTeal << "latest" << cOff << " block";
+            cout << " is " << cYellow << sBal.Substitute("  "," ") << cOff << "\n";
+        }
     }
+
     if (needsNewline)
         cerr << "                                                                                              \n";
     return 0;

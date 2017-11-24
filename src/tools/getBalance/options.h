@@ -11,6 +11,7 @@ public:
     SFString addrs;
     bool asData;
     bool noZero;
+    bool total;
 
     COptions(void);
     ~COptions(void);

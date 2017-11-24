@@ -12,9 +12,10 @@ CParams params[] = {
     CParams("~address_list", "two or more addresses (0x...), the first is an ERC20 token, balances for the rest are reported"),
     CParams("~!block_list",  "an optional list of one or more blocks at which to report balances, defaults to 'latest'"),
     CParams("-byAcct",       "consider each address an ERC20 token except the last, whose balance is reported for each token"),
+    CParams("-data",         "render results as tab delimited data (for example, to build a cap table)"),
     CParams("-list:<fn>",    "an alternative way to specify an address_list, place one address per line in the file 'fn'"),
     CParams("-noZero",       "suppress the display of zero balance accounts"),
-    CParams("-data",         "render results as tab delimited data (for example, to build a cap table)"),
+    CParams("-total",        "if more than one balance is requested, display a total as well."),
     CParams("",              "Retrieve the token balance(s) for one or more addresses at the given (or latest) block(s).\n"),
 };
 uint32_t nParams = sizeof(params) / sizeof(CParams);
@@ -37,10 +38,14 @@ bool COptions::parseArguments(SFString& command) {
         } else if (arg == "-n" || arg == "--noZero") {
             noZero = true;
 
+        } else if (arg == "-t" || arg == "--total") {
+            total = true;
+
         } else if (arg == "-b" || arg == "--byAcct") {
             byAccount = true;
 
         } else if (arg.startsWith("-l:") || arg.startsWith("--list:")) {
+
             CFilename fileName(arg.Substitute("-l:","").Substitute("--list:",""));
             if (!fileName.isValid())
                 return usage("Not a valid filename: " + orig + ". Quitting...");
@@ -63,6 +68,7 @@ bool COptions::parseArguments(SFString& command) {
             }
 
         } else if (arg.startsWith("0x")) {
+
             if (!isAddress(arg))
                 return usage(arg + " does not appear to be a valid Ethereum address. Quitting...");
             address_list += arg + "|";
@@ -78,6 +84,9 @@ bool COptions::parseArguments(SFString& command) {
             }
         }
     }
+
+    if (asData && total)
+        return usage("Totalling is not available when exporting data.");
 
     address_list = Strip(address_list, '|');
     if (countOf('|', address_list) < 1)
@@ -117,6 +126,7 @@ void COptions::Init(void) {
     asData = false;
     noZero = false;
     byAccount = false;
+    total = false;
     blocks.Init();
 }
 
