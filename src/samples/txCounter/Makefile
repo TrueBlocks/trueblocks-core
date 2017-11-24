@@ -51,7 +51,6 @@ $(EXE_NAME): $(OBJS)
 	@mkdir -p $(EXE_PATH)
 	mv $(EXE_NAME) $(EXE_PATH)	
 
-
 # Clean
 clean: 
 	$(RM) -rf $(OBJS_PATH) $(EXE_PATH)
