@@ -112,7 +112,7 @@ SFString doOneBlock(uint64_t num, const COptions& opt) {
             SFString format = opt.format;
             if (false) { //opt.priceBlocks) {
                 SFUintBN oneWei = canonicalWei("1000000000000000000");
-                SFString dollars = asDollars(gold.timestamp, oneWei);
+                SFString dollars = "$" + asDollars(gold.timestamp, oneWei);
                 format.Replace("{PRICE:CLOSE}", dollars);
             }
             result = gold.Format(format);
