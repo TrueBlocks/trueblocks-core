@@ -1,6 +1,20 @@
-getTokenBal argc: 8 [1:0xb9e7f8568e08d5659f5d29c4997173d84cdf2607] [2:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98] [3:0x6b65353ac052f6c3a0c9688911b078bd025d6ab3] [4:0xa25d04fa348f107428708ba19c95d1c79b3744bf] [5:--byAcct] [6:-d] [7:4000000] 
-getTokenBal 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98 0x6b65353ac052f6c3a0c9688911b078bd025d6ab3 0xa25d04fa348f107428708ba19c95d1c79b3744bf --byAcct -d 4000000 
-block	token	holder	token balance
-4000000	0xb9e7f8568e08d5659f5d29c4997173d84cdf2607	0xa25d04fa348f107428708ba19c95d1c79b3744bf	435000000000000000000000
-4000000	0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98	0xa25d04fa348f107428708ba19c95d1c79b3744bf	0
-4000000	0x6b65353ac052f6c3a0c9688911b078bd025d6ab3	0xa25d04fa348f107428708ba19c95d1c79b3744bf	0
+getTokenBal argc: 9 [1:0xb9e7f8568e08d5659f5d29c4997173d84cdf2607] [2:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98] [3:0x6b65353ac052f6c3a0c9688911b078bd025d6ab3] [4:0xa25d04fa348f107428708ba19c95d1c79b3744bf] [5:--byAcct] [6:-d] [7:4000000] [8:--total] 
+getTokenBal 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98 0x6b65353ac052f6c3a0c9688911b078bd025d6ab3 0xa25d04fa348f107428708ba19c95d1c79b3744bf --byAcct -d 4000000 --total 
+
+  Totalling is not available when exporting data.
+
+  Usage:    getTokenBal [-b|-d|-l fn|-n|-t|-v|-h] <address> <address> [address...] [block...]  
+  Purpose:  Retrieve the token balance(s) for one or more addresses at the given (or latest) block(s).
+             
+  Where:    
+	address_list          two or more addresses (0x...), the first is an ERC20 token, balances for the rest are reported (required)
+	block_list            an optional list of one or more blocks at which to report balances, defaults to 'latest'
+	-b  (--byAcct)        consider each address an ERC20 token except the last, whose balance is reported for each token
+	-d  (--data)          render results as tab delimited data (for example, to build a cap table)
+	-l  (--list fn)       an alternative way to specify an address_list, place one address per line in the file 'fn'
+	-n  (--noZero)        suppress the display of zero balance accounts
+	-t  (--total)         if more than one balance is requested, display a total as well.
+	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
+	-h  (--help)          display this help screen
+
+  Powered by QuickBlocks

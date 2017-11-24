@@ -13,6 +13,7 @@ public:
     bool asData;
     bool byAccount;
     bool noZero;
+    bool total;
 
     COptions(void);
     ~COptions(void);
