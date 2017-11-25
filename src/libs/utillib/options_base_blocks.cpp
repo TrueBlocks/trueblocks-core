@@ -121,4 +121,14 @@ namespace qblocks {
         return ret;
     }
 
+    //--------------------------------------------------------------------------------
+    bool COptionsBlockList::isInRange(blknum_t bn) const {
+        if (start <= bn && bn < stop)
+            return true;
+        for (uint32_t i = 0 ; i < numList.getCount() ; i++)
+            if (bn == numList[i])
+                return true;
+        return false;
+    }
+
 }  // namespace qblocks

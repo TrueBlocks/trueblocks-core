@@ -1,5 +1,5 @@
-ethslurp argc: 6 [1:0x1324e7b922b30B49Ab8EA81086341cc41C249346] [2:--dates:20170519:20170519] [3:--fmt:html] [4:--income] [5:--blocks:0] 
-ethslurp 0x1324e7b922b30B49Ab8EA81086341cc41C249346 --dates:20170519:20170519 --fmt:html --income --blocks:0 
+ethslurp argc: 7 [1:0x1324e7b922b30B49Ab8EA81086341cc41C249346] [2:--dates:20170519:20170519] [3:--fmt:html] [4:--income] [5:--blocks] [6:0] 
+ethslurp 0x1324e7b922b30B49Ab8EA81086341cc41C249346 --dates:20170519:20170519 --fmt:html --income --blocks 0 
 Processing: 0x1324e7b922b30B49Ab8EA81086341cc41C249346 --dates:20170519:20170519 --fmt:html --income --blocks:0
 
   Specifiy either a date range or a block range, not both. Quitting...
