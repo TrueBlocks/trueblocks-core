@@ -99,10 +99,15 @@ parity_proc_name = 'parity'
 # Contracts and bin paths (can be absolute or relative path, by default using relative one present at bash script)
 contracts_path = '../monitors'
 contracts_bin_subpath = 'bin'
+# Timeout (in seconds) for periodic parity restart
+restart_timeout = 7200 # (120 min * 60 sec)
 
 #---------------------
 # EXECUTION
 #---------------------
+
+# Get last parity restart timestamp = now
+last_restart_time = int(time.time())
 
 # Define a signals handler to capture at least Ctrl+C
 signal.signal(signal.SIGINT, signal_handler)
@@ -143,7 +148,16 @@ while True:
             break
         else:
             # we can run the watcher
+            # After watchers we check if the parity restart is required or we can continue
             runwatcher()
+
+            now_time = int(time.time())
+            elapsed_time = (now_time - last_restart_time)
+
+            if elapsed_time >= restart_timeout:
+                restart_timeout = now_time # keep track of last restart
+                break
+
             time.sleep(float(timeout))
     print("Restarting Parity...")
     #os.kill(proc.pid, signal.SIGINT)
