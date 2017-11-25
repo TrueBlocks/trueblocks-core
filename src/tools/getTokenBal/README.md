@@ -10,7 +10,7 @@ You may optionally specify one or more blocks at which to report.
 
 #### Usage
 
-`Usage:`    getTokenBal [-b|-l fn|-n|-d|-v|-h] &lt;address&gt; &lt;address&gt; [address...] [block...]  
+`Usage:`    getTokenBal [-b|-d|-l fn|-n|-t|-v|-h] &lt;address&gt; &lt;address&gt; [address...] [block...]  
 `Purpose:`  Retrieve the token balance(s) for one or more addresses at the given (or latest) block(s).
              
 `Where:`  
@@ -20,9 +20,10 @@ You may optionally specify one or more blocks at which to report.
 |  | address_list | two or more addresses (0x...), the first is an ERC20 token, balances for the rest are reported |
 |  | block_list | an optional list of one or more blocks at which to report balances, defaults to 'latest' |
 | -b | --byAcct | consider each address an ERC20 token except the last, whose balance is reported for each token |
+| -d | --data | render results as tab delimited data (for example, to build a cap table) |
 | -l | --list fn | an alternative way to specify an address_list, place one address per line in the file 'fn' |
 | -n | --noZero | suppress the display of zero balance accounts |
-| -d | --data | render results as tab delimited data (for example, to build a cap table) |
+| -t | --total | if more than one balance is requested, display a total as well. |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
