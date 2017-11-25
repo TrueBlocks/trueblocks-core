@@ -128,6 +128,7 @@ namespace qblocks {
         COptionsBlockList(void);
         SFString toString(void) const;
         bool hasBlocks(void) const { return (hashList.getCount() || numList.getCount() || (start != stop)); }
+        bool isInRange(blknum_t bn) const;
         blknum_t parseBlockOption(SFString& msg, blknum_t lastBlock) const;
     };
 
