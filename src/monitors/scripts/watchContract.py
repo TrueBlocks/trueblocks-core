@@ -64,12 +64,15 @@ def runwatcher():
 # Checks if parity is already running. Returns true/false
 #---------------------------------------------------------------------------------------------
 def is_parity_running():
-    s = subprocess.check_output('ps axco command', shell=True)
-    # print s # debugging
-    if parity_proc_name in s:
-        return True
-    else:
-        # Not running
+    try:
+        s = subprocess.check_output('ps axco command', shell=True)
+        # print s # debugging
+        if parity_proc_name in s:
+            return True
+        else:
+            # Not running
+            return False
+    except: 
         return False
 
 
@@ -81,7 +84,7 @@ def get_parity_pid():
     # Get PID from name, this is only valid under Linux like environments
     pid = subprocess.check_output("pgrep " + parity_proc_name, shell=True)
     #print(pid)
-    return pid
+    return int(pid)
 
 #---------------------------------------------------------------------------------------------
 #  Main program
@@ -99,15 +102,14 @@ parity_proc_name = 'parity'
 # Contracts and bin paths (can be absolute or relative path, by default using relative one present at bash script)
 contracts_path = '../monitors'
 contracts_bin_subpath = 'bin'
-# Timeout (in seconds) for periodic parity restart
-restart_timeout = 7200 # (120 min * 60 sec)
+# Timeout (in seconds) for periodic parity restart and guard time to wait till it is completelly stopped
+parity_restart_periodicity = 7200 # (120 min * 60 sec)
+parity_stop_guard_time = 20
 
 #---------------------
 # EXECUTION
 #---------------------
 
-# Get last parity restart timestamp = now
-last_restart_time = int(time.time())
 
 # Define a signals handler to capture at least Ctrl+C
 signal.signal(signal.SIGINT, signal_handler)
@@ -128,8 +130,12 @@ else:
      exit(2)
 
 while True:
+    # Get last parity restart timestamp = now
+    last_restart_time = int(time.time())
+
     # Start parity if it is NOT running, otherwise start watching logic directly (parity is alread running)
-    if(is_parity_running() != True):
+    is_running = is_parity_running()
+    if(is_running != True):
         print("Starting Parity...")
         proc = subprocess.Popen([parity_proc_name, '--tracing', 'on', '--pruning', 'archive'])
         print("Parity running with pid {0}, waiting {1} seconds before running watcher".format(proc.pid, startup_timeout))
@@ -139,6 +145,7 @@ while True:
 
     while True:
         # Get the occupation percentage at current filesystem (in GB)
+        print("Cheking filesystem occupation...")
         s = os.statvfs(getmount('.'))
         gigs_left = (s.f_bavail * s.f_frsize) / 1024 / 1024 / 1024
         gigs_total_space = (s.f_blocks * s.f_frsize) / 1024 / 1024 / 1024
@@ -154,13 +161,20 @@ while True:
             now_time = int(time.time())
             elapsed_time = (now_time - last_restart_time)
 
-            if elapsed_time >= restart_timeout:
-                restart_timeout = now_time # keep track of last restart
+            #print("Elapsed {0} seconds since last restart, restart scheduled every {1} seconds".format(elapsed_time, parity_restart_periodicity))
+
+            if elapsed_time >= parity_restart_periodicity:
+                last_restart_time = now_time # keep track of last restart
                 break
 
             time.sleep(float(timeout))
     print("Restarting Parity...")
-    #os.kill(proc.pid, signal.SIGINT)
     # Get PID based on process name, this way we can also kill it when already running
-    os.kill(get_parity_pid(), signal.SIGINT) #Always running at this point
-    proc.wait()
+    pid = get_parity_pid()
+    os.kill(pid, signal.SIGINT) #Always running at this point
+    if not is_running:
+        proc.wait()
+    else:
+        # Wait enough time after kill
+        #print("Waiting {0} seconds till parity is completely stopped".format(parity_stop_guard_time))
+        time.sleep(parity_stop_guard_time)
