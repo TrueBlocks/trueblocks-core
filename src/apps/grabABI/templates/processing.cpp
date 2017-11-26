@@ -70,7 +70,7 @@ bool displayFromCache(const SFString& cacheFileName, uint64_t& blockNum, void *d
 
                     // If we switched blocks, read the next block
                     if (!readOneBlock_fromBinary(block, getBinaryFilename1(blockNum))) {
-                        cerr << "Block read failed. Quitting cache read\r\n";
+                        cerr << "Read of block " << blockNum << " failed. Quitting cache read\r\n";
                         visitor->cache.Release();
                         return false;
                     }
