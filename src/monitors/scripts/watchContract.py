@@ -110,7 +110,6 @@ parity_stop_guard_time = 20
 # EXECUTION
 #---------------------
 
-
 # Define a signals handler to capture at least Ctrl+C
 signal.signal(signal.SIGINT, signal_handler)
 
