@@ -90,7 +90,7 @@ run_test("getBloom_special_2" "stateclear")
 run_special_test("getBloom_cmd_file1" "--file:cmd_file1")
 run_special_test("getBloom_cmd_file2" "--file:cmd_file2")
 
-
+run_test("getBloom_blockByHash" "0xd19bc98080cd70951fad3951cef2d512e6334aa3c7e64a38985c955d4d2e273b" " 0x5cfb2aeb032f8280c85f51857badb4cd3837427603f2939baa34692c8da52be4")
 
 # Installation steps
 install(TARGETS ${TOOL_NAME} RUNTIME DESTINATION bin)

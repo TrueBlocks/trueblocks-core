@@ -104,5 +104,7 @@ run_special_test("whenBlock_special_block_multi2"         "stateclear" " iceage"
 run_special_test("whenBlock_help"                         "-h")
 run_special_test("whenBlock_long_help"                    "--help")
 
+run_test("whenBlock_blockByHash"                          "0xd19bc98080cd70951fad3951cef2d512e6334aa3c7e64a38985c955d4d2e273b")
+
 # Installation steps
 install(TARGETS ${TOOL_NAME} RUNTIME DESTINATION bin)

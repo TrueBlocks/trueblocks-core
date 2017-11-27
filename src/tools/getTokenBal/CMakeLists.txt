@@ -74,5 +74,7 @@ run_test("getTokenBal_special_2" "0xd26114cd6EE289AccF82350c8d8487fedB8A0C07" " 
 run_test("getTokenBal_special_3" "0xd26114cd6EE289AccF82350c8d8487fedB8A0C07" " 0x5e44c3e467a49c9ca0296a9f130fc433041aaa28" " 0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"  "  stateclear" " daofund")
 run_test("getTokenBal_special_and_block_combination" "0xd26114cd6EE289AccF82350c8d8487fedB8A0C07" " 0x5e44c3e467a49c9ca0296a9f130fc433041aaa28" " 0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"  "  stateclear" " daofund" " 4225341")
 
+run_test("getTokenBal_blockByHash" "0xd26114cd6ee289accf82350c8d8487fedb8a0c07" " 0xcfb98637bcae43c13323eaa1731ced2b716962fd" " 0x45205b0bdb6c9cc9bf0eb3753ae98175c563389b41b2d4a2178593a3415772c1" " 0x966c946dff292e4e5d91169f3007c3c28cd50ca614b18db601806c486f9e6e87")
+
 # Installation steps
 install(TARGETS ${TOOL_NAME} RUNTIME DESTINATION bin)

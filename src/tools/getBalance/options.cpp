@@ -63,6 +63,15 @@ bool COptions::parseArguments(SFString& command) {
                 return usage("Invalid option: " + arg);
             }
 
+        } else if (isHash(arg)) {
+            SFString ret = blocks.parseBlockList(arg, latestBlock);
+            if (ret.endsWith("\n")) {
+                cerr << "\n  " << ret << "\n";
+                return false;
+            } else if (!ret.empty()) {
+                return usage(ret);
+            }
+
         } else if (arg.startsWith("0x")) {
 
             if (!isAddress(arg))
