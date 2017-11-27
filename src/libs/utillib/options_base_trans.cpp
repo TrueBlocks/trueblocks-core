@@ -33,6 +33,11 @@ namespace qblocks {
             } else if (isHash(arg)) {
                 queries += (arg + "|");  // transHash
 
+            } else {
+                SFString ret = "The argument '" + argIn + "' is not properly formatted.";
+                if (arg.length() != 66)
+                    ret += " Is it the right length?";
+                return ret;
             }
 
         } else if (arg.Contains(".")) {

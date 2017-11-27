@@ -77,5 +77,10 @@ run_test("getReceipt_by_file"            "--file:cmd_file")
 run_test("getReceipt_by_file_long_v"     "--file:cmd_file" " --verbose" " --parity")
 run_test("getReceipt_by_file_v"          "--verbose"       " --file:cmd_file")
 
+run_test("getReceipt_bad_hash_msg"                 "0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521" " 0x0766ec95bf12f9600afc6c33c287f9d2356d85f15f0d7eeeb6647f5d4ddfbc11" " 0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521")
+run_test("getReceipt_bad_hash_msg_raw"     "--raw" " 0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521" " 0x0766ec95bf12f9600afc6c33c287f9d2356d85f15f0d7eeeb6647f5d4ddfbc11" " 0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521")
+run_test("getReceipt_bad_blkhash_msg"              "0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.1" " 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.5")
+run_test("getReceipt_bad_blkhash_msg_raw"  "--raw" "0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.1" " 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.5")
+
 # Installation steps
 install(TARGETS ${TOOL_NAME} RUNTIME DESTINATION bin)
