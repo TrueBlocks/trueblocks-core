@@ -951,12 +951,13 @@ bool forEveryTransaction(TRANSVISITFUNC func, void *data, const SFString& trans_
     while (!list.empty()) {
         SFString item = nextTokenClear(list, '|');
         bool hasDot = item.Contains(".");
+        bool isHex = item.startsWith("0x");
 
         SFString hash = nextTokenClear(item, '.');
         uint64_t txID = toLongU(item);
 
         CTransaction trans;
-        if (hash.startsWith("0x")) {
+        if (isHex) {
             if (hasDot) {
                 // We are not fully formed, we have to ask the node for the receipt
                 getTransaction(trans, hash, txID);  // blockHash.txID
@@ -967,11 +968,19 @@ bool forEveryTransaction(TRANSVISITFUNC func, void *data, const SFString& trans_
         } else {
             getTransaction(trans, (uint32_t)toLongU(hash), txID);  // blockNum.txID
         }
+
         CBlock block;
         trans.pBlock = &block;
         getBlock(block, trans.blockNumber);
         getReceipt(trans.receipt, trans.getValueByName("hash"));
         trans.finishParse();
+        if (!isHash(trans.hash)) {
+            // If the transaction has no hash here, either the block hash or the transaction hash being asked for doesn't exist. We need to
+            // report which hash failed and why to the caller. Because we have no better way, we report that in the hash itself. There are
+            // three cases, two with either block hash or block num one with transaction hash. Note: This will fail if we move to non-string hashes
+            trans.hash = hash + "-" + (!isHex || hasDot ? "block_not_found" : "trans_not_found");
+        }
+
         if (!(*func)(trans, data))
             return false;
     }

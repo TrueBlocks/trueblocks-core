@@ -1,7 +1,7 @@
 getReceipt argc: 2 [1:0x0012] 
 getReceipt 0x0012 
 
-  Please specify at least one transaction identifier.
+  The argument '0x0012' is not properly formatted. Is it the right length?
 
   Usage:    getReceipt [-r|-v|-h] <transID> [transID...]  
   Purpose:  Retrieve a transaction's receipt from the local cache or a running node.  
