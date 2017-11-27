@@ -280,14 +280,13 @@ bool queryBlock(CBlock& block, const SFString& datIn, bool needTrace, bool byHas
         getObjectViaRPC(block, "eth_getBlockByNumber", "["+quote(asStringU(num))+",true]");
     }
 
-    // If there are no transactions, we're done
-    if (!block.transactions.getCount() || no_tracing)
-    {
-        // We only write binary if there are transactions
-        //writeToBinary(block, getBinaryFilename1(num));
-        //writeToJson(block, getJsonFilename1(num)); //We've stopped writing JSON for now because of disc space
+    // If there are no transactions, we do not have to trace and we want to tell the caller that
+    if (!block.transactions.getCount())
         return false;
-    }
+
+    // If there are transactions, but we are told not to trace, tell the caller that
+    if (no_tracing)
+        return true;
 
     // We have the transactions, but we also want the receipts
     nTraces=0;

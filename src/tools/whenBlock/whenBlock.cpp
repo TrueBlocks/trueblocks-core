@@ -14,7 +14,7 @@ extern void unloadCache(void);
 
 //---------------------------------------------------------------
 int main(int argc, const char *argv[]) {
-    etherlib_init("parity");
+    etherlib_init("binary");
 
     setNoTracing(true); // we never need to trace in this app
 
