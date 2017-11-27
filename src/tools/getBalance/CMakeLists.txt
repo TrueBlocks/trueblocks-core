@@ -84,5 +84,7 @@ run_test("getBalance_e_tip_4"       "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359"
 # Don't run this test since it defaults to latest block which chages at every 14 seconds
 #run_test("getBalance_no_block"    "0xbb9bc244d798123fde783fcc1c72d3bb8c189413")
 
+run_test("getBalance_blockByHash" "0x89205a3a3b2a69de6dbf7f01ed13b2108b2c43e7" " 0x45205b0bdb6c9cc9bf0eb3753ae98175c563389b41b2d4a2178593a3415772c1")
+
 # Installation steps
 install(TARGETS ${TOOL_NAME} RUNTIME DESTINATION bin)

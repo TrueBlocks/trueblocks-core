@@ -103,4 +103,3 @@ SFString doOneBloom(uint64_t num, const COptions& opt) {
 
     return (opt.quiet ? "" : result);
 }
-

@@ -50,6 +50,7 @@ run_test("whereBlock_help"              "-h")
 run_test("whereBlock_long_help"         "--help")
 run_test("whereBlock_notcached"         "45000")
 run_test("whereBlock_cached"            "1001001")
+run_test("whereBlock_blockByHash"       "0xd19bc98080cd70951fad3951cef2d512e6334aa3c7e64a38985c955d4d2e273b")
 
 # Installation steps
 install(TARGETS ${TOOL_NAME} RUNTIME DESTINATION bin)

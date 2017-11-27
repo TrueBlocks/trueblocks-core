@@ -229,6 +229,8 @@ set_property(TEST ethslurp_single_date_range PROPERTY ENVIRONMENT "CACHE_ADDR=0x
 #echo "Bring down EEAR contract just to keep track of it"                      | tee proposed/eear.txt
 #cat api_key | ethslurp -t -f:txt 0xbdace480953fc8260184bd625389ea20bbd0da9f   >>proposed/eear.txt 2>&1
 
+run_test("ethslurp_blockByHash" "0xd26114cd6ee289accf82350c8d8487fedb8a0c07" " --block" " 0xd19bc98080cd70951fad3951cef2d512e6334aa3c7e64a38985c955d4d2e273b")
+
 # Installation steps, this tool is renamed at installation
 install(TARGETS ${TOOL_NAME} RUNTIME DESTINATION bin)
-install(CODE "file(RENAME \"${CMAKE_INSTALL_PREFIX}/bin/${TOOL_NAME}\" \"${CMAKE_INSTALL_PREFIX}/bin/ethSlurp\")")    
+install(CODE "file(RENAME \"${CMAKE_INSTALL_PREFIX}/bin/${TOOL_NAME}\" \"${CMAKE_INSTALL_PREFIX}/bin/ethSlurp\")")

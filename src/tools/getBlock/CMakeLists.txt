@@ -94,6 +94,7 @@ run_test("getBlock_help" "-h")
 run_test("getBlock_help_long" "--help")
 
 run_test("getBlock_byzantium_1" " 4369999" " 4370000" " 4380101")
+run_test("getBlock_blockByHash" "0xd19bc98080cd70951fad3951cef2d512e6334aa3c7e64a38985c955d4d2e273b")
 
 # Installation steps
 install(TARGETS ${TOOL_NAME} RUNTIME DESTINATION bin)

@@ -183,4 +183,3 @@ void interumReport(ostream& os, blknum_t i) {
     os << (!(i%150) ? "." : (!(i%1000)) ? "+" : "");  // dots '.' at every 150, '+' at every 1000
     os.flush();
 }
-
