@@ -1,13 +1,14 @@
 ethName argc: 2 [1:--help] 
 ethName --help 
 
-  Usage:    ethName [-a|-c|-o|-l|-m|-s|-v|-h] <term> [term...]  
+  Usage:    ethName [-a|-c|-d|-o|-l|-m|-s|-v|-h] <term> [term...]  
   Purpose:  Query Ethereum addresses and/or names making it easy to remember accounts.
              
   Where:    
 	terms                 a space separated list of one or more search terms (required)
-	-a  (--alone)         export only the associated address (may be used in scripting)
+	-a  (--addr)          export only the associated address (may be used in scripting)
 	-c  (--count)         print only the count of the number of matches
+	-d  (--data)          export results as tab separated data
 	-o  (--open)          open the name database for editing
 	-l  (--list)          list all names in the database
 	-m  (--matchCase)     matches must agree in case (the default is to ignore case)
