@@ -18,7 +18,8 @@ public:
     bool matchCase;
     bool open;
     bool list;
-    bool alone;
+    bool addrOnly;
+    bool data;
     bool isEdit;
 
     COptions(void);
