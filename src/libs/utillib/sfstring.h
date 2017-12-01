@@ -240,10 +240,6 @@ namespace qblocks {
         SFString        substr        (size_t first) const;
 
         void            Reverse       (void);
-
-        void            Format        (const char *lpszFormat, ...) const;
-        void            FormatV       (const char *lpszFormat, va_list argList) const;
-
         int             Icompare      (const char *str) const;
 
         size_t   findI           (const char *search) const;
