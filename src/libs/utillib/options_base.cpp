@@ -452,11 +452,12 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
             ctx << "| -------: | :------- | :------- |\n";
         }
 
+        bool showHidden = (SFString(getenv("SHOW_HIDDEN_OPTIONS")) == "true");
         for (uint64_t i = 0 ; i < nParamsRef ; i++) {
             SFString sName = paramsPtr[i].shortName;
             SFString lName = paramsPtr[i].longName;
             SFString descr = Strip(paramsPtr[i].description, ' ');
-            if (sName.startsWith('@')) {
+            if (sName.startsWith('@') && !showHidden) {
                 // invisible option
 
             } else if (!sName.empty()) {
