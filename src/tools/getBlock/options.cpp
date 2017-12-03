@@ -64,6 +64,7 @@ bool COptions::parseArguments(SFString& command) {
 
         } else if (arg == "-o" || arg == "--force") {
             etherlib_init("binary");
+            latestBlock = getLatestBlockFromClient();
             force = true;
 
         } else if (arg == "--normalize") {
@@ -76,7 +77,12 @@ bool COptions::parseArguments(SFString& command) {
 
             } else if (mode == "c" || mode == "cache") {
                 etherlib_init("binaryOnly");
+                latestBlock = getLatestBlockFromClient();
                 asks4Cache = true;
+
+            } else if (mode == "r" || mode == "remote") {
+                etherlib_init("infura");
+                latestBlock = getLatestBlockFromClient();
 
             } else {
                 return usage("Invalide source. Must be either '(r)aw' or '(c)ache'. Quitting...");
