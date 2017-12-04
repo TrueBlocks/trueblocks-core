@@ -47,5 +47,19 @@ run_test("cacheMan_invalid_param_1"   "--junk" )
 run_test("cacheMan_invalid_param_2"   "-l" " --junk" )
 
 # depends on fullblockIndex
-run_special_test("cacheMan_list"                    "Duplicate.cache")
-run_special_test("cacheMan_check"             "-c" " Duplicate.cache")
+run_special_test("cacheMan_list"       "Duplicate.cache")
+run_special_test("cacheMan_check" "-c" " Duplicate.cache")
+
+# CParams("~filenames",      "path(s) of files to check, merge, fix or display (default=display)"),
+# CParams("-check",          "check for duplicates and other problems in the cache"),
+# CParams("-data",           "in 'list' mode, render results as data (i.e export mode)"),
+# CParams("-fix",            "remove duplicates from the cache (if any)"),
+# CParams("-list",           "list the contents of the cache (the default if no other option)"),
+# CParams("-stats",          "report statistics on the cache"),
+# CParams("-extract:<num>",  "extract transactions for the given contract :id"),
+# CParams("-truncate:<num>", "truncate the cache at block :n (keeps block 'n' and before, implies --fix)"),
+# CParams("-merge",          "merge two or more caches into a single cache"),
+# //    CParams("-renumber",     "renumber contract is from :old-new. (You may specify multiple pairs separated by commas.)"),
+# CParams("@s(k)ip",         "skip value for testing"),
+# //  CParams("-remove:addr",    "remove any transaction included because of this address (disabled)"),
+# CParams("",                "Show the contents of an account cache and/or fix it by removing duplicate records.\n"),
