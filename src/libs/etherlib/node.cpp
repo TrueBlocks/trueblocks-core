@@ -88,6 +88,7 @@ void etherlib_init(const SFString& sourceIn)
     CRPCResult::registerClass();
     CNameValue::registerClass();
     CAccountName::registerClass();
+    CAcctCacheItem::registerClass();
 
     setSource(sourceIn);
     // if curl has already been initialized, we want to clear it out
