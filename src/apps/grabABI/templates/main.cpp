@@ -115,7 +115,10 @@ int main(int argc, const char *argv[]) {
 
             visitor.blockStats.lastBlock  = min(topOfChain, visitor.blockStats.maxWatchBlock);
             visitor.blockStats.firstBlock = min(blockNum,   visitor.blockStats.lastBlock);
-            visitor.blockStats.nBlocks    = visitor.blockStats.lastBlock - visitor.blockStats.firstBlock;
+            if (visitor.blockStats.firstBlock > visitor.blockStats.lastBlock)
+                visitor.blockStats.nBlocks    = 0;
+            else
+                visitor.blockStats.nBlocks    = visitor.blockStats.lastBlock - visitor.blockStats.firstBlock;
             cerr << "Freshening " << visitor.opts.monitorName << "from " << visitor.blockStats.firstBlock << " to " << visitor.blockStats.lastBlock << " (" << visitor.blockStats.nBlocks << " blocks)\r\n";
             cerr.flush();
 
