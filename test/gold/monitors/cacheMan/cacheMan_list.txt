@@ -1,5 +1,5 @@
-cacheMan argc: 2 [1:Duplicate.cache] 
-cacheMan Duplicate.cache 
+cacheMan argc: 3 [1:-l] [2:Duplicate.cache] 
+cacheMan -l Duplicate.cache 
 Listing cache: Duplicate.cache
 blockNum: 1235820 transID: 1 which: 12
 blockNum: 1236136 transID: 14 which: 12

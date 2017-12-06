@@ -18,9 +18,8 @@ CParams params[] = {
     CParams("-extract:<num>",  "extract transactions for the given contract :id"),
     CParams("-truncate:<num>", "truncate the cache at block :n (keeps block 'n' and before, implies --fix)"),
     CParams("-merge",          "merge two or more caches into a single cache"),
-//    CParams("-renumber",     "renumber contract is from :old-new. (You may specify multiple pairs separated by commas.)"),
     CParams("@s(k)ip",         "skip value for testing"),
-//  CParams("-remove:addr",    "remove any transaction included because of this address (disabled)"),
+    CParams("@spl(i)t",        "split the cache by address"),
     CParams("",                "Show the contents of an account cache and/or fix it by removing duplicate records.\n"),
 };
 uint32_t nParams = sizeof(params) / sizeof(CParams);
@@ -68,29 +67,13 @@ bool COptions::parseArguments(SFString& command) {
                 return usage("You must supply a contract address to extract: --extract:id.");
             nextTokenClear(arg, ':');
             extractID = toLong32u(arg);
-            mode = "extract";  // 'extract' must be stand alone
-
-        } else if (arg.startsWith("-r") || arg.startsWith("--renum")) {
-            arg = arg.Substitute("-r", "").Substitute("--renum", "");
-            if (!arg.startsWith(":"))
-                return usage("You must supply both an old and new contract id: --renum:old-new.");
-            if (!arg.Contains("-"))
-                return usage("Use '-' to separate old and new in --renum:old-new.");
-
-            // User may specify either -r:old-new,old-new or multiple -r:old-new pairs
-            // At this point 'arg' starts with ':' and may contain any number of old-new pairs
-            // of renumbers separated by commas.
-            nextTokenClear(arg, ':');
-            while (!arg.empty()) {
-                if (!arg.Contains("-"))
-                    return usage("You must supply both an old and new contract id: --renum:old-new.");
-                renums[renums.getCount()] = toLong32u(nextTokenClear(arg, '-'));
-                renums[renums.getCount()] = toLong32u(nextTokenClear(arg, ','));
-            }
-            mode = "renum";  // 'renum' must be stand alone
+            isExtract = true;
 
         } else if (arg == "-m" || arg == "--merge") {
             isMerge = true;
+
+        } else if (arg == "-i" || arg == "--split") {
+            isSplit = true;
 
         } else if (arg == "-d" || arg == "--data") {
             asData = true;
@@ -117,31 +100,17 @@ bool COptions::parseArguments(SFString& command) {
 
     if (filenames.getCount() == 0)
         return usage("You must provide at least one filename. Quitting.");
-    if (mode.empty())
-        mode = "list";
-
+    if (mode.empty() && !wantsStats && !isMerge && !isExtract && !isSplit)
+        return usage("You must provide some combination of --list, --check, or --fix. Quitting...");
     if (isMerge && filenames.getCount() < 2)
         return usage("Merge command needs at least two filenames. Quitting.");
-    // The actual merge is handled in caller
+    if (isSplit && filenames.getCount() != 1)
+        return usage("Split command requires a single filename. Quitting.");
 
-    if (mode.Contains("extract"))
-        mode = "extract";  // if extract is used at all, use it alone
-
-    if (mode.Contains("renum")) {
-        for (uint32_t i = 0 ; i < renums.getCount() ; i++)
-            cout << renums[i] << ":";
-        cout << "\n";
-        mode = "renum|list";  // if renum is used at all, use it alone
-        if (renums.getCount() % 2)
-            return usage("With --renum, you must specify both old and new ids. Use --renum:old:new. Quitting.");
-        for (uint32_t i = 0 ; i < renums.getCount() ; i++) {
-            if (renums[i] < 0)
-                return usage("Renum ids must be greater than zero. Quitting.");
-            for (uint32_t j = 0 ; j < renums.getCount() ; j++) {
-                if (i != j && renums[i] == renums[j])
-                    return usage("Use a contract id only once in a renumbering scheme. Run cacheMan twice instead.");
-            }
-        }
+    // Merge and extract are handled in main, split is handled right here
+    if (isSplit) {
+        processSplit(*this);
+        return false;
     }
 
     return true;
@@ -155,11 +124,12 @@ void COptions::Init(void) {
     filenames.Clear();
     mode = "";
     trunc = 0;
-    extractID = NOPOS;
     isMerge = false;
+    isSplit = false;
+    isExtract = false;
+    extractID = NOPOS;
     asData = false;
     wantsStats = false;
-    renums.Clear();
     skip = 1;
 }
 
