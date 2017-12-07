@@ -2,13 +2,13 @@
 
 The only dependencies for QuickBlocks are (1) a locally-running Ethereum node (or a remote Ethereum node such as [Infura](http://infura.io)), (2) the `curl` libraries, and (3) build tools such as `git`, `cmake`, and `python`.  Below we give specific instructions for your operating sytem. Following that are instructions for how to build and install QuickBlocks and further steps.
 
-If you are the `root` user on your system, you do not need to use `sudo` below. If you are *not* the `root`, you will need to use `sudo`.
-
 The [ethslurp tool](../../apps/ethslurp/README.md) will not run without an API key from [EtherScan.io](http://etherscan.io/apis) (registration is required). The tool will request a key from that site before running.
 
 Please see [this important information](RUNNING_A_NODE.md) about running or not running the Ethereum node.
 
 ***
+
+If you are the `root` user on your system, you do not need to use `sudo` below. If you are *not* the `root` user, you will need to use `sudo`.
 
 ### for Centos
 
@@ -83,6 +83,6 @@ sudo make install
 The installation installs the QuickBlocks command line tools in the folder /usr/local/qblocks/bin. You may wish to add this path to your ${PATH} environment variable.
 
 ***
-## After Building...on To the Samples
+## After building, on to the samples
 
 After you're done building and installing the library and tools, you may wish to try your hand at building some QuickBlocks applications or tools. We've provided a number of simple samples to help you get started. Please follow [this link](../../samples/README.md).
