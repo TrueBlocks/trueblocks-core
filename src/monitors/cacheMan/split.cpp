@@ -8,20 +8,62 @@
 #include "options.h"
 
 extern void loadWatches(const CToml& toml, CAccountWatchArray& array);
+extern void oneWatch(const CAccountWatch& watch);
 //-------------------------------------------------------------------------
 bool processSplit(COptions& options) {
 
-    if (!fileExists("./config.toml"))
+    if (!fileExists("./config.toml")) {
         cerr << "Config file ./config.toml not found. Quitting...\n";
+        return false;
+    }
 
     CToml toml("./config.toml");
-
     CAccountWatchArray array;
     loadWatches(toml, array);
 
-    for (uint32_t i=0;i<array.getCount();i++) {
-        cout << array[i].Format("[{INDEX}]\t[{NAME}]\t[{ADDRESS}]\n");
+    cout << iMagenta << "\n" << array.getCount() << " watched accounts were found in the file: "
+            << bTeal << options.filenames[0] << "\n" << cOff;
+    for (uint32_t i=0;i<=array.getCount()/2;i++) {
+        oneWatch(array[i]);
+        if ((i+array.getCount()/2)+1<array.getCount())
+            oneWatch(array[(i+array.getCount()/2)+1]);
+        cout << "\n";
     }
+
+    cerr << iMagenta << "The results will be placed in the folder ./split.\n" << cOff;
+    cerr << bTeal << "Continue? (y=yes) > " << cOff;
+    int ch = (isTestMode() ? 'y' : getchar());
+    if (ch != 'y' && ch != 'Y') {
+        cerr << "Split request ignored.\n";
+        return false;  // return false so we don't continue
+    }
+
+    SFString source = options.filenames[0].Substitute("cache/", "split/").Substitute(".acct.bin", ".junk");
+    cout << "\nSplitting the file " << options.filenames[0] << " into the folder ./split.\n";
+    if (!establishFolder("split/"))
+        cout << "Could not create folder.\n";
+    else
+        copyFile(options.filenames[0], source);
+
+    CAcctCacheItemArray theData;
+    SFArchive cache(READING_ARCHIVE);
+    if (!cache.Lock(source, binaryReadOnly, LOCK_NOWAIT))
+        return usage("Could not open file: " + source + ". Quitting.");
+    while (!cache.Eof()) {
+        int32_t which = 0; uint64_t blockNum = 0, transID = 0;
+        cache >> which >> blockNum >> transID;
+        theData[theData.getCount()] = CAcctCacheItem(blockNum, transID, which);
+    }
+    cache.Release();
+    theData.Sort(sortByAccount);
+
+    for (uint32_t i=0;i<theData.getCount();i++) {
+        const CAccountWatch *item = &array[(uint32_t)theData[i].which];
+        cout << theData[i] << "." << item->address << "." << item->color << item->name << cOff << "\n";
+    }
+
+    if (fileExists(source))
+        removeFile(source);
 
     return true;
 }
@@ -46,6 +88,7 @@ void loadWatches(const CToml& toml, CAccountWatchArray& array) {
             SFString msg;
             watch.index = cnt++;
             watch.address = fixAddress(toLower(watch.address));
+            watch.color = convertColor(watch.color);
             if (!isAddress(watch.address)) {
                 cerr << "invalid address " << watch.address << "\n";
                 exit(0);
@@ -54,4 +97,13 @@ void loadWatches(const CToml& toml, CAccountWatchArray& array) {
         }
     }
     return;
+}
+
+//-----------------------------------------------------------------------
+void oneWatch(const CAccountWatch& watch) {
+    cout << "    " << padRight(asStringU(watch.index)+".",4) << watch.address;
+    SFString name = " (**" + watch.name.substr(0,12) + "&&)";
+    size_t len = 20-name.length();
+    cout << name.Substitute("**",watch.color).Substitute("&&",cOff);
+    cout << SFString(' ', len);
 }

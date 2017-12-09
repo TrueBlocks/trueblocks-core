@@ -32,7 +32,7 @@ bool processExtract(COptions& options) {
 
         cache.Release();
     }
-    extract.Sort(sortTheCache);
+    extract.Sort(sortByBlock);
 
     SFArchive extractFile(WRITING_ARCHIVE);
     if (extractFile.Lock("./extract.bin", binaryWriteCreate, LOCK_WAIT)) {

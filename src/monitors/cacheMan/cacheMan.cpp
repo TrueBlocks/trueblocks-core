@@ -192,7 +192,7 @@ int main(int argc, const char *argv[]) {
 }
 
 //-------------------------------------------------------------------------
-int sortTheCache(const void *v1, const void *v2) {
+int sortByBlock(const void *v1, const void *v2) {
     const CAcctCacheItem *c1 = (const CAcctCacheItem *)v1;
     const CAcctCacheItem *c2 = (const CAcctCacheItem *)v2;
     if ( c1->blockNum   > c2->blockNum   ) return  1;
@@ -200,6 +200,19 @@ int sortTheCache(const void *v1, const void *v2) {
     if ( c1->transIndex > c2->transIndex ) return  1;
     if ( c1->transIndex < c2->transIndex ) return -1;
     return (c1->which - c2->which);
+}
+
+//-------------------------------------------------------------------------
+int sortByAccount(const void *v1, const void *v2) {
+    const CAcctCacheItem *c1 = (const CAcctCacheItem *)v1;
+    const CAcctCacheItem *c2 = (const CAcctCacheItem *)v2;
+    if ( c1->which      > c2->which      ) return  1;
+    if ( c1->which      < c2->which      ) return -1;
+    if ( c1->blockNum   > c2->blockNum   ) return  1;
+    if ( c1->blockNum   < c2->blockNum   ) return -1;
+    if ( c1->transIndex > c2->transIndex ) return  1;
+    if ( c1->transIndex < c2->transIndex ) return -1;
+    return 0;
 }
 
 //-------------------------------------------------------------------------

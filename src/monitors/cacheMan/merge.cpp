@@ -38,7 +38,7 @@ bool processMerge(COptions& options) {
         }
         cache.Release();
     }
-    merged.Sort(sortTheCache);
+    merged.Sort(sortByBlock);
 
     SFArchive mergeFile(WRITING_ARCHIVE);
     if (!mergeFile.Lock("./merged.bin", binaryWriteCreate, LOCK_WAIT))
