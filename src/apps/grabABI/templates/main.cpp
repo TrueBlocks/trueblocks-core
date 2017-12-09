@@ -1,4 +1,3 @@
-THIS CODE MAY NOT WORK BECAUSE OF RECENT CHANGE TO READING ARRAYS IN TOML CODE
 /*-------------------------------------------------------------------------
  * This source code is confidential proprietary information which is
  * Copyright (c) 2017 by Great Hill Corporation.
