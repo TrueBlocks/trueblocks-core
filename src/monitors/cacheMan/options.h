@@ -49,7 +49,8 @@ extern bool processFix(COptions& options);
 extern bool processMerge(COptions& options);
 extern bool processExtract(COptions& options);
 extern bool processSplit(COptions& options);
-extern int  sortTheCache(const void *v1, const void *v2);
+extern int  sortByBlock(const void *v1, const void *v2);
+extern int  sortByAccount(const void *v1, const void *v2);
 
 //-------------------------------------------------------------------------
 extern const char *STR_DEFAULT_DISPLAY;
