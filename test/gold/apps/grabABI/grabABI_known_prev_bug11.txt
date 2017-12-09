@@ -47,7 +47,6 @@ ABI for address 0xbb9bc244d798123fde783fcc1c72d3bb8c189413
 	function curator                    ()
 	function checkProposalCode          (uint256 _proposalID,address _recipient,uint256 _amount,bytes _transactionData)
 	function privateCreation            ()
-	constructor                         (address _curator,address _daoCreator,uint256 _proposalDeposit,uint256 _minTokensToCreate,uint256 _closingTime,address _privateCreation)
 	event Transfer                      (address indexed _from,address indexed _to,uint256 _amount)
 	event Approval                      (address indexed _owner,address indexed _spender,uint256 _amount)
 	event FuelingToDate                 (uint256 value)

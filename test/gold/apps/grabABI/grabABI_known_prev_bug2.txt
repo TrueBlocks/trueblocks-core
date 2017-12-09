@@ -15,6 +15,5 @@ ABI for address 0x5f742383b6d1298980030d6af943b76cdd902143
 	function getPlayersFromCompetition  (string gameID,uint8 competitionIndex)
 	function getCurrentCompetitionValues(string gameID)
 	function _rewardWinners             (string gameID,uint8 competitionIndex,address[] winners)
-	constructor                         ()
 	event VersionChange                 (string indexed gameID,uint32 indexed version,bytes32 codeHash)
 

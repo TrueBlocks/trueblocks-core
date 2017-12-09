@@ -19,7 +19,6 @@ ABI for address 0xef638b4305b8a1620f4e0e562e127f1181ae16d2
 	function kill                       (address _to)
 	function changeOwner                (address _from,address _to)
 	function m_dailyLimit               ()
-	constructor                         (address[] _owners,uint256 _required,uint256 _daylimit)
 	event Confirmation                  (address owner,bytes32 operation)
 	event Revoke                        (address owner,bytes32 operation)
 	event OwnerChanged                  (address oldOwner,address newOwner)
