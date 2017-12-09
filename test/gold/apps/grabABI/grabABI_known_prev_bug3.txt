@@ -24,7 +24,6 @@ ABI for address 0x6090a6e47849629b7245dfa1ca21d94cd15878ef
 	function startAuction               (bytes32 _hash)
 	function rootNode                   ()
 	function startAuctionsAndBid        (bytes32[] hashes,bytes32 sealedBid)
-	constructor                         (address _ens,bytes32 _rootNode,uint256 _startDate)
 	event AuctionStarted                (bytes32 indexed hash,uint256 registrationDate)
 	event NewBid                        (bytes32 indexed hash,address indexed bidder,uint256 deposit)
 	event BidRevealed                   (bytes32 indexed hash,address indexed owner,uint256 value,uint8 status)

@@ -20,7 +20,6 @@ ABI for address 0xe94327d07fc17907b4db788e5adf2ed424addff6
 	function legacyRepContract          ()
 	function allowance                  (address _owner,address _spender)
 	function transferOwnership          (address newOwner)
-	constructor                         (address _legacyRepContract,uint256 _amountUsedToFreeze,address _accountToSendFrozenRepTo)
 	event Migrated                      (address indexed holder,uint256 amount)
 	event Pause                         ()
 	event Unpause                       ()
