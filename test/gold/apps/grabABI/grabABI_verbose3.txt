@@ -20,7 +20,6 @@ ABI for address 0xbb9bc244d798123fde783fcc1c72d3bb8c189413
 	function getMyReward                () [0xcc9ae3f6]
 	function transferFromWithoutReward  (address _from,address _to,uint256 _value) [0xdbde1988]
 	function changeProposalDeposit      (uint256 _proposalDeposit) [0xe33734fd]
-	constructor                         (address _curator,address _daoCreator,uint256 _proposalDeposit,uint256 _minTokensToCreate,uint256 _closingTime,address _privateCreation) [0xd9fdb088]
 	event Transfer                      (address indexed _from,address indexed _to,uint256 _amount) [0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef]
 	event Approval                      (address indexed _owner,address indexed _spender,uint256 _amount) [0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925]
 	event FuelingToDate                 (uint256 value) [0xf381a3e2428fdda36615919e8d9c35878d9eb0cf85ac6edf575088e80e4c147e]
