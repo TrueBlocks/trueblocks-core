@@ -45,7 +45,6 @@ ABI for address 0xaaaf91d9b90df800df4f55c205fd6989c977e73a
 	function claimTokens                (address _token)
 	function setTokenHolder             (address _th)
 	function controller                 ()
-	constructor                         ()
 	event Transfer                      (address indexed from,address indexed to,uint256 value)
 	event Approval                      (address indexed owner,address indexed spender,uint256 value)
 	event logTokenTransfer              (address token,address to,uint256 amount)
