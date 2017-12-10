@@ -20,8 +20,8 @@ MYSQL *conn = NULL;
 
 // connection credentials, normally at config file
 std::string host = "127.0.0.1";
-std::string user = "root"; //root
-std::string password = ""; //Sep2017$
+std::string user = "root";
+std::string password = "";
 
 //--------------------------------------------------------------------------
 extern int runQuery(const char* query);
@@ -82,7 +82,6 @@ void disconnectServer() {
     // close socket
     mysql_close(conn);
     conn = NULL;
-
     cout << "Disconnnected from mysql\n";
 }
 
@@ -215,4 +214,3 @@ int runQuery(const char* query) {
 
     return result;
 }
-
