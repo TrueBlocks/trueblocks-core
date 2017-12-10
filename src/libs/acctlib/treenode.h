@@ -28,7 +28,7 @@ using ACCTVISITOR = bool (*)(const CTreeNode *v, void *data);
 class CTreeNode : public CBaseNode {
 public:
     uint64_t index;
-    SFString m_prefix;
+    SFString prefix;
 
 public:
     CTreeNode(void);
@@ -92,7 +92,7 @@ inline void CTreeNode::Init(void) {
     CBaseNode::Init();
 
     index = 0;
-    m_prefix = "";
+    prefix = "";
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -104,7 +104,7 @@ inline void CTreeNode::Copy(const CTreeNode& tr) {
     CBaseNode::Copy(tr);
 
     index = tr.index;
-    m_prefix = tr.m_prefix;
+    prefix = tr.prefix;
 
     // EXISTING_CODE
     // EXISTING_CODE
