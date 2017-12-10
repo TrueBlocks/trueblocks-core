@@ -113,12 +113,12 @@ bool CNewReceipt::Serialize(SFArchive& archive) {
 //---------------------------------------------------------------------------------------------------
 bool CNewReceipt::SerializeC(SFArchive& archive) const {
 
-    // EXISTING_CODE
-    // EXISTING_CODE
-
     // Writing always write the latest version of the data
     ((CNewReceipt*)this)->m_schema = getVersionNum();
     CBaseNode::SerializeC(archive);
+
+    // EXISTING_CODE
+    // EXISTING_CODE
     archive << contractAddress;
     archive << gasUsed;
     archive << logs;

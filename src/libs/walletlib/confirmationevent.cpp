@@ -94,12 +94,11 @@ bool QConfirmationEvent::Serialize(SFArchive& archive) {
 //---------------------------------------------------------------------------------------------------
 bool QConfirmationEvent::SerializeC(SFArchive& archive) const {
 
-    // EXISTING_CODE
-    // EXISTING_CODE
-
     // Writing always write the latest version of the data
     CLogEntry::SerializeC(archive);
 
+    // EXISTING_CODE
+    // EXISTING_CODE
     archive << owner;
     archive << operation;
 

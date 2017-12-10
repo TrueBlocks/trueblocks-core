@@ -94,12 +94,11 @@ bool QApprove::Serialize(SFArchive& archive) {
 //---------------------------------------------------------------------------------------------------
 bool QApprove::SerializeC(SFArchive& archive) const {
 
-    // EXISTING_CODE
-    // EXISTING_CODE
-
     // Writing always write the latest version of the data
     CTransaction::SerializeC(archive);
 
+    // EXISTING_CODE
+    // EXISTING_CODE
     archive << _spender;
     archive << _value;
 

@@ -156,11 +156,11 @@ bool CFunction::Serialize(SFArchive& archive) {
 //---------------------------------------------------------------------------------------------------
 bool CFunction::SerializeC(SFArchive& archive) const {
 
-    // EXISTING_CODE
-    // EXISTING_CODE
-
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
+
+    // EXISTING_CODE
+    // EXISTING_CODE
     archive << name;
     archive << type;
     archive << anonymous;
