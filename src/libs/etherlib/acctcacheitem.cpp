@@ -98,11 +98,11 @@ bool CAcctCacheItem::Serialize(SFArchive& archive) {
 //---------------------------------------------------------------------------------------------------
 bool CAcctCacheItem::SerializeC(SFArchive& archive) const {
 
-    // EXISTING_CODE
-    // EXISTING_CODE
-
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
+
+    // EXISTING_CODE
+    // EXISTING_CODE
     archive << blockNum;
     archive << transIndex;
     archive << which;

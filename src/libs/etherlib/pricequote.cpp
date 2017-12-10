@@ -101,12 +101,12 @@ bool CPriceQuote::Serialize(SFArchive& archive) {
 //---------------------------------------------------------------------------------------------------
 bool CPriceQuote::SerializeC(SFArchive& archive) const {
 
-    // EXISTING_CODE
-    // EXISTING_CODE
-
     // Writing always write the latest version of the data
     ((CPriceQuote*)this)->m_schema = getVersionNum();
     CBaseNode::SerializeC(archive);
+
+    // EXISTING_CODE
+    // EXISTING_CODE
     archive << timestamp;
     archive << close;
 
