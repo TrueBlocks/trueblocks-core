@@ -136,11 +136,11 @@ bool CTrace::Serialize(SFArchive& archive) {
 //---------------------------------------------------------------------------------------------------
 bool CTrace::SerializeC(SFArchive& archive) const {
 
-    // EXISTING_CODE
-    // EXISTING_CODE
-
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
+
+    // EXISTING_CODE
+    // EXISTING_CODE
     archive << blockHash;
     archive << blockNumber;
     archive << subtraces;

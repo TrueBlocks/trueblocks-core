@@ -92,12 +92,11 @@ bool QChangeRequirement::Serialize(SFArchive& archive) {
 //---------------------------------------------------------------------------------------------------
 bool QChangeRequirement::SerializeC(SFArchive& archive) const {
 
-    // EXISTING_CODE
-    // EXISTING_CODE
-
     // Writing always write the latest version of the data
     CTransaction::SerializeC(archive);
 
+    // EXISTING_CODE
+    // EXISTING_CODE
     archive << _newRequired;
 
     return true;

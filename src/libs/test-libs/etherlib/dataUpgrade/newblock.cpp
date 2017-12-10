@@ -150,12 +150,12 @@ bool CNewBlock::Serialize(SFArchive& archive) {
 //---------------------------------------------------------------------------------------------------
 bool CNewBlock::SerializeC(SFArchive& archive) const {
 
-    // EXISTING_CODE
-    // EXISTING_CODE
-
     // Writing always write the latest version of the data
     ((CNewBlock*)this)->m_schema = getVersionNum();
     CBaseNode::SerializeC(archive);
+
+    // EXISTING_CODE
+    // EXISTING_CODE
     archive << gasLimit;
     archive << gasUsed;
     archive << hash;

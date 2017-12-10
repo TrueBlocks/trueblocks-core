@@ -119,6 +119,7 @@ namespace qblocks {
     extern SFString blockCachePath(const SFString& _part);
 
 #define fullBlockIndex (blockCachePath("fullBlocks.bin"))
+#define accountIndex   (blockCachePath("accountTree.bin"))
 #define miniBlockCache (blockCachePath("miniBlocks.bin"))
 #define miniTransCache (blockCachePath("miniTrans.bin"))
 #define blockFolder    (blockCachePath("blocks/"))
