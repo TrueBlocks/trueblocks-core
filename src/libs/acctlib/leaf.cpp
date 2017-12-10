@@ -104,12 +104,11 @@ bool CLeaf::Serialize(SFArchive& archive) {
 //---------------------------------------------------------------------------------------------------
 bool CLeaf::SerializeC(SFArchive& archive) const {
 
-    // EXISTING_CODE
-    // EXISTING_CODE
-
     // Writing always write the latest version of the data
     CTreeNode::SerializeC(archive);
 
+    // EXISTING_CODE
+    // EXISTING_CODE
     archive << blocks;
     archive << cnt;
 
@@ -245,7 +244,7 @@ const SFString CLeaf::getStringAt(const SFString& name, uint32_t i) const {
 #else
         cnt = 1;
 #endif
-        m_prefix = _key;
+        prefix = _key;
         if (verbose == 2) cerr << "\t\tCreating leaf " << _key << " at " << _value << endl;
     }
 
@@ -270,9 +269,9 @@ const SFString CLeaf::getStringAt(const SFString& name, uint32_t i) const {
     //-----------------------------------------------------------------------------
     bool CLeaf::contains(const SFString& _key) const {
         size_t l1 = _key.length();
-        size_t l2 = m_prefix.length();
+        size_t l2 = prefix.length();
         const char *s1 = (const char*)_key;
-        const char *s2 = (const char*)m_prefix;
+        const char *s2 = (const char*)prefix;
         bool found = !memcmp(s1, s2, l1);
 
         return l1 == l2 && found;
@@ -283,16 +282,16 @@ const SFString CLeaf::getStringAt(const SFString& name, uint32_t i) const {
         if (contains(_key)) {
             // If the leaf exists, we reset the value
             // We've reached the end of the key, so store the value here
-//            if (m_first == 0) {
+//            if (first == 0) {
 //                // store the first encountered block
 //                if (verbose) cerr << "\t\tStoring first contents " << _key << " at " << _value << "\n";
-//                m_first = toUnsigned(_value);
+//                first = toUnsigned(_value);
 //
 //            } else
             {
                 // preserve the most recent block encountered
                 if (verbose) cerr << "\t\tReplacing leaf contents " << _key << " at " << _value
-//                    << " (" << m_first << ")"
+//                    << " (" << first << ")"
                     << "\n";
 #ifdef OLD_CODE_Y
                 blocks[blocks.getCount()] = toUnsigned(_value);
@@ -319,7 +318,7 @@ const SFString CLeaf::getStringAt(const SFString& name, uint32_t i) const {
                 curVal = asStringU(cnt);
 #endif
             }
-            CTreeNode *n = CTreeNode::newBranch(_key, _value, m_prefix, curVal);
+            CTreeNode *n = CTreeNode::newBranch(_key, _value, prefix, curVal);
             delete this;
             return n;
         }
@@ -351,7 +350,7 @@ const SFString CLeaf::getStringAt(const SFString& name, uint32_t i) const {
         uint32_t save = vd->type;
         vd->cnt = cnt;
         vd->type = T_LEAF;
-        vd->strs = vd->strs + "+" + (cMagenta+m_prefix + cOff + "|" + cBlue + at(m_prefix) + cOff);
+        vd->strs = vd->strs + "+" + (cMagenta+prefix + cOff + "|" + cBlue + at(prefix) + cOff);
         (*func)(this, data);
         nextTokenClearReverse(vd->strs, '+');
         vd->type = save;

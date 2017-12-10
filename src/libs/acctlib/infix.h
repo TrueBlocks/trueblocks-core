@@ -27,7 +27,7 @@ typedef SFUniqueList<CInfix*>       CInfixListU;
 //--------------------------------------------------------------------------
 class CInfix : public CTreeNode {
 public:
-    CTreeNode *m_next;
+    CTreeNode *next;
 
 public:
     CInfix(void);
@@ -38,8 +38,8 @@ public:
     DECLARE_NODE(CInfix);
 
     // EXISTING_CODE
-    CInfix(const SFString& _key, CTreeNode* _next) : m_next(_next) {
-        m_prefix = _key;
+    CInfix(const SFString& _key, CTreeNode* _next) : next(_next) {
+        prefix = _key;
     }
     SFString at(const SFString& _key) const override;
     CTreeNode* insert(const SFString& _key, const SFString& _value) override;
@@ -85,9 +85,9 @@ inline CInfix::~CInfix(void) {
 
 //--------------------------------------------------------------------------
 inline void CInfix::Clear(void) {
-    if (m_next)
-        delete m_next;
-    m_next = NULL;
+    if (next)
+        delete next;
+    next = NULL;
     // EXISTING_CODE
     // EXISTING_CODE
 }
@@ -96,7 +96,7 @@ inline void CInfix::Clear(void) {
 inline void CInfix::Init(void) {
     CTreeNode::Init();
 
-    m_next = NULL;
+    next = NULL;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -107,9 +107,9 @@ inline void CInfix::Copy(const CInfix& in) {
     Clear();
     CTreeNode::Copy(in);
 
-    if (in.m_next) {
-        m_next = new CTreeNode;
-        *m_next = *in.m_next;
+    if (in.next) {
+        next = new CTreeNode;
+        *next = *in.next;
     }
 
     // EXISTING_CODE
