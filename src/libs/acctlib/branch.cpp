@@ -81,10 +81,26 @@ bool CBranch::Serialize(SFArchive& archive) {
         return ((const CBranch*)this)->SerializeC(archive);
 
     // If we're reading a back level, read the whole thing and we're done.
-    if (readBackLevel(archive))
-        return true;
+    CTreeNode::Serialize(archive);
 
     // EXISTING_CODE
+    for (int i=0;i<16;i++) {
+        if (nodes[i]) {
+            delete nodes[i];
+            nodes[i] = NULL;
+        }
+
+        bool has_val = false;
+        archive >> has_val;
+        if (has_val) {
+            SFString className;
+            archive >> className;
+            nodes[i] = createTreeNode(className);
+            if (!nodes[i])
+                return false;
+            nodes[i]->Serialize(archive);
+        }
+    }
     // EXISTING_CODE
     archive >> branchValue;
     finishParse();
@@ -98,6 +114,14 @@ bool CBranch::SerializeC(SFArchive& archive) const {
     CTreeNode::SerializeC(archive);
 
     // EXISTING_CODE
+    for (int i=0;i<16;i++) {
+        archive << bool(nodes[i] != NULL);
+        if (nodes[i]) {
+            SFString className = nodes[i]->getRuntimeClass()->getClassNamePtr();
+            archive << className;
+            nodes[i]->SerializeC(archive);
+        }
+    }
     // EXISTING_CODE
     archive << branchValue;
 

@@ -91,20 +91,20 @@ bool CInfix::Serialize(SFArchive& archive) {
         return ((const CInfix*)this)->SerializeC(archive);
 
     // If we're reading a back level, read the whole thing and we're done.
-    if (readBackLevel(archive))
-        return true;
+    CTreeNode::Serialize(archive);
 
     // EXISTING_CODE
-    // EXISTING_CODE
-    next = NULL;
     bool has_next = false;
     archive >> has_next;
     if (has_next) {
-        next = new CTreeNode;
+        SFString className;
+        archive >> className;
+        next = createTreeNode(className);
         if (!next)
             return false;
         next->Serialize(archive);
     }
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -118,8 +118,11 @@ bool CInfix::SerializeC(SFArchive& archive) const {
     // EXISTING_CODE
     // EXISTING_CODE
     archive << (next != NULL);
-    if (next)
+    if (next) {
+        SFString className = next->getRuntimeClass()->getClassNamePtr();
+        archive << className;
         next->SerializeC(archive);
+    }
 
     return true;
 }
