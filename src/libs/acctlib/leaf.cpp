@@ -90,8 +90,7 @@ bool CLeaf::Serialize(SFArchive& archive) {
         return ((const CLeaf*)this)->SerializeC(archive);
 
     // If we're reading a back level, read the whole thing and we're done.
-    if (readBackLevel(archive))
-        return true;
+    CTreeNode::Serialize(archive);
 
     // EXISTING_CODE
     // EXISTING_CODE
