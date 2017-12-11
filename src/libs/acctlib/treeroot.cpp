@@ -91,16 +91,19 @@ bool CTreeRoot::Serialize(SFArchive& archive) {
         return true;
 
     // EXISTING_CODE
-    // EXISTING_CODE
-    root = NULL;
     bool has_root = false;
     archive >> has_root;
     if (has_root) {
-        root = new CTreeNode;
+        SFString className;
+        archive >> className;
+        root = createTreeNode(className);
         if (!root)
             return false;
         root->Serialize(archive);
+    } else {
+        root = NULL;
     }
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -112,10 +115,13 @@ bool CTreeRoot::SerializeC(SFArchive& archive) const {
     CBaseNode::SerializeC(archive);
 
     // EXISTING_CODE
-    // EXISTING_CODE
     archive << (root != NULL);
-    if (root)
+    if (root) {
+        SFString className = root->getRuntimeClass()->getClassNamePtr();
+        archive << className;
         root->SerializeC(archive);
+    }
+    // EXISTING_CODE
 
     return true;
 }

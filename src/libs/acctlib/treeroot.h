@@ -180,6 +180,17 @@ inline SFString idex(char n) {
 //------------------------------------------------------------------
 bool forEveryAccount(CTreeRoot *trie, ACCTVISITOR func, void *data);
 extern SFString idnt;
+
+//------------------------------------------------------------------
+inline CTreeNode *createTreeNode(const SFString& type) {
+    if (type == "CInfix")
+        return new CInfix;
+    else if (type == "CBranch")
+        return new CBranch;
+    else if (type == "CLeaf")
+        return new CLeaf;
+    return NULL;
+}
 // EXISTING_CODE
 }  // namespace qblocks
 
