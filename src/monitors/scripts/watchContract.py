@@ -24,7 +24,6 @@ def getmount(path):
         path = os.path.abspath(os.path.join(path, os.pardir))
         return path
 
-
 #---------------------------------------------------------------------------------------------
 # Watch a given contract. This script needs to know the following paths:
 # 1) Where are the contracts directories (contracts_path)
@@ -72,9 +71,8 @@ def is_parity_running():
         else:
             # Not running
             return False
-    except: 
+    except:
         return False
-
 
 #---------------------------------------------------------------------------------------------
 # Gets the PID of the current parity process running at the system
@@ -109,7 +107,6 @@ parity_stop_guard_time = 20
 #---------------------
 # EXECUTION
 #---------------------
-
 # Define a signals handler to capture at least Ctrl+C
 signal.signal(signal.SIGINT, signal_handler)
 
