@@ -3,7 +3,7 @@ ethprice --when 19
 
   Invalid option: --when
 
-  Usage:    ethprice -a|-c|-f|-p|-v|-h  
+  Usage:    ethprice -a|-c|-f|-p|-p|-v|-h  
   Purpose:  Freshen and/or display Ethereum price data and other purposes.
              
   Where:    
@@ -11,6 +11,7 @@ ethprice --when 19
 	-c  (--current)       Report on the current price (i.e. -at:now)
 	-f  (--freshen)       Freshen database (append new data)
 	-p  (--period val)    Display prices in this increment. One of [5|15|30|120*|240|1440]
+	-p  (--pair)          Which price pair to freshen or list
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
 	-h  (--help)          display this help screen
 

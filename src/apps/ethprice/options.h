@@ -14,6 +14,7 @@ public:
     uint32_t    freq;
     uint32_t    hour;
     timestamp_t at;
+    CPriceSource source;
 
     COptions(void);
     ~COptions(void) {};
