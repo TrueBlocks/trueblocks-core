@@ -14,6 +14,7 @@ CParams params[] = {
     CParams("-current",                        "Report on the current price (i.e. -at:now)"),
     CParams("-freshen",                        "Freshen database (append new data)"),
     CParams("-period:<5|15|30|*120|240|1440>", "Display prices in this increment. One of [5|15|30|120*|240|1440]"),
+    CParams("-pair",                           "Which price pair to freshen or list"),
     CParams("",                                "Freshen and/or display Ethereum price data and other purposes.\n"),
 };
 uint32_t nParams = sizeof(params) / sizeof(CParams);
@@ -52,6 +53,10 @@ bool COptions::parseArguments(SFString& command) {
             if (!isUnsigned(arg) || freq % 5)
                 return usage("Positive multiple of 5 expected: " + orig);
 
+        } else if (arg.startsWith("--pair:")) {
+            arg = orig.Substitute("--pair:","");
+            source.pair = arg;
+
         } else {
             if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);
@@ -59,10 +64,10 @@ bool COptions::parseArguments(SFString& command) {
         }
     }
 
-    if (!fileExists(priceDatabasePath())) {
+    if (!fileExists(source.getDatabasePath())) {
         if (verbose)
             cerr << "Establishing price database cache.\n";
-        establishFolder(priceDatabasePath());
+        establishFolder(source.getDatabasePath());
     }
 
     return true;

@@ -27,7 +27,7 @@ int main(int argc, const char* argv[]) {
         SFString message;
 
         CPriceQuoteArray quotes;
-        if (loadPriceData(quotes, options.freshen, message) && quotes.getCount()) {
+        if (loadPriceData(options.source, quotes, options.freshen, message) && quotes.getCount()) {
 
             SFString fmt = "";
             if (!verbose)
@@ -47,12 +47,12 @@ int main(int argc, const char* argv[]) {
                     timestamp_t ts = toTimestamp(quotes[i].Format("[{TIMESTAMP}]"));
                     if (i > 0)
                         cout << ",\n";
-                    if (i != indexFromTimeStamp(quotes, ts)) {
-                        cerr << cRed << "mismatch between 'i' ("
-                        << i << ") and 'index' ("
-                        << indexFromTimeStamp(quotes, ts) << "). Quitting.\n" << cOff;
-                        return 0;
-                    }
+//                    if (i != indexFromTimeStamp(quotes, ts)) {
+//                        cerr << cRed << "mismatch between 'i' ("
+//                        << i << ") and 'index' ("
+//                        << indexFromTimeStamp(quotes, ts) << "). Quitting.\n" << cOff;
+//                        return 0;
+//                    }
                     cout << quotes[i].Format(fmt);
 
                     if (isTestMode() && dateFromTimeStamp(ts) >= SFTime(2017,8,15,0,0,0))

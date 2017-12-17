@@ -84,7 +84,7 @@ namespace qblocks {
 
         SFString lockFilename = m_filename + ".lck";
 
-        if (fileExists(lockFilename))
+        if (fileExists(lockFilename) && !isTestMode())
             cerr << "Waiting for lock to clear\n";
 
         int i = 0;
