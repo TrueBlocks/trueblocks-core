@@ -10,11 +10,12 @@
 
 //---------------------------------------------------------------------------------------------------
 CParams params[] = {
-    CParams( "~source",  "source for the data (either 'infura', 'local', or 'binary')"),
-    CParams( "~begin",   "block to start with"),
-    CParams( "~end",     "block to end on"),
-    CParams( "~@skip",   "optional skip step (default 100)"),
-    CParams( "",         "Scans blocks looking for saturated bloomFilters.\n"),
+    CParams( "~source",      "source for the data (either 'infura', 'local', or 'binary')"),
+    CParams( "~begin",       "block to start with"),
+    CParams( "~end",         "block to end on"),
+    CParams( "-mode:<mode>", "if not present, display in 'short' mode, otherwise 'full' mode"),
+    CParams( "~@skip",       "optional skip step (default 100)"),
+    CParams( "",             "Scans blocks looking for saturated bloomFilters.\n"),
 };
 uint32_t nParams = sizeof(params) / sizeof(CParams);
 
@@ -29,10 +30,17 @@ bool COptions::parseArguments(SFString& command) {
     while (!command.empty()) {
         SFString arg = nextTokenClear(command,' ');
         SFString orig = arg;
-        if (arg.startsWith('-')) {  // do not collapse
+        if (arg.startsWith("-m:") || arg.startsWith("--mode:")) {
+            arg = arg.Substitute("-m:", "").Substitute("--mode:", "");
+            if (arg != "short" && arg != "full")
+                return usage("Mode must be either 'full' or 'short'. Quitting...");
+            mode = arg;
+
+        } else if (arg.startsWith('-')) {  // do not collapse
             if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);
             }
+
         } else {
             if (!isUnsigned(arg)) {
                 if (arg != "infura" && arg != "binary" && arg != "local")
@@ -71,6 +79,7 @@ void COptions::Init(void) {
     start = NOPOS;
     stop  = NOPOS;
     skip  = NOPOS;
+    mode  = "short";
     optionOff(OPT_VERBOSE);
     minArgs = 2;
 }
