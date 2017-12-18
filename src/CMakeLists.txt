@@ -7,7 +7,7 @@ cmake_minimum_required (VERSION 2.6)
 # ----------------------------------------------------------------------------------------
 # Define default installation PATH
 if(NOT WIN32)
-    set(CMAKE_INSTALL_PREFIX "/usr/local/qblocks/")
+    set(CMAKE_INSTALL_PREFIX "/usr/local/qblocks/" CACHE PATH "Default install directory")
 else()
     message(ERROR "Windows build is not supported yet")
 endif()
