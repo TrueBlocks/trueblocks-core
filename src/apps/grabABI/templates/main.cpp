@@ -48,7 +48,7 @@ int main(int argc, const char *argv[]) {
         visitor.loadWatches(toml);
 
         const char* defaultFormat = "{ \"date\": \"[{DATE}]\", \"from\": \"[{FROM}]\", \"to\": \"[{TO}]\", \"value\": \"[{VALUE}]\" }";
-        visitor.screenFmt  = cleanFmt(toml.getConfigStr("formats", "screen_fmt",  defaultFormat));
+        visitor.screenFmt          = cleanFmt(toml.getConfigStr("formats", "screen_fmt",  defaultFormat));
         visitor.opts.accounting_on = toml.getConfigBool("display", "accounting", false) || visitor.opts.accounting_on;
         visitor.opts.logs_on       = toml.getConfigBool("display", "logs", false) || visitor.opts.logs_on;
         visitor.opts.trace_on      = toml.getConfigBool("display", "trace", false) || visitor.opts.trace_on;

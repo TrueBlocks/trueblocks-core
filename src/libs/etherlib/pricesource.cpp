@@ -34,7 +34,9 @@ namespace qblocks {
         SFString cacheFile = source.getDatabasePath();
 
         // Load and possibly refresh the price database
-        SFTime lastRead = SFTime(2015, 1, 1, 0, 0, 0);  // Ethereum didn't even exist before July 2015
+        SFTime lastRead = SFTime(2015, 1, 1, 0, 0, 0);
+        if (source.pair.Contains("BTC"))
+            lastRead = SFTime(2009,1,1,0,0,0);
         if (fileExists(cacheFile)) {
             SFArchive archive(READING_ARCHIVE);
             if (archive.Lock(cacheFile, binaryReadOnly, LOCK_NOWAIT)) {

@@ -201,8 +201,10 @@ extern SFString collapseArrays(const SFString& inStr);
         SFString fmt = getConfigStr("display", (terse ? "terse" : "format"), "<not_set>");
         if (fmt == "<not_set>")
             fmt = def;
-        fmt.ReplaceAll("{", color+"{");
-        fmt.ReplaceAll("}", "}"+cOff);
+        if (!color.empty()) {
+            fmt.ReplaceAll("{", color+"{");
+            fmt.ReplaceAll("}", "}"+cOff);
+        }
         return cleanFmt(fmt);
     }
 
