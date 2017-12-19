@@ -93,8 +93,10 @@ function(run_the_test testPath goldPath testName testExe) # Optional argv4 with 
 	if (NOT ${ARGV4} STREQUAL "" )
 	    # In ARGV4 we receive the parameters to be passed to testExe  (optional)
 	    add_test(NAME ${testName} COMMAND ${TEST_CHECK} ${testExe} ${ARGN} ${TEST_FILE} ${GOLD_FILE})
+	    #message(STATUS ${testExe} " " ${ARGN} " " ${TEST_FILE} " " ${GOLD_FILE})
     else()
 	    add_test(NAME ${testName} COMMAND ${TEST_CHECK} ${testExe} ${TEST_FILE} ${GOLD_FILE})
+	    #message(STATUS ${testExe} " " ${TEST_FILE} " " ${GOLD_FILE})
     endif()
 endfunction(run_the_test)
 
@@ -106,8 +108,10 @@ function(run_the_special_test testPath goldPath testName testExe) # Optional arg
     if (NOT ${ARGV4} STREQUAL "" )
         # In ARGV4 we receive the parameters to be passed to testExe  (optional)
         add_test(NAME ${testName} COMMAND ${TEST_CHECK} ${testExe} ${ARGN} ${TEST_FILE} ${GOLD_FILE} CONFIGURATIONS test_all)
+	    #message(STATUS ${testExe} " " ${ARGN} " " ${TEST_FILE} " " ${GOLD_FILE})
     else()
         add_test(NAME ${testName} COMMAND ${TEST_CHECK} ${testExe} ${TEST_FILE} ${GOLD_FILE} CONFIGURATIONS test_all)
+	    #message(STATUS ${testExe} " " ${TEST_FILE} " " ${GOLD_FILE})
     endif()
 endfunction(run_the_special_test)
 
