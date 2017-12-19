@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 
 #########################################################################################################################################
-# This script receives as input the exact command we have to execute and its parameters. 
+# This script receives as input the exact command we have to execute and its parameters.
 # Next-to-last parameter is the output file
 # Lat parameter is the gold file we need to compare with
 # (Both files can be relative or absolute paths)
 #
-# Example: run_anc_compare.py ethName 0x1 test/tools/tests/test1.txt test-gold/tools/tests/test1.txt 
+# Example: run_anc_compare.py ethName 0x1 test/tools/tests/test1.txt test-gold/tools/tests/test1.txt
 #
 # The parameters are (N: total number):
 # argv[0] the name of the python script
@@ -38,7 +38,6 @@ def printe(*args, **kwargs):
 def cmp_files(a, b):
         return filecmp.cmp(a, b)
 
-
 #-------------------------------------------------------
 # Delete a file if it exists
 #-------------------------------------------------------
@@ -52,45 +51,57 @@ def delete_file(file):
             printe("ERROR: %s for file %s" % (e.strerror, file))
             exit(2)
 
-#-------------------------------------------------------
+#------------------------------------------------------------------
 # Do a file copy passing src and destination
-#-------------------------------------------------------
+#------------------------------------------------------------------
 def copy_file(srcfile, destfile):
     shutil.copyfile(srcfile, destfile)
 
-#-------------------------------------------------------
-# Update qblocks configuration with custom one (if defined)
-#-------------------------------------------------------
-def set_custom_config(custompath):
-    if os.path.exists(custompath):
+#------------------------------------------------------------------
+# If we find a customization file, copy it into quickBlocks folder
+#------------------------------------------------------------------
+def set_custom_config(goldPath):
+    test_name = os.path.splitext(os.path.basename(goldPath))[0]
+    srcPath = os.path.dirname(gold_file).replace("gold", "custom_config", 1) + '/' + test_name + '/'
 
+    if os.path.exists(srcPath):
+#        printe("Custom:\t",  srcConfig)
+#        printe("Orig:  \t",  qbConfig)
         for file in CUSTOM_FILES:
             # Build customized file path
-            customfilepath = custompath + file
-            qbfilepath = QUICKBLOCKS_PATH + file
+            srcConfig = srcPath + file
+            qbConfig  = QUICKBLOCKS_PATH + file
 
-            if os.path.isfile(customfilepath) and os.path.isfile(qbfilepath):
-                qbfilepath_tmp = qbfilepath + TMP_EXT
-                copy_file(qbfilepath, qbfilepath_tmp)
-                copy_file(customfilepath, qbfilepath)
+            if os.path.isfile(srcConfig) and os.path.isfile(qbConfig):
+                # source exists and destination exists, save destination
+                copy_file(qbConfig,  qbConfig + '.tmp')
+                copy_file(srcConfig, qbConfig)
+#                printe("\tSave and replace custom config...")
 
-            # else - not present - use default
-    # else  - No custom configuration defined - use default one
+            elif os.path.isfile(srcConfig):
+                # source exists only, note that we need to delete it, then copy it
+                copy_file(srcConfig, qbConfig + '.rm')
+                copy_file(srcConfig, qbConfig)
+#                printe("\tCopy custom config...")
 
 #-------------------------------------------------------
 # Restore original qblocks configuration once test run
-# Any tmp file is restored 
+# Any tmp file is restored
 #-------------------------------------------------------
-def restore_qblocks_config(custompath):
+def restore_qblocks_config():
     for file in CUSTOM_FILES:
-        qbfilepath = QUICKBLOCKS_PATH + file
-        qbfilepath_tmp = qbfilepath + TMP_EXT
+        qbConfig = QUICKBLOCKS_PATH + file
+        # If the temp file exists, copy if back to the original and remove the temp file
+        if os.path.isfile(qbConfig + '.tmp'):
+            copy_file(qbConfig + '.tmp', qbConfig)
+            delete_file(qbConfig + '.tmp')
+#            printe("\tRemoved custom config, replaced original")
 
-        if os.path.isfile(qbfilepath) and os.path.isfile(qbfilepath_tmp):
-            copy_file(qbfilepath_tmp, qbfilepath)
-            delete_file(qbfilepath_tmp)
-
-        # else - not present - do nothing
+        # If the remove note exists, remove both the remove note and the custom config
+        if os.path.isfile(qbConfig + '.rm'):
+            delete_file(qbConfig)
+            delete_file(qbConfig + '.rm')
+#            printe("\tRemoved custom config")
 
 #-------------------------------------------------------
 # Delete any cache files for input addr
@@ -120,13 +131,10 @@ def clear_cache(addr):
 #-------------------------------------------------------
 
 # We define here the array of files that we can customize, add more to this array in the future
-CUSTOM_FILES = [ 'whenBlock.toml' ]
+CUSTOM_FILES = [ 'whenBlock.toml', 'ethprice.toml' ]
 
 # Cache path
 QUICKBLOCKS_PATH = os.environ['HOME'] + '/.quickBlocks/'
-
-# TMP extension for files
-TMP_EXT = '.tmp'
 
 # When at environment we have defined an address, we clear its cache before running the test
 cache_addr = os.getenv('CACHE_ADDR')
@@ -159,14 +167,12 @@ if os.path.isfile(gold_file) == False:
 # Then add the output file and redirections
 command = sys.argv[1:-2]
 
-# Before running the test, update custom configuration (if required)
-# The custom configurations are expected at the same level than "gold/working" folders inside "custom_config" folder
-# We keep the same structure of directories, but we need to define an additional subfolder per customized test
-# Example: <path>/test/custom_config/tools/whenBlock/whenBlock_custom1/whenBlock.toml  ("whenBlock_custom1" intermediate folder is required)
-test_name = os.path.splitext(os.path.basename(gold_file))[0]
-custom_config_path = os.path.dirname(gold_file).replace("gold", "custom_config", 1) + '/' + test_name + '/'
-
-set_custom_config(custom_config_path)
+#-----------------------------------------------------------------------------------------
+# We are ready to run the test. Before doing so, copy in any custom configuration files
+# Custom configurations are stored in the ../test/custom_config folder in the same relative
+# folder with the same name as the test case.
+#-----------------------------------------------------------------------------------------
+set_custom_config(gold_file)
 
 # Open output file and execute the command with redirections
 with open(output_file, 'w') as f:
@@ -177,7 +183,7 @@ with open(output_file, 'w') as f:
     result = subprocess.call(command, stdout=f, stderr=subprocess.STDOUT)
 
 # Once test is executed, restore qblocks default config if it changed
-restore_qblocks_config(custom_config_path)
+restore_qblocks_config()
 
 if result:
     printe("ERROR: Command execution failed with error %d" % result)
@@ -189,4 +195,3 @@ if cmp_files(output_file, gold_file):
 else:
     printe("ERROR: Differences found comparing %s with %s" % (output_file, gold_file))
     exit(3)
-
