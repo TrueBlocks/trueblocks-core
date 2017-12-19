@@ -14,7 +14,7 @@ CParams params[] = {
     CParams("-current",                        "Report on the current price (i.e. -at:now)"),
     CParams("-freshen",                        "Freshen database (append new data)"),
     CParams("-period:<5|15|30|*120|240|1440>", "Display prices in this increment. One of [5|15|30|120*|240|1440]"),
-    CParams("-pair",                           "Which price pair to freshen or list"),
+    CParams("-pair:<val>",                     "Which price pair to freshen or list (see Poloniex)"),
     CParams("",                                "Freshen and/or display Ethereum price data and other purposes.\n"),
 };
 uint32_t nParams = sizeof(params) / sizeof(CParams);
