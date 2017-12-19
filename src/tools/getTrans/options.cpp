@@ -45,8 +45,6 @@ bool COptions::parseArguments(SFString& command) {
     if (!transList.hasTrans())
         return usage("Please specify at least one transaction identifier.");
 
-//    if (address && !isAddress(address))
-//        return usage("Bad address.");
 extern const char* STR_DISPLAY_FORMAT;
     format = getGlobalConfig()->getDisplayStr(!verbose, (verbose ? "" : STR_DISPLAY_FORMAT));
 
