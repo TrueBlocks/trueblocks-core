@@ -112,7 +112,7 @@ namespace qblocks {
 
     //-------------------------------------------------------------
     CExportContext& CExportContext::operator<<(const SFString& str) {
-        if (str.length() >= 3 && str.Left(2) == "`%" && str.at(2) != '%')
+        if (str.length() >= 3 && str.substr(0,2) == "`%" && str.at(2) != '%')
             fmt = str.substr(1);
         else if (str == "%")
             fmt = EMPTY;

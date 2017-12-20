@@ -27,7 +27,7 @@ typedef SFUniqueList<CBalHistory*>       CBalHistoryListU;
 class CBalHistory : public CBaseNode {
 public:
     SFString recordID;
-    SFTime txDate;
+    timestamp_t timestamp;
     SFIntBN balance;
 
 public:
@@ -88,7 +88,7 @@ inline void CBalHistory::Init(void) {
     CBaseNode::Init();
 
     recordID = "";
-    txDate = earliestDate;
+    timestamp = 0;
     balance = 0;
 
     // EXISTING_CODE
@@ -101,7 +101,7 @@ inline void CBalHistory::Copy(const CBalHistory& ba) {
     CBaseNode::Copy(ba);
 
     recordID = ba.recordID;
-    txDate = ba.txDate;
+    timestamp = ba.timestamp;
     balance = ba.balance;
 
     // EXISTING_CODE
@@ -128,7 +128,7 @@ extern SFArchive& operator>>(SFArchive& archive, CBalHistory& bal);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-inline SFString toRecordID(const SFString& addr, blknum_t bn, SFUint32 tn) {
+inline SFString toRecordID(const SFString& addr, blknum_t bn, uint64_t tn) {
     return addr + "_" + padNum9(bn) + "_" + padNum5(tn);
 }
 // EXISTING_CODE

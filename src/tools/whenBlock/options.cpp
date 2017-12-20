@@ -19,7 +19,7 @@ CParams params[] = {
 uint32_t nParams = sizeof(params) / sizeof(CParams);
 
 extern int sortByBlockNum(const void *v1, const void *v2);
-extern SFTime parseDate(const SFString& strIn);
+extern SFTime grabDate(const SFString& strIn);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(SFString& command) {
 
@@ -44,35 +44,38 @@ bool COptions::parseArguments(SFString& command) {
 
             alone = true;
 
-        } else if (arg.ContainsAny(":- ") && countOf('-',arg) > 1 && !arg.startsWith("-")) {
-
-            if (isList)
-                return usage("The --list option must appear alone on the line. Quitting...");
-
-            // If we're here, we better have a good date, assume we don't
-            foundOne = false;
-            SFString str = arg.Substitute(" ", ";").Substitute("-", ";").Substitute("_", ";")
-                                .Substitute(":", ";").Substitute(";UTC", "");
-            str = nextTokenClear(str,'.');
-            SFTime date = parseDate(str);
-            if (date == earliestDate)
-                return usage("Invalid date: '" + orig + "'. Quitting...");
-            if (date > Now())
-                return usage("Date '" + date.Format(FMT_JSON) + "' is in the future. No such block found. Quitting...");
-            if (date < SFTime(2015,07,30,15,25,00)) { // first block was at 15:26:00
-                cout << "The date you specified (";
-                cout << cTeal << orig << cOff;
-                cout << ") is before the first block. Quitting...\n";
-                return false;
-            }
-            foundOne = true;
-            requests[requests.getCount()] = "date:" + asString(toTimestamp(date));
-
         } else if (arg.startsWith('-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
                 return usage("Invalid option: '" + orig + "'. Quitting...");
             }
+
+        } else if (arg.ContainsAny(":- ") && countOf('-',arg) > 1) {
+
+            ASSERT(!arg.startsWith("-"));
+            if (isList)
+                return usage("The --list option must appear alone on the line. Quitting...");
+
+            SFTime date = grabDate(arg);
+            if (date == earliestDate) {
+                return usage("Invalid date: '" + orig + "'. Quitting...");
+
+            } else if (date > Now()) {
+                cout << "The date you specified (";
+                cout << cTeal << orig << cOff;
+                cout << ") is in the future. No such block. Quitting...\n";
+                return false;
+
+            } else if (date < SFTime(2015,07,30,15,25,00)) {
+                // first block was at 15:26:00
+                cout << "The date you specified (";
+                cout << cTeal << orig << cOff;
+                cout << ") is before the first block. Quitting...\n";
+                return false;
+            }
+
+            foundOne = true;
+            requests[requests.getCount()] = "date:" + asString(toTimestamp(date));
 
         } else {
 
@@ -97,7 +100,7 @@ bool COptions::parseArguments(SFString& command) {
                 } else if (!ret.empty()) {
                     return usage(ret);
                 }
-                SFString blockList = blocks.toString();
+                SFString blockList = getBlockNumList();
                 blocks.Init();
                 while (!blockList.empty()) {
                     requests[requests.getCount()] = "block:" + nextTokenClear(blockList,'|');
@@ -147,21 +150,37 @@ COptions::~COptions(void) {
 
 //--------------------------------------------------------------------------------
 SFString COptions::postProcess(const SFString& which, const SFString& str) const {
-    if (which == "options")
+
+    if (which == "options") {
         return str.Substitute("block date", "< block | date > [ block... | date... ]");
-    if (which == "description")
-        return str + "####Notes:\n" + listSpecials(true);
+
+    } else if (which == "notes") {
+        SFString ret = str;
+        if (verbose || COptions::isReadme) {
+            ret += "Add custom special blocks by editing ~/.quickBlocks/whenBlock.toml.\n";
+        }
+        ret += listSpecials(true);
+        return ret;
+    }
     return str;
 }
 
 //--------------------------------------------------------------------------------
-SFTime parseDate(const SFString& strIn) {
+SFTime grabDate(const SFString& strIn) {
 
     if (strIn.empty()) {
         return earliestDate;
     }
 
-    SFString str = strIn.Substitute(";", "");
+//#error
+    SFString str = strIn;
+    str.ReplaceAny(" -:",";");
+    str.Replace(";UTC", "");
+    str = nextTokenClear(str,'.');
+
+    // Expects four number year, two number month and day at a minimum. Fields may be separated by '-' or ';'
+    //    YYYYMMDD or YYYY;MM;DD
+    str.ReplaceAll(";","");
     if (str.Contains("T")) {
         str.Replace("T","");
         if      (str.length() == 10) str += "0000";
@@ -185,6 +204,12 @@ SFTime parseDate(const SFString& strIn) {
     if (y == NP || m == NP || d == NP || h == NP || mn == NP || s == NP)
         return earliestDate;
 
+    if (m > 12) return earliestDate;
+    if (d > 31) return earliestDate;
+    if (h > 23) return earliestDate;
+    if (mn > 59) return earliestDate;
+    if (s > 59) return earliestDate;
+
     return SFTime(y, m, d, h, mn, s);
 }
 
@@ -196,7 +221,7 @@ SFString COptions::listSpecials(bool terse) const {
     ostringstream os;
     if (!alone) {
         if (terse) {
-            os << "\t- Use the following names to represent `special` blocks:\n\t  - ";
+            os << "Use the following names to represent `special` blocks:\n  ";
         } else {
             os << bYellow << "\n  Blocks:" << cOff;
         }
@@ -205,34 +230,44 @@ SFString COptions::listSpecials(bool terse) const {
     SFString extra;
     for (uint32_t i = 0 ; i < specials.getCount(); i++) {
 
-        SFString name  = specials[i].getName();
-        SFString block = specials[i].getValue();
+        SFString name = specials[i].getName();
+        SFString bn = specials[i].getValue();
         if (name == "latest") {
-            block = asStringU(getLatestBlockFromClient());
+            bn = asStringU(getLatestBlockFromClient());
             if (isTestMode()) {
-                block = "";
+                bn = "";
             } else if (COptionsBase::isReadme) {
-                block = "--";
+                bn = "--";
             } else if (i > 0 && specials[i-1].getValueU() >= getLatestBlockFromClient()) {
                 extra = iWhite + " (syncing)" + cOff;
             }
         }
 
-        if (alone) {
-            if (!block.Contains("tbd"))
-                os << block << " ";
+        if (alone && !terse) {
+            if (!bn.Contains("tbd"))
+                os << bn << " ";
         } else {
             if (terse) {
                 os << name;
-                os << " (" << cTeal << block << extra << cOff << ")";
+                os << " (" << cTeal << bn << extra << cOff << ")";
                 if (!((i+1)%4)) {
-                    os << "\n\t";
                     if (i < specials.getCount()-1)
-                        os << "  - ";
+                        os << "\n  ";
                 } else if (i < specials.getCount()-1)
                     os << ", ";
             } else {
-                os << "\n      - " << padRight(name, 15) << cTeal << block << cOff << extra ;
+                os << "\n      - " << padRight(name, 15);
+                os << cTeal << padLeft(bn,9) << cOff;
+                if (verbose) {
+                    CBlock block;
+                    getBlock(block, bn);
+                    block.timestamp = (block.blockNumber == 0 ? 1438269973 : block.timestamp);
+                    if (block.timestamp != 0) {
+                        UNHIDE_FIELD(CBlock, "date");
+                        os << block.Format(" [{DATE}] ([{TIMESTAMP}])");
+                    }
+                }
+                os << extra ;
             }
         }
     }
@@ -242,6 +277,5 @@ SFString COptions::listSpecials(bool terse) const {
     } else {
         os << "\n";
     }
-    SFString ret = os.str().c_str();
-    return ret;
+    return os.str().c_str();
 }

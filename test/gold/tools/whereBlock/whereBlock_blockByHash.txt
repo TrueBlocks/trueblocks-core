@@ -1,0 +1,6 @@
+whereBlock argc: 2 [1:0xd19bc98080cd70951fad3951cef2d512e6334aa3c7e64a38985c955d4d2e273b] 
+whereBlock 0xd19bc98080cd70951fad3951cef2d512e6334aa3c7e64a38985c955d4d2e273b 
+
+Report on block locations:
+  (cache folder: --)
+	block   1001010 found at cache:  ./blocks/00/10/01/001001010.bin

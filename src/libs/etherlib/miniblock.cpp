@@ -121,12 +121,15 @@ namespace qblocks {
 
     //--------------------------------------------------------------------------
     void CInMemoryCache::Clear(void) {
+#ifdef NEW_CODE
+        // The 'block' and 'trans' pointers are not allocated, they are FILE pointers instead, so don't 'delete' them.
+#else
         if (blocks)
             delete [] blocks;
-        blocks = NULL;
-
         if (trans)
             delete [] trans;
+#endif
+        blocks = NULL;
         trans = NULL;
 
         blocksOnDisc.Release();
@@ -194,8 +197,8 @@ namespace qblocks {
 
         //--------------------------------------------------------------------------
         // See if we can allocation enough space for the mini-transaction database
-        SFUint32 fs = fileSize(miniTransCache);
-        SFUint32 ms = sizeof(CMiniTrans);
+        uint64_t fs = fileSize(miniTransCache);
+        uint64_t ms = sizeof(CMiniTrans);
         nTrans   = fs / ms;
 #endif
 
@@ -251,8 +254,10 @@ namespace qblocks {
     void clearInMemoryCache(void) {
         if (theCache)
             theCache->Clear();
+        delete theCache;
         theCache = NULL;
     }
+
     //--------------------------------------------------------------------------
     CInMemoryCache *getTheCache(void) {
         if (!theCache)

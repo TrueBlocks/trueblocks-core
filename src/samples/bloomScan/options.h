@@ -16,6 +16,7 @@ public:
     blknum_t stop;
     blknum_t skip;
     blknum_t nBlocks;
+    SFString mode;
 
 	        COptions  (void);
 	       ~COptions  (void);
@@ -29,7 +30,7 @@ public:
 extern bool visitNonEmptyBlock(CBlock& node, void *data);
 extern bool displayBloom(CBlock& node, void *data);
 extern bool checkBloom(CBlock& node, void *data);
-inline SFString dateColor(SFUint32 bn) {
+inline SFString dateColor(uint64_t bn) {
 	if (1442339 <= bn && bn <= 1439214) return bBlue;
 	return bYellow;
 }

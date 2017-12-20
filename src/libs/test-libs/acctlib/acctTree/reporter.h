@@ -22,7 +22,7 @@ public:
     double endLoad;
     double startPrint;
     double endPrint;
-    SFUint32 stopping;
+    uint64_t stopping;
     CTreeRoot *tree;
 
     CReporter(void)

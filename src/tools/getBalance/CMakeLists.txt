@@ -50,7 +50,7 @@ run_test("getBalance_dao_1500000"   "0xbb9bc244d798123fde783fcc1c72d3bb8c189413"
 run_test("getBalance_two_accts"     "0xbb9bc244d798123fde783fcc1c72d3bb8c189413" " $tip" " 1500000")
 run_test("getBalance_tip_4"         "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359" " 1500000" " 2000000" " 2500000" " 3000000")
 run_test("getBalance_from_file"     "--file:cmd_file")
-run_test("getBalance_multiple_accounts" "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359" " 0x6f46cf5569aefa1acc1009290c8e043747172d89"  " 4000000")
+run_test("getBalance_multiple_accounts" "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359" " 0x6f46cf5569aefa1acc1009290c8e043747172d89"  " 4000000" " --total")
 run_test("getBalance_multiple_accounts_and_blocks_1" "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359" " 0x6f46cf5569aefa1acc1009290c8e043747172d89"  " 3500000" " 4000000")
 run_test("getBalance_multiple_accounts_and_blocks_2" "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359" " 0x6f46cf5569aefa1acc1009290c8e043747172d89" " 0xf27daff52c38b2c373ad2b9392652ddf433303c4" " 3500000" " 3700000" " 4000000")
 run_test("getBalance_display_tab_format" "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359" " 4000000" " -d")
@@ -58,7 +58,7 @@ run_test("getBalance_display_tab_format_long" "0xfb6916095ca1df60bb79ce92ce3ea74
 run_test("getBalance_no_zero_1" "-n" " 0xf27daff52c38b2c373ad2b9392652ddf433303c5" " 3500000")
 run_test("getBalance_no_zero_2" "-n" " 0xf27daff52c38b2c373ad2b9392652ddf433303c5" " 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359" " 3500000")
 run_test("getBalance_no_zero_3" "-n" " 0xf27daff52c38b2c373ad2b9392652ddf433303c4" " 0" " 4000000")
-run_test("getBalance_no_zero_4" "-n" "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359" " 0x6f46cf5569aefa1acc1009290c8e043747172d89" " 0xf27daff52c38b2c373ad2b9392652ddf433303c4" " 3500000" " 3700000" " 4000000")
+run_test("getBalance_no_zero_4" "-n" "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359" " 0x6f46cf5569aefa1acc1009290c8e043747172d89" " 0xf27daff52c38b2c373ad2b9392652ddf433303c4" " 3500000" " 3700000" " 4000000" " -t")
 run_test("getBalance_no_zero_long_1" "--noZero" " 0xf27daff52c38b2c373ad2b9392652ddf433303c5" " 3500000")
 run_test("getBalance_no_zero_long_2" "--noZero" " 0xf27daff52c38b2c373ad2b9392652ddf433303c5" " 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359" " 3500000")
 run_test("getBalance_no_zero_long_3" "--noZero" " 0xf27daff52c38b2c373ad2b9392652ddf433303c4" " 0" " 4000000")
@@ -83,6 +83,8 @@ run_test("getBalance_e_tip_4"       "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359"
 
 # Don't run this test since it defaults to latest block which chages at every 14 seconds
 #run_test("getBalance_no_block"    "0xbb9bc244d798123fde783fcc1c72d3bb8c189413")
+
+run_test("getBalance_blockByHash" "0x89205a3a3b2a69de6dbf7f01ed13b2108b2c43e7" " 0x45205b0bdb6c9cc9bf0eb3753ae98175c563389b41b2d4a2178593a3415772c1")
 
 # Installation steps
 install(TARGETS ${TOOL_NAME} RUNTIME DESTINATION bin)

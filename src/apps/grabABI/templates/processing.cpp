@@ -28,7 +28,7 @@ bool CVisitor::isTransactionOfInterest(CTransaction *trans, uint32_t& whichWatch
 }
 
 //-----------------------------------------------------------------------
-bool displayFromCache(const SFString& cacheFileName, SFUint32& blockNum, void *dataPtr) {
+bool displayFromCache(const SFString& cacheFileName, uint64_t& blockNum, void *dataPtr) {
 
     CVisitor *visitor = reinterpret_cast<CVisitor*>(dataPtr);
     CBlock block;
@@ -37,13 +37,13 @@ bool displayFromCache(const SFString& cacheFileName, SFUint32& blockNum, void *d
     if (!fileExists(cacheFileName))
         return true; // return true if we want to continue on to updateCache
 
-    SFUint32 orig = blockNum, lastBlock = 0;
+    uint64_t orig = blockNum, lastBlock = 0;
 
     if (visitor->cache.Lock(cacheFileName, binaryReadOnly, LOCK_NOWAIT)) {
 
         while (!visitor->cache.Eof()) {
 
-            SFUint32 transID;
+            uint64_t transID;
             uint32_t whichWatch;
             visitor->cache >> whichWatch;
             if (visitor->cache.Eof()) {
@@ -70,7 +70,7 @@ bool displayFromCache(const SFString& cacheFileName, SFUint32& blockNum, void *d
 
                     // If we switched blocks, read the next block
                     if (!readOneBlock_fromBinary(block, getBinaryFilename1(blockNum))) {
-                        cerr << "Block read failed. Quitting cache read\r\n";
+                        cerr << "Read of block " << blockNum << " failed. Quitting cache read\r\n";
                         visitor->cache.Release();
                         return false;
                     }
@@ -99,7 +99,7 @@ bool displayFromCache(const SFString& cacheFileName, SFUint32& blockNum, void *d
                         if (visitor->opts.accounting_on || visitor->opts.trace_on)
                             getTraces(trans->traces, trans->hash);
                         visitor->accountForExtTransaction(block, trans);
-                        visitor->displayTrans(trans);
+                        visitor->displayTrans(whichWatch,trans);
                         visitor->transStats.nDisplayed++;
                         if (visitor->opts.debugger_on && !visitor->esc_hit) {
                             nodelay(stdscr, true);
@@ -122,7 +122,7 @@ bool displayFromCache(const SFString& cacheFileName, SFUint32& blockNum, void *d
 }
 
 blknum_t lastBloomHit = 0;
-SFUint32 nFound = 0;
+uint64_t nFound = 0;
 //-----------------------------------------------------------------------
 bool updateCacheUsingBlooms(const SFString& path, void *dataPtr) {
 
@@ -247,7 +247,7 @@ bool updateCache(CBlock& block, void *dataPtr) {
             visitor->accountForExtTransaction(block, trans);
 
             if (visitor->watches[(uint32_t)whichWatch].status != "disabled") {
-                visitor->displayTrans(trans);
+                visitor->displayTrans(whichWatch,trans);
                 visitor->transStats.nDisplayed++;
                 if (visitor->opts.debugger_on && !visitor->esc_hit) {
                     nodelay(stdscr, true);
@@ -270,7 +270,7 @@ bool updateCache(CBlock& block, void *dataPtr) {
     timestamp_t tsOut = (block.timestamp == 0 ? toTimestamp(Now()) : block.timestamp);
     SFString endMsg = dateFromTimeStamp(tsOut).Format(FMT_JSON) + " (" + asStringU(block.blockNumber) + ")";
     blknum_t x = (visitor->blockStats.firstBlock >= block.blockNumber ? 0 : block.blockNumber - visitor->blockStats.firstBlock);
-    progressBar(x, visitor->blockStats.nBlocks, endMsg);
+    progressBar(x, visitor->blockStats.nBlocks, visitor->opts.monitorName+"|"+endMsg);
     visitor->blockStats.prevBlock = block;
 
     // Write this to the file so we know which block to start on next time the monitor is run
@@ -292,7 +292,7 @@ void loadWatches(const CToml& toml, CAccountWatchArray& array, const SFString& k
     minny = UINT32_MAX;
     maxxy = 0;
 
-    SFString watchStr = toml.getConfigArray("watches", key, "");
+    SFString watchStr = toml.getConfigStr("watches", key, "");
     if (key == "list" && watchStr.empty()) {
         cout << "Empty list of watches. Quitting.\r\n";
         exit(0);
@@ -344,3 +344,60 @@ blknum_t CVisitor::loadWatches(const CToml& toml) {
     watches[watches.getCount()] = CAccountWatch(watches.getCount(), "Others", "Other Accts", 0, UINT32_MAX, bRed);
     return true;
 }
+
+//-----------------------------------------------------------------------
+CAccountWatch *CVisitor::findWatch(SFAddress addr) {
+    for (uint32_t i = 0 ; i < watches.getCount() ; i++)
+        if (watches[i].address == addr)
+            return &watches[i];
+    return NULL;
+}
+
+//-----------------------------------------------------------------------
+class CTemp {
+public:
+    uint64_t blockNum, transID;
+    uint32_t whichWatch;
+};
+typedef SFArrayBase<CTemp> SFTempArray;
+
+//-----------------------------------------------------------------------
+uint32_t CVisitor::checkForImport(void) {
+    if (!fileExists("./caxche/import.txt")) {
+        cerr << "No import found.\n";
+        return 0;
+    }
+
+    SFTempArray imp;
+    uint32_t cnt = 0;
+    blknum_t currentLast = toLongU(asciiFileToString("./cache/lastBlock.txt"));
+    blknum_t lastBlock   = 0;
+    SFString contents = asciiFileToString("./cache/import.txt");
+    while (!contents.empty()) {
+        SFString line    = nextTokenClear(contents,'\n');
+        SFString val = nextTokenClear(line,'\t');
+        SFAddress address = toAddress (val);
+        CAccountWatch *watch = findWatch(address);
+        if (watch) {
+            CTemp tmp;
+            tmp.whichWatch = watch->index;
+            val = nextTokenClear(line,'\t');
+            tmp.blockNum = toUnsigned(val);
+            val = nextTokenClear(line,'\t');
+            tmp.transID = toUnsigned(val);
+            imp[imp.getCount()] = tmp;
+            lastBlock = max(lastBlock, tmp.blockNum);
+            cnt++;
+        }
+    }
+
+    for (uint32_t i = 0 ; i < imp.getCount() ; i++) {
+        cout << imp[i].whichWatch << " : " << imp[i].blockNum << " : " << imp[i].transID << "\n";
+    }
+
+    if (lastBlock > currentLast)
+        stringToAsciiFile("./cache/lastBlock.txt", asStringU(lastBlock) + "\r\n");
+
+    return cnt;
+}
+

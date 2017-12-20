@@ -45,8 +45,8 @@ bool COptions::parseArguments(SFString& command) {
     if (!transList.hasTrans())
         return usage("Please specify at least one transaction identifier.");
 
-//    if (address && !isAddress(address))
-//        return usage("Bad address.");
+extern const char* STR_DISPLAY_FORMAT;
+    format = getGlobalConfig()->getDisplayStr(!verbose, (verbose ? "" : STR_DISPLAY_FORMAT));
 
     return true;
 }
@@ -59,6 +59,7 @@ void COptions::Init(void) {
 
     transList.Init();
     isRaw = false;
+    format = "";
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -94,3 +95,5 @@ SFString COptions::postProcess(const SFString& which, const SFString& str) const
     return str;
 }
 
+//--------------------------------------------------------------------------------
+const char* STR_DISPLAY_FORMAT = "[{DATE}][\t{TIMESTAMP}][\t{BLOCKNUMBER}][\t{TRANSACTIONINDEX}][\t{HASH}]\\n";

@@ -149,7 +149,7 @@ IMPLEMENT_ARCHIVE_LIST(CAccountList);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-extern SFUint32 verbose;
+extern uint64_t verbose;
 #define REP_FREQ   11
 #define REP_INFREQ 563
 // EXISTING_CODE

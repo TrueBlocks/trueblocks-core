@@ -7,7 +7,7 @@ cmake_minimum_required (VERSION 2.6)
 # ----------------------------------------------------------------------------------------
 # Define default installation PATH
 if(NOT WIN32)
-    set(CMAKE_INSTALL_PREFIX "/usr/local/qblocks/")
+    set(CMAKE_INSTALL_PREFIX "/usr/local/qblocks/" CACHE PATH "Default install directory")
 else()
     message(ERROR "Windows build is not supported yet")
 endif()
@@ -93,8 +93,10 @@ function(run_the_test testPath goldPath testName testExe) # Optional argv4 with 
 	if (NOT ${ARGV4} STREQUAL "" )
 	    # In ARGV4 we receive the parameters to be passed to testExe  (optional)
 	    add_test(NAME ${testName} COMMAND ${TEST_CHECK} ${testExe} ${ARGN} ${TEST_FILE} ${GOLD_FILE})
+	    #message(STATUS ${testExe} " " ${ARGN} " " ${TEST_FILE} " " ${GOLD_FILE})
     else()
 	    add_test(NAME ${testName} COMMAND ${TEST_CHECK} ${testExe} ${TEST_FILE} ${GOLD_FILE})
+	    #message(STATUS ${testExe} " " ${TEST_FILE} " " ${GOLD_FILE})
     endif()
 endfunction(run_the_test)
 
@@ -106,8 +108,10 @@ function(run_the_special_test testPath goldPath testName testExe) # Optional arg
     if (NOT ${ARGV4} STREQUAL "" )
         # In ARGV4 we receive the parameters to be passed to testExe  (optional)
         add_test(NAME ${testName} COMMAND ${TEST_CHECK} ${testExe} ${ARGN} ${TEST_FILE} ${GOLD_FILE} CONFIGURATIONS test_all)
+	    #message(STATUS ${testExe} " " ${ARGN} " " ${TEST_FILE} " " ${GOLD_FILE})
     else()
         add_test(NAME ${testName} COMMAND ${TEST_CHECK} ${testExe} ${TEST_FILE} ${GOLD_FILE} CONFIGURATIONS test_all)
+	    #message(STATUS ${testExe} " " ${TEST_FILE} " " ${GOLD_FILE})
     endif()
 endfunction(run_the_special_test)
 
@@ -140,4 +144,3 @@ add_subdirectory (tools)
 add_subdirectory (samples)
 add_subdirectory (monitors)
 add_subdirectory (other)
-

@@ -11,6 +11,7 @@
 #include "namevalue.h"
 #include "accountname.h"
 #include "filenames.h"
+#include "toml.h"
 
 // Bit flags to enable / disable various options
 #define OPT_VERBOSE (1<<2)
@@ -34,7 +35,7 @@ namespace qblocks {
 
         SFString commandList;
         bool     fromFile;
-        SFUint32 minArgs;
+        uint64_t minArgs;
         CRuntimeClass *sorts[5];
 
         COptionsBase(void);
@@ -93,7 +94,7 @@ namespace qblocks {
     extern SFString expandOption(SFString& arg);
 
     //--------------------------------------------------------------------------------
-    extern SFUint32 verbose;
+    extern uint64_t verbose;
 
     //--------------------------------------------------------------------------------
     extern void     editFile  (const SFString& fileName);
@@ -112,12 +113,13 @@ namespace qblocks {
     extern void optionOff(uint32_t q);
     extern void optionOn (uint32_t q);
 
-#define MAX_BLOCK_LIST 100
-#define MAX_BLOCK_RANGE 10000
+    //--------------------------------------------------------------------------------
+    extern const CToml *getGlobalConfig(const SFString& name="");
+
     class COptionsBlockList {
     public:
-        blknum_t nums[MAX_BLOCK_LIST];
-        blknum_t nNums;
+        SFBlockArray numList;
+        SFStringArray hashList;
         blknum_t start;
         blknum_t stop;
         blknum_t latest;
@@ -125,7 +127,8 @@ namespace qblocks {
         SFString parseBlockList(const SFString& arg, blknum_t latest);
         COptionsBlockList(void);
         SFString toString(void) const;
-        bool hasBlocks(void) const { return (nNums || (start != stop)); }
+        bool hasBlocks(void) const { return (hashList.getCount() || numList.getCount() || (start != stop)); }
+        bool isInRange(blknum_t bn) const;
         blknum_t parseBlockOption(SFString& msg, blknum_t lastBlock) const;
     };
 

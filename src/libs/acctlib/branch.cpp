@@ -59,8 +59,8 @@ bool CBranch::setValueByName(const SFString& fieldName, const SFString& fieldVal
         return true;
 
     switch (tolower(fieldName[0])) {
-        case 'm':
-            if ( fieldName % "m_branchValue" ) { m_branchValue = fieldValue; return true; }
+        case 'b':
+            if ( fieldName % "branchValue" ) { branchValue = fieldValue; return true; }
             break;
         default:
             break;
@@ -81,12 +81,28 @@ bool CBranch::Serialize(SFArchive& archive) {
         return ((const CBranch*)this)->SerializeC(archive);
 
     // If we're reading a back level, read the whole thing and we're done.
-    if (readBackLevel(archive))
-        return true;
+    CTreeNode::Serialize(archive);
 
     // EXISTING_CODE
+    for (int i=0;i<16;i++) {
+        if (nodes[i]) {
+            delete nodes[i];
+            nodes[i] = NULL;
+        }
+
+        bool has_val = false;
+        archive >> has_val;
+        if (has_val) {
+            SFString className;
+            archive >> className;
+            nodes[i] = createTreeNode(className);
+            if (!nodes[i])
+                return false;
+            nodes[i]->Serialize(archive);
+        }
+    }
     // EXISTING_CODE
-    archive >> m_branchValue;
+    archive >> branchValue;
     finishParse();
     return true;
 }
@@ -94,13 +110,20 @@ bool CBranch::Serialize(SFArchive& archive) {
 //---------------------------------------------------------------------------------------------------
 bool CBranch::SerializeC(SFArchive& archive) const {
 
-    // EXISTING_CODE
-    // EXISTING_CODE
-
     // Writing always write the latest version of the data
     CTreeNode::SerializeC(archive);
 
-    archive << m_branchValue;
+    // EXISTING_CODE
+    for (int i=0;i<16;i++) {
+        archive << bool(nodes[i] != NULL);
+        if (nodes[i]) {
+            SFString className = nodes[i]->getRuntimeClass()->getClassNamePtr();
+            archive << className;
+            nodes[i]->SerializeC(archive);
+        }
+    }
+    // EXISTING_CODE
+    archive << branchValue;
 
     return true;
 }
@@ -117,7 +140,7 @@ void CBranch::registerClass(void) {
     ADD_FIELD(CBranch, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CBranch, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CBranch, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CBranch, "m_branchValue", T_TEXT, ++fieldNum);
+    ADD_FIELD(CBranch, "branchValue", T_TEXT, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CBranch, "schema");
@@ -135,7 +158,7 @@ SFString nextBranchChunk_custom(const SFString& fieldIn, const void *dataPtr) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             case 'm':
-                if ( fieldIn % "m_nodes" ) { return EMPTY; }
+                if ( fieldIn % "nodes" ) { return EMPTY; }
                 break;
             // EXISTING_CODE
             case 'p':
@@ -179,8 +202,8 @@ SFString CBranch::getValueByName(const SFString& fieldName) const {
 
     // Return field values
     switch (tolower(fieldName[0])) {
-        case 'm':
-            if ( fieldName % "m_branchValue" ) return m_branchValue;
+        case 'b':
+            if ( fieldName % "branchValue" ) return branchValue;
             break;
     }
 
@@ -203,31 +226,31 @@ ostream& operator<<(ostream& os, const CBranch& item) {
 //---------------------------------------------------------------------------
 // EXISTING_CODE
     //-----------------------------------------------------------------------------
-    CBranch::CBranch(const SFString& _value) : m_branchValue(_value) {
-        memset(m_nodes, 0, sizeof(CTreeNode*) * 16);
+    CBranch::CBranch(const SFString& _value) : branchValue(_value) {
+        memset(nodes, 0, sizeof(CTreeNode*) * 16);
     }
 
     //-----------------------------------------------------------------------------
-    CBranch::CBranch(char _i1, CTreeNode* _n1, const SFString& _value) : m_branchValue(_value) {
-        memset(m_nodes, 0, sizeof(CTreeNode*) * 16);
-        m_nodes[nodeIndex(_i1)] = _n1;
+    CBranch::CBranch(char _i1, CTreeNode* _n1, const SFString& _value) : branchValue(_value) {
+        memset(nodes, 0, sizeof(CTreeNode*) * 16);
+        nodes[nodeIndex(_i1)] = _n1;
     }
 
     //-----------------------------------------------------------------------------
     CBranch::CBranch(char _i1, CTreeNode* _n1, char _i2, CTreeNode* _n2) {
-        memset(m_nodes, 0, sizeof(CTreeNode*) * 16);
-        m_nodes[nodeIndex(_i1)] = _n1;
-        m_nodes[nodeIndex(_i2)] = _n2;
+        memset(nodes, 0, sizeof(CTreeNode*) * 16);
+        nodes[nodeIndex(_i1)] = _n1;
+        nodes[nodeIndex(_i2)] = _n2;
     }
 
     //-----------------------------------------------------------------------------
     SFString CBranch::at(const SFString& _key) const {
         if (_key.empty())
-            return m_branchValue;
+            return branchValue;
 
         int idx = nodeIndex(_key[0]);
-        if (m_nodes[idx])
-            return m_nodes[idx]->at(_key.substr(1));
+        if (nodes[idx])
+            return nodes[idx]->at(_key.substr(1));
 
         return "";
     }
@@ -237,26 +260,26 @@ ostream& operator<<(ostream& os, const CBranch& item) {
         if (verbose == 2) { cerr << "\tbranch inserting " << _key << " at " << _value << "\n"; }
         if (_key.empty()) {
             // We've reached the end of the key, so store the value here
-            if (m_branchValue.empty()) {
+            if (branchValue.empty()) {
                 // store the first encountered block
-                m_branchValue = _value;
+                branchValue = _value;
 
             } else {
                 // preserve the most recent block encountered
-                m_branchValue = nextTokenClear(m_branchValue, '|');
-                m_branchValue += "|" + _value;
+                branchValue = nextTokenClear(branchValue, '|');
+                branchValue += "|" + _value;
             }
 
         } else {
             // Figure out which bucket to store the value in by the next character in the key
             int idx = nodeIndex(_key[0]);
-            if (m_nodes[nodeIndex(_key[0])]) {
+            if (nodes[nodeIndex(_key[0])]) {
                 // There is already something stored here, so we need to find room for it
-                m_nodes[idx] = m_nodes[idx]->insert(_key.substr(1), _value);
+                nodes[idx] = nodes[idx]->insert(_key.substr(1), _value);
 
             } else {
                 // we've reached a leaf
-                m_nodes[idx] = new CLeaf(_key.substr(1), _value);
+                nodes[idx] = new CLeaf(_key.substr(1), _value);
             }
         }
         return this;
@@ -273,10 +296,10 @@ ostream& operator<<(ostream& os, const CBranch& item) {
         }
 
         if (_key.empty()) {
-            if (m_branchValue.length()) {
+            if (branchValue.length()) {
                 if (verbose)
                     cerr << "and non-empty value " << endl;
-                m_branchValue = "";
+                branchValue = "";
                 return rejig();
             }
             if (verbose)
@@ -286,10 +309,10 @@ ostream& operator<<(ostream& os, const CBranch& item) {
         }
 
         int idx = nodeIndex(_key[0]);
-        if (m_nodes[idx]) {
+        if (nodes[idx]) {
             const char *k = (const char*)_key;
-            CTreeNode *ret = m_nodes[idx]->remove(&k[1]);
-            m_nodes[idx] = ret;
+            CTreeNode *ret = nodes[idx]->remove(&k[1]);
+            nodes[idx] = ret;
             CTreeNode *n = rejig();
             if (verbose)
                 idnt.Replace("\t", "");
@@ -308,32 +331,32 @@ ostream& operator<<(ostream& os, const CBranch& item) {
 #define MULTI_BRANCH ((char)16)
     CTreeNode *CBranch::rejig() {
         char n = activeBranch();
-        if (n == NO_BRANCHS && m_branchValue.length()) {
+        if (n == NO_BRANCHS && branchValue.length()) {
             if (verbose)
                 cerr << "No branches, but we have a value, so we save it as a leaf" << endl;
             // revert back down to a leaf
-            CTreeNode *r = new CLeaf("", m_branchValue);
+            CTreeNode *r = new CLeaf("", branchValue);
             delete this;
             return r;
 
-        } else if (n != MULTI_BRANCH && m_branchValue.empty()) {
+        } else if (n != MULTI_BRANCH && branchValue.empty()) {
             if (verbose == 2)
                 cerr << idnt << "This single (empty) branch has a single child at [" << idex(n) << "]" << endl;
             // only branching to n...
             int nn = static_cast<int>(n);
-            if (auto b = dynamic_cast<CBranch*>(m_nodes[nn])) {
+            if (auto b = dynamic_cast<CBranch*>(nodes[nn])) {
                 // switch to infix
-                m_nodes[nn] = NULL;
+                nodes[nn] = NULL;
                 delete this;
                 SFString x = idex(n);
                 return new CInfix(x, b);
 
             } else {
-                auto x = m_nodes[nn];
+                auto x = nodes[nn];
                 ASSERT(x);
                 // include in child
-                x->m_prefix = idex(n) + x->m_prefix;
-                m_nodes[nn] = NULL;
+                x->prefix = idex(n) + x->prefix;
+                nodes[nn] = NULL;
                 delete this;
                 return x;
             }
@@ -347,7 +370,7 @@ ostream& operator<<(ostream& os, const CBranch& item) {
     char CBranch::activeBranch() const {
         char n = NO_BRANCHS;
         for (int i = 0 ; i < 16 ; i++) {
-            if (m_nodes[i]) {
+            if (nodes[i]) {
                 if (n == NO_BRANCHS)
                     n = static_cast<char>(i);
                 else
@@ -364,13 +387,13 @@ ostream& operator<<(ostream& os, const CBranch& item) {
         uint32_t save = vd->type;
         vd->type = T_BRANCH;
         vd->cnt = 0;
-        //        vd->strs = vd->strs + m_branchValue + "+";
+        //        vd->strs = vd->strs + branchValue + "+";
         vd->strs = vd->strs + "+";
         (*func)(this, data);
         for (uint32_t i = 0; i < 16; ++i) {
-            if (m_nodes[i]) {
+            if (nodes[i]) {
                 vd->strs = vd->strs + "-" + idex((char)i);
-                m_nodes[i]->visitItems(func, data);
+                nodes[i]->visitItems(func, data);
                 nextTokenClearReverse(vd->strs, '-');
             }
         }

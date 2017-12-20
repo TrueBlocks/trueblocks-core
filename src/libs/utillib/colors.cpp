@@ -6,6 +6,9 @@
  * The LICENSE at the root of this repo details your rights (if any)
  *------------------------------------------------------------------------*/
 #include "basetypes.h"
+#include "conversions.h"
+#include "exportcontext.h"
+#include "colors.h"
 
 namespace qblocks {
 
@@ -59,5 +62,52 @@ namespace qblocks {
         strikethru = "\e[7m";
         greenCheck = "\e[0;32m✓\e[0m";
         redX       = "\e[0;31mX\e[0m";
+    }
+
+    //-----------------------------------------------------------------------
+    uint64_t barLen(uint64_t newLen) {
+        static uint64_t _barLen = 100;
+        if (newLen)
+            _barLen = newLen;
+        return _barLen;
+    }
+
+    //-----------------------------------------------------------------------
+    void progressBar(uint64_t _part, uint64_t _whole, const SFString& msgs) {
+        SFString endMsg = msgs;
+        SFString begMsg = nextTokenClear(endMsg, '|');
+        double percent = 1.0;
+        if (_whole > 0)
+            percent = (_part / static_cast<double>(_whole));
+        uint64_t len = (uint64_t)(barLen() * percent);
+
+        cout << begMsg << (begMsg.empty() ? " " : "");
+        cout << " [" << SFString('x', len).Substitute("x", "░");
+        cout << SFString(' ', max((uint64_t)0, barLen() - len));
+        cout << "] ";
+        cout << cYellow << _part << cOff << " of " << cYellow << _whole << cOff;
+        cout << " (" << cBlue << fmtFloatp(100.*percent, 1) << cOff << "%)";
+        cout << (endMsg.empty() ? " " : "") << endMsg;
+        cout << "\r";
+        cout.flush();
+    }
+
+    static double pb_Value = -1.0;
+    double getProgBarVal(void) { return pb_Value; }
+
+    //-----------------------------------------------------------------------
+    void progressBar(uint64_t _part, uint64_t _whole, double _tim, const SFString& begMsg) {
+        if (_part == 0 && _whole == 0) {
+            // reset
+            pb_Value = 0.;
+            return;
+        }
+
+        CStringExportContext ctx;
+        if (_tim > 0.) {
+            pb_Value = max(pb_Value, _tim);  // keep it monotonic
+            ctx << " in " << cYellow << pb_Value << cOff << " seconds.";
+        }
+        progressBar(_part, _whole, begMsg+"|"+ctx.str);
     }
 }  // namespace qblocks

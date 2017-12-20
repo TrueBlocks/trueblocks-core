@@ -27,7 +27,6 @@ ABI for address 0x851b7f3ab81bd8df354f0d7640efcd7288553419
 	function replaceOwner               (address owner,address newOwner)
 	function executeTransaction         (uint256 transactionId)
 	function spentToday                 ()
-	constructor                         (address[] _owners,uint256 _required,uint256 _dailyLimit)
 	event DailyLimitChange              (uint256 dailyLimit)
 	event Confirmation                  (address indexed sender,uint256 indexed transactionId)
 	event Revocation                    (address indexed sender,uint256 indexed transactionId)

@@ -47,12 +47,12 @@ run_test("ethslurp_invalid_param_1"                "-x")
 run_test("ethslurp_invalid_param_2"                "--")
 run_test("ethslurp_invalid_address_1"              "invalid")
 run_test("ethslurp_invalid_address_2"              "0x63c8c29af409bd31ec7ddeea58f")
-run_test("ethslurp_no_record_in_block_range"       "0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0" " -b:0:1")
-run_test("ethslurp_single_block_range"             "0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0" " -b:4186279:4186279")
-run_test("ethslurp_range_of_blocks"                "0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0" " -b:4186279:4186301")
-run_test("ethslurp_no_record_in_block_range_long"  "0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0" " --blocks:0:1")
-run_test("ethslurp_single_block_range_long"        "0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0" " --blocks:4186279:4186279")
-run_test("ethslurp_range_of_blocks_long"           "0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0" " --blocks:4186279:4186301")
+run_test("ethslurp_no_record_in_block_range"       "0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0" " -b 0-1")
+run_test("ethslurp_single_block_range"             "0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0" " -b 4186279-4186279")
+run_test("ethslurp_range_of_blocks"                "0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0" " -b 4186279-4186301")
+run_test("ethslurp_no_record_in_block_range_long"  "0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0" " --blocks" " 0-1")
+run_test("ethslurp_single_block_range_long"        "0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0" " --blocks" " 4186279-4186279")
+run_test("ethslurp_range_of_blocks_long"           "0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0" " --blocks" " 4186279-4186301")
 run_test("ethslurp_invalid_date_range_1"           "0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0" " -d" " 0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0")
 run_test("ethslurp_invalid_date_range_2"           "0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0" " -da:b")
 run_test("ethslurp_invalid_date_range_3"           "0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0" " -d:a:b")
@@ -69,8 +69,8 @@ run_test("ethslurp_no_record_in_dates_range_long"  "0x63c8c29af409bd31ec7ddeea58
 run_test("ethslurp_single_date_range_long"         "0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0" " --dates:20170821:20170821")
 run_test("ethslurp_invalid_format"                 "0x1324e7b922b30B49Ab8EA81086341cc41C249346" " -d:20170519:20170519"      " -f:invalid")
 run_test("ethslurp_invalid_format_long"            "0x1324e7b922b30B49Ab8EA81086341cc41C249346" " -d:20170519:20170519"      " --fmt:invalid")
-run_test("ethslurp_options_combination_1"          "0x1324e7b922b30B49Ab8EA81086341cc41C249346" " -d:20170519:20170519"      " -f:html"    " -i"  " -b:0")
-run_test("ethslurp_options_combination_1_long"     "0x1324e7b922b30B49Ab8EA81086341cc41C249346" " --dates:20170519:20170519" " --fmt:html" " --income" " --blocks:0")
+run_test("ethslurp_options_combination_1"          "0x1324e7b922b30B49Ab8EA81086341cc41C249346" " -d:20170519:20170519"      " -f:html"    " -i"  " -b" " 0")
+run_test("ethslurp_options_combination_1_long"     "0x1324e7b922b30B49Ab8EA81086341cc41C249346" " --dates:20170519:20170519" " --fmt:html" " --income" " --blocks" " 0")
 
 run_special_test("ethslurp_not_found_address"              "0x63c8c29af409bd31ec7ddeea58ff14f21e8980b5")
 run_special_test("ethslurp_date_range_1"                   "0x1324e7b922b30B49Ab8EA81086341cc41C249346" " -d:20170519:20170618")
@@ -87,10 +87,10 @@ run_special_test("ethslurp_out_html_format"                "0x1324e7b922b30B49Ab
 run_special_test("ethslurp_out_txt_format_long"            "0x1324e7b922b30B49Ab8EA81086341cc41C249346" " -d:20170519:20170519"      " --fmt:txt")
 run_special_test("ethslurp_out_csv_format_long"            "0x1324e7b922b30B49Ab8EA81086341cc41C249346" " -d:20170519:20170519"      " --fmt:csv")
 run_special_test("ethslurp_out_html_format_long"           "0x1324e7b922b30B49Ab8EA81086341cc41C249346" " -d:20170519:20170519"      " --fmt:html")
-run_special_test("ethslurp_options_combination_2"          "0x1324e7b922b30B49Ab8EA81086341cc41C249346" " -b:3730547:3730547"        " -f:csv"     " -i")
-run_special_test("ethslurp_verbose_options"                "0x1324e7b922b30B49Ab8EA81086341cc41C249346" " -b:3730547:3730547"        " -f:csv"     " -i"  " -v")
-run_special_test("ethslurp_options_combination_2_long"     "0x1324e7b922b30B49Ab8EA81086341cc41C249346" " --blocks:3730547:3730547"  " --fmt:csv"  " --income")
-run_special_test("ethslurp_verbose_options_long"           "0x1324e7b922b30B49Ab8EA81086341cc41C249346" " --blocks:3730547:3730547"  " --fmt:csv"  " --income" " --verbose")
+run_special_test("ethslurp_options_combination_2"          "0x1324e7b922b30B49Ab8EA81086341cc41C249346" " -b:3730547-3730547"        " -f:csv"     " -i")
+run_special_test("ethslurp_verbose_options"                "0x1324e7b922b30B49Ab8EA81086341cc41C249346" " -b:3730547-3730547"        " -f:csv"     " -i"  " -v")
+run_special_test("ethslurp_options_combination_2_long"     "0x1324e7b922b30B49Ab8EA81086341cc41C249346" " --blocks" " 3730547-3730547"  " --fmt:csv"  " --income")
+run_special_test("ethslurp_verbose_options_long"           "0x1324e7b922b30B49Ab8EA81086341cc41C249346" " --blocks" " 3730547-3730547"  " --fmt:csv"  " --income" " --verbose")
 run_special_test("ethslurp_single_date_range"              "0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0" " -d:20170821:20170821")
 # For the previous test case - set CACHE_ADDR at environment, this way we can clean the cache before running it
 set_property(TEST ethslurp_single_date_range PROPERTY ENVIRONMENT "CACHE_ADDR=0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0")
@@ -191,12 +191,12 @@ set_property(TEST ethslurp_single_date_range PROPERTY ENVIRONMENT "CACHE_ADDR=0x
 #echo "test12: test block number option fail"                             | tee proposed/test12_fail.txt
 #ethslurp -t -b -r -f                                                     >>proposed/test12_fail.txt  2>&1
 #echo "test12: test block number option less than"                        | tee proposed/test12_lessthan.txt
-#ethslurp -t -b::1491788 -r -f                                            >>proposed/test12_lessthan.txt  2>&1
+#ethslurp -t -b 0-1491788 -r -f                                            >>proposed/test12_lessthan.txt  2>&1
 #echo "test12: test block number option greater than"                     | tee proposed/test12_greaterthan.txt
-#ethslurp -t -b:1491788 -r -f                                             >>proposed/test12_greaterthan.txt  2>&1
+#ethslurp -t -b 1491788 -r -f                                             >>proposed/test12_greaterthan.txt  2>&1
 #sleep 1s
 #echo "test12: test block number option range"                            | tee proposed/test12_range.txt
-#ethslurp -t -b:1491752:1546617 -r -f                                     >>proposed/test12_range.txt 2>&1
+#ethslurp -t -b 1491752-1546617 -r -f                                     >>proposed/test12_range.txt 2>&1
 
 
 #--------------------------------------------------------------------------------
@@ -229,6 +229,8 @@ set_property(TEST ethslurp_single_date_range PROPERTY ENVIRONMENT "CACHE_ADDR=0x
 #echo "Bring down EEAR contract just to keep track of it"                      | tee proposed/eear.txt
 #cat api_key | ethslurp -t -f:txt 0xbdace480953fc8260184bd625389ea20bbd0da9f   >>proposed/eear.txt 2>&1
 
+run_test("ethslurp_blockByHash" "0xd26114cd6ee289accf82350c8d8487fedb8a0c07" " --block" " 0xd19bc98080cd70951fad3951cef2d512e6334aa3c7e64a38985c955d4d2e273b")
+
 # Installation steps, this tool is renamed at installation
 install(TARGETS ${TOOL_NAME} RUNTIME DESTINATION bin)
-install(CODE "file(RENAME \"${CMAKE_INSTALL_PREFIX}/bin/${TOOL_NAME}\" \"${CMAKE_INSTALL_PREFIX}/bin/ethSlurp\")")    
+install(CODE "file(RENAME \"${CMAKE_INSTALL_PREFIX}/bin/${TOOL_NAME}\" \"${CMAKE_INSTALL_PREFIX}/bin/ethSlurp\")")

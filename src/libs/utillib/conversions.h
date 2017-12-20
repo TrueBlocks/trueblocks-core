@@ -57,7 +57,7 @@ namespace qblocks {
         SFString ret, in = inHex.startsWith("0x") ? inHex.substr(2) : inHex;
         while (!in.empty())
         {
-            SFString nibble = in.Left(2);
+            SFString nibble = in.substr(0,2);
             in = in.substr(2);
             ret += (char)hex2Ascii((char*)(const char*)nibble);
         }
@@ -70,7 +70,7 @@ namespace qblocks {
         char tmp[20];
         sprintf(tmp, "%02x", (unsigned int)(char)val);
         SFString ret = tmp;
-        return ret.Right(2);
+        return ret.substr(ret.length()-2,2);
     }
     //----------------------------------------------------------------------------
     inline SFString string2Hex(const SFString& inAscii)
@@ -89,7 +89,7 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------
-    inline SFString asStringU(SFUint32 i) {
+    inline SFString asStringU(uint64_t i) {
         ostringstream os;
         os << i;
         return os.str().c_str();
@@ -157,7 +157,7 @@ namespace qblocks {
         if (ret.length() < 18)
             ret = padLeft(_value, 18).Substitute(" ", "0");
         ret.Reverse();
-        ret = ret.Left(18) + "." + ret.substr(18);
+        ret = ret.substr(0,18) + "." + ret.substr(18);
         ret.Reverse();
         ret = StripLeading(ret, '0');
         if (ret.startsWith('.'))
@@ -189,10 +189,10 @@ namespace qblocks {
         SFString decimals = nextTokenClear(exponent,'e');
         SFString num = nextTokenClear(decimals,'.');
         long nD = (long)decimals.length();
-        SFUint32 e = toLongU(exponent);
+        uint64_t e = toLongU(exponent);
         SFUintBN ee = 1;
-        SFUint32 power = e - (SFUint32)nD;
-        for (SFUint32 i=0;i<power;i++)
+        uint64_t power = e - (uint64_t)nD;
+        for (uint64_t i=0;i<power;i++)
             ee *= 10;
         num += decimals;
         return str2BigUint(num) * ee;
@@ -206,7 +206,7 @@ namespace qblocks {
     }
 
     //-------------------------------------------------------------------------
-    inline SFUintBN canonicalWei(SFUint32 _value)
+    inline SFUintBN canonicalWei(uint64_t _value)
     {
         return SFUintBN(_value);
     }
@@ -259,7 +259,7 @@ namespace qblocks {
 
     //--------------------------------------------------------------------------------------------------------------
     extern SFTime      dateFromTimeStamp(timestamp_t tsIn);
-    extern SFTime      snagDate(const SFString& str, int dir = 0);  // -1 BOD, 0 MIDDAY, 1 EOD
+    extern SFTime      parseDate(const SFString& str);
 
     extern timestamp_t toTimestamp(const SFTime&   timeIn);
     extern timestamp_t toTimestamp(const SFString& timeIn);

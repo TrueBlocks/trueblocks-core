@@ -29,48 +29,26 @@ int main(int argc, const char * argv[]) {
         if (!options.quiet)
             cout << (options.isMulti() ? "[" : "");
 
-        for (SFUint32 i = options.blocks.start ; i < options.blocks.stop ; i++) {
+        SFString list = options.getBlockNumList();
+        while (!list.empty()) {
+            blknum_t bn = toLongU(nextTokenClear(list, '|'));
             if (options.isCheck) {
-                checkResults += checkOneBlock(i, options);
-
+                checkResults += checkOneBlock(bn, options);
             } else {
-                SFString result = doOneBlock(i, options);
+                SFString result = doOneBlock(bn, options);
                 if (options.normalize) {
                     if (verbose)
-                        cout << i << "\n";
-                    result = normalizeBlock(result, false, i >= byzantiumBlock);
+                        cout << bn << "\n";
+                    result = normalizeBlock(result, false, bn >= byzantiumBlock);
                 }
                 if (!options.quiet) {
                     cout << result;
-                    if (i < options.blocks.stop-1)
+                    if (!list.empty())
                         cout << ",";
                     cout << "\n";
 
-                 } else {
-                    interumReport(cerr, i);
-                }
-            }
-        }
-
-        for (SFUint32 i = 0 ; i < options.blocks.nNums ; i++) {
-            if (options.isCheck) {
-                checkResults += checkOneBlock(options.blocks.nums[i], options);
-
-            } else {
-                SFString result = doOneBlock(options.blocks.nums[i], options);
-                if (options.normalize) {
-                    if (verbose)
-                        cout << options.blocks.nums[i] << "\n";
-                    result = normalizeBlock(result, false, options.blocks.nums[i] >= byzantiumBlock);
-                }
-                if (!options.quiet) {
-                    cout << result;
-                    if (i < options.blocks.nNums - 1)
-                        cout << ",";
-                     cout << "\n";
-
                 } else {
-                    interumReport(cerr, i);
+                    interumReport(cerr, bn);
                 }
             }
         }
@@ -88,7 +66,7 @@ int main(int argc, const char * argv[]) {
 }
 
 //------------------------------------------------------------
-SFString doOneBlock(SFUint32 num, const COptions& opt) {
+SFString doOneBlock(uint64_t num, const COptions& opt) {
 
     CBlock gold;
     SFString result;
@@ -129,14 +107,22 @@ SFString doOneBlock(SFUint32 num, const COptions& opt) {
             }
 
         }
-        if (!opt.silent)
-            result = gold.Format();
+
+        if (!opt.silent) {
+            SFString format = opt.format;
+            if (false) { //opt.priceBlocks) {
+                SFUintBN oneWei = canonicalWei("1000000000000000000");
+                SFString dollars = "$" + asDollars(gold.timestamp, oneWei);
+                format.Replace("{PRICE:CLOSE}", dollars);
+            }
+            result = gold.Format(format);
+        }
     }
     return result;
 }
 
 //------------------------------------------------------------
-SFString checkOneBlock(SFUint32 num, const COptions& opt) {
+SFString checkOneBlock(uint64_t num, const COptions& opt) {
 
     if (opt.quiet == 2) {
         cout << "Checking block " + cYellow + asStringU(num) + cOff + "...       \r";
@@ -197,4 +183,3 @@ void interumReport(ostream& os, blknum_t i) {
     os << (!(i%150) ? "." : (!(i%1000)) ? "+" : "");  // dots '.' at every 150, '+' at every 1000
     os.flush();
 }
-

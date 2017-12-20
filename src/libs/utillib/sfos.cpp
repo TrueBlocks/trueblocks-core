@@ -85,7 +85,7 @@ namespace qblocks {
 
                     // filter specified directories and remove trailing '/'
                     if (path.endsWith('/'))
-                        path = path.Left(path.length() - 1);
+                        path = path.substr(0,path.length() - 1);
 
                     if (!keepPaths) {
                         // trim path to last directory / file
@@ -305,13 +305,13 @@ extern SFString binaryFileToString(const SFString& filename);
     }
 
     //------------------------------------------------------------------
-    SFUint32 fileSize(const SFString& filename) {
+    uint64_t fileSize(const SFString& filename) {
         if (!fileExists(filename))
             return 0;
 
         struct stat statBuf;
         stat((const char *)filename, &statBuf);
-        return (SFUint32)statBuf.st_size;
+        return (uint64_t)statBuf.st_size;
     }
 } // namespace qblocks
 
@@ -326,7 +326,7 @@ namespace qblocks {
         CFilename fullPath(path);
         SFString targetFolder = fullPath.getFullPath();
         size_t find = targetFolder.ReverseFind('/');
-        targetFolder = targetFolder.Left(find) + "/";
+        targetFolder = targetFolder.substr(0,find) + "/";
         SFString folder = targetFolder;
         SFString curFolder = "/";
         while (!folder.empty()) {

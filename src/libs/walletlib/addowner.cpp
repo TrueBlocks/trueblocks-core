@@ -92,12 +92,11 @@ bool QAddOwner::Serialize(SFArchive& archive) {
 //---------------------------------------------------------------------------------------------------
 bool QAddOwner::SerializeC(SFArchive& archive) const {
 
-    // EXISTING_CODE
-    // EXISTING_CODE
-
     // Writing always write the latest version of the data
     CTransaction::SerializeC(archive);
 
+    // EXISTING_CODE
+    // EXISTING_CODE
     archive << _owner;
 
     return true;
