@@ -156,11 +156,11 @@ bool CFunction::Serialize(SFArchive& archive) {
 //---------------------------------------------------------------------------------------------------
 bool CFunction::SerializeC(SFArchive& archive) const {
 
-    // EXISTING_CODE
-    // EXISTING_CODE
-
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
+
+    // EXISTING_CODE
+    // EXISTING_CODE
     archive << name;
     archive << type;
     archive << anonymous;
@@ -358,7 +358,7 @@ const CBaseNode *CFunction::getObjectAt(const SFString& name, uint32_t i) const 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 //---------------------------------------------------------------------------
-SFString CFunction::getSignature(SFUint32 parts) const {
+SFString CFunction::getSignature(uint64_t parts) const {
     uint32_t cnt = inputs.getCount();
 
     SFString nm = (origName.empty() ? name : origName);
@@ -394,7 +394,7 @@ SFString CFunction::encodeItem(void) const {
     SFString ret;
 extern bool getSha3(const SFString& hexIn, SFString& shaOut);
     getSha3(hex, ret);
-    ret = (type == "event" ? ret : ret.Left(10));
+    ret = (type == "event" ? ret : ret.substr(0,10));
     return ret;
 }
 // EXISTING_CODE

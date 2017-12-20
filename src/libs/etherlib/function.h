@@ -49,7 +49,7 @@ public:
 
     // EXISTING_CODE
     bool hasAddrs;
-    SFString getSignature(SFUint32 parts) const;
+    SFString getSignature(uint64_t parts) const;
     SFString encodeItem(void) const;
     bool isBuiltin;
     SFString origName;

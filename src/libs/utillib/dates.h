@@ -11,11 +11,7 @@
 
 namespace qblocks {
 
-    #define FMT_DEFAULT  0
-    #define FMT_TIME     2
-    #define FMT_DATE     5
-    #define FMT_SEMI_SEP 31
-    #define FMT_JSON     32
+    #define FMT_JSON SFString("%Y-%m-%d %H:%M:%S UTC")
 
     extern uint32_t DaysInMonth(uint32_t year, uint32_t month);
     extern uint32_t DaysInMonth(const SFTime& date);

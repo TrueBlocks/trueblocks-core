@@ -27,6 +27,9 @@ set(GOLD_PATH "${GOLD_PATH}/${PROJ_NAME}/${TOOL_NAME}")
 # Additional target to make the README.md
 build_readme(${CMAKE_CURRENT_SOURCE_DIR} ${TOOL_NAME})
 
+# To run only specific tests we define a test configuration named "test_all"
+add_custom_target(test-all COMMAND ${CMAKE_CTEST_COMMAND} -C test_all)
+
 # Function to run an special or slow test case
 function(run_special_test testName)
     run_the_special_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
@@ -90,7 +93,7 @@ run_test("getBloom_special_2" "stateclear")
 run_special_test("getBloom_cmd_file1" "--file:cmd_file1")
 run_special_test("getBloom_cmd_file2" "--file:cmd_file2")
 
-
+run_test("getBloom_blockByHash" "0xd19bc98080cd70951fad3951cef2d512e6334aa3c7e64a38985c955d4d2e273b" " 0x5cfb2aeb032f8280c85f51857badb4cd3837427603f2939baa34692c8da52be4")
 
 # Installation steps
 install(TARGETS ${TOOL_NAME} RUNTIME DESTINATION bin)

@@ -15,6 +15,7 @@
 #include "logentry.h"
 #include "webapi.h"
 #include "pricequote.h"
+#include "pricesource.h"
 #include "trace.h"
 #include "traceaction.h"
 #include "traceresult.h"
@@ -25,5 +26,6 @@
 #include "accountwatch.h"
 #include "balhistory.h"
 #include "acctcacheitem.h"
+#include "blockoptions.h"
 
 using namespace qblocks;

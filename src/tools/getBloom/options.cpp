@@ -155,7 +155,7 @@ COptions::~COptions(void) {
 
 //--------------------------------------------------------------------------------
 bool COptions::isMulti(void) const {
-    return ((blocks.stop - blocks.start) > 1 || blocks.nNums > 1);
+    return ((blocks.stop - blocks.start) > 1 || blocks.hashList.getCount() > 1 || blocks.numList.getCount() > 1);
 }
 
 //--------------------------------------------------------------------------------

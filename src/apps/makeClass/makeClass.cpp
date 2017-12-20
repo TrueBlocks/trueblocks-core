@@ -354,7 +354,7 @@ SFString ptrWriteFmt =
     SFString subClsCodeStr  = fieldSubCls;
 
     //------------------------------------------------------------------------------------------------
-    SFString sorts[4] = { baseLower.Left(2)+"_Name", "", baseLower+"ID", "" };
+    SFString sorts[4] = { baseLower.substr(0,2)+"_Name", "", baseLower+"ID", "" };
     SFString sortString = toml.getConfigStr("settings", "sort", "");
     uint32_t cnt = 0;
     while (!sortString.empty())
@@ -378,7 +378,7 @@ SFString ptrWriteFmt =
     headSource.ReplaceAll("[{COMMENT_LINE}]", STR_COMMENT_LINE);
     headSource.ReplaceAll("[{LONG}]",         baseLower);
     headSource.ReplaceAll("[{PROPER}]",       baseProper);
-    headSource.ReplaceAll("[{SHORT}]",        baseLower.Left(2));
+    headSource.ReplaceAll("[{SHORT}]",        baseLower.substr(0,2));
     headSource.ReplaceAll("[{BASE_CLASS}]",   baseClass);
     headSource.ReplaceAll("[{BASE_BASE}]",    baseBase);
     headSource.ReplaceAll("[{BASE}]",         baseUpper);
@@ -387,7 +387,7 @@ SFString ptrWriteFmt =
     headSource.ReplaceAll("[{LONG}]",         baseLower);
     headSource.ReplaceAll("[{PROPER}]",       baseProper);
     headSource.ReplaceAll("[{SHORT3}]",       short3(baseLower));
-    headSource.ReplaceAll("[{SHORT}]",        baseLower.Left(2));
+    headSource.ReplaceAll("[{SHORT}]",        baseLower.substr(0,2));
     headSource.ReplaceAll("[{SCOPE}]",        scope);
     headSource.ReplaceAll("[{NAMESPACE1}]",   (ns.empty() ? "" : "\nnamespace qblocks {\n\n"));
     headSource.ReplaceAll("[{NAMESPACE2}]",   (ns.empty() ? "" : "}  // namespace qblocks\n"));
@@ -424,7 +424,7 @@ SFString ptrWriteFmt =
     srcSource.ReplaceAll("[{COMMENT_LINE}]",    STR_COMMENT_LINE);
     srcSource.ReplaceAll("[{LONG}]",            baseLower);
     srcSource.ReplaceAll("[{PROPER}]",          baseProper);
-    srcSource.ReplaceAll("[{SHORT}]",           baseLower.Left(2));
+    srcSource.ReplaceAll("[{SHORT}]",           baseLower.substr(0,2));
     srcSource.ReplaceAll("[{NAME_SORT1}]",      sorts[0]);
     srcSource.ReplaceAll("[{NAME_SORT2}]",      sorts[1]);
     srcSource.ReplaceAll("[{ID_SORT1}]",        sorts[2]);
@@ -437,7 +437,7 @@ SFString ptrWriteFmt =
     srcSource.ReplaceAll("[{LONG}]",            baseLower);
     srcSource.ReplaceAll("[{PROPER}]",          baseProper);
     srcSource.ReplaceAll("[{SHORT3}]",          short3(baseLower));
-    srcSource.ReplaceAll("[{SHORT}]",           baseLower.Left(2));
+    srcSource.ReplaceAll("[{SHORT}]",           baseLower.substr(0,2));
     srcSource.ReplaceAll("[{SCOPE}]",           scope);
     srcSource.ReplaceAll("[{NAMESPACE1}]",      (ns.empty() ? "" : "\nnamespace qblocks {\n\n"));
     srcSource.ReplaceAll("[{NAMESPACE2}]",      (ns.empty() ? "" : "}  // namespace qblocks\n"));
@@ -589,7 +589,7 @@ SFString getCaseSetCode(const SFString& fieldCase) {
                         caseCode += ptrCase;
 
                     } else if (type == "time") {
-                        caseCode += " { " + field + " = snagDate(fieldValue); return true; }";
+                        caseCode += " { " + field + " = parseDate(fieldValue); return true; }";
 
                     } else if (type == "bbool" || type == "bool") {
                         caseCode +=  " { " + field + " = toBool(fieldValue); return true; }";
@@ -822,7 +822,7 @@ const char *STR_UPGRADE_CODE =
 
 //------------------------------------------------------------------------------------------------------------
 SFString short3(const SFString& str) {
-    SFString ret = str.Left(3);
+    SFString ret = str.substr(0,3);
     if (ret == "new")
         ret = "newp";
     if (ret == "ret")

@@ -10,9 +10,10 @@
 class COptions : public COptionsBase {
 public:
     SFAddress addrs[MAX_ADDRS];
-    SFUint32 nAddrs;
+    uint64_t nAddrs;
     bool diff;
-    bool display;
+    bool asData;
+    bool showBytes;
 
     COptions(void);
     ~COptions(void);

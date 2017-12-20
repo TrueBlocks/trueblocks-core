@@ -88,6 +88,7 @@ void etherlib_init(const SFString& sourceIn)
     CRPCResult::registerClass();
     CNameValue::registerClass();
     CAccountName::registerClass();
+    CAcctCacheItem::registerClass();
 
     setSource(sourceIn);
     // if curl has already been initialized, we want to clear it out
@@ -104,6 +105,7 @@ void etherlib_cleanup(void)
 {
     // cleanup curl
     getCurl(true);
+    clearInMemoryCache();
 }
 
 static uint32_t theID = 1;
@@ -242,45 +244,50 @@ bool getObjectViaRPC(CBaseNode &node, const SFString& method, const SFString& pa
 static bool no_tracing=false;
 void setNoTracing(bool val) { no_tracing = val; }
 //-------------------------------------------------------------------------
-bool queryBlock(CBlock& block, const SFString& numIn, bool needTrace, bool byHash) {
+bool queryBlock(CBlock& block, const SFString& datIn, bool needTrace, bool byHash) {
     uint32_t unused = 0;
-    return queryBlock(block, numIn, needTrace, byHash, unused);
+    return queryBlock(block, datIn, needTrace, byHash, unused);
 }
 
 //-------------------------------------------------------------------------
-bool queryBlock(CBlock& block, const SFString& numIn, bool needTrace, bool byHash, uint32_t& nTraces) {
+bool queryBlock(CBlock& block, const SFString& datIn, bool needTrace, bool byHash, uint32_t& nTraces) {
 
-    if (numIn=="latest")
+    if (datIn == "latest")
         return queryBlock(block, asStringU(getLatestBlockFromClient()), needTrace, false);
 
-    SFUint32 num = toLongU(numIn);
-    if ((getSource().Contains("binary") || getSource().Contains("nonemp")) && fileSize(getBinaryFilename1(num))>0) {
-        UNHIDE_FIELD(CTransaction, "receipt");
-        return readOneBlock_fromBinary(block, getBinaryFilename1(num));
+    if (isHash(datIn)) {
+        HIDE_FIELD(CTransaction, "receipt");
+        getObjectViaRPC(block, "eth_getBlockByHash", "["+quote(datIn)+",true]");
 
-    } else if (getSource().Contains("Only")) {
+    } else {
+        uint64_t num = toLongU(datIn);
+        if ((getSource().Contains("binary") || getSource().Contains("nonemp")) && fileSize(getBinaryFilename1(num))>0) {
+            UNHIDE_FIELD(CTransaction, "receipt");
+            return readOneBlock_fromBinary(block, getBinaryFilename1(num));
+
+        } else if (getSource().Contains("Only")) {
+            return false;
+
+        }
+
+        if (getSource() == "json" && fileSize(getJsonFilename1(num))>0)
+        {
+            UNHIDE_FIELD(CTransaction, "receipt");
+            return readOneBlock_fromJson(block, getJsonFilename1(num));
+
+        }
+
+        HIDE_FIELD(CTransaction, "receipt");
+        getObjectViaRPC(block, "eth_getBlockByNumber", "["+quote(asStringU(num))+",true]");
+    }
+
+    // If there are no transactions, we do not have to trace and we want to tell the caller that
+    if (!block.transactions.getCount())
         return false;
 
-    }
-
-    if (getSource() == "json" && fileSize(getJsonFilename1(num))>0)
-    {
-        UNHIDE_FIELD(CTransaction, "receipt");
-        return readOneBlock_fromJson(block, getJsonFilename1(num));
-
-    }
-
-    HIDE_FIELD(CTransaction, "receipt");
-    getObjectViaRPC(block, "eth_getBlockByNumber", "["+quote(asStringU(num))+",true]");
-
-    // If there are no transactions, we're done
-    if (!block.transactions.getCount() || no_tracing)
-    {
-        // We only write binary if there are transactions
-        //writeToBinary(block, getBinaryFilename1(num));
-        //writeToJson(block, getJsonFilename1(num)); //We've stopped writing JSON for now because of disc space
-        return false;
-    }
+    // If there are transactions, but we are told not to trace, tell the caller that
+    if (no_tracing)
+        return true;
 
     // We have the transactions, but we also want the receipts
     nTraces=0;
@@ -293,7 +300,7 @@ bool queryBlock(CBlock& block, const SFString& numIn, bool needTrace, bool byHas
         CReceipt receipt;
         getReceipt(receipt, trans->hash);
         trans->receipt = receipt; // deep copy
-        if (num >= byzantiumBlock) {
+        if (block.blockNumber >= byzantiumBlock) {
             trans->isError = (receipt.status == 0);
 
         } else if (needTrace && trans->gas == receipt.gasUsed) {
@@ -311,40 +318,39 @@ bool queryBlock(CBlock& block, const SFString& numIn, bool needTrace, bool byHas
 }
 
 //-------------------------------------------------------------------------
-bool getBlock(CBlock& block, SFUint32 numIn)
-{
+bool getBlock(CBlock& block, uint64_t datIn) {
     SFString save = getSource();
     if (getSource() == "fastest")
-        setSource(fileExists(getBinaryFilename1(numIn)) ? "binary" : "parity");
-    bool ret = queryBlock(block, asStringU(numIn), true, false);
+        setSource(fileExists(getBinaryFilename1(datIn)) ? "binary" : "parity");
+    bool ret = queryBlock(block, asStringU(datIn), true, false);
     setSource(save);
     return ret;
 }
 
 //-------------------------------------------------------------------------
 bool getBlock(CBlock& block, const SFHash& hash) {
-    // TODO: Note--this does not work because queryBlock takes blockNum in second param
-    bool ret = queryBlock(block, hash, true, true);
-    return ret;
+    return queryBlock(block, hash, true, true);
 }
 
 //-------------------------------------------------------------------------
-bool queryRawBlock(SFString& block, const SFString& numIn, bool needTrace, bool hashesOnly)
-{
-    block = callRPC("eth_getBlockByNumber", "["+quote(numIn)+","+(hashesOnly?"false":"true")+"]", true);
+bool queryRawBlock(SFString& blockStr, const SFString& datIn, bool needTrace, bool hashesOnly) {
+
+    if (isHash(datIn)) {
+        blockStr = callRPC("eth_getBlockByHash", "["+quote(datIn)+","+(hashesOnly?"false":"true")+"]", true);
+    } else {
+        blockStr = callRPC("eth_getBlockByNumber", "["+quote(datIn)+","+(hashesOnly?"false":"true")+"]", true);
+    }
     return true;
 }
 
 //-------------------------------------------------------------------------
-SFString hexxy(SFUint32 x)
-{
+SFString hexxy(uint64_t x) {
     SFUintBN bn = x;
     return toLower(SFString(to_hex(bn).c_str()));
 }
 
 //-------------------------------------------------------------------------
-bool queryRawReceipt(SFString& results, const SFHash& txHash)
-{
+bool queryRawReceipt(SFString& results, const SFHash& txHash) {
     SFString data = "[\"[HASH]\"]";
     data.Replace("[HASH]", txHash);
     results = callRPC("eth_getTransactionReceipt", data, true);
@@ -360,7 +366,7 @@ bool queryRawTransaction(SFString& results, const SFHash& txHash) {
 }
 
 //-------------------------------------------------------------------------
-bool queryRawLogs(SFString& results, const SFAddress& addr, SFUint32 fromBlock, SFUint32 toBlock)
+bool queryRawLogs(SFString& results, const SFAddress& addr, uint64_t fromBlock, uint64_t toBlock)
 {
     SFString data = "[{\"fromBlock\":\"0x[START]\",\"toBlock\":\"0x[STOP]\", \"address\": \"[ADDR]\"}]";
     data.Replace("[START]", hexxy(fromBlock));
@@ -387,7 +393,7 @@ bool getTransaction(CTransaction& trans, const SFString& hashIn)
 }
 
 //-------------------------------------------------------------------------
-bool getTransaction(CTransaction& trans, const SFString& hashIn, SFUint32 transID)
+bool getTransaction(CTransaction& trans, const SFString& hashIn, uint64_t transID)
 {
     SFUintBN t(transID);
     SFString ts = to_hex(t).c_str();
@@ -397,7 +403,7 @@ bool getTransaction(CTransaction& trans, const SFString& hashIn, SFUint32 transI
 }
 
 //-------------------------------------------------------------------------
-bool getTransaction(CTransaction& trans, blknum_t blockNum, SFUint32 transID)
+bool getTransaction(CTransaction& trans, blknum_t blockNum, uint64_t transID)
 {
     SFUintBN h(blockNum);
     SFUintBN t(transID);
@@ -660,7 +666,7 @@ bool verifyBlock(const CBlock& qBlock, SFString& result)
         size_t f2 = tail.find(",");
         if (field=="transactions")
             f2 = tail.find("],") + 1;
-        SFString tField = tail.Left(f2 == NOPOS ? tail.length() : f2).Substitute("0x"+SFString('0',512),"0x0");
+        SFString tField = tail.substr(0,f2 == NOPOS ? tail.length() : f2).Substitute("0x"+SFString('0',512),"0x0");
         nnStr += (tField + ",");
 #if DEBUG_VERIFY
         cout << field << " = " << tField << "\n";
@@ -696,7 +702,7 @@ SFString getStorageRoot(void) {
 }
 
 //-------------------------------------------------------------------------
-static SFString getFilename_local(SFUint32 numIn, bool asPath, bool asJson)
+static SFString getFilename_local(uint64_t numIn, bool asPath, bool asJson)
 {
     if (storagePath.empty())
     {
@@ -711,18 +717,18 @@ static SFString getFilename_local(SFUint32 numIn, bool asPath, bool asJson)
     SFString fmt = (asPath ? "%s/%s/%s/" : "%s/%s/%s/%s");
     SFString fn  = (asPath ? "" : num + (asJson ? ".json" : ".bin"));
 
-    sprintf(ret, (const char*)(storagePath+fmt), (const char*)num.Left(2), (const char*)num.substr(2,2), (const char*)num.substr(4,2), (const char*)fn);
+    sprintf(ret, (const char*)(storagePath+fmt), (const char*)num.substr(0,2), (const char*)num.substr(2,2), (const char*)num.substr(4,2), (const char*)fn);
     return ret;
 }
 
 //-------------------------------------------------------------------------
-SFString getJsonFilename1(SFUint32 num)
+SFString getJsonFilename1(uint64_t num)
 {
     return getFilename_local(num, false, true);
 }
 
 //-------------------------------------------------------------------------
-SFString getBinaryFilename1(SFUint32 num)
+SFString getBinaryFilename1(uint64_t num)
 {
     SFString ret = getFilename_local(num, false, false);
     ret.Replace("/00/",  "/blocks/00/"); // can't use Substitute because it will change them all
@@ -730,13 +736,13 @@ SFString getBinaryFilename1(SFUint32 num)
 }
 
 //-------------------------------------------------------------------------
-SFString getJsonPath1(SFUint32 num)
+SFString getJsonPath1(uint64_t num)
 {
     return getFilename_local(num, true, true);
 }
 
 //-------------------------------------------------------------------------
-SFString getBinaryPath1(SFUint32 num)
+SFString getBinaryPath1(uint64_t num)
 {
     SFString ret = getFilename_local(num, true, false);
     ret.Replace("/00/",  "/blocks/00/"); // can't use Substitute because it will change them all
@@ -744,13 +750,13 @@ SFString getBinaryPath1(SFUint32 num)
 }
 
 //-------------------------------------------------------------------------
-bool forEveryBlockOnDisc(BLOCKVISITFUNC func, void *data, SFUint32 start, SFUint32 count, SFUint32 skip)
+bool forEveryBlockOnDisc(BLOCKVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip)
 {
     if (!func)
         return false;
 
     // Read every block from number start to start+count
-    for (SFUint32 i = start ; i < start + count ; i = i + skip)
+    for (uint64_t i = start ; i < start + count ; i = i + skip)
     {
         CBlock block;
         getBlock(block,i);
@@ -761,7 +767,7 @@ bool forEveryBlockOnDisc(BLOCKVISITFUNC func, void *data, SFUint32 start, SFUint
 }
 
 //-------------------------------------------------------------------------
-bool forEveryEmptyBlockOnDisc(BLOCKVISITFUNC func, void *data, SFUint32 start, SFUint32 count, SFUint32 skip)
+bool forEveryEmptyBlockOnDisc(BLOCKVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip)
 {
     if (!func)
         return false;
@@ -777,17 +783,17 @@ bool forEveryEmptyBlockOnDisc(BLOCKVISITFUNC func, void *data, SFUint32 start, S
     }
     ASSERT(fullBlocks.isOpen());
 
-    SFUint32 nItems = fileSize(fullBlockIndex) / sizeof(SFUint32) + 1;  // we need an extra one for item '0'
-    SFUint32 *contents = new SFUint32[nItems+2];  // extra space
+    uint64_t nItems = fileSize(fullBlockIndex) / sizeof(uint64_t) + 1;  // we need an extra one for item '0'
+    uint64_t *contents = new uint64_t[nItems+2];  // extra space
     if (contents)
     {
         // read the entire full block index
-        fullBlocks.Read(&contents[0], sizeof(SFUint32), nItems-1);  // one less since we asked for an extra one
+        fullBlocks.Read(&contents[0], sizeof(uint64_t), nItems-1);  // one less since we asked for an extra one
         fullBlocks.Release();  // release it since we don't need it any longer
 
         contents[0] = 0;  // the starting point (needed because we are build the empty list from the non-empty list
-        SFUint32 cnt = start;
-        for (SFUint32 i = 1 ; i < nItems ; i = i + skip) // first one (at index '0') is assumed to be the '0' block
+        uint64_t cnt = start;
+        for (uint64_t i = 1 ; i < nItems ; i = i + skip) // first one (at index '0') is assumed to be the '0' block
         {
             while (cnt<contents[i])
             {
@@ -812,7 +818,7 @@ bool forEveryEmptyBlockOnDisc(BLOCKVISITFUNC func, void *data, SFUint32 start, S
 }
 
 //-------------------------------------------------------------------------
-bool forEveryBlock(BLOCKVISITFUNC func, void *data, SFUint32 start, SFUint32 count, SFUint32 skip) {
+bool forEveryBlock(BLOCKVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip) {
     // Here we simply scan the numbers and either read from disc or query the node
     if (!func)
         return false;
@@ -820,7 +826,7 @@ bool forEveryBlock(BLOCKVISITFUNC func, void *data, SFUint32 start, SFUint32 cou
     SFString save = getSource();
     setSource("fastest");
 
-    for (SFUint32 i = start ; i < start + count - 1 ; i = i + skip) {
+    for (uint64_t i = start ; i < start + count - 1 ; i = i + skip) {
         SFString fileName = getBinaryFilename1(i);
         CBlock block;
         if (fileExists(fileName))
@@ -883,7 +889,7 @@ bool forEveryNonEmptyBlockOnDisc(BLOCKVISITFUNC func, void *data, uint64_t start
 }
 
 //-------------------------------------------------------------------------
-SFUint32 getLatestBlockFromClient(void)
+uint64_t getLatestBlockFromClient(void)
 {
     CBlock block;
     getObjectViaRPC(block, "eth_getBlockByNumber", "[\"latest\",true]");
@@ -891,14 +897,14 @@ SFUint32 getLatestBlockFromClient(void)
 }
 
 //--------------------------------------------------------------------------
-SFUint32 getLatestBloomFromCache(void) {
+uint64_t getLatestBloomFromCache(void) {
     return toLongU(asciiFileToString(bloomFolder + "lastBloom.txt"));
 }
 
 //--------------------------------------------------------------------------
-SFUint32 getLatestBlockFromCache(CSharedResource *res) {
+uint64_t getLatestBlockFromCache(CSharedResource *res) {
 
-    SFUint32 ret = 0;
+    uint64_t ret = 0;
 
     CSharedResource fullBlocks; // Don't move--need the scope
     CSharedResource *pRes = res;
@@ -914,7 +920,7 @@ SFUint32 getLatestBlockFromCache(CSharedResource *res) {
     }
     ASSERT(pRes->isOpen());
 
-    pRes->Seek( (-1 * (long)sizeof(SFUint32)), SEEK_END);
+    pRes->Seek( (-1 * (long)sizeof(uint64_t)), SEEK_END);
     pRes->Read(ret);
     if (pRes != res)
         pRes->Release();
@@ -922,7 +928,7 @@ SFUint32 getLatestBlockFromCache(CSharedResource *res) {
 }
 
 //--------------------------------------------------------------------------
-bool getLatestBlocks(SFUint32& cache, SFUint32& client, CSharedResource *res)
+bool getLatestBlocks(uint64_t& cache, uint64_t& client, CSharedResource *res)
 {
     client = getLatestBlockFromClient();
     cache  = getLatestBlockFromCache(res);
@@ -945,12 +951,13 @@ bool forEveryTransaction(TRANSVISITFUNC func, void *data, const SFString& trans_
     while (!list.empty()) {
         SFString item = nextTokenClear(list, '|');
         bool hasDot = item.Contains(".");
+        bool isHex = item.startsWith("0x");
 
         SFString hash = nextTokenClear(item, '.');
-        SFUint32 txID = toLongU(item);
+        uint64_t txID = toLongU(item);
 
         CTransaction trans;
-        if (hash.startsWith("0x")) {
+        if (isHex) {
             if (hasDot) {
                 // We are not fully formed, we have to ask the node for the receipt
                 getTransaction(trans, hash, txID);  // blockHash.txID
@@ -959,13 +966,21 @@ bool forEveryTransaction(TRANSVISITFUNC func, void *data, const SFString& trans_
                 getTransaction(trans, hash);  // transHash
             }
         } else {
-            getTransaction(trans, (uint32_t)toLongU(hash), txID);  // blockHash.txID
+            getTransaction(trans, (uint32_t)toLongU(hash), txID);  // blockNum.txID
         }
+
         CBlock block;
         trans.pBlock = &block;
         getBlock(block, trans.blockNumber);
         getReceipt(trans.receipt, trans.getValueByName("hash"));
         trans.finishParse();
+        if (!isHash(trans.hash)) {
+            // If the transaction has no hash here, either the block hash or the transaction hash being asked for doesn't exist. We need to
+            // report which hash failed and why to the caller. Because we have no better way, we report that in the hash itself. There are
+            // three cases, two with either block hash or block num one with transaction hash. Note: This will fail if we move to non-string hashes
+            trans.hash = hash + "-" + (!isHex || hasDot ? "block_not_found" : "trans_not_found");
+        }
+
         if (!(*func)(trans, data))
             return false;
     }
@@ -973,8 +988,8 @@ bool forEveryTransaction(TRANSVISITFUNC func, void *data, const SFString& trans_
 }
 
 //-------------------------------------------------------------------------
-bool forEveryBloomFile(FILEVISITOR func, void *data, SFUint32 start, SFUint32 count, SFUint32 skip) {
-    if (start == 0 || count == (SFUint32)-1) { // visit everything since we're given the default
+bool forEveryBloomFile(FILEVISITOR func, void *data, uint64_t start, uint64_t count, uint64_t skip) {
+    if (start == 0 || count == (uint64_t)-1) { // visit everything since we're given the default
         forEveryFileInFolder(bloomFolder, func, data);
         return true;
     }
@@ -1011,7 +1026,8 @@ SFString blockCachePath(const SFString& _part) {
         }
         blockCache = folder.getFullPath();
     }
-    ASSERT(blockCache.endsWith("/"));
+    if (!blockCache.endsWith("/"))
+        blockCache += "/";
     return blockCache + _part;
 }
 

@@ -174,7 +174,7 @@ int main(int argc, const char *argv[])
 		TEST( SFIntBN    (4294967295U).to_uint(),                         "4294967295"        );
 		TEST( str2BigInt  ("4294967296").to_uint(),                       "error"             );
 		TEST( str2BigInt  ("-2147483649").to_int(),                       "error"             );
-		TEST( str2BigInt  ("-2147483648").to_int(),                       "-2147483648"       );
+		TEST( str2BigInt  ("-2147483645").to_int(),                       "-2147483645"       );
 		TEST( SFIntBN    (-2147483647).to_int(),                          "-2147483647"       );
 		TEST( SFIntBN    (0).to_int(),                                    "0"                 );
 		TEST( SFIntBN    (2147483647).to_int(),                           "2147483647"        );

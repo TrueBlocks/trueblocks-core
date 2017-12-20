@@ -335,10 +335,9 @@ bool CSlurperApp::Filter(COptions& options, SFString& message) {
             bool isVisible = (date >= options.firstDate && date <= options.lastDate);
             trans->m_showing = isVisible;
 
-        } else if (options.firstBlock2Read != 0 || options.lastBlock2Read != ((uint32_t)-1)) {
-            SFUint32 bN = trans->blockNumber;
-            bool isVisible = (bN >= options.firstBlock2Read && bN <= options.lastBlock2Read);
-            trans->m_showing = isVisible;
+        } else if (options.blocks.hasBlocks()) {
+            uint64_t bN = trans->blockNumber;
+            trans->m_showing = options.blocks.isInRange(bN);
         }
 
         // The -incomeOnly and -expensesOnly filters are also mutually exclusive
@@ -382,7 +381,7 @@ bool CSlurperApp::Filter(COptions& options, SFString& message) {
         double timeSpent = stop-start;
         cerr << "\tFilter passed " << theAccount.nVisible
                 << " visible records of " << theAccount.transactions.getCount()
-                << " in " << timeSpent << " seconds\n",
+                << " in " << timeSpent << " seconds\n";
         cerr.flush();
     }
 
@@ -411,7 +410,7 @@ bool CSlurperApp::Display(COptions& options, SFString& message) {
         double stop = qbNow();
         double timeSpent = stop-start;
         cerr << "\tExported " << theAccount.nVisible
-                << " records in " << timeSpent << " seconds             \n\n",
+                << " records in " << timeSpent << " seconds             \n\n";
         cerr.flush();
     }
     return true;

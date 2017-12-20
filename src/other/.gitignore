@@ -1,3 +1,6 @@
+single-simple
+bytesUsed
+mysql
 acctIndex
 addresses
 atexit
@@ -45,3 +48,8 @@ visitor
 zOldCode
 zOldCode.tar.gz
 junkUse
+seth
+database
+miniBlkTst
+tokenCounter
+largestInput

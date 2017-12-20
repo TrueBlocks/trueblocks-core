@@ -20,7 +20,7 @@ static CParams debugCmds[] = {
     CParams("-(h)elp",        "Display this screen"),
     CParams("",               "Press enter to continue without correction, up or down arrows to recall commands"),
 };
-static SFUint32 nDebugCmds = sizeof(debugCmds) / sizeof(CParams);
+static uint64_t nDebugCmds = sizeof(debugCmds) / sizeof(CParams);
 
 //---------------------------------------------------------------------
 #define isdelim(cc) ((cc) == ':' || (cc) == '.' || (cc) == ' ')
@@ -134,9 +134,10 @@ bool CVisitor::enterDebugger(const CBlock& block) {
 
                 } else if (curCmd == "l" || curCmd == "list") {
                     cout << "\r\nAccounts:\r\n";
-                    cout << "[";
+                    cout << cOff << "[";
                     for (uint32_t i=0;i<watches.getCount()-1;i++) {
                         cout << " { ";
+                        cout << "\"index\": \""    <<                     watches[i].index              << "\", ";
                         cout << "\"address\": \""  << watches[i].color << watches[i].address    << cOff << "\", ";
                         cout << "\"firstBlock\": " << bRed                     << watches[i].firstBlock << cOff << ", ";
                         cout << "\"name\": \""     << watches[i].color << watches[i].name       << cOff << "\"";

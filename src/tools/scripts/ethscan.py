@@ -6,41 +6,26 @@
 import sys
 import webbrowser
 
-# Set the default URL we want to open
-url = 'http://etherscan.io'
-
-# get the params number
-params_number = len(sys.argv)
-
 #-------------------------------------------------------
-# Open a given URL passed as argument
+url = 'http://etherscan.io'
+nArgs = len(sys.argv)
+
 #-------------------------------------------------------
 def open_url(url):
-    #print("Opening URL " + url) # debug
     webbrowser.open(url)
-    
+
 #-------------------------------------------------------
-# Main program
-# Checks the input parameters and their length to determine 
-# the URL to be launched
-#-------------------------------------------------------
-
-if params_number > 1:
-    if params_number == 2:
-        param_len = len(sys.argv[1])
-
-        # Debug
-        #print("Len: %d" % param_len)
-
-        if param_len == 66:
-	    open_url(url + '/tx/' + sys.argv[1])
-        elif param_len == 42:
-            open_url(url + '/address/' + sys.argv[1])
-        else:
-            open_url(url + '/block/' + sys.argv[1])
-    else:
-        # More than one parameter passed
-	print("\nERROR: Specify only a single transaction hash, account address, or block number\n")
+if nArgs == 1:
+    open_url(url) # If no args, open the main site
 else:
-    # No arguments, open the URL only
-    open_url(url)
+    been_here = 0 # skip arg0
+    for arg in sys.argv:
+        if (been_here):
+            argLen = len(arg)
+            if argLen == 66:
+                open_url(url + '/tx/' + arg)
+            elif argLen == 42:
+                open_url(url + '/address/' + arg)
+            else:
+                open_url(url + '/block/' + arg)
+        been_here = 1

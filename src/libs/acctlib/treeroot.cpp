@@ -55,14 +55,14 @@ bool CTreeRoot::setValueByName(const SFString& fieldName, const SFString& fieldV
     // EXISTING_CODE
 
     switch (tolower(fieldName[0])) {
-        case 'm':
-            if ( fieldName % "m_root" ) {
+        case 'r':
+            if ( fieldName % "root" ) {
                 Clear();
-                m_root = new CTreeNode;
-                if (m_root) {
+                root = new CTreeNode;
+                if (root) {
                     char *p = cleanUpJson((char *)fieldValue.c_str());
                     uint32_t nFields = 0;
-                    m_root->parseJson(p, nFields);
+                    root->parseJson(p, nFields);
                     return true;
                 }
                 return false;
@@ -91,16 +91,19 @@ bool CTreeRoot::Serialize(SFArchive& archive) {
         return true;
 
     // EXISTING_CODE
-    // EXISTING_CODE
-    m_root = NULL;
-    bool has_m_root = false;
-    archive >> has_m_root;
-    if (has_m_root) {
-        m_root = new CTreeNode;
-        if (!m_root)
+    bool has_root = false;
+    archive >> has_root;
+    if (has_root) {
+        SFString className;
+        archive >> className;
+        root = createTreeNode(className);
+        if (!root)
             return false;
-        m_root->Serialize(archive);
+        root->Serialize(archive);
+    } else {
+        root = NULL;
     }
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -108,14 +111,17 @@ bool CTreeRoot::Serialize(SFArchive& archive) {
 //---------------------------------------------------------------------------------------------------
 bool CTreeRoot::SerializeC(SFArchive& archive) const {
 
-    // EXISTING_CODE
-    // EXISTING_CODE
-
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
-    archive << (m_root != NULL);
-    if (m_root)
-        m_root->SerializeC(archive);
+
+    // EXISTING_CODE
+    archive << (root != NULL);
+    if (root) {
+        SFString className = root->getRuntimeClass()->getClassNamePtr();
+        archive << className;
+        root->SerializeC(archive);
+    }
+    // EXISTING_CODE
 
     return true;
 }
@@ -130,7 +136,7 @@ void CTreeRoot::registerClass(void) {
     ADD_FIELD(CTreeRoot, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CTreeRoot, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CTreeRoot, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CTreeRoot, "m_root", T_POINTER, ++fieldNum);
+    ADD_FIELD(CTreeRoot, "root", T_POINTER, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CTreeRoot, "schema");
@@ -189,10 +195,10 @@ SFString CTreeRoot::getValueByName(const SFString& fieldName) const {
 
     // Return field values
     switch (tolower(fieldName[0])) {
-        case 'm':
-            if ( fieldName % "m_root" ) {
-                if (m_root)
-                    return m_root->Format();
+        case 'r':
+            if ( fieldName % "root" ) {
+                if (root)
+                    return root->Format();
                 return "";
             }
             break;
@@ -218,15 +224,15 @@ ostream& operator<<(ostream& os, const CTreeRoot& item) {
 // EXISTING_CODE
     //-----------------------------------------------------------------------------
     SFString CTreeRoot::at(const SFString& _key) const {
-        if (!m_root)
+        if (!root)
             return "";
-        return m_root->at(_key);
+        return root->at(_key);
     }
 
     //-----------------------------------------------------------------------------
     void CTreeRoot::remove(const SFString& _key) {
-        if (m_root)
-            m_root = m_root->remove(_key);
+        if (root)
+            root = root->remove(_key);
     }
 
     //-----------------------------------------------------------------------------
@@ -234,13 +240,13 @@ ostream& operator<<(ostream& os, const CTreeRoot& item) {
         if (_value.empty())
             remove(_key);
         if (verbose == 2) { cerr << "treeroot inserting " << _key << " at " << _value << "\n"; }
-        m_root = m_root ? m_root->insert(_key, _value) : new CLeaf(_key, _value);
+        root = root ? root->insert(_key, _value) : new CLeaf(_key, _value);
     }
 
     //-----------------------------------------------------------------------------
     bool CTreeRoot::visitItems(ACCTVISITOR func, void *data) const {
-        if (m_root)
-            return m_root->visitItems(func, data);
+        if (root)
+            return root->visitItems(func, data);
         return true;
     }
 

@@ -64,6 +64,7 @@ bool COptions::parseArguments(SFString& command) {
 
         } else if (arg == "-o" || arg == "--force") {
             etherlib_init("binary");
+            latestBlock = getLatestBlockFromClient();
             force = true;
 
         } else if (arg == "--normalize") {
@@ -76,7 +77,12 @@ bool COptions::parseArguments(SFString& command) {
 
             } else if (mode == "c" || mode == "cache") {
                 etherlib_init("binaryOnly");
+                latestBlock = getLatestBlockFromClient();
                 asks4Cache = true;
+
+            } else if (mode == "r" || mode == "remote") {
+                etherlib_init("infura");
+                latestBlock = getLatestBlockFromClient();
 
             } else {
                 return usage("Invalide source. Must be either '(r)aw' or '(c)ache'. Quitting...");
@@ -169,6 +175,11 @@ bool COptions::parseArguments(SFString& command) {
     if (!blocks.hasBlocks())
         return usage("You must specify at least one block.");
 
+    format = getGlobalConfig()->getDisplayStr(false, "");
+    if (format.Contains("{PRICE:CLOSE}")) {
+//        priceBlocks = true;
+    }
+
     return true;
 }
 
@@ -178,13 +189,15 @@ void COptions::Init(void) {
     nParamsRef = nParams;
     pOptions = this;
 
-    isCheck    = false;
-    isRaw      = false;
-    terse      = false;
-    force      = false;
-    normalize  = false;
-    asks4Cache = false;
-    quiet      = 0; // quiet has levels
+    isCheck     = false;
+    isRaw       = false;
+    terse       = false;
+    force       = false;
+    normalize   = false;
+    asks4Cache  = false;
+    quiet       = 0; // quiet has levels
+    format      = "";
+    priceBlocks = false;
     blocks.Init();
 }
 
@@ -209,7 +222,7 @@ COptions::~COptions(void) {
 
 //--------------------------------------------------------------------------------
 bool COptions::isMulti(void) const {
-    return ((blocks.stop - blocks.start) > 1 || blocks.nNums > 1);
+    return ((blocks.stop - blocks.start) > 1 || blocks.hashList.getCount() > 1 || blocks.numList.getCount() > 1);
 }
 
 //--------------------------------------------------------------------------------
@@ -229,4 +242,24 @@ SFString COptions::postProcess(const SFString& which, const SFString& str) const
         return ret;
     }
     return str;
+}
+
+//--------------------------------------------------------------------------------
+SFString COptions::getBlockNumList(void) const {
+    SFString ret;
+    SFString list = blocks.toString();
+    while (!list.empty()) {
+        SFString val = nextTokenClear(list, '|');
+        blknum_t bn = toLongU(val);
+        if (isHash(val)) {
+            CBlock block;
+            if (!getBlock(block, val)) {
+                cerr << "Block hash '" << val << "' does not appear to be a valid block hash. Quitting...";
+                exit(0);
+            }
+            bn = block.blockNumber;
+        }
+        ret += asStringU(bn) + "|";
+    }
+    return ret;
 }

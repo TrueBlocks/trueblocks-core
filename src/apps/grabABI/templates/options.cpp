@@ -41,18 +41,18 @@ bool COptions::parseArguments(SFString& command) {
             // do nothing -- this is the default
             mode = "freshen|";  // last in wins
 
-        } else if (arg.Contains("-k:") || arg.Contains("-kBlock:")) {
+        } else if (arg.Contains("-k:") || arg.Contains("--kBlock:")) {
 
-            arg = arg.Substitute("-k:","").Substitute("-kBlock:","");
+            arg = arg.Substitute("-k:","").Substitute("--kBlock:","");
             if (!isNumeral(arg)) {
                 cerr << usageStr("You must specify a block number (" + arg + ")").Substitute("\n","\r\n");
                 return false;
             }
             kBlock = toLongU(arg);
 
-        } else if (arg.Contains("-o:") || arg.Contains("-offset:")) {
+        } else if (arg.Contains("-o:") || arg.Contains("--offset:")) {
 
-            arg = arg.Substitute("-o:","").Substitute("-offset:","");
+            arg = arg.Substitute("-o:","").Substitute("--offset:","");
             if (!isNumeral(arg)) {
                 cerr << usageStr("You must specify a number for offset (" + arg + ")").Substitute("\n","\r\n");
                 return false;

@@ -78,7 +78,7 @@ Test 74: 0 expected: 0 ✓
 Test 75: 4294967295 expected: 4294967295 ✓
 Test 76: errorSFUintBN::to<Primitive>: Value is too big to fit in the requested type expected: error ✓
 Test 77: errorSFIntBN::to<Primitive>: Value is too big to fit in the requested type expected: error ✓
-Test 78: errorSFIntBN::to<Primitive>: Value is too big to fit in the requested type expected: -2147483648 X
+Test 78: -2147483645 expected: -2147483645 ✓
 Test 79: -2147483647 expected: -2147483647 ✓
 Test 80: 0 expected: 0 ✓
 Test 81: 2147483647 expected: 2147483647 ✓

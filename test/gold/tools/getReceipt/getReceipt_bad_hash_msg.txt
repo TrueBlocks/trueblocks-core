@@ -1,0 +1,17 @@
+getReceipt argc: 4 [1:0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521] [2:0x0766ec95bf12f9600afc6c33c287f9d2356d85f15f0d7eeeb6647f5d4ddfbc11] [3:0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521] 
+getReceipt 0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521 0x0766ec95bf12f9600afc6c33c287f9d2356d85f15f0d7eeeb6647f5d4ddfbc11 0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521 
+{
+  "contractAddress": "0x0",
+  "gasUsed": 21000,
+  "logs": [],
+  "logsBloom": "0x0",
+  "status": null
+}
+Warning: The hash 0x0766ec95bf12f9600afc6c33c287f9d2356d85f15f0d7eeeb6647f5d4ddfbc11 was not found.
+{
+  "contractAddress": "0x0",
+  "gasUsed": 21000,
+  "logs": [],
+  "logsBloom": "0x0",
+  "status": null
+}

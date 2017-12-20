@@ -6,9 +6,8 @@
 #include "etherlib.h"
 
 //-----------------------------------------------------------------------------
-class COptions : public COptionsBase {
+class COptions : public CBlockOptions {
 public:
-    SFBlockArray blocks;
     bool         alone;
 
     COptions(void);

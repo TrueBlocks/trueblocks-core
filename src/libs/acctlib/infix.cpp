@@ -59,14 +59,14 @@ bool CInfix::setValueByName(const SFString& fieldName, const SFString& fieldValu
         return true;
 
     switch (tolower(fieldName[0])) {
-        case 'm':
-            if ( fieldName % "m_next" ) {
+        case 'n':
+            if ( fieldName % "next" ) {
                 Clear();
-                m_next = new CTreeNode;
-                if (m_next) {
+                next = new CTreeNode;
+                if (next) {
                     char *p = cleanUpJson((char *)fieldValue.c_str());
                     uint32_t nFields = 0;
-                    m_next->parseJson(p, nFields);
+                    next->parseJson(p, nFields);
                     return true;
                 }
                 return false;
@@ -91,20 +91,20 @@ bool CInfix::Serialize(SFArchive& archive) {
         return ((const CInfix*)this)->SerializeC(archive);
 
     // If we're reading a back level, read the whole thing and we're done.
-    if (readBackLevel(archive))
-        return true;
+    CTreeNode::Serialize(archive);
 
     // EXISTING_CODE
-    // EXISTING_CODE
-    m_next = NULL;
-    bool has_m_next = false;
-    archive >> has_m_next;
-    if (has_m_next) {
-        m_next = new CTreeNode;
-        if (!m_next)
+    bool has_next = false;
+    archive >> has_next;
+    if (has_next) {
+        SFString className;
+        archive >> className;
+        next = createTreeNode(className);
+        if (!next)
             return false;
-        m_next->Serialize(archive);
+        next->Serialize(archive);
     }
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -112,15 +112,17 @@ bool CInfix::Serialize(SFArchive& archive) {
 //---------------------------------------------------------------------------------------------------
 bool CInfix::SerializeC(SFArchive& archive) const {
 
-    // EXISTING_CODE
-    // EXISTING_CODE
-
     // Writing always write the latest version of the data
     CTreeNode::SerializeC(archive);
 
-    archive << (m_next != NULL);
-    if (m_next)
-        m_next->SerializeC(archive);
+    // EXISTING_CODE
+    // EXISTING_CODE
+    archive << (next != NULL);
+    if (next) {
+        SFString className = next->getRuntimeClass()->getClassNamePtr();
+        archive << className;
+        next->SerializeC(archive);
+    }
 
     return true;
 }
@@ -137,7 +139,7 @@ void CInfix::registerClass(void) {
     ADD_FIELD(CInfix, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CInfix, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CInfix, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CInfix, "m_next", T_POINTER, ++fieldNum);
+    ADD_FIELD(CInfix, "next", T_POINTER, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CInfix, "schema");
@@ -196,10 +198,10 @@ SFString CInfix::getValueByName(const SFString& fieldName) const {
 
     // Return field values
     switch (tolower(fieldName[0])) {
-        case 'm':
-            if ( fieldName % "m_next" ) {
-                if (m_next)
-                    return m_next->Format();
+        case 'n':
+            if ( fieldName % "next" ) {
+                if (next)
+                    return next->Format();
                 return "";
             }
             break;
@@ -225,16 +227,16 @@ ostream& operator<<(ostream& os, const CInfix& item) {
 // EXISTING_CODE
     //-----------------------------------------------------------------------------
     SFString CInfix::at(const SFString& _key) const {
-        ASSERT(m_next);
-        return contains(_key) ? m_next->at(_key.substr(m_prefix.length())) : "";
+        ASSERT(next);
+        return contains(_key) ? next->at(_key.substr(prefix.length())) : "";
     }
 
     //-----------------------------------------------------------------------------
     bool CInfix::contains(const SFString& _key) const {
         size_t l1 = _key.length();
-        size_t l2 = m_prefix.length();
+        size_t l2 = prefix.length();
         const char *s1 = (const char*)_key;
-        const char *s2 = (const char*)m_prefix;
+        const char *s2 = (const char*)prefix;
         bool found = !memcmp(s1, s2, l2);
 
         return
@@ -246,24 +248,24 @@ ostream& operator<<(ostream& os, const CInfix& item) {
         if (verbose == 2) { cerr << "\tinfix inserting " << _key << " at " << _value << "\n"; }
         ASSERT(_value.length());
         if (contains(_key)) {
-            m_next = m_next->insert(_key.substr(m_prefix.length()), _value);
+            next = next->insert(_key.substr(prefix.length()), _value);
             return this;
 
         } else {
-            unsigned prefix = commonPrefix(_key, m_prefix);
-            if (prefix) {
+            unsigned prefixA = commonPrefix(_key, prefix);
+            if (prefixA) {
                 // one infix becomes two infixes, then insert into the second
                 // instead of pop_front()...
-                m_prefix = m_prefix.substr(prefix);
-                return new CInfix(_key.substr(0, prefix), insert(_key.substr(prefix), _value));
+                prefix = prefix.substr(prefixA);
+                return new CInfix(_key.substr(0, prefixA), insert(_key.substr(prefixA), _value));
 
             } else {
                 // split here.
-                auto f = m_prefix[0];
-                m_prefix = m_prefix.substr(1);
-                CTreeNode* n = m_prefix.empty() ? m_next : this;
+                auto f = prefix[0];
+                prefix = prefix.substr(1);
+                CTreeNode* n = prefix.empty() ? next : this;
                 if (n != this) {
-                    m_next = NULL;
+                    next = NULL;
                     delete this;
                 }
                 CBranch* ret = new CBranch(f, n);
@@ -280,24 +282,24 @@ ostream& operator<<(ostream& os, const CInfix& item) {
             cerr << endl << endl<< endl
             << idnt << SFString('-', 80) << endl
             << idnt << SFString('-', 80) << endl
-            << idnt << "remove infix [" << m_prefix << "] at [" << _key << "]: ";
+            << idnt << "remove infix [" << prefix << "] at [" << _key << "]: ";
             idnt+="\t";
         }
 
         if (contains(_key)) {
-            SFString newKey = _key.substr(m_prefix.length());
-            m_next = m_next->remove(newKey);
-            if (auto p = m_next) {
+            SFString newKey = _key.substr(prefix.length());
+            next = next->remove(newKey);
+            if (auto p = next) {
                 // merge with child...
-                p->m_prefix = m_prefix + p->m_prefix;
-                m_next = nullptr;
+                p->prefix = prefix + p->prefix;
+                next = nullptr;
                 delete this;
-                if (verbose) cerr << idnt << "removed infix replaced with [" << p->m_prefix << "]";
+                if (verbose) cerr << idnt << "removed infix replaced with [" << p->prefix << "]";
                 idnt.Replace("\t", "");
                 return p;
             }
 
-            if (!m_next) {
+            if (!next) {
                 // we've cleaned up all the children
                 delete this;
                 idnt.Replace("\t", "");
@@ -315,10 +317,10 @@ ostream& operator<<(ostream& os, const CInfix& item) {
         uint32_t save = vd->type;
         vd->cnt = 0;
         vd->type = T_INFIX;
-        vd->strs = vd->strs + "+" + m_prefix;
+        vd->strs = vd->strs + "+" + prefix;
         (*func)(this, data);
-        if (m_next)
-            m_next->visitItems(func, data);
+        if (next)
+            next->visitItems(func, data);
         nextTokenClearReverse(vd->strs, '+');
         vd->type = save;
         return true;

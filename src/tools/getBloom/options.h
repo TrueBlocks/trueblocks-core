@@ -9,7 +9,7 @@
 #include "etherlib.h"
 
 //-----------------------------------------------------------------------------
-class COptions : public COptionsBase {
+class COptions : public CBlockOptions {
 public:
     bool isCheck;
     bool isRaw;
@@ -17,7 +17,6 @@ public:
     bool force;
     bool silent;
     int quiet;
-    COptionsBlockList blocks;
 
     COptions(void);
     ~COptions(void);

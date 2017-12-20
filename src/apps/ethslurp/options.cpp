@@ -42,6 +42,7 @@ bool COptions::parseArguments(SFString& command) {
         return false;
 
     Init();
+    blknum_t latestBlock = getLatestBlockFromClient();
     while (!command.empty()) {
         SFString arg = nextTokenClear(command, ' ');
         SFString orig = arg;
@@ -85,34 +86,30 @@ bool COptions::parseArguments(SFString& command) {
         } else if (arg.startsWith("--cache")) {
             cache = true;
 
-        } else if (arg == "-b") {
-            return usage("Invalid option -b. This option must include :firstBlock or :first:lastBlock range.");
-
         } else if (arg.startsWith("-b:") || arg.startsWith("--blocks:")) {
 
             if (firstDate != earliestDate || lastDate != latestDate)
                 return usage("Specifiy either a date range or a block range, not both. Quitting...");
 
-            SFString lastStr = arg.Substitute("-b:", "").Substitute("--blocks:", "");
-            if (lastStr.startsWith("0x"))
-                return usage("Invalid block specified (" + orig + "). Blocks must be integers. Quitting...");
-
-            SFString firstStr = nextTokenClear(lastStr, ':');
-            if (firstStr.startsWith("0x"))
-                return usage("Invalid block specified (" + orig + "). Blocks must be integers. Quitting...");
-
-            firstBlock2Read = max(toLongU("0"), toLongU(firstStr));
-            if (!lastStr.empty())
-                lastBlock2Read = max(firstBlock2Read, toLongU(lastStr));
-
-            // Don't have to check that last is later than first since the clamp
+            SFString ret = blocks.parseBlockList(arg.Substitute("-b:","").Substitute("--blocks:",""), latestBlock);
+            if (ret.Contains("'stop' must be strictly larger than 'start'"))
+                ret = "";
+            if (ret.endsWith("\n")) {
+                cerr << "\n  " << ret << "\n";
+                return false;
+            } else if (!ret.empty()) {
+                return usage(ret);
+            }
+            // HACK ALERT: ethslurp, being old, used to provide inclusive block ranges (i.e. last was included in range).
+            // New version does not include last in range, so we add one here to make it work the same.
+            blocks.stop++;
 
         } else if (arg == "-d") {
             return usage("Invalid option -d. This option must include :firstDate or :first:lastDate range.");
 
         } else if (arg.startsWith("-d:") || arg.startsWith("--dates:")) {
 
-            if (firstBlock2Read != 0 || lastBlock2Read != NOPOS)
+            if (blocks.hasBlocks())
                 return usage("Specifiy either a date range or a block range, not both. Quitting...");
 
             SFString lateStr = arg.Substitute("-d:", "").Substitute("--dates:", "");
@@ -133,14 +130,14 @@ bool COptions::parseArguments(SFString& command) {
                 return usage("Option -d: Invalid date format for endDate. "
                                 "Format must be either yyyymmdd or yyyymmddhhmmss.");
 
-            firstDate = snagDate(earlyStr, -1);
-            lastDate = snagDate(lateStr, 1);
+            firstDate = BOD(parseDate(earlyStr));
+            lastDate  = EOD(parseDate(lateStr));
             if (lastDate == earliestDate)  // the default
                 lastDate = latestDate;
 
             if (firstDate > lastDate) {
-                return usage("lastDate (" + lastDate.Format(FMT_DEFAULT) +
-                             ") must be later than startDate (" + firstDate.Format(FMT_DEFAULT) +
+                return usage("lastDate (" + lastDate.Format(FMT_JSON) +
+                             ") must be later than startDate (" + firstDate.Format(FMT_JSON) +
                              "). Quitting...");
             }
 
@@ -157,14 +154,14 @@ bool COptions::parseArguments(SFString& command) {
                 qbSleep(wait);
             }
 
-        } else if (arg.startsWith("-m:") || arg.startsWith("-max:")) {
+        } else if (arg.startsWith("-m:") || arg.startsWith("--max:")) {
             SFString val = arg.Substitute("-m:", "").Substitute("--max:", "");
             if (val.empty() || !isdigit(val[0]))
                 return usage("Please supply a value with the --max: option. Quitting...");
             maxTransactions = toLong32u(val);
 
-        } else if (arg.startsWith("-n:") || arg.startsWith("-name:")) {
-            SFString val = arg.Substitute("-m:", "").Substitute("--max:", "");
+        } else if (arg.startsWith("-n:") || arg.startsWith("--name:")) {
+            SFString val = arg.Substitute("-n:", "").Substitute("--name:", "");
             if (val.empty())
                 return usage("You must supply a name with the --name option. Quitting...");
             name = val;
@@ -223,8 +220,7 @@ void COptions::Init(void) {
     funcFilter = "";
     errFilt = false;
     reverseSort = false;
-    firstBlock2Read = 0;
-    lastBlock2Read = NOPOS;
+    blocks.Init();
     firstDate = earliestDate;
     lastDate = latestDate;
     maxTransactions = 250000;

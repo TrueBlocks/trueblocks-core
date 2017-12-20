@@ -7,6 +7,7 @@
  *------------------------------------------------------------------------*/
 #include "options.h"
 
+extern const char* STR_NAME_DATA;
 //-----------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
@@ -33,7 +34,7 @@ int main(int argc, const char *argv[]) {
             exit(0);
         }
 
-        SFString fmt = (options.alone ? "[{ADDR}]" : "");
+        SFString fmt = (options.addrOnly ? "[{ADDR}]" : (options.data ? STR_NAME_DATA : ""));
         if (options.list) {
             if (options.count)
                 cout << options.namedAccounts.getCount() << " items\n";
@@ -57,7 +58,7 @@ int main(int argc, const char *argv[]) {
 SFString COptions::showMatches(void) {
     SFString ret;
     uint32_t hits = 0;
-    SFString fmt = (alone ? "[{ADDR}]" : "");
+    SFString fmt = (addrOnly ? "[{ADDR}]" : "");
     for (uint32_t i = 0 ; i < namedAccounts.getCount() ; i++) {
         if (namedAccounts[i].Match(addr, name, source, matchCase, all)) {
             ret += (namedAccounts[i].Format(fmt).Substitute("\n", " ").Substitute("  ", " ") + "\n");
@@ -71,3 +72,6 @@ SFString COptions::showMatches(void) {
     return ret;
 }
 
+//-----------------------------------------------------------------------
+const char* STR_NAME_DATA =
+"[{symbol}]\t[{name}]\t[{addr}]\t[{source}]\t[{description}]";

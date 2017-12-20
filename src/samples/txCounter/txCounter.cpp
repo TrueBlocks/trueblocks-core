@@ -7,34 +7,45 @@
  *------------------------------------------------------------------------*/
 #include "etherlib.h"
 
-#if 0
-#define START_BLOCK 4369903
-#define N_EMPTY 1397928
-#define N_FULL 2834172
-#define N_TRANS 53065764
-#define N_TRACES 0
-#else
-#define START_BLOCK 4366423
-#define N_EMPTY 1398230
-#define N_FULL 2968193
-#define N_TRANS 67567161
-#define N_TRACES 0
-#endif
+//-------------------------------------------------------------------------
+#include <iostream>
+#include <iomanip>
+char sep = '\t';
 
 //-------------------------------------------------------------------------
 class CCounter {
 public:
+    uint64_t startBlock;
     uint64_t nFull;
     uint64_t nEmpty;
     uint64_t nTrans;
     uint64_t nTraces;
-    CCounter(void) : nFull(N_FULL), nEmpty(N_EMPTY), nTrans(N_TRANS), nTraces(N_TRACES) {}
+    CCounter(void) :
+        startBlock(0), nFull(0), nEmpty(0), nTrans(0), nTraces(0)
+        {}
     void countOne(const CBlock& block);
+    void loadFromFile(void) {
+        SFString contents = asciiFileToString("./data/countsByWeek.txt");
+        SFString last;
+        while (!contents.empty()) {
+            SFString str = Strip(nextTokenClear(contents,'\n'),' ');
+            if (!str.empty())
+                last = str;
+        }
+//4305968 2017-09-24 00:00:17 UTC 1398084 2907884 0.675315    60868104    20.9321 14.1358 0
+        SFString str;
+        str = nextTokenClear(last,sep); startBlock = toUnsigned(str);
+        nextTokenClear(last,sep);
+        str = nextTokenClear(last,sep); nEmpty     = toUnsigned(str);
+        str = nextTokenClear(last,sep); nFull      = toUnsigned(str);;
+        str = nextTokenClear(last,sep);
+        str = nextTokenClear(last,sep); nTrans     = toUnsigned(str);;
+        str = nextTokenClear(last,sep);
+        str = nextTokenClear(last,sep);
+        str = nextTokenClear(last,sep); nTraces    = toUnsigned(str);;
+    }
 };
 
-#include <iostream>
-#include <iomanip>
-#define sep '|'
 //-------------------------------------------------------------------------
 int main(int argc, char *argv[])
 {
@@ -51,8 +62,9 @@ int main(int argc, char *argv[])
         << "nTraces" << "\n";
 
     CCounter counter;
-    blknum_t latest = getLatestBlockFromClient();
-    for (blknum_t i = START_BLOCK - 1 ; i < latest ; i++) {
+    counter.loadFromFile();
+    blknum_t latest = getLatestBlockFromCache();
+    for (blknum_t i = counter.startBlock-1 ; i < latest ; i++) {
         SFString fileName = getBinaryFilename1(i);
         if (fileExists(fileName)) {
             CBlock block;
@@ -65,29 +77,37 @@ int main(int argc, char *argv[])
             }
         }
     }
-	return 0;
+    return 0;
 }
 
 //-------------------------------------------------------------------------
 void CCounter::countOne(const CBlock &block) {
+
+#ifdef SUBTOTAL_EVERY_X_BLOCKS
+    static blknum_t last = startBlock;
+    blknum_t thisOne = (block.blockNumber / 10000) * 10000;
+#else
+    static SFTime last = earliestDate;
+#ifdef SUBTOTAL_BY_FIVE_MINS
+    SFTime thisOne = dateFromTimeStamp(block.timestamp);
+    thisOne = SFTime(thisOne.GetYear(),thisOne.GetMonth(),thisOne.GetDay(),thisOne.GetHour(),thisOne.GetMinute()/5,0);
+#else
+    SFTime thisOne = SubtractOneDay(SubtractOneDay(BOW(dateFromTimeStamp(block.timestamp))));
+#endif
+#endif
+
     uint64_t tCount = block.transactions.getCount();
     nFull++;
     nEmpty = (block.blockNumber - nFull);
     nTrans += tCount;
 
-#ifdef SUBTOTAL_EVERY_X_BLOCKS
-    static blknum_t last = START_BLOCK;
-    blknum_t thisOne = (block.blockNumber / 10000) * 10000;
-#else
-    static SFTime last = earliestDate;
-    //SFTime thisOne = SubtractOneDay(SubtractOneDay(BOW(dateFromTimeStamp(block.timestamp))));
-    SFTime thisOne = dateFromTimeStamp(block.timestamp);
-    thisOne = SFTime(thisOne.GetYear(),thisOne.GetMonth(),thisOne.GetDay(),thisOne.GetHour(),thisOne.GetMinute()/5,0);
-#endif
-
     ostream *os = &cerr;
-    if (last != thisOne)
+    sep = ' ';
+    if (last != thisOne) {
         os = &cout;
+        sep = '\t';
+        cerr << SFString(' ',120) << "\r";
+    }
     *os << block.blockNumber << sep
         << dateFromTimeStamp(block.timestamp) << sep
         << nEmpty << sep
@@ -99,7 +119,7 @@ void CCounter::countOne(const CBlock &block) {
         << nTraces;
 
     if (last != thisOne) {
-        *os << "          \n";
+        *os << "\n";
         last = thisOne;
     } else {
         *os << "\r";

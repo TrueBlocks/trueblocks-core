@@ -11,8 +11,9 @@
 //---------------------------------------------------------------------------------------------------
 CParams params[] = {
     CParams("~terms",       "a space separated list of one or more search terms"),
-    CParams("-alone",       "export only the associated address (may be used in scripting)"),
+    CParams("-addr",        "export only the associated address (may be used in scripting)"),
     CParams("-count",       "print only the count of the number of matches"),
+    CParams("-data",        "export results as tab separated data"),
     CParams("-open",        "open the name database for editing"),
     CParams("-list",        "list all names in the database"),
     CParams("-matchCase",   "matches must agree in case (the default is to ignore case)"),
@@ -36,8 +37,11 @@ bool COptions::parseArguments(SFString& command) {
         } else if (arg == "-c" || arg == "--count") {
             count = true;
 
-        } else if (arg == "-a" || arg == "--alone") {
-            alone = true;
+        } else if (arg == "-a" || arg == "--addr") {
+            addrOnly = true;
+
+        } else if (arg == "-d" || arg == "--data") {
+            data = true;
 
         } else if (arg == "-l" || arg == "--list") {
             list = true;
@@ -86,7 +90,8 @@ void COptions::Init(void) {
     all = false;
     matchCase = false;
     list = false;
-    alone = false;
+    addrOnly = false;
+    data = false;
     count = false;
     isEdit = false;
 }

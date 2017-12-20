@@ -35,7 +35,7 @@ typedef SFUniqueList<CTreeRoot*>       CTreeRootListU;
 class CVisitData {
 public:
     uint32_t type;
-    SFUint32 cnt;
+    uint64_t cnt;
     SFString strs;
     CVisitData(void) : type(0), cnt(0) { }
 };
@@ -44,7 +44,7 @@ public:
 //--------------------------------------------------------------------------
 class CTreeRoot : public CBaseNode {
 public:
-    CTreeNode *m_root;
+    CTreeNode *root;
 
 public:
     CTreeRoot(void);
@@ -98,9 +98,9 @@ inline CTreeRoot::~CTreeRoot(void) {
 
 //--------------------------------------------------------------------------
 inline void CTreeRoot::Clear(void) {
-    if (m_root)
-        delete m_root;
-    m_root = NULL;
+    if (root)
+        delete root;
+    root = NULL;
     // EXISTING_CODE
     // EXISTING_CODE
 }
@@ -109,7 +109,7 @@ inline void CTreeRoot::Clear(void) {
 inline void CTreeRoot::Init(void) {
     CBaseNode::Init();
 
-    m_root = NULL;
+    root = NULL;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -120,9 +120,9 @@ inline void CTreeRoot::Copy(const CTreeRoot& tr) {
     Clear();
     CBaseNode::Copy(tr);
 
-    if (tr.m_root) {
-        m_root = new CTreeNode;
-        *m_root = *tr.m_root;
+    if (tr.root) {
+        root = new CTreeNode;
+        *root = *tr.root;
     }
 
     // EXISTING_CODE
@@ -180,6 +180,17 @@ inline SFString idex(char n) {
 //------------------------------------------------------------------
 bool forEveryAccount(CTreeRoot *trie, ACCTVISITOR func, void *data);
 extern SFString idnt;
+
+//------------------------------------------------------------------
+inline CTreeNode *createTreeNode(const SFString& type) {
+    if (type == "CInfix")
+        return new CInfix;
+    else if (type == "CBranch")
+        return new CBranch;
+    else if (type == "CLeaf")
+        return new CLeaf;
+    return NULL;
+}
 // EXISTING_CODE
 }  // namespace qblocks
 

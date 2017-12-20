@@ -14,7 +14,7 @@ extern void unloadCache(void);
 
 //---------------------------------------------------------------
 int main(int argc, const char *argv[]) {
-    etherlib_init("parity");
+    etherlib_init("binary");
 
     setNoTracing(true); // we never need to trace in this app
 
@@ -23,7 +23,6 @@ int main(int argc, const char *argv[]) {
     if (!options.prepareArguments(argc, argv))
         return 0;
 
-    bool oneCmd = !options.commandList.Contains("\n");
     while (!options.commandList.empty()) {
         SFString command = nextTokenClear(options.commandList, '\n');
         if (!options.parseArguments(command))
@@ -50,19 +49,17 @@ int main(int argc, const char *argv[]) {
 
             CBlock block;
             if (mode == "block") {
-                if (verbose) { cout << "finding by block number\n"; }
                 queryBlock(block, value, false, false);
 
             } else if (mode == "date") {
-                if (verbose) { cout << "finding by date\n"; }
-
                 if (!fileExists(miniBlockCache)) {
-                    cout << "Lookup by date is not currently supported.\n";
+                    cout << "Looking up blocks by date is not supported without a miniBlock ";
+                    cout << "database, which is an advanced feature.\n";
 
                 } else {
                     SFTime date = dateFromTimeStamp((timestamp_t)toUnsigned(value));
-                    bool res = lookupDate(block, date);
-                    if (!res) {
+                    bool found = lookupDate(block, date);
+                    if (!found) {
                         unloadCache();
                         return 0;
                     }
@@ -73,22 +70,13 @@ int main(int argc, const char *argv[]) {
             if (block.blockNumber == 0)
                 block.timestamp = 1438269960;
 
-            if (options.alone) {
-                cout << block.blockNumber << "\t" << dateFromTimeStamp(block.timestamp) << "\n";
-
-            } else {
-                bool newLines = oneCmd && options.requests.getCount() == 1;
-                cout << (newLines ? "\n\t" : "") << "block ";
-                cout << cYellow << "#" << block.blockNumber << cOff;
-                if (!special.empty())
-                    cout << " (" << special << ")";
-                cout << " : ";
-                cout << cYellow << block.timestamp << cOff;
-                cout << " : ";
-                cout << cYellow << dateFromTimeStamp(block.timestamp) << cOff;
-                cout << (newLines ? "\n" : "");
-                cout << "\n";
+            SFString def = (options.alone ? "[{BLOCKNUMBER}\\t][{DATE}]\\n" : "block #[{BLOCKNUMBER}][ : {TIMESTAMP}][ : {DATE}]\\n");
+            SFString fmt = getGlobalConfig()->getDisplayStr(options.alone, def);
+            if (verbose && !special.empty()) {
+                SFString sp = "(" + special + ")";
+                fmt.Replace("{BLOCKNUMBER}", "{BLOCKNUMBER} " + sp);
             }
+            cout << block.Format(fmt);
         }
     }
 
@@ -98,9 +86,9 @@ int main(int argc, const char *argv[]) {
 
 //---------------------------------------------------------------
 static CMiniBlock *blocks = NULL;
-static SFUint32 nBlocks = 0;
-static SFUint32 below = ULONG_MAX;
-static SFUint32 above = 0;
+static uint64_t nBlocks = 0;
+static uint64_t below = ULONG_MAX;
+static uint64_t above = 0;
 #define tD(a) dateFromTimeStamp(a)
 
 //---------------------------------------------------------------
@@ -116,21 +104,18 @@ int findFunc(const void *v1, const void *v2) {
 class CBlockFinder {
 public:
     timestamp_t ts;
-    SFUint32 found;
+    uint64_t found;
     explicit CBlockFinder(timestamp_t t) : ts(t), found(0) { }
 };
 
 //---------------------------------------------------------------
 bool lookCloser(CBlock& block, void *data) {
-//    cout << "Checking block: " << block.blockNumber << " (" << dateFromTimeStamp(block.timestamp) << ")";
+
     CBlockFinder *bf = reinterpret_cast<CBlockFinder*>(data);
     if (block.timestamp <= bf->ts) {
-//        cout << "...saved";
         bf->found = block.blockNumber;
-//        cout << "\n";
         return true;
     }
-//    cout << "\n";
     return false;
 }
 

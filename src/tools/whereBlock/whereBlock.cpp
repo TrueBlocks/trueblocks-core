@@ -13,6 +13,8 @@ int main(int argc, const char *argv[]) {
     // Tell the system where the blocks are and which version to use
     etherlib_init("binary");
 
+    setNoTracing(true); // we never need to trace in this app
+
     // Parse command line, allowing for command files
     COptions options;
     if (!options.prepareArguments(argc, argv))
@@ -31,10 +33,10 @@ int main(int argc, const char *argv[]) {
             cout << cYellow << "\nReport on block locations:" << cOff << (verbose ? "" : "\n  (cache folder: " + cachePath + ")") << "\n";
         }
 
-        for (uint32_t i = 0 ; i < options.blocks.getCount() ; i++ ) {
-
-            blknum_t block = options.blocks[i];
-            CFilename fileName(getBinaryFilename1(block));
+        SFString list = options.getBlockNumList();
+        while (!list.empty()) {
+            blknum_t bn = toLongU(nextTokenClear(list, '|'));
+            CFilename fileName(getBinaryFilename1(bn));
             bool exists = fileExists(fileName.getFullPath());
 
             if (options.alone) {
@@ -53,7 +55,7 @@ int main(int argc, const char *argv[]) {
                 SFString fallback = getenv("FALLBACK");
                 bool running_node = isNodeRunning();
 
-                cout << "\tblock " << cTeal << padLeft(asStringU(block),9) << cOff << " ";
+                cout << "\tblock " << cTeal << padLeft(asStringU(bn),9) << cOff << " ";
                      if (exists)            cout << "found at cache:  " << cTeal << path << cOff << "\n";
                 else if (running_node)      cout << "found at node:   " << vers << "\n";
                 else if (!fallback.empty()) cout << "found at remote: " << fallback << "\n";

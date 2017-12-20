@@ -98,7 +98,7 @@ void CAccount::finishParse() {
     // EXISTING_CODE
     for (uint32_t i = 0 ; i < transactions.getCount() ; i++) {
         CTransaction *t = &transactions[i];
-        SFString encoding = t->input.Left(10);
+        SFString encoding = t->input.substr(0,10);
         t->funcPtr = abi.findFunctionByEncoding(encoding);
     }
     // EXISTING_CODE
@@ -131,11 +131,11 @@ bool CAccount::Serialize(SFArchive& archive) {
 //---------------------------------------------------------------------------------------------------
 bool CAccount::SerializeC(SFArchive& archive) const {
 
-    // EXISTING_CODE
-    // EXISTING_CODE
-
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
+
+    // EXISTING_CODE
+    // EXISTING_CODE
     archive << addr;
     archive << header;
     archive << displayString;

@@ -96,16 +96,18 @@ public:
     bool closeIncomeStatement     (const CBlock& block);
     bool enterDebugger            (const CBlock& block);
 
-    blknum_t loadWatches(const CToml& toml);
-    SFString annotate   (const SFString& strIn) const;
+    blknum_t loadWatches    (const CToml& toml);
+    SFString annotate       (const SFString& strIn) const;
+    CAccountWatch *findWatch(SFAddress addr);
+    uint32_t checkForImport (void);
 
-    void displayTrans (const CTransaction *theTrans) const;
+    void displayTrans (uint32_t which, const CTransaction *theTrans) const;
     void displayTrace (timestamp_t ts, const CTraceArray& traces, bool err) const;
     void displayBloom (const SFBloom& bloom, const SFString& msg, const SFString& res) const;
 };
 
 //-----------------------------------------------------------------------
-extern bool displayFromCache      (const SFString& fileName, SFUint32& blockNum, void *dataPtr);
+extern bool displayFromCache      (const SFString& fileName, uint64_t& blockNum, void *dataPtr);
 extern bool updateCacheUsingBlooms(const SFString& str, void *dataPtr);
 extern bool updateCache           (CBlock& block, void *dataPtr);
 extern void myQuitHandler         (int s);
