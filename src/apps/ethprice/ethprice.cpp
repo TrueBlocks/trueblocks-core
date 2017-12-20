@@ -31,14 +31,14 @@ int main(int argc, const char* argv[]) {
 
             SFString def = (verbose ? "" : "{ \"date\": \"[{DATE}]\", \"price\": \"[{CLOSE}]\" }");
             SFString fmtStr = getGlobalConfig()->getDisplayStr(!verbose, def, "");
-
+            bool isJson = ((fmtStr.startsWith("{") && fmtStr.endsWith("}")) || fmtStr.empty());
             if (options.at) {
                 cout << quotes[(uint32_t)indexFromTimeStamp(quotes, options.at)].Format(fmtStr);
 
             } else {
                 if (verbose > 1)
                     UNHIDE_FIELD(CPriceQuote, "schema");
-                if (verbose)
+                if (isJson)
                     cout << "[\n";
                 uint32_t step = (uint32_t)options.freq / 5;
                 bool done = false;
@@ -46,7 +46,7 @@ int main(int argc, const char* argv[]) {
 
                     timestamp_t ts = toTimestamp(quotes[i].Format("[{TIMESTAMP}]"));
                     if (i > 0) {
-                        if (verbose)
+                        if (isJson)
                             cout << ",";
                         cout << "\n";
                     }
@@ -61,7 +61,7 @@ int main(int argc, const char* argv[]) {
                     if (isTestMode() && dateFromTimeStamp(ts) >= SFTime(2017,8,15,0,0,0))
                         done = true;
                 }
-                if (verbose)
+                if (isJson)
                     cout << "\n]";
                 cout << "\n";
             }
