@@ -12,6 +12,8 @@
 
 namespace qblocks {
 
+    extern SFString cTeal, cOff;
+    #define cleanFmt(str) ((str).Substitute("\\n\\\n", "\\n").Substitute("\n", "").Substitute("\\n", "\r\n").Substitute("\\t", "\t"))
     //-------------------------------------------------------------------------
     class CToml : public CSharedResource {
     private:
@@ -40,7 +42,8 @@ namespace qblocks {
         class CTomlGroup {
         public:
             SFString  groupName;
-            bool      comment;
+            bool      isArray;
+            bool      isComment;
             CTomlKeyList keys;
 
             CTomlGroup(void);
@@ -61,7 +64,7 @@ namespace qblocks {
         typedef SFList<CTomlGroup*> CTomlGroupList;
 
     protected:
-        CTomlGroup *addGroup(const SFString& group, bool commented);
+        CTomlGroup *addGroup(const SFString& group, bool commented, bool array);
         CTomlGroup *findGroup(const SFString& group) const;
 
         CTomlKey *addKey(const SFString& group, const SFString& key, const SFString& val, bool commented);
@@ -73,15 +76,15 @@ namespace qblocks {
         CToml(const SFString& fileName);
         ~CToml(void);
 
-        SFString getConfigArray(const SFString& group, const SFString& key, const SFString& def) const;
-        SFString getConfigStr(const SFString& group, const SFString& key, const SFString& def) const;
-        uint64_t getConfigInt(const SFString& group, const SFString& key, uint64_t def) const;
+        SFString getConfigStr   (const SFString& group, const SFString& key, const SFString& def) const;
+        uint64_t getConfigInt   (const SFString& group, const SFString& key, uint64_t def) const;
         SFUintBN getConfigBigInt(const SFString& group, const SFString& key, SFUintBN def) const;
-        bool getConfigBool(const SFString& group, const SFString& key, bool def) const;
+        bool     getConfigBool  (const SFString& group, const SFString& key, bool def) const;
+        SFString getDisplayStr  (bool terse, const SFString& def, const SFString& color=cTeal) const;
 
-        void setConfigStr(const SFString& group, const SFString& key, const SFString& value);
-        void setConfigInt(const SFString& group, const SFString& key, uint64_t value);
-        void setConfigBool(const SFString& group, const SFString& key, bool value);
+        void setConfigStr  (const SFString& group, const SFString& key, const SFString& value);
+        void setConfigInt  (const SFString& group, const SFString& key, uint64_t value);
+        void setConfigBool (const SFString& group, const SFString& key, bool value);
 
         bool writeFile(void);
         bool readFile(const SFString& filename);

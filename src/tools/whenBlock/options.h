@@ -9,11 +9,10 @@
 #include "etherlib.h"
 
 //-----------------------------------------------------------------------------
-class COptions : public COptionsBase {
+class COptions : public CBlockOptions {
 public:
     SFStringArray     requests;
     bool              alone;
-    COptionsBlockList blocks;
 
     COptions(void);
     ~COptions(void);

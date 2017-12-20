@@ -360,22 +360,6 @@ namespace qblocks {
     }
 
     //---------------------------------------------------------------------------------------
-    SFString SFString::Right(size_t len) const
-    {
-        len = min(length(),len);
-        SFString ret = extract(length()-len, len).c_str();
-        return ret;
-    }
-
-    //---------------------------------------------------------------------------------------
-    SFString SFString::Left(size_t len) const
-    {
-        len = min(length(),len);
-        SFString ret = extract(0, len).c_str();
-        return ret;
-    }
-
-    //---------------------------------------------------------------------------------------
     // Find functions
 
     //---------------------------------------------------------------------------------------
@@ -459,7 +443,7 @@ namespace qblocks {
         size_t i = find(what);
         if (i != NOPOS)
         {
-            *this = Left(i) + with + substr(i + what.length());
+            *this = substr(0,i) + with + substr(i + what.length());
         }
     }
 
@@ -468,7 +452,7 @@ namespace qblocks {
     {
         size_t i = findI(what);
         if (i != NOPOS)
-            *this = Left(i) + with + substr(i + what.length());
+            *this = substr(0,i) + with + substr(i + what.length());
     }
 
     //---------------------------------------------------------------------------------------
@@ -567,228 +551,6 @@ namespace qblocks {
     }
 
     //---------------------------------------------------------------------------------------
-    void SFString::FormatV(const char *lpszFormat, va_list argList) const
-    {
-#define incPtr(x) ((x)+1)
-
-        //ASSERT(AfxIsValidString(lpszFormat, false));
-
-        va_list argListSave;
-        va_copy(argListSave, argList);
-
-        // make a guess at the maximum length of the resulting string
-        int nMaxLen = 0;
-
-        const char *lpsz = lpszFormat;
-        for (lpsz = lpszFormat; *lpsz != '\0'; lpsz = incPtr(lpsz))
-        {
-            // handle '%' character, but watch out for '%%'
-            if (*lpsz != '%' || *(lpsz = incPtr(lpsz)) == '%')
-            {
-                nMaxLen += strlen(lpsz);
-                continue;
-            }
-
-            int nItemLen = 0;
-
-            // handle '%' character with format
-            int nWidth = 0;
-            for (; *lpsz != '\0'; lpsz = incPtr(lpsz))
-            {
-                // check for valid flags
-                if (*lpsz == '#')
-                    nMaxLen += 2;   // for '0x'
-                else if (*lpsz == '*')
-                    nWidth = va_arg(argList, int);
-                else if (*lpsz == '-' || *lpsz == '+' || *lpsz == '0' ||
-                         *lpsz == ' ')
-                    ;
-                else // hit non-flag character
-                    break;
-            }
-            // get width and skip it
-            if (nWidth == 0)
-            {
-                // width indicated by
-                nWidth = (int)toLong(lpsz);
-                for (; *lpsz != '\0' && isdigit(*lpsz); lpsz = incPtr(lpsz))
-                    ;
-            }
-            ASSERT(nWidth >= 0);
-
-            int nPrecision = 0;
-            if (*lpsz == '.')
-            {
-                // skip past '.' separator (width.precision)
-                lpsz = incPtr(lpsz);
-
-                // get precision and skip it
-                if (*lpsz == '*')
-                {
-                    nPrecision = va_arg(argList, int);
-                    lpsz = incPtr(lpsz);
-                }
-                else
-                {
-                    nPrecision = (int)toLong(lpsz);
-                    for (; *lpsz != '\0' && isdigit(*lpsz); lpsz = incPtr(lpsz))
-                        ;
-                }
-                ASSERT(nPrecision >= 0);
-            }
-
-            //-------------------------------------------------------------------------
-            #define FORCE_ANSI         0x10000 // needed for Format function for some reason
-            #define FORCE_UNICODE      0x20000
-            // should be on type modifier or specifier
-            int nModifier = 0;
-            switch (*lpsz)
-            {
-                    // modifiers that affect size
-                case 'h':
-                    nModifier = FORCE_ANSI;
-                    lpsz = incPtr(lpsz);
-                    break;
-                case 'l':
-                    nModifier = FORCE_UNICODE;
-                    lpsz = incPtr(lpsz);
-                    break;
-
-                    // modifiers that do not affect size
-                case 'F':
-                case 'N':
-                case 'L':
-                    lpsz = incPtr(lpsz);
-                    break;
-            }
-
-            // now should be on specifier
-            switch (*lpsz | nModifier)
-            {
-                    // strings
-                case 's':
-                {
-                    const char *pstrNextArg = va_arg(argList, const char *);
-                    if (pstrNextArg == NULL)
-                        nItemLen = 6;  // "(null)"
-                    else
-                    {
-                        nItemLen = (int)strlen(pstrNextArg);
-                        nItemLen = max(1, nItemLen);
-                    }
-                    break;
-                }
-
-                case 'S':
-                {
-                    char* pstrNextArg = va_arg(argList, char*);
-                    if (pstrNextArg == NULL)
-                        nItemLen = 6; // "(null)"
-                    else
-                    {
-                        nItemLen = (int)strlen(pstrNextArg);
-                        nItemLen = max(1, nItemLen);
-                    }
-                    break;
-                }
-
-                case 's'|FORCE_ANSI:
-                case 'S'|FORCE_ANSI:
-                {
-                    char *pstrNextArg = va_arg(argList, char*);
-                    if (pstrNextArg == NULL)
-                        nItemLen = 6; // "(null)"
-                    else
-                    {
-                        nItemLen = (int)strlen(pstrNextArg);
-                        nItemLen = max(1, nItemLen);
-                    }
-                    break;
-                }
-
-                case 's'|FORCE_UNICODE:
-                case 'S'|FORCE_UNICODE:
-                {
-                    char *pstrNextArg = va_arg(argList, char*);
-                    if (pstrNextArg == NULL)
-                        nItemLen = 6; // "(null)"
-                    else
-                    {
-                        nItemLen = (int)strlen(pstrNextArg);
-                        nItemLen = max(1, nItemLen);
-                    }
-                    break;
-                }
-            }
-
-            // adjust nItemLen for strings
-            if (nItemLen != 0)
-            {
-                nItemLen = max(nItemLen, nWidth);
-                if (nPrecision != 0)
-                    nItemLen = min(nItemLen, nPrecision);
-            }
-            else
-            {
-                switch (*lpsz)
-                {
-                        // integers
-                    case 'd':
-                    case 'i':
-                    case 'u':
-                    case 'x':
-                    case 'X':
-                    case 'o':
-                        va_arg(argList, int);
-                        nItemLen = 32;
-                        nItemLen = max(nItemLen, nWidth+nPrecision);
-                        break;
-
-                    case 'e':
-                    case 'f':
-                    case 'g':
-                    case 'G':
-                        va_arg(argList, double);
-                        nItemLen = 128;
-                        nItemLen = max(nItemLen, nWidth+nPrecision);
-                        break;
-
-                    case 'p':
-                        va_arg(argList, void*);
-                        nItemLen = 32;
-                        nItemLen = max(nItemLen, nWidth+nPrecision);
-                        break;
-
-                        // no output
-                    case 'n':
-                        va_arg(argList, int*);
-                        break;
-
-                    default:
-                        ASSERT(false);  // unknown formatting option
-                }
-            }
-
-            // adjust nMaxLen for output nItemLen
-            nMaxLen += nItemLen;
-        }
-
-        vsprintf(m_Values, lpszFormat, argListSave);
-        va_end(argListSave);
-    }
-
-    //---------------------------------------------------------------------------------------
-    // formatting (using wsprintf style formatting)
-    void SFString::Format(const char *lpszFormat, ...) const
-    {
-        //ASSERT(AfxIsValidString(lpszFormat, false));
-        va_list argList;
-        va_start(argList, lpszFormat);
-        FormatV(lpszFormat, argList);
-        va_end(argList);
-    }
-
-    //---------------------------------------------------------------------------------------
     void SFString::Reverse()
     {
         char tmp;
@@ -801,24 +563,6 @@ namespace qblocks {
             m_Values[i] = m_Values[j];
             m_Values[j] = tmp;
         }
-    }
-
-    //---------------------------------------------------------------------------------------
-    SFString SFString::Center(size_t width) const
-    {
-        SFString str = *this;
-        size_t len = str.length();
-
-        size_t n = 1;
-        if (len < width)
-            n = (width - len) >> 1;
-
-        SFString space;
-        for (size_t i=0;i<n;i++)
-            space += "&nbsp;";
-        SFString ret = space + str.Left(min(width, len)) + space;
-
-        return ret;
     }
 
     //---------------------------------------------------------------------------------------
@@ -852,7 +596,7 @@ namespace qblocks {
         }
 #endif
         SFString f1 = "</" + field + ">";
-        SFString ret = in.Left(in.find(f1));
+        SFString ret = in.substr(0,in.find(f1));
 
         SFString f2 = "<" + field + ">";
         ret = ret.substr(ret.find(f2)+f2.length());
@@ -880,7 +624,7 @@ namespace qblocks {
         }
 #endif
         SFString f = "</" + field + ">";
-        SFString ret = in.Left(in.find(f));
+        SFString ret = in.substr(0,in.find(f));
 
         f.Replace("</", "<");
         ret = ret.substr(ret.find(f)+f.length());
@@ -929,29 +673,29 @@ namespace qblocks {
     //---------------------------------------------------------------------------------------
     void SFString::ReplaceExact(const SFString& what, const SFString& with, char sep, const SFString& replaceables)
     {
-        SFInt32 i = findExact(what, sep, replaceables);
+        int64_t i = findExact(what, sep, replaceables);
         if (i != NOPOS)
         {
-            *this = Left(i) + with + substr(i + what.length());
+            *this = substr(0,i) + with + substr(i + what.length());
         }
     }
-    
+
     //---------------------------------------------------------------------------------------
     void SFString::ReplaceExactI(const SFString& what, const SFString& with, char sep, const SFString& replaceables)
     {
-        SFInt32 i = findExactI(what, sep, replaceables);
+        int64_t i = findExactI(what, sep, replaceables);
         if (i != NOPOS)
         {
-            *this = Left(i) + with + substr(i + what.length());
+            *this = substr(0,i) + with + substr(i + what.length());
         }
     }
-    
+
     //---------------------------------------------------------------------------------------
     void SFString::ReplaceAllExact(const SFString& what, const SFString& with, char sep, const SFString& replaceables)
     {
         if (what.empty())
             return;
-        
+
         if (with.ContainsExact(what, sep, replaceables))
         {
             // may cause endless recursions so do it in two steps instead
@@ -959,21 +703,21 @@ namespace qblocks {
             ReplaceAllExact("]QXXQX[", with, sep, replaceables);
             return;
         }
-        
-        SFInt32 i = findExact(what, sep, replaceables);
+
+        int64_t i = findExact(what, sep, replaceables);
         while (i != NOPOS)
         {
             ReplaceExact(what, with, sep, replaceables);
             i = findExact(what, sep, replaceables);
         }
     }
-    
+
     //---------------------------------------------------------------------------------------
     void SFString::ReplaceAllExactI(const SFString& what, const SFString& with, char sep, const SFString& replaceables)
     {
         if (what.empty())
             return;
-        
+
         if (with.ContainsExactI(what, sep, replaceables))
         {
             // may cause endless recursions so do it in two steps instead
@@ -982,7 +726,7 @@ namespace qblocks {
             return;
         }
 
-        SFInt32 i = findExactI(what, sep, replaceables);
+        int64_t i = findExactI(what, sep, replaceables);
         while (i != NOPOS)
         {
             ReplaceExactI(what, with, sep, replaceables);
@@ -1048,7 +792,7 @@ namespace qblocks {
             return;
         }
 
-        SFInt32 i = findI(what);
+        int64_t i = findI(what);
         while (i != NOPOS)
         {
             ReplaceI(what, with);
@@ -1057,4 +801,3 @@ namespace qblocks {
     }
 #endif
 }  // namespace qblocks
-

@@ -178,11 +178,11 @@ bool CTransaction::Serialize(SFArchive& archive) {
 //---------------------------------------------------------------------------------------------------
 bool CTransaction::SerializeC(SFArchive& archive) const {
 
-    // EXISTING_CODE
-    // EXISTING_CODE
-
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
+
+    // EXISTING_CODE
+    // EXISTING_CODE
     archive << hash;
     archive << blockHash;
     archive << blockNumber;
@@ -249,9 +249,11 @@ void CTransaction::registerClass(void) {
     ADD_FIELD(CTransaction, "gasUsed", T_GAS, ++fieldNum);
     ADD_FIELD(CTransaction, "date", T_DATE, ++fieldNum);
     ADD_FIELD(CTransaction, "ether", T_ETHER, ++fieldNum);
+    ADD_FIELD(CTransaction, "encoding", T_TEXT, ++fieldNum);
 
     // Hide fields we don't want to show by default
     HIDE_FIELD(CTransaction, "function");
+    HIDE_FIELD(CTransaction, "encoding");
     HIDE_FIELD(CTransaction, "gasCost");
     HIDE_FIELD(CTransaction, "isError");
     HIDE_FIELD(CTransaction, "isInternalTx");
@@ -281,6 +283,9 @@ SFString nextTransactionChunk_custom(const SFString& fieldIn, const void *dataPt
                 break;
             case 'e':
                 if ( fieldIn % "ether" ) return wei2Ether(asStringBN(tra->value));
+                if ( fieldIn % "encoding" ) {
+                    return tra->input.substr(0,10);
+                }
                 break;
             case 'f':
                 if ( fieldIn % "function" )
@@ -291,7 +296,7 @@ SFString nextTransactionChunk_custom(const SFString& fieldIn, const void *dataPt
                 if ( fieldIn % "gasCost" ) {
                     SFUintBN used = tra->receipt.gasUsed;
                     SFUintBN price = tra->gasPrice;
-                    return asStringBN(used * price);
+                    return wei2Ether(to_string(used * price).c_str());
                 }
                 break;
             case 't':
@@ -519,235 +524,11 @@ SFString parse(const SFString& params, int nItems, SFString *types)
 }
 
 //---------------------------------------------------------------------------
-SFString parseParams(const CTransaction* trans, const SFString& which, const SFString& params)
-{
-    if (which=="approve")
-    {
-        //function approve(address _spender, uint256 _amount) returns (bool success) {  discuss
-        SFString items[] = { "address", "uint256", };
-        int nItems = sizeof(items) / sizeof(SFString);
-        return which + parse(params, nItems, items);
-
-    } else if (which=="transferWithoutReward")
-    {
-        //function transferWithoutReward(address _to, uint256 _value)
-        SFString items[] = { "address", "uint256", };
-        int nItems = sizeof(items) / sizeof(SFString);
-        return which + parse(params, nItems, items);
-
-    } else if (which=="retrieveDAOReward")
-    {
-        // function retrieveDAOReward(bool _toMembers)
-        SFString items[] = { "bool", };
-        int nItems = sizeof(items) / sizeof(SFString);
-        return which + parse(params, nItems, items);
-
-    } else if (which=="splitDAO")
-    {
-        //function splitDAO(uint _proposalID, address _newCurator)
-        SFString items[] = { "uint3", "address", };
-        int nItems = sizeof(items) / sizeof(SFString);
-        return which + parse(params, nItems, items);
-
-    } else if (which=="createTokenProxy")
-    {
-        //function createTokenProxy(address _tokenHolder)
-        SFString items[] = { "address", };
-        int nItems = sizeof(items) / sizeof(SFString);
-        return which + parse(params, nItems, items);
-
-    } else if (which=="getMyReward")
-    {
-        //function getMyReward()
-        SFString items[] = { };
-        int nItems = sizeof(items) / sizeof(SFString);
-        return which + parse(params, nItems, items);
-
-    } else if (which=="payOut")
-    {
-        //function payOut(address _recipient, uint _amount)
-        SFString items[] = { "address", "uint256", };
-        int nItems = sizeof(items) / sizeof(SFString);
-        return which + parse(params, nItems, items);
-
-    } else if (which=="receiveEther")
-    {
-        //function receiveEther()
-        SFString items[] = { };
-        int nItems = sizeof(items) / sizeof(SFString);
-        return which + parse(params, nItems, items);
-        return which;
-
-    } else if (which=="changeDomain")
-    {
-        //function changeDomain( uint domain, uint expires, uint price, address transfer )
-        SFString items[] = { "bytes256", "uint256", "uint256", "address", };
-        int nItems = sizeof(items) / sizeof(SFString);
-        return which + parse(params, nItems, items);
-
-    } else if (which=="changeId")
-    {
-        //function changeId( uint domain, uint name, uint value )
-        SFString items[] = { "bytes256", "bytes256", "uint256", };
-        int nItems = sizeof(items) / sizeof(SFString);
-        return which + parse(params, nItems, items);
-
-    } else if (which=="getDomain")
-    {
-        //function getDomain( uint domain )
-        SFString items[] = { "bytes256", };
-        int nItems = sizeof(items) / sizeof(SFString);
-        return which + parse(params, nItems, items);
-
-    } else if (which=="getId")
-    {
-        //function getId( uint domain, uint id )
-        SFString items[] = { "bytes256", "uint256", };
-        int nItems = sizeof(items) / sizeof(SFString);
-        return which + parse(params, nItems, items);
-
-    } else if (which=="balanceOf")
-    {
-        //function balanceOf(addr _owner);
-        SFString items[] = { "address", };
-        int nItems = sizeof(items) / sizeof(SFString);
-        return which + parse(params, nItems, items);
-
-    } else if (which=="vote")
-    {
-        //function vote(uint _proposalID, bool _supportsProposal)
-        SFString items[] = { "uint3", "vote", };
-        int nItems = sizeof(items) / sizeof(SFString);
-        return which + parse(params, nItems, items);
-
-    } else if (which=="executeProposal")
-    {
-        //function executeProposal(uint _proposalID, bytes _transactionData)
-        SFString items[] = { "uint3", "bytes", };
-        int nItems = sizeof(items) / sizeof(SFString);
-        return which + parse(params, nItems, items);
-
-    } else if (which=="transferFrom")
-    {
-        //function transferFrom(address _from, address _to, uint256 _amount)
-        SFString items[] = { "address", "address", "uint256", };
-        int nItems = sizeof(items) / sizeof(SFString);
-        return which + parse(params, nItems, items);
-
-    } else if (which=="transfer")
-    {
-        //function transfer(address _to, uint256 _amount)
-        SFString items[] = { "address", "uint256", };
-        int nItems = sizeof(items) / sizeof(SFString);
-        return which + parse(params, nItems, items);
-
-    } else if (which=="newProposal")
-    {
-        //function newProposal(address _recipient,uint _amount,string _description,bytes _transactionData,uint _debatingPeriod,bool _newCurator)
-        SFString items[] = { "address", "uint256", "string", "bytes", "uint256", "bool", };
-        int nItems = sizeof(items) / sizeof(SFString);
-
-        SFString type = (trans->value > 0 ? " (non-split)" : " (split)");
-        return which + type + parse(params, nItems, items);
-
-    } else if (which=="SendEmail")
-    {
-        SFString items[] = { "string","string", };
-        int nItems = sizeof(items) / sizeof(SFString);
-        return which + parse(params, nItems, items);
-
-    } else if (which=="mint")
-    {
-        //function mint(address _to, string _identity)
-        SFString items[] = { "address","string", };
-        int nItems = sizeof(items) / sizeof(SFString);
-        return which + parse(params, nItems, items);
-
-    } else if (which=="removeOwner")
-    {
-        //function removeOwner(address)
-        SFString items[] = { "address" };
-        int nItems = sizeof(items) / sizeof(SFString);
-        return which + parse(params, nItems, items);
-
-    } else if (which=="isOwner")
-    {
-        //function isOwner(address)
-        SFString items[] = { "address" };
-        int nItems = sizeof(items) / sizeof(SFString);
-        return which + parse(params, nItems, items);
-
-    } else if (which=="resetSpentToday")
-    {
-        //function resetSpentToday()
-        SFString items[] = { };
-        int nItems = sizeof(items) / sizeof(SFString);
-        return which + parse(params, nItems, items);
-
-    } else if (which=="addOwner")
-    {
-        //function addOwner(address)
-        SFString items[] = { "address" };
-        int nItems = sizeof(items) / sizeof(SFString);
-        return which + parse(params, nItems, items);
-
-    } else if (which=="confirm")
-    {
-        //function confirm(bytes32)
-        SFString items[] = { "bytes32", };
-        int nItems = sizeof(items) / sizeof(SFString);
-        return which + parse(params, nItems, items);
-
-    } else if (which=="setDailyLimit")
-    {
-        //function setDailyLimit(uint256)
-        SFString items[] = { "uint256", };
-        int nItems = sizeof(items) / sizeof(SFString);
-        return which + parse(params, nItems, items);
-
-    } else if (which=="execute")
-    {
-        //function execute(address,uint256,bytes)
-        SFString items[] = { "address","uint256","bytes" };
-        int nItems = sizeof(items) / sizeof(SFString);
-        return which + parse(params, nItems, items);
-
-    } else if (which=="revoke")
-    {
-        //function revoke(bytes32)
-        SFString items[] = { "bytes32", };
-        int nItems = sizeof(items) / sizeof(SFString);
-        return which + parse(params, nItems, items);
-
-    } else if (which=="changeRequirement")
-    {
-        //function changeRequirement(uint256)
-        SFString items[] = { "uint256", };
-        int nItems = sizeof(items) / sizeof(SFString);
-        return which + parse(params, nItems, items);
-
-    } else if (which=="kill")
-    {
-        //function kill(address)
-        SFString items[] = { "address" };
-        int nItems = sizeof(items) / sizeof(SFString);
-        return which + parse(params, nItems, items);
-
-    } else if (which=="changeOwner")
-    {
-        //function changeOwner(address,address)
-        SFString items[] = { "address","address", };
-        int nItems = sizeof(items) / sizeof(SFString);
-        return which + parse(params, nItems, items);
-
-    }
-
-    return which;
-}
-
-//---------------------------------------------------------------------------
 SFString CTransaction::inputToFunction(void) const
 {
+    if (input.length()<10)
+        return " ";
+
     if (funcPtr)
     {
         SFString items[256];
@@ -755,127 +536,10 @@ SFString CTransaction::inputToFunction(void) const
         for (uint32_t i = 0 ; i < funcPtr->inputs.getCount() ; i++)
             items[nItems++] = funcPtr->inputs[i].type;
         return funcPtr->name + parse(input.substr(10), nItems, items);
-        //        return parseParams(this, funcPtr->name, input.substr(10));
     }
-
-    if (input.length()<10)
-        return " ";
-#if 1
-    /* from Mist wallet
-     */
-    // This is needed here because we only check the abi of the asked for account. We should load and check both from and to addresses' abi
-    char ch = input[2];
-    if (!input.startsWith("0x"))
-        ch = input[0];
-    switch (ch)
-    {
-        case '0':
-            if      (input.startsWith( "0x095ea7b3" )) return parseParams(this, "approve",                   input.substr(10));
-            else if (input.startsWith( "0x0221038a" )) return parseParams(this, "payOut",                    input.substr(10));
-            break;
-
-        case '1':
-            if      (input.startsWith( "0x1a7a98e2" )) return parseParams(this, "getDomain",                 input.substr(10));
-            else if (input.startsWith( "0x173825d9" )) return parseParams(this, "removeOwner",               input.substr(10));
-            break;
-
-        case '2':
-            if      (input.startsWith( "0x237e9492" )) return parseParams(this, "executeProposal",           input.substr(10));
-            else if (input.startsWith( "0x24fc65ed" )) return parseParams(this, "getId",                     input.substr(10));
-            else if (input.startsWith( "0x23b872dd" )) return parseParams(this, "transferFrom",              input.substr(10));
-            else if (input.startsWith( "0x2632bf20" )) return parseParams(this, "unblockMe",                 input.substr(10));
-            else if (input.startsWith( "0x2f54bf6e" )) return parseParams(this, "isOwner",                   input.substr(10));
-            break;
-
-        case '3':
-            break;
-
-        case '4':
-            if      (input.startsWith( "0x4e10c3ee" )) return parseParams(this, "transferWithoutReward",     input.substr(10));
-            break;
-
-        case '5':
-            if      (input.startsWith( "0x590e1ae3" )) return parseParams(this, "refund",                    input.substr(10));
-            else if (input.startsWith( "0x5c52c2f5" )) return parseParams(this, "resetSpentToday",           input.substr(10));
-            break;
-
-        case '6':
-            if      (input.startsWith( "0x612e45a3" )) return parseParams(this, "newProposal",               input.substr(10));
-            break;
-
-        case '7':
-            if      (input.startsWith( "0x78524b2e" )) return parseParams(this, "halveMinQuorum",            input.substr(10));
-            else if (input.startsWith( "0x75090ebf" )) return parseParams(this, "changeDomain",              input.substr(10));
-            else if (input.startsWith( "0x70a08231" )) return parseParams(this, "balanceOf",                 input.substr(10));
-            else if (input.startsWith( "0x7065cb48" )) return parseParams(this, "addOwner",                  input.substr(10));
-            else if (input.startsWith( "0x797af627" )) return parseParams(this, "confirm",                   input.substr(10));
-            break;
-
-        case '8':
-            if      (input.startsWith( "0x82661dc4" )) return parseParams(this, "splitDAO",                  input.substr(10));
-            break;
-
-        case '9':
-            break;
-
-        case 'a':
-            if      (input.startsWith( "0xa1da2fb9" )) return parseParams(this, "retrieveDAOReward",         input.substr(10));
-            else if (input.startsWith( "0xa3912ec8" )) return parseParams(this, "receiveEther",              input.substr(10));
-            else if (input.startsWith( "0xa9059cbb" )) return parseParams(this, "transfer",                  input.substr(10));
-            break;
-
-        case 'b':
-            if      (input.startsWith( "0xbaac5300" )) return parseParams(this, "createTokenProxy",          input.substr(10));
-            else if (input.startsWith( "0xb20d30a9" )) return parseParams(this, "setDailyLimit",             input.substr(10));
-            else if (input.startsWith( "0xb61d27f6" )) return parseParams(this, "execute",                   input.substr(10));
-            else if (input.startsWith( "0xb75c7dc6" )) return parseParams(this, "revoke",                    input.substr(10));
-            else if (input.startsWith( "0xba51a6df" )) return parseParams(this, "changeRequirement",         input.substr(10));
-            break;
-
-        case 'c':
-            if      (input.startsWith( "0xc9d27afe" )) return parseParams(this, "vote",                      input.substr(10));
-            else if (input.startsWith( "0xcc9ae3f6" )) return parseParams(this, "getMyReward",               input.substr(10));
-            else if (input.startsWith( "0xcbf0b0c0" )) return parseParams(this, "kill",                      input.substr(10));
-            break;
-
-        case 'd':
-            if      (input.startsWith( "0xdbde1988" )) return parseParams(this, "transferFromWithoutReward", input.substr(10));
-            break;
-
-        case 'e':
-            if      (input.startsWith( "0xeceb2945" )) return parseParams(this, "checkProposalCode",         input.substr(10));
-            else if (input.startsWith( "0xeb1ff845" )) return parseParams(this, "changeId",                  input.substr(10));
-            break;
-
-        case 'f':
-            if      (input.startsWith( "0xf00d4b5d" )) return parseParams(this, "changeOwner",               input.substr(10));
-            break;
-    }
-
-    if (pParent && pParent->isKindOf(GETRUNTIME_CLASS(CAccount)))
-    {
-        SFString test = input.substr(2,8);
-        CAccount *p = (CAccount*)pParent;
-        for (uint32_t i=0;i<p->abi.abiByName.getCount();i++)
-        {
-            CFunction *f = &p->abi.abiByName[i];
-            if (f->encoding.ContainsI(test))
-            {
-                SFString str = f->Format("[{NAME}]");
-                return str;
-            }
-        }
-    }
-#endif
 
     return " ";
 }
-#if 0
-archive >> creates;
-archive >> confirmations;
-archive >> contractAddress;
-archive >> cumulativeGasUsed;
-#endif
 // EXISTING_CODE
 }  // namespace qblocks
 

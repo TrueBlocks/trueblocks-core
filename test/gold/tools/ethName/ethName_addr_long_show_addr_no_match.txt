@@ -1,2 +1,2 @@
-ethName argc: 3 [1:--alone] [2:0xCB1] 
-ethName --alone 0xCB1 
+ethName argc: 3 [1:--addr] [2:0xCB1] 
+ethName --addr 0xCB1 

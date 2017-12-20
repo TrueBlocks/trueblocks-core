@@ -10,7 +10,8 @@
 //---------------------------------------------------------------------------------------------------
 CParams params[] = {
     CParams("~address_list", "a space-separated list of one or more Ethereum addresses"),
-    CParams("-display",      "display the byte code at the address(es)"),
+    CParams("-data",         "display results as data (addr <tab> is_contract)"),
+    CParams("-bytes",        "display the byte code at the address(es)"),
     CParams("-nodiff",       "return 'true' if (exactly) two Ethereum addresses have identical code"),
     CParams("",              "Returns 'true' or 'false' if the given address(es) holds byte code "
                              "(optionally displays the code).\n"),
@@ -30,8 +31,11 @@ bool COptions::parseArguments(SFString& command) {
         if (arg == "-n" || arg == "--nodiff") {
             diff = true;
 
-        } else if (arg == "-d" || arg == "--display") {
-            display = true;
+        } else if (arg == "-b" || arg == "--bytes") {
+            showBytes = true;
+
+        } else if (arg == "-d" || arg == "--data") {
+            asData = true;
 
         } else if (arg.startsWith('-')) {  // do not collapse
 
@@ -57,7 +61,7 @@ bool COptions::parseArguments(SFString& command) {
     if (diff && nAddrs != 2)
         return usage("--nodiff command requires exactly two addresses.\n");
 
-    if (diff && display)
+    if (diff && showBytes)
         return usage("Choose only one of --nodiff and --display.\n");
 
     return true;
@@ -74,7 +78,8 @@ void COptions::Init(void) {
     }
     nAddrs = 0;
     diff = false;
-    display = false;
+    asData = false;
+    showBytes = false;
 }
 
 //---------------------------------------------------------------------------------------------------

@@ -31,6 +31,7 @@ public:
     bool autocorrect_on;
     blknum_t kBlock;
     blknum_t offset;
+    SFString monitorName;
 
     COptions(void);
     ~COptions(void);

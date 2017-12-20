@@ -18,9 +18,9 @@ namespace qblocks {
     //----------------------------------------------------------------------------
     class CBaseNode {
     public:
-        SFUint32 m_deleted;
-        SFUint32 m_schema;
-        SFUint32 m_showing;
+        uint64_t m_deleted;
+        uint64_t m_schema;
+        uint64_t m_showing;
 
     public:
         const CBaseNode *pParent;

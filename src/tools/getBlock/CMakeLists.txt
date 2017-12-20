@@ -43,6 +43,7 @@ run_test("getBlock_no_params")
 run_test("getBlock_invalid_option" "-s" " 1001001")
 run_test("getBlock_empty"        "1001001")
 run_test("getBlock_bloom"        "4000001")
+run_test("getBlock_byhash"       "0x79990fd526c4751139a7a3afc7420cde1a1141b1920d2afd411858ecb4926a39")
 run_test("getBlock_blooms"       "1590000"        " 4000001" " 4000002")
 run_test("getBlock_range"        "4000001-4000003")
 run_test("getBlock_baddata"      "1590000"        " 4000001-4000002" " x400x001")
@@ -93,6 +94,7 @@ run_test("getBlock_help" "-h")
 run_test("getBlock_help_long" "--help")
 
 run_test("getBlock_byzantium_1" " 4369999" " 4370000" " 4380101")
+run_test("getBlock_blockByHash" "0xd19bc98080cd70951fad3951cef2d512e6334aa3c7e64a38985c955d4d2e273b")
 
 # Installation steps
 install(TARGETS ${TOOL_NAME} RUNTIME DESTINATION bin)

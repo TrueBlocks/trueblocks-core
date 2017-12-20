@@ -1,5 +1,3 @@
 CMakeLists.txt
 ethview
 firstBlock
-#watchContract.py
-watchContracts

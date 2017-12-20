@@ -9,7 +9,7 @@
 #include "options.h"
 
 extern const char *STR_FMT_BLOOMS_OUT;
-extern SFString doOneBloom(SFUint32 num, const COptions& opt);
+extern SFString doOneBloom(uint64_t num, const COptions& opt);
 //------------------------------------------------------------
 int main(int argc, const char * argv[]) {
 
@@ -26,46 +26,32 @@ int main(int argc, const char * argv[]) {
         if (!options.parseArguments(command))
             return 0;
 
-        // There can be more than one thing to do...
         if (!options.quiet)
             cout << (options.isMulti() ? "[" : "");
-        for (SFUint32 i = options.blocks.start ; i < options.blocks.stop ; i++) {
-            cout << doOneBloom(i, options);
-            if (!options.quiet) {
-                if (i < options.blocks.stop-1 || options.blocks.nNums)
-                    cout << ",";
-                cout << "\n";
-                if (options.isCheck) {
-                    // Not implemented
+
+        int cnt=0;
+        SFString list = options.getBlockNumList();
+        while (!list.empty()) {
+            blknum_t bn = toLongU(nextTokenClear(list, '|'));
+            SFString result = doOneBloom(bn, options);
+            if (options.isCheck) {
+                // Not implemented
+            } else {
+                if (!options.quiet) {
+                    cout << result;
+                    if (!list.empty())
+                        cout << ",";
+                    cout << "\n";
+
+                } else if (!(cnt%150)) {
+                    cout << ".";
+                    cout.flush();
+
+                } else if (!(cnt%1000)) {
+                    cout << "+";
+                    cout.flush();
                 }
-
-            } else if (!(i%150)) {
-                cout << ".";
-                cout.flush();
-
-            } else if (!(i%1000)) {
-                cout << "+";
-                cout.flush();
-            }
-        }
-
-        for (SFUint32 i = 0 ; i < options.blocks.nNums ; i++) {
-            cout << doOneBloom(options.blocks.nums[i], options);
-            if (!options.quiet) {
-                if (i < options.blocks.nNums - 1)
-                    cout << ",";
-                cout << "\n";
-                if (options.isCheck) {
-                    // Not implemented
-                }
-
-            } else if (!(i%150)) {
-                cout << ".";
-                cout.flush();
-
-            } else if (!(i%1000)) {
-                cout << "+";
-                cout.flush();
+                cnt++;
             }
         }
 
@@ -77,7 +63,7 @@ int main(int argc, const char * argv[]) {
 }
 
 //------------------------------------------------------------
-SFString doOneBloom(SFUint32 num, const COptions& opt) {
+SFString doOneBloom(uint64_t num, const COptions& opt) {
 
     CBlock gold;
     SFString result;
@@ -117,4 +103,3 @@ SFString doOneBloom(SFUint32 num, const COptions& opt) {
 
     return (opt.quiet ? "" : result);
 }
-

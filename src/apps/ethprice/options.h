@@ -14,10 +14,12 @@ public:
     uint32_t    freq;
     uint32_t    hour;
     timestamp_t at;
+    CPriceSource source;
 
     COptions(void);
-    ~COptions(void) {}
+    ~COptions(void) {};
 
-    bool parseArguments(SFString& command);
-    void Init(void);
+    bool parseArguments(SFString& command) override;
+    void Init(void) override;
+    SFString postProcess(const SFString& which, const SFString& str) const override;
 };

@@ -1,0 +1,7 @@
+cacheMan argc: 3 [1:-f] [2:TipJar.cache] 
+cacheMan -f TipJar.cache 
+Fixing cache: TipJar.cache
+	Duplicate removed at record 1373, current 4642742.35.1, previous 4642742.35.1
+	Re-writing 1389 of 1390 records to cache: TipJar.cache (0 truncated)
+	The cache was repaired and a backup created.
+

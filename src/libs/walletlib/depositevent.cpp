@@ -96,12 +96,11 @@ bool QDepositEvent::Serialize(SFArchive& archive) {
 //---------------------------------------------------------------------------------------------------
 bool QDepositEvent::SerializeC(SFArchive& archive) const {
 
-    // EXISTING_CODE
-    // EXISTING_CODE
-
     // Writing always write the latest version of the data
     CLogEntry::SerializeC(archive);
 
+    // EXISTING_CODE
+    // EXISTING_CODE
     archive << from;
     archive << value;
 

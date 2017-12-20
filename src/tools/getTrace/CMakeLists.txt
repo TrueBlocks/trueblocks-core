@@ -114,5 +114,10 @@ run_special_test("getTrace_26" "0x8324490c68e6268db9eadcb4ce8303ee1d256e480f7637
 run_special_test("getTrace_27" "0xf9d426284bd20415a53991a004122b3a3a619b295ea98d1d88a5fd3a4125408b" "-r")
 run_special_test("getTrace_28" "0xf9d426284bd20415a53991a004122b3a3a619b295ea98d1d88a5fd3a4125408b")
 
+run_test("getTrace_bad_hash_msg"                 "0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521" " 0x0766ec95bf12f9600afc6c33c287f9d2356d85f15f0d7eeeb6647f5d4ddfbc11" " 0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521")
+run_test("getTrace_bad_hash_msg_raw"     "--raw" " 0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521" " 0x0766ec95bf12f9600afc6c33c287f9d2356d85f15f0d7eeeb6647f5d4ddfbc11" " 0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521")
+run_test("getTrace_bad_blkhash_msg"              "0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.1" " 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.5")
+run_test("getTrace_bad_blkhash_msg_raw"  "--raw" "0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.1" " 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.5")
+
 # Installation steps
 install(TARGETS ${TOOL_NAME} RUNTIME DESTINATION bin)

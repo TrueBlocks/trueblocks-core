@@ -1,15 +1,16 @@
-isContract argc: 4 [1:0x705f04a4f1e7a1e23caea390b8903bd43d96e18e] [2:0x73cbe96839b723bc913d10ba32b58fc476988a36] [3:-dn] 
-isContract 0x705f04a4f1e7a1e23caea390b8903bd43d96e18e 0x73cbe96839b723bc913d10ba32b58fc476988a36 -dn 
+isContract argc: 4 [1:0x705f04a4f1e7a1e23caea390b8903bd43d96e18e] [2:0x73cbe96839b723bc913d10ba32b58fc476988a36] [3:-bn] 
+isContract 0x705f04a4f1e7a1e23caea390b8903bd43d96e18e 0x73cbe96839b723bc913d10ba32b58fc476988a36 -bn 
 
   Choose only one of --nodiff and --display.
 
 
-  Usage:    isContract [-d|-n|-v|-h] <address> [address...]  
+  Usage:    isContract [-d|-b|-n|-v|-h] <address> [address...]  
   Purpose:  Returns 'true' or 'false' if the given address(es) holds byte code (optionally displays the code).
              
   Where:    
 	address_list          a space-separated list of one or more Ethereum addresses (required)
-	-d  (--display)       display the byte code at the address(es)
+	-d  (--data)          display results as data (addr <tab> is_contract)
+	-b  (--bytes)         display the byte code at the address(es)
 	-n  (--nodiff)        return 'true' if (exactly) two Ethereum addresses have identical code
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
 	-h  (--help)          display this help screen

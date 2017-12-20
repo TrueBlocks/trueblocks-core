@@ -92,12 +92,11 @@ bool QRequirementChangedEvent::Serialize(SFArchive& archive) {
 //---------------------------------------------------------------------------------------------------
 bool QRequirementChangedEvent::SerializeC(SFArchive& archive) const {
 
-    // EXISTING_CODE
-    // EXISTING_CODE
-
     // Writing always write the latest version of the data
     CLogEntry::SerializeC(archive);
 
+    // EXISTING_CODE
+    // EXISTING_CODE
     archive << newRequirement;
 
     return true;

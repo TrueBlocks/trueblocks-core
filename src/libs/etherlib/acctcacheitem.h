@@ -39,7 +39,7 @@ public:
     DECLARE_NODE(CAcctCacheItem);
 
     // EXISTING_CODE
-    CAcctCacheItem(SFUint32 b, SFUint32 t, int32_t w) : blockNum(b), transIndex(t), which(w) {}
+    CAcctCacheItem(uint64_t b, uint64_t t, int32_t w) : blockNum(b), transIndex(t), which(w) {}
     CAcctCacheItem(SFString& str);
     bool operator==(const CAcctCacheItem& item) {
         return (blockNum == item.blockNum && transIndex == item.transIndex); // && which == item.which);

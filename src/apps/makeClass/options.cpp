@@ -44,7 +44,7 @@ bool COptions::parseArguments(SFString& command) {
         } else if (arg == "-h" || arg == "--header") {
             writeHeader = true;
 
-        } else if (arg == "-l" || arg == "-list") {
+        } else if (arg == "-l" || arg == "--list") {
             if (isRun)
                 return usage("Incompatible options '-r' and '-l'. Choose one or the other.");
             isList = true;
@@ -64,12 +64,12 @@ bool COptions::parseArguments(SFString& command) {
                 return usage("Unknown parameter: " + orig);
             filter = arg;
 
-        } else if (arg == "-r" || arg == "-run") {
+        } else if (arg == "-r" || arg == "--run") {
             if (isEdit || isRemove || isList)
                 return usage("Incompatible options with '-r'. Only '-a' option works with '-r'.");
             isRun = true;
 
-        } else if (arg == "-a" || arg == "-all") {
+        } else if (arg == "-a" || arg == "--all") {
             isAll = true;
 
         } else if (!arg.startsWith('-')) {

@@ -14,7 +14,7 @@ void reportByAccount(const COptions& options);
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
     // Tell the system where the blocks are and which version to use
-    etherlib_init("parity");
+    etherlib_init("fastest");
 
     // Parse command line, allowing for command files
     COptions options;
@@ -41,6 +41,10 @@ int main(int argc, const char *argv[]) {
 //--------------------------------------------------------------
 void reportByToken(const COptions& options) {
 
+    SFUintBN totalVal = 0;
+    uint64_t nAccts = countOf('|', options.holders) + 1;
+    bool needsTotal = (nAccts > 1 && options.total);
+
     bool needsNewline = true;
     // For each token contract
     SFString tokens = options.tokens;
@@ -55,18 +59,18 @@ void reportByToken(const COptions& options) {
             SFAddress holder = nextTokenClear(holders, '|');
 
             // For each block
-            SFString blocks = options.blocks.toString();
+            SFString blocks = options.getBlockNumList();
             while (!blocks.empty()) {
-
                 blknum_t blockNum = toLongU(nextTokenClear(blocks, '|'));
                 SFUintBN bal = getTokenBalance(token, holder, blockNum);
+                totalVal += bal;
                 SFString sBal = to_string(bal).c_str();
                 if (expContext().asEther) {
                     sBal = wei2Ether(to_string(bal).c_str());
                 } else if (expContext().asDollars) {
                     CBlock blk;
                     getBlock(blk, blockNum);
-                    sBal = padLeft(dispDollars(blk.timestamp, bal),14);
+                    sBal = padLeft("$" + dispDollars(blk.timestamp, bal),14);
                 }
 
                 needsNewline = true;
@@ -84,7 +88,8 @@ void reportByToken(const COptions& options) {
                         cerr << blockNum << "\t" << token << "\t" << holder << "         \r";
                     } else {
                         cerr << "    Balance for account " << cGreen << holder << cOff;
-                        cerr << " at block " << cTeal << blockNum << cOff << "           \r";
+                        cerr << " at block " << cTeal << blockNum << cOff;
+                        cerr << " is " << cYellow << sBal << cOff << "           \r";
                     }
                 }
                 cerr.flush();
@@ -92,12 +97,31 @@ void reportByToken(const COptions& options) {
             }
         }
     }
+
+    if (needsTotal) {
+        SFString sBal = to_string(totalVal).c_str();
+        if (expContext().asEther) {
+            sBal = wei2Ether(to_string(totalVal).c_str());
+        } else if (expContext().asDollars) {
+            CBlock blk;
+            getBlock(blk, getLatestBlockFromClient());
+            sBal = padLeft("$" + dispDollars(blk.timestamp, totalVal),14);
+        }
+        cout << "        Total for " << cGreen << nAccts << cOff;
+        cout << " accounts at " << cTeal << "latest" << cOff << " block";
+        cout << " is " << cYellow << sBal.Substitute("  "," ") << cOff << "\n";
+    }
+
     if (needsNewline)
         cerr << "                                                                                              \n";
 }
 
 //--------------------------------------------------------------
 void reportByAccount(const COptions& options) {
+
+    SFUintBN totalVal = 0;
+    uint64_t nAccts = countOf('|', options.holders) + 1;
+    bool needsTotal = (nAccts > 1 && options.total);
 
     bool needsNewline = true;
     // For each holder
@@ -113,18 +137,19 @@ void reportByAccount(const COptions& options) {
             SFAddress token = nextTokenClear(tokens, '|');
 
             // For each block
-            SFString blocks = options.blocks.toString();
+            SFString blocks = options.getBlockNumList();
             while (!blocks.empty()) {
 
                 blknum_t blockNum = toLongU(nextTokenClear(blocks, '|'));
                 SFUintBN bal = getTokenBalance(token, holder, blockNum);
+                totalVal += bal;
                 SFString sBal = to_string(bal).c_str();
                 if (expContext().asEther) {
                     sBal = wei2Ether(to_string(bal).c_str());
                 } else if (expContext().asDollars) {
                     CBlock blk;
                     getBlock(blk, blockNum);
-                    sBal = padLeft(dispDollars(blk.timestamp, bal),14);
+                    sBal = padLeft("$" + dispDollars(blk.timestamp, bal),14);
                 }
 
                 needsNewline = true;
@@ -139,10 +164,11 @@ void reportByAccount(const COptions& options) {
                     needsNewline = false;
                 } else if (!isTestMode()) {
                     if (options.asData) {
-                        cout << blockNum << "\t" << token << "\t" << holder << "\r";
+                        cerr << blockNum << "\t" << token << "\t" << holder << "         \r";
                     } else {
-                        cout << "    Balance of token contract " << cGreen << token << cOff;
-                        cout << " at block " << cTeal << blockNum << cOff << "\r";
+                        cerr << "    Balance of token contract " << cGreen << token << cOff;
+                        cerr << " at block " << cTeal << blockNum << cOff;
+                        cerr << " is " << cYellow << sBal << cOff << "           \r";
                     }
                 }
                 cerr.flush();
@@ -150,6 +176,21 @@ void reportByAccount(const COptions& options) {
             }
         }
     }
+
+    if (needsTotal) {
+        SFString sBal = to_string(totalVal).c_str();
+        if (expContext().asEther) {
+            sBal = wei2Ether(to_string(totalVal).c_str());
+        } else if (expContext().asDollars) {
+            CBlock blk;
+            getBlock(blk, getLatestBlockFromClient());
+            sBal = padLeft("$" + dispDollars(blk.timestamp, totalVal),14);
+        }
+        cout << "        Total for " << cGreen << nAccts << cOff;
+        cout << " accounts at " << cTeal << "latest" << cOff << " block";
+        cout << " is " << cYellow << sBal.Substitute("  "," ") << cOff << "\n";
+    }
+
     if (needsNewline)
         cerr << "                                                                                              \n";
 }

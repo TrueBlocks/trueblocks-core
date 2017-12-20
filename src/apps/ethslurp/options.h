@@ -15,8 +15,7 @@ public:
     bool rerun;
     bool incomeOnly;
     bool expenseOnly;
-    uint64_t firstBlock2Read;
-    uint64_t lastBlock2Read;
+    COptionsBlockList blocks;
     SFTime firstDate;
     SFString funcFilter;
     int errFilt;

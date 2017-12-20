@@ -32,10 +32,26 @@ int main(int argc, const char *argv[]) {
 bool visitTransaction(CTransaction& trans, void *data) {
     const COptions *opt = (const COptions*)data;
 
+    bool badHash = !isHash(trans.hash);
+    bool isBlock = trans.hash.Contains("block");
+    trans.hash = trans.hash.Substitute("-block_not_found","").Substitute("-trans_not_found","");
     if (opt->isRaw) {
+        if (badHash) {
+            cerr << "{\"jsonrpc\":\"2.0\",\"result\":{\"hash\":\"" << trans.hash.Substitute(" ","") << "\",\"result\":\"";
+            cerr << (isBlock ? "block " : "");
+            cerr << "hash not found\"},\"id\":-1}" << "\n";
+            return true;
+        }
+
+        // Note: this call is redundant. The transaction is already populated (if it's valid), but we need the raw data)
         SFString results;
         queryRawTrace(results, trans.getValueByName("hash"));
-        cout << results << "\n";
+        cout << results;
+        return true;
+    }
+
+    if (badHash) {
+        cerr << cRed << "Warning:" << cOff << " The " << (isBlock ? "block " : "") << "hash " << cYellow << trans.hash << cOff << " was not found.\n";
         return true;
     }
 
