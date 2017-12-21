@@ -1,3 +1,0 @@
-cacheMan argc: 3 [1:--stats] [2:TipJar.cache] 
-cacheMan --stats TipJar.cache 
-Stats option is not implemented. Quitting...
