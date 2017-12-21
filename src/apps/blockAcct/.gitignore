@@ -1,0 +1,5 @@
+sample_cache_from_singular.txt
+*.cpp
+*.h
+makefile
+tests
