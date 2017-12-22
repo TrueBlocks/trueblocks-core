@@ -941,7 +941,22 @@ bool forEveryBlock(BLOCKVISITFUNC func, void *data, const SFString& block_list) 
 }
 
 //-------------------------------------------------------------------------
-bool forEveryTransaction(TRANSVISITFUNC func, void *data, const SFString& trans_list)
+bool forEveryTransactionInBlock(TRANSVISITFUNC func, void *data, const CBlock& block) {
+
+    if (!func)
+        return false;
+
+    for (uint32_t i = 0 ; i < block.transactions.getCount() ; i++) {
+        CTransaction trans = block.transactions[i];
+        if (!(*func)(trans, data))
+            return false;
+    }
+
+    return true;
+}
+
+//-------------------------------------------------------------------------
+bool forEveryTransactionInList(TRANSVISITFUNC func, void *data, const SFString& trans_list)
 {
     if (!func)
         return false;
