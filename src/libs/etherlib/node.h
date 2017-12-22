@@ -89,7 +89,8 @@ namespace qblocks {
     extern bool forEveryBloomFile            (FILEVISITOR func,    void *data, uint64_t start, uint64_t count, uint64_t skip=1);
 
     //-------------------------------------------------------------------------
-    extern bool forEveryTransaction          (TRANSVISITFUNC func, void *data, const SFString& trans_list);
+    extern bool forEveryTransactionInList    (TRANSVISITFUNC func, void *data, const SFString& trans_list);
+    extern bool forEveryTransactionInBlock   (TRANSVISITFUNC func, void *data, const CBlock& block);
 
     //-------------------------------------------------------------------------
     extern bool forEveryFullBlockInMemory    (BLOCKVISITFUNC     func, void *data, uint64_t start, uint64_t count);
