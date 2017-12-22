@@ -23,7 +23,7 @@ int main(int argc, const char *argv[]) {
         SFString command = nextTokenClear(options.commandList, '\n');
         if (!options.parseArguments(command))
             return 0;
-        forEveryTransaction(visitTransaction, &options, options.transList.queries);
+        forEveryTransactionInList(visitTransaction, &options, options.transList.queries);
     }
     return 0;
 }
