@@ -6,6 +6,9 @@
  * The LICENSE at the root of this repo details your rights (if any)
  *------------------------------------------------------------------------*/
 #include <ncurses.h>
+#ifdef USE_BSD
+#include <bsd/stdlib.h>
+#endif
 #include "etherlib.h"
 #include "parselib.h"
 #include "processing.h"
