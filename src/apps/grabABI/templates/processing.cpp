@@ -166,6 +166,7 @@ bool updateCacheUsingBlooms(const SFString& path, void *dataPtr) {
             visitor->bloomStats.bloomsChecked++;
             SFArchive archive(READING_ARCHIVE);
             if (archive.Lock(path, binaryReadOnly, LOCK_NOWAIT)) {
+//                cerr << "Reading bloom\r";
                 archive >> bloom;
                 archive.Close();
             }
@@ -400,4 +401,3 @@ uint32_t CVisitor::checkForImport(void) {
 
     return cnt;
 }
-
