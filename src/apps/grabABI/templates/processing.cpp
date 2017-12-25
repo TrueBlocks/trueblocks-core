@@ -49,12 +49,14 @@ bool displayFromCache(const SFString& cacheFileName, uint64_t& blockNum, void *d
             if (visitor->cache.Eof()) {
                 visitor->closeIncomeStatement(block);
                 visitor->cache.Release();
+                blockNum++; // the next block to process
                 return true;
             }
             visitor->cache >> blockNum;
             if (visitor->cache.Eof()) {
                 visitor->closeIncomeStatement(block);
                 visitor->cache.Release();
+                blockNum++; // the next block to process
                 return true;
             }
             visitor->cache >> transID;
@@ -65,6 +67,7 @@ bool displayFromCache(const SFString& cacheFileName, uint64_t& blockNum, void *d
                     if (!visitor->closeIncomeStatement(block)) {
                         cerr << "Quitting debugger.\r\n";
                         visitor->cache.Release();
+                        blockNum++; // the next block to process
                         return false; // return false since user hit 'quit' on debugger
                     }
 
@@ -72,6 +75,7 @@ bool displayFromCache(const SFString& cacheFileName, uint64_t& blockNum, void *d
                     if (!readOneBlock_fromBinary(block, getBinaryFilename1(blockNum))) {
                         cerr << "Read of block " << blockNum << " failed. Quitting cache read\r\n";
                         visitor->cache.Release();
+                        blockNum++; // the next block to process
                         return false;
                     }
                     visitor->blockStats.prevBlock = block;
@@ -79,6 +83,7 @@ bool displayFromCache(const SFString& cacheFileName, uint64_t& blockNum, void *d
                     if (!visitor->openIncomeStatement(block))  {
                         cerr << "Quitting debugger.\r\n";
                         visitor->cache.Release();
+                        blockNum++; // the next block to process
                         return false; // return false since user hit 'quit' on debugger
                     }
 
@@ -117,11 +122,11 @@ bool displayFromCache(const SFString& cacheFileName, uint64_t& blockNum, void *d
         // ignore return since we're done anway
         visitor->closeIncomeStatement(block);
         visitor->cache.Release();
+        blockNum++; // the next block to process
     }
     return true;
 }
 
-blknum_t lastBloomHit = 0;
 uint64_t nFound = 0;
 //-----------------------------------------------------------------------
 bool updateCacheUsingBlooms(const SFString& path, void *dataPtr) {
@@ -141,63 +146,69 @@ bool updateCacheUsingBlooms(const SFString& path, void *dataPtr) {
             blknum_t bloomNum = toUnsigned(p);
             if (bloomNum <= visitor->blockStats.firstBlock) {
                 static blknum_t lastBucket1 = 0;
-                blknum_t thisBucket1 = (bloomNum / 10000 ) * 10000;
+                blknum_t thisBucket1 = (bloomNum / 997 ) * 997;
                 if (thisBucket1 != lastBucket1) {
-                    cerr << "earlyExit: " << thisBucket1 << "|"
-                        << visitor->bloomStats.bloomsChecked << "|"
-                        << visitor->bloomStats.bloomHits << "|"
-                        << visitor->bloomStats.falsePositives << "\r";
-                    cerr.flush();
+//                    cerr << "earlyExit: " << thisBucket1 << "|"
+//                        << visitor->bloomStats.bloomsChecked << "|"
+//                        << visitor->bloomStats.bloomHits << "|"
+//                        << visitor->bloomStats.falsePositives << "\r";
+//                    cerr.flush();
+                    SFString endMsg = " (" + asStringU(bloomNum) + ")";
+                    blknum_t x = (visitor->blockStats.firstBlock >= bloomNum ? 0 : bloomNum - visitor->blockStats.firstBlock);
+                    progressBar(x, visitor->blockStats.nBlocks, visitor->opts.monitorName+"|"+endMsg);
                     lastBucket1 = thisBucket1;
                 }
-                lastBloomHit = bloomNum;
                 return true; // continue
 
             } else if (bloomNum >= visitor->blockStats.firstBlock + visitor->blockStats.nBlocks) {
                 stringToAsciiFile("./cache/lastBlock.txt", asStringU(bloomNum) + "\r\n");
                 return false; // don't continue
-
-            } else {
-                if (lastBloomHit ==0)
-                    lastBloomHit = visitor->blockStats.firstBlock;
             }
 
-            SFBloom bloom;
+            SFBloomArray blooms;
             visitor->bloomStats.bloomsChecked++;
             SFArchive archive(READING_ARCHIVE);
             if (archive.Lock(path, binaryReadOnly, LOCK_NOWAIT)) {
-//                cerr << "Reading bloom\r";
-                archive >> bloom;
+//                cerr << "Reading bloom: " << path << "\n";
+                archive >> blooms;
+//                for (uint32_t j = 0 ; j < blooms.getCount() ; j++) {
+//                    cerr << bitsTwiddled(blooms[j]) << "\n";
+//                }
                 archive.Close();
             }
 
+            SFBloom whichBloom;SFAddress whichAddr;
 //            cout << "Checking bloom " << path << "\r\n";
             bool hit = false;
-            for (uint32_t i = 0 ; i < visitor->watches.getCount()-1 && !hit; i++) { // don't check too many
-                if (isBloomHit(makeBloom(visitor->watches[i].address), bloom)) {
-                    hit = true;
+            for (uint32_t j = 0 ; j < blooms.getCount() && !hit ; j++) {
+                for (uint32_t i = 0 ; i < visitor->watches.getCount()-1 && !hit; i++) { // don't check too many
+//                    cerr << cYellow << "    Checking " << visitor->watches[i].address << " against bloom " << path << "\n" << cOff;
+                    if (isBloomHit(makeBloom(visitor->watches[i].address), blooms[j])) {
+//                        cerr << bTeal << "    Hit\n" << cOff;
+                        whichBloom = blooms[j];
+                        whichAddr = visitor->watches[i].address;
+                        hit = true;
+                    }
                 }
             }
 
             if (hit) {
-//                cout << "Bloom hit from " << lastBloomHit << " to " << bloomNum << "\r\n";
+//                cout << "Bloom hit at " << bloomNum << "\r\n";
                 nFound = 0;
-                for (blknum_t k = lastBloomHit ; k < bloomNum ; k++) {
-                    if (fileExists(getBinaryFilename1(k))) {
-//                        cout << "Checking block " << k << "\r\n";
-                        CBlock block;
-                        readOneBlock_fromBinary(block, getBinaryFilename1(k));
-                        if (!updateCache(block, visitor)) {
-                            visitor->bloomStats.bloomHits++;
-                            visitor->bloomStats.falsePositives += (nFound == 0);
-                            stringToAsciiFile("./cache/lastBlock.txt", asStringU(bloomNum) + "\r\n");
-                            return false;  // don't continue, user hit 'q'
-                        }
+                if (fileExists(getBinaryFilename1(bloomNum))) {
+//                    cout << "Checking block " << bloomNum << "\r\n";
+                    CBlock block;
+                    readOneBlock_fromBinary(block, getBinaryFilename1(bloomNum));
+                    if (!updateCache(block, visitor)) {
+                        visitor->bloomStats.bloomHits++;
+                        visitor->bloomStats.falsePositives += (nFound == 0);
+                        stringToAsciiFile("./cache/lastBlock.txt", asStringU(bloomNum) + "\r\n");
+                        return false;  // don't continue, user hit 'q'
                     }
                 }
 //                cout << "Bloom hit at block " << bloomNum
-//                        << " at address " << padNum7T(hit)
-//                        << " with " << bitsTwiddled(bloom)
+//                        << " at address " << whichAddr
+//                        << " with " << bitsTwiddled(whichBloom)
 //                        << " bits found " << nFound << " transactions\r";
                 cout.flush();
                 visitor->bloomStats.bloomHits++;
@@ -206,16 +217,18 @@ bool updateCacheUsingBlooms(const SFString& path, void *dataPtr) {
             stringToAsciiFile("./cache/lastBlock.txt", asStringU(bloomNum) + "\r\n");
 
             static blknum_t lastBucket2 = 0;
-            blknum_t thisBucket2 = (bloomNum / 1000 ) * 1000;
+            blknum_t thisBucket2 = (bloomNum / 97 ) * 97;
             if (thisBucket2 != lastBucket2) {
-                cout << "buckets: " << thisBucket2 << "|"
-                    << visitor->bloomStats.bloomsChecked << "|"
-                    << visitor->bloomStats.bloomHits << "|"
-                    << visitor->bloomStats.falsePositives << "\r";
-                cout.flush();
+//                cout << "buckets: " << thisBucket2 << "|"
+//                    << visitor->bloomStats.bloomsChecked << "|"
+//                    << visitor->bloomStats.bloomHits << "|"
+//                    << visitor->bloomStats.falsePositives << "\r";
+//                cout.flush();
+                SFString endMsg = " (" + asStringU(bloomNum) + ")";
+                blknum_t x = (visitor->blockStats.firstBlock >= bloomNum ? 0 : bloomNum - visitor->blockStats.firstBlock);
+                progressBar(x, visitor->blockStats.nBlocks, visitor->opts.monitorName+"|"+endMsg);
                 lastBucket2 = thisBucket2;
             }
-            lastBloomHit = bloomNum;
         }
     }
     return true;
@@ -268,8 +281,8 @@ bool updateCache(CBlock& block, void *dataPtr) {
         }
     }
 
-    timestamp_t tsOut = (block.timestamp == 0 ? toTimestamp(Now()) : block.timestamp);
-    SFString endMsg = dateFromTimeStamp(tsOut).Format(FMT_JSON) + " (" + asStringU(block.blockNumber) + ")";
+//    SFString endMsg = dateFromTimeStamp(tsOut).Format(FMT_JSON) + " (" + asStringU(block.blockNumber) + ")";
+    SFString endMsg = " (" + asStringU(block.blockNumber) + ")";
     blknum_t x = (visitor->blockStats.firstBlock >= block.blockNumber ? 0 : block.blockNumber - visitor->blockStats.firstBlock);
     progressBar(x, visitor->blockStats.nBlocks, visitor->opts.monitorName+"|"+endMsg);
     visitor->blockStats.prevBlock = block;
