@@ -238,21 +238,23 @@ SFString CIncomeStatement::getValueByName(const SFString& fieldName) const {
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const CIncomeStatement& item) {
     // EXISTING_CODE
-    uint32_t width = 22;
-    if (item.begBal == item.endBal && item.begBal == -1) {
-        os << padCenter("begBal", width) << "   "
-        << padCenter("inFlow", width) << "   "
-        << padCenter("outFlow", width) << "   "
-        << padCenter("gasCost", width) << "   "
-        << padCenter("endBal", width);
-    } else {
-        os << (item.begBal>0?cGreen:bBlack) << padLeft(wei2Ether(to_string(item.begBal).c_str()),width) << bBlack << "   ";
-        os << (item.inflow>0?cYellow:"") << padLeft(wei2Ether(to_string(item.inflow).c_str()),width) << bBlack << "   ";
-        os << (item.outflow>0?cYellow:"") << padLeft(wei2Ether(to_string(item.outflow).c_str()),width) << bBlack << "   ";
-        os << (item.gasCost>0?cYellow:"") << padLeft(wei2Ether(to_string(item.gasCost).c_str()),width) << cOff << "   ";
-        os << (item.endBal>0?cGreen:bBlack) << padLeft(wei2Ether(to_string(item.endBal).c_str()),width);
+    if (sizeof(item) != 0) { // do this to always go through here, but avoid a warning
+        uint32_t width = 22;
+        if (item.begBal == item.endBal && item.begBal == -1) {
+            os << padCenter("begBal", width) << "   "
+            << padCenter("inFlow", width) << "   "
+            << padCenter("outFlow", width) << "   "
+            << padCenter("gasCost", width) << "   "
+            << padCenter("endBal", width);
+        } else {
+            os << (item.begBal>0?cGreen:bBlack) << padLeft(wei2Ether(to_string(item.begBal).c_str()),width) << bBlack << "   ";
+            os << (item.inflow>0?cYellow:"") << padLeft(wei2Ether(to_string(item.inflow).c_str()),width) << bBlack << "   ";
+            os << (item.outflow>0?cYellow:"") << padLeft(wei2Ether(to_string(item.outflow).c_str()),width) << bBlack << "   ";
+            os << (item.gasCost>0?cYellow:"") << padLeft(wei2Ether(to_string(item.gasCost).c_str()),width) << cOff << "   ";
+            os << (item.endBal>0?cGreen:bBlack) << padLeft(wei2Ether(to_string(item.endBal).c_str()),width);
+        }
+        { return os; }
     }
-    { return os; }
     // EXISTING_CODE
 
     os << item.Format() << "\n";
