@@ -8,56 +8,64 @@
 #include "node.h"
 
 namespace qblocks {
-    
+
     //-------------------------------------------------------------------------
-    static SFString curlHeaders =
-    "Content-Type: application/json|";
-    
+    extern size_t write_callback(char *ptr, size_t size, size_t nmemb, void *userdata);
+
+    //-------------------------------------------------------------------------
+    // TODO: remove global data
+    static SFString curlHeaders = "Content-Type: application/json|";
+    static CURLCALLBACKFUNC callBackFunc=NULL;
     static bool tracing_on = true;
+    static bool earlyAbort=false;
+    static uint32_t theID = 1;
+    static bool is_error=false;
+    static bool is_tracing=false;
+
     void tracingOff(bool val) { tracing_on = false; }
     void tracingOn(bool val) { tracing_on = true; }
     bool isTracingOn(void) { return tracing_on; }
+    //-------------------------------------------------------------------------
+    bool lightTracing(bool on) {
+        bool ret = is_error;
+        is_tracing = on;
+        is_error   = false;
+        return ret;
+    }
 
     //--------------------------------------------------------------------------
-    CURLCALLBACKFUNC callBackFunc=NULL;
     CURLCALLBACKFUNC setCurlCallback(CURLCALLBACKFUNC func) {
         CURLCALLBACKFUNC prev = callBackFunc;
         callBackFunc = func;
         return prev;
     }
-    
+
     //-------------------------------------------------------------------------
-    CURL *getCurl(bool cleanup)
-    {
+    CURL *getCurl(bool cleanup) {
         static CURL *curl = NULL;
         static struct curl_slist *headers = NULL;
-        if (!curl && !cleanup)
-        {
+        if (!curl && !cleanup) {
             curl = curl_easy_init();
-            if (!curl)
-            {
+            if (!curl) {
                 fprintf(stderr, "Curl failed to initialize. Quitting...\n");
                 exit(0);
             }
-            
+
             SFString head = curlHeaders;
             while (!head.empty()) {
                 SFString next = nextTokenClear(head, '|');
                 headers = curl_slist_append(headers, (char*)(const char*)next);
             }
             curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
-            
-            if (getSource() == "infura")
-            {
+
+            if (getSource() == "infura") {
                 curl_easy_setopt(curl, CURLOPT_URL,        "https://pmainnet.infura.io/");
-                
-            } else
-            {
+
+            } else {
                 curl_easy_setopt(curl, CURLOPT_URL,        "http://localhost:8545");
             }
-            
-        } else if (cleanup)
-        {
+
+        } else if (cleanup) {
             if (headers)
                 curl_slist_free_all(headers);
             if (curl)
@@ -66,21 +74,15 @@ namespace qblocks {
             curl = NULL;
             return NULL;
         }
-        
+
         return curl;
     }
-    
-    //-------------------------------------------------------------------------
-    extern size_t write_callback(char *ptr, size_t size, size_t nmemb, void *userdata);
-    static bool earlyAbort=false;
-    bool is_error=false;
-    bool is_tracing=false;
-    static uint32_t theID = 1;
+
     //-------------------------------------------------------------------------
     SFString getCurlID(void) {
         return asString(isTestMode() ? 1 : theID++);
     }
-    
+
     //-------------------------------------------------------------------------
     class CCurlData {
     public:
@@ -95,14 +97,28 @@ namespace qblocks {
             url += "}";
         }
     };
-    
+
+    //-------------------------------------------------------------------------
+    size_t nullCallback(char *ptr, size_t size, size_t nmemb, void *userdata) {
+        return size*nmemb;
+    }
+
+    //-------------------------------------------------------------------------
+    bool isNodeRunning(void) {
+        CCurlData curlData("web3_clientVersion", "[]");
+        curl_easy_setopt(getCurl(), CURLOPT_POSTFIELDS,    (const char*)curlData.url);
+        curl_easy_setopt(getCurl(), CURLOPT_POSTFIELDSIZE, curlData.url.length());
+        curl_easy_setopt(getCurl(), CURLOPT_WRITEDATA,     &curlData);
+        curl_easy_setopt(getCurl(), CURLOPT_WRITEFUNCTION, nullCallback);
+        return (curl_easy_perform(getCurl()) == CURLE_OK);
+    }
+
     //-------------------------------------------------------------------------
     // Use 'curl' to make an arbitrary rpc call
     //-------------------------------------------------------------------------
-    SFString callRPC(const SFString& method, const SFString& params, bool raw)
-    {
+    SFString callRPC(const SFString& method, const SFString& params, bool raw) {
         CCurlData curlData(method, params);
-        
+
         //#define DEBUG_RPC
 #ifdef DEBUG_RPC
         cerr << "\n" << SFString('-',80) << "\n";
@@ -110,17 +126,16 @@ namespace qblocks {
         cerr << SFString('-',80) << "\n";
         cerr.flush();
 #endif
-        
+
         curl_easy_setopt(getCurl(), CURLOPT_POSTFIELDS,    (const char*)curlData.url);
         curl_easy_setopt(getCurl(), CURLOPT_POSTFIELDSIZE, curlData.url.length());
-        
+
         curl_easy_setopt(getCurl(), CURLOPT_WRITEDATA,     &curlData);
         curl_easy_setopt(getCurl(), CURLOPT_WRITEFUNCTION, write_callback);
-        
+
         earlyAbort = false;
         CURLcode res = curl_easy_perform(getCurl());
-        if (res != CURLE_OK && !earlyAbort)
-        {
+        if (res != CURLE_OK && !earlyAbort) {
             SFString currentSource = getSource();
             SFString fallBack = getenv("FALLBACK");
             if (!fallBack.empty() && currentSource != fallBack) {
@@ -132,7 +147,7 @@ namespace qblocks {
                     cerr << "\n";
                     exit(0);
                 }
-                
+
                 if (fallBack == "infura" && method.startsWith("trace_")) {
                     cerr << cYellow;
                     cerr << "\n";
@@ -159,7 +174,7 @@ namespace qblocks {
             cerr << "\n";
             exit(0);
         }
-        
+
         if (!is_tracing && curlData.result.empty()) {
             cerr << cYellow;
             cerr << "\n";
@@ -168,7 +183,7 @@ namespace qblocks {
             cerr << "\n";
             exit(0);
         }
-        
+
 #ifdef DEBUG_RPC
         //    cout << "\n" << SFString('-',80) << "\n";
         //    cout << thePost << "\n";
@@ -176,7 +191,7 @@ namespace qblocks {
         cout << "received: " << curlData.result << "\n";
         cout.flush();
 #endif
-        
+
         if (raw)
             return curlData.result;
         CRPCResult generic;
@@ -184,43 +199,20 @@ namespace qblocks {
         generic.parseJson(p);
         return generic.result;
     }
-    
-    //-------------------------------------------------------------------------
-    size_t nullCallback(char *ptr, size_t size, size_t nmemb, void *userdata) {
-        return size*nmemb;
-    }
-    
-    //-------------------------------------------------------------------------
-    bool isNodeRunning(void) {
-        CCurlData curlData("web3_clientVersion", "[]");
-        curl_easy_setopt(getCurl(), CURLOPT_POSTFIELDS,    (const char*)curlData.url);
-        curl_easy_setopt(getCurl(), CURLOPT_POSTFIELDSIZE, curlData.url.length());
-        curl_easy_setopt(getCurl(), CURLOPT_WRITEDATA,     &curlData);
-        curl_easy_setopt(getCurl(), CURLOPT_WRITEFUNCTION, nullCallback);
-        return (curl_easy_perform(getCurl()) == CURLE_OK);
-    }
-    
+
     //-------------------------------------------------------------------------
     bool getObjectViaRPC(CBaseNode &node, const SFString& method, const SFString& params) {
         SFString ret = callRPC(method, params, false);
         node.parseJson((char *)(const char*)ret);
         return true;
     }
-    
-    //-------------------------------------------------------------------------
-    bool lightTracing(bool on) {
-        bool ret = is_error;
-        is_tracing = on;
-        is_error   = false;
-        return ret;
-    }
-    
+
     //-------------------------------------------------------------------------
     size_t write_callback(char *ptr, size_t size, size_t nmemb, void *userdata)
     {
         if (callBackFunc)
             return (*callBackFunc)(ptr, size, nmemb, userdata);
-        
+
         if (is_tracing) {
             // Curl does not close the string, so we have to
             ptr[size*nmemb-1] = '\0';
@@ -229,7 +221,7 @@ namespace qblocks {
                 earlyAbort = true;
                 return 0;
             }
-            
+
         } else {
             SFString part;
             part.reserve(size*nmemb+1);
@@ -250,8 +242,8 @@ namespace qblocks {
                 return 0;
             }
         }
-        
+
         return size*nmemb;
     }
-    
+
 }  // namespace qblocks

@@ -111,9 +111,9 @@ SFString RPCSession::eth_getBalanc e(SFString const& _address, SFString const& _
 }
 
 //-----------------------------------------------------
-SFString RPCSession::eth_getStorageRoot(SFString const& _address, SFString const& _blockNumber)
+SFString RPCSession::eth_getSt orageRoot(SFString const& _address, SFString const& _blockNumber)
 {
-    return rpcCall("eth_getStorageRoot", _address + "|" + _blockNumber);
+    return rpcCall("eth_getSt orageRoot", _address + "|" + _blockNumber);
 }
 
 //-----------------------------------------------------

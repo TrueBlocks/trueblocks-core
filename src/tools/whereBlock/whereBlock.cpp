@@ -46,7 +46,7 @@ int main(int argc, const char *argv[]) {
 
             } else {
 
-                SFString path = (verbose ? fileName.getFullPath() : fileName.relativePath(getStorageRoot()));
+                SFString path = (verbose ? fileName.getFullPath() : fileName.relativePath(blockCachePath("")));
                 SFString vers = getVersionFromClient();
                 if (isTestMode() && verbose)
                     path = "--";
