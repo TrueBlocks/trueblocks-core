@@ -16,7 +16,7 @@ extern void unloadCache(void);
 int main(int argc, const char *argv[]) {
     etherlib_init("binary");
 
-    setNoTracing(true); // we never need to trace in this app
+    tracingOff(); // we never need to trace in this app
 
     // Parse command line, allowing for command files
     COptions options;
