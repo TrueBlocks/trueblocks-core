@@ -8,12 +8,13 @@
 #include "node.h"
 
 namespace qblocks {
-    
-    QUITHANDLER theQuitHandler = NULL;
+
+    static QUITHANDLER theQuitHandler = NULL;
     //-------------------------------------------------------------------------
     void etherlib_init(const SFString& sourceIn, QUITHANDLER qh) {
-        setStorageRoot(blockCachePath(""));
-        
+
+        establishFolder(blockCachePath(""));
+
         // In case we create any lock files, so they get cleaned up
         extern void registerQuitHandler(QUITHANDLER qh);
         if (theQuitHandler == NULL || qh != defaultQuitHandler) {
@@ -21,7 +22,7 @@ namespace qblocks {
             theQuitHandler = qh;
             registerQuitHandler(qh);
         }
-        
+
         CBlock::registerClass();
         CTransaction::registerClass();
         CReceipt::registerClass();
@@ -41,16 +42,16 @@ namespace qblocks {
         CNameValue::registerClass();
         CAccountName::registerClass();
         CAcctCacheItem::registerClass();
-        
+
         setSource(sourceIn);
         // if curl has already been initialized, we want to clear it out
         getCurl(true);
         // initialize curl
         getCurl();
-        
+
         establishFolder(configPath(""));
     }
-    
+
     //-------------------------------------------------------------------------
     void etherlib_cleanup(void) {
         getCurl(true);
@@ -68,7 +69,7 @@ namespace qblocks {
         setSource(save);
         return ret;
     }
-    
+
     //-------------------------------------------------------------------------
     bool getBlock(CBlock& block, const SFHash& blockHash) {
         return queryBlock(block, blockHash, true, true);
@@ -114,7 +115,7 @@ namespace qblocks {
         CRPCResult generic;
         char *p = cleanUpJson((char*)(const char*)trace);
         generic.parseJson(p);
-        
+
         p = cleanUpJson((char *)(generic.result.c_str()));  // NOLINT
         while (p && *p) {
             CTrace tr;
@@ -130,57 +131,57 @@ namespace qblocks {
         uint32_t unused = 0;
         return queryBlock(block, datIn, needTrace, byHash, unused);
     }
-    
+
     //-------------------------------------------------------------------------
     bool queryBlock(CBlock& block, const SFString& datIn, bool needTrace, bool byHash, uint32_t& nTraces) {
-        
+
         if (datIn == "latest")
             return queryBlock(block, asStringU(getLatestBlockFromClient()), needTrace, false);
-        
+
         if (isHash(datIn)) {
             HIDE_FIELD(CTransaction, "receipt");
             getObjectViaRPC(block, "eth_getBlockByHash", "["+quote(datIn)+",true]");
-            
+
         } else {
             uint64_t num = toLongU(datIn);
             if ((getSource().Contains("binary") || getSource().Contains("nonemp")) && fileSize(getBinaryFilename(num))>0) {
                 UNHIDE_FIELD(CTransaction, "receipt");
                 return readOneBlock_fromBinary(block, getBinaryFilename(num));
-                
+
             } else if (getSource().Contains("Only")) {
                 return false;
-                
+
             }
-            
+
             if (getSource() == "json" && fileSize(getJsonFilename(num))>0)
             {
                 UNHIDE_FIELD(CTransaction, "receipt");
                 return readOneBlock_fromJson(block, getJsonFilename(num));
-                
+
             }
-            
+
             HIDE_FIELD(CTransaction, "receipt");
             getObjectViaRPC(block, "eth_getBlockByNumber", "["+quote(asStringU(num))+",true]");
         }
-        
+
         // If there are no transactions, we do not have to trace and we want to tell the caller that
         if (!block.transactions.getCount())
             return false;
-        
+
         // We have the transactions, but we also want the receipts, and we need an error indication
         nTraces=0;
         for (uint32_t i=0;i<block.transactions.getCount();i++)
         {
             CTransaction *trans = &block.transactions[i];
             trans->pBlock = &block;
-            
+
             UNHIDE_FIELD(CTransaction, "receipt");
             CReceipt receipt;
             getReceipt(receipt, trans->hash);
             trans->receipt = receipt; // deep copy
             if (block.blockNumber >= byzantiumBlock) {
                 trans->isError = (receipt.status == 0);
-                
+
             } else if (needTrace && trans->gas == receipt.gasUsed) {
 
                 // If we've been told not to trace, quit here, but return sucess
@@ -188,21 +189,19 @@ namespace qblocks {
                     return true;
 
                 SFString trace;
-                is_error = false;
-                is_tracing = true;
+                lightTracing(true);
                 queryRawTrace(trace, trans->hash);
-                is_tracing = false;
-                trans->isError = is_error;
+                trans->isError = lightTracing(false);
                 nTraces++;
             }
         }
-        
+
         return true;
     }
 
     //-------------------------------------------------------------------------
     bool queryRawBlock(SFString& blockStr, const SFString& datIn, bool needTrace, bool hashesOnly) {
-        
+
         if (isHash(datIn)) {
             blockStr = callRPC("eth_getBlockByHash", "["+quote(datIn)+","+(hashesOnly?"false":"true")+"]", true);
         } else {
@@ -309,7 +308,7 @@ namespace qblocks {
             }
         }
     }
-    
+
     //-----------------------------------------------------------------------
     bool readFromBinary(CBaseNode& item, const SFString& fileName) {
         // Assumes that the item is clear, so no Init
@@ -344,9 +343,9 @@ namespace qblocks {
 
     //--------------------------------------------------------------------------
     uint64_t getLatestBlockFromCache(CSharedResource *res) {
-        
+
         uint64_t ret = 0;
-        
+
         CSharedResource fullBlocks; // Don't move--need the scope
         CSharedResource *pRes = res;
         if (!pRes) {
@@ -358,7 +357,7 @@ namespace qblocks {
             pRes = &fullBlocks;
         }
         ASSERT(pRes->isOpen());
-        
+
         pRes->Seek( (-1 * (long)sizeof(uint64_t)), SEEK_END);
         pRes->Read(ret);
         if (pRes != res)
@@ -380,7 +379,7 @@ namespace qblocks {
         theCode = callRPC("eth_getCode", "[\"0x" + a +"\"]", false);
         return theCode.length()!=0;
     }
-    
+
     //-------------------------------------------------------------------------
     SFUintBN getBalance(const SFString& addr, blknum_t blockNum, bool isDemo) {
         SFString a = addr.substr(2);
@@ -388,60 +387,46 @@ namespace qblocks {
         SFString ret = callRPC("eth_getBalance", "[\"0x" + a +"\","+quote(asStringU(blockNum))+"]", false);
         return toWei(ret);
     }
-    
+
     //-------------------------------------------------------------------------
     SFUintBN getTokenBalance(const SFAddress& token, const SFAddress& holder, blknum_t blockNum) {
-        
+
         ASSERT(isAddress(token));
         ASSERT(isAddress(holder));
-        
+
         SFString t = "0x" + padLeft(token.substr(2), 40, '0');  // address to send the command to
         SFString h =        padLeft(holder.substr(2), 64, '0'); // encoded data for the transaction
-        
+
         SFString cmd = "[{\"to\": \"[TOKEN]\", \"data\": \"0x70a08231[HOLDER]\"}, \"[BLOCK]\"]";
         cmd.Replace("[TOKEN]",  t);
         cmd.Replace("[HOLDER]", h);
         cmd.Replace("[BLOCK]",  asStringU(blockNum));
-        
+
         return toWei(callRPC("eth_call", cmd, false));
     }
-    
+
     //-------------------------------------------------------------------------
     bool getSha3(const SFString& hexIn, SFString& shaOut) {
         shaOut = callRPC("web3_sha3", "[\"" + hexIn + "\"]", false);
         return true;
     }
 
-    static SFString storagePath;
     //-------------------------------------------------------------------------
     static SFString getFilename_local(uint64_t numIn, bool asPath, bool asJson) {
-        if (storagePath.empty()) {
-            cerr << "You must set the storage path with setStorageRoot(path). Quitting...\n";
-            exit(0);
-        }
-        
+
         char ret[512];
         bzero(ret,sizeof(ret));
-        
+
         SFString num = padLeft(asStringU(numIn),9,'0');
         SFString fmt = (asPath ? "%s/%s/%s/" : "%s/%s/%s/%s");
         SFString fn  = (asPath ? "" : num + (asJson ? ".json" : ".bin"));
-        
-        sprintf(ret, (const char*)(storagePath+fmt), (const char*)num.substr(0,2), (const char*)num.substr(2,2), (const char*)num.substr(4,2), (const char*)fn);
-        return ret;
-    }
 
-    //-------------------------------------------------------------------------
-    void setStorageRoot(const SFString& path) {
-        storagePath = path;
-        if (!storagePath.endsWith('/'))
-            storagePath += "/";
-        establishFolder(storagePath);
-    }
-    
-    //-------------------------------------------------------------------------
-    SFString getStorageRoot(void) {
-        return storagePath;
+        sprintf(ret, (const char*)(blockCachePath("")+fmt),
+                      (const char*)num.substr(0,2),
+                      (const char*)num.substr(2,2),
+                      (const char*)num.substr(4,2),
+                      (const char*)fn);
+        return ret;
     }
 
     //-------------------------------------------------------------------------
@@ -494,10 +479,10 @@ namespace qblocks {
         // Here we simply scan the numbers and either read from disc or query the node
         if (!func)
             return false;
-        
+
         SFString save = getSource();
         setSource("fastest");
-        
+
         for (uint64_t i = start ; i < start + count - 1 ; i = i + skip) {
             SFString fileName = getBinaryFilename(i);
             CBlock block;
@@ -505,7 +490,7 @@ namespace qblocks {
                 readOneBlock_fromBinary(block, fileName);
             else
                 getBlock(block,i);
-            
+
             bool ret = (*func)(block, data);
             if (!ret) {
                 // Cleanup and return if user tells us to
@@ -516,7 +501,7 @@ namespace qblocks {
         setSource(save);
         return true;
     }
-    
+
     //-------------------------------------------------------------------------
     bool forEveryBlock(BLOCKVISITFUNC func, void *data, const SFString& block_list) {
         return true;
@@ -526,7 +511,7 @@ namespace qblocks {
     bool forEveryBlockOnDisc(BLOCKVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip) {
         if (!func)
             return false;
-        
+
         // Read every block from number start to start+count
         for (uint64_t i = start ; i < start + count ; i = i + skip) {
             CBlock block;
@@ -536,28 +521,28 @@ namespace qblocks {
         }
         return true;
     }
-    
+
     //-------------------------------------------------------------------------
     bool forEveryNonEmptyBlockOnDisc(BLOCKVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip) {
-        
+
         // Read the non-empty block index file and spit it out only non-empty blocks
         if (!func)
             return false;
-        
+
         CSharedResource fullBlocks;
         if (!fullBlocks.Lock(fullBlockIndex, binaryReadOnly, LOCK_WAIT)) {
             cerr << "forEveryNonEmptyBlockOnDisc failed: " << fullBlocks.LockFailure() << "\n";
             return false;
         }
         ASSERT(fullBlocks.isOpen());
-        
+
         uint64_t nItems = fileSize(fullBlockIndex) / sizeof(uint64_t);
         uint64_t *contents = new uint64_t[nItems];
         if (contents) {
             // read the entire full block index
             fullBlocks.Read(contents, sizeof(uint64_t), nItems);
             fullBlocks.Release();  // release it since we don't need it any longer
-            
+
             for (uint64_t i = 0 ; i < nItems ; i = i + skip) {
                 // TODO: This should be a binary search not a scan. This is why it appears to wait
                 uint64_t item = contents[i];
@@ -581,28 +566,27 @@ namespace qblocks {
     }
 
     //-------------------------------------------------------------------------
-    bool forEveryEmptyBlockOnDisc(BLOCKVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip)
-    {
+    bool forEveryEmptyBlockOnDisc(BLOCKVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip) {
         if (!func)
             return false;
-        
+
         SFString save = getSource();
         setSource("parity"); // the empty blocks are not on disk, so we have to ask parity. Don't write them, though
-        
+
         CSharedResource fullBlocks;
         if (!fullBlocks.Lock(fullBlockIndex, binaryReadOnly, LOCK_WAIT)) {
             cerr << "forEveryEmptyBlockOnDisc failed: " << fullBlocks.LockFailure() << "\n";
             return false;
         }
         ASSERT(fullBlocks.isOpen());
-        
+
         uint64_t nItems = fileSize(fullBlockIndex) / sizeof(uint64_t) + 1;  // we need an extra one for item '0'
         uint64_t *contents = new uint64_t[nItems+2];  // extra space
         if (contents) {
             // read the entire full block index
             fullBlocks.Read(&contents[0], sizeof(uint64_t), nItems-1);  // one less since we asked for an extra one
             fullBlocks.Release();  // release it since we don't need it any longer
-            
+
             contents[0] = 0;  // the starting point (needed because we are build the empty list from the non-empty list
             uint64_t cnt = start;
             for (uint64_t i = 1 ; i < nItems ; i = i + skip) { // first one (at index '0') is assumed to be the '0' block
@@ -632,7 +616,7 @@ namespace qblocks {
             forEveryFileInFolder(bloomFolder, func, data);
             return true;
         }
-        
+
         // visit only the folder the user tells us to visit
         blknum_t st = (start / 1000) * 1000;
         blknum_t ed = ((start+count+1000) / 1000) * 1000;
@@ -645,10 +629,10 @@ namespace qblocks {
 
     //-------------------------------------------------------------------------
     bool forEveryTraceInTransaction(TRACEVISITFUNC func, void *data, const CTransaction& trans) {
-        
+
         if (!func)
             return false;
-        
+
         CTraceArray traces;
         getTraces(traces, trans.hash);
         for (uint32_t i=0;i<traces.getCount();i++) {
@@ -656,42 +640,42 @@ namespace qblocks {
             if (!(*func)(trace, data))
                 return false;
         }
-        
+
         return true;
     }
 
     //-------------------------------------------------------------------------
     bool forEveryTransactionInBlock(TRANSVISITFUNC func, void *data, const CBlock& block) {
-        
+
         if (!func)
             return false;
-        
+
         for (uint32_t i = 0 ; i < block.transactions.getCount() ; i++) {
             CTransaction trans = block.transactions[i];
             if (!(*func)(trans, data))
                 return false;
         }
-        
+
         return true;
     }
 
     //-------------------------------------------------------------------------
     bool forEveryTransactionInList(TRANSVISITFUNC func, void *data, const SFString& trans_list)
     {
-        
+
         if (!func)
             return false;
-        
+
         // trans_list is a list of tx_hash, blk_hash.tx_id, or blk_num.tx_id, or any combination
         SFString list = trans_list;
         while (!list.empty()) {
             SFString item = nextTokenClear(list, '|');
             bool hasDot = item.Contains(".");
             bool isHex = item.startsWith("0x");
-            
+
             SFString hash = nextTokenClear(item, '.');
             uint64_t txID = toLongU(item);
-            
+
             CTransaction trans;
             if (isHex) {
                 if (hasDot) {
@@ -704,7 +688,7 @@ namespace qblocks {
             } else {
                 getTransaction(trans, (uint32_t)toLongU(hash), txID);  // blockNum.txID
             }
-            
+
             CBlock block;
             trans.pBlock = &block;
             getBlock(block, trans.blockNumber);
@@ -716,7 +700,7 @@ namespace qblocks {
                 // three cases, two with either block hash or block num one with transaction hash. Note: This will fail if we move to non-string hashes
                 trans.hash = hash + "-" + (!isHex || hasDot ? "block_not_found" : "trans_not_found");
             }
-            
+
             if (!(*func)(trans, data))
                 return false;
         }
@@ -725,7 +709,7 @@ namespace qblocks {
 
     //-------------------------------------------------------------------------
     SFString blockCachePath(const SFString& _part) {
-        
+
         static SFString blockCache;
         if (blockCache.empty()) {
             CToml toml(configPath("quickBlocks.toml"));

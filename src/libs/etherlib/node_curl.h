@@ -22,12 +22,12 @@ namespace qblocks {
     extern void      tracingOff              (void);
     extern void      tracingOn               (void);
     extern bool      isTracingOn             (void);
-    extern bool      getObjectViaRPC         (CBaseNode &node, const SFString& method, const SFString& params);
     extern bool      lightTracing            (bool on);
+
+    extern bool      isNodeRunning           (void);
+
     extern CURL     *getCurl                 (bool cleanup=false);
     extern SFString  callRPC                 (const SFString& method, const SFString& params, bool raw);
-    extern bool      isNodeRunning           (void);
-    extern bool      is_error;
-    extern bool      is_tracing;
+    extern bool      getObjectViaRPC         (CBaseNode &node, const SFString& method, const SFString& params);
 
 }  // namespace qblocks
