@@ -81,14 +81,14 @@ SFString doOneBlock(uint64_t num, const COptions& opt) {
                 generic.parseJson(cleanUpJson((char*)(const char*)result));
                 result = generic.result;
                 gold.parseJson((char*)(const char*)result);
-                SFString fileName = getBinaryFilename1(num);
+                SFString fileName = getBinaryFilename(num);
                 writeToBinary(gold, fileName);
             }
         }
 
     } else {
         if (opt.asks4Cache) {
-            CFilename fileName(getBinaryFilename1(num));
+            CFilename fileName(getBinaryFilename(num));
             if (!fileExists(fileName.getFullPath())) {
                 cout << usageStr("You asked for a block (" + asStringU(num) + ") from the cache, but that block is not in the cache. Quitting.");
                 exit(0);
@@ -96,7 +96,7 @@ SFString doOneBlock(uint64_t num, const COptions& opt) {
         }
         queryBlock(gold, numStr, true, false);
         if (opt.force) { // turn this on to force a write of the block to the disc
-            SFString fileName = getBinaryFilename1(gold.blockNumber);
+            SFString fileName = getBinaryFilename(gold.blockNumber);
             writeToBinary(gold, fileName);
         }
 

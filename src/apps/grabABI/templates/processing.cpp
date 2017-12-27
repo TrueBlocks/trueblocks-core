@@ -72,7 +72,7 @@ bool displayFromCache(const SFString& cacheFileName, uint64_t& blockNum, void *d
                     }
 
                     // If we switched blocks, read the next block
-                    if (!readOneBlock_fromBinary(block, getBinaryFilename1(blockNum))) {
+                    if (!readOneBlock_fromBinary(block, getBinaryFilename(blockNum))) {
                         cerr << "Read of block " << blockNum << " failed. Quitting cache read\r\n";
                         visitor->cache.Release();
                         blockNum++; // the next block to process
@@ -195,10 +195,10 @@ bool updateCacheUsingBlooms(const SFString& path, void *dataPtr) {
             if (hit) {
 //                cout << "Bloom hit at " << bloomNum << "\r\n";
                 nFound = 0;
-                if (fileExists(getBinaryFilename1(bloomNum))) {
+                if (fileExists(getBinaryFilename(bloomNum))) {
 //                    cout << "Checking block " << bloomNum << "\r\n";
                     CBlock block;
-                    readOneBlock_fromBinary(block, getBinaryFilename1(bloomNum));
+                    readOneBlock_fromBinary(block, getBinaryFilename(bloomNum));
                     if (!updateCache(block, visitor)) {
                         visitor->bloomStats.bloomHits++;
                         visitor->bloomStats.falsePositives += (nFound == 0);

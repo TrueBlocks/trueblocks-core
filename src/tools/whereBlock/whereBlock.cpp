@@ -36,7 +36,7 @@ int main(int argc, const char *argv[]) {
         SFString list = options.getBlockNumList();
         while (!list.empty()) {
             blknum_t bn = toLongU(nextTokenClear(list, '|'));
-            CFilename fileName(getBinaryFilename1(bn));
+            CFilename fileName(getBinaryFilename(bn));
             bool exists = fileExists(fileName.getFullPath());
 
             if (options.alone) {
