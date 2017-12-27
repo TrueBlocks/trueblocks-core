@@ -286,6 +286,6 @@ SFString dispDollars(timestamp_t ts, SFUintBN weiIn) {
     sBal = (sBal.empty() ? "0.00" : d + "." + sBal.substr(0,2));
     return sBal;
 }
-
 // EXISTING_CODE
 }  // namespace qblocks
+
