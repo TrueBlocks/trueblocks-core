@@ -9,6 +9,15 @@
 
 namespace qblocks {
     
+    //-------------------------------------------------------------------------
+    static SFString curlHeaders =
+    "Content-Type: application/json|";
+    
+    static bool tracing_on = true;
+    void tracingOff(bool val) { tracing_on = false; }
+    void tracingOn(bool val) { tracing_on = true; }
+    bool isTracingOn(void) { return tracing_on; }
+
     //--------------------------------------------------------------------------
     CURLCALLBACKFUNC callBackFunc=NULL;
     CURLCALLBACKFUNC setCurlCallback(CURLCALLBACKFUNC func) {
@@ -16,10 +25,6 @@ namespace qblocks {
         callBackFunc = func;
         return prev;
     }
-    
-    //-------------------------------------------------------------------------
-    static SFString curlHeaders =
-    "Content-Type: application/json|";
     
     //-------------------------------------------------------------------------
     CURL *getCurl(bool cleanup)
@@ -202,10 +207,6 @@ namespace qblocks {
         return true;
     }
     
-    // TODO: remove global data
-    static bool no_tracing=false;
-    void setNoTracing(bool val) { no_tracing = val; }
-
     //-------------------------------------------------------------------------
     bool lightTracing(bool on) {
         bool ret = is_error;
