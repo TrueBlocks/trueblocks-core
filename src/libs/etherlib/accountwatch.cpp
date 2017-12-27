@@ -288,8 +288,8 @@ ostream& operator<<(ostream& os, const CAccountWatch& item) {
 }
 
 //---------------------------------------------------------------------------
-const CBaseNode *CAccountWatch::getObjectAt(const SFString& name, uint32_t i) const {
-    if ( name % "qbis" )
+const CBaseNode *CAccountWatch::getObjectAt(const SFString& fieldName, uint32_t i) const {
+    if ( fieldName % "qbis" )
         return &qbis;
     return NULL;
 }
