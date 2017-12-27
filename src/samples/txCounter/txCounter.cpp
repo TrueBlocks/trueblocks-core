@@ -65,7 +65,7 @@ int main(int argc, char *argv[])
     counter.loadFromFile();
     blknum_t latest = getLatestBlockFromCache();
     for (blknum_t i = counter.startBlock-1 ; i < latest ; i++) {
-        SFString fileName = getBinaryFilename1(i);
+        SFString fileName = getBinaryFilename(i);
         if (fileExists(fileName)) {
             CBlock block;
             readOneBlock_fromBinary(block, fileName);
