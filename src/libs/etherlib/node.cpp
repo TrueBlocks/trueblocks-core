@@ -182,7 +182,11 @@ namespace qblocks {
                 trans->isError = (receipt.status == 0);
                 
             } else if (needTrace && trans->gas == receipt.gasUsed) {
-                
+
+                // If we've been told not to trace, quit here, but return sucess
+                if (!isTracingOn())
+                    return true;
+
                 SFString trace;
                 is_error = false;
                 is_tracing = true;

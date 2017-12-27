@@ -19,7 +19,9 @@ namespace qblocks {
     extern size_t           write_callback   (char *ptr, size_t size, size_t nmemb, void *userdata);
     
     //-------------------------------------------------------------------------
-    extern void      setNoTracing            (bool val);
+    extern void      tracingOff              (void);
+    extern void      tracingOn               (void);
+    extern bool      isTracingOn             (void);
     extern bool      getObjectViaRPC         (CBaseNode &node, const SFString& method, const SFString& params);
     extern bool      lightTracing            (bool on);
     extern CURL     *getCurl                 (bool cleanup=false);
