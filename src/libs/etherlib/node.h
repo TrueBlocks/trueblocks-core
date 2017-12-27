@@ -70,8 +70,6 @@ namespace qblocks {
     inline SFString getSha3                 (const SFString& hexIn) { SFString ret; getSha3(hexIn,ret); return ret; }
 
     //-------------------------------------------------------------------------
-    extern void     setStorageRoot          (const SFString& path);
-    extern SFString getStorageRoot          (void);
     extern SFString getJsonFilename         (uint64_t num);
     extern SFString getBinaryFilename      (uint64_t num);
     extern SFString getBinaryPath1          (uint64_t num);
