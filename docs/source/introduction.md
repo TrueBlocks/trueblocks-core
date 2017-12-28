@@ -53,7 +53,7 @@ QuickBlocks is old school. We abhor JSON data, which in our estimation, is liter
     int main(int argc, const char *argv[]) {
 
         // Initialize the system and tell it where to find the blockchain data.
-        etherlib_init("infura");
+        etherlib_init("remote");
 
         // Request the 3,500,000th block from Infura. Store it in 'block'
         CBlock block;
@@ -79,3 +79,4 @@ Resources
 +---------+----------------------------------------------------------------------------------------------------------------+
 | Medium  | `http://medium.com/@tjayrush <http://medium.com/@tjayrush>`_                                                   |
 +---------+----------------------------------------------------------------------------------------------------------------+
+

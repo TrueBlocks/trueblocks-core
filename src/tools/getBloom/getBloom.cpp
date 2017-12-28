@@ -13,8 +13,7 @@ extern SFString doOneBloom(uint64_t num, const COptions& opt);
 //------------------------------------------------------------
 int main(int argc, const char * argv[]) {
 
-    // Tell the system where the blocks are and which version to use
-    etherlib_init("fastest");
+    etherlib_init();
 
     // Parse command line, allowing for command files
     COptions options;
@@ -66,6 +65,7 @@ int main(int argc, const char * argv[]) {
 SFString doOneBloom(uint64_t num, const COptions& opt) {
 
     CBlock gold;
+    gold.blockNumber = num;
     SFString result;
     SFString numStr = asStringU(num);
     if (opt.isRaw) {
@@ -84,20 +84,23 @@ SFString doOneBloom(uint64_t num, const COptions& opt) {
         result = "{" + Strip(ret.Substitute(",\n",","),',') + "}";
 
     } else {
-        // queryBlock returns false if there are no transactions, so ignore the return value
-        queryBlock(gold, numStr, true, false);
-        if (/* DISABLES CODE */ (false)) { // turn this on to force a write of the block to the disc
-            SFString fileName = getBinaryFilename(gold.blockNumber);
-            writeToBinary(gold, fileName);
-        }
 
-        if (getSource().Contains("Only")) {
+        // queryBlock returns false if there are no transactions, so ignore the return value
+        if (opt.isCache) {
+            readFromBinary(gold, getBinaryFilename(gold.blockNumber));
             // --source::cache mode doesn't include timestamp in transactions
             for (uint32_t t = 0 ; t < gold.transactions.getCount() ; t++) {
                 gold.transactions[t].timestamp = gold.timestamp;
             }
 
+        } else {
+            queryBlock(gold, numStr, true, false);
+            if (/* DISABLES CODE */ (false)) { // turn this on to force a write of the block to the disc
+                SFString fileName = getBinaryFilename(gold.blockNumber);
+                writeToBinary(gold, fileName);
+            }
         }
+
         result = gold.Format();
     }
 

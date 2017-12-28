@@ -13,7 +13,7 @@ class COptions : public COptionsBase {
 public:
     bool isCheck;
     bool isRaw;
-    bool asks4Cache;
+    bool isCache;
     bool terse;
     bool force;
     bool normalize;
