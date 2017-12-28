@@ -11,8 +11,7 @@
 //------------------------------------------------------------
 int main(int argc, const char * argv[]) {
 
-    // Tell the system where the blocks are and which version to use
-    etherlib_init("binary");
+    etherlib_init();
 
     // Parse command line, allowing for command files
     COptions options;
@@ -69,6 +68,7 @@ int main(int argc, const char * argv[]) {
 SFString doOneBlock(uint64_t num, const COptions& opt) {
 
     CBlock gold;
+    gold.blockNumber = num;
     SFString result;
     SFString numStr = asStringU(num);
     if (opt.isRaw) {
@@ -87,26 +87,20 @@ SFString doOneBlock(uint64_t num, const COptions& opt) {
         }
 
     } else {
-        if (opt.asks4Cache) {
-            CFilename fileName(getBinaryFilename(num));
-            if (!fileExists(fileName.getFullPath())) {
-                cout << usageStr("You asked for a block (" + asStringU(num) + ") from the cache, but that block is not in the cache. Quitting.");
-                exit(0);
-            }
-        }
-        queryBlock(gold, numStr, true, false);
-        if (opt.force) { // turn this on to force a write of the block to the disc
-            SFString fileName = getBinaryFilename(gold.blockNumber);
-            writeToBinary(gold, fileName);
-        }
+        SFString fileName = getBinaryFilename(gold.blockNumber);
+        if (opt.isCache) {
 
-        if (getSource().Contains("Only")) {
             // --source::cache mode doesn't include timestamp in transactions
-            for (uint32_t t = 0 ; t < gold.transactions.getCount() ; t++) {
+            readFromBinary(gold, fileName);
+            for (uint32_t t = 0 ; t < gold.transactions.getCount() ; t++)
                 gold.transactions[t].timestamp = gold.timestamp;
-            }
 
+        } else {
+            queryBlock(gold, numStr, true, false);
         }
+
+        if (opt.force) // turn this on to force a write of the block to the disc
+            writeToBinary(gold, fileName);
 
         if (!opt.silent) {
             SFString format = opt.format;

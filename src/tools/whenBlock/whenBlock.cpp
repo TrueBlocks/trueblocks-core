@@ -14,9 +14,10 @@ extern void unloadCache(void);
 
 //---------------------------------------------------------------
 int main(int argc, const char *argv[]) {
-    etherlib_init("binary");
 
-    tracingOff(); // we never need to trace in this app
+    etherlib_init();
+
+    getCurlContext()->tracingOff(); // we never need to trace in this app
 
     // Parse command line, allowing for command files
     COptions options;

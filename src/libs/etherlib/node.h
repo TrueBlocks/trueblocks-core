@@ -14,7 +14,7 @@ namespace qblocks {
 
     //-------------------------------------------------------------------------
     // setup and tear down of the library
-    extern void     etherlib_init           (const SFString& primarySource, QUITHANDLER qh=defaultQuitHandler);
+    extern void     etherlib_init           (const SFString& primarySource="binary", QUITHANDLER qh=defaultQuitHandler);
     extern void     etherlib_cleanup        (void);
 
     //-------------------------------------------------------------------------
@@ -50,7 +50,7 @@ namespace qblocks {
 
     //-----------------------------------------------------------------------
     extern bool     readOneBlock_fromBinary (      CBlock& block,   const SFString& fileName);
-    extern void     writeToBinary           (const CBaseNode& node, const SFString& fileName);
+    extern bool     writeToBinary           (const CBaseNode& node, const SFString& fileName);
     extern bool     readFromBinary          (      CBaseNode& node, const SFString& fileName);
 
     //-------------------------------------------------------------------------

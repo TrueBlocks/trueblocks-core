@@ -16,10 +16,10 @@ namespace qblocks {
         establishFolder(blockCachePath(""));
 
         // In case we create any lock files, so they get cleaned up
-        extern void registerQuitHandler(QUITHANDLER qh);
         if (theQuitHandler == NULL || qh != defaultQuitHandler) {
-            // Only set this once unless it's non-default
+            // Set this once, unless it's non-default
             theQuitHandler = qh;
+extern void registerQuitHandler(QUITHANDLER qh);
             registerQuitHandler(qh);
         }
 
@@ -43,7 +43,7 @@ namespace qblocks {
         CAccountName::registerClass();
         CAcctCacheItem::registerClass();
 
-        setSource(sourceIn);
+        getCurlContext()->source = sourceIn;
         // if curl has already been initialized, we want to clear it out
         getCurl(true);
         // initialize curl
@@ -62,11 +62,9 @@ namespace qblocks {
 
     //-------------------------------------------------------------------------
     bool getBlock(CBlock& block, blknum_t blockNum) {
-        SFString save = getSource();
-        if (getSource() == "fastest")
-            setSource(fileExists(getBinaryFilename(blockNum)) ? "binary" : "parity");
+        getCurlContext()->source = fileExists(getBinaryFilename(blockNum)) ? "binary" : "local";
         bool ret = queryBlock(block, asStringU(blockNum), true, false);
-        setSource(save);
+        getCurlContext()->source = "binary";
         return ret;
     }
 
@@ -144,16 +142,13 @@ namespace qblocks {
 
         } else {
             uint64_t num = toLongU(datIn);
-            if ((getSource().Contains("binary") || getSource().Contains("nonemp")) && fileSize(getBinaryFilename(num))>0) {
+            if (getCurlContext()->source == "binary" && fileSize(getBinaryFilename(num))>0) {
                 UNHIDE_FIELD(CTransaction, "receipt");
                 return readOneBlock_fromBinary(block, getBinaryFilename(num));
 
-            } else if (getSource().Contains("Only")) {
-                return false;
-
             }
 
-            if (getSource() == "json" && fileSize(getJsonFilename(num))>0)
+            if (getCurlContext()->source == "json" && fileSize(getJsonFilename(num))>0)
             {
                 UNHIDE_FIELD(CTransaction, "receipt");
                 return readOneBlock_fromJson(block, getJsonFilename(num));
@@ -185,13 +180,13 @@ namespace qblocks {
             } else if (needTrace && trans->gas == receipt.gasUsed) {
 
                 // If we've been told not to trace, quit here, but return sucess
-                if (!isTracingOn())
+                if (!getCurlContext()->isTracingOn())
                     return true;
 
                 SFString trace;
-                lightTracing(true);
+                getCurlContext()->lightTracing(true);
                 queryRawTrace(trace, trans->hash);
-                trans->isError = lightTracing(false);
+                trans->isError = getCurlContext()->lightTracing(false);
                 nTraces++;
             }
         }
@@ -296,17 +291,19 @@ namespace qblocks {
     }
 
     //-----------------------------------------------------------------------
-    void writeToBinary(const CBaseNode& node, const SFString& fileName) {
+    bool writeToBinary(const CBaseNode& node, const SFString& fileName) {
         SFString created;
         if (establishFolder(fileName,created)) {
             if (!created.empty() && !isTestMode())
                 cerr << "mkdir(" << created << ")" << SFString(' ',20) << "                                                     \n";
             SFArchive archive(WRITING_ARCHIVE);
             if (archive.Lock(fileName, binaryWriteCreate, LOCK_CREATE)) {
-                ((CBlock *)&node)->Serialize(archive);
+                node.SerializeC(archive);
                 archive.Close();
+                return true;
             }
         }
+        return false;
     }
 
     //-----------------------------------------------------------------------
@@ -449,29 +446,34 @@ namespace qblocks {
     }
 
     //----------------------------------------------------------------------------------
-    SFBloom readOneBloom(blknum_t bn) {
-        SFBloom ret = 0;
-        SFString fileName = getBinaryFilename(bn).Substitute("/blocks/", "/blooms/");
+    bool readBloomArray(SFBloomArray& blooms, const SFString& fileName) {
+        blooms.Clear();
         SFArchive archive(READING_ARCHIVE);
         if (archive.Lock(fileName, binaryReadOnly, LOCK_NOWAIT)) {
-            archive >> ret;
+            archive >> blooms;
             archive.Close();
+            return true;
         }
-        return ret;
+        return false;
     }
 
-    //-----------------------------------------------------------------------
-    void writeOneBloom(const SFString& fileName, const SFBloom& bloom) {
+   //-----------------------------------------------------------------------
+    bool writeBloomArray(const SFBloomArray& blooms, const SFString& fileName) {
+        if (blooms.getCount() == 0 || (blooms.getCount() == 1 && blooms[0] == 0))
+            return false;
+
         SFString created;
         if (establishFolder(fileName,created)) {
             if (!created.empty() && !isTestMode())
                 cerr << "mkdir(" << created << ")" << SFString(' ',20) << "                                                     \n";
             SFArchive archive(WRITING_ARCHIVE);
             if (archive.Lock(fileName, binaryWriteCreate, LOCK_CREATE)) {
-                archive << bloom;
+                archive << blooms;
                 archive.Close();
+                return true;
             }
         }
+        return false;
     }
 
     //-------------------------------------------------------------------------
@@ -479,9 +481,6 @@ namespace qblocks {
         // Here we simply scan the numbers and either read from disc or query the node
         if (!func)
             return false;
-
-        SFString save = getSource();
-        setSource("fastest");
 
         for (uint64_t i = start ; i < start + count - 1 ; i = i + skip) {
             SFString fileName = getBinaryFilename(i);
@@ -494,11 +493,9 @@ namespace qblocks {
             bool ret = (*func)(block, data);
             if (!ret) {
                 // Cleanup and return if user tells us to
-                setSource(save);
                 return false;
             }
         }
-        setSource(save);
         return true;
     }
 
@@ -570,8 +567,7 @@ namespace qblocks {
         if (!func)
             return false;
 
-        SFString save = getSource();
-        setSource("parity"); // the empty blocks are not on disk, so we have to ask parity. Don't write them, though
+        getCurlContext()->source = "local"; // the empty blocks are not on disk, so we have to ask parity. Don't write them, though
 
         CSharedResource fullBlocks;
         if (!fullBlocks.Lock(fullBlockIndex, binaryReadOnly, LOCK_WAIT)) {
@@ -596,7 +592,7 @@ namespace qblocks {
                     // transactions, so we ignore the return value
                     getBlock(block,cnt);
                     if (!(*func)(block, data)) {
-                        setSource(save);
+                        getCurlContext()->source = "binary";
                         delete [] contents;
                         return false;
                     }
@@ -606,7 +602,7 @@ namespace qblocks {
             }
             delete [] contents;
         }
-        setSource(save);
+        getCurlContext()->source = "binary";
         return true;
     }
 
