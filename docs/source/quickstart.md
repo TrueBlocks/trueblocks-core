@@ -35,7 +35,7 @@ Finally, play with some `sample code <https://github.com/Great-Hill-Corporation/
     //--------------------------------------------------------------
     int main(int argc, const char *argv[]) {
 
-        etherlib_init("");
+        etherlib_init();
 
         COptions opt;
         opt.parseArguments(argc, argv);

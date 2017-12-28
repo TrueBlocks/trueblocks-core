@@ -315,8 +315,6 @@ namespace qblocks {
     bool forEveryFullBlockInMemory(BLOCKVISITFUNC func, void *data, blknum_t start, blknum_t count) {
 
         CInMemoryCache *cache = getTheCache();
-        if (getSource() != "mem")
-            return false;
         if (!cache->Load(start, count))
             return false;
 

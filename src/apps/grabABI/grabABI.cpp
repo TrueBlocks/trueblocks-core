@@ -145,7 +145,7 @@ SFString acquireABI(CFunctionArray& functions, const SFAddress& addr, const COpt
 //-----------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
-    etherlib_init("binary");
+    etherlib_init();
 
     // We keep only a single slurper. If the user is using the --file option and they
     // are reading the same account repeatedly, we only need to read the cache once.

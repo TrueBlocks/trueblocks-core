@@ -49,7 +49,7 @@ public:
 //-------------------------------------------------------------------------
 int main(int argc, char *argv[])
 {
-    etherlib_init("binary");
+    etherlib_init();
 
     cout << "blockNum" << sep
         << "date" << sep
