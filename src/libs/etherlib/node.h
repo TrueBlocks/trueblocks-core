@@ -15,6 +15,7 @@ namespace qblocks {
     //-------------------------------------------------------------------------
     // setup and tear down of the library
     extern void     etherlib_init           (const SFString& primarySource="binary", QUITHANDLER qh=defaultQuitHandler);
+    inline void     etherlib_init           (QUITHANDLER qh) { etherlib_init("binary", qh); };
     extern void     etherlib_cleanup        (void);
 
     //-------------------------------------------------------------------------

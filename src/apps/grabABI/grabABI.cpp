@@ -638,7 +638,7 @@ const char* STR_CODE_SIGS =
 "\n";
 
 //-----------------------------------------------------------------------
-const char* STR_BLOCK_PATH = "etherlib_init(\"binary\", qh);\n\n";
+const char* STR_BLOCK_PATH = "etherlib_init(qh);\n\n";
 
 //-----------------------------------------------------------------------
 const char* STR_ITEMS =
