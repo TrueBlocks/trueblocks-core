@@ -12,7 +12,7 @@ extern void doTests(void);
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
-    etherlib_init("binary");
+    etherlib_init();
 
     // Parse command line, allowing for command files
     COptions options;

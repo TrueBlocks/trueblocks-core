@@ -43,7 +43,11 @@ extern void registerQuitHandler(QUITHANDLER qh);
         CAccountName::registerClass();
         CAcctCacheItem::registerClass();
 
-        getCurlContext()->source = sourceIn;
+        if (sourceIn != "remote" || sourceIn != "local")
+            getCurlContext()->source = "binary";
+        else
+            getCurlContext()->source = sourceIn;
+
         // if curl has already been initialized, we want to clear it out
         getCurl(true);
         // initialize curl
