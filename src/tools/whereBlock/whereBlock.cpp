@@ -38,7 +38,6 @@ int main(int argc, const char *argv[]) {
             blknum_t bn = toLongU(nextTokenClear(list, '|'));
             CFilename fileName(getBinaryFilename(bn));
             bool exists = fileExists(fileName.getFullPath());
-
             if (options.alone) {
                 // When running in 'alone' mode, only report items in the cache
                 if (exists)
