@@ -45,11 +45,6 @@ namespace qblocks {
     extern bool     queryRawLogs            (SFString& results,   const SFAddress& addr, uint64_t fromBlock, uint64_t toBlock);
 
     //-----------------------------------------------------------------------
-    extern bool     readOneBlock_fromJson   (      CBlock& block,   const SFString& fileName);
-    extern void     writeToJson             (const CBaseNode& node, const SFString& fileName);
-    extern bool     readFromJson            (      CBaseNode& node, const SFString& fileName);
-
-    //-----------------------------------------------------------------------
     extern bool     readOneBlock_fromBinary (      CBlock& block,   const SFString& fileName);
     extern bool     writeToBinary           (const CBaseNode& node, const SFString& fileName);
     extern bool     readFromBinary          (      CBaseNode& node, const SFString& fileName);
@@ -71,9 +66,7 @@ namespace qblocks {
     inline SFString getSha3                 (const SFString& hexIn) { SFString ret; getSha3(hexIn,ret); return ret; }
 
     //-------------------------------------------------------------------------
-    extern SFString getJsonFilename         (uint64_t num);
-    extern SFString getBinaryFilename      (uint64_t num);
-    extern SFString getBinaryPath1          (uint64_t num);
+    extern SFString getBinaryFilename       (uint64_t num);
 
     //-------------------------------------------------------------------------
     // function pointer types for forEvery functions
