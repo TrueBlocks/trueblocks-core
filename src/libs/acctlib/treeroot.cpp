@@ -91,6 +91,7 @@ bool CTreeRoot::Serialize(SFArchive& archive) {
         return true;
 
     // EXISTING_CODE
+    root = NULL;
     bool has_root = false;
     archive >> has_root;
     if (has_root) {
@@ -100,8 +101,6 @@ bool CTreeRoot::Serialize(SFArchive& archive) {
         if (!root)
             return false;
         root->Serialize(archive);
-    } else {
-        root = NULL;
     }
     // EXISTING_CODE
     finishParse();

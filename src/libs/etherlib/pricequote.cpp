@@ -10,8 +10,8 @@
  * of 'EXISTING_CODE' tags.
  */
 #include "pricequote.h"
-#include "pricesource.h"
 #include "etherlib.h"
+#include "pricesource.h"
 
 namespace qblocks {
 

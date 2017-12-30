@@ -328,9 +328,9 @@ ostream& operator<<(ostream& os, const CAccount& item) {
 }
 
 //---------------------------------------------------------------------------
-const CBaseNode *CAccount::getObjectAt(const SFString& name, uint32_t i) const {
-    if ( name % "transactions" && i < transactions.getCount() )
-        return &transactions[i];
+const CBaseNode *CAccount::getObjectAt(const SFString& fieldName, uint32_t index) const {
+    if ( fieldName % "transactions" && index < transactions.getCount() )
+        return &transactions[index];
     return NULL;
 }
 
