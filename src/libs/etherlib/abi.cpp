@@ -248,11 +248,11 @@ ostream& operator<<(ostream& os, const CAbi& item) {
 }
 
 //---------------------------------------------------------------------------
-const CBaseNode *CAbi::getObjectAt(const SFString& name, uint32_t i) const {
-    if ( name % "abiByName" && i < abiByName.getCount() )
-        return &abiByName[i];
-    if ( name % "abiByEncoding" && i < abiByEncoding.getCount() )
-        return &abiByEncoding[i];
+const CBaseNode *CAbi::getObjectAt(const SFString& fieldName, uint32_t index) const {
+    if ( fieldName % "abiByName" && index < abiByName.getCount() )
+        return &abiByName[index];
+    if ( fieldName % "abiByEncoding" && index < abiByEncoding.getCount() )
+        return &abiByEncoding[index];
     return NULL;
 }
 

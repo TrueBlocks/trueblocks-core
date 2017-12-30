@@ -47,7 +47,7 @@ public:
 
     DECLARE_NODE(CTrace);
 
-    const CBaseNode *getObjectAt(const SFString& name, uint32_t i) const override;
+    const CBaseNode *getObjectAt(const SFString& fieldName, uint32_t index) const override;
     const SFString getStringAt(const SFString& name, uint32_t i) const override;
 
     // EXISTING_CODE

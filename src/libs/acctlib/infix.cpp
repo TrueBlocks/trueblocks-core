@@ -94,6 +94,7 @@ bool CInfix::Serialize(SFArchive& archive) {
     CTreeNode::Serialize(archive);
 
     // EXISTING_CODE
+    next = NULL;
     bool has_next = false;
     archive >> has_next;
     if (has_next) {
@@ -116,13 +117,13 @@ bool CInfix::SerializeC(SFArchive& archive) const {
     CTreeNode::SerializeC(archive);
 
     // EXISTING_CODE
-    // EXISTING_CODE
     archive << (next != NULL);
     if (next) {
         SFString className = next->getRuntimeClass()->getClassNamePtr();
         archive << className;
         next->SerializeC(archive);
     }
+    // EXISTING_CODE
 
     return true;
 }

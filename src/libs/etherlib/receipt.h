@@ -43,7 +43,7 @@ public:
 
     DECLARE_NODE(CReceipt);
 
-    const CBaseNode *getObjectAt(const SFString& name, uint32_t i) const override;
+    const CBaseNode *getObjectAt(const SFString& fieldName, uint32_t index) const override;
 
     // EXISTING_CODE
     const CTransaction *pTrans;

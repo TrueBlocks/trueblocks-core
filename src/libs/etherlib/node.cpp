@@ -241,6 +241,41 @@ extern void registerQuitHandler(QUITHANDLER qh);
     }
 
     //-----------------------------------------------------------------------
+    bool readOneBlock_fromJson(CBlock& block, const SFString& fileName) {
+        if (!fileExists(fileName)) {
+            cerr << "File not found " << fileName << "\n";
+            return false;
+        }
+        block = CBlock(); // reset
+        SFString contents = asciiFileToString(fileName);
+        if (contents.Contains("null")) {
+            contents.ReplaceAll("null", "\"0x\"");
+            stringToAsciiFile(fileName, contents);
+        }
+        if (!contents.endsWith('\n')) {
+            stringToAsciiFile(fileName, contents+"\n");
+        }
+        char *p = cleanUpJson((char *)(const char*)contents);
+        uint32_t nFields=0;
+        block.parseJson(p,nFields);
+        return nFields;
+    }
+
+    //-----------------------------------------------------------------------
+    void writeToJson(const CBaseNode& node, const SFString& fileName) {
+        if (establishFolder(fileName)) {
+            std::ofstream out(fileName);
+            out << node.Format() << "\n";
+            out.close();
+        }
+    }
+
+    //-----------------------------------------------------------------------
+    bool readFromJson(CBaseNode& node, const SFString& fileName) {
+        return false;
+    };
+
+    //-----------------------------------------------------------------------
     bool readOneBlock_fromBinary(CBlock& block, const SFString& fileName) {
         block = CBlock(); // reset
         SFArchive archive(READING_ARCHIVE);
@@ -370,15 +405,15 @@ extern void registerQuitHandler(QUITHANDLER qh);
         return true;
     }
 
-    //------------------------------------------------------------------------
-    static SFString getFilename_local(uint64_t numIn, bool asPath) {
+    //-------------------------------------------------------------------------
+    static SFString getFilename_local(uint64_t numIn, bool asPath, bool asJson) {
 
         char ret[512];
         bzero(ret,sizeof(ret));
 
         SFString num = padLeft(asStringU(numIn),9,'0');
         SFString fmt = (asPath ? "%s/%s/%s/" : "%s/%s/%s/%s");
-        SFString fn  = (asPath ? "" : num + ".bin");
+        SFString fn  = (asPath ? "" : num + (asJson ? ".json" : ".bin"));
 
         sprintf(ret, (const char*)(blockCachePath("")+fmt),
                       (const char*)num.substr(0,2),
@@ -389,15 +424,20 @@ extern void registerQuitHandler(QUITHANDLER qh);
     }
 
     //-------------------------------------------------------------------------
+    SFString getJsonFilename(uint64_t num) {
+        return getFilename_local(num, false, true);
+    }
+
+    //-------------------------------------------------------------------------
     SFString getBinaryFilename(uint64_t num) {
-        SFString ret = getFilename_local(num, false);
+        SFString ret = getFilename_local(num, false, false);
         ret.Replace("/00/",  "/blocks/00/"); // can't use Substitute because it will change them all
         return ret;
     }
 
     //-------------------------------------------------------------------------
     SFString getBinaryPath(uint64_t num) {
-        SFString ret = getFilename_local(num, true);
+        SFString ret = getFilename_local(num, true, false);
         ret.Replace("/00/",  "/blocks/00/"); // can't use Substitute because it will change them all
         return ret;
     }

@@ -427,8 +427,8 @@ ostream& operator<<(ostream& os, const CTransaction& item) {
 }
 
 //---------------------------------------------------------------------------
-const CBaseNode *CTransaction::getObjectAt(const SFString& name, uint32_t i) const {
-    if ( name % "receipt" )
+const CBaseNode *CTransaction::getObjectAt(const SFString& fieldName, uint32_t index) const {
+    if ( fieldName % "receipt" )
         return &receipt;
     return NULL;
 }

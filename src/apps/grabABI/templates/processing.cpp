@@ -323,7 +323,7 @@ void loadWatches(const CToml& toml, CAccountWatchArray& array, const SFString& k
             // cleanup and report on errors
             bool okay = true;
             SFString msg;
-            watch.index = cnt++;
+            watch.id = cnt++;
             watch.color = convertColor(watch.color);
             watch.address = fixAddress(toLower(watch.address));
             watch.nodeBal = getBalance(watch.address, watch.firstBlock-1, false);
@@ -394,7 +394,7 @@ uint32_t CVisitor::checkForImport(void) {
         CAccountWatch *watch = findWatch(address);
         if (watch) {
             CTemp tmp;
-            tmp.whichWatch = watch->index;
+            tmp.whichWatch = watch->id;
             val = nextTokenClear(line,'\t');
             tmp.blockNum = toUnsigned(val);
             val = nextTokenClear(line,'\t');

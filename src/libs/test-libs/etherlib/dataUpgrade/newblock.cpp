@@ -345,9 +345,9 @@ ostream& operator<<(ostream& os, const CNewBlock& item) {
 }
 
 //---------------------------------------------------------------------------
-const CBaseNode *CNewBlock::getObjectAt(const SFString& name, uint32_t i) const {
-    if ( name % "transactions" && i < transactions.getCount() )
-        return &transactions[i];
+const CBaseNode *CNewBlock::getObjectAt(const SFString& fieldName, uint32_t index) const {
+    if ( fieldName % "transactions" && index < transactions.getCount() )
+        return &transactions[index];
     return NULL;
 }
 
