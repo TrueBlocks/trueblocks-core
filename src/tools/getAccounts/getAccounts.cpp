@@ -10,8 +10,7 @@
 //-----------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
-   // Tell the system where the blocks are and which version to use
-    etherlib_init("fastest");
+    etherlib_init();
 
     COptions options;
     if (!options.prepareArguments(argc, argv))

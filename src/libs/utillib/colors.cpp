@@ -86,7 +86,7 @@ namespace qblocks {
         cout << SFString(' ', max((uint64_t)0, barLen() - len));
         cout << "] ";
         cout << cYellow << _part << cOff << " of " << cYellow << _whole << cOff;
-        cout << " (" << cBlue << fmtFloatp(100.*percent, 1) << cOff << "%)";
+        cout << " (" << bBlue << fmtFloatp(100.*percent, 1) << cOff << "%)";
         cout << (endMsg.empty() ? " " : "") << endMsg;
         cout << "\r";
         cout.flush();

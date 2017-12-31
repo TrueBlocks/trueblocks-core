@@ -156,7 +156,6 @@ namespace qblocks {
     typedef void (*QUITHANDLER) (int s);
     extern SFString manageRemoveList(const SFString& str = "");
     extern void defaultQuitHandler(int s);
-    extern void registerQuitHandler(QUITHANDLER qh);
 
     //----------------------------------------------------------------------
     inline bool asciiFileToBuffer(const SFString& filename, SFString *contents, uint32_t maxLines = INT_MAX) {

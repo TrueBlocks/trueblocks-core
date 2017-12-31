@@ -347,11 +347,11 @@ ostream& operator<<(ostream& os, const CFunction& item) {
 }
 
 //---------------------------------------------------------------------------
-const CBaseNode *CFunction::getObjectAt(const SFString& name, uint32_t i) const {
-    if ( name % "inputs" && i < inputs.getCount() )
-        return &inputs[i];
-    if ( name % "outputs" && i < outputs.getCount() )
-        return &outputs[i];
+const CBaseNode *CFunction::getObjectAt(const SFString& fieldName, uint32_t index) const {
+    if ( fieldName % "inputs" && index < inputs.getCount() )
+        return &inputs[index];
+    if ( fieldName % "outputs" && index < outputs.getCount() )
+        return &outputs[index];
     return NULL;
 }
 

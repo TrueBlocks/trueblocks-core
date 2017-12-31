@@ -232,13 +232,15 @@ SFString CAbi::getValueByName(const SFString& fieldName) const {
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const CAbi& item) {
     // EXISTING_CODE
-    for (uint32_t i = 0 ; i < item.abiByName.getCount() ; i++ ) {
-        os << item.abiByName[i].Format() << "\n";
+    if (sizeof(item) != 0) { // do this to always go through here, but avoid a warning
+        for (uint32_t i = 0 ; i < item.abiByName.getCount() ; i++ ) {
+            os << item.abiByName[i].Format() << "\n";
+        }
+        for (uint32_t i = 0 ; i < item.abiByEncoding.getCount() ; i++ ) {
+            os << item.abiByEncoding[i].Format() << "\n";
+        }
+        { return os; }
     }
-    for (uint32_t i = 0 ; i < item.abiByEncoding.getCount() ; i++ ) {
-        os << item.abiByEncoding[i].Format() << "\n";
-    }
-    { return os; }
     // EXISTING_CODE
 
     os << item.Format() << "\n";
@@ -246,11 +248,11 @@ ostream& operator<<(ostream& os, const CAbi& item) {
 }
 
 //---------------------------------------------------------------------------
-const CBaseNode *CAbi::getObjectAt(const SFString& name, uint32_t i) const {
-    if ( name % "abiByName" && i < abiByName.getCount() )
-        return &abiByName[i];
-    if ( name % "abiByEncoding" && i < abiByEncoding.getCount() )
-        return &abiByEncoding[i];
+const CBaseNode *CAbi::getObjectAt(const SFString& fieldName, uint32_t index) const {
+    if ( fieldName % "abiByName" && index < abiByName.getCount() )
+        return &abiByName[index];
+    if ( fieldName % "abiByEncoding" && index < abiByEncoding.getCount() )
+        return &abiByEncoding[index];
     return NULL;
 }
 

@@ -10,7 +10,7 @@
 
 //---------------------------------------------------------------------------------------------------
 CParams params[] = {
-    CParams( "~source",      "source for the data (either 'infura', 'local', or 'binary')"),
+    CParams( "~source",      "source for the data (either 'remote', 'pairty', 'binary')"),
     CParams( "~begin",       "block to start with"),
     CParams( "~end",         "block to end on"),
     CParams( "-mode:<mode>", "if not present, display in 'short' mode, otherwise 'full' mode"),
@@ -43,10 +43,10 @@ bool COptions::parseArguments(SFString& command) {
 
         } else {
             if (!isUnsigned(arg)) {
-                if (arg != "infura" && arg != "binary" && arg != "local")
+                if (arg != "remote" && arg != "binary" && arg != "local")
                     return usage("Incorrect value (" + orig + ") for mode. Quitting.");
-                etherlib_init(arg);  // infura, binary, local
-                source = arg; // infura, binary, or local
+                etherlib_init(arg);
+                source = arg;
             } else {
                 if (start == NOPOS)
                     start = toUnsigned(arg);
@@ -61,7 +61,7 @@ bool COptions::parseArguments(SFString& command) {
     }
 
     if (source.empty())
-        return usage("You must provide a source of either 'infura' or 'binary'. Quitting...");
+        return usage("You must provide a source of either 'local', 'remote', or 'binary'. Quitting...");
     if (start == NOPOS || stop == NOPOS)
         return usage("Please provide both a start block and an end block. Quitting...");
     if (start >= stop)

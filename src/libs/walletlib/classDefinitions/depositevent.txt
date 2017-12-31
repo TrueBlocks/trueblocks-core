@@ -1,0 +1,6 @@
+[settings]
+class     = QDepositEvent
+baseClass = CLogEntry
+fields    = address from|uint256 value|
+includes  = logentry.h
+cIncs     = #include "etherlib.h"

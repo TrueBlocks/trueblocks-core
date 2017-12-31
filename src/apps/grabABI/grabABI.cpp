@@ -145,7 +145,7 @@ SFString acquireABI(CFunctionArray& functions, const SFAddress& addr, const COpt
 //-----------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
-    etherlib_init("binary");
+    etherlib_init();
 
     // We keep only a single slurper. If the user is using the --file option and they
     // are reading the same account repeatedly, we only need to read the cache once.
@@ -360,7 +360,7 @@ int main(int argc, const char *argv[]) {
             if (!options.isBuiltin())
                 headers += ("#include \"processing.h\"\n");
             SFString headerCode = SFString(STR_HEADERFILE).Substitute("[{HEADERS}]", headers);
-            SFString parseInit = "parselib_init(void)";
+            SFString parseInit = "parselib_init(QUITHANDLER qh=defaultQuitHandler)";
             if (!options.isBuiltin())
                 headerCode.ReplaceAll("[{PREFIX}]_init(void)", parseInit);
             headerCode.ReplaceAll("[{ADDR}]", options.primaryAddr.Substitute("0x", ""));
@@ -389,7 +389,7 @@ int main(int argc, const char *argv[]) {
             factory2.Replace("} else ", "");
 
             SFString sourceCode = asciiFileToString(templateFolder + "parselib/parselib.cpp");
-            parseInit = "parselib_init(void)";
+            parseInit = "parselib_init(QUITHANDLER qh)";
             if (!options.isBuiltin())
                 sourceCode.ReplaceAll("[{PREFIX}]_init(void)", parseInit);
             if (options.isToken()) {
@@ -638,7 +638,7 @@ const char* STR_CODE_SIGS =
 "\n";
 
 //-----------------------------------------------------------------------
-const char* STR_BLOCK_PATH = "etherlib_init(\"binary\");\n\n";
+const char* STR_BLOCK_PATH = "etherlib_init(qh);\n\n";
 
 //-----------------------------------------------------------------------
 const char* STR_ITEMS =

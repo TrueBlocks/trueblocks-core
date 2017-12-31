@@ -16,8 +16,8 @@ extern bool testUpgrade(COptions& options);
 extern void reportNode(CBaseNode *node);
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
-    // Tell the system where the blocks are and which version to use
-    etherlib_init("binary");
+
+    etherlib_init();
 
     CNewBlock::registerClass();
     CNewReceipt::registerClass();

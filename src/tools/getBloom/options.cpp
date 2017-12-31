@@ -75,7 +75,7 @@ bool COptions::parseArguments(SFString& command) {
                 isRaw = true;
 
             } else if (mode == "c" || mode == "cache") {
-                etherlib_init("binaryOnly");
+                isCache = true;
 
             } else {
                 return usage("Invalide source. Must be either '(r)aw' or '(c)ache'. Quitting...");
@@ -123,6 +123,7 @@ void COptions::Init(void) {
 
     isCheck    = false;
     isRaw      = false;
+    isCache    = false;
     force      = false;
     receipt    = false;
     quiet      = 0; // quiet has levels
