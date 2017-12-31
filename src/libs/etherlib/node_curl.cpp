@@ -129,6 +129,7 @@ namespace qblocks {
 
         getCurlContext()->callBackFunc = write_callback;
         getCurlContext()->setPostData(method, params);
+
         CURLcode res = curl_easy_perform(getCurl());
         if (res != CURLE_OK && !getCurlContext()->earlyAbort) {
             SFString currentSource = getCurlContext()->source;

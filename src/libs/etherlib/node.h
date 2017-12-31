@@ -23,6 +23,7 @@ namespace qblocks {
     extern bool     getBlock                (CBlock& block,       blknum_t blockNum);
     extern bool     getTransaction          (CTransaction& trans, blknum_t blockNum, txnum_t txID);
     extern bool     getReceipt              (CReceipt& receipt,   const SFHash& txHash);
+    extern bool     getLogEntry             (CLogEntry& log,      const SFHash& txHash);
     extern void     getTraces               (CTraceArray& traces, const SFHash& txHash);
 
     //-------------------------------------------------------------------------
@@ -72,8 +73,8 @@ namespace qblocks {
 
     //-------------------------------------------------------------------------
     extern SFString getJsonFilename         (uint64_t num);
-    extern SFString getBinaryFilename      (uint64_t num);
-    extern SFString getBinaryPath1          (uint64_t num);
+    extern SFString getBinaryFilename       (uint64_t num);
+    extern SFString getBinaryPath           (uint64_t num);
 
     //-------------------------------------------------------------------------
     // function pointer types for forEvery functions
