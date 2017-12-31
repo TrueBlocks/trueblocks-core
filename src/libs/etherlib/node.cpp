@@ -15,7 +15,8 @@ namespace qblocks {
 
         establishFolder(blockCachePath(""));
 
-        // In case we create any lock files, so they get cleaned up
+        // In case we create any lock files, so
+        // they get cleaned up
         if (theQuitHandler == NULL || qh != defaultQuitHandler) {
             // Set this once, unless it's non-default
             theQuitHandler = qh;
@@ -157,7 +158,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
 
         } else {
             uint64_t num = toLongU(datIn);
-            if (getCurlContext()->source == "binary" && fileSize(getBinaryFilename(num))>0) {
+            if (getCurlContext()->source == "binary" && fileSize(getBinaryFilename(num)) > 0) {
                 UNHIDE_FIELD(CTransaction, "receipt");
                 return readOneBlock_fromBinary(block, getBinaryFilename(num));
 
@@ -251,81 +252,6 @@ extern void registerQuitHandler(QUITHANDLER qh);
         return true;
     }
 
-    //-----------------------------------------------------------------------
-    bool readOneBlock_fromJson(CBlock& block, const SFString& fileName) {
-        if (!fileExists(fileName)) {
-            cerr << "File not found " << fileName << "\n";
-            return false;
-        }
-        block = CBlock(); // reset
-        SFString contents = asciiFileToString(fileName);
-        if (contents.Contains("null")) {
-            contents.ReplaceAll("null", "\"0x\"");
-            stringToAsciiFile(fileName, contents);
-        }
-        if (!contents.endsWith('\n')) {
-            stringToAsciiFile(fileName, contents+"\n");
-        }
-        char *p = cleanUpJson((char *)(const char*)contents);
-        uint32_t nFields=0;
-        block.parseJson(p,nFields);
-        return nFields;
-    }
-
-    //-----------------------------------------------------------------------
-    void writeToJson(const CBaseNode& node, const SFString& fileName) {
-        if (establishFolder(fileName)) {
-            std::ofstream out(fileName);
-            out << node.Format() << "\n";
-            out.close();
-        }
-    }
-
-    //-----------------------------------------------------------------------
-    bool readFromJson(CBaseNode& node, const SFString& fileName) {
-        return false;
-    };
-
-    //-----------------------------------------------------------------------
-    bool readOneBlock_fromBinary(CBlock& block, const SFString& fileName) {
-        block = CBlock(); // reset
-        SFArchive archive(READING_ARCHIVE);
-        if (archive.Lock(fileName, binaryReadOnly, LOCK_NOWAIT)) {
-            block.Serialize(archive);
-            archive.Close();
-            return block.blockNumber;
-        }
-        return false;
-    }
-
-    //-----------------------------------------------------------------------
-    bool writeToBinary(const CBaseNode& node, const SFString& fileName) {
-        SFString created;
-        if (establishFolder(fileName,created)) {
-            if (!created.empty() && !isTestMode())
-                cerr << "mkdir(" << created << ")" << SFString(' ',20) << "                                                     \n";
-            SFArchive archive(WRITING_ARCHIVE);
-            if (archive.Lock(fileName, binaryWriteCreate, LOCK_CREATE)) {
-                node.SerializeC(archive);
-                archive.Close();
-                return true;
-            }
-        }
-        return false;
-    }
-
-    //-----------------------------------------------------------------------
-    bool readFromBinary(CBaseNode& item, const SFString& fileName) {
-        // Assumes that the item is clear, so no Init
-        SFArchive archive(READING_ARCHIVE);
-        if (archive.Lock(fileName, binaryReadOnly, LOCK_NOWAIT)) {
-            item.Serialize(archive);
-            archive.Close();
-            return true;
-        }
-        return false;
-    }
-
     //-------------------------------------------------------------------------
     SFString getVersionFromClient(void) {
         return callRPC("web3_clientVersion", "[]", false);
@@ -416,6 +342,81 @@ extern void registerQuitHandler(QUITHANDLER qh);
         return true;
     }
 
+    //-----------------------------------------------------------------------
+    bool readOneBlock_fromJson(CBlock& block, const SFString& fileName) {
+        if (!fileExists(fileName)) {
+            cerr << "File not found " << fileName << "\n";
+            return false;
+        }
+        block = CBlock(); // reset
+        SFString contents = asciiFileToString(fileName);
+        if (contents.Contains("null")) {
+            contents.ReplaceAll("null", "\"0x\"");
+            stringToAsciiFile(fileName, contents);
+        }
+        if (!contents.endsWith('\n')) {
+            stringToAsciiFile(fileName, contents+"\n");
+        }
+        char *p = cleanUpJson((char *)(const char*)contents);
+        uint32_t nFields=0;
+        block.parseJson(p,nFields);
+        return nFields;
+    }
+
+    //-----------------------------------------------------------------------
+    void writeToJson(const CBaseNode& node, const SFString& fileName) {
+        if (establishFolder(fileName)) {
+            std::ofstream out(fileName);
+            out << node.Format() << "\n";
+            out.close();
+        }
+    }
+
+    //-----------------------------------------------------------------------
+    bool readFromJson(CBaseNode& node, const SFString& fileName) {
+        return false;
+    };
+
+    //-----------------------------------------------------------------------
+    bool readOneBlock_fromBinary(CBlock& block, const SFString& fileName) {
+        block = CBlock(); // reset
+        SFArchive archive(READING_ARCHIVE);
+        if (archive.Lock(fileName, binaryReadOnly, LOCK_NOWAIT)) {
+            block.Serialize(archive);
+            archive.Close();
+            return block.blockNumber;
+        }
+        return false;
+    }
+
+    //-----------------------------------------------------------------------
+    bool writeToBinary(const CBaseNode& node, const SFString& fileName) {
+        SFString created;
+        if (establishFolder(fileName,created)) {
+            if (!created.empty() && !isTestMode())
+                cerr << "mkdir(" << created << ")" << SFString(' ',20) << "                                                     \n";
+            SFArchive archive(WRITING_ARCHIVE);
+            if (archive.Lock(fileName, binaryWriteCreate, LOCK_CREATE)) {
+                node.SerializeC(archive);
+                archive.Close();
+                return true;
+            }
+        }
+        return false;
+    }
+
+    //-----------------------------------------------------------------------
+    bool readFromBinary(CBaseNode& item, const SFString& fileName) {
+        // Assumes that the item is clear, so no Init
+        SFArchive archive(READING_ARCHIVE);
+        if (archive.Lock(fileName, binaryReadOnly, LOCK_NOWAIT)) {
+            item.Serialize(archive);
+            archive.Close();
+            return true;
+        }
+        return false;
+    }
+
     //-------------------------------------------------------------------------
     static SFString getFilename_local(uint64_t numIn, bool asPath, bool asJson) {
 
@@ -465,7 +466,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
         return false;
     }
 
-   //-----------------------------------------------------------------------
+    //-----------------------------------------------------------------------
     bool writeBloomArray(const SFBloomArray& blooms, const SFString& fileName) {
         if (blooms.getCount() == 0 || (blooms.getCount() == 1 && blooms[0] == 0))
             return false;
@@ -664,8 +665,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
     }
 
     //-------------------------------------------------------------------------
-    bool forEveryTransactionInList(TRANSVISITFUNC func, void *data, const SFString& trans_list)
-    {
+    bool forEveryTransactionInList(TRANSVISITFUNC func, void *data, const SFString& trans_list) {
 
         if (!func)
             return false;
