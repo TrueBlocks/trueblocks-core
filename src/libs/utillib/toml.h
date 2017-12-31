@@ -13,7 +13,7 @@
 namespace qblocks {
 
     extern SFString cTeal, cOff;
-    #define cleanFmt(str) ((str).Substitute("\\n\\\n", "\\n").Substitute("\n", "").Substitute("\\n", "\r\n").Substitute("\\t", "\t"))
+    #define cleanFmt(str) ((str).Substitute("\\n\\\n", "\\n").Substitute("\n", "").Substitute("\\n", "\n").Substitute("\\t", "\t"))
     //-------------------------------------------------------------------------
     class CToml : public CSharedResource {
     private:

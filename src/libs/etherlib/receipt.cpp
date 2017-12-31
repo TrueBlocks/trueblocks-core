@@ -59,7 +59,7 @@ bool CReceipt::setValueByName(const SFString& fieldName, const SFString& fieldVa
         *((SFString*)&fieldValue) = asStringU(NO_STATUS);
     }
 
-    if (pTrans && fieldName != "logsBloom")
+    if (pTrans)
         if (((CTransaction*)pTrans)->setValueByName(fieldName, fieldValue))
             return true;
     // EXISTING_CODE
@@ -83,7 +83,6 @@ bool CReceipt::setValueByName(const SFString& fieldName, const SFString& fieldVa
                 }
                 return true;
             }
-            if ( fieldName % "logsBloom" ) { logsBloom = toBloom(fieldValue); return true; }
             break;
         case 's':
             if ( fieldName % "status" ) { status = toLong32u(fieldValue); return true; }
@@ -118,7 +117,6 @@ bool CReceipt::Serialize(SFArchive& archive) {
     archive >> contractAddress;
     archive >> gasUsed;
     archive >> logs;
-    archive >> logsBloom;
     archive >> status;
     finishParse();
     return true;
@@ -135,7 +133,6 @@ bool CReceipt::SerializeC(SFArchive& archive) const {
     archive << contractAddress;
     archive << gasUsed;
     archive << logs;
-    archive << logsBloom;
     archive << status;
 
     return true;
@@ -154,7 +151,6 @@ void CReceipt::registerClass(void) {
     ADD_FIELD(CReceipt, "contractAddress", T_ADDRESS, ++fieldNum);
     ADD_FIELD(CReceipt, "gasUsed", T_GAS, ++fieldNum);
     ADD_FIELD(CReceipt, "logs", T_OBJECT|TS_ARRAY, ++fieldNum);
-    ADD_FIELD(CReceipt, "logsBloom", T_BLOOM, ++fieldNum);
     ADD_FIELD(CReceipt, "status", T_NUMBER, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
@@ -211,17 +207,28 @@ bool CReceipt::readBackLevel(SFArchive& archive) {
     CBaseNode::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
+    SFBloom removed;
     if (m_schema < getVersionNum(0,2,0)) {
         archive >> contractAddress;
         archive >> gasUsed;
         archive >> logs;
-        archive >> logsBloom;
+        archive >> removed; // was logsBloom
         // The `status` field will be corrected in CBlock::finishParse() once we have a block
         // number. We set status here to NO_STATUS assuming pre-byzantium. After byzantium, we
         // have to pick up the value (0 or 1) from the node
         status = NO_STATUS;
         finishParse();
         done = true;
+
+    } else if (m_schema <= getVersionNum(0,3,0)) {
+        archive >> contractAddress;
+        archive >> gasUsed;
+        archive >> logs;
+        archive >> removed; // was logsBloom
+        archive >> status;
+        finishParse();
+        done = true;
+
     }
     // EXISTING_CODE
     return done;
@@ -268,7 +275,6 @@ SFString CReceipt::getValueByName(const SFString& fieldName) const {
                 }
                 return retS;
             }
-            if ( fieldName % "logsBloom" ) return fromBloom(logsBloom);
             break;
         case 's':
             if ( fieldName % "status" ) return asStringU(status);
@@ -298,9 +304,9 @@ ostream& operator<<(ostream& os, const CReceipt& item) {
 }
 
 //---------------------------------------------------------------------------
-const CBaseNode *CReceipt::getObjectAt(const SFString& name, uint32_t i) const {
-    if ( name % "logs" && i < logs.getCount() )
-        return &logs[i];
+const CBaseNode *CReceipt::getObjectAt(const SFString& fieldName, uint32_t index) const {
+    if ( fieldName % "logs" && index < logs.getCount() )
+        return &logs[index];
     return NULL;
 }
 

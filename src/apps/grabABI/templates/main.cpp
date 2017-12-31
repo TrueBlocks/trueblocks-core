@@ -6,24 +6,32 @@
  * The LICENSE at the root of this repo details your rights (if any)
  *------------------------------------------------------------------------*/
 #include <ncurses.h>
+#ifdef USE_BSD
+#include <bsd/stdlib.h>
+#endif
 #include "etherlib.h"
 #include "parselib.h"
 #include "processing.h"
 #include "debug.h"
 
 //EXISTING_CODE
+uint64_t getLatestBloomFromCache(void) {
+    uint64_t cache = 0, client = 0;
+    getLatestBlocks(cache, client, NULL);
+    return cache;
+}
 //EXISTING_CODE
 
 //-----------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
-    parselib_init();
-
-    registerQuitHandler(myQuitHandler);
+    parselib_init(myQuitHandler);
     if (argc < 2)
         verbose = true;
 
-    uint64_t topOfChain = getLatestBloomFromCache();
+    blknum_t clientHeight;
+    uint64_t cacheHeight;
+    getLatestBlocks(cacheHeight, clientHeight);
 
     // Parse command line, allowing for command files
     CVisitor visitor;
@@ -67,7 +75,7 @@ int main(int argc, const char *argv[]) {
                             "\tlast time it ran. Quit the already running program or, if it is not running, remove the lock\n"
                             "\tfile: " + cacheFileName + ".lck'. Quitting...")
                     .Substitute("\n", "\r\n");
-            cout.flush();cerr.flush();getchar();
+            cout.flush();cerr.flush();//getchar();
             return 0;
         }
 
@@ -110,15 +118,16 @@ int main(int argc, const char *argv[]) {
             visitor.checkForImport();
 
             uint64_t lastVisit  = toLongU(asciiFileToString("./cache/lastBlock.txt"));
-            blockNum = max(blockNum, lastVisit) + 1;
+            blockNum = max(blockNum, lastVisit + 1);
 
-            visitor.blockStats.lastBlock  = min(topOfChain, visitor.blockStats.maxWatchBlock);
-            visitor.blockStats.firstBlock = min(blockNum,   visitor.blockStats.lastBlock);
-            if (visitor.blockStats.firstBlock > visitor.blockStats.lastBlock)
-                visitor.blockStats.nBlocks    = 0;
-            else
-                visitor.blockStats.nBlocks    = visitor.blockStats.lastBlock - visitor.blockStats.firstBlock;
-            cerr << "Freshening " << visitor.opts.monitorName << "from " << visitor.blockStats.firstBlock << " to " << visitor.blockStats.lastBlock << " (" << visitor.blockStats.nBlocks << " blocks)\r\n";
+            visitor.blockStats.lastBlock  = min(cacheHeight, visitor.blockStats.maxWatchBlock);
+            visitor.blockStats.firstBlock = min(blockNum,    visitor.blockStats.lastBlock);
+            ASSERT(visitor.blockStats.firstBlock <= visitor.blockStats.lastBlock);
+            visitor.blockStats.nBlocks    = visitor.blockStats.lastBlock - visitor.blockStats.firstBlock;
+            cerr << "Freshening " << visitor.opts.monitorName
+                    << "from " << visitor.blockStats.firstBlock
+                    << " to " << visitor.blockStats.lastBlock
+                    << " inclusive (" << visitor.blockStats.nBlocks << " blocks)\r\n";
             cerr.flush();
 
             if (!upToDate) {  // we're not starting at the beginning
@@ -131,13 +140,15 @@ int main(int argc, const char *argv[]) {
             // close it here, so we can open it back up as append only
             visitor.cache.resetForWriting();
             if (visitor.cache.Lock(cacheFileName, "a+", LOCK_WAIT)) {
+//cout << "firstBlock: " << visitor.blockStats.firstBlock << " nBlocks: " << visitor.blockStats.nBlocks << "\n";
+//cout.flush();
                 forEveryBloomFile(updateCacheUsingBlooms, &visitor, visitor.blockStats.firstBlock, visitor.blockStats.nBlocks);
                 visitor.cache.Release();
             }
 
             if (visitor.transStats.nFreshened) {
                 SFTime dt = dateFromTimeStamp(visitor.blockStats.prevBlock.timestamp);
-                progressBar(visitor.blockStats.nBlocks, visitor.blockStats.nBlocks, visitor.opts.monitorName+"|"+dt.Format(FMT_JSON) + " (" + asStringU(topOfChain) + ")");
+                progressBar(visitor.blockStats.nBlocks, visitor.blockStats.nBlocks, visitor.opts.monitorName+"|"+dt.Format(FMT_JSON) + " (" + asStringU(cacheHeight) + ")");
                 cout << "\r\n";
             }
         }
@@ -162,7 +173,7 @@ int main(int argc, const char *argv[]) {
 
     if (visitor.opts.debugger_on) {
         CBlock block;
-        getBlock(block, topOfChain);
+        getBlock(block, cacheHeight);
         visitor.enterDebugger(block);
     }
 

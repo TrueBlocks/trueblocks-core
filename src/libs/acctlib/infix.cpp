@@ -94,6 +94,7 @@ bool CInfix::Serialize(SFArchive& archive) {
     CTreeNode::Serialize(archive);
 
     // EXISTING_CODE
+    next = NULL;
     bool has_next = false;
     archive >> has_next;
     if (has_next) {

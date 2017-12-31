@@ -127,10 +127,14 @@ namespace qblocks {
 
     //--------------------------------------------------------------------
     inline SFString padNum3T(uint64_t n) { return padLeft(asStringU((n)), 3); }
+    inline SFString padNum3T(uint32_t n) { return padLeft(asStringU((n)), 3); }
+    inline SFString padNum4T(uint64_t n) { return padLeft(asStringU((n)), 4); }
+    inline SFString padNum4T(uint32_t n) { return padLeft(asStringU((n)), 4); }
     inline SFString padNum5T(uint64_t n) { return padLeft(asStringU((n)), 5); }
     inline SFString padNum6T(uint64_t n) { return padLeft(asStringU((n)), 6); }
     inline SFString padNum7T(uint64_t n) { return padLeft(asStringU((n)), 7); }
     inline SFString padNum8T(uint64_t n) { return padLeft(asStringU((n)), 8); }
+    inline SFString padNum9T(uint64_t n) { return padLeft(asStringU((n)), 9); }
 
     //--------------------------------------------------------------------
     inline SFString padNum2 (int64_t n) { return padLeft(asString((n)), 2, '0'); }
@@ -233,6 +237,7 @@ namespace qblocks {
     typedef SFArrayBase<SFAddress> SFAddressArray;
 #define SFHash         SFString
 #define SFBloom        SFUintBN
+    typedef SFArrayBase<SFBloom> SFBloomArray;
 #define SFWei          SFUintBN
 #define SFGas          uint64_t
 #define blknum_t       uint64_t

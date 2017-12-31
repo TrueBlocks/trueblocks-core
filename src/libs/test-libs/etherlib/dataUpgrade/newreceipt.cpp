@@ -256,9 +256,9 @@ ostream& operator<<(ostream& os, const CNewReceipt& item) {
 }
 
 //---------------------------------------------------------------------------
-const CBaseNode *CNewReceipt::getObjectAt(const SFString& name, uint32_t i) const {
-    if ( name % "logs" && i < logs.getCount() )
-        return &logs[i];
+const CBaseNode *CNewReceipt::getObjectAt(const SFString& fieldName, uint32_t index) const {
+    if ( fieldName % "logs" && index < logs.getCount() )
+        return &logs[index];
     return NULL;
 }
 

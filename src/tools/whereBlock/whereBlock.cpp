@@ -10,10 +10,10 @@
 
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
-    // Tell the system where the blocks are and which version to use
-    etherlib_init("binary");
 
-    setNoTracing(true); // we never need to trace in this app
+    etherlib_init();
+
+    getCurlContext()->tracingOff(); // we never need to trace in this app
 
     // Parse command line, allowing for command files
     COptions options;
@@ -36,7 +36,7 @@ int main(int argc, const char *argv[]) {
         SFString list = options.getBlockNumList();
         while (!list.empty()) {
             blknum_t bn = toLongU(nextTokenClear(list, '|'));
-            CFilename fileName(getBinaryFilename1(bn));
+            CFilename fileName(getBinaryFilename(bn));
             bool exists = fileExists(fileName.getFullPath());
 
             if (options.alone) {
@@ -46,7 +46,7 @@ int main(int argc, const char *argv[]) {
 
             } else {
 
-                SFString path = (verbose ? fileName.getFullPath() : fileName.relativePath(getStorageRoot()));
+                SFString path = (verbose ? fileName.getFullPath() : fileName.relativePath(blockCachePath("")));
                 SFString vers = getVersionFromClient();
                 if (isTestMode() && verbose)
                     path = "--";

@@ -54,18 +54,32 @@ SFString removeField(const SFString& strIn, const SFString& field) {
 }
 
 //------------------------------------------------------------
+const SFString removes[] = {
+    // fields in RPC but not in QuickBlocks
+    "author", "condition", "creates", "difficulty", "extraData", "miner", "mixHash", "networkId", "chainId",
+    "nonce", "nonce", // NOT A DUP--IT NEEDS TO BE HERE BECAUSE THERE ARE TWO DIFFERENT NONCES
+    "publicKey", "r", "raw", "receiptsRoot", "s", "sealFields", "sha3Uncles", "size", "standardV", "stateRoot",
+    "totalDifficulty", "transactionsRoot", "uncles", "v", "logsBloom",
+    // fields in QuickBlocks but not in RPC
+    "contractAddress", "cumulativeGasUsed", "receipt", "address", "data", "logIndex", "topics", "price", "status",
+    // status must be last because we only use it after byzan
+};
+uint32_t nRemoved = sizeof(removes) / sizeof(SFString);
+
+//------------------------------------------------------------
+SFString hiddenFields(void) {
+    SFString ret = "Hidden fields:\n";
+    for (uint32_t i = 0 ; i < nRemoved ; i++) {
+        ret += removes[i];
+        if (i < nRemoved-1)
+            ret += ", ";
+    }
+    return ret + "\n\n";
+}
+
+//------------------------------------------------------------
 SFString cleanAll(const SFString& str, bool remove, bool isByzan) {
 
-    static const SFString removes[] = {
-        // fields in RPC but not in QuickBlocks
-        "author", "condition", "creates", "difficulty", "extraData", "miner", "mixHash", "networkId", "chainId",
-        "nonce", "nonce", // NOT A DUP--IT NEEDS TO BE HERE BECAUSE THERE ARE TWO DIFFERENT NONCES
-        "publicKey", "r", "raw", "receiptsRoot", "s", "sealFields", "sha3Uncles", "size", "standardV", "stateRoot",
-        "totalDifficulty", "transactionsRoot", "uncles", "v",
-        // fields in QuickBlocks but not in RPC
-        "contractAddress", "cumulativeGasUsed", "receipt", "address", "data", "logIndex", "topics", "status", // status must be last because we only use it after byzan
-    };
-    uint32_t nRemoved = sizeof(removes) / sizeof(SFString);
     if (!remove)
         nRemoved = 0;
     else if (isByzan)

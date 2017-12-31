@@ -139,6 +139,21 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------
+    inline SFString TIMER_IN(double& st) {
+        CStringExportContext ctx;
+        ctx << (qbNow()-st) << ": ";
+        st = qbNow();
+        return ctx.str;
+    }
+
+    //-------------------------------------------------------------------------
+    inline SFString TIMER_TICK(double st) {
+        CStringExportContext ctx;
+        ctx << "in " << cGreen << (qbNow()-st) << cOff << " seconds.";
+        return ctx.str;
+    }
+
+    //--------------------------------------------------------------------------
     bool CInMemoryCache::Load(blknum_t _start, blknum_t _count) {
 
         double startTime = qbNow();
@@ -300,8 +315,6 @@ namespace qblocks {
     bool forEveryFullBlockInMemory(BLOCKVISITFUNC func, void *data, blknum_t start, blknum_t count) {
 
         CInMemoryCache *cache = getTheCache();
-        if (getSource() != "mem")
-            return false;
         if (!cache->Load(start, count))
             return false;
 

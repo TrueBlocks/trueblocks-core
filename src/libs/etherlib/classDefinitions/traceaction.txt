@@ -1,0 +1,6 @@
+[settings]
+class     = CTraceAction
+fields    = string callType|address from|gas gas|string input|address to|wei value|address address|wei balance|address refundAddress
+includes  = abilib.h
+cIncs     = #include "trace.h"
+serialize = true

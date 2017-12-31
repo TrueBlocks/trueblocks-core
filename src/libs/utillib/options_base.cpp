@@ -579,11 +579,6 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
     }
 
     //-------------------------------------------------------------------------
-    namespace qbGlobals {
-        static SFString source;
-    }
-
-    //-------------------------------------------------------------------------
     bool isEnabled(uint32_t q) {
         return COptionsBase::enableBits & q;
     }
@@ -595,10 +590,6 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
     void optionOn (uint32_t q) {
         COptionsBase::enableBits |= q;
     }
-
-    //-------------------------------------------------------------------------
-    SFString getSource(void) { return qbGlobals::source; }
-    void     setSource(const SFString& src) { qbGlobals::source = src; }
 
     //--------------------------------------------------------------------------------
     int sortByBlockNum(const void *v1, const void *v2) {

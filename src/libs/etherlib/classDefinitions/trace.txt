@@ -1,0 +1,4 @@
+[settings]
+class     = CTrace
+fields    = hash blockHash|blknum blockNumber|uint64 subtraces|SFAddressArray traceAddress|hash transactionHash|uint64 transactionPosition|string type|string error|CTraceAction action|CTraceResult result
+includes  = abilib.h|traceaction.h|traceresult.h

@@ -87,5 +87,18 @@ namespace qblocks {
         uint64_t        count;
     };
 
+    //-------------------------------------------------------------------------
+    // function pointer types for forEvery functions
+    typedef bool (*MINIBLOCKVISITFUNC)(CMiniBlock& block, const CMiniTrans *trans, void *data);
+    typedef bool (*MINITRANSVISITFUNC)(CMiniTrans& trans, void *data);
+    typedef bool (*BLOCKVISITFUNC)(CBlock& block, void *data);
+    
+    //-------------------------------------------------------------------------
+    extern bool forEveryFullBlockInMemory    (BLOCKVISITFUNC     func, void *data, uint64_t start, uint64_t count);
+    extern bool forEveryMiniBlockInMemory    (MINIBLOCKVISITFUNC func, void *data, uint64_t start, uint64_t count);
+    extern bool forOnlyMiniBlocks            (MINIBLOCKVISITFUNC func, void *data, uint64_t start, uint64_t count);
+    extern bool forOnlyMiniTransactions      (MINITRANSVISITFUNC func, void *data, uint64_t start, uint64_t count);
+    extern void clearInMemoryCache           (void);
+
 }  // namespace qblocks
 

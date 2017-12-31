@@ -76,12 +76,11 @@ bool COptions::parseArguments(SFString& command) {
                 isRaw = true;
 
             } else if (mode == "c" || mode == "cache") {
-                etherlib_init("binaryOnly");
                 latestBlock = getLatestBlockFromClient();
-                asks4Cache = true;
+                isCache = true;
 
             } else if (mode == "r" || mode == "remote") {
-                etherlib_init("infura");
+                etherlib_init("remote");
                 latestBlock = getLatestBlockFromClient();
 
             } else {
@@ -194,7 +193,7 @@ void COptions::Init(void) {
     terse       = false;
     force       = false;
     normalize   = false;
-    asks4Cache  = false;
+    isCache     = false;
     quiet       = 0; // quiet has levels
     format      = "";
     priceBlocks = false;

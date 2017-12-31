@@ -128,3 +128,4 @@ extern SFString asDollars(timestamp_t ts, SFUintBN weiIn);
 extern SFString dispDollars(timestamp_t ts, SFUintBN weiIn);
 // EXISTING_CODE
 }  // namespace qblocks
+

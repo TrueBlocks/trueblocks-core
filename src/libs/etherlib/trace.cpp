@@ -302,10 +302,10 @@ ostream& operator<<(ostream& os, const CTrace& item) {
 }
 
 //---------------------------------------------------------------------------
-const CBaseNode *CTrace::getObjectAt(const SFString& name, uint32_t i) const {
-    if ( name % "action" )
+const CBaseNode *CTrace::getObjectAt(const SFString& fieldName, uint32_t index) const {
+    if ( fieldName % "action" )
         return &action;
-    if ( name % "result" )
+    if ( fieldName % "result" )
         return &result;
     return NULL;
 }
