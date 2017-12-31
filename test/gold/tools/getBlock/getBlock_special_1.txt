@@ -8,6 +8,7 @@ getBlock stateclear
     "parentHash": "0xe58fe2892b76e7b536b10bc3adcf6a30d463d6624f270eee223df8e83feb057c",
     "miner": "0xc0ea08a2d404d3172d2add29a45be56da40e2949",
     "difficulty": 70225364656452,
+    "price": 0,
     "timestamp": 1480460845,
     "transactions": [
         {

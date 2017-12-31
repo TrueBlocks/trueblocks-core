@@ -8,6 +8,7 @@ whenBlock homestead -v
   "parentHash": "0xaf674ef208df140303da41ba04be5a8689a7d842b548035872c09a8a1c258658",
   "miner": "0x2a65aca4d5fc5b5c859090a6c34d164135398226",
   "difficulty": 20473100089179,
+  "price": 0,
   "timestamp": 1457981393,
   "transactions": [
     {

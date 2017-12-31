@@ -89,6 +89,7 @@ bool CNewBlock::setValueByName(const SFString& fieldName, const SFString& fieldV
             break;
         case 'p':
             if ( fieldName % "parentHash" ) { parentHash = toHash(fieldValue); return true; }
+            if ( fieldName % "price" ) { price = toDouble(fieldValue); return true; }
             break;
         case 't':
             if ( fieldName % "timestamp" ) { timestamp = toTimestamp(fieldValue); return true; }
@@ -137,6 +138,7 @@ bool CNewBlock::Serialize(SFArchive& archive) {
     archive >> parentHash;
     archive >> miner;
     archive >> difficulty;
+    archive >> price;
     archive >> timestamp;
     archive >> transactions;
     finishParse();
@@ -159,6 +161,7 @@ bool CNewBlock::SerializeC(SFArchive& archive) const {
     archive << parentHash;
     archive << miner;
     archive << difficulty;
+    archive << price;
     archive << timestamp;
     archive << transactions;
 
@@ -182,6 +185,7 @@ void CNewBlock::registerClass(void) {
     ADD_FIELD(CNewBlock, "parentHash", T_HASH, ++fieldNum);
     ADD_FIELD(CNewBlock, "miner", T_ADDRESS, ++fieldNum);
     ADD_FIELD(CNewBlock, "difficulty", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CNewBlock, "price", T_DOUBLE, ++fieldNum);
     ADD_FIELD(CNewBlock, "timestamp", T_TIMESTAMP, ++fieldNum);
     ADD_FIELD(CNewBlock, "transactions", T_OBJECT|TS_ARRAY, ++fieldNum);
 
@@ -243,18 +247,25 @@ bool CNewBlock::readBackLevel(SFArchive& archive) {
     CBaseNode::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
+    SFBloom removed;
     if (m_schema < 502) {
         archive >> gasLimit;
         archive >> gasUsed;
         archive >> hash;
-        SFBloom removed;
-        archive >> removed;
+        archive >> removed; // used to be logsBloom
         archive >> blockNumber;
         archive >> parentHash;
         archive >> timestamp;
         archive >> transactions;
-        difficulty = 0x0;
-        miner = "0x0";
+        // TODO -- technically we should re-read these values from the node
+        SFString save = getCurlContext()->source;
+        getCurlContext()->source = "local";
+        CBlock upgrade;uint32_t unused;
+        queryBlock(upgrade, asStringU(blockNumber), false, false, unused);
+        getCurlContext()->source = save;
+        miner = upgrade.miner;
+        difficulty = upgrade.difficulty;
+        price = 0.0;
         finishParse();
         done = true;
     }
@@ -302,6 +313,7 @@ SFString CNewBlock::getValueByName(const SFString& fieldName) const {
             break;
         case 'p':
             if ( fieldName % "parentHash" ) return fromHash(parentHash);
+            if ( fieldName % "price" ) return fmtFloat(price);
             break;
         case 't':
             if ( fieldName % "timestamp" ) return fromTimestamp(timestamp);

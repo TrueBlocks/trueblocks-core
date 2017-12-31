@@ -32,6 +32,7 @@ public:
     SFHash parentHash;
     SFAddress miner;
     uint64_t difficulty;
+    double price;
     timestamp_t timestamp;
     CTransactionArray transactions;
 
@@ -101,6 +102,7 @@ inline void CNewBlock::Init(void) {
     parentHash = "";
     miner = "";
     difficulty = 0;
+    price = 0.0;
     timestamp = 0;
     transactions.Clear();
 
@@ -120,6 +122,7 @@ inline void CNewBlock::Copy(const CNewBlock& ne) {
     parentHash = ne.parentHash;
     miner = ne.miner;
     difficulty = ne.difficulty;
+    price = ne.price;
     timestamp = ne.timestamp;
     transactions = ne.transactions;
 

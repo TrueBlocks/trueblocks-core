@@ -281,8 +281,13 @@ bool CBlock::readBackLevel(SFArchive& archive) {
         archive >> timestamp;
         archive >> transactions;
         // TODO -- technically we should re-read these values from the node
-        miner = "0x0";
-        difficulty = 0;
+        SFString save = getCurlContext()->source;
+        getCurlContext()->source = "local";
+        CBlock upgrade;uint32_t unused;
+        queryBlock(upgrade, asStringU(blockNumber), false, false, unused);
+        getCurlContext()->source = save;
+        miner = upgrade.miner;
+        difficulty = upgrade.difficulty;
         price = 0.0;
         finishParse();
         done = true;
