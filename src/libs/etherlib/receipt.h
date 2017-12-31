@@ -32,7 +32,6 @@ public:
     SFAddress contractAddress;
     SFGas gasUsed;
     CLogEntryArray logs;
-    SFBloom logsBloom;
     uint32_t status;
 
 public:
@@ -108,7 +107,6 @@ inline void CReceipt::Init(void) {
     contractAddress = "";
     gasUsed = 0;
     logs.Clear();
-    logsBloom = 0;
     status = NO_STATUS;
 
     // EXISTING_CODE
@@ -134,7 +132,6 @@ inline void CReceipt::Copy(const CReceipt& re) {
     contractAddress = re.contractAddress;
     gasUsed = re.gasUsed;
     logs = re.logs;
-    logsBloom = re.logsBloom;
     status = re.status;
 
     // EXISTING_CODE

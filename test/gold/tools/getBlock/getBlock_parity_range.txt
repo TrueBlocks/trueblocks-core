@@ -1,10 +1,11 @@
 getBlock argc: 3 [1:--parity] [2:358450-0x5785a] 
 getBlock --parity 358450-0x5785a 
 [{
+    "difficulty": "0x5a5753781c6",
     "gasLimit": "0x2fefd8",
     "gasUsed": "0x19a28",
     "hash": "0x6531ec576f15ff4ac5b36643ad333c88e057d923e98edb9d2df9c26948d8cda1",
-    "logsBloom": "0x0",
+    "miner": "0x1dcb8d1f0fcc8cbc8c2d76528e877f915e299fbe",
     "number": "0x57832",
     "parentHash": "0xbe6a6533c602bbf5a537e7ed009c07dc7f7de7639f08e08d97ad529f2c0b31fe",
     "timestamp": "0x5617f9de",
@@ -22,7 +23,6 @@ getBlock --parity 358450-0x5785a
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0xc47aaa860008be6f65b58c6c6e02a84e666efe31",
@@ -42,7 +42,6 @@ getBlock --parity 358450-0x5785a
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0xc47aaa860008be6f65b58c6c6e02a84e666efe31",
@@ -62,7 +61,6 @@ getBlock --parity 358450-0x5785a
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0xc47aaa860008be6f65b58c6c6e02a84e666efe31",
@@ -82,7 +80,6 @@ getBlock --parity 358450-0x5785a
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0xb1abce2918e21ddb93aa452731a12672a3d9f75a",
@@ -102,7 +99,6 @@ getBlock --parity 358450-0x5785a
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0x7c5080988c6d91d090c23d54740f856c69450b29",
@@ -112,10 +108,11 @@ getBlock --parity 358450-0x5785a
     ]
 },
 {
+    "difficulty": "0x5a4c088dad8",
     "gasLimit": "0x2fefd8",
     "gasUsed": "0x5208",
     "hash": "0x9b1d126da7114ae0acde547d73a1cde0a2967cf780394d225ee4f26f0f4d3ce4",
-    "logsBloom": "0x0",
+    "miner": "0x4bb96091ee9d802ed039c4d1a5f6216f90f81b01",
     "number": "0x57833",
     "parentHash": "0x6531ec576f15ff4ac5b36643ad333c88e057d923e98edb9d2df9c26948d8cda1",
     "timestamp": "0x5617f9f1",
@@ -133,7 +130,6 @@ getBlock --parity 358450-0x5785a
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0x2b5c412bce54d17cc805f928e1dff4a42ff370c7",
@@ -143,20 +139,22 @@ getBlock --parity 358450-0x5785a
     ]
 },
 {
+    "difficulty": "0x5a40bf0c9bf",
     "gasLimit": "0x2fefd8",
     "gasUsed": "0x0",
     "hash": "0x7d077aa901df0b73b81dbf9412bbb173ad6f3ef0e047a070efa1f986ba733b08",
-    "logsBloom": "0x0",
+    "miner": "0xf927a40c8b7f6e07c5af7fa2155b4864a4112b13",
     "number": "0x57834",
     "parentHash": "0x9b1d126da7114ae0acde547d73a1cde0a2967cf780394d225ee4f26f0f4d3ce4",
     "timestamp": "0x5617f9fe",
     "transactions": []
 },
 {
+    "difficulty": "0x5a3576f4ba8",
     "gasLimit": "0x2fefd8",
     "gasUsed": "0x5208",
     "hash": "0x5cfddc32969cd153a5cc4770a4267db0c51e2f845e6324935c4c03c4232041b4",
-    "logsBloom": "0x0",
+    "miner": "0x1dcb8d1f0fcc8cbc8c2d76528e877f915e299fbe",
     "number": "0x57835",
     "parentHash": "0x7d077aa901df0b73b81dbf9412bbb173ad6f3ef0e047a070efa1f986ba733b08",
     "timestamp": "0x5617fa0d",
@@ -174,7 +172,6 @@ getBlock --parity 358450-0x5785a
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0xfffbca3a38c3c5fcb3adbb8e63c04c3e629aafce",
@@ -184,20 +181,22 @@ getBlock --parity 358450-0x5785a
     ]
 },
 {
+    "difficulty": "0x5a40bda3993",
     "gasLimit": "0x2fefd8",
     "gasUsed": "0x0",
     "hash": "0x1f94febfedd52c7e96d8bc336b45485d1946cd8ed75a2b56ac769be25a69373b",
-    "logsBloom": "0x0",
+    "miner": "0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5",
     "number": "0x57836",
     "parentHash": "0x5cfddc32969cd153a5cc4770a4267db0c51e2f845e6324935c4c03c4232041b4",
     "timestamp": "0x5617fa10",
     "transactions": []
 },
 {
+    "difficulty": "0x5a4c05bb4dc",
     "gasLimit": "0x2fefd8",
     "gasUsed": "0x5208",
     "hash": "0x54d9b33954a832da1c5d5dfa863983bed661297644960eadb8d71c0f7fc30236",
-    "logsBloom": "0x0",
+    "miner": "0x2a65aca4d5fc5b5c859090a6c34d164135398226",
     "number": "0x57837",
     "parentHash": "0x1f94febfedd52c7e96d8bc336b45485d1946cd8ed75a2b56ac769be25a69373b",
     "timestamp": "0x5617fa1a",
@@ -215,7 +214,6 @@ getBlock --parity 358450-0x5785a
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0x362db1e4830bf2c401d7f9f45034f5e6e1c46a0b",
@@ -225,10 +223,11 @@ getBlock --parity 358450-0x5785a
     ]
 },
 {
+    "difficulty": "0x5a40bc3a968",
     "gasLimit": "0x2fefd8",
     "gasUsed": "0x5208",
     "hash": "0x072d01a6debc9e95fbfb347c8bafee3490d91a4faadfced04e4a35cb66b1982f",
-    "logsBloom": "0x0",
+    "miner": "0x2a65aca4d5fc5b5c859090a6c34d164135398226",
     "number": "0x57838",
     "parentHash": "0x54d9b33954a832da1c5d5dfa863983bed661297644960eadb8d71c0f7fc30236",
     "timestamp": "0x5617fa2e",
@@ -246,7 +245,6 @@ getBlock --parity 358450-0x5785a
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0x7c5080988c6d91d090c23d54740f856c69450b29",
@@ -256,10 +254,11 @@ getBlock --parity 358450-0x5785a
     ]
 },
 {
+    "difficulty": "0x5a3574230f5",
     "gasLimit": "0x2fefd8",
     "gasUsed": "0x2e248",
     "hash": "0xbb2e0d2ba9d2205f01bce949928f7b5d7711a66861225dabd99da3b78d379b7e",
-    "logsBloom": "0x0",
+    "miner": "0xe48430c4e88a929bba0ee3dce284866a9937b609",
     "number": "0x57839",
     "parentHash": "0x072d01a6debc9e95fbfb347c8bafee3490d91a4faadfced04e4a35cb66b1982f",
     "timestamp": "0x5617fa5a",
@@ -277,7 +276,6 @@ getBlock --parity 358450-0x5785a
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0x32be343b94f860124dc4fee278fdcbd38c102d88",
@@ -297,7 +295,6 @@ getBlock --parity 358450-0x5785a
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0xc8fea4ab769162f6f7eafb8c2bd49734a03c60ef",
@@ -317,7 +314,6 @@ getBlock --parity 358450-0x5785a
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0x32be343b94f860124dc4fee278fdcbd38c102d88",
@@ -337,7 +333,6 @@ getBlock --parity 358450-0x5785a
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0x32be343b94f860124dc4fee278fdcbd38c102d88",
@@ -357,7 +352,6 @@ getBlock --parity 358450-0x5785a
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0x54cec426307c1acaa63b25aa48fade5df9e5d418",
@@ -377,7 +371,6 @@ getBlock --parity 358450-0x5785a
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0x32be343b94f860124dc4fee278fdcbd38c102d88",
@@ -397,7 +390,6 @@ getBlock --parity 358450-0x5785a
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0x32be343b94f860124dc4fee278fdcbd38c102d88",
@@ -417,7 +409,6 @@ getBlock --parity 358450-0x5785a
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0xe9b9a8b234ffa8a31cec82b4071ad017bbe73e5d",
@@ -437,7 +428,6 @@ getBlock --parity 358450-0x5785a
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0x32be343b94f860124dc4fee278fdcbd38c102d88",
@@ -447,10 +437,11 @@ getBlock --parity 358450-0x5785a
     ]
 },
 {
+    "difficulty": "0x5a2a2d748b1",
     "gasLimit": "0x2fefd8",
     "gasUsed": "0xa410",
     "hash": "0x3225c85b6dde1736df295bbb6224938b2b3882afc6298b6338c248aa28f562c9",
-    "logsBloom": "0x0",
+    "miner": "0xa6f403a34838d4bfba8d03281248ae3b4e8432d6",
     "number": "0x5783a",
     "parentHash": "0xbb2e0d2ba9d2205f01bce949928f7b5d7711a66861225dabd99da3b78d379b7e",
     "timestamp": "0x5617fa6f",
@@ -468,7 +459,6 @@ getBlock --parity 358450-0x5785a
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0xcb8a03674aa31c84ac3cb372cd960e79d61b1725",
@@ -488,7 +478,6 @@ getBlock --parity 358450-0x5785a
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0xfc32cdcfc3ac1c189bc06467a35f603e64b29a6c",
@@ -498,30 +487,33 @@ getBlock --parity 358450-0x5785a
     ]
 },
 {
+    "difficulty": "0x5a3572ba39c",
     "gasLimit": "0x2fefd8",
     "gasUsed": "0x0",
     "hash": "0xe3dfb69a85a752183259da3d0b0d915461432af702c97a2bccdbed65c40f9627",
-    "logsBloom": "0x0",
+    "miner": "0xe8f3b0ad85889a12b3d59d0b2dc257b08793e9f8",
     "number": "0x5783b",
     "parentHash": "0x3225c85b6dde1736df295bbb6224938b2b3882afc6298b6338c248aa28f562c9",
     "timestamp": "0x5617fa77",
     "transactions": []
 },
 {
+    "difficulty": "0x5a40b968912",
     "gasLimit": "0x2fefd8",
     "gasUsed": "0x0",
     "hash": "0x54fdd3dbd8b3e7726662bfe8d26f92eaa7b0f3bcf00111040f4a9e125664f21e",
-    "logsBloom": "0x0",
+    "miner": "0x4bb96091ee9d802ed039c4d1a5f6216f90f81b01",
     "number": "0x5783c",
     "parentHash": "0xe3dfb69a85a752183259da3d0b0d915461432af702c97a2bccdbed65c40f9627",
     "timestamp": "0x5617fa81",
     "transactions": []
 },
 {
+    "difficulty": "0x5a357151643",
     "gasLimit": "0x2fefd8",
     "gasUsed": "0xf618",
     "hash": "0x4c33f03d5b79dc77a18441798a70dd7849f514f159e427a199ad179ed8aa2aaf",
-    "logsBloom": "0x0",
+    "miner": "0xf8b483dba2c3b7176a3da549ad41a48bb3121069",
     "number": "0x5783d",
     "parentHash": "0x54fdd3dbd8b3e7726662bfe8d26f92eaa7b0f3bcf00111040f4a9e125664f21e",
     "timestamp": "0x5617faa3",
@@ -539,7 +531,6 @@ getBlock --parity 358450-0x5785a
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0x605c4282130e22ae43d0e95728788988fa800894",
@@ -559,7 +550,6 @@ getBlock --parity 358450-0x5785a
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0xd6463b514443dc308ca70d69dda2b13f494ef882",
@@ -579,7 +569,6 @@ getBlock --parity 358450-0x5785a
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0xa50ec0d39fa913e62f1bae7074e6f36caa71855b",
@@ -589,10 +578,11 @@ getBlock --parity 358450-0x5785a
     ]
 },
 {
+    "difficulty": "0x5a2a2aa33a3",
     "gasLimit": "0x2fefd8",
     "gasUsed": "0x5208",
     "hash": "0x0a429ba4341318d4b99d46efd7bb3ada750208fcd816316d08bea15e54e5d34c",
-    "logsBloom": "0x0",
+    "miner": "0xf927a40c8b7f6e07c5af7fa2155b4864a4112b13",
     "number": "0x5783e",
     "parentHash": "0x4c33f03d5b79dc77a18441798a70dd7849f514f159e427a199ad179ed8aa2aaf",
     "timestamp": "0x5617fabb",
@@ -610,7 +600,6 @@ getBlock --parity 358450-0x5785a
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98",
@@ -620,10 +609,11 @@ getBlock --parity 358450-0x5785a
     ]
 },
 {
+    "difficulty": "0x5a1ee55de5f",
     "gasLimit": "0x2fefd8",
     "gasUsed": "0xf618",
     "hash": "0x9ac38e4f18730b1042280660c2eb11dbbf58b78ae1ab808cac5359ec17abdc16",
-    "logsBloom": "0x0",
+    "miner": "0xf8b483dba2c3b7176a3da549ad41a48bb3121069",
     "number": "0x5783f",
     "parentHash": "0x0a429ba4341318d4b99d46efd7bb3ada750208fcd816316d08bea15e54e5d34c",
     "timestamp": "0x5617facf",
@@ -641,7 +631,6 @@ getBlock --parity 358450-0x5785a
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0xa36c32dc26de774ee6876c8ed04aa519f10fdf94",
@@ -661,7 +650,6 @@ getBlock --parity 358450-0x5785a
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0xc47aaa860008be6f65b58c6c6e02a84e666efe31",
@@ -681,7 +669,6 @@ getBlock --parity 358450-0x5785a
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0xc47aaa860008be6f65b58c6c6e02a84e666efe31",
@@ -691,10 +678,11 @@ getBlock --parity 358450-0x5785a
     ]
 },
 {
+    "difficulty": "0x5a13a1813a6",
     "gasLimit": "0x2fefd8",
     "gasUsed": "0x5208",
     "hash": "0x8a171f322c4968c10992960d16254554cb7c338bbc45578417830f12382e0276",
-    "logsBloom": "0x0",
+    "miner": "0x580992b51e3925e23280efb93d3047c82f17e038",
     "number": "0x57840",
     "parentHash": "0x9ac38e4f18730b1042280660c2eb11dbbf58b78ae1ab808cac5359ec17abdc16",
     "timestamp": "0x5617fae8",
@@ -712,7 +700,6 @@ getBlock --parity 358450-0x5785a
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0x00a6e86fb108f769c349cbccd6bd8f43096570a2",
@@ -722,30 +709,33 @@ getBlock --parity 358450-0x5785a
     ]
 },
 {
+    "difficulty": "0x5a1ee3f56aa",
     "gasLimit": "0x2fefd8",
     "gasUsed": "0x0",
     "hash": "0x3769689a077f0d918a211cc554485115424e4f1c427cf5dab55b69c89403ad20",
-    "logsBloom": "0x0",
+    "miner": "0x1dcb8d1f0fcc8cbc8c2d76528e877f915e299fbe",
     "number": "0x57841",
     "parentHash": "0x8a171f322c4968c10992960d16254554cb7c338bbc45578417830f12382e0276",
     "timestamp": "0x5617faec",
     "transactions": []
 },
 {
+    "difficulty": "0x5a2a27d1e96",
     "gasLimit": "0x2fefd8",
     "gasUsed": "0x0",
     "hash": "0x6549aa784d0398cf2085af909d65e9be25df7102715fb4425039f224fc72cbfa",
-    "logsBloom": "0x0",
+    "miner": "0x1dcb8d1f0fcc8cbc8c2d76528e877f915e299fbe",
     "number": "0x57842",
     "parentHash": "0x3769689a077f0d918a211cc554485115424e4f1c427cf5dab55b69c89403ad20",
     "timestamp": "0x5617faf8",
     "transactions": []
 },
 {
+    "difficulty": "0x5a356d16e3b",
     "gasLimit": "0x2fefd8",
     "gasUsed": "0x5208",
     "hash": "0x12f7cfae85694bcdc1483881ef4f459a387a2d89738d323d614d83366534bcb3",
-    "logsBloom": "0x0",
+    "miner": "0x2134e2a2b718dca96580ecac31e653ea1fdd58da",
     "number": "0x57843",
     "parentHash": "0x6549aa784d0398cf2085af909d65e9be25df7102715fb4425039f224fc72cbfa",
     "timestamp": "0x5617fafa",
@@ -763,7 +753,6 @@ getBlock --parity 358450-0x5785a
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0x61e20833179ba2eccc2065e5f733cc8cda7394c0",
@@ -773,10 +762,11 @@ getBlock --parity 358450-0x5785a
     ]
 },
 {
+    "difficulty": "0x5a2a2669410",
     "gasLimit": "0x2fefd8",
     "gasUsed": "0x5208",
     "hash": "0x5ed695a339d5856ff9b5c5e1816dd340d0121e48cb084a090149adad6cb750e5",
-    "logsBloom": "0x0",
+    "miner": "0x4bb96091ee9d802ed039c4d1a5f6216f90f81b01",
     "number": "0x57844",
     "parentHash": "0x12f7cfae85694bcdc1483881ef4f459a387a2d89738d323d614d83366534bcb3",
     "timestamp": "0x5617fb2d",
@@ -794,7 +784,6 @@ getBlock --parity 358450-0x5785a
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0x7c5080988c6d91d090c23d54740f856c69450b29",
@@ -804,10 +793,11 @@ getBlock --parity 358450-0x5785a
     ]
 },
 {
+    "difficulty": "0x5a1ee124740",
     "gasLimit": "0x2fefd8",
     "gasUsed": "0xa410",
     "hash": "0x9aa3544900f4361be65c92499c609ffa5ca2309d62354256dc36c8a54989d113",
-    "logsBloom": "0x0",
+    "miner": "0x9d551f41fed6fc27b719777c224dfecce170004d",
     "number": "0x57845",
     "parentHash": "0x5ed695a339d5856ff9b5c5e1816dd340d0121e48cb084a090149adad6cb750e5",
     "timestamp": "0x5617fb3b",
@@ -825,7 +815,6 @@ getBlock --parity 358450-0x5785a
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0x32be343b94f860124dc4fee278fdcbd38c102d88",
@@ -845,7 +834,6 @@ getBlock --parity 358450-0x5785a
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0xaa656e51565979f6893797a72fcd06716a15eab8",
@@ -855,20 +843,22 @@ getBlock --parity 358450-0x5785a
     ]
 },
 {
+    "difficulty": "0x5a2a250098a",
     "gasLimit": "0x2fefd8",
     "gasUsed": "0x0",
     "hash": "0xfc2fd216a2a8fc8bdbb41d4f8127c91c9b555ab1f3b1319c3e8dfd43b22c1597",
-    "logsBloom": "0x0",
+    "miner": "0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5",
     "number": "0x57846",
     "parentHash": "0x9aa3544900f4361be65c92499c609ffa5ca2309d62354256dc36c8a54989d113",
     "timestamp": "0x5617fb44",
     "transactions": []
 },
 {
+    "difficulty": "0x5a356a4538d",
     "gasLimit": "0x2fefd8",
     "gasUsed": "0xa410",
     "hash": "0x2f359cd259322814efa861621fd51501f61b5ee2d10ffe4b961763f7e9920361",
-    "logsBloom": "0x0",
+    "miner": "0xe409d18384025b84ce2f77e21db73aade4c3cf67",
     "number": "0x57847",
     "parentHash": "0xfc2fd216a2a8fc8bdbb41d4f8127c91c9b555ab1f3b1319c3e8dfd43b22c1597",
     "timestamp": "0x5617fb50",
@@ -886,7 +876,6 @@ getBlock --parity 358450-0x5785a
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0x004b878a2bf81783569e92c9769d9528d3641d5f",
@@ -906,7 +895,6 @@ getBlock --parity 358450-0x5785a
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0x54cec426307c1acaa63b25aa48fade5df9e5d418",
@@ -916,10 +904,11 @@ getBlock --parity 358450-0x5785a
     ]
 },
 {
+    "difficulty": "0x5a2a2397f05",
     "gasLimit": "0x2fefd8",
     "gasUsed": "0x5208",
     "hash": "0x4de30bc47cb9282c30bb69dc6535a66d4325418f7a86467f78909a00a307b762",
-    "logsBloom": "0x0",
+    "miner": "0x623d2411c3bb3340784155f9a688b0085251ab5c",
     "number": "0x57848",
     "parentHash": "0x2f359cd259322814efa861621fd51501f61b5ee2d10ffe4b961763f7e9920361",
     "timestamp": "0x5617fb92",
@@ -937,7 +926,6 @@ getBlock --parity 358450-0x5785a
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0x6a8cc233e14f874983bb2f37d1de706f6910ef0b",
@@ -947,30 +935,33 @@ getBlock --parity 358450-0x5785a
     ]
 },
 {
+    "difficulty": "0x5a3568dc636",
     "gasLimit": "0x2fefd8",
     "gasUsed": "0x0",
     "hash": "0x85afb48ee5c7f2e885f92e53d4071b870f99b46133db5cf1c450fbbc1d3bc738",
-    "logsBloom": "0x0",
+    "miner": "0xf927a40c8b7f6e07c5af7fa2155b4864a4112b13",
     "number": "0x57849",
     "parentHash": "0x4de30bc47cb9282c30bb69dc6535a66d4325418f7a86467f78909a00a307b762",
     "timestamp": "0x5617fb9c",
     "transactions": []
 },
 {
+    "difficulty": "0x5a2a222f480",
     "gasLimit": "0x2fefd8",
     "gasUsed": "0x0",
     "hash": "0xd1835ff03a5bb638f7d606093d70362a4435b2ddf4b6f77f061d2277c498850a",
-    "logsBloom": "0x0",
+    "miner": "0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5",
     "number": "0x5784a",
     "parentHash": "0x85afb48ee5c7f2e885f92e53d4071b870f99b46133db5cf1c450fbbc1d3bc738",
     "timestamp": "0x5617fbc0",
     "transactions": []
 },
 {
+    "difficulty": "0x5a1edceb024",
     "gasLimit": "0x2fefd8",
     "gasUsed": "0xf618",
     "hash": "0xd90737f452530c9c165a5f1c99631cbf2cb2ccb461556b50dca6e059d582144c",
-    "logsBloom": "0x0",
+    "miner": "0x1dcb8d1f0fcc8cbc8c2d76528e877f915e299fbe",
     "number": "0x5784b",
     "parentHash": "0xd1835ff03a5bb638f7d606093d70362a4435b2ddf4b6f77f061d2277c498850a",
     "timestamp": "0x5617fbd5",
@@ -988,7 +979,6 @@ getBlock --parity 358450-0x5785a
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0x1d0991db028630c0f7b49edad406665fe45e1821",
@@ -1008,7 +998,6 @@ getBlock --parity 358450-0x5785a
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0x7cb73d69f6e24e9e0ae812f2c036058415893644",
@@ -1028,7 +1017,6 @@ getBlock --parity 358450-0x5785a
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0x98f2c2754c77b49993eea4dcd2d9aba71b696b60",
@@ -1038,10 +1026,11 @@ getBlock --parity 358450-0x5785a
     ]
 },
 {
+    "difficulty": "0x5a2a20c69fc",
     "gasLimit": "0x2fefd8",
     "gasUsed": "0x47c70",
     "hash": "0x3ca475da20d1ac9533582647eda199a9db9ea655f3ffda1f5fb58f454a293196",
-    "logsBloom": "0x0",
+    "miner": "0x1dcb8d1f0fcc8cbc8c2d76528e877f915e299fbe",
     "number": "0x5784c",
     "parentHash": "0xd90737f452530c9c165a5f1c99631cbf2cb2ccb461556b50dca6e059d582144c",
     "timestamp": "0x5617fbd8",
@@ -1059,7 +1048,6 @@ getBlock --parity 358450-0x5785a
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0xd4d979b6c0c797d4d5dc80baaa0972dc413bd533",
@@ -1079,7 +1067,6 @@ getBlock --parity 358450-0x5785a
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0x716d4adb710b0d102fa584bf0091de0f5acff747",
@@ -1099,7 +1086,6 @@ getBlock --parity 358450-0x5785a
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0x14db64d45ef2e27925a9f1553db750902e19b337",
@@ -1119,7 +1105,6 @@ getBlock --parity 358450-0x5785a
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0x04719524a3f646f9cf42a0480013944813c1c31b",
@@ -1139,7 +1124,6 @@ getBlock --parity 358450-0x5785a
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0x9d84e42cc974bbd0cb4134506123c68277cf5546",
@@ -1159,7 +1143,6 @@ getBlock --parity 358450-0x5785a
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0xb0e2bfee1cdc80a77c6ed0bb29d9a8f9c018dd42",
@@ -1179,7 +1162,6 @@ getBlock --parity 358450-0x5785a
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0x33228b774dcbddc7158a2fe647453443d8c87e72",
@@ -1199,7 +1181,6 @@ getBlock --parity 358450-0x5785a
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0x994bae53bca3e41c8f4d53ff04ecd4529b0cd748",
@@ -1219,7 +1200,6 @@ getBlock --parity 358450-0x5785a
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0xe241c26ee286b1614bb1b0a5969e1a93a6f0080e",
@@ -1239,7 +1219,6 @@ getBlock --parity 358450-0x5785a
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0x0f7a2e98afa6918d4d52f95c1fc1e57160d5f877",
@@ -1259,7 +1238,6 @@ getBlock --parity 358450-0x5785a
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0x4dbfc5cd4d88480476f951dbcd591396773ae56c",
@@ -1279,7 +1257,6 @@ getBlock --parity 358450-0x5785a
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0x707868ea3bfb73007106cfd30f678fdb94d12173",
@@ -1299,7 +1276,6 @@ getBlock --parity 358450-0x5785a
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0xf2cc0eeaaaed313542cb262b0b8c3972425143f0",
@@ -1319,7 +1295,6 @@ getBlock --parity 358450-0x5785a
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0x2b8e8c560281d2686c63c45bec73f5d2b84004c3",
@@ -1329,30 +1304,33 @@ getBlock --parity 358450-0x5785a
     ]
 },
 {
+    "difficulty": "0x5a35660ab8b",
     "gasLimit": "0x2fefd8",
     "gasUsed": "0x0",
     "hash": "0x1422b5f5e747f7b652f0ed9892eca0ea4aeaa11dc3cd79831c9de9e5e2a87263",
-    "logsBloom": "0x0",
+    "miner": "0x1dcb8d1f0fcc8cbc8c2d76528e877f915e299fbe",
     "number": "0x5784d",
     "parentHash": "0x3ca475da20d1ac9533582647eda199a9db9ea655f3ffda1f5fb58f454a293196",
     "timestamp": "0x5617fbe1",
     "transactions": []
 },
 {
+    "difficulty": "0x5a2a1f5df78",
     "gasLimit": "0x2fefd8",
     "gasUsed": "0x0",
     "hash": "0x9ad3ebd5ea48fca2e8e4d75c46b03be7e34b354d22070b13532a28447b20c725",
-    "logsBloom": "0x0",
+    "miner": "0x22a0fbf89ad1362d74f626436d8c4fc6dc4f0679",
     "number": "0x5784e",
     "parentHash": "0x1422b5f5e747f7b652f0ed9892eca0ea4aeaa11dc3cd79831c9de9e5e2a87263",
     "timestamp": "0x5617fbee",
     "transactions": []
 },
 {
+    "difficulty": "0x5a3564a1e35",
     "gasLimit": "0x2fefd8",
     "gasUsed": "0x3f735",
     "hash": "0x6359558fd302f40c63f70d70b8a9381988b0ac0b0b2ebaa58191c015be06aab7",
-    "logsBloom": "0x0",
+    "miner": "0x95581ea0c5b362933f3523138f54d51eae817211",
     "number": "0x5784f",
     "parentHash": "0x9ad3ebd5ea48fca2e8e4d75c46b03be7e34b354d22070b13532a28447b20c725",
     "timestamp": "0x5617fbf2",
@@ -1370,7 +1348,6 @@ getBlock --parity 358450-0x5785a
                 "contractAddress": "0x0",
                 "gasUsed": "0x3a52d",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0x1194e966965418c7d73a42cceeb254d875860356",
@@ -1390,7 +1367,6 @@ getBlock --parity 358450-0x5785a
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0x1543667b9bad3e41865c3233e1764d8dda8e1f3d",
@@ -1400,10 +1376,11 @@ getBlock --parity 358450-0x5785a
     ]
 },
 {
+    "difficulty": "0x5a40ab4e77a",
     "gasLimit": "0x2fefd8",
     "gasUsed": "0x14820",
     "hash": "0x7b4e660de30e9b63765c7040d6a07095f7e818071f533eab50253c8576ba7e15",
-    "logsBloom": "0x0",
+    "miner": "0xa6f403a34838d4bfba8d03281248ae3b4e8432d6",
     "number": "0x57850",
     "parentHash": "0x6359558fd302f40c63f70d70b8a9381988b0ac0b0b2ebaa58191c015be06aab7",
     "timestamp": "0x5617fbfe",
@@ -1421,7 +1398,6 @@ getBlock --parity 358450-0x5785a
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0xc47aaa860008be6f65b58c6c6e02a84e666efe31",
@@ -1441,7 +1417,6 @@ getBlock --parity 358450-0x5785a
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0xc47aaa860008be6f65b58c6c6e02a84e666efe31",
@@ -1461,7 +1436,6 @@ getBlock --parity 358450-0x5785a
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0x444dc0ce10bd7321689dd12315e8e0a9644a2c0c",
@@ -1481,7 +1455,6 @@ getBlock --parity 358450-0x5785a
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0x7c5080988c6d91d090c23d54740f856c69450b29",
@@ -1491,20 +1464,22 @@ getBlock --parity 358450-0x5785a
     ]
 },
 {
+    "difficulty": "0x5a3563390e0",
     "gasLimit": "0x2fefd8",
     "gasUsed": "0x0",
     "hash": "0x73bd430784fb18bf53b3eb0f4c6d85a257ca36bf3a6977be612e0d026e9a9668",
-    "logsBloom": "0x0",
+    "miner": "0xf927a40c8b7f6e07c5af7fa2155b4864a4112b13",
     "number": "0x57851",
     "parentHash": "0x7b4e660de30e9b63765c7040d6a07095f7e818071f533eab50253c8576ba7e15",
     "timestamp": "0x5617fc0b",
     "transactions": []
 },
 {
+    "difficulty": "0x5a40a9e5754",
     "gasLimit": "0x2fefd8",
     "gasUsed": "0x5208",
     "hash": "0x192c3c339a51acbdbe5009bf0ceb78de597c005da23f5ed7ece73ba5dddd0e92",
-    "logsBloom": "0x0",
+    "miner": "0x2134e2a2b718dca96580ecac31e653ea1fdd58da",
     "number": "0x57852",
     "parentHash": "0x73bd430784fb18bf53b3eb0f4c6d85a257ca36bf3a6977be612e0d026e9a9668",
     "timestamp": "0x5617fc0d",
@@ -1522,7 +1497,6 @@ getBlock --parity 358450-0x5785a
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0x1049cb6c4223942bb3ed14e47b27c7478449deb2",
@@ -1532,30 +1506,33 @@ getBlock --parity 358450-0x5785a
     ]
 },
 {
+    "difficulty": "0x5a3561d038c",
     "gasLimit": "0x2fefd8",
     "gasUsed": "0x0",
     "hash": "0x7d9a88393e87c423a4d3821251b0f59b017fbc7a8bc60bebb9833be0bc48e2bb",
-    "logsBloom": "0x0",
+    "miner": "0x1dcb8d1f0fcc8cbc8c2d76528e877f915e299fbe",
     "number": "0x57853",
     "parentHash": "0x192c3c339a51acbdbe5009bf0ceb78de597c005da23f5ed7ece73ba5dddd0e92",
     "timestamp": "0x5617fc1c",
     "transactions": []
 },
 {
+    "difficulty": "0x5a2a1b23fee",
     "gasLimit": "0x2fefd8",
     "gasUsed": "0x0",
     "hash": "0xb329c0b14f19d84f0ef6c23a6ced74f96071a298d0da7f69b67e22ae20d71096",
-    "logsBloom": "0x0",
+    "miner": "0x4bb96091ee9d802ed039c4d1a5f6216f90f81b01",
     "number": "0x57854",
     "parentHash": "0x7d9a88393e87c423a4d3821251b0f59b017fbc7a8bc60bebb9833be0bc48e2bb",
     "timestamp": "0x5617fc2e",
     "transactions": []
 },
 {
+    "difficulty": "0x5a1ed5e09a9",
     "gasLimit": "0x2fefd8",
     "gasUsed": "0x14820",
     "hash": "0xbe9793ab691f65d24906b822c71694e288e6bcc70de0745a8149a77693ca40b1",
-    "logsBloom": "0x0",
+    "miner": "0x4bb96091ee9d802ed039c4d1a5f6216f90f81b01",
     "number": "0x57855",
     "parentHash": "0xb329c0b14f19d84f0ef6c23a6ced74f96071a298d0da7f69b67e22ae20d71096",
     "timestamp": "0x5617fc3d",
@@ -1573,7 +1550,6 @@ getBlock --parity 358450-0x5785a
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0x32be343b94f860124dc4fee278fdcbd38c102d88",
@@ -1593,7 +1569,6 @@ getBlock --parity 358450-0x5785a
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0x32be343b94f860124dc4fee278fdcbd38c102d88",
@@ -1613,7 +1588,6 @@ getBlock --parity 358450-0x5785a
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0x32be343b94f860124dc4fee278fdcbd38c102d88",
@@ -1633,7 +1607,6 @@ getBlock --parity 358450-0x5785a
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0x7c5080988c6d91d090c23d54740f856c69450b29",
@@ -1643,10 +1616,11 @@ getBlock --parity 358450-0x5785a
     ]
 },
 {
+    "difficulty": "0x5a139205dea",
     "gasLimit": "0x2fefd8",
     "gasUsed": "0x23e38",
     "hash": "0x3b134dc8af49c6a66460fd0109b9d9cc9165c579d521629c6ce143f4bead3f64",
-    "logsBloom": "0x0",
+    "miner": "0x4bb96091ee9d802ed039c4d1a5f6216f90f81b01",
     "number": "0x57856",
     "parentHash": "0xbe9793ab691f65d24906b822c71694e288e6bcc70de0745a8149a77693ca40b1",
     "timestamp": "0x5617fc4b",
@@ -1664,7 +1638,6 @@ getBlock --parity 358450-0x5785a
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0x32be343b94f860124dc4fee278fdcbd38c102d88",
@@ -1684,7 +1657,6 @@ getBlock --parity 358450-0x5785a
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0x32be343b94f860124dc4fee278fdcbd38c102d88",
@@ -1704,7 +1676,6 @@ getBlock --parity 358450-0x5785a
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0xbb701b920aa9244505a7a7922186441f5e7c623a",
@@ -1724,7 +1695,6 @@ getBlock --parity 358450-0x5785a
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0x32be343b94f860124dc4fee278fdcbd38c102d88",
@@ -1744,7 +1714,6 @@ getBlock --parity 358450-0x5785a
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0x32be343b94f860124dc4fee278fdcbd38c102d88",
@@ -1764,7 +1733,6 @@ getBlock --parity 358450-0x5785a
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0x32be343b94f860124dc4fee278fdcbd38c102d88",
@@ -1784,7 +1752,6 @@ getBlock --parity 358450-0x5785a
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0x32be343b94f860124dc4fee278fdcbd38c102d88",
@@ -1794,10 +1761,11 @@ getBlock --parity 358450-0x5785a
     ]
 },
 {
+    "difficulty": "0x5a084f939e1",
     "gasLimit": "0x2fefd8",
     "gasUsed": "0x14820",
     "hash": "0xe756e674394043757e301b0d6039608016469b9ca246c2ecb4ed7f096e1bd658",
-    "logsBloom": "0x0",
+    "miner": "0x790b8a3ce86e707ed0ed32bf89b3269692a23cc1",
     "number": "0x57857",
     "parentHash": "0x3b134dc8af49c6a66460fd0109b9d9cc9165c579d521629c6ce143f4bead3f64",
     "timestamp": "0x5617fc5b",
@@ -1815,7 +1783,6 @@ getBlock --parity 358450-0x5785a
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0x32be343b94f860124dc4fee278fdcbd38c102d88",
@@ -1835,7 +1802,6 @@ getBlock --parity 358450-0x5785a
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0x32be343b94f860124dc4fee278fdcbd38c102d88",
@@ -1855,7 +1821,6 @@ getBlock --parity 358450-0x5785a
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0x32be343b94f860124dc4fee278fdcbd38c102d88",
@@ -1875,7 +1840,6 @@ getBlock --parity 358450-0x5785a
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0x54cec426307c1acaa63b25aa48fade5df9e5d418",
@@ -1885,20 +1849,22 @@ getBlock --parity 358450-0x5785a
     ]
 },
 {
+    "difficulty": "0x5a13909d90a",
     "gasLimit": "0x2fefd8",
     "gasUsed": "0x0",
     "hash": "0x51ac91f8777a09c8351f05a429015fcc6d7a02e937e1dc240cb29edc823ded72",
-    "logsBloom": "0x0",
+    "miner": "0x1dcb8d1f0fcc8cbc8c2d76528e877f915e299fbe",
     "number": "0x57858",
     "parentHash": "0xe756e674394043757e301b0d6039608016469b9ca246c2ecb4ed7f096e1bd658",
     "timestamp": "0x5617fc67",
     "transactions": []
 },
 {
+    "difficulty": "0x5a1ed30fa47",
     "gasLimit": "0x2fefd8",
     "gasUsed": "0x0",
     "hash": "0x2e3c4dac5fc5465768e724529623634fe1ad63f048c023c077465ea610ea287c",
-    "logsBloom": "0x0",
+    "miner": "0x4bb96091ee9d802ed039c4d1a5f6216f90f81b01",
     "number": "0x57859",
     "parentHash": "0x51ac91f8777a09c8351f05a429015fcc6d7a02e937e1dc240cb29edc823ded72",
     "timestamp": "0x5617fc6a",

@@ -4,20 +4,17 @@ getReceipt --file:cmd_file --verbose --parity
   "contractAddress": "0x0",
   "gasUsed": 21000,
   "logs": [],
-  "logsBloom": "0x0",
   "status": null
 }
 {
   "contractAddress": "0x0",
   "gasUsed": 21000,
   "logs": [],
-  "logsBloom": "0x0",
   "status": null
 }
 {
     "contractAddress": "0x0",
     "gasUsed": "0x5208",
     "logs": [],
-    "logsBloom": "0x0",
     "status": null
 }

@@ -22,9 +22,6 @@ typedef SFList<CBlock*>             CBlockList;
 typedef SFUniqueList<CBlock*>       CBlockListU;
 
 // EXISTING_CODE
-#ifdef UPGRADING
-#define CBlock_513 CBlock
-#endif
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
@@ -33,9 +30,10 @@ public:
     SFGas gasLimit;
     SFGas gasUsed;
     SFHash hash;
-    SFBloom logsBloom;
     blknum_t blockNumber;
     SFHash parentHash;
+    SFAddress miner;
+    uint64_t difficulty;
     timestamp_t timestamp;
     CTransactionArray transactions;
 
@@ -50,27 +48,6 @@ public:
     const CBaseNode *getObjectAt(const SFString& fieldName, uint32_t index) const override;
 
     // EXISTING_CODE
-#ifdef UPGRADING
-    CBlock& operator=(const CBlock_513& ne);
-#endif
-#if 0
-    SFAddress author;
-    SFString difficulty;
-    SFString extraData;
-    SFString logsBloom;
-    SFAddress miner;
-    SFHash mixHash;
-    SFString nonce;
-    SFString receiptRoot;
-    SFString receiptsRoot;
-    SFStringArray sealFields;
-    SFString sha3Uncles;
-    SFString size;
-    SFString stateRoot;
-    SFString totalDifficulty;
-    SFString transactionsRoot;
-    SFStringArray uncles;
-#endif
     // EXISTING_CODE
     friend ostream& operator<<(ostream& os, const CBlock& item);
 
@@ -121,30 +98,14 @@ inline void CBlock::Init(void) {
     gasLimit = 0;
     gasUsed = 0;
     hash = "";
-    logsBloom = 0;
     blockNumber = 0;
     parentHash = "";
+    miner = "";
+    difficulty = 0;
     timestamp = 0;
     transactions.Clear();
 
     // EXISTING_CODE
-#if 0
-    author = "";
-    difficulty = "";
-    extraData = "";
-    miner = "";
-    mixHash = "";
-    nonce = "";
-    receiptRoot = "";
-    receiptsRoot = "";
-    sealFields.Clear();
-    sha3Uncles = "";
-    size = "";
-    stateRoot = "";
-    totalDifficulty = "";
-    transactionsRoot = "";
-    uncles.Clear();
-#endif
     // EXISTING_CODE
 }
 
@@ -156,30 +117,14 @@ inline void CBlock::Copy(const CBlock& bl) {
     gasLimit = bl.gasLimit;
     gasUsed = bl.gasUsed;
     hash = bl.hash;
-    logsBloom = bl.logsBloom;
     blockNumber = bl.blockNumber;
     parentHash = bl.parentHash;
+    miner = bl.miner;
+    difficulty = bl.difficulty;
     timestamp = bl.timestamp;
     transactions = bl.transactions;
 
     // EXISTING_CODE
-#if 0
-    author = bl.author;
-    difficulty = bl.difficulty;
-    extraData = bl.extraData;
-    miner = bl.miner;
-    mixHash = bl.mixHash;
-    nonce = bl.nonce;
-    receiptRoot = bl.receiptRoot;
-    receiptsRoot = bl.receiptsRoot;
-    sealFields = bl.sealFields;
-    sha3Uncles = bl.sha3Uncles;
-    size = bl.size;
-    stateRoot = bl.stateRoot;
-    totalDifficulty = bl.totalDifficulty;
-    transactionsRoot = bl.transactionsRoot;
-    uncles = bl.uncles;
-#endif
     // EXISTING_CODE
     finishParse();
 }
