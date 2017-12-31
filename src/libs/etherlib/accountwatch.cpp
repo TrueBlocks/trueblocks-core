@@ -79,7 +79,7 @@ bool CAccountWatch::setValueByName(const SFString& fieldName, const SFString& fi
             if ( fieldName % "firstBlock" ) { firstBlock = toUnsigned(fieldValue); return true; }
             break;
         case 'i':
-            if ( fieldName % "index" ) { index = toLong32u(fieldValue); return true; }
+            if ( fieldName % "id" ) { id = toLong32u(fieldValue); return true; }
             break;
         case 'l':
             if ( fieldName % "lastBlock" ) { lastBlock = toUnsigned(fieldValue); return true; }
@@ -118,7 +118,7 @@ bool CAccountWatch::Serialize(SFArchive& archive) {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive >> index;
+    archive >> id;
     archive >> address;
     archive >> name;
     archive >> color;
@@ -140,7 +140,7 @@ bool CAccountWatch::SerializeC(SFArchive& archive) const {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive << index;
+    archive << id;
     archive << address;
     archive << name;
     archive << color;
@@ -164,7 +164,7 @@ void CAccountWatch::registerClass(void) {
     ADD_FIELD(CAccountWatch, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CAccountWatch, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CAccountWatch, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CAccountWatch, "index", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CAccountWatch, "id", T_NUMBER, ++fieldNum);
     ADD_FIELD(CAccountWatch, "address", T_ADDRESS, ++fieldNum);
     ADD_FIELD(CAccountWatch, "name", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccountWatch, "color", T_TEXT, ++fieldNum);
@@ -245,7 +245,7 @@ SFString CAccountWatch::getValueByName(const SFString& fieldName) const {
             if ( fieldName % "firstBlock" ) return asStringU(firstBlock);
             break;
         case 'i':
-            if ( fieldName % "index" ) return asStringU(index);
+            if ( fieldName % "id" ) return asStringU(id);
             break;
         case 'l':
             if ( fieldName % "lastBlock" ) return asStringU(lastBlock);
@@ -297,7 +297,7 @@ const CBaseNode *CAccountWatch::getObjectAt(const SFString& fieldName, uint32_t 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 bool CAccountWatch::getWatch(const CToml& toml, uint32_t n) {
-    index = n;
+    id = n;
     address = fixAddress(toLower(toml.getConfigStr("watches", "address_"+asString(n), "")));
     if (!isAddress(address))
         return false;

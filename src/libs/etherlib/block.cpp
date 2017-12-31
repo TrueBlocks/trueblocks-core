@@ -79,6 +79,9 @@ bool CBlock::setValueByName(const SFString& fieldName, const SFString& fieldValu
         case 'b':
             if ( fieldName % "blockNumber" ) { blockNumber = toUnsigned(fieldValue); return true; }
             break;
+        case 'd':
+            if ( fieldName % "difficulty" ) { difficulty = toUnsigned(fieldValue); return true; }
+            break;
         case 'g':
             if ( fieldName % "gasLimit" ) { gasLimit = toGas(fieldValue); return true; }
             if ( fieldName % "gasUsed" ) { gasUsed = toGas(fieldValue); return true; }
@@ -86,8 +89,8 @@ bool CBlock::setValueByName(const SFString& fieldName, const SFString& fieldValu
         case 'h':
             if ( fieldName % "hash" ) { hash = toHash(fieldValue); return true; }
             break;
-        case 'l':
-            if ( fieldName % "logsBloom" ) { logsBloom = toBloom(fieldValue); return true; }
+        case 'm':
+            if ( fieldName % "miner" ) { miner = toAddress(fieldValue); return true; }
             break;
         case 'p':
             if ( fieldName % "parentHash" ) { parentHash = toHash(fieldValue); return true; }
@@ -143,9 +146,10 @@ bool CBlock::Serialize(SFArchive& archive) {
     archive >> gasLimit;
     archive >> gasUsed;
     archive >> hash;
-    archive >> logsBloom;
     archive >> blockNumber;
     archive >> parentHash;
+    archive >> miner;
+    archive >> difficulty;
     archive >> timestamp;
     archive >> transactions;
     finishParse();
@@ -163,9 +167,10 @@ bool CBlock::SerializeC(SFArchive& archive) const {
     archive << gasLimit;
     archive << gasUsed;
     archive << hash;
-    archive << logsBloom;
     archive << blockNumber;
     archive << parentHash;
+    archive << miner;
+    archive << difficulty;
     archive << timestamp;
     archive << transactions;
 
@@ -185,9 +190,10 @@ void CBlock::registerClass(void) {
     ADD_FIELD(CBlock, "gasLimit", T_GAS, ++fieldNum);
     ADD_FIELD(CBlock, "gasUsed", T_GAS, ++fieldNum);
     ADD_FIELD(CBlock, "hash", T_HASH, ++fieldNum);
-    ADD_FIELD(CBlock, "logsBloom", T_BLOOM, ++fieldNum);
     ADD_FIELD(CBlock, "blockNumber", T_NUMBER, ++fieldNum);
     ADD_FIELD(CBlock, "parentHash", T_HASH, ++fieldNum);
+    ADD_FIELD(CBlock, "miner", T_ADDRESS, ++fieldNum);
+    ADD_FIELD(CBlock, "difficulty", T_NUMBER, ++fieldNum);
     ADD_FIELD(CBlock, "timestamp", T_TIMESTAMP, ++fieldNum);
     ADD_FIELD(CBlock, "transactions", T_OBJECT|TS_ARRAY, ++fieldNum);
 
@@ -258,23 +264,19 @@ bool CBlock::readBackLevel(SFArchive& archive) {
     CBaseNode::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
-#ifdef UPGRADING
-    if (m_schema < 514) {
-        CBlock_513 old;
-        archive >> old.gasLimit;
-        archive >> old.gasUsed;
-        archive >> old.hash;
-        archive >> old.logsBloom;
-        archive >> old.blockNumber;
-        archive >> old.parentHash;
-        archive >> old.timestamp;
-        archive >> old.transactions;
-        old.finishParse();
-        *this = old;
+    SFBloom removed;
+    if (m_schema <= getVersionNum(0,3,0)) {
+        archive >> gasLimit;
+        archive >> gasUsed;
+        archive >> hash;
+        archive >> removed; // used to be logsBloom
+        archive >> blockNumber;
+        archive >> parentHash;
+        archive >> timestamp;
+        archive >> transactions;
         finishParse();
         done = true;
     }
-#endif
     // EXISTING_CODE
     return done;
 }
@@ -304,6 +306,9 @@ SFString CBlock::getValueByName(const SFString& fieldName) const {
         case 'b':
             if ( fieldName % "blockNumber" ) return asStringU(blockNumber);
             break;
+        case 'd':
+            if ( fieldName % "difficulty" ) return asStringU(difficulty);
+            break;
         case 'g':
             if ( fieldName % "gasLimit" ) return fromGas(gasLimit);
             if ( fieldName % "gasUsed" ) return fromGas(gasUsed);
@@ -311,8 +316,8 @@ SFString CBlock::getValueByName(const SFString& fieldName) const {
         case 'h':
             if ( fieldName % "hash" ) return fromHash(hash);
             break;
-        case 'l':
-            if ( fieldName % "logsBloom" ) return fromBloom(logsBloom);
+        case 'm':
+            if ( fieldName % "miner" ) return fromAddress(miner);
             break;
         case 'p':
             if ( fieldName % "parentHash" ) return fromHash(parentHash);
@@ -361,33 +366,6 @@ const CBaseNode *CBlock::getObjectAt(const SFString& fieldName, uint32_t index) 
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-#ifdef UPGRADING
-CBlock& CBlock::operator=(const CBlock_513& old) {
-
-    // Pick up the missing stuff...
-    SFString results;
-    queryRawBlock(results, asStringU(blockNumber), false, false);
-    CRPCResult generic;
-    char *p = cleanUpJson((char*)(const char*)results);
-    generic.parseJson(p);
-    p = cleanUpJson((char *)generic.result.c_str());
-    parseJson(p);
-
-    // The old stuff should be identical, but we assign it anyway
-    gasLimit = old.gasLimit;
-    gasUsed = old.gasUsed;
-    hash = old.hash;
-    logsBloom = old.logsBloom;
-    blockNumber = old.blockNumber;
-    parentHash = old.parentHash;
-    timestamp = old.timestamp;
-    transactions.Clear();
-    for (uint32_t i = 0 ; i < old.transactions.getCount(); i++) {
-        transactions[transactions.getCount()] = old.transactions[i];
-    }
-    return *this;
-}
-#endif
 // EXISTING_CODE
 }  // namespace qblocks
 

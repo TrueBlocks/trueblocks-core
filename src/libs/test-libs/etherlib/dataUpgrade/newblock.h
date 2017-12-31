@@ -28,13 +28,12 @@ public:
     SFGas gasLimit;
     SFGas gasUsed;
     SFHash hash;
-    SFBloom logsBloom;
     blknum_t blockNumber;
     SFHash parentHash;
+    SFAddress miner;
+    uint64_t difficulty;
     timestamp_t timestamp;
     CTransactionArray transactions;
-    SFAddress miner;
-    uint64_t size;
 
 public:
     CNewBlock(void);
@@ -98,13 +97,12 @@ inline void CNewBlock::Init(void) {
     gasLimit = 0;
     gasUsed = 0;
     hash = "";
-    logsBloom = 0;
     blockNumber = 0;
     parentHash = "";
+    miner = "";
+    difficulty = 0;
     timestamp = 0;
     transactions.Clear();
-    miner = "";
-    size = 0;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -118,32 +116,14 @@ inline void CNewBlock::Copy(const CNewBlock& ne) {
     gasLimit = ne.gasLimit;
     gasUsed = ne.gasUsed;
     hash = ne.hash;
-    logsBloom = ne.logsBloom;
     blockNumber = ne.blockNumber;
     parentHash = ne.parentHash;
+    miner = ne.miner;
+    difficulty = ne.difficulty;
     timestamp = ne.timestamp;
     transactions = ne.transactions;
-    miner = ne.miner;
-    size = ne.size;
 
     // EXISTING_CODE
-#if 0
-    author = ne.author;
-    difficulty = ne.difficulty;
-    extraData = ne.extraData;
-    miner = ne.miner;
-    mixHash = ne.mixHash;
-    nonce = ne.nonce;
-    receiptRoot = ne.receiptRoot;
-    receiptsRoot = ne.receiptsRoot;
-    sealFields = ne.sealFields;
-    sha3Uncles = ne.sha3Uncles;
-    size = ne.size;
-    stateRoot = ne.stateRoot;
-    totalDifficulty = ne.totalDifficulty;
-    transactionsRoot = ne.transactionsRoot;
-    uncles = ne.uncles;
-#endif
     // EXISTING_CODE
     finishParse();
 }
