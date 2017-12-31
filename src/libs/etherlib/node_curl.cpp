@@ -51,7 +51,7 @@ namespace qblocks {
         is_tracing   = false;
         url          = "";
         result       = "";
-        source       = "";
+        source       = "binary";
     }
     void CCurlContext::tracingOff (void) { tracing_on = false; }
     void CCurlContext::tracingOn  (void) { tracing_on = true; }

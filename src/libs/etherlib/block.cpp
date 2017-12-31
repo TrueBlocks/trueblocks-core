@@ -65,7 +65,6 @@ bool CBlock::setValueByName(const SFString& fieldName, const SFString& fieldValu
     } else if (fieldName % "transactions") {
         // Transactions come to us either as a JSON objects or lists
         // of hashes (i.e. a string array). JSON objects have 'from'
-        
         if (!fieldValue.Contains("from")) {
             SFString str = fieldValue;
             while (!str.empty()) {
@@ -97,6 +96,7 @@ bool CBlock::setValueByName(const SFString& fieldName, const SFString& fieldValu
             break;
         case 'p':
             if ( fieldName % "parentHash" ) { parentHash = toHash(fieldValue); return true; }
+            if ( fieldName % "price" ) { price = toDouble(fieldValue); return true; }
             break;
         case 't':
             if ( fieldName % "timestamp" ) { timestamp = toTimestamp(fieldValue); return true; }
@@ -153,6 +153,7 @@ bool CBlock::Serialize(SFArchive& archive) {
     archive >> parentHash;
     archive >> miner;
     archive >> difficulty;
+    archive >> price;
     archive >> timestamp;
     archive >> transactions;
     finishParse();
@@ -174,6 +175,7 @@ bool CBlock::SerializeC(SFArchive& archive) const {
     archive << parentHash;
     archive << miner;
     archive << difficulty;
+    archive << price;
     archive << timestamp;
     archive << transactions;
 
@@ -197,6 +199,7 @@ void CBlock::registerClass(void) {
     ADD_FIELD(CBlock, "parentHash", T_HASH, ++fieldNum);
     ADD_FIELD(CBlock, "miner", T_ADDRESS, ++fieldNum);
     ADD_FIELD(CBlock, "difficulty", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CBlock, "price", T_DOUBLE, ++fieldNum);
     ADD_FIELD(CBlock, "timestamp", T_TIMESTAMP, ++fieldNum);
     ADD_FIELD(CBlock, "transactions", T_OBJECT|TS_ARRAY, ++fieldNum);
 
@@ -280,6 +283,7 @@ bool CBlock::readBackLevel(SFArchive& archive) {
         // TODO -- technically we should re-read these values from the node
         miner = "0x0";
         difficulty = 0;
+        price = 0.0;
         finishParse();
         done = true;
     }
@@ -327,6 +331,7 @@ SFString CBlock::getValueByName(const SFString& fieldName) const {
             break;
         case 'p':
             if ( fieldName % "parentHash" ) return fromHash(parentHash);
+            if ( fieldName % "price" ) return fmtFloat(price);
             break;
         case 't':
             if ( fieldName % "timestamp" ) return fromTimestamp(timestamp);
