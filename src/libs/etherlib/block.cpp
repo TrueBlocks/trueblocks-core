@@ -56,6 +56,9 @@ bool CBlock::setValueByName(const SFString& fieldName, const SFString& fieldValu
     if (fieldName % "number") {
         *(SFString*)&fieldName = "blockNumber";
 
+    } else if (fieldName % "author") {
+        *(SFString*)&fieldName = "miner";
+
     } else if (isTestMode() && fieldName % "blockHash") {
         *(SFString*)&fieldName = "hash";
 
@@ -274,6 +277,9 @@ bool CBlock::readBackLevel(SFArchive& archive) {
         archive >> parentHash;
         archive >> timestamp;
         archive >> transactions;
+        // TODO -- technically we should re-read these values from the node
+        miner = "0x0";
+        difficulty = 0;
         finishParse();
         done = true;
     }
