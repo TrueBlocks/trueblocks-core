@@ -2,7 +2,7 @@ dataUpgrade argc: 2 [1:CReceipt]
 dataUpgrade CReceipt 
 --------------------------------------------------------------------------------
 className: CReceipt
-objectSize: 120
+objectSize: 104
 baseClass: CBaseNode
 	fieldName: schema
 	  fieldID: 1001
@@ -28,19 +28,14 @@ baseClass: CBaseNode
 	  fieldID: 1006
 	  fieldType: T_OBJECT|TS_ARRAY TS_ARRAY 1572939 TS_OBJECT 1572939
 	  hidden: 0
-	fieldName: logsBloom
-	  fieldID: 1007
-	  fieldType: T_BLOOM TS_STRING 131137
-	  hidden: 0
 	fieldName: status
-	  fieldID: 1008
+	  fieldID: 1007
 	  fieldType: T_NUMBER TS_NUMERAL 65561
 	  hidden: 0
 {
   "contractAddress": "0x0",
   "gasUsed": 0,
   "logs": [],
-  "logsBloom": "0x0",
   "status": null
 }
 
