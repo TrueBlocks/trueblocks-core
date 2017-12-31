@@ -95,6 +95,17 @@ extern void registerQuitHandler(QUITHANDLER qh);
 
     //-------------------------------------------------------------------------
     bool getTransaction(CTransaction& trans, blknum_t blockNum, txnum_t txID) {
+        if (fileExists(getBinaryFilename(blockNum))) {
+            CBlock block;
+            readFromBinary(block, getBinaryFilename(blockNum));
+            if (txID < block.transactions.getCount())
+            {
+                trans = block.transactions[(uint32_t)txID];
+                return true;
+            }
+            // fall through to node
+        }
+
         SFUintBN h(blockNum);
         SFUintBN t(txID);
         SFString hs = to_hex(h).c_str();

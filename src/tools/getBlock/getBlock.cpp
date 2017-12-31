@@ -148,7 +148,8 @@ SFString checkOneBlock(uint64_t num, const COptions& opt) {
         cout << num << "\n";
     fromQblocks = normalizeBlock(qBlocks.Format(), true, num > byzantiumBlock);
 
-    SFString result = "The strings are "; result += ((fromNode != fromQblocks) ? "different\n" : "the same\n");
+extern SFString hiddenFields(void);
+    SFString result = hiddenFields() + "The strings are "; result += ((fromNode != fromQblocks) ? "different\n" : "the same\n");
     SFString diffA  = "In fromNode but not fromQblocks:\n" + diffStr(fromNode, fromQblocks);
     SFString diffB  = "In fromQblocks but not fromNode:\n" + diffStr(fromQblocks, fromNode);
 

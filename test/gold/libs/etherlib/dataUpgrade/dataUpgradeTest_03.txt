@@ -3,7 +3,7 @@ dataUpgrade 3
 3. Read from new binary format, write to JSON...
 --------------------------------------------------------------------------------
 className: CNewBlock
-objectSize: 168
+objectSize: 176
 baseClass: CBaseNode
 	fieldName: schema
 	  fieldID: 1001
@@ -45,12 +45,16 @@ baseClass: CBaseNode
 	  fieldID: 1010
 	  fieldType: T_NUMBER TS_NUMERAL 65561
 	  hidden: 0
-	fieldName: timestamp
+	fieldName: price
 	  fieldID: 1011
+	  fieldType: T_DOUBLE TS_NUMERAL 65566
+	  hidden: 0
+	fieldName: timestamp
+	  fieldID: 1012
 	  fieldType: T_TIMESPAN TS_NUMERAL 65551
 	  hidden: 0
 	fieldName: transactions
-	  fieldID: 1012
+	  fieldID: 1013
 	  fieldType: T_OBJECT|TS_ARRAY TS_ARRAY 1572939 TS_OBJECT 1572939
 	  hidden: 0
 {
@@ -61,6 +65,7 @@ baseClass: CBaseNode
   "parentHash": "0xd2c56db29797324c22d9808cc58d80fc0c53f034f1e215fb077abb223e3bdd9b",
   "miner": "0x0",
   "difficulty": 0,
+  "price": 0,
   "timestamp": 1442749586,
   "transactions": [
     {
@@ -96,6 +101,7 @@ baseClass: CBaseNode
   "parentHash": "0xd2c56db29797324c22d9808cc58d80fc0c53f034f1e215fb077abb223e3bdd9b",
   "miner": "0x0",
   "difficulty": 0,
+  "price": 0,
   "timestamp": 1442749586,
   "transactions": [
     {
