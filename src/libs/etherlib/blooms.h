@@ -44,7 +44,7 @@ extern SFString getSha3(const SFString& hexIn);
     }
 
     //----------------------------------------------------------------------------------
-    extern SFBloom readOneBloom(blknum_t bn);
-    extern void    writeOneBloom(const SFString& fileName, const SFBloom& bloom);
+    extern bool readBloomArray (      SFBloomArray& blooms, const SFString& fileName);
+    extern bool writeBloomArray(const SFBloomArray& blooms, const SFString& fileName);
     
 }  // namespace qblocks

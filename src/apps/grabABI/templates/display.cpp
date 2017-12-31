@@ -108,15 +108,15 @@ void CVisitor::displayTrans(uint32_t which, const CTransaction *theTrans) const 
         displayTrace(ts, theTrans->traces, theTrans->isError);
     }
 
-    if (opts.bloom_on && promoted->receipt.logsBloom != 0) {
-        displayBloom(promoted->receipt.logsBloom, "Tx bloom:", "");
-        cout << "\r\n";
-        for (uint32_t t=0;t<watches.getCount()-1;t++) {
-            SFBloom b = makeBloom(watches[t].address);
-            displayBloom(b,watches[t].color + padRight(watches[t].name.substr(0,9),9) + cOff, (isBloomHit(b, promoted->receipt.logsBloom) ? greenCheck : redX));
-            cout << "\r\n";
-        }
-    }
+//   if (opts.bloom_on && promoted->receipt.logsBloom != 0) {
+//        displayBloom(promoted->receipt.logsBloom, "Tx bloom:", "");
+//        cout << "\r\n";
+//        for (uint32_t t=0;t<watches.getCount()-1;t++) {
+//            SFBloom b = makeBloom(watches[t].address);
+//            displayBloom(b,watches[t].color + padRight(watches[t].name.substr(0,9),9) + cOff, (isBloomHit(b, promoted->receipt.logsBloom) ? greenCheck : redX));
+//            cout << "\r\n";
+//        }
+//    }
 
     // If the transaction was promoted, clear that up
     if (theTrans != promoted)

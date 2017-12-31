@@ -526,7 +526,7 @@ namespace qblocks {
 
     //-----------------------------------------------------------------------
     void defaultQuitHandler(int s) {
-        if (s != 1)
+        if (s != 1 && s != -1)
             cout << "Caught signal " << s << "\n";
         SFString list = manageRemoveList();
         while (!list.empty()) {
@@ -534,7 +534,8 @@ namespace qblocks {
             cout << "Removing file: " << file << "\n"; cout.flush();
             removeFile(file);
         }
-        exit(1);
+        if (s != -1)
+            exit(1);
     }
 
     //-----------------------------------------------------------------------

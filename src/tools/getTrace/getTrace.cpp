@@ -11,8 +11,8 @@
 extern bool visitTransaction(CTransaction& trans, void *data);
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
-    // Tell the system where the blocks are and which version to use
-    etherlib_init("binary");
+
+    etherlib_init();
 
     // Parse command line, allowing for command files
     COptions options;
@@ -23,7 +23,7 @@ int main(int argc, const char *argv[]) {
         SFString command = nextTokenClear(options.commandList, '\n');
         if (!options.parseArguments(command))
             return 0;
-        forEveryTransaction(visitTransaction, &options, options.transList.queries);
+        forEveryTransactionInList(visitTransaction, &options, options.transList.queries);
     }
     return 0;
 }

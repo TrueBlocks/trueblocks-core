@@ -15,7 +15,7 @@ extern double testRetrieve(void);
 //--------------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
-    etherlib_init("infura");
+    etherlib_init();
 
     double buildTime = testBuild();
     double retrieveTime = testRetrieve();

@@ -11,8 +11,7 @@
 //-----------------------------------------------------------------------------------
 int main(int argc, const char* argv[]) {
 
-    // Tell the system where the blocks are and which version to use
-    etherlib_init("fastest");
+    etherlib_init();
 
     // Parse command line, allowing for command files
     COptions options;

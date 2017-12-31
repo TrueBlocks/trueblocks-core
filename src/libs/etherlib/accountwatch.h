@@ -28,7 +28,7 @@ typedef SFUniqueList<CAccountWatch*>       CAccountWatchListU;
 //--------------------------------------------------------------------------
 class CAccountWatch : public CBaseNode {
 public:
-    uint32_t index;
+    uint32_t id;
     SFAddress address;
     SFString name;
     SFString color;
@@ -47,11 +47,11 @@ public:
 
     DECLARE_NODE(CAccountWatch);
 
-    const CBaseNode *getObjectAt(const SFString& name, uint32_t i) const override;
+    const CBaseNode *getObjectAt(const SFString& fieldName, uint32_t index) const override;
 
     // EXISTING_CODE
     CAccountWatch(uint32_t _id, const SFString& _addr, const SFString& _name, blknum_t fB, blknum_t lB, const SFString& _color)
-    : index(_id), address(toLower(_addr)), name(_name), color(_color), firstBlock(fB), lastBlock(lB), status("") { }
+    : id(_id), address(toLower(_addr)), name(_name), color(_color), firstBlock(fB), lastBlock(lB), status("") { }
     bool getWatch(const CToml& toml, uint32_t n);
     SFString displayName(bool terse, uint32_t w1=20, uint32_t w2=8) const;
     bool isTransactionOfInterest(CTransaction *trans, uint64_t nSigs, SFString sigs[]) const;
@@ -102,7 +102,7 @@ inline void CAccountWatch::Clear(void) {
 inline void CAccountWatch::Init(void) {
     CBaseNode::Init();
 
-    index = 0;
+    id = 0;
     address = "";
     name = "";
     color = "";
@@ -123,7 +123,7 @@ inline void CAccountWatch::Copy(const CAccountWatch& ac) {
     Clear();
     CBaseNode::Copy(ac);
 
-    index = ac.index;
+    id = ac.id;
     address = ac.address;
     name = ac.name;
     color = ac.color;

@@ -39,6 +39,7 @@ endfunction(run_test)
 
 # weird, but we have to make sure the block is in the cache first
 run_the_test(${TEST_PATH} ${GOLD_PATH} "whereBlock_preload" ${EXECUTABLE_OUTPUT_PATH}/getBlock " 1001001" " -o")
+run_the_test(${TEST_PATH} ${GOLD_PATH} "whereBlock_preload2" ${EXECUTABLE_OUTPUT_PATH}/getBlock " 1001010" " -o")
 
 # Enter one line for each individual test
 run_test("whereBlock_README"            "-th")

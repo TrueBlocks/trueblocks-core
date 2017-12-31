@@ -1,0 +1,6 @@
+[settings]
+class     = CTraceResult
+fields    = gas gasUsed|string output
+includes  = abilib.h
+cIncs     = #include "trace.h"
+serialize = true

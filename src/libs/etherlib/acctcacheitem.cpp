@@ -202,8 +202,10 @@ SFString CAcctCacheItem::getValueByName(const SFString& fieldName) const {
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const CAcctCacheItem& item) {
     // EXISTING_CODE
-    os << item.blockNum << "." << item.transIndex << "." << item.which;
-    return os;
+    if (sizeof(item) != 0) { // do this to always go through here, but avoid a warning
+        os << item.blockNum << "." << item.transIndex << "." << item.which;
+        return os;
+    }
     // EXISTING_CODE
 
     os << item.Format() << "\n";

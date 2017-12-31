@@ -11,7 +11,7 @@
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
-    etherlib_init("");
+    etherlib_init();
 
     COptions opt;
     if (opt.parseArguments(argc, argv)) {

@@ -74,7 +74,7 @@ bool COptions::parseArguments(SFString& command) {
 
         } else if (arg.startsWith("--errFilt")) {
             // weird, but 1 == no errors, 2 == errors only
-            errFilt = true + arg.Contains(":errOnly");
+            errFilt = true + arg.Contains(":errsOnly");
 
         } else if (arg.startsWith("--reverse")) {
             reverseSort = true;

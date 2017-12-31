@@ -292,8 +292,8 @@ void generateCode(const COptions& options, CToml& toml, const SFString& dataFile
             } else {
                 fieldGetObj += STR_GETOBJ_CODE_FIELD;
                 if (!fld->type.Contains("Array")) {
-                    fieldGetObj.Replace(" && i < [{FIELD}].getCount()", "");
-                    fieldGetObj.Replace("[i]", "");
+                    fieldGetObj.Replace(" && index < [{FIELD}].getCount()", "");
+                    fieldGetObj.Replace("[index]", "");
                 }
                 fieldGetObj.ReplaceAll("[{FIELD}]", fld->name);
             }
@@ -786,17 +786,17 @@ const char* PTR_SET_CASE =
 
 //------------------------------------------------------------------------------------------------------------
 const char *STR_GETOBJ_HEAD =
-"\tconst CBaseNode *getObjectAt(const SFString& name, uint32_t i) const override;\n";
+"\tconst CBaseNode *getObjectAt(const SFString& fieldName, uint32_t index) const override;\n";
 
 //------------------------------------------------------------------------------------------------------------
 const char *STR_GETOBJ_CODE_FIELD =
-"\tif ( name % \"[{FIELD}]\" && i < [{FIELD}].getCount() )\n"
-"\t\treturn &[{FIELD}][i];\n";
+"\tif ( fieldName % \"[{FIELD}]\" && index < [{FIELD}].getCount() )\n"
+"\t\treturn &[{FIELD}][index];\n";
 
 //------------------------------------------------------------------------------------------------------------
 const char *STR_GETOBJ_CODE =
 "//---------------------------------------------------------------------------\n"
-"const CBaseNode *[{CLASS_NAME}]::getObjectAt(const SFString& name, uint32_t i) const {\n"
+"const CBaseNode *[{CLASS_NAME}]::getObjectAt(const SFString& fieldName, uint32_t index) const {\n"
 "[{FIELDS}]\treturn NULL;\n"
 "}\n\n";
 
