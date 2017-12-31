@@ -1,0 +1,5 @@
+[settings]
+class    = CAccountName
+fields   = string symbol|string name|string addr|string source|string description
+includes = basetypes.h|basenode.h|sfarchive.h
+

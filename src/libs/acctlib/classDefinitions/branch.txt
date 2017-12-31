@@ -1,0 +1,6 @@
+[settings]
+class     = CBranch
+baseClass = CTreeNode
+fields    = string branchValue
+includes  = etherlib.h|treenode.h
+cIncs     = #include "treeroot.h"
