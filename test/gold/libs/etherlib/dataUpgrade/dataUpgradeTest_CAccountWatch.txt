@@ -16,7 +16,7 @@ baseClass: CBaseNode
 	  fieldID: 1003
 	  fieldType: T_BOOL TS_NUMERAL 65556
 	  hidden: 1
-	fieldName: index
+	fieldName: id
 	  fieldID: 1004
 	  fieldType: T_NUMBER TS_NUMERAL 65561
 	  hidden: 0
@@ -57,7 +57,7 @@ baseClass: CBaseNode
 	  fieldType: T_WEI TS_NUMERAL 4259875 TS_BIGNUM 4259875
 	  hidden: 0
 {
-  "index": 0,
+  "id": 0,
   "address": "0x0",
   "firstBlock": 0,
   "lastBlock": 4294967295,

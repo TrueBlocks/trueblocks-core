@@ -1,6 +1,0 @@
-cacheMan argc: 3 [1:-c] [2:TipJar.cache] 
-cacheMan -c TipJar.cache 
-Checking cache: TipJar.cache
-	Duplicate at record 1373, current 4642742.35.1, previous 4642742.35.1
-	The cache has 1 duplicates.
-
