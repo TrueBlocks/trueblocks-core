@@ -62,6 +62,9 @@ from Quickblocks:
 "value":"0xe10b0466bd1d398"
 
 --------------------------------------------------------------------------------
+Hidden fields:
+author, condition, creates, difficulty, extraData, miner, mixHash, networkId, chainId, nonce, nonce, publicKey, r, raw, receiptsRoot, s, sealFields, sha3Uncles, size, standardV, stateRoot, totalDifficulty, transactionsRoot, uncles, v, logsBloom, contractAddress, cumulativeGasUsed, receipt, address, data, logIndex, topics, price, status
+
 The strings are the same
 
 --------------------------------------------------------------------------------

@@ -27,6 +27,7 @@ getBlock -a 2768801 1995314 1958017 --normalize --parity
 "nonce":"0x195ef4"
 "number":"0x2a3fa1"
 "parentHash":"0xabc3e2787669f48ad8ab2e521cf914d779e6514f296914d12b0668af5b2f97d0"
+"price":"0x0"
 "receipt":
 "status":"null"
 "timestamp":"0x5848fe6f"
@@ -64,6 +65,7 @@ getBlock -a 2768801 1995314 1958017 --normalize --parity
 "nonce":"0x579"
 "number":"0x1e7232"
 "parentHash":"0xe19aa0276eee73e6d548e457eff67797dfec9142a8c9044b7494cf19fd5c55e4"
+"price":"0x0"
 "receipt":
 "status":"null"
 "timestamp":"0x57a004c3"
@@ -98,6 +100,7 @@ getBlock -a 2768801 1995314 1958017 --normalize --parity
 "nonce":"0x50da5"
 "number":"0x1de081"
 "parentHash":"0x6b218fa2bfd0e3c331c5f442dc559208a1ee41e8a01c2c689b0f338a107d3708"
+"price":"0x0"
 "receipt":
 "status":"null"
 "timestamp":"0x5797db28"

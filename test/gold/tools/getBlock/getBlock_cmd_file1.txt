@@ -20,6 +20,7 @@ getBlock --file:cmd_file1
 "nonce":297887
 "nonce":3113
 "parentHash":"0x85f082ce9d5cb8b3c16e0eb8ba5152927a02d1a2c9dc5ddf49a643f48bbe6d15"
+"price":0
 "receipt":
 "status":null
 "timestamp":1458022602
@@ -104,6 +105,7 @@ getBlock --file:cmd_file1
 "nonce":98474
 "nonce":98475
 "parentHash":"0x5e48c48213ede8ed9b7e9f5411564f4f996015c2d93636d7b2b7c60b230b0c20"
+"price":0
 "receipt":
 "status":null
 "timestamp":1458213990
@@ -197,6 +199,7 @@ getBlock --file:cmd_file1
 "miner":"0x61c808d82a3ac53231750dadc13c777b59310bd9"
 "nonce":13
 "parentHash":"0xeb35ba146384965b444191fa6354bdddbe0dcdc89319b2ab202422591213b24d"
+"price":0
 "receipt":
 "status":null
 "timestamp":1459980885
@@ -211,6 +214,7 @@ getBlock --file:cmd_file1
 "hash":"0xb536b97cce62003549986495f3d7d52347a874ba7ff73f2b442d0e1eb36113ac"
 "miner":"0xd34da389374caad1a048fbdc4569aae33fd5a375"
 "parentHash":"0x85bd2983043a4b717893f96407a24dda3af899e100ca65a5efc62e5859bd50bc"
+"price":0
 "timestamp":1461564158
 
 "address":"0x0b954635512f75edc168515aef7e086d02ea6ad5"
@@ -287,6 +291,7 @@ getBlock --file:cmd_file1
 "nonce":900705
 "nonce":900706
 "parentHash":"0x1adf11a3b8d0c2e75605a34a9adb883268ad48531c541ce3c98a42dce8f688b3"
+"price":0
 "receipt":
 "status":null
 "timestamp":1467296018
@@ -336,6 +341,7 @@ getBlock --file:cmd_file1
 "hash":"0x005ae48cbf04826bacbbffd44b79a5995eb9bda46ffda5609dbad7bd3c083902"
 "miner":"0xbcdfc35b86bedf72f0cda046a3c16829a2ef41d1"
 "parentHash":"0x5e26bd3cb18e0775d13d460868d328642bf51f4d989a3a13a0f43c6401edb8ad"
+"price":0
 "timestamp":1468865843
 
 "blockNumber":2017468
@@ -345,6 +351,7 @@ getBlock --file:cmd_file1
 "hash":"0xf0a5e384e9345372a57122e028ceaf400d637e65c728dc0512c69859fef01781"
 "miner":"0x2a65aca4d5fc5b5c859090a6c34d164135398226"
 "parentHash":"0x6ca269d02245567d73e81cd959b9ed079e3f483fd5916976863610b49d78618b"
+"price":0
 "timestamp":1470422063
 
 "address":"0x276c5c6ca8507ed7bac085fc9b9521f4f54b58d3"
@@ -438,6 +445,7 @@ getBlock --file:cmd_file1
 "nonce":43
 "nonce":728
 "parentHash":"0xd6f07877d475d957c7d2154db7b2b6e769ec4428be56e0690a7ead297aa7cd39"
+"price":0
 "receipt":
 "status":null
 "timestamp":1471990847
@@ -527,6 +535,7 @@ getBlock --file:cmd_file1
 "miner":"0xf3b9d2c81f2b24b0fa0acaaa865b7d9ced5fc2fb"
 "nonce":4
 "parentHash":"0xf482445c37a2b92cf4dc1507b3e8661f600dcd0980a79c910df6eaf6d7f9e555"
+"price":0
 "receipt":
 "status":null
 "timestamp":1473930294
@@ -550,6 +559,7 @@ getBlock --file:cmd_file1
 "miner":"0x2a65aca4d5fc5b5c859090a6c34d164135398226"
 "nonce":98
 "parentHash":"0x5e58ba96ebc9c4cfce21733bdf243a8dd090b881ac233c0e0fe08ef16e8f02ac"
+"price":0
 "receipt":
 "status":null
 "timestamp":1474007546
@@ -584,6 +594,7 @@ getBlock --file:cmd_file1
 "nonce":1393991
 "nonce":1393992
 "parentHash":"0x4c2f8369342b33445927fd1bba6f34d5f7c84e2903df18db56503df2ffde99c7"
+"price":0
 "receipt":
 "status":null
 "timestamp":1475329719
@@ -613,6 +624,7 @@ getBlock --file:cmd_file1
 "hash":"0x44fca249c279b399a9dd6abce1d4838e5e141514f96cbeec0908f9dacea77626"
 "miner":"0x61c808d82a3ac53231750dadc13c777b59310bd9"
 "parentHash":"0xffd3fd40d63430db65c335f592c6bfcc88f091fa0684ddb67c38969486a19e52"
+"price":0
 "timestamp":1477523292
 
 "blockHash":"0xce51a593a412e42f375f3e36660a090b2ff4c483fbed46f7ab031f3580d1a596"
@@ -631,6 +643,7 @@ getBlock --file:cmd_file1
 "miner":"0xf3b9d2c81f2b24b0fa0acaaa865b7d9ced5fc2fb"
 "nonce":2334
 "parentHash":"0xbad0aa3ba8fdfa7d205627a2b8fded3427f030fa1427076c47acf04ee33334af"
+"price":0
 "receipt":
 "status":null
 "timestamp":1478169571
@@ -645,5 +658,6 @@ getBlock --file:cmd_file1
 "hash":"0xfea7e92e1dc4aae5ef2310a4ae0a64997e949b85442a619a9b9633b9ecdd0810"
 "miner":"0x61c808d82a3ac53231750dadc13c777b59310bd9"
 "parentHash":"0x474c65a602268ccbddc6c1386c686db6523fa6172073bd07218ed27238441548"
+"price":0
 "timestamp":1480604456
 
