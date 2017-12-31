@@ -1,12 +1,14 @@
 getBlock argc: 3 [1:--parity] [2:0x2e7721] 
 getBlock --parity 0x2e7721 
 {
+    "difficulty": "0x62f79fffb26f",
     "gasLimit": "0x3d4629",
     "gasUsed": "0x4eb38",
     "hash": "0x662bd2bfc5ccbff1712f38354bba6075242fd3d0ef20ffafa2221ca03a56bfff",
-    "logsBloom": "0x00000000000000000008000000000000000000000000000000000000000000000000000000000000000000000000000000000000800000000000000080000000000000000000000000000000000000000000000000000000000000208000000000000000000000000000000000000000080000000000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000404000000000000000",
+    "miner": "0x2a65aca4d5fc5b5c859090a6c34d164135398226",
     "number": "0x2e7721",
     "parentHash": "0x74a7b7ed731f1a1ff41e97de97ec255908e6ca341ff1f7498e4df55e792d163d",
+    "price": "0x0",
     "timestamp": "0x58852147",
     "transactions": [
         {
@@ -22,7 +24,6 @@ getBlock --parity 0x2e7721
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0xdfe84ccf90221689393f3c15918a51bd8aaee3eb",
@@ -42,7 +43,6 @@ getBlock --parity 0x2e7721
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0xbcea34b591db7951b01259782c1d3a38bac77cf0",
@@ -72,7 +72,6 @@ getBlock --parity 0x2e7721
                         ]
                     }
                 ],
-                "logsBloom": "0x00000000000000000008000000000000000000000000000000000000000000000000000000000000000000000000000000000000800000000000000080000000000000000000000000000000000000000000000000000000000000208000000000000000000000000000000000000000080000000000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000404000000000000000",
                 "status": "null"
             },
             "to": "0xecf8f87f810ecf450940c9f60066b4a7a501d6a7",
@@ -92,7 +91,6 @@ getBlock --parity 0x2e7721
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0x6394421a777d714a127601dd225c3294e360b9c2",
@@ -112,7 +110,6 @@ getBlock --parity 0x2e7721
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0x3e937dffd79d0b493a923a7a8e7abe69d45ef6b0",
@@ -132,7 +129,6 @@ getBlock --parity 0x2e7721
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0x8ecd73a951d2363924be8fda02fef910149eb455",
@@ -152,7 +148,6 @@ getBlock --parity 0x2e7721
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0x8223836ca547eed16127b9437cf3fc127b3008d0",
@@ -172,7 +167,6 @@ getBlock --parity 0x2e7721
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0xe62686e71a7484ad17eaabc520175e5a2847f264",
@@ -192,7 +186,6 @@ getBlock --parity 0x2e7721
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0x9bfa8241e32c158f31d80bad5542bb750863ca15",
@@ -212,7 +205,6 @@ getBlock --parity 0x2e7721
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0x7a0593e86e4ff431184faa96dc84f582efd8be13",
@@ -232,7 +224,6 @@ getBlock --parity 0x2e7721
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0xe97bd9a1c8b9c18ba5d2fc8891e3c6c0dba4e383",
@@ -252,7 +243,6 @@ getBlock --parity 0x2e7721
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0x9b9fac527ef803b9122b568dad73179518ccdf72",
@@ -272,7 +262,6 @@ getBlock --parity 0x2e7721
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0xf91a6e0a861e8b3c53c29f2772871588afd49ce6",
@@ -292,7 +281,6 @@ getBlock --parity 0x2e7721
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0xfe350f199f244ac9a79038d254400b632a633225",
@@ -312,7 +300,6 @@ getBlock --parity 0x2e7721
                 "contractAddress": "0x0",
                 "gasUsed": "0x5208",
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": "null"
             },
             "to": "0xdc3e78fdc5a2784dead276ba114ca8b6c3465ded",

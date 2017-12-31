@@ -12,7 +12,6 @@ from Node:
 "gasUsed":"0x5208"
 "hash":"0x67622c17c586e4e4bcffb118344b6d9683eb354858b7638ab77aafbd7e3f54e0"
 "input":"0x"
-"logsBloom":"0x0"
 "number":"0x3bd09"
 "parentHash":"0x32ce6303a0e247ca522b29fd61a61d1d34700b47d4eaf8de3287d37ac85584b9"
 "timestamp":"0x55f9f307"
@@ -31,7 +30,6 @@ from Quickblocks:
 "gasUsed":"0x5208"
 "hash":"0x67622c17c586e4e4bcffb118344b6d9683eb354858b7638ab77aafbd7e3f54e0"
 "input":"0x"
-"logsBloom":"0x0"
 "number":"0x3bd09"
 "parentHash":"0x32ce6303a0e247ca522b29fd61a61d1d34700b47d4eaf8de3287d37ac85584b9"
 "timestamp":"0x55f9f307"
@@ -40,6 +38,9 @@ from Quickblocks:
 "value":"0x1bc16d674ec80000"
 
 --------------------------------------------------------------------------------
+Hidden fields:
+author, condition, creates, difficulty, extraData, miner, mixHash, networkId, chainId, nonce, nonce, publicKey, r, raw, receiptsRoot, s, sealFields, sha3Uncles, size, standardV, stateRoot, totalDifficulty, transactionsRoot, uncles, v, logsBloom, contractAddress, cumulativeGasUsed, receipt, address, data, logIndex, topics, price, status
+
 The strings are the same
 
 --------------------------------------------------------------------------------

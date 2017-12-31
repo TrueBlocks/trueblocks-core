@@ -4,9 +4,11 @@ getBlock 1001001 -o
     "gasLimit": 3141592,
     "gasUsed": 84000,
     "hash": "0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53",
-    "logsBloom": "0x0",
     "blockNumber": 1001001,
     "parentHash": "0x96810a6076e621e311a232468bfd3dcfac08f4803b255af0f00300f47981c10f",
+    "miner": "0x0c729be7c39543c3d549282a40395299d987cec2",
+    "difficulty": 12468438268070,
+    "price": 0,
     "timestamp": 1455421883,
     "transactions": [
         {
@@ -27,7 +29,6 @@ getBlock 1001001 -o
                 "contractAddress": "0x0",
                 "gasUsed": 21000,
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": null
             },
             "gasUsed": 21000
@@ -50,7 +51,6 @@ getBlock 1001001 -o
                 "contractAddress": "0x0",
                 "gasUsed": 21000,
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": null
             },
             "gasUsed": 21000
@@ -73,7 +73,6 @@ getBlock 1001001 -o
                 "contractAddress": "0x0",
                 "gasUsed": 21000,
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": null
             },
             "gasUsed": 21000
@@ -96,7 +95,6 @@ getBlock 1001001 -o
                 "contractAddress": "0x0",
                 "gasUsed": 21000,
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": null
             },
             "gasUsed": 21000
