@@ -74,6 +74,9 @@ bool CNewBlock::setValueByName(const SFString& fieldName, const SFString& fieldV
         case 'b':
             if ( fieldName % "blockNumber" ) { blockNumber = toUnsigned(fieldValue); return true; }
             break;
+        case 'd':
+            if ( fieldName % "difficulty" ) { difficulty = toUnsigned(fieldValue); return true; }
+            break;
         case 'g':
             if ( fieldName % "gasLimit" ) { gasLimit = toGas(fieldValue); return true; }
             if ( fieldName % "gasUsed" ) { gasUsed = toGas(fieldValue); return true; }
@@ -81,17 +84,11 @@ bool CNewBlock::setValueByName(const SFString& fieldName, const SFString& fieldV
         case 'h':
             if ( fieldName % "hash" ) { hash = toHash(fieldValue); return true; }
             break;
-        case 'l':
-            if ( fieldName % "logsBloom" ) { logsBloom = toBloom(fieldValue); return true; }
-            break;
         case 'm':
             if ( fieldName % "miner" ) { miner = toAddress(fieldValue); return true; }
             break;
         case 'p':
             if ( fieldName % "parentHash" ) { parentHash = toHash(fieldValue); return true; }
-            break;
-        case 's':
-            if ( fieldName % "size" ) { size = toUnsigned(fieldValue); return true; }
             break;
         case 't':
             if ( fieldName % "timestamp" ) { timestamp = toTimestamp(fieldValue); return true; }
@@ -136,13 +133,12 @@ bool CNewBlock::Serialize(SFArchive& archive) {
     archive >> gasLimit;
     archive >> gasUsed;
     archive >> hash;
-    archive >> logsBloom;
     archive >> blockNumber;
     archive >> parentHash;
+    archive >> miner;
+    archive >> difficulty;
     archive >> timestamp;
     archive >> transactions;
-    archive >> miner;
-    archive >> size;
     finishParse();
     return true;
 }
@@ -159,13 +155,12 @@ bool CNewBlock::SerializeC(SFArchive& archive) const {
     archive << gasLimit;
     archive << gasUsed;
     archive << hash;
-    archive << logsBloom;
     archive << blockNumber;
     archive << parentHash;
+    archive << miner;
+    archive << difficulty;
     archive << timestamp;
     archive << transactions;
-    archive << miner;
-    archive << size;
 
     return true;
 }
@@ -183,13 +178,12 @@ void CNewBlock::registerClass(void) {
     ADD_FIELD(CNewBlock, "gasLimit", T_GAS, ++fieldNum);
     ADD_FIELD(CNewBlock, "gasUsed", T_GAS, ++fieldNum);
     ADD_FIELD(CNewBlock, "hash", T_HASH, ++fieldNum);
-    ADD_FIELD(CNewBlock, "logsBloom", T_BLOOM, ++fieldNum);
     ADD_FIELD(CNewBlock, "blockNumber", T_NUMBER, ++fieldNum);
     ADD_FIELD(CNewBlock, "parentHash", T_HASH, ++fieldNum);
+    ADD_FIELD(CNewBlock, "miner", T_ADDRESS, ++fieldNum);
+    ADD_FIELD(CNewBlock, "difficulty", T_NUMBER, ++fieldNum);
     ADD_FIELD(CNewBlock, "timestamp", T_TIMESTAMP, ++fieldNum);
     ADD_FIELD(CNewBlock, "transactions", T_OBJECT|TS_ARRAY, ++fieldNum);
-    ADD_FIELD(CNewBlock, "miner", T_ADDRESS, ++fieldNum);
-    ADD_FIELD(CNewBlock, "size", T_NUMBER, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CNewBlock, "schema");
@@ -253,13 +247,14 @@ bool CNewBlock::readBackLevel(SFArchive& archive) {
         archive >> gasLimit;
         archive >> gasUsed;
         archive >> hash;
-        archive >> logsBloom;
+        SFBloom removed;
+        archive >> removed;
         archive >> blockNumber;
         archive >> parentHash;
         archive >> timestamp;
         archive >> transactions;
+        difficulty = 0x0;
         miner = "0x0";
-        size = 0x0;
         finishParse();
         done = true;
     }
@@ -292,6 +287,9 @@ SFString CNewBlock::getValueByName(const SFString& fieldName) const {
         case 'b':
             if ( fieldName % "blockNumber" ) return asStringU(blockNumber);
             break;
+        case 'd':
+            if ( fieldName % "difficulty" ) return asStringU(difficulty);
+            break;
         case 'g':
             if ( fieldName % "gasLimit" ) return fromGas(gasLimit);
             if ( fieldName % "gasUsed" ) return fromGas(gasUsed);
@@ -299,17 +297,11 @@ SFString CNewBlock::getValueByName(const SFString& fieldName) const {
         case 'h':
             if ( fieldName % "hash" ) return fromHash(hash);
             break;
-        case 'l':
-            if ( fieldName % "logsBloom" ) return fromBloom(logsBloom);
-            break;
         case 'm':
             if ( fieldName % "miner" ) return fromAddress(miner);
             break;
         case 'p':
             if ( fieldName % "parentHash" ) return fromHash(parentHash);
-            break;
-        case 's':
-            if ( fieldName % "size" ) return asStringU(size);
             break;
         case 't':
             if ( fieldName % "timestamp" ) return fromTimestamp(timestamp);
@@ -357,13 +349,13 @@ CNewBlock::CNewBlock(const CBlock& block) {
     gasLimit = block.gasLimit;
     gasUsed = block.gasUsed;
     hash = block.hash;
-    logsBloom = block.logsBloom;
+//    logsBloom = block.logsBloom;
     blockNumber = block.blockNumber;
     parentHash = block.parentHash;
     timestamp = block.timestamp;
     transactions = block.transactions;
     miner = "0x0";
-    size = 0;
+    difficulty = 0;
 }
 
 //-----------------------------------------------------------------------

@@ -4,9 +4,10 @@ getBlock 4000001
     "gasLimit": 6712392,
     "gasUsed": 337966,
     "hash": "0x79990fd526c4751139a7a3afc7420cde1a1141b1920d2afd411858ecb4926a39",
-    "logsBloom": "0x00000000000000000000000000000000000000000400000000000000000000000000000000000000000000000080000028000000000000000000000000000000000000000000000000000000000000000001000000000000000000000000040000000000000000000000000000000000000000000000000000000080000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002000000000000000000008000000000000000000000000000000000000000000000000000004100000000000000000000000000000400000000000000000000000",
     "blockNumber": 4000001,
     "parentHash": "0xb8a3f7f5cfc1748f91a684f20fe89031202cbadcd15078c49b85ec2a57f43853",
+    "miner": "0xea674fdde714fd979de3edf0f56aa9716b898ec8",
+    "difficulty": 1097113993909745,
     "timestamp": 1499633571,
     "transactions": [
         {
@@ -27,7 +28,6 @@ getBlock 4000001
                 "contractAddress": "0x0",
                 "gasUsed": 21000,
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": null
             },
             "gasUsed": 21000
@@ -50,7 +50,6 @@ getBlock 4000001
                 "contractAddress": "0x0",
                 "gasUsed": 21000,
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": null
             },
             "gasUsed": 21000
@@ -73,7 +72,6 @@ getBlock 4000001
                 "contractAddress": "0x0",
                 "gasUsed": 21000,
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": null
             },
             "gasUsed": 21000
@@ -96,7 +94,6 @@ getBlock 4000001
                 "contractAddress": "0x0",
                 "gasUsed": 21000,
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": null
             },
             "gasUsed": 21000
@@ -119,7 +116,6 @@ getBlock 4000001
                 "contractAddress": "0x0",
                 "gasUsed": 21000,
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": null
             },
             "gasUsed": 21000
@@ -142,7 +138,6 @@ getBlock 4000001
                 "contractAddress": "0x0",
                 "gasUsed": 21000,
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": null
             },
             "gasUsed": 21000
@@ -165,7 +160,6 @@ getBlock 4000001
                 "contractAddress": "0x0",
                 "gasUsed": 21000,
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": null
             },
             "gasUsed": 21000
@@ -188,7 +182,6 @@ getBlock 4000001
                 "contractAddress": "0x0",
                 "gasUsed": 21000,
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": null
             },
             "gasUsed": 21000
@@ -211,7 +204,6 @@ getBlock 4000001
                 "contractAddress": "0x0",
                 "gasUsed": 21000,
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": null
             },
             "gasUsed": 21000
@@ -234,7 +226,6 @@ getBlock 4000001
                 "contractAddress": "0x0",
                 "gasUsed": 21000,
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": null
             },
             "gasUsed": 21000
@@ -268,7 +259,6 @@ getBlock 4000001
                         ]
                     }
                 ],
-                "logsBloom": "0x00000000000000000000000000000000000000000400000000000000000000000000000000000000000000000080000028000000000000000000000000000000000000000000000000000000000000000001000000000000000000000000040000000000000000000000000000000000000000000000000000000080000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002000000000000000000008000000000000000000000000000000000000000000000000000004100000000000000000000000000000400000000000000000000000",
                 "status": null
             },
             "gasUsed": 22966
@@ -291,7 +281,6 @@ getBlock 4000001
                 "contractAddress": "0x0",
                 "gasUsed": 21000,
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": null
             },
             "gasUsed": 21000
@@ -314,7 +303,6 @@ getBlock 4000001
                 "contractAddress": "0x0",
                 "gasUsed": 21000,
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": null
             },
             "gasUsed": 21000
@@ -337,7 +325,6 @@ getBlock 4000001
                 "contractAddress": "0x0",
                 "gasUsed": 21000,
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": null
             },
             "gasUsed": 21000
@@ -360,7 +347,6 @@ getBlock 4000001
                 "contractAddress": "0x0",
                 "gasUsed": 21000,
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": null
             },
             "gasUsed": 21000
@@ -383,7 +369,6 @@ getBlock 4000001
                 "contractAddress": "0x0",
                 "gasUsed": 21000,
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": null
             },
             "gasUsed": 21000

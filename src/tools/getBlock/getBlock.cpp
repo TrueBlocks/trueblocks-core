@@ -142,7 +142,7 @@ SFString checkOneBlock(uint64_t num, const COptions& opt) {
         // to be the same as the block's (even though they are not) so they
         // are removed as duplicates. Otherwise, the blocks won't match
         qBlocks.transactions[i].receipt.gasUsed = qBlocks.gasUsed;
-        qBlocks.transactions[i].receipt.logsBloom = qBlocks.logsBloom;
+        //qBlocks.transactions[i].receipt.logsBloom = qBlocks.logsBloom;
     }
     if (verbose)
         cout << num << "\n";

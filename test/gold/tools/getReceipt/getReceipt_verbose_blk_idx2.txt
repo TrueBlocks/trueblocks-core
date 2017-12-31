@@ -4,6 +4,5 @@ getReceipt --verbose 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef979865523
   "contractAddress": "0x0",
   "gasUsed": 21000,
   "logs": [],
-  "logsBloom": "0x0",
   "status": null
 }

@@ -4,9 +4,10 @@ getBlock daofork
     "gasLimit": 4712384,
     "gasUsed": 84000,
     "hash": "0x4985f5ca3d2afbec36529aa96f74de3cc10a2a4a6c44f2157a57d2c6059a11bb",
-    "logsBloom": "0x0",
     "blockNumber": 1920000,
     "parentHash": "0xa218e2c611f21232d857e3c8cecdcdf1f65f25a4477f98f6f47e4063807f2308",
+    "miner": "0xbcdfc35b86bedf72f0cda046a3c16829a2ef41d1",
+    "difficulty": 62413376722602,
     "timestamp": 1469020840,
     "transactions": [
         {
@@ -27,7 +28,6 @@ getBlock daofork
                 "contractAddress": "0x0",
                 "gasUsed": 21000,
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": null
             },
             "gasUsed": 21000
@@ -50,7 +50,6 @@ getBlock daofork
                 "contractAddress": "0x0",
                 "gasUsed": 21000,
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": null
             },
             "gasUsed": 21000
@@ -73,7 +72,6 @@ getBlock daofork
                 "contractAddress": "0x0",
                 "gasUsed": 21000,
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": null
             },
             "gasUsed": 21000
@@ -96,7 +94,6 @@ getBlock daofork
                 "contractAddress": "0x0",
                 "gasUsed": 21000,
                 "logs": [],
-                "logsBloom": "0x0",
                 "status": null
             },
             "gasUsed": 21000
