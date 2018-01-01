@@ -159,7 +159,7 @@ int main(int argc, const char *argv[]) {
                 << cYellow << visitor.transStats.nDisplayed    << cOff << " displayed from cache; "
                 << cYellow << visitor.transStats.nFreshened    << cOff << " written to cache; "
                 << cYellow << visitor.transStats.nAccountedFor << cOff << " accounted for"
-                << " }\r\n";
+                << " }                        \r\n";
 
         if (visitor.opts.debugger_on) {
             // If we were debugging and we did nothing, let the user know
