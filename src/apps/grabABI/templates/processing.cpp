@@ -378,7 +378,7 @@ typedef SFArrayBase<CTemp> SFTempArray;
 //-----------------------------------------------------------------------
 uint32_t CVisitor::checkForImport(void) {
     if (!fileExists("./caxche/import.txt")) {
-        cerr << "No import found.\n";
+//        cerr << "No import found.\n";
         return 0;
     }
 
