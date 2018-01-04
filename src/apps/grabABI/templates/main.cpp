@@ -28,6 +28,7 @@ int main(int argc, const char *argv[]) {
     parselib_init(myQuitHandler);
     if (argc < 2)
         verbose = true;
+    cout << "Starting monitor...\r"; cout.flush();
 
     blknum_t clientHeight;
     uint64_t cacheHeight;
@@ -123,7 +124,8 @@ int main(int argc, const char *argv[]) {
             visitor.blockStats.lastBlock  = min(cacheHeight, visitor.blockStats.maxWatchBlock);
             visitor.blockStats.firstBlock = min(blockNum,    visitor.blockStats.lastBlock);
             ASSERT(visitor.blockStats.firstBlock <= visitor.blockStats.lastBlock);
-            visitor.blockStats.nBlocks    = visitor.blockStats.lastBlock - visitor.blockStats.firstBlock;
+            visitor.blockStats.nBlocks = visitor.blockStats.lastBlock - visitor.blockStats.firstBlock;
+            visitor.blockStats.nBlocks = min(visitor.blockStats.nBlocks,(uint64_t)8000);
             cerr << "Freshening " << visitor.opts.monitorName
                     << "from " << visitor.blockStats.firstBlock
                     << " to " << visitor.blockStats.lastBlock

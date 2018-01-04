@@ -182,12 +182,13 @@ bool updateCacheUsingBlooms(const SFString& path, void *dataPtr) {
             bool hit = false;
             for (uint32_t j = 0 ; j < blooms.getCount() && !hit ; j++) {
                 for (uint32_t i = 0 ; i < visitor->watches.getCount()-1 && !hit; i++) { // don't check too many
-//                    cerr << cYellow << "    Checking " << visitor->watches[i].address << " against bloom " << path << "\n" << cOff;
                     if (isBloomHit(makeBloom(visitor->watches[i].address), blooms[j])) {
-//                        cerr << bTeal << "    Hit\n" << cOff;
                         whichBloom = blooms[j];
                         whichAddr = visitor->watches[i].address;
                         hit = true;
+//                        cout << cTeal << "\nHit at " << visitor->watches[i].address << " against bloom " << path << "\n" << cOff;
+                    } else {
+//                        cout << cYellow << "Checking " << visitor->watches[i].address << " against bloom " << path << "\r" << cOff;
                     }
                 }
             }
@@ -199,18 +200,26 @@ bool updateCacheUsingBlooms(const SFString& path, void *dataPtr) {
 //                    cout << "Checking block " << bloomNum << "\r\n";
                     CBlock block;
                     readOneBlock_fromBinary(block, getBinaryFilename(bloomNum));
-                    if (!updateCache(block, visitor)) {
-                        visitor->bloomStats.bloomHits++;
-                        visitor->bloomStats.falsePositives += (nFound == 0);
-                        stringToAsciiFile("./cache/lastBlock.txt", asStringU(bloomNum) + "\r\n");
-                        return false;  // don't continue, user hit 'q'
+                    bool probableDDos = block.transactions.getCount() < 20 && blooms.getCount() > 100 && block.blockNumber > 2286910 && block.blockNumber < 2463000;
+//                    cout << probableDDos << " at " << block.blockNumber << " : " << block.transactions.getCount() << " : " << blooms.getCount() << "\n";
+                    if (!probableDDos) {
+//                        cout << "Updating cache...";cout.flush();
+                        if (!updateCache(block, visitor)) {
+                            visitor->bloomStats.bloomHits++;
+                            visitor->bloomStats.falsePositives += (nFound == 0);
+                            stringToAsciiFile("./cache/lastBlock.txt", asStringU(bloomNum) + "\r\n");
+                            return false;  // don't continue, user hit 'q'
+                        }
+                    } else {
+//                         cout << cRed << "skipping probably DDos block at " << block.blockNumber << "\n" << cOff;
+//                         cout.flush();//getchar();
                     }
                 }
 //                cout << "Bloom hit at block " << bloomNum
 //                        << " at address " << whichAddr
 //                        << " with " << bitsTwiddled(whichBloom)
 //                        << " bits found " << nFound << " transactions\r";
-                cout.flush();
+//                cout.flush();
                 visitor->bloomStats.bloomHits++;
                 visitor->bloomStats.falsePositives += (nFound == 0);
             }
