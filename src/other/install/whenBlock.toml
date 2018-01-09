@@ -16,7 +16,7 @@ list = [
 	{ name = "devcon2",        value = "2286910" },
 	{ name = "tangerine",      value = "2463000" },
 	{ name = "spurious",       value = "2675000" },
-	{ name = "stateclear",     value = "2718436" },
+	{ name = "stateclear",     value = "2717576" },
 	{ name = "eea",            value = "3265360" },
 	{ name = "ens2",           value = "3327417" },
 	{ name = "parityhack1",    value = "4041179" },
