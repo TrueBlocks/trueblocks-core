@@ -72,6 +72,7 @@ bool CTraceAction::setValueByName(const SFString& fieldName, const SFString& fie
             if ( fieldName % "gas" ) { gas = toGas(fieldValue); return true; }
             break;
         case 'i':
+            if ( fieldName % "init" ) { init = fieldValue; return true; }
             if ( fieldName % "input" ) { input = fieldValue; return true; }
             break;
         case 'r':
@@ -107,15 +108,16 @@ bool CTraceAction::Serialize(SFArchive& archive) {
 
     // EXISTING_CODE
     // EXISTING_CODE
+    archive >> address;
+    archive >> balance;
     archive >> callType;
     archive >> from;
     archive >> gas;
+    archive >> init;
     archive >> input;
+    archive >> refundAddress;
     archive >> to;
     archive >> value;
-    archive >> address;
-    archive >> balance;
-    archive >> refundAddress;
     finishParse();
     return true;
 }
@@ -128,15 +130,16 @@ bool CTraceAction::SerializeC(SFArchive& archive) const {
 
     // EXISTING_CODE
     // EXISTING_CODE
+    archive << address;
+    archive << balance;
     archive << callType;
     archive << from;
     archive << gas;
+    archive << init;
     archive << input;
+    archive << refundAddress;
     archive << to;
     archive << value;
-    archive << address;
-    archive << balance;
-    archive << refundAddress;
 
     return true;
 }
@@ -151,15 +154,16 @@ void CTraceAction::registerClass(void) {
     ADD_FIELD(CTraceAction, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CTraceAction, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CTraceAction, "showing", T_BOOL,  ++fieldNum);
+    ADD_FIELD(CTraceAction, "address", T_ADDRESS, ++fieldNum);
+    ADD_FIELD(CTraceAction, "balance", T_WEI, ++fieldNum);
     ADD_FIELD(CTraceAction, "callType", T_TEXT, ++fieldNum);
     ADD_FIELD(CTraceAction, "from", T_ADDRESS, ++fieldNum);
     ADD_FIELD(CTraceAction, "gas", T_GAS, ++fieldNum);
+    ADD_FIELD(CTraceAction, "init", T_TEXT, ++fieldNum);
     ADD_FIELD(CTraceAction, "input", T_TEXT, ++fieldNum);
+    ADD_FIELD(CTraceAction, "refundAddress", T_ADDRESS, ++fieldNum);
     ADD_FIELD(CTraceAction, "to", T_ADDRESS, ++fieldNum);
     ADD_FIELD(CTraceAction, "value", T_WEI, ++fieldNum);
-    ADD_FIELD(CTraceAction, "address", T_ADDRESS, ++fieldNum);
-    ADD_FIELD(CTraceAction, "balance", T_WEI, ++fieldNum);
-    ADD_FIELD(CTraceAction, "refundAddress", T_ADDRESS, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CTraceAction, "schema");
@@ -246,6 +250,7 @@ SFString CTraceAction::getValueByName(const SFString& fieldName) const {
             if ( fieldName % "gas" ) return fromGas(gas);
             break;
         case 'i':
+            if ( fieldName % "init" ) return init;
             if ( fieldName % "input" ) return input;
             break;
         case 'r':

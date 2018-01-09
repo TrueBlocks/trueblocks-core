@@ -2,7 +2,7 @@ dataUpgrade argc: 2 [1:CTrace]
 dataUpgrade CTrace 
 --------------------------------------------------------------------------------
 className: CTrace
-objectSize: 472
+objectSize: 544
 baseClass: CBaseNode
 	fieldName: schema
 	  fieldID: 1001
@@ -64,15 +64,16 @@ baseClass: CBaseNode
   "transactionHash": "0x0",
   "transactionPosition": 0,
   "action": {
-    "from": "0x0",
-    "gas": 0,
-    "to": "0x0",
-    "value": 0,
     "address": "0x0",
     "balance": 0,
-    "refundAddress": "0x0"
+    "from": "0x0",
+    "gas": 0,
+    "refundAddress": "0x0",
+    "to": "0x0",
+    "value": 0
   },
   "result": {
+    "address": "0x0",
     "gasUsed": 0
   }
 }
