@@ -23,6 +23,16 @@ typedef SFList<CTrace*>             CTraceList;
 typedef SFUniqueList<CTrace*>       CTraceListU;
 
 // EXISTING_CODE
+/*
+ FROM RPC DOCUMENTATION
+ traceAddress field
+ The traceAddress field of all returned traces, gives the exact location in the
+ call trace [index in root, index in first CALL, index in second CALL, ...].
+ i.e. if the trace is:
+    A calls B, B calls G, A calls C, C calls G
+ returns
+    [ {A: []}, {B: [0]}, {G: [0, 0]}, {C: [1]}, {G: [1, 0]} ]
+*/
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------

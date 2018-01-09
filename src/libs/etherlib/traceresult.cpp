@@ -56,6 +56,12 @@ bool CTraceResult::setValueByName(const SFString& fieldName, const SFString& fie
     // EXISTING_CODE
 
     switch (tolower(fieldName[0])) {
+        case 'a':
+            if ( fieldName % "address" ) { address = toAddress(fieldValue); return true; }
+            break;
+        case 'c':
+            if ( fieldName % "code" ) { code = fieldValue; return true; }
+            break;
         case 'g':
             if ( fieldName % "gasUsed" ) { gasUsed = toGas(fieldValue); return true; }
             break;
@@ -86,6 +92,8 @@ bool CTraceResult::Serialize(SFArchive& archive) {
 
     // EXISTING_CODE
     // EXISTING_CODE
+    archive >> address;
+    archive >> code;
     archive >> gasUsed;
     archive >> output;
     finishParse();
@@ -100,6 +108,8 @@ bool CTraceResult::SerializeC(SFArchive& archive) const {
 
     // EXISTING_CODE
     // EXISTING_CODE
+    archive << address;
+    archive << code;
     archive << gasUsed;
     archive << output;
 
@@ -116,6 +126,8 @@ void CTraceResult::registerClass(void) {
     ADD_FIELD(CTraceResult, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CTraceResult, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CTraceResult, "showing", T_BOOL,  ++fieldNum);
+    ADD_FIELD(CTraceResult, "address", T_ADDRESS, ++fieldNum);
+    ADD_FIELD(CTraceResult, "code", T_TEXT, ++fieldNum);
     ADD_FIELD(CTraceResult, "gasUsed", T_GAS, ++fieldNum);
     ADD_FIELD(CTraceResult, "output", T_TEXT, ++fieldNum);
 
@@ -188,6 +200,12 @@ SFString CTraceResult::getValueByName(const SFString& fieldName) const {
 
     // Return field values
     switch (tolower(fieldName[0])) {
+        case 'a':
+            if ( fieldName % "address" ) return fromAddress(address);
+            break;
+        case 'c':
+            if ( fieldName % "code" ) return code;
+            break;
         case 'g':
             if ( fieldName % "gasUsed" ) return fromGas(gasUsed);
             break;

@@ -83,7 +83,7 @@ getBlock --file:cmd_file2
 "blockHash":"0x85bc0d134ec1a4b4b3700519b60bac5f8ff34a7a368b129d907b4cbe764c9743"
 "blockNumber":599852
 "contractAddress":"0x0"
-"cumulativeGasUsed":0
+"cumulativeGasUsed":21000
 "difficulty":7588129354316
 "from":"0x2a65aca4d5fc5b5c859090a6c34d164135398226"
 "gas":90000
@@ -107,7 +107,7 @@ getBlock --file:cmd_file2
 "blockHash":"0x52e7da7012939d8a9d8439e0db42de86b4629f7cd0d8745188de41881fd25974"
 "blockNumber":635557
 "contractAddress":"0x0"
-"cumulativeGasUsed":0
+"cumulativeGasUsed":21000
 "difficulty":7406139158036
 "from":"0x63a9975ba31b0b9626b34300f7f627147df1f526"
 "gas":90000
@@ -151,7 +151,7 @@ getBlock --file:cmd_file2
 "blockHash":"0x4888dfa10357fbbdfaaa0b4adf580522eeb47a438afd4afbf8a2cdb28884b45c"
 "blockNumber":798397
 "contractAddress":"0x0"
-"cumulativeGasUsed":0
+"cumulativeGasUsed":21000
 "difficulty":8190827447647
 "from":"0x63a9975ba31b0b9626b34300f7f627147df1f526"
 "gas":90000
@@ -175,7 +175,7 @@ getBlock --file:cmd_file2
 "blockHash":"0xd1eb7ea80cd4ce9c0b34e4297232fc96779b9bba8b5e4da46b3e2887adb3912b"
 "blockNumber":851731
 "contractAddress":"0x0"
-"cumulativeGasUsed":0
+"cumulativeGasUsed":21000
 "difficulty":8886631266194
 "from":"0x82214942f4c0b387d953408eaf2219a4775f647f"
 "gas":90000
@@ -199,7 +199,8 @@ getBlock --file:cmd_file2
 "blockHash":"0x2880d6b277063fccfb361df7b76e151054a58d9d9918283ecdad0da1e77224e5"
 "blockNumber":1025677
 "contractAddress":"0x0"
-"cumulativeGasUsed":0
+"cumulativeGasUsed":21000
+"cumulativeGasUsed":42000
 "difficulty":12517095426659
 "from":"0x2a65aca4d5fc5b5c859090a6c34d164135398226"
 "gas":90000
@@ -231,7 +232,15 @@ getBlock --file:cmd_file2
 "blockHash":"0x830089de4d461ac6ceaf273fd67b58ccdd4f39bbdf69aa19ad0f5f74c417db87"
 "blockNumber":1026962
 "contractAddress":"0x0"
-"cumulativeGasUsed":0
+"cumulativeGasUsed":105000
+"cumulativeGasUsed":126000
+"cumulativeGasUsed":147000
+"cumulativeGasUsed":168000
+"cumulativeGasUsed":21000
+"cumulativeGasUsed":333222
+"cumulativeGasUsed":42000
+"cumulativeGasUsed":63000
+"cumulativeGasUsed":84000
 "data":"0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
 "data":"0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002faf080"
 "data":"0x000000000000000000000000e73d305a231ab10a7e6c0f6faa3f8bdc1aa1246c00000000000000000000000002e433afd75df65fbf4e263d84238f5628453d700000000000000000000000000000000000000000000000000000000056c6d8800000000000000000000000000000000000000000000000000000000002faf0800000000000000000000000000000000000000000000000000000000000000000"
@@ -310,7 +319,11 @@ getBlock --file:cmd_file2
 "blockHash":"0xd62bbd86a8e93d18a74561fd1404cdfc3725ee49e2268f8915979e9de85e04b3"
 "blockNumber":1078767
 "contractAddress":"0x0"
-"cumulativeGasUsed":0
+"cumulativeGasUsed":113244
+"cumulativeGasUsed":21000
+"cumulativeGasUsed":50244
+"cumulativeGasUsed":71244
+"cumulativeGasUsed":92244
 "data":"0x00000000000000000000000063a9975ba31b0b9626b34300f7f627147df1f5260000000000000000000000000000000000000000000000000243c238a1901000"
 "difficulty":15032592181868
 "from":"0x2a65aca4d5fc5b5c859090a6c34d164135398226"
@@ -360,7 +373,8 @@ getBlock --file:cmd_file2
 "blockHash":"0x536606c35e261ecaa1da2d427b9b907d78464b57f19d59ea5d5c93b9f441bbba"
 "blockNumber":1152642
 "contractAddress":"0x0"
-"cumulativeGasUsed":0
+"cumulativeGasUsed":21000
+"cumulativeGasUsed":42000
 "difficulty":17542881926868
 "from":"0x151255dd9e38e44db38ea06ec66d0d113d6cbe37"
 "from":"0x2a65aca4d5fc5b5c859090a6c34d164135398226"

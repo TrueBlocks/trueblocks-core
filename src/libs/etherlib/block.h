@@ -158,4 +158,3 @@ inline blknum_t bnFromPath(const SFString& path) {
 }
 // EXISTING_CODE
 }  // namespace qblocks
-
