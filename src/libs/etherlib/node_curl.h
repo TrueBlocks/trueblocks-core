@@ -20,7 +20,7 @@ namespace qblocks {
         SFString         baseURL;
         CURLCALLBACKFUNC callBackFunc;
         bool             earlyAbort;
-        SFString         url;
+        SFString         postData;
         SFString         result;
         SFString         source;
         bool             tracing_on;

@@ -26,15 +26,16 @@ typedef SFUniqueList<CTraceAction*>       CTraceActionListU;
 //--------------------------------------------------------------------------
 class CTraceAction : public CBaseNode {
 public:
+    SFAddress address;
+    SFWei balance;
     SFString callType;
     SFAddress from;
     SFGas gas;
+    SFString init;
     SFString input;
+    SFAddress refundAddress;
     SFAddress to;
     SFWei value;
-    SFAddress address;
-    SFWei balance;
-    SFAddress refundAddress;
 
 public:
     CTraceAction(void);
@@ -93,15 +94,16 @@ inline void CTraceAction::Clear(void) {
 inline void CTraceAction::Init(void) {
     CBaseNode::Init();
 
+    address = "";
+    balance = 0;
     callType = "";
     from = "";
     gas = 0;
+    init = "";
     input = "";
+    refundAddress = "";
     to = "";
     value = 0;
-    address = "";
-    balance = 0;
-    refundAddress = "";
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -112,15 +114,16 @@ inline void CTraceAction::Copy(const CTraceAction& tr) {
     Clear();
     CBaseNode::Copy(tr);
 
+    address = tr.address;
+    balance = tr.balance;
     callType = tr.callType;
     from = tr.from;
     gas = tr.gas;
+    init = tr.init;
     input = tr.input;
+    refundAddress = tr.refundAddress;
     to = tr.to;
     value = tr.value;
-    address = tr.address;
-    balance = tr.balance;
-    refundAddress = tr.refundAddress;
 
     // EXISTING_CODE
     // EXISTING_CODE

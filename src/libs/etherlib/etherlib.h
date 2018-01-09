@@ -7,6 +7,7 @@
  * The LICENSE at the root of this repo details your rights (if any)
  *------------------------------------------------------------------------*/
 
+#include "known_blocks.h"
 #include "abilib.h"
 #include "block.h"
 #include "transaction.h"
@@ -29,3 +30,4 @@
 #include "blockoptions.h"
 
 using namespace qblocks;
+

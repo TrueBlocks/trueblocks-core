@@ -23,7 +23,7 @@ getBlock 2769609 2799895 2872831 3076260 -o
             "value": 1052000000000000000,
             "gas": 21000,
             "gasPrice": 50000000000,
-            "cumulativeGasUsed": 0,
+            "cumulativeGasUsed": 21000,
             "input": "0x",
             "receipt": {
                 "contractAddress": "0x0",
@@ -45,7 +45,7 @@ getBlock 2769609 2799895 2872831 3076260 -o
             "value": 94299178842130530,
             "gas": 21000,
             "gasPrice": 40000000000,
-            "cumulativeGasUsed": 0,
+            "cumulativeGasUsed": 42000,
             "input": "0x",
             "receipt": {
                 "contractAddress": "0x0",
@@ -67,7 +67,7 @@ getBlock 2769609 2799895 2872831 3076260 -o
             "value": 0,
             "gas": 135000,
             "gasPrice": 20000000000,
-            "cumulativeGasUsed": 0,
+            "cumulativeGasUsed": 79358,
             "input": "0xa9059cbb000000000000000000000000b6907884085f2e1710b95c15c8da4552fd51722200000000000000000000000000000000000000000000000003d9e0c79d2bc000",
             "receipt": {
                 "contractAddress": "0x0",
@@ -100,7 +100,7 @@ getBlock 2769609 2799895 2872831 3076260 -o
             "value": 1009137432003723100,
             "gas": 39000,
             "gasPrice": 20000000000,
-            "cumulativeGasUsed": 0,
+            "cumulativeGasUsed": 100358,
             "input": "0x",
             "receipt": {
                 "contractAddress": "0x0",
@@ -122,7 +122,7 @@ getBlock 2769609 2799895 2872831 3076260 -o
             "value": 90567000000000000000,
             "gas": 21000,
             "gasPrice": 20000000000,
-            "cumulativeGasUsed": 0,
+            "cumulativeGasUsed": 121358,
             "input": "0x",
             "receipt": {
                 "contractAddress": "0x0",
@@ -144,7 +144,7 @@ getBlock 2769609 2799895 2872831 3076260 -o
             "value": 60122000000000000000,
             "gas": 90000,
             "gasPrice": 20000000000,
-            "cumulativeGasUsed": 0,
+            "cumulativeGasUsed": 142358,
             "input": "0x",
             "receipt": {
                 "contractAddress": "0x0",
@@ -166,7 +166,7 @@ getBlock 2769609 2799895 2872831 3076260 -o
             "value": 1002827260130989400,
             "gas": 39000,
             "gasPrice": 20000000000,
-            "cumulativeGasUsed": 0,
+            "cumulativeGasUsed": 165258,
             "input": "0x",
             "receipt": {
                 "contractAddress": "0x0",
