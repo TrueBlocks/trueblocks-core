@@ -62,5 +62,17 @@ bool visitTransaction(CTransaction& trans, void *data) {
         cout << trans.Format(opt->format);
     }
 
+    if (opt->incTrace) {
+        CTraceArray traces;
+        getTraces(traces, trans.hash);
+        if (traces.getCount()) {
+            cout << "[";
+            for (uint32_t i = 0 ; i < traces.getCount() ; i++) {
+                traces[i].doExport(cout);
+            }
+            cout << "]\n";
+        }
+    }
+
     return true;
 }
