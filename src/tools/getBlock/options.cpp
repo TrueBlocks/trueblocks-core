@@ -84,7 +84,7 @@ bool COptions::parseArguments(SFString& command) {
             cout << "Difference:             " << cYellow << padNum8T(diff);
             if (lastUpdate) {
                 uint64_t diffDiff = lastUpdate - diff;
-                cout << " (+" << diffDiff + ")";
+                cout << " (+" << diffDiff << ")";
             }
             cout << cOff << "\n";
             isLatest = true;
