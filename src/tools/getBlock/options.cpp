@@ -13,6 +13,7 @@ CParams params[] = {
     CParams("-raw",              "pull the block data from the running Ethereum node (no cache)"),
     CParams("-terse",            "display only transaction hashes, default is to display full transaction details"),
     CParams("-check",            "compare results between qblocks and Ethereum node, report differences, if any"),
+    CParams("-latest",           "display the latest blocks at both the node and the cache"),
     CParams("@force",            "force a re-write of the block to the cache"),
     CParams("@quiet",            "do not print results to screen, used for speed testing and data checking"),
     CParams("@source:[c|r]",     "either :c(a)che or :(r)aw, source for data retrival. (shortcuts -c = qblocks, -r = node)"),
@@ -30,6 +31,7 @@ bool COptions::parseArguments(SFString& command) {
 
     Init();
     blknum_t latestBlock = getLatestBlockFromClient();
+    bool isLatest = false;
     while (!command.empty()) {
 
         SFString arg = nextTokenClear(command, ' ');
@@ -69,6 +71,14 @@ bool COptions::parseArguments(SFString& command) {
 
         } else if (arg == "--normalize") {
             normalize = true;
+
+        } else if (arg == "-l" || arg == "--latest") {
+            uint64_t cache=NOPOS, client=NOPOS;
+            getLatestBlocks(cache, client);
+            cout << "Latest block in cache:  " << cYellow << padNum8T(cache)          << cOff << "\n";
+            cout << "Latest block at client: " << cYellow << padNum8T(client)         << cOff << "\n";
+            cout << "Difference:             " << cYellow << padNum8T(client - cache) << cOff << "\n";
+            isLatest = true;
 
         } else if (arg.startsWith("-s:") || arg.startsWith("--source:")) {
             SFString mode = arg.Substitute("-s:","").Substitute("--source:","");
@@ -171,7 +181,7 @@ bool COptions::parseArguments(SFString& command) {
     if (terse && !isRaw)
         return usage("The --terse option works only with --raw. Quitting...");
 
-    if (!blocks.hasBlocks())
+    if (!blocks.hasBlocks() && !isLatest)
         return usage("You must specify at least one block.");
 
     format = getGlobalConfig()->getDisplayStr(false, "");
@@ -228,9 +238,7 @@ bool COptions::isMulti(void) const {
 SFString COptions::postProcess(const SFString& which, const SFString& str) const {
 
     if (which == "options") {
-        return
-            str.Substitute("block_list", "<block> [block...]")
-                .Substitute("-l|", "-l fn|");
+        return str.Substitute("block_list", "<block> [block...]");
 
     } else if (which == "notes" && (verbose || COptions::isReadme)) {
 
