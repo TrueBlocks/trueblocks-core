@@ -73,11 +73,20 @@ bool COptions::parseArguments(SFString& command) {
             normalize = true;
 
         } else if (arg == "-l" || arg == "--latest") {
+            uint64_t lastUpdate = toUnsigned(asciiFileToString("/tmp/getBlock_junk.txt"));
             uint64_t cache=NOPOS, client=NOPOS;
             getLatestBlocks(cache, client);
-            cout << "Latest block in cache:  " << cYellow << padNum8T(cache)          << cOff << "\n";
-            cout << "Latest block at client: " << cYellow << padNum8T(client)         << cOff << "\n";
-            cout << "Difference:             " << cYellow << padNum8T(client - cache) << cOff << "\n";
+            uint64_t diff = cache > client ? 0 : client - cache;
+            stringToAsciiFile("/tmp/getBlock_junk.txt", asStringU(diff)); // for next time
+
+            cout << "Latest block in cache:  " << cYellow << padNum8T(cache)  << cOff << "\n";
+            cout << "Latest block at client: " << cYellow << padNum8T(client) << cOff << "\n";
+            cout << "Difference:             " << cYellow << padNum8T(diff);
+            if (lastUpdate) {
+                uint64_t diffDiff = lastUpdate - diff;
+                cout << " (+" << diffDiff + ")";
+            }
+            cout << cOff << "\n";
             isLatest = true;
 
         } else if (arg.startsWith("-s:") || arg.startsWith("--source:")) {
