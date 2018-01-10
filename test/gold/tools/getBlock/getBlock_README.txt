@@ -2,7 +2,7 @@ getBlock argc: 2 [1:-th]
 getBlock -th 
 #### Usage
 
-  Usage:    getBlock [-r|-t|-c|-l|-v|-h] <block> [block...]  
+`Usage:`    getBlock [-r|-t|-c|-l|-v|-h] &lt;block&gt; [block...]  
 `Purpose:`  Returns block(s) from local cache or directly from a running node.
              
 `Where:`  
