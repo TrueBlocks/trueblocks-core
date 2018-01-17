@@ -146,7 +146,7 @@ bool updateCacheUsingBlooms(const SFString& path, void *dataPtr) {
             blknum_t bloomNum = toUnsigned(p);
             if (bloomNum <= visitor->blockStats.firstBlock) {
                 static blknum_t lastBucket1 = 0;
-                blknum_t thisBucket1 = (bloomNum / 997 ) * 997;
+                blknum_t thisBucket1 = (bloomNum / 97 ) * 97;
                 if (thisBucket1 != lastBucket1) {
 //                    cerr << "earlyExit: " << thisBucket1 << "|"
 //                        << visitor->bloomStats.bloomsChecked << "|"
@@ -200,10 +200,11 @@ bool updateCacheUsingBlooms(const SFString& path, void *dataPtr) {
 //                    cout << "Checking block " << bloomNum << "\r\n";
                     CBlock block;
                     readOneBlock_fromBinary(block, getBinaryFilename(bloomNum));
-                    bool probableDDos = block.transactions.getCount() < 20 && blooms.getCount() > 100 && block.blockNumber > 2286910 && block.blockNumber < 2463000;
-//                    cout << probableDDos << " at " << block.blockNumber << " : " << block.transactions.getCount() << " : " << blooms.getCount() << "\n";
+                    bool fewTransactions = block.transactions.getCount() < 20;
+                    bool lotsOfBlooms    = blooms.getCount() > 100;
+                    bool duringDDos      = block.blockNumber > 2286910 && block.blockNumber < 2463000;
+                    bool probableDDos (fewTransactions && lotsOfBlooms && duringDDos);
                     if (!probableDDos) {
-//                        cout << "Updating cache...";cout.flush();
                         if (!updateCache(block, visitor)) {
                             visitor->bloomStats.bloomHits++;
                             visitor->bloomStats.falsePositives += (nFound == 0);
@@ -377,49 +378,52 @@ CAccountWatch *CVisitor::findWatch(SFAddress addr) {
 }
 
 //-----------------------------------------------------------------------
+CAccountWatch *CVisitor::findWatch(uint32_t which) {
+    if (which < watches.getCount())
+        return &watches[which];
+    return NULL;
+}
+
+//-----------------------------------------------------------------------
 class CTemp {
 public:
     uint64_t blockNum, transID;
     uint32_t whichWatch;
+    CTemp(uint64_t bn, uint64_t tx, uint32_t w) : blockNum(bn), transID(tx), whichWatch(w) {}
 };
 typedef SFArrayBase<CTemp> SFTempArray;
 
 //-----------------------------------------------------------------------
+bool CVisitor::hasImport(void) {
+    return fileExists("./cache/import.txt");
+}
+
+//-----------------------------------------------------------------------
 uint32_t CVisitor::checkForImport(void) {
-    if (!fileExists("./caxche/import.txt")) {
-//        cerr << "No import found.\n";
+    if (!hasImport())
         return 0;
-    }
 
     SFTempArray imp;
     uint32_t cnt = 0;
     blknum_t currentLast = toLongU(asciiFileToString("./cache/lastBlock.txt"));
-    blknum_t lastBlock   = 0;
     SFString contents = asciiFileToString("./cache/import.txt");
     while (!contents.empty()) {
-        SFString line    = nextTokenClear(contents,'\n');
-        SFString val = nextTokenClear(line,'\t');
-        SFAddress address = toAddress (val);
-        CAccountWatch *watch = findWatch(address);
+        SFString line  = nextTokenClear(contents,'\n');
+        SFString bnStr = nextTokenClear(line, '\t');
+        SFString txStr = nextTokenClear(line, '\t');
+        SFString which = nextTokenClear(line, '\t');
+        CTemp tmp(toUnsigned(bnStr), toUnsigned(txStr), (uint32_t)toUnsigned(which));
+        CAccountWatch *watch = findWatch(tmp.whichWatch);
         if (watch) {
-            CTemp tmp;
-            tmp.whichWatch = watch->id;
-            val = nextTokenClear(line,'\t');
-            tmp.blockNum = toUnsigned(val);
-            val = nextTokenClear(line,'\t');
-            tmp.transID = toUnsigned(val);
-            imp[imp.getCount()] = tmp;
-            lastBlock = max(lastBlock, tmp.blockNum);
-            cnt++;
+            cache << tmp.whichWatch << tmp.blockNum << tmp.transID;
+            cache.flush();
+            cout << "Imported: " << tmp.blockNum << "\t" << tmp.transID << "\r";
+            cout.flush();
+            if (tmp.blockNum > currentLast)
+                stringToAsciiFile("./cache/lastBlock.txt", asStringU(tmp.blockNum) + "\r\n");
         }
     }
-
-    for (uint32_t i = 0 ; i < imp.getCount() ; i++) {
-        cout << imp[i].whichWatch << " : " << imp[i].blockNum << " : " << imp[i].transID << "\n";
-    }
-
-    if (lastBlock > currentLast)
-        stringToAsciiFile("./cache/lastBlock.txt", asStringU(lastBlock) + "\r\n");
-
+    removeFile("./cache/import.txt");
+    // TODO(tjayrush) -- we need to de-dup here
     return cnt;
 }

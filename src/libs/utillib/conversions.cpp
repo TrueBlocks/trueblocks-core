@@ -55,7 +55,7 @@ namespace qblocks {
     }
 
     //------------------------------------------------------------------
-    SFString fromBloom(const SFBloom& bl) {
+    SFString bloom2Bytes(const SFBloom& bl) {
         if (bl == 0)
             return "0x0";
         SFBloomHex b2(bl);

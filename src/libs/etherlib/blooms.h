@@ -14,7 +14,7 @@ namespace qblocks {
 
     //-------------------------------------------------------------------------
     // Helps debug a bloom filter
-#define dbgBloom(a) fromBloom(a).Substitute("0"," ")
+#define dbgBloom(a) bloom2Bytes(a).Substitute("0"," ")
 
     //-------------------------------------------------------------------------
     inline SFUintBN makeBloom(const SFString& hexIn) {

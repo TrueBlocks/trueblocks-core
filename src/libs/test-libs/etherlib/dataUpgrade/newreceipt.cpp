@@ -235,7 +235,7 @@ SFString CNewReceipt::getValueByName(const SFString& fieldName) const {
                 }
                 return retS;
             }
-            if ( fieldName % "logsBloom" ) return fromBloom(logsBloom);
+            if ( fieldName % "logsBloom" ) return bloom2Bytes(logsBloom);
             break;
     }
 
