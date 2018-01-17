@@ -99,7 +99,9 @@ public:
     blknum_t loadWatches    (const CToml& toml);
     SFString annotate       (const SFString& strIn) const;
     CAccountWatch *findWatch(SFAddress addr);
+    CAccountWatch *findWatch(uint32_t which);
     uint32_t checkForImport (void);
+    bool hasImport(void);
 
     void displayTrans (uint32_t which, const CTransaction *theTrans) const;
     void displayTrace (timestamp_t ts, const CTraceArray& traces, bool err) const;

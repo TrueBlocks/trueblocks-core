@@ -116,7 +116,19 @@ int main(int argc, const char *argv[]) {
         // Freshening the cache (if the user tells us to...)
         if (visitor.opts.mode.Contains("freshen")) {
 
-            visitor.checkForImport();
+            // The cache may have been opened for reading during displayFromCache, so we
+            // close it here, so we can open it back up as append only
+            visitor.cache.resetForWriting();
+
+            // Import if there's anything to import
+            if (visitor.hasImport()) {
+                if (visitor.cache.Lock(cacheFileName, "a+", LOCK_WAIT)) {
+                    //cout << "firstBlock: " << visitor.blockStats.firstBlock << " nBlocks: " << visitor.blockStats.nBlocks << "\n";
+                    //cout.flush();
+                    visitor.checkForImport();
+                    visitor.cache.Release();
+                }
+            }
 
             uint64_t lastVisit  = toLongU(asciiFileToString("./cache/lastBlock.txt"));
             blockNum = max(blockNum, lastVisit + 1);
@@ -129,7 +141,7 @@ int main(int argc, const char *argv[]) {
             cerr << "Freshening " << visitor.opts.monitorName
                     << "from " << visitor.blockStats.firstBlock
                     << " to " << visitor.blockStats.lastBlock
-                    << " inclusive (" << visitor.blockStats.nBlocks << " blocks)\r\n";
+                    << " inclusive (" << visitor.blockStats.nBlocks << " of " << (cacheHeight-visitor.blockStats.firstBlock) << " blocks)\r\n";
             cerr.flush();
 
             if (!upToDate) {  // we're not starting at the beginning
