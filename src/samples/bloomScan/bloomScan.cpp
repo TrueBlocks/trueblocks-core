@@ -53,7 +53,7 @@ extern bool displayBloom(blknum_t bn, const SFBloom& bloom, void *data);
 
 //-------------------------------------------------------------
 bool displayBloom(blknum_t bn, const SFBloom& bloom, void *data) {
-    SFString s = fromBloom(bloom);
+    SFString s = bloom2Bytes(bloom);
     COptions *opt = (COptions*)data;
     if (opt->mode == "short") {
         size_t len = s.length();

@@ -133,7 +133,7 @@ void CVisitor::displayTrans(uint32_t which, const CTransaction *theTrans) const 
 
 //-----------------------------------------------------------------------
 void CVisitor::displayBloom(const SFBloom& bloom, const SFString& msg, const SFString& res) const {
-    SFString bl = fromBloom(bloom).substr(2);
+    SFString bl = bloom2Bytes(bloom).substr(2);
     for (uint32_t i = 0 ; i < bl.length() ; i = i + 128) {
         SFString m = padLeft(" ",16);
         if (i == 0)
