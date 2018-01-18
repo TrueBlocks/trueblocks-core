@@ -103,6 +103,7 @@ bool CAccountWatch::setValueByName(const SFString& fieldName, const SFString& fi
 //---------------------------------------------------------------------------------------------------
 void CAccountWatch::finishParse() {
     // EXISTING_CODE
+    bloom = makeBloom(address);
     // EXISTING_CODE
 }
 

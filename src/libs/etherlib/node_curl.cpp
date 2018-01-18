@@ -53,10 +53,10 @@ namespace qblocks {
         tracing_on   = true;
         earlyAbort   = false;
         is_error     = false;
-//      is_tracing   = false;
         postData     = "";
         result       = "";
-        source       = "binary";
+//      is_tracing   = false;
+//      source       = "binary";
     }
 
     //-------------------------------------------------------------------------
@@ -189,6 +189,11 @@ namespace qblocks {
             cerr << "\tresponse. It is impossible forQuickBlocks to proceed. Quitting...\n";
             cerr << "\n";
             exit(0);
+        } else if (getCurlContext()->result.Contains("error")) {
+            if (verbose>1) {
+                cerr << getCurlContext()->result;
+                cerr << getCurlContext()->postData << "\n";
+            }
         }
 
 #ifdef DEBUG_RPC
