@@ -8,26 +8,20 @@
 #include "etherlib.h"
 #include "blockoptions.h"
 
+static uint64_t findBlockNumByHash(const SFHash& hash, void *data);
 //--------------------------------------------------------------------------------
 CBlockOptions::CBlockOptions(void) {
+    blocks.hashFind = findBlockNumByHash;
 }
 
 //--------------------------------------------------------------------------------
-SFString CBlockOptions::getBlockNumList(void) const {
-    SFString ret;
-    SFString list = blocks.toString();
-    while (!list.empty()) {
-        SFString val = nextTokenClear(list, '|');
-        blknum_t bn = toLongU(val);
-        if (isHash(val)) {
-            CBlock block;
-            if (!getBlock(block, val)) {
-                cerr << "Block hash '" << val << "' does not appear to be a valid block hash. Quitting...";
-                exit(0);
-            }
-            bn = block.blockNumber;
-        }
-        ret += asStringU(bn) + "|";
+uint64_t findBlockNumByHash(const SFHash& hash, void *data) {
+    ASSERT(isHash(hash));
+    CBlock block;
+    if (!getBlock(block, hash)) {
+        cerr << "Block hash '" << hash << "' does not appear to be a valid block hash. Quitting...";
+        exit(0);
     }
-    return ret;
+    return block.blockNumber;
 }
+

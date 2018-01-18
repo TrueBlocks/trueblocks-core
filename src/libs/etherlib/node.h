@@ -116,6 +116,7 @@ namespace qblocks {
 }  // namespace qblocks
 
 //-------------------------------------------------------------------------
+extern bool visitBlockNumber(blknum_t bn,         void *data);
 extern bool visitBlock      (CBlock& block,       void *data);
 extern bool visitTransaction(CTransaction& trans, void *data);
 extern bool visitTrace      (CTrace& trace,       void *data);

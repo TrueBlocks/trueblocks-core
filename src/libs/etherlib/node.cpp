@@ -44,7 +44,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
         CAccountName::registerClass();
         CAcctCacheItem::registerClass();
 
-        if (sourceIn != "remote" || sourceIn != "local")
+        if (sourceIn != "remote" && sourceIn != "local")
             getCurlContext()->source = "binary";
         else
             getCurlContext()->source = sourceIn;
@@ -147,6 +147,12 @@ extern void registerQuitHandler(QUITHANDLER qh);
     }
 
     //-------------------------------------------------------------------------
+    SFString hexxy(uint64_t x) {
+        SFUintBN bn = x;
+        return "0x"+toLower(SFString(to_hex(bn).c_str()));
+    }
+
+    //-------------------------------------------------------------------------
     bool queryBlock(CBlock& block, const SFString& datIn, bool needTrace, bool byHash, uint32_t& nTraces) {
 
         if (datIn == "latest")
@@ -165,7 +171,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
             }
 
             HIDE_FIELD(CTransaction, "receipt");
-            getObjectViaRPC(block, "eth_getBlockByNumber", "["+quote(asStringU(num))+",true]");
+            getObjectViaRPC(block, "eth_getBlockByNumber", "["+quote(hexxy(num))+",true]");
         }
 
         // If there are no transactions, we do not have to trace and we want to tell the caller that
@@ -237,14 +243,8 @@ extern void registerQuitHandler(QUITHANDLER qh);
     }
 
     //-------------------------------------------------------------------------
-    SFString hexxy(uint64_t x) {
-        SFUintBN bn = x;
-        return toLower(SFString(to_hex(bn).c_str()));
-    }
-
-    //-------------------------------------------------------------------------
     bool queryRawLogs(SFString& results, const SFAddress& addr, uint64_t fromBlock, uint64_t toBlock) {
-        SFString data = "[{\"fromBlock\":\"0x[START]\",\"toBlock\":\"0x[STOP]\", \"address\": \"[ADDR]\"}]";
+        SFString data = "[{\"fromBlock\":\"[START]\",\"toBlock\":\"[STOP]\", \"address\": \"[ADDR]\"}]";
         data.Replace("[START]", hexxy(fromBlock));
         data.Replace("[STOP]",  hexxy(toBlock));
         data.Replace("[ADDR]",  fromAddress(addr));
