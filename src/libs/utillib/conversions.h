@@ -260,6 +260,8 @@ namespace qblocks {
 #define toHex2(a)       (a == "null" ? "null" : ("0x"+toLower(SFString(to_hex(str2BigUint(a)).c_str()))))
 
 	extern  SFString   bloom2Bytes(const SFBloom& bl);
+    extern SFString bloom2Bits(const SFBloom& b);
+
 #define fromUnsigned(a) asStringU((a))
 
     //--------------------------------------------------------------------------------------------------------------

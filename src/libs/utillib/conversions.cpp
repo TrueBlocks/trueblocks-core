@@ -66,6 +66,28 @@ namespace qblocks {
 #endif
     }
 
+    //-------------------------------------------------------------------------
+    SFString bloom2Bits(const SFBloom& b) {
+        SFString ret = bloom2Bytes(b).Substitute("0x", "");
+        ret.ReplaceAll("0","0000");
+        ret.ReplaceAll("1","0001");
+        ret.ReplaceAll("2","0010");
+        ret.ReplaceAll("3","0011");
+        ret.ReplaceAll("4","0100");
+        ret.ReplaceAll("5","0101");
+        ret.ReplaceAll("6","0110");
+        ret.ReplaceAll("7","0111");
+        ret.ReplaceAll("8","1000");
+        ret.ReplaceAll("9","1001");
+        ret.ReplaceAll("a","1010");
+        ret.ReplaceAll("b","1011");
+        ret.ReplaceAll("c","1100");
+        ret.ReplaceAll("d","1101");
+        ret.ReplaceAll("e","1110");
+        ret.ReplaceAll("f","1111");
+        return ret;
+    }
+
     //----------------------------------------------------------------------------------------------------
     timestamp_t toTimestamp(const SFString& timeIn) {
         return (timeIn.startsWith("0x") ? (timestamp_t)hex2Long(timeIn) : (timestamp_t)toLong(timeIn));
