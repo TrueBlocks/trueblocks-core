@@ -73,12 +73,6 @@ namespace qblocks {
             if (stop <= start)
                 return "'stop' must be strictly larger than 'start'";
 
-            blknum_t width = (stop - start + 1);
-#define MAX_BLOCK_RANGE 10000
-            if (width > MAX_BLOCK_RANGE)
-                return "The range you specified (" + argIn + ") is too broad (" + asStringU(width) + "). "
-                        "Ranges may be at most " + asStringU(MAX_BLOCK_RANGE) + " blocks long. Quitting...";
-
         } else {
 
             if (isHash(arg)) {
@@ -102,6 +96,7 @@ namespace qblocks {
         numList.Clear();
         hashList.Clear();
         start = stop = 0;
+        hashFind = NULL;
     }
 
     //--------------------------------------------------------------------------------
@@ -110,15 +105,27 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    SFString COptionsBlockList::toString(void) const {
-        SFString ret;
-        for (uint64_t i = start ; i < stop ; i++)
-            ret += (asStringU(i) + "|");
-        for (uint32_t i = 0 ; i < numList.getCount() ; i++)
-            ret += (asStringU(numList[i]) + "|");
-        for (uint32_t i = 0 ; i < hashList.getCount() ; i++)
-            ret += (hashList[i] + "|");
-        return ret;
+    bool COptionsBlockList::forEveryBlockNumber(UINT64VISITFUNC func, void *data) const {
+        if (!func)
+            return false;
+
+        for (uint64_t i = start ; i < stop ; i++) {
+            if (!(*func)(i, data))
+                return false;
+        }
+        for (uint32_t i = 0 ; i < numList.getCount() ; i++) {
+            uint64_t n = numList[i];
+            if (!(*func)(n, data))
+                return false;
+        }
+        if (hashFind) {
+            for (uint32_t i = 0 ; i < hashList.getCount() ; i++) {
+                uint64_t n = (*hashFind)(hashList[i],data);
+                if (!(*func)(n, data))
+                    return false;
+            }
+        }
+        return true;
     }
 
     //--------------------------------------------------------------------------------
