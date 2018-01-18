@@ -1,8 +1,8 @@
 getBlock argc: 3 [1:--latest] [2:0xd19bc98080cd70951fad3951cef2d512e6334aa3c7e64a38985c955d4d2e273b] 
 getBlock --latest 0xd19bc98080cd70951fad3951cef2d512e6334aa3c7e64a38985c955d4d2e273b 
-Latest block in cache:   --cache--
-Latest block at client:  --client--
-Difference:              --diff--
+Latest block in cache:  --cache--
+Latest block at client: --client--
+Difference:             --diff--
 {
     "gasLimit": 3141592,
     "gasUsed": 42000,

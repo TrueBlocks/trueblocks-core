@@ -118,6 +118,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
 
     //-------------------------------------------------------------------------
     bool getReceipt(CReceipt& receipt, const SFHash& txHash) {
+        receipt = CReceipt();
         getObjectViaRPC(receipt, "eth_getTransactionReceipt", "[\"" + fixHash(txHash) + "\"]");
         return true;
     }

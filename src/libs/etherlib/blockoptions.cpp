@@ -25,3 +25,19 @@ uint64_t findBlockNumByHash(const SFHash& hash, void *data) {
     return block.blockNumber;
 }
 
+//--------------------------------------------------------------------------------
+bool blockNumToString(uint64_t num, void *data) {
+    if (num != NOPOS) {
+        SFString *str = (SFString*)data;
+        *str += (asStringU(num) + "|");
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------
+SFString CBlockOptions::getBlockNumList(void) {
+    SFString ret;
+    blocks.hashFind = findBlockNumByHash;
+    blocks.forEveryBlockNumber(blockNumToString, &ret);
+    return ret;
+}
