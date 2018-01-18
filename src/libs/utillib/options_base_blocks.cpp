@@ -120,7 +120,7 @@ namespace qblocks {
         }
         if (hashFind) {
             for (uint32_t i = 0 ; i < hashList.getCount() ; i++) {
-                uint64_t n = (*hashFind)(hashList[i],data);
+                uint64_t n = (*hashFind)(hashList[i], data);
                 if (!(*func)(n, data))
                     return false;
             }

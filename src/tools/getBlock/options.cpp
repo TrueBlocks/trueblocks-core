@@ -79,10 +79,10 @@ bool COptions::parseArguments(SFString& command) {
             uint64_t diff = cache > client ? 0 : client - cache;
             stringToAsciiFile("/tmp/getBlock_junk.txt", asStringU(diff)); // for next time
 
-            cout << "Latest block in cache:  " << cYellow << padNum8T(cache)  << cOff << "\n";
-            cout << "Latest block at client: " << cYellow << padNum8T(client) << cOff << "\n";
-            cout << "Difference:             " << cYellow << padNum8T(diff);
-            if (lastUpdate) {
+            cout << "Latest block in cache:  " << cYellow << (isTestMode() ? "--cache--"  : padNum8T(cache))  << cOff << "\n";
+            cout << "Latest block at client: " << cYellow << (isTestMode() ? "--client--" : padNum8T(client)) << cOff << "\n";
+            cout << "Difference:             " << cYellow << (isTestMode() ? "--diff--"   : padNum8T(diff));
+            if (!isTestMode() && lastUpdate) {
                 uint64_t diffDiff = lastUpdate - diff;
                 cout << " (+" << diffDiff << ")";
             }
@@ -260,22 +260,3 @@ SFString COptions::postProcess(const SFString& which, const SFString& str) const
     return str;
 }
 
-//--------------------------------------------------------------------------------
-SFString COptions::getBlockNumList(void) const {
-    SFString ret;
-    SFString list = blocks.toString();
-    while (!list.empty()) {
-        SFString val = nextTokenClear(list, '|');
-        blknum_t bn = toLongU(val);
-        if (isHash(val)) {
-            CBlock block;
-            if (!getBlock(block, val)) {
-                cerr << "Block hash '" << val << "' does not appear to be a valid block hash. Quitting...";
-                exit(0);
-            }
-            bn = block.blockNumber;
-        }
-        ret += asStringU(bn) + "|";
-    }
-    return ret;
-}

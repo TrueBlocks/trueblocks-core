@@ -198,7 +198,7 @@ baseClass: CBaseNode
 
 --------------------------------------------------------------------------------
 className: CAccountWatch
-objectSize: 376
+objectSize: 400
 baseClass: CBaseNode
 	fieldName: schema
 	  fieldID: 1001
