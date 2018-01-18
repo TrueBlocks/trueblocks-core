@@ -144,7 +144,7 @@ namespace qblocks {
     extern SFString binaryFileToString(const SFString& filename);
     extern bool asciiFileToBuffer(const SFString& filename, size_t& nChars, SFString *buffer,
                                   uint32_t maxLines = INT_MAX);
-    extern size_t appendToAsciiFile(const SFString& fileName, const SFString& addContents);
+    extern uint64_t appendToAsciiFile(const SFString& fileName, const SFString& addContents);
 
     //----------------------------------------------------------------------
     extern SFString docxToString(const SFString& filename);

@@ -472,13 +472,6 @@ namespace qblocks {
         return true;
     }
 
-    //----------------------------------------------------------------------
-    size_t appendToAsciiFile(const SFString& fileName, const SFString& addContents) {
-        SFString existing = asciiFileToString(fileName);
-        stringToAsciiFile(fileName, existing + addContents);
-        return true;
-    }
-
     //------------------------------------------------------------------------------------------------------------
     void writeTheCode(const SFString& fileName, const SFString& codeOutIn, const SFString& ns, bool spaces) {
         SFString codeOut = codeOutIn;

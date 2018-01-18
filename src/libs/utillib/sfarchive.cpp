@@ -201,4 +201,14 @@ namespace qblocks {
         return *this;
     }
 
+    //----------------------------------------------------------------------
+    uint64_t appendToAsciiFile(const SFString& fileName, const SFString& addContents) {
+        SFArchive archive(WRITING_ARCHIVE);
+        if (archive.Lock(fileName, asciiWriteAppend, LOCK_NOWAIT)) {
+            archive.WriteLine((const char*)addContents);
+            archive.Release();
+        }
+        return fileSize(fileName);
+    }
+
 }  // namespace qblocks

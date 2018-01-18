@@ -112,17 +112,20 @@ namespace qblocks {
     //--------------------------------------------------------------------------------
     extern const CToml *getGlobalConfig(const SFString& name="");
 
+    typedef bool (*UINT64VISITFUNC)(uint64_t num, void *data);
+    typedef uint64_t (*HASHFINDFUNC)(const SFHash& hash, void *data);
     class COptionsBlockList {
     public:
         SFBlockArray numList;
         SFStringArray hashList;
+        HASHFINDFUNC hashFind;
         blknum_t start;
         blknum_t stop;
         blknum_t latest;
         void Init(void);
         SFString parseBlockList(const SFString& arg, blknum_t latest);
         COptionsBlockList(void);
-        SFString toString(void) const;
+        bool forEveryBlockNumber(UINT64VISITFUNC func, void *) const;
         bool hasBlocks(void) const { return (hashList.getCount() || numList.getCount() || (start != stop)); }
         bool isInRange(blknum_t bn) const;
         blknum_t parseBlockOption(SFString& msg, blknum_t lastBlock) const;
