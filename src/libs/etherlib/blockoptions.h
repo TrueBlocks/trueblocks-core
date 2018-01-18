@@ -12,7 +12,5 @@
 class CBlockOptions : public COptionsBase {
 public:
     COptionsBlockList blocks;
-
     CBlockOptions(void);
-    SFString getBlockNumList(void) const;
 };
