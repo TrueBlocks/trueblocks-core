@@ -191,10 +191,10 @@ SFString CVisitor::annotate(const SFString& strIn) const {
 
     SFString ret = strIn;
     for (uint32_t i=0;i<watches.getCount();i++) {
-        ret = ret.Substitute(watches[i].address, watches[i].displayName(true,8));
+        ret = ret.Substitute(watches[i].address, watches[i].displayName(true,true,8));
     }
     for (uint32_t i=0;i<named.getCount();i++) {
-        ret = ret.Substitute(named[i].address, named[i].displayName(true,8));
+        ret = ret.Substitute(named[i].address, named[i].displayName(true,true,8));
     }
     return ret;
 }

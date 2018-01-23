@@ -150,7 +150,7 @@ bool CVisitor::closeIncomeStatement(const CBlock& block) {
             watches[i].qbis.begBal = watches[i].qbis.endBal;
             watches[i].qbis.endBal = (watches[i].qbis.begBal + watches[i].qbis.inflow - watches[i].qbis.outflow - watches[i].qbis.gasCost);
 
-            cout << watches[i].color << padRight(watches[i].displayName(false,14,6),24) << cOff << watches[i].qbis << "   ";
+            cout << watches[i].color << padRight(watches[i].displayName(true,false,14,6),24) << cOff << watches[i].qbis << "   ";
 
             if (i < watches.getCount()-1) {
                 watches[i].qbis.reconcile(watches[i].address, block.blockNumber);
