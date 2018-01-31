@@ -11,7 +11,8 @@
 CParams params[] = {
     CParams("~block_list",       "a space-separated list of one or more blocks to retrieve"),
     CParams("-raw",              "pull the block data from the running Ethereum node (no cache)"),
-    CParams("-terse",            "display only transaction hashes, default is to display full transaction details"),
+    CParams("-h(a)shes",         "display only transaction hashes, default is to display full transaction detail"),
+//    CParams("-trac(e)s",         "include transaction traces in the export"),
     CParams("-check",            "compare results between qblocks and Ethereum node, report differences, if any"),
     CParams("-latest",           "display the latest blocks at both the node and the cache"),
     CParams("@force",            "force a re-write of the block to the cache"),
@@ -106,8 +107,11 @@ bool COptions::parseArguments(SFString& command) {
                 return usage("Invalide source. Must be either '(r)aw' or '(c)ache'. Quitting...");
             }
 
-        } else if (arg == "-t" || arg == "--terse") {
-            terse = true;
+        } else if (arg == "-a" || arg == "--hashes") {
+            hashes = true;
+
+        } else if (arg == "-e" || arg == "--traces") {
+            traces = true;
 
         } else if (arg == "-q" || arg == "--quiet") {
             quiet++; // if both --check and --quiet are present, be very quiet...
@@ -187,8 +191,8 @@ bool COptions::parseArguments(SFString& command) {
         }
     }
 
-    if (terse && !isRaw)
-        return usage("The --terse option works only with --raw. Quitting...");
+    if (hashes && !isRaw)
+        return usage("The --hashes option works only with --raw. Quitting...");
 
     if (!blocks.hasBlocks() && !isLatest)
         return usage("You must specify at least one block.");
@@ -209,7 +213,8 @@ void COptions::Init(void) {
 
     isCheck     = false;
     isRaw       = false;
-    terse       = false;
+    hashes      = false;
+    traces      = false;
     force       = false;
     normalize   = false;
     isCache     = false;

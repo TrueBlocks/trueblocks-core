@@ -14,7 +14,8 @@ public:
     bool isCheck;
     bool isRaw;
     bool isCache;
-    bool terse;
+    bool hashes;
+    bool traces;
     bool force;
     bool normalize;
     bool silent;
