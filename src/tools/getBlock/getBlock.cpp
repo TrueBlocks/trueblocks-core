@@ -73,7 +73,7 @@ SFString doOneBlock(uint64_t num, const COptions& opt) {
     SFString numStr = asStringU(num);
     if (opt.isRaw) {
 
-        if (!queryRawBlock(result, numStr, true, opt.terse)) {
+        if (!queryRawBlock(result, numStr, true, opt.hashes)) {
             result = "Could not query raw block " + numStr + ". Is an Ethereum node running?";
         } else {
             if (opt.force) { // turn this on to force a write of the block to the disc
@@ -104,11 +104,11 @@ SFString doOneBlock(uint64_t num, const COptions& opt) {
 
         if (!opt.silent) {
             SFString format = opt.format;
-            if (false) { //opt.priceBlocks) {
-                SFUintBN oneWei = canonicalWei("1000000000000000000");
-                SFString dollars = "$" + asDollars(gold.timestamp, oneWei);
-                format.Replace("{PRICE:CLOSE}", dollars);
-            }
+//            if (false) { //opt.priceBlocks) {
+//                SFUintBN oneWei = canonicalWei("1000000000000000000");
+//                SFString dollars = "$" + asDollars(gold.timestamp, oneWei);
+//                format.Replace("{PRICE:CLOSE}", dollars);
+//            }
             result = gold.Format(format);
         }
     }
@@ -119,7 +119,7 @@ SFString doOneBlock(uint64_t num, const COptions& opt) {
 SFString checkOneBlock(uint64_t num, const COptions& opt) {
 
     if (opt.quiet == 2) {
-        cout << "Checking block " + cYellow + asStringU(num) + cOff + "...       \r";
+        cout << "Checking block " << cYellow << asStringU(num) << cOff << "...       \r";
         cout.flush();
     }
     SFString numStr = asStringU(num);

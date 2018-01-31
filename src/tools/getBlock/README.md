@@ -15,7 +15,7 @@ The tool may also be used to double check that the results produced from the Qui
 | -------: | :------- | :------- |
 |  | block_list | a space-separated list of one or more blocks to retrieve |
 | -r | --raw | pull the block data from the running Ethereum node (no cache) |
-| -t | --terse | display only transaction hashes, default is to display full transaction details |
+| -a| --hashes | display only transaction hashes, default is to display full transaction details |
 | -c | --check | compare results between qblocks and Ethereum node, report differences, if any |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
