@@ -49,6 +49,9 @@ public:
     const CBaseNode *getObjectAt(const SFString& fieldName, uint32_t index) const override;
 
     // EXISTING_CODE
+    typedef bool (*ADDRESSFUNC)(const SFAddress& addr, void *data);
+    bool forEveryAddress      (ADDRESSFUNC func, void *data);
+    bool forEveryUniqueAddress(ADDRESSFUNC func, void *data);
     // EXISTING_CODE
     friend ostream& operator<<(ostream& os, const CBlock& item);
 
