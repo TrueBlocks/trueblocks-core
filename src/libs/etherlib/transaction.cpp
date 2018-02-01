@@ -427,6 +427,27 @@ ostream& operator<<(ostream& os, const CTransaction& item) {
 }
 
 //---------------------------------------------------------------------------
+bool CTransaction::operator==(const CTransaction& item) const {
+    if (hash != item.hash) return false;
+    if (blockHash != item.blockHash) return false;
+    if (blockNumber != item.blockNumber) return false;
+    if (transactionIndex != item.transactionIndex) return false;
+    if (nonce != item.nonce) return false;
+    if (timestamp != item.timestamp) return false;
+    if (from != item.from) return false;
+    if (to != item.to) return false;
+    if (value != item.value) return false;
+    if (gas != item.gas) return false;
+    if (gasPrice != item.gasPrice) return false;
+    //if (cumulativeGasUsed != item.cumulativeGasUsed) return false;
+    if (input != item.input) return false;
+    if (isError != item.isError) return false;
+    if (isInternalTx != item.isInternalTx) return false;
+    //if (receipt != item.receipt) return false;
+    return true;
+}
+
+//---------------------------------------------------------------------------
 const CBaseNode *CTransaction::getObjectAt(const SFString& fieldName, uint32_t index) const {
     if ( fieldName % "receipt" )
         return &receipt;

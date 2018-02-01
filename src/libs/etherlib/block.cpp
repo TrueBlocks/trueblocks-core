@@ -382,6 +382,76 @@ const CBaseNode *CBlock::getObjectAt(const SFString& fieldName, uint32_t index) 
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
+//---------------------------------------------------------------------------
+int compareAddr(const void *ob1, const void *ob2) {
+    const SFAddress *a1 = (const SFAddress*)ob1;
+    const SFAddress *a2 = (const SFAddress*)ob2;
+//    cout << "comparing: " << *a1 << " to: " << *a2 << " r: " << (*a1 != *a2) << "\n";
+    return a1->compare(*a2);
+}
+
+//---------------------------------------------------------------------------
+bool accumulateAddresses(const SFAddress& addr, void *data) {
+    if (zeroAddr(addr))
+        return true;
+
+    //    cout << "\n--------------------------------------------\n";
+    SFAddressArray *array = (SFAddressArray *)data;
+    if (!array->Find(&addr, compareAddr)) {
+        array->addValue(addr);
+        array->Sort(compareAddr);
+//        cout << "adding:    " << addr << "\n";
+//    } else {
+//        cout << "not adding " << addr << "\n";
+    }
+    return true;
+}
+
+//---------------------------------------------------------------------------
+bool CBlock::forEveryUniqueAddress(ADDRESSFUNC func, void *data) {
+    if (!func)
+        return false;
+
+    SFAddressArray array;
+    forEveryAddress(accumulateAddresses, &array);
+    for (uint32_t i = 0 ; i < array.getCount() ; i++) {
+        (*func)(array[i], data);
+    }
+
+    return true;
+}
+
+//---------------------------------------------------------------------------
+bool CBlock::forEveryAddress(ADDRESSFUNC func, void *data) {
+
+    if (!func)
+        return false;
+
+    (*func)(miner, data);
+
+    for (uint32_t i = 0 ; i < transactions.getCount() ; i++) {
+        CTransaction *trans = &transactions[i];
+        CReceipt *receipt = &trans->receipt;
+
+        (*func)(trans->from, data);
+        (*func)(trans->to, data);
+        (*func)(receipt->contractAddress, data);
+        for (uint32_t j = 0 ; j < receipt->logs.getCount() ; j++)
+            (*func)(receipt->logs[j].address, data);
+
+        CTraceArray traces;
+        getTraces(traces, trans->hash);
+        for (uint32_t t = 0 ; t < traces.getCount() ; t++) {
+            CTrace *trace = &traces[t];
+            (*func)(trace->action.from, data);
+            (*func)(trace->action.to, data);
+            (*func)(trace->action.refundAddress, data);
+            (*func)(trace->action.address, data);
+            (*func)(trace->result.address, data);
+        }
+    }
+    return true;
+}
 // EXISTING_CODE
 }  // namespace qblocks
 
