@@ -108,6 +108,9 @@ namespace qblocks {
             if (getCurlContext()->source == "remote") {
                 curl_easy_setopt(curl, CURLOPT_URL, "https://pmainnet.infura.io/");
 
+            } else if (getCurlContext()->source == "ropsten") {
+                curl_easy_setopt(curl, CURLOPT_URL, "https://testnet.infura.io/");
+
             } else {
                 curl_easy_setopt(curl, CURLOPT_URL, (const char*)getCurlContext()->baseURL);
             }

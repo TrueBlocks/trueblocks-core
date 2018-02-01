@@ -124,6 +124,7 @@ namespace qblocks {
 
     //--------------------------------------------------------------------------------
     char *CBaseNode::parseText(char *s, uint32_t& nFields, const SFString *fields) {
+        uint32_t max = nFields;
         nFields = 0;
         char *fieldVal = s;
         while (s && *s) {
@@ -143,7 +144,8 @@ namespace qblocks {
             }
             s++;
         }
-        this->setValueByName(fields[nFields++], fieldVal);
+        if (nFields < max)
+            this->setValueByName(fields[nFields++], fieldVal);
         finishParse();
         return NULL;
     }

@@ -44,7 +44,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
         CAccountName::registerClass();
         CAcctCacheItem::registerClass();
 
-        if (sourceIn != "remote" && sourceIn != "local")
+        if (sourceIn != "remote" && sourceIn != "local" && sourceIn != "ropsten")
             getCurlContext()->source = "binary";
         else
             getCurlContext()->source = sourceIn;
@@ -102,6 +102,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
             if (txID < block.transactions.getCount())
             {
                 trans = block.transactions[(uint32_t)txID];
+                trans.pBlock = NULL; // otherwise, it's pointing to a dead pointer
                 return true;
             }
             // fall through to node
@@ -618,18 +619,23 @@ extern void registerQuitHandler(QUITHANDLER qh);
 
     //-------------------------------------------------------------------------
     bool forEveryBloomFile(FILEVISITOR func, void *data, uint64_t start, uint64_t count, uint64_t skip) {
-        if (start == 0 || count == (uint64_t)-1) { // visit everything since we're given the default
+
+        // If the caller does not specify start/end block numbers, visita all blooms
+        if (start == 0 || count == (uint64_t)-1) {
             forEveryFileInFolder(bloomFolder, func, data);
             return true;
         }
 
-        // visit only the folder the user tells us to visit
+        // The user is asking for certain files and not others. The bext we can do is limit which folders
+        // to visit, which we do here. Caller must protect against too early or too late files by number.
+        // Use interger math to figure out which folders to visit
         blknum_t st = (start / 1000) * 1000;
         blknum_t ed = ((start+count+1000) / 1000) * 1000;
         for (blknum_t b = st ; b < ed ; b += 1000) {
             SFString path = getBinaryPath(b).Substitute("/blocks/","/blooms/");
             forEveryFileInFolder(path, func, data);
         }
+
         return true;
     }
 

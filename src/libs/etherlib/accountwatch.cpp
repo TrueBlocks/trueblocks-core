@@ -318,7 +318,7 @@ bool CAccountWatch::getWatch(const CToml& toml, uint32_t n) {
 }
 
 //---------------------------------------------------------------------------
-SFString CAccountWatch::displayName(bool terse, uint32_t w1, uint32_t w2) const {
+SFString CAccountWatch::displayName(bool useColor, bool terse, uint32_t w1, uint32_t w2) const {
     if (address == "others") {
         return padRight(name, w1 + w2 + 1);
     }
@@ -326,7 +326,7 @@ SFString CAccountWatch::displayName(bool terse, uint32_t w1, uint32_t w2) const 
     if (terse) {
         uint64_t len = name.length();
         uint64_t need = 42 - len - 6; // " (" and "...)"
-        return color + name.substr(0,42-6) + " (" + address.substr(0,need) + "...)" + cOff;
+        return (useColor ? color : "") + name.substr(0,42-6) + " (" + address.substr(0,need) + "...)" + (useColor ? cOff : "");
     }
 
     return padRight(name.substr(0,w1),w1) + " " + address.substr(0,w2) + " ";
