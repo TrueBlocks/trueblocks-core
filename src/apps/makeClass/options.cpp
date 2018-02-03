@@ -10,15 +10,16 @@
 
 CParams params[] = {
     CParams("~className",          "name of C++ class(es) to process"),
-    CParams("-edit",               "edit <className(s)> definition file in local folder"),
+    CParams("-open",               "edit <className(s)> definition file in local folder"),
+    CParams("-run",                "run the class maker on associated <className(s)>"),
     CParams("-filter:<string>",    "process only files with :filter in their names"),
     CParams("-list",               "list all definition files found in the local folder"),
     CParams("-header",             "write headers files only"),
     CParams("-sour(c)e",           "write source files only"),
     CParams("-namespace:<string>", "surround the code with a --namespace:ns"),
     CParams("-silent",             "on error (no classDefinition file) exit silently"),
-    CParams("-run",                "run the class maker on associated <className(s)>"),
     CParams("-all",                "clear, edit, list, or run all class definitions found in the local folder"),
+    CParams("@edit",               "edit <className(s)> definition file in local folder"),
     CParams("",                    "Creates C++ code based on definition file at ./classDefinition/<className>.\n"),
 };
 uint32_t nParams = sizeof(params) / sizeof(CParams);
@@ -32,7 +33,7 @@ bool COptions::parseArguments(SFString& command) {
     Init();
     while (!command.empty()) {
         SFString arg = nextTokenClear(command, ' ');
-        if ((arg == "-e" || arg == "-edit")) {
+        if ((arg == "-e" || arg == "-edit" || arg == "-o" || arg == "-open")) {
             if (isRun)
                 return usage("Incompatible options '-r' and '-e'. Choose one or the other.");
             isEdit = true;
@@ -102,7 +103,7 @@ bool COptions::parseArguments(SFString& command) {
     }
 
     if (!isList && !isEdit && !isRemove && !isRun) {
-        errMsg = "You must specify at least one of --run, --list, --edit, or --clear";
+        errMsg = "You must specify at least one of --run, --list, --open, or --clear";
     }
 
     if (silent && !errMsg.empty()) {
