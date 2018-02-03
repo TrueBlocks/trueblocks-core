@@ -123,4 +123,22 @@ namespace qblocks {
         return SFTime(y, m, d, h, mn, s);
     }
 
+    /*
+        Javascipt: Returns a checksummed address
+        @param {String} address
+        @return {String}
+        exports.toChecksumAddress = function (address) {
+            address = exports.stripHexPrefix(address).toLowerCase()
+            const hash = exports.sha3(address).toString('hex')
+            let ret = '0x'
+            for (let i = 0; i < address.length; i++) {
+                if (parseInt(hash[i], 16) >= 8) {
+                    ret += address[i].toUpperCase()
+                } else {
+                    ret += address[i]
+                }
+            }
+            return ret
+        }
+    */
 }  // namespace qblocks
