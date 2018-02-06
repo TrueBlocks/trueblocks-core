@@ -94,9 +94,6 @@ bool CTransaction::setValueByName(const SFString& fieldName, const SFString& fie
             if ( fieldName % "blockHash" ) { blockHash = toHash(fieldValue); return true; }
             if ( fieldName % "blockNumber" ) { blockNumber = toUnsigned(fieldValue); return true; }
             break;
-        case 'c':
-            if ( fieldName % "cumulativeGasUsed" ) { cumulativeGasUsed = toWei(fieldValue); return true; }
-            break;
         case 'f':
             if ( fieldName % "from" ) { from = toAddress(fieldValue); return true; }
             break;
@@ -110,7 +107,7 @@ bool CTransaction::setValueByName(const SFString& fieldName, const SFString& fie
         case 'i':
             if ( fieldName % "input" ) { input = fieldValue; return true; }
             if ( fieldName % "isError" ) { isError = toUnsigned(fieldValue); return true; }
-            if ( fieldName % "isInternalTx" ) { isInternalTx = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "isInternal" ) { isInternal = toUnsigned(fieldValue); return true; }
             break;
         case 'n':
             if ( fieldName % "nonce" ) { nonce = toUnsigned(fieldValue); return true; }
@@ -166,10 +163,9 @@ bool CTransaction::Serialize(SFArchive& archive) {
     archive >> value;
     archive >> gas;
     archive >> gasPrice;
-    archive >> cumulativeGasUsed;
     archive >> input;
     archive >> isError;
-    archive >> isInternalTx;
+    archive >> isInternal;
     archive >> receipt;
     finishParse();
     return true;
@@ -194,10 +190,9 @@ bool CTransaction::SerializeC(SFArchive& archive) const {
     archive << value;
     archive << gas;
     archive << gasPrice;
-    archive << cumulativeGasUsed;
     archive << input;
     archive << isError;
-    archive << isInternalTx;
+    archive << isInternal;
     archive << receipt;
 
     return true;
@@ -224,10 +219,9 @@ void CTransaction::registerClass(void) {
     ADD_FIELD(CTransaction, "value", T_WEI, ++fieldNum);
     ADD_FIELD(CTransaction, "gas", T_GAS, ++fieldNum);
     ADD_FIELD(CTransaction, "gasPrice", T_GAS, ++fieldNum);
-    ADD_FIELD(CTransaction, "cumulativeGasUsed", T_WEI, ++fieldNum);
     ADD_FIELD(CTransaction, "input", T_TEXT, ++fieldNum);
     ADD_FIELD(CTransaction, "isError", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CTransaction, "isInternalTx", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CTransaction, "isInternal", T_NUMBER, ++fieldNum);
     ADD_FIELD(CTransaction, "receipt", T_OBJECT, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
@@ -256,7 +250,7 @@ void CTransaction::registerClass(void) {
     HIDE_FIELD(CTransaction, "encoding");
     HIDE_FIELD(CTransaction, "gasCost");
     HIDE_FIELD(CTransaction, "isError");
-    HIDE_FIELD(CTransaction, "isInternalTx");
+    HIDE_FIELD(CTransaction, "isInternal");
     HIDE_FIELD(CTransaction, "date");
     HIDE_FIELD(CTransaction, "ether");
     //    HIDE_FIELD(CTransaction, "receipt");
@@ -331,6 +325,27 @@ bool CTransaction::readBackLevel(SFArchive& archive) {
     CBaseNode::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
+    if (m_schema <= getVersionNum(0,4,0)) {
+        SFWei removed; // used to be cumulativeGasUsed
+        archive >> hash;
+        archive >> blockHash;
+        archive >> blockNumber;
+        archive >> transactionIndex;
+        archive >> nonce;
+        archive >> timestamp;
+        archive >> from;
+        archive >> to;
+        archive >> value;
+        archive >> gas;
+        archive >> gasPrice;
+        archive >> removed;
+        archive >> input;
+        archive >> isError;
+        archive >> isInternal;
+        archive >> receipt;
+        finishParse();
+        done = true;
+    }
     // EXISTING_CODE
     return done;
 }
@@ -361,9 +376,6 @@ SFString CTransaction::getValueByName(const SFString& fieldName) const {
             if ( fieldName % "blockHash" ) return fromHash(blockHash);
             if ( fieldName % "blockNumber" ) return asStringU(blockNumber);
             break;
-        case 'c':
-            if ( fieldName % "cumulativeGasUsed" ) return fromWei(cumulativeGasUsed);
-            break;
         case 'f':
             if ( fieldName % "from" ) return fromAddress(from);
             break;
@@ -377,7 +389,7 @@ SFString CTransaction::getValueByName(const SFString& fieldName) const {
         case 'i':
             if ( fieldName % "input" ) return input;
             if ( fieldName % "isError" ) return asStringU(isError);
-            if ( fieldName % "isInternalTx" ) return asStringU(isInternalTx);
+            if ( fieldName % "isInternal" ) return asStringU(isInternal);
             break;
         case 'n':
             if ( fieldName % "nonce" ) return asStringU(nonce);
@@ -424,27 +436,6 @@ ostream& operator<<(ostream& os, const CTransaction& item) {
 
     os << item.Format() << "\n";
     return os;
-}
-
-//---------------------------------------------------------------------------
-bool CTransaction::operator==(const CTransaction& item) const {
-    if (hash != item.hash) return false;
-    if (blockHash != item.blockHash) return false;
-    if (blockNumber != item.blockNumber) return false;
-    if (transactionIndex != item.transactionIndex) return false;
-    if (nonce != item.nonce) return false;
-    if (timestamp != item.timestamp) return false;
-    if (from != item.from) return false;
-    if (to != item.to) return false;
-    if (value != item.value) return false;
-    if (gas != item.gas) return false;
-    if (gasPrice != item.gasPrice) return false;
-    //if (cumulativeGasUsed != item.cumulativeGasUsed) return false;
-    if (input != item.input) return false;
-    if (isError != item.isError) return false;
-    if (isInternalTx != item.isInternalTx) return false;
-    //if (receipt != item.receipt) return false;
-    return true;
 }
 
 //---------------------------------------------------------------------------

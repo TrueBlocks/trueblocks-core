@@ -84,6 +84,9 @@ bool CBlock::setValueByName(const SFString& fieldName, const SFString& fieldValu
         case 'd':
             if ( fieldName % "difficulty" ) { difficulty = toUnsigned(fieldValue); return true; }
             break;
+        case 'f':
+            if ( fieldName % "finalized" ) { finalized = toBool(fieldValue); return true; }
+            break;
         case 'g':
             if ( fieldName % "gasLimit" ) { gasLimit = toGas(fieldValue); return true; }
             if ( fieldName % "gasUsed" ) { gasUsed = toGas(fieldValue); return true; }
@@ -154,6 +157,7 @@ bool CBlock::Serialize(SFArchive& archive) {
     archive >> miner;
     archive >> difficulty;
     archive >> price;
+    archive >> finalized;
     archive >> timestamp;
     archive >> transactions;
     finishParse();
@@ -176,6 +180,7 @@ bool CBlock::SerializeC(SFArchive& archive) const {
     archive << miner;
     archive << difficulty;
     archive << price;
+    archive << finalized;
     archive << timestamp;
     archive << transactions;
 
@@ -200,6 +205,7 @@ void CBlock::registerClass(void) {
     ADD_FIELD(CBlock, "miner", T_ADDRESS, ++fieldNum);
     ADD_FIELD(CBlock, "difficulty", T_NUMBER, ++fieldNum);
     ADD_FIELD(CBlock, "price", T_DOUBLE, ++fieldNum);
+    ADD_FIELD(CBlock, "finalized", T_BOOL, ++fieldNum);
     ADD_FIELD(CBlock, "timestamp", T_TIMESTAMP, ++fieldNum);
     ADD_FIELD(CBlock, "transactions", T_OBJECT|TS_ARRAY, ++fieldNum);
 
@@ -289,6 +295,21 @@ bool CBlock::readBackLevel(SFArchive& archive) {
         miner = upgrade.miner;
         difficulty = upgrade.difficulty;
         price = 0.0;
+        finalized = false;
+        finishParse();
+        done = true;
+    } else if (m_schema <= getVersionNum(0,4,0)) {
+        archive >> gasLimit;
+        archive >> gasUsed;
+        archive >> hash;
+        archive >> blockNumber;
+        archive >> parentHash;
+        archive >> miner;
+        archive >> difficulty;
+        archive >> price;
+        archive >> timestamp;
+        archive >> transactions;
+        finalized = false;
         finishParse();
         done = true;
     }
@@ -323,6 +344,9 @@ SFString CBlock::getValueByName(const SFString& fieldName) const {
             break;
         case 'd':
             if ( fieldName % "difficulty" ) return asStringU(difficulty);
+            break;
+        case 'f':
+            if ( fieldName % "finalized" ) return asString(finalized);
             break;
         case 'g':
             if ( fieldName % "gasLimit" ) return fromGas(gasLimit);
@@ -421,6 +445,23 @@ bool CBlock::forEveryUniqueAddress(ADDRESSFUNC func, void *data) {
     return true;
 }
 
+typedef bool (*ADDRESSFUNC)(const SFAddress& addr, void *data);
+//---------------------------------------------------------------------------
+void callWithAddr(ADDRESSFUNC func, SFUintBN test, void *data) {
+    static const SFUintBN small = hex2BN(  "0x00000000000000ffffffffffffffffffffffffff"); // the smallest address we search for
+    static const SFUintBN large = hex2BN("0x010000000000000000000000000000000000000000"); // the largest address we search for
+    if (test <= small || test >= large)
+        return;
+
+    SFAddress addr = to_hex(test).c_str();
+    if (addr.length()<40)
+        addr = padLeft(addr, 40, '0');
+    addr = addr.substr(addr.length()-40,40);
+    addr = toLower("0x" + addr);
+
+    (*func)(addr, data);
+}
+
 //---------------------------------------------------------------------------
 bool CBlock::forEveryAddress(ADDRESSFUNC func, void *data) {
 
@@ -429,15 +470,21 @@ bool CBlock::forEveryAddress(ADDRESSFUNC func, void *data) {
 
     (*func)(miner, data);
 
-    for (uint32_t i = 0 ; i < transactions.getCount() ; i++) {
-        CTransaction *trans = &transactions[i];
+    for (uint32_t tr = 0 ; tr < transactions.getCount() ; tr++) {
+        CTransaction *trans   = &transactions[tr];
         CReceipt *receipt = &trans->receipt;
 
         (*func)(trans->from, data);
         (*func)(trans->to, data);
         (*func)(receipt->contractAddress, data);
-        for (uint32_t j = 0 ; j < receipt->logs.getCount() ; j++)
-            (*func)(receipt->logs[j].address, data);
+        SFString strData = trans->input.substr(10);
+        for (uint32_t l = 0 ; l < receipt->logs.getCount() ; l++) {
+            CLogEntry *log = &receipt->logs[l];
+            (*func)(log->address, data);
+            for (uint32_t t = 0 ; t < log->topics.getCount() ; t++)
+                callWithAddr(func, log->topics[t], data);
+            strData += log->data.substr(2);
+        }
 
         CTraceArray traces;
         getTraces(traces, trans->hash);
@@ -448,6 +495,14 @@ bool CBlock::forEveryAddress(ADDRESSFUNC func, void *data) {
             (*func)(trace->action.refundAddress, data);
             (*func)(trace->action.address, data);
             (*func)(trace->result.address, data);
+            SFString input = trace->action.input.substr(10);
+            if (!input.empty())
+                strData += input;
+        }
+
+        for (uint32_t s = 0 ; s < strData.length() / 64 ; s++) {
+            SFUintBN test  = hex2BN("0x" + strData.substr(s*64,64));
+            callWithAddr(func, test, data);
         }
     }
     return true;

@@ -82,6 +82,7 @@ SFString doOneBlock(uint64_t num, const COptions& opt) {
                 result = generic.result;
                 gold.parseJson((char*)(const char*)result);
                 SFString fileName = getBinaryFilename(num);
+                gold.finalized = isFinal(gold.timestamp);
                 writeToBinary(gold, fileName);
             }
         }
@@ -99,8 +100,10 @@ SFString doOneBlock(uint64_t num, const COptions& opt) {
             queryBlock(gold, numStr, true, false);
         }
 
-        if (opt.force) // turn this on to force a write of the block to the disc
+        if (opt.force) { // turn this on to force a write of the block to the disc
+            gold.finalized = isFinal(gold.timestamp);
             writeToBinary(gold, fileName);
+        }
 
         if (!opt.silent) {
             SFString format = opt.format;

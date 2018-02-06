@@ -34,8 +34,10 @@ double testBuild(void) {
         SFString fileName = "./cache/" + asStringU(b) + ".bin";
         CBlock block;
         getBlock(block, b);
-        if (!fileExists(fileName))
+        if (!fileExists(fileName)) {
+            block.finalized = isFinal(block.timestamp);
             writeToBinary(block, fileName);
+        }
         cerr << "Writing " << block.blockNumber << "\r";
         cerr.flush();
     }

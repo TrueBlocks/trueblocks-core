@@ -210,13 +210,11 @@ namespace qblocks {
     }
 
     //-------------------------------------------------------------------------
-    inline SFUintBN canonicalWei(uint64_t _value)
-    {
+    inline SFUintBN canonicalWei(uint64_t _value) {
         return SFUintBN(_value);
     }
 
-    inline SFUintBN canonicalWei(const SFString& _value)
-    {
+    inline SFUintBN canonicalWei(const SFString& _value) {
         if (_value.Contains( "0x" ))
             return hex2BigUint((const char*) _value.substr(2));
         if (_value.Contains( "e"  ))
@@ -224,13 +222,11 @@ namespace qblocks {
         return str2BigUint(_value);
     }
 
-    inline SFString asStringBN(const SFUintBN& bu)
-    {
+    inline SFString asStringBN(const SFUintBN& bu) {
         return to_string(bu).c_str();
     }
 
-    inline SFString asStringBN(const SFIntBN& bn)
-    {
+    inline SFString asStringBN(const SFIntBN& bn) {
         return to_string(bn).c_str();
     }
 #define SFAddress      SFString
@@ -251,6 +247,7 @@ namespace qblocks {
 #define toWei(a)       canonicalWei(a)
 #define toGas(a)       toUnsigned(a)
 #define addr2BN        toWei
+#define hex2BN         toWei
 
 #define fromAddress(a)  ((a).empty() ? "0x0" : (a))
 #define fromHash(a)     ((a).empty() ? "0x0" : (a))
