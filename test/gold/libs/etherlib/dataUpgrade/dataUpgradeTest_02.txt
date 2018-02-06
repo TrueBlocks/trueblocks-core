@@ -3,7 +3,7 @@ dataUpgrade 2
 2. Read from JSON, write to new binary format...
 --------------------------------------------------------------------------------
 className: CBlock
-objectSize: 176
+objectSize: 184
 baseClass: CBaseNode
 	fieldName: schema
 	  fieldID: 1001
@@ -49,16 +49,20 @@ baseClass: CBaseNode
 	  fieldID: 1011
 	  fieldType: T_DOUBLE TS_NUMERAL 65566
 	  hidden: 0
-	fieldName: timestamp
+	fieldName: finalized
 	  fieldID: 1012
+	  fieldType: T_BOOL TS_NUMERAL 65556
+	  hidden: 0
+	fieldName: timestamp
+	  fieldID: 1013
 	  fieldType: T_TIMESPAN TS_NUMERAL 65551
 	  hidden: 0
 	fieldName: transactions
-	  fieldID: 1013
+	  fieldID: 1014
 	  fieldType: T_OBJECT|TS_ARRAY TS_ARRAY 1572939 TS_OBJECT 1572939
 	  hidden: 0
 	fieldName: date
-	  fieldID: 1014
+	  fieldID: 1015
 	  fieldType: T_DATE TS_DATE 262149
 	  hidden: 1
 {
@@ -70,6 +74,7 @@ baseClass: CBaseNode
   "miner": "0xbb7b8287f3f0a933474a79eae42cbca977791171",
   "difficulty": 6143022084827,
   "price": 0,
+  "finalized": 1,
   "timestamp": 1442749586,
   "transactions": [
     {
@@ -84,7 +89,6 @@ baseClass: CBaseNode
       "value": 100418060000000000,
       "gas": 90000,
       "gasPrice": 50000000000,
-      "cumulativeGasUsed": 0,
       "input": "0x",
       "receipt": {
         "contractAddress": "0x0",
@@ -99,7 +103,7 @@ baseClass: CBaseNode
 
 --------------------------------------------------------------------------------
 className: CNewBlock
-objectSize: 176
+objectSize: 184
 baseClass: CBaseNode
 	fieldName: schema
 	  fieldID: 1001
@@ -145,12 +149,16 @@ baseClass: CBaseNode
 	  fieldID: 1011
 	  fieldType: T_DOUBLE TS_NUMERAL 65566
 	  hidden: 0
-	fieldName: timestamp
+	fieldName: finalized
 	  fieldID: 1012
+	  fieldType: T_BOOL TS_NUMERAL 65556
+	  hidden: 0
+	fieldName: timestamp
+	  fieldID: 1013
 	  fieldType: T_TIMESPAN TS_NUMERAL 65551
 	  hidden: 0
 	fieldName: transactions
-	  fieldID: 1013
+	  fieldID: 1014
 	  fieldType: T_OBJECT|TS_ARRAY TS_ARRAY 1572939 TS_OBJECT 1572939
 	  hidden: 0
 {
@@ -162,6 +170,7 @@ baseClass: CBaseNode
   "miner": "0x0",
   "difficulty": 0,
   "price": 0,
+  "finalized": 1,
   "timestamp": 1442749586,
   "transactions": [
     {
@@ -176,7 +185,6 @@ baseClass: CBaseNode
       "value": 100418060000000000,
       "gas": 90000,
       "gasPrice": 50000000000,
-      "cumulativeGasUsed": 0,
       "input": "0x",
       "receipt": {
         "contractAddress": "0x0",

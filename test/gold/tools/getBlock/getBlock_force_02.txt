@@ -9,6 +9,7 @@ getBlock 2769609 2799895 2872831 3076260 -o
     "miner": "0x1e9939daaad6924ad004c2560e90804164900341",
     "difficulty": 75086032611208,
     "price": 0,
+    "finalized": 1,
     "timestamp": 1481190424,
     "transactions": [
         {
@@ -23,7 +24,6 @@ getBlock 2769609 2799895 2872831 3076260 -o
             "value": 1052000000000000000,
             "gas": 21000,
             "gasPrice": 50000000000,
-            "cumulativeGasUsed": 21000,
             "input": "0x",
             "receipt": {
                 "contractAddress": "0x0",
@@ -45,7 +45,6 @@ getBlock 2769609 2799895 2872831 3076260 -o
             "value": 94299178842130530,
             "gas": 21000,
             "gasPrice": 40000000000,
-            "cumulativeGasUsed": 42000,
             "input": "0x",
             "receipt": {
                 "contractAddress": "0x0",
@@ -67,7 +66,6 @@ getBlock 2769609 2799895 2872831 3076260 -o
             "value": 0,
             "gas": 135000,
             "gasPrice": 20000000000,
-            "cumulativeGasUsed": 79358,
             "input": "0xa9059cbb000000000000000000000000b6907884085f2e1710b95c15c8da4552fd51722200000000000000000000000000000000000000000000000003d9e0c79d2bc000",
             "receipt": {
                 "contractAddress": "0x0",
@@ -100,7 +98,6 @@ getBlock 2769609 2799895 2872831 3076260 -o
             "value": 1009137432003723100,
             "gas": 39000,
             "gasPrice": 20000000000,
-            "cumulativeGasUsed": 100358,
             "input": "0x",
             "receipt": {
                 "contractAddress": "0x0",
@@ -122,7 +119,6 @@ getBlock 2769609 2799895 2872831 3076260 -o
             "value": 90567000000000000000,
             "gas": 21000,
             "gasPrice": 20000000000,
-            "cumulativeGasUsed": 121358,
             "input": "0x",
             "receipt": {
                 "contractAddress": "0x0",
@@ -144,7 +140,6 @@ getBlock 2769609 2799895 2872831 3076260 -o
             "value": 60122000000000000000,
             "gas": 90000,
             "gasPrice": 20000000000,
-            "cumulativeGasUsed": 142358,
             "input": "0x",
             "receipt": {
                 "contractAddress": "0x0",
@@ -166,7 +161,6 @@ getBlock 2769609 2799895 2872831 3076260 -o
             "value": 1002827260130989400,
             "gas": 39000,
             "gasPrice": 20000000000,
-            "cumulativeGasUsed": 165258,
             "input": "0x",
             "receipt": {
                 "contractAddress": "0x0",
@@ -198,6 +192,7 @@ getBlock 2769609 2799895 2872831 3076260 -o
     "miner": "0x61c808d82a3ac53231750dadc13c777b59310bd9",
     "difficulty": 81881924985250,
     "price": 0,
+    "finalized": 1,
     "timestamp": 1481621074,
     "transactions": []
 },
@@ -210,6 +205,7 @@ getBlock 2769609 2799895 2872831 3076260 -o
     "miner": "0x4bb96091ee9d802ed039c4d1a5f6216f90f81b01",
     "difficulty": 77217903307043,
     "price": 0,
+    "finalized": 1,
     "timestamp": 1482663926,
     "transactions": []
 },
@@ -222,6 +218,7 @@ getBlock 2769609 2799895 2872831 3076260 -o
     "miner": "0x61c808d82a3ac53231750dadc13c777b59310bd9",
     "difficulty": 112182607379608,
     "price": 0,
+    "finalized": 1,
     "timestamp": 1485564456,
     "transactions": []
 }
