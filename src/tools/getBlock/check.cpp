@@ -61,7 +61,7 @@ const SFString removes[] = {
     "publicKey", "r", "raw", "receiptsRoot", "s", "sealFields", "sha3Uncles", "size", "standardV", "stateRoot",
     "totalDifficulty", "transactionsRoot", "uncles", "v", "logsBloom",
     // fields in QuickBlocks but not in RPC
-    "contractAddress", "cumulativeGasUsed", "receipt", "address", "data", "logIndex", "topics", "price", "status",
+    "contractAddress", "cumulativeGasUsed", "receipt", "address", "data", "logIndex", "topics", "price", "status", "finalized",
     // status must be last because we only use it after byzan
 };
 uint32_t nRemoved = sizeof(removes) / sizeof(SFString);

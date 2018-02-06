@@ -9,6 +9,7 @@ getBlock stateclear
     "miner": "0xc0ea08a2d404d3172d2add29a45be56da40e2949",
     "difficulty": 70225364656452,
     "price": 0,
+    "finalized": 1,
     "timestamp": 1480460845,
     "transactions": [
         {
@@ -23,7 +24,6 @@ getBlock stateclear
             "value": 10000000000000000000,
             "gas": 72527,
             "gasPrice": 21000000000,
-            "cumulativeGasUsed": 0,
             "input": "0x",
             "receipt": {
                 "contractAddress": "0x0",
@@ -56,7 +56,6 @@ getBlock stateclear
             "value": 0,
             "gas": 100000,
             "gasPrice": 21000000000,
-            "cumulativeGasUsed": 0,
             "input": "0xf3fef3a3000000000000000000000000196556fa54738563c9ae4bf6dddf6128ebd4a6450000000000000000000000000000000000000000000000000000000000000000",
             "receipt": {
                 "contractAddress": "0x0",
@@ -78,7 +77,6 @@ getBlock stateclear
             "value": 0,
             "gas": 250000,
             "gasPrice": 20000000000,
-            "cumulativeGasUsed": 0,
             "input": "0x0a19b14a00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000de0b6b3a7640000000000000000000000000000ac709fcb44a43c35f0da4e3163b117a17f3770f5000000000000000000000000000000000000000000000003cb71f51fc55800000000000000000000000000000000000000000000000000000000000000297c570000000000000000000000000000000000000000000000000000000073750f80000000000000000000000000d635df2c3d63575576c1f030df8f634358bd6975000000000000000000000000000000000000000000000000000000000000001c486d074112f9165ca6adf9a5d972d1958c8119b977329b4afb0ed62243aee55958547c8e1a9ef327d60825e25b56be4b0a43d5b3671bdd5b4bdc9c2dd665aeb600000000000000000000000000000000000000000000000001fb87d0882e8500",
             "receipt": {
                 "contractAddress": "0x0",
@@ -109,7 +107,6 @@ getBlock stateclear
             "value": 7000000000000000000,
             "gas": 90000,
             "gasPrice": 20000000000,
-            "cumulativeGasUsed": 0,
             "input": "0x",
             "receipt": {
                 "contractAddress": "0x0",
@@ -131,7 +128,6 @@ getBlock stateclear
             "value": 1018569490538067000,
             "gas": 90000,
             "gasPrice": 20000000000,
-            "cumulativeGasUsed": 0,
             "input": "0x",
             "receipt": {
                 "contractAddress": "0x0",
@@ -153,7 +149,6 @@ getBlock stateclear
             "value": 1000872537922061200,
             "gas": 90000,
             "gasPrice": 20000000000,
-            "cumulativeGasUsed": 0,
             "input": "0x",
             "receipt": {
                 "contractAddress": "0x0",
@@ -175,7 +170,6 @@ getBlock stateclear
             "value": 1014079737550374500,
             "gas": 90000,
             "gasPrice": 20000000000,
-            "cumulativeGasUsed": 0,
             "input": "0x",
             "receipt": {
                 "contractAddress": "0x0",
@@ -197,7 +191,6 @@ getBlock stateclear
             "value": 1009388728759714300,
             "gas": 90000,
             "gasPrice": 20000000000,
-            "cumulativeGasUsed": 0,
             "input": "0x",
             "receipt": {
                 "contractAddress": "0x0",
@@ -219,7 +212,6 @@ getBlock stateclear
             "value": 1000359724938947700,
             "gas": 90000,
             "gasPrice": 20000000000,
-            "cumulativeGasUsed": 0,
             "input": "0x",
             "receipt": {
                 "contractAddress": "0x0",

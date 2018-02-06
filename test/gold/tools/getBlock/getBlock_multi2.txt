@@ -2,6 +2,7 @@ getBlock argc: 7 [1:--parity] [2:-a] [3:2769609] [4:2799895] [5:2872831] [6:3076
 getBlock --parity -a 2769609 2799895 2872831 3076260 
 [{
     "difficulty": "0x444a544d2788",
+    "finalized": "0x1",
     "gasLimit": "0x3d08fc",
     "gasUsed": "0x2858a",
     "hash": "0x549eb23a472504a498b07a122b8461121cec1a25a8b5ee8831917b426a99e3d7",
@@ -170,6 +171,7 @@ getBlock --parity -a 2769609 2799895 2872831 3076260
 },
 {
     "difficulty": "0x4a789f0d61a2",
+    "finalized": "0x1",
     "gasLimit": "0x3d1b3d",
     "gasUsed": "0x0",
     "hash": "0x900779fded60ab5079c74e994193fac9c35229e047cbce06fb30457e53fe8c48",
@@ -182,6 +184,7 @@ getBlock --parity -a 2769609 2799895 2872831 3076260
 },
 {
     "difficulty": "0x463ab1b26923",
+    "finalized": "0x1",
     "gasLimit": "0x3d371b",
     "gasUsed": "0x0",
     "hash": "0xf7ee644e2baec7aa00c9f88f893d4607054779068eeb50bcac5f765943291ca2",
@@ -194,6 +197,7 @@ getBlock --parity -a 2769609 2799895 2872831 3076260
 },
 {
     "difficulty": "0x66078c767c98",
+    "finalized": "0x1",
     "gasLimit": "0x3cfc86",
     "gasUsed": "0x0",
     "hash": "0x5d0614997a0beb807fe1ac293af95eef17f2769a3762b166d950709197299b5f",

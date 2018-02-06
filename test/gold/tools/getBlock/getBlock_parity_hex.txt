@@ -2,6 +2,7 @@ getBlock argc: 3 [1:--parity] [2:0x2e7721]
 getBlock --parity 0x2e7721 
 {
     "difficulty": "0x62f79fffb26f",
+    "finalized": "0x1",
     "gasLimit": "0x3d4629",
     "gasUsed": "0x4eb38",
     "hash": "0x662bd2bfc5ccbff1712f38354bba6075242fd3d0ef20ffafa2221ca03a56bfff",
