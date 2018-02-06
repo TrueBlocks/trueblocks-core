@@ -335,7 +335,7 @@ SFString CAccountWatch::displayName(bool useColor, bool terse, uint32_t w1, uint
 //---------------------------------------------------------------------------
 bool CAccountWatch::isTransactionOfInterest(CTransaction *trans, uint64_t nSigs, SFString sigs[]) const {
     // Assume it's not an internal transaction
-    trans->isInternalTx = false;
+    trans->isInternal = false;
 
     // First, check to see if the transaction is directly 'to' or 'from'
     if (trans->to.ContainsI(address) || trans->from.ContainsI(address))
@@ -343,7 +343,7 @@ bool CAccountWatch::isTransactionOfInterest(CTransaction *trans, uint64_t nSigs,
 
     // If this is a contract and this is its birth block, that's a hit
     if (trans->receipt.contractAddress == address) {
-        trans->isInternalTx = true;
+        trans->isInternal = true;
         return true;
     }
 
@@ -355,7 +355,7 @@ bool CAccountWatch::isTransactionOfInterest(CTransaction *trans, uint64_t nSigs,
         if (l->address.Contains(acc)) {
             // If we find a receipt log with an 'address' of interest, this is an
             // internal transaction that caused our contract to emit an event.
-            trans->isInternalTx = true;
+            trans->isInternal = true;
             return true;
 
         } else {
@@ -367,7 +367,7 @@ bool CAccountWatch::isTransactionOfInterest(CTransaction *trans, uint64_t nSigs,
             if (l->data.ContainsI(acc)) {
                 // Do this first to avoid spinning through event sigs if we
                 // don't have to.
-                trans->isInternalTx = true;
+                trans->isInternal = true;
                 return true;
 
             } else {
@@ -375,7 +375,7 @@ bool CAccountWatch::isTransactionOfInterest(CTransaction *trans, uint64_t nSigs,
                 for (uint64_t q = 0 ; q < nSigs ; q++) {
                     SFHash tHash = fromTopic(l->topics[0]);
                     if (tHash % sigs[q]) {
-                        trans->isInternalTx = true;
+                        trans->isInternal = true;
                         return true;
                     }
                 }
@@ -384,7 +384,7 @@ bool CAccountWatch::isTransactionOfInterest(CTransaction *trans, uint64_t nSigs,
                 for (uint32_t j = 1 ; j < l->topics.getCount() ; j++) {
                     SFHash tHash = fromTopic(l->topics[j]);
                     if (tHash % acc) {
-                        trans->isInternalTx = true;
+                        trans->isInternal = true;
                         return true;
                     }
                 }
@@ -398,7 +398,7 @@ bool CAccountWatch::isTransactionOfInterest(CTransaction *trans, uint64_t nSigs,
         for (uint32_t i = 0 ; i < traces.getCount() ; i++) {
             CTraceAction *action = (CTraceAction*)&(traces[i].action);
             if (action->to % address || action->from % address || action->address % address || action->refundAddress % address) {
-                trans->isInternalTx = true;
+                trans->isInternal = true;
                 return true;
             }
         }

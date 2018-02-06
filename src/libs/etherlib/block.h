@@ -35,6 +35,7 @@ public:
     SFAddress miner;
     uint64_t difficulty;
     double price;
+    bool finalized;
     timestamp_t timestamp;
     CTransactionArray transactions;
 
@@ -107,6 +108,7 @@ inline void CBlock::Init(void) {
     miner = "";
     difficulty = 0;
     price = 0.0;
+    finalized = 0;
     timestamp = 0;
     transactions.Clear();
 
@@ -127,6 +129,7 @@ inline void CBlock::Copy(const CBlock& bl) {
     miner = bl.miner;
     difficulty = bl.difficulty;
     price = bl.price;
+    finalized = bl.finalized;
     timestamp = bl.timestamp;
     transactions = bl.transactions;
 
@@ -158,6 +161,13 @@ inline blknum_t bnFromPath(const SFString& path) {
     SFString p = path.Substitute(".bin","");
     p.Reverse(); p = nextTokenClear(p, '/'); p.Reverse();
     return toUnsigned(p);
+}
+
+//---------------------------------------------------------------------------
+inline bool isFinal(timestamp_t ts) {
+    SFTime now = Now();
+    // Ten minutes is long enough for a block to be final (three minutes, actually, but we're conservative)
+    return (toTimestamp(now) - ts) > (60 * 10);
 }
 // EXISTING_CODE
 }  // namespace qblocks

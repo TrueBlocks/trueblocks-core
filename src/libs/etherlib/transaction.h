@@ -40,10 +40,9 @@ public:
     SFWei value;
     SFGas gas;
     SFGas gasPrice;
-    SFWei cumulativeGasUsed;
     SFString input;
     uint64_t isError;
-    uint64_t isInternalTx;
+    uint64_t isInternal;
     CReceipt receipt;
 
 public:
@@ -77,8 +76,6 @@ public:
 #endif
     // EXISTING_CODE
     friend ostream& operator<<(ostream& os, const CTransaction& item);
-    bool operator==(const CTransaction& item) const;
-    bool operator!=(const CTransaction& item) const { return !operator==(item); };
 
 protected:
     void Clear(void);
@@ -136,10 +133,9 @@ inline void CTransaction::Init(void) {
     value = 0;
     gas = 0;
     gasPrice = 0;
-    cumulativeGasUsed = 0;
     input = "";
     isError = 0;
-    isInternalTx = 0;
+    isInternal = 0;
     receipt.Init();
 
     // EXISTING_CODE
@@ -176,10 +172,9 @@ inline void CTransaction::Copy(const CTransaction& tr) {
     value = tr.value;
     gas = tr.gas;
     gasPrice = tr.gasPrice;
-    cumulativeGasUsed = tr.cumulativeGasUsed;
     input = tr.input;
     isError = tr.isError;
-    isInternalTx = tr.isInternalTx;
+    isInternal = tr.isInternal;
     receipt = tr.receipt;
 
     // EXISTING_CODE
