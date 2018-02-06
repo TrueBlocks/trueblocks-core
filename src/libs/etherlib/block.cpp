@@ -134,6 +134,7 @@ void CBlock::finishParse() {
             trans->receipt.status = rec.status;
         }
     }
+    finalized = isFinal(timestamp);
     // EXISTING_CODE
 }
 

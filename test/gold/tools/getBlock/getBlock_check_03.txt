@@ -51,7 +51,7 @@ from Quickblocks:
 
 --------------------------------------------------------------------------------
 Hidden fields:
-author, condition, creates, difficulty, extraData, miner, mixHash, networkId, chainId, nonce, nonce, publicKey, r, raw, receiptsRoot, s, sealFields, sha3Uncles, size, standardV, stateRoot, totalDifficulty, transactionsRoot, uncles, v, logsBloom, contractAddress, cumulativeGasUsed, receipt, address, data, logIndex, topics, price, status
+author, condition, creates, difficulty, extraData, miner, mixHash, networkId, chainId, nonce, nonce, publicKey, r, raw, receiptsRoot, s, sealFields, sha3Uncles, size, standardV, stateRoot, totalDifficulty, transactionsRoot, uncles, v, logsBloom, contractAddress, cumulativeGasUsed, receipt, address, data, logIndex, topics, price, status, finalized
 
 The strings are the same
 
