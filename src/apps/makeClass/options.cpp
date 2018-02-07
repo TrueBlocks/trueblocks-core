@@ -33,7 +33,7 @@ bool COptions::parseArguments(SFString& command) {
     Init();
     while (!command.empty()) {
         SFString arg = nextTokenClear(command, ' ');
-        if ((arg == "-e" || arg == "-edit" || arg == "-o" || arg == "-open")) {
+        if ((arg == "-e" || arg == "--edit" || arg == "-o" || arg == "--open")) {
             if (isRun)
                 return usage("Incompatible options '-r' and '-e'. Choose one or the other.");
             isEdit = true;
