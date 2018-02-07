@@ -446,21 +446,42 @@ bool CBlock::forEveryUniqueAddress(ADDRESSFUNC func, void *data) {
     return true;
 }
 
-typedef bool (*ADDRESSFUNC)(const SFAddress& addr, void *data);
 //---------------------------------------------------------------------------
-void callWithAddr(ADDRESSFUNC func, SFUintBN test, void *data) {
+bool isPotentialAddr(SFUintBN test, SFAddress& addrOut) {
+
+    addrOut = "";
+
     static const SFUintBN small = hex2BN(  "0x00000000000000ffffffffffffffffffffffffff"); // the smallest address we search for
     static const SFUintBN large = hex2BN("0x010000000000000000000000000000000000000000"); // the largest address we search for
     if (test <= small || test >= large)
+        return false;
+
+    addrOut = to_hex(test).c_str();
+    // Totally a heuristic that can't really be supported, but a good probability that this isn't an address
+    if (addrOut.endsWith("00000000"))
+        return false;
+
+    if (addrOut.length()<40)
+        addrOut = padLeft(addrOut, 40, '0');
+    addrOut = addrOut.substr(addrOut.length()-40,40);
+    addrOut = toLower("0x" + addrOut);
+
+    return true;
+}
+
+//---------------------------------------------------------------------------
+void processPotentialAddrs(const SFString& potList, ADDRESSFUNC func, void *data) {
+
+    if (!func)
         return;
 
-    SFAddress addr = to_hex(test).c_str();
-    if (addr.length()<40)
-        addr = padLeft(addr, 40, '0');
-    addr = addr.substr(addr.length()-40,40);
-    addr = toLower("0x" + addr);
-
-    (*func)(addr, data);
+    // Pull out 32-byte chunks and check to see if they are addresses
+    SFAddress addr;
+    for (uint32_t s = 0 ; s < potList.length() / 64 ; s++) {
+        SFUintBN test  = hex2BN("0x" + potList.substr(s*64,64));
+        if (isPotentialAddr(test, addr))
+            (*func)(addr, data);
+    }
 }
 
 //---------------------------------------------------------------------------
@@ -473,18 +494,22 @@ bool CBlock::forEveryAddress(ADDRESSFUNC func, void *data) {
 
     for (uint32_t tr = 0 ; tr < transactions.getCount() ; tr++) {
         CTransaction *trans   = &transactions[tr];
-        CReceipt *receipt = &trans->receipt;
+        CReceipt     *receipt = &trans->receipt;
 
         (*func)(trans->from, data);
-        (*func)(trans->to, data);
+        (*func)(trans->to,   data);
         (*func)(receipt->contractAddress, data);
-        SFString strData = trans->input.substr(10);
+        SFString potList = trans->input.substr(10);
         for (uint32_t l = 0 ; l < receipt->logs.getCount() ; l++) {
             CLogEntry *log = &receipt->logs[l];
             (*func)(log->address, data);
-            for (uint32_t t = 0 ; t < log->topics.getCount() ; t++)
-                callWithAddr(func, log->topics[t], data);
-            strData += log->data.substr(2);
+            for (uint32_t t = 0 ; t < log->topics.getCount() ; t++) {
+                SFAddress addr;
+                if (isPotentialAddr(log->topics[t], addr)) {
+                    (*func)(addr, data);
+                }
+            }
+            potList += log->data.substr(2);
         }
 
         CTraceArray traces;
@@ -498,16 +523,11 @@ bool CBlock::forEveryAddress(ADDRESSFUNC func, void *data) {
             (*func)(trace->result.address, data);
             SFString input = trace->action.input.substr(10);
             if (!input.empty())
-                strData += input;
+                potList += input;
         }
-
-        for (uint32_t s = 0 ; s < strData.length() / 64 ; s++) {
-            SFUintBN test  = hex2BN("0x" + strData.substr(s*64,64));
-            callWithAddr(func, test, data);
-        }
+        processPotentialAddrs(potList, func, data);
     }
     return true;
 }
 // EXISTING_CODE
 }  // namespace qblocks
-
