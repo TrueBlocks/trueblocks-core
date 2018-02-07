@@ -22,6 +22,7 @@ typedef SFList<CBlock*>             CBlockList;
 typedef SFUniqueList<CBlock*>       CBlockListU;
 
 // EXISTING_CODE
+typedef bool (*ADDRESSFUNC)(const SFAddress& addr, void *data);
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
@@ -50,7 +51,6 @@ public:
     const CBaseNode *getObjectAt(const SFString& fieldName, uint32_t index) const override;
 
     // EXISTING_CODE
-    typedef bool (*ADDRESSFUNC)(const SFAddress& addr, void *data);
     bool forEveryAddress      (ADDRESSFUNC func, void *data);
     bool forEveryUniqueAddress(ADDRESSFUNC func, void *data);
     // EXISTING_CODE
@@ -169,6 +169,8 @@ inline bool isFinal(timestamp_t ts) {
     // Ten minutes is long enough for a block to be final (three minutes, actually, but we're conservative)
     return (toTimestamp(now) - ts) > (60 * 10);
 }
+extern bool isPotentialAddr(SFUintBN test, SFAddress& addrOut);
+extern void processPotentialAddrs(const SFString& potList, ADDRESSFUNC func, void *data);
 // EXISTING_CODE
 }  // namespace qblocks
 
