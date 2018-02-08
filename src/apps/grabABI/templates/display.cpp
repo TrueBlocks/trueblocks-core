@@ -108,16 +108,6 @@ void CVisitor::displayTrans(uint32_t which, const CTransaction *theTrans) const 
         displayTrace(ts, theTrans->traces, theTrans->isError);
     }
 
-//   if (opts.bloom_on && promoted->receipt.logsBloom != 0) {
-//        displayBloom(promoted->receipt.logsBloom, "Tx bloom:", "");
-//        cout << "\r\n";
-//        for (uint32_t t=0;t<watches.getCount()-1;t++) {
-//            SFBloom b = makeBloom(watches[t].address);
-//            displayBloom(b,watches[t].color + padRight(watches[t].name.substr(0,9),9) + cOff, (isBloomHit(b, promoted->receipt.logsBloom) ? greenCheck : redX));
-//            cout << "\r\n";
-//        }
-//    }
-
     // If the transaction was promoted, clear that up
     if (theTrans != promoted)
         delete promoted;
@@ -129,17 +119,6 @@ void CVisitor::displayTrans(uint32_t which, const CTransaction *theTrans) const 
 //    if (!colorsDisabled())
 //      colorsOn();
     return;
-}
-
-//-----------------------------------------------------------------------
-void CVisitor::displayBloom(const SFBloom& bloom, const SFString& msg, const SFString& res) const {
-    SFString bl = bloom2Bytes(bloom).substr(2);
-    for (uint32_t i = 0 ; i < bl.length() ; i = i + 128) {
-        SFString m = padLeft(" ",16);
-        if (i == 0)
-            m = "    " + msg + bBlack + " 0x";
-        cout << m << bl.substr(i,128).Substitute("0",bBlack+"."+cOff) << (i == 0 ? " "+res : "") << "\r\n";
-    }
 }
 
 //-----------------------------------------------------------------------

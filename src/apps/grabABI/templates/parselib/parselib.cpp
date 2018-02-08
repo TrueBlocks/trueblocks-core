@@ -49,8 +49,8 @@ const CLogEntry *promoteTo[{PPREFIX}]Event(const CLogEntry *p)
     if (!p)
         return NULL;
 
-    uint32_t nTopics = p->topics.getCount();
-    if (nTopics>0) // the '0'th topic is the event signature
+    uint32_t nTops = p->topics.getCount();
+    if (nTops>0) // the '0'th topic is the event signature
     {
         SFString data = p->data.substr(2);
         // EXISTING_CODE

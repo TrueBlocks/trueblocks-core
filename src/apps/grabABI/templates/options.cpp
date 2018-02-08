@@ -9,15 +9,11 @@
 
 //---------------------------------------------------------------------------------------------------
 CParams params[] = {
-    CParams("-freshen",      "mode: freshen only -- default (do not display transactions from the cache)"),
-    CParams("-showCache",    "mode: show transactions from the cache, and then freshen"),
-    CParams("-cacheOnly",    "mode: display transactions from the cache only (do not freshen)"),
     CParams("-kBlock:<num>", "start processing at block :k"),
     CParams("-offset:<num>", "offset to kBlock"),
     CParams("-parse",        "display parsed input data"),
     CParams("-lo(g)s",       "display smart contract lo(g)s or events"),
     CParams("-trace",        "display smart contract internal traces"),
-    CParams("-bloom",        "display bloom filter matching"),
     CParams("-accounting",   "display credits and debits per account and reconcile at each block"),
     CParams("-list",         "display list of monitored accounts"),
     CParams("-debug",        "enter debug mode (pause after each transaction)"),
@@ -33,15 +29,10 @@ bool COptions::parseArguments(SFString& command) {
     if (!standardOptions(command))
         return false;
 
-    bool hasOnly = false;
     Init();
     while (!command.empty()) {
         SFString arg = nextTokenClear(command, ' ');
-        if (arg == "-f" || arg == "--freshen") {
-            // do nothing -- this is the default
-            mode = "freshen|";  // last in wins
-
-        } else if (arg.Contains("-k:") || arg.Contains("--kBlock:")) {
+        if (arg.Contains("-k:") || arg.Contains("--kBlock:")) {
 
             arg = arg.Substitute("-k:","").Substitute("--kBlock:","");
             if (!isNumeral(arg)) {
@@ -58,14 +49,6 @@ bool COptions::parseArguments(SFString& command) {
                 return false;
             }
             offset = toLongU(arg);
-
-        } else if (arg == "-c" || arg == "--cacheOnly") {
-            mode = "showCache|";  // last in wins
-            hasOnly = true;
-
-        } else if (arg == "-s" || arg == "--showCache") {
-            if (!hasOnly) // don't add freshen if we've already been told not to
-                mode = "showCache|freshen|";  // last in wins
 
         } else if (arg == "--single" || arg == "--single_step") {
             single_on = true;
@@ -95,9 +78,6 @@ bool COptions::parseArguments(SFString& command) {
 
         } else if (arg == "-p" || arg == "--parse") {
             parse_on = true;
-
-        } else if (arg == "-b" || arg == "--bloom") {
-            bloom_on = true;
 
         } else if (arg == "-d" || arg == "--debug") {
             debugger_on = true;
@@ -129,9 +109,6 @@ bool COptions::parseArguments(SFString& command) {
         }
     }
 
-    if (mode.empty())
-        mode = "freshen|";
-
     if (debugger_on && !accounting_on)
         return usage("If you want to use the debugger, you must use the --accounting option as well.");
 
@@ -145,12 +122,10 @@ void COptions::Init(void) {
     paramsPtr = params;
     nParamsRef = nParams;
 
-    mode = "freshen|";
     single_on = false;
     accounting_on = false;
     logs_on = false;
     trace_on = false;
-    bloom_on = false;
     debugger_on = false;
     parse_on = false;
     autocorrect_on = false;
