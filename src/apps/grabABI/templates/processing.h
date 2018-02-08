@@ -27,14 +27,12 @@ public:
     blknum_t lastBlock;
     blknum_t minWatchBlock;
     blknum_t maxWatchBlock;
-    CBlock   prevBlock;
     CBlockStats(void) :
         nBlocks(0),
         firstBlock(0),
         lastBlock(0),
         minWatchBlock(0),
-        maxWatchBlock(UINT32_MAX),
-        prevBlock()
+        maxWatchBlock(UINT32_MAX)
     {  }
 };
 
@@ -43,24 +41,9 @@ class CTransStats {
 public:
     uint64_t nAccountedFor;
     uint64_t nDisplayed;
-    uint64_t nFreshened;
     CTransStats(void) :
         nAccountedFor(0),
-        nDisplayed(0),
-        nFreshened(0)
-    {  }
-};
-
-//-----------------------------------------------------------------------
-class CBloomStats {
-public:
-    blknum_t bloomsChecked;
-    blknum_t bloomHits;
-    blknum_t falsePositives;
-    CBloomStats(void) :
-        bloomsChecked(0),
-        bloomHits(0),
-        falsePositives(0)
+        nDisplayed(0)
     {  }
 };
 
@@ -68,7 +51,6 @@ public:
 class CVisitor {
 public:
     COptions     opts;
-    CBloomStats  bloomStats;
     CTransStats  transStats;
     CBlockStats  blockStats;
     CTransBuffer tBuffer;
@@ -79,16 +61,13 @@ public:
     SFArchive cache;
     SFString screenFmt;
     bool esc_hit;
-    bool user_hit_q;
 
     CVisitor(void) :
-        opts(), bloomStats(), transStats(), blockStats(), tBuffer(),
+        opts(), transStats(), blockStats(), tBuffer(),
 //      watches, named,
         cache(READING_ARCHIVE),
-        screenFmt(""), esc_hit(false), user_hit_q(false)
+        screenFmt(""), esc_hit(false)
     { barLen(80); }
-
-    bool isTransactionOfInterest  (CTransaction *trans, uint32_t& which);
 
     bool openIncomeStatement      (const CBlock& block);
     bool accountForExtTransaction (const CBlock& block, const CTransaction *trans);
@@ -105,13 +84,10 @@ public:
 
     void displayTrans (uint32_t which, const CTransaction *theTrans) const;
     void displayTrace (timestamp_t ts, const CTraceArray& traces, bool err) const;
-    void displayBloom (const SFBloom& bloom, const SFString& msg, const SFString& res) const;
 };
 
 //-----------------------------------------------------------------------
 extern bool displayFromCache      (const SFString& fileName, uint64_t& blockNum, void *dataPtr);
-extern bool updateCacheUsingBlooms(const SFString& str, void *dataPtr);
-extern bool updateCache           (CBlock& block, void *dataPtr);
 extern void myQuitHandler         (int s);
 inline void myOnExitHandler       (void) { myQuitHandler(1); }
 
