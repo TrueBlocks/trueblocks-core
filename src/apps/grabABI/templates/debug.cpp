@@ -94,7 +94,6 @@ bool CVisitor::enterDebugger(const CBlock& block) {
                     cout << "\r\n";
                     cout.flush();
                     opts.debugger_on = false;
-                    user_hit_q = true;
                     return false;
 
                 } else if (curCmd == "a" || curCmd == "autoCorrect") {
