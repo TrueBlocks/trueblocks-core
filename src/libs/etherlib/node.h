@@ -57,6 +57,8 @@ namespace qblocks {
 
     //-------------------------------------------------------------------------
     extern SFString getVersionFromClient    (void);
+    inline bool     isGeth                  (void) { return getVersionFromClient().ContainsI("geth"); }
+    inline bool     isParity                (void) { return getVersionFromClient().ContainsI("parity"); }
     extern bool     getAccounts             (SFAddressArray& addrs);
     extern uint64_t getLatestBlockFromClient(void);
     extern uint64_t getLatestBlockFromCache (CSharedResource *res=NULL);
