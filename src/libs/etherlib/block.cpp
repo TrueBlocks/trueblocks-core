@@ -531,3 +531,4 @@ bool CBlock::forEveryAddress(ADDRESSFUNC func, void *data) {
 }
 // EXISTING_CODE
 }  // namespace qblocks
+
