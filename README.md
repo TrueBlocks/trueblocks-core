@@ -1,6 +1,5 @@
 #### Contact Info
 
-Contact us by [Email](mailto:jrush@quickblocks.io)  
 Visit our [Website](http://quickblocks.io)  
 Join our [Slack](https://join.slack.com/t/quickblocks/shared_invite/enQtMzEzMzYzODI2MDY4LWRjZWUzMzg3N2RhYjMzN2FiYWMzYzlmYTA1MzJhNDM3NTUyMmZlOWU1ZWY5ZjdjMjcyZTMzMjk2NDI0ZTVhZTg)
 
