@@ -269,9 +269,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
 
     //-------------------------------------------------------------------------
     uint64_t getLatestBlockFromClient(void) {
-        CBlock block;
-        getObjectViaRPC(block, "eth_getBlockByNumber", "[\"latest\", false]");
-        return block.blockNumber;
+        return toUnsigned(callRPC("eth_blockNumber", "[]", false));
     }
 
     //--------------------------------------------------------------------------
