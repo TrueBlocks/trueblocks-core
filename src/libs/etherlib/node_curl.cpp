@@ -29,6 +29,7 @@ namespace qblocks {
     }
 
     //-------------------------------------------------------------------------
+//#define DEBUG_RPC
     void CCurlContext::setPostData(const SFString& method, const SFString& params) {
         Clear();
         postData += "{";
@@ -37,7 +38,6 @@ namespace qblocks {
         postData +=  quote("params")  + ":"  + params + ",";
         postData +=  quote("id")      + ":"  + quote(getCurlID());
         postData += "}";
-        //#define DEBUG_RPC
 #ifdef DEBUG_RPC
         cerr << postData << "\n";
         cerr.flush();
