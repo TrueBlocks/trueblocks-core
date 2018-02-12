@@ -269,7 +269,19 @@ extern void registerQuitHandler(QUITHANDLER qh);
 
     //-------------------------------------------------------------------------
     uint64_t getLatestBlockFromClient(void) {
-        return toUnsigned(callRPC("eth_blockNumber", "[]", false));
+        SFString ret = callRPC("eth_blockNumber", "[]", false);
+        uint64_t retN = toUnsigned(ret);
+        if (retN == 0) {
+            // Try a different way just in case. Geth, for example, doesn't
+            // return blockNumber until the chain is synced (Parity may--don't know
+            // We fall back to this method just in case
+            SFString str = callRPC("eth_syncing", "[]", false);
+            str.Replace("currentBlock:","|");
+            nextTokenClear(str,'|');
+            str = nextTokenClear(str,',');
+            retN = toUnsigned(str);
+        }
+        return retN;
     }
 
     //--------------------------------------------------------------------------
