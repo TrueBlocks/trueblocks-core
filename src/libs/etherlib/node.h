@@ -82,6 +82,7 @@ namespace qblocks {
     // function pointer types for forEvery functions
     typedef bool (*BLOCKVISITFUNC)          (CBlock& block, void *data);
     typedef bool (*TRANSVISITFUNC)          (CTransaction& trans, void *data);
+    typedef bool (*LOGVISITFUNC)            (CLogEntry& log, void *data);
     typedef bool (*TRACEVISITFUNC)          (CTrace& trace, void *data);
 
     //-------------------------------------------------------------------------
@@ -104,6 +105,9 @@ namespace qblocks {
     //-------------------------------------------------------------------------
     // forEvery functions
     extern bool forEveryTraceInTransaction   (TRACEVISITFUNC func, void *data, const CTransaction& trans);
+    extern bool forEveryTraceInBlock         (TRACEVISITFUNC func, void *data, const CBlock& block);
+    extern bool forEveryLogInTransaction     (LOGVISITFUNC func, void *data, const CTransaction& trans);
+    extern bool forEveryLogInBlock           (LOGVISITFUNC func, void *data, const CBlock& block);
 
     //-------------------------------------------------------------------------
     extern SFString blockCachePath(const SFString& _part);
@@ -121,4 +125,6 @@ namespace qblocks {
 extern bool visitBlockNumber(blknum_t bn,         void *data);
 extern bool visitBlock      (CBlock& block,       void *data);
 extern bool visitTransaction(CTransaction& trans, void *data);
+extern bool visitLog        (CLogEntry& log,      void *data);
 extern bool visitTrace      (CTrace& trace,       void *data);
+
