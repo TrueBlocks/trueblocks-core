@@ -264,10 +264,6 @@ ostream& operator<<(ostream& os, const CIncomeStatement& item) {
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 //---------------------------------------------------------------------------
-bool CIncomeStatement::reconcile(const SFAddress& addr, blknum_t blockNum1) {
-    nodeBal = getBalance(addr, blockNum1, false);
-    return balanced();
-}
 // EXISTING_CODE
 }  // namespace qblocks
 

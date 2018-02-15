@@ -66,6 +66,12 @@ extern void registerQuitHandler(QUITHANDLER qh);
     }
 
     //-------------------------------------------------------------------------
+    SFString hexxy(uint64_t x) {
+        SFUintBN bn = x;
+        return "0x" + toLower(SFString(to_hex(bn).c_str()));
+    }
+
+    //-------------------------------------------------------------------------
     bool getBlock(CBlock& block, blknum_t blockNum) {
         getCurlContext()->source = fileExists(getBinaryFilename(blockNum)) ? "binary" : "local";
         bool ret = queryBlock(block, asStringU(blockNum), true, false);
@@ -87,9 +93,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
 
     //-------------------------------------------------------------------------
     bool getTransaction(CTransaction& trans, const SFHash& blockHash, txnum_t txID) {
-        SFUintBN t(txID);
-        SFString ts = to_hex(t).c_str();
-        getObjectViaRPC(trans, "eth_getTransactionByBlockHashAndIndex", "[\"" + fixHash(blockHash) +"\",\"0x" + ts + "\"]");
+        getObjectViaRPC(trans, "eth_getTransactionByBlockHashAndIndex", "[\"" + fixHash(blockHash) +"\",\"" + hexxy(txID) + "\"]");
         trans.finishParse();
         return true;
     }
@@ -108,11 +112,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
             // fall through to node
         }
 
-        SFUintBN h(blockNum);
-        SFUintBN t(txID);
-        SFString hs = to_hex(h).c_str();
-        SFString ts = to_hex(t).c_str();
-        getObjectViaRPC(trans, "eth_getTransactionByBlockNumberAndIndex", "[\"0x" + hs +"\",\"0x" + ts + "\"]");
+        getObjectViaRPC(trans, "eth_getTransactionByBlockNumberAndIndex", "[\"" + hexxy(blockNum) +"\",\"" + hexxy(txID) + "\"]");
         trans.finishParse();
         return true;
     }
@@ -146,12 +146,6 @@ extern void registerQuitHandler(QUITHANDLER qh);
     bool queryBlock(CBlock& block, const SFString& datIn, bool needTrace, bool byHash) {
         uint32_t unused = 0;
         return queryBlock(block, datIn, needTrace, byHash, unused);
-    }
-
-    //-------------------------------------------------------------------------
-    SFString hexxy(uint64_t x) {
-        SFUintBN bn = x;
-        return "0x"+toLower(SFString(to_hex(bn).c_str()));
     }
 
     //-------------------------------------------------------------------------
@@ -327,7 +321,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
     SFUintBN getBalance(const SFString& addr, blknum_t blockNum, bool isDemo) {
         SFString a = addr.substr(2);
         a = padLeft(a,40,'0');
-        SFString ret = callRPC("eth_getBalance", "[\"0x" + a +"\","+quote(asStringU(blockNum))+"]", false);
+        SFString ret = callRPC("eth_getBalance", "[\"0x" + a +"\",\""+hexxy(blockNum)+"\"]", false);
         return toWei(ret);
     }
 
@@ -343,7 +337,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
         SFString cmd = "[{\"to\": \"[TOKEN]\", \"data\": \"0x70a08231[HOLDER]\"}, \"[BLOCK]\"]";
         cmd.Replace("[TOKEN]",  t);
         cmd.Replace("[HOLDER]", h);
-        cmd.Replace("[BLOCK]",  asStringU(blockNum));
+        cmd.Replace("[BLOCK]",  hexxy(blockNum));
 
         return toWei(callRPC("eth_call", cmd, false));
     }
@@ -663,6 +657,42 @@ extern void registerQuitHandler(QUITHANDLER qh);
                 return false;
         }
 
+        return true;
+    }
+
+    //-------------------------------------------------------------------------
+    bool forEveryTraceInBlock(TRACEVISITFUNC func, void *data, const CBlock& block) {
+        for (uint32_t i = 0 ; i < block.transactions.getCount() ; i++) {
+            if (!forEveryTraceInTransaction(func, data, block.transactions[i]))
+                return false;
+        }
+        return true;
+    }
+
+    //-------------------------------------------------------------------------
+    bool forEveryLogInTransaction(LOGVISITFUNC func, void *data, const CTransaction& trans) {
+
+        if (!func)
+            return false;
+
+//        cout << "Visiting " << trans.receipt.logs.getCount() << " logs\n";
+//        cout.flush();
+        for (uint32_t i = 0 ; i < trans.receipt.logs.getCount() ; i++) {
+            CLogEntry log = trans.receipt.logs[i];
+            if (!(*func)(log, data))
+                return false;
+        }
+        return true;
+    }
+
+    //-------------------------------------------------------------------------
+    bool forEveryLogInBlock(LOGVISITFUNC func, void *data, const CBlock& block) {
+//        cout << "Visiting " << block.transactions.getCount() << " transactions\n";
+//        cout.flush();
+        for (uint32_t i = 0 ; i < block.transactions.getCount() ; i++) {
+            if (!forEveryLogInTransaction(func, data, block.transactions[i]))
+                return false;
+        }
         return true;
     }
 

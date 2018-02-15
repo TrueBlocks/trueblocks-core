@@ -35,14 +35,12 @@ extern SFString getSha3 (const SFString& hexIn);
     }
 
     //-------------------------------------------------------------------------
-    inline bool isBloomHit(const SFUintBN& test, const SFUintBN filter)
-    {
+    inline bool isBloomHit(const SFUintBN& test, const SFUintBN filter) {
         return ((test & filter) == test);
     }
 
     //-------------------------------------------------------------------------
-    inline bool isBloomHit(const SFString& hexIn, const SFUintBN filter)
-    {
+    inline bool isBloomHit(const SFString& hexIn, const SFUintBN filter) {
         return isBloomHit(makeBloom(hexIn),filter);
     }
 
