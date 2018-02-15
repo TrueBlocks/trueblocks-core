@@ -297,26 +297,6 @@ const CBaseNode *CAccountWatch::getObjectAt(const SFString& fieldName, uint32_t 
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-bool CAccountWatch::getWatch(const CToml& toml, uint32_t n) {
-    id = n;
-    address = fixAddress(toLower(toml.getConfigStr("watches", "address_"+asString(n), "")));
-    if (!isAddress(address))
-        return false;
-    name = toml.getConfigStr("watches", "name_"+asString(n), "");
-    if (name.empty())
-        return false;
-    color = convertColor(toml.getConfigStr("watches", "color_"+asString(n), ""));
-    if (cBlack != "" && color.empty())
-        return false;
-    firstBlock = toml.getConfigInt("watches", "firstBlock_"+asString(n), 0);
-    lastBlock = toml.getConfigInt("watches", "lastBlock_"+asString(n), UINT_MAX);
-    status = toml.getConfigStr("watches", "status_"+asString(n), "");
-    qbis.begBal = toml.getConfigBigInt("watches", "start_bal_"+asString(n), 0);
-    qbis.endBal = qbis.begBal;
-    nodeBal = getBalance(address, firstBlock-1, false);
-    return true;
-}
-
 //---------------------------------------------------------------------------
 SFString CAccountWatch::displayName(bool useColor, bool terse, uint32_t w1, uint32_t w2) const {
     if (address == "others") {
