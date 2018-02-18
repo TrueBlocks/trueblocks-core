@@ -1,5 +1,5 @@
 getBlock argc: 2 [1:--latest] 
 getBlock --latest 
-Latest block in cache:  --cache--
-Latest block at client: --client--
-Difference:             --diff--
+Latest block in cache:   --cache--
+Latest block at client:  --client--
+Difference:              --diff--
