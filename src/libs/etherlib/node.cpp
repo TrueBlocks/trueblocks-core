@@ -343,6 +343,47 @@ extern void registerQuitHandler(QUITHANDLER qh);
     }
 
     //-------------------------------------------------------------------------
+    bool hasTraceAt(const SFString& hashIn, uint32_t where) {
+        SFString cmd = "[\"" + fixHash(hashIn) +"\",[\"" + hexxy(where) + "\"]]";
+        SFString ret = callRPC("trace_get", cmd.c_str(), true);
+        return ret.find("blockNumber") != NOPOS;
+    }
+
+    //--------------------------------------------------------------
+    uint32_t getTraceCount_binarySearch(const SFHash& hashIn, uint32_t first, uint32_t last) {
+        if (last > first) {
+            uint32_t mid = first + ((last - first) / 2);
+            bool atMid  = hasTraceAt(hashIn, mid);
+            bool atMid1 = hasTraceAt(hashIn, mid + 1);
+            if (atMid && !atMid1)
+                return mid; // found it
+            if (!atMid) {
+                // we're too high, so search below
+                return getTraceCount_binarySearch(hashIn, first, mid-1);
+            }
+            // we're too low, so search above
+            return getTraceCount_binarySearch(hashIn, mid+1, last);
+        }
+        return first;
+    }
+
+    // https://ethereum.stackexchange.com/questions/9883/why-is-my-node-synchronization-stuck-extremely-slow-at-block-2-306-843/10453
+    //--------------------------------------------------------------
+    uint32_t getTraceCount(const SFHash& hashIn) {
+        // handle most likely cases linearly
+        for (uint32_t n = 2 ; n < 8 ; n++)
+            if (!hasTraceAt(hashIn, n))
+                return n-1;
+
+        // binary search the rest
+        if (!hasTraceAt(hashIn, (1<<8))) // small?
+            return getTraceCount_binarySearch(hashIn, 0, (1<<8)-1);
+        else if (!hasTraceAt(hashIn, (1<<16))) // medium?
+            return getTraceCount_binarySearch(hashIn, 0, (1<<16)-1);
+        return getTraceCount_binarySearch(hashIn, 0, (1<<30)); // TODO: is this big enough?
+    }
+
+    //-------------------------------------------------------------------------
     bool getSha3(const SFString& hexIn, SFString& shaOut) {
         shaOut = callRPC("web3_sha3", "[\"" + hexIn + "\"]", false);
         return true;

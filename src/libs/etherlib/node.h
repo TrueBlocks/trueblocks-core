@@ -25,6 +25,7 @@ namespace qblocks {
     extern bool     getReceipt              (CReceipt& receipt,   const SFHash& txHash);
     extern bool     getLogEntry             (CLogEntry& log,      const SFHash& txHash);
     extern void     getTraces               (CTraceArray& traces, const SFHash& txHash);
+    extern uint32_t getTraceCount           (const SFHash& hashIn);
 
     //-------------------------------------------------------------------------
     // other methods to access data

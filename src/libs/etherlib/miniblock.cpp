@@ -57,25 +57,20 @@ namespace qblocks {
     //--------------------------------------------------------------------------
     CMiniTrans::CMiniTrans(CTransaction *t) {
         bzero(this, sizeof(CMiniTrans));
-        index      = (uint32_t)t->transactionIndex;
-        gasUsed    = t->receipt.gasUsed;
-        gasPrice   = t->gasPrice;
-        gasAllowed = t->gas;
-        isError    = t->isError;
-        strncpy(from,  fromAddress(t->from).substr(2), 40); from [40] = '\0';
-        strncpy(to,    fromAddress(t->to).substr(2),   40); to   [40] = '\0';
-        strncpy(value, fromWei    (t->value),          40); value[40] = '\0';
+        index    = (uint32_t)t->transactionIndex;
+        gasUsed  = t->receipt.gasUsed;
+        gasPrice = t->gasPrice;
+        isError  = t->isError;
+        nTraces  = getTraceCount(t->hash);
+        strncpy(value, fromWei(t->value), 40); value[40] = '\0';
     }
 
     //--------------------------------------------------------------------------
     void CMiniTrans::toTrans(CTransaction& trans) const {
         trans.transactionIndex = index;
-        trans.gas              = gasAllowed;
         trans.receipt.gasUsed  = gasUsed;
         trans.gasPrice         = gasPrice;
         trans.isError          = isError;
-        trans.from             = toAddress(from);
-        trans.to               = toAddress(to);
         trans.value            = toWei(value);
         return;
     }
@@ -84,13 +79,11 @@ namespace qblocks {
     SFString CMiniTrans::Format(void) const {
         CStringExportContext ctx;
         ctx << "index: "    << index      << " ";
-        ctx << "from: "     << from       << " ";
-        ctx << "to: "       << to         << " ";
-        ctx << "value: "    << value      << " ";
         ctx << "isError: "  << isError    << " ";
-        ctx << "gas: "      << gasAllowed << " ";
+        ctx << "nTraces: "  << nTraces    << " ";
         ctx << "gasUsed: "  << gasUsed    << " ";
         ctx << "gasPrice: " << gasPrice   << " ";
+        ctx << "value: "    << value      << " ";
         return ctx.str;
     }
 
