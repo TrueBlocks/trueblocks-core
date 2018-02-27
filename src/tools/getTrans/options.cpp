@@ -76,6 +76,9 @@ COptions::COptions(void) {
     HIDE_FIELD(CTransaction, "cumulativeGasUsed");
 
     Init();
+    // Don't reset these for each command
+    nCmds = 0;
+    nVisited = 0;
 }
 
 //--------------------------------------------------------------------------------
