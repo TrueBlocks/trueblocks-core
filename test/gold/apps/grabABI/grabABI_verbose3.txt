@@ -1,6 +1,6 @@
 grabABI argc: 3 [1:0xbb9bc244d798123fde783fcc1c72d3bb8c189413] [2:-vn] 
 grabABI 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 -vn 
-ABI for address 0xbb9bc244d798123fde783fcc1c72d3bb8c189413
+Reading ABI for 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 from cache ~/.quickBlocks/ABI for address 0xbb9bc244d798123fde783fcc1c72d3bb8c189413
 	function approve                    (address _spender,uint256 _amount) [0x095ea7b3]
 	function executeProposal            (uint256 _proposalID,bytes _transactionData) [0x237e9492]
 	function transferFrom               (address _from,address _to,uint256 _value) [0x23b872dd]
