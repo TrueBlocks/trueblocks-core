@@ -6,7 +6,7 @@ The format of the classDefinition file is described below.
 
 #### Usage
 
-`Usage:`    makeClass [-e|-f|-l|-h|-c|-n|-s|-r|-a|-v|-h] className  
+`Usage:`    makeClass [-o|-r|-f|-l|-h|-c|-n|-s|-a|-v|-h] className  
 `Purpose:`  Creates C++ code based on definition file at ./classDefinition/<className>.
              
 `Where:`  
@@ -14,14 +14,14 @@ The format of the classDefinition file is described below.
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
 |  | className | name of C++ class(es) to process |
-| -e | --edit | edit <className(s)> definition file in local folder |
+| -o | --open | edit <className(s)> definition file in local folder |
+| -r | --run | run the class maker on associated <className(s)> |
 | -f | --filter val | process only files with :filter in their names |
 | -l | --list | list all definition files found in the local folder |
 | -h | --header | write headers files only |
 | -c | --source | write source files only |
 | -n | --namespace val | surround the code with a --namespace:ns |
 | -s | --silent | on error (no classDefinition file) exit silently |
-| -r | --run | run the class maker on associated <className(s)> |
 | -a | --all | clear, edit, list, or run all class definitions found in the local folder |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |

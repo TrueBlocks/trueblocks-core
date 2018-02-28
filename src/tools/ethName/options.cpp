@@ -128,7 +128,7 @@ SFString COptions::postProcess(const SFString& which, const SFString& str) const
         ret += "The [{--count}] option works with any other option and will simply display the number of matches.\n";
         ret += "The [{--matchCase}] option requires case sensitive matching. It works with all other options.\n";
         ret += "The [{--addrOnly}] option modifies the display output and therefore works with any other options.\n";
-        ret += "Name file: [{" + namesFile.getFullPath() + "}] (" + asStringU(fileSize(namesFile.getFullPath())) + ")\n";
+        ret += "Name file: [{" + namesFile.getFullPath().Substitute(getHomeFolder(),"~/") + "}] (" + asStringU(fileSize(namesFile.getFullPath())) + ")\n";
         return ret;
     }
     return str;
