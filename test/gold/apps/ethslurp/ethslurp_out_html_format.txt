@@ -14,10 +14,9 @@ Processing: 0x1324e7b922b30B49Ab8EA81086341cc41C249346 -d:20170519:20170519 -f:h
 		<td>value</td>
 		<td>gas</td>
 		<td>gasPrice</td>
-		<td>cumulativeGasUsed</td>
 		<td>input</td>
 		<td>isError</td>
-		<td>isInternalTx</td>
+		<td>isInternal</td>
 		<td>gasUsed</td>
 		<td>date</td>
 		<td>ether</td>
@@ -34,7 +33,6 @@ Processing: 0x1324e7b922b30B49Ab8EA81086341cc41C249346 -d:20170519:20170519 -f:h
 		<td>26911713734980000000000</td>
 		<td>21001</td>
 		<td>20000000000</td>
-		<td>379912</td>
 		<td>0x</td>
 		<td>0</td>
 		<td>0</td>
@@ -54,7 +52,6 @@ Processing: 0x1324e7b922b30B49Ab8EA81086341cc41C249346 -d:20170519:20170519 -f:h
 		<td>157900169159979996854272</td>
 		<td>21001</td>
 		<td>20000000000</td>
-		<td>1021081</td>
 		<td>0x</td>
 		<td>0</td>
 		<td>0</td>
@@ -74,7 +71,6 @@ Processing: 0x1324e7b922b30B49Ab8EA81086341cc41C249346 -d:20170519:20170519 -f:h
 		<td>184811000000000000000000</td>
 		<td>500000</td>
 		<td>21000000000</td>
-		<td>460436</td>
 		<td>0xce92dced348c814793453116b587f98c53a30e581be4d6bf82c8dc3519ab898334260729</td>
 		<td>0</td>
 		<td>0</td>
@@ -94,7 +90,6 @@ Processing: 0x1324e7b922b30B49Ab8EA81086341cc41C249346 -d:20170519:20170519 -f:h
 		<td>0</td>
 		<td>200000</td>
 		<td>21000000000</td>
-		<td>2866226</td>
 		<td>0x47872b42358c4c78a09fb497f6189740618baa4bba273193d57007a5ace38857d8ea785a0000000000000000000000000000000000000000000027229fd7b15b4ccc00001763b10ad2d3c0f8de908e73bbac5612b94f030298ef04ef9b49ca126d50f265</td>
 		<td>0</td>
 		<td>0</td>
