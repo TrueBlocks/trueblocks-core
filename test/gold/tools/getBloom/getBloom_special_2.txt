@@ -1,5 +1,5 @@
 getBloom argc: 2 [1:stateclear] 
 getBloom stateclear 
 {
-    "blockNumber": 2718436
+    "blockNumber": 2717576
 }

@@ -67,7 +67,7 @@ baseClass: CBaseNode
 	fieldName: isError
 	  fieldID: 1016
 	  fieldType: T_NUMBER TS_NUMERAL 65561
-	  hidden: 1
+	  hidden: 0
 	fieldName: isInternal
 	  fieldID: 1017
 	  fieldType: T_NUMBER TS_NUMERAL 65561
@@ -116,6 +116,7 @@ baseClass: CBaseNode
   "value": 0,
   "gas": 0,
   "gasPrice": 0,
+  "isError": 0,
   "receipt": {
     "contractAddress": "0x0",
     "gasUsed": 0,

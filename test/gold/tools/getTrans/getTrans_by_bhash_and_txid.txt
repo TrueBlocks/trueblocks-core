@@ -9,6 +9,7 @@ getTrans 0xb8a3f7f5cfc1748f91a684f20fe89031202cbadcd15078c49b85ec2a57f43853.4 -v
     "gasUsed": "0x76d0",
     "hash": "0xf1e398af74afe7dff17573ab30ae0b5bdbbcfc65a5d22d69b096cf620363a3c0",
     "input": "0x",
+    "isError": "0x0",
     "nonce": "0x1dc",
     "receipt": {
         "contractAddress": "0x0",
