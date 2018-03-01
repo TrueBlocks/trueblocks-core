@@ -65,7 +65,7 @@ run_special_test("whenBlock_mixed_block_and_date"         "2017-03-02" " 123123"
 run_special_test("whenBlock_first_block"                  "0")
 run_special_test("whenBlock_intermediate_block_1"         "1000000")
 run_special_test("whenBlock_intermediate_block_2"         "2677160")
-run_special_test("whenBlock_not_present_block"            "5000000")
+run_special_test("whenBlock_not_present_block"            "8000000")
 run_special_test("whenBlock_block_with_leading_zeroes"    "000000011")
 run_special_test("whenBlock_invalid_alone_syntax_1"       "-d")
 run_special_test("whenBlock_invalid_alone_syntax_2"       "-d"      " 2015-03-02")
