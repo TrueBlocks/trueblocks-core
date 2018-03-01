@@ -133,7 +133,7 @@ SFString checkOneBlock(uint64_t num, const COptions& opt) {
     fromNode.Replace("\"hash\":","\"blockHash\":");
     if (verbose)
         cout << num << "\n";
-    fromNode = normalizeBlock(fromNode, true, num > byzantiumBlock);
+    fromNode = normalizeBlock(fromNode, true, num >= byzantiumBlock);
 
     // Now get the same block from quickBlocks
     SFString fromQblocks;
@@ -149,7 +149,7 @@ SFString checkOneBlock(uint64_t num, const COptions& opt) {
     }
     if (verbose)
         cout << num << "\n";
-    fromQblocks = normalizeBlock(qBlocks.Format(), true, num > byzantiumBlock);
+    fromQblocks = normalizeBlock(qBlocks.Format(), true, num >= byzantiumBlock);
 
 extern SFString hiddenFields(void);
     SFString result = hiddenFields() + "The strings are "; result += ((fromNode != fromQblocks) ? "different\n" : "the same\n");

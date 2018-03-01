@@ -85,7 +85,7 @@ bool CReceipt::setValueByName(const SFString& fieldName, const SFString& fieldVa
             }
             break;
         case 's':
-            if ( fieldName % "status" ) { status = toLong32u(fieldValue); return true; }
+            if ( fieldName % "status" ) { status = newUnsigned32(fieldValue); return true; }
             break;
         default:
             break;
