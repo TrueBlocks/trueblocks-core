@@ -72,6 +72,11 @@ extern void registerQuitHandler(QUITHANDLER qh);
     }
 
     //-------------------------------------------------------------------------
+    SFString hexxy(const SFString& numIn) {
+        return hexxy(toUnsigned(numIn));
+    }
+
+    //-------------------------------------------------------------------------
     bool getBlock(CBlock& block, blknum_t blockNum) {
         getCurlContext()->source = fileExists(getBinaryFilename(blockNum)) ? "binary" : "local";
         bool ret = queryBlock(block, asStringU(blockNum), true, false);
@@ -211,7 +216,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
         if (isHash(datIn)) {
             blockStr = callRPC("eth_getBlockByHash", "["+quote(datIn)+","+(hashesOnly?"false":"true")+"]", true);
         } else {
-            blockStr = callRPC("eth_getBlockByNumber", "["+quote(datIn)+","+(hashesOnly?"false":"true")+"]", true);
+            blockStr = callRPC("eth_getBlockByNumber", "["+quote(hexxy(datIn))+","+(hashesOnly?"false":"true")+"]", true);
         }
         return true;
     }
@@ -288,7 +293,8 @@ extern void registerQuitHandler(QUITHANDLER qh);
         if (!pRes) {
             // We're reading so okay not to wait
             if (!fullBlocks.Lock(fullBlockIndex, binaryReadOnly, LOCK_WAIT)) {
-                cerr << "getLatestBlockFromCache failed: " << fullBlocks.LockFailure() << "\n";
+                if (!isTestMode())
+                    cerr << "getLatestBlockFromCache failed: " << fullBlocks.LockFailure() << "\n";
                 return ret;
             }
             pRes = &fullBlocks;
@@ -784,6 +790,8 @@ extern void registerQuitHandler(QUITHANDLER qh);
             CBlock block;
             trans.pBlock = &block;
             getBlock(block, trans.blockNumber);
+            if (block.transactions.getCount() > trans.transactionIndex)
+                trans.isError = block.transactions[(uint32_t)trans.transactionIndex].isError;
             getReceipt(trans.receipt, trans.getValueByName("hash"));
             trans.finishParse();
             if (!isHash(trans.hash)) {

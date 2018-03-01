@@ -79,6 +79,8 @@ COptions::COptions(void) {
     // Don't reset these for each command
     nCmds = 0;
     nVisited = 0;
+    if (isTestMode())
+        UNHIDE_FIELD(CTransaction, "isError");
 }
 
 //--------------------------------------------------------------------------------
