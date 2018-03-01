@@ -5,6 +5,7 @@ getBlock 1958017 -c
 from Node:
 "blockHash":"0x93ef1e0e47b32163d9cf9bd2e0a5f52b05e04f77fc99c7750b551553eb0c94c3"
 "blockNumber":"0x1de081"
+"difficulty":"0x2fb8651f992b"
 "from":"0x7365fe88666f3474fd7631f3ff669c6787a5bf49"
 "from":"0xea674fdde714fd979de3edf0f56aa9716b898ec8"
 "gas":"0x15f90"
@@ -15,6 +16,7 @@ from Node:
 "hash":"0x35569f795bc0a8769dedb88cdf37cad28397aa53ffc1e8bc23a0b8583af58b82"
 "hash":"0x5b0b4c79fbb61d6a439b2d6a9bed03e7e2c7de87e9a4f6d860312ffb4f98618e"
 "input":"0x"
+"miner":"0xbcdfc35b86bedf72f0cda046a3c16829a2ef41d1"
 "number":"0x1de081"
 "parentHash":"0x6b218fa2bfd0e3c331c5f442dc559208a1ee41e8a01c2c689b0f338a107d3708"
 "timestamp":"0x5797db28"
@@ -29,6 +31,7 @@ from Node:
 from Quickblocks:
 "blockHash":"0x93ef1e0e47b32163d9cf9bd2e0a5f52b05e04f77fc99c7750b551553eb0c94c3"
 "blockNumber":"0x1de081"
+"difficulty":"0x2fb8651f992b"
 "from":"0x7365fe88666f3474fd7631f3ff669c6787a5bf49"
 "from":"0xea674fdde714fd979de3edf0f56aa9716b898ec8"
 "gas":"0x15f90"
@@ -39,6 +42,7 @@ from Quickblocks:
 "hash":"0x35569f795bc0a8769dedb88cdf37cad28397aa53ffc1e8bc23a0b8583af58b82"
 "hash":"0x5b0b4c79fbb61d6a439b2d6a9bed03e7e2c7de87e9a4f6d860312ffb4f98618e"
 "input":"0x"
+"miner":"0xbcdfc35b86bedf72f0cda046a3c16829a2ef41d1"
 "number":"0x1de081"
 "parentHash":"0x6b218fa2bfd0e3c331c5f442dc559208a1ee41e8a01c2c689b0f338a107d3708"
 "timestamp":"0x5797db28"
@@ -51,7 +55,7 @@ from Quickblocks:
 
 --------------------------------------------------------------------------------
 Hidden fields:
-author, condition, creates, difficulty, extraData, miner, mixHash, networkId, chainId, nonce, nonce, publicKey, r, raw, receiptsRoot, s, sealFields, sha3Uncles, size, standardV, stateRoot, totalDifficulty, transactionsRoot, uncles, v, logsBloom, contractAddress, cumulativeGasUsed, receipt, address, data, logIndex, topics, price, status, finalized
+author, condition, creates, extraData, mixHash, networkId, chainId, nonce, nonce, publicKey, r, raw, receiptsRoot, s, sealFields, sha3Uncles, size, standardV, stateRoot, totalDifficulty, transactionsRoot, uncles, v, logsBloom, contractAddress, cumulativeGasUsed, receipt, address, data, logIndex, topics, price, finalized, isError, status
 
 The strings are the same
 

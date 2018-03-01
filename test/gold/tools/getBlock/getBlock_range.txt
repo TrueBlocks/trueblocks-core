@@ -25,6 +25,7 @@ getBlock 4000001-4000003
             "gas": 41000,
             "gasPrice": 24150000000,
             "input": "0x",
+            "isError": 0,
             "receipt": {
                 "contractAddress": "0x0",
                 "gasUsed": 21000,
@@ -46,6 +47,7 @@ getBlock 4000001-4000003
             "gas": 50000,
             "gasPrice": 21000000000,
             "input": "0x",
+            "isError": 0,
             "receipt": {
                 "contractAddress": "0x0",
                 "gasUsed": 21000,
@@ -67,6 +69,7 @@ getBlock 4000001-4000003
             "gas": 50000,
             "gasPrice": 4000000000,
             "input": "0x",
+            "isError": 0,
             "receipt": {
                 "contractAddress": "0x0",
                 "gasUsed": 21000,
@@ -88,6 +91,7 @@ getBlock 4000001-4000003
             "gas": 50000,
             "gasPrice": 21000000000,
             "input": "0x",
+            "isError": 0,
             "receipt": {
                 "contractAddress": "0x0",
                 "gasUsed": 21000,
@@ -109,6 +113,7 @@ getBlock 4000001-4000003
             "gas": 50000,
             "gasPrice": 21000000000,
             "input": "0x",
+            "isError": 0,
             "receipt": {
                 "contractAddress": "0x0",
                 "gasUsed": 21000,
@@ -130,6 +135,7 @@ getBlock 4000001-4000003
             "gas": 50000,
             "gasPrice": 21000000000,
             "input": "0x",
+            "isError": 0,
             "receipt": {
                 "contractAddress": "0x0",
                 "gasUsed": 21000,
@@ -151,6 +157,7 @@ getBlock 4000001-4000003
             "gas": 50000,
             "gasPrice": 21000000000,
             "input": "0x",
+            "isError": 0,
             "receipt": {
                 "contractAddress": "0x0",
                 "gasUsed": 21000,
@@ -172,6 +179,7 @@ getBlock 4000001-4000003
             "gas": 50000,
             "gasPrice": 21000000000,
             "input": "0x",
+            "isError": 0,
             "receipt": {
                 "contractAddress": "0x0",
                 "gasUsed": 21000,
@@ -193,6 +201,7 @@ getBlock 4000001-4000003
             "gas": 50000,
             "gasPrice": 21000000000,
             "input": "0x",
+            "isError": 0,
             "receipt": {
                 "contractAddress": "0x0",
                 "gasUsed": 21000,
@@ -214,6 +223,7 @@ getBlock 4000001-4000003
             "gas": 50000,
             "gasPrice": 21000000000,
             "input": "0x",
+            "isError": 0,
             "receipt": {
                 "contractAddress": "0x0",
                 "gasUsed": 21000,
@@ -235,6 +245,7 @@ getBlock 4000001-4000003
             "gas": 50000,
             "gasPrice": 21000000000,
             "input": "0x",
+            "isError": 0,
             "receipt": {
                 "contractAddress": "0x0",
                 "gasUsed": 22966,
@@ -267,6 +278,7 @@ getBlock 4000001-4000003
             "gas": 50000,
             "gasPrice": 21000000000,
             "input": "0x",
+            "isError": 0,
             "receipt": {
                 "contractAddress": "0x0",
                 "gasUsed": 21000,
@@ -288,6 +300,7 @@ getBlock 4000001-4000003
             "gas": 50000,
             "gasPrice": 21000000000,
             "input": "0x",
+            "isError": 0,
             "receipt": {
                 "contractAddress": "0x0",
                 "gasUsed": 21000,
@@ -309,6 +322,7 @@ getBlock 4000001-4000003
             "gas": 50000,
             "gasPrice": 21000000000,
             "input": "0x",
+            "isError": 0,
             "receipt": {
                 "contractAddress": "0x0",
                 "gasUsed": 21000,
@@ -330,6 +344,7 @@ getBlock 4000001-4000003
             "gas": 50000,
             "gasPrice": 21000000000,
             "input": "0x",
+            "isError": 0,
             "receipt": {
                 "contractAddress": "0x0",
                 "gasUsed": 21000,
@@ -351,6 +366,7 @@ getBlock 4000001-4000003
             "gas": 50000,
             "gasPrice": 21000000000,
             "input": "0x",
+            "isError": 0,
             "receipt": {
                 "contractAddress": "0x0",
                 "gasUsed": 21000,
@@ -386,6 +402,7 @@ getBlock 4000001-4000003
             "gas": 170000,
             "gasPrice": 30000000000,
             "input": "0xa9059cbb000000000000000000000000aca33c43bd8deac8e1d144baa51fe9c7dd7b010f000000000000000000000000000000000000000000000181e5085292122a0000",
+            "isError": 0,
             "receipt": {
                 "contractAddress": "0x0",
                 "gasUsed": 52129,
@@ -418,6 +435,7 @@ getBlock 4000001-4000003
             "gas": 150000,
             "gasPrice": 24150000000,
             "input": "0x606060405260008054600160a060020a0319163317905560f2806100236000396000f3606060405260e060020a6000350463f5537ede8114601c575b6002565b3460025760f06004356024356044356000805433600160a060020a039081169116141560ea5783905080600160a060020a031663a9059cbb84846000604051602001526040518360e060020a0281526004018083600160a060020a0316815260200182815260200192505050602060405180830381600087803b1560025760325a03f1156002575050604080518481529051600160a060020a0386811693508716917fd0ed88a3f042c6bbb1e3ea406079b5f2b4b198afccaa535d837f4c63abbc4de6919081900360200190a35b50505050565b00",
+            "isError": 0,
             "receipt": {
                 "contractAddress": "0x9f87e7a713d8575b1d3b9c2320aae64c8222c001",
                 "gasUsed": 140027,
@@ -439,6 +457,7 @@ getBlock 4000001-4000003
             "gas": 21000,
             "gasPrice": 23100000000,
             "input": "0x",
+            "isError": 0,
             "receipt": {
                 "contractAddress": "0x0",
                 "gasUsed": 21000,
@@ -460,6 +479,7 @@ getBlock 4000001-4000003
             "gas": 50000,
             "gasPrice": 21000000000,
             "input": "0x",
+            "isError": 0,
             "receipt": {
                 "contractAddress": "0x0",
                 "gasUsed": 21000,
@@ -481,6 +501,7 @@ getBlock 4000001-4000003
             "gas": 50000,
             "gasPrice": 21000000000,
             "input": "0x",
+            "isError": 0,
             "receipt": {
                 "contractAddress": "0x0",
                 "gasUsed": 21000,
@@ -502,6 +523,7 @@ getBlock 4000001-4000003
             "gas": 31500,
             "gasPrice": 21000000000,
             "input": "0x",
+            "isError": 0,
             "receipt": {
                 "contractAddress": "0x0",
                 "gasUsed": 21000,
@@ -523,6 +545,7 @@ getBlock 4000001-4000003
             "gas": 21000,
             "gasPrice": 21000000000,
             "input": "0x",
+            "isError": 0,
             "receipt": {
                 "contractAddress": "0x0",
                 "gasUsed": 21000,
@@ -544,6 +567,7 @@ getBlock 4000001-4000003
             "gas": 21000,
             "gasPrice": 21000000000,
             "input": "0x",
+            "isError": 0,
             "receipt": {
                 "contractAddress": "0x0",
                 "gasUsed": 21000,
@@ -565,6 +589,7 @@ getBlock 4000001-4000003
             "gas": 21000,
             "gasPrice": 21000000000,
             "input": "0x",
+            "isError": 0,
             "receipt": {
                 "contractAddress": "0x0",
                 "gasUsed": 21000,

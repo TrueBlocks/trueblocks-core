@@ -25,6 +25,7 @@ getBlock daofork
             "gas": 21000,
             "gasPrice": 20000000000,
             "input": "0x",
+            "isError": 0,
             "receipt": {
                 "contractAddress": "0x0",
                 "gasUsed": 21000,
@@ -46,6 +47,7 @@ getBlock daofork
             "gas": 21000,
             "gasPrice": 20000000000,
             "input": "0x",
+            "isError": 0,
             "receipt": {
                 "contractAddress": "0x0",
                 "gasUsed": 21000,
@@ -67,6 +69,7 @@ getBlock daofork
             "gas": 21000,
             "gasPrice": 20000000000,
             "input": "0x",
+            "isError": 0,
             "receipt": {
                 "contractAddress": "0x0",
                 "gasUsed": 21000,
@@ -88,6 +91,7 @@ getBlock daofork
             "gas": 21000,
             "gasPrice": 20000000000,
             "input": "0x",
+            "isError": 0,
             "receipt": {
                 "contractAddress": "0x0",
                 "gasUsed": 21000,

@@ -1,6 +1,6 @@
 grabABI argc: 3 [1:0xbb9bc244d798123fde783fcc1c72d3bb8c189413] [2:-v] 
 grabABI 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 -v 
-Reading ABI for 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 from cache ~/.quickBlocks/ABI for address 0xbb9bc244d798123fde783fcc1c72d3bb8c189413
+ABI for address 0xbb9bc244d798123fde783fcc1c72d3bb8c189413
 	function proposals                  (uint256 param_0) [0x013cf08b] constant
 	function approve                    (address _spender,uint256 _amount) [0x095ea7b3]
 	function minTokensToCreate          () [0x0c3b7b96] constant
