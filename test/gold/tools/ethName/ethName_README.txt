@@ -30,4 +30,5 @@ ethName -th
 - The `--count` option works with any other option and will simply display the number of matches.
 - The `--matchCase` option requires case sensitive matching. It works with all other options.
 - The `--addrOnly` option modifies the display output and therefore works with any other options.
+- Name file: `~/.quickBlocks/names/names.txt` (7736)
 
