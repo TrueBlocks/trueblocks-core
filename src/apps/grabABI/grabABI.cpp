@@ -88,14 +88,14 @@ SFString acquireABI(CFunctionArray& functions, const SFAddress& addr, const COpt
     dispName = "~/.quickBlocks/" + dispName;
     if (fileExists(fileName) && !opt.raw) {
 
-        if (verbose || !isTestMode()) {
+        if (verbose && !isTestMode()) {
             cerr << "Reading ABI for " << addr << " from cache " + dispName + "\r";
             cerr.flush();
         }
         results = asciiFileToString(fileName);
 
     } else {
-        if (verbose || !isTestMode()) {
+        if (verbose && !isTestMode()) {
             cerr << "Reading ABI for " << addr << " from EtherScan\r";
             cerr.flush();
         }
