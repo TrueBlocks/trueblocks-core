@@ -253,6 +253,9 @@ void CTransaction::registerClass(void) {
     HIDE_FIELD(CTransaction, "isInternal");
     HIDE_FIELD(CTransaction, "date");
     HIDE_FIELD(CTransaction, "ether");
+    if (isTestMode()) {
+        UNHIDE_FIELD(CTransaction, "isError");
+    }
     //    HIDE_FIELD(CTransaction, "receipt");
     // EXISTING_CODE
 }
