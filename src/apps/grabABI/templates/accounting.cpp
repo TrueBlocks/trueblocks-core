@@ -153,7 +153,7 @@ bool CVisitor::closeIncomeStatement(const CBlock& block) {
             cout << watches[i].color << padRight(watches[i].displayName(true,false,14,6),24) << cOff << watches[i].qbis << "   ";
 
             if (i < watches.getCount()-1) {
-                watches[i].qbis.reconcile(watches[i].address, block.blockNumber);
+                watches[i].qbis.nodeBal = getBalance(watches[i].address, block.blockNumber, false);
                 cout << padLeft(wei2Ether(to_string(watches[i].qbis.nodeBal).c_str()),28);
                 if (!watches[i].qbis.balanced()) {
 

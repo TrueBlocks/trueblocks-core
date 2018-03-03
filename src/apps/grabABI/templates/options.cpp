@@ -18,7 +18,6 @@ CParams params[] = {
     CParams("-list",         "display list of monitored accounts"),
     CParams("-debug",        "enter debug mode (pause after each transaction)"),
     CParams("-single",       "if debugging is enable, single step through transactions"),
-    CParams("-rebuild",      "clear cache and reprocess all transcations (may take a long time)"),
     CParams("",              "Index transactions for a given Ethereum address (or series of addresses).\r\n"),
 };
 uint32_t nParams = sizeof(params) / sizeof(CParams);
@@ -81,26 +80,6 @@ bool COptions::parseArguments(SFString& command) {
 
         } else if (arg == "-d" || arg == "--debug") {
             debugger_on = true;
-
-        } else if (arg == "-r" || arg == "--rebuild") {
-            cerr << cRed << "Warning: " << cOff
-            << "Rebuilding the cache may take a very long time. Are you sure? Type 'y' or 'yes' to continue...\r\n"
-            << "  > ";
-            cerr.flush();
-            char buffer[256];
-            cin >> buffer;
-            SFString res = buffer;
-
-            if (res == "y" || res == "yes") {
-                CFilename fn("./cache/");
-                SFString path = fn.getFullPath();
-                removeFolder(path);
-                establishFolder(path);
-                cerr << cYellow << "The cache was cleared. Quitting...\r\n" << cOff;
-            } else {
-                cerr << cYellow << "The cache was not removed. Quitting...\r\n" << cOff;
-            }
-            return false;
 
         } else if (arg.startsWith('-')) {  // do not collapse
             if (!builtInCmd(arg)) {

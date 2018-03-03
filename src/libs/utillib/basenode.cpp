@@ -462,7 +462,7 @@ namespace qblocks {
 
                 } else if (fld->m_fieldType & TS_NUMERAL) {
                     if (expContext().quoteNums) ret += "\"";
-                    ret += (expContext().hexNums) ? toHex2(val) : decBigNum(val);
+                    ret += (expContext().hexNums) ? toHex(val) : decBigNum(val);
                     if (expContext().quoteNums) ret += "\"";
 
                 } else if (val == "null") {
@@ -494,8 +494,8 @@ namespace qblocks {
     SFString decBigNum(const SFString& str) {
         SFString ret = str;
         size_t len = ret.length();
-        if (len > 29) ret = ret.substr(0,1) + "." + StripTrailing(ret.substr(1), '0') + "e+29";
-        else if (len >28) ret = ret.substr(0,1) + "." + StripTrailing(ret.substr(1), '0') + "e+28";
+             if (len > 29) ret = ret.substr(0,1) + "." + StripTrailing(ret.substr(1), '0') + "e+29";
+        else if (len > 28) ret = ret.substr(0,1) + "." + StripTrailing(ret.substr(1), '0') + "e+28";
         else if (len > 27) ret = ret.substr(0,1) + "." + StripTrailing(ret.substr(1), '0') + "e+27";
         else if (len > 26) ret = ret.substr(0,1) + "." + StripTrailing(ret.substr(1), '0') + "e+26";
         else if (len > 25) ret = ret.substr(0,1) + "." + StripTrailing(ret.substr(1), '0') + "e+25";
@@ -705,7 +705,7 @@ namespace qblocks {
                     SFString val = getValueByName(name);
                     bool isNum = field->m_fieldType & TS_NUMERAL;
                     if (isNum && expContext().hexNums && !val.startsWith("0x"))
-                        val = toHex2(val);
+                        val = toHex(val);
                     bool quote = (!isNum || expContext().quoteNums) && val != "null";
                     if (quote)
                         os << "\"";
