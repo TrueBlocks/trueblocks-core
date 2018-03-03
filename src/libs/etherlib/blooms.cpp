@@ -83,5 +83,22 @@ namespace qblocks {
         }
         return false;
     }
+
+    //-----------------------------------------------------------------------
+    SFString reportBloom(const SFBloomArray& blooms) {
+        SFString ret;
+        for (uint32_t i = 0; i < blooms.getCount(); i++) {
+            uint64_t bits = bitsTwiddled(blooms[i]);
+            if (bits) {
+                ret += asStringU(bits);
+                if (i < blooms.getCount()-1)
+                    ret += ",";
+            }
+        }
+        if (ret.empty())
+            return ret;
+        return "bloom bits: " + cYellow + ret + cOff;
+    }
+
 }  // namespace qblocks
 

@@ -52,5 +52,7 @@ extern SFString getSha3 (const SFString& hexIn);
     //----------------------------------------------------------------------------------
     extern bool readBloomArray (      SFBloomArray& blooms, const SFString& fileName);
     extern bool writeBloomArray(const SFBloomArray& blooms, const SFString& fileName);
-    
+    extern SFString reportBloom(const SFBloomArray& blooms);
+
 }  // namespace qblocks
+

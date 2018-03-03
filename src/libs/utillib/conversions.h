@@ -254,9 +254,22 @@ namespace qblocks {
 #define fromWei(a)      to_string((a)).c_str()
 #define fromTopic(a)    ("0x"+padLeft(toLower(SFString(to_hex((a)).c_str())),64,'0'))
 #define fromGas(a)      asStringU(a)
-#define toHex2(a)       (a == "null" ? "null" : ("0x"+toLower(SFString(to_hex(str2BigUint(a)).c_str()))))
 
-	extern  SFString   bloom2Bytes(const SFBloom& bl);
+    //-------------------------------------------------------------------------
+    inline SFString toHex(const SFString& str) {
+        if (str == "null")
+            return str;
+        SFUintBN bn = canonicalWei(str);
+        return toLower("0x" + SFString(to_hex(bn).c_str()));
+    }
+
+    //-------------------------------------------------------------------------
+    inline SFString toHex(uint64_t num) {
+        SFUintBN bn = num;
+        return toLower("0x" + SFString(to_hex(bn).c_str()));
+    }
+
+    extern SFString bloom2Bytes(const SFBloom& bl);
     extern SFString bloom2Bits(const SFBloom& b);
 
 #define fromUnsigned(a) asStringU((a))
