@@ -66,17 +66,6 @@ extern void registerQuitHandler(QUITHANDLER qh);
     }
 
     //-------------------------------------------------------------------------
-    SFString hexxy(uint64_t x) {
-        SFUintBN bn = x;
-        return "0x" + toLower(SFString(to_hex(bn).c_str()));
-    }
-
-    //-------------------------------------------------------------------------
-    SFString hexxy(const SFString& numIn) {
-        return hexxy(toUnsigned(numIn));
-    }
-
-    //-------------------------------------------------------------------------
     bool getBlock(CBlock& block, blknum_t blockNum) {
         getCurlContext()->source = fileExists(getBinaryFilename(blockNum)) ? "binary" : "local";
         bool ret = queryBlock(block, asStringU(blockNum), true, false);
@@ -98,7 +87,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
 
     //-------------------------------------------------------------------------
     bool getTransaction(CTransaction& trans, const SFHash& blockHash, txnum_t txID) {
-        getObjectViaRPC(trans, "eth_getTransactionByBlockHashAndIndex", "[\"" + fixHash(blockHash) +"\",\"" + hexxy(txID) + "\"]");
+        getObjectViaRPC(trans, "eth_getTransactionByBlockHashAndIndex", "[\"" + fixHash(blockHash) +"\",\"" + toHex(txID) + "\"]");
         trans.finishParse();
         return true;
     }
@@ -117,7 +106,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
             // fall through to node
         }
 
-        getObjectViaRPC(trans, "eth_getTransactionByBlockNumberAndIndex", "[\"" + hexxy(blockNum) +"\",\"" + hexxy(txID) + "\"]");
+        getObjectViaRPC(trans, "eth_getTransactionByBlockNumberAndIndex", "[\"" + toHex(blockNum) +"\",\"" + toHex(txID) + "\"]");
         trans.finishParse();
         return true;
     }
@@ -172,7 +161,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
             }
 
             HIDE_FIELD(CTransaction, "receipt");
-            getObjectViaRPC(block, "eth_getBlockByNumber", "["+quote(hexxy(num))+",true]");
+            getObjectViaRPC(block, "eth_getBlockByNumber", "["+quote(toHex(num))+",true]");
         }
 
         // If there are no transactions, we do not have to trace and we want to tell the caller that
@@ -216,7 +205,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
         if (isHash(datIn)) {
             blockStr = callRPC("eth_getBlockByHash", "["+quote(datIn)+","+(hashesOnly?"false":"true")+"]", true);
         } else {
-            blockStr = callRPC("eth_getBlockByNumber", "["+quote(hexxy(datIn))+","+(hashesOnly?"false":"true")+"]", true);
+            blockStr = callRPC("eth_getBlockByNumber", "["+quote(toHex(datIn))+","+(hashesOnly?"false":"true")+"]", true);
         }
         return true;
     }
@@ -246,8 +235,8 @@ extern void registerQuitHandler(QUITHANDLER qh);
     //-------------------------------------------------------------------------
     bool queryRawLogs(SFString& results, const SFAddress& addr, uint64_t fromBlock, uint64_t toBlock) {
         SFString data = "[{\"fromBlock\":\"[START]\",\"toBlock\":\"[STOP]\", \"address\": \"[ADDR]\"}]";
-        data.Replace("[START]", hexxy(fromBlock));
-        data.Replace("[STOP]",  hexxy(toBlock));
+        data.Replace("[START]", toHex(fromBlock));
+        data.Replace("[STOP]",  toHex(toBlock));
         data.Replace("[ADDR]",  fromAddress(addr));
         results = callRPC("eth_getLogs", data, true);
         return true;
@@ -327,7 +316,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
     SFUintBN getBalance(const SFString& addr, blknum_t blockNum, bool isDemo) {
         SFString a = addr.substr(2);
         a = padLeft(a,40,'0');
-        SFString ret = callRPC("eth_getBalance", "[\"0x" + a +"\",\""+hexxy(blockNum)+"\"]", false);
+        SFString ret = callRPC("eth_getBalance", "[\"0x" + a +"\",\""+toHex(blockNum)+"\"]", false);
         return toWei(ret);
     }
 
@@ -343,14 +332,14 @@ extern void registerQuitHandler(QUITHANDLER qh);
         SFString cmd = "[{\"to\": \"[TOKEN]\", \"data\": \"0x70a08231[HOLDER]\"}, \"[BLOCK]\"]";
         cmd.Replace("[TOKEN]",  t);
         cmd.Replace("[HOLDER]", h);
-        cmd.Replace("[BLOCK]",  hexxy(blockNum));
+        cmd.Replace("[BLOCK]",  toHex(blockNum));
 
         return toWei(callRPC("eth_call", cmd, false));
     }
 
     //-------------------------------------------------------------------------
     bool hasTraceAt(const SFString& hashIn, uint32_t where) {
-        SFString cmd = "[\"" + fixHash(hashIn) +"\",[\"" + hexxy(where) + "\"]]";
+        SFString cmd = "[\"" + fixHash(hashIn) +"\",[\"" + toHex(where) + "\"]]";
         SFString ret = callRPC("trace_get", cmd.c_str(), true);
         return ret.find("blockNumber") != NOPOS;
     }
