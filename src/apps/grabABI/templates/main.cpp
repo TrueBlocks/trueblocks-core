@@ -6,9 +6,6 @@
  * The LICENSE at the root of this repo details your rights (if any)
  *------------------------------------------------------------------------*/
 #include <ncurses.h>
-#ifdef USE_BSD
-#include <bsd/stdlib.h>
-#endif
 #include "etherlib.h"
 #include "parselib.h"
 #include "processing.h"
@@ -109,7 +106,7 @@ int main(int argc, const char *argv[]) {
         displayFromCache(cacheFileName, blockNum, &visitor);
 
         SFTime now = Now();
-        cout << getprogname() << ": " << now.Format(FMT_JSON) << ": "
+        cout << argv[0] << ": " << now.Format(FMT_JSON) << ": "
                 << "{ "
                 << cYellow << visitor.transStats.nDisplayed    << cOff << " displayed from cache; "
                 << cYellow << visitor.transStats.nAccountedFor << cOff << " accounted for"

@@ -59,10 +59,14 @@ bool displayFromCache(const SFString& cacheFileName, uint64_t& blockNum, void *d
 
                     // If we switched blocks, read the next block
                     if (!readOneBlock_fromBinary(block, getBinaryFilename(blockNum))) {
-                        cerr << "Read of block " << blockNum << " failed. Quitting cache read\r\n";
-                        visitor->cache.Release();
-                        blockNum++; // the next block to process
-                        return false;
+                        getBlock(block, blockNum);
+                        writeToBinary(block, getBinaryFilename(blockNum));
+                        if (!fileExists(getBinaryFilename(blockNum))) {
+                            cerr << "Read of block " << blockNum << " failed. Quitting cache read\r\n";
+                            visitor->cache.Release();
+                            blockNum++; // the next block to process
+                            return false;
+                        }
                     }
 
                     if (!visitor->openIncomeStatement(block))  {
