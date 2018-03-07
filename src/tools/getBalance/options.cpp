@@ -15,7 +15,7 @@ CParams params[] = {
     CParams("-list:<fn>",    "an alternative way to specify an address_list; place one address per line in the file 'fn'"),
     CParams("-noZero",       "suppress the display of zero balance accounts"),
     CParams("-total",        "if more than one balance is requested, display a total as well."),
-//    CParams("-changes",      "only report a balance when it changes from one block to the next"),
+    CParams("-changes",      "only report a balance when it changes from one block to the next"),
     CParams("",              "Retrieve the balance (in wei) for one or more addresses at the given block(s).\n"),
 };
 uint32_t nParams = sizeof(params) / sizeof(CParams);
