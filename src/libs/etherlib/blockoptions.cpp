@@ -11,6 +11,11 @@
 static uint64_t findBlockNumByHash(const SFHash& hash, void *data);
 //--------------------------------------------------------------------------------
 CBlockOptions::CBlockOptions(void) {
+    Init();
+}
+
+//--------------------------------------------------------------------------------
+void CBlockOptions::Init(void) {
     blocks.hashFind = findBlockNumByHash;
 }
 
