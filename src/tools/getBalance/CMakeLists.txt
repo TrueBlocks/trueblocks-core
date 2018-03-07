@@ -73,7 +73,7 @@ run_test("getBalance_special_block_2"    "0xfb6916095ca1df60bb79ce92ce3ea74c37c5
 run_test("getBalance_special_block_3"    "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359" " first")
 run_test("getBalance_wei"      "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359" " 4000000" " --wei")
 run_test("getBalance_ether"    "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359" " 4000000" " --ether")
-run_test("getBalance_changes"  "0xbb9bc244d798123fde783fcc1c72d3bb8c189413" " 1430000-1430050" " --changes")
+run_test("getBalance_changes"  "0xbb9bc244d798123fde783fcc1c72d3bb8c189413" " 1430957-1430966" " --changes")
 
 set(TIPJAR   "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359")
 set(MYETHTIP "0x7cb57b5a97eabe94205c07890be4c1ad31e486a8")

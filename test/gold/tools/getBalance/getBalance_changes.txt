@@ -1,3 +1,6 @@
-getBalance argc: 4 [1:0xbb9bc244d798123fde783fcc1c72d3bb8c189413] [2:1430000-1430050] [3:--changes] 
-getBalance 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 1430000-1430050 --changes 
+getBalance argc: 4 [1:0xbb9bc244d798123fde783fcc1c72d3bb8c189413] [2:1430957-1430966] [3:--changes] 
+getBalance 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 1430957-1430966 --changes 
+    Balance for account 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 at block 1430957 is 956077579120000000000
+    Balance for account 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 at block 1430958 is 976077579120000000000
+    Balance for account 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 at block 1430961 is 981077579120000000000
                                                                                                                  
