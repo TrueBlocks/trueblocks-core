@@ -121,6 +121,7 @@ void COptions::Init(void) {
     total = false;
     changes = false;
     blocks.Init();
+    CBlockOptions::Init();
 }
 
 //---------------------------------------------------------------------------------------------------
