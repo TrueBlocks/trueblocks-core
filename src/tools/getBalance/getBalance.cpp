@@ -36,6 +36,7 @@ int main(int argc, const char *argv[]) {
         // For each address
         while (!options.addrs.empty()) {
             SFAddress addr = nextTokenClear(options.addrs, '|');
+            SFUintBN lastBal(0);
 
             // For each block
             SFString blocks = options.getBlockNumList();
@@ -58,7 +59,15 @@ int main(int argc, const char *argv[]) {
                 }
 
                 needsNewline = true;
-                if (bal > 0 || !options.noZero) {
+                bool show = true;
+                if (options.changes) {
+                    if (bal == lastBal)
+                        show = false;
+                    lastBal = bal;
+                }
+
+                if (show && (bal > 0 || !options.noZero)) {
+
                     if (options.asData) {
                         cout << blockNum << "\t" << addr << "\t" << sBal << "\n";
                     } else {
@@ -67,6 +76,7 @@ int main(int argc, const char *argv[]) {
                         cout << " is " << cYellow << sBal << cOff << "\n";
                     }
                     needsNewline = false;
+
                 } else if (!isTestMode()) {
                     if (options.asData) {
                         cerr << blockNum << "\t" << addr << "         \r";
@@ -97,6 +107,6 @@ int main(int argc, const char *argv[]) {
     }
 
     if (needsNewline)
-        cerr << "                                                                                              \n";
+        cerr << "                                                                                                                 \n";
     return 0;
 }
