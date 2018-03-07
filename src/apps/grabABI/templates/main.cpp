@@ -137,12 +137,7 @@ void myQuitHandler(int s) {
         endwin();
     if (s != 1)
         cout << "Caught signal " << s << "\n";
-    SFString list = manageRemoveList();
-    while (!list.empty()) {
-        SFString file = nextTokenClear(list, '|');
-        cout << "Removing file: " << file << "\n"; cout.flush();
-        removeFile(file);
-    }
+    cleanFileLocks();
     removeFile("./cache/debug");
     exit(1);
 }
