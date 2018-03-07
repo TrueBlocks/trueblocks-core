@@ -119,6 +119,7 @@ namespace qblocks {
     #define miniTransCache (blockCachePath("miniTrans.bin"))
     #define blockFolder    (blockCachePath("blocks/"))
     #define bloomFolder    (blockCachePath("blooms/"))
+    extern SFUintBN weiPerEther;
 
 }  // namespace qblocks
 
