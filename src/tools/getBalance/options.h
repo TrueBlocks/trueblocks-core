@@ -12,6 +12,7 @@ public:
     bool asData;
     bool noZero;
     bool total;
+    bool changes;
 
     COptions(void);
     ~COptions(void);
