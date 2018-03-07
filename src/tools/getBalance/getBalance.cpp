@@ -8,6 +8,7 @@
 #include "etherlib.h"
 #include "options.h"
 
+bool visitBlock(uint64_t num, void *data);
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
@@ -18,7 +19,6 @@ int main(int argc, const char *argv[]) {
     if (!options.prepareArguments(argc, argv))
         return 0;
 
-    bool needsNewline = true;
     while (!options.commandList.empty()) {
 
         SFString command = nextTokenClear(options.commandList, '\n');
@@ -28,77 +28,23 @@ int main(int argc, const char *argv[]) {
         if (!options.parseArguments(command))
             return 0;
 
-        blknum_t latestBlock = getLatestBlockFromClient();
-        SFUintBN totalVal = 0;
         uint64_t nAccts = countOf('|', options.addrs) + 1;
         bool needsTotal = (nAccts > 1 && options.total);
 
         // For each address
         while (!options.addrs.empty()) {
-            SFAddress addr = nextTokenClear(options.addrs, '|');
-            SFUintBN lastBal(0);
-
-            // For each block
-            SFString blocks = options.getBlockNumList();
-            while (!blocks.empty()) {
-                blknum_t blockNum = toLongU(nextTokenClear(blocks, '|'));
-                if (blockNum > latestBlock) {
-                    SFString late = (isTestMode() ? "--" : asStringU(latestBlock));
-                    return usage("Block " + asStringU(blockNum) + " is later than the last valid block " + late + ". Quitting...");
-                }
-
-                SFUintBN bal = getBalance(addr, blockNum, false);
-                totalVal += bal;
-                SFString sBal = to_string(bal).c_str();
-                if (expContext().asEther) {
-                    sBal = wei2Ether(to_string(bal).c_str());
-                } else if (expContext().asDollars) {
-                    CBlock blk;
-                    getBlock(blk, blockNum);
-                    sBal = padLeft("$" + dispDollars(blk.timestamp, bal),14);
-                }
-
-                needsNewline = true;
-                bool show = true;
-                if (options.changes) {
-                    if (bal == lastBal)
-                        show = false;
-                    lastBal = bal;
-                }
-
-                if (show && (bal > 0 || !options.noZero)) {
-
-                    if (options.asData) {
-                        cout << blockNum << "\t" << addr << "\t" << sBal << "\n";
-                    } else {
-                        cout << "    Balance for account " << cGreen << addr << cOff;
-                        cout << " at block " << cTeal << blockNum << cOff;
-                        cout << " is " << cYellow << sBal << cOff << "\n";
-                    }
-                    needsNewline = false;
-
-                } else if (!isTestMode()) {
-                    if (options.asData) {
-                        cerr << blockNum << "\t" << addr << "         \r";
-                    } else {
-                        cerr << "    Balance for account " << cGreen << addr << cOff;
-                        cerr << " at block " << cTeal << blockNum << cOff;
-                        cerr << " is " << cYellow << sBal << cOff << "           \r";
-                    }
-                }
-                cerr.flush();
-                cout.flush();
-            }
+            options.state.curAddr = nextTokenClear(options.addrs, '|');
+            options.blocks.forEveryBlockNumber(visitBlock, &options);
         }
 
         if (needsTotal) {
-            SFString sBal = to_string(totalVal).c_str();
+            SFString sBal = to_string(options.state.totalVal).c_str();
             if (expContext().asEther) {
-                sBal = wei2Ether(to_string(totalVal).c_str());
+                sBal = wei2Ether(to_string(options.state.totalVal).c_str());
             } else if (expContext().asDollars) {
                 CBlock blk;
                 getBlock(blk, getLatestBlockFromClient());
-                sBal = padLeft("$" + dispDollars(blk.timestamp, totalVal),14);
+                sBal = padLeft("$" + dispDollars(blk.timestamp, options.state.totalVal),14);
             }
             cout << "        Total for " << cGreen << nAccts << cOff;
             cout << " accounts at " << cTeal << "latest" << cOff << " block";
@@ -106,7 +52,63 @@ int main(int argc, const char *argv[]) {
         }
     }
 
-    if (needsNewline)
+    if (options.state.needsNewline)
         cerr << "                                                                                                                 \n";
     return 0;
+}
+
+//--------------------------------------------------------------
+bool visitBlock(uint64_t blockNum, void *data) {
+
+    COptions *options = (COptions*)data;
+    if (blockNum > options->state.latestBlock) {
+        SFString late = (isTestMode() ? "--" : asStringU(options->state.latestBlock));
+        return usage("Block " + asStringU(blockNum) + " is later than the last valid block " + late + ". Quitting...");
+    }
+
+    SFUintBN bal = getBalance(options->state.curAddr, blockNum, false);
+    options->state.totalVal += bal;
+    SFString sBal = to_string(bal).c_str();
+    if (expContext().asEther) {
+        sBal = wei2Ether(to_string(bal).c_str());
+    } else if (expContext().asDollars) {
+        CBlock blk;
+        getBlock(blk, blockNum);
+        sBal = padLeft("$" + dispDollars(blk.timestamp, bal), 14);
+    }
+
+    options->state.needsNewline = true;
+    bool show = true;
+    if (options->changes) {
+        if (bal == options->state.lastBal)
+            show = false;
+        options->state.lastBal = bal;
+    }
+
+    if (show && (bal > 0 || !options->noZero)) {
+
+        if (options->asData) {
+            cout << blockNum << "\t" << options->state.curAddr << "\t" << sBal << "\n";
+        } else {
+            cout << "    Balance for account " << cGreen << options->state.curAddr << cOff;
+            cout << " at block " << cTeal << blockNum << cOff;
+            cout << " is " << cYellow << sBal << cOff << "\n";
+        }
+
+        options->state.needsNewline = false;
+
+    } else if (!isTestMode()) {
+
+        if (options->asData) {
+            cerr << blockNum << "\t" << options->state.curAddr << "         \r";
+        } else {
+            cerr << "    Balance for account " << cGreen << options->state.curAddr << cOff;
+            cerr << " at block " << cTeal << blockNum << cOff;
+            cerr << " is " << cYellow << sBal << cOff << "           \r";
+        }
+    }
+    cerr.flush();
+    cout.flush();
+
+    return !shouldQuit();
 }
