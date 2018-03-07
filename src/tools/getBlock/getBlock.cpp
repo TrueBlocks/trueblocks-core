@@ -29,7 +29,7 @@ int main(int argc, const char * argv[]) {
             cout << (options.isMulti() ? "[" : "");
 
         SFString list = options.getBlockNumList();
-        while (!list.empty()) {
+        while (!list.empty() && !shouldQuit()) {
             blknum_t bn = toLongU(nextTokenClear(list, '|'));
             if (options.isCheck) {
                 checkResults += checkOneBlock(bn, options);
