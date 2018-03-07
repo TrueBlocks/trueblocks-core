@@ -14,4 +14,5 @@ public:
     COptionsBlockList blocks;
     CBlockOptions(void);
     SFString getBlockNumList(void);
+    void Init(void);
 };
