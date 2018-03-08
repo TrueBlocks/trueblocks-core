@@ -264,6 +264,21 @@ const SFString CLogEntry::getStringAt(const SFString& name, uint32_t i) const {
 }
 
 //---------------------------------------------------------------------------
+#define EQ_TEST(a) { if (test.a != a) { cout << " diff at " << #a << " " << test.a << ":" << a << " "; return false; } }
+bool CLogEntry::operator==(const CLogEntry& test) const {
+
+    EQ_TEST(address);
+    EQ_TEST(data);
+    EQ_TEST(logIndex);
+    EQ_TEST(topics.getCount());
+    for (uint32_t i = 0 ; i < topics.getCount() ; i++)
+        if (test.topics[i] != topics[i])
+            return false;
+
+    return true;
+}
+
+//---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks

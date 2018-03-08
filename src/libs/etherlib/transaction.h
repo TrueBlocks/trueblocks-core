@@ -76,6 +76,8 @@ public:
 #endif
     // EXISTING_CODE
     friend ostream& operator<<(ostream& os, const CTransaction& item);
+    bool operator==(const CTransaction& tr) const;
+    bool operator!=(const CTransaction& tr) const { return !operator==(tr); }
 
 protected:
     void Clear(void);

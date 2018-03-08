@@ -242,6 +242,8 @@ void CTransaction::registerClass(void) {
     ADD_FIELD(CTransaction, "function", T_TEXT, ++fieldNum);
     ADD_FIELD(CTransaction, "gasUsed", T_GAS, ++fieldNum);
     ADD_FIELD(CTransaction, "date", T_DATE, ++fieldNum);
+    ADD_FIELD(CTransaction, "datesh", T_DATE, ++fieldNum);
+    ADD_FIELD(CTransaction, "time", T_DATE, ++fieldNum);
     ADD_FIELD(CTransaction, "ether", T_ETHER, ++fieldNum);
     ADD_FIELD(CTransaction, "encoding", T_TEXT, ++fieldNum);
 
@@ -252,6 +254,8 @@ void CTransaction::registerClass(void) {
     HIDE_FIELD(CTransaction, "isError");
     HIDE_FIELD(CTransaction, "isInternal");
     HIDE_FIELD(CTransaction, "date");
+    HIDE_FIELD(CTransaction, "datesh");
+    HIDE_FIELD(CTransaction, "time");
     HIDE_FIELD(CTransaction, "ether");
     if (isTestMode()) {
         UNHIDE_FIELD(CTransaction, "isError");
@@ -270,12 +274,12 @@ SFString nextTransactionChunk_custom(const SFString& fieldIn, const void *dataPt
                 if ( fieldIn % "contractAddress" ) return fromAddress(tra->receipt.contractAddress);
                 break;
             case 'd':
-                if (fieldIn % "date")
-                {
-                    timestamp_t ts = (timestamp_t)tra->timestamp;
-                    if (tra->pBlock)
-                        ts = tra->pBlock->timestamp;
-                    return dateFromTimeStamp(ts).Format(FMT_JSON);
+                if (fieldIn % "date" || fieldIn % "datesh") {
+                    timestamp_t ts = (tra->pBlock ? tra->pBlock->timestamp : tra->timestamp);
+                    SFString ret = dateFromTimeStamp(ts).Format(FMT_JSON);
+                    if (fieldIn % "datesh") // short date
+                        return ret.substr(0, 10);
+                    return ret;
                 }
                 break;
             case 'e':
@@ -297,8 +301,11 @@ SFString nextTransactionChunk_custom(const SFString& fieldIn, const void *dataPt
                 }
                 break;
             case 't':
-                if ( fieldIn % "timestamp" && tra->pBlock)
-                    return asString(tra->pBlock->timestamp);
+                if ( fieldIn % "timestamp" && tra->pBlock) return asString(tra->pBlock->timestamp);
+                if ( fieldIn % "time") {
+                    timestamp_t ts = (tra->pBlock ? tra->pBlock->timestamp : tra->timestamp);
+                    return dateFromTimeStamp(ts).Format(FMT_JSON).substr(12,1000);
+                }
                 break;
             // EXISTING_CODE
             case 'p':
@@ -446,6 +453,30 @@ const CBaseNode *CTransaction::getObjectAt(const SFString& fieldName, uint32_t i
     if ( fieldName % "receipt" )
         return &receipt;
     return NULL;
+}
+
+#define EQ_TEST(a) { if (test.a != a) { cout << " diff at " << #a << " " << test.a << ":" << a << " "; return false; } }
+//---------------------------------------------------------------------------
+bool CTransaction::operator==(const CTransaction& test) const {
+
+    EQ_TEST(hash);
+    EQ_TEST(blockHash);
+    EQ_TEST(blockNumber);
+    EQ_TEST(transactionIndex);
+    EQ_TEST(nonce);
+    EQ_TEST(timestamp);
+    EQ_TEST(from);
+    EQ_TEST(to);
+    EQ_TEST(value);
+    EQ_TEST(gas);
+    EQ_TEST(gasPrice);
+    EQ_TEST(input);
+//    EQ_TEST(isError);
+    EQ_TEST(isInternal);
+    if (test.receipt != receipt)
+        return false;
+
+    return true;
 }
 
 //---------------------------------------------------------------------------
