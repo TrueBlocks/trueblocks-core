@@ -274,7 +274,7 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------
-    bool forEveryMiniBlockInMemory(MINIBLOCKVISITFUNC func, void *data, blknum_t start, blknum_t count) {
+    bool forEveryMiniBlockInMemory(MINIBLOCKVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip) {
 
         CInMemoryCache *cache = getTheCache();
         if (!cache->Load(start,count))
@@ -284,7 +284,7 @@ namespace qblocks {
         blknum_t last = cache->lastBlock();
 
         bool done = false;
-        for (blknum_t i = first ; i < last && !done ; i++) {
+        for (blknum_t i = first ; i < last && !done ; i = i + skip) {
 
             if (inRange(cache->blocks[i].blockNumber, start, start+count-1)) {
 
@@ -305,7 +305,7 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------
-    bool forEveryFullBlockInMemory(BLOCKVISITFUNC func, void *data, blknum_t start, blknum_t count) {
+    bool forEveryFullBlockInMemory(BLOCKVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip) {
 
         CInMemoryCache *cache = getTheCache();
         if (!cache->Load(start, count))
@@ -315,7 +315,7 @@ namespace qblocks {
         blknum_t last  = cache->lastBlock();
 
         bool done=false;
-        for (blknum_t i = first ; i < last && !done ; i++) {
+        for (blknum_t i = first ; i < last && !done ; i = i + skip) {
 
             if (inRange(cache->blocks[i].blockNumber, start, start+count-1)) {
 
@@ -345,11 +345,11 @@ namespace qblocks {
         return true;
     }
 
-    bool forOnlyMiniBlocks(MINIBLOCKVISITFUNC func, void *data, blknum_t start, blknum_t count) {
+    bool forOnlyMiniBlocks(MINIBLOCKVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip) {
         return true;
     }
 
-    bool forOnlyMiniTransactions(MINITRANSVISITFUNC func, void *data, blknum_t start, blknum_t count) {
+    bool forOnlyMiniTransactions(MINITRANSVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip) {
         return true;
     }
 

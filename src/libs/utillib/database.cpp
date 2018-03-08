@@ -536,10 +536,9 @@ namespace qblocks {
 
     //-----------------------------------------------------------------------
     bool shouldQuit(void) {
-    	if (quitCount() == 1)
-            cout << "\nFinishing work...Hit Cntl+C again to quit...\n";
         bool ret = quitCount() > 1;
         if (ret) {
+            cout << "\nFinishing work...Hit Cntl+C again to quit...\n";
             cleanFileLocks();
             cout.flush();
         }
@@ -563,7 +562,7 @@ namespace qblocks {
         if (quitCount(1) > 2) {
             cleanFileLocks();
             if (signum != -1)
-                exit(0);
+                exit(1);
         }
     }
 
