@@ -107,8 +107,8 @@ namespace qblocks {
     // forEvery functions
     extern bool forEveryTraceInTransaction   (TRACEVISITFUNC func, void *data, const CTransaction& trans);
     extern bool forEveryTraceInBlock         (TRACEVISITFUNC func, void *data, const CBlock& block);
-    extern bool forEveryLogInTransaction     (LOGVISITFUNC func, void *data, const CTransaction& trans);
-    extern bool forEveryLogInBlock           (LOGVISITFUNC func, void *data, const CBlock& block);
+    extern bool forEveryLogInTransaction     (LOGVISITFUNC func,   void *data, const CTransaction& trans);
+    extern bool forEveryLogInBlock           (LOGVISITFUNC func,   void *data, const CBlock& block);
 
     //-------------------------------------------------------------------------
     extern SFString blockCachePath(const SFString& _part);

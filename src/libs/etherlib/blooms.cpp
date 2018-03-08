@@ -97,7 +97,7 @@ namespace qblocks {
         }
         if (ret.empty())
             return ret;
-        return "bloom bits: " + cYellow + ret + cOff;
+        return "bits: " + cYellow + ret + cOff;
     }
 
 }  // namespace qblocks
