@@ -385,6 +385,37 @@ bool CAccountWatch::isTransactionOfInterest(CTransaction *trans, uint64_t nSigs,
     }
     return false;
 }
+
+//-----------------------------------------------------------------------
+SFUintBN CAccountWatch::getNodeBal(blknum_t blockNum) {
+
+    if (fileExists("./cache/balances.txt")) {
+        if (balanceHistory.getCount() == 0) { // do not collapse
+            SFString contents = asciiFileToString("./cache/balances.txt");
+            while (!contents.empty()) {
+                SFString line = nextTokenClear(contents, '\n');
+                SFString bn = nextTokenClear(line, '\t');
+                SFString addr = nextTokenClear(line, '\t');
+                SFString bal = nextTokenClear(line, '\t');
+                if (addr == address) {
+                    uint32_t cnt = balanceHistory.getCount();
+                    balanceHistory[cnt].bn = toUnsigned(bn);
+                    balanceHistory[cnt].balance = toWei(bal);
+                }
+            }
+        }
+        SFUintBN ret = 0;
+        for (uint32_t i = 0 ; i < balanceHistory.getCount() ; i++) {
+            if (balanceHistory[i].bn > blockNum)
+                return ret;
+            ret = balanceHistory[i].balance;
+        }
+        if (ret > 0)
+            return ret;
+    }
+
+    return getBalance(address, blockNum, false);
+}
 // EXISTING_CODE
 }  // namespace qblocks
 

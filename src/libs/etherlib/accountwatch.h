@@ -23,6 +23,13 @@ typedef SFList<CAccountWatch*>             CAccountWatchList;
 typedef SFUniqueList<CAccountWatch*>       CAccountWatchListU;
 
 // EXISTING_CODE
+class CBalanceHistory {
+public:
+    blknum_t bn;
+    SFUintBN balance;
+    CBalanceHistory(void) { bn = 0; balance = 0; }
+};
+typedef SFArrayBase<CBalanceHistory> CBalanceHistoryArray;
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
@@ -57,6 +64,8 @@ public:
     bool isTransactionOfInterest(CTransaction *trans, uint64_t nSigs, SFString sigs[]) const;
     SFBloom bloom;
     bool inBlock;
+    CBalanceHistoryArray balanceHistory;
+    SFUintBN getNodeBal(blknum_t blockNum);
     // EXISTING_CODE
     friend ostream& operator<<(ostream& os, const CAccountWatch& item);
 
@@ -119,6 +128,7 @@ inline void CAccountWatch::Init(void) {
     lastBlock = UINT_MAX;
     bloom = 0;
     inBlock = false;
+    balanceHistory.Clear();
     // EXISTING_CODE
 }
 
@@ -142,6 +152,7 @@ inline void CAccountWatch::Copy(const CAccountWatch& ac) {
     lastBlock = ac.lastBlock;
     bloom = ac.bloom;
     inBlock = ac.inBlock;
+    balanceHistory = ac.balanceHistory;
     // EXISTING_CODE
     finishParse();
 }
