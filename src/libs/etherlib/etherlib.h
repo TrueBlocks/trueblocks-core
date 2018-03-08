@@ -28,6 +28,7 @@
 #include "balhistory.h"
 #include "acctcacheitem.h"
 #include "blockoptions.h"
+#include "abirecord.h"
 
 using namespace qblocks;
 
