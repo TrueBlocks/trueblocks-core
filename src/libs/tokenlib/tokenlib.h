@@ -36,3 +36,12 @@ extern const SFString func_transferFrom_qb;
 //------------------------------------------------------------------------
 extern const SFString evt_Approval_qb;
 extern const SFString evt_Transfer_qb;
+
+//EXISTING_CODE
+//-----------------------------------------------------------------------
+inline bool isTokenRelated(const CTransaction *trans) {
+    return (trans->input.startsWith(func_approve_qb ) ||
+            trans->input.startsWith(func_transfer_qb) ||
+            trans->input.startsWith(func_transferFrom_qb));
+}
+//EXISTING_CODE
