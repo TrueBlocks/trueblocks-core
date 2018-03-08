@@ -13,14 +13,14 @@
 
 //-----------------------------------------------------------------------
 bool CVisitor::openIncomeStatement(const CBlock& block) {
-    if (!opts.accounting_on)
+    if (!accounting_on)
         return true;
 
     for (uint32_t i = 0 ; i < watches.getCount() ; i++) {
         CAccountWatch *w = &watches[i];
         w->qbis.inflow = w->qbis.outflow = w->qbis.gasCost = 0;
         if (i < watches.getCount()-1) {
-            w->qbis.nodeBal = getBalance(w->address, block.blockNumber-1, false);
+            w->qbis.nodeBal = w->getNodeBal(block.blockNumber-1);
             SFIntBN diff = (w->qbis.nodeBal - w->qbis.endBal);
             if (diff != 0) {
                 SFString c1 = watches[i].color, c2 = cOff;
@@ -31,7 +31,7 @@ bool CVisitor::openIncomeStatement(const CBlock& block) {
                     << " ether at the start of block "
                     << cYellow << block.blockNumber << "\r\n" << cOff;
                 cout << bRed << SFString('-', 180) << cOff << "\r\n";
-                if (opts.debugger_on) {
+                if (debugger_on) {
                     if (!enterDebugger(block))
                             return false;  // quit
                 }
@@ -45,7 +45,7 @@ bool CVisitor::openIncomeStatement(const CBlock& block) {
 //-----------------------------------------------------------------------
 bool CVisitor::accountForExtTransaction(const CBlock& block, const CTransaction *trans) {
 
-    if (!opts.accounting_on)
+    if (!accounting_on)
         return true;
 
     for (uint32_t t = 0 ; t < trans->traces.getCount() ; t++) {
@@ -89,7 +89,7 @@ bool CVisitor::accountForExtTransaction(const CBlock& block, const CTransaction 
 //-----------------------------------------------------------------------
 bool CVisitor::accountForIntTransaction(const CBlock& block, const CTransaction *trans, const CTrace *trace) {
 
-    if (!opts.accounting_on)
+    if (!accounting_on)
         return true;
 
     if (trace->isError())
@@ -113,11 +113,12 @@ bool CVisitor::accountForIntTransaction(const CBlock& block, const CTransaction 
     }
 
     watches[fWhich].qbis.outflow += trace->action.value;
-//    if (fWhich != watches.getCount() - 1)
-//        watches[fWhich].qbis.gasCost += (trans->receipt.gasUsed * trace->gasPrice);
+    // gas is paid by originating account
+    //    if (fWhich != watches.getCount() - 1)
+    //        watches[fWhich].qbis.gasCost += (trans->receipt.gasUsed * trace->gasPrice);
     watches[tWhich].qbis.inflow += trace->action.value;
     transStats.nAccountedFor++;
-//    tBuffer.addItem(trace->blockNumber, trace->transactionIndex, trace->hash);
+    //    tBuffer.addItem(trace->blockNumber, trace->transactionIndex, trace->hash);
     return true;
 }
 
@@ -127,7 +128,7 @@ bool CVisitor::closeIncomeStatement(const CBlock& block) {
     // If the user has not hit the escape key...
     if (!esc_hit) {
         // ...and is either not accounting or nothing worth reporting happened...
-        if (!opts.accounting_on || !transStats.nAccountedFor) {
+        if (!accounting_on || !transStats.nAccountedFor) {
             // ...return
             return true;
         }
@@ -153,7 +154,7 @@ bool CVisitor::closeIncomeStatement(const CBlock& block) {
             cout << watches[i].color << padRight(watches[i].displayName(true,false,14,6),24) << cOff << watches[i].qbis << "   ";
 
             if (i < watches.getCount()-1) {
-                watches[i].qbis.nodeBal = getBalance(watches[i].address, block.blockNumber, false);
+                watches[i].qbis.nodeBal = watches[i].getNodeBal(block.blockNumber);
                 cout << padLeft(wei2Ether(to_string(watches[i].qbis.nodeBal).c_str()),28);
                 if (!watches[i].qbis.balanced()) {
 
@@ -174,15 +175,15 @@ bool CVisitor::closeIncomeStatement(const CBlock& block) {
             cout << "\r\n" << bYellow << SFString('-', 180) << "\r\n";
     }
 
-    if (opts.debugger_on) {
-        if (nOutOfBal || opts.single_on || debugFile() || esc_hit) {
+    if (debugger_on) {
+        if (nOutOfBal || single_on || debugFile() || esc_hit) {
             if (!enterDebugger(block)) {
                 esc_hit = false;
                 return false;  // quit
             }
         }
-    } else if (opts.single_on) {
-        if (!opts.autocorrect_on)
+    } else if (single_on) {
+        if (!autocorrect_on)
             cout << "\r\nHit enter to continue, 'c' to correct and continue, or 'q' to quit >> ";
         else
             cout << "\r\nHit enter to continue or 'q' to quit >> ";
@@ -196,7 +197,7 @@ bool CVisitor::closeIncomeStatement(const CBlock& block) {
         }
     }
 
-    if (opts.autocorrect_on) {
+    if (autocorrect_on) {
         for (uint32_t i = 0 ; i < watches.getCount() ; i++)
             watches[i].qbis.correct();
     }

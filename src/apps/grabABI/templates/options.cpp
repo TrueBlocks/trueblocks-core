@@ -23,7 +23,7 @@ CParams params[] = {
 uint32_t nParams = sizeof(params) / sizeof(CParams);
 
 //---------------------------------------------------------------------------------------------------
-bool COptions::parseArguments(SFString& command) {
+bool CVisitor::parseArguments(SFString& command) {
 
     if (!standardOptions(command))
         return false;
@@ -59,17 +59,21 @@ bool COptions::parseArguments(SFString& command) {
             logs_on = true;
 
         } else if (arg == "-l" || arg == "--list") {
+            colorsOff();
             CVisitor visitor;
             CToml toml("./config.toml");
             visitor.loadWatches(toml);
-            cout << "[";
+            if (visitor.watches.getCount() > 2)
+                cout << "[";
             for (uint32_t i=0;i<visitor.watches.getCount()-1;i++) {
                 cout << " { ";
                 cout << "\"address\": \""  << visitor.watches[i].color << visitor.watches[i].address    << cOff << "\", ";
                 cout << "\"firstBlock\": " << bRed                     << visitor.watches[i].firstBlock << cOff << ", ";
                 cout << "\"name\": \""     << visitor.watches[i].color << visitor.watches[i].name       << cOff << "\"";
-                cout << " }" << (i<visitor.watches.getCount()-2 ? ",\r\n " : " ]\r\n");
+                cout << " }" << ( i < visitor.watches.getCount()-2 ? ",\r\n " : " \r\n");
             }
+            if (visitor.watches.getCount() > 2)
+                cout << "]";
             exit(0);
 
         } else if (arg == "-t" || arg == "--trace") {
@@ -97,7 +101,7 @@ bool COptions::parseArguments(SFString& command) {
 }
 
 //---------------------------------------------------------------------------------------------------
-void COptions::Init(void) {
+void CVisitor::Init(void) {
     paramsPtr = params;
     nParamsRef = nParams;
 
@@ -114,10 +118,11 @@ void COptions::Init(void) {
 }
 
 //---------------------------------------------------------------------------------------------------
-COptions::COptions(void) {
+CVisitor::CVisitor(void) : transStats(), blockStats(), tBuffer(), cache(READING_ARCHIVE), screenFmt(""), esc_hit(false) {
     Init();
+    barLen(80);
 }
 
 //--------------------------------------------------------------------------------
-COptions::~COptions(void) {
+CVisitor::~CVisitor(void) {
 }
