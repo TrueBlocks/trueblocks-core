@@ -55,6 +55,8 @@ public:
     bool forEveryUniqueAddress(ADDRESSFUNC func, void *data);
     // EXISTING_CODE
     friend ostream& operator<<(ostream& os, const CBlock& item);
+    bool operator==(const CBlock& bl) const;
+    bool operator!=(const CBlock& bl) const { return !operator==(bl); }
 
 protected:
     void Clear(void);
