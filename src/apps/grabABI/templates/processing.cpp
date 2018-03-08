@@ -47,7 +47,6 @@ bool displayFromCache(const SFString& cacheFileName, uint64_t& blockNum, void *d
             }
             visitor->cache >> transID;
             if (blockNum >= orig) {
-
                 if (blockNum > lastBlock) {  // only re-read if it's a new block
 
                     if (!visitor->closeIncomeStatement(block)) {
@@ -88,14 +87,14 @@ bool displayFromCache(const SFString& cacheFileName, uint64_t& blockNum, void *d
                     CTransaction *trans = &block.transactions[(uint32_t)transID];
                     trans->pBlock = &block;
                     if (visitor->watches[whichWatch].status != "disabled") {
-                        if (visitor->opts.trace_on || visitor->opts.logs_on)
+                        if (visitor->trace_on || visitor->logs_on)
                             cout << bGreen << SFString('-',180) << "\r\n";
-                        if (visitor->opts.accounting_on || visitor->opts.trace_on)
+                        if (visitor->accounting_on || visitor->trace_on)
                             getTraces(trans->traces, trans->hash);
                         visitor->accountForExtTransaction(block, trans);
                         visitor->displayTrans(whichWatch,trans);
                         visitor->transStats.nDisplayed++;
-                        if (visitor->opts.debugger_on && !visitor->esc_hit) {
+                        if (visitor->debugger_on && !visitor->esc_hit) {
                             nodelay(stdscr, true);
                             int ch = getch();
                             visitor->esc_hit = (ch == 27 || ch == 'q');
@@ -142,7 +141,7 @@ void loadWatches(const CToml& toml, CAccountWatchArray& array, const SFString& k
             watch.id = cnt++;
             watch.color = convertColor(watch.color);
             watch.address = fixAddress(toLower(watch.address));
-            watch.nodeBal = getBalance(watch.address, watch.firstBlock-1, false);
+            watch.nodeBal = watch.getNodeBal(watch.firstBlock-1);
             if (!isAddress(watch.address)) {
                 okay = false;
                 msg = "invalid address " + watch.address;
@@ -165,71 +164,3 @@ void loadWatches(const CToml& toml, CAccountWatchArray& array, const SFString& k
     return;
 }
 
-//-----------------------------------------------------------------------
-blknum_t CVisitor::loadWatches(const CToml& toml) {
-
-    blknum_t unused1 = 0, unused2 = 0;
-    ::loadWatches(toml, named, "named", unused1, unused2);
-    ::loadWatches(toml, watches, "list", blockStats.minWatchBlock, blockStats.maxWatchBlock);
-    watches[watches.getCount()] = CAccountWatch(watches.getCount(), "Others", "Other Accts", 0, UINT32_MAX, bRed);
-    return true;
-}
-
-//-----------------------------------------------------------------------
-CAccountWatch *CVisitor::findWatch(SFAddress addr) {
-    for (uint32_t i = 0 ; i < watches.getCount() ; i++)
-        if (watches[i].address == addr)
-            return &watches[i];
-    return NULL;
-}
-
-//-----------------------------------------------------------------------
-CAccountWatch *CVisitor::findWatch(uint32_t which) {
-    if (which < watches.getCount())
-        return &watches[which];
-    return NULL;
-}
-
-//-----------------------------------------------------------------------
-class CTemp {
-public:
-    uint64_t blockNum, transID;
-    uint32_t whichWatch;
-    CTemp(uint64_t bn, uint64_t tx, uint32_t w) : blockNum(bn), transID(tx), whichWatch(w) {}
-};
-typedef SFArrayBase<CTemp> SFTempArray;
-
-//-----------------------------------------------------------------------
-bool CVisitor::hasImport(void) {
-    return fileExists("./cache/import.txt");
-}
-
-//-----------------------------------------------------------------------
-uint32_t CVisitor::checkForImport(void) {
-    if (!hasImport())
-        return 0;
-
-    SFTempArray imp;
-    uint32_t cnt = 0;
-    blknum_t currentLast = toLongU(asciiFileToString("./cache/lastBlock.txt"));
-    SFString contents = asciiFileToString("./cache/import.txt");
-    while (!contents.empty()) {
-        SFString line  = nextTokenClear(contents,'\n');
-        SFString bnStr = nextTokenClear(line, '\t');
-        SFString txStr = nextTokenClear(line, '\t');
-        SFString which = nextTokenClear(line, '\t');
-        CTemp tmp(toUnsigned(bnStr), toUnsigned(txStr), (uint32_t)toUnsigned(which));
-        CAccountWatch *watch = findWatch(tmp.whichWatch);
-        if (watch) {
-            cache << tmp.whichWatch << tmp.blockNum << tmp.transID;
-            cache.flush();
-            cout << "Imported: " << tmp.blockNum << "\t" << tmp.transID << "\r";
-            cout.flush();
-            if (tmp.blockNum > currentLast)
-                stringToAsciiFile("./cache/lastBlock.txt", asStringU(tmp.blockNum) + "\r\n");
-        }
-    }
-    removeFile("./cache/import.txt");
-    // TODO(tjayrush) -- we need to de-dup here
-    return cnt;
-}

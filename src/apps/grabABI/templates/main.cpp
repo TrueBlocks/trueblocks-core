@@ -20,7 +20,8 @@ int main(int argc, const char *argv[]) {
     parselib_init(myQuitHandler);
     if (argc < 2)
         verbose = true;
-    cout << "Starting monitor...\r"; cout.flush();
+    cerr << "Starting monitor...\r";
+    cerr.flush();
 
     blknum_t clientHeight;
     uint64_t cacheHeight;
@@ -28,14 +29,14 @@ int main(int argc, const char *argv[]) {
 
     // Parse command line, allowing for command files
     CVisitor visitor;
-    if (!visitor.opts.prepareArguments(argc, argv)) {
+    if (!visitor.prepareArguments(argc, argv)) {
         return 0;
     }
 
-    // while (!visitor.opts.commandList.empty())
+    // while (!visitor.commandList.empty())
     {
-        SFString command = nextTokenClear(visitor.opts.commandList, '\n');
-        if (!visitor.opts.parseArguments(command)) {
+        SFString command = nextTokenClear(visitor.commandList, '\n');
+        if (!visitor.parseArguments(command)) {
             return 0;
         }
 
@@ -50,13 +51,13 @@ int main(int argc, const char *argv[]) {
 
         const char* defaultFormat = "{ \"date\": \"[{DATE}]\", \"from\": \"[{FROM}]\", \"to\": \"[{TO}]\", \"value\": \"[{VALUE}]\" }";
         visitor.screenFmt          = cleanFmt(toml.getConfigStr("formats", "screen_fmt",  defaultFormat));
-        visitor.opts.accounting_on = toml.getConfigBool("display", "accounting", false) || visitor.opts.accounting_on;
-        visitor.opts.logs_on       = toml.getConfigBool("display", "logs", false) || visitor.opts.logs_on;
-        visitor.opts.trace_on      = toml.getConfigBool("display", "trace", false) || visitor.opts.trace_on;
-        visitor.opts.parse_on      = toml.getConfigBool("display", "parse", false) || visitor.opts.parse_on;
-        visitor.opts.debugger_on   = toml.getConfigBool("display", "debug", false) || visitor.opts.debugger_on;
-        visitor.opts.single_on     = toml.getConfigBool("display", "single", false) || visitor.opts.single_on;
-        visitor.opts.kBlock        = visitor.opts.kBlock;
+        visitor.accounting_on = toml.getConfigBool("display", "accounting", false) || visitor.accounting_on;
+        visitor.logs_on       = toml.getConfigBool("display", "logs", false) || visitor.logs_on;
+        visitor.trace_on      = toml.getConfigBool("display", "trace", false) || visitor.trace_on;
+        visitor.parse_on      = toml.getConfigBool("display", "parse", false) || visitor.parse_on;
+        visitor.debugger_on   = toml.getConfigBool("display", "debug", false) || visitor.debugger_on;
+        visitor.single_on     = toml.getConfigBool("display", "single", false) || visitor.single_on;
+        visitor.kBlock        = visitor.kBlock;
 
         // Showing the cache file (if told to...)
         SFString cacheFileName = "./cache/" + visitor.watches[0].address + ".acct.bin";
@@ -77,17 +78,20 @@ int main(int argc, const char *argv[]) {
             }
         }
 
+        uint64_t blockNum = visitor.blockStats.minWatchBlock-1;
+        if (visitor.kBlock > blockNum)
+            blockNum = visitor.kBlock;
+
         // Figure out which block to start on. Use earliest block from the watches. Note that
         // 'displayFromCache' may modify this to lastest visited block
-        uint64_t blockNum = visitor.blockStats.minWatchBlock-1;
-        if (visitor.opts.kBlock) {  // we're not starting at the beginning
-            blockNum = visitor.opts.kBlock;
+        if (visitor.kBlock || fileExists("./cache/balances.txt")) {
+            // we're not starting at the beginning
             for (uint32_t i = 0 ; i < visitor.watches.getCount() ; i++) {
-                visitor.watches[i].qbis.endBal = getBalance(visitor.watches[i].address, blockNum, false);
+                visitor.watches[i].qbis.endBal = visitor.watches[i].getNodeBal(blockNum - (uint32_t)fileExists("./cache/balances.txt"));
             }
         }
 
-        if (visitor.opts.debugger_on) {
+        if (visitor.debugger_on) {
             removeFile("./cache/debug");
             initscr();
             raw();
@@ -99,10 +103,10 @@ int main(int argc, const char *argv[]) {
         }
 
         // Display the cache (if the user tells us to...)
-        if (!visitor.opts.debugger_on && !verbose) verbose = 1;
+        if (!visitor.debugger_on && !verbose) verbose = 1;
 
-            // TODO(tjayrush): allow for early quiting from debugger--trouble--with this on, and no cache, it
-            // immediately quits because displayFromCache returns 'false' for more than one reason
+        // TODO(tjayrush): allow for early quiting from debugger--trouble--with this on, and no cache, it
+        // immediately quits because displayFromCache returns 'false' for more than one reason
         displayFromCache(cacheFileName, blockNum, &visitor);
 
         SFTime now = Now();
@@ -112,7 +116,7 @@ int main(int argc, const char *argv[]) {
                 << cYellow << visitor.transStats.nAccountedFor << cOff << " accounted for"
                 << " }                        \r\n";
 
-        if (visitor.opts.debugger_on) {
+        if (visitor.debugger_on) {
             // If we were debugging and we did nothing, let the user know
             if ((visitor.transStats.nDisplayed + visitor.transStats.nAccountedFor) == 0) {
                 cout << "Nothing to do. Hit enter to quit...";
@@ -120,12 +124,6 @@ int main(int argc, const char *argv[]) {
                 getchar();
             }
         }
-    }
-
-    if (visitor.opts.debugger_on) {
-        CBlock block;
-        getBlock(block, cacheHeight);
-        visitor.enterDebugger(block);
     }
 
     return 0;
