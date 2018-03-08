@@ -93,25 +93,25 @@ bool CVisitor::enterDebugger(const CBlock& block) {
                 } else if (curCmd == "q" || curCmd == "quit" || curCmd == "exit") {
                     cout << "\r\n";
                     cout.flush();
-                    opts.debugger_on = false;
+                    debugger_on = false;
                     return false;
 
                 } else if (curCmd == "a" || curCmd == "autoCorrect") {
                     history(curCmd);
-                    opts.autocorrect_on = !opts.autocorrect_on;
-                    cout << "\tautoCorrect is " << (opts.autocorrect_on ? "on" : "off");
+                    autocorrect_on = !autocorrect_on;
+                    cout << "\tautoCorrect is " << (autocorrect_on ? "on" : "off");
                     cout.flush();
 
                 } else if (curCmd == "t" || curCmd == "trace") {
                     history(curCmd);
-                    opts.trace_on = !opts.trace_on;
-                    cout << "\ttrace display is " << (opts.trace_on ? "on" : "off");
+                    trace_on = !trace_on;
+                    cout << "\ttrace display is " << (trace_on ? "on" : "off");
                     cout.flush();
 
                 } else if (curCmd == "n" || curCmd == "single") {
                     history(curCmd);
-                    opts.single_on = !opts.single_on;
-                    cout << "\tsingle step is " << (opts.single_on ? "on" : "off");
+                    single_on = !single_on;
+                    cout << "\tsingle step is " << (single_on ? "on" : "off");
                     cout.flush();
 
                 } else if (curCmd == "d" || curCmd == "dollar") {

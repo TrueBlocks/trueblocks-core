@@ -64,7 +64,7 @@ void CVisitor::displayTrans(uint32_t which, const CTransaction *theTrans) const 
     }
 
     //----------------------------------
-    if (opts.parse_on || wantsParse) {
+    if (parse_on || wantsParse) {
         SFString parsed = promoted->Format("\r\n[{PARSED}]\r\n")
                 .Substitute(" ", "").Substitute(",", ", ").Substitute("{", "{ ").Substitute("}", " }");
         cout << iTeal << Strip(parsed, ',');
@@ -72,8 +72,8 @@ void CVisitor::displayTrans(uint32_t which, const CTransaction *theTrans) const 
 
     //----------------------------------
     SFString evtList;
-    if (opts.logs_on || wantsEvents) {
-        if (opts.logs_on)
+    if (logs_on || wantsEvents) {
+        if (logs_on)
             cout << "\r\n";
         for (uint32_t i = 0 ; i < theTrans->receipt.logs.getCount() ; i++) {
 
@@ -86,7 +86,7 @@ void CVisitor::displayTrans(uint32_t which, const CTransaction *theTrans) const 
             // Display it.
             SFString eventType = (SFString(promotedLog->getRuntimeClass()->m_ClassName).substr(1));
             SFString evtStr = promotedLog->toJson1();
-            if (opts.logs_on) {
+            if (logs_on) {
                 cout << iYellow << "  "
                         << padLeft(asString(i),2) << ". "
                         << padRight(eventType.substr(0,15),15) << " "
@@ -103,7 +103,7 @@ void CVisitor::displayTrans(uint32_t which, const CTransaction *theTrans) const 
     if (wantsEvents)
         cout << iYellow << "[" << Strip(evtList, ',') << "]";
 
-    if (opts.trace_on) {
+    if (trace_on) {
         timestamp_t ts = toTimestamp(theTrans->Format("[{TIMESTAMP}]"));
         displayTrace(ts, theTrans->traces, theTrans->isError);
     }
