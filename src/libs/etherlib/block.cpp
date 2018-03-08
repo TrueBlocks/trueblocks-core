@@ -406,6 +406,28 @@ const CBaseNode *CBlock::getObjectAt(const SFString& fieldName, uint32_t index) 
 }
 
 //---------------------------------------------------------------------------
+#define EQ_TEST(a) { if (test.a != a) { cout << " diff at " << #a << " " << test.a << ":" << a << " "; return false; } }
+bool CBlock::operator==(const CBlock& test) const {
+
+    EQ_TEST(gasLimit);
+    EQ_TEST(gasUsed);
+    EQ_TEST(hash);
+    EQ_TEST(blockNumber);
+    EQ_TEST(parentHash);
+    EQ_TEST(miner);
+    EQ_TEST(difficulty);
+    EQ_TEST(price);
+    EQ_TEST(finalized);
+    EQ_TEST(timestamp);
+    EQ_TEST(transactions.getCount());
+    for (uint32_t i = 0 ; i < transactions.getCount() ; i++)
+        if (test.transactions[i] != transactions[i])
+            return false;
+
+    return true;
+}
+
+//---------------------------------------------------------------------------
 // EXISTING_CODE
 //---------------------------------------------------------------------------
 int compareAddr(const void *ob1, const void *ob2) {

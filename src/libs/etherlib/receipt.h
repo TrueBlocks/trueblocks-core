@@ -59,6 +59,8 @@ public:
 #endif
     // EXISTING_CODE
     friend ostream& operator<<(ostream& os, const CReceipt& item);
+    bool operator==(const CReceipt& r) const;
+    bool operator!=(const CReceipt& r) const { return !operator==(r); }
 
 protected:
     void Clear(void);
