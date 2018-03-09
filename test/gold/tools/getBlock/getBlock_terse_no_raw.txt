@@ -854,7 +854,7 @@ getBlock -a 4001001
             "gas": 60000,
             "gasPrice": 21000000000,
             "input": "0xd1058e59",
-            "isError": 0,
+            "isError": 1,
             "receipt": {
                 "contractAddress": "0x0",
                 "gasUsed": 60000,
@@ -964,7 +964,7 @@ getBlock -a 4001001
             "gas": 200000,
             "gasPrice": 6000000000,
             "input": "0xe8b5e51f",
-            "isError": 0,
+            "isError": 1,
             "receipt": {
                 "contractAddress": "0x0",
                 "gasUsed": 200000,
@@ -1431,7 +1431,7 @@ getBlock -a 4001001
             "gas": 250000,
             "gasPrice": 4000000000,
             "input": "0x2e1a7d4d000000000000000000000000000000000000000000000000011c37937e080000",
-            "isError": 0,
+            "isError": 1,
             "receipt": {
                 "contractAddress": "0x0",
                 "gasUsed": 250000,
@@ -1515,7 +1515,7 @@ getBlock -a 4001001
             "gas": 300000,
             "gasPrice": 20000000000,
             "input": "0xa9059cbb000000000000000000000000304cc179719bc5b05418d6f7f6783abe45d8309000000000000000000000000000000000000000000000000000000001826709b1",
-            "isError": 0,
+            "isError": 1,
             "receipt": {
                 "contractAddress": "0x0",
                 "gasUsed": 300000,
@@ -1537,7 +1537,7 @@ getBlock -a 4001001
             "gas": 300000,
             "gasPrice": 20000000000,
             "input": "0xa9059cbb000000000000000000000000304cc179719bc5b05418d6f7f6783abe45d8309000000000000000000000000000000000000000000000000000000000a9036765",
-            "isError": 0,
+            "isError": 1,
             "receipt": {
                 "contractAddress": "0x0",
                 "gasUsed": 300000,
@@ -1592,7 +1592,7 @@ getBlock -a 4001001
             "gas": 300000,
             "gasPrice": 20000000000,
             "input": "0xa9059cbb000000000000000000000000304cc179719bc5b05418d6f7f6783abe45d83090000000000000000000000000000000000000000000000000000000004cb4beae",
-            "isError": 0,
+            "isError": 1,
             "receipt": {
                 "contractAddress": "0x0",
                 "gasUsed": 300000,
@@ -1614,7 +1614,7 @@ getBlock -a 4001001
             "gas": 300000,
             "gasPrice": 20000000000,
             "input": "0xa9059cbb000000000000000000000000304cc179719bc5b05418d6f7f6783abe45d8309000000000000000000000000000000000000000000000000000000000880ea5aa",
-            "isError": 0,
+            "isError": 1,
             "receipt": {
                 "contractAddress": "0x0",
                 "gasUsed": 300000,
@@ -1636,7 +1636,7 @@ getBlock -a 4001001
             "gas": 300000,
             "gasPrice": 20000000000,
             "input": "0xa9059cbb000000000000000000000000304cc179719bc5b05418d6f7f6783abe45d83090000000000000000000000000000000000000000000000000000000000c180eb9",
-            "isError": 0,
+            "isError": 1,
             "receipt": {
                 "contractAddress": "0x0",
                 "gasUsed": 300000,
@@ -1691,7 +1691,7 @@ getBlock -a 4001001
             "gas": 300000,
             "gasPrice": 20000000000,
             "input": "0xa9059cbb000000000000000000000000304cc179719bc5b05418d6f7f6783abe45d83090000000000000000000000000000000000000000000000000000000001001626b",
-            "isError": 0,
+            "isError": 1,
             "receipt": {
                 "contractAddress": "0x0",
                 "gasUsed": 300000,
@@ -1812,7 +1812,7 @@ getBlock -a 4001001
             "gas": 300000,
             "gasPrice": 20000000000,
             "input": "0xa9059cbb000000000000000000000000304cc179719bc5b05418d6f7f6783abe45d8309000000000000000000000000000000000000000000000000000000000994a8773",
-            "isError": 0,
+            "isError": 1,
             "receipt": {
                 "contractAddress": "0x0",
                 "gasUsed": 300000,
@@ -1867,7 +1867,7 @@ getBlock -a 4001001
             "gas": 300000,
             "gasPrice": 20000000000,
             "input": "0xa9059cbb000000000000000000000000304cc179719bc5b05418d6f7f6783abe45d8309000000000000000000000000000000000000000000000000000000000030603ae",
-            "isError": 0,
+            "isError": 1,
             "receipt": {
                 "contractAddress": "0x0",
                 "gasUsed": 300000,
@@ -1889,7 +1889,7 @@ getBlock -a 4001001
             "gas": 300000,
             "gasPrice": 20000000000,
             "input": "0xa9059cbb000000000000000000000000304cc179719bc5b05418d6f7f6783abe45d830900000000000000000000000000000000000000000000000000000000046c10131",
-            "isError": 0,
+            "isError": 1,
             "receipt": {
                 "contractAddress": "0x0",
                 "gasUsed": 300000,
@@ -1911,7 +1911,7 @@ getBlock -a 4001001
             "gas": 300000,
             "gasPrice": 20000000000,
             "input": "0xa9059cbb000000000000000000000000304cc179719bc5b05418d6f7f6783abe45d8309000000000000000000000000000000000000000000000000000000000b79cc16b",
-            "isError": 0,
+            "isError": 1,
             "receipt": {
                 "contractAddress": "0x0",
                 "gasUsed": 300000,
@@ -1933,7 +1933,7 @@ getBlock -a 4001001
             "gas": 300000,
             "gasPrice": 20000000000,
             "input": "0xa9059cbb000000000000000000000000304cc179719bc5b05418d6f7f6783abe45d830900000000000000000000000000000000000000000000000000000000003ee37fc",
-            "isError": 0,
+            "isError": 1,
             "receipt": {
                 "contractAddress": "0x0",
                 "gasUsed": 300000,
@@ -1955,7 +1955,7 @@ getBlock -a 4001001
             "gas": 300000,
             "gasPrice": 20000000000,
             "input": "0xa9059cbb000000000000000000000000304cc179719bc5b05418d6f7f6783abe45d8309000000000000000000000000000000000000000000000000000000000f66c7e7a",
-            "isError": 0,
+            "isError": 1,
             "receipt": {
                 "contractAddress": "0x0",
                 "gasUsed": 300000,
@@ -2010,7 +2010,7 @@ getBlock -a 4001001
             "gas": 300000,
             "gasPrice": 20000000000,
             "input": "0xa9059cbb000000000000000000000000304cc179719bc5b05418d6f7f6783abe45d8309000000000000000000000000000000000000000000000000000000000972cb813",
-            "isError": 0,
+            "isError": 1,
             "receipt": {
                 "contractAddress": "0x0",
                 "gasUsed": 300000,
@@ -2098,7 +2098,7 @@ getBlock -a 4001001
             "gas": 300000,
             "gasPrice": 20000000000,
             "input": "0xa9059cbb000000000000000000000000304cc179719bc5b05418d6f7f6783abe45d8309000000000000000000000000000000000000000000000000000000001a6e514f2",
-            "isError": 0,
+            "isError": 1,
             "receipt": {
                 "contractAddress": "0x0",
                 "gasUsed": 300000,
