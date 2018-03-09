@@ -2,7 +2,7 @@ dataUpgrade argc: 2 [1:CAccountWatch]
 dataUpgrade CAccountWatch 
 --------------------------------------------------------------------------------
 className: CAccountWatch
-objectSize: 400
+objectSize: 416
 baseClass: CBaseNode
 	fieldName: schema
 	  fieldID: 1001
