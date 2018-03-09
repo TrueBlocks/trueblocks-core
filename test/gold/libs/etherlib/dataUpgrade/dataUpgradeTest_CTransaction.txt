@@ -96,12 +96,20 @@ baseClass: CBaseNode
 	  fieldID: 1023
 	  fieldType: T_DATE TS_DATE 262149
 	  hidden: 1
-	fieldName: ether
+	fieldName: datesh
 	  fieldID: 1024
+	  fieldType: T_DATE TS_DATE 262149
+	  hidden: 1
+	fieldName: time
+	  fieldID: 1025
+	  fieldType: T_DATE TS_DATE 262149
+	  hidden: 1
+	fieldName: ether
+	  fieldID: 1026
 	  fieldType: T_ETHER TS_NUMERAL 4259885 TS_BIGNUM 4259885
 	  hidden: 1
 	fieldName: encoding
-	  fieldID: 1025
+	  fieldID: 1027
 	  fieldType: T_TEXT TS_STRING 131122
 	  hidden: 1
 {
