@@ -270,24 +270,10 @@ extern SFString binaryFileToString(const SFString& filename);
     }
 
     //------------------------------------------------------------------
-    uint32_t nFiles(const SFString& path) {
-        uint32_t count = 0;
-        listFiles(count, NULL, path);
-        return count;
-    }
-
-    //------------------------------------------------------------------
     void listFiles(uint32_t& nStrs, SFString *strs, const SFString& mask) {
         uint32_t ret = 0;
         doGlob(ret, strs, mask, true, mask.Contains("/*/")); /* fixes color coding in pico */
         nStrs = ret;
-    }
-
-    //------------------------------------------------------------------
-    uint32_t nFolders(const SFString& path) {
-        uint32_t count = 0;
-        listFolders(count, NULL, path);
-        return count;  // don't count '.' or '..'
     }
 
     //------------------------------------------------------------------

@@ -15,8 +15,6 @@ import errno
 def printe(*args, **kwargs):
     print(*args, file=sys.stderr, **kwargs)
 
-
-
 #-------------------------------------------------------
 # Delete a file if it exists
 #-------------------------------------------------------

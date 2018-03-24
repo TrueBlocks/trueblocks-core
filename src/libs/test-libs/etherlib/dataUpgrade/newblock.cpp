@@ -77,6 +77,9 @@ bool CNewBlock::setValueByName(const SFString& fieldName, const SFString& fieldV
         case 'd':
             if ( fieldName % "difficulty" ) { difficulty = toUnsigned(fieldValue); return true; }
             break;
+        case 'f':
+            if ( fieldName % "finalized" ) { finalized = toBool(fieldValue); return true; }
+            break;
         case 'g':
             if ( fieldName % "gasLimit" ) { gasLimit = toGas(fieldValue); return true; }
             if ( fieldName % "gasUsed" ) { gasUsed = toGas(fieldValue); return true; }
@@ -139,6 +142,7 @@ bool CNewBlock::Serialize(SFArchive& archive) {
     archive >> miner;
     archive >> difficulty;
     archive >> price;
+    archive >> finalized;
     archive >> timestamp;
     archive >> transactions;
     finishParse();
@@ -162,6 +166,7 @@ bool CNewBlock::SerializeC(SFArchive& archive) const {
     archive << miner;
     archive << difficulty;
     archive << price;
+    archive << finalized;
     archive << timestamp;
     archive << transactions;
 
@@ -186,6 +191,7 @@ void CNewBlock::registerClass(void) {
     ADD_FIELD(CNewBlock, "miner", T_ADDRESS, ++fieldNum);
     ADD_FIELD(CNewBlock, "difficulty", T_NUMBER, ++fieldNum);
     ADD_FIELD(CNewBlock, "price", T_DOUBLE, ++fieldNum);
+    ADD_FIELD(CNewBlock, "finalized", T_BOOL, ++fieldNum);
     ADD_FIELD(CNewBlock, "timestamp", T_TIMESTAMP, ++fieldNum);
     ADD_FIELD(CNewBlock, "transactions", T_OBJECT|TS_ARRAY, ++fieldNum);
 
@@ -300,6 +306,9 @@ SFString CNewBlock::getValueByName(const SFString& fieldName) const {
             break;
         case 'd':
             if ( fieldName % "difficulty" ) return asStringU(difficulty);
+            break;
+        case 'f':
+            if ( fieldName % "finalized" ) return asString(finalized);
             break;
         case 'g':
             if ( fieldName % "gasLimit" ) return fromGas(gasLimit);

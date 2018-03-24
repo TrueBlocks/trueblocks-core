@@ -85,7 +85,7 @@ bool CReceipt::setValueByName(const SFString& fieldName, const SFString& fieldVa
             }
             break;
         case 's':
-            if ( fieldName % "status" ) { status = toLong32u(fieldValue); return true; }
+            if ( fieldName % "status" ) { status = newUnsigned32(fieldValue); return true; }
             break;
         default:
             break;
@@ -312,6 +312,21 @@ const CBaseNode *CReceipt::getObjectAt(const SFString& fieldName, uint32_t index
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
+#define EQ_TEST(a) { if (test.a != a) { cout << " diff at " << #a << " " << test.a << ":" << a << " "; return false; } }
+bool CReceipt::operator==(const CReceipt& test) const {
+
+    EQ_TEST(contractAddress);
+    EQ_TEST(gasUsed);
+    EQ_TEST(status);
+    EQ_TEST(logs.getCount());
+    for (uint32_t i = 0 ; i < logs.getCount() ; i++)
+        if (test.logs[i] != logs[i])
+            return false;
+
+    return true;
+}
+
+//---------------------------------------------------------------------------
 // EXISTING_CODE
 }  // namespace qblocks
 

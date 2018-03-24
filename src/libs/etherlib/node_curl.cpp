@@ -10,12 +10,15 @@
 
 namespace qblocks {
 
+    //-------------------------------------------------------------------------
     extern size_t write_callback(char *ptr, size_t size, size_t nmemb, void *userdata);
     extern size_t nullCallback(char *ptr, size_t size, size_t nmemb, void *userdata);
+
+    //-------------------------------------------------------------------------
     CCurlContext::CCurlContext(void) {
         headers      = "Content-Type: application/json\n";
         baseURL      = "http://localhost:8545";
-        callBackFunc = nullCallback;
+        callBackFunc = write_callback;
         theID        = 1;
         Clear();
     }
@@ -25,37 +28,42 @@ namespace qblocks {
         return asString(isTestMode() ? 1 : theID++);
     }
 
+    //-------------------------------------------------------------------------
+//#define DEBUG_RPC
     void CCurlContext::setPostData(const SFString& method, const SFString& params) {
         Clear();
-        url += "{";
-        url +=  quote("jsonrpc") + ":"  + quote("2.0")  + ",";
-        url +=  quote("method")  + ":"  + quote(method) + ",";
-        url +=  quote("params")  + ":"  + params + ",";
-        url +=  quote("id")      + ":"  + quote(getCurlID());
-        url += "}";
-        //#define DEBUG_RPC
+        postData += "{";
+        postData +=  quote("jsonrpc") + ":"  + quote("2.0")  + ",";
+        postData +=  quote("method")  + ":"  + quote(method) + ",";
+        postData +=  quote("params")  + ":"  + params + ",";
+        postData +=  quote("id")      + ":"  + quote(getCurlID());
+        postData += "}";
 #ifdef DEBUG_RPC
-        cerr << url << "\n";
+        cerr << postData << "\n";
         cerr.flush();
 #endif
-        curl_easy_setopt(getCurl(), CURLOPT_POSTFIELDS,    (const char*)url);
-        curl_easy_setopt(getCurl(), CURLOPT_POSTFIELDSIZE, url.length());
+        curl_easy_setopt(getCurl(), CURLOPT_POSTFIELDS,    (const char*)postData);
+        curl_easy_setopt(getCurl(), CURLOPT_POSTFIELDSIZE, postData.length());
         curl_easy_setopt(getCurl(), CURLOPT_WRITEDATA,     this);
         curl_easy_setopt(getCurl(), CURLOPT_WRITEFUNCTION, callBackFunc);
     }
 
+    //-------------------------------------------------------------------------
     void CCurlContext::Clear(void) {
         tracing_on   = true;
         earlyAbort   = false;
         is_error     = false;
-        is_tracing   = false;
-        url          = "";
+        postData     = "";
         result       = "";
-        source       = "binary";
+//      is_tracing   = false;
+//      source       = "binary";
     }
+
+    //-------------------------------------------------------------------------
     void CCurlContext::tracingOff (void) { tracing_on = false; }
-    void CCurlContext::tracingOn  (void) { tracing_on = true; }
-    bool CCurlContext::isTracingOn(void)     { return tracing_on; }
+    void CCurlContext::tracingOn  (void) { tracing_on = true;  }
+    bool CCurlContext::isTracingOn(void) { return tracing_on;  }
+
     //-------------------------------------------------------------------------
     bool CCurlContext::lightTracing(bool on) {
         bool ret = is_error;
@@ -64,7 +72,10 @@ namespace qblocks {
         return ret;
     }
 
+    //-------------------------------------------------------------------------
     static CCurlContext theCurlContext;
+
+    //-------------------------------------------------------------------------
     CCurlContext *getCurlContext(void) {
         return &theCurlContext;
     }
@@ -95,10 +106,13 @@ namespace qblocks {
             curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
 
             if (getCurlContext()->source == "remote") {
-                curl_easy_setopt(curl, CURLOPT_URL,        "https://pmainnet.infura.io/");
+                curl_easy_setopt(curl, CURLOPT_URL, "https://pmainnet.infura.io/");
+
+            } else if (getCurlContext()->source == "ropsten") {
+                curl_easy_setopt(curl, CURLOPT_URL, "https://testnet.infura.io/");
 
             } else {
-                curl_easy_setopt(curl, CURLOPT_URL,        "http://localhost:8545");
+                curl_easy_setopt(curl, CURLOPT_URL, (const char*)getCurlContext()->baseURL);
             }
 
         } else if (cleanup) {
@@ -127,7 +141,7 @@ namespace qblocks {
     //-------------------------------------------------------------------------
     SFString callRPC(const SFString& method, const SFString& params, bool raw) {
 
-        getCurlContext()->callBackFunc = write_callback;
+        //getCurlContext()->callBackFunc = write_callback;
         getCurlContext()->setPostData(method, params);
 
         CURLcode res = curl_easy_perform(getCurl());
@@ -178,6 +192,11 @@ namespace qblocks {
             cerr << "\tresponse. It is impossible forQuickBlocks to proceed. Quitting...\n";
             cerr << "\n";
             exit(0);
+        } else if (getCurlContext()->result.Contains("error")) {
+            if (verbose>1) {
+                cerr << getCurlContext()->result;
+                cerr << getCurlContext()->postData << "\n";
+            }
         }
 
 #ifdef DEBUG_RPC
@@ -207,6 +226,8 @@ namespace qblocks {
     size_t write_callback(char *ptr, size_t size, size_t nmemb, void *userdata)
     {
         if (getCurlContext()->is_tracing) {
+//            cout << bRed << "." << cOff;
+//            cout.flush();
             // Curl does not close the string, so we have to
             ptr[size*nmemb-1] = '\0';
             if (strstr(ptr,"erro")!=NULL) {

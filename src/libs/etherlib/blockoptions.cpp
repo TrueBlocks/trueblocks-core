@@ -8,26 +8,41 @@
 #include "etherlib.h"
 #include "blockoptions.h"
 
+static uint64_t findBlockNumByHash(const SFHash& hash, void *data);
 //--------------------------------------------------------------------------------
 CBlockOptions::CBlockOptions(void) {
+    Init();
 }
 
 //--------------------------------------------------------------------------------
-SFString CBlockOptions::getBlockNumList(void) const {
-    SFString ret;
-    SFString list = blocks.toString();
-    while (!list.empty()) {
-        SFString val = nextTokenClear(list, '|');
-        blknum_t bn = toLongU(val);
-        if (isHash(val)) {
-            CBlock block;
-            if (!getBlock(block, val)) {
-                cerr << "Block hash '" << val << "' does not appear to be a valid block hash. Quitting...";
-                exit(0);
-            }
-            bn = block.blockNumber;
-        }
-        ret += asStringU(bn) + "|";
+void CBlockOptions::Init(void) {
+    blocks.hashFind = findBlockNumByHash;
+}
+
+//--------------------------------------------------------------------------------
+uint64_t findBlockNumByHash(const SFHash& hash, void *data) {
+    ASSERT(isHash(hash));
+    CBlock block;
+    if (!getBlock(block, hash)) {
+        cerr << "Block hash '" << hash << "' does not appear to be a valid block hash. Quitting...";
+        exit(0);
     }
+    return block.blockNumber;
+}
+
+//--------------------------------------------------------------------------------
+bool blockNumToString(uint64_t num, void *data) {
+    if (num != NOPOS) {
+        SFString *str = (SFString*)data;
+        *str += (asStringU(num) + "|");
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------
+SFString CBlockOptions::getBlockNumList(void) {
+    SFString ret;
+    blocks.hashFind = findBlockNumByHash;
+    blocks.forEveryBlockNumber(blockNumToString, &ret);
     return ret;
 }

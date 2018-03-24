@@ -210,13 +210,11 @@ namespace qblocks {
     }
 
     //-------------------------------------------------------------------------
-    inline SFUintBN canonicalWei(uint64_t _value)
-    {
+    inline SFUintBN canonicalWei(uint64_t _value) {
         return SFUintBN(_value);
     }
 
-    inline SFUintBN canonicalWei(const SFString& _value)
-    {
+    inline SFUintBN canonicalWei(const SFString& _value) {
         if (_value.Contains( "0x" ))
             return hex2BigUint((const char*) _value.substr(2));
         if (_value.Contains( "e"  ))
@@ -224,13 +222,11 @@ namespace qblocks {
         return str2BigUint(_value);
     }
 
-    inline SFString asStringBN(const SFUintBN& bu)
-    {
+    inline SFString asStringBN(const SFUintBN& bu) {
         return to_string(bu).c_str();
     }
 
-    inline SFString asStringBN(const SFIntBN& bn)
-    {
+    inline SFString asStringBN(const SFIntBN& bn) {
         return to_string(bn).c_str();
     }
 #define SFAddress      SFString
@@ -251,15 +247,31 @@ namespace qblocks {
 #define toWei(a)       canonicalWei(a)
 #define toGas(a)       toUnsigned(a)
 #define addr2BN        toWei
+#define hex2BN         toWei
 
 #define fromAddress(a)  ((a).empty() ? "0x0" : (a))
 #define fromHash(a)     ((a).empty() ? "0x0" : (a))
 #define fromWei(a)      to_string((a)).c_str()
 #define fromTopic(a)    ("0x"+padLeft(toLower(SFString(to_hex((a)).c_str())),64,'0'))
 #define fromGas(a)      asStringU(a)
-#define toHex2(a)       (a == "null" ? "null" : ("0x"+toLower(SFString(to_hex(str2BigUint(a)).c_str()))))
 
-	extern  SFString   fromBloom(const SFBloom& bl);
+    //-------------------------------------------------------------------------
+    inline SFString toHex(const SFString& str) {
+        if (str == "null")
+            return str;
+        SFUintBN bn = canonicalWei(str);
+        return toLower("0x" + SFString(to_hex(bn).c_str()));
+    }
+
+    //-------------------------------------------------------------------------
+    inline SFString toHex(uint64_t num) {
+        SFUintBN bn = num;
+        return toLower("0x" + SFString(to_hex(bn).c_str()));
+    }
+
+    extern SFString bloom2Bytes(const SFBloom& bl);
+    extern SFString bloom2Bits(const SFBloom& b);
+
 #define fromUnsigned(a) asStringU((a))
 
     //--------------------------------------------------------------------------------------------------------------

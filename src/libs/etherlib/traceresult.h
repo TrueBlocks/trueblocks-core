@@ -26,6 +26,8 @@ typedef SFUniqueList<CTraceResult*>       CTraceResultListU;
 //--------------------------------------------------------------------------
 class CTraceResult : public CBaseNode {
 public:
+    SFAddress address;
+    SFString code;
     SFGas gasUsed;
     SFString output;
 
@@ -86,6 +88,8 @@ inline void CTraceResult::Clear(void) {
 inline void CTraceResult::Init(void) {
     CBaseNode::Init();
 
+    address = "";
+    code = "";
     gasUsed = 0;
     output = "";
 
@@ -98,6 +102,8 @@ inline void CTraceResult::Copy(const CTraceResult& tr) {
     Clear();
     CBaseNode::Copy(tr);
 
+    address = tr.address;
+    code = tr.code;
     gasUsed = tr.gasUsed;
     output = tr.output;
 

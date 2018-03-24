@@ -29,7 +29,7 @@ int main(int argc, const char * argv[]) {
             cout << (options.isMulti() ? "[" : "");
 
         SFString list = options.getBlockNumList();
-        while (!list.empty()) {
+        while (!list.empty() && !shouldQuit()) {
             blknum_t bn = toLongU(nextTokenClear(list, '|'));
             if (options.isCheck) {
                 checkResults += checkOneBlock(bn, options);
@@ -73,7 +73,7 @@ SFString doOneBlock(uint64_t num, const COptions& opt) {
     SFString numStr = asStringU(num);
     if (opt.isRaw) {
 
-        if (!queryRawBlock(result, numStr, true, opt.terse)) {
+        if (!queryRawBlock(result, numStr, true, opt.hashes)) {
             result = "Could not query raw block " + numStr + ". Is an Ethereum node running?";
         } else {
             if (opt.force) { // turn this on to force a write of the block to the disc
@@ -82,6 +82,7 @@ SFString doOneBlock(uint64_t num, const COptions& opt) {
                 result = generic.result;
                 gold.parseJson((char*)(const char*)result);
                 SFString fileName = getBinaryFilename(num);
+                gold.finalized = isFinal(gold.timestamp);
                 writeToBinary(gold, fileName);
             }
         }
@@ -99,16 +100,18 @@ SFString doOneBlock(uint64_t num, const COptions& opt) {
             queryBlock(gold, numStr, true, false);
         }
 
-        if (opt.force) // turn this on to force a write of the block to the disc
+        if (opt.force) { // turn this on to force a write of the block to the disc
+            gold.finalized = isFinal(gold.timestamp);
             writeToBinary(gold, fileName);
+        }
 
         if (!opt.silent) {
             SFString format = opt.format;
-            if (false) { //opt.priceBlocks) {
-                SFUintBN oneWei = canonicalWei("1000000000000000000");
-                SFString dollars = "$" + asDollars(gold.timestamp, oneWei);
-                format.Replace("{PRICE:CLOSE}", dollars);
-            }
+//            if (false) { //opt.priceBlocks) {
+//                SFUintBN oneWei = canonicalWei("1000000000000000000");
+//                SFString dollars = "$" + asDollars(gold.timestamp, oneWei);
+//                format.Replace("{PRICE:CLOSE}", dollars);
+//            }
             result = gold.Format(format);
         }
     }
@@ -119,7 +122,7 @@ SFString doOneBlock(uint64_t num, const COptions& opt) {
 SFString checkOneBlock(uint64_t num, const COptions& opt) {
 
     if (opt.quiet == 2) {
-        cout << "Checking block " + cYellow + asStringU(num) + cOff + "...       \r";
+        cout << "Checking block " << cYellow << asStringU(num) << cOff << "...       \r";
         cout.flush();
     }
     SFString numStr = asStringU(num);
@@ -130,7 +133,7 @@ SFString checkOneBlock(uint64_t num, const COptions& opt) {
     fromNode.Replace("\"hash\":","\"blockHash\":");
     if (verbose)
         cout << num << "\n";
-    fromNode = normalizeBlock(fromNode, true, num > byzantiumBlock);
+    fromNode = normalizeBlock(fromNode, true, num >= byzantiumBlock);
 
     // Now get the same block from quickBlocks
     SFString fromQblocks;
@@ -146,7 +149,7 @@ SFString checkOneBlock(uint64_t num, const COptions& opt) {
     }
     if (verbose)
         cout << num << "\n";
-    fromQblocks = normalizeBlock(qBlocks.Format(), true, num > byzantiumBlock);
+    fromQblocks = normalizeBlock(qBlocks.Format(), true, num >= byzantiumBlock);
 
 extern SFString hiddenFields(void);
     SFString result = hiddenFields() + "The strings are "; result += ((fromNode != fromQblocks) ? "different\n" : "the same\n");

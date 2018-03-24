@@ -19,18 +19,25 @@ int main(int argc, const char *argv[]) {
     if (!options.prepareArguments(argc, argv))
         return 0;
 
+    options.nCmds = countOf('\n', options.commandList);
+    if (options.nCmds > 1 && verbose)
+        cout << "[\n";
     while (!options.commandList.empty()) {
         SFString command = nextTokenClear(options.commandList, '\n');
         if (!options.parseArguments(command))
             return 0;
         forEveryTransactionInList(visitTransaction, &options, options.transList.queries);
     }
+    if (options.nCmds > 1 && verbose)
+        cout << "]\n";
+    cout.flush();
     return 0;
 }
 
 //--------------------------------------------------------------
 bool visitTransaction(CTransaction& trans, void *data) {
-    const COptions *opt = (const COptions*)data;
+    COptions *opt = (COptions*)data;
+    opt->nVisited++;
 
     bool badHash = !isHash(trans.hash);
     bool isBlock = trans.hash.Contains("block");
@@ -57,9 +64,23 @@ bool visitTransaction(CTransaction& trans, void *data) {
 
     if (verbose) {
         trans.doExport(cout);
+        if (opt->nVisited <= opt->nCmds && verbose)
+            cout << ",";
         cout << "\n";
     } else {
         cout << trans.Format(opt->format);
+    }
+
+    if (opt->incTrace) {
+        CTraceArray traces;
+        getTraces(traces, trans.hash);
+        if (traces.getCount()) {
+            cout << "[";
+            for (uint32_t i = 0 ; i < traces.getCount() ; i++) {
+                traces[i].doExport(cout);
+            }
+            cout << "]\n";
+        }
     }
 
     return true;

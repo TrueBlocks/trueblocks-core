@@ -58,7 +58,7 @@ COptions::COptions(void) {
     sorts[2] = GETRUNTIME_CLASS(CReceipt);
 
     // If you need the names file, you have to add it in the constructor
-    namesFile = CFilename(blockCachePath("names/names.txt"));
+    namesFile = CFilename(configPath("names/names.txt"));
     establishFolder(namesFile.getPath());
     if (!fileExists(namesFile.getFullPath()))
         stringToAsciiFile(namesFile.getFullPath(), SFString(STR_DEFAULT_DATA).Substitute(" |","|").Substitute("|","\t"));

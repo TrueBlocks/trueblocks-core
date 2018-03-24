@@ -244,8 +244,13 @@ ostream& operator<<(ostream& os, const CTreeRoot& item) {
 
     //-----------------------------------------------------------------------------
     bool CTreeRoot::visitItems(ACCTVISITOR func, void *data) const {
-        if (root)
-            return root->visitItems(func, data);
+        ASSERT(func);
+        CVisitData *vd = reinterpret_cast<CVisitData*>(data);
+        vd->level = 0;
+        if (root) {
+            bool ret = root->visitItems(func, data);
+            return ret;
+        }
         return true;
     }
 

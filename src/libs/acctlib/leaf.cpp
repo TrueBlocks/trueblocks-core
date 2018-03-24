@@ -69,7 +69,7 @@ bool CLeaf::setValueByName(const SFString& fieldName, const SFString& fieldValue
             }
             break;
         case 'c':
-            if ( fieldName % "cnt" ) { cnt = toLong32u(fieldValue); return true; }
+            if ( fieldName % "cnt" ) { counter = toLong32u(fieldValue); return true; }
             break;
         default:
             break;
@@ -95,7 +95,7 @@ bool CLeaf::Serialize(SFArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     archive >> blocks;
-    archive >> cnt;
+    archive >> counter;
     finishParse();
     return true;
 }
@@ -109,7 +109,7 @@ bool CLeaf::SerializeC(SFArchive& archive) const {
     // EXISTING_CODE
     // EXISTING_CODE
     archive << blocks;
-    archive << cnt;
+    archive << counter;
 
     return true;
 }
@@ -201,7 +201,7 @@ SFString CLeaf::getValueByName(const SFString& fieldName) const {
             }
             break;
         case 'c':
-            if ( fieldName % "cnt" ) return asStringU(cnt);
+            if ( fieldName % "cnt" ) return asStringU(counter);
             break;
     }
 
@@ -241,9 +241,9 @@ const SFString CLeaf::getStringAt(const SFString& name, uint32_t i) const {
                 blocks[blocks.getCount()] = toUnsigned(last);;
         }
 #else
-        cnt = 1;
+        counter = 1;
 #endif
-        prefix = _key;
+        prefixS = _key;
         if (verbose == 2) cerr << "\t\tCreating leaf " << _key << " at " << _value << endl;
     }
 
@@ -260,7 +260,7 @@ const SFString CLeaf::getStringAt(const SFString& name, uint32_t i) const {
                 ret += ",";
         }
 #else
-        ret = asStringU(cnt);
+        ret = asStringU(counter);
 #endif
         return ret;
     }
@@ -268,9 +268,9 @@ const SFString CLeaf::getStringAt(const SFString& name, uint32_t i) const {
     //-----------------------------------------------------------------------------
     bool CLeaf::contains(const SFString& _key) const {
         size_t l1 = _key.length();
-        size_t l2 = prefix.length();
+        size_t l2 = prefixS.length();
         const char *s1 = (const char*)_key;
-        const char *s2 = (const char*)prefix;
+        const char *s2 = (const char*)prefixS;
         bool found = !memcmp(s1, s2, l1);
 
         return l1 == l2 && found;
@@ -295,7 +295,7 @@ const SFString CLeaf::getStringAt(const SFString& name, uint32_t i) const {
 #ifdef OLD_CODE_Y
                 blocks[blocks.getCount()] = toUnsigned(_value);
 #else
-                cnt++;
+                counter++;
 #endif
             }
             return this;
@@ -314,10 +314,10 @@ const SFString CLeaf::getStringAt(const SFString& name, uint32_t i) const {
                         curVal += ",";
                 }
 #else
-                curVal = asStringU(cnt);
+                curVal = asStringU(counter);
 #endif
             }
-            CTreeNode *n = CTreeNode::newBranch(_key, _value, prefix, curVal);
+            CTreeNode *n = CTreeNode::newBranch(_key, _value, prefixS, curVal);
             delete this;
             return n;
         }
@@ -347,9 +347,9 @@ const SFString CLeaf::getStringAt(const SFString& name, uint32_t i) const {
         ASSERT(func);
         CVisitData *vd = reinterpret_cast<CVisitData*>(data);
         uint32_t save = vd->type;
-        vd->cnt = cnt;
+        vd->counter = counter;
         vd->type = T_LEAF;
-        vd->strs = vd->strs + "+" + (cMagenta+prefix + cOff + "|" + cBlue + at(prefix) + cOff);
+        vd->strs = vd->strs + "+" + (cMagenta+prefixS + cOff + "|" + cBlue + at(prefixS) + cOff);
         (*func)(this, data);
         nextTokenClearReverse(vd->strs, '+');
         vd->type = save;
