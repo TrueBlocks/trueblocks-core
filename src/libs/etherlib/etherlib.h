@@ -11,7 +11,6 @@
 #include "abilib.h"
 #include "block.h"
 #include "transaction.h"
-#include "account.h"
 #include "receipt.h"
 #include "logentry.h"
 #include "webapi.h"
