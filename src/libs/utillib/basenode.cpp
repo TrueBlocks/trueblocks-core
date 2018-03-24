@@ -33,7 +33,6 @@ namespace qblocks {
         m_deleted  = false;
         m_schema = getVersionNum();
         m_showing = true;
-        pParent = NULL;
     }
 
     //--------------------------------------------------------------------------------
@@ -41,7 +40,6 @@ namespace qblocks {
         m_deleted  = bn.m_deleted;
         m_schema = bn.m_schema;
         m_showing = bn.m_showing;
-        pParent = NULL;
     }
 
     //--------------------------------------------------------------------------------
@@ -290,9 +288,6 @@ namespace qblocks {
     //---------------------------------------------------------------------------
     bool CBaseNode::readBackLevel(SFArchive& archive) {
 
-        // pParent is use for array items to reach up into it's container
-        archive.pParent = this;
-
         // The following code assumes we do not change the format of the header
         archive >> m_deleted;
         archive >> m_schema;
@@ -307,7 +302,6 @@ namespace qblocks {
 
     //---------------------------------------------------------------------------
     bool CBaseNode::Serialize(SFArchive& archive) {
-        archive.pParent = this;  // sets this value for items stored in lists or arrays -- read only
         archive >> m_deleted;
         archive >> m_schema;
         archive >> m_showing;
@@ -323,9 +317,6 @@ namespace qblocks {
         // Not happy with this, but we must set the schema to the latest before we write data
         // since we always write the latest version to the hard drive.
         ((CBaseNode*)this)->m_schema = getVersionNum();
-
-        // This sets this value to be used by contained items (such as array items). It's read only
-        archive.pParent = this;
 
         archive << m_deleted;
         archive << m_schema;

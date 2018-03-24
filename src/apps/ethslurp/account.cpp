@@ -242,7 +242,6 @@ bool CAccount::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, vo
                 }
             }
 
-            ((CTransaction*)&transactions[i])->pParent = this;
             ctx << transactions[i].Format(displayString);
             if (cnt >= nVisible)
                 break;  // no need to keep spinning if we've shown them all

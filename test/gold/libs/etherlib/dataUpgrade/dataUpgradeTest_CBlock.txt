@@ -2,7 +2,7 @@ dataUpgrade argc: 2 [1:CBlock]
 dataUpgrade CBlock 
 --------------------------------------------------------------------------------
 className: CBlock
-objectSize: 184
+objectSize: 176
 baseClass: CBaseNode
 	fieldName: schema
 	  fieldID: 1001
