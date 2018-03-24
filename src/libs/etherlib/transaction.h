@@ -74,10 +74,10 @@ public:
     SFHash v;
     CTrace trace;
 #endif
-    // EXISTING_CODE
-    friend ostream& operator<<(ostream& os, const CTransaction& item);
     bool operator==(const CTransaction& tr) const;
     bool operator!=(const CTransaction& tr) const { return !operator==(tr); }
+    // EXISTING_CODE
+    friend ostream& operator<<(ostream& os, const CTransaction& item);
 
 protected:
     void Clear(void);

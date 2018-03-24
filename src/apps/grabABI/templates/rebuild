@@ -1,3 +1,0 @@
-mkdir parselib 2>/dev/null
-cd parselib
-grabABI [{ADDR}] -s -n $1

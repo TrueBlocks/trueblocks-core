@@ -214,17 +214,19 @@ ostream& operator<<(ostream& os, const CAcctCacheItem& item) {
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-    CAcctCacheItem::CAcctCacheItem(SFString& line) {
-        SFString s = nextTokenClear(line,'\t');
-        uint64_t x    = toUnsigned(s);
-        blockNum = x;
-        s = nextTokenClear(line,'\t');
-        x    = toUnsigned(s);
-        transIndex = x;
-        s = nextTokenClear(line,'\t');
-        x    = toUnsigned(s);
-        which = (int32_t)x;
-    }
+CAcctCacheItem::CAcctCacheItem(SFString& line) {
+
+    line.ReplaceAll(".","\t");
+
+    SFString val = nextTokenClear(line,'\t');
+    blockNum = toUnsigned(val);
+
+    val = nextTokenClear(line,'\t');
+    transIndex = toUnsigned(val);
+
+    val = nextTokenClear(line,'\t');
+    which = (int32_t)toUnsigned(val);
+}
 // EXISTING_CODE
 }  // namespace qblocks
 
