@@ -132,8 +132,6 @@ bool CTransaction::setValueByName(const SFString& fieldName, const SFString& fie
 //---------------------------------------------------------------------------------------------------
 void CTransaction::finishParse() {
     // EXISTING_CODE
-    if (pParent && pParent->isKindOf(GETRUNTIME_CLASS(CAccount)))
-        funcPtr = ((CAccount*)pParent)->abi.findFunctionByEncoding(input.substr(2,8));
     function = Format("[{FUNCTION}]");
     ether = (double)strtold((const char*)Format("[{ETHER}]"),NULL);
     receipt.pTrans = this;
