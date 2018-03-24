@@ -150,7 +150,7 @@ getBlock --parity 358450-0x5785a
 },
 {
     "difficulty": "0x5a40bf0c9bf",
-    "finalized": "0x1",
+    "finalized": "0x0",
     "gasLimit": "0x2fefd8",
     "gasUsed": "0x0",
     "hash": "0x7d077aa901df0b73b81dbf9412bbb173ad6f3ef0e047a070efa1f986ba733b08",
@@ -197,7 +197,7 @@ getBlock --parity 358450-0x5785a
 },
 {
     "difficulty": "0x5a40bda3993",
-    "finalized": "0x1",
+    "finalized": "0x0",
     "gasLimit": "0x2fefd8",
     "gasUsed": "0x0",
     "hash": "0x1f94febfedd52c7e96d8bc336b45485d1946cd8ed75a2b56ac769be25a69373b",
@@ -526,7 +526,7 @@ getBlock --parity 358450-0x5785a
 },
 {
     "difficulty": "0x5a3572ba39c",
-    "finalized": "0x1",
+    "finalized": "0x0",
     "gasLimit": "0x2fefd8",
     "gasUsed": "0x0",
     "hash": "0xe3dfb69a85a752183259da3d0b0d915461432af702c97a2bccdbed65c40f9627",
@@ -539,7 +539,7 @@ getBlock --parity 358450-0x5785a
 },
 {
     "difficulty": "0x5a40b968912",
-    "finalized": "0x1",
+    "finalized": "0x0",
     "gasLimit": "0x2fefd8",
     "gasUsed": "0x0",
     "hash": "0x54fdd3dbd8b3e7726662bfe8d26f92eaa7b0f3bcf00111040f4a9e125664f21e",
@@ -768,7 +768,7 @@ getBlock --parity 358450-0x5785a
 },
 {
     "difficulty": "0x5a1ee3f56aa",
-    "finalized": "0x1",
+    "finalized": "0x0",
     "gasLimit": "0x2fefd8",
     "gasUsed": "0x0",
     "hash": "0x3769689a077f0d918a211cc554485115424e4f1c427cf5dab55b69c89403ad20",
@@ -781,7 +781,7 @@ getBlock --parity 358450-0x5785a
 },
 {
     "difficulty": "0x5a2a27d1e96",
-    "finalized": "0x1",
+    "finalized": "0x0",
     "gasLimit": "0x2fefd8",
     "gasUsed": "0x0",
     "hash": "0x6549aa784d0398cf2085af909d65e9be25df7102715fb4425039f224fc72cbfa",
@@ -916,7 +916,7 @@ getBlock --parity 358450-0x5785a
 },
 {
     "difficulty": "0x5a2a250098a",
-    "finalized": "0x1",
+    "finalized": "0x0",
     "gasLimit": "0x2fefd8",
     "gasUsed": "0x0",
     "hash": "0xfc2fd216a2a8fc8bdbb41d4f8127c91c9b555ab1f3b1319c3e8dfd43b22c1597",
@@ -1017,7 +1017,7 @@ getBlock --parity 358450-0x5785a
 },
 {
     "difficulty": "0x5a3568dc636",
-    "finalized": "0x1",
+    "finalized": "0x0",
     "gasLimit": "0x2fefd8",
     "gasUsed": "0x0",
     "hash": "0x85afb48ee5c7f2e885f92e53d4071b870f99b46133db5cf1c450fbbc1d3bc738",
@@ -1030,7 +1030,7 @@ getBlock --parity 358450-0x5785a
 },
 {
     "difficulty": "0x5a2a222f480",
-    "finalized": "0x1",
+    "finalized": "0x0",
     "gasLimit": "0x2fefd8",
     "gasUsed": "0x0",
     "hash": "0xd1835ff03a5bb638f7d606093d70362a4435b2ddf4b6f77f061d2277c498850a",
@@ -1411,7 +1411,7 @@ getBlock --parity 358450-0x5785a
 },
 {
     "difficulty": "0x5a35660ab8b",
-    "finalized": "0x1",
+    "finalized": "0x0",
     "gasLimit": "0x2fefd8",
     "gasUsed": "0x0",
     "hash": "0x1422b5f5e747f7b652f0ed9892eca0ea4aeaa11dc3cd79831c9de9e5e2a87263",
@@ -1424,7 +1424,7 @@ getBlock --parity 358450-0x5785a
 },
 {
     "difficulty": "0x5a2a1f5df78",
-    "finalized": "0x1",
+    "finalized": "0x0",
     "gasLimit": "0x2fefd8",
     "gasUsed": "0x0",
     "hash": "0x9ad3ebd5ea48fca2e8e4d75c46b03be7e34b354d22070b13532a28447b20c725",
@@ -1585,7 +1585,7 @@ getBlock --parity 358450-0x5785a
 },
 {
     "difficulty": "0x5a3563390e0",
-    "finalized": "0x1",
+    "finalized": "0x0",
     "gasLimit": "0x2fefd8",
     "gasUsed": "0x0",
     "hash": "0x73bd430784fb18bf53b3eb0f4c6d85a257ca36bf3a6977be612e0d026e9a9668",
@@ -1632,7 +1632,7 @@ getBlock --parity 358450-0x5785a
 },
 {
     "difficulty": "0x5a3561d038c",
-    "finalized": "0x1",
+    "finalized": "0x0",
     "gasLimit": "0x2fefd8",
     "gasUsed": "0x0",
     "hash": "0x7d9a88393e87c423a4d3821251b0f59b017fbc7a8bc60bebb9833be0bc48e2bb",
@@ -1645,7 +1645,7 @@ getBlock --parity 358450-0x5785a
 },
 {
     "difficulty": "0x5a2a1b23fee",
-    "finalized": "0x1",
+    "finalized": "0x0",
     "gasLimit": "0x2fefd8",
     "gasUsed": "0x0",
     "hash": "0xb329c0b14f19d84f0ef6c23a6ced74f96071a298d0da7f69b67e22ae20d71096",
@@ -2000,7 +2000,7 @@ getBlock --parity 358450-0x5785a
 },
 {
     "difficulty": "0x5a13909d90a",
-    "finalized": "0x1",
+    "finalized": "0x0",
     "gasLimit": "0x2fefd8",
     "gasUsed": "0x0",
     "hash": "0x51ac91f8777a09c8351f05a429015fcc6d7a02e937e1dc240cb29edc823ded72",
@@ -2013,7 +2013,7 @@ getBlock --parity 358450-0x5785a
 },
 {
     "difficulty": "0x5a1ed30fa47",
-    "finalized": "0x1",
+    "finalized": "0x0",
     "gasLimit": "0x2fefd8",
     "gasUsed": "0x0",
     "hash": "0x2e3c4dac5fc5465768e724529623634fe1ad63f048c023c077465ea610ea287c",

@@ -88,28 +88,32 @@ baseClass: CBaseNode
 	  fieldID: 1021
 	  fieldType: T_TEXT TS_STRING 131122
 	  hidden: 1
-	fieldName: gasUsed
+	fieldName: articulated
 	  fieldID: 1022
+	  fieldType: T_TEXT TS_STRING 131122
+	  hidden: 1
+	fieldName: gasUsed
+	  fieldID: 1023
 	  fieldType: T_GAS TS_NUMERAL 4259880 TS_BIGNUM 4259880
 	  hidden: 0
 	fieldName: date
-	  fieldID: 1023
-	  fieldType: T_DATE TS_DATE 262149
-	  hidden: 1
-	fieldName: datesh
 	  fieldID: 1024
 	  fieldType: T_DATE TS_DATE 262149
 	  hidden: 1
-	fieldName: time
+	fieldName: datesh
 	  fieldID: 1025
 	  fieldType: T_DATE TS_DATE 262149
 	  hidden: 1
-	fieldName: ether
+	fieldName: time
 	  fieldID: 1026
+	  fieldType: T_DATE TS_DATE 262149
+	  hidden: 1
+	fieldName: ether
+	  fieldID: 1027
 	  fieldType: T_ETHER TS_NUMERAL 4259885 TS_BIGNUM 4259885
 	  hidden: 1
 	fieldName: encoding
-	  fieldID: 1027
+	  fieldID: 1028
 	  fieldType: T_TEXT TS_STRING 131122
 	  hidden: 1
 {

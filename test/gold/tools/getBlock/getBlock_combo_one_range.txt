@@ -555,7 +555,7 @@ getBlock 1590000 4000001-4000002 1001001 1234567
     "miner": "0x2a65aca4d5fc5b5c859090a6c34d164135398226",
     "difficulty": 22349600794407,
     "price": 0,
-    "finalized": 1,
+    "finalized": 0,
     "timestamp": 1459194277,
     "transactions": []
 }
