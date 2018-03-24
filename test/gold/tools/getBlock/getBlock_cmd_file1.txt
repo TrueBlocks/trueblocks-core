@@ -212,7 +212,7 @@ getBlock --file:cmd_file1
 
 "blockNumber":1399675
 "difficulty":30027571242885
-"finalized":1
+"finalized":0
 "gasLimit":4712388
 "gasUsed":0
 "hash":"0xb536b97cce62003549986495f3d7d52347a874ba7ff73f2b442d0e1eb36113ac"
@@ -341,7 +341,7 @@ getBlock --file:cmd_file1
 
 "blockNumber":1909113
 "difficulty":59717402562065
-"finalized":1
+"finalized":0
 "gasLimit":4712388
 "gasUsed":0
 "hash":"0x005ae48cbf04826bacbbffd44b79a5995eb9bda46ffda5609dbad7bd3c083902"
@@ -352,7 +352,7 @@ getBlock --file:cmd_file1
 
 "blockNumber":2017468
 "difficulty":53448351719689
-"finalized":1
+"finalized":0
 "gasLimit":4700000
 "gasUsed":0
 "hash":"0xf0a5e384e9345372a57122e028ceaf400d637e65c728dc0512c69859fef01781"
@@ -630,7 +630,7 @@ getBlock --file:cmd_file1
 
 "blockNumber":2513942
 "difficulty":106947037494033
-"finalized":1
+"finalized":0
 "gasLimit":1996159
 "gasUsed":0
 "hash":"0x44fca249c279b399a9dd6abce1d4838e5e141514f96cbeec0908f9dacea77626"
@@ -666,7 +666,7 @@ getBlock --file:cmd_file1
 
 "blockNumber":2728501
 "difficulty":70209084255676
-"finalized":1
+"finalized":0
 "gasLimit":3263330
 "gasUsed":0
 "hash":"0xfea7e92e1dc4aae5ef2310a4ae0a64997e949b85442a619a9b9633b9ecdd0810"
