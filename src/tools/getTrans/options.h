@@ -10,7 +10,10 @@ class COptions : public COptionsBase {
 public:
     COptionsTransList transList;
     bool isRaw;
+    bool incTrace;
     SFString format;
+    uint64_t nCmds;
+    uint64_t nVisited;
 
     COptions(void);
     ~COptions(void);

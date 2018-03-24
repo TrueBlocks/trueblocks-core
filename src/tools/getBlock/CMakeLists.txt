@@ -83,8 +83,8 @@ run_test("getBlock_force_02"                  " 2769609" " 2799895" " 2872831" "
 run_test("getBlock_multi1"   "--parity" " -r" " 2769609" " 2799895" " 2872831" " 3076260")
 run_test("getBlock_multi2"   "--parity" " -a" " 2769609" " 2799895" " 2872831" " 3076260")
 
-run_test("getBlock_terse_no_raw"  "-t"           " 4001001")
-run_test("getBlock_terse_yes_raw" "-t" " -s:raw" " 4001001")
+run_test("getBlock_terse_no_raw"  "-a"           " 4001001")
+run_test("getBlock_terse_yes_raw" "-a" " -s:raw" " 4001001")
 
 run_test("getBlock_cmd_file1" "--file:cmd_file1")
 run_test("getBlock_cmd_file2" "--file:cmd_file2")
@@ -95,6 +95,9 @@ run_test("getBlock_help_long" "--help")
 
 run_test("getBlock_byzantium_1" " 4369999" " 4370000" " 4380101")
 run_test("getBlock_blockByHash" "0xd19bc98080cd70951fad3951cef2d512e6334aa3c7e64a38985c955d4d2e273b")
+
+run_test("getBlock_latest1" "--latest")
+run_test("getBlock_latest2" "--latest" " 0xd19bc98080cd70951fad3951cef2d512e6334aa3c7e64a38985c955d4d2e273b")
 
 # Installation steps
 install(TARGETS ${TOOL_NAME} RUNTIME DESTINATION bin)

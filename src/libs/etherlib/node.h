@@ -25,6 +25,7 @@ namespace qblocks {
     extern bool     getReceipt              (CReceipt& receipt,   const SFHash& txHash);
     extern bool     getLogEntry             (CLogEntry& log,      const SFHash& txHash);
     extern void     getTraces               (CTraceArray& traces, const SFHash& txHash);
+    extern uint32_t getTraceCount           (const SFHash& hashIn);
 
     //-------------------------------------------------------------------------
     // other methods to access data
@@ -57,6 +58,8 @@ namespace qblocks {
 
     //-------------------------------------------------------------------------
     extern SFString getVersionFromClient    (void);
+    inline bool     isGeth                  (void) { return getVersionFromClient().ContainsI("geth"); }
+    inline bool     isParity                (void) { return getVersionFromClient().ContainsI("parity"); }
     extern bool     getAccounts             (SFAddressArray& addrs);
     extern uint64_t getLatestBlockFromClient(void);
     extern uint64_t getLatestBlockFromCache (CSharedResource *res=NULL);
@@ -80,6 +83,7 @@ namespace qblocks {
     // function pointer types for forEvery functions
     typedef bool (*BLOCKVISITFUNC)          (CBlock& block, void *data);
     typedef bool (*TRANSVISITFUNC)          (CTransaction& trans, void *data);
+    typedef bool (*LOGVISITFUNC)            (CLogEntry& log, void *data);
     typedef bool (*TRACEVISITFUNC)          (CTrace& trace, void *data);
 
     //-------------------------------------------------------------------------
@@ -102,6 +106,9 @@ namespace qblocks {
     //-------------------------------------------------------------------------
     // forEvery functions
     extern bool forEveryTraceInTransaction   (TRACEVISITFUNC func, void *data, const CTransaction& trans);
+    extern bool forEveryTraceInBlock         (TRACEVISITFUNC func, void *data, const CBlock& block);
+    extern bool forEveryLogInTransaction     (LOGVISITFUNC func,   void *data, const CTransaction& trans);
+    extern bool forEveryLogInBlock           (LOGVISITFUNC func,   void *data, const CBlock& block);
 
     //-------------------------------------------------------------------------
     extern SFString blockCachePath(const SFString& _part);
@@ -112,10 +119,14 @@ namespace qblocks {
     #define miniTransCache (blockCachePath("miniTrans.bin"))
     #define blockFolder    (blockCachePath("blocks/"))
     #define bloomFolder    (blockCachePath("blooms/"))
+    extern SFUintBN weiPerEther;
 
 }  // namespace qblocks
 
 //-------------------------------------------------------------------------
+extern bool visitBlockNumber(blknum_t bn,         void *data);
 extern bool visitBlock      (CBlock& block,       void *data);
 extern bool visitTransaction(CTransaction& trans, void *data);
+extern bool visitLog        (CLogEntry& log,      void *data);
 extern bool visitTrace      (CTrace& trace,       void *data);
+

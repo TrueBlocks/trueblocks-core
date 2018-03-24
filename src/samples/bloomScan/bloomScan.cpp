@@ -8,6 +8,7 @@
 #include "etherlib.h"
 #include "options.h"
 
+extern bool visitBloom(const SFString& path, void *data);
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
@@ -15,16 +16,44 @@ int main(int argc, const char *argv[]) {
 
     COptions opt;
     if (opt.parseArguments(argc, argv)) {
-        forEveryBlock ( displayBloom, &opt, opt.start, opt.nBlocks, opt.skip );
+        forEveryBloomFile( visitBloom, &opt, opt.start, opt.nBlocks, opt.skip );
     }
 
     return 0;
 }
 
+//-----------------------------------------------------------------------
+bool visitBloom(const SFString& path, void *data) {
+
+    if (path.endsWith("/")) {
+        forAllFiles(path + "*", visitBloom, data);
+
+    } else {
+extern bool displayBloom(blknum_t bn, const SFBloom& bloom, void *data);
+        if (path.endsWith(".bin")) {
+            SFBloom bloom;
+            SFArchive archive(READING_ARCHIVE);
+            if (archive.Lock(path, binaryReadOnly, LOCK_NOWAIT)) {
+                SFBloomArray blooms;
+                archive >> blooms;
+                archive.Release();
+                for (uint32_t i = 0 ; i < blooms.getCount() ; i++) {
+                    bloom |= blooms[i];
+                }
+            }
+            COptions *options = (COptions*)data;
+            if (options->asData)
+                cout << bnFromPath(path) << "," << fileSize(path) << "," << bitsTwiddled(bloom) << "\n";
+            else
+                displayBloom(bnFromPath(path), bloom, data);
+        }
+    }
+    return true;
+}
+
 //-------------------------------------------------------------
-bool displayBloom(CBlock& block, void *data)
-{
-    SFString s = fromBloom(block.logsBloom);
+bool displayBloom(blknum_t bn, const SFBloom& bloom, void *data) {
+    SFString s = bloom2Bytes(bloom);
     COptions *opt = (COptions*)data;
     if (opt->mode == "short") {
         size_t len = s.length();
@@ -60,7 +89,7 @@ bool displayBloom(CBlock& block, void *data)
         s.ReplaceAll("-",cOff+cMagenta);
         s.ReplaceAll("%",cOff+bBlue);
     }
-    cout << cOff << block.blockNumber << s << "\n";
+    cout << cOff << bn << s << "\n";
     cout.flush();
     return true;
 }

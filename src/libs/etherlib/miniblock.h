@@ -35,12 +35,10 @@ namespace qblocks {
     class CMiniTrans {
     public:
         uint32_t index;
+        bool     isError;
         SFGas    gasUsed;
         SFGas    gasPrice;
-        SFGas    gasAllowed;
-        bool     isError;
-        char     from [41];
-        char     to   [41];
+        uint32_t nTraces;
         char     value[41];
 
                  CMiniTrans (void);
@@ -92,13 +90,15 @@ namespace qblocks {
     typedef bool (*MINIBLOCKVISITFUNC)(CMiniBlock& block, const CMiniTrans *trans, void *data);
     typedef bool (*MINITRANSVISITFUNC)(CMiniTrans& trans, void *data);
     typedef bool (*BLOCKVISITFUNC)(CBlock& block, void *data);
-    
+
     //-------------------------------------------------------------------------
-    extern bool forEveryFullBlockInMemory    (BLOCKVISITFUNC     func, void *data, uint64_t start, uint64_t count);
-    extern bool forEveryMiniBlockInMemory    (MINIBLOCKVISITFUNC func, void *data, uint64_t start, uint64_t count);
-    extern bool forOnlyMiniBlocks            (MINIBLOCKVISITFUNC func, void *data, uint64_t start, uint64_t count);
-    extern bool forOnlyMiniTransactions      (MINITRANSVISITFUNC func, void *data, uint64_t start, uint64_t count);
+    extern bool forEveryFullBlockInMemory    (BLOCKVISITFUNC     func, void *data, uint64_t start, uint64_t count, uint64_t skip=1);
+    extern bool forEveryMiniBlockInMemory    (MINIBLOCKVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip=1);
+    extern bool forOnlyMiniBlocks            (MINIBLOCKVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip=1);
+    extern bool forOnlyMiniTransactions      (MINITRANSVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip=1);
     extern void clearInMemoryCache           (void);
 
 }  // namespace qblocks
 
+//-------------------------------------------------------------------------
+extern bool visitMiniBlock(CMiniBlock& block, const CMiniTrans *trans, void *data);

@@ -57,6 +57,8 @@ public:
     SFHash transactionHash;
     uint32_t transactionIndex;
 #endif
+    bool operator==(const CReceipt& r) const;
+    bool operator!=(const CReceipt& r) const { return !operator==(r); }
     // EXISTING_CODE
     friend ostream& operator<<(ostream& os, const CReceipt& item);
 

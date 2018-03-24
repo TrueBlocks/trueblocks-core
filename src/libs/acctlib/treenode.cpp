@@ -60,7 +60,7 @@ bool CTreeNode::setValueByName(const SFString& fieldName, const SFString& fieldV
             if ( fieldName % "index" ) { index = toUnsigned(fieldValue); return true; }
             break;
         case 'p':
-            if ( fieldName % "prefix" ) { prefix = fieldValue; return true; }
+            if ( fieldName % "prefixS" ) { prefixS = fieldValue; return true; }
             break;
         default:
             break;
@@ -87,7 +87,7 @@ bool CTreeNode::Serialize(SFArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     archive >> index;
-    archive >> prefix;
+    archive >> prefixS;
     finishParse();
     return true;
 }
@@ -101,7 +101,7 @@ bool CTreeNode::SerializeC(SFArchive& archive) const {
     // EXISTING_CODE
     // EXISTING_CODE
     archive << index;
-    archive << prefix;
+    archive << prefixS;
 
     return true;
 }
@@ -117,7 +117,7 @@ void CTreeNode::registerClass(void) {
     ADD_FIELD(CTreeNode, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CTreeNode, "showing", T_BOOL,  ++fieldNum);
     ADD_FIELD(CTreeNode, "index", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CTreeNode, "prefix", T_TEXT, ++fieldNum);
+    ADD_FIELD(CTreeNode, "prefixS", T_TEXT, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CTreeNode, "schema");
@@ -180,7 +180,7 @@ SFString CTreeNode::getValueByName(const SFString& fieldName) const {
             if ( fieldName % "index" ) return asStringU(index);
             break;
         case 'p':
-            if ( fieldName % "prefix" ) return prefix;
+            if ( fieldName % "prefixS" ) return prefixS;
             break;
     }
 

@@ -479,7 +479,7 @@ SFString getCaseCode(const SFString& fieldCase, const SFString& ex) {
                         caseCode += " return asString([{PTR}]" + field + ");";
 
                     } else if (type == "bloom") {
-                        caseCode += " return fromBloom([{PTR}]" + field + ");";
+                        caseCode += " return bloom2Bytes([{PTR}]" + field + ");";
 
                     } else if (type == "wei") {
                         caseCode += " return fromWei([{PTR}]" + field + ");";

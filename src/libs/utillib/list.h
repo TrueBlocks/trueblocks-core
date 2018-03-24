@@ -44,7 +44,7 @@ namespace qblocks {
         uint32_t getSize(void) const { return m_nSize; }
 
         void Sort(SORTINGFUNC func) { qsort(&m_Values[0], m_nValues, sizeof(TYPE), func); }
-        TYPE *Find(TYPE *key, SEARCHFUNC func) {
+        TYPE *Find(const TYPE *key, SEARCHFUNC func) {
             return reinterpret_cast<TYPE*>(bsearch(key, &m_Values[0], m_nValues, sizeof(TYPE), func));
         }
 

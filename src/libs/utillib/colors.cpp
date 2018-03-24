@@ -64,6 +64,8 @@ namespace qblocks {
         redX       = "\e[0;31mX\e[0m";
     }
 
+    bool colorsDisabled(void) { return cBlack == ""; }
+
     //-----------------------------------------------------------------------
     uint64_t barLen(uint64_t newLen) {
         static uint64_t _barLen = 100;

@@ -22,6 +22,8 @@ typedef SFList<CBlock*>             CBlockList;
 typedef SFUniqueList<CBlock*>       CBlockListU;
 
 // EXISTING_CODE
+typedef bool (*ADDRESSFUNC)(blknum_t bn, blknum_t tr, const SFAddress& addr, void *data);
+typedef bool (*TRANSFUNC)(const CTransaction *trans, void *data);
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
@@ -35,6 +37,7 @@ public:
     SFAddress miner;
     uint64_t difficulty;
     double price;
+    bool finalized;
     timestamp_t timestamp;
     CTransactionArray transactions;
 
@@ -49,6 +52,10 @@ public:
     const CBaseNode *getObjectAt(const SFString& fieldName, uint32_t index) const override;
 
     // EXISTING_CODE
+    bool forEveryAddress      (ADDRESSFUNC func, TRANSFUNC filt, void *data);
+    bool forEveryUniqueAddress(ADDRESSFUNC func, TRANSFUNC filt, void *data);
+    bool operator==(const CBlock& bl) const;
+    bool operator!=(const CBlock& bl) const { return !operator==(bl); }
     // EXISTING_CODE
     friend ostream& operator<<(ostream& os, const CBlock& item);
 
@@ -104,6 +111,7 @@ inline void CBlock::Init(void) {
     miner = "";
     difficulty = 0;
     price = 0.0;
+    finalized = 0;
     timestamp = 0;
     transactions.Clear();
 
@@ -124,6 +132,7 @@ inline void CBlock::Copy(const CBlock& bl) {
     miner = bl.miner;
     difficulty = bl.difficulty;
     price = bl.price;
+    finalized = bl.finalized;
     timestamp = bl.timestamp;
     transactions = bl.transactions;
 
@@ -151,6 +160,20 @@ extern SFArchive& operator>>(SFArchive& archive, CBlock& blo);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
+inline blknum_t bnFromPath(const SFString& path) {
+    SFString p = path.Substitute(".bin","");
+    p.Reverse(); p = nextTokenClear(p, '/'); p.Reverse();
+    return toUnsigned(p);
+}
+
+//---------------------------------------------------------------------------
+inline bool isFinal(timestamp_t ts) {
+    SFTime now = Now();
+    // Ten minutes is long enough for a block to be final (three minutes, actually, but we're conservative)
+    return (toTimestamp(now) - ts) > (60 * 10);
+}
+extern bool isPotentialAddr(SFUintBN test, SFAddress& addrOut);
+extern void processPotentialAddrs(blknum_t bn, blknum_t tr, const SFString& potList, ADDRESSFUNC func, void *data);
 // EXISTING_CODE
 }  // namespace qblocks
 

@@ -9,8 +9,8 @@
 #include "tokenlib.h"
 #include "options.h"
 
-void reportByToken(const COptions& options);
-void reportByAccount(const COptions& options);
+void reportByToken(COptions& options);
+void reportByAccount(COptions& options);
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
@@ -39,7 +39,7 @@ int main(int argc, const char *argv[]) {
 }
 
 //--------------------------------------------------------------
-void reportByToken(const COptions& options) {
+void reportByToken(COptions& options) {
 
     SFUintBN totalVal = 0;
     uint64_t nAccts = countOf('|', options.holders) + 1;
@@ -117,7 +117,7 @@ void reportByToken(const COptions& options) {
 }
 
 //--------------------------------------------------------------
-void reportByAccount(const COptions& options) {
+void reportByAccount(COptions& options) {
 
     SFUintBN totalVal = 0;
     uint64_t nAccts = countOf('|', options.holders) + 1;

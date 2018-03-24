@@ -39,7 +39,7 @@ public:
 
     // EXISTING_CODE
     CInfix(const SFString& _key, CTreeNode* _next) : next(_next) {
-        prefix = _key;
+        prefixS = _key;
     }
     SFString at(const SFString& _key) const override;
     CTreeNode* insert(const SFString& _key, const SFString& _value) override;

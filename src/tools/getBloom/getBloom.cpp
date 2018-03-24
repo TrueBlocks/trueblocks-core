@@ -97,6 +97,7 @@ SFString doOneBloom(uint64_t num, const COptions& opt) {
             queryBlock(gold, numStr, true, false);
             if (/* DISABLES CODE */ (false)) { // turn this on to force a write of the block to the disc
                 SFString fileName = getBinaryFilename(gold.blockNumber);
+                gold.finalized = isFinal(gold.timestamp);
                 writeToBinary(gold, fileName);
             }
         }

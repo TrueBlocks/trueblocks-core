@@ -38,13 +38,12 @@ extern void registerQuitHandler(QUITHANDLER qh);
         CAbi::registerClass();
         CFunction::registerClass();
         CParameter::registerClass();
-        CAccount::registerClass();
         CRPCResult::registerClass();
         CNameValue::registerClass();
         CAccountName::registerClass();
         CAcctCacheItem::registerClass();
 
-        if (sourceIn != "remote" || sourceIn != "local")
+        if (sourceIn != "remote" && sourceIn != "local" && sourceIn != "ropsten")
             getCurlContext()->source = "binary";
         else
             getCurlContext()->source = sourceIn;
@@ -87,9 +86,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
 
     //-------------------------------------------------------------------------
     bool getTransaction(CTransaction& trans, const SFHash& blockHash, txnum_t txID) {
-        SFUintBN t(txID);
-        SFString ts = to_hex(t).c_str();
-        getObjectViaRPC(trans, "eth_getTransactionByBlockHashAndIndex", "[\"" + fixHash(blockHash) +"\",\"0x" + ts + "\"]");
+        getObjectViaRPC(trans, "eth_getTransactionByBlockHashAndIndex", "[\"" + fixHash(blockHash) +"\",\"" + toHex(txID) + "\"]");
         trans.finishParse();
         return true;
     }
@@ -102,30 +99,30 @@ extern void registerQuitHandler(QUITHANDLER qh);
             if (txID < block.transactions.getCount())
             {
                 trans = block.transactions[(uint32_t)txID];
+                trans.pBlock = NULL; // otherwise, it's pointing to a dead pointer
                 return true;
             }
             // fall through to node
         }
 
-        SFUintBN h(blockNum);
-        SFUintBN t(txID);
-        SFString hs = to_hex(h).c_str();
-        SFString ts = to_hex(t).c_str();
-        getObjectViaRPC(trans, "eth_getTransactionByBlockNumberAndIndex", "[\"0x" + hs +"\",\"0x" + ts + "\"]");
+        getObjectViaRPC(trans, "eth_getTransactionByBlockNumberAndIndex", "[\"" + toHex(blockNum) +"\",\"" + toHex(txID) + "\"]");
         trans.finishParse();
         return true;
     }
 
     //-------------------------------------------------------------------------
     bool getReceipt(CReceipt& receipt, const SFHash& txHash) {
+        receipt = CReceipt();
         getObjectViaRPC(receipt, "eth_getTransactionReceipt", "[\"" + fixHash(txHash) + "\"]");
         return true;
     }
 
     //--------------------------------------------------------------
     void getTraces(CTraceArray& traces, const SFHash& hash) {
+
         SFString trace;
         queryRawTrace(trace, hash);
+
         CRPCResult generic;
         char *p = cleanUpJson((char*)(const char*)trace);
         generic.parseJson(p);
@@ -165,7 +162,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
             }
 
             HIDE_FIELD(CTransaction, "receipt");
-            getObjectViaRPC(block, "eth_getBlockByNumber", "["+quote(asStringU(num))+",true]");
+            getObjectViaRPC(block, "eth_getBlockByNumber", "["+quote(toHex(num))+",true]");
         }
 
         // If there are no transactions, we do not have to trace and we want to tell the caller that
@@ -209,7 +206,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
         if (isHash(datIn)) {
             blockStr = callRPC("eth_getBlockByHash", "["+quote(datIn)+","+(hashesOnly?"false":"true")+"]", true);
         } else {
-            blockStr = callRPC("eth_getBlockByNumber", "["+quote(datIn)+","+(hashesOnly?"false":"true")+"]", true);
+            blockStr = callRPC("eth_getBlockByNumber", "["+quote(toHex(datIn))+","+(hashesOnly?"false":"true")+"]", true);
         }
         return true;
     }
@@ -237,16 +234,10 @@ extern void registerQuitHandler(QUITHANDLER qh);
     }
 
     //-------------------------------------------------------------------------
-    SFString hexxy(uint64_t x) {
-        SFUintBN bn = x;
-        return toLower(SFString(to_hex(bn).c_str()));
-    }
-
-    //-------------------------------------------------------------------------
     bool queryRawLogs(SFString& results, const SFAddress& addr, uint64_t fromBlock, uint64_t toBlock) {
-        SFString data = "[{\"fromBlock\":\"0x[START]\",\"toBlock\":\"0x[STOP]\", \"address\": \"[ADDR]\"}]";
-        data.Replace("[START]", hexxy(fromBlock));
-        data.Replace("[STOP]",  hexxy(toBlock));
+        SFString data = "[{\"fromBlock\":\"[START]\",\"toBlock\":\"[STOP]\", \"address\": \"[ADDR]\"}]";
+        data.Replace("[START]", toHex(fromBlock));
+        data.Replace("[STOP]",  toHex(toBlock));
         data.Replace("[ADDR]",  fromAddress(addr));
         results = callRPC("eth_getLogs", data, true);
         return true;
@@ -267,9 +258,19 @@ extern void registerQuitHandler(QUITHANDLER qh);
 
     //-------------------------------------------------------------------------
     uint64_t getLatestBlockFromClient(void) {
-        CBlock block;
-        getObjectViaRPC(block, "eth_getBlockByNumber", "[\"latest\", false]");
-        return block.blockNumber;
+        SFString ret = callRPC("eth_blockNumber", "[]", false);
+        uint64_t retN = toUnsigned(ret);
+        if (retN == 0) {
+            // Try a different way just in case. Geth, for example, doesn't
+            // return blockNumber until the chain is synced (Parity may--don't know
+            // We fall back to this method just in case
+            SFString str = callRPC("eth_syncing", "[]", false);
+            str.Replace("currentBlock:","|");
+            nextTokenClear(str,'|');
+            str = nextTokenClear(str,',');
+            retN = toUnsigned(str);
+        }
+        return retN;
     }
 
     //--------------------------------------------------------------------------
@@ -282,7 +283,8 @@ extern void registerQuitHandler(QUITHANDLER qh);
         if (!pRes) {
             // We're reading so okay not to wait
             if (!fullBlocks.Lock(fullBlockIndex, binaryReadOnly, LOCK_WAIT)) {
-                cerr << "getLatestBlockFromCache failed: " << fullBlocks.LockFailure() << "\n";
+                if (!isTestMode())
+                    cerr << "getLatestBlockFromCache failed: " << fullBlocks.LockFailure() << "\n";
                 return ret;
             }
             pRes = &fullBlocks;
@@ -315,7 +317,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
     SFUintBN getBalance(const SFString& addr, blknum_t blockNum, bool isDemo) {
         SFString a = addr.substr(2);
         a = padLeft(a,40,'0');
-        SFString ret = callRPC("eth_getBalance", "[\"0x" + a +"\","+quote(asStringU(blockNum))+"]", false);
+        SFString ret = callRPC("eth_getBalance", "[\"0x" + a +"\",\""+toHex(blockNum)+"\"]", false);
         return toWei(ret);
     }
 
@@ -331,9 +333,62 @@ extern void registerQuitHandler(QUITHANDLER qh);
         SFString cmd = "[{\"to\": \"[TOKEN]\", \"data\": \"0x70a08231[HOLDER]\"}, \"[BLOCK]\"]";
         cmd.Replace("[TOKEN]",  t);
         cmd.Replace("[HOLDER]", h);
-        cmd.Replace("[BLOCK]",  asStringU(blockNum));
+        cmd.Replace("[BLOCK]",  toHex(blockNum));
 
         return toWei(callRPC("eth_call", cmd, false));
+    }
+
+    //-------------------------------------------------------------------------
+    bool hasTraceAt(const SFString& hashIn, uint32_t where) {
+        SFString cmd = "[\"" + fixHash(hashIn) +"\",[\"" + toHex(where) + "\"]]";
+        SFString ret = callRPC("trace_get", cmd.c_str(), true);
+        return ret.find("blockNumber") != NOPOS;
+    }
+
+    //--------------------------------------------------------------
+    uint32_t getTraceCount_binarySearch(const SFHash& hashIn, uint32_t first, uint32_t last) {
+        if (last > first) {
+            uint32_t mid = first + ((last - first) / 2);
+            bool atMid  = hasTraceAt(hashIn, mid);
+            bool atMid1 = hasTraceAt(hashIn, mid + 1);
+            if (atMid && !atMid1)
+                return mid; // found it
+            if (!atMid) {
+                // we're too high, so search below
+                return getTraceCount_binarySearch(hashIn, first, mid-1);
+            }
+            // we're too low, so search above
+            return getTraceCount_binarySearch(hashIn, mid+1, last);
+        }
+        return first;
+    }
+
+    // https://ethereum.stackexchange.com/questions/9883/why-is-my-node-synchronization-stuck-extremely-slow-at-block-2-306-843/10453
+    //--------------------------------------------------------------
+    uint32_t getTraceCount(const SFHash& hashIn) {
+        // handle most likely cases linearly
+        for (uint32_t n = 2 ; n < 8 ; n++) {
+            if (!hasTraceAt(hashIn, n)) {
+                if (verbose>2) cerr << "tiny trace" << (n-1) << "\n";
+                return n-1;
+            }
+        }
+
+        // binary search the rest
+        uint32_t ret = 0;
+        if (!hasTraceAt(hashIn, (1<<8))) { // small?
+            ret = getTraceCount_binarySearch(hashIn, 0, (1<<8)-1);
+            if (verbose>2) cerr << "small trace" << ret << "\n";
+            return ret;
+        } else if (!hasTraceAt(hashIn, (1<<16))) { // medium?
+            ret = getTraceCount_binarySearch(hashIn, 0, (1<<16)-1);
+            if (verbose>2) cerr << "medium trace" << ret << "\n";
+            return ret;
+        } else {
+            ret = getTraceCount_binarySearch(hashIn, 0, (1<<30)); // TODO: is this big enough?
+            if (verbose>2) cerr << "large trace" << ret << "\n";
+        }
+        return ret;
     }
 
     //-------------------------------------------------------------------------
@@ -617,17 +672,20 @@ extern void registerQuitHandler(QUITHANDLER qh);
 
     //-------------------------------------------------------------------------
     bool forEveryBloomFile(FILEVISITOR func, void *data, uint64_t start, uint64_t count, uint64_t skip) {
-        if (start == 0 || count == (uint64_t)-1) { // visit everything since we're given the default
-            forEveryFileInFolder(bloomFolder, func, data);
-            return true;
-        }
 
-        // visit only the folder the user tells us to visit
+        // If the caller does not specify start/end block numbers, visit every bloom file
+        if (start == 0 || count == (uint64_t)-1)
+            return forEveryFileInFolder(bloomFolder, func, data);
+
+        // The user is asking for certain files and not others. The bext we can do is limit which folders
+        // to visit, which we do here. Caller must protect against too early or too late files by number.
+        // Use interger math to figure out which folders to visit
         blknum_t st = (start / 1000) * 1000;
         blknum_t ed = ((start+count+1000) / 1000) * 1000;
         for (blknum_t b = st ; b < ed ; b += 1000) {
             SFString path = getBinaryPath(b).Substitute("/blocks/","/blooms/");
-            forEveryFileInFolder(path, func, data);
+            if (!forEveryFileInFolder(path, func, data))
+                return false;
         }
         return true;
     }
@@ -646,6 +704,42 @@ extern void registerQuitHandler(QUITHANDLER qh);
                 return false;
         }
 
+        return true;
+    }
+
+    //-------------------------------------------------------------------------
+    bool forEveryTraceInBlock(TRACEVISITFUNC func, void *data, const CBlock& block) {
+        for (uint32_t i = 0 ; i < block.transactions.getCount() ; i++) {
+            if (!forEveryTraceInTransaction(func, data, block.transactions[i]))
+                return false;
+        }
+        return true;
+    }
+
+    //-------------------------------------------------------------------------
+    bool forEveryLogInTransaction(LOGVISITFUNC func, void *data, const CTransaction& trans) {
+
+        if (!func)
+            return false;
+
+//        cout << "Visiting " << trans.receipt.logs.getCount() << " logs\n";
+//        cout.flush();
+        for (uint32_t i = 0 ; i < trans.receipt.logs.getCount() ; i++) {
+            CLogEntry log = trans.receipt.logs[i];
+            if (!(*func)(log, data))
+                return false;
+        }
+        return true;
+    }
+
+    //-------------------------------------------------------------------------
+    bool forEveryLogInBlock(LOGVISITFUNC func, void *data, const CBlock& block) {
+//        cout << "Visiting " << block.transactions.getCount() << " transactions\n";
+//        cout.flush();
+        for (uint32_t i = 0 ; i < block.transactions.getCount() ; i++) {
+            if (!forEveryLogInTransaction(func, data, block.transactions[i]))
+                return false;
+        }
         return true;
     }
 
@@ -696,6 +790,8 @@ extern void registerQuitHandler(QUITHANDLER qh);
             CBlock block;
             trans.pBlock = &block;
             getBlock(block, trans.blockNumber);
+            if (block.transactions.getCount() > trans.transactionIndex)
+                trans.isError = block.transactions[(uint32_t)trans.transactionIndex].isError;
             getReceipt(trans.receipt, trans.getValueByName("hash"));
             trans.finishParse();
             if (!isHash(trans.hash)) {
@@ -737,5 +833,8 @@ extern void registerQuitHandler(QUITHANDLER qh);
             blockCache += "/";
         return blockCache + _part;
     }
+
+    //--------------------------------------------------------------------------
+    SFUintBN weiPerEther = (modexp(10,9,10000000000)*modexp(10,9,10000000000));
 
 }  // namespace qblocks

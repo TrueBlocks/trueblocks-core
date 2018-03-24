@@ -23,6 +23,8 @@ namespace qblocks {
     #define LK_NO_REMOVE_LOCK      4
 
     //----------------------------------------------------------------------
+    extern SFString manageRemoveList(const SFString& filename="");
+    extern uint32_t quitCount(uint32_t s=0);
     bool CSharedResource::g_locking = true;
 
     //----------------------------------------------------------------------
@@ -472,13 +474,6 @@ namespace qblocks {
         return true;
     }
 
-    //----------------------------------------------------------------------
-    size_t appendToAsciiFile(const SFString& fileName, const SFString& addContents) {
-        SFString existing = asciiFileToString(fileName);
-        stringToAsciiFile(fileName, existing + addContents);
-        return true;
-    }
-
     //------------------------------------------------------------------------------------------------------------
     void writeTheCode(const SFString& fileName, const SFString& codeOutIn, const SFString& ns, bool spaces) {
         SFString codeOut = codeOutIn;
@@ -525,31 +520,70 @@ namespace qblocks {
     }
 
     //-----------------------------------------------------------------------
-    void defaultQuitHandler(int s) {
-        if (s != 1 && s != -1)
-            cout << "Caught signal " << s << "\n";
+    static bool sectionLocked = false;
+    void lockSection(bool lock) {
+        sectionLocked = lock;
+    }
+
+    //-----------------------------------------------------------------------
+    uint32_t quitCount(uint32_t s) {
+        static uint32_t cnt = 0;
+        if (cnt && sectionLocked) // ignore if we're locked
+            return false;
+        cnt += s;
+        return cnt;
+    }
+
+    //-----------------------------------------------------------------------
+    bool shouldQuit(void) {
+        bool ret = quitCount() > 1;
+        if (ret) {
+            cout << "\nFinishing work...Hit Cntl+C again to quit...\n";
+            cleanFileLocks();
+            cout.flush();
+        }
+        return ret;
+    }
+
+    //-----------------------------------------------------------------------
+    void cleanFileLocks(void) {
         SFString list = manageRemoveList();
         while (!list.empty()) {
             SFString file = nextTokenClear(list, '|');
-            cout << "Removing file: " << file << "\n"; cout.flush();
             removeFile(file);
+            cerr << "Removing file: " << file << "\n";
+            cerr.flush();
         }
-        if (s != -1)
-            exit(1);
+        manageRemoveList("clear");
+    }
+
+    //-----------------------------------------------------------------------
+    void defaultQuitHandler(int signum) {
+        if (quitCount(1) > 2) {
+            cleanFileLocks();
+            if (signum != -1)
+                exit(1);
+        }
     }
 
     //-----------------------------------------------------------------------
     void registerQuitHandler(QUITHANDLER qh) {
+
         struct sigaction sigIntHandler;
         sigIntHandler.sa_handler = qh;
-        sigemptyset(&sigIntHandler.sa_mask);
+        sigemptyset (&sigIntHandler.sa_mask);
         sigIntHandler.sa_flags = 0;
-        sigaction(SIGINT, &sigIntHandler, NULL);
+        sigaction (SIGINT,  &sigIntHandler, NULL);
+        sigaction (SIGTERM, &sigIntHandler, NULL);
     }
 
     //-----------------------------------------------------------------------
     SFString manageRemoveList(const SFString& filename) {
         static SFString theList;
+        if (filename == "clear") {
+            theList = "";
+            return "";
+        }
 
         SFString fn = filename.Substitute("r:", "");;
         if (!fn.empty()) {

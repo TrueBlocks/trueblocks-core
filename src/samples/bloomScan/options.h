@@ -16,6 +16,7 @@ public:
     blknum_t stop;
     blknum_t skip;
     blknum_t nBlocks;
+    bool asData;
     SFString mode;
 
 	        COptions  (void);

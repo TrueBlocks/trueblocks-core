@@ -9,19 +9,19 @@
 #include "etherlib.h"
 
 //-----------------------------------------------------------------------------
-class COptions : public COptionsBase {
+class COptions : public CBlockOptions {
 public:
     bool isCheck;
     bool isRaw;
     bool isCache;
-    bool terse;
+    bool hashes;
+    bool traces;
     bool force;
     bool normalize;
     bool silent;
     int quiet;
     SFString format;
     bool priceBlocks;
-    COptionsBlockList blocks;
 
     COptions(void);
     ~COptions(void);
@@ -30,7 +30,6 @@ public:
     bool parseArguments(SFString& command) override;
     void Init(void) override;
     bool isMulti(void) const;
-    SFString getBlockNumList(void) const;
 };
 
 //-----------------------------------------------------------------------------

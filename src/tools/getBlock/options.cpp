@@ -11,8 +11,10 @@
 CParams params[] = {
     CParams("~block_list",       "a space-separated list of one or more blocks to retrieve"),
     CParams("-raw",              "pull the block data from the running Ethereum node (no cache)"),
-    CParams("-terse",            "display only transaction hashes, default is to display full transaction details"),
+    CParams("-h(a)shes",         "display only transaction hashes, default is to display full transaction detail"),
+//    CParams("-trac(e)s",         "include transaction traces in the export"),
     CParams("-check",            "compare results between qblocks and Ethereum node, report differences, if any"),
+    CParams("-latest",           "display the latest blocks at both the node and the cache"),
     CParams("@force",            "force a re-write of the block to the cache"),
     CParams("@quiet",            "do not print results to screen, used for speed testing and data checking"),
     CParams("@source:[c|r]",     "either :c(a)che or :(r)aw, source for data retrival. (shortcuts -c = qblocks, -r = node)"),
@@ -30,6 +32,7 @@ bool COptions::parseArguments(SFString& command) {
 
     Init();
     blknum_t latestBlock = getLatestBlockFromClient();
+    bool isLatest = false;
     while (!command.empty()) {
 
         SFString arg = nextTokenClear(command, ' ');
@@ -70,6 +73,23 @@ bool COptions::parseArguments(SFString& command) {
         } else if (arg == "--normalize") {
             normalize = true;
 
+        } else if (arg == "-l" || arg == "--latest") {
+            uint64_t lastUpdate = toUnsigned(asciiFileToString("/tmp/getBlock_junk.txt"));
+            uint64_t cache=NOPOS, client=NOPOS;
+            getLatestBlocks(cache, client);
+            uint64_t diff = cache > client ? 0 : client - cache;
+            stringToAsciiFile("/tmp/getBlock_junk.txt", asStringU(diff)); // for next time
+
+            cout << "Latest block in cache:  " << cYellow << (isTestMode() ? "--cache--"  : padNum8T(cache))  << cOff << "\n";
+            cout << "Latest block at client: " << cYellow << (isTestMode() ? "--client--" : padNum8T(client)) << cOff << "\n";
+            cout << "Difference:             " << cYellow << (isTestMode() ? "--diff--"   : padNum8T(diff));
+            if (!isTestMode() && lastUpdate) {
+                uint64_t diffDiff = lastUpdate - diff;
+                cout << " (+" << diffDiff << ")";
+            }
+            cout << cOff << "\n";
+            isLatest = true;
+
         } else if (arg.startsWith("-s:") || arg.startsWith("--source:")) {
             SFString mode = arg.Substitute("-s:","").Substitute("--source:","");
             if (mode == "r" || mode == "raw") {
@@ -87,8 +107,11 @@ bool COptions::parseArguments(SFString& command) {
                 return usage("Invalide source. Must be either '(r)aw' or '(c)ache'. Quitting...");
             }
 
-        } else if (arg == "-t" || arg == "--terse") {
-            terse = true;
+        } else if (arg == "-a" || arg == "--hashes") {
+            hashes = true;
+
+        } else if (arg == "-e" || arg == "--traces") {
+            traces = true;
 
         } else if (arg == "-q" || arg == "--quiet") {
             quiet++; // if both --check and --quiet are present, be very quiet...
@@ -168,10 +191,10 @@ bool COptions::parseArguments(SFString& command) {
         }
     }
 
-    if (terse && !isRaw)
-        return usage("The --terse option works only with --raw. Quitting...");
+    if (hashes && !isRaw)
+        return usage("The --hashes option works only with --raw. Quitting...");
 
-    if (!blocks.hasBlocks())
+    if (!blocks.hasBlocks() && !isLatest)
         return usage("You must specify at least one block.");
 
     format = getGlobalConfig()->getDisplayStr(false, "");
@@ -190,7 +213,8 @@ void COptions::Init(void) {
 
     isCheck     = false;
     isRaw       = false;
-    terse       = false;
+    hashes      = false;
+    traces      = false;
     force       = false;
     normalize   = false;
     isCache     = false;
@@ -228,9 +252,7 @@ bool COptions::isMulti(void) const {
 SFString COptions::postProcess(const SFString& which, const SFString& str) const {
 
     if (which == "options") {
-        return
-            str.Substitute("block_list", "<block> [block...]")
-                .Substitute("-l|", "-l fn|");
+        return str.Substitute("block_list", "<block> [block...]");
 
     } else if (which == "notes" && (verbose || COptions::isReadme)) {
 
@@ -243,22 +265,3 @@ SFString COptions::postProcess(const SFString& which, const SFString& str) const
     return str;
 }
 
-//--------------------------------------------------------------------------------
-SFString COptions::getBlockNumList(void) const {
-    SFString ret;
-    SFString list = blocks.toString();
-    while (!list.empty()) {
-        SFString val = nextTokenClear(list, '|');
-        blknum_t bn = toLongU(val);
-        if (isHash(val)) {
-            CBlock block;
-            if (!getBlock(block, val)) {
-                cerr << "Block hash '" << val << "' does not appear to be a valid block hash. Quitting...";
-                exit(0);
-            }
-            bn = block.blockNumber;
-        }
-        ret += asStringU(bn) + "|";
-    }
-    return ret;
-}

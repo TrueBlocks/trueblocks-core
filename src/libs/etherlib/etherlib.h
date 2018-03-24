@@ -7,10 +7,10 @@
  * The LICENSE at the root of this repo details your rights (if any)
  *------------------------------------------------------------------------*/
 
+#include "known_blocks.h"
 #include "abilib.h"
 #include "block.h"
 #include "transaction.h"
-#include "account.h"
 #include "receipt.h"
 #include "logentry.h"
 #include "webapi.h"
@@ -27,5 +27,7 @@
 #include "balhistory.h"
 #include "acctcacheitem.h"
 #include "blockoptions.h"
+#include "abirecord.h"
 
 using namespace qblocks;
+
