@@ -13,5 +13,10 @@ namespace qblocks {
 
 #define byzantiumBlock     4370000
 
+//-----------------------------------------------------------------------
+inline bool ddosRange(blknum_t bn) {
+    return (bn >= 2283440 && bn <= 2718436);
+}
+
 } // namespace qblocks
 

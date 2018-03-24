@@ -168,8 +168,8 @@ namespace qblocks {
         SFString tt('-',25);
         tt += "\n";
         cout << tt << s << "\n" << tt;
-        cout << tt << ss.substr(ss.find("{"), 300)) << "\n" << tt;
-        cout << tt << ss.substr(substr.length()-300,300) << "\n" << tt;
+        cout << tt << ss.substr(ss.find("{"),   300) << "\n" << tt;
+        cout << tt << ss.substr(ss.length()-300,300) << "\n" << tt;
         cout.flush();
         tbs+="\t";
 #endif

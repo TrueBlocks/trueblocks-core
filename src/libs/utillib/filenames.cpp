@@ -19,19 +19,21 @@ namespace qblocks {
     }
 
     //----------------------------------------------------------------------------------
-    void forAllFiles(const SFString& mask, FILEVISITOR func, void *data ) {
+    bool forAllFiles(const SFString& mask, FILEVISITOR func, void *data ) {
         glob_t globBuf;
         glob((const char *)mask, GLOB_MARK, globErrFunc, &globBuf);
-        bool done = false;
-        for (size_t i = 0 ; i < globBuf.gl_pathc && !done ; i++)
+        bool quitEarly = false;
+        for (size_t i = 0 ; i < globBuf.gl_pathc && !quitEarly ; i++)
             if (!(func)(globBuf.gl_pathv[i], data))
-                done = true;
+                quitEarly = true;
         globfree(&globBuf);
+        return !quitEarly; // if we quit early, we want to return false, true if we quit naturally
     }
 
     //----------------------------------------------------------------------------------
-    void forEveryFileInFolder(const SFString& mask, FILEVISITOR func, void *data) {
-        forAllFiles(mask, func, data);
+    bool forEveryFileInFolder(const SFString& mask, FILEVISITOR func, void *data) {
+        // if we quit after visiting all files, return true.
+        return forAllFiles(mask, func, data);
     }
 
     //--------------------------------------------------------------------------------

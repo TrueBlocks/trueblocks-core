@@ -44,8 +44,8 @@ namespace qblocks {
 
     //------------------------------------------------------------------
     extern int globErrFunc(const char *epath, int eerrno);
-    extern void forAllFiles(const SFString& mask, FILEVISITOR func, void *data);
-    extern void forEveryFileInFolder(const SFString& mask, FILEVISITOR func, void *data);
+    extern bool forAllFiles(const SFString& mask, FILEVISITOR func, void *data);
+    extern bool forEveryFileInFolder(const SFString& mask, FILEVISITOR func, void *data);
     extern SFString getHomeFolder(void);
 
     //-------------------------------------------------------------------------

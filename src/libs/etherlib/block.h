@@ -22,7 +22,8 @@ typedef SFList<CBlock*>             CBlockList;
 typedef SFUniqueList<CBlock*>       CBlockListU;
 
 // EXISTING_CODE
-typedef bool (*ADDRESSFUNC)(const SFAddress& addr, void *data);
+typedef bool (*ADDRESSFUNC)(blknum_t bn, blknum_t tr, const SFAddress& addr, void *data);
+typedef bool (*TRANSFUNC)(const CTransaction *trans, void *data);
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
@@ -51,12 +52,12 @@ public:
     const CBaseNode *getObjectAt(const SFString& fieldName, uint32_t index) const override;
 
     // EXISTING_CODE
-    bool forEveryAddress      (ADDRESSFUNC func, void *data);
-    bool forEveryUniqueAddress(ADDRESSFUNC func, void *data);
-    // EXISTING_CODE
-    friend ostream& operator<<(ostream& os, const CBlock& item);
+    bool forEveryAddress      (ADDRESSFUNC func, TRANSFUNC filt, void *data);
+    bool forEveryUniqueAddress(ADDRESSFUNC func, TRANSFUNC filt, void *data);
     bool operator==(const CBlock& bl) const;
     bool operator!=(const CBlock& bl) const { return !operator==(bl); }
+    // EXISTING_CODE
+    friend ostream& operator<<(ostream& os, const CBlock& item);
 
 protected:
     void Clear(void);
@@ -172,7 +173,7 @@ inline bool isFinal(timestamp_t ts) {
     return (toTimestamp(now) - ts) > (60 * 10);
 }
 extern bool isPotentialAddr(SFUintBN test, SFAddress& addrOut);
-extern void processPotentialAddrs(const SFString& potList, ADDRESSFUNC func, void *data);
+extern void processPotentialAddrs(blknum_t bn, blknum_t tr, const SFString& potList, ADDRESSFUNC func, void *data);
 // EXISTING_CODE
 }  // namespace qblocks
 

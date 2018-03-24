@@ -12,6 +12,8 @@
 #include "abirecord.h"
 #include "etherlib.h"
 
+namespace qblocks {
+
 //---------------------------------------------------------------------------
 IMPLEMENT_NODE(CABIRecord, CBaseNode);
 
@@ -272,4 +274,5 @@ ostream& operator<<(ostream& os, const CABIRecord& item) {
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
+}  // namespace qblocks
 

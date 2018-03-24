@@ -355,7 +355,7 @@ ostream& operator<<(ostream& os, const CBranch& item) {
                 auto x = nodes[nn];
                 ASSERT(x);
                 // include in child
-                x->prefix = idex(n) + x->prefix;
+                x->prefixS = idex(n) + x->prefixS;
                 nodes[nn] = NULL;
                 delete this;
                 return x;
@@ -386,15 +386,17 @@ ostream& operator<<(ostream& os, const CBranch& item) {
         CVisitData *vd = reinterpret_cast<CVisitData*>(data);
         uint32_t save = vd->type;
         vd->type = T_BRANCH;
-        vd->cnt = 0;
-        //        vd->strs = vd->strs + branchValue + "+";
-        vd->strs = vd->strs + "+";
+        vd->counter = 0;
+        vd->strs = vd->strs + branchValue + "+";
+        //vd->strs = vd->strs + "+";
         (*func)(this, data);
         for (uint32_t i = 0; i < 16; ++i) {
             if (nodes[i]) {
+                vd->level++;
                 vd->strs = vd->strs + "-" + idex((char)i);
                 nodes[i]->visitItems(func, data);
                 nextTokenClearReverse(vd->strs, '-');
+                vd->level--;
             }
         }
         nextTokenClearReverse(vd->strs, '+');

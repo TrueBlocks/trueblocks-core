@@ -12,6 +12,8 @@
  */
 #include "etherlib.h"
 
+namespace qblocks {
+
 //--------------------------------------------------------------------------
 class CABIRecord;
 typedef SFArrayBase<CABIRecord>         CABIRecordArray;
@@ -144,4 +146,5 @@ extern SFArchive& operator>>(SFArchive& archive, CABIRecord& abi);
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
+}  // namespace qblocks
 

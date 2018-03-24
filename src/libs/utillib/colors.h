@@ -57,6 +57,7 @@ namespace qblocks {
     extern void colorsOff(void);
     extern void colorsOn(void);
     extern void colorsDim(void);
+    extern bool colorsDisabled(void);
 
     //-----------------------------------------------------------------------
     inline SFString convertColor(const SFString& colorIn) {
