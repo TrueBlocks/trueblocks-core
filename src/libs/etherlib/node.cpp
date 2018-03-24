@@ -38,7 +38,6 @@ extern void registerQuitHandler(QUITHANDLER qh);
         CAbi::registerClass();
         CFunction::registerClass();
         CParameter::registerClass();
-        CAccount::registerClass();
         CRPCResult::registerClass();
         CNameValue::registerClass();
         CAccountName::registerClass();
