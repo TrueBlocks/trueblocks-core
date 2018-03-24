@@ -240,6 +240,7 @@ void CTransaction::registerClass(void) {
     // Add custom fields
     ADD_FIELD(CTransaction, "gasCost", T_WEI, ++fieldNum);
     ADD_FIELD(CTransaction, "function", T_TEXT, ++fieldNum);
+    ADD_FIELD(CTransaction, "articulated", T_TEXT, ++fieldNum);
     ADD_FIELD(CTransaction, "gasUsed", T_GAS, ++fieldNum);
     ADD_FIELD(CTransaction, "date", T_DATE, ++fieldNum);
     ADD_FIELD(CTransaction, "datesh", T_DATE, ++fieldNum);
@@ -249,6 +250,7 @@ void CTransaction::registerClass(void) {
 
     // Hide fields we don't want to show by default
     HIDE_FIELD(CTransaction, "function");
+    HIDE_FIELD(CTransaction, "articulated");
     HIDE_FIELD(CTransaction, "encoding");
     HIDE_FIELD(CTransaction, "gasCost");
     HIDE_FIELD(CTransaction, "isError");
@@ -270,6 +272,13 @@ SFString nextTransactionChunk_custom(const SFString& fieldIn, const void *dataPt
     if (tra) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
+            case 'a':
+                if ( fieldIn % "articulated" ) {
+                    if (tra->function.empty() || tra->function == " ")
+                        return tra->input;
+                    return tra->function;
+                }
+                break;
             case 'c':
                 if ( fieldIn % "contractAddress" ) return fromAddress(tra->receipt.contractAddress);
                 break;
@@ -455,6 +464,8 @@ const CBaseNode *CTransaction::getObjectAt(const SFString& fieldName, uint32_t i
     return NULL;
 }
 
+//---------------------------------------------------------------------------
+// EXISTING_CODE
 #define EQ_TEST(a) { if (test.a != a) { cout << " diff at " << #a << " " << test.a << ":" << a << " "; return false; } }
 //---------------------------------------------------------------------------
 bool CTransaction::operator==(const CTransaction& test) const {
@@ -471,7 +482,7 @@ bool CTransaction::operator==(const CTransaction& test) const {
     EQ_TEST(gas);
     EQ_TEST(gasPrice);
     EQ_TEST(input);
-//    EQ_TEST(isError);
+    EQ_TEST(isError);
     EQ_TEST(isInternal);
     if (test.receipt != receipt)
         return false;
@@ -479,8 +490,6 @@ bool CTransaction::operator==(const CTransaction& test) const {
     return true;
 }
 
-//---------------------------------------------------------------------------
-// EXISTING_CODE
 int sortTransactionsForWrite(const void *rr1, const void *rr2)
 {
     CTransaction *tr1 = (CTransaction*)rr1;
@@ -559,11 +568,10 @@ SFString parse(const SFString& params, int nItems, SFString *types)
             if (len == NOPOS)
                 len = params.length()-start;
             if (t == "string")
-                val = hex2String(params.substr((start+1)*64,len*2)).Substitute("\n","\\n").Substitute("\r","");
+                val = "\"" + hex2String(params.substr((start+1)*64,len*2)).Substitute("\n","\\n").Substitute("\r","").Substitute("\"","\\\"") + "\"";
             else
                 val = "0x"+params.substr((start+1)*64,len*2);
         }
-
         ret += ("|" + val);
     }
     return ret;

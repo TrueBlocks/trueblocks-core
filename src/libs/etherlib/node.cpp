@@ -120,8 +120,10 @@ extern void registerQuitHandler(QUITHANDLER qh);
 
     //--------------------------------------------------------------
     void getTraces(CTraceArray& traces, const SFHash& hash) {
+
         SFString trace;
         queryRawTrace(trace, hash);
+
         CRPCResult generic;
         char *p = cleanUpJson((char*)(const char*)trace);
         generic.parseJson(p);
@@ -366,16 +368,28 @@ extern void registerQuitHandler(QUITHANDLER qh);
     //--------------------------------------------------------------
     uint32_t getTraceCount(const SFHash& hashIn) {
         // handle most likely cases linearly
-        for (uint32_t n = 2 ; n < 8 ; n++)
-            if (!hasTraceAt(hashIn, n))
+        for (uint32_t n = 2 ; n < 8 ; n++) {
+            if (!hasTraceAt(hashIn, n)) {
+                if (verbose>2) cerr << "tiny trace" << (n-1) << "\n";
                 return n-1;
+            }
+        }
 
         // binary search the rest
-        if (!hasTraceAt(hashIn, (1<<8))) // small?
-            return getTraceCount_binarySearch(hashIn, 0, (1<<8)-1);
-        else if (!hasTraceAt(hashIn, (1<<16))) // medium?
-            return getTraceCount_binarySearch(hashIn, 0, (1<<16)-1);
-        return getTraceCount_binarySearch(hashIn, 0, (1<<30)); // TODO: is this big enough?
+        uint32_t ret = 0;
+        if (!hasTraceAt(hashIn, (1<<8))) { // small?
+            ret = getTraceCount_binarySearch(hashIn, 0, (1<<8)-1);
+            if (verbose>2) cerr << "small trace" << ret << "\n";
+            return ret;
+        } else if (!hasTraceAt(hashIn, (1<<16))) { // medium?
+            ret = getTraceCount_binarySearch(hashIn, 0, (1<<16)-1);
+            if (verbose>2) cerr << "medium trace" << ret << "\n";
+            return ret;
+        } else {
+            ret = getTraceCount_binarySearch(hashIn, 0, (1<<30)); // TODO: is this big enough?
+            if (verbose>2) cerr << "large trace" << ret << "\n";
+        }
+        return ret;
     }
 
     //-------------------------------------------------------------------------
@@ -660,11 +674,9 @@ extern void registerQuitHandler(QUITHANDLER qh);
     //-------------------------------------------------------------------------
     bool forEveryBloomFile(FILEVISITOR func, void *data, uint64_t start, uint64_t count, uint64_t skip) {
 
-        // If the caller does not specify start/end block numbers, visita all blooms
-        if (start == 0 || count == (uint64_t)-1) {
-            forEveryFileInFolder(bloomFolder, func, data);
-            return true;
-        }
+        // If the caller does not specify start/end block numbers, visit every bloom file
+        if (start == 0 || count == (uint64_t)-1)
+            return forEveryFileInFolder(bloomFolder, func, data);
 
         // The user is asking for certain files and not others. The bext we can do is limit which folders
         // to visit, which we do here. Caller must protect against too early or too late files by number.
@@ -673,9 +685,9 @@ extern void registerQuitHandler(QUITHANDLER qh);
         blknum_t ed = ((start+count+1000) / 1000) * 1000;
         for (blknum_t b = st ; b < ed ; b += 1000) {
             SFString path = getBinaryPath(b).Substitute("/blocks/","/blooms/");
-            forEveryFileInFolder(path, func, data);
+            if (!forEveryFileInFolder(path, func, data))
+                return false;
         }
-
         return true;
     }
 

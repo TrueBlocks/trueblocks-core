@@ -229,15 +229,15 @@ ostream& operator<<(ostream& os, const CInfix& item) {
     //-----------------------------------------------------------------------------
     SFString CInfix::at(const SFString& _key) const {
         ASSERT(next);
-        return contains(_key) ? next->at(_key.substr(prefix.length())) : "";
+        return contains(_key) ? next->at(_key.substr(prefixS.length())) : "";
     }
 
     //-----------------------------------------------------------------------------
     bool CInfix::contains(const SFString& _key) const {
         size_t l1 = _key.length();
-        size_t l2 = prefix.length();
+        size_t l2 = prefixS.length();
         const char *s1 = (const char*)_key;
-        const char *s2 = (const char*)prefix;
+        const char *s2 = (const char*)prefixS;
         bool found = !memcmp(s1, s2, l2);
 
         return
@@ -249,22 +249,22 @@ ostream& operator<<(ostream& os, const CInfix& item) {
         if (verbose == 2) { cerr << "\tinfix inserting " << _key << " at " << _value << "\n"; }
         ASSERT(_value.length());
         if (contains(_key)) {
-            next = next->insert(_key.substr(prefix.length()), _value);
+            next = next->insert(_key.substr(prefixS.length()), _value);
             return this;
 
         } else {
-            unsigned prefixA = commonPrefix(_key, prefix);
+            unsigned prefixA = commonPrefix(_key, prefixS);
             if (prefixA) {
                 // one infix becomes two infixes, then insert into the second
                 // instead of pop_front()...
-                prefix = prefix.substr(prefixA);
+                prefixS = prefixS.substr(prefixA);
                 return new CInfix(_key.substr(0, prefixA), insert(_key.substr(prefixA), _value));
 
             } else {
                 // split here.
-                auto f = prefix[0];
-                prefix = prefix.substr(1);
-                CTreeNode* n = prefix.empty() ? next : this;
+                auto f = prefixS[0];
+                prefixS = prefixS.substr(1);
+                CTreeNode* n = prefixS.empty() ? next : this;
                 if (n != this) {
                     next = NULL;
                     delete this;
@@ -283,19 +283,19 @@ ostream& operator<<(ostream& os, const CInfix& item) {
             cerr << endl << endl<< endl
             << idnt << SFString('-', 80) << endl
             << idnt << SFString('-', 80) << endl
-            << idnt << "remove infix [" << prefix << "] at [" << _key << "]: ";
+            << idnt << "remove infix [" << prefixS << "] at [" << _key << "]: ";
             idnt+="\t";
         }
 
         if (contains(_key)) {
-            SFString newKey = _key.substr(prefix.length());
+            SFString newKey = _key.substr(prefixS.length());
             next = next->remove(newKey);
             if (auto p = next) {
                 // merge with child...
-                p->prefix = prefix + p->prefix;
+                p->prefixS = prefixS + p->prefixS;
                 next = nullptr;
                 delete this;
-                if (verbose) cerr << idnt << "removed infix replaced with [" << p->prefix << "]";
+                if (verbose) cerr << idnt << "removed infix replaced with [" << p->prefixS << "]";
                 idnt.Replace("\t", "");
                 return p;
             }
@@ -316,12 +316,15 @@ ostream& operator<<(ostream& os, const CInfix& item) {
         ASSERT(func);
         CVisitData *vd = reinterpret_cast<CVisitData*>(data);
         uint32_t save = vd->type;
-        vd->cnt = 0;
+        vd->counter = 0;
         vd->type = T_INFIX;
-        vd->strs = vd->strs + "+" + prefix;
+        vd->strs = vd->strs + "+" + prefixS;
         (*func)(this, data);
-        if (next)
+        if (next) {
+            vd->level++;
             next->visitItems(func, data);
+            vd->level--;
+        }
         nextTokenClearReverse(vd->strs, '+');
         vd->type = save;
         return true;

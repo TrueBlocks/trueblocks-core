@@ -61,11 +61,9 @@ public:
     : id(_id), address(toLower(_addr)), name(_name), color(_color), firstBlock(fB), lastBlock(lB), status("") { }
     SFString displayName(bool terse, uint32_t w1=20, uint32_t w2=8) const { return displayName(true,terse,w1,w2); }
     SFString displayName(bool useColor, bool terse, uint32_t w1=20, uint32_t w2=8) const;
-    bool isTransactionOfInterest(CTransaction *trans, uint64_t nSigs, SFString sigs[]) const;
     SFBloom bloom;
     bool inBlock;
     CBalanceHistoryArray balanceHistory;
-    SFUintBN getNodeBal(blknum_t blockNum);
     // EXISTING_CODE
     friend ostream& operator<<(ostream& os, const CAccountWatch& item);
 
@@ -172,6 +170,7 @@ IMPLEMENT_ARCHIVE_LIST(CAccountWatchList);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
+SFUintBN getNodeBal(CBalanceHistoryArray& history, const SFAddress& addr, blknum_t blockNum);
 // EXISTING_CODE
 }  // namespace qblocks
 

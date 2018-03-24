@@ -51,10 +51,10 @@ public:
     SFHash transactionHash;
     uint32_t transactionIndex;
 #endif
-    // EXISTING_CODE
-    friend ostream& operator<<(ostream& os, const CLogEntry& item);
     bool operator==(const CLogEntry& le) const;
     bool operator!=(const CLogEntry& le) const { return !operator==(le); };
+    // EXISTING_CODE
+    friend ostream& operator<<(ostream& os, const CLogEntry& item);
 
 protected:
     void Clear(void);
