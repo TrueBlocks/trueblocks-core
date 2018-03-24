@@ -1,0 +1,7 @@
+[settings]
+class       = CABIRecord
+fields      = string name|string type|bool constant|uint64 inputcnt|string output0|string abiitem|uint64 count|string hash|string signature
+includes    = etherlib.h
+cIncs       = #include "etherlib.h"
+scope       = extern
+serialize   = true
