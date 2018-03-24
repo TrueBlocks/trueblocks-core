@@ -3,7 +3,7 @@ dataUpgrade 4
 4. Read from new JSON and we're done.
 --------------------------------------------------------------------------------
 className: CNewBlock
-objectSize: 184
+objectSize: 176
 baseClass: CBaseNode
 	fieldName: schema
 	  fieldID: 1001

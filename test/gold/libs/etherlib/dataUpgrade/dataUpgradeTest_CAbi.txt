@@ -2,7 +2,7 @@ dataUpgrade argc: 2 [1:CAbi]
 dataUpgrade CAbi 
 --------------------------------------------------------------------------------
 className: CAbi
-objectSize: 72
+objectSize: 64
 baseClass: CBaseNode
 	fieldName: schema
 	  fieldID: 1001

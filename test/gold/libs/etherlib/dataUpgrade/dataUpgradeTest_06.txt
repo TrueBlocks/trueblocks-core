@@ -3,7 +3,7 @@ dataUpgrade --file:cmd_file1
 0. Read from old binary format and do nothing...
 --------------------------------------------------------------------------------
 className: CBlock
-objectSize: 184
+objectSize: 176
 baseClass: CBaseNode
 	fieldName: schema
 	  fieldID: 1001
@@ -105,7 +105,7 @@ baseClass: CBaseNode
 1. Read from old binary format, write to JSON...
 --------------------------------------------------------------------------------
 className: CBlock
-objectSize: 184
+objectSize: 176
 baseClass: CBaseNode
 	fieldName: schema
 	  fieldID: 1001
@@ -244,7 +244,7 @@ baseClass: CBaseNode
 2. Read from JSON, write to new binary format...
 --------------------------------------------------------------------------------
 className: CBlock
-objectSize: 184
+objectSize: 176
 baseClass: CBaseNode
 	fieldName: schema
 	  fieldID: 1001
@@ -345,7 +345,7 @@ baseClass: CBaseNode
 
 --------------------------------------------------------------------------------
 className: CNewBlock
-objectSize: 184
+objectSize: 176
 baseClass: CBaseNode
 	fieldName: schema
 	  fieldID: 1001
@@ -443,7 +443,7 @@ baseClass: CBaseNode
 3. Read from new binary format, write to JSON...
 --------------------------------------------------------------------------------
 className: CNewBlock
-objectSize: 184
+objectSize: 176
 baseClass: CBaseNode
 	fieldName: schema
 	  fieldID: 1001
@@ -578,7 +578,7 @@ baseClass: CBaseNode
 4. Read from new JSON and we're done.
 --------------------------------------------------------------------------------
 className: CNewBlock
-objectSize: 184
+objectSize: 176
 baseClass: CBaseNode
 	fieldName: schema
 	  fieldID: 1001
@@ -676,7 +676,7 @@ baseClass: CBaseNode
 5. Read from old binary format, using new binary format...
 --------------------------------------------------------------------------------
 className: CNewBlock
-objectSize: 184
+objectSize: 176
 baseClass: CBaseNode
 	fieldName: schema
 	  fieldID: 1001
