@@ -2,7 +2,7 @@ dataUpgrade argc: 2 [1:--file:cmd_file2]
 dataUpgrade --file:cmd_file2 
 --------------------------------------------------------------------------------
 className: CAbi
-objectSize: 72
+objectSize: 64
 baseClass: CBaseNode
 	fieldName: schema
 	  fieldID: 1001
@@ -31,7 +31,7 @@ baseClass: CBaseNode
 
 --------------------------------------------------------------------------------
 className: CFunction
-objectSize: 208
+objectSize: 200
 baseClass: CBaseNode
 	fieldName: schema
 	  fieldID: 1001
@@ -90,7 +90,7 @@ baseClass: CBaseNode
 
 --------------------------------------------------------------------------------
 className: CParameter
-objectSize: 128
+objectSize: 120
 baseClass: CBaseNode
 	fieldName: schema
 	  fieldID: 1001
@@ -142,7 +142,7 @@ baseClass: CBaseNode
 Unknown node of type CAccount not created.
 --------------------------------------------------------------------------------
 className: CAccountWatch
-objectSize: 416
+objectSize: 400
 baseClass: CBaseNode
 	fieldName: schema
 	  fieldID: 1001
@@ -215,7 +215,7 @@ baseClass: CBaseNode
 
 --------------------------------------------------------------------------------
 className: CBalHistory
-objectSize: 96
+objectSize: 88
 baseClass: CBaseNode
 	fieldName: schema
 	  fieldID: 1001
@@ -248,7 +248,7 @@ baseClass: CBaseNode
 
 --------------------------------------------------------------------------------
 className: CBlock
-objectSize: 184
+objectSize: 176
 baseClass: CBaseNode
 	fieldName: schema
 	  fieldID: 1001
@@ -326,7 +326,7 @@ baseClass: CBaseNode
 
 --------------------------------------------------------------------------------
 className: CIncomeStatement
-objectSize: 192
+objectSize: 184
 baseClass: CBaseNode
 	fieldName: schema
 	  fieldID: 1001
@@ -375,7 +375,7 @@ baseClass: CBaseNode
 
 --------------------------------------------------------------------------------
 className: CLogEntry
-objectSize: 120
+objectSize: 112
 baseClass: CBaseNode
 	fieldName: schema
 	  fieldID: 1001
@@ -413,7 +413,7 @@ baseClass: CBaseNode
 
 --------------------------------------------------------------------------------
 className: CPriceQuote
-objectSize: 64
+objectSize: 56
 baseClass: CBaseNode
 	fieldName: schema
 	  fieldID: 1001
@@ -447,7 +447,7 @@ baseClass: CBaseNode
 
 --------------------------------------------------------------------------------
 className: CReceipt
-objectSize: 104
+objectSize: 96
 baseClass: CBaseNode
 	fieldName: schema
 	  fieldID: 1001
@@ -486,7 +486,7 @@ baseClass: CBaseNode
 
 --------------------------------------------------------------------------------
 className: CRPCResult
-objectSize: 112
+objectSize: 104
 baseClass: CBaseNode
 	fieldName: schema
 	  fieldID: 1001
@@ -517,7 +517,7 @@ baseClass: CBaseNode
 
 --------------------------------------------------------------------------------
 className: CTrace
-objectSize: 544
+objectSize: 520
 baseClass: CBaseNode
 	fieldName: schema
 	  fieldID: 1001
@@ -595,7 +595,7 @@ baseClass: CBaseNode
 
 --------------------------------------------------------------------------------
 className: CTraceAction
-objectSize: 248
+objectSize: 240
 baseClass: CBaseNode
 	fieldName: schema
 	  fieldID: 1001
@@ -661,7 +661,7 @@ baseClass: CBaseNode
 
 --------------------------------------------------------------------------------
 className: CTraceResult
-objectSize: 120
+objectSize: 112
 baseClass: CBaseNode
 	fieldName: schema
 	  fieldID: 1001
@@ -698,7 +698,7 @@ baseClass: CBaseNode
 
 --------------------------------------------------------------------------------
 className: CTransaction
-objectSize: 408
+objectSize: 392
 baseClass: CBaseNode
 	fieldName: schema
 	  fieldID: 1001
@@ -836,7 +836,7 @@ baseClass: CBaseNode
 
 --------------------------------------------------------------------------------
 className: CNewBlock
-objectSize: 184
+objectSize: 176
 baseClass: CBaseNode
 	fieldName: schema
 	  fieldID: 1001
@@ -910,7 +910,7 @@ baseClass: CBaseNode
 
 --------------------------------------------------------------------------------
 className: CNewReceipt
-objectSize: 112
+objectSize: 104
 baseClass: CBaseNode
 	fieldName: schema
 	  fieldID: 1001

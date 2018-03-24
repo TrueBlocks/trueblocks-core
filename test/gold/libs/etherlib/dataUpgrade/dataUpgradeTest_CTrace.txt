@@ -2,7 +2,7 @@ dataUpgrade argc: 2 [1:CTrace]
 dataUpgrade CTrace 
 --------------------------------------------------------------------------------
 className: CTrace
-objectSize: 544
+objectSize: 520
 baseClass: CBaseNode
 	fieldName: schema
 	  fieldID: 1001

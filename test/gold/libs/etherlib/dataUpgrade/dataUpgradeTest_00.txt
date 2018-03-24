@@ -3,7 +3,7 @@ dataUpgrade 0
 0. Read from old binary format and do nothing...
 --------------------------------------------------------------------------------
 className: CBlock
-objectSize: 184
+objectSize: 176
 baseClass: CBaseNode
 	fieldName: schema
 	  fieldID: 1001

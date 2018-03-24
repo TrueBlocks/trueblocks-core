@@ -143,7 +143,6 @@ CBaseNode *getNode(const SFString& nodeType) {
     else if (nodeType == "CLeaf")            node = CLeaf::CreateObject();
     else if (nodeType == "CTreeNode")        node = CTreeNode::CreateObject();
     else if (nodeType == "CTreeRoot")        node = CTreeRoot::CreateObject();
-//    else if (nodeType == "CAccount")         node = CAccount::CreateObject();
     else if (nodeType == "CAccountWatch")    node = CAccountWatch::CreateObject();
     else if (nodeType == "CBalHistory")      node = CBalHistory::CreateObject();
     else if (nodeType == "CBlock")           node = CBlock::CreateObject();

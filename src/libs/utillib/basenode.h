@@ -23,8 +23,6 @@ namespace qblocks {
         uint64_t m_showing;
 
     public:
-        const CBaseNode *pParent;
-
         CBaseNode(void);
         virtual ~CBaseNode(void);
 

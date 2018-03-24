@@ -263,7 +263,6 @@ bool CSlurperApp::Slurp(COptions& options, SFString& message) {
         while (p && *p) {
             CTransaction trans;
             uint32_t nFields = 0;
-            trans.pParent = &theAccount;
             p = trans.parseJson(p, nFields);
             if (nFields) {
                 int64_t transBlock = (int64_t)trans.blockNumber;  // NOLINT
@@ -324,7 +323,6 @@ bool CSlurperApp::Filter(COptions& options, SFString& message) {
     theAccount.nVisible = 0;
     for (uint32_t i = 0 ; i < theAccount.transactions.getCount() ; i++) {
         CTransaction *trans = &theAccount.transactions[i];
-        trans->pParent = &theAccount;
 
         // Turn every transaction on and then turning them off if they match the filter.
         trans->m_showing = true;

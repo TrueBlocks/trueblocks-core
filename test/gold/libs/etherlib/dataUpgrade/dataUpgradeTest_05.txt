@@ -3,7 +3,7 @@ dataUpgrade 5
 5. Read from old binary format, using new binary format...
 --------------------------------------------------------------------------------
 className: CNewBlock
-objectSize: 184
+objectSize: 176
 baseClass: CBaseNode
 	fieldName: schema
 	  fieldID: 1001

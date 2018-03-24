@@ -2,7 +2,7 @@ dataUpgrade argc: 2 [1:CTransaction]
 dataUpgrade CTransaction 
 --------------------------------------------------------------------------------
 className: CTransaction
-objectSize: 408
+objectSize: 392
 baseClass: CBaseNode
 	fieldName: schema
 	  fieldID: 1001
