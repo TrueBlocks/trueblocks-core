@@ -1,4 +1,0 @@
-[settings]
-class     = CAccount
-fields    = address addr|string header|string displayString|uint64 pageSize|uint64 lastPage|int64 lastBlock=-1|uint64 nVisible|CTransactionArray transactions
-includes  = abilib.h|transaction.h

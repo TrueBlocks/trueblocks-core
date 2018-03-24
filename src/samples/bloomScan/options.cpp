@@ -14,6 +14,7 @@ CParams params[] = {
     CParams( "~begin",       "block to start with"),
     CParams( "~end",         "block to end on"),
     CParams( "-mode:<mode>", "if not present, display in 'short' mode, otherwise 'full' mode"),
+    CParams( "-data",        "show results as data instead of displaying bloom filters"),
     CParams( "~@skip",       "optional skip step (default 100)"),
     CParams( "",             "Scans blocks looking for saturated bloomFilters.\n"),
 };
@@ -35,6 +36,9 @@ bool COptions::parseArguments(SFString& command) {
             if (arg != "short" && arg != "full")
                 return usage("Mode must be either 'full' or 'short'. Quitting...");
             mode = arg;
+
+        } else if (arg == "-d" || arg == "--data") {
+            asData = true;
 
         } else if (arg.startsWith('-')) {  // do not collapse
             if (!builtInCmd(arg)) {
@@ -80,6 +84,7 @@ void COptions::Init(void) {
     stop  = NOPOS;
     skip  = NOPOS;
     mode  = "short";
+    asData = false;
     optionOff(OPT_VERBOSE);
     minArgs = 2;
 }

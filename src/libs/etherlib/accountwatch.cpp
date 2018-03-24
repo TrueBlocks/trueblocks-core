@@ -103,6 +103,7 @@ bool CAccountWatch::setValueByName(const SFString& fieldName, const SFString& fi
 //---------------------------------------------------------------------------------------------------
 void CAccountWatch::finishParse() {
     // EXISTING_CODE
+    bloom = makeBloom(address);
     // EXISTING_CODE
 }
 
@@ -296,28 +297,8 @@ const CBaseNode *CAccountWatch::getObjectAt(const SFString& fieldName, uint32_t 
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-bool CAccountWatch::getWatch(const CToml& toml, uint32_t n) {
-    id = n;
-    address = fixAddress(toLower(toml.getConfigStr("watches", "address_"+asString(n), "")));
-    if (!isAddress(address))
-        return false;
-    name = toml.getConfigStr("watches", "name_"+asString(n), "");
-    if (name.empty())
-        return false;
-    color = convertColor(toml.getConfigStr("watches", "color_"+asString(n), ""));
-    if (cBlack != "" && color.empty())
-        return false;
-    firstBlock = toml.getConfigInt("watches", "firstBlock_"+asString(n), 0);
-    lastBlock = toml.getConfigInt("watches", "lastBlock_"+asString(n), UINT_MAX);
-    status = toml.getConfigStr("watches", "status_"+asString(n), "");
-    qbis.begBal = toml.getConfigBigInt("watches", "start_bal_"+asString(n), 0);
-    qbis.endBal = qbis.begBal;
-    nodeBal = getBalance(address, firstBlock-1, false);
-    return true;
-}
-
 //---------------------------------------------------------------------------
-SFString CAccountWatch::displayName(bool terse, uint32_t w1, uint32_t w2) const {
+SFString CAccountWatch::displayName(bool useColor, bool terse, uint32_t w1, uint32_t w2) const {
     if (address == "others") {
         return padRight(name, w1 + w2 + 1);
     }
@@ -325,84 +306,43 @@ SFString CAccountWatch::displayName(bool terse, uint32_t w1, uint32_t w2) const 
     if (terse) {
         uint64_t len = name.length();
         uint64_t need = 42 - len - 6; // " (" and "...)"
-        return color + name.substr(0,42-6) + " (" + address.substr(0,need) + "...)" + cOff;
+        return (useColor ? color : "") + name.substr(0,42-6) + " (" + address.substr(0,need) + "...)" + (useColor ? cOff : "");
     }
 
     return padRight(name.substr(0,w1),w1) + " " + address.substr(0,w2) + " ";
 }
 
-//---------------------------------------------------------------------------
-bool CAccountWatch::isTransactionOfInterest(CTransaction *trans, uint64_t nSigs, SFString sigs[]) const {
-    // Assume it's not an internal transaction
-    trans->isInternalTx = false;
+//-----------------------------------------------------------------------
+SFUintBN getNodeBal(CBalanceHistoryArray& history, const SFAddress& addr, blknum_t blockNum) {
 
-    // First, check to see if the transaction is directly 'to' or 'from'
-    if (trans->to.ContainsI(address) || trans->from.ContainsI(address))
-        return true;
-
-    // If this is a contract and this is its birth block, that's a hit
-    if (trans->receipt.contractAddress == address) {
-        trans->isInternalTx = true;
-        return true;
-    }
-
-    // Next, we check the receipt logs to see if the address appears either in
-    // the log's 'address' field or in one of the data items
-    for (uint32_t i = 0 ; i < trans->receipt.logs.getCount() ; i++) {
-        SFString acc = address;
-        CLogEntry *l = reinterpret_cast<CLogEntry *>(&trans->receipt.logs[i]);
-        if (l->address.Contains(acc)) {
-            // If we find a receipt log with an 'address' of interest, this is an
-            // internal transaction that caused our contract to emit an event.
-            trans->isInternalTx = true;
-            return true;
-
-        } else {
-            // Next, left pad the address with '0' to a width of 32 bytes. If
-            // it matches either an indexed topic or one of the 32-byte aligned
-            // data items, we have found a potential match. We cannot be sure this
-            // is a hit, but it most likely is. This may be a false positive.
-            acc = padLeft(acc.Substitute("0x",""), 64).Substitute(' ', '0');
-            if (l->data.ContainsI(acc)) {
-                // Do this first to avoid spinning through event sigs if we
-                // don't have to.
-                trans->isInternalTx = true;
-                return true;
-
-            } else {
-                // If the topic[0] is an event of interest...
-                for (uint64_t q = 0 ; q < nSigs ; q++) {
-                    SFHash tHash = fromTopic(l->topics[0]);
-                    if (tHash % sigs[q]) {
-                        trans->isInternalTx = true;
-                        return true;
-                    }
-                }
-
-                // ...or the address is in the indexed topics or data
-                for (uint32_t j = 1 ; j < l->topics.getCount() ; j++) {
-                    SFHash tHash = fromTopic(l->topics[j]);
-                    if (tHash % acc) {
-                        trans->isInternalTx = true;
-                        return true;
-                    }
+    if (fileExists("./cache/balances.txt")) {
+        if (history.getCount() == 0) { // do not collapse
+            SFString contents = asciiFileToString("./cache/balances.txt");
+            while (!contents.empty()) {
+                SFString line = nextTokenClear(contents, '\n');
+                SFString bn = nextTokenClear(line, '\t');
+                SFString addr1 = nextTokenClear(line, '\t');
+                SFString bal = nextTokenClear(line, '\t');
+                if (addr1 == addr) {
+                    uint32_t cnt = history.getCount();
+                    history[cnt].bn      = toUnsigned(bn);
+                    history[cnt].balance = toWei(bal);
                 }
             }
         }
-    }
 
-    if (deepScan) {
-        CTraceArray traces;
-        getTraces(traces, trans->hash);
-        for (uint32_t i = 0 ; i < traces.getCount() ; i++) {
-            CTraceAction *action = (CTraceAction*)&(traces[i].action);
-            if (action->to % address || action->from % address || action->address % address || action->refundAddress % address) {
-                trans->isInternalTx = true;
-                return true;
+        SFUintBN ret = 0;
+        for (uint32_t i = 0 ; i < history.getCount() ; i++) {
+            if (history[i].bn > blockNum) {
+                return ret;
             }
+            ret = history[i].balance;
+        }
+        if (ret > 0) {
+            return ret;
         }
     }
-    return false;
+    return getBalance(addr, blockNum, false);
 }
 // EXISTING_CODE
 }  // namespace qblocks

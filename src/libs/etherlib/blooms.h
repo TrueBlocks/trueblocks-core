@@ -14,11 +14,14 @@ namespace qblocks {
 
     //-------------------------------------------------------------------------
     // Helps debug a bloom filter
-#define dbgBloom(a) fromBloom(a).Substitute("0"," ")
+#define dbgBloom(a) bloom2Bytes(a).Substitute("0"," ")
 
     //-------------------------------------------------------------------------
     inline SFUintBN makeBloom(const SFString& hexIn) {
-extern SFString getSha3(const SFString& hexIn);
+        if (hexIn.empty() || !hexIn.startsWith("0x"))
+            return 0;
+
+extern SFString getSha3 (const SFString& hexIn);
         SFString sha = getSha3(hexIn);
         SFUintBN bloom;
         for (uint32_t i=0;i<3;i++)
@@ -32,19 +35,24 @@ extern SFString getSha3(const SFString& hexIn);
     }
 
     //-------------------------------------------------------------------------
-    inline bool isBloomHit(const SFUintBN& test, const SFUintBN filter)
-    {
+    inline bool isBloomHit(const SFUintBN& test, const SFUintBN filter) {
         return ((test & filter) == test);
     }
 
     //-------------------------------------------------------------------------
-    inline bool isBloomHit(const SFString& hexIn, const SFUintBN filter)
-    {
+    inline bool isBloomHit(const SFString& hexIn, const SFUintBN filter) {
         return isBloomHit(makeBloom(hexIn),filter);
     }
 
     //----------------------------------------------------------------------------------
+    extern bool compareBlooms(const SFBloom& b1, const SFBloom& b2, SFString& str);
+    extern SFString formatBloom(const SFBloom& b1, bool bits);
+    extern bool addAddrToBloom(const SFAddress& addr, SFBloomArray& blooms, uint32_t maxBits);
+
+    //----------------------------------------------------------------------------------
     extern bool readBloomArray (      SFBloomArray& blooms, const SFString& fileName);
     extern bool writeBloomArray(const SFBloomArray& blooms, const SFString& fileName);
-    
+    extern SFString reportBloom(const SFBloomArray& blooms);
+
 }  // namespace qblocks
+

@@ -6,12 +6,25 @@
 #include "etherlib.h"
 
 //-----------------------------------------------------------------------------
+class CState {
+public:
+    bool needsNewline;
+    blknum_t latestBlock;
+    SFUintBN totalVal;
+    SFUintBN lastBal;
+    SFAddress curAddr;
+    CState(void) { needsNewline = true; latestBlock = getLatestBlockFromClient(); totalVal = 0; lastBal = 0; }
+};
+
+//-----------------------------------------------------------------------------
 class COptions : public CBlockOptions {
 public:
+    CState state;
     SFString addrs;
     bool asData;
     bool noZero;
     bool total;
+    bool changes;
 
     COptions(void);
     ~COptions(void);

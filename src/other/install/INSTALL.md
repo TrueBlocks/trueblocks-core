@@ -8,7 +8,7 @@ Please see [this important information](RUNNING_A_NODE.md) about running or not 
 
 ***
 
-If you are the `root` user on your system, you do not need to use `sudo` below. If you are *not* the `root` user, you will need to use `sudo`.
+If you are the `root` user on your system, you do not need to use `sudo` below. If you are *not* the `root` user, you will need to use `sudo`. On all non-Windows platforms, update your system first. For example, on Ubuntu, do this `apt-get update` then `apt-get upgrade`.
 
 ### for Centos
 

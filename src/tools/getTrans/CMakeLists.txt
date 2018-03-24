@@ -60,9 +60,10 @@ run_test("getTrans_from_node"          "-r" " 4000000.5")
 run_test("getTrans_from_node_long"     "--raw" " 4000000.5")
 run_test("getTrans_help"               "-h")
 run_test("getTrans_help_long"          "--help")
+run_test("getTrans_should_be_error"    "0xeec4ccd13fe05907f9d732a8ad245bcb7f918217157b89baaa23895c12eb329a" " --verbose")
 
 run_test("getTrans_verbose_blk_idx1"   "-v" " 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.3")
-run_test("getTrans_verbose_blk_idx2"   "--verbose" " 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.3")
+run_test("getTrans_verbose_blk_idx2"   "--verbose" " 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.4")
 run_test("getTrans_verbose_blk_idx3"   "0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.3" " -v")
 
 run_test("getTrans_by_blk_hash_good"   "0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f.55" " --verbose")

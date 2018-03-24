@@ -34,14 +34,12 @@ namespace qblocks {
     public:
         SFArchiveHeader  m_header;
         bool             m_isReading;
-        const CBaseNode  *pParent;
         //VISITARCHIVEFUNC writeMsgFunc;
         //VISITARCHIVEFUNC readMsgFunc;
 
         SFArchive(bool isReading) {
             m_isReading        = isReading;
             m_header.m_version = getVersionNum();
-            pParent            = NULL;
             //writeMsgFunc     = NULL;
             //readMsgFunc      = NULL;
         }

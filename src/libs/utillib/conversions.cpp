@@ -55,7 +55,7 @@ namespace qblocks {
     }
 
     //------------------------------------------------------------------
-    SFString fromBloom(const SFBloom& bl) {
+    SFString bloom2Bytes(const SFBloom& bl) {
         if (bl == 0)
             return "0x0";
         SFBloomHex b2(bl);
@@ -64,6 +64,28 @@ namespace qblocks {
 #else
         return ("0x" + padLeft(b2.str,512,'0'));
 #endif
+    }
+
+    //-------------------------------------------------------------------------
+    SFString bloom2Bits(const SFBloom& b) {
+        SFString ret = bloom2Bytes(b).Substitute("0x", "");
+        ret.ReplaceAll("0","0000");
+        ret.ReplaceAll("1","0001");
+        ret.ReplaceAll("2","0010");
+        ret.ReplaceAll("3","0011");
+        ret.ReplaceAll("4","0100");
+        ret.ReplaceAll("5","0101");
+        ret.ReplaceAll("6","0110");
+        ret.ReplaceAll("7","0111");
+        ret.ReplaceAll("8","1000");
+        ret.ReplaceAll("9","1001");
+        ret.ReplaceAll("a","1010");
+        ret.ReplaceAll("b","1011");
+        ret.ReplaceAll("c","1100");
+        ret.ReplaceAll("d","1101");
+        ret.ReplaceAll("e","1110");
+        ret.ReplaceAll("f","1111");
+        return ret;
     }
 
     //----------------------------------------------------------------------------------------------------
@@ -101,4 +123,22 @@ namespace qblocks {
         return SFTime(y, m, d, h, mn, s);
     }
 
+    /*
+        Javascipt: Returns a checksummed address
+        @param {String} address
+        @return {String}
+        exports.toChecksumAddress = function (address) {
+            address = exports.stripHexPrefix(address).toLowerCase()
+            const hash = exports.sha3(address).toString('hex')
+            let ret = '0x'
+            for (let i = 0; i < address.length; i++) {
+                if (parseInt(hash[i], 16) >= 8) {
+                    ret += address[i].toUpperCase()
+                } else {
+                    ret += address[i]
+                }
+            }
+            return ret
+        }
+    */
 }  // namespace qblocks

@@ -94,9 +94,6 @@ bool CTransaction::setValueByName(const SFString& fieldName, const SFString& fie
             if ( fieldName % "blockHash" ) { blockHash = toHash(fieldValue); return true; }
             if ( fieldName % "blockNumber" ) { blockNumber = toUnsigned(fieldValue); return true; }
             break;
-        case 'c':
-            if ( fieldName % "cumulativeGasUsed" ) { cumulativeGasUsed = toWei(fieldValue); return true; }
-            break;
         case 'f':
             if ( fieldName % "from" ) { from = toAddress(fieldValue); return true; }
             break;
@@ -110,7 +107,7 @@ bool CTransaction::setValueByName(const SFString& fieldName, const SFString& fie
         case 'i':
             if ( fieldName % "input" ) { input = fieldValue; return true; }
             if ( fieldName % "isError" ) { isError = toUnsigned(fieldValue); return true; }
-            if ( fieldName % "isInternalTx" ) { isInternalTx = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "isInternal" ) { isInternal = toUnsigned(fieldValue); return true; }
             break;
         case 'n':
             if ( fieldName % "nonce" ) { nonce = toUnsigned(fieldValue); return true; }
@@ -135,8 +132,6 @@ bool CTransaction::setValueByName(const SFString& fieldName, const SFString& fie
 //---------------------------------------------------------------------------------------------------
 void CTransaction::finishParse() {
     // EXISTING_CODE
-    if (pParent && pParent->isKindOf(GETRUNTIME_CLASS(CAccount)))
-        funcPtr = ((CAccount*)pParent)->abi.findFunctionByEncoding(input.substr(2,8));
     function = Format("[{FUNCTION}]");
     ether = (double)strtold((const char*)Format("[{ETHER}]"),NULL);
     receipt.pTrans = this;
@@ -166,10 +161,9 @@ bool CTransaction::Serialize(SFArchive& archive) {
     archive >> value;
     archive >> gas;
     archive >> gasPrice;
-    archive >> cumulativeGasUsed;
     archive >> input;
     archive >> isError;
-    archive >> isInternalTx;
+    archive >> isInternal;
     archive >> receipt;
     finishParse();
     return true;
@@ -194,10 +188,9 @@ bool CTransaction::SerializeC(SFArchive& archive) const {
     archive << value;
     archive << gas;
     archive << gasPrice;
-    archive << cumulativeGasUsed;
     archive << input;
     archive << isError;
-    archive << isInternalTx;
+    archive << isInternal;
     archive << receipt;
 
     return true;
@@ -224,10 +217,9 @@ void CTransaction::registerClass(void) {
     ADD_FIELD(CTransaction, "value", T_WEI, ++fieldNum);
     ADD_FIELD(CTransaction, "gas", T_GAS, ++fieldNum);
     ADD_FIELD(CTransaction, "gasPrice", T_GAS, ++fieldNum);
-    ADD_FIELD(CTransaction, "cumulativeGasUsed", T_WEI, ++fieldNum);
     ADD_FIELD(CTransaction, "input", T_TEXT, ++fieldNum);
     ADD_FIELD(CTransaction, "isError", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CTransaction, "isInternalTx", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CTransaction, "isInternal", T_NUMBER, ++fieldNum);
     ADD_FIELD(CTransaction, "receipt", T_OBJECT, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
@@ -246,19 +238,28 @@ void CTransaction::registerClass(void) {
     // Add custom fields
     ADD_FIELD(CTransaction, "gasCost", T_WEI, ++fieldNum);
     ADD_FIELD(CTransaction, "function", T_TEXT, ++fieldNum);
+    ADD_FIELD(CTransaction, "articulated", T_TEXT, ++fieldNum);
     ADD_FIELD(CTransaction, "gasUsed", T_GAS, ++fieldNum);
     ADD_FIELD(CTransaction, "date", T_DATE, ++fieldNum);
+    ADD_FIELD(CTransaction, "datesh", T_DATE, ++fieldNum);
+    ADD_FIELD(CTransaction, "time", T_DATE, ++fieldNum);
     ADD_FIELD(CTransaction, "ether", T_ETHER, ++fieldNum);
     ADD_FIELD(CTransaction, "encoding", T_TEXT, ++fieldNum);
 
     // Hide fields we don't want to show by default
     HIDE_FIELD(CTransaction, "function");
+    HIDE_FIELD(CTransaction, "articulated");
     HIDE_FIELD(CTransaction, "encoding");
     HIDE_FIELD(CTransaction, "gasCost");
     HIDE_FIELD(CTransaction, "isError");
-    HIDE_FIELD(CTransaction, "isInternalTx");
+    HIDE_FIELD(CTransaction, "isInternal");
     HIDE_FIELD(CTransaction, "date");
+    HIDE_FIELD(CTransaction, "datesh");
+    HIDE_FIELD(CTransaction, "time");
     HIDE_FIELD(CTransaction, "ether");
+    if (isTestMode()) {
+        UNHIDE_FIELD(CTransaction, "isError");
+    }
     //    HIDE_FIELD(CTransaction, "receipt");
     // EXISTING_CODE
 }
@@ -269,16 +270,23 @@ SFString nextTransactionChunk_custom(const SFString& fieldIn, const void *dataPt
     if (tra) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
+            case 'a':
+                if ( fieldIn % "articulated" ) {
+                    if (tra->function.empty() || tra->function == " ")
+                        return tra->input;
+                    return tra->function;
+                }
+                break;
             case 'c':
                 if ( fieldIn % "contractAddress" ) return fromAddress(tra->receipt.contractAddress);
                 break;
             case 'd':
-                if (fieldIn % "date")
-                {
-                    timestamp_t ts = (timestamp_t)tra->timestamp;
-                    if (tra->pBlock)
-                        ts = tra->pBlock->timestamp;
-                    return dateFromTimeStamp(ts).Format(FMT_JSON);
+                if (fieldIn % "date" || fieldIn % "datesh") {
+                    timestamp_t ts = (tra->pBlock ? tra->pBlock->timestamp : tra->timestamp);
+                    SFString ret = dateFromTimeStamp(ts).Format(FMT_JSON);
+                    if (fieldIn % "datesh") // short date
+                        return ret.substr(0, 10);
+                    return ret;
                 }
                 break;
             case 'e':
@@ -300,8 +308,11 @@ SFString nextTransactionChunk_custom(const SFString& fieldIn, const void *dataPt
                 }
                 break;
             case 't':
-                if ( fieldIn % "timestamp" && tra->pBlock)
-                    return asString(tra->pBlock->timestamp);
+                if ( fieldIn % "timestamp" && tra->pBlock) return asString(tra->pBlock->timestamp);
+                if ( fieldIn % "time") {
+                    timestamp_t ts = (tra->pBlock ? tra->pBlock->timestamp : tra->timestamp);
+                    return dateFromTimeStamp(ts).Format(FMT_JSON).substr(12,1000);
+                }
                 break;
             // EXISTING_CODE
             case 'p':
@@ -331,6 +342,27 @@ bool CTransaction::readBackLevel(SFArchive& archive) {
     CBaseNode::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
+    if (m_schema <= getVersionNum(0,4,0)) {
+        SFWei removed; // used to be cumulativeGasUsed
+        archive >> hash;
+        archive >> blockHash;
+        archive >> blockNumber;
+        archive >> transactionIndex;
+        archive >> nonce;
+        archive >> timestamp;
+        archive >> from;
+        archive >> to;
+        archive >> value;
+        archive >> gas;
+        archive >> gasPrice;
+        archive >> removed;
+        archive >> input;
+        archive >> isError;
+        archive >> isInternal;
+        archive >> receipt;
+        finishParse();
+        done = true;
+    }
     // EXISTING_CODE
     return done;
 }
@@ -361,9 +393,6 @@ SFString CTransaction::getValueByName(const SFString& fieldName) const {
             if ( fieldName % "blockHash" ) return fromHash(blockHash);
             if ( fieldName % "blockNumber" ) return asStringU(blockNumber);
             break;
-        case 'c':
-            if ( fieldName % "cumulativeGasUsed" ) return fromWei(cumulativeGasUsed);
-            break;
         case 'f':
             if ( fieldName % "from" ) return fromAddress(from);
             break;
@@ -377,7 +406,7 @@ SFString CTransaction::getValueByName(const SFString& fieldName) const {
         case 'i':
             if ( fieldName % "input" ) return input;
             if ( fieldName % "isError" ) return asStringU(isError);
-            if ( fieldName % "isInternalTx" ) return asStringU(isInternalTx);
+            if ( fieldName % "isInternal" ) return asStringU(isInternal);
             break;
         case 'n':
             if ( fieldName % "nonce" ) return asStringU(nonce);
@@ -435,6 +464,30 @@ const CBaseNode *CTransaction::getObjectAt(const SFString& fieldName, uint32_t i
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
+#define EQ_TEST(a) { if (test.a != a) { cout << " diff at " << #a << " " << test.a << ":" << a << " "; return false; } }
+//---------------------------------------------------------------------------
+bool CTransaction::operator==(const CTransaction& test) const {
+
+    EQ_TEST(hash);
+    EQ_TEST(blockHash);
+    EQ_TEST(blockNumber);
+    EQ_TEST(transactionIndex);
+    EQ_TEST(nonce);
+    EQ_TEST(timestamp);
+    EQ_TEST(from);
+    EQ_TEST(to);
+    EQ_TEST(value);
+    EQ_TEST(gas);
+    EQ_TEST(gasPrice);
+    EQ_TEST(input);
+    EQ_TEST(isError);
+    EQ_TEST(isInternal);
+    if (test.receipt != receipt)
+        return false;
+
+    return true;
+}
+
 int sortTransactionsForWrite(const void *rr1, const void *rr2)
 {
     CTransaction *tr1 = (CTransaction*)rr1;
@@ -513,11 +566,10 @@ SFString parse(const SFString& params, int nItems, SFString *types)
             if (len == NOPOS)
                 len = params.length()-start;
             if (t == "string")
-                val = hex2String(params.substr((start+1)*64,len*2)).Substitute("\n","\\n").Substitute("\r","");
+                val = "\"" + hex2String(params.substr((start+1)*64,len*2)).Substitute("\n","\\n").Substitute("\r","").Substitute("\"","\\\"") + "\"";
             else
                 val = "0x"+params.substr((start+1)*64,len*2);
         }
-
         ret += ("|" + val);
     }
     return ret;

@@ -5,9 +5,9 @@ set(QUICKBLOCKS_HOME "$ENV{HOME}/.quickBlocks")
 # create the files (will silently fail if already present)
 message(STATUS "Establishing configuration folders at ${QUICKBLOCKS_HOME}")
 file(MAKE_DIRECTORY "${QUICKBLOCKS_HOME}")
+file(MAKE_DIRECTORY "${QUICKBLOCKS_HOME}/names")
 file(MAKE_DIRECTORY "${QUICKBLOCKS_HOME}/cache")
 file(MAKE_DIRECTORY "${QUICKBLOCKS_HOME}/cache/abis")
-file(MAKE_DIRECTORY "${QUICKBLOCKS_HOME}/cache/names")
 file(MAKE_DIRECTORY "${QUICKBLOCKS_HOME}/makeClass")
 file(MAKE_DIRECTORY "${QUICKBLOCKS_HOME}/grabABI")
 file(MAKE_DIRECTORY "${QUICKBLOCKS_HOME}/chifra")
@@ -27,10 +27,10 @@ if (NOT EXISTS "${QUICKBLOCKS_TOML_FILE}")
 endif()
 
 # Create names fie only if it does not exist
-set(QUICKBLOCKS_NAMES_FILE "${QUICKBLOCKS_HOME}/cache/names/names.txt")
+set(QUICKBLOCKS_NAMES_FILE "${QUICKBLOCKS_HOME}/names/names.txt")
 if (NOT EXISTS "${QUICKBLOCKS_NAMES_FILE}")
     message(STATUS "Copying names file ${QUICKBLOCKS_NAMES_FILE}")
-    file(COPY "${CMAKE_SOURCE_DIR}/../../../src/other/install/names.txt" DESTINATION "${QUICKBLOCKS_HOME}/cache/names" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
+    file(COPY "${CMAKE_SOURCE_DIR}/../../../src/other/install/names.txt" DESTINATION "${QUICKBLOCKS_HOME}/names" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
 endif()
 
 # makeClass content

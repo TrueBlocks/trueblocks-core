@@ -33,6 +33,7 @@ public:
     SFAddress miner;
     uint64_t difficulty;
     double price;
+    bool finalized;
     timestamp_t timestamp;
     CTransactionArray transactions;
 
@@ -103,6 +104,7 @@ inline void CNewBlock::Init(void) {
     miner = "";
     difficulty = 0;
     price = 0.0;
+    finalized = 0;
     timestamp = 0;
     transactions.Clear();
 
@@ -123,6 +125,7 @@ inline void CNewBlock::Copy(const CNewBlock& ne) {
     miner = ne.miner;
     difficulty = ne.difficulty;
     price = ne.price;
+    finalized = ne.finalized;
     timestamp = ne.timestamp;
     transactions = ne.transactions;
 

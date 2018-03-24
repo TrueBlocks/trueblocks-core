@@ -769,6 +769,6 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
     "# Sym    Name                Address                        Source        Description\n"
     "#---------------------------------------------------------------------------------------------------------------\n"
     "#\n"
-    "#Add your names here\n";
+    "#Add your names here or remove this file and run \"ethName --list\"\n";
 
 }  // namespace qblocks

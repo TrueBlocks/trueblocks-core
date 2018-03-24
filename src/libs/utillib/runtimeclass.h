@@ -137,7 +137,6 @@ array.Grow((uint32_t)(count+1)); \
 for (uint32_t i = 0 ; i < count ; i++) \
 { \
 array[i].Serialize(archive); \
-array[i].pParent = archive.pParent; \
 } \
 return archive; \
 }
