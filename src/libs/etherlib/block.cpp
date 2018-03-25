@@ -430,9 +430,12 @@ bool CBlock::operator==(const CBlock& test) const {
 }
 
 //---------------------------------------------------------------------------
-class CAddressItem : public CAcctCacheItem {
+class CAddressItem {
 public:
+    uint64_t blockNum;
+    uint64_t transIndex;
     SFAddress addr;
+    CAddressItem(void) : blockNum(0), transIndex(0) { }
 };
 typedef SFArrayBase<CAddressItem> CAddressItemArray;
 
