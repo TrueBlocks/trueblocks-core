@@ -9,19 +9,23 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
-#include "acctcacheitem.h"
+#include "balhistory.h"
+#include "etherlib.h"
 
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CAcctCacheItem, CBaseNode);
+IMPLEMENT_NODE(CBalHistory, CBaseNode);
 
 //---------------------------------------------------------------------------
-static SFString nextAcctcacheitemChunk(const SFString& fieldIn, const void *dataPtr);
-static SFString nextAcctcacheitemChunk_custom(const SFString& fieldIn, const void *dataPtr);
+static SFString nextBalhistoryChunk(const SFString& fieldIn, const void *dataPtr);
+static SFString nextBalhistoryChunk_custom(const SFString& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CAcctCacheItem::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
+void CBalHistory::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
+
+    CBalHistory::registerClass();
+
     if (!m_showing)
         return;
 
@@ -35,13 +39,13 @@ void CAcctCacheItem::Format(CExportContext& ctx, const SFString& fmtIn, void *da
         return;
 
     while (!fmt.empty())
-        ctx << getNextChunk(fmt, nextAcctcacheitemChunk, this);
+        ctx << getNextChunk(fmt, nextBalhistoryChunk, this);
 }
 
 //---------------------------------------------------------------------------
-SFString nextAcctcacheitemChunk(const SFString& fieldIn, const void *dataPtr) {
+SFString nextBalhistoryChunk(const SFString& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const CAcctCacheItem *)dataPtr)->getValueByName(fieldIn);
+        return ((const CBalHistory *)dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -50,19 +54,19 @@ SFString nextAcctcacheitemChunk(const SFString& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CAcctCacheItem::setValueByName(const SFString& fieldName, const SFString& fieldValue) {
+bool CBalHistory::setValueByName(const SFString& fieldName, const SFString& fieldValue) {
     // EXISTING_CODE
     // EXISTING_CODE
 
     switch (tolower(fieldName[0])) {
         case 'b':
-            if ( fieldName % "blockNum" ) { blockNum = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "balance" ) { balance = toLong(fieldValue); return true; }
+            break;
+        case 'r':
+            if ( fieldName % "recordID" ) { recordID = fieldValue; return true; }
             break;
         case 't':
-            if ( fieldName % "transIndex" ) { transIndex = toUnsigned(fieldValue); return true; }
-            break;
-        case 'w':
-            if ( fieldName % "which" ) { which = toLong32(fieldValue); return true; }
+            if ( fieldName % "timestamp" ) { timestamp = toTimestamp(fieldValue); return true; }
             break;
         default:
             break;
@@ -71,16 +75,16 @@ bool CAcctCacheItem::setValueByName(const SFString& fieldName, const SFString& f
 }
 
 //---------------------------------------------------------------------------------------------------
-void CAcctCacheItem::finishParse() {
+void CBalHistory::finishParse() {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CAcctCacheItem::Serialize(SFArchive& archive) {
+bool CBalHistory::Serialize(SFArchive& archive) {
 
     if (archive.isWriting())
-        return ((const CAcctCacheItem*)this)->SerializeC(archive);
+        return ((const CBalHistory*)this)->SerializeC(archive);
 
     // If we're reading a back level, read the whole thing and we're done.
     if (readBackLevel(archive))
@@ -88,62 +92,62 @@ bool CAcctCacheItem::Serialize(SFArchive& archive) {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive >> blockNum;
-    archive >> transIndex;
-    archive >> which;
+    archive >> recordID;
+    archive >> timestamp;
+    archive >> balance;
     finishParse();
     return true;
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CAcctCacheItem::SerializeC(SFArchive& archive) const {
+bool CBalHistory::SerializeC(SFArchive& archive) const {
 
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive << blockNum;
-    archive << transIndex;
-    archive << which;
+    archive << recordID;
+    archive << timestamp;
+    archive << balance;
 
     return true;
 }
 
 //---------------------------------------------------------------------------
-void CAcctCacheItem::registerClass(void) {
+void CBalHistory::registerClass(void) {
     static bool been_here = false;
     if (been_here) return;
     been_here = true;
 
     uint32_t fieldNum = 1000;
-    ADD_FIELD(CAcctCacheItem, "schema",  T_NUMBER, ++fieldNum);
-    ADD_FIELD(CAcctCacheItem, "deleted", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CAcctCacheItem, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CAcctCacheItem, "blockNum", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CAcctCacheItem, "transIndex", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CAcctCacheItem, "which", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CBalHistory, "schema",  T_NUMBER, ++fieldNum);
+    ADD_FIELD(CBalHistory, "deleted", T_BOOL,  ++fieldNum);
+    ADD_FIELD(CBalHistory, "showing", T_BOOL,  ++fieldNum);
+    ADD_FIELD(CBalHistory, "recordID", T_TEXT, ++fieldNum);
+    ADD_FIELD(CBalHistory, "timestamp", T_TIMESTAMP, ++fieldNum);
+    ADD_FIELD(CBalHistory, "balance", T_NUMBER, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
-    HIDE_FIELD(CAcctCacheItem, "schema");
-    HIDE_FIELD(CAcctCacheItem, "deleted");
-    HIDE_FIELD(CAcctCacheItem, "showing");
+    HIDE_FIELD(CBalHistory, "schema");
+    HIDE_FIELD(CBalHistory, "deleted");
+    HIDE_FIELD(CBalHistory, "showing");
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------
-SFString nextAcctcacheitemChunk_custom(const SFString& fieldIn, const void *dataPtr) {
-    const CAcctCacheItem *acc = (const CAcctCacheItem *)dataPtr;
-    if (acc) {
+SFString nextBalhistoryChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+    const CBalHistory *bal = (const CBalHistory *)dataPtr;
+    if (bal) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn, acc);
+                    return nextBasenodeChunk(fieldIn, bal);
                 break;
 
             default:
@@ -155,14 +159,14 @@ SFString nextAcctcacheitemChunk_custom(const SFString& fieldIn, const void *data
 }
 
 //---------------------------------------------------------------------------
-bool CAcctCacheItem::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
+bool CBalHistory::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
 }
 
 //---------------------------------------------------------------------------
-bool CAcctCacheItem::readBackLevel(SFArchive& archive) {
+bool CBalHistory::readBackLevel(SFArchive& archive) {
 
     CBaseNode::readBackLevel(archive);
     bool done = false;
@@ -172,23 +176,35 @@ bool CAcctCacheItem::readBackLevel(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------
-SFString CAcctCacheItem::getValueByName(const SFString& fieldName) const {
+SFArchive& operator<<(SFArchive& archive, const CBalHistory& bal) {
+    bal.SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+SFArchive& operator>>(SFArchive& archive, CBalHistory& bal) {
+    bal.Serialize(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+SFString CBalHistory::getValueByName(const SFString& fieldName) const {
 
     // Give customized code a chance to override first
-    SFString ret = nextAcctcacheitemChunk_custom(fieldName, this);
+    SFString ret = nextBalhistoryChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'b':
-            if ( fieldName % "blockNum" ) return asStringU(blockNum);
+            if ( fieldName % "balance" ) return asStringBN(balance);
+            break;
+        case 'r':
+            if ( fieldName % "recordID" ) return recordID;
             break;
         case 't':
-            if ( fieldName % "transIndex" ) return asStringU(transIndex);
-            break;
-        case 'w':
-            if ( fieldName % "which" ) return asString(which);
+            if ( fieldName % "timestamp" ) return fromTimestamp(timestamp);
             break;
     }
 
@@ -200,12 +216,8 @@ SFString CAcctCacheItem::getValueByName(const SFString& fieldName) const {
 }
 
 //-------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const CAcctCacheItem& item) {
+ostream& operator<<(ostream& os, const CBalHistory& item) {
     // EXISTING_CODE
-    if (sizeof(item) != 0) { // do this to always go through here, but avoid a warning
-        os << item.blockNum << "." << item.transIndex << "." << item.which;
-        return os;
-    }
     // EXISTING_CODE
 
     os << item.Format() << "\n";
@@ -214,19 +226,6 @@ ostream& operator<<(ostream& os, const CAcctCacheItem& item) {
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-CAcctCacheItem::CAcctCacheItem(SFString& line) {
-
-    line.ReplaceAll(".","\t");
-
-    SFString val = nextTokenClear(line,'\t');
-    blockNum = toUnsigned(val);
-
-    val = nextTokenClear(line,'\t');
-    transIndex = toUnsigned(val);
-
-    val = nextTokenClear(line,'\t');
-    which = (int32_t)toUnsigned(val);
-}
 // EXISTING_CODE
 }  // namespace qblocks
 
