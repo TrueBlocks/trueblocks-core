@@ -1,0 +1,7 @@
+[settings]
+class     = CIncomeStatement
+fields    = int256 begBal|int256 inflow|int256 outflow|int256 gasCost|int256 endBal|blknum blockNum
+includes  = abilib.h
+cIncs     = #include "etherlib.h"
+serialize = true
+
