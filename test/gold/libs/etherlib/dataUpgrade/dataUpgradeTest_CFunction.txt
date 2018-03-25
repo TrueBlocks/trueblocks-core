@@ -2,7 +2,7 @@ dataUpgrade argc: 2 [1:CFunction]
 dataUpgrade CFunction 
 --------------------------------------------------------------------------------
 className: CFunction
-objectSize: 208
+objectSize: 200
 baseClass: CBaseNode
 	fieldName: schema
 	  fieldID: 1001
