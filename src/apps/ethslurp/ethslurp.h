@@ -8,6 +8,10 @@
  *------------------------------------------------------------------------*/
 #include <algorithm>
 #include "etherlib.h"
+<<<<<<< HEAD
+=======
+#include "webapi.h"
+>>>>>>> develop
 #include "account.h"
 #include "options.h"
 
