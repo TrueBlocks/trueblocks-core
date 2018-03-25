@@ -53,7 +53,7 @@ SFString IPCSocket::sendRequest(SFString const& _req)
 CReceipt RPCSession::eth_getTransactionReceipt(SFString const& _transactionHash)
 {
     CReceipt receipt;
-#if 0
+
     SFString const result = rpcCall("eth_getTransactionReceipt", { _transactionHash });
     if (result.empty())
     {
@@ -71,7 +71,6 @@ CReceipt RPCSession::eth_getTransactionReceipt(SFString const& _transactionHash)
             entry.topics.push_back(topic);
         receipt.logEntries.push_back(entry);
     }
-#endif
     return receipt;
 }
 
