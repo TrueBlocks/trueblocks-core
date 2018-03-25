@@ -13,7 +13,6 @@
 #include "transaction.h"
 #include "receipt.h"
 #include "logentry.h"
-#include "webapi.h"
 #include "pricequote.h"
 #include "pricesource.h"
 #include "trace.h"
@@ -23,11 +22,7 @@
 #include "miniblock.h"
 #include "node.h"
 #include "blooms.h"
-#include "accountwatch.h"
-#include "balhistory.h"
-#include "acctcacheitem.h"
 #include "blockoptions.h"
 #include "abirecord.h"
 
 using namespace qblocks;
-

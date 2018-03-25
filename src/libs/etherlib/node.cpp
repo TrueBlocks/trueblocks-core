@@ -29,9 +29,6 @@ extern void registerQuitHandler(QUITHANDLER qh);
         CReceipt::registerClass();
         CLogEntry::registerClass();
         CPriceQuote::registerClass();
-        CBalHistory::registerClass();
-        CAccountWatch::registerClass();
-        CIncomeStatement::registerClass();
         CTrace::registerClass();
         CTraceAction::registerClass();
         CTraceResult::registerClass();
@@ -41,7 +38,6 @@ extern void registerQuitHandler(QUITHANDLER qh);
         CRPCResult::registerClass();
         CNameValue::registerClass();
         CAccountName::registerClass();
-        CAcctCacheItem::registerClass();
 
         if (sourceIn != "remote" && sourceIn != "local" && sourceIn != "ropsten")
             getCurlContext()->source = "binary";
