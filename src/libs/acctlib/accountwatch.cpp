@@ -23,6 +23,7 @@ static SFString nextAccountwatchChunk_custom(const SFString& fieldIn, const void
 
 //---------------------------------------------------------------------------
 void CAccountWatch::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
+
     if (!m_showing)
         return;
 

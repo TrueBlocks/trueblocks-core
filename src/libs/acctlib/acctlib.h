@@ -7,6 +7,9 @@
  * The LICENSE at the root of this repo details your rights (if any)
  *------------------------------------------------------------------------*/
 
+#include "accountwatch.h"
+#include "acctcacheitem.h"
+#include "balhistory.h"
 #include "treeroot.h"
 #include "acctlib.h"
 #include "branch.h"

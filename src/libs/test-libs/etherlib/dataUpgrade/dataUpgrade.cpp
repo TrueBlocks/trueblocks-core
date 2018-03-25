@@ -21,6 +21,10 @@ int main(int argc, const char *argv[]) {
 
     CNewBlock::registerClass();
     CNewReceipt::registerClass();
+    CAccountWatch::registerClass();
+    CAcctCacheItem::registerClass();
+    CBalHistory::registerClass();
+    CIncomeStatement::registerClass();
 
     COptions options;
     if (!options.prepareArguments(argc, argv))

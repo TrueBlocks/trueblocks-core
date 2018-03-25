@@ -1,3 +1,8 @@
+#### Contact Info
+
+Visit our [Website](http://quickblocks.io)  
+Join our [Slack](https://join.slack.com/t/quickblocks/shared_invite/enQtMzEzMzYzODI2MDY4LWRjZWUzMzg3N2RhYjMzN2FiYWMzYzlmYTA1MzJhNDM3NTUyMmZlOWU1ZWY5ZjdjMjcyZTMzMjk2NDI0ZTVhZTg)
+
 #### Installing QuickBlocks
 
 First things first. We start with the [installation instructions](src/other/install/INSTALL.md).
