@@ -2,7 +2,7 @@ dataUpgrade argc: 2 [1:CTraceResult]
 dataUpgrade CTraceResult 
 --------------------------------------------------------------------------------
 className: CTraceResult
-objectSize: 72
+objectSize: 112
 baseClass: CBaseNode
 	fieldName: schema
 	  fieldID: 1001
@@ -16,15 +16,24 @@ baseClass: CBaseNode
 	  fieldID: 1003
 	  fieldType: T_BOOL TS_NUMERAL 65556
 	  hidden: 1
-	fieldName: gasUsed
+	fieldName: address
 	  fieldID: 1004
-	  fieldType: T_GAS TS_NUMERAL 4259880 TS_BIGNUM 4259880
+	  fieldType: T_ADDRESS TS_STRING 131127
 	  hidden: 0
-	fieldName: output
+	fieldName: code
 	  fieldID: 1005
 	  fieldType: T_TEXT TS_STRING 131122
 	  hidden: 0
+	fieldName: gasUsed
+	  fieldID: 1006
+	  fieldType: T_GAS TS_NUMERAL 4259880 TS_BIGNUM 4259880
+	  hidden: 0
+	fieldName: output
+	  fieldID: 1007
+	  fieldType: T_TEXT TS_STRING 131122
+	  hidden: 0
 {
+  "address": "0x0",
   "gasUsed": 0
 }
 

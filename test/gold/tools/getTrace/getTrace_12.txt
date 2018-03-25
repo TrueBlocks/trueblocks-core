@@ -10,17 +10,20 @@ getTrace 0x8732bfb0c257c82c1d7964cd5f7b560b83b6ba3a32a808499dfd868633d115ad
   "type": "call",
   "error": "",
   "action": {
+    "address": "0x0",
+    "balance": 0,
     "callType": "call",
     "from": "0xbd26c502ed292d6e86cdce6396711b9507546591",
     "gas": 0,
+    "init": "",
     "input": "0x",
+    "refundAddress": "0x0",
     "to": "0x96fc4553a00c117c5b0bed950dd625d1c16dc894",
-    "value": 29999580000000000000,
-    "address": "0x0",
-    "balance": 0,
-    "refundAddress": "0x0"
+    "value": 29999580000000000000
   },
   "result": {
+    "address": "0x0",
+    "code": "",
     "gasUsed": 0,
     "output": "0x"
   }

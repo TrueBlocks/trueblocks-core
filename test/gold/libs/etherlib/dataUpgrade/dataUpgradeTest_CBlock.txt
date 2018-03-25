@@ -48,16 +48,20 @@ baseClass: CBaseNode
 	  fieldID: 1011
 	  fieldType: T_DOUBLE TS_NUMERAL 65566
 	  hidden: 0
-	fieldName: timestamp
+	fieldName: finalized
 	  fieldID: 1012
+	  fieldType: T_BOOL TS_NUMERAL 65556
+	  hidden: 0
+	fieldName: timestamp
+	  fieldID: 1013
 	  fieldType: T_TIMESPAN TS_NUMERAL 65551
 	  hidden: 0
 	fieldName: transactions
-	  fieldID: 1013
+	  fieldID: 1014
 	  fieldType: T_OBJECT|TS_ARRAY TS_ARRAY 1572939 TS_OBJECT 1572939
 	  hidden: 0
 	fieldName: date
-	  fieldID: 1014
+	  fieldID: 1015
 	  fieldType: T_DATE TS_DATE 262149
 	  hidden: 1
 {
@@ -69,6 +73,7 @@ baseClass: CBaseNode
   "miner": "0x0",
   "difficulty": 0,
   "price": 0,
+  "finalized": 0,
   "timestamp": 0,
   "transactions": []
 }

@@ -10,17 +10,20 @@ getTrace --file:cmd_file --verbose --parity
   "type": "call",
   "error": "",
   "action": {
+    "address": "0x0",
+    "balance": 0,
     "callType": "call",
     "from": "0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5",
     "gas": 29000,
+    "init": "",
     "input": "0x",
+    "refundAddress": "0x0",
     "to": "0x8c222fb428f9f44715cf85349f79a18761c8e53c",
-    "value": 233602441535478432,
-    "address": "0x0",
-    "balance": 0,
-    "refundAddress": "0x0"
+    "value": 233602441535478432
   },
   "result": {
+    "address": "0x0",
+    "code": "",
     "gasUsed": 0,
     "output": "0x"
   }
@@ -36,17 +39,20 @@ getTrace --file:cmd_file --verbose --parity
   "type": "call",
   "error": "",
   "action": {
+    "address": "0x0",
+    "balance": 0,
     "callType": "call",
     "from": "0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5",
     "gas": 29000,
+    "init": "",
     "input": "0x",
+    "refundAddress": "0x0",
     "to": "0x8c222fb428f9f44715cf85349f79a18761c8e53c",
-    "value": 233602441535478432,
-    "address": "0x0",
-    "balance": 0,
-    "refundAddress": "0x0"
+    "value": 233602441535478432
   },
   "result": {
+    "address": "0x0",
+    "code": "",
     "gasUsed": 0,
     "output": "0x"
   }
@@ -62,17 +68,20 @@ getTrace --file:cmd_file --verbose --parity
     "type": "call",
     "error": "",
     "action": {
+        "address": "0x0",
+        "balance": "0x0",
         "callType": "call",
         "from": "0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5",
         "gas": "0x7148",
+        "init": "",
         "input": "0x",
+        "refundAddress": "0x0",
         "to": "0x85ac33fe36a146ca3651693c16fbb45b3832b3f6",
-        "value": "0x2e056847f291e60",
-        "address": "0x0",
-        "balance": "0x0",
-        "refundAddress": "0x0"
+        "value": "0x2e056847f291e60"
     },
     "result": {
+        "address": "0x0",
+        "code": "",
         "gasUsed": "0x0",
         "output": "0x"
     }

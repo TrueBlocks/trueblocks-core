@@ -9,6 +9,7 @@ getBlock daofork
     "miner": "0xbcdfc35b86bedf72f0cda046a3c16829a2ef41d1",
     "difficulty": 62413376722602,
     "price": 0,
+    "finalized": 1,
     "timestamp": 1469020840,
     "transactions": [
         {
@@ -23,8 +24,8 @@ getBlock daofork
             "value": 1502561962583879700,
             "gas": 21000,
             "gasPrice": 20000000000,
-            "cumulativeGasUsed": 0,
             "input": "0x",
+            "isError": 0,
             "receipt": {
                 "contractAddress": "0x0",
                 "gasUsed": 21000,
@@ -45,8 +46,8 @@ getBlock daofork
             "value": 10046680000000000000,
             "gas": 21000,
             "gasPrice": 20000000000,
-            "cumulativeGasUsed": 0,
             "input": "0x",
+            "isError": 0,
             "receipt": {
                 "contractAddress": "0x0",
                 "gasUsed": 21000,
@@ -67,8 +68,8 @@ getBlock daofork
             "value": 20093780000000000000,
             "gas": 21000,
             "gasPrice": 20000000000,
-            "cumulativeGasUsed": 0,
             "input": "0x",
+            "isError": 0,
             "receipt": {
                 "contractAddress": "0x0",
                 "gasUsed": 21000,
@@ -89,8 +90,8 @@ getBlock daofork
             "value": 1022338440000000000,
             "gas": 21000,
             "gasPrice": 20000000000,
-            "cumulativeGasUsed": 0,
             "input": "0x",
+            "isError": 0,
             "receipt": {
                 "contractAddress": "0x0",
                 "gasUsed": 21000,

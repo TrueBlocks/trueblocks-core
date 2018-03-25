@@ -2,7 +2,7 @@ dataUpgrade argc: 2 [1:CPriceQuote]
 dataUpgrade CPriceQuote 
 --------------------------------------------------------------------------------
 className: CPriceQuote
-objectSize: 64
+objectSize: 56
 baseClass: CBaseNode
 	fieldName: schema
 	  fieldID: 1001

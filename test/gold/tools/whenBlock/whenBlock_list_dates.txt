@@ -12,7 +12,7 @@ whenBlock -l
       - devcon2          2286910
       - tangerine        2463000
       - spurious         2675000
-      - stateclear       2718436
+      - stateclear       2717576
       - eea              3265360
       - ens2             3327417
       - parityhack1      4041179
