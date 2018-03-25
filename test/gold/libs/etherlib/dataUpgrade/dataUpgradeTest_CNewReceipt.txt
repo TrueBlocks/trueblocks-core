@@ -2,7 +2,7 @@ dataUpgrade argc: 2 [1:CNewReceipt]
 dataUpgrade CNewReceipt 
 --------------------------------------------------------------------------------
 className: CNewReceipt
-objectSize: 112
+objectSize: 104
 baseClass: CBaseNode
 	fieldName: schema
 	  fieldID: 1001

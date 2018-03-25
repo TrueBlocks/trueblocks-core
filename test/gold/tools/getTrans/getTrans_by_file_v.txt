@@ -1,5 +1,6 @@
 getTrans argc: 3 [1:--verbose] [2:--file:cmd_file] 
 getTrans --verbose --file:cmd_file 
+[
 {
   "hash": "0x1e4e4d62951733dea1cce59eca0ffaf89a7881f13c9bb8558d61f6a9e0928c4b",
   "blockHash": "0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9",
@@ -13,6 +14,7 @@ getTrans --verbose --file:cmd_file
   "gas": 50000,
   "gasPrice": 20000000000,
   "input": "0x",
+  "isError": 0,
   "receipt": {
     "contractAddress": "0x0",
     "gasUsed": 21000,
@@ -20,7 +22,7 @@ getTrans --verbose --file:cmd_file
     "status": null
   },
   "gasUsed": 21000
-}
+},
 {
   "hash": "0x1e4e4d62951733dea1cce59eca0ffaf89a7881f13c9bb8558d61f6a9e0928c4b",
   "blockHash": "0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9",
@@ -34,6 +36,7 @@ getTrans --verbose --file:cmd_file
   "gas": 50000,
   "gasPrice": 20000000000,
   "input": "0x",
+  "isError": 0,
   "receipt": {
     "contractAddress": "0x0",
     "gasUsed": 21000,
@@ -41,7 +44,7 @@ getTrans --verbose --file:cmd_file
     "status": null
   },
   "gasUsed": 21000
-}
+},
 {
     "blockHash": "0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9",
     "blockNumber": "0x37cf08",
@@ -51,6 +54,7 @@ getTrans --verbose --file:cmd_file
     "gasUsed": "0x5208",
     "hash": "0xda2f27fffb36c90c74fc53bd8b721074e87203c727640c95c4c802296e3bf8ad",
     "input": "0x",
+    "isError": "0x0",
     "nonce": "0x1aac8e",
     "receipt": {
         "contractAddress": "0x0",
@@ -63,3 +67,4 @@ getTrans --verbose --file:cmd_file
     "transactionIndex": "0x4f",
     "value": "0x2e056847f291e60"
 }
+]

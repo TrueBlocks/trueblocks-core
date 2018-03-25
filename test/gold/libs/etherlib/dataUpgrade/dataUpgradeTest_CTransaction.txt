@@ -2,7 +2,7 @@ dataUpgrade argc: 2 [1:CTransaction]
 dataUpgrade CTransaction 
 --------------------------------------------------------------------------------
 className: CTransaction
-objectSize: 424
+objectSize: 392
 baseClass: CBaseNode
 	fieldName: schema
 	  fieldID: 1001
@@ -60,35 +60,35 @@ baseClass: CBaseNode
 	  fieldID: 1014
 	  fieldType: T_GAS TS_NUMERAL 4259880 TS_BIGNUM 4259880
 	  hidden: 0
-	fieldName: cumulativeGasUsed
-	  fieldID: 1015
-	  fieldType: T_WEI TS_NUMERAL 4259875 TS_BIGNUM 4259875
-	  hidden: 0
 	fieldName: input
-	  fieldID: 1016
+	  fieldID: 1015
 	  fieldType: T_TEXT TS_STRING 131122
 	  hidden: 0
 	fieldName: isError
+	  fieldID: 1016
+	  fieldType: T_NUMBER TS_NUMERAL 65561
+	  hidden: 0
+	fieldName: isInternal
 	  fieldID: 1017
 	  fieldType: T_NUMBER TS_NUMERAL 65561
 	  hidden: 1
-	fieldName: isInternalTx
-	  fieldID: 1018
-	  fieldType: T_NUMBER TS_NUMERAL 65561
-	  hidden: 1
 	fieldName: receipt
-	  fieldID: 1019
+	  fieldID: 1018
 	  fieldType: T_OBJECT TS_OBJECT 1048651
 	  hidden: 0
 	fieldName: confirmations
-	  fieldID: 1020
+	  fieldID: 1019
 	  fieldType: T_NUMBER TS_NUMERAL 65561
 	  hidden: 1
 	fieldName: gasCost
-	  fieldID: 1021
+	  fieldID: 1020
 	  fieldType: T_WEI TS_NUMERAL 4259875 TS_BIGNUM 4259875
 	  hidden: 1
 	fieldName: function
+	  fieldID: 1021
+	  fieldType: T_TEXT TS_STRING 131122
+	  hidden: 1
+	fieldName: articulated
 	  fieldID: 1022
 	  fieldType: T_TEXT TS_STRING 131122
 	  hidden: 1
@@ -100,12 +100,20 @@ baseClass: CBaseNode
 	  fieldID: 1024
 	  fieldType: T_DATE TS_DATE 262149
 	  hidden: 1
-	fieldName: ether
+	fieldName: datesh
 	  fieldID: 1025
+	  fieldType: T_DATE TS_DATE 262149
+	  hidden: 1
+	fieldName: time
+	  fieldID: 1026
+	  fieldType: T_DATE TS_DATE 262149
+	  hidden: 1
+	fieldName: ether
+	  fieldID: 1027
 	  fieldType: T_ETHER TS_NUMERAL 4259885 TS_BIGNUM 4259885
 	  hidden: 1
 	fieldName: encoding
-	  fieldID: 1026
+	  fieldID: 1028
 	  fieldType: T_TEXT TS_STRING 131122
 	  hidden: 1
 {
@@ -120,7 +128,7 @@ baseClass: CBaseNode
   "value": 0,
   "gas": 0,
   "gasPrice": 0,
-  "cumulativeGasUsed": 0,
+  "isError": 0,
   "receipt": {
     "contractAddress": "0x0",
     "gasUsed": 0,

@@ -5,6 +5,7 @@ getBlock 1995314 --check
 from Node:
 "blockHash":"0x0a283943a9a99fe706de36a2ac34465f4924cf09e7d917db3b1b6677b3f7cc01"
 "blockNumber":"0x1e7232"
+"difficulty":"0x301f53282378"
 "from":"0x2a7f8fa32012ba83e77afa782fbc9267ab0967d5"
 "from":"0xea674fdde714fd979de3edf0f56aa9716b898ec8"
 "from":"0xfe2b40254ef79cdeb30283ade2d6990cdfee3d77"
@@ -18,6 +19,7 @@ from Node:
 "hash":"0xd6bfccab86d4638287499eb3e1779c3e771d362ea1a292015db681733f275586"
 "input":"0x"
 "input":"0x54a380060000000000000000000000000000000000000000000000000000000000000040000000000000000000000000ebfaa805cf814c060cfac25adf75485fa528cb9a000000000000000000000000000000000000000000000000000000000000001c44657374726f7920476f6c6420536d61727420436f6e74726163747300000000"
+"miner":"0xea674fdde714fd979de3edf0f56aa9716b898ec8"
 "number":"0x1e7232"
 "parentHash":"0xe19aa0276eee73e6d548e457eff67797dfec9142a8c9044b7494cf19fd5c55e4"
 "timestamp":"0x57a004c3"
@@ -35,6 +37,7 @@ from Node:
 from Quickblocks:
 "blockHash":"0x0a283943a9a99fe706de36a2ac34465f4924cf09e7d917db3b1b6677b3f7cc01"
 "blockNumber":"0x1e7232"
+"difficulty":"0x301f53282378"
 "from":"0x2a7f8fa32012ba83e77afa782fbc9267ab0967d5"
 "from":"0xea674fdde714fd979de3edf0f56aa9716b898ec8"
 "from":"0xfe2b40254ef79cdeb30283ade2d6990cdfee3d77"
@@ -48,6 +51,7 @@ from Quickblocks:
 "hash":"0xd6bfccab86d4638287499eb3e1779c3e771d362ea1a292015db681733f275586"
 "input":"0x"
 "input":"0x54a380060000000000000000000000000000000000000000000000000000000000000040000000000000000000000000ebfaa805cf814c060cfac25adf75485fa528cb9a000000000000000000000000000000000000000000000000000000000000001c44657374726f7920476f6c6420536d61727420436f6e74726163747300000000"
+"miner":"0xea674fdde714fd979de3edf0f56aa9716b898ec8"
 "number":"0x1e7232"
 "parentHash":"0xe19aa0276eee73e6d548e457eff67797dfec9142a8c9044b7494cf19fd5c55e4"
 "timestamp":"0x57a004c3"
@@ -63,7 +67,7 @@ from Quickblocks:
 
 --------------------------------------------------------------------------------
 Hidden fields:
-author, condition, creates, difficulty, extraData, miner, mixHash, networkId, chainId, nonce, nonce, publicKey, r, raw, receiptsRoot, s, sealFields, sha3Uncles, size, standardV, stateRoot, totalDifficulty, transactionsRoot, uncles, v, logsBloom, contractAddress, cumulativeGasUsed, receipt, address, data, logIndex, topics, price, status
+author, condition, creates, extraData, mixHash, networkId, chainId, nonce, nonce, publicKey, r, raw, receiptsRoot, s, sealFields, sha3Uncles, size, standardV, stateRoot, totalDifficulty, transactionsRoot, uncles, v, logsBloom, contractAddress, cumulativeGasUsed, receipt, address, data, logIndex, topics, price, finalized, isError, status
 
 The strings are the same
 

@@ -9,6 +9,7 @@ getBlock 1001001 -o
     "miner": "0x0c729be7c39543c3d549282a40395299d987cec2",
     "difficulty": 12468438268070,
     "price": 0,
+    "finalized": 1,
     "timestamp": 1455421883,
     "transactions": [
         {
@@ -23,8 +24,8 @@ getBlock 1001001 -o
             "value": 1174501130000000000,
             "gas": 90000,
             "gasPrice": 50000000000,
-            "cumulativeGasUsed": 0,
             "input": "0x",
+            "isError": 0,
             "receipt": {
                 "contractAddress": "0x0",
                 "gasUsed": 21000,
@@ -45,8 +46,8 @@ getBlock 1001001 -o
             "value": 2148415350000000000,
             "gas": 90000,
             "gasPrice": 50000000000,
-            "cumulativeGasUsed": 0,
             "input": "0x",
+            "isError": 0,
             "receipt": {
                 "contractAddress": "0x0",
                 "gasUsed": 21000,
@@ -67,8 +68,8 @@ getBlock 1001001 -o
             "value": 38120000000000000000,
             "gas": 21000,
             "gasPrice": 50000000000,
-            "cumulativeGasUsed": 0,
             "input": "0x",
+            "isError": 0,
             "receipt": {
                 "contractAddress": "0x0",
                 "gasUsed": 21000,
@@ -89,8 +90,8 @@ getBlock 1001001 -o
             "value": 61848232647269079,
             "gas": 21000,
             "gasPrice": 50000000000,
-            "cumulativeGasUsed": 0,
             "input": "0x",
+            "isError": 0,
             "receipt": {
                 "contractAddress": "0x0",
                 "gasUsed": 21000,
