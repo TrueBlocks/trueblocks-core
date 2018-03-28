@@ -52,7 +52,6 @@ namespace qblocks {
     extern bool     readFromJson            (      CBaseNode& node, const SFString& fileName);
 
     //-----------------------------------------------------------------------
-    extern bool     readOneBlock_fromBinary (      CBlock& block,   const SFString& fileName);
     extern bool     writeToBinary           (const CBaseNode& node, const SFString& fileName);
     extern bool     readFromBinary          (      CBaseNode& node, const SFString& fileName);
 

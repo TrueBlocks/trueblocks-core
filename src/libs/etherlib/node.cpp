@@ -153,7 +153,8 @@ extern void registerQuitHandler(QUITHANDLER qh);
             uint64_t num = toLongU(datIn);
             if (getCurlContext()->source == "binary" && fileSize(getBinaryFilename(num)) > 0) {
                 UNHIDE_FIELD(CTransaction, "receipt");
-                return readOneBlock_fromBinary(block, getBinaryFilename(num));
+                block = CBlock();
+                return readFromBinary(block, getBinaryFilename(num));
 
             }
 
@@ -429,18 +430,6 @@ extern void registerQuitHandler(QUITHANDLER qh);
     };
 
     //-----------------------------------------------------------------------
-    bool readOneBlock_fromBinary(CBlock& block, const SFString& fileName) {
-        block = CBlock(); // reset
-        SFArchive archive(READING_ARCHIVE);
-        if (archive.Lock(fileName, binaryReadOnly, LOCK_NOWAIT)) {
-            block.Serialize(archive);
-            archive.Close();
-            return block.blockNumber;
-        }
-        return false;
-    }
-
-    //-----------------------------------------------------------------------
     bool writeToBinary(const CBaseNode& node, const SFString& fileName) {
         SFString created;
         if (establishFolder(fileName,created)) {
@@ -545,10 +534,12 @@ extern void registerQuitHandler(QUITHANDLER qh);
         for (uint64_t i = start ; i < start + count - 1 ; i = i + skip) {
             SFString fileName = getBinaryFilename(i);
             CBlock block;
-            if (fileExists(fileName))
-                readOneBlock_fromBinary(block, fileName);
-            else
+            if (fileExists(fileName)) {
+                block = CBlock();
+                readFromBinary(block, fileName);
+            } else {
                 getBlock(block,i);
+            }
 
             bool ret = (*func)(block, data);
             if (!ret) {
