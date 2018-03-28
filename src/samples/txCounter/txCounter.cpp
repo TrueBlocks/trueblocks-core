@@ -68,7 +68,7 @@ int main(int argc, char *argv[])
         SFString fileName = getBinaryFilename(i);
         if (fileExists(fileName)) {
             CBlock block;
-            readOneBlock_fromBinary(block, fileName);
+            readFromBinary(block, fileName);
             counter.countOne(block);
         } else {
             if (verbose) {
