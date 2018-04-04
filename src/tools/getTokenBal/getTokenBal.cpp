@@ -62,7 +62,7 @@ void reportByToken(COptions& options) {
             SFString blocks = options.getBlockNumList();
             while (!blocks.empty()) {
                 blknum_t blockNum = toLongU(nextTokenClear(blocks, '|'));
-                SFUintBN bal = getTokenBalance(token, holder, blockNum);
+                SFUintBN bal = getTokenInfo("balance", token, holder, blockNum);
                 totalVal += bal;
                 SFString sBal = to_string(bal).c_str();
                 if (expContext().asEther) {
@@ -139,9 +139,8 @@ void reportByAccount(COptions& options) {
             // For each block
             SFString blocks = options.getBlockNumList();
             while (!blocks.empty()) {
-
                 blknum_t blockNum = toLongU(nextTokenClear(blocks, '|'));
-                SFUintBN bal = getTokenBalance(token, holder, blockNum);
+                SFUintBN bal = getTokenInfo("balance", token, holder, blockNum);
                 totalVal += bal;
                 SFString sBal = to_string(bal).c_str();
                 if (expContext().asEther) {
