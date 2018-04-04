@@ -319,7 +319,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
     }
 
     //-------------------------------------------------------------------------
-    SFUintBN getTokenBalance(const SFAddress& token, const SFAddress& holder, blknum_t blockNum) {
+    SFUintBN getTokenInfo(const SFString& value, const SFAddress& token, const SFAddress& holder, blknum_t blockNum) {
 
         ASSERT(isAddress(token));
         ASSERT(isAddress(holder));
@@ -328,6 +328,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
         SFString h =        padLeft(holder.substr(2), 64, '0'); // encoded data for the transaction
 
         SFString cmd = "[{\"to\": \"[TOKEN]\", \"data\": \"0x70a08231[HOLDER]\"}, \"[BLOCK]\"]";
+//        SFString cmd = "[{\"to\": \"[TOKEN]\", \"data\": \"0x18160ddd\"}, \"[BLOCK]\"]";
         cmd.Replace("[TOKEN]",  t);
         cmd.Replace("[HOLDER]", h);
         cmd.Replace("[BLOCK]",  toHex(blockNum));
