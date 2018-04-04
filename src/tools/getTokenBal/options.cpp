@@ -15,7 +15,8 @@ CParams params[] = {
     CParams("-data",         "render results as tab delimited data (for example, to build a cap table)"),
     CParams("-list:<fn>",    "an alternative way to specify an address_list, place one address per line in the file 'fn'"),
     CParams("-noZero",       "suppress the display of zero balance accounts"),
-    CParams("-total",        "if more than one balance is requested, display a total as well."),
+    CParams("-total",        "if more than one balance is requested, display a total as well"),
+    CParams("-info",         "retreive standarized information (name, decimals, totalSupply, etc.) about the token"),
     CParams("",              "Retrieve the token balance(s) for one or more addresses at the given (or latest) block(s).\n"),
 };
 uint32_t nParams = sizeof(params) / sizeof(CParams);
@@ -41,6 +42,9 @@ bool COptions::parseArguments(SFString& command) {
         } else if (arg == "-t" || arg == "--total") {
             total = true;
 
+        } else if (arg == "-i" || arg == "--info") {
+            tokenInfo = true;
+            
         } else if (arg == "-b" || arg == "--byAcct") {
             byAccount = true;
 
@@ -136,6 +140,7 @@ void COptions::Init(void) {
     noZero = false;
     byAccount = false;
     total = false;
+    tokenInfo = false;
     blocks.Init();
 }
 
