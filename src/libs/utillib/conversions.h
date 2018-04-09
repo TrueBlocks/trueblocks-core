@@ -179,6 +179,7 @@ namespace qblocks {
     extern SFUintBN hex2BigUint(const string& s);
     extern SFIntBN hex2BigInt(const string& s);
     extern SFUintBN str2BigUint(const string &s);
+    #define toBigUint str2BigUint
 
     //--------------------------------------------------------------------------------
     inline SFUintBN str2BigUint(const SFString& s) {

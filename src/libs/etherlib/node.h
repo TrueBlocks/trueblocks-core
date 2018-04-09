@@ -69,7 +69,6 @@ namespace qblocks {
     inline SFString getCode                 (const SFAddress& addr) { SFString ret; getCode(addr, ret); return ret; }
     inline bool     isContract              (const SFAddress& addr) { return !getCode(addr).Substitute("0x","").empty(); }
     extern SFUintBN getBalance              (const SFAddress& addr, blknum_t blockNum, bool isDemo);
-    extern SFUintBN getTokenInfo            (const SFString& value,  const SFAddress& token, const SFAddress& holder, blknum_t blockNum);
     extern bool     getSha3                 (const SFString& hexIn, SFString& shaOut);
     inline SFString getSha3                 (const SFString& hexIn) { SFString ret; getSha3(hexIn,ret); return ret; }
 
