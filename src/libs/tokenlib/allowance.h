@@ -10,51 +10,39 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
-#include "etherlib.h"
-#include "treenode.h"
-
-namespace qblocks {
+#include "transaction.h"
 
 //--------------------------------------------------------------------------
-class CLeaf;
-typedef SFArrayBase<CLeaf>         CLeafArray;
-typedef SFList<CLeaf*>             CLeafList;
-typedef SFUniqueList<CLeaf*>       CLeafListU;
+class QAllowance;
+typedef SFArrayBase<QAllowance>         QAllowanceArray;
+typedef SFList<QAllowance*>             QAllowanceList;
+typedef SFUniqueList<QAllowance*>       QAllowanceListU;
 
 // EXISTING_CODE
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CLeaf : public CTreeNode {
+class QAllowance : public CTransaction {
 public:
-    SFBlockArray blocks;
-    uint32_t counter;
+    SFAddress _owner;
+    SFAddress _spender;
 
 public:
-    CLeaf(void);
-    CLeaf(const CLeaf& le);
-    virtual ~CLeaf(void);
-    CLeaf& operator=(const CLeaf& le);
+    QAllowance(void);
+    QAllowance(const QAllowance& al);
+    virtual ~QAllowance(void);
+    QAllowance& operator=(const QAllowance& al);
 
-    DECLARE_NODE(CLeaf);
-
-    const SFString getStringAt(const SFString& name, uint32_t i) const override;
+    DECLARE_NODE(QAllowance);
 
     // EXISTING_CODE
-    CLeaf(const SFString& _key, const SFString& _value);
-    SFString at(const SFString& _key) const override;
-    CTreeNode* insert(const SFString& _key, const SFString& _value) override;
-    CTreeNode* remove(const SFString& _key) override;
-    bool visitItems(ACCTVISITOR func, void *data) const override;
-private:
-    bool contains(const SFString& _key) const;
     // EXISTING_CODE
-    friend ostream& operator<<(ostream& os, const CLeaf& item);
+    friend ostream& operator<<(ostream& os, const QAllowance& item);
 
 protected:
     void Clear(void);
     void Init(void);
-    void Copy(const CLeaf& le);
+    void Copy(const QAllowance& al);
     bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
@@ -62,53 +50,53 @@ protected:
 };
 
 //--------------------------------------------------------------------------
-inline CLeaf::CLeaf(void) {
+inline QAllowance::QAllowance(void) {
     Init();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CLeaf::CLeaf(const CLeaf& le) {
+inline QAllowance::QAllowance(const QAllowance& al) {
     // EXISTING_CODE
     // EXISTING_CODE
-    Copy(le);
+    Copy(al);
 }
 
 // EXISTING_CODE
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline CLeaf::~CLeaf(void) {
+inline QAllowance::~QAllowance(void) {
     Clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CLeaf::Clear(void) {
+inline void QAllowance::Clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CLeaf::Init(void) {
-    CTreeNode::Init();
+inline void QAllowance::Init(void) {
+    CTransaction::Init();
 
-    blocks.Clear();
-    counter = 0;
+    _owner = "";
+    _spender = "";
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CLeaf::Copy(const CLeaf& le) {
+inline void QAllowance::Copy(const QAllowance& al) {
     Clear();
-    CTreeNode::Copy(le);
+    CTransaction::Copy(al);
 
-    blocks = le.blocks;
-    counter = le.counter;
+    _owner = al._owner;
+    _spender = al._spender;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -116,21 +104,19 @@ inline void CLeaf::Copy(const CLeaf& le) {
 }
 
 //--------------------------------------------------------------------------
-inline CLeaf& CLeaf::operator=(const CLeaf& le) {
-    Copy(le);
+inline QAllowance& QAllowance::operator=(const QAllowance& al) {
+    Copy(al);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
 //---------------------------------------------------------------------------
-IMPLEMENT_ARCHIVE_ARRAY(CLeafArray);
-IMPLEMENT_ARCHIVE_ARRAY_C(CLeafArray);
-IMPLEMENT_ARCHIVE_LIST(CLeafList);
+IMPLEMENT_ARCHIVE_ARRAY(QAllowanceArray);
+IMPLEMENT_ARCHIVE_ARRAY_C(QAllowanceArray);
+IMPLEMENT_ARCHIVE_LIST(QAllowanceList);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-extern SFString nextTreenodeChunk(const SFString& fieldIn, const void *data);
 // EXISTING_CODE
-}  // namespace qblocks
 
