@@ -250,12 +250,12 @@ int main(int argc, const char *argv[]) {
                     SFString fixed(ch);
                     name = fixed + name.substr(1);
                     SFString theClass = (options.isBuiltin() ? "Q" : "C") + name;
-//                    bool isConst = func->constant;
+                    bool isConst = func->constant;
                     bool isEmpty = name.empty() || func->type.empty();
                     bool isLog = name.ContainsI("logentry");
 //                    bool isConstructor = func->type % "constructor";
 //                    if (!isConst && !isEmpty && !isLog) { // && !isConstructor) {
-                    if (!isEmpty && !isLog) { // && !isConstructor) {
+                    if (!isEmpty && !isLog) {
                         if (name != "DefFunction") {
                             if (func->type == "event") {
                                 evtExterns += func->Format("extern const SFString evt_[{NAME}]{QB};\n");
@@ -296,9 +296,11 @@ int main(int argc, const char *argv[]) {
                         out.Replace("[{BASE_LOWER}]", toLower(base));
 
                         SFString fileName = toLower(name)+".txt";
-                        headers += ("#include \"" + fileName.Substitute(".txt", ".h") + "\"\n");
+                        if (!isConst) {
+                            headers += ("#include \"" + fileName.Substitute(".txt", ".h") + "\"\n");
+                            registers += "\t" + theClass + "::registerClass();\n";
+                        }
                         sources += fileName.Substitute(".txt", ".cpp") + " \\\n";
-                        registers += "\t" + theClass + "::registerClass();\n";
                         if (base == "Transaction") {
                             SFString f1, fName = func->Format("[{NAME}]");
                             f1 = SFString(STR_FACTORY1);
@@ -319,7 +321,8 @@ int main(int argc, const char *argv[]) {
                                                             .Substitute(",", ", "));
                             f1.Replace("[{ENCODING}]", func->getSignature(SIG_ENCODE));
                             f1.Replace(" defFunction(string)", "()");
-                            factory1 += f1;
+                            if (!isConst)
+                                factory1 += f1;
 
                         } else if (name != "LogEntry") {
                             SFString f2;
@@ -332,10 +335,11 @@ int main(int argc, const char *argv[]) {
                                        .Substitute("\t", "").Substitute("  ", " ")
                                        .Substitute(" (", "(").Substitute(",", ", "));
                             f2.Replace("[{ENCODING}]", func->getSignature(SIG_ENCODE));
-                            factory2 += f2;
+                            if (!isConst)
+                                factory2 += f2;
                         }
 
-                        if (name != "logEntry") {
+                        if (name != "logEntry" && !isConst) {
                             // hack warning
                             out.ReplaceAll("bytes32[]", "SFStringArray");
                             out.ReplaceAll("uint256[]", "SFBigUintArray");  // order matters
