@@ -33,8 +33,8 @@ public:
     bool parseArguments(SFString& command) override;
     void Init(void) override;
 
-    bool isToken(void) const { return prefix == "tokenlib"; }
-    bool isWallet(void) const { return prefix == "walletlib"; }
+    bool isToken(void) const { return prefix % "tokenlib"; }
+    bool isWallet(void) const { return prefix % "walletlib"; }
     bool isBuiltin(void) const { return isToken() || isWallet(); }
 };
 

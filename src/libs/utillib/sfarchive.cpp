@@ -203,10 +203,10 @@ namespace qblocks {
 
     //----------------------------------------------------------------------
     uint64_t appendToAsciiFile(const SFString& fileName, const SFString& addContents) {
-        SFArchive archive(WRITING_ARCHIVE);
-        if (archive.Lock(fileName, asciiWriteAppend, LOCK_NOWAIT)) {
-            archive.WriteLine((const char*)addContents);
-            archive.Release();
+        SFArchive asciiCache(WRITING_ARCHIVE);
+        if (asciiCache.Lock(fileName, asciiWriteAppend, LOCK_NOWAIT)) {
+            asciiCache.WriteLine((const char*)addContents);
+            asciiCache.Release();
         }
         return fileSize(fileName);
     }
