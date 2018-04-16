@@ -432,10 +432,11 @@ bool CBlock::operator==(const CBlock& test) const {
 //---------------------------------------------------------------------------
 class CAddressItem {
 public:
-    uint64_t blockNum;
-    uint64_t transIndex;
+    blknum_t blockNum;
+    blknum_t transIndex;
+    blknum_t traceId;
     SFAddress addr;
-    CAddressItem(void) : blockNum(0), transIndex(0) { }
+    CAddressItem(void) : blockNum(0), transIndex(0), traceId(0) { }
 };
 typedef SFArrayBase<CAddressItem> CAddressItemArray;
 
@@ -448,7 +449,7 @@ int compareAddr(const void *ob1, const void *ob2) {
 }
 
 //---------------------------------------------------------------------------
-bool accumulateAddresses(blknum_t bn, blknum_t tr, const SFAddress& addr, void *data) {
+bool accumulateAddresses(blknum_t bn, blknum_t tx, blknum_t tc, const SFAddress& addr, void *data) {
     if (zeroAddr(addr))
         return true;
 
@@ -456,7 +457,8 @@ bool accumulateAddresses(blknum_t bn, blknum_t tr, const SFAddress& addr, void *
     CAddressItem search;
     search.addr = addr;
     search.blockNum = bn;
-    search.transIndex = tr;
+    search.transIndex = tx;
+    search.traceId = tc;
     CAddressItemArray *array = (CAddressItemArray *)data;
     if (!array->Find(&search, compareAddr)) {
         array->addValue(search);
@@ -476,7 +478,7 @@ bool CBlock::forEveryUniqueAddress(ADDRESSFUNC func, TRANSFUNC filterFunc, void 
     CAddressItemArray array;
     forEveryAddress(accumulateAddresses, filterFunc, &array);
     for (uint32_t i = 0 ; i < array.getCount() ; i++) {
-        (*func)(array[i].blockNum, array[i].transIndex, array[i].addr, data);
+        (*func)(array[i].blockNum, array[i].transIndex, array[i].traceId, array[i].addr, data);
     }
     return true;
 }
@@ -505,7 +507,7 @@ bool isPotentialAddr(SFUintBN test, SFAddress& addrOut) {
 }
 
 //---------------------------------------------------------------------------
-void processPotentialAddrs(blknum_t bn, blknum_t tr, const SFString& potList, ADDRESSFUNC func, void *data) {
+void processPotentialAddrs(blknum_t bn, blknum_t tx, blknum_t tc, const SFString& potList, ADDRESSFUNC func, void *data) {
 
     if (!func)
         return;
@@ -515,7 +517,7 @@ void processPotentialAddrs(blknum_t bn, blknum_t tr, const SFString& potList, AD
     for (uint32_t s = 0 ; s < potList.length() / 64 ; s++) {
         SFUintBN test  = hex2BN("0x" + potList.substr(s*64,64));
         if (isPotentialAddr(test, addr))
-            (*func)(bn, tr, addr, data);
+            (*func)(bn, tx, tc, addr, data);
     }
 }
 
@@ -525,47 +527,44 @@ bool CBlock::forEveryAddress(ADDRESSFUNC func, TRANSFUNC filterFunc, void *data)
     if (!func)
         return false;
 
-    (*func)(blockNumber, NOPOS, miner, data);
+    (*func)(blockNumber, NOPOS, 0, miner, data);
 
     for (uint32_t tr = 0 ; tr < transactions.getCount() ; tr++) {
-
         CTransaction *trans   = &transactions[tr];
         CReceipt     *receipt = &trans->receipt;
-
-        (*func)(blockNumber, tr, trans->from, data);
-        (*func)(blockNumber, tr, trans->to,   data);
-        (*func)(blockNumber, tr, receipt->contractAddress, data);
-        SFString potList = trans->input.substr(10);
+        (*func)(blockNumber, tr, 0, trans->from, data);
+        (*func)(blockNumber, tr, 0, trans->to,   data);
+        (*func)(blockNumber, tr, 0, receipt->contractAddress, data);
+        processPotentialAddrs(blockNumber, tr, 0, trans->input.substr(10), func, data);
         for (uint32_t l = 0 ; l < receipt->logs.getCount() ; l++) {
             CLogEntry *log = &receipt->logs[l];
-            (*func)(blockNumber, tr, log->address, data);
+            (*func)(blockNumber, tr, 0, log->address, data);
             for (uint32_t t = 0 ; t < log->topics.getCount() ; t++) {
                 SFAddress addr;
                 if (isPotentialAddr(log->topics[t], addr)) {
-                    (*func)(blockNumber, tr, addr, data);
+                    (*func)(blockNumber, tr, 0, addr, data);
                 }
             }
-            potList += log->data.substr(2);
+            processPotentialAddrs(blockNumber, tr, 0, log->data.substr(2), func, data);
         }
 
-        // If we're not filtering, or the filter passes, proceed. Not the filter depends on the transaction only, not any address.
+        // If we're not filtering, or the filter passes, proceed. Note the filter depends on the
+        // transaction only, not on any address.
         if (!filterFunc || !filterFunc(trans, data)) { // may look at DDos range and nTraces for example
             CTraceArray traces;
             getTraces(traces, trans->hash);
             for (uint32_t t = 0 ; t < traces.getCount() ; t++) {
                 CTrace *trace = &traces[t];
-                (*func)(blockNumber, tr, trace->action.from, data);
-                (*func)(blockNumber, tr, trace->action.to, data);
-                (*func)(blockNumber, tr, trace->action.refundAddress, data);
-                (*func)(blockNumber, tr, trace->action.address, data);
-                (*func)(blockNumber, tr, trace->result.address, data);
+                (*func)(blockNumber, tr, t+10, trace->action.from, data);
+                (*func)(blockNumber, tr, t+10, trace->action.to, data);
+                (*func)(blockNumber, tr, t+10, trace->action.refundAddress, data);
+                (*func)(blockNumber, tr, t+10, trace->action.address, data);
+                (*func)(blockNumber, tr, t+10, trace->result.address, data);
                 SFString input = trace->action.input.substr(10);
                 if (!input.empty())
-                    potList += input;
+                    processPotentialAddrs(blockNumber, tr, t+10, input, func, data);
             }
         }
-
-        processPotentialAddrs(blockNumber, tr, potList, func, data);
     }
     return true;
 }
