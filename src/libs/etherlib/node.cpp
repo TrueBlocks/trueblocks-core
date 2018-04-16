@@ -58,6 +58,8 @@ extern void registerQuitHandler(QUITHANDLER qh);
         clearInMemoryCache();
         if (theQuitHandler)
             (*theQuitHandler)(-1);
+        else
+            cleanFileLocks();
     }
 
     //-------------------------------------------------------------------------
@@ -89,9 +91,10 @@ extern void registerQuitHandler(QUITHANDLER qh);
 
     //-------------------------------------------------------------------------
     bool getTransaction(CTransaction& trans, blknum_t blockNum, txnum_t txID) {
+
         if (fileExists(getBinaryFilename(blockNum))) {
             CBlock block;
-            readFromBinary(block, getBinaryFilename(blockNum));
+            readBlockFromBinary(block, getBinaryFilename(blockNum));
             if (txID < block.transactions.getCount())
             {
                 trans = block.transactions[(uint32_t)txID];
@@ -154,7 +157,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
             if (getCurlContext()->source == "binary" && fileSize(getBinaryFilename(num)) > 0) {
                 UNHIDE_FIELD(CTransaction, "receipt");
                 block = CBlock();
-                return readFromBinary(block, getBinaryFilename(num));
+                return readBlockFromBinary(block, getBinaryFilename(num));
 
             }
 
@@ -378,27 +381,6 @@ extern void registerQuitHandler(QUITHANDLER qh);
     }
 
     //-----------------------------------------------------------------------
-    bool readOneBlock_fromJson(CBlock& block, const SFString& fileName) {
-        if (!fileExists(fileName)) {
-            cerr << "File not found " << fileName << "\n";
-            return false;
-        }
-        block = CBlock(); // reset
-        SFString contents = asciiFileToString(fileName);
-        if (contents.Contains("null")) {
-            contents.ReplaceAll("null", "\"0x\"");
-            stringToAsciiFile(fileName, contents);
-        }
-        if (!contents.endsWith('\n')) {
-            stringToAsciiFile(fileName, contents+"\n");
-        }
-        char *p = cleanUpJson((char *)(const char*)contents);
-        uint32_t nFields=0;
-        block.parseJson(p,nFields);
-        return nFields;
-    }
-
-    //-----------------------------------------------------------------------
     void writeToJson(const CBaseNode& node, const SFString& fileName) {
         if (establishFolder(fileName)) {
             std::ofstream out(fileName);
@@ -409,19 +391,36 @@ extern void registerQuitHandler(QUITHANDLER qh);
 
     //-----------------------------------------------------------------------
     bool readFromJson(CBaseNode& node, const SFString& fileName) {
-        return false;
-    };
+        if (!fileExists(fileName)) {
+            cerr << "File not found " << fileName << "\n";
+            return false;
+        }
+        // assume the item is already clear
+        SFString contents = asciiFileToString(fileName);
+        if (contents.Contains("null")) {
+            contents.ReplaceAll("null", "\"0x\"");
+            stringToAsciiFile(fileName, contents);
+        }
+        if (!contents.endsWith('\n')) {
+            stringToAsciiFile(fileName, contents+"\n");
+        }
+        char *p = cleanUpJson((char *)(const char*)contents);
+        uint32_t nFields=0;
+        node.parseJson(p,nFields);
+        return nFields;
+    }
 
     //-----------------------------------------------------------------------
-    bool writeToBinary(const CBaseNode& node, const SFString& fileName) {
+    // local function only
+    static bool writeNodeToBinary(const CBaseNode& node, const SFString& fileName) {
         SFString created;
-        if (establishFolder(fileName,created)) {
+        if (establishFolder(fileName, created)) {
             if (!created.empty() && !isTestMode())
                 cerr << "mkdir(" << created << ")" << SFString(' ',20) << "                                                     \n";
-            SFArchive archive(WRITING_ARCHIVE);
-            if (archive.Lock(fileName, binaryWriteCreate, LOCK_CREATE)) {
-                node.SerializeC(archive);
-                archive.Close();
+            SFArchive nodeCache(WRITING_ARCHIVE);
+            if (nodeCache.Lock(fileName, binaryWriteCreate, LOCK_CREATE)) {
+                node.SerializeC(nodeCache);
+                nodeCache.Close();
                 return true;
             }
         }
@@ -429,13 +428,57 @@ extern void registerQuitHandler(QUITHANDLER qh);
     }
 
     //-----------------------------------------------------------------------
-    bool readFromBinary(CBaseNode& item, const SFString& fileName) {
+    // local function only
+    static bool readNodeFromBinary(CBaseNode& item, const SFString& fileName) {
         // Assumes that the item is clear, so no Init
-        SFArchive archive(READING_ARCHIVE);
-        if (archive.Lock(fileName, binaryReadOnly, LOCK_NOWAIT)) {
-            item.Serialize(archive);
-            archive.Close();
+        SFArchive nodeCache(READING_ARCHIVE);
+        if (nodeCache.Lock(fileName, binaryReadOnly, LOCK_NOWAIT)) {
+            item.Serialize(nodeCache);
+            nodeCache.Close();
             return true;
+        }
+        return false;
+    }
+
+    //-----------------------------------------------------------------------
+    bool writeBlockToBinary(const CBlock& block, const SFString& fileName) {
+        //SFArchive blockCache(READING_ARCHIVE);  -- so search hits
+        return writeNodeToBinary(block, fileName);
+    }
+
+    //-----------------------------------------------------------------------
+    bool readBlockFromBinary(CBlock& block, const SFString& fileName) {
+        //SFArchive blockCache(READING_ARCHIVE);  -- so search hits
+        return readNodeFromBinary(block, fileName);
+    }
+
+    //----------------------------------------------------------------------------------
+    bool readBloomArray(SFBloomArray& blooms, const SFString& fileName) {
+        blooms.Clear();
+        SFArchive bloomCache(READING_ARCHIVE);
+        if (bloomCache.Lock(fileName, binaryReadOnly, LOCK_NOWAIT)) {
+            bloomCache >> blooms;
+            bloomCache.Close();
+            return true;
+        }
+        return false;
+    }
+
+    //-----------------------------------------------------------------------
+    bool writeBloomArray(const SFBloomArray& blooms, const SFString& fileName) {
+        if (blooms.getCount() == 0 || (blooms.getCount() == 1 && blooms[0] == 0))
+            return false;
+
+        SFString created;
+        if (establishFolder(fileName,created)) {
+            if (!created.empty() && !isTestMode())
+                cerr << "mkdir(" << created << ")" << SFString(' ',20) << "                                                     \n";
+            SFArchive bloomCache(WRITING_ARCHIVE);
+            if (bloomCache.Lock(fileName, binaryWriteCreate, LOCK_CREATE)) {
+                bloomCache << blooms;
+                bloomCache.Close();
+                return true;
+            }
         }
         return false;
     }
@@ -477,37 +520,6 @@ extern void registerQuitHandler(QUITHANDLER qh);
         return ret;
     }
 
-    //----------------------------------------------------------------------------------
-    bool readBloomArray(SFBloomArray& blooms, const SFString& fileName) {
-        blooms.Clear();
-        SFArchive archive(READING_ARCHIVE);
-        if (archive.Lock(fileName, binaryReadOnly, LOCK_NOWAIT)) {
-            archive >> blooms;
-            archive.Close();
-            return true;
-        }
-        return false;
-    }
-
-    //-----------------------------------------------------------------------
-    bool writeBloomArray(const SFBloomArray& blooms, const SFString& fileName) {
-        if (blooms.getCount() == 0 || (blooms.getCount() == 1 && blooms[0] == 0))
-            return false;
-
-        SFString created;
-        if (establishFolder(fileName,created)) {
-            if (!created.empty() && !isTestMode())
-                cerr << "mkdir(" << created << ")" << SFString(' ',20) << "                                                     \n";
-            SFArchive archive(WRITING_ARCHIVE);
-            if (archive.Lock(fileName, binaryWriteCreate, LOCK_CREATE)) {
-                archive << blooms;
-                archive.Close();
-                return true;
-            }
-        }
-        return false;
-    }
-
     //-------------------------------------------------------------------------
     bool forEveryBlock(BLOCKVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip) {
         // Here we simply scan the numbers and either read from disc or query the node
@@ -519,7 +531,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
             CBlock block;
             if (fileExists(fileName)) {
                 block = CBlock();
-                readFromBinary(block, fileName);
+                readBlockFromBinary(block, fileName);
             } else {
                 getBlock(block,i);
             }
@@ -798,10 +810,10 @@ extern void registerQuitHandler(QUITHANDLER qh);
                 exit(0);
             }
             blockCache = folder.getFullPath();
+            if (!blockCache.endsWith("/"))
+                blockCache += "/";
         }
-        if (!blockCache.endsWith("/"))
-            blockCache += "/";
-        return blockCache + _part;
+        return (blockCache + _part).Substitute("//", "/");
     }
 
     //--------------------------------------------------------------------------
