@@ -3,7 +3,7 @@ getTokenBal 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 0xfbb1b73c4f0bda4f67dca26
 
   Totalling is not available when exporting data.
 
-  Usage:    getTokenBal [-b|-d|-l fn|-n|-t|-v|-h] <address> <address> [address...] [block...]  
+  Usage:    getTokenBal [-b|-d|-l fn|-n|-t|-i|-v|-h] <address> <address> [address...] [block...]  
   Purpose:  Retrieve the token balance(s) for one or more addresses at the given (or latest) block(s).
              
   Where:    
@@ -13,7 +13,8 @@ getTokenBal 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 0xfbb1b73c4f0bda4f67dca26
 	-d  (--data)          render results as tab delimited data (for example, to build a cap table)
 	-l  (--list fn)       an alternative way to specify an address_list, place one address per line in the file 'fn'
 	-n  (--noZero)        suppress the display of zero balance accounts
-	-t  (--total)         if more than one balance is requested, display a total as well.
+	-t  (--total)         if more than one balance is requested, display a total as well
+	-i  (--info)          retreive standarized information (name, decimals, totalSupply, etc.) about the token
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
 	-h  (--help)          display this help screen
 
