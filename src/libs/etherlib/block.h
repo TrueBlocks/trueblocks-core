@@ -22,7 +22,7 @@ typedef SFList<CBlock*>             CBlockList;
 typedef SFUniqueList<CBlock*>       CBlockListU;
 
 // EXISTING_CODE
-typedef bool (*ADDRESSFUNC)(blknum_t bn, blknum_t tr, const SFAddress& addr, void *data);
+typedef bool (*ADDRESSFUNC)(blknum_t bn, blknum_t tx, blknum_t tc, const SFAddress& addr, void *data);
 typedef bool (*TRANSFUNC)(const CTransaction *trans, void *data);
 // EXISTING_CODE
 
@@ -173,7 +173,7 @@ inline bool isFinal(timestamp_t ts) {
     return (toTimestamp(now) - ts) > (60 * 10);
 }
 extern bool isPotentialAddr(SFUintBN test, SFAddress& addrOut);
-extern void processPotentialAddrs(blknum_t bn, blknum_t tr, const SFString& potList, ADDRESSFUNC func, void *data);
+extern void processPotentialAddrs(blknum_t bn, blknum_t tx, blknum_t tc, const SFString& potList, ADDRESSFUNC func, void *data);
 // EXISTING_CODE
 }  // namespace qblocks
 
