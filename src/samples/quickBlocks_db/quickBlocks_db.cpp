@@ -51,7 +51,7 @@ double testRetrieve(void) {
     for (blknum_t b = FIRST ; b < FIRST+NBLKS ; b++) {
         SFString fileName = "./cache/" + asStringU(b) + ".bin";
         CBlock block;
-        readOneBlock_fromBinary(block, fileName);
+        readFromBinary(block, fileName);
         cerr << "Reading " << block.blockNumber << "\r";
         cerr.flush();
     }

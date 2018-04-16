@@ -8,7 +8,7 @@
 //-----------------------------------------------------------------------------
 class COptions : public CBlockOptions {
 public:
-    bool         alone;
+    SFString mode;
 
     COptions(void);
     ~COptions(void);

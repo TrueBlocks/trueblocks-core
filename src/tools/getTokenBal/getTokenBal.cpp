@@ -11,6 +11,7 @@
 
 void reportByToken(COptions& options);
 void reportByAccount(COptions& options);
+extern SFUintBN getTokenInfo(const SFString& value,  const SFAddress& token, const SFAddress& holder, blknum_t blockNum);
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
@@ -62,7 +63,7 @@ void reportByToken(COptions& options) {
             SFString blocks = options.getBlockNumList();
             while (!blocks.empty()) {
                 blknum_t blockNum = toLongU(nextTokenClear(blocks, '|'));
-                SFUintBN bal = getTokenBalance(token, holder, blockNum);
+                SFUintBN bal = getTokenInfo("balance", token, holder, blockNum);
                 totalVal += bal;
                 SFString sBal = to_string(bal).c_str();
                 if (expContext().asEther) {
@@ -139,9 +140,8 @@ void reportByAccount(COptions& options) {
             // For each block
             SFString blocks = options.getBlockNumList();
             while (!blocks.empty()) {
-
                 blknum_t blockNum = toLongU(nextTokenClear(blocks, '|'));
-                SFUintBN bal = getTokenBalance(token, holder, blockNum);
+                SFUintBN bal = getTokenInfo("balance", token, holder, blockNum);
                 totalVal += bal;
                 SFString sBal = to_string(bal).c_str();
                 if (expContext().asEther) {
@@ -194,3 +194,22 @@ void reportByAccount(COptions& options) {
     if (needsNewline)
         cerr << "                                                                                              \n";
 }
+
+//-------------------------------------------------------------------------
+SFUintBN getTokenInfo(const SFString& value, const SFAddress& token, const SFAddress& holder, blknum_t blockNum) {
+
+    ASSERT(isAddress(token));
+    ASSERT(isAddress(holder));
+
+    SFString t = "0x" + padLeft(token.substr(2), 40, '0');  // address to send the command to
+    SFString h =        padLeft(holder.substr(2), 64, '0'); // encoded data for the transaction
+
+    SFString cmd = "[{\"to\": \"[TOKEN]\", \"data\": \"0x70a08231[HOLDER]\"}, \"[BLOCK]\"]";
+    //        SFString cmd = "[{\"to\": \"[TOKEN]\", \"data\": \"0x18160ddd\"}, \"[BLOCK]\"]";
+    cmd.Replace("[TOKEN]",  t);
+    cmd.Replace("[HOLDER]", h);
+    cmd.Replace("[BLOCK]",  toHex(blockNum));
+
+    return toWei(callRPC("eth_call", cmd, false));
+}
+

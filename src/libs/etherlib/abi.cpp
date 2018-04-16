@@ -437,10 +437,10 @@ void rebuildFourByteDB(void) {
         }
     }
     funcArray.Sort(sortFuncTableByEncoding);
-    SFArchive archive(WRITING_ARCHIVE);
-    if (archive.Lock(abiPath+"abis.bin", binaryWriteCreate, LOCK_CREATE)) {
-        archive << funcArray;
-        archive.Release();
+    SFArchive funcCache(WRITING_ARCHIVE);
+    if (funcCache.Lock(abiPath+"abis.bin", binaryWriteCreate, LOCK_CREATE)) {
+        funcCache << funcArray;
+        funcCache.Release();
     }
 }
 
@@ -451,10 +451,10 @@ static CFunctionArray *getABIArray(void) {
     if (!theArrayPtr) {
         static CFunctionArray theArray;
         SFString abiPath = blockCachePath("abis/abis.bin");
-        SFArchive archive(READING_ARCHIVE);
-        if (archive.Lock(abiPath, binaryReadOnly, LOCK_WAIT)) {
-            archive >> theArray;
-            archive.Release();
+        SFArchive funcCache(READING_ARCHIVE);
+        if (funcCache.Lock(abiPath, binaryReadOnly, LOCK_WAIT)) {
+            funcCache >> theArray;
+            funcCache.Release();
         }
         theArrayPtr = &theArray;
     }
