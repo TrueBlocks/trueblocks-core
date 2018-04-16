@@ -87,7 +87,7 @@ SFString doOneBloom(uint64_t num, const COptions& opt) {
 
         // queryBlock returns false if there are no transactions, so ignore the return value
         if (opt.isCache) {
-            readFromBinary(gold, getBinaryFilename(gold.blockNumber));
+            readBlockFromBinary(gold, getBinaryFilename(gold.blockNumber));
             // --source::cache mode doesn't include timestamp in transactions
             for (uint32_t t = 0 ; t < gold.transactions.getCount() ; t++) {
                 gold.transactions[t].timestamp = gold.timestamp;
@@ -98,7 +98,7 @@ SFString doOneBloom(uint64_t num, const COptions& opt) {
             if (/* DISABLES CODE */ (false)) { // turn this on to force a write of the block to the disc
                 SFString fileName = getBinaryFilename(gold.blockNumber);
                 gold.finalized = isFinal(gold.timestamp);
-                writeToBinary(gold, fileName);
+                writeBlockToBinary(gold, fileName);
             }
         }
 

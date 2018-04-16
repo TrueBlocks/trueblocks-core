@@ -53,6 +53,8 @@ namespace qblocks {
     //-----------------------------------------------------------------------
     extern bool     writeBlockToBinary      (const CBlock& block, const SFString& fileName);
     extern bool     readBlockFromBinary     (      CBlock& block, const SFString& fileName);
+    extern bool     writeNodeToBinary       (const CBaseNode& node, const SFString& fileName);
+    extern bool     readNodeFromBinary      (      CBaseNode& item, const SFString& fileName);
 
     //-------------------------------------------------------------------------
     extern SFString getVersionFromClient    (void);
