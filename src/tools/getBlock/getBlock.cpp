@@ -83,7 +83,7 @@ SFString doOneBlock(uint64_t num, const COptions& opt) {
                 gold.parseJson((char*)(const char*)result);
                 SFString fileName = getBinaryFilename(num);
                 gold.finalized = isFinal(gold.timestamp);
-                writeToBinary(gold, fileName);
+                writeBlockToBinary(gold, fileName);
             }
         }
 
@@ -92,7 +92,7 @@ SFString doOneBlock(uint64_t num, const COptions& opt) {
         if (opt.isCache) {
 
             // --source::cache mode doesn't include timestamp in transactions
-            readFromBinary(gold, fileName);
+            readBlockFromBinary(gold, fileName);
             for (uint32_t t = 0 ; t < gold.transactions.getCount() ; t++)
                 gold.transactions[t].timestamp = gold.timestamp;
 
@@ -102,7 +102,7 @@ SFString doOneBlock(uint64_t num, const COptions& opt) {
 
         if (opt.force) { // turn this on to force a write of the block to the disc
             gold.finalized = isFinal(gold.timestamp);
-            writeToBinary(gold, fileName);
+            writeBlockToBinary(gold, fileName);
         }
 
         if (!opt.silent) {
