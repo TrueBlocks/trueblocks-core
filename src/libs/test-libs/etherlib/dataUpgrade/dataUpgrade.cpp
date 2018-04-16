@@ -61,7 +61,7 @@ bool testReadWrite(COptions& options) {
             ASSERT(fileExists("./oldFmt.cache"));
             cout << "0. Read from old binary format and do nothing...\n";
             cout.flush();
-            readOneBlock_fromBinary(block, "./oldFmt.cache");
+            readFromBinary(block, "./oldFmt.cache");
             reportNode(&block);
             break;
         }
@@ -69,7 +69,7 @@ bool testReadWrite(COptions& options) {
             ASSERT(fileExists("./oldFmt.cache"));
             cout << "1. Read from old binary format, write to JSON...\n";
             cout.flush();
-            readOneBlock_fromBinary(block, "./oldFmt.cache");
+            readFromBinary(block, "./oldFmt.cache");
             writeToJson(block, "./newFmt.json");
             ASSERT(fileExists("./newFmt.json"));
             reportNode(&block);

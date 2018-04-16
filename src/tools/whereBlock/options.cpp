@@ -10,8 +10,9 @@
 //---------------------------------------------------------------------------------------------------
 CParams params[] = {
     CParams("~block_list", "a space-separated list of one or more blocks to search for"),
-    CParams("-alone",      "if the block(s) is/are found in the cache, display the path(s) to those blocks"),
-    CParams("",            "Reports if a block was found in the cache or at a local or remote node.\n"),
+    CParams("-account",    "find an account file, not the block file"),
+    CParams("-bloom",      "find a bloom file, not the block file"),
+    CParams("",            "Reports if a block was found in the cache, at a local, or at a remote node.\n"),
 };
 uint32_t nParams = sizeof(params) / sizeof(CParams);
 
@@ -27,8 +28,11 @@ bool COptions::parseArguments(SFString& command) {
         SFString arg = nextTokenClear(command, ' ');
         SFString orig = arg;
 
-        if (arg == "-a" || arg == "--alone") {
-            alone = true;
+        if (arg == "-a" || arg == "--account") {
+            mode = "account";
+
+        } else if (arg == "-b" || arg == "--bloom") {
+            mode = "bloom";
 
         } else if (arg.startsWith('-')) {  // do not collapse
             if (!builtInCmd(arg)) {
@@ -49,9 +53,6 @@ bool COptions::parseArguments(SFString& command) {
     if (!blocks.hasBlocks())
         return usage("You must enter a valid block number. Quitting...");
 
-    if (alone && !isNodeRunning())
-        alone = false;
-
     return true;
 }
 
@@ -61,7 +62,7 @@ void COptions::Init(void) {
     nParamsRef = nParams;
     pOptions = this;
 
-    alone = false;
+    mode = "block";
     optionOff(OPT_DENOM);
 }
 

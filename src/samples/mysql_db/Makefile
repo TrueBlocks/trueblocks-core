@@ -18,8 +18,8 @@ QBLOCKS_LDFLAGS      = -L$(QBLOCKS_LIB_PATH) $(QBLOCKS_STATIC_LIBS)
 # Compiler/linker flags
 #---------------------------------------------------------------------------
 CXX=g++
-CFLAGS=-std=c++11 -Werror -Wall -O2 -I. -I$(QBLOCKS_INCLUDE_PATH) -I/usr/include/mysql
-LDFLAGS=$(QBLOCKS_LDFLAGS) -lcurl -L/usr/local/Cellar/mysql-connector-c/6.1.11/lib/ -lmysqlclient
+CFLAGS=-std=c++11 -Werror -Wall -O2 -I. -I$(QBLOCKS_INCLUDE_PATH) -I/usr/local/mysql/include/
+LDFLAGS=$(QBLOCKS_LDFLAGS) -lcurl -L/usr/local/mysql/lib/ -lmysqlclient
 
 #---------------------------------------------------------------------------
 # Program sources and name

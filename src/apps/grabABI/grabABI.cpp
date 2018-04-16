@@ -190,7 +190,7 @@ int main(int argc, const char *argv[]) {
         CFunctionArray functions;
         SFString addrList;
         bool isGenerate = !options.classDir.empty();
-        if (options.addrs[0] != "0xTokenLib" && options.addrs[0] != "0xWalletLib" && isGenerate)
+        if (!(options.addrs[0] % "0xTokenLib") && !(options.addrs[0] % "0xWalletLib") && isGenerate)
         {
             acquireABI(functions, "0xTokenLib",  options, true);
             acquireABI(functions, "0xWalletLib", options, true);
@@ -236,7 +236,7 @@ int main(int argc, const char *argv[]) {
             SFString funcExterns, evtExterns, funcDecls, evtDecls, sigs, evts;
             SFString headers;
             if (!options.isToken()) headers += ("#include \"tokenlib.h\"\n");
-            if (!options.isWallet()) headers += ("#include \"walletlib.h\"\n");
+            if (!options.isWallet()) headers += ("#ifndef NOWALLETLIB\n#include \"walletlib.h\"\n#endif\n");
             SFString sources = "src= \\\n", registers, factory1, factory2;
             for (uint32_t i = 0 ; i < functions.getCount() ; i++) {
                 CFunction *func = &functions[i];
@@ -254,7 +254,8 @@ int main(int argc, const char *argv[]) {
                     bool isEmpty = name.empty() || func->type.empty();
                     bool isLog = name.ContainsI("logentry");
 //                    bool isConstructor = func->type % "constructor";
-                    if (!isConst && !isEmpty && !isLog) { // && !isConstructor) {
+//                    if (!isConst && !isEmpty && !isLog) { // && !isConstructor) {
+                    if (!isEmpty && !isLog) {
                         if (name != "DefFunction") {
                             if (func->type == "event") {
                                 evtExterns += func->Format("extern const SFString evt_[{NAME}]{QB};\n");
@@ -295,9 +296,11 @@ int main(int argc, const char *argv[]) {
                         out.Replace("[{BASE_LOWER}]", toLower(base));
 
                         SFString fileName = toLower(name)+".txt";
-                        headers += ("#include \"" + fileName.Substitute(".txt", ".h") + "\"\n");
+                        if (!isConst) {
+                            headers += ("#include \"" + fileName.Substitute(".txt", ".h") + "\"\n");
+                            registers += "\t" + theClass + "::registerClass();\n";
+                        }
                         sources += fileName.Substitute(".txt", ".cpp") + " \\\n";
-                        registers += "\t" + theClass + "::registerClass();\n";
                         if (base == "Transaction") {
                             SFString f1, fName = func->Format("[{NAME}]");
                             f1 = SFString(STR_FACTORY1);
@@ -318,7 +321,8 @@ int main(int argc, const char *argv[]) {
                                                             .Substitute(",", ", "));
                             f1.Replace("[{ENCODING}]", func->getSignature(SIG_ENCODE));
                             f1.Replace(" defFunction(string)", "()");
-                            factory1 += f1;
+                            if (!isConst)
+                                factory1 += f1;
 
                         } else if (name != "LogEntry") {
                             SFString f2;
@@ -331,10 +335,11 @@ int main(int argc, const char *argv[]) {
                                        .Substitute("\t", "").Substitute("  ", " ")
                                        .Substitute(" (", "(").Substitute(",", ", "));
                             f2.Replace("[{ENCODING}]", func->getSignature(SIG_ENCODE));
-                            factory2 += f2;
+                            if (!isConst)
+                                factory2 += f2;
                         }
 
-                        if (name != "logEntry") {
+                        if (name != "logEntry" && !isConst) {
                             // hack warning
                             out.ReplaceAll("bytes32[]", "SFStringArray");
                             out.ReplaceAll("uint256[]", "SFBigUintArray");  // order matters
@@ -382,9 +387,11 @@ int main(int argc, const char *argv[]) {
 
             // The library make file
             sources.ReplaceReverse(" \\\n", " \\\n" + options.prefix + ".cpp\n");
-            SFString makefile = asciiFileToString(templateFolder + "parselib/CMakeLists.txt");
-            makefile.ReplaceAll("[{PROJECT_NAME}]", projectName());
-            writeTheCode(classDir + "CMakeLists.txt", makefile);
+            if (!options.isBuiltin()) {
+                SFString makefile = asciiFileToString(templateFolder + "parselib/CMakeLists.txt");
+                makefile.ReplaceAll("[{PROJECT_NAME}]", projectName());
+                writeTheCode(classDir + "CMakeLists.txt", makefile);
+            }
 
             // The library source file
             factory1.Replace("} else ", "");
@@ -497,7 +504,7 @@ SFString getEventAssign(const CParameter *p, uint64_t which, uint64_t nIndexed) 
     }
 
     if (p->indexed) {
-        ass.Replace("[{VAL}]", "nTopics > [{WHICH}] ? fromTopic(p->topics[{IDX}]) : \"\"");
+        ass.Replace("[{VAL}]", "nTops > [{WHICH}] ? fromTopic(p->topics[{IDX}]) : \"\"");
 
     } else if (type == "bytes") {
         ass.Replace("[{VAL}]", "\"0x\"+data.substr([{WHICH}]*64)");
@@ -585,7 +592,7 @@ const char* STR_HEADERFILE =
 "extern void [{PREFIX}]_init(void);\n"
 "extern const CTransaction *promoteTo[{PPREFIX}](const CTransaction *p);\n"
 "extern const CLogEntry *promoteTo[{PPREFIX}]Event(const CLogEntry *p);\n"
-"\n[{EXTERNS}][{HEADER_SIGS}]\n";
+"\n[{EXTERNS}][{HEADER_SIGS}]\n\n//EXISTING_CODE\n//EXISTING_CODE\n";
 
 //-----------------------------------------------------------------------
 const char* STR_HEADER_SIGS =

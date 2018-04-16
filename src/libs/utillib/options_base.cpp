@@ -715,12 +715,12 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
             cout << "txtDate: " << txtDate << " binDate: " << binDate << "\n";
 
         if (binDate > txtDate) {
-            SFArchive archive(READING_ARCHIVE);
-            if (archive.Lock(binFile, binaryReadOnly, LOCK_NOWAIT)) {
+            SFArchive nameCache(READING_ARCHIVE);
+            if (nameCache.Lock(binFile, binaryReadOnly, LOCK_NOWAIT)) {
                 if (verbose && !isTestMode())
                     cout << "Reading from binary cache\n";
-                archive >> namedAccounts;
-                archive.Release();
+                nameCache >> namedAccounts;
+                nameCache.Release();
                 return true;
             }
         }
@@ -748,12 +748,12 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
             }
         }
 
-        SFArchive archive(WRITING_ARCHIVE);
-        if (archive.Lock(binFile, binaryWriteCreate, LOCK_CREATE)) {
+        SFArchive nameCache(WRITING_ARCHIVE);
+        if (nameCache.Lock(binFile, binaryWriteCreate, LOCK_CREATE)) {
             if (verbose && !isTestMode())
                 cout << "Writing binary cache\n";
-            archive << namedAccounts;
-            archive.Release();
+            nameCache << namedAccounts;
+            nameCache.Release();
         }
 
         return true;

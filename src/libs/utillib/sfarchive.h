@@ -69,18 +69,6 @@ namespace qblocks {
             operator>>(unused);
         }
 
-        void resetForWriting(void) {
-            if (isOpen())
-                Release();
-            m_isReading = false;
-        }
-
-        void resetForReading(void) {
-            if (isOpen())
-                Release();
-            m_isReading = true;
-        }
-
         SFArchive& operator<<(bool b);
         SFArchive& operator<<(char c);
         SFArchive& operator<<(int d);
