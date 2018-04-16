@@ -567,6 +567,13 @@ namespace qblocks {
     }
 
     //-----------------------------------------------------------------------
+    void quickQuitHander(int signum) {
+        cleanFileLocks();
+        if (signum != -1)
+            exit(1);
+    }
+
+    //-----------------------------------------------------------------------
     void registerQuitHandler(QUITHANDLER qh) {
 
         struct sigaction sigIntHandler;

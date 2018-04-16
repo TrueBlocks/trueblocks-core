@@ -304,7 +304,7 @@ SFString nextTransactionChunk_custom(const SFString& fieldIn, const void *dataPt
                 if ( fieldIn % "gasCost" ) {
                     SFUintBN used = tra->receipt.gasUsed;
                     SFUintBN price = tra->gasPrice;
-                    return wei2Ether(to_string(used * price).c_str());
+                    return to_string(used * price).c_str();
                 }
                 break;
             case 't':
