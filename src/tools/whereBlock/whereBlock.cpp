@@ -36,7 +36,6 @@ int main(int argc, const char *argv[]) {
             blknum_t bn = toLongU(nextTokenClear(list, '|'));
             CFilename fileName(getBinaryFilename(bn).Substitute("/blocks/", "/"+options.mode+"s/"));
             bool exists = fileExists(fileName.getFullPath());
-            cout << fileName.getFullPath() << " " << exists << "\n";
 
             SFString path = (verbose ? fileName.getFullPath() : fileName.relativePath(blockCachePath("").Substitute("/blocks/", "/"+options.mode+"s/")));
             SFString vers = getVersionFromClient();
