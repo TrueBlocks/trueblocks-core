@@ -1,6 +1,0 @@
-[settings]
-class     = QAllowance
-baseClass = CTransaction
-fields    = address _owner|address _spender|
-includes  = transaction.h
-cIncs     = #include "etherlib.h"

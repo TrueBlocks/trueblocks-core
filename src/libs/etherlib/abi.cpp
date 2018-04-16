@@ -369,6 +369,32 @@ bool CAbi::loadABIFromFile(const SFString& fileName) {
 }
 
 //---------------------------------------------------------------------------
+bool CAbi::loadABIFromCSV(const SFString& fileName) {
+    CFunction::registerClass();
+    CParameter::registerClass();
+    HIDE_FIELD(CParameter, "indexed");
+    HIDE_FIELD(CParameter, "isPointer");
+    HIDE_FIELD(CParameter, "isArray");
+    HIDE_FIELD(CParameter, "isObject");
+    SFString contents = asciiFileToString(fileName);
+    ASSERT(!contents.empty());
+    while (!contents.empty()) {
+        SFString json = nextTokenClear(contents,'\n');
+        SFString encoding = nextTokenClear(json,'\t');
+        CFunction func;
+        uint32_t nFields = 0;
+        char *p = cleanUpJson((char *)json.c_str());
+        func.parseJson(p, nFields);
+        if (nFields) {
+            abiByEncoding[abiByEncoding.getCount()] = func;
+            cout << func.encoding << ": " << func.name << ": " << func.inputs.getCount() << "\n";
+        }
+    }
+    abiByEncoding.Sort(sortFuncTableByEncoding);
+    return abiByEncoding.getCount();
+}
+
+//---------------------------------------------------------------------------
 bool CAbi::loadABI(const SFString& addr) {
     // Already loaded?
     if (abiByName.getCount() && abiByEncoding.getCount())
