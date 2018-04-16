@@ -411,8 +411,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
     }
 
     //-----------------------------------------------------------------------
-    // local function only
-    static bool writeNodeToBinary(const CBaseNode& node, const SFString& fileName) {
+    bool writeNodeToBinary(const CBaseNode& node, const SFString& fileName) {
         SFString created;
         if (establishFolder(fileName, created)) {
             if (!created.empty() && !isTestMode())
@@ -428,8 +427,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
     }
 
     //-----------------------------------------------------------------------
-    // local function only
-    static bool readNodeFromBinary(CBaseNode& item, const SFString& fileName) {
+    bool readNodeFromBinary(CBaseNode& item, const SFString& fileName) {
         // Assumes that the item is clear, so no Init
         SFArchive nodeCache(READING_ARCHIVE);
         if (nodeCache.Lock(fileName, binaryReadOnly, LOCK_NOWAIT)) {
