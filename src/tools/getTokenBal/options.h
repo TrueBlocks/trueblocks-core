@@ -14,6 +14,7 @@ public:
     bool byAccount;
     bool noZero;
     bool total;
+    bool tokenInfo;
 
     COptions(void);
     ~COptions(void);
