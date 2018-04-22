@@ -14,6 +14,10 @@
 extern bool testReadWrite(COptions& options);
 extern bool testUpgrade(COptions& options);
 extern void reportNode(CBaseNode *node);
+namespace qblocks {
+    extern bool writeNodeToBinary(const CBaseNode& node, const SFString& fileName);
+    extern bool readNodeFromBinary(CBaseNode& node, const SFString& fileName);
+};
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
