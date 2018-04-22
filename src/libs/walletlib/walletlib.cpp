@@ -62,7 +62,7 @@ const CTransaction *promoteToWallet(const CTransaction *p)
     if (p && (p->input.length()>=10 || p->input == "0x"))
     {
         SFString items[256];
-        int nItems=0;
+        uint32_t nItems=0;
 
         SFString encoding = p->input.substr(0,10);
         SFString params   = p->input.substr(10);
@@ -77,7 +77,7 @@ const CTransaction *promoteToWallet(const CTransaction *p)
             *(CTransaction*)a = *p; // copy in
             a->_owner = toAddress(params.substr(0*64,64));
             items[nItems++] = "address";
-            a->function = "addOwner" + parse(params,nItems,items);
+            a->function = toFunction("addOwner", params, nItems, items);
             return a;
 
         } else if (encoding == func_changeOwner_qb)
@@ -90,7 +90,7 @@ const CTransaction *promoteToWallet(const CTransaction *p)
             a->_to = toAddress(params.substr(1*64,64));
             items[nItems++] = "address";
             items[nItems++] = "address";
-            a->function = "changeOwner" + parse(params,nItems,items);
+            a->function = toFunction("changeOwner", params, nItems, items);
             return a;
 
         } else if (encoding == func_changeRequirement_qb)
@@ -101,7 +101,7 @@ const CTransaction *promoteToWallet(const CTransaction *p)
             *(CTransaction*)a = *p; // copy in
             a->_newRequired = toWei("0x"+params.substr(0*64,64));
             items[nItems++] = "uint256";
-            a->function = "changeRequirement" + parse(params,nItems,items);
+            a->function = toFunction("changeRequirement", params, nItems, items);
             return a;
 
         } else if (encoding == func_confirm_qb)
@@ -112,7 +112,7 @@ const CTransaction *promoteToWallet(const CTransaction *p)
             *(CTransaction*)a = *p; // copy in
             a->_h = params.substr(0*64,64);
             items[nItems++] = "bytes32";
-            a->function = "confirm" + parse(params,nItems,items);
+            a->function = toFunction("confirm", params, nItems, items);
             return a;
 
         } else if (encoding == func_execute_qb)
@@ -127,7 +127,7 @@ const CTransaction *promoteToWallet(const CTransaction *p)
             items[nItems++] = "address";
             items[nItems++] = "uint256";
             items[nItems++] = "bytes";
-            a->function = "execute" + parse(params,nItems,items);
+            a->function = toFunction("execute", params, nItems, items);
             return a;
 
         } else if (encoding == func_isOwner_qb)
@@ -138,7 +138,7 @@ const CTransaction *promoteToWallet(const CTransaction *p)
             *(CTransaction*)a = *p; // copy in
             a->_addr = toAddress(params.substr(0*64,64));
             items[nItems++] = "address";
-            a->function = "isOwner" + parse(params,nItems,items);
+            a->function = toFunction("isOwner", params, nItems, items);
             return a;
 
         } else if (encoding == func_kill_qb)
@@ -149,7 +149,7 @@ const CTransaction *promoteToWallet(const CTransaction *p)
             *(CTransaction*)a = *p; // copy in
             a->_to = toAddress(params.substr(0*64,64));
             items[nItems++] = "address";
-            a->function = "kill" + parse(params,nItems,items);
+            a->function = toFunction("kill", params, nItems, items);
             return a;
 
         } else if (encoding == func_removeOwner_qb)
@@ -160,7 +160,7 @@ const CTransaction *promoteToWallet(const CTransaction *p)
             *(CTransaction*)a = *p; // copy in
             a->_owner = toAddress(params.substr(0*64,64));
             items[nItems++] = "address";
-            a->function = "removeOwner" + parse(params,nItems,items);
+            a->function = toFunction("removeOwner", params, nItems, items);
             return a;
 
         } else if (encoding == func_resetSpentToday_qb)
@@ -169,7 +169,7 @@ const CTransaction *promoteToWallet(const CTransaction *p)
             // 0x5c52c2f5
             QResetSpentToday *a = new QResetSpentToday;
             *(CTransaction*)a = *p; // copy in
-            a->function = "resetSpentToday";
+            a->function = toFunction("resetSpentToday", params, 0, NULL);
             return a;
 
         } else if (encoding == func_revoke_qb)
@@ -180,7 +180,7 @@ const CTransaction *promoteToWallet(const CTransaction *p)
             *(CTransaction*)a = *p; // copy in
             a->_operation = params.substr(0*64,64);
             items[nItems++] = "bytes32";
-            a->function = "revoke" + parse(params,nItems,items);
+            a->function = toFunction("revoke", params, nItems, items);
             return a;
 
         } else if (encoding == func_setDailyLimit_qb)
@@ -191,7 +191,7 @@ const CTransaction *promoteToWallet(const CTransaction *p)
             *(CTransaction*)a = *p; // copy in
             a->_newLimit = toWei("0x"+params.substr(0*64,64));
             items[nItems++] = "uint256";
-            a->function = "setDailyLimit" + parse(params,nItems,items);
+            a->function = toFunction("setDailyLimit", params, nItems, items);
             return a;
 
         }
