@@ -218,7 +218,8 @@ extern SFArchive& operator>>(SFArchive& archive, CTransaction& tra);
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 extern int sortTransactionsForWrite(const void *rr1, const void *rr2);
-extern SFString parse(const SFString& params, int nItems, SFString *types);
+extern SFString parse(const SFString& params, uint32_t nItems, SFString *types);
+extern SFString toFunction(const SFString& name, const SFString& input, uint32_t nItems, SFString *items);
 extern SFString nextBlockChunk(const SFString& fieldIn, const void *data);
 // EXISTING_CODE
 }  // namespace qblocks
