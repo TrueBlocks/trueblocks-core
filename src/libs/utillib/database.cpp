@@ -477,8 +477,8 @@ namespace qblocks {
     //------------------------------------------------------------------------------------------------------------
     void writeTheCode(const SFString& fileName, const SFString& codeOutIn, const SFString& ns, bool spaces) {
         SFString codeOut = codeOutIn;
-        SFString existingCode = asciiFileToString(fileName);
-        SFString orig = existingCode;
+        SFString orig = asciiFileToString(fileName);
+        SFString existingCode = orig.Substitute("//EXISTING_CODE","// EXISTING_CODE");
         if (spaces) {
             existingCode.ReplaceAll("    ", "\t");
             codeOut     .ReplaceAll("    ", "\t");
