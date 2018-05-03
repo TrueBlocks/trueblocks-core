@@ -70,5 +70,5 @@ extern const SFString evt_RequirementChanged_qb;
 extern const SFString evt_Revoke_qb;
 extern const SFString evt_SingleTransact_qb;
 
-//EXISTING_CODE
-//EXISTING_CODE
+// EXISTING_CODE
+// EXISTING_CODE

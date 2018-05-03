@@ -305,14 +305,15 @@ int main(int argc, const char *argv[]) {
                             SFString f1, fName = func->Format("[{NAME}]");
                             f1 = SFString(STR_FACTORY1);
                             f1.ReplaceAll("[{CLASS}]", theClass);
-                            f1.ReplaceAll("[{NAME}]", func->Format("[{NAME}]"));
+                            f1.ReplaceAll("[{NAME}]", fName);
                             if (fName == "defFunction")
                                 f1.ReplaceAll("encoding == func_[{LOWER}]", "encoding.length() < 10");
                             else
                                 f1.ReplaceAll("[{LOWER}]", fName);
                             f1.ReplaceAll("[{ASSIGNS1}]", assigns1);
                             f1.ReplaceAll("[{ITEMS1}]", items1);
-                            f1.ReplaceAll("[{PARSEIT}]", (items1.empty() ? "" : " + parse(params,nItems,items)"));
+                            SFString parseIt = "toFunction(\"" + fName + "\", params, nItems, items)";
+                            f1.ReplaceAll("[{PARSEIT}]", parseIt);
                             f1.ReplaceAll("[{BASE}]", base);
                             f1.Replace("[{SIGNATURE}]", func->getSignature(SIG_DEFAULT)
                                                             .Substitute("\t", "")
@@ -325,10 +326,10 @@ int main(int argc, const char *argv[]) {
                                 factory1 += f1;
 
                         } else if (name != "LogEntry") {
-                            SFString f2;
+                            SFString f2, fName = func->Format("[{NAME}]");
                             f2 = SFString(STR_FACTORY2)
                                             .Substitute("[{CLASS}]", theClass)
-                                            .Substitute("[{LOWER}]", func->Format("[{NAME}]"));
+                                            .Substitute("[{LOWER}]", fName);
                             f2.Replace("[{ASSIGNS2}]", assigns2);
                             f2.Replace("[{BASE}]", base);
                             f2.Replace("[{SIGNATURE}]", func->getSignature(SIG_DEFAULT|SIG_IINDEXED)
@@ -545,7 +546,7 @@ const char* STR_FACTORY1 =
 "\t\t\t*(C[{BASE}]*)a = *p; // copy in\n"
 "[{ASSIGNS1}]"
 "[{ITEMS1}]"
-"\t\t\ta->function = \"[{NAME}]\"[{PARSEIT}];\n"
+"\t\t\ta->function = [{PARSEIT}];\n"
 "\t\t\treturn a;\n"
 "\n";
 
@@ -592,7 +593,7 @@ const char* STR_HEADERFILE =
 "extern void [{PREFIX}]_init(void);\n"
 "extern const CTransaction *promoteTo[{PPREFIX}](const CTransaction *p);\n"
 "extern const CLogEntry *promoteTo[{PPREFIX}]Event(const CLogEntry *p);\n"
-"\n[{EXTERNS}][{HEADER_SIGS}]\n\n//EXISTING_CODE\n//EXISTING_CODE\n";
+"\n[{EXTERNS}][{HEADER_SIGS}]\n\n// EXISTING_CODE\n// EXISTING_CODE\n";
 
 //-----------------------------------------------------------------------
 const char* STR_HEADER_SIGS =
@@ -656,7 +657,7 @@ const char* STR_BLOCK_PATH = "etherlib_init(qh);\n\n";
 //-----------------------------------------------------------------------
 const char* STR_ITEMS =
 "\t\tSFString items[256];\n"
-"\t\tint nItems=0;\n"
+"\t\tuint32_t nItems=0;\n"
 "\n"
 "\t\tSFString encoding = p->input.substr(0,10);\n"
 "\t\tSFString params   = p->input.substr(10);\n";
