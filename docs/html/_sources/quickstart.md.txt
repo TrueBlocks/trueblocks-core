@@ -25,7 +25,7 @@ Next compile, build, and install the executable files:
     make
     (sudo) make install
 
-Finally, play with some `sample code <https://github.com/Great-Hill-Corporation/quickBlocks/blob/master/src/samples>`_. Here's some sample code that uses one of QuickBlocks' `forEvery` functions to visit each block in the chain and print out its logsBloom. We present it with no explanation.
+Finally, play with some `sample code <https://github.com/Great-Hill-Corporation/quickBlocks/blob/master/examples>`_. Here's some sample code that uses one of QuickBlocks' `forEvery` functions to visit each block in the chain and print out its logsBloom. We present it with no explanation.
 
 ::
 
