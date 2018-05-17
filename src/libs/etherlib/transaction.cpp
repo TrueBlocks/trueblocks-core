@@ -239,6 +239,8 @@ void CTransaction::registerClass(void) {
     ADD_FIELD(CTransaction, "gasCost", T_WEI, ++fieldNum);
     ADD_FIELD(CTransaction, "function", T_TEXT, ++fieldNum);
     ADD_FIELD(CTransaction, "articulated", T_TEXT, ++fieldNum);
+    ADD_FIELD(CTransaction, "events", T_TEXT, ++fieldNum);
+    ADD_FIELD(CTransaction, "price", T_TEXT, ++fieldNum);
     ADD_FIELD(CTransaction, "gasUsed", T_GAS, ++fieldNum);
     ADD_FIELD(CTransaction, "date", T_DATE, ++fieldNum);
     ADD_FIELD(CTransaction, "datesh", T_DATE, ++fieldNum);
@@ -249,6 +251,8 @@ void CTransaction::registerClass(void) {
     // Hide fields we don't want to show by default
     HIDE_FIELD(CTransaction, "function");
     HIDE_FIELD(CTransaction, "articulated");
+    HIDE_FIELD(CTransaction, "events");
+    HIDE_FIELD(CTransaction, "price");
     HIDE_FIELD(CTransaction, "encoding");
     HIDE_FIELD(CTransaction, "gasCost");
     HIDE_FIELD(CTransaction, "isError");
@@ -294,6 +298,11 @@ SFString nextTransactionChunk_custom(const SFString& fieldIn, const void *dataPt
                 if ( fieldIn % "encoding" ) {
                     return tra->input.substr(0,10);
                 }
+                if ( fieldIn % "events" ) {
+                    if (tra->receipt.logs.getCount())
+                        return "++EVENT_LIST++";
+                    return "";
+                }
                 break;
             case 'f':
                 if ( fieldIn % "function" )
@@ -319,6 +328,10 @@ SFString nextTransactionChunk_custom(const SFString& fieldIn, const void *dataPt
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
                     return nextBasenodeChunk(fieldIn, tra);
+                // EXISTING_CODE
+                if ( fieldIn % "price" )
+                    return "++PRICE++";
+                // EXISTING_CODE
                 break;
 
             default:
@@ -464,7 +477,7 @@ const CBaseNode *CTransaction::getObjectAt(const SFString& fieldName, uint32_t i
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-#define EQ_TEST(a) { if (test.a != a) { cout << " diff at " << #a << " " << test.a << ":" << a << " "; return false; } }
+#define EQ_TEST(a) { if (test.a != a) return false; }
 //---------------------------------------------------------------------------
 bool CTransaction::operator==(const CTransaction& test) const {
 
@@ -571,13 +584,12 @@ SFString parse(const SFString& params, uint32_t nItems, SFString *types) {
         ret += ("|" + val);
     }
 
-    ret.ReplaceAll("\"\"","");
-    return ret;
+    return "\"" + Strip(ret,'|') + "\"";
 }
 
 //---------------------------------------------------------------------------
 SFString toFunction(const SFString& name, const SFString& input, uint32_t nItems, SFString *items) {
-    return "[ \"" + name + "\", \"" + parse(input.substr(10), nItems, items).Substitute("|", "\", \"") + "\" ]";
+    return "[ \"" + name + "\", " + parse(input.substr(10), nItems, items).Substitute("|", "\", \"") + " ]";
 }
 
 //---------------------------------------------------------------------------
@@ -595,6 +607,6 @@ SFString CTransaction::inputToFunction(void) const {
 
     return " ";
 }
-
 // EXISTING_CODE
 }  // namespace qblocks
+

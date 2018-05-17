@@ -48,16 +48,18 @@ extern const SFString evt_Transfer_qb;
 // EXISTING_CODE
 //-----------------------------------------------------------------------
 inline bool isTokenRelated(const CTransaction *trans) {
-    return (trans->input.startsWith(func_allowance_qb) ||
+    return (
+            trans->input.startsWith(func_transfer_qb) ||
+            trans->input.startsWith(func_transferFrom_qb) ||
             trans->input.startsWith(func_approve_qb) ||
             trans->input.startsWith(func_approveAndCall_qb) ||
+            trans->input.startsWith(func_allowance_qb) ||
             trans->input.startsWith(func_balanceOf_qb) ||
             trans->input.startsWith(func_decimals_qb) ||
             trans->input.startsWith(func_name_qb) ||
             trans->input.startsWith(func_symbol_qb) ||
             trans->input.startsWith(func_totalSupply_qb) ||
-            trans->input.startsWith(func_transfer_qb) ||
-            trans->input.startsWith(func_transferFrom_qb) ||
-            trans->input.startsWith(func_version_qb));
+            trans->input.startsWith(func_version_qb)
+    );
 }
 // EXISTING_CODE
