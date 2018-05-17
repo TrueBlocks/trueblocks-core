@@ -34,7 +34,7 @@ sudo dnf install cmake python python-devel libcurl-devel
 
 ### for FreeBSD
 
-```bash 
+```bash
 sudo pkg install lang/gcc49 git cmake python ftp/curl
 cd /usr/include  
 sudo ln -s ./usr/local/include/curl curl  
@@ -72,17 +72,17 @@ Open a terminal and change to whatever folder you normally store GitHub repos. T
 
 ```bash
 git clone https://github.com/Great-Hill-Corporation/quickBlocks.git .
-cd quickBlocks 
+cd quickBlocks
 mkdir build
 cd build
 cmake ../src
 make
 sudo make install
 ```
-   
+
 The installation installs the QuickBlocks command line tools in the folder /usr/local/qblocks/bin. You may wish to add this path to your ${PATH} environment variable.
 
 ***
 ## After building, on to the samples
 
-After you're done building and installing the library and tools, you may wish to try your hand at building some QuickBlocks applications or tools. We've provided a number of simple samples to help you get started. Please follow [this link](../../samples/README.md).
+After you're done building and installing the library and tools, you may wish to try your hand at building some QuickBlocks applications or tools. We've provided a number of simple samples to help you get started. Please follow [this link](/examples).

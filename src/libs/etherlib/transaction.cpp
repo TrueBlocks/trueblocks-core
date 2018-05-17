@@ -239,6 +239,8 @@ void CTransaction::registerClass(void) {
     ADD_FIELD(CTransaction, "gasCost", T_WEI, ++fieldNum);
     ADD_FIELD(CTransaction, "function", T_TEXT, ++fieldNum);
     ADD_FIELD(CTransaction, "articulated", T_TEXT, ++fieldNum);
+    ADD_FIELD(CTransaction, "events", T_TEXT, ++fieldNum);
+    ADD_FIELD(CTransaction, "price", T_TEXT, ++fieldNum);
     ADD_FIELD(CTransaction, "gasUsed", T_GAS, ++fieldNum);
     ADD_FIELD(CTransaction, "date", T_DATE, ++fieldNum);
     ADD_FIELD(CTransaction, "datesh", T_DATE, ++fieldNum);
@@ -249,6 +251,8 @@ void CTransaction::registerClass(void) {
     // Hide fields we don't want to show by default
     HIDE_FIELD(CTransaction, "function");
     HIDE_FIELD(CTransaction, "articulated");
+    HIDE_FIELD(CTransaction, "events");
+    HIDE_FIELD(CTransaction, "price");
     HIDE_FIELD(CTransaction, "encoding");
     HIDE_FIELD(CTransaction, "gasCost");
     HIDE_FIELD(CTransaction, "isError");
@@ -273,7 +277,7 @@ SFString nextTransactionChunk_custom(const SFString& fieldIn, const void *dataPt
             case 'a':
                 if ( fieldIn % "articulated" ) {
                     if (tra->function.empty() || tra->function == " ")
-                        return tra->input;
+                        return "[ \"" + tra->input + "\" ]";
                     return tra->function;
                 }
                 break;
@@ -293,6 +297,11 @@ SFString nextTransactionChunk_custom(const SFString& fieldIn, const void *dataPt
                 if ( fieldIn % "ether" ) return wei2Ether(asStringBN(tra->value));
                 if ( fieldIn % "encoding" ) {
                     return tra->input.substr(0,10);
+                }
+                if ( fieldIn % "events" ) {
+                    if (tra->receipt.logs.getCount())
+                        return "++EVENT_LIST++";
+                    return "";
                 }
                 break;
             case 'f':
@@ -319,6 +328,10 @@ SFString nextTransactionChunk_custom(const SFString& fieldIn, const void *dataPt
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
                     return nextBasenodeChunk(fieldIn, tra);
+                // EXISTING_CODE
+                if ( fieldIn % "price" )
+                    return "++PRICE++";
+                // EXISTING_CODE
                 break;
 
             default:
@@ -464,7 +477,7 @@ const CBaseNode *CTransaction::getObjectAt(const SFString& fieldName, uint32_t i
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-#define EQ_TEST(a) { if (test.a != a) { cout << " diff at " << #a << " " << test.a << ":" << a << " "; return false; } }
+#define EQ_TEST(a) { if (test.a != a) return false; }
 //---------------------------------------------------------------------------
 bool CTransaction::operator==(const CTransaction& test) const {
 
@@ -540,16 +553,15 @@ inline SFString asStringULL(uint64_t i) {
 #define toVote(a,b)         (grabBigNum(a,b)?"Yea":"Nay")
 #define toBoolean(a,b)      (grabBigNum(a,b)?"true":"false")
 #define toBytes(a,b)        ((a).substr(64*(b),64))
-SFString parse(const SFString& params, int nItems, SFString *types)
-{
+SFString parse(const SFString& params, uint32_t nItems, SFString *types) {
+
     SFString ret;
-    for (size_t item = 0 ; item < (size_t)nItems ; item++)
-    {
+    for (size_t item = 0 ; item < (size_t)nItems ; item++) {
         SFString t = types[item];
         bool isDynamic = (t=="string" || t=="bytes" || t.Contains("[]"));
         SFString val;
 
-        if ( t == "address"                    )   val =          toAddr      (params,item);
+             if ( t == "address"                    )   val =          toAddr      (params,item);
         else if ( t == "bool"                       )   val =          toBoolean   (params,item);
         else if ( t == "vote"                       )   val =          toVote      (params,item);
         else if ( t == "uint3"                      )   val =          toBigNum3   (params,item);
@@ -559,8 +571,7 @@ SFString parse(const SFString& params, int nItems, SFString *types)
         else if ( isDynamic                         )   val = "off:" + toBigNum2   (params,item);
         else                                            val = "unknown type: " + t;
 
-        if (val.Contains("off:"))
-        {
+        if (val.Contains("off:")) {
             size_t start = toLong32u(val.Substitute("off:","")) / (size_t)32;
             size_t len   = grabBigNum(params,start);
             if (len == NOPOS)
@@ -572,22 +583,26 @@ SFString parse(const SFString& params, int nItems, SFString *types)
         }
         ret += ("|" + val);
     }
-    return ret;
+
+    return "\"" + Strip(ret,'|') + "\"";
 }
 
 //---------------------------------------------------------------------------
-SFString CTransaction::inputToFunction(void) const
-{
+SFString toFunction(const SFString& name, const SFString& input, uint32_t nItems, SFString *items) {
+    return "[ \"" + name + "\", " + parse(input.substr(10), nItems, items).Substitute("|", "\", \"") + " ]";
+}
+
+//---------------------------------------------------------------------------
+SFString CTransaction::inputToFunction(void) const {
     if (input.length()<10)
         return " ";
 
-    if (funcPtr)
-    {
+    if (funcPtr) {
         SFString items[256];
-        int nItems = 0;
+        uint32_t nItems = 0;
         for (uint32_t i = 0 ; i < funcPtr->inputs.getCount() ; i++)
             items[nItems++] = funcPtr->inputs[i].type;
-        return funcPtr->name + parse(input.substr(10), nItems, items);
+        return toFunction(funcPtr->name, input, nItems, items);
     }
 
     return " ";

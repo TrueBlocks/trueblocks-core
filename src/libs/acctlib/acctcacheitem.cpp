@@ -64,9 +64,6 @@ bool CAcctCacheItem::setValueByName(const SFString& fieldName, const SFString& f
         case 't':
             if ( fieldName % "transIndex" ) { transIndex = toUnsigned(fieldValue); return true; }
             break;
-        case 'w':
-            if ( fieldName % "which" ) { which = toLong32(fieldValue); return true; }
-            break;
         default:
             break;
     }
@@ -93,7 +90,6 @@ bool CAcctCacheItem::Serialize(SFArchive& archive) {
     // EXISTING_CODE
     archive >> blockNum;
     archive >> transIndex;
-    archive >> which;
     finishParse();
     return true;
 }
@@ -108,7 +104,6 @@ bool CAcctCacheItem::SerializeC(SFArchive& archive) const {
     // EXISTING_CODE
     archive << blockNum;
     archive << transIndex;
-    archive << which;
 
     return true;
 }
@@ -125,7 +120,6 @@ void CAcctCacheItem::registerClass(void) {
     ADD_FIELD(CAcctCacheItem, "showing", T_BOOL,  ++fieldNum);
     ADD_FIELD(CAcctCacheItem, "blockNum", T_NUMBER, ++fieldNum);
     ADD_FIELD(CAcctCacheItem, "transIndex", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CAcctCacheItem, "which", T_NUMBER, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CAcctCacheItem, "schema");
@@ -190,9 +184,6 @@ SFString CAcctCacheItem::getValueByName(const SFString& fieldName) const {
         case 't':
             if ( fieldName % "transIndex" ) return asStringU(transIndex);
             break;
-        case 'w':
-            if ( fieldName % "which" ) return asString(which);
-            break;
     }
 
     // EXISTING_CODE
@@ -206,7 +197,7 @@ SFString CAcctCacheItem::getValueByName(const SFString& fieldName) const {
 ostream& operator<<(ostream& os, const CAcctCacheItem& item) {
     // EXISTING_CODE
     if (sizeof(item) != 0) { // do this to always go through here, but avoid a warning
-        os << item.blockNum << "." << item.transIndex << "." << item.which;
+        os << item.blockNum << "." << item.transIndex;
         return os;
     }
     // EXISTING_CODE
@@ -226,9 +217,6 @@ CAcctCacheItem::CAcctCacheItem(SFString& line) {
 
     val = nextTokenClear(line,'\t');
     transIndex = toUnsigned(val);
-
-    val = nextTokenClear(line,'\t');
-    which = (int32_t)toUnsigned(val);
 }
 // EXISTING_CODE
 }  // namespace qblocks
