@@ -1,0 +1,11 @@
+make
+
+colorEcho ""
+colorEcho -t "Testing quickBlocks"
+
+time bin/bloomScan binary  100000  150000 50 $1 $2
+time bin/bloomScan binary 1100000 1150000 50 $1 $2
+time bin/bloomScan binary 2100000 2150000 50 $1 $2
+time bin/bloomScan binary 3100000 3150000 50 $1 $2
+time bin/bloomScan binary 4100000 4150000 50 $1 $2
+time bin/bloomScan binary 4725000 4760000 50 $1 $2

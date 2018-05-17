@@ -44,7 +44,7 @@ const CTransaction *promoteToToken(const CTransaction *p)
     if (p && (p->input.length()>=10 || p->input == "0x"))
     {
         SFString items[256];
-        int nItems=0;
+        uint32_t nItems=0;
 
         SFString encoding = p->input.substr(0,10);
         SFString params   = p->input.substr(10);
@@ -61,7 +61,7 @@ const CTransaction *promoteToToken(const CTransaction *p)
             a->_value = toWei("0x"+params.substr(1*64,64));
             items[nItems++] = "address";
             items[nItems++] = "uint256";
-            a->function = "approve" + parse(params,nItems,items);
+            a->function = toFunction("approve", params, nItems, items);
             return a;
 
         } else if (encoding == func_approveAndCall_qb)
@@ -76,7 +76,7 @@ const CTransaction *promoteToToken(const CTransaction *p)
             items[nItems++] = "address";
             items[nItems++] = "uint256";
             items[nItems++] = "bytes";
-            a->function = "approveAndCall" + parse(params,nItems,items);
+            a->function = toFunction("approveAndCall", params, nItems, items);
             return a;
 
         } else if (encoding == func_transfer_qb)
@@ -89,7 +89,7 @@ const CTransaction *promoteToToken(const CTransaction *p)
             a->_value = toWei("0x"+params.substr(1*64,64));
             items[nItems++] = "address";
             items[nItems++] = "uint256";
-            a->function = "transfer" + parse(params,nItems,items);
+            a->function = toFunction("transfer", params, nItems, items);
             return a;
 
         } else if (encoding == func_transferFrom_qb)
@@ -104,7 +104,7 @@ const CTransaction *promoteToToken(const CTransaction *p)
             items[nItems++] = "address";
             items[nItems++] = "address";
             items[nItems++] = "uint256";
-            a->function = "transferFrom" + parse(params,nItems,items);
+            a->function = toFunction("transferFrom", params, nItems, items);
             return a;
 
         }

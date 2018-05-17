@@ -288,11 +288,11 @@ bool CBlock::readBackLevel(SFArchive& archive) {
         archive >> timestamp;
         archive >> transactions;
         // TODO -- technically we should re-read these values from the node
-        SFString save = getCurlContext()->source;
-        getCurlContext()->source = "local";
+        SFString save = getCurlContext()->provider;
+        getCurlContext()->provider = "local";
         CBlock upgrade;uint32_t unused;
         queryBlock(upgrade, asStringU(blockNumber), false, false, unused);
-        getCurlContext()->source = save;
+        getCurlContext()->provider = save;
         miner = upgrade.miner;
         difficulty = upgrade.difficulty;
         price = 0.0;
@@ -408,7 +408,7 @@ const CBaseNode *CBlock::getObjectAt(const SFString& fieldName, uint32_t index) 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 //---------------------------------------------------------------------------
-#define EQ_TEST(a) { if (test.a != a) { cout << " diff at " << #a << " " << test.a << ":" << a << " "; return false; } }
+#define EQ_TEST(a) { if (test.a != a) return false; }
 bool CBlock::operator==(const CBlock& test) const {
 
     EQ_TEST(gasLimit);

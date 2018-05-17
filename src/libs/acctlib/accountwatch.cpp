@@ -78,9 +78,6 @@ bool CAccountWatch::setValueByName(const SFString& fieldName, const SFString& fi
         case 'f':
             if ( fieldName % "firstBlock" ) { firstBlock = toUnsigned(fieldValue); return true; }
             break;
-        case 'i':
-            if ( fieldName % "id" ) { id = toLong32u(fieldValue); return true; }
-            break;
         case 'l':
             if ( fieldName % "lastBlock" ) { lastBlock = toUnsigned(fieldValue); return true; }
             break;
@@ -90,9 +87,6 @@ bool CAccountWatch::setValueByName(const SFString& fieldName, const SFString& fi
             break;
         case 'q':
             if ( fieldName % "qbis" ) { /* qbis = fieldValue; */ return false; }
-            break;
-        case 's':
-            if ( fieldName % "status" ) { status = fieldValue; return true; }
             break;
         default:
             break;
@@ -119,13 +113,11 @@ bool CAccountWatch::Serialize(SFArchive& archive) {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive >> id;
     archive >> address;
     archive >> name;
     archive >> color;
     archive >> firstBlock;
     archive >> lastBlock;
-    archive >> status;
     archive >> deepScan;
     archive >> qbis;
     archive >> nodeBal;
@@ -141,13 +133,11 @@ bool CAccountWatch::SerializeC(SFArchive& archive) const {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive << id;
     archive << address;
     archive << name;
     archive << color;
     archive << firstBlock;
     archive << lastBlock;
-    archive << status;
     archive << deepScan;
     archive << qbis;
     archive << nodeBal;
@@ -165,13 +155,11 @@ void CAccountWatch::registerClass(void) {
     ADD_FIELD(CAccountWatch, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CAccountWatch, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CAccountWatch, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CAccountWatch, "id", T_NUMBER, ++fieldNum);
     ADD_FIELD(CAccountWatch, "address", T_ADDRESS, ++fieldNum);
     ADD_FIELD(CAccountWatch, "name", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccountWatch, "color", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccountWatch, "firstBlock", T_NUMBER, ++fieldNum);
     ADD_FIELD(CAccountWatch, "lastBlock", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CAccountWatch, "status", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccountWatch, "deepScan", T_BOOL, ++fieldNum);
     ADD_FIELD(CAccountWatch, "qbis", T_OBJECT, ++fieldNum);
     ADD_FIELD(CAccountWatch, "nodeBal", T_WEI, ++fieldNum);
@@ -245,9 +233,6 @@ SFString CAccountWatch::getValueByName(const SFString& fieldName) const {
         case 'f':
             if ( fieldName % "firstBlock" ) return asStringU(firstBlock);
             break;
-        case 'i':
-            if ( fieldName % "id" ) return asStringU(id);
-            break;
         case 'l':
             if ( fieldName % "lastBlock" ) return asStringU(lastBlock);
             break;
@@ -257,9 +242,6 @@ SFString CAccountWatch::getValueByName(const SFString& fieldName) const {
             break;
         case 'q':
             if ( fieldName % "qbis" ) { expContext().noFrst=true; return qbis.Format(); }
-            break;
-        case 's':
-            if ( fieldName % "status" ) return status;
             break;
     }
 
@@ -298,51 +280,131 @@ const CBaseNode *CAccountWatch::getObjectAt(const SFString& fieldName, uint32_t 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 //---------------------------------------------------------------------------
-SFString CAccountWatch::displayName(bool useColor, bool terse, uint32_t w1, uint32_t w2) const {
+SFString CAccountWatch::displayName(bool expand, bool useColor, bool terse, uint32_t w1, uint32_t w2) const {
     if (address == "others") {
         return padRight(name, w1 + w2 + 1);
     }
 
     if (terse) {
         uint64_t len = name.length();
-        uint64_t need = 42 - len - 6; // " (" and "...)"
-        return (useColor ? color : "") + name.substr(0,42-6) + " (" + address.substr(0,need) + "...)" + (useColor ? cOff : "");
+        uint64_t need = 42 - len - 6; // the six is for " (" and "...)"
+        SFString ret;
+//        if (useColor)
+//            ret += color;
+        if (expand)
+            ret += "[000000000000";
+        ret += name.substr(0,42-6);
+        ret += " (" + address.substr(0,need) + "...)";
+        if (expand)
+            ret += "]";
+//        if (useColor)
+//            ret += cOff;
+        return ret;
     }
-
     return padRight(name.substr(0,w1),w1) + " " + address.substr(0,w2) + " ";
 }
 
 //-----------------------------------------------------------------------
+extern int findBalance(const void *ob1, const void *ob2);
 SFUintBN getNodeBal(CBalanceHistoryArray& history, const SFAddress& addr, blknum_t blockNum) {
 
-    if (fileExists("./cache/balances.txt")) {
-        if (history.getCount() == 0) { // do not collapse
-            SFString contents = asciiFileToString("./cache/balances.txt");
-            while (!contents.empty()) {
-                SFString line = nextTokenClear(contents, '\n');
-                SFString bn = nextTokenClear(line, '\t');
-                SFString addr1 = nextTokenClear(line, '\t');
-                SFString bal = nextTokenClear(line, '\t');
-                if (addr1 == addr) {
-                    uint32_t cnt = history.getCount();
-                    history[cnt].bn      = toUnsigned(bn);
-                    history[cnt].balance = toWei(bal);
-                }
-            }
-        }
+    if (!addr.startsWith("0x"))
+        return 0;
 
-        SFUintBN ret = 0;
-        for (uint32_t i = 0 ; i < history.getCount() ; i++) {
-            if (history[i].bn > blockNum) {
-                return ret;
+    // This will return 'true' if the node has historical balances - we want to use those balances if they are there
+    if (nodeHasBalances())
+        return getBalance(addr, blockNum, false);
+
+    // If the history is empty, we can try to load the history from a file if it exists...
+    SFString binaryFilename = "./balances/" + addr + ".bals.bin";
+    if (history.getCount() == 0 && fileExists(binaryFilename) && fileSize(binaryFilename) > 0) {
+
+        SFArchive balCache(READING_ARCHIVE);
+        if (balCache.Lock(binaryFilename, binaryReadOnly, LOCK_NOWAIT)) {
+            blknum_t last = NOPOS;
+            SFAddress lastA;
+            while (!balCache.Eof()) {
+                uint32_t pos = history.getCount();
+                blknum_t bn;
+                SFAddress addr1;
+                SFUintBN bal;
+                balCache >> bn >> addr1 >> bal;
+                if (addr == addr1) {
+                    if (last != bn || bal != 0) {
+                        history[pos].bn      = bn;
+                        history[pos].balance = bal;
+                        last = bn;
+                    }
+                    cerr << "Loaded block  #" << bn << " at " << addr1 << "\r";
+                } else {
+                    cerr << "Loaded block  #" << bn << " at " << addr1 << "\r";
+                }
+                cerr.flush();
             }
-            ret = history[i].balance;
         }
-        if (ret > 0) {
+        cerr << "\n";
+        cerr.flush();
+    }
+
+    // First, we try to find it using a binary search. Many times this will hit...
+    CBalanceHistory find;
+    find.bn = blockNum;
+    CBalanceHistory *found = history.Find(&find, findBalance);
+    if (found)
+        return found->balance;
+
+    // ...if it doesn't hit, we need to find the most recent balance
+    SFUintBN ret = 0;
+    for (uint32_t i = 0 ; i < history.getCount() ; i++) {
+        // TODO(tjayrush): THIS IS A BUG HACK FIX - SEE ABOVE
+        // We should be able to do >= just below, but if we do, we pick up a zero
+        // balance as the last balance available for any account because the code
+        // that generates the balance history includes a incorrect last duplicated value
+        if (history[i].bn == blockNum)
+            return history[i].balance;
+
+        // ...If we've overshot, we report the previous balance
+        if (history[i].bn > blockNum)
             return ret;
+
+        ret = history[i].balance;
+    }
+
+    // We've run off the end of the array, return the most recent balance (if any)
+    if (ret > 0)
+        return ret;
+
+    // We finally fall to the node in case we're near the head
+    return getBalance(addr, blockNum, false);
+}
+
+//---------------------------------------------------------------------------
+int findBalance(const void *ob1, const void *ob2) {
+    CBalanceHistory *h1 = (CBalanceHistory*)ob1;
+    CBalanceHistory *h2 = (CBalanceHistory*)ob2;
+         if (h1->bn > h2->bn) return 1;
+    else if (h1->bn < h2->bn) return -1;
+    return 0;
+}
+
+//-----------------------------------------------------------------------
+// This assumes there are valid watches. Caller is expected to check
+void loadWatchList(const CToml& toml, CAccountWatchArray& watches, const SFString& key) {
+
+    SFString watchStr = toml.getConfigStr("watches", key, "");
+    char *p = cleanUpJson((char *)watchStr.c_str());
+    while (p && *p) {
+        CAccountWatch watch;
+        uint32_t nFields = 0;
+        p = watch.parseJson(p, nFields);
+        if (nFields) {
+            // cleanup and add to list of watches
+            watch.address = fixAddress(toLower(watch.address));
+            watch.color   = convertColor(watch.color);
+            watches[watches.getCount()] = watch;
         }
     }
-    return getBalance(addr, blockNum, false);
+    return;
 }
 // EXISTING_CODE
 }  // namespace qblocks
