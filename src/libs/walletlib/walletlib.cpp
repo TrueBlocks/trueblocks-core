@@ -169,7 +169,7 @@ const CTransaction *promoteToWallet(const CTransaction *p)
             // 0x5c52c2f5
             QResetSpentToday *a = new QResetSpentToday;
             *(CTransaction*)a = *p; // copy in
-            a->function = toFunction("resetSpentToday", params, 0, NULL);
+            a->function = toFunction("resetSpentToday", params, nItems, items);
             return a;
 
         } else if (encoding == func_revoke_qb)

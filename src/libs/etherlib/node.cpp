@@ -40,9 +40,9 @@ extern void registerQuitHandler(QUITHANDLER qh);
         CAccountName::registerClass();
 
         if (sourceIn != "remote" && sourceIn != "local" && sourceIn != "ropsten")
-            getCurlContext()->source = "binary";
+            getCurlContext()->provider = "binary";
         else
-            getCurlContext()->source = sourceIn;
+            getCurlContext()->provider = sourceIn;
 
         // if curl has already been initialized, we want to clear it out
         getCurl(true);
@@ -64,9 +64,9 @@ extern void registerQuitHandler(QUITHANDLER qh);
 
     //-------------------------------------------------------------------------
     bool getBlock(CBlock& block, blknum_t blockNum) {
-        getCurlContext()->source = fileExists(getBinaryFilename(blockNum)) ? "binary" : "local";
+        getCurlContext()->provider = fileExists(getBinaryFilename(blockNum)) ? "binary" : "local";
         bool ret = queryBlock(block, asStringU(blockNum), true, false);
-        getCurlContext()->source = "binary";
+        getCurlContext()->provider = "binary";
         return ret;
     }
 
@@ -154,7 +154,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
 
         } else {
             uint64_t num = toLongU(datIn);
-            if (getCurlContext()->source == "binary" && fileSize(getBinaryFilename(num)) > 0) {
+            if (getCurlContext()->provider == "binary" && fileSize(getBinaryFilename(num)) > 0) {
                 UNHIDE_FIELD(CTransaction, "receipt");
                 block = CBlock();
                 return readBlockFromBinary(block, getBinaryFilename(num));
@@ -274,34 +274,27 @@ extern void registerQuitHandler(QUITHANDLER qh);
     }
 
     //--------------------------------------------------------------------------
-    uint64_t getLatestBlockFromCache(CSharedResource *res) {
+    uint64_t getLatestBlockFromCache(void) {
+
+        SFArchive fullBlocks(READING_ARCHIVE);
+        if (!fullBlocks.Lock(fullBlockIndex, binaryReadOnly, LOCK_NOWAIT)) {
+            if (!isTestMode())
+                cerr << "getLatestBlockFromCache failed: " << fullBlocks.LockFailure() << "\n";
+            return 0;
+        }
+        ASSERT(fullBlocks.isOpen());
 
         uint64_t ret = 0;
-
-        CSharedResource fullBlocks; // Don't move--need the scope
-        CSharedResource *pRes = res;
-        if (!pRes) {
-            // We're reading so okay not to wait
-            if (!fullBlocks.Lock(fullBlockIndex, binaryReadOnly, LOCK_WAIT)) {
-                if (!isTestMode())
-                    cerr << "getLatestBlockFromCache failed: " << fullBlocks.LockFailure() << "\n";
-                return ret;
-            }
-            pRes = &fullBlocks;
-        }
-        ASSERT(pRes->isOpen());
-
-        pRes->Seek( (-1 * (long)sizeof(uint64_t)), SEEK_END);
-        pRes->Read(ret);
-        if (pRes != res)
-            pRes->Release();
+        fullBlocks.Seek( (-1 * (long)sizeof(uint64_t)), SEEK_END);
+        fullBlocks.Read(ret);
+        fullBlocks.Release();
         return ret;
     }
 
     //--------------------------------------------------------------------------
-    bool getLatestBlocks(uint64_t& cache, uint64_t& client, CSharedResource *res) {
+    bool getLatestBlocks(uint64_t& cache, uint64_t& client) {
         client = getLatestBlockFromClient();
-        cache  = getLatestBlockFromCache(res);
+        cache  = getLatestBlockFromCache();
         return true;
     }
 
@@ -319,6 +312,12 @@ extern void registerQuitHandler(QUITHANDLER qh);
         a = padLeft(a,40,'0');
         SFString ret = callRPC("eth_getBalance", "[\"0x" + a +"\",\""+toHex(blockNum)+"\"]", false);
         return toWei(ret);
+    }
+
+    //-------------------------------------------------------------------------
+    bool nodeHasBalances(void) {
+        // The known balance of the DAO smart contract at block 1,500,001 was 4423518369662462108465682, if the node reports this correctly, it has historical balances
+        return getBalance("0xbb9bc244d798123fde783fcc1c72d3bb8c189413", 1500001, false) == canonicalWei("4423518369662462108465682");
     }
 
     //-------------------------------------------------------------------------
@@ -611,7 +610,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
         if (!func)
             return false;
 
-        getCurlContext()->source = "local"; // the empty blocks are not on disk, so we have to ask parity. Don't write them, though
+        getCurlContext()->provider = "local"; // the empty blocks are not on disk, so we have to ask parity. Don't write them, though
 
         CSharedResource fullBlocks;
         if (!fullBlocks.Lock(fullBlockIndex, binaryReadOnly, LOCK_WAIT)) {
@@ -636,7 +635,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
                     // transactions, so we ignore the return value
                     getBlock(block,cnt);
                     if (!(*func)(block, data)) {
-                        getCurlContext()->source = "binary";
+                        getCurlContext()->provider = "binary";
                         delete [] contents;
                         return false;
                     }
@@ -646,7 +645,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
             }
             delete [] contents;
         }
-        getCurlContext()->source = "binary";
+        getCurlContext()->provider = "binary";
         return true;
     }
 

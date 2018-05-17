@@ -171,9 +171,9 @@ namespace qblocks {
                     cerr << "Wrote " << quotes.getCount() << " price quotes to file ";
                     cerr << "(lastRead: " << lastRead << ").\n";
                 }
-            } else {
-                if (!isTestMode())
-                    msg = "Data not written because no new data, or no -freshen flag. ";
+//            } else {
+//                if (!isTestMode())
+//                    msg = "Data not written because no new data, or no -freshen flag. ";
             }
         }
 
