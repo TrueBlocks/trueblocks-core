@@ -99,11 +99,7 @@ SFString doOneBloom(uint64_t num, const COptions& opt) {
                 CBlock latest;
                 getBlock(latest, "latest");
                 SFString fileName = getBinaryFilename(gold.blockNumber);
-<<<<<<< HEAD
-                gold.finalized = isFinal(gold.timestamp);
-=======
                 gold.finalized = isBlockFinal(gold.timestamp, latest.timestamp);
->>>>>>> develop
                 writeBlockToBinary(gold, fileName);
             }
         }
