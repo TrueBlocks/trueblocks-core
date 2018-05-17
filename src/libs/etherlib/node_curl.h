@@ -22,7 +22,7 @@ namespace qblocks {
         bool             earlyAbort;
         SFString         postData;
         SFString         result;
-        SFString         source;
+        SFString         provider;
         bool             tracing_on;
         bool             is_error;
         bool             is_tracing;
@@ -41,6 +41,7 @@ namespace qblocks {
 
     extern CURL         *getCurl         (bool cleanup=false);
     extern bool          isNodeRunning   (void);
+    extern bool          nodeHasBalances (void);
     extern bool          getObjectViaRPC (CBaseNode &node, const SFString& method, const SFString& params);
     extern SFString      callRPC         (const SFString& method, const SFString& params, bool raw);
     extern CCurlContext *getCurlContext  (void);

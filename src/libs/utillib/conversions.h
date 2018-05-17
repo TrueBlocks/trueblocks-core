@@ -22,15 +22,13 @@ namespace qblocks {
     }
 
     //----------------------------------------------------------------------------
-    inline uint64_t hex2Long(const SFString& inHex)
-    {
+    inline uint64_t hex2Long(const SFString& inHex) {
         SFString hex = toLower(inHex.startsWith("0x")?inHex.substr(2):inHex);
         hex.Reverse();
         char *s = (char *)(const char*)hex;
 
         uint64_t ret = 0, mult=1;
-        while (*s)
-        {
+        while (*s) {
             int val = *s - '0';
             if (*s >= 'a' && *s <= 'f')
             val = *s - 'a' + 10;
@@ -42,8 +40,7 @@ namespace qblocks {
     }
 
     //----------------------------------------------------------------------------
-    inline unsigned char hex2Ascii(char *str)
-    {
+    inline unsigned char hex2Ascii(char *str) {
         unsigned char c;
         c =  (unsigned char)((str[0] >= 'A' ? ((str[0]&0xDF)-'A')+10 : (str[0]-'0')));
         c *= 16;
@@ -52,11 +49,9 @@ namespace qblocks {
     }
 
     //----------------------------------------------------------------------------
-    inline SFString hex2String(const SFString& inHex)
-    {
+    inline SFString hex2String(const SFString& inHex) {
         SFString ret, in = inHex.startsWith("0x") ? inHex.substr(2) : inHex;
-        while (!in.empty())
-        {
+        while (!in.empty()) {
             SFString nibble = in.substr(0,2);
             in = in.substr(2);
             ret += (char)hex2Ascii((char*)(const char*)nibble);
@@ -65,16 +60,14 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------
-    inline SFString asHex(char val)
-    {
+    inline SFString asHex(char val) {
         char tmp[20];
         sprintf(tmp, "%02x", (unsigned int)(char)val);
         SFString ret = tmp;
         return ret.substr(ret.length()-2,2);
     }
     //----------------------------------------------------------------------------
-    inline SFString string2Hex(const SFString& inAscii)
-    {
+    inline SFString string2Hex(const SFString& inAscii) {
         SFString ret;
         for (size_t i = 0 ; i < inAscii.length() ; i++)
             ret += asHex(inAscii[(int)i]);
@@ -188,8 +181,7 @@ namespace qblocks {
 
     extern SFIntBN exp2BigInt(const string& s);
     //--------------------------------------------------------------------------------
-    inline SFUintBN exp2BigUint(const string &s)
-    {
+    inline SFUintBN exp2BigUint(const string &s) {
         SFString exponent = s.c_str();
         SFString decimals = nextTokenClear(exponent,'e');
         SFString num = nextTokenClear(decimals,'.');
@@ -215,6 +207,7 @@ namespace qblocks {
         return SFUintBN(_value);
     }
 
+    //--------------------------------------------------------------------------------
     inline SFUintBN canonicalWei(const SFString& _value) {
         if (_value.Contains( "0x" ))
             return hex2BigUint((const char*) _value.substr(2));
@@ -223,10 +216,12 @@ namespace qblocks {
         return str2BigUint(_value);
     }
 
+    //--------------------------------------------------------------------------------
     inline SFString asStringBN(const SFUintBN& bu) {
         return to_string(bu).c_str();
     }
 
+    //--------------------------------------------------------------------------------
     inline SFString asStringBN(const SFIntBN& bn) {
         return to_string(bn).c_str();
     }
@@ -242,7 +237,7 @@ namespace qblocks {
 
 #define toUnsigned(a)  (uint64_t)((a).startsWith("0x")?hex2Long((a)):toLongU((a)))
 #define toSigned(a)    (int64_t)((a).startsWith("0x")?hex2Long((a)):toLong((a)))
-#define toHash(a)      (a)
+#define toHash(a)      toLower(a)
 #define toTopic(a)     canonicalWei(a)
 #define toBloom(a)     canonicalWei(a)
 #define toWei(a)       canonicalWei(a)
@@ -295,7 +290,7 @@ namespace qblocks {
     }
 
     //----------------------------------------------------------------------------------
-    inline SFString fixAddress(const SFString& addrIn) {
+    inline SFString fixAddress(const SFAddress& addrIn) {
         SFString ret = addrIn.startsWith("0x") ? addrIn.substr(2) : addrIn;
         return "0x" + ret;
     }
@@ -306,25 +301,25 @@ namespace qblocks {
     }
 
     //----------------------------------------------------------------------------------
-    inline bool isHash(const SFAddress& hashIn) {
+    inline bool isHash(const SFHash& hashIn) {
         return (hashIn.length() == 66 && isHexStr(hashIn));
     }
 
     //------------------------------------------------------
-    inline SFAddress toAddress(const SFString& strIn)
-    {
+    inline SFAddress toAddress(const SFAddress& strIn) {
         // Strip it if it's there. We will put it back
         SFString ret = strIn.Substitute("0x","");
 
         // Shorten, but only if all leading zeros
-        if (ret.length()==64 && ret.startsWith("000000000000000000000000"))
-            ret.Replace("000000000000000000000000","");
+        SFString leading('0', 64-40);
+        if (ret.length()==64 && ret.startsWith(leading))
+            ret.Replace(leading,"");
 
         // Special case
         if (ret.empty())
             ret = "0";
 
-        return "0x" + ret;
+        return "0x" + toLower(ret);
     }
 
     //-------------------------------------------------------------------------

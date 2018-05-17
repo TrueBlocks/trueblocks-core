@@ -582,6 +582,14 @@ namespace qblocks {
         ASSERT(fieldName.length() >= 2);
         bool isPrompt = false;
 
+        // The fieldname may contain b: in which case the field is a bool. Display only 'true' values
+        // (in other words, false is same as empty)
+        bool isBool = false;
+        if (fieldName.ContainsI("b:")) {
+            isBool = true;
+            fieldName.ReplaceI("b:", EMPTY);
+        }
+
         // The fieldname may contain p: or w:width: or both.  If it contains either it
         // must contain them at the beginning of the string (before the fieldName).  Anything
         // left after the last ':' is considered the fieldName
@@ -613,8 +621,12 @@ namespace qblocks {
 
         // Get the value of the field.  If the value of the field is empty we return empty for the entire token.
         SFString fieldValue = (func)(fieldName, data);
+        if (isBool && fieldValue == "0")
+            fieldValue = "";
         if (!isPrompt && fieldValue.empty())
             return EMPTY;
+        if (isBool) // we know it's true, so we want to only show the pre and post
+            fieldValue = "";
         if (rightJust) {
             fieldValue = truncPadR(fieldValue, maxWidth);  // pad or truncate
         } else {

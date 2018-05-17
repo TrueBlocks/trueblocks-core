@@ -35,13 +35,11 @@ typedef SFArrayBase<CBalanceHistory> CBalanceHistoryArray;
 //--------------------------------------------------------------------------
 class CAccountWatch : public CBaseNode {
 public:
-    uint32_t id;
     SFAddress address;
     SFString name;
     SFString color;
     blknum_t firstBlock;
     blknum_t lastBlock;
-    SFString status;
     bool deepScan;
     CIncomeStatement qbis;
     SFWei nodeBal;
@@ -57,10 +55,10 @@ public:
     const CBaseNode *getObjectAt(const SFString& fieldName, uint32_t index) const override;
 
     // EXISTING_CODE
-    CAccountWatch(uint32_t _id, const SFString& _addr, const SFString& _name, blknum_t fB, blknum_t lB, const SFString& _color)
-    : id(_id), address(toLower(_addr)), name(_name), color(_color), firstBlock(fB), lastBlock(lB), status("") { }
-    SFString displayName(bool terse, uint32_t w1=20, uint32_t w2=8) const { return displayName(true,terse,w1,w2); }
-    SFString displayName(bool useColor, bool terse, uint32_t w1=20, uint32_t w2=8) const;
+    CAccountWatch(const SFString& _addr, const SFString& _name, blknum_t fB, blknum_t lB, const SFString& _color)
+    : address(toLower(_addr)), name(_name), color(_color), firstBlock(fB), lastBlock(lB) {}
+    SFString displayName(bool expand, bool terse, uint32_t w1=20, uint32_t w2=8) const { return displayName(expand, true,terse,w1,w2); }
+    SFString displayName(bool expand, bool useColor, bool terse, uint32_t w1=20, uint32_t w2=8) const;
     SFBloom bloom;
     bool inBlock;
     CBalanceHistoryArray balanceHistory;
@@ -111,13 +109,11 @@ inline void CAccountWatch::Clear(void) {
 inline void CAccountWatch::Init(void) {
     CBaseNode::Init();
 
-    id = 0;
     address = "";
     name = "";
     color = "";
     firstBlock = 0;
     lastBlock = 0;
-    status = "";
     deepScan = 0;
     qbis.Init();
     nodeBal = 0;
@@ -135,13 +131,11 @@ inline void CAccountWatch::Copy(const CAccountWatch& ac) {
     Clear();
     CBaseNode::Copy(ac);
 
-    id = ac.id;
     address = ac.address;
     name = ac.name;
     color = ac.color;
     firstBlock = ac.firstBlock;
     lastBlock = ac.lastBlock;
-    status = ac.status;
     deepScan = ac.deepScan;
     qbis = ac.qbis;
     nodeBal = ac.nodeBal;
@@ -170,7 +164,8 @@ IMPLEMENT_ARCHIVE_LIST(CAccountWatchList);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-SFUintBN getNodeBal(CBalanceHistoryArray& history, const SFAddress& addr, blknum_t blockNum);
+extern SFUintBN getNodeBal(CBalanceHistoryArray& history, const SFAddress& addr, blknum_t blockNum);
+extern void loadWatchList(const CToml& toml, CAccountWatchArray& watches, const SFString& key);
 // EXISTING_CODE
 }  // namespace qblocks
 
