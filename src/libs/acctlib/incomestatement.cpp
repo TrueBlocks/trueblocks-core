@@ -242,10 +242,10 @@ ostream& operator<<(ostream& os, const CIncomeStatement& item) {
         uint32_t width = 22;
         if (item.begBal == item.endBal && item.begBal == -1) {
             os << padCenter("begBal", width) << "   "
-            << padCenter("inFlow", width) << "   "
-            << padCenter("outFlow", width) << "   "
-            << padCenter("gasCost", width) << "   "
-            << padCenter("endBal", width);
+                << padCenter("inFlow", width) << "   "
+                << padCenter("outFlow", width) << "   "
+                << padCenter("gasCost", width) << "   "
+                << padCenter("endBal", width);
         } else {
             os << (item.begBal>0?cGreen:bBlack) << padLeft(wei2Ether(to_string(item.begBal).c_str()),width) << bBlack << "   ";
             os << (item.inflow>0?cYellow:"") << padLeft(wei2Ether(to_string(item.inflow).c_str()),width) << bBlack << "   ";

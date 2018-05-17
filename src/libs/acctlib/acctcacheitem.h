@@ -28,7 +28,6 @@ class CAcctCacheItem : public CBaseNode {
 public:
     uint64_t blockNum;
     uint64_t transIndex;
-    int32_t which;
 
 public:
     CAcctCacheItem(void);
@@ -39,10 +38,10 @@ public:
     DECLARE_NODE(CAcctCacheItem);
 
     // EXISTING_CODE
-    CAcctCacheItem(uint64_t b, uint64_t t, int32_t w) : blockNum(b), transIndex(t), which(w) {}
+    CAcctCacheItem(uint64_t b, uint64_t t) : blockNum(b), transIndex(t) {}
     CAcctCacheItem(SFString& str);
     bool operator==(const CAcctCacheItem& item) {
-        return (blockNum == item.blockNum && transIndex == item.transIndex); // && which == item.which);
+        return (blockNum == item.blockNum && transIndex == item.transIndex);
     }
     bool operator!=(const CAcctCacheItem& item) { return !operator==(item); }
     // EXISTING_CODE
@@ -94,7 +93,6 @@ inline void CAcctCacheItem::Init(void) {
 
     blockNum = 0;
     transIndex = 0;
-    which = 0;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -107,7 +105,6 @@ inline void CAcctCacheItem::Copy(const CAcctCacheItem& ac) {
 
     blockNum = ac.blockNum;
     transIndex = ac.transIndex;
-    which = ac.which;
 
     // EXISTING_CODE
     // EXISTING_CODE
