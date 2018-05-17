@@ -67,6 +67,9 @@ int main(int argc, const char * argv[]) {
 //------------------------------------------------------------
 SFString doOneBlock(uint64_t num, const COptions& opt) {
 
+    CBlock latest;
+    getBlock(latest, "latest");
+
     CBlock gold;
     gold.blockNumber = num;
     SFString result;
@@ -82,7 +85,7 @@ SFString doOneBlock(uint64_t num, const COptions& opt) {
                 result = generic.result;
                 gold.parseJson((char*)(const char*)result);
                 SFString fileName = getBinaryFilename(num);
-                gold.finalized = isFinal(gold.timestamp);
+                gold.finalized = isBlockFinal(gold.timestamp, latest.timestamp);
                 writeBlockToBinary(gold, fileName);
             }
         }
@@ -101,7 +104,7 @@ SFString doOneBlock(uint64_t num, const COptions& opt) {
         }
 
         if (opt.force) { // turn this on to force a write of the block to the disc
-            gold.finalized = isFinal(gold.timestamp);
+            gold.finalized = isBlockFinal(gold.timestamp, latest.timestamp);
             writeBlockToBinary(gold, fileName);
         }
 

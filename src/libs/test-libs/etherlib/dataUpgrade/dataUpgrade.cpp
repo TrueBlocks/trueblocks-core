@@ -60,6 +60,9 @@ bool testReadWrite(COptions& options) {
     CBlock block;
     CNewBlock newBlock;
 
+    CBlock latest;
+    getBlock(latest, "latest");
+
     switch (options.testNum) {
         case 0: {
             ASSERT(fileExists("./oldFmt.cache"));
@@ -87,7 +90,7 @@ bool testReadWrite(COptions& options) {
             cout.flush();
             readFromJson(block, "./newFmt.json");
             newBlock = CNewBlock(block);
-            newBlock.finalized = isFinal(newBlock.timestamp);
+            newBlock.finalized = isBlockFinal(newBlock.timestamp, latest.timestamp);
             writeNodeToBinary(newBlock, "./newFmt.cache");
             ASSERT(fileExists("./newFmt.cache"));
             reportNode(&block);
