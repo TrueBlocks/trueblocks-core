@@ -7,7 +7,8 @@ We could have allowed each smart-contract that supports the ERC20 token standard
 for many use cases the ABI file may not be available, we chose to implement this common functionality in libraries. This allows us to support these common types of smart contracts 
 without requiring an ABI file from the end user (which is some cases may not be available).
 
-By virtue of being created automatically by makeClass, each of the classes in these libraries may be customized using the // EXISTING_CODE functionality. However, at present, these class are not customized.
+By virtue of being created automatically by makeClass, each of the classes in these libraries may be customized using the // EXISTING_CODE functionality. However, at present, these class 
+are not customized.
 
 As a further consequence of being derived from the base classes of the etherlib library, each of these classes may be easily “promoted” to more capable and informative classes. 
 The two built-in functions, promote_to_transaction(CTransaction *t), and promote_to_event(CLogEntry *e) are provided to promote any given etherlib class.
