@@ -3,13 +3,16 @@ getBloom
 
   Not enough arguments presented.
 
-  Usage:    getBloom [-r|-p|-v|-h] <block> [block...]  
-  Purpose:  Returns bloom filter(s) from local cache or directly from a running node.
+  Usage:    getBloom [-r|-e|-a|-s|-p|-v|-h] <block> [block...]  
+  Purpose:  Returns bloom filter(s) from running node (the default) or as EAB from local cache.
              
   Where:    
-	block_list            a space-separated list of one or more blocks from which to retrieve blooms (required)
-	-r  (--raw)           pull the bloom filter from the running Ethereum node (no cache)
-	-p  (--receipt)       display receipt level blooms, default is to display only block-level blooms
+	block_list            a space-separated list of one or more blocks for which to retrieve blooms (required)
+	-r  (--raw)           pull the bloom filter directly from the running node (the default)
+	-e  (--eab)           pull the enhanced adaptive bloom filters (EAB) from the local cache
+	-a  (--asbits)        display the bloom filter as bits instead of hex
+	-s  (--asbars)        display the bloom filter as bar charts instead of hex
+	-p  (--receipt)       display blooms from the transaction receipts as opposed to block (--raw only)
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
 	-h  (--help)          display this help screen
 

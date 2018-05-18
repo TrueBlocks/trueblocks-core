@@ -212,6 +212,17 @@ extern void registerQuitHandler(QUITHANDLER qh);
     }
 
     //-------------------------------------------------------------------------
+    SFString getRawBlock(blknum_t bn) {
+        SFString numStr = asStringU(bn);
+        SFString results;
+        queryRawBlock(results, numStr, true, false);
+        CRPCResult generic;
+        char *p = cleanUpJson((char*)results.c_str());
+        generic.parseJson(p);
+        return generic.result;
+    }
+
+    //-------------------------------------------------------------------------
     bool queryRawTransaction(SFString& results, const SFHash& txHash) {
         SFString data = "[\"[HASH]\"]";
         data.Replace("[HASH]", txHash);
