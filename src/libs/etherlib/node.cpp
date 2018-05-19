@@ -223,6 +223,20 @@ extern void registerQuitHandler(QUITHANDLER qh);
     }
 
     //-------------------------------------------------------------------------
+    SFHash getRawBlockHash(blknum_t bn) {
+        SFString blockStr;
+        queryRawBlock(blockStr, asStringU(bn), false, true);
+        blockStr = blockStr.substr(blockStr.find("\"hash\":"),blockStr.length());
+        cout << blockStr << "\n";
+        return blockStr;
+    }
+
+    //-------------------------------------------------------------------------
+    SFHash getRawTransactionHash(blknum_t bn, txnum_t tx) {
+        return "Not implemented";
+    }
+
+    //-------------------------------------------------------------------------
     bool queryRawTransaction(SFString& results, const SFHash& txHash) {
         SFString data = "[\"[HASH]\"]";
         data.Replace("[HASH]", txHash);

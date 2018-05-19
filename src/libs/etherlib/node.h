@@ -46,8 +46,10 @@ namespace qblocks {
     extern bool     queryRawTrace           (SFString& results,   const SFHash& hashIn);
     extern bool     queryRawLogs            (SFString& results,   const SFAddress& addr, uint64_t fromBlock, uint64_t toBlock);
 
-    //-------------------------------------------------------------------------
-    extern SFString getRawBlock             (blknum_t bn);
+    //-----------------------------------------------------------------------
+    extern SFHash   getRawBlock             (blknum_t bn);
+    extern SFHash   getRawBlockHash         (blknum_t bn);
+    extern SFHash   getRawTransactionHash   (blknum_t bn, txnum_t tx);
 
     //-----------------------------------------------------------------------
     extern void     writeToJson             (const CBaseNode& node, const SFString& fileName);
