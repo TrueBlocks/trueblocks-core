@@ -167,7 +167,7 @@ inline blknum_t bnFromPath(const SFString& path) {
 }
 
 //---------------------------------------------------------------------------
-inline bool isBlockFinal(timestamp_t ts_block, timestamp_t ts_chain, timestamp_t seconds = (60 * 10)) { // default to ten minutes
+inline bool isBlockFinal(timestamp_t ts_block, timestamp_t ts_chain, timestamp_t seconds = (60 * 4)) { // default to ten minutes
     // If the distance from the front of the node's current view of the front of the chain
     // is more than the numbers of seconds provided, consider the block final (even if it isn't
     // in a perfectly mathematical sense

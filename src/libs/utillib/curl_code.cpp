@@ -33,18 +33,26 @@ namespace qblocks {
     }
 
     //-------------------------------------------------------------------------
-    size_t write_callback_internal(char *ptr, size_t size, size_t nmemb, void *userdata) {
-        string result;
-        size_t i = 0;
-        for (i = 0 ; i < nmemb ; i++)
-            result += ptr[i];
-        result[i] = '\0';
+    size_t internalCallback(char *ptr, size_t size, size_t nmemb, void *userdata) {
 
-        // store the new dasta in the caller's string
-        string *str = reinterpret_cast<string*>(userdata); ASSERT(str);
+        // We need to save the last character...
+        char l = ptr[nmemb-1];
+
+        // ...because we're overwriting it (curl doesn't end the data with a '\0')...
+        ptr[nmemb-1] = '\0';
+
+        // ... now we can copy the string...
+        string result = ptr;
+
+        // ...but we need the last character...
+        result += l;
+
+        // Now we copy out to the caller's buffer
+        string *str = reinterpret_cast<string*>(userdata);
+        ASSERT(str);
         *str += result;
 
-        // we handeled everything, tell curl to keep going
+        // We've handeled everything, tell curl to keep going
         return size * nmemb;
     }
 
@@ -56,9 +64,9 @@ namespace qblocks {
         }
 
         string result;
-        curl_easy_setopt(getCurl_internal(), CURLOPT_URL, (const char*)url);
-        curl_easy_setopt(getCurl_internal(), CURLOPT_WRITEDATA, &result);
-        curl_easy_setopt(getCurl_internal(), CURLOPT_WRITEFUNCTION, write_callback_internal);
+        curl_easy_setopt(getCurl_internal(), CURLOPT_URL,           (const char*)url);
+        curl_easy_setopt(getCurl_internal(), CURLOPT_WRITEDATA,     &result);
+        curl_easy_setopt(getCurl_internal(), CURLOPT_WRITEFUNCTION, internalCallback);
         CURLcode res = curl_easy_perform(getCurl_internal());
         if (res != CURLE_OK) {
             fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
