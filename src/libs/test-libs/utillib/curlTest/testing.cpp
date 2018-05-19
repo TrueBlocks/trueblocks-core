@@ -15,7 +15,7 @@ using namespace std;
 //----------------------------------------------------------------------
 int main(int argc, const char *argv[])
 {
-    cout << urlToString("http:/""/google.com").Substitute("\r","").Substitute("\n","") << "\n";
-    cout << urlToString("https:/""/quickblocks.io").Substitute("\r","").Substitute("\n","") << "\n";
+    cout << urlToString("http:/""/google.com").Substitute("\r","") << "\n";
+    cout << urlToString("https:/""/quickblocks.io").Substitute("\r","") << "\n";
 	return 0;
 }
