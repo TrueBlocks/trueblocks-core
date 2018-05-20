@@ -1,5 +1,5 @@
 [settings]
 class     = CAccountWatch
-fields    = uint32 id|address address|string name|string color|blknum firstBlock|blknum lastBlock|string status|bool deepScan|CIncomeStatement qbis|wei nodeBal
+fields    = address address|string name|string color|blknum firstBlock|blknum lastBlock|bool deepScan|CIncomeStatement qbis|wei nodeBal
 includes  = abilib.h|transaction.h|incomestatement.h
 cIncs     = #include "etherlib.h"
