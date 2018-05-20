@@ -1,6 +1,6 @@
 [settings]
 class     = CLeaf
 baseClass = CTreeNode
-fields    = SFBlockArray blocks|uint32 cnt
+fields    = SFBlockArray blocks|uint32 counter
 includes  = etherlib.h|treenode.h
 cIncs     = #include "treeroot.h"

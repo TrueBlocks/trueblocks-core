@@ -1,6 +1,6 @@
 [settings]
 class    = CTreeNode
-fields   = uint64 index|string prefix
+fields   = uint64 index|string prefixS
 includes = etherlib.h
 cIncs    = #include "treeroot.h"
 scope    = extern
