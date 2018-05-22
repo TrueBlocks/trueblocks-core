@@ -38,12 +38,12 @@ namespace qblocks {
         if (source.pair.Contains("BTC"))
             lastRead = SFTime(2009,1,1,0,0,0);
         if (fileExists(cacheFile)) {
-            SFArchive archive(READING_ARCHIVE);
-            if (archive.Lock(cacheFile, binaryReadOnly, LOCK_NOWAIT)) {
-                archive.readHeader(); // we read the header even though it may not be the current version...
-                archive >> lastRead;
-                archive >> quotes;
-                archive.Close();
+            SFArchive priceCache(READING_ARCHIVE);
+            if (priceCache.Lock(cacheFile, binaryReadOnly, LOCK_NOWAIT)) {
+                priceCache.readHeader(); // we read the header even though it may not be the current version...
+                priceCache >> lastRead;
+                priceCache >> quotes;
+                priceCache.Close();
                 if (verbose) {
                     SFString date = lastRead.Format(FMT_JSON);
                     SFString count = asString(quotes.getCount());
@@ -158,22 +158,22 @@ namespace qblocks {
 
             // Write the database to the cache
             if (prevLast != lastRead && freshen) {
-                SFArchive archive(WRITING_ARCHIVE);
-                if (!archive.Lock(cacheFile, binaryWriteCreate, LOCK_WAIT)) {
+                SFArchive priceCache(WRITING_ARCHIVE);
+                if (!priceCache.Lock(cacheFile, binaryWriteCreate, LOCK_WAIT)) {
                     message = "Could not open cache file for writing: '" + cacheFile + "'";
                     return false;
                 }
-                archive.writeHeader();
-                archive << lastRead;
-                archive << quotes;
-                archive.Close();
+                priceCache.writeHeader();
+                priceCache << lastRead;
+                priceCache << quotes;
+                priceCache.Close();
                 if (verbose) {
                     cerr << "Wrote " << quotes.getCount() << " price quotes to file ";
                     cerr << "(lastRead: " << lastRead << ").\n";
                 }
-            } else {
-                if (!isTestMode())
-                    msg = "Data not written because no new data, or no -freshen flag. ";
+//            } else {
+//                if (!isTestMode())
+//                    msg = "Data not written because no new data, or no -freshen flag. ";
             }
         }
 

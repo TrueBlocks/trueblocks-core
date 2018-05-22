@@ -69,7 +69,7 @@ bool CLeaf::setValueByName(const SFString& fieldName, const SFString& fieldValue
             }
             break;
         case 'c':
-            if ( fieldName % "cnt" ) { counter = toLong32u(fieldValue); return true; }
+            if ( fieldName % "counter" ) { counter = toLong32u(fieldValue); return true; }
             break;
         default:
             break;
@@ -127,7 +127,7 @@ void CLeaf::registerClass(void) {
     ADD_FIELD(CLeaf, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CLeaf, "showing", T_BOOL,  ++fieldNum);
     ADD_FIELD(CLeaf, "blocks", T_OBJECT|TS_ARRAY, ++fieldNum);
-    ADD_FIELD(CLeaf, "cnt", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CLeaf, "counter", T_NUMBER, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CLeaf, "schema");
@@ -201,7 +201,7 @@ SFString CLeaf::getValueByName(const SFString& fieldName) const {
             }
             break;
         case 'c':
-            if ( fieldName % "cnt" ) return asStringU(counter);
+            if ( fieldName % "counter" ) return asStringU(counter);
             break;
     }
 

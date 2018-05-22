@@ -55,6 +55,9 @@ bool CFunction::setValueByName(const SFString& fieldName, const SFString& fieldV
     if ( fieldName % "signature" ) {
         signature = getSignature(SIG_CANONICAL);
         return true;
+    } else if (fieldName % "name") {
+        name = fieldValue.Substitute("_","");
+        return true;
     }
     // EXISTING_CODE
 
