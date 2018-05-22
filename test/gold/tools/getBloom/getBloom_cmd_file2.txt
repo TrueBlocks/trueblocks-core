@@ -34,18 +34,67 @@ getBloom --file:cmd_file2
     "number": "477644"
 }
 {
+    "blockNumber": 599852,
+    "transactions": [
+        {
+            "transactionIndex": 0,
+            "receipt": {
+            }
+        }
+    ]
 }
 {
+    "blockNumber": 635557,
+    "transactions": [
+        {
+            "transactionIndex": 0,
+            "receipt": {
+            }
+        }
+    ]
 }
 {
+    "blockNumber": 640798,
+    "transactions": []
 }
 {
+    "blockNumber": 723006,
+    "transactions": []
 }
 {
+    "blockNumber": 798397,
+    "transactions": [
+        {
+            "transactionIndex": 0,
+            "receipt": {
+            }
+        }
+    ]
 }
 {
+    "blockNumber": 851731,
+    "transactions": [
+        {
+            "transactionIndex": 0,
+            "receipt": {
+            }
+        }
+    ]
 }
 {
+    "blockNumber": 1025677,
+    "transactions": [
+        {
+            "transactionIndex": 0,
+            "receipt": {
+            }
+        },
+        {
+            "transactionIndex": 1,
+            "receipt": {
+            }
+        }
+    ]
 }
 {
 }
