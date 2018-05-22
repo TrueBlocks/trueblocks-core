@@ -369,6 +369,32 @@ bool CAbi::loadABIFromFile(const SFString& fileName) {
 }
 
 //---------------------------------------------------------------------------
+bool CAbi::loadABIFromCSV(const SFString& fileName) {
+    CFunction::registerClass();
+    CParameter::registerClass();
+    HIDE_FIELD(CParameter, "indexed");
+    HIDE_FIELD(CParameter, "isPointer");
+    HIDE_FIELD(CParameter, "isArray");
+    HIDE_FIELD(CParameter, "isObject");
+    SFString contents = asciiFileToString(fileName);
+    ASSERT(!contents.empty());
+    while (!contents.empty()) {
+        SFString json = nextTokenClear(contents,'\n');
+        SFString encoding = nextTokenClear(json,'\t');
+        CFunction func;
+        uint32_t nFields = 0;
+        char *p = cleanUpJson((char *)json.c_str());
+        func.parseJson(p, nFields);
+        if (nFields) {
+            abiByEncoding[abiByEncoding.getCount()] = func;
+            cout << func.encoding << ": " << func.name << ": " << func.inputs.getCount() << "\n";
+        }
+    }
+    abiByEncoding.Sort(sortFuncTableByEncoding);
+    return abiByEncoding.getCount();
+}
+
+//---------------------------------------------------------------------------
 bool CAbi::loadABI(const SFString& addr) {
     // Already loaded?
     if (abiByName.getCount() && abiByEncoding.getCount())
@@ -437,10 +463,10 @@ void rebuildFourByteDB(void) {
         }
     }
     funcArray.Sort(sortFuncTableByEncoding);
-    SFArchive archive(WRITING_ARCHIVE);
-    if (archive.Lock(abiPath+"abis.bin", binaryWriteCreate, LOCK_CREATE)) {
-        archive << funcArray;
-        archive.Release();
+    SFArchive funcCache(WRITING_ARCHIVE);
+    if (funcCache.Lock(abiPath+"abis.bin", binaryWriteCreate, LOCK_CREATE)) {
+        funcCache << funcArray;
+        funcCache.Release();
     }
 }
 
@@ -451,10 +477,10 @@ static CFunctionArray *getABIArray(void) {
     if (!theArrayPtr) {
         static CFunctionArray theArray;
         SFString abiPath = blockCachePath("abis/abis.bin");
-        SFArchive archive(READING_ARCHIVE);
-        if (archive.Lock(abiPath, binaryReadOnly, LOCK_WAIT)) {
-            archive >> theArray;
-            archive.Release();
+        SFArchive funcCache(READING_ARCHIVE);
+        if (funcCache.Lock(abiPath, binaryReadOnly, LOCK_WAIT)) {
+            funcCache >> theArray;
+            funcCache.Release();
         }
         theArrayPtr = &theArray;
     }

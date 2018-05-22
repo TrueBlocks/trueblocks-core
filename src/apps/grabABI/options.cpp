@@ -86,6 +86,8 @@ bool COptions::parseArguments(SFString& command) {
             if (primaryAddr.empty())
                 primaryAddr = arg;
             SFAddress addr = fixAddress(toLower(arg));
+            if (arg == "0xTokenLib" || arg == "0xWalletLib")
+                addr = arg;
             if (!isAddress(addr) && !addr.ContainsI("tokenlib") && !addr.ContainsI("walletlib"))
                 return usage("Invalid address `" + addr + "'. Length is not equal to 40 characters (20 bytes).\n");
             addrs[nAddrs++] = addr;

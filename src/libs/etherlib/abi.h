@@ -44,6 +44,7 @@ public:
     void clearABI(void);
     bool loadABI(const SFString& addr);
     bool loadABIFromFile(const SFString& fileName);
+    bool loadABIFromCSV(const SFString& fileName);
     CFunction *findFunctionByName(const SFString& search);
     CFunction *findFunctionByEncoding(const SFString& search);
     friend class CAccount;

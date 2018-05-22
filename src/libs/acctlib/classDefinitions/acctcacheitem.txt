@@ -1,4 +1,4 @@
 [settings]
 class = CAcctCacheItem
-fields = uint64 blockNum|uint64 transIndex|int32 which
+fields = uint64 blockNum|uint64 transIndex
 includes = etherlib.h

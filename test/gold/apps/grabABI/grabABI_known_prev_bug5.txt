@@ -22,7 +22,7 @@ ABI for address 0x851b7f3ab81bd8df354f0d7640efcd7288553419
 	function confirmTransaction         (uint256 transactionId)
 	function submitTransaction          (address destination,uint256 value,bytes data)
 	function changeDailyLimit           (uint256 _dailyLimit)
-	function MAX_OWNER_COUNT            ()
+	function MAXOWNERCOUNT              ()
 	function required                   ()
 	function replaceOwner               (address owner,address newOwner)
 	function executeTransaction         (uint256 transactionId)

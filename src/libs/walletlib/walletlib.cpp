@@ -5,19 +5,17 @@
  *
  * The LICENSE at the root of this repo details your rights (if any)
  *------------------------------------------------------------------------*/
- /*
-  *
-  * This code was generated automatically from grabABI and makeClass from the
-  * 'WalletLib' ABI file. You may edit the file,
-  * but keep your edits inside the 'EXISTING_CODE' tags.
-  *
-  */
+/*
+ * This code was generated automatically from grabABI and makeClass. You may
+ * edit the file, but keep your edits inside the 'EXISTING_CODE' tags.
+ */
 #include "tokenlib.h"
 #include "walletlib.h"
 
 //-----------------------------------------------------------------------
 void walletlib_init(void)
 {
+    
     QConfirmationEvent::registerClass();
     QConfirmationNeededEvent::registerClass();
     QDepositEvent::registerClass();
@@ -47,8 +45,12 @@ const SFString func_changeOwner_qb = "0xf00d4b5d";
 const SFString func_changeRequirement_qb = "0xba51a6df";
 const SFString func_confirm_qb = "0x797af627";
 const SFString func_execute_qb = "0xb61d27f6";
+const SFString func_hasConfirmed_qb = "0xc2cf7326";
 const SFString func_isOwner_qb = "0x2f54bf6e";
 const SFString func_kill_qb = "0xcbf0b0c0";
+const SFString func_mdailyLimit_qb = "0x893ec080";
+const SFString func_mnumOwners_qb = "0x4c68cda4";
+const SFString func_mrequired_qb = "0x6f88eef4";
 const SFString func_removeOwner_qb = "0x173825d9";
 const SFString func_resetSpentToday_qb = "0x5c52c2f5";
 const SFString func_revoke_qb = "0xb75c7dc6";
@@ -60,7 +62,7 @@ const CTransaction *promoteToWallet(const CTransaction *p)
     if (p && (p->input.length()>=10 || p->input == "0x"))
     {
         SFString items[256];
-        int nItems=0;
+        uint32_t nItems=0;
 
         SFString encoding = p->input.substr(0,10);
         SFString params   = p->input.substr(10);
@@ -75,7 +77,7 @@ const CTransaction *promoteToWallet(const CTransaction *p)
             *(CTransaction*)a = *p; // copy in
             a->_owner = toAddress(params.substr(0*64,64));
             items[nItems++] = "address";
-            a->function = "addOwner" + parse(params,nItems,items);
+            a->function = toFunction("addOwner", params, nItems, items);
             return a;
 
         } else if (encoding == func_changeOwner_qb)
@@ -88,7 +90,7 @@ const CTransaction *promoteToWallet(const CTransaction *p)
             a->_to = toAddress(params.substr(1*64,64));
             items[nItems++] = "address";
             items[nItems++] = "address";
-            a->function = "changeOwner" + parse(params,nItems,items);
+            a->function = toFunction("changeOwner", params, nItems, items);
             return a;
 
         } else if (encoding == func_changeRequirement_qb)
@@ -99,7 +101,7 @@ const CTransaction *promoteToWallet(const CTransaction *p)
             *(CTransaction*)a = *p; // copy in
             a->_newRequired = toWei("0x"+params.substr(0*64,64));
             items[nItems++] = "uint256";
-            a->function = "changeRequirement" + parse(params,nItems,items);
+            a->function = toFunction("changeRequirement", params, nItems, items);
             return a;
 
         } else if (encoding == func_confirm_qb)
@@ -110,7 +112,7 @@ const CTransaction *promoteToWallet(const CTransaction *p)
             *(CTransaction*)a = *p; // copy in
             a->_h = params.substr(0*64,64);
             items[nItems++] = "bytes32";
-            a->function = "confirm" + parse(params,nItems,items);
+            a->function = toFunction("confirm", params, nItems, items);
             return a;
 
         } else if (encoding == func_execute_qb)
@@ -125,7 +127,7 @@ const CTransaction *promoteToWallet(const CTransaction *p)
             items[nItems++] = "address";
             items[nItems++] = "uint256";
             items[nItems++] = "bytes";
-            a->function = "execute" + parse(params,nItems,items);
+            a->function = toFunction("execute", params, nItems, items);
             return a;
 
         } else if (encoding == func_isOwner_qb)
@@ -136,7 +138,7 @@ const CTransaction *promoteToWallet(const CTransaction *p)
             *(CTransaction*)a = *p; // copy in
             a->_addr = toAddress(params.substr(0*64,64));
             items[nItems++] = "address";
-            a->function = "isOwner" + parse(params,nItems,items);
+            a->function = toFunction("isOwner", params, nItems, items);
             return a;
 
         } else if (encoding == func_kill_qb)
@@ -147,7 +149,7 @@ const CTransaction *promoteToWallet(const CTransaction *p)
             *(CTransaction*)a = *p; // copy in
             a->_to = toAddress(params.substr(0*64,64));
             items[nItems++] = "address";
-            a->function = "kill" + parse(params,nItems,items);
+            a->function = toFunction("kill", params, nItems, items);
             return a;
 
         } else if (encoding == func_removeOwner_qb)
@@ -158,7 +160,7 @@ const CTransaction *promoteToWallet(const CTransaction *p)
             *(CTransaction*)a = *p; // copy in
             a->_owner = toAddress(params.substr(0*64,64));
             items[nItems++] = "address";
-            a->function = "removeOwner" + parse(params,nItems,items);
+            a->function = toFunction("removeOwner", params, nItems, items);
             return a;
 
         } else if (encoding == func_resetSpentToday_qb)
@@ -167,7 +169,7 @@ const CTransaction *promoteToWallet(const CTransaction *p)
             // 0x5c52c2f5
             QResetSpentToday *a = new QResetSpentToday;
             *(CTransaction*)a = *p; // copy in
-            a->function = "resetSpentToday";
+            a->function = toFunction("resetSpentToday", params, nItems, items);
             return a;
 
         } else if (encoding == func_revoke_qb)
@@ -178,7 +180,7 @@ const CTransaction *promoteToWallet(const CTransaction *p)
             *(CTransaction*)a = *p; // copy in
             a->_operation = params.substr(0*64,64);
             items[nItems++] = "bytes32";
-            a->function = "revoke" + parse(params,nItems,items);
+            a->function = toFunction("revoke", params, nItems, items);
             return a;
 
         } else if (encoding == func_setDailyLimit_qb)
@@ -189,7 +191,7 @@ const CTransaction *promoteToWallet(const CTransaction *p)
             *(CTransaction*)a = *p; // copy in
             a->_newLimit = toWei("0x"+params.substr(0*64,64));
             items[nItems++] = "uint256";
-            a->function = "setDailyLimit" + parse(params,nItems,items);
+            a->function = toFunction("setDailyLimit", params, nItems, items);
             return a;
 
         }
@@ -221,8 +223,8 @@ const CLogEntry *promoteToWalletEvent(const CLogEntry *p)
     if (!p)
         return NULL;
 
-    uint32_t nTopics = p->topics.getCount();
-    if (nTopics>0) // the '0'th topic is the event signature
+    uint32_t nTops = p->topics.getCount();
+    if (nTops>0) // the '0'th topic is the event signature
     {
         SFString data = p->data.substr(2);
         // EXISTING_CODE
@@ -343,7 +345,9 @@ const CLogEntry *promoteToWalletEvent(const CLogEntry *p)
     // returns NULL if not promoted
     return NULL;
 }
+
 /*
-//ABI From 'WalletLib'
+ ABI for addr : 0xWalletLib
 [{"constant":false,"inputs":[{"name":"_owner","type":"address"}],"name":"removeOwner","outputs":[],"type":"function"},{"constant":false,"inputs":[{"name":"_addr","type":"address"}],"name":"isOwner","outputs":[{"name":"","type":"bool"}],"type":"function"},{"constant":true,"inputs":[],"name":"m_numOwners","outputs":[{"name":"","type":"uint256"}],"type":"function"},{"constant":false,"inputs":[],"name":"resetSpentToday","outputs":[],"type":"function"},{"constant":false,"inputs":[{"name":"_owner","type":"address"}],"name":"addOwner","outputs":[],"type":"function"},{"constant":true,"inputs":[],"name":"m_required","outputs":[{"name":"","type":"uint256"}],"type":"function"},{"constant":false,"inputs":[{"name":"_h","type":"bytes32"}],"name":"confirm","outputs":[{"name":"","type":"bool"}],"type":"function"},{"constant":false,"inputs":[{"name":"_newLimit","type":"uint256"}],"name":"setDailyLimit","outputs":[],"type":"function"},{"constant":false,"inputs":[{"name":"_to","type":"address"},{"name":"_value","type":"uint256"},{"name":"_data","type":"bytes"}],"name":"execute","outputs":[{"name":"_r","type":"bytes32"}],"type":"function"},{"constant":false,"inputs":[{"name":"_operation","type":"bytes32"}],"name":"revoke","outputs":[],"type":"function"},{"constant":false,"inputs":[{"name":"_newRequired","type":"uint256"}],"name":"changeRequirement","outputs":[],"type":"function"},{"constant":true,"inputs":[{"name":"_operation","type":"bytes32"},{"name":"_owner","type":"address"}],"name":"hasConfirmed","outputs":[{"name":"","type":"bool"}],"type":"function"},{"constant":false,"inputs":[{"name":"_to","type":"address"}],"name":"kill","outputs":[],"type":"function"},{"constant":false,"inputs":[{"name":"_from","type":"address"},{"name":"_to","type":"address"}],"name":"changeOwner","outputs":[],"type":"function"},{"constant":true,"inputs":[],"name":"m_dailyLimit","outputs":[{"name":"","type":"uint256"}],"type":"function"},{"inputs":[{"name":"_owners","type":"address[]"},{"name":"_required","type":"uint256"},{"name":"_daylimit","type":"uint256"}],"type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"name":"owner","type":"address"},{"indexed":false,"name":"operation","type":"bytes32"}],"name":"Confirmation","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"owner","type":"address"},{"indexed":false,"name":"operation","type":"bytes32"}],"name":"Revoke","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"oldOwner","type":"address"},{"indexed":false,"name":"newOwner","type":"address"}],"name":"OwnerChanged","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"newOwner","type":"address"}],"name":"OwnerAdded","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"oldOwner","type":"address"}],"name":"OwnerRemoved","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"newRequirement","type":"uint256"}],"name":"RequirementChanged","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"from","type":"address"},{"indexed":false,"name":"value","type":"uint256"}],"name":"Deposit","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"owner","type":"address"},{"indexed":false,"name":"value","type":"uint256"},{"indexed":false,"name":"to","type":"address"},{"indexed":false,"name":"data","type":"bytes"}],"name":"SingleTransact","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"owner","type":"address"},{"indexed":false,"name":"operation","type":"bytes32"},{"indexed":false,"name":"value","type":"uint256"},{"indexed":false,"name":"to","type":"address"},{"indexed":false,"name":"data","type":"bytes"}],"name":"MultiTransact","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"operation","type":"bytes32"},{"indexed":false,"name":"initiator","type":"address"},{"indexed":false,"name":"value","type":"uint256"},{"indexed":false,"name":"to","type":"address"},{"indexed":false,"name":"data","type":"bytes"}],"name":"ConfirmationNeeded","type":"event"}]
+
 */

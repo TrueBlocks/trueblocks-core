@@ -14,6 +14,10 @@
 extern bool testReadWrite(COptions& options);
 extern bool testUpgrade(COptions& options);
 extern void reportNode(CBaseNode *node);
+namespace qblocks {
+    extern bool writeNodeToBinary(const CBaseNode& node, const SFString& fileName);
+    extern bool readNodeFromBinary(CBaseNode& node, const SFString& fileName);
+};
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
@@ -56,12 +60,15 @@ bool testReadWrite(COptions& options) {
     CBlock block;
     CNewBlock newBlock;
 
+    CBlock latest;
+    getBlock(latest, "latest");
+
     switch (options.testNum) {
         case 0: {
             ASSERT(fileExists("./oldFmt.cache"));
             cout << "0. Read from old binary format and do nothing...\n";
             cout.flush();
-            readFromBinary(block, "./oldFmt.cache");
+            readBlockFromBinary(block, "./oldFmt.cache");
             reportNode(&block);
             break;
         }
@@ -69,7 +76,7 @@ bool testReadWrite(COptions& options) {
             ASSERT(fileExists("./oldFmt.cache"));
             cout << "1. Read from old binary format, write to JSON...\n";
             cout.flush();
-            readFromBinary(block, "./oldFmt.cache");
+            readBlockFromBinary(block, "./oldFmt.cache");
             writeToJson(block, "./newFmt.json");
             ASSERT(fileExists("./newFmt.json"));
             reportNode(&block);
@@ -81,10 +88,10 @@ bool testReadWrite(COptions& options) {
             ASSERT(fileExists("./newFmt.json"));
             cout << "2. Read from JSON, write to new binary format...\n";
             cout.flush();
-            readOneBlock_fromJson(block, "./newFmt.json");
+            readFromJson(block, "./newFmt.json");
             newBlock = CNewBlock(block);
-            newBlock.finalized = isFinal(newBlock.timestamp);
-            writeToBinary(newBlock, "./newFmt.cache");
+            newBlock.finalized = isBlockFinal(newBlock.timestamp, latest.timestamp);
+            writeNodeToBinary(newBlock, "./newFmt.cache");
             ASSERT(fileExists("./newFmt.cache"));
             reportNode(&block);
             reportNode(&newBlock);
