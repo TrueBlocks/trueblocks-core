@@ -62,6 +62,12 @@ namespace qblocks {
             }
             return NULL;
         }
+        bool isFieldHidden(const SFString& fieldName) {
+            CFieldData *f = FindField(fieldName);
+            if (f)
+                return f->isHidden();
+            return false;
+        }
     };
 
     //------------------------------------------------------------

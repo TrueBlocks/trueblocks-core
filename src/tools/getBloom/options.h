@@ -11,13 +11,11 @@
 //-----------------------------------------------------------------------------
 class COptions : public CBlockOptions {
 public:
-    bool isCheck;
     bool isRaw;
-    bool isCache;
     bool receipt;
     bool force;
-    bool silent;
-    int quiet;
+    bool asBits;
+    bool asBars;
 
     COptions(void);
     ~COptions(void);

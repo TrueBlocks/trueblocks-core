@@ -157,8 +157,16 @@ SFString nextBranchChunk_custom(const SFString& fieldIn, const void *dataPtr) {
     if (bra) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
-            case 'm':
-                if ( fieldIn % "nodes" ) { return EMPTY; }
+            case 'n':
+                if ( fieldIn % "nodes" ) {
+                    SFString ret;
+                    for (int i=0;i<16;i++) {
+                        if (bra->nodes[i]) {
+                            ret += bra->nodes[i]->Format();
+                        }
+                    }
+                    return ret;
+                }
                 break;
             // EXISTING_CODE
             case 'p':

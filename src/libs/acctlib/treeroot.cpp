@@ -239,7 +239,10 @@ ostream& operator<<(ostream& os, const CTreeRoot& item) {
         if (_value.empty())
             remove(_key);
         if (verbose == 2) { cerr << "treeroot inserting " << _key << " at " << _value << "\n"; }
-        root = root ? root->insert(_key, _value) : new CLeaf(_key, _value);
+        root =
+            root ?
+                root->insert(_key, _value) :
+                new CLeaf(_key, _value);
     }
 
     //-----------------------------------------------------------------------------

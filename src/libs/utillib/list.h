@@ -45,6 +45,7 @@ namespace qblocks {
 
         void Sort(SORTINGFUNC func) { qsort(&m_Values[0], m_nValues, sizeof(TYPE), func); }
         TYPE *Find(const TYPE *key, SEARCHFUNC func) {
+            // note: use the same function you would use to sort. Return <0, 0, or >0 if less, equal, greater
             return reinterpret_cast<TYPE*>(bsearch(key, &m_Values[0], m_nValues, sizeof(TYPE), func));
         }
 
@@ -562,7 +563,13 @@ namespace qblocks {
     }
 
     //-----------------------------------------------------------------------------------------
-    inline int compareStringValue(const void *rr1, const void *rr2) {
+    inline int findByStringValue(const void *rr1, const void *rr2) {
+        // return -1, 0, or 1
+        return sortByStringValue(rr1, rr2);
+    }
+
+    //-----------------------------------------------------------------------------------------
+    inline int isDuplicate(const void *rr1, const void *rr2) {
         // return true of these are the same string
         return !sortByStringValue(rr1, rr2);
     }
@@ -570,7 +577,7 @@ namespace qblocks {
     //----------------------------------------------------------------------------------------
     class SFUniqueStringList : public SFUniqueList<const SFString&> {
     public:
-        SFUniqueStringList(void) : SFUniqueList(sortByStringValue, compareStringValue) { }
+        SFUniqueStringList(void) : SFUniqueList(sortByStringValue, isDuplicate) { }
     };
 
     typedef SFArrayBase<SFString> SFStringArray;

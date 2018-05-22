@@ -46,7 +46,6 @@ public:
     CTreeNode* insert(const SFString& _key, const SFString& _value) override;
     CTreeNode* remove(const SFString& _key) override;
     bool visitItems(ACCTVISITOR func, void *data) const override;
-
 private:
     bool contains(const SFString& _key) const;
     // EXISTING_CODE

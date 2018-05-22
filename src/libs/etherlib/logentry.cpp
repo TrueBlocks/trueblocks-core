@@ -265,7 +265,7 @@ const SFString CLogEntry::getStringAt(const SFString& name, uint32_t i) const {
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-#define EQ_TEST(a) { if (test.a != a) { cout << " diff at " << #a << " " << test.a << ":" << a << " "; return false; } }
+#define EQ_TEST(a) { if (test.a != a) return false; }
 bool CLogEntry::operator==(const CLogEntry& test) const {
 
     EQ_TEST(address);

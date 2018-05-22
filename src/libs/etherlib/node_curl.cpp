@@ -105,10 +105,10 @@ namespace qblocks {
             }
             curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
 
-            if (getCurlContext()->source == "remote") {
+            if (getCurlContext()->provider == "remote") {
                 curl_easy_setopt(curl, CURLOPT_URL, "https://pmainnet.infura.io/");
 
-            } else if (getCurlContext()->source == "ropsten") {
+            } else if (getCurlContext()->provider == "ropsten") {
                 curl_easy_setopt(curl, CURLOPT_URL, "https://testnet.infura.io/");
 
             } else {
@@ -146,7 +146,7 @@ namespace qblocks {
 
         CURLcode res = curl_easy_perform(getCurl());
         if (res != CURLE_OK && !getCurlContext()->earlyAbort) {
-            SFString currentSource = getCurlContext()->source;
+            SFString currentSource = getCurlContext()->provider;
             SFString fallBack = getenv("FALLBACK");
             if (!fallBack.empty() && currentSource != fallBack) {
                 if (fallBack != "infura") {
@@ -168,10 +168,10 @@ namespace qblocks {
                     exit(0);
                 }
                 getCurlContext()->theID--;
-                getCurlContext()->source = "remote";
+                getCurlContext()->provider = "remote";
                 // reset curl
                 getCurl(true); getCurl();
-                // since we failed, we leave the new source, otherwise we would have to save
+                // since we failed, we leave the new provider, otherwise we would have to save
                 // the results and reset it here.
                 return callRPC(method, params, raw);
             }

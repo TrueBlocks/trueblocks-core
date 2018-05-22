@@ -8,9 +8,8 @@
  *------------------------------------------------------------------------*/
  /*
   *
-  * This code was generated automatically from grabABI and makeClass from the
-  * 'WalletLib' ABI file. You may edit the file,
-  * but keep your edits inside the 'EXISTING_CODE' tags.
+  * This code was generated automatically from grabABI and makeClass You may 
+  * edit the file, but keep your edits inside the 'EXISTING_CODE' tags.
   *
   */
 #include "etherlib.h"
@@ -48,8 +47,12 @@ extern const SFString func_changeOwner_qb;
 extern const SFString func_changeRequirement_qb;
 extern const SFString func_confirm_qb;
 extern const SFString func_execute_qb;
+extern const SFString func_hasConfirmed_qb;
 extern const SFString func_isOwner_qb;
 extern const SFString func_kill_qb;
+extern const SFString func_mdailyLimit_qb;
+extern const SFString func_mnumOwners_qb;
+extern const SFString func_mrequired_qb;
 extern const SFString func_removeOwner_qb;
 extern const SFString func_resetSpentToday_qb;
 extern const SFString func_revoke_qb;
@@ -67,3 +70,5 @@ extern const SFString evt_RequirementChanged_qb;
 extern const SFString evt_Revoke_qb;
 extern const SFString evt_SingleTransact_qb;
 
+// EXISTING_CODE
+// EXISTING_CODE

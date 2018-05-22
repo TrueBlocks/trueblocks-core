@@ -10,4 +10,6 @@
 
 namespace qblocks {
 
+    uint32_t unused = 0;
+
 } // namespace qblocks
