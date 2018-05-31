@@ -37,13 +37,15 @@ namespace qblocks {
         //VISITARCHIVEFUNC writeMsgFunc;
         //VISITARCHIVEFUNC readMsgFunc;
 
-        SFArchive(bool isReading) {
+        SFArchive(bool isReading) : CSharedResource() {
             m_isReading        = isReading;
             m_header.m_version = getVersionNum();
             //writeMsgFunc     = NULL;
             //readMsgFunc      = NULL;
         }
 
+        SFString getType(void) const override { return "SFArchive"; }
+        
         bool isWriting(void) const {
             return !m_isReading;
         }

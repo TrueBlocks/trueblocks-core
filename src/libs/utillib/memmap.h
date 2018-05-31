@@ -14,6 +14,7 @@
 // o - Altered source versions must be plainly marked as such, and must not be misrepresented as being the original software.
 //
 
+#include <stdexcept>
 class CMemMapFile {
 public:
     enum CacheHint {
