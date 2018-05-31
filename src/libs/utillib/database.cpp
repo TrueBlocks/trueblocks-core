@@ -235,7 +235,7 @@ namespace qblocks {
 
         nChars = (uint32_t)fileSize(filename);
         if (buffer) {
-            CSharedResource lock;
+            CBinFile lock;
             if (lock.Lock(filename, binaryReadOnly, LOCK_NOWAIT)) {  // do not wait for lock - read only file
                 ASSERT(lock.isOpen());
                 lock.Seek(0, SEEK_SET);
@@ -383,7 +383,7 @@ namespace qblocks {
         memset(val, 0, nBytes+100);
         char *s = val;
 
-        CSharedResource lock;
+        CAsciiFile lock;
         if (lock.Lock(filename, asciiReadOnly, LOCK_NOWAIT)) {  // do not wait for lock - read only file
             uint64_t nLines = 0;
 
@@ -463,7 +463,7 @@ namespace qblocks {
 
     //----------------------------------------------------------------------
     size_t stringToAsciiFile(const SFString& fileName, const SFString& contents) {
-        CSharedResource lock;
+        CAsciiFile lock;
         if (lock.Lock(fileName, asciiWriteCreate, LOCK_WAIT)) {
             lock.WriteLine((const char*)contents);
             lock.Release();

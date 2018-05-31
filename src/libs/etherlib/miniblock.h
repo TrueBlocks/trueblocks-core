@@ -64,8 +64,8 @@ namespace qblocks {
     public:
         bool            isLoaded;
 
-        CSharedResource blocksOnDisc;
-        CSharedResource transOnDisc;
+        CBinFile blocksOnDisc;
+        CBinFile transOnDisc;
 
 #ifdef NEW_CODE
         // Very important note: the two pointers are not allocated. They are pointers to a location

@@ -11,6 +11,7 @@ public:
     COptionsTransList transList;
     bool isRaw;
     bool incTrace;
+    bool nTraces;
     SFString format;
     uint64_t nCmds;
     uint64_t nVisited;

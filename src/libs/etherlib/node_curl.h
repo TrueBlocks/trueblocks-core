@@ -10,7 +10,7 @@
 #include "etherlib.h"
 
 namespace qblocks {
-    
+
     //-------------------------------------------------------------------------
     typedef size_t (*CURLCALLBACKFUNC)(char *ptr, size_t size, size_t nmemb, void *userdata);
 
@@ -23,19 +23,13 @@ namespace qblocks {
         SFString         postData;
         SFString         result;
         SFString         provider;
-        bool             tracing_on;
         bool             is_error;
-        bool             is_tracing;
         uint32_t         theID;
 
         CCurlContext(void);
         SFString getCurlID(void);
         void setPostData(const SFString& method, const SFString& params);
         void Clear(void);
-        void tracingOff (void);
-        void tracingOn  (void);
-        bool isTracingOn(void);
-        bool lightTracing(bool on);
         CURLCALLBACKFUNC setCurlCallback(CURLCALLBACKFUNC func);
     };
 
@@ -45,5 +39,6 @@ namespace qblocks {
     extern bool          getObjectViaRPC (CBaseNode &node, const SFString& method, const SFString& params);
     extern SFString      callRPC         (const SFString& method, const SFString& params, bool raw);
     extern CCurlContext *getCurlContext  (void);
-    extern size_t        write_callback  (char *ptr, size_t size, size_t nmemb, void *userdata);
+    extern size_t        writeCallback   (char *ptr, size_t size, size_t nmemb, void *userdata);
+    extern size_t        traceCallback   (char *ptr, size_t size, size_t nmemb, void *userdata);
 }  // namespace qblocks
