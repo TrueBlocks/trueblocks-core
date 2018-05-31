@@ -11,6 +11,7 @@
 CParams params[] = {
     CParams("~!trans_list", "a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)"),
     CParams("-raw",         "retrieve raw transaction directly from the running node"),
+    CParams("-nTraces",     "report on how many traces the transaction generated and deepest trace"),
     CParams("@trace",       "include the transactions trace after the transaction"),
     CParams("",             "Retrieve an Ethereum transaction from the local cache or a running node."),
 };
@@ -30,6 +31,9 @@ bool COptions::parseArguments(SFString& command) {
 
         } else if (arg == "-t" || arg == "--trace") {
             incTrace = true;
+
+        } else if (arg == "-n" || arg == "--nTraces") {
+            nTraces = true;
 
         } else if (arg.startsWith('-')) {  // do not collapse
 
@@ -64,6 +68,7 @@ void COptions::Init(void) {
     transList.Init();
     isRaw = false;
     incTrace = false;
+    nTraces = false;
     format = "";
 }
 

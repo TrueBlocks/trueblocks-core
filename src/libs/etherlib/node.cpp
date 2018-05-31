@@ -13,6 +13,17 @@ namespace qblocks {
     //-------------------------------------------------------------------------
     void etherlib_init(const SFString& sourceIn, QUITHANDLER qh) {
 
+        SFString fallBack = getenv("FALLBACK");
+        if (!isNodeRunning() && fallBack.empty()) {
+            cerr << "\n\t";
+            cerr << cTeal << "Warning: " << cOff << "QuickBlocks requires a running Ethereum\n";
+            cerr << "\tnode to operate properly. Please start your node.\n";
+            cerr << "\tAlternatively, export FALLBACK=infura in your\n";
+            cerr << "\tenvironment before running this command. Quitting...\n\n";
+            cerr.flush();
+            exit(0);
+        }
+
         establishFolder(blockCachePath(""));
 
         // In case we create any lock files, so
@@ -171,8 +182,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
 
         // We have the transactions, but we also want the receipts, and we need an error indication
         nTraces=0;
-        for (uint32_t i=0;i<block.transactions.getCount();i++)
-        {
+        for (uint32_t i=0;i<block.transactions.getCount();i++) {
             CTransaction *trans = &block.transactions[i];
             trans->pBlock = &block;
 
@@ -185,14 +195,12 @@ extern void registerQuitHandler(QUITHANDLER qh);
 
             } else if (needTrace && trans->gas == receipt.gasUsed) {
 
-                // If we've been told not to trace, quit here, but return sucess
-                if (!getCurlContext()->isTracingOn())
-                    return true;
-
-                SFString trace;
-                getCurlContext()->lightTracing(true);
-                queryRawTrace(trace, trans->hash);
-                trans->isError = getCurlContext()->lightTracing(false);
+                SFString unused;
+                CURLCALLBACKFUNC prev = getCurlContext()->setCurlCallback(traceCallback);
+                getCurlContext()->is_error = false;
+                queryRawTrace(unused, trans->hash);
+                trans->isError = getCurlContext()->is_error;
+                getCurlContext()->setCurlCallback(prev);
                 nTraces++;
             }
         }
@@ -226,8 +234,8 @@ extern void registerQuitHandler(QUITHANDLER qh);
     SFHash getRawBlockHash(blknum_t bn) {
         SFString blockStr;
         queryRawBlock(blockStr, asStringU(bn), false, true);
-        blockStr = blockStr.substr(blockStr.find("\"hash\":"),blockStr.length());
-        cout << blockStr << "\n";
+        blockStr = blockStr.substr(blockStr.find("\"hash\":"),blockStr.length()).Substitute("\"hash\":\"","");
+        blockStr = nextTokenClear(blockStr, '\"');
         return blockStr;
     }
 
@@ -594,7 +602,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
         if (!func)
             return false;
 
-        CSharedResource fullBlocks;
+        SFArchive fullBlocks(READING_ARCHIVE);
         if (!fullBlocks.Lock(fullBlockIndex, binaryReadOnly, LOCK_WAIT)) {
             cerr << "forEveryNonEmptyBlockOnDisc failed: " << fullBlocks.LockFailure() << "\n";
             return false;
@@ -637,7 +645,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
 
         getCurlContext()->provider = "local"; // the empty blocks are not on disk, so we have to ask parity. Don't write them, though
 
-        CSharedResource fullBlocks;
+        SFArchive fullBlocks(READING_ARCHIVE);
         if (!fullBlocks.Lock(fullBlockIndex, binaryReadOnly, LOCK_WAIT)) {
             cerr << "forEveryEmptyBlockOnDisc failed: " << fullBlocks.LockFailure() << "\n";
             return false;

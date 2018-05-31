@@ -63,6 +63,9 @@ namespace qblocks {
             Release();
         }
 
+        // forces implementation
+        virtual SFString getType(void) const = 0;
+
         bool Lock(const SFString& fn, const SFString& mode, uint32_t obeyLock);
         bool ReLock(const SFString& mode);
         void Release(void);
@@ -179,4 +182,15 @@ namespace qblocks {
         return fileExists(fileName + ".lck");
     }
 
+    // Generic binary file
+    class CBinFile : public CSharedResource {
+    public:
+        SFString getType(void) const override { return "CBinFile"; }
+    };
+
+    // Generic ascii file
+    class CAsciiFile : public CSharedResource {
+    public:
+        SFString getType(void) const override { return "CAsciiFile"; }
+    };
 }  // namespace qblocks
