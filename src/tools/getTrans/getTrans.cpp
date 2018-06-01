@@ -72,6 +72,7 @@ bool visitTransaction(CTransaction& trans, void *data) {
     }
 
     if (opt->incTrace) {
+        uint64_t nTr = getTraceCount(trans.hash);
         CTraceArray traces;
         getTraces(traces, trans.hash);
         if (traces.getCount()) {
@@ -83,8 +84,10 @@ bool visitTransaction(CTransaction& trans, void *data) {
             }
             cout << "]\n";
             if (opt->nTraces) {
-                SFString fmt = ",{ \"nTraces\": [N], \"depth\": [D] }";
-                cout << fmt.Substitute("[N]", asString(traces.getCount())).Substitute("[D]", asString(dTs));
+                SFString fmt = ",{ \"nTraces\": [N]-[NN], \"depth\": [D] }";
+                cout << fmt.Substitute("[N]", asStringU(nTr))
+                            .Substitute("[NN]", asStringU(traces.getCount()))
+                            .Substitute("[D]", asStringU(dTs));
             }
         }
     }
