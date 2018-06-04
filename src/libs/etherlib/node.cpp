@@ -309,18 +309,18 @@ extern void registerQuitHandler(QUITHANDLER qh);
     //--------------------------------------------------------------------------
     uint64_t getLatestBlockFromCache(void) {
 
-        SFArchive fullBlocks(READING_ARCHIVE);
-        if (!fullBlocks.Lock(fullBlockIndex, binaryReadOnly, LOCK_NOWAIT)) {
+        SFArchive fullBlockCache(READING_ARCHIVE);
+        if (!fullBlockCache.Lock(fullBlockIndex, binaryReadOnly, LOCK_NOWAIT)) {
             if (!isTestMode())
-                cerr << "getLatestBlockFromCache failed: " << fullBlocks.LockFailure() << "\n";
+                cerr << "getLatestBlockFromCache failed: " << fullBlockCache.LockFailure() << "\n";
             return 0;
         }
-        ASSERT(fullBlocks.isOpen());
+        ASSERT(fullBlockCache.isOpen());
 
         uint64_t ret = 0;
-        fullBlocks.Seek( (-1 * (long)sizeof(uint64_t)), SEEK_END);
-        fullBlocks.Read(ret);
-        fullBlocks.Release();
+        fullBlockCache.Seek( (-1 * (long)sizeof(uint64_t)), SEEK_END);
+        fullBlockCache.Read(ret);
+        fullBlockCache.Release();
         return ret;
     }
 
@@ -602,19 +602,19 @@ extern void registerQuitHandler(QUITHANDLER qh);
         if (!func)
             return false;
 
-        SFArchive fullBlocks(READING_ARCHIVE);
-        if (!fullBlocks.Lock(fullBlockIndex, binaryReadOnly, LOCK_WAIT)) {
-            cerr << "forEveryNonEmptyBlockOnDisc failed: " << fullBlocks.LockFailure() << "\n";
+        SFArchive fullBlockCache(READING_ARCHIVE);
+        if (!fullBlockCache.Lock(fullBlockIndex, binaryReadOnly, LOCK_WAIT)) {
+            cerr << "forEveryNonEmptyBlockOnDisc failed: " << fullBlockCache.LockFailure() << "\n";
             return false;
         }
-        ASSERT(fullBlocks.isOpen());
+        ASSERT(fullBlockCache.isOpen());
 
         uint64_t nItems = fileSize(fullBlockIndex) / sizeof(uint64_t);
         uint64_t *contents = new uint64_t[nItems];
         if (contents) {
             // read the entire full block index
-            fullBlocks.Read(contents, sizeof(uint64_t), nItems);
-            fullBlocks.Release();  // release it since we don't need it any longer
+            fullBlockCache.Read(contents, sizeof(uint64_t), nItems);
+            fullBlockCache.Release();  // release it since we don't need it any longer
 
             for (uint64_t i = 0 ; i < nItems ; i = i + skip) {
                 // TODO: This should be a binary search not a scan. This is why it appears to wait
@@ -645,19 +645,19 @@ extern void registerQuitHandler(QUITHANDLER qh);
 
         getCurlContext()->provider = "local"; // the empty blocks are not on disk, so we have to ask parity. Don't write them, though
 
-        SFArchive fullBlocks(READING_ARCHIVE);
-        if (!fullBlocks.Lock(fullBlockIndex, binaryReadOnly, LOCK_WAIT)) {
-            cerr << "forEveryEmptyBlockOnDisc failed: " << fullBlocks.LockFailure() << "\n";
+        SFArchive fullBlockCache(READING_ARCHIVE);
+        if (!fullBlockCache.Lock(fullBlockIndex, binaryReadOnly, LOCK_WAIT)) {
+            cerr << "forEveryEmptyBlockOnDisc failed: " << fullBlockCache.LockFailure() << "\n";
             return false;
         }
-        ASSERT(fullBlocks.isOpen());
+        ASSERT(fullBlockCache.isOpen());
 
         uint64_t nItems = fileSize(fullBlockIndex) / sizeof(uint64_t) + 1;  // we need an extra one for item '0'
         uint64_t *contents = new uint64_t[nItems+2];  // extra space
         if (contents) {
             // read the entire full block index
-            fullBlocks.Read(&contents[0], sizeof(uint64_t), nItems-1);  // one less since we asked for an extra one
-            fullBlocks.Release();  // release it since we don't need it any longer
+            fullBlockCache.Read(&contents[0], sizeof(uint64_t), nItems-1);  // one less since we asked for an extra one
+            fullBlockCache.Release();  // release it since we don't need it any longer
 
             contents[0] = 0;  // the starting point (needed because we are build the empty list from the non-empty list
             uint64_t cnt = start;
