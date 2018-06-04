@@ -114,14 +114,12 @@ namespace qblocks {
 
     //--------------------------------------------------------------------------
     void CInMemoryCache::Clear(void) {
-#ifdef NEW_CODE
-        // The 'block' and 'trans' pointers are not allocated, they are FILE pointers instead, so don't 'delete' them.
-#else
-        if (blocks)
-            delete [] blocks;
-        if (trans)
-            delete [] trans;
-#endif
+        // VERY IMPORTANT NOTE: The 'block' and 'trans' pointers are not allocated, they are FILE pointers
+        // instead, so don't 'delete' them.
+        // if (blocks)
+        //     delete [] blocks;
+        // if (trans)
+        //     delete [] trans;
         blocks = NULL;
         trans = NULL;
 
@@ -172,74 +170,11 @@ namespace qblocks {
         start = min(_start,          latestBlock);
         count = min(_start + _count, latestBlock) - _start;
 
-#ifdef NEW_CODE
         CMemMapFile blockFile(miniBlockCache.c_str(),  CMemMapFile::WholeFile, CMemMapFile::SequentialScan);
         blocks = (CMiniBlock*)(blockFile.getData());
-#else
-        //--------------------------------------------------------------------------
-        blocks = new CMiniBlock[nBlocks];
-        if (!blocks) {
-            cerr << "Could not allocate memory for the blocks (size needed: " << nBlocks << ").\n";
-            return false;
-        }
-        bzero(blocks, sizeof(CMiniBlock)*(nBlocks));
-        if (verbose)
-            cerr << TIMER_IN(startTime) << "Allocated room for " << nBlocks << " miniBlocks.\n";
 
-        // Next, we try to open the mini-block database
-        if (!blocksOnDisc.Lock(miniBlockCache, binaryReadOnly, LOCK_WAIT)) {
-            cerr << "Could not open the mini-block database: " << miniBlockCache << ".\n";
-            return false;
-        }
-        blocksOnDisc.Seek(0, SEEK_SET);
-
-        // Read the entire mini-block database into memory in one chunk
-        size_t nRead = blocksOnDisc.Read(blocks, nBlocks, sizeof(CMiniBlock));
-        blocksOnDisc.Release();  // We're done with it
-        if (nRead != nBlocks) {
-            cerr << "Error encountered reading mini-blocks database.\n Quitting...";
-            return false;
-        }
-        if (verbose)
-            cerr << TIMER_IN(startTime) << "Read " << nRead << " miniBlocks into memory.\n";
-
-        //--------------------------------------------------------------------------
-        // See if we can allocation enough space for the mini-transaction database
-        uint64_t fs = fileSize(miniTransCache);
-        uint64_t ms = sizeof(CMiniTrans);
-        nTrans   = fs / ms;
-#endif
-
-#ifdef NEW_CODE
         CMemMapFile transFile(miniTransCache.c_str(),  CMemMapFile::WholeFile, CMemMapFile::SequentialScan);
         trans  = reinterpret_cast<const CMiniTrans *>(transFile.getData());
-#else
-        trans = new CMiniTrans[nTrans];
-        if (!trans) {
-            cerr << "Could not allocate memory for the transactions (size needed: " << nTrans << ").\n";
-            return false;
-        }
-        bzero(trans, sizeof(CMiniTrans)*(nTrans));
-        if (verbose)
-            cerr << TIMER_IN(startTime) << "Allocated room for " << nTrans << " transactions.\n";
-
-        // Next, we try to open the mini-transaction database
-        if (!transOnDisc.Lock(miniTransCache, binaryReadOnly, LOCK_WAIT)) {
-            cerr << "Could not open the mini-transaction database: " << miniTransCache << ".\n";
-            return false;
-        }
-
-        // Read the entire mini-transaction database into memory in one chunk
-        // TODO: What is the correct value for this?
-#define READ_SIZE 204800
-        nRead = 0;
-        while (nRead < nTrans) {
-            nRead += transOnDisc.Read(&trans[nRead], READ_SIZE, sizeof(CMiniTrans));
-            if (verbose)
-                progressBar(nRead, nTrans, qbNow() - startTime);
-        }
-        transOnDisc.Release();
-#endif
 
         cerr << "\n" << TIMER_IN(startTime);
         return true;

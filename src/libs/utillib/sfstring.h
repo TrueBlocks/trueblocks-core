@@ -408,14 +408,14 @@ namespace qblocks {
     inline SFString padRight(const SFString& str, uint32_t len, char p=' ') {
         if (len > str.length())
             return str + SFString(p, len-str.length());
-        return str.substr(0,len);
+        return str; //.substr(0,len);
     }
 
     //--------------------------------------------------------------------
     inline SFString padLeft(const SFString& str, uint32_t len, char p=' ') {
         if (len > str.length())
             return SFString(p, len-str.length()) + str;
-        return str.substr(0,len);
+        return str; //.substr(0,len);
     }
 
     //--------------------------------------------------------------------
@@ -424,7 +424,7 @@ namespace qblocks {
             size_t padding = (len-str.length()) / 2;
             return SFString(p, padding) + str + SFString(p, padding);
         }
-        return str.substr(0,len);
+        return str; //.substr(0,len);
     }
 
     //--------------------------------------------------------------------
