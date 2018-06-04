@@ -1,6 +1,0 @@
-[settings]
-class     = QMultiTransactEvent
-baseClass = CLogEntry
-fields    = address owner|bytes32 operation|uint256 value|address to|bytes data|
-includes  = logentry.h
-cIncs     = #include "etherlib.h"
