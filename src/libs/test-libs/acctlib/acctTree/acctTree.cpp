@@ -90,16 +90,16 @@ bool printTree(const CTreeNode *node, void *data) {
         r->maxMatch1 = r->strs;
     }
     if (r->type == T_LEAF) {
-        if (r->cnt < MAX_CNTS)
-            r->counters[r->cnt]++;
-        if (r->cnt > 5)
+        if (r->counter < MAX_CNTS)
+            r->counters[r->counter]++;
+        if (r->counter > 5)
             r->gtFive++;
-        if (r->cnt > r->maxCnt) {
-            r->maxCnt = r->cnt;
+        if (r->counter > r->maxCnt) {
+            r->maxCnt = r->counter;
             r->maxStr = r->strs;
         }
     }
-    r->cnt = 0;
+    r->counter = 0;
 
     // print the report
     r->interumReport();

@@ -1,6 +1,0 @@
-[settings]
-class     = QTransferEvent
-baseClass = CLogEntry
-fields    = address _from|address _to|uint256 _value|
-includes  = logentry.h
-cIncs     = #include "etherlib.h"
