@@ -1,6 +1,0 @@
-[settings]
-class     = QOwnerAddedEvent
-baseClass = CLogEntry
-fields    = address newOwner|
-includes  = logentry.h
-cIncs     = #include "etherlib.h"

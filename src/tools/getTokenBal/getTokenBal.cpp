@@ -6,7 +6,7 @@
  * The LICENSE at the root of this repo details your rights (if any)
  *------------------------------------------------------------------------*/
 #define NOWALLETLIB
-#include "tokenlib.h"
+#include "etherlib.h"
 #include "options.h"
 
 void reportByToken(COptions& options);
