@@ -65,7 +65,7 @@ The document has moved
 <link rel="alternate" type="application/rss+xml" title="QuickBlocks &raquo; Feed" href="https://quickblocks.io/feed/" />
 <link rel="alternate" type="application/rss+xml" title="QuickBlocks &raquo; Comments Feed" href="https://quickblocks.io/comments/feed/" />
 		<script type="text/javascript">
-			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2.4\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2.4\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/quickblocks.io\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.9.6"}};
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2.4\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2.4\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/quickblocks.io\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.9.5"}};
 			!function(a,b,c){function d(a,b){var c=String.fromCharCode;l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,a),0,0);var d=k.toDataURL();l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,b),0,0);var e=k.toDataURL();return d===e}function e(a){var b;if(!l||!l.fillText)return!1;switch(l.textBaseline="top",l.font="600 32px Arial",a){case"flag":return!(b=d([55356,56826,55356,56819],[55356,56826,8203,55356,56819]))&&(b=d([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]),!b);case"emoji":return b=d([55357,56692,8205,9792,65039],[55357,56692,8203,9792,65039]),!b}return!1}function f(a){var c=b.createElement("script");c.src=a,c.defer=c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var g,h,i,j,k=b.createElement("canvas"),l=k.getContext&&k.getContext("2d");for(j=Array("flag","emoji"),c.supports={everything:!0,everythingExceptFlag:!0},i=0;i<j.length;i++)c.supports[j[i]]=e(j[i]),c.supports.everything=c.supports.everything&&c.supports[j[i]],"flag"!==j[i]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[j[i]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(h=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",h,!1),a.addEventListener("load",h,!1)):(a.attachEvent("onload",h),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),g=c.source||{},g.concatemoji?f(g.concatemoji):g.wpemoji&&g.twemoji&&(f(g.twemoji),f(g.wpemoji)))}(window,document,window._wpemojiSettings);
 		</script>
 		<meta content="Quickblocks v." name="generator"/><style type="text/css">
@@ -89,7 +89,7 @@ img.emoji {
 <link rel='stylesheet' id='gforms_formsmain_css-css'  href='https://quickblocks.io/wp-content/plugins/gravityforms/css/formsmain.min.css?ver=2.2.6.5' type='text/css' media='all' />
 <link rel='stylesheet' id='gforms_ready_class_css-css'  href='https://quickblocks.io/wp-content/plugins/gravityforms/css/readyclass.min.css?ver=2.2.6.5' type='text/css' media='all' />
 <link rel='stylesheet' id='gforms_browsers_css-css'  href='https://quickblocks.io/wp-content/plugins/gravityforms/css/browsers.min.css?ver=2.2.6.5' type='text/css' media='all' />
-<link rel='stylesheet' id='dashicons-css'  href='https://quickblocks.io/wp-includes/css/dashicons.min.css?ver=4.9.6' type='text/css' media='all' />
+<link rel='stylesheet' id='dashicons-css'  href='https://quickblocks.io/wp-includes/css/dashicons.min.css?ver=4.9.5' type='text/css' media='all' />
 <script type='text/javascript' src='https://quickblocks.io/wp-includes/js/jquery/jquery.js?ver=1.12.4'></script>
 <script type='text/javascript' src='https://quickblocks.io/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.4.1'></script>
 <script type='text/javascript' src='https://quickblocks.io/wp-content/plugins/gravityforms/js/jquery.json.min.js?ver=2.2.6.5'></script>
@@ -108,7 +108,7 @@ img.emoji {
 <link rel="stylesheet" id="et-core-unified-cached-inline-styles" href="https://quickblocks.io/wp-content/cache/et/269/et-core-unified-15263851282553.min.css" onerror="et_core_page_resource_fallback(this, true)" onload="et_core_page_resource_fallback(this)" />
 		
 </head>
-<body class="home page-template-default page page-id-269 et_color_scheme_orange et_pb_button_helper_class et_transparent_nav et_fixed_nav et_show_nav et_cover_background et_pb_side_nav_page et_pb_gutter windows et_pb_gutters3 et_primary_nav_dropdown_animation_fade et_secondary_nav_dropdown_animation_fade et_pb_footer_columns3 et_header_style_left et_pb_pagebuilder_layout et_smooth_scroll et_right_sidebar et_divi_theme chrome">
+<body class="home page-template-default page page-id-269 et_color_scheme_orange et_pb_button_helper_class et_transparent_nav et_fixed_nav et_show_nav et_cover_background et_pb_side_nav_page et_pb_gutter et_pb_gutters3 et_primary_nav_dropdown_animation_fade et_secondary_nav_dropdown_animation_fade et_pb_footer_columns3 et_header_style_left et_pb_pagebuilder_layout et_smooth_scroll et_right_sidebar et_divi_theme unknown">
 	<div id="page-container">
 
 	
@@ -692,7 +692,7 @@ Philadelpia, PA 19123</p>
 				<div class="et_pb_text_inner">
 					<h4>Leave A message</h4>
 
-                <div class='gf_browser_chrome gform_wrapper' id='gform_wrapper_2' ><a id='gf_2' class='gform_anchor' ></a><form method='post' enctype='multipart/form-data' target='gform_ajax_frame_2' id='gform_2'  action='/#gf_2'>
+                <div class='gf_browser_unknown gform_wrapper' id='gform_wrapper_2' ><a id='gf_2' class='gform_anchor' ></a><form method='post' enctype='multipart/form-data' target='gform_ajax_frame_2' id='gform_2'  action='/#gf_2'>
                         <div class='gform_body'><ul id='gform_fields_2' class='gform_fields top_label form_sublabel_below description_below'><li id='field_2_1' class='gfield gfield_contains_required field_sublabel_hidden_label field_description_below hidden_label gfield_visibility_visible' ><label class='gfield_label gfield_label_before_complex' for='input_2_1_3' >Name<span class='gfield_required'>*</span></label><div class='ginput_complex ginput_container no_prefix has_first_name no_middle_name no_last_name no_suffix gf_name_has_1 ginput_container_name gfield_trigger_change' id='input_2_1'>
                             
                             <span id='input_2_1_3_container' class='name_first' >
@@ -810,12 +810,12 @@ Philadelpia, PA 19123</li>
 <script type='text/javascript' src='https://quickblocks.io/wp-content/themes/Divi/includes/builder/scripts/jquery.magnific-popup.js?ver=3.0.89'></script>
 <script type='text/javascript'>
 /* <![CDATA[ */
-var et_pb_custom = {"ajaxurl":"https:\/\/quickblocks.io\/wp-admin\/admin-ajax.php","images_uri":"https:\/\/quickblocks.io\/wp-content\/themes\/Divi\/images","builder_images_uri":"https:\/\/quickblocks.io\/wp-content\/themes\/Divi\/includes\/builder\/images","et_frontend_nonce":"30d522ca8a","subscription_failed":"Please, check the fields below to make sure you entered the correct information.","et_ab_log_nonce":"8092c8745b","fill_message":"Please, fill in the following fields:","contact_error_message":"Please, fix the following errors:","invalid":"Invalid email","captcha":"Captcha","prev":"Prev","previous":"Previous","next":"Next","wrong_captcha":"You entered the wrong number in captcha.","is_builder_plugin_used":"","ignore_waypoints":"no","is_divi_theme_used":"1","widget_search_selector":".widget_search","is_ab_testing_active":"","page_id":"269","unique_test_id":"","ab_bounce_rate":"5","is_cache_plugin_active":"no","is_shortcode_tracking":""};
+var et_pb_custom = {"ajaxurl":"https:\/\/quickblocks.io\/wp-admin\/admin-ajax.php","images_uri":"https:\/\/quickblocks.io\/wp-content\/themes\/Divi\/images","builder_images_uri":"https:\/\/quickblocks.io\/wp-content\/themes\/Divi\/includes\/builder\/images","et_frontend_nonce":"6e42e55854","subscription_failed":"Please, check the fields below to make sure you entered the correct information.","et_ab_log_nonce":"590d8353ac","fill_message":"Please, fill in the following fields:","contact_error_message":"Please, fix the following errors:","invalid":"Invalid email","captcha":"Captcha","prev":"Prev","previous":"Previous","next":"Next","wrong_captcha":"You entered the wrong number in captcha.","is_builder_plugin_used":"","ignore_waypoints":"no","is_divi_theme_used":"1","widget_search_selector":".widget_search","is_ab_testing_active":"","page_id":"269","unique_test_id":"","ab_bounce_rate":"5","is_cache_plugin_active":"no","is_shortcode_tracking":""};
 var et_pb_box_shadow_elements = [];
 /* ]]> */
 </script>
 <script type='text/javascript' src='https://quickblocks.io/wp-content/themes/Divi/includes/builder/scripts/frontend-builder-scripts.js?ver=3.0.89'></script>
-<script type='text/javascript' src='https://quickblocks.io/wp-includes/js/wp-embed.min.js?ver=4.9.6'></script>
+<script type='text/javascript' src='https://quickblocks.io/wp-includes/js/wp-embed.min.js?ver=4.9.5'></script>
 </body>
 </html>
 <!--
@@ -823,5 +823,5 @@ Performance optimized by W3 Total Cache. Learn more: https://www.w3-edge.com/pro
 
 Page Caching using disk: enhanced 
 
-Served from: quickblocks.io @ 2018-05-31 15:59:34 by W3 Total Cache
+Served from: quickblocks.io @ 2018-05-19 14:43:33 by W3 Total Cache
 -->
