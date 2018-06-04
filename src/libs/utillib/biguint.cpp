@@ -6,7 +6,7 @@
  *------------------------------------------------------------------------*/
 #pragma once
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks(tm) - Decentralized, useful, and detailed data from Ethereum blockchains
+ * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
  * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
