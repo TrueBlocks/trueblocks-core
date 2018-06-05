@@ -1,8 +1,15 @@
 stringTest argc: 2 [1:2] 
 stringTest 2 
-Please
-split
-this
-sentence
-into
-tokens
+	Please  	split this sentence into tokens
+	split   	this sentence into tokens
+	this    	sentence into tokens
+	sentence	into tokens
+	into    	tokens
+	tokens  	
+
+	Please  	split|that|sentence|into|tokens
+	split   	that|sentence|into|tokens
+	that    	sentence|into|tokens
+	sentence	into|tokens
+	into    	tokens
+	tokens  	
