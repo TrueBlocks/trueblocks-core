@@ -19,7 +19,7 @@ namespace qblocks {
 
     //----------------------------------------------------------------------------
     inline bool isNumeral(const SFString& test) {
-        for (int32_t i = 0 ; i < (int32_t)test.length() ; i++)
+        for (size_t i = 0 ; i < test.length() ; i++)
             if (!isdigit(test[i]))
                 return false;
         return true;
@@ -74,7 +74,7 @@ namespace qblocks {
     inline SFString string2Hex(const SFString& inAscii) {
         SFString ret;
         for (size_t i = 0 ; i < inAscii.length() ; i++)
-            ret += asHex(inAscii[(int)i]);
+            ret += asHex(inAscii[i]);
         return ret;
     }
 
