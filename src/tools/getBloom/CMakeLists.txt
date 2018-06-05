@@ -16,7 +16,7 @@ set(PROJ_NAME "tools")
 add_executable(${TOOL_NAME} ${SOURCE_FILES})
 
 # Add the project static libs at linking
-target_link_libraries (${TOOL_NAME} wallet token ${BASE_LIBS})
+target_link_libraries (${TOOL_NAME} ${BASE_LIBS})
 
 # Testing
 # Define paths to test folder and gold folder
@@ -50,24 +50,19 @@ run_test("getBloom_blooms"    "1590000" " 4000001" "4000002")
 run_test("getBloom_range"     "4000001-4000003")
 run_test("getBloom_baddata"   "1590000" " 4000001-4000002" " x400x001")
 
-run_test("getBloom_combo_one_range" "1590000" " 4000001-4000002" " 1001001" " 1234567")
+run_test("getBloom_combo_one_range" "1590000 4000001-4000002 1001001 1234567 --receipt")
 run_test("getBloom_combo_two_range" "1590000" " 4000001-4000002" " 1001001-1001100" " 1234567")
 
 # display a bunch of blocks raw
-run_test("getBloom_raw_01"       "--source:raw"   " 2768801" " 1995314" " 1958017")
-run_test("getBloom_raw_02"       "-s:r"           " 2768801" " 1995314" " 1958017")
-run_test("getBloom_raw_03"       "-s:raw"         " 2768801" " 1995314" " 1958017")
-run_test("getBloom_raw_04"       "-r"             " 2768801" " 1995314" " 1958017")
-run_test("getBloom_raw_05"       "--raw"          " 2768801" " 1995314" " 1958017")
+run_test("getBloom_raw_01"       "--raw"          " 2768801" " 1995314" " 1958017")
+run_test("getBloom_raw_02"       "-r"             " 2768801" " 1995314" " 1958017")
 
 # so that the test works, we must first bring these blocks onto the cache (uses undocumented options)
 run_the_test(${TEST_PATH} ${GOLD_PATH} "getBloom_force_01" ${EXECUTABLE_OUTPUT_PATH}/getBlock " 2768801" " 1995314" " 1958017" " -o")
 
 # display a bunch of blocks from cache
-run_test("getBloom_cache_01"     "--source:cache" " 2768801" " 1995314" " 1958017" " --parity")
-run_test("getBloom_cache_02"     "-s:c"           " 2768801" " 1995314" " 1958017" " --parity")
-run_test("getBloom_cache_03"     "-s:cache"       " 2768801" " 1995314" " 1958017" " --parity" " -v")
-run_test("getBloom_cache_04"     "-a"             " 2768801" " 1995314" " 1958017" " --parity" " --verbose")
+run_test("getBloom_cache_01"     "--eab"          " 2768801" " 1995314" " 1958017" " --parity")
+run_test("getBloom_cache_02"     "-e"             " 2768801" " 1995314" " 1958017" " --parity")
 
 # now check them
 #run_test("getBloom_check_01"     "2768801"        " -c")
@@ -81,7 +76,7 @@ run_test("getBloom_parity_range" "--parity"       " 358450-0x5785a")
 
 run_test("getBloom_force_02"                  " 2769609" " 2799895" " 2872831" " 3076260" " -o")
 run_test("getBloom_multi1"   "--parity" " -r" " 2769609" " 2799895" " 2872831" " 3076260")
-run_test("getBloom_multi2"   "--parity" " -a" " 2769609" " 2799895" " 2872831" " 3076260")
+run_test("getBloom_multi2"   "--parity" " -e" " 2769609" " 2799895" " 2872831" " 3076260")
 
 run_test("getBloom_short_receipt" "-p"        " 4001001")
 run_test("getBloom_long_receipt"  "--receipt" " 4001001")

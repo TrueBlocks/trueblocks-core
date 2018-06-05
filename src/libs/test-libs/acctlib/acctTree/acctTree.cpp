@@ -1,10 +1,15 @@
-/*-------------------------------------------------------------------------
- * This source code is confidential proprietary information which is
- * Copyright (c) 2017 by Great Hill Corporation.
- * All Rights Reserved
+/*-------------------------------------------------------------------------------------------
+ * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
+ * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
  *
- * The LICENSE at the root of this repo details your rights (if any)
- *------------------------------------------------------------------------*/
+ * This program is free software: you may redistribute it and/or modify it under the terms
+ * of the GNU General Public License as published by the Free Software Foundation, either
+ * version 3 of the License, or (at your option) any later version. This program is
+ * distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+ * the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details. You should have received a copy of the GNU General
+ * Public License along with this program. If not, see http://www.gnu.org/licenses/.
+ *-------------------------------------------------------------------------------------------*/
 #include "options.h"
 #include "reporter.h"
 
@@ -90,16 +95,16 @@ bool printTree(const CTreeNode *node, void *data) {
         r->maxMatch1 = r->strs;
     }
     if (r->type == T_LEAF) {
-        if (r->cnt < MAX_CNTS)
-            r->counters[r->cnt]++;
-        if (r->cnt > 5)
+        if (r->counter < MAX_CNTS)
+            r->counters[r->counter]++;
+        if (r->counter > 5)
             r->gtFive++;
-        if (r->cnt > r->maxCnt) {
-            r->maxCnt = r->cnt;
+        if (r->counter > r->maxCnt) {
+            r->maxCnt = r->counter;
             r->maxStr = r->strs;
         }
     }
-    r->cnt = 0;
+    r->counter = 0;
 
     // print the report
     r->interumReport();

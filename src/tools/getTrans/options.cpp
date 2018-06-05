@@ -1,16 +1,22 @@
-/*-------------------------------------------------------------------------
- * This source code is confidential proprietary information which is
- * Copyright (c) 2017 by Great Hill Corporation.
- * All Rights Reserved
+/*-------------------------------------------------------------------------------------------
+ * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
+ * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
  *
- * The LICENSE at the root of this repo details your rights (if any)
- *------------------------------------------------------------------------*/
+ * This program is free software: you may redistribute it and/or modify it under the terms
+ * of the GNU General Public License as published by the Free Software Foundation, either
+ * version 3 of the License, or (at your option) any later version. This program is
+ * distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+ * the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details. You should have received a copy of the GNU General
+ * Public License along with this program. If not, see http://www.gnu.org/licenses/.
+ *-------------------------------------------------------------------------------------------*/
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
 CParams params[] = {
     CParams("~!trans_list", "a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)"),
     CParams("-raw",         "retrieve raw transaction directly from the running node"),
+    CParams("-nTraces",     "report on how many traces the transaction generated and deepest trace"),
     CParams("@trace",       "include the transactions trace after the transaction"),
     CParams("",             "Retrieve an Ethereum transaction from the local cache or a running node."),
 };
@@ -30,6 +36,9 @@ bool COptions::parseArguments(SFString& command) {
 
         } else if (arg == "-t" || arg == "--trace") {
             incTrace = true;
+
+        } else if (arg == "-n" || arg == "--nTraces") {
+            nTraces = true;
 
         } else if (arg.startsWith('-')) {  // do not collapse
 
@@ -64,6 +73,7 @@ void COptions::Init(void) {
     transList.Init();
     isRaw = false;
     incTrace = false;
+    nTraces = false;
     format = "";
 }
 

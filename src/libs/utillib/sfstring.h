@@ -1,12 +1,16 @@
 #pragma once
-/*-------------------------------------------------------------------------
- * This source code is confidential proprietary information which is
- * Copyright (c) 2017 by Great Hill Corporation.
- * All Rights Reserved
+/*-------------------------------------------------------------------------------------------
+ * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
+ * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
  *
- * The LICENSE at the root of this repo details your rights (if any)
- *------------------------------------------------------------------------*/
-
+ * This program is free software: you may redistribute it and/or modify it under the terms
+ * of the GNU General Public License as published by the Free Software Foundation, either
+ * version 3 of the License, or (at your option) any later version. This program is
+ * distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+ * the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details. You should have received a copy of the GNU General
+ * Public License along with this program. If not, see http://www.gnu.org/licenses/.
+ *-------------------------------------------------------------------------------------------*/
 #include "basetypes.h"
 
 namespace qblocks {
@@ -408,14 +412,14 @@ namespace qblocks {
     inline SFString padRight(const SFString& str, uint32_t len, char p=' ') {
         if (len > str.length())
             return str + SFString(p, len-str.length());
-        return str.substr(0,len);
+        return str;
     }
 
     //--------------------------------------------------------------------
     inline SFString padLeft(const SFString& str, uint32_t len, char p=' ') {
         if (len > str.length())
             return SFString(p, len-str.length()) + str;
-        return str.substr(0,len);
+        return str;
     }
 
     //--------------------------------------------------------------------
@@ -424,7 +428,7 @@ namespace qblocks {
             size_t padding = (len-str.length()) / 2;
             return SFString(p, padding) + str + SFString(p, padding);
         }
-        return str.substr(0,len);
+        return str;
     }
 
     //--------------------------------------------------------------------
