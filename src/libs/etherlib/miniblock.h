@@ -1,11 +1,16 @@
 #pragma once
-/*-------------------------------------------------------------------------
- * This source code is confidential proprietary information which is
- * Copyright (c) 2017 by Great Hill Corporation.
- * All Rights Reserved
+/*-------------------------------------------------------------------------------------------
+ * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
+ * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
  *
- * The LICENSE at the root of this repo details your rights (if any)
- *------------------------------------------------------------------------*/
+ * This program is free software: you may redistribute it and/or modify it under the terms
+ * of the GNU General Public License as published by the Free Software Foundation, either
+ * version 3 of the License, or (at your option) any later version. This program is
+ * distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+ * the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details. You should have received a copy of the GNU General
+ * Public License along with this program. If not, see http://www.gnu.org/licenses/.
+ *-------------------------------------------------------------------------------------------*/
 
 namespace qblocks {
 
@@ -47,7 +52,6 @@ namespace qblocks {
         SFString Format     (void) const;
     };
 
-#define NEW_CODE
     //--------------------------------------------------------------------------
     class CInMemoryCache {
     public:
@@ -64,19 +68,14 @@ namespace qblocks {
     public:
         bool            isLoaded;
 
-        CSharedResource blocksOnDisc;
-        CSharedResource transOnDisc;
+        CBinFile blocksOnDisc;
+        CBinFile transOnDisc;
 
-#ifdef NEW_CODE
         // Very important note: the two pointers are not allocated. They are pointers to a location
         // in the memory mapped file. They appear to be allocated array pointers, but they are
         // actually FILE pointers and should not be cleaned up.
         CMiniBlock *blocks;
         const CMiniTrans *trans;
-#else
-        CMiniBlock *blocks;
-        CMiniTrans *trans;
-#endif
 
     private:
         blknum_t        nBlocks;

@@ -1,12 +1,16 @@
 #pragma once
-/*-------------------------------------------------------------------------
- * This source code is confidential proprietary information which is
- * Copyright (c) 2017 by Great Hill Corporation.
- * All Rights Reserved
+/*-------------------------------------------------------------------------------------------
+ * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
+ * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
  *
- * The LICENSE at the root of this repo details your rights (if any)
- *------------------------------------------------------------------------*/
-
+ * This program is free software: you may redistribute it and/or modify it under the terms
+ * of the GNU General Public License as published by the Free Software Foundation, either
+ * version 3 of the License, or (at your option) any later version. This program is
+ * distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+ * the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details. You should have received a copy of the GNU General
+ * Public License along with this program. If not, see http://www.gnu.org/licenses/.
+ *-------------------------------------------------------------------------------------------*/
 #include "fielddata.h"
 #include "sftime.h"
 
@@ -62,6 +66,9 @@ namespace qblocks {
         virtual ~CSharedResource(void) {
             Release();
         }
+
+        // forces implementation
+        virtual SFString getType(void) const = 0;
 
         bool Lock(const SFString& fn, const SFString& mode, uint32_t obeyLock);
         bool ReLock(const SFString& mode);
@@ -179,4 +186,15 @@ namespace qblocks {
         return fileExists(fileName + ".lck");
     }
 
+    // Generic binary file
+    class CBinFile : public CSharedResource {
+    public:
+        SFString getType(void) const override { return "CBinFile"; }
+    };
+
+    // Generic ascii file
+    class CAsciiFile : public CSharedResource {
+    public:
+        SFString getType(void) const override { return "CAsciiFile"; }
+    };
 }  // namespace qblocks

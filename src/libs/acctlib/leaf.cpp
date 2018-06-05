@@ -1,10 +1,15 @@
-/*-------------------------------------------------------------------------
- * This source code is confidential proprietary information which is
- * Copyright (c) 2017 by Great Hill Corporation.
- * All Rights Reserved
+/*-------------------------------------------------------------------------------------------
+ * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
+ * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
  *
- * The LICENSE at the root of this repo details your rights (if any)
- *------------------------------------------------------------------------*/
+ * This program is free software: you may redistribute it and/or modify it under the terms
+ * of the GNU General Public License as published by the Free Software Foundation, either
+ * version 3 of the License, or (at your option) any later version. This program is
+ * distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+ * the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details. You should have received a copy of the GNU General
+ * Public License along with this program. If not, see http://www.gnu.org/licenses/.
+ *-------------------------------------------------------------------------------------------*/
 /*
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
@@ -69,7 +74,7 @@ bool CLeaf::setValueByName(const SFString& fieldName, const SFString& fieldValue
             }
             break;
         case 'c':
-            if ( fieldName % "cnt" ) { counter = toLong32u(fieldValue); return true; }
+            if ( fieldName % "counter" ) { counter = toLong32u(fieldValue); return true; }
             break;
         default:
             break;
@@ -127,7 +132,7 @@ void CLeaf::registerClass(void) {
     ADD_FIELD(CLeaf, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CLeaf, "showing", T_BOOL,  ++fieldNum);
     ADD_FIELD(CLeaf, "blocks", T_OBJECT|TS_ARRAY, ++fieldNum);
-    ADD_FIELD(CLeaf, "cnt", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CLeaf, "counter", T_NUMBER, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CLeaf, "schema");
@@ -201,7 +206,7 @@ SFString CLeaf::getValueByName(const SFString& fieldName) const {
             }
             break;
         case 'c':
-            if ( fieldName % "cnt" ) return asStringU(counter);
+            if ( fieldName % "counter" ) return asStringU(counter);
             break;
     }
 

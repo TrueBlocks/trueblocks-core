@@ -12,7 +12,8 @@
 // o - If you use this software in a product, an acknowledgment in the product documentation would be appreciated but is not required.
 // o - Altered source versions must be plainly marked as such, and must not be misrepresented as being the original software.
 //
-
+// Notice: This code has been modified to conform to QuickBlocks formatting preferences as well as other minor changes
+//
 #include "utillib.h"
 
 CMemMapFile::CMemMapFile()
@@ -141,4 +142,3 @@ bool CMemMapFile::remap(uint64_t offset, size_t mappedBytes) {
 int CMemMapFile::getpagesize() {
     return static_cast<int>(sysconf(_SC_PAGESIZE));
 }
-

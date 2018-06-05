@@ -1,24 +1,30 @@
-/*-------------------------------------------------------------------------
- * This source code is confidential proprietary information which is
- * Copyright (c) 2017 by Great Hill Corporation.
- * All Rights Reserved
+/*-------------------------------------------------------------------------------------------
+ * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
+ * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
  *
- * The LICENSE at the root of this repo details your rights (if any)
- *------------------------------------------------------------------------*/
+ * This program is free software: you may redistribute it and/or modify it under the terms
+ * of the GNU General Public License as published by the Free Software Foundation, either
+ * version 3 of the License, or (at your option) any later version. This program is
+ * distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+ * the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details. You should have received a copy of the GNU General
+ * Public License along with this program. If not, see http://www.gnu.org/licenses/.
+ *-------------------------------------------------------------------------------------------*/
 #include "node.h"
 #include "node_curl.h"
 
 namespace qblocks {
 
     //-------------------------------------------------------------------------
-    extern size_t write_callback(char *ptr, size_t size, size_t nmemb, void *userdata);
+    extern size_t writeCallback(char *ptr, size_t size, size_t nmemb, void *userdata);
+    extern size_t traceCallback(char *ptr, size_t size, size_t nmemb, void *userdata);
     extern size_t nullCallback(char *ptr, size_t size, size_t nmemb, void *userdata);
 
     //-------------------------------------------------------------------------
     CCurlContext::CCurlContext(void) {
         headers      = "Content-Type: application/json\n";
         baseURL      = "http://localhost:8545";
-        callBackFunc = write_callback;
+        callBackFunc = writeCallback;
         theID        = 1;
         Clear();
     }
@@ -50,26 +56,11 @@ namespace qblocks {
 
     //-------------------------------------------------------------------------
     void CCurlContext::Clear(void) {
-        tracing_on   = true;
         earlyAbort   = false;
         is_error     = false;
         postData     = "";
         result       = "";
-//      is_tracing   = false;
 //      source       = "binary";
-    }
-
-    //-------------------------------------------------------------------------
-    void CCurlContext::tracingOff (void) { tracing_on = false; }
-    void CCurlContext::tracingOn  (void) { tracing_on = true;  }
-    bool CCurlContext::isTracingOn(void) { return tracing_on;  }
-
-    //-------------------------------------------------------------------------
-    bool CCurlContext::lightTracing(bool on) {
-        bool ret = is_error;
-        is_tracing = on;
-        is_error   = false;
-        return ret;
     }
 
     //-------------------------------------------------------------------------
@@ -141,7 +132,7 @@ namespace qblocks {
     //-------------------------------------------------------------------------
     SFString callRPC(const SFString& method, const SFString& params, bool raw) {
 
-        //getCurlContext()->callBackFunc = write_callback;
+        //getCurlContext()->callBackFunc = writeCallback;
         getCurlContext()->setPostData(method, params);
 
         CURLcode res = curl_easy_perform(getCurl());
@@ -185,7 +176,7 @@ namespace qblocks {
             exit(0);
         }
 
-        if (!getCurlContext()->is_tracing && getCurlContext()->result.empty()) {
+        if (getCurlContext()->result.empty()) {
             cerr << cYellow;
             cerr << "\n";
             cerr << "\tWarning:" << cOff << "The Ethereum node  resulted in an empty\n";
@@ -223,45 +214,57 @@ namespace qblocks {
     }
 
     //-------------------------------------------------------------------------
-    size_t write_callback(char *ptr, size_t size, size_t nmemb, void *userdata)
-    {
-        if (getCurlContext()->is_tracing) {
-//            cout << bRed << "." << cOff;
-//            cout.flush();
-            // Curl does not close the string, so we have to
-            ptr[size*nmemb-1] = '\0';
-            if (strstr(ptr,"erro")!=NULL) {
-                getCurlContext()->is_error = true;
-                getCurlContext()->earlyAbort = true;
-                return 0;
-            }
-
-        } else {
-            SFString part;
-            part.reserve(size*nmemb+1);
-            char *s = (char*)(const char*)part;
-            strncpy(s,ptr,size*nmemb);
-            s[size*nmemb]='\0';
-            ASSERT(userdata);
-            CCurlContext *data = (CCurlContext*)userdata;
-            data->result += s;
-            // Starting around block 3804005, there was a hack wherein the byte code 5b5b5b5b5b5b5b5b5b5b5b5b
-            // repeated thousands of times, doing nothing. If we don't handle this, it dominates the scanning
-            // for no reason
-            if (strstr(s, "5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b") != NULL) {
-                // This is the hack trace (there are many), so skip it
-                cerr << "Curl response contains '5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b'. Aborting.\n";
-                cerr.flush();
-                getCurlContext()->earlyAbort = true;
-                return 0;
-            }
+    size_t writeCallback(char *ptr, size_t size, size_t nmemb, void *userdata) {
+        SFString part;
+        part.reserve(size*nmemb+1);
+        char *s = (char*)(const char*)part;
+        strncpy(s,ptr,size*nmemb);
+        s[size*nmemb]='\0';
+        ASSERT(userdata);
+        CCurlContext *data = (CCurlContext*)userdata;
+        data->result += s;
+        // Starting around block 3804005, there was a hack wherein the byte code 5b5b5b5b5b5b5b5b5b5b5b5b
+        // repeated thousands of times, doing nothing. If we don't handle this, it dominates the scanning
+        // for no reason
+        if (strstr(s, "5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b") != NULL) {
+            // This is the hack trace (there are many), so skip it
+            cerr << "Curl response contains '5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b'. Aborting.\n";
+            cerr.flush();
+            getCurlContext()->earlyAbort = true;
+            return 0;
         }
 
-        return size*nmemb;
+//        if (shouldQuit()) {
+//            getCurlContext()->earlyAbort = true;
+//            return 0;
+//        }
+
+        return size * nmemb;
+    }
+
+    //-------------------------------------------------------------------------
+    size_t traceCallback(char *ptr, size_t size, size_t nmemb, void *userdata) {
+        // Curl does not close the string, so we have to
+        ptr[size*nmemb-1] = '\0';
+        CCurlContext *data = (CCurlContext*)userdata;
+        data->result = "ok";
+        if (strstr(ptr,"erro")!=NULL) {
+            data->result = "error";
+            getCurlContext()->is_error = true;
+            getCurlContext()->earlyAbort = true;
+            return 0;
+        }
+
+//        if (shouldQuit()) {
+//            getCurlContext()->earlyAbort = true;
+//            return 0;
+//        }
+
+        return size * nmemb;
     }
 
     //-------------------------------------------------------------------------
     size_t nullCallback(char *ptr, size_t size, size_t nmemb, void *userdata) {
-        return size*nmemb;
+        return size * nmemb;
     }
 }  // namespace qblocks

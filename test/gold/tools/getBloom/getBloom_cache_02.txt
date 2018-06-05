@@ -1,7 +1,8 @@
-getBloom argc: 6 [1:-s:c] [2:2768801] [3:1995314] [4:1958017] [5:--parity] 
-getBloom -s:c 2768801 1995314 1958017 --parity 
+getBloom argc: 6 [1:-e] [2:2768801] [3:1995314] [4:1958017] [5:--parity] 
+getBloom -e 2768801 1995314 1958017 --parity 
 [{
     "blockNumber": "0x2a3fa1"
+    show eab
 },
 {
     "blockNumber": "0x1e7232"

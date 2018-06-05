@@ -1,10 +1,15 @@
-/*-------------------------------------------------------------------------
- * This source code is confidential proprietary information which is
- * Copyright (c) 2017 by Great Hill Corporation.
- * All Rights Reserved
+/*-------------------------------------------------------------------------------------------
+ * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
+ * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
  *
- * The LICENSE at the root of this repo details your rights (if any)
- *------------------------------------------------------------------------*/
+ * This program is free software: you may redistribute it and/or modify it under the terms
+ * of the GNU General Public License as published by the Free Software Foundation, either
+ * version 3 of the License, or (at your option) any later version. This program is
+ * distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+ * the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details. You should have received a copy of the GNU General
+ * Public License along with this program. If not, see http://www.gnu.org/licenses/.
+ *-------------------------------------------------------------------------------------------*/
 #include "node.h"
 
 namespace qblocks {
@@ -12,6 +17,17 @@ namespace qblocks {
     static QUITHANDLER theQuitHandler = NULL;
     //-------------------------------------------------------------------------
     void etherlib_init(const SFString& sourceIn, QUITHANDLER qh) {
+
+        SFString fallBack = getenv("FALLBACK");
+        if (!isNodeRunning() && fallBack.empty()) {
+            cerr << "\n\t";
+            cerr << cTeal << "Warning: " << cOff << "QuickBlocks requires a running Ethereum\n";
+            cerr << "\tnode to operate properly. Please start your node.\n";
+            cerr << "\tAlternatively, export FALLBACK=infura in your\n";
+            cerr << "\tenvironment before running this command. Quitting...\n\n";
+            cerr.flush();
+            exit(0);
+        }
 
         establishFolder(blockCachePath(""));
 
@@ -171,8 +187,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
 
         // We have the transactions, but we also want the receipts, and we need an error indication
         nTraces=0;
-        for (uint32_t i=0;i<block.transactions.getCount();i++)
-        {
+        for (uint32_t i=0;i<block.transactions.getCount();i++) {
             CTransaction *trans = &block.transactions[i];
             trans->pBlock = &block;
 
@@ -185,14 +200,12 @@ extern void registerQuitHandler(QUITHANDLER qh);
 
             } else if (needTrace && trans->gas == receipt.gasUsed) {
 
-                // If we've been told not to trace, quit here, but return sucess
-                if (!getCurlContext()->isTracingOn())
-                    return true;
-
-                SFString trace;
-                getCurlContext()->lightTracing(true);
-                queryRawTrace(trace, trans->hash);
-                trans->isError = getCurlContext()->lightTracing(false);
+                SFString unused;
+                CURLCALLBACKFUNC prev = getCurlContext()->setCurlCallback(traceCallback);
+                getCurlContext()->is_error = false;
+                queryRawTrace(unused, trans->hash);
+                trans->isError = getCurlContext()->is_error;
+                getCurlContext()->setCurlCallback(prev);
                 nTraces++;
             }
         }
@@ -209,6 +222,31 @@ extern void registerQuitHandler(QUITHANDLER qh);
             blockStr = callRPC("eth_getBlockByNumber", "["+quote(toHex(datIn))+","+(hashesOnly?"false":"true")+"]", true);
         }
         return true;
+    }
+
+    //-------------------------------------------------------------------------
+    SFString getRawBlock(blknum_t bn) {
+        SFString numStr = asStringU(bn);
+        SFString results;
+        queryRawBlock(results, numStr, true, false);
+        CRPCResult generic;
+        char *p = cleanUpJson((char*)results.c_str());
+        generic.parseJson(p);
+        return generic.result;
+    }
+
+    //-------------------------------------------------------------------------
+    SFHash getRawBlockHash(blknum_t bn) {
+        SFString blockStr;
+        queryRawBlock(blockStr, asStringU(bn), false, true);
+        blockStr = blockStr.substr(blockStr.find("\"hash\":"),blockStr.length()).Substitute("\"hash\":\"","");
+        blockStr = nextTokenClear(blockStr, '\"');
+        return blockStr;
+    }
+
+    //-------------------------------------------------------------------------
+    SFHash getRawTransactionHash(blknum_t bn, txnum_t tx) {
+        return "Not implemented";
     }
 
     //-------------------------------------------------------------------------
@@ -276,18 +314,18 @@ extern void registerQuitHandler(QUITHANDLER qh);
     //--------------------------------------------------------------------------
     uint64_t getLatestBlockFromCache(void) {
 
-        SFArchive fullBlocks(READING_ARCHIVE);
-        if (!fullBlocks.Lock(fullBlockIndex, binaryReadOnly, LOCK_NOWAIT)) {
+        SFArchive fullBlockCache(READING_ARCHIVE);
+        if (!fullBlockCache.Lock(fullBlockIndex, binaryReadOnly, LOCK_NOWAIT)) {
             if (!isTestMode())
-                cerr << "getLatestBlockFromCache failed: " << fullBlocks.LockFailure() << "\n";
+                cerr << "getLatestBlockFromCache failed: " << fullBlockCache.LockFailure() << "\n";
             return 0;
         }
-        ASSERT(fullBlocks.isOpen());
+        ASSERT(fullBlockCache.isOpen());
 
         uint64_t ret = 0;
-        fullBlocks.Seek( (-1 * (long)sizeof(uint64_t)), SEEK_END);
-        fullBlocks.Read(ret);
-        fullBlocks.Release();
+        fullBlockCache.Seek( (-1 * (long)sizeof(uint64_t)), SEEK_END);
+        fullBlockCache.Read(ret);
+        fullBlockCache.Release();
         return ret;
     }
 
@@ -569,19 +607,19 @@ extern void registerQuitHandler(QUITHANDLER qh);
         if (!func)
             return false;
 
-        CSharedResource fullBlocks;
-        if (!fullBlocks.Lock(fullBlockIndex, binaryReadOnly, LOCK_WAIT)) {
-            cerr << "forEveryNonEmptyBlockOnDisc failed: " << fullBlocks.LockFailure() << "\n";
+        SFArchive fullBlockCache(READING_ARCHIVE);
+        if (!fullBlockCache.Lock(fullBlockIndex, binaryReadOnly, LOCK_WAIT)) {
+            cerr << "forEveryNonEmptyBlockOnDisc failed: " << fullBlockCache.LockFailure() << "\n";
             return false;
         }
-        ASSERT(fullBlocks.isOpen());
+        ASSERT(fullBlockCache.isOpen());
 
         uint64_t nItems = fileSize(fullBlockIndex) / sizeof(uint64_t);
         uint64_t *contents = new uint64_t[nItems];
         if (contents) {
             // read the entire full block index
-            fullBlocks.Read(contents, sizeof(uint64_t), nItems);
-            fullBlocks.Release();  // release it since we don't need it any longer
+            fullBlockCache.Read(contents, sizeof(uint64_t), nItems);
+            fullBlockCache.Release();  // release it since we don't need it any longer
 
             for (uint64_t i = 0 ; i < nItems ; i = i + skip) {
                 // TODO: This should be a binary search not a scan. This is why it appears to wait
@@ -612,19 +650,19 @@ extern void registerQuitHandler(QUITHANDLER qh);
 
         getCurlContext()->provider = "local"; // the empty blocks are not on disk, so we have to ask parity. Don't write them, though
 
-        CSharedResource fullBlocks;
-        if (!fullBlocks.Lock(fullBlockIndex, binaryReadOnly, LOCK_WAIT)) {
-            cerr << "forEveryEmptyBlockOnDisc failed: " << fullBlocks.LockFailure() << "\n";
+        SFArchive fullBlockCache(READING_ARCHIVE);
+        if (!fullBlockCache.Lock(fullBlockIndex, binaryReadOnly, LOCK_WAIT)) {
+            cerr << "forEveryEmptyBlockOnDisc failed: " << fullBlockCache.LockFailure() << "\n";
             return false;
         }
-        ASSERT(fullBlocks.isOpen());
+        ASSERT(fullBlockCache.isOpen());
 
         uint64_t nItems = fileSize(fullBlockIndex) / sizeof(uint64_t) + 1;  // we need an extra one for item '0'
         uint64_t *contents = new uint64_t[nItems+2];  // extra space
         if (contents) {
             // read the entire full block index
-            fullBlocks.Read(&contents[0], sizeof(uint64_t), nItems-1);  // one less since we asked for an extra one
-            fullBlocks.Release();  // release it since we don't need it any longer
+            fullBlockCache.Read(&contents[0], sizeof(uint64_t), nItems-1);  // one less since we asked for an extra one
+            fullBlockCache.Release();  // release it since we don't need it any longer
 
             contents[0] = 0;  // the starting point (needed because we are build the empty list from the non-empty list
             uint64_t cnt = start;

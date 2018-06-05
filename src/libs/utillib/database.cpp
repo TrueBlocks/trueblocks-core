@@ -1,10 +1,15 @@
-/*-------------------------------------------------------------------------
- * This source code is confidential proprietary information which is
- * Copyright (c) 2017 by Great Hill Corporation.
- * All Rights Reserved
+/*-------------------------------------------------------------------------------------------
+ * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
+ * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
  *
- * The LICENSE at the root of this repo details your rights (if any)
- *------------------------------------------------------------------------*/
+ * This program is free software: you may redistribute it and/or modify it under the terms
+ * of the GNU General Public License as published by the Free Software Foundation, either
+ * version 3 of the License, or (at your option) any later version. This program is
+ * distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+ * the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details. You should have received a copy of the GNU General
+ * Public License along with this program. If not, see http://www.gnu.org/licenses/.
+ *-------------------------------------------------------------------------------------------*/
 #include "basetypes.h"
 
 #include "database.h"
@@ -235,7 +240,7 @@ namespace qblocks {
 
         nChars = (uint32_t)fileSize(filename);
         if (buffer) {
-            CSharedResource lock;
+            CBinFile lock;
             if (lock.Lock(filename, binaryReadOnly, LOCK_NOWAIT)) {  // do not wait for lock - read only file
                 ASSERT(lock.isOpen());
                 lock.Seek(0, SEEK_SET);
@@ -383,7 +388,7 @@ namespace qblocks {
         memset(val, 0, nBytes+100);
         char *s = val;
 
-        CSharedResource lock;
+        CAsciiFile lock;
         if (lock.Lock(filename, asciiReadOnly, LOCK_NOWAIT)) {  // do not wait for lock - read only file
             uint64_t nLines = 0;
 
@@ -463,7 +468,7 @@ namespace qblocks {
 
     //----------------------------------------------------------------------
     size_t stringToAsciiFile(const SFString& fileName, const SFString& contents) {
-        CSharedResource lock;
+        CAsciiFile lock;
         if (lock.Lock(fileName, asciiWriteCreate, LOCK_WAIT)) {
             lock.WriteLine((const char*)contents);
             lock.Release();
