@@ -12,19 +12,17 @@
  *-------------------------------------------------------------------------------------------*/
 #include <string>
 #include <algorithm>
-#include "etherlib.h"
+#include "utillib.h"
 
-// Changing this between qstring and SFString helps migrating away from quickBlocks code
-#define TEST_STR SFString
+// Changing this between string_q and SFString helps migrating away from quickBlocks code
+#define TEST_STR string_q
 
 //------------------------------------------------------------------------
 class CThisTest : public testing::Test {
 public:
-    CThisTest(void) : Test() {}
-    virtual void SetUp() {
-    }
-    virtual void TearDown() {
-    }
+                 CThisTest(void) : Test() {}
+    virtual void SetUp    (void) {}
+    virtual void TearDown (void) {}
 };
 
 //------------------------------------------------------------------------
@@ -79,14 +77,43 @@ TEST_F(CThisTest, TestCompare) {
 }}
 
 //------------------------------------------------------------------------
+TEST_F(CThisTest, TestAssignment) {
+    string str1, str2, str3;
+    TEST_STR xstr1, xstr2, xstr3;
+
+     str1 = "Test string: ";  str2 = 'x';
+    xstr1 = "Test string: "; xstr2 = TEST_STR('x');
+
+     str3 =  str1 +  str2;
+    xstr3 = xstr1 + xstr2;
+
+    ASSERT_TRUE("c-string set1",   str1 == "Test string: ");
+    ASSERT_TRUE("qb-string set1", xstr1 == "Test string: ");
+    ASSERT_TRUE("c-string set2",   str2 == "x");
+    ASSERT_TRUE("qb-string set2", xstr2 == "x");
+    ASSERT_TRUE("c-string set3",   str3 == "Test string: x");
+    ASSERT_TRUE("qb-string set3", xstr3 == "Test string: x");
+    ASSERT_TRUE("set1 equal",      str1 == xstr1.str());
+    ASSERT_TRUE("set2 equal",      str2 == xstr2.str());
+    ASSERT_TRUE("set3 equal",      str3 == xstr3.str());
+
+    return true;
+}}
+
+//------------------------------------------------------------------------
 void testCStr(void) {
 
     char str[] = "Please split this sentence into tokens";
     char *token;
     char *rest = str;
-    while ((token = strtok_r(rest, " ", &rest))) {
-        cout << token << "\n";
-    }
+    while ((token = strtok_r(rest, " ", &rest)))
+        cout << "\t" << padRight(token,8,' ') << "\t" << (rest ? rest : "") << "\n";
+    cout << "\n";
+    char str1[] = "Please|split|that|sentence|into|tokens";
+    char *token1;
+    char *rest1 = str1;
+    while ((token1 = strtok_r(rest1, "|", &rest1)))
+        cout << "\t" << padRight(token1,8,' ') << "\t" << (rest1 ? rest1 : "") << "\n";
 }
 
 #include "options.h"
@@ -94,7 +121,6 @@ void testCStr(void) {
 int main(int argc, const char *argv[]) {
 
     COptions options;
-    options.minArgs = 0;
     if (!options.prepareArguments(argc, argv))
         return 0;
 
@@ -103,14 +129,11 @@ int main(int argc, const char *argv[]) {
         if (!options.parseArguments(command))
             return 0;
 
-        if (options.testNum == 0) {
-            LOAD_TEST(TestRelational);
-
-        } else if (options.testNum == 1) {
-            LOAD_TEST(TestCompare);
-
-        } else if (options.testNum == 2) {
-            testCStr();
+        switch (options.testNum) {
+            case 0: LOAD_TEST(TestRelational); break;
+            case 1: LOAD_TEST(TestCompare);    break;
+            case 2:           testCStr();      break;
+            case 3: LOAD_TEST(TestAssignment); break;
         }
     }
 

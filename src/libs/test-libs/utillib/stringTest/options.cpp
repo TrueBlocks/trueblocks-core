@@ -13,11 +13,11 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-CParams params[] = {
+static CParams params[] = {
     CParams("~mode", "a number between 0 and 2 inclusive"),
     CParams("",      "Test 'c' library strings against quickBlocks strings.\n"),
 };
-uint32_t nParams = sizeof(params) / sizeof(CParams);
+static uint32_t nParams = sizeof(params) / sizeof(CParams);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(SFString& command) {
@@ -34,7 +34,7 @@ bool COptions::parseArguments(SFString& command) {
                 return usage("Invalid option: " + arg);
             }
         } else {
-            testNum = (int32_t)toLong(arg);
+            testNum = toLongU(arg);
         }
     }
     return true;
@@ -45,14 +45,5 @@ void COptions::Init(void) {
     paramsPtr = params;
     nParamsRef = nParams;
 
-    testNum = -1;
-}
-
-//---------------------------------------------------------------------------------------------------
-COptions::COptions(void) {
-    Init();
-}
-
-//--------------------------------------------------------------------------------
-COptions::~COptions(void) {
+    testNum = NOPOS;
 }

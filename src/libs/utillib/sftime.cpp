@@ -602,8 +602,8 @@ namespace qblocks {
 
         SFString str = timeStr;  // 12:12:12 am for example
 
-        for (uint32_t i = 0 ; i < 3 && str.length() > 0 ; i++) {
-            switch (fmtStr[(int)i]) {
+        for (size_t i = 0 ; i < 3 && str.length() > 0 ; i++) {
+            switch (fmtStr[i]) {
                 case 'h':
                 case 'H':
                     hour = toLong32u(nextTokenClear(str, sep));
@@ -914,8 +914,8 @@ namespace qblocks {
         char sep = fmtStr[4];
 
         SFString str = dateStr;  // 12-10-1921 for example
-        for (uint32_t i = 0 ; i < 3 && str.length() > 0 ; i++) {
-            switch (fmtStr[(int)i]) {
+        for (size_t i = 0 ; i < 3 && str.length() > 0 ; i++) {
+            switch (fmtStr[i]) {
                 case 'd':
                 case 'D':
                     day = toLong32u(nextTokenClear(str, sep));
