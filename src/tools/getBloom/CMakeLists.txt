@@ -76,7 +76,7 @@ run_test("getBloom_parity_range" "--parity"       " 358450-0x5785a")
 
 run_test("getBloom_force_02"                  " 2769609" " 2799895" " 2872831" " 3076260" " -o")
 # TURN BACK ON run_test("getBloom_multi1"   "--parity" " -r" " 2769609" " 2799895" " 2872831" " 3076260")
-run_test("getBloom_multi2"   "--parity" " -e" " 2769609" " 2799895" " 2872831" " 3076260")
+# TURN BACK ON run_test("getBloom_multi2"   "--parity" " -e" " 2769609" " 2799895" " 2872831" " 3076260")
 
 run_test("getBloom_short_receipt" "-p"        " 4001001")
 run_test("getBloom_long_receipt"  "--receipt" " 4001001")
