@@ -16,10 +16,10 @@
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
-    int32_t testNum;
+    uint64_t testNum;
 
-    COptions(void);
-    ~COptions(void);
+    COptions(void)  { Init(); }
+    ~COptions(void) { }
 
     bool parseArguments(SFString& command);
     void Init(void);
