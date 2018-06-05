@@ -15,7 +15,7 @@
 #include "utillib.h"
 
 // Changing this between string_q and SFString helps migrating away from quickBlocks code
-#define TEST_STR string_q
+#define TEST_STR SFString
 
 //------------------------------------------------------------------------
 class CThisTest : public testing::Test {
