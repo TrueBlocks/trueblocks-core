@@ -12,7 +12,7 @@
  *-------------------------------------------------------------------------------------------*/
 #include <string>
 #include <algorithm>
-#include "etherlib.h"
+#include "utillib.h"
 
 // Changing this between string_q and SFString helps migrating away from quickBlocks code
 #define TEST_STR string_q
@@ -129,7 +129,6 @@ int main(int argc, const char *argv[]) {
         if (!options.parseArguments(command))
             return 0;
 
-        options.testNum = 3;
         switch (options.testNum) {
             case 0: LOAD_TEST(TestRelational); break;
             case 1: LOAD_TEST(TestCompare);    break;
