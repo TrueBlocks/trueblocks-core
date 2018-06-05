@@ -14,17 +14,15 @@
 #include <algorithm>
 #include "etherlib.h"
 
-// Changing this between qstring and SFString helps migrating away from quickBlocks code
-#define TEST_STR SFString
+// Changing this between string_q and SFString helps migrating away from quickBlocks code
+#define TEST_STR string_q
 
 //------------------------------------------------------------------------
 class CThisTest : public testing::Test {
 public:
-    CThisTest(void) : Test() {}
-    virtual void SetUp() {
-    }
-    virtual void TearDown() {
-    }
+                 CThisTest(void) : Test() {}
+    virtual void SetUp    (void) {}
+    virtual void TearDown (void) {}
 };
 
 //------------------------------------------------------------------------

@@ -41,7 +41,7 @@ namespace qblocks {
         init();
 
         size_t strLen = (str ? strlen(str) : 0);
-        len = ((long)len >= 0 ? strLen : len);
+        len = (len == NOPOS ? strLen : len);
         if (str && (strLen > start))
         {
             reserve(len);
@@ -123,7 +123,6 @@ namespace qblocks {
         return;
     }
 
-#ifdef NEW_CODE
     //---------------------------------------------------------------------------------------
     void string_q::resize(size_t newSize, char c) {
         if (newSize <= m_buffSize) {
@@ -142,7 +141,6 @@ namespace qblocks {
         }
         return;
     }
-#endif
 
     //---------------------------------------------------------------------------------------
     void string_q::clear(void)
@@ -150,9 +148,9 @@ namespace qblocks {
         if (m_Values)
             if (m_Values != nullString)
                 delete [] m_Values;
-        m_Values  = NULL;
-        m_nValues = 0;
-        init();
+        m_nValues     = 0;
+        m_buffSize    = 0;
+        m_Values      = nullString;
     }
 
     //---------------------------------------------------------------------------------------
