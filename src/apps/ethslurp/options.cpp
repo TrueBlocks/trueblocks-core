@@ -156,7 +156,7 @@ bool COptions::parseArguments(SFString& command) {
             uint32_t wait = toLong32u(arg);
             if (wait) {
                 cerr << "Sleeping " << wait << " seconds\n";
-                qbSleep(wait);
+                usleep(wait * 1000000);
             }
 
         } else if (arg.startsWith("-m:") || arg.startsWith("--max:")) {

@@ -149,7 +149,7 @@ namespace qblocks {
         waitForCreate(filename);
 extern SFString binaryFileToString(const SFString& filename);
         SFString ret = binaryFileToString(filename);
-        removeFile(filename);
+        remove(filename.c_str());
         return Strip(ret, '\n');
     }
 
@@ -161,28 +161,6 @@ extern SFString binaryFileToString(const SFString& filename);
         if (!folder.endsWith('/'))
             folder += "/";
         return folder + filename;  // may be empty
-    }
-
-    //------------------------------------------------------------------
-    int removeFile(const SFString& name) {
-        return ::remove((const char *)name);
-    }
-
-    //------------------------------------------------------------------
-    int moveFile(const SFString& from, const SFString& to) {
-        if (from % to)
-            return true;
-
-        if (copyFile(from, to))
-            return !removeFile(from);  // remove file returns '0' on success
-        return false;
-    }
-
-    //------------------------------------------------------------------
-    // Send a float representing seconds - adjust because Windows takes 1/1000 (thousandth)
-    // of a second and Linux takes 1/1000000 (millionth)
-    void qbSleep(float units) {
-        ::usleep((useconds_t)(units * 1000000.));
     }
 
     //------------------------------------------------------------------
@@ -209,49 +187,6 @@ extern SFString binaryFileToString(const SFString& filename);
             listFolders(nFiles, NULL, folder+".");
 
         return (nFiles > 0);
-    }
-
-    //--------------------------------------------------------------------------------
-    int removeFolder(const SFString& folderIn) {
-        SFString folder = folderIn;
-        if (!folder.endsWith('/'))
-            folder += "/";
-
-        uint32_t nFiles = 0;
-        listFiles(nFiles, NULL, folder + "*");
-        if (nFiles) {
-            SFString *files = new SFString[nFiles];
-            listFiles(nFiles, files, folder + "*");
-            if (files) {
-                for (uint32_t j = 0 ; j < nFiles ; j++)
-                    if (files[j] != "." && files[j] != "..")
-                        removeFile(folder + files[j]);
-                delete [] files;
-            }
-        }
-        rmdir(folder.c_str());
-
-        return !fileExists(folder.c_str());
-    }
-
-    //------------------------------------------------------------------
-    SFTime fileCreateDate(const SFString& filename) {
-        if (!fileExists(filename))
-            return earliestDate;
-
-        struct stat statBuf;
-        stat(filename, &statBuf);
-
-        // Convert time_t to struct tm
-        tm unused;
-        tm *t = localtime_r(&statBuf.st_ctime, &unused);
-        ASSERT(t);
-        return SFTime(  (uint32_t)t->tm_year + 1900,
-                        (uint32_t)t->tm_mon+1,
-                        (uint32_t)t->tm_mday,
-                        (uint32_t)t->tm_hour,
-                        (uint32_t)t->tm_min,
-                        (uint32_t)t->tm_sec);
     }
 
     //------------------------------------------------------------------

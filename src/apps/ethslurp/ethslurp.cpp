@@ -240,7 +240,7 @@ bool CSlurperApp::Slurp(COptions& options, SFString& message) {
 
             // Etherscan.io doesn't want more than five pages per second, so sleep for a second
             if (++nRequests == 4) {
-                qbSleep(1.0);
+                usleep(1000000);
                 nRequests = 0;
             }
 
