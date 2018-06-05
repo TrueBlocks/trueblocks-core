@@ -20,7 +20,7 @@ namespace qblocks {
         if (!str.startsWith("0x"))
             return false;
         for (size_t i = 2 ; i < str.length() ; i++)
-            if (!isHex(str[(int)i]))
+            if (!isHex(str[i]))
                 return false;
         return true;
     }
