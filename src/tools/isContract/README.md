@@ -25,7 +25,7 @@ This simple program may be used to query an Ethereum address to determine if it 
 - If the queried node does not store historical state, the results are undefined.
 - `special` blocks are detailed under `whenBlock --list`.
 
-`See Also`: This command-line tool implements the [eth_getCode](https://github.com/paritytech/parity/wiki/JSONRPC-eth-module#eth_getcode) RPC interface.
+`See Also`: This command-line tool implements the [eth_getCode](https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_getcode) RPC interface.
 
 #### Other Options
 
