@@ -20,24 +20,20 @@ namespace qblocks {
     extern char nullString[];
 
 #ifndef NATIVE
-#if 1
     //---------------------------------------------------------------------------------------
-    string_q::string_q()
-    {
+    string_q::string_q() {
         init();
         reserve(0);
     }
 
     //---------------------------------------------------------------------------------------
-    string_q::string_q(const string_q& str)
-    {
+    string_q::string_q(const string_q& str) {
         init();
         *this = str.m_Values;
     }
 
     //---------------------------------------------------------------------------------------
-    string_q::string_q(const char *str, size_t start, size_t len)
-    {
+    string_q::string_q(const char *str, size_t start, size_t len) {
         init();
 
         size_t strLen = (str ? strlen(str) : 0);
@@ -53,8 +49,7 @@ namespace qblocks {
     }
 
     //---------------------------------------------------------------------------------------
-    string_q::string_q(char ch, size_t len)
-    {
+    string_q::string_q(char ch, size_t len) {
         init();
 
         if (((long)len) > 0)
@@ -67,40 +62,33 @@ namespace qblocks {
     }
 
     //---------------------------------------------------------------------------------------
-    string_q::~string_q()
-    {
+    string_q::~string_q() {
         if (m_Values)
             if (m_Values != nullString)
                 delete [] m_Values;
         m_Values  = NULL;
         m_nValues = 0;
     }
-#endif
 
     //---------------------------------------------------------------------------------------
-    const char *string_q::c_str(void) const
-    {
+    const char *string_q::c_str(void) const {
         ASSERT(m_Values);
         return m_Values;
     }
 
     //--------------------------------------------------------------------
-    size_t string_q::length() const
-    {
+    size_t string_q::length() const {
         return m_nValues;
     }
 
     //--------------------------------------------------------------------
-    bool string_q::empty() const
-    {
+    bool string_q::empty() const {
         return !length();
     }
 
     //---------------------------------------------------------------------------------------
-    void string_q::reserve(size_t newSize)
-    {
-        if (newSize <= m_buffSize && m_buffSize)
-        {
+    void string_q::reserve(size_t newSize) {
+        if (newSize <= m_buffSize && m_buffSize) {
             // do not release the memory, just empty the existing string
             m_nValues   = 0;
             m_Values[0] = '\0';
@@ -143,8 +131,7 @@ namespace qblocks {
     }
 
     //---------------------------------------------------------------------------------------
-    void string_q::clear(void)
-    {
+    void string_q::clear(void) {
         if (m_Values)
             if (m_Values != nullString)
                 delete [] m_Values;
@@ -154,59 +141,51 @@ namespace qblocks {
     }
 
     //---------------------------------------------------------------------------------------
-    void string_q::init()
-    {
+    void string_q::init() {
         m_nValues     = 0;
         m_buffSize    = 0;
         m_Values      = nullString;
     }
 
     //---------------------------------------------------------------------------------------
-    int string_q::compare(const char* str) const
-    {
+    int string_q::compare(const char* str) const {
         return strcmp(m_Values, str);
     }
 
     //---------------------------------------------------------------------------------------
-    int string_q::compare(size_t pos, size_t len, const char* str) const
-    {
+    int string_q::compare(size_t pos, size_t len, const char* str) const {
         SFString compared = m_Values;
         SFString comparing = str;
         return compared.substr(pos,len).compare(comparing);
     }
 
     //---------------------------------------------------------------------------------------
-    int string_q::compare(size_t pos, size_t len, const char* str, size_t n) const
-    {
+    int string_q::compare(size_t pos, size_t len, const char* str, size_t n) const {
         SFString compared = m_Values;
         SFString comparing = str;
         return compared.substr(pos,len).compare(comparing.substr(n));
     }
 
     //---------------------------------------------------------------------------------------
-    int string_q::compare(const string_q& str) const
-    {
+    int string_q::compare(const string_q& str) const {
         return strcmp(m_Values, str.c_str());
     }
 
     //---------------------------------------------------------------------------------------
-    int string_q::compare(size_t pos, size_t len, const string_q& str) const
-    {
+    int string_q::compare(size_t pos, size_t len, const string_q& str) const {
         SFString compared = m_Values;
         SFString comparing = str.c_str();
         return compared.substr(pos,len).compare(comparing);
     }
 
     //---------------------------------------------------------------------------------------
-    int string_q::compare(size_t pos, size_t len, const string_q& str, size_t subpos, size_t sublen) const
-    {
+    int string_q::compare(size_t pos, size_t len, const string_q& str, size_t subpos, size_t sublen) const {
         SFString compared = m_Values;
         SFString comparing = str.c_str();
         return compared.substr(pos,len).compare(comparing.substr(subpos,sublen));
     }
     //---------------------------------------------------------------------------------------
-    size_t string_q::find(const char *str, size_t pos) const
-    {
+    size_t string_q::find(const char *str, size_t pos) const {
         char *f = strstr(m_Values, str);
         if (f)
             return size_t(f-m_Values);
@@ -214,8 +193,7 @@ namespace qblocks {
     }
 
     //---------------------------------------------------------------------------------------
-    size_t string_q::find(char ch, size_t pos) const
-    {
+    size_t string_q::find(char ch, size_t pos) const {
         char *f = strchr(m_Values, ch);
         if (f)
             return size_t(f-m_Values);
@@ -223,35 +201,46 @@ namespace qblocks {
     }
 
     //---------------------------------------------------------------------------------------
-    size_t string_q::find(const string_q& str, size_t pos) const
-    {
+    size_t string_q::find(const string_q& str, size_t pos) const {
         SFString s = str.m_Values;
         return find((const char*)s,pos);
     }
 
     //---------------------------------------------------------------------------------------
-    size_t string_q::find(const char* s, size_t pos, size_t n) const
-    {
+    size_t string_q::find(const char* s, size_t pos, size_t n) const {
         return find(s,pos);
     }
 
     //---------------------------------------------------------------------------------------
-    const char& string_q::at(size_t index) const
-    {
+    const char& string_q::at(size_t index) const {
         ASSERT(index >= 0);
         ASSERT(index < length());
         return m_Values[index];
     }
 
+#ifdef THE_SWITCH
     //---------------------------------------------------------------------------------------
-    SFString SFString::substr(size_t first) const
-    {
+    string_q string_q::substr(size_t first) const {
         return substr(first, length()-first);
     }
 
     //---------------------------------------------------------------------------------------
-    SFString SFString::substr(size_t first, size_t len) const
-    {
+    string_q string_q::substr(size_t first, size_t len) const {
+        if (first+len > length())
+            len = length() - first; // not past end
+        if (first > length())
+            len = 0;  // not longer than string
+        string_q ret = extract(first, len).c_str();
+        return ret;
+    }
+#else
+    //---------------------------------------------------------------------------------------
+    SFString SFString::substr(size_t first) const {
+        return substr(first, length()-first);
+    }
+
+    //---------------------------------------------------------------------------------------
+    SFString SFString::substr(size_t first, size_t len) const {
         if (first+len > length())
             len = length() - first; // not past end
         if (first > length())
@@ -259,10 +248,10 @@ namespace qblocks {
         SFString ret = extract(first, len).c_str();
         return ret;
     }
+#endif
 
     //---------------------------------------------------------------------------------------
-    string_q string_q::extract(size_t start, size_t len) const
-    {
+    string_q string_q::extract(size_t start, size_t len) const {
         ASSERT((char*)(start+start+len) <= (char*)((int64_t)m_Values+strlen(m_Values)));
 
         const char *strStart = m_Values;
@@ -277,32 +266,54 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------
-    char string_q::operator[](int index) const
-    {
-        return at((size_t)index);
+    char string_q::operator[](size_t index) const {
+        return at(index);
     }
+
+#ifdef THE_SWITCH
+    //---------------------------------------------------------------------------------------
+    const string_q& string_q::operator=(const string_q& str) noexcept {
+        if (m_Values == str.m_Values) // do not change this line
+            return *this;
+        size_t len = str.length();
+        reserve(len);
+        memcpy(m_Values, str.m_Values, len);
+        m_nValues     = len;
+        m_Values[len] = '\0';
+        return *this;
+    }
+#else
+    //---------------------------------------------------------------------------------------
+    const SFString& SFString::operator=(const SFString& str) {
+        if (m_Values == str.m_Values) // do not change this line
+            return *this;
+        size_t len = str.length();
+        reserve(len);
+        memcpy(m_Values, str.m_Values, len);
+        m_nValues     = len;
+        m_Values[len] = '\0';
+        return *this;
+    }
+#endif
 #endif
 
     //---------------------------------------------------------------------------------------
     char nullString[2];
 
     //---------------------------------------------------------------------------------------
-    SFString::SFString()
-    {
+    SFString::SFString() {
         init();
         reserve(0);
     }
 
     //---------------------------------------------------------------------------------------
-    SFString::SFString(const SFString& str)
-    {
+    SFString::SFString(const SFString& str) {
         init();
         *this = str.m_Values;
     }
 
     //---------------------------------------------------------------------------------------
-    SFString::SFString(const char *str, size_t startIn, size_t lenIn)
-    {
+    SFString::SFString(const char *str, size_t startIn, size_t lenIn) {
         init();
 
         int64_t start = (int64_t)startIn;
@@ -322,8 +333,7 @@ namespace qblocks {
     }
 
     //---------------------------------------------------------------------------------------
-    SFString::SFString(char ch, size_t lenIn)
-    {
+    SFString::SFString(char ch, size_t lenIn) {
         init();
 
         int64_t len = (int64_t)lenIn;
@@ -338,8 +348,7 @@ namespace qblocks {
     }
 
     //---------------------------------------------------------------------------------------
-    SFString::~SFString()
-    {
+    SFString::~SFString() {
         if (m_Values)
             if (m_Values != nullString)
                 delete [] m_Values;
@@ -348,26 +357,10 @@ namespace qblocks {
     }
 
     //---------------------------------------------------------------------------------------
-    const SFString& SFString::operator=(const SFString& str)
-    {
-        if (m_Values == str.m_Values) // do not change this line
-            return *this;
-
-        size_t len = str.length();
-        reserve(len);
-        memcpy(m_Values, str.m_Values, len);
-        m_nValues     = len;
-        m_Values[len] = '\0';
-
-        return *this;
-    }
-
-    //---------------------------------------------------------------------------------------
     // Find functions
 
     //---------------------------------------------------------------------------------------
-    size_t SFString::findI(const char *search) const
-    {
+    size_t SFString::findI(const char *search) const {
         SFString me   = toLower(*this);
         SFString test = toLower(SFString(search));
         char *f = strstr(me.m_Values, test.m_Values);
@@ -377,93 +370,77 @@ namespace qblocks {
     }
 
     //---------------------------------------------------------------------------------------
-    size_t SFString::ReverseFind(char ch) const
-    {
+    size_t SFString::ReverseFind(char ch) const {
         char *f = strrchr(m_Values, ch);
         return (f ? size_t(f-m_Values) : NOPOS);
     }
 
     //---------------------------------------------------------------------------------------
-    bool SFString::ContainsAny(const SFString& search) const
-    {
-        for (uint32_t i=0;i<search.length();i++)
-            if (Contains(search[(int)i]))
+    bool SFString::ContainsAny(const SFString& search) const {
+        for (size_t i=0;i<search.length();i++)
+            if (Contains(search[i]))
                 return true;
         return false;
     }
 
     //---------------------------------------------------------------------------------------
-    bool SFString::ContainsAll(const SFString& search) const
-    {
-        for (uint32_t i=0;i<search.length();i++)
-            if (!Contains(search[(int)i]))
+    bool SFString::ContainsAll(const SFString& search) const {
+        for (size_t i=0;i<search.length();i++)
+            if (!Contains(search[i]))
                 return false;
         return true;
     }
 
     //---------------------------------------------------------------------------------------
-    bool SFString::Contains(char ch) const
-    {
+    bool SFString::Contains(char ch) const {
         return (find(ch) != NOPOS);
     }
 
     //---------------------------------------------------------------------------------------
-    bool SFString::Contains(const SFString& search) const
-    {
+    bool SFString::Contains(const SFString& search) const {
         return (find(search) != NOPOS);
     }
 
     //---------------------------------------------------------------------------------------
-    bool SFString::ContainsI(const SFString& search) const
-    {
+    bool SFString::ContainsI(const SFString& search) const {
         return (findI(search) != NOPOS);
     }
 
     //---------------------------------------------------------------------------------------
-    SFString SFString::Substitute(const SFString& what, const SFString& with) const
-    {
+    SFString SFString::Substitute(const SFString& what, const SFString& with) const {
         SFString ret = *this;
-        if (with.Contains("`"))
-        {
+        if (with.Contains("`")) {
             SFString whatStr = what;
             SFString withStr = with;
-            while (!whatStr.empty()) // they should match but don't have to. With predominates
-            {
+            while (!whatStr.empty()) { // they should match but don't have to. With predominates
                 SFString wtStr = nextTokenClear(whatStr, '`');
                 SFString whStr = nextTokenClear(withStr, '`');
                 ret.ReplaceAll(wtStr, whStr);
             }
-        } else
-        {
+        } else {
             ret.ReplaceAll(what, with);
         }
         return ret;
     }
 
     //---------------------------------------------------------------------------------------
-    void SFString::Replace(const SFString& what, const SFString& with)
-    {
+    void SFString::Replace(const SFString& what, const SFString& with) {
         size_t i = find(what);
         if (i != NOPOS)
-        {
             *this = substr(0,i) + with + substr(i + what.length());
-        }
     }
 
     //---------------------------------------------------------------------------------------
-    void SFString::ReplaceI(const SFString& what, const SFString& with)
-    {
+    void SFString::ReplaceI(const SFString& what, const SFString& with) {
         size_t i = findI(what);
         if (i != NOPOS)
             *this = substr(0,i) + with + substr(i + what.length());
     }
 
     //---------------------------------------------------------------------------------------
-    void SFString::ReplaceAll(char what, char with)
-    {
+    void SFString::ReplaceAll(char what, char with) {
         char *s = m_Values;
-        while (*s)
-        {
+        while (*s) {
             if (*s == what)
                 *s = with;
             s++;
@@ -471,13 +448,11 @@ namespace qblocks {
     }
 
     //---------------------------------------------------------------------------------------
-    void SFString::ReplaceAll(const SFString& what, const SFString& with)
-    {
+    void SFString::ReplaceAll(const SFString& what, const SFString& with) {
         if (what.empty())
             return;
 
-        if (with.Contains(what))
-        {
+        if (with.Contains(what)) {
             // may cause endless recursions so do it in two steps instead
             ReplaceAll(what, SFString((char)0x5));
             ReplaceAll(SFString((char)0x5), with);
@@ -485,24 +460,21 @@ namespace qblocks {
         }
 
         size_t i = find(what);
-        while (i != NOPOS)
-        {
+        while (i != NOPOS) {
             Replace(what, with);
             i = find(what);
         }
     }
 
     //---------------------------------------------------------------------------------------
-    void SFString::ReplaceAny(const SFString& list, const SFString& with)
-    {
+    void SFString::ReplaceAny(const SFString& list, const SFString& with) {
         size_t len = list.length();
-        for (uint32_t i = 0 ; i < len ; i++)
-            ReplaceAll(list[(int)i], with);
+        for (size_t i = 0 ; i < len ; i++)
+            ReplaceAll(list[i], with);
     }
 
     //---------------------------------------------------------------------------------------
-    void SFString::ReplaceReverse(const SFString& whatIn, const SFString& withIn)
-    {
+    void SFString::ReplaceReverse(const SFString& whatIn, const SFString& withIn) {
         SFString what = whatIn;
         SFString with = withIn;
 
@@ -514,16 +486,14 @@ namespace qblocks {
     }
 
     //---------------------------------------------------------------------------------------
-    size_t SFString::findExactI(const SFString& search, char sep, const SFString& replaceables) const
-    {
+    size_t SFString::findExactI(const SFString& search, char sep, const SFString& replaceables) const {
         SFString me   = toLower(*this);
         SFString test = toLower(search);
         return me.findExact(test, sep, replaceables);
     }
 
     //---------------------------------------------------------------------------------------
-    size_t SFString::findExact(const SFString& search, char sep, const SFString& repables) const
-    {
+    size_t SFString::findExact(const SFString& search, char sep, const SFString& repables) const {
         ASSERT(sep == '|' || sep == ';' || sep == ',' || sep == ' ');
 
         SFString sepStr(sep);
@@ -542,26 +512,22 @@ namespace qblocks {
     }
 
     //---------------------------------------------------------------------------------------
-    bool SFString::ContainsExact(const SFString& search, char sep, const SFString& replaceables) const
-    {
+    bool SFString::ContainsExact(const SFString& search, char sep, const SFString& replaceables) const {
         return (findExact(search, sep, replaceables) != NOPOS);
     }
 
     //---------------------------------------------------------------------------------------
-    bool SFString::ContainsExactI(const SFString& search, char sep, const SFString& replaceables) const
-    {
+    bool SFString::ContainsExactI(const SFString& search, char sep, const SFString& replaceables) const {
         return (findExactI(search, sep, replaceables) != NOPOS);
     }
 
     //---------------------------------------------------------------------------------------
-    void SFString::Reverse()
-    {
+    void SFString::Reverse() {
         char tmp;
         unsigned int i,j;
         unsigned int n = (unsigned int)m_nValues ;
 
-        for( i=0,j=n-1; i < n/2; i++,j-- )
-        {
+        for( i=0,j=n-1; i < n/2; i++,j-- ) {
             tmp = m_Values[i];
             m_Values[i] = m_Values[j];
             m_Values[j] = tmp;
@@ -569,14 +535,12 @@ namespace qblocks {
     }
 
     //---------------------------------------------------------------------------------------
-    int SFString::Icompare(const char *str) const
-    {
+    int SFString::Icompare(const char *str) const {
         return strcasecmp(m_Values, str);
     }
 
     //----------------------------------------------------------------------------------------
-    SFString nextTokenClearReverse(SFString& str, char token)
-    {
+    SFString nextTokenClearReverse(SFString& str, char token) {
         str.Reverse();
         SFString ret = nextTokenClear(str, token);
         ret.Reverse();
@@ -585,8 +549,7 @@ namespace qblocks {
     }
 
     //---------------------------------------------------------------------------------------
-    SFString snagFieldClear(SFString& in, const SFString& field, const SFString& defVal)
-    {
+    SFString snagFieldClear(SFString& in, const SFString& field, const SFString& defVal) {
 #ifdef _DEBUG
         bool start = in.Contains("<"+field+">");
         bool stop  = in.Contains("</"+field+">");
@@ -613,8 +576,7 @@ namespace qblocks {
     }
 
     //---------------------------------------------------------------------------------------
-    SFString snagField(const SFString& in, const SFString& field, const SFString& defVal)
-    {
+    SFString snagField(const SFString& in, const SFString& field, const SFString& defVal) {
 #ifdef _DEBUG
         bool start = in.Contains("<"+field+">");
         bool stop  = in.Contains("</"+field+">");
@@ -642,8 +604,7 @@ namespace qblocks {
     const char* CHR_VALID_NAME  = "\t\n\r()<>[]{}`\\|; " "'!$^*~@" "?&#+%" ",:/=\"";
 
     //---------------------------------------------------------------------------------------
-    SFString makeValidName(const SFString& inOut)
-    {
+    SFString makeValidName(const SFString& inOut) {
         SFString ret = inOut;
 
         // make it a valid path
@@ -655,152 +616,18 @@ namespace qblocks {
     }
 
     //---------------------------------------------------------------------------------------
-    bool endsWithAny(const SFString& haystack, const SFString& str)
-    {
-        for (uint32_t i = 0 ; i < str.length() ; i++)
-            if (haystack.endsWith(str[(int)i]))
+    bool endsWithAny(const SFString& haystack, const SFString& str) {
+        for (size_t i = 0 ; i < str.length() ; i++)
+            if (haystack.endsWith(str[i]))
                 return true;
         return false;
     }
 
     //---------------------------------------------------------------------------------------
-    bool startsWithAny(const SFString& haystack, const SFString& str)
-    {
-        for (uint32_t i = 0 ; i < str.length() ; i++)
-            if (haystack.startsWith(str[(int)i]))
+    bool startsWithAny(const SFString& haystack, const SFString& str) {
+        for (size_t i = 0 ; i < str.length() ; i++)
+            if (haystack.startsWith(str[i]))
                 return true;
         return false;
     }
-
-#if 0
-    //---------------------------------------------------------------------------------------
-    void SFString::ReplaceExact(const SFString& what, const SFString& with, char sep, const SFString& replaceables)
-    {
-        int64_t i = findExact(what, sep, replaceables);
-        if (i != NOPOS)
-        {
-            *this = substr(0,i) + with + substr(i + what.length());
-        }
-    }
-
-    //---------------------------------------------------------------------------------------
-    void SFString::ReplaceExactI(const SFString& what, const SFString& with, char sep, const SFString& replaceables)
-    {
-        int64_t i = findExactI(what, sep, replaceables);
-        if (i != NOPOS)
-        {
-            *this = substr(0,i) + with + substr(i + what.length());
-        }
-    }
-
-    //---------------------------------------------------------------------------------------
-    void SFString::ReplaceAllExact(const SFString& what, const SFString& with, char sep, const SFString& replaceables)
-    {
-        if (what.empty())
-            return;
-
-        if (with.ContainsExact(what, sep, replaceables))
-        {
-            // may cause endless recursions so do it in two steps instead
-            ReplaceAllExact(what, "]QXXQX[", sep, replaceables);
-            ReplaceAllExact("]QXXQX[", with, sep, replaceables);
-            return;
-        }
-
-        int64_t i = findExact(what, sep, replaceables);
-        while (i != NOPOS)
-        {
-            ReplaceExact(what, with, sep, replaceables);
-            i = findExact(what, sep, replaceables);
-        }
-    }
-
-    //---------------------------------------------------------------------------------------
-    void SFString::ReplaceAllExactI(const SFString& what, const SFString& with, char sep, const SFString& replaceables)
-    {
-        if (what.empty())
-            return;
-
-        if (with.ContainsExactI(what, sep, replaceables))
-        {
-            // may cause endless recursions so do it in two steps instead
-            ReplaceAllExactI(what, "]QXXQX[", sep, replaceables);
-            ReplaceAllExactI("]QXXQX[", with, sep, replaceables);
-            return;
-        }
-
-        int64_t i = findExactI(what, sep, replaceables);
-        while (i != NOPOS)
-        {
-            ReplaceExactI(what, with, sep, replaceables);
-            i = findExactI(what, sep, replaceables);
-        }
-    }
-
-    //---------------------------------------------------------------------------------------
-    void SFString::ReplaceAnyExact(const SFString& list, const SFString& with, char sep, const SFString& replaceables)
-    {
-        size_t len = list.length();
-        for (size_t i = 0 ; i < len ; i++)
-            ReplaceAllExact(list[i], with, sep, replaceables);
-    }
-
-    //---------------------------------------------------------------------------------------
-    void SFString::ReplaceAnyExactI(const SFString& list, const SFString& with, char sep, const SFString& replaceables)
-    {
-        size_t len = list.length();
-        for (size_t i = 0 ; i < len ; i++)
-            ReplaceAllExactI(list[i], with, sep, replaceables);
-    }
-
-    //---------------------------------------------------------------------------------------
-    void SFString::ReplaceAnyI(const SFString& list, const SFString& with)
-    {
-        size_t len = list.length();
-        for (size_t i = 0 ; i < len ; i++)
-            ReplaceAllI(list[i], with);
-    }
-
-    //---------------------------------------------------------------------------------------
-    bool SFString::findExact(const SFString& search, char sep, const SFString& repables) const
-    {
-        ASSERT(sep == '|' || sep == ';' || sep == ',' || sep == ' ');
-
-        SFString sepStr(sep);
-
-        // Surround the stringa with sep to handle boundary cases
-        SFString tS = sepStr + *this  + sepStr;
-        SFString qS = sepStr + search + sepStr;
-
-        // we will replace everything but the separator
-        SFString replaceables = repables;
-        replaceables.Replace(sepStr, EMPTY);
-
-        tS.ReplaceAny(replaceables, sepStr);
-
-        return tS.find(qS);
-    }
-
-    //---------------------------------------------------------------------------------------
-    void SFString::ReplaceAllI(const SFString& what, const SFString& with)
-    {
-        if (what.empty())
-            return;
-
-        if (with.ContainsI(what))
-        {
-            // may cause endless recursions so do it in two steps instead
-            ReplaceAllI(what, "]QXXQX[");
-            ReplaceAllI("]QXXQX[", with);
-            return;
-        }
-
-        int64_t i = findI(what);
-        while (i != NOPOS)
-        {
-            ReplaceI(what, with);
-            i = findI(what);
-        }
-    }
-#endif
 }  // namespace qblocks

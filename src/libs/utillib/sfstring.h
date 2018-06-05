@@ -42,6 +42,7 @@ namespace qblocks {
 
         void     clear    (void);
         size_t   length   (void) const;
+        size_t   size     (void) const { return length(); }
         int      compare  (const char* s) const;
         int      compare  (size_t pos, size_t len, const char* s) const;
         int      compare  (size_t pos, size_t len, const char* s, size_t n) const;
@@ -58,10 +59,23 @@ namespace qblocks {
         size_t   find     (char c, size_t pos=0) const;
         string_q extract  (size_t first, size_t len) const;
 
-        const char&    at       (size_t index) const;
-        char     operator[](int index) const;
+        char            operator[](size_t index) const;
+        char            operator[](int index) const { return at((size_t)index); };
 
-        const char    *c_str     (void) const;
+//#define THE_SWITCH
+#ifdef THE_SWITCH
+        const string_q& operator= (const string_q& str);
+        const string_q& operator+=(const string_q& str);
+        const string_q& operator+=(char ch);
+        const string_q& operator+=(const char *str);
+        string_q      substr    (size_t first, size_t len) const;
+        string_q      substr    (size_t first) const;
+        friend string_q operator+(const string_q& str1, const string_q& str2);
+#endif
+
+        const char&   at        (size_t index) const;
+        const char   *c_str     (void) const;
+        const string  str       (void) const { return string(c_str()); };
 
         friend bool   operator==(const string_q& str1, const string_q& str2);
         friend bool   operator==(const string_q& str1, const char *str2);
@@ -188,6 +202,13 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------
+    inline string_q operator+(const string_q& str1, const string_q& str2) {
+        string s1 = str1.c_str();
+        string s2 = str2.c_str();
+        return (s1 + s2).c_str();
+    }
+
+    //--------------------------------------------------------------------
     inline string_q toLower(const string_q& in) {
         string_q ret = in;
         if (ret.length()) {
@@ -213,6 +234,90 @@ namespace qblocks {
         return ret;
     }
 
+#ifdef THE_SWITCH
+    //---------------------------------------------------------------------------------------
+    inline string_q operator+(const string_q& str1, const string_q& str2) {
+        size_t newLen = str1.length() + str2.length();
+        string_q ret;
+        ret.reserve(newLen);
+        memcpy(ret.m_Values, str1.m_Values, str1.length());
+        memcpy(ret.m_Values+str1.length(), str2.m_Values, str2.length());
+        ret.m_nValues = newLen;
+        ret.m_Values[newLen] = '\0';
+        return ret;
+    }
+
+    //--------------------------------------------------------------------
+    inline string_q operator+(const string_q& str1, const char *str2) {
+        return operator+(str1, string_q(str2));
+    }
+
+    //--------------------------------------------------------------------
+    inline string_q operator+(const char *str1, const string_q& str2) {
+        return operator+(string_q(str1), str2);
+    }
+
+    //--------------------------------------------------------------------
+    inline string_q operator+(const string_q& str,  char ch) {
+        return operator+(str, string_q(ch));
+    }
+
+    //---------------------------------------------------------------------------------------
+    inline const string_q& string_q::operator+=(const string_q& add) {
+        if (add.length() == 0)
+            return *this;
+
+        size_t newLen = length() + add.length() + 1;
+
+        string_q ret;
+        ret.reserve(newLen); // resets the string
+
+        char *s = (char *)ret.c_str();
+        for (size_t ch = 0 ; ch < length() ; ch++)
+            s[ch] = at(ch);
+        for (size_t ch = 0 ; ch < add.length() ; ch++)
+            s[ch+length()] = add.at(ch);
+
+        *this = ret.c_str();
+        return *this;
+    }
+
+    //--------------------------------------------------------------------
+    inline const string_q& string_q::operator+=(const char *str) {
+        return operator+=(string_q(str));
+    }
+
+    //--------------------------------------------------------------------
+    inline const string_q& string_q::operator+=(char ch) {
+        return operator+=(string_q(ch));
+    }
+#endif
+
+    //--------------------------------------------------------------------
+    inline bool operator%(const string_q& str1, const string_q& str2) {
+        return !strcasecmp(str1.c_str(), str2.c_str()); //str1.Icompare(str2) == 0;
+    }
+
+    //--------------------------------------------------------------------
+    inline bool operator%(const string_q& str1, const char *str2) {
+        return !strcasecmp(str1.c_str(), str2); //str1.Icompare(str2) == 0;
+    }
+
+    //--------------------------------------------------------------------
+    inline bool operator%(const char *str1, const string_q& str2) {
+        return !strcasecmp(str1, str2.c_str()); //str2.Icompare(str1) == 0;
+    }
+
+    //--------------------------------------------------------------------
+    inline bool operator%(const string_q& str1, char ch) {
+        return !strcasecmp(str1.c_str(), string_q(ch).c_str()); //str1.Icompare(string_q(ch)) == 0;
+    }
+
+    //--------------------------------------------------------------------
+    inline bool operator%(char ch, const string_q& str2) {
+        return !strcasecmp(string_q(ch).c_str(), str2.c_str()); //str2.Icompare(string_q(ch)) == 0;
+    }
+
 #else
 #define string_q std::string
 #endif
@@ -230,16 +335,16 @@ namespace qblocks {
 
         ~SFString (void);
 
+#ifndef THE_SWITCH
         const SFString& operator=     (const SFString& str);
-
         const SFString& operator+=    (const SFString& str);
         const SFString& operator+=    (char ch);
         const SFString& operator+=    (const char *str);
-
-        operator  const char *        (void) const;
-
         SFString        substr        (size_t first, size_t len) const;
         SFString        substr        (size_t first) const;
+#endif
+
+        operator  const char *        (void) const;
 
         void            Reverse       (void);
         int             Icompare      (const char *str) const;
@@ -270,9 +375,10 @@ namespace qblocks {
 
         bool     startsWith      (const SFString& str) const;
         bool     endsWith        (const SFString& str) const;
-
         friend SFString operator+(const SFString& str1, const SFString& str2);
+#ifndef THE_SWITCH
         friend SFString operator+(const SFString& str1, const char *str2);
+#endif
     };
 
     //--------------------------------------------------------------------
@@ -287,9 +393,10 @@ namespace qblocks {
 
     //--------------------------------------------------------------------
     inline SFString::operator const char *() const {
-        return m_Values;
+        return c_str();
     }
 
+#ifndef THE_SWITCH
     //---------------------------------------------------------------------------------------
     inline SFString operator+(const SFString& str1, const SFString& str2) {
         size_t newLen = str1.length() + str2.length();
@@ -333,6 +440,7 @@ namespace qblocks {
     inline SFString operator+(const SFString& str,  char ch) {
         return operator+(str, SFString(ch));
     }
+#endif
 
     //--------------------------------------------------------------------
     inline bool SFString::endsWith(const SFString& str) const {
@@ -346,31 +454,6 @@ namespace qblocks {
         if (empty())
             return false;
         return (substr(0,str.length()) == str);
-    }
-
-    //--------------------------------------------------------------------
-    inline bool operator%(const SFString& str1, const SFString& str2) {
-        return str1.Icompare(str2) == 0;
-    }
-
-    //--------------------------------------------------------------------
-    inline bool operator%(const SFString& str1, const char *str2) {
-        return str1.Icompare(str2) == 0;
-    }
-
-    //--------------------------------------------------------------------
-    inline bool operator%(const char *str1, const SFString& str2) {
-        return str2.Icompare(str1) == 0;
-    }
-
-    //--------------------------------------------------------------------
-    inline bool operator%(const SFString& str1, char ch) {
-        return str1.Icompare(SFString(ch)) == 0;
-    }
-
-    //--------------------------------------------------------------------
-    inline bool operator%(char ch, const SFString& str2) {
-        return str2.Icompare(SFString(ch)) == 0;
     }
 
     //--------------------------------------------------------------------
@@ -515,7 +598,7 @@ namespace qblocks {
         SFString ret = str;
         while (endsWithAny(ret, any) || startsWithAny(ret, any)) {
             for (size_t i = 0 ; i < any.length() ; i++)
-                ret = Strip(ret, any[(int)i]);
+                ret = Strip(ret, any[i]);
         }
         return ret;
     }
