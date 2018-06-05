@@ -38,4 +38,4 @@ function(run_test testName)
 endfunction(run_test)
 
 # Enter one line for each individual test
-run_test("curlTest_00")
+#run_test("curlTest_00")
