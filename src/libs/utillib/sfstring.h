@@ -497,8 +497,8 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------
-    extern SFString snagFieldClear     (      SFString& in, const SFString& tagName, const SFString& defVal="");
-    extern SFString snagField          (const SFString& in, const SFString& tagName, const SFString& defVal="");
+    extern SFString snagFieldClear(      SFString& in, const SFString& tagName, const SFString& defVal="");
+    extern SFString snagField     (const SFString& in, const SFString& tagName, const SFString& defVal="");
 
     //--------------------------------------------------------------------
     extern string_q toLower (const string_q& in);
@@ -510,41 +510,16 @@ namespace qblocks {
     extern SFString toUpper (const SFString& in);
     extern SFString toProper(const SFString& in);
 
-    //----------------------------------------------------------------------------
-    inline SFString shorten(const SFString& in, size_t x) {
-        return padRight(in.length()>x-3 ? in.substr(0,x-3) + "..." : in, (uint32_t)x);
-    }
+    //--------------------------------------------------------------------
+    extern string_q StripTrailing(const string_q& str, char c = ' ');
+    extern string_q StripLeading (const string_q& str, char c = ' ');
+    extern string_q Strip        (const string_q& str, char c = ' ');
+    extern string_q StripAny     (const string_q& str, const string_q& any = " ");
 
     //--------------------------------------------------------------------
-    inline SFString StripTrailing(const SFString& str, char c) {
-        SFString ret = str;
-        while (ret.endsWith(c))
-            ret = ret.substr(0,ret.length()-1);
+    extern SFString StripTrailing(const SFString& str, char c = ' ');
+    extern SFString StripLeading (const SFString& str, char c = ' ');
+    extern SFString Strip        (const SFString& str, char c = ' ');
+    extern SFString StripAny     (const SFString& str, const SFString& any = " ");
 
-        return ret;
-    }
-
-    //--------------------------------------------------------------------
-    inline SFString StripLeading(const SFString& str, char c) {
-        SFString ret = str;
-        while (ret.startsWith(c))
-            ret = ret.substr(1);
-
-        return ret;
-    }
-
-    //--------------------------------------------------------------------
-    inline SFString Strip(const SFString& str, char c) {
-        return StripTrailing(StripLeading(str, c), c);
-    }
-
-    //--------------------------------------------------------------------
-    inline SFString StripAny(const SFString& str, const SFString& any) {
-        SFString ret = str;
-        while (endsWithAny(ret, any) || startsWithAny(ret, any)) {
-            for (size_t i = 0 ; i < any.length() ; i++)
-                ret = Strip(ret, any[i]);
-        }
-        return ret;
-    }
 }  // namespace qblocks
