@@ -108,7 +108,7 @@ SFString acquireABI(CFunctionArray& functions, const SFAddress& addr, const COpt
                             + "/api.etherscan.io/api?module=contract&action=getabi&address="
                             + addr;
         results = urlToString(url).Substitute("\\", "");
-        if (!results.Contains("NOTOK")) {
+        if (!results.Contains("NOTOK") && !results.Contains("Contract source code not verified")) {
         	// strip RPC wrapper
         	results.Replace("{\"status\":\"1\",\"message\":\"OK\",\"result\":\"","");
         	results.ReplaceReverse("]\"}","");
