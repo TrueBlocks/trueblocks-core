@@ -251,7 +251,7 @@ namespace qblocks {
 
         CFilename fullPath(path);
         SFString targetFolder = fullPath.getFullPath();
-        size_t find = targetFolder.ReverseFind('/');
+        size_t find = targetFolder.rfind('/');
         targetFolder = targetFolder.substr(0,find) + "/";
         SFString folder = targetFolder;
         SFString curFolder = "/";

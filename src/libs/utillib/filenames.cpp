@@ -69,7 +69,7 @@ namespace qblocks {
             fileName = EMPTY;
 
         } else {
-            path = fn.substr(0,fn.ReverseFind('/')+1);
+            path = fn.substr(0,fn.rfind('/')+1);
             fileName = fn.Substitute(path, EMPTY);
         }
     }

@@ -356,12 +356,25 @@ bool CSlurperApp::Filter(COptions& options, SFString& message) {
             trans->m_showing = false;
         }
 
-        if (!options.funcFilter.empty()) {
-            bool show = false;
-            for (uint64_t jj = 0 ; jj < nFuncFilts ; jj++)
-                show = (show || trans->isFunction(funcFilts[jj]));
-            trans->m_showing = show;
-        }
+// TAKEN OUT OF CTransaction class during cleanup
+////---------------------------------------------------------------------------
+//bool CTransaction::isFunction(const SFString& func) const
+//{
+//    if (func=="none")
+//    {
+//        SFString ret = inputToFunction();
+//         if (ret.Contains Any("acghrstuv"))
+//            return false;
+//        return (ret==" ");
+//    }
+//    return (funcPtr ? funcPtr->name == func : false);
+//}
+//        if (!options.funcFilter.empty()) {
+//            bool show = false;
+//            for (uint64_t jj = 0 ; jj < nFuncFilts ; jj++)
+//                show = (show || trans->isFunction(funcFilts[jj]));
+//            trans->m_showing = show;
+//        }
 
         // We only apply this if another filter has not already hidden the transaction
         if (trans->m_showing && options.errFilt) {
@@ -539,7 +552,7 @@ void findBlockRange(const SFString& json, uint32_t& minBlock, uint32_t& maxBlock
         minBlock = toLong32u(str);
     }
 
-    SFString end = json.substr(json.ReverseFind('{'));  // pull off the last transaction
+    SFString end = json.substr(json.rfind('{'));  // pull off the last transaction
     size_t last = end.find(search);
     if (last != NOPOS) {
         SFString str = end.substr(last+len);
