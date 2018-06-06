@@ -65,13 +65,13 @@ namespace qblocks {
 //#define THE_SWITCH
 #ifdef THE_SWITCH
         const string_q& operator= (const string_q& str);
-#endif
         const string_q& operator+=(const string_q& str);
         const string_q& operator+=(char ch);
         const string_q& operator+=(const char *str);
         string_q      substr    (size_t first, size_t len) const;
         string_q      substr    (size_t first) const;
         friend string_q operator+(const string_q& str1, const string_q& str2);
+#endif
 
         const char&   at        (size_t index) const;
         const char   *c_str     (void) const;
@@ -205,6 +205,11 @@ namespace qblocks {
 
     //--------------------------------------------------------------------
     inline string_q operator+(const string_q& str1, const string_q& str2) {
+#if 1
+        string s1 = str1.c_str();
+        string s2 = str2.c_str();
+        return (s1 + s2).c_str();
+#else
         size_t newLen = str1.length() + str2.length();
         string_q ret;
         ret.reserve(newLen);
@@ -213,6 +218,7 @@ namespace qblocks {
         ret.m_nValues = newLen;
         ret.m_Values[newLen] = '\0';
         return ret;
+#endif
     }
 
     //--------------------------------------------------------------------
@@ -268,7 +274,6 @@ namespace qblocks {
     inline string_q operator+(const string_q& str,  char ch) {
         return operator+(str, string_q(ch));
     }
-#endif
 
     //---------------------------------------------------------------------------------------
     inline const string_q& string_q::operator+=(const string_q& add) {
@@ -299,6 +304,7 @@ namespace qblocks {
     inline const string_q& string_q::operator+=(char ch) {
         return operator+=(string_q(ch));
     }
+#endif
 
     //--------------------------------------------------------------------
     inline bool operator%(const string_q& str1, const string_q& str2) {
@@ -344,9 +350,12 @@ namespace qblocks {
 
 #ifndef THE_SWITCH
         const SFString& operator=     (const SFString& str);
-#endif
+        const SFString& operator+=    (const SFString& str);
+        const SFString& operator+=    (char ch);
+        const SFString& operator+=    (const char *str);
         SFString        substr        (size_t first, size_t len) const;
         SFString        substr        (size_t first) const;
+#endif
 
         operator  const char *        (void) const;
 
@@ -408,6 +417,23 @@ namespace qblocks {
         ret.m_nValues = newLen;
         ret.m_Values[newLen] = '\0';
         return ret;
+    }
+
+    //---------------------------------------------------------------------------------------
+    inline const SFString& SFString::operator+=(const SFString& add) {
+        if (add.length())
+            *this = (*this + add);
+        return *this;
+    }
+
+    //--------------------------------------------------------------------
+    inline const SFString& SFString::operator+=(const char *str) {
+        return operator+=(SFString(str));
+    }
+
+    //--------------------------------------------------------------------
+    inline const SFString& SFString::operator+=(char ch) {
+        return operator+=(SFString(ch));
     }
 
     //--------------------------------------------------------------------
@@ -552,59 +578,6 @@ namespace qblocks {
     //----------------------------------------------------------------------------
     inline SFString shorten(const SFString& in, size_t x) {
         return padRight(in.length()>x-3 ? in.substr(0,x-3) + "..." : in, (uint32_t)x);
-    }
-
-    //--------------------------------------------------------------------
-    inline bool endsWith(const string_q& haystack, const string_q& str) {
-        if (haystack.empty())
-            return false;
-        return (haystack.substr(haystack.length()-str.length(),str.length()) == str);
-    }
-
-    //--------------------------------------------------------------------
-    inline bool startsWith(const string_q& haystack, const string_q& str) {
-        if (haystack.empty())
-            return false;
-        return (haystack.substr(0, str.length()) == str);
-    }
-
-    //--------------------------------------------------------------------
-    inline string_q StripTrailing1(const string_q& str, char c) {
-        string_q ret = str;
-        while (endsWith(ret, c))
-            ret = ret.substr(0,ret.length()-1);
-
-        return ret;
-    }
-
-    //--------------------------------------------------------------------
-    inline string_q StripLeading1(const string_q& str, char c) {
-        string_q ret = str;
-        while (startsWith(ret, c))
-            ret = ret.substr(1);
-
-        return ret;
-    }
-
-    //--------------------------------------------------------------------
-    inline string_q Strip1(const string_q& str, char c) {
-        return StripTrailing1(StripLeading1(str, c), c);
-    }
-
-    //---------------------------------------------------------------------------------------
-    bool endsWithAny(const string_q& haystack, const string_q& str) {
-        for (size_t i = 0 ; i < str.length() ; i++)
-            if (endsWith(haystack, str[i]))
-                return true;
-        return false;
-    }
-
-    //---------------------------------------------------------------------------------------
-    bool startsWithAny(const string_q& haystack, const string_q& str) {
-        for (size_t i = 0 ; i < str.length() ; i++)
-            if (startsWith(haystack, str[i]))
-                return true;
-        return false;
     }
 
     //--------------------------------------------------------------------
