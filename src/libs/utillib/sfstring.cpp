@@ -620,4 +620,83 @@ namespace qblocks {
                 return true;
         return false;
     }
+
+    //--------------------------------------------------------------------
+    string_q toLower(const string_q& in) {
+        string ret;
+        string str = in.c_str();
+        for (auto elem : str)
+            ret += (char)tolower(elem);
+        return ret.c_str();
+    }
+
+    //--------------------------------------------------------------------
+    string_q toUpper(const string_q& in) {
+        string ret;
+        string str = in.c_str();
+        for (auto elem : str)
+            ret += (char)toupper(elem);
+        return ret.c_str();
+    }
+
+    //--------------------------------------------------------------------
+    string_q toProper(const string_q& in) {
+        string ret;
+        string str = in.c_str();
+        char prev = 'x'; // not a space
+        for (auto elem : str) {
+            if (isspace(prev) || prev == '_')
+                ret += (char)toupper(elem);
+            else
+                ret += (char)tolower(elem);
+            prev = elem;
+        }
+        return ret.c_str();
+    }
+
+    //--------------------------------------------------------------------
+    SFString toLower(const SFString& in) {
+        SFString ret = in;
+        if (ret.length()) {
+            char *s = (char*)ret.c_str();
+            while (*s) {
+                *s = (char)tolower(*s);
+                s++;
+            }
+        }
+        return ret;
+    }
+
+    //--------------------------------------------------------------------
+    SFString toUpper(const SFString& in) {
+        SFString ret = in;
+        if (ret.length()) {
+            char *s = (char*)ret.c_str();
+            while (*s) {
+                *s = (char)toupper(*s);
+                s++;
+            }
+        }
+        return ret;
+    }
+
+    //--------------------------------------------------------------------
+    SFString toProper(const SFString& in) {
+        SFString ret = in;
+        if (ret.length()) {
+            char last='\0';
+            char *s = (char*)ret.c_str();
+            while (*s) {
+                if (last == '_' || isWhiteSpace(last))
+                    *s = (char)toupper(*s);
+
+                else
+                    *s = (char)tolower(*s);
+                last = *s;
+                s++;
+            }
+        }
+//        ret.ReplaceAll("_", " ");
+        return ret;
+    }
 }  // namespace qblocks

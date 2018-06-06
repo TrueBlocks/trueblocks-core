@@ -23,8 +23,9 @@ stringTest 2
 	THIS ISTHE_THING	THAT MATTERS
 	AND IS_UPPERCASE LOWER CASE
 
-	This Isthe Thing	That Matters
-	And Is Uppercase Lower Case
+	This Isthe_Thing	That Matters
+	And Is_Uppercase Lower Case
+
 
 	This isthe_thing	that matters
 	and is_upperCase lower case
@@ -35,5 +36,6 @@ stringTest 2
 	THIS ISTHE_THING	THAT MATTERS
 	AND IS_UPPERCASE LOWER CASE
 
-	This Isthe Thing	That Matters
-	And Is Uppercase Lower Case
+	This Isthe_Thing	That Matters
+	And Is_Uppercase Lower Case
+
