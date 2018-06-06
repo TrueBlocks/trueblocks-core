@@ -65,17 +65,19 @@ namespace qblocks {
 //#define THE_SWITCH
 #ifdef THE_SWITCH
         const string_q& operator= (const string_q& str);
+#endif
         const string_q& operator+=(const string_q& str);
         const string_q& operator+=(char ch);
         const string_q& operator+=(const char *str);
         string_q      substr    (size_t first, size_t len) const;
         string_q      substr    (size_t first) const;
         friend string_q operator+(const string_q& str1, const string_q& str2);
-#endif
 
         const char&   at        (size_t index) const;
         const char   *c_str     (void) const;
         const string  str       (void) const { return string(c_str()); };
+
+              size_t  rfind     (char ch) const;
 
         friend bool   operator==(const string_q& str1, const string_q& str2);
         friend bool   operator==(const string_q& str1, const char *str2);
@@ -203,9 +205,14 @@ namespace qblocks {
 
     //--------------------------------------------------------------------
     inline string_q operator+(const string_q& str1, const string_q& str2) {
-        string s1 = str1.c_str();
-        string s2 = str2.c_str();
-        return (s1 + s2).c_str();
+        size_t newLen = str1.length() + str2.length();
+        string_q ret;
+        ret.reserve(newLen);
+        memcpy(ret.m_Values, str1.m_Values, str1.length());
+        memcpy(ret.m_Values + str1.length(), str2.m_Values, str2.length());
+        ret.m_nValues = newLen;
+        ret.m_Values[newLen] = '\0';
+        return ret;
     }
 
     //--------------------------------------------------------------------
@@ -261,6 +268,7 @@ namespace qblocks {
     inline string_q operator+(const string_q& str,  char ch) {
         return operator+(str, string_q(ch));
     }
+#endif
 
     //---------------------------------------------------------------------------------------
     inline const string_q& string_q::operator+=(const string_q& add) {
@@ -291,7 +299,6 @@ namespace qblocks {
     inline const string_q& string_q::operator+=(char ch) {
         return operator+=(string_q(ch));
     }
-#endif
 
     //--------------------------------------------------------------------
     inline bool operator%(const string_q& str1, const string_q& str2) {
@@ -337,12 +344,9 @@ namespace qblocks {
 
 #ifndef THE_SWITCH
         const SFString& operator=     (const SFString& str);
-        const SFString& operator+=    (const SFString& str);
-        const SFString& operator+=    (char ch);
-        const SFString& operator+=    (const char *str);
+#endif
         SFString        substr        (size_t first, size_t len) const;
         SFString        substr        (size_t first) const;
-#endif
 
         operator  const char *        (void) const;
 
@@ -350,7 +354,6 @@ namespace qblocks {
         int             Icompare      (const char *str) const;
 
         size_t   findI           (const char *search) const;
-        size_t   ReverseFind     (char ch) const;
         size_t   findExact       (const SFString& search, char sep, const SFString& replaceables=CHR_VALID_NAME) const;
         size_t   findExactI      (const SFString& search, char sep, const SFString& replaceables=CHR_VALID_NAME) const;
 
@@ -359,8 +362,6 @@ namespace qblocks {
         bool     ContainsI       (const SFString& search) const;
         bool     ContainsAll     (const SFString& search) const;
         bool     ContainsAny     (const SFString& search) const;
-        bool     ContainsExact   (const SFString& search, char sep, const SFString& replaceables=CHR_VALID_NAME) const;
-        bool     ContainsExactI  (const SFString& search, char sep, const SFString& replaceables=CHR_VALID_NAME) const;
 
         SFString Substitute      (const SFString& what, const SFString& with) const;
 
@@ -407,23 +408,6 @@ namespace qblocks {
         ret.m_nValues = newLen;
         ret.m_Values[newLen] = '\0';
         return ret;
-    }
-
-    //---------------------------------------------------------------------------------------
-    inline const SFString& SFString::operator+=(const SFString& add) {
-        if (add.length())
-            *this = (*this + add);
-        return *this;
-    }
-
-    //--------------------------------------------------------------------
-    inline const SFString& SFString::operator+=(const char *str) {
-        return operator+=(SFString(str));
-    }
-
-    //--------------------------------------------------------------------
-    inline const SFString& SFString::operator+=(char ch) {
-        return operator+=(SFString(ch));
     }
 
     //--------------------------------------------------------------------
