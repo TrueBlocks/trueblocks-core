@@ -555,6 +555,59 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------
+    inline bool endsWith(const string_q& haystack, const string_q& str) {
+        if (haystack.empty())
+            return false;
+        return (haystack.substr(haystack.length()-str.length(),str.length()) == str);
+    }
+
+    //--------------------------------------------------------------------
+    inline bool startsWith(const string_q& haystack, const string_q& str) {
+        if (haystack.empty())
+            return false;
+        return (haystack.substr(0, str.length()) == str);
+    }
+
+    //--------------------------------------------------------------------
+    inline string_q StripTrailing1(const string_q& str, char c) {
+        string_q ret = str;
+        while (endsWith(ret, c))
+            ret = ret.substr(0,ret.length()-1);
+
+        return ret;
+    }
+
+    //--------------------------------------------------------------------
+    inline string_q StripLeading1(const string_q& str, char c) {
+        string_q ret = str;
+        while (startsWith(ret, c))
+            ret = ret.substr(1);
+
+        return ret;
+    }
+
+    //--------------------------------------------------------------------
+    inline string_q Strip1(const string_q& str, char c) {
+        return StripTrailing1(StripLeading1(str, c), c);
+    }
+
+    //---------------------------------------------------------------------------------------
+    bool endsWithAny(const string_q& haystack, const string_q& str) {
+        for (size_t i = 0 ; i < str.length() ; i++)
+            if (endsWith(haystack, str[i]))
+                return true;
+        return false;
+    }
+
+    //---------------------------------------------------------------------------------------
+    bool startsWithAny(const string_q& haystack, const string_q& str) {
+        for (size_t i = 0 ; i < str.length() ; i++)
+            if (startsWith(haystack, str[i]))
+                return true;
+        return false;
+    }
+
+    //--------------------------------------------------------------------
     inline SFString StripTrailing(const SFString& str, char c) {
         SFString ret = str;
         while (ret.endsWith(c))
