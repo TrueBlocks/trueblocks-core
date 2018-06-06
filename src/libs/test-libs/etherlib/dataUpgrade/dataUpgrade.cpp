@@ -131,15 +131,15 @@ bool testReadWrite(COptions& options) {
 
             // Clean up all but the original old format and make sure we did.
             ASSERT( fileExists("./newFmt.cache"));
-            removeFile("./newFmt.cache");
+            remove("./newFmt.cache");
             ASSERT(!fileExists("./newFmt.cache"));
 
             ASSERT( fileExists("./newFmt.json"));
-            removeFile("./newFmt.json");
+            remove("./newFmt.json");
             ASSERT(!fileExists("./newFmt.json"));
 
             ASSERT( fileExists("./newFmt2.json"));
-            removeFile("./newFmt2.json");
+            remove("./newFmt2.json");
             ASSERT(!fileExists("./newFmt2.json"));
 
             break;

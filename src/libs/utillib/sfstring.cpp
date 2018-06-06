@@ -370,7 +370,7 @@ namespace qblocks {
     }
 
     //---------------------------------------------------------------------------------------
-    size_t SFString::ReverseFind(char ch) const {
+    size_t string_q::rfind(char ch) const {
         char *f = strrchr(m_Values, ch);
         return (f ? size_t(f-m_Values) : NOPOS);
     }
@@ -512,16 +512,6 @@ namespace qblocks {
     }
 
     //---------------------------------------------------------------------------------------
-    bool SFString::ContainsExact(const SFString& search, char sep, const SFString& replaceables) const {
-        return (findExact(search, sep, replaceables) != NOPOS);
-    }
-
-    //---------------------------------------------------------------------------------------
-    bool SFString::ContainsExactI(const SFString& search, char sep, const SFString& replaceables) const {
-        return (findExactI(search, sep, replaceables) != NOPOS);
-    }
-
-    //---------------------------------------------------------------------------------------
     void SFString::Reverse() {
         char tmp;
         unsigned int i,j;
@@ -629,5 +619,141 @@ namespace qblocks {
             if (haystack.startsWith(str[i]))
                 return true;
         return false;
+    }
+
+    //--------------------------------------------------------------------
+    string_q toLower(const string_q& in) {
+        string ret;
+        string str = in.c_str();
+        for (auto elem : str)
+            ret += (char)tolower(elem);
+        return ret.c_str();
+    }
+
+    //--------------------------------------------------------------------
+    string_q toUpper(const string_q& in) {
+        string ret;
+        string str = in.c_str();
+        for (auto elem : str)
+            ret += (char)toupper(elem);
+        return ret.c_str();
+    }
+
+    //--------------------------------------------------------------------
+    string_q toProper(const string_q& in) {
+        string ret;
+        string str = in.c_str();
+        char prev = 'x'; // not a space
+        for (auto elem : str) {
+            if (isspace(prev) || prev == '_')
+                ret += (char)toupper(elem);
+            else
+                ret += (char)tolower(elem);
+            prev = elem;
+        }
+        return ret.c_str();
+    }
+
+    //--------------------------------------------------------------------
+    SFString toLower(const SFString& in) {
+        string_q str(in.c_str());
+        return toLower(str).c_str();
+    }
+
+    //--------------------------------------------------------------------
+    SFString toUpper(const SFString& in) {
+        SFString ret = in;
+        if (ret.length()) {
+            char *s = (char*)ret.c_str();
+            while (*s) {
+                *s = (char)toupper(*s);
+                s++;
+            }
+        }
+        return ret;
+    }
+
+    //--------------------------------------------------------------------
+    SFString toProper(const SFString& in) {
+        SFString ret = in;
+        if (ret.length()) {
+            char last='\0';
+            char *s = (char*)ret.c_str();
+            while (*s) {
+                if (last == '_' || isWhiteSpace(last))
+                    *s = (char)toupper(*s);
+
+                else
+                    *s = (char)tolower(*s);
+                last = *s;
+                s++;
+            }
+        }
+        return ret;
+    }
+
+    //--------------------------------------------------------------------
+    string_q StripTrailing(const string_q& str, char c) {
+        SFString ret = str.c_str();
+        while (ret.endsWith(c))
+            ret = ret.substr(0,ret.length()-1);
+        return ret.c_str();
+    }
+
+    //--------------------------------------------------------------------
+    string_q StripLeading(const string_q& str, char c) {
+        SFString ret = str.c_str();
+        while (ret.startsWith(c))
+            ret = ret.substr(1);
+        return ret.c_str();
+    }
+
+    //--------------------------------------------------------------------
+    string_q Strip(const string_q& str, char c) {
+        return StripTrailing(StripLeading(str, c), c);
+    }
+
+    //--------------------------------------------------------------------
+    string_q StripAny(const string_q& str, const string_q& any) {
+        SFString ret = str.c_str();
+        SFString aa = any.c_str();
+        while (endsWithAny(ret, aa) || startsWithAny(ret, aa)) {
+            for (size_t i = 0 ; i < aa.length() ; i++)
+                ret = Strip(ret, aa[i]);
+        }
+        return ret.c_str();
+    }
+
+    //--------------------------------------------------------------------
+    SFString StripTrailing(const SFString& str, char c) {
+        SFString ret = str;
+        while (ret.endsWith(c))
+            ret = ret.substr(0,ret.length()-1);
+
+        return ret;
+    }
+
+    //--------------------------------------------------------------------
+    SFString StripLeading(const SFString& str, char c) {
+        SFString ret = str;
+        while (ret.startsWith(c))
+            ret = ret.substr(1);
+
+        return ret;
+    }
+
+    //--------------------------------------------------------------------
+    SFString Strip(const SFString& str, char c) {
+        return StripTrailing(StripLeading(str, c), c);
+    }
+
+    //--------------------------------------------------------------------
+    SFString StripAny(const SFString& str, const SFString& any) {
+        SFString ret = str;
+        while (endsWithAny(ret, any) || startsWithAny(ret, any)) {
+            for (size_t i = 0 ; i < any.length() ; i++)
+                ret = Strip(ret, any[i]);
+        }
+        return ret;
     }
 }  // namespace qblocks

@@ -67,7 +67,7 @@ int main(int argc, const char *argv[])
         CPerson::registerClass();
         cout << leader.Format() << "\n";
 
-        removeFile("./file.bin");
+        remove("./file.bin");
     }
     return 0;
 }
