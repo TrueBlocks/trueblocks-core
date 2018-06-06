@@ -68,7 +68,6 @@ public:
     CTraceArray traces;
 
     SFString inputToFunction(void) const;
-    bool isFunction(const SFString& func) const;
 #if 0
     SFString creates;
     uint32_t confirmations;
