@@ -15,7 +15,7 @@
 #include "utillib.h"
 
 // Changing this between string_q and SFString helps migrating away from quickBlocks code
-#define TEST_STR string_q
+#define TEST_STR SFString
 
 //------------------------------------------------------------------------
 class CThisTest : public testing::Test {
@@ -114,6 +114,36 @@ void testCStr(void) {
     char *rest1 = str1;
     while ((token1 = strtok_r(rest1, "|", &rest1)))
         cout << "\t" << padRight(token1,8,' ') << "\t" << (rest1 ? rest1 : "") << "\n";
+
+    SFString text = "\tThis isthe_thing\tthat matters\n\tand is_upperCase lower case\n";
+    cout << "\n";
+    cout << text << "\n";
+    cout << toLower(text) << "\n";
+    cout << toUpper(text) << "\n";
+    cout << toProper(text) << "\n";
+
+    SFString strip = "\t AxBBBxBx\tA ";
+    cout << "\t|" << strip << "|\n";
+    cout << "\t|" << Strip(strip) << "|\n";
+    cout << "\t|" << StripLeading(strip, '\t') << "|\n";
+    cout << "\t|" << StripTrailing(strip) << "|\n";
+    cout << "\t|" << StripAny(strip, " \t") << "|\n";
+    cout << "\t|" << StripAny(strip, " \tZAx") << "|\n";
+
+    string_q text1 = "\tThis isthe_thing\tthat matters\n\tand is_upperCase lower case\n";
+    cout << "\n";
+    cout << text1 << "\n";
+    cout << toLower(text1) << "\n";
+    cout << toUpper(text1) << "\n";
+    cout << toProper(text1) << "\n";
+
+    string_q strip1 = "\t AxBBBxBx\tA ";
+    cout << "\t|" << strip1 << "|\n";
+    cout << "\t|" << Strip(strip1) << "|\n";
+    cout << "\t|" << StripLeading(strip1, '\t') << "|\n";
+    cout << "\t|" << StripTrailing(strip1) << "|\n";
+    cout << "\t|" << StripAny(strip1, " \t") << "|\n";
+    cout << "\t|" << StripAny(strip1, " \tZAx") << "|\n";
 }
 
 #include "options.h"

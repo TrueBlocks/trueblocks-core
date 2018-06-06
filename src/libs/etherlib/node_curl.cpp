@@ -153,7 +153,7 @@ namespace qblocks {
                     cerr << cYellow;
                     cerr << "\n";
                     cerr << "\tWarning: " << cOff << "A trace request was made to the fallback\n";
-                    cerr << "\tnode. " << toProper(fallBack) << " does not support tracing. It ";
+                    cerr << "\tnode. " << fallBack << " does not support tracing. It ";
                     cerr << "is impossible\n\tfor QuickBlocks to proceed. Quitting...\n";
                     cerr << "\n";
                     exit(0);

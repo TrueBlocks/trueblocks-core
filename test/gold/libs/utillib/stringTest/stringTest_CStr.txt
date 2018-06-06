@@ -1,8 +1,53 @@
 stringTest argc: 2 [1:2] 
 stringTest 2 
-Please
-split
-this
-sentence
-into
-tokens
+	Please  	split this sentence into tokens
+	split   	this sentence into tokens
+	this    	sentence into tokens
+	sentence	into tokens
+	into    	tokens
+	tokens  	
+
+	Please  	split|that|sentence|into|tokens
+	split   	that|sentence|into|tokens
+	that    	sentence|into|tokens
+	sentence	into|tokens
+	into    	tokens
+	tokens  	
+
+	This isthe_thing	that matters
+	and is_upperCase lower case
+
+	this isthe_thing	that matters
+	and is_uppercase lower case
+
+	THIS ISTHE_THING	THAT MATTERS
+	AND IS_UPPERCASE LOWER CASE
+
+	This Isthe_Thing	That Matters
+	And Is_Uppercase Lower Case
+
+	|	 AxBBBxBx	A |
+	|	 AxBBBxBx	A|
+	| AxBBBxBx	A |
+	|	 AxBBBxBx	A|
+	|AxBBBxBx	A|
+	|BBBxB|
+
+	This isthe_thing	that matters
+	and is_upperCase lower case
+
+	this isthe_thing	that matters
+	and is_uppercase lower case
+
+	THIS ISTHE_THING	THAT MATTERS
+	AND IS_UPPERCASE LOWER CASE
+
+	This Isthe_Thing	That Matters
+	And Is_Uppercase Lower Case
+
+	|	 AxBBBxBx	A |
+	|	 AxBBBxBx	A|
+	| AxBBBxBx	A |
+	|	 AxBBBxBx	A|
+	|AxBBBxBx	A|
+	|BBBxB|

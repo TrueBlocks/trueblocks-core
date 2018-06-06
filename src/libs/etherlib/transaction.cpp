@@ -524,20 +524,6 @@ int sortTransactionsForWrite(const void *rr1, const void *rr2)
     return tr1->hash.compare(tr2->hash);
 }
 
-//---------------------------------------------------------------------------
-bool CTransaction::isFunction(const SFString& func) const
-{
-    if (func=="none")
-    {
-        SFString ret = inputToFunction();
-        if (ret.ContainsAny("acghrstuv"))
-            return false;
-        return (ret==" ");
-    }
-
-    return (funcPtr ? funcPtr->name == func : false);
-}
-
 //--------------------------------------------------------------------
 inline SFString asStringULL(uint64_t i) {
     ostringstream os;

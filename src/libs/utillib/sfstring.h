@@ -77,6 +77,8 @@ namespace qblocks {
         const char   *c_str     (void) const;
         const string  str       (void) const { return string(c_str()); };
 
+              size_t  rfind     (char ch) const;
+
         friend bool   operator==(const string_q& str1, const string_q& str2);
         friend bool   operator==(const string_q& str1, const char *str2);
         friend bool   operator==(const char *str1, const string_q& str2);
@@ -203,35 +205,20 @@ namespace qblocks {
 
     //--------------------------------------------------------------------
     inline string_q operator+(const string_q& str1, const string_q& str2) {
+#if 1
         string s1 = str1.c_str();
         string s2 = str2.c_str();
         return (s1 + s2).c_str();
-    }
-
-    //--------------------------------------------------------------------
-    inline string_q toLower(const string_q& in) {
-        string_q ret = in;
-        if (ret.length()) {
-            char *s = (char*)ret.c_str();
-            while (*s) {
-                *s = (char)tolower(*s);
-                s++;
-            }
-        }
+#else
+        size_t newLen = str1.length() + str2.length();
+        string_q ret;
+        ret.reserve(newLen);
+        memcpy(ret.m_Values, str1.m_Values, str1.length());
+        memcpy(ret.m_Values + str1.length(), str2.m_Values, str2.length());
+        ret.m_nValues = newLen;
+        ret.m_Values[newLen] = '\0';
         return ret;
-    }
-
-    //--------------------------------------------------------------------
-    inline string_q toUpper(const string_q& in) {
-        string_q ret = in;
-        if (ret.length()) {
-            char *s = (char*)ret.c_str();
-            while (*s) {
-                *s = (char)toupper(*s);
-                s++;
-            }
-        }
-        return ret;
+#endif
     }
 
 #ifdef THE_SWITCH
@@ -350,7 +337,6 @@ namespace qblocks {
         int             Icompare      (const char *str) const;
 
         size_t   findI           (const char *search) const;
-        size_t   ReverseFind     (char ch) const;
         size_t   findExact       (const SFString& search, char sep, const SFString& replaceables=CHR_VALID_NAME) const;
         size_t   findExactI      (const SFString& search, char sep, const SFString& replaceables=CHR_VALID_NAME) const;
 
@@ -359,8 +345,6 @@ namespace qblocks {
         bool     ContainsI       (const SFString& search) const;
         bool     ContainsAll     (const SFString& search) const;
         bool     ContainsAny     (const SFString& search) const;
-        bool     ContainsExact   (const SFString& search, char sep, const SFString& replaceables=CHR_VALID_NAME) const;
-        bool     ContainsExactI  (const SFString& search, char sep, const SFString& replaceables=CHR_VALID_NAME) const;
 
         SFString Substitute      (const SFString& what, const SFString& with) const;
 
@@ -513,93 +497,29 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------
-    extern SFString snagFieldClear     (      SFString& in, const SFString& tagName, const SFString& defVal="");
-    extern SFString snagField          (const SFString& in, const SFString& tagName, const SFString& defVal="");
+    extern SFString snagFieldClear(      SFString& in, const SFString& tagName, const SFString& defVal="");
+    extern SFString snagField     (const SFString& in, const SFString& tagName, const SFString& defVal="");
 
     //--------------------------------------------------------------------
-    inline SFString toLower(const SFString& in) {
-        SFString ret = in;
-        if (ret.length()) {
-            char *s = (char*)ret.c_str();
-            while (*s) {
-                *s = (char)tolower(*s);
-                s++;
-            }
-        }
-        return ret;
-    }
+    extern string_q toLower (const string_q& in);
+    extern string_q toUpper (const string_q& in);
+    extern string_q toProper(const string_q& in);
 
     //--------------------------------------------------------------------
-    inline SFString toUpper(const SFString& in) {
-        SFString ret = in;
-        if (ret.length()) {
-            char *s = (char*)ret.c_str();
-            while (*s) {
-                *s = (char)toupper(*s);
-                s++;
-            }
-        }
-        return ret;
-    }
+    extern SFString toLower (const SFString& in);
+    extern SFString toUpper (const SFString& in);
+    extern SFString toProper(const SFString& in);
 
     //--------------------------------------------------------------------
-    inline SFString toProper(const SFString& in) {
-        SFString ret = in;
-        if (ret.length()) {
-            char last='\0';
-            char *s = (char*)ret.c_str();
-            while (*s) {
-                if (last == '_' || isWhiteSpace(last))
-                    *s = (char)toupper(*s);
-
-                else
-                    *s = (char)tolower(*s);
-                last = *s;
-                s++;
-            }
-        }
-        ret.ReplaceAll("_", " ");
-        return ret;
-    }
+    extern string_q StripTrailing(const string_q& str, char c = ' ');
+    extern string_q StripLeading (const string_q& str, char c = ' ');
+    extern string_q Strip        (const string_q& str, char c = ' ');
+    extern string_q StripAny     (const string_q& str, const string_q& any = " ");
 
     //--------------------------------------------------------------------
-    extern void writeTheCode(const SFString& fileName, const SFString& code, const SFString& ns = "", bool spaces = true);
+    extern SFString StripTrailing(const SFString& str, char c = ' ');
+    extern SFString StripLeading (const SFString& str, char c = ' ');
+    extern SFString Strip        (const SFString& str, char c = ' ');
+    extern SFString StripAny     (const SFString& str, const SFString& any = " ");
 
-    //----------------------------------------------------------------------------
-    inline SFString shorten(const SFString& in, size_t x) {
-        return padRight(in.length()>x-3 ? in.substr(0,x-3) + "..." : in, (uint32_t)x);
-    }
-
-    //--------------------------------------------------------------------
-    inline SFString StripTrailing(const SFString& str, char c) {
-        SFString ret = str;
-        while (ret.endsWith(c))
-            ret = ret.substr(0,ret.length()-1);
-
-        return ret;
-    }
-
-    //--------------------------------------------------------------------
-    inline SFString StripLeading(const SFString& str, char c) {
-        SFString ret = str;
-        while (ret.startsWith(c))
-            ret = ret.substr(1);
-
-        return ret;
-    }
-
-    //--------------------------------------------------------------------
-    inline SFString Strip(const SFString& str, char c) {
-        return StripTrailing(StripLeading(str, c), c);
-    }
-
-    //--------------------------------------------------------------------
-    inline SFString StripAny(const SFString& str, const SFString& any) {
-        SFString ret = str;
-        while (endsWithAny(ret, any) || startsWithAny(ret, any)) {
-            for (size_t i = 0 ; i < any.length() ; i++)
-                ret = Strip(ret, any[i]);
-        }
-        return ret;
-    }
 }  // namespace qblocks

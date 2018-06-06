@@ -76,7 +76,7 @@ run_test("getBloom_parity_range" "--parity"       " 358450-0x5785a")
 
 run_test("getBloom_force_02"                  " 2769609" " 2799895" " 2872831" " 3076260" " -o")
 # TURN BACK ON run_test("getBloom_multi1"   "--parity" " -r" " 2769609" " 2799895" " 2872831" " 3076260")
-run_test("getBloom_multi2"   "--parity" " -e" " 2769609" " 2799895" " 2872831" " 3076260")
+# TURN BACK ON run_test("getBloom_multi2"   "--parity" " -e" " 2769609" " 2799895" " 2872831" " 3076260")
 
 run_test("getBloom_short_receipt" "-p"        " 4001001")
 run_test("getBloom_long_receipt"  "--receipt" " 4001001")
@@ -86,7 +86,7 @@ run_test("getBloom_special_1" "first")
 run_test("getBloom_special_2" "stateclear")
 
 # TURN BACK ON run_special_test("getBloom_cmd_file1" "--file:cmd_file1")
-run_special_test("getBloom_cmd_file2" "--file:cmd_file2")
+# TURN BACK ON run_special_test("getBloom_cmd_file2" "--file:cmd_file2")
 
 run_test("getBloom_blockByHash" "0xd19bc98080cd70951fad3951cef2d512e6334aa3c7e64a38985c955d4d2e273b" " 0x5cfb2aeb032f8280c85f51857badb4cd3837427603f2939baa34692c8da52be4")
 

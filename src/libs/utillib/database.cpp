@@ -69,7 +69,7 @@ namespace qblocks {
         while (i < maxSecondsLock) {
             if (!fileExists(lockFilename))
                 return createLockFile(lockFilename);
-            qbSleep(1.0);
+            usleep(1000000);
             i++;
         }
 
@@ -98,7 +98,7 @@ namespace qblocks {
         while (i < maxSecondsLock) {
             if (!fileExists(lockFilename))
                 return true;
-            qbSleep(1.0);
+            usleep(1000000);
             i++;
         }
 
@@ -197,7 +197,7 @@ namespace qblocks {
 
         if (g_locking && m_ownsLock) {
             SFString lockFilename = m_filename + ".lck";
-            bool ret = removeFile((const char *)lockFilename);
+            bool ret = remove(lockFilename.c_str());
             manageRemoveList("r:"+lockFilename);
             if (ret != 0) {
 //              fprintf(stdout, "What happened?: %d: %s\n", ret, (const char *)(m_filename + ".lck"));
@@ -460,8 +460,8 @@ namespace qblocks {
         doCommand(cmd);
         copyFile(pdfName, fileName);
 
-        removeFile(tmpName);
-        removeFile(pdfName);
+        remove(tmpName.c_str());
+        remove(pdfName.c_str());
 
         return true;
     }
@@ -555,7 +555,7 @@ namespace qblocks {
         SFString list = manageRemoveList();
         while (!list.empty()) {
             SFString file = nextTokenClear(list, '|');
-            removeFile(file);
+            remove(file.c_str());
             cerr << "Removing file: " << file << "\n";
             cerr.flush();
         }
