@@ -656,15 +656,8 @@ namespace qblocks {
 
     //--------------------------------------------------------------------
     SFString toLower(const SFString& in) {
-        SFString ret = in;
-        if (ret.length()) {
-            char *s = (char*)ret.c_str();
-            while (*s) {
-                *s = (char)tolower(*s);
-                s++;
-            }
-        }
-        return ret;
+        string_q str(in.c_str());
+        return toLower(str).c_str();
     }
 
     //--------------------------------------------------------------------
@@ -696,7 +689,71 @@ namespace qblocks {
                 s++;
             }
         }
-//        ret.ReplaceAll("_", " ");
+        return ret;
+    }
+
+    //--------------------------------------------------------------------
+    string_q StripTrailing(const string_q& str, char c) {
+        SFString ret = str.c_str();
+        while (ret.endsWith(c))
+            ret = ret.substr(0,ret.length()-1);
+        return ret.c_str();
+    }
+
+    //--------------------------------------------------------------------
+    string_q StripLeading(const string_q& str, char c) {
+        SFString ret = str.c_str();
+        while (ret.startsWith(c))
+            ret = ret.substr(1);
+        return ret.c_str();
+    }
+
+    //--------------------------------------------------------------------
+    string_q Strip(const string_q& str, char c) {
+        return StripTrailing(StripLeading(str, c), c);
+    }
+
+    //--------------------------------------------------------------------
+    string_q StripAny(const string_q& str, const string_q& any) {
+        SFString ret = str.c_str();
+        SFString aa = any.c_str();
+        while (endsWithAny(ret, aa) || startsWithAny(ret, aa)) {
+            for (size_t i = 0 ; i < aa.length() ; i++)
+                ret = Strip(ret, aa[i]);
+        }
+        return ret.c_str();
+    }
+
+    //--------------------------------------------------------------------
+    SFString StripTrailing(const SFString& str, char c) {
+        SFString ret = str;
+        while (ret.endsWith(c))
+            ret = ret.substr(0,ret.length()-1);
+
+        return ret;
+    }
+
+    //--------------------------------------------------------------------
+    SFString StripLeading(const SFString& str, char c) {
+        SFString ret = str;
+        while (ret.startsWith(c))
+            ret = ret.substr(1);
+
+        return ret;
+    }
+
+    //--------------------------------------------------------------------
+    SFString Strip(const SFString& str, char c) {
+        return StripTrailing(StripLeading(str, c), c);
+    }
+
+    //--------------------------------------------------------------------
+    SFString StripAny(const SFString& str, const SFString& any) {
+        SFString ret = str;
+        while (endsWithAny(ret, any) || startsWithAny(ret, any)) {
+            for (size_t i = 0 ; i < any.length() ; i++)
+                ret = Strip(ret, any[i]);
+        }
         return ret;
     }
 }  // namespace qblocks

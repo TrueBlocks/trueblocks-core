@@ -47,12 +47,12 @@ namespace qblocks {
             // we present the data once for clarity...
             cout << programName << " argc: " << argc << " ";
             for (int i=1;i<argc;i++)
-                cout << "[" << i << ":" << Strip(argv[i], ' ') << "] ";
+                cout << "[" << i << ":" << Strip(SFString(argv[i])) << "] ";
             cout << "\n";
             // ... and once to use as a command line for copy/paste
             cout << programName << " ";
             for (int i=1;i<argc;i++)
-                cout << Strip(argv[i], ' ') << " ";
+                cout << Strip(SFString(argv[i])) << " ";
             cout << "\n";
         }
 
@@ -68,7 +68,7 @@ namespace qblocks {
 
         bool hasStdIn = false;
         for (int i = 1 ; i < argc ; i++) {
-            SFString arg = Strip(argv[i], ' ');
+            SFString arg = Strip(SFString(argv[i]));
             arg.Replace("--verbose", "-v");
             while (!arg.empty()) {
                 SFString opt = expandOption(arg);  // handles case of -rf for example
