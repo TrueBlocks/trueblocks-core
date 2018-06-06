@@ -218,6 +218,7 @@ namespace qblocks {
         return m_Values[index];
     }
 
+#ifdef THE_SWITCH
     //---------------------------------------------------------------------------------------
     string_q string_q::substr(size_t first) const {
         return substr(first, length()-first);
@@ -232,7 +233,7 @@ namespace qblocks {
         string_q ret = extract(first, len).c_str();
         return ret;
     }
-
+#else
     //---------------------------------------------------------------------------------------
     SFString SFString::substr(size_t first) const {
         return substr(first, length()-first);
@@ -247,6 +248,7 @@ namespace qblocks {
         SFString ret = extract(first, len).c_str();
         return ret;
     }
+#endif
 
     //---------------------------------------------------------------------------------------
     string_q string_q::extract(size_t start, size_t len) const {
