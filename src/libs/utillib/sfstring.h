@@ -223,28 +223,20 @@ namespace qblocks {
 
     //--------------------------------------------------------------------
     inline string_q toLower(const string_q& in) {
-        string_q ret = in;
-        if (ret.length()) {
-            char *s = (char*)ret.c_str();
-            while (*s) {
-                *s = (char)tolower(*s);
-                s++;
-            }
-        }
-        return ret;
+        string ret;
+        string str = in.c_str();
+        for (auto elem : str)
+            ret += (char)tolower(elem);
+        return ret.c_str();
     }
 
     //--------------------------------------------------------------------
     inline string_q toUpper(const string_q& in) {
-        string_q ret = in;
-        if (ret.length()) {
-            char *s = (char*)ret.c_str();
-            while (*s) {
-                *s = (char)toupper(*s);
-                s++;
-            }
-        }
-        return ret;
+        string ret;
+        string str = in.c_str();
+        for (auto elem : str)
+            ret += (char)toupper(elem);
+        return ret.c_str();
     }
 
 #ifdef THE_SWITCH
@@ -571,9 +563,6 @@ namespace qblocks {
         ret.ReplaceAll("_", " ");
         return ret;
     }
-
-    //--------------------------------------------------------------------
-    extern void writeTheCode(const SFString& fileName, const SFString& code, const SFString& ns = "", bool spaces = true);
 
     //----------------------------------------------------------------------------
     inline SFString shorten(const SFString& in, size_t x) {

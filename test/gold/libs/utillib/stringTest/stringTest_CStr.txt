@@ -13,3 +13,27 @@ stringTest 2
 	sentence	into|tokens
 	into    	tokens
 	tokens  	
+
+	This isthe_thing	that matters
+	and is_upperCase lower case
+
+	this isthe_thing	that matters
+	and is_uppercase lower case
+
+	THIS ISTHE_THING	THAT MATTERS
+	AND IS_UPPERCASE LOWER CASE
+
+	This Isthe Thing	That Matters
+	And Is Uppercase Lower Case
+
+	This isthe_thing	that matters
+	and is_upperCase lower case
+
+	this isthe_thing	that matters
+	and is_uppercase lower case
+
+	THIS ISTHE_THING	THAT MATTERS
+	AND IS_UPPERCASE LOWER CASE
+
+	This Isthe Thing	That Matters
+	And Is Uppercase Lower Case
