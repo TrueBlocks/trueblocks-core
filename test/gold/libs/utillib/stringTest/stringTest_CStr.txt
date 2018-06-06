@@ -26,6 +26,12 @@ stringTest 2
 	This Isthe_Thing	That Matters
 	And Is_Uppercase Lower Case
 
+	|	 AxBBBxBx	A |
+	|	 AxBBBxBx	A|
+	| AxBBBxBx	A |
+	|	 AxBBBxBx	A|
+	|AxBBBxBx	A|
+	|BBBxB|
 
 	This isthe_thing	that matters
 	and is_upperCase lower case
@@ -39,3 +45,9 @@ stringTest 2
 	This Isthe_Thing	That Matters
 	And Is_Uppercase Lower Case
 
+	|	 AxBBBxBx	A |
+	|	 AxBBBxBx	A|
+	| AxBBBxBx	A |
+	|	 AxBBBxBx	A|
+	|AxBBBxBx	A|
+	|BBBxB|
