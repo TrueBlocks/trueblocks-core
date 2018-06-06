@@ -592,7 +592,7 @@ namespace qblocks {
     }
 
     //---------------------------------------------------------------------------------------
-    inline bool endsWithAny(const string_q& haystack, const string_q& str) {
+    bool endsWithAny(const string_q& haystack, const string_q& str) {
         for (size_t i = 0 ; i < str.length() ; i++)
             if (endsWith(haystack, str[i]))
                 return true;
@@ -600,7 +600,7 @@ namespace qblocks {
     }
 
     //---------------------------------------------------------------------------------------
-    inline bool startsWithAny(const string_q& haystack, const string_q& str) {
+    bool startsWithAny(const string_q& haystack, const string_q& str) {
         for (size_t i = 0 ; i < str.length() ; i++)
             if (startsWith(haystack, str[i]))
                 return true;
