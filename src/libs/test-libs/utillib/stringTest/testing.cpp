@@ -127,7 +127,7 @@ void testCStr(void) {
     cout << text1 << "\n";
     cout << toLower(text1) << "\n";
     cout << toUpper(text1) << "\n";
-    //cout << toProper(text1) << "\n";
+    cout << toProper(text1) << "\n";
 }
 
 #include "options.h"
