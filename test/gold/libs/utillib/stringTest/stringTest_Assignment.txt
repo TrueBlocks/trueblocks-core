@@ -1,7 +1,6 @@
 stringTest argc: 2 [1:3] 
 stringTest 3 
 0. 	000.000. c-string set1                    ==> passed 'str1 == "Test string: "' is true
-<<<<<<< HEAD
 	000.001. qb-string set1                   ==> passed 'xstr1 == "Test string: "' is true
 	000.002. c-string set2                    ==> passed 'str2 == "x"' is true
 	000.003. qb-string set2                   ==> passed 'xstr2 == "x"' is true
@@ -10,6 +9,3 @@ stringTest 3
 	000.006. set1 equal                       ==> passed 'str1 == xstr1.str()' is true
 	000.007. set2 equal                       ==> passed 'str2 == xstr2.str()' is true
 	000.008. set3 equal                       ==> passed 'str3 == xstr3.str()' is true
-=======
-	000.001. qb-string set1                   ==> failed 'xstr1 == "Test string: "' is false
->>>>>>> ef7847629d6add53f45ef52ee8cf3b5040f35f4d

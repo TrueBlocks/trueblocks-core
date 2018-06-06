@@ -168,6 +168,7 @@ namespace qblocks {
     //----------------------------------------------------------------------
     extern bool shouldQuit(void);
     extern void lockSection(bool lock);
+    extern void writeTheCode(const SFString& fileName, const SFString& code, const SFString& ns = "", bool spaces = true);
 
     //----------------------------------------------------------------------
     inline bool asciiFileToBuffer(const SFString& filename, SFString *contents, uint32_t maxLines = INT_MAX) {
