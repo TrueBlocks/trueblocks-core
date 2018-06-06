@@ -221,24 +221,6 @@ namespace qblocks {
 #endif
     }
 
-    //--------------------------------------------------------------------
-    inline string_q toLower(const string_q& in) {
-        string ret;
-        string str = in.c_str();
-        for (auto elem : str)
-            ret += (char)tolower(elem);
-        return ret.c_str();
-    }
-
-    //--------------------------------------------------------------------
-    inline string_q toUpper(const string_q& in) {
-        string ret;
-        string str = in.c_str();
-        for (auto elem : str)
-            ret += (char)toupper(elem);
-        return ret.c_str();
-    }
-
 #ifdef THE_SWITCH
     //---------------------------------------------------------------------------------------
     inline string_q operator+(const string_q& str1, const string_q& str2) {
@@ -519,50 +501,14 @@ namespace qblocks {
     extern SFString snagField          (const SFString& in, const SFString& tagName, const SFString& defVal="");
 
     //--------------------------------------------------------------------
-    inline SFString toLower(const SFString& in) {
-        SFString ret = in;
-        if (ret.length()) {
-            char *s = (char*)ret.c_str();
-            while (*s) {
-                *s = (char)tolower(*s);
-                s++;
-            }
-        }
-        return ret;
-    }
+    extern string_q toLower (const string_q& in);
+    extern string_q toUpper (const string_q& in);
+    extern string_q toProper(const string_q& in);
 
     //--------------------------------------------------------------------
-    inline SFString toUpper(const SFString& in) {
-        SFString ret = in;
-        if (ret.length()) {
-            char *s = (char*)ret.c_str();
-            while (*s) {
-                *s = (char)toupper(*s);
-                s++;
-            }
-        }
-        return ret;
-    }
-
-    //--------------------------------------------------------------------
-    inline SFString toProper(const SFString& in) {
-        SFString ret = in;
-        if (ret.length()) {
-            char last='\0';
-            char *s = (char*)ret.c_str();
-            while (*s) {
-                if (last == '_' || isWhiteSpace(last))
-                    *s = (char)toupper(*s);
-
-                else
-                    *s = (char)tolower(*s);
-                last = *s;
-                s++;
-            }
-        }
-        ret.ReplaceAll("_", " ");
-        return ret;
-    }
+    extern SFString toLower (const SFString& in);
+    extern SFString toUpper (const SFString& in);
+    extern SFString toProper(const SFString& in);
 
     //----------------------------------------------------------------------------
     inline SFString shorten(const SFString& in, size_t x) {
