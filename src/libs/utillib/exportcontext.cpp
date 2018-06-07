@@ -13,7 +13,7 @@
 #include "basetypes.h"
 
 #include "exportcontext.h"
-#include "dates.h"
+#include "sftime.h"
 #include "conversions.h"
 
 namespace qblocks {
@@ -123,12 +123,6 @@ namespace qblocks {
             fmt = EMPTY;
         else
             Output(str);
-        return *this;
-    }
-
-    //-------------------------------------------------------------
-    CExportContext& CExportContext::operator<<(const SFTime& tm) {
-        Output(tm.Format(FMT_JSON));
         return *this;
     }
 

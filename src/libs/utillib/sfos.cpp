@@ -190,26 +190,6 @@ extern SFString binaryFileToString(const SFString& filename);
     }
 
     //------------------------------------------------------------------
-    SFTime fileLastModifyDate(const SFString& filename) {
-        if (!fileExists(filename))
-            return earliestDate;
-
-        struct stat statBuf;
-        stat(filename, &statBuf);
-
-        // Convert time_t to struct tm
-        tm unused;
-        tm *t = localtime_r(&statBuf.st_mtime, &unused);
-        ASSERT(t);
-        return SFTime(  (uint32_t)t->tm_year + 1900,
-                        (uint32_t)t->tm_mon+1,
-                        (uint32_t)t->tm_mday,
-                        (uint32_t)t->tm_hour,
-                        (uint32_t)t->tm_min,
-                        (uint32_t)t->tm_sec);
-    }
-
-    //------------------------------------------------------------------
     void listFiles(uint32_t& nStrs, SFString *strs, const SFString& mask) {
         uint32_t ret = 0;
         doGlob(ret, strs, mask, true, mask.Contains("/*/")); /* fixes color coding in pico */

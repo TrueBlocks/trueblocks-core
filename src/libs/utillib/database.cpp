@@ -13,7 +13,7 @@
 #include "basetypes.h"
 
 #include "database.h"
-#include "dates.h"
+#include "sftime.h"
 #include "sfos.h"
 #include "filenames.h"
 #include "conversions.h"
@@ -302,7 +302,6 @@ namespace qblocks {
     size_t CSharedResource::Read(unsigned long long& val) { return Read(&val, sizeof(long long), 1); }
     size_t CSharedResource::Read(float& val) { return Read(&val, sizeof(float), 1); }
     size_t CSharedResource::Read(double& val) { return Read(&val, sizeof(double), 1); }
-    size_t CSharedResource::Read(SFTime& val) { return Read(&val.m_nSeconds, sizeof(long), 1); }
 
     //----------------------------------------------------------------------
     size_t CSharedResource::Read(SFString& str) {
@@ -352,7 +351,6 @@ namespace qblocks {
     size_t CSharedResource::Write(unsigned long long     val) const { return Write(&val, sizeof(long long), 1); }
     size_t CSharedResource::Write(float val) const { return Write(&val, sizeof(float), 1); }
     size_t CSharedResource::Write(double val) const { return Write(&val, sizeof(double), 1); }
-    size_t CSharedResource::Write(const SFTime& val) const { return Write(&val.m_nSeconds, sizeof(long), 1); }
 
     //----------------------------------------------------------------------
     size_t CSharedResource::Write(const SFString& val) const {

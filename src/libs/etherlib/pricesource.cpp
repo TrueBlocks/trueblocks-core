@@ -46,7 +46,7 @@ namespace qblocks {
             SFArchive priceCache(READING_ARCHIVE);
             if (priceCache.Lock(cacheFile, binaryReadOnly, LOCK_NOWAIT)) {
                 priceCache.readHeader(); // we read the header even though it may not be the current version...
-                priceCache >> lastRead;
+                priceCache >> lastRead.m_nSeconds;
                 priceCache >> quotes;
                 priceCache.Close();
                 if (verbose) {
@@ -169,7 +169,7 @@ namespace qblocks {
                     return false;
                 }
                 priceCache.writeHeader();
-                priceCache << lastRead;
+                priceCache << lastRead.m_nSeconds;
                 priceCache << quotes;
                 priceCache.Close();
                 if (verbose) {
