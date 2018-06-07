@@ -12,7 +12,7 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 #include "sfstring.h"
-#include "sftime.h"
+#include "sfos.h"
 
 namespace qblocks {
 
@@ -68,7 +68,6 @@ namespace qblocks {
         virtual CExportContext& operator<<(double f);
         virtual CExportContext& operator<<(const char *str);
         virtual CExportContext& operator<<(const SFString& str);
-        virtual CExportContext& operator<<(const SFTime& tm);
 
         virtual SFString tabs(uint32_t add = 0) { return SFString(tCh, nTabs + add); }
         virtual SFString inc(void) { SFString ret = SFString(tCh, nTabs); nTabs++; return ret; }
