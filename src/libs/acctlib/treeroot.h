@@ -184,7 +184,7 @@ inline SFString idex(char n) {
 }
 
 //------------------------------------------------------------------
-bool forEveryAccount(CTreeRoot *trie, ACCTVISITOR func, void *data);
+extern bool forEveryAccount(CTreeRoot *trie, ACCTVISITOR func, void *data);
 extern SFString idnt;
 
 //------------------------------------------------------------------
