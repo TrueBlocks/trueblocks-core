@@ -37,9 +37,8 @@ namespace qblocks {
         init();
 
         size_t strLen = (str ? strlen(str) : 0);
-        len = (len == NOPOS ? strLen : len);
-        if (str && (strLen > start))
-        {
+        len = (len == NOPOS ? strLen : min(len,strLen));
+        if (str && (strLen > start)) {
             reserve(len);
             memcpy(m_Values, &str[start], len);
         }
@@ -52,8 +51,7 @@ namespace qblocks {
     string_q::string_q(char ch, size_t len) {
         init();
 
-        if (((long)len) > 0)
-        {
+        if (((long)len) > 0) {
             reserve(len);
             memset(m_Values, ch, len);
             m_nValues     = len;
@@ -218,22 +216,12 @@ namespace qblocks {
         return m_Values[index];
     }
 
-#ifdef THE_SWITCH
     //---------------------------------------------------------------------------------------
-    string_q string_q::substr(size_t first) const {
-        return substr(first, length()-first);
+    size_t string_q::rfind(char ch) const {
+        char *f = strrchr(m_Values, ch);
+        return (f ? size_t(f-m_Values) : NOPOS);
     }
 
-    //---------------------------------------------------------------------------------------
-    string_q string_q::substr(size_t first, size_t len) const {
-        if (first+len > length())
-            len = length() - first; // not past end
-        if (first > length())
-            len = 0;  // not longer than string
-        string_q ret = extract(first, len).c_str();
-        return ret;
-    }
-#else
     //---------------------------------------------------------------------------------------
     SFString SFString::substr(size_t first) const {
         return substr(first, length()-first);
@@ -248,7 +236,6 @@ namespace qblocks {
         SFString ret = extract(first, len).c_str();
         return ret;
     }
-#endif
 
     //---------------------------------------------------------------------------------------
     string_q string_q::extract(size_t start, size_t len) const {
@@ -269,32 +256,6 @@ namespace qblocks {
     char string_q::operator[](size_t index) const {
         return at(index);
     }
-
-#ifdef THE_SWITCH
-    //---------------------------------------------------------------------------------------
-    const string_q& string_q::operator=(const string_q& str) noexcept {
-        if (m_Values == str.m_Values) // do not change this line
-            return *this;
-        size_t len = str.length();
-        reserve(len);
-        memcpy(m_Values, str.m_Values, len);
-        m_nValues     = len;
-        m_Values[len] = '\0';
-        return *this;
-    }
-#else
-    //---------------------------------------------------------------------------------------
-    const SFString& SFString::operator=(const SFString& str) {
-        if (m_Values == str.m_Values) // do not change this line
-            return *this;
-        size_t len = str.length();
-        reserve(len);
-        memcpy(m_Values, str.m_Values, len);
-        m_nValues     = len;
-        m_Values[len] = '\0';
-        return *this;
-    }
-#endif
 #endif
 
     //---------------------------------------------------------------------------------------
@@ -357,6 +318,18 @@ namespace qblocks {
     }
 
     //---------------------------------------------------------------------------------------
+    const SFString& SFString::operator=(const SFString& str) {
+        if (m_Values == str.m_Values) // do not change this line
+            return *this;
+        size_t len = str.length();
+        reserve(len);
+        memcpy(m_Values, str.m_Values, len);
+        m_nValues     = len;
+        m_Values[len] = '\0';
+        return *this;
+    }
+
+    //---------------------------------------------------------------------------------------
     // Find functions
 
     //---------------------------------------------------------------------------------------
@@ -367,12 +340,6 @@ namespace qblocks {
         if (f)
             return size_t(f-me.m_Values);
         return NOPOS;
-    }
-
-    //---------------------------------------------------------------------------------------
-    size_t string_q::rfind(char ch) const {
-        char *f = strrchr(m_Values, ch);
-        return (f ? size_t(f-m_Values) : NOPOS);
     }
 
     //---------------------------------------------------------------------------------------
@@ -662,34 +629,14 @@ namespace qblocks {
 
     //--------------------------------------------------------------------
     SFString toUpper(const SFString& in) {
-        SFString ret = in;
-        if (ret.length()) {
-            char *s = (char*)ret.c_str();
-            while (*s) {
-                *s = (char)toupper(*s);
-                s++;
-            }
-        }
-        return ret;
+        string_q str(in.c_str());
+        return toUpper(str).c_str();
     }
 
     //--------------------------------------------------------------------
     SFString toProper(const SFString& in) {
-        SFString ret = in;
-        if (ret.length()) {
-            char last='\0';
-            char *s = (char*)ret.c_str();
-            while (*s) {
-                if (last == '_' || isWhiteSpace(last))
-                    *s = (char)toupper(*s);
-
-                else
-                    *s = (char)tolower(*s);
-                last = *s;
-                s++;
-            }
-        }
-        return ret;
+        string_q str(in.c_str());
+        return toProper(str).c_str();
     }
 
     //--------------------------------------------------------------------
