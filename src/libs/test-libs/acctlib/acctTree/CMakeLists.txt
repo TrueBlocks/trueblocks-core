@@ -42,5 +42,5 @@ endfunction(run_test)
 
 # Enter one line for each individual test
 run_test("acctTest_README" "-th")
-run_special_test("acctTest_01"     "--start" " 1500000")
+#run_special_test("acctTest_01"     "--start" " 1500000")
 #run_special_test("acctTest_02"     "-s" " 3500000")
