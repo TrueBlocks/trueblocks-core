@@ -32,7 +32,6 @@ int main(int argc, const char *argv[]) {
     uint64_t uil = (uint64_t)-1;
     float f = (float)10.333;
     double d = 1001001010.01121112;
-    SFTime t = SFTime(2017,10,12,1,14,12);
 
     CStringExportContext ctx;
     ctx << "my string: " << myStr << " : " << sizeme(myStr) << "\n";
@@ -42,7 +41,6 @@ int main(int argc, const char *argv[]) {
     ctx << "int: " << i << " : " << sizeme(i) << "\n";
     ctx << "float: " << f << " : " << sizeme(f) << "\n";
     ctx << "double: " << d << " : " << sizeme(d) << "\n";
-    ctx << "time: " << t << " : " << sizeme(t) << "\n";
     ctx << "int64_t: " << il << " : " << sizeme(il) << "\n";
     ctx << "uint64_t: " << uil << " : " << sizeme(uil) << "\n";
     cout << ctx.str << "\n";
@@ -57,7 +55,6 @@ int main(int argc, const char *argv[]) {
     os << "int: " << i << " : " << sizeme(i) << "\n";
     os << "float: " << f << " : " << sizeme(f) << "\n";
     os << "double: " << d << " : " << sizeme(d) << "\n";
-    os << "time: " << t << " : " << sizeme(t) << "\n";
     os << "int64_t: " << il << " : " << sizeme(il) << "\n";
     os << "uint64_t: " << uil << " : " << sizeme(uil) << "\n";
     cout << os.str();
