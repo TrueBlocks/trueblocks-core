@@ -68,11 +68,6 @@ namespace qblocks {
         return *this;
     }
 
-    SFArchive& SFArchive::operator<<(const SFTime& tm) {
-        Write(tm);
-        return *this;
-    }
-
     SFArchive& operator<<(SFArchive& archive, const SFStringArray& array) {
         uint64_t count = array.getCount();
         archive << count;
@@ -154,11 +149,6 @@ namespace qblocks {
 
     SFArchive& SFArchive::operator>>(SFString& str) {
         Read(str);
-        return *this;
-    }
-
-    SFArchive& SFArchive::operator>>(SFTime& tm) {
-        Read(tm);
         return *this;
     }
 

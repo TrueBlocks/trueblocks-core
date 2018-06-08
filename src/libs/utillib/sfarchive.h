@@ -15,6 +15,7 @@
 #include "database.h"
 #include "conversions.h"
 #include "version.h"
+#include "sftime.h"
 
 namespace qblocks {
 
@@ -84,7 +85,6 @@ namespace qblocks {
         SFArchive& operator<<(float f);
         SFArchive& operator<<(double f);
         SFArchive& operator<<(const SFString& str);
-        SFArchive& operator<<(const SFTime& tm);
         SFArchive& operator<<(const SFUintBN& bn);
         SFArchive& operator<<(const SFIntBN& bn);
         SFArchive& operator<<(const char *str);
@@ -98,7 +98,6 @@ namespace qblocks {
         SFArchive& operator>>(float& f);
         SFArchive& operator>>(double& f);
         SFArchive& operator>>(SFString& str);
-        SFArchive& operator>>(SFTime& tm);
         SFArchive& operator>>(SFUintBN& bn);
         SFArchive& operator>>(SFIntBN& bn);
     };
