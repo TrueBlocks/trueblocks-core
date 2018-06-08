@@ -13,7 +13,6 @@
 #include "basetypes.h"
 
 #include "database.h"
-#include "sftime.h"
 #include "sfos.h"
 #include "filenames.h"
 #include "conversions.h"
