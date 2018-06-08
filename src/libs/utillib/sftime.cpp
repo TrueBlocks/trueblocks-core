@@ -1328,6 +1328,7 @@ namespace qblocks {
         return (timeIn.startsWith("0x") ? (timestamp_t)hex2Long(timeIn) : (timestamp_t)toLong(timeIn));
     }
 
+    //----------------------------------------------------------------------------------------------------
     SFTime fileLastModifyDate(const SFString& filename) {
         if (!fileExists(filename))
             return earliestDate;
