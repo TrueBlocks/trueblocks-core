@@ -9,7 +9,7 @@ First things first. We start with the [installation instructions](src/other/inst
 
 #### What is QuickBlocks?
 
-QuickBlocks is a collection of software [libraries](src/libs), [applications](src/apps), [tools](src/tools), and [examples](examples) that allow you to retrieve
+QuickBlocks is a collection of software [libraries](src/libs), [applications](src/apps), [tools](src/tools), and [examples](src/examples) that allow you to retrieve
 Ethereum blockchain data (a) more quickly, (b) with higher information content, (c) in an fully decentralized way, (d) in a fully automated way, and (e) in a highly 
 maintenance free way. The many potential use cases for QuickBlocks are described
 [here](https://github.com/Great-Hill-Corporation/quickBlocks/blob/master/docs/README_use_cases.md).
