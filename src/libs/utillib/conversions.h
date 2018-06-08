@@ -12,7 +12,7 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 #include "conversions_base.h"
-#include "sftime.h"
+#include "sfos.h"
 #include "biglib.h"
 
 namespace qblocks {
@@ -273,14 +273,6 @@ namespace qblocks {
     extern SFString bloom2Bits(const SFBloom& b);
 
 #define fromUnsigned(a) asStringU((a))
-
-    //--------------------------------------------------------------------------------------------------------------
-    extern SFTime      dateFromTimeStamp(timestamp_t tsIn);
-    extern SFTime      parseDate(const SFString& str);
-
-    extern timestamp_t toTimestamp(const SFTime&   timeIn);
-    extern timestamp_t toTimestamp(const SFString& timeIn);
-    inline SFString    fromTimestamp(timestamp_t ts) { return asString(ts); }
 
     //----------------------------------------------------------------------------------
     inline SFString fixHash(const SFString& hashIn) {

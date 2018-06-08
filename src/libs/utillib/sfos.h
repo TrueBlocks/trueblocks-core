@@ -15,9 +15,6 @@
 namespace qblocks {
 
     //-------------------------------------------------------------------------------
-    class SFTime;
-
-    //-------------------------------------------------------------------------------
     extern uint64_t fileSize(const SFString& file);
 
     extern void listFiles(uint32_t& nFiles, SFString *files, const SFString& mask);
@@ -31,8 +28,6 @@ namespace qblocks {
 
     extern bool establishFolder(const SFString& path, SFString& created);
     inline bool establishFolder(const SFString& path) { SFString unused; return establishFolder(path, unused); }
-
-    extern SFTime fileLastModifyDate(const SFString& filename);
 
     extern SFString getCWD(const SFString& filename = "");
     extern SFString doCommand(const SFString& cmd);

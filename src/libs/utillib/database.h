@@ -12,7 +12,7 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 #include "fielddata.h"
-#include "sftime.h"
+#include "sfos.h"
 
 namespace qblocks {
 
@@ -113,7 +113,6 @@ namespace qblocks {
         size_t Read(float& val);
         size_t Read(double& val);
         size_t Read(SFString& val);
-        size_t Read(SFTime& val);
 
         size_t Write(bool val) const;
         size_t Write(char val) const;
@@ -126,7 +125,6 @@ namespace qblocks {
         size_t Write(float val) const;
         size_t Write(double val) const;
         size_t Write(const SFString& val) const;
-        size_t Write(const SFTime& val) const;
 
         size_t Read(void *buff, size_t size, size_t cnt);
         size_t Write(const void *buff, size_t size, size_t cnt) const;

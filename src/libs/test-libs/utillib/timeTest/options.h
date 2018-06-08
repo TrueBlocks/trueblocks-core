@@ -11,28 +11,16 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-#include "basetypes.h"
-#include "sfstring.h"
-#include "basenode.h"
-#include "biglib.h"
-#include "conversions.h"
-#include "sftime.h"
-#include "sfos.h"
-#include "database.h"
-#include "toml.h"
-#include "list.h"
-#include "exportcontext.h"
-#include "sfarchive.h"
-#include "fielddata.h"
-#include "curl_code.h"
-#include "fielddata.h"  // NOLINT
-#include "colors.h"
-#include "sfarchive.h"  // NOLINT
-#include "performance.h"
-#include "options_base.h"
-#include "filenames.h"
-#include "namevalue.h"
-#include "accountname.h"
-#include "memmap.h"
+#include "etherlib.h"
 
-using namespace qblocks;  // NOLINT
+//-----------------------------------------------------------------------------
+class COptions : public COptionsBase {
+public:
+    uint64_t testNum;
+
+    COptions(void)  { Init(); }
+    ~COptions(void) { }
+
+    bool parseArguments(SFString& command);
+    void Init(void);
+};

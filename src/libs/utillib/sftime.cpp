@@ -13,7 +13,6 @@
 #include <algorithm>
 #include "basetypes.h"
 #include "sftime.h"
-#include "dates.h"
 #include "sfos.h"
 #include "conversions.h"
 
@@ -1178,6 +1177,175 @@ namespace qblocks {
             return SFTime(sysTime, false);
         }
         return earliestDate;
+    }
+
+    //---------------------------------------------------------------------------------------
+    const SFTime latestDate = SFTime(2200, 12, 31, 23, 59, 59);
+    const SFTime earliestDate = SFTime(1700,  1,  1,  0,  0,  1);
+
+    //---------------------------------------------------------------------------------------
+    const uint32_t DaysPerMonth[] = {
+        31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31
+    };
+
+    //---------------------------------------------------------------------------------------
+    bool isLeap(uint32_t year) {
+        if ((year % 400) == 0)  // centuries every 400 years are leaps
+            return true;
+
+        if (((year % 4) == 0) && ((year % 100) != 0))  // otherwise every four years (but not centuries)
+            return true;
+
+        return false;
+    }
+
+    //---------------------------------------------------------------------------------------
+    uint32_t DaysInMonth(uint32_t year, uint32_t month) {
+        if (month == 2 && isLeap(year))
+            return 29;
+        return DaysPerMonth[month-1];
+    }
+
+    //---------------------------------------------------------------------------------------
+    uint32_t DaysInMonth(const SFTime& date) {
+        return DaysInMonth(date.GetYear(), date.GetMonth());
+    }
+
+    //---------------------------------------------------------------------------------------
+    uint32_t DaysInYear(uint32_t year) {
+        return isLeap(year) ? 366 : 365;
+    }
+
+    //---------------------------------------------------------------------------------------
+    uint32_t DaysInYear(const SFTime& date) {
+        return DaysInYear(date.GetYear());
+    }
+
+    //---------------------------------------------------------------------------------------
+    SFTime AddOneDay(const SFTime& date) {
+        if (date >= latestDate)
+            return latestDate;
+
+        uint32_t day    = date.GetDay();
+        uint32_t month  = date.GetMonth();
+        uint32_t year   = date.GetYear();
+        uint32_t minute = date.GetMinute();
+        uint32_t sec    = date.GetSecond();
+        uint32_t hour   = date.GetHour();
+        uint32_t nDays  = DaysInMonth(year, month);
+
+        if (nDays == day) {
+            if (month == 12) {
+                month = 1;
+                year  += 1;
+                return SFTime(year, month, 1, hour, minute, sec);
+            } else {
+                month += 1;
+                return SFTime(year, month, 1, hour, minute, sec);
+            }
+        }
+
+        return SFTime(year, month, day+1, hour, minute, sec);
+    }
+
+    //---------------------------------------------------------------------------------------
+    SFTime SubtractOneDay(const SFTime& date) {
+        if (date <= earliestDate)
+            return earliestDate;
+
+        uint32_t day    = date.GetDay();
+        uint32_t month  = date.GetMonth();
+        uint32_t year   = date.GetYear();
+        uint32_t minute = date.GetMinute();
+        uint32_t sec    = date.GetSecond();
+        uint32_t hour   = date.GetHour();
+
+        if (day == 1) {
+            if (month == 1) {
+                month = 12;
+                year  -= 1;
+                return SFTime(year, month, DaysInMonth(year, month), hour, minute, sec);
+            } else {
+                month -= 1;
+                return SFTime(year, month, DaysInMonth(year, month), hour, minute, sec);
+            }
+        }
+
+        return SFTime(year, month, --day, hour, minute, sec);
+    }
+
+    SFTime BOW(const SFTime& tm) {
+        SFTime ret = BOD(tm);
+        while (ret.GetDayOfWeek() > 1) // if it equals '1', it's Sunday at 00:00:01
+            ret = SubtractOneDay(ret);
+        return ret;
+    }
+
+    SFTime EOW(const SFTime& tm) {
+        SFTime ret = EOD(tm);
+        while (tm.GetDayOfWeek() < 7) // if it equals '7', it's Saturday 12:59:59
+            ret = AddOneDay(ret);
+        return ret;
+    }
+
+    //----------------------------------------------------------------------------------------------------
+    timestamp_t toTimestamp(const SFTime& timeIn) {
+        SFTime  jan1970(1970, 1, 1, 0, 0, 0);
+        if (timeIn < jan1970)
+            return 0;
+
+        int64_t j70 = jan1970.GetTotalSeconds();
+        int64_t t   = timeIn.GetTotalSeconds();
+        return (t - j70);
+    }
+
+    //----------------------------------------------------------------------------------------------------
+    SFTime dateFromTimeStamp(timestamp_t tsIn) {
+        time_t utc = tsIn;
+        tm unused;
+        struct tm *ret = gmtime_r(&utc, &unused);
+
+        char retStr[40];
+        strftime(retStr, sizeof(retStr), "%Y-%m-%d %H:%M:%S UTC", ret);
+
+        SFString str = retStr;
+        uint32_t y = toLong32u(nextTokenClear(str, '-'));
+        uint32_t m = toLong32u(nextTokenClear(str, '-'));
+        uint32_t d = toLong32u(nextTokenClear(str, ' '));
+        uint32_t h = toLong32u(nextTokenClear(str, ':'));
+        uint32_t mn = toLong32u(nextTokenClear(str, ':'));
+        uint32_t s = toLong32u(nextTokenClear(str, ' '));
+        return SFTime(y, m, d, h, mn, s);
+    }
+
+    //----------------------------------------------------------------------------------------------------
+    SFString fromTimestamp(timestamp_t ts) {
+        return asString(ts);
+    }
+
+    //----------------------------------------------------------------------------------------------------
+    timestamp_t toTimestamp(const SFString& timeIn) {
+        return (timeIn.startsWith("0x") ? (timestamp_t)hex2Long(timeIn) : (timestamp_t)toLong(timeIn));
+    }
+
+    //----------------------------------------------------------------------------------------------------
+    SFTime fileLastModifyDate(const SFString& filename) {
+        if (!fileExists(filename))
+            return earliestDate;
+
+        struct stat statBuf;
+        stat(filename, &statBuf);
+
+        // Convert time_t to struct tm
+        tm unused;
+        tm *t = localtime_r(&statBuf.st_mtime, &unused);
+        ASSERT(t);
+        return SFTime(  (uint32_t)t->tm_year + 1900,
+                        (uint32_t)t->tm_mon+1,
+                        (uint32_t)t->tm_mday,
+                        (uint32_t)t->tm_hour,
+                        (uint32_t)t->tm_min,
+                        (uint32_t)t->tm_sec);
     }
 
 }  // namespace qblocks
