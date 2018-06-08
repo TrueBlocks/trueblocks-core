@@ -85,4 +85,5 @@ The installation installs the QuickBlocks command line tools in the folder /usr/
 ***
 ## After building, on to the samples
 
-After you're done building and installing the library and tools, you may wish to try your hand at building some QuickBlocks applications or tools. We've provided a number of simple samples to help you get started. Please follow [this link](/examples).
+After you're done building and installing the library and tools, you may wish to try your hand at building some QuickBlocks applications or tools. We've provided a 
+number of simple samples to help you get started. Please follow [this link](/src/examples).
