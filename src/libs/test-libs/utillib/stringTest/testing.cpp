@@ -114,9 +114,9 @@ void testCStr(void) {
     char *rest1 = str1;
     while ((token1 = strtok_r(rest1, "|", &rest1)))
         cout << "\t" << padRight(token1,8,' ') << "\t" << (rest1 ? rest1 : "") << "\n";
+    cout << "\n";
 
     SFString text = "\tThis isthe_thing\tthat matters\n\tand is_upperCase lower case\n";
-    cout << "\n";
     cout << text << "\n";
     cout << toLower(text) << "\n";
     cout << toUpper(text) << "\n";
@@ -129,9 +129,9 @@ void testCStr(void) {
     cout << "\t|" << trimTrailing(strip1) << "|\n";
     cout << "\t|" << trimWhitespace(strip1) << "|\n";
     cout << "\t|" << trimWhitespace(strip1, "ZAx") << "|\n";
+    cout << "\n";
 
     string_q text1 = "\tThis isthe_thing\tthat matters\n\tand is_upperCase lower case\n";
-    cout << "\n";
     cout << text1 << "\n";
     cout << toLower(text1) << "\n";
     cout << toUpper(text1) << "\n";
@@ -144,6 +144,10 @@ void testCStr(void) {
     cout << "\t|" << trimTrailing(strip2) << "|\n";
     cout << "\t|" << trimWhitespace(strip2) << "|\n";
     cout << "\t|" << trimWhitespace(strip2, "ZAx") << "|\n";
+    cout << "\n";
+
+    cout << "\tThere are " << countOf(strip2, 'B') << " 'Bs' in '|" << strip2 << "|'\n";
+    cout << "\tThere are " << countOf(text,  'i') << " 'is' in '" << text.Substitute("\n"," ").Substitute("\t"," ") << "'\n";
 }
 
 #include "options.h"

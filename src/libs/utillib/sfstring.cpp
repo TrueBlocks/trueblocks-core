@@ -572,46 +572,44 @@ namespace qblocks {
         return ret;
     }
 
+    //--------------------------------------------------------------------
+    size_t countOf(const string_q& haystack, char needle) {
+        string hay = haystack.c_str();
+        return (size_t)count(hay.begin(), hay.end(), needle);
+    }
+
+    //--------------------------------------------------------------------
+    bool startsWith(const string_q& haystack, const string_q& needle) {
+        SFString hay = haystack.c_str();
+        if (hay.empty() || needle.empty())
+            return false;
+        return (hay.substr(0, needle.length()) == needle);
+    }
+
+    //--------------------------------------------------------------------
+    bool endsWith(const string_q& haystack, const string_q& needle) {
+        SFString hay = haystack.c_str();
+        if (hay.empty() || needle.empty())
+            return false;
+        return (hay.substr(hay.length() - needle.length(), needle.length()) == needle);
+    }
+
     //---------------------------------------------------------------------------------------
-    bool endsWithAny(const SFString& haystack, const SFString& str) {
-        for (size_t i = 0 ; i < str.length() ; i++)
-            if (endsWith(haystack, str[i]))
+    bool startsWithAny(const string_q& haystack, const string_q& needles) {
+        string need = needles.c_str();
+        for (auto elem : need)
+            if (startsWith(haystack, elem))
                 return true;
         return false;
     }
 
     //---------------------------------------------------------------------------------------
-    bool startsWithAny(const SFString& haystack, const SFString& str) {
-        for (size_t i = 0 ; i < str.length() ; i++)
-            if (startsWith(haystack, str[i]))
+    bool endsWithAny(const string_q& haystack, const string_q& needles) {
+        string need = needles.c_str();
+        for (auto elem : need)
+            if (endsWith(haystack, elem))
                 return true;
         return false;
-    }
-
-    //--------------------------------------------------------------------
-    bool endsWith(const SFString& haystack, const SFString& needle) {
-        if (haystack.empty() || needle.empty())
-            return false;
-        return (haystack.substr(haystack.length() - needle.length(), needle.length()) == needle);
-    }
-
-    //--------------------------------------------------------------------
-    bool startsWith(const SFString& haystack, const SFString& needle) {
-        if (haystack.empty())
-            return false;
-        return (haystack.substr(0, needle.length()) == needle);
-    }
-
-    //--------------------------------------------------------------------
-    size_t countOf(char c, const SFString& str) {
-        size_t len = str.length();
-        size_t i=0, cnt=0;
-        while (i<len) {
-            if (str.at(i) == c)
-                cnt++;
-            i++;
-        }
-        return cnt;
     }
 
     //--------------------------------------------------------------------

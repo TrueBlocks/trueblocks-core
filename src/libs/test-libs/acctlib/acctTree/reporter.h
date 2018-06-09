@@ -79,7 +79,7 @@ public:
     bool isMax(void) {
         if (strs.Contains("0x+-0+-0+-0+-0+-0+-0+-0+-0+-0+-0+-0+-0+000000000000"))
             return false;
-        return (countOf('-', strs) > maxDepth);
+        return (countOf(strs, '-') > maxDepth);
     }
 };
 

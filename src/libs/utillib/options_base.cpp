@@ -748,7 +748,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
         while (!contents.empty()) {
             SFString line = nextTokenClear(contents, '\n');
             if (!startsWith(line, "#")) {
-                if (countOf('\t', line) < 2) {
+                if (countOf(line, '\t') < 2) {
                     cerr << "Line " << line << " does not contain two tabs.\n";
 
                 } else {

@@ -24,7 +24,7 @@ int main(int argc, const char *argv[]) {
     if (!options.prepareArguments(argc, argv))
         return 0;
 
-    options.nCmds = countOf('\n', options.commandList);
+    options.nCmds = countOf(options.commandList, '\n');
     if (options.nCmds > 1 && verbose)
         cout << "[\n";
     while (!options.commandList.empty()) {
