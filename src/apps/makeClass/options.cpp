@@ -59,7 +59,7 @@ bool COptions::parseArguments(SFString& command) {
         } else if (arg == "-s" || arg == "--silent") {
             silent = true;
 
-        } else if (arg.startsWith("-n:") || arg.startsWith("--namespace:")) {
+        } else if (startsWith(arg, "-n:") || startsWith(arg, "--namespace:")) {
 
             namesp = arg.Substitute("-n:", "").Substitute(".--namespace:", "");
 
@@ -78,7 +78,7 @@ bool COptions::parseArguments(SFString& command) {
         } else if (arg == "-a" || arg == "--all") {
             isAll = true;
 
-        } else if (!arg.startsWith('-')) {
+        } else if (!startsWith(arg, '-')) {
             if (!classNames.empty())
                 classNames += "|";
             classNames += arg.Substitute("classDefinitions/", "").Substitute(".txt", "");
@@ -164,7 +164,7 @@ COptions::~COptions(void) {
 
 //---------------------------------------------------------------------------------------------------
 bool listClasses(const SFString& path, void *data) {
-    if (path.endsWith("/")) {
+    if (endsWith(path, "/")) {
         forAllFiles(path + "*", listClasses, data);
 
     } else {

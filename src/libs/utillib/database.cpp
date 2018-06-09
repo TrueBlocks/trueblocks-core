@@ -596,7 +596,7 @@ namespace qblocks {
 
         SFString fn = filename.Substitute("r:", "");;
         if (!fn.empty()) {
-            if (filename.startsWith("r:")) {
+            if (startsWith(filename, "r:")) {
                 theList.Replace(fn+"|", "");
 
             } else if (!theList.Contains(fn+"|")) {

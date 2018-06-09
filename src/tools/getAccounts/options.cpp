@@ -32,7 +32,7 @@ bool COptions::parseArguments(SFString& command) {
         if (arg == "-n" || arg == "--named") {
             named = true;
 
-        } else if (arg.startsWith('-')) {  // do not collapse
+        } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);

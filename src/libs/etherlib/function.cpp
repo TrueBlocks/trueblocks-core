@@ -299,7 +299,7 @@ SFString CFunction::getValueByName(const SFString& fieldName) const {
         case 'i':
             if ( fieldName % "inputs" || fieldName % "inputsCnt" ) {
                 uint32_t cnt = inputs.getCount();
-                if (fieldName.endsWith("Cnt"))
+                if (endsWith(fieldName, "Cnt"))
                     return asStringU(cnt);
                 if (!cnt) return "";
                 SFString retS;
@@ -316,7 +316,7 @@ SFString CFunction::getValueByName(const SFString& fieldName) const {
         case 'o':
             if ( fieldName % "outputs" || fieldName % "outputsCnt" ) {
                 uint32_t cnt = outputs.getCount();
-                if (fieldName.endsWith("Cnt"))
+                if (endsWith(fieldName, "Cnt"))
                     return asStringU(cnt);
                 if (!cnt) return "";
                 SFString retS;

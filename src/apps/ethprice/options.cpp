@@ -42,7 +42,7 @@ bool COptions::parseArguments(SFString& command) {
         if (arg == "-f" || arg == "--freshen") {
             freshen = true;
 
-        } else if (arg.startsWith("-a:") || arg.startsWith("--at:")) {
+        } else if (startsWith(arg, "-a:") || startsWith(arg, "--at:")) {
             arg = orig.Substitute("-a:","").Substitute("--at:","");
             if (arg == "now") {
                 at = toTimestamp(Now());
@@ -52,13 +52,13 @@ bool COptions::parseArguments(SFString& command) {
                     return usage("Timestamp expected: " + orig);
             }
 
-        } else if (arg.startsWith("-p:") || arg.startsWith("--period:")) {
+        } else if (startsWith(arg, "-p:") || startsWith(arg, "--period:")) {
             arg = orig.Substitute("-p:","").Substitute("--period:","");
             freq = newUnsigned32(arg);
             if (!isUnsigned(arg) || freq % 5)
                 return usage("Positive multiple of 5 expected: " + orig);
 
-        } else if (arg.startsWith("--pair:")) {
+        } else if (startsWith(arg, "--pair:")) {
             arg = orig.Substitute("--pair:","");
             source.pair = arg;
 

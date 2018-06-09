@@ -194,7 +194,7 @@ SFString CLeaf::getValueByName(const SFString& fieldName) const {
         case 'b':
             if ( fieldName % "blocks" || fieldName % "blocksCnt" ) {
                 uint32_t cnt = blocks.getCount();
-                if (fieldName.endsWith("Cnt"))
+                if (endsWith(fieldName, "Cnt"))
                     return asStringU(cnt);
                 if (!cnt) return "";
                 SFString retS;

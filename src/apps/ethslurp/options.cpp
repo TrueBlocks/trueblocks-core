@@ -66,32 +66,32 @@ bool COptions::parseArguments(SFString& command) {
             prettyPrint = true;
             exportFormat = "json";
 
-        } else if (arg.startsWith("-f:") || arg.startsWith("--fmt:")) {
+        } else if (startsWith(arg, "-f:") || startsWith(arg, "--fmt:")) {
             prettyPrint = true;
             exportFormat = arg.Substitute("-f:", "").Substitute("--fmt:", "");
             if (exportFormat.empty())
                 return usage("Please provide a formatting option with " + orig + ". Quitting...");
 
-        } else if (arg.startsWith("--func:")) {
+        } else if (startsWith(arg, "--func:")) {
             funcFilter = arg.Substitute("--func:", "");
             if (funcFilter.empty())
                 return usage("Please provide a function to filter on " + orig + ". Quitting...");
 
-        } else if (arg.startsWith("--errFilt")) {
+        } else if (startsWith(arg, "--errFilt")) {
             // weird, but 1 == no errors, 2 == errors only
             errFilt = true + arg.Contains(":errsOnly");
 
-        } else if (arg.startsWith("--reverse")) {
+        } else if (startsWith(arg, "--reverse")) {
             reverseSort = true;
 
-        } else if (arg.startsWith("--acct_id:")) {
+        } else if (startsWith(arg, "--acct_id:")) {
             arg = arg.Substitute("--acct_id:", "");
             acct_id = toLong32u(arg);
 
-        } else if (arg.startsWith("--cache")) {
+        } else if (startsWith(arg, "--cache")) {
             cache = true;
 
-        } else if (arg.startsWith("-b:") || arg.startsWith("--blocks:")) {
+        } else if (startsWith(arg, "-b:") || startsWith(arg, "--blocks:")) {
 
             if (firstDate != earliestDate || lastDate != latestDate)
                 return usage("Specifiy either a date range or a block range, not both. Quitting...");
@@ -99,7 +99,7 @@ bool COptions::parseArguments(SFString& command) {
             SFString ret = blocks.parseBlockList(arg.Substitute("-b:","").Substitute("--blocks:",""), latestBlock);
             if (ret.Contains("'stop' must be strictly larger than 'start'"))
                 ret = "";
-            if (ret.endsWith("\n")) {
+            if (endsWith(ret, "\n")) {
                 cerr << "\n  " << ret << "\n";
                 return false;
             } else if (!ret.empty()) {
@@ -112,7 +112,7 @@ bool COptions::parseArguments(SFString& command) {
         } else if (arg == "-d") {
             return usage("Invalid option -d. This option must include :firstDate or :first:lastDate range.");
 
-        } else if (arg.startsWith("-d:") || arg.startsWith("--dates:")) {
+        } else if (startsWith(arg, "-d:") || startsWith(arg, "--dates:")) {
 
             if (blocks.hasBlocks())
                 return usage("Specifiy either a date range or a block range, not both. Quitting...");
@@ -149,7 +149,7 @@ bool COptions::parseArguments(SFString& command) {
         } else if (arg == "-r" || arg == "--rerun") {
             rerun = true;
 
-        } else if (arg.startsWith("--sleep:")) {
+        } else if (startsWith(arg, "--sleep:")) {
             arg = arg.Substitute("--sleep:", "");
             if (arg.empty() || !isdigit(arg[0]))
                 return usage("Sleep amount must be a numeral. Quitting...");
@@ -159,13 +159,13 @@ bool COptions::parseArguments(SFString& command) {
                 usleep(wait * 1000000);
             }
 
-        } else if (arg.startsWith("-m:") || arg.startsWith("--max:")) {
+        } else if (startsWith(arg, "-m:") || startsWith(arg, "--max:")) {
             SFString val = arg.Substitute("-m:", "").Substitute("--max:", "");
             if (val.empty() || !isdigit(val[0]))
                 return usage("Please supply a value with the --max: option. Quitting...");
             maxTransactions = toLong32u(val);
 
-        } else if (arg.startsWith("-n:") || arg.startsWith("--name:")) {
+        } else if (startsWith(arg, "-n:") || startsWith(arg, "--name:")) {
             SFString val = arg.Substitute("-n:", "").Substitute("--name:", "");
             if (val.empty())
                 return usage("You must supply a name with the --name option. Quitting...");
@@ -177,11 +177,11 @@ bool COptions::parseArguments(SFString& command) {
             wantsArchive = true;
             archiveFile = "";
 
-        } else if (arg.startsWith("-a:") || arg.startsWith("--archive:")) {
+        } else if (startsWith(arg, "-a:") || startsWith(arg, "--archive:")) {
             SFString fileName = arg.Substitute("-a:", "").Substitute("--archive:", "");
 
             CFilename filename(fileName);
-            if (!filename.getPath().startsWith('/'))
+            if (!startsWith(filename.getPath(), '/'))
                 return usage("Archive file '" + arg + "' does not resolve to a full path. "
                              "Use ./path/filename, ~/path/filename, or a fully qualified path.");
             archiveFile = filename.getFullPath();
@@ -192,7 +192,7 @@ bool COptions::parseArguments(SFString& command) {
             editFile(configPath("quickBlocks.toml"));
             exit(0);
 
-        } else if (arg.startsWith('-')) {  // do not collapse
+        } else if (startsWith(arg, '-')) {  // do not collapse
             if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);
             }

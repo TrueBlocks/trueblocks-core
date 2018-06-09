@@ -257,7 +257,7 @@ SFString CTrace::getValueByName(const SFString& fieldName) const {
         case 't':
             if ( fieldName % "traceAddress" || fieldName % "traceAddressCnt" ) {
                 uint32_t cnt = traceAddress.getCount();
-                if (fieldName.endsWith("Cnt"))
+                if (endsWith(fieldName, "Cnt"))
                     return asStringU(cnt);
                 if (!cnt) return "";
                 SFString retS;

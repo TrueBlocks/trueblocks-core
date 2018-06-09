@@ -43,7 +43,7 @@ SFString removeField(const SFString& strIn, const SFString& field) {
         SFString rest   = str.substr(start);
 
         size_t end = rest.find(",")+1; // first comma
-        if (rest.startsWith(search+"[")) // unless it's an array, then end of array
+        if (startsWith(rest, search+"[")) // unless it's an array, then end of array
             end = rest.find("]")+1;
         SFString during = rest.substr(0,end);
         SFString after  = rest.substr(end);
@@ -116,7 +116,7 @@ SFString cleanAll(const SFString& str, bool remove, bool isByzan) {
     SFString ret;
     while (!orig.empty()) {
         SFString line = nextTokenClear(orig, '\n');
-        if (!line.startsWith("\"id\":"))
+        if (!startsWith(line, "\"id\":"))
             ret += (line + "\n");
     }
     return trim(ret.Substitute("\"\"","\"\n\"").Substitute("\n\n","\n"), '\n');

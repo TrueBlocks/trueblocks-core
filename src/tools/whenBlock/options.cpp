@@ -49,7 +49,7 @@ bool COptions::parseArguments(SFString& command) {
 
             alone = true;
 
-        } else if (arg.startsWith('-')) {  // do not collapse
+        } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
                 return usage("Invalid option: '" + orig + "'. Quitting...");
@@ -57,7 +57,7 @@ bool COptions::parseArguments(SFString& command) {
 
         } else if (arg.ContainsAny(":- ") && countOf('-',arg) > 1) {
 
-            ASSERT(!arg.startsWith("-"));
+            ASSERT(!startsWith(arg, "-"));
             if (isList)
                 return usage("The --list option must appear alone on the line. Quitting...");
 
@@ -99,7 +99,7 @@ bool COptions::parseArguments(SFString& command) {
             } else  {
 
                 SFString ret = blocks.parseBlockList(arg, latestBlock);
-                if (ret.endsWith("\n")) {
+                if (endsWith(ret, "\n")) {
                     cerr << "\n  " << ret << "\n";
                     return false;
                 } else if (!ret.empty()) {

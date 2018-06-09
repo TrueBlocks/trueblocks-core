@@ -29,7 +29,7 @@ bool COptions::parseArguments(SFString& command) {
         SFString arg = nextTokenClear(command, ' ');
         SFString orig = arg;
         if (arg == "-x" || arg == "--xarg") {
-        } else if (arg.startsWith("-")) {
+        } else if (startsWith(arg, "-")) {
             if (!builtInCmd(arg)) {
                 return usage("Invalid argument: " + orig);
             }

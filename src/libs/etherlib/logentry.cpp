@@ -226,7 +226,7 @@ SFString CLogEntry::getValueByName(const SFString& fieldName) const {
         case 't':
             if ( fieldName % "topics" || fieldName % "topicsCnt" ) {
                 uint32_t cnt = topics.getCount();
-                if (fieldName.endsWith("Cnt"))
+                if (endsWith(fieldName, "Cnt"))
                     return asStringU(cnt);
                 if (!cnt) return "";
                 SFString retS;

@@ -230,7 +230,7 @@ SFString CNewReceipt::getValueByName(const SFString& fieldName) const {
         case 'l':
             if ( fieldName % "logs" || fieldName % "logsCnt" ) {
                 uint32_t cnt = logs.getCount();
-                if (fieldName.endsWith("Cnt"))
+                if (endsWith(fieldName, "Cnt"))
                     return asStringU(cnt);
                 if (!cnt) return "";
                 SFString retS;

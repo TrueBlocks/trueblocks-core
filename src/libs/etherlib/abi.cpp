@@ -202,7 +202,7 @@ SFString CAbi::getValueByName(const SFString& fieldName) const {
         case 'a':
             if ( fieldName % "abiByName" || fieldName % "abiByNameCnt" ) {
                 uint32_t cnt = abiByName.getCount();
-                if (fieldName.endsWith("Cnt"))
+                if (endsWith(fieldName, "Cnt"))
                     return asStringU(cnt);
                 if (!cnt) return "";
                 SFString retS;
@@ -214,7 +214,7 @@ SFString CAbi::getValueByName(const SFString& fieldName) const {
             }
             if ( fieldName % "abiByEncoding" || fieldName % "abiByEncodingCnt" ) {
                 uint32_t cnt = abiByEncoding.getCount();
-                if (fieldName.endsWith("Cnt"))
+                if (endsWith(fieldName, "Cnt"))
                     return asStringU(cnt);
                 if (!cnt) return "";
                 SFString retS;
@@ -279,8 +279,8 @@ int findByName(const void *rr1, const void *rr2) {
 
 //---------------------------------------------------------------------------
 int cleanCompare(const SFString& s1, const SFString& s2) {
-    SFString ss1 = (s1.startsWith("0x") ? s1.substr(2,8) : s1.substr(0,8));
-    SFString ss2 = (s2.startsWith("0x") ? s2.substr(2,8) : s2.substr(0,8));
+    SFString ss1 = (startsWith(s1, "0x") ? s1.substr(2,8) : s1.substr(0,8));
+    SFString ss2 = (startsWith(s2, "0x") ? s2.substr(2,8) : s2.substr(0,8));
     return ss2.compare(ss1);
 }
 
@@ -442,7 +442,7 @@ bool CAbi::loadABI(const SFString& addr) {
 //---------------------------------------------------------------------------
 bool visitABIs(const SFString& path, void *dataPtr) {
 
-    if (path.endsWith(".json")) {
+    if (endsWith(path, ".json")) {
         SFString *str = (SFString*)dataPtr;
         *str += (path+"\n");
     }
@@ -494,8 +494,8 @@ static CFunctionArray *getABIArray(void) {
 
 //---------------------------------------------------------------------------
 int cleanCompareI(const SFString& s1, const SFString& s2) {
-    SFString ss1 = toLower(s1.startsWith("0x") ? s1.substr(2,8) : s1.substr(0,8));
-    SFString ss2 = toLower(s2.startsWith("0x") ? s2.substr(2,8) : s2.substr(0,8));
+    SFString ss1 = toLower(startsWith(s1, "0x") ? s1.substr(2,8) : s1.substr(0,8));
+    SFString ss2 = toLower(startsWith(s2, "0x") ? s2.substr(2,8) : s2.substr(0,8));
     return ss2.compare(ss1);
 }
 

@@ -27,7 +27,7 @@ namespace qblocks {
 
     //----------------------------------------------------------------------------
     inline uint64_t hex2Long(const SFString& inHex) {
-        SFString hex = toLower(inHex.startsWith("0x") ? inHex.substr(2) : inHex);
+        SFString hex = toLower(startsWith(inHex, "0x") ? inHex.substr(2) : inHex);
         hex.Reverse();
         char *s = (char *)(const char*)hex;
 
@@ -54,7 +54,7 @@ namespace qblocks {
 
     //----------------------------------------------------------------------------
     inline SFString hex2String(const SFString& inHex) {
-        SFString ret, in = inHex.startsWith("0x") ? inHex.substr(2) : inHex;
+        SFString ret, in = startsWith(inHex, "0x") ? inHex.substr(2) : inHex;
         while (!in.empty()) {
             SFString nibble = in.substr(0,2);
             in = in.substr(2);
@@ -161,7 +161,7 @@ namespace qblocks {
         ret = ret.substr(0,18) + "." + ret.substr(18);
         ret.Reverse();
         ret = trimLeading(ret, '0');
-        if (ret.startsWith('.'))
+        if (startsWith(ret, '.'))
             ret = "0" + ret;
         if (ret.Contains("0-")) {
             ret = "-" + ret.Substitute("0-","0");
@@ -239,8 +239,8 @@ namespace qblocks {
 #define blknum_t       uint64_t
 #define txnum_t        uint64_t
 
-#define toUnsigned(a)  (uint64_t)((a).startsWith("0x")?hex2Long((a)):toLongU((a)))
-#define toSigned(a)    (int64_t)((a).startsWith("0x")?hex2Long((a)):toLong((a)))
+#define toUnsigned(a)  (uint64_t)(startsWith((a), "0x")?hex2Long((a)):toLongU((a)))
+#define toSigned(a)    (int64_t)(startsWith((a), "0x")?hex2Long((a)):toLong((a)))
 #define toHash(a)      toLower(a)
 #define toTopic(a)     canonicalWei(a)
 #define toBloom(a)     canonicalWei(a)
@@ -276,7 +276,7 @@ namespace qblocks {
 
     //----------------------------------------------------------------------------------
     inline SFString fixHash(const SFString& hashIn) {
-        SFString ret = hashIn.startsWith("0x") ? hashIn.substr(2) : hashIn;
+        SFString ret = startsWith(hashIn, "0x") ? hashIn.substr(2) : hashIn;
         return "0x" + padLeft(ret, 32 * 2, '0');
     }
 
@@ -287,7 +287,7 @@ namespace qblocks {
 
     //----------------------------------------------------------------------------------
     inline SFString fixAddress(const SFAddress& addrIn) {
-        SFString ret = addrIn.startsWith("0x") ? addrIn.substr(2) : addrIn;
+        SFString ret = startsWith(addrIn, "0x") ? addrIn.substr(2) : addrIn;
         return "0x" + ret;
     }
 
@@ -308,7 +308,7 @@ namespace qblocks {
 
         // Shorten, but only if all leading zeros
         SFString leading('0', 64-40);
-        if (ret.length()==64 && ret.startsWith(leading))
+        if (ret.length()==64 && startsWith(ret, leading))
             ret.Replace(leading,"");
 
         // Special case
@@ -341,14 +341,14 @@ namespace qblocks {
         if (!isdigit(in[0]))
             return false;
 
-        return (!in.startsWith("0x") || isHex(in.at(2)));
+        return (!startsWith(in, "0x") || isHex(in.at(2)));
     }
 
-#define newUnsigned64(a)  ((a).startsWith("0x") ?    (uint64_t)hex2Long((a)) :    (uint64_t)toLongU((a)))
-#define newSigned64(a)    ((a).startsWith("0x") ?    ( int64_t)hex2Long((a)) :    ( int64_t)toLong ((a)))
+#define newUnsigned64(a)  (startsWith((a), "0x") ?    (uint64_t)hex2Long((a)) :    (uint64_t)toLongU((a)))
+#define newSigned64(a)    (startsWith((a), "0x") ?    ( int64_t)hex2Long((a)) :    ( int64_t)toLong ((a)))
 
-#define newUnsigned32(a)  ((a).startsWith("0x") ?    (uint32_t)hex2Long((a)) :    (uint32_t)toLongU((a)))
-#define newSigned32(a)    ((a).startsWith("0x") ?    ( int32_t)hex2Long((a)) :    ( int32_t)toLong ((a)))
+#define newUnsigned32(a)  (startsWith((a), "0x") ?    (uint32_t)hex2Long((a)) :    (uint32_t)toLongU((a)))
+#define newSigned32(a)    (startsWith((a), "0x") ?    ( int32_t)hex2Long((a)) :    ( int32_t)toLong ((a)))
 
     //--------------------------------------------------------------------
     inline SFString formatFloat(double f, uint32_t nDecimals=10) {

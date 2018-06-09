@@ -149,7 +149,7 @@ namespace qblocks {
                     exit(0);
                 }
 
-                if (fallBack == "infura" && method.startsWith("trace_")) {
+                if (fallBack == "infura" && startsWith(method, "trace_")) {
                     cerr << cYellow;
                     cerr << "\n";
                     cerr << "\tWarning: " << cOff << "A trace request was made to the fallback\n";

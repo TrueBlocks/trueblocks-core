@@ -55,7 +55,7 @@ bool test_encodings(void) {
     nextTokenClear(contents, '\n');  // skip header row
     while (!contents.empty()) {
         SFString expected = nextTokenClear(contents, '\n');
-        if (!expected.startsWith(';')) {
+        if (!startsWith(expected, ';')) {
             SFString type  = nextTokenClear(expected, ' ');
             SFString text  = nextTokenClear(expected, ' ');
             SFString myHex = "0x"+string2Hex(text);

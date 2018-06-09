@@ -248,7 +248,7 @@ CParameter::CParameter(SFString& textIn) {
     type       = nextTokenClear(textIn, ' ');
     isPointer  = textIn.Contains("*");
     isArray    = textIn.Contains("Array");
-    isObject   = !isArray && type.startsWith('C');
+    isObject   = !isArray && startsWith(type, 'C');
     name       = textIn.Substitute("*", "");
 }
 // EXISTING_CODE

@@ -72,7 +72,7 @@ void addIfUnique(const SFString& addr, CFunctionArray& functions, CFunction& fun
         // the first four characters of the contract's address.
         if (decorateNames && functions[i].name == func.name) {
             func.origName = func.name;
-            func.name += (addr.startsWith("0x") ? addr.substr(2,4) : addr.substr(0,4));
+            func.name += (startsWith(addr, "0x") ? addr.substr(2,4) : addr.substr(0,4));
         }
     }
 
@@ -249,7 +249,7 @@ int main(int argc, const char *argv[]) {
                     SFString name = func->Format("[{NAME}]") + (func->type == "event" ? "Event" : "");
                     if (name == "eventEvent")
                         name = "logEntry";
-                    if (name.startsWith('_'))
+                    if (startsWith(name, '_'))
                         name = name.substr(1);
                     char ch = static_cast<char>(toupper(name[0]));
                     SFString fixed(ch);
