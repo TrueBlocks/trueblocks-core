@@ -117,18 +117,7 @@ namespace qblocks {
             uint32_t GetSecond(void) const;
             uint32_t GetTotalSeconds(void) const;
 
-            bool operator==(const SFTimeOfDay& tod) const;
-            bool operator!=(const SFTimeOfDay& tod) const;
-
-            bool operator>(const SFTimeOfDay& tod) const;
-            bool operator<(const SFTimeOfDay& tod) const;
-
-            bool operator>=(const SFTimeOfDay& tod) const;
-            bool operator<=(const SFTimeOfDay& tod) const;
-
             SFString Format(const SFString& fmt = "") const;
-
-            bool IsValid(void) const;
 
             uint32_t m_nSeconds;
             friend class SFTime;

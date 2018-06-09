@@ -356,41 +356,6 @@ namespace qblocks {
     }
 
     //-------------------------------------------------------------------------
-    bool SFTime::SFTimeOfDay::IsValid() const {
-        return (m_nSeconds != SECS_PER_DAY);
-    }
-
-    //-------------------------------------------------------------------------
-    bool SFTime::SFTimeOfDay::operator==(const SFTimeOfDay& tod) const {
-        return (m_nSeconds == tod.m_nSeconds);
-    }
-
-    //-------------------------------------------------------------------------
-    bool SFTime::SFTimeOfDay::operator!=(const SFTimeOfDay& tod) const {
-        return !operator==(tod);
-    }
-
-    //-------------------------------------------------------------------------
-    bool SFTime::SFTimeOfDay::operator>(const SFTimeOfDay& tod) const {
-        return (m_nSeconds > tod.m_nSeconds);
-    }
-
-    //-------------------------------------------------------------------------
-    bool SFTime::SFTimeOfDay::operator<(const SFTimeOfDay& tod) const {
-        return (m_nSeconds < tod.m_nSeconds);
-    }
-
-    //-------------------------------------------------------------------------
-    bool SFTime::SFTimeOfDay::operator>=(const SFTimeOfDay& tod) const {
-        return (m_nSeconds >= tod.m_nSeconds);
-    }
-
-    //-------------------------------------------------------------------------
-    bool SFTime::SFTimeOfDay::operator<=(const SFTimeOfDay& tod) const {
-        return (m_nSeconds <= tod.m_nSeconds);
-    }
-
-    //-------------------------------------------------------------------------
     uint32_t SFTime::GetYear() const {
         return getDatePart().GetYear();
     }
@@ -654,7 +619,7 @@ namespace qblocks {
         ASSERT(!sFormat.empty());
 
         SFString ret;
-        if (IsValid()) {
+        if (true) {
             char sBuffer[512];
             size_t bSize = sizeof(sBuffer);
 
