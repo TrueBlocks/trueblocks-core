@@ -330,47 +330,8 @@ namespace qblocks {
     }
 
     //---------------------------------------------------------------------------------------
-    // Find functions
-
-    //---------------------------------------------------------------------------------------
-    size_t SFString::findI(const char *search) const {
-        SFString me   = toLower(*this);
-        SFString test = toLower(SFString(search));
-        char *f = strstr(me.m_Values, test.m_Values);
-        if (f)
-            return size_t(f-me.m_Values);
-        return NOPOS;
-    }
-
-    //---------------------------------------------------------------------------------------
-    bool SFString::ContainsAny(const SFString& search) const {
-        for (size_t i=0;i<search.length();i++)
-            if (Contains(search[i]))
-                return true;
-        return false;
-    }
-
-    //---------------------------------------------------------------------------------------
-    bool SFString::ContainsAll(const SFString& search) const {
-        for (size_t i=0;i<search.length();i++)
-            if (!Contains(search[i]))
-                return false;
-        return true;
-    }
-
-    //---------------------------------------------------------------------------------------
-    bool SFString::Contains(char ch) const {
-        return (find(ch) != NOPOS);
-    }
-
-    //---------------------------------------------------------------------------------------
     bool SFString::Contains(const SFString& search) const {
         return (find(search) != NOPOS);
-    }
-
-    //---------------------------------------------------------------------------------------
-    bool SFString::ContainsI(const SFString& search) const {
-        return (findI(search) != NOPOS);
     }
 
     //---------------------------------------------------------------------------------------
@@ -397,22 +358,15 @@ namespace qblocks {
             *this = substr(0,i) + with + substr(i + what.length());
     }
 
-    //---------------------------------------------------------------------------------------
-    void SFString::ReplaceI(const SFString& what, const SFString& with) {
-        size_t i = findI(what);
-        if (i != NOPOS)
-            *this = substr(0,i) + with + substr(i + what.length());
-    }
-
-    //---------------------------------------------------------------------------------------
-    void SFString::ReplaceAll(char what, char with) {
-        char *s = m_Values;
-        while (*s) {
-            if (*s == what)
-                *s = with;
-            s++;
-        }
-    }
+//    //---------------------------------------------------------------------------------------
+//    void SFString::ReplaceAll(char what, char with) {
+//        char *s = m_Values;
+//        while (*s) {
+//            if (*s == what)
+//                *s = with;
+//            s++;
+//        }
+//    }
 
     //---------------------------------------------------------------------------------------
     void SFString::ReplaceAll(const SFString& what, const SFString& with) {
@@ -453,32 +407,6 @@ namespace qblocks {
     }
 
     //---------------------------------------------------------------------------------------
-    size_t SFString::findExactI(const SFString& search, char sep, const SFString& replaceables) const {
-        SFString me   = toLower(*this);
-        SFString test = toLower(search);
-        return me.findExact(test, sep, replaceables);
-    }
-
-    //---------------------------------------------------------------------------------------
-    size_t SFString::findExact(const SFString& search, char sep, const SFString& repables) const {
-        ASSERT(sep == '|' || sep == ';' || sep == ',' || sep == ' ');
-
-        SFString sepStr(sep);
-
-        // Surround the stringa with sep to handle boundary cases
-        SFString tS = sepStr + *this  + sepStr;
-        SFString qS = sepStr + search + sepStr;
-
-        // we will replace everything but the separator
-        SFString replaceables = repables;
-        replaceables.Replace(sepStr, EMPTY);
-
-        tS.ReplaceAny(replaceables, sepStr);
-
-        return tS.find(qS);
-    }
-
-    //---------------------------------------------------------------------------------------
     void SFString::Reverse() {
         char tmp;
         unsigned int i,j;
@@ -489,11 +417,6 @@ namespace qblocks {
             m_Values[i] = m_Values[j];
             m_Values[j] = tmp;
         }
-    }
-
-    //---------------------------------------------------------------------------------------
-    int SFString::Icompare(const char *str) const {
-        return strcasecmp(m_Values, str);
     }
 
     //----------------------------------------------------------------------------------------

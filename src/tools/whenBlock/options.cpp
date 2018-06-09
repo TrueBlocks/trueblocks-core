@@ -25,6 +25,7 @@ uint32_t nParams = sizeof(params) / sizeof(CParams);
 
 extern int sortByBlockNum(const void *v1, const void *v2);
 extern SFTime grabDate(const SFString& strIn);
+extern bool containsAny(const SFString& haystack, const SFString& needle);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(SFString& command) {
 
@@ -55,7 +56,7 @@ bool COptions::parseArguments(SFString& command) {
                 return usage("Invalid option: '" + orig + "'. Quitting...");
             }
 
-        } else if (arg.ContainsAny(":- ") && countOf(arg, '-') > 1) {
+        } else if (containsAny(arg, ":- ") && countOf(arg, '-') > 1) {
 
             ASSERT(!startsWith(arg, "-"));
             if (isList)
@@ -284,3 +285,13 @@ SFString COptions::listSpecials(bool terse) const {
     }
     return os.str().c_str();
 }
+
+//---------------------------------------------------------------------------------------
+bool containsAny(const SFString& haystack, const SFString& needle) {
+    string need = needle.c_str();
+    for (auto elem : need)
+        if (haystack.Contains(elem))
+            return true;
+    return false;
+}
+
