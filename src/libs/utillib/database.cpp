@@ -497,7 +497,7 @@ namespace qblocks {
                 existingCode.Replace(tabs + "// EXISTING_CODE", "</code>");
             }
             while (existingCode.Contains("</code>")) {
-                SFString snipit = Strip(snagFieldClear(existingCode, "code"), '\n');
+                SFString snipit = trim(snagFieldClear(existingCode, "code"), '\n');
                 codeOut.Replace(tabs + "// EXISTING_CODE\n" + tabs + "// EXISTING_CODE",
                                 tabs + "// EXISTING_CODE\n" + snipit + "\n" + tabs + "// EXISTING_CODE");
             }

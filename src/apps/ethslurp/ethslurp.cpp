@@ -524,10 +524,10 @@ void CSlurperApp::buildDisplayStrings(COptions& options) {
                 .Substitute("<td ", "<th ");
         }
     }
-    theAccount.displayString = StripAny(theAccount.displayString, "\t ");
-    theAccount.header = StripAny(theAccount.header, "\t ");
+    theAccount.displayString = trimWhitespace(theAccount.displayString);
+    theAccount.header        = trimWhitespace(theAccount.header);
 
-    theAccount.displayString = Strip(fmtForRecords.Substitute("[{FIELDS}]", theAccount.displayString), '\t');
+    theAccount.displayString = trim(fmtForRecords.Substitute("[{FIELDS}]", theAccount.displayString), '\t');
     theAccount.displayString.ReplaceAll("[{NAME}]", options.archiveFile);
     if (options.exportFormat == "json") {
         // One little hack to make raw json more readable

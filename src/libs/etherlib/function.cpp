@@ -393,7 +393,7 @@ SFString CFunction::getSignature(uint64_t parts) const {
     }
 
     ctx.str.ReplaceAll(" )", ")");
-    return Strip(ctx.str, ' ');
+    return trim(ctx.str);
 }
 
 //-----------------------------------------------------------------------

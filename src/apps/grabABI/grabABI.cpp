@@ -109,7 +109,7 @@ SFString acquireABI(CFunctionArray& functions, const SFAddress& addr, const COpt
                             + addr;
         results = urlToString(url).Substitute("\\", "");
         if (!results.Contains("NOTOK")) {
-        	// strip RPC wrapper
+        	// clear the RPC wrapper
         	results.Replace("{\"status\":\"1\",\"message\":\"OK\",\"result\":\"","");
         	results.ReplaceReverse("]\"}","");
         	if (verbose) {
@@ -447,7 +447,7 @@ int main(int argc, const char *argv[]) {
 
             // The code
             if (!options.isBuiltin()) {
-                makeTheCode("rebuild",        StripTrailing(addrList,'|').Substitute("|", " "));
+                makeTheCode("rebuild",        trimTrailing(addrList,'|').Substitute("|", " "));
                 makeTheCode("CMakeLists.txt", options.primaryAddr);
                 makeTheCode("debug.h",        options.primaryAddr);
                 makeTheCode("debug.cpp",      options.primaryAddr);

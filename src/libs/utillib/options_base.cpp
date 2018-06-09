@@ -48,14 +48,14 @@ namespace qblocks {
             cout << programName << " argc: " << argc << " ";
             for (int i=1;i<argc;i++) {
                 SFString str = argv[i];
-                cout << "[" << i << ":" << Strip(str) << "] ";
+                cout << "[" << i << ":" << trim(str) << "] ";
             }
             cout << "\n";
             // ... and once to use as a command line for copy/paste
             cout << programName << " ";
             for (int i=1;i<argc;i++) {
                 SFString str = argv[i];
-                cout << Strip(str) << " ";
+                cout << trim(str) << " ";
             }
             cout << "\n";
         }
@@ -73,7 +73,7 @@ namespace qblocks {
         bool hasStdIn = false;
         for (int i = 1 ; i < argc ; i++) {
             SFString str = argv[i];
-            SFString arg = Strip(str);
+            SFString arg = trim(str);
             arg.Replace("--verbose", "-v");
             while (!arg.empty()) {
                 SFString opt = expandOption(arg);  // handles case of -rf for example
@@ -179,7 +179,7 @@ namespace qblocks {
                 nextTokenClear(commandList,'\n');
             } else {
                 while (!contents.empty()) {
-                    SFString command = StripAny(nextTokenClear(contents, '\n'), "\t\r\n ");
+                    SFString command = trimWhitespace(nextTokenClear(contents, '\n'));
                     if (!command.empty() && !command.startsWith(";"))  // ignore comments
                         commandList += (command+"\n");
                 }
@@ -187,7 +187,7 @@ namespace qblocks {
         }
         commandList += stdInCmds;
         commandList.ReplaceAll(" \n", "\n");
-        commandList = Strip(commandList, '\n');
+        commandList = trim(commandList, '\n');
 
         if (args) delete [] args;
         return 1;
@@ -236,7 +236,7 @@ namespace qblocks {
                 if (sorts[i])
                     sorts[i]->sortFieldList();
         }
-        cmdLine = Strip(cmdLine, ' ');
+        cmdLine = trim(cmdLine);
         return true;
     }
 
@@ -466,7 +466,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
         for (uint64_t i = 0 ; i < nParamsRef ; i++) {
             SFString sName = paramsPtr[i].shortName;
             SFString lName = paramsPtr[i].longName;
-            SFString descr = Strip(paramsPtr[i].description, ' ');
+            SFString descr = trim(paramsPtr[i].description);
             if (sName.startsWith('@') && !showHidden) {
                 // invisible option
 
@@ -739,7 +739,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
             cout << "Reading from text database\n";
 
         // Read the data from the names database and clean it up if needed
-        SFString contents = StripAny(asciiFileToString(textFile), "\t\n ");
+        SFString contents = trimWhitespace(asciiFileToString(textFile));
         contents.ReplaceAll("\t\t", "\t");
         if (!contents.endsWith("\n"))
             contents += "\n";

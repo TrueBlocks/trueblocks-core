@@ -27,7 +27,7 @@ namespace qblocks {
 
     //----------------------------------------------------------------------------
     inline uint64_t hex2Long(const SFString& inHex) {
-        SFString hex = toLower(inHex.startsWith("0x")?inHex.substr(2):inHex);
+        SFString hex = toLower(inHex.startsWith("0x") ? inHex.substr(2) : inHex);
         hex.Reverse();
         char *s = (char *)(const char*)hex;
 
@@ -153,14 +153,14 @@ namespace qblocks {
     inline SFString wei2Ether(const SFString& _value) {
         // Make sure the wei number is at least 18 characters long. Once it is,
         // reverse it, put a decimal at the 18th position, reverse it back,
-        // strip leading '0's except the tens digit.
+        // trim leading '0's except the tens digit.
         SFString ret = _value;
         if (ret.length() < 18)
             ret = padLeft(_value, 18).Substitute(" ", "0");
         ret.Reverse();
         ret = ret.substr(0,18) + "." + ret.substr(18);
         ret.Reverse();
-        ret = StripLeading(ret, '0');
+        ret = trimLeading(ret, '0');
         if (ret.startsWith('.'))
             ret = "0" + ret;
         if (ret.Contains("0-")) {
@@ -303,7 +303,7 @@ namespace qblocks {
 
     //------------------------------------------------------
     inline SFAddress toAddress(const SFAddress& strIn) {
-        // Strip it if it's there. We will put it back
+        // trim it if it's there. We will put it back
         SFString ret = strIn.Substitute("0x","");
 
         // Shorten, but only if all leading zeros

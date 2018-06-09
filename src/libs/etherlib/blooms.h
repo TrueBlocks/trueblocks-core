@@ -50,7 +50,6 @@ extern SFString getSha3 (const SFString& hexIn);
 
     //----------------------------------------------------------------------------------
     extern bool compareBlooms(const SFBloom& b1, const SFBloom& b2, SFString& str);
-    extern SFString formatBloom(const SFBloom& b1, bool bits);
     extern bool addAddrToBloom(const SFAddress& addr, SFBloomArray& blooms, uint32_t maxBits);
 
     //----------------------------------------------------------------------------------

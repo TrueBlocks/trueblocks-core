@@ -142,15 +142,16 @@ namespace qblocks {
 
         SFTime now = Now();
         SFString tmpPath = "/tmp/";
-        SFString filename = makeValidName(tmpPath + "qb_" + now.Format("%Y%m%d%H%M%S"));
-        if (system((const char *)(cmd + ">" + filename))) { }  // Don't remove. Silences compiler warnings
+        SFString filename = tmpPath + makeValidName("qb_" + now.Format("%Y%m%d%H%M%S"));
+        SFString theCommand = (cmd + " >" + filename);
+        if (system(theCommand.c_str())) { }  // Don't remove. Silences compiler warnings
 
         // Check twice for existance since the previous command creates the file but may take some time
         waitForCreate(filename);
 extern SFString binaryFileToString(const SFString& filename);
         SFString ret = binaryFileToString(filename);
         remove(filename.c_str());
-        return Strip(ret, '\n');
+        return trim(ret, '\n');
     }
 
     //------------------------------------------------------------------

@@ -21,7 +21,7 @@ SFString diffStr(const SFString& str1, const SFString& str2) {
         SFString line = nextTokenClear(junk,'\n');
         diff.Replace(line,"\n");
     }
-    SFString ret = Strip(diff.Substitute("\n\n","\n"), '\n');
+    SFString ret = trim(diff.Substitute("\n\n","\n"), '\n');
     if (!ret.empty())
         ret += "\n";
     return ret;
@@ -48,9 +48,9 @@ SFString removeField(const SFString& strIn, const SFString& field) {
         SFString during = rest.substr(0,end);
         SFString after  = rest.substr(end);
 
-        before = Strip(before, '\n');
-        during = Strip(during, '\n');
-        after  = Strip(after,  '\n');
+        before = trim(before, '\n');
+        during = trim(during, '\n');
+        after  = trim(after,  '\n');
         ret += (before + after);
         str = after;
     }
@@ -107,7 +107,7 @@ SFString cleanAll(const SFString& str, bool remove, bool isByzan) {
     orig.ReplaceAll("[", "");
     orig.ReplaceAll("]", "");
     orig.ReplaceAll("\"to\":null","\"to\":\"0x0\"");
-    orig = StripAny(orig, "\t\n ");
+    orig = trimWhitespace(orig);
     orig = orig.Substitute("\"result\":","").Substitute("\"transactions\":","").Substitute("\"logs\":","");
     orig = orig.Substitute("\"jsonrpc\":","");
     orig = orig.Substitute("0x" + SFString('0',512), "0x0"); // minimize bloom filters
@@ -119,7 +119,7 @@ SFString cleanAll(const SFString& str, bool remove, bool isByzan) {
         if (!line.startsWith("\"id\":"))
             ret += (line + "\n");
     }
-    return Strip(ret.Substitute("\"\"","\"\n\"").Substitute("\n\n","\n"),'\n');
+    return trim(ret.Substitute("\"\"","\"\n\"").Substitute("\n\n","\n"), '\n');
 }
 
 //------------------------------------------------------------

@@ -435,15 +435,15 @@ namespace qblocks {
     extern SFString toProper(const SFString& in);
 
     //--------------------------------------------------------------------
-    extern string_q StripTrailing(const string_q& str, char c = ' ');
-    extern string_q StripLeading (const string_q& str, char c = ' ');
-    extern string_q Strip        (const string_q& str, char c = ' ');
-    extern string_q StripAny     (const string_q& str, const string_q& any = " ");
+    extern string_q trim          (const string_q& str, char c = ' ');
+    extern string_q trimTrailing  (const string_q& str, char c = ' ');
+    extern string_q trimLeading   (const string_q& str, char c = ' ');
+    extern string_q trimWhitespace(const string_q& str, const string_q& add="");
 
     //--------------------------------------------------------------------
-    extern SFString StripTrailing(const SFString& str, char c = ' ');
-    extern SFString StripLeading (const SFString& str, char c = ' ');
-    extern SFString Strip        (const SFString& str, char c = ' ');
-    extern SFString StripAny     (const SFString& str, const SFString& any = " ");
+    extern SFString trim          (const SFString& str, char c = ' ');
+    extern SFString trimTrailing  (const SFString& str, char c = ' ');
+    extern SFString trimLeading   (const SFString& str, char c = ' ');
+    extern SFString trimWhitespace(const SFString& str, const SFString& add="");
 
 }  // namespace qblocks

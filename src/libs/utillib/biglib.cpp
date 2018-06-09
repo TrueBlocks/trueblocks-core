@@ -43,8 +43,7 @@ namespace qblocks {
         BigUnsignedInABase(int, unsigned int c) : SFBigNumStore<unsigned short>(0, c) {}
 
         // Decreases len to eliminate any leading zero igits.
-        void trimLeft()
-        {
+        void trimLeadingZeros(void) {
             while (len > 0 && blk[len - 1] == 0)
                 len--;
         }
@@ -95,7 +94,7 @@ namespace qblocks {
             if (blk[i] >= base)
                 throw "BigUnsignedInABase::BigUnsignedInABase(const unsigned short *, unsigned int, unsigned short): A d igit is too large for the specified base";
 
-        trimLeft();
+        trimLeadingZeros();
     }
 
     //------------------------------------------------------------------
@@ -177,7 +176,7 @@ namespace qblocks {
             if (blk[digitNum] >= base)
                 throw "BigUnsignedInABase::BigUnsignedInABase(const unsigned short *, unsigned int, unsigned short): A digit is too large for the specified base";
         }
-        trimLeft();
+        trimLeadingZeros();
     }
 
     //------------------------------------------------------------------

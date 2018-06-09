@@ -122,13 +122,13 @@ void testCStr(void) {
     cout << toUpper(text) << "\n";
     cout << toProper(text) << "\n";
 
-    SFString strip = "\t AxBBBxBx\tA ";
-    cout << "\t|" << strip << "|\n";
-    cout << "\t|" << Strip(strip) << "|\n";
-    cout << "\t|" << StripLeading(strip, '\t') << "|\n";
-    cout << "\t|" << StripTrailing(strip) << "|\n";
-    cout << "\t|" << StripAny(strip, " \t") << "|\n";
-    cout << "\t|" << StripAny(strip, " \tZAx") << "|\n";
+    SFString strip1 = "\t AxBBBxBx\tA ";
+    cout << "\t|" << strip1 << "|\n";
+    cout << "\t|" << trim(strip1) << "|\n";
+    cout << "\t|" << trimLeading(strip1, '\t') << "|\n";
+    cout << "\t|" << trimTrailing(strip1) << "|\n";
+    cout << "\t|" << trimWhitespace(strip1) << "|\n";
+    cout << "\t|" << trimWhitespace(strip1, "ZAx") << "|\n";
 
     string_q text1 = "\tThis isthe_thing\tthat matters\n\tand is_upperCase lower case\n";
     cout << "\n";
@@ -137,13 +137,13 @@ void testCStr(void) {
     cout << toUpper(text1) << "\n";
     cout << toProper(text1) << "\n";
 
-    string_q strip1 = "\t AxBBBxBx\tA ";
-    cout << "\t|" << strip1 << "|\n";
-    cout << "\t|" << Strip(strip1) << "|\n";
-    cout << "\t|" << StripLeading(strip1, '\t') << "|\n";
-    cout << "\t|" << StripTrailing(strip1) << "|\n";
-    cout << "\t|" << StripAny(strip1, " \t") << "|\n";
-    cout << "\t|" << StripAny(strip1, " \tZAx") << "|\n";
+    string_q strip2 = "\t AxBBBxBx\tA ";
+    cout << "\t|" << strip2 << "|\n";
+    cout << "\t|" << trim(strip2) << "|\n";
+    cout << "\t|" << trimLeading(strip2, '\t') << "|\n";
+    cout << "\t|" << trimTrailing(strip2) << "|\n";
+    cout << "\t|" << trimWhitespace(strip2) << "|\n";
+    cout << "\t|" << trimWhitespace(strip2, "ZAx") << "|\n";
 }
 
 #include "options.h"

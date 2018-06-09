@@ -640,7 +640,12 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------
-    string_q StripTrailing(const string_q& str, char c) {
+    string_q trim(const string_q& str, char c) {
+        return trimTrailing(trimLeading(str, c), c);
+    }
+
+    //--------------------------------------------------------------------
+    string_q trimTrailing(const string_q& str, char c) {
         SFString ret = str.c_str();
         while (ret.endsWith(c))
             ret = ret.substr(0,ret.length()-1);
@@ -648,7 +653,7 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------
-    string_q StripLeading(const string_q& str, char c) {
+    string_q trimLeading(const string_q& str, char c) {
         SFString ret = str.c_str();
         while (ret.startsWith(c))
             ret = ret.substr(1);
@@ -656,50 +661,44 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------
-    string_q Strip(const string_q& str, char c) {
-        return StripTrailing(StripLeading(str, c), c);
-    }
-
-    //--------------------------------------------------------------------
-    string_q StripAny(const string_q& str, const string_q& any) {
+    string_q trimWhitespace(const string_q& str, const string_q& add) {
         SFString ret = str.c_str();
-        SFString aa = any.c_str();
-        while (endsWithAny(ret, aa) || startsWithAny(ret, aa)) {
-            for (size_t i = 0 ; i < aa.length() ; i++)
-                ret = Strip(ret, aa[i]);
+        SFString any = SFString("\t\r\n ") + add.c_str();
+        while (endsWithAny(ret, any) || startsWithAny(ret, any)) {
+            for (size_t i = 0 ; i < any.length() ; i++)
+                ret = trim(ret, any[i]);
         }
         return ret.c_str();
     }
 
     //--------------------------------------------------------------------
-    SFString StripTrailing(const SFString& str, char c) {
+    SFString trim(const SFString& str, char c) {
+        return trimTrailing(trimLeading(str, c), c);
+    }
+
+    //--------------------------------------------------------------------
+    SFString trimTrailing(const SFString& str, char c) {
         SFString ret = str;
         while (ret.endsWith(c))
             ret = ret.substr(0,ret.length()-1);
-
         return ret;
     }
 
     //--------------------------------------------------------------------
-    SFString StripLeading(const SFString& str, char c) {
+    SFString trimLeading(const SFString& str, char c) {
         SFString ret = str;
         while (ret.startsWith(c))
             ret = ret.substr(1);
-
         return ret;
     }
 
     //--------------------------------------------------------------------
-    SFString Strip(const SFString& str, char c) {
-        return StripTrailing(StripLeading(str, c), c);
-    }
-
-    //--------------------------------------------------------------------
-    SFString StripAny(const SFString& str, const SFString& any) {
+    SFString trimWhitespace(const SFString& str, const SFString& add) {
         SFString ret = str;
+        SFString any = "\t\r\n " + add;
         while (endsWithAny(ret, any) || startsWithAny(ret, any)) {
             for (size_t i = 0 ; i < any.length() ; i++)
-                ret = Strip(ret, any[i]);
+                ret = trim(ret, any[i]);
         }
         return ret;
     }
