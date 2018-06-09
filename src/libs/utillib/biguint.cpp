@@ -33,7 +33,7 @@ namespace qblocks {
     //----------------------------------------------------------------------
     SFUintBN::SFUintBN(const uint64_t *b, unsigned int blen) : SFBigNumStore<uint64_t>(b, blen)
     {
-        trimLeft();
+        trimLeadingZeros();
     }
 
     //----------------------------------------------------------------------
@@ -83,7 +83,7 @@ namespace qblocks {
     short SFUintBN::to_short(void) const { return convertToSignedPrimitive <short> (); }
 
     //----------------------------------------------------------------------
-    void SFUintBN::trimLeft(void)
+    void SFUintBN::trimLeadingZeros(void)
     {
         while (len > 0 && blk[len-1] == 0)
             len--;
@@ -97,7 +97,7 @@ namespace qblocks {
             if (i<len)
             {
                 blk[i] = 0;
-                trimLeft();
+                trimLeadingZeros();
             }
 
         } else
@@ -293,7 +293,7 @@ namespace qblocks {
                 blk[i] = a.blk[i];
         }
 
-        trimLeft();
+        trimLeadingZeros();
     }
 
     /*
@@ -609,7 +609,7 @@ namespace qblocks {
         if (q.blk[q.len - 1] == 0)
             q.len--;
         // Zap any/all leading zeros in remainder
-        trimLeft();
+        trimLeadingZeros();
         // Deallocate subtractBuf.
         // (Thanks to Brad Spencer for noticing my accidental omission of this!)
         delete [] subtractBuf;
@@ -632,7 +632,7 @@ namespace qblocks {
         unsigned int i;
         for (i = 0; i < len; i++)
             blk[i] = a.blk[i] & b.blk[i];
-        trimLeft();
+        trimLeadingZeros();
     }
 
     //----------------------------------------------------------------------
@@ -700,7 +700,7 @@ namespace qblocks {
             blk[i] = a2->blk[i];
         len = a2->len;
 
-        trimLeft();
+        trimLeadingZeros();
     }
 
     // Negative shift amounts translate to opposite-direction shifts, except for -2^(8*sizeof(int)-1) which is unimplemented.
@@ -742,7 +742,7 @@ namespace qblocks {
         for (j = 0, i = shiftBlocks; j <= a.len; j++, i++)
             blk[i] = getShiftedBlock(a, j, shiftBits);
 
-        trimLeft();
+        trimLeadingZeros();
     }
 
     //----------------------------------------------------------------------
@@ -788,6 +788,6 @@ namespace qblocks {
         for (j = rightShiftBlocks, i = 0; j <= a.len; j++, i++)
             blk[i] = getShiftedBlock(a, j, leftShiftBits);
 
-        trimLeft();
+        trimLeadingZeros();
     }
 }

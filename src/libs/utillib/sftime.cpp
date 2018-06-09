@@ -87,20 +87,6 @@ namespace qblocks {
     }
 
     //----------------------------------------------------------------------------------------------------
-    SFString toMonthName(uint64_t mon, bool full) {
-        SFString months[] = {
-            "", "January", "February", "March", "April", "May", "June",
-            "July", "August", "September", "October", "November", "December", };
-        return (full ? months[mon] : months[mon].substr(0,3));
-    }
-
-    //----------------------------------------------------------------------------------------------------
-    SFString toDayName(uint64_t day, bool full) {
-        SFString days[] = { "", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", };
-        return (full ? days[day] : days[day].substr(0,3));
-    }
-
-    //----------------------------------------------------------------------------------------------------
     // %a    Abbreviated weekday name
     // %A    Full weekday name
     // %b    Abbreviated month name
@@ -211,35 +197,6 @@ namespace qblocks {
                                 ret += sBuffer;
                                 break;
                             }
-                            case 'a': {
-                                snprintf(sBuffer, bSize, "%s", (const char*)toDayName(getDayOfWeek(getDatePart()), false));  // NOLINT
-                                ret += sBuffer;
-                                break;
-                            }
-                            case 'A': {
-                                snprintf(sBuffer, bSize, "%s", (const char*)toDayName(getDayOfWeek(getDatePart()), true));  // NOLINT
-                                ret += sBuffer;
-                                break;
-                            }
-                            case 'b': {
-                                snprintf(sBuffer, bSize, "%s", (const char*)toMonthName(getDatePart().GetMonth(), false));  // NOLINT
-                                ret += sBuffer;
-                                break;
-                            }
-                            case 'B': {
-                                snprintf(sBuffer, bSize, "%s", (const char*)toMonthName(getDatePart().GetMonth(), true));  // NOLINT
-                                ret += sBuffer;
-                                break;
-                            }
-                            case 'w': {
-                                snprintf(sBuffer, bSize, "%d", getDayOfWeek(getDatePart()));
-                                ret += sBuffer;
-                                break;
-                            }
-                            case 'x': {
-                                ret += getDatePart().Format() + " " + getTimePart().Format();
-                                break;
-                            }
                             case 'y': {
                                 snprintf(sBuffer, bSize, "%.02d", get2Digit(GetYear()));
                                 ret += sBuffer;
@@ -263,10 +220,6 @@ namespace qblocks {
                                         case 'm': {
                                             snprintf(sBuffer, bSize, "%d", GetMonth());
                                             ret += sBuffer;
-                                            break;
-                                        }
-                                        case 'x': {
-                                            ret += getDatePart().Format() + " " + getTimePart().Format();
                                             break;
                                         }
                                         case 'y': {
@@ -394,11 +347,6 @@ namespace qblocks {
     extern uint32_t getDayOfWeek(const SFTime::SFDate& date);
 
     //-------------------------------------------------------------------------
-    uint32_t SFTime::GetDayOfWeek() const {
-        return getDayOfWeek(getDatePart());
-    }
-
-    //-------------------------------------------------------------------------
     // We only do the test for equality and greater than. We then use these
     // to do all other tests
     bool SFTime::operator==(const SFTime& date) const {
@@ -480,19 +428,6 @@ namespace qblocks {
     }
 
     //-------------------------------------------------------------------------
-    SFString getPaddedDate(const SFTime& date) {
-        SFString ret = padNum2((uint64_t)date.GetMonth())+"_"+padNum2((uint64_t)date.GetDay());
-        if (date.GetDayOfWeek() == 1) ret += "Su";
-        if (date.GetDayOfWeek() == 2) ret += "M";
-        if (date.GetDayOfWeek() == 3) ret += "T";
-        if (date.GetDayOfWeek() == 4) ret += "W";
-        if (date.GetDayOfWeek() == 5) ret += "R";
-        if (date.GetDayOfWeek() == 6) ret += "F";
-        if (date.GetDayOfWeek() == 7) ret += "Sa";
-        return ret;
-    }
-
-    //-------------------------------------------------------------------------
     SFTime::SFTimeOfDay::SFTimeOfDay() {
         // create an invalid value (would be the next day otherwise!)
         m_nSeconds = SECS_PER_DAY;
@@ -522,12 +457,6 @@ namespace qblocks {
                 (uint32_t)(sysTime.tm_min) * SECS_PER_MIN +
                 (uint32_t)(sysTime.tm_sec);
         m_nSeconds = min(SECS_PER_DAY, m_nSeconds);  // make it invalid of overrun
-    }
-
-    //-------------------------------------------------------------------------
-    SFTime::SFTimeOfDay& SFTime::SFTimeOfDay::operator=(const SFTimeOfDay& tod) {
-        m_nSeconds = tod.m_nSeconds;
-        return *this;
     }
 
     //-------------------------------------------------------------------------
@@ -602,119 +531,6 @@ namespace qblocks {
     }
 
     //-------------------------------------------------------------------------
-    //
-    // The Following Format parameters are supported
-    //
-    // %H    Hours in the current day
-    // %M    Minutes in the current hour
-    // %h    12 Hour format (00 - 12)
-    // %P    AM / PM indicator
-    // %p    AM / PM indicator
-    // %S    Seconds in the current minute
-    // %%    Percent sign
-    // %#H, %#h, %#M, %#S  Remove leading zeros (if any).
-    //-------------------------------------------------------------------------
-    SFString SFTime::SFTimeOfDay::Format(const SFString& fmt) const {
-        SFString sFormat = fmt;
-        ASSERT(!sFormat.empty());
-
-        SFString ret;
-        if (true) {
-            char sBuffer[512];
-            size_t bSize = sizeof(sBuffer);
-
-            size_t sFmtLength = sFormat.length();
-            for (size_t i = 0; i < sFmtLength; i++) {
-                char c = sFormat.at(i);
-                if (c == '%') {
-                    ++i;
-                    if (i < sFmtLength) {
-                        c = sFormat.at(i);
-                        switch (c) {
-                            case 'H': {
-                                snprintf(sBuffer, bSize, "%.02d", GetHour());
-                                ret += sBuffer;
-                                break;
-                            }
-                            case 'M': {
-                                snprintf(sBuffer, bSize, "%.02d", GetMinute());
-                                ret += sBuffer;
-                                break;
-                            }
-                            case 'h': {
-                                uint32_t h = GetHour();
-                                if (h > 12)
-                                    h -= 12;
-                                snprintf(sBuffer, bSize, "%.02d", h);
-                                ret += sBuffer;
-                                break;
-                            }
-                            case 'P': {
-                                ASSERT(IsValid());
-                                ret += (GetHour() >= 12 ? "pm" : "am");
-                                break;
-                            }
-                            case 'p': {
-                                ASSERT(IsValid());
-                                ret += (GetHour() >= 12 ? "p" : "a");
-                                break;
-                            }
-                            case 'S': {
-                                snprintf(sBuffer, bSize, "%.02d", GetSecond());
-                                ret += sBuffer;
-                                break;
-                            }
-                            case '#': {
-                                if (i < sFmtLength) {
-                                    ++i;
-                                    c = sFormat.at(i);
-                                    switch (c) {
-                                        case 'H': {
-                                            snprintf(sBuffer, bSize, "%d", GetHour());
-                                            ret += sBuffer;
-                                            break;
-                                        }
-                                        case 'h': {
-                                            uint32_t h = GetHour();
-                                            if (h > 12)
-                                                h -= 12;
-                                            snprintf(sBuffer, bSize, "%d", h);
-                                            ret += sBuffer;
-                                            break;
-                                        }
-                                        case 'M': {
-                                            snprintf(sBuffer, bSize, "%d", GetMinute());
-                                            ret += sBuffer;
-                                            break;
-                                        }
-                                        case 'S': {
-                                            snprintf(sBuffer, bSize, "%d", GetSecond());
-                                            ret += sBuffer;
-                                            break;
-                                        }
-                                        default: {
-                                            ret += c;
-                                            break;
-                                        }
-                                    }
-                                }
-                                break;
-                            }
-                            default: {
-                                ret += c;
-                                break;
-                            }
-                        }
-                    }
-                } else {
-                    ret += c;
-                }
-            }
-        }
-        return ret;
-    }
-
-    //-------------------------------------------------------------------------
     uint32_t SFTime::SFDate::GetDay() const {
         ASSERT(IsValid());
         return getDateStruct().m_Day;
@@ -739,11 +555,6 @@ namespace qblocks {
     }
 
     //-------------------------------------------------------------------------
-    bool SFTime::SFDate::IsValid() const {
-        return (m_nDays != (uint64_t)LONG_MIN);
-    }
-
-    //-------------------------------------------------------------------------
     SFTime::SFDate SFTime::SFDate::operator+(int32_t days) const {
         int64_t res = ((int64_t)m_nDays) - 2000000000L;
         res += days;
@@ -752,9 +563,7 @@ namespace qblocks {
 
     //-------------------------------------------------------------------------
     SFTime::SFDate SFTime::SFDate::operator-(int32_t days) const {
-        return SFDate(
-                      int64_t(m_nDays - 2000000000L) -
-                      days);
+        return SFDate(int64_t(m_nDays - 2000000000L) - days);
     }
 
     //-------------------------------------------------------------------------
@@ -767,36 +576,6 @@ namespace qblocks {
     SFTime::SFDate& SFTime::SFDate::operator-=(int32_t days) {
         *this = *this - days;
         return *this;
-    }
-
-    //-------------------------------------------------------------------------
-    bool SFTime::SFDate::operator==(const SFDate& date) const {
-        return (m_nDays == date.m_nDays);
-    }
-
-    //-------------------------------------------------------------------------
-    bool SFTime::SFDate::operator!=(const SFDate& date) const {
-        return !operator==(date);
-    }
-
-    //-------------------------------------------------------------------------
-    bool SFTime::SFDate::operator>(const SFDate& date) const {
-        return m_nDays > date.m_nDays;
-    }
-
-    //-------------------------------------------------------------------------
-    bool SFTime::SFDate::operator<(const SFDate& date) const {
-        return m_nDays < date.m_nDays;
-    }
-
-    //-------------------------------------------------------------------------
-    bool SFTime::SFDate::operator>=(const SFDate& date) const {
-        return m_nDays >= date.m_nDays;
-    }
-
-    //-------------------------------------------------------------------------
-    bool SFTime::SFDate::operator<=(const SFDate& date) const {
-        return m_nDays <= date.m_nDays;
     }
 
     //-------------------------------------------------------------------------
@@ -1003,104 +782,6 @@ namespace qblocks {
         return ds;
     }
 
-    //-------------------------------------------------------------------------
-    //
-    // The Following Format parameters are supported
-    //
-    // %a    Abbreviated weekday name
-    // %A    Full weekday name
-    // %b    Abbreviated month name
-    // %B    Full month name
-    // %d    Day of month as decimal number (01 - 31)
-    // %f    Calendar being used "O.S" Old Style (Julian) or "N.S" New Style (Gregorian)
-    // %j    Day of year as decimal number (001 - 366)
-    // %m    Month as decimal number (01 - 12)
-    // %U    Week of year as decimal number
-    // %w    Weekday as decimal number (1 - 7; Sunday is 1)
-    // %y    Year without century, as decimal number (00 - 99)
-    // %Y    Year with century, as decimal number
-    // %#x   Long date representation, appropriate to current locale
-    // %#d, %#j, %#m, %#U, %#y Remove leading zeros (if any)
-    //
-    //-------------------------------------------------------------------------
-    SFString SFTime::SFDate::Format(const SFString& fmt) const {
-        SFString fmtStr = fmt;
-        ASSERT(!fmtStr.empty());
-
-        char sBuffer[512];
-        size_t bSize = sizeof(sBuffer);
-
-        SFString ret;
-        if (IsValid()) {
-
-            size_t sFmtLength = fmtStr.length();
-            for (size_t i = 0; i < sFmtLength; i++) {
-                char c = fmtStr.at(i);
-                if (c == '%') {
-                    ++i;
-                    if (i < sFmtLength) {
-                        c = fmtStr.at(i);
-                        switch (c) {
-                            case 'd':
-                                snprintf(sBuffer, bSize, "%.02d", GetDay());
-                                ret += sBuffer;
-                                break;
-                            case 'f':
-                                ret += "Gregorian Calendar";
-                                break;
-                            case 'm':
-                                snprintf(sBuffer, bSize, "%.02d", GetMonth());
-                                ret += sBuffer;
-                                break;
-                            case 'w':
-                                snprintf(sBuffer, bSize, "%d", getDayOfWeek(*this));
-                                ret += sBuffer;
-                                break;
-                            case 'y':
-                                snprintf(sBuffer, bSize, "%.02d", get2Digit(GetYear()));
-                                ret += sBuffer;
-                                break;
-                            case 'Y':
-                                snprintf(sBuffer, bSize, "%d", GetYear());
-                                ret += sBuffer;
-                                break;
-                            case '#': {
-                                if (i < sFmtLength) {
-                                    ++i;
-                                    c = fmtStr.at(i);
-                                    switch (c) {
-                                        case 'd':
-                                            snprintf(sBuffer, bSize, "%d", GetDay());
-                                            ret += sBuffer;
-                                            break;
-                                        case 'm':
-                                            snprintf(sBuffer, bSize, "%d", GetMonth());
-                                            ret += sBuffer;
-                                            break;
-                                        case 'y':
-                                            snprintf(sBuffer, bSize, "%d", get2Digit(GetYear()));
-                                            ret += sBuffer;
-                                            break;
-                                        default:
-                                            ret += c;
-                                            break;
-                                    }
-                                }
-                                break;
-                            }
-                            default:
-                                ret += c;
-                                break;
-                        }
-                    }
-                } else {
-                    ret += c;
-                }
-            }
-        }
-        return ret;
-    }
-
     //---------------------------------------------------------------------------------------
     uint32_t getDayOfWeek(const SFTime::SFDate& date) {
         ASSERT(date.IsValid());
@@ -1172,11 +853,6 @@ namespace qblocks {
     }
 
     //---------------------------------------------------------------------------------------
-    uint32_t DaysInMonth(const SFTime& date) {
-        return DaysInMonth(date.GetYear(), date.GetMonth());
-    }
-
-    //---------------------------------------------------------------------------------------
     uint32_t DaysInYear(uint32_t year) {
         return isLeap(year) ? 366 : 365;
     }
@@ -1239,16 +915,18 @@ namespace qblocks {
         return SFTime(year, month, --day, hour, minute, sec);
     }
 
+    //----------------------------------------------------------------------------------------------------
     SFTime BOW(const SFTime& tm) {
         SFTime ret = BOD(tm);
-        while (ret.GetDayOfWeek() > 1) // if it equals '1', it's Sunday at 00:00:01
+        while (getDayOfWeek(ret.getDatePart()) > 1) // if it equals '1', it's Sunday at 00:00:01
             ret = SubtractOneDay(ret);
         return ret;
     }
 
+    //----------------------------------------------------------------------------------------------------
     SFTime EOW(const SFTime& tm) {
         SFTime ret = EOD(tm);
-        while (tm.GetDayOfWeek() < 7) // if it equals '7', it's Saturday 12:59:59
+        while (getDayOfWeek(tm.getDatePart()) < 7) // if it equals '7', it's Saturday 12:59:59
             ret = AddOneDay(ret);
         return ret;
     }

@@ -189,7 +189,7 @@ SFString baseTypeName(uint64_t type) {
     if (type & TS_OBJECT)  ret += (" TS_OBJECT "  + asStringU(type));
     if (type & TS_POINTER) ret += (" TS_POINTER " + asStringU(type));
     if (type & TS_BIGNUM)  ret += (" TS_BIGNUM "  + asStringU(type));
-    return Strip(ret.Substitute("  "," "), ' ');
+    return trim(ret.Substitute("  "," "));
 }
 
 //--------------------------------------------------------------

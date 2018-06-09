@@ -107,17 +107,19 @@ extern SFString collapseArrays(const SFString& inStr);
         Clear();
 
         SFString contents = asciiFileToString(filename)
-                            .Substitute("\\\n ", "\\\n").Substitute("\\\n", "").Substitute("\\\r\n", "");
+                            .Substitute("\\\n ", "\\\n") // if ends with '\' + '\n' + space, make it just '\' + '\n'
+                            .Substitute("\\\n", "")      // if ends with '\' + '\n', its a continuation, so fold in
+                            .Substitute("\\\r\n", "");   // same for \r\n
         contents = collapseArrays(stripFullLineComments(contents));
         while (!contents.empty()) {
-            SFString value = StripAny(nextTokenClear(contents, '\n'), " \t");
+            SFString value = trimWhitespace(nextTokenClear(contents, '\n'));
             bool comment = value.startsWith('#');
             if (comment)
                 value = value.substr(1);
             if (!value.empty()) {
                 bool isArray = value.Contains("[[");
                 if (value.startsWith('[')) {  // it's a group
-                    value = StripAny(value.Substitute("[", "").Substitute("]", ""), " \t");
+                    value = trimWhitespace(value.Substitute("[", "").Substitute("]", ""));
                     addGroup(value, comment, isArray);
                     curGroup = value;
 
@@ -128,8 +130,8 @@ extern SFString collapseArrays(const SFString& inStr);
                         exit(0);
                     }
                     SFString key = nextTokenClear(value, '=');  // value may be empty, but not whitespace
-                    key = StripAny(key, " \t");
-                    value = StripAny(value, " \t");
+                    key   = trimWhitespace(key);
+                    value = trimWhitespace(value);
                     addKey(curGroup, key, value, comment);
                 }
             }
@@ -343,7 +345,7 @@ extern SFString collapseArrays(const SFString& inStr);
         SFString str = inStr;
         SFString ret;
         while (!str.empty()) {
-            SFString line = StripAny(nextTokenClear(str, '\n'), " \t\n\r");
+            SFString line = trimWhitespace(nextTokenClear(str, '\n'));
             if (line.length() && line[0] != '#') {
                 ret += (line + "\n");
             }

@@ -49,16 +49,12 @@ namespace qblocks {
 
             SFDate(void);
             SFDate(const SFDate& dt);
-
-            // Everything is private because on the SFTime class (which is exposed to end users and
-            // is a 'friend' can use this class
             SFDate(uint32_t year, uint32_t month, uint32_t day);
             SFDate(uint32_t year, uint32_t month, uint32_t weekInMonth, uint32_t dayOfWeek);
-            explicit SFDate(int64_t days);
-            explicit SFDate(const tm& sysTime);
             SFDate(const SFString& dateStr, const SFString& fmtStr);
 
-            // ~SFDate(void);
+            explicit SFDate(int64_t days);
+            explicit SFDate(const tm& sysTime);
 
             SFDate& operator=(const SFDate& date);
 
@@ -74,19 +70,6 @@ namespace qblocks {
             SFDate& operator+=(int32_t days);
             SFDate& operator-=(int32_t days);
 
-            bool operator==(const SFDate& date) const;
-            bool operator!=(const SFDate& date) const;
-
-            bool operator>(const SFDate& date) const;
-            bool operator<(const SFDate& date) const;
-
-            bool operator>=(const SFDate& date) const;
-            bool operator<=(const SFDate& date) const;
-
-            SFString Format(const SFString& fmt = "") const;
-
-            bool IsValid(void) const;
-
             SFDate& setValues(uint32_t y, uint32_t m, uint32_t d);
             SFDateStruct getDateStruct(void) const;
 
@@ -99,28 +82,21 @@ namespace qblocks {
         // Used by SFTime to hold the time portion of the date
         //----------------------------------------------------------------------------
         class SFTimeOfDay {
+public:
             SFTimeOfDay(void);
             SFTimeOfDay(const SFTimeOfDay& tod);
-
-            // Everything is private because on the SFTime class (which is exposed to
-            // end users and is a 'friend' can use this class)
-            explicit SFTimeOfDay(const tm& sysTime);
-            explicit SFTimeOfDay(uint32_t secs);
             SFTimeOfDay(uint32_t h, uint32_t m, uint32_t s);
             SFTimeOfDay(const SFString& dateStr, const SFString& fmtStr);
 
-            // ~SFTimeOfDay(void);
-            SFTimeOfDay&  operator=(const SFTimeOfDay& tod);
+            explicit SFTimeOfDay(const tm& sysTime);
+            explicit SFTimeOfDay(uint32_t secs);
 
             uint32_t GetHour(void) const;
             uint32_t GetMinute(void) const;
             uint32_t GetSecond(void) const;
             uint32_t GetTotalSeconds(void) const;
 
-            SFString Format(const SFString& fmt = "") const;
-
             uint32_t m_nSeconds;
-            friend class SFTime;
         };
 
     public:
@@ -128,26 +104,14 @@ namespace qblocks {
         SFTime(const SFTime& date);
 
         SFTime(uint32_t year, uint32_t month, uint32_t day, uint32_t hour, uint32_t minute, uint32_t sec);
-        SFTime(uint32_t year, uint32_t month, uint32_t weekInMonth, uint32_t dayOfWeek,
-               uint32_t hour, uint32_t minute, uint32_t sec);
+        SFTime(uint32_t year, uint32_t month, uint32_t weekInMonth, uint32_t dayOfWeek, uint32_t hour, uint32_t minute, uint32_t sec);
         SFTime(uint32_t days, uint32_t hour, uint32_t minute, uint32_t sec);
         SFTime(const SFDate& date, const SFTimeOfDay& tod);
-        explicit SFTime(const tm& sysTime, bool useDayOfWeek = false);
         SFTime(const SFString& dateStr, const SFString& fmtStr);
 
-        // ~SFTime(void);
+        explicit SFTime(const tm& sysTime, bool useDayOfWeek = false);
 
         SFTime& operator=(const SFTime& date);
-
-        uint32_t GetDay(void) const;
-        uint32_t GetMonth(void) const;
-        uint32_t GetYear(void) const;
-        uint32_t GetHour(void) const;
-        uint32_t GetMinute(void) const;
-        uint32_t GetSecond(void) const;
-        uint32_t GetDayOfWeek(void) const;
-
-        timestamp_t GetTotalSeconds(void) const;
 
         bool IsValid(void) const;
 
@@ -164,11 +128,20 @@ namespace qblocks {
         bool operator>=(const SFTime& date) const;
         bool operator<=(const SFTime& date) const;
 
+        uint32_t GetDay(void) const;
+        uint32_t GetMonth(void) const;
+        uint32_t GetYear(void) const;
+        uint32_t GetHour(void) const;
+        uint32_t GetMinute(void) const;
+        uint32_t GetSecond(void) const;
+        uint32_t GetDayOfWeek(void) const;
+        timestamp_t GetTotalSeconds(void) const;
+
         bool onTheHour(void) const;
 
         SFString Format(const SFString& fmt) const;
 
-        SFDate getDatePart(void) const;
+        SFDate      getDatePart(void) const;
         SFTimeOfDay getTimePart(void) const;
 
         // Count of seconds from same epoch as SFDate uses
@@ -191,7 +164,6 @@ namespace qblocks {
 #define FMT_JSON SFString("%Y-%m-%d %H:%M:%S UTC")
 
     extern uint32_t DaysInMonth(uint32_t year, uint32_t month);
-    extern uint32_t DaysInMonth(const SFTime& date);
     extern SFTime   AddOneDay(const SFTime& date);
     extern SFTime   SubtractOneDay(const SFTime& date);
 
