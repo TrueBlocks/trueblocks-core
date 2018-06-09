@@ -39,14 +39,14 @@ bool COptions::parseArguments(SFString& command) {
         } else if (arg == "-b" || arg == "--bloom") {
             mode = "bloom";
 
-        } else if (arg.startsWith('-')) {  // do not collapse
+        } else if (startsWith(arg, '-')) {  // do not collapse
             if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);
             }
         } else {
 
             SFString ret = blocks.parseBlockList(arg, latestBlock);
-            if (ret.endsWith("\n")) {
+            if (endsWith(ret, "\n")) {
                 cerr << "\n  " << ret << "\n";
                 return false;
             } else if (!ret.empty()) {

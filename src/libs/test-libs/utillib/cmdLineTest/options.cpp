@@ -35,7 +35,7 @@ bool COptions::parseArguments(SFString& command) {
     while (!command.empty()) {
         SFString arg = nextTokenClear(command, ' ');
         SFString orig = arg;
-        if (arg.startsWith("-b:") || arg.startsWith("--bool:")) {
+        if (startsWith(arg, "-b:") || startsWith(arg, "--bool:")) {
             arg = arg.Substitute("-b:","").Substitute("--bool:","");
             if (arg == "1" || arg == "true") {
                 boolOption = true;
@@ -46,13 +46,13 @@ bool COptions::parseArguments(SFString& command) {
             } else
                 usage("Invalid bool: " + orig);
 
-        } else if (arg.startsWith("-i:") || arg.startsWith("--int:")) {
+        } else if (startsWith(arg, "-i:") || startsWith(arg, "--int:")) {
             arg = arg.Substitute("-i:","").Substitute("--int:","");
             if (arg.empty() || (arg[0] != '-' && arg[0] != '+' && !isdigit(arg[0])))
                 return usage("--int requires a number. Quitting");
             numOption = toLong(arg);
 
-        } else if (arg.startsWith("-u:") || arg.startsWith("--uint:")) {
+        } else if (startsWith(arg, "-u:") || startsWith(arg, "--uint:")) {
             arg = arg.Substitute("-u:","").Substitute("--uint:","");
             if (arg.empty() || (arg[0] != '+' && !isdigit(arg[0]))) {
                 //return usage("--uint requires a non-negative number. Quitting");
@@ -60,7 +60,7 @@ bool COptions::parseArguments(SFString& command) {
                 numOption = toLong(arg);
             }
 
-        } else if (arg.startsWith('-')) {  // do not collapse
+        } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);

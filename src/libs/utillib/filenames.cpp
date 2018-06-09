@@ -57,14 +57,14 @@ namespace qblocks {
     //----------------------------------------------------------------------------------
     CFilename::CFilename(const SFString& fnIn) {
         SFString fn = fnIn;
-        if (!fn.startsWith('/') && !fn.startsWith('.') && !fn.startsWith('~'))
+        if (!startsWith(fn, '/') && !startsWith(fn, '.') && !startsWith(fn, '~'))
             fn = "./" + fn;  // assume cwd
         fn.Replace("../", getCWD() + "$%^&#*/");
         fn.Replace("./",  getCWD());
         fn.Replace("~/",  getHomeFolder());
         fn.Replace("$%^&#*/", "../");
 
-        if (fn.endsWith('/')) {
+        if (endsWith(fn, '/')) {
             path = fn;
             fileName = EMPTY;
 

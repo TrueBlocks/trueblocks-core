@@ -333,7 +333,7 @@ SFString CNewBlock::getValueByName(const SFString& fieldName) const {
             if ( fieldName % "timestamp" ) return fromTimestamp(timestamp);
             if ( fieldName % "transactions" || fieldName % "transactionsCnt" ) {
                 uint32_t cnt = transactions.getCount();
-                if (fieldName.endsWith("Cnt"))
+                if (endsWith(fieldName, "Cnt"))
                     return asStringU(cnt);
                 if (!cnt) return "";
                 SFString retS;
@@ -406,7 +406,7 @@ bool readOneNewBlock_fromJson(CNewBlock& block, const SFString& fileName) {
         stringToAsciiFile(fileName, contents);
     }
 
-    if (!contents.endsWith('\n')) {
+    if (!endsWith(contents, '\n')) {
         stringToAsciiFile(fileName, contents+"\n");
     }
 

@@ -113,12 +113,12 @@ extern SFString collapseArrays(const SFString& inStr);
         contents = collapseArrays(stripFullLineComments(contents));
         while (!contents.empty()) {
             SFString value = trimWhitespace(nextTokenClear(contents, '\n'));
-            bool comment = value.startsWith('#');
+            bool comment = startsWith(value, '#');
             if (comment)
                 value = value.substr(1);
             if (!value.empty()) {
                 bool isArray = value.Contains("[[");
-                if (value.startsWith('[')) {  // it's a group
+                if (startsWith(value, '[')) {  // it's a group
                     value = trimWhitespace(value.Substitute("[", "").Substitute("]", ""));
                     addGroup(value, comment, isArray);
                     curGroup = value;
@@ -217,7 +217,7 @@ extern SFString collapseArrays(const SFString& inStr);
 
     //-------------------------------------------------------------------------
     void CToml::setConfigStr(const SFString& group, const SFString& keyIn, const SFString& value) {
-        bool comment = keyIn.startsWith('#');
+        bool comment = startsWith(keyIn, '#');
         SFString key = (comment ? keyIn.substr(1) : keyIn);
 
         CTomlGroup *grp = findGroup(group);

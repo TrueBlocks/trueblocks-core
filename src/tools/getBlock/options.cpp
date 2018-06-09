@@ -95,7 +95,7 @@ bool COptions::parseArguments(SFString& command) {
             cout << cOff << "\n";
             isLatest = true;
 
-        } else if (arg.startsWith("-s:") || arg.startsWith("--source:")) {
+        } else if (startsWith(arg, "-s:") || startsWith(arg, "--source:")) {
             SFString mode = arg.Substitute("-s:","").Substitute("--source:","");
             if (mode == "r" || mode == "raw") {
                 isRaw = true;
@@ -121,7 +121,7 @@ bool COptions::parseArguments(SFString& command) {
         } else if (arg == "-q" || arg == "--quiet") {
             quiet++; // if both --check and --quiet are present, be very quiet...
 
-        } else if (arg.startsWith("-f:") || arg.startsWith("--fields:")) {
+        } else if (startsWith(arg, "-f:") || startsWith(arg, "--fields:")) {
             SFString mode = arg.Substitute("-f:","").Substitute("--fields:","");
 
             if (mode == "a" || mode == "all") {
@@ -165,7 +165,7 @@ bool COptions::parseArguments(SFString& command) {
                 UNHIDE_FIELD(CReceipt, "gasUsed");
             }
 
-        } else if (arg.startsWith('-')) {  // do not collapse
+        } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);
@@ -174,7 +174,7 @@ bool COptions::parseArguments(SFString& command) {
         } else {
 
             SFString ret = blocks.parseBlockList(arg, latestBlock);
-            if (ret.endsWith("\n")) {
+            if (endsWith(ret, "\n")) {
                 cerr << "\n  " << ret << "\n";
                 return false;
             } else if (!ret.empty()) {

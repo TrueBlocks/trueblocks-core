@@ -34,13 +34,13 @@ bool COptions::parseArguments(SFString& command) {
         if (arg == "-r" || arg == "--raw") {
             isRaw = true;
 
-        } else if (arg.startsWith("-a:") || arg.startsWith("--address:")) {
+        } else if (startsWith(arg, "-a:") || startsWith(arg, "--address:")) {
             arg = arg.Substitute("-a:", "").Substitute("--address:", "");
             if (!isAddress(arg))
                 return usage(orig + " does not appear to be a valid Ethereum address. Quitting...");
             address_list += arg + "|";
 
-        } else if (arg.startsWith('-')) {  // do not collapse
+        } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);

@@ -313,7 +313,7 @@ SFString CAccountWatch::displayName(bool expand, bool useColor, bool terse, uint
 extern int findBalance(const void *ob1, const void *ob2);
 SFUintBN getNodeBal(CBalanceHistoryArray& history, const SFAddress& addr, blknum_t blockNum) {
 
-    if (!addr.startsWith("0x"))
+    if (!startsWith(addr, "0x"))
         return 0;
 
     // This will return 'true' if the node has historical balances - we want to use those balances if they are there

@@ -30,12 +30,12 @@ int main(int argc, const char *argv[]) {
 //-----------------------------------------------------------------------
 bool visitBloom(const SFString& path, void *data) {
 
-    if (path.endsWith("/")) {
+    if (endsWith(path, "/")) {
         forAllFiles(path + "*", visitBloom, data);
 
     } else {
 extern bool displayBloom(blknum_t bn, const SFBloom& bloom, void *data);
-        if (path.endsWith(".bin")) {
+        if (endsWith(path, ".bin")) {
             SFBloom bloom;
             SFArchive archive(READING_ARCHIVE);
             if (archive.Lock(path, binaryReadOnly, LOCK_NOWAIT)) {

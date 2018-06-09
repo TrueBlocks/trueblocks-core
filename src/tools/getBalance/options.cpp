@@ -49,7 +49,7 @@ bool COptions::parseArguments(SFString& command) {
         } else if (arg == "-c" || arg == "--changes") {
             changes = true;
 
-        } else if (arg.startsWith("-l:") || arg.startsWith("--list:")) {
+        } else if (startsWith(arg, "-l:") || startsWith(arg, "--list:")) {
 
             CFilename fileName(arg.Substitute("-l:","").Substitute("--list:",""));
             if (!fileName.isValid())
@@ -66,7 +66,7 @@ bool COptions::parseArguments(SFString& command) {
                 address_list += line + "|";
             }
 
-        } else if (arg.startsWith('-')) {  // do not collapse
+        } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);
@@ -74,14 +74,14 @@ bool COptions::parseArguments(SFString& command) {
 
         } else if (isHash(arg)) {
             SFString ret = blocks.parseBlockList(arg, latestBlock);
-            if (ret.endsWith("\n")) {
+            if (endsWith(ret, "\n")) {
                 cerr << "\n  " << ret << "\n";
                 return false;
             } else if (!ret.empty()) {
                 return usage(ret);
             }
 
-        } else if (arg.startsWith("0x")) {
+        } else if (startsWith(arg, "0x")) {
 
             if (!isAddress(arg))
                 return usage(arg + " does not appear to be a valid Ethereum address. Quitting...");
@@ -90,7 +90,7 @@ bool COptions::parseArguments(SFString& command) {
         } else {
 
             SFString ret = blocks.parseBlockList(arg, latestBlock);
-            if (ret.endsWith("\n")) {
+            if (endsWith(ret, "\n")) {
                 cerr << "\n  " << ret << "\n";
                 return false;
             } else if (!ret.empty()) {

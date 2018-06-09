@@ -372,7 +372,7 @@ SFString CBlock::getValueByName(const SFString& fieldName) const {
             if ( fieldName % "timestamp" ) return fromTimestamp(timestamp);
             if ( fieldName % "transactions" || fieldName % "transactionsCnt" ) {
                 uint32_t cnt = transactions.getCount();
-                if (fieldName.endsWith("Cnt"))
+                if (endsWith(fieldName, "Cnt"))
                     return asStringU(cnt);
                 if (!cnt) return "";
                 SFString retS;
@@ -500,7 +500,7 @@ bool isPotentialAddr(SFUintBN test, SFAddress& addrOut) {
 
     addrOut = to_hex(test).c_str();
     // Totally a heuristic that can't really be supported, but a good probability that this isn't an address
-    if (addrOut.endsWith("00000000"))
+    if (endsWith(addrOut, "00000000"))
         return false;
 
     if (addrOut.length()<40)

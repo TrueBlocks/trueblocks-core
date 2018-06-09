@@ -404,7 +404,7 @@ SFString ptrWriteFmt =
 
     SFString srcFile    = dataFile.Substitute(".txt", ".cpp").Substitute("./classDefinitions/", "./");
     SFString srcSource  = asciiFileToString(configPath("makeClass/blank.cpp"));
-    if ((className.startsWith("CNew") || className == "CPriceQuote") && !getCWD().Contains("parse"))
+    if ((startsWith(className, "CNew") || className == "CPriceQuote") && !getCWD().Contains("parse"))
         srcSource.Replace("version of the data\n", STR_UPGRADE_CODE);
     srcSource.ReplaceAll("[{GET_OBJ}]",         fieldGetObj);
     srcSource.ReplaceAll("[{GET_STR}]",         fieldGetStr);
@@ -705,7 +705,7 @@ const char* STR_CASE_SET_CODE_ARRAY =
 const char* STR_CASE_CODE_ARRAY =
 " {\n"
 "[BTAB]\t\tuint32_t cnt = [{PTR}][{FIELD}].getCount();\n"
-"[BTAB]\t\tif (fieldName.endsWith(\"Cnt\"))\n"
+"[BTAB]\t\tif (endsWith(fieldName, \"Cnt\"))\n"
 "[BTAB]\t\t\treturn asStringU(cnt);\n"
 "[BTAB]\t\tif (!cnt) return \"\";\n"
 "[BTAB]\t\tSFString retS;\n"
@@ -720,7 +720,7 @@ const char* STR_CASE_CODE_ARRAY =
 const char* STR_CASE_CODE_STRINGARRAY =
 " {\n"
 "[BTAB]\t\tuint32_t cnt = [{PTR}][{FIELD}].getCount();\n"
-"[BTAB]\t\tif (fieldName.endsWith(\"Cnt\"))\n"
+"[BTAB]\t\tif (endsWith(fieldName, \"Cnt\"))\n"
 "[BTAB]\t\t\treturn asStringU(cnt);\n"
 "[BTAB]\t\tif (!cnt) return \"\";\n"
 "[BTAB]\t\tSFString retS;\n"
@@ -837,8 +837,8 @@ SFString short3(const SFString& str) {
 
 //---------------------------------------------------------------------------
 SFString checkType(const SFString& typeIn) {
-    if (typeIn.startsWith("C")) return typeIn;
-    if (typeIn.endsWith("Array")) return typeIn;
+    if (startsWith(typeIn, "C")) return typeIn;
+    if (endsWith(typeIn, "Array")) return typeIn;
 
     SFString keywords[] = {
         "address", "bloom",  "bool",  "bytes",     "bytes32",

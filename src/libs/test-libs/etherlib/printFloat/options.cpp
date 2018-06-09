@@ -28,7 +28,7 @@ bool COptions::parseArguments(SFString& command) {
     Init();
     while (!command.empty()) {
         SFString arg = nextTokenClear(command, ' ');
-        if (arg.startsWith("-t:") || arg.startsWith("--testNum:")) {
+        if (startsWith(arg, "-t:") || startsWith(arg, "--testNum:")) {
             SFString orig = arg;
             arg.ReplaceAny("--testNum:","");
             arg.ReplaceAny("-t:","");

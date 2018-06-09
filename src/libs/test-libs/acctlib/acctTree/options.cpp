@@ -37,18 +37,18 @@ bool COptions::parseArguments(SFString& command) {
         if (arg == "-a" || arg == "--all") {
             all = true;
 
-        } else if (arg.startsWith("-n:") || arg.startsWith("--nblocks:")) {
+        } else if (startsWith(arg, "-n:") || startsWith(arg, "--nblocks:")) {
             arg = orig.Substitute("-n:","").Substitute("--nblocks:","");
             nBlocks = newUnsigned32(arg);
             hasN = true;
 
-        } else if (arg.startsWith("-s:") || arg.startsWith("--start:")) {
+        } else if (startsWith(arg, "-s:") || startsWith(arg, "--start:")) {
             arg = orig.Substitute("-s:","").Substitute("--start:","");
             startBlock = newUnsigned32(arg);
             if (!isUnsigned(arg))
                 return usage("Positive start block number expected: " + orig);
 
-        } else if (arg.startsWith("-e:") || arg.startsWith("--end:")) {
+        } else if (startsWith(arg, "-e:") || startsWith(arg, "--end:")) {
             arg = orig.Substitute("-e:","").Substitute("--end:","");
             if (arg == "latest") {
                 endBlock = getLatestBlockFromClient();

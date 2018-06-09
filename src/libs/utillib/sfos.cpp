@@ -89,7 +89,7 @@ namespace qblocks {
                     SFString path = globBuf.gl_pathv[i];
 
                     // filter specified directories and remove trailing '/'
-                    if (path.endsWith('/'))
+                    if (endsWith(path, '/'))
                         path = path.substr(0,path.length() - 1);
 
                     if (!keepPaths) {
@@ -100,7 +100,7 @@ namespace qblocks {
 #else
                         path = basename((char *)path.c_str());  // NOLINT
 #endif
-                        if (path.startsWith('/'))
+                        if (startsWith(path, '/'))
                             path = path.substr(1);
                         // The path we return is always just the name of the folder or file
                         // without any leading (or even existing) '/'
@@ -159,7 +159,7 @@ extern SFString binaryFileToString(const SFString& filename);
         char buffer[kMaxPathSize];
         if (::getcwd(buffer, kMaxPathSize)) { }  // do not remove. The test just silences compiler warnings
         SFString folder = buffer;
-        if (!folder.endsWith('/'))
+        if (!endsWith(folder, '/'))
             folder += "/";
         return folder + filename;  // may be empty
     }
@@ -176,7 +176,7 @@ extern SFString binaryFileToString(const SFString& filename);
             return false;
 
         SFString folder = folderName;
-        if (!folder.endsWith('/'))
+        if (!endsWith(folder, '/'))
             folder += '/';
 
         uint32_t nFiles = 0;

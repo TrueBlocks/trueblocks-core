@@ -30,7 +30,7 @@ bool COptions::parseArguments(SFString& command) {
         if (arg == "-o" || arg == "--option") {
             // whatever
 
-        } else if (arg.startsWith('-')) {  // do not collapse
+        } else if (startsWith(arg, '-')) {  // do not collapse
             if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);
             }

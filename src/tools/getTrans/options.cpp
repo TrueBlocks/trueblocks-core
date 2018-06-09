@@ -40,7 +40,7 @@ bool COptions::parseArguments(SFString& command) {
         } else if (arg == "-n" || arg == "--nTraces") {
             nTraces = true;
 
-        } else if (arg.startsWith('-')) {  // do not collapse
+        } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);
