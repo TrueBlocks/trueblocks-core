@@ -257,7 +257,7 @@ int main(int argc, const char *argv[]) {
                     SFString theClass = (options.isBuiltin() ? "Q" : "C") + name;
                     bool isConst = func->constant;
                     bool isEmpty = name.empty() || func->type.empty();
-                    bool isLog = name.ContainsI("logentry");
+                    bool isLog = toLower(name).Contains("logentry");
 //                    bool isConstructor = func->type % "constructor";
 //                    if (!isConst && !isEmpty && !isLog) { // && !isConstructor) {
                     if (!isEmpty && !isLog) {

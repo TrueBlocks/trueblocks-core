@@ -279,32 +279,19 @@ namespace qblocks {
         const SFString& operator+=    (const SFString& str);
         const SFString& operator+=    (char ch);
         const SFString& operator+=    (const char *str);
-        SFString        substr        (size_t first, size_t len) const;
-        SFString        substr        (size_t first) const;
 
         operator  const char *        (void) const;
 
-        void            Reverse       (void);
-        int             Icompare      (const char *str) const;
+        SFString substr          (size_t first, size_t len) const;
+        SFString substr          (size_t first) const;
 
-        size_t   findI           (const char *search) const;
-        size_t   findExact       (const SFString& search, char sep, const SFString& replaceables=CHR_VALID_NAME) const;
-        size_t   findExactI      (const SFString& search, char sep, const SFString& replaceables=CHR_VALID_NAME) const;
-
-        bool     Contains        (char search) const;
         bool     Contains        (const SFString& search) const;
-        bool     ContainsI       (const SFString& search) const;
-        bool     ContainsAll     (const SFString& search) const;
-        bool     ContainsAny     (const SFString& search) const;
-
+        void     Reverse         (void);
         SFString Substitute      (const SFString& what, const SFString& with) const;
 
         void     Replace         (const SFString& what, const SFString& with);
-        void     ReplaceI        (const SFString& what, const SFString& with);
-
-        void     ReplaceAll      (      char      what,       char      with);
+//        void     ReplaceAll      (      char      what,       char      with);
         void     ReplaceAll      (const SFString& what, const SFString& with);
-
         void     ReplaceAny      (const SFString& list, const SFString& with);
         void     ReplaceReverse  (const SFString& what, const SFString& with);
 

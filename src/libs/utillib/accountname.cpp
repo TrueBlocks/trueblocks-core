@@ -251,11 +251,11 @@ bool CAccountName::Match(const SFString& s1, const SFString& s2, const SFString&
     SFString theName   = name + " " + symbol;
     SFString theSource = source;
 
-    bool m11 = (matchCase ? theAddr.Contains(s1)   : theAddr.ContainsI(s1));
-    bool m12 = (matchCase ? theName.Contains(s1)   : theName.ContainsI(s1));
-    bool m13 = (matchCase ? theSource.Contains(s1) : theSource.ContainsI(s1));
-    bool m2  = (matchCase ? theName.Contains(s2)   : theName.ContainsI(s2));
-    bool m3  = (matchCase ? theSource.Contains(s3) : theSource.ContainsI(s3));
+    bool m11 = (matchCase ? theAddr  .Contains(s1) : toLower(theAddr)  .Contains(toLower(s1)));
+    bool m12 = (matchCase ? theName  .Contains(s1) : toLower(theName)  .Contains(toLower(s1)));
+    bool m13 = (matchCase ? theSource.Contains(s1) : toLower(theSource).Contains(toLower(s1)));
+    bool m2  = (matchCase ? theName  .Contains(s2) : toLower(theName)  .Contains(toLower(s2)));
+    bool m3  = (matchCase ? theSource.Contains(s3) : toLower(theSource).Contains(toLower(s3)));
 
     if (!s1.empty() && !s2.empty() && !s3.empty())
         return m11 && m2 && m3;  // all three must match
