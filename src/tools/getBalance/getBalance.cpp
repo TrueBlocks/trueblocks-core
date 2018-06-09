@@ -33,7 +33,7 @@ int main(int argc, const char *argv[]) {
         if (!options.parseArguments(command))
             return 0;
 
-        uint64_t nAccts = countOf('|', options.addrs) + 1;
+        uint64_t nAccts = countOf(options.addrs, '|') + 1;
         bool needsTotal = (nAccts > 1 && options.total);
 
         // For each address

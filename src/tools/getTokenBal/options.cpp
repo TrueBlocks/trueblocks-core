@@ -107,7 +107,7 @@ bool COptions::parseArguments(SFString& command) {
         return usage("Totalling is not available when exporting data.");
 
     address_list = trim(address_list, '|');
-    if (countOf('|', address_list) < 1)
+    if (countOf(address_list, '|') < 1)
         return usage("You must provide both a token contract and an account. Quitting...");
 
     if (!byAccount) {

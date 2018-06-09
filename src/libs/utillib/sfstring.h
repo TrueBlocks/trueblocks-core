@@ -240,6 +240,29 @@ namespace qblocks {
 #endif
 
     //--------------------------------------------------------------------
+    extern size_t  countOf        (const string_q& haystack, char needle);
+    extern bool    endsWith       (const string_q& haystack, const string_q& needle);
+    extern bool    startsWith     (const string_q& haystack, const string_q& needle);
+    extern bool    endsWithAny    (const string_q& haystack, const string_q& needle);
+    extern bool    startsWithAny  (const string_q& haystack, const string_q& needle);
+
+    //--------------------------------------------------------------------
+    extern string_q toLower       (const string_q& in);
+    extern string_q toUpper       (const string_q& in);
+    extern string_q toProper      (const string_q& in);
+
+    //--------------------------------------------------------------------
+//    extern string_q padRight      (const string_q& str, size_t len, char p=' ');
+//    extern string_q padLeft       (const string_q& str, size_t len, char p=' ');
+//    extern string_q padCenter     (const string_q& str, size_t len, char p=' ');
+
+    //--------------------------------------------------------------------
+    extern string_q trim          (const string_q& str, char c = ' ');
+    extern string_q trimTrailing  (const string_q& str, char c = ' ');
+    extern string_q trimLeading   (const string_q& str, char c = ' ');
+    extern string_q trimWhitespace(const string_q& str, const string_q& add="");
+
+    //--------------------------------------------------------------------
     class SFString : public string_q {
         SFString  (long) {};
         SFString  (unsigned long) {};
@@ -367,32 +390,8 @@ namespace qblocks {
     //--------------------------------------------------------------------
 #define EMPTY SFString("")
 
-    //--------------------------------------------------------------------
-    extern bool    endsWith       (const SFString& haystack, const SFString& needle);
-    extern bool    endsWithAny    (const SFString& haystack, const SFString& needle);
-    extern bool    startsWith     (const SFString& haystack, const SFString& needle);
-    extern bool    startsWithAny  (const SFString& haystack, const SFString& needle);
-    extern size_t  countOf        (char c, const SFString& str);
-
-    //--------------------------------------------------------------------
     extern SFString snagFieldClear(      SFString& in, const SFString& tagName, const SFString& defVal="");
     extern SFString snagField     (const SFString& in, const SFString& tagName, const SFString& defVal="");
-
-    //--------------------------------------------------------------------
-    extern string_q toLower       (const string_q& in);
-    extern string_q toUpper       (const string_q& in);
-    extern string_q toProper      (const string_q& in);
-
-    //--------------------------------------------------------------------
-//    extern string_q padRight      (const string_q& str, size_t len, char p=' ');
-//    extern string_q padLeft       (const string_q& str, size_t len, char p=' ');
-//    extern string_q padCenter     (const string_q& str, size_t len, char p=' ');
-
-    //--------------------------------------------------------------------
-    extern string_q trim          (const string_q& str, char c = ' ');
-    extern string_q trimTrailing  (const string_q& str, char c = ' ');
-    extern string_q trimLeading   (const string_q& str, char c = ' ');
-    extern string_q trimWhitespace(const string_q& str, const string_q& add="");
 
     //--------------------------------------------------------------------
     extern SFString toLower       (const SFString& in);
