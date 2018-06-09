@@ -42,7 +42,7 @@ int main(int argc, const char * argv[]) {
 
         // Slurp the address...
         if (!slurper.Slurp(options, message)) {
-            if (message.startsWith("No transactions")) {
+            if (startsWith(message, "No transactions")) {
                 // Fix for issue #252.
                 cerr << cRed << "\t" << message << cOff << "\n";
                 return 0;

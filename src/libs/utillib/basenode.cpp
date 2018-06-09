@@ -551,7 +551,7 @@ namespace qblocks {
             return chunk;
         }
 
-        if (!fmtOut.startsWith('[')) {
+        if (!startsWith(fmtOut, '[')) {
             // We've encountered plain text outside of a token. There is more to process so grab
             // the next chunk and then prepare the remaining chunk by prepending the token.
             // The next time through we will hit the token.
@@ -563,7 +563,7 @@ namespace qblocks {
         // We've hit a token, toss the start token, look for a field and toss the last token
         // leaving the remainder of the format in fmtOut.  A field is found if we find a pair
         // of squigglies).  Save text inside the start token and outside the field in pre and post
-        ASSERT(fmtOut.startsWith('['));
+        ASSERT(startsWith(fmtOut, '['));
 
         SFString pre, fieldName, post;
         nextTokenClear(fmtOut, '[', false);  // toss the start token
@@ -722,7 +722,7 @@ extern SFString reformat1(const SFString& in, uint32_t len);
                 } else {
                     SFString val = getValueByName(name);
                     bool isNum = field->m_fieldType & TS_NUMERAL;
-                    if (isNum && expContext().hexNums && !val.startsWith("0x"))
+                    if (isNum && expContext().hexNums && !startsWith(val, "0x"))
                         val = toHex(val);
                     bool quote = (!isNum || expContext().quoteNums) && val != "null";
                     if (quote)

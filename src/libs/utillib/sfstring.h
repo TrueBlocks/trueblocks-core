@@ -285,15 +285,11 @@ namespace qblocks {
         void     ReplaceAny      (const SFString& list, const SFString& with);
         void     ReplaceReverse  (const SFString& what, const SFString& with);
 
-        bool     startsWith      (const SFString& str) const;
-        bool     endsWith        (const SFString& str) const;
         friend SFString operator+(const SFString& str1, const SFString& str2);
         friend SFString operator+(const SFString& str1, const char *str2);
     };
 
     //--------------------------------------------------------------------
-    extern bool     endsWithAny   (const SFString& haystack, const SFString& str);
-    extern bool     startsWithAny (const SFString& haystack, const SFString& str);
     extern SFString makeValidName (const SFString& input);
 
     //--------------------------------------------------------------------
@@ -351,32 +347,6 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------
-    inline bool SFString::endsWith(const SFString& str) const {
-        if (empty())
-            return false;
-        return (substr(length()-str.length(),str.length()) == str);
-    }
-
-    //--------------------------------------------------------------------
-    inline bool SFString::startsWith(const SFString& str) const {
-        if (empty())
-            return false;
-        return (substr(0,str.length()) == str);
-    }
-
-    //--------------------------------------------------------------------
-    inline size_t countOf(char c, const SFString& str) {
-        size_t len = str.length();
-        size_t i=0, cnt=0;
-        while (i<len) {
-            if (str.at(i) == c)
-                cnt++;
-            i++;
-        }
-        return cnt;
-    }
-
-    //--------------------------------------------------------------------
     extern SFString nextTokenClearReverse(SFString& str, char token);
     inline SFString nextTokenClear(SFString& line, char delim, bool doClear=true) {
         SFString ret;
@@ -398,47 +368,41 @@ namespace qblocks {
 #define EMPTY SFString("")
 
     //--------------------------------------------------------------------
-    inline SFString padRight(const SFString& str, uint32_t len, char p=' ') {
-        if (len > str.length())
-            return str + SFString(p, len-str.length());
-        return str;
-    }
-
-    //--------------------------------------------------------------------
-    inline SFString padLeft(const SFString& str, uint32_t len, char p=' ') {
-        if (len > str.length())
-            return SFString(p, len-str.length()) + str;
-        return str;
-    }
-
-    //--------------------------------------------------------------------
-    inline SFString padCenter(const SFString& str, size_t len, char p=' ') {
-        if (len > str.length()) {
-            size_t padding = (len-str.length()) / 2;
-            return SFString(p, padding) + str + SFString(p, padding);
-        }
-        return str;
-    }
+    extern bool    endsWith       (const SFString& haystack, const SFString& needle);
+    extern bool    endsWithAny    (const SFString& haystack, const SFString& needle);
+    extern bool    startsWith     (const SFString& haystack, const SFString& needle);
+    extern bool    startsWithAny  (const SFString& haystack, const SFString& needle);
+    extern size_t  countOf        (char c, const SFString& str);
 
     //--------------------------------------------------------------------
     extern SFString snagFieldClear(      SFString& in, const SFString& tagName, const SFString& defVal="");
     extern SFString snagField     (const SFString& in, const SFString& tagName, const SFString& defVal="");
 
     //--------------------------------------------------------------------
-    extern string_q toLower (const string_q& in);
-    extern string_q toUpper (const string_q& in);
-    extern string_q toProper(const string_q& in);
+    extern string_q toLower       (const string_q& in);
+    extern string_q toUpper       (const string_q& in);
+    extern string_q toProper      (const string_q& in);
 
     //--------------------------------------------------------------------
-    extern SFString toLower (const SFString& in);
-    extern SFString toUpper (const SFString& in);
-    extern SFString toProper(const SFString& in);
+//    extern string_q padRight      (const string_q& str, size_t len, char p=' ');
+//    extern string_q padLeft       (const string_q& str, size_t len, char p=' ');
+//    extern string_q padCenter     (const string_q& str, size_t len, char p=' ');
 
     //--------------------------------------------------------------------
     extern string_q trim          (const string_q& str, char c = ' ');
     extern string_q trimTrailing  (const string_q& str, char c = ' ');
     extern string_q trimLeading   (const string_q& str, char c = ' ');
     extern string_q trimWhitespace(const string_q& str, const string_q& add="");
+
+    //--------------------------------------------------------------------
+    extern SFString toLower       (const SFString& in);
+    extern SFString toUpper       (const SFString& in);
+    extern SFString toProper      (const SFString& in);
+
+    //--------------------------------------------------------------------
+    extern SFString padRight      (const SFString& str, size_t len, char p=' ');
+    extern SFString padLeft       (const SFString& str, size_t len, char p=' ');
+    extern SFString padCenter     (const SFString& str, size_t len, char p=' ');
 
     //--------------------------------------------------------------------
     extern SFString trim          (const SFString& str, char c = ' ');

@@ -28,10 +28,10 @@ bool COptions::parseArguments(SFString& command) {
     Init();
     while (!command.empty()) {
         SFString arg = nextTokenClear(command, ' ');
-        if (arg.startsWith("C")) {
+        if (startsWith(arg, "C")) {
             className = arg;
 
-        } else if (arg.startsWith('-')) {  // do not collapse
+        } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);

@@ -35,7 +35,7 @@ int main(int argc, const char* argv[]) {
 
             SFString def = (verbose ? "" : "{ \"date\": \"[{DATE}]\", \"price\": \"[{CLOSE}]\" }");
             SFString fmtStr = getGlobalConfig()->getDisplayStr(!verbose, def, "");
-            bool isJson = ((fmtStr.startsWith("{") && fmtStr.endsWith("}")) || fmtStr.empty());
+            bool isJson = ((startsWith(fmtStr, "{") && endsWith(fmtStr, "}")) || fmtStr.empty());
             if (options.at) {
                 cout << quotes[(uint32_t)indexFromTimeStamp(quotes, options.at)].Format(fmtStr);
 

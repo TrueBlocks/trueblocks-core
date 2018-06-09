@@ -97,7 +97,7 @@ namespace qblocks {
                 stdInCmds += c;
                 c = static_cast<char>(getchar());
             }
-            if (!stdInCmds.endsWith("\n"))
+            if (!endsWith(stdInCmds, "\n"))
                 stdInCmds += "\n";
         }
 
@@ -111,14 +111,14 @@ namespace qblocks {
         SFString cmdFileName = "";
         for (uint64_t i = 0 ; i < nArgs ; i++) {
             SFString arg = args[i];
-            if (arg.startsWith("--file:")) {
+            if (startsWith(arg, "--file:")) {
                 cmdFileName = arg.Substitute("--file:", "");
                 cmdFileName.Replace("~/", getHomeFolder());
                 if (!fileExists(cmdFileName)) {
                     if (args) delete [] args;
                     return usage("--file: '" + cmdFileName + "' not found. Quitting.");
                 }
-            } else if (arg.startsWith("-v") || arg.startsWith("--verbose")) {
+            } else if (startsWith(arg, "-v") || startsWith(arg, "--verbose")) {
                 verbose = true;
                 arg = arg.Substitute("-v", "").Substitute("--verbose", "").Substitute(":", "");
                 if (!arg.empty()) {
@@ -141,7 +141,7 @@ namespace qblocks {
                     SFString shortName = paramsPtr[j].shortName;
                     SFString longName  = "-"+paramsPtr[j].longName;
                     if (shortName == arg ||
-                        longName.startsWith(arg))
+                        startsWith(longName, arg))
                     {
                         // we want to pull the next parameter into this one since it's a ':' param
                         combine = true;
@@ -174,13 +174,13 @@ namespace qblocks {
             if (contents.empty()) {
                 return usage("Command file '" + cmdFileName + "' is empty. Quitting...");
             }
-            if (contents.startsWith("NOPARSE\n")) {
+            if (startsWith(contents, "NOPARSE\n")) {
                 commandList = contents;
                 nextTokenClear(commandList,'\n');
             } else {
                 while (!contents.empty()) {
                     SFString command = trimWhitespace(nextTokenClear(contents, '\n'));
-                    if (!command.empty() && !command.startsWith(";"))  // ignore comments
+                    if (!command.empty() && !startsWith(command, ";"))  // ignore comments
                         commandList += (command+"\n");
                 }
             }
@@ -242,7 +242,7 @@ namespace qblocks {
 
     //--------------------------------------------------------------------------------
     bool COptionsBase::builtInCmd(const SFString& arg) {
-        if (isEnabled(OPT_VERBOSE) && (arg == "-v" || arg.startsWith("-v:") || arg.startsWith("--verbose")))
+        if (isEnabled(OPT_VERBOSE) && (arg == "-v" || startsWith(arg, "-v:") || startsWith(arg, "--verbose")))
             return true;
         if (isEnabled(OPT_DENOM) && (arg == "--ether" || arg == "--wei" || arg == "--dollars"))
             return true;
@@ -346,10 +346,10 @@ namespace qblocks {
         if (!COptionsBase::needsOption)
             ctx << "[";
         for (uint64_t i = 0 ; i < nParamsRef ; i++) {
-            if (paramsPtr[i].shortName.startsWith('~')) {
+            if (startsWith(paramsPtr[i].shortName, '~')) {
                 required += (" " + paramsPtr[i].longName.substr(1).Substitute("!", ""));
 
-            } else if (paramsPtr[i].shortName.startsWith('@')) {
+            } else if (startsWith(paramsPtr[i].shortName, '@')) {
                 // invisible option
 
             } else if (!paramsPtr[i].shortName.empty()) {
@@ -467,11 +467,11 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
             SFString sName = paramsPtr[i].shortName;
             SFString lName = paramsPtr[i].longName;
             SFString descr = trim(paramsPtr[i].description);
-            if (sName.startsWith('@') && !showHidden) {
+            if (startsWith(sName, '@') && !showHidden) {
                 // invisible option
 
             } else if (!sName.empty()) {
-                bool isMode = sName.startsWith('~');
+                bool isMode = startsWith(sName, '~');
                 // ~ makes the option a required mode, ! makes it not required
                 bool isReq = isMode && !lName.Contains('!');
                 sName = (isMode ? "" : sName);
@@ -504,7 +504,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
         CStringExportContext ctx;
 
         // Not an option
-        if (!arg.startsWith('-') || arg.startsWith("--")) {
+        if (!startsWith(arg, '-') || startsWith(arg, "--")) {
             arg = "";
             return ret;
         }
@@ -741,13 +741,13 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
         // Read the data from the names database and clean it up if needed
         SFString contents = trimWhitespace(asciiFileToString(textFile));
         contents.ReplaceAll("\t\t", "\t");
-        if (!contents.endsWith("\n"))
+        if (!endsWith(contents, "\n"))
             contents += "\n";
 
         // Parse out the data....
         while (!contents.empty()) {
             SFString line = nextTokenClear(contents, '\n');
-            if (!line.startsWith("#")) {
+            if (!startsWith(line, "#")) {
                 if (countOf('\t', line) < 2) {
                     cerr << "Line " << line << " does not contain two tabs.\n";
 

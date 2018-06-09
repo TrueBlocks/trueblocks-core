@@ -26,7 +26,7 @@ namespace qblocks {
     SFString COptionsTransList::parseTransList(const SFString& argIn) {
 
         SFString arg = argIn;
-        if (arg.startsWith("0x")) {
+        if (startsWith(arg, "0x")) {
 
             if (arg.Contains(".")) {
 

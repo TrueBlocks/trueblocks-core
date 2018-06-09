@@ -338,7 +338,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
 
     //-------------------------------------------------------------------------
     bool getCode(const SFString& addr, SFString& theCode) {
-        SFString a = addr.startsWith("0x") ? addr.substr(2) : addr;
+        SFString a = startsWith(addr, "0x") ? addr.substr(2) : addr;
         a = padLeft(a,40,'0');
         theCode = callRPC("eth_getCode", "[\"0x" + a +"\"]", false);
         return theCode.length()!=0;
@@ -438,7 +438,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
             contents.ReplaceAll("null", "\"0x\"");
             stringToAsciiFile(fileName, contents);
         }
-        if (!contents.endsWith('\n')) {
+        if (!endsWith(contents, '\n')) {
             stringToAsciiFile(fileName, contents+"\n");
         }
         char *p = cleanUpJson((char *)(const char*)contents);
@@ -786,7 +786,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
         while (!list.empty()) {
             SFString item = nextTokenClear(list, '|');
             bool hasDot = item.Contains(".");
-            bool isHex = item.startsWith("0x");
+            bool isHex = startsWith(item, "0x");
 
             SFString hash = nextTokenClear(item, '.');
             uint64_t txID = toLongU(item);
@@ -845,7 +845,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
                 exit(0);
             }
             blockCache = folder.getFullPath();
-            if (!blockCache.endsWith("/"))
+            if (!endsWith(blockCache, "/"))
                 blockCache += "/";
         }
         return (blockCache + _part).Substitute("//", "/");

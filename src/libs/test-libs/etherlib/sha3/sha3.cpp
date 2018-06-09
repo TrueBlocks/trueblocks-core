@@ -33,7 +33,7 @@ int main(int argc, const char *argv[]) {
                 return 0;
             SFString in = argv[1];
             cout << "in: " << in << "\n";
-            SFString hex = in.startsWith("0x") ? in : "0x" + string2Hex(in);
+            SFString hex = startsWith(in, "0x") ? in : "0x" + string2Hex(in);
             cout << "hex: " << hex << "\n";
             SFString out = getSha3(hex);
             cout << "out: " << out << "\n";
@@ -51,12 +51,12 @@ void doTests(void) {
     SFString contents = STR_TEST_DATA;
     while (!contents.empty()) {
         SFString line = nextTokenClear(contents, '\n');
-        if (!line.startsWith('#')) {
+        if (!startsWith(line, '#')) {
             if (!hasIn) {
                 in = line;
                 hasIn = true;
             } else {
-                SFString hex = in.startsWith("0x") ? in : "0x" + string2Hex(in);
+                SFString hex = startsWith(in, "0x") ? in : "0x" + string2Hex(in);
                 SFString out = getSha3(hex);
                 cout << "in:\t\t" << in << "\n"
                     << "hex:\t\t" << hex << "\n"

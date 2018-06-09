@@ -22,7 +22,7 @@ namespace qblocks {
 
     //-------------------------------------------------------------------------
     inline SFUintBN makeBloom(const SFString& hexIn) {
-        if (hexIn.empty() || !hexIn.startsWith("0x"))
+        if (hexIn.empty() || !startsWith(hexIn, "0x"))
             return 0;
 
 extern SFString getSha3 (const SFString& hexIn);

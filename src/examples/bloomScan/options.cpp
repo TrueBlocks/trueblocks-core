@@ -36,7 +36,7 @@ bool COptions::parseArguments(SFString& command) {
     while (!command.empty()) {
         SFString arg = nextTokenClear(command,' ');
         SFString orig = arg;
-        if (arg.startsWith("-m:") || arg.startsWith("--mode:")) {
+        if (startsWith(arg, "-m:") || startsWith(arg, "--mode:")) {
             arg = arg.Substitute("-m:", "").Substitute("--mode:", "");
             if (arg != "short" && arg != "full")
                 return usage("Mode must be either 'full' or 'short'. Quitting...");
@@ -45,7 +45,7 @@ bool COptions::parseArguments(SFString& command) {
         } else if (arg == "-d" || arg == "--data") {
             asData = true;
 
-        } else if (arg.startsWith('-')) {  // do not collapse
+        } else if (startsWith(arg, '-')) {  // do not collapse
             if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);
             }

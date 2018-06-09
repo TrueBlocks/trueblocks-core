@@ -968,7 +968,7 @@ namespace qblocks {
 
     //----------------------------------------------------------------------------------------------------
     timestamp_t toTimestamp(const SFString& timeIn) {
-        return (timeIn.startsWith("0x") ? (timestamp_t)hex2Long(timeIn) : (timestamp_t)toLong(timeIn));
+        return (startsWith(timeIn, "0x") ? (timestamp_t)hex2Long(timeIn) : (timestamp_t)toLong(timeIn));
     }
 
     //----------------------------------------------------------------------------------------------------

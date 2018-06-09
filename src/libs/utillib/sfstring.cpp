@@ -575,7 +575,7 @@ namespace qblocks {
     //---------------------------------------------------------------------------------------
     bool endsWithAny(const SFString& haystack, const SFString& str) {
         for (size_t i = 0 ; i < str.length() ; i++)
-            if (haystack.endsWith(str[i]))
+            if (endsWith(haystack, str[i]))
                 return true;
         return false;
     }
@@ -583,9 +583,35 @@ namespace qblocks {
     //---------------------------------------------------------------------------------------
     bool startsWithAny(const SFString& haystack, const SFString& str) {
         for (size_t i = 0 ; i < str.length() ; i++)
-            if (haystack.startsWith(str[i]))
+            if (startsWith(haystack, str[i]))
                 return true;
         return false;
+    }
+
+    //--------------------------------------------------------------------
+    bool endsWith(const SFString& haystack, const SFString& needle) {
+        if (haystack.empty() || needle.empty())
+            return false;
+        return (haystack.substr(haystack.length() - needle.length(), needle.length()) == needle);
+    }
+
+    //--------------------------------------------------------------------
+    bool startsWith(const SFString& haystack, const SFString& needle) {
+        if (haystack.empty())
+            return false;
+        return (haystack.substr(0, needle.length()) == needle);
+    }
+
+    //--------------------------------------------------------------------
+    size_t countOf(char c, const SFString& str) {
+        size_t len = str.length();
+        size_t i=0, cnt=0;
+        while (i<len) {
+            if (str.at(i) == c)
+                cnt++;
+            i++;
+        }
+        return cnt;
     }
 
     //--------------------------------------------------------------------
@@ -639,6 +665,31 @@ namespace qblocks {
         return toProper(str).c_str();
     }
 
+/*
+    //--------------------------------------------------------------------
+    string_q padRight(const string_q& str, size_t len, char p) {
+        if (len > str.length())
+            return str + string_q(p, len-str.length());
+        return str;
+    }
+
+    //--------------------------------------------------------------------
+    string_q padLeft(const string_q& str, size_t len, char p) {
+        if (len > str.length())
+            return string_q(p, len-str.length()) + str;
+        return str;
+    }
+
+    //--------------------------------------------------------------------
+    string_q padCenter(const string_q& str, size_t len, char p) {
+        if (len > str.length()) {
+            size_t padding = (len-str.length()) / 2;
+            return string_q(p, padding) + str + string_q(p, padding);
+        }
+        return str;
+    }
+*/
+
     //--------------------------------------------------------------------
     string_q trim(const string_q& str, char c) {
         return trimTrailing(trimLeading(str, c), c);
@@ -647,7 +698,7 @@ namespace qblocks {
     //--------------------------------------------------------------------
     string_q trimTrailing(const string_q& str, char c) {
         SFString ret = str.c_str();
-        while (ret.endsWith(c))
+        while (endsWith(ret, c))
             ret = ret.substr(0,ret.length()-1);
         return ret.c_str();
     }
@@ -655,7 +706,7 @@ namespace qblocks {
     //--------------------------------------------------------------------
     string_q trimLeading(const string_q& str, char c) {
         SFString ret = str.c_str();
-        while (ret.startsWith(c))
+        while (startsWith(ret, c))
             ret = ret.substr(1);
         return ret.c_str();
     }
@@ -672,6 +723,29 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------
+    SFString padRight(const SFString& str, size_t len, char p) {
+        if (len > str.length())
+            return str + SFString(p, len-str.length());
+        return str;
+    }
+
+    //--------------------------------------------------------------------
+    SFString padLeft(const SFString& str, size_t len, char p) {
+        if (len > str.length())
+            return SFString(p, len-str.length()) + str;
+        return str;
+    }
+
+    //--------------------------------------------------------------------
+    SFString padCenter(const SFString& str, size_t len, char p) {
+        if (len > str.length()) {
+            size_t padding = (len-str.length()) / 2;
+            return SFString(p, padding) + str + SFString(p, padding);
+        }
+        return str;
+    }
+
+    //--------------------------------------------------------------------
     SFString trim(const SFString& str, char c) {
         return trimTrailing(trimLeading(str, c), c);
     }
@@ -679,7 +753,7 @@ namespace qblocks {
     //--------------------------------------------------------------------
     SFString trimTrailing(const SFString& str, char c) {
         SFString ret = str;
-        while (ret.endsWith(c))
+        while (endsWith(ret, c))
             ret = ret.substr(0,ret.length()-1);
         return ret;
     }
@@ -687,7 +761,7 @@ namespace qblocks {
     //--------------------------------------------------------------------
     SFString trimLeading(const SFString& str, char c) {
         SFString ret = str;
-        while (ret.startsWith(c))
+        while (startsWith(ret, c))
             ret = ret.substr(1);
         return ret;
     }

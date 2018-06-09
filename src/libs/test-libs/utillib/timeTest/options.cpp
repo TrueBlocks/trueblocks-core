@@ -28,7 +28,7 @@ bool COptions::parseArguments(SFString& command) {
     Init();
     while (!command.empty()) {
         SFString arg = nextTokenClear(command, ' ');
-        if (arg.startsWith('-')) {  // do not collapse
+        if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);
