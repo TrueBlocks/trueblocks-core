@@ -48,7 +48,7 @@ int main(int argc, const char *argv[]) {
 void reportByToken(COptions& options) {
 
     SFUintBN totalVal = 0;
-    uint64_t nAccts = countOf('|', options.holders) + 1;
+    uint64_t nAccts = countOf(options.holders, '|') + 1;
     bool needsTotal = (nAccts > 1 && options.total);
 
     bool needsNewline = true;
@@ -126,7 +126,7 @@ void reportByToken(COptions& options) {
 void reportByAccount(COptions& options) {
 
     SFUintBN totalVal = 0;
-    uint64_t nAccts = countOf('|', options.holders) + 1;
+    uint64_t nAccts = countOf(options.holders, '|') + 1;
     bool needsTotal = (nAccts > 1 && options.total);
 
     bool needsNewline = true;

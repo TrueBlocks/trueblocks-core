@@ -228,7 +228,7 @@ bool CSlurperApp::Slurp(COptions& options, SFString& message) {
             }
             contents += thisPage;
 
-            uint64_t nRecords = countOf('}', thisPage) - 1;
+            uint64_t nRecords = countOf(thisPage, '}') - 1;
             nRead += nRecords;
             if (!isTestMode())
                 cerr << "\tDownloaded " << nRead << " potentially new transactions.\r";
@@ -458,7 +458,7 @@ SFString CSlurperApp::getFormatString(COptions& options, const SFString& which, 
     ret = ret.Substitute("\\n", "\n").Substitute("\\t", "\t");
 
     // some sanity checks
-    if (countOf('{', ret) != countOf('}', ret) || countOf('[', ret) != countOf(']', ret)) {
+    if (countOf(ret, '{') != countOf(ret, '}') || countOf(ret, '[') != countOf(ret, ']')) {
         errMsg = SFString("Mismatched brackets in display string '") + formatName + "': '" + ret + "'. Quiting...\n";
 
     } else if (ret.empty() && !ignoreBlank) {

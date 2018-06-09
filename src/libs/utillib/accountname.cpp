@@ -230,7 +230,7 @@ ostream& operator<<(ostream& os, const CAccountName& item) {
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 CAccountName::CAccountName(SFString& strIn) {
-    if (countOf('\t',strIn) == 2) {
+    if (countOf(strIn, '\t') == 2) {
         // previous format
         source = strIn;
         addr = toLower(nextTokenClear(source, '\t'));

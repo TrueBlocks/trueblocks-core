@@ -55,7 +55,7 @@ bool COptions::parseArguments(SFString& command) {
                 return usage("Invalid option: '" + orig + "'. Quitting...");
             }
 
-        } else if (arg.ContainsAny(":- ") && countOf('-',arg) > 1) {
+        } else if (arg.ContainsAny(":- ") && countOf(arg, '-') > 1) {
 
             ASSERT(!startsWith(arg, "-"));
             if (isList)

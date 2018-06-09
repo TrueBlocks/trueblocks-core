@@ -51,3 +51,6 @@ stringTest 2
 	|	 AxBBBxBx	A|
 	|AxBBBxBx	A|
 	|BBBxB|
+
+	There are 4 'Bs' in '|	 AxBBBxBx	A |'
+	There are 4 'is' in ' This isthe_thing that matters  and is_upperCase lower case '

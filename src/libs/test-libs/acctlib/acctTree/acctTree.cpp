@@ -90,7 +90,7 @@ bool printTree(const CTreeNode *node, void *data) {
     }
 
     if (r->isMax()) {
-        r->maxDepth  = countOf('-', r->strs);
+        r->maxDepth  = countOf(r->strs, '-');
         r->getNext = true;
         r->maxMatch1 = r->strs;
     }

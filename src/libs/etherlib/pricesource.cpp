@@ -119,7 +119,7 @@ namespace qblocks {
                 SFString response = urlToString(url);
 
                 // Figure out how many new records there are
-                uint32_t nRecords = (uint32_t)countOf('}', response);
+                uint32_t nRecords = (uint32_t)countOf(response, '}');
                 nRecords--;
                 if (verbose)
                     cerr << "Response: " << nRecords << " were sent from Poloniex\n";
