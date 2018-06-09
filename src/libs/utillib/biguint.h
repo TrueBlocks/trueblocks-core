@@ -206,7 +206,7 @@ namespace qblocks {
         void setBlock(unsigned int i, uint64_t newBlock);
         bool getBit(unsigned int bi) const;
         void setBit(unsigned int bi, bool newBit);
-        void trimLeft(void);
+        void trimLeadingZeros(void);
 
         //protected:
 
@@ -447,15 +447,15 @@ namespace qblocks {
             borrow =(blk[i] == 0);
             blk[i]--;
         }
-        trimLeft();
+        trimLeadingZeros();
     }
-    
+
     //----------------------------------------------------------------------
     inline uint64_t SFUintBN::getBlock(unsigned int i) const
     {
         return i >= len ? 0 : blk[i];
     }
-    
+
     //----------------------------------------------------------------------
     inline bool SFUintBN::getBit(unsigned int bi) const
     {

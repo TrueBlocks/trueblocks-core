@@ -479,7 +479,7 @@ namespace qblocks {
         ASSERT(fieldList);
         SFString ret;
         ret += "{";
-        ret += Strip(toJsonFldList(fieldList),' ');
+        ret += trim(toJsonFldList(fieldList));
         ret += "\n";
         ret += indent();
         ret += "}";
@@ -490,15 +490,15 @@ namespace qblocks {
     SFString decBigNum(const SFString& str) {
         SFString ret = str;
         size_t len = ret.length();
-             if (len > 29) ret = ret.substr(0,1) + "." + StripTrailing(ret.substr(1), '0') + "e+29";
-        else if (len > 28) ret = ret.substr(0,1) + "." + StripTrailing(ret.substr(1), '0') + "e+28";
-        else if (len > 27) ret = ret.substr(0,1) + "." + StripTrailing(ret.substr(1), '0') + "e+27";
-        else if (len > 26) ret = ret.substr(0,1) + "." + StripTrailing(ret.substr(1), '0') + "e+26";
-        else if (len > 25) ret = ret.substr(0,1) + "." + StripTrailing(ret.substr(1), '0') + "e+25";
-        else if (len > 24) ret = ret.substr(0,1) + "." + StripTrailing(ret.substr(1), '0') + "e+24";
-        else if (len > 23) ret = ret.substr(0,1) + "." + StripTrailing(ret.substr(1), '0') + "e+23";
-        else if (len > 22) ret = ret.substr(0,1) + "." + StripTrailing(ret.substr(1), '0') + "e+22";
-        else if (len > 21) ret = ret.substr(0,1) + "." + StripTrailing(ret.substr(1), '0') + "e+21";
+             if (len > 29) ret = ret.substr(0,1) + "." + trimTrailing(ret.substr(1), '0') + "e+29";
+        else if (len > 28) ret = ret.substr(0,1) + "." + trimTrailing(ret.substr(1), '0') + "e+28";
+        else if (len > 27) ret = ret.substr(0,1) + "." + trimTrailing(ret.substr(1), '0') + "e+27";
+        else if (len > 26) ret = ret.substr(0,1) + "." + trimTrailing(ret.substr(1), '0') + "e+26";
+        else if (len > 25) ret = ret.substr(0,1) + "." + trimTrailing(ret.substr(1), '0') + "e+25";
+        else if (len > 24) ret = ret.substr(0,1) + "." + trimTrailing(ret.substr(1), '0') + "e+24";
+        else if (len > 23) ret = ret.substr(0,1) + "." + trimTrailing(ret.substr(1), '0') + "e+23";
+        else if (len > 22) ret = ret.substr(0,1) + "." + trimTrailing(ret.substr(1), '0') + "e+22";
+        else if (len > 21) ret = ret.substr(0,1) + "." + trimTrailing(ret.substr(1), '0') + "e+21";
         ret.Replace(".e+", "e+");
         return ret;
     }
@@ -605,8 +605,8 @@ namespace qblocks {
             promptName = fieldName;
         }
 
-        uint32_t maxWidth = 0xdeadbeef;
-        bool rightJust = false;
+        uint32_t maxWidth = 0xdeadbeef, lineWidth = 0xdeadbeef;
+        bool rightJust = false, lineJust = false;
         if (fieldName.ContainsI("w:")) {
             ASSERT(fieldName.substr(0,2) % "w:");  // must be first modifier in the string
             fieldName.ReplaceI("w:", EMPTY);   // get rid of the 'w:'
@@ -618,6 +618,12 @@ namespace qblocks {
             maxWidth = toLong32u(fieldName);   // grab the width
             nextTokenClear(fieldName, ':');    // skip to the start of the fieldname
             rightJust = true;
+        } else if (fieldName.ContainsI("l:")) {
+            ASSERT(fieldName.substr(0,2) % "l:");  // must be first modifier in the string
+            fieldName.ReplaceI("l:", "");   // get rid of the 'w:'
+            lineWidth = toLong32u(fieldName);   // grab the width
+            nextTokenClear(fieldName, ':');    // skip to the start of the fieldname
+            lineJust = true;
         }
 
         //--------------------------------------------------------------------
@@ -636,6 +642,10 @@ namespace qblocks {
             fieldValue = truncPadR(fieldValue, maxWidth);  // pad or truncate
         } else {
             fieldValue = truncPad(fieldValue, maxWidth);  // pad or truncate
+        }
+        if (lineJust) {
+extern SFString reformat1(const SFString& in, uint32_t len);
+            fieldValue = reformat1(fieldValue, lineWidth);
         }
 
         // The field is not hidden, the value of the field is not empty, we are not working
@@ -729,6 +739,26 @@ namespace qblocks {
         decIndent();
         os << indent();
         os << "}";
+    }
+
+    //-----------------------------------------------------------------------
+    SFString reformat1(const SFString& in, uint32_t len) {
+        SFString ret = in;
+        if (ret.length() > len+10) {
+            SFString parts[1000];
+            uint32_t nParts = 0;
+            while (!ret.empty()) {
+                parts[nParts++] = ret.substr(0, len);
+                ret.Replace(parts[nParts-1], "");
+                if (parts[nParts-1].length()==len) {
+                    parts[nParts-1] += "...";
+                    parts[nParts-1] += "\r\n\t\t\t    ";
+                }
+            }
+            for (uint32_t xx = 0 ; xx < nParts ; xx++)
+                ret += parts[xx];
+        }
+        return ret;
     }
 }  // namespace qblocks
 

@@ -19,33 +19,6 @@
 namespace qblocks {
 
     //-------------------------------------------------------------------------
-    SFString formatBloom(const SFBloom& b1, bool bits) {
-        SFString ret;
-        if (bits) {
-            ret = "\tbits: " + asStringU(bitsTwiddled(b1));
-            SFString s1 = bloom2Bits(b1).Substitute("0", ".");
-            for (uint32_t i=0;i<16;i++) {
-                SFString m1;
-                for (uint32_t j=0;j<128;j=j+10) {
-                    m1 += s1.substr(i*128, 128).substr(j,10) + " ";
-                }
-                ret += ("\n\t" + m1);
-            }
-        } else {
-            ret = "\tbits: " + asStringU(bitsTwiddled(b1));
-            SFString s1 = bloom2Bytes(b1).Substitute("0x", "").Substitute("0", ".");
-            for (uint32_t i=0;i<4;i++) {
-                SFString m1;
-                for (uint32_t j=0;j<128;j=j+10) {
-                    m1 += s1.substr(i*128, 128).substr(j,10) + " ";
-                }
-                ret += ("\n\t" + m1);
-            }
-        }
-        return ret;
-    }
-
-    //-------------------------------------------------------------------------
     bool compareBlooms(const SFBloom& b1, const SFBloom& b2, SFString& str) {
         if (verbose > 2) {
             str = "\n\tbits1: " + asStringU(bitsTwiddled(b1)) + " bits2: " + asStringU(bitsTwiddled(b2));

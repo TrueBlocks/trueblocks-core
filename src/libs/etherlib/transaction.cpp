@@ -533,7 +533,7 @@ inline SFString asStringULL(uint64_t i) {
 
 //------------------------------------------------------------------------------
 #define toBigNum2(a,b)      SFString(to_string(canonicalWei("0x"+grabPart(a,b))).c_str())
-#define grabPart(a,b)       StripLeading((a).substr(64*(b),64),'0')
+#define grabPart(a,b)       trimLeading((a).substr(64*(b),64),'0')
 #define grabBigNum(a,b)     strtoull((const char*)grabPart(a,b),NULL,16)
 #define toAddr(a,b)         "0x"+padLeft(grabPart(a,b),40,'0')
 #define toAddrOld(a,b)      "0x"+grabPart(a,b)
@@ -575,7 +575,7 @@ SFString parse(const SFString& params, uint32_t nItems, SFString *types) {
         ret += ("|" + val);
     }
 
-    return "\"" + Strip(ret,'|') + "\"";
+    return "\"" + trim(ret, '|') + "\"";
 }
 
 //---------------------------------------------------------------------------

@@ -33,7 +33,7 @@ public:
         SFString contents = asciiFileToString("./data/countsByWeek.txt");
         SFString last;
         while (!contents.empty()) {
-            SFString str = Strip(nextTokenClear(contents,'\n'),' ');
+            SFString str = trim(nextTokenClear(contents,'\n'));
             if (!str.empty())
                 last = str;
         }
