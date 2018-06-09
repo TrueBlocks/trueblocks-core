@@ -563,7 +563,7 @@ namespace qblocks {
     inline int sortByStringValue(const void *rr1, const void *rr2) {
         SFString n1 = * reinterpret_cast<const SFString*>(rr1);
         SFString n2 = * reinterpret_cast<const SFString*>(rr2);
-        return n1.Icompare(n2);
+        return strcasecmp(n1.c_str(), n2.c_str());
     }
 
     //-----------------------------------------------------------------------------------------

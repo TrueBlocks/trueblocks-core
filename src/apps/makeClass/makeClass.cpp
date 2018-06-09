@@ -455,7 +455,7 @@ SFString getCaseCode(const SFString& fieldCase, const SFString& ex) {
     SFString baseTab = (tab+tab+ex);
     SFString caseCode;
     for (char ch = '_' ; ch < 'z' + 1 ; ch++) {
-        if (fieldCase.ContainsI("+"+SFString(ch))) {
+        if (toLower(fieldCase).Contains("+"+SFString(ch))) {
             caseCode += baseTab + "case '" + ch + "':\n";
             SFString fields = fieldCase;
             while (!fields.empty()) {
@@ -574,7 +574,7 @@ SFString getCaseSetCode(const SFString& fieldCase) {
     SFString baseTab = (tab+tab);
     SFString caseCode;
     for (char ch = '_' ; ch < 'z' + 1 ; ch++) {
-        if (fieldCase.ContainsI("+"+SFString(ch))) {
+        if (toLower(fieldCase).Contains("+"+SFString(ch))) {
             caseCode += baseTab + "case '" + ch + "':\n";
             SFString fields = fieldCase;
             while (!fields.empty()) {

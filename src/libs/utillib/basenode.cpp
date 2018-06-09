@@ -590,37 +590,37 @@ namespace qblocks {
         // The fieldname may contain b: in which case the field is a bool. Display only 'true' values
         // (in other words, false is same as empty)
         bool isBool = false;
-        if (fieldName.ContainsI("b:")) {
+        if (fieldName.Contains("b:")) {
             isBool = true;
-            fieldName.ReplaceI("b:", EMPTY);
+            fieldName.Replace("b:", EMPTY);
         }
 
         // The fieldname may contain p: or w:width: or both.  If it contains either it
         // must contain them at the beginning of the string (before the fieldName).  Anything
         // left after the last ':' is considered the fieldName
         SFString promptName = fieldName;
-        if (fieldName.ContainsI("p:")) {
+        if (fieldName.Contains("p:")) {
             isPrompt = true;
-            fieldName.ReplaceI("p:", EMPTY);
+            fieldName.Replace("p:", EMPTY);
             promptName = fieldName;
         }
 
         uint32_t maxWidth = 0xdeadbeef, lineWidth = 0xdeadbeef;
         bool rightJust = false, lineJust = false;
-        if (fieldName.ContainsI("w:")) {
+        if (fieldName.Contains("w:")) {
             ASSERT(fieldName.substr(0,2) % "w:");  // must be first modifier in the string
-            fieldName.ReplaceI("w:", EMPTY);   // get rid of the 'w:'
+            fieldName.Replace("w:", EMPTY);   // get rid of the 'w:'
             maxWidth = toLong32u(fieldName);   // grab the width
             nextTokenClear(fieldName, ':');    // skip to the start of the fieldname
-        } else if (fieldName.ContainsI("r:")) {
+        } else if (fieldName.Contains("r:")) {
             ASSERT(fieldName.substr(0,2) % "r:");  // must be first modifier in the string
-            fieldName.ReplaceI("r:", EMPTY);   // get rid of the 'w:'
+            fieldName.Replace("r:", EMPTY);   // get rid of the 'w:'
             maxWidth = toLong32u(fieldName);   // grab the width
             nextTokenClear(fieldName, ':');    // skip to the start of the fieldname
             rightJust = true;
-        } else if (fieldName.ContainsI("l:")) {
+        } else if (fieldName.Contains("l:")) {
             ASSERT(fieldName.substr(0,2) % "l:");  // must be first modifier in the string
-            fieldName.ReplaceI("l:", "");   // get rid of the 'w:'
+            fieldName.Replace("l:", "");   // get rid of the 'w:'
             lineWidth = toLong32u(fieldName);   // grab the width
             nextTokenClear(fieldName, ':');    // skip to the start of the fieldname
             lineJust = true;
