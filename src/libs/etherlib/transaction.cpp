@@ -531,6 +531,26 @@ inline SFString asStringULL(uint64_t i) {
     return os.str().c_str();
 }
 
+//----------------------------------------------------------------------------
+inline unsigned char hex2Ascii(char *str) {
+    unsigned char c;
+    c =  (unsigned char)((str[0] >= 'A' ? ((str[0]&0xDF)-'A')+10 : (str[0]-'0')));
+    c *= 16;
+    c = (unsigned char)(c + (str[1] >= 'A' ? ((str[1]&0xDF)-'A')+10 : (str[1]-'0')));
+    return c;
+}
+
+//----------------------------------------------------------------------------
+inline SFString hex2String(const SFString& inHex) {
+    SFString ret, in = startsWith(inHex, "0x") ? inHex.substr(2) : inHex;
+    while (!in.empty()) {
+        SFString nibble = in.substr(0,2);
+        in = in.substr(2);
+        ret += (char)hex2Ascii((char*)nibble.c_str());
+    }
+    return ret;
+}
+
 //------------------------------------------------------------------------------
 #define toBigNum2(a,b)      SFString(to_string(canonicalWei("0x"+grabPart(a,b))).c_str())
 #define grabPart(a,b)       trimLeading((a).substr(64*(b),64),'0')

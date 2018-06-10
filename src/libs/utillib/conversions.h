@@ -35,26 +35,6 @@ namespace qblocks {
         return ret;
     }
 
-    //----------------------------------------------------------------------------
-    inline unsigned char hex2Ascii(char *str) {
-        unsigned char c;
-        c =  (unsigned char)((str[0] >= 'A' ? ((str[0]&0xDF)-'A')+10 : (str[0]-'0')));
-        c *= 16;
-        c = (unsigned char)(c + (str[1] >= 'A' ? ((str[1]&0xDF)-'A')+10 : (str[1]-'0')));
-        return c;
-    }
-
-    //----------------------------------------------------------------------------
-    inline SFString hex2String(const SFString& inHex) {
-        SFString ret, in = startsWith(inHex, "0x") ? inHex.substr(2) : inHex;
-        while (!in.empty()) {
-            SFString nibble = in.substr(0,2);
-            in = in.substr(2);
-            ret += (char)hex2Ascii((char*)nibble.c_str());
-        }
-        return ret;
-    }
-
     //--------------------------------------------------------------------
     inline SFString asHex(char val) {
         char tmp[20];
@@ -251,8 +231,6 @@ namespace qblocks {
     extern SFString bloom2Bytes(const SFBloom& bl);
     extern SFString bloom2Bits(const SFBloom& b);
 
-#define fromUnsigned(a) asStringU((a))
-
     //----------------------------------------------------------------------------------
     inline SFString fixHash(const SFString& hashIn) {
         SFString ret = startsWith(hashIn, "0x") ? hashIn.substr(2) : hashIn;
@@ -298,6 +276,20 @@ namespace qblocks {
         return (hashIn.length() == 66 && isHexStr(hashIn));
     }
 
+    //-------------------------------------------------------------------------
+    inline bool isUnsigned(const SFString& in) {
+        // Empty string is not valid...
+        if (in.empty())
+            return false;
+        // ...first character must be 0-9 (no negatives)...
+        if (!isdigit(in[0]))
+            return false;
+        // ...or first two must be '0x' and the third must be non negative hex digit
+        if (startsWith(in,"0x") && in.length() > 2)
+            return isxdigit(in.at(2));
+        return true;
+    }
+
     //------------------------------------------------------
     inline SFAddress toAddress(const SFAddress& strIn) {
         // trim it if it's there. We will put it back
@@ -313,20 +305,6 @@ namespace qblocks {
             ret = "0";
 
         return "0x" + toLower(ret);
-    }
-
-    //-------------------------------------------------------------------------
-    inline bool isUnsigned(const SFString& in) {
-        // Empty string is not valid...
-        if (in.empty())
-            return false;
-        // ...first character must be 0-9 (no negatives)...
-        if (!isdigit(in[0]))
-            return false;
-        // ...or first two must be '0x' and the third must be non negative hex digit
-        if (startsWith(in,"0x") && in.length() > 2)
-            return isxdigit(in.at(2));
-        return true;
     }
 
     //--------------------------------------------------------------------
