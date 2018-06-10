@@ -39,7 +39,6 @@ int main(int argc, const char *argv[]) {
                 cout << "Generation test...\n";
                 cout << (test_generation() ? "...passed" : "...failed") << "\n";
                 cout << "\n";
-                
             }
         }
     }
