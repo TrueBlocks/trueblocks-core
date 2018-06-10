@@ -183,7 +183,7 @@ namespace qblocks {
             cerr << "\tresponse. It is impossible forQuickBlocks to proceed. Quitting...\n";
             cerr << "\n";
             exit(0);
-        } else if (getCurlContext()->result.Contains("error")) {
+        } else if (contains(getCurlContext()->result, "error")) {
             if (verbose>1) {
                 cerr << getCurlContext()->result;
                 cerr << getCurlContext()->postData << "\n";

@@ -434,7 +434,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
         }
         // assume the item is already clear
         SFString contents = asciiFileToString(fileName);
-        if (contents.Contains("null")) {
+        if (contains(contents, "null")) {
             replaceAll(contents, "null", "\"0x\"");
             stringToAsciiFile(fileName, contents);
         }
@@ -785,7 +785,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
         SFString list = trans_list;
         while (!list.empty()) {
             SFString item = nextTokenClear(list, '|');
-            bool hasDot = item.Contains(".");
+            bool hasDot = contains(item, ".");
             bool isHex = startsWith(item, "0x");
 
             SFString hash = nextTokenClear(item, '.');

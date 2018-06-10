@@ -109,8 +109,8 @@ bool CSlurperApp::Initialize(COptions& options, SFString& message) {
         if (options.archiveFile.empty() && options.name.empty())
             return usage("-a and -n may not both be empty. Specify either an archive file or a name. Quitting...");
 
-        SFString fn = (options.name.Contains("/") ? options.name : options.exportFormat + "/" + options.name) +
-                        (options.name.Contains(".")?"":"." + options.exportFormat);
+        SFString fn = (contains(options.name, "/") ? options.name : options.exportFormat + "/" + options.name) +
+                        (contains(options.name, ".")?"":"." + options.exportFormat);
         CFilename filename(fn);
         if (options.archiveFile.empty())
             options.archiveFile = filename.getFullPath();
@@ -221,8 +221,8 @@ bool CSlurperApp::Slurp(COptions& options, SFString& message) {
 
             // See if it's good data, if not, bail
             message = nextTokenClear(thisPage, '[');
-            if (!message.Contains("{\"status\":\"1\",\"message\":\"OK\"")) {
-                if (message.Contains("{\"status\":\"0\",\"message\":\"No transactions found\",\"result\":"))
+            if (!contains(message, "{\"status\":\"1\",\"message\":\"OK\"")) {
+                if (contains(message, "{\"status\":\"0\",\"message\":\"No transactions found\",\"result\":"))
                     message = "No transactions were found for address '" + theAccount.addr + "'.";
                 return options.fromFile;
             }
@@ -363,7 +363,7 @@ bool CSlurperApp::Filter(COptions& options, SFString& message) {
 //    if (func=="none")
 //    {
 //        SFString ret = inputToFunction();
-//         if (ret.Contains Any("acghrstuv"))
+//         if (containsAny(ret, "acghrstuv"))
 //            return false;
 //        return (ret==" ");
 //    }
@@ -442,7 +442,7 @@ SFString CSlurperApp::getFormatString(COptions& options, const SFString& which, 
 
     SFString formatName = "fmt_" + options.exportFormat + "_" + which;
     SFString ret = toml.getConfigStr("display", formatName, EMPTY);
-    if (ret.Contains("file:")) {
+    if (contains(ret, "file:")) {
         SFString file = ret.Substitute("file:", EMPTY);
         if (!fileExists(file))
             errMsg = SFString("Formatting file '") + file +
@@ -450,7 +450,7 @@ SFString CSlurperApp::getFormatString(COptions& options, const SFString& which, 
         else
             ret = asciiFileToString(file);
 
-    } else if (ret.Contains("fmt_")) {  // it's referring to another format string...
+    } else if (contains(ret, "fmt_")) {  // it's referring to another format string...
         SFString newName = ret;
         ret = toml.getConfigStr("display", newName, EMPTY);
         formatName += ":" + newName;
@@ -488,7 +488,7 @@ void CSlurperApp::buildDisplayStrings(COptions& options) {
     ASSERT(!fmtForRecords.empty());
 
     // ...we may need this to build it.
-    const SFString fmtForFields  = getFormatString(options, "field", !fmtForRecords.Contains("{FIELDS}"));
+    const SFString fmtForFields  = getFormatString(options, "field", !contains(fmtForRecords, "{FIELDS}"));
     ASSERT(!fmtForFields.empty());
 
     SFString defList = toml.getConfigStr("display", "fmt_fieldList", EMPTY);
@@ -501,7 +501,7 @@ void CSlurperApp::buildDisplayStrings(COptions& options) {
     theAccount.header = EMPTY;
     while (!fieldList.empty()) {
         SFString fieldName = nextTokenClear(fieldList, '|');
-        bool force = fieldName.Contains("*");
+        bool force = contains(fieldName, "*");
         fieldName.Replace("*", EMPTY);
 
         const CFieldData *field = GETRUNTIME_CLASS(CTransaction)->FindField(fieldName);

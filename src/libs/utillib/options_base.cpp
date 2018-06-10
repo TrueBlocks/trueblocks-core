@@ -196,37 +196,37 @@ namespace qblocks {
     //--------------------------------------------------------------------------------
     bool COptionsBase::standardOptions(SFString& cmdLine) {
         cmdLine += " ";
-        if (cmdLine.Contains("--version ")) {
+        if (contains(cmdLine, "--version ")) {
             cerr << programName << " (quickBlocks) " << getVersionStr() << "\n";
             exit(0);
 
-        } else if (cmdLine.Contains("-h ") || cmdLine.Contains("--help ")) {
+        } else if (contains(cmdLine, "-h ") || contains(cmdLine, "--help ")) {
             usage();
             exit(0);
 
-        } else if (cmdLine.Contains("--nocolor ")) {
+        } else if (contains(cmdLine, "--nocolor ")) {
             replaceAll(cmdLine, "--nocolor ","");
             colorsOff();
 
-        } else if (isEnabled(OPT_DENOM) && cmdLine.Contains("--ether " )) {
+        } else if (isEnabled(OPT_DENOM) && contains(cmdLine, "--ether " )) {
             replaceAll(cmdLine, "--ether ","");
             expContext().asEther = true;
             expContext().asDollars = false;
             expContext().asWei = false;
 
-        } else if (isEnabled(OPT_DENOM) && cmdLine.Contains("--wei ")) {
+        } else if (isEnabled(OPT_DENOM) && contains(cmdLine, "--wei ")) {
             replaceAll(cmdLine, "--wei ","");
             expContext().asEther = false;
             expContext().asDollars = false;
             expContext().asWei = true;
 
-        } else if (isEnabled(OPT_DENOM) && cmdLine.Contains("--dollars ")) {
+        } else if (isEnabled(OPT_DENOM) && contains(cmdLine, "--dollars ")) {
             replaceAll(cmdLine, "--dollars ","");
             expContext().asEther = false;
             expContext().asDollars = true;
             expContext().asWei = false;
 
-        } else if (isEnabled(OPT_PARITY) && cmdLine.Contains("--parity ")) {
+        } else if (isEnabled(OPT_PARITY) && contains(cmdLine, "--parity ")) {
             replaceAll(cmdLine, "--parity ","");
             expContext().spcs = 4;
             expContext().hexNums = true;
@@ -265,7 +265,7 @@ namespace qblocks {
 
         description = descr;
         SFString dummy;
-        if (name.Contains(":<") || name.Contains(":[")) {
+        if (contains(name, ":<") || contains(name, ":[")) {
             permitted = name;
             name = nextTokenClear(permitted,':');
             // order matters
@@ -285,18 +285,18 @@ namespace qblocks {
             if (name.length() > 2)
                 longName = name + dummy;
 
-            if (name.Contains("{")) {
+            if (contains(name, "{")) {
                 name.Replace("{", "|{");
                 nextTokenClear(name, '|');
                 shortName += name;
 
-            } else if (name.Contains(":")) {
+            } else if (contains(name, ":")) {
                 nextTokenClear(name, ':');
                 shortName += name[0];
                 longName = "-" + name + dummy;
             }
 
-            if (longName.Contains("(") && longName.Contains(")")) {
+            if (contains(longName, "(") && contains(longName, ")")) {
                 hotKey = longName;
                 nextTokenClear(hotKey,'(');
                 hotKey = nextTokenClear(hotKey, ')');
@@ -473,7 +473,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
             } else if (!sName.empty()) {
                 bool isMode = startsWith(sName, '~');
                 // ~ makes the option a required mode, ! makes it not required
-                bool isReq = isMode && !lName.Contains('!');
+                bool isReq = isMode && !contains(lName, '!');
                 sName = (isMode ? "" : sName);
                 lName = (isMode ? lName.Substitute('-', "") : lName).Substitute("!", "").Substitute("~", "");
                 ctx << oneDescription(sName, lName, descr, isMode, isReq);
@@ -539,7 +539,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
 
         // One of the range commands. These must be alone on
         // the line (this is a bug for -rf:txt for example)
-        if (arg.Contains(":") || arg.Contains("=")) {
+        if (contains(arg, ":") || contains(arg, "=")) {
             arg = "";
             return ret;
         }
@@ -609,11 +609,11 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
             return 1;
         if (b2->getName() == "latest")
             return -1;
-        if (b1->getValue().Contains("tbd") && b1->getValue().Contains("tbd"))
+        if (contains(b1->getValue(), "tbd") && contains(b1->getValue(), "tbd"))
             return b1->getValue().compare(b2->getValue());
-        if (b1->getValue().Contains("tbd"))
+        if (contains(b1->getValue(), "tbd"))
             return 1;
-        if (b2->getValue().Contains("tbd"))
+        if (contains(b2->getValue(), "tbd"))
             return -1;
         return (int)(b1->getValueU() - b2->getValueU());
     }
@@ -627,7 +627,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
             toml = &theToml;
             // Always load the program's custom config if it exists
             SFString fileName = configPath(programName+".toml");
-            if (fileExists(fileName) && !components.Contains(programName+"|")) {
+            if (fileExists(fileName) && !contains(components, programName+"|")) {
                 components += programName+"|";
                 CToml custom(fileName);
                 toml->mergeFile(&custom);
@@ -637,7 +637,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
         // If we're told explicitly to load another config, do that here
         if (!name.empty()) {
             SFString fileName = configPath(name+".toml");
-            if (fileExists(fileName) && !components.Contains(name+"|")) {
+            if (fileExists(fileName) && !contains(components, name+"|")) {
                 components += name+"|";
                 CToml custom(fileName);
                 toml->mergeFile(&custom);

@@ -215,7 +215,7 @@ bool CAccount::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, vo
     // If no records, just process as normal. We do this because it's so slow
     // copying the records into a string, so we write it directly to the
     // export context. If there is no {RECORDS}, then just send handle it like normal
-    if (!fmtIn.Contains("{RECORDS}") || transactions.getCount() == 0) {
+    if (!contains(fmtIn, "{RECORDS}") || transactions.getCount() == 0) {
         SFString fmt = fmtIn;
 
         while (!fmt.empty())

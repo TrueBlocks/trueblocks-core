@@ -164,17 +164,16 @@ TEST_F(CThisTest, TestCStr) {
     }
     cout << "\n";
 
-    string_q target1 = "Target1|Target2|Target3|Target4";
-    cout << TESTID("base case",15) << target1 << "\n";
-    replaceAny(target1, "get", "XXX");
-    cout << TESTID("rep any",15) << target1 << "\n";
-    replaceAny(target1, "|", " |  ");
-    cout << TESTID("rep any",15) << target1 << "\n";
-    replaceAny(target1, " ", "-");
-    cout << TESTID("rep any",15) << target1 << "\n";
+    string_q target1 = "Target1|Target2|Target3|Target4"; cout << TESTID("base case",15) << target1 << "\n";
+    replaceAny(target1, "get", "XXX");                    cout << TESTID("rep any",15) << target1 << "\n";
+    replaceAny(target1, "|", " |  ");                     cout << TESTID("rep any",15) << target1 << "\n";
+    replaceAny(target1, " ", "-");                        cout << TESTID("rep any",15) << target1 << "\n";
     replaceAll(target1, "X", "");
-    replaceAny(target1, " -", "");
-    cout << TESTID("rep any",15) << target1 << "\n";
+    replaceAny(target1, " -", "");                        cout << TESTID("rep any",15) << target1 << "\n";
+    cout << "\n";
+
+    string_q revTarget = ".desrever gnirts eht si sihT";  cout << TESTID("base case",15) << revTarget << "\n";
+    reverse(revTarget);                                   cout << TESTID("reversed", 15) << revTarget << "\n";
 
     return true;
 }}

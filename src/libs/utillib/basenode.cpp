@@ -552,7 +552,7 @@ namespace qblocks {
     //---------------------------------------------------------------------------------------------
     SFString getNextChunk(SFString& fmtOut, NEXTCHUNKFUNC func, const void *data) {
         SFString chunk = fmtOut;
-        if (!fmtOut.Contains("[")) {
+        if (!contains(fmtOut, "[")) {
             // There are no more tokens.  Return the last chunk and empty out the format
             fmtOut = EMPTY;
             return chunk;
@@ -574,7 +574,7 @@ namespace qblocks {
 
         SFString pre, fieldName, post;
         nextTokenClear(fmtOut, '[', false);  // toss the start token
-        if (chunk.Contains("{")) {
+        if (contains(chunk, "{")) {
             // we've encountered a field
             pre       = nextTokenClear(fmtOut, '{', false);
             fieldName = nextTokenClear(fmtOut, '}', false);
@@ -597,7 +597,7 @@ namespace qblocks {
         // The fieldname may contain b: in which case the field is a bool. Display only 'true' values
         // (in other words, false is same as empty)
         bool isBool = false;
-        if (fieldName.Contains("b:")) {
+        if (contains(fieldName, "b:")) {
             isBool = true;
             fieldName.Replace("b:", EMPTY);
         }
@@ -606,7 +606,7 @@ namespace qblocks {
         // must contain them at the beginning of the string (before the fieldName).  Anything
         // left after the last ':' is considered the fieldName
         SFString promptName = fieldName;
-        if (fieldName.Contains("p:")) {
+        if (contains(fieldName, "p:")) {
             isPrompt = true;
             fieldName.Replace("p:", EMPTY);
             promptName = fieldName;
@@ -614,18 +614,18 @@ namespace qblocks {
 
         uint32_t maxWidth = 0xdeadbeef, lineWidth = 0xdeadbeef;
         bool rightJust = false, lineJust = false;
-        if (fieldName.Contains("w:")) {
+        if (contains(fieldName, "w:")) {
             ASSERT(fieldName.substr(0,2) % "w:");  // must be first modifier in the string
             fieldName.Replace("w:", EMPTY);   // get rid of the 'w:'
             maxWidth = toLong32u(fieldName);   // grab the width
             nextTokenClear(fieldName, ':');    // skip to the start of the fieldname
-        } else if (fieldName.Contains("r:")) {
+        } else if (contains(fieldName, "r:")) {
             ASSERT(fieldName.substr(0,2) % "r:");  // must be first modifier in the string
             fieldName.Replace("r:", EMPTY);   // get rid of the 'w:'
             maxWidth = toLong32u(fieldName);   // grab the width
             nextTokenClear(fieldName, ':');    // skip to the start of the fieldname
             rightJust = true;
-        } else if (fieldName.Contains("l:")) {
+        } else if (contains(fieldName, "l:")) {
             ASSERT(fieldName.substr(0,2) % "l:");  // must be first modifier in the string
             fieldName.Replace("l:", "");   // get rid of the 'w:'
             lineWidth = toLong32u(fieldName);   // grab the width

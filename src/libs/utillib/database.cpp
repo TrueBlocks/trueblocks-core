@@ -425,14 +425,14 @@ namespace qblocks {
 
     //----------------------------------------------------------------------
     SFString excelFileToString(const SFString& excelFilename) {
-        if (excelFilename.Contains(".xlsx"))
+        if (contains(excelFilename, ".xlsx"))
             return "Only .xls Excel files are supported";
         return doCommand("exportExcel " + excelFilename);
     }
 
     //----------------------------------------------------------------------
     SFString docxToString(const SFString& filename) {
-        if (!filename.Contains(".docx"))
+        if (!contains(filename, ".docx"))
             return "Only .docx files are supported";
         return doCommand(getHomeFolder() + "source/docx2txt.pl " +
                                filename.Substitute(" ", "\\ ").Substitute("'", "\\'") + " -");
@@ -492,11 +492,11 @@ namespace qblocks {
             tabs = SFString('\t', (size_t)nTabs);
             nTabs--;
             //--------------------------------------------------------------------------------------
-            while (existingCode.Contains(tabs + "// EXISTING_CODE")) {
+            while (contains(existingCode, tabs + "// EXISTING_CODE")) {
                 existingCode.Replace(tabs + "// EXISTING_CODE", "<code>");
                 existingCode.Replace(tabs + "// EXISTING_CODE", "</code>");
             }
-            while (existingCode.Contains("</code>")) {
+            while (contains(existingCode, "</code>")) {
                 SFString snipit = trim(snagFieldClear(existingCode, "code"), '\n');
                 codeOut.Replace(tabs + "// EXISTING_CODE\n" + tabs + "// EXISTING_CODE",
                                 tabs + "// EXISTING_CODE\n" + snipit + "\n" + tabs + "// EXISTING_CODE");
@@ -513,7 +513,7 @@ namespace qblocks {
         if (spaces)
             replaceAll(codeOut, "\t", "    ");
 
-        if (codeOut.Contains("virtual") || codeOut.Contains("override"))
+        if (contains(codeOut, "virtual") || contains(codeOut, "override"))
             replaceAll(codeOut, "~", "virtual ~");
 
         // If we don't write it because it's identical, it won't force a rebuild
@@ -599,7 +599,7 @@ namespace qblocks {
             if (startsWith(filename, "r:")) {
                 theList.Replace(fn+"|", "");
 
-            } else if (!theList.Contains(fn+"|")) {
+            } else if (!contains(theList, fn+"|")) {
                 theList += (filename + "|");
 
             }

@@ -118,11 +118,11 @@ bool COptions::parseArguments(SFString& command) {
 
     } else {
         // last item is account, preceeding are ERC20 contracts
-        address_list.Reverse();
+        reverse(address_list);
         // holder token2 token1 - reversed
         tokens = address_list;
         holders = nextTokenClear(tokens,'|');
-        tokens.Reverse(); holders.Reverse();
+        reverse(tokens); reverse(holders);
     }
 
     if (!blocks.hasBlocks()) {

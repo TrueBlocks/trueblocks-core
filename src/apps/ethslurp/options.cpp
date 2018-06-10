@@ -79,7 +79,7 @@ bool COptions::parseArguments(SFString& command) {
 
         } else if (startsWith(arg, "--errFilt")) {
             // weird, but 1 == no errors, 2 == errors only
-            errFilt = true + arg.Contains(":errsOnly");
+            errFilt = true + contains(arg, ":errsOnly");
 
         } else if (startsWith(arg, "--reverse")) {
             reverseSort = true;
@@ -97,7 +97,7 @@ bool COptions::parseArguments(SFString& command) {
                 return usage("Specifiy either a date range or a block range, not both. Quitting...");
 
             SFString ret = blocks.parseBlockList(arg.Substitute("-b:","").Substitute("--blocks:",""), latestBlock);
-            if (ret.Contains("'stop' must be strictly larger than 'start'"))
+            if (contains(ret, "'stop' must be strictly larger than 'start'"))
                 ret = "";
             if (endsWith(ret, "\n")) {
                 cerr << "\n  " << ret << "\n";

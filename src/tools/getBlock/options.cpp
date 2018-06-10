@@ -203,7 +203,7 @@ bool COptions::parseArguments(SFString& command) {
         return usage("You must specify at least one block.");
 
     format = getGlobalConfig()->getDisplayStr(false, "");
-    if (format.Contains("{PRICE:CLOSE}")) {
+    if (contains(format, "{PRICE:CLOSE}")) {
 //        priceBlocks = true;
     }
 

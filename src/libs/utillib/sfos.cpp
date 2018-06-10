@@ -205,21 +205,21 @@ extern SFString binaryFileToString(const SFString& filename);
     //------------------------------------------------------------------
     void listFiles(uint32_t& nStrs, SFString *strs, const SFString& mask) {
         uint32_t ret = 0;
-        doGlob(ret, strs, mask, true, mask.Contains("/*/")); /* fixes color coding in pico */
+        doGlob(ret, strs, mask, true, contains(mask, "/*/")); /* fixes color coding in pico */
         nStrs = ret;
     }
 
     //------------------------------------------------------------------
     void listFolders(uint32_t& nStrs, SFString *strs, const SFString& mask) {
         uint32_t ret = 0;
-        doGlob(ret, strs, mask, false, mask.Contains("/*/")); /* fixes color coding in pico */
+        doGlob(ret, strs, mask, false, contains(mask, "/*/")); /* fixes color coding in pico */
         nStrs = ret;
     }
 
     //------------------------------------------------------------------
     void listFilesOrFolders(uint32_t& nStrs, SFString *strs, const SFString& mask) {
         uint32_t ret = 0;
-        doGlob(ret, strs, mask, ANY_FILETYPE, mask.Contains("/*/"));
+        doGlob(ret, strs, mask, ANY_FILETYPE, contains(mask, "/*/"));
         nStrs = ret;
     }
 

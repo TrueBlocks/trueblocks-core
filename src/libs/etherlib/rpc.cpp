@@ -94,8 +94,7 @@ SFString RPCSession::rpcCall(SFString const& _methodName, SFString const& _args)
     ++m_rpcSequence;
 
     SFString result = m_ipcSocket.sendRequest(request);
-    if (result.Contains("error"))
-    {
+    if (contains(result, "error")) {
         cerr << "Error on JSON-RPC call: " << result << "\n";
         exit(0);
     }

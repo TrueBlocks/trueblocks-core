@@ -28,7 +28,7 @@ namespace qblocks {
         SFString arg = argIn;
         if (startsWith(arg, "0x")) {
 
-            if (arg.Contains(".")) {
+            if (contains(arg, ".")) {
 
                 SFString hash = nextTokenClear(arg, '.');
                 if (!isHash(hash) || !isNumeral(arg))
@@ -45,7 +45,7 @@ namespace qblocks {
                 return ret;
             }
 
-        } else if (arg.Contains(".")) {
+        } else if (contains(arg, ".")) {
             SFString blockNum = nextTokenClear(arg, '.');
             if (!isNumeral(blockNum) || !isNumeral(arg))
                 return "The argument '" + argIn + "' is not properly formatted.";

@@ -45,7 +45,7 @@ bool visitTransaction(CTransaction& trans, void *data) {
     opt->nVisited++;
 
     bool badHash = !isHash(trans.hash);
-    bool isBlock = trans.hash.Contains("block");
+    bool isBlock = contains(trans.hash, "block");
     trans.hash = trans.hash.Substitute("-block_not_found","").Substitute("-trans_not_found","");
     if (opt->isRaw) {
         if (badHash) {

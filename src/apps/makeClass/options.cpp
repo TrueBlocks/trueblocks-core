@@ -63,7 +63,7 @@ bool COptions::parseArguments(SFString& command) {
 
             namesp = arg.Substitute("-n:", "").Substitute(".--namespace:", "");
 
-        } else if (arg.Contains("-f")) {
+        } else if (contains(arg, "-f")) {
             SFString orig = arg;
             SFString arg1 = nextTokenClear(arg, ':');
             if (arg1 != "-f" && arg1 != "--filter")
@@ -83,7 +83,7 @@ bool COptions::parseArguments(SFString& command) {
                 classNames += "|";
             classNames += arg.Substitute("classDefinitions/", "").Substitute(".txt", "");
 
-        } else if (arg != "-t" && arg != "-h" && !arg.Contains("-v")) {
+        } else if (arg != "-t" && arg != "-h" && !contains(arg, "-v")) {
             return usage("Unknown parameter: " + arg);
         }
     }
@@ -168,14 +168,14 @@ bool listClasses(const SFString& path, void *data) {
         forAllFiles(path + "*", listClasses, data);
 
     } else {
-        if (path.Contains(".txt")) {
+        if (contains(path, ".txt")) {
             SFString file = path;
             file = nextTokenClearReverse(file, '/').Substitute(".txt", "");
             COptions *opts = reinterpret_cast<COptions*>(data);
             bool include = true;
             if (!opts->filter.empty()) {
                 SFString contents = asciiFileToString(path);
-                include = contents.Contains(opts->filter);
+                include = contains(contents, opts->filter);
             }
             if (include) {
                 if (!opts->classNames.empty())
