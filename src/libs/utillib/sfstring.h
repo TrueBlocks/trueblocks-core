@@ -62,7 +62,6 @@ namespace qblocks {
         char          operator[](int index) const { return at((size_t)index); };
 
         const char&   at        (size_t index) const;
-              void    setAt     (size_t index, char c) { if (index < length()) m_Values[index] = c; }
         const char   *c_str     (void) const;
         const string  str       (void) const { return string(c_str()); };
 
