@@ -39,12 +39,12 @@ bool COptions::parseArguments(SFString& command) {
 
         } else if (startsWith(arg, "-n:") || startsWith(arg, "--nblocks:")) {
             arg = orig.Substitute("-n:","").Substitute("--nblocks:","");
-            nBlocks = newUnsigned32(arg);
+            nBlocks = toLongU(arg);
             hasN = true;
 
         } else if (startsWith(arg, "-s:") || startsWith(arg, "--start:")) {
             arg = orig.Substitute("-s:","").Substitute("--start:","");
-            startBlock = newUnsigned32(arg);
+            startBlock = toLongU(arg);
             if (!isUnsigned(arg))
                 return usage("Positive start block number expected: " + orig);
 
@@ -53,7 +53,7 @@ bool COptions::parseArguments(SFString& command) {
             if (arg == "latest") {
                 endBlock = getLatestBlockFromClient();
             } else {
-                endBlock = newUnsigned32(arg);
+                endBlock = toLongU(arg);
                 if (!isUnsigned(arg))
                     return usage("Positive end block number expected: " + orig);
             }

@@ -58,13 +58,13 @@ SFString nextTraceChunk(const SFString& fieldIn, const void *dataPtr) {
 bool CTrace::setValueByName(const SFString& fieldName, const SFString& fieldValue) {
     // EXISTING_CODE
     if (fieldName % "action") {
-        char *p = (char *)(const char*)fieldValue;
+        char *p = (char *)fieldValue.c_str();
         uint32_t nFields=0;
         action.parseJson(p,nFields);
         return true;
 
     } else if (fieldName % "result") {
-        char *p = (char *)(const char*)fieldValue;
+        char *p = (char *)fieldValue.c_str();
         uint32_t nFields=0;
         result.parseJson(p,nFields);
         return true;

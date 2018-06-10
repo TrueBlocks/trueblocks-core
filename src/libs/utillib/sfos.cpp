@@ -49,7 +49,7 @@ namespace qblocks {
 
         const SFString copyCmd = "cp -pf";
         SFString command = copyCmd + " " + from + " " + to;
-        if (system((const char *)command)) { }  // do not remove. The test just silences compiler warnings
+        if (system(command.c_str())) { }  // do not remove. The test just silences compiler warnings
         return static_cast<int>(fileExists(to));
     }
 
@@ -64,7 +64,7 @@ namespace qblocks {
         SFString mask = maskIn;
 
         // should check return code
-        glob((const char *)mask, GLOB_MARK, globErrFunc, &globBuf);
+        glob(mask.c_str(), GLOB_MARK, globErrFunc, &globBuf);
 
         size_t n = globBuf.gl_pathc;
         uint32_t mx = nStrs;
@@ -179,7 +179,7 @@ extern SFString binaryFileToString(const SFString& filename);
     //------------------------------------------------------------------
     bool fileExists(const SFString& file) {
         struct stat statBuf;
-        return !file.empty() && stat((const char *)file, &statBuf) == 0;
+        return !file.empty() && stat(file.c_str(), &statBuf) == 0;
     }
 
     //------------------------------------------------------------------
@@ -229,7 +229,7 @@ extern SFString binaryFileToString(const SFString& filename);
             return 0;
 
         struct stat statBuf;
-        stat((const char *)filename, &statBuf);
+        stat(filename.c_str(), &statBuf);
         return (uint64_t)statBuf.st_size;
     }
 } // namespace qblocks

@@ -200,8 +200,10 @@ namespace qblocks {
 
     //---------------------------------------------------------------------------------------
     size_t string_q::find(const string_q& str, size_t pos) const {
-        SFString s = str.m_Values;
-        return find((const char*)s,pos);
+        char *f = strstr(m_Values, str.c_str());
+        if (f)
+            return size_t(f-m_Values);
+        return NOPOS;
     }
 
     //---------------------------------------------------------------------------------------
@@ -435,7 +437,7 @@ namespace qblocks {
             SFString out = in;
             replaceAll(out, "<", "&lt;");
             replaceAll(out, ">", "&gt;");
-            printf("%s", (const char*)(SFString("<h3>'") + field + "' not found in '" + out + "'<h3><br>"));
+            printf("%s", (SFString("<h3>'") + field + "' not found in '" + out + "'<h3><br>").c_str());
         }
 #endif
         SFString f1 = "</" + field + ">";
@@ -462,7 +464,7 @@ namespace qblocks {
             SFString out = in;
             replaceAll(out, "<", "&lt;");
             replaceAll(out, ">", "&gt;");
-            printf("%s", (const char*)(SFString("<h3>'") + field + "' not found in '" + out + "'<h3><br>"));
+            printf("%s", (SFString("<h3>'") + field + "' not found in '" + out + "'<h3><br>").c_str());
         }
 #endif
         SFString f = "</" + field + ">";

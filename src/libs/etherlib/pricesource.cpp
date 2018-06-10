@@ -130,7 +130,7 @@ namespace qblocks {
                 quotes.Grow(nRecords+10);
 
                 // Parse the response and populate the array
-                char *p = cleanUpJson((char *)(const char*)response);  // NOLINT
+                char *p = cleanUpJson((char *)response.c_str());  // NOLINT
                 while (p && *p) {
                     CPriceQuote quote;
                     quote.timestamp = toTimestamp(SFTime(2015, 1, 1, 0, 0, 0));  // Ensures we get a good parse

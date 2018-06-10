@@ -323,7 +323,7 @@ ostream& operator<<(ostream& os, const CBranch& item) {
 
         int idx = nodeIndex(_key[0]);
         if (nodes[idx]) {
-            const char *k = (const char*)_key;
+            const char *k = _key.c_str();
             CTreeNode *ret = nodes[idx]->remove(&k[1]);
             nodes[idx] = ret;
             CTreeNode *n = rejig();

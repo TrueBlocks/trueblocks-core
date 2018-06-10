@@ -83,7 +83,7 @@ bool CNewBlock::setValueByName(const SFString& fieldName, const SFString& fieldV
             if ( fieldName % "difficulty" ) { difficulty = toUnsigned(fieldValue); return true; }
             break;
         case 'f':
-            if ( fieldName % "finalized" ) { finalized = toBool(fieldValue); return true; }
+            if ( fieldName % "finalized" ) { finalized = str2Bool(fieldValue); return true; }
             break;
         case 'g':
             if ( fieldName % "gasLimit" ) { gasLimit = toGas(fieldValue); return true; }
@@ -97,7 +97,7 @@ bool CNewBlock::setValueByName(const SFString& fieldName, const SFString& fieldV
             break;
         case 'p':
             if ( fieldName % "parentHash" ) { parentHash = toHash(fieldValue); return true; }
-            if ( fieldName % "price" ) { price = toDouble(fieldValue); return true; }
+            if ( fieldName % "price" ) { price = str2Double(fieldValue); return true; }
             break;
         case 't':
             if ( fieldName % "timestamp" ) { timestamp = toTimestamp(fieldValue); return true; }
@@ -327,7 +327,7 @@ SFString CNewBlock::getValueByName(const SFString& fieldName) const {
             break;
         case 'p':
             if ( fieldName % "parentHash" ) return fromHash(parentHash);
-            if ( fieldName % "price" ) return fmtFloat(price);
+            if ( fieldName % "price" ) return fmtFloat(price).c_str();
             break;
         case 't':
             if ( fieldName % "timestamp" ) return fromTimestamp(timestamp);
@@ -410,7 +410,7 @@ bool readOneNewBlock_fromJson(CNewBlock& block, const SFString& fileName) {
         stringToAsciiFile(fileName, contents+"\n");
     }
 
-    char *p = cleanUpJson((char *)(const char*)contents);
+    char *p = cleanUpJson((char *)contents.c_str());
     uint32_t nFields=0;
     block.parseJson(p,nFields);
     return nFields;

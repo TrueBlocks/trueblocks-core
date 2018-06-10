@@ -111,7 +111,7 @@ namespace qblocks {
                     if (*s == '\"') {
                         *s = '\0';
                         if (!this->setValueByName(fields[nFields++], fieldVal)) {
-//                          fprintf(stderr, "Bad field name %s. Quitting...", (const char*)fields[nFields-1]);
+//                          fprintf(stderr, "Bad field name %s. Quitting...", fields[nFields-1].c_str());
 //                          return NULL;
                         }
                         fieldVal = NULL;

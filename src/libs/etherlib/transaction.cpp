@@ -70,7 +70,7 @@ bool CTransaction::setValueByName(const SFString& fieldName, const SFString& fie
     } else if ( fieldName % "value" )
     {
         value = canonicalWei(fieldValue);
-        ether = (double)strtold((const char*)Format("[{ETHER}]"),NULL);
+        ether = str2Double(Format("[{ETHER}]"));
         return true;
 
     } else if ( fieldName % "contractAddress" )
@@ -84,7 +84,7 @@ bool CTransaction::setValueByName(const SFString& fieldName, const SFString& fie
         return true;
     } else if ( fieldName % "receipt" )
     {
-        char *p = (char *)(const char*)fieldValue;
+        char *p = (char *)fieldValue.c_str();
         uint32_t nFields=0;
         receipt.parseJson(p,nFields);
         return true;
@@ -138,7 +138,7 @@ bool CTransaction::setValueByName(const SFString& fieldName, const SFString& fie
 void CTransaction::finishParse() {
     // EXISTING_CODE
     function = Format("[{FUNCTION}]");
-    ether = (double)strtold((const char*)Format("[{ETHER}]"),NULL);
+    ether = str2Double(Format("[{ETHER}]"));
     receipt.pTrans = this;
     // EXISTING_CODE
 }
@@ -534,7 +534,7 @@ inline SFString asStringULL(uint64_t i) {
 //------------------------------------------------------------------------------
 #define toBigNum2(a,b)      SFString(to_string(canonicalWei("0x"+grabPart(a,b))).c_str())
 #define grabPart(a,b)       trimLeading((a).substr(64*(b),64),'0')
-#define grabBigNum(a,b)     strtoull((const char*)grabPart(a,b),NULL,16)
+#define grabBigNum(a,b)     strtoull(grabPart(a,b).c_str(),NULL,16)
 #define toAddr(a,b)         "0x"+padLeft(grabPart(a,b),40,'0')
 #define toAddrOld(a,b)      "0x"+grabPart(a,b)
 #define toAscString(a,b)    hex2String("0x"+grabPart(a,b))

@@ -54,7 +54,7 @@ bool COptions::parseArguments(SFString& command) {
 
         } else if (startsWith(arg, "-p:") || startsWith(arg, "--period:")) {
             arg = orig.Substitute("-p:","").Substitute("--period:","");
-            freq = newUnsigned32(arg);
+            freq = toLongU(arg);
             if (!isUnsigned(arg) || freq % 5)
                 return usage("Positive multiple of 5 expected: " + orig);
 
@@ -85,7 +85,6 @@ void COptions::Init(void) {
 
     freshen = false;
     freq = 120;
-    hour = 0;
     at = 0;
 }
 

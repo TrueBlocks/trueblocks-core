@@ -68,10 +68,10 @@ bool CFunction::setValueByName(const SFString& fieldName, const SFString& fieldV
 
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "anonymous" ) { anonymous = toBool(fieldValue); return true; }
+            if ( fieldName % "anonymous" ) { anonymous = str2Bool(fieldValue); return true; }
             break;
         case 'c':
-            if ( fieldName % "constant" ) { constant = toBool(fieldValue); return true; }
+            if ( fieldName % "constant" ) { constant = str2Bool(fieldValue); return true; }
             break;
         case 'e':
             if ( fieldName % "encoding" ) { encoding = fieldValue; return true; }
@@ -106,7 +106,7 @@ bool CFunction::setValueByName(const SFString& fieldName, const SFString& fieldV
             }
             break;
         case 'p':
-            if ( fieldName % "payable" ) { payable = toBool(fieldValue); return true; }
+            if ( fieldName % "payable" ) { payable = str2Bool(fieldValue); return true; }
             break;
         case 's':
             if ( fieldName % "signature" ) { signature = fieldValue; return true; }

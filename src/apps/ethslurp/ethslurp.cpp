@@ -115,7 +115,7 @@ bool CSlurperApp::Initialize(COptions& options, SFString& message) {
         if (options.archiveFile.empty())
             options.archiveFile = filename.getFullPath();
         ASSERT(options.output == NULL);
-        options.output = fopen((const char*)options.archiveFile, asciiWriteCreate);
+        options.output = fopen(options.archiveFile.c_str(), asciiWriteCreate);
         if (!options.output)
             return usage("file '" + options.archiveFile + "' could not be opened. Quitting.");
         outScreen.setOutput(options.output);
@@ -572,12 +572,12 @@ bool establishFolders(CToml& toml) {
     }
 
     // create the main folder
-    mkdir((const char*)configPath(""), (mode_t)0755);
+    mkdir(configPath("").c_str(), (mode_t)0755);
     if (!folderExists(configPath("")))
         return false;
 
     // create the folder for the data
-    mkdir(blockCachePath("slurps/"), (mode_t)0755);
+    mkdir(blockCachePath("slurps/").c_str(), (mode_t)0755);
     if (!folderExists(blockCachePath("slurps/")))
         return false;
 

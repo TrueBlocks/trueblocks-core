@@ -91,7 +91,7 @@ bool CBloomBlock::setValueByName(SFString const& fieldName, SFString const& fiel
                 SFString result;
                 queryRawReceipt(result, item.hash);
                 CRPCResult generic;
-                char *r = cleanUpJson((char*)(const char*)result);
+                char *r = cleanUpJson((char*)result.c_str());
                 generic.parseJson(r);
                 item.receipt.parseJson(cleanUpJson((char*)generic.result.c_str()));
                 transactions[transactions.getCount()] = item;

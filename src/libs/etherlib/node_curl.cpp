@@ -48,7 +48,7 @@ namespace qblocks {
         cerr << postData << "\n";
         cerr.flush();
 #endif
-        curl_easy_setopt(getCurl(), CURLOPT_POSTFIELDS,    (const char*)postData);
+        curl_easy_setopt(getCurl(), CURLOPT_POSTFIELDS,    postData.c_str());
         curl_easy_setopt(getCurl(), CURLOPT_POSTFIELDSIZE, postData.length());
         curl_easy_setopt(getCurl(), CURLOPT_WRITEDATA,     this);
         curl_easy_setopt(getCurl(), CURLOPT_WRITEFUNCTION, callBackFunc);
@@ -92,7 +92,7 @@ namespace qblocks {
             SFString head = getCurlContext()->headers;
             while (!head.empty()) {
                 SFString next = nextTokenClear(head, '\n');
-                headers = curl_slist_append(headers, (char*)(const char*)next);
+                headers = curl_slist_append(headers, (char*)next.c_str());
             }
             curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
 
@@ -103,7 +103,7 @@ namespace qblocks {
                 curl_easy_setopt(curl, CURLOPT_URL, "https://testnet.infura.io/");
 
             } else {
-                curl_easy_setopt(curl, CURLOPT_URL, (const char*)getCurlContext()->baseURL);
+                curl_easy_setopt(curl, CURLOPT_URL, getCurlContext()->baseURL.c_str());
             }
 
         } else if (cleanup) {
@@ -201,7 +201,7 @@ namespace qblocks {
         if (raw)
             return getCurlContext()->result;
         CRPCResult generic;
-        char *p = cleanUpJson((char*)(const char*)getCurlContext()->result);
+        char *p = cleanUpJson((char*)getCurlContext()->result.c_str());
         generic.parseJson(p);
         return generic.result;
     }
@@ -209,7 +209,7 @@ namespace qblocks {
     //-------------------------------------------------------------------------
     bool getObjectViaRPC(CBaseNode &node, const SFString& method, const SFString& params) {
         SFString ret = callRPC(method, params, false);
-        node.parseJson((char *)(const char*)ret);
+        node.parseJson((char *)ret.c_str());
         return true;
     }
 
@@ -217,7 +217,7 @@ namespace qblocks {
     size_t writeCallback(char *ptr, size_t size, size_t nmemb, void *userdata) {
         SFString part;
         part.reserve(size*nmemb+1);
-        char *s = (char*)(const char*)part;
+        char *s = (char*)part.c_str();
         strncpy(s,ptr,size*nmemb);
         s[size*nmemb]='\0';
         ASSERT(userdata);

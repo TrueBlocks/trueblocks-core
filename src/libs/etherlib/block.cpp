@@ -90,7 +90,7 @@ bool CBlock::setValueByName(const SFString& fieldName, const SFString& fieldValu
             if ( fieldName % "difficulty" ) { difficulty = toUnsigned(fieldValue); return true; }
             break;
         case 'f':
-            if ( fieldName % "finalized" ) { finalized = toBool(fieldValue); return true; }
+            if ( fieldName % "finalized" ) { finalized = str2Bool(fieldValue); return true; }
             break;
         case 'g':
             if ( fieldName % "gasLimit" ) { gasLimit = toGas(fieldValue); return true; }
@@ -104,7 +104,7 @@ bool CBlock::setValueByName(const SFString& fieldName, const SFString& fieldValu
             break;
         case 'p':
             if ( fieldName % "parentHash" ) { parentHash = toHash(fieldValue); return true; }
-            if ( fieldName % "price" ) { price = toDouble(fieldValue); return true; }
+            if ( fieldName % "price" ) { price = str2Double(fieldValue); return true; }
             break;
         case 't':
             if ( fieldName % "timestamp" ) { timestamp = toTimestamp(fieldValue); return true; }
@@ -366,7 +366,7 @@ SFString CBlock::getValueByName(const SFString& fieldName) const {
             break;
         case 'p':
             if ( fieldName % "parentHash" ) return fromHash(parentHash);
-            if ( fieldName % "price" ) return fmtFloat(price);
+            if ( fieldName % "price" ) return fmtFloat(price).c_str();
             break;
         case 't':
             if ( fieldName % "timestamp" ) return fromTimestamp(timestamp);

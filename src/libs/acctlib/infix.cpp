@@ -241,8 +241,8 @@ ostream& operator<<(ostream& os, const CInfix& item) {
     bool CInfix::contains(const SFString& _key) const {
         size_t l1 = _key.length();
         size_t l2 = prefixS.length();
-        const char *s1 = (const char*)_key;
-        const char *s2 = (const char*)prefixS;
+        const char *s1 = _key.c_str();
+        const char *s2 = prefixS.c_str();
         bool found = !memcmp(s1, s2, l2);
 
         return

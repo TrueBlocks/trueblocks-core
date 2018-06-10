@@ -25,7 +25,7 @@ IPCSocket::IPCSocket(SFString const& _path): m_path(_path)
     struct sockaddr_un saun;
     memset(&saun, 0, sizeof(sockaddr_un));
     saun.sun_family = AF_UNIX;
-    strcpy(saun.sun_path, (const char*)_path);
+    strcpy(saun.sun_path, _path.c_str());
     saun.sun_len = sizeof(struct sockaddr_un);
 
     if ((m_socket = socket(AF_UNIX, SOCK_STREAM, 0)) < 0)
