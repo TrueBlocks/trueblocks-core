@@ -55,7 +55,7 @@ namespace qblocks {
     //--------------------------------------------------------------------------------
     SFString COptionsBlockList::parseBlockList(const SFString& argIn, blknum_t lastBlock) {
         SFString arg = argIn;
-        if (arg.Contains("-")) {
+        if (contains(arg, "-")) {
 
             // If we already have a range, bail
             if (start != stop)

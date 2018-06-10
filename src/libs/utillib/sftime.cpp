@@ -517,7 +517,7 @@ namespace qblocks {
         size_t find = timeStr.find(" ");
         if (find != NOPOS) {
             str = toLower(timeStr.substr(find));
-            if (str.Contains("p"))
+            if (contains(str, "p"))
                 am = false;
         }
 

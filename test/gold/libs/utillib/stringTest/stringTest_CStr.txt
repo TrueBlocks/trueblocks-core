@@ -53,3 +53,6 @@ stringTest 2
 	000.041 rep any         ==> TarXXXXXXXXX1 |  TarXXXXXXXXX2 |  TarXXXXXXXXX3 |  TarXXXXXXXXX4
 	000.042 rep any         ==> TarXXXXXXXXX1-|--TarXXXXXXXXX2-|--TarXXXXXXXXX3-|--TarXXXXXXXXX4
 	000.043 rep any         ==> Tar1|Tar2|Tar3|Tar4
+
+	000.044 base case       ==> .desrever gnirts eht si sihT
+	000.045 reversed        ==> This is the string reversed.

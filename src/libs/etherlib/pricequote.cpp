@@ -272,12 +272,12 @@ SFString asDollars(timestamp_t ts, SFUintBN weiIn) {
 //-----------------------------------------------------------------------
 SFString insertCommas(const SFString& dIn) {
     SFString d = dIn;
-    d.Reverse();
+    reverse(d);
     SFString ret;
     while (!d.empty()) {
         SFString three = d.substr(0,3);
         d = d.substr(3);
-        three.Reverse();
+        reverse(three);
         ret = (d.empty()?"":",") + three + ret;
     }
     return ret;

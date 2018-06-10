@@ -28,7 +28,7 @@ namespace qblocks {
     //----------------------------------------------------------------------------
     inline uint64_t hex2Long(const SFString& inHex) {
         SFString hex = toLower(startsWith(inHex, "0x") ? inHex.substr(2) : inHex);
-        hex.Reverse();
+        reverse(hex);
         char *s = (char *)(const char*)hex;
 
         uint64_t ret = 0, mult=1;
@@ -157,13 +157,13 @@ namespace qblocks {
         SFString ret = _value;
         if (ret.length() < 18)
             ret = padLeft(_value, 18).Substitute(" ", "0");
-        ret.Reverse();
+        reverse(ret);
         ret = ret.substr(0,18) + "." + ret.substr(18);
-        ret.Reverse();
+        reverse(ret);
         ret = trimLeading(ret, '0');
         if (startsWith(ret, '.'))
             ret = "0" + ret;
-        if (ret.Contains("0-")) {
+        if (contains(ret, "0-")) {
             ret = "-" + ret.Substitute("0-","0");
         }
         ret = ret.Substitute("-.","-0.");
@@ -213,9 +213,9 @@ namespace qblocks {
 
     //--------------------------------------------------------------------------------
     inline SFUintBN canonicalWei(const SFString& _value) {
-        if (_value.Contains( "0x" ))
+        if (contains(_value, "0x"))
             return hex2BigUint((const char*) _value.substr(2));
-        if (_value.Contains( "e"  ))
+        if (contains(_value, "e"))
             return exp2BigUint((const char*) _value);
         return str2BigUint(_value);
     }

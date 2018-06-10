@@ -108,7 +108,7 @@ SFString acquireABI(CFunctionArray& functions, const SFAddress& addr, const COpt
                             + "/api.etherscan.io/api?module=contract&action=getabi&address="
                             + addr;
         results = urlToString(url).Substitute("\\", "");
-        if (!results.Contains("NOTOK")) {
+        if (!contains(results, "NOTOK")) {
         	// clear the RPC wrapper
         	results.Replace("{\"status\":\"1\",\"message\":\"OK\",\"result\":\"","");
         	replaceReverse(results, "]\"}", "");
@@ -257,7 +257,7 @@ int main(int argc, const char *argv[]) {
                     SFString theClass = (options.isBuiltin() ? "Q" : "C") + name;
                     bool isConst = func->constant;
                     bool isEmpty = name.empty() || func->type.empty();
-                    bool isLog = toLower(name).Contains("logentry");
+                    bool isLog = contains(toLower(name), "logentry");
 //                    bool isConstructor = func->type % "constructor";
 //                    if (!isConst && !isEmpty && !isLog) { // && !isConstructor) {
                     if (!isEmpty && !isLog) {
@@ -401,7 +401,7 @@ int main(int argc, const char *argv[]) {
 
             // The library source file
             factory1.Replace("} else ", "");
-            factory1.Replace("func.Contains(\"defFunction|\")", "!func.Contains(\"|\")");
+            factory1.Replace("contains(func, \"defFunction|\")", "!contains(func, \"|\")");
             factory1.Replace(" if (encoding == func_[{LOWER}])", "");
             factory2.Replace("} else ", "");
 
@@ -473,8 +473,7 @@ SFString getAssign(const CParameter *p, uint64_t which) {
     SFString ass;
     SFString type = p->Format("[{TYPE}]");
 
-    if (type.Contains("[") && type.Contains("]"))
-    {
+    if (contains(type, "[") && contains(type, "]")) {
         const char* STR_ASSIGNARRAY =
             "\t\t\twhile (!params.empty()) {\n"
             "\t\t\t\tSFString val = params.substr(0,64);\n"
@@ -485,11 +484,11 @@ SFString getAssign(const CParameter *p, uint64_t which) {
     }
 
     if (type == "uint" || type == "uint256") { ass = "toWei(\"0x\"+[{VAL}]);";
-    } else if (type.Contains("gas")) { ass = "toGas([{VAL}]);";
-    } else if (type.Contains("uint64")) { ass = "toLongU([{VAL}]);";
-    } else if (type.Contains("uint")) { ass = "toLong32u([{VAL}]);";
-    } else if (type.Contains("int") || type.Contains("bool")) { ass = "toLong([{VAL}]);";
-    } else if (type.Contains("address")) { ass = "toAddress([{VAL}]);";
+    } else if (contains(type, "gas")) { ass = "toGas([{VAL}]);";
+    } else if (contains(type, "uint64")) { ass = "toLongU([{VAL}]);";
+    } else if (contains(type, "uint")) { ass = "toLong32u([{VAL}]);";
+    } else if (contains(type, "int") || contains(type, "bool")) { ass = "toLong([{VAL}]);";
+    } else if (contains(type, "address")) { ass = "toAddress([{VAL}]);";
     } else { ass = "[{VAL}];";
     }
 
@@ -501,11 +500,11 @@ SFString getAssign(const CParameter *p, uint64_t which) {
 SFString getEventAssign(const CParameter *p, uint64_t which, uint64_t nIndexed) {
     SFString type = p->Format("[{TYPE}]"), ass;
     if (type == "uint" || type == "uint256") { ass = "toWei([{VAL}]);";
-    } else if (type.Contains("gas")) { ass = "toGas([{VAL}]);";
-    } else if (type.Contains("uint64")) { ass = "toLongU([{VAL}]);";
-    } else if (type.Contains("uint")) { ass = "toLong32u([{VAL}]);";
-    } else if (type.Contains("int") || type.Contains("bool")) { ass = "toLong([{VAL}]);";
-    } else if (type.Contains("address")) { ass = "toAddress([{VAL}]);";
+    } else if (contains(type, "gas")) { ass = "toGas([{VAL}]);";
+    } else if (contains(type, "uint64")) { ass = "toLongU([{VAL}]);";
+    } else if (contains(type, "uint")) { ass = "toLong32u([{VAL}]);";
+    } else if (contains(type, "int") || contains(type, "bool")) { ass = "toLong([{VAL}]);";
+    } else if (contains(type, "address")) { ass = "toAddress([{VAL}]);";
     } else { ass = "[{VAL}];";
     }
 

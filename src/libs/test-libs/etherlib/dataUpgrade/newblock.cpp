@@ -63,7 +63,7 @@ bool CNewBlock::setValueByName(const SFString& fieldName, const SFString& fieldV
         // Transactions come to us either as a JSON objects or lists
         // of hashes (i.e. a string array). JSON objects have 'from'
         // We handle those as normal below
-        if (!fieldValue.Contains("from")) {
+        if (!contains(fieldValue, "from")) {
             SFString str = fieldValue;
             while (!str.empty()) {
                 CTransaction trans;
@@ -401,7 +401,7 @@ bool readOneNewBlock_fromBinary(CNewBlock& block, const SFString& fileName) {
 bool readOneNewBlock_fromJson(CNewBlock& block, const SFString& fileName) {
     block = CNewBlock(); // reset
     SFString contents = asciiFileToString(fileName);
-    if (contents.Contains("null")) {
+    if (contains(contents, "null")) {
         replaceAll(contents, "null", "\"0x\"");
         stringToAsciiFile(fileName, contents);
     }

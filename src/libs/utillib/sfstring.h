@@ -101,6 +101,7 @@ namespace qblocks {
         friend void replaceAll    (string_q& target, const string_q& what, const string_q& with);
         friend void replaceAny    (string_q& target, const string_q& list, const string_q& with);
         friend void replaceReverse(string_q& target, const string_q& what, const string_q& with);
+        friend void reverse       (string_q& target);
 
     protected:
         void    init      (void);
@@ -249,6 +250,7 @@ namespace qblocks {
     extern bool    startsWith     (const string_q& haystack, const string_q& needle);
     extern bool    endsWithAny    (const string_q& haystack, const string_q& needle);
     extern bool    startsWithAny  (const string_q& haystack, const string_q& needle);
+    extern bool    contains       (const string_q& haystack, const string_q& needle);
 
     //--------------------------------------------------------------------
     extern string_q toLower       (const string_q& in);
@@ -288,9 +290,6 @@ namespace qblocks {
 
         SFString substr          (size_t first, size_t len) const;
         SFString substr          (size_t first) const;
-
-        bool     Contains        (const SFString& search) const;
-        void     Reverse         (void);
         SFString Substitute      (const SFString& what, const SFString& with) const;
 
         void     Replace         (const SFString& what, const SFString& with);

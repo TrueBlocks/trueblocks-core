@@ -242,7 +242,7 @@ SFString CLogEntry::getValueByName(const SFString& fieldName) const {
     // EXISTING_CODE
     // See if this field belongs to the item's container
     ret = nextReceiptChunk(fieldName, pReceipt);
-    if (ret.Contains("Field not found"))
+    if (contains(ret, "Field not found"))
         ret = EMPTY;
     if (!ret.empty())
         return ret;
