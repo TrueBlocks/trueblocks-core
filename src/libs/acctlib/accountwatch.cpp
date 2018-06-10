@@ -78,7 +78,7 @@ bool CAccountWatch::setValueByName(const SFString& fieldName, const SFString& fi
             if ( fieldName % "color" ) { color = fieldValue; return true; }
             break;
         case 'd':
-            if ( fieldName % "deepScan" ) { deepScan = toBool(fieldValue); return true; }
+            if ( fieldName % "deepScan" ) { deepScan = str2Bool(fieldValue); return true; }
             break;
         case 'f':
             if ( fieldName % "firstBlock" ) { firstBlock = toUnsigned(fieldValue); return true; }

@@ -139,7 +139,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
         queryRawTrace(trace, hash);
 
         CRPCResult generic;
-        char *p = cleanUpJson((char*)(const char*)trace);
+        char *p = cleanUpJson((char*)trace.c_str());
         generic.parseJson(p);
 
         p = cleanUpJson((char *)(generic.result.c_str()));  // NOLINT
@@ -420,7 +420,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
     //-----------------------------------------------------------------------
     void writeToJson(const CBaseNode& node, const SFString& fileName) {
         if (establishFolder(fileName)) {
-            std::ofstream out(fileName);
+            std::ofstream out(fileName.c_str());
             out << node.Format() << "\n";
             out.close();
         }
@@ -441,7 +441,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
         if (!endsWith(contents, '\n')) {
             stringToAsciiFile(fileName, contents+"\n");
         }
-        char *p = cleanUpJson((char *)(const char*)contents);
+        char *p = cleanUpJson((char *)contents.c_str());
         uint32_t nFields=0;
         node.parseJson(p,nFields);
         return nFields;
@@ -528,11 +528,9 @@ extern void registerQuitHandler(QUITHANDLER qh);
         SFString fmt = (asPath ? "%s/%s/%s/" : "%s/%s/%s/%s");
         SFString fn  = (asPath ? "" : num + (asJson ? ".json" : ".bin"));
 
-        sprintf(ret, (const char*)(blockCachePath("")+fmt),
-                      (const char*)num.substr(0,2),
-                      (const char*)num.substr(2,2),
-                      (const char*)num.substr(4,2),
-                      (const char*)fn);
+        sprintf(ret, (blockCachePath("")+fmt).c_str(),
+                      num.substr(0,2).c_str(), num.substr(2,2).c_str(), num.substr(4,2).c_str(),
+                      fn.c_str());
         return ret;
     }
 
@@ -786,13 +784,13 @@ extern void registerQuitHandler(QUITHANDLER qh);
         while (!list.empty()) {
             SFString item = nextTokenClear(list, '|');
             bool hasDot = contains(item, ".");
-            bool isHex = startsWith(item, "0x");
+            bool hasHex = startsWith(item, "0x");
 
             SFString hash = nextTokenClear(item, '.');
             uint64_t txID = toLongU(item);
 
             CTransaction trans;
-            if (isHex) {
+            if (hasHex) {
                 if (hasDot) {
                     // We are not fully formed, we have to ask the node for the receipt
                     getTransaction(trans, hash, txID);  // blockHash.txID
@@ -815,7 +813,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
                 // If the transaction has no hash here, either the block hash or the transaction hash being asked for doesn't exist. We need to
                 // report which hash failed and why to the caller. Because we have no better way, we report that in the hash itself. There are
                 // three cases, two with either block hash or block num one with transaction hash. Note: This will fail if we move to non-string hashes
-                trans.hash = hash + "-" + (!isHex || hasDot ? "block_not_found" : "trans_not_found");
+                trans.hash = hash + "-" + (!hasHex || hasDot ? "block_not_found" : "trans_not_found");
             }
 
             if (!(*func)(trans, data))

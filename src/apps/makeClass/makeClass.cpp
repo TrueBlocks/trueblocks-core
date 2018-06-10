@@ -463,8 +463,8 @@ SFString getCaseCode(const SFString& fieldCase, const SFString& ex) {
                 SFString type  = nextTokenClear(isObj, '+');
                 SFString field = nextTokenClear(isObj, '-');
                 SFString isPtr = nextTokenClear(isObj, '~');
-                bool     isPointer = atoi((const char*)isPtr);
-                bool     isObject = atoi((const char*)isObj);
+                bool     isPointer = str2Bool(isPtr);
+                bool     isObject  = str2Bool(isObj);
 
                 if (tolower(field[0]) == ch) {
                     caseCode += baseTab + tab + "if ( fieldName % \"" + field + "\"";
@@ -582,8 +582,8 @@ SFString getCaseSetCode(const SFString& fieldCase) {
                 SFString type  = nextTokenClear(isObj, '+');
                 SFString field = nextTokenClear(isObj, '-');
                 SFString isPtr = nextTokenClear(isObj, '~');
-                bool     isPointer = atoi((const char*)isPtr);
-                bool     isObject = atoi((const char*)isObj);
+                bool     isPointer = str2Bool(isPtr);
+                bool     isObject  = str2Bool(isObj);
 
                 if (tolower(field[0]) == ch) {
                     caseCode += baseTab + tab + "if ( fieldName % \"" + field + "\" )";
@@ -597,7 +597,7 @@ SFString getCaseSetCode(const SFString& fieldCase) {
                         caseCode += " { " + field + " = parseDate(fieldValue); return true; }";
 
                     } else if (type == "bbool" || type == "bool") {
-                        caseCode +=  " { " + field + " = toBool(fieldValue); return true; }";
+                        caseCode +=  " { " + field + " = str2Bool(fieldValue); return true; }";
 
                     } else if (type == "bloom") {
                         caseCode +=  " { " + field + " = toBloom(fieldValue); return true; }";
@@ -621,13 +621,13 @@ SFString getCaseSetCode(const SFString& fieldCase) {
                         caseCode += " { " + field + " = toLower(fieldValue); return true; }";
 
                     } else if (type == "int8" || type == "int16" || type == "int32") {
-                        caseCode +=  " { " + field + " = toLong32(fieldValue); return true; }";
+                        caseCode +=  " { " + field + " = (int32_t)toLongU(fieldValue); return true; }";
 
                     } else if (type == "int64") {
                         caseCode +=  " { " + field + " = toLong(fieldValue); return true; }";
 
                     } else if (type == "int256") {
-                        caseCode +=  " { " + field + " = toLong(fieldValue); return true; }";
+                        caseCode +=  " { " + field + " = toWei(fieldValue); return true; }";
 
                     } else if (type == "uint8" || type == "uint16" || type == "uint32") {
                         caseCode +=  " { " + field + " = toLong32u(fieldValue); return true; }";
@@ -642,7 +642,7 @@ SFString getCaseSetCode(const SFString& fieldCase) {
                         caseCode +=  " { " + field + " = toUnsigned(fieldValue); return true; }";
 
                     } else if (type == "double") {
-                        caseCode +=  " { " + field + " = toDouble(fieldValue); return true; }";
+                        caseCode +=  " { " + field + " = str2Double(fieldValue); return true; }";
 
                     } else if (contains(type, "SFStringArray") || contains(type, "SFBlockArray")) {
                         SFString str = strArraySet;

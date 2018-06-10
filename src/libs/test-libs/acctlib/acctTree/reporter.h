@@ -54,7 +54,7 @@ public:
         double percent = 1.0;
         if (_whole > 0)
             percent = (_part / static_cast<double>(_whole));
-        return fmtFloatp(100.*percent, 3);
+        return fmtFloatp(100.*percent, 3).c_str();
     }
 
     void finalReport(void) {

@@ -16,8 +16,7 @@
 class COptions : public COptionsBase {
 public:
     bool        freshen;
-    uint32_t    freq;
-    uint32_t    hour;
+    uint64_t    freq;
     timestamp_t at;
     CPriceSource source;
 

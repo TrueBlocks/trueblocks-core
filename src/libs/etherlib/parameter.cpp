@@ -61,10 +61,10 @@ bool CParameter::setValueByName(const SFString& fieldName, const SFString& field
 
     switch (tolower(fieldName[0])) {
         case 'i':
-            if ( fieldName % "indexed" ) { indexed = toBool(fieldValue); return true; }
-            if ( fieldName % "isPointer" ) { isPointer = toBool(fieldValue); return true; }
-            if ( fieldName % "isArray" ) { isArray = toBool(fieldValue); return true; }
-            if ( fieldName % "isObject" ) { isObject = toBool(fieldValue); return true; }
+            if ( fieldName % "indexed" ) { indexed = str2Bool(fieldValue); return true; }
+            if ( fieldName % "isPointer" ) { isPointer = str2Bool(fieldValue); return true; }
+            if ( fieldName % "isArray" ) { isArray = str2Bool(fieldValue); return true; }
+            if ( fieldName % "isObject" ) { isObject = str2Bool(fieldValue); return true; }
             break;
         case 'n':
             if ( fieldName % "name" ) { name = fieldValue; return true; }

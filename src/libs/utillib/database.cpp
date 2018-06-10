@@ -44,9 +44,9 @@ namespace qblocks {
             return true;
 
         m_ownsLock = false;
-        FILE *fp = fopen((const char *)lockfilename, asciiWriteCreate);
+        FILE *fp = fopen(lockfilename.c_str(), asciiWriteCreate);
         if (fp) {
-            fprintf(fp, "%s\n", (const char *)m_lockingUser);
+            fprintf(fp, "%s\n", m_lockingUser.c_str());
             fclose(fp);
             m_ownsLock = true;
             manageRemoveList(lockfilename);
@@ -130,7 +130,7 @@ namespace qblocks {
 
         // Close and re-open the file without relinqishing the lock
         Close();
-        m_fp = fopen((const char *)m_filename, mode);
+        m_fp = fopen(m_filename.c_str(), mode.c_str());
         m_isascii = qblocks::isAscii(mode);
 
         return isOpen();
@@ -183,7 +183,7 @@ namespace qblocks {
         }
 
         if (openIt) {
-            m_fp = fopen((const char *)m_filename, (const char *)m_mode);  // operator on event database
+            m_fp = fopen(m_filename.c_str(), m_mode.c_str());  // operator on event database
             m_isascii = qblocks::isAscii(m_mode);
         }
 
@@ -358,14 +358,14 @@ namespace qblocks {
 
         unsigned long len = val.length();
         size_t ret = Write(&len, sizeof(unsigned long), 1);
-        return Write((const char *)val, sizeof(char), len) + ret;
+        return Write(val.c_str(), sizeof(char), len) + ret;
     }
 
     //----------------------------------------------------------------------
     void CSharedResource::WriteLine(const SFString& str) {
         ASSERT(isOpen());
         ASSERT(isAscii());
-        fprintf(m_fp, "%s", (const char *)str);
+        fprintf(m_fp, "%s", str.c_str());
     }
 
     //----------------------------------------------------------------------
@@ -443,7 +443,7 @@ namespace qblocks {
         SFString cmd = getHomeFolder() + "source/createDocx \"" +
                         fileName + "\" \"" + contents.Substitute("\"", "''") + "\"";
         SFString ret = doCommand(cmd);
-        fprintf(stderr, "ret: %s\n", (const char*)ret);
+        fprintf(stderr, "ret: %s\n", ret.c_str());
         return true;
     }
 
@@ -467,10 +467,10 @@ namespace qblocks {
     size_t stringToAsciiFile(const SFString& fileName, const SFString& contents) {
         CAsciiFile lock;
         if (lock.Lock(fileName, asciiWriteCreate, LOCK_WAIT)) {
-            lock.WriteLine((const char*)contents);
+            lock.WriteLine(contents.c_str());
             lock.Release();
         } else {
-            fprintf(stderr, "%s\n", (const char*)SFString("Could not open file: " + fileName));
+            fprintf(stderr, "%s\n", (string_q("Could not open file: ") + fileName).c_str());
             return false;
         }
         return true;

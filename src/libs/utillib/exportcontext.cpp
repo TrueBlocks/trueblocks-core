@@ -66,7 +66,7 @@ namespace qblocks {
         Output(os.str().c_str());
 #else
         char val[64];
-        sprintf(val, (fmt.empty() ? "%d" : (const char*)fmt), ui);
+        sprintf(val, (fmt.empty() ? "%d" : fmt.c_str()), ui);
         Output(val);
 #endif
         return *this;
@@ -88,7 +88,7 @@ namespace qblocks {
         Output(os.str().c_str());
 #else
         char val[64];
-        sprintf(val, (fmt.empty() ? "%d" : (const char*)fmt), i);
+        sprintf(val, (fmt.empty() ? "%d" : fmt.c_str()), i);
         Output(val);
 #endif
         return *this;
@@ -134,7 +134,7 @@ namespace qblocks {
     //-------------------------------------------------------------
     void CFileExportContext::Output(const SFString& sss) {
         ASSERT(m_output);
-        fprintf(m_output, "%s", (const char *)sss);
+        fprintf(m_output, "%s", sss.c_str());
     }
 
     //-------------------------------------------------------------
