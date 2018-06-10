@@ -26,7 +26,7 @@ namespace qblocks {
     //----------------------------------------------------------------------------------
     bool forAllFiles(const SFString& mask, FILEVISITOR func, void *data ) {
         glob_t globBuf;
-        glob((const char *)mask, GLOB_MARK, globErrFunc, &globBuf);
+        glob(mask.c_str(), GLOB_MARK, globErrFunc, &globBuf);
         bool quitEarly = false;
         for (size_t i = 0 ; i < globBuf.gl_pathc && !quitEarly ; i++)
             if (!(func)(globBuf.gl_pathv[i], data))

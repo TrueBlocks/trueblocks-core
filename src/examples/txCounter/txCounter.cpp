@@ -42,12 +42,12 @@ public:
         str = nextTokenClear(last,sep); startBlock = toUnsigned(str);
         nextTokenClear(last,sep);
         str = nextTokenClear(last,sep); nEmpty     = toUnsigned(str);
-        str = nextTokenClear(last,sep); nFull      = toUnsigned(str);;
+        str = nextTokenClear(last,sep); nFull      = toUnsigned(str);
         str = nextTokenClear(last,sep);
-        str = nextTokenClear(last,sep); nTrans     = toUnsigned(str);;
+        str = nextTokenClear(last,sep); nTrans     = toUnsigned(str);
         str = nextTokenClear(last,sep);
         str = nextTokenClear(last,sep);
-        str = nextTokenClear(last,sep); nTraces    = toUnsigned(str);;
+        str = nextTokenClear(last,sep); nTraces    = toUnsigned(str);
     }
 };
 

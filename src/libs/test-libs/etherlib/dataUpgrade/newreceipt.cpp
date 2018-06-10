@@ -66,7 +66,7 @@ bool CNewReceipt::setValueByName(const SFString& fieldName, const SFString& fiel
             if ( fieldName % "gasUsed" ) { gasUsed = toGas(fieldValue); return true; }
             break;
         case 'i':
-            if ( fieldName % "isError" ) { isError = toBool(fieldValue); return true; }
+            if ( fieldName % "isError" ) { isError = str2Bool(fieldValue); return true; }
             break;
         case 'l':
             if ( fieldName % "logs" ) {

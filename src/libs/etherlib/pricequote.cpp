@@ -68,7 +68,7 @@ bool CPriceQuote::setValueByName(const SFString& fieldName, const SFString& fiel
 
     switch (tolower(fieldName[0])) {
         case 'c':
-            if ( fieldName % "close" ) { close = toDouble(fieldValue); return true; }
+            if ( fieldName % "close" ) { close = str2Double(fieldValue); return true; }
             break;
         case 't':
             if ( fieldName % "timestamp" ) { timestamp = toTimestamp(fieldValue); return true; }
@@ -213,7 +213,7 @@ SFString CPriceQuote::getValueByName(const SFString& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'c':
-            if ( fieldName % "close" ) return fmtFloat(close);
+            if ( fieldName % "close" ) return fmtFloat(close).c_str();
             break;
         case 't':
             if ( fieldName % "timestamp" ) return fromTimestamp(timestamp);

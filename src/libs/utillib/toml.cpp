@@ -79,7 +79,7 @@ namespace qblocks {
     //-------------------------------------------------------------------------
     uint64_t CToml::getConfigInt(const SFString& group, const SFString& key, uint64_t def) const {
         SFString ret = getConfigStr(group, key, asStringU(def));
-        return toLong32u(ret);
+        return toLongU(ret);
     }
 
     //-------------------------------------------------------------------------

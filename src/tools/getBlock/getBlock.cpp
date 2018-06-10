@@ -86,9 +86,9 @@ SFString doOneBlock(uint64_t num, const COptions& opt) {
         } else {
             if (opt.force) { // turn this on to force a write of the block to the disc
                 CRPCResult generic;
-                generic.parseJson(cleanUpJson((char*)(const char*)result));
+                generic.parseJson(cleanUpJson((char*)result.c_str()));
                 result = generic.result;
-                gold.parseJson((char*)(const char*)result);
+                gold.parseJson((char*)result.c_str());
                 SFString fileName = getBinaryFilename(num);
                 gold.finalized = isBlockFinal(gold.timestamp, latest.timestamp);
                 writeBlockToBinary(gold, fileName);

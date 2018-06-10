@@ -285,22 +285,14 @@ namespace qblocks {
         const SFString& operator+=    (char ch);
         const SFString& operator+=    (const char *str);
 
-        operator  const char *        (void) const;
-
         SFString substr          (size_t first, size_t len) const;
         SFString substr          (size_t first) const;
         SFString Substitute      (const SFString& what, const SFString& with) const;
-
-        void     Replace         (const SFString& what, const SFString& with);
-
         friend SFString operator+(const SFString& str1, const SFString& str2);
         friend SFString operator+(const SFString& str1, const char *str2);
-    };
 
-    //--------------------------------------------------------------------
-    inline SFString::operator const char *() const {
-        return c_str();
-    }
+        void     Replace         (const SFString& what, const SFString& with);
+    };
 
     //---------------------------------------------------------------------------------------
     inline SFString operator+(const SFString& str1, const SFString& str2) {

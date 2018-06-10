@@ -89,7 +89,7 @@ namespace qblocks {
         }
 
         CFileExportContext(const SFString& filename, const SFString& mode) {
-            m_output = fopen((const char *)filename, mode);
+            m_output = fopen(filename.c_str(), mode.c_str());
             if (!m_output)
                 m_output = stdout;
         }

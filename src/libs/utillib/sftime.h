@@ -12,7 +12,7 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 #include "sfos.h"
-#include "conversions_base.h"
+#include "conversions.h"
 
 namespace qblocks {
 

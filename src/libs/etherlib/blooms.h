@@ -21,6 +21,18 @@ namespace qblocks {
 #define dbgBloom(a) bloom2Bytes(a).Substitute("0"," ")
 
     //-------------------------------------------------------------------------
+    inline uint32_t bitsTwiddled(SFBloom n) {
+        uint32_t count = 0;
+        while (n != 0) {
+            SFUintBN x = n - 1;
+            SFUintBN y = n & x;
+            n = y;
+            count++;
+        }
+        return count;
+    }
+
+    //-------------------------------------------------------------------------
     inline SFUintBN makeBloom(const SFString& hexIn) {
         if (hexIn.empty() || !startsWith(hexIn, "0x"))
             return 0;
@@ -29,7 +41,7 @@ extern SFString getSha3 (const SFString& hexIn);
         SFString sha = getSha3(hexIn);
         SFUintBN bloom;
         for (uint32_t i=0;i<3;i++)
-            bloom |= (SFUintBN(1) << (strtoul((const char*)"0x"+sha.substr(2+(i*4),4),NULL,16))%2048);
+            bloom |= (SFUintBN(1) << (strtoul(("0x"+sha.substr(2+(i*4),4)).c_str(),NULL,16))%2048);
         return bloom;
     }
 

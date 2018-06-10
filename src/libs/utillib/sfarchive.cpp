@@ -200,7 +200,7 @@ namespace qblocks {
     uint64_t appendToAsciiFile(const SFString& fileName, const SFString& addContents) {
         SFArchive asciiCache(WRITING_ARCHIVE);
         if (asciiCache.Lock(fileName, asciiWriteAppend, LOCK_NOWAIT)) {
-            asciiCache.WriteLine((const char*)addContents);
+            asciiCache.WriteLine(addContents.c_str());
             asciiCache.Release();
         }
         return fileSize(fileName);

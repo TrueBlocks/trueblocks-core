@@ -977,7 +977,7 @@ namespace qblocks {
             return earliestDate;
 
         struct stat statBuf;
-        stat(filename, &statBuf);
+        stat(filename.c_str(), &statBuf);
 
         // Convert time_t to struct tm
         tm unused;
