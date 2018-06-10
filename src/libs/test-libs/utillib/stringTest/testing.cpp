@@ -13,6 +13,7 @@
 #include <string>
 #include <algorithm>
 #include "utillib.h"
+#include "testing.h"
 
 // Changing this between string_q and SFString helps migrating away from quickBlocks code
 #define TEST_STR SFString
@@ -30,9 +31,9 @@ TEST_F(CThisTest, TestRelational) {
     string foo = "alpha"; TEST_STR xfoo(foo.c_str());
     string bar = "beta";  TEST_STR xbar(bar.c_str());
 
-    cerr << "Running " << testName << "\n";
-    cerr << "\tc-string  -- foo:  " << foo  << " bar: " << bar << "\n";
-    cerr << "\tqb-string -- xfoo: " << xfoo << " xbar: " << xbar << "\n\n";
+    cout << "Running " << testName << "\n";
+    cout << "\tc-string  -- foo:  " << foo  << " bar: " << bar << "\n";
+    cout << "\tqb-string -- xfoo: " << xfoo << " xbar: " << xbar << "\n\n";
 
     ASSERT_NOT_EQ("c-string non-equality",        foo,  bar      );
     ASSERT_NOT_EQ("qb-string non-equality",       xfoo, xbar     );
@@ -58,9 +59,9 @@ TEST_F(CThisTest, TestCompare) {
     string str1("green apple"); TEST_STR xstr1("green apple");
     string str2("red apple");   TEST_STR xstr2("red apple");
 
-    cerr << "Running " << testName << "\n";
-    cerr << "\tc-string  -- str1:  " <<  str1  << " str2: "  << str2  << "\n";
-    cerr << "\tqb-string -- xstr1: " << xstr1 << " xstr2: " << xstr2 << "\n\n";
+    cout << "Running " << testName << "\n";
+    cout << "\tc-string  -- str1:  " <<  str1  << " str2: "  << str2  << "\n";
+    cout << "\tqb-string -- xstr1: " << xstr1 << " xstr2: " << xstr2 << "\n\n";
 
     ASSERT_NOT_EQ("c-string compare",             str1.compare( str2 ), 0);
     ASSERT_NOT_EQ("qb-string compare",           xstr1.compare( xstr2), 0);
@@ -81,11 +82,13 @@ TEST_F(CThisTest, TestAssignment) {
     string str1, str2, str3;
     TEST_STR xstr1, xstr2, xstr3;
 
-     str1 = "Test string: ";  str2 = 'x';
+    str1 = "Test string: ";  str2 = 'x';
     xstr1 = "Test string: "; xstr2 = TEST_STR('x');
 
      str3 =  str1 +  str2;
     xstr3 = xstr1 + xstr2;
+
+    cout << "Running " << testName << "\n";
 
     ASSERT_TRUE("c-string set1",   str1 == "Test string: ");
     ASSERT_TRUE("qb-string set1", xstr1 == "Test string: ");
@@ -101,54 +104,80 @@ TEST_F(CThisTest, TestAssignment) {
 }}
 
 //------------------------------------------------------------------------
-void testCStr(void) {
+TEST_F(CThisTest, TestCStr) {
+
+    cout << "Running " << testName << "\n";
 
     char str[] = "Please split this sentence into tokens";
     char *token;
     char *rest = str;
     while ((token = strtok_r(rest, " ", &rest)))
-        cout << "\t" << padRight(token,8,' ') << "\t" << (rest ? rest : "") << "\n";
-    cout << "\n";
-    char str1[] = "Please|split|that|sentence|into|tokens";
-    char *token1;
-    char *rest1 = str1;
-    while ((token1 = strtok_r(rest1, "|", &rest1)))
-        cout << "\t" << padRight(token1,8,' ') << "\t" << (rest1 ? rest1 : "") << "\n";
+        cout << TESTID("tokenize",15) << padRight(token,8,' ') << "\t" << (rest ? rest : "") << "\n";
     cout << "\n";
 
-    SFString text = "\tThis isthe_thing\tthat matters\n\tand is_upperCase lower case\n";
-    cout << text << "\n";
-    cout << toLower(text) << "\n";
-    cout << toUpper(text) << "\n";
-    cout << toProper(text) << "\n";
-
-    SFString strip1 = "\t AxBBBxBx\tA ";
-    cout << "\t|" << strip1 << "|\n";
-    cout << "\t|" << trim(strip1) << "|\n";
-    cout << "\t|" << trimLeading(strip1, '\t') << "|\n";
-    cout << "\t|" << trimTrailing(strip1) << "|\n";
-    cout << "\t|" << trimWhitespace(strip1) << "|\n";
-    cout << "\t|" << trimWhitespace(strip1, "ZAx") << "|\n";
+    SFString str1 = "Please|split|that|sentence|into|tokens";
+    while (!str1.empty())
+        cout << TESTID("nextTokClr",15) << padRight(nextTokenClear(str1,'|'),8,' ') << "\t" << str1 << "\n";
     cout << "\n";
 
-    string_q text1 = "\tThis isthe_thing\tthat matters\n\tand is_upperCase lower case\n";
-    cout << text1 << "\n";
-    cout << toLower(text1) << "\n";
-    cout << toUpper(text1) << "\n";
-    cout << toProper(text1) << "\n";
-
-    string_q strip2 = "\t AxBBBxBx\tA ";
-    cout << "\t|" << strip2 << "|\n";
-    cout << "\t|" << trim(strip2) << "|\n";
-    cout << "\t|" << trimLeading(strip2, '\t') << "|\n";
-    cout << "\t|" << trimTrailing(strip2) << "|\n";
-    cout << "\t|" << trimWhitespace(strip2) << "|\n";
-    cout << "\t|" << trimWhitespace(strip2, "ZAx") << "|\n";
+    SFString text1 = "This isthe_thing\tthat matters\tand is_upperCase lower case";
+    cout << TESTID("base case",15) << text1 << "\n";
+    cout << TESTID("toLower",15) << toLower(text1) << "\n";
+    cout << TESTID("toUpper",15) << toUpper(text1) << "\n";
+    cout << TESTID("toProper",15) << toProper(text1) << "\n";
     cout << "\n";
 
-    cout << "\tThere are " << countOf(strip2, 'B') << " 'Bs' in '|" << strip2 << "|'\n";
-    cout << "\tThere are " << countOf(text,  'i') << " 'is' in '" << text.Substitute("\n"," ").Substitute("\t"," ") << "'\n";
-}
+    string_q text2 = "This isthe_thing\tthat matters\tand is_upperCase lower case";
+    cout << TESTID("base case",15) << text2 << "\n";
+    cout << TESTID("toLower",15) << toLower(text2) << "\n";
+    cout << TESTID("toUpper",15) << toUpper(text2) << "\n";
+    cout << TESTID("toProper",15) << toProper(text2) << "\n";
+    cout << "\n";
+
+    SFString strip1 = " tab[\t]AxBBBxBxA tab:\t";
+    cout << TESTID("base case",15)   << "|" << strip1 << "|\n";
+    cout << TESTID("trim",15)        << "|" << trim(strip1) << "|\n";
+    cout << TESTID("trim lead",15)   << "|" << trimLeading(strip1) << "|\n";
+    cout << TESTID("trim tail",15)   << "|" << trimTrailing(strip1, '\t') << "|\n";
+    cout << TESTID("trim ws",15)     << "|" << trimWhitespace(strip1) << "|\n";
+    cout << TESTID("trim ws ext",15) << "|" << trimWhitespace(strip1, "tab:[]") << "|\n";
+    cout << "\n";
+
+    string_q strip2 = " tab[\t]AxBBBxBxA tab:\t";
+    cout << TESTID("base case",15)   << "|" << strip2 << "|\n";
+    cout << TESTID("trim",15)        << "|" << trim(strip2) << "|\n";
+    cout << TESTID("trim lead",15)   << "|" << trimLeading(strip2) << "|\n";
+    cout << TESTID("trim tail",15)   << "|" << trimTrailing(strip2, '\t') << "|\n";
+    cout << TESTID("trim ws",15)     << "|" << trimWhitespace(strip2) << "|\n";
+    cout << TESTID("trim ws ext",15) << "|" << trimWhitespace(strip2, "tab:[]") << "|\n";
+    cout << "\n";
+
+    cout << TESTID("countOf",15) << "There are " << countOf(strip2, 'B') << " 'Bs' in '|" << strip2 << "|'\n";
+    cout << TESTID("countOf",15) << "There are " << countOf(text2,  'i') << " 'is' in '" << text1.Substitute("\t"," ") << "'\n";
+    cout << "\n";
+
+    string_q target = "Target1|Target2|Target3|Target4";
+    cout << TESTID("base case",15) << target << "\n";
+    while (target.find("get") != NOPOS) {
+        replaceReverse(target, "get", "tan");
+        cout << TESTID("rev replace",15) << target << "\n";
+    }
+    cout << "\n";
+
+    string_q target1 = "Target1|Target2|Target3|Target4";
+    cout << TESTID("base case",15) << target1 << "\n";
+    replaceAny(target1, "get", "XXX");
+    cout << TESTID("rep any",15) << target1 << "\n";
+    replaceAny(target1, "|", " |  ");
+    cout << TESTID("rep any",15) << target1 << "\n";
+    replaceAny(target1, " ", "-");
+    cout << TESTID("rep any",15) << target1 << "\n";
+    replaceAll(target1, "X", "");
+    replaceAny(target1, " -", "");
+    cout << TESTID("rep any",15) << target1 << "\n";
+
+    return true;
+}}
 
 #include "options.h"
 //------------------------------------------------------------------------
@@ -166,7 +195,7 @@ int main(int argc, const char *argv[]) {
         switch (options.testNum) {
             case 0: LOAD_TEST(TestRelational); break;
             case 1: LOAD_TEST(TestCompare);    break;
-            case 2:           testCStr();      break;
+            case 2: LOAD_TEST(TestCStr);       break;
             case 3: LOAD_TEST(TestAssignment); break;
         }
     }

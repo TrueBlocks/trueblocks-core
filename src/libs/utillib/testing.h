@@ -12,13 +12,6 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 
-namespace qblocks {
-    //---------------------------------------------------------------------------
-    inline bool isTestMode(void) {
-        return (SFString(getenv("TEST_MODE")) == "true");
-    }
-}  // namespace qblocks
-
 namespace testing {
 
     typedef bool (*PF)(uint64_t testID);
@@ -48,45 +41,52 @@ bool func_##funcName(uint64_t testID) { \
 uint64_t subTestID = 0; \
 SFString testName = #funcName; \
 
+#define TESTID(msg, wid) \
+"\t" << padNum3(testID) << "." << padNum3(subTestID++) << " " << padRight(msg, wid) << " ==> "
+
+#define TEST_ID() \
+TESTID("",1)
+
 #define ASSERT_TRUE(msg, test) { \
-cerr << "\t" << padNum3(testID) << "." << padNum3(subTestID++) << ". " << padRight(msg, 32) << " ==> "; \
+cout << TESTID(msg, 32); \
 if ((test)) { \
-cerr << "passed '" << #test<< "' is true\n"; \
+cout << "passed '" << #test<< "' is true\n"; \
 } else { \
-cerr << "failed '" << #test << "' is false\n"; \
+cout << "failed '" << #test << "' is false\n"; \
 return false; \
 } \
 }
 
 #define ASSERT_FALSE(msg, test) { \
-cerr << "\t" << padNum3(testID) << "." << padNum3(subTestID++) << ". " << padRight(msg, 32) << " ==> "; \
+cout << TESTID(msg, 32); \
 if (!(test)) { \
-cerr << "passed '" << #test << "' is false\n"; \
+cout << "passed '" << #test << "' is false\n"; \
 } else { \
-cerr << "failed '" << #test << "' is true\n"; \
+cout << "failed '" << #test << "' is true\n"; \
 return false; \
 } \
 }
 
 #define ASSERT_NOT_EQ(msg, a, b) { \
-cerr << "\t" << padNum3(testID) << "." << padNum3(subTestID++) << ". " << padRight(msg, 32) << " ==> "; \
+cout << TESTID(msg, 32); \
 if ((a) != (b)) { \
-cerr << "passed '" << #a << "' is not equal to '" << #b << "'" << "\n"; \
+cout << "passed '" << #a << "' is not equal to '" << #b << "'" << "\n"; \
 } else { \
-cerr << "failed '" << #a << "' should not be equal to '" << #b << "'" << "\n"; \
+cout << "failed '" << #a << "' should not be equal to '" << #b << "'" << "\n"; \
 return false; \
 } \
 }
 
 #define ASSERT_EQ(msg, a, b) { \
-cerr << "\t" << padNum3(testID) << "." << padNum3(subTestID++) << ". " << padRight(msg, 32) << " ==> "; \
+cout << TESTID(msg, 32); \
 if ((a) == (b)) { \
-cerr << "passed '" << #a << "' is equal to '" << #b << "'" << "\n"; \
+cout << "passed '" << #a << "' is equal to '" << #b << "'" << "\n"; \
 } else { \
-cerr << "failed '" << #a << "' should be equal to '" << #b << "'" << "\n"; \
+cout << "failed '" << #a << "' should be equal to '" << #b << "'" << "\n"; \
 return false; \
 } \
 }
+
 }  // namespace testing
 
 inline int RUN_ALL_TESTS(void) {

@@ -52,8 +52,8 @@ inline SFString projectName(void) {
 //-----------------------------------------------------------------------
 inline void makeTheCode(const SFString& fn, const SFString& addr) {
     SFString theCode = asciiFileToString(templateFolder + fn);
-    theCode.ReplaceAll("[{ADDR}]", addr);
-    theCode.ReplaceAll("[{PROJECT_NAME}]", projectName());
+    replaceAll(theCode, "[{ADDR}]", addr);
+    replaceAll(theCode, "[{PROJECT_NAME}]", projectName());
     writeTheCode(classDir + "../" + fn, theCode, "", fn != "CMakeFile.txt");
 }
 
@@ -111,14 +111,14 @@ SFString acquireABI(CFunctionArray& functions, const SFAddress& addr, const COpt
         if (!results.Contains("NOTOK")) {
         	// clear the RPC wrapper
         	results.Replace("{\"status\":\"1\",\"message\":\"OK\",\"result\":\"","");
-        	results.ReplaceReverse("]\"}","");
+        	replaceReverse(results, "]\"}", "");
         	if (verbose) {
             	if (!isTestMode())
                 	cout << verbose << "---------->" << results << "\n";
             	cout.flush();
         	}
             nextTokenClear(results, '[');
-            results.ReplaceReverse("]}", "");
+            replaceReverse(results, "]}", "");
             if (!isTestMode()) {
                 cerr << "Caching abi in " << dispName << "\n";
             }
@@ -309,18 +309,18 @@ int main(int argc, const char *argv[]) {
                         if (base == "Transaction") {
                             SFString f1, fName = func->Format("[{NAME}]");
                             f1 = SFString(STR_FACTORY1);
-                            f1.ReplaceAll("[{CLASS}]", theClass);
-                            f1.ReplaceAll("[{NAME}]", fName);
+                            replaceAll(f1, "[{CLASS}]", theClass);
+                            replaceAll(f1, "[{NAME}]", fName);
                             if (fName == "defFunction")
-                                f1.ReplaceAll("encoding == func_[{LOWER}]", "encoding.length() < 10");
+                                replaceAll(f1, "encoding == func_[{LOWER}]", "encoding.length() < 10");
                             else
-                                f1.ReplaceAll("[{LOWER}]", fName);
-                            f1.ReplaceAll("[{ASSIGNS1}]", assigns1);
-                            f1.ReplaceAll("[{ITEMS1}]", items1);
+                                replaceAll(f1, "[{LOWER}]", fName);
+                            replaceAll(f1, "[{ASSIGNS1}]", assigns1);
+                            replaceAll(f1, "[{ITEMS1}]", items1);
                             SFString parseIt = "toFunction(\"" + fName + "\", params, nItems, items)";
-                            f1.ReplaceAll("[{PARSEIT}]", parseIt);
-                            f1.ReplaceAll("[{BASE}]", base);
-                            f1.Replace("[{SIGNATURE}]", func->getSignature(SIG_DEFAULT)
+                            replaceAll(f1, "[{PARSEIT}]", parseIt);
+                            replaceAll(f1, "[{BASE}]", base);
+                            replaceAll(f1, "[{SIGNATURE}]", func->getSignature(SIG_DEFAULT)
                                                             .Substitute("\t", "")
                                                             .Substitute("  ", " ")
                                                             .Substitute(" (", "(")
@@ -347,11 +347,11 @@ int main(int argc, const char *argv[]) {
 
                         if (name != "logEntry" && !isConst) {
                             // hack warning
-                            out.ReplaceAll("bytes32[]", "SFStringArray");
-                            out.ReplaceAll("uint256[]", "SFBigUintArray");  // order matters
-                            out.ReplaceAll("int256[]", "SFBigIntArray");
-                            out.ReplaceAll("uint32[]", "SFUintArray");  // order matters
-                            out.ReplaceAll("int32[]", "SFIntArray");
+                            replaceAll(out, "bytes32[]", "SFStringArray");
+                            replaceAll(out, "uint256[]", "SFBigUintArray");  // order matters
+                            replaceAll(out, "int256[]", "SFBigIntArray");
+                            replaceAll(out, "uint32[]", "SFUintArray");  // order matters
+                            replaceAll(out, "int32[]", "SFIntArray");
                             stringToAsciiFile(classDefs+fileName, out);
                             if (func->type == "event")
                                 cout << "Generating class for event type: '" << theClass << "'\n";
@@ -377,25 +377,25 @@ int main(int argc, const char *argv[]) {
             SFString headerCode = SFString(STR_HEADERFILE).Substitute("[{HEADERS}]", headers);
             SFString parseInit = "parselib_init(QUITHANDLER qh=defaultQuitHandler)";
             if (!options.isBuiltin())
-                headerCode.ReplaceAll("[{PREFIX}]_init(void)", parseInit);
-            headerCode.ReplaceAll("[{ADDR}]", options.primaryAddr.Substitute("0x", ""));
-            headerCode.ReplaceAll("[{HEADER_SIGS}]", options.isBuiltin() ? "" : STR_HEADER_SIGS);
-            headerCode.ReplaceAll("[{PREFIX}]", toLower(options.prefix));
+                replaceAll(headerCode, "[{PREFIX}]_init(void)", parseInit);
+            replaceAll(headerCode, "[{ADDR}]", options.primaryAddr.Substitute("0x", ""));
+            replaceAll(headerCode, "[{HEADER_SIGS}]", options.isBuiltin() ? "" : STR_HEADER_SIGS);
+            replaceAll(headerCode, "[{PREFIX}]", toLower(options.prefix));
             SFString pprefix = (options.isBuiltin() ? toProper(options.prefix).Substitute("lib", "") : "Func");
-            headerCode.ReplaceAll("[{PPREFIX}]", pprefix);
-            headerCode.ReplaceAll("FuncEvent", "Event");
+            replaceAll(headerCode, "[{PPREFIX}]", pprefix);
+            replaceAll(headerCode, "FuncEvent", "Event");
             SFString comment = "//------------------------------------------------------------------------\n";
             funcExterns = (funcExterns.empty() ? "// No functions" : funcExterns);
             evtExterns = (evtExterns.empty() ? "// No events" : evtExterns);
-            headerCode.ReplaceAll("[{EXTERNS}]", comment+funcExterns+"\n"+comment+evtExterns);
+            replaceAll(headerCode, "[{EXTERNS}]", comment+funcExterns+"\n"+comment+evtExterns);
             headerCode = headerCode.Substitute("{QB}", (options.isBuiltin() ? "_qb" : ""));
             writeTheCode(classDir + options.prefix + ".h", headerCode);
 
             // The library make file
-            sources.ReplaceReverse(" \\\n", " \\\n" + options.prefix + ".cpp\n");
+            replaceReverse(sources, " \\\n", " \\\n" + options.prefix + ".cpp\n");
             if (!options.isBuiltin()) {
                 SFString makefile = asciiFileToString(templateFolder + "parselib/CMakeLists.txt");
-                makefile.ReplaceAll("[{PROJECT_NAME}]", projectName());
+                replaceAll(makefile, "[{PROJECT_NAME}]", projectName());
                 writeTheCode(classDir + "CMakeLists.txt", makefile);
             }
 
@@ -408,7 +408,7 @@ int main(int argc, const char *argv[]) {
             SFString sourceCode = asciiFileToString(templateFolder + "parselib/parselib.cpp");
             parseInit = "parselib_init(QUITHANDLER qh)";
             if (!options.isBuiltin())
-                sourceCode.ReplaceAll("[{PREFIX}]_init(void)", parseInit);
+                replaceAll(sourceCode, "[{PREFIX}]_init(void)", parseInit);
             if (options.isToken()) {
                 sourceCode.Replace("return promoteToToken(p);", "return promoteToWallet(p);");
                 sourceCode.Replace("return promoteToTokenEvent(p);", "return promoteToWalletEvent(p);");
@@ -417,31 +417,31 @@ int main(int argc, const char *argv[]) {
                 sourceCode.Replace("return promoteToTokenEvent(p);", "return NULL;");
             }
             sourceCode.Replace("[{BLKPATH}]", options.isBuiltin() ? "" : STR_BLOCK_PATH);
-            sourceCode.ReplaceAll("[{CODE_SIGS}]", (options.isBuiltin() ? "" : STR_CODE_SIGS));
-            sourceCode.ReplaceAll("[{ADDR}]", options.primaryAddr.Substitute("0x", ""));
-            sourceCode.ReplaceAll("[{ABI}]", options.theABI);
-            sourceCode.ReplaceAll("[{REGISTERS}]", registers);
+            replaceAll(sourceCode, "[{CODE_SIGS}]", (options.isBuiltin() ? "" : STR_CODE_SIGS));
+            replaceAll(sourceCode, "[{ADDR}]", options.primaryAddr.Substitute("0x", ""));
+            replaceAll(sourceCode, "[{ABI}]", options.theABI);
+            replaceAll(sourceCode, "[{REGISTERS}]", registers);
             SFString chainInit = (options.isToken() ?
                                     "\twalletlib_init();\n" :
                                   (options.isWallet() ? "" : "\ttokenlib_init();\n"));
-            sourceCode.ReplaceAll("[{CHAINLIB}]",  chainInit);
-            sourceCode.ReplaceAll("[{FACTORY1}]",  factory1.empty() ? "\t\t{\n\t\t\t// No functions\n" : factory1);
-            sourceCode.ReplaceAll("[{INIT_CODE}]", factory1.empty() ? "" : STR_ITEMS);
-            sourceCode.ReplaceAll("[{FACTORY2}]",  factory2.empty() ? "\t\t{\n\t\t\t// No events\n" : factory2);
+            replaceAll(sourceCode, "[{CHAINLIB}]",  chainInit);
+            replaceAll(sourceCode, "[{FACTORY1}]",  factory1.empty() ? "\t\t{\n\t\t\t// No functions\n" : factory1);
+            replaceAll(sourceCode, "[{INIT_CODE}]", factory1.empty() ? "" : STR_ITEMS);
+            replaceAll(sourceCode, "[{FACTORY2}]",  factory2.empty() ? "\t\t{\n\t\t\t// No events\n" : factory2);
 
             headers = ("#include \"tokenlib.h\"\n");
             headers += ("#include \"walletlib.h\"\n");
             if (!options.isBuiltin())
                 headers += "#include \"[{PREFIX}].h\"\n";
-            sourceCode.ReplaceAll("[{HEADERS}]", headers);
-            sourceCode.ReplaceAll("[{PREFIX}]", options.prefix);
+            replaceAll(sourceCode, "[{HEADERS}]", headers);
+            replaceAll(sourceCode, "[{PREFIX}]", options.prefix);
             pprefix = (options.isBuiltin() ? toProper(options.prefix).Substitute("lib", "") : "Func");
-            sourceCode.ReplaceAll("[{PPREFIX}]", pprefix);
-            sourceCode.ReplaceAll("FuncEvent", "Event");
-            sourceCode.ReplaceAll("[{FUNC_DECLS}]", funcDecls.empty() ? "// No functions" : funcDecls);
-            sourceCode.ReplaceAll("[{SIGS}]", sigs.empty() ? "\t// No functions\n" : sigs);
-            sourceCode.ReplaceAll("[{EVENT_DECLS}]", evtDecls.empty() ? "// No events" : evtDecls);
-            sourceCode.ReplaceAll("[{EVTS}]", evts.empty() ? "\t// No events\n" : evts);
+            replaceAll(sourceCode, "[{PPREFIX}]", pprefix);
+            replaceAll(sourceCode, "FuncEvent", "Event");
+            replaceAll(sourceCode, "[{FUNC_DECLS}]", funcDecls.empty() ? "// No functions" : funcDecls);
+            replaceAll(sourceCode, "[{SIGS}]", sigs.empty() ? "\t// No functions\n" : sigs);
+            replaceAll(sourceCode, "[{EVENT_DECLS}]", evtDecls.empty() ? "// No events" : evtDecls);
+            replaceAll(sourceCode, "[{EVTS}]", evts.empty() ? "\t// No events\n" : evts);
             sourceCode = sourceCode.Substitute("{QB}", (options.isBuiltin() ? "_qb" : ""));
             writeTheCode(classDir + options.prefix + ".cpp", sourceCode.Substitute("XXXX","[").Substitute("YYYY","]"));
 

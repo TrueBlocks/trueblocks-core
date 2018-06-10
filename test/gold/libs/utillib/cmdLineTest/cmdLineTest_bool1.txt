@@ -7,7 +7,7 @@ numOption: -1
 stringOption: 
 testNum: 1
 0. Running Test1
-	000.000. 1. boolOption == false           ==> passed '(opts.boolSet && !opts.boolOption)' is true
+	000.000 1. boolOption == false           ==> passed '(opts.boolSet && !opts.boolOption)' is true
 --------------------------------------------------------------------------------
 boolOption: 1
 boolSet: 1
@@ -15,7 +15,7 @@ numOption: -1
 stringOption: 
 testNum: 2
 0. Running Test1
-	000.000. 2. boolOption == true            ==> passed '(opts.boolSet && opts.boolOption)' is true
+	000.000 2. boolOption == true            ==> passed '(opts.boolSet && opts.boolOption)' is true
 --------------------------------------------------------------------------------
 boolOption: 0
 boolSet: 1
@@ -23,7 +23,7 @@ numOption: -1
 stringOption: 
 testNum: 3
 0. Running Test1
-	000.000. 3. boolOption == false           ==> passed '(opts.boolSet && !opts.boolOption)' is true
+	000.000 3. boolOption == false           ==> passed '(opts.boolSet && !opts.boolOption)' is true
 --------------------------------------------------------------------------------
 boolOption: 1
 boolSet: 1
@@ -31,5 +31,5 @@ numOption: -1
 stringOption: 
 testNum: 4
 0. Running Test1
-	000.000. 4. boolOption == true            ==> passed '(opts.boolSet && opts.boolOption)' is true
+	000.000 4. boolOption == true            ==> passed '(opts.boolSet && opts.boolOption)' is true
 ret: 0

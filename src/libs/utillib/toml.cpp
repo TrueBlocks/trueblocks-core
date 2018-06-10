@@ -85,7 +85,7 @@ namespace qblocks {
     //-------------------------------------------------------------------------
     bool CToml::getConfigBool(const SFString& group, const SFString& key, bool def) const {
         SFString ret = getConfigStr(group, key, asString(def?1:0));
-        ret.ReplaceAny(";\t\n\r ", "");
+        replaceAny(ret, ";\t\n\r ", "");
         return ((ret == "true" || ret == "1") ? true : false);
     }
 
@@ -183,7 +183,7 @@ extern SFString collapseArrays(const SFString& inStr);
     SFUintBN CToml::getConfigBigInt(const SFString& group, const SFString& key, SFUintBN def) const {
         SFString ret = getConfigStr(group, key, to_string(def).c_str());
         SFString check = ret;
-        check.ReplaceAny("0123456789abcdefABCDEF", "");
+        replaceAny(check, "0123456789abcdefABCDEF", "");
         if (!check.empty()) {
             cerr << "Big int config item " << group << "::" << key << " is not an integer...returning zero.";
             return 0;
@@ -209,8 +209,8 @@ extern SFString collapseArrays(const SFString& inStr);
         if (fmt == "<not_set>")
             fmt = def;
         if (!color.empty()) {
-            fmt.ReplaceAll("{", color+"{");
-            fmt.ReplaceAll("}", "}"+cOff);
+            replaceAll(fmt, "{", color+"{");
+            replaceAll(fmt, "}", "}"+cOff);
         }
         return cleanFmt(fmt);
     }
@@ -367,9 +367,9 @@ extern SFString collapseArrays(const SFString& inStr);
         str = str.Substitute("]]","</array>\n<name>");
         str = str.Substitute("[","</name>\n<value>");
         str = str.Substitute("]","</value>\n<name>");
-        str.ReplaceReverse("<name>","");
-        str.ReplaceAll("<name>\n","<name>");
-        str.ReplaceAll(" = </name>","</name>");
+        replaceReverse(str, "<name>", "");
+        replaceAll(str, "<name>\n","<name>");
+        replaceAll(str, " = </name>","</name>");
         while (str.Contains("</array>")) {
             SFString array = snagFieldClear(str,"array");
             SFString vals;

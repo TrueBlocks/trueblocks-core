@@ -186,7 +186,7 @@ namespace qblocks {
             }
         }
         commandList += stdInCmds;
-        commandList.ReplaceAll(" \n", "\n");
+        replaceAll(commandList, " \n", "\n");
         commandList = trim(commandList, '\n');
 
         if (args) delete [] args;
@@ -205,29 +205,29 @@ namespace qblocks {
             exit(0);
 
         } else if (cmdLine.Contains("--nocolor ")) {
-            cmdLine.ReplaceAll("--nocolor ","");
+            replaceAll(cmdLine, "--nocolor ","");
             colorsOff();
 
         } else if (isEnabled(OPT_DENOM) && cmdLine.Contains("--ether " )) {
-            cmdLine.ReplaceAll("--ether ","");
+            replaceAll(cmdLine, "--ether ","");
             expContext().asEther = true;
             expContext().asDollars = false;
             expContext().asWei = false;
 
         } else if (isEnabled(OPT_DENOM) && cmdLine.Contains("--wei ")) {
-            cmdLine.ReplaceAll("--wei ","");
+            replaceAll(cmdLine, "--wei ","");
             expContext().asEther = false;
             expContext().asDollars = false;
             expContext().asWei = true;
 
         } else if (isEnabled(OPT_DENOM) && cmdLine.Contains("--dollars ")) {
-            cmdLine.ReplaceAll("--dollars ","");
+            replaceAll(cmdLine, "--dollars ","");
             expContext().asEther = false;
             expContext().asDollars = true;
             expContext().asWei = false;
 
         } else if (isEnabled(OPT_PARITY) && cmdLine.Contains("--parity ")) {
-            cmdLine.ReplaceAll("--parity ","");
+            replaceAll(cmdLine, "--parity ","");
             expContext().spcs = 4;
             expContext().hexNums = true;
             expContext().quoteNums = true;
@@ -300,7 +300,7 @@ namespace qblocks {
                 hotKey = longName;
                 nextTokenClear(hotKey,'(');
                 hotKey = nextTokenClear(hotKey, ')');
-                longName.ReplaceAny("()","");
+                replaceAny(longName, "()","");
                 shortName = SFString(shortName[0]) + hotKey;
             }
         }
@@ -436,8 +436,8 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
                 lead = "";
                 trail = "\n";
             }
-            ret.ReplaceAll("[{", sepy1);
-            ret.ReplaceAll("}]", sepy2);
+            replaceAll(ret, "[{", sepy1);
+            replaceAll(ret, "}]", sepy2);
 
             ctx << bYellow << sep << "Notes:" << sep << cOff << "\n";
             ctx << (COptionsBase::isReadme ? "\n" : "");
@@ -446,7 +446,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
                 ctx << lead << tick << line << "\n";
             }
             ctx << "\n";
-            ctx.str.ReplaceAll("-   ","  - ");
+            replaceAll(ctx.str, "-   ","  - ");
         }
         return ctx.str;
     }
@@ -525,8 +525,8 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
         if (arg == "-th" || arg == "-ht") {
             COptionsBase::isReadme = true;
             arg = "";
-            ret.ReplaceAll("-th","");
-            ret.ReplaceAll("-ht","");
+            replaceAll(ret, "-th","");
+            replaceAll(ret, "-ht","");
             return ret;
         }
 
@@ -740,7 +740,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
 
         // Read the data from the names database and clean it up if needed
         SFString contents = trimWhitespace(asciiFileToString(textFile));
-        contents.ReplaceAll("\t\t", "\t");
+        replaceAll(contents, "\t\t", "\t");
         if (!endsWith(contents, "\n"))
             contents += "\n";
 

@@ -13,6 +13,7 @@
 #include <string>
 #include <algorithm>
 #include "etherlib.h"
+#include "testing.h"
 
 // Changing this between qstring and SFString helps migrating away from quickBlocks code
 #define TEST_STR SFString

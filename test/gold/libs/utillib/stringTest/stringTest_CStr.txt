@@ -1,56 +1,55 @@
 stringTest argc: 2 [1:2] 
 stringTest 2 
-	Please  	split this sentence into tokens
-	split   	this sentence into tokens
-	this    	sentence into tokens
-	sentence	into tokens
-	into    	tokens
-	tokens  	
+0. Running TestCStr
+	000.000 tokenize        ==> Please  	split this sentence into tokens
+	000.001 tokenize        ==> split   	this sentence into tokens
+	000.002 tokenize        ==> this    	sentence into tokens
+	000.003 tokenize        ==> sentence	into tokens
+	000.004 tokenize        ==> into    	tokens
+	000.005 tokenize        ==> tokens  	
 
-	Please  	split|that|sentence|into|tokens
-	split   	that|sentence|into|tokens
-	that    	sentence|into|tokens
-	sentence	into|tokens
-	into    	tokens
-	tokens  	
+	000.006 nextTokClr      ==> Please  	split|that|sentence|into|tokens
+	000.007 nextTokClr      ==> split   	that|sentence|into|tokens
+	000.008 nextTokClr      ==> that    	sentence|into|tokens
+	000.009 nextTokClr      ==> sentence	into|tokens
+	000.010 nextTokClr      ==> into    	tokens
+	000.011 nextTokClr      ==> tokens  	
 
-	This isthe_thing	that matters
-	and is_upperCase lower case
+	000.012 base case       ==> This isthe_thing	that matters	and is_upperCase lower case
+	000.013 toLower         ==> this isthe_thing	that matters	and is_uppercase lower case
+	000.014 toUpper         ==> THIS ISTHE_THING	THAT MATTERS	AND IS_UPPERCASE LOWER CASE
+	000.015 toProper        ==> this Isthe_Thing	That Matters	And Is_Uppercase Lower Case
 
-	this isthe_thing	that matters
-	and is_uppercase lower case
+	000.016 base case       ==> This isthe_thing	that matters	and is_upperCase lower case
+	000.017 toLower         ==> this isthe_thing	that matters	and is_uppercase lower case
+	000.018 toUpper         ==> THIS ISTHE_THING	THAT MATTERS	AND IS_UPPERCASE LOWER CASE
+	000.019 toProper        ==> this Isthe_Thing	That Matters	And Is_Uppercase Lower Case
 
-	THIS ISTHE_THING	THAT MATTERS
-	AND IS_UPPERCASE LOWER CASE
+	000.020 base case       ==> | tab[	]AxBBBxBxA tab:	|
+	000.021 trim            ==> |tab[	]AxBBBxBxA tab:	|
+	000.022 trim lead       ==> |tab[	]AxBBBxBxA tab:	|
+	000.023 trim tail       ==> | tab[	]AxBBBxBxA tab:|
+	000.024 trim ws         ==> |tab[	]AxBBBxBxA tab:|
+	000.025 trim ws ext     ==> |AxBBBxBxA|
 
-	This Isthe_Thing	That Matters
-	And Is_Uppercase Lower Case
+	000.026 base case       ==> | tab[	]AxBBBxBxA tab:	|
+	000.027 trim            ==> |tab[	]AxBBBxBxA tab:	|
+	000.028 trim lead       ==> |tab[	]AxBBBxBxA tab:	|
+	000.029 trim tail       ==> | tab[	]AxBBBxBxA tab:|
+	000.030 trim ws         ==> |tab[	]AxBBBxBxA tab:|
+	000.031 trim ws ext     ==> |AxBBBxBxA|
 
-	|	 AxBBBxBx	A |
-	|	 AxBBBxBx	A|
-	| AxBBBxBx	A |
-	|	 AxBBBxBx	A|
-	|AxBBBxBx	A|
-	|BBBxB|
+	000.032 countOf         ==> There are 4 'Bs' in '| tab[	]AxBBBxBxA tab:	|'
+	000.033 countOf         ==> There are 4 'is' in 'This isthe_thing that matters and is_upperCase lower case'
 
-	This isthe_thing	that matters
-	and is_upperCase lower case
+	000.034 base case       ==> Target1|Target2|Target3|Target4
+	000.035 rev replace     ==> Target1|Target2|Target3|Tartan4
+	000.036 rev replace     ==> Target1|Target2|Tartan3|Tartan4
+	000.037 rev replace     ==> Target1|Tartan2|Tartan3|Tartan4
+	000.038 rev replace     ==> Tartan1|Tartan2|Tartan3|Tartan4
 
-	this isthe_thing	that matters
-	and is_uppercase lower case
-
-	THIS ISTHE_THING	THAT MATTERS
-	AND IS_UPPERCASE LOWER CASE
-
-	This Isthe_Thing	That Matters
-	And Is_Uppercase Lower Case
-
-	|	 AxBBBxBx	A |
-	|	 AxBBBxBx	A|
-	| AxBBBxBx	A |
-	|	 AxBBBxBx	A|
-	|AxBBBxBx	A|
-	|BBBxB|
-
-	There are 4 'Bs' in '|	 AxBBBxBx	A |'
-	There are 4 'is' in ' This isthe_thing that matters  and is_upperCase lower case '
+	000.039 base case       ==> Target1|Target2|Target3|Target4
+	000.040 rep any         ==> TarXXXXXXXXX1|TarXXXXXXXXX2|TarXXXXXXXXX3|TarXXXXXXXXX4
+	000.041 rep any         ==> TarXXXXXXXXX1 |  TarXXXXXXXXX2 |  TarXXXXXXXXX3 |  TarXXXXXXXXX4
+	000.042 rep any         ==> TarXXXXXXXXX1-|--TarXXXXXXXXX2-|--TarXXXXXXXXX3-|--TarXXXXXXXXX4
+	000.043 rep any         ==> Tar1|Tar2|Tar3|Tar4

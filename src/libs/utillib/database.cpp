@@ -482,8 +482,8 @@ namespace qblocks {
         SFString orig = asciiFileToString(fileName);
         SFString existingCode = orig.Substitute("//EXISTING_CODE","// EXISTING_CODE");
         if (spaces) {
-            existingCode.ReplaceAll("    ", "\t");
-            codeOut     .ReplaceAll("    ", "\t");
+            replaceAll(existingCode, "    ", "\t");
+            replaceAll(codeOut,      "    ", "\t");
         }
 
         SFString tabs;
@@ -501,20 +501,20 @@ namespace qblocks {
                 codeOut.Replace(tabs + "// EXISTING_CODE\n" + tabs + "// EXISTING_CODE",
                                 tabs + "// EXISTING_CODE\n" + snipit + "\n" + tabs + "// EXISTING_CODE");
             }
-            codeOut.ReplaceAll("// EXISTING_CODE\n\n" + tabs + "// EXISTING_CODE", "// EXISTING_CODE\n" +
+            replaceAll(codeOut, "// EXISTING_CODE\n\n" + tabs + "// EXISTING_CODE", "// EXISTING_CODE\n" +
                                tabs + "// EXISTING_CODE");
             //--------------------------------------------------------------------------------------
         }
 
         // One final cleanup
-        codeOut.ReplaceAll("\n\n}", "\n}");
-        codeOut.ReplaceAll("\n\n\n", "\n\n");
+        replaceAll(codeOut, "\n\n}", "\n}");
+        replaceAll(codeOut, "\n\n\n", "\n\n");
 
         if (spaces)
-            codeOut.ReplaceAll("\t", "    ");
+            replaceAll(codeOut, "\t", "    ");
 
         if (codeOut.Contains("virtual") || codeOut.Contains("override"))
-            codeOut.Replace("~", "virtual ~");
+            replaceAll(codeOut, "~", "virtual ~");
 
         // If we don't write it because it's identical, it won't force a rebuild
         if (orig != codeOut)

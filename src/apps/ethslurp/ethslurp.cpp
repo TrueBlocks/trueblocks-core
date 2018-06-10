@@ -528,14 +528,14 @@ void CSlurperApp::buildDisplayStrings(COptions& options) {
     theAccount.header        = trimWhitespace(theAccount.header);
 
     theAccount.displayString = trim(fmtForRecords.Substitute("[{FIELDS}]", theAccount.displayString), '\t');
-    theAccount.displayString.ReplaceAll("[{NAME}]", options.archiveFile);
+    replaceAll(theAccount.displayString, "[{NAME}]", options.archiveFile);
     if (options.exportFormat == "json") {
         // One little hack to make raw json more readable
-        theAccount.displayString.ReplaceReverse("}]\",", "}]\"\n");
+        replaceReverse(theAccount.displayString, "}]\",", "}]\"\n");
         if (options.prettyPrint) {
-            theAccount.displayString.ReplaceAll("\"[{p:", "            \"[{p:");
-            theAccount.displayString.ReplaceAll("}]\",",  "}]\",\n");
-            theAccount.displayString.ReplaceAll("\":\"", "\": \"");
+            replaceAll(theAccount.displayString, "\"[{p:", "            \"[{p:");
+            replaceAll(theAccount.displayString, "}]\",",  "}]\",\n");
+            replaceAll(theAccount.displayString, "\":\"", "\": \"");
         }
     }
 }

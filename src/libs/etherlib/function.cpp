@@ -392,7 +392,7 @@ SFString CFunction::getSignature(uint64_t parts) const {
         ctx << (payable   ? " payable" : "");
     }
 
-    ctx.str.ReplaceAll(" )", ")");
+    replaceAll(ctx.str, " )", ")");
     return trim(ctx.str);
 }
 

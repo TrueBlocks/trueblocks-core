@@ -94,8 +94,8 @@ SFString cleanAll(const SFString& str, bool remove, bool isByzan) {
         nRemoved--; // don't remove status if were post-byzantium
 
     SFString orig = str;
-    orig.ReplaceAny("\t\r {}","");
-    orig.ReplaceAll(",",",\n"); // put everything on its own line
+    replaceAny(orig, "\t\r {}","");
+    replaceAll(orig, ",",",\n"); // put everything on its own line
     for (uint32_t i = 0 ; i < nRemoved ; i++) {
         SFString search = "\"" + removes[i] + "\":";
         while (orig.Contains(search)) {
@@ -103,15 +103,15 @@ SFString cleanAll(const SFString& str, bool remove, bool isByzan) {
         }
     }
     orig = orig.Substitute("}]","");
-    orig.ReplaceAll(",", "");
-    orig.ReplaceAll("[", "");
-    orig.ReplaceAll("]", "");
-    orig.ReplaceAll("\"to\":null","\"to\":\"0x0\"");
+    replaceAll(orig, ",", "");
+    replaceAll(orig, "[", "");
+    replaceAll(orig, "]", "");
+    replaceAll(orig, "\"to\":null","\"to\":\"0x0\"");
     orig = trimWhitespace(orig);
     orig = orig.Substitute("\"result\":","").Substitute("\"transactions\":","").Substitute("\"logs\":","");
     orig = orig.Substitute("\"jsonrpc\":","");
     orig = orig.Substitute("0x" + SFString('0',512), "0x0"); // minimize bloom filters
-    orig.ReplaceAll("\n\n","\n");
+    replaceAll(orig, "\n\n", "\n");
     // get rid of id
     SFString ret;
     while (!orig.empty()) {

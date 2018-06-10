@@ -435,7 +435,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
         // assume the item is already clear
         SFString contents = asciiFileToString(fileName);
         if (contents.Contains("null")) {
-            contents.ReplaceAll("null", "\"0x\"");
+            replaceAll(contents, "null", "\"0x\"");
             stringToAsciiFile(fileName, contents);
         }
         if (!endsWith(contents, '\n')) {
