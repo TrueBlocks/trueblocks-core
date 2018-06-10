@@ -30,8 +30,8 @@ bool COptions::parseArguments(SFString& command) {
         SFString arg = nextTokenClear(command, ' ');
         if (startsWith(arg, "-t:") || startsWith(arg, "--testNum:")) {
             SFString orig = arg;
-            arg.ReplaceAny("--testNum:","");
-            arg.ReplaceAny("-t:","");
+            replaceAny(arg, "--testNum:", "");
+            replaceAny(arg, "-t:", "");
             testNum = (int32_t)toLong(arg);
             if (!testNum || testNum > 2)
                 return usage("Invalid argument: " + orig + ". Quitting...");

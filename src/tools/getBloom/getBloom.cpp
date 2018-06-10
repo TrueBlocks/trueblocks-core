@@ -50,22 +50,22 @@ int main(int argc, const char * argv[]) {
 
 SFString toBits(const SFString& blIn) {
     SFString ret = toLower(blIn).substr(2);
-    ret.ReplaceAll("0","0000");
-    ret.ReplaceAll("1","0001");
-    ret.ReplaceAll("2","0010");
-    ret.ReplaceAll("3","0011");
-    ret.ReplaceAll("4","0100");
-    ret.ReplaceAll("5","0101");
-    ret.ReplaceAll("6","0110");
-    ret.ReplaceAll("7","0111");
-    ret.ReplaceAll("8","1000");
-    ret.ReplaceAll("9","1001");
-    ret.ReplaceAll("a","1010");
-    ret.ReplaceAll("b","1011");
-    ret.ReplaceAll("c","1100");
-    ret.ReplaceAll("d","1101");
-    ret.ReplaceAll("e","1110");
-    ret.ReplaceAll("f","1111");
+    replaceAll(ret, "0", "0000");
+    replaceAll(ret, "1", "0001");
+    replaceAll(ret, "2", "0010");
+    replaceAll(ret, "3", "0011");
+    replaceAll(ret, "4", "0100");
+    replaceAll(ret, "5", "0101");
+    replaceAll(ret, "6", "0110");
+    replaceAll(ret, "7", "0111");
+    replaceAll(ret, "8", "1000");
+    replaceAll(ret, "9", "1001");
+    replaceAll(ret, "a", "1010");
+    replaceAll(ret, "b", "1011");
+    replaceAll(ret, "c", "1100");
+    replaceAll(ret, "d", "1101");
+    replaceAll(ret, "e", "1110");
+    replaceAll(ret, "f", "1111");
     return "0x"+ret;
 }
 SFString asBar(const SFString& blIn) {

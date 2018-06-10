@@ -17,7 +17,6 @@ namespace qblocks {
 
     //--------------------------------------------------------------------
 #define NOPOS ((size_t)-1)
-    extern const char* CHR_VALID_NAME;
 
     //--------------------------------------------------------------------
     //#define NATIVE
@@ -63,6 +62,7 @@ namespace qblocks {
         char          operator[](int index) const { return at((size_t)index); };
 
         const char&   at        (size_t index) const;
+              void    setAt     (size_t index, char c) { if (index < length()) m_Values[index] = c; }
         const char   *c_str     (void) const;
         const string  str       (void) const { return string(c_str()); };
 
@@ -97,6 +97,10 @@ namespace qblocks {
             os << x.m_Values;
             return os;
         }
+
+        friend void replaceAll    (string_q& target, const string_q& what, const string_q& with);
+        friend void replaceAny    (string_q& target, const string_q& list, const string_q& with);
+        friend void replaceReverse(string_q& target, const string_q& what, const string_q& with);
 
     protected:
         void    init      (void);
@@ -290,22 +294,10 @@ namespace qblocks {
         SFString Substitute      (const SFString& what, const SFString& with) const;
 
         void     Replace         (const SFString& what, const SFString& with);
-//        void     ReplaceAll      (      char      what,       char      with);
-        void     ReplaceAll      (const SFString& what, const SFString& with);
-        void     ReplaceAny      (const SFString& list, const SFString& with);
-        void     ReplaceReverse  (const SFString& what, const SFString& with);
 
         friend SFString operator+(const SFString& str1, const SFString& str2);
         friend SFString operator+(const SFString& str1, const char *str2);
     };
-
-    //--------------------------------------------------------------------
-    extern SFString makeValidName (const SFString& input);
-
-    //--------------------------------------------------------------------
-    inline bool isWhiteSpace(char c) {
-        return (c == '\0' || c == ' ' || c == '\n' || c == '\r' || c == '\t');
-    }
 
     //--------------------------------------------------------------------
     inline SFString::operator const char *() const {

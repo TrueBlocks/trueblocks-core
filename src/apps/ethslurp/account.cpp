@@ -228,7 +228,7 @@ bool CAccount::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, vo
 
         // We assume here that the token was properly formed. For the pre-text we
         // have to clear out the start '[', and for the post text we clear out the ']'
-        preFmt.ReplaceReverse("[", "");
+        replaceReverse(preFmt, "[", "");
         postFmt.Replace("]", "");
 
         // We handle the display in three parts: pre, records, and post so as

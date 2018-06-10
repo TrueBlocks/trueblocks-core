@@ -7,7 +7,7 @@ numOption: 12
 stringOption: 
 testNum: 5
 0. Running Test1
-	000.000. 5. int  == 12                    ==> passed '(opts.numOption == 12)' is true
+	000.000 5. int  == 12                    ==> passed '(opts.numOption == 12)' is true
 --------------------------------------------------------------------------------
 boolOption: 0
 boolSet: 0
@@ -15,7 +15,7 @@ numOption: -100
 stringOption: 
 testNum: 6
 0. Running Test1
-	000.000. 6. int  == -100                  ==> passed '(opts.numOption == -100)' is true
+	000.000 6. int  == -100                  ==> passed '(opts.numOption == -100)' is true
 --------------------------------------------------------------------------------
 boolOption: 0
 boolSet: 0
@@ -23,7 +23,7 @@ numOption: 12
 stringOption: 
 testNum: 7
 0. Running Test1
-	000.000. 7. uint == 12                    ==> passed '(opts.numOption == 12)' is true
+	000.000 7. uint == 12                    ==> passed '(opts.numOption == 12)' is true
 --------------------------------------------------------------------------------
 boolOption: 0
 boolSet: 0
@@ -31,7 +31,7 @@ numOption: -1
 stringOption: 
 testNum: 8
 0. Running Test1
-	000.000. 8. uint == -100 (false)          ==> passed '(opts.numOption == (int64_t)NOPOS)' is true
+	000.000 8. uint == -100 (false)          ==> passed '(opts.numOption == (int64_t)NOPOS)' is true
 
   Invalid option: --string:String
 

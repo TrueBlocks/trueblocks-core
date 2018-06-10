@@ -180,13 +180,13 @@ SFTime grabDate(const SFString& strIn) {
 
 //#error
     SFString str = strIn;
-    str.ReplaceAny(" -:",";");
+    replaceAny(str, " -:",";");
     str.Replace(";UTC", "");
     str = nextTokenClear(str,'.');
 
     // Expects four number year, two number month and day at a minimum. Fields may be separated by '-' or ';'
     //    YYYYMMDD or YYYY;MM;DD
-    str.ReplaceAll(";","");
+    replaceAll(str, ";", "");
     if (str.Contains("T")) {
         str.Replace("T","");
         if      (str.length() == 10) str += "0000";

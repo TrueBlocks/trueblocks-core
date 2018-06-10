@@ -402,7 +402,7 @@ bool readOneNewBlock_fromJson(CNewBlock& block, const SFString& fileName) {
     block = CNewBlock(); // reset
     SFString contents = asciiFileToString(fileName);
     if (contents.Contains("null")) {
-        contents.ReplaceAll("null", "\"0x\"");
+        replaceAll(contents, "null", "\"0x\"");
         stringToAsciiFile(fileName, contents);
     }
 

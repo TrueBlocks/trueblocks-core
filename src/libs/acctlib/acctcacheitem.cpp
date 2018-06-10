@@ -215,7 +215,7 @@ ostream& operator<<(ostream& os, const CAcctCacheItem& item) {
 // EXISTING_CODE
 CAcctCacheItem::CAcctCacheItem(SFString& line) {
 
-    line.ReplaceAll(".","\t");
+    replaceAll(line, ".", "\t");
 
     SFString val = nextTokenClear(line,'\t');
     blockNum = toUnsigned(val);
