@@ -89,7 +89,7 @@ namespace qblocks {
         if (newSize <= m_buffSize && m_buffSize) {
             // do not release the memory, just empty the existing string
             m_nValues   = 0;
-            m_Values[0] = '\0';
+            memset(m_Values, '\0', m_buffSize);
             return;
         }
 
@@ -103,9 +103,9 @@ namespace qblocks {
 
 #define GROW_SIZE 16
         m_Values      = new char[newSize+GROW_SIZE+1];
-        m_Values[0]   = '\0';
-        m_nValues     = 0;
         m_buffSize    = newSize + GROW_SIZE;
+        m_nValues     = 0;
+        memset(m_Values, '\0', m_buffSize+1);
         return;
     }
 
@@ -343,10 +343,10 @@ namespace qblocks {
             while (!whatStr.empty()) { // they should match but don't have to. With predominates
                 SFString wtStr = nextTokenClear(whatStr, '`');
                 SFString whStr = nextTokenClear(withStr, '`');
-                ret.ReplaceAll(wtStr, whStr);
+                replaceAll(ret, wtStr, whStr);
             }
         } else {
-            ret.ReplaceAll(what, with);
+            replaceAll(ret, what, with);
         }
         return ret;
     }
@@ -358,52 +358,51 @@ namespace qblocks {
             *this = substr(0,i) + with + substr(i + what.length());
     }
 
-//    //---------------------------------------------------------------------------------------
-//    void SFString::ReplaceAll(char what, char with) {
-//        char *s = m_Values;
-//        while (*s) {
-//            if (*s == what)
-//                *s = with;
-//            s++;
-//        }
-//    }
-
     //---------------------------------------------------------------------------------------
-    void SFString::ReplaceAll(const SFString& what, const SFString& with) {
+    void replaceAll(string_q& target, const string_q& what, const string_q& with) {
         if (what.empty())
             return;
 
-        if (with.Contains(what)) {
+        if (with.find(what) != NOPOS) {
             // may cause endless recursions so do it in two steps instead
-            ReplaceAll(what, SFString((char)0x5));
-            ReplaceAll(SFString((char)0x5), with);
+            string_q rep((char)0x5);
+            replaceAll(target, what, rep);
+            replaceAll(target, rep, with);
             return;
         }
 
-        size_t i = find(what);
-        while (i != NOPOS) {
-            Replace(what, with);
-            i = find(what);
+        size_t f = target.find(what);
+        while (f != NOPOS) {
+            SFString targ = target.c_str();
+            targ.Replace(what.c_str(), with.c_str());
+            target.reserve(targ.length()+1);
+            ASSERT(target.m_nValues == 0);
+            for (size_t i = 0 ; i < targ.length() ; i++)
+                target.m_Values[target.m_nValues++] = targ[i];
+            f = target.find(what);
         }
     }
 
     //---------------------------------------------------------------------------------------
-    void SFString::ReplaceAny(const SFString& list, const SFString& with) {
-        size_t len = list.length();
-        for (size_t i = 0 ; i < len ; i++)
-            ReplaceAll(list[i], with);
+    void replaceAny(string_q& target, const string_q& list, const string_q& with) {
+        for (size_t i = 0 ; i < list.length() ; i++)
+            replaceAll(target, list[i], with);
     }
 
     //---------------------------------------------------------------------------------------
-    void SFString::ReplaceReverse(const SFString& whatIn, const SFString& withIn) {
-        SFString what = whatIn;
-        SFString with = withIn;
-
-        Reverse();
+    void replaceReverse(string_q& target, const string_q& whatIn, const string_q& withIn) {
+        SFString targ = target.c_str();
+        SFString what = whatIn.c_str();
+        SFString with = withIn.c_str();
+        targ.Reverse();
         what.Reverse();
         with.Reverse();
-        Replace(what, with);
-        Reverse();
+        targ.Replace(what, with);
+        targ.Reverse();
+        target.reserve(targ.length());
+        ASSERT(target.m_nValues == 0);
+        for (size_t i = 0 ; i < targ.length() ; i++)
+            target.m_Values[target.m_nValues++] = targ[i];
     }
 
     //---------------------------------------------------------------------------------------
@@ -436,8 +435,8 @@ namespace qblocks {
         if (start != stop)
         {
             SFString out = in;
-            out.ReplaceAll("<", "&lt;");
-            out.ReplaceAll(">", "&gt;");
+            replaceAll(out, "<", "&lt;");
+            replaceAll(out, ">", "&gt;");
             printf("%s", (const char*)(SFString("<h3>'") + field + "' not found in '" + out + "'<h3><br>"));
         }
 #endif
@@ -463,8 +462,8 @@ namespace qblocks {
         if (start != stop)
         {
             SFString out = in;
-            out.ReplaceAll("<", "&lt;");
-            out.ReplaceAll(">", "&gt;");
+            replaceAll(out, "<", "&lt;");
+            replaceAll(out, ">", "&gt;");
             printf("%s", (const char*)(SFString("<h3>'") + field + "' not found in '" + out + "'<h3><br>"));
         }
 #endif
@@ -476,21 +475,6 @@ namespace qblocks {
 
         if (ret.empty())
             ret = defVal;
-
-        return ret;
-    }
-
-    //---------------------------------------------------------------------------------------
-    const char* CHR_VALID_NAME  = "\t\n\r()<>[]{}`\\|; " "'!$^*~@" "?&#+%" ",:/=\"";
-
-    //---------------------------------------------------------------------------------------
-    SFString makeValidName(const SFString& inOut) {
-        SFString ret = inOut;
-
-        // make it a valid path
-        ret.ReplaceAny(CHR_VALID_NAME, "_");
-        if (!ret.empty() && isdigit(ret[0]))
-            ret = "_" + ret;
 
         return ret;
     }

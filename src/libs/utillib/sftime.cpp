@@ -794,7 +794,7 @@ namespace qblocks {
             return earliestDate;
 
         SFString str = strIn;
-        str.ReplaceAll(";", EMPTY);
+        replaceAll(str, ";", EMPTY);
         if (str.length() != 14) {
             str += "120000";
         }

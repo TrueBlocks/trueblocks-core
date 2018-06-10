@@ -455,7 +455,7 @@ SFString CTransaction::getValueByName(const SFString& fieldName) const {
     s = toUpper(SFString("receipt")) + "::";
     if (fieldName.Contains(s)) {
         SFString f = fieldName;
-        f.ReplaceAll(s,"");
+        replaceAll(f, s, "");
         f = receipt.getValueByName(f);
         return f;
     }

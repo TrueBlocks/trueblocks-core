@@ -17,6 +17,7 @@
 #include "exportcontext.h"
 #include "conversions.h"
 #include "version.h"
+#include "testing.h"
 
 namespace qblocks {
 
@@ -272,6 +273,12 @@ namespace qblocks {
 #endif
         finishParse();
         return NULL;
+    }
+
+    //--------------------------------------------------------------------
+    inline bool isWhiteSpace(char c) {
+        // TODO: this is unsafe if the JSON contains preservable spaces. Since that is not the case with Ethereum data, it's okay
+        return (c == '\0' || c == ' ' || c == '\n' || c == '\r' || c == '\t');
     }
 
     //--------------------------------------------------------------------------------

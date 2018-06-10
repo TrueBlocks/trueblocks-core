@@ -124,8 +124,8 @@ bool COptions::parseArguments(SFString& command) {
             if (!lateStr.empty() && !isNumeral(lateStr))
                 return usage("Invalid date: " + orig + ". Quitting...");
 
-            earlyStr.ReplaceAll("-", "");
-            lateStr.ReplaceAll("-", "");
+            replaceAll(earlyStr, "-", "");
+            replaceAll(lateStr,  "-", "");
 
             if (!earlyStr.empty() && earlyStr.length() != 8 && earlyStr.length() != 14)
                 return usage("Option -d: Invalid date format for startDate. "

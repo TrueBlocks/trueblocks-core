@@ -286,13 +286,13 @@ void generateCode(const COptions& options, CToml& toml, const SFString& dataFile
                 fld->type.Contains("SFTopicArray")) {
 
                 fieldGetStr += STR_GETSTR_CODE_FIELD;
-                fieldGetStr.ReplaceAll("[{FIELD}]", fld->name);
+                replaceAll(fieldGetStr, "[{FIELD}]", fld->name);
                 if (fld->name == "topics") {
-                    fieldGetStr.ReplaceAll("THING", "fromTopic");
+                    replaceAll(fieldGetStr, "THING", "fromTopic");
                 } else if (fld->type.Contains("SFBlockArray")) {
-                    fieldGetStr.ReplaceAll("THING", "asStringU");
+                    replaceAll(fieldGetStr, "THING", "asStringU");
                 } else {
-                    fieldGetStr.ReplaceAll("THING", "");
+                    replaceAll(fieldGetStr, "THING", "");
                 }
             } else {
                 fieldGetObj += STR_GETOBJ_CODE_FIELD;
@@ -300,11 +300,11 @@ void generateCode(const COptions& options, CToml& toml, const SFString& dataFile
                     fieldGetObj.Replace(" && index < [{FIELD}].getCount()", "");
                     fieldGetObj.Replace("[index]", "");
                 }
-                fieldGetObj.ReplaceAll("[{FIELD}]", fld->name);
+                replaceAll(fieldGetObj, "[{FIELD}]", fld->name);
             }
         }
 
-        fieldReg   += fld->Format(regFmt).Substitute("T_TEXT", regType); fieldReg.ReplaceAll("CL_NM", "[{CLASS_NAME}]");
+        fieldReg   += fld->Format(regFmt).Substitute("T_TEXT", regType); replaceAll(fieldReg, "CL_NM", "[{CLASS_NAME}]");
         fieldCase  += fld->Format("[{TYPE}]+[{NAME}]-[{ISPOINTER}]~[{ISOBJECT}]|");
         fieldDec   += (convertTypes(fld->Format(decFmt)) + "\n");
         fieldCopy  += fld->Format(copyFmt).Substitute("+SHORT+", "[{SHORT}]").Substitute("++CLASS++", "[{CLASS_NAME}]");
@@ -312,8 +312,8 @@ void generateCode(const COptions& options, CToml& toml, const SFString& dataFile
         fieldClear += (fld->isPointer ? fld->Format(clearFmt) : "");
         if (fld->isObject && !fld->isPointer && !fld->type.Contains("Array")) {
             SFString fmt = subClsFmt;
-            fmt.ReplaceAll("[FNAME]", fld->name);
-            fmt.ReplaceAll("[SH3]", short3(baseLower));
+            replaceAll(fmt, "[FNAME]", fld->name);
+            replaceAll(fmt, "[SH3]", short3(baseLower));
             SFString fldStr = fld->Format(fmt);
             fldStr.Replace("++", "[{");
             fldStr.Replace("++", "}]");
@@ -368,34 +368,34 @@ SFString ptrWriteFmt =
     //------------------------------------------------------------------------------------------------
     SFString headerFile = dataFile.Substitute(".txt", ".h").Substitute("./classDefinitions/", "./");
     SFString headSource = asciiFileToString(configPath("makeClass/blank.h"));
-    headSource.ReplaceAll("[{GET_OBJ}]",      (hasObjGetter ? SFString(STR_GETOBJ_HEAD)+(hasStrGetter?"":"\n") : ""));
-    headSource.ReplaceAll("[{GET_STR}]",      (hasStrGetter ? SFString(STR_GETSTR_HEAD)+"\n" : ""));
-    headSource.ReplaceAll("[FIELD_COPY]",     fieldCopy);
-    headSource.ReplaceAll("[FIELD_DEC]",      fieldDec);
-    headSource.ReplaceAll("[FIELD_SET]",      fieldSet);
-    headSource.ReplaceAll("[FIELD_CLEAR]",    fieldClear);
-    headSource.ReplaceAll("[H_INCLUDES]",     headerIncs);
-    headSource.ReplaceAll("[{OPERATORS}]",    operatorH);
-    headSource.ReplaceAll("[{BASE_CLASS}]",   baseClass);
-    headSource.ReplaceAll("[{BASE_BASE}]",    baseBase);
-    headSource.ReplaceAll("[{BASE}]",         baseUpper);
-    headSource.ReplaceAll("[{CLASS_NAME}]",   className);
-    headSource.ReplaceAll("[{COMMENT_LINE}]", STR_COMMENT_LINE);
-    headSource.ReplaceAll("[{LONG}]",         baseLower);
-    headSource.ReplaceAll("[{PROPER}]",       baseProper);
-    headSource.ReplaceAll("[{SHORT}]",        baseLower.substr(0,2));
-    headSource.ReplaceAll("[{BASE_CLASS}]",   baseClass);
-    headSource.ReplaceAll("[{BASE_BASE}]",    baseBase);
-    headSource.ReplaceAll("[{BASE}]",         baseUpper);
-    headSource.ReplaceAll("[{CLASS_NAME}]",   className);
-    headSource.ReplaceAll("[{COMMENT_LINE}]", STR_COMMENT_LINE);
-    headSource.ReplaceAll("[{LONG}]",         baseLower);
-    headSource.ReplaceAll("[{PROPER}]",       baseProper);
-    headSource.ReplaceAll("[{SHORT3}]",       short3(baseLower));
-    headSource.ReplaceAll("[{SHORT}]",        baseLower.substr(0,2));
-    headSource.ReplaceAll("[{SCOPE}]",        scope);
-    headSource.ReplaceAll("[{NAMESPACE1}]",   (ns.empty() ? "" : "\nnamespace qblocks {\n\n"));
-    headSource.ReplaceAll("[{NAMESPACE2}]",   (ns.empty() ? "" : "}  // namespace qblocks\n"));
+    replaceAll(headSource, "[{GET_OBJ}]",      (hasObjGetter ? SFString(STR_GETOBJ_HEAD)+(hasStrGetter?"":"\n") : ""));
+    replaceAll(headSource, "[{GET_STR}]",      (hasStrGetter ? SFString(STR_GETSTR_HEAD)+"\n" : ""));
+    replaceAll(headSource, "[FIELD_COPY]",     fieldCopy);
+    replaceAll(headSource, "[FIELD_DEC]",      fieldDec);
+    replaceAll(headSource, "[FIELD_SET]",      fieldSet);
+    replaceAll(headSource, "[FIELD_CLEAR]",    fieldClear);
+    replaceAll(headSource, "[H_INCLUDES]",     headerIncs);
+    replaceAll(headSource, "[{OPERATORS}]",    operatorH);
+    replaceAll(headSource, "[{BASE_CLASS}]",   baseClass);
+    replaceAll(headSource, "[{BASE_BASE}]",    baseBase);
+    replaceAll(headSource, "[{BASE}]",         baseUpper);
+    replaceAll(headSource, "[{CLASS_NAME}]",   className);
+    replaceAll(headSource, "[{COMMENT_LINE}]", STR_COMMENT_LINE);
+    replaceAll(headSource, "[{LONG}]",         baseLower);
+    replaceAll(headSource, "[{PROPER}]",       baseProper);
+    replaceAll(headSource, "[{SHORT}]",        baseLower.substr(0,2));
+    replaceAll(headSource, "[{BASE_CLASS}]",   baseClass);
+    replaceAll(headSource, "[{BASE_BASE}]",    baseBase);
+    replaceAll(headSource, "[{BASE}]",         baseUpper);
+    replaceAll(headSource, "[{CLASS_NAME}]",   className);
+    replaceAll(headSource, "[{COMMENT_LINE}]", STR_COMMENT_LINE);
+    replaceAll(headSource, "[{LONG}]",         baseLower);
+    replaceAll(headSource, "[{PROPER}]",       baseProper);
+    replaceAll(headSource, "[{SHORT3}]",       short3(baseLower));
+    replaceAll(headSource, "[{SHORT}]",        baseLower.substr(0,2));
+    replaceAll(headSource, "[{SCOPE}]",        scope);
+    replaceAll(headSource, "[{NAMESPACE1}]",   (ns.empty() ? "" : "\nnamespace qblocks {\n\n"));
+    replaceAll(headSource, "[{NAMESPACE2}]",   (ns.empty() ? "" : "}  // namespace qblocks\n"));
     if (options.writeHeader)
         writeTheCode(headerFile, headSource, ns);
 
@@ -406,46 +406,46 @@ SFString ptrWriteFmt =
     SFString srcSource  = asciiFileToString(configPath("makeClass/blank.cpp"));
     if ((startsWith(className, "CNew") || className == "CPriceQuote") && !getCWD().Contains("parse"))
         srcSource.Replace("version of the data\n", STR_UPGRADE_CODE);
-    srcSource.ReplaceAll("[{GET_OBJ}]",         fieldGetObj);
-    srcSource.ReplaceAll("[{GET_STR}]",         fieldGetStr);
-    srcSource.ReplaceAll("[ARCHIVE_READ]",      fieldArchiveRead);
-    srcSource.ReplaceAll("[ARCHIVE_WRITE]",     fieldArchiveWrite);
-    srcSource.ReplaceAll("[{OPERATORS}]",       operatorC);
-    srcSource.ReplaceAll("[REGISTER_FIELDS]",   fieldReg);
-    srcSource.ReplaceAll("[{FIELD_CASE}]",      fieldStr);
-    srcSource.ReplaceAll("[OTHER_INCS]",        otherIncs);
-    srcSource.ReplaceAll("[FIELD_SETCASE]",     caseSetCodeStr);
-    srcSource.ReplaceAll("[{SUBCLASSFLDS}]",    subClsCodeStr);
-    srcSource.ReplaceAll("[{PARENT_SER1}]",     parSer);
-    srcSource.ReplaceAll("[{PARENT_SER2}]",     parSer.Substitute("Serialize", "SerializeC"));
-    srcSource.ReplaceAll("[{PARENT_REG}]",      parReg);
-    srcSource.ReplaceAll("[{PARENT_CHNK}]\n",   parCnk);
-    srcSource.ReplaceAll("[{PARENT_SET}]\n",    parSet);
-    srcSource.ReplaceAll("[{PAR_READ_HEAD}]",   parFnc);
-    srcSource.ReplaceAll("[{BASE_CLASS}]",      baseClass);
-    srcSource.ReplaceAll("[{BASE_BASE}]",       baseBase);
-    srcSource.ReplaceAll("[{BASE}]",            baseUpper);
-    srcSource.ReplaceAll("[{CLASS_NAME}]",      className);
-    srcSource.ReplaceAll("[{COMMENT_LINE}]",    STR_COMMENT_LINE);
-    srcSource.ReplaceAll("[{LONG}]",            baseLower);
-    srcSource.ReplaceAll("[{PROPER}]",          baseProper);
-    srcSource.ReplaceAll("[{SHORT}]",           baseLower.substr(0,2));
-    srcSource.ReplaceAll("[{NAME_SORT1}]",      sorts[0]);
-    srcSource.ReplaceAll("[{NAME_SORT2}]",      sorts[1]);
-    srcSource.ReplaceAll("[{ID_SORT1}]",        sorts[2]);
-    srcSource.ReplaceAll("[{ID_SORT2}]",        sorts[3]);
-    srcSource.ReplaceAll("[{BASE_CLASS}]",      baseClass);
-    srcSource.ReplaceAll("[{BASE_BASE}]",       baseBase);
-    srcSource.ReplaceAll("[{BASE}]",            baseUpper);
-    srcSource.ReplaceAll("[{CLASS_NAME}]",      className);
-    srcSource.ReplaceAll("[{COMMENT_LINE}]",    STR_COMMENT_LINE);
-    srcSource.ReplaceAll("[{LONG}]",            baseLower);
-    srcSource.ReplaceAll("[{PROPER}]",          baseProper);
-    srcSource.ReplaceAll("[{SHORT3}]",          short3(baseLower));
-    srcSource.ReplaceAll("[{SHORT}]",           baseLower.substr(0,2));
-    srcSource.ReplaceAll("[{SCOPE}]",           scope);
-    srcSource.ReplaceAll("[{NAMESPACE1}]",      (ns.empty() ? "" : "\nnamespace qblocks {\n\n"));
-    srcSource.ReplaceAll("[{NAMESPACE2}]",      (ns.empty() ? "" : "}  // namespace qblocks\n"));
+    replaceAll(srcSource, "[{GET_OBJ}]",         fieldGetObj);
+    replaceAll(srcSource, "[{GET_STR}]",         fieldGetStr);
+    replaceAll(srcSource, "[ARCHIVE_READ]",      fieldArchiveRead);
+    replaceAll(srcSource, "[ARCHIVE_WRITE]",     fieldArchiveWrite);
+    replaceAll(srcSource, "[{OPERATORS}]",       operatorC);
+    replaceAll(srcSource, "[REGISTER_FIELDS]",   fieldReg);
+    replaceAll(srcSource, "[{FIELD_CASE}]",      fieldStr);
+    replaceAll(srcSource, "[OTHER_INCS]",        otherIncs);
+    replaceAll(srcSource, "[FIELD_SETCASE]",     caseSetCodeStr);
+    replaceAll(srcSource, "[{SUBCLASSFLDS}]",    subClsCodeStr);
+    replaceAll(srcSource, "[{PARENT_SER1}]",     parSer);
+    replaceAll(srcSource, "[{PARENT_SER2}]",     parSer.Substitute("Serialize", "SerializeC"));
+    replaceAll(srcSource, "[{PARENT_REG}]",      parReg);
+    replaceAll(srcSource, "[{PARENT_CHNK}]\n",   parCnk);
+    replaceAll(srcSource, "[{PARENT_SET}]\n",    parSet);
+    replaceAll(srcSource, "[{PAR_READ_HEAD}]",   parFnc);
+    replaceAll(srcSource, "[{BASE_CLASS}]",      baseClass);
+    replaceAll(srcSource, "[{BASE_BASE}]",       baseBase);
+    replaceAll(srcSource, "[{BASE}]",            baseUpper);
+    replaceAll(srcSource, "[{CLASS_NAME}]",      className);
+    replaceAll(srcSource, "[{COMMENT_LINE}]",    STR_COMMENT_LINE);
+    replaceAll(srcSource, "[{LONG}]",            baseLower);
+    replaceAll(srcSource, "[{PROPER}]",          baseProper);
+    replaceAll(srcSource, "[{SHORT}]",           baseLower.substr(0,2));
+    replaceAll(srcSource, "[{NAME_SORT1}]",      sorts[0]);
+    replaceAll(srcSource, "[{NAME_SORT2}]",      sorts[1]);
+    replaceAll(srcSource, "[{ID_SORT1}]",        sorts[2]);
+    replaceAll(srcSource, "[{ID_SORT2}]",        sorts[3]);
+    replaceAll(srcSource, "[{BASE_CLASS}]",      baseClass);
+    replaceAll(srcSource, "[{BASE_BASE}]",       baseBase);
+    replaceAll(srcSource, "[{BASE}]",            baseUpper);
+    replaceAll(srcSource, "[{CLASS_NAME}]",      className);
+    replaceAll(srcSource, "[{COMMENT_LINE}]",    STR_COMMENT_LINE);
+    replaceAll(srcSource, "[{LONG}]",            baseLower);
+    replaceAll(srcSource, "[{PROPER}]",          baseProper);
+    replaceAll(srcSource, "[{SHORT3}]",          short3(baseLower));
+    replaceAll(srcSource, "[{SHORT}]",           baseLower.substr(0,2));
+    replaceAll(srcSource, "[{SCOPE}]",           scope);
+    replaceAll(srcSource, "[{NAMESPACE1}]",      (ns.empty() ? "" : "\nnamespace qblocks {\n\n"));
+    replaceAll(srcSource, "[{NAMESPACE2}]",      (ns.empty() ? "" : "}  // namespace qblocks\n"));
     if (options.writeSource)
         writeTheCode(srcFile, srcSource, ns);
 }
@@ -473,8 +473,8 @@ SFString getCaseCode(const SFString& fieldCase, const SFString& ex) {
                     caseCode += " )";
                     if (type.Contains("List") || isPointer) {
                         SFString ptrCase = PTR_GET_CASE;
-                        ptrCase.ReplaceAll("[{NAME}]", field);
-                        ptrCase.ReplaceAll("[{TYPE}]", type);
+                        replaceAll(ptrCase, "[{NAME}]", field);
+                        replaceAll(ptrCase, "[{TYPE}]", type);
                         caseCode += ptrCase;
 
                     } else if (type == "time") {
@@ -524,7 +524,7 @@ SFString getCaseCode(const SFString& fieldCase, const SFString& ex) {
 
                     } else if (type.Contains("SFStringArray") || type.Contains("SFAddressArray")) {
                         SFString str = STR_CASE_CODE_STRINGARRAY;
-                        str.ReplaceAll("[{FIELD}]", field);
+                        replaceAll(str, "[{FIELD}]", field);
                         caseCode += str;
 
                     } else if (type.Contains("SFBigUintArray") || type.Contains("SFTopicArray")) {
@@ -538,8 +538,8 @@ SFString getCaseCode(const SFString& fieldCase, const SFString& ex) {
                     } else if (type.Contains("Array")) {
                         SFString str = STR_CASE_CODE_ARRAY;
                         if (type.Contains("SFUint") || type.Contains("SFBlock"))
-                            str.ReplaceAll("[{PTR}][{FIELD}][i].Format()", "asStringU([{PTR}][{FIELD}][i])");
-                        str.ReplaceAll("[{FIELD}]", field);
+                            replaceAll(str, "[{PTR}][{FIELD}][i].Format()", "asStringU([{PTR}][{FIELD}][i])");
+                        replaceAll(str, "[{FIELD}]", field);
                         caseCode += str;
 
                     } else if (isObject) {
@@ -555,7 +555,7 @@ SFString getCaseCode(const SFString& fieldCase, const SFString& ex) {
             caseCode += baseTab + tab + "break;\n";
         }
     }
-    caseCode.ReplaceAll("[BTAB]", baseTab);
+    replaceAll(caseCode, "[BTAB]", baseTab);
     caseCode = "// Return field values\n\tswitch (tolower(fieldName[0])) {\n" + caseCode + "\t}\n";
     return caseCode;
 }
@@ -589,8 +589,8 @@ SFString getCaseSetCode(const SFString& fieldCase) {
                     caseCode += baseTab + tab + "if ( fieldName % \"" + field + "\" )";
                     if (type.Contains("List") || isPointer) {
                         SFString ptrCase = PTR_SET_CASE;
-                        ptrCase.ReplaceAll("[{NAME}]", field);
-                        ptrCase.ReplaceAll("[{TYPE}]", type);
+                        replaceAll(ptrCase, "[{NAME}]", field);
+                        replaceAll(ptrCase, "[{TYPE}]", type);
                         caseCode += ptrCase;
 
                     } else if (type == "time") {
@@ -646,22 +646,22 @@ SFString getCaseSetCode(const SFString& fieldCase) {
 
                     } else if (type.Contains("SFStringArray") || type.Contains("SFBlockArray")) {
                         SFString str = strArraySet;
-                        str.ReplaceAll("[{NAME}]", field);
+                        replaceAll(str, "[{NAME}]", field);
                         if (type.Contains("SFBlockArray"))
-                            str.ReplaceAll("nextTokenClear(str,',')", "toUnsigned(nextTokenClear(str,','))");
+                            replaceAll(str, "nextTokenClear(str,',')", "toUnsigned(nextTokenClear(str,','))");
                         caseCode += str;
 
                     } else if (type.Contains("SFAddressArray") || type.Contains("SFBigUintArray") || type.Contains("SFTopicArray")) {
                         SFString str = strArraySet;
-                        str.ReplaceAll("[{NAME}]", field);
-                        str.ReplaceAll("nextTokenClear(str,',')", "to[{TYPE}](nextTokenClear(str,','))");
-                        str.ReplaceAll("[{TYPE}]", type.substr(2).Substitute("Array", ""));
+                        replaceAll(str, "[{NAME}]", field);
+                        replaceAll(str, "nextTokenClear(str,',')", "to[{TYPE}](nextTokenClear(str,','))");
+                        replaceAll(str, "[{TYPE}]", type.substr(2).Substitute("Array", ""));
                         caseCode += str;
 
                     } else if (type.Contains("Array")) {
                         SFString str = STR_CASE_SET_CODE_ARRAY;
-                        str.ReplaceAll("[{NAME}]", field);
-                        str.ReplaceAll("[{TYPE}]", type.Substitute("Array", ""));
+                        replaceAll(str, "[{NAME}]", field);
+                        replaceAll(str, "[{TYPE}]", type.Substitute("Array", ""));
                         caseCode += str;
 
                     } else if (isObject) {
@@ -762,7 +762,7 @@ const char* STR_SUBCLASS =
 "\ts = toUpper(SFString(\"[FNAME]\")) + \"::\";\n"
 "\tif (fieldName.Contains(s)) {\n"
 "\t\tSFString f = fieldName;\n"
-"\t\tf.ReplaceAll(s,\"\");\n"
+"\t\treplaceAll(f, s,\"\");\n"
 "\t\tf = [FNAME].getValueByName(f);\n"
 "\t\treturn f;\n"
 "\t}\n\n";

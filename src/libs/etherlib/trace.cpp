@@ -280,7 +280,7 @@ SFString CTrace::getValueByName(const SFString& fieldName) const {
     s = toUpper(SFString("action")) + "::";
     if (fieldName.Contains(s)) {
         SFString f = fieldName;
-        f.ReplaceAll(s,"");
+        replaceAll(f, s, "");
         f = action.getValueByName(f);
         return f;
     }
@@ -288,7 +288,7 @@ SFString CTrace::getValueByName(const SFString& fieldName) const {
     s = toUpper(SFString("result")) + "::";
     if (fieldName.Contains(s)) {
         SFString f = fieldName;
-        f.ReplaceAll(s,"");
+        replaceAll(f, s, "");
         f = result.getValueByName(f);
         return f;
     }

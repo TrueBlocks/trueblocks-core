@@ -28,11 +28,11 @@ namespace qblocks {
     //------------------------------------------------------------------
     static SFString escapePath(const SFString& nameIn) {
         SFString name = nameIn;
-        name.ReplaceAll(" ", "\\ ");
-        name.ReplaceAll("&", "\\&");
-        name.ReplaceAll("(", "\\(");
-        name.ReplaceAll(")", "\\)");
-        name.ReplaceAll("'", "\\'");
+        replaceAll(name, " ", "\\ ");
+        replaceAll(name, "&", "\\&");
+        replaceAll(name, "(", "\\(");
+        replaceAll(name, ")", "\\)");
+        replaceAll(name, "'", "\\'");
         return name;
     }
 
@@ -136,6 +136,18 @@ namespace qblocks {
 
         return fileExists(filename);
     }
+
+    //---------------------------------------------------------------------------------------
+    static const char* CHR_VALID_NAME  = "\t\n\r()<>[]{}`\\|; " "'!$^*~@" "?&#+%" ",:/=\"";
+    //---------------------------------------------------------------------------------------
+    static SFString makeValidName(const SFString& inOut) {
+        SFString ret = inOut;
+        replaceAny(ret, CHR_VALID_NAME, "_");
+        if (!ret.empty() && isdigit(ret[0]))
+            ret = "_" + ret;
+        return ret;
+    }
+
 
     //------------------------------------------------------------------------------------------
     SFString doCommand(const SFString& cmd) {
