@@ -23,6 +23,7 @@ This is a list of very rudimentary ideas for possible EIPs intended to make the 
 
 5. Get `geth` and `parity` to agree on the `trace_` RPC commands.
 
+6. We could standarize certain test cases by purposefully do things in a smart contract that any legit blockcahin scraper would need to handle properly. For example, suicides, a smart contract that calls into another smart contract and either does or does not handle a throw by throwing itself or not. A 1000 deep call stack that ends with out of gas. We can custom build transactions that describe particular behaviour (for example returning structures, returing error messages, input of arbtrarily complex ABI interfaces) and properly articulate that data. Summary (of poorly worded section): build smart contract test cases that allow parsers/scrapers/articulators test themselves.
 
 ### Other Ideas About Audting
 
