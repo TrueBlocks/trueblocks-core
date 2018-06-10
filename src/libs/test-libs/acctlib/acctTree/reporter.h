@@ -77,7 +77,7 @@ public:
 
     void interumReport(void);
     bool isMax(void) {
-        if (strs.Contains("0x+-0+-0+-0+-0+-0+-0+-0+-0+-0+-0+-0+-0+000000000000"))
+        if (contains(strs, "0x+-0+-0+-0+-0+-0+-0+-0+-0+-0+-0+-0+-0+000000000000"))
             return false;
         return (countOf(strs, '-') > maxDepth);
     }

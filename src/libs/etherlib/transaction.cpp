@@ -445,7 +445,7 @@ SFString CTransaction::getValueByName(const SFString& fieldName) const {
     // EXISTING_CODE
     // See if this field belongs to the item's container
     ret = nextBlockChunk(fieldName, pBlock);
-    if (ret.Contains("Field not found"))
+    if (contains(ret, "Field not found"))
         ret = EMPTY;
     if (!ret.empty())
         return ret;
@@ -453,7 +453,7 @@ SFString CTransaction::getValueByName(const SFString& fieldName) const {
 
     SFString s;
     s = toUpper(SFString("receipt")) + "::";
-    if (fieldName.Contains(s)) {
+    if (contains(fieldName, s)) {
         SFString f = fieldName;
         replaceAll(f, s, "");
         f = receipt.getValueByName(f);
@@ -549,7 +549,7 @@ SFString parse(const SFString& params, uint32_t nItems, SFString *types) {
     SFString ret;
     for (size_t item = 0 ; item < (size_t)nItems ; item++) {
         SFString t = types[item];
-        bool isDynamic = (t=="string" || t=="bytes" || t.Contains("[]"));
+        bool isDynamic = (t=="string" || t=="bytes" || contains(t, "[]"));
         SFString val;
 
              if ( t == "address"                    )   val =          toAddr      (params,item);
@@ -557,12 +557,12 @@ SFString parse(const SFString& params, uint32_t nItems, SFString *types) {
         else if ( t == "vote"                       )   val =          toVote      (params,item);
         else if ( t == "uint3"                      )   val =          toBigNum3   (params,item);
         else if ( t == "bytes256"                   )   val =          toAscString (params,item);
-        else if ( t.Contains("int") &&   !isDynamic )   val =          toBigNum2   (params,item);
-        else if ( t.Contains("bytes") && !isDynamic )   val =          toBytes     (params,item);
+        else if ( contains(t, "int") &&   !isDynamic)   val =          toBigNum2   (params,item);
+        else if ( contains(t, "bytes") && !isDynamic)   val =          toBytes     (params,item);
         else if ( isDynamic                         )   val = "off:" + toBigNum2   (params,item);
         else                                            val = "unknown type: " + t;
 
-        if (val.Contains("off:")) {
+        if (contains(val, "off:")) {
             size_t start = toLong32u(val.Substitute("off:","")) / (size_t)32;
             size_t len   = grabBigNum(params,start);
             if (len == NOPOS)

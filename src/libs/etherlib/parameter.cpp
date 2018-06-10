@@ -241,13 +241,13 @@ ostream& operator<<(ostream& os, const CParameter& item) {
 // EXISTING_CODE
 //---------------------------------------------------------------------------
 CParameter::CParameter(SFString& textIn) {
-    if (textIn.Contains("=")) {
+    if (contains(textIn, "=")) {
         strDefault = textIn;
         textIn = nextTokenClear(strDefault, '=');
     }
     type       = nextTokenClear(textIn, ' ');
-    isPointer  = textIn.Contains("*");
-    isArray    = textIn.Contains("Array");
+    isPointer  = contains(textIn, "*");
+    isArray    = contains(textIn, "Array");
     isObject   = !isArray && startsWith(type, 'C');
     name       = textIn.Substitute("*", "");
 }

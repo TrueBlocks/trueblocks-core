@@ -40,7 +40,7 @@ namespace qblocks {
 
         // Load and possibly refresh the price database
         SFTime lastRead = SFTime(2015, 1, 1, 0, 0, 0);
-        if (source.pair.Contains("BTC"))
+        if (contains(source.pair, "BTC"))
             lastRead = SFTime(2009,1,1,0,0,0);
         if (fileExists(cacheFile)) {
             SFArchive priceCache(READING_ARCHIVE);

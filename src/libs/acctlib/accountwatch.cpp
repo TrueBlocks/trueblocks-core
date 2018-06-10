@@ -255,7 +255,7 @@ SFString CAccountWatch::getValueByName(const SFString& fieldName) const {
 
     SFString s;
     s = toUpper(SFString("qbis")) + "::";
-    if (fieldName.Contains(s)) {
+    if (contains(fieldName, s)) {
         SFString f = fieldName;
         replaceAll(f, s, "");
         f = qbis.getValueByName(f);

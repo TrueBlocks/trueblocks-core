@@ -187,7 +187,7 @@ SFTime grabDate(const SFString& strIn) {
     // Expects four number year, two number month and day at a minimum. Fields may be separated by '-' or ';'
     //    YYYYMMDD or YYYY;MM;DD
     replaceAll(str, ";", "");
-    if (str.Contains("T")) {
+    if (contains(str, "T")) {
         str.Replace("T","");
         if      (str.length() == 10) str += "0000";
         else if (str.length() == 12) str += "00";
@@ -250,7 +250,7 @@ SFString COptions::listSpecials(bool terse) const {
         }
 
         if (alone && !terse) {
-            if (!bn.Contains("tbd"))
+            if (!contains(bn, "tbd"))
                 os << bn << " ";
         } else {
             if (terse) {
@@ -290,7 +290,7 @@ SFString COptions::listSpecials(bool terse) const {
 bool containsAny(const SFString& haystack, const SFString& needle) {
     string need = needle.c_str();
     for (auto elem : need)
-        if (haystack.Contains(elem))
+        if (contains(haystack, elem))
             return true;
     return false;
 }

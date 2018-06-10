@@ -260,11 +260,11 @@ void generateCode(const COptions& options, CToml& toml, const SFString& dataFile
         } else if (fld->isObject)            { setFmt = "\t[{NAME}].Init();\n";     regType = "T_OBJECT";
         } else                               { setFmt = badSet;                     regType = "T_TEXT"; }
 
-        if (fld->type.Contains("Array")) {
+        if (contains(fld->type, "Array")) {
             setFmt = "\t[{NAME}].Clear();\n";
-            if (fld->type.Contains("Address")) {
+            if (contains(fld->type, "Address")) {
                 regType = "T_ADDRESS|TS_ARRAY";
-            } else if (fld->type.Contains("String")) {
+            } else if (contains(fld->type, "String")) {
                 regType = "T_TEXT|TS_ARRAY";
             } else {
                 regType = "T_OBJECT|TS_ARRAY";
@@ -277,26 +277,26 @@ void generateCode(const COptions& options, CToml& toml, const SFString& dataFile
         setFmt.Replace("[{DEFT}]", getDefault("earliestDate"));
         setFmt.Replace("[{DEFP}]", getDefault("NULL"));
 
-        if (fld->type.Contains("Array") || (fld->isObject && !fld->isPointer)) {
+        if (contains(fld->type, "Array") || (fld->isObject && !fld->isPointer)) {
 
-            if (fld->type.Contains("SFStringArray")  ||
-                fld->type.Contains("SFBlockArray")   ||
-                fld->type.Contains("SFAddressArray") ||
-                fld->type.Contains("SFBigUintArray") ||
-                fld->type.Contains("SFTopicArray")) {
+            if (contains(fld->type, "SFStringArray")  ||
+                contains(fld->type, "SFBlockArray")   ||
+                contains(fld->type, "SFAddressArray") ||
+                contains(fld->type, "SFBigUintArray") ||
+                contains(fld->type, "SFTopicArray")) {
 
                 fieldGetStr += STR_GETSTR_CODE_FIELD;
                 replaceAll(fieldGetStr, "[{FIELD}]", fld->name);
                 if (fld->name == "topics") {
                     replaceAll(fieldGetStr, "THING", "fromTopic");
-                } else if (fld->type.Contains("SFBlockArray")) {
+                } else if (contains(fld->type, "SFBlockArray")) {
                     replaceAll(fieldGetStr, "THING", "asStringU");
                 } else {
                     replaceAll(fieldGetStr, "THING", "");
                 }
             } else {
                 fieldGetObj += STR_GETOBJ_CODE_FIELD;
-                if (!fld->type.Contains("Array")) {
+                if (!contains(fld->type, "Array")) {
                     fieldGetObj.Replace(" && index < [{FIELD}].getCount()", "");
                     fieldGetObj.Replace("[index]", "");
                 }
@@ -310,7 +310,7 @@ void generateCode(const COptions& options, CToml& toml, const SFString& dataFile
         fieldCopy  += fld->Format(copyFmt).Substitute("+SHORT+", "[{SHORT}]").Substitute("++CLASS++", "[{CLASS_NAME}]");
         fieldSet   += fld->Format(setFmt);
         fieldClear += (fld->isPointer ? fld->Format(clearFmt) : "");
-        if (fld->isObject && !fld->isPointer && !fld->type.Contains("Array")) {
+        if (fld->isObject && !fld->isPointer && !contains(fld->type, "Array")) {
             SFString fmt = subClsFmt;
             replaceAll(fmt, "[FNAME]", fld->name);
             replaceAll(fmt, "[SH3]", short3(baseLower));
@@ -404,7 +404,7 @@ SFString ptrWriteFmt =
 
     SFString srcFile    = dataFile.Substitute(".txt", ".cpp").Substitute("./classDefinitions/", "./");
     SFString srcSource  = asciiFileToString(configPath("makeClass/blank.cpp"));
-    if ((startsWith(className, "CNew") || className == "CPriceQuote") && !getCWD().Contains("parse"))
+    if ((startsWith(className, "CNew") || className == "CPriceQuote") && !contains(getCWD(), "parse"))
         srcSource.Replace("version of the data\n", STR_UPGRADE_CODE);
     replaceAll(srcSource, "[{GET_OBJ}]",         fieldGetObj);
     replaceAll(srcSource, "[{GET_STR}]",         fieldGetStr);
@@ -455,7 +455,7 @@ SFString getCaseCode(const SFString& fieldCase, const SFString& ex) {
     SFString baseTab = (tab+tab+ex);
     SFString caseCode;
     for (char ch = '_' ; ch < 'z' + 1 ; ch++) {
-        if (toLower(fieldCase).Contains("+"+SFString(ch))) {
+        if (contains(toLower(fieldCase), "+"+SFString(ch))) {
             caseCode += baseTab + "case '" + ch + "':\n";
             SFString fields = fieldCase;
             while (!fields.empty()) {
@@ -468,10 +468,10 @@ SFString getCaseCode(const SFString& fieldCase, const SFString& ex) {
 
                 if (tolower(field[0]) == ch) {
                     caseCode += baseTab + tab + "if ( fieldName % \"" + field + "\"";
-                    if (type.Contains("Array"))
+                    if (contains(type, "Array"))
                         caseCode += " || fieldName % \"" + field + "Cnt\"";
                     caseCode += " )";
-                    if (type.Contains("List") || isPointer) {
+                    if (contains(type, "List") || isPointer) {
                         SFString ptrCase = PTR_GET_CASE;
                         replaceAll(ptrCase, "[{NAME}]", field);
                         replaceAll(ptrCase, "[{TYPE}]", type);
@@ -522,12 +522,12 @@ SFString getCaseCode(const SFString& fieldCase, const SFString& ex) {
                     } else if (type == "double") {
                         caseCode += " return fmtFloat([{PTR}]" + field + ");";
 
-                    } else if (type.Contains("SFStringArray") || type.Contains("SFAddressArray")) {
+                    } else if (contains(type, "SFStringArray") || contains(type, "SFAddressArray")) {
                         SFString str = STR_CASE_CODE_STRINGARRAY;
                         replaceAll(str, "[{FIELD}]", field);
                         caseCode += str;
 
-                    } else if (type.Contains("SFBigUintArray") || type.Contains("SFTopicArray")) {
+                    } else if (contains(type, "SFBigUintArray") || contains(type, "SFTopicArray")) {
                         SFString str = STR_CASE_CODE_STRINGARRAY;
                         // hack for getCount clause
                         str.Replace("[{FIELD}]", field);
@@ -535,9 +535,9 @@ SFString getCaseCode(const SFString& fieldCase, const SFString& ex) {
                         str.Replace("[{FIELD}][i]", "fromTopic("+field+"[i])");
                         caseCode += str;
 
-                    } else if (type.Contains("Array")) {
+                    } else if (contains(type, "Array")) {
                         SFString str = STR_CASE_CODE_ARRAY;
-                        if (type.Contains("SFUint") || type.Contains("SFBlock"))
+                        if (contains(type, "SFUint") || contains(type, "SFBlock"))
                             replaceAll(str, "[{PTR}][{FIELD}][i].Format()", "asStringU([{PTR}][{FIELD}][i])");
                         replaceAll(str, "[{FIELD}]", field);
                         caseCode += str;
@@ -574,7 +574,7 @@ SFString getCaseSetCode(const SFString& fieldCase) {
     SFString baseTab = (tab+tab);
     SFString caseCode;
     for (char ch = '_' ; ch < 'z' + 1 ; ch++) {
-        if (toLower(fieldCase).Contains("+"+SFString(ch))) {
+        if (contains(toLower(fieldCase), "+"+SFString(ch))) {
             caseCode += baseTab + "case '" + ch + "':\n";
             SFString fields = fieldCase;
             while (!fields.empty()) {
@@ -587,7 +587,7 @@ SFString getCaseSetCode(const SFString& fieldCase) {
 
                 if (tolower(field[0]) == ch) {
                     caseCode += baseTab + tab + "if ( fieldName % \"" + field + "\" )";
-                    if (type.Contains("List") || isPointer) {
+                    if (contains(type, "List") || isPointer) {
                         SFString ptrCase = PTR_SET_CASE;
                         replaceAll(ptrCase, "[{NAME}]", field);
                         replaceAll(ptrCase, "[{TYPE}]", type);
@@ -617,7 +617,7 @@ SFString getCaseSetCode(const SFString& fieldCase) {
                     } else if (type == "hash") {
                         caseCode += " { " + field + " = toHash(fieldValue); return true; }";
 
-                    } else if (type.Contains("bytes")) {
+                    } else if (contains(type, "bytes")) {
                         caseCode += " { " + field + " = toLower(fieldValue); return true; }";
 
                     } else if (type == "int8" || type == "int16" || type == "int32") {
@@ -644,21 +644,21 @@ SFString getCaseSetCode(const SFString& fieldCase) {
                     } else if (type == "double") {
                         caseCode +=  " { " + field + " = toDouble(fieldValue); return true; }";
 
-                    } else if (type.Contains("SFStringArray") || type.Contains("SFBlockArray")) {
+                    } else if (contains(type, "SFStringArray") || contains(type, "SFBlockArray")) {
                         SFString str = strArraySet;
                         replaceAll(str, "[{NAME}]", field);
-                        if (type.Contains("SFBlockArray"))
+                        if (contains(type, "SFBlockArray"))
                             replaceAll(str, "nextTokenClear(str,',')", "toUnsigned(nextTokenClear(str,','))");
                         caseCode += str;
 
-                    } else if (type.Contains("SFAddressArray") || type.Contains("SFBigUintArray") || type.Contains("SFTopicArray")) {
+                    } else if (contains(type, "SFAddressArray") || contains(type, "SFBigUintArray") || contains(type, "SFTopicArray")) {
                         SFString str = strArraySet;
                         replaceAll(str, "[{NAME}]", field);
                         replaceAll(str, "nextTokenClear(str,',')", "to[{TYPE}](nextTokenClear(str,','))");
                         replaceAll(str, "[{TYPE}]", type.substr(2).Substitute("Array", ""));
                         caseCode += str;
 
-                    } else if (type.Contains("Array")) {
+                    } else if (contains(type, "Array")) {
                         SFString str = STR_CASE_SET_CODE_ARRAY;
                         replaceAll(str, "[{NAME}]", field);
                         replaceAll(str, "[{TYPE}]", type.Substitute("Array", ""));
@@ -760,7 +760,7 @@ const char* STR_OPERATOR_C =
 //------------------------------------------------------------------------------------------------------------
 const char* STR_SUBCLASS =
 "\ts = toUpper(SFString(\"[FNAME]\")) + \"::\";\n"
-"\tif (fieldName.Contains(s)) {\n"
+"\tif (contains(fieldName, s)) {\n"
 "\t\tSFString f = fieldName;\n"
 "\t\treplaceAll(f, s,\"\");\n"
 "\t\tf = [FNAME].getValueByName(f);\n"

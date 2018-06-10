@@ -330,14 +330,14 @@ namespace qblocks {
     }
 
     //---------------------------------------------------------------------------------------
-    bool SFString::Contains(const SFString& search) const {
-        return (find(search) != NOPOS);
+    bool contains(const string_q& haystack, const string_q& needle) {
+        return (haystack.find(needle) != NOPOS);
     }
 
     //---------------------------------------------------------------------------------------
     SFString SFString::Substitute(const SFString& what, const SFString& with) const {
         SFString ret = *this;
-        if (with.Contains("`")) {
+        if (contains(with, "`")) {
             SFString whatStr = what;
             SFString withStr = with;
             while (!whatStr.empty()) { // they should match but don't have to. With predominates
@@ -394,11 +394,11 @@ namespace qblocks {
         SFString targ = target.c_str();
         SFString what = whatIn.c_str();
         SFString with = withIn.c_str();
-        targ.Reverse();
-        what.Reverse();
-        with.Reverse();
+        reverse(targ);
+        reverse(what);
+        reverse(with);
         targ.Replace(what, with);
-        targ.Reverse();
+        reverse(targ);
         target.reserve(targ.length());
         ASSERT(target.m_nValues == 0);
         for (size_t i = 0 ; i < targ.length() ; i++)
@@ -406,32 +406,30 @@ namespace qblocks {
     }
 
     //---------------------------------------------------------------------------------------
-    void SFString::Reverse() {
-        char tmp;
-        unsigned int i,j;
-        unsigned int n = (unsigned int)m_nValues ;
-
-        for( i=0,j=n-1; i < n/2; i++,j-- ) {
-            tmp = m_Values[i];
-            m_Values[i] = m_Values[j];
-            m_Values[j] = tmp;
+    void reverse(string_q& target) {
+        size_t i,j;
+        size_t n = target.m_nValues;
+        for ( i = 0, j = n-1 ; i < n/2; i++, j-- ) {
+            char tmp = target.m_Values[i];
+            target.m_Values[i] = target.m_Values[j];
+            target.m_Values[j] = tmp;
         }
     }
 
     //----------------------------------------------------------------------------------------
     SFString nextTokenClearReverse(SFString& str, char token) {
-        str.Reverse();
+        reverse(str);
         SFString ret = nextTokenClear(str, token);
-        ret.Reverse();
-        str.Reverse();
+        reverse(ret);
+        reverse(str);
         return ret;
     }
 
     //---------------------------------------------------------------------------------------
     SFString snagFieldClear(SFString& in, const SFString& field, const SFString& defVal) {
 #ifdef _DEBUG
-        bool start = in.Contains("<"+field+">");
-        bool stop  = in.Contains("</"+field+">");
+        bool start = contains(in, "<"+field+">");
+        bool stop  = contains(in, "</"+field+">");
         if (start != stop)
         {
             SFString out = in;
@@ -457,8 +455,8 @@ namespace qblocks {
     //---------------------------------------------------------------------------------------
     SFString snagField(const SFString& in, const SFString& field, const SFString& defVal) {
 #ifdef _DEBUG
-        bool start = in.Contains("<"+field+">");
-        bool stop  = in.Contains("</"+field+">");
+        bool start = contains(in, "<"+field+">");
+        bool stop  = contains(in, "</"+field+">");
         if (start != stop)
         {
             SFString out = in;

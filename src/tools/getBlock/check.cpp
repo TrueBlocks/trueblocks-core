@@ -31,12 +31,12 @@ SFString diffStr(const SFString& str1, const SFString& str2) {
 SFString removeField(const SFString& strIn, const SFString& field) {
 
     SFString search = "\"" + field + "\":";
-    if (!strIn.Contains(search))
+    if (!contains(strIn, search))
         return strIn;
 
     SFString ret;
     SFString str = strIn;
-    //while (str.Contains(search))
+    //while (contains(str, search))
     {
         size_t start = str.find(search);
         SFString before = str.substr(0,start);
@@ -98,7 +98,7 @@ SFString cleanAll(const SFString& str, bool remove, bool isByzan) {
     replaceAll(orig, ",",",\n"); // put everything on its own line
     for (uint32_t i = 0 ; i < nRemoved ; i++) {
         SFString search = "\"" + removes[i] + "\":";
-        while (orig.Contains(search)) {
+        while (contains(orig, search)) {
             orig = removeField(orig, removes[i]);
         }
     }
@@ -131,7 +131,7 @@ SFString sorted(const SFString& inIn) {
     }
     inList.Sort(sortByStringValue);
     for (uint32_t i = 0 ; i < inList.getCount()-1 ; i++) {
-        if (inList[i] != inList[i+1] && inList[i].Contains(":"))
+        if (inList[i] != inList[i+1] && contains(inList[i], ":"))
             outList[outList.getCount()] = inList[i];
     }
     // add the last one of it's not already there

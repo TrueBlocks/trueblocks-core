@@ -66,8 +66,8 @@ namespace qblocks {
 
     //-----------------------------------------------------------------------
     inline SFString convertColor(const SFString& colorIn) {
-        bool bold = colorIn.Contains("_b");
-        bool ital = colorIn.Contains("_i");
+        bool bold = contains(colorIn, "_b");
+        bool ital = contains(colorIn, "_i");
         SFString color = colorIn;
         color = nextTokenClear(color, '_');
         if (color == "black"  ) return (bold ? bBlack   : ital ? iBlack   : cBlack   );

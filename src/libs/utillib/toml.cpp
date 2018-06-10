@@ -117,7 +117,7 @@ extern SFString collapseArrays(const SFString& inStr);
             if (comment)
                 value = value.substr(1);
             if (!value.empty()) {
-                bool isArray = value.Contains("[[");
+                bool isArray = contains(value, "[[");
                 if (startsWith(value, '[')) {  // it's a group
                     value = trimWhitespace(value.Substitute("[", "").Substitute("]", ""));
                     addGroup(value, comment, isArray);
@@ -355,7 +355,7 @@ extern SFString collapseArrays(const SFString& inStr);
 
     //---------------------------------------------------------------------------------------
     SFString collapseArrays(const SFString& inStr) {
-        if (!inStr.Contains("[[") && !inStr.Contains("]]"))
+        if (!contains(inStr, "[[") && !contains(inStr, "]]"))
             return inStr;
 
         SFString ret;
@@ -370,10 +370,10 @@ extern SFString collapseArrays(const SFString& inStr);
         replaceReverse(str, "<name>", "");
         replaceAll(str, "<name>\n","<name>");
         replaceAll(str, " = </name>","</name>");
-        while (str.Contains("</array>")) {
+        while (contains(str, "</array>")) {
             SFString array = snagFieldClear(str,"array");
             SFString vals;
-            while (str.Contains("</value>")) {
+            while (contains(str, "</value>")) {
                 SFString name = snagFieldClear(str,"name").Substitute("=","").Substitute("\n","");
                 SFString value = snagFieldClear(str,"value").Substitute("\n","").Substitute("=",":");
                 vals += name + " = [ " + value + " ]\n";

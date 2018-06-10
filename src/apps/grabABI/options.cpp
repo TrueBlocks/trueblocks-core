@@ -162,9 +162,9 @@ SFString getPrefix(const SFString& inIn) {
 
     SFString in = inIn; // for example ./ENS/parselib/
     in.Replace("parseLib","parselib"); // hack: to fix dao monitor
-    in.Reverse();
+    reverse(in);
     in.Replace("/", ""); // remove trailing '/'
     in = nextTokenClear(in, '/'); // remove /parselib
-    in.Reverse();
+    reverse(in);
     return in;
 }

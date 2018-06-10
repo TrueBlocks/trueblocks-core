@@ -70,7 +70,7 @@ bool CBlock::setValueByName(const SFString& fieldName, const SFString& fieldValu
     } else if (fieldName % "transactions") {
         // Transactions come to us either as a JSON objects or lists of hashes (i.e. a string array). JSON objects have
         // (among other things) a 'from' field
-        if (!fieldValue.Contains("from")) {
+        if (!contains(fieldValue, "from")) {
             SFString str = fieldValue;
             while (!str.empty()) {
                 CTransaction trans;

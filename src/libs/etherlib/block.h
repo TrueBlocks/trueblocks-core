@@ -167,7 +167,7 @@ extern SFArchive& operator>>(SFArchive& archive, CBlock& blo);
 // EXISTING_CODE
 inline blknum_t bnFromPath(const SFString& path) {
     SFString p = path.Substitute(".bin","");
-    p.Reverse(); p = nextTokenClear(p, '/'); p.Reverse();
+    reverse(p); p = nextTokenClear(p, '/'); reverse(p);
     return toUnsigned(p);
 }
 
