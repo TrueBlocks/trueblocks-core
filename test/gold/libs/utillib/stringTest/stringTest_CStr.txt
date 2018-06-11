@@ -1,5 +1,5 @@
-stringTest argc: 2 [1:2] 
-stringTest 2 
+stringTest argc: 2 [1:3] 
+stringTest 3 
 0. Running TestCStr
 	000.000 tokenize        ==> Please  	split this sentence into tokens
 	000.001 tokenize        ==> split   	this sentence into tokens
@@ -71,3 +71,11 @@ stringTest 2
 	000.056 replace         ==> |||Target4
 	000.057 replace         ==> |||
 
+	000.058 es1 is empty                     ==> passed 'es1.empty()' is true
+	000.059 es1 == ""                        ==> passed 'es1 == ""' is true
+	000.060 es1 == EMPTY                     ==> passed 'es1 == (EMPTY.str())' is true
+	000.061 es1 == nullStr                   ==> passed 'es1 == nullStr' is true
+	000.062 es2 is empty                     ==> passed 'es2.empty()' is true
+	000.063 es2 == ""                        ==> passed 'es2 == ""' is true
+	000.064 es2 == EMPTY                     ==> passed 'es2 == EMPTY' is true
+	000.065 es2 == nullStr                   ==> passed 'es2 == nullStr' is true
