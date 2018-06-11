@@ -42,17 +42,25 @@ stringTest 2
 	000.032 countOf         ==> There are 4 'Bs' in '| tab[	]AxBBBxBxA tab:	|'
 	000.033 countOf         ==> There are 4 'is' in 'This isthe_thing that matters and is_upperCase lower case'
 
-	000.034 base case       ==> Target1|Target2|Target3|Target4
-	000.035 rev replace     ==> Target1|Target2|Target3|Tartan4
-	000.036 rev replace     ==> Target1|Target2|Tartan3|Tartan4
-	000.037 rev replace     ==> Target1|Tartan2|Tartan3|Tartan4
-	000.038 rev replace     ==> Tartan1|Tartan2|Tartan3|Tartan4
+	000.034 base case       ==> This is the thing
+	000.035 find is         ==> 2
+	000.036 contains is     ==> 1
+	000.037 find not this   ==> 18446744073709551615
+	000.038 not there this  ==> 0
+	000.039 findI not this  ==> 0
+	000.040 there this      ==> 1
 
-	000.039 base case       ==> Target1|Target2|Target3|Target4
-	000.040 rep any         ==> TarXXXXXXXXX1|TarXXXXXXXXX2|TarXXXXXXXXX3|TarXXXXXXXXX4
-	000.041 rep any         ==> TarXXXXXXXXX1 |  TarXXXXXXXXX2 |  TarXXXXXXXXX3 |  TarXXXXXXXXX4
-	000.042 rep any         ==> TarXXXXXXXXX1-|--TarXXXXXXXXX2-|--TarXXXXXXXXX3-|--TarXXXXXXXXX4
-	000.043 rep any         ==> Tar1|Tar2|Tar3|Tar4
+	000.041 base case       ==> Target1|Target2|Target3|Target4
+	000.042 rev replace     ==> Target1|Target2|Target3|Tartan4
+	000.043 rev replace     ==> Target1|Target2|Tartan3|Tartan4
+	000.044 rev replace     ==> Target1|Tartan2|Tartan3|Tartan4
+	000.045 rev replace     ==> Tartan1|Tartan2|Tartan3|Tartan4
 
-	000.044 base case       ==> .desrever gnirts eht si sihT
-	000.045 reversed        ==> This is the string reversed.
+	000.046 base case       ==> Target1|Target2|Target3|Target4
+	000.047 rep any         ==> TarXXXXXXXXX1|TarXXXXXXXXX2|TarXXXXXXXXX3|TarXXXXXXXXX4
+	000.048 rep any         ==> TarXXXXXXXXX1 |  TarXXXXXXXXX2 |  TarXXXXXXXXX3 |  TarXXXXXXXXX4
+	000.049 rep any         ==> TarXXXXXXXXX1-|--TarXXXXXXXXX2-|--TarXXXXXXXXX3-|--TarXXXXXXXXX4
+	000.050 rep any         ==> Tar1|Tar2|Tar3|Tar4
+
+	000.051 base case       ==> .desrever gnirts eht si sihT
+	000.052 reversed        ==> This is the string reversed.
