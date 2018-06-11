@@ -54,7 +54,7 @@ public:
 
     DECLARE_NODE(CBlock);
 
-    const CBaseNode *getObjectAt(const SFString& fieldName, uint32_t index) const override;
+    const CBaseNode *getObjectAt(const string_q& fieldName, uint32_t index) const override;
 
     // EXISTING_CODE
     bool forEveryAddress      (ADDRESSFUNC func, TRANSFUNC filt, void *data);
@@ -165,8 +165,8 @@ extern SFArchive& operator>>(SFArchive& archive, CBlock& blo);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-inline blknum_t bnFromPath(const SFString& path) {
-    SFString p = path.Substitute(".bin","");
+inline blknum_t bnFromPath(const string_q& path) {
+    string_q p = path.Substitute(".bin","");
     reverse(p); p = nextTokenClear(p, '/'); reverse(p);
     return toUnsigned(p);
 }
@@ -179,7 +179,7 @@ inline bool isBlockFinal(timestamp_t ts_block, timestamp_t ts_chain, timestamp_t
     return ((ts_chain - ts_block) > seconds);
 }
 extern bool isPotentialAddr(SFUintBN test, SFAddress& addrOut);
-extern void processPotentialAddrs(blknum_t bn, blknum_t tx, blknum_t tc, const SFString& potList, ADDRESSFUNC func, void *data);
+extern void processPotentialAddrs(blknum_t bn, blknum_t tx, blknum_t tc, const string_q& potList, ADDRESSFUNC func, void *data);
 // EXISTING_CODE
 }  // namespace qblocks
 

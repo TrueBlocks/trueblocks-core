@@ -33,64 +33,84 @@ namespace qblocks {
         size_t m_buffSize;
 
     public:
-        string_q(void);
-        string_q(const string_q& str);
-        string_q(char ch, size_t reps=1);
-        string_q(const char *str, size_t start=0, size_t len=NOPOS);
-        ~string_q(void);
+                        string_q   (void);
+                        string_q   (const string_q& str);
+       const string_q&  operator=  (const string_q& str);
+       const string_q&  operator=  (char ch);
 
-        void     clear    (void);
-        size_t   length   (void) const;
-        size_t   size     (void) const { return length(); }
-        int      compare  (const char* s) const;
-        int      compare  (size_t pos, size_t len, const char* s) const;
-        int      compare  (size_t pos, size_t len, const char* s, size_t n) const;
-        int      compare  (const string_q& str) const;
-        int      compare  (size_t pos, size_t len, const string_q& str) const;
-        int      compare  (size_t pos, size_t len, const string_q& str, size_t subpos, size_t sublen) const;
-        void     reserve  (size_t n=0);
-        void     resize   (size_t n) { resize(n, '\0'); }
-        void     resize   (size_t n, char c);
-        bool     empty    (void) const;
-        size_t   find     (const string_q& str, size_t pos=0) const;
-        size_t   find     (const char* s, size_t pos=0) const;
-        size_t   find     (const char* s, size_t pos, size_t n) const;
-        size_t   find     (char c, size_t pos=0) const;
-        size_t   findI    (const string_q& str, size_t pos=0) const;
-        string_q extract  (size_t first, size_t len) const;
+                        string_q   (char ch, size_t reps=1);
+                        string_q   (const char *str, size_t start=0, size_t len=NOPOS);
+                       ~string_q   (void);
 
-        char          operator[](size_t index) const;
-        char          operator[](int index) const { return at((size_t)index); };
+        char            operator[] (size_t index) const;
+        char            operator[] (int index) const { return at((size_t)index); };
 
-        const char&   at        (size_t index) const;
-        const char   *c_str     (void) const;
-        const string  str       (void) const { return string(c_str()); };
+        const string_q& operator+= (const string_q& str);
+        const string_q& operator+= (const char *str);
 
-              size_t  rfind     (char ch) const;
+        friend string_q operator+(const string_q& str1, const string_q& str2);
+        friend string_q operator+(const string_q& str1, const char*     str2);
+        friend string_q operator+(const char*     str1, const string_q& str2);
+        friend string_q operator+(const string_q& str1, char            ch);
 
-        friend bool   operator==(const string_q& str1, const string_q& str2);
-        friend bool   operator==(const string_q& str1, const char *str2);
-        friend bool   operator==(const char *str1, const string_q& str2);
+        friend bool     operator== (const string_q& str1, const string_q& str2);
+        friend bool     operator== (const string_q& str1, const char *str2);
+        friend bool     operator== (const char *str1, const string_q& str2);
 
-        friend bool   operator!=(const string_q& str1, const string_q& str2);
-        friend bool   operator!=(const string_q& str1, const char *str2);
-        friend bool   operator!=(const char *str1, const string_q& str2);
+        friend bool     operator!= (const string_q& str1, const string_q& str2);
+        friend bool     operator!= (const string_q& str1, const char *str2);
+        friend bool     operator!= (const char *str1, const string_q& str2);
 
-        friend bool   operator< (const string_q& str1, const string_q& str2);
-        friend bool   operator< (const string_q& str1, const char *str2);
-        friend bool   operator< (const char *str1, const string_q& str2);
+        friend bool     operator<  (const string_q& str1, const string_q& str2);
+        friend bool     operator<  (const string_q& str1, const char *str2);
+        friend bool     operator<  (const char *str1, const string_q& str2);
 
-        friend bool   operator<=(const string_q& str1, const string_q& str2);
-        friend bool   operator<=(const string_q& str1, const char *str2);
-        friend bool   operator<=(const char *str1, const string_q& str2);
+        friend bool     operator<= (const string_q& str1, const string_q& str2);
+        friend bool     operator<= (const string_q& str1, const char *str2);
+        friend bool     operator<= (const char *str1, const string_q& str2);
 
-        friend bool   operator> (const string_q& str1, const string_q& str2);
-        friend bool   operator> (const string_q& str1, const char *str2);
-        friend bool   operator> (const char *str1, const string_q& str2);
+        friend bool     operator>  (const string_q& str1, const string_q& str2);
+        friend bool     operator>  (const string_q& str1, const char *str2);
+        friend bool     operator>  (const char *str1, const string_q& str2);
 
-        friend bool   operator>=(const string_q& str1, const string_q& str2);
-        friend bool   operator>=(const string_q& str1, const char *str2);
-        friend bool   operator>=(const char *str1, const string_q& str2);
+        friend bool     operator>= (const string_q& str1, const string_q& str2);
+        friend bool     operator>= (const string_q& str1, const char *str2);
+        friend bool     operator>= (const char *str1, const string_q& str2);
+
+        void            clear      (void);
+        size_t          length     (void) const;
+        size_t          size       (void) const { return length(); }
+        int             compare    (const char* s) const;
+        int             compare    (size_t pos, size_t len, const char* s) const;
+        int             compare    (size_t pos, size_t len, const char* s, size_t n) const;
+        int             compare    (const string_q& str) const;
+        int             compare    (size_t pos, size_t len, const string_q& str) const;
+        int             compare    (size_t pos, size_t len, const string_q& str, size_t subpos, size_t sublen) const;
+        void            reserve    (size_t n=0);
+        void            resize     (size_t n) { resize(n, '\0'); }
+        void            resize     (size_t n, char c);
+        bool            empty      (void) const;
+        size_t          find       (const string_q& str, size_t pos=0) const;
+        size_t          find       (const char* s, size_t pos=0) const;
+        size_t          find       (const char* s, size_t pos, size_t n) const;
+        size_t          find       (char c, size_t pos=0) const;
+        string_q        extract    (size_t first, size_t len) const;
+        string_q        substr     (size_t first, size_t len) const;
+        string_q        substr     (size_t first) const;
+
+        const char&     at         (size_t index) const;
+        const char*     c_str      (void) const;
+        const string    str        (void) const { return string(c_str()); };
+              size_t    rfind      (char ch) const;
+
+        friend void     replace    (string_q& target, const string_q& what, const string_q& with);
+        friend void     replaceAll (string_q& target, const string_q& what, const string_q& with);
+        friend void     replaceAny (string_q& target, const string_q& list, const string_q& with);
+        friend void     replaceReverse(string_q& target, const string_q& what, const string_q& with);
+        friend void     reverse    (string_q& target);
+
+        size_t          findI      (const string_q& str, size_t pos=0) const;
+        string_q        Substitute (const string_q& what, const string_q& with) const;
 
         //----------------------------------------------------------------------------------------------------
         friend ostream& operator<<(ostream &os, const string_q& x) {
@@ -98,15 +118,48 @@ namespace qblocks {
             return os;
         }
 
-        friend void replace       (string_q& target, const string_q& what, const string_q& with);
-        friend void replaceAll    (string_q& target, const string_q& what, const string_q& with);
-        friend void replaceAny    (string_q& target, const string_q& list, const string_q& with);
-        friend void replaceReverse(string_q& target, const string_q& what, const string_q& with);
-        friend void reverse       (string_q& target);
-
     protected:
         void    init      (void);
     };
+
+    //---------------------------------------------------------------------------------------
+    inline const string_q& string_q::operator+=(const string_q& add) {
+        if (add.length())
+            *this = (*this + add);
+        return *this;
+    }
+
+    //--------------------------------------------------------------------
+    inline const string_q& string_q::operator+=(const char *str) {
+        return operator+=(string_q(str));
+    }
+
+    //---------------------------------------------------------------------------------------
+    inline string_q operator+(const string_q& str1, const string_q& str2) {
+        size_t newLen = str1.length() + str2.length();
+        string_q ret;
+        ret.reserve(newLen);
+        memcpy(ret.m_Values, str1.m_Values, str1.length());
+        memcpy(ret.m_Values+str1.length(), str2.m_Values, str2.length());
+        ret.m_nValues = newLen;
+        ret.m_Values[newLen] = '\0';
+        return ret;
+    }
+
+    //--------------------------------------------------------------------
+    inline string_q operator+(const string_q& str1, const char *str2) {
+        return operator+(str1, string_q(str2));
+    }
+
+    //--------------------------------------------------------------------
+    inline string_q operator+(const char *str1, const string_q& str2) {
+        return operator+(string_q(str1), str2);
+    }
+
+    //--------------------------------------------------------------------
+    inline string_q operator+(const string_q& str,  char ch) {
+        return operator+(str, string_q(ch));
+    }
 
     //--------------------------------------------------------------------
     inline bool operator==(const string_q& str1, const string_q& str2) {
@@ -198,23 +251,23 @@ namespace qblocks {
         return str2.compare(str1) <= 0;
     }
 
-    //--------------------------------------------------------------------
-    inline string_q operator+(const string_q& str1, const string_q& str2) {
-#if 1
-        string s1 = str1.c_str();
-        string s2 = str2.c_str();
-        return (s1 + s2).c_str();
-#else
-        size_t newLen = str1.length() + str2.length();
-        string_q ret;
-        ret.reserve(newLen);
-        memcpy(ret.m_Values, str1.m_Values, str1.length());
-        memcpy(ret.m_Values + str1.length(), str2.m_Values, str2.length());
-        ret.m_nValues = newLen;
-        ret.m_Values[newLen] = '\0';
-        return ret;
-#endif
-    }
+//    //--------------------------------------------------------------------
+//    inline string_q operator+(const string_q& str1, const string_q& str2) {
+//#if 1
+//        string s1 = str1.c_str();
+//        string s2 = str2.c_str();
+//        return (s1 + s2).c_str();
+//#else
+//        size_t newLen = str1.length() + str2.length();
+//        string_q ret;
+//        ret.reserve(newLen);
+//        memcpy(ret.m_Values, str1.m_Values, str1.length());
+//        memcpy(ret.m_Values + str1.length(), str2.m_Values, str2.length());
+//        ret.m_nValues = newLen;
+//        ret.m_Values[newLen] = '\0';
+//        return ret;
+//#endif
+//    }
 
     //--------------------------------------------------------------------
     inline bool operator%(const string_q& str1, const string_q& str2) {
@@ -260,9 +313,9 @@ namespace qblocks {
     extern string_q toProper      (const string_q& in);
 
     //--------------------------------------------------------------------
-//    extern string_q padRight      (const string_q& str, size_t len, char p=' ');
-//    extern string_q padLeft       (const string_q& str, size_t len, char p=' ');
-//    extern string_q padCenter     (const string_q& str, size_t len, char p=' ');
+    extern string_q padRight      (const string_q& str, size_t len, char p=' ');
+    extern string_q padLeft       (const string_q& str, size_t len, char p=' ');
+    extern string_q padCenter     (const string_q& str, size_t len, char p=' ');
 
     //--------------------------------------------------------------------
     extern string_q trim          (const string_q& str, char c = ' ');
@@ -271,73 +324,9 @@ namespace qblocks {
     extern string_q trimWhitespace(const string_q& str, const string_q& add="");
 
     //--------------------------------------------------------------------
-    class SFString : public string_q {
-        SFString  (long) {};
-        SFString  (unsigned long) {};
-        const SFString& operator=(long);
-    public:
-        SFString  (void);
-        SFString  (const SFString& str);
-        SFString  (char ch, size_t reps=1);
-        SFString  (const char *str, size_t start=0, size_t len=NOPOS);
-
-        ~SFString (void);
-
-        const SFString& operator=     (const SFString& str);
-        const SFString& operator+=    (const SFString& str);
-        const SFString& operator+=    (const char *str);
-
-        friend SFString operator+(const SFString& str1, const SFString& str2);
-        friend SFString operator+(const SFString& str1, const char *str2);
-
-        SFString substr          (size_t first, size_t len) const;
-        SFString substr          (size_t first) const;
-        SFString Substitute      (const SFString& what, const SFString& with) const;
-    };
-
-    //---------------------------------------------------------------------------------------
-    inline SFString operator+(const SFString& str1, const SFString& str2) {
-        size_t newLen = str1.length() + str2.length();
-        SFString ret;
-        ret.reserve(newLen);
-        memcpy(ret.m_Values, str1.m_Values, str1.length());
-        memcpy(ret.m_Values+str1.length(), str2.m_Values, str2.length());
-        ret.m_nValues = newLen;
-        ret.m_Values[newLen] = '\0';
-        return ret;
-    }
-
-    //---------------------------------------------------------------------------------------
-    inline const SFString& SFString::operator+=(const SFString& add) {
-        if (add.length())
-            *this = (*this + add);
-        return *this;
-    }
-
-    //--------------------------------------------------------------------
-    inline const SFString& SFString::operator+=(const char *str) {
-        return operator+=(SFString(str));
-    }
-
-    //--------------------------------------------------------------------
-    inline SFString operator+(const SFString& str1, const char *str2) {
-        return operator+(str1, SFString(str2));
-    }
-
-    //--------------------------------------------------------------------
-    inline SFString operator+(const char *str1, const SFString& str2) {
-        return operator+(SFString(str1), str2);
-    }
-
-    //--------------------------------------------------------------------
-    inline SFString operator+(const SFString& str,  char ch) {
-        return operator+(str, SFString(ch));
-    }
-
-    //--------------------------------------------------------------------
-    extern SFString nextTokenClearReverse(SFString& str, char token);
-    inline SFString nextTokenClear(SFString& line, char delim, bool doClear=true) {
-        SFString ret;
+    extern string_q nextTokenClearReverse(string_q& str, char token);
+    inline string_q nextTokenClear(string_q& line, char delim, bool doClear=true) {
+        string_q ret;
 
         size_t find = line.find(delim);
         if (find!=NOPOS) {
@@ -352,26 +341,13 @@ namespace qblocks {
         return ret;
     }
 
-    //--------------------------------------------------------------------
-#define EMPTY SFString("")
-
-    extern SFString snagFieldClear(      SFString& in, const SFString& tagName, const SFString& defVal="");
-    extern SFString snagField     (const SFString& in, const SFString& tagName, const SFString& defVal="");
+    extern string_q snagFieldClear(      string_q& in, const string_q& tagName, const string_q& defVal="");
+    extern string_q snagField     (const string_q& in, const string_q& tagName, const string_q& defVal="");
 
     //--------------------------------------------------------------------
-    extern SFString toLower       (const SFString& in);
-    extern SFString toUpper       (const SFString& in);
-    extern SFString toProper      (const SFString& in);
+    #define EMPTY string_q("")
 
-    //--------------------------------------------------------------------
-    extern SFString padRight      (const SFString& str, size_t len, char p=' ');
-    extern SFString padLeft       (const SFString& str, size_t len, char p=' ');
-    extern SFString padCenter     (const SFString& str, size_t len, char p=' ');
-
-    //--------------------------------------------------------------------
-    extern SFString trim          (const SFString& str, char c = ' ');
-    extern SFString trimTrailing  (const SFString& str, char c = ' ');
-    extern SFString trimLeading   (const SFString& str, char c = ' ');
-    extern SFString trimWhitespace(const SFString& str, const SFString& add="");
+    //---------------------------------------------------------------------------------------
+    extern char nullStr[];
 
 }  // namespace qblocks

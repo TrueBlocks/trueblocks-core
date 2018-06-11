@@ -28,7 +28,7 @@ int main(int argc, const char *argv[]) {
     if (options.nCmds > 1 && verbose)
         cout << "[\n";
     while (!options.commandList.empty()) {
-        SFString command = nextTokenClear(options.commandList, '\n');
+        string_q command = nextTokenClear(options.commandList, '\n');
         if (!options.parseArguments(command))
             return 0;
         forEveryTransactionInList(visitTransaction, &options, options.transList.queries);
@@ -56,7 +56,7 @@ bool visitTransaction(CTransaction& trans, void *data) {
         }
 
         // Note: this call is redundant. The transaction is already populated (if it's valid), but we need the raw data)
-        SFString results;
+        string_q results;
         queryRawTransaction(results, trans.getValueByName("hash"));
         cout << results;
         return true;
@@ -89,7 +89,7 @@ bool visitTransaction(CTransaction& trans, void *data) {
             }
             cout << "]\n";
             if (opt->nTraces) {
-                SFString fmt = ",{ \"nTraces\": [N]-[NN], \"depth\": [D] }";
+                string_q fmt = ",{ \"nTraces\": [N]-[NN], \"depth\": [D] }";
                 cout << fmt.Substitute("[N]", asStringU(nTr))
                             .Substitute("[NN]", asStringU(traces.getCount()))
                             .Substitute("[D]", asStringU(dTs));

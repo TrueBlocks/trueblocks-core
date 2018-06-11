@@ -25,16 +25,16 @@ int main(int argc, const char * argv[]) {
 
     //while (!options.commandList.empty())
     {
-        SFString command = nextTokenClear(options.commandList, '\n');
+        string_q command = nextTokenClear(options.commandList, '\n');
         if (!options.parseArguments(command))
             return 0;
 
         while (!options.fileName.empty()) {
-            SFString fileName = nextTokenClear(options.fileName, '|');
+            string_q fileName = nextTokenClear(options.fileName, '|');
             cout << fileName << "\n";
-            SFString contents = asciiFileToString(fileName);
+            string_q contents = asciiFileToString(fileName);
             while (!contents.empty()) {
-                SFString line = nextTokenClear(contents, '\n');
+                string_q line = nextTokenClear(contents, '\n');
                 cout << line << "\n";
             }
         }

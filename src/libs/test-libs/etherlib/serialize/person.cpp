@@ -20,11 +20,11 @@
 IMPLEMENT_NODE(CPerson, CBaseNode);
 
 //---------------------------------------------------------------------------
-static SFString nextPersonChunk(const SFString& fieldIn, const void *dataPtr);
-static SFString nextPersonChunk_custom(const SFString& fieldIn, const void *dataPtr);
+static string_q nextPersonChunk(const string_q& fieldIn, const void *dataPtr);
+static string_q nextPersonChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CPerson::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
+void CPerson::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -33,7 +33,7 @@ void CPerson::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) 
         return;
     }
 
-    SFString fmt = fmtIn;
+    string_q fmt = fmtIn;
     if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
@@ -42,7 +42,7 @@ void CPerson::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) 
 }
 
 //---------------------------------------------------------------------------
-SFString nextPersonChunk(const SFString& fieldIn, const void *dataPtr) {
+string_q nextPersonChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
         return ((const CPerson *)dataPtr)->getValueByName(fieldIn);
 
@@ -53,7 +53,7 @@ SFString nextPersonChunk(const SFString& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CPerson::setValueByName(const SFString& fieldName, const SFString& fieldValue) {
+bool CPerson::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
     // EXISTING_CODE
     // EXISTING_CODE
 
@@ -155,7 +155,7 @@ void CPerson::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextPersonChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+string_q nextPersonChunk_custom(const string_q& fieldIn, const void *dataPtr) {
     const CPerson *per = (const CPerson *)dataPtr;
     if (per) {
         switch (tolower(fieldIn[0])) {
@@ -176,7 +176,7 @@ SFString nextPersonChunk_custom(const SFString& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------
-bool CPerson::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
+bool CPerson::handleCustomFormat(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
@@ -193,10 +193,10 @@ bool CPerson::readBackLevel(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------
-SFString CPerson::getValueByName(const SFString& fieldName) const {
+string_q CPerson::getValueByName(const string_q& fieldName) const {
 
     // Give customized code a chance to override first
-    SFString ret = nextPersonChunk_custom(fieldName, this);
+    string_q ret = nextPersonChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 

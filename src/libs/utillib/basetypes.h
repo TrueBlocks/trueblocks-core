@@ -59,7 +59,7 @@ using namespace std;  // NOLINT
 namespace qblocks {
     //---------------------------------------------------------------------------
     inline bool isTestMode(void) {
-        return (SFString(getenv("TEST_MODE")) == "true");
+        return (string_q(getenv("TEST_MODE")) == "true");
     }
 }  // namespace qblocks
 

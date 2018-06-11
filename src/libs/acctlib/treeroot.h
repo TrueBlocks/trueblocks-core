@@ -42,7 +42,7 @@ public:
     uint32_t type;
     uint32_t level;
     uint64_t counter;
-    SFString strs;
+    string_q strs;
     CVisitData(void) : type(0), level(0), counter(0) { }
 };
 // EXISTING_CODE
@@ -61,9 +61,9 @@ public:
     DECLARE_NODE(CTreeRoot);
 
     // EXISTING_CODE
-    SFString at(const SFString& _key) const;
-    void insert(const SFString& _key, const SFString& _value);
-    void remove(const SFString& _key);
+    string_q at(const string_q& _key) const;
+    void insert(const string_q& _key, const string_q& _value);
+    void remove(const string_q& _key);
     bool visitItems(ACCTVISITOR func, void *data) const;
     // EXISTING_CODE
     friend ostream& operator<<(ostream& os, const CTreeRoot& item);
@@ -159,7 +159,7 @@ inline int nodeIndex(char c) {
 }
 
 //------------------------------------------------------------------
-inline SFString idex(char n) {
+inline string_q idex(char n) {
     switch (n)     {
         case 0: return "0";
         case 1: return "1";
@@ -185,10 +185,10 @@ inline SFString idex(char n) {
 
 //------------------------------------------------------------------
 extern bool forEveryAccount(CTreeRoot *trie, ACCTVISITOR func, void *data);
-extern SFString idnt;
+extern string_q idnt;
 
 //------------------------------------------------------------------
-inline CTreeNode *createTreeNode(const SFString& type) {
+inline CTreeNode *createTreeNode(const string_q& type) {
     if (type == "CInfix")
         return new CInfix;
     else if (type == "CBranch")

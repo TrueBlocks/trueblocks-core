@@ -27,17 +27,17 @@ CParams params[] = {
 uint32_t nParams = sizeof(params) / sizeof(CParams);
 
 //---------------------------------------------------------------------------------------------------
-bool COptions::parseArguments(SFString& command) {
+bool COptions::parseArguments(string_q& command) {
 
     if (!standardOptions(command))
         return false;
 
     Init();
     blknum_t latestBlock = getLatestBlockFromClient();
-    SFString address_list;
+    string_q address_list;
     while (!command.empty()) {
-        SFString arg = nextTokenClear(command, ' ');
-        SFString orig = arg;
+        string_q arg = nextTokenClear(command, ' ');
+        string_q orig = arg;
         if (arg == "-d" || arg == "--data") {
             asData = true;
 
@@ -60,11 +60,11 @@ bool COptions::parseArguments(SFString& command) {
                 return usage("Not a valid filename: " + orig + ". Quitting...");
             if (!fileExists(fileName.getFullPath()))
                 return usage("File " + fileName.relativePath() + " not found. Quitting...");
-            SFString contents = asciiFileToString(fileName.getFullPath());
+            string_q contents = asciiFileToString(fileName.getFullPath());
             if (contents.empty())
                 return usage("No addresses were found in file " + fileName.relativePath() + ". Quitting...");
             while (!contents.empty()) {
-                SFString line = nextTokenClear(contents, '\n');
+                string_q line = nextTokenClear(contents, '\n');
                 if (!isAddress(line))
                     return usage(line + " does not appear to be a valid Ethereum address. Quitting...");
                 address_list += line + "|";
@@ -77,7 +77,7 @@ bool COptions::parseArguments(SFString& command) {
             }
 
         } else if (isHash(arg)) {
-            SFString ret = blocks.parseBlockList(arg, latestBlock);
+            string_q ret = blocks.parseBlockList(arg, latestBlock);
             if (endsWith(ret, "\n")) {
                 cerr << "\n  " << ret << "\n";
                 return false;
@@ -93,7 +93,7 @@ bool COptions::parseArguments(SFString& command) {
 
         } else {
 
-            SFString ret = blocks.parseBlockList(arg, latestBlock);
+            string_q ret = blocks.parseBlockList(arg, latestBlock);
             if (endsWith(ret, "\n")) {
                 cerr << "\n  " << ret << "\n";
                 return false;
@@ -164,7 +164,7 @@ COptions::~COptions(void) {
 }
 
 //--------------------------------------------------------------------------------
-SFString COptions::postProcess(const SFString& which, const SFString& str) const {
+string_q COptions::postProcess(const string_q& which, const string_q& str) const {
 
     if (which == "options") {
         return
@@ -173,7 +173,7 @@ SFString COptions::postProcess(const SFString& which, const SFString& str) const
 
     } else if (which == "notes" && (verbose || COptions::isReadme)) {
 
-        SFString ret;
+        string_q ret;
         ret += "[{addresses}] must start with '0x' and be forty characters long.\n";
         ret += "[{block_list}] may be space-separated list of values, a start-end range, a [{special}], or any combination.\n";
         ret += "This tool retrieves information from the local node or the ${FALLBACK} node, if configured (see documentation).\n";

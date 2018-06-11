@@ -33,8 +33,8 @@ typedef SFUniqueList<CAccount*>       CAccountListU;
 class CAccount : public CBaseNode {
 public:
     SFAddress addr;
-    SFString header;
-    SFString displayString;
+    string_q header;
+    string_q displayString;
     uint64_t pageSize;
     uint64_t lastPage;
     int64_t lastBlock;
@@ -49,7 +49,7 @@ public:
 
     DECLARE_NODE(CAccount);
 
-    const CBaseNode *getObjectAt(const SFString& fieldName, uint32_t index) const override;
+    const CBaseNode *getObjectAt(const string_q& fieldName, uint32_t index) const override;
 
     // EXISTING_CODE
     CAbi abi;

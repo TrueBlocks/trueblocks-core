@@ -52,8 +52,8 @@ namespace qblocks {
     }
 
     //-------------------------------------------------------------------------
-    SFString CRuntimeClass::listOfFields(char sep) const {
-        SFString ret;
+    string_q CRuntimeClass::listOfFields(char sep) const {
+        string_q ret;
         if (m_FieldList) {
             LISTPOS p = m_FieldList->GetHeadPosition();
             while (p) {
@@ -120,7 +120,7 @@ namespace qblocks {
     }
 
     //-------------------------------------------------------------------------
-    void CRuntimeClass::AddField(const SFString& fieldName, uint32_t dataType, uint32_t fieldID) {
+    void CRuntimeClass::AddField(const string_q& fieldName, uint32_t dataType, uint32_t fieldID) {
         if (!m_FieldList)
             m_FieldList = new CFieldList;
         ASSERT(m_FieldList);
@@ -135,10 +135,10 @@ namespace qblocks {
     }
 
     //-------------------------------------------------------------------------
-    CBuiltIn::CBuiltIn(CRuntimeClass *pClass, const SFString& className, uint32_t size,
+    CBuiltIn::CBuiltIn(CRuntimeClass *pClass, const string_q& className, uint32_t size,
                        PFNV createFunc, CRuntimeClass *pBase) {
         m_pClass = pClass;
-        SFString copy = className;
+        string_q copy = className;
         if (!copy.empty())
             pClass->m_ClassName = strdup(copy.c_str());
 

@@ -21,11 +21,11 @@
 IMPLEMENT_NODE(CNewBlock, CBaseNode);
 
 //---------------------------------------------------------------------------
-extern SFString nextNewblockChunk(const SFString& fieldIn, const void *dataPtr);
-static SFString nextNewblockChunk_custom(const SFString& fieldIn, const void *dataPtr);
+extern string_q nextNewblockChunk(const string_q& fieldIn, const void *dataPtr);
+static string_q nextNewblockChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CNewBlock::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
+void CNewBlock::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -34,7 +34,7 @@ void CNewBlock::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr
         return;
     }
 
-    SFString fmt = fmtIn;
+    string_q fmt = fmtIn;
     if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
@@ -43,7 +43,7 @@ void CNewBlock::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr
 }
 
 //---------------------------------------------------------------------------
-SFString nextNewblockChunk(const SFString& fieldIn, const void *dataPtr) {
+string_q nextNewblockChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
         return ((const CNewBlock *)dataPtr)->getValueByName(fieldIn);
 
@@ -54,17 +54,17 @@ SFString nextNewblockChunk(const SFString& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CNewBlock::setValueByName(const SFString& fieldName, const SFString& fieldValue) {
+bool CNewBlock::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
     // EXISTING_CODE
     if (fieldName % "number") {
-        *(SFString*)&fieldName = "blockNumber";
+        *(string_q*)&fieldName = "blockNumber";
 
     } else if (fieldName % "transactions") {
         // Transactions come to us either as a JSON objects or lists
         // of hashes (i.e. a string array). JSON objects have 'from'
         // We handle those as normal below
         if (!contains(fieldValue, "from")) {
-            SFString str = fieldValue;
+            string_q str = fieldValue;
             while (!str.empty()) {
                 CTransaction trans;
                 trans.hash = toAddress(nextTokenClear(str, ','));
@@ -210,7 +210,7 @@ void CNewBlock::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextNewblockChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+string_q nextNewblockChunk_custom(const string_q& fieldIn, const void *dataPtr) {
     const CNewBlock *newp = (const CNewBlock *)dataPtr;
     if (newp) {
         switch (tolower(fieldIn[0])) {
@@ -222,7 +222,7 @@ SFString nextNewblockChunk_custom(const SFString& fieldIn, const void *dataPtr) 
                 if ( expContext().hashesOnly && fieldIn % "transactions" ) {
                     uint32_t cnt = newp->transactions.getCount();
                     if (!cnt) return EMPTY;
-                    SFString ret;
+                    string_q ret;
                     for (uint32_t i = 0 ; i < cnt ; i++) {
                         ret += newp->transactions[i].hash;
                         ret += ((i < cnt-1) ? ",\n" : "\n");
@@ -246,7 +246,7 @@ SFString nextNewblockChunk_custom(const SFString& fieldIn, const void *dataPtr) 
 }
 
 //---------------------------------------------------------------------------
-bool CNewBlock::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
+bool CNewBlock::handleCustomFormat(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
@@ -269,7 +269,7 @@ bool CNewBlock::readBackLevel(SFArchive& archive) {
         archive >> timestamp;
         archive >> transactions;
         // TODO -- technically we should re-read these values from the node
-        SFString save = getCurlContext()->provider;
+        string_q save = getCurlContext()->provider;
         getCurlContext()->provider = "local";
         CBlock upgrade;uint32_t unused;
         queryBlock(upgrade, asStringU(blockNumber), false, false, unused);
@@ -297,10 +297,10 @@ SFArchive& operator>>(SFArchive& archive, CNewBlock& newp) {
 }
 
 //---------------------------------------------------------------------------
-SFString CNewBlock::getValueByName(const SFString& fieldName) const {
+string_q CNewBlock::getValueByName(const string_q& fieldName) const {
 
     // Give customized code a chance to override first
-    SFString ret = nextNewblockChunk_custom(fieldName, this);
+    string_q ret = nextNewblockChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
@@ -336,7 +336,7 @@ SFString CNewBlock::getValueByName(const SFString& fieldName) const {
                 if (endsWith(fieldName, "Cnt"))
                     return asStringU(cnt);
                 if (!cnt) return "";
-                SFString retS;
+                string_q retS;
                 for (uint32_t i = 0 ; i < cnt ; i++) {
                     retS += transactions[i].Format();
                     retS += ((i < cnt - 1) ? ",\n" : "\n");
@@ -363,7 +363,7 @@ ostream& operator<<(ostream& os, const CNewBlock& item) {
 }
 
 //---------------------------------------------------------------------------
-const CBaseNode *CNewBlock::getObjectAt(const SFString& fieldName, uint32_t index) const {
+const CBaseNode *CNewBlock::getObjectAt(const string_q& fieldName, uint32_t index) const {
     if ( fieldName % "transactions" && index < transactions.getCount() )
         return &transactions[index];
     return NULL;
@@ -385,7 +385,7 @@ CNewBlock::CNewBlock(const CBlock& block) {
 }
 
 //-----------------------------------------------------------------------
-bool readOneNewBlock_fromBinary(CNewBlock& block, const SFString& fileName) {
+bool readOneNewBlock_fromBinary(CNewBlock& block, const string_q& fileName) {
     block = CNewBlock(); // reset
     SFArchive archive(READING_ARCHIVE);
     if (archive.Lock(fileName, binaryReadOnly, LOCK_NOWAIT))
@@ -398,9 +398,9 @@ bool readOneNewBlock_fromBinary(CNewBlock& block, const SFString& fileName) {
 }
 
 //-----------------------------------------------------------------------
-bool readOneNewBlock_fromJson(CNewBlock& block, const SFString& fileName) {
+bool readOneNewBlock_fromJson(CNewBlock& block, const string_q& fileName) {
     block = CNewBlock(); // reset
-    SFString contents = asciiFileToString(fileName);
+    string_q contents = asciiFileToString(fileName);
     if (contains(contents, "null")) {
         replaceAll(contents, "null", "\"0x\"");
         stringToAsciiFile(fileName, contents);

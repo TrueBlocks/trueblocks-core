@@ -15,9 +15,6 @@
 #include "etherlib.h"
 #include "testing.h"
 
-// Changing this between qstring and SFString helps migrating away from quickBlocks code
-#define TEST_STR SFString
-
 //------------------------------------------------------------------------
 class CThisTest : public testing::Test {
 public:
@@ -34,9 +31,9 @@ TEST_F(CThisTest, Test01) {
     cerr << "Running " << testName << "\n";
 
     uint64_t val64u = uint64_t(-1);
-    SFString sValu = asStringU(val64u);
+    string_q sValu = asStringU(val64u);
     int64_t val64 = -1;
-    SFString sVal = asString(val64);
+    string_q sVal = asString(val64);
 
     cout << "val64u: " << val64u << "\n";
     cout << "sValu: "  << sValu  << "\n";
@@ -61,7 +58,7 @@ int main(int argc, const char *argv[]) {
         return 0;
 
     while (!options.commandList.empty()) {
-        SFString command = nextTokenClear(options.commandList, '\n');
+        string_q command = nextTokenClear(options.commandList, '\n');
         if (!options.parseArguments(command))
             return 0;
     }

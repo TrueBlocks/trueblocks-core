@@ -23,15 +23,15 @@ namespace qblocks {
 class IPCSocket
 {
 public:
-    IPCSocket   ( SFString const& _path );
+    IPCSocket   ( const string_q& _path );
     ~IPCSocket   ( );
-    SFString        sendRequest ( SFString const& _req);
+    string_q        sendRequest ( const string_q& _req);
 
-    SFString const& path        ( void ) const;
+    const string_q& path        ( void ) const;
 
 private:
     FILE *m_fp;
-    SFString m_path;
+    string_q m_path;
     int m_socket;
 };
 
@@ -43,7 +43,7 @@ IPCSocket::~IPCSocket(void)
 }
 
 //-----------------------------------------------------
-SFString const& IPCSocket::path( void ) const
+const string_q& IPCSocket::path( void ) const
 {
     return m_path;
 }
@@ -52,14 +52,14 @@ SFString const& IPCSocket::path( void ) const
 class RPCSession
 {
 public:
-    CReceipt           eth_getTransactionReceipt ( SFString const& _transactionHash );
-    SFString           eth_getCode               ( SFString const& _address, SFString const& _blockNumber );
-    SFString           eth_getBalanc e            ( SFString const& _address, SFString const& _blockNumber );
-    SFString           eth_getSt orageRoot        ( SFString const& _address, SFString const& _blockNumber );
-    SFString           rpcCall                   (SFString const& _methodName, SFString const& _args);
+    CReceipt           eth_getTransactionReceipt ( const string_q& _transactionHash );
+    string_q           eth_getCode               ( const string_q& _address, const string_q& _blockNumber );
+    string_q           eth_getBalanc e            ( const string_q& _address, const string_q& _blockNumber );
+    string_q           eth_getSt orageRoot        ( const string_q& _address, const string_q& _blockNumber );
+    string_q           rpcCall                   (const string_q& _methodName, const string_q& _args);
 
 private:
-    RPCSession               (SFString const& _path);
+    RPCSession               (const string_q& _path);
 
     IPCSocket m_ipcSocket;
     size_t m_rpcSequence = 1;

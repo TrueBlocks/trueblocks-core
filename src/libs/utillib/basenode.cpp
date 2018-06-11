@@ -70,7 +70,7 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    SFString CBaseNode::getValueByName(const SFString& fieldName) const {
+    string_q CBaseNode::getValueByName(const string_q& fieldName) const {
 
         switch (tolower(fieldName[0])) {
             case 'd':
@@ -86,7 +86,7 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    char *CBaseNode::parseCSV(char *s, uint32_t& nFields, const SFString *fields) {
+    char *CBaseNode::parseCSV(char *s, uint32_t& nFields, const string_q *fields) {
         nFields = 0;
 
         typedef enum { OUTSIDE = 0, INSIDE } parseState;
@@ -127,7 +127,7 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    char *CBaseNode::parseText(char *s, uint32_t& nFields, const SFString *fields) {
+    char *CBaseNode::parseText(char *s, uint32_t& nFields, const string_q *fields) {
         uint32_t max = nFields;
         nFields = 0;
         char *fieldVal = s;
@@ -162,14 +162,14 @@ namespace qblocks {
 
 //#define DEBUG_PARSER
 #ifdef DEBUG_PARSER
-    SFString tbs;
+    string_q tbs;
 #endif
 
     //--------------------------------------------------------------------------------
     char *CBaseNode::parseJson(char *s, uint32_t& nFields) {
 #ifdef DEBUG_PARSER
-        SFString ss = s;
-        SFString tt('-',25);
+        string_q ss = s;
+        string_q tt('-',25);
         tt += "\n";
         cout << tt << s << "\n" << tt;
         cout << tt << ss.substr(ss.find("{"),   300) << "\n" << tt;
@@ -304,9 +304,9 @@ namespace qblocks {
         archive >> m_deleted;
         archive >> m_schema;
         archive >> m_showing;
-        SFString str;
+        string_q str;
         archive >> str;
-        ASSERT(str == SFString(getRuntimeClass()->getClassNamePtr()));
+        ASSERT(str == string_q(getRuntimeClass()->getClassNamePtr()));
 
         // Return true if this is a back level version
         return true;
@@ -317,9 +317,9 @@ namespace qblocks {
         archive >> m_deleted;
         archive >> m_schema;
         archive >> m_showing;
-        SFString str;
+        string_q str;
         archive >> str;
-        ASSERT(str == SFString(getRuntimeClass()->getClassNamePtr()));
+        ASSERT(str == string_q(getRuntimeClass()->getClassNamePtr()));
         return false;
     }
 
@@ -354,17 +354,17 @@ namespace qblocks {
     }
 
     //---------------------------------------------------------------------------
-    SFString indent(void) {
-        return SFString(expC.tab, expC.spcs*expC.lev);
+    string_q indent(void) {
+        return string_q(expC.tab, expC.spcs*expC.lev);
     }
 
-    extern SFString decBigNum(const SFString& str);
+    extern string_q decBigNum(const string_q& str);
     //--------------------------------------------------------------------------------
-    SFString CBaseNode::toJson1(void) const {
+    string_q CBaseNode::toJson1(void) const {
         return toJson().Substitute("\t", " ").Substitute("\n", "").Substitute("  ", " ");
     }
     //--------------------------------------------------------------------------------
-    SFString CBaseNode::toJson(void) const {
+    string_q CBaseNode::toJson(void) const {
         const CFieldList *fieldList = getRuntimeClass()->GetFieldList();
         if (!fieldList) {
             cerr << "No fieldList in " << getRuntimeClass()->m_ClassName
@@ -396,7 +396,7 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    SFString CBaseNode::toJson(const SFString& fieldsIn) const {
+    string_q CBaseNode::toJson(const string_q& fieldsIn) const {
         const CFieldList *fieldList = getRuntimeClass()->GetFieldList();
         if (!fieldList) {
             cerr << "No fieldList in " << getRuntimeClass()->m_ClassName
@@ -408,9 +408,9 @@ namespace qblocks {
         // TODO(tjayrush): THIS PER DISPLAY LOOKUP IS SLOW - SAVE THIS STRING FIELD LIST AND ONLY
         // LOAD IF DIFFERENT USE STATIC
         CFieldList theList;
-        SFString fields = fieldsIn;
+        string_q fields = fieldsIn;
         while (!fields.empty()) {
-            SFString field = nextTokenClear(fields, '|');
+            string_q field = nextTokenClear(fields, '|');
             const CFieldData *fld = fieldList->getFieldByName(field);
             if (!fld) {
                 cerr << "Could not find field " << field << " in class "
@@ -424,8 +424,8 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    SFString CBaseNode::toJsonFldList(const CFieldList *fieldList) const {
-        SFString ret;
+    string_q CBaseNode::toJsonFldList(const CFieldList *fieldList) const {
+        string_q ret;
         bool first = true;
         if (!expContext().noFrst)
             ret += indent();
@@ -434,7 +434,7 @@ namespace qblocks {
         while (lPos) {
             incIndent();
             CFieldData *fld = fieldList->GetNext(lPos);
-            SFString val = getValueByName(fld->m_fieldName);
+            string_q val = getValueByName(fld->m_fieldName);
             if (!fld->isHidden() && (!val.empty() || fld->isArray())) {
                 if (!first) {
                     if (expContext().colored)
@@ -482,9 +482,9 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    SFString CBaseNode::toJson(const CFieldList *fieldList) const {
+    string_q CBaseNode::toJson(const CFieldList *fieldList) const {
         ASSERT(fieldList);
-        SFString ret;
+        string_q ret;
         ret += "{";
         ret += trim(toJsonFldList(fieldList));
         ret += "\n";
@@ -494,8 +494,8 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    SFString decBigNum(const SFString& str) {
-        SFString ret = str;
+    string_q decBigNum(const string_q& str) {
+        string_q ret = str;
         size_t len = ret.length();
              if (len > 29) ret = ret.substr(0,1) + "." + trimTrailing(ret.substr(1), '0') + "e+29";
         else if (len > 28) ret = ret.substr(0,1) + "." + trimTrailing(ret.substr(1), '0') + "e+28";
@@ -511,9 +511,9 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    SFString nextBasenodeChunk(const SFString& fieldIn, const CBaseNode *node) {
+    string_q nextBasenodeChunk(const string_q& fieldIn, const CBaseNode *node) {
         if (node) {
-            SFString className = node->getRuntimeClass()->getClassNamePtr();
+            string_q className = node->getRuntimeClass()->getClassNamePtr();
             switch (tolower(fieldIn[0])) {
                 case 'd':
                     if ( fieldIn % "deleted" ) return asString(node->isDeleted());
@@ -530,7 +530,7 @@ namespace qblocks {
                             cerr.flush();
                             exit(0);
                         }
-                        SFString ret;
+                        string_q ret;
                         ret += "{";
                         ret += node->toJsonFldList(fieldList);
                         ret += "}";
@@ -550,8 +550,8 @@ namespace qblocks {
     }
 
     //---------------------------------------------------------------------------------------------
-    SFString getNextChunk(SFString& fmtOut, NEXTCHUNKFUNC func, const void *data) {
-        SFString chunk = fmtOut;
+    string_q getNextChunk(string_q& fmtOut, NEXTCHUNKFUNC func, const void *data) {
+        string_q chunk = fmtOut;
         if (!contains(fmtOut, "[")) {
             // There are no more tokens.  Return the last chunk and empty out the format
             fmtOut = EMPTY;
@@ -572,7 +572,7 @@ namespace qblocks {
         // of squigglies).  Save text inside the start token and outside the field in pre and post
         ASSERT(startsWith(fmtOut, '['));
 
-        SFString pre, fieldName, post;
+        string_q pre, fieldName, post;
         nextTokenClear(fmtOut, '[', false);  // toss the start token
         if (contains(chunk, "{")) {
             // we've encountered a field
@@ -605,7 +605,7 @@ namespace qblocks {
         // The fieldname may contain p: or w:width: or both.  If it contains either it
         // must contain them at the beginning of the string (before the fieldName).  Anything
         // left after the last ':' is considered the fieldName
-        SFString promptName = fieldName;
+        string_q promptName = fieldName;
         if (contains(fieldName, "p:")) {
             isPrompt = true;
             replace(fieldName, "p:", EMPTY);
@@ -638,7 +638,7 @@ namespace qblocks {
 #define truncPadR(str, size) (size == 0xdeadbeef ? str : padLeft (str.substr(0,size), size))
 
         // Get the value of the field.  If the value of the field is empty we return empty for the entire token.
-        SFString fieldValue = (func)(fieldName, data);
+        string_q fieldValue = (func)(fieldName, data);
         if (isBool && fieldValue == "0")
             fieldValue = "";
         if (!isPrompt && fieldValue.empty())
@@ -651,7 +651,7 @@ namespace qblocks {
             fieldValue = truncPad(fieldValue, maxWidth);  // pad or truncate
         }
         if (lineJust) {
-extern SFString reformat1(const SFString& in, uint32_t len);
+extern string_q reformat1(const string_q& in, uint32_t len);
             fieldValue = reformat1(fieldValue, lineWidth);
         }
 
@@ -661,7 +661,7 @@ extern SFString reformat1(const SFString& in, uint32_t len);
             return pre + fieldValue + post;
 
         // We are working on a prompt.  Pick up customizations if any
-        SFString prompt = promptName;
+        string_q prompt = promptName;
         if (rightJust) {
             prompt = truncPadR(prompt, maxWidth);  // pad or truncate
         } else {
@@ -671,7 +671,7 @@ extern SFString reformat1(const SFString& in, uint32_t len);
     }
 
     //--------------------------------------------------------------------------------
-    SFString fldNotFound(const SFString& str) {
+    string_q fldNotFound(const string_q& str) {
         return "Field not found: " + str + "\n";
     }
 
@@ -695,7 +695,7 @@ extern SFString reformat1(const SFString& in, uint32_t len);
         while (pos) {
             CFieldData *field = list->GetNext(pos);
             if (!field->isHidden()) {
-                SFString name = field->getName();
+                string_q name = field->getName();
                 os << indent() << "\"" << name << "\": ";
                 if (field->isArray()) {
                     uint64_t cnt = toLongU(getValueByName(name+"Cnt"));
@@ -727,7 +727,7 @@ extern SFString reformat1(const SFString& in, uint32_t len);
                         os << getValueByName(name);
                     }
                 } else {
-                    SFString val = getValueByName(name);
+                    string_q val = getValueByName(name);
                     bool isNum = field->m_fieldType & TS_NUMERAL;
                     if (isNum && expContext().hexNums && !startsWith(val, "0x"))
                         val = toHex(val);
@@ -749,10 +749,10 @@ extern SFString reformat1(const SFString& in, uint32_t len);
     }
 
     //-----------------------------------------------------------------------
-    SFString reformat1(const SFString& in, uint32_t len) {
-        SFString ret = in;
+    string_q reformat1(const string_q& in, uint32_t len) {
+        string_q ret = in;
         if (ret.length() > len+10) {
-            SFString parts[1000];
+            string_q parts[1000];
             uint32_t nParts = 0;
             while (!ret.empty()) {
                 parts[nParts++] = ret.substr(0, len);

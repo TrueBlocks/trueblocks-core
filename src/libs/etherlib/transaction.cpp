@@ -23,11 +23,11 @@ namespace qblocks {
 IMPLEMENT_NODE(CTransaction, CBaseNode);
 
 //---------------------------------------------------------------------------
-extern SFString nextTransactionChunk(const SFString& fieldIn, const void *dataPtr);
-static SFString nextTransactionChunk_custom(const SFString& fieldIn, const void *dataPtr);
+extern string_q nextTransactionChunk(const string_q& fieldIn, const void *dataPtr);
+static string_q nextTransactionChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CTransaction::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
+void CTransaction::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -36,7 +36,7 @@ void CTransaction::Format(CExportContext& ctx, const SFString& fmtIn, void *data
         return;
     }
 
-    SFString fmt = fmtIn;
+    string_q fmt = fmtIn;
     if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
@@ -45,7 +45,7 @@ void CTransaction::Format(CExportContext& ctx, const SFString& fmtIn, void *data
 }
 
 //---------------------------------------------------------------------------
-SFString nextTransactionChunk(const SFString& fieldIn, const void *dataPtr) {
+string_q nextTransactionChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
         return ((const CTransaction *)dataPtr)->getValueByName(fieldIn);
 
@@ -56,10 +56,10 @@ SFString nextTransactionChunk(const SFString& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CTransaction::setValueByName(const SFString& fieldName, const SFString& fieldValue) {
+bool CTransaction::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
     // EXISTING_CODE
     if (fieldName == "to" && fieldValue == "null")
-        *((SFString*)&fieldValue) = "0x";
+        *((string_q*)&fieldValue) = "0x";
 
     if ( fieldName % "input" )
     {
@@ -274,7 +274,7 @@ void CTransaction::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextTransactionChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+string_q nextTransactionChunk_custom(const string_q& fieldIn, const void *dataPtr) {
     const CTransaction *tra = (const CTransaction *)dataPtr;
     if (tra) {
         switch (tolower(fieldIn[0])) {
@@ -292,7 +292,7 @@ SFString nextTransactionChunk_custom(const SFString& fieldIn, const void *dataPt
             case 'd':
                 if (fieldIn % "date" || fieldIn % "datesh") {
                     timestamp_t ts = (tra->pBlock ? tra->pBlock->timestamp : tra->timestamp);
-                    SFString ret = dateFromTimeStamp(ts).Format(FMT_JSON);
+                    string_q ret = dateFromTimeStamp(ts).Format(FMT_JSON);
                     if (fieldIn % "datesh") // short date
                         return ret.substr(0, 10);
                     return ret;
@@ -348,7 +348,7 @@ SFString nextTransactionChunk_custom(const SFString& fieldIn, const void *dataPt
 }
 
 //---------------------------------------------------------------------------
-bool CTransaction::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
+bool CTransaction::handleCustomFormat(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
@@ -398,10 +398,10 @@ SFArchive& operator>>(SFArchive& archive, CTransaction& tra) {
 }
 
 //---------------------------------------------------------------------------
-SFString CTransaction::getValueByName(const SFString& fieldName) const {
+string_q CTransaction::getValueByName(const string_q& fieldName) const {
 
     // Give customized code a chance to override first
-    SFString ret = nextTransactionChunk_custom(fieldName, this);
+    string_q ret = nextTransactionChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
@@ -451,10 +451,10 @@ SFString CTransaction::getValueByName(const SFString& fieldName) const {
         return ret;
     // EXISTING_CODE
 
-    SFString s;
-    s = toUpper(SFString("receipt")) + "::";
+    string_q s;
+    s = toUpper(string_q("receipt")) + "::";
     if (contains(fieldName, s)) {
-        SFString f = fieldName;
+        string_q f = fieldName;
         replaceAll(f, s, "");
         f = receipt.getValueByName(f);
         return f;
@@ -474,7 +474,7 @@ ostream& operator<<(ostream& os, const CTransaction& item) {
 }
 
 //---------------------------------------------------------------------------
-const CBaseNode *CTransaction::getObjectAt(const SFString& fieldName, uint32_t index) const {
+const CBaseNode *CTransaction::getObjectAt(const string_q& fieldName, uint32_t index) const {
     if ( fieldName % "receipt" )
         return &receipt;
     return NULL;
@@ -525,7 +525,7 @@ int sortTransactionsForWrite(const void *rr1, const void *rr2)
 }
 
 //--------------------------------------------------------------------
-inline SFString asStringULL(uint64_t i) {
+inline string_q asStringULL(uint64_t i) {
     ostringstream os;
     os << i;
     return os.str().c_str();
@@ -541,10 +541,10 @@ inline unsigned char hex2Ascii(char *str) {
 }
 
 //----------------------------------------------------------------------------
-inline SFString hex2String(const SFString& inHex) {
-    SFString ret, in = startsWith(inHex, "0x") ? inHex.substr(2) : inHex;
+inline string_q hex2String(const string_q& inHex) {
+    string_q ret, in = startsWith(inHex, "0x") ? inHex.substr(2) : inHex;
     while (!in.empty()) {
-        SFString nibble = in.substr(0,2);
+        string_q nibble = in.substr(0,2);
         in = in.substr(2);
         ret += (char)hex2Ascii((char*)nibble.c_str());
     }
@@ -552,7 +552,7 @@ inline SFString hex2String(const SFString& inHex) {
 }
 
 //------------------------------------------------------------------------------
-#define toBigNum2(a,b)      SFString(to_string(canonicalWei("0x"+grabPart(a,b))).c_str())
+#define toBigNum2(a,b)      string_q(to_string(canonicalWei("0x"+grabPart(a,b))).c_str())
 #define grabPart(a,b)       trimLeading((a).substr(64*(b),64),'0')
 #define grabBigNum(a,b)     strtoull(grabPart(a,b).c_str(),NULL,16)
 #define toAddr(a,b)         "0x"+padLeft(grabPart(a,b),40,'0')
@@ -564,13 +564,13 @@ inline SFString hex2String(const SFString& inHex) {
 #define toVote(a,b)         (grabBigNum(a,b)?"Yea":"Nay")
 #define toBoolean(a,b)      (grabBigNum(a,b)?"true":"false")
 #define toBytes(a,b)        ((a).substr(64*(b),64))
-SFString parse(const SFString& params, uint32_t nItems, SFString *types) {
+string_q parse(const string_q& params, uint32_t nItems, string_q *types) {
 
-    SFString ret;
+    string_q ret;
     for (size_t item = 0 ; item < (size_t)nItems ; item++) {
-        SFString t = types[item];
+        string_q t = types[item];
         bool isDynamic = (t=="string" || t=="bytes" || contains(t, "[]"));
-        SFString val;
+        string_q val;
 
              if ( t == "address"                    )   val =          toAddr      (params,item);
         else if ( t == "bool"                       )   val =          toBoolean   (params,item);
@@ -599,17 +599,17 @@ SFString parse(const SFString& params, uint32_t nItems, SFString *types) {
 }
 
 //---------------------------------------------------------------------------
-SFString toFunction(const SFString& name, const SFString& input, uint32_t nItems, SFString *items) {
+string_q toFunction(const string_q& name, const string_q& input, uint32_t nItems, string_q *items) {
     return "[ \"" + name + "\", " + parse(input.substr(10), nItems, items).Substitute("|", "\", \"") + " ]";
 }
 
 //---------------------------------------------------------------------------
-SFString CTransaction::inputToFunction(void) const {
+string_q CTransaction::inputToFunction(void) const {
     if (input.length()<10)
         return " ";
 
     if (funcPtr) {
-        SFString items[256];
+        string_q items[256];
         uint32_t nItems = 0;
         for (uint32_t i = 0 ; i < funcPtr->inputs.getCount() ; i++)
             items[nItems++] = funcPtr->inputs[i].type;

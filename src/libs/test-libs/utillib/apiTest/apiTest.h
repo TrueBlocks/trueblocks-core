@@ -29,4 +29,4 @@ private:
 };
 
 //---------------------------------------------------------------------------------------------------
-extern void findBlockRange(const SFString& contents, uint32_t& minBlock, uint32_t& maxBlock);
+extern void findBlockRange(const string_q& contents, uint32_t& minBlock, uint32_t& maxBlock);

@@ -16,12 +16,12 @@
 //-----------------------------------------------------------------------------
 class COptions : public CBlockOptions {
 public:
-    SFString mode;
+    string_q mode;
 
     COptions(void);
     ~COptions(void);
 
-    SFString postProcess(const SFString& which, const SFString& str) const override;
-    bool parseArguments(SFString& command) override;
+    string_q postProcess(const string_q& which, const string_q& str) const override;
+    bool parseArguments(string_q& command) override;
     void Init(void) override;
 };

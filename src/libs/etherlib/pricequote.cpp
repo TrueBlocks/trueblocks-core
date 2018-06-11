@@ -24,11 +24,11 @@ namespace qblocks {
 IMPLEMENT_NODE(CPriceQuote, CBaseNode);
 
 //---------------------------------------------------------------------------
-static SFString nextPricequoteChunk(const SFString& fieldIn, const void *dataPtr);
-static SFString nextPricequoteChunk_custom(const SFString& fieldIn, const void *dataPtr);
+static string_q nextPricequoteChunk(const string_q& fieldIn, const void *dataPtr);
+static string_q nextPricequoteChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CPriceQuote::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
+void CPriceQuote::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -37,7 +37,7 @@ void CPriceQuote::Format(CExportContext& ctx, const SFString& fmtIn, void *dataP
         return;
     }
 
-    SFString fmt = fmtIn;
+    string_q fmt = fmtIn;
     if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
@@ -46,7 +46,7 @@ void CPriceQuote::Format(CExportContext& ctx, const SFString& fmtIn, void *dataP
 }
 
 //---------------------------------------------------------------------------
-SFString nextPricequoteChunk(const SFString& fieldIn, const void *dataPtr) {
+string_q nextPricequoteChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
         return ((const CPriceQuote *)dataPtr)->getValueByName(fieldIn);
 
@@ -57,7 +57,7 @@ SFString nextPricequoteChunk(const SFString& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CPriceQuote::setValueByName(const SFString& fieldName, const SFString& fieldValue) {
+bool CPriceQuote::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
     // EXISTING_CODE
     if ( fieldName % "date" || fieldName % "timestamp" ) {
         timestamp = toLong(fieldValue);
@@ -143,7 +143,7 @@ void CPriceQuote::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextPricequoteChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+string_q nextPricequoteChunk_custom(const string_q& fieldIn, const void *dataPtr) {
     const CPriceQuote *pri = (const CPriceQuote *)dataPtr;
     if (pri) {
         switch (tolower(fieldIn[0])) {
@@ -167,7 +167,7 @@ SFString nextPricequoteChunk_custom(const SFString& fieldIn, const void *dataPtr
 }
 
 //---------------------------------------------------------------------------
-bool CPriceQuote::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
+bool CPriceQuote::handleCustomFormat(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
@@ -203,10 +203,10 @@ bool CPriceQuote::readBackLevel(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------
-SFString CPriceQuote::getValueByName(const SFString& fieldName) const {
+string_q CPriceQuote::getValueByName(const string_q& fieldName) const {
 
     // Give customized code a chance to override first
-    SFString ret = nextPricequoteChunk_custom(fieldName, this);
+    string_q ret = nextPricequoteChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
@@ -248,12 +248,12 @@ uint64_t indexFromTimeStamp(const CPriceQuoteArray& quotes, timestamp_t ts) {
 }
 
 //-----------------------------------------------------------------------
-SFString asDollars(timestamp_t ts, SFUintBN weiIn) {
+string_q asDollars(timestamp_t ts, SFUintBN weiIn) {
     if (weiIn == 0)
         return "";
     static CPriceQuoteArray quotes;
     if (!quotes.getCount()) {
-        SFString message;
+        string_q message;
         CPriceSource source;
         if (!loadPriceData(source, quotes, false, message, 1)) {
             cerr << "Cannot load price data. Quitting.\n";
@@ -270,12 +270,12 @@ SFString asDollars(timestamp_t ts, SFUintBN weiIn) {
 }
 
 //-----------------------------------------------------------------------
-SFString insertCommas(const SFString& dIn) {
-    SFString d = dIn;
+string_q insertCommas(const string_q& dIn) {
+    string_q d = dIn;
     reverse(d);
-    SFString ret;
+    string_q ret;
     while (!d.empty()) {
-        SFString three = d.substr(0,3);
+        string_q three = d.substr(0,3);
         d = d.substr(3);
         reverse(three);
         ret = (d.empty()?"":",") + three + ret;
@@ -284,9 +284,9 @@ SFString insertCommas(const SFString& dIn) {
 }
 
 //-----------------------------------------------------------------------
-SFString dispDollars(timestamp_t ts, SFUintBN weiIn) {
-    SFString sBal = asDollars(ts, weiIn);
-    SFString d = nextTokenClear(sBal,'.');
+string_q dispDollars(timestamp_t ts, SFUintBN weiIn) {
+    string_q sBal = asDollars(ts, weiIn);
+    string_q d = nextTokenClear(sBal,'.');
     d = insertCommas(d);
     sBal = (sBal.empty() ? "0.00" : d + "." + sBal.substr(0,2));
     return sBal;

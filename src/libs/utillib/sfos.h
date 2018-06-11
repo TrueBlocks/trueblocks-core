@@ -15,24 +15,24 @@
 namespace qblocks {
 
     //-------------------------------------------------------------------------------
-    extern uint64_t fileSize(const SFString& file);
+    extern uint64_t fileSize(const string_q& file);
 
-    extern void listFiles(uint32_t& nFiles, SFString *files, const SFString& mask);
-    extern void listFolders(uint32_t& nDirs, SFString *dirs, const SFString& mask);
-    extern void listFilesOrFolders(uint32_t& nItems, SFString *items, const SFString& mask);
+    extern void listFiles(uint32_t& nFiles, string_q *files, const string_q& mask);
+    extern void listFolders(uint32_t& nDirs, string_q *dirs, const string_q& mask);
+    extern void listFilesOrFolders(uint32_t& nItems, string_q *items, const string_q& mask);
 
-    extern int copyFile(const SFString& from, const SFString& to);
+    extern int copyFile(const string_q& from, const string_q& to);
 
-    extern bool folderExists(const SFString& path);
-    extern bool fileExists(const SFString& file);
+    extern bool folderExists(const string_q& path);
+    extern bool fileExists(const string_q& file);
 
-    extern bool establishFolder(const SFString& path, SFString& created);
-    inline bool establishFolder(const SFString& path) { SFString unused; return establishFolder(path, unused); }
+    extern bool establishFolder(const string_q& path, string_q& created);
+    inline bool establishFolder(const string_q& path) { string_q unused; return establishFolder(path, unused); }
 
-    extern SFString getCWD(const SFString& filename = "");
-    extern SFString doCommand(const SFString& cmd);
+    extern string_q getCWD(const string_q& filename = "");
+    extern string_q doCommand(const string_q& cmd);
 
-    extern SFString makeValidName(const SFString& inOut);
+    extern string_q makeValidName(const string_q& inOut);
 
     #define kMaxPathSize _POSIX_PATH_MAX
 }  // namespace qblocks

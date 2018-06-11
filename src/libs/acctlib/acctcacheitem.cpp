@@ -22,11 +22,11 @@ namespace qblocks {
 IMPLEMENT_NODE(CAcctCacheItem, CBaseNode);
 
 //---------------------------------------------------------------------------
-static SFString nextAcctcacheitemChunk(const SFString& fieldIn, const void *dataPtr);
-static SFString nextAcctcacheitemChunk_custom(const SFString& fieldIn, const void *dataPtr);
+static string_q nextAcctcacheitemChunk(const string_q& fieldIn, const void *dataPtr);
+static string_q nextAcctcacheitemChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CAcctCacheItem::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
+void CAcctCacheItem::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
 
     CAcctCacheItem::registerClass();
 
@@ -38,7 +38,7 @@ void CAcctCacheItem::Format(CExportContext& ctx, const SFString& fmtIn, void *da
         return;
     }
 
-    SFString fmt = fmtIn;
+    string_q fmt = fmtIn;
     if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
@@ -47,7 +47,7 @@ void CAcctCacheItem::Format(CExportContext& ctx, const SFString& fmtIn, void *da
 }
 
 //---------------------------------------------------------------------------
-SFString nextAcctcacheitemChunk(const SFString& fieldIn, const void *dataPtr) {
+string_q nextAcctcacheitemChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
         return ((const CAcctCacheItem *)dataPtr)->getValueByName(fieldIn);
 
@@ -58,7 +58,7 @@ SFString nextAcctcacheitemChunk(const SFString& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CAcctCacheItem::setValueByName(const SFString& fieldName, const SFString& fieldValue) {
+bool CAcctCacheItem::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
     // EXISTING_CODE
     // EXISTING_CODE
 
@@ -136,7 +136,7 @@ void CAcctCacheItem::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextAcctcacheitemChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+string_q nextAcctcacheitemChunk_custom(const string_q& fieldIn, const void *dataPtr) {
     const CAcctCacheItem *acc = (const CAcctCacheItem *)dataPtr;
     if (acc) {
         switch (tolower(fieldIn[0])) {
@@ -157,7 +157,7 @@ SFString nextAcctcacheitemChunk_custom(const SFString& fieldIn, const void *data
 }
 
 //---------------------------------------------------------------------------
-bool CAcctCacheItem::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
+bool CAcctCacheItem::handleCustomFormat(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
@@ -174,10 +174,10 @@ bool CAcctCacheItem::readBackLevel(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------
-SFString CAcctCacheItem::getValueByName(const SFString& fieldName) const {
+string_q CAcctCacheItem::getValueByName(const string_q& fieldName) const {
 
     // Give customized code a chance to override first
-    SFString ret = nextAcctcacheitemChunk_custom(fieldName, this);
+    string_q ret = nextAcctcacheitemChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
@@ -213,11 +213,11 @@ ostream& operator<<(ostream& os, const CAcctCacheItem& item) {
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-CAcctCacheItem::CAcctCacheItem(SFString& line) {
+CAcctCacheItem::CAcctCacheItem(string_q& line) {
 
     replaceAll(line, ".", "\t");
 
-    SFString val = nextTokenClear(line,'\t');
+    string_q val = nextTokenClear(line,'\t');
     blockNum = toUnsigned(val);
 
     val = nextTokenClear(line,'\t');

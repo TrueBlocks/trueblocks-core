@@ -23,7 +23,7 @@ namespace qblocks {
     class CBuiltIn {
     public:
         const CRuntimeClass *m_pClass;
-        CBuiltIn(CRuntimeClass *pClass, const SFString& className, uint32_t size, PFNV createFunc, CRuntimeClass *pBase);
+        CBuiltIn(CRuntimeClass *pClass, const string_q& className, uint32_t size, PFNV createFunc, CRuntimeClass *pBase);
     };
 
     //----------------------------------------------------------------------------
@@ -40,11 +40,11 @@ namespace qblocks {
 
         char *getClassNamePtr(void) const;
         bool IsDerivedFrom(const CRuntimeClass* pBaseClass) const;
-        void AddField(const SFString& fieldName, uint32_t dataType, uint32_t fieldID);
+        void AddField(const string_q& fieldName, uint32_t dataType, uint32_t fieldID);
         void ClearFieldList(void);
-        SFString listOfFields(char sep = '|') const;
+        string_q listOfFields(char sep = '|') const;
         CFieldList *GetFieldList(void) const { return m_FieldList; }
-        void Initialize(const SFString& protoName);
+        void Initialize(const string_q& protoName);
         void hideAllFields(void);
         void showAllFields(void);
         void sortFieldList(void);
@@ -55,7 +55,7 @@ namespace qblocks {
             return NULL;
         }
 
-        virtual CFieldData *FindField(const SFString& fieldName) {
+        virtual CFieldData *FindField(const string_q& fieldName) {
             if (m_FieldList) {
                 LISTPOS pos = m_FieldList->GetHeadPosition();
                 while (pos) {
@@ -66,7 +66,7 @@ namespace qblocks {
             }
             return NULL;
         }
-        bool isFieldHidden(const SFString& fieldName) {
+        bool isFieldHidden(const string_q& fieldName) {
             CFieldData *f = FindField(fieldName);
             if (f)
                 return f->isHidden();
@@ -84,23 +84,23 @@ public: \
 static CRuntimeClass class##CLASS_NAME; \
 static CBaseNode *CreateObject(void); \
 CRuntimeClass *getRuntimeClass(void) const override; \
-SFString getValueByName(const SFString& fieldName) const override; \
-bool setValueByName(const SFString& fieldName, const SFString& fieldValue) override; \
+string_q getValueByName(const string_q& fieldName) const override; \
+bool setValueByName(const string_q& fieldName, const string_q& fieldValue) override; \
 bool Serialize(SFArchive& archive) override; \
 bool SerializeC(SFArchive& archive) const override; \
 void finishParse(void) override; \
-bool handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data = NULL) const override; \
-void Format(CExportContext& ctx, const SFString& fmtIn, void *data = NULL) const override; \
-SFString Format(const SFString& fmtIn = "") const override { \
+bool handleCustomFormat(CExportContext& ctx, const string_q& fmtIn, void *data = NULL) const override; \
+void Format(CExportContext& ctx, const string_q& fmtIn, void *data = NULL) const override; \
+string_q Format(const string_q& fmtIn = "") const override { \
     CStringExportContext ctx; Format(ctx, fmtIn, NULL); return ctx.str; } \
-SFString getClassName(void) const; \
+string_q getClassName(void) const; \
 static void registerClass(void)
 
     //------------------------------------------------------------
 #define IMPLEMENT_NODE(CLASS_NAME, BASECLASS_NAME) \
 CRuntimeClass CLASS_NAME::class##CLASS_NAME; \
 CRuntimeClass *CLASS_NAME::getRuntimeClass(void) const { return &CLASS_NAME::class##CLASS_NAME; } \
-SFString CLASS_NAME::getClassName(void) const { return CLASS_NAME::class##CLASS_NAME.getClassNamePtr(); } \
+string_q CLASS_NAME::getClassName(void) const { return CLASS_NAME::class##CLASS_NAME.getClassNamePtr(); } \
 CBaseNode* CLASS_NAME::CreateObject(void) { return new CLASS_NAME; } \
 static CBuiltIn _bi##CLASS_NAME(&CLASS_NAME::class##CLASS_NAME, #CLASS_NAME, sizeof(CLASS_NAME), \
 CLASS_NAME::CreateObject, GETRUNTIME_CLASS(BASECLASS_NAME));
@@ -115,8 +115,8 @@ CFieldData *f = GETRUNTIME_CLASS(CLASS_NAME)->FindField(FIELD_NAME); if (f) { f-
 }
 
     //------------------------------------------------------------
-#define SUBFIELD_FMT(a, sf, b) SFString("[\"") + SFString(sf) + SFString("\": \"{") + \
-toUpper(SFString(a)) + "::" + toUpper(SFString(sf)) + "}\"" + (b ? ", ]" : "]")
+#define SUBFIELD_FMT(a, sf, b) string_q("[\"") + string_q(sf) + string_q("\": \"{") + \
+toUpper(string_q(a)) + "::" + toUpper(string_q(sf)) + "}\"" + (b ? ", ]" : "]")
 
     //------------------------------------------------------------
 #define UNHIDE_FIELD(CLASS_NAME, FIELD_NAME) {\
@@ -175,5 +175,5 @@ return archive; \
 }
 
     //---------------------------------------------------------------------------
-    extern SFString nextBasenodeChunk(const SFString& fieldIn, const CBaseNode *node);
+    extern string_q nextBasenodeChunk(const string_q& fieldIn, const CBaseNode *node);
 }  // namespace qblocks

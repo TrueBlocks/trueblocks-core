@@ -24,16 +24,16 @@ int main(int argc, const char *argv[]) {
         return 0;
 
     while (!options.commandList.empty()) {
-        SFString command = nextTokenClear(options.commandList, '\n');
+        string_q command = nextTokenClear(options.commandList, '\n');
         if (!options.parseArguments(command))
             return 0;
 
         for (uint64_t i = 0 ; i < options.nAddrs ; i++) {
-            SFString code1 = getCode(options.addrs[i]);
+            string_q code1 = getCode(options.addrs[i]);
             bool hasCode = code1.length() > 2;
 
             if (options.diff) {
-                SFString code2 = getCode(options.addrs[i+1]);
+                string_q code2 = getCode(options.addrs[i+1]);
                 cout << "Code at address '" << options.addrs[i] << ") and (" << "(" << options.addrs[i+1] + ") are "
                         << (code1 == code2 ? "identical" : "different") << "\n";
                 break;

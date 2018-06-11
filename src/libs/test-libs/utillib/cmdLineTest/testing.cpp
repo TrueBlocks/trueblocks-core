@@ -16,9 +16,6 @@
 #include "options.h"
 #include "testing.h"
 
-// Changing this between qstring and SFString helps migrating away from quickBlocks code
-#define TEST_STR SFString
-
 //------------------------------------------------------------------------
 class CThisTest : public testing::Test {
 public:
@@ -35,7 +32,7 @@ TEST_F(ThisTest, Test1) {
 
     if (opts.testNum < 1 || opts.testNum > 10)
         return true;
-    
+
     cerr << "Running " << testName << "\n";
 
     if (opts.testNum ==  1) ASSERT_TRUE( "1. boolOption == false",  (opts.boolSet && !opts.boolOption) );
@@ -62,10 +59,10 @@ int main(int argc, const char *argv[]) {
     bool ret = true;
     LOAD_TEST(Test1);
     while (!opts.commandList.empty()) {
-        SFString command = nextTokenClear(opts.commandList, '\n');
+        string_q command = nextTokenClear(opts.commandList, '\n');
         if (!opts.parseArguments(command))
             return 0;
-        cout << SFString('-',80) << "\n";
+        cout << string_q('-',80) << "\n";
         opts.output();
         ret &= RUN_ALL_TESTS();
     }

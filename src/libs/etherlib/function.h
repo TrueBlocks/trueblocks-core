@@ -32,13 +32,13 @@ typedef SFUniqueList<CFunction*>       CFunctionListU;
 //--------------------------------------------------------------------------
 class CFunction : public CBaseNode {
 public:
-    SFString name;
-    SFString type;
+    string_q name;
+    string_q type;
     bool anonymous;
     bool constant;
     bool payable;
-    SFString signature;
-    SFString encoding;
+    string_q signature;
+    string_q encoding;
     CParameterArray inputs;
     CParameterArray outputs;
 
@@ -50,14 +50,14 @@ public:
 
     DECLARE_NODE(CFunction);
 
-    const CBaseNode *getObjectAt(const SFString& fieldName, uint32_t index) const override;
+    const CBaseNode *getObjectAt(const string_q& fieldName, uint32_t index) const override;
 
     // EXISTING_CODE
     bool hasAddrs;
-    SFString getSignature(uint64_t parts) const;
-    SFString encodeItem(void) const;
+    string_q getSignature(uint64_t parts) const;
+    string_q encodeItem(void) const;
     bool isBuiltin;
-    SFString origName;
+    string_q origName;
     // EXISTING_CODE
     friend ostream& operator<<(ostream& os, const CFunction& item);
 

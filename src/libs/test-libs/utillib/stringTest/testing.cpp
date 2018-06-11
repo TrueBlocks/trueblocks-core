@@ -15,9 +15,6 @@
 #include "utillib.h"
 #include "testing.h"
 
-// Changing this between string_q and SFString helps migrating away from quickBlocks code
-#define TEST_STR SFString
-
 //------------------------------------------------------------------------
 class CThisTest : public testing::Test {
 public:
@@ -28,8 +25,8 @@ public:
 
 //------------------------------------------------------------------------
 TEST_F(CThisTest, TestRelational) {
-    string foo = "alpha"; TEST_STR xfoo(foo.c_str());
-    string bar = "beta";  TEST_STR xbar(bar.c_str());
+    string foo = "alpha"; string_q xfoo(foo.c_str());
+    string bar = "beta";  string_q xbar(bar.c_str());
 
     cout << "Running " << testName << "\n";
     cout << "\tc-string  -- foo:  " << foo  << " bar: " << bar << "\n";
@@ -56,8 +53,8 @@ TEST_F(CThisTest, TestRelational) {
 
 //------------------------------------------------------------------------
 TEST_F(CThisTest, TestCompare) {
-    string str1("green apple"); TEST_STR xstr1("green apple");
-    string str2("red apple");   TEST_STR xstr2("red apple");
+    string str1("green apple"); string_q xstr1("green apple");
+    string str2("red apple");   string_q xstr2("red apple");
 
     cout << "Running " << testName << "\n";
     cout << "\tc-string  -- str1:  " <<  str1  << " str2: "  << str2  << "\n";
@@ -79,11 +76,11 @@ TEST_F(CThisTest, TestCompare) {
 
 //------------------------------------------------------------------------
 TEST_F(CThisTest, TestAssignment) {
-    string str1, str2, str3;
-    TEST_STR xstr1, xstr2, xstr3;
+    string str1("Test string: "), str2, str3;
+    string_q xstr1("Test string: "), xstr2, xstr3;
 
-    str1 = "Test string: ";  str2 = 'x';
-    xstr1 = "Test string: "; xstr2 = TEST_STR('x');
+    str2 = 'x';
+    xstr2 = 'x';
 
      str3 =  str1 +  str2;
     xstr3 = xstr1 + xstr2;
@@ -115,12 +112,12 @@ TEST_F(CThisTest, TestCStr) {
         cout << TESTID("tokenize",15) << padRight(token,8,' ') << "\t" << (rest ? rest : "") << "\n";
     cout << "\n";
 
-    SFString str1 = "Please|split|that|sentence|into|tokens";
+    string_q str1 = "Please|split|that|sentence|into|tokens";
     while (!str1.empty())
         cout << TESTID("nextTokClr",15) << padRight(nextTokenClear(str1,'|'),8,' ') << "\t" << str1 << "\n";
     cout << "\n";
 
-    SFString text1 = "This isthe_thing\tthat matters\tand is_upperCase lower case";
+    string_q text1 = "This isthe_thing\tthat matters\tand is_upperCase lower case";
     cout << TESTID("base case",15) << text1 << "\n";
     cout << TESTID("toLower",15) << toLower(text1) << "\n";
     cout << TESTID("toUpper",15) << toUpper(text1) << "\n";
@@ -134,7 +131,7 @@ TEST_F(CThisTest, TestCStr) {
     cout << TESTID("toProper",15) << toProper(text2) << "\n";
     cout << "\n";
 
-    SFString strip1 = " tab[\t]AxBBBxBxA tab:\t";
+    string_q strip1 = " tab[\t]AxBBBxBxA tab:\t";
     cout << TESTID("base case",15)   << "|" << strip1 << "|\n";
     cout << TESTID("trim",15)        << "|" << trim(strip1) << "|\n";
     cout << TESTID("trim lead",15)   << "|" << trimLeading(strip1) << "|\n";
@@ -193,6 +190,18 @@ TEST_F(CThisTest, TestCStr) {
     replace(target3, "Target4", "");                   cout << TESTID("replace",15)   << target3 << "\n";
     cout << "\n";
 
+    string es1;
+    ASSERT_TRUE("es1 is empty", es1.empty())
+    ASSERT_TRUE("es1 == \"\"", es1 == "");
+    ASSERT_TRUE("es1 == EMPTY", es1 == (EMPTY.str()));
+    ASSERT_TRUE("es1 == nullStr", es1 == nullStr);
+
+    string_q es2;
+    ASSERT_TRUE("es2 is empty", es2.empty())
+    ASSERT_TRUE("es2 == \"\"", es2 == "");
+    ASSERT_TRUE("es2 == EMPTY", es2 == EMPTY);
+    ASSERT_TRUE("es2 == nullStr", es2 == nullStr);
+
     return true;
 }}
 
@@ -205,15 +214,15 @@ int main(int argc, const char *argv[]) {
         return 0;
 
     while (!options.commandList.empty()) {
-        SFString command = nextTokenClear(options.commandList, '\n');
+        string_q command = nextTokenClear(options.commandList, '\n');
         if (!options.parseArguments(command))
             return 0;
 
         switch (options.testNum) {
             case 0: LOAD_TEST(TestRelational); break;
             case 1: LOAD_TEST(TestCompare);    break;
-            case 2: LOAD_TEST(TestCStr);       break;
-            case 3: LOAD_TEST(TestAssignment); break;
+            case 2: LOAD_TEST(TestAssignment); break;
+            case 3: LOAD_TEST(TestCStr);       break;
         }
     }
 

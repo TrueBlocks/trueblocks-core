@@ -32,9 +32,9 @@ namespace qblocks {
     }
 
     //----------------------------------------------------------------------------
-    uint64_t hex2LongU(const SFString& str) {
+    uint64_t hex2LongU(const string_q& str) {
 
-        SFString hex = toLower(startsWith(str, "0x") ? str.substr(2) : str);
+        string_q hex = toLower(startsWith(str, "0x") ? str.substr(2) : str);
         reverse(hex);
 
         char *s = (char *)hex.c_str();
@@ -51,7 +51,7 @@ namespace qblocks {
     }
 
     //----------------------------------------------------------------------------
-    SFString string2Hex(const string_q& str) {
+    string_q string2Hex(const string_q& str) {
 
         if (startsWith(str, "0x"))
             return str.c_str();
@@ -59,7 +59,7 @@ namespace qblocks {
         if (str.empty())
             return "0x";
         
-        SFString ret;
+        string_q ret;
         for (size_t i = 0 ; i < str.length() ; i++) {
             ostringstream os;
             os << hex << (unsigned int)str[i];
@@ -72,7 +72,7 @@ namespace qblocks {
     class SFBloomHex : public SFBigNumStore<unsigned char> {
     public:
         SFBloomHex(const SFUintBN& numIn);
-        SFString str;
+        string_q str;
     };
 
     //------------------------------------------------------------------
@@ -102,7 +102,7 @@ namespace qblocks {
     }
 
     //------------------------------------------------------------------
-    SFString bloom2Bytes(const SFBloom& bl) {
+    string_q bloom2Bytes(const SFBloom& bl) {
         if (bl == 0)
             return "0x0";
         SFBloomHex b2(bl);
@@ -110,8 +110,8 @@ namespace qblocks {
     }
 
     //-------------------------------------------------------------------------
-    SFString bloom2Bits(const SFBloom& b) {
-        SFString ret = bloom2Bytes(b).Substitute("0x", "");
+    string_q bloom2Bits(const SFBloom& b) {
+        string_q ret = bloom2Bytes(b).Substitute("0x", "");
         replaceAll(ret, "0", "0000");
         replaceAll(ret, "1", "0001");
         replaceAll(ret, "2", "0010");

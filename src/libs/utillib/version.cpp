@@ -30,7 +30,7 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    SFString getVersionStr(const SFString& sep1, const SFString& sep2) {
+    string_q getVersionStr(const string_q& sep1, const string_q& sep2) {
         return asStringU(MAJOR) + sep1 + asStringU(MINOR) + sep1 + asStringU(BUILD) + sep2 + SUBVERS;
     }
 

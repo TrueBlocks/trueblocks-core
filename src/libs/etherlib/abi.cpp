@@ -23,11 +23,11 @@ namespace qblocks {
 IMPLEMENT_NODE(CAbi, CBaseNode);
 
 //---------------------------------------------------------------------------
-static SFString nextAbiChunk(const SFString& fieldIn, const void *dataPtr);
-static SFString nextAbiChunk_custom(const SFString& fieldIn, const void *dataPtr);
+static string_q nextAbiChunk(const string_q& fieldIn, const void *dataPtr);
+static string_q nextAbiChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CAbi::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
+void CAbi::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -36,7 +36,7 @@ void CAbi::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) con
         return;
     }
 
-    SFString fmt = fmtIn;
+    string_q fmt = fmtIn;
     if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
@@ -45,7 +45,7 @@ void CAbi::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) con
 }
 
 //---------------------------------------------------------------------------
-SFString nextAbiChunk(const SFString& fieldIn, const void *dataPtr) {
+string_q nextAbiChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
         return ((const CAbi *)dataPtr)->getValueByName(fieldIn);
 
@@ -56,7 +56,7 @@ SFString nextAbiChunk(const SFString& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CAbi::setValueByName(const SFString& fieldName, const SFString& fieldValue) {
+bool CAbi::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
     // EXISTING_CODE
     // EXISTING_CODE
 
@@ -152,7 +152,7 @@ void CAbi::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextAbiChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+string_q nextAbiChunk_custom(const string_q& fieldIn, const void *dataPtr) {
     const CAbi *abi = (const CAbi *)dataPtr;
     if (abi) {
         switch (tolower(fieldIn[0])) {
@@ -173,7 +173,7 @@ SFString nextAbiChunk_custom(const SFString& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------
-bool CAbi::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
+bool CAbi::handleCustomFormat(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
@@ -190,10 +190,10 @@ bool CAbi::readBackLevel(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------
-SFString CAbi::getValueByName(const SFString& fieldName) const {
+string_q CAbi::getValueByName(const string_q& fieldName) const {
 
     // Give customized code a chance to override first
-    SFString ret = nextAbiChunk_custom(fieldName, this);
+    string_q ret = nextAbiChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
@@ -205,7 +205,7 @@ SFString CAbi::getValueByName(const SFString& fieldName) const {
                 if (endsWith(fieldName, "Cnt"))
                     return asStringU(cnt);
                 if (!cnt) return "";
-                SFString retS;
+                string_q retS;
                 for (uint32_t i = 0 ; i < cnt ; i++) {
                     retS += abiByName[i].Format();
                     retS += ((i < cnt - 1) ? ",\n" : "\n");
@@ -217,7 +217,7 @@ SFString CAbi::getValueByName(const SFString& fieldName) const {
                 if (endsWith(fieldName, "Cnt"))
                     return asStringU(cnt);
                 if (!cnt) return "";
-                SFString retS;
+                string_q retS;
                 for (uint32_t i = 0 ; i < cnt ; i++) {
                     retS += abiByEncoding[i].Format();
                     retS += ((i < cnt - 1) ? ",\n" : "\n");
@@ -253,7 +253,7 @@ ostream& operator<<(ostream& os, const CAbi& item) {
 }
 
 //---------------------------------------------------------------------------
-const CBaseNode *CAbi::getObjectAt(const SFString& fieldName, uint32_t index) const {
+const CBaseNode *CAbi::getObjectAt(const string_q& fieldName, uint32_t index) const {
     if ( fieldName % "abiByName" && index < abiByName.getCount() )
         return &abiByName[index];
     if ( fieldName % "abiByEncoding" && index < abiByEncoding.getCount() )
@@ -278,9 +278,9 @@ int findByName(const void *rr1, const void *rr2) {
 }
 
 //---------------------------------------------------------------------------
-int cleanCompare(const SFString& s1, const SFString& s2) {
-    SFString ss1 = (startsWith(s1, "0x") ? s1.substr(2,8) : s1.substr(0,8));
-    SFString ss2 = (startsWith(s2, "0x") ? s2.substr(2,8) : s2.substr(0,8));
+int cleanCompare(const string_q& s1, const string_q& s2) {
+    string_q ss1 = (startsWith(s1, "0x") ? s1.substr(2,8) : s1.substr(0,8));
+    string_q ss2 = (startsWith(s2, "0x") ? s2.substr(2,8) : s2.substr(0,8));
     return ss2.compare(ss1);
 }
 
@@ -299,14 +299,14 @@ int findByEncoding(const void *rr1, const void *rr2) {
 }
 
 //---------------------------------------------------------------------------
-CFunction *CAbi::findFunctionByName(const SFString& name) {
+CFunction *CAbi::findFunctionByName(const string_q& name) {
     CFunction search;
     search.name = name;
     return abiByName.Find(&search, findByName);
 }
 
 //---------------------------------------------------------------------------
-CFunction *CAbi::findFunctionByEncoding(const SFString& enc) {
+CFunction *CAbi::findFunctionByEncoding(const string_q& enc) {
     CFunction search;
     search.encoding = enc;
     return abiByEncoding.Find(&search, findByEncoding);
@@ -319,7 +319,7 @@ void CAbi::clearABI(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString abis[1000][2];
+string_q abis[1000][2];
 uint32_t nAbis = 0;
 
 //---------------------------------------------------------------------------
@@ -328,9 +328,9 @@ void clearAbis(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString findEncoding(const SFString& addr, CFunction& func) {
+string_q findEncoding(const string_q& addr, CFunction& func) {
     if (!nAbis) {
-        SFString contents = asciiFileToString(blockCachePath("abis/" + addr + ".abi"));
+        string_q contents = asciiFileToString(blockCachePath("abis/" + addr + ".abi"));
         while (!contents.empty()) {
             abis[nAbis][1] = nextTokenClear(contents, '\n');
             abis[nAbis][0] = nextTokenClear(abis[nAbis][1], '|');
@@ -345,7 +345,7 @@ SFString findEncoding(const SFString& addr, CFunction& func) {
 }
 
 //---------------------------------------------------------------------------
-static bool getEncoding(const SFString& abiFilename, const SFString& addr, CFunction& func) {
+static bool getEncoding(const string_q& abiFilename, const string_q& addr, CFunction& func) {
     if (func.type != "function")
         return false;
     func.name     = nextTokenClear(func.name, '(');
@@ -354,9 +354,9 @@ static bool getEncoding(const SFString& abiFilename, const SFString& addr, CFunc
 }
 
 //---------------------------------------------------------------------------
-bool CAbi::loadABIFromFile(const SFString& fileName) {
+bool CAbi::loadABIFromFile(const string_q& fileName) {
 
-    SFString contents = asciiFileToString(fileName);
+    string_q contents = asciiFileToString(fileName);
     ASSERT(!contents.empty());
     char *p = cleanUpJson((char *)contents.c_str());
     while (p && *p) {
@@ -374,18 +374,18 @@ bool CAbi::loadABIFromFile(const SFString& fileName) {
 }
 
 //---------------------------------------------------------------------------
-bool CAbi::loadABIFromCSV(const SFString& fileName) {
+bool CAbi::loadABIFromCSV(const string_q& fileName) {
     CFunction::registerClass();
     CParameter::registerClass();
     HIDE_FIELD(CParameter, "indexed");
     HIDE_FIELD(CParameter, "isPointer");
     HIDE_FIELD(CParameter, "isArray");
     HIDE_FIELD(CParameter, "isObject");
-    SFString contents = asciiFileToString(fileName);
+    string_q contents = asciiFileToString(fileName);
     ASSERT(!contents.empty());
     while (!contents.empty()) {
-        SFString json = nextTokenClear(contents,'\n');
-        SFString encoding = nextTokenClear(json,'\t');
+        string_q json = nextTokenClear(contents,'\n');
+        string_q encoding = nextTokenClear(json,'\t');
         CFunction func;
         uint32_t nFields = 0;
         char *p = cleanUpJson((char *)json.c_str());
@@ -400,19 +400,19 @@ bool CAbi::loadABIFromCSV(const SFString& fileName) {
 }
 
 //---------------------------------------------------------------------------
-bool CAbi::loadABI(const SFString& addr) {
+bool CAbi::loadABI(const string_q& addr) {
     // Already loaded?
     if (abiByName.getCount() && abiByEncoding.getCount())
         return true;
 
-    SFString abiFilename = blockCachePath("abis/" + addr + ".json");
+    string_q abiFilename = blockCachePath("abis/" + addr + ".json");
     if (!fileExists(abiFilename))
         return false;
 
     cerr << "\tLoading abi file: " << abiFilename << "...\n";
     if (loadABIFromFile(abiFilename)) {
 
-        SFString abis1;
+        string_q abis1;
 
         // Get the encodings
         for (uint32_t i=0;i<abiByName.getCount();i++) {
@@ -440,10 +440,10 @@ bool CAbi::loadABI(const SFString& addr) {
 }
 
 //---------------------------------------------------------------------------
-bool visitABIs(const SFString& path, void *dataPtr) {
+bool visitABIs(const string_q& path, void *dataPtr) {
 
     if (endsWith(path, ".json")) {
-        SFString *str = (SFString*)dataPtr;
+        string_q *str = (string_q*)dataPtr;
         *str += (path+"\n");
     }
     return true;
@@ -452,14 +452,14 @@ bool visitABIs(const SFString& path, void *dataPtr) {
 //---------------------------------------------------------------------------
 void rebuildFourByteDB(void) {
 
-    SFString fileList;
-    SFString abiPath = blockCachePath("abis/");
+    string_q fileList;
+    string_q abiPath = blockCachePath("abis/");
     cout << abiPath << "\n";
     forEveryFileInFolder(abiPath+"*", visitABIs, &fileList);
 
     CFunctionArray funcArray;
     while (!fileList.empty()) {
-        SFString fileName = nextTokenClear(fileList, '\n');
+        string_q fileName = nextTokenClear(fileList, '\n');
         CAbi abi;
         abi.loadABIFromFile(fileName);
         for (uint32_t f = 0 ; f < abi.abiByEncoding.getCount() ; f++) {
@@ -481,7 +481,7 @@ static CFunctionArray *getABIArray(void) {
     static CFunctionArray *theArrayPtr = NULL;
     if (!theArrayPtr) {
         static CFunctionArray theArray;
-        SFString abiPath = blockCachePath("abis/abis.bin");
+        string_q abiPath = blockCachePath("abis/abis.bin");
         SFArchive funcCache(READING_ARCHIVE);
         if (funcCache.Lock(abiPath, binaryReadOnly, LOCK_WAIT)) {
             funcCache >> theArray;
@@ -493,9 +493,9 @@ static CFunctionArray *getABIArray(void) {
 }
 
 //---------------------------------------------------------------------------
-int cleanCompareI(const SFString& s1, const SFString& s2) {
-    SFString ss1 = toLower(startsWith(s1, "0x") ? s1.substr(2,8) : s1.substr(0,8));
-    SFString ss2 = toLower(startsWith(s2, "0x") ? s2.substr(2,8) : s2.substr(0,8));
+int cleanCompareI(const string_q& s1, const string_q& s2) {
+    string_q ss1 = toLower(startsWith(s1, "0x") ? s1.substr(2,8) : s1.substr(0,8));
+    string_q ss2 = toLower(startsWith(s2, "0x") ? s2.substr(2,8) : s2.substr(0,8));
     return ss2.compare(ss1);
 }
 
@@ -507,7 +507,7 @@ int findByEncodingI(const void *rr1, const void *rr2) {
 }
 
 //---------------------------------------------------------------------------
-CFunction *findFunctionByEncoding(const SFString& encoding) {
+CFunction *findFunctionByEncoding(const string_q& encoding) {
     CFunctionArray *array = getABIArray();
     if (array) {
         CFunction search;

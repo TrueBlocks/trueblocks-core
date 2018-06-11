@@ -96,14 +96,14 @@ namespace qblocks {
 
     //-------------------------------------------------------------
     CExportContext& CExportContext::operator<<(float f) {
-        SFString val = formatFloat(f);
+        string_q val = formatFloat(f);
         Output(val);
         return *this;
     }
 
     //-------------------------------------------------------------
     CExportContext& CExportContext::operator<<(double f) {
-        SFString val = formatFloat(f);
+        string_q val = formatFloat(f);
         Output(val);
         return *this;
     }
@@ -115,7 +115,7 @@ namespace qblocks {
     }
 
     //-------------------------------------------------------------
-    CExportContext& CExportContext::operator<<(const SFString& str) {
+    CExportContext& CExportContext::operator<<(const string_q& str) {
         if (str.length() >= 3 && str.substr(0,2) == "`%" && str.at(2) != '%')
             fmt = str.substr(1);
         else if (str == "%")
@@ -132,7 +132,7 @@ namespace qblocks {
     }
 
     //-------------------------------------------------------------
-    void CFileExportContext::Output(const SFString& sss) {
+    void CFileExportContext::Output(const string_q& sss) {
         ASSERT(m_output);
         fprintf(m_output, "%s", sss.c_str());
     }
@@ -143,7 +143,7 @@ namespace qblocks {
         ASSERT(0);
     }
 
-    void CStringExportContext::Output(const SFString& sss) {
+    void CStringExportContext::Output(const string_q& sss) {
         str += sss;
     }
 }  // namespace qblocks

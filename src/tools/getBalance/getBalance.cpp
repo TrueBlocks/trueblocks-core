@@ -26,7 +26,7 @@ int main(int argc, const char *argv[]) {
 
     while (!options.commandList.empty()) {
 
-        SFString command = nextTokenClear(options.commandList, '\n');
+        string_q command = nextTokenClear(options.commandList, '\n');
         if (verbose)
             cout << "running command: " << command << "\n";
 
@@ -43,7 +43,7 @@ int main(int argc, const char *argv[]) {
         }
 
         if (needsTotal) {
-            SFString sBal = to_string(options.state.totalVal).c_str();
+            string_q sBal = to_string(options.state.totalVal).c_str();
             if (expContext().asEther) {
                 sBal = wei2Ether(to_string(options.state.totalVal).c_str());
             } else if (expContext().asDollars) {
@@ -67,13 +67,13 @@ bool visitBlock(uint64_t blockNum, void *data) {
 
     COptions *options = (COptions*)data;
     if (blockNum > options->state.latestBlock) {
-        SFString late = (isTestMode() ? "--" : asStringU(options->state.latestBlock));
+        string_q late = (isTestMode() ? "--" : asStringU(options->state.latestBlock));
         return usage("Block " + asStringU(blockNum) + " is later than the last valid block " + late + ". Quitting...");
     }
 
     SFUintBN bal = getBalance(options->state.curAddr, blockNum, false);
     options->state.totalVal += bal;
-    SFString sBal = to_string(bal).c_str();
+    string_q sBal = to_string(bal).c_str();
     if (expContext().asEther) {
         sBal = wei2Ether(to_string(bal).c_str());
     } else if (expContext().asDollars) {

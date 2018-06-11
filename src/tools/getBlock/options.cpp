@@ -30,7 +30,7 @@ CParams params[] = {
 uint32_t nParams = sizeof(params) / sizeof(CParams);
 
 //---------------------------------------------------------------------------------------------------
-bool COptions::parseArguments(SFString& command) {
+bool COptions::parseArguments(string_q& command) {
 
     if (!standardOptions(command))
         return false;
@@ -40,7 +40,7 @@ bool COptions::parseArguments(SFString& command) {
     bool isLatest = false;
     while (!command.empty()) {
 
-        SFString arg = nextTokenClear(command, ' ');
+        string_q arg = nextTokenClear(command, ' ');
 
         // shortcuts
         if (arg == "-r" || arg == "--raw")   { arg = "--source:raw";   }
@@ -96,7 +96,7 @@ bool COptions::parseArguments(SFString& command) {
             isLatest = true;
 
         } else if (startsWith(arg, "-s:") || startsWith(arg, "--source:")) {
-            SFString mode = arg.Substitute("-s:","").Substitute("--source:","");
+            string_q mode = arg.Substitute("-s:","").Substitute("--source:","");
             if (mode == "r" || mode == "raw") {
                 isRaw = true;
 
@@ -122,7 +122,7 @@ bool COptions::parseArguments(SFString& command) {
             quiet++; // if both --check and --quiet are present, be very quiet...
 
         } else if (startsWith(arg, "-f:") || startsWith(arg, "--fields:")) {
-            SFString mode = arg.Substitute("-f:","").Substitute("--fields:","");
+            string_q mode = arg.Substitute("-f:","").Substitute("--fields:","");
 
             if (mode == "a" || mode == "all") {
                 SHOW_ALL_FIELDS(CBlock);
@@ -173,7 +173,7 @@ bool COptions::parseArguments(SFString& command) {
 
         } else {
 
-            SFString ret = blocks.parseBlockList(arg, latestBlock);
+            string_q ret = blocks.parseBlockList(arg, latestBlock);
             if (endsWith(ret, "\n")) {
                 cerr << "\n  " << ret << "\n";
                 return false;
@@ -254,14 +254,14 @@ bool COptions::isMulti(void) const {
 }
 
 //--------------------------------------------------------------------------------
-SFString COptions::postProcess(const SFString& which, const SFString& str) const {
+string_q COptions::postProcess(const string_q& which, const string_q& str) const {
 
     if (which == "options") {
         return str.Substitute("block_list", "<block> [block...]");
 
     } else if (which == "notes" && (verbose || COptions::isReadme)) {
 
-        SFString ret;
+        string_q ret;
         ret += "[{block_list}] is a space-separated list of values, a start-end range, a [{special}], or any combination.\n";
         ret += "This tool retrieves information from the local node or the ${FALLBACK} node, if configured (see documentation).\n";
         ret += "[{special}] blocks are detailed under " + cTeal + "[{whenBlock --list}]" + cOff + ".\n";

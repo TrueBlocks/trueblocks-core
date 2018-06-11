@@ -17,24 +17,24 @@
 
 namespace qblocks {
 
-    SFString cBlack     = "\e[0;30m";
-    SFString cRed       = "\e[0;31m";
-    SFString cGreen     = "\e[0;32m";
-    SFString cYellow    = "\e[0;33m";
-    SFString cBlue      = "\e[0;34m";
-    SFString cMagenta   = "\e[0;35m";
-    SFString cTeal      = "\e[0;36m";
-    SFString cWhite     = "\e[0;37m";
-    SFString cOff       = "\e[0m";
+    string_q cBlack     = "\e[0;30m";
+    string_q cRed       = "\e[0;31m";
+    string_q cGreen     = "\e[0;32m";
+    string_q cYellow    = "\e[0;33m";
+    string_q cBlue      = "\e[0;34m";
+    string_q cMagenta   = "\e[0;35m";
+    string_q cTeal      = "\e[0;36m";
+    string_q cWhite     = "\e[0;37m";
+    string_q cOff       = "\e[0m";
 
-    SFString bbold      = "\e[1m";
-    SFString dim        = "\e[2m";
-    SFString italic     = "\e[3m";
-    SFString underline  = "\e[4m";
-    SFString reversed   = "\e[7m";
-    SFString strikethru = "\e[7m";
-    SFString greenCheck = "\e[0;32m✓\e[0m";
-    SFString redX       = "\e[0;31mX\e[0m";
+    string_q bbold      = "\e[1m";
+    string_q dim        = "\e[2m";
+    string_q italic     = "\e[3m";
+    string_q underline  = "\e[4m";
+    string_q reversed   = "\e[7m";
+    string_q strikethru = "\e[7m";
+    string_q greenCheck = "\e[0;32m✓\e[0m";
+    string_q redX       = "\e[0;31mX\e[0m";
 
     void colorsDim(void) {
         cWhite = (cWhite+dim+italic);
@@ -80,17 +80,17 @@ namespace qblocks {
     }
 
     //-----------------------------------------------------------------------
-    void progressBar(uint64_t _part, uint64_t _whole, const SFString& msgs) {
-        SFString endMsg = msgs;
-        SFString begMsg = nextTokenClear(endMsg, '|');
+    void progressBar(uint64_t _part, uint64_t _whole, const string_q& msgs) {
+        string_q endMsg = msgs;
+        string_q begMsg = nextTokenClear(endMsg, '|');
         double percent = 1.0;
         if (_whole > 0)
             percent = (_part / static_cast<double>(_whole));
         uint64_t len = (uint64_t)(barLen() * percent);
 
         cout << begMsg << (begMsg.empty() ? " " : "");
-        cout << " [" << SFString('x', len).Substitute("x", "░");
-        cout << SFString(' ', max((uint64_t)0, barLen() - len));
+        cout << " [" << string_q('x', len).Substitute("x", "░");
+        cout << string_q(' ', max((uint64_t)0, barLen() - len));
         cout << "] ";
         cout << cYellow << _part << cOff << " of " << cYellow << _whole << cOff;
         cout << " (" << bBlue << fmtFloatp(100. * percent, 1).c_str() << cOff << "%)";
@@ -103,7 +103,7 @@ namespace qblocks {
     double getProgBarVal(void) { return pb_Value; }
 
     //-----------------------------------------------------------------------
-    void progressBar(uint64_t _part, uint64_t _whole, double _tim, const SFString& begMsg) {
+    void progressBar(uint64_t _part, uint64_t _whole, double _tim, const string_q& begMsg) {
         if (_part == 0 && _whole == 0) {
             // reset
             pb_Value = 0.;

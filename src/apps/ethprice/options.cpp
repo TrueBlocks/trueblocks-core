@@ -25,7 +25,7 @@ CParams params[] = {
 uint32_t nParams = sizeof(params) / sizeof(CParams);
 
 //---------------------------------------------------------------------------------------------------
-bool COptions::parseArguments(SFString& command) {
+bool COptions::parseArguments(string_q& command) {
 
     if (!standardOptions(command))
         return false;
@@ -33,11 +33,11 @@ bool COptions::parseArguments(SFString& command) {
     Init();
     while (!command.empty()) {
 
-        SFString arg  = nextTokenClear(command, ' ');
+        string_q arg  = nextTokenClear(command, ' ');
         // do not collapse
         if (arg == "-c" || arg == "--current")
             arg = "-a:now";
-        SFString orig = arg;
+        string_q orig = arg;
 
         if (arg == "-f" || arg == "--freshen") {
             freshen = true;
@@ -95,7 +95,7 @@ COptions::COptions(void) {
 }
 
 //--------------------------------------------------------------------------------
-SFString COptions::postProcess(const SFString& which, const SFString& str) const {
+string_q COptions::postProcess(const string_q& which, const string_q& str) const {
 
     if (which == "options") {
         //return str.Substitute("address_list block_list", "<address> [address...] [block...]")
@@ -103,7 +103,7 @@ SFString COptions::postProcess(const SFString& which, const SFString& str) const
 
     } else if (which == "notes" && (verbose || COptions::isReadme)) {
 
-        //SFString ret;
+        //string_q ret;
         //ret += "[{addresses}] must start with '0x' and be forty characters long.\n";
         //ret += "[{block_list}] may be a space-separated list of values, a start-end range, a [{special}], or any combination.\n";
         //ret += "This tool retrieves information from the local node or the ${FALLBACK} node, if configured (see documentation).\n";

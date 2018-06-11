@@ -26,16 +26,16 @@ CParams params[] = {
 uint32_t nParams = sizeof(params) / sizeof(CParams);
 
 //---------------------------------------------------------------------------------------------------
-bool COptions::parseArguments(SFString& command) {
+bool COptions::parseArguments(string_q& command) {
 
     if (!standardOptions(command))
         return false;
 
     Init();
-    SFString source;
+    string_q source;
     while (!command.empty()) {
-        SFString arg = nextTokenClear(command,' ');
-        SFString orig = arg;
+        string_q arg = nextTokenClear(command,' ');
+        string_q orig = arg;
         if (startsWith(arg, "-m:") || startsWith(arg, "--mode:")) {
             arg = arg.Substitute("-m:", "").Substitute("--mode:", "");
             if (arg != "short" && arg != "full")

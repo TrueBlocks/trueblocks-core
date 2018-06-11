@@ -28,13 +28,13 @@ int main(int argc, const char * argv[]) {
         return 0;
 
     while (!options.commandList.empty()) {
-        SFString command = nextTokenClear(options.commandList, '\n');
+        string_q command = nextTokenClear(options.commandList, '\n');
         cerr << "Processing: " << command << "\n";
 
         if (!options.parseArguments(command))
             return 0;
 
-        SFString message;
+        string_q message;
 
         // Setup the slurper
         if (!slurper.Initialize(options, message))
@@ -62,7 +62,7 @@ int main(int argc, const char * argv[]) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CSlurperApp::Initialize(COptions& options, SFString& message) {
+bool CSlurperApp::Initialize(COptions& options, string_q& message) {
     // This allows us to spin through these classes' lists of fields without explicit display strings
     CFunction::registerClass();
     CParameter::registerClass();
@@ -85,7 +85,7 @@ bool CSlurperApp::Initialize(COptions& options, SFString& message) {
 
     // If we are told to get the address from the rerun address, and the
     // user hasn't supplied one, do so...
-    SFString addr = options.addr;
+    string_q addr = options.addr;
     if (addr.empty() && options.rerun)
         addr = toml.getConfigStr("settings", "rerun", EMPTY);
 
@@ -109,7 +109,7 @@ bool CSlurperApp::Initialize(COptions& options, SFString& message) {
         if (options.archiveFile.empty() && options.name.empty())
             return usage("-a and -n may not both be empty. Specify either an archive file or a name. Quitting...");
 
-        SFString fn = (contains(options.name, "/") ? options.name : options.exportFormat + "/" + options.name) +
+        string_q fn = (contains(options.name, "/") ? options.name : options.exportFormat + "/" + options.name) +
                         (contains(options.name, ".")?"":"." + options.exportFormat);
         CFilename filename(fn);
         if (options.archiveFile.empty())
@@ -126,7 +126,7 @@ bool CSlurperApp::Initialize(COptions& options, SFString& message) {
     toml.writeFile();
 
     // Load per address configurations if any
-    SFString customConfig = blockCachePath("slurps/" + addr + ".toml");
+    string_q customConfig = blockCachePath("slurps/" + addr + ".toml");
     if (fileExists(customConfig) || !options.name.empty()) {
         CToml perAddr("");
         perAddr.setFilename(customConfig);
@@ -157,14 +157,14 @@ bool CSlurperApp::Initialize(COptions& options, SFString& message) {
 }
 
 //--------------------------------------------------------------------------------
-bool CSlurperApp::Slurp(COptions& options, SFString& message) {
+bool CSlurperApp::Slurp(COptions& options, string_q& message) {
     double start = qbNow();
 
     // We always need the ABI
     theAccount.abi.loadABI(theAccount.addr);
 
     // Do we have the data for this address cached?
-    SFString cacheFilename = blockCachePath("slurps/" + theAccount.addr + ".bin");
+    string_q cacheFilename = blockCachePath("slurps/" + theAccount.addr + ".bin");
     bool needToRead = fileExists(cacheFilename);
     if (options.rerun && theAccount.transactions.getCount())
         needToRead = false;
@@ -202,14 +202,14 @@ bool CSlurperApp::Slurp(COptions& options, SFString& message) {
         uint32_t page = max((uint32_t)theAccount.lastPage, (uint32_t)1);
 
         // Keep reading until we get less than a full page
-        SFString contents;
+        string_q contents;
         bool done = false;
 // #define NO_INTERNET
 #ifdef NO_INTERNET
         done = true;
 #endif
         while (!done) {
-            SFString url = SFString("https://api.etherscan.io/api?module=account&action=txlist&sort=asc") +
+            string_q url = string_q("https://api.etherscan.io/api?module=account&action=txlist&sort=asc") +
             "&address=" + theAccount.addr +
             "&page="    + asString(page) +
             "&offset="  +
@@ -217,7 +217,7 @@ bool CSlurperApp::Slurp(COptions& options, SFString& message) {
             "&apikey="  + api.getKey();
 
             // Grab a page of data from the web api
-            SFString thisPage = urlToString(url);
+            string_q thisPage = urlToString(url);
 
             // See if it's good data, if not, bail
             message = nextTokenClear(thisPage, '[');
@@ -315,13 +315,13 @@ bool CSlurperApp::Slurp(COptions& options, SFString& message) {
 }
 
 //--------------------------------------------------------------------------------
-bool CSlurperApp::Filter(COptions& options, SFString& message) {
+bool CSlurperApp::Filter(COptions& options, string_q& message) {
     message = "";
     double start = qbNow();
 
     uint32_t nFuncFilts = 0;
-    SFString funcFilts[20];
-    SFString filtList = options.funcFilter;
+    string_q funcFilts[20];
+    string_q filtList = options.funcFilter;
     while (!filtList.empty())
         funcFilts[nFuncFilts++] = nextTokenClear(filtList, ',');
 
@@ -358,11 +358,11 @@ bool CSlurperApp::Filter(COptions& options, SFString& message) {
 
 // TAKEN OUT OF CTransaction class during cleanup
 ////---------------------------------------------------------------------------
-//bool CTransaction::isFunction(const SFString& func) const
+//bool CTransaction::isFunction(const string_q& func) const
 //{
 //    if (func=="none")
 //    {
-//        SFString ret = inputToFunction();
+//        string_q ret = inputToFunction();
 //         if (containsAny(ret, "acghrstuv"))
 //            return false;
 //        return (ret==" ");
@@ -405,7 +405,7 @@ bool CSlurperApp::Filter(COptions& options, SFString& message) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CSlurperApp::Display(COptions& options, SFString& message) {
+bool CSlurperApp::Display(COptions& options, string_q& message) {
     message = "";
     double start = qbNow();
 
@@ -433,25 +433,25 @@ bool CSlurperApp::Display(COptions& options, SFString& message) {
 }
 
 //--------------------------------------------------------------------------------
-SFString CSlurperApp::getFormatString(COptions& options, const SFString& which, bool ignoreBlank) {
+string_q CSlurperApp::getFormatString(COptions& options, const string_q& which, bool ignoreBlank) {
 
     if (which == "file")
         buildDisplayStrings(options);
 
-    SFString errMsg;
+    string_q errMsg;
 
-    SFString formatName = "fmt_" + options.exportFormat + "_" + which;
-    SFString ret = toml.getConfigStr("display", formatName, EMPTY);
+    string_q formatName = "fmt_" + options.exportFormat + "_" + which;
+    string_q ret = toml.getConfigStr("display", formatName, EMPTY);
     if (contains(ret, "file:")) {
-        SFString file = ret.Substitute("file:", EMPTY);
+        string_q file = ret.Substitute("file:", EMPTY);
         if (!fileExists(file))
-            errMsg = SFString("Formatting file '") + file +
+            errMsg = string_q("Formatting file '") + file +
                         "' for display string '" + formatName + "' not found. Quiting...\n";
         else
             ret = asciiFileToString(file);
 
     } else if (contains(ret, "fmt_")) {  // it's referring to another format string...
-        SFString newName = ret;
+        string_q newName = ret;
         ret = toml.getConfigStr("display", newName, EMPTY);
         formatName += ":" + newName;
     }
@@ -459,14 +459,14 @@ SFString CSlurperApp::getFormatString(COptions& options, const SFString& which, 
 
     // some sanity checks
     if (countOf(ret, '{') != countOf(ret, '}') || countOf(ret, '[') != countOf(ret, ']')) {
-        errMsg = SFString("Mismatched brackets in display string '") + formatName + "': '" + ret + "'. Quiting...\n";
+        errMsg = string_q("Mismatched brackets in display string '") + formatName + "': '" + ret + "'. Quiting...\n";
 
     } else if (ret.empty() && !ignoreBlank) {
 const char *ERR_NO_DISPLAY_STR =
 "You entered an empty display string with the --format (-f) option. The format string 'fmt_[{FMT}]_file'\n"
 "  was not found in the configuration file (which is stored here: ~/.quickBlocks/quickBlocks.toml).\n"
 "  Please see the full documentation for more information on display strings.";
-        errMsg = usageStr(SFString(ERR_NO_DISPLAY_STR).Substitute("[{FMT}]", options.exportFormat));
+        errMsg = usageStr(string_q(ERR_NO_DISPLAY_STR).Substitute("[{FMT}]", options.exportFormat));
     }
 
     if (!errMsg.empty()) {
@@ -484,23 +484,23 @@ void CSlurperApp::buildDisplayStrings(COptions& options) {
         options.exportFormat = "json";
 
     // This is what we're really after...
-    const SFString fmtForRecords = getFormatString(options, "record", false);
+    const string_q fmtForRecords = getFormatString(options, "record", false);
     ASSERT(!fmtForRecords.empty());
 
     // ...we may need this to build it.
-    const SFString fmtForFields  = getFormatString(options, "field", !contains(fmtForRecords, "{FIELDS}"));
+    const string_q fmtForFields  = getFormatString(options, "field", !contains(fmtForRecords, "{FIELDS}"));
     ASSERT(!fmtForFields.empty());
 
-    SFString defList = toml.getConfigStr("display", "fmt_fieldList", EMPTY);
-    SFString fieldList = toml.getConfigStr("display", "fmt_"+options.exportFormat+"_fieldList", defList);
+    string_q defList = toml.getConfigStr("display", "fmt_fieldList", EMPTY);
+    string_q fieldList = toml.getConfigStr("display", "fmt_"+options.exportFormat+"_fieldList", defList);
     if (fieldList.empty())
         fieldList = GETRUNTIME_CLASS(CTransaction)->listOfFields();
-    SFString origList = fieldList;
+    string_q origList = fieldList;
 
     theAccount.displayString = EMPTY;
     theAccount.header = EMPTY;
     while (!fieldList.empty()) {
-        SFString fieldName = nextTokenClear(fieldList, '|');
+        string_q fieldName = nextTokenClear(fieldList, '|');
         bool force = contains(fieldName, "*");
         replace(fieldName, "*", EMPTY);
 
@@ -511,7 +511,7 @@ void CSlurperApp::buildDisplayStrings(COptions& options) {
         }
         if (field->isHidden() && force) ((CFieldData*)field)->setHidden(false);  // NOLINT
         if (!field->isHidden()) {
-            SFString resolved = fieldName;
+            string_q resolved = fieldName;
             if (options.exportFormat != "json")
                 resolved = toml.getConfigStr("field_str", fieldName, fieldName);
             theAccount.displayString += fmtForFields
@@ -541,21 +541,21 @@ void CSlurperApp::buildDisplayStrings(COptions& options) {
 }
 
 //--------------------------------------------------------------------------------
-void findBlockRange(const SFString& json, uint32_t& minBlock, uint32_t& maxBlock) {
-    SFString search = "\"blockNumber\":\"";
+void findBlockRange(const string_q& json, uint32_t& minBlock, uint32_t& maxBlock) {
+    string_q search = "\"blockNumber\":\"";
     size_t len = search.length();
 
     minBlock = 0;
     int64_t first = (int64_t)json.find(search);
     if (first != (int64_t)NOPOS) {
-        SFString str = json.substr(((size_t)first+len));
+        string_q str = json.substr(((size_t)first+len));
         minBlock = toLong32u(str);
     }
 
-    SFString end = json.substr(json.rfind('{'));  // pull off the last transaction
+    string_q end = json.substr(json.rfind('{'));  // pull off the last transaction
     size_t last = end.find(search);
     if (last != NOPOS) {
-        SFString str = end.substr(last+len);
+        string_q str = end.substr(last+len);
         maxBlock = toLong32u(str);
     }
 }
@@ -564,7 +564,7 @@ void findBlockRange(const SFString& json, uint32_t& minBlock, uint32_t& maxBlock
 // Make sure our data folder exist, if not establish it
 bool establishFolders(CToml& toml) {
 
-    SFString configFilename = configPath("quickBlocks.toml");
+    string_q configFilename = configPath("quickBlocks.toml");
     toml.setFilename(configFilename);
     if (folderExists(blockCachePath("slurps/")) && fileExists(configFilename)) {
         toml.readFile(configFilename);

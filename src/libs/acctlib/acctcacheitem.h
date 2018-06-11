@@ -44,7 +44,7 @@ public:
 
     // EXISTING_CODE
     CAcctCacheItem(uint64_t b, uint64_t t) : blockNum(b), transIndex(t) {}
-    CAcctCacheItem(SFString& str);
+    CAcctCacheItem(string_q& str);
     bool operator==(const CAcctCacheItem& item) {
         return (blockNum == item.blockNum && transIndex == item.transIndex);
     }

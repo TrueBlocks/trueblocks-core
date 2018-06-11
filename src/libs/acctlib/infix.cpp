@@ -23,11 +23,11 @@ namespace qblocks {
 IMPLEMENT_NODE(CInfix, CTreeNode);
 
 //---------------------------------------------------------------------------
-static SFString nextInfixChunk(const SFString& fieldIn, const void *dataPtr);
-static SFString nextInfixChunk_custom(const SFString& fieldIn, const void *dataPtr);
+static string_q nextInfixChunk(const string_q& fieldIn, const void *dataPtr);
+static string_q nextInfixChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CInfix::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
+void CInfix::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -36,7 +36,7 @@ void CInfix::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) c
         return;
     }
 
-    SFString fmt = fmtIn;
+    string_q fmt = fmtIn;
     if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
@@ -45,7 +45,7 @@ void CInfix::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) c
 }
 
 //---------------------------------------------------------------------------
-SFString nextInfixChunk(const SFString& fieldIn, const void *dataPtr) {
+string_q nextInfixChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
         return ((const CInfix *)dataPtr)->getValueByName(fieldIn);
 
@@ -56,7 +56,7 @@ SFString nextInfixChunk(const SFString& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CInfix::setValueByName(const SFString& fieldName, const SFString& fieldValue) {
+bool CInfix::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
     // EXISTING_CODE
     // EXISTING_CODE
 
@@ -103,7 +103,7 @@ bool CInfix::Serialize(SFArchive& archive) {
     bool has_next = false;
     archive >> has_next;
     if (has_next) {
-        SFString className;
+        string_q className;
         archive >> className;
         next = createTreeNode(className);
         if (!next)
@@ -125,7 +125,7 @@ bool CInfix::SerializeC(SFArchive& archive) const {
     // EXISTING_CODE
     archive << (next != NULL);
     if (next) {
-        SFString className = next->getRuntimeClass()->getClassNamePtr();
+        string_q className = next->getRuntimeClass()->getClassNamePtr();
         archive << className;
         next->SerializeC(archive);
     }
@@ -157,7 +157,7 @@ void CInfix::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextInfixChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+string_q nextInfixChunk_custom(const string_q& fieldIn, const void *dataPtr) {
     const CInfix *inf = (const CInfix *)dataPtr;
     if (inf) {
         switch (tolower(fieldIn[0])) {
@@ -178,7 +178,7 @@ SFString nextInfixChunk_custom(const SFString& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------
-bool CInfix::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
+bool CInfix::handleCustomFormat(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
@@ -195,10 +195,10 @@ bool CInfix::readBackLevel(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------
-SFString CInfix::getValueByName(const SFString& fieldName) const {
+string_q CInfix::getValueByName(const string_q& fieldName) const {
 
     // Give customized code a chance to override first
-    SFString ret = nextInfixChunk_custom(fieldName, this);
+    string_q ret = nextInfixChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
@@ -232,13 +232,13 @@ ostream& operator<<(ostream& os, const CInfix& item) {
 //---------------------------------------------------------------------------
 // EXISTING_CODE
     //-----------------------------------------------------------------------------
-    SFString CInfix::at(const SFString& _key) const {
+    string_q CInfix::at(const string_q& _key) const {
         ASSERT(next);
         return contains(_key) ? next->at(_key.substr(prefixS.length())) : "";
     }
 
     //-----------------------------------------------------------------------------
-    bool CInfix::contains(const SFString& _key) const {
+    bool CInfix::contains(const string_q& _key) const {
         size_t l1 = _key.length();
         size_t l2 = prefixS.length();
         const char *s1 = _key.c_str();
@@ -250,7 +250,7 @@ ostream& operator<<(ostream& os, const CInfix& item) {
     }
 
     //-----------------------------------------------------------------------------
-    CTreeNode* CInfix::insert(const SFString& _key, const SFString& _value) {
+    CTreeNode* CInfix::insert(const string_q& _key, const string_q& _value) {
         if (verbose == 2) { cerr << "\tinfix inserting " << _key << " at " << _value << "\n"; }
         ASSERT(_value.length());
         if (contains(_key)) {
@@ -281,19 +281,19 @@ ostream& operator<<(ostream& os, const CInfix& item) {
         }
     }
 
-    SFString idnt = "";
+    string_q idnt = "";
     //-----------------------------------------------------------------------------
-    CTreeNode* CInfix::remove(const SFString& _key) {
+    CTreeNode* CInfix::remove(const string_q& _key) {
         if (verbose) {
             cerr << endl << endl<< endl
-            << idnt << SFString('-', 80) << endl
-            << idnt << SFString('-', 80) << endl
+            << idnt << string_q('-', 80) << endl
+            << idnt << string_q('-', 80) << endl
             << idnt << "remove infix [" << prefixS << "] at [" << _key << "]: ";
             idnt+="\t";
         }
 
         if (contains(_key)) {
-            SFString newKey = _key.substr(prefixS.length());
+            string_q newKey = _key.substr(prefixS.length());
             next = next->remove(newKey);
             if (auto p = next) {
                 // merge with child...

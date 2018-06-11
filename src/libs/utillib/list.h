@@ -23,15 +23,15 @@ namespace qblocks {
     typedef int  (*SEARCHFUNC)    (const void *ob1, const void *ob2);
     typedef int  (*SORTINGFUNC)   (const void *ob1, const void *ob2);
     typedef int  (*DUPLICATEFUNC) (const void *ob1, const void *ob2);
-    typedef bool (*APPLYFUNC)     (SFString& line, void *data);
+    typedef bool (*APPLYFUNC)     (string_q& line, void *data);
 
     //----------------------------------------------------------------------
     template<class TYPE>
     class SFArrayBase {
     protected:
         uint32_t m_nSize;
-        uint32_t m_nValues;
-        TYPE  *m_Values;
+        uint32_t m_nItems;
+        TYPE  *m_Items;
 
     public:
         SFArrayBase(void);
@@ -43,14 +43,14 @@ namespace qblocks {
         TYPE& operator[](uint32_t index);
         const TYPE& operator[](uint32_t index) const;
 
-        void addValue(TYPE val) { operator[](m_nValues) = val; }
-        uint32_t getCount(void) const { return m_nValues; }
+        void addValue(TYPE val) { operator[](m_nItems) = val; }
+        uint32_t getCount(void) const { return m_nItems; }
         uint32_t getSize(void) const { return m_nSize; }
 
-        void Sort(SORTINGFUNC func) { qsort(&m_Values[0], m_nValues, sizeof(TYPE), func); }
+        void Sort(SORTINGFUNC func) { qsort(&m_Items[0], m_nItems, sizeof(TYPE), func); }
         TYPE *Find(const TYPE *key, SEARCHFUNC func) {
             // note: use the same function you would use to sort. Return <0, 0, or >0 if less, equal, greater
-            return reinterpret_cast<TYPE*>(bsearch(key, &m_Values[0], m_nValues, sizeof(TYPE), func));
+            return reinterpret_cast<TYPE*>(bsearch(key, &m_Items[0], m_nItems, sizeof(TYPE), func));
         }
 
         void Clear(void);
@@ -91,16 +91,16 @@ namespace qblocks {
     //----------------------------------------------------------------------
     template<class TYPE>
     inline void SFArrayBase<TYPE>::Init(uint32_t size, uint32_t count, TYPE *values) {
-        m_nSize   = size;
-        m_nValues = count;
-        m_Values  = values;
+        m_nSize  = size;
+        m_nItems = count;
+        m_Items  = values;
     }
 
     //----------------------------------------------------------------------
     template<class TYPE>
     inline void SFArrayBase<TYPE>::Clear(void) {
-        if (m_Values)
-            delete [] m_Values;
+        if (m_Items)
+            delete [] m_Items;
         Init(0, 0, NULL);
     }
 
@@ -109,8 +109,8 @@ namespace qblocks {
     inline void SFArrayBase<TYPE>::Copy(const SFArrayBase<TYPE>& copy) {
         CheckSize(copy.getSize());
         for (uint32_t i = 0 ; i < copy.getCount() ; i++)
-            m_Values[i] = copy.m_Values[i];
-        m_nValues = copy.getCount();
+            m_Items[i] = copy.m_Items[i];
+        m_nItems = copy.getCount();
     }
 
     //----------------------------------------------------------------------
@@ -128,17 +128,17 @@ namespace qblocks {
         // The user is requesting access to an index that is past range. We need to grow the array.
         uint32_t newSize = max(m_nSize + ARRAY_CHUNK_SIZE, sizeNeeded);
         TYPE *newArray = new TYPE[newSize];
-        if (m_nValues) {
-            ASSERT(m_Values);
+        if (m_nItems) {
+            ASSERT(m_Items);
             // If there are any values in the source copy them over
-            for (uint32_t i = 0 ; i < m_nValues ; i++)
-                newArray[i] = m_Values[i];
+            for (uint32_t i = 0 ; i < m_nItems ; i++)
+                newArray[i] = m_Items[i];
             // Then clear out the old array
-            if (m_Values)
-                delete [] m_Values;
-            m_Values = NULL;
+            if (m_Items)
+                delete [] m_Items;
+            m_Items = NULL;
         }
-        Init(newSize, m_nValues, newArray);
+        Init(newSize, m_nItems, newArray);
     }
 
     //----------------------------------------------------------------------
@@ -147,10 +147,10 @@ namespace qblocks {
         // This is the non-const version which means we may
         // have to grow the array
         CheckSize(index);
-        if (index >= m_nValues)
-            m_nValues = index+1;
-        ASSERT(m_Values && index >= 0 && index <= m_nSize && index <= m_nValues);
-        return m_Values[index];
+        if (index >= m_nItems)
+            m_nItems = index+1;
+        ASSERT(m_Items && index >= 0 && index <= m_nSize && index <= m_nItems);
+        return m_Items[index];
     }
 
     //----------------------------------------------------------------------
@@ -158,8 +158,8 @@ namespace qblocks {
     inline const TYPE& SFArrayBase<TYPE>::operator[](uint32_t index) const {
         // This is the const version which means it's a get which means we should not be expecting
         // the array to grow. Does not appear to protect against accessing outside range though.
-        ASSERT(index >= 0 && index <= m_nValues);
-        return m_Values[index];
+        ASSERT(index >= 0 && index <= m_nItems);
+        return m_Items[index];
     }
 
     struct xLISTPOS__ { int unused; };
@@ -561,8 +561,8 @@ namespace qblocks {
 
     //-----------------------------------------------------------------------------------------
     inline int sortByStringValue(const void *rr1, const void *rr2) {
-        SFString n1 = * reinterpret_cast<const SFString*>(rr1);
-        SFString n2 = * reinterpret_cast<const SFString*>(rr2);
+        string_q n1 = * reinterpret_cast<const string_q*>(rr1);
+        string_q n2 = * reinterpret_cast<const string_q*>(rr2);
         return strcasecmp(n1.c_str(), n2.c_str());
     }
 
@@ -579,13 +579,13 @@ namespace qblocks {
     }
 
     //----------------------------------------------------------------------------------------
-    class SFUniqueStringList : public SFUniqueList<const SFString&> {
+    class SFUniqueStringList : public SFUniqueList<const string_q&> {
     public:
         SFUniqueStringList(void) : SFUniqueList(sortByStringValue, isDuplicate) { }
     };
 
-    typedef SFArrayBase<SFString> SFStringArray;
-    typedef SFList<SFString> SFStringList;
+    typedef SFArrayBase<string_q> CStringArray;
+    typedef SFList<string_q> CStringList;
     typedef SFArrayBase<uint64_t> SFUintArray;
     typedef SFArrayBase<int64_t> SFIntArray;
 #define SFBlockArray SFUintArray

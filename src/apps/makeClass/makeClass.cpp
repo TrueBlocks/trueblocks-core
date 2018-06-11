@@ -14,12 +14,12 @@
 #include "options.h"
 
 //------------------------------------------------------------------------------------------------------------
-extern void     generateCode  (const COptions& options, CToml& toml, const SFString& dataFile, const SFString& ns);
-extern SFString getCaseCode   (const SFString& fieldCase, const SFString& ex);
-extern SFString getCaseSetCode(const SFString& fieldCase);
-extern SFString short3        (const SFString& in);
-extern SFString checkType     (const SFString& typeIn);
-extern SFString convertTypes  (const SFString& inStr);
+extern void     generateCode  (const COptions& options, CToml& toml, const string_q& dataFile, const string_q& ns);
+extern string_q getCaseCode   (const string_q& fieldCase, const string_q& ex);
+extern string_q getCaseSetCode(const string_q& fieldCase);
+extern string_q short3        (const string_q& in);
+extern string_q checkType     (const string_q& typeIn);
+extern string_q convertTypes  (const string_q& inStr);
 
 //-----------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
@@ -31,7 +31,7 @@ int main(int argc, const char *argv[]) {
         return 0;
 
     while (!options.commandList.empty()) {
-        SFString command = nextTokenClear(options.commandList, '\n');
+        string_q command = nextTokenClear(options.commandList, '\n');
         if (!options.parseArguments(command))
             return 0;
 
@@ -40,8 +40,8 @@ int main(int argc, const char *argv[]) {
 
         while (!options.classNames.empty()) {
 
-            SFString className = nextTokenClear(options.classNames, '|');
-            SFString fileName = "./classDefinitions/" + toLower(className) + ".txt";
+            string_q className = nextTokenClear(options.classNames, '|');
+            string_q fileName = "./classDefinitions/" + toLower(className) + ".txt";
             if (!fileExists(fileName)) {
                 return usage("No class definition file found at " + fileName + "\n");
 
@@ -51,7 +51,7 @@ int main(int argc, const char *argv[]) {
 
                 if (options.isList) {
                     if (verbose) {
-                        cout << SFString('-', 80) << "\nFile (dest): " << fileName << "\n";
+                        cout << string_q('-', 80) << "\nFile (dest): " << fileName << "\n";
                         cout << toml << "\n";
 
                     } else if (!toml.getConfigBool("settings", "disabled", false)) {
@@ -95,19 +95,19 @@ int main(int argc, const char *argv[]) {
 }
 
 //------------------------------------------------------------------------------------------------------------
-SFString convertTypes(const SFString& inStr) {
+string_q convertTypes(const string_q& inStr) {
 
     // Note: Watch out for trailing spaces. They are here to make sure it
     // matches only the types and not the field names.
-    SFString outStr = inStr
+    string_q outStr = inStr
         .Substitute("address ",   "SFAddress "  )
-        .Substitute("bytes32 ",   "SFString "   )
-        .Substitute("bytes ",     "SFString "   )
+        .Substitute("bytes32 ",   "string_q "   )
+        .Substitute("bytes ",     "string_q "   )
         .Substitute("bloom ",     "SFBloom "    )
         .Substitute("wei ",       "SFWei "      )
         .Substitute("gas ",       "SFGas "      )
         .Substitute("hash ",      "SFHash "     )
-        .Substitute("string ",    "SFString "   )
+        .Substitute("string ",    "string_q "   )
         .Substitute("time ",      "SFTime "     )
         .Substitute("uint256 ",   "SFUintBN "   )
         .Substitute("int256 ",    "SFIntBN "    )
@@ -126,7 +126,7 @@ SFString convertTypes(const SFString& inStr) {
         .Substitute("32uint ",    "uint32_t "   )
         .Substitute("64uint ",    "uint64_t "   );
 
-    if (SFString(getenv("TRACING")) == "true")
+    if (string_q(getenv("TRACING")) == "true")
         cerr << "\tconvert: " << padRight(inStr, 30) << " ==> " << outStr << "\n";
 
     return outStr;
@@ -153,61 +153,61 @@ extern const char* STR_GETOBJ_HEAD;
 extern const char* STR_GETSTR_HEAD;
 extern const char* STR_UPGRADE_CODE;
 
-SFString tab = SFString("\t");
+string_q tab = string_q("\t");
 
 //------------------------------------------------------------------------------------------------------------
-void generateCode(const COptions& options, CToml& toml, const SFString& dataFile, const SFString& ns) {
+void generateCode(const COptions& options, CToml& toml, const string_q& dataFile, const string_q& ns) {
 
     //------------------------------------------------------------------------------------------------
-    SFString className  = toml.getConfigStr ("settings", "class", "");
-    SFString baseClass  = toml.getConfigStr ("settings", "baseClass", "CBaseNode");
-    SFString otherIncs  = toml.getConfigStr ("settings", "cIncs", "").Substitute("|", "\n");
-    SFString scope      = toml.getConfigStr ("settings", "scope", "static");
-    SFString hIncludes  = toml.getConfigStr ("settings", "includes", "");
+    string_q className  = toml.getConfigStr ("settings", "class", "");
+    string_q baseClass  = toml.getConfigStr ("settings", "baseClass", "CBaseNode");
+    string_q otherIncs  = toml.getConfigStr ("settings", "cIncs", "").Substitute("|", "\n");
+    string_q scope      = toml.getConfigStr ("settings", "scope", "static");
+    string_q hIncludes  = toml.getConfigStr ("settings", "includes", "");
     bool     serialize  = toml.getConfigBool("settings", "serialize", false);
 
     //------------------------------------------------------------------------------------------------
-    SFString baseBase   = toProper(baseClass.substr(1));
-    SFString baseName   = className.substr(1);
-    SFString baseProper = toProper(baseName);
-    SFString baseLower  = toLower(baseName);
-    SFString baseUpper  = toUpper(baseName);
+    string_q baseBase   = toProper(baseClass.substr(1));
+    string_q baseName   = className.substr(1);
+    string_q baseProper = toProper(baseName);
+    string_q baseLower  = toLower(baseName);
+    string_q baseUpper  = toUpper(baseName);
 
     //------------------------------------------------------------------------------------------------
-    SFString fieldDec, fieldSet,  fieldClear,  fieldCopy, fieldGetObj, fieldGetStr, fieldArchiveRead;
-    SFString fieldArchiveWrite,   fieldReg,    fieldCase, fieldSubCls, headerIncs;
+    string_q fieldDec, fieldSet,  fieldClear,  fieldCopy, fieldGetObj, fieldGetStr, fieldArchiveRead;
+    string_q fieldArchiveWrite,   fieldReg,    fieldCase, fieldSubCls, headerIncs;
 
     //------------------------------------------------------------------------------------------------
     while (!hIncludes.empty()) {
-        SFString line = nextTokenClear(hIncludes, '|');
+        string_q line = nextTokenClear(hIncludes, '|');
         if (line != "none")
             headerIncs += "#include \"" + line + "\"\n";
     }
 
     //------------------------------------------------------------------------------------------------
     bool isBase = (baseClass == "CBaseNode");
-    SFString parFnc = isBase ?
+    string_q parFnc = isBase ?
                         "readBackLevel" :
                         "readBackLevel";
-    SFString parSer = isBase ?
+    string_q parSer = isBase ?
                         "\t[{BASE_CLASS}]::Serialize(archive);\n" :
                         "\t[{BASE_CLASS}]::Serialize(archive);\n\n";
-    SFString parReg = isBase ?
+    string_q parReg = isBase ?
                         "" :
                         "[{BASE_CLASS}]::registerClass();\n\n\t";
-    SFString parCnk = isBase ?
+    string_q parCnk = isBase ?
                         "ret = next[{BASE_BASE}]Chunk(fieldName, this);\n" :
                         "ret = next[{BASE_BASE}]Chunk(fieldName, this);\n";
-    SFString parSet = isBase ?
+    string_q parSet = isBase ?
                         "" :
                         "\tif ([{BASE_CLASS}]::setValueByName(fieldName, fieldValue))\n\t\treturn true;\n\n";
 
     //------------------------------------------------------------------------------------------------
     // build the field list from the config file string
-    SFString fields = toml.getConfigStr("settings", "fields", "").Substitute("address[]", "SFAddressArray");
+    string_q fields = toml.getConfigStr("settings", "fields", "").Substitute("address[]", "SFAddressArray");
     CParameterList fieldList;
     while (!fields.empty()) {
-        SFString fieldDef = nextTokenClear(fields, '|');
+        string_q fieldDef = nextTokenClear(fields, '|');
         CParameter *f = new CParameter(fieldDef);
         fieldList.AddTail(f);
     }
@@ -217,19 +217,19 @@ void generateCode(const COptions& options, CToml& toml, const SFString& dataFile
     while (lPos) {
         CParameter *fld = fieldList.GetNext(lPos);
 
-        SFString decFmt  = "\t[{TYPE}] *[{NAME}];";
+        string_q decFmt  = "\t[{TYPE}] *[{NAME}];";
         if (!fld->isPointer) {
             replace(decFmt, "*", "");
         }
-        SFString copyFmt = "\t[{NAME}] = +SHORT+.[{NAME}];\n";
+        string_q copyFmt = "\t[{NAME}] = +SHORT+.[{NAME}];\n";
         if (fld->isPointer)
             copyFmt = "\tif ([+SHORT+.{NAME}]) {\n\t\t[{NAME}] = new [{TYPE}];\n"
                         "\t\t*[{NAME}] = *[+SHORT+.{NAME}];\n\t}\n";
-        SFString badSet   = "//\t[{NAME}] = ??; /""* unknown type: [{TYPE}] */\n";
-        SFString setFmt   = "\t[{NAME}]";
-        SFString regFmt   = "\tADD_FIELD(CL_NM, \"[{NAME}]\", T_TEXT, ++fieldNum);\n", regType;
-        SFString clearFmt = "\tif ([{NAME}])\n\t\tdelete [{NAME}];\n\t[{NAME}] = NULL;\n";
-        SFString subClsFmt = STR_SUBCLASS;
+        string_q badSet   = "//\t[{NAME}] = ??; /""* unknown type: [{TYPE}] */\n";
+        string_q setFmt   = "\t[{NAME}]";
+        string_q regFmt   = "\tADD_FIELD(CL_NM, \"[{NAME}]\", T_TEXT, ++fieldNum);\n", regType;
+        string_q clearFmt = "\tif ([{NAME}])\n\t\tdelete [{NAME}];\n\t[{NAME}] = NULL;\n";
+        string_q subClsFmt = STR_SUBCLASS;
 
                if (fld->type == "bloom")     { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_BLOOM";
         } else if (fld->type == "wei")       { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_WEI";
@@ -279,7 +279,7 @@ void generateCode(const COptions& options, CToml& toml, const SFString& dataFile
 
         if (contains(fld->type, "Array") || (fld->isObject && !fld->isPointer)) {
 
-            if (contains(fld->type, "SFStringArray")  ||
+            if (contains(fld->type, "CStringArray")  ||
                 contains(fld->type, "SFBlockArray")   ||
                 contains(fld->type, "SFAddressArray") ||
                 contains(fld->type, "SFBigUintArray") ||
@@ -311,18 +311,18 @@ void generateCode(const COptions& options, CToml& toml, const SFString& dataFile
         fieldSet   += fld->Format(setFmt);
         fieldClear += (fld->isPointer ? fld->Format(clearFmt) : "");
         if (fld->isObject && !fld->isPointer && !contains(fld->type, "Array")) {
-            SFString fmt = subClsFmt;
+            string_q fmt = subClsFmt;
             replaceAll(fmt, "[FNAME]", fld->name);
             replaceAll(fmt, "[SH3]", short3(baseLower));
-            SFString fldStr = fld->Format(fmt);
+            string_q fldStr = fld->Format(fmt);
             replace(fldStr, "++", "[{");
             replace(fldStr, "++", "}]");
             if (fieldSubCls.empty())
-                fieldSubCls = "\n\tSFString s;\n";
+                fieldSubCls = "\n\tstring_q s;\n";
             fieldSubCls += fldStr;
         }
 
-SFString ptrReadFmt =
+string_q ptrReadFmt =
 "    [{NAME}] = NULL;\n"
 "    bool has_[{NAME}] = false;\n"
 "    archive >> has_[{NAME}];\n"
@@ -333,7 +333,7 @@ SFString ptrReadFmt =
 "        [{NAME}]->Serialize(archive);\n"
 "    }\n";
 
-SFString ptrWriteFmt =
+string_q ptrWriteFmt =
 "    archive << ([{NAME}] != NULL);\n"
 "    if ([{NAME}])\n"
 "        [{NAME}]->SerializeC(archive);\n";
@@ -345,31 +345,31 @@ SFString ptrWriteFmt =
     //------------------------------------------------------------------------------------------------
     bool hasObjGetter = !fieldGetObj.empty();
     if (hasObjGetter)
-        fieldGetObj = SFString(STR_GETOBJ_CODE).Substitute("[{FIELDS}]", fieldGetObj);
+        fieldGetObj = string_q(STR_GETOBJ_CODE).Substitute("[{FIELDS}]", fieldGetObj);
     bool hasStrGetter = !fieldGetStr.empty();
     if (hasStrGetter)
-        fieldGetStr = SFString(STR_GETSTR_CODE).Substitute("[{FIELDS}]", fieldGetStr);
+        fieldGetStr = string_q(STR_GETSTR_CODE).Substitute("[{FIELDS}]", fieldGetStr);
 
     //------------------------------------------------------------------------------------------------
-    SFString operatorH = SFString(serialize ? STR_OPERATOR_H : "");
-    SFString operatorC = SFString(serialize ? STR_OPERATOR_C : "\n");
+    string_q operatorH = string_q(serialize ? STR_OPERATOR_H : "");
+    string_q operatorC = string_q(serialize ? STR_OPERATOR_C : "\n");
 
     //------------------------------------------------------------------------------------------------
-    SFString caseSetCodeStr = getCaseSetCode(fieldCase);
-    SFString subClsCodeStr  = fieldSubCls;
+    string_q caseSetCodeStr = getCaseSetCode(fieldCase);
+    string_q subClsCodeStr  = fieldSubCls;
 
     //------------------------------------------------------------------------------------------------
-    SFString sorts[4] = { baseLower.substr(0,2)+"_Name", "", baseLower+"ID", "" };
-    SFString sortString = toml.getConfigStr("settings", "sort", "");
+    string_q sorts[4] = { baseLower.substr(0,2)+"_Name", "", baseLower+"ID", "" };
+    string_q sortString = toml.getConfigStr("settings", "sort", "");
     uint32_t cnt = 0;
     while (!sortString.empty())
         sorts[cnt++] = nextTokenClear(sortString, '|');
 
     //------------------------------------------------------------------------------------------------
-    SFString headerFile = dataFile.Substitute(".txt", ".h").Substitute("./classDefinitions/", "./");
-    SFString headSource = asciiFileToString(configPath("makeClass/blank.h"));
-    replaceAll(headSource, "[{GET_OBJ}]",      (hasObjGetter ? SFString(STR_GETOBJ_HEAD)+(hasStrGetter?"":"\n") : ""));
-    replaceAll(headSource, "[{GET_STR}]",      (hasStrGetter ? SFString(STR_GETSTR_HEAD)+"\n" : ""));
+    string_q headerFile = dataFile.Substitute(".txt", ".h").Substitute("./classDefinitions/", "./");
+    string_q headSource = asciiFileToString(configPath("makeClass/blank.h"));
+    replaceAll(headSource, "[{GET_OBJ}]",      (hasObjGetter ? string_q(STR_GETOBJ_HEAD)+(hasStrGetter?"":"\n") : ""));
+    replaceAll(headSource, "[{GET_STR}]",      (hasStrGetter ? string_q(STR_GETSTR_HEAD)+"\n" : ""));
     replaceAll(headSource, "[FIELD_COPY]",     fieldCopy);
     replaceAll(headSource, "[FIELD_DEC]",      fieldDec);
     replaceAll(headSource, "[FIELD_SET]",      fieldSet);
@@ -400,10 +400,10 @@ SFString ptrWriteFmt =
         writeTheCode(headerFile, headSource, ns);
 
     //------------------------------------------------------------------------------------------------
-    SFString fieldStr = fieldList.GetCount() ? getCaseCode(fieldCase, "").Substitute("[{PTR}]", "") : "// No fields";
+    string_q fieldStr = fieldList.GetCount() ? getCaseCode(fieldCase, "").Substitute("[{PTR}]", "") : "// No fields";
 
-    SFString srcFile    = dataFile.Substitute(".txt", ".cpp").Substitute("./classDefinitions/", "./");
-    SFString srcSource  = asciiFileToString(configPath("makeClass/blank.cpp"));
+    string_q srcFile    = dataFile.Substitute(".txt", ".cpp").Substitute("./classDefinitions/", "./");
+    string_q srcSource  = asciiFileToString(configPath("makeClass/blank.cpp"));
     if ((startsWith(className, "CNew") || className == "CPriceQuote") && !contains(getCWD(), "parse"))
         replace(srcSource, "version of the data\n", STR_UPGRADE_CODE);
     replaceAll(srcSource, "[{GET_OBJ}]",         fieldGetObj);
@@ -451,18 +451,18 @@ SFString ptrWriteFmt =
 }
 
 //------------------------------------------------------------------------------------------------
-SFString getCaseCode(const SFString& fieldCase, const SFString& ex) {
-    SFString baseTab = (tab+tab+ex);
-    SFString caseCode;
+string_q getCaseCode(const string_q& fieldCase, const string_q& ex) {
+    string_q baseTab = (tab+tab+ex);
+    string_q caseCode;
     for (char ch = '_' ; ch < 'z' + 1 ; ch++) {
-        if (contains(toLower(fieldCase), "+"+SFString(ch))) {
+        if (contains(toLower(fieldCase), "+"+string_q(ch))) {
             caseCode += baseTab + "case '" + ch + "':\n";
-            SFString fields = fieldCase;
+            string_q fields = fieldCase;
             while (!fields.empty()) {
-                SFString isObj = nextTokenClear(fields, '|');
-                SFString type  = nextTokenClear(isObj, '+');
-                SFString field = nextTokenClear(isObj, '-');
-                SFString isPtr = nextTokenClear(isObj, '~');
+                string_q isObj = nextTokenClear(fields, '|');
+                string_q type  = nextTokenClear(isObj, '+');
+                string_q field = nextTokenClear(isObj, '-');
+                string_q isPtr = nextTokenClear(isObj, '~');
                 bool     isPointer = str2Bool(isPtr);
                 bool     isObject  = str2Bool(isObj);
 
@@ -472,7 +472,7 @@ SFString getCaseCode(const SFString& fieldCase, const SFString& ex) {
                         caseCode += " || fieldName % \"" + field + "Cnt\"";
                     caseCode += " )";
                     if (contains(type, "List") || isPointer) {
-                        SFString ptrCase = PTR_GET_CASE;
+                        string_q ptrCase = PTR_GET_CASE;
                         replaceAll(ptrCase, "[{NAME}]", field);
                         replaceAll(ptrCase, "[{TYPE}]", type);
                         caseCode += ptrCase;
@@ -522,13 +522,13 @@ SFString getCaseCode(const SFString& fieldCase, const SFString& ex) {
                     } else if (type == "double") {
                         caseCode += " return fmtFloat([{PTR}]" + field + ");";
 
-                    } else if (contains(type, "SFStringArray") || contains(type, "SFAddressArray")) {
-                        SFString str = STR_CASE_CODE_STRINGARRAY;
+                    } else if (contains(type, "CStringArray") || contains(type, "SFAddressArray")) {
+                        string_q str = STR_CASE_CODE_STRINGARRAY;
                         replaceAll(str, "[{FIELD}]", field);
                         caseCode += str;
 
                     } else if (contains(type, "SFBigUintArray") || contains(type, "SFTopicArray")) {
-                        SFString str = STR_CASE_CODE_STRINGARRAY;
+                        string_q str = STR_CASE_CODE_STRINGARRAY;
                         // hack for getCount clause
                         replace(str, "[{FIELD}]", field);
                         // hack for the array access
@@ -536,7 +536,7 @@ SFString getCaseCode(const SFString& fieldCase, const SFString& ex) {
                         caseCode += str;
 
                     } else if (contains(type, "Array")) {
-                        SFString str = STR_CASE_CODE_ARRAY;
+                        string_q str = STR_CASE_CODE_ARRAY;
                         if (contains(type, "SFUint") || contains(type, "SFBlock"))
                             replaceAll(str, "[{PTR}][{FIELD}][i].Format()", "asStringU([{PTR}][{FIELD}][i])");
                         replaceAll(str, "[{FIELD}]", field);
@@ -560,9 +560,9 @@ SFString getCaseCode(const SFString& fieldCase, const SFString& ex) {
     return caseCode;
 }
 
-SFString strArraySet =
+string_q strArraySet =
 " {\n"
-"\t\t\t\tSFString str = fieldValue;\n"
+"\t\t\t\tstring_q str = fieldValue;\n"
 "\t\t\t\twhile (!str.empty()) {\n"
 "\t\t\t\t\t[{NAME}][[{NAME}].getCount()] = nextTokenClear(str,',');\n"
 "\t\t\t\t}\n"
@@ -570,25 +570,25 @@ SFString strArraySet =
 "\t\t\t}";
 
 //------------------------------------------------------------------------------------------------
-SFString getCaseSetCode(const SFString& fieldCase) {
-    SFString baseTab = (tab+tab);
-    SFString caseCode;
+string_q getCaseSetCode(const string_q& fieldCase) {
+    string_q baseTab = (tab+tab);
+    string_q caseCode;
     for (char ch = '_' ; ch < 'z' + 1 ; ch++) {
-        if (contains(toLower(fieldCase), "+"+SFString(ch))) {
+        if (contains(toLower(fieldCase), "+"+string_q(ch))) {
             caseCode += baseTab + "case '" + ch + "':\n";
-            SFString fields = fieldCase;
+            string_q fields = fieldCase;
             while (!fields.empty()) {
-                SFString isObj = nextTokenClear(fields, '|');
-                SFString type  = nextTokenClear(isObj, '+');
-                SFString field = nextTokenClear(isObj, '-');
-                SFString isPtr = nextTokenClear(isObj, '~');
+                string_q isObj = nextTokenClear(fields, '|');
+                string_q type  = nextTokenClear(isObj, '+');
+                string_q field = nextTokenClear(isObj, '-');
+                string_q isPtr = nextTokenClear(isObj, '~');
                 bool     isPointer = str2Bool(isPtr);
                 bool     isObject  = str2Bool(isObj);
 
                 if (tolower(field[0]) == ch) {
                     caseCode += baseTab + tab + "if ( fieldName % \"" + field + "\" )";
                     if (contains(type, "List") || isPointer) {
-                        SFString ptrCase = PTR_SET_CASE;
+                        string_q ptrCase = PTR_SET_CASE;
                         replaceAll(ptrCase, "[{NAME}]", field);
                         replaceAll(ptrCase, "[{TYPE}]", type);
                         caseCode += ptrCase;
@@ -644,22 +644,22 @@ SFString getCaseSetCode(const SFString& fieldCase) {
                     } else if (type == "double") {
                         caseCode +=  " { " + field + " = str2Double(fieldValue); return true; }";
 
-                    } else if (contains(type, "SFStringArray") || contains(type, "SFBlockArray")) {
-                        SFString str = strArraySet;
+                    } else if (contains(type, "CStringArray") || contains(type, "SFBlockArray")) {
+                        string_q str = strArraySet;
                         replaceAll(str, "[{NAME}]", field);
                         if (contains(type, "SFBlockArray"))
                             replaceAll(str, "nextTokenClear(str,',')", "toUnsigned(nextTokenClear(str,','))");
                         caseCode += str;
 
                     } else if (contains(type, "SFAddressArray") || contains(type, "SFBigUintArray") || contains(type, "SFTopicArray")) {
-                        SFString str = strArraySet;
+                        string_q str = strArraySet;
                         replaceAll(str, "[{NAME}]", field);
                         replaceAll(str, "nextTokenClear(str,',')", "to[{TYPE}](nextTokenClear(str,','))");
                         replaceAll(str, "[{TYPE}]", type.substr(2).Substitute("Array", ""));
                         caseCode += str;
 
                     } else if (contains(type, "Array")) {
-                        SFString str = STR_CASE_SET_CODE_ARRAY;
+                        string_q str = STR_CASE_SET_CODE_ARRAY;
                         replaceAll(str, "[{NAME}]", field);
                         replaceAll(str, "[{TYPE}]", type.Substitute("Array", ""));
                         caseCode += str;
@@ -708,7 +708,7 @@ const char* STR_CASE_CODE_ARRAY =
 "[BTAB]\t\tif (endsWith(fieldName, \"Cnt\"))\n"
 "[BTAB]\t\t\treturn asStringU(cnt);\n"
 "[BTAB]\t\tif (!cnt) return \"\";\n"
-"[BTAB]\t\tSFString retS;\n"
+"[BTAB]\t\tstring_q retS;\n"
 "[BTAB]\t\tfor (uint32_t i = 0 ; i < cnt ; i++) {\n"
 "[BTAB]\t\t\tretS += [{PTR}][{FIELD}][i].Format();\n"
 "[BTAB]\t\t\tretS += ((i < cnt - 1) ? \",\\n\" : \"\\n\");\n"
@@ -723,7 +723,7 @@ const char* STR_CASE_CODE_STRINGARRAY =
 "[BTAB]\t\tif (endsWith(fieldName, \"Cnt\"))\n"
 "[BTAB]\t\t\treturn asStringU(cnt);\n"
 "[BTAB]\t\tif (!cnt) return \"\";\n"
-"[BTAB]\t\tSFString retS;\n"
+"[BTAB]\t\tstring_q retS;\n"
 "[BTAB]\t\tfor (uint32_t i = 0 ; i < cnt ; i++) {\n"
 "[BTAB]\t\t\tretS += (\"\\\"\" + [{PTR}][{FIELD}][i] + \"\\\"\");\n"
 "[BTAB]\t\t\tretS += ((i < cnt - 1) ? \",\\n\" + indent() : \"\\n\");\n"
@@ -759,9 +759,9 @@ const char* STR_OPERATOR_C =
 
 //------------------------------------------------------------------------------------------------------------
 const char* STR_SUBCLASS =
-"\ts = toUpper(SFString(\"[FNAME]\")) + \"::\";\n"
+"\ts = toUpper(string_q(\"[FNAME]\")) + \"::\";\n"
 "\tif (contains(fieldName, s)) {\n"
-"\t\tSFString f = fieldName;\n"
+"\t\tstring_q f = fieldName;\n"
 "\t\treplaceAll(f, s, \"\");\n"
 "\t\tf = [FNAME].getValueByName(f);\n"
 "\t\treturn f;\n"
@@ -791,7 +791,7 @@ const char* PTR_SET_CASE =
 
 //------------------------------------------------------------------------------------------------------------
 const char *STR_GETOBJ_HEAD =
-"\tconst CBaseNode *getObjectAt(const SFString& fieldName, uint32_t index) const override;\n";
+"\tconst CBaseNode *getObjectAt(const string_q& fieldName, uint32_t index) const override;\n";
 
 //------------------------------------------------------------------------------------------------------------
 const char *STR_GETOBJ_CODE_FIELD =
@@ -801,13 +801,13 @@ const char *STR_GETOBJ_CODE_FIELD =
 //------------------------------------------------------------------------------------------------------------
 const char *STR_GETOBJ_CODE =
 "//---------------------------------------------------------------------------\n"
-"const CBaseNode *[{CLASS_NAME}]::getObjectAt(const SFString& fieldName, uint32_t index) const {\n"
+"const CBaseNode *[{CLASS_NAME}]::getObjectAt(const string_q& fieldName, uint32_t index) const {\n"
 "[{FIELDS}]\treturn NULL;\n"
 "}\n\n";
 
 //------------------------------------------------------------------------------------------------------------
 const char *STR_GETSTR_HEAD =
-"\tconst SFString getStringAt(const SFString& name, uint32_t i) const override;\n";
+"\tconst string_q getStringAt(const string_q& name, uint32_t i) const override;\n";
 
 //------------------------------------------------------------------------------------------------------------
 const char *STR_GETSTR_CODE_FIELD =
@@ -817,7 +817,7 @@ const char *STR_GETSTR_CODE_FIELD =
 //------------------------------------------------------------------------------------------------------------
 const char *STR_GETSTR_CODE =
 "//---------------------------------------------------------------------------\n"
-"const SFString [{CLASS_NAME}]::getStringAt(const SFString& name, uint32_t i) const {\n"
+"const string_q [{CLASS_NAME}]::getStringAt(const string_q& name, uint32_t i) const {\n"
 "[{FIELDS}]\treturn \"\";\n"
 "}\n\n";
 
@@ -826,8 +826,8 @@ const char *STR_UPGRADE_CODE =
 "version of the data\n\t(([{CLASS_NAME}]*)this)->m_schema = getVersionNum();\n";
 
 //------------------------------------------------------------------------------------------------------------
-SFString short3(const SFString& str) {
-    SFString ret = str.substr(0,3);
+string_q short3(const string_q& str) {
+    string_q ret = str.substr(0,3);
     if (ret == "new")
         ret = "newp";
     if (ret == "ret")
@@ -836,17 +836,17 @@ SFString short3(const SFString& str) {
 }
 
 //---------------------------------------------------------------------------
-SFString checkType(const SFString& typeIn) {
+string_q checkType(const string_q& typeIn) {
     if (startsWith(typeIn, "C")) return typeIn;
     if (endsWith(typeIn, "Array")) return typeIn;
 
-    SFString keywords[] = {
+    string_q keywords[] = {
         "address", "bloom",  "bool",  "bytes",     "bytes32",
         "double",  "gas",    "hash",  "int256",    "int32",
         "int64",   "string", "time",  "timestamp", "uint256",
         "uint32",  "uint64", "uint8", "wei",       "blknum",
     };
-    uint32_t cnt = sizeof(keywords) / sizeof(SFString);
+    uint32_t cnt = sizeof(keywords) / sizeof(string_q);
     for (uint32_t i=0;i<cnt;i++) {
         if (keywords[i] == typeIn)
             return typeIn;

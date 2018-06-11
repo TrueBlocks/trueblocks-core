@@ -61,7 +61,7 @@ bool CWebAPI::checkKey(CToml& toml) {
 }
 
 //--------------------------------------------------------------------------------
-SFString CWebAPI::getKey(void) const {
+string_q CWebAPI::getKey(void) const {
     return key;
 }
 }  // namespace qblocks

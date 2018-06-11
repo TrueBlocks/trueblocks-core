@@ -17,11 +17,11 @@
 namespace qblocks {
 
     //--------------------------------------------------------------------------------
-    blknum_t COptionsBlockList::parseBlockOption(SFString& msg, blknum_t lastBlock) const {
+    blknum_t COptionsBlockList::parseBlockOption(string_q& msg, blknum_t lastBlock) const {
 
         blknum_t ret = NOPOS;
 
-        SFString arg = msg;
+        string_q arg = msg;
         msg = "";
 
         // if it's a number, return it
@@ -44,7 +44,7 @@ namespace qblocks {
         }
 
         if (ret > lastBlock) {
-            SFString lateStr = (isTestMode() ? "--" : asStringU(lastBlock));
+            string_q lateStr = (isTestMode() ? "--" : asStringU(lastBlock));
             msg = "Block " + arg + " is later than the last valid block " + lateStr + ". Quitting...\n";
             return NOPOS;
         }
@@ -53,20 +53,20 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    SFString COptionsBlockList::parseBlockList(const SFString& argIn, blknum_t lastBlock) {
-        SFString arg = argIn;
+    string_q COptionsBlockList::parseBlockList(const string_q& argIn, blknum_t lastBlock) {
+        string_q arg = argIn;
         if (contains(arg, "-")) {
 
             // If we already have a range, bail
             if (start != stop)
                 return "Specify only a single block range at a time.";
 
-            SFString stp = arg;
-            SFString strt = nextTokenClear(stp, '-');
+            string_q stp = arg;
+            string_q strt = nextTokenClear(stp, '-');
             if (strt == "latest")
                 return "Cannot start range with 'latest'";
 
-            SFString msg = strt;
+            string_q msg = strt;
             start = parseBlockOption(msg, lastBlock);
             if (!msg.empty())
                 return msg;
@@ -84,7 +84,7 @@ namespace qblocks {
                 hashList[hashList.getCount()] = arg;
 
             } else {
-                SFString msg = arg;
+                string_q msg = arg;
                 blknum_t num = parseBlockOption(msg, lastBlock);
                 if (!msg.empty())
                     return msg;

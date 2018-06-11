@@ -17,7 +17,7 @@
 namespace qblocks {
 
 //-----------------------------------------------------
-IPCSocket::IPCSocket(SFString const& _path): m_path(_path)
+IPCSocket::IPCSocket(const string_q& _path): m_path(_path)
 {
     if (_path.length() >= sizeof(sockaddr_un::sun_path))
     { cerr << "Error opening IPC: socket path is too long!" << "\n"; exit(0); }
@@ -38,12 +38,12 @@ IPCSocket::IPCSocket(SFString const& _path): m_path(_path)
 }
 
 //-----------------------------------------------------
-SFString IPCSocket::sendRequest(SFString const& _req)
+string_q IPCSocket::sendRequest(const string_q& _req)
 {
     send(m_socket, (const char*)_req, _req.length(), 0);
 
     char c;
-    SFString response;
+    string_q response;
     while ((c = fgetc(m_fp)) != EOF)
     {
         if (c != '\n')
@@ -55,11 +55,11 @@ SFString IPCSocket::sendRequest(SFString const& _req)
 }
 
 //-----------------------------------------------------
-CReceipt RPCSession::eth_getTransactionReceipt(SFString const& _transactionHash)
+CReceipt RPCSession::eth_getTransactionReceipt(const string_q& _transactionHash)
 {
     CReceipt receipt;
 
-    SFString const result = rpcCall("eth_getTransactionReceipt", { _transactionHash });
+    string_q const result = rpcCall("eth_getTransactionReceipt", { _transactionHash });
     if (result.empty())
     {
         cerr << "Result from eth_getTransactionReceipt call is empty. Quitting...\n";
@@ -80,10 +80,10 @@ CReceipt RPCSession::eth_getTransactionReceipt(SFString const& _transactionHash)
 }
 
 //-----------------------------------------------------
-SFString RPCSession::rpcCall(SFString const& _methodName, SFString const& _args)
+string_q RPCSession::rpcCall(const string_q& _methodName, const string_q& _args)
 {
-    SFString request = "{\"jsonrpc\":\"2.0\",\"method\":\"" + _methodName + "\",\"params\":[";
-    SFString args = _args;
+    string_q request = "{\"jsonrpc\":\"2.0\",\"method\":\"" + _methodName + "\",\"params\":[";
+    string_q args = _args;
     while (!args.empty())
     {
         request += "\"" + nextTokenClear(args, '|') + "\"";
@@ -93,7 +93,7 @@ SFString RPCSession::rpcCall(SFString const& _methodName, SFString const& _args)
     request += "],\"id\":" + asString(m_rpcSequence) + "}";
     ++m_rpcSequence;
 
-    SFString result = m_ipcSocket.sendRequest(request);
+    string_q result = m_ipcSocket.sendRequest(request);
     if (contains(result, "error")) {
         cerr << "Error on JSON-RPC call: " << result << "\n";
         exit(0);
@@ -102,25 +102,25 @@ SFString RPCSession::rpcCall(SFString const& _methodName, SFString const& _args)
 }
 
 //-----------------------------------------------------
-SFString RPCSession::eth_getCode(SFString const& _address, SFString const& _blockNumber)
+string_q RPCSession::eth_getCode(const string_q& _address, const string_q& _blockNumber)
 {
     return rpcCall("eth_getCode", _address + "|" + _blockNumber);
 }
 
 //-----------------------------------------------------
-SFString RPCSession::eth_getBalanc e(SFString const& _address, SFString const& _blockNumber)
+string_q RPCSession::eth_getBalanc e(const string_q& _address, const string_q& _blockNumber)
 {
     return rpcCall("eth_getBalanc e", _address + "|" + _blockNumber);
 }
 
 //-----------------------------------------------------
-SFString RPCSession::eth_getSt orageRoot(SFString const& _address, SFString const& _blockNumber)
+string_q RPCSession::eth_getSt orageRoot(const string_q& _address, const string_q& _blockNumber)
 {
     return rpcCall("eth_getSt orageRoot", _address + "|" + _blockNumber);
 }
 
 //-----------------------------------------------------
-RPCSession::RPCSession(const SFString& _path) : m_ipcSocket(_path)
+RPCSession::RPCSession(const string_q& _path) : m_ipcSocket(_path)
 {
 }
 
