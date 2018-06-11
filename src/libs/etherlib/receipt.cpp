@@ -218,7 +218,7 @@ bool CReceipt::readBackLevel(SFArchive& archive) {
         archive >> gasUsed;
         archive >> logs;
         archive >> removed; // was logsBloom
-        // The `status` field will be corrected in CBlock::finishParse() once we have a block
+        // The 'status' field will be corrected in CBlock::finishParse() once we have a block
         // number. We set status here to NO_STATUS assuming pre-byzantium. After byzantium, we
         // have to pick up the value (0 or 1) from the node
         status = NO_STATUS;

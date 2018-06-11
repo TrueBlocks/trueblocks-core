@@ -15,7 +15,7 @@
 //---------------------------------------------------------------------------------------------------
 CParams params[] = {
     CParams("~testNum",         "the number of the test to run"),
-    CParams("-bool:<bool>",     "enter a boolean value (either `0`, `1`, `false`, or `true`)"),
+    CParams("-bool:<bool>",     "enter a boolean value (either '0', '1', 'false', or 'true')"),
     CParams("-int:<int>",       "enter any numeric value"),
     CParams("-uint:<uint>",     "enter any numeric value greater than or equal to zero"),
     CParams("-string:<string>", "enter any value"),
