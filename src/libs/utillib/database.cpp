@@ -514,7 +514,7 @@ namespace qblocks {
             replaceAll(codeOut, "\t", "    ");
 
         if (contains(codeOut, "virtual") || contains(codeOut, "override"))
-            replaceAll(codeOut, "~", "virtual ~");
+            codeOut.Replace("~", "virtual ~");
 
         // If we don't write it because it's identical, it won't force a rebuild
         if (orig != codeOut)
