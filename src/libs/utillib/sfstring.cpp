@@ -47,7 +47,7 @@ namespace qblocks {
     string_q::string_q(char ch, size_t len) {
         init();
 
-        if (((long)len) > 0) {
+        if ((long)len > 0) {
             reserve(len);
             memset(m_Values, ch, len);
             m_nValues     = len;
