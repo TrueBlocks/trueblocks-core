@@ -17,40 +17,6 @@
 
 namespace qblocks {
 
-    //----------------------------------------------------------------------------
-    inline uint64_t hex2Long(const SFString& inHex) {
-        SFString hex = toLower(startsWith(inHex, "0x") ? inHex.substr(2) : inHex);
-        reverse(hex);
-        char *s = (char *)hex.c_str();
-
-        uint64_t ret = 0, mult=1;
-        while (*s) {
-            int val = *s - '0';
-            if (*s >= 'a' && *s <= 'f')
-            val = *s - 'a' + 10;
-            ret += (mult * (uint64_t)val);
-            s++;mult*=16;
-        }
-
-        return ret;
-    }
-
-    //--------------------------------------------------------------------
-    inline SFString asHex(char val) {
-        char tmp[20];
-        sprintf(tmp, "%02x", (unsigned int)(char)val);
-        SFString ret = tmp;
-        return ret.substr(ret.length()-2,2);
-    }
-
-    //----------------------------------------------------------------------------
-    inline SFString string2Hex(const SFString& inAscii) {
-        SFString ret;
-        for (size_t i = 0 ; i < inAscii.length() ; i++)
-            ret += asHex(inAscii[i]);
-        return ret;
-    }
-
     //--------------------------------------------------------------------
     inline SFString asString(int64_t i) {
         ostringstream os;
@@ -200,7 +166,6 @@ namespace qblocks {
     typedef SFArrayBase<SFAddress> SFAddressArray;
     typedef SFArrayBase<SFBloom> SFBloomArray;
 
-#define toSigned(a)    (int64_t)(startsWith((a), "0x")?hex2Long((a)):toLong((a)))
 #define toHash(a)      toLower(a)
 #define toTopic(a)     canonicalWei(a)
 #define toBloom(a)     canonicalWei(a)

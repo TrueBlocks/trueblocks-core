@@ -57,7 +57,7 @@ bool test_encodings(void) {
         if (!startsWith(expected, ';')) {
             SFString type  = nextTokenClear(expected, ' ');
             SFString text  = nextTokenClear(expected, ' ');
-            SFString myHex = "0x"+string2Hex(text);
+            SFString myHex = string2Hex(text);
             SFString mySha = getSha3(myHex);
             if (type == "function")
                 mySha = mySha.substr(0,10);

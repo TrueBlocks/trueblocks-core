@@ -33,7 +33,7 @@ int main(int argc, const char *argv[]) {
                 return 0;
             SFString in = argv[1];
             cout << "in: " << in << "\n";
-            SFString hex = startsWith(in, "0x") ? in : "0x" + string2Hex(in);
+            SFString hex = string2Hex(in);
             cout << "hex: " << hex << "\n";
             SFString out = getSha3(hex);
             cout << "out: " << out << "\n";
@@ -49,6 +49,7 @@ void doTests(void) {
     SFString in;
     bool hasIn = false;
     SFString contents = STR_TEST_DATA;
+    SFString comment;
     while (!contents.empty()) {
         SFString line = nextTokenClear(contents, '\n');
         if (!startsWith(line, '#')) {
@@ -56,14 +57,19 @@ void doTests(void) {
                 in = line;
                 hasIn = true;
             } else {
-                SFString hex = startsWith(in, "0x") ? in : "0x" + string2Hex(in);
+                SFString hex = string2Hex(in);
                 SFString out = getSha3(hex);
-                cout << "in:\t\t" << in << "\n"
+                cout << SFString('-', 80) << "\n"
+                    << comment << "\n"
+                    << "in:\t\t" << in << "\n"
                     << "hex:\t\t" << hex << "\n"
                     << "expected:\t" << line << "\n"
-                    << "out:\t\t" << out << " " << (out == line ? greenCheck : redX) << "\n\n";
+                    << "delivered:\t" << out << " " << (out == line ? greenCheck : redX) << "\n\n";
                 hasIn = false;
+                comment = "";
             }
+        } else if (!hasIn) {
+            comment = line;
         }
     }
 }
@@ -75,20 +81,22 @@ const char* STR_TEST_DATA =
 "# pairs of input / expected output on subsequent lines\n"
 "#\n"
 "#\n"
-"# from RPC web page (already hex)\n"
+"# From an example on the RPC web page (already in hex)\n"
 "0x68656c6c6f20776f726c64\n"
 "0x47173285a8d7341e5e972fc677286384f802f8ef42a5ec5f03bbfa254cb01fad\n"
 "#\n"
-"# empty string \n"
+"# An empty string \n"
 "\n"
 "0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470\n"
 "#\n"
-"# longer string\n"
+"# A longer string\n"
 "abcdefghbcdefghicdefghijdefghijkefghijklfghijklmghijklmnhijklmnoijklmnopjklmnopqklmnopqrlmnopqrsmnopqrstnopqrstu \n"
 "0x4fdc431ca3869f7a79a3a43acbb0019c769c667ad29fb36896209969b8550af7\n"
 "#\n"
+"# A regular sentence with no period\n"
 "The quick brown fox jumps over the lazy dog\n"
 "0x4d741b6f1eb29cb2a9b9911c82f56fa8d73b04959d3d9d222895df6c0b28aa15\n"
 "#\n"
+"# A regular sentence with a period\n"
 "The quick brown fox jumps over the lazy dog.\n"
 "0x578951e24efd62a3d63a86f7cd19aaa53c898fe287d2552133220370240b572d\n";

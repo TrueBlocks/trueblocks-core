@@ -228,7 +228,8 @@ SFString nextFunctionChunk_custom(const SFString& fieldIn, const void *dataPtr) 
                             ret += ",";
                     }
                     ret += ")";
-                    return ret + "\t0x" + string2Hex(ret).Substitute(",)", ")");
+                    ret.Replace(",)", ")");
+                    return (ret + "\t" + string2Hex(ret));
 
                 } else if ( fieldIn % "hasAddrs" ) {
                     return asString(fun->hasAddrs);
@@ -398,7 +399,7 @@ SFString CFunction::getSignature(uint64_t parts) const {
 
 //-----------------------------------------------------------------------
 SFString CFunction::encodeItem(void) const {
-    SFString hex = "0x"+string2Hex(signature);
+    SFString hex = string2Hex(signature);
     SFString ret;
 extern bool getSha3(const SFString& hexIn, SFString& shaOut);
     getSha3(hex, ret);

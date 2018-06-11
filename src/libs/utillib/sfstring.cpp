@@ -541,7 +541,7 @@ namespace qblocks {
     string_q toProper(const string_q& in) {
         string ret;
         string str = in.c_str();
-        char prev = 'x'; // not a space
+        char prev = ' '; // not a space
         for (auto elem : str) {
             if (isspace(prev) || prev == '_')
                 ret += (char)toupper(elem);

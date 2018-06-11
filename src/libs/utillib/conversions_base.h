@@ -14,15 +14,17 @@
 
 namespace qblocks {
 
-extern uint64_t hex2Long(const SFString& inHex);
 extern int64_t toLong(const string_q& str);
 
     using timestamp_t = int64_t;
 
     //-------------------------------------------------------------------------
-    inline uint64_t toLongU   (const string_q& str) { return (uint64_t)(startsWith(str,"0x") ? hex2Long(str.c_str()) : strtoul(str.c_str(), NULL, 10)); }
-    inline double   str2Double(const string_q& str) { return (double)strtold(str.c_str(), NULL); }
-    inline bool     str2Bool  (const string_q& str) { return (bool)(str % "true" || toLong(str) != 0); }
+    extern uint64_t toLongU   (const string_q& str);
+    extern uint64_t hex2LongU (const SFString& str);
+    extern double   str2Double(const string_q& str);
+    extern bool     str2Bool  (const string_q& str);
+
+    extern SFString string2Hex(const string_q& str);
 
 #define toUnsigned(a)  toLongU((a))
 #define toGas(a)       toLongU((a))
