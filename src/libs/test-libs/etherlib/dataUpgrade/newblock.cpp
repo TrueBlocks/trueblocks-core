@@ -327,7 +327,7 @@ string_q CNewBlock::getValueByName(const string_q& fieldName) const {
             break;
         case 'p':
             if ( fieldName % "parentHash" ) return fromHash(parentHash);
-            if ( fieldName % "price" ) return fmtFloat(price).c_str();
+            if ( fieldName % "price" ) return double2Str(price);
             break;
         case 't':
             if ( fieldName % "timestamp" ) return fromTimestamp(timestamp);
