@@ -48,10 +48,10 @@ namespace qblocks {
         const string_q& operator+= (const string_q& str);
         const string_q& operator+= (const char *str);
 
-        friend string_q operator+(const string_q& str1, const string_q& str2);
-        friend string_q operator+(const string_q& str1, const char*     str2);
-        friend string_q operator+(const char*     str1, const string_q& str2);
-        friend string_q operator+(const string_q& str1, char            ch);
+        friend string_q operator+  (const string_q& str1, const string_q& str2);
+        friend string_q operator+  (const string_q& str1, const char*     str2);
+        friend string_q operator+  (const char*     str1, const string_q& str2);
+        friend string_q operator+  (const string_q& str1, char            ch);
 
         friend bool     operator== (const string_q& str1, const string_q& str2);
         friend bool     operator== (const string_q& str1, const char *str2);
@@ -250,24 +250,6 @@ namespace qblocks {
     inline bool operator>=(const char *str1, const string_q& str2) {
         return str2.compare(str1) <= 0;
     }
-
-//    //--------------------------------------------------------------------
-//    inline string_q operator+(const string_q& str1, const string_q& str2) {
-//#if 1
-//        string s1 = str1.c_str();
-//        string s2 = str2.c_str();
-//        return (s1 + s2).c_str();
-//#else
-//        size_t newLen = str1.length() + str2.length();
-//        string_q ret;
-//        ret.reserve(newLen);
-//        memcpy(ret.m_Values, str1.m_Values, str1.length());
-//        memcpy(ret.m_Values + str1.length(), str2.m_Values, str2.length());
-//        ret.m_nValues = newLen;
-//        ret.m_Values[newLen] = '\0';
-//        return ret;
-//#endif
-//    }
 
     //--------------------------------------------------------------------
     inline bool operator%(const string_q& str1, const string_q& str2) {
