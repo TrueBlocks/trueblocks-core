@@ -23,7 +23,7 @@ public:
     COptions(void);
     ~COptions(void) {};
 
-    bool parseArguments(SFString& command) override;
+    bool parseArguments(string_q& command) override;
     void Init(void) override;
-    SFString postProcess(const SFString& which, const SFString& str) const override;
+    string_q postProcess(const string_q& which, const string_q& str) const override;
 };

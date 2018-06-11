@@ -23,11 +23,11 @@ namespace qblocks {
 IMPLEMENT_NODE(CLeaf, CTreeNode);
 
 //---------------------------------------------------------------------------
-static SFString nextLeafChunk(const SFString& fieldIn, const void *dataPtr);
-static SFString nextLeafChunk_custom(const SFString& fieldIn, const void *dataPtr);
+static string_q nextLeafChunk(const string_q& fieldIn, const void *dataPtr);
+static string_q nextLeafChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CLeaf::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
+void CLeaf::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -36,7 +36,7 @@ void CLeaf::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) co
         return;
     }
 
-    SFString fmt = fmtIn;
+    string_q fmt = fmtIn;
     if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
@@ -45,7 +45,7 @@ void CLeaf::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) co
 }
 
 //---------------------------------------------------------------------------
-SFString nextLeafChunk(const SFString& fieldIn, const void *dataPtr) {
+string_q nextLeafChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
         return ((const CLeaf *)dataPtr)->getValueByName(fieldIn);
 
@@ -56,7 +56,7 @@ SFString nextLeafChunk(const SFString& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CLeaf::setValueByName(const SFString& fieldName, const SFString& fieldValue) {
+bool CLeaf::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
     // EXISTING_CODE
     // EXISTING_CODE
 
@@ -66,7 +66,7 @@ bool CLeaf::setValueByName(const SFString& fieldName, const SFString& fieldValue
     switch (tolower(fieldName[0])) {
         case 'b':
             if ( fieldName % "blocks" ) {
-                SFString str = fieldValue;
+                string_q str = fieldValue;
                 while (!str.empty()) {
                     blocks[blocks.getCount()] = toUnsigned(nextTokenClear(str,','));
                 }
@@ -144,7 +144,7 @@ void CLeaf::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextLeafChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+string_q nextLeafChunk_custom(const string_q& fieldIn, const void *dataPtr) {
     const CLeaf *lea = (const CLeaf *)dataPtr;
     if (lea) {
         switch (tolower(fieldIn[0])) {
@@ -165,7 +165,7 @@ SFString nextLeafChunk_custom(const SFString& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------
-bool CLeaf::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
+bool CLeaf::handleCustomFormat(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
@@ -182,10 +182,10 @@ bool CLeaf::readBackLevel(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------
-SFString CLeaf::getValueByName(const SFString& fieldName) const {
+string_q CLeaf::getValueByName(const string_q& fieldName) const {
 
     // Give customized code a chance to override first
-    SFString ret = nextLeafChunk_custom(fieldName, this);
+    string_q ret = nextLeafChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
@@ -197,7 +197,7 @@ SFString CLeaf::getValueByName(const SFString& fieldName) const {
                 if (endsWith(fieldName, "Cnt"))
                     return asStringU(cnt);
                 if (!cnt) return "";
-                SFString retS;
+                string_q retS;
                 for (uint32_t i = 0 ; i < cnt ; i++) {
                     retS += asStringU(blocks[i]);
                     retS += ((i < cnt - 1) ? ",\n" : "\n");
@@ -227,7 +227,7 @@ ostream& operator<<(ostream& os, const CLeaf& item) {
 }
 
 //---------------------------------------------------------------------------
-const SFString CLeaf::getStringAt(const SFString& name, uint32_t i) const {
+const string_q CLeaf::getStringAt(const string_q& name, uint32_t i) const {
     if ( name % "blocks" && i < blocks.getCount() )
         return asStringU(blocks[i]);
     return "";
@@ -236,10 +236,10 @@ const SFString CLeaf::getStringAt(const SFString& name, uint32_t i) const {
 //---------------------------------------------------------------------------
 // EXISTING_CODE
     //-----------------------------------------------------------------------------
-    CLeaf::CLeaf(const SFString& _key, const SFString& _value) {
+    CLeaf::CLeaf(const string_q& _key, const string_q& _value) {
 #ifdef OLD_CODE_Y
-        SFString last = _value;
-        SFString first = nextTokenClear(last, '|');
+        string_q last = _value;
+        string_q first = nextTokenClear(last, '|');
         if (!first.empty()) {
             blocks[blocks.getCount()] = toUnsigned(first);
             if (!last.empty())
@@ -253,11 +253,11 @@ const SFString CLeaf::getStringAt(const SFString& name, uint32_t i) const {
     }
 
     //-----------------------------------------------------------------------------
-    SFString CLeaf::at(const SFString& _key) const {
+    string_q CLeaf::at(const string_q& _key) const {
         if (!contains(_key))
             return "";
 
-        SFString ret;
+        string_q ret;
 #ifdef OLD_CODE_Y
         for (int i = 0 ; i < blocks.getCount() ; i++) {
             ret += asString(blocks[i]);
@@ -271,7 +271,7 @@ const SFString CLeaf::getStringAt(const SFString& name, uint32_t i) const {
     }
 
     //-----------------------------------------------------------------------------
-    bool CLeaf::contains(const SFString& _key) const {
+    bool CLeaf::contains(const string_q& _key) const {
         size_t l1 = _key.length();
         size_t l2 = prefixS.length();
         const char *s1 = _key.c_str();
@@ -282,7 +282,7 @@ const SFString CLeaf::getStringAt(const SFString& name, uint32_t i) const {
     }
 
     //-----------------------------------------------------------------------------
-    CTreeNode* CLeaf::insert(const SFString& _key, const SFString& _value) {
+    CTreeNode* CLeaf::insert(const string_q& _key, const string_q& _value) {
         if (contains(_key)) {
             // If the leaf exists, we reset the value
             // We've reached the end of the key, so store the value here
@@ -308,7 +308,7 @@ const SFString CLeaf::getStringAt(const SFString& name, uint32_t i) const {
         } else {
             // If the leaf is not the key, delete and convert to a branch
             if (verbose == 2) { cerr << "\tleaf branching " << _key << " at " << _value << "\n"; }
-            SFString curVal;
+            string_q curVal;
             if (!contains(_key) || blocks.getCount() == 0) {
                 curVal = "";
             } else {
@@ -329,11 +329,11 @@ const SFString CLeaf::getStringAt(const SFString& name, uint32_t i) const {
     }
 
     //-----------------------------------------------------------------------------
-    CTreeNode* CLeaf::remove(const SFString& _key) {
+    CTreeNode* CLeaf::remove(const string_q& _key) {
         if (verbose)
             cerr << endl<< endl<< endl
-            << idnt << SFString('-', 80) << endl
-            << idnt << SFString('-', 80) << endl
+            << idnt << string_q('-', 80) << endl
+            << idnt << string_q('-', 80) << endl
             << idnt << "remove infix at [" << _key << "]: ";
 
         if (contains(_key)) {

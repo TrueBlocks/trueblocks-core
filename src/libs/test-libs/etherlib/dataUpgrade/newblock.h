@@ -50,7 +50,7 @@ public:
 
     DECLARE_NODE(CNewBlock);
 
-    const CBaseNode *getObjectAt(const SFString& fieldName, uint32_t index) const override;
+    const CBaseNode *getObjectAt(const string_q& fieldName, uint32_t index) const override;
 
     // EXISTING_CODE
     CNewBlock(const CBlock& block);
@@ -158,7 +158,7 @@ extern SFArchive& operator>>(SFArchive& archive, CNewBlock& newp);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-bool readOneNewBlock_fromBinary(CNewBlock& block, const SFString& fileName);
-bool readOneNewBlock_fromJson(CNewBlock& block, const SFString& fileName);
+bool readOneNewBlock_fromBinary(CNewBlock& block, const string_q& fileName);
+bool readOneNewBlock_fromJson(CNewBlock& block, const string_q& fileName);
 // EXISTING_CODE
 

@@ -20,6 +20,6 @@ public:
     COptions(void);
     ~COptions(void) {}
 
-    bool parseArguments(SFString& command);
+    bool parseArguments(string_q& command);
     void Init(void);
 };

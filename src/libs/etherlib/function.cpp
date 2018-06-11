@@ -22,11 +22,11 @@ namespace qblocks {
 IMPLEMENT_NODE(CFunction, CBaseNode);
 
 //---------------------------------------------------------------------------
-static SFString nextFunctionChunk(const SFString& fieldIn, const void *dataPtr);
-static SFString nextFunctionChunk_custom(const SFString& fieldIn, const void *dataPtr);
+static string_q nextFunctionChunk(const string_q& fieldIn, const void *dataPtr);
+static string_q nextFunctionChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CFunction::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
+void CFunction::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -35,7 +35,7 @@ void CFunction::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr
         return;
     }
 
-    SFString fmt = fmtIn;
+    string_q fmt = fmtIn;
     if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
@@ -44,7 +44,7 @@ void CFunction::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr
 }
 
 //---------------------------------------------------------------------------
-SFString nextFunctionChunk(const SFString& fieldIn, const void *dataPtr) {
+string_q nextFunctionChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
         return ((const CFunction *)dataPtr)->getValueByName(fieldIn);
 
@@ -55,7 +55,7 @@ SFString nextFunctionChunk(const SFString& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CFunction::setValueByName(const SFString& fieldName, const SFString& fieldValue) {
+bool CFunction::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
     // EXISTING_CODE
     if ( fieldName % "signature" ) {
         signature = getSignature(SIG_CANONICAL);
@@ -214,14 +214,14 @@ void CFunction::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextFunctionChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+string_q nextFunctionChunk_custom(const string_q& fieldIn, const void *dataPtr) {
     const CFunction *fun = (const CFunction *)dataPtr;
     if (fun) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             case 'h':
                 if ( fieldIn % "hex" ) {
-                    SFString ret = fun->name + "(";
+                    string_q ret = fun->name + "(";
                     for (uint32_t i = 0 ; i < fun->inputs.getCount() ; i++) {
                         ret += fun->inputs[i].type;
                         if (i < fun->inputs.getCount())
@@ -262,7 +262,7 @@ SFString nextFunctionChunk_custom(const SFString& fieldIn, const void *dataPtr) 
 }
 
 //---------------------------------------------------------------------------
-bool CFunction::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
+bool CFunction::handleCustomFormat(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
@@ -279,10 +279,10 @@ bool CFunction::readBackLevel(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------
-SFString CFunction::getValueByName(const SFString& fieldName) const {
+string_q CFunction::getValueByName(const string_q& fieldName) const {
 
     // Give customized code a chance to override first
-    SFString ret = nextFunctionChunk_custom(fieldName, this);
+    string_q ret = nextFunctionChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
@@ -303,7 +303,7 @@ SFString CFunction::getValueByName(const SFString& fieldName) const {
                 if (endsWith(fieldName, "Cnt"))
                     return asStringU(cnt);
                 if (!cnt) return "";
-                SFString retS;
+                string_q retS;
                 for (uint32_t i = 0 ; i < cnt ; i++) {
                     retS += inputs[i].Format();
                     retS += ((i < cnt - 1) ? ",\n" : "\n");
@@ -320,7 +320,7 @@ SFString CFunction::getValueByName(const SFString& fieldName) const {
                 if (endsWith(fieldName, "Cnt"))
                     return asStringU(cnt);
                 if (!cnt) return "";
-                SFString retS;
+                string_q retS;
                 for (uint32_t i = 0 ; i < cnt ; i++) {
                     retS += outputs[i].Format();
                     retS += ((i < cnt - 1) ? ",\n" : "\n");
@@ -356,7 +356,7 @@ ostream& operator<<(ostream& os, const CFunction& item) {
 }
 
 //---------------------------------------------------------------------------
-const CBaseNode *CFunction::getObjectAt(const SFString& fieldName, uint32_t index) const {
+const CBaseNode *CFunction::getObjectAt(const string_q& fieldName, uint32_t index) const {
     if ( fieldName % "inputs" && index < inputs.getCount() )
         return &inputs[index];
     if ( fieldName % "outputs" && index < outputs.getCount() )
@@ -367,14 +367,14 @@ const CBaseNode *CFunction::getObjectAt(const SFString& fieldName, uint32_t inde
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 //---------------------------------------------------------------------------
-SFString CFunction::getSignature(uint64_t parts) const {
+string_q CFunction::getSignature(uint64_t parts) const {
     uint32_t cnt = inputs.getCount();
 
-    SFString nm = (origName.empty() ? name : origName);
+    string_q nm = (origName.empty() ? name : origName);
     CStringExportContext ctx;
     ctx << (parts & SIG_FTYPE  ? "\t"+type+" " : "");
     ctx << (parts & SIG_FNAME  ? nm            : "");
-    ctx << (parts & SIG_FSPACE ? SFString(' ', 35-type.length()-nm.length()) : "");
+    ctx << (parts & SIG_FSPACE ? string_q(' ', 35-type.length()-nm.length()) : "");
     ctx << (parts & SIG_FTYPE || parts & SIG_FNAME  ? "("    : "");
     for (uint32_t j = 0 ; j < cnt ; j++) {
         ctx << (parts & SIG_ITYPE    ? inputs[j].type : "");
@@ -398,10 +398,10 @@ SFString CFunction::getSignature(uint64_t parts) const {
 }
 
 //-----------------------------------------------------------------------
-SFString CFunction::encodeItem(void) const {
-    SFString hex = string2Hex(signature);
-    SFString ret;
-extern bool getSha3(const SFString& hexIn, SFString& shaOut);
+string_q CFunction::encodeItem(void) const {
+    string_q hex = string2Hex(signature);
+    string_q ret;
+extern bool getSha3(const string_q& hexIn, string_q& shaOut);
     getSha3(hex, ret);
     ret = (type == "event" ? ret : ret.substr(0,10));
     return ret;

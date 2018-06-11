@@ -34,7 +34,7 @@ class CReceipt;
 class CLogEntry : public CBaseNode {
 public:
     SFAddress address;
-    SFString data;
+    string_q data;
     uint64_t logIndex;
     SFTopicArray topics;
 
@@ -46,7 +46,7 @@ public:
 
     DECLARE_NODE(CLogEntry);
 
-    const SFString getStringAt(const SFString& name, uint32_t i) const override;
+    const string_q getStringAt(const string_q& name, uint32_t i) const override;
 
     // EXISTING_CODE
     const CReceipt *pReceipt;
@@ -163,8 +163,8 @@ extern SFArchive& operator>>(SFArchive& archive, CLogEntry& log);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-extern SFString nextReceiptChunk(const SFString& fieldIn, const void *data);
-extern SFString nextLogentryChunk(const SFString& fieldIn, const void *data);
+extern string_q nextReceiptChunk(const string_q& fieldIn, const void *data);
+extern string_q nextLogentryChunk(const string_q& fieldIn, const void *data);
 // EXISTING_CODE
 }  // namespace qblocks
 

@@ -33,7 +33,7 @@ using ACCTVISITOR = bool (*)(const CTreeNode *v, void *data);
 class CTreeNode : public CBaseNode {
 public:
     uint64_t index;
-    SFString prefixS;
+    string_q prefixS;
 
 public:
     CTreeNode(void);
@@ -44,11 +44,11 @@ public:
     DECLARE_NODE(CTreeNode);
 
     // EXISTING_CODE
-    virtual SFString at(const SFString& _key) const { return ""; }
-    virtual CTreeNode* insert(const SFString& _key, const SFString& _value) { return NULL; }
-    virtual CTreeNode* remove(const SFString& _key) { return NULL; }
+    virtual string_q at(const string_q& _key) const { return ""; }
+    virtual CTreeNode* insert(const string_q& _key, const string_q& _value) { return NULL; }
+    virtual CTreeNode* remove(const string_q& _key) { return NULL; }
     virtual bool visitItems(ACCTVISITOR func, void *data) const { return true; }
-    CTreeNode* newBranch(const SFString& _k1, const SFString& _v1, const SFString& _k2, const SFString& _v2);
+    CTreeNode* newBranch(const string_q& _k1, const string_q& _v1, const string_q& _k2, const string_q& _v2);
     // EXISTING_CODE
     friend ostream& operator<<(ostream& os, const CTreeNode& item);
 
@@ -132,7 +132,7 @@ IMPLEMENT_ARCHIVE_LIST(CTreeNodeList);
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 //---------------------------------------------------------------------------
-inline unsigned commonPrefix(const SFString& _t, const SFString& _u) {
+inline unsigned commonPrefix(const string_q& _t, const string_q& _u) {
     int32_t s = (int32_t)min(_t.length(), _u.length());
     for (int32_t i = 0 ; ; ++i)
         if (i == s || (_t[i] != _u[i]))

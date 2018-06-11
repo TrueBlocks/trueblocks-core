@@ -40,15 +40,15 @@ namespace qblocks {
     //------------------------------------------------------------------------
     class CSharedResource {
     private:
-        SFString m_mode;
-        SFString m_errorMsg;
+        string_q m_mode;
+        string_q m_errorMsg;
         size_t   m_error;
         bool     m_ownsLock;
-        SFString m_lockingUser;
+        string_q m_lockingUser;
         bool     m_isascii;
 
     protected:
-        SFString m_filename;
+        string_q m_filename;
 
     public:
         FILE *m_fp;
@@ -68,10 +68,10 @@ namespace qblocks {
         }
 
         // forces implementation
-        virtual SFString getType(void) const = 0;
+        virtual string_q getType(void) const = 0;
 
-        bool Lock(const SFString& fn, const SFString& mode, uint32_t obeyLock);
-        bool ReLock(const SFString& mode);
+        bool Lock(const string_q& fn, const string_q& mode, uint32_t obeyLock);
+        bool ReLock(const string_q& mode);
         void Release(void);
         void Close(void);
 
@@ -83,16 +83,16 @@ namespace qblocks {
         void Seek(long offset, int whence) const;
         bool Eof(void) const;
         char *ReadLine(char *buff, size_t maxBuff);
-        void WriteLine(const SFString& str);
-        SFString LockFailure(void) const;
+        void WriteLine(const string_q& str);
+        string_q LockFailure(void) const;
         void flush(void) { if (m_fp) fflush(m_fp); }
 
         virtual bool Upgrade(void) {
             return false;  // did not upgrade anything
         }
 
-        SFString getFilename(void) const { return m_filename; }
-        void setFilename(const SFString& fn) { m_filename = fn; }
+        string_q getFilename(void) const { return m_filename; }
+        void setFilename(const string_q& fn) { m_filename = fn; }
 
         // Use only for cases where file deletion does not work
         static bool setLocking(bool val);
@@ -112,7 +112,7 @@ namespace qblocks {
         size_t Read(unsigned long long& val);
         size_t Read(float& val);
         size_t Read(double& val);
-        size_t Read(SFString& val);
+        size_t Read(string_q& val);
 
         size_t Write(bool val) const;
         size_t Write(char val) const;
@@ -124,7 +124,7 @@ namespace qblocks {
         size_t Write(unsigned long long val) const;
         size_t Write(float val) const;
         size_t Write(double val) const;
-        size_t Write(const SFString& val) const;
+        size_t Write(const string_q& val) const;
 
         size_t Read(void *buff, size_t size, size_t cnt);
         size_t Write(const void *buff, size_t size, size_t cnt) const;
@@ -134,7 +134,7 @@ namespace qblocks {
         size_t Write(const char *val) const;
 
         bool waitOnLock(bool deleteOnFail) const;
-        bool createLockFile(const SFString& lockfilename);
+        bool createLockFile(const string_q& lockfilename);
         bool createLock(bool createOnFail);
 
         CSharedResource(const CSharedResource& l);
@@ -145,17 +145,17 @@ namespace qblocks {
     };
 
     //----------------------------------------------------------------------
-    extern size_t stringToAsciiFile(const SFString& fileName, const SFString& contents);
-    extern SFString binaryFileToString(const SFString& filename);
-    extern bool asciiFileToBuffer(const SFString& filename, size_t& nChars, SFString *buffer,
+    extern size_t stringToAsciiFile(const string_q& fileName, const string_q& contents);
+    extern string_q binaryFileToString(const string_q& filename);
+    extern bool asciiFileToBuffer(const string_q& filename, size_t& nChars, string_q *buffer,
                                   uint32_t maxLines = INT_MAX);
-    extern uint64_t appendToAsciiFile(const SFString& fileName, const SFString& addContents);
+    extern uint64_t appendToAsciiFile(const string_q& fileName, const string_q& addContents);
 
     //----------------------------------------------------------------------
-    extern SFString docxToString(const SFString& filename);
-    extern size_t stringToDocxFile(const SFString& fileName, const SFString& contents);
-    extern size_t stringToPDF(const SFString& fileName, const SFString& contents);
-    extern SFString excelFileToString(const SFString& filename);
+    extern string_q docxToString(const string_q& filename);
+    extern size_t stringToDocxFile(const string_q& fileName, const string_q& contents);
+    extern size_t stringToPDF(const string_q& fileName, const string_q& contents);
+    extern string_q excelFileToString(const string_q& filename);
 
     //----------------------------------------------------------------------
     typedef void (*QUITHANDLER) (int s);
@@ -166,34 +166,34 @@ namespace qblocks {
     //----------------------------------------------------------------------
     extern bool shouldQuit(void);
     extern void lockSection(bool lock);
-    extern void writeTheCode(const SFString& fileName, const SFString& code, const SFString& ns = "", bool spaces = true);
+    extern void writeTheCode(const string_q& fileName, const string_q& code, const string_q& ns = "", bool spaces = true);
 
     //----------------------------------------------------------------------
-    inline bool asciiFileToBuffer(const SFString& filename, SFString *contents, uint32_t maxLines = INT_MAX) {
+    inline bool asciiFileToBuffer(const string_q& filename, string_q *contents, uint32_t maxLines = INT_MAX) {
         size_t unused = 0;
         return asciiFileToBuffer(filename, unused, contents, maxLines);
     }
 
     //----------------------------------------------------------------------
-    inline SFString asciiFileToString(const SFString& filename) {
-        SFString contents;
+    inline string_q asciiFileToString(const string_q& filename) {
+        string_q contents;
         asciiFileToBuffer(filename, &contents);
         return contents;
     }
 
-    inline bool isFileLocked(const SFString& fileName) {
+    inline bool isFileLocked(const string_q& fileName) {
         return fileExists(fileName + ".lck");
     }
 
     // Generic binary file
     class CBinFile : public CSharedResource {
     public:
-        SFString getType(void) const override { return "CBinFile"; }
+        string_q getType(void) const override { return "CBinFile"; }
     };
 
     // Generic ascii file
     class CAsciiFile : public CSharedResource {
     public:
-        SFString getType(void) const override { return "CAsciiFile"; }
+        string_q getType(void) const override { return "CAsciiFile"; }
     };
 }  // namespace qblocks

@@ -28,14 +28,14 @@ int main(int argc, const char *argv[]) {
         doTests();
     } else {
         while (!options.commandList.empty()) {
-            SFString command = nextTokenClear(options.commandList, '\n');
+            string_q command = nextTokenClear(options.commandList, '\n');
             if (!options.parseArguments(command))
                 return 0;
-            SFString in = argv[1];
+            string_q in = argv[1];
             cout << "in: " << in << "\n";
-            SFString hex = string2Hex(in);
+            string_q hex = string2Hex(in);
             cout << "hex: " << hex << "\n";
-            SFString out = getSha3(hex);
+            string_q out = getSha3(hex);
             cout << "out: " << out << "\n";
         }
     }
@@ -46,20 +46,20 @@ int main(int argc, const char *argv[]) {
 extern const char* STR_TEST_DATA;
 //--------------------------------------------------------------
 void doTests(void) {
-    SFString in;
+    string_q in;
     bool hasIn = false;
-    SFString contents = STR_TEST_DATA;
-    SFString comment;
+    string_q contents = STR_TEST_DATA;
+    string_q comment;
     while (!contents.empty()) {
-        SFString line = nextTokenClear(contents, '\n');
+        string_q line = nextTokenClear(contents, '\n');
         if (!startsWith(line, '#')) {
             if (!hasIn) {
                 in = line;
                 hasIn = true;
             } else {
-                SFString hex = string2Hex(in);
-                SFString out = getSha3(hex);
-                cout << SFString('-', 80) << "\n"
+                string_q hex = string2Hex(in);
+                string_q out = getSha3(hex);
+                cout << string_q('-', 80) << "\n"
                     << comment << "\n"
                     << "in:\t\t" << in << "\n"
                     << "hex:\t\t" << hex << "\n"

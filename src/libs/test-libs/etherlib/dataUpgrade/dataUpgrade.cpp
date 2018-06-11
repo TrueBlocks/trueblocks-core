@@ -20,8 +20,8 @@ extern bool testReadWrite(COptions& options);
 extern bool testUpgrade(COptions& options);
 extern void reportNode(CBaseNode *node);
 namespace qblocks {
-    extern bool writeNodeToBinary(const CBaseNode& node, const SFString& fileName);
-    extern bool readNodeFromBinary(CBaseNode& node, const SFString& fileName);
+    extern bool writeNodeToBinary(const CBaseNode& node, const string_q& fileName);
+    extern bool readNodeFromBinary(CBaseNode& node, const string_q& fileName);
 };
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
@@ -45,7 +45,7 @@ int main(int argc, const char *argv[]) {
     }
 
     while (!options.commandList.empty()) {
-        SFString command = nextTokenClear(options.commandList, '\n');
+        string_q command = nextTokenClear(options.commandList, '\n');
         if (!options.parseArguments(command))
             return 0;
 
@@ -149,7 +149,7 @@ bool testReadWrite(COptions& options) {
 }
 
 //--------------------------------------------------------------
-CBaseNode *getNode(const SFString& nodeType) {
+CBaseNode *getNode(const string_q& nodeType) {
     CBaseNode *node = NULL;
          if (nodeType == "CAbi")             node = CAbi::CreateObject();
     else if (nodeType == "CFunction")        node = CFunction::CreateObject();
@@ -180,8 +180,8 @@ CBaseNode *getNode(const SFString& nodeType) {
 }
 
 //--------------------------------------------------------------
-SFString baseTypeName(uint64_t type) {
-    SFString ret;
+string_q baseTypeName(uint64_t type) {
+    string_q ret;
     if (type & TS_NUMERAL) ret += (" TS_NUMERAL " + asStringU(type));
     if (type & TS_STRING)  ret += (" TS_STRING "  + asStringU(type));
     if (type & TS_DATE)    ret += (" TS_DATE "    + asStringU(type));
@@ -193,7 +193,7 @@ SFString baseTypeName(uint64_t type) {
 }
 
 //--------------------------------------------------------------
-SFString typeName(uint64_t type) {
+string_q typeName(uint64_t type) {
 
     if (type == T_DATE)      return "T_DATE "    + baseTypeName(type);
     if (type == T_TIME)      return "T_TIME "    + baseTypeName(type);
@@ -222,7 +222,7 @@ SFString typeName(uint64_t type) {
 void reportNode(CBaseNode *node) {
     CRuntimeClass *pClass = node->getRuntimeClass();
 
-    cout << SFString('-',80) << "\n";
+    cout << string_q('-',80) << "\n";
     cout << "className: " << pClass->m_ClassName << "\n";
     cout << "objectSize: " << pClass->m_ObjectSize << "\n";
     cout << "baseClass: " << (pClass->m_BaseClass ? pClass->m_BaseClass->m_ClassName : "None") << "\n";

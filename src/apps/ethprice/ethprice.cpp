@@ -24,17 +24,17 @@ int main(int argc, const char* argv[]) {
         return 0;
 
     while (!options.commandList.empty()) {
-        SFString command = nextTokenClear(options.commandList, '\n');
+        string_q command = nextTokenClear(options.commandList, '\n');
         if (!options.parseArguments(command))
             return 0;
 
-        SFString message;
+        string_q message;
 
         CPriceQuoteArray quotes;
         if (loadPriceData(options.source, quotes, options.freshen, message) && quotes.getCount()) {
 
-            SFString def = (verbose ? "" : "{ \"date\": \"[{DATE}]\", \"price\": \"[{CLOSE}]\" }");
-            SFString fmtStr = getGlobalConfig()->getDisplayStr(!verbose, def, "");
+            string_q def = (verbose ? "" : "{ \"date\": \"[{DATE}]\", \"price\": \"[{CLOSE}]\" }");
+            string_q fmtStr = getGlobalConfig()->getDisplayStr(!verbose, def, "");
             bool isJson = ((startsWith(fmtStr, "{") && endsWith(fmtStr, "}")) || fmtStr.empty());
             if (options.at) {
                 cout << quotes[(uint32_t)indexFromTimeStamp(quotes, options.at)].Format(fmtStr);

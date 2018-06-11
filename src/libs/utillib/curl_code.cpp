@@ -62,7 +62,7 @@ namespace qblocks {
     }
 
     //---------------------------------------------------------------------------------------------------
-    SFString urlToString(const SFString& url) {
+    string_q urlToString(const string_q& url) {
         if (url.empty()) {
             getCurl_internal(true);
             return EMPTY;

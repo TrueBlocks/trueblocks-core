@@ -25,21 +25,21 @@ public:
     bool normalize;
     bool silent;
     int quiet;
-    SFString format;
+    string_q format;
     bool priceBlocks;
 
     COptions(void);
     ~COptions(void);
 
-    SFString postProcess(const SFString& which, const SFString& str) const override;
-    bool parseArguments(SFString& command) override;
+    string_q postProcess(const string_q& which, const string_q& str) const override;
+    bool parseArguments(string_q& command) override;
     void Init(void) override;
     bool isMulti(void) const;
 };
 
 //-----------------------------------------------------------------------------
-extern SFString doOneBlock(uint64_t num, const COptions& opt);
-extern SFString checkOneBlock(uint64_t num, const COptions& opt);
-extern SFString normalizeBlock(const SFString& inIn, bool remove, bool isByzan);
-extern SFString diffStr(const SFString& str1, const SFString& str2);
+extern string_q doOneBlock(uint64_t num, const COptions& opt);
+extern string_q checkOneBlock(uint64_t num, const COptions& opt);
+extern string_q normalizeBlock(const string_q& inIn, bool remove, bool isByzan);
+extern string_q diffStr(const string_q& str1, const string_q& str2);
 extern void interumReport(ostream& os, blknum_t i);

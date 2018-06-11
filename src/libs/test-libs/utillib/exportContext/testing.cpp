@@ -23,7 +23,7 @@ int main(int argc, const char *argv[]) {
         return 0;
 
     string c_str = "regular 'c' string";
-    SFString myStr = "my string";
+    string_q myStr = "my string";
     bool b = true;
     char c = 'c';
     unsigned int ui = (unsigned int)-1;

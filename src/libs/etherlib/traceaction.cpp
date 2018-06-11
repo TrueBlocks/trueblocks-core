@@ -23,11 +23,11 @@ namespace qblocks {
 IMPLEMENT_NODE(CTraceAction, CBaseNode);
 
 //---------------------------------------------------------------------------
-static SFString nextTraceactionChunk(const SFString& fieldIn, const void *dataPtr);
-static SFString nextTraceactionChunk_custom(const SFString& fieldIn, const void *dataPtr);
+static string_q nextTraceactionChunk(const string_q& fieldIn, const void *dataPtr);
+static string_q nextTraceactionChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CTraceAction::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
+void CTraceAction::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -36,7 +36,7 @@ void CTraceAction::Format(CExportContext& ctx, const SFString& fmtIn, void *data
         return;
     }
 
-    SFString fmt = fmtIn;
+    string_q fmt = fmtIn;
     if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
@@ -45,7 +45,7 @@ void CTraceAction::Format(CExportContext& ctx, const SFString& fmtIn, void *data
 }
 
 //---------------------------------------------------------------------------
-SFString nextTraceactionChunk(const SFString& fieldIn, const void *dataPtr) {
+string_q nextTraceactionChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
         return ((const CTraceAction *)dataPtr)->getValueByName(fieldIn);
 
@@ -56,7 +56,7 @@ SFString nextTraceactionChunk(const SFString& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CTraceAction::setValueByName(const SFString& fieldName, const SFString& fieldValue) {
+bool CTraceAction::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
     // EXISTING_CODE
     // EXISTING_CODE
 
@@ -180,7 +180,7 @@ void CTraceAction::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextTraceactionChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+string_q nextTraceactionChunk_custom(const string_q& fieldIn, const void *dataPtr) {
     const CTraceAction *tra = (const CTraceAction *)dataPtr;
     if (tra) {
         switch (tolower(fieldIn[0])) {
@@ -201,7 +201,7 @@ SFString nextTraceactionChunk_custom(const SFString& fieldIn, const void *dataPt
 }
 
 //---------------------------------------------------------------------------
-bool CTraceAction::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
+bool CTraceAction::handleCustomFormat(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
@@ -230,10 +230,10 @@ SFArchive& operator>>(SFArchive& archive, CTraceAction& tra) {
 }
 
 //---------------------------------------------------------------------------
-SFString CTraceAction::getValueByName(const SFString& fieldName) const {
+string_q CTraceAction::getValueByName(const string_q& fieldName) const {
 
     // Give customized code a chance to override first
-    SFString ret = nextTraceactionChunk_custom(fieldName, this);
+    string_q ret = nextTraceactionChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 

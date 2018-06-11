@@ -45,7 +45,7 @@ public:
     SFWei value;
     SFGas gas;
     SFGas gasPrice;
-    SFString input;
+    string_q input;
     uint64_t isError;
     uint64_t isInternal;
     CReceipt receipt;
@@ -58,22 +58,22 @@ public:
 
     DECLARE_NODE(CTransaction);
 
-    const CBaseNode *getObjectAt(const SFString& fieldName, uint32_t index) const override;
+    const CBaseNode *getObjectAt(const string_q& fieldName, uint32_t index) const override;
 
     // EXISTING_CODE
     const CBlock *pBlock;
     CFunction *funcPtr;
-    SFString function;
+    string_q function;
     double ether;
     CTraceArray traces;
 
-    SFString inputToFunction(void) const;
+    string_q inputToFunction(void) const;
 #if 0
-    SFString creates;
+    string_q creates;
     uint32_t confirmations;
     SFAddress contractAddress;
     SFHash r;
-    SFString raw;
+    string_q raw;
     SFHash s;
     SFHash v;
     CTrace trace;
@@ -222,9 +222,9 @@ extern SFArchive& operator>>(SFArchive& archive, CTransaction& tra);
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 extern int sortTransactionsForWrite(const void *rr1, const void *rr2);
-extern SFString parse(const SFString& params, uint32_t nItems, SFString *types);
-extern SFString toFunction(const SFString& name, const SFString& input, uint32_t nItems, SFString *items);
-extern SFString nextBlockChunk(const SFString& fieldIn, const void *data);
+extern string_q parse(const string_q& params, uint32_t nItems, string_q *types);
+extern string_q toFunction(const string_q& name, const string_q& input, uint32_t nItems, string_q *items);
+extern string_q nextBlockChunk(const string_q& fieldIn, const void *data);
 // EXISTING_CODE
 }  // namespace qblocks
 

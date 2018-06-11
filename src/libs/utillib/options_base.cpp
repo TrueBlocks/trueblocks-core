@@ -11,7 +11,6 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 #include "basetypes.h"
-#include "sfstring.h"
 #include "database.h"
 #include "exportcontext.h"
 #include "options_base.h"
@@ -33,13 +32,13 @@ namespace qblocks {
     COptionsBase *pOptions = &defOpts;
 
     //--------------------------------------------------------------------------------
-    static SFString programName = "quickBlocks";
+    static string_q programName = "quickBlocks";
 
     //--------------------------------------------------------------------------------
     bool COptionsBase::prepareArguments(int argc, const char *argv[]) {
 
-        SFString env = getenv("NO_COLOR");
-        if (SFString(env) == "true")
+        string_q env = getenv("NO_COLOR");
+        if (string_q(env) == "true")
             colorsOff();
 
         programName = basename((char*)argv[0]);
@@ -47,14 +46,14 @@ namespace qblocks {
             // we present the data once for clarity...
             cout << programName << " argc: " << argc << " ";
             for (int i=1;i<argc;i++) {
-                SFString str = argv[i];
+                string_q str = argv[i];
                 cout << "[" << i << ":" << trim(str) << "] ";
             }
             cout << "\n";
             // ... and once to use as a command line for copy/paste
             cout << programName << " ";
             for (int i=1;i<argc;i++) {
-                SFString str = argv[i];
+                string_q str = argv[i];
                 cout << trim(str) << " ";
             }
             cout << "\n";
@@ -65,18 +64,18 @@ namespace qblocks {
 
         int nChars = 0;
         for (int i=0; i<argc; i++) {
-            nChars += SFString(argv[i]).length();
+            nChars += string_q(argv[i]).length();
         }
         uint32_t nArgs = 0;
-        SFString *args = new SFString[argc+nChars+2];
+        string_q *args = new string_q[argc+nChars+2];
 
         bool hasStdIn = false;
         for (int i = 1 ; i < argc ; i++) {
-            SFString str = argv[i];
-            SFString arg = trim(str);
+            string_q str = argv[i];
+            string_q arg = trim(str);
             replace(arg, "--verbose", "-v");
             while (!arg.empty()) {
-                SFString opt = expandOption(arg);  // handles case of -rf for example
+                string_q opt = expandOption(arg);  // handles case of -rf for example
                 if (isReadme) {
                     if (args)
                         delete [] args;
@@ -89,7 +88,7 @@ namespace qblocks {
             }
         }
 
-        SFString stdInCmds;
+        string_q stdInCmds;
         if (hasStdIn) {
             // reading from stdin, expect only a list of addresses, one per line.
             char c = static_cast<char>(getchar());
@@ -108,9 +107,9 @@ namespace qblocks {
         // (1) handle any arguments common to all programs and remove them from the array
         // (2) identify any --file arguments and store them for later use
         //-----------------------------------------------------------------------------------
-        SFString cmdFileName = "";
+        string_q cmdFileName = "";
         for (uint64_t i = 0 ; i < nArgs ; i++) {
-            SFString arg = args[i];
+            string_q arg = args[i];
             if (startsWith(arg, "--file:")) {
                 cmdFileName = arg.Substitute("--file:", "");
                 replace(cmdFileName, "~/", getHomeFolder());
@@ -134,12 +133,12 @@ namespace qblocks {
         //-----------------------------------------------------------------------------------
         uint32_t curArg = 0;
         for (uint32_t i = 0 ; i < nArgs ; i++) {
-            SFString arg = args[i];
+            string_q arg = args[i];
             bool combine = false;
             for (uint32_t j = 0 ; j < nParamsRef && !combine ; j++) {
                 if (!paramsPtr[j].permitted.empty()) {
-                    SFString shortName = paramsPtr[j].shortName;
-                    SFString longName  = "-"+paramsPtr[j].longName;
+                    string_q shortName = paramsPtr[j].shortName;
+                    string_q longName  = "-"+paramsPtr[j].longName;
                     if (shortName == arg ||
                         startsWith(longName, arg))
                     {
@@ -168,7 +167,7 @@ namespace qblocks {
 
         } else {
             fromFile = true;
-            SFString contents =  asciiFileToString(cmdFileName).Substitute("\t", " ").
+            string_q contents =  asciiFileToString(cmdFileName).Substitute("\t", " ").
                                             Substitute("-v", "").Substitute("-h", "").
                                             Substitute("  ", " ").Substitute("\\\n", "");
             if (contents.empty()) {
@@ -179,7 +178,7 @@ namespace qblocks {
                 nextTokenClear(commandList,'\n');
             } else {
                 while (!contents.empty()) {
-                    SFString command = trimWhitespace(nextTokenClear(contents, '\n'));
+                    string_q command = trimWhitespace(nextTokenClear(contents, '\n'));
                     if (!command.empty() && !startsWith(command, ";"))  // ignore comments
                         commandList += (command+"\n");
                 }
@@ -194,7 +193,7 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    bool COptionsBase::standardOptions(SFString& cmdLine) {
+    bool COptionsBase::standardOptions(string_q& cmdLine) {
         cmdLine += " ";
         if (contains(cmdLine, "--version ")) {
             cerr << programName << " (quickBlocks) " << getVersionStr() << "\n";
@@ -241,7 +240,7 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    bool COptionsBase::builtInCmd(const SFString& arg) {
+    bool COptionsBase::builtInCmd(const string_q& arg) {
         if (isEnabled(OPT_VERBOSE) && (arg == "-v" || startsWith(arg, "-v:") || startsWith(arg, "--verbose")))
             return true;
         if (isEnabled(OPT_DENOM) && (arg == "--ether" || arg == "--wei" || arg == "--dollars"))
@@ -260,11 +259,11 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    CParams::CParams(const SFString& nameIn, const SFString& descr) {
-        SFString name = nameIn;
+    CParams::CParams(const string_q& nameIn, const string_q& descr) {
+        string_q name = nameIn;
 
         description = descr;
-        SFString dummy;
+        string_q dummy;
         if (contains(name, ":<") || contains(name, ":[")) {
             permitted = name;
             name = nextTokenClear(permitted,':');
@@ -301,21 +300,21 @@ namespace qblocks {
                 nextTokenClear(hotKey,'(');
                 hotKey = nextTokenClear(hotKey, ')');
                 replaceAny(longName, "()","");
-                shortName = SFString(shortName[0]) + hotKey;
+                shortName = string_q(shortName[0]) + hotKey;
             }
         }
     }
 
-    static SFString sep = "  ";
-    static SFString sep2 = "";
+    static string_q sep = "  ";
+    static string_q sep2 = "";
 
     //--------------------------------------------------------------------------------
-    int usage(const SFString& errMsg) {
+    int usage(const string_q& errMsg) {
         cerr << usageStr(errMsg);
         return false;
     }
 
-    SFString usageStr(const SFString& errMsg) {
+    string_q usageStr(const string_q& errMsg) {
 
         ostringstream os;
         if (COptionsBase::isReadme) {
@@ -333,14 +332,14 @@ namespace qblocks {
         os << notes();
         if (!COptionsBase::isReadme)
             os << bBlue << "  Powered by QuickBlocks" << (isTestMode() ? "" : " (" + getVersionStr() + ")") << "\n" << cOff;
-        SFString ret = os.str().c_str();
+        string_q ret = os.str().c_str();
         ASSERT(pOptions);
         return pOptions->postProcess("usage", ret);
     }
 
     //--------------------------------------------------------------------------------
-    SFString options(void) {
-        SFString required;
+    string_q options(void) {
+        string_q required;
 
         CStringExportContext ctx;
         if (!COptionsBase::needsOption)
@@ -367,15 +366,15 @@ namespace qblocks {
         ctx << required;
 
         ASSERT(pOptions);
-        SFString ret = pOptions->postProcess("options", ctx.str);
+        string_q ret = pOptions->postProcess("options", ctx.str);
         if (COptionsBase::isReadme)
             ret = ret.Substitute("<", "&lt;").Substitute(">", "&gt;");
         return ret;
     }
 
     //--------------------------------------------------------------------------------
-    SFString purpose(void) {
-        SFString purpose;
+    string_q purpose(void) {
+        string_q purpose;
         for (uint64_t i = 0 ; i < nParamsRef ; i++)
             if (paramsPtr[i].shortName.empty())
                 purpose += ("\n           " + paramsPtr[i].description);
@@ -393,12 +392,12 @@ namespace qblocks {
     //--------------------------------------------------------------------------------
 const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
 
-    SFString oneDescription(const SFString& sN, const SFString& lN, const SFString& d, bool isMode, bool required) {
+    string_q oneDescription(const string_q& sN, const string_q& lN, const string_q& d, bool isMode, bool required) {
         CStringExportContext ctx;
         if (COptionsBase::isReadme) {
 
             // When we are writing the readme file...
-            SFString line = STR_ONE_LINE;
+            string_q line = STR_ONE_LINE;
             replace(line, "{S}", sN);
             replace(line, "{L}", (isMode ? "" : "-") + lN);
             replace(line, "{D}", d.Substitute("|", "&#124;"));
@@ -407,7 +406,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
         } else {
 
             // When we are writing to the command line...
-            SFString line = "\t" + SFString(STR_ONE_LINE).Substitute(" ","").Substitute("|","");
+            string_q line = "\t" + string_q(STR_ONE_LINE).Substitute(" ","").Substitute("|","");
             replace(line, "{S}", (isMode ? "" : padRight(sN, 3)));
             if (isMode)
                 replace(line, "{L}", padRight(lN , 22));
@@ -422,15 +421,15 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
     }
 
     //--------------------------------------------------------------------------------
-    SFString notes(void) {
+    string_q notes(void) {
         CStringExportContext ctx;
         ASSERT(pOptions);
-        SFString ret = pOptions->postProcess("notes", "");
+        string_q ret = pOptions->postProcess("notes", "");
         if (!ret.empty()) {
-            SFString tick = "- ";
-            SFString lead = "\t";
-            SFString trail = "\n";
-            SFString sepy1 = cTeal, sepy2 = cOff;
+            string_q tick = "- ";
+            string_q lead = "\t";
+            string_q trail = "\n";
+            string_q sepy1 = cTeal, sepy2 = cOff;
             if (COptionsBase::isReadme) {
                 sepy1 = sepy2 = "`";
                 lead = "";
@@ -442,7 +441,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
             ctx << bYellow << sep << "Notes:" << sep << cOff << "\n";
             ctx << (COptionsBase::isReadme ? "\n" : "");
             while (!ret.empty()) {
-                SFString line = nextTokenClear(ret,'\n').Substitute("|","\n" + lead + "  ");
+                string_q line = nextTokenClear(ret,'\n').Substitute("|","\n" + lead + "  ");
                 ctx << lead << tick << line << "\n";
             }
             ctx << "\n";
@@ -452,8 +451,8 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
     }
 
     //--------------------------------------------------------------------------------
-    SFString descriptions(void) {
-        SFString required;
+    string_q descriptions(void) {
+        string_q required;
         CStringExportContext ctx;
         ctx << bYellow << sep << "Where:" << sep << cOff << "  \n";
         if (COptionsBase::isReadme) {
@@ -462,11 +461,11 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
             ctx << "| -------: | :------- | :------- |\n";
         }
 
-        bool showHidden = (SFString(getenv("SHOW_HIDDEN_OPTIONS")) == "true");
+        bool showHidden = (string_q(getenv("SHOW_HIDDEN_OPTIONS")) == "true");
         for (uint64_t i = 0 ; i < nParamsRef ; i++) {
-            SFString sName = paramsPtr[i].shortName;
-            SFString lName = paramsPtr[i].longName;
-            SFString descr = trim(paramsPtr[i].description);
+            string_q sName = paramsPtr[i].shortName;
+            string_q lName = paramsPtr[i].longName;
+            string_q descr = trim(paramsPtr[i].description);
             if (startsWith(sName, '@') && !showHidden) {
                 // invisible option
 
@@ -488,9 +487,9 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
     }
 
     //--------------------------------------------------------------------------------
-    SFString expandOption(SFString& arg) {
+    string_q expandOption(string_q& arg) {
 
-        SFString ret = arg;
+        string_q ret = arg;
 
         // Check that we don't have a regular command with a single dash, which
         // should report an error in client code
@@ -571,15 +570,15 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
     uint64_t verbose = false;
 
     //---------------------------------------------------------------------------------------------------
-    SFString configPath(const SFString& part) {
+    string_q configPath(const string_q& part) {
         return getHomeFolder() + ".quickBlocks/" + part;
     }
 
     //------------------------------------------------------------------
-    void editFile(const SFString& fileName) {
+    void editFile(const string_q& fileName) {
         CToml toml(configPath("quickBlocks.toml"));
-        SFString editor = toml.getConfigStr("settings", "editor", "open ");
-        SFString cmd = editor + " \"" + fileName + "\"";
+        string_q editor = toml.getConfigStr("settings", "editor", "open ");
+        string_q cmd = editor + " \"" + fileName + "\"";
         if (isTestMode()) {
             cout << "Testing editFile: " << cmd << "\n";
             cout << asciiFileToString(fileName) << "\n";
@@ -619,14 +618,14 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
     }
 
     //-----------------------------------------------------------------------
-    const CToml *getGlobalConfig(const SFString& name) {
+    const CToml *getGlobalConfig(const string_q& name) {
         static CToml *toml = NULL;
-        static SFString components = "quickBlocks|";
+        static string_q components = "quickBlocks|";
         if (!toml) {
             static CToml theToml(configPath("quickBlocks.toml"));
             toml = &theToml;
             // Always load the program's custom config if it exists
-            SFString fileName = configPath(programName+".toml");
+            string_q fileName = configPath(programName+".toml");
             if (fileExists(fileName) && !contains(components, programName+"|")) {
                 components += programName+"|";
                 CToml custom(fileName);
@@ -636,7 +635,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
 
         // If we're told explicitly to load another config, do that here
         if (!name.empty()) {
-            SFString fileName = configPath(name+".toml");
+            string_q fileName = configPath(name+".toml");
             if (fileExists(fileName) && !contains(components, name+"|")) {
                 components += name+"|";
                 CToml custom(fileName);
@@ -653,7 +652,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
         const CToml *toml = getGlobalConfig("whenBlock");
 
         specials.Clear();
-        SFString specialsStr = toml->getConfigStr("specials", "list", "");
+        string_q specialsStr = toml->getConfigStr("specials", "list", "");
         char *p = cleanUpJson((char *)specialsStr.c_str());
         while (p && *p) {
             CNameValue pair;
@@ -668,7 +667,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
     }
 
     //--------------------------------------------------------------------------------
-    bool COptionsBase::findSpecial(CNameValue& pair, const SFString& arg) const {
+    bool COptionsBase::findSpecial(CNameValue& pair, const string_q& arg) const {
         if (specials.getCount() == 0)
             ((COptionsBase*)this)->loadSpecials();
         for (uint32_t i = 0 ; i < specials.getCount() ; i++) {
@@ -691,7 +690,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
     }
 
     //-----------------------------------------------------------------------
-    bool COptionsBase::getNamedAccount(CAccountName& acct, const SFString& addr) const {
+    bool COptionsBase::getNamedAccount(CAccountName& acct, const string_q& addr) const {
         if (namedAccounts.getCount() == 0) {
             uint64_t save = verbose;
             verbose = false;
@@ -715,8 +714,8 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
         if (namedAccounts.getCount() > 0)
             return true;
 
-        SFString textFile = namesFile.getFullPath();
-        SFString binFile  = textFile.Substitute(".txt",".bin");
+        string_q textFile = namesFile.getFullPath();
+        string_q binFile  = textFile.Substitute(".txt",".bin");
 
         SFTime txtDate = fileLastModifyDate(textFile);
         SFTime binDate = fileLastModifyDate(binFile);
@@ -739,14 +738,14 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
             cout << "Reading from text database\n";
 
         // Read the data from the names database and clean it up if needed
-        SFString contents = trimWhitespace(asciiFileToString(textFile));
+        string_q contents = trimWhitespace(asciiFileToString(textFile));
         replaceAll(contents, "\t\t", "\t");
         if (!endsWith(contents, "\n"))
             contents += "\n";
 
         // Parse out the data....
         while (!contents.empty()) {
-            SFString line = nextTokenClear(contents, '\n');
+            string_q line = nextTokenClear(contents, '\n');
             if (!startsWith(line, "#")) {
                 if (countOf(line, '\t') < 2) {
                     cerr << "Line " << line << " does not contain two tabs.\n";

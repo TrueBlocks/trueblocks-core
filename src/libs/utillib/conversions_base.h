@@ -20,11 +20,11 @@ extern int64_t toLong(const string_q& str);
 
     //-------------------------------------------------------------------------
     extern uint64_t toLongU   (const string_q& str);
-    extern uint64_t hex2LongU (const SFString& str);
+    extern uint64_t hex2LongU (const string_q& str);
     extern double   str2Double(const string_q& str);
     extern bool     str2Bool  (const string_q& str);
 
-    extern SFString string2Hex(const string_q& str);
+    extern string_q string2Hex(const string_q& str);
 
 #define toUnsigned(a)  toLongU((a))
 #define toGas(a)       toLongU((a))

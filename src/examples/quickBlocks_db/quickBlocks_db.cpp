@@ -36,7 +36,7 @@ double testBuild(void) {
     double start = qbNow();
     establishFolder("./cache/");
     for (blknum_t b = FIRST ; b < FIRST+NBLKS ; b++) {
-        SFString fileName = "./cache/" + asStringU(b) + ".bin";
+        string_q fileName = "./cache/" + asStringU(b) + ".bin";
         CBlock block;
         getBlock(block, b);
         if (!fileExists(fileName)) {
@@ -46,7 +46,7 @@ double testBuild(void) {
         cerr << "Writing " << block.blockNumber << "\r";
         cerr.flush();
     }
-    cerr << SFString(' ',80) << "\r";
+    cerr << string_q(' ',80) << "\r";
     return qbNow() - start;
 }
 
@@ -54,12 +54,12 @@ double testBuild(void) {
 double testRetrieve(void) {
     double start = qbNow();
     for (blknum_t b = FIRST ; b < FIRST+NBLKS ; b++) {
-        SFString fileName = "./cache/" + asStringU(b) + ".bin";
+        string_q fileName = "./cache/" + asStringU(b) + ".bin";
         CBlock block;
         readFromBinary(block, fileName);
         cerr << "Reading " << block.blockNumber << "\r";
         cerr.flush();
     }
-    cerr << SFString(' ',80) << "\r";
+    cerr << string_q(' ',80) << "\r";
     return qbNow() - start;
 }

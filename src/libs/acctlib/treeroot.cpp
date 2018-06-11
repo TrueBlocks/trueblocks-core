@@ -22,11 +22,11 @@ namespace qblocks {
 IMPLEMENT_NODE(CTreeRoot, CBaseNode);
 
 //---------------------------------------------------------------------------
-static SFString nextTreerootChunk(const SFString& fieldIn, const void *dataPtr);
-static SFString nextTreerootChunk_custom(const SFString& fieldIn, const void *dataPtr);
+static string_q nextTreerootChunk(const string_q& fieldIn, const void *dataPtr);
+static string_q nextTreerootChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CTreeRoot::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
+void CTreeRoot::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -35,7 +35,7 @@ void CTreeRoot::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr
         return;
     }
 
-    SFString fmt = fmtIn;
+    string_q fmt = fmtIn;
     if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
@@ -44,7 +44,7 @@ void CTreeRoot::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr
 }
 
 //---------------------------------------------------------------------------
-SFString nextTreerootChunk(const SFString& fieldIn, const void *dataPtr) {
+string_q nextTreerootChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
         return ((const CTreeRoot *)dataPtr)->getValueByName(fieldIn);
 
@@ -55,7 +55,7 @@ SFString nextTreerootChunk(const SFString& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CTreeRoot::setValueByName(const SFString& fieldName, const SFString& fieldValue) {
+bool CTreeRoot::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
     // EXISTING_CODE
     // EXISTING_CODE
 
@@ -100,7 +100,7 @@ bool CTreeRoot::Serialize(SFArchive& archive) {
     bool has_root = false;
     archive >> has_root;
     if (has_root) {
-        SFString className;
+        string_q className;
         archive >> className;
         root = createTreeNode(className);
         if (!root)
@@ -121,7 +121,7 @@ bool CTreeRoot::SerializeC(SFArchive& archive) const {
     // EXISTING_CODE
     archive << (root != NULL);
     if (root) {
-        SFString className = root->getRuntimeClass()->getClassNamePtr();
+        string_q className = root->getRuntimeClass()->getClassNamePtr();
         archive << className;
         root->SerializeC(archive);
     }
@@ -152,7 +152,7 @@ void CTreeRoot::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextTreerootChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+string_q nextTreerootChunk_custom(const string_q& fieldIn, const void *dataPtr) {
     const CTreeRoot *tre = (const CTreeRoot *)dataPtr;
     if (tre) {
         switch (tolower(fieldIn[0])) {
@@ -173,7 +173,7 @@ SFString nextTreerootChunk_custom(const SFString& fieldIn, const void *dataPtr) 
 }
 
 //---------------------------------------------------------------------------
-bool CTreeRoot::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
+bool CTreeRoot::handleCustomFormat(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
@@ -190,10 +190,10 @@ bool CTreeRoot::readBackLevel(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------
-SFString CTreeRoot::getValueByName(const SFString& fieldName) const {
+string_q CTreeRoot::getValueByName(const string_q& fieldName) const {
 
     // Give customized code a chance to override first
-    SFString ret = nextTreerootChunk_custom(fieldName, this);
+    string_q ret = nextTreerootChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
@@ -227,20 +227,20 @@ ostream& operator<<(ostream& os, const CTreeRoot& item) {
 //---------------------------------------------------------------------------
 // EXISTING_CODE
     //-----------------------------------------------------------------------------
-    SFString CTreeRoot::at(const SFString& _key) const {
+    string_q CTreeRoot::at(const string_q& _key) const {
         if (!root)
             return "";
         return root->at(_key);
     }
 
     //-----------------------------------------------------------------------------
-    void CTreeRoot::remove(const SFString& _key) {
+    void CTreeRoot::remove(const string_q& _key) {
         if (root)
             root = root->remove(_key);
     }
 
     //-----------------------------------------------------------------------------
-    void CTreeRoot::insert(const SFString& _key, const SFString& _value) {
+    void CTreeRoot::insert(const string_q& _key, const string_q& _value) {
         if (_value.empty())
             remove(_key);
         if (verbose == 2) { cerr << "treeroot inserting " << _key << " at " << _value << "\n"; }

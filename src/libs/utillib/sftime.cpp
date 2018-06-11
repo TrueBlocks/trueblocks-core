@@ -54,7 +54,7 @@ namespace qblocks {
     }
 
     //----------------------------------------------------------------------------------------------------
-    SFTime::SFTime(const SFString& dateStr, const SFString& fmtStr) {
+    SFTime::SFTime(const string_q& dateStr, const string_q& fmtStr) {
         if (dateStr.empty() || fmtStr.empty())
             *this = earliestDate;
         else
@@ -127,8 +127,8 @@ namespace qblocks {
     //
     // %#d, %#j, %#m, %#U, %#w, %#y, %#H, %#h, %#M, %#S  Remove leading zeros (if any).
     //----------------------------------------------------------------------------------------------------
-    SFString SFTime::Format(const SFString& sFormat) const {
-        SFString ret;
+    string_q SFTime::Format(const string_q& sFormat) const {
+        string_q ret;
         if (IsValid()) {
             char sBuffer[512];
             size_t bSize = sizeof(sBuffer);
@@ -479,7 +479,7 @@ namespace qblocks {
     // as entered in a masked edit field or from a parsed report.
     //
     //-------------------------------------------------------------------------
-    SFTime::SFTimeOfDay::SFTimeOfDay(const SFString& timeStr, const SFString& fmtStr) {
+    SFTime::SFTimeOfDay::SFTimeOfDay(const string_q& timeStr, const string_q& fmtStr) {
         m_nSeconds = SECS_PER_DAY;
         if (fmtStr.length() != 4) {
             *this = SFTimeOfDay(12, 0, 0);
@@ -493,7 +493,7 @@ namespace qblocks {
 
         char sep = fmtStr[3];
 
-        SFString str = timeStr;  // 12:12:12 am for example
+        string_q str = timeStr;  // 12:12:12 am for example
 
         for (size_t i = 0 ; i < 3 && str.length() > 0 ; i++) {
             switch (fmtStr[i]) {
@@ -643,7 +643,7 @@ namespace qblocks {
     // This feature allows for the creation of SFDate's from a string
     // as entered in a masked edit field or from a parsed report.
     //-------------------------------------------------------------------------
-    SFTime::SFDate::SFDate(const SFString& dateStr, const SFString& fmtStr) {
+    SFTime::SFDate::SFDate(const string_q& dateStr, const string_q& fmtStr) {
         m_nDays  = (uint64_t)LONG_MIN;
         if (fmtStr.length() != 5) {
             *this = SFDate(Now().GetYear(), Now().GetMonth(), Now().GetDay());
@@ -656,7 +656,7 @@ namespace qblocks {
 
         char sep = fmtStr[4];
 
-        SFString str = dateStr;  // 12-10-1921 for example
+        string_q str = dateStr;  // 12-10-1921 for example
         for (size_t i = 0 ; i < 3 && str.length() > 0 ; i++) {
             switch (fmtStr[i]) {
                 case 'd':
@@ -789,11 +789,11 @@ namespace qblocks {
     }
 
     //---------------------------------------------------------------------------------------
-    SFTime parseDate(const SFString& strIn) {
+    SFTime parseDate(const string_q& strIn) {
         if (strIn.empty())
             return earliestDate;
 
-        SFString str = strIn;
+        string_q str = strIn;
         replaceAll(str, ";", EMPTY);
         if (str.length() != 14) {
             str += "120000";
@@ -951,7 +951,7 @@ namespace qblocks {
         char retStr[40];
         strftime(retStr, sizeof(retStr), "%Y-%m-%d %H:%M:%S UTC", ret);
 
-        SFString str = retStr;
+        string_q str = retStr;
         uint32_t y = toLong32u(nextTokenClear(str, '-'));
         uint32_t m = toLong32u(nextTokenClear(str, '-'));
         uint32_t d = toLong32u(nextTokenClear(str, ' '));
@@ -962,17 +962,17 @@ namespace qblocks {
     }
 
     //----------------------------------------------------------------------------------------------------
-    SFString fromTimestamp(timestamp_t ts) {
+    string_q fromTimestamp(timestamp_t ts) {
         return asString(ts);
     }
 
     //----------------------------------------------------------------------------------------------------
-    timestamp_t toTimestamp(const SFString& timeIn) {
+    timestamp_t toTimestamp(const string_q& timeIn) {
         return (startsWith(timeIn, "0x") ? (timestamp_t)hex2LongU(timeIn) : (timestamp_t)toLong(timeIn));
     }
 
     //----------------------------------------------------------------------------------------------------
-    SFTime fileLastModifyDate(const SFString& filename) {
+    SFTime fileLastModifyDate(const string_q& filename) {
         if (!fileExists(filename))
             return earliestDate;
 

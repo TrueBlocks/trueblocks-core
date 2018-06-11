@@ -19,13 +19,13 @@ public:
     bool boolOption;
     bool boolSet;
     int64_t numOption;
-    SFString stringOption;
+    string_q stringOption;
     int32_t testNum;
 
     COptions(void);
     ~COptions(void);
 
-    bool parseArguments(SFString& command);
+    bool parseArguments(string_q& command);
     void Init(void);
     void output(void) const {
         cout << "boolOption: "   << boolOption << "\n";

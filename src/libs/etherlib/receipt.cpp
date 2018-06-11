@@ -23,11 +23,11 @@ namespace qblocks {
 IMPLEMENT_NODE(CReceipt, CBaseNode);
 
 //---------------------------------------------------------------------------
-extern SFString nextReceiptChunk(const SFString& fieldIn, const void *dataPtr);
-static SFString nextReceiptChunk_custom(const SFString& fieldIn, const void *dataPtr);
+extern string_q nextReceiptChunk(const string_q& fieldIn, const void *dataPtr);
+static string_q nextReceiptChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CReceipt::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
+void CReceipt::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -36,7 +36,7 @@ void CReceipt::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr)
         return;
     }
 
-    SFString fmt = fmtIn;
+    string_q fmt = fmtIn;
     if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
@@ -45,7 +45,7 @@ void CReceipt::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr)
 }
 
 //---------------------------------------------------------------------------
-SFString nextReceiptChunk(const SFString& fieldIn, const void *dataPtr) {
+string_q nextReceiptChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
         return ((const CReceipt *)dataPtr)->getValueByName(fieldIn);
 
@@ -56,12 +56,12 @@ SFString nextReceiptChunk(const SFString& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CReceipt::setValueByName(const SFString& fieldName, const SFString& fieldValue) {
+bool CReceipt::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
     // EXISTING_CODE
     if (fieldName == "contractAddress" && fieldValue == "null") {
-        *((SFString*)&fieldValue) = "0";
+        *((string_q*)&fieldValue) = "0";
     } else if (fieldName == "status" && (fieldValue == "null" || fieldValue == "0x")) {
-        *((SFString*)&fieldValue) = asStringU(NO_STATUS);
+        *((string_q*)&fieldValue) = asStringU(NO_STATUS);
     }
 
     if (pTrans)
@@ -168,7 +168,7 @@ void CReceipt::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextReceiptChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+string_q nextReceiptChunk_custom(const string_q& fieldIn, const void *dataPtr) {
     const CReceipt *rec = (const CReceipt *)dataPtr;
     if (rec) {
         switch (tolower(fieldIn[0])) {
@@ -200,7 +200,7 @@ SFString nextReceiptChunk_custom(const SFString& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------
-bool CReceipt::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
+bool CReceipt::handleCustomFormat(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
@@ -252,10 +252,10 @@ SFArchive& operator>>(SFArchive& archive, CReceipt& rec) {
 }
 
 //---------------------------------------------------------------------------
-SFString CReceipt::getValueByName(const SFString& fieldName) const {
+string_q CReceipt::getValueByName(const string_q& fieldName) const {
 
     // Give customized code a chance to override first
-    SFString ret = nextReceiptChunk_custom(fieldName, this);
+    string_q ret = nextReceiptChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
@@ -273,7 +273,7 @@ SFString CReceipt::getValueByName(const SFString& fieldName) const {
                 if (endsWith(fieldName, "Cnt"))
                     return asStringU(cnt);
                 if (!cnt) return "";
-                SFString retS;
+                string_q retS;
                 for (uint32_t i = 0 ; i < cnt ; i++) {
                     retS += logs[i].Format();
                     retS += ((i < cnt - 1) ? ",\n" : "\n");
@@ -309,7 +309,7 @@ ostream& operator<<(ostream& os, const CReceipt& item) {
 }
 
 //---------------------------------------------------------------------------
-const CBaseNode *CReceipt::getObjectAt(const SFString& fieldName, uint32_t index) const {
+const CBaseNode *CReceipt::getObjectAt(const string_q& fieldName, uint32_t index) const {
     if ( fieldName % "logs" && index < logs.getCount() )
         return &logs[index];
     return NULL;

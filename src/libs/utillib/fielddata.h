@@ -43,7 +43,7 @@ namespace qblocks {
     //-------------------------------------------------------------------------
     class CFieldData {
     private:
-        SFString m_fieldName;
+        string_q m_fieldName;
         uint32_t m_fieldID;
         uint32_t m_fieldType;
         bool     m_hidden;
@@ -57,10 +57,10 @@ namespace qblocks {
         bool isObject(void) const { return m_fieldType & TS_OBJECT; }
         bool isArray (void) const { return m_fieldType & TS_ARRAY;  }
 
-        SFString getName(void) const { return m_fieldName; }
+        string_q getName(void) const { return m_fieldName; }
         uint32_t getID  (void) const { return m_fieldID;   }
         uint32_t getType(void) const { return m_fieldType; }
-        void     setName(const SFString& str) { m_fieldName = str; }
+        void     setName(const string_q& str) { m_fieldName = str; }
 
         bool operator==(const CFieldData& data) {
             if (m_fieldName != data.m_fieldName) return false;
@@ -82,6 +82,6 @@ namespace qblocks {
     public:
         CFieldList(void) : SFList<CFieldData*>() { }
         const CFieldData *getFieldByID(uint32_t id) const;
-        const CFieldData *getFieldByName(const SFString& name) const;
+        const CFieldData *getFieldByName(const string_q& name) const;
     };
 }  // namespace qblocks

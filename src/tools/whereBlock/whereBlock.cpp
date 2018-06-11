@@ -25,28 +25,28 @@ int main(int argc, const char *argv[]) {
 
     //while (!options.commandList.empty())
     {
-        SFString command = nextTokenClear(options.commandList, '\n');
+        string_q command = nextTokenClear(options.commandList, '\n');
         if (!options.parseArguments(command))
             return 0;
 
-        SFString cachePath = blockCachePath("").Substitute("/blocks/", "/"+options.mode+"s/");
+        string_q cachePath = blockCachePath("").Substitute("/blocks/", "/"+options.mode+"s/");
         if (isTestMode())
             cachePath = "--";
         cout << cYellow << "\nReport on " << options.mode << " locations:" << cOff << (verbose ? "" : "\n  (cache folder: " + cachePath + ")") << "\n";
 
-        SFString list = options.getBlockNumList();
+        string_q list = options.getBlockNumList();
         while (!list.empty()) {
             blknum_t bn = toLongU(nextTokenClear(list, '|'));
             CFilename fileName(getBinaryFilename(bn).Substitute("/blocks/", "/"+options.mode+"s/"));
             bool exists = fileExists(fileName.getFullPath());
 
-            SFString path = (verbose ? fileName.getFullPath() : fileName.relativePath(blockCachePath("").Substitute("/blocks/", "/"+options.mode+"s/")));
-            SFString vers = getVersionFromClient();
+            string_q path = (verbose ? fileName.getFullPath() : fileName.relativePath(blockCachePath("").Substitute("/blocks/", "/"+options.mode+"s/")));
+            string_q vers = getVersionFromClient();
             if (isTestMode() && verbose)
                 path = "--";
             if (isTestMode())
                 vers = "--";
-            SFString fallback = getenv("FALLBACK");
+            string_q fallback = getenv("FALLBACK");
             bool running_node = isNodeRunning();
 
             cout << "\t" << options.mode << " " << cTeal << padLeft(asStringU(bn),9) << cOff << " ";

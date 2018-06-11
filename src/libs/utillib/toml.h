@@ -16,7 +16,7 @@
 
 namespace qblocks {
 
-    extern SFString cTeal, cOff;
+    extern string_q cTeal, cOff;
     #define cleanFmt(str) ((str).Substitute("\\n\\\n", "\\n").Substitute("\n", "").Substitute("\\n", "\n").Substitute("\\t", "\t").Substitute("\\r", "\r"))
     //-------------------------------------------------------------------------
     class CToml : public CSharedResource {
@@ -31,8 +31,8 @@ namespace qblocks {
         // support class for toml file
         class CTomlKey {
         public:
-            SFString keyName;
-            SFString value;
+            string_q keyName;
+            string_q value;
             bool     comment;
 
             CTomlKey(void);
@@ -45,7 +45,7 @@ namespace qblocks {
         // support class for toml file
         class CTomlGroup {
         public:
-            SFString  groupName;
+            string_q  groupName;
             bool      isArray;
             bool      isComment;
             CTomlKeyList keys;
@@ -57,8 +57,8 @@ namespace qblocks {
 
             CTomlGroup& operator=(const CTomlGroup& group);
 
-            CTomlKey *addKey(const SFString& keyName, const SFString& val, bool commented);
-            CTomlKey *findKey(const SFString& keyName) const;
+            CTomlKey *addKey(const string_q& keyName, const string_q& val, bool commented);
+            CTomlKey *findKey(const string_q& keyName) const;
 
         private:
             void Clear(void);
@@ -68,32 +68,32 @@ namespace qblocks {
         typedef SFList<CTomlGroup*> CTomlGroupList;
 
     protected:
-        CTomlGroup *addGroup(const SFString& group, bool commented, bool array);
-        CTomlGroup *findGroup(const SFString& group) const;
+        CTomlGroup *addGroup(const string_q& group, bool commented, bool array);
+        CTomlGroup *findGroup(const string_q& group) const;
 
-        CTomlKey *addKey(const SFString& group, const SFString& key, const SFString& val, bool commented);
-        CTomlKey *findKey(const SFString& group, const SFString& key) const;
+        CTomlKey *addKey(const string_q& group, const string_q& key, const string_q& val, bool commented);
+        CTomlKey *findKey(const string_q& group, const string_q& key) const;
 
     public:
         CTomlGroupList groups;
 
-        CToml(const SFString& fileName);
+        CToml(const string_q& fileName);
         ~CToml(void);
 
-        SFString getType(void) const override { return "CToml"; }
+        string_q getType(void) const override { return "CToml"; }
 
-        SFString getConfigStr   (const SFString& group, const SFString& key, const SFString& def) const;
-        uint64_t getConfigInt   (const SFString& group, const SFString& key, uint64_t def) const;
-        SFUintBN getConfigBigInt(const SFString& group, const SFString& key, SFUintBN def) const;
-        bool     getConfigBool  (const SFString& group, const SFString& key, bool def) const;
-        SFString getDisplayStr  (bool terse, const SFString& def, const SFString& color=cTeal) const;
+        string_q getConfigStr   (const string_q& group, const string_q& key, const string_q& def) const;
+        uint64_t getConfigInt   (const string_q& group, const string_q& key, uint64_t def) const;
+        SFUintBN getConfigBigInt(const string_q& group, const string_q& key, SFUintBN def) const;
+        bool     getConfigBool  (const string_q& group, const string_q& key, bool def) const;
+        string_q getDisplayStr  (bool terse, const string_q& def, const string_q& color=cTeal) const;
 
-        void setConfigStr  (const SFString& group, const SFString& key, const SFString& value);
-        void setConfigInt  (const SFString& group, const SFString& key, uint64_t value);
-        void setConfigBool (const SFString& group, const SFString& key, bool value);
+        void setConfigStr  (const string_q& group, const string_q& key, const string_q& value);
+        void setConfigInt  (const string_q& group, const string_q& key, uint64_t value);
+        void setConfigBool (const string_q& group, const string_q& key, bool value);
 
         bool writeFile(void);
-        bool readFile(const SFString& filename);
+        bool readFile(const string_q& filename);
         void mergeFile(CToml *tomlIn);
 
         friend ostream& operator<<(ostream& os, const CToml& tomlIn);
