@@ -161,9 +161,9 @@ SFString COptions::postProcess(const SFString& which, const SFString& str) const
 SFString getPrefix(const SFString& inIn) {
 
     SFString in = inIn; // for example ./ENS/parselib/
-    in.Replace("parseLib","parselib"); // hack: to fix dao monitor
+    replace(in, "parseLib","parselib"); // hack: to fix dao monitor
     reverse(in);
-    in.Replace("/", ""); // remove trailing '/'
+    replace(in, "/", ""); // remove trailing '/'
     in = nextTokenClear(in, '/'); // remove /parselib
     reverse(in);
     return in;

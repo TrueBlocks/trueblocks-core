@@ -47,7 +47,7 @@ stringTest 2
 	000.036 contains is     ==> 1
 	000.037 find not this   ==> 18446744073709551615
 	000.038 not there this  ==> 0
-	000.039 findI not this  ==> 0
+	000.039 findI not this  ==> 12
 	000.040 there this      ==> 1
 
 	000.041 base case       ==> Target1|Target2|Target3|Target4
@@ -64,3 +64,10 @@ stringTest 2
 
 	000.051 base case       ==> .desrever gnirts eht si sihT
 	000.052 reversed        ==> This is the string reversed.
+
+	000.053 base case       ==> Target1|Target2|Target3|Target4
+	000.054 replace         ==> |Target2|Target3|Target4
+	000.055 replace         ==> ||Target3|Target4
+	000.056 replace         ==> |||Target4
+	000.057 replace         ==> |||
+

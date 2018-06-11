@@ -223,13 +223,13 @@ bool CAccount::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, vo
 
     } else {
         SFString postFmt = fmtIn;
-        postFmt.Replace("{RECORDS}", "|");
+        replace(postFmt, "{RECORDS}", "|");
         SFString preFmt = nextTokenClear(postFmt, '|');
 
         // We assume here that the token was properly formed. For the pre-text we
         // have to clear out the start '[', and for the post text we clear out the ']'
         replaceReverse(preFmt, "[", "");
-        postFmt.Replace("]", "");
+        replace(postFmt, "]", "");
 
         // We handle the display in three parts: pre, records, and post so as
         // to avoid building the entire record list into an ever-growing and

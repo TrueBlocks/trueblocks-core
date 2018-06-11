@@ -252,7 +252,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
     //-------------------------------------------------------------------------
     bool queryRawTransaction(SFString& results, const SFHash& txHash) {
         SFString data = "[\"[HASH]\"]";
-        data.Replace("[HASH]", txHash);
+        replace(data, "[HASH]", txHash);
         results = callRPC("eth_getTransactionByHash", data, true);
         return true;
     }
@@ -260,7 +260,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
     //-------------------------------------------------------------------------
     bool queryRawReceipt(SFString& results, const SFHash& txHash) {
         SFString data = "[\"[HASH]\"]";
-        data.Replace("[HASH]", txHash);
+        replace(data, "[HASH]", txHash);
         results = callRPC("eth_getTransactionReceipt", data, true);
         return true;
     }
@@ -274,9 +274,9 @@ extern void registerQuitHandler(QUITHANDLER qh);
     //-------------------------------------------------------------------------
     bool queryRawLogs(SFString& results, const SFAddress& addr, uint64_t fromBlock, uint64_t toBlock) {
         SFString data = "[{\"fromBlock\":\"[START]\",\"toBlock\":\"[STOP]\", \"address\": \"[ADDR]\"}]";
-        data.Replace("[START]", toHex(fromBlock));
-        data.Replace("[STOP]",  toHex(toBlock));
-        data.Replace("[ADDR]",  fromAddress(addr));
+        replace(data, "[START]", toHex(fromBlock));
+        replace(data, "[STOP]",  toHex(toBlock));
+        replace(data, "[ADDR]",  fromAddress(addr));
         results = callRPC("eth_getLogs", data, true);
         return true;
     }
@@ -303,7 +303,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
             // return blockNumber until the chain is synced (Parity may--don't know
             // We fall back to this method just in case
             SFString str = callRPC("eth_syncing", "[]", false);
-            str.Replace("currentBlock:","|");
+            replace(str, "currentBlock:","|");
             nextTokenClear(str,'|');
             str = nextTokenClear(str,',');
             retN = toUnsigned(str);
@@ -542,14 +542,14 @@ extern void registerQuitHandler(QUITHANDLER qh);
     //-------------------------------------------------------------------------
     SFString getBinaryFilename(uint64_t num) {
         SFString ret = getFilename_local(num, false, false);
-        ret.Replace("/00/",  "/blocks/00/"); // can't use Substitute because it will change them all
+        replace(ret, "/00/",  "/blocks/00/"); // can't use Substitute because it will change them all
         return ret;
     }
 
     //-------------------------------------------------------------------------
     SFString getBinaryPath(uint64_t num) {
         SFString ret = getFilename_local(num, true, false);
-        ret.Replace("/00/",  "/blocks/00/"); // can't use Substitute because it will change them all
+        replace(ret, "/00/",  "/blocks/00/"); // can't use Substitute because it will change them all
         return ret;
     }
 

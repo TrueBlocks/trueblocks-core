@@ -219,7 +219,7 @@ void generateCode(const COptions& options, CToml& toml, const SFString& dataFile
 
         SFString decFmt  = "\t[{TYPE}] *[{NAME}];";
         if (!fld->isPointer) {
-            decFmt.Replace("*", "");
+            replace(decFmt, "*", "");
         }
         SFString copyFmt = "\t[{NAME}] = +SHORT+.[{NAME}];\n";
         if (fld->isPointer)
@@ -271,11 +271,11 @@ void generateCode(const COptions& options, CToml& toml, const SFString& dataFile
             }
         }
 #define getDefault(a) (fld->strDefault.empty() ? (a) : fld->strDefault )
-        setFmt.Replace("[{DEFS}]", getDefault("\"\""));
-        setFmt.Replace("[{DEF}]",  getDefault("0"));
-        setFmt.Replace("[{DEFF}]", getDefault("0.0"));
-        setFmt.Replace("[{DEFT}]", getDefault("earliestDate"));
-        setFmt.Replace("[{DEFP}]", getDefault("NULL"));
+        replace(setFmt, "[{DEFS}]", getDefault("\"\""));
+        replace(setFmt, "[{DEF}]",  getDefault("0"));
+        replace(setFmt, "[{DEFF}]", getDefault("0.0"));
+        replace(setFmt, "[{DEFT}]", getDefault("earliestDate"));
+        replace(setFmt, "[{DEFP}]", getDefault("NULL"));
 
         if (contains(fld->type, "Array") || (fld->isObject && !fld->isPointer)) {
 
@@ -297,8 +297,8 @@ void generateCode(const COptions& options, CToml& toml, const SFString& dataFile
             } else {
                 fieldGetObj += STR_GETOBJ_CODE_FIELD;
                 if (!contains(fld->type, "Array")) {
-                    fieldGetObj.Replace(" && index < [{FIELD}].getCount()", "");
-                    fieldGetObj.Replace("[index]", "");
+                    replace(fieldGetObj, " && index < [{FIELD}].getCount()", "");
+                    replace(fieldGetObj, "[index]", "");
                 }
                 replaceAll(fieldGetObj, "[{FIELD}]", fld->name);
             }
@@ -315,8 +315,8 @@ void generateCode(const COptions& options, CToml& toml, const SFString& dataFile
             replaceAll(fmt, "[FNAME]", fld->name);
             replaceAll(fmt, "[SH3]", short3(baseLower));
             SFString fldStr = fld->Format(fmt);
-            fldStr.Replace("++", "[{");
-            fldStr.Replace("++", "}]");
+            replace(fldStr, "++", "[{");
+            replace(fldStr, "++", "}]");
             if (fieldSubCls.empty())
                 fieldSubCls = "\n\tSFString s;\n";
             fieldSubCls += fldStr;
@@ -405,7 +405,7 @@ SFString ptrWriteFmt =
     SFString srcFile    = dataFile.Substitute(".txt", ".cpp").Substitute("./classDefinitions/", "./");
     SFString srcSource  = asciiFileToString(configPath("makeClass/blank.cpp"));
     if ((startsWith(className, "CNew") || className == "CPriceQuote") && !contains(getCWD(), "parse"))
-        srcSource.Replace("version of the data\n", STR_UPGRADE_CODE);
+        replace(srcSource, "version of the data\n", STR_UPGRADE_CODE);
     replaceAll(srcSource, "[{GET_OBJ}]",         fieldGetObj);
     replaceAll(srcSource, "[{GET_STR}]",         fieldGetStr);
     replaceAll(srcSource, "[ARCHIVE_READ]",      fieldArchiveRead);
@@ -530,9 +530,9 @@ SFString getCaseCode(const SFString& fieldCase, const SFString& ex) {
                     } else if (contains(type, "SFBigUintArray") || contains(type, "SFTopicArray")) {
                         SFString str = STR_CASE_CODE_STRINGARRAY;
                         // hack for getCount clause
-                        str.Replace("[{FIELD}]", field);
+                        replace(str, "[{FIELD}]", field);
                         // hack for the array access
-                        str.Replace("[{FIELD}][i]", "fromTopic("+field+"[i])");
+                        replace(str, "[{FIELD}][i]", "fromTopic("+field+"[i])");
                         caseCode += str;
 
                     } else if (contains(type, "Array")) {

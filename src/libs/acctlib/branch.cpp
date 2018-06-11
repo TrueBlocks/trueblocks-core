@@ -317,7 +317,7 @@ ostream& operator<<(ostream& os, const CBranch& item) {
             }
             if (verbose)
                 cerr << "and empty value" << endl;
-            idnt.Replace("\t", "");
+            replace(idnt, "\t", "");
             return this;
         }
 
@@ -328,13 +328,13 @@ ostream& operator<<(ostream& os, const CBranch& item) {
             nodes[idx] = ret;
             CTreeNode *n = rejig();
             if (verbose)
-                idnt.Replace("\t", "");
+                replace(idnt, "\t", "");
             return n;
         }
 
         if (verbose) {
             cerr << endl;
-            idnt.Replace("\t", "");
+            replace(idnt, "\t", "");
         }
         return this;
     }

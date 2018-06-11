@@ -62,7 +62,7 @@ bool displayBloom(blknum_t bn, const SFBloom& bloom, void *data) {
     COptions *opt = (COptions*)data;
     if (opt->mode == "short") {
         size_t len = s.length();
-        s.Replace (   "0x",     "");
+        replace(s,    "0x",     "");
         replaceAny(s, "0",      "");
         replaceAny(s, "1248",   ".");
         replaceAny(s, "3569ac", ".");
@@ -71,7 +71,7 @@ bool displayBloom(blknum_t bn, const SFBloom& bloom, void *data) {
         size_t rem = len - s.length();
         s = s + SFString(' ', rem) + "|";
     } else {
-        s.Replace("0x", cOff);
+        replace(s,    "0x", cOff);
         replaceAll(s, "0",  " ");
         replaceAll(s, "1",  "[.");
         replaceAll(s, "2",  "[.");

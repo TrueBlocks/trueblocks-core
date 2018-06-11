@@ -110,7 +110,7 @@ SFString acquireABI(CFunctionArray& functions, const SFAddress& addr, const COpt
         results = urlToString(url).Substitute("\\", "");
         if (!contains(results, "NOTOK")) {
         	// clear the RPC wrapper
-        	results.Replace("{\"status\":\"1\",\"message\":\"OK\",\"result\":\"","");
+        	replace(results, "{\"status\":\"1\",\"message\":\"OK\",\"result\":\"","");
         	replaceReverse(results, "]\"}", "");
         	if (verbose) {
             	if (!isTestMode())
@@ -284,8 +284,8 @@ int main(int argc, const char *argv[]) {
                             items1   += "\t\t\titems[nItems++] = \"" + func->inputs[j].type + "\";\n";
                             nIndexed += func->inputs[j].indexed;
                             SFString res = func->inputs[j].Format(getEventAssign(&func->inputs[j], j+1, nIndexed));
-                            res.Replace("++", "[");
-                            res.Replace("++", "]");
+                            replace(res, "++", "[");
+                            replace(res, "++", "]");
                             assigns2 += res;
                         }
 
@@ -294,11 +294,11 @@ int main(int argc, const char *argv[]) {
                             base = "LogEntry";
 
                         SFString out = STR_CLASSDEF;
-                        out.Replace("[{DIR}]", options.classDir.Substitute(getHomeFolder(), "~/"));
-                        out.Replace("[{CLASS}]", theClass);
-                        out.Replace("[{FIELDS}]", fields);
-                        out.Replace("[{BASE}]", base);
-                        out.Replace("[{BASE_LOWER}]", toLower(base));
+                        replace(out, "[{DIR}]", options.classDir.Substitute(getHomeFolder(), "~/"));
+                        replace(out, "[{CLASS}]", theClass);
+                        replace(out, "[{FIELDS}]", fields);
+                        replace(out, "[{BASE}]", base);
+                        replace(out, "[{BASE_LOWER}]", toLower(base));
 
                         SFString fileName = toLower(name)+".txt";
                         if (!isConst) {
@@ -325,8 +325,8 @@ int main(int argc, const char *argv[]) {
                                                             .Substitute("  ", " ")
                                                             .Substitute(" (", "(")
                                                             .Substitute(",", ", "));
-                            f1.Replace("[{ENCODING}]", func->getSignature(SIG_ENCODE));
-                            f1.Replace(" defFunction(string)", "()");
+                            replace(f1, "[{ENCODING}]", func->getSignature(SIG_ENCODE));
+                            replace(f1, " defFunction(string)", "()");
                             if (!isConst)
                                 factory1 += f1;
 
@@ -335,12 +335,12 @@ int main(int argc, const char *argv[]) {
                             f2 = SFString(STR_FACTORY2)
                                             .Substitute("[{CLASS}]", theClass)
                                             .Substitute("[{LOWER}]", fName);
-                            f2.Replace("[{ASSIGNS2}]", assigns2);
-                            f2.Replace("[{BASE}]", base);
-                            f2.Replace("[{SIGNATURE}]", func->getSignature(SIG_DEFAULT|SIG_IINDEXED)
+                            replace(f2, "[{ASSIGNS2}]", assigns2);
+                            replace(f2, "[{BASE}]", base);
+                            replace(f2, "[{SIGNATURE}]", func->getSignature(SIG_DEFAULT|SIG_IINDEXED)
                                        .Substitute("\t", "").Substitute("  ", " ")
                                        .Substitute(" (", "(").Substitute(",", ", "));
-                            f2.Replace("[{ENCODING}]", func->getSignature(SIG_ENCODE));
+                            replace(f2, "[{ENCODING}]", func->getSignature(SIG_ENCODE));
                             if (!isConst)
                                 factory2 += f2;
                         }
@@ -400,23 +400,23 @@ int main(int argc, const char *argv[]) {
             }
 
             // The library source file
-            factory1.Replace("} else ", "");
-            factory1.Replace("contains(func, \"defFunction|\")", "!contains(func, \"|\")");
-            factory1.Replace(" if (encoding == func_[{LOWER}])", "");
-            factory2.Replace("} else ", "");
+            replace(factory1, "} else ", "");
+            replace(factory1, "contains(func, \"defFunction|\")", "!contains(func, \"|\")");
+            replace(factory1, " if (encoding == func_[{LOWER}])", "");
+            replace(factory2, "} else ", "");
 
             SFString sourceCode = asciiFileToString(templateFolder + "parselib/parselib.cpp");
             parseInit = "parselib_init(QUITHANDLER qh)";
             if (!options.isBuiltin())
                 replaceAll(sourceCode, "[{PREFIX}]_init(void)", parseInit);
             if (options.isToken()) {
-                sourceCode.Replace("return promoteToToken(p);", "return promoteToWallet(p);");
-                sourceCode.Replace("return promoteToTokenEvent(p);", "return promoteToWalletEvent(p);");
+                replace(sourceCode, "return promoteToToken(p);", "return promoteToWallet(p);");
+                replace(sourceCode, "return promoteToTokenEvent(p);", "return promoteToWalletEvent(p);");
             } else if (options.isWallet()) {
-                sourceCode.Replace("return promoteToToken(p);", "return NULL;");
-                sourceCode.Replace("return promoteToTokenEvent(p);", "return NULL;");
+                replace(sourceCode, "return promoteToToken(p);", "return NULL;");
+                replace(sourceCode, "return promoteToTokenEvent(p);", "return NULL;");
             }
-            sourceCode.Replace("[{BLKPATH}]", options.isBuiltin() ? "" : STR_BLOCK_PATH);
+            replace(sourceCode, "[{BLKPATH}]", options.isBuiltin() ? "" : STR_BLOCK_PATH);
             replaceAll(sourceCode, "[{CODE_SIGS}]", (options.isBuiltin() ? "" : STR_CODE_SIGS));
             replaceAll(sourceCode, "[{ADDR}]", options.primaryAddr.Substitute("0x", ""));
             replaceAll(sourceCode, "[{ABI}]", options.theABI);
@@ -492,7 +492,7 @@ SFString getAssign(const CParameter *p, uint64_t which) {
     } else { ass = "[{VAL}];";
     }
 
-    ass.Replace("[{VAL}]", "params.substr(" + asStringU(which) + "*64" + (type == "bytes" ? "" : ",64") + ")");
+    replace(ass, "[{VAL}]", "params.substr(" + asStringU(which) + "*64" + (type == "bytes" ? "" : ",64") + ")");
     return p->Format("\t\t\ta->[{NAME}] = " + ass + "\n");
 }
 
@@ -509,18 +509,18 @@ SFString getEventAssign(const CParameter *p, uint64_t which, uint64_t nIndexed) 
     }
 
     if (p->indexed) {
-        ass.Replace("[{VAL}]", "nTops > [{WHICH}] ? fromTopic(p->topics[{IDX}]) : \"\"");
+        replace(ass, "[{VAL}]", "nTops > [{WHICH}] ? fromTopic(p->topics[{IDX}]) : \"\"");
 
     } else if (type == "bytes") {
-        ass.Replace("[{VAL}]", "\"0x\"+data.substr([{WHICH}]*64)");
+        replace(ass, "[{VAL}]", "\"0x\"+data.substr([{WHICH}]*64)");
         which -= (nIndexed+1);
 
     } else {
-        ass.Replace("[{VAL}]", SFString(type == "address" ? "" : "\"0x\"+") + "data.substr([{WHICH}]*64,64)");
+        replace(ass, "[{VAL}]", SFString(type == "address" ? "" : "\"0x\"+") + "data.substr([{WHICH}]*64,64)");
         which -= (nIndexed+1);
     }
-    ass.Replace("[{IDX}]", "++" + asStringU(which)+"++");
-    ass.Replace("[{WHICH}]", asStringU(which));
+    replace(ass, "[{IDX}]", "++" + asStringU(which)+"++");
+    replace(ass, "[{WHICH}]", asStringU(which));
     SFString fmt = "\t\t\ta->[{NAME}] = " + ass + "\n";
     return p->Format(fmt);
 }

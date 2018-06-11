@@ -502,7 +502,7 @@ void CSlurperApp::buildDisplayStrings(COptions& options) {
     while (!fieldList.empty()) {
         SFString fieldName = nextTokenClear(fieldList, '|');
         bool force = contains(fieldName, "*");
-        fieldName.Replace("*", EMPTY);
+        replace(fieldName, "*", EMPTY);
 
         const CFieldData *field = GETRUNTIME_CLASS(CTransaction)->FindField(fieldName);
         if (!field) {
