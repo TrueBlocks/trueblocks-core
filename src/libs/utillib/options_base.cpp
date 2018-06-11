@@ -74,7 +74,7 @@ namespace qblocks {
         for (int i = 1 ; i < argc ; i++) {
             SFString str = argv[i];
             SFString arg = trim(str);
-            arg.Replace("--verbose", "-v");
+            replace(arg, "--verbose", "-v");
             while (!arg.empty()) {
                 SFString opt = expandOption(arg);  // handles case of -rf for example
                 if (isReadme) {
@@ -113,7 +113,7 @@ namespace qblocks {
             SFString arg = args[i];
             if (startsWith(arg, "--file:")) {
                 cmdFileName = arg.Substitute("--file:", "");
-                cmdFileName.Replace("~/", getHomeFolder());
+                replace(cmdFileName, "~/", getHomeFolder());
                 if (!fileExists(cmdFileName)) {
                     if (args) delete [] args;
                     return usage("--file: '" + cmdFileName + "' not found. Quitting.");
@@ -286,7 +286,7 @@ namespace qblocks {
                 longName = name + dummy;
 
             if (contains(name, "{")) {
-                name.Replace("{", "|{");
+                replace(name, "{", "|{");
                 nextTokenClear(name, '|');
                 shortName += name;
 
@@ -382,7 +382,7 @@ namespace qblocks {
 
         CStringExportContext ctx;
         if (!purpose.empty()) {
-            purpose.Replace("\n           ", "");
+            replace(purpose, "\n           ", "");
             ctx << bYellow << sep << "Purpose:" << sep2 << "  " << cOff
                 << purpose.Substitute("\n", "\n           ") << "  \n";
         }
@@ -399,22 +399,22 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
 
             // When we are writing the readme file...
             SFString line = STR_ONE_LINE;
-            line.Replace("{S}", sN);
-            line.Replace("{L}", (isMode ? "" : "-") + lN);
-            line.Replace("{D}", d.Substitute("|", "&#124;"));
+            replace(line, "{S}", sN);
+            replace(line, "{L}", (isMode ? "" : "-") + lN);
+            replace(line, "{D}", d.Substitute("|", "&#124;"));
             ctx << line;
 
         } else {
 
             // When we are writing to the command line...
             SFString line = "\t" + SFString(STR_ONE_LINE).Substitute(" ","").Substitute("|","");
-            line.Replace("{S}", (isMode ? "" : padRight(sN, 3)));
+            replace(line, "{S}", (isMode ? "" : padRight(sN, 3)));
             if (isMode)
-                line.Replace("{L}", padRight(lN , 22));
+                replace(line, "{L}", padRight(lN , 22));
             else {
-                line.Replace("{L}", padRight((lN.empty() ? "" : " (-" + lN + ")") , 19));
+                replace(line, "{L}", padRight((lN.empty() ? "" : " (-" + lN + ")") , 19));
             }
-            line.Replace("{D}", d + (required ? " (required)" : ""));
+            replace(line, "{D}", d + (required ? " (required)" : ""));
             ctx << line;
         }
         ASSERT(pOptions);

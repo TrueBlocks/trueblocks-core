@@ -228,7 +228,7 @@ SFString nextFunctionChunk_custom(const SFString& fieldIn, const void *dataPtr) 
                             ret += ",";
                     }
                     ret += ")";
-                    ret.Replace(",)", ")");
+                    replace(ret, ",)", ")");
                     return (ret + "\t" + string2Hex(ret));
 
                 } else if ( fieldIn % "hasAddrs" ) {

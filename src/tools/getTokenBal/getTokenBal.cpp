@@ -211,9 +211,9 @@ SFUintBN getTokenInfo(const SFString& value, const SFAddress& token, const SFAdd
 
     SFString cmd = "[{\"to\": \"[TOKEN]\", \"data\": \"0x70a08231[HOLDER]\"}, \"[BLOCK]\"]";
     //        SFString cmd = "[{\"to\": \"[TOKEN]\", \"data\": \"0x18160ddd\"}, \"[BLOCK]\"]";
-    cmd.Replace("[TOKEN]",  t);
-    cmd.Replace("[HOLDER]", h);
-    cmd.Replace("[BLOCK]",  toHex(blockNum));
+    replace(cmd, "[TOKEN]",  t);
+    replace(cmd, "[HOLDER]", h);
+    replace(cmd, "[BLOCK]",  toHex(blockNum));
 
     return toWei(callRPC("eth_call", cmd, false));
 }

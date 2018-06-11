@@ -160,10 +160,10 @@ TEST_F(CThisTest, TestCStr) {
     cout << TESTID("base case",15)      << thing << "\n";
     cout << TESTID("find is",15)        << thing.find("is") << "\n";
     cout << TESTID("contains is",15)    << contains(thing, "is") << "\n";
-    cout << TESTID("find not this",15)  << thing.find("this") << "\n";
-    cout << TESTID("not there this",15) << contains(thing, "this") << "\n";
-    cout << TESTID("findI not this",15) << thing.findI("this") << "\n";
-    cout << TESTID("there this",15)     << containsI(thing, "this") << "\n";
+    cout << TESTID("find not this",15)  << thing.find("ThiNG") << "\n";
+    cout << TESTID("not there this",15) << contains(thing, "ThiNG") << "\n";
+    cout << TESTID("findI not this",15) << thing.findI("ThiNG") << "\n";
+    cout << TESTID("there this",15)     << containsI(thing, "ThiNG") << "\n";
     cout << "\n";
 
     string_q target = "Target1|Target2|Target3|Target4";
@@ -184,6 +184,14 @@ TEST_F(CThisTest, TestCStr) {
 
     string_q revTarget = ".desrever gnirts eht si sihT";  cout << TESTID("base case",15) << revTarget << "\n";
     reverse(revTarget);                                   cout << TESTID("reversed", 15) << revTarget << "\n";
+    cout << "\n";
+
+    string_q target3 = "Target1|Target2|Target3|Target4"; cout << TESTID("base case",15) << target3 << "\n";
+    replace(target3, "Target1", "");                   cout << TESTID("replace",15)   << target3 << "\n";
+    replace(target3, "Target2", "");                   cout << TESTID("replace",15)   << target3 << "\n";
+    replace(target3, "Target3", "");                   cout << TESTID("replace",15)   << target3 << "\n";
+    replace(target3, "Target4", "");                   cout << TESTID("replace",15)   << target3 << "\n";
+    cout << "\n";
 
     return true;
 }}

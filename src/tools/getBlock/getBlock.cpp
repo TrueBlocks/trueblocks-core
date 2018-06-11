@@ -118,7 +118,7 @@ SFString doOneBlock(uint64_t num, const COptions& opt) {
 //            if (false) { //opt.priceBlocks) {
 //                SFUintBN oneWei = canonicalWei("1000000000000000000");
 //                SFString dollars = "$" + asDollars(gold.timestamp, oneWei);
-//                format.Replace("{PRICE:CLOSE}", dollars);
+//                replace(format, "{PRICE:CLOSE}", dollars);
 //            }
             result = gold.Format(format);
         }
@@ -138,7 +138,7 @@ SFString checkOneBlock(uint64_t num, const COptions& opt) {
     // Get the block raw from the node...
     SFString fromNode;
     queryRawBlock(fromNode, numStr, true, false);
-    fromNode.Replace("\"hash\":","\"blockHash\":");
+    replace(fromNode, "\"hash\":","\"blockHash\":");
     if (verbose)
         cout << num << "\n";
     fromNode = normalizeBlock(fromNode, true, num >= byzantiumBlock);

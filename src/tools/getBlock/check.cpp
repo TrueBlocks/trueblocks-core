@@ -19,7 +19,7 @@ SFString diffStr(const SFString& str1, const SFString& str2) {
     SFString junk = str2;
     while (!junk.empty()) {
         SFString line = nextTokenClear(junk,'\n');
-        diff.Replace(line,"\n");
+        replace(diff, line,"\n");
     }
     SFString ret = trim(diff.Substitute("\n\n","\n"), '\n');
     if (!ret.empty())

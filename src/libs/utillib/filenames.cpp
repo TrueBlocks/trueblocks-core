@@ -59,10 +59,10 @@ namespace qblocks {
         SFString fn = fnIn;
         if (!startsWith(fn, '/') && !startsWith(fn, '.') && !startsWith(fn, '~'))
             fn = "./" + fn;  // assume cwd
-        fn.Replace("../", getCWD() + "$%^&#*/");
-        fn.Replace("./",  getCWD());
-        fn.Replace("~/",  getHomeFolder());
-        fn.Replace("$%^&#*/", "../");
+        replace(fn, "../", getCWD() + "$%^&#*/");
+        replace(fn, "./",  getCWD());
+        replace(fn, "~/",  getHomeFolder());
+        replace(fn, "$%^&#*/", "../");
 
         if (endsWith(fn, '/')) {
             path = fn;

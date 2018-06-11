@@ -78,7 +78,7 @@ int main(int argc, const char *argv[]) {
             SFString fmt = getGlobalConfig()->getDisplayStr(options.alone, def);
             if (verbose && !special.empty()) {
                 SFString sp = "(" + special + ")";
-                fmt.Replace("{BLOCKNUMBER}", "{BLOCKNUMBER} " + sp);
+                replace(fmt, "{BLOCKNUMBER}", "{BLOCKNUMBER} " + sp);
             }
             cout << block.Format(fmt);
         }

@@ -98,6 +98,7 @@ namespace qblocks {
             return os;
         }
 
+        friend void replace       (string_q& target, const string_q& what, const string_q& with);
         friend void replaceAll    (string_q& target, const string_q& what, const string_q& with);
         friend void replaceAny    (string_q& target, const string_q& list, const string_q& with);
         friend void replaceReverse(string_q& target, const string_q& what, const string_q& with);
@@ -284,16 +285,15 @@ namespace qblocks {
 
         const SFString& operator=     (const SFString& str);
         const SFString& operator+=    (const SFString& str);
-        const SFString& operator+=    (char ch);
+//        const SFString& operator+=    (char ch);
         const SFString& operator+=    (const char *str);
+
+        friend SFString operator+(const SFString& str1, const SFString& str2);
+        friend SFString operator+(const SFString& str1, const char *str2);
 
         SFString substr          (size_t first, size_t len) const;
         SFString substr          (size_t first) const;
         SFString Substitute      (const SFString& what, const SFString& with) const;
-        friend SFString operator+(const SFString& str1, const SFString& str2);
-        friend SFString operator+(const SFString& str1, const char *str2);
-
-        void     Replace         (const SFString& what, const SFString& with);
     };
 
     //---------------------------------------------------------------------------------------
@@ -320,10 +320,10 @@ namespace qblocks {
         return operator+=(SFString(str));
     }
 
-    //--------------------------------------------------------------------
-    inline const SFString& SFString::operator+=(char ch) {
-        return operator+=(SFString(ch));
-    }
+//    //--------------------------------------------------------------------
+//    inline const SFString& SFString::operator+=(char ch) {
+//        return operator+=(SFString(ch));
+//    }
 
     //--------------------------------------------------------------------
     inline SFString operator+(const SFString& str1, const char *str2) {
