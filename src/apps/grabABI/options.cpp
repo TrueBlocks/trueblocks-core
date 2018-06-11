@@ -94,7 +94,7 @@ bool COptions::parseArguments(SFString& command) {
             if (arg == "0xTokenLib" || arg == "0xWalletLib")
                 addr = arg;
             if (!isAddress(addr) && addr != "0xTokenLib" && addr != "0xWalletLib")
-                return usage("Invalid address `" + addr + "'. Length is not equal to 40 characters (20 bytes).\n");
+                return usage("Invalid address '" + addr + "'. Length is not equal to 40 characters (20 bytes).\n");
             addrs[nAddrs++] = addr;
         }
     }
