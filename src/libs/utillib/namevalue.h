@@ -34,8 +34,8 @@ typedef SFUniqueList<CNameValue*>       CNameValueListU;
 //--------------------------------------------------------------------------
 class CNameValue : public CBaseNode {
 public:
-    SFString name;
-    SFString value;
+    string_q name;
+    string_q value;
 
 public:
     CNameValue(void);
@@ -46,11 +46,11 @@ public:
     DECLARE_NODE(CNameValue);
 
     // EXISTING_CODE
-    SFString getValue  (void) const { return            value;  }
+    string_q getValue  (void) const { return            value;  }
     uint64_t getValueU (void) const { return toUnsigned(value); }
     int64_t  getValueI (void) const { return toLong    (value); }
     SFUintBN getValueBN(void) const { return toWei     (value); }
-    SFString getName   (void) const { return            name;   }
+    string_q getName   (void) const { return            name;   }
     // EXISTING_CODE
     friend ostream& operator<<(ostream& os, const CNameValue& item);
 

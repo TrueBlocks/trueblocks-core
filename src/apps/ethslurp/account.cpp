@@ -22,11 +22,11 @@ namespace qblocks {
 IMPLEMENT_NODE(CAccount, CBaseNode);
 
 //---------------------------------------------------------------------------
-static SFString nextAccountChunk(const SFString& fieldIn, const void *dataPtr);
-static SFString nextAccountChunk_custom(const SFString& fieldIn, const void *dataPtr);
+static string_q nextAccountChunk(const string_q& fieldIn, const void *dataPtr);
+static string_q nextAccountChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CAccount::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
+void CAccount::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -35,7 +35,7 @@ void CAccount::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr)
         return;
     }
 
-    SFString fmt = fmtIn;
+    string_q fmt = fmtIn;
     if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
@@ -44,7 +44,7 @@ void CAccount::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr)
 }
 
 //---------------------------------------------------------------------------
-SFString nextAccountChunk(const SFString& fieldIn, const void *dataPtr) {
+string_q nextAccountChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
         return ((const CAccount *)dataPtr)->getValueByName(fieldIn);
 
@@ -55,7 +55,7 @@ SFString nextAccountChunk(const SFString& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CAccount::setValueByName(const SFString& fieldName, const SFString& fieldValue) {
+bool CAccount::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
     // EXISTING_CODE
     // EXISTING_CODE
 
@@ -103,7 +103,7 @@ void CAccount::finishParse() {
     // EXISTING_CODE
     for (uint32_t i = 0 ; i < transactions.getCount() ; i++) {
         CTransaction *t = &transactions[i];
-        SFString encoding = t->input.substr(0,10);
+        string_q encoding = t->input.substr(0,10);
         t->funcPtr = abi.findFunctionByEncoding(encoding);
     }
     // EXISTING_CODE
@@ -182,7 +182,7 @@ void CAccount::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextAccountChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+string_q nextAccountChunk_custom(const string_q& fieldIn, const void *dataPtr) {
     const CAccount *acc = (const CAccount *)dataPtr;
     if (acc) {
         switch (tolower(fieldIn[0])) {
@@ -209,22 +209,22 @@ SFString nextAccountChunk_custom(const SFString& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------
-bool CAccount::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
+bool CAccount::handleCustomFormat(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // Split the format string into three parts: pre, post and records.
     // If no records, just process as normal. We do this because it's so slow
     // copying the records into a string, so we write it directly to the
     // export context. If there is no {RECORDS}, then just send handle it like normal
     if (!contains(fmtIn, "{RECORDS}") || transactions.getCount() == 0) {
-        SFString fmt = fmtIn;
+        string_q fmt = fmtIn;
 
         while (!fmt.empty())
             ctx << getNextChunk(fmt, nextAccountChunk, this);
 
     } else {
-        SFString postFmt = fmtIn;
+        string_q postFmt = fmtIn;
         replace(postFmt, "{RECORDS}", "|");
-        SFString preFmt = nextTokenClear(postFmt, '|');
+        string_q preFmt = nextTokenClear(postFmt, '|');
 
         // We assume here that the token was properly formed. For the pre-text we
         // have to clear out the start '[', and for the post text we clear out the ']'
@@ -271,10 +271,10 @@ bool CAccount::readBackLevel(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------
-SFString CAccount::getValueByName(const SFString& fieldName) const {
+string_q CAccount::getValueByName(const string_q& fieldName) const {
 
     // Give customized code a chance to override first
-    SFString ret = nextAccountChunk_custom(fieldName, this);
+    string_q ret = nextAccountChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
@@ -305,7 +305,7 @@ SFString CAccount::getValueByName(const SFString& fieldName) const {
                 if (endsWith(fieldName, "Cnt"))
                     return asStringU(cnt);
                 if (!cnt) return "";
-                SFString retS;
+                string_q retS;
                 for (uint32_t i = 0 ; i < cnt ; i++) {
                     retS += transactions[i].Format();
                     retS += ((i < cnt - 1) ? ",\n" : "\n");
@@ -332,7 +332,7 @@ ostream& operator<<(ostream& os, const CAccount& item) {
 }
 
 //---------------------------------------------------------------------------
-const CBaseNode *CAccount::getObjectAt(const SFString& fieldName, uint32_t index) const {
+const CBaseNode *CAccount::getObjectAt(const string_q& fieldName, uint32_t index) const {
     if ( fieldName % "transactions" && index < transactions.getCount() )
         return &transactions[index];
     return NULL;

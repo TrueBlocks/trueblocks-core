@@ -13,7 +13,7 @@
 #include "etherlib.h"
 #include "options.h"
 
-extern SFString getTestData(void);
+extern string_q getTestData(void);
 extern bool test_encodings(void);
 extern bool test_generation(void);
 //--------------------------------------------------------------
@@ -24,12 +24,12 @@ int main(int argc, const char *argv[]) {
         return 0;
 
     while (!options.commandList.empty()) {
-        SFString command = nextTokenClear(options.commandList, '\n');
+        string_q command = nextTokenClear(options.commandList, '\n');
         if (!options.parseArguments(command))
             return 0;
 
         while (!options.mode.empty()) {
-            SFString mode = nextTokenClear(options.mode, '|');
+            string_q mode = nextTokenClear(options.mode, '|');
             if (mode == "encoding") {
                 cout << "Encodings test...\n";
                 cout << (test_encodings() ? "...passed" : "...failed") << "\n";
@@ -50,15 +50,15 @@ bool test_encodings(void) {
 
     bool ret = true;
 
-    SFString contents = getTestData().Substitute("  ", " ");
+    string_q contents = getTestData().Substitute("  ", " ");
     nextTokenClear(contents, '\n');  // skip header row
     while (!contents.empty()) {
-        SFString expected = nextTokenClear(contents, '\n');
+        string_q expected = nextTokenClear(contents, '\n');
         if (!startsWith(expected, ';')) {
-            SFString type  = nextTokenClear(expected, ' ');
-            SFString text  = nextTokenClear(expected, ' ');
-            SFString myHex = string2Hex(text);
-            SFString mySha = getSha3(myHex);
+            string_q type  = nextTokenClear(expected, ' ');
+            string_q text  = nextTokenClear(expected, ' ');
+            string_q myHex = string2Hex(text);
+            string_q mySha = getSha3(myHex);
             if (type == "function")
                 mySha = mySha.substr(0,10);
             bool result = mySha == expected;
@@ -89,7 +89,7 @@ bool test_generation(void) {
 }
 
 //--------------------------------------------------------------
-SFString getTestData(void) {
+string_q getTestData(void) {
 
     return
       "type     signature                                  expected\n"

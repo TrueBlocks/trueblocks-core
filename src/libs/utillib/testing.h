@@ -39,7 +39,7 @@ testing::Test::addFunc(func_##funcName);
 extern bool func_##funcName(uint64_t testID); \
 bool func_##funcName(uint64_t testID) { \
 uint64_t subTestID = 0; \
-SFString testName = #funcName; \
+string_q testName = #funcName; \
 
 #define TESTID(msg, wid) \
 "\t" << padNum3(testID) << "." << padNum3(subTestID++) << " " << padRight(msg, wid) << " ==> "

@@ -41,7 +41,7 @@ CParams params[] = {
 uint32_t nParams = sizeof(params) / sizeof(CParams);
 
 //---------------------------------------------------------------------------------------------------
-bool COptions::parseArguments(SFString& command) {
+bool COptions::parseArguments(string_q& command) {
 
     if (!standardOptions(command))
         return false;
@@ -49,8 +49,8 @@ bool COptions::parseArguments(SFString& command) {
     Init();
     blknum_t latestBlock = getLatestBlockFromClient();
     while (!command.empty()) {
-        SFString arg = nextTokenClear(command, ' ');
-        SFString orig = arg;
+        string_q arg = nextTokenClear(command, ' ');
+        string_q orig = arg;
         if (arg == "-i" || arg == "--income") {
             if (expenseOnly)
                 return usage("Only one of --income or --expense may be specified.");
@@ -96,7 +96,7 @@ bool COptions::parseArguments(SFString& command) {
             if (firstDate != earliestDate || lastDate != latestDate)
                 return usage("Specifiy either a date range or a block range, not both. Quitting...");
 
-            SFString ret = blocks.parseBlockList(arg.Substitute("-b:","").Substitute("--blocks:",""), latestBlock);
+            string_q ret = blocks.parseBlockList(arg.Substitute("-b:","").Substitute("--blocks:",""), latestBlock);
             if (contains(ret, "'stop' must be strictly larger than 'start'"))
                 ret = "";
             if (endsWith(ret, "\n")) {
@@ -117,8 +117,8 @@ bool COptions::parseArguments(SFString& command) {
             if (blocks.hasBlocks())
                 return usage("Specifiy either a date range or a block range, not both. Quitting...");
 
-            SFString lateStr = arg.Substitute("-d:", "").Substitute("--dates:", "");
-            SFString earlyStr = nextTokenClear(lateStr, ':');
+            string_q lateStr = arg.Substitute("-d:", "").Substitute("--dates:", "");
+            string_q earlyStr = nextTokenClear(lateStr, ':');
             if (!earlyStr.empty() && !isNumeral(earlyStr))
                 return usage("Invalid date: " + orig + ". Quitting...");
             if (!lateStr.empty() && !isNumeral(lateStr))
@@ -160,13 +160,13 @@ bool COptions::parseArguments(SFString& command) {
             }
 
         } else if (startsWith(arg, "-m:") || startsWith(arg, "--max:")) {
-            SFString val = arg.Substitute("-m:", "").Substitute("--max:", "");
+            string_q val = arg.Substitute("-m:", "").Substitute("--max:", "");
             if (val.empty() || !isdigit(val[0]))
                 return usage("Please supply a value with the --max: option. Quitting...");
             maxTransactions = toLong32u(val);
 
         } else if (startsWith(arg, "-n:") || startsWith(arg, "--name:")) {
-            SFString val = arg.Substitute("-n:", "").Substitute("--name:", "");
+            string_q val = arg.Substitute("-n:", "").Substitute("--name:", "");
             if (val.empty())
                 return usage("You must supply a name with the --name option. Quitting...");
             name = val;
@@ -178,7 +178,7 @@ bool COptions::parseArguments(SFString& command) {
             archiveFile = "";
 
         } else if (startsWith(arg, "-a:") || startsWith(arg, "--archive:")) {
-            SFString fileName = arg.Substitute("-a:", "").Substitute("--archive:", "");
+            string_q fileName = arg.Substitute("-a:", "").Substitute("--archive:", "");
 
             CFilename filename(fileName);
             if (!startsWith(filename.getPath(), '/'))
@@ -257,14 +257,14 @@ COptions::~COptions(void) {
 }
 
 //--------------------------------------------------------------------------------
-SFString COptions::postProcess(const SFString& which, const SFString& str) const {
+string_q COptions::postProcess(const string_q& which, const string_q& str) const {
 
     if (which == "options") {
         return str;
 
     } else if (which == "notes" && (verbose || COptions::isReadme)) {
 
-        SFString ret;
+        string_q ret;
         ret += "Portions of this software are Powered by Etherscan.io APIs.\n";
         return ret;
     }

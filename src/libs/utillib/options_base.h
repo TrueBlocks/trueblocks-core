@@ -37,7 +37,7 @@ namespace qblocks {
         static bool needsOption;
         static bool isReadme;
 
-        SFString commandList;
+        string_q commandList;
         bool     fromFile;
         uint64_t minArgs;
         CRuntimeClass *sorts[5];
@@ -46,21 +46,21 @@ namespace qblocks {
         virtual ~COptionsBase(void) { }
 
         bool prepareArguments(int argc, const char *argv[]);
-        virtual bool parseArguments(SFString& command) = 0;
-        bool builtInCmd(const SFString& arg);
-        bool standardOptions(SFString& cmdLine);
-        virtual SFString postProcess(const SFString& which, const SFString& str) const { return str; }
+        virtual bool parseArguments(string_q& command) = 0;
+        bool builtInCmd(const string_q& arg);
+        bool standardOptions(string_q& cmdLine);
+        virtual string_q postProcess(const string_q& which, const string_q& str) const { return str; }
 
         // supporting special block names
         CNameValueArray specials;
         void     loadSpecials(void);
-        bool     findSpecial(CNameValue& pair, const SFString& arg) const;
+        bool     findSpecial(CNameValue& pair, const string_q& arg) const;
 
         // supporting named accounts
         CAccountNameArray namedAccounts;
         CFilename namesFile;
         bool loadNames(void);
-        bool getNamedAccount(CAccountName& acct, const SFString& addr) const;
+        bool getNamedAccount(CAccountName& acct, const string_q& addr) const;
 
     protected:
         virtual void Init(void) = 0;
@@ -70,39 +70,39 @@ namespace qblocks {
     class CDefaultOptions : public COptionsBase {
     public:
         CDefaultOptions() {}
-        bool parseArguments(SFString& command) { return true; }
+        bool parseArguments(string_q& command) { return true; }
         void Init(void) {}
     };
 
     //--------------------------------------------------------------------------------
     class CParams {
     public:
-        SFString  shortName;
-        SFString  longName;
-        SFString  hotKey;
-        SFString  description;
-        SFString  permitted;
-        CParams(const SFString& name, const SFString& descr);
+        string_q  shortName;
+        string_q  longName;
+        string_q  hotKey;
+        string_q  description;
+        string_q  permitted;
+        CParams(const string_q& name, const string_q& descr);
     };
 
     //--------------------------------------------------------------------------------
-    extern int usage(const SFString& errMsg = "");
-    extern SFString usageStr(const SFString& errMsg = "");
-    extern SFString options(void);
-    extern SFString descriptions(void);
-    extern SFString notes(void);
-    extern SFString purpose(void);
+    extern int usage(const string_q& errMsg = "");
+    extern string_q usageStr(const string_q& errMsg = "");
+    extern string_q options(void);
+    extern string_q descriptions(void);
+    extern string_q notes(void);
+    extern string_q purpose(void);
 
     //--------------------------------------------------------------------------------
     extern int sortParams(const void *c1, const void *c2);
-    extern SFString expandOption(SFString& arg);
+    extern string_q expandOption(string_q& arg);
 
     //--------------------------------------------------------------------------------
     extern uint64_t verbose;
 
     //--------------------------------------------------------------------------------
-    extern void     editFile  (const SFString& fileName);
-    extern SFString configPath(const SFString& part);
+    extern void     editFile  (const string_q& fileName);
+    extern string_q configPath(const string_q& part);
 
     //--------------------------------------------------------------------------------
     extern CParams *paramsPtr;
@@ -114,34 +114,34 @@ namespace qblocks {
     extern void optionOn (uint32_t q);
 
     //--------------------------------------------------------------------------------
-    extern const CToml *getGlobalConfig(const SFString& name="");
+    extern const CToml *getGlobalConfig(const string_q& name="");
 
     typedef bool (*UINT64VISITFUNC)(uint64_t num, void *data);
     typedef uint64_t (*HASHFINDFUNC)(const SFHash& hash, void *data);
     class COptionsBlockList {
     public:
         SFBlockArray numList;
-        SFStringArray hashList;
+        CStringArray hashList;
         HASHFINDFUNC hashFind;
         blknum_t start;
         blknum_t stop;
         blknum_t latest;
         void Init(void);
-        SFString parseBlockList(const SFString& arg, blknum_t latest);
+        string_q parseBlockList(const string_q& arg, blknum_t latest);
         COptionsBlockList(void);
         bool forEveryBlockNumber(UINT64VISITFUNC func, void *) const;
         bool hasBlocks(void) const { return (hashList.getCount() || numList.getCount() || (start != stop)); }
         bool isInRange(blknum_t bn) const;
-        blknum_t parseBlockOption(SFString& msg, blknum_t lastBlock) const;
+        blknum_t parseBlockOption(string_q& msg, blknum_t lastBlock) const;
     };
 
     class COptionsTransList {
     public:
-        SFString queries;
+        string_q queries;
         void Init(void);
-        SFString parseTransList(const SFString& arg);
+        string_q parseTransList(const string_q& arg);
         COptionsTransList(void);
-        SFString toString(void) const;
+        string_q toString(void) const;
         bool hasTrans(void) const { return !queries.empty(); }
     };
 

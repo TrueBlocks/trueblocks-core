@@ -21,14 +21,14 @@ CParams params[] = {
 uint32_t nParams = sizeof(params) / sizeof(CParams);
 
 //---------------------------------------------------------------------------------------------------
-bool COptions::parseArguments(SFString& command) {
+bool COptions::parseArguments(string_q& command) {
 
     if (!standardOptions(command))
         return false;
 
     Init();
     while (!command.empty()) {
-        SFString arg = nextTokenClear(command, ' ');
+        string_q arg = nextTokenClear(command, ' ');
         if (arg == "-n" || arg == "--named") {
             named = true;
 
@@ -66,7 +66,7 @@ COptions::COptions(void) {
     namesFile = CFilename(configPath("names/names.txt"));
     establishFolder(namesFile.getPath());
     if (!fileExists(namesFile.getFullPath()))
-        stringToAsciiFile(namesFile.getFullPath(), SFString(STR_DEFAULT_DATA).Substitute(" |","|").Substitute("|","\t"));
+        stringToAsciiFile(namesFile.getFullPath(), string_q(STR_DEFAULT_DATA).Substitute(" |","|").Substitute("|","\t"));
     loadNames();
     Init();
 }

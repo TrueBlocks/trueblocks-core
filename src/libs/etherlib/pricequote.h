@@ -129,8 +129,8 @@ IMPLEMENT_ARCHIVE_LIST(CPriceQuoteList);
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 extern uint64_t indexFromTimeStamp(const CPriceQuoteArray& quotes, timestamp_t ts);
-extern SFString asDollars(timestamp_t ts, SFUintBN weiIn);
-extern SFString dispDollars(timestamp_t ts, SFUintBN weiIn);
+extern string_q asDollars(timestamp_t ts, SFUintBN weiIn);
+extern string_q dispDollars(timestamp_t ts, SFUintBN weiIn);
 // EXISTING_CODE
 }  // namespace qblocks
 

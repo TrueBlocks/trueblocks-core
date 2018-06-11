@@ -25,7 +25,7 @@ int main(int argc, const char *argv[]) {
         return 0;
 
     while (!options.commandList.empty()) {
-        SFString command = nextTokenClear(options.commandList, '\n');
+        string_q command = nextTokenClear(options.commandList, '\n');
         if (!options.parseArguments(command))
             return 0;
         forEveryTransactionInList(visitTransaction, &options, options.transList.queries);
@@ -49,7 +49,7 @@ bool visitTransaction(CTransaction& trans, void *data) {
         }
 
         // Note: this call is redundant. The transaction is already populated (if it's valid), but we need the raw data)
-        SFString results;
+        string_q results;
         queryRawTrace(results, trans.getValueByName("hash"));
         cout << results;
         return true;

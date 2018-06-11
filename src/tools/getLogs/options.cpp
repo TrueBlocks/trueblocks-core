@@ -22,15 +22,15 @@ CParams params[] = {
 uint32_t nParams = sizeof(params) / sizeof(CParams);
 
 //---------------------------------------------------------------------------------------------------
-bool COptions::parseArguments(SFString& command) {
+bool COptions::parseArguments(string_q& command) {
 
     if (!standardOptions(command))
         return false;
 
     Init();
     while (!command.empty()) {
-        SFString arg = nextTokenClear(command, ' ');
-        SFString orig = arg;
+        string_q arg = nextTokenClear(command, ' ');
+        string_q orig = arg;
         if (arg == "-r" || arg == "--raw") {
             isRaw = true;
 
@@ -48,7 +48,7 @@ bool COptions::parseArguments(SFString& command) {
 
         } else {
 
-            SFString ret = transList.parseTransList(arg);
+            string_q ret = transList.parseTransList(arg);
             if (!ret.empty())
                 return usage(ret);
 
@@ -87,13 +87,13 @@ COptions::~COptions(void) {
 }
 
 //--------------------------------------------------------------------------------
-SFString COptions::postProcess(const SFString& which, const SFString& str) const {
+string_q COptions::postProcess(const string_q& which, const string_q& str) const {
     if (which == "options") {
         return str.Substitute("trans_list","<transID> [transID...]");
 
     } else if (which == "notes" && (verbose || COptions::isReadme)) {
 
-        SFString ret;
+        string_q ret;
         ret += "[{trans_list}] is one or more space-separated identifiers which may be either a transaction hash,|"
                 "a blockNumber.transactionID pair, or a blockHash.transactionID pair, or any combination.\n";
         ret += "This tool checks for valid input syntax, but does not check that the transaction requested exists.\n";

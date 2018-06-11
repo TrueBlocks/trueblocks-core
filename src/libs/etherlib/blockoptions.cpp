@@ -38,15 +38,15 @@ uint64_t findBlockNumByHash(const SFHash& hash, void *data) {
 //--------------------------------------------------------------------------------
 bool blockNumToString(uint64_t num, void *data) {
     if (num != NOPOS) {
-        SFString *str = (SFString*)data;
+        string_q *str = (string_q*)data;
         *str += (asStringU(num) + "|");
     }
     return true;
 }
 
 //--------------------------------------------------------------------------------
-SFString CBlockOptions::getBlockNumList(void) {
-    SFString ret;
+string_q CBlockOptions::getBlockNumList(void) {
+    string_q ret;
     blocks.hashFind = findBlockNumByHash;
     blocks.forEveryBlockNumber(blockNumToString, &ret);
     return ret;

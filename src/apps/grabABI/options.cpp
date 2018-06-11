@@ -32,14 +32,14 @@ CParams params[] = {
 uint32_t nParams = sizeof(params) / sizeof(CParams);
 
 //---------------------------------------------------------------------------------------------------
-bool COptions::parseArguments(SFString& command) {
+bool COptions::parseArguments(string_q& command) {
 
     if (!standardOptions(command))
         return false;
 
     Init();
     while (!command.empty()) {
-        SFString arg = nextTokenClear(command, ' ');
+        string_q arg = nextTokenClear(command, ' ');
         if (arg == "-g" || arg == "--gen" || arg == "--generate") {
             classDir = getCWD();
             prefix = getPrefix(classDir);
@@ -145,12 +145,12 @@ COptions::~COptions(void) {
 }
 
 //--------------------------------------------------------------------------------
-SFString COptions::postProcess(const SFString& which, const SFString& str) const {
+string_q COptions::postProcess(const string_q& which, const string_q& str) const {
     if (which == "options") {
         return str;
 
     } else if (which == "notes" && (verbose || COptions::isReadme)) {
-        SFString ret;
+        string_q ret;
         ret += "Use the [{--silent}] option, which displays fewer messages, for scripting.\n";
         return ret;
     }
@@ -158,9 +158,9 @@ SFString COptions::postProcess(const SFString& which, const SFString& str) const
 }
 
 //--------------------------------------------------------------------------------
-SFString getPrefix(const SFString& inIn) {
+string_q getPrefix(const string_q& inIn) {
 
-    SFString in = inIn; // for example ./ENS/parselib/
+    string_q in = inIn; // for example ./ENS/parselib/
     replace(in, "parseLib","parselib"); // hack: to fix dao monitor
     reverse(in);
     replace(in, "/", ""); // remove trailing '/'

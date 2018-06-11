@@ -16,12 +16,12 @@
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
-    SFString mode;
+    string_q mode;
     
     COptions(void);
     ~COptions(void);
 
-    bool parseArguments(SFString& command);
+    bool parseArguments(string_q& command);
     void Init(void);
 };
 

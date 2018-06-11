@@ -51,7 +51,7 @@ namespace qblocks {
             SFDate(const SFDate& dt);
             SFDate(uint32_t year, uint32_t month, uint32_t day);
             SFDate(uint32_t year, uint32_t month, uint32_t weekInMonth, uint32_t dayOfWeek);
-            SFDate(const SFString& dateStr, const SFString& fmtStr);
+            SFDate(const string_q& dateStr, const string_q& fmtStr);
 
             explicit SFDate(int64_t days);
             explicit SFDate(const tm& sysTime);
@@ -86,7 +86,7 @@ public:
             SFTimeOfDay(void);
             SFTimeOfDay(const SFTimeOfDay& tod);
             SFTimeOfDay(uint32_t h, uint32_t m, uint32_t s);
-            SFTimeOfDay(const SFString& dateStr, const SFString& fmtStr);
+            SFTimeOfDay(const string_q& dateStr, const string_q& fmtStr);
 
             explicit SFTimeOfDay(const tm& sysTime);
             explicit SFTimeOfDay(uint32_t secs);
@@ -107,7 +107,7 @@ public:
         SFTime(uint32_t year, uint32_t month, uint32_t weekInMonth, uint32_t dayOfWeek, uint32_t hour, uint32_t minute, uint32_t sec);
         SFTime(uint32_t days, uint32_t hour, uint32_t minute, uint32_t sec);
         SFTime(const SFDate& date, const SFTimeOfDay& tod);
-        SFTime(const SFString& dateStr, const SFString& fmtStr);
+        SFTime(const string_q& dateStr, const string_q& fmtStr);
 
         explicit SFTime(const tm& sysTime, bool useDayOfWeek = false);
 
@@ -139,7 +139,7 @@ public:
 
         bool onTheHour(void) const;
 
-        SFString Format(const SFString& fmt) const;
+        string_q Format(const string_q& fmt) const;
 
         SFDate      getDatePart(void) const;
         SFTimeOfDay getTimePart(void) const;
@@ -161,7 +161,7 @@ public:
 
     typedef SFArrayBase<SFTime> SFTimeArray;
 
-#define FMT_JSON SFString("%Y-%m-%d %H:%M:%S UTC")
+#define FMT_JSON string_q("%Y-%m-%d %H:%M:%S UTC")
 
     extern uint32_t DaysInMonth(uint32_t year, uint32_t month);
     extern SFTime   AddOneDay(const SFTime& date);
@@ -230,14 +230,14 @@ public:
 
     //--------------------------------------------------------------------------------------------------------------
     extern SFTime dateFromTimeStamp(timestamp_t tsIn);
-    extern SFTime parseDate(const SFString& str);
+    extern SFTime parseDate(const string_q& str);
 
     //--------------------------------------------------------------------------------------------------------------
     extern timestamp_t toTimestamp(const SFTime&   timeIn);
-    extern timestamp_t toTimestamp(const SFString& timeIn);
-    extern SFString    fromTimestamp(timestamp_t ts);
+    extern timestamp_t toTimestamp(const string_q& timeIn);
+    extern string_q    fromTimestamp(timestamp_t ts);
 
     //------------------------------------------------------------------
-    extern SFTime fileLastModifyDate(const SFString& filename);
+    extern SFTime fileLastModifyDate(const string_q& filename);
 
 }  // namespace qblocks

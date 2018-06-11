@@ -32,9 +32,9 @@ typedef SFUniqueList<CTraceResult*>       CTraceResultListU;
 class CTraceResult : public CBaseNode {
 public:
     SFAddress address;
-    SFString code;
+    string_q code;
     SFGas gasUsed;
-    SFString output;
+    string_q output;
 
 public:
     CTraceResult(void);

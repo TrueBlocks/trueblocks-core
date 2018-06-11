@@ -22,11 +22,11 @@ namespace qblocks {
 IMPLEMENT_NODE(CParameter, CBaseNode);
 
 //---------------------------------------------------------------------------
-static SFString nextParameterChunk(const SFString& fieldIn, const void *dataPtr);
-static SFString nextParameterChunk_custom(const SFString& fieldIn, const void *dataPtr);
+static string_q nextParameterChunk(const string_q& fieldIn, const void *dataPtr);
+static string_q nextParameterChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CParameter::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
+void CParameter::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -35,7 +35,7 @@ void CParameter::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPt
         return;
     }
 
-    SFString fmt = fmtIn;
+    string_q fmt = fmtIn;
     if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
@@ -44,7 +44,7 @@ void CParameter::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPt
 }
 
 //---------------------------------------------------------------------------
-SFString nextParameterChunk(const SFString& fieldIn, const void *dataPtr) {
+string_q nextParameterChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
         return ((const CParameter *)dataPtr)->getValueByName(fieldIn);
 
@@ -55,7 +55,7 @@ SFString nextParameterChunk(const SFString& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CParameter::setValueByName(const SFString& fieldName, const SFString& fieldValue) {
+bool CParameter::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
     // EXISTING_CODE
     // EXISTING_CODE
 
@@ -157,7 +157,7 @@ void CParameter::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextParameterChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+string_q nextParameterChunk_custom(const string_q& fieldIn, const void *dataPtr) {
     const CParameter *par = (const CParameter *)dataPtr;
     if (par) {
         switch (tolower(fieldIn[0])) {
@@ -178,7 +178,7 @@ SFString nextParameterChunk_custom(const SFString& fieldIn, const void *dataPtr)
 }
 
 //---------------------------------------------------------------------------
-bool CParameter::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
+bool CParameter::handleCustomFormat(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
@@ -195,10 +195,10 @@ bool CParameter::readBackLevel(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------
-SFString CParameter::getValueByName(const SFString& fieldName) const {
+string_q CParameter::getValueByName(const string_q& fieldName) const {
 
     // Give customized code a chance to override first
-    SFString ret = nextParameterChunk_custom(fieldName, this);
+    string_q ret = nextParameterChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
@@ -240,7 +240,7 @@ ostream& operator<<(ostream& os, const CParameter& item) {
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 //---------------------------------------------------------------------------
-CParameter::CParameter(SFString& textIn) {
+CParameter::CParameter(string_q& textIn) {
     if (contains(textIn, "=")) {
         strDefault = textIn;
         textIn = nextTokenClear(strDefault, '=');

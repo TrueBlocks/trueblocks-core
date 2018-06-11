@@ -49,8 +49,8 @@ namespace qblocks {
             //readMsgFunc      = NULL;
         }
 
-        SFString getType(void) const override { return "SFArchive"; }
-        
+        string_q getType(void) const override { return "SFArchive"; }
+
         bool isWriting(void) const {
             return !m_isReading;
         }
@@ -84,7 +84,7 @@ namespace qblocks {
         SFArchive& operator<<(uint64_t dw);
         SFArchive& operator<<(float f);
         SFArchive& operator<<(double f);
-        SFArchive& operator<<(const SFString& str);
+        SFArchive& operator<<(const string_q& str);
         SFArchive& operator<<(const SFUintBN& bn);
         SFArchive& operator<<(const SFIntBN& bn);
         SFArchive& operator<<(const char *str);
@@ -97,16 +97,16 @@ namespace qblocks {
         SFArchive& operator>>(uint64_t& dw);
         SFArchive& operator>>(float& f);
         SFArchive& operator>>(double& f);
-        SFArchive& operator>>(SFString& str);
+        SFArchive& operator>>(string_q& str);
         SFArchive& operator>>(SFUintBN& bn);
         SFArchive& operator>>(SFIntBN& bn);
     };
 
-    extern SFArchive& operator<<(SFArchive& archive, const SFStringArray& array);
+    extern SFArchive& operator<<(SFArchive& archive, const CStringArray& array);
     extern SFArchive& operator<<(SFArchive& archive, const SFBigUintArray& array);
     extern SFArchive& operator<<(SFArchive& archive, const SFUintArray& array);
 
-    extern SFArchive& operator>>(SFArchive& archive, SFStringArray& array);
+    extern SFArchive& operator>>(SFArchive& archive, CStringArray& array);
     extern SFArchive& operator>>(SFArchive& archive, SFBigUintArray& array);
     extern SFArchive& operator>>(SFArchive& archive, SFUintArray& array);
 }  // namespace qblocks

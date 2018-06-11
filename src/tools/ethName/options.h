@@ -15,9 +15,9 @@
 
 class COptions : public COptionsBase {
 public:
-    SFString addr;
-    SFString name;
-    SFString source;
+    string_q addr;
+    string_q name;
+    string_q source;
     bool all;
     bool count;
     bool matchCase;
@@ -30,9 +30,9 @@ public:
     COptions(void);
     ~COptions(void) {}
 
-    SFString postProcess(const SFString& which, const SFString& str) const override;
-    bool parseArguments(SFString& command) override;
+    string_q postProcess(const string_q& which, const string_q& str) const override;
+    bool parseArguments(string_q& command) override;
     void Init(void) override;
 
-    SFString showMatches(void);
+    string_q showMatches(void);
 };

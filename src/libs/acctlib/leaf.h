@@ -43,16 +43,16 @@ public:
 
     DECLARE_NODE(CLeaf);
 
-    const SFString getStringAt(const SFString& name, uint32_t i) const override;
+    const string_q getStringAt(const string_q& name, uint32_t i) const override;
 
     // EXISTING_CODE
-    CLeaf(const SFString& _key, const SFString& _value);
-    SFString at(const SFString& _key) const override;
-    CTreeNode* insert(const SFString& _key, const SFString& _value) override;
-    CTreeNode* remove(const SFString& _key) override;
+    CLeaf(const string_q& _key, const string_q& _value);
+    string_q at(const string_q& _key) const override;
+    CTreeNode* insert(const string_q& _key, const string_q& _value) override;
+    CTreeNode* remove(const string_q& _key) override;
     bool visitItems(ACCTVISITOR func, void *data) const override;
 private:
-    bool contains(const SFString& _key) const;
+    bool contains(const string_q& _key) const;
     // EXISTING_CODE
     friend ostream& operator<<(ostream& os, const CLeaf& item);
 
@@ -135,7 +135,7 @@ IMPLEMENT_ARCHIVE_LIST(CLeafList);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-extern SFString nextTreenodeChunk(const SFString& fieldIn, const void *data);
+extern string_q nextTreenodeChunk(const string_q& fieldIn, const void *data);
 // EXISTING_CODE
 }  // namespace qblocks
 

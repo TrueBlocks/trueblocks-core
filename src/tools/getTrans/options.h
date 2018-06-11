@@ -20,14 +20,14 @@ public:
     bool isRaw;
     bool incTrace;
     bool nTraces;
-    SFString format;
+    string_q format;
     uint64_t nCmds;
     uint64_t nVisited;
 
     COptions(void);
     ~COptions(void);
 
-    SFString postProcess(const SFString& which, const SFString& str) const override;
-    bool parseArguments(SFString& command) override;
+    string_q postProcess(const string_q& which, const string_q& str) const override;
+    bool parseArguments(string_q& command) override;
     void Init(void) override;
 };

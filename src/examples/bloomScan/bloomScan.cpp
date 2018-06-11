@@ -13,7 +13,7 @@
 #include "etherlib.h"
 #include "options.h"
 
-extern bool visitBloom(const SFString& path, void *data);
+extern bool visitBloom(const string_q& path, void *data);
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
@@ -28,7 +28,7 @@ int main(int argc, const char *argv[]) {
 }
 
 //-----------------------------------------------------------------------
-bool visitBloom(const SFString& path, void *data) {
+bool visitBloom(const string_q& path, void *data) {
 
     if (endsWith(path, "/")) {
         forAllFiles(path + "*", visitBloom, data);
@@ -58,7 +58,7 @@ extern bool displayBloom(blknum_t bn, const SFBloom& bloom, void *data);
 
 //-------------------------------------------------------------
 bool displayBloom(blknum_t bn, const SFBloom& bloom, void *data) {
-    SFString s = bloom2Bytes(bloom);
+    string_q s = bloom2Bytes(bloom);
     COptions *opt = (COptions*)data;
     if (opt->mode == "short") {
         size_t len = s.length();
@@ -69,7 +69,7 @@ bool displayBloom(blknum_t bn, const SFBloom& bloom, void *data) {
         replaceAny(s, "7bde",   "+");
         replaceAny(s, "f",      "@");
         size_t rem = len - s.length();
-        s = s + SFString(' ', rem) + "|";
+        s = s + string_q(' ', rem) + "|";
     } else {
         replace(s,    "0x", cOff);
         replaceAll(s, "0",  " ");

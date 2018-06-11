@@ -29,10 +29,10 @@ namespace qblocks {
     }
 
     //-------------------------------------------------------------------------
-    const CFieldData *CFieldList::getFieldByName(const SFString& fieldString) const {
+    const CFieldData *CFieldList::getFieldByName(const string_q& fieldString) const {
 
         // the input may contain more than just fieldName
-        SFString fieldName = fieldString; fieldName = nextTokenClear(fieldName, '|');
+        string_q fieldName = fieldString; fieldName = nextTokenClear(fieldName, '|');
 
         const CFieldData *field = NULL;
         LISTPOS lPos = GetHeadPosition();

@@ -21,11 +21,11 @@
 IMPLEMENT_NODE(CNewReceipt, CBaseNode);
 
 //---------------------------------------------------------------------------
-extern SFString nextNewreceiptChunk(const SFString& fieldIn, const void *dataPtr);
-static SFString nextNewreceiptChunk_custom(const SFString& fieldIn, const void *dataPtr);
+extern string_q nextNewreceiptChunk(const string_q& fieldIn, const void *dataPtr);
+static string_q nextNewreceiptChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CNewReceipt::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
+void CNewReceipt::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -34,7 +34,7 @@ void CNewReceipt::Format(CExportContext& ctx, const SFString& fmtIn, void *dataP
         return;
     }
 
-    SFString fmt = fmtIn;
+    string_q fmt = fmtIn;
     if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
@@ -43,7 +43,7 @@ void CNewReceipt::Format(CExportContext& ctx, const SFString& fmtIn, void *dataP
 }
 
 //---------------------------------------------------------------------------
-SFString nextNewreceiptChunk(const SFString& fieldIn, const void *dataPtr) {
+string_q nextNewreceiptChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
         return ((const CNewReceipt *)dataPtr)->getValueByName(fieldIn);
 
@@ -54,7 +54,7 @@ SFString nextNewreceiptChunk(const SFString& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CNewReceipt::setValueByName(const SFString& fieldName, const SFString& fieldValue) {
+bool CNewReceipt::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
     // EXISTING_CODE
     // EXISTING_CODE
 
@@ -159,7 +159,7 @@ void CNewReceipt::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextNewreceiptChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+string_q nextNewreceiptChunk_custom(const string_q& fieldIn, const void *dataPtr) {
     const CNewReceipt *newp = (const CNewReceipt *)dataPtr;
     if (newp) {
         switch (tolower(fieldIn[0])) {
@@ -180,7 +180,7 @@ SFString nextNewreceiptChunk_custom(const SFString& fieldIn, const void *dataPtr
 }
 
 //---------------------------------------------------------------------------
-bool CNewReceipt::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
+bool CNewReceipt::handleCustomFormat(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
@@ -209,10 +209,10 @@ SFArchive& operator>>(SFArchive& archive, CNewReceipt& newp) {
 }
 
 //---------------------------------------------------------------------------
-SFString CNewReceipt::getValueByName(const SFString& fieldName) const {
+string_q CNewReceipt::getValueByName(const string_q& fieldName) const {
 
     // Give customized code a chance to override first
-    SFString ret = nextNewreceiptChunk_custom(fieldName, this);
+    string_q ret = nextNewreceiptChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
@@ -233,7 +233,7 @@ SFString CNewReceipt::getValueByName(const SFString& fieldName) const {
                 if (endsWith(fieldName, "Cnt"))
                     return asStringU(cnt);
                 if (!cnt) return "";
-                SFString retS;
+                string_q retS;
                 for (uint32_t i = 0 ; i < cnt ; i++) {
                     retS += logs[i].Format();
                     retS += ((i < cnt - 1) ? ",\n" : "\n");
@@ -261,7 +261,7 @@ ostream& operator<<(ostream& os, const CNewReceipt& item) {
 }
 
 //---------------------------------------------------------------------------
-const CBaseNode *CNewReceipt::getObjectAt(const SFString& fieldName, uint32_t index) const {
+const CBaseNode *CNewReceipt::getObjectAt(const string_q& fieldName, uint32_t index) const {
     if ( fieldName % "logs" && index < logs.getCount() )
         return &logs[index];
     return NULL;

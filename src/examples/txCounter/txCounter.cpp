@@ -30,15 +30,15 @@ public:
         {}
     void countOne(const CBlock& block);
     void loadFromFile(void) {
-        SFString contents = asciiFileToString("./data/countsByWeek.txt");
-        SFString last;
+        string_q contents = asciiFileToString("./data/countsByWeek.txt");
+        string_q last;
         while (!contents.empty()) {
-            SFString str = trim(nextTokenClear(contents,'\n'));
+            string_q str = trim(nextTokenClear(contents,'\n'));
             if (!str.empty())
                 last = str;
         }
 //4305968 2017-09-24 00:00:17 UTC 1398084 2907884 0.675315    60868104    20.9321 14.1358 0
-        SFString str;
+        string_q str;
         str = nextTokenClear(last,sep); startBlock = toUnsigned(str);
         nextTokenClear(last,sep);
         str = nextTokenClear(last,sep); nEmpty     = toUnsigned(str);
@@ -70,7 +70,7 @@ int main(int argc, char *argv[])
     counter.loadFromFile();
     blknum_t latest = getLatestBlockFromCache();
     for (blknum_t i = counter.startBlock-1 ; i < latest ; i++) {
-        SFString fileName = getBinaryFilename(i);
+        string_q fileName = getBinaryFilename(i);
         if (fileExists(fileName)) {
             CBlock block;
             readFromBinary(block, fileName);
@@ -111,7 +111,7 @@ void CCounter::countOne(const CBlock &block) {
     if (last != thisOne) {
         os = &cout;
         sep = '\t';
-        cerr << SFString(' ',120) << "\r";
+        cerr << string_q(' ',120) << "\r";
     }
     *os << block.blockNumber << sep
         << dateFromTimeStamp(block.timestamp) << sep

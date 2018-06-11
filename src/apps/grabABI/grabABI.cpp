@@ -15,8 +15,8 @@
 
 //-----------------------------------------------------------------------
 extern void addDefaultFuncs(CFunctionArray& funcs);
-extern SFString getAssign(const CParameter *p, uint64_t which);
-extern SFString getEventAssign(const CParameter *p, uint64_t which, uint64_t prevIdxs);
+extern string_q getAssign(const CParameter *p, uint64_t which);
+extern string_q getEventAssign(const CParameter *p, uint64_t which, uint64_t prevIdxs);
 
 //-----------------------------------------------------------------------
 extern const char* STR_FACTORY1;
@@ -30,7 +30,7 @@ extern const char* STR_ITEMS;
 extern const char* STR_FORMAT_FUNCDATA;
 
 //-----------------------------------------------------------------------
-SFString templateFolder = configPath("grabABI/");
+string_q templateFolder = configPath("grabABI/");
 
 //-----------------------------------------------------------------------
 int sortFunctionByName(const void *v1, const void *v2) {
@@ -39,26 +39,26 @@ int sortFunctionByName(const void *v1, const void *v2) {
     return f1->name.compare(f2->name);
 }
 
-SFString classDir;
+string_q classDir;
 //-----------------------------------------------------------------------
-inline SFString projectName(void) {
+inline string_q projectName(void) {
     CFilename fn(classDir+"tmp");
-    SFString ret = fn.getPath().Substitute("parselib/","").Substitute("parseLib/","").Substitute("//","");
+    string_q ret = fn.getPath().Substitute("parselib/","").Substitute("parseLib/","").Substitute("//","");
     nextTokenClearReverse(ret,'/');
     ret = nextTokenClearReverse(ret,'/');
     return ret;
 }
 
 //-----------------------------------------------------------------------
-inline void makeTheCode(const SFString& fn, const SFString& addr) {
-    SFString theCode = asciiFileToString(templateFolder + fn);
+inline void makeTheCode(const string_q& fn, const string_q& addr) {
+    string_q theCode = asciiFileToString(templateFolder + fn);
     replaceAll(theCode, "[{ADDR}]", addr);
     replaceAll(theCode, "[{PROJECT_NAME}]", projectName());
     writeTheCode(classDir + "../" + fn, theCode, "", fn != "CMakeFile.txt");
 }
 
 //-----------------------------------------------------------------------
-void addIfUnique(const SFString& addr, CFunctionArray& functions, CFunction& func, bool decorateNames)
+void addIfUnique(const string_q& addr, CFunctionArray& functions, CFunction& func, bool decorateNames)
 {
     if (func.name.empty()) // && func.type != "constructor")
         return;
@@ -80,15 +80,15 @@ void addIfUnique(const SFString& addr, CFunctionArray& functions, CFunction& fun
 }
 
 //-----------------------------------------------------------------------
-SFString acquireABI(CFunctionArray& functions, const SFAddress& addr, const COptions& opt, bool builtIn) {
+string_q acquireABI(CFunctionArray& functions, const SFAddress& addr, const COptions& opt, bool builtIn) {
 
-    SFString results, ret;
-    SFString fileName = blockCachePath("abis/" + addr + ".json");
-    SFString localFile("./" + addr + ".json");
+    string_q results, ret;
+    string_q fileName = blockCachePath("abis/" + addr + ".json");
+    string_q localFile("./" + addr + ".json");
     if (fileExists(localFile))
         copyFile(localFile, fileName);
 
-    SFString dispName = fileName.Substitute(configPath(""),"|");
+    string_q dispName = fileName.Substitute(configPath(""),"|");
     nextTokenClear(dispName, '|');
     dispName = "~/.quickBlocks/" + dispName;
     if (fileExists(fileName) && !opt.raw) {
@@ -104,7 +104,7 @@ SFString acquireABI(CFunctionArray& functions, const SFAddress& addr, const COpt
             cerr << "Reading ABI for " << addr << " from EtherScan\r";
             cerr.flush();
         }
-        SFString url = SFString("http:/")
+        string_q url = string_q("http:/")
                             + "/api.etherscan.io/api?module=contract&action=getabi&address="
                             + addr;
         results = urlToString(url).Substitute("\\", "");
@@ -164,13 +164,13 @@ int main(int argc, const char *argv[]) {
         return 0;
 
     while (!options.commandList.empty()) {
-        SFString command = nextTokenClear(options.commandList, '\n');
+        string_q command = nextTokenClear(options.commandList, '\n');
         if (!options.parseArguments(command))
             return 0;
 
         if (options.open) {
             for (uint64_t i = 0 ; i < options.nAddrs ; i++) {
-                SFString fileName = blockCachePath("abis/" + options.addrs[i] + ".json");
+                string_q fileName = blockCachePath("abis/" + options.addrs[i] + ".json");
                 if (!fileExists(fileName)) {
                     cerr << "ABI for '" + options.addrs[i] + "' not found. Quitting...\n";
                     return 0;
@@ -182,7 +182,7 @@ int main(int argc, const char *argv[]) {
 
         if (options.asJson) {
             for (uint64_t i = 0 ; i < options.nAddrs ; i++) {
-                SFString fileName = blockCachePath("abis/" + options.addrs[i] + ".json");
+                string_q fileName = blockCachePath("abis/" + options.addrs[i] + ".json");
                 if (!fileExists(fileName)) {
                     cerr << "ABI for '" + options.addrs[i] + "' not found. Quitting...\n";
                     return 0;
@@ -193,7 +193,7 @@ int main(int argc, const char *argv[]) {
         }
 
         CFunctionArray functions;
-        SFString addrList;
+        string_q addrList;
         bool isGenerate = !options.classDir.empty();
         if (!(options.addrs[0] % "0xTokenLib") && !(options.addrs[0] % "0xWalletLib") && isGenerate)
         {
@@ -212,7 +212,7 @@ int main(int argc, const char *argv[]) {
                 for (uint32_t i = 0 ; i < functions.getCount() ; i++) {
                     CFunction *func = &functions[i];
                     if (!func->constant || !options.noconst) {
-                        SFString format = getGlobalConfig()->getDisplayStr(false, STR_FORMAT_FUNCDATA);
+                        string_q format = getGlobalConfig()->getDisplayStr(false, STR_FORMAT_FUNCDATA);
                         cout << func->Format(format);
                     }
                 }
@@ -235,26 +235,26 @@ int main(int argc, const char *argv[]) {
 //                addDefaultFuncs(functions);
 
             classDir = (options.classDir).Substitute("~/", getHomeFolder());
-            SFString classDefs = classDir + "classDefinitions/";
+            string_q classDefs = classDir + "classDefinitions/";
             establishFolder(classDefs);
 
-            SFString funcExterns, evtExterns, funcDecls, evtDecls, sigs, evts;
-            SFString headers;
+            string_q funcExterns, evtExterns, funcDecls, evtDecls, sigs, evts;
+            string_q headers;
             if (!options.isToken()) headers += ("#include \"tokenlib.h\"\n");
             if (!options.isWallet()) headers += ("#ifndef NOWALLETLIB\n#include \"walletlib.h\"\n#endif\n");
-            SFString sources = "src= \\\n", registers, factory1, factory2;
+            string_q sources = "src= \\\n", registers, factory1, factory2;
             for (uint32_t i = 0 ; i < functions.getCount() ; i++) {
                 CFunction *func = &functions[i];
                 if (!func->isBuiltin) {
-                    SFString name = func->Format("[{NAME}]") + (func->type == "event" ? "Event" : "");
+                    string_q name = func->Format("[{NAME}]") + (func->type == "event" ? "Event" : "");
                     if (name == "eventEvent")
                         name = "logEntry";
                     if (startsWith(name, '_'))
                         name = name.substr(1);
                     char ch = static_cast<char>(toupper(name[0]));
-                    SFString fixed(ch);
+                    string_q fixed(ch);
                     name = fixed + name.substr(1);
-                    SFString theClass = (options.isBuiltin() ? "Q" : "C") + name;
+                    string_q theClass = (options.isBuiltin() ? "Q" : "C") + name;
                     bool isConst = func->constant;
                     bool isEmpty = name.empty() || func->type.empty();
                     bool isLog = contains(toLower(name), "logentry");
@@ -263,52 +263,52 @@ int main(int argc, const char *argv[]) {
                     if (!isEmpty && !isLog) {
                         if (name != "DefFunction") {
                             if (func->type == "event") {
-                                evtExterns += func->Format("extern const SFString evt_[{NAME}]{QB};\n");
-                                SFString decl = "const SFString evt_[{NAME}]{QB} = \"" + func->encoding + "\";\n";
+                                evtExterns += func->Format("extern const string_q evt_[{NAME}]{QB};\n");
+                                string_q decl = "const string_q evt_[{NAME}]{QB} = \"" + func->encoding + "\";\n";
                                 evtDecls += func->Format(decl);
                                 if (!options.isBuiltin())
                                     evts += func->Format("\tevt_[{NAME}],\n");
                             } else {
-                                funcExterns += func->Format("extern const SFString func_[{NAME}]{QB};\n");
-                                SFString decl = "const SFString func_[{NAME}]{QB} = \"" + func->encoding + "\";\n";
+                                funcExterns += func->Format("extern const string_q func_[{NAME}]{QB};\n");
+                                string_q decl = "const string_q func_[{NAME}]{QB} = \"" + func->encoding + "\";\n";
                                 funcDecls += func->Format(decl);
                                 if (!options.isBuiltin())
                                     sigs += func->Format("\tfunc_[{NAME}],\n");
                             }
                         }
-                        SFString fields, assigns1, assigns2, items1;
+                        string_q fields, assigns1, assigns2, items1;
                         uint64_t nIndexed = 0;
                         for (uint32_t j = 0 ; j < func->inputs.getCount() ; j++) {
                             fields   += func->inputs[j].Format("[{TYPE}][ {NAME}]|");
                             assigns1 += func->inputs[j].Format(getAssign(&func->inputs[j], j));
                             items1   += "\t\t\titems[nItems++] = \"" + func->inputs[j].type + "\";\n";
                             nIndexed += func->inputs[j].indexed;
-                            SFString res = func->inputs[j].Format(getEventAssign(&func->inputs[j], j+1, nIndexed));
+                            string_q res = func->inputs[j].Format(getEventAssign(&func->inputs[j], j+1, nIndexed));
                             replace(res, "++", "[");
                             replace(res, "++", "]");
                             assigns2 += res;
                         }
 
-                        SFString base = (func->type == "event" ? "LogEntry" : "Transaction");
+                        string_q base = (func->type == "event" ? "LogEntry" : "Transaction");
                         if (name == "LogEntry")
                             base = "LogEntry";
 
-                        SFString out = STR_CLASSDEF;
+                        string_q out = STR_CLASSDEF;
                         replace(out, "[{DIR}]", options.classDir.Substitute(getHomeFolder(), "~/"));
                         replace(out, "[{CLASS}]", theClass);
                         replace(out, "[{FIELDS}]", fields);
                         replace(out, "[{BASE}]", base);
                         replace(out, "[{BASE_LOWER}]", toLower(base));
 
-                        SFString fileName = toLower(name)+".txt";
+                        string_q fileName = toLower(name)+".txt";
                         if (!isConst) {
                             headers += ("#include \"" + fileName.Substitute(".txt", ".h") + "\"\n");
                             registers += "\t" + theClass + "::registerClass();\n";
                         }
                         sources += fileName.Substitute(".txt", ".cpp") + " \\\n";
                         if (base == "Transaction") {
-                            SFString f1, fName = func->Format("[{NAME}]");
-                            f1 = SFString(STR_FACTORY1);
+                            string_q f1, fName = func->Format("[{NAME}]");
+                            f1 = string_q(STR_FACTORY1);
                             replaceAll(f1, "[{CLASS}]", theClass);
                             replaceAll(f1, "[{NAME}]", fName);
                             if (fName == "defFunction")
@@ -317,7 +317,7 @@ int main(int argc, const char *argv[]) {
                                 replaceAll(f1, "[{LOWER}]", fName);
                             replaceAll(f1, "[{ASSIGNS1}]", assigns1);
                             replaceAll(f1, "[{ITEMS1}]", items1);
-                            SFString parseIt = "toFunction(\"" + fName + "\", params, nItems, items)";
+                            string_q parseIt = "toFunction(\"" + fName + "\", params, nItems, items)";
                             replaceAll(f1, "[{PARSEIT}]", parseIt);
                             replaceAll(f1, "[{BASE}]", base);
                             replaceAll(f1, "[{SIGNATURE}]", func->getSignature(SIG_DEFAULT)
@@ -331,8 +331,8 @@ int main(int argc, const char *argv[]) {
                                 factory1 += f1;
 
                         } else if (name != "LogEntry") {
-                            SFString f2, fName = func->Format("[{NAME}]");
-                            f2 = SFString(STR_FACTORY2)
+                            string_q f2, fName = func->Format("[{NAME}]");
+                            f2 = string_q(STR_FACTORY2)
                                             .Substitute("[{CLASS}]", theClass)
                                             .Substitute("[{LOWER}]", fName);
                             replace(f2, "[{ASSIGNS2}]", assigns2);
@@ -347,7 +347,7 @@ int main(int argc, const char *argv[]) {
 
                         if (name != "logEntry" && !isConst) {
                             // hack warning
-                            replaceAll(out, "bytes32[]", "SFStringArray");
+                            replaceAll(out, "bytes32[]", "CStringArray");
                             replaceAll(out, "uint256[]", "SFBigUintArray");  // order matters
                             replaceAll(out, "int256[]", "SFBigIntArray");
                             replaceAll(out, "uint32[]", "SFUintArray");  // order matters
@@ -358,12 +358,12 @@ int main(int argc, const char *argv[]) {
                             else
                                 cout << "Generating class for derived transaction type: '" << theClass << "'\n";
 
-                            SFString makeClass = configPath("makeClass/makeClass");
+                            string_q makeClass = configPath("makeClass/makeClass");
                             if (!fileExists(makeClass)) {
                                 cerr << makeClass << " was not found. This executable is required to run grabABI. Quitting...\n";
                                 exit(0);
                             }
-                            SFString res = doCommand(makeClass + " -r " + toLower(name));
+                            string_q res = doCommand(makeClass + " -r " + toLower(name));
                             if (!res.empty())
                                 cout << "\t" << res << "\n";
                         }
@@ -374,17 +374,17 @@ int main(int argc, const char *argv[]) {
             // The library header file
             if (!options.isBuiltin())
                 headers += ("#include \"processing.h\"\n");
-            SFString headerCode = SFString(STR_HEADERFILE).Substitute("[{HEADERS}]", headers);
-            SFString parseInit = "parselib_init(QUITHANDLER qh=defaultQuitHandler)";
+            string_q headerCode = string_q(STR_HEADERFILE).Substitute("[{HEADERS}]", headers);
+            string_q parseInit = "parselib_init(QUITHANDLER qh=defaultQuitHandler)";
             if (!options.isBuiltin())
                 replaceAll(headerCode, "[{PREFIX}]_init(void)", parseInit);
             replaceAll(headerCode, "[{ADDR}]", options.primaryAddr.Substitute("0x", ""));
             replaceAll(headerCode, "[{HEADER_SIGS}]", options.isBuiltin() ? "" : STR_HEADER_SIGS);
             replaceAll(headerCode, "[{PREFIX}]", toLower(options.prefix));
-            SFString pprefix = (options.isBuiltin() ? toProper(options.prefix).Substitute("lib", "") : "Func");
+            string_q pprefix = (options.isBuiltin() ? toProper(options.prefix).Substitute("lib", "") : "Func");
             replaceAll(headerCode, "[{PPREFIX}]", pprefix);
             replaceAll(headerCode, "FuncEvent", "Event");
-            SFString comment = "//------------------------------------------------------------------------\n";
+            string_q comment = "//------------------------------------------------------------------------\n";
             funcExterns = (funcExterns.empty() ? "// No functions" : funcExterns);
             evtExterns = (evtExterns.empty() ? "// No events" : evtExterns);
             replaceAll(headerCode, "[{EXTERNS}]", comment+funcExterns+"\n"+comment+evtExterns);
@@ -394,7 +394,7 @@ int main(int argc, const char *argv[]) {
             // The library make file
             replaceReverse(sources, " \\\n", " \\\n" + options.prefix + ".cpp\n");
             if (!options.isBuiltin()) {
-                SFString makefile = asciiFileToString(templateFolder + "parselib/CMakeLists.txt");
+                string_q makefile = asciiFileToString(templateFolder + "parselib/CMakeLists.txt");
                 replaceAll(makefile, "[{PROJECT_NAME}]", projectName());
                 writeTheCode(classDir + "CMakeLists.txt", makefile);
             }
@@ -405,7 +405,7 @@ int main(int argc, const char *argv[]) {
             replace(factory1, " if (encoding == func_[{LOWER}])", "");
             replace(factory2, "} else ", "");
 
-            SFString sourceCode = asciiFileToString(templateFolder + "parselib/parselib.cpp");
+            string_q sourceCode = asciiFileToString(templateFolder + "parselib/parselib.cpp");
             parseInit = "parselib_init(QUITHANDLER qh)";
             if (!options.isBuiltin())
                 replaceAll(sourceCode, "[{PREFIX}]_init(void)", parseInit);
@@ -421,7 +421,7 @@ int main(int argc, const char *argv[]) {
             replaceAll(sourceCode, "[{ADDR}]", options.primaryAddr.Substitute("0x", ""));
             replaceAll(sourceCode, "[{ABI}]", options.theABI);
             replaceAll(sourceCode, "[{REGISTERS}]", registers);
-            SFString chainInit = (options.isToken() ?
+            string_q chainInit = (options.isToken() ?
                                     "\twalletlib_init();\n" :
                                   (options.isWallet() ? "" : "\ttokenlib_init();\n"));
             replaceAll(sourceCode, "[{CHAINLIB}]",  chainInit);
@@ -468,15 +468,15 @@ int main(int argc, const char *argv[]) {
 }
 
 //-----------------------------------------------------------------------
-SFString getAssign(const CParameter *p, uint64_t which) {
+string_q getAssign(const CParameter *p, uint64_t which) {
 
-    SFString ass;
-    SFString type = p->Format("[{TYPE}]");
+    string_q ass;
+    string_q type = p->Format("[{TYPE}]");
 
     if (contains(type, "[") && contains(type, "]")) {
         const char* STR_ASSIGNARRAY =
             "\t\t\twhile (!params.empty()) {\n"
-            "\t\t\t\tSFString val = params.substr(0,64);\n"
+            "\t\t\t\tstring_q val = params.substr(0,64);\n"
             "\t\t\t\tparams = params.substr(64);\n"
             "\t\t\t\ta->[{NAME}]XXXXa->[{NAME}].getCount()YYYY = val;\n"
             "\t\t\t}\n";
@@ -497,8 +497,8 @@ SFString getAssign(const CParameter *p, uint64_t which) {
 }
 
 //-----------------------------------------------------------------------
-SFString getEventAssign(const CParameter *p, uint64_t which, uint64_t nIndexed) {
-    SFString type = p->Format("[{TYPE}]"), ass;
+string_q getEventAssign(const CParameter *p, uint64_t which, uint64_t nIndexed) {
+    string_q type = p->Format("[{TYPE}]"), ass;
     if (type == "uint" || type == "uint256") { ass = "toWei([{VAL}]);";
     } else if (contains(type, "gas")) { ass = "toGas([{VAL}]);";
     } else if (contains(type, "uint64")) { ass = "toLongU([{VAL}]);";
@@ -516,12 +516,12 @@ SFString getEventAssign(const CParameter *p, uint64_t which, uint64_t nIndexed) 
         which -= (nIndexed+1);
 
     } else {
-        replace(ass, "[{VAL}]", SFString(type == "address" ? "" : "\"0x\"+") + "data.substr([{WHICH}]*64,64)");
+        replace(ass, "[{VAL}]", string_q(type == "address" ? "" : "\"0x\"+") + "data.substr([{WHICH}]*64,64)");
         which -= (nIndexed+1);
     }
     replace(ass, "[{IDX}]", "++" + asStringU(which)+"++");
     replace(ass, "[{WHICH}]", asStringU(which));
-    SFString fmt = "\t\t\ta->[{NAME}] = " + ass + "\n";
+    string_q fmt = "\t\t\ta->[{NAME}] = " + ass + "\n";
     return p->Format(fmt);
 }
 
@@ -602,8 +602,8 @@ const char* STR_HEADERFILE =
 //-----------------------------------------------------------------------
 const char* STR_HEADER_SIGS =
 "\n\n//-----------------------------------------------------------------------------\n"
-"extern SFString sigs[];\n"
-"extern SFString topics[];\n"
+"extern string_q sigs[];\n"
+"extern string_q topics[];\n"
 "\n"
 "extern uint32_t nSigs;\n"
 "extern uint32_t nTopics;";
@@ -611,7 +611,7 @@ const char* STR_HEADER_SIGS =
 //-----------------------------------------------------------------------
 const char* STR_CODE_SIGS =
 "\n\n//-----------------------------------------------------------------------------\n"
-"SFString sigs[] = {\n"
+"string_q sigs[] = {\n"
 "\t// Token support\n"
 "\tfunc_approve_qb,\n"
 "\tfunc_transferFrom_qb,\n"
@@ -631,10 +631,10 @@ const char* STR_CODE_SIGS =
 "\t// Contract support\n"
 "[{SIGS}]"
 "};\n"
-"uint32_t nSigs = sizeof(sigs) / sizeof(SFString);\n"
+"uint32_t nSigs = sizeof(sigs) / sizeof(string_q);\n"
 "\n"
 "//-----------------------------------------------------------------------------\n"
-"SFString topics[] = {\n"
+"string_q topics[] = {\n"
 "\t// Token support\n"
 "\tevt_Transfer_qb,\n"
 "\tevt_Approval_qb,\n"
@@ -652,7 +652,7 @@ const char* STR_CODE_SIGS =
 "\t// Contract support\n"
 "[{EVTS}]"
 "};\n"
-"uint32_t nTopics = sizeof(topics) / sizeof(SFString);\n"
+"uint32_t nTopics = sizeof(topics) / sizeof(string_q);\n"
 "\n";
 
 //-----------------------------------------------------------------------
@@ -660,11 +660,11 @@ const char* STR_BLOCK_PATH = "etherlib_init(qh);\n\n";
 
 //-----------------------------------------------------------------------
 const char* STR_ITEMS =
-"\t\tSFString items[256];\n"
+"\t\tstring_q items[256];\n"
 "\t\tuint32_t nItems=0;\n"
 "\n"
-"\t\tSFString encoding = p->input.substr(0,10);\n"
-"\t\tSFString params   = p->input.substr(10);\n";
+"\t\tstring_q encoding = p->input.substr(0,10);\n"
+"\t\tstring_q params   = p->input.substr(10);\n";
 
 //-----------------------------------------------------------------------
 const char* STR_FORMAT_FUNCDATA =
