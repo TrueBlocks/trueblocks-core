@@ -56,6 +56,7 @@ namespace qblocks {
         size_t   find     (const char* s, size_t pos=0) const;
         size_t   find     (const char* s, size_t pos, size_t n) const;
         size_t   find     (char c, size_t pos=0) const;
+        size_t   findI    (const string_q& str, size_t pos=0) const;
         string_q extract  (size_t first, size_t len) const;
 
         char          operator[](size_t index) const;
@@ -250,6 +251,7 @@ namespace qblocks {
     extern bool    endsWithAny    (const string_q& haystack, const string_q& needle);
     extern bool    startsWithAny  (const string_q& haystack, const string_q& needle);
     extern bool    contains       (const string_q& haystack, const string_q& needle);
+    extern bool    containsI      (const string_q& haystack, const string_q& needle);
 
     //--------------------------------------------------------------------
     extern string_q toLower       (const string_q& in);

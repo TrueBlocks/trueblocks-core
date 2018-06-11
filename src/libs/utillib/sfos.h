@@ -32,5 +32,7 @@ namespace qblocks {
     extern SFString getCWD(const SFString& filename = "");
     extern SFString doCommand(const SFString& cmd);
 
+    extern SFString makeValidName(const SFString& inOut);
+
     #define kMaxPathSize _POSIX_PATH_MAX
 }  // namespace qblocks

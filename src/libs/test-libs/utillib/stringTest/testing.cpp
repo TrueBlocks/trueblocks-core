@@ -156,6 +156,16 @@ TEST_F(CThisTest, TestCStr) {
     cout << TESTID("countOf",15) << "There are " << countOf(text2,  'i') << " 'is' in '" << text1.Substitute("\t"," ") << "'\n";
     cout << "\n";
 
+    string_q thing = "This is the thing";
+    cout << TESTID("base case",15)      << thing << "\n";
+    cout << TESTID("find is",15)        << thing.find("is") << "\n";
+    cout << TESTID("contains is",15)    << contains(thing, "is") << "\n";
+    cout << TESTID("find not this",15)  << thing.find("this") << "\n";
+    cout << TESTID("not there this",15) << contains(thing, "this") << "\n";
+    cout << TESTID("findI not this",15) << thing.findI("this") << "\n";
+    cout << TESTID("there this",15)     << containsI(thing, "this") << "\n";
+    cout << "\n";
+
     string_q target = "Target1|Target2|Target3|Target4";
     cout << TESTID("base case",15) << target << "\n";
     while (target.find("get") != NOPOS) {
