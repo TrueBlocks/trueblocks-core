@@ -108,10 +108,10 @@ namespace qblocks {
 
                 // we need to read some data
                 SFString url = source.url;
-                url.Replace("[{PAIR}]",   source.pair);
-                url.Replace("[{START}]",  asString(start));
-                url.Replace("[{END}]",    asString(end));
-                url.Replace("[{PERIOD}]", asString(5*60));
+                replace(url, "[{PAIR}]",   source.pair);
+                replace(url, "[{START}]",  asString(start));
+                replace(url, "[{END}]",    asString(end));
+                replace(url, "[{PERIOD}]", asString(5*60));
                 if (verbose)
                     cerr << "Fetching: " << url << "\n";
 

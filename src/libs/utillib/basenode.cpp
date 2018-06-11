@@ -261,7 +261,7 @@ namespace qblocks {
                     if (s && *s && (*s == '{' || *s == '}' || *s == ']')) {
                         finishParse();
 #ifdef DEBUG_PARSER
-                        tbs.Replace("\t", "");
+                        replace(tbs, "\t", "");
 #endif
                         return s;
                     }
@@ -269,7 +269,7 @@ namespace qblocks {
             }
         }
 #ifdef DEBUG_PARSER
-        tbs.Replace("\t", "");
+        replace(tbs, "\t", "");
 #endif
         finishParse();
         return NULL;
@@ -506,7 +506,7 @@ namespace qblocks {
         else if (len > 23) ret = ret.substr(0,1) + "." + trimTrailing(ret.substr(1), '0') + "e+23";
         else if (len > 22) ret = ret.substr(0,1) + "." + trimTrailing(ret.substr(1), '0') + "e+22";
         else if (len > 21) ret = ret.substr(0,1) + "." + trimTrailing(ret.substr(1), '0') + "e+21";
-        ret.Replace(".e+", "e+");
+        replace(ret, ".e+", "e+");
         return ret;
     }
 
@@ -599,7 +599,7 @@ namespace qblocks {
         bool isBool = false;
         if (contains(fieldName, "b:")) {
             isBool = true;
-            fieldName.Replace("b:", EMPTY);
+            replace(fieldName, "b:", EMPTY);
         }
 
         // The fieldname may contain p: or w:width: or both.  If it contains either it
@@ -608,7 +608,7 @@ namespace qblocks {
         SFString promptName = fieldName;
         if (contains(fieldName, "p:")) {
             isPrompt = true;
-            fieldName.Replace("p:", EMPTY);
+            replace(fieldName, "p:", EMPTY);
             promptName = fieldName;
         }
 
@@ -616,18 +616,18 @@ namespace qblocks {
         bool rightJust = false, lineJust = false;
         if (contains(fieldName, "w:")) {
             ASSERT(fieldName.substr(0,2) % "w:");  // must be first modifier in the string
-            fieldName.Replace("w:", EMPTY);   // get rid of the 'w:'
+            replace(fieldName, "w:", EMPTY);   // get rid of the 'w:'
             maxWidth = toLong32u(fieldName);   // grab the width
             nextTokenClear(fieldName, ':');    // skip to the start of the fieldname
         } else if (contains(fieldName, "r:")) {
             ASSERT(fieldName.substr(0,2) % "r:");  // must be first modifier in the string
-            fieldName.Replace("r:", EMPTY);   // get rid of the 'w:'
+            replace(fieldName, "r:", EMPTY);   // get rid of the 'w:'
             maxWidth = toLong32u(fieldName);   // grab the width
             nextTokenClear(fieldName, ':');    // skip to the start of the fieldname
             rightJust = true;
         } else if (contains(fieldName, "l:")) {
             ASSERT(fieldName.substr(0,2) % "l:");  // must be first modifier in the string
-            fieldName.Replace("l:", "");   // get rid of the 'w:'
+            replace(fieldName, "l:", "");   // get rid of the 'w:'
             lineWidth = toLong32u(fieldName);   // grab the width
             nextTokenClear(fieldName, ':');    // skip to the start of the fieldname
             lineJust = true;
@@ -756,7 +756,7 @@ extern SFString reformat1(const SFString& in, uint32_t len);
             uint32_t nParts = 0;
             while (!ret.empty()) {
                 parts[nParts++] = ret.substr(0, len);
-                ret.Replace(parts[nParts-1], "");
+                replace(ret, parts[nParts-1], "");
                 if (parts[nParts-1].length()==len) {
                     parts[nParts-1] += "...";
                     parts[nParts-1] += "\r\n\t\t\t    ";

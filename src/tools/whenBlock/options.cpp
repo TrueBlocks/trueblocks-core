@@ -181,14 +181,14 @@ SFTime grabDate(const SFString& strIn) {
 //#error
     SFString str = strIn;
     replaceAny(str, " -:",";");
-    str.Replace(";UTC", "");
+    replace(str, ";UTC", "");
     str = nextTokenClear(str,'.');
 
     // Expects four number year, two number month and day at a minimum. Fields may be separated by '-' or ';'
     //    YYYYMMDD or YYYY;MM;DD
     replaceAll(str, ";", "");
     if (contains(str, "T")) {
-        str.Replace("T","");
+        replace(str, "T","");
         if      (str.length() == 10) str += "0000";
         else if (str.length() == 12) str += "00";
         else if (str.length() != 14) { cerr << "Bad: " << str << "\n"; return earliestDate; }

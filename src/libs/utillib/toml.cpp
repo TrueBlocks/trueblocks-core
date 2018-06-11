@@ -360,7 +360,7 @@ extern SFString collapseArrays(const SFString& inStr);
 
         SFString ret;
         SFString str = inStr.Substitute("  "," ");
-        str.Replace("[[","`");
+        replace(str, "[[","`");
         SFString front = nextTokenClear(str, '`');
         str = "[[" + str;
         str = str.Substitute("[[","<array>");

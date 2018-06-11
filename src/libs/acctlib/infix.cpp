@@ -301,18 +301,18 @@ ostream& operator<<(ostream& os, const CInfix& item) {
                 next = nullptr;
                 delete this;
                 if (verbose) cerr << idnt << "removed infix replaced with [" << p->prefixS << "]";
-                idnt.Replace("\t", "");
+                replace(idnt, "\t", "");
                 return p;
             }
 
             if (!next) {
                 // we've cleaned up all the children
                 delete this;
-                idnt.Replace("\t", "");
+                replace(idnt, "\t", "");
                 return NULL;
             }
         }
-        idnt.Replace("\t", "");
+        replace(idnt, "\t", "");
         return this;
     }
 

@@ -370,10 +370,16 @@ namespace qblocks {
     }
 
     //---------------------------------------------------------------------------------------
-    void SFString::Replace(const SFString& what, const SFString& with) {
-        size_t i = find(what);
-        if (i != NOPOS)
-            *this = substr(0,i) + with + substr(i + what.length());
+    void replace(string_q& target, const string_q& what, const string_q& with) {
+        SFString targ = target.c_str();
+        size_t f = targ.find(what);
+        if (f != NOPOS) {
+            targ = (targ.substr(0, f) + SFString(with.c_str()) + targ.substr(f + what.length()));
+            target.reserve(targ.length()+1);
+            ASSERT(target.m_nValues == 0);
+            for (size_t i = 0 ; i < targ.length() ; i++)
+                target.m_Values[target.m_nValues++] = targ[i];
+        }
     }
 
     //---------------------------------------------------------------------------------------
@@ -392,7 +398,7 @@ namespace qblocks {
         size_t f = target.find(what);
         while (f != NOPOS) {
             SFString targ = target.c_str();
-            targ.Replace(what.c_str(), with.c_str());
+            replace(targ, what.c_str(), with.c_str());
             target.reserve(targ.length()+1);
             ASSERT(target.m_nValues == 0);
             for (size_t i = 0 ; i < targ.length() ; i++)
@@ -415,7 +421,7 @@ namespace qblocks {
         reverse(targ);
         reverse(what);
         reverse(with);
-        targ.Replace(what, with);
+        replace(targ, what, with);
         reverse(targ);
         target.reserve(targ.length());
         ASSERT(target.m_nValues == 0);
@@ -462,7 +468,7 @@ namespace qblocks {
         SFString f2 = "<" + field + ">";
         ret = ret.substr(ret.find(f2)+f2.length());
 
-        in.Replace(f2 + ret + f1, "");
+        replace(in, f2 + ret + f1, "");
 
         if (ret.empty())
             ret = defVal;
@@ -486,7 +492,7 @@ namespace qblocks {
         SFString f = "</" + field + ">";
         SFString ret = in.substr(0,in.find(f));
 
-        f.Replace("</", "<");
+        replace(f, "</", "<");
         ret = ret.substr(ret.find(f)+f.length());
 
         if (ret.empty())

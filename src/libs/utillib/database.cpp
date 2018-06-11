@@ -493,12 +493,12 @@ namespace qblocks {
             nTabs--;
             //--------------------------------------------------------------------------------------
             while (contains(existingCode, tabs + "// EXISTING_CODE")) {
-                existingCode.Replace(tabs + "// EXISTING_CODE", "<code>");
-                existingCode.Replace(tabs + "// EXISTING_CODE", "</code>");
+                replace(existingCode, tabs + "// EXISTING_CODE", "<code>");
+                replace(existingCode, tabs + "// EXISTING_CODE", "</code>");
             }
             while (contains(existingCode, "</code>")) {
                 SFString snipit = trim(snagFieldClear(existingCode, "code"), '\n');
-                codeOut.Replace(tabs + "// EXISTING_CODE\n" + tabs + "// EXISTING_CODE",
+                replace(codeOut, tabs + "// EXISTING_CODE\n" + tabs + "// EXISTING_CODE",
                                 tabs + "// EXISTING_CODE\n" + snipit + "\n" + tabs + "// EXISTING_CODE");
             }
             replaceAll(codeOut, "// EXISTING_CODE\n\n" + tabs + "// EXISTING_CODE", "// EXISTING_CODE\n" +
@@ -514,7 +514,7 @@ namespace qblocks {
             replaceAll(codeOut, "\t", "    ");
 
         if (contains(codeOut, "virtual") || contains(codeOut, "override"))
-            codeOut.Replace("~", "virtual ~");
+            replace(codeOut, "~", "virtual ~");
 
         // If we don't write it because it's identical, it won't force a rebuild
         if (orig != codeOut)
@@ -597,7 +597,7 @@ namespace qblocks {
         SFString fn = filename.Substitute("r:", "");;
         if (!fn.empty()) {
             if (startsWith(filename, "r:")) {
-                theList.Replace(fn+"|", "");
+                replace(theList, fn+"|", "");
 
             } else if (!contains(theList, fn+"|")) {
                 theList += (filename + "|");

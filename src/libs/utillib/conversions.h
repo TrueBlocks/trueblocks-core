@@ -263,7 +263,7 @@ namespace qblocks {
         // Shorten, but only if all leading zeros
         SFString leading('0', 64-40);
         if (ret.length()==64 && startsWith(ret, leading))
-            ret.Replace(leading,"");
+            replace(ret, leading,"");
 
         // Special case
         if (ret.empty())
