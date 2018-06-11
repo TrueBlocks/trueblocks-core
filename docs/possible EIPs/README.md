@@ -25,6 +25,8 @@ This is a list of very rudimentary ideas for possible EIPs intended to make the 
 
 6. We could standarize certain test cases by purposefully do things in a smart contract that any legit blockcahin scraper would need to handle properly. For example, suicides, a smart contract that calls into another smart contract and either does or does not handle a throw by throwing itself or not. A 1000 deep call stack that ends with out of gas. We can custom build transactions that describe particular behaviour (for example returning structures, returing error messages, input of arbtrarily complex ABI interfaces) and properly articulate that data. Summary (of poorly worded section): build smart contract test cases that allow parsers/scrapers/articulators test themselves.
 
+7. You should be able to specify exactly which addresses you want to keep historical balances for. I only want the historical state for these addresses: 0x1212, 0x1221213, 0xababbaa112
+
 ### Other Ideas About Audting
 
 There should be a repository of test cases where a list of transactions for particular accounts are records. The format of these lists should be as small as possible (i.e. blockNumber.transactionID as opposed to transaction hash). These lists of transactions must include all incoming and outgoing internal transactions as well as any use of an address as data in a smart contract. They may contain false positives, but should avoid false negatives. Note: it is not impossible, but very time consuming, to provide a list of all uses of an address as data. For example, if an address is used as data in a packed byte array (as oppossed to with leading zeros), it's very hard to find.
