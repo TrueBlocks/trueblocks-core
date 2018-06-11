@@ -213,7 +213,7 @@ string_q CPriceQuote::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'c':
-            if ( fieldName % "close" ) return fmtFloat(close).c_str();
+            if ( fieldName % "close" ) return double2Str(close);
             break;
         case 't':
             if ( fieldName % "timestamp" ) return fromTimestamp(timestamp);

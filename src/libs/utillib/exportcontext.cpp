@@ -96,14 +96,14 @@ namespace qblocks {
 
     //-------------------------------------------------------------
     CExportContext& CExportContext::operator<<(float f) {
-        string_q val = formatFloat(f);
+        string_q val = double2Str(f);
         Output(val);
         return *this;
     }
 
     //-------------------------------------------------------------
     CExportContext& CExportContext::operator<<(double f) {
-        string_q val = formatFloat(f);
+        string_q val = double2Str(f);
         Output(val);
         return *this;
     }

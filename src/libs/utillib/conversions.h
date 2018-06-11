@@ -273,7 +273,7 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------
-    inline string_q formatFloat(double f, uint32_t nDecimals=10) {
+    inline string_q double2Str(double f, uint32_t nDecimals=10) {
         char s[100], r[100];
         memset(s,'\0',100);
         memset(r,'\0',100);
@@ -283,7 +283,5 @@ namespace qblocks {
         sprintf(r, "%d%s", (int)f, s+1);
         return string_q(r);
     }
-#define fmtFloat(f) (const char*)formatFloat(f)
-#define fmtFloatp(f,p) (const char*)formatFloat(f, p)
 
 }  // namespace qblocks

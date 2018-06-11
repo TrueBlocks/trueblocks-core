@@ -520,7 +520,7 @@ string_q getCaseCode(const string_q& fieldCase, const string_q& ex) {
                         caseCode += " return asStringBN([{PTR}]" + field + ");";
 
                     } else if (type == "double") {
-                        caseCode += " return fmtFloat([{PTR}]" + field + ");";
+                        caseCode += " return double2Str([{PTR}]" + field + ");";
 
                     } else if (contains(type, "CStringArray") || contains(type, "SFAddressArray")) {
                         string_q str = STR_CASE_CODE_STRINGARRAY;
