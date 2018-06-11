@@ -285,7 +285,6 @@ namespace qblocks {
 
         const SFString& operator=     (const SFString& str);
         const SFString& operator+=    (const SFString& str);
-//        const SFString& operator+=    (char ch);
         const SFString& operator+=    (const char *str);
 
         friend SFString operator+(const SFString& str1, const SFString& str2);
@@ -319,11 +318,6 @@ namespace qblocks {
     inline const SFString& SFString::operator+=(const char *str) {
         return operator+=(SFString(str));
     }
-
-//    //--------------------------------------------------------------------
-//    inline const SFString& SFString::operator+=(char ch) {
-//        return operator+=(SFString(ch));
-//    }
 
     //--------------------------------------------------------------------
     inline SFString operator+(const SFString& str1, const char *str2) {
