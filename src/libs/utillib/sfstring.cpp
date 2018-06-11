@@ -182,11 +182,22 @@ namespace qblocks {
         SFString comparing = str.c_str();
         return compared.substr(pos,len).compare(comparing.substr(subpos,sublen));
     }
+
     //---------------------------------------------------------------------------------------
     size_t string_q::find(const char *str, size_t pos) const {
-        char *f = strstr(m_Values, str);
+        const char *f = strstr(m_Values, str);
         if (f)
             return size_t(f-m_Values);
+        return NOPOS;
+    }
+
+    //---------------------------------------------------------------------------------------
+    size_t string_q::findI(const string_q& str, size_t pos) const {
+        SFString hayStack = toLower(SFString(m_Values));
+        SFString needle   = toLower(SFString(str.m_Values));
+        const char *f = strstr(hayStack.c_str(), needle.c_str());
+        if (f)
+            return size_t(f-hayStack.c_str());
         return NOPOS;
     }
 
@@ -334,6 +345,11 @@ namespace qblocks {
     //---------------------------------------------------------------------------------------
     bool contains(const string_q& haystack, const string_q& needle) {
         return (haystack.find(needle) != NOPOS);
+    }
+
+    //---------------------------------------------------------------------------------------
+    bool containsI(const string_q& haystack, const string_q& needle) {
+        return (haystack.findI(needle) != NOPOS);
     }
 
     //---------------------------------------------------------------------------------------

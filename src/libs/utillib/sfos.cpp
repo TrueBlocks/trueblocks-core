@@ -140,7 +140,7 @@ namespace qblocks {
     //---------------------------------------------------------------------------------------
     static const char* CHR_VALID_NAME  = "\t\n\r()<>[]{}`\\|; " "'!$^*~@" "?&#+%" ",:/=\"";
     //---------------------------------------------------------------------------------------
-    static SFString makeValidName(const SFString& inOut) {
+    SFString makeValidName(const SFString& inOut) {
         SFString ret = inOut;
         replaceAny(ret, CHR_VALID_NAME, "_");
         if (!ret.empty() && isdigit(ret[0]))
