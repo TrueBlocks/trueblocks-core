@@ -762,7 +762,7 @@ const char* STR_SUBCLASS =
 "\ts = toUpper(SFString(\"[FNAME]\")) + \"::\";\n"
 "\tif (contains(fieldName, s)) {\n"
 "\t\tSFString f = fieldName;\n"
-"\t\treplaceAll(f, s,\"\");\n"
+"\t\treplaceAll(f, s, \"\");\n"
 "\t\tf = [FNAME].getValueByName(f);\n"
 "\t\treturn f;\n"
 "\t}\n\n";

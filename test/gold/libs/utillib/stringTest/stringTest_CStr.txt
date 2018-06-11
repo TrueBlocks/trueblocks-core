@@ -18,12 +18,12 @@ stringTest 2
 	000.012 base case       ==> This isthe_thing	that matters	and is_upperCase lower case
 	000.013 toLower         ==> this isthe_thing	that matters	and is_uppercase lower case
 	000.014 toUpper         ==> THIS ISTHE_THING	THAT MATTERS	AND IS_UPPERCASE LOWER CASE
-	000.015 toProper        ==> this Isthe_Thing	That Matters	And Is_Uppercase Lower Case
+	000.015 toProper        ==> This Isthe_Thing	That Matters	And Is_Uppercase Lower Case
 
 	000.016 base case       ==> This isthe_thing	that matters	and is_upperCase lower case
 	000.017 toLower         ==> this isthe_thing	that matters	and is_uppercase lower case
 	000.018 toUpper         ==> THIS ISTHE_THING	THAT MATTERS	AND IS_UPPERCASE LOWER CASE
-	000.019 toProper        ==> this Isthe_Thing	That Matters	And Is_Uppercase Lower Case
+	000.019 toProper        ==> This Isthe_Thing	That Matters	And Is_Uppercase Lower Case
 
 	000.020 base case       ==> | tab[	]AxBBBxBxA tab:	|
 	000.021 trim            ==> |tab[	]AxBBBxBxA tab:	|
