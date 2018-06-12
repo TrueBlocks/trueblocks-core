@@ -31,7 +31,7 @@ typedef SFUniqueList<CBalHistory*>       CBalHistoryListU;
 //--------------------------------------------------------------------------
 class CBalHistory : public CBaseNode {
 public:
-    SFString recordID;
+    string_q recordID;
     timestamp_t timestamp;
     SFIntBN balance;
 
@@ -44,7 +44,7 @@ public:
     DECLARE_NODE(CBalHistory);
 
     // EXISTING_CODE
-    CBalHistory(const SFString& _recID, SFIntBN bal) : recordID(_recID), balance(bal) { }
+    CBalHistory(const string_q& _recID, SFIntBN bal) : recordID(_recID), balance(bal) { }
     // EXISTING_CODE
     friend ostream& operator<<(ostream& os, const CBalHistory& item);
 
@@ -133,7 +133,7 @@ extern SFArchive& operator>>(SFArchive& archive, CBalHistory& bal);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-inline SFString toRecordID(const SFString& addr, blknum_t bn, uint64_t tn) {
+inline string_q toRecordID(const string_q& addr, blknum_t bn, uint64_t tn) {
     return addr + "_" + padNum9(bn) + "_" + padNum5(tn);
 }
 // EXISTING_CODE

@@ -23,11 +23,11 @@ namespace qblocks {
 IMPLEMENT_NODE(CBranch, CTreeNode);
 
 //---------------------------------------------------------------------------
-static SFString nextBranchChunk(const SFString& fieldIn, const void *dataPtr);
-static SFString nextBranchChunk_custom(const SFString& fieldIn, const void *dataPtr);
+static string_q nextBranchChunk(const string_q& fieldIn, const void *dataPtr);
+static string_q nextBranchChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CBranch::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
+void CBranch::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -36,7 +36,7 @@ void CBranch::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) 
         return;
     }
 
-    SFString fmt = fmtIn;
+    string_q fmt = fmtIn;
     if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
@@ -45,7 +45,7 @@ void CBranch::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) 
 }
 
 //---------------------------------------------------------------------------
-SFString nextBranchChunk(const SFString& fieldIn, const void *dataPtr) {
+string_q nextBranchChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
         return ((const CBranch *)dataPtr)->getValueByName(fieldIn);
 
@@ -56,7 +56,7 @@ SFString nextBranchChunk(const SFString& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CBranch::setValueByName(const SFString& fieldName, const SFString& fieldValue) {
+bool CBranch::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
     // EXISTING_CODE
     // EXISTING_CODE
 
@@ -98,7 +98,7 @@ bool CBranch::Serialize(SFArchive& archive) {
         bool has_val = false;
         archive >> has_val;
         if (has_val) {
-            SFString className;
+            string_q className;
             archive >> className;
             nodes[i] = createTreeNode(className);
             if (!nodes[i])
@@ -122,7 +122,7 @@ bool CBranch::SerializeC(SFArchive& archive) const {
     for (int i=0;i<16;i++) {
         archive << bool(nodes[i] != NULL);
         if (nodes[i]) {
-            SFString className = nodes[i]->getRuntimeClass()->getClassNamePtr();
+            string_q className = nodes[i]->getRuntimeClass()->getClassNamePtr();
             archive << className;
             nodes[i]->SerializeC(archive);
         }
@@ -157,14 +157,14 @@ void CBranch::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextBranchChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+string_q nextBranchChunk_custom(const string_q& fieldIn, const void *dataPtr) {
     const CBranch *bra = (const CBranch *)dataPtr;
     if (bra) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             case 'n':
                 if ( fieldIn % "nodes" ) {
-                    SFString ret;
+                    string_q ret;
                     for (int i=0;i<16;i++) {
                         if (bra->nodes[i]) {
                             ret += bra->nodes[i]->Format();
@@ -189,7 +189,7 @@ SFString nextBranchChunk_custom(const SFString& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------
-bool CBranch::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
+bool CBranch::handleCustomFormat(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
@@ -206,10 +206,10 @@ bool CBranch::readBackLevel(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------
-SFString CBranch::getValueByName(const SFString& fieldName) const {
+string_q CBranch::getValueByName(const string_q& fieldName) const {
 
     // Give customized code a chance to override first
-    SFString ret = nextBranchChunk_custom(fieldName, this);
+    string_q ret = nextBranchChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
@@ -239,12 +239,12 @@ ostream& operator<<(ostream& os, const CBranch& item) {
 //---------------------------------------------------------------------------
 // EXISTING_CODE
     //-----------------------------------------------------------------------------
-    CBranch::CBranch(const SFString& _value) : branchValue(_value) {
+    CBranch::CBranch(const string_q& _value) : branchValue(_value) {
         memset(nodes, 0, sizeof(CTreeNode*) * 16);
     }
 
     //-----------------------------------------------------------------------------
-    CBranch::CBranch(char _i1, CTreeNode* _n1, const SFString& _value) : branchValue(_value) {
+    CBranch::CBranch(char _i1, CTreeNode* _n1, const string_q& _value) : branchValue(_value) {
         memset(nodes, 0, sizeof(CTreeNode*) * 16);
         nodes[nodeIndex(_i1)] = _n1;
     }
@@ -257,7 +257,7 @@ ostream& operator<<(ostream& os, const CBranch& item) {
     }
 
     //-----------------------------------------------------------------------------
-    SFString CBranch::at(const SFString& _key) const {
+    string_q CBranch::at(const string_q& _key) const {
         if (_key.empty())
             return branchValue;
 
@@ -269,7 +269,7 @@ ostream& operator<<(ostream& os, const CBranch& item) {
     }
 
     //-----------------------------------------------------------------------------
-    CTreeNode* CBranch::insert(const SFString& _key, const SFString& _value) {
+    CTreeNode* CBranch::insert(const string_q& _key, const string_q& _value) {
         if (verbose == 2) { cerr << "\tbranch inserting " << _key << " at " << _value << "\n"; }
         if (_key.empty()) {
             // We've reached the end of the key, so store the value here
@@ -299,11 +299,11 @@ ostream& operator<<(ostream& os, const CBranch& item) {
     }
 
     //-----------------------------------------------------------------------------
-    CTreeNode* CBranch::remove(const SFString& _key) {
+    CTreeNode* CBranch::remove(const string_q& _key) {
         if (verbose) {
             cerr << endl<< endl<< endl
-            << idnt << SFString('-', 80) << endl
-            << idnt << SFString('-', 80) << endl
+            << idnt << string_q('-', 80) << endl
+            << idnt << string_q('-', 80) << endl
             << idnt << "remove branch at [" << _key << "]: ";
             idnt+="\t";
         }
@@ -317,24 +317,24 @@ ostream& operator<<(ostream& os, const CBranch& item) {
             }
             if (verbose)
                 cerr << "and empty value" << endl;
-            idnt.Replace("\t", "");
+            replace(idnt, "\t", "");
             return this;
         }
 
         int idx = nodeIndex(_key[0]);
         if (nodes[idx]) {
-            const char *k = (const char*)_key;
+            const char *k = _key.c_str();
             CTreeNode *ret = nodes[idx]->remove(&k[1]);
             nodes[idx] = ret;
             CTreeNode *n = rejig();
             if (verbose)
-                idnt.Replace("\t", "");
+                replace(idnt, "\t", "");
             return n;
         }
 
         if (verbose) {
             cerr << endl;
-            idnt.Replace("\t", "");
+            replace(idnt, "\t", "");
         }
         return this;
     }
@@ -361,7 +361,7 @@ ostream& operator<<(ostream& os, const CBranch& item) {
                 // switch to infix
                 nodes[nn] = NULL;
                 delete this;
-                SFString x = idex(n);
+                string_q x = idex(n);
                 return new CInfix(x, b);
 
             } else {

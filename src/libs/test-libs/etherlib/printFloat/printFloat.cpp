@@ -25,7 +25,7 @@ int main(int argc, const char *argv[]) {
 
     //while (!options.commandList.empty())
     {
-        SFString command = nextTokenClear(options.commandList, '\n');
+        string_q command = nextTokenClear(options.commandList, '\n');
         if (!options.parseArguments(command))
             return 0;
 
@@ -57,7 +57,7 @@ int main(int argc, char *argv[]) {
     uint64_t x = NOPOS;
     char ss[100];
     sprintf(ss,"%016llx\n", x);
-    SFString s = ss;
+    string_q s = ss;
     cout << "0x" << toLower(s) << "\n";
     return 1;
 }

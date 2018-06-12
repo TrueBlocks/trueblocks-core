@@ -37,7 +37,7 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------
-    SFString CMiniBlock::Format(void) const {
+    string_q CMiniBlock::Format(void) const {
         CStringExportContext ctx;
         ctx << "blockNumber: " << blockNumber << " ";
         ctx << "timestamp: "   << timestamp   << " ";
@@ -81,7 +81,7 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------
-    SFString CMiniTrans::Format(void) const {
+    string_q CMiniTrans::Format(void) const {
         CStringExportContext ctx;
         ctx << "index: "    << index      << " ";
         ctx << "isError: "  << isError    << " ";
@@ -135,7 +135,7 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------
-    inline SFString TIMER_IN(double& st) {
+    inline string_q TIMER_IN(double& st) {
         CStringExportContext ctx;
         ctx << (qbNow()-st) << ": ";
         st = qbNow();
@@ -143,7 +143,7 @@ namespace qblocks {
     }
 
     //-------------------------------------------------------------------------
-    inline SFString TIMER_TICK(double st) {
+    inline string_q TIMER_TICK(double st) {
         CStringExportContext ctx;
         ctx << "in " << cGreen << (qbNow()-st) << cOff << " seconds.";
         return ctx.str;

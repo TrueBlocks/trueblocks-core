@@ -14,14 +14,19 @@
 
 namespace qblocks {
 
+extern int64_t toLong(const string_q& str);
+
     using timestamp_t = int64_t;
-#define isHex(cc) (isdigit(cc) || (cc) == 'x' || ((cc) >= 'a' && (cc) <= 'f') || ((cc) >= 'A' && (cc) <= 'F'))
-    inline bool isHexStr(const SFString& str) {
-        if (!str.startsWith("0x"))
-            return false;
-        for (size_t i = 2 ; i < str.length() ; i++)
-            if (!isHex(str[i]))
-                return false;
-        return true;
-    }
+
+    //-------------------------------------------------------------------------
+    extern uint64_t toLongU   (const string_q& str);
+    extern uint64_t hex2LongU (const string_q& str);
+    extern double   str2Double(const string_q& str);
+    extern bool     str2Bool  (const string_q& str);
+
+    extern string_q string2Hex(const string_q& str);
+
+#define toUnsigned(a)  toLongU((a))
+#define toGas(a)       toLongU((a))
+
 }  // namespace qblocks

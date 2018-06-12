@@ -11,18 +11,18 @@
 /*
  * A BigUnsignedInABase object represents a nonnegative integer of size limited
  * only by available memory, represented in a user-specified base that can fit
- * in an `unsigned short' (most can, and this saves memory).
+ * in an 'unsigned short' (most can, and this saves memory).
  *
  * BigUnsignedInABase is intended as an intermediary class with little
  * functionality of its own.  BigUnsignedInABase objects can be constructed
  * from, and converted to, SFUintBNs (requiring multiplication, mods, etc.)
- * and `string's (by switching igit values for appropriate characters).
+ * and 'string's (by switching igit values for appropriate characters).
  *
  * BigUnsignedInABase is similar to SFUintBN.  Note the following:
  *
  * (1) They represent the number in exactly the same way, except that
- * BigUnsignedInABase uses ``igits'' (or igit) where SFUintBN uses
- * ``blocks'' (or Blk).
+ * BigUnsignedInABase uses ''igits'' (or igit) where SFUintBN uses
+ * ''blocks'' (or Blk).
  *
  * (2) Both use the management features of SFBigNumStore.  (In fact, my desire
  * to add a BigUnsignedInABase class without duplicating a lot of code led me to
@@ -43,8 +43,7 @@ namespace qblocks {
         BigUnsignedInABase(int, unsigned int c) : SFBigNumStore<unsigned short>(0, c) {}
 
         // Decreases len to eliminate any leading zero igits.
-        void trimLeft()
-        {
+        void trimLeadingZeros(void) {
             while (len > 0 && blk[len - 1] == 0)
                 len--;
         }
@@ -95,7 +94,7 @@ namespace qblocks {
             if (blk[i] >= base)
                 throw "BigUnsignedInABase::BigUnsignedInABase(const unsigned short *, unsigned int, unsigned short): A d igit is too large for the specified base";
 
-        trimLeft();
+        trimLeadingZeros();
     }
 
     //------------------------------------------------------------------
@@ -122,7 +121,7 @@ namespace qblocks {
         int minBitsPerDigit = (int)bitLen(base) - 1;
         int maxDigitLenOfX  = (maxBitLenOfX + minBitsPerDigit - 1) / minBitsPerDigit;
 
-        len = (unsigned int)maxDigitLenOfX; // Another change to comply with `staying in bounds'.
+        len = (unsigned int)maxDigitLenOfX; // Another change to comply with 'staying in bounds'.
         allocate(len); // Get the space
 
         SFUintBN x2(x), buBase(base);
@@ -130,7 +129,7 @@ namespace qblocks {
 
         while (x2.len!=0)
         {
-            // Get last digit.  This is like `lastDigit = x2 % buBase, x2 /= buBase'.
+            // Get last digit.  This is like 'lastDigit = x2 % buBase, x2 /= buBase'.
             SFUintBN lastDigit(x2);
             lastDigit.divide(buBase, x2);
             // Save the digit.
@@ -151,8 +150,8 @@ namespace qblocks {
 
         this->base = base;
 
-        // `s.length()' is a `size_t', while `len' is a unsigned int,
-        // also known as an `unsigned int'.  Some compilers warn without this cast.
+        // 's.length()' is a 'size_t', while 'len' is a unsigned int,
+        // also known as an 'unsigned int'.  Some compilers warn without this cast.
         len = (unsigned int)(s.length());
         allocate(len);
 
@@ -177,7 +176,7 @@ namespace qblocks {
             if (blk[digitNum] >= base)
                 throw "BigUnsignedInABase::BigUnsignedInABase(const unsigned short *, unsigned int, unsigned short): A digit is too large for the specified base";
         }
-        trimLeft();
+        trimLeadingZeros();
     }
 
     //------------------------------------------------------------------

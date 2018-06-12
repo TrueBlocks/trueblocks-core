@@ -11,164 +11,90 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-#include "conversions_base.h"
 #include "sfos.h"
 #include "biglib.h"
+#include "conversions_base.h"
 
 namespace qblocks {
 
-    //----------------------------------------------------------------------------
-    inline bool isNumeral(const SFString& test) {
-        for (size_t i = 0 ; i < test.length() ; i++)
-            if (!isdigit(test[i]))
-                return false;
-        return true;
-    }
-
-    //----------------------------------------------------------------------------
-    inline uint64_t hex2Long(const SFString& inHex) {
-        SFString hex = toLower(inHex.startsWith("0x")?inHex.substr(2):inHex);
-        hex.Reverse();
-        char *s = (char *)(const char*)hex;
-
-        uint64_t ret = 0, mult=1;
-        while (*s) {
-            int val = *s - '0';
-            if (*s >= 'a' && *s <= 'f')
-            val = *s - 'a' + 10;
-            ret += (mult * (uint64_t)val);
-            s++;mult*=16;
-        }
-
-        return ret;
-    }
-
-    //----------------------------------------------------------------------------
-    inline unsigned char hex2Ascii(char *str) {
-        unsigned char c;
-        c =  (unsigned char)((str[0] >= 'A' ? ((str[0]&0xDF)-'A')+10 : (str[0]-'0')));
-        c *= 16;
-        c = (unsigned char)(c + (str[1] >= 'A' ? ((str[1]&0xDF)-'A')+10 : (str[1]-'0')));
-        return c;
-    }
-
-    //----------------------------------------------------------------------------
-    inline SFString hex2String(const SFString& inHex) {
-        SFString ret, in = inHex.startsWith("0x") ? inHex.substr(2) : inHex;
-        while (!in.empty()) {
-            SFString nibble = in.substr(0,2);
-            in = in.substr(2);
-            ret += (char)hex2Ascii((char*)(const char*)nibble);
-        }
-        return ret;
-    }
-
     //--------------------------------------------------------------------
-    inline SFString asHex(char val) {
-        char tmp[20];
-        sprintf(tmp, "%02x", (unsigned int)(char)val);
-        SFString ret = tmp;
-        return ret.substr(ret.length()-2,2);
-    }
-    //----------------------------------------------------------------------------
-    inline SFString string2Hex(const SFString& inAscii) {
-        SFString ret;
-        for (size_t i = 0 ; i < inAscii.length() ; i++)
-            ret += asHex(inAscii[i]);
-        return ret;
-    }
-
-    //--------------------------------------------------------------------
-    inline SFString asString(int64_t i) {
+    inline string_q asString(int64_t i) {
         ostringstream os;
         os << i;
         return os.str().c_str();
     }
 
     //--------------------------------------------------------------------
-    inline SFString asStringU(uint64_t i) {
+    inline string_q asStringU(uint64_t i) {
         ostringstream os;
         os << i;
         return os.str().c_str();
     }
 
-    //-------------------------------------------------------------------------
-    inline int64_t toLong(const char *str)   { return strtol(str, NULL, 10); }
-    inline uint64_t toLongU(const char *str) { return strtoul(str, NULL, 10); }
-
-    //-------------------------------------------------------------------------
-    inline uint32_t toLong32u(const char *str) { return (uint32_t)strtoul((const char*)(str), NULL, 10); }
-    inline uint32_t toLong32u(char *str) { return (uint32_t)strtoul((const char*)(str), NULL, 10); }
-
-    //-------------------------------------------------------------------------
-    inline int32_t toLong32(const char *str) { return (int32_t)strtol((const char*)(str), NULL, 10); }
-    inline int32_t toLong32(char *str) { return (int32_t)strtol((const char*)(str), NULL, 10); }
-
-    //-------------------------------------------------------------------------
-    inline double toDouble(const char *str) { return (double)strtold((const char*)(str), NULL); }
-    inline double toDouble(char *str) { return (double)strtold((const char*)(str), NULL); }
+    //--------------------------------------------------------------------
+    inline string_q padNum2(uint64_t n) { return padLeft(asStringU((n)), 2, '0'); }
+    inline string_q padNum3(uint64_t n) { return padLeft(asStringU((n)), 3, '0'); }
+    inline string_q padNum4(uint64_t n) { return padLeft(asStringU((n)), 4, '0'); }
+    inline string_q padNum5(uint64_t n) { return padLeft(asStringU((n)), 5, '0'); }
+    inline string_q padNum6(uint64_t n) { return padLeft(asStringU((n)), 6, '0'); }
+    inline string_q padNum7(uint64_t n) { return padLeft(asStringU((n)), 7, '0'); }
+    inline string_q padNum8(uint64_t n) { return padLeft(asStringU((n)), 8, '0'); }
+    inline string_q padNum9(uint64_t n) { return padLeft(asStringU((n)), 9, '0'); }
 
     //--------------------------------------------------------------------
-    inline bool toBool_in(const SFString& in) { return in%"true" || toLong(in)!=0; }
-#define toBool toBool_in
+    inline string_q padNum3T(uint64_t n) { return padLeft(asStringU((n)), 3); }
+    inline string_q padNum4T(uint64_t n) { return padLeft(asStringU((n)), 4); }
+    inline string_q padNum5T(uint64_t n) { return padLeft(asStringU((n)), 5); }
+    inline string_q padNum6T(uint64_t n) { return padLeft(asStringU((n)), 6); }
+    inline string_q padNum7T(uint64_t n) { return padLeft(asStringU((n)), 7); }
+    inline string_q padNum8T(uint64_t n) { return padLeft(asStringU((n)), 8); }
+    inline string_q padNum9T(uint64_t n) { return padLeft(asStringU((n)), 9); }
 
     //--------------------------------------------------------------------
-    inline SFString padNum2(uint64_t n) { return padLeft(asStringU((n)), 2, '0'); }
-    inline SFString padNum3(uint64_t n) { return padLeft(asStringU((n)), 3, '0'); }
-    inline SFString padNum4(uint64_t n) { return padLeft(asStringU((n)), 4, '0'); }
-    inline SFString padNum5(uint64_t n) { return padLeft(asStringU((n)), 5, '0'); }
-    inline SFString padNum6(uint64_t n) { return padLeft(asStringU((n)), 6, '0'); }
-    inline SFString padNum7(uint64_t n) { return padLeft(asStringU((n)), 7, '0'); }
-    inline SFString padNum8(uint64_t n) { return padLeft(asStringU((n)), 8, '0'); }
-    inline SFString padNum9(uint64_t n) { return padLeft(asStringU((n)), 9, '0'); }
+    inline string_q padNum3T(uint32_t n) { return padLeft(asStringU((n)), 3); }
+    inline string_q padNum4T(uint32_t n) { return padLeft(asStringU((n)), 4); }
 
     //--------------------------------------------------------------------
-    inline SFString padNum3T(uint64_t n) { return padLeft(asStringU((n)), 3); }
-    inline SFString padNum3T(uint32_t n) { return padLeft(asStringU((n)), 3); }
-    inline SFString padNum4T(uint64_t n) { return padLeft(asStringU((n)), 4); }
-    inline SFString padNum4T(uint32_t n) { return padLeft(asStringU((n)), 4); }
-    inline SFString padNum5T(uint64_t n) { return padLeft(asStringU((n)), 5); }
-    inline SFString padNum6T(uint64_t n) { return padLeft(asStringU((n)), 6); }
-    inline SFString padNum7T(uint64_t n) { return padLeft(asStringU((n)), 7); }
-    inline SFString padNum8T(uint64_t n) { return padLeft(asStringU((n)), 8); }
-    inline SFString padNum9T(uint64_t n) { return padLeft(asStringU((n)), 9); }
+    inline string_q padNum2 (int64_t n) { return padLeft(asString((n)), 2, '0'); }
+    inline string_q padNum3i(int64_t n) { return padLeft(asString((n)), 3, '0'); }
+    inline string_q padNum4 (int64_t n) { return padLeft(asString((n)), 4, '0'); }
+    inline string_q padNum5 (int64_t n) { return padLeft(asString((n)), 5, '0'); }
+    inline string_q padNum6 (int64_t n) { return padLeft(asString((n)), 6, '0'); }
+    inline string_q padNum7 (int64_t n) { return padLeft(asString((n)), 7, '0'); }
+    inline string_q padNum8 (int64_t n) { return padLeft(asString((n)), 8, '0'); }
+    inline string_q padNum9 (int64_t n) { return padLeft(asString((n)), 9, '0'); }
 
     //--------------------------------------------------------------------
-    inline SFString padNum2 (int64_t n) { return padLeft(asString((n)), 2, '0'); }
-    inline SFString padNum3i(int64_t n) { return padLeft(asString((n)), 3, '0'); }
-    inline SFString padNum4 (int64_t n) { return padLeft(asString((n)), 4, '0'); }
-    inline SFString padNum5 (int64_t n) { return padLeft(asString((n)), 5, '0'); }
-    inline SFString padNum6 (int64_t n) { return padLeft(asString((n)), 6, '0'); }
-    inline SFString padNum7 (int64_t n) { return padLeft(asString((n)), 7, '0'); }
-    inline SFString padNum8 (int64_t n) { return padLeft(asString((n)), 8, '0'); }
-    inline SFString padNum9 (int64_t n) { return padLeft(asString((n)), 9, '0'); }
-
-    //--------------------------------------------------------------------
-    inline SFString padNum3T(int64_t n) { return padLeft(asString((n)), 3); }
-    inline SFString padNum5T(int64_t n) { return padLeft(asString((n)), 5); }
-    inline SFString padNum7T(int64_t n) { return padLeft(asString((n)), 7); }
-    inline SFString padNum8T(int64_t n) { return padLeft(asString((n)), 8); }
+    inline string_q padNum3T(int64_t n) { return padLeft(asString((n)), 3); }
+    inline string_q padNum5T(int64_t n) { return padLeft(asString((n)), 5); }
+    inline string_q padNum7T(int64_t n) { return padLeft(asString((n)), 7); }
+    inline string_q padNum8T(int64_t n) { return padLeft(asString((n)), 8); }
 
 #define toEther wei2Ether
-    inline SFString wei2Ether(const SFString& _value) {
+    inline string_q wei2Ether(const string_q& _value) {
         // Make sure the wei number is at least 18 characters long. Once it is,
         // reverse it, put a decimal at the 18th position, reverse it back,
-        // strip leading '0's except the tens digit.
-        SFString ret = _value;
+        // trim leading '0's except the tens digit.
+        string_q ret = _value;
         if (ret.length() < 18)
             ret = padLeft(_value, 18).Substitute(" ", "0");
-        ret.Reverse();
+        reverse(ret);
         ret = ret.substr(0,18) + "." + ret.substr(18);
-        ret.Reverse();
-        ret = StripLeading(ret, '0');
-        if (ret.startsWith('.'))
+        reverse(ret);
+        ret = trimLeading(ret, '0');
+        if (startsWith(ret, '.'))
             ret = "0" + ret;
-        if (ret.Contains("0-")) {
+        if (contains(ret, "0-")) {
             ret = "-" + ret.Substitute("0-","0");
         }
         ret = ret.Substitute("-.","-0.");
         return ret;
     }
+
+    //-------------------------------------------------------------------------
+    inline int64_t  toLong   (const string_q& str) { return (int64_t) strtol (str.c_str(), NULL, 10); }
+    inline uint32_t toLong32u(const string_q& str) { return (uint32_t)strtoul(str.c_str(), NULL, 10); }
+
     extern string to_string(const SFUintBN& bu);
     extern string to_hex(const SFUintBN& bu);
     extern string to_string(const SFIntBN&  bi);
@@ -179,16 +105,16 @@ namespace qblocks {
     #define toBigUint str2BigUint
 
     //--------------------------------------------------------------------------------
-    inline SFUintBN str2BigUint(const SFString& s) {
-        string ss = (const char*)s; return str2BigUint(ss);
+    inline SFUintBN str2BigUint(const string_q& s) {
+        string ss = s.c_str(); return str2BigUint(ss);
     }
 
     extern SFIntBN exp2BigInt(const string& s);
     //--------------------------------------------------------------------------------
     inline SFUintBN exp2BigUint(const string &s) {
-        SFString exponent = s.c_str();
-        SFString decimals = nextTokenClear(exponent,'e');
-        SFString num = nextTokenClear(decimals,'.');
+        string_q exponent = s.c_str();
+        string_q decimals = nextTokenClear(exponent,'e');
+        string_q num = nextTokenClear(decimals,'.');
         long nD = (long)decimals.length();
         uint64_t e = toLongU(exponent);
         SFUintBN ee = 1;
@@ -212,71 +138,67 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    inline SFUintBN canonicalWei(const SFString& _value) {
-        if (_value.Contains( "0x" ))
-            return hex2BigUint((const char*) _value.substr(2));
-        if (_value.Contains( "e"  ))
-            return exp2BigUint((const char*) _value);
+    inline SFUintBN canonicalWei(const string_q& _value) {
+        if (contains(_value, "0x"))
+            return hex2BigUint(_value.substr(2).c_str());
+        if (contains(_value, "e"))
+            return exp2BigUint(_value.c_str());
         return str2BigUint(_value);
     }
 
     //--------------------------------------------------------------------------------
-    inline SFString asStringBN(const SFUintBN& bu) {
+    inline string_q asStringBN(const SFUintBN& bu) {
         return to_string(bu).c_str();
     }
 
     //--------------------------------------------------------------------------------
-    inline SFString asStringBN(const SFIntBN& bn) {
+    inline string_q asStringBN(const SFIntBN& bn) {
         return to_string(bn).c_str();
     }
-#define SFAddress      SFString
-    typedef SFArrayBase<SFAddress> SFAddressArray;
-#define SFHash         SFString
+
+#define SFAddress      string_q
+#define SFHash         string_q
 #define SFBloom        SFUintBN
-    typedef SFArrayBase<SFBloom> SFBloomArray;
 #define SFWei          SFUintBN
 #define SFGas          uint64_t
 #define blknum_t       uint64_t
 #define txnum_t        uint64_t
+    typedef SFArrayBase<SFAddress> SFAddressArray;
+    typedef SFArrayBase<SFBloom> SFBloomArray;
 
-#define toUnsigned(a)  (uint64_t)((a).startsWith("0x")?hex2Long((a)):toLongU((a)))
-#define toSigned(a)    (int64_t)((a).startsWith("0x")?hex2Long((a)):toLong((a)))
 #define toHash(a)      toLower(a)
 #define toTopic(a)     canonicalWei(a)
 #define toBloom(a)     canonicalWei(a)
 #define toWei(a)       canonicalWei(a)
-#define toGas(a)       toUnsigned(a)
 #define addr2BN        toWei
 #define hex2BN         toWei
 
 #define fromAddress(a)  ((a).empty() ? "0x0" : (a))
 #define fromHash(a)     ((a).empty() ? "0x0" : (a))
 #define fromWei(a)      to_string((a)).c_str()
-#define fromTopic(a)    ("0x"+padLeft(toLower(SFString(to_hex((a)).c_str())),64,'0'))
+#define fromTopic(a)    ("0x"+padLeft(toLower(string_q(to_hex((a)).c_str())),64,'0'))
 #define fromGas(a)      asStringU(a)
 
     //-------------------------------------------------------------------------
-    inline SFString toHex(const SFString& str) {
+    inline string_q toHex(const string_q& str) {
         if (str == "null")
             return str;
         SFUintBN bn = canonicalWei(str);
-        return toLower("0x" + SFString(to_hex(bn).c_str()));
+        return toLower("0x" + string_q(to_hex(bn).c_str()));
     }
 
     //-------------------------------------------------------------------------
-    inline SFString toHex(uint64_t num) {
+    inline string_q toHex(uint64_t num) {
         SFUintBN bn = num;
-        return toLower("0x" + SFString(to_hex(bn).c_str()));
+        return toLower("0x" + string_q(to_hex(bn).c_str()));
     }
 
-    extern SFString bloom2Bytes(const SFBloom& bl);
-    extern SFString bloom2Bits(const SFBloom& b);
-
-#define fromUnsigned(a) asStringU((a))
+    extern string_q bloom2Bytes(const SFBloom& bl);
+    extern string_q bloom2Bits(const SFBloom& b);
 
     //----------------------------------------------------------------------------------
-    inline SFString fixHash(const SFString& hashIn) {
-        SFString ret = hashIn.startsWith("0x") ? hashIn.substr(2) : hashIn;
+    inline string_q fixHash(const string_q& hashIn) {
+        string_q ret = startsWith(hashIn, "0x") ? hashIn.substr(2) : hashIn;
         return "0x" + padLeft(ret, 32 * 2, '0');
     }
 
@@ -286,9 +208,27 @@ namespace qblocks {
     }
 
     //----------------------------------------------------------------------------------
-    inline SFString fixAddress(const SFAddress& addrIn) {
-        SFString ret = addrIn.startsWith("0x") ? addrIn.substr(2) : addrIn;
+    inline string_q fixAddress(const SFAddress& addrIn) {
+        string_q ret = startsWith(addrIn, "0x") ? addrIn.substr(2) : addrIn;
         return "0x" + ret;
+    }
+
+    //----------------------------------------------------------------------------------
+    inline bool isHexStr(const string_q& str) {
+        if (!startsWith(str, "0x"))
+            return false;
+        for (size_t i = 2 ; i < str.length() ; i++)
+            if (!isxdigit(str[i]))
+                return false;
+        return true;
+    }
+
+    //----------------------------------------------------------------------------
+    inline bool isNumeral(const string_q& test) {
+        for (size_t i = 0 ; i < test.length() ; i++)
+            if (!isdigit(test[i]))
+                return false;
+        return true;
     }
 
     //----------------------------------------------------------------------------------
@@ -301,15 +241,29 @@ namespace qblocks {
         return (hashIn.length() == 66 && isHexStr(hashIn));
     }
 
+    //-------------------------------------------------------------------------
+    inline bool isUnsigned(const string_q& in) {
+        // Empty string is not valid...
+        if (in.empty())
+            return false;
+        // ...first character must be 0-9 (no negatives)...
+        if (!isdigit(in[0]))
+            return false;
+        // ...or first two must be '0x' and the third must be non negative hex digit
+        if (startsWith(in,"0x") && in.length() > 2)
+            return isxdigit(in.at(2));
+        return true;
+    }
+
     //------------------------------------------------------
     inline SFAddress toAddress(const SFAddress& strIn) {
-        // Strip it if it's there. We will put it back
-        SFString ret = strIn.Substitute("0x","");
+        // trim it if it's there. We will put it back
+        string_q ret = strIn.Substitute("0x","");
 
         // Shorten, but only if all leading zeros
-        SFString leading('0', 64-40);
-        if (ret.length()==64 && ret.startsWith(leading))
-            ret.Replace(leading,"");
+        string_q leading('0', 64-40);
+        if (ret.length()==64 && startsWith(ret, leading))
+            replace(ret, leading,"");
 
         // Special case
         if (ret.empty())
@@ -318,40 +272,8 @@ namespace qblocks {
         return "0x" + toLower(ret);
     }
 
-    //-------------------------------------------------------------------------
-    inline uint32_t bitsTwiddled(SFBloom n) {
-        uint32_t count = 0;
-        while (n != 0) {
-            SFUintBN x = n - 1;
-            SFUintBN y = n & x;
-            n = y;
-            count++;
-        }
-        return count;
-    }
-
-// NEW_CODE
-    //-------------------------------------------------------------------------
-    inline bool isUnsigned(const SFString& in) {
-        // empty string is not valid
-        if (in.empty())
-            return false;
-
-        // first character must be 0-9 (no negatives)
-        if (!isdigit(in[0]))
-            return false;
-
-        return (!in.startsWith("0x") || isHex(in.at(2)));
-    }
-
-#define newUnsigned64(a)  ((a).startsWith("0x") ?    (uint64_t)hex2Long((a)) :    (uint64_t)toLongU((a)))
-#define newSigned64(a)    ((a).startsWith("0x") ?    ( int64_t)hex2Long((a)) :    ( int64_t)toLong ((a)))
-
-#define newUnsigned32(a)  ((a).startsWith("0x") ?    (uint32_t)hex2Long((a)) :    (uint32_t)toLongU((a)))
-#define newSigned32(a)    ((a).startsWith("0x") ?    ( int32_t)hex2Long((a)) :    ( int32_t)toLong ((a)))
-
     //--------------------------------------------------------------------
-    inline SFString formatFloat(double f, uint32_t nDecimals=10) {
+    inline string_q double2Str(double f, uint32_t nDecimals=10) {
         char s[100], r[100];
         memset(s,'\0',100);
         memset(r,'\0',100);
@@ -359,9 +281,7 @@ namespace qblocks {
         if (strchr(s, 'e'))
         s[1] = '\0';
         sprintf(r, "%d%s", (int)f, s+1);
-        return SFString(r);
+        return string_q(r);
     }
-#define fmtFloat(f) (const char*)formatFloat(f)
-#define fmtFloatp(f,p) (const char*)formatFloat(f, p)
 
 }  // namespace qblocks

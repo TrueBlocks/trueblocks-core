@@ -27,7 +27,7 @@ namespace qblocks {
     #define LK_NO_REMOVE_LOCK      4
 
     //----------------------------------------------------------------------
-    extern SFString manageRemoveList(const SFString& filename="");
+    extern string_q manageRemoveList(const string_q& filename="");
     extern uint32_t quitCount(uint32_t s=0);
     bool CSharedResource::g_locking = true;
 
@@ -39,14 +39,14 @@ namespace qblocks {
     }
 
     //----------------------------------------------------------------------
-    bool CSharedResource::createLockFile(const SFString& lockfilename) {
+    bool CSharedResource::createLockFile(const string_q& lockfilename) {
         if (!g_locking)
             return true;
 
         m_ownsLock = false;
-        FILE *fp = fopen((const char *)lockfilename, asciiWriteCreate);
+        FILE *fp = fopen(lockfilename.c_str(), asciiWriteCreate);
         if (fp) {
-            fprintf(fp, "%s\n", (const char *)m_lockingUser);
+            fprintf(fp, "%s\n", m_lockingUser.c_str());
             fclose(fp);
             m_ownsLock = true;
             manageRemoveList(lockfilename);
@@ -62,7 +62,7 @@ namespace qblocks {
         if (!g_locking)
             return true;
 
-        SFString lockFilename = m_filename + ".lck";
+        string_q lockFilename = m_filename + ".lck";
 
         int i = 0;
         while (i < maxSecondsLock) {
@@ -88,7 +88,7 @@ namespace qblocks {
         if (!g_locking)
             return true;
 
-        SFString lockFilename = m_filename + ".lck";
+        string_q lockFilename = m_filename + ".lck";
 
         if (fileExists(lockFilename) && !isTestMode())
             cerr << "Waiting for lock to clear\n";
@@ -116,7 +116,7 @@ namespace qblocks {
     }
 
     //----------------------------------------------------------------------
-    static bool isAscii(const SFString& mode) {
+    static bool isAscii(const string_q& mode) {
         return (mode % asciiReadOnly ||
                 mode % asciiReadWrite ||
                 mode % asciiWriteCreate ||
@@ -124,20 +124,20 @@ namespace qblocks {
     }
 
     //----------------------------------------------------------------------
-    bool CSharedResource::ReLock(const SFString& mode) {
+    bool CSharedResource::ReLock(const string_q& mode) {
         ASSERT(isOpen());
         ASSERT(m_ownsLock);
 
         // Close and re-open the file without relinqishing the lock
         Close();
-        m_fp = fopen((const char *)m_filename, mode);
+        m_fp = fopen(m_filename.c_str(), mode.c_str());
         m_isascii = qblocks::isAscii(mode);
 
         return isOpen();
     }
 
     //----------------------------------------------------------------------
-    bool CSharedResource::Lock(const SFString& fn, const SFString& mode, uint32_t lockType) {
+    bool CSharedResource::Lock(const string_q& fn, const string_q& mode, uint32_t lockType) {
         ASSERT(!isOpen());
 
         m_filename = fn;
@@ -183,7 +183,7 @@ namespace qblocks {
         }
 
         if (openIt) {
-            m_fp = fopen((const char *)m_filename, (const char *)m_mode);  // operator on event database
+            m_fp = fopen(m_filename.c_str(), m_mode.c_str());  // operator on event database
             m_isascii = qblocks::isAscii(m_mode);
         }
 
@@ -195,7 +195,7 @@ namespace qblocks {
         Close();
 
         if (g_locking && m_ownsLock) {
-            SFString lockFilename = m_filename + ".lck";
+            string_q lockFilename = m_filename + ".lck";
             bool ret = remove(lockFilename.c_str());
             manageRemoveList("r:"+lockFilename);
             if (ret != 0) {
@@ -221,7 +221,7 @@ namespace qblocks {
     }
 
     //----------------------------------------------------------------------
-    SFString CSharedResource::LockFailure(void) const {
+    string_q CSharedResource::LockFailure(void) const {
         // In some cases (for example when can't open event file because it has not yet
         // been created) this may not be an error -- Lock should set an error flag
         // which this guy should read and do right
@@ -229,7 +229,7 @@ namespace qblocks {
     }
 
     //----------------------------------------------------------------------
-    static bool binaryFileToBuffer(const SFString& filename, uint32_t& nChars, char *buffer) {
+    static bool binaryFileToBuffer(const string_q& filename, uint32_t& nChars, char *buffer) {
         if (!fileExists(filename)) {
             nChars = 0;
             if (buffer)
@@ -254,8 +254,8 @@ namespace qblocks {
     }
 
     //----------------------------------------------------------------------
-    SFString binaryFileToString(const SFString& filename) {
-        SFString ret; uint32_t nChars = 0;
+    string_q binaryFileToString(const string_q& filename) {
+        string_q ret; uint32_t nChars = 0;
         if (binaryFileToBuffer(filename, nChars, NULL)) {
             char *buffer = new char[nChars + 100];  // safty factor
             if (binaryFileToBuffer(filename, nChars, buffer))
@@ -265,7 +265,7 @@ namespace qblocks {
         }
         return ret;
     }
-//    extern bool binaryFileToBuffer(const SFString& filename, uint32_t& nChars, char *buffer);
+//    extern bool binaryFileToBuffer(const string_q& filename, uint32_t& nChars, char *buffer);
     //----------------------------------------------------------------------
     bool CSharedResource::Eof(void) const {
         ASSERT(isOpen());
@@ -303,7 +303,7 @@ namespace qblocks {
     size_t CSharedResource::Read(double& val) { return Read(&val, sizeof(double), 1); }
 
     //----------------------------------------------------------------------
-    size_t CSharedResource::Read(SFString& str) {
+    size_t CSharedResource::Read(string_q& str) {
         ASSERT(isOpen());
         ASSERT(!isAscii());
 
@@ -352,24 +352,24 @@ namespace qblocks {
     size_t CSharedResource::Write(double val) const { return Write(&val, sizeof(double), 1); }
 
     //----------------------------------------------------------------------
-    size_t CSharedResource::Write(const SFString& val) const {
+    size_t CSharedResource::Write(const string_q& val) const {
         ASSERT(isOpen());
         ASSERT(!isAscii());
 
         unsigned long len = val.length();
         size_t ret = Write(&len, sizeof(unsigned long), 1);
-        return Write((const char *)val, sizeof(char), len) + ret;
+        return Write(val.c_str(), sizeof(char), len) + ret;
     }
 
     //----------------------------------------------------------------------
-    void CSharedResource::WriteLine(const SFString& str) {
+    void CSharedResource::WriteLine(const string_q& str) {
         ASSERT(isOpen());
         ASSERT(isAscii());
-        fprintf(m_fp, "%s", (const char *)str);
+        fprintf(m_fp, "%s", str.c_str());
     }
 
     //----------------------------------------------------------------------
-    bool asciiFileToBuffer(const SFString& filename, size_t& nChars, SFString *buffer, uint32_t maxLines) {
+    bool asciiFileToBuffer(const string_q& filename, size_t& nChars, string_q *buffer, uint32_t maxLines) {
         if (!fileExists(filename) || folderExists(filename)) {
             nChars = 0;
             if (buffer)
@@ -424,36 +424,36 @@ namespace qblocks {
     }
 
     //----------------------------------------------------------------------
-    SFString excelFileToString(const SFString& excelFilename) {
-        if (excelFilename.Contains(".xlsx"))
+    string_q excelFileToString(const string_q& excelFilename) {
+        if (contains(excelFilename, ".xlsx"))
             return "Only .xls Excel files are supported";
         return doCommand("exportExcel " + excelFilename);
     }
 
     //----------------------------------------------------------------------
-    SFString docxToString(const SFString& filename) {
-        if (!filename.Contains(".docx"))
+    string_q docxToString(const string_q& filename) {
+        if (!contains(filename, ".docx"))
             return "Only .docx files are supported";
         return doCommand(getHomeFolder() + "source/docx2txt.pl " +
                                filename.Substitute(" ", "\\ ").Substitute("'", "\\'") + " -");
     }
 
     //----------------------------------------------------------------------
-    size_t stringToDocxFile(const SFString& fileName, const SFString& contents) {
-        SFString cmd = getHomeFolder() + "source/createDocx \"" +
+    size_t stringToDocxFile(const string_q& fileName, const string_q& contents) {
+        string_q cmd = getHomeFolder() + "source/createDocx \"" +
                         fileName + "\" \"" + contents.Substitute("\"", "''") + "\"";
-        SFString ret = doCommand(cmd);
-        fprintf(stderr, "ret: %s\n", (const char*)ret);
+        string_q ret = doCommand(cmd);
+        fprintf(stderr, "ret: %s\n", ret.c_str());
         return true;
     }
 
     //----------------------------------------------------------------------
-    size_t stringToPDF(const SFString& fileName, const SFString& contents) {
-        SFString tmpName = "/tmp/toPDF.txt";
-        SFString pdfName = "/tmp/toPDF.pdf";
+    size_t stringToPDF(const string_q& fileName, const string_q& contents) {
+        string_q tmpName = "/tmp/toPDF.txt";
+        string_q pdfName = "/tmp/toPDF.pdf";
         stringToAsciiFile(tmpName, contents);
 
-        SFString cmd = getHomeFolder() + "source/toPDF \"" + tmpName + "\" \"" + pdfName + "\" 2>/dev/null";
+        string_q cmd = getHomeFolder() + "source/toPDF \"" + tmpName + "\" \"" + pdfName + "\" 2>/dev/null";
         doCommand(cmd);
         copyFile(pdfName, fileName);
 
@@ -464,57 +464,57 @@ namespace qblocks {
     }
 
     //----------------------------------------------------------------------
-    size_t stringToAsciiFile(const SFString& fileName, const SFString& contents) {
+    size_t stringToAsciiFile(const string_q& fileName, const string_q& contents) {
         CAsciiFile lock;
         if (lock.Lock(fileName, asciiWriteCreate, LOCK_WAIT)) {
-            lock.WriteLine((const char*)contents);
+            lock.WriteLine(contents.c_str());
             lock.Release();
         } else {
-            fprintf(stderr, "%s\n", (const char*)SFString("Could not open file: " + fileName));
+            fprintf(stderr, "%s\n", (string_q("Could not open file: ") + fileName).c_str());
             return false;
         }
         return true;
     }
 
     //------------------------------------------------------------------------------------------------------------
-    void writeTheCode(const SFString& fileName, const SFString& codeOutIn, const SFString& ns, bool spaces) {
-        SFString codeOut = codeOutIn;
-        SFString orig = asciiFileToString(fileName);
-        SFString existingCode = orig.Substitute("//EXISTING_CODE","// EXISTING_CODE");
+    void writeTheCode(const string_q& fileName, const string_q& codeOutIn, const string_q& ns, bool spaces) {
+        string_q codeOut = codeOutIn;
+        string_q orig = asciiFileToString(fileName);
+        string_q existingCode = orig.Substitute("//EXISTING_CODE","// EXISTING_CODE");
         if (spaces) {
-            existingCode.ReplaceAll("    ", "\t");
-            codeOut     .ReplaceAll("    ", "\t");
+            replaceAll(existingCode, "    ", "\t");
+            replaceAll(codeOut,      "    ", "\t");
         }
 
-        SFString tabs;
+        string_q tabs;
         int nTabs = 4;
         while (nTabs >= 0) {
-            tabs = SFString('\t', (size_t)nTabs);
+            tabs = string_q('\t', (size_t)nTabs);
             nTabs--;
             //--------------------------------------------------------------------------------------
-            while (existingCode.Contains(tabs + "// EXISTING_CODE")) {
-                existingCode.Replace(tabs + "// EXISTING_CODE", "<code>");
-                existingCode.Replace(tabs + "// EXISTING_CODE", "</code>");
+            while (contains(existingCode, tabs + "// EXISTING_CODE")) {
+                replace(existingCode, tabs + "// EXISTING_CODE", "<code>");
+                replace(existingCode, tabs + "// EXISTING_CODE", "</code>");
             }
-            while (existingCode.Contains("</code>")) {
-                SFString snipit = Strip(snagFieldClear(existingCode, "code"), '\n');
-                codeOut.Replace(tabs + "// EXISTING_CODE\n" + tabs + "// EXISTING_CODE",
+            while (contains(existingCode, "</code>")) {
+                string_q snipit = trim(snagFieldClear(existingCode, "code"), '\n');
+                replace(codeOut, tabs + "// EXISTING_CODE\n" + tabs + "// EXISTING_CODE",
                                 tabs + "// EXISTING_CODE\n" + snipit + "\n" + tabs + "// EXISTING_CODE");
             }
-            codeOut.ReplaceAll("// EXISTING_CODE\n\n" + tabs + "// EXISTING_CODE", "// EXISTING_CODE\n" +
+            replaceAll(codeOut, "// EXISTING_CODE\n\n" + tabs + "// EXISTING_CODE", "// EXISTING_CODE\n" +
                                tabs + "// EXISTING_CODE");
             //--------------------------------------------------------------------------------------
         }
 
         // One final cleanup
-        codeOut.ReplaceAll("\n\n}", "\n}");
-        codeOut.ReplaceAll("\n\n\n", "\n\n");
+        replaceAll(codeOut, "\n\n}", "\n}");
+        replaceAll(codeOut, "\n\n\n", "\n\n");
 
         if (spaces)
-            codeOut.ReplaceAll("\t", "    ");
+            replaceAll(codeOut, "\t", "    ");
 
-        if (codeOut.Contains("virtual") || codeOut.Contains("override"))
-            codeOut.Replace("~", "virtual ~");
+        if (contains(codeOut, "virtual") || contains(codeOut, "override"))
+            replace(codeOut, "~", "virtual ~");
 
         // If we don't write it because it's identical, it won't force a rebuild
         if (orig != codeOut)
@@ -549,9 +549,9 @@ namespace qblocks {
 
     //-----------------------------------------------------------------------
     void cleanFileLocks(void) {
-        SFString list = manageRemoveList();
+        string_q list = manageRemoveList();
         while (!list.empty()) {
-            SFString file = nextTokenClear(list, '|');
+            string_q file = nextTokenClear(list, '|');
             remove(file.c_str());
             cerr << "Removing file: " << file << "\n";
             cerr.flush();
@@ -587,19 +587,19 @@ namespace qblocks {
     }
 
     //-----------------------------------------------------------------------
-    SFString manageRemoveList(const SFString& filename) {
-        static SFString theList;
+    string_q manageRemoveList(const string_q& filename) {
+        static string_q theList;
         if (filename == "clear") {
             theList = "";
             return "";
         }
 
-        SFString fn = filename.Substitute("r:", "");;
+        string_q fn = filename.Substitute("r:", "");;
         if (!fn.empty()) {
-            if (filename.startsWith("r:")) {
-                theList.Replace(fn+"|", "");
+            if (startsWith(filename, "r:")) {
+                replace(theList, fn+"|", "");
 
-            } else if (!theList.Contains(fn+"|")) {
+            } else if (!contains(theList, fn+"|")) {
                 theList += (filename + "|");
 
             }

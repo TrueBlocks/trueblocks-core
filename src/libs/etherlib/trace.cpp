@@ -22,11 +22,11 @@ namespace qblocks {
 IMPLEMENT_NODE(CTrace, CBaseNode);
 
 //---------------------------------------------------------------------------
-static SFString nextTraceChunk(const SFString& fieldIn, const void *dataPtr);
-static SFString nextTraceChunk_custom(const SFString& fieldIn, const void *dataPtr);
+static string_q nextTraceChunk(const string_q& fieldIn, const void *dataPtr);
+static string_q nextTraceChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CTrace::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
+void CTrace::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -35,7 +35,7 @@ void CTrace::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) c
         return;
     }
 
-    SFString fmt = fmtIn;
+    string_q fmt = fmtIn;
     if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
@@ -44,7 +44,7 @@ void CTrace::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) c
 }
 
 //---------------------------------------------------------------------------
-SFString nextTraceChunk(const SFString& fieldIn, const void *dataPtr) {
+string_q nextTraceChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
         return ((const CTrace *)dataPtr)->getValueByName(fieldIn);
 
@@ -55,16 +55,16 @@ SFString nextTraceChunk(const SFString& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CTrace::setValueByName(const SFString& fieldName, const SFString& fieldValue) {
+bool CTrace::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
     // EXISTING_CODE
     if (fieldName % "action") {
-        char *p = (char *)(const char*)fieldValue;
+        char *p = (char *)fieldValue.c_str();
         uint32_t nFields=0;
         action.parseJson(p,nFields);
         return true;
 
     } else if (fieldName % "result") {
-        char *p = (char *)(const char*)fieldValue;
+        char *p = (char *)fieldValue.c_str();
         uint32_t nFields=0;
         result.parseJson(p,nFields);
         return true;
@@ -90,7 +90,7 @@ bool CTrace::setValueByName(const SFString& fieldName, const SFString& fieldValu
             break;
         case 't':
             if ( fieldName % "traceAddress" ) {
-                SFString str = fieldValue;
+                string_q str = fieldValue;
                 while (!str.empty()) {
                     traceAddress[traceAddress.getCount()] = toAddress(nextTokenClear(str,','));
                 }
@@ -191,7 +191,7 @@ void CTrace::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextTraceChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+string_q nextTraceChunk_custom(const string_q& fieldIn, const void *dataPtr) {
     const CTrace *tra = (const CTrace *)dataPtr;
     if (tra) {
         switch (tolower(fieldIn[0])) {
@@ -212,7 +212,7 @@ SFString nextTraceChunk_custom(const SFString& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------
-bool CTrace::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
+bool CTrace::handleCustomFormat(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
@@ -229,10 +229,10 @@ bool CTrace::readBackLevel(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------
-SFString CTrace::getValueByName(const SFString& fieldName) const {
+string_q CTrace::getValueByName(const string_q& fieldName) const {
 
     // Give customized code a chance to override first
-    SFString ret = nextTraceChunk_custom(fieldName, this);
+    string_q ret = nextTraceChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
@@ -257,10 +257,10 @@ SFString CTrace::getValueByName(const SFString& fieldName) const {
         case 't':
             if ( fieldName % "traceAddress" || fieldName % "traceAddressCnt" ) {
                 uint32_t cnt = traceAddress.getCount();
-                if (fieldName.endsWith("Cnt"))
+                if (endsWith(fieldName, "Cnt"))
                     return asStringU(cnt);
                 if (!cnt) return "";
-                SFString retS;
+                string_q retS;
                 for (uint32_t i = 0 ; i < cnt ; i++) {
                     retS += ("\"" + traceAddress[i] + "\"");
                     retS += ((i < cnt - 1) ? ",\n" + indent() : "\n");
@@ -276,19 +276,19 @@ SFString CTrace::getValueByName(const SFString& fieldName) const {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    SFString s;
-    s = toUpper(SFString("action")) + "::";
-    if (fieldName.Contains(s)) {
-        SFString f = fieldName;
-        f.ReplaceAll(s,"");
+    string_q s;
+    s = toUpper(string_q("action")) + "::";
+    if (contains(fieldName, s)) {
+        string_q f = fieldName;
+        replaceAll(f, s, "");
         f = action.getValueByName(f);
         return f;
     }
 
-    s = toUpper(SFString("result")) + "::";
-    if (fieldName.Contains(s)) {
-        SFString f = fieldName;
-        f.ReplaceAll(s,"");
+    s = toUpper(string_q("result")) + "::";
+    if (contains(fieldName, s)) {
+        string_q f = fieldName;
+        replaceAll(f, s, "");
         f = result.getValueByName(f);
         return f;
     }
@@ -307,7 +307,7 @@ ostream& operator<<(ostream& os, const CTrace& item) {
 }
 
 //---------------------------------------------------------------------------
-const CBaseNode *CTrace::getObjectAt(const SFString& fieldName, uint32_t index) const {
+const CBaseNode *CTrace::getObjectAt(const string_q& fieldName, uint32_t index) const {
     if ( fieldName % "action" )
         return &action;
     if ( fieldName % "result" )
@@ -316,7 +316,7 @@ const CBaseNode *CTrace::getObjectAt(const SFString& fieldName, uint32_t index) 
 }
 
 //---------------------------------------------------------------------------
-const SFString CTrace::getStringAt(const SFString& name, uint32_t i) const {
+const string_q CTrace::getStringAt(const string_q& name, uint32_t i) const {
     if ( name % "traceAddress" && i < traceAddress.getCount() )
         return (traceAddress[i]);
     return "";

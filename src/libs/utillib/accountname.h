@@ -33,11 +33,11 @@ typedef SFUniqueList<CAccountName*>       CAccountNameListU;
 //--------------------------------------------------------------------------
 class CAccountName : public CBaseNode {
 public:
-    SFString symbol;
-    SFString name;
-    SFString addr;
-    SFString source;
-    SFString description;
+    string_q symbol;
+    string_q name;
+    string_q addr;
+    string_q source;
+    string_q description;
 
 public:
     CAccountName(void);
@@ -48,8 +48,8 @@ public:
     DECLARE_NODE(CAccountName);
 
     // EXISTING_CODE
-    explicit CAccountName(SFString& nameIn);
-    bool Match(const SFString& s1, const SFString& s2, const SFString& s3, bool matchCase, bool all) const;
+    explicit CAccountName(string_q& nameIn);
+    bool Match(const string_q& s1, const string_q& s2, const string_q& s3, bool matchCase, bool all) const;
     // EXISTING_CODE
     friend ostream& operator<<(ostream& os, const CAccountName& item);
 

@@ -33,7 +33,7 @@ namespace qblocks {
     //----------------------------------------------------------------------
     SFUintBN::SFUintBN(const uint64_t *b, unsigned int blen) : SFBigNumStore<uint64_t>(b, blen)
     {
-        trimLeft();
+        trimLeadingZeros();
     }
 
     //----------------------------------------------------------------------
@@ -83,7 +83,7 @@ namespace qblocks {
     short SFUintBN::to_short(void) const { return convertToSignedPrimitive <short> (); }
 
     //----------------------------------------------------------------------
-    void SFUintBN::trimLeft(void)
+    void SFUintBN::trimLeadingZeros(void)
     {
         while (len > 0 && blk[len-1] == 0)
             len--;
@@ -97,7 +97,7 @@ namespace qblocks {
             if (i<len)
             {
                 blk[i] = 0;
-                trimLeft();
+                trimLeadingZeros();
             }
 
         } else
@@ -293,17 +293,17 @@ namespace qblocks {
                 blk[i] = a.blk[i];
         }
 
-        trimLeft();
+        trimLeadingZeros();
     }
 
     /*
-     * I eventually decided to use bit-shifting algorithms.  To multiply `a'
-     * and `b', we zero out the result.  Then, for each `1' bit in `a', we
-     * shift `b' left the appropriate amount and add it to the result.
-     * Similarly, to divide `a' by `b', we shift `b' left varying amounts,
-     * repeatedly trying to subtract it from `a'.  When we succeed, we note
+     * I eventually decided to use bit-shifting algorithms.  To multiply 'a'
+     * and 'b', we zero out the result.  Then, for each '1' bit in 'a', we
+     * shift 'b' left the appropriate amount and add it to the result.
+     * Similarly, to divide 'a' by 'b', we shift 'b' left varying amounts,
+     * repeatedly trying to subtract it from 'a'.  When we succeed, we note
      * the fact by setting a bit in the quotient.  While these algorithms
-     * have the same O(n^2) time complexity as Knuth's, the ``constant factor''
+     * have the same O(n^2) time complexity as Knuth's, the 'constant factor'
      * is likely to be larger.
      *
      * Because I used these algorithms, which require single-block addition
@@ -314,24 +314,24 @@ namespace qblocks {
      * This is a little function used by both the multiplication
      * routine and the division routine.
      *
-     * `getShiftedBlock' returns the `x'th block of `num << y'.
-     * `y' may be anything from 0 to N - 1, and `x' may be anything from
-     * 0 to `num.len'.
+     * 'getShiftedBlock' returns the 'x'th block of 'num << y'.
+     * 'y' may be anything from 0 to N - 1, and 'x' may be anything from
+     * 0 to 'num.len'.
      *
      * Two things contribute to this block:
      *
-     * (1) The `N - y' low bits of `num.blk[x]', shifted `y' bits left.
+     * (1) The 'N - y' low bits of 'num.blk[x]', shifted 'y' bits left.
      *
-     * (2) The `y' high bits of `num.blk[x-1]', shifted `N - y' bits right.
+     * (2) The 'y' high bits of 'num.blk[x-1]', shifted 'N - y' bits right.
      *
-     * But we must be careful if `x == 0' or `x == num.len', in
+     * But we must be careful if 'x == 0' or 'x == num.len', in
      * which case we should use 0 instead of (2) or (1), respectively.
      *
-     * If `y == 0', then (2) contributes 0, as it should.  However,
+     * If 'y == 0', then (2) contributes 0, as it should.  However,
      * in some computer environments, for a reason I cannot understand,
-     * `a >> b' means `a >> (b % N)'.  This means `num.blk[x-1] >> (N - y)'
-     * will return `num.blk[x-1]' instead of the desired 0 when `y == 0';
-     * the test `y == 0' handles this case specially.
+     * 'a >> b' means 'a >> (b % N)'.  This means 'num.blk[x-1] >> (N - y)'
+     * will return 'num.blk[x-1]' instead of the desired 0 when 'y == 0';
+     * the test 'y == 0' handles this case specially.
      */
     //----------------------------------------------------------------------
     uint64_t getShiftedBlock(const SFUintBN &num, unsigned int x, unsigned int y)
@@ -364,8 +364,8 @@ namespace qblocks {
          * Overall method:
          *
          * Set this = 0.
-         * For each 1-bit of `a' (say the `i2'th bit of block `i'):
-         *    Add `b << (i blocks and i2 bits)' to *this.
+         * For each 1-bit of 'a' (say the 'i2'th bit of block 'i'):
+         *    Add 'b << (i blocks and i2 bits)' to *this.
          */
         // Variables for the calculation
         unsigned int i, j, k;
@@ -390,9 +390,9 @@ namespace qblocks {
                  * Add b to this, shifted left i blocks and i2 bits.
                  * j is the index in b, and k = i + j is the index in this.
                  *
-                 * `getShiftedBlock', a short nline function defined above,
+                 * 'getShiftedBlock', a short nline function defined above,
                  * is now used for the bit handling.  It replaces the more
-                 * complex `bHigh' code, in which each run of the loop dealt
+                 * complex 'bHigh' code, in which each run of the loop dealt
                  * immediately with the low bits and saved the high bits to
                  * be picked up next time.  The last run of the loop used to
                  * leave leftover high bits, which were handled separately.
@@ -403,7 +403,7 @@ namespace qblocks {
                 {
                     /*
                      * The body of this loop is very similar to the body of the first loop
-                     * in `add', except that this loop does a `+=' instead of a `+'.
+                     * in 'add', except that this loop does a '+=' instead of a '+'.
                      */
                     temp = blk[k] + getShiftedBlock(b, j, i2);
                     carryOut = (temp < blk[k]);
@@ -414,7 +414,7 @@ namespace qblocks {
                     blk[k] = temp;
                     carryIn = carryOut;
                 }
-                // No more extra iteration to deal with `bHigh'.
+                // No more extra iteration to deal with 'bHigh'.
                 // Roll-over a carry as necessary.
                 for (; carryIn; k++)
                 {
@@ -439,11 +439,11 @@ namespace qblocks {
      * "modWithQuotient" might be a better name for this function, but I would
      * rather not change the name now.
      *
-     * `a.divide(b, q)' is like `q = a / b, a %= b'.
+     * 'a.divide(b, q)' is like 'q = a / b, a %= b'.
      * / and % use semantics similar to Knuth's, which differ from the
      * primitive integer semantics under division by zero.  See the
      * implementation in SFUintBN.cc for details.
-     * `a.divide(b, a)' throws an exception: it doesn't make
+     * 'a.divide(b, a)' throws an exception: it doesn't make
      * sense to write quotient and remainder into the same variable.
      */
 
@@ -516,7 +516,7 @@ namespace qblocks {
          * But on a single iteration, we don't touch the i lowest blocks of blk
          * (and don't use those of subtractBuf) because these blocks are
          * unaffected by the subtraction: we are subtracting
-         * (b << (i blocks and i2 bits)), which ends in at least `i' zero
+         * (b << (i blocks and i2 bits)), which ends in at least 'i' zero
          * blocks. */
         // Variables for the calculation
         unsigned int i, j, k;
@@ -527,12 +527,12 @@ namespace qblocks {
         /*
          * Make sure we have an extra zero block just past the value.
          *
-         * When we attempt a subtraction, we might shift `b' so
+         * When we attempt a subtraction, we might shift 'b' so
          * its first block begins a few bits left of the dividend,
          * and then we'll try to compare these extra bits with
          * a nonexistent block to the left of the dividend.  The
          * extra zero block ensures sensible behavior; we need
-         * an extra block in `subtractBuf' for exactly the same reason.
+         * an extra block in 'subtractBuf' for exactly the same reason.
          */
         unsigned int origLen = len; // Save real length.
         /* To avoid an out-of-bounds access in case of reallocation, allocate
@@ -563,11 +563,11 @@ namespace qblocks {
                 i2--;
                 /*
                  * Subtract b, shifted left i blocks and i2 bits, from *this,
-                 * and store the answer in subtractBuf.  In the for loop, `k == i + j'.
+                 * and store the answer in subtractBuf.  In the for loop, 'k == i + j'.
                  *
-                 * Compare this to the middle section of `multiply'.  They
+                 * Compare this to the middle section of 'multiply'.  They
                  * are in many ways analogous.  See especially the discussion
-                 * of `getShiftedBlock'.
+                 * of 'getShiftedBlock'.
                  */
                 for (j = 0, k = i, borrowIn = false; j <= b.len; j++, k++) {
                     temp = blk[k] - getShiftedBlock(b, j, i2);
@@ -576,11 +576,11 @@ namespace qblocks {
                         borrowOut |= (temp == 0);
                         temp--;
                     }
-                    // Since 2005.01.11, indices of `subtractBuf' directly match those of `blk', so use `k'.
+                    // Since 2005.01.11, indices of 'subtractBuf' directly match those of 'blk', so use 'k'.
                     subtractBuf[k] = temp;
                     borrowIn = borrowOut;
                 }
-                // No more extra iteration to deal with `bHigh'.
+                // No more extra iteration to deal with 'bHigh'.
                 // Roll-over a borrow as necessary.
                 for (; k < origLen && borrowIn; k++) {
                     borrowIn = (blk[k] == 0);
@@ -592,7 +592,7 @@ namespace qblocks {
                  *
                  * Then, copy the portion of subtractBuf filled by the subtraction
                  * back to *this.  This portion starts with block i and ends--
-                 * where?  Not necessarily at block `i + b.len'!  Well, we
+                 * where?  Not necessarily at block 'i + b.len'!  Well, we
                  * increased k every time we saved a block into subtractBuf, so
                  * the region of subtractBuf we copy is just [i, k).
                  */
@@ -609,7 +609,7 @@ namespace qblocks {
         if (q.blk[q.len - 1] == 0)
             q.len--;
         // Zap any/all leading zeros in remainder
-        trimLeft();
+        trimLeadingZeros();
         // Deallocate subtractBuf.
         // (Thanks to Brad Spencer for noticing my accidental omission of this!)
         delete [] subtractBuf;
@@ -632,7 +632,7 @@ namespace qblocks {
         unsigned int i;
         for (i = 0; i < len; i++)
             blk[i] = a.blk[i] & b.blk[i];
-        trimLeft();
+        trimLeadingZeros();
     }
 
     //----------------------------------------------------------------------
@@ -700,7 +700,7 @@ namespace qblocks {
             blk[i] = a2->blk[i];
         len = a2->len;
 
-        trimLeft();
+        trimLeadingZeros();
     }
 
     // Negative shift amounts translate to opposite-direction shifts, except for -2^(8*sizeof(int)-1) which is unimplemented.
@@ -742,7 +742,7 @@ namespace qblocks {
         for (j = 0, i = shiftBlocks; j <= a.len; j++, i++)
             blk[i] = getShiftedBlock(a, j, shiftBits);
 
-        trimLeft();
+        trimLeadingZeros();
     }
 
     //----------------------------------------------------------------------
@@ -788,6 +788,6 @@ namespace qblocks {
         for (j = rightShiftBlocks, i = 0; j <= a.len; j++, i++)
             blk[i] = getShiftedBlock(a, j, leftShiftBits);
 
-        trimLeft();
+        trimLeadingZeros();
     }
 }

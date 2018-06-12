@@ -28,14 +28,14 @@ CParams params[] = {
 uint32_t nParams = sizeof(params) / sizeof(CParams);
 
 //---------------------------------------------------------------------------------------------------
-bool COptions::parseArguments(SFString& command) {
+bool COptions::parseArguments(string_q& command) {
 
     if (!standardOptions(command))
         return false;
 
     Init();
     while (!command.empty()) {
-        SFString arg = nextTokenClear(command, ' ');
+        string_q arg = nextTokenClear(command, ' ');
         if (arg == "-s" || arg == "--source") {
             all = true;
 
@@ -57,7 +57,7 @@ bool COptions::parseArguments(SFString& command) {
         } else if (arg == "-o" || arg == "--open") {
             isEdit = true;
 
-        } else if (arg.startsWith('-')) {  // do not collapse
+        } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);
@@ -112,18 +112,18 @@ COptions::COptions(void) {
     namesFile = CFilename(configPath("names/names.txt"));
     establishFolder(namesFile.getPath());
     if (!fileExists(namesFile.getFullPath()))
-        stringToAsciiFile(namesFile.getFullPath(), SFString(STR_DEFAULT_DATA).Substitute(" |","|").Substitute("|","\t"));
+        stringToAsciiFile(namesFile.getFullPath(), string_q(STR_DEFAULT_DATA).Substitute(" |","|").Substitute("|","\t"));
     loadNames();
     Init();
 }
 
 //--------------------------------------------------------------------------------
-SFString COptions::postProcess(const SFString& which, const SFString& str) const {
+string_q COptions::postProcess(const string_q& which, const string_q& str) const {
     if (which == "options") {
         return str.Substitute("terms", "<term> [term...]");
 
     } else if (which == "notes" && (verbose || COptions::isReadme)) {
-        SFString ret;
+        string_q ret;
         ret += "With a single search term, the tool searches both [{name}] and [{address}].\n";
         ret += "With two search terms, the first term must match the [{address}] field, and the "
                 "second term must match the [{name}] field.\n";

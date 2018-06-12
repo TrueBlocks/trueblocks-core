@@ -36,29 +36,29 @@ namespace qblocks {
         virtual bool isKindOf(const CRuntimeClass* pClass) const;
         virtual char *parseJson(char *s, uint32_t& nFields);
         virtual char *parseJson(char *s);
-        virtual char *parseCSV(char *s, uint32_t& nFields, const SFString *fields);
-        virtual char *parseText(char *s, uint32_t& nFields, const SFString *fields);
-        virtual SFString toJson1(void) const;
-        virtual SFString toJson(void) const;
-        virtual SFString toJson(const SFString& fields) const;
-        virtual SFString toJson(const CFieldList *fields) const;
-        virtual SFString toJsonFldList(const CFieldList *fieldList) const;
+        virtual char *parseCSV(char *s, uint32_t& nFields, const string_q *fields);
+        virtual char *parseText(char *s, uint32_t& nFields, const string_q *fields);
+        virtual string_q toJson1(void) const;
+        virtual string_q toJson(void) const;
+        virtual string_q toJson(const string_q& fields) const;
+        virtual string_q toJson(const CFieldList *fields) const;
+        virtual string_q toJsonFldList(const CFieldList *fieldList) const;
 
     public:
         static CRuntimeClass classCBaseNode;
         static CBaseNode *CreateObject(void);
         virtual CRuntimeClass *getRuntimeClass(void) const;
-        virtual SFString getValueByName(const SFString& fieldName) const;
-        virtual bool setValueByName(const SFString& fieldName, const SFString& fieldValue) { return false; }
+        virtual string_q getValueByName(const string_q& fieldName) const;
+        virtual bool setValueByName(const string_q& fieldName, const string_q& fieldValue) { return false; }
         virtual bool Serialize(SFArchive& archive);
         virtual bool SerializeC(SFArchive& archive) const;
         virtual bool readBackLevel(SFArchive& archive);
         virtual void finishParse(void) { }
-        virtual void Format(CExportContext& ctx, const SFString& fmtIn, void *data = NULL) const { }
-        virtual SFString Format(const SFString& fmtIn = "") const { return ""; }
-        virtual const CBaseNode *getObjectAt(const SFString& name, uint32_t i) const { return NULL; }
-        virtual const SFString   getStringAt(const SFString& name, uint32_t i) const { return ""; }
-        virtual bool handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *data = NULL) const {
+        virtual void Format(CExportContext& ctx, const string_q& fmtIn, void *data = NULL) const { }
+        virtual string_q Format(const string_q& fmtIn = "") const { return ""; }
+        virtual const CBaseNode *getObjectAt(const string_q& name, uint32_t i) const { return NULL; }
+        virtual const string_q   getStringAt(const string_q& name, uint32_t i) const { return ""; }
+        virtual bool handleCustomFormat(CExportContext& ctx, const string_q& fmtIn, void *data = NULL) const {
             return false;
         }
 
@@ -88,10 +88,10 @@ namespace qblocks {
     extern char *cleanUpJson(char *s);
 
     //--------------------------------------------------------------------------------------------------------------
-    typedef SFString (*NEXTCHUNKFUNC)(const SFString& fieldIn, const void *data);
+    typedef string_q (*NEXTCHUNKFUNC)(const string_q& fieldIn, const void *data);
 
     //--------------------------------------------------------------------------------------------------------------
-    SFString getNextChunk(SFString& fmtOut, NEXTCHUNKFUNC func, const void *data);
-    SFString fldNotFound(const SFString& str);
+    string_q getNextChunk(string_q& fmtOut, NEXTCHUNKFUNC func, const void *data);
+    string_q fldNotFound(const string_q& str);
 
 }  // namespace qblocks

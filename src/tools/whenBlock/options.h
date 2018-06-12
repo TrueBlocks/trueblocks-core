@@ -16,14 +16,14 @@
 //-----------------------------------------------------------------------------
 class COptions : public CBlockOptions {
 public:
-    SFStringArray     requests;
-    bool              alone;
+    CStringArray     requests;
+    bool             alone;
 
     COptions(void);
     ~COptions(void);
 
-    SFString postProcess(const SFString& which, const SFString& str) const override;
-    bool parseArguments(SFString& command) override;
+    string_q postProcess(const string_q& which, const string_q& str) const override;
+    bool parseArguments(string_q& command) override;
     void Init(void) override;
-    SFString listSpecials(bool terse) const;
+    string_q listSpecials(bool terse) const;
 };

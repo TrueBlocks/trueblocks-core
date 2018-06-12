@@ -23,11 +23,11 @@ namespace qblocks {
 IMPLEMENT_NODE(CBlock, CBaseNode);
 
 //---------------------------------------------------------------------------
-extern SFString nextBlockChunk(const SFString& fieldIn, const void *dataPtr);
-static SFString nextBlockChunk_custom(const SFString& fieldIn, const void *dataPtr);
+extern string_q nextBlockChunk(const string_q& fieldIn, const void *dataPtr);
+static string_q nextBlockChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CBlock::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
+void CBlock::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -36,7 +36,7 @@ void CBlock::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) c
         return;
     }
 
-    SFString fmt = fmtIn;
+    string_q fmt = fmtIn;
     if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
@@ -45,7 +45,7 @@ void CBlock::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) c
 }
 
 //---------------------------------------------------------------------------
-SFString nextBlockChunk(const SFString& fieldIn, const void *dataPtr) {
+string_q nextBlockChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
         return ((const CBlock *)dataPtr)->getValueByName(fieldIn);
 
@@ -56,22 +56,22 @@ SFString nextBlockChunk(const SFString& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CBlock::setValueByName(const SFString& fieldName, const SFString& fieldValue) {
+bool CBlock::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
     // EXISTING_CODE
     if (fieldName % "number") {
-        *(SFString*)&fieldName = "blockNumber";
+        *(string_q*)&fieldName = "blockNumber";
 
     } else if (fieldName % "author") {
-        *(SFString*)&fieldName = "miner";
+        *(string_q*)&fieldName = "miner";
 
     } else if (isTestMode() && fieldName % "blockHash") {
-        *(SFString*)&fieldName = "hash";
+        *(string_q*)&fieldName = "hash";
 
     } else if (fieldName % "transactions") {
         // Transactions come to us either as a JSON objects or lists of hashes (i.e. a string array). JSON objects have
         // (among other things) a 'from' field
-        if (!fieldValue.Contains("from")) {
-            SFString str = fieldValue;
+        if (!contains(fieldValue, "from")) {
+            string_q str = fieldValue;
             while (!str.empty()) {
                 CTransaction trans;
                 trans.hash = toAddress(nextTokenClear(str, ','));
@@ -90,7 +90,7 @@ bool CBlock::setValueByName(const SFString& fieldName, const SFString& fieldValu
             if ( fieldName % "difficulty" ) { difficulty = toUnsigned(fieldValue); return true; }
             break;
         case 'f':
-            if ( fieldName % "finalized" ) { finalized = toBool(fieldValue); return true; }
+            if ( fieldName % "finalized" ) { finalized = str2Bool(fieldValue); return true; }
             break;
         case 'g':
             if ( fieldName % "gasLimit" ) { gasLimit = toGas(fieldValue); return true; }
@@ -104,7 +104,7 @@ bool CBlock::setValueByName(const SFString& fieldName, const SFString& fieldValu
             break;
         case 'p':
             if ( fieldName % "parentHash" ) { parentHash = toHash(fieldValue); return true; }
-            if ( fieldName % "price" ) { price = toDouble(fieldValue); return true; }
+            if ( fieldName % "price" ) { price = str2Double(fieldValue); return true; }
             break;
         case 't':
             if ( fieldName % "timestamp" ) { timestamp = toTimestamp(fieldValue); return true; }
@@ -227,7 +227,7 @@ void CBlock::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextBlockChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+string_q nextBlockChunk_custom(const string_q& fieldIn, const void *dataPtr) {
     const CBlock *blo = (const CBlock *)dataPtr;
     if (blo) {
         switch (tolower(fieldIn[0])) {
@@ -246,7 +246,7 @@ SFString nextBlockChunk_custom(const SFString& fieldIn, const void *dataPtr) {
                 if ( expContext().hashesOnly && fieldIn % "transactions" ) {
                     uint32_t cnt = blo->transactions.getCount();
                     if (!cnt) return EMPTY;
-                    SFString ret;
+                    string_q ret;
                     for (uint32_t i = 0 ; i < cnt ; i++) {
                         ret += blo->transactions[i].hash;
                         ret += ((i < cnt-1) ? ",\n" : "\n");
@@ -270,7 +270,7 @@ SFString nextBlockChunk_custom(const SFString& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------
-bool CBlock::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
+bool CBlock::handleCustomFormat(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
@@ -293,7 +293,7 @@ bool CBlock::readBackLevel(SFArchive& archive) {
         archive >> timestamp;
         archive >> transactions;
         // TODO -- technically we should re-read these values from the node
-        SFString save = getCurlContext()->provider;
+        string_q save = getCurlContext()->provider;
         getCurlContext()->provider = "local";
         CBlock upgrade;uint32_t unused;
         queryBlock(upgrade, asStringU(blockNumber), false, false, unused);
@@ -336,10 +336,10 @@ SFArchive& operator>>(SFArchive& archive, CBlock& blo) {
 }
 
 //---------------------------------------------------------------------------
-SFString CBlock::getValueByName(const SFString& fieldName) const {
+string_q CBlock::getValueByName(const string_q& fieldName) const {
 
     // Give customized code a chance to override first
-    SFString ret = nextBlockChunk_custom(fieldName, this);
+    string_q ret = nextBlockChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
@@ -366,16 +366,16 @@ SFString CBlock::getValueByName(const SFString& fieldName) const {
             break;
         case 'p':
             if ( fieldName % "parentHash" ) return fromHash(parentHash);
-            if ( fieldName % "price" ) return fmtFloat(price);
+            if ( fieldName % "price" ) return double2Str(price);
             break;
         case 't':
             if ( fieldName % "timestamp" ) return fromTimestamp(timestamp);
             if ( fieldName % "transactions" || fieldName % "transactionsCnt" ) {
                 uint32_t cnt = transactions.getCount();
-                if (fieldName.endsWith("Cnt"))
+                if (endsWith(fieldName, "Cnt"))
                     return asStringU(cnt);
                 if (!cnt) return "";
-                SFString retS;
+                string_q retS;
                 for (uint32_t i = 0 ; i < cnt ; i++) {
                     retS += transactions[i].Format();
                     retS += ((i < cnt - 1) ? ",\n" : "\n");
@@ -404,7 +404,7 @@ ostream& operator<<(ostream& os, const CBlock& item) {
 }
 
 //---------------------------------------------------------------------------
-const CBaseNode *CBlock::getObjectAt(const SFString& fieldName, uint32_t index) const {
+const CBaseNode *CBlock::getObjectAt(const string_q& fieldName, uint32_t index) const {
     if ( fieldName % "transactions" && index < transactions.getCount() )
         return &transactions[index];
     return NULL;
@@ -500,7 +500,7 @@ bool isPotentialAddr(SFUintBN test, SFAddress& addrOut) {
 
     addrOut = to_hex(test).c_str();
     // Totally a heuristic that can't really be supported, but a good probability that this isn't an address
-    if (addrOut.endsWith("00000000"))
+    if (endsWith(addrOut, "00000000"))
         return false;
 
     if (addrOut.length()<40)
@@ -512,7 +512,7 @@ bool isPotentialAddr(SFUintBN test, SFAddress& addrOut) {
 }
 
 //---------------------------------------------------------------------------
-void processPotentialAddrs(blknum_t bn, blknum_t tx, blknum_t tc, const SFString& potList, ADDRESSFUNC func, void *data) {
+void processPotentialAddrs(blknum_t bn, blknum_t tx, blknum_t tc, const string_q& potList, ADDRESSFUNC func, void *data) {
 
     if (!func)
         return;
@@ -565,7 +565,7 @@ bool CBlock::forEveryAddress(ADDRESSFUNC func, TRANSFUNC filterFunc, void *data)
                 (*func)(blockNumber, tr, t+10, trace->action.refundAddress, data);
                 (*func)(blockNumber, tr, t+10, trace->action.address, data);
                 (*func)(blockNumber, tr, t+10, trace->result.address, data);
-                SFString input = trace->action.input.substr(10);
+                string_q input = trace->action.input.substr(10);
                 if (!input.empty())
                     processPotentialAddrs(blockNumber, tr, t+10, input, func, data);
             }

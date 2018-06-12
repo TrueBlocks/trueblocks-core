@@ -23,9 +23,9 @@ int main(int argc, const char * argv[]) {
     if (!options.prepareArguments(argc, argv))
         return 0;
 
-    SFString checkResults;
+    string_q checkResults;
     while (!options.commandList.empty()) {
-        SFString command = nextTokenClear(options.commandList, '\n');
+        string_q command = nextTokenClear(options.commandList, '\n');
         if (!options.parseArguments(command))
             return 0;
 
@@ -33,13 +33,13 @@ int main(int argc, const char * argv[]) {
         if (!options.quiet)
             cout << (options.isMulti() ? "[" : "");
 
-        SFString list = options.getBlockNumList();
+        string_q list = options.getBlockNumList();
         while (!list.empty() && !shouldQuit()) {
             blknum_t bn = toLongU(nextTokenClear(list, '|'));
             if (options.isCheck) {
                 checkResults += checkOneBlock(bn, options);
             } else {
-                SFString result = doOneBlock(bn, options);
+                string_q result = doOneBlock(bn, options);
                 if (options.normalize) {
                     if (verbose)
                         cout << bn << "\n";
@@ -70,15 +70,15 @@ int main(int argc, const char * argv[]) {
 }
 
 //------------------------------------------------------------
-SFString doOneBlock(uint64_t num, const COptions& opt) {
+string_q doOneBlock(uint64_t num, const COptions& opt) {
 
     CBlock latest;
     getBlock(latest, "latest");
 
     CBlock gold;
     gold.blockNumber = num;
-    SFString result;
-    SFString numStr = asStringU(num);
+    string_q result;
+    string_q numStr = asStringU(num);
     if (opt.isRaw) {
 
         if (!queryRawBlock(result, numStr, true, opt.hashes)) {
@@ -86,17 +86,17 @@ SFString doOneBlock(uint64_t num, const COptions& opt) {
         } else {
             if (opt.force) { // turn this on to force a write of the block to the disc
                 CRPCResult generic;
-                generic.parseJson(cleanUpJson((char*)(const char*)result));
+                generic.parseJson(cleanUpJson((char*)result.c_str()));
                 result = generic.result;
-                gold.parseJson((char*)(const char*)result);
-                SFString fileName = getBinaryFilename(num);
+                gold.parseJson((char*)result.c_str());
+                string_q fileName = getBinaryFilename(num);
                 gold.finalized = isBlockFinal(gold.timestamp, latest.timestamp);
                 writeBlockToBinary(gold, fileName);
             }
         }
 
     } else {
-        SFString fileName = getBinaryFilename(gold.blockNumber);
+        string_q fileName = getBinaryFilename(gold.blockNumber);
         if (opt.isCache) {
 
             // --source::cache mode doesn't include timestamp in transactions
@@ -114,11 +114,11 @@ SFString doOneBlock(uint64_t num, const COptions& opt) {
         }
 
         if (!opt.silent) {
-            SFString format = opt.format;
+            string_q format = opt.format;
 //            if (false) { //opt.priceBlocks) {
 //                SFUintBN oneWei = canonicalWei("1000000000000000000");
-//                SFString dollars = "$" + asDollars(gold.timestamp, oneWei);
-//                format.Replace("{PRICE:CLOSE}", dollars);
+//                string_q dollars = "$" + asDollars(gold.timestamp, oneWei);
+//                replace(format, "{PRICE:CLOSE}", dollars);
 //            }
             result = gold.Format(format);
         }
@@ -127,24 +127,24 @@ SFString doOneBlock(uint64_t num, const COptions& opt) {
 }
 
 //------------------------------------------------------------
-SFString checkOneBlock(uint64_t num, const COptions& opt) {
+string_q checkOneBlock(uint64_t num, const COptions& opt) {
 
     if (opt.quiet == 2) {
         cout << "Checking block " << cYellow << asStringU(num) << cOff << "...       \r";
         cout.flush();
     }
-    SFString numStr = asStringU(num);
+    string_q numStr = asStringU(num);
 
     // Get the block raw from the node...
-    SFString fromNode;
+    string_q fromNode;
     queryRawBlock(fromNode, numStr, true, false);
-    fromNode.Replace("\"hash\":","\"blockHash\":");
+    replace(fromNode, "\"hash\":","\"blockHash\":");
     if (verbose)
         cout << num << "\n";
     fromNode = normalizeBlock(fromNode, true, num >= byzantiumBlock);
 
     // Now get the same block from quickBlocks
-    SFString fromQblocks;
+    string_q fromQblocks;
     CBlock qBlocks;
     queryBlock(qBlocks, numStr, true, false);
     for (uint32_t i = 0 ; i < qBlocks.transactions.getCount() ; i++) {
@@ -159,13 +159,13 @@ SFString checkOneBlock(uint64_t num, const COptions& opt) {
         cout << num << "\n";
     fromQblocks = normalizeBlock(qBlocks.Format(), true, num >= byzantiumBlock);
 
-extern SFString hiddenFields(void);
-    SFString result = hiddenFields() + "The strings are "; result += ((fromNode != fromQblocks) ? "different\n" : "the same\n");
-    SFString diffA  = "In fromNode but not fromQblocks:\n" + diffStr(fromNode, fromQblocks);
-    SFString diffB  = "In fromQblocks but not fromNode:\n" + diffStr(fromQblocks, fromNode);
+extern string_q hiddenFields(void);
+    string_q result = hiddenFields() + "The strings are "; result += ((fromNode != fromQblocks) ? "different\n" : "the same\n");
+    string_q diffA  = "In fromNode but not fromQblocks:\n" + diffStr(fromNode, fromQblocks);
+    string_q diffB  = "In fromQblocks but not fromNode:\n" + diffStr(fromQblocks, fromNode);
 
     // return the results
-    SFString head = "\n" + SFString('-',80) + "\n";
+    string_q head = "\n" + string_q('-',80) + "\n";
     if (opt.quiet == 2) {
         // only report results if we're being very quiet
         if (fromNode != fromQblocks)

@@ -16,12 +16,12 @@
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
-    SFString fileName;
+    string_q fileName;
 
     COptions(void);
     ~COptions(void);
 
-    bool parseArguments(SFString& command);
+    bool parseArguments(string_q& command);
     void Init(void);
 };
 

@@ -14,7 +14,7 @@
 #include "options.h"
 
 extern const char *STR_FMT_BLOOMS_OUT;
-extern SFString doOneBloom(uint64_t num, const COptions& opt);
+extern string_q doOneBloom(uint64_t num, const COptions& opt);
 //------------------------------------------------------------
 int main(int argc, const char * argv[]) {
 
@@ -26,15 +26,15 @@ int main(int argc, const char * argv[]) {
         return 0;
 
     while (!options.commandList.empty()) {
-        SFString command = nextTokenClear(options.commandList, '\n');
+        string_q command = nextTokenClear(options.commandList, '\n');
         if (!options.parseArguments(command))
             return 0;
 
         cout << (options.isMulti() ? "[" : "");
-        SFString list = options.getBlockNumList();
+        string_q list = options.getBlockNumList();
         while (!list.empty()) {
             blknum_t bn = toLongU(nextTokenClear(list, '|'));
-            SFString result = doOneBloom(bn, options);
+            string_q result = doOneBloom(bn, options);
             cout << result;
             if (!options.asBars) {
                 if (!list.empty())
@@ -48,37 +48,37 @@ int main(int argc, const char * argv[]) {
     return 0;
 }
 
-SFString toBits(const SFString& blIn) {
-    SFString ret = toLower(blIn).substr(2);
-    ret.ReplaceAll("0","0000");
-    ret.ReplaceAll("1","0001");
-    ret.ReplaceAll("2","0010");
-    ret.ReplaceAll("3","0011");
-    ret.ReplaceAll("4","0100");
-    ret.ReplaceAll("5","0101");
-    ret.ReplaceAll("6","0110");
-    ret.ReplaceAll("7","0111");
-    ret.ReplaceAll("8","1000");
-    ret.ReplaceAll("9","1001");
-    ret.ReplaceAll("a","1010");
-    ret.ReplaceAll("b","1011");
-    ret.ReplaceAll("c","1100");
-    ret.ReplaceAll("d","1101");
-    ret.ReplaceAll("e","1110");
-    ret.ReplaceAll("f","1111");
+string_q toBits(const string_q& blIn) {
+    string_q ret = toLower(blIn).substr(2);
+    replaceAll(ret, "0", "0000");
+    replaceAll(ret, "1", "0001");
+    replaceAll(ret, "2", "0010");
+    replaceAll(ret, "3", "0011");
+    replaceAll(ret, "4", "0100");
+    replaceAll(ret, "5", "0101");
+    replaceAll(ret, "6", "0110");
+    replaceAll(ret, "7", "0111");
+    replaceAll(ret, "8", "1000");
+    replaceAll(ret, "9", "1001");
+    replaceAll(ret, "a", "1010");
+    replaceAll(ret, "b", "1011");
+    replaceAll(ret, "c", "1100");
+    replaceAll(ret, "d", "1101");
+    replaceAll(ret, "e", "1110");
+    replaceAll(ret, "f", "1111");
     return "0x"+ret;
 }
-SFString asBar(const SFString& blIn) {
+string_q asBar(const string_q& blIn) {
     return toBits(blIn).substr(2).Substitute("0", "").Substitute("1", "-").Substitute("---", "🁡");
 }
 
 #include "bloom_blocks.h"
-SFString doOneBloom(uint64_t num, const COptions& opt) {
+string_q doOneBloom(uint64_t num, const COptions& opt) {
 
     CBlock gold;
     gold.blockNumber = num;
-    SFString result;
-    SFString numStr = asStringU(num);
+    string_q result;
+    string_q numStr = asStringU(num);
 
     if (opt.isRaw) {
 
@@ -89,7 +89,7 @@ SFString doOneBloom(uint64_t num, const COptions& opt) {
             HIDE_FIELD(CBloomBlock, "logsBloom");
         }
 
-        SFString r = getRawBlock(num);
+        string_q r = getRawBlock(num);
         CBloomBlock rawBlock;
         rawBlock.parseJson(cleanUpJson((char*)r.c_str()));
         HIDE_FIELD(CBloomTrans,"hash");
@@ -102,13 +102,13 @@ SFString doOneBloom(uint64_t num, const COptions& opt) {
         if (opt.asBars) {
             ostringstream os;
             if (opt.receipt)
-                os << "\n" << SFString('-',90) << " " << rawBlock.number << SFString('-',90) << "\n";
+                os << "\n" << string_q('-',90) << " " << rawBlock.number << string_q('-',90) << "\n";
             else
                 os << num << ": ";
             os << asBar(rawBlock.logsBloom) << "\n";
             for (uint32_t i = 0 ; i < rawBlock.transactions.getCount() ; i++) {
                 if (opt.receipt) {
-                    SFString x = asBar(rawBlock.transactions[i].receipt.logsBloom);
+                    string_q x = asBar(rawBlock.transactions[i].receipt.logsBloom);
                     if (!x.empty())
                         os << x << "\n";
                 }
@@ -125,7 +125,7 @@ SFString doOneBloom(uint64_t num, const COptions& opt) {
         SFBloomArray blooms;
         readBloomArray(blooms, getBinaryFilename(num).Substitute("/blocks/", "/blooms/"));
         ostringstream os;
-        os << "\n" << SFString('-',90) << " " << num << SFString('-',90) << "\n";
+        os << "\n" << string_q('-',90) << " " << num << string_q('-',90) << "\n";
         for (uint32_t i = 0 ; i < blooms.getCount(); i++) {
             os << asBar(bloom2Bits(blooms[i])) << "\n";
         }

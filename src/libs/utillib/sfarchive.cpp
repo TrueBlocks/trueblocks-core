@@ -58,17 +58,17 @@ namespace qblocks {
     }
 
     SFArchive& SFArchive::operator<<(const char *str) {
-        SFString s = str;
+        string_q s = str;
         Write(s);
         return *this;
     }
 
-    SFArchive& SFArchive::operator<<(const SFString& str) {
+    SFArchive& SFArchive::operator<<(const string_q& str) {
         Write(str);
         return *this;
     }
 
-    SFArchive& operator<<(SFArchive& archive, const SFStringArray& array) {
+    SFArchive& operator<<(SFArchive& archive, const CStringArray& array) {
         uint64_t count = array.getCount();
         archive << count;
         for (uint32_t i = 0 ; i < array.getCount() ; i++)
@@ -147,12 +147,12 @@ namespace qblocks {
         return *this;
     }
 
-    SFArchive& SFArchive::operator>>(SFString& str) {
+    SFArchive& SFArchive::operator>>(string_q& str) {
         Read(str);
         return *this;
     }
 
-    SFArchive& operator>>(SFArchive& archive, SFStringArray& array) {
+    SFArchive& operator>>(SFArchive& archive, CStringArray& array) {
         uint64_t count;
         archive >> count;
         for (uint32_t i = 0 ; i < count ; i++)
@@ -197,10 +197,10 @@ namespace qblocks {
     }
 
     //----------------------------------------------------------------------
-    uint64_t appendToAsciiFile(const SFString& fileName, const SFString& addContents) {
+    uint64_t appendToAsciiFile(const string_q& fileName, const string_q& addContents) {
         SFArchive asciiCache(WRITING_ARCHIVE);
         if (asciiCache.Lock(fileName, asciiWriteAppend, LOCK_NOWAIT)) {
-            asciiCache.WriteLine((const char*)addContents);
+            asciiCache.WriteLine(addContents.c_str());
             asciiCache.Release();
         }
         return fileSize(fileName);

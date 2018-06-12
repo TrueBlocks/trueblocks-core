@@ -30,14 +30,14 @@ CParams params[] = {
 uint32_t nParams = sizeof(params) / sizeof(CParams);
 
 //---------------------------------------------------------------------------------------------------
-bool COptions::parseArguments(SFString& command) {
+bool COptions::parseArguments(string_q& command) {
 
     if (!standardOptions(command))
         return false;
 
     Init();
     while (!command.empty()) {
-        SFString arg = nextTokenClear(command, ' ');
+        string_q arg = nextTokenClear(command, ' ');
         if ((arg == "-e" || arg == "--edit" || arg == "-o" || arg == "--open")) {
             if (isRun)
                 return usage("Incompatible options '-r' and '-e'. Choose one or the other.");
@@ -59,13 +59,13 @@ bool COptions::parseArguments(SFString& command) {
         } else if (arg == "-s" || arg == "--silent") {
             silent = true;
 
-        } else if (arg.startsWith("-n:") || arg.startsWith("--namespace:")) {
+        } else if (startsWith(arg, "-n:") || startsWith(arg, "--namespace:")) {
 
             namesp = arg.Substitute("-n:", "").Substitute(".--namespace:", "");
 
-        } else if (arg.Contains("-f")) {
-            SFString orig = arg;
-            SFString arg1 = nextTokenClear(arg, ':');
+        } else if (contains(arg, "-f")) {
+            string_q orig = arg;
+            string_q arg1 = nextTokenClear(arg, ':');
             if (arg1 != "-f" && arg1 != "--filter")
                 return usage("Unknown parameter: " + orig);
             filter = arg;
@@ -78,17 +78,17 @@ bool COptions::parseArguments(SFString& command) {
         } else if (arg == "-a" || arg == "--all") {
             isAll = true;
 
-        } else if (!arg.startsWith('-')) {
+        } else if (!startsWith(arg, '-')) {
             if (!classNames.empty())
                 classNames += "|";
             classNames += arg.Substitute("classDefinitions/", "").Substitute(".txt", "");
 
-        } else if (arg != "-t" && arg != "-h" && !arg.Contains("-v")) {
+        } else if (arg != "-t" && arg != "-h" && !contains(arg, "-v")) {
             return usage("Unknown parameter: " + arg);
         }
     }
 
-    SFString errMsg;
+    string_q errMsg;
     if (!folderExists("./classDefinitions/"))
         errMsg = "./classDefinitions folder does not exist. Quitting...";
 
@@ -119,11 +119,11 @@ bool COptions::parseArguments(SFString& command) {
         return usage(errMsg);
     }
 
-    if (SFString(getenv("NO_HEADER")) == "true") {
+    if (string_q(getenv("NO_HEADER")) == "true") {
         writeSource = true;
     }
 
-    if (SFString(getenv("NO_SOURCE")) == "true") {
+    if (string_q(getenv("NO_SOURCE")) == "true") {
         writeHeader = true;
     }
 
@@ -163,19 +163,19 @@ COptions::~COptions(void) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool listClasses(const SFString& path, void *data) {
-    if (path.endsWith("/")) {
+bool listClasses(const string_q& path, void *data) {
+    if (endsWith(path, "/")) {
         forAllFiles(path + "*", listClasses, data);
 
     } else {
-        if (path.Contains(".txt")) {
-            SFString file = path;
+        if (contains(path, ".txt")) {
+            string_q file = path;
             file = nextTokenClearReverse(file, '/').Substitute(".txt", "");
             COptions *opts = reinterpret_cast<COptions*>(data);
             bool include = true;
             if (!opts->filter.empty()) {
-                SFString contents = asciiFileToString(path);
-                include = contents.Contains(opts->filter);
+                string_q contents = asciiFileToString(path);
+                include = contains(contents, opts->filter);
             }
             if (include) {
                 if (!opts->classNames.empty())

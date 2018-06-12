@@ -16,8 +16,8 @@
 //-----------------------------------------------------------------------------
 class COptions : public CBlockOptions {
 public:
-    SFString tokens;
-    SFString holders;
+    string_q tokens;
+    string_q holders;
     bool asData;
     bool byAccount;
     bool noZero;
@@ -27,7 +27,7 @@ public:
     COptions(void);
     ~COptions(void);
 
-    bool parseArguments(SFString& command) override;
+    bool parseArguments(string_q& command) override;
     void Init(void) override;
-    SFString postProcess(const SFString& which, const SFString& str) const override;
+    string_q postProcess(const string_q& which, const string_q& str) const override;
 };

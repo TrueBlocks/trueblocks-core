@@ -49,8 +49,8 @@ public:
     SFAddressArray traceAddress;
     SFHash transactionHash;
     uint64_t transactionPosition;
-    SFString type;
-    SFString error;
+    string_q type;
+    string_q error;
     CTraceAction action;
     CTraceResult result;
 
@@ -62,8 +62,8 @@ public:
 
     DECLARE_NODE(CTrace);
 
-    const CBaseNode *getObjectAt(const SFString& fieldName, uint32_t index) const override;
-    const SFString getStringAt(const SFString& name, uint32_t i) const override;
+    const CBaseNode *getObjectAt(const string_q& fieldName, uint32_t index) const override;
+    const string_q getStringAt(const string_q& name, uint32_t i) const override;
 
     // EXISTING_CODE
     bool isError(void) const;

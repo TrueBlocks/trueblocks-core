@@ -22,17 +22,17 @@ public:
     bool expenseOnly;
     COptionsBlockList blocks;
     SFTime firstDate;
-    SFString funcFilter;
+    string_q funcFilter;
     int errFilt;
     bool reverseSort;
     SFTime lastDate;
     bool openFile;
-    SFString addr;
+    string_q addr;
     uint32_t maxTransactions;
     uint32_t pageSize;
-    SFString exportFormat;
-    SFString name;
-    SFString archiveFile;
+    string_q exportFormat;
+    string_q name;
+    string_q archiveFile;
     bool wantsArchive;
     bool cache;
     uint32_t acct_id;
@@ -41,7 +41,7 @@ public:
     COptions(void);
     ~COptions(void);
 
-    SFString postProcess(const SFString& which, const SFString& str) const override;
-    bool parseArguments(SFString& command) override;
+    string_q postProcess(const string_q& which, const string_q& str) const override;
+    bool parseArguments(string_q& command) override;
     void Init(void) override;
 };

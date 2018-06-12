@@ -13,7 +13,6 @@
 #include "basetypes.h"
 #include "options_base.h"
 #include "database.h"
-#include "sfstring.h"
 
 namespace qblocks {
 
@@ -23,14 +22,14 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    SFString COptionsTransList::parseTransList(const SFString& argIn) {
+    string_q COptionsTransList::parseTransList(const string_q& argIn) {
 
-        SFString arg = argIn;
-        if (arg.startsWith("0x")) {
+        string_q arg = argIn;
+        if (startsWith(arg, "0x")) {
 
-            if (arg.Contains(".")) {
+            if (contains(arg, ".")) {
 
-                SFString hash = nextTokenClear(arg, '.');
+                string_q hash = nextTokenClear(arg, '.');
                 if (!isHash(hash) || !isNumeral(arg))
                     return "The argument '" + argIn + "' is not properly formatted.";
                 queries += (hash + "." + arg + "|");  // blockHash.transID
@@ -39,14 +38,14 @@ namespace qblocks {
                 queries += (arg + "|");  // transHash
 
             } else {
-                SFString ret = "The argument '" + argIn + "' is not properly formatted.";
+                string_q ret = "The argument '" + argIn + "' is not properly formatted.";
                 if (arg.length() != 66)
                     ret += " Is it the right length?";
                 return ret;
             }
 
-        } else if (arg.Contains(".")) {
-            SFString blockNum = nextTokenClear(arg, '.');
+        } else if (contains(arg, ".")) {
+            string_q blockNum = nextTokenClear(arg, '.');
             if (!isNumeral(blockNum) || !isNumeral(arg))
                 return "The argument '" + argIn + "' is not properly formatted.";
             queries += (argIn + "|");  // blockNum.transID
@@ -65,7 +64,7 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    SFString COptionsTransList::toString(void) const {
+    string_q COptionsTransList::toString(void) const {
         return queries;
     }
 

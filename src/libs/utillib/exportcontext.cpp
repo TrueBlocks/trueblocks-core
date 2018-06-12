@@ -66,7 +66,7 @@ namespace qblocks {
         Output(os.str().c_str());
 #else
         char val[64];
-        sprintf(val, (fmt.empty() ? "%d" : (const char*)fmt), ui);
+        sprintf(val, (fmt.empty() ? "%d" : fmt.c_str()), ui);
         Output(val);
 #endif
         return *this;
@@ -88,7 +88,7 @@ namespace qblocks {
         Output(os.str().c_str());
 #else
         char val[64];
-        sprintf(val, (fmt.empty() ? "%d" : (const char*)fmt), i);
+        sprintf(val, (fmt.empty() ? "%d" : fmt.c_str()), i);
         Output(val);
 #endif
         return *this;
@@ -96,14 +96,14 @@ namespace qblocks {
 
     //-------------------------------------------------------------
     CExportContext& CExportContext::operator<<(float f) {
-        SFString val = formatFloat(f);
+        string_q val = double2Str(f);
         Output(val);
         return *this;
     }
 
     //-------------------------------------------------------------
     CExportContext& CExportContext::operator<<(double f) {
-        SFString val = formatFloat(f);
+        string_q val = double2Str(f);
         Output(val);
         return *this;
     }
@@ -115,7 +115,7 @@ namespace qblocks {
     }
 
     //-------------------------------------------------------------
-    CExportContext& CExportContext::operator<<(const SFString& str) {
+    CExportContext& CExportContext::operator<<(const string_q& str) {
         if (str.length() >= 3 && str.substr(0,2) == "`%" && str.at(2) != '%')
             fmt = str.substr(1);
         else if (str == "%")
@@ -132,9 +132,9 @@ namespace qblocks {
     }
 
     //-------------------------------------------------------------
-    void CFileExportContext::Output(const SFString& sss) {
+    void CFileExportContext::Output(const string_q& sss) {
         ASSERT(m_output);
-        fprintf(m_output, "%s", (const char *)sss);
+        fprintf(m_output, "%s", sss.c_str());
     }
 
     //-------------------------------------------------------------
@@ -143,7 +143,7 @@ namespace qblocks {
         ASSERT(0);
     }
 
-    void CStringExportContext::Output(const SFString& sss) {
+    void CStringExportContext::Output(const string_q& sss) {
         str += sss;
     }
 }  // namespace qblocks

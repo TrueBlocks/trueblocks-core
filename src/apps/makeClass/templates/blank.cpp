@@ -21,11 +21,11 @@
 IMPLEMENT_NODE([{CLASS_NAME}], [{BASE_CLASS}]);
 
 //---------------------------------------------------------------------------
-[{SCOPE}] SFString next[{PROPER}]Chunk(const SFString& fieldIn, const void *dataPtr);
-static SFString next[{PROPER}]Chunk_custom(const SFString& fieldIn, const void *dataPtr);
+[{SCOPE}] string_q next[{PROPER}]Chunk(const string_q& fieldIn, const void *dataPtr);
+static string_q next[{PROPER}]Chunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void [{CLASS_NAME}]::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
+void [{CLASS_NAME}]::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -34,7 +34,7 @@ void [{CLASS_NAME}]::Format(CExportContext& ctx, const SFString& fmtIn, void *da
         return;
     }
 
-    SFString fmt = fmtIn;
+    string_q fmt = fmtIn;
     if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
@@ -43,7 +43,7 @@ void [{CLASS_NAME}]::Format(CExportContext& ctx, const SFString& fmtIn, void *da
 }
 
 //---------------------------------------------------------------------------
-SFString next[{PROPER}]Chunk(const SFString& fieldIn, const void *dataPtr) {
+string_q next[{PROPER}]Chunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
         return ((const [{CLASS_NAME}] *)dataPtr)->getValueByName(fieldIn);
 
@@ -54,7 +54,7 @@ SFString next[{PROPER}]Chunk(const SFString& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool [{CLASS_NAME}]::setValueByName(const SFString& fieldName, const SFString& fieldValue) {
+bool [{CLASS_NAME}]::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
     // EXISTING_CODE
     // EXISTING_CODE
 
@@ -119,7 +119,7 @@ void [{CLASS_NAME}]::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString next[{PROPER}]Chunk_custom(const SFString& fieldIn, const void *dataPtr) {
+string_q next[{PROPER}]Chunk_custom(const string_q& fieldIn, const void *dataPtr) {
     const [{CLASS_NAME}] *[{SHORT3}] = (const [{CLASS_NAME}] *)dataPtr;
     if ([{SHORT3}]) {
         switch (tolower(fieldIn[0])) {
@@ -140,7 +140,7 @@ SFString next[{PROPER}]Chunk_custom(const SFString& fieldIn, const void *dataPtr
 }
 
 //---------------------------------------------------------------------------
-bool [{CLASS_NAME}]::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
+bool [{CLASS_NAME}]::handleCustomFormat(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
@@ -158,10 +158,10 @@ bool [{CLASS_NAME}]::readBackLevel(SFArchive& archive) {
 
 [{OPERATORS}]
 //---------------------------------------------------------------------------
-SFString [{CLASS_NAME}]::getValueByName(const SFString& fieldName) const {
+string_q [{CLASS_NAME}]::getValueByName(const string_q& fieldName) const {
 
     // Give customized code a chance to override first
-    SFString ret = next[{PROPER}]Chunk_custom(fieldName, this);
+    string_q ret = next[{PROPER}]Chunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 

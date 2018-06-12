@@ -41,7 +41,7 @@ CParams params[] = {
 uint32_t nParams = sizeof(params) / sizeof(CParams);
 
 //---------------------------------------------------------------------------------------------------
-bool COptions::parseArguments(SFString& command) {
+bool COptions::parseArguments(string_q& command) {
 
     if (!standardOptions(command))
         return false;
@@ -49,8 +49,8 @@ bool COptions::parseArguments(SFString& command) {
     Init();
     blknum_t latestBlock = getLatestBlockFromClient();
     while (!command.empty()) {
-        SFString arg = nextTokenClear(command, ' ');
-        SFString orig = arg;
+        string_q arg = nextTokenClear(command, ' ');
+        string_q orig = arg;
         if (arg == "-i" || arg == "--income") {
             if (expenseOnly)
                 return usage("Only one of --income or --expense may be specified.");
@@ -66,40 +66,40 @@ bool COptions::parseArguments(SFString& command) {
             prettyPrint = true;
             exportFormat = "json";
 
-        } else if (arg.startsWith("-f:") || arg.startsWith("--fmt:")) {
+        } else if (startsWith(arg, "-f:") || startsWith(arg, "--fmt:")) {
             prettyPrint = true;
             exportFormat = arg.Substitute("-f:", "").Substitute("--fmt:", "");
             if (exportFormat.empty())
                 return usage("Please provide a formatting option with " + orig + ". Quitting...");
 
-        } else if (arg.startsWith("--func:")) {
+        } else if (startsWith(arg, "--func:")) {
             funcFilter = arg.Substitute("--func:", "");
             if (funcFilter.empty())
                 return usage("Please provide a function to filter on " + orig + ". Quitting...");
 
-        } else if (arg.startsWith("--errFilt")) {
+        } else if (startsWith(arg, "--errFilt")) {
             // weird, but 1 == no errors, 2 == errors only
-            errFilt = true + arg.Contains(":errsOnly");
+            errFilt = true + contains(arg, ":errsOnly");
 
-        } else if (arg.startsWith("--reverse")) {
+        } else if (startsWith(arg, "--reverse")) {
             reverseSort = true;
 
-        } else if (arg.startsWith("--acct_id:")) {
+        } else if (startsWith(arg, "--acct_id:")) {
             arg = arg.Substitute("--acct_id:", "");
             acct_id = toLong32u(arg);
 
-        } else if (arg.startsWith("--cache")) {
+        } else if (startsWith(arg, "--cache")) {
             cache = true;
 
-        } else if (arg.startsWith("-b:") || arg.startsWith("--blocks:")) {
+        } else if (startsWith(arg, "-b:") || startsWith(arg, "--blocks:")) {
 
             if (firstDate != earliestDate || lastDate != latestDate)
                 return usage("Specifiy either a date range or a block range, not both. Quitting...");
 
-            SFString ret = blocks.parseBlockList(arg.Substitute("-b:","").Substitute("--blocks:",""), latestBlock);
-            if (ret.Contains("'stop' must be strictly larger than 'start'"))
+            string_q ret = blocks.parseBlockList(arg.Substitute("-b:","").Substitute("--blocks:",""), latestBlock);
+            if (contains(ret, "'stop' must be strictly larger than 'start'"))
                 ret = "";
-            if (ret.endsWith("\n")) {
+            if (endsWith(ret, "\n")) {
                 cerr << "\n  " << ret << "\n";
                 return false;
             } else if (!ret.empty()) {
@@ -112,20 +112,20 @@ bool COptions::parseArguments(SFString& command) {
         } else if (arg == "-d") {
             return usage("Invalid option -d. This option must include :firstDate or :first:lastDate range.");
 
-        } else if (arg.startsWith("-d:") || arg.startsWith("--dates:")) {
+        } else if (startsWith(arg, "-d:") || startsWith(arg, "--dates:")) {
 
             if (blocks.hasBlocks())
                 return usage("Specifiy either a date range or a block range, not both. Quitting...");
 
-            SFString lateStr = arg.Substitute("-d:", "").Substitute("--dates:", "");
-            SFString earlyStr = nextTokenClear(lateStr, ':');
+            string_q lateStr = arg.Substitute("-d:", "").Substitute("--dates:", "");
+            string_q earlyStr = nextTokenClear(lateStr, ':');
             if (!earlyStr.empty() && !isNumeral(earlyStr))
                 return usage("Invalid date: " + orig + ". Quitting...");
             if (!lateStr.empty() && !isNumeral(lateStr))
                 return usage("Invalid date: " + orig + ". Quitting...");
 
-            earlyStr.ReplaceAll("-", "");
-            lateStr.ReplaceAll("-", "");
+            replaceAll(earlyStr, "-", "");
+            replaceAll(lateStr,  "-", "");
 
             if (!earlyStr.empty() && earlyStr.length() != 8 && earlyStr.length() != 14)
                 return usage("Option -d: Invalid date format for startDate. "
@@ -149,7 +149,7 @@ bool COptions::parseArguments(SFString& command) {
         } else if (arg == "-r" || arg == "--rerun") {
             rerun = true;
 
-        } else if (arg.startsWith("--sleep:")) {
+        } else if (startsWith(arg, "--sleep:")) {
             arg = arg.Substitute("--sleep:", "");
             if (arg.empty() || !isdigit(arg[0]))
                 return usage("Sleep amount must be a numeral. Quitting...");
@@ -159,14 +159,14 @@ bool COptions::parseArguments(SFString& command) {
                 usleep(wait * 1000000);
             }
 
-        } else if (arg.startsWith("-m:") || arg.startsWith("--max:")) {
-            SFString val = arg.Substitute("-m:", "").Substitute("--max:", "");
+        } else if (startsWith(arg, "-m:") || startsWith(arg, "--max:")) {
+            string_q val = arg.Substitute("-m:", "").Substitute("--max:", "");
             if (val.empty() || !isdigit(val[0]))
                 return usage("Please supply a value with the --max: option. Quitting...");
             maxTransactions = toLong32u(val);
 
-        } else if (arg.startsWith("-n:") || arg.startsWith("--name:")) {
-            SFString val = arg.Substitute("-n:", "").Substitute("--name:", "");
+        } else if (startsWith(arg, "-n:") || startsWith(arg, "--name:")) {
+            string_q val = arg.Substitute("-n:", "").Substitute("--name:", "");
             if (val.empty())
                 return usage("You must supply a name with the --name option. Quitting...");
             name = val;
@@ -177,11 +177,11 @@ bool COptions::parseArguments(SFString& command) {
             wantsArchive = true;
             archiveFile = "";
 
-        } else if (arg.startsWith("-a:") || arg.startsWith("--archive:")) {
-            SFString fileName = arg.Substitute("-a:", "").Substitute("--archive:", "");
+        } else if (startsWith(arg, "-a:") || startsWith(arg, "--archive:")) {
+            string_q fileName = arg.Substitute("-a:", "").Substitute("--archive:", "");
 
             CFilename filename(fileName);
-            if (!filename.getPath().startsWith('/'))
+            if (!startsWith(filename.getPath(), '/'))
                 return usage("Archive file '" + arg + "' does not resolve to a full path. "
                              "Use ./path/filename, ~/path/filename, or a fully qualified path.");
             archiveFile = filename.getFullPath();
@@ -192,7 +192,7 @@ bool COptions::parseArguments(SFString& command) {
             editFile(configPath("quickBlocks.toml"));
             exit(0);
 
-        } else if (arg.startsWith('-')) {  // do not collapse
+        } else if (startsWith(arg, '-')) {  // do not collapse
             if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);
             }
@@ -257,14 +257,14 @@ COptions::~COptions(void) {
 }
 
 //--------------------------------------------------------------------------------
-SFString COptions::postProcess(const SFString& which, const SFString& str) const {
+string_q COptions::postProcess(const string_q& which, const string_q& str) const {
 
     if (which == "options") {
         return str;
 
     } else if (which == "notes" && (verbose || COptions::isReadme)) {
 
-        SFString ret;
+        string_q ret;
         ret += "Portions of this software are Powered by Etherscan.io APIs.\n";
         return ret;
     }

@@ -10,7 +10,7 @@ cmdLineTest -th
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
 |  | testNum | the number of the test to run |
-| -b | --bool val | enter a boolean value (either `0`, `1`, `false`, or `true`) |
+| -b | --bool val | enter a boolean value (either '0', '1', 'false', or 'true') |
 | -i | --int val | enter any numeric value |
 | -u | --uint val | enter any numeric value greater than or equal to zero |
 | -s | --string val | enter any value |

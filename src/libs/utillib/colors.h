@@ -16,23 +16,23 @@
 namespace qblocks {
 
     // regular colors
-    extern SFString cBlack;
-    extern SFString cRed;
-    extern SFString cGreen;
-    extern SFString cYellow;
-    extern SFString cBlue;
-    extern SFString cMagenta;
-    extern SFString cTeal;
-    extern SFString cWhite;
-    extern SFString cOff;
+    extern string_q cBlack;
+    extern string_q cRed;
+    extern string_q cGreen;
+    extern string_q cYellow;
+    extern string_q cBlue;
+    extern string_q cMagenta;
+    extern string_q cTeal;
+    extern string_q cWhite;
+    extern string_q cOff;
 
-    extern SFString bbold;
-    extern SFString italic;
-    extern SFString underline;
-    extern SFString reversed;
-    extern SFString strikethru;
-    extern SFString greenCheck;
-    extern SFString redX;
+    extern string_q bbold;
+    extern string_q italic;
+    extern string_q underline;
+    extern string_q reversed;
+    extern string_q strikethru;
+    extern string_q greenCheck;
+    extern string_q redX;
 
     // bold italic colors
     #define biBlack  (cBlack+bbold+italic)
@@ -65,10 +65,10 @@ namespace qblocks {
     extern bool colorsDisabled(void);
 
     //-----------------------------------------------------------------------
-    inline SFString convertColor(const SFString& colorIn) {
-        bool bold = colorIn.Contains("_b");
-        bool ital = colorIn.Contains("_i");
-        SFString color = colorIn;
+    inline string_q convertColor(const string_q& colorIn) {
+        bool bold = contains(colorIn, "_b");
+        bool ital = contains(colorIn, "_i");
+        string_q color = colorIn;
         color = nextTokenClear(color, '_');
         if (color == "black"  ) return (bold ? bBlack   : ital ? iBlack   : cBlack   );
         else if (color == "blue"   ) return (bold ? bBlue    : ital ? iBlue    : cBlue    );
@@ -82,8 +82,8 @@ namespace qblocks {
     }
 
     //-----------------------------------------------------------------------
-    extern void progressBar(uint64_t _part, uint64_t _whole, const SFString& msgs);
-    extern void progressBar(uint64_t _part, uint64_t _whole, double _tim, const SFString& msgs);
+    extern void progressBar(uint64_t _part, uint64_t _whole, const string_q& msgs);
+    extern void progressBar(uint64_t _part, uint64_t _whole, double _tim, const string_q& msgs);
     extern uint64_t barLen(uint64_t newLen = 0);
     extern double getProgBarVal(void);
 }  // namespace qblocks

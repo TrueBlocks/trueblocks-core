@@ -47,7 +47,7 @@ public:
 
     DECLARE_NODE(CReceipt);
 
-    const CBaseNode *getObjectAt(const SFString& fieldName, uint32_t index) const override;
+    const CBaseNode *getObjectAt(const string_q& fieldName, uint32_t index) const override;
 
     // EXISTING_CODE
     const CTransaction *pTrans;
@@ -57,7 +57,7 @@ public:
     SFAddress from12;
     SFHash blockHash;
     uint32_t blockNumber;
-    SFString root;
+    string_q root;
     SFAddress to;
     SFHash transactionHash;
     uint32_t transactionIndex;
@@ -176,7 +176,7 @@ extern SFArchive& operator>>(SFArchive& archive, CReceipt& rec);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-extern SFString nextTransactionChunk(const SFString& fieldIn, const void *data);
+extern string_q nextTransactionChunk(const string_q& fieldIn, const void *data);
 // EXISTING_CODE
 }  // namespace qblocks
 

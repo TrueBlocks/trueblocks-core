@@ -25,7 +25,7 @@ CParams params[] = {
 uint32_t nParams = sizeof(params) / sizeof(CParams);
 
 //---------------------------------------------------------------------------------------------------
-bool COptions::parseArguments(SFString& command) {
+bool COptions::parseArguments(string_q& command) {
 
     if (!standardOptions(command))
         return false;
@@ -33,16 +33,16 @@ bool COptions::parseArguments(SFString& command) {
     Init();
     while (!command.empty()) {
 
-        SFString arg  = nextTokenClear(command, ' ');
+        string_q arg  = nextTokenClear(command, ' ');
         // do not collapse
         if (arg == "-c" || arg == "--current")
             arg = "-a:now";
-        SFString orig = arg;
+        string_q orig = arg;
 
         if (arg == "-f" || arg == "--freshen") {
             freshen = true;
 
-        } else if (arg.startsWith("-a:") || arg.startsWith("--at:")) {
+        } else if (startsWith(arg, "-a:") || startsWith(arg, "--at:")) {
             arg = orig.Substitute("-a:","").Substitute("--at:","");
             if (arg == "now") {
                 at = toTimestamp(Now());
@@ -52,13 +52,13 @@ bool COptions::parseArguments(SFString& command) {
                     return usage("Timestamp expected: " + orig);
             }
 
-        } else if (arg.startsWith("-p:") || arg.startsWith("--period:")) {
+        } else if (startsWith(arg, "-p:") || startsWith(arg, "--period:")) {
             arg = orig.Substitute("-p:","").Substitute("--period:","");
-            freq = newUnsigned32(arg);
+            freq = toLongU(arg);
             if (!isUnsigned(arg) || freq % 5)
                 return usage("Positive multiple of 5 expected: " + orig);
 
-        } else if (arg.startsWith("--pair:")) {
+        } else if (startsWith(arg, "--pair:")) {
             arg = orig.Substitute("--pair:","");
             source.pair = arg;
 
@@ -85,7 +85,6 @@ void COptions::Init(void) {
 
     freshen = false;
     freq = 120;
-    hour = 0;
     at = 0;
 }
 
@@ -96,7 +95,7 @@ COptions::COptions(void) {
 }
 
 //--------------------------------------------------------------------------------
-SFString COptions::postProcess(const SFString& which, const SFString& str) const {
+string_q COptions::postProcess(const string_q& which, const string_q& str) const {
 
     if (which == "options") {
         //return str.Substitute("address_list block_list", "<address> [address...] [block...]")
@@ -104,7 +103,7 @@ SFString COptions::postProcess(const SFString& which, const SFString& str) const
 
     } else if (which == "notes" && (verbose || COptions::isReadme)) {
 
-        //SFString ret;
+        //string_q ret;
         //ret += "[{addresses}] must start with '0x' and be forty characters long.\n";
         //ret += "[{block_list}] may be a space-separated list of values, a start-end range, a [{special}], or any combination.\n";
         //ret += "This tool retrieves information from the local node or the ${FALLBACK} node, if configured (see documentation).\n";

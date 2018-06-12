@@ -16,8 +16,8 @@
 namespace qblocks {
 
 #define MAJOR 0
-#define MINOR 4
-#define BUILD 7
+#define MINOR 5
+#define BUILD 1
 #define SUBVERS "alpha"
     //--------------------------------------------------------------------------------
     uint32_t getVersionNum(void) {
@@ -30,7 +30,7 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    SFString getVersionStr(const SFString& sep1, const SFString& sep2) {
+    string_q getVersionStr(const string_q& sep1, const string_q& sep2) {
         return asStringU(MAJOR) + sep1 + asStringU(MINOR) + sep1 + asStringU(BUILD) + sep2 + SUBVERS;
     }
 

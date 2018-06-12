@@ -26,7 +26,7 @@ CParams params[] = {
 uint32_t nParams = sizeof(params) / sizeof(CParams);
 
 //---------------------------------------------------------------------------------------------------
-bool COptions::parseArguments(SFString& command) {
+bool COptions::parseArguments(string_q& command) {
 
     if (!standardOptions(command))
         return false;
@@ -35,7 +35,7 @@ bool COptions::parseArguments(SFString& command) {
     blknum_t latestBlock = getLatestBlockFromClient();
     while (!command.empty()) {
 
-        SFString arg = nextTokenClear(command, ' ');
+        string_q arg = nextTokenClear(command, ' ');
 
         if (arg == "-o" || arg == "--force") {
             etherlib_init("binary");
@@ -60,14 +60,14 @@ bool COptions::parseArguments(SFString& command) {
             UNHIDE_FIELD(CReceipt,     "logsBloom");
             receipt = true;
 
-        } else if (arg.startsWith('-')) {  // do not collapse
+        } else if (startsWith(arg, '-')) {  // do not collapse
             if (!builtInCmd(arg))
                 return usage("Invalid option: " + arg);
 
         } else {
 
-            SFString ret = blocks.parseBlockList(arg, latestBlock);
-            if (ret.endsWith("\n")) {
+            string_q ret = blocks.parseBlockList(arg, latestBlock);
+            if (endsWith(ret, "\n")) {
                 cerr << "\n  " << ret << "\n";
                 return false;
             } else if (!ret.empty()) {
@@ -129,7 +129,7 @@ bool COptions::isMulti(void) const {
 }
 
 //--------------------------------------------------------------------------------
-SFString COptions::postProcess(const SFString& which, const SFString& str) const {
+string_q COptions::postProcess(const string_q& which, const string_q& str) const {
 
     if (which == "options") {
         return
@@ -138,7 +138,7 @@ SFString COptions::postProcess(const SFString& which, const SFString& str) const
 
     } else if (which == "notes" && (verbose || COptions::isReadme)) {
 
-        SFString ret;
+        string_q ret;
         ret += "[{block_list}] is a space-separated list of values, a start-end range, a [{special}], or any combination.\n";
         ret += "This tool retrieves information from the local node or the ${FALLBACK} node, if configured (see documentation).\n";
         ret += "[{special}] blocks are detailed under " + cTeal + "[{whenBlock --list}]" + cOff + ".\n";

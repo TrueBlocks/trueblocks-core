@@ -11,7 +11,7 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-#include "sfstring.h"
+#include "basetypes.h"
 #include "sfos.h"
 
 namespace qblocks {
@@ -47,12 +47,12 @@ namespace qblocks {
     extern CExportOptions& expContext(void);
     extern void incIndent(void);
     extern void decIndent(void);
-    extern SFString indent(void);
+    extern string_q indent(void);
 
     class CExportContext {
     public:
         uint32_t nTabs;
-        SFString fmt;
+        string_q fmt;
         char     tCh;
 
         CExportContext(void);
@@ -67,15 +67,15 @@ namespace qblocks {
         virtual CExportContext& operator<<(float f);
         virtual CExportContext& operator<<(double f);
         virtual CExportContext& operator<<(const char *str);
-        virtual CExportContext& operator<<(const SFString& str);
+        virtual CExportContext& operator<<(const string_q& str);
 
-        virtual SFString tabs(uint32_t add = 0) { return SFString(tCh, nTabs + add); }
-        virtual SFString inc(void) { SFString ret = SFString(tCh, nTabs); nTabs++; return ret; }
-        virtual SFString dec(void) { nTabs--; return SFString(tCh, nTabs); }
+        virtual string_q tabs(uint32_t add = 0) { return string_q(tCh, nTabs + add); }
+        virtual string_q inc(void) { string_q ret = string_q(tCh, nTabs); nTabs++; return ret; }
+        virtual string_q dec(void) { nTabs--; return string_q(tCh, nTabs); }
 
         virtual void setOutput(void *output) = 0;
         virtual void* getOutput(void) const = 0;
-        virtual void Output(const SFString& str) = 0;
+        virtual void Output(const string_q& str) = 0;
         virtual void flush(void) = 0;
     };
 
@@ -88,8 +88,8 @@ namespace qblocks {
             m_output = ((output == NULL) ? stdout : reinterpret_cast<FILE*>(output));
         }
 
-        CFileExportContext(const SFString& filename, const SFString& mode) {
-            m_output = fopen((const char *)filename, mode);
+        CFileExportContext(const string_q& filename, const string_q& mode) {
+            m_output = fopen(filename.c_str(), mode.c_str());
             if (!m_output)
                 m_output = stdout;
         }
@@ -100,7 +100,7 @@ namespace qblocks {
 
         void  setOutput(void *output);
         void *getOutput(void) const { return m_output; }
-        void  Output(const SFString& str);
+        void  Output(const string_q& str);
         void  flush(void) {
             ASSERT(m_output)
             fflush(m_output);
@@ -121,19 +121,19 @@ namespace qblocks {
     // Handy for generating code into strings
     class CStringExportContext : public CExportContext {
     public:
-        SFString str;
+        string_q str;
 
         CStringExportContext(void) {}
 
         void  setOutput(void *output);
         void* getOutput(void) const { return NULL; }
-        void  Output(const SFString& s);
+        void  Output(const string_q& s);
         void  flush(void) { }  // do nothing
 
-        operator SFString(void) const;
+        operator string_q(void) const;
     };
 
-    inline CStringExportContext::operator SFString(void) const {
+    inline CStringExportContext::operator string_q(void) const {
         return str;
     }
 }  // namespace qblocks

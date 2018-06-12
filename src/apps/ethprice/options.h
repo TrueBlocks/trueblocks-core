@@ -16,15 +16,14 @@
 class COptions : public COptionsBase {
 public:
     bool        freshen;
-    uint32_t    freq;
-    uint32_t    hour;
+    uint64_t    freq;
     timestamp_t at;
     CPriceSource source;
 
     COptions(void);
     ~COptions(void) {};
 
-    bool parseArguments(SFString& command) override;
+    bool parseArguments(string_q& command) override;
     void Init(void) override;
-    SFString postProcess(const SFString& which, const SFString& str) const override;
+    string_q postProcess(const string_q& which, const string_q& str) const override;
 };

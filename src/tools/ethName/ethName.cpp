@@ -24,7 +24,7 @@ int main(int argc, const char *argv[]) {
 
     bool loaded = options.loadNames();
     while (!options.commandList.empty()) {
-        SFString command = nextTokenClear(options.commandList, '\n');
+        string_q command = nextTokenClear(options.commandList, '\n');
         if (!options.parseArguments(command))
             return 0;
 
@@ -38,7 +38,7 @@ int main(int argc, const char *argv[]) {
             exit(0);
         }
 
-        SFString fmt = (options.addrOnly ? "[{ADDR}]" : (options.data ? STR_NAME_DATA : ""));
+        string_q fmt = (options.addrOnly ? "[{ADDR}]" : (options.data ? STR_NAME_DATA : ""));
         if (options.list) {
             if (options.count)
                 cout << options.namedAccounts.getCount() << " items\n";
@@ -47,7 +47,7 @@ int main(int argc, const char *argv[]) {
             exit(0);
         }
 
-        SFString ret = options.showMatches();
+        string_q ret = options.showMatches();
         if (!ret.empty())
             cout << ret;
         else if (verbose)
@@ -59,10 +59,10 @@ int main(int argc, const char *argv[]) {
 }
 
 //-----------------------------------------------------------------------
-SFString COptions::showMatches(void) {
-    SFString ret;
+string_q COptions::showMatches(void) {
+    string_q ret;
     uint32_t hits = 0;
-    SFString fmt = (addrOnly ? "[{ADDR}]" : "");
+    string_q fmt = (addrOnly ? "[{ADDR}]" : "");
     for (uint32_t i = 0 ; i < namedAccounts.getCount() ; i++) {
         if (namedAccounts[i].Match(addr, name, source, matchCase, all)) {
             ret += (namedAccounts[i].Format(fmt).Substitute("\n", " ").Substitute("  ", " ") + "\n");

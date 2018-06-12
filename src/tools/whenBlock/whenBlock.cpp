@@ -28,16 +28,16 @@ int main(int argc, const char *argv[]) {
         return 0;
 
     while (!options.commandList.empty()) {
-        SFString command = nextTokenClear(options.commandList, '\n');
+        string_q command = nextTokenClear(options.commandList, '\n');
         if (!options.parseArguments(command))
             return 0;
 
         for (uint32_t i = 0 ; i < options.requests.getCount() ; i++ ) {
 
-            SFString value = options.requests[i];
-            SFString mode = nextTokenClear(value, ':');
+            string_q value = options.requests[i];
+            string_q mode = nextTokenClear(value, ':');
 
-            SFString special;
+            string_q special;
             if (mode == "special") {
                 mode = "block";
                 special = nextTokenClear(value,'|');
@@ -74,11 +74,11 @@ int main(int argc, const char *argv[]) {
             if (block.blockNumber == 0)
                 block.timestamp = 1438269960;
 
-            SFString def = (options.alone ? "[{BLOCKNUMBER}\\t][{DATE}]\\n" : "block #[{BLOCKNUMBER}][ : {TIMESTAMP}][ : {DATE}]\\n");
-            SFString fmt = getGlobalConfig()->getDisplayStr(options.alone, def);
+            string_q def = (options.alone ? "[{BLOCKNUMBER}\\t][{DATE}]\\n" : "block #[{BLOCKNUMBER}][ : {TIMESTAMP}][ : {DATE}]\\n");
+            string_q fmt = getGlobalConfig()->getDisplayStr(options.alone, def);
             if (verbose && !special.empty()) {
-                SFString sp = "(" + special + ")";
-                fmt.Replace("{BLOCKNUMBER}", "{BLOCKNUMBER} " + sp);
+                string_q sp = "(" + special + ")";
+                replace(fmt, "{BLOCKNUMBER}", "{BLOCKNUMBER} " + sp);
             }
             cout << block.Format(fmt);
         }

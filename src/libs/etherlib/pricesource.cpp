@@ -25,22 +25,22 @@ namespace qblocks {
     }
 
     //---------------------------------------------------------------------------
-    SFString CPriceSource::getDatabasePath(void) const {
-        SFString source = url.Substitute("http://","").Substitute("https://","");
+    string_q CPriceSource::getDatabasePath(void) const {
+        string_q source = url.Substitute("http://","").Substitute("https://","");
         source = nextTokenClear(source, '.');
-        SFString ret = blockCachePath("prices/" + source + "_" + pair + ".bin");
+        string_q ret = blockCachePath("prices/" + source + "_" + pair + ".bin");
         establishFolder(ret);
         return ret;
     }
 
     //---------------------------------------------------------------------------
-    bool loadPriceData(const CPriceSource& source, CPriceQuoteArray& quotes, bool freshen, SFString& message, uint64_t step) {
+    bool loadPriceData(const CPriceSource& source, CPriceQuoteArray& quotes, bool freshen, string_q& message, uint64_t step) {
 
-        SFString cacheFile = source.getDatabasePath();
+        string_q cacheFile = source.getDatabasePath();
 
         // Load and possibly refresh the price database
         SFTime lastRead = SFTime(2015, 1, 1, 0, 0, 0);
-        if (source.pair.Contains("BTC"))
+        if (contains(source.pair, "BTC"))
             lastRead = SFTime(2009,1,1,0,0,0);
         if (fileExists(cacheFile)) {
             SFArchive priceCache(READING_ARCHIVE);
@@ -50,8 +50,8 @@ namespace qblocks {
                 priceCache >> quotes;
                 priceCache.Close();
                 if (verbose) {
-                    SFString date = lastRead.Format(FMT_JSON);
-                    SFString count = asString(quotes.getCount());
+                    string_q date = lastRead.Format(FMT_JSON);
+                    string_q count = asString(quotes.getCount());
                     if (isTestMode()) {
                         date = "Now";
                         count = "cnt";
@@ -70,7 +70,7 @@ namespace qblocks {
                 cerr << "Price database not found. Creating it.\n";
         }
 
-        SFString msg;
+        string_q msg;
         SFTime firstDate = SFTime(2015, 6, 1, 0, 0, 0);
         SFTime now       = Now();
         SFTime nextRead  = (lastRead == SFTime(2015, 1, 1, 0, 0, 0) ? firstDate : lastRead + 5*60);  // 5 minutes
@@ -107,19 +107,19 @@ namespace qblocks {
                 }
 
                 // we need to read some data
-                SFString url = source.url;
-                url.Replace("[{PAIR}]",   source.pair);
-                url.Replace("[{START}]",  asString(start));
-                url.Replace("[{END}]",    asString(end));
-                url.Replace("[{PERIOD}]", asString(5*60));
+                string_q url = source.url;
+                replace(url, "[{PAIR}]",   source.pair);
+                replace(url, "[{START}]",  asString(start));
+                replace(url, "[{END}]",    asString(end));
+                replace(url, "[{PERIOD}]", asString(5*60));
                 if (verbose)
                     cerr << "Fetching: " << url << "\n";
 
                 // Ask Poloniex for the latest data
-                SFString response = urlToString(url);
+                string_q response = urlToString(url);
 
                 // Figure out how many new records there are
-                uint32_t nRecords = (uint32_t)countOf('}', response);
+                uint32_t nRecords = (uint32_t)countOf(response, '}');
                 nRecords--;
                 if (verbose)
                     cerr << "Response: " << nRecords << " were sent from Poloniex\n";
@@ -130,7 +130,7 @@ namespace qblocks {
                 quotes.Grow(nRecords+10);
 
                 // Parse the response and populate the array
-                char *p = cleanUpJson((char *)(const char*)response);  // NOLINT
+                char *p = cleanUpJson((char *)response.c_str());  // NOLINT
                 while (p && *p) {
                     CPriceQuote quote;
                     quote.timestamp = toTimestamp(SFTime(2015, 1, 1, 0, 0, 0));  // Ensures we get a good parse
@@ -183,8 +183,8 @@ namespace qblocks {
         }
 
         if (!reportAtEnd) {
-            SFString date = lastRead.Format(FMT_JSON);
-            SFString count = asString(quotes.getCount());
+            string_q date = lastRead.Format(FMT_JSON);
+            string_q count = asString(quotes.getCount());
             if (isTestMode()) {
                 date = "Now";
                 count = "cnt";

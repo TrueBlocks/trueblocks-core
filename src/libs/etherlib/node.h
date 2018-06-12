@@ -18,7 +18,7 @@ namespace qblocks {
 
     //-------------------------------------------------------------------------
     // setup and tear down of the library
-    extern void     etherlib_init           (const SFString& primarySource="binary", QUITHANDLER qh=defaultQuitHandler);
+    extern void     etherlib_init           (const string_q& primarySource="binary", QUITHANDLER qh=defaultQuitHandler);
     inline void     etherlib_init           (QUITHANDLER qh) { etherlib_init("binary", qh); };
     extern void     etherlib_cleanup        (void);
 
@@ -38,17 +38,17 @@ namespace qblocks {
     extern bool     getTransaction          (CTransaction& trans, const SFHash& blockHash, txnum_t txID);
 
     //-------------------------------------------------------------------------
-    extern bool     queryBlock              (CBlock& block,       const SFString& num, bool needTrace, bool byHash, uint32_t& nTraces);
-    extern bool     queryBlock              (CBlock& block,       const SFString& num, bool needTrace, bool byHash);
+    extern bool     queryBlock              (CBlock& block,       const string_q& num, bool needTrace, bool byHash, uint32_t& nTraces);
+    extern bool     queryBlock              (CBlock& block,       const string_q& num, bool needTrace, bool byHash);
 
     //-------------------------------------------------------------------------
     // lower level access to the node's responses
-    extern bool     queryRawBlock           (SFString& results,   const SFString& blockNum, bool needTrace, bool hashesOnly);
-    extern bool     queryRawTransaction     (SFString& results,   const SFHash& txHash);
-    extern bool     queryRawReceipt         (SFString& results,   const SFHash& txHash);
-    extern bool     queryRawLog             (SFString& results,   const SFHash& hashIn);
-    extern bool     queryRawTrace           (SFString& results,   const SFHash& hashIn);
-    extern bool     queryRawLogs            (SFString& results,   const SFAddress& addr, uint64_t fromBlock, uint64_t toBlock);
+    extern bool     queryRawBlock           (string_q& results,   const string_q& blockNum, bool needTrace, bool hashesOnly);
+    extern bool     queryRawTransaction     (string_q& results,   const SFHash& txHash);
+    extern bool     queryRawReceipt         (string_q& results,   const SFHash& txHash);
+    extern bool     queryRawLog             (string_q& results,   const SFHash& hashIn);
+    extern bool     queryRawTrace           (string_q& results,   const SFHash& hashIn);
+    extern bool     queryRawLogs            (string_q& results,   const SFAddress& addr, uint64_t fromBlock, uint64_t toBlock);
 
     //-----------------------------------------------------------------------
     extern SFHash   getRawBlock             (blknum_t bn);
@@ -56,34 +56,34 @@ namespace qblocks {
     extern SFHash   getRawTransactionHash   (blknum_t bn, txnum_t tx);
 
     //-----------------------------------------------------------------------
-    extern void     writeToJson             (const CBaseNode& node, const SFString& fileName);
-    extern bool     readFromJson            (      CBaseNode& node, const SFString& fileName);
+    extern void     writeToJson             (const CBaseNode& node, const string_q& fileName);
+    extern bool     readFromJson            (      CBaseNode& node, const string_q& fileName);
 
     //-----------------------------------------------------------------------
-    extern bool     writeBlockToBinary      (const CBlock& block, const SFString& fileName);
-    extern bool     readBlockFromBinary     (      CBlock& block, const SFString& fileName);
+    extern bool     writeBlockToBinary      (const CBlock& block, const string_q& fileName);
+    extern bool     readBlockFromBinary     (      CBlock& block, const string_q& fileName);
 
     //-------------------------------------------------------------------------
-    extern SFString getVersionFromClient    (void);
-    inline bool     isGeth                  (void) { return getVersionFromClient().ContainsI("geth"); }
-    inline bool     isParity                (void) { return getVersionFromClient().ContainsI("parity"); }
+    extern string_q getVersionFromClient    (void);
+    inline bool     isGeth                  (void) { return contains(toLower(getVersionFromClient()), "geth"); }
+    inline bool     isParity                (void) { return contains(toLower(getVersionFromClient()), "parity"); }
     extern bool     getAccounts             (SFAddressArray& addrs);
     extern uint64_t getLatestBlockFromClient(void);
     extern uint64_t getLatestBlockFromCache (void);
     extern bool     getLatestBlocks         (uint64_t& cache, uint64_t& client);
 
     //-------------------------------------------------------------------------
-    extern bool     getCode                 (const SFAddress& addr, SFString& theCode);
-    inline SFString getCode                 (const SFAddress& addr) { SFString ret; getCode(addr, ret); return ret; }
+    extern bool     getCode                 (const SFAddress& addr, string_q& theCode);
+    inline string_q getCode                 (const SFAddress& addr) { string_q ret; getCode(addr, ret); return ret; }
     inline bool     isContract              (const SFAddress& addr) { return !getCode(addr).Substitute("0x","").empty(); }
     extern SFUintBN getBalance              (const SFAddress& addr, blknum_t blockNum, bool isDemo);
-    extern bool     getSha3                 (const SFString& hexIn, SFString& shaOut);
-    inline SFString getSha3                 (const SFString& hexIn) { SFString ret; getSha3(hexIn,ret); return ret; }
+    extern bool     getSha3                 (const string_q& hexIn, string_q& shaOut);
+    inline string_q getSha3                 (const string_q& hexIn) { string_q ret; getSha3(hexIn,ret); return ret; }
 
     //-------------------------------------------------------------------------
-    extern SFString getJsonFilename         (uint64_t num);
-    extern SFString getBinaryFilename       (uint64_t num);
-    extern SFString getBinaryPath           (uint64_t num);
+    extern string_q getJsonFilename         (uint64_t num);
+    extern string_q getBinaryFilename       (uint64_t num);
+    extern string_q getBinaryPath           (uint64_t num);
 
     //-------------------------------------------------------------------------
     // function pointer types for forEvery functions
@@ -94,7 +94,7 @@ namespace qblocks {
 
     //-------------------------------------------------------------------------
     // forEvery functions
-    extern bool forEveryBlock                (BLOCKVISITFUNC func, void *data, const SFString& block_list);
+    extern bool forEveryBlock                (BLOCKVISITFUNC func, void *data, const string_q& block_list);
     extern bool forEveryBlock                (BLOCKVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip=1);
     extern bool forEveryBlockOnDisc          (BLOCKVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip=1);
     extern bool forEveryNonEmptyBlockOnDisc  (BLOCKVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip=1);
@@ -106,7 +106,7 @@ namespace qblocks {
 
     //-------------------------------------------------------------------------
     // forEvery functions
-    extern bool forEveryTransactionInList    (TRANSVISITFUNC func, void *data, const SFString& trans_list);
+    extern bool forEveryTransactionInList    (TRANSVISITFUNC func, void *data, const string_q& trans_list);
     extern bool forEveryTransactionInBlock   (TRANSVISITFUNC func, void *data, const CBlock& block);
 
     //-------------------------------------------------------------------------
@@ -117,7 +117,7 @@ namespace qblocks {
     extern bool forEveryLogInBlock           (LOGVISITFUNC func,   void *data, const CBlock& block);
 
     //-------------------------------------------------------------------------
-    extern SFString blockCachePath(const SFString& _part);
+    extern string_q blockCachePath(const string_q& _part);
 
     #define fullBlockIndex (blockCachePath("fullBlocks.bin"))
     #define accountIndex   (blockCachePath("accountTree.bin"))
