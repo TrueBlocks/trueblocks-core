@@ -19,17 +19,17 @@ namespace qblocks {
     //----------------------------------------------------------------------------------
     class CFilename {
     protected:
-        SFString path;
-        SFString fileName;
+        string_q path;
+        string_q fileName;
         CFilename(void) {}  // cannot create default
 
     public:
-        explicit CFilename(const SFString& fnIn);
+        explicit CFilename(const string_q& fnIn);
         virtual ~CFilename(void) { }
-        SFString getPath(void) const;
-        SFString getFilename(void) const;
-        SFString getFullPath(void) const;
-        SFString relativePath(const SFString& relTo="") const;
+        string_q getPath(void) const;
+        string_q getFilename(void) const;
+        string_q getFullPath(void) const;
+        string_q relativePath(const string_q& relTo="") const;
         virtual bool isValid(void) { return fileExists(getFullPath()); }
     };
 
@@ -39,21 +39,21 @@ namespace qblocks {
         CPath(void) : CFilename() { }  // cannot create default
 
     public:
-        explicit CPath(const SFString& pathIn) : CFilename(pathIn) { ASSERT(fileName.empty()); }
+        explicit CPath(const string_q& pathIn) : CFilename(pathIn) { ASSERT(fileName.empty()); }
         virtual bool isValid(void) { return CFilename::isValid() && fileName.empty(); }
     };
 
     //----------------------------------------------------------------------------------
-    typedef bool (*FILEVISITOR)(const SFString& str, void *data);
+    typedef bool (*FILEVISITOR)(const string_q& str, void *data);
 
     //------------------------------------------------------------------
     extern int globErrFunc(const char *epath, int eerrno);
-    extern bool forAllFiles(const SFString& mask, FILEVISITOR func, void *data);
-    extern bool forEveryFileInFolder(const SFString& mask, FILEVISITOR func, void *data);
-    extern SFString getHomeFolder(void);
+    extern bool forAllFiles(const string_q& mask, FILEVISITOR func, void *data);
+    extern bool forEveryFileInFolder(const string_q& mask, FILEVISITOR func, void *data);
+    extern string_q getHomeFolder(void);
 
     //-------------------------------------------------------------------------
-    #define quote(a) (SFString("\"") + a + "\"")
+    #define quote(a) (string_q("\"") + a + "\"")
 
     //----------------------------------------------------------------------------------
     #define F_INCLUDE_FOLDERS (1<<1)
@@ -69,4 +69,4 @@ namespace qblocks {
 
 }  // namespace qblocks
 
-extern bool visitFile(const qblocks::SFString& path, void *data);
+extern bool visitFile(const qblocks::string_q& path, void *data);

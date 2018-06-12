@@ -14,43 +14,43 @@
 #include "options.h"
 
 //------------------------------------------------------------
-SFString diffStr(const SFString& str1, const SFString& str2) {
-    SFString diff = str1;
-    SFString junk = str2;
+string_q diffStr(const string_q& str1, const string_q& str2) {
+    string_q diff = str1;
+    string_q junk = str2;
     while (!junk.empty()) {
-        SFString line = nextTokenClear(junk,'\n');
-        diff.Replace(line,"\n");
+        string_q line = nextTokenClear(junk,'\n');
+        replace(diff, line,"\n");
     }
-    SFString ret = Strip(diff.Substitute("\n\n","\n"), '\n');
+    string_q ret = trim(diff.Substitute("\n\n","\n"), '\n');
     if (!ret.empty())
         ret += "\n";
     return ret;
 }
 
 //------------------------------------------------------------
-SFString removeField(const SFString& strIn, const SFString& field) {
+string_q removeField(const string_q& strIn, const string_q& field) {
 
-    SFString search = "\"" + field + "\":";
-    if (!strIn.Contains(search))
+    string_q search = "\"" + field + "\":";
+    if (!contains(strIn, search))
         return strIn;
 
-    SFString ret;
-    SFString str = strIn;
-    //while (str.Contains(search))
+    string_q ret;
+    string_q str = strIn;
+    //while (contains(str, search))
     {
         size_t start = str.find(search);
-        SFString before = str.substr(0,start);
-        SFString rest   = str.substr(start);
+        string_q before = str.substr(0,start);
+        string_q rest   = str.substr(start);
 
         size_t end = rest.find(",")+1; // first comma
-        if (rest.startsWith(search+"[")) // unless it's an array, then end of array
+        if (startsWith(rest, search+"[")) // unless it's an array, then end of array
             end = rest.find("]")+1;
-        SFString during = rest.substr(0,end);
-        SFString after  = rest.substr(end);
+        string_q during = rest.substr(0,end);
+        string_q after  = rest.substr(end);
 
-        before = Strip(before, '\n');
-        during = Strip(during, '\n');
-        after  = Strip(after,  '\n');
+        before = trim(before, '\n');
+        during = trim(during, '\n');
+        after  = trim(after,  '\n');
         ret += (before + after);
         str = after;
     }
@@ -59,7 +59,7 @@ SFString removeField(const SFString& strIn, const SFString& field) {
 }
 
 //------------------------------------------------------------
-const SFString removes[] = {
+const string_q removes[] = {
     // fields in RPC but not in QuickBlocks
     "author", "condition", "creates", "extraData", "mixHash", "networkId", "chainId",
     "nonce", "nonce", // NOT A DUP--IT NEEDS TO BE HERE BECAUSE THERE ARE TWO DIFFERENT NONCES
@@ -72,11 +72,11 @@ const SFString removes[] = {
     "status", 
     // WARNING: status must be last because we only use it after byzan
 };
-uint32_t nRemoved = sizeof(removes) / sizeof(SFString);
+uint32_t nRemoved = sizeof(removes) / sizeof(string_q);
 
 //------------------------------------------------------------
-SFString hiddenFields(void) {
-    SFString ret = "Hidden fields:\n";
+string_q hiddenFields(void) {
+    string_q ret = "Hidden fields:\n";
     for (uint32_t i = 0 ; i < nRemoved ; i++) {
         ret += removes[i];
         if (i < nRemoved-1)
@@ -86,65 +86,65 @@ SFString hiddenFields(void) {
 }
 
 //------------------------------------------------------------
-SFString cleanAll(const SFString& str, bool remove, bool isByzan) {
+string_q cleanAll(const string_q& str, bool remove, bool isByzan) {
 
     if (!remove)
         nRemoved = 0;
     else if (isByzan)
         nRemoved--; // don't remove status if were post-byzantium
 
-    SFString orig = str;
-    orig.ReplaceAny("\t\r {}","");
-    orig.ReplaceAll(",",",\n"); // put everything on its own line
+    string_q orig = str;
+    replaceAny(orig, "\t\r {}","");
+    replaceAll(orig, ",",",\n"); // put everything on its own line
     for (uint32_t i = 0 ; i < nRemoved ; i++) {
-        SFString search = "\"" + removes[i] + "\":";
-        while (orig.Contains(search)) {
+        string_q search = "\"" + removes[i] + "\":";
+        while (contains(orig, search)) {
             orig = removeField(orig, removes[i]);
         }
     }
     orig = orig.Substitute("}]","");
-    orig.ReplaceAll(",", "");
-    orig.ReplaceAll("[", "");
-    orig.ReplaceAll("]", "");
-    orig.ReplaceAll("\"to\":null","\"to\":\"0x0\"");
-    orig = StripAny(orig, "\t\n ");
+    replaceAll(orig, ",", "");
+    replaceAll(orig, "[", "");
+    replaceAll(orig, "]", "");
+    replaceAll(orig, "\"to\":null","\"to\":\"0x0\"");
+    orig = trimWhitespace(orig);
     orig = orig.Substitute("\"result\":","").Substitute("\"transactions\":","").Substitute("\"logs\":","");
     orig = orig.Substitute("\"jsonrpc\":","");
-    orig = orig.Substitute("0x" + SFString('0',512), "0x0"); // minimize bloom filters
-    orig.ReplaceAll("\n\n","\n");
+    orig = orig.Substitute("0x" + string_q('0',512), "0x0"); // minimize bloom filters
+    replaceAll(orig, "\n\n", "\n");
     // get rid of id
-    SFString ret;
+    string_q ret;
     while (!orig.empty()) {
-        SFString line = nextTokenClear(orig, '\n');
-        if (!line.startsWith("\"id\":"))
+        string_q line = nextTokenClear(orig, '\n');
+        if (!startsWith(line, "\"id\":"))
             ret += (line + "\n");
     }
-    return Strip(ret.Substitute("\"\"","\"\n\"").Substitute("\n\n","\n"),'\n');
+    return trim(ret.Substitute("\"\"","\"\n\"").Substitute("\n\n","\n"), '\n');
 }
 
 //------------------------------------------------------------
-SFString sorted(const SFString& inIn) {
-    SFStringArray inList, outList;
-    SFString in = inIn;
+string_q sorted(const string_q& inIn) {
+    CStringArray inList, outList;
+    string_q in = inIn;
     while (!in.empty()) {
         inList[inList.getCount()] = nextTokenClear(in,'\n');
     }
     inList.Sort(sortByStringValue);
     for (uint32_t i = 0 ; i < inList.getCount()-1 ; i++) {
-        if (inList[i] != inList[i+1] && inList[i].Contains(":"))
+        if (inList[i] != inList[i+1] && contains(inList[i], ":"))
             outList[outList.getCount()] = inList[i];
     }
     // add the last one of it's not already there
     if (inList[inList.getCount()-1] != outList[outList.getCount()-1])
         outList[outList.getCount()] = inList[inList.getCount()-1];
 
-    SFString ret;
+    string_q ret;
     for (uint32_t i = 0 ; i < outList.getCount() ; i++)
         ret += (outList[i] + "\n");
     return ret;
 }
 
 //------------------------------------------------------------
-SFString normalizeBlock(const SFString& inIn, bool remove, bool isByzan) {
+string_q normalizeBlock(const string_q& inIn, bool remove, bool isByzan) {
     return sorted(cleanAll(inIn, remove, isByzan));
 }

@@ -43,15 +43,15 @@ public:
 
     DECLARE_NODE(CAbi);
 
-    const CBaseNode *getObjectAt(const SFString& fieldName, uint32_t index) const override;
+    const CBaseNode *getObjectAt(const string_q& fieldName, uint32_t index) const override;
 
     // EXISTING_CODE
     void clearABI(void);
-    bool loadABI(const SFString& addr);
-    bool loadABIFromFile(const SFString& fileName);
-    bool loadABIFromCSV(const SFString& fileName);
-    CFunction *findFunctionByName(const SFString& search);
-    CFunction *findFunctionByEncoding(const SFString& search);
+    bool loadABI(const string_q& addr);
+    bool loadABIFromFile(const string_q& fileName);
+    bool loadABIFromCSV(const string_q& fileName);
+    CFunction *findFunctionByName(const string_q& search);
+    CFunction *findFunctionByEncoding(const string_q& search);
     friend class CAccount;
     // EXISTING_CODE
     friend ostream& operator<<(ostream& os, const CAbi& item);
@@ -142,7 +142,7 @@ extern uint64_t verbose;
 #define REP_INFREQ 563
 void clearAbis(void);
 void rebuildFourByteDB(void);
-CFunction *findFunctionByEncoding(const SFString& encoding);
+CFunction *findFunctionByEncoding(const string_q& encoding);
 // EXISTING_CODE
 }  // namespace qblocks
 

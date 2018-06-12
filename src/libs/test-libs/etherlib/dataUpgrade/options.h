@@ -17,11 +17,11 @@
 class COptions : public COptionsBase {
 public:
     int32_t testNum;
-    SFString className;
+    string_q className;
 
     COptions(void);
     ~COptions(void);
 
-    bool parseArguments(SFString& command);
+    bool parseArguments(string_q& command);
     void Init(void);
 };

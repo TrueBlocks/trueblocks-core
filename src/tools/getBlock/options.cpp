@@ -30,7 +30,7 @@ CParams params[] = {
 uint32_t nParams = sizeof(params) / sizeof(CParams);
 
 //---------------------------------------------------------------------------------------------------
-bool COptions::parseArguments(SFString& command) {
+bool COptions::parseArguments(string_q& command) {
 
     if (!standardOptions(command))
         return false;
@@ -40,7 +40,7 @@ bool COptions::parseArguments(SFString& command) {
     bool isLatest = false;
     while (!command.empty()) {
 
-        SFString arg = nextTokenClear(command, ' ');
+        string_q arg = nextTokenClear(command, ' ');
 
         // shortcuts
         if (arg == "-r" || arg == "--raw")   { arg = "--source:raw";   }
@@ -95,8 +95,8 @@ bool COptions::parseArguments(SFString& command) {
             cout << cOff << "\n";
             isLatest = true;
 
-        } else if (arg.startsWith("-s:") || arg.startsWith("--source:")) {
-            SFString mode = arg.Substitute("-s:","").Substitute("--source:","");
+        } else if (startsWith(arg, "-s:") || startsWith(arg, "--source:")) {
+            string_q mode = arg.Substitute("-s:","").Substitute("--source:","");
             if (mode == "r" || mode == "raw") {
                 isRaw = true;
 
@@ -121,8 +121,8 @@ bool COptions::parseArguments(SFString& command) {
         } else if (arg == "-q" || arg == "--quiet") {
             quiet++; // if both --check and --quiet are present, be very quiet...
 
-        } else if (arg.startsWith("-f:") || arg.startsWith("--fields:")) {
-            SFString mode = arg.Substitute("-f:","").Substitute("--fields:","");
+        } else if (startsWith(arg, "-f:") || startsWith(arg, "--fields:")) {
+            string_q mode = arg.Substitute("-f:","").Substitute("--fields:","");
 
             if (mode == "a" || mode == "all") {
                 SHOW_ALL_FIELDS(CBlock);
@@ -165,7 +165,7 @@ bool COptions::parseArguments(SFString& command) {
                 UNHIDE_FIELD(CReceipt, "gasUsed");
             }
 
-        } else if (arg.startsWith('-')) {  // do not collapse
+        } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);
@@ -173,8 +173,8 @@ bool COptions::parseArguments(SFString& command) {
 
         } else {
 
-            SFString ret = blocks.parseBlockList(arg, latestBlock);
-            if (ret.endsWith("\n")) {
+            string_q ret = blocks.parseBlockList(arg, latestBlock);
+            if (endsWith(ret, "\n")) {
                 cerr << "\n  " << ret << "\n";
                 return false;
             } else if (!ret.empty()) {
@@ -203,7 +203,7 @@ bool COptions::parseArguments(SFString& command) {
         return usage("You must specify at least one block.");
 
     format = getGlobalConfig()->getDisplayStr(false, "");
-    if (format.Contains("{PRICE:CLOSE}")) {
+    if (contains(format, "{PRICE:CLOSE}")) {
 //        priceBlocks = true;
     }
 
@@ -254,14 +254,14 @@ bool COptions::isMulti(void) const {
 }
 
 //--------------------------------------------------------------------------------
-SFString COptions::postProcess(const SFString& which, const SFString& str) const {
+string_q COptions::postProcess(const string_q& which, const string_q& str) const {
 
     if (which == "options") {
         return str.Substitute("block_list", "<block> [block...]");
 
     } else if (which == "notes" && (verbose || COptions::isReadme)) {
 
-        SFString ret;
+        string_q ret;
         ret += "[{block_list}] is a space-separated list of values, a start-end range, a [{special}], or any combination.\n";
         ret += "This tool retrieves information from the local node or the ${FALLBACK} node, if configured (see documentation).\n";
         ret += "[{special}] blocks are detailed under " + cTeal + "[{whenBlock --list}]" + cOff + ".\n";

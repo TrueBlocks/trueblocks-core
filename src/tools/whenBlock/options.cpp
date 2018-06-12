@@ -24,9 +24,10 @@ CParams params[] = {
 uint32_t nParams = sizeof(params) / sizeof(CParams);
 
 extern int sortByBlockNum(const void *v1, const void *v2);
-extern SFTime grabDate(const SFString& strIn);
+extern SFTime grabDate(const string_q& strIn);
+extern bool containsAny(const string_q& haystack, const string_q& needle);
 //---------------------------------------------------------------------------------------------------
-bool COptions::parseArguments(SFString& command) {
+bool COptions::parseArguments(string_q& command) {
 
     if (!standardOptions(command))
         return false;
@@ -36,8 +37,8 @@ bool COptions::parseArguments(SFString& command) {
     Init();
     blknum_t latestBlock = getLatestBlockFromClient();
     while (!command.empty()) {
-        SFString arg = nextTokenClear(command, ' ');
-        SFString orig = arg;
+        string_q arg = nextTokenClear(command, ' ');
+        string_q orig = arg;
 
         if (arg == "UTC") {
             // do nothing
@@ -49,15 +50,15 @@ bool COptions::parseArguments(SFString& command) {
 
             alone = true;
 
-        } else if (arg.startsWith('-')) {  // do not collapse
+        } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
                 return usage("Invalid option: '" + orig + "'. Quitting...");
             }
 
-        } else if (arg.ContainsAny(":- ") && countOf('-',arg) > 1) {
+        } else if (containsAny(arg, ":- ") && countOf(arg, '-') > 1) {
 
-            ASSERT(!arg.startsWith("-"));
+            ASSERT(!startsWith(arg, "-"));
             if (isList)
                 return usage("The --list option must appear alone on the line. Quitting...");
 
@@ -90,7 +91,7 @@ bool COptions::parseArguments(SFString& command) {
             // if we're here, we better have a good block, assume we don't
             CNameValue spec;
             if (findSpecial(spec, arg)) {
-                SFString val = spec.getValue();
+                string_q val = spec.getValue();
                 if (spec.getName() == "latest")
                     val = asStringU(getLatestBlockFromClient());
                 requests[requests.getCount()] = "special:" + spec.getName() + "|" + val;
@@ -98,14 +99,14 @@ bool COptions::parseArguments(SFString& command) {
 
             } else  {
 
-                SFString ret = blocks.parseBlockList(arg, latestBlock);
-                if (ret.endsWith("\n")) {
+                string_q ret = blocks.parseBlockList(arg, latestBlock);
+                if (endsWith(ret, "\n")) {
                     cerr << "\n  " << ret << "\n";
                     return false;
                 } else if (!ret.empty()) {
                     return usage(ret);
                 }
-                SFString blockList = getBlockNumList();
+                string_q blockList = getBlockNumList();
                 blocks.Init();
                 while (!blockList.empty()) {
                     requests[requests.getCount()] = "block:" + nextTokenClear(blockList,'|');
@@ -154,13 +155,13 @@ COptions::~COptions(void) {
 }
 
 //--------------------------------------------------------------------------------
-SFString COptions::postProcess(const SFString& which, const SFString& str) const {
+string_q COptions::postProcess(const string_q& which, const string_q& str) const {
 
     if (which == "options") {
         return str.Substitute("block date", "< block | date > [ block... | date... ]");
 
     } else if (which == "notes") {
-        SFString ret = str;
+        string_q ret = str;
         if (verbose || COptions::isReadme) {
             ret += "Add custom special blocks by editing ~/.quickBlocks/whenBlock.toml.\n";
         }
@@ -171,23 +172,23 @@ SFString COptions::postProcess(const SFString& which, const SFString& str) const
 }
 
 //--------------------------------------------------------------------------------
-SFTime grabDate(const SFString& strIn) {
+SFTime grabDate(const string_q& strIn) {
 
     if (strIn.empty()) {
         return earliestDate;
     }
 
 //#error
-    SFString str = strIn;
-    str.ReplaceAny(" -:",";");
-    str.Replace(";UTC", "");
+    string_q str = strIn;
+    replaceAny(str, " -:",";");
+    replace(str, ";UTC", "");
     str = nextTokenClear(str,'.');
 
     // Expects four number year, two number month and day at a minimum. Fields may be separated by '-' or ';'
     //    YYYYMMDD or YYYY;MM;DD
-    str.ReplaceAll(";","");
-    if (str.Contains("T")) {
-        str.Replace("T","");
+    replaceAll(str, ";", "");
+    if (contains(str, "T")) {
+        replace(str, "T","");
         if      (str.length() == 10) str += "0000";
         else if (str.length() == 12) str += "00";
         else if (str.length() != 14) { cerr << "Bad: " << str << "\n"; return earliestDate; }
@@ -219,7 +220,7 @@ SFTime grabDate(const SFString& strIn) {
 }
 
 //--------------------------------------------------------------------------------
-SFString COptions::listSpecials(bool terse) const {
+string_q COptions::listSpecials(bool terse) const {
     if (specials.getCount() == 0)
         ((COptionsBase*)this)->loadSpecials();
 
@@ -232,11 +233,11 @@ SFString COptions::listSpecials(bool terse) const {
         }
     }
 
-    SFString extra;
+    string_q extra;
     for (uint32_t i = 0 ; i < specials.getCount(); i++) {
 
-        SFString name = specials[i].getName();
-        SFString bn = specials[i].getValue();
+        string_q name = specials[i].getName();
+        string_q bn = specials[i].getValue();
         if (name == "latest") {
             bn = asStringU(getLatestBlockFromClient());
             if (isTestMode()) {
@@ -249,7 +250,7 @@ SFString COptions::listSpecials(bool terse) const {
         }
 
         if (alone && !terse) {
-            if (!bn.Contains("tbd"))
+            if (!contains(bn, "tbd"))
                 os << bn << " ";
         } else {
             if (terse) {
@@ -284,3 +285,13 @@ SFString COptions::listSpecials(bool terse) const {
     }
     return os.str().c_str();
 }
+
+//---------------------------------------------------------------------------------------
+bool containsAny(const string_q& haystack, const string_q& needle) {
+    string need = needle.c_str();
+    for (auto elem : need)
+        if (contains(haystack, elem))
+            return true;
+    return false;
+}
+

@@ -47,12 +47,12 @@ class CFunction;
 class CParameter : public CBaseNode {
 public:
     bool indexed;
-    SFString name;
-    SFString type;
+    string_q name;
+    string_q type;
     bool isPointer;
     bool isArray;
     bool isObject;
-    SFString strDefault;
+    string_q strDefault;
 
 public:
     CParameter(void);
@@ -63,7 +63,7 @@ public:
     DECLARE_NODE(CParameter);
 
     // EXISTING_CODE
-    CParameter(SFString& txtIn);
+    CParameter(string_q& txtIn);
     // EXISTING_CODE
     friend ostream& operator<<(ostream& os, const CParameter& item);
 

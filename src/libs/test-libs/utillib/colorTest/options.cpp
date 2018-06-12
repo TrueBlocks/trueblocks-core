@@ -19,17 +19,17 @@ CParams params[] = {
 uint32_t nParams = sizeof(params) / sizeof(CParams);
 
 //---------------------------------------------------------------------------------------------------
-bool COptions::parseArguments(SFString& command) {
+bool COptions::parseArguments(string_q& command) {
 
     if (!standardOptions(command))
         return false;
 
     Init();
     while (!command.empty()) {
-        SFString arg = nextTokenClear(command, ' ');
-        SFString orig = arg;
+        string_q arg = nextTokenClear(command, ' ');
+        string_q orig = arg;
         if (arg == "-x" || arg == "--xarg") {
-        } else if (arg.startsWith("-")) {
+        } else if (startsWith(arg, "-")) {
             if (!builtInCmd(arg)) {
                 return usage("Invalid argument: " + orig);
             }

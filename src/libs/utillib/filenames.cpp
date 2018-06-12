@@ -24,9 +24,9 @@ namespace qblocks {
     }
 
     //----------------------------------------------------------------------------------
-    bool forAllFiles(const SFString& mask, FILEVISITOR func, void *data ) {
+    bool forAllFiles(const string_q& mask, FILEVISITOR func, void *data ) {
         glob_t globBuf;
-        glob((const char *)mask, GLOB_MARK, globErrFunc, &globBuf);
+        glob(mask.c_str(), GLOB_MARK, globErrFunc, &globBuf);
         bool quitEarly = false;
         for (size_t i = 0 ; i < globBuf.gl_pathc && !quitEarly ; i++)
             if (!(func)(globBuf.gl_pathv[i], data))
@@ -36,13 +36,13 @@ namespace qblocks {
     }
 
     //----------------------------------------------------------------------------------
-    bool forEveryFileInFolder(const SFString& mask, FILEVISITOR func, void *data) {
+    bool forEveryFileInFolder(const string_q& mask, FILEVISITOR func, void *data) {
         // if we quit after visiting all files, return true.
         return forAllFiles(mask, func, data);
     }
 
     //--------------------------------------------------------------------------------
-    SFString getHomeFolder(void) {
+    string_q getHomeFolder(void) {
         struct passwd pd;
         struct passwd* pwdptr = &pd;
         struct passwd* tempPwdPtr;
@@ -50,21 +50,21 @@ namespace qblocks {
         size_t pwdlinelen = sizeof(pwdbuffer);
 
         if (getpwuid_r(getuid(), pwdptr, pwdbuffer, pwdlinelen, &tempPwdPtr) == 0)
-            return SFString(pd.pw_dir) + "/";
+            return string_q(pd.pw_dir) + "/";
         return "./";
     }
 
     //----------------------------------------------------------------------------------
-    CFilename::CFilename(const SFString& fnIn) {
-        SFString fn = fnIn;
-        if (!fn.startsWith('/') && !fn.startsWith('.') && !fn.startsWith('~'))
+    CFilename::CFilename(const string_q& fnIn) {
+        string_q fn = fnIn;
+        if (!startsWith(fn, '/') && !startsWith(fn, '.') && !startsWith(fn, '~'))
             fn = "./" + fn;  // assume cwd
-        fn.Replace("../", getCWD() + "$%^&#*/");
-        fn.Replace("./",  getCWD());
-        fn.Replace("~/",  getHomeFolder());
-        fn.Replace("$%^&#*/", "../");
+        replace(fn, "../", getCWD() + "$%^&#*/");
+        replace(fn, "./",  getCWD());
+        replace(fn, "~/",  getHomeFolder());
+        replace(fn, "$%^&#*/", "../");
 
-        if (fn.endsWith('/')) {
+        if (endsWith(fn, '/')) {
             path = fn;
             fileName = EMPTY;
 
@@ -75,23 +75,23 @@ namespace qblocks {
     }
 
     //----------------------------------------------------------------------------------
-    SFString CFilename::getPath(void) const {
+    string_q CFilename::getPath(void) const {
         return path;
     }
 
     //----------------------------------------------------------------------------------
-    SFString CFilename::getFilename(void) const {
+    string_q CFilename::getFilename(void) const {
         return fileName;
     }
 
     //----------------------------------------------------------------------------------
-    SFString CFilename::getFullPath(void) const {
+    string_q CFilename::getFullPath(void) const {
         return (path + fileName).Substitute("//", "/");
     }
 
     //----------------------------------------------------------------------------------
-    SFString CFilename::relativePath(const SFString& relTo) const {
-        SFString rel = (relTo.empty() ? getCWD() : relTo);
+    string_q CFilename::relativePath(const string_q& relTo) const {
+        string_q rel = (relTo.empty() ? getCWD() : relTo);
         return getFullPath().Substitute(rel, "./");
     }
 

@@ -26,17 +26,17 @@ CParams params[] = {
 uint32_t nParams = sizeof(params) / sizeof(CParams);
 
 //---------------------------------------------------------------------------------------------------
-bool COptions::parseArguments(SFString& command) {
+bool COptions::parseArguments(string_q& command) {
 
     if (!standardOptions(command))
         return false;
 
     Init();
-    SFString source;
+    string_q source;
     while (!command.empty()) {
-        SFString arg = nextTokenClear(command,' ');
-        SFString orig = arg;
-        if (arg.startsWith("-m:") || arg.startsWith("--mode:")) {
+        string_q arg = nextTokenClear(command,' ');
+        string_q orig = arg;
+        if (startsWith(arg, "-m:") || startsWith(arg, "--mode:")) {
             arg = arg.Substitute("-m:", "").Substitute("--mode:", "");
             if (arg != "short" && arg != "full")
                 return usage("Mode must be either 'full' or 'short'. Quitting...");
@@ -45,7 +45,7 @@ bool COptions::parseArguments(SFString& command) {
         } else if (arg == "-d" || arg == "--data") {
             asData = true;
 
-        } else if (arg.startsWith('-')) {  // do not collapse
+        } else if (startsWith(arg, '-')) {  // do not collapse
             if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);
             }

@@ -32,7 +32,7 @@ typedef SFUniqueList<CBranch*>       CBranchListU;
 //--------------------------------------------------------------------------
 class CBranch : public CTreeNode {
 public:
-    SFString branchValue;
+    string_q branchValue;
 
 public:
     CBranch(void);
@@ -44,12 +44,12 @@ public:
 
     // EXISTING_CODE
     CTreeNode *nodes[16];
-    explicit CBranch(const SFString& _value);
-    CBranch(char _i1, CTreeNode* _n1, const SFString& _value = "");
+    explicit CBranch(const string_q& _value);
+    CBranch(char _i1, CTreeNode* _n1, const string_q& _value = "");
     CBranch(char _i1, CTreeNode* _n1, char _i2, CTreeNode* _n2);
-    SFString at(const SFString& _key) const override;
-    CTreeNode* insert(const SFString& _key, const SFString& _value) override;
-    CTreeNode* remove(const SFString& _key) override;
+    string_q at(const string_q& _key) const override;
+    CTreeNode* insert(const string_q& _key, const string_q& _value) override;
+    CTreeNode* remove(const string_q& _key) override;
     bool visitItems(ACCTVISITOR func, void *data) const override;
 private:
     char activeBranch() const;
@@ -142,7 +142,7 @@ IMPLEMENT_ARCHIVE_LIST(CBranchList);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-extern SFString nextTreenodeChunk(const SFString& fieldIn, const void *data);
+extern string_q nextTreenodeChunk(const string_q& fieldIn, const void *data);
 // EXISTING_CODE
 }  // namespace qblocks
 

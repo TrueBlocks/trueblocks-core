@@ -32,14 +32,14 @@ CParams params[] = {
 uint32_t nParams = sizeof(params) / sizeof(CParams);
 
 //---------------------------------------------------------------------------------------------------
-bool COptions::parseArguments(SFString& command) {
+bool COptions::parseArguments(string_q& command) {
 
     if (!standardOptions(command))
         return false;
 
     Init();
     while (!command.empty()) {
-        SFString arg = nextTokenClear(command, ' ');
+        string_q arg = nextTokenClear(command, ' ');
         if (arg == "-g" || arg == "--gen" || arg == "--generate") {
             classDir = getCWD();
             prefix = getPrefix(classDir);
@@ -79,7 +79,7 @@ bool COptions::parseArguments(SFString& command) {
         } else if (arg == "-j" || arg == "--json") {
             asJson = true;
 
-        } else if (arg.startsWith('-')) {  // do not collapse
+        } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);
@@ -93,8 +93,8 @@ bool COptions::parseArguments(SFString& command) {
             SFAddress addr = fixAddress(toLower(arg));
             if (arg == "0xTokenLib" || arg == "0xWalletLib")
                 addr = arg;
-            if (!isAddress(addr) && !addr.ContainsI("tokenlib") && !addr.ContainsI("walletlib"))
-                return usage("Invalid address `" + addr + "'. Length is not equal to 40 characters (20 bytes).\n");
+            if (!isAddress(addr) && addr != "0xTokenLib" && addr != "0xWalletLib")
+                return usage("Invalid address '" + addr + "'. Length is not equal to 40 characters (20 bytes).\n");
             addrs[nAddrs++] = addr;
         }
     }
@@ -145,12 +145,12 @@ COptions::~COptions(void) {
 }
 
 //--------------------------------------------------------------------------------
-SFString COptions::postProcess(const SFString& which, const SFString& str) const {
+string_q COptions::postProcess(const string_q& which, const string_q& str) const {
     if (which == "options") {
         return str;
 
     } else if (which == "notes" && (verbose || COptions::isReadme)) {
-        SFString ret;
+        string_q ret;
         ret += "Use the [{--silent}] option, which displays fewer messages, for scripting.\n";
         return ret;
     }
@@ -158,13 +158,13 @@ SFString COptions::postProcess(const SFString& which, const SFString& str) const
 }
 
 //--------------------------------------------------------------------------------
-SFString getPrefix(const SFString& inIn) {
+string_q getPrefix(const string_q& inIn) {
 
-    SFString in = inIn; // for example ./ENS/parselib/
-    in.Replace("parseLib","parselib"); // hack: to fix dao monitor
-    in.Reverse();
-    in.Replace("/", ""); // remove trailing '/'
+    string_q in = inIn; // for example ./ENS/parselib/
+    replace(in, "parseLib","parselib"); // hack: to fix dao monitor
+    reverse(in);
+    replace(in, "/", ""); // remove trailing '/'
     in = nextTokenClear(in, '/'); // remove /parselib
-    in.Reverse();
+    reverse(in);
     return in;
 }

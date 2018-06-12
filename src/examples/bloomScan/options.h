@@ -22,12 +22,12 @@ public:
     blknum_t skip;
     blknum_t nBlocks;
     bool asData;
-    SFString mode;
+    string_q mode;
 
 	        COptions  (void);
 	       ~COptions  (void);
 
-	bool parseArguments(SFString& command);
+	bool parseArguments(string_q& command);
 	bool parseArguments(int argc, const char *argv[]);
 	void Init (void);
 };
@@ -36,7 +36,7 @@ public:
 extern bool visitNonEmptyBlock(CBlock& node, void *data);
 extern bool displayBloom(CBlock& node, void *data);
 extern bool checkBloom(CBlock& node, void *data);
-inline SFString dateColor(uint64_t bn) {
+inline string_q dateColor(uint64_t bn) {
 	if (1442339 <= bn && bn <= 1439214) return bBlue;
 	return bYellow;
 }

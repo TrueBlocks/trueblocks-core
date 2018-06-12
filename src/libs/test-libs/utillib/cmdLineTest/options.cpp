@@ -15,7 +15,7 @@
 //---------------------------------------------------------------------------------------------------
 CParams params[] = {
     CParams("~testNum",         "the number of the test to run"),
-    CParams("-bool:<bool>",     "enter a boolean value (either `0`, `1`, `false`, or `true`)"),
+    CParams("-bool:<bool>",     "enter a boolean value (either '0', '1', 'false', or 'true')"),
     CParams("-int:<int>",       "enter any numeric value"),
     CParams("-uint:<uint>",     "enter any numeric value greater than or equal to zero"),
     CParams("-string:<string>", "enter any value"),
@@ -26,16 +26,16 @@ CParams params[] = {
 uint32_t nParams = sizeof(params) / sizeof(CParams);
 
 //---------------------------------------------------------------------------------------------------
-bool COptions::parseArguments(SFString& command) {
+bool COptions::parseArguments(string_q& command) {
 
     if (!standardOptions(command))
         return false;
 
     Init();
     while (!command.empty()) {
-        SFString arg = nextTokenClear(command, ' ');
-        SFString orig = arg;
-        if (arg.startsWith("-b:") || arg.startsWith("--bool:")) {
+        string_q arg = nextTokenClear(command, ' ');
+        string_q orig = arg;
+        if (startsWith(arg, "-b:") || startsWith(arg, "--bool:")) {
             arg = arg.Substitute("-b:","").Substitute("--bool:","");
             if (arg == "1" || arg == "true") {
                 boolOption = true;
@@ -46,13 +46,13 @@ bool COptions::parseArguments(SFString& command) {
             } else
                 usage("Invalid bool: " + orig);
 
-        } else if (arg.startsWith("-i:") || arg.startsWith("--int:")) {
+        } else if (startsWith(arg, "-i:") || startsWith(arg, "--int:")) {
             arg = arg.Substitute("-i:","").Substitute("--int:","");
             if (arg.empty() || (arg[0] != '-' && arg[0] != '+' && !isdigit(arg[0])))
                 return usage("--int requires a number. Quitting");
             numOption = toLong(arg);
 
-        } else if (arg.startsWith("-u:") || arg.startsWith("--uint:")) {
+        } else if (startsWith(arg, "-u:") || startsWith(arg, "--uint:")) {
             arg = arg.Substitute("-u:","").Substitute("--uint:","");
             if (arg.empty() || (arg[0] != '+' && !isdigit(arg[0]))) {
                 //return usage("--uint requires a non-negative number. Quitting");
@@ -60,7 +60,7 @@ bool COptions::parseArguments(SFString& command) {
                 numOption = toLong(arg);
             }
 
-        } else if (arg.startsWith('-')) {  // do not collapse
+        } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);

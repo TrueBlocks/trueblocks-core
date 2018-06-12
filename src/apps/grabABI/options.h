@@ -25,17 +25,17 @@ public:
     bool decNames;
     SFAddress addrs[MAX_ADDRS+2];
     uint64_t nAddrs;
-    SFString primaryAddr;
-    SFString classDir;
-    SFString prefix;
-    SFString theABI;
+    string_q primaryAddr;
+    string_q classDir;
+    string_q prefix;
+    string_q theABI;
     bool silent;
 
     COptions(void);
     ~COptions(void);
 
-    SFString postProcess(const SFString& which, const SFString& str) const override;
-    bool parseArguments(SFString& command) override;
+    string_q postProcess(const string_q& which, const string_q& str) const override;
+    bool parseArguments(string_q& command) override;
     void Init(void) override;
 
     bool isToken(void) const { return prefix % "tokenlib"; }
@@ -43,4 +43,4 @@ public:
     bool isBuiltin(void) const { return isToken() || isWallet(); }
 };
 
-extern SFString getPrefix(const SFString& in);
+extern string_q getPrefix(const string_q& in);

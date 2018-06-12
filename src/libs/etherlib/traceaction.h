@@ -33,11 +33,11 @@ class CTraceAction : public CBaseNode {
 public:
     SFAddress address;
     SFWei balance;
-    SFString callType;
+    string_q callType;
     SFAddress from;
     SFGas gas;
-    SFString init;
-    SFString input;
+    string_q init;
+    string_q input;
     SFAddress refundAddress;
     SFAddress to;
     SFWei value;

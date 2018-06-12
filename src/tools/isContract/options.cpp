@@ -24,7 +24,7 @@ CParams params[] = {
 uint32_t nParams = sizeof(params) / sizeof(CParams);
 
 //---------------------------------------------------------------------------------------------------
-bool COptions::parseArguments(SFString& command) {
+bool COptions::parseArguments(string_q& command) {
 
     if (!standardOptions(command))
         return false;
@@ -32,7 +32,7 @@ bool COptions::parseArguments(SFString& command) {
     Init();
     while (!command.empty()) {
 
-        SFString arg = nextTokenClear(command, ' ');
+        string_q arg = nextTokenClear(command, ' ');
         if (arg == "-n" || arg == "--nodiff") {
             diff = true;
 
@@ -42,7 +42,7 @@ bool COptions::parseArguments(SFString& command) {
         } else if (arg == "-d" || arg == "--data") {
             asData = true;
 
-        } else if (arg.startsWith('-')) {  // do not collapse
+        } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);
@@ -52,7 +52,7 @@ bool COptions::parseArguments(SFString& command) {
 
              if (nAddrs >= MAX_ADDRS)
                  return usage("You may query at most " + asString(MAX_ADDRS) + " addresses. Quitting...");
-            SFString addr = fixAddress(toLower(arg));
+            string_q addr = fixAddress(toLower(arg));
             if (!isAddress(addr))
                 return usage(arg + " does not appear to be a valid Ethereum address.\n");
             addrs[nAddrs++] = addr;
@@ -102,12 +102,12 @@ COptions::~COptions(void) {
 }
 
 //--------------------------------------------------------------------------------
-SFString COptions::postProcess(const SFString& which, const SFString& str) const {
+string_q COptions::postProcess(const string_q& which, const string_q& str) const {
     if (which == "options") {
         return str.Substitute("address_list", "<address> [address...]");
 
     } else if (which == "notes" && (verbose || COptions::isReadme)) {
-        SFString ret;
+        string_q ret;
         ret += "[{addresses}] must start with '0x' and be forty characters long.\n";
         ret += "This tool retrieves information from the local node or the ${FALLBACK} node, if configured.\n";
         ret += "If the queried node does not store historical state, the results are undefined.\n";

@@ -31,9 +31,9 @@ typedef SFUniqueList<CRPCResult*>       CRPCResultListU;
 //--------------------------------------------------------------------------
 class CRPCResult : public CBaseNode {
 public:
-    SFString jsonrpc;
-    SFString result;
-    SFString id;
+    string_q jsonrpc;
+    string_q result;
+    string_q id;
 
 public:
     CRPCResult(void);

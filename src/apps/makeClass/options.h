@@ -21,20 +21,20 @@ public:
     bool isRemove;
     bool isList;
     bool silent;
-    SFString namesp;
+    string_q namesp;
     bool writeHeader;
     bool writeSource;
 
-    SFString classNames;
-    SFString filter;
+    string_q classNames;
+    string_q filter;
     CToml classFile;
 
     COptions(void);
     ~COptions(void);
 
-    bool parseArguments(SFString& command);
+    bool parseArguments(string_q& command);
     void Init(void);
 };
 
 //-------------------------------------------------------------------
-extern bool listClasses(const SFString& path, void *data);
+extern bool listClasses(const string_q& path, void *data);

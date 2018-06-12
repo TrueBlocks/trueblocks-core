@@ -20,19 +20,19 @@ namespace qblocks {
 
     class CCurlContext {
     public:
-        SFString         headers;
-        SFString         baseURL;
+        string_q         headers;
+        string_q         baseURL;
         CURLCALLBACKFUNC callBackFunc;
         bool             earlyAbort;
-        SFString         postData;
-        SFString         result;
-        SFString         provider;
+        string_q         postData;
+        string_q         result;
+        string_q         provider;
         bool             is_error;
         uint32_t         theID;
 
         CCurlContext(void);
-        SFString getCurlID(void);
-        void setPostData(const SFString& method, const SFString& params);
+        string_q getCurlID(void);
+        void setPostData(const string_q& method, const string_q& params);
         void Clear(void);
         CURLCALLBACKFUNC setCurlCallback(CURLCALLBACKFUNC func);
     };
@@ -40,8 +40,8 @@ namespace qblocks {
     extern CURL         *getCurl         (bool cleanup=false);
     extern bool          isNodeRunning   (void);
     extern bool          nodeHasBalances (void);
-    extern bool          getObjectViaRPC (CBaseNode &node, const SFString& method, const SFString& params);
-    extern SFString      callRPC         (const SFString& method, const SFString& params, bool raw);
+    extern bool          getObjectViaRPC (CBaseNode &node, const string_q& method, const string_q& params);
+    extern string_q      callRPC         (const string_q& method, const string_q& params, bool raw);
     extern CCurlContext *getCurlContext  (void);
     extern size_t        writeCallback   (char *ptr, size_t size, size_t nmemb, void *userdata);
     extern size_t        traceCallback   (char *ptr, size_t size, size_t nmemb, void *userdata);

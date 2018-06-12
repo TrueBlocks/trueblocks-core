@@ -19,15 +19,15 @@ namespace qblocks {
 //---------------------------------------------------------------------------------------------------
 class CWebAPI {
 private:
-    SFString key;
-    SFString provider;
-    SFString url;
+    string_q key;
+    string_q provider;
+    string_q url;
 
 public:
     CWebAPI(void);
     ~CWebAPI(void);
 
     bool checkKey(CToml& toml);
-    SFString getKey(void) const;
+    string_q getKey(void) const;
 };
 }  // namespace qblocks

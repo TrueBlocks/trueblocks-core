@@ -26,7 +26,7 @@ int main(int argc, const char *argv[]) {
     if (options.commandList.empty())
         options.commandList = "null";
     while (!options.commandList.empty()) {
-        SFString command = nextTokenClear(options.commandList, '\n');
+        string_q command = nextTokenClear(options.commandList, '\n');
         if (!options.parseArguments(command))
             return 0;
 
@@ -39,7 +39,7 @@ int main(int argc, const char *argv[]) {
         reporter.tree = new CTreeRoot;
         if (reporter.tree) {
             //-----------------------------------------------
-            SFString msg = "Accumulating accounts between blocks " +
+            string_q msg = "Accumulating accounts between blocks " +
                                 asStringU(options.startBlock) + " and " +
                                 asStringU(options.startBlock+options.nBlocks) + " (nBlocks: " +
                                 asStringU(options.nBlocks) + ")";
@@ -66,7 +66,7 @@ bool buildTree(CBlock& block, void *data) {
     r->nBlocksVisited++;
     for (uint32_t i = 0 ; i < block.transactions.getCount() ; i++) {
         CTransaction *tr = (CTransaction*)&block.transactions[i];  // NOLINT
-        if (SFString(tr->to).empty())
+        if (string_q(tr->to).empty())
             tr->to = "0x0";
         r->nTransVisited++;
         r->tree->insert(tr->from, asStringU(block.blockNumber));
@@ -90,7 +90,7 @@ bool printTree(const CTreeNode *node, void *data) {
     }
 
     if (r->isMax()) {
-        r->maxDepth  = countOf('-', r->strs);
+        r->maxDepth  = countOf(r->strs, '-');
         r->getNext = true;
         r->maxMatch1 = r->strs;
     }
@@ -114,7 +114,7 @@ bool printTree(const CTreeNode *node, void *data) {
 
 //-----------------------------------------------------------------------------
 void CReporter::interumReport(void) {
-    SFString types[] = {
+    string_q types[] = {
         cWhite   +     "T_TRTOP " + cOff,
         cRed     +     "T_TRLEAF" + cOff,
         bYellow  + "\n""T_BRANCH" + cOff,

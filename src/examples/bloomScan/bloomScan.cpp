@@ -13,7 +13,7 @@
 #include "etherlib.h"
 #include "options.h"
 
-extern bool visitBloom(const SFString& path, void *data);
+extern bool visitBloom(const string_q& path, void *data);
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
@@ -28,14 +28,14 @@ int main(int argc, const char *argv[]) {
 }
 
 //-----------------------------------------------------------------------
-bool visitBloom(const SFString& path, void *data) {
+bool visitBloom(const string_q& path, void *data) {
 
-    if (path.endsWith("/")) {
+    if (endsWith(path, "/")) {
         forAllFiles(path + "*", visitBloom, data);
 
     } else {
 extern bool displayBloom(blknum_t bn, const SFBloom& bloom, void *data);
-        if (path.endsWith(".bin")) {
+        if (endsWith(path, ".bin")) {
             SFBloom bloom;
             SFArchive archive(READING_ARCHIVE);
             if (archive.Lock(path, binaryReadOnly, LOCK_NOWAIT)) {
@@ -58,41 +58,41 @@ extern bool displayBloom(blknum_t bn, const SFBloom& bloom, void *data);
 
 //-------------------------------------------------------------
 bool displayBloom(blknum_t bn, const SFBloom& bloom, void *data) {
-    SFString s = bloom2Bytes(bloom);
+    string_q s = bloom2Bytes(bloom);
     COptions *opt = (COptions*)data;
     if (opt->mode == "short") {
         size_t len = s.length();
-        s.Replace   ("0x",     "");
-        s.ReplaceAny("0",      "");
-        s.ReplaceAny("1248",   ".");
-        s.ReplaceAny("3569ac", ".");
-        s.ReplaceAny("7bde",   "+");
-        s.ReplaceAny("f",      "@");
+        replace(s,    "0x",     "");
+        replaceAny(s, "0",      "");
+        replaceAny(s, "1248",   ".");
+        replaceAny(s, "3569ac", ".");
+        replaceAny(s, "7bde",   "+");
+        replaceAny(s, "f",      "@");
         size_t rem = len - s.length();
-        s = s + SFString(' ', rem) + "|";
+        s = s + string_q(' ', rem) + "|";
     } else {
-        s.Replace("0x", cOff);
-        s.ReplaceAll("0",  " ");
-        s.ReplaceAll("1",  "[.");
-        s.ReplaceAll("2",  "[.");
-        s.ReplaceAll("4",  "[.");
-        s.ReplaceAll("8",  "[.");
-        s.ReplaceAll("3",  "+.");
-        s.ReplaceAll("5",  "+.");
-        s.ReplaceAll("6",  "+.");
-        s.ReplaceAll("9",  "+.");
-        s.ReplaceAll("a",  "+.");
-        s.ReplaceAll("c",  "+.");
-        s.ReplaceAll("7",  "-+");
-        s.ReplaceAll("b",  "-+");
-        s.ReplaceAll("d",  "-+");
-        s.ReplaceAll("e",  "-+");
-        s.ReplaceAll("f",  "%@");
-//        s.ReplaceAll(" ",cOff);
-        s.ReplaceAll("[",cOff+cWhite);
-        s.ReplaceAll("+",cOff+cYellow);
-        s.ReplaceAll("-",cOff+cMagenta);
-        s.ReplaceAll("%",cOff+bBlue);
+        replace(s,    "0x", cOff);
+        replaceAll(s, "0",  " ");
+        replaceAll(s, "1",  "[.");
+        replaceAll(s, "2",  "[.");
+        replaceAll(s, "4",  "[.");
+        replaceAll(s, "8",  "[.");
+        replaceAll(s, "3",  "+.");
+        replaceAll(s, "5",  "+.");
+        replaceAll(s, "6",  "+.");
+        replaceAll(s, "9",  "+.");
+        replaceAll(s, "a",  "+.");
+        replaceAll(s, "c",  "+.");
+        replaceAll(s, "7",  "-+");
+        replaceAll(s, "b",  "-+");
+        replaceAll(s, "d",  "-+");
+        replaceAll(s, "e",  "-+");
+        replaceAll(s, "f",  "%@");
+//        replaceAll(s, " ",cOff);
+        replaceAll(s, "[",cOff+cWhite);
+        replaceAll(s, "+",cOff+cYellow);
+        replaceAll(s, "-",cOff+cMagenta);
+        replaceAll(s, "%",cOff+bBlue);
     }
     cout << cOff << bn << s << "\n";
     cout.flush();

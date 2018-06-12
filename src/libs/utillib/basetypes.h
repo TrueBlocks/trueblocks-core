@@ -55,4 +55,11 @@ using namespace std;  // NOLINT
 //-------------------------------------------------------------------------
 #include "sfstring.h"
 #include "list.h"
-#include "testing.h"
+
+namespace qblocks {
+    //---------------------------------------------------------------------------
+    inline bool isTestMode(void) {
+        return (string_q(getenv("TEST_MODE")) == "true");
+    }
+}  // namespace qblocks
+

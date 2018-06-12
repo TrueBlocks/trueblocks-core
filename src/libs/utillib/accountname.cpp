@@ -22,11 +22,11 @@ namespace qblocks {
 IMPLEMENT_NODE(CAccountName, CBaseNode);
 
 //---------------------------------------------------------------------------
-static SFString nextAccountnameChunk(const SFString& fieldIn, const void *dataPtr);
-static SFString nextAccountnameChunk_custom(const SFString& fieldIn, const void *dataPtr);
+static string_q nextAccountnameChunk(const string_q& fieldIn, const void *dataPtr);
+static string_q nextAccountnameChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CAccountName::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
+void CAccountName::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -35,7 +35,7 @@ void CAccountName::Format(CExportContext& ctx, const SFString& fmtIn, void *data
         return;
     }
 
-    SFString fmt = fmtIn;
+    string_q fmt = fmtIn;
     if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
@@ -44,7 +44,7 @@ void CAccountName::Format(CExportContext& ctx, const SFString& fmtIn, void *data
 }
 
 //---------------------------------------------------------------------------
-SFString nextAccountnameChunk(const SFString& fieldIn, const void *dataPtr) {
+string_q nextAccountnameChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
         return ((const CAccountName *)dataPtr)->getValueByName(fieldIn);
 
@@ -55,7 +55,7 @@ SFString nextAccountnameChunk(const SFString& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CAccountName::setValueByName(const SFString& fieldName, const SFString& fieldValue) {
+bool CAccountName::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
     // EXISTING_CODE
     // EXISTING_CODE
 
@@ -149,7 +149,7 @@ void CAccountName::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextAccountnameChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+string_q nextAccountnameChunk_custom(const string_q& fieldIn, const void *dataPtr) {
     const CAccountName *acc = (const CAccountName *)dataPtr;
     if (acc) {
         switch (tolower(fieldIn[0])) {
@@ -170,7 +170,7 @@ SFString nextAccountnameChunk_custom(const SFString& fieldIn, const void *dataPt
 }
 
 //---------------------------------------------------------------------------
-bool CAccountName::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
+bool CAccountName::handleCustomFormat(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
@@ -187,10 +187,10 @@ bool CAccountName::readBackLevel(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------
-SFString CAccountName::getValueByName(const SFString& fieldName) const {
+string_q CAccountName::getValueByName(const string_q& fieldName) const {
 
     // Give customized code a chance to override first
-    SFString ret = nextAccountnameChunk_custom(fieldName, this);
+    string_q ret = nextAccountnameChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
@@ -229,8 +229,8 @@ ostream& operator<<(ostream& os, const CAccountName& item) {
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-CAccountName::CAccountName(SFString& strIn) {
-    if (countOf('\t',strIn) == 2) {
+CAccountName::CAccountName(string_q& strIn) {
+    if (countOf(strIn, '\t') == 2) {
         // previous format
         source = strIn;
         addr = toLower(nextTokenClear(source, '\t'));
@@ -245,17 +245,17 @@ CAccountName::CAccountName(SFString& strIn) {
 }
 
 //---------------------------------------------------------------------------
-bool CAccountName::Match(const SFString& s1, const SFString& s2, const SFString& s3, bool matchCase, bool all) const {
+bool CAccountName::Match(const string_q& s1, const string_q& s2, const string_q& s3, bool matchCase, bool all) const {
 
-    SFString theAddr   = addr;
-    SFString theName   = name + " " + symbol;
-    SFString theSource = source;
+    string_q theAddr   = addr;
+    string_q theName   = name + " " + symbol;
+    string_q theSource = source;
 
-    bool m11 = (matchCase ? theAddr.Contains(s1)   : theAddr.ContainsI(s1));
-    bool m12 = (matchCase ? theName.Contains(s1)   : theName.ContainsI(s1));
-    bool m13 = (matchCase ? theSource.Contains(s1) : theSource.ContainsI(s1));
-    bool m2  = (matchCase ? theName.Contains(s2)   : theName.ContainsI(s2));
-    bool m3  = (matchCase ? theSource.Contains(s3) : theSource.ContainsI(s3));
+    bool m11 = (matchCase ? contains(theAddr  , s1) : contains(toLower(theAddr)  , toLower(s1)));
+    bool m12 = (matchCase ? contains(theName  , s1) : contains(toLower(theName)  , toLower(s1)));
+    bool m13 = (matchCase ? contains(theSource, s1) : contains(toLower(theSource), toLower(s1)));
+    bool m2  = (matchCase ? contains(theName  , s2) : contains(toLower(theName)  , toLower(s2)));
+    bool m3  = (matchCase ? contains(theSource, s3) : contains(toLower(theSource), toLower(s3)));
 
     if (!s1.empty() && !s2.empty() && !s3.empty())
         return m11 && m2 && m3;  // all three must match

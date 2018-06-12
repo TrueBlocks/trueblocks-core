@@ -15,14 +15,66 @@
 
 namespace qblocks {
 
+    // TODO: inline these conversions
+    //----------------------------------------------------------------------------
+    uint64_t toLongU(const string_q& str) {
+        return (uint64_t)(startsWith(str,"0x") ? hex2LongU(str.c_str()) : strtoul(str.c_str(), NULL, 10));
+    }
+
+    //----------------------------------------------------------------------------
+    double str2Double(const string_q& str) {
+        return (double)strtold(str.c_str(), NULL);
+    }
+
+    //----------------------------------------------------------------------------
+    bool str2Bool(const string_q& str) {
+        return (bool)(str % "true" || toLong(str) != 0);
+    }
+
+    //----------------------------------------------------------------------------
+    uint64_t hex2LongU(const string_q& str) {
+
+        string_q hex = toLower(startsWith(str, "0x") ? str.substr(2) : str);
+        reverse(hex);
+
+        char *s = (char *)hex.c_str();
+        uint64_t ret = 0, mult=1;
+        while (*s) {
+            int val = *s - '0';
+            if (*s >= 'a' && *s <= 'f')
+                val = *s - 'a' + 10;
+            ret += (mult * (uint64_t)val);
+            s++;mult*=16;
+        }
+
+        return ret;
+    }
+
+    //----------------------------------------------------------------------------
+    string_q string2Hex(const string_q& str) {
+
+        if (startsWith(str, "0x"))
+            return str.c_str();
+
+        if (str.empty())
+            return "0x";
+        
+        string_q ret;
+        for (size_t i = 0 ; i < str.length() ; i++) {
+            ostringstream os;
+            os << hex << (unsigned int)str[i];
+            ret = (ret + os.str().c_str());
+        }
+        return ("0x" + ret);
+    }
+
     //------------------------------------------------------------------
     class SFBloomHex : public SFBigNumStore<unsigned char> {
     public:
         SFBloomHex(const SFUintBN& numIn);
-        SFString str;
+        string_q str;
     };
 
-#define OLD_CODE 1
     //------------------------------------------------------------------
     SFBloomHex::SFBloomHex(const SFUintBN& numIn) {
 
@@ -40,7 +92,6 @@ namespace qblocks {
         }
         len = nDigits;
 
-#ifdef OLD_CODE
         char s[1024+1];
 		memset(s,'\0',sizeof(s));
         for (unsigned int p=0;p<len;p++) {
@@ -48,67 +99,35 @@ namespace qblocks {
             s[p] = ((c < 10) ? char('0'+c) : char('A'+c-10));
         }
         str = s;
-#else
-        str.reserve(1025);
-        char *pStr = (char*)(const char*)str.c_str();
-        memset(pStr,'\0',1025);
-        for (unsigned int p = 0 ; p < len ; p++) {
-            unsigned short c = blk[len-1-p];
-            pStr[p] = ((c < 10) ? char('0'+c) : char('a'+c-10));
-        }
-#endif
     }
 
     //------------------------------------------------------------------
-    SFString bloom2Bytes(const SFBloom& bl) {
+    string_q bloom2Bytes(const SFBloom& bl) {
         if (bl == 0)
             return "0x0";
         SFBloomHex b2(bl);
-#ifdef OLD_CODE
         return ("0x" + padLeft(toLower(b2.str),512,'0'));
-#else
-        return ("0x" + padLeft(b2.str,512,'0'));
-#endif
     }
 
     //-------------------------------------------------------------------------
-    SFString bloom2Bits(const SFBloom& b) {
-        SFString ret = bloom2Bytes(b).Substitute("0x", "");
-        ret.ReplaceAll("0","0000");
-        ret.ReplaceAll("1","0001");
-        ret.ReplaceAll("2","0010");
-        ret.ReplaceAll("3","0011");
-        ret.ReplaceAll("4","0100");
-        ret.ReplaceAll("5","0101");
-        ret.ReplaceAll("6","0110");
-        ret.ReplaceAll("7","0111");
-        ret.ReplaceAll("8","1000");
-        ret.ReplaceAll("9","1001");
-        ret.ReplaceAll("a","1010");
-        ret.ReplaceAll("b","1011");
-        ret.ReplaceAll("c","1100");
-        ret.ReplaceAll("d","1101");
-        ret.ReplaceAll("e","1110");
-        ret.ReplaceAll("f","1111");
+    string_q bloom2Bits(const SFBloom& b) {
+        string_q ret = bloom2Bytes(b).Substitute("0x", "");
+        replaceAll(ret, "0", "0000");
+        replaceAll(ret, "1", "0001");
+        replaceAll(ret, "2", "0010");
+        replaceAll(ret, "3", "0011");
+        replaceAll(ret, "4", "0100");
+        replaceAll(ret, "5", "0101");
+        replaceAll(ret, "6", "0110");
+        replaceAll(ret, "7", "0111");
+        replaceAll(ret, "8", "1000");
+        replaceAll(ret, "9", "1001");
+        replaceAll(ret, "a", "1010");
+        replaceAll(ret, "b", "1011");
+        replaceAll(ret, "c", "1100");
+        replaceAll(ret, "d", "1101");
+        replaceAll(ret, "e", "1110");
+        replaceAll(ret, "f", "1111");
         return ret;
     }
-
-    /*
-        Javascipt: Returns a checksummed address
-        @param {String} address
-        @return {String}
-        exports.toChecksumAddress = function (address) {
-            address = exports.stripHexPrefix(address).toLowerCase()
-            const hash = exports.sha3(address).toString('hex')
-            let ret = '0x'
-            for (let i = 0; i < address.length; i++) {
-                if (parseInt(hash[i], 16) >= 8) {
-                    ret += address[i].toUpperCase()
-                } else {
-                    ret += address[i]
-                }
-            }
-            return ret
-        }
-    */
 }  // namespace qblocks

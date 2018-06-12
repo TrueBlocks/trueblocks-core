@@ -33,7 +33,7 @@ namespace qblocks {
                  CMiniBlock (CBlock *block);
         bool     operator== (const CBlock& b) const;
         void     toBlock    (CBlock& block) const;
-        SFString Format     (void) const;
+        string_q Format     (void) const;
     };
 
     //------------------------------------------------------------------------
@@ -49,7 +49,7 @@ namespace qblocks {
                  CMiniTrans (void);
                  CMiniTrans (CTransaction *t);
         void     toTrans    (CTransaction& trans) const;
-        SFString Format     (void) const;
+        string_q Format     (void) const;
     };
 
     //--------------------------------------------------------------------------

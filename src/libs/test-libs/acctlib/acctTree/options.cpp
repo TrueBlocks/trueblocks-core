@@ -24,7 +24,7 @@ CParams params[] = {
 uint32_t nParams = sizeof(params) / sizeof(CParams);
 
 //---------------------------------------------------------------------------------------------------
-bool COptions::parseArguments(SFString& command) {
+bool COptions::parseArguments(string_q& command) {
 
     if (!standardOptions(command))
         return false;
@@ -32,28 +32,28 @@ bool COptions::parseArguments(SFString& command) {
     bool hasN = false;
     Init();
     while (!command.empty()) {
-        SFString arg = nextTokenClear(command, ' ');
-        SFString orig = arg;
+        string_q arg = nextTokenClear(command, ' ');
+        string_q orig = arg;
         if (arg == "-a" || arg == "--all") {
             all = true;
 
-        } else if (arg.startsWith("-n:") || arg.startsWith("--nblocks:")) {
+        } else if (startsWith(arg, "-n:") || startsWith(arg, "--nblocks:")) {
             arg = orig.Substitute("-n:","").Substitute("--nblocks:","");
-            nBlocks = newUnsigned32(arg);
+            nBlocks = toLongU(arg);
             hasN = true;
 
-        } else if (arg.startsWith("-s:") || arg.startsWith("--start:")) {
+        } else if (startsWith(arg, "-s:") || startsWith(arg, "--start:")) {
             arg = orig.Substitute("-s:","").Substitute("--start:","");
-            startBlock = newUnsigned32(arg);
+            startBlock = toLongU(arg);
             if (!isUnsigned(arg))
                 return usage("Positive start block number expected: " + orig);
 
-        } else if (arg.startsWith("-e:") || arg.startsWith("--end:")) {
+        } else if (startsWith(arg, "-e:") || startsWith(arg, "--end:")) {
             arg = orig.Substitute("-e:","").Substitute("--end:","");
             if (arg == "latest") {
                 endBlock = getLatestBlockFromClient();
             } else {
-                endBlock = newUnsigned32(arg);
+                endBlock = toLongU(arg);
                 if (!isUnsigned(arg))
                     return usage("Positive end block number expected: " + orig);
             }

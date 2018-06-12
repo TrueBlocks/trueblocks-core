@@ -18,7 +18,7 @@
 namespace qblocks {
 
     //-------------------------------------------------------------------------
-    CToml::CToml(const SFString& fileName) : CSharedResource() {
+    CToml::CToml(const string_q& fileName) : CSharedResource() {
         setFilename(fileName);
         if (!fileName.empty())
             readFile(fileName);
@@ -40,7 +40,7 @@ namespace qblocks {
     }
 
     //-------------------------------------------------------------------------
-    CToml::CTomlGroup *CToml::addGroup(const SFString& group, bool commented, bool array) {
+    CToml::CTomlGroup *CToml::addGroup(const string_q& group, bool commented, bool array) {
         ASSERT(!findGroup(group));
         CTomlGroup *newGroup = new CTomlGroup;
         newGroup->isArray = array;
@@ -51,7 +51,7 @@ namespace qblocks {
     }
 
     //-------------------------------------------------------------------------
-    CToml::CTomlGroup *CToml::findGroup(const SFString& group) const {
+    CToml::CTomlGroup *CToml::findGroup(const string_q& group) const {
         LISTPOS gPos = groups.GetHeadPosition();
         while (gPos) {
             CTomlGroup *grp = groups.GetNext(gPos);
@@ -62,14 +62,14 @@ namespace qblocks {
     }
 
     //-------------------------------------------------------------------------
-    CToml::CTomlKey *CToml::addKey(const SFString& group, const SFString& key, const SFString& val, bool commented) {
+    CToml::CTomlKey *CToml::addKey(const string_q& group, const string_q& key, const string_q& val, bool commented) {
         CTomlGroup *grp = findGroup(group);
         ASSERT(grp);
         return grp->addKey(key, val, commented);
     }
 
     //-------------------------------------------------------------------------
-    CToml::CTomlKey *CToml::findKey(const SFString& group, const SFString& key) const {
+    CToml::CTomlKey *CToml::findKey(const string_q& group, const string_q& key) const {
         CTomlGroup *grp = findGroup(group);
         if (grp)
             return grp->findKey(key);
@@ -77,47 +77,49 @@ namespace qblocks {
     }
 
     //-------------------------------------------------------------------------
-    uint64_t CToml::getConfigInt(const SFString& group, const SFString& key, uint64_t def) const {
-        SFString ret = getConfigStr(group, key, asStringU(def));
-        return toLong32u(ret);
+    uint64_t CToml::getConfigInt(const string_q& group, const string_q& key, uint64_t def) const {
+        string_q ret = getConfigStr(group, key, asStringU(def));
+        return toLongU(ret);
     }
 
     //-------------------------------------------------------------------------
-    bool CToml::getConfigBool(const SFString& group, const SFString& key, bool def) const {
-        SFString ret = getConfigStr(group, key, asString(def?1:0));
-        ret.ReplaceAny(";\t\n\r ", "");
+    bool CToml::getConfigBool(const string_q& group, const string_q& key, bool def) const {
+        string_q ret = getConfigStr(group, key, asString(def?1:0));
+        replaceAny(ret, ";\t\n\r ", "");
         return ((ret == "true" || ret == "1") ? true : false);
     }
 
     //-------------------------------------------------------------------------
-    void CToml::setConfigInt(const SFString& group, const SFString& key, uint64_t value) {
+    void CToml::setConfigInt(const string_q& group, const string_q& key, uint64_t value) {
         setConfigStr(group, key, asString((int64_t)value));
     }
 
     //-------------------------------------------------------------------------
-    void CToml::setConfigBool(const SFString& group, const SFString& key, bool value) {
+    void CToml::setConfigBool(const string_q& group, const string_q& key, bool value) {
         setConfigStr(group, key, asString(value));
     }
 
     //---------------------------------------------------------------------------------------
-extern SFString stripFullLineComments(const SFString& inStr);
-extern SFString collapseArrays(const SFString& inStr);
-    bool CToml::readFile(const SFString& filename) {
-        SFString curGroup;
+extern string_q stripFullLineComments(const string_q& inStr);
+extern string_q collapseArrays(const string_q& inStr);
+    bool CToml::readFile(const string_q& filename) {
+        string_q curGroup;
         Clear();
 
-        SFString contents = asciiFileToString(filename)
-                            .Substitute("\\\n ", "\\\n").Substitute("\\\n", "").Substitute("\\\r\n", "");
+        string_q contents = asciiFileToString(filename)
+                            .Substitute("\\\n ", "\\\n") // if ends with '\' + '\n' + space, make it just '\' + '\n'
+                            .Substitute("\\\n", "")      // if ends with '\' + '\n', its a continuation, so fold in
+                            .Substitute("\\\r\n", "");   // same for \r\n
         contents = collapseArrays(stripFullLineComments(contents));
         while (!contents.empty()) {
-            SFString value = StripAny(nextTokenClear(contents, '\n'), " \t");
-            bool comment = value.startsWith('#');
+            string_q value = trimWhitespace(nextTokenClear(contents, '\n'));
+            bool comment = startsWith(value, '#');
             if (comment)
                 value = value.substr(1);
             if (!value.empty()) {
-                bool isArray = value.Contains("[[");
-                if (value.startsWith('[')) {  // it's a group
-                    value = StripAny(value.Substitute("[", "").Substitute("]", ""), " \t");
+                bool isArray = contains(value, "[[");
+                if (startsWith(value, '[')) {  // it's a group
+                    value = trimWhitespace(value.Substitute("[", "").Substitute("]", ""));
                     addGroup(value, comment, isArray);
                     curGroup = value;
 
@@ -127,9 +129,9 @@ extern SFString collapseArrays(const SFString& inStr);
                         cerr.flush();
                         exit(0);
                     }
-                    SFString key = nextTokenClear(value, '=');  // value may be empty, but not whitespace
-                    key = StripAny(key, " \t");
-                    value = StripAny(value, " \t");
+                    string_q key = nextTokenClear(value, '=');  // value may be empty, but not whitespace
+                    key   = trimWhitespace(key);
+                    value = trimWhitespace(value);
                     addKey(curGroup, key, value, comment);
                 }
             }
@@ -178,10 +180,10 @@ extern SFString collapseArrays(const SFString& inStr);
         }
     }
 
-    SFUintBN CToml::getConfigBigInt(const SFString& group, const SFString& key, SFUintBN def) const {
-        SFString ret = getConfigStr(group, key, to_string(def).c_str());
-        SFString check = ret;
-        check.ReplaceAny("0123456789abcdefABCDEF", "");
+    SFUintBN CToml::getConfigBigInt(const string_q& group, const string_q& key, SFUintBN def) const {
+        string_q ret = getConfigStr(group, key, to_string(def).c_str());
+        string_q check = ret;
+        replaceAny(check, "0123456789abcdefABCDEF", "");
         if (!check.empty()) {
             cerr << "Big int config item " << group << "::" << key << " is not an integer...returning zero.";
             return 0;
@@ -190,8 +192,8 @@ extern SFString collapseArrays(const SFString& inStr);
     }
 
     //---------------------------------------------------------------------------------------
-    SFString CToml::getConfigStr(const SFString& group, const SFString& key, const SFString& def) const {
-        SFString ret = def;
+    string_q CToml::getConfigStr(const string_q& group, const string_q& key, const string_q& def) const {
+        string_q ret = def;
         CTomlGroup *grp = findGroup(group);
         if (grp) {
             CTomlKey *k = grp->findKey(key);
@@ -202,21 +204,21 @@ extern SFString collapseArrays(const SFString& inStr);
     }
 
     //-------------------------------------------------------------------------
-    SFString CToml::getDisplayStr(bool terse, const SFString& def, const SFString& color) const {
-        SFString fmt = getConfigStr("display", (terse ? "terse" : "format"), "<not_set>");
+    string_q CToml::getDisplayStr(bool terse, const string_q& def, const string_q& color) const {
+        string_q fmt = getConfigStr("display", (terse ? "terse" : "format"), "<not_set>");
         if (fmt == "<not_set>")
             fmt = def;
         if (!color.empty()) {
-            fmt.ReplaceAll("{", color+"{");
-            fmt.ReplaceAll("}", "}"+cOff);
+            replaceAll(fmt, "{", color+"{");
+            replaceAll(fmt, "}", "}"+cOff);
         }
         return cleanFmt(fmt);
     }
 
     //-------------------------------------------------------------------------
-    void CToml::setConfigStr(const SFString& group, const SFString& keyIn, const SFString& value) {
-        bool comment = keyIn.startsWith('#');
-        SFString key = (comment ? keyIn.substr(1) : keyIn);
+    void CToml::setConfigStr(const string_q& group, const string_q& keyIn, const string_q& value) {
+        bool comment = startsWith(keyIn, '#');
+        string_q key = (comment ? keyIn.substr(1) : keyIn);
 
         CTomlGroup *grp = findGroup(group);
         if (!grp) {
@@ -317,7 +319,7 @@ extern SFString collapseArrays(const SFString& inStr);
     }
 
     //---------------------------------------------------------------------------------------
-    CToml::CTomlKey *CToml::CTomlGroup::addKey(const SFString& keyName, const SFString& val, bool commented) {
+    CToml::CTomlKey *CToml::CTomlGroup::addKey(const string_q& keyName, const string_q& val, bool commented) {
         CTomlKey *key = new CTomlKey;
         key->comment = commented;
         key->keyName = keyName;
@@ -327,11 +329,11 @@ extern SFString collapseArrays(const SFString& inStr);
     }
 
     //---------------------------------------------------------------------------------------
-    CToml::CTomlKey *CToml::CTomlGroup::findKey(const SFString& keyName) const {
+    CToml::CTomlKey *CToml::CTomlGroup::findKey(const string_q& keyName) const {
         LISTPOS kPos = keys.GetHeadPosition();
         while (kPos) {
             CTomlKey *key = keys.GetNext(kPos);
-            SFString name = key->keyName;
+            string_q name = key->keyName;
             if (name == keyName)
                 return key;
         }
@@ -339,11 +341,11 @@ extern SFString collapseArrays(const SFString& inStr);
     }
 
     //---------------------------------------------------------------------------------------
-    SFString stripFullLineComments(const SFString& inStr) {
-        SFString str = inStr;
-        SFString ret;
+    string_q stripFullLineComments(const string_q& inStr) {
+        string_q str = inStr;
+        string_q ret;
         while (!str.empty()) {
-            SFString line = StripAny(nextTokenClear(str, '\n'), " \t\n\r");
+            string_q line = trimWhitespace(nextTokenClear(str, '\n'));
             if (line.length() && line[0] != '#') {
                 ret += (line + "\n");
             }
@@ -352,31 +354,31 @@ extern SFString collapseArrays(const SFString& inStr);
     }
 
     //---------------------------------------------------------------------------------------
-    SFString collapseArrays(const SFString& inStr) {
-        if (!inStr.Contains("[[") && !inStr.Contains("]]"))
+    string_q collapseArrays(const string_q& inStr) {
+        if (!contains(inStr, "[[") && !contains(inStr, "]]"))
             return inStr;
 
-        SFString ret;
-        SFString str = inStr.Substitute("  "," ");
-        str.Replace("[[","`");
-        SFString front = nextTokenClear(str, '`');
+        string_q ret;
+        string_q str = inStr.Substitute("  "," ");
+        replace(str, "[[","`");
+        string_q front = nextTokenClear(str, '`');
         str = "[[" + str;
         str = str.Substitute("[[","<array>");
         str = str.Substitute("]]","</array>\n<name>");
         str = str.Substitute("[","</name>\n<value>");
         str = str.Substitute("]","</value>\n<name>");
-        str.ReplaceReverse("<name>","");
-        str.ReplaceAll("<name>\n","<name>");
-        str.ReplaceAll(" = </name>","</name>");
-        while (str.Contains("</array>")) {
-            SFString array = snagFieldClear(str,"array");
-            SFString vals;
-            while (str.Contains("</value>")) {
-                SFString name = snagFieldClear(str,"name").Substitute("=","").Substitute("\n","");
-                SFString value = snagFieldClear(str,"value").Substitute("\n","").Substitute("=",":");
+        replaceReverse(str, "<name>", "");
+        replaceAll(str, "<name>\n","<name>");
+        replaceAll(str, " = </name>","</name>");
+        while (contains(str, "</array>")) {
+            string_q array = snagFieldClear(str,"array");
+            string_q vals;
+            while (contains(str, "</value>")) {
+                string_q name = snagFieldClear(str,"name").Substitute("=","").Substitute("\n","");
+                string_q value = snagFieldClear(str,"value").Substitute("\n","").Substitute("=",":");
                 vals += name + " = [ " + value + " ]\n";
             }
-            SFString line = "[[" + array + "]]\n" + vals;
+            string_q line = "[[" + array + "]]\n" + vals;
             ret += line;
         }
         return front + ret;

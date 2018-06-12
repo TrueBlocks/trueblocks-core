@@ -21,15 +21,27 @@ namespace qblocks {
 #define dbgBloom(a) bloom2Bytes(a).Substitute("0"," ")
 
     //-------------------------------------------------------------------------
-    inline SFUintBN makeBloom(const SFString& hexIn) {
-        if (hexIn.empty() || !hexIn.startsWith("0x"))
+    inline uint32_t bitsTwiddled(SFBloom n) {
+        uint32_t count = 0;
+        while (n != 0) {
+            SFUintBN x = n - 1;
+            SFUintBN y = n & x;
+            n = y;
+            count++;
+        }
+        return count;
+    }
+
+    //-------------------------------------------------------------------------
+    inline SFUintBN makeBloom(const string_q& hexIn) {
+        if (hexIn.empty() || !startsWith(hexIn, "0x"))
             return 0;
 
-extern SFString getSha3 (const SFString& hexIn);
-        SFString sha = getSha3(hexIn);
+extern string_q getSha3 (const string_q& hexIn);
+        string_q sha = getSha3(hexIn);
         SFUintBN bloom;
         for (uint32_t i=0;i<3;i++)
-            bloom |= (SFUintBN(1) << (strtoul((const char*)"0x"+sha.substr(2+(i*4),4),NULL,16))%2048);
+            bloom |= (SFUintBN(1) << (strtoul(("0x"+sha.substr(2+(i*4),4)).c_str(),NULL,16))%2048);
         return bloom;
     }
 
@@ -44,19 +56,18 @@ extern SFString getSha3 (const SFString& hexIn);
     }
 
     //-------------------------------------------------------------------------
-    inline bool isBloomHit(const SFString& hexIn, const SFUintBN filter) {
+    inline bool isBloomHit(const string_q& hexIn, const SFUintBN filter) {
         return isBloomHit(makeBloom(hexIn),filter);
     }
 
     //----------------------------------------------------------------------------------
-    extern bool compareBlooms(const SFBloom& b1, const SFBloom& b2, SFString& str);
-    extern SFString formatBloom(const SFBloom& b1, bool bits);
+    extern bool compareBlooms(const SFBloom& b1, const SFBloom& b2, string_q& str);
     extern bool addAddrToBloom(const SFAddress& addr, SFBloomArray& blooms, uint32_t maxBits);
 
     //----------------------------------------------------------------------------------
-    extern bool readBloomArray (      SFBloomArray& blooms, const SFString& fileName);
-    extern bool writeBloomArray(const SFBloomArray& blooms, const SFString& fileName);
-    extern SFString reportBloom(const SFBloomArray& blooms);
+    extern bool readBloomArray (      SFBloomArray& blooms, const string_q& fileName);
+    extern bool writeBloomArray(const SFBloomArray& blooms, const string_q& fileName);
+    extern string_q reportBloom(const SFBloomArray& blooms);
 
 }  // namespace qblocks
 

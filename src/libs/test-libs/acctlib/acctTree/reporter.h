@@ -19,7 +19,7 @@ public:
     txnum_t nTransVisited;
     blknum_t nAccts;
     blknum_t maxDepth;
-    SFString maxMatch1, maxMatch2, maxStr;
+    string_q maxMatch1, maxMatch2, maxStr;
     blknum_t counters[MAX_CNTS], maxCnt, gtFive;
     bool getNext;
     double startLoad;
@@ -39,7 +39,7 @@ public:
 
     ~CReporter(void) { if (tree) delete tree; }
 
-    void startTimer(const SFString& msg) {
+    void startTimer(const string_q& msg) {
         cerr << msg << "\n"; cerr.flush();
         if (startLoad == 0.0) startLoad = qbNow();
         else                  startPrint = qbNow();
@@ -50,11 +50,11 @@ public:
         else                endPrint = qbNow();
     }
 
-    SFString asPct(double _part, double _whole) {
+    string_q asPct(double _part, double _whole) {
         double percent = 1.0;
         if (_whole > 0)
             percent = (_part / static_cast<double>(_whole));
-        return fmtFloatp(100.*percent, 3);
+        return double2Str(100.*percent, 3);
     }
 
     void finalReport(void) {
@@ -77,9 +77,9 @@ public:
 
     void interumReport(void);
     bool isMax(void) {
-        if (strs.Contains("0x+-0+-0+-0+-0+-0+-0+-0+-0+-0+-0+-0+-0+000000000000"))
+        if (contains(strs, "0x+-0+-0+-0+-0+-0+-0+-0+-0+-0+-0+-0+-0+000000000000"))
             return false;
-        return (countOf('-', strs) > maxDepth);
+        return (countOf(strs, '-') > maxDepth);
     }
 };
 

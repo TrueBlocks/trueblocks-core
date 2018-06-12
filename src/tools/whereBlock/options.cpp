@@ -22,7 +22,7 @@ CParams params[] = {
 uint32_t nParams = sizeof(params) / sizeof(CParams);
 
 //---------------------------------------------------------------------------------------------------
-bool COptions::parseArguments(SFString& command) {
+bool COptions::parseArguments(string_q& command) {
 
     if (!standardOptions(command))
         return false;
@@ -30,8 +30,8 @@ bool COptions::parseArguments(SFString& command) {
     Init();
     blknum_t latestBlock = isNodeRunning() ? getLatestBlockFromClient() : 7000000;
     while (!command.empty()) {
-        SFString arg = nextTokenClear(command, ' ');
-        SFString orig = arg;
+        string_q arg = nextTokenClear(command, ' ');
+        string_q orig = arg;
 
         if (arg == "-a" || arg == "--account") {
             mode = "account";
@@ -39,14 +39,14 @@ bool COptions::parseArguments(SFString& command) {
         } else if (arg == "-b" || arg == "--bloom") {
             mode = "bloom";
 
-        } else if (arg.startsWith('-')) {  // do not collapse
+        } else if (startsWith(arg, '-')) {  // do not collapse
             if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);
             }
         } else {
 
-            SFString ret = blocks.parseBlockList(arg, latestBlock);
-            if (ret.endsWith("\n")) {
+            string_q ret = blocks.parseBlockList(arg, latestBlock);
+            if (endsWith(ret, "\n")) {
                 cerr << "\n  " << ret << "\n";
                 return false;
             } else if (!ret.empty()) {
@@ -86,7 +86,7 @@ COptions::~COptions(void) {
 }
 
 //--------------------------------------------------------------------------------
-SFString COptions::postProcess(const SFString& which, const SFString& str) const {
+string_q COptions::postProcess(const string_q& which, const string_q& str) const {
     if (which == "options")
         return str.Substitute("block_list", "<block> [block...]");
     return str;

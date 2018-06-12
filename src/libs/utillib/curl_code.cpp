@@ -62,14 +62,14 @@ namespace qblocks {
     }
 
     //---------------------------------------------------------------------------------------------------
-    SFString urlToString(const SFString& url) {
+    string_q urlToString(const string_q& url) {
         if (url.empty()) {
             getCurl_internal(true);
             return EMPTY;
         }
 
         string result;
-        curl_easy_setopt(getCurl_internal(), CURLOPT_URL,           (const char*)url);
+        curl_easy_setopt(getCurl_internal(), CURLOPT_URL,           url.c_str());
         curl_easy_setopt(getCurl_internal(), CURLOPT_WRITEDATA,     &result);
         curl_easy_setopt(getCurl_internal(), CURLOPT_WRITEFUNCTION, internalCallback);
         CURLcode res = curl_easy_perform(getCurl_internal());

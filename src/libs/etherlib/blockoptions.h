@@ -18,6 +18,6 @@ class CBlockOptions : public COptionsBase {
 public:
     COptionsBlockList blocks;
     CBlockOptions(void);
-    SFString getBlockNumList(void);
+    string_q getBlockNumList(void);
     void Init(void);
 };

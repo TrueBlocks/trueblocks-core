@@ -20,18 +20,18 @@ CParams params[] = {
 uint32_t nParams = sizeof(params) / sizeof(CParams);
 
 //---------------------------------------------------------------------------------------------------
-bool COptions::parseArguments(SFString& command) {
+bool COptions::parseArguments(string_q& command) {
 
     if (!standardOptions(command))
         return false;
 
     Init();
     while (!command.empty()) {
-        SFString arg = nextTokenClear(command, ' ');
-        if (arg.startsWith("-t:") || arg.startsWith("--testNum:")) {
-            SFString orig = arg;
-            arg.ReplaceAny("--testNum:","");
-            arg.ReplaceAny("-t:","");
+        string_q arg = nextTokenClear(command, ' ');
+        if (startsWith(arg, "-t:") || startsWith(arg, "--testNum:")) {
+            string_q orig = arg;
+            replaceAny(arg, "--testNum:", "");
+            replaceAny(arg, "-t:", "");
             testNum = (int32_t)toLong(arg);
             if (!testNum || testNum > 2)
                 return usage("Invalid argument: " + orig + ". Quitting...");

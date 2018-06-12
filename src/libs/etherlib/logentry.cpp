@@ -23,11 +23,11 @@ namespace qblocks {
 IMPLEMENT_NODE(CLogEntry, CBaseNode);
 
 //---------------------------------------------------------------------------
-extern SFString nextLogentryChunk(const SFString& fieldIn, const void *dataPtr);
-static SFString nextLogentryChunk_custom(const SFString& fieldIn, const void *dataPtr);
+extern string_q nextLogentryChunk(const string_q& fieldIn, const void *dataPtr);
+static string_q nextLogentryChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CLogEntry::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
+void CLogEntry::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -36,7 +36,7 @@ void CLogEntry::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr
         return;
     }
 
-    SFString fmt = fmtIn;
+    string_q fmt = fmtIn;
     if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
 
@@ -45,7 +45,7 @@ void CLogEntry::Format(CExportContext& ctx, const SFString& fmtIn, void *dataPtr
 }
 
 //---------------------------------------------------------------------------
-SFString nextLogentryChunk(const SFString& fieldIn, const void *dataPtr) {
+string_q nextLogentryChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
         return ((const CLogEntry *)dataPtr)->getValueByName(fieldIn);
 
@@ -56,7 +56,7 @@ SFString nextLogentryChunk(const SFString& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CLogEntry::setValueByName(const SFString& fieldName, const SFString& fieldValue) {
+bool CLogEntry::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
     // EXISTING_CODE
     if (pReceipt)
         if (((CReceipt*)pReceipt)->setValueByName(fieldName, fieldValue))
@@ -75,7 +75,7 @@ bool CLogEntry::setValueByName(const SFString& fieldName, const SFString& fieldV
             break;
         case 't':
             if ( fieldName % "topics" ) {
-                SFString str = fieldValue;
+                string_q str = fieldValue;
                 while (!str.empty()) {
                     topics[topics.getCount()] = toTopic(nextTokenClear(str,','));
                 }
@@ -155,7 +155,7 @@ void CLogEntry::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-SFString nextLogentryChunk_custom(const SFString& fieldIn, const void *dataPtr) {
+string_q nextLogentryChunk_custom(const string_q& fieldIn, const void *dataPtr) {
     const CLogEntry *log = (const CLogEntry *)dataPtr;
     if (log) {
         switch (tolower(fieldIn[0])) {
@@ -176,7 +176,7 @@ SFString nextLogentryChunk_custom(const SFString& fieldIn, const void *dataPtr) 
 }
 
 //---------------------------------------------------------------------------
-bool CLogEntry::handleCustomFormat(CExportContext& ctx, const SFString& fmtIn, void *dataPtr) const {
+bool CLogEntry::handleCustomFormat(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
     // EXISTING_CODE
     return false;
@@ -205,10 +205,10 @@ SFArchive& operator>>(SFArchive& archive, CLogEntry& log) {
 }
 
 //---------------------------------------------------------------------------
-SFString CLogEntry::getValueByName(const SFString& fieldName) const {
+string_q CLogEntry::getValueByName(const string_q& fieldName) const {
 
     // Give customized code a chance to override first
-    SFString ret = nextLogentryChunk_custom(fieldName, this);
+    string_q ret = nextLogentryChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
@@ -226,10 +226,10 @@ SFString CLogEntry::getValueByName(const SFString& fieldName) const {
         case 't':
             if ( fieldName % "topics" || fieldName % "topicsCnt" ) {
                 uint32_t cnt = topics.getCount();
-                if (fieldName.endsWith("Cnt"))
+                if (endsWith(fieldName, "Cnt"))
                     return asStringU(cnt);
                 if (!cnt) return "";
-                SFString retS;
+                string_q retS;
                 for (uint32_t i = 0 ; i < cnt ; i++) {
                     retS += ("\"" + fromTopic(topics[i]) + "\"");
                     retS += ((i < cnt - 1) ? ",\n" + indent() : "\n");
@@ -242,7 +242,7 @@ SFString CLogEntry::getValueByName(const SFString& fieldName) const {
     // EXISTING_CODE
     // See if this field belongs to the item's container
     ret = nextReceiptChunk(fieldName, pReceipt);
-    if (ret.Contains("Field not found"))
+    if (contains(ret, "Field not found"))
         ret = EMPTY;
     if (!ret.empty())
         return ret;
@@ -262,7 +262,7 @@ ostream& operator<<(ostream& os, const CLogEntry& item) {
 }
 
 //---------------------------------------------------------------------------
-const SFString CLogEntry::getStringAt(const SFString& name, uint32_t i) const {
+const string_q CLogEntry::getStringAt(const string_q& name, uint32_t i) const {
     if ( name % "topics" && i < topics.getCount() )
         return fromTopic(topics[i]);
     return "";
