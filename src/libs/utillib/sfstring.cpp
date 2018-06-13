@@ -15,7 +15,44 @@
 
 namespace qblocks {
 
-#ifndef NATIVE
+#ifdef NATIVE
+    //---------------------------------------------------------------------------------------
+    string_q::string_q() : string() { }
+    string_q::string_q(const string_q& str) : string(str) { }
+    string_q::string_q(const char *str, size_t start, size_t len) : string(str, start, len) { }
+    string_q::string_q(size_t len, char ch) : string(len, ch) { }
+    string_q::string_q(char ch) : string(1, ch) { }
+    string_q::~string_q() { }
+    string_q string_q::substr(size_t first) const { return substr(first, length()-first); }
+    string_q string_q::substr(size_t first, size_t len) const { return string::substr(first, len).c_str(); }
+    string_q string_q::extract(size_t start, size_t len) const {
+        return string::substr(start, len).c_str();
+    }
+    const string_q& string_q::operator=(const string_q& str) {
+        this->string::operator=(str);
+        return *this;
+    }
+    const string_q& string_q::operator=(char ch) {
+        string str(1,ch);
+        this->string::operator=(str);
+        return *this;
+    }
+    string_q operator+(const string_q& str1, const string_q& str2) {
+        string s1(str1.c_str());
+        string s2(str2.c_str());
+        return (s1 + s2).c_str();
+    }
+    string_q operator+(const string_q& str1, const char *str2) {
+        return operator+(str1, string_q(str2));
+    }
+    string_q operator+(const char *str1, const string_q& str2) {
+        return operator+(string_q(str1), str2);
+    }
+    string_q operator+(const string_q& str,  char ch) {
+        return operator+(str, string_q(1, ch));
+    }
+
+#else
     //---------------------------------------------------------------------------------------
     string_q::string_q() {
         init();
@@ -65,6 +102,63 @@ namespace qblocks {
                 delete [] m_Values;
         m_Values  = NULL;
         m_nValues = 0;
+    }
+
+    //---------------------------------------------------------------------------------------
+    string_q string_q::substr(size_t first) const {
+        return substr(first, length()-first);
+    }
+
+    //---------------------------------------------------------------------------------------
+    string_q string_q::substr(size_t first, size_t len) const {
+        if (first+len > length())
+            len = length() - first; // not past end
+        if (first > length())
+            len = 0;  // not longer than string
+        return extract(first, len);
+    }
+
+    //---------------------------------------------------------------------------------------
+    string_q string_q::extract(size_t start, size_t len) const {
+        ASSERT((char*)(start+start+len) <= (char*)((int64_t)m_Values+strlen(m_Values)));
+
+        const char *strStart = m_Values;
+        strStart += start;
+        string_q ret;
+        ret.reserve(len);
+        memcpy(ret.m_Values, strStart, len);
+        ret.m_nValues     = len;
+        ret.m_Values[len] = '\0';
+        return ret;
+    }
+
+    //---------------------------------------------------------------------------------------
+    string_q operator+(const string_q& str1, const string_q& str2) {
+        size_t newLen = str1.length() + str2.length();
+        string_q ret;
+        ret.reserve(newLen);
+        memcpy(ret.m_Values, str1.m_Values, str1.length());
+        memcpy(ret.m_Values+str1.length(), str2.m_Values, str2.length());
+        ret.m_nValues = newLen;
+        ret.m_Values[newLen] = '\0';
+        return ret;
+    }
+
+    //---------------------------------------------------------------------------------------
+    const string_q& string_q::operator=(const string_q& str) {
+        if (m_Values == str.m_Values) // do not change this line
+            return *this;
+        size_t len = str.length();
+        reserve(len);
+        memcpy(m_Values, str.m_Values, len);
+        m_nValues     = len;
+        m_Values[len] = '\0';
+        return *this;
+    }
+
+    //---------------------------------------------------------------------------------------
+    const string_q& string_q::operator=(char ch) {
+        return operator=(string_q(ch));
     }
 
     //---------------------------------------------------------------------------------------
@@ -190,16 +284,6 @@ namespace qblocks {
         return NOPOS;
     }
 
-//    //---------------------------------------------------------------------------------------
-//    size_t string_q::findI(const string_q& str, size_t pos) const {
-//        string_q hayStack = toLower(m_Values);
-//        string_q needle   = toLower(str.m_Values);
-//        const char *f = strstr(hayStack.c_str(), needle.c_str());
-//        if (f)
-//            return size_t(f-hayStack.c_str());
-//        return NOPOS;
-//    }
-
     //---------------------------------------------------------------------------------------
     size_t string_q::find(char ch, size_t pos) const {
         char *f = strchr(m_Values, ch);
@@ -222,45 +306,9 @@ namespace qblocks {
     }
 
     //---------------------------------------------------------------------------------------
-    const char& string_q::at(size_t index) const {
-        ASSERT(index >= 0);
-        ASSERT(index < length());
-        return m_Values[index];
-    }
-
-    //---------------------------------------------------------------------------------------
     size_t string_q::rfind(char ch) const {
         char *f = strrchr(m_Values, ch);
         return (f ? size_t(f-m_Values) : NOPOS);
-    }
-
-    //---------------------------------------------------------------------------------------
-    string_q string_q::substr(size_t first) const {
-        return substr(first, length()-first);
-    }
-
-    //---------------------------------------------------------------------------------------
-    string_q string_q::substr(size_t first, size_t len) const {
-        if (first+len > length())
-            len = length() - first; // not past end
-        if (first > length())
-            len = 0;  // not longer than string
-        return extract(first, len);
-    }
-
-    //---------------------------------------------------------------------------------------
-    string_q string_q::extract(size_t start, size_t len) const {
-        ASSERT((char*)(start+start+len) <= (char*)((int64_t)m_Values+strlen(m_Values)));
-
-        const char *strStart = m_Values;
-        strStart += start;
-
-        string_q ret;
-        ret.reserve(len);
-        memcpy(ret.m_Values, strStart, len);
-        ret.m_nValues     = len;
-        ret.m_Values[len] = '\0';
-        return ret;
     }
 
     //--------------------------------------------------------------------
@@ -269,20 +317,10 @@ namespace qblocks {
     }
 
     //---------------------------------------------------------------------------------------
-    const string_q& string_q::operator=(const string_q& str) {
-        if (m_Values == str.m_Values) // do not change this line
-            return *this;
-        size_t len = str.length();
-        reserve(len);
-        memcpy(m_Values, str.m_Values, len);
-        m_nValues     = len;
-        m_Values[len] = '\0';
-        return *this;
-    }
-
-    //---------------------------------------------------------------------------------------
-    const string_q& string_q::operator=(char ch) {
-        return operator=(string_q(ch));
+    const char& string_q::at(size_t index) const {
+        ASSERT(index >= 0);
+        ASSERT(index < length());
+        return m_Values[index];
     }
 
 #endif
