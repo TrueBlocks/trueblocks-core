@@ -44,7 +44,7 @@ namespace qblocks {
     }
 
     //---------------------------------------------------------------------------------------
-    string_q::string_q(char ch, size_t len) {
+    string_q::string_q(size_t len, char ch) {
         init();
 
         if ((long)len > 0) {
@@ -54,6 +54,9 @@ namespace qblocks {
             m_Values[len] = '\0';
         }
     }
+
+    //---------------------------------------------------------------------------------------
+    string_q::string_q(char ch) : string_q(1, ch) {}
 
     //---------------------------------------------------------------------------------------
     string_q::~string_q() {
@@ -187,15 +190,15 @@ namespace qblocks {
         return NOPOS;
     }
 
-    //---------------------------------------------------------------------------------------
-    size_t string_q::findI(const string_q& str, size_t pos) const {
-        string_q hayStack = toLower(m_Values);
-        string_q needle   = toLower(str.m_Values);
-        const char *f = strstr(hayStack.c_str(), needle.c_str());
-        if (f)
-            return size_t(f-hayStack.c_str());
-        return NOPOS;
-    }
+//    //---------------------------------------------------------------------------------------
+//    size_t string_q::findI(const string_q& str, size_t pos) const {
+//        string_q hayStack = toLower(m_Values);
+//        string_q needle   = toLower(str.m_Values);
+//        const char *f = strstr(hayStack.c_str(), needle.c_str());
+//        if (f)
+//            return size_t(f-hayStack.c_str());
+//        return NOPOS;
+//    }
 
     //---------------------------------------------------------------------------------------
     size_t string_q::find(char ch, size_t pos) const {
@@ -352,6 +355,7 @@ namespace qblocks {
         reverse(target);
     }
 
+#ifdef NATIVE
     //---------------------------------------------------------------------------------------
     void reverse(string_q& target) {
         size_t i,j;
@@ -362,6 +366,19 @@ namespace qblocks {
             target[j] = tmp;
         }
     }
+#else
+    //---------------------------------------------------------------------------------------
+    void reverse(string_q& target) {
+        size_t i,j;
+        size_t n = target.length();
+        char *t = (char *)target.c_str();
+        for ( i = 0, j = n-1 ; i < n/2; i++, j-- ) {
+            char tmp = t[i];
+            t[i] = t[j];
+            t[j] = tmp;
+        }
+    }
+#endif
 
     //----------------------------------------------------------------------------------------
     string_q nextTokenClearReverse(string_q& str, char token) {
