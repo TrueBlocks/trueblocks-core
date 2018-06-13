@@ -106,10 +106,10 @@ extern string_q collapseArrays(const string_q& inStr);
         string_q curGroup;
         Clear();
 
-        string_q contents = asciiFileToString(filename)
-                            .Substitute("\\\n ", "\\\n") // if ends with '\' + '\n' + space, make it just '\' + '\n'
-                            .Substitute("\\\n", "")      // if ends with '\' + '\n', its a continuation, so fold in
-                            .Substitute("\\\r\n", "");   // same for \r\n
+        string_q contents = asciiFileToString(filename);
+        replaceAll(contents, "\\\n ", "\\\n"); // if ends with '\' + '\n' + space, make it just '\' + '\n'
+        replaceAll(contents, "\\\n", "");      // if ends with '\' + '\n', its a continuation, so fold in
+        replaceAll(contents, "\\\r\n", "");    // same for \r\n
         contents = collapseArrays(stripFullLineComments(contents));
         while (!contents.empty()) {
             string_q value = trimWhitespace(nextTokenClear(contents, '\n'));
@@ -119,7 +119,7 @@ extern string_q collapseArrays(const string_q& inStr);
             if (!value.empty()) {
                 bool isArray = contains(value, "[[");
                 if (startsWith(value, '[')) {  // it's a group
-                    value = trimWhitespace(value.Substitute("[", "").Substitute("]", ""));
+                    value = trimWhitespace(substitute(substitute(value, "[", ""), "]", ""));
                     addGroup(value, comment, isArray);
                     curGroup = value;
 
@@ -212,7 +212,13 @@ extern string_q collapseArrays(const string_q& inStr);
             replaceAll(fmt, "{", color+"{");
             replaceAll(fmt, "}", "}"+cOff);
         }
-        return cleanFmt(fmt);
+
+		string_q ret = substitute(fmt, "\\n\\\n", "\\n");
+		ret = substitute(ret, "\n", "");
+		ret = substitute(ret, "\\n", "\n");
+		ret = substitute(ret, "\\t", "\t");
+		ret = substitute(ret, "\\r", "\r");
+		return ret;
     }
 
     //-------------------------------------------------------------------------
@@ -359,14 +365,14 @@ extern string_q collapseArrays(const string_q& inStr);
             return inStr;
 
         string_q ret;
-        string_q str = inStr.Substitute("  "," ");
+        string_q str = substitute(inStr, "  "," ");
         replace(str, "[[","`");
         string_q front = nextTokenClear(str, '`');
         str = "[[" + str;
-        str = str.Substitute("[[","<array>");
-        str = str.Substitute("]]","</array>\n<name>");
-        str = str.Substitute("[","</name>\n<value>");
-        str = str.Substitute("]","</value>\n<name>");
+        str = substitute(str, "[[","<array>");
+        str = substitute(str, "]]","</array>\n<name>");
+        str = substitute(str, "[","</name>\n<value>");
+        str = substitute(str, "]","</value>\n<name>");
         replaceReverse(str, "<name>", "");
         replaceAll(str, "<name>\n","<name>");
         replaceAll(str, " = </name>","</name>");
@@ -374,8 +380,8 @@ extern string_q collapseArrays(const string_q& inStr);
             string_q array = snagFieldClear(str,"array");
             string_q vals;
             while (contains(str, "</value>")) {
-                string_q name = snagFieldClear(str,"name").Substitute("=","").Substitute("\n","");
-                string_q value = snagFieldClear(str,"value").Substitute("\n","").Substitute("=",":");
+                string_q name = substitute(substitute(snagFieldClear(str,"name"), "=",""), "\n","");
+                string_q value = substitute(substitute(snagFieldClear(str,"value"), "\n",""), "=",":");
                 vals += name + " = [ " + value + " ]\n";
             }
             string_q line = "[[" + array + "]]\n" + vals;

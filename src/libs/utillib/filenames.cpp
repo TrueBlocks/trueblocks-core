@@ -70,7 +70,7 @@ namespace qblocks {
 
         } else {
             path = fn.substr(0,fn.rfind('/')+1);
-            fileName = fn.Substitute(path, EMPTY);
+            fileName = substitute(fn, path, EMPTY);
         }
     }
 
@@ -86,13 +86,13 @@ namespace qblocks {
 
     //----------------------------------------------------------------------------------
     string_q CFilename::getFullPath(void) const {
-        return (path + fileName).Substitute("//", "/");
+        return substitute((path + fileName), "//", "/");
     }
 
     //----------------------------------------------------------------------------------
     string_q CFilename::relativePath(const string_q& relTo) const {
         string_q rel = (relTo.empty() ? getCWD() : relTo);
-        return getFullPath().Substitute(rel, "./");
+        return substitute(getFullPath(), rel, "./");
     }
 
 }  // namespace qblocks

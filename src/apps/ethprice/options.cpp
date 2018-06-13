@@ -43,7 +43,7 @@ bool COptions::parseArguments(string_q& command) {
             freshen = true;
 
         } else if (startsWith(arg, "-a:") || startsWith(arg, "--at:")) {
-            arg = orig.Substitute("-a:","").Substitute("--at:","");
+            arg = substitute(substitute(orig, "-a:", ""), "--at:", "");
             if (arg == "now") {
                 at = toTimestamp(Now());
             } else {
@@ -53,13 +53,13 @@ bool COptions::parseArguments(string_q& command) {
             }
 
         } else if (startsWith(arg, "-p:") || startsWith(arg, "--period:")) {
-            arg = orig.Substitute("-p:","").Substitute("--period:","");
+            arg = substitute(substitute(orig, "-p:", ""), "--period:", "");
             freq = toLongU(arg);
             if (!isUnsigned(arg) || freq % 5)
                 return usage("Positive multiple of 5 expected: " + orig);
 
         } else if (startsWith(arg, "--pair:")) {
-            arg = orig.Substitute("--pair:","");
+            arg = substitute(orig, "--pair:", "");
             source.pair = arg;
 
         } else {
@@ -98,8 +98,7 @@ COptions::COptions(void) {
 string_q COptions::postProcess(const string_q& which, const string_q& str) const {
 
     if (which == "options") {
-        //return str.Substitute("address_list block_list", "<address> [address...] [block...]")
-        //        .Substitute("-l|", "-l fn|");
+        //return substitute(substitute(str, "address_list block_list", "<address> [address...] [block...]"), "-l|", "-l fn|");
 
     } else if (which == "notes" && (verbose || COptions::isReadme)) {
 

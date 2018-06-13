@@ -88,6 +88,6 @@ COptions::~COptions(void) {
 //--------------------------------------------------------------------------------
 string_q COptions::postProcess(const string_q& which, const string_q& str) const {
     if (which == "options")
-        return str.Substitute("block_list", "<block> [block...]");
+        return substitute(str, "block_list", "<block> [block...]");
     return str;
 }

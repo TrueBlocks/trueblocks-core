@@ -189,7 +189,7 @@ string_q baseTypeName(uint64_t type) {
     if (type & TS_OBJECT)  ret += (" TS_OBJECT "  + asStringU(type));
     if (type & TS_POINTER) ret += (" TS_POINTER " + asStringU(type));
     if (type & TS_BIGNUM)  ret += (" TS_BIGNUM "  + asStringU(type));
-    return trim(ret.Substitute("  "," "));
+    return trim(substitute(ret, "  "," "));
 }
 
 //--------------------------------------------------------------
@@ -222,7 +222,7 @@ string_q typeName(uint64_t type) {
 void reportNode(CBaseNode *node) {
     CRuntimeClass *pClass = node->getRuntimeClass();
 
-    cout << string_q('-',80) << "\n";
+    cout << string_q(80, '-') << "\n";
     cout << "className: " << pClass->m_ClassName << "\n";
     cout << "objectSize: " << pClass->m_ObjectSize << "\n";
     cout << "baseClass: " << (pClass->m_BaseClass ? pClass->m_BaseClass->m_ClassName : "None") << "\n";

@@ -66,7 +66,7 @@ COptions::COptions(void) {
     namesFile = CFilename(configPath("names/names.txt"));
     establishFolder(namesFile.getPath());
     if (!fileExists(namesFile.getFullPath()))
-        stringToAsciiFile(namesFile.getFullPath(), string_q(STR_DEFAULT_DATA).Substitute(" |","|").Substitute("|","\t"));
+        stringToAsciiFile(namesFile.getFullPath(), substitute(substitute(string_q(STR_DEFAULT_DATA), " |","|"), "|","\t"));
     loadNames();
     Init();
 }

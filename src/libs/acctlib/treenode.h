@@ -133,8 +133,8 @@ IMPLEMENT_ARCHIVE_LIST(CTreeNodeList);
 // EXISTING_CODE
 //---------------------------------------------------------------------------
 inline unsigned commonPrefix(const string_q& _t, const string_q& _u) {
-    int32_t s = (int32_t)min(_t.length(), _u.length());
-    for (int32_t i = 0 ; ; ++i)
+    size_t s = min(_t.length(), _u.length());
+    for (size_t i = 0 ; ; ++i)
         if (i == s || (_t[i] != _u[i]))
             return (unsigned)i;
     return (unsigned)s;

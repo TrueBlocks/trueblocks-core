@@ -112,7 +112,7 @@ COptions::COptions(void) {
     namesFile = CFilename(configPath("names/names.txt"));
     establishFolder(namesFile.getPath());
     if (!fileExists(namesFile.getFullPath()))
-        stringToAsciiFile(namesFile.getFullPath(), string_q(STR_DEFAULT_DATA).Substitute(" |","|").Substitute("|","\t"));
+        stringToAsciiFile(namesFile.getFullPath(), substitute(substitute(string_q(STR_DEFAULT_DATA), " |","|"), "|","\t"));
     loadNames();
     Init();
 }
@@ -120,7 +120,7 @@ COptions::COptions(void) {
 //--------------------------------------------------------------------------------
 string_q COptions::postProcess(const string_q& which, const string_q& str) const {
     if (which == "options") {
-        return str.Substitute("terms", "<term> [term...]");
+        return substitute(str, "terms", "<term> [term...]");
 
     } else if (which == "notes" && (verbose || COptions::isReadme)) {
         string_q ret;
@@ -133,7 +133,7 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
         ret += "The [{--count}] option works with any other option and will simply display the number of matches.\n";
         ret += "The [{--matchCase}] option requires case sensitive matching. It works with all other options.\n";
         ret += "The [{--addrOnly}] option modifies the display output and therefore works with any other options.\n";
-        ret += "Name file: [{" + namesFile.getFullPath().Substitute(getHomeFolder(),"~/") + "}] (" + asStringU(fileSize(namesFile.getFullPath())) + ")\n";
+        ret += "Name file: [{" + substitute(namesFile.getFullPath(), getHomeFolder(), "~/") + "}] (" + asStringU(fileSize(namesFile.getFullPath())) + ")\n";
         return ret;
     }
     return str;

@@ -264,10 +264,6 @@ namespace qblocks {
     char string_q::operator[](size_t index) const {
         return at(index);
     }
-#endif
-
-    //---------------------------------------------------------------------------------------
-    char nullStr[2];
 
     //---------------------------------------------------------------------------------------
     const string_q& string_q::operator=(const string_q& str) {
@@ -286,44 +282,35 @@ namespace qblocks {
         return operator=(string_q(ch));
     }
 
+#endif
+
+    //---------------------------------------------------------------------------------------
+    char nullStr[2];
+
     //---------------------------------------------------------------------------------------
     bool contains(const string_q& haystack, const string_q& needle) {
         return (haystack.find(needle) != NOPOS);
     }
 
     //---------------------------------------------------------------------------------------
-    bool containsI(const string_q& haystack, const string_q& needle) {
-        return (haystack.findI(needle) != NOPOS);
+    bool contains(const string_q& haystack, char ch) {
+        string_q ss;
+        ss = ch;
+        return contains(haystack, ss);
     }
 
     //---------------------------------------------------------------------------------------
-    string_q string_q::Substitute(const string_q& what, const string_q& with) const {
-        string_q ret = *this;
-        if (contains(with, "`")) {
-            string_q whatStr = what;
-            string_q withStr = with;
-            while (!whatStr.empty()) { // they should match but don't have to. With predominates
-                string_q wtStr = nextTokenClear(whatStr, '`');
-                string_q whStr = nextTokenClear(withStr, '`');
-                replaceAll(ret, wtStr, whStr);
-            }
-        } else {
-            replaceAll(ret, what, with);
-        }
-        return ret;
+    bool containsI(const string_q& haystack, const string_q& needle) {
+        string_q hay = toLower(haystack);
+        string_q need = toLower(needle);
+        return contains(hay, need);
     }
 
     //---------------------------------------------------------------------------------------
     void replace(string_q& target, const string_q& what, const string_q& with) {
-        string_q targ = target.c_str();
-        size_t f = targ.find(what);
-        if (f != NOPOS) {
-            targ = (targ.substr(0, f) + string_q(with.c_str()) + targ.substr(f + what.length()));
-            target.reserve(targ.length()+1);
-            ASSERT(target.m_nValues == 0);
-            for (size_t i = 0 ; i < targ.length() ; i++)
-                target.m_Values[target.m_nValues++] = targ[i];
-        }
+        size_t f = target.find(what);
+        if (f != NOPOS)
+            target = (target.substr(0, f) + string_q(with.c_str()) + target.substr(f + what.length()));
     }
 
     //---------------------------------------------------------------------------------------
@@ -333,54 +320,46 @@ namespace qblocks {
 
         if (with.find(what) != NOPOS) {
             // may cause endless recursions so do it in two steps instead
-            string_q rep((char)0x5);
-            replaceAll(target, what, rep);
-            replaceAll(target, rep, with);
+            replaceAll(target, what, "~*~``");
+            replaceAll(target, "~*~``", with);
             return;
         }
 
         size_t f = target.find(what);
         while (f != NOPOS) {
-            string_q targ = target.c_str();
-            replace(targ, what.c_str(), with.c_str());
-            target.reserve(targ.length()+1);
-            ASSERT(target.m_nValues == 0);
-            for (size_t i = 0 ; i < targ.length() ; i++)
-                target.m_Values[target.m_nValues++] = targ[i];
+            replace(target, what, with);
             f = target.find(what);
         }
     }
 
     //---------------------------------------------------------------------------------------
     void replaceAny(string_q& target, const string_q& list, const string_q& with) {
-        for (size_t i = 0 ; i < list.length() ; i++)
-            replaceAll(target, list[i], with);
+        for (size_t i = 0 ; i < list.length() ; i++) {
+            string_q ss;
+            ss = list[i];
+            replaceAll(target, ss, with);
+        }
     }
 
     //---------------------------------------------------------------------------------------
-    void replaceReverse(string_q& target, const string_q& whatIn, const string_q& withIn) {
-        string_q targ = target.c_str();
-        string_q what = whatIn.c_str();
-        string_q with = withIn.c_str();
-        reverse(targ);
-        reverse(what);
-        reverse(with);
-        replace(targ, what, with);
-        reverse(targ);
-        target.reserve(targ.length());
-        ASSERT(target.m_nValues == 0);
-        for (size_t i = 0 ; i < targ.length() ; i++)
-            target.m_Values[target.m_nValues++] = targ[i];
+    void replaceReverse(string_q& target, const string_q& what, const string_q& with) {
+        string_q w1 = what;
+        string_q w2 = with;
+        reverse(target);
+        reverse(w1);
+        reverse(w2);
+        replace(target, w1, w2);
+        reverse(target);
     }
 
     //---------------------------------------------------------------------------------------
     void reverse(string_q& target) {
         size_t i,j;
-        size_t n = target.m_nValues;
+        size_t n = target.length();
         for ( i = 0, j = n-1 ; i < n/2; i++, j-- ) {
-            char tmp = target.m_Values[i];
-            target.m_Values[i] = target.m_Values[j];
-            target.m_Values[j] = tmp;
+            char tmp = target[i];
+            target[i] = target[j];
+            target[j] = tmp;
         }
     }
 
@@ -460,11 +439,25 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------
+    bool startsWith(const string_q& haystack, char ch) {
+        string_q ss;
+        ss = ch;
+        return startsWith(haystack, ss);
+    }
+
+    //--------------------------------------------------------------------
     bool endsWith(const string_q& haystack, const string_q& needle) {
         string_q hay = haystack.c_str();
         if (hay.empty() || needle.empty())
             return false;
         return (hay.substr(hay.length() - needle.length(), needle.length()) == needle);
+    }
+
+    //--------------------------------------------------------------------
+    bool endsWith(const string_q& haystack, char ch) {
+        string_q ss;
+        ss = ch;
+        return endsWith(haystack, ss);
     }
 
     //---------------------------------------------------------------------------------------
@@ -525,10 +518,10 @@ namespace qblocks {
 
     //--------------------------------------------------------------------
     string_q trimTrailing(const string_q& str, char c) {
-        string_q ret = str.c_str();
+        string_q ret = str;
         while (endsWith(ret, c))
             ret = ret.substr(0,ret.length()-1);
-        return ret.c_str();
+        return ret;
     }
 
     //--------------------------------------------------------------------
@@ -553,14 +546,14 @@ namespace qblocks {
     //--------------------------------------------------------------------
     string_q padRight(const string_q& str, size_t len, char p) {
         if (len > str.length())
-            return str + string_q(p, len-str.length());
+            return str + string_q(len-str.length(), p);
         return str;
     }
 
     //--------------------------------------------------------------------
     string_q padLeft(const string_q& str, size_t len, char p) {
         if (len > str.length())
-            return string_q(p, len-str.length()) + str;
+            return string_q(len-str.length(), p) + str;
         return str;
     }
 
@@ -568,7 +561,7 @@ namespace qblocks {
     string_q padCenter(const string_q& str, size_t len, char p) {
         if (len > str.length()) {
             size_t padding = (len-str.length()) / 2;
-            return string_q(p, padding) + str + string_q(p, padding);
+            return string_q(padding, p) + str + string_q(padding, p);
         }
         return str;
     }

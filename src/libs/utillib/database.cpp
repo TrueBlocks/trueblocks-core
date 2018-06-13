@@ -435,13 +435,13 @@ namespace qblocks {
         if (!contains(filename, ".docx"))
             return "Only .docx files are supported";
         return doCommand(getHomeFolder() + "source/docx2txt.pl " +
-                               filename.Substitute(" ", "\\ ").Substitute("'", "\\'") + " -");
+                               substitute(substitute(filename, " ", "\\ "), "'", "\\'") + " -");
     }
 
     //----------------------------------------------------------------------
     size_t stringToDocxFile(const string_q& fileName, const string_q& contents) {
         string_q cmd = getHomeFolder() + "source/createDocx \"" +
-                        fileName + "\" \"" + contents.Substitute("\"", "''") + "\"";
+                        fileName + "\" \"" + substitute(contents, "\"", "''") + "\"";
         string_q ret = doCommand(cmd);
         fprintf(stderr, "ret: %s\n", ret.c_str());
         return true;
@@ -480,7 +480,7 @@ namespace qblocks {
     void writeTheCode(const string_q& fileName, const string_q& codeOutIn, const string_q& ns, bool spaces) {
         string_q codeOut = codeOutIn;
         string_q orig = asciiFileToString(fileName);
-        string_q existingCode = orig.Substitute("//EXISTING_CODE","// EXISTING_CODE");
+        string_q existingCode = substitute(orig, "//EXISTING_CODE","// EXISTING_CODE");
         if (spaces) {
             replaceAll(existingCode, "    ", "\t");
             replaceAll(codeOut,      "    ", "\t");
@@ -489,7 +489,7 @@ namespace qblocks {
         string_q tabs;
         int nTabs = 4;
         while (nTabs >= 0) {
-            tabs = string_q('\t', (size_t)nTabs);
+            tabs = string_q((size_t)nTabs, '\t');
             nTabs--;
             //--------------------------------------------------------------------------------------
             while (contains(existingCode, tabs + "// EXISTING_CODE")) {
@@ -594,7 +594,7 @@ namespace qblocks {
             return "";
         }
 
-        string_q fn = filename.Substitute("r:", "");;
+        string_q fn = substitute(filename, "r:", "");;
         if (!fn.empty()) {
             if (startsWith(filename, "r:")) {
                 replace(theList, fn+"|", "");

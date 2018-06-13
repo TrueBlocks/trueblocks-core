@@ -133,8 +133,7 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
 
     if (which == "options") {
         return
-            str.Substitute("block_list", "<block> [block...]")
-                .Substitute("-l|", "-l fn|");
+            substitute(substitute(str, "block_list", "<block> [block...]"), "-l|", "-l fn|");
 
     } else if (which == "notes" && (verbose || COptions::isReadme)) {
 

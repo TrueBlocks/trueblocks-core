@@ -18,7 +18,7 @@ namespace qblocks {
     //-------------------------------------------------------------------------
     void etherlib_init(const string_q& sourceIn, QUITHANDLER qh) {
 
-        string_q fallBack = getenv("FALLBACK");
+        string_q fallBack = getEnvStr("FALLBACK");
         if (!isNodeRunning() && fallBack.empty()) {
             cerr << "\n\t";
             cerr << cTeal << "Warning: " << cOff << "QuickBlocks requires a running Ethereum\n";
@@ -239,7 +239,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
     SFHash getRawBlockHash(blknum_t bn) {
         string_q blockStr;
         queryRawBlock(blockStr, asStringU(bn), false, true);
-        blockStr = blockStr.substr(blockStr.find("\"hash\":"),blockStr.length()).Substitute("\"hash\":\"","");
+        blockStr = substitute(blockStr.substr(blockStr.find("\"hash\":"),blockStr.length()), "\"hash\":\"","");
         blockStr = nextTokenClear(blockStr, '\"');
         return blockStr;
     }
@@ -452,7 +452,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
         string_q created;
         if (establishFolder(fileName, created)) {
             if (!created.empty() && !isTestMode())
-                cerr << "mkdir(" << created << ")" << string_q(' ',20) << "                                                     \n";
+                cerr << "mkdir(" << created << ")" << string_q(20, ' ') << "                                                     \n";
             SFArchive nodeCache(WRITING_ARCHIVE);
             if (nodeCache.Lock(fileName, binaryWriteCreate, LOCK_CREATE)) {
                 node.SerializeC(nodeCache);
@@ -507,7 +507,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
         string_q created;
         if (establishFolder(fileName,created)) {
             if (!created.empty() && !isTestMode())
-                cerr << "mkdir(" << created << ")" << string_q(' ',20) << "                                                     \n";
+                cerr << "mkdir(" << created << ")" << string_q(20, ' ') << "                                                     \n";
             SFArchive bloomCache(WRITING_ARCHIVE);
             if (bloomCache.Lock(fileName, binaryWriteCreate, LOCK_CREATE)) {
                 bloomCache << blooms;
@@ -698,7 +698,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
         blknum_t st = (start / 1000) * 1000;
         blknum_t ed = ((start+count+1000) / 1000) * 1000;
         for (blknum_t b = st ; b < ed ; b += 1000) {
-            string_q path = getBinaryPath(b).Substitute("/blocks/","/blooms/");
+            string_q path = substitute(getBinaryPath(b), "/blocks/", "/blooms/");
             if (!forEveryFileInFolder(path, func, data))
                 return false;
         }
@@ -846,7 +846,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
             if (!endsWith(blockCache, "/"))
                 blockCache += "/";
         }
-        return (blockCache + _part).Substitute("//", "/");
+        return substitute((blockCache + _part), "//", "/");
     }
 
     //--------------------------------------------------------------------------

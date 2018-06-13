@@ -27,7 +27,7 @@ int main(int argc, const char *argv[])
             lastAdded = newPerson;
         }
 
-        cout << "Creation\n" << string_q('-', 80) << "\n";
+        cout << "Creation\n" << string_q(80, '-') << "\n";
         CPerson *cur = &leader;
         while (cur) {
             cout << cur->name << " : " << cur->age << "\n";
@@ -41,7 +41,7 @@ int main(int argc, const char *argv[])
             out.Release();
         }
 
-        cout << "\nReset\n" << string_q('-', 80) << "\n";
+        cout << "\nReset\n" << string_q(80, '-') << "\n";
         leader = CPerson();
         cur = &leader;
         while (cur) {
@@ -56,7 +56,7 @@ int main(int argc, const char *argv[])
             in.Release();
         }
 
-        cout << "\nRead in data\n" << string_q('-', 80) << "\n";
+        cout << "\nRead in data\n" << string_q(80, '-') << "\n";
         cur = &leader;
         while (cur) {
             cout << cur->name << " : " << cur->age << "\n";

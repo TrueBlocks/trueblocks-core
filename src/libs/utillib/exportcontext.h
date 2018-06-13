@@ -69,9 +69,9 @@ namespace qblocks {
         virtual CExportContext& operator<<(const char *str);
         virtual CExportContext& operator<<(const string_q& str);
 
-        virtual string_q tabs(uint32_t add = 0) { return string_q(tCh, nTabs + add); }
-        virtual string_q inc(void) { string_q ret = string_q(tCh, nTabs); nTabs++; return ret; }
-        virtual string_q dec(void) { nTabs--; return string_q(tCh, nTabs); }
+        virtual string_q tabs(uint32_t add = 0) { return string_q(nTabs + add, tCh); }
+        virtual string_q inc(void) { string_q ret = string_q(nTabs, tCh); nTabs++; return ret; }
+        virtual string_q dec(void) { nTabs--; return string_q(nTabs, tCh); }
 
         virtual void setOutput(void *output) = 0;
         virtual void* getOutput(void) const = 0;

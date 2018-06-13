@@ -61,7 +61,7 @@ bool CFunction::setValueByName(const string_q& fieldName, const string_q& fieldV
         signature = getSignature(SIG_CANONICAL);
         return true;
     } else if (fieldName % "name") {
-        name = fieldValue.Substitute("_","");
+        name = substitute(fieldValue, "_", "");
         return true;
     }
     // EXISTING_CODE
@@ -371,10 +371,16 @@ string_q CFunction::getSignature(uint64_t parts) const {
     uint32_t cnt = inputs.getCount();
 
     string_q nm = (origName.empty() ? name : origName);
+
+    size_t tl = type.length();
+    size_t nl = nm.length();
+    size_t v1 = 35 - tl;
+    size_t ll = (nl > v1 ? 0 : v1 - nl);
+
     CStringExportContext ctx;
     ctx << (parts & SIG_FTYPE  ? "\t"+type+" " : "");
     ctx << (parts & SIG_FNAME  ? nm            : "");
-    ctx << (parts & SIG_FSPACE ? string_q(' ', 35-type.length()-nm.length()) : "");
+    ctx << (parts & SIG_FSPACE ? string_q(ll, ' ') : "");
     ctx << (parts & SIG_FTYPE || parts & SIG_FNAME  ? "("    : "");
     for (uint32_t j = 0 ; j < cnt ; j++) {
         ctx << (parts & SIG_ITYPE    ? inputs[j].type : "");

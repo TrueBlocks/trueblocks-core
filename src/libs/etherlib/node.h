@@ -75,7 +75,7 @@ namespace qblocks {
     //-------------------------------------------------------------------------
     extern bool     getCode                 (const SFAddress& addr, string_q& theCode);
     inline string_q getCode                 (const SFAddress& addr) { string_q ret; getCode(addr, ret); return ret; }
-    inline bool     isContract              (const SFAddress& addr) { return !getCode(addr).Substitute("0x","").empty(); }
+    inline bool     isContract              (const SFAddress& addr) { return !substitute(getCode(addr), "0x", "").empty(); }
     extern SFUintBN getBalance              (const SFAddress& addr, blknum_t blockNum, bool isDemo);
     extern bool     getSha3                 (const string_q& hexIn, string_q& shaOut);
     inline string_q getSha3                 (const string_q& hexIn) { string_q ret; getSha3(hexIn,ret); return ret; }
