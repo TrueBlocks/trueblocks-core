@@ -326,6 +326,22 @@ namespace qblocks {
 #endif
 
     //---------------------------------------------------------------------------------------
+    string_q nextTokenClear(string_q& line, char delim, bool doClear) {
+        string_q ret;
+        size_t find = line.find(delim);
+        if (find!=NOPOS) {
+            ret  = line.substr(0,find);
+            line = line.substr(find+1);
+
+        } else if (!line.empty()) {
+            ret  = line;
+            if (doClear)
+                line = "";
+        }
+        return ret;
+    }
+
+    //---------------------------------------------------------------------------------------
     char nullStr[2];
 
     //---------------------------------------------------------------------------------------

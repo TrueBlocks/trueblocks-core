@@ -127,7 +127,7 @@ bool CTrace::Serialize(SFArchive& archive) {
     archive >> blockHash;
     archive >> blockNumber;
     archive >> subtraces;
-    archive >> traceAddress;
+//    archive >> traceAddress;
     archive >> transactionHash;
     archive >> transactionPosition;
     archive >> type;
@@ -149,7 +149,7 @@ bool CTrace::SerializeC(SFArchive& archive) const {
     archive << blockHash;
     archive << blockNumber;
     archive << subtraces;
-    archive << traceAddress;
+//    archive << traceAddress;
     archive << transactionHash;
     archive << transactionPosition;
     archive << type;

@@ -124,22 +124,26 @@ string_q cleanAll(const string_q& str, bool remove, bool isByzan) {
 
 //------------------------------------------------------------
 string_q sorted(const string_q& inIn) {
+
     CStringArray inList, outList;
+
     string_q in = inIn;
     while (!in.empty()) {
-        inList[inList.getCount()] = nextTokenClear(in,'\n');
+        inList.push_back(nextTokenClear(in,'\n'));
     }
-    inList.Sort(sortByStringValue);
-    for (uint32_t i = 0 ; i < inList.getCount()-1 ; i++) {
+
+    sort(inList.begin(), inList.end());
+
+    for (uint32_t i = 0 ; i < inList.size()-1 ; i++)
         if (inList[i] != inList[i+1] && contains(inList[i], ":"))
-            outList[outList.getCount()] = inList[i];
-    }
+            outList.push_back(inList[i]);
+
     // add the last one of it's not already there
-    if (inList[inList.getCount()-1] != outList[outList.getCount()-1])
-        outList[outList.getCount()] = inList[inList.getCount()-1];
+    if (inList[inList.size()-1] != outList[outList.size()-1])
+        outList.push_back(inList[inList.size()-1]);
 
     string_q ret;
-    for (uint32_t i = 0 ; i < outList.getCount() ; i++)
+    for (uint32_t i = 0 ; i < outList.size() ; i++)
         ret += (outList[i] + "\n");
     return ret;
 }

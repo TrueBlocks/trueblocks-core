@@ -21,7 +21,6 @@ namespace qblocks {
     //--------------------------------------------------------------------
 //#define NATIVE
 #ifdef NATIVE
-//#define string_q std::string
     class string_q : public string {
 public:
         string_q   (void);
@@ -326,22 +325,7 @@ public:
 
     //--------------------------------------------------------------------
     extern string_q nextTokenClearReverse(string_q& str, char token);
-    inline string_q nextTokenClear(string_q& line, char delim, bool doClear=true) {
-        string_q ret;
-
-        size_t find = line.find(delim);
-        if (find!=NOPOS) {
-            ret  = line.substr(0,find);
-            line = line.substr(find+1);
-
-        } else if (!line.empty()) {
-            ret  = line;
-            if (doClear)
-                line = "";
-        }
-        return ret;
-    }
-
+    extern string_q nextTokenClear(string_q& line, char delim, bool doClear=true);
     extern string_q snagFieldClear(      string_q& in, const string_q& tagName, const string_q& defVal="");
     extern string_q snagField     (const string_q& in, const string_q& tagName, const string_q& defVal="");
 
