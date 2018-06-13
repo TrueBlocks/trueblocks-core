@@ -20,7 +20,27 @@ namespace qblocks {
 
     //--------------------------------------------------------------------
 //#define NATIVE
-#ifndef NATIVE
+#ifdef NATIVE
+//#define string_q std::string
+    class string_q : public string {
+public:
+        string_q   (void);
+        string_q   (const string_q& str);
+        const string_q&  operator=  (const string_q& str);
+        const string_q&  operator=  (char ch);
+        string_q   (char ch);
+        string_q   (size_t reps, char ch);
+        string_q   (const char *str, size_t start=0, size_t len=NOPOS);
+        ~string_q   (void);
+        string_q        extract    (size_t first, size_t len) const;
+        string_q        substr     (size_t first, size_t len) const;
+        string_q        substr     (size_t first) const;
+        friend string_q operator+  (const string_q& str1, const string_q& str2);
+        friend string_q operator+  (const string_q& str1, const char*     str2);
+        friend string_q operator+  (const char*     str1, const string_q& str2);
+        friend string_q operator+  (const string_q& str1, char            ch);
+    };
+#else
     class string_q {
     private:
         string_q  (long) {};
@@ -127,18 +147,6 @@ namespace qblocks {
         return operator+=(string_q(str));
     }
 
-    //---------------------------------------------------------------------------------------
-    inline string_q operator+(const string_q& str1, const string_q& str2) {
-        size_t newLen = str1.length() + str2.length();
-        string_q ret;
-        ret.reserve(newLen);
-        memcpy(ret.m_Values, str1.m_Values, str1.length());
-        memcpy(ret.m_Values+str1.length(), str2.m_Values, str2.length());
-        ret.m_nValues = newLen;
-        ret.m_Values[newLen] = '\0';
-        return ret;
-    }
-
     //--------------------------------------------------------------------
     inline string_q operator+(const string_q& str1, const char *str2) {
         return operator+(str1, string_q(str2));
@@ -243,9 +251,6 @@ namespace qblocks {
     inline bool operator>=(const char *str1, const string_q& str2) {
         return str2.compare(str1) <= 0;
     }
-
-#else
-#define string_q std::string
 #endif
 
     extern void replace    (string_q& target, const string_q& what, const string_q& with);
@@ -352,4 +357,3 @@ namespace qblocks {
 	}
 
 }  // namespace qblocks
-

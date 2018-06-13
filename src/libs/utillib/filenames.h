@@ -69,8 +69,4 @@ namespace qblocks {
 
 }  // namespace qblocks
 
-#ifdef NATIVE
-extern bool visitFile(const string_q& path, void *data);
-#else
 extern bool visitFile(const qblocks::string_q& path, void *data);
-#endif
