@@ -46,6 +46,7 @@ namespace qblocks {
         void addValue(TYPE val) { operator[](m_nItems) = val; }
         uint32_t getCount(void) const { return m_nItems; }
         uint32_t getSize(void) const { return m_nSize; }
+        uint32_t size(void) const { return getCount(); }
 
         void Sort(SORTINGFUNC func) { qsort(&m_Items[0], m_nItems, sizeof(TYPE), func); }
         TYPE *Find(const TYPE *key, SEARCHFUNC func) {
@@ -53,7 +54,10 @@ namespace qblocks {
             return reinterpret_cast<TYPE*>(bsearch(key, &m_Items[0], m_nItems, sizeof(TYPE), func));
         }
 
+        void push_back(TYPE x) { operator[](getCount()) = x; }
+
         void Clear(void);
+        void clear(void) { Clear(); }
         void Grow(uint32_t sizeNeeded);
 
     private:
@@ -584,7 +588,7 @@ namespace qblocks {
         SFUniqueStringList(void) : SFUniqueList(sortByStringValue, isDuplicate) { }
     };
 
-    typedef SFArrayBase<string_q> CStringArray;
+    typedef vector<string_q> CStringArray;
     typedef SFList<string_q> CStringList;
     typedef SFArrayBase<uint64_t> SFUintArray;
     typedef SFArrayBase<int64_t> SFIntArray;

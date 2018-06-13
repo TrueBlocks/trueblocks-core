@@ -81,14 +81,14 @@ namespace qblocks {
         } else {
 
             if (isHash(arg)) {
-                hashList[hashList.getCount()] = arg;
+                hashList.push_back(arg);
 
             } else {
                 string_q msg = arg;
                 blknum_t num = parseBlockOption(msg, lastBlock);
                 if (!msg.empty())
                     return msg;
-                numList[numList.getCount()] = num;
+                numList.push_back(num);
             }
         }
 
@@ -99,7 +99,7 @@ namespace qblocks {
     //--------------------------------------------------------------------------------
     void COptionsBlockList::Init(void) {
         numList.Clear();
-        hashList.Clear();
+        hashList.clear();
         start = stop = 0;
         hashFind = NULL;
     }
@@ -124,7 +124,7 @@ namespace qblocks {
                 return false;
         }
         if (hashFind) {
-            for (uint32_t i = 0 ; i < hashList.getCount() ; i++) {
+            for (uint32_t i = 0 ; i < hashList.size() ; i++) {
                 uint64_t n = (*hashFind)(hashList[i], data);
                 if (!(*func)(n, data))
                     return false;

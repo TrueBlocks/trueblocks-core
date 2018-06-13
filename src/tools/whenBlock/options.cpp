@@ -81,7 +81,7 @@ bool COptions::parseArguments(string_q& command) {
             }
 
             foundOne = true;
-            requests[requests.getCount()] = "date:" + asString(toTimestamp(date));
+            requests.push_back("date:" + asString(toTimestamp(date)));
 
         } else {
 
@@ -94,7 +94,7 @@ bool COptions::parseArguments(string_q& command) {
                 string_q val = spec.getValue();
                 if (spec.getName() == "latest")
                     val = asStringU(getLatestBlockFromClient());
-                requests[requests.getCount()] = "special:" + spec.getName() + "|" + val;
+                requests.push_back("special:" + spec.getName() + "|" + val);
                 foundOne = true;
 
             } else  {
@@ -109,7 +109,7 @@ bool COptions::parseArguments(string_q& command) {
                 string_q blockList = getBlockNumList();
                 blocks.Init();
                 while (!blockList.empty()) {
-                    requests[requests.getCount()] = "block:" + nextTokenClear(blockList,'|');
+                    requests.push_back("block:" + nextTokenClear(blockList,'|'));
                 }
                 foundOne = true;
             }
@@ -117,7 +117,7 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     if (isList) {
-        if (requests.getCount())
+        if (requests.size())
             return usage("The --list option must appear alone on the line. Quitting...");
         cout << listSpecials(false);
         return false;
@@ -135,7 +135,7 @@ void COptions::Init(void) {
     nParamsRef = nParams;
     pOptions = this;
 
-    requests.Clear();
+    requests.clear();
     alone = false;
     optionOff(OPT_DENOM);
 }
@@ -221,7 +221,7 @@ SFTime grabDate(const string_q& strIn) {
 
 //--------------------------------------------------------------------------------
 string_q COptions::listSpecials(bool terse) const {
-    if (specials.getCount() == 0)
+    if (specials.size() == 0)
         ((COptionsBase*)this)->loadSpecials();
 
     ostringstream os;
@@ -234,7 +234,7 @@ string_q COptions::listSpecials(bool terse) const {
     }
 
     string_q extra;
-    for (uint32_t i = 0 ; i < specials.getCount(); i++) {
+    for (uint32_t i = 0 ; i < specials.size(); i++) {
 
         string_q name = specials[i].getName();
         string_q bn = specials[i].getValue();
@@ -257,9 +257,9 @@ string_q COptions::listSpecials(bool terse) const {
                 os << name;
                 os << " (" << cTeal << bn << extra << cOff << ")";
                 if (!((i+1)%4)) {
-                    if (i < specials.getCount()-1)
+                    if (i < specials.size()-1)
                         os << "\n  ";
-                } else if (i < specials.getCount()-1)
+                } else if (i < specials.size()-1)
                     os << ", ";
             } else {
                 os << "\n      - " << padRight(name, 15);
@@ -278,7 +278,7 @@ string_q COptions::listSpecials(bool terse) const {
         }
     }
     if (terse) {
-        if (specials.getCount() % 4)
+        if (specials.size() % 4)
             os << "\n";
     } else {
         os << "\n";
