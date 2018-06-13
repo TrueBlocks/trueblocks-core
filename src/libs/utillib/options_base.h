@@ -130,7 +130,7 @@ namespace qblocks {
         string_q parseBlockList(const string_q& arg, blknum_t latest);
         COptionsBlockList(void);
         bool forEveryBlockNumber(UINT64VISITFUNC func, void *) const;
-        bool hasBlocks(void) const { return (hashList.getCount() || numList.getCount() || (start != stop)); }
+        bool hasBlocks(void) const { return (hashList.size() || numList.size() || (start != stop)); }
         bool isInRange(blknum_t bn) const;
         blknum_t parseBlockOption(string_q& msg, blknum_t lastBlock) const;
     };

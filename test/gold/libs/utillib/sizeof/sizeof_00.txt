@@ -9,7 +9,7 @@ sizeof
 	000.005 sizeof(size_t)       ==> 8
 	000.006 sizeof(uint32_t)     ==> 4
 	000.007 sizeof(uint64_t)     ==> 8
-	000.008 sizeof(string_q)     ==> 32
+	000.008 sizeof(string_q)     ==> 24
 
 	000.009 sizeof(bool)         ==> 1
 	000.010 sizeof(char)         ==> 1
@@ -21,5 +21,5 @@ sizeof
 	000.016 sizeof(unsigned long long) ==> 8
 	000.017 sizeof(float)        ==> 4
 	000.018 sizeof(double)       ==> 8
-	000.019 sizeof(string_q)     ==> 32
+	000.019 sizeof(string_q)     ==> 24
 	000.020 sizeof(const char *) ==> 8

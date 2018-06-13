@@ -69,9 +69,9 @@ namespace qblocks {
     }
 
     SFArchive& operator<<(SFArchive& archive, const CStringArray& array) {
-        uint64_t count = array.getCount();
+        uint64_t count = array.size();
         archive << count;
-        for (uint32_t i = 0 ; i < array.getCount() ; i++)
+        for (uint32_t i = 0 ; i < array.size() ; i++)
             archive << array[i];
         return archive;
     }
@@ -155,8 +155,11 @@ namespace qblocks {
     SFArchive& operator>>(SFArchive& archive, CStringArray& array) {
         uint64_t count;
         archive >> count;
-        for (uint32_t i = 0 ; i < count ; i++)
-            archive >> array[i];
+        for (uint32_t i = 0 ; i < count ; i++) {
+            string_q str;
+            archive >> str;
+            array.push_back(str);
+        }
         return archive;
     }
 
