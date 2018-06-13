@@ -432,7 +432,7 @@ bool CAbi::loadABI(const string_q& addr) {
             for (uint32_t i = 0 ; i < abiByName.getCount() ; i++) {
                 CFunction *f = &abiByName[i];
                 if (f->type == "function")
-                    cerr << f->Format("[\"{NAME}|][{ENCODING}\"]").Substitute("\n", " ") << "\n";
+                    cerr << substitute(f->Format("[\"{NAME}|][{ENCODING}\"]"), "\n", " ") << "\n";
             }
         }
     }

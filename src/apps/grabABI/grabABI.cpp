@@ -43,7 +43,7 @@ string_q classDir;
 //-----------------------------------------------------------------------
 inline string_q projectName(void) {
     CFilename fn(classDir+"tmp");
-    string_q ret = fn.getPath().Substitute("parselib/","").Substitute("parseLib/","").Substitute("//","");
+    string_q ret = substitute(substitute(substitute(fn.getPath(), "parselib/", ""), "parseLib/", ""), "//", "");
     nextTokenClearReverse(ret,'/');
     ret = nextTokenClearReverse(ret,'/');
     return ret;
@@ -88,7 +88,7 @@ string_q acquireABI(CFunctionArray& functions, const SFAddress& addr, const COpt
     if (fileExists(localFile))
         copyFile(localFile, fileName);
 
-    string_q dispName = fileName.Substitute(configPath(""),"|");
+    string_q dispName = substitute(fileName, configPath(""), "|");
     nextTokenClear(dispName, '|');
     dispName = "~/.quickBlocks/" + dispName;
     if (fileExists(fileName) && !opt.raw) {
@@ -107,7 +107,7 @@ string_q acquireABI(CFunctionArray& functions, const SFAddress& addr, const COpt
         string_q url = string_q("http:/")
                             + "/api.etherscan.io/api?module=contract&action=getabi&address="
                             + addr;
-        results = urlToString(url).Substitute("\\", "");
+        results = substitute(urlToString(url), "\\", "");
         if (!contains(results, "NOTOK")) {
         	// clear the RPC wrapper
         	replace(results, "{\"status\":\"1\",\"message\":\"OK\",\"result\":\"","");
@@ -137,7 +137,7 @@ string_q acquireABI(CFunctionArray& functions, const SFAddress& addr, const COpt
         }
     }
 
-    ret = results.Substitute("\n", "").Substitute("\t", "").Substitute(" ", "");
+    ret = substitute(substitute(substitute(results, "\n", ""), "\t", ""), " ", "");
     char *s = (char *)(results.c_str()); // NOLINT
     char *p = cleanUpJson(s);
     while (p && *p) {
@@ -234,7 +234,7 @@ int main(int argc, const char *argv[]) {
 //            if (options.isToken())
 //                addDefaultFuncs(functions);
 
-            classDir = (options.classDir).Substitute("~/", getHomeFolder());
+            classDir = substitute((options.classDir), "~/", getHomeFolder());
             string_q classDefs = classDir + "classDefinitions/";
             establishFolder(classDefs);
 
@@ -252,7 +252,8 @@ int main(int argc, const char *argv[]) {
                     if (startsWith(name, '_'))
                         name = name.substr(1);
                     char ch = static_cast<char>(toupper(name[0]));
-                    string_q fixed(ch);
+                    string_q fixed;
+                    fixed = ch;
                     name = fixed + name.substr(1);
                     string_q theClass = (options.isBuiltin() ? "Q" : "C") + name;
                     bool isConst = func->constant;
@@ -294,7 +295,7 @@ int main(int argc, const char *argv[]) {
                             base = "LogEntry";
 
                         string_q out = STR_CLASSDEF;
-                        replace(out, "[{DIR}]", options.classDir.Substitute(getHomeFolder(), "~/"));
+                        replace(out, "[{DIR}]", substitute(options.classDir, getHomeFolder(), "~/"));
                         replace(out, "[{CLASS}]", theClass);
                         replace(out, "[{FIELDS}]", fields);
                         replace(out, "[{BASE}]", base);
@@ -302,10 +303,10 @@ int main(int argc, const char *argv[]) {
 
                         string_q fileName = toLower(name)+".txt";
                         if (!isConst) {
-                            headers += ("#include \"" + fileName.Substitute(".txt", ".h") + "\"\n");
+                            headers += ("#include \"" + substitute(fileName, ".txt", ".h") + "\"\n");
                             registers += "\t" + theClass + "::registerClass();\n";
                         }
-                        sources += fileName.Substitute(".txt", ".cpp") + " \\\n";
+                        sources += substitute(fileName, ".txt", ".cpp") + " \\\n";
                         if (base == "Transaction") {
                             string_q f1, fName = func->Format("[{NAME}]");
                             f1 = string_q(STR_FACTORY1);
@@ -320,11 +321,7 @@ int main(int argc, const char *argv[]) {
                             string_q parseIt = "toFunction(\"" + fName + "\", params, nItems, items)";
                             replaceAll(f1, "[{PARSEIT}]", parseIt);
                             replaceAll(f1, "[{BASE}]", base);
-                            replaceAll(f1, "[{SIGNATURE}]", func->getSignature(SIG_DEFAULT)
-                                                            .Substitute("\t", "")
-                                                            .Substitute("  ", " ")
-                                                            .Substitute(" (", "(")
-                                                            .Substitute(",", ", "));
+                            replaceAll(f1, "[{SIGNATURE}]", substitute(substitute(substitute(substitute(func->getSignature(SIG_DEFAULT), "\t", ""), "  ", " "), " (", "("), ",", ", "));
                             replace(f1, "[{ENCODING}]", func->getSignature(SIG_ENCODE));
                             replace(f1, " defFunction(string)", "()");
                             if (!isConst)
@@ -332,14 +329,10 @@ int main(int argc, const char *argv[]) {
 
                         } else if (name != "LogEntry") {
                             string_q f2, fName = func->Format("[{NAME}]");
-                            f2 = string_q(STR_FACTORY2)
-                                            .Substitute("[{CLASS}]", theClass)
-                                            .Substitute("[{LOWER}]", fName);
+                            f2 = substitute(substitute(string_q(STR_FACTORY2), "[{CLASS}]", theClass), "[{LOWER}]", fName);
                             replace(f2, "[{ASSIGNS2}]", assigns2);
                             replace(f2, "[{BASE}]", base);
-                            replace(f2, "[{SIGNATURE}]", func->getSignature(SIG_DEFAULT|SIG_IINDEXED)
-                                       .Substitute("\t", "").Substitute("  ", " ")
-                                       .Substitute(" (", "(").Substitute(",", ", "));
+                            replace(f2, "[{SIGNATURE}]",substitute(substitute(substitute(substitute(func->getSignature(SIG_DEFAULT|SIG_IINDEXED), "\t", ""), "  ", " "), " (", "("), ",", ", "));
                             replace(f2, "[{ENCODING}]", func->getSignature(SIG_ENCODE));
                             if (!isConst)
                                 factory2 += f2;
@@ -374,21 +367,21 @@ int main(int argc, const char *argv[]) {
             // The library header file
             if (!options.isBuiltin())
                 headers += ("#include \"processing.h\"\n");
-            string_q headerCode = string_q(STR_HEADERFILE).Substitute("[{HEADERS}]", headers);
+            string_q headerCode = substitute(string_q(STR_HEADERFILE), "[{HEADERS}]", headers);
             string_q parseInit = "parselib_init(QUITHANDLER qh=defaultQuitHandler)";
             if (!options.isBuiltin())
                 replaceAll(headerCode, "[{PREFIX}]_init(void)", parseInit);
-            replaceAll(headerCode, "[{ADDR}]", options.primaryAddr.Substitute("0x", ""));
+            replaceAll(headerCode, "[{ADDR}]", substitute(options.primaryAddr, "0x", ""));
             replaceAll(headerCode, "[{HEADER_SIGS}]", options.isBuiltin() ? "" : STR_HEADER_SIGS);
             replaceAll(headerCode, "[{PREFIX}]", toLower(options.prefix));
-            string_q pprefix = (options.isBuiltin() ? toProper(options.prefix).Substitute("lib", "") : "Func");
+            string_q pprefix = (options.isBuiltin() ? substitute(toProper(options.prefix), "lib", "") : "Func");
             replaceAll(headerCode, "[{PPREFIX}]", pprefix);
             replaceAll(headerCode, "FuncEvent", "Event");
             string_q comment = "//------------------------------------------------------------------------\n";
             funcExterns = (funcExterns.empty() ? "// No functions" : funcExterns);
             evtExterns = (evtExterns.empty() ? "// No events" : evtExterns);
             replaceAll(headerCode, "[{EXTERNS}]", comment+funcExterns+"\n"+comment+evtExterns);
-            headerCode = headerCode.Substitute("{QB}", (options.isBuiltin() ? "_qb" : ""));
+            headerCode = substitute(headerCode, "{QB}", (options.isBuiltin() ? "_qb" : ""));
             writeTheCode(classDir + options.prefix + ".h", headerCode);
 
             // The library make file
@@ -418,7 +411,7 @@ int main(int argc, const char *argv[]) {
             }
             replace(sourceCode, "[{BLKPATH}]", options.isBuiltin() ? "" : STR_BLOCK_PATH);
             replaceAll(sourceCode, "[{CODE_SIGS}]", (options.isBuiltin() ? "" : STR_CODE_SIGS));
-            replaceAll(sourceCode, "[{ADDR}]", options.primaryAddr.Substitute("0x", ""));
+            replaceAll(sourceCode, "[{ADDR}]", substitute(options.primaryAddr, "0x", ""));
             replaceAll(sourceCode, "[{ABI}]", options.theABI);
             replaceAll(sourceCode, "[{REGISTERS}]", registers);
             string_q chainInit = (options.isToken() ?
@@ -435,19 +428,19 @@ int main(int argc, const char *argv[]) {
                 headers += "#include \"[{PREFIX}].h\"\n";
             replaceAll(sourceCode, "[{HEADERS}]", headers);
             replaceAll(sourceCode, "[{PREFIX}]", options.prefix);
-            pprefix = (options.isBuiltin() ? toProper(options.prefix).Substitute("lib", "") : "Func");
+            pprefix = (options.isBuiltin() ? substitute(toProper(options.prefix), "lib", "") : "Func");
             replaceAll(sourceCode, "[{PPREFIX}]", pprefix);
             replaceAll(sourceCode, "FuncEvent", "Event");
             replaceAll(sourceCode, "[{FUNC_DECLS}]", funcDecls.empty() ? "// No functions" : funcDecls);
             replaceAll(sourceCode, "[{SIGS}]", sigs.empty() ? "\t// No functions\n" : sigs);
             replaceAll(sourceCode, "[{EVENT_DECLS}]", evtDecls.empty() ? "// No events" : evtDecls);
             replaceAll(sourceCode, "[{EVTS}]", evts.empty() ? "\t// No events\n" : evts);
-            sourceCode = sourceCode.Substitute("{QB}", (options.isBuiltin() ? "_qb" : ""));
-            writeTheCode(classDir + options.prefix + ".cpp", sourceCode.Substitute("XXXX","[").Substitute("YYYY","]"));
+            sourceCode = substitute(sourceCode, "{QB}", (options.isBuiltin() ? "_qb" : ""));
+            writeTheCode(classDir + options.prefix + ".cpp", substitute(substitute(sourceCode, "XXXX","["), "YYYY","]"));
 
             // The code
             if (!options.isBuiltin()) {
-                makeTheCode("rebuild",        trimTrailing(addrList,'|').Substitute("|", " "));
+                makeTheCode("rebuild",        substitute(trimTrailing(addrList,'|'), "|", " "));
                 makeTheCode("CMakeLists.txt", options.primaryAddr);
                 makeTheCode("debug.h",        options.primaryAddr);
                 makeTheCode("debug.cpp",      options.primaryAddr);

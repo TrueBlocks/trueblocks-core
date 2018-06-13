@@ -51,7 +51,7 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (startsWith(arg, "-l:") || startsWith(arg, "--list:")) {
 
-            CFilename fileName(arg.Substitute("-l:","").Substitute("--list:",""));
+            CFilename fileName(substitute(substitute(arg, "-l:", ""), "--list:", ""));
             if (!fileName.isValid())
                 return usage("Not a valid filename: " + orig + ". Quitting...");
             if (!fileExists(fileName.getFullPath()))
@@ -148,8 +148,7 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
 
     if (which == "options") {
         return
-            str.Substitute("address_list block_list", "<address> [address...] [block...]")
-                .Substitute("-l|", "-l fn|");
+            substitute(substitute(str, "address_list block_list", "<address> [address...] [block...]"), "-l|", "-l fn|");
 
     } else if (which == "notes" && (verbose || COptions::isReadme)) {
 

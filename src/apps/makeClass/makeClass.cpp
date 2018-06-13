@@ -51,7 +51,7 @@ int main(int argc, const char *argv[]) {
 
                 if (options.isList) {
                     if (verbose) {
-                        cout << string_q('-', 80) << "\nFile (dest): " << fileName << "\n";
+                        cout << string_q(80, '-') << "\nFile (dest): " << fileName << "\n";
                         cout << toml << "\n";
 
                     } else if (!toml.getConfigBool("settings", "disabled", false)) {
@@ -99,34 +99,34 @@ string_q convertTypes(const string_q& inStr) {
 
     // Note: Watch out for trailing spaces. They are here to make sure it
     // matches only the types and not the field names.
-    string_q outStr = inStr
-        .Substitute("address ",   "SFAddress "  )
-        .Substitute("bytes32 ",   "string_q "   )
-        .Substitute("bytes ",     "string_q "   )
-        .Substitute("bloom ",     "SFBloom "    )
-        .Substitute("wei ",       "SFWei "      )
-        .Substitute("gas ",       "SFGas "      )
-        .Substitute("hash ",      "SFHash "     )
-        .Substitute("string ",    "string_q "   )
-        .Substitute("time ",      "SFTime "     )
-        .Substitute("uint256 ",   "SFUintBN "   )
-        .Substitute("int256 ",    "SFIntBN "    )
-        .Substitute("blknum ",    "blknum_t "   )
-        .Substitute("timestamp ", "timestamp_t ")
-        .Substitute("bbool ",     "bool "       )
-        .Substitute("bool ",      "bool "       )
-        .Substitute("uint8 ",     "32uint "     )
-        .Substitute("uint16 ",    "32uint "     )
-        .Substitute("uint32 ",    "32uint "     )
-        .Substitute("uint64 ",    "64uint "     )
-        .Substitute("int8 ",      "int32_t "    )
-        .Substitute("int16 ",     "int32_t "    )
-        .Substitute("int32 ",     "int32_t "    )
-        .Substitute("int64 ",     "int64_t "    )
-        .Substitute("32uint ",    "uint32_t "   )
-        .Substitute("64uint ",    "uint64_t "   );
+    string_q outStr = inStr;
+    replaceAll(outStr, "address ",   "SFAddress "  );
+    replaceAll(outStr, "bytes32 ",   "string_q "   );
+    replaceAll(outStr, "bytes ",     "string_q "   );
+    replaceAll(outStr, "bloom ",     "SFBloom "    );
+    replaceAll(outStr, "wei ",       "SFWei "      );
+    replaceAll(outStr, "gas ",       "SFGas "      );
+    replaceAll(outStr, "hash ",      "SFHash "     );
+    replaceAll(outStr, "string ",    "string_q "   );
+    replaceAll(outStr, "time ",      "SFTime "     );
+    replaceAll(outStr, "uint256 ",   "SFUintBN "   );
+    replaceAll(outStr, "int256 ",    "SFIntBN "    );
+    replaceAll(outStr, "blknum ",    "blknum_t "   );
+    replaceAll(outStr, "timestamp ", "timestamp_t ");
+    replaceAll(outStr, "bbool ",     "bool "       );
+    replaceAll(outStr, "bool ",      "bool "       );
+    replaceAll(outStr, "uint8 ",     "32uint "     );
+    replaceAll(outStr, "uint16 ",    "32uint "     );
+    replaceAll(outStr, "uint32 ",    "32uint "     );
+    replaceAll(outStr, "uint64 ",    "64uint "     );
+    replaceAll(outStr, "int8 ",      "int32_t "    );
+    replaceAll(outStr, "int16 ",     "int32_t "    );
+    replaceAll(outStr, "int32 ",     "int32_t "    );
+    replaceAll(outStr, "int64 ",     "int64_t "    );
+    replaceAll(outStr, "32uint ",    "uint32_t "   );
+    replaceAll(outStr, "64uint ",    "uint64_t "   );
 
-    if (string_q(getenv("TRACING")) == "true")
+	if (getEnvStr("TRACING") == "true")
         cerr << "\tconvert: " << padRight(inStr, 30) << " ==> " << outStr << "\n";
 
     return outStr;
@@ -161,7 +161,7 @@ void generateCode(const COptions& options, CToml& toml, const string_q& dataFile
     //------------------------------------------------------------------------------------------------
     string_q className  = toml.getConfigStr ("settings", "class", "");
     string_q baseClass  = toml.getConfigStr ("settings", "baseClass", "CBaseNode");
-    string_q otherIncs  = toml.getConfigStr ("settings", "cIncs", "").Substitute("|", "\n");
+    string_q otherIncs  = substitute(toml.getConfigStr ("settings", "cIncs", ""), "|", "\n");
     string_q scope      = toml.getConfigStr ("settings", "scope", "static");
     string_q hIncludes  = toml.getConfigStr ("settings", "includes", "");
     bool     serialize  = toml.getConfigBool("settings", "serialize", false);
@@ -204,7 +204,7 @@ void generateCode(const COptions& options, CToml& toml, const string_q& dataFile
 
     //------------------------------------------------------------------------------------------------
     // build the field list from the config file string
-    string_q fields = toml.getConfigStr("settings", "fields", "").Substitute("address[]", "SFAddressArray");
+    string_q fields = substitute(toml.getConfigStr("settings", "fields", ""), "address[]", "SFAddressArray");
     CParameterList fieldList;
     while (!fields.empty()) {
         string_q fieldDef = nextTokenClear(fields, '|');
@@ -304,10 +304,10 @@ void generateCode(const COptions& options, CToml& toml, const string_q& dataFile
             }
         }
 
-        fieldReg   += fld->Format(regFmt).Substitute("T_TEXT", regType); replaceAll(fieldReg, "CL_NM", "[{CLASS_NAME}]");
+        fieldReg   += substitute(fld->Format(regFmt), "T_TEXT", regType); replaceAll(fieldReg, "CL_NM", "[{CLASS_NAME}]");
         fieldCase  += fld->Format("[{TYPE}]+[{NAME}]-[{ISPOINTER}]~[{ISOBJECT}]|");
         fieldDec   += (convertTypes(fld->Format(decFmt)) + "\n");
-        fieldCopy  += fld->Format(copyFmt).Substitute("+SHORT+", "[{SHORT}]").Substitute("++CLASS++", "[{CLASS_NAME}]");
+        fieldCopy  += substitute(substitute(fld->Format(copyFmt), "+SHORT+", "[{SHORT}]"), "++CLASS++", "[{CLASS_NAME}]");
         fieldSet   += fld->Format(setFmt);
         fieldClear += (fld->isPointer ? fld->Format(clearFmt) : "");
         if (fld->isObject && !fld->isPointer && !contains(fld->type, "Array")) {
@@ -345,10 +345,10 @@ string_q ptrWriteFmt =
     //------------------------------------------------------------------------------------------------
     bool hasObjGetter = !fieldGetObj.empty();
     if (hasObjGetter)
-        fieldGetObj = string_q(STR_GETOBJ_CODE).Substitute("[{FIELDS}]", fieldGetObj);
+        fieldGetObj = substitute(string_q(STR_GETOBJ_CODE), "[{FIELDS}]", fieldGetObj);
     bool hasStrGetter = !fieldGetStr.empty();
     if (hasStrGetter)
-        fieldGetStr = string_q(STR_GETSTR_CODE).Substitute("[{FIELDS}]", fieldGetStr);
+        fieldGetStr = substitute(string_q(STR_GETSTR_CODE), "[{FIELDS}]", fieldGetStr);
 
     //------------------------------------------------------------------------------------------------
     string_q operatorH = string_q(serialize ? STR_OPERATOR_H : "");
@@ -366,7 +366,7 @@ string_q ptrWriteFmt =
         sorts[cnt++] = nextTokenClear(sortString, '|');
 
     //------------------------------------------------------------------------------------------------
-    string_q headerFile = dataFile.Substitute(".txt", ".h").Substitute("./classDefinitions/", "./");
+    string_q headerFile = substitute(substitute(dataFile, ".txt", ".h"), "./classDefinitions/", "./");
     string_q headSource = asciiFileToString(configPath("makeClass/blank.h"));
     replaceAll(headSource, "[{GET_OBJ}]",      (hasObjGetter ? string_q(STR_GETOBJ_HEAD)+(hasStrGetter?"":"\n") : ""));
     replaceAll(headSource, "[{GET_STR}]",      (hasStrGetter ? string_q(STR_GETSTR_HEAD)+"\n" : ""));
@@ -400,9 +400,9 @@ string_q ptrWriteFmt =
         writeTheCode(headerFile, headSource, ns);
 
     //------------------------------------------------------------------------------------------------
-    string_q fieldStr = fieldList.GetCount() ? getCaseCode(fieldCase, "").Substitute("[{PTR}]", "") : "// No fields";
+    string_q fieldStr = fieldList.GetCount() ? substitute(getCaseCode(fieldCase, ""), "[{PTR}]", "") : "// No fields";
 
-    string_q srcFile    = dataFile.Substitute(".txt", ".cpp").Substitute("./classDefinitions/", "./");
+    string_q srcFile    = substitute(substitute(dataFile, ".txt", ".cpp"), "./classDefinitions/", "./");
     string_q srcSource  = asciiFileToString(configPath("makeClass/blank.cpp"));
     if ((startsWith(className, "CNew") || className == "CPriceQuote") && !contains(getCWD(), "parse"))
         replace(srcSource, "version of the data\n", STR_UPGRADE_CODE);
@@ -417,7 +417,7 @@ string_q ptrWriteFmt =
     replaceAll(srcSource, "[FIELD_SETCASE]",     caseSetCodeStr);
     replaceAll(srcSource, "[{SUBCLASSFLDS}]",    subClsCodeStr);
     replaceAll(srcSource, "[{PARENT_SER1}]",     parSer);
-    replaceAll(srcSource, "[{PARENT_SER2}]",     parSer.Substitute("Serialize", "SerializeC"));
+    replaceAll(srcSource, "[{PARENT_SER2}]",     substitute(parSer, "Serialize", "SerializeC"));
     replaceAll(srcSource, "[{PARENT_REG}]",      parReg);
     replaceAll(srcSource, "[{PARENT_CHNK}]\n",   parCnk);
     replaceAll(srcSource, "[{PARENT_SET}]\n",    parSet);
@@ -455,7 +455,9 @@ string_q getCaseCode(const string_q& fieldCase, const string_q& ex) {
     string_q baseTab = (tab+tab+ex);
     string_q caseCode;
     for (char ch = '_' ; ch < 'z' + 1 ; ch++) {
-        if (contains(toLower(fieldCase), "+"+string_q(ch))) {
+        string_q charStr;
+        charStr = ch;
+        if (contains(toLower(fieldCase), "+" + charStr)) {
             caseCode += baseTab + "case '" + ch + "':\n";
             string_q fields = fieldCase;
             while (!fields.empty()) {
@@ -574,7 +576,9 @@ string_q getCaseSetCode(const string_q& fieldCase) {
     string_q baseTab = (tab+tab);
     string_q caseCode;
     for (char ch = '_' ; ch < 'z' + 1 ; ch++) {
-        if (contains(toLower(fieldCase), "+"+string_q(ch))) {
+        string_q charStr;
+        charStr = ch;
+        if (contains(toLower(fieldCase), "+" + charStr)) {
             caseCode += baseTab + "case '" + ch + "':\n";
             string_q fields = fieldCase;
             while (!fields.empty()) {
@@ -655,13 +659,13 @@ string_q getCaseSetCode(const string_q& fieldCase) {
                         string_q str = strArraySet;
                         replaceAll(str, "[{NAME}]", field);
                         replaceAll(str, "nextTokenClear(str,',')", "to[{TYPE}](nextTokenClear(str,','))");
-                        replaceAll(str, "[{TYPE}]", type.substr(2).Substitute("Array", ""));
+                        replaceAll(str, "[{TYPE}]", substitute(type.substr(2), "Array", ""));
                         caseCode += str;
 
                     } else if (contains(type, "Array")) {
                         string_q str = STR_CASE_SET_CODE_ARRAY;
                         replaceAll(str, "[{NAME}]", field);
-                        replaceAll(str, "[{TYPE}]", type.Substitute("Array", ""));
+                        replaceAll(str, "[{TYPE}]", substitute(type, "Array", ""));
                         caseCode += str;
 
                     } else if (isObject) {

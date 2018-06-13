@@ -286,8 +286,8 @@ ostream& operator<<(ostream& os, const CInfix& item) {
     CTreeNode* CInfix::remove(const string_q& _key) {
         if (verbose) {
             cerr << endl << endl<< endl
-            << idnt << string_q('-', 80) << endl
-            << idnt << string_q('-', 80) << endl
+            << idnt << string_q(80, '-') << endl
+            << idnt << string_q(80, '-') << endl
             << idnt << "remove infix [" << prefixS << "] at [" << _key << "]: ";
             idnt+="\t";
         }

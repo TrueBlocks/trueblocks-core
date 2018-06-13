@@ -96,7 +96,7 @@ bool COptions::parseArguments(string_q& command) {
             isLatest = true;
 
         } else if (startsWith(arg, "-s:") || startsWith(arg, "--source:")) {
-            string_q mode = arg.Substitute("-s:","").Substitute("--source:","");
+            string_q mode = substitute(substitute(arg, "-s:",""), "--source:","");
             if (mode == "r" || mode == "raw") {
                 isRaw = true;
 
@@ -122,7 +122,7 @@ bool COptions::parseArguments(string_q& command) {
             quiet++; // if both --check and --quiet are present, be very quiet...
 
         } else if (startsWith(arg, "-f:") || startsWith(arg, "--fields:")) {
-            string_q mode = arg.Substitute("-f:","").Substitute("--fields:","");
+            string_q mode = substitute(substitute(arg, "-f:",""), "--fields:","");
 
             if (mode == "a" || mode == "all") {
                 SHOW_ALL_FIELDS(CBlock);
@@ -257,7 +257,7 @@ bool COptions::isMulti(void) const {
 string_q COptions::postProcess(const string_q& which, const string_q& str) const {
 
     if (which == "options") {
-        return str.Substitute("block_list", "<block> [block...]");
+        return substitute(str, "block_list", "<block> [block...]");
 
     } else if (which == "notes" && (verbose || COptions::isReadme)) {
 

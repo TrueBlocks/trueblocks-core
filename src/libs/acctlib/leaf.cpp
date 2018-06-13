@@ -332,8 +332,8 @@ const string_q CLeaf::getStringAt(const string_q& name, uint32_t i) const {
     CTreeNode* CLeaf::remove(const string_q& _key) {
         if (verbose)
             cerr << endl<< endl<< endl
-            << idnt << string_q('-', 80) << endl
-            << idnt << string_q('-', 80) << endl
+            << idnt << string_q(80, '-') << endl
+            << idnt << string_q(80, '-') << endl
             << idnt << "remove infix at [" << _key << "]: ";
 
         if (contains(_key)) {

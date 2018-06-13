@@ -43,7 +43,7 @@ int main(int argc, const char *argv[]) {
             if (options.count)
                 cout << options.namedAccounts.getCount() << " items\n";
             for (uint32_t i = 0 ; i < options.namedAccounts.getCount() ; i++)
-                cout << options.namedAccounts[i].Format(fmt).Substitute("\n", " ").Substitute("  ", " ") << "\n";
+                cout << substitute(substitute(options.namedAccounts[i].Format(fmt), "\n", " "), "  ", " ") << "\n";
             exit(0);
         }
 
@@ -65,7 +65,7 @@ string_q COptions::showMatches(void) {
     string_q fmt = (addrOnly ? "[{ADDR}]" : "");
     for (uint32_t i = 0 ; i < namedAccounts.getCount() ; i++) {
         if (namedAccounts[i].Match(addr, name, source, matchCase, all)) {
-            ret += (namedAccounts[i].Format(fmt).Substitute("\n", " ").Substitute("  ", " ") + "\n");
+            ret += (substitute(substitute(namedAccounts[i].Format(fmt), "\n", " "), "  ", " ") + "\n");
             hits++;
         }
     }

@@ -443,7 +443,7 @@ string_q CSlurperApp::getFormatString(COptions& options, const string_q& which, 
     string_q formatName = "fmt_" + options.exportFormat + "_" + which;
     string_q ret = toml.getConfigStr("display", formatName, EMPTY);
     if (contains(ret, "file:")) {
-        string_q file = ret.Substitute("file:", EMPTY);
+        string_q file = substitute(ret, "file:", EMPTY);
         if (!fileExists(file))
             errMsg = string_q("Formatting file '") + file +
                         "' for display string '" + formatName + "' not found. Quiting...\n";
@@ -455,7 +455,7 @@ string_q CSlurperApp::getFormatString(COptions& options, const string_q& which, 
         ret = toml.getConfigStr("display", newName, EMPTY);
         formatName += ":" + newName;
     }
-    ret = ret.Substitute("\\n", "\n").Substitute("\\t", "\t");
+    ret = substitute(substitute(ret, "\\n", "\n"), "\\t", "\t");
 
     // some sanity checks
     if (countOf(ret, '{') != countOf(ret, '}') || countOf(ret, '[') != countOf(ret, ']')) {
@@ -466,7 +466,7 @@ const char *ERR_NO_DISPLAY_STR =
 "You entered an empty display string with the --format (-f) option. The format string 'fmt_[{FMT}]_file'\n"
 "  was not found in the configuration file (which is stored here: ~/.quickBlocks/quickBlocks.toml).\n"
 "  Please see the full documentation for more information on display strings.";
-        errMsg = usageStr(string_q(ERR_NO_DISPLAY_STR).Substitute("[{FMT}]", options.exportFormat));
+        errMsg = usageStr(substitute(string_q(ERR_NO_DISPLAY_STR), "[{FMT}]", options.exportFormat));
     }
 
     if (!errMsg.empty()) {
@@ -514,20 +514,14 @@ void CSlurperApp::buildDisplayStrings(COptions& options) {
             string_q resolved = fieldName;
             if (options.exportFormat != "json")
                 resolved = toml.getConfigStr("field_str", fieldName, fieldName);
-            theAccount.displayString += fmtForFields
-                .Substitute("{FIELD}", "{" + toUpper(resolved)+"}")
-                .Substitute("{p:FIELD}", "{p:"+resolved+"}");
-            theAccount.header += fmtForFields
-                .Substitute("{FIELD}", resolved)
-                .Substitute("[", EMPTY)
-                .Substitute("]", EMPTY)
-                .Substitute("<td ", "<th ");
+            theAccount.displayString += substitute(substitute(fmtForFields, "{FIELD}", "{" + toUpper(resolved)+"}"), "{p:FIELD}", "{p:"+resolved+"}");
+            theAccount.header += substitute(substitute(substitute(substitute(fmtForFields, "{FIELD}", resolved), "[", EMPTY), "]", EMPTY), "<td ", "<th ");
         }
     }
     theAccount.displayString = trimWhitespace(theAccount.displayString);
     theAccount.header        = trimWhitespace(theAccount.header);
 
-    theAccount.displayString = trim(fmtForRecords.Substitute("[{FIELDS}]", theAccount.displayString), '\t');
+    theAccount.displayString = trim(substitute(fmtForRecords, "[{FIELDS}]", theAccount.displayString), '\t');
     replaceAll(theAccount.displayString, "[{NAME}]", options.archiveFile);
     if (options.exportFormat == "json") {
         // One little hack to make raw json more readable

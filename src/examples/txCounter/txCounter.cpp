@@ -111,7 +111,7 @@ void CCounter::countOne(const CBlock &block) {
     if (last != thisOne) {
         os = &cout;
         sep = '\t';
-        cerr << string_q(' ',120) << "\r";
+        cerr << string_q(120, ' ') << "\r";
     }
     *os << block.blockNumber << sep
         << dateFromTimeStamp(block.timestamp) << sep

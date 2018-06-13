@@ -46,7 +46,7 @@ double testBuild(void) {
         cerr << "Writing " << block.blockNumber << "\r";
         cerr.flush();
     }
-    cerr << string_q(' ',80) << "\r";
+    cerr << string_q(80, ' ') << "\r";
     return qbNow() - start;
 }
 
@@ -60,6 +60,6 @@ double testRetrieve(void) {
         cerr << "Reading " << block.blockNumber << "\r";
         cerr.flush();
     }
-    cerr << string_q(' ',80) << "\r";
+    cerr << string_q(80, ' ') << "\r";
     return qbNow() - start;
 }

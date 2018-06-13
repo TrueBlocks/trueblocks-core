@@ -30,8 +30,7 @@ bool COptions::parseArguments(string_q& command) {
         string_q arg = nextTokenClear(command, ' ');
         if (startsWith(arg, "-t:") || startsWith(arg, "--testNum:")) {
             string_q orig = arg;
-            replaceAny(arg, "--testNum:", "");
-            replaceAny(arg, "-t:", "");
+            arg = substitute(substitute(arg, "--testNum:", ""), "-t:", "");
             testNum = (int32_t)toLong(arg);
             if (!testNum || testNum > 2)
                 return usage("Invalid argument: " + orig + ". Quitting...");

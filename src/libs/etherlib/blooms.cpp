@@ -22,8 +22,8 @@ namespace qblocks {
     bool compareBlooms(const SFBloom& b1, const SFBloom& b2, string_q& str) {
         if (verbose > 2) {
             str = "\n\tbits1: " + asStringU(bitsTwiddled(b1)) + " bits2: " + asStringU(bitsTwiddled(b2));
-            string_q s1 = bloom2Bits(b1).Substitute("0", ".");
-            string_q s2 = bloom2Bits(b2).Substitute("0", ".");
+            string_q s1 = substitute(bloom2Bits(b1), "0", ".");
+            string_q s2 = substitute(bloom2Bits(b2), "0", ".");
             for (uint32_t i=0;i<16;i++) {
                 string_q m1, m2;
                 for (uint32_t j=0;j<128;j=j+10) {
@@ -34,8 +34,8 @@ namespace qblocks {
             }
         } else if (verbose > 1) {
             str = "\n\tbits: " + asStringU(bitsTwiddled(b1)) + " " + asStringU(bitsTwiddled(b2));
-            string_q s1 = bloom2Bytes(b1).Substitute("0x", "").Substitute("0", ".");
-            string_q s2 = bloom2Bytes(b2).Substitute("0x", "").Substitute("0", ".");
+            string_q s1 = substitute(substitute(bloom2Bytes(b1), "0x", ""), "0", ".");
+            string_q s2 = substitute(substitute(bloom2Bytes(b2), "0x", ""), "0", ".");
             for (uint32_t i=0;i<4;i++) {
                 string_q m1, m2;
                 for (uint32_t j=0;j<128;j=j+10) {

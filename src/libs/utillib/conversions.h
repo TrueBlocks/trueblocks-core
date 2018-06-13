@@ -77,7 +77,7 @@ namespace qblocks {
         // trim leading '0's except the tens digit.
         string_q ret = _value;
         if (ret.length() < 18)
-            ret = padLeft(_value, 18).Substitute(" ", "0");
+            ret = substitute(padLeft(_value, 18), " ", "0");
         reverse(ret);
         ret = ret.substr(0,18) + "." + ret.substr(18);
         reverse(ret);
@@ -85,9 +85,9 @@ namespace qblocks {
         if (startsWith(ret, '.'))
             ret = "0" + ret;
         if (contains(ret, "0-")) {
-            ret = "-" + ret.Substitute("0-","0");
+            ret = "-" + substitute(ret, "0-", "0");
         }
-        ret = ret.Substitute("-.","-0.");
+        ret = substitute(ret, "-.", "-0.");
         return ret;
     }
 
@@ -103,11 +103,6 @@ namespace qblocks {
     extern SFIntBN hex2BigInt(const string& s);
     extern SFUintBN str2BigUint(const string &s);
     #define toBigUint str2BigUint
-
-    //--------------------------------------------------------------------------------
-    inline SFUintBN str2BigUint(const string_q& s) {
-        string ss = s.c_str(); return str2BigUint(ss);
-    }
 
     extern SFIntBN exp2BigInt(const string& s);
     //--------------------------------------------------------------------------------
@@ -258,7 +253,7 @@ namespace qblocks {
     //------------------------------------------------------
     inline SFAddress toAddress(const SFAddress& strIn) {
         // trim it if it's there. We will put it back
-        string_q ret = strIn.Substitute("0x","");
+        string_q ret = substitute(strIn, "0x", "");
 
         // Shorten, but only if all leading zeros
         string_q leading('0', 64-40);
