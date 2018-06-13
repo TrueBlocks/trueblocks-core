@@ -399,11 +399,7 @@ namespace qblocks {
             os << "  \n";
         }
         ASSERT(pOptions);
-#ifdef NATIVE
-        return pOptions->postProcess("purpose", os.str());
-#else
         return pOptions->postProcess("purpose", os.str().c_str());
-#endif
     }
 
     //--------------------------------------------------------------------------------
@@ -434,11 +430,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
             os << line;
         }
         ASSERT(pOptions);
-#ifdef NATIVE
-        return pOptions->postProcess("oneDescription", os.str());
-#else
         return pOptions->postProcess("oneDescription", os.str().c_str());
-#endif
     }
 
     //--------------------------------------------------------------------------------
