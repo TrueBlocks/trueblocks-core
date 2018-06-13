@@ -69,7 +69,7 @@ bool displayBloom(blknum_t bn, const SFBloom& bloom, void *data) {
         replaceAny(s, "7bde",   "+");
         replaceAny(s, "f",      "@");
         size_t rem = len - s.length();
-        s = s + string_q(' ', rem) + "|";
+        s = s + string_q(rem, ' ') + "|";
     } else {
         replace(s,    "0x", cOff);
         replaceAll(s, "0",  " ");

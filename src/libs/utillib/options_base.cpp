@@ -37,7 +37,7 @@ namespace qblocks {
     //--------------------------------------------------------------------------------
     bool COptionsBase::prepareArguments(int argc, const char *argv[]) {
 
-        string_q env = getenv("NO_COLOR");
+        string_q env = getEnvStr("NO_COLOR");
         if (string_q(env) == "true")
             colorsOff();
 
@@ -111,7 +111,7 @@ namespace qblocks {
         for (uint64_t i = 0 ; i < nArgs ; i++) {
             string_q arg = args[i];
             if (startsWith(arg, "--file:")) {
-                cmdFileName = arg.Substitute("--file:", "");
+                cmdFileName = substitute(arg, "--file:", "");
                 replace(cmdFileName, "~/", getHomeFolder());
                 if (!fileExists(cmdFileName)) {
                     if (args) delete [] args;
@@ -119,7 +119,7 @@ namespace qblocks {
                 }
             } else if (startsWith(arg, "-v") || startsWith(arg, "--verbose")) {
                 verbose = true;
-                arg = arg.Substitute("-v", "").Substitute("--verbose", "").Substitute(":", "");
+                arg = substitute(substitute(substitute(arg, "-v", ""), "--verbose", ""), ":", "");
                 if (!arg.empty()) {
                     if (!isUnsigned(arg))
                         return usage("Invalid verbose level '" + arg + "'. Quitting...");
@@ -167,9 +167,12 @@ namespace qblocks {
 
         } else {
             fromFile = true;
-            string_q contents =  asciiFileToString(cmdFileName).Substitute("\t", " ").
-                                            Substitute("-v", "").Substitute("-h", "").
-                                            Substitute("  ", " ").Substitute("\\\n", "");
+            string_q contents =  asciiFileToString(cmdFileName);
+            replaceAll(contents, "\t", " ");
+            replaceAll(contents, "-v", "");
+            replaceAll(contents, "-h", "");
+            replaceAll(contents, "  ", " ");
+            replaceAll(contents, "\\\n", "");
             if (contents.empty()) {
                 return usage("Command file '" + cmdFileName + "' is empty. Quitting...");
             }
@@ -300,7 +303,9 @@ namespace qblocks {
                 nextTokenClear(hotKey,'(');
                 hotKey = nextTokenClear(hotKey, ')');
                 replaceAny(longName, "()","");
-                shortName = string_q(shortName[0]) + hotKey;
+                string_q ss;
+                ss = shortName[0];
+                shortName = ss + hotKey;
             }
         }
     }
@@ -346,7 +351,7 @@ namespace qblocks {
             ctx << "[";
         for (uint64_t i = 0 ; i < nParamsRef ; i++) {
             if (startsWith(paramsPtr[i].shortName, '~')) {
-                required += (" " + paramsPtr[i].longName.substr(1).Substitute("!", ""));
+                required += (" " + substitute(paramsPtr[i].longName.substr(1), "!", ""));
 
             } else if (startsWith(paramsPtr[i].shortName, '@')) {
                 // invisible option
@@ -368,7 +373,7 @@ namespace qblocks {
         ASSERT(pOptions);
         string_q ret = pOptions->postProcess("options", ctx.str);
         if (COptionsBase::isReadme)
-            ret = ret.Substitute("<", "&lt;").Substitute(">", "&gt;");
+            ret = substitute(substitute(ret, "<", "&lt;"), ">", "&gt;");
         return ret;
     }
 
@@ -379,34 +384,42 @@ namespace qblocks {
             if (paramsPtr[i].shortName.empty())
                 purpose += ("\n           " + paramsPtr[i].description);
 
-        CStringExportContext ctx;
+        ostringstream os;
         if (!purpose.empty()) {
             replace(purpose, "\n           ", "");
-            ctx << bYellow << sep << "Purpose:" << sep2 << "  " << cOff
-                << purpose.Substitute("\n", "\n           ") << "  \n";
+            string_q xxx;
+            xxx = substitute(purpose, "\n", "\n           ");
+            os << bYellow;
+            os << sep;
+            os << "Purpose:";
+            os << sep2;
+            os << "  ";
+            os << cOff;
+            os << xxx;
+            os << "  \n";
         }
         ASSERT(pOptions);
-        return pOptions->postProcess("purpose", ctx.str);
+        return pOptions->postProcess("purpose", os.str());
     }
 
     //--------------------------------------------------------------------------------
 const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
 
     string_q oneDescription(const string_q& sN, const string_q& lN, const string_q& d, bool isMode, bool required) {
-        CStringExportContext ctx;
+        ostringstream os;
         if (COptionsBase::isReadme) {
 
             // When we are writing the readme file...
             string_q line = STR_ONE_LINE;
             replace(line, "{S}", sN);
             replace(line, "{L}", (isMode ? "" : "-") + lN);
-            replace(line, "{D}", d.Substitute("|", "&#124;"));
-            ctx << line;
+            replace(line, "{D}", substitute(d, "|", "&#124;"));
+            os << line;
 
         } else {
 
             // When we are writing to the command line...
-            string_q line = "\t" + string_q(STR_ONE_LINE).Substitute(" ","").Substitute("|","");
+            string_q line = "\t" + substitute(substitute(string_q(STR_ONE_LINE), " ",""), "|","");
             replace(line, "{S}", (isMode ? "" : padRight(sN, 3)));
             if (isMode)
                 replace(line, "{L}", padRight(lN , 22));
@@ -414,10 +427,10 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
                 replace(line, "{L}", padRight((lN.empty() ? "" : " (-" + lN + ")") , 19));
             }
             replace(line, "{D}", d + (required ? " (required)" : ""));
-            ctx << line;
+            os << line;
         }
         ASSERT(pOptions);
-        return pOptions->postProcess("oneDescription", ctx.str);
+        return pOptions->postProcess("oneDescription", os.str());
     }
 
     //--------------------------------------------------------------------------------
@@ -441,7 +454,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
             ctx << bYellow << sep << "Notes:" << sep << cOff << "\n";
             ctx << (COptionsBase::isReadme ? "\n" : "");
             while (!ret.empty()) {
-                string_q line = nextTokenClear(ret,'\n').Substitute("|","\n" + lead + "  ");
+                string_q line = substitute(nextTokenClear(ret,'\n'), "|","\n" + lead + "  ");
                 ctx << lead << tick << line << "\n";
             }
             ctx << "\n";
@@ -461,7 +474,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
             ctx << "| -------: | :------- | :------- |\n";
         }
 
-        bool showHidden = (string_q(getenv("SHOW_HIDDEN_OPTIONS")) == "true");
+        bool showHidden = (getEnvStr("SHOW_HIDDEN_OPTIONS") == "true");
         for (uint64_t i = 0 ; i < nParamsRef ; i++) {
             string_q sName = paramsPtr[i].shortName;
             string_q lName = paramsPtr[i].longName;
@@ -474,7 +487,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
                 // ~ makes the option a required mode, ! makes it not required
                 bool isReq = isMode && !contains(lName, '!');
                 sName = (isMode ? "" : sName);
-                lName = (isMode ? lName.Substitute('-', "") : lName).Substitute("!", "").Substitute("~", "");
+                lName = substitute(substitute((isMode ? substitute(lName, "-", "") : lName), "!", ""), "~", "");
                 ctx << oneDescription(sName, lName, descr, isMode, isReq);
             }
         }
@@ -715,7 +728,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
             return true;
 
         string_q textFile = namesFile.getFullPath();
-        string_q binFile  = textFile.Substitute(".txt",".bin");
+        string_q binFile  = substitute(textFile, ".txt", ".bin");
 
         SFTime txtDate = fileLastModifyDate(textFile);
         SFTime binDate = fileLastModifyDate(binFile);

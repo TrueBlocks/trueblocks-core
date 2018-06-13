@@ -115,7 +115,7 @@ void reportByToken(COptions& options) {
         }
         cout << "        Total for " << cGreen << nAccts << cOff;
         cout << " accounts at " << cTeal << "latest" << cOff << " block";
-        cout << " is " << cYellow << sBal.Substitute("  "," ") << cOff << "\n";
+        cout << " is " << cYellow << substitute(sBal, "  ", " ") << cOff << "\n";
     }
 
     if (needsNewline)
@@ -193,7 +193,7 @@ void reportByAccount(COptions& options) {
         }
         cout << "        Total for " << cGreen << nAccts << cOff;
         cout << " accounts at " << cTeal << "latest" << cOff << " block";
-        cout << " is " << cYellow << sBal.Substitute("  "," ") << cOff << "\n";
+        cout << " is " << cYellow << substitute(sBal, "  ", " ") << cOff << "\n";
     }
 
     if (needsNewline)

@@ -583,14 +583,17 @@ string_q parse(const string_q& params, uint32_t nItems, string_q *types) {
         else                                            val = "unknown type: " + t;
 
         if (contains(val, "off:")) {
-            size_t start = toLong32u(val.Substitute("off:","")) / (size_t)32;
+            size_t start = toLong32u(substitute(val, "off:", "")) / (size_t)32;
             size_t len   = grabBigNum(params,start);
             if (len == NOPOS)
                 len = params.length()-start;
-            if (t == "string")
-                val = "\"" + hex2String(params.substr((start+1)*64,len*2)).Substitute("\n","\\n").Substitute("\r","").Substitute("\"","\\\"") + "\"";
-            else
-                val = "0x"+params.substr((start+1)*64,len*2);
+            if (t == "string") {
+                val = "\"";
+                val += substitute(substitute(substitute(hex2String(params.substr((start+1) * 64, len * 2)), "\n","\\n"), "\r",""), "\"","\\\"");
+                val += "\"";
+            } else {
+                val = "0x"+params.substr((start+1) * 64, len * 2);
+            }
         }
         ret += ("|" + val);
     }
@@ -600,7 +603,7 @@ string_q parse(const string_q& params, uint32_t nItems, string_q *types) {
 
 //---------------------------------------------------------------------------
 string_q toFunction(const string_q& name, const string_q& input, uint32_t nItems, string_q *items) {
-    return "[ \"" + name + "\", " + parse(input.substr(10), nItems, items).Substitute("|", "\", \"") + " ]";
+    return "[ \"" + name + "\", " + substitute(parse(input.substr(10), nItems, items), "|", "\", \"") + " ]";
 }
 
 //---------------------------------------------------------------------------

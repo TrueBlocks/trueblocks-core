@@ -46,10 +46,10 @@ bool visitTransaction(CTransaction& trans, void *data) {
 
     bool badHash = !isHash(trans.hash);
     bool isBlock = contains(trans.hash, "block");
-    trans.hash = trans.hash.Substitute("-block_not_found","").Substitute("-trans_not_found","");
+    trans.hash = substitute(substitute(trans.hash, "-block_not_found", ""), "-trans_not_found", "");
     if (opt->isRaw) {
         if (badHash) {
-            cerr << "{\"jsonrpc\":\"2.0\",\"result\":{\"hash\":\"" << trans.hash.Substitute(" ","") << "\",\"result\":\"";
+            cerr << "{\"jsonrpc\":\"2.0\",\"result\":{\"hash\":\"" << substitute(trans.hash, " ", "") << "\",\"result\":\"";
             cerr << (isBlock ? "block " : "");
             cerr << "hash not found\"},\"id\":-1}" << "\n";
             return true;
@@ -90,9 +90,7 @@ bool visitTransaction(CTransaction& trans, void *data) {
             cout << "]\n";
             if (opt->nTraces) {
                 string_q fmt = ",{ \"nTraces\": [N]-[NN], \"depth\": [D] }";
-                cout << fmt.Substitute("[N]", asStringU(nTr))
-                            .Substitute("[NN]", asStringU(traces.getCount()))
-                            .Substitute("[D]", asStringU(dTs));
+                cout << substitute(substitute(substitute(fmt, "[N]", asStringU(nTr)), "[NN]", asStringU(traces.getCount())), "[D]", asStringU(dTs));
             }
         }
     }

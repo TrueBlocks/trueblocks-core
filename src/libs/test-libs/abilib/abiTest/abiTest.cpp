@@ -50,7 +50,7 @@ bool test_encodings(void) {
 
     bool ret = true;
 
-    string_q contents = getTestData().Substitute("  ", " ");
+    string_q contents = substitute(getTestData(), "  ", " ");
     nextTokenClear(contents, '\n');  // skip header row
     while (!contents.empty()) {
         string_q expected = nextTokenClear(contents, '\n');

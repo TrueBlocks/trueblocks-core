@@ -53,7 +53,7 @@ int main(int argc, const char *argv[]) {
             }
             cout << "        Total for " << cGreen << nAccts << cOff;
             cout << " accounts at " << cTeal << "latest" << cOff << " block";
-            cout << " is " << cYellow << sBal.Substitute("  "," ") << cOff << "\n";
+            cout << " is " << cYellow << substitute(sBal, "  "," ") << cOff << "\n";
         }
     }
 

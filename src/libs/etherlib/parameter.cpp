@@ -249,7 +249,7 @@ CParameter::CParameter(string_q& textIn) {
     isPointer  = contains(textIn, "*");
     isArray    = contains(textIn, "Array");
     isObject   = !isArray && startsWith(type, 'C');
-    name       = textIn.Substitute("*", "");
+    name       = substitute(textIn, "*", "");
 }
 // EXISTING_CODE
 }  // namespace qblocks

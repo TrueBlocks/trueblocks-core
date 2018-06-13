@@ -138,7 +138,7 @@ namespace qblocks {
         CURLcode res = curl_easy_perform(getCurl());
         if (res != CURLE_OK && !getCurlContext()->earlyAbort) {
             string_q currentSource = getCurlContext()->provider;
-            string_q fallBack = getenv("FALLBACK");
+            string_q fallBack = getEnvStr("FALLBACK");
             if (!fallBack.empty() && currentSource != fallBack) {
                 if (fallBack != "infura") {
                     cerr << cYellow;
@@ -191,9 +191,9 @@ namespace qblocks {
         }
 
 #ifdef DEBUG_RPC
-        //    cout << "\n" << string_q('-',80) << "\n";
+        //    cout << "\n" << string_q(80, '-') << "\n";
         //    cout << thePost << "\n";
-        cout << string_q('=',60) << "\n";
+        cout << string_q(60, '=') << "\n";
         cout << "received: " << getCurlContext()->result << "\n";
         cout.flush();
 #endif

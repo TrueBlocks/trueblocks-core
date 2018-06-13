@@ -302,8 +302,8 @@ ostream& operator<<(ostream& os, const CBranch& item) {
     CTreeNode* CBranch::remove(const string_q& _key) {
         if (verbose) {
             cerr << endl<< endl<< endl
-            << idnt << string_q('-', 80) << endl
-            << idnt << string_q('-', 80) << endl
+            << idnt << string_q(80, '-') << endl
+            << idnt << string_q(80, '-') << endl
             << idnt << "remove branch at [" << _key << "]: ";
             idnt+="\t";
         }

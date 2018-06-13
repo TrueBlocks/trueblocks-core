@@ -21,7 +21,7 @@ string_q diffStr(const string_q& str1, const string_q& str2) {
         string_q line = nextTokenClear(junk,'\n');
         replace(diff, line,"\n");
     }
-    string_q ret = trim(diff.Substitute("\n\n","\n"), '\n');
+    string_q ret = trim(substitute(diff, "\n\n","\n"), '\n');
     if (!ret.empty())
         ret += "\n";
     return ret;
@@ -102,15 +102,15 @@ string_q cleanAll(const string_q& str, bool remove, bool isByzan) {
             orig = removeField(orig, removes[i]);
         }
     }
-    orig = orig.Substitute("}]","");
+    orig = substitute(orig, "}]", "");
     replaceAll(orig, ",", "");
     replaceAll(orig, "[", "");
     replaceAll(orig, "]", "");
     replaceAll(orig, "\"to\":null","\"to\":\"0x0\"");
     orig = trimWhitespace(orig);
-    orig = orig.Substitute("\"result\":","").Substitute("\"transactions\":","").Substitute("\"logs\":","");
-    orig = orig.Substitute("\"jsonrpc\":","");
-    orig = orig.Substitute("0x" + string_q('0',512), "0x0"); // minimize bloom filters
+    orig = substitute(substitute(substitute(orig, "\"result\":",""), "\"transactions\":",""), "\"logs\":","");
+    orig = substitute(orig, "\"jsonrpc\":","");
+    orig = substitute(orig, "0x" + string_q(512,'0'), "0x0"); // minimize bloom filters
     replaceAll(orig, "\n\n", "\n");
     // get rid of id
     string_q ret;
@@ -119,7 +119,7 @@ string_q cleanAll(const string_q& str, bool remove, bool isByzan) {
         if (!startsWith(line, "\"id\":"))
             ret += (line + "\n");
     }
-    return trim(ret.Substitute("\"\"","\"\n\"").Substitute("\n\n","\n"), '\n');
+    return trim(substitute(substitute(ret, "\"\"","\"\n\""), "\n\n","\n"), '\n');
 }
 
 //------------------------------------------------------------

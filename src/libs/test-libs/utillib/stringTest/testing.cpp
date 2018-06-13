@@ -93,9 +93,9 @@ TEST_F(CThisTest, TestAssignment) {
     ASSERT_TRUE("qb-string set2", xstr2 == "x");
     ASSERT_TRUE("c-string set3",   str3 == "Test string: x");
     ASSERT_TRUE("qb-string set3", xstr3 == "Test string: x");
-    ASSERT_TRUE("set1 equal",      str1 == xstr1.str());
-    ASSERT_TRUE("set2 equal",      str2 == xstr2.str());
-    ASSERT_TRUE("set3 equal",      str3 == xstr3.str());
+    ASSERT_TRUE("set1 equal",      str1 == xstr1);
+    ASSERT_TRUE("set2 equal",      str2 == xstr2);
+    ASSERT_TRUE("set3 equal",      str3 == xstr3);
 
     return true;
 }}
@@ -150,7 +150,7 @@ TEST_F(CThisTest, TestCStr) {
     cout << "\n";
 
     cout << TESTID("countOf",15) << "There are " << countOf(strip2, 'B') << " 'Bs' in '|" << strip2 << "|'\n";
-    cout << TESTID("countOf",15) << "There are " << countOf(text2,  'i') << " 'is' in '" << text1.Substitute("\t"," ") << "'\n";
+    cout << TESTID("countOf",15) << "There are " << countOf(text2,  'i') << " 'is' in '" << substitute(text1, "\t"," ") << "'\n";
     cout << "\n";
 
     string_q thing = "This is the thing";
@@ -159,7 +159,7 @@ TEST_F(CThisTest, TestCStr) {
     cout << TESTID("contains is",15)    << contains(thing, "is") << "\n";
     cout << TESTID("find not this",15)  << thing.find("ThiNG") << "\n";
     cout << TESTID("not there this",15) << contains(thing, "ThiNG") << "\n";
-    cout << TESTID("findI not this",15) << thing.findI("ThiNG") << "\n";
+//    cout << TESTID("findI not this",15) << thing.findI("ThiNG") << "\n";
     cout << TESTID("there this",15)     << containsI(thing, "ThiNG") << "\n";
     cout << "\n";
 
@@ -171,12 +171,17 @@ TEST_F(CThisTest, TestCStr) {
     }
     cout << "\n";
 
-    string_q target1 = "Target1|Target2|Target3|Target4"; cout << TESTID("base case",15) << target1 << "\n";
-    replaceAny(target1, "get", "XXX");                    cout << TESTID("rep any",15) << target1 << "\n";
-    replaceAny(target1, "|", " |  ");                     cout << TESTID("rep any",15) << target1 << "\n";
-    replaceAny(target1, " ", "-");                        cout << TESTID("rep any",15) << target1 << "\n";
+    string_q target1 = "Target1|Target2|Target3|Target4";
+    cout << TESTID("base case",15) << target1 << "\n";
+    replaceAny(target1, "get", "XXX");
+    cout << TESTID("rep any",15) << target1 << "\n";
+    replaceAny(target1, "|", " |  ");
+    cout << TESTID("rep any",15) << target1 << "\n";
+    replaceAny(target1, " ", "-");
+    cout << TESTID("rep any",15) << target1 << "\n";
     replaceAll(target1, "X", "");
-    replaceAny(target1, " -", "");                        cout << TESTID("rep any",15) << target1 << "\n";
+    replaceAny(target1, " -", "");
+    cout << TESTID("rep any",15) << target1 << "\n";
     cout << "\n";
 
     string_q revTarget = ".desrever gnirts eht si sihT";  cout << TESTID("base case",15) << revTarget << "\n";
@@ -193,7 +198,7 @@ TEST_F(CThisTest, TestCStr) {
     string es1;
     ASSERT_TRUE("es1 is empty", es1.empty())
     ASSERT_TRUE("es1 == \"\"", es1 == "");
-    ASSERT_TRUE("es1 == EMPTY", es1 == (EMPTY.str()));
+    ASSERT_TRUE("es1 == EMPTY", es1 == (EMPTY));
     ASSERT_TRUE("es1 == nullStr", es1 == nullStr);
 
     string_q es2;

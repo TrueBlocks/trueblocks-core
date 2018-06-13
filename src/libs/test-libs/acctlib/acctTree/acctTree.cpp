@@ -121,6 +121,6 @@ void CReporter::interumReport(void) {
         cGreen   + "\n""T_INFIX " + cOff,
     };
 
-    cout << types[type] << " " << strs.Substitute("+", "").Substitute("-", "").Substitute("|0", "") << "\n";
+    cout << types[type] << " " << substitute(substitute(substitute(strs, "+", ""), "-", ""), "|0", "") << "\n";
 }
 

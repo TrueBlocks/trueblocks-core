@@ -37,7 +37,7 @@ bool COptions::parseArguments(string_q& command) {
         string_q arg = nextTokenClear(command,' ');
         string_q orig = arg;
         if (startsWith(arg, "-m:") || startsWith(arg, "--mode:")) {
-            arg = arg.Substitute("-m:", "").Substitute("--mode:", "");
+            arg = substitute(substitute(arg, "-m:", ""), "--mode:", "");
             if (arg != "short" && arg != "full")
                 return usage("Mode must be either 'full' or 'short'. Quitting...");
             mode = arg;

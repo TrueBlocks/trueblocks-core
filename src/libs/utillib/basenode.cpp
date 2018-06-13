@@ -355,14 +355,15 @@ namespace qblocks {
 
     //---------------------------------------------------------------------------
     string_q indent(void) {
-        return string_q(expC.tab, expC.spcs*expC.lev);
+        return string_q(expC.spcs*expC.lev, expC.tab);
     }
 
     extern string_q decBigNum(const string_q& str);
     //--------------------------------------------------------------------------------
     string_q CBaseNode::toJson1(void) const {
-        return toJson().Substitute("\t", " ").Substitute("\n", "").Substitute("  ", " ");
+        return substitute(substitute(substitute(toJson(), "\t", " "), "\n", ""), "  ", " ");
     }
+
     //--------------------------------------------------------------------------------
     string_q CBaseNode::toJson(void) const {
         const CFieldList *fieldList = getRuntimeClass()->GetFieldList();
@@ -451,7 +452,7 @@ namespace qblocks {
                     ret += "%";
                 if (fld->isArray()) {
                     incIndent();
-                    val = getValueByName(fld->m_fieldName).Substitute("\n{","\n"+indent()+"{");
+                    val = substitute(getValueByName(fld->m_fieldName), "\n{", "\n"+indent()+"{");
                     ret += (val.empty() ? "[]" : "[\n" + indent() + val);
                     decIndent();
                     ret += (val.empty() ? "" : indent() + "]");
@@ -534,7 +535,7 @@ namespace qblocks {
                         ret += "{";
                         ret += node->toJsonFldList(fieldList);
                         ret += "}";
-                        return ret.Substitute("\n", "");;
+                        return substitute(ret, "\n", "");;
                     }
                     break;
                 case 's':

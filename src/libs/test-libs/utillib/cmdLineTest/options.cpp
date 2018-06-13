@@ -36,7 +36,7 @@ bool COptions::parseArguments(string_q& command) {
         string_q arg = nextTokenClear(command, ' ');
         string_q orig = arg;
         if (startsWith(arg, "-b:") || startsWith(arg, "--bool:")) {
-            arg = arg.Substitute("-b:","").Substitute("--bool:","");
+            arg = substitute(substitute(arg, "-b:", ""), "--bool:", "");
             if (arg == "1" || arg == "true") {
                 boolOption = true;
                 boolSet = true;
@@ -47,13 +47,13 @@ bool COptions::parseArguments(string_q& command) {
                 usage("Invalid bool: " + orig);
 
         } else if (startsWith(arg, "-i:") || startsWith(arg, "--int:")) {
-            arg = arg.Substitute("-i:","").Substitute("--int:","");
+            arg = substitute(substitute(arg, "-i:", ""), "--int:", "");
             if (arg.empty() || (arg[0] != '-' && arg[0] != '+' && !isdigit(arg[0])))
                 return usage("--int requires a number. Quitting");
             numOption = toLong(arg);
 
         } else if (startsWith(arg, "-u:") || startsWith(arg, "--uint:")) {
-            arg = arg.Substitute("-u:","").Substitute("--uint:","");
+            arg = substitute(substitute(arg, "-u:", ""), "--uint:", "");
             if (arg.empty() || (arg[0] != '+' && !isdigit(arg[0]))) {
                 //return usage("--uint requires a non-negative number. Quitting");
             } else {

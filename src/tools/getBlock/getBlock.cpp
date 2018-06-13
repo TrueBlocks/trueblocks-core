@@ -165,7 +165,7 @@ extern string_q hiddenFields(void);
     string_q diffB  = "In fromQblocks but not fromNode:\n" + diffStr(fromQblocks, fromNode);
 
     // return the results
-    string_q head = "\n" + string_q('-',80) + "\n";
+    string_q head = "\n" + string_q(80, '-') + "\n";
     if (opt.quiet == 2) {
         // only report results if we're being very quiet
         if (fromNode != fromQblocks)

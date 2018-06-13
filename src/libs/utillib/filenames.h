@@ -69,4 +69,4 @@ namespace qblocks {
 
 }  // namespace qblocks
 
-extern bool visitFile(const qblocks::string_q& path, void *data);
+extern bool visitFile(const string_q& path, void *data);

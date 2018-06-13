@@ -59,7 +59,7 @@ void doTests(void) {
             } else {
                 string_q hex = string2Hex(in);
                 string_q out = getSha3(hex);
-                cout << string_q('-', 80) << "\n"
+                cout << string_q(80, '-') << "\n"
                     << comment << "\n"
                     << "in:\t\t" << in << "\n"
                     << "hex:\t\t" << hex << "\n"

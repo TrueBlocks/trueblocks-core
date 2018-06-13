@@ -35,7 +35,7 @@ bool COptions::parseArguments(string_q& command) {
             isRaw = true;
 
         } else if (startsWith(arg, "-a:") || startsWith(arg, "--address:")) {
-            arg = arg.Substitute("-a:", "").Substitute("--address:", "");
+            arg = substitute(substitute(arg, "-a:", ""), "--address:", "");
             if (!isAddress(arg))
                 return usage(orig + " does not appear to be a valid Ethereum address. Quitting...");
             address_list += arg + "|";
@@ -89,7 +89,7 @@ COptions::~COptions(void) {
 //--------------------------------------------------------------------------------
 string_q COptions::postProcess(const string_q& which, const string_q& str) const {
     if (which == "options") {
-        return str.Substitute("trans_list","<transID> [transID...]");
+        return substitute(str, "trans_list", "<transID> [transID...]");
 
     } else if (which == "notes" && (verbose || COptions::isReadme)) {
 

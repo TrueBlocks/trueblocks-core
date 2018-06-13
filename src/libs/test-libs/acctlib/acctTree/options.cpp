@@ -38,18 +38,18 @@ bool COptions::parseArguments(string_q& command) {
             all = true;
 
         } else if (startsWith(arg, "-n:") || startsWith(arg, "--nblocks:")) {
-            arg = orig.Substitute("-n:","").Substitute("--nblocks:","");
+            arg = substitute(substitute(orig, "-n:", ""), "--nblocks:", "");
             nBlocks = toLongU(arg);
             hasN = true;
 
         } else if (startsWith(arg, "-s:") || startsWith(arg, "--start:")) {
-            arg = orig.Substitute("-s:","").Substitute("--start:","");
+            arg = substitute(substitute(orig, "-s:", ""), "--start:", "");
             startBlock = toLongU(arg);
             if (!isUnsigned(arg))
                 return usage("Positive start block number expected: " + orig);
 
         } else if (startsWith(arg, "-e:") || startsWith(arg, "--end:")) {
-            arg = orig.Substitute("-e:","").Substitute("--end:","");
+            arg = substitute(substitute(orig, "-e:", ""), "--end:", "");
             if (arg == "latest") {
                 endBlock = getLatestBlockFromClient();
             } else {

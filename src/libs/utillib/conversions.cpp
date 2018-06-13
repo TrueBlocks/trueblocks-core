@@ -111,7 +111,7 @@ namespace qblocks {
 
     //-------------------------------------------------------------------------
     string_q bloom2Bits(const SFBloom& b) {
-        string_q ret = bloom2Bytes(b).Substitute("0x", "");
+        string_q ret = substitute(bloom2Bytes(b), "0x", "");
         replaceAll(ret, "0", "0000");
         replaceAll(ret, "1", "0001");
         replaceAll(ret, "2", "0010");

@@ -26,7 +26,7 @@ namespace qblocks {
 
     //---------------------------------------------------------------------------
     string_q CPriceSource::getDatabasePath(void) const {
-        string_q source = url.Substitute("http://","").Substitute("https://","");
+        string_q source = substitute(substitute(url, "http://",""), "https://","");
         source = nextTokenClear(source, '.');
         string_q ret = blockCachePath("prices/" + source + "_" + pair + ".bin");
         establishFolder(ret);

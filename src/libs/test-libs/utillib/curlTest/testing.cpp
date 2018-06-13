@@ -20,7 +20,7 @@ using namespace std;
 //----------------------------------------------------------------------
 int main(int argc, const char *argv[])
 {
-    cout << urlToString("http:/""/google.com").Substitute("\r","") << "\n";
-    cout << urlToString("https:/""/quickblocks.io").Substitute("\r","") << "\n";
+    cout << substitute(urlToString("http:/""/google.com"), "\r", "") << "\n";
+    cout << substitute(urlToString("https:/""/quickblocks.io"), "\r", "") << "\n";
 	return 0;
 }

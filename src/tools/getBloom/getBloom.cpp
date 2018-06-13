@@ -69,7 +69,7 @@ string_q toBits(const string_q& blIn) {
     return "0x"+ret;
 }
 string_q asBar(const string_q& blIn) {
-    return toBits(blIn).substr(2).Substitute("0", "").Substitute("1", "-").Substitute("---", "🁡");
+    return substitute(substitute(substitute(toBits(blIn).substr(2), "0", ""), "1", "-"), "---", "🁡");
 }
 
 #include "bloom_blocks.h"
@@ -102,7 +102,7 @@ string_q doOneBloom(uint64_t num, const COptions& opt) {
         if (opt.asBars) {
             ostringstream os;
             if (opt.receipt)
-                os << "\n" << string_q('-',90) << " " << rawBlock.number << string_q('-',90) << "\n";
+                os << "\n" << string_q(90, '-') << " " << rawBlock.number << string_q(90, '-') << "\n";
             else
                 os << num << ": ";
             os << asBar(rawBlock.logsBloom) << "\n";
@@ -123,9 +123,9 @@ string_q doOneBloom(uint64_t num, const COptions& opt) {
     } else {
 
         SFBloomArray blooms;
-        readBloomArray(blooms, getBinaryFilename(num).Substitute("/blocks/", "/blooms/"));
+        readBloomArray(blooms, substitute(getBinaryFilename(num), "/blocks/", "/blooms/"));
         ostringstream os;
-        os << "\n" << string_q('-',90) << " " << num << string_q('-',90) << "\n";
+        os << "\n" << string_q(90, '-') << " " << num << string_q(90, '-') << "\n";
         for (uint32_t i = 0 ; i < blooms.getCount(); i++) {
             os << asBar(bloom2Bits(blooms[i])) << "\n";
         }

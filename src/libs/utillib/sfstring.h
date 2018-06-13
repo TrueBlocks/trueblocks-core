@@ -19,7 +19,7 @@ namespace qblocks {
 #define NOPOS ((size_t)-1)
 
     //--------------------------------------------------------------------
-    //#define NATIVE
+#define NATIVE
 #ifndef NATIVE
     class string_q {
     private:
@@ -102,15 +102,6 @@ namespace qblocks {
         const char*     c_str      (void) const;
         const string    str        (void) const { return string(c_str()); };
               size_t    rfind      (char ch) const;
-
-        friend void     replace    (string_q& target, const string_q& what, const string_q& with);
-        friend void     replaceAll (string_q& target, const string_q& what, const string_q& with);
-        friend void     replaceAny (string_q& target, const string_q& list, const string_q& with);
-        friend void     replaceReverse(string_q& target, const string_q& what, const string_q& with);
-        friend void     reverse    (string_q& target);
-
-        size_t          findI      (const string_q& str, size_t pos=0) const;
-        string_q        Substitute (const string_q& what, const string_q& with) const;
 
         //----------------------------------------------------------------------------------------------------
         friend ostream& operator<<(ostream &os, const string_q& x) {
@@ -251,6 +242,24 @@ namespace qblocks {
         return str2.compare(str1) <= 0;
     }
 
+#else
+#define string_q std::string
+#endif
+
+    extern void replace    (string_q& target, const string_q& what, const string_q& with);
+    extern void replaceAll (string_q& target, const string_q& what, const string_q& with);
+    extern void replaceAny (string_q& target, const string_q& list, const string_q& with);
+    extern void replaceReverse(string_q& target, const string_q& what, const string_q& with);
+    extern void reverse    (string_q& target);
+
+    //---------------------------------------------------------------------------------------
+    inline string_q substitute(const string_q& strIn, const string_q& what, const string_q& with) {
+        string_q ret;
+        ret = strIn;
+        replaceAll(ret, what, with);
+        return ret;
+    }
+
     //--------------------------------------------------------------------
     inline bool operator%(const string_q& str1, const string_q& str2) {
         return !strcasecmp(str1.c_str(), str2.c_str());
@@ -268,25 +277,28 @@ namespace qblocks {
 
     //--------------------------------------------------------------------
     inline bool operator%(const string_q& str1, char ch) {
-        return !strcasecmp(str1.c_str(), string_q(ch).c_str());
+        string_q str2;
+        str2 = ch;
+        return !strcasecmp(str1.c_str(), str2.c_str());
     }
 
     //--------------------------------------------------------------------
     inline bool operator%(char ch, const string_q& str2) {
-        return !strcasecmp(string_q(ch).c_str(), str2.c_str());
+        string_q str1;
+        str1 = ch;
+        return !strcasecmp(str1.c_str(), str2.c_str());
     }
-
-#else
-#define string_q std::string
-#endif
 
     //--------------------------------------------------------------------
     extern size_t  countOf        (const string_q& haystack, char needle);
-    extern bool    endsWith       (const string_q& haystack, const string_q& needle);
     extern bool    startsWith     (const string_q& haystack, const string_q& needle);
+    extern bool    startsWith     (const string_q& haystack, char ch);
+    extern bool    endsWith       (const string_q& haystack, const string_q& needle);
+    extern bool    endsWith       (const string_q& haystack, char ch);
     extern bool    endsWithAny    (const string_q& haystack, const string_q& needle);
     extern bool    startsWithAny  (const string_q& haystack, const string_q& needle);
     extern bool    contains       (const string_q& haystack, const string_q& needle);
+    extern bool    contains       (const string_q& haystack, char ch);
     extern bool    containsI      (const string_q& haystack, const string_q& needle);
 
     //--------------------------------------------------------------------
@@ -332,4 +344,10 @@ namespace qblocks {
     //---------------------------------------------------------------------------------------
     extern char nullStr[];
 
+	inline string_q getEnvStr(const char* name) {
+    	char *sss = getenv(name);
+    	return ( sss ? string_q(sss) : string_q(""));
+	}
+
 }  // namespace qblocks
+
