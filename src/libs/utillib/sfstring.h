@@ -19,7 +19,7 @@ namespace qblocks {
 #define NOPOS ((size_t)-1)
 
     //--------------------------------------------------------------------
-#define NATIVE
+//#define NATIVE
 #ifndef NATIVE
     class string_q {
     private:
@@ -38,11 +38,13 @@ namespace qblocks {
        const string_q&  operator=  (const string_q& str);
        const string_q&  operator=  (char ch);
 
-                        string_q   (char ch, size_t reps=1);
+                        string_q   (char ch);
+                        string_q   (size_t reps, char ch);
                         string_q   (const char *str, size_t start=0, size_t len=NOPOS);
                        ~string_q   (void);
 
         char            operator[] (size_t index) const;
+        char            operator[] (unsigned int index) const { return at((size_t)index); };
         char            operator[] (int index) const { return at((size_t)index); };
 
         const string_q& operator+= (const string_q& str);
@@ -149,7 +151,7 @@ namespace qblocks {
 
     //--------------------------------------------------------------------
     inline string_q operator+(const string_q& str,  char ch) {
-        return operator+(str, string_q(ch));
+        return operator+(str, string_q(1, ch));
     }
 
     //--------------------------------------------------------------------
