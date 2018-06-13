@@ -1,0 +1,12 @@
+sizeof argc: 1 
+sizeof 
+0. Running TestSizes
+	000.000 sizeof(char)         ==> 1
+	000.001 sizeof(int)          ==> 4
+	000.002 sizeof(short)        ==> 2
+	000.003 sizeof(long)         ==> 8
+	000.004 sizeof(unsigned)     ==> 4
+	000.005 sizeof(size_t)       ==> 8
+	000.006 sizeof(uint32_t)     ==> 4
+	000.007 sizeof(uint64_t)     ==> 8
+	000.008 sizeof(string_q)     ==> 24
