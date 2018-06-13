@@ -37,6 +37,20 @@ TEST_F(CThisTest, TestSizes) {
     cout << TESTID("sizeof(uint32_t)", 20) << sizeof(uint32_t)  << "\n";
     cout << TESTID("sizeof(uint64_t)", 20) << sizeof(uint64_t)  << "\n";
     cout << TESTID("sizeof(string_q)", 20) << sizeof(string_q)  << "\n";
+    cout << "\n";
+
+    cout << TESTID("sizeof(bool)",               20) << sizeof(bool)               << "\n";
+    cout << TESTID("sizeof(char)",               20) << sizeof(char)               << "\n";
+    cout << TESTID("sizeof(int)",                20) << sizeof(int)                << "\n";
+    cout << TESTID("sizeof(unsigned int)",       20) << sizeof(unsigned int)       << "\n";
+    cout << TESTID("sizeof(long)",               20) << sizeof(long)               << "\n";
+    cout << TESTID("sizeof(unsigned long)",      20) << sizeof(unsigned long)      << "\n";
+    cout << TESTID("sizeof(long long)",          20) << sizeof(long long)          << "\n";
+    cout << TESTID("sizeof(unsigned long long)", 20) << sizeof(unsigned long long) << "\n";
+    cout << TESTID("sizeof(float)",              20) << sizeof(float)              << "\n";
+    cout << TESTID("sizeof(double)",             20) << sizeof(double)             << "\n";
+    cout << TESTID("sizeof(string_q)",           20) << sizeof(string_q)           << "\n";
+    cout << TESTID("sizeof(const char *)",       20) << sizeof(const char *)       << "\n";
 
     return true;
 }}
