@@ -100,7 +100,7 @@ inline void CLeaf::Clear(void) {
 inline void CLeaf::Init(void) {
     CTreeNode::Init();
 
-    blocks.Clear();
+    blocks.clear();
     counter = 0;
 
     // EXISTING_CODE

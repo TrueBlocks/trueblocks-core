@@ -108,7 +108,7 @@ bool COptions::parseArguments(string_q& command) {
 
     if (!blocks.hasBlocks()) {
         // use 'latest'
-        blocks.numList[blocks.numList.getCount()] = latestBlock;
+        blocks.numList.push_back(latestBlock);
     }
 
     return true;

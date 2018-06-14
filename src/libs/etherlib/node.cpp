@@ -111,7 +111,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
         if (fileExists(getBinaryFilename(blockNum))) {
             CBlock block;
             readBlockFromBinary(block, getBinaryFilename(blockNum));
-            if (txID < block.transactions.getCount())
+            if (txID < block.transactions.size())
             {
                 trans = block.transactions[(uint32_t)txID];
                 trans.pBlock = NULL; // otherwise, it's pointing to a dead pointer
@@ -148,7 +148,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
             uint32_t nFields = 0;
             p = tr.parseJson(p, nFields);
             if (nFields)
-                traces[traces.getCount()] = tr;
+                traces.push_back(tr);
         }
     }
 
@@ -182,12 +182,12 @@ extern void registerQuitHandler(QUITHANDLER qh);
         }
 
         // If there are no transactions, we do not have to trace and we want to tell the caller that
-        if (!block.transactions.getCount())
+        if (!block.transactions.size())
             return false;
 
         // We have the transactions, but we also want the receipts, and we need an error indication
         nTraces=0;
-        for (uint32_t i=0;i<block.transactions.getCount();i++) {
+        for (uint32_t i=0;i<block.transactions.size();i++) {
             CTransaction *trans = &block.transactions[i];
             trans->pBlock = &block;
 
@@ -290,7 +290,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
     bool getAccounts(SFAddressArray& addrs) {
         string_q results = callRPC("eth_accounts", "[]", false);
         while (!results.empty())
-            addrs[addrs.getCount()] = nextTokenClear(results,',');
+            addrs.push_back(nextTokenClear(results,','));
         return true;
     }
 
@@ -489,7 +489,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
 
     //----------------------------------------------------------------------------------
     bool readBloomArray(SFBloomArray& blooms, const string_q& fileName) {
-        blooms.Clear();
+        blooms.clear();
         SFArchive bloomCache(READING_ARCHIVE);
         if (bloomCache.Lock(fileName, binaryReadOnly, LOCK_NOWAIT)) {
             bloomCache >> blooms;
@@ -501,7 +501,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
 
     //-----------------------------------------------------------------------
     bool writeBloomArray(const SFBloomArray& blooms, const string_q& fileName) {
-        if (blooms.getCount() == 0 || (blooms.getCount() == 1 && blooms[0] == 0))
+        if (blooms.size() == 0 || (blooms.size() == 1 && blooms[0] == 0))
             return false;
 
         string_q created;
@@ -713,7 +713,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
 
         CTraceArray traces;
         getTraces(traces, trans.hash);
-        for (uint32_t i=0;i<traces.getCount();i++) {
+        for (uint32_t i=0;i<traces.size();i++) {
             CTrace trace = traces[i];
             if (!(*func)(trace, data))
                 return false;
@@ -724,7 +724,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
 
     //-------------------------------------------------------------------------
     bool forEveryTraceInBlock(TRACEVISITFUNC func, void *data, const CBlock& block) {
-        for (uint32_t i = 0 ; i < block.transactions.getCount() ; i++) {
+        for (uint32_t i = 0 ; i < block.transactions.size() ; i++) {
             if (!forEveryTraceInTransaction(func, data, block.transactions[i]))
                 return false;
         }
@@ -737,9 +737,9 @@ extern void registerQuitHandler(QUITHANDLER qh);
         if (!func)
             return false;
 
-//        cout << "Visiting " << trans.receipt.logs.getCount() << " logs\n";
+//        cout << "Visiting " << trans.receipt.logs.size() << " logs\n";
 //        cout.flush();
-        for (uint32_t i = 0 ; i < trans.receipt.logs.getCount() ; i++) {
+        for (uint32_t i = 0 ; i < trans.receipt.logs.size() ; i++) {
             CLogEntry log = trans.receipt.logs[i];
             if (!(*func)(log, data))
                 return false;
@@ -749,9 +749,9 @@ extern void registerQuitHandler(QUITHANDLER qh);
 
     //-------------------------------------------------------------------------
     bool forEveryLogInBlock(LOGVISITFUNC func, void *data, const CBlock& block) {
-//        cout << "Visiting " << block.transactions.getCount() << " transactions\n";
+//        cout << "Visiting " << block.transactions.size() << " transactions\n";
 //        cout.flush();
-        for (uint32_t i = 0 ; i < block.transactions.getCount() ; i++) {
+        for (uint32_t i = 0 ; i < block.transactions.size() ; i++) {
             if (!forEveryLogInTransaction(func, data, block.transactions[i]))
                 return false;
         }
@@ -764,7 +764,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
         if (!func)
             return false;
 
-        for (uint32_t i = 0 ; i < block.transactions.getCount() ; i++) {
+        for (uint32_t i = 0 ; i < block.transactions.size() ; i++) {
             CTransaction trans = block.transactions[i];
             if (!(*func)(trans, data))
                 return false;
@@ -805,7 +805,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
             CBlock block;
             trans.pBlock = &block;
             getBlock(block, trans.blockNumber);
-            if (block.transactions.getCount() > trans.transactionIndex)
+            if (block.transactions.size() > trans.transactionIndex)
                 trans.isError = block.transactions[(uint32_t)trans.transactionIndex].isError;
             getReceipt(trans.receipt, trans.getValueByName("hash"));
             trans.finishParse();

@@ -63,9 +63,9 @@ bool visitTransaction(CTransaction& trans, void *data) {
     }
 
 	cout << "[";
-	for (uint32_t i = 0 ; i < trans.receipt.logs.getCount() ; i++) {
+	for (uint32_t i = 0 ; i < trans.receipt.logs.size() ; i++) {
 		trans.receipt.logs[i].doExport(cout);
-		cout << (i < trans.receipt.logs.getCount()-1 ? ",\n" : "\n");
+		cout << (i < trans.receipt.logs.size()-1 ? ",\n" : "\n");
 	}
 	cout << "]\n";
 

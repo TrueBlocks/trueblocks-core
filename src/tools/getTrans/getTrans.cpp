@@ -80,17 +80,17 @@ bool visitTransaction(CTransaction& trans, void *data) {
         uint64_t nTr = getTraceCount(trans.hash);
         CTraceArray traces;
         getTraces(traces, trans.hash);
-        if (traces.getCount()) {
+        if (traces.size()) {
             uint32_t dTs = 0;
             cout << "[";
-            for (uint32_t i = 0 ; i < traces.getCount() ; i++) {
+            for (uint32_t i = 0 ; i < traces.size() ; i++) {
                 traces[i].doExport(cout);
-                dTs = max(dTs, traces[i].traceAddress.getCount());
+                dTs = max(dTs, traces[i].traceAddress.size());
             }
             cout << "]\n";
             if (opt->nTraces) {
                 string_q fmt = ",{ \"nTraces\": [N]-[NN], \"depth\": [D] }";
-                cout << substitute(substitute(substitute(fmt, "[N]", asStringU(nTr)), "[NN]", asStringU(traces.getCount())), "[D]", asStringU(dTs));
+                cout << substitute(substitute(substitute(fmt, "[N]", asStringU(nTr)), "[NN]", asStringU(traces.size())), "[D]", asStringU(dTs));
             }
         }
     }

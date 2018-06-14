@@ -97,7 +97,7 @@ inline void CNewReceipt::Init(void) {
 
     contractAddress = "";
     gasUsed = 0;
-    logs.Clear();
+    logs.clear();
     logsBloom = 0;
     isError = 0;
 

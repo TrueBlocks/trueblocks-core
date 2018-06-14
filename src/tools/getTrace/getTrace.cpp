@@ -64,9 +64,9 @@ bool visitTransaction(CTransaction& trans, void *data) {
     getTraces(traces, trans.getValueByName("hash"));
 
     cout << "[";
-    for (uint32_t i = 0 ; i < traces.getCount() ; i++) {
+    for (uint32_t i = 0 ; i < traces.size() ; i++) {
         traces[i].doExport(cout);
-        cout << (i < traces.getCount()-1 ? ",\n" : "\n");
+        cout << (i < traces.size()-1 ? ",\n" : "\n");
     }
     cout << "]\n";
 

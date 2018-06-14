@@ -125,7 +125,7 @@ string_q cleanAll(const string_q& str, bool remove, bool isByzan) {
 //------------------------------------------------------------
 string_q sorted(const string_q& inIn) {
 
-    CStringArray inList, outList;
+    vector<string_q> inList, outList;
 
     string_q in = inIn;
     while (!in.empty()) {

@@ -111,7 +111,7 @@ inline void CNewBlock::Init(void) {
     price = 0.0;
     finalized = 0;
     timestamp = 0;
-    transactions.Clear();
+    transactions.clear();
 
     // EXISTING_CODE
     // EXISTING_CODE

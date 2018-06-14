@@ -51,9 +51,9 @@ namespace qblocks {
     //----------------------------------------------------------------------------------
     bool addAddrToBloom(const SFAddress& addr, SFBloomArray& blooms, uint32_t maxBits) {
         // Initialize if not already
-        if (blooms.getCount() == 0)
+        if (blooms.size() == 0)
             blooms[0] = 0;
-        uint32_t cnt = blooms.getCount();
+        uint32_t cnt = blooms.size();
         blooms[cnt - 1] = joinBloom(blooms[cnt - 1], makeBloom(addr));
         if (bitsTwiddled(blooms[cnt - 1]) > maxBits) {
             blooms[cnt] = 0; // start a new bloom
@@ -65,11 +65,11 @@ namespace qblocks {
     //-----------------------------------------------------------------------
     string_q reportBloom(const SFBloomArray& blooms) {
         string_q ret;
-        for (uint32_t i = 0; i < blooms.getCount(); i++) {
+        for (uint32_t i = 0; i < blooms.size(); i++) {
             uint64_t bits = bitsTwiddled(blooms[i]);
             if (bits) {
                 ret += asStringU(bits);
-                if (i < blooms.getCount()-1)
+                if (i < blooms.size()-1)
                     ret += ",";
             }
         }

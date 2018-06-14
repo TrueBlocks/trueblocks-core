@@ -68,7 +68,7 @@ bool CLeaf::setValueByName(const string_q& fieldName, const string_q& fieldValue
             if ( fieldName % "blocks" ) {
                 string_q str = fieldValue;
                 while (!str.empty()) {
-                    blocks[blocks.getCount()] = toUnsigned(nextTokenClear(str,','));
+                    blocks.push_back(toUnsigned(nextTokenClear(str,',')));
                 }
                 return true;
             }
@@ -193,7 +193,7 @@ string_q CLeaf::getValueByName(const string_q& fieldName) const {
     switch (tolower(fieldName[0])) {
         case 'b':
             if ( fieldName % "blocks" || fieldName % "blocksCnt" ) {
-                uint32_t cnt = blocks.getCount();
+                uint32_t cnt = blocks.size();
                 if (endsWith(fieldName, "Cnt"))
                     return asStringU(cnt);
                 if (!cnt) return "";
@@ -228,7 +228,7 @@ ostream& operator<<(ostream& os, const CLeaf& item) {
 
 //---------------------------------------------------------------------------
 const string_q CLeaf::getStringAt(const string_q& name, uint32_t i) const {
-    if ( name % "blocks" && i < blocks.getCount() )
+    if ( name % "blocks" && i < blocks.size() )
         return asStringU(blocks[i]);
     return "";
 }
@@ -241,9 +241,9 @@ const string_q CLeaf::getStringAt(const string_q& name, uint32_t i) const {
         string_q last = _value;
         string_q first = nextTokenClear(last, '|');
         if (!first.empty()) {
-            blocks[blocks.getCount()] = toUnsigned(first);
+            blocks.push_back(toUnsigned(first));
             if (!last.empty())
-                blocks[blocks.getCount()] = toUnsigned(last);;
+                blocks.push_back(toUnsigned(last));
         }
 #else
         counter = 1;
@@ -259,9 +259,9 @@ const string_q CLeaf::getStringAt(const string_q& name, uint32_t i) const {
 
         string_q ret;
 #ifdef OLD_CODE_Y
-        for (int i = 0 ; i < blocks.getCount() ; i++) {
+        for (int i = 0 ; i < blocks.size() ; i++) {
             ret += asString(blocks[i]);
-            if (i < blocks.getCount()-1)
+            if (i < blocks.size()-1)
                 ret += ",";
         }
 #else
@@ -298,7 +298,7 @@ const string_q CLeaf::getStringAt(const string_q& name, uint32_t i) const {
 //                    << " (" << first << ")"
                     << "\n";
 #ifdef OLD_CODE_Y
-                blocks[blocks.getCount()] = toUnsigned(_value);
+                blocks.push_back(toUnsigned(_value));
 #else
                 counter++;
 #endif
@@ -309,13 +309,13 @@ const string_q CLeaf::getStringAt(const string_q& name, uint32_t i) const {
             // If the leaf is not the key, delete and convert to a branch
             if (verbose == 2) { cerr << "\tleaf branching " << _key << " at " << _value << "\n"; }
             string_q curVal;
-            if (!contains(_key) || blocks.getCount() == 0) {
+            if (!contains(_key) || blocks.size() == 0) {
                 curVal = "";
             } else {
 #ifdef OLD_CODE_Y
-                for (int i = 0 ; i < blocks.getCount() ; i++) {
+                for (int i = 0 ; i < blocks.size() ; i++) {
                     curVal += asString(blocks[i]);
-                    if (i < blocks.getCount()-1)
+                    if (i < blocks.size()-1)
                         curVal += ",";
                 }
 #else

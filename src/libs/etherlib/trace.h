@@ -117,7 +117,7 @@ inline void CTrace::Init(void) {
     blockHash = "";
     blockNumber = 0;
     subtraces = 0;
-    traceAddress.Clear();
+    traceAddress.clear();
     transactionHash = "";
     transactionPosition = 0;
     type = "";

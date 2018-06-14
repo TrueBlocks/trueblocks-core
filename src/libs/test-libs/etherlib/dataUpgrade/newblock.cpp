@@ -68,7 +68,7 @@ bool CNewBlock::setValueByName(const string_q& fieldName, const string_q& fieldV
             while (!str.empty()) {
                 CTransaction trans;
                 trans.hash = toAddress(nextTokenClear(str, ','));
-                transactions[transactions.getCount()] = trans;
+                transactions.push_back(trans);
             }
             return true;
         }
@@ -108,7 +108,7 @@ bool CNewBlock::setValueByName(const string_q& fieldName, const string_q& fieldV
                     uint32_t nFields = 0;
                     p = item.parseJson(p, nFields);
                     if (nFields)
-                        transactions[transactions.getCount()] = item;
+                        transactions.push_back(item);
                 }
                 return true;
             }
@@ -122,7 +122,7 @@ bool CNewBlock::setValueByName(const string_q& fieldName, const string_q& fieldV
 //---------------------------------------------------------------------------------------------------
 void CNewBlock::finishParse() {
     // EXISTING_CODE
-    for (uint32_t i=0;i<transactions.getCount();i++)
+    for (uint32_t i=0;i<transactions.size();i++)
         transactions[i].pBlock = (CBlock*)this;
     // EXISTING_CODE
 }
@@ -220,7 +220,7 @@ string_q nextNewblockChunk_custom(const string_q& fieldIn, const void *dataPtr) 
                 break;
             case 't':
                 if ( expContext().hashesOnly && fieldIn % "transactions" ) {
-                    uint32_t cnt = newp->transactions.getCount();
+                    uint32_t cnt = newp->transactions.size();
                     if (!cnt) return EMPTY;
                     string_q ret;
                     for (uint32_t i = 0 ; i < cnt ; i++) {
@@ -332,7 +332,7 @@ string_q CNewBlock::getValueByName(const string_q& fieldName) const {
         case 't':
             if ( fieldName % "timestamp" ) return fromTimestamp(timestamp);
             if ( fieldName % "transactions" || fieldName % "transactionsCnt" ) {
-                uint32_t cnt = transactions.getCount();
+                uint32_t cnt = transactions.size();
                 if (endsWith(fieldName, "Cnt"))
                     return asStringU(cnt);
                 if (!cnt) return "";
@@ -364,7 +364,7 @@ ostream& operator<<(ostream& os, const CNewBlock& item) {
 
 //---------------------------------------------------------------------------
 const CBaseNode *CNewBlock::getObjectAt(const string_q& fieldName, uint32_t index) const {
-    if ( fieldName % "transactions" && index < transactions.getCount() )
+    if ( fieldName % "transactions" && index < transactions.size() )
         return &transactions[index];
     return NULL;
 }
