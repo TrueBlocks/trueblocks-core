@@ -304,7 +304,7 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void *dataPt
                     return tra->input.substr(0,10);
                 }
                 if ( fieldIn % "events" ) {
-                    if (tra->receipt.logs.getCount())
+                    if (tra->receipt.logs.size())
                         return "++EVENT_LIST++";
                     return "";
                 }
@@ -614,7 +614,7 @@ string_q CTransaction::inputToFunction(void) const {
     if (funcPtr) {
         string_q items[256];
         uint32_t nItems = 0;
-        for (uint32_t i = 0 ; i < funcPtr->inputs.getCount() ; i++)
+        for (uint32_t i = 0 ; i < funcPtr->inputs.size() ; i++)
             items[nItems++] = funcPtr->inputs[i].type;
         return toFunction(funcPtr->name, input, nItems, items);
     }

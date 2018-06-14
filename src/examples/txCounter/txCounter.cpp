@@ -101,7 +101,7 @@ void CCounter::countOne(const CBlock &block) {
 #endif
 #endif
 
-    uint64_t tCount = block.transactions.getCount();
+    uint64_t tCount = block.transactions.size();
     nFull++;
     nEmpty = (block.blockNumber - nFull);
     nTrans += tCount;

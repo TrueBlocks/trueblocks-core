@@ -664,7 +664,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
 
         const CToml *toml = getGlobalConfig("whenBlock");
 
-        specials.Clear();
+        specials.clear();
         string_q specialsStr = toml->getConfigStr("specials", "list", "");
         char *p = cleanUpJson((char *)specialsStr.c_str());
         while (p && *p) {
@@ -672,7 +672,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
             uint32_t nFields = 0;
             p = pair.parseJson(p, nFields);
             if (nFields) {
-                specials[specials.getCount()] = pair;
+                specials.push_back(pair);
             }
         }
         specials.Sort(sortByBlockNum);
@@ -681,9 +681,9 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
 
     //--------------------------------------------------------------------------------
     bool COptionsBase::findSpecial(CNameValue& pair, const string_q& arg) const {
-        if (specials.getCount() == 0)
+        if (specials.size() == 0)
             ((COptionsBase*)this)->loadSpecials();
-        for (uint32_t i = 0 ; i < specials.getCount() ; i++) {
+        for (uint32_t i = 0 ; i < specials.size() ; i++) {
             if (arg == specials[i].getName()) {
                 pair = specials[i];
                 return true;
@@ -704,14 +704,14 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
 
     //-----------------------------------------------------------------------
     bool COptionsBase::getNamedAccount(CAccountName& acct, const string_q& addr) const {
-        if (namedAccounts.getCount() == 0) {
+        if (namedAccounts.size() == 0) {
             uint64_t save = verbose;
             verbose = false;
             ((COptionsBase*)this)->loadNames();
             verbose = save;
         }
 
-        for (uint32_t i = 0 ; i < namedAccounts.getCount() ; i++) {
+        for (uint32_t i = 0 ; i < namedAccounts.size() ; i++) {
             if (namedAccounts[i].addr % addr) {
                 acct = namedAccounts[i];
                 return true;
@@ -724,7 +724,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
     bool COptionsBase::loadNames(void) {
 
         // If we're already loaded or editing, return
-        if (namedAccounts.getCount() > 0)
+        if (namedAccounts.size() > 0)
             return true;
 
         string_q textFile = namesFile.getFullPath();
@@ -765,7 +765,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
 
                 } else {
                     CAccountName account(line);
-                    namedAccounts[namedAccounts.getCount()] = account;
+                    namedAccounts.push_back(account);
                 }
             }
         }

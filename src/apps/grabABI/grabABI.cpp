@@ -63,7 +63,7 @@ void addIfUnique(const string_q& addr, CFunctionArray& functions, CFunction& fun
     if (func.name.empty()) // && func.type != "constructor")
         return;
 
-    for (uint32_t i = 0 ; i < functions.getCount() ; i++) {
+    for (uint32_t i = 0 ; i < functions.size() ; i++) {
         if (functions[i].encoding == func.encoding)
             return;
 
@@ -76,7 +76,7 @@ void addIfUnique(const string_q& addr, CFunctionArray& functions, CFunction& fun
         }
     }
 
-    functions[functions.getCount()] = func;
+    functions.push_back(func);
 }
 
 //-----------------------------------------------------------------------
@@ -209,7 +209,7 @@ int main(int argc, const char *argv[]) {
         if (!isGenerate) {
 
             if (options.asData) {
-                for (uint32_t i = 0 ; i < functions.getCount() ; i++) {
+                for (uint32_t i = 0 ; i < functions.size() ; i++) {
                     CFunction *func = &functions[i];
                     if (!func->constant || !options.noconst) {
                         string_q format = getGlobalConfig()->getDisplayStr(false, STR_FORMAT_FUNCDATA);
@@ -220,7 +220,7 @@ int main(int argc, const char *argv[]) {
             } else {
                 // print to a buffer because we have to modify it before we print it
                 cout << "ABI for address " << options.primaryAddr << (options.nAddrs>1 ? " and others" : "") << "\n";
-                for (uint32_t i = 0 ; i < functions.getCount() ; i++) {
+                for (uint32_t i = 0 ; i < functions.size() ; i++) {
                     CFunction *func = &functions[i];
                     if (!func->constant || !options.noconst)
                         cout << func->getSignature(options.parts) << "\n";
@@ -243,7 +243,7 @@ int main(int argc, const char *argv[]) {
             if (!options.isToken()) headers += ("#include \"tokenlib.h\"\n");
             if (!options.isWallet()) headers += ("#ifndef NOWALLETLIB\n#include \"walletlib.h\"\n#endif\n");
             string_q sources = "src= \\\n", registers, factory1, factory2;
-            for (uint32_t i = 0 ; i < functions.getCount() ; i++) {
+            for (uint32_t i = 0 ; i < functions.size() ; i++) {
                 CFunction *func = &functions[i];
                 if (!func->isBuiltin) {
                     string_q name = func->Format("[{NAME}]") + (func->type == "event" ? "Event" : "");
@@ -279,7 +279,7 @@ int main(int argc, const char *argv[]) {
                         }
                         string_q fields, assigns1, assigns2, items1;
                         uint64_t nIndexed = 0;
-                        for (uint32_t j = 0 ; j < func->inputs.getCount() ; j++) {
+                        for (uint32_t j = 0 ; j < func->inputs.size() ; j++) {
                             fields   += func->inputs[j].Format("[{TYPE}][ {NAME}]|");
                             assigns1 += func->inputs[j].Format(getAssign(&func->inputs[j], j));
                             items1   += "\t\t\titems[nItems++] = \"" + func->inputs[j].type + "\";\n";
@@ -471,7 +471,7 @@ string_q getAssign(const CParameter *p, uint64_t which) {
             "\t\t\twhile (!params.empty()) {\n"
             "\t\t\t\tstring_q val = params.substr(0,64);\n"
             "\t\t\t\tparams = params.substr(64);\n"
-            "\t\t\t\ta->[{NAME}]XXXXa->[{NAME}].getCount()YYYY = val;\n"
+            "\t\t\t\ta->[{NAME}]XXXXa->[{NAME}].size()YYYY = val;\n"
             "\t\t\t}\n";
         return p->Format(STR_ASSIGNARRAY);
     }
@@ -526,11 +526,11 @@ string_q getEventAssign(const CParameter *p, uint64_t which, uint64_t nIndexed) 
 //    //  func.inputs[0].type = "string";
 //    //  func.inputs[0].name = "_str";
 //    //  func.name = "defFunction";
-//    //  funcs[funcs.getCount()] = func;
+//    //  funcs.push_back(func);
 //    func.type = "event";
 //    func.name = "event";
 //    func.inputs.Clear();
-//    funcs[funcs.getCount()] = func;
+//    funcs.push_back(func);
 //}
 
 //-----------------------------------------------------------------------

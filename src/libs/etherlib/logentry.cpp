@@ -77,7 +77,7 @@ bool CLogEntry::setValueByName(const string_q& fieldName, const string_q& fieldV
             if ( fieldName % "topics" ) {
                 string_q str = fieldValue;
                 while (!str.empty()) {
-                    topics[topics.getCount()] = toTopic(nextTokenClear(str,','));
+                    topics.push_back(toTopic(nextTokenClear(str,',')));
                 }
                 return true;
             }
@@ -225,7 +225,7 @@ string_q CLogEntry::getValueByName(const string_q& fieldName) const {
             break;
         case 't':
             if ( fieldName % "topics" || fieldName % "topicsCnt" ) {
-                uint32_t cnt = topics.getCount();
+                uint32_t cnt = topics.size();
                 if (endsWith(fieldName, "Cnt"))
                     return asStringU(cnt);
                 if (!cnt) return "";
@@ -263,7 +263,7 @@ ostream& operator<<(ostream& os, const CLogEntry& item) {
 
 //---------------------------------------------------------------------------
 const string_q CLogEntry::getStringAt(const string_q& name, uint32_t i) const {
-    if ( name % "topics" && i < topics.getCount() )
+    if ( name % "topics" && i < topics.size() )
         return fromTopic(topics[i]);
     return "";
 }
@@ -276,8 +276,8 @@ bool CLogEntry::operator==(const CLogEntry& test) const {
     EQ_TEST(address);
     EQ_TEST(data);
     EQ_TEST(logIndex);
-    EQ_TEST(topics.getCount());
-    for (uint32_t i = 0 ; i < topics.getCount() ; i++)
+    EQ_TEST(topics.size());
+    for (uint32_t i = 0 ; i < topics.size() ; i++)
         if (test.topics[i] != topics[i])
             return false;
 

@@ -31,7 +31,7 @@ int main(int argc, const char* argv[]) {
         string_q message;
 
         CPriceQuoteArray quotes;
-        if (loadPriceData(options.source, quotes, options.freshen, message) && quotes.getCount()) {
+        if (loadPriceData(options.source, quotes, options.freshen, message) && quotes.size()) {
 
             string_q def = (verbose ? "" : "{ \"date\": \"[{DATE}]\", \"price\": \"[{CLOSE}]\" }");
             string_q fmtStr = getGlobalConfig()->getDisplayStr(!verbose, def, "");
@@ -46,7 +46,7 @@ int main(int argc, const char* argv[]) {
                     cout << "[\n";
                 uint32_t step = (uint32_t)options.freq / 5;
                 bool done = false;
-                for (uint32_t i = 0 ; i < quotes.getCount() && !done ; i = i + step) {
+                for (uint32_t i = 0 ; i < quotes.size() && !done ; i = i + step) {
 
                     timestamp_t ts = toTimestamp(quotes[i].Format("[{TIMESTAMP}]"));
                     if (i > 0) {

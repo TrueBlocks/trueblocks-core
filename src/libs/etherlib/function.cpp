@@ -84,7 +84,7 @@ bool CFunction::setValueByName(const string_q& fieldName, const string_q& fieldV
                     uint32_t nFields = 0;
                     p = item.parseJson(p, nFields);
                     if (nFields)
-                        inputs[inputs.getCount()] = item;
+                        inputs.push_back(item);
                 }
                 return true;
             }
@@ -100,7 +100,7 @@ bool CFunction::setValueByName(const string_q& fieldName, const string_q& fieldV
                     uint32_t nFields = 0;
                     p = item.parseJson(p, nFields);
                     if (nFields)
-                        outputs[outputs.getCount()] = item;
+                        outputs.push_back(item);
                 }
                 return true;
             }
@@ -123,13 +123,13 @@ bool CFunction::setValueByName(const string_q& fieldName, const string_q& fieldV
 //---------------------------------------------------------------------------------------------------
 void CFunction::finishParse() {
     // EXISTING_CODE
-    for (uint32_t i = 0 ; i < inputs.getCount() ; i++)
+    for (uint32_t i = 0 ; i < inputs.size() ; i++)
         hasAddrs |= (inputs[i].type == "address");
     signature = getSignature(SIG_CANONICAL);
     encoding  = encodeItem();
     // The input parameters need to have a name. If not, we provide one
     int cnt = 0;
-    for (uint32_t i = 0 ; i < inputs.getCount() ; i++) {
+    for (uint32_t i = 0 ; i < inputs.size() ; i++) {
         if (inputs[i].name.empty())
             inputs[i].name = "param_" + asString(cnt++);
     }
@@ -222,9 +222,9 @@ string_q nextFunctionChunk_custom(const string_q& fieldIn, const void *dataPtr) 
             case 'h':
                 if ( fieldIn % "hex" ) {
                     string_q ret = fun->name + "(";
-                    for (uint32_t i = 0 ; i < fun->inputs.getCount() ; i++) {
+                    for (uint32_t i = 0 ; i < fun->inputs.size() ; i++) {
                         ret += fun->inputs[i].type;
-                        if (i < fun->inputs.getCount())
+                        if (i < fun->inputs.size())
                             ret += ",";
                     }
                     ret += ")";
@@ -299,7 +299,7 @@ string_q CFunction::getValueByName(const string_q& fieldName) const {
             break;
         case 'i':
             if ( fieldName % "inputs" || fieldName % "inputsCnt" ) {
-                uint32_t cnt = inputs.getCount();
+                uint32_t cnt = inputs.size();
                 if (endsWith(fieldName, "Cnt"))
                     return asStringU(cnt);
                 if (!cnt) return "";
@@ -316,7 +316,7 @@ string_q CFunction::getValueByName(const string_q& fieldName) const {
             break;
         case 'o':
             if ( fieldName % "outputs" || fieldName % "outputsCnt" ) {
-                uint32_t cnt = outputs.getCount();
+                uint32_t cnt = outputs.size();
                 if (endsWith(fieldName, "Cnt"))
                     return asStringU(cnt);
                 if (!cnt) return "";
@@ -357,9 +357,9 @@ ostream& operator<<(ostream& os, const CFunction& item) {
 
 //---------------------------------------------------------------------------
 const CBaseNode *CFunction::getObjectAt(const string_q& fieldName, uint32_t index) const {
-    if ( fieldName % "inputs" && index < inputs.getCount() )
+    if ( fieldName % "inputs" && index < inputs.size() )
         return &inputs[index];
-    if ( fieldName % "outputs" && index < outputs.getCount() )
+    if ( fieldName % "outputs" && index < outputs.size() )
         return &outputs[index];
     return NULL;
 }
@@ -368,7 +368,7 @@ const CBaseNode *CFunction::getObjectAt(const string_q& fieldName, uint32_t inde
 // EXISTING_CODE
 //---------------------------------------------------------------------------
 string_q CFunction::getSignature(uint64_t parts) const {
-    uint32_t cnt = inputs.getCount();
+    uint32_t cnt = inputs.size();
 
     string_q nm = (origName.empty() ? name : origName);
 

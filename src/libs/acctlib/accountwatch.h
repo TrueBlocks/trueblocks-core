@@ -127,7 +127,7 @@ inline void CAccountWatch::Init(void) {
     lastBlock = UINT_MAX;
     bloom = 0;
     inBlock = false;
-    balanceHistory.Clear();
+    balanceHistory.clear();
     // EXISTING_CODE
 }
 

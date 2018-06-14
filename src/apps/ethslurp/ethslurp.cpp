@@ -142,7 +142,7 @@ bool CSlurperApp::Initialize(COptions& options, string_q& message) {
 
     // If we're not re-running, we're slurping and we need an empty transaction list
     if (!options.rerun) {
-        theAccount.transactions.Clear();
+        theAccount.transactions.clear();
         theAccount = CAccount();
         clearAbis();
     }
@@ -166,7 +166,7 @@ bool CSlurperApp::Slurp(COptions& options, string_q& message) {
     // Do we have the data for this address cached?
     string_q cacheFilename = blockCachePath("slurps/" + theAccount.addr + ".bin");
     bool needToRead = fileExists(cacheFilename);
-    if (options.rerun && theAccount.transactions.getCount())
+    if (options.rerun && theAccount.transactions.size())
         needToRead = false;
     if (needToRead) {
         // Once a transaction is on the blockchain, it will never change
@@ -189,7 +189,7 @@ bool CSlurperApp::Slurp(COptions& options, string_q& message) {
     uint32_t nSeconds = (uint32_t)max((uint64_t)60, toml.getConfigInt("settings", "update_freq", 300));
     if ((now - fileTime) > nSeconds) {
         // This is how many records we currently have
-        uint32_t origCount  = theAccount.transactions.getCount();
+        uint32_t origCount  = theAccount.transactions.size();
         uint32_t nNewBlocks = 0;
 
         if (!isTestMode())
@@ -288,7 +288,7 @@ bool CSlurperApp::Slurp(COptions& options, string_q& message) {
 
         theAccount.lastBlock = max(theAccount.lastBlock, lastBlock);
         // Write the data if we got new data
-        uint32_t newRecords = (theAccount.transactions.getCount() - origCount);
+        uint32_t newRecords = (theAccount.transactions.size() - origCount);
         if (newRecords) {
             if (!isTestMode())
                 cerr << "\tWriting " << newRecords << " new records to cache\n";
@@ -307,11 +307,11 @@ bool CSlurperApp::Slurp(COptions& options, string_q& message) {
     if (!isTestMode()) {
         double stop = qbNow();
         double timeSpent = stop-start;
-        fprintf(stderr, "\tLoaded %d total records in %f seconds\n", theAccount.transactions.getCount(), timeSpent);
+        fprintf(stderr, "\tLoaded %d total records in %f seconds\n", theAccount.transactions.size(), timeSpent);
         fflush(stderr);
     }
 
-    return (options.fromFile || theAccount.transactions.getCount() > 0);
+    return (options.fromFile || theAccount.transactions.size() > 0);
 }
 
 //--------------------------------------------------------------------------------
@@ -326,7 +326,7 @@ bool CSlurperApp::Filter(COptions& options, string_q& message) {
         funcFilts[nFuncFilts++] = nextTokenClear(filtList, ',');
 
     theAccount.nVisible = 0;
-    for (uint32_t i = 0 ; i < theAccount.transactions.getCount() ; i++) {
+    for (uint32_t i = 0 ; i < theAccount.transactions.size() ; i++) {
         CTransaction *trans = &theAccount.transactions[i];
 
         // Turn every transaction on and then turning them off if they match the filter.
@@ -396,7 +396,7 @@ bool CSlurperApp::Filter(COptions& options, string_q& message) {
         double stop = qbNow();
         double timeSpent = stop-start;
         cerr << "\tFilter passed " << theAccount.nVisible
-                << " visible records of " << theAccount.transactions.getCount()
+                << " visible records of " << theAccount.transactions.size()
                 << " in " << timeSpent << " seconds\n";
         cerr.flush();
     }
@@ -413,7 +413,7 @@ bool CSlurperApp::Display(COptions& options, string_q& message) {
         theAccount.transactions.Sort(sortReverseChron);
 
     if (options.cache) {
-        for (uint32_t i = 0 ; i < theAccount.transactions.getCount() ; i++) {
+        for (uint32_t i = 0 ; i < theAccount.transactions.size() ; i++) {
             const CTransaction *t = &theAccount.transactions[i];
             outScreen << t->Format("[{BLOCKNUMBER}]\t[{TRANSACTIONINDEX}]\t" + asString(options.acct_id)) << "\n";
         }

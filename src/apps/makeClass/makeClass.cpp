@@ -297,7 +297,7 @@ void generateCode(const COptions& options, CToml& toml, const string_q& dataFile
             } else {
                 fieldGetObj += STR_GETOBJ_CODE_FIELD;
                 if (!contains(fld->type, "Array")) {
-                    replace(fieldGetObj, " && index < [{FIELD}].getCount()", "");
+                    replace(fieldGetObj, " && index < [{FIELD}].size()", "");
                     replace(fieldGetObj, "[index]", "");
                 }
                 replaceAll(fieldGetObj, "[{FIELD}]", fld->name);
@@ -400,7 +400,7 @@ string_q ptrWriteFmt =
         writeTheCode(headerFile, headSource, ns);
 
     //------------------------------------------------------------------------------------------------
-    string_q fieldStr = fieldList.GetCount() ? substitute(getCaseCode(fieldCase, ""), "[{PTR}]", "") : "// No fields";
+    string_q fieldStr = fieldList.size() ? substitute(getCaseCode(fieldCase, ""), "[{PTR}]", "") : "// No fields";
 
     string_q srcFile    = substitute(substitute(dataFile, ".txt", ".cpp"), "./classDefinitions/", "./");
     string_q srcSource  = asciiFileToString(configPath("makeClass/blank.cpp"));
@@ -531,7 +531,7 @@ string_q getCaseCode(const string_q& fieldCase, const string_q& ex) {
 
                     } else if (contains(type, "SFBigUintArray") || contains(type, "SFTopicArray")) {
                         string_q str = STR_CASE_CODE_STRINGARRAY;
-                        // hack for getCount clause
+                        // hack for size clause
                         replace(str, "[{FIELD}]", field);
                         // hack for the array access
                         replace(str, "[{FIELD}][i]", "fromTopic("+field+"[i])");
@@ -566,7 +566,7 @@ string_q strArraySet =
 " {\n"
 "\t\t\t\tstring_q str = fieldValue;\n"
 "\t\t\t\twhile (!str.empty()) {\n"
-"\t\t\t\t\t[{NAME}][[{NAME}].getCount()] = nextTokenClear(str,',');\n"
+"\t\t\t\t\t[{NAME}].push_back(nextTokenClear(str,','));\n"
 "\t\t\t\t}\n"
 "\t\t\t\treturn true;\n"
 "\t\t\t}";
@@ -700,7 +700,7 @@ const char* STR_CASE_SET_CODE_ARRAY =
 "\t\t\t\t\tuint32_t nFields = 0;\n"
 "\t\t\t\t\tp = item.parseJson(p, nFields);\n"
 "\t\t\t\t\tif (nFields)\n"
-"\t\t\t\t\t\t[{NAME}][[{NAME}].getCount()] = item;\n"
+"\t\t\t\t\t\t[{NAME}].push_back(item);\n"
 "\t\t\t\t}\n"
 "\t\t\t\treturn true;\n"
 "\t\t\t}";
@@ -708,7 +708,7 @@ const char* STR_CASE_SET_CODE_ARRAY =
 //------------------------------------------------------------------------------------------------------------
 const char* STR_CASE_CODE_ARRAY =
 " {\n"
-"[BTAB]\t\tuint32_t cnt = [{PTR}][{FIELD}].getCount();\n"
+"[BTAB]\t\tuint32_t cnt = [{PTR}][{FIELD}].size();\n"
 "[BTAB]\t\tif (endsWith(fieldName, \"Cnt\"))\n"
 "[BTAB]\t\t\treturn asStringU(cnt);\n"
 "[BTAB]\t\tif (!cnt) return \"\";\n"
@@ -723,7 +723,7 @@ const char* STR_CASE_CODE_ARRAY =
 //------------------------------------------------------------------------------------------------------------
 const char* STR_CASE_CODE_STRINGARRAY =
 " {\n"
-"[BTAB]\t\tuint32_t cnt = [{PTR}][{FIELD}].getCount();\n"
+"[BTAB]\t\tuint32_t cnt = [{PTR}][{FIELD}].size();\n"
 "[BTAB]\t\tif (endsWith(fieldName, \"Cnt\"))\n"
 "[BTAB]\t\t\treturn asStringU(cnt);\n"
 "[BTAB]\t\tif (!cnt) return \"\";\n"
@@ -799,7 +799,7 @@ const char *STR_GETOBJ_HEAD =
 
 //------------------------------------------------------------------------------------------------------------
 const char *STR_GETOBJ_CODE_FIELD =
-"\tif ( fieldName % \"[{FIELD}]\" && index < [{FIELD}].getCount() )\n"
+"\tif ( fieldName % \"[{FIELD}]\" && index < [{FIELD}].size() )\n"
 "\t\treturn &[{FIELD}][index];\n";
 
 //------------------------------------------------------------------------------------------------------------
@@ -815,7 +815,7 @@ const char *STR_GETSTR_HEAD =
 
 //------------------------------------------------------------------------------------------------------------
 const char *STR_GETSTR_CODE_FIELD =
-"\tif ( name % \"[{FIELD}]\" && i < [{FIELD}].getCount() )\n"
+"\tif ( name % \"[{FIELD}]\" && i < [{FIELD}].size() )\n"
 "\t\treturn THING([{FIELD}][i]);\n";
 
 //------------------------------------------------------------------------------------------------------------

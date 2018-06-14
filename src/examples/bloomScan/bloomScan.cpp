@@ -42,7 +42,7 @@ extern bool displayBloom(blknum_t bn, const SFBloom& bloom, void *data);
                 SFBloomArray blooms;
                 archive >> blooms;
                 archive.Release();
-                for (uint32_t i = 0 ; i < blooms.getCount() ; i++) {
+                for (uint32_t i = 0 ; i < blooms.size() ; i++) {
                     bloom |= blooms[i];
                 }
             }

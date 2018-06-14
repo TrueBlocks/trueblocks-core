@@ -77,17 +77,17 @@ namespace qblocks {
     }
 
     SFArchive& operator<<(SFArchive& archive, const SFBigUintArray& array) {
-        uint64_t count = array.getCount();
+        uint64_t count = array.size();
         archive << count;
-        for (uint32_t i = 0 ; i < array.getCount() ; i++)
+        for (uint32_t i = 0 ; i < array.size() ; i++)
             archive << array[i];
         return archive;
     }
 
     SFArchive& operator<<(SFArchive& archive, const SFUintArray& array) {
-        uint64_t count = array.getCount();
+        uint64_t count = array.size();
         archive << count;
-        for (uint32_t i = 0 ; i < array.getCount() ; i++)
+        for (uint32_t i = 0 ; i < array.size() ; i++)
             archive << array[i];
         return archive;
     }
@@ -166,16 +166,22 @@ namespace qblocks {
     SFArchive& operator>>(SFArchive& archive, SFBigUintArray& array) {
         uint64_t count;
         archive >> count;
-        for (uint32_t i = 0 ; i < count ; i++)
-            archive >> array[i];
+        for (uint32_t i = 0 ; i < count ; i++) {
+            SFUintBN num;
+            archive >> num;
+            array.push_back(num);
+        }
         return archive;
     }
 
     SFArchive& operator>>(SFArchive& archive, SFUintArray& array) {
         uint64_t count;
         archive >> count;
-        for (uint32_t i = 0 ; i < count ; i++)
-            archive >> array[i];
+        for (uint32_t i = 0 ; i < count ; i++) {
+            uint64_t num;
+            archive >> num;
+            array.push_back(num);
+        }
         return archive;
     }
 

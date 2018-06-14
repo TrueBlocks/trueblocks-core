@@ -51,7 +51,7 @@ namespace qblocks {
                 priceCache.Close();
                 if (verbose) {
                     string_q date = lastRead.Format(FMT_JSON);
-                    string_q count = asString(quotes.getCount());
+                    string_q count = asString(quotes.size());
                     if (isTestMode()) {
                         date = "Now";
                         count = "cnt";
@@ -150,8 +150,8 @@ namespace qblocks {
                     // So as to not inadvertantly add records we already have
                     if (addToArray) {
                         // First entry should be on a two hour mark so we hit midnight in default two hour case
-                        if (quotes.getCount() || (quote.date.onTheHour() && (!quote.date.GetHour()%2))) {
-                            quotes[quotes.getCount()] = quote;
+                        if (quotes.size() || (quote.date.onTheHour() && (!quote.date.GetHour()%2))) {
+                            quotes.push_back(quote);
 #ifdef DEBUGGING
                             cerr << quote.Format() << "\n";
 #endif
@@ -173,7 +173,7 @@ namespace qblocks {
                 priceCache << quotes;
                 priceCache.Close();
                 if (verbose) {
-                    cerr << "Wrote " << quotes.getCount() << " price quotes to file ";
+                    cerr << "Wrote " << quotes.size() << " price quotes to file ";
                     cerr << "(lastRead: " << lastRead << ").\n";
                 }
 //            } else {
@@ -184,7 +184,7 @@ namespace qblocks {
 
         if (!reportAtEnd) {
             string_q date = lastRead.Format(FMT_JSON);
-            string_q count = asString(quotes.getCount());
+            string_q count = asString(quotes.size());
             if (isTestMode()) {
                 date = "Now";
                 count = "cnt";
@@ -196,7 +196,7 @@ namespace qblocks {
         if (step != 1) {
             CPriceQuoteArray ret;
             uint32_t cur = 0;
-            for (uint32_t i = 0 ; i < quotes.getCount() ; i += step)
+            for (uint32_t i = 0 ; i < quotes.size() ; i += step)
                 ret[cur++] = quotes[i];
             quotes = ret;
         }

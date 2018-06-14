@@ -244,7 +244,7 @@ uint64_t indexFromTimeStamp(const CPriceQuoteArray& quotes, timestamp_t ts) {
     if (ts < first)
         return 0;
     timestamp_t since = ts - first;
-    return min(quotes.getCount()-1, uint32_t(since / (5*60)));
+    return min(quotes.size()-1, uint32_t(since / (5*60)));
 }
 
 //-----------------------------------------------------------------------
@@ -252,7 +252,7 @@ string_q asDollars(timestamp_t ts, SFUintBN weiIn) {
     if (weiIn == 0)
         return "";
     static CPriceQuoteArray quotes;
-    if (!quotes.getCount()) {
+    if (!quotes.size()) {
         string_q message;
         CPriceSource source;
         if (!loadPriceData(source, quotes, false, message, 1)) {

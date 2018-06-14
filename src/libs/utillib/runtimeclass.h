@@ -155,9 +155,9 @@ return archive; \
 #define IMPLEMENT_ARCHIVE_ARRAY_C(ARRAY_CLASS) \
 inline SFArchive& operator<<(SFArchive& archive, const ARRAY_CLASS& array) \
 { \
-uint64_t count = array.getCount(); \
+uint64_t count = array.size(); \
 archive << count; \
-for (uint32_t i = 0 ; i < array.getCount() ; i++) \
+for (uint32_t i = 0 ; i < array.size() ; i++) \
 array[i].SerializeC(archive); \
 return archive; \
 }

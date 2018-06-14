@@ -92,7 +92,7 @@ bool CTrace::setValueByName(const string_q& fieldName, const string_q& fieldValu
             if ( fieldName % "traceAddress" ) {
                 string_q str = fieldValue;
                 while (!str.empty()) {
-                    traceAddress[traceAddress.getCount()] = toAddress(nextTokenClear(str,','));
+                    traceAddress.push_back(toAddress(nextTokenClear(str,',')));
                 }
                 return true;
             }
@@ -256,7 +256,7 @@ string_q CTrace::getValueByName(const string_q& fieldName) const {
             break;
         case 't':
             if ( fieldName % "traceAddress" || fieldName % "traceAddressCnt" ) {
-                uint32_t cnt = traceAddress.getCount();
+                uint32_t cnt = traceAddress.size();
                 if (endsWith(fieldName, "Cnt"))
                     return asStringU(cnt);
                 if (!cnt) return "";
@@ -317,7 +317,7 @@ const CBaseNode *CTrace::getObjectAt(const string_q& fieldName, uint32_t index) 
 
 //---------------------------------------------------------------------------
 const string_q CTrace::getStringAt(const string_q& name, uint32_t i) const {
-    if ( name % "traceAddress" && i < traceAddress.getCount() )
+    if ( name % "traceAddress" && i < traceAddress.size() )
         return (traceAddress[i]);
     return "";
 }

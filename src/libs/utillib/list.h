@@ -29,24 +29,24 @@ namespace qblocks {
     template<class TYPE>
     class SFArrayBase {
     protected:
-        uint32_t m_nSize;
+        uint32_t m_nCapacity;
         uint32_t m_nItems;
         TYPE  *m_Items;
 
     public:
         SFArrayBase(void);
-        SFArrayBase(const SFArrayBase& copy);
+        SFArrayBase(const SFArrayBase& cop);
         ~SFArrayBase(void);
 
-        SFArrayBase& operator=(const SFArrayBase& copy);
+        SFArrayBase& operator=(const SFArrayBase& cop);
 
         TYPE& operator[](uint32_t index);
         const TYPE& operator[](uint32_t index) const;
 
-        void addValue(TYPE val) { operator[](m_nItems) = val; }
-        uint32_t getCount(void) const { return m_nItems; }
-        uint32_t getSize(void) const { return m_nSize; }
-        uint32_t size(void) const { return getCount(); }
+        uint32_t capacity (void) const { return m_nCapacity; }
+        uint32_t size     (void) const { return m_nItems; }
+        void     push_back(TYPE x);
+        void     clear    (void);
 
         void Sort(SORTINGFUNC func) { qsort(&m_Items[0], m_nItems, sizeof(TYPE), func); }
         TYPE *Find(const TYPE *key, SEARCHFUNC func) {
@@ -54,67 +54,63 @@ namespace qblocks {
             return reinterpret_cast<TYPE*>(bsearch(key, &m_Items[0], m_nItems, sizeof(TYPE), func));
         }
 
-        void push_back(TYPE x) { operator[](getCount()) = x; }
-
-        void Clear(void);
-        void clear(void) { Clear(); }
         void Grow(uint32_t sizeNeeded);
 
     private:
         void CheckSize(uint32_t sizeNeeded);
-        void Copy(const SFArrayBase& copy);
-        void Init(uint32_t size, uint32_t count, TYPE *values);
+        void copy(const SFArrayBase& cop);
+        void init(uint32_t cap, uint32_t count, TYPE *values);
     };
 
     //----------------------------------------------------------------------
     template<class TYPE>
     inline SFArrayBase<TYPE>::SFArrayBase(void) {
-        Init(0, 0, NULL);
+        init(0, 0, NULL);
     }
 
     //----------------------------------------------------------------------
     template<class TYPE>
-    inline SFArrayBase<TYPE>::SFArrayBase(const SFArrayBase<TYPE>& copy) {
-        Copy(copy);
+    inline SFArrayBase<TYPE>::SFArrayBase(const SFArrayBase<TYPE>& cop) {
+        copy(cop);
     }
 
     //----------------------------------------------------------------------
     template<class TYPE>
     inline SFArrayBase<TYPE>::~SFArrayBase(void) {
-        Clear();
+        clear();
     }
 
     //----------------------------------------------------------------------
     template<class TYPE>
-    inline SFArrayBase<TYPE>& SFArrayBase<TYPE>::operator=(const SFArrayBase<TYPE>& copy) {
-        Clear();
-        Copy(copy);
+    inline SFArrayBase<TYPE>& SFArrayBase<TYPE>::operator=(const SFArrayBase<TYPE>& cop) {
+        clear();
+        copy(cop);
         return *this;
     }
 
     //----------------------------------------------------------------------
     template<class TYPE>
-    inline void SFArrayBase<TYPE>::Init(uint32_t size, uint32_t count, TYPE *values) {
-        m_nSize  = size;
+    inline void SFArrayBase<TYPE>::init(uint32_t cap, uint32_t count, TYPE *values) {
+        m_nCapacity = cap;
         m_nItems = count;
         m_Items  = values;
     }
 
     //----------------------------------------------------------------------
     template<class TYPE>
-    inline void SFArrayBase<TYPE>::Clear(void) {
+    inline void SFArrayBase<TYPE>::clear(void) {
         if (m_Items)
             delete [] m_Items;
-        Init(0, 0, NULL);
+        init(0, 0, NULL);
     }
 
     //----------------------------------------------------------------------
     template<class TYPE>
-    inline void SFArrayBase<TYPE>::Copy(const SFArrayBase<TYPE>& copy) {
-        CheckSize(copy.getSize());
-        for (uint32_t i = 0 ; i < copy.getCount() ; i++)
-            m_Items[i] = copy.m_Items[i];
-        m_nItems = copy.getCount();
+    inline void SFArrayBase<TYPE>::copy(const SFArrayBase<TYPE>& cop) {
+        CheckSize(cop.capacity());
+        for (uint32_t i = 0 ; i < cop.size() ; i++)
+            m_Items[i] = cop.m_Items[i];
+        m_nItems = cop.size();
     }
 
     //----------------------------------------------------------------------
@@ -126,11 +122,11 @@ namespace qblocks {
     //----------------------------------------------------------------------
     template<class TYPE>
     inline void SFArrayBase<TYPE>::CheckSize(uint32_t sizeNeeded) {
-        if (sizeNeeded < m_nSize)
+        if (sizeNeeded < m_nCapacity)
             return;
 
         // The user is requesting access to an index that is past range. We need to grow the array.
-        uint32_t newSize = max(m_nSize + ARRAY_CHUNK_SIZE, sizeNeeded);
+        uint32_t newSize = max(m_nCapacity + ARRAY_CHUNK_SIZE, sizeNeeded);
         TYPE *newArray = new TYPE[newSize];
         if (m_nItems) {
             ASSERT(m_Items);
@@ -142,7 +138,7 @@ namespace qblocks {
                 delete [] m_Items;
             m_Items = NULL;
         }
-        Init(newSize, m_nItems, newArray);
+        init(newSize, m_nItems, newArray);
     }
 
     //----------------------------------------------------------------------
@@ -153,8 +149,19 @@ namespace qblocks {
         CheckSize(index);
         if (index >= m_nItems)
             m_nItems = index+1;
-        ASSERT(m_Items && index >= 0 && index <= m_nSize && index <= m_nItems);
+        ASSERT(m_Items && index >= 0 && index <= m_nCapacity && index <= m_nItems);
         return m_Items[index];
+    }
+
+    //----------------------------------------------------------------------
+    template<class TYPE>
+    inline void SFArrayBase<TYPE>::push_back(TYPE x) {
+        uint32_t index = size();
+        CheckSize(index);
+        if (index >= m_nItems)
+            m_nItems = index + 1;
+        ASSERT(m_Items && index >= 0 && index <= m_nCapacity && index <= m_nItems);
+        m_Items[index] = x;
     }
 
     //----------------------------------------------------------------------
@@ -205,7 +212,7 @@ namespace qblocks {
 
         SFList& operator=(const SFList& l);
 
-        uint32_t GetCount(void) const { return m_Count; }
+        uint32_t size(void) const { return m_Count; }
         TYPE GetHead(void) const { return (TYPE)(m_Head->m_Data); }
         TYPE GetTail(void) const { return (TYPE)(m_Tail->m_Data); }
 
@@ -588,7 +595,11 @@ namespace qblocks {
         SFUniqueStringList(void) : SFUniqueList(sortByStringValue, isDuplicate) { }
     };
 
+#ifdef NATIVE
     typedef vector<string_q> CStringArray;
+#else
+    typedef SFArrayBase<string_q> CStringArray;
+#endif
     typedef SFList<string_q> CStringList;
     typedef SFArrayBase<uint64_t> SFUintArray;
     typedef SFArrayBase<int64_t> SFIntArray;

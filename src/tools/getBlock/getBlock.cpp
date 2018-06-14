@@ -101,7 +101,7 @@ string_q doOneBlock(uint64_t num, const COptions& opt) {
 
             // --source::cache mode doesn't include timestamp in transactions
             readBlockFromBinary(gold, fileName);
-            for (uint32_t t = 0 ; t < gold.transactions.getCount() ; t++)
+            for (uint32_t t = 0 ; t < gold.transactions.size() ; t++)
                 gold.transactions[t].timestamp = gold.timestamp;
 
         } else {
@@ -147,7 +147,7 @@ string_q checkOneBlock(uint64_t num, const COptions& opt) {
     string_q fromQblocks;
     CBlock qBlocks;
     queryBlock(qBlocks, numStr, true, false);
-    for (uint32_t i = 0 ; i < qBlocks.transactions.getCount() ; i++) {
+    for (uint32_t i = 0 ; i < qBlocks.transactions.size() ; i++) {
         // quickBlocks pulls the receipt for each transaction, but the RPC does
         // not. Therefore, we must set the transactions' gasUsed and logsBloom
         // to be the same as the block's (even though they are not) so they

@@ -322,14 +322,14 @@ SFUintBN getNodeBal(CBalanceHistoryArray& history, const SFAddress& addr, blknum
 
     // If the history is empty, we can try to load the history from a file if it exists...
     string_q binaryFilename = "./balances/" + addr + ".bals.bin";
-    if (history.getCount() == 0 && fileExists(binaryFilename) && fileSize(binaryFilename) > 0) {
+    if (history.size() == 0 && fileExists(binaryFilename) && fileSize(binaryFilename) > 0) {
 
         SFArchive balCache(READING_ARCHIVE);
         if (balCache.Lock(binaryFilename, binaryReadOnly, LOCK_NOWAIT)) {
             blknum_t last = NOPOS;
             SFAddress lastA;
             while (!balCache.Eof()) {
-                uint32_t pos = history.getCount();
+                uint32_t pos = history.size();
                 blknum_t bn;
                 SFAddress addr1;
                 SFUintBN bal;
@@ -360,7 +360,7 @@ SFUintBN getNodeBal(CBalanceHistoryArray& history, const SFAddress& addr, blknum
 
     // ...if it doesn't hit, we need to find the most recent balance
     SFUintBN ret = 0;
-    for (uint32_t i = 0 ; i < history.getCount() ; i++) {
+    for (uint32_t i = 0 ; i < history.size() ; i++) {
         // TODO(tjayrush): THIS IS A BUG HACK FIX - SEE ABOVE
         // We should be able to do >= just below, but if we do, we pick up a zero
         // balance as the last balance available for any account because the code
@@ -406,7 +406,7 @@ void loadWatchList(const CToml& toml, CAccountWatchArray& watches, const string_
             // cleanup and add to list of watches
             watch.address = fixAddress(toLower(watch.address));
             watch.color   = convertColor(watch.color);
-            watches[watches.getCount()] = watch;
+            watches.push_back(watch);
         }
     }
     return;

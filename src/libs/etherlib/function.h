@@ -112,8 +112,8 @@ inline void CFunction::Init(void) {
     payable = 0;
     signature = "";
     encoding = "";
-    inputs.Clear();
-    outputs.Clear();
+    inputs.clear();
+    outputs.clear();
 
     // EXISTING_CODE
     hasAddrs = false;
