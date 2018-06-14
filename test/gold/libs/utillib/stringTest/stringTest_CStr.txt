@@ -72,7 +72,7 @@ stringTest 3
 
 	000.057 es1 is empty                     ==> passed 'es1.empty()' is true
 	000.058 es1 == ""                        ==> passed 'es1 == ""' is true
-	000.059 es1 == EMPTY                     ==> passed 'es1 == (EMPTY)' is true
+	000.059 es1 == EMPTY                     ==> passed 'es1 == (EMPTY).c_str()' is true
 	000.060 es1 == nullStr                   ==> passed 'es1 == nullStr' is true
 	000.061 es2 is empty                     ==> passed 'es2.empty()' is true
 	000.062 es2 == ""                        ==> passed 'es2 == ""' is true
