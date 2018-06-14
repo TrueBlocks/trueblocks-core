@@ -41,8 +41,8 @@ int main(int argc, const char *argv[]) {
         string_q fmt = (options.addrOnly ? "[{ADDR}]" : (options.data ? STR_NAME_DATA : ""));
         if (options.list) {
             if (options.count)
-                cout << options.namedAccounts.getCount() << " items\n";
-            for (uint32_t i = 0 ; i < options.namedAccounts.getCount() ; i++)
+                cout << options.namedAccounts.size() << " items\n";
+            for (uint32_t i = 0 ; i < options.namedAccounts.size() ; i++)
                 cout << substitute(substitute(options.namedAccounts[i].Format(fmt), "\n", " "), "  ", " ") << "\n";
             exit(0);
         }
@@ -63,7 +63,7 @@ string_q COptions::showMatches(void) {
     string_q ret;
     uint32_t hits = 0;
     string_q fmt = (addrOnly ? "[{ADDR}]" : "");
-    for (uint32_t i = 0 ; i < namedAccounts.getCount() ; i++) {
+    for (uint32_t i = 0 ; i < namedAccounts.size() ; i++) {
         if (namedAccounts[i].Match(addr, name, source, matchCase, all)) {
             ret += (substitute(substitute(namedAccounts[i].Format(fmt), "\n", " "), "  ", " ") + "\n");
             hits++;

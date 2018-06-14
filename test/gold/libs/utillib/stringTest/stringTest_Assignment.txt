@@ -7,6 +7,6 @@ stringTest 2
 	000.003 qb-string set2                   ==> passed 'xstr2 == "x"' is true
 	000.004 c-string set3                    ==> passed 'str3 == "Test string: x"' is true
 	000.005 qb-string set3                   ==> passed 'xstr3 == "Test string: x"' is true
-	000.006 set1 equal                       ==> passed 'str1 == xstr1.c_str()' is true
-	000.007 set2 equal                       ==> passed 'str2 == xstr2.c_str()' is true
-	000.008 set3 equal                       ==> passed 'str3 == xstr3.c_str()' is true
+	000.006 set1 equal                       ==> passed 'str1 == xstr1' is true
+	000.007 set2 equal                       ==> passed 'str2 == xstr2' is true
+	000.008 set3 equal                       ==> passed 'str3 == xstr3' is true

@@ -76,7 +76,7 @@ bool CNewReceipt::setValueByName(const string_q& fieldName, const string_q& fiel
                     uint32_t nFields = 0;
                     p = item.parseJson(p, nFields);
                     if (nFields)
-                        logs[logs.getCount()] = item;
+                        logs.push_back(item);
                 }
                 return true;
             }
@@ -229,7 +229,7 @@ string_q CNewReceipt::getValueByName(const string_q& fieldName) const {
             break;
         case 'l':
             if ( fieldName % "logs" || fieldName % "logsCnt" ) {
-                uint32_t cnt = logs.getCount();
+                uint32_t cnt = logs.size();
                 if (endsWith(fieldName, "Cnt"))
                     return asStringU(cnt);
                 if (!cnt) return "";
@@ -262,7 +262,7 @@ ostream& operator<<(ostream& os, const CNewReceipt& item) {
 
 //---------------------------------------------------------------------------
 const CBaseNode *CNewReceipt::getObjectAt(const string_q& fieldName, uint32_t index) const {
-    if ( fieldName % "logs" && index < logs.getCount() )
+    if ( fieldName % "logs" && index < logs.size() )
         return &logs[index];
     return NULL;
 }

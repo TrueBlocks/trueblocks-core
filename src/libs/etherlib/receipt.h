@@ -113,7 +113,7 @@ inline void CReceipt::Init(void) {
 
     contractAddress = "";
     gasUsed = 0;
-    logs.Clear();
+    logs.clear();
     status = NO_STATUS;
 
     // EXISTING_CODE

@@ -98,7 +98,7 @@ namespace qblocks {
 
     //--------------------------------------------------------------------------------
     void COptionsBlockList::Init(void) {
-        numList.Clear();
+        numList.clear();
         hashList.clear();
         start = stop = 0;
         hashFind = NULL;
@@ -118,7 +118,7 @@ namespace qblocks {
             if (!(*func)(i, data))
                 return false;
         }
-        for (uint32_t i = 0 ; i < numList.getCount() ; i++) {
+        for (uint32_t i = 0 ; i < numList.size() ; i++) {
             uint64_t n = numList[i];
             if (!(*func)(n, data))
                 return false;
@@ -137,7 +137,7 @@ namespace qblocks {
     bool COptionsBlockList::isInRange(blknum_t bn) const {
         if (start <= bn && bn < stop)
             return true;
-        for (uint32_t i = 0 ; i < numList.getCount() ; i++)
+        for (uint32_t i = 0 ; i < numList.size() ; i++)
             if (bn == numList[i])
                 return true;
         return false;

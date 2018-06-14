@@ -48,9 +48,9 @@ namespace qblocks {
 
     //--------------------------------------------------------------------------
     bool CMiniBlock::operator==(const CBlock& b) const {
-        if (b.blockNumber             != blockNumber) return false;
-        if (b.timestamp               != timestamp) return false;
-        if (b.transactions.getCount() != nTrans) return false;
+        if (b.blockNumber         != blockNumber) return false;
+        if (b.timestamp           != timestamp) return false;
+        if (b.transactions.size() != nTrans) return false;
         return true;
     }
 
@@ -266,7 +266,7 @@ namespace qblocks {
                     CTransaction tt;
                     cache->trans[tr].toTrans(tt);
                     gasUsed += tt.receipt.gasUsed;
-                    block.transactions[block.transactions.getCount()] = tt;
+                    block.transactions.push_back(tt);
                 }
                 block.gasUsed = gasUsed;
                 if (!(*func)(block, data))

@@ -108,7 +108,7 @@ inline void CLogEntry::Init(void) {
     address = "";
     data = "";
     logIndex = 0;
-    topics.Clear();
+    topics.clear();
 
     // EXISTING_CODE
 #if 0

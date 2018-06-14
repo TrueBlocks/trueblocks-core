@@ -94,8 +94,8 @@ inline CAccount::~CAccount(void) {
 //--------------------------------------------------------------------------
 inline void CAccount::Clear(void) {
     // EXISTING_CODE
-    abi.abiByName.Clear();
-    abi.abiByEncoding.Clear();
+    abi.abiByName.clear();
+    abi.abiByEncoding.clear();
     // EXISTING_CODE
 }
 
@@ -110,7 +110,7 @@ inline void CAccount::Init(void) {
     lastPage = 0;
     lastBlock = -1;
     nVisible = 0;
-    transactions.Clear();
+    transactions.clear();
 
     // EXISTING_CODE
     abi.Init();

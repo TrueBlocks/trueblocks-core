@@ -87,7 +87,7 @@ bool CAccount::setValueByName(const string_q& fieldName, const string_q& fieldVa
                     uint32_t nFields = 0;
                     p = item.parseJson(p, nFields);
                     if (nFields)
-                        transactions[transactions.getCount()] = item;
+                        transactions.push_back(item);
                 }
                 return true;
             }
@@ -101,7 +101,7 @@ bool CAccount::setValueByName(const string_q& fieldName, const string_q& fieldVa
 //---------------------------------------------------------------------------------------------------
 void CAccount::finishParse() {
     // EXISTING_CODE
-    for (uint32_t i = 0 ; i < transactions.getCount() ; i++) {
+    for (uint32_t i = 0 ; i < transactions.size() ; i++) {
         CTransaction *t = &transactions[i];
         string_q encoding = t->input.substr(0,10);
         t->funcPtr = abi.findFunctionByEncoding(encoding);
@@ -191,7 +191,7 @@ string_q nextAccountChunk_custom(const string_q& fieldIn, const void *dataPtr) {
                 if ( fieldIn % "now" ) return (isTestMode() ? "TESTING_TIME" : Now().Format(FMT_JSON));
                 break;
             case 'r':
-                if ( fieldIn % "records" ) return (acc->transactions.getCount() == 0 ? "No records" : "");
+                if ( fieldIn % "records" ) return (acc->transactions.size() == 0 ? "No records" : "");
                 break;
             // EXISTING_CODE
             case 'p':
@@ -215,7 +215,7 @@ bool CAccount::handleCustomFormat(CExportContext& ctx, const string_q& fmtIn, vo
     // If no records, just process as normal. We do this because it's so slow
     // copying the records into a string, so we write it directly to the
     // export context. If there is no {RECORDS}, then just send handle it like normal
-    if (!contains(fmtIn, "{RECORDS}") || transactions.getCount() == 0) {
+    if (!contains(fmtIn, "{RECORDS}") || transactions.size() == 0) {
         string_q fmt = fmtIn;
 
         while (!fmt.empty())
@@ -237,12 +237,12 @@ bool CAccount::handleCustomFormat(CExportContext& ctx, const string_q& fmtIn, vo
         while (!preFmt.empty())
             ctx << getNextChunk(preFmt, nextAccountChunk, this);
         uint32_t cnt = 0;
-        for (uint32_t i = 0 ; i < transactions.getCount() ; i++) {
+        for (uint32_t i = 0 ; i < transactions.size() ; i++) {
             cnt += transactions[i].m_showing;
             if (cnt && !(cnt % REP_INFREQ)) {
                 cerr << "\tExporting record " << cnt << " of " << nVisible;
                 if (!isTestMode()) {
-                    cerr << (transactions.getCount() != nVisible ? " visible" : "") << " records\r";
+                    cerr << (transactions.size() != nVisible ? " visible" : "") << " records\r";
                     cerr.flush();
                 }
             }
@@ -301,7 +301,7 @@ string_q CAccount::getValueByName(const string_q& fieldName) const {
             break;
         case 't':
             if ( fieldName % "transactions" || fieldName % "transactionsCnt" ) {
-                uint32_t cnt = transactions.getCount();
+                uint32_t cnt = transactions.size();
                 if (endsWith(fieldName, "Cnt"))
                     return asStringU(cnt);
                 if (!cnt) return "";
@@ -333,7 +333,7 @@ ostream& operator<<(ostream& os, const CAccount& item) {
 
 //---------------------------------------------------------------------------
 const CBaseNode *CAccount::getObjectAt(const string_q& fieldName, uint32_t index) const {
-    if ( fieldName % "transactions" && index < transactions.getCount() )
+    if ( fieldName % "transactions" && index < transactions.size() )
         return &transactions[index];
     return NULL;
 }
@@ -342,7 +342,7 @@ const CBaseNode *CAccount::getObjectAt(const string_q& fieldName, uint32_t index
 // EXISTING_CODE
 uint32_t CAccount::deleteNotShowing(void) {
     uint32_t nDeleted = 0;
-    for (uint32_t i = 0 ; i < transactions.getCount() ; i++) {
+    for (uint32_t i = 0 ; i < transactions.size() ; i++) {
         CTransaction *t = &transactions[i];
         if (!t->m_showing) {
             t->setDeleted(true);

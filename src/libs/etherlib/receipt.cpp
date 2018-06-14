@@ -84,7 +84,7 @@ bool CReceipt::setValueByName(const string_q& fieldName, const string_q& fieldVa
                     uint32_t nFields = 0;
                     p = item.parseJson(p, nFields);
                     if (nFields)
-                        logs[logs.getCount()] = item;
+                        logs.push_back(item);
                 }
                 return true;
             }
@@ -101,7 +101,7 @@ bool CReceipt::setValueByName(const string_q& fieldName, const string_q& fieldVa
 //---------------------------------------------------------------------------------------------------
 void CReceipt::finishParse() {
     // EXISTING_CODE
-    for (uint32_t i = 0 ; i < logs.getCount() ; i++) {
+    for (uint32_t i = 0 ; i < logs.size() ; i++) {
         logs[i].pReceipt = this;
     }
     // EXISTING_CODE
@@ -269,7 +269,7 @@ string_q CReceipt::getValueByName(const string_q& fieldName) const {
             break;
         case 'l':
             if ( fieldName % "logs" || fieldName % "logsCnt" ) {
-                uint32_t cnt = logs.getCount();
+                uint32_t cnt = logs.size();
                 if (endsWith(fieldName, "Cnt"))
                     return asStringU(cnt);
                 if (!cnt) return "";
@@ -310,7 +310,7 @@ ostream& operator<<(ostream& os, const CReceipt& item) {
 
 //---------------------------------------------------------------------------
 const CBaseNode *CReceipt::getObjectAt(const string_q& fieldName, uint32_t index) const {
-    if ( fieldName % "logs" && index < logs.getCount() )
+    if ( fieldName % "logs" && index < logs.size() )
         return &logs[index];
     return NULL;
 }
@@ -323,8 +323,8 @@ bool CReceipt::operator==(const CReceipt& test) const {
     EQ_TEST(contractAddress);
     EQ_TEST(gasUsed);
     EQ_TEST(status);
-    EQ_TEST(logs.getCount());
-    for (uint32_t i = 0 ; i < logs.getCount() ; i++)
+    EQ_TEST(logs.size());
+    for (uint32_t i = 0 ; i < logs.size() ; i++)
         if (test.logs[i] != logs[i])
             return false;
 

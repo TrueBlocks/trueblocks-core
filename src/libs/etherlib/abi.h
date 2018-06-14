@@ -93,8 +93,8 @@ inline CAbi::~CAbi(void) {
 //--------------------------------------------------------------------------
 inline void CAbi::Clear(void) {
     // EXISTING_CODE
-    abiByName.Clear();
-    abiByEncoding.Clear();
+    abiByName.clear();
+    abiByEncoding.clear();
     // EXISTING_CODE
 }
 
@@ -102,8 +102,8 @@ inline void CAbi::Clear(void) {
 inline void CAbi::Init(void) {
     CBaseNode::Init();
 
-    abiByName.Clear();
-    abiByEncoding.Clear();
+    abiByName.clear();
+    abiByEncoding.clear();
 
     // EXISTING_CODE
     // EXISTING_CODE
