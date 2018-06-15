@@ -61,7 +61,7 @@ void CBloomTrans::Format(CExportContext& ctx, const string_q& fmtIn, void* dataP
     ctx << toJson();
     return;
 }
-const CBaseNode *CBloomTrans::getObjectAt(const string_q& name, uint32_t i) const {
+const CBaseNode *CBloomTrans::getObjectAt(const string_q& name, size_t i) const {
     if (name == "receipt")
         return &receipt;
     return NULL;
@@ -85,7 +85,7 @@ bool CBloomBlock::setValueByName(const string_q& fieldName, const string_q& fiel
         char *p = cleanUpJson((char*)fieldValue.c_str());
         while (p && *p) {
             CBloomTrans item;
-            uint32_t nFields = 0;
+            size_t nFields = 0;
             p = item.parseJson(p, nFields);
             if (nFields) {
                 string_q result;
@@ -109,7 +109,7 @@ string_q CBloomBlock::getValueByName(const string_q& fieldName) const {
         if (GETRUNTIME_CLASS(CBloomBlock)->isFieldHidden("transactions"))
             return "";
         string_q ret;
-        for (uint32_t i = 0 ; i < transactions.size(); i++)
+        for (size_t i = 0 ; i < transactions.size(); i++)
             ret += transactions[i].Format();
         return ret;
     }
@@ -119,7 +119,7 @@ void CBloomBlock::Format(CExportContext& ctx, const string_q& fmtIn, void* dataP
     ctx << toJson();
     return;
 }
-const CBaseNode *CBloomBlock::getObjectAt(const string_q& name, uint32_t i) const {
+const CBaseNode *CBloomBlock::getObjectAt(const string_q& name, size_t i) const {
     if (name == "transactions" && i < transactions.size())
         return &transactions[i];
     return NULL;

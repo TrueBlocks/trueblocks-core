@@ -73,7 +73,7 @@ bool CNewReceipt::setValueByName(const string_q& fieldName, const string_q& fiel
                 char *p = (char *)fieldValue.c_str();
                 while (p && *p) {
                     CLogEntry item;
-                    uint32_t nFields = 0;
+                    size_t nFields = 0;
                     p = item.parseJson(p, nFields);
                     if (nFields)
                         logs.push_back(item);
@@ -139,7 +139,7 @@ void CNewReceipt::registerClass(void) {
     if (been_here) return;
     been_here = true;
 
-    uint32_t fieldNum = 1000;
+    size_t fieldNum = 1000;
     ADD_FIELD(CNewReceipt, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CNewReceipt, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CNewReceipt, "showing", T_BOOL,  ++fieldNum);
@@ -229,12 +229,12 @@ string_q CNewReceipt::getValueByName(const string_q& fieldName) const {
             break;
         case 'l':
             if ( fieldName % "logs" || fieldName % "logsCnt" ) {
-                uint32_t cnt = logs.size();
+                size_t cnt = logs.size();
                 if (endsWith(fieldName, "Cnt"))
                     return asStringU(cnt);
                 if (!cnt) return "";
                 string_q retS;
-                for (uint32_t i = 0 ; i < cnt ; i++) {
+                for (size_t i = 0 ; i < cnt ; i++) {
                     retS += logs[i].Format();
                     retS += ((i < cnt - 1) ? ",\n" : "\n");
                 }
@@ -261,7 +261,7 @@ ostream& operator<<(ostream& os, const CNewReceipt& item) {
 }
 
 //---------------------------------------------------------------------------
-const CBaseNode *CNewReceipt::getObjectAt(const string_q& fieldName, uint32_t index) const {
+const CBaseNode *CNewReceipt::getObjectAt(const string_q& fieldName, size_t index) const {
     if ( fieldName % "logs" && index < logs.size() )
         return &logs[index];
     return NULL;

@@ -63,7 +63,7 @@ void addIfUnique(const string_q& addr, CFunctionArray& functions, CFunction& fun
     if (func.name.empty()) // && func.type != "constructor")
         return;
 
-    for (uint32_t i = 0 ; i < functions.size() ; i++) {
+    for (size_t i = 0 ; i < functions.size() ; i++) {
         if (functions[i].encoding == func.encoding)
             return;
 
@@ -142,7 +142,7 @@ string_q acquireABI(CFunctionArray& functions, const SFAddress& addr, const COpt
     char *p = cleanUpJson(s);
     while (p && *p) {
         CFunction func;
-        uint32_t nFields = 0;
+        size_t nFields = 0;
         p = func.parseJson(p, nFields);
         func.isBuiltin = builtIn;
         addIfUnique(addr, functions, func, opt.decNames);
@@ -209,8 +209,8 @@ int main(int argc, const char *argv[]) {
         if (!isGenerate) {
 
             if (options.asData) {
-                for (uint32_t i = 0 ; i < functions.size() ; i++) {
-                    CFunction *func = &functions[i];
+                for (size_t i = 0 ; i < functions.size() ; i++) {
+                    const CFunction *func = &functions[i];
                     if (!func->constant || !options.noconst) {
                         string_q format = getGlobalConfig()->getDisplayStr(false, STR_FORMAT_FUNCDATA);
                         cout << func->Format(format);
@@ -220,8 +220,8 @@ int main(int argc, const char *argv[]) {
             } else {
                 // print to a buffer because we have to modify it before we print it
                 cout << "ABI for address " << options.primaryAddr << (options.nAddrs>1 ? " and others" : "") << "\n";
-                for (uint32_t i = 0 ; i < functions.size() ; i++) {
-                    CFunction *func = &functions[i];
+                for (size_t i = 0 ; i < functions.size() ; i++) {
+                    const CFunction *func = &functions[i];
                     if (!func->constant || !options.noconst)
                         cout << func->getSignature(options.parts) << "\n";
                 }
@@ -243,8 +243,8 @@ int main(int argc, const char *argv[]) {
             if (!options.isToken()) headers += ("#include \"tokenlib.h\"\n");
             if (!options.isWallet()) headers += ("#ifndef NOWALLETLIB\n#include \"walletlib.h\"\n#endif\n");
             string_q sources = "src= \\\n", registers, factory1, factory2;
-            for (uint32_t i = 0 ; i < functions.size() ; i++) {
-                CFunction *func = &functions[i];
+            for (size_t i = 0 ; i < functions.size() ; i++) {
+                const CFunction *func = &functions[i];
                 if (!func->isBuiltin) {
                     string_q name = func->Format("[{NAME}]") + (func->type == "event" ? "Event" : "");
                     if (name == "eventEvent")
@@ -279,7 +279,7 @@ int main(int argc, const char *argv[]) {
                         }
                         string_q fields, assigns1, assigns2, items1;
                         uint64_t nIndexed = 0;
-                        for (uint32_t j = 0 ; j < func->inputs.size() ; j++) {
+                        for (size_t j = 0 ; j < func->inputs.size() ; j++) {
                             fields   += func->inputs[j].Format("[{TYPE}][ {NAME}]|");
                             assigns1 += func->inputs[j].Format(getAssign(&func->inputs[j], j));
                             items1   += "\t\t\titems[nItems++] = \"" + func->inputs[j].type + "\";\n";
@@ -479,7 +479,7 @@ string_q getAssign(const CParameter *p, uint64_t which) {
     if (type == "uint" || type == "uint256") { ass = "toWei(\"0x\"+[{VAL}]);";
     } else if (contains(type, "gas")) { ass = "toGas([{VAL}]);";
     } else if (contains(type, "uint64")) { ass = "toLongU([{VAL}]);";
-    } else if (contains(type, "uint")) { ass = "toLong32u([{VAL}]);";
+    } else if (contains(type, "uint")) { ass = "toLongU([{VAL}]);";
     } else if (contains(type, "int") || contains(type, "bool")) { ass = "toLong([{VAL}]);";
     } else if (contains(type, "address")) { ass = "toAddress([{VAL}]);";
     } else { ass = "[{VAL}];";
@@ -495,7 +495,7 @@ string_q getEventAssign(const CParameter *p, uint64_t which, uint64_t nIndexed) 
     if (type == "uint" || type == "uint256") { ass = "toWei([{VAL}]);";
     } else if (contains(type, "gas")) { ass = "toGas([{VAL}]);";
     } else if (contains(type, "uint64")) { ass = "toLongU([{VAL}]);";
-    } else if (contains(type, "uint")) { ass = "toLong32u([{VAL}]);";
+    } else if (contains(type, "uint")) { ass = "toLongU([{VAL}]);";
     } else if (contains(type, "int") || contains(type, "bool")) { ass = "toLong([{VAL}]);";
     } else if (contains(type, "address")) { ass = "toAddress([{VAL}]);";
     } else { ass = "[{VAL}];";
@@ -598,8 +598,8 @@ const char* STR_HEADER_SIGS =
 "extern string_q sigs[];\n"
 "extern string_q topics[];\n"
 "\n"
-"extern uint32_t nSigs;\n"
-"extern uint32_t nTopics;";
+"extern size_t nSigs;\n"
+"extern size_t nTopics;";
 
 //-----------------------------------------------------------------------
 const char* STR_CODE_SIGS =
@@ -624,7 +624,7 @@ const char* STR_CODE_SIGS =
 "\t// Contract support\n"
 "[{SIGS}]"
 "};\n"
-"uint32_t nSigs = sizeof(sigs) / sizeof(string_q);\n"
+"size_t nSigs = sizeof(sigs) / sizeof(string_q);\n"
 "\n"
 "//-----------------------------------------------------------------------------\n"
 "string_q topics[] = {\n"
@@ -645,7 +645,7 @@ const char* STR_CODE_SIGS =
 "\t// Contract support\n"
 "[{EVTS}]"
 "};\n"
-"uint32_t nTopics = sizeof(topics) / sizeof(string_q);\n"
+"size_t nTopics = sizeof(topics) / sizeof(string_q);\n"
 "\n";
 
 //-----------------------------------------------------------------------
@@ -654,7 +654,7 @@ const char* STR_BLOCK_PATH = "etherlib_init(qh);\n\n";
 //-----------------------------------------------------------------------
 const char* STR_ITEMS =
 "\t\tstring_q items[256];\n"
-"\t\tuint32_t nItems=0;\n"
+"\t\tsize_t nItems=0;\n"
 "\n"
 "\t\tstring_q encoding = p->input.substr(0,10);\n"
 "\t\tstring_q params   = p->input.substr(10);\n";

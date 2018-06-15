@@ -125,7 +125,7 @@ void CPriceQuote::registerClass(void) {
     if (been_here) return;
     been_here = true;
 
-    uint32_t fieldNum = 1000;
+    size_t fieldNum = 1000;
     ADD_FIELD(CPriceQuote, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CPriceQuote, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CPriceQuote, "showing", T_BOOL,  ++fieldNum);
@@ -244,7 +244,7 @@ uint64_t indexFromTimeStamp(const CPriceQuoteArray& quotes, timestamp_t ts) {
     if (ts < first)
         return 0;
     timestamp_t since = ts - first;
-    return min(quotes.size()-1, uint32_t(since / (5*60)));
+    return min(quotes.size()-1, size_t(since / (5*60)));
 }
 
 //-----------------------------------------------------------------------
@@ -261,7 +261,7 @@ string_q asDollars(timestamp_t ts, SFUintBN weiIn) {
         }
     }
     uint64_t index = indexFromTimeStamp(quotes, ts);
-    CPriceQuote *q = &quotes[(uint32_t)index];
+    const CPriceQuote *q = &quotes[index]; // taking a non-const reference
     double price = q->close * 100.0;
     uint64_t pInt = (uint64_t)price;
     weiIn *= pInt;

@@ -23,14 +23,14 @@ namespace qblocks {
     class CBuiltIn {
     public:
         const CRuntimeClass *m_pClass;
-        CBuiltIn(CRuntimeClass *pClass, const string_q& className, uint32_t size, PFNV createFunc, CRuntimeClass *pBase);
+        CBuiltIn(CRuntimeClass *pClass, const string_q& className, size_t size, PFNV createFunc, CRuntimeClass *pBase);
     };
 
     //----------------------------------------------------------------------------
     class CRuntimeClass {
     public:
         char *m_ClassName;
-        uint32_t m_ObjectSize;
+        size_t m_ObjectSize;
         PFNV m_CreateFunc;
         CRuntimeClass *m_BaseClass;
         CFieldList *m_FieldList;
@@ -40,7 +40,7 @@ namespace qblocks {
 
         char *getClassNamePtr(void) const;
         bool IsDerivedFrom(const CRuntimeClass* pBaseClass) const;
-        void AddField(const string_q& fieldName, uint32_t dataType, uint32_t fieldID);
+        void AddField(const string_q& fieldName, size_t dataType, size_t fieldID);
         void ClearFieldList(void);
         string_q listOfFields(char sep = '|') const;
         CFieldList *GetFieldList(void) const { return m_FieldList; }
@@ -141,37 +141,34 @@ GETRUNTIME_CLASS(CLASS_NAME)->showAllFields();
 #define IMPLEMENT_ARCHIVE_ARRAY(ARRAY_CLASS) \
 inline SFArchive& operator>>(SFArchive& archive, ARRAY_CLASS& array) \
 { \
-uint64_t count; \
-archive >> count; \
-array.Grow((uint32_t)(count+1)); \
-for (uint32_t i = 0 ; i < count ; i++) \
-{ \
-array[i].Serialize(archive); \
-} \
-return archive; \
+    uint64_t count; \
+    archive >> count; \
+    array.reserve(count + 1); \
+    for (size_t i = 0 ; i < count ; i++) { \
+        ASSERT(i < array.capacity()); \
+        array.at(i).Serialize(archive); \
+    } \
+    return archive; \
 }
 
     //------------------------------------------------------------
 #define IMPLEMENT_ARCHIVE_ARRAY_C(ARRAY_CLASS) \
-inline SFArchive& operator<<(SFArchive& archive, const ARRAY_CLASS& array) \
-{ \
-uint64_t count = array.size(); \
-archive << count; \
-for (uint32_t i = 0 ; i < array.size() ; i++) \
-array[i].SerializeC(archive); \
-return archive; \
+inline SFArchive& operator<<(SFArchive& archive, const ARRAY_CLASS& array) { \
+    uint64_t count = array.size(); \
+    archive << count; \
+    for (size_t i = 0 ; i < array.size() ; i++) \
+        array[i].SerializeC(archive); \
+    return archive; \
 }
 
     //------------------------------------------------------------
     // Archive list containers
 #define IMPLEMENT_ARCHIVE_LIST(LIST_CLASS) \
-inline SFArchive& operator<<(SFArchive& archive, LIST_CLASS& array) \
-{ \
-return archive; \
+inline SFArchive& operator<<(SFArchive& archive, LIST_CLASS& array) { \
+    return archive; \
 } \
-inline SFArchive& operator>>(SFArchive& archive, LIST_CLASS& array) \
-{ \
-return archive; \
+inline SFArchive& operator>>(SFArchive& archive, LIST_CLASS& array) { \
+    return archive; \
 }
 
     //---------------------------------------------------------------------------

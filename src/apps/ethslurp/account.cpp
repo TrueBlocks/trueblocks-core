@@ -84,7 +84,7 @@ bool CAccount::setValueByName(const string_q& fieldName, const string_q& fieldVa
                 char *p = (char *)fieldValue.c_str();
                 while (p && *p) {
                     CTransaction item;
-                    uint32_t nFields = 0;
+                    size_t nFields = 0;
                     p = item.parseJson(p, nFields);
                     if (nFields)
                         transactions.push_back(item);
@@ -101,8 +101,8 @@ bool CAccount::setValueByName(const string_q& fieldName, const string_q& fieldVa
 //---------------------------------------------------------------------------------------------------
 void CAccount::finishParse() {
     // EXISTING_CODE
-    for (uint32_t i = 0 ; i < transactions.size() ; i++) {
-        CTransaction *t = &transactions[i];
+    for (size_t i = 0 ; i < transactions.size() ; i++) {
+        CTransaction *t = &transactions.at(i);
         string_q encoding = t->input.substr(0,10);
         t->funcPtr = abi.findFunctionByEncoding(encoding);
     }
@@ -159,7 +159,7 @@ void CAccount::registerClass(void) {
     if (been_here) return;
     been_here = true;
 
-    uint32_t fieldNum = 1000;
+    size_t fieldNum = 1000;
     ADD_FIELD(CAccount, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CAccount, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CAccount, "showing", T_BOOL,  ++fieldNum);
@@ -236,8 +236,8 @@ bool CAccount::handleCustomFormat(CExportContext& ctx, const string_q& fmtIn, vo
         // ever-slowing string
         while (!preFmt.empty())
             ctx << getNextChunk(preFmt, nextAccountChunk, this);
-        uint32_t cnt = 0;
-        for (uint32_t i = 0 ; i < transactions.size() ; i++) {
+        size_t cnt = 0;
+        for (size_t i = 0 ; i < transactions.size() ; i++) {
             cnt += transactions[i].m_showing;
             if (cnt && !(cnt % REP_INFREQ)) {
                 cerr << "\tExporting record " << cnt << " of " << nVisible;
@@ -301,12 +301,12 @@ string_q CAccount::getValueByName(const string_q& fieldName) const {
             break;
         case 't':
             if ( fieldName % "transactions" || fieldName % "transactionsCnt" ) {
-                uint32_t cnt = transactions.size();
+                size_t cnt = transactions.size();
                 if (endsWith(fieldName, "Cnt"))
                     return asStringU(cnt);
                 if (!cnt) return "";
                 string_q retS;
-                for (uint32_t i = 0 ; i < cnt ; i++) {
+                for (size_t i = 0 ; i < cnt ; i++) {
                     retS += transactions[i].Format();
                     retS += ((i < cnt - 1) ? ",\n" : "\n");
                 }
@@ -332,7 +332,7 @@ ostream& operator<<(ostream& os, const CAccount& item) {
 }
 
 //---------------------------------------------------------------------------
-const CBaseNode *CAccount::getObjectAt(const string_q& fieldName, uint32_t index) const {
+const CBaseNode *CAccount::getObjectAt(const string_q& fieldName, size_t index) const {
     if ( fieldName % "transactions" && index < transactions.size() )
         return &transactions[index];
     return NULL;
@@ -340,10 +340,10 @@ const CBaseNode *CAccount::getObjectAt(const string_q& fieldName, uint32_t index
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-uint32_t CAccount::deleteNotShowing(void) {
-    uint32_t nDeleted = 0;
-    for (uint32_t i = 0 ; i < transactions.size() ; i++) {
-        CTransaction *t = &transactions[i];
+size_t CAccount::deleteNotShowing(void) {
+    size_t nDeleted = 0;
+    for (size_t i = 0 ; i < transactions.size() ; i++) {
+        CTransaction *t = &transactions.at(i);
         if (!t->m_showing) {
             t->setDeleted(true);
             nDeleted++;

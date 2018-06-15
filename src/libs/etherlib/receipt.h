@@ -47,21 +47,11 @@ public:
 
     DECLARE_NODE(CReceipt);
 
-    const CBaseNode *getObjectAt(const string_q& fieldName, uint32_t index) const override;
+    const CBaseNode *getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
     const CTransaction *pTrans;
     friend class CTransaction;
-#if 0
-    uint32_t cumulativeGasUsed;
-    SFAddress from12;
-    SFHash blockHash;
-    uint32_t blockNumber;
-    string_q root;
-    SFAddress to;
-    SFHash transactionHash;
-    uint32_t transactionIndex;
-#endif
     bool operator==(const CReceipt& r) const;
     bool operator!=(const CReceipt& r) const { return !operator==(r); }
     // EXISTING_CODE

@@ -56,7 +56,7 @@ namespace qblocks {
     //------------------------------------------------------------------
     // Returns a list of either files or folders, but not both.
     //------------------------------------------------------------------
-    void doGlob(uint32_t& nStrs, string_q *strs, const string_q& maskIn, int wantFiles, bool keepPaths ) {
+    void doGlob(size_t& nStrs, string_q *strs, const string_q& maskIn, int wantFiles, bool keepPaths ) {
         ASSERT(!strs || nStrs);
 
         glob_t globBuf;
@@ -67,7 +67,7 @@ namespace qblocks {
         glob(mask.c_str(), GLOB_MARK, globErrFunc, &globBuf);
 
         size_t n = globBuf.gl_pathc;
-        uint32_t mx = nStrs;
+        size_t mx = nStrs;
         nStrs = 0;
         char c;
 
@@ -129,8 +129,8 @@ namespace qblocks {
 
     //-------------------------------------------------------------------------------------------------------------
     inline bool waitForCreate(const string_q& filename) {
-        uint32_t mx = 1000;
-        uint32_t cnt = 0;
+        size_t mx = 1000;
+        size_t cnt = 0;
         while (cnt < mx && !fileExists(filename))
             cnt++;
 
@@ -191,7 +191,7 @@ extern string_q binaryFileToString(const string_q& filename);
         if (!endsWith(folder, '/'))
             folder += '/';
 
-        uint32_t nFiles = 0;
+        size_t nFiles = 0;
         listFiles(nFiles, NULL, folder+"*.*");
         // check to see if it is just folders
         if (!nFiles)
@@ -203,22 +203,22 @@ extern string_q binaryFileToString(const string_q& filename);
     }
 
     //------------------------------------------------------------------
-    void listFiles(uint32_t& nStrs, string_q *strs, const string_q& mask) {
-        uint32_t ret = 0;
+    void listFiles(size_t& nStrs, string_q *strs, const string_q& mask) {
+        size_t ret = 0;
         doGlob(ret, strs, mask, true, contains(mask, "/*/")); /* fixes color coding in pico */
         nStrs = ret;
     }
 
     //------------------------------------------------------------------
-    void listFolders(uint32_t& nStrs, string_q *strs, const string_q& mask) {
-        uint32_t ret = 0;
+    void listFolders(size_t& nStrs, string_q *strs, const string_q& mask) {
+        size_t ret = 0;
         doGlob(ret, strs, mask, false, contains(mask, "/*/")); /* fixes color coding in pico */
         nStrs = ret;
     }
 
     //------------------------------------------------------------------
-    void listFilesOrFolders(uint32_t& nStrs, string_q *strs, const string_q& mask) {
-        uint32_t ret = 0;
+    void listFilesOrFolders(size_t& nStrs, string_q *strs, const string_q& mask) {
+        size_t ret = 0;
         doGlob(ret, strs, mask, ANY_FILETYPE, contains(mask, "/*/"));
         nStrs = ret;
     }

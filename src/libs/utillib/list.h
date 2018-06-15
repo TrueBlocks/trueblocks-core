@@ -29,8 +29,8 @@ namespace qblocks {
     template<class TYPE>
     class SFArrayBase {
     protected:
-        uint32_t m_nCapacity;
-        uint32_t m_nItems;
+        size_t m_nCapacity;
+        size_t m_nItems;
         TYPE  *m_Items;
 
     public:
@@ -40,13 +40,13 @@ namespace qblocks {
 
         SFArrayBase& operator=(const SFArrayBase& cop);
 
-        TYPE& operator[](uint32_t index);
-        const TYPE& operator[](uint32_t index) const;
-
-        uint32_t capacity (void) const { return m_nCapacity; }
-        uint32_t size     (void) const { return m_nItems; }
-        void     push_back(TYPE x);
-        void     clear    (void);
+              TYPE&  at        (size_t index);
+        const TYPE&  operator[](size_t index) const;
+              size_t capacity  (void) const { return m_nCapacity; }
+              size_t size      (void) const { return m_nItems; }
+              void   push_back (TYPE x);
+              void   clear     (void);
+              void   reserve   (size_t newSize);
 
         void Sort(SORTINGFUNC func) { qsort(&m_Items[0], m_nItems, sizeof(TYPE), func); }
         TYPE *Find(const TYPE *key, SEARCHFUNC func) {
@@ -54,12 +54,10 @@ namespace qblocks {
             return reinterpret_cast<TYPE*>(bsearch(key, &m_Items[0], m_nItems, sizeof(TYPE), func));
         }
 
-        void Grow(uint32_t sizeNeeded);
-
     private:
-        void CheckSize(uint32_t sizeNeeded);
+        void checkSize(size_t sizeNeeded);
         void copy(const SFArrayBase& cop);
-        void init(uint32_t cap, uint32_t count, TYPE *values);
+        void init(size_t cap, size_t count, TYPE *values);
     };
 
     //----------------------------------------------------------------------
@@ -90,7 +88,7 @@ namespace qblocks {
 
     //----------------------------------------------------------------------
     template<class TYPE>
-    inline void SFArrayBase<TYPE>::init(uint32_t cap, uint32_t count, TYPE *values) {
+    inline void SFArrayBase<TYPE>::init(size_t cap, size_t count, TYPE *values) {
         m_nCapacity = cap;
         m_nItems = count;
         m_Items  = values;
@@ -107,31 +105,30 @@ namespace qblocks {
     //----------------------------------------------------------------------
     template<class TYPE>
     inline void SFArrayBase<TYPE>::copy(const SFArrayBase<TYPE>& cop) {
-        CheckSize(cop.capacity());
-        for (uint32_t i = 0 ; i < cop.size() ; i++)
+        checkSize(cop.capacity());
+        for (size_t i = 0 ; i < cop.size() ; i++)
             m_Items[i] = cop.m_Items[i];
         m_nItems = cop.size();
     }
 
     //----------------------------------------------------------------------
     template<class TYPE>
-    inline void SFArrayBase<TYPE>::Grow(uint32_t sizeNeeded) {
-        CheckSize(sizeNeeded);
+    inline void SFArrayBase<TYPE>::reserve(size_t newSize) {
+        checkSize(newSize);
     }
 
     //----------------------------------------------------------------------
     template<class TYPE>
-    inline void SFArrayBase<TYPE>::CheckSize(uint32_t sizeNeeded) {
+    inline void SFArrayBase<TYPE>::checkSize(size_t sizeNeeded) {
         if (sizeNeeded < m_nCapacity)
             return;
 
-        // The user is requesting access to an index that is past range. We need to grow the array.
-        uint32_t newSize = max(m_nCapacity + ARRAY_CHUNK_SIZE, sizeNeeded);
+        // The user is requesting access to an index that is past range. We need to resize the array.
+        size_t newSize = max(m_nCapacity + ARRAY_CHUNK_SIZE, sizeNeeded);
         TYPE *newArray = new TYPE[newSize];
         if (m_nItems) {
-            ASSERT(m_Items);
             // If there are any values in the source copy them over
-            for (uint32_t i = 0 ; i < m_nItems ; i++)
+            for (size_t i = 0 ; i < m_nItems ; i++)
                 newArray[i] = m_Items[i];
             // Then clear out the old array
             if (m_Items)
@@ -143,10 +140,10 @@ namespace qblocks {
 
     //----------------------------------------------------------------------
     template<class TYPE>
-    inline TYPE& SFArrayBase<TYPE>::operator[](uint32_t index) {
-        // This is the non-const version which means we may
-        // have to grow the array
-        CheckSize(index);
+    inline TYPE& SFArrayBase<TYPE>::at(size_t index) {
+        // TODO: This should definitly not grow the array. If we use this to grow the array, 
+        // when we switch to a native vector, this will break
+        checkSize(index);
         if (index >= m_nItems)
             m_nItems = index+1;
         ASSERT(m_Items && index >= 0 && index <= m_nCapacity && index <= m_nItems);
@@ -156,8 +153,8 @@ namespace qblocks {
     //----------------------------------------------------------------------
     template<class TYPE>
     inline void SFArrayBase<TYPE>::push_back(TYPE x) {
-        uint32_t index = size();
-        CheckSize(index);
+        size_t index = size();
+        checkSize(index);
         if (index >= m_nItems)
             m_nItems = index + 1;
         ASSERT(m_Items && index >= 0 && index <= m_nCapacity && index <= m_nItems);
@@ -166,7 +163,7 @@ namespace qblocks {
 
     //----------------------------------------------------------------------
     template<class TYPE>
-    inline const TYPE& SFArrayBase<TYPE>::operator[](uint32_t index) const {
+    inline const TYPE& SFArrayBase<TYPE>::operator[](size_t index) const {
         // This is the const version which means it's a get which means we should not be expecting
         // the array to grow. Does not appear to protect against accessing outside range though.
         ASSERT(index >= 0 && index <= m_nItems);
@@ -201,7 +198,7 @@ namespace qblocks {
     template<class TYPE>
     class SFList {
     protected:
-        uint32_t m_Count;
+        size_t m_Count;
         SFListNode<TYPE> *m_Head;
         SFListNode<TYPE> *m_Tail;
 
@@ -212,7 +209,7 @@ namespace qblocks {
 
         SFList& operator=(const SFList& l);
 
-        uint32_t size(void) const { return m_Count; }
+        size_t size(void) const { return m_Count; }
         TYPE GetHead(void) const { return (TYPE)(m_Head->m_Data); }
         TYPE GetTail(void) const { return (TYPE)(m_Tail->m_Data); }
 

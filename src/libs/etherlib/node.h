@@ -29,7 +29,7 @@ namespace qblocks {
     extern bool     getReceipt              (CReceipt& receipt,   const SFHash& txHash);
     extern bool     getLogEntry             (CLogEntry& log,      const SFHash& txHash);
     extern void     getTraces               (CTraceArray& traces, const SFHash& txHash);
-    extern uint32_t getTraceCount           (const SFHash& hashIn);
+    extern size_t   getTraceCount           (const SFHash& hashIn);
 
     //-------------------------------------------------------------------------
     // other methods to access data
@@ -38,7 +38,7 @@ namespace qblocks {
     extern bool     getTransaction          (CTransaction& trans, const SFHash& blockHash, txnum_t txID);
 
     //-------------------------------------------------------------------------
-    extern bool     queryBlock              (CBlock& block,       const string_q& num, bool needTrace, bool byHash, uint32_t& nTraces);
+    extern bool     queryBlock              (CBlock& block,       const string_q& num, bool needTrace, bool byHash, size_t& nTraces);
     extern bool     queryBlock              (CBlock& block,       const string_q& num, bool needTrace, bool byHash);
 
     //-------------------------------------------------------------------------

@@ -23,7 +23,7 @@ CParams params[] = {
     CParams("-changes",      "only report a balance when it changes from one block to the next"),
     CParams("",              "Retrieve the balance (in wei) for one or more addresses at the given block(s).\n"),
 };
-uint32_t nParams = sizeof(params) / sizeof(CParams);
+size_t nParams = sizeof(params) / sizeof(CParams);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {

@@ -36,7 +36,7 @@ public:
     CBloomReceipt receipt;
     DECLARE_NODE(CBloomTrans);
     CBloomTrans(void);
-    const CBaseNode *getObjectAt(const string_q& name, uint32_t i) const override;
+    const CBaseNode *getObjectAt(const string_q& name, size_t i) const override;
 };
 IMPLEMENT_UNUSED(CBloomTrans);
 
@@ -48,6 +48,6 @@ public:
     SFArrayBase<CBloomTrans> transactions;
     DECLARE_NODE(CBloomBlock);
     CBloomBlock(void);
-    const CBaseNode *getObjectAt(const string_q& name, uint32_t i) const override;
+    const CBaseNode *getObjectAt(const string_q& name, size_t i) const override;
 };
 IMPLEMENT_UNUSED(CBloomBlock);

@@ -38,7 +38,7 @@ CParams params[] = {
                                 "contract. Optionally formats the output to your specification. Note: --income "
                                 "and --expense are mutually exclusive as are --blocks and --dates.\n"),
 };
-uint32_t nParams = sizeof(params) / sizeof(CParams);
+size_t nParams = sizeof(params) / sizeof(CParams);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
@@ -86,7 +86,7 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (startsWith(arg, "--acct_id:")) {
             arg = substitute(arg, "--acct_id:", "");
-            acct_id = toLong32u(arg);
+            acct_id = toLongU(arg);
 
         } else if (startsWith(arg, "--cache")) {
             cache = true;
@@ -153,7 +153,7 @@ bool COptions::parseArguments(string_q& command) {
             arg = substitute(arg, "--sleep:", "");
             if (arg.empty() || !isdigit(arg[0]))
                 return usage("Sleep amount must be a numeral. Quitting...");
-            uint32_t wait = toLong32u(arg);
+            useconds_t wait = (useconds_t)toLongU(arg);
             if (wait) {
                 cerr << "Sleeping " << wait << " seconds\n";
                 usleep(wait * 1000000);
@@ -163,7 +163,7 @@ bool COptions::parseArguments(string_q& command) {
             string_q val = substitute(substitute(arg, "-m:", ""), "--max:", "");
             if (val.empty() || !isdigit(val[0]))
                 return usage("Please supply a value with the --max: option. Quitting...");
-            maxTransactions = toLong32u(val);
+            maxTransactions = toLongU(val);
 
         } else if (startsWith(arg, "-n:") || startsWith(arg, "--name:")) {
             string_q val = substitute(substitute(arg, "-n:", ""), "--name:", "");

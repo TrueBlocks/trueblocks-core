@@ -30,7 +30,7 @@ typedef SFUniqueList<CPerson*>       CPersonListU;
 class CPerson : public CBaseNode {
 public:
     string_q name;
-    uint32_t age;
+    uint64_t age;
     CPerson *next;
 
 public:
@@ -42,7 +42,7 @@ public:
     DECLARE_NODE(CPerson);
 
     // EXISTING_CODE
-    CPerson(const string_q& n, uint32_t a) : name(n), age(a), next(NULL) { }
+    CPerson(const string_q& n, uint64_t a) : name(n), age(a), next(NULL) { }
     // EXISTING_CODE
     friend ostream& operator<<(ostream& os, const CPerson& item);
 

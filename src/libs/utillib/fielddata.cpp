@@ -16,7 +16,7 @@
 namespace qblocks {
 
     //-------------------------------------------------------------------------
-    const CFieldData *CFieldList::getFieldByID(uint32_t id) const {
+    const CFieldData *CFieldList::getFieldByID(size_t id) const {
         LISTPOS lPos = GetHeadPosition();
         while (lPos) {
             CFieldData *field = GetNext(lPos);

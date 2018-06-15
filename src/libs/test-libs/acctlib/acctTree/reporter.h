@@ -64,7 +64,7 @@ public:
         cout << "maxDepth:  " << cGreen << maxDepth       << cOff << "\n";
         cout << "maxMatch1: " << cGreen << maxMatch1      << cOff << "\n";
         cout << "maxMatch2: " << cGreen << maxMatch2      << cOff << "\n";
-        for (uint32_t i = 0 ; i < MAX_CNTS ; i++) {
+        for (size_t i = 0 ; i < MAX_CNTS ; i++) {
             cout << padNum3(i) << ":    " << cGreen << counters[i] << " (" << asPct(counters[i], nTransVisited) << "%)" << cOff << "\n";
         }
         cout << "maxCnt:    " << cGreen << maxCnt         << " (" << asPct(maxCnt, nTransVisited) << "%)" << cOff << "\n";

@@ -27,7 +27,7 @@ CParams params[] = {
     CParams("@edit",               "edit <className(s)> definition file in local folder"),
     CParams("",                    "Creates C++ code based on definition file at ./classDefinition/<className>.\n"),
 };
-uint32_t nParams = sizeof(params) / sizeof(CParams);
+size_t nParams = sizeof(params) / sizeof(CParams);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {

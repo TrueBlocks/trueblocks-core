@@ -23,7 +23,7 @@ CParams params[] = {
     CParams("@force",            "force a re-write of the bloom to the cache"),
     CParams("",                  "Returns bloom filter(s) from running node (the default) or as EAB from local cache.\n"),
 };
-uint32_t nParams = sizeof(params) / sizeof(CParams);
+size_t nParams = sizeof(params) / sizeof(CParams);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {

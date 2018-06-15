@@ -118,13 +118,13 @@ namespace qblocks {
             if (!(*func)(i, data))
                 return false;
         }
-        for (uint32_t i = 0 ; i < numList.size() ; i++) {
+        for (size_t i = 0 ; i < numList.size() ; i++) {
             uint64_t n = numList[i];
             if (!(*func)(n, data))
                 return false;
         }
         if (hashFind) {
-            for (uint32_t i = 0 ; i < hashList.size() ; i++) {
+            for (size_t i = 0 ; i < hashList.size() ; i++) {
                 uint64_t n = (*hashFind)(hashList[i], data);
                 if (!(*func)(n, data))
                     return false;
@@ -137,7 +137,7 @@ namespace qblocks {
     bool COptionsBlockList::isInRange(blknum_t bn) const {
         if (start <= bn && bn < stop)
             return true;
-        for (uint32_t i = 0 ; i < numList.size() ; i++)
+        for (size_t i = 0 ; i < numList.size() ; i++)
             if (bn == numList[i])
                 return true;
         return false;

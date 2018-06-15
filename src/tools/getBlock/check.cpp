@@ -72,12 +72,12 @@ const string_q removes[] = {
     "status", 
     // WARNING: status must be last because we only use it after byzan
 };
-uint32_t nRemoved = sizeof(removes) / sizeof(string_q);
+size_t nRemoved = sizeof(removes) / sizeof(string_q);
 
 //------------------------------------------------------------
 string_q hiddenFields(void) {
     string_q ret = "Hidden fields:\n";
-    for (uint32_t i = 0 ; i < nRemoved ; i++) {
+    for (size_t i = 0 ; i < nRemoved ; i++) {
         ret += removes[i];
         if (i < nRemoved-1)
             ret += ", ";
@@ -96,7 +96,7 @@ string_q cleanAll(const string_q& str, bool remove, bool isByzan) {
     string_q orig = str;
     replaceAny(orig, "\t\r {}","");
     replaceAll(orig, ",",",\n"); // put everything on its own line
-    for (uint32_t i = 0 ; i < nRemoved ; i++) {
+    for (size_t i = 0 ; i < nRemoved ; i++) {
         string_q search = "\"" + removes[i] + "\":";
         while (contains(orig, search)) {
             orig = removeField(orig, removes[i]);
@@ -134,7 +134,7 @@ string_q sorted(const string_q& inIn) {
 
     sort(inList.begin(), inList.end());
 
-    for (uint32_t i = 0 ; i < inList.size()-1 ; i++)
+    for (size_t i = 0 ; i < inList.size()-1 ; i++)
         if (inList[i] != inList[i+1] && contains(inList[i], ":"))
             outList.push_back(inList[i]);
 
@@ -143,7 +143,7 @@ string_q sorted(const string_q& inIn) {
         outList.push_back(inList[inList.size()-1]);
 
     string_q ret;
-    for (uint32_t i = 0 ; i < outList.size() ; i++)
+    for (size_t i = 0 ; i < outList.size() ; i++)
         ret += (outList[i] + "\n");
     return ret;
 }

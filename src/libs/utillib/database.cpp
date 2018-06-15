@@ -28,7 +28,7 @@ namespace qblocks {
 
     //----------------------------------------------------------------------
     extern string_q manageRemoveList(const string_q& filename="");
-    extern uint32_t quitCount(uint32_t s=0);
+    extern size_t quitCount(size_t s=0);
     bool CSharedResource::g_locking = true;
 
     //----------------------------------------------------------------------
@@ -137,7 +137,7 @@ namespace qblocks {
     }
 
     //----------------------------------------------------------------------
-    bool CSharedResource::Lock(const string_q& fn, const string_q& mode, uint32_t lockType) {
+    bool CSharedResource::Lock(const string_q& fn, const string_q& mode, size_t lockType) {
         ASSERT(!isOpen());
 
         m_filename = fn;
@@ -229,7 +229,7 @@ namespace qblocks {
     }
 
     //----------------------------------------------------------------------
-    static bool binaryFileToBuffer(const string_q& filename, uint32_t& nChars, char *buffer) {
+    static bool binaryFileToBuffer(const string_q& filename, size_t& nChars, char *buffer) {
         if (!fileExists(filename)) {
             nChars = 0;
             if (buffer)
@@ -237,7 +237,7 @@ namespace qblocks {
             return false;
         }
 
-        nChars = (uint32_t)fileSize(filename);
+        nChars = fileSize(filename);
         if (buffer) {
             CBinFile lock;
             if (lock.Lock(filename, binaryReadOnly, LOCK_NOWAIT)) {  // do not wait for lock - read only file
@@ -255,7 +255,8 @@ namespace qblocks {
 
     //----------------------------------------------------------------------
     string_q binaryFileToString(const string_q& filename) {
-        string_q ret; uint32_t nChars = 0;
+        string_q ret;
+        size_t nChars = 0;
         if (binaryFileToBuffer(filename, nChars, NULL)) {
             char *buffer = new char[nChars + 100];  // safty factor
             if (binaryFileToBuffer(filename, nChars, buffer))
@@ -265,7 +266,7 @@ namespace qblocks {
         }
         return ret;
     }
-//    extern bool binaryFileToBuffer(const string_q& filename, uint32_t& nChars, char *buffer);
+
     //----------------------------------------------------------------------
     bool CSharedResource::Eof(void) const {
         ASSERT(isOpen());
@@ -369,7 +370,7 @@ namespace qblocks {
     }
 
     //----------------------------------------------------------------------
-    bool asciiFileToBuffer(const string_q& filename, size_t& nChars, string_q *buffer, uint32_t maxLines) {
+    bool asciiFileToBuffer(const string_q& filename, size_t& nChars, string_q *buffer, size_t maxLines) {
         if (!fileExists(filename) || folderExists(filename)) {
             nChars = 0;
             if (buffer)
@@ -528,8 +529,8 @@ namespace qblocks {
     }
 
     //-----------------------------------------------------------------------
-    uint32_t quitCount(uint32_t s) {
-        static uint32_t cnt = 0;
+    size_t quitCount(size_t s) {
+        static size_t cnt = 0;
         if (cnt && sectionLocked) // ignore if we're locked
             return false;
         cnt += s;

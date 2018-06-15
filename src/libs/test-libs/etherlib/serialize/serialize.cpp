@@ -21,7 +21,7 @@ int main(int argc, const char *argv[])
         if (!options.parseArguments(command))
             return 0;
 
-        for (uint32_t i = 0 ; i < 10 ; i++) {
+        for (size_t i = 0 ; i < 10 ; i++) {
             CPerson *newPerson = new CPerson("Person " + asStringU(i), i * 2);
             lastAdded->next = newPerson;
             lastAdded = newPerson;

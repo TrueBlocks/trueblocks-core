@@ -23,7 +23,7 @@ CParams params[] = {
     CParams( "~@skip",       "optional skip step (default 100)"),
     CParams( "",             "Scans blocks looking for saturated bloomFilters.\n"),
 };
-uint32_t nParams = sizeof(params) / sizeof(CParams);
+size_t nParams = sizeof(params) / sizeof(CParams);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {

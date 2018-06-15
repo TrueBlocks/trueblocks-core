@@ -59,7 +59,7 @@ bool CPerson::setValueByName(const string_q& fieldName, const string_q& fieldVal
 
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "age" ) { age = toLong32u(fieldValue); return true; }
+            if ( fieldName % "age" ) { age = toLongU(fieldValue); return true; }
             break;
         case 'n':
             if ( fieldName % "name" ) { name = fieldValue; return true; }
@@ -68,7 +68,7 @@ bool CPerson::setValueByName(const string_q& fieldName, const string_q& fieldVal
                 next = new CPerson;
                 if (next) {
                     char *p = cleanUpJson((char *)fieldValue.c_str());
-                    uint32_t nFields = 0;
+                    size_t nFields = 0;
                     next->parseJson(p, nFields);
                     return true;
                 }
@@ -137,7 +137,7 @@ void CPerson::registerClass(void) {
     if (been_here) return;
     been_here = true;
 
-    uint32_t fieldNum = 1000;
+    size_t fieldNum = 1000;
     ADD_FIELD(CPerson, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CPerson, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CPerson, "showing", T_BOOL,  ++fieldNum);

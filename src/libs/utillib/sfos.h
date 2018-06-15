@@ -17,9 +17,9 @@ namespace qblocks {
     //-------------------------------------------------------------------------------
     extern uint64_t fileSize(const string_q& file);
 
-    extern void listFiles(uint32_t& nFiles, string_q *files, const string_q& mask);
-    extern void listFolders(uint32_t& nDirs, string_q *dirs, const string_q& mask);
-    extern void listFilesOrFolders(uint32_t& nItems, string_q *items, const string_q& mask);
+    extern void listFiles(size_t& nFiles, string_q *files, const string_q& mask);
+    extern void listFolders(size_t& nDirs, string_q *dirs, const string_q& mask);
+    extern void listFilesOrFolders(size_t& nItems, string_q *items, const string_q& mask);
 
     extern int copyFile(const string_q& from, const string_q& to);
 

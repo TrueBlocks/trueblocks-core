@@ -34,10 +34,10 @@ namespace qblocks {
         void setDeleted(bool val);
 
         virtual bool isKindOf(const CRuntimeClass* pClass) const;
-        virtual char *parseJson(char *s, uint32_t& nFields);
+        virtual char *parseJson(char *s, size_t& nFields);
         virtual char *parseJson(char *s);
-        virtual char *parseCSV(char *s, uint32_t& nFields, const string_q *fields);
-        virtual char *parseText(char *s, uint32_t& nFields, const string_q *fields);
+        virtual char *parseCSV(char *s, size_t& nFields, const string_q *fields);
+        virtual char *parseText(char *s, size_t& nFields, const string_q *fields);
         virtual string_q toJson1(void) const;
         virtual string_q toJson(void) const;
         virtual string_q toJson(const string_q& fields) const;
@@ -56,8 +56,8 @@ namespace qblocks {
         virtual void finishParse(void) { }
         virtual void Format(CExportContext& ctx, const string_q& fmtIn, void *data = NULL) const { }
         virtual string_q Format(const string_q& fmtIn = "") const { return ""; }
-        virtual const CBaseNode *getObjectAt(const string_q& name, uint32_t i) const { return NULL; }
-        virtual const string_q   getStringAt(const string_q& name, uint32_t i) const { return ""; }
+        virtual const CBaseNode *getObjectAt(const string_q& name, size_t i) const { return NULL; }
+        virtual const string_q   getStringAt(const string_q& name, size_t i) const { return ""; }
         virtual bool handleCustomFormat(CExportContext& ctx, const string_q& fmtIn, void *data = NULL) const {
             return false;
         }

@@ -60,7 +60,7 @@ bool CAccountWatch::setValueByName(const string_q& fieldName, const string_q& fi
     // EXISTING_CODE
     if (fieldName % "qbis") {
         char *p = (char *)fieldValue.c_str();
-        uint32_t nFields = 0;
+        size_t nFields = 0;
         qbis.parseJson(p, nFields);
         return true;
     }
@@ -156,7 +156,7 @@ void CAccountWatch::registerClass(void) {
     if (been_here) return;
     been_here = true;
 
-    uint32_t fieldNum = 1000;
+    size_t fieldNum = 1000;
     ADD_FIELD(CAccountWatch, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CAccountWatch, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CAccountWatch, "showing", T_BOOL,  ++fieldNum);
@@ -276,7 +276,7 @@ ostream& operator<<(ostream& os, const CAccountWatch& item) {
 }
 
 //---------------------------------------------------------------------------
-const CBaseNode *CAccountWatch::getObjectAt(const string_q& fieldName, uint32_t index) const {
+const CBaseNode *CAccountWatch::getObjectAt(const string_q& fieldName, size_t index) const {
     if ( fieldName % "qbis" )
         return &qbis;
     return NULL;
@@ -285,7 +285,7 @@ const CBaseNode *CAccountWatch::getObjectAt(const string_q& fieldName, uint32_t 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 //---------------------------------------------------------------------------
-string_q CAccountWatch::displayName(bool expand, bool useColor, bool terse, uint32_t w1, uint32_t w2) const {
+string_q CAccountWatch::displayName(bool expand, bool useColor, bool terse, size_t w1, size_t w2) const {
     if (address == "others") {
         return padRight(name, w1 + w2 + 1);
     }
@@ -329,15 +329,16 @@ SFUintBN getNodeBal(CBalanceHistoryArray& history, const SFAddress& addr, blknum
             blknum_t last = NOPOS;
             SFAddress lastA;
             while (!balCache.Eof()) {
-                uint32_t pos = history.size();
                 blknum_t bn;
                 SFAddress addr1;
                 SFUintBN bal;
                 balCache >> bn >> addr1 >> bal;
                 if (addr == addr1) {
                     if (last != bn || bal != 0) {
-                        history[pos].bn      = bn;
-                        history[pos].balance = bal;
+                        CBalanceHistory newBal;
+                        newBal.bn = bn;
+                        newBal.balance = bal;
+                        history.push_back(newBal);
                         last = bn;
                     }
                     cerr << "Loaded block  #" << bn << " at " << addr1 << "\r";
@@ -360,7 +361,7 @@ SFUintBN getNodeBal(CBalanceHistoryArray& history, const SFAddress& addr, blknum
 
     // ...if it doesn't hit, we need to find the most recent balance
     SFUintBN ret = 0;
-    for (uint32_t i = 0 ; i < history.size() ; i++) {
+    for (size_t i = 0 ; i < history.size() ; i++) {
         // TODO(tjayrush): THIS IS A BUG HACK FIX - SEE ABOVE
         // We should be able to do >= just below, but if we do, we pick up a zero
         // balance as the last balance available for any account because the code
@@ -400,7 +401,7 @@ void loadWatchList(const CToml& toml, CAccountWatchArray& watches, const string_
     char *p = cleanUpJson((char *)watchStr.c_str());
     while (p && *p) {
         CAccountWatch watch;
-        uint32_t nFields = 0;
+        size_t nFields = 0;
         p = watch.parseJson(p, nFields);
         if (nFields) {
             // cleanup and add to list of watches

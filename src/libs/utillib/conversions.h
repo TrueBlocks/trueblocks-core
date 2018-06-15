@@ -51,10 +51,6 @@ namespace qblocks {
     inline string_q padNum9T(uint64_t n) { return padLeft(asStringU((n)), 9); }
 
     //--------------------------------------------------------------------
-    inline string_q padNum3T(uint32_t n) { return padLeft(asStringU((n)), 3); }
-    inline string_q padNum4T(uint32_t n) { return padLeft(asStringU((n)), 4); }
-
-    //--------------------------------------------------------------------
     inline string_q padNum2 (int64_t n) { return padLeft(asString((n)), 2, '0'); }
     inline string_q padNum3i(int64_t n) { return padLeft(asString((n)), 3, '0'); }
     inline string_q padNum4 (int64_t n) { return padLeft(asString((n)), 4, '0'); }
@@ -93,7 +89,6 @@ namespace qblocks {
 
     //-------------------------------------------------------------------------
     inline int64_t  toLong   (const string_q& str) { return (int64_t) strtol (str.c_str(), NULL, 10); }
-    inline uint32_t toLong32u(const string_q& str) { return (uint32_t)strtoul(str.c_str(), NULL, 10); }
 
     extern string to_string(const SFUintBN& bu);
     extern string to_hex(const SFUintBN& bu);
@@ -277,7 +272,7 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------
-    inline string_q double2Str(double f, uint32_t nDecimals=10) {
+    inline string_q double2Str(double f, size_t nDecimals=10) {
         char s[100], r[100];
         memset(s,'\0',100);
         memset(r,'\0',100);

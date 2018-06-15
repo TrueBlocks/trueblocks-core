@@ -20,7 +20,7 @@ namespace qblocks {
 
     //---------------------------------------------------------------------------
     char *parsePoloniex(CPriceQuote& quote, char *p) {
-        uint32_t nFields = 0;
+        size_t nFields = 0;
         return quote.parseJson(p, nFields);
     }
 
@@ -51,7 +51,7 @@ namespace qblocks {
                 priceCache.Close();
                 if (verbose) {
                     string_q date = lastRead.Format(FMT_JSON);
-                    string_q count = asString(quotes.size());
+                    string_q count = asStringU(quotes.size());
                     if (isTestMode()) {
                         date = "Now";
                         count = "cnt";
@@ -119,7 +119,7 @@ namespace qblocks {
                 string_q response = urlToString(url);
 
                 // Figure out how many new records there are
-                uint32_t nRecords = (uint32_t)countOf(response, '}');
+                size_t nRecords = countOf(response, '}');
                 nRecords--;
                 if (verbose)
                     cerr << "Response: " << nRecords << " were sent from Poloniex\n";
@@ -127,7 +127,7 @@ namespace qblocks {
                 //                cerr << "JSON: " << response << "\n";
 
                 // And grow the array so we don't have to allocate for each new record
-                quotes.Grow(nRecords+10);
+                quotes.reserve(nRecords+10);
 
                 // Parse the response and populate the array
                 char *p = cleanUpJson((char *)response.c_str());  // NOLINT
@@ -184,7 +184,7 @@ namespace qblocks {
 
         if (!reportAtEnd) {
             string_q date = lastRead.Format(FMT_JSON);
-            string_q count = asString(quotes.size());
+            string_q count = asStringU(quotes.size());
             if (isTestMode()) {
                 date = "Now";
                 count = "cnt";
@@ -195,9 +195,8 @@ namespace qblocks {
 
         if (step != 1) {
             CPriceQuoteArray ret;
-            uint32_t cur = 0;
-            for (uint32_t i = 0 ; i < quotes.size() ; i += step)
-                ret[cur++] = quotes[i];
+            for (size_t i = 0 ; i < quotes.size() ; i += step)
+                ret.push_back(quotes[i]); // grows the vector
             quotes = ret;
         }
 

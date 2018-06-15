@@ -20,7 +20,7 @@ CParams params[] = {
     CParams("@trace",       "include the transactions trace after the transaction"),
     CParams("",             "Retrieve an Ethereum transaction from the local cache or a running node."),
 };
-uint32_t nParams = sizeof(params) / sizeof(CParams);
+size_t nParams = sizeof(params) / sizeof(CParams);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {

@@ -186,20 +186,19 @@ bool CSlurperApp::Slurp(COptions& options, string_q& message) {
 
     // If the user tells us he/she wants to update the cache, or the cache
     // hasn't been updated in five minutes, then update it
-    uint32_t nSeconds = (uint32_t)max((uint64_t)60, toml.getConfigInt("settings", "update_freq", 300));
+    uint64_t nSeconds = max((uint64_t)60, toml.getConfigInt("settings", "update_freq", 300));
     if ((now - fileTime) > nSeconds) {
         // This is how many records we currently have
-        uint32_t origCount  = theAccount.transactions.size();
-        uint32_t nNewBlocks = 0;
+        uint64_t origCount  = theAccount.transactions.size();
+        uint64_t nNewBlocks = 0;
 
         if (!isTestMode())
             cerr << "\tSlurping new transactions from blockchain...\n";
-        uint32_t nextRecord = origCount;
-        uint32_t nRead = 0;
-        uint32_t nRequests = 0;
+        uint64_t nRead = 0;
+        uint64_t nRequests = 0;
 
         // We already have 'page' pages, so start there.
-        uint32_t page = max((uint32_t)theAccount.lastPage, (uint32_t)1);
+        uint64_t page = max(theAccount.lastPage, (uint64_t)1);
 
         // Keep reading until we get less than a full page
         string_q contents;
@@ -211,9 +210,8 @@ bool CSlurperApp::Slurp(COptions& options, string_q& message) {
         while (!done) {
             string_q url = string_q("https://api.etherscan.io/api?module=account&action=txlist&sort=asc") +
             "&address=" + theAccount.addr +
-            "&page="    + asString(page) +
-            "&offset="  +
-            asString(options.pageSize) +
+            "&page="    + asStringU(page) +
+            "&offset="  + asStringU(options.pageSize) +
             "&apikey="  + api.getKey();
 
             // Grab a page of data from the web api
@@ -249,7 +247,7 @@ bool CSlurperApp::Slurp(COptions& options, string_q& message) {
                 done = true;
         }
 
-        uint32_t minBlock = 0, maxBlock = 0;
+        size_t minBlock = 0, maxBlock = 0;
         findBlockRange(contents, minBlock, maxBlock);
 #ifndef NO_INTERNET
         if (!isTestMode())
@@ -260,19 +258,19 @@ bool CSlurperApp::Slurp(COptions& options, string_q& message) {
         theAccount.lastPage = page;
         theAccount.pageSize = options.pageSize;
 
-        // pre allocate the array (probably wrong input here--Grow takes max needed size, not addition size needed)
-        theAccount.transactions.Grow(nRead);
+        // pre allocate the array (probably wrong input here--reserve takes max needed size, not addition size needed)
+        theAccount.transactions.reserve(nRead);
 
         int64_t lastBlock = 0;  // DO NOT CHANGE! MAKES A BUG IF YOU MAKE IT UNSIGNED NOLINT
         char *p = cleanUpJson((char *)(contents.c_str()));  // NOLINT
         while (p && *p) {
             CTransaction trans;
-            uint32_t nFields = 0;
+            size_t nFields = 0;
             p = trans.parseJson(p, nFields);
             if (nFields) {
                 int64_t transBlock = (int64_t)trans.blockNumber;  // NOLINT
                 if (transBlock > theAccount.lastBlock) {  // add the new transaction if it's in a new block
-                    theAccount.transactions[nextRecord++] = trans;
+                    theAccount.transactions.push_back(trans);
                     lastBlock = transBlock;
                     if (!(++nNewBlocks % REP_FREQ) && !isTestMode()) {
                         cerr << "\tFound new transaction at block " << transBlock << ". Importing...\r";
@@ -288,7 +286,7 @@ bool CSlurperApp::Slurp(COptions& options, string_q& message) {
 
         theAccount.lastBlock = max(theAccount.lastBlock, lastBlock);
         // Write the data if we got new data
-        uint32_t newRecords = (theAccount.transactions.size() - origCount);
+        size_t newRecords = (theAccount.transactions.size() - origCount);
         if (newRecords) {
             if (!isTestMode())
                 cerr << "\tWriting " << newRecords << " new records to cache\n";
@@ -307,7 +305,7 @@ bool CSlurperApp::Slurp(COptions& options, string_q& message) {
     if (!isTestMode()) {
         double stop = qbNow();
         double timeSpent = stop-start;
-        fprintf(stderr, "\tLoaded %d total records in %f seconds\n", theAccount.transactions.size(), timeSpent);
+        fprintf(stderr, "\tLoaded %ld total records in %f seconds\n", theAccount.transactions.size(), timeSpent);
         fflush(stderr);
     }
 
@@ -319,15 +317,15 @@ bool CSlurperApp::Filter(COptions& options, string_q& message) {
     message = "";
     double start = qbNow();
 
-    uint32_t nFuncFilts = 0;
+    size_t nFuncFilts = 0;
     string_q funcFilts[20];
     string_q filtList = options.funcFilter;
     while (!filtList.empty())
         funcFilts[nFuncFilts++] = nextTokenClear(filtList, ',');
 
     theAccount.nVisible = 0;
-    for (uint32_t i = 0 ; i < theAccount.transactions.size() ; i++) {
-        CTransaction *trans = &theAccount.transactions[i];
+    for (size_t i = 0 ; i < theAccount.transactions.size() ; i++) {
+        CTransaction *trans = &theAccount.transactions.at(i);
 
         // Turn every transaction on and then turning them off if they match the filter.
         trans->m_showing = true;
@@ -413,9 +411,9 @@ bool CSlurperApp::Display(COptions& options, string_q& message) {
         theAccount.transactions.Sort(sortReverseChron);
 
     if (options.cache) {
-        for (uint32_t i = 0 ; i < theAccount.transactions.size() ; i++) {
+        for (size_t i = 0 ; i < theAccount.transactions.size() ; i++) {
             const CTransaction *t = &theAccount.transactions[i];
-            outScreen << t->Format("[{BLOCKNUMBER}]\t[{TRANSACTIONINDEX}]\t" + asString(options.acct_id)) << "\n";
+            outScreen << t->Format("[{BLOCKNUMBER}]\t[{TRANSACTIONINDEX}]\t" + asStringU(options.acct_id)) << "\n";
         }
     } else {
 
@@ -535,7 +533,7 @@ void CSlurperApp::buildDisplayStrings(COptions& options) {
 }
 
 //--------------------------------------------------------------------------------
-void findBlockRange(const string_q& json, uint32_t& minBlock, uint32_t& maxBlock) {
+void findBlockRange(const string_q& json, size_t& minBlock, size_t& maxBlock) {
     string_q search = "\"blockNumber\":\"";
     size_t len = search.length();
 
@@ -543,14 +541,14 @@ void findBlockRange(const string_q& json, uint32_t& minBlock, uint32_t& maxBlock
     int64_t first = (int64_t)json.find(search);
     if (first != (int64_t)NOPOS) {
         string_q str = json.substr(((size_t)first+len));
-        minBlock = toLong32u(str);
+        minBlock = toLongU(str);
     }
 
     string_q end = json.substr(json.rfind('{'));  // pull off the last transaction
     size_t last = end.find(search);
     if (last != NOPOS) {
         string_q str = end.substr(last+len);
-        maxBlock = toLong32u(str);
+        maxBlock = toLongU(str);
     }
 }
 

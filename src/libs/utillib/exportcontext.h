@@ -19,7 +19,7 @@ namespace qblocks {
     //----------------------------------------------------------------------------
     class CExportOptions {
     public:
-        uint32_t lev, spcs;
+        size_t lev, spcs;
         bool noFrst;
         char tab, nl;
         bool quoteNums;
@@ -51,7 +51,7 @@ namespace qblocks {
 
     class CExportContext {
     public:
-        uint32_t nTabs;
+        size_t   nTabs;
         string_q fmt;
         char     tCh;
 
@@ -69,7 +69,7 @@ namespace qblocks {
         virtual CExportContext& operator<<(const char *str);
         virtual CExportContext& operator<<(const string_q& str);
 
-        virtual string_q tabs(uint32_t add = 0) { return string_q(nTabs + add, tCh); }
+        virtual string_q tabs(size_t add = 0) { return string_q(nTabs + add, tCh); }
         virtual string_q inc(void) { string_q ret = string_q(nTabs, tCh); nTabs++; return ret; }
         virtual string_q dec(void) { nTabs--; return string_q(nTabs, tCh); }
 

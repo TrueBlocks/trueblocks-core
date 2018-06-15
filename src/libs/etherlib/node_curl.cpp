@@ -31,7 +31,7 @@ namespace qblocks {
 
     //-------------------------------------------------------------------------
     string_q CCurlContext::getCurlID(void) {
-        return asString(isTestMode() ? 1 : theID++);
+        return asStringU(isTestMode() ? 1 : theID++);
     }
 
     //-------------------------------------------------------------------------
