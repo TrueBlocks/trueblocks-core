@@ -464,14 +464,22 @@ bool accumulateAddresses(blknum_t bn, blknum_t tx, blknum_t tc, const SFAddress&
     search.blockNum = bn;
     search.transIndex = tx;
     search.traceId = tc;
+#ifdef NATIVE
+//    CAddressItemArray *array = (CAddressItemArray *)data;
+//    if (!array->Find(&search, compareAddr)) {
+//        array->push_back(search);
+//        array->Sort(compareAddr);
+//    }
+#else
     CAddressItemArray *array = (CAddressItemArray *)data;
     if (!array->Find(&search, compareAddr)) {
         array->push_back(search);
         array->Sort(compareAddr);
-//        cout << "adding:    " << addr << "\n";
-//    } else {
-//        cout << "not adding " << addr << "\n";
+        //        cout << "adding:    " << addr << "\n";
+        //    } else {
+        //        cout << "not adding " << addr << "\n";
     }
+#endif
     return true;
 }
 
