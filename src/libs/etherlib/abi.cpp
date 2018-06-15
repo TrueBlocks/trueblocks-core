@@ -302,14 +302,14 @@ int findByEncoding(const void *rr1, const void *rr2) {
 CFunction *CAbi::findFunctionByName(const string_q& name) {
     CFunction search;
     search.name = name;
-    return abiByName.Find(&search, findByName);
+    return 0; //abiByName.Find(&search, findByName);
 }
 
 //---------------------------------------------------------------------------
 CFunction *CAbi::findFunctionByEncoding(const string_q& enc) {
     CFunction search;
     search.encoding = enc;
-    return abiByEncoding.Find(&search, findByEncoding);
+    return 0; //abiByEncoding.Find(&search, findByEncoding);
 }
 
 //---------------------------------------------------------------------------
@@ -368,8 +368,8 @@ bool CAbi::loadABIFromFile(const string_q& fileName) {
             abiByEncoding.push_back(func);
         }
     }
-    abiByName.Sort(sortFuncTableByName);
-    abiByEncoding.Sort(sortFuncTableByEncoding);
+    //abiByName.Sort(sortFuncTableByName);
+    //abiByEncoding.Sort(sortFuncTableByEncoding);
     return abiByName.size();
 }
 
@@ -395,7 +395,7 @@ bool CAbi::loadABIFromCSV(const string_q& fileName) {
             cout << func.encoding << ": " << func.name << ": " << func.inputs.size() << "\n";
         }
     }
-    abiByEncoding.Sort(sortFuncTableByEncoding);
+    //abiByEncoding.Sort(sortFuncTableByEncoding);
     return abiByEncoding.size();
 }
 
@@ -469,7 +469,7 @@ void rebuildFourByteDB(void) {
             cout << abi.abiByEncoding[f].encoding << " : " << abi.abiByEncoding[f].name << " : " << abi.abiByEncoding[f].signature << "\n";
         }
     }
-    funcArray.Sort(sortFuncTableByEncoding);
+    //funcArray.Sort(sortFuncTableByEncoding);
     SFArchive funcCache(WRITING_ARCHIVE);
     if (funcCache.Lock(abiPath+"abis.bin", binaryWriteCreate, LOCK_CREATE)) {
         funcCache << funcArray;
@@ -514,7 +514,7 @@ CFunction *findFunctionByEncoding(const string_q& encoding) {
     if (array) {
         CFunction search;
         search.encoding = encoding;
-        return array->Find(&search, findByEncodingI);
+        return NULL; //array->Find(&search, findByEncodingI);
     }
     return NULL;
 }
