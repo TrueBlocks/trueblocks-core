@@ -675,7 +675,11 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
                 specials.push_back(pair);
             }
         }
+#ifdef NATIVE
+//        specials.Sort(sortByBlockNum);
+#else
         specials.Sort(sortByBlockNum);
+#endif
         return;
     }
 
