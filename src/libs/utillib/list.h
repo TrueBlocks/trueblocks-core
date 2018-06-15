@@ -25,6 +25,9 @@ namespace qblocks {
     typedef int  (*DUPLICATEFUNC) (const void *ob1, const void *ob2);
     typedef bool (*APPLYFUNC)     (string_q& line, void *data);
 
+#ifdef NATIVE
+    #define SFArrayBase vector
+#else
     //----------------------------------------------------------------------
     template<class TYPE>
     class SFArrayBase {
@@ -169,6 +172,7 @@ namespace qblocks {
         ASSERT(index >= 0 && index <= m_nItems);
         return m_Items[index];
     }
+#endif
 
     struct xLISTPOS__ { int unused; };
     typedef xLISTPOS__* LISTPOS;
