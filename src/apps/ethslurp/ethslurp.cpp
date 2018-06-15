@@ -187,7 +187,7 @@ bool CSlurperApp::Slurp(COptions& options, string_q& message) {
     // If the user tells us he/she wants to update the cache, or the cache
     // hasn't been updated in five minutes, then update it
     uint64_t nSeconds = max((uint64_t)60, toml.getConfigInt("settings", "update_freq", 300));
-    if ((now - fileTime) > nSeconds) {
+    if (uint64_t(now - fileTime) > nSeconds) {
         // This is how many records we currently have
         uint64_t origCount  = theAccount.transactions.size();
         uint64_t nNewBlocks = 0;
