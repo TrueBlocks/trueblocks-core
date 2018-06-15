@@ -21,7 +21,7 @@ CParams params[] = {
     CParams("",                "Build an account tree listing first transaction, latest transaction, and "
                                "node balance for each account.\n"),
 };
-uint32_t nParams = sizeof(params) / sizeof(CParams);
+size_t nParams = sizeof(params) / sizeof(CParams);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {

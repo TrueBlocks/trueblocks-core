@@ -460,6 +460,9 @@ namespace qblocks {
     }
 
     //-------------------------------------------------------------------------
+    #define toLong32u(a) (uint32_t)toLongU((a))
+
+    //-------------------------------------------------------------------------
     //
     // dateStr is a legal date string as defined by fmtStr.
     //

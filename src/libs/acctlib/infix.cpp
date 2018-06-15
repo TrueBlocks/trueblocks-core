@@ -70,7 +70,7 @@ bool CInfix::setValueByName(const string_q& fieldName, const string_q& fieldValu
                 next = new CTreeNode;
                 if (next) {
                     char *p = cleanUpJson((char *)fieldValue.c_str());
-                    uint32_t nFields = 0;
+                    size_t nFields = 0;
                     next->parseJson(p, nFields);
                     return true;
                 }
@@ -141,7 +141,7 @@ void CInfix::registerClass(void) {
 
     CTreeNode::registerClass();
 
-    uint32_t fieldNum = 1000;
+    size_t fieldNum = 1000;
     ADD_FIELD(CInfix, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CInfix, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CInfix, "showing", T_BOOL,  ++fieldNum);
@@ -320,7 +320,7 @@ ostream& operator<<(ostream& os, const CInfix& item) {
     bool CInfix::visitItems(ACCTVISITOR func, void *data) const {
         ASSERT(func);
         CVisitData *vd = reinterpret_cast<CVisitData*>(data);
-        uint32_t save = vd->type;
+        uint64_t save = vd->type;
         vd->counter = 0;
         vd->type = T_INFIX;
         vd->strs = vd->strs + "+" + prefixS;

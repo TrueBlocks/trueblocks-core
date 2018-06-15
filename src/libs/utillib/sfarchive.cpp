@@ -71,7 +71,7 @@ namespace qblocks {
     SFArchive& operator<<(SFArchive& archive, const CStringArray& array) {
         uint64_t count = array.size();
         archive << count;
-        for (uint32_t i = 0 ; i < array.size() ; i++)
+        for (size_t i = 0 ; i < array.size() ; i++)
             archive << array[i];
         return archive;
     }
@@ -79,7 +79,7 @@ namespace qblocks {
     SFArchive& operator<<(SFArchive& archive, const SFBigUintArray& array) {
         uint64_t count = array.size();
         archive << count;
-        for (uint32_t i = 0 ; i < array.size() ; i++)
+        for (size_t i = 0 ; i < array.size() ; i++)
             archive << array[i];
         return archive;
     }
@@ -87,7 +87,7 @@ namespace qblocks {
     SFArchive& operator<<(SFArchive& archive, const SFUintArray& array) {
         uint64_t count = array.size();
         archive << count;
-        for (uint32_t i = 0 ; i < array.size() ; i++)
+        for (size_t i = 0 ; i < array.size() ; i++)
             archive << array[i];
         return archive;
     }
@@ -155,7 +155,7 @@ namespace qblocks {
     SFArchive& operator>>(SFArchive& archive, CStringArray& array) {
         uint64_t count;
         archive >> count;
-        for (uint32_t i = 0 ; i < count ; i++) {
+        for (size_t i = 0 ; i < count ; i++) {
             string_q str;
             archive >> str;
             array.push_back(str);
@@ -166,7 +166,7 @@ namespace qblocks {
     SFArchive& operator>>(SFArchive& archive, SFBigUintArray& array) {
         uint64_t count;
         archive >> count;
-        for (uint32_t i = 0 ; i < count ; i++) {
+        for (size_t i = 0 ; i < count ; i++) {
             SFUintBN num;
             archive >> num;
             array.push_back(num);
@@ -177,7 +177,7 @@ namespace qblocks {
     SFArchive& operator>>(SFArchive& archive, SFUintArray& array) {
         uint64_t count;
         archive >> count;
-        for (uint32_t i = 0 ; i < count ; i++) {
+        for (size_t i = 0 ; i < count ; i++) {
             uint64_t num;
             archive >> num;
             array.push_back(num);

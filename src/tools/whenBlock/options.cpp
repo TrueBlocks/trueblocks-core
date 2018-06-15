@@ -21,7 +21,7 @@ CParams params[] = {
     CParams("",        "Finds the nearest block prior to a date, or the nearest date prior to a block.\n"
                        " Alternatively, search for one of special 'named' blocks.\n"),
 };
-uint32_t nParams = sizeof(params) / sizeof(CParams);
+size_t nParams = sizeof(params) / sizeof(CParams);
 
 extern int sortByBlockNum(const void *v1, const void *v2);
 extern SFTime grabDate(const string_q& strIn);
@@ -197,6 +197,7 @@ SFTime grabDate(const string_q& strIn) {
     }
 
 #define NP ((uint32_t)-1)
+#define toLong32u(a) (uint32_t)toLongU((a))
     uint32_t y, m, d, h, mn, s;
     y = m = d = h = mn = s = NP;
     if (isUnsigned(str.substr( 0,4))) { y  = toLong32u(str.substr( 0, 4)); }
@@ -234,7 +235,7 @@ string_q COptions::listSpecials(bool terse) const {
     }
 
     string_q extra;
-    for (uint32_t i = 0 ; i < specials.size(); i++) {
+    for (size_t i = 0 ; i < specials.size(); i++) {
 
         string_q name = specials[i].getName();
         string_q bn = specials[i].getValue();

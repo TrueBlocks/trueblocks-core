@@ -135,7 +135,7 @@ void CIncomeStatement::registerClass(void) {
     if (been_here) return;
     been_here = true;
 
-    uint32_t fieldNum = 1000;
+    size_t fieldNum = 1000;
     ADD_FIELD(CIncomeStatement, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CIncomeStatement, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CIncomeStatement, "showing", T_BOOL,  ++fieldNum);
@@ -244,7 +244,7 @@ string_q CIncomeStatement::getValueByName(const string_q& fieldName) const {
 ostream& operator<<(ostream& os, const CIncomeStatement& item) {
     // EXISTING_CODE
     if (sizeof(item) != 0) { // do this to always go through here, but avoid a warning
-        uint32_t width = 22;
+        uint64_t width = 22;
         if (item.begBal == item.endBal && item.begBal == -1) {
             os << padCenter("begBal", width) << "   "
                 << padCenter("inFlow", width) << "   "

@@ -24,9 +24,9 @@ namespace qblocks {
             str = "\n\tbits1: " + asStringU(bitsTwiddled(b1)) + " bits2: " + asStringU(bitsTwiddled(b2));
             string_q s1 = substitute(bloom2Bits(b1), "0", ".");
             string_q s2 = substitute(bloom2Bits(b2), "0", ".");
-            for (uint32_t i=0;i<16;i++) {
+            for (size_t i = 0 ; i < 16 ; i++) {
                 string_q m1, m2;
-                for (uint32_t j=0;j<128;j=j+10) {
+                for (size_t j = 0 ; j < 128 ; j = j + 10) {
                     m1 += s1.substr(i*128, 128).substr(j,10) + " ";
                     m2 += s2.substr(i*128, 128).substr(j,10) + " ";
                 }
@@ -36,9 +36,9 @@ namespace qblocks {
             str = "\n\tbits: " + asStringU(bitsTwiddled(b1)) + " " + asStringU(bitsTwiddled(b2));
             string_q s1 = substitute(substitute(bloom2Bytes(b1), "0x", ""), "0", ".");
             string_q s2 = substitute(substitute(bloom2Bytes(b2), "0x", ""), "0", ".");
-            for (uint32_t i=0;i<4;i++) {
+            for (size_t i = 0 ; i < 4 ; i++) {
                 string_q m1, m2;
-                for (uint32_t j=0;j<128;j=j+10) {
+                for (size_t j = 0 ; j < 128 ; j = j + 10) {
                     m1 += s1.substr(i*128, 128).substr(j,10) + " ";
                     m2 += s2.substr(i*128, 128).substr(j,10) + " ";
                 }
@@ -49,14 +49,14 @@ namespace qblocks {
     }
 
     //----------------------------------------------------------------------------------
-    bool addAddrToBloom(const SFAddress& addr, SFBloomArray& blooms, uint32_t maxBits) {
+    bool addAddrToBloom(const SFAddress& addr, SFBloomArray& blooms, size_t maxBits) {
         // Initialize if not already
         if (blooms.size() == 0)
-            blooms[0] = 0;
-        uint32_t cnt = blooms.size();
-        blooms[cnt - 1] = joinBloom(blooms[cnt - 1], makeBloom(addr));
+            blooms.push_back(0);
+        size_t cnt = blooms.size();
+        blooms.at(cnt - 1) = joinBloom(blooms[cnt - 1], makeBloom(addr)); // assignments requires the non-const reference
         if (bitsTwiddled(blooms[cnt - 1]) > maxBits) {
-            blooms[cnt] = 0; // start a new bloom
+            blooms.push_back(0); // start a new bloom
             return true;
         }
         return false;
@@ -65,7 +65,7 @@ namespace qblocks {
     //-----------------------------------------------------------------------
     string_q reportBloom(const SFBloomArray& blooms) {
         string_q ret;
-        for (uint32_t i = 0; i < blooms.size(); i++) {
+        for (size_t i = 0; i < blooms.size(); i++) {
             uint64_t bits = bitsTwiddled(blooms[i]);
             if (bits) {
                 ret += asStringU(bits);

@@ -112,7 +112,7 @@ bool CBlock::setValueByName(const string_q& fieldName, const string_q& fieldValu
                 char *p = (char *)fieldValue.c_str();
                 while (p && *p) {
                     CTransaction item;
-                    uint32_t nFields = 0;
+                    size_t nFields = 0;
                     p = item.parseJson(p, nFields);
                     if (nFields)
                         transactions.push_back(item);
@@ -129,8 +129,8 @@ bool CBlock::setValueByName(const string_q& fieldName, const string_q& fieldValu
 //---------------------------------------------------------------------------------------------------
 void CBlock::finishParse() {
     // EXISTING_CODE
-    for (uint32_t i=0;i<transactions.size();i++) {
-        CTransaction *trans = &transactions[i];
+    for (size_t i = 0 ; i < transactions.size() ; i++) {
+        CTransaction *trans = &transactions.at(i); // taking a non-const reference
         trans->pBlock = this;
         if (blockNumber >= byzantiumBlock && trans->receipt.status == NO_STATUS) {
             // If we have NO_STATUS in a receipt after the byzantium block, we have to pick it up.
@@ -199,7 +199,7 @@ void CBlock::registerClass(void) {
     if (been_here) return;
     been_here = true;
 
-    uint32_t fieldNum = 1000;
+    size_t fieldNum = 1000;
     ADD_FIELD(CBlock, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CBlock, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CBlock, "showing", T_BOOL,  ++fieldNum);
@@ -244,10 +244,10 @@ string_q nextBlockChunk_custom(const string_q& fieldIn, const void *dataPtr) {
                 break;
             case 't':
                 if ( expContext().hashesOnly && fieldIn % "transactions" ) {
-                    uint32_t cnt = blo->transactions.size();
+                    size_t cnt = blo->transactions.size();
                     if (!cnt) return EMPTY;
                     string_q ret;
-                    for (uint32_t i = 0 ; i < cnt ; i++) {
+                    for (size_t i = 0 ; i < cnt ; i++) {
                         ret += blo->transactions[i].hash;
                         ret += ((i < cnt-1) ? ",\n" : "\n");
                     }
@@ -295,7 +295,7 @@ bool CBlock::readBackLevel(SFArchive& archive) {
         // TODO -- technically we should re-read these values from the node
         string_q save = getCurlContext()->provider;
         getCurlContext()->provider = "local";
-        CBlock upgrade;uint32_t unused;
+        CBlock upgrade;size_t unused;
         queryBlock(upgrade, asStringU(blockNumber), false, false, unused);
         getCurlContext()->provider = save;
         miner = upgrade.miner;
@@ -371,12 +371,12 @@ string_q CBlock::getValueByName(const string_q& fieldName) const {
         case 't':
             if ( fieldName % "timestamp" ) return fromTimestamp(timestamp);
             if ( fieldName % "transactions" || fieldName % "transactionsCnt" ) {
-                uint32_t cnt = transactions.size();
+                size_t cnt = transactions.size();
                 if (endsWith(fieldName, "Cnt"))
                     return asStringU(cnt);
                 if (!cnt) return "";
                 string_q retS;
-                for (uint32_t i = 0 ; i < cnt ; i++) {
+                for (size_t i = 0 ; i < cnt ; i++) {
                     retS += transactions[i].Format();
                     retS += ((i < cnt - 1) ? ",\n" : "\n");
                 }
@@ -404,7 +404,7 @@ ostream& operator<<(ostream& os, const CBlock& item) {
 }
 
 //---------------------------------------------------------------------------
-const CBaseNode *CBlock::getObjectAt(const string_q& fieldName, uint32_t index) const {
+const CBaseNode *CBlock::getObjectAt(const string_q& fieldName, size_t index) const {
     if ( fieldName % "transactions" && index < transactions.size() )
         return &transactions[index];
     return NULL;
@@ -427,7 +427,7 @@ bool CBlock::operator==(const CBlock& test) const {
     EQ_TEST(finalized);
     EQ_TEST(timestamp);
     EQ_TEST(transactions.size());
-    for (uint32_t i = 0 ; i < transactions.size() ; i++)
+    for (size_t i = 0 ; i < transactions.size() ; i++)
         if (test.transactions[i] != transactions[i])
             return false;
 
@@ -482,7 +482,7 @@ bool CBlock::forEveryUniqueAddress(ADDRESSFUNC func, TRANSFUNC filterFunc, void 
 
     CAddressItemArray array;
     forEveryAddress(accumulateAddresses, filterFunc, &array);
-    for (uint32_t i = 0 ; i < array.size() ; i++) {
+    for (size_t i = 0 ; i < array.size() ; i++) {
         (*func)(array[i].blockNum, array[i].transIndex, array[i].traceId, array[i].addr, data);
     }
     return true;
@@ -519,7 +519,7 @@ void processPotentialAddrs(blknum_t bn, blknum_t tx, blknum_t tc, const string_q
 
     // Pull out 32-byte chunks and check to see if they are addresses
     SFAddress addr;
-    for (uint32_t s = 0 ; s < potList.length() / 64 ; s++) {
+    for (size_t s = 0 ; s < potList.length() / 64 ; s++) {
         SFUintBN test  = hex2BN("0x" + potList.substr(s*64,64));
         if (isPotentialAddr(test, addr))
             (*func)(bn, tx, tc, addr, data);
@@ -534,17 +534,17 @@ bool CBlock::forEveryAddress(ADDRESSFUNC func, TRANSFUNC filterFunc, void *data)
 
     (*func)(blockNumber, NOPOS, 0, miner, data);
 
-    for (uint32_t tr = 0 ; tr < transactions.size() ; tr++) {
-        CTransaction *trans   = &transactions[tr];
-        CReceipt     *receipt = &trans->receipt;
+    for (size_t tr = 0 ; tr < transactions.size() ; tr++) {
+        const CTransaction *trans   = &transactions[tr];
+        const CReceipt     *receipt = &trans->receipt;
         (*func)(blockNumber, tr, 0, trans->from, data);
         (*func)(blockNumber, tr, 0, trans->to,   data);
         (*func)(blockNumber, tr, 0, receipt->contractAddress, data);
         processPotentialAddrs(blockNumber, tr, 0, trans->input.substr(10), func, data);
-        for (uint32_t l = 0 ; l < receipt->logs.size() ; l++) {
-            CLogEntry *log = &receipt->logs[l];
+        for (size_t l = 0 ; l < receipt->logs.size() ; l++) {
+            const CLogEntry *log = &receipt->logs[l];
             (*func)(blockNumber, tr, 0, log->address, data);
-            for (uint32_t t = 0 ; t < log->topics.size() ; t++) {
+            for (size_t t = 0 ; t < log->topics.size() ; t++) {
                 SFAddress addr;
                 if (isPotentialAddr(log->topics[t], addr)) {
                     (*func)(blockNumber, tr, 0, addr, data);
@@ -558,8 +558,8 @@ bool CBlock::forEveryAddress(ADDRESSFUNC func, TRANSFUNC filterFunc, void *data)
         if (!filterFunc || !filterFunc(trans, data)) { // may look at DDos range and nTraces for example
             CTraceArray traces;
             getTraces(traces, trans->hash);
-            for (uint32_t t = 0 ; t < traces.size() ; t++) {
-                CTrace *trace = &traces[t];
+            for (size_t t = 0 ; t < traces.size() ; t++) {
+                const CTrace *trace = &traces[t]; // taking a non-const reference
                 (*func)(blockNumber, tr, t+10, trace->action.from, data);
                 (*func)(blockNumber, tr, t+10, trace->action.to, data);
                 (*func)(blockNumber, tr, t+10, trace->action.refundAddress, data);

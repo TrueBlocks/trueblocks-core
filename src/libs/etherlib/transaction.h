@@ -58,7 +58,7 @@ public:
 
     DECLARE_NODE(CTransaction);
 
-    const CBaseNode *getObjectAt(const string_q& fieldName, uint32_t index) const override;
+    const CBaseNode *getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
     const CBlock *pBlock;
@@ -68,16 +68,6 @@ public:
     CTraceArray traces;
 
     string_q inputToFunction(void) const;
-#if 0
-    string_q creates;
-    uint32_t confirmations;
-    SFAddress contractAddress;
-    SFHash r;
-    string_q raw;
-    SFHash s;
-    SFHash v;
-    CTrace trace;
-#endif
     bool operator==(const CTransaction& tr) const;
     bool operator!=(const CTransaction& tr) const { return !operator==(tr); }
     // EXISTING_CODE
@@ -222,8 +212,8 @@ extern SFArchive& operator>>(SFArchive& archive, CTransaction& tra);
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 extern int sortTransactionsForWrite(const void *rr1, const void *rr2);
-extern string_q parse(const string_q& params, uint32_t nItems, string_q *types);
-extern string_q toFunction(const string_q& name, const string_q& input, uint32_t nItems, string_q *items);
+extern string_q parse(const string_q& params, size_t nItems, string_q *types);
+extern string_q toFunction(const string_q& name, const string_q& input, size_t nItems, string_q *items);
 extern string_q nextBlockChunk(const string_q& fieldIn, const void *data);
 // EXISTING_CODE
 }  // namespace qblocks

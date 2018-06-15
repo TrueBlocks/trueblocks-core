@@ -27,7 +27,7 @@ CParams params[] = {
     CParams("@normalize",        "normalize (remove un-common fields and sort) for comparison with other results (testing)"),
     CParams("",                  "Returns block(s) from local cache or directly from a running node.\n"),
 };
-uint32_t nParams = sizeof(params) / sizeof(CParams);
+size_t nParams = sizeof(params) / sizeof(CParams);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {

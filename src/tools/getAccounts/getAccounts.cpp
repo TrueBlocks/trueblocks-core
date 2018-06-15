@@ -29,7 +29,7 @@ int main(int argc, const char *argv[]) {
 
         SFAddressArray addrs;
         if (options.named) {
-            for (uint32_t i = 0 ; i < options.namedAccounts.size() ; i++)
+            for (size_t i = 0 ; i < options.namedAccounts.size() ; i++)
                 addrs.push_back(options.namedAccounts[i].addr);
 
         } else {
@@ -43,7 +43,7 @@ int main(int argc, const char *argv[]) {
             }
         }
 
-        for (uint32_t i = 0 ; i < addrs.size() ; i++) {
+        for (size_t i = 0 ; i < addrs.size() ; i++) {
             CAccountName acct;
             bool found = verbose && options.getNamedAccount(acct, addrs[i]);
             cout << addrs[i] << (found ? acct.Format(" ([{NAME}])") : "") << "\n";

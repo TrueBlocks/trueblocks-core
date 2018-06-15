@@ -32,7 +32,7 @@ int main(int argc, const char *argv[]) {
         if (!options.parseArguments(command))
             return 0;
 
-        for (uint32_t i = 0 ; i < options.requests.size() ; i++ ) {
+        for (size_t i = 0 ; i < options.requests.size() ; i++ ) {
 
             string_q value = options.requests[i];
             string_q mode = nextTokenClear(value, ':');

@@ -84,7 +84,7 @@ namespace qblocks {
     //-------------------------------------------------------------------------
     class Cleanup {
     public:
-        uint32_t unused;
+        size_t unused;
         Cleanup() { unused = 0; }
         ~Cleanup() {
             urlToString();

@@ -22,7 +22,7 @@ CParams params[] = {
     CParams("-pair:<val>",                     "Which price pair to freshen or list (see Poloniex)"),
     CParams("",                                "Freshen and/or display Ethereum price data and other purposes.\n"),
 };
-uint32_t nParams = sizeof(params) / sizeof(CParams);
+size_t nParams = sizeof(params) / sizeof(CParams);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {

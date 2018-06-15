@@ -111,9 +111,8 @@ extern void registerQuitHandler(QUITHANDLER qh);
         if (fileExists(getBinaryFilename(blockNum))) {
             CBlock block;
             readBlockFromBinary(block, getBinaryFilename(blockNum));
-            if (txID < block.transactions.size())
-            {
-                trans = block.transactions[(uint32_t)txID];
+            if (txID < block.transactions.size()) {
+                trans = block.transactions[txID];
                 trans.pBlock = NULL; // otherwise, it's pointing to a dead pointer
                 return true;
             }
@@ -145,7 +144,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
         p = cleanUpJson((char *)(generic.result.c_str()));  // NOLINT
         while (p && *p) {
             CTrace tr;
-            uint32_t nFields = 0;
+            size_t nFields = 0;
             p = tr.parseJson(p, nFields);
             if (nFields)
                 traces.push_back(tr);
@@ -154,12 +153,12 @@ extern void registerQuitHandler(QUITHANDLER qh);
 
     //-------------------------------------------------------------------------
     bool queryBlock(CBlock& block, const string_q& datIn, bool needTrace, bool byHash) {
-        uint32_t unused = 0;
+        size_t unused = 0;
         return queryBlock(block, datIn, needTrace, byHash, unused);
     }
 
     //-------------------------------------------------------------------------
-    bool queryBlock(CBlock& block, const string_q& datIn, bool needTrace, bool byHash, uint32_t& nTraces) {
+    bool queryBlock(CBlock& block, const string_q& datIn, bool needTrace, bool byHash, size_t& nTraces) {
 
         if (datIn == "latest")
             return queryBlock(block, asStringU(getLatestBlockFromClient()), needTrace, false);
@@ -187,8 +186,8 @@ extern void registerQuitHandler(QUITHANDLER qh);
 
         // We have the transactions, but we also want the receipts, and we need an error indication
         nTraces=0;
-        for (uint32_t i=0;i<block.transactions.size();i++) {
-            CTransaction *trans = &block.transactions[i];
+        for (size_t i = 0 ; i < block.transactions.size() ; i++) {
+            CTransaction *trans = &block.transactions.at(i); // taking a non-const reference
             trans->pBlock = &block;
 
             UNHIDE_FIELD(CTransaction, "receipt");
@@ -359,16 +358,16 @@ extern void registerQuitHandler(QUITHANDLER qh);
     }
 
     //-------------------------------------------------------------------------
-    bool hasTraceAt(const string_q& hashIn, uint32_t where) {
+    bool hasTraceAt(const string_q& hashIn, size_t where) {
         string_q cmd = "[\"" + fixHash(hashIn) +"\",[\"" + toHex(where) + "\"]]";
         string_q ret = callRPC("trace_get", cmd.c_str(), true);
         return ret.find("blockNumber") != NOPOS;
     }
 
     //--------------------------------------------------------------
-    uint32_t getTraceCount_binarySearch(const SFHash& hashIn, uint32_t first, uint32_t last) {
+    size_t getTraceCount_binarySearch(const SFHash& hashIn, size_t first, size_t last) {
         if (last > first) {
-            uint32_t mid = first + ((last - first) / 2);
+            size_t mid = first + ((last - first) / 2);
             bool atMid  = hasTraceAt(hashIn, mid);
             bool atMid1 = hasTraceAt(hashIn, mid + 1);
             if (atMid && !atMid1)
@@ -385,9 +384,9 @@ extern void registerQuitHandler(QUITHANDLER qh);
 
     // https://ethereum.stackexchange.com/questions/9883/why-is-my-node-synchronization-stuck-extremely-slow-at-block-2-306-843/10453
     //--------------------------------------------------------------
-    uint32_t getTraceCount(const SFHash& hashIn) {
+    size_t getTraceCount(const SFHash& hashIn) {
         // handle most likely cases linearly
-        for (uint32_t n = 2 ; n < 8 ; n++) {
+        for (size_t n = 2 ; n < 8 ; n++) {
             if (!hasTraceAt(hashIn, n)) {
                 if (verbose>2) cerr << "tiny trace" << (n-1) << "\n";
                 return n-1;
@@ -395,7 +394,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
         }
 
         // binary search the rest
-        uint32_t ret = 0;
+        size_t ret = 0;
         if (!hasTraceAt(hashIn, (1<<8))) { // small?
             ret = getTraceCount_binarySearch(hashIn, 0, (1<<8)-1);
             if (verbose>2) cerr << "small trace" << ret << "\n";
@@ -442,7 +441,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
             stringToAsciiFile(fileName, contents+"\n");
         }
         char *p = cleanUpJson((char *)contents.c_str());
-        uint32_t nFields=0;
+        size_t nFields=0;
         node.parseJson(p,nFields);
         return nFields;
     }
@@ -713,7 +712,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
 
         CTraceArray traces;
         getTraces(traces, trans.hash);
-        for (uint32_t i=0;i<traces.size();i++) {
+        for (size_t i = 0 ; i < traces.size() ; i++) {
             CTrace trace = traces[i];
             if (!(*func)(trace, data))
                 return false;
@@ -724,7 +723,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
 
     //-------------------------------------------------------------------------
     bool forEveryTraceInBlock(TRACEVISITFUNC func, void *data, const CBlock& block) {
-        for (uint32_t i = 0 ; i < block.transactions.size() ; i++) {
+        for (size_t i = 0 ; i < block.transactions.size() ; i++) {
             if (!forEveryTraceInTransaction(func, data, block.transactions[i]))
                 return false;
         }
@@ -739,7 +738,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
 
 //        cout << "Visiting " << trans.receipt.logs.size() << " logs\n";
 //        cout.flush();
-        for (uint32_t i = 0 ; i < trans.receipt.logs.size() ; i++) {
+        for (size_t i = 0 ; i < trans.receipt.logs.size() ; i++) {
             CLogEntry log = trans.receipt.logs[i];
             if (!(*func)(log, data))
                 return false;
@@ -751,7 +750,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
     bool forEveryLogInBlock(LOGVISITFUNC func, void *data, const CBlock& block) {
 //        cout << "Visiting " << block.transactions.size() << " transactions\n";
 //        cout.flush();
-        for (uint32_t i = 0 ; i < block.transactions.size() ; i++) {
+        for (size_t i = 0 ; i < block.transactions.size() ; i++) {
             if (!forEveryLogInTransaction(func, data, block.transactions[i]))
                 return false;
         }
@@ -764,7 +763,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
         if (!func)
             return false;
 
-        for (uint32_t i = 0 ; i < block.transactions.size() ; i++) {
+        for (size_t i = 0 ; i < block.transactions.size() ; i++) {
             CTransaction trans = block.transactions[i];
             if (!(*func)(trans, data))
                 return false;
@@ -799,14 +798,14 @@ extern void registerQuitHandler(QUITHANDLER qh);
                     getTransaction(trans, hash);  // transHash
                 }
             } else {
-                getTransaction(trans, (uint32_t)toLongU(hash), txID);  // blockNum.txID
+                getTransaction(trans, toLongU(hash), txID);  // blockNum.txID
             }
 
             CBlock block;
             trans.pBlock = &block;
             getBlock(block, trans.blockNumber);
             if (block.transactions.size() > trans.transactionIndex)
-                trans.isError = block.transactions[(uint32_t)trans.transactionIndex].isError;
+                trans.isError = block.transactions[trans.transactionIndex].isError;
             getReceipt(trans.receipt, trans.getValueByName("hash"));
             trans.finishParse();
             if (!isHash(trans.hash)) {

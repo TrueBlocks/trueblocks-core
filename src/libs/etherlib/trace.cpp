@@ -59,13 +59,13 @@ bool CTrace::setValueByName(const string_q& fieldName, const string_q& fieldValu
     // EXISTING_CODE
     if (fieldName % "action") {
         char *p = (char *)fieldValue.c_str();
-        uint32_t nFields=0;
+        size_t nFields=0;
         action.parseJson(p,nFields);
         return true;
 
     } else if (fieldName % "result") {
         char *p = (char *)fieldValue.c_str();
-        uint32_t nFields=0;
+        size_t nFields=0;
         result.parseJson(p,nFields);
         return true;
     }
@@ -127,7 +127,7 @@ bool CTrace::Serialize(SFArchive& archive) {
     archive >> blockHash;
     archive >> blockNumber;
     archive >> subtraces;
-//    archive >> traceAddress;
+    archive >> traceAddress;
     archive >> transactionHash;
     archive >> transactionPosition;
     archive >> type;
@@ -149,7 +149,7 @@ bool CTrace::SerializeC(SFArchive& archive) const {
     archive << blockHash;
     archive << blockNumber;
     archive << subtraces;
-//    archive << traceAddress;
+    archive << traceAddress;
     archive << transactionHash;
     archive << transactionPosition;
     archive << type;
@@ -166,7 +166,7 @@ void CTrace::registerClass(void) {
     if (been_here) return;
     been_here = true;
 
-    uint32_t fieldNum = 1000;
+    size_t fieldNum = 1000;
     ADD_FIELD(CTrace, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CTrace, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CTrace, "showing", T_BOOL,  ++fieldNum);
@@ -256,12 +256,12 @@ string_q CTrace::getValueByName(const string_q& fieldName) const {
             break;
         case 't':
             if ( fieldName % "traceAddress" || fieldName % "traceAddressCnt" ) {
-                uint32_t cnt = traceAddress.size();
+                size_t cnt = traceAddress.size();
                 if (endsWith(fieldName, "Cnt"))
                     return asStringU(cnt);
                 if (!cnt) return "";
                 string_q retS;
-                for (uint32_t i = 0 ; i < cnt ; i++) {
+                for (size_t i = 0 ; i < cnt ; i++) {
                     retS += ("\"" + traceAddress[i] + "\"");
                     retS += ((i < cnt - 1) ? ",\n" + indent() : "\n");
                 }
@@ -307,7 +307,7 @@ ostream& operator<<(ostream& os, const CTrace& item) {
 }
 
 //---------------------------------------------------------------------------
-const CBaseNode *CTrace::getObjectAt(const string_q& fieldName, uint32_t index) const {
+const CBaseNode *CTrace::getObjectAt(const string_q& fieldName, size_t index) const {
     if ( fieldName % "action" )
         return &action;
     if ( fieldName % "result" )
@@ -316,7 +316,7 @@ const CBaseNode *CTrace::getObjectAt(const string_q& fieldName, uint32_t index) 
 }
 
 //---------------------------------------------------------------------------
-const string_q CTrace::getStringAt(const string_q& name, uint32_t i) const {
+const string_q CTrace::getStringAt(const string_q& name, size_t i) const {
     if ( name % "traceAddress" && i < traceAddress.size() )
         return (traceAddress[i]);
     return "";

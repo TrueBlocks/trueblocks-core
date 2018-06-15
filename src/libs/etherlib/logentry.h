@@ -46,16 +46,10 @@ public:
 
     DECLARE_NODE(CLogEntry);
 
-    const string_q getStringAt(const string_q& name, uint32_t i) const override;
+    const string_q getStringAt(const string_q& name, size_t i) const override;
 
     // EXISTING_CODE
     const CReceipt *pReceipt;
-#if 0
-    SFHash blockHash;
-    uint32_t blockNumber;
-    SFHash transactionHash;
-    uint32_t transactionIndex;
-#endif
     bool operator==(const CLogEntry& le) const;
     bool operator!=(const CLogEntry& le) const { return !operator==(le); };
     // EXISTING_CODE

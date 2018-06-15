@@ -28,14 +28,14 @@ public:
     SFTime lastDate;
     bool openFile;
     string_q addr;
-    uint32_t maxTransactions;
-    uint32_t pageSize;
+    size_t maxTransactions;
+    size_t pageSize;
     string_q exportFormat;
     string_q name;
     string_q archiveFile;
     bool wantsArchive;
     bool cache;
-    uint32_t acct_id;
+    size_t acct_id;
     FILE *output;  // for use when -a is on
 
     COptions(void);

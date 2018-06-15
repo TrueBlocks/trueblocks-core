@@ -43,7 +43,7 @@ public:
 
     DECLARE_NODE(CAbi);
 
-    const CBaseNode *getObjectAt(const string_q& fieldName, uint32_t index) const override;
+    const CBaseNode *getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
     void clearABI(void);

@@ -85,7 +85,7 @@ bool CTransaction::setValueByName(const string_q& fieldName, const string_q& fie
     } else if ( fieldName % "receipt" )
     {
         char *p = (char *)fieldValue.c_str();
-        uint32_t nFields=0;
+        size_t nFields=0;
         receipt.parseJson(p,nFields);
         return true;
     }
@@ -207,7 +207,7 @@ void CTransaction::registerClass(void) {
     if (been_here) return;
     been_here = true;
 
-    uint32_t fieldNum = 1000;
+    size_t fieldNum = 1000;
     ADD_FIELD(CTransaction, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CTransaction, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CTransaction, "showing", T_BOOL,  ++fieldNum);
@@ -474,7 +474,7 @@ ostream& operator<<(ostream& os, const CTransaction& item) {
 }
 
 //---------------------------------------------------------------------------
-const CBaseNode *CTransaction::getObjectAt(const string_q& fieldName, uint32_t index) const {
+const CBaseNode *CTransaction::getObjectAt(const string_q& fieldName, size_t index) const {
     if ( fieldName % "receipt" )
         return &receipt;
     return NULL;
@@ -564,7 +564,7 @@ inline string_q hex2String(const string_q& inHex) {
 #define toVote(a,b)         (grabBigNum(a,b)?"Yea":"Nay")
 #define toBoolean(a,b)      (grabBigNum(a,b)?"true":"false")
 #define toBytes(a,b)        ((a).substr(64*(b),64))
-string_q parse(const string_q& params, uint32_t nItems, string_q *types) {
+string_q parse(const string_q& params, size_t nItems, string_q *types) {
 
     string_q ret;
     for (size_t item = 0 ; item < (size_t)nItems ; item++) {
@@ -583,7 +583,7 @@ string_q parse(const string_q& params, uint32_t nItems, string_q *types) {
         else                                            val = "unknown type: " + t;
 
         if (contains(val, "off:")) {
-            size_t start = toLong32u(substitute(val, "off:", "")) / (size_t)32;
+            size_t start = toLongU(substitute(val, "off:", "")) / (size_t)32;
             size_t len   = grabBigNum(params,start);
             if (len == NOPOS)
                 len = params.length()-start;
@@ -602,7 +602,7 @@ string_q parse(const string_q& params, uint32_t nItems, string_q *types) {
 }
 
 //---------------------------------------------------------------------------
-string_q toFunction(const string_q& name, const string_q& input, uint32_t nItems, string_q *items) {
+string_q toFunction(const string_q& name, const string_q& input, size_t nItems, string_q *items) {
     return "[ \"" + name + "\", " + substitute(parse(input.substr(10), nItems, items), "|", "\", \"") + " ]";
 }
 
@@ -613,8 +613,8 @@ string_q CTransaction::inputToFunction(void) const {
 
     if (funcPtr) {
         string_q items[256];
-        uint32_t nItems = 0;
-        for (uint32_t i = 0 ; i < funcPtr->inputs.size() ; i++)
+        size_t nItems = 0;
+        for (size_t i = 0 ; i < funcPtr->inputs.size() ; i++)
             items[nItems++] = funcPtr->inputs[i].type;
         return toFunction(funcPtr->name, input, nItems, items);
     }

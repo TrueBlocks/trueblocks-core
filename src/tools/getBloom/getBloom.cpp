@@ -96,8 +96,8 @@ string_q doOneBloom(uint64_t num, const COptions& opt) {
 
         if (opt.asBits) {
             rawBlock.logsBloom = toBits(rawBlock.logsBloom);
-            for (uint32_t i = 0 ; i < rawBlock.transactions.size() ; i++)
-                rawBlock.transactions[i].receipt.logsBloom = toBits(rawBlock.transactions[i].receipt.logsBloom);
+            for (size_t i = 0 ; i < rawBlock.transactions.size() ; i++)
+                rawBlock.transactions.at(i).receipt.logsBloom = toBits(rawBlock.transactions[i].receipt.logsBloom); // .at cannot go past end of vector!
         }
         if (opt.asBars) {
             ostringstream os;
@@ -106,7 +106,7 @@ string_q doOneBloom(uint64_t num, const COptions& opt) {
             else
                 os << num << ": ";
             os << asBar(rawBlock.logsBloom) << "\n";
-            for (uint32_t i = 0 ; i < rawBlock.transactions.size() ; i++) {
+            for (size_t i = 0 ; i < rawBlock.transactions.size() ; i++) {
                 if (opt.receipt) {
                     string_q x = asBar(rawBlock.transactions[i].receipt.logsBloom);
                     if (!x.empty())
@@ -126,7 +126,7 @@ string_q doOneBloom(uint64_t num, const COptions& opt) {
         readBloomArray(blooms, substitute(getBinaryFilename(num), "/blocks/", "/blooms/"));
         ostringstream os;
         os << "\n" << string_q(90, '-') << " " << num << string_q(90, '-') << "\n";
-        for (uint32_t i = 0 ; i < blooms.size(); i++) {
+        for (size_t i = 0 ; i < blooms.size(); i++) {
             os << asBar(bloom2Bits(blooms[i])) << "\n";
         }
         result = os.str().c_str();
