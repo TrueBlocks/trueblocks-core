@@ -74,7 +74,7 @@ bool CLeaf::setValueByName(const string_q& fieldName, const string_q& fieldValue
             }
             break;
         case 'c':
-            if ( fieldName % "counter" ) { counter = toLong32u(fieldValue); return true; }
+            if ( fieldName % "counter" ) { counter = toLongU(fieldValue); return true; }
             break;
         default:
             break;
@@ -127,7 +127,7 @@ void CLeaf::registerClass(void) {
 
     CTreeNode::registerClass();
 
-    uint32_t fieldNum = 1000;
+    size_t fieldNum = 1000;
     ADD_FIELD(CLeaf, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CLeaf, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CLeaf, "showing", T_BOOL,  ++fieldNum);
@@ -193,12 +193,12 @@ string_q CLeaf::getValueByName(const string_q& fieldName) const {
     switch (tolower(fieldName[0])) {
         case 'b':
             if ( fieldName % "blocks" || fieldName % "blocksCnt" ) {
-                uint32_t cnt = blocks.size();
+                size_t cnt = blocks.size();
                 if (endsWith(fieldName, "Cnt"))
                     return asStringU(cnt);
                 if (!cnt) return "";
                 string_q retS;
-                for (uint32_t i = 0 ; i < cnt ; i++) {
+                for (size_t i = 0 ; i < cnt ; i++) {
                     retS += asStringU(blocks[i]);
                     retS += ((i < cnt - 1) ? ",\n" : "\n");
                 }
@@ -227,7 +227,7 @@ ostream& operator<<(ostream& os, const CLeaf& item) {
 }
 
 //---------------------------------------------------------------------------
-const string_q CLeaf::getStringAt(const string_q& name, uint32_t i) const {
+const string_q CLeaf::getStringAt(const string_q& name, size_t i) const {
     if ( name % "blocks" && i < blocks.size() )
         return asStringU(blocks[i]);
     return "";
@@ -351,7 +351,7 @@ const string_q CLeaf::getStringAt(const string_q& name, uint32_t i) const {
     bool CLeaf::visitItems(ACCTVISITOR func, void *data) const {
         ASSERT(func);
         CVisitData *vd = reinterpret_cast<CVisitData*>(data);
-        uint32_t save = vd->type;
+        uint64_t save = vd->type;
         vd->counter = counter;
         vd->type = T_LEAF;
         vd->strs = vd->strs + "+" + (cMagenta+prefixS + cOff + "|" + cBlue + at(prefixS) + cOff);

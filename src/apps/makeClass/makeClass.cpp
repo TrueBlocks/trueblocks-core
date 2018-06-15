@@ -361,7 +361,7 @@ string_q ptrWriteFmt =
     //------------------------------------------------------------------------------------------------
     string_q sorts[4] = { baseLower.substr(0,2)+"_Name", "", baseLower+"ID", "" };
     string_q sortString = toml.getConfigStr("settings", "sort", "");
-    uint32_t cnt = 0;
+    size_t cnt = 0;
     while (!sortString.empty())
         sorts[cnt++] = nextTokenClear(sortString, '|');
 
@@ -634,7 +634,7 @@ string_q getCaseSetCode(const string_q& fieldCase) {
                         caseCode +=  " { " + field + " = toWei(fieldValue); return true; }";
 
                     } else if (type == "uint8" || type == "uint16" || type == "uint32") {
-                        caseCode +=  " { " + field + " = toLong32u(fieldValue); return true; }";
+                        caseCode +=  " { " + field + " = (uint32_t)toLongU(fieldValue); return true; }";
 
                     } else if (type == "uint64") {
                         caseCode +=  " { " + field + " = toUnsigned(fieldValue); return true; }";
@@ -697,7 +697,7 @@ const char* STR_CASE_SET_CODE_ARRAY =
 "\t\t\t\tchar *p = (char *)fieldValue.c_str();\n"
 "\t\t\t\twhile (p && *p) {\n"
 "\t\t\t\t\t[{TYPE}] item;\n"
-"\t\t\t\t\tuint32_t nFields = 0;\n"
+"\t\t\t\t\tsize_t nFields = 0;\n"
 "\t\t\t\t\tp = item.parseJson(p, nFields);\n"
 "\t\t\t\t\tif (nFields)\n"
 "\t\t\t\t\t\t[{NAME}].push_back(item);\n"
@@ -708,12 +708,12 @@ const char* STR_CASE_SET_CODE_ARRAY =
 //------------------------------------------------------------------------------------------------------------
 const char* STR_CASE_CODE_ARRAY =
 " {\n"
-"[BTAB]\t\tuint32_t cnt = [{PTR}][{FIELD}].size();\n"
+"[BTAB]\t\tsize_t cnt = [{PTR}][{FIELD}].size();\n"
 "[BTAB]\t\tif (endsWith(fieldName, \"Cnt\"))\n"
 "[BTAB]\t\t\treturn asStringU(cnt);\n"
 "[BTAB]\t\tif (!cnt) return \"\";\n"
 "[BTAB]\t\tstring_q retS;\n"
-"[BTAB]\t\tfor (uint32_t i = 0 ; i < cnt ; i++) {\n"
+"[BTAB]\t\tfor (size_t i = 0 ; i < cnt ; i++) {\n"
 "[BTAB]\t\t\tretS += [{PTR}][{FIELD}][i].Format();\n"
 "[BTAB]\t\t\tretS += ((i < cnt - 1) ? \",\\n\" : \"\\n\");\n"
 "[BTAB]\t\t}\n"
@@ -723,12 +723,12 @@ const char* STR_CASE_CODE_ARRAY =
 //------------------------------------------------------------------------------------------------------------
 const char* STR_CASE_CODE_STRINGARRAY =
 " {\n"
-"[BTAB]\t\tuint32_t cnt = [{PTR}][{FIELD}].size();\n"
+"[BTAB]\t\tsize_t cnt = [{PTR}][{FIELD}].size();\n"
 "[BTAB]\t\tif (endsWith(fieldName, \"Cnt\"))\n"
 "[BTAB]\t\t\treturn asStringU(cnt);\n"
 "[BTAB]\t\tif (!cnt) return \"\";\n"
 "[BTAB]\t\tstring_q retS;\n"
-"[BTAB]\t\tfor (uint32_t i = 0 ; i < cnt ; i++) {\n"
+"[BTAB]\t\tfor (size_t i = 0 ; i < cnt ; i++) {\n"
 "[BTAB]\t\t\tretS += (\"\\\"\" + [{PTR}][{FIELD}][i] + \"\\\"\");\n"
 "[BTAB]\t\t\tretS += ((i < cnt - 1) ? \",\\n\" + indent() : \"\\n\");\n"
 "[BTAB]\t\t}\n"
@@ -786,7 +786,7 @@ const char* PTR_SET_CASE =
 "\t\t\t\t[{NAME}] = new [{TYPE}];\n"
 "\t\t\t\tif ([{NAME}]) {\n"
 "\t\t\t\t\tchar *p = cleanUpJson((char *)fieldValue.c_str());\n"
-"\t\t\t\t\tuint32_t nFields = 0;\n"
+"\t\t\t\t\tsize_t nFields = 0;\n"
 "\t\t\t\t\t[{NAME}]->parseJson(p, nFields);\n"
 "\t\t\t\t\treturn true;\n"
 "\t\t\t\t}\n"
@@ -795,7 +795,7 @@ const char* PTR_SET_CASE =
 
 //------------------------------------------------------------------------------------------------------------
 const char *STR_GETOBJ_HEAD =
-"\tconst CBaseNode *getObjectAt(const string_q& fieldName, uint32_t index) const override;\n";
+"\tconst CBaseNode *getObjectAt(const string_q& fieldName, size_t index) const override;\n";
 
 //------------------------------------------------------------------------------------------------------------
 const char *STR_GETOBJ_CODE_FIELD =
@@ -805,13 +805,13 @@ const char *STR_GETOBJ_CODE_FIELD =
 //------------------------------------------------------------------------------------------------------------
 const char *STR_GETOBJ_CODE =
 "//---------------------------------------------------------------------------\n"
-"const CBaseNode *[{CLASS_NAME}]::getObjectAt(const string_q& fieldName, uint32_t index) const {\n"
+"const CBaseNode *[{CLASS_NAME}]::getObjectAt(const string_q& fieldName, size_t index) const {\n"
 "[{FIELDS}]\treturn NULL;\n"
 "}\n\n";
 
 //------------------------------------------------------------------------------------------------------------
 const char *STR_GETSTR_HEAD =
-"\tconst string_q getStringAt(const string_q& name, uint32_t i) const override;\n";
+"\tconst string_q getStringAt(const string_q& name, size_t i) const override;\n";
 
 //------------------------------------------------------------------------------------------------------------
 const char *STR_GETSTR_CODE_FIELD =
@@ -821,7 +821,7 @@ const char *STR_GETSTR_CODE_FIELD =
 //------------------------------------------------------------------------------------------------------------
 const char *STR_GETSTR_CODE =
 "//---------------------------------------------------------------------------\n"
-"const string_q [{CLASS_NAME}]::getStringAt(const string_q& name, uint32_t i) const {\n"
+"const string_q [{CLASS_NAME}]::getStringAt(const string_q& name, size_t i) const {\n"
 "[{FIELDS}]\treturn \"\";\n"
 "}\n\n";
 
@@ -850,8 +850,8 @@ string_q checkType(const string_q& typeIn) {
         "int64",   "string", "time",  "timestamp", "uint256",
         "uint32",  "uint64", "uint8", "wei",       "blknum",
     };
-    uint32_t cnt = sizeof(keywords) / sizeof(string_q);
-    for (uint32_t i=0;i<cnt;i++) {
+    size_t cnt = sizeof(keywords) / sizeof(string_q);
+    for (size_t i = 0 ; i < cnt ; i++) {
         if (keywords[i] == typeIn)
             return typeIn;
     }

@@ -24,7 +24,7 @@ CParams params[] = {
     CParams("-info",         "retreive standarized information (name, decimals, totalSupply, etc.) about the token"),
     CParams("",              "Retrieve the token balance(s) for one or more addresses at the given (or latest) block(s).\n"),
 };
-uint32_t nParams = sizeof(params) / sizeof(CParams);
+size_t nParams = sizeof(params) / sizeof(CParams);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {

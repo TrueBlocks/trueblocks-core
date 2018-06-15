@@ -86,7 +86,7 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    char *CBaseNode::parseCSV(char *s, uint32_t& nFields, const string_q *fields) {
+    char *CBaseNode::parseCSV(char *s, size_t& nFields, const string_q *fields) {
         nFields = 0;
 
         typedef enum { OUTSIDE = 0, INSIDE } parseState;
@@ -127,8 +127,8 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    char *CBaseNode::parseText(char *s, uint32_t& nFields, const string_q *fields) {
-        uint32_t max = nFields;
+    char *CBaseNode::parseText(char *s, size_t& nFields, const string_q *fields) {
+        size_t max = nFields;
         nFields = 0;
         char *fieldVal = s;
         while (s && *s) {
@@ -156,7 +156,7 @@ namespace qblocks {
 
     //--------------------------------------------------------------------------------
     char *CBaseNode::parseJson(char *s) {
-        uint32_t nFields = 0;
+        size_t nFields = 0;
         return parseJson(s, nFields);
     }
 
@@ -166,7 +166,7 @@ namespace qblocks {
 #endif
 
     //--------------------------------------------------------------------------------
-    char *CBaseNode::parseJson(char *s, uint32_t& nFields) {
+    char *CBaseNode::parseJson(char *s, size_t& nFields) {
 #ifdef DEBUG_PARSER
         string_q ss = s;
         string_q tt('-',25);
@@ -613,23 +613,23 @@ namespace qblocks {
             promptName = fieldName;
         }
 
-        uint32_t maxWidth = 0xdeadbeef, lineWidth = 0xdeadbeef;
+        size_t maxWidth = 0xdeadbeef, lineWidth = 0xdeadbeef;
         bool rightJust = false, lineJust = false;
         if (contains(fieldName, "w:")) {
             ASSERT(fieldName.substr(0,2) % "w:");  // must be first modifier in the string
             replace(fieldName, "w:", EMPTY);   // get rid of the 'w:'
-            maxWidth = toLong32u(fieldName);   // grab the width
+            maxWidth = toLongU(fieldName);   // grab the width
             nextTokenClear(fieldName, ':');    // skip to the start of the fieldname
         } else if (contains(fieldName, "r:")) {
             ASSERT(fieldName.substr(0,2) % "r:");  // must be first modifier in the string
             replace(fieldName, "r:", EMPTY);   // get rid of the 'w:'
-            maxWidth = toLong32u(fieldName);   // grab the width
+            maxWidth = toLongU(fieldName);   // grab the width
             nextTokenClear(fieldName, ':');    // skip to the start of the fieldname
             rightJust = true;
         } else if (contains(fieldName, "l:")) {
             ASSERT(fieldName.substr(0,2) % "l:");  // must be first modifier in the string
             replace(fieldName, "l:", "");   // get rid of the 'w:'
-            lineWidth = toLong32u(fieldName);   // grab the width
+            lineWidth = toLongU(fieldName);   // grab the width
             nextTokenClear(fieldName, ':');    // skip to the start of the fieldname
             lineJust = true;
         }
@@ -652,7 +652,7 @@ namespace qblocks {
             fieldValue = truncPad(fieldValue, maxWidth);  // pad or truncate
         }
         if (lineJust) {
-extern string_q reformat1(const string_q& in, uint32_t len);
+extern string_q reformat1(const string_q& in, size_t len);
             fieldValue = reformat1(fieldValue, lineWidth);
         }
 
@@ -704,7 +704,7 @@ extern string_q reformat1(const string_q& in, uint32_t len);
                     if (cnt) {
                         incIndent();
                         os << "\n";
-                        for (uint32_t i = 0 ; i < cnt ; i++) {
+                        for (size_t i = 0 ; i < cnt ; i++) {
                             os << indent();
                             const CBaseNode *node = getObjectAt(name, i);
                             if (node) {
@@ -750,21 +750,22 @@ extern string_q reformat1(const string_q& in, uint32_t len);
     }
 
     //-----------------------------------------------------------------------
-    string_q reformat1(const string_q& in, uint32_t len) {
+    string_q reformat1(const string_q& in, size_t len) {
         string_q ret = in;
         if (ret.length() > len+10) {
-            string_q parts[1000];
-            uint32_t nParts = 0;
+            CStringArray parts;
             while (!ret.empty()) {
-                parts[nParts++] = ret.substr(0, len);
-                replace(ret, parts[nParts-1], "");
-                if (parts[nParts-1].length()==len) {
-                    parts[nParts-1] += "...";
-                    parts[nParts-1] += "\r\n\t\t\t    ";
+                string_q s = ret.substr(0, len);
+                replace(ret, s, "");
+                if (s.length() == len) {
+                    s += "...";
+                    s += "\r\n\t\t\t    ";
                 }
+                parts.push_back(s);
             }
-            for (uint32_t xx = 0 ; xx < nParts ; xx++)
-                ret += parts[xx];
+            ASSERT(ret.empty());
+            for (size_t i = 0 ; i < parts.size() ; i++)
+                ret += parts[i];
         }
         return ret;
     }

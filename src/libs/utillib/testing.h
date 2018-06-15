@@ -19,12 +19,12 @@ namespace testing {
     public:
         static PF funcs[100];
         static uint64_t nFuncs;
-        Test(void)  { for (uint32_t i=0;i<100;i++) { funcs[i] = NULL; } }
+        Test(void)  { memset(funcs, '\0', 100); }
         virtual ~Test(void) {}
         virtual void SetUp(void) = 0;
         virtual void TearDown(void) = 0;
         static void addFunc(PF func) {
-            for (uint32_t i=0;i<nFuncs;i++) {
+            for (size_t i = 0 ; i < nFuncs ; i++) {
                 if (funcs[i])
                     return;
             }
@@ -91,7 +91,7 @@ return false; \
 
 inline int RUN_ALL_TESTS(void) {
     bool result = false;
-    for (uint32_t i = 0 ; i < testing::Test::nFuncs ; i++)
+    for (size_t i = 0 ; i < testing::Test::nFuncs ; i++)
         if (testing::Test::funcs[i]) {
             cerr << i << ". ";
             result |= !((*(testing::Test::funcs[i]))(i));

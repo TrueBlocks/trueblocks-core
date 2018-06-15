@@ -120,7 +120,7 @@ namespace qblocks {
     }
 
     //-------------------------------------------------------------------------
-    void CRuntimeClass::AddField(const string_q& fieldName, uint32_t dataType, uint32_t fieldID) {
+    void CRuntimeClass::AddField(const string_q& fieldName, size_t dataType, size_t fieldID) {
         if (!m_FieldList)
             m_FieldList = new CFieldList;
         ASSERT(m_FieldList);
@@ -135,16 +135,16 @@ namespace qblocks {
     }
 
     //-------------------------------------------------------------------------
-    CBuiltIn::CBuiltIn(CRuntimeClass *pClass, const string_q& className, uint32_t size,
+    CBuiltIn::CBuiltIn(CRuntimeClass *pClass, const string_q& className, size_t size,
                        PFNV createFunc, CRuntimeClass *pBase) {
         m_pClass = pClass;
         string_q copy = className;
         if (!copy.empty())
             pClass->m_ClassName = strdup(copy.c_str());
 
-        pClass->m_ObjectSize    = size;
-        pClass->m_BaseClass     = pBase;
-        pClass->m_FieldList     = NULL;
-        pClass->m_CreateFunc    = createFunc;
+        pClass->m_ObjectSize = size;
+        pClass->m_BaseClass  = pBase;
+        pClass->m_FieldList  = NULL;
+        pClass->m_CreateFunc = createFunc;
     }
 }  // namespace qblocks

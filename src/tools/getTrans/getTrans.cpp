@@ -81,11 +81,12 @@ bool visitTransaction(CTransaction& trans, void *data) {
         CTraceArray traces;
         getTraces(traces, trans.hash);
         if (traces.size()) {
-            uint32_t dTs = 0;
+            size_t dTs = 0;
             cout << "[";
-            for (uint32_t i = 0 ; i < traces.size() ; i++) {
-                traces[i].doExport(cout);
-                dTs = max(dTs, traces[i].traceAddress.size());
+            for (size_t i = 0 ; i < traces.size() ; i++) {
+            	const CTrace *trace = &traces[i]; 
+                trace->doExport(cout);
+                dTs = max(dTs, trace->traceAddress.size());
             }
             cout << "]\n";
             if (opt->nTraces) {

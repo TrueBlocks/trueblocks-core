@@ -38,7 +38,6 @@ public:
         friend string_q operator+  (const string_q& str1, const char*     str2);
         friend string_q operator+  (const char*     str1, const string_q& str2);
         friend string_q operator+  (const string_q& str1, char            ch);
-        static size_t sizeme(void) { return 24; }
     };
 #else
     class string_q {
@@ -120,11 +119,10 @@ public:
         string_q        substr     (size_t first, size_t len) const;
         string_q        substr     (size_t first) const;
 
-        const  char&    at         (size_t index) const;
-        const  char*    c_str      (void) const;
-        const  string   str        (void) const { return string(c_str()); };
-               size_t   rfind      (char ch) const;
-        static size_t   sizeme     (void) { return sizeof(string_q); }
+        const char&     at         (size_t index) const;
+        const char*     c_str      (void) const;
+        const string    str        (void) const { return string(c_str()); };
+              size_t    rfind      (char ch) const;
 
         //----------------------------------------------------------------------------------------------------
         friend ostream& operator<<(ostream &os, const string_q& x) {

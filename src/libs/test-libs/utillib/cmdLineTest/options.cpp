@@ -23,7 +23,7 @@ CParams params[] = {
     CParams("-list:<list>",     "enter a list of value separated by commas (no spaces or quoted)"),
     CParams("",                 "Tests various command line behavior.\n"),
 };
-uint32_t nParams = sizeof(params) / sizeof(CParams);
+size_t nParams = sizeof(params) / sizeof(CParams);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {

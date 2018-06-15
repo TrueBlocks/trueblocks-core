@@ -141,7 +141,7 @@ void CBranch::registerClass(void) {
 
     CTreeNode::registerClass();
 
-    uint32_t fieldNum = 1000;
+    size_t fieldNum = 1000;
     ADD_FIELD(CBranch, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CBranch, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CBranch, "showing", T_BOOL,  ++fieldNum);
@@ -397,13 +397,13 @@ ostream& operator<<(ostream& os, const CBranch& item) {
     bool CBranch::visitItems(ACCTVISITOR func, void *data) const {
         ASSERT(func);
         CVisitData *vd = reinterpret_cast<CVisitData*>(data);
-        uint32_t save = vd->type;
+        uint64_t save = vd->type;
         vd->type = T_BRANCH;
         vd->counter = 0;
         vd->strs = vd->strs + branchValue + "+";
         //vd->strs = vd->strs + "+";
         (*func)(this, data);
-        for (uint32_t i = 0; i < 16; ++i) {
+        for (size_t i = 0; i < 16; ++i) {
             if (nodes[i]) {
                 vd->level++;
                 vd->strs = vd->strs + "-" + idex((char)i);

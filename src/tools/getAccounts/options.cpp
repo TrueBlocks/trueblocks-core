@@ -18,7 +18,7 @@ CParams params[] = {
     CParams("-named",    "Show addresses from named accounts as per ethName"),
     CParams("",          "Show the list of Ethereum accounts known to the local node or named accounts."),
 };
-uint32_t nParams = sizeof(params) / sizeof(CParams);
+size_t nParams = sizeof(params) / sizeof(CParams);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {

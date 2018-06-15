@@ -155,7 +155,7 @@ void CTraceAction::registerClass(void) {
     if (been_here) return;
     been_here = true;
 
-    uint32_t fieldNum = 1000;
+    size_t fieldNum = 1000;
     ADD_FIELD(CTraceAction, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CTraceAction, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CTraceAction, "showing", T_BOOL,  ++fieldNum);

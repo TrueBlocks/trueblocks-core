@@ -66,7 +66,7 @@ bool CAbi::setValueByName(const string_q& fieldName, const string_q& fieldValue)
                 char *p = (char *)fieldValue.c_str();
                 while (p && *p) {
                     CFunction item;
-                    uint32_t nFields = 0;
+                    size_t nFields = 0;
                     p = item.parseJson(p, nFields);
                     if (nFields)
                         abiByName.push_back(item);
@@ -77,7 +77,7 @@ bool CAbi::setValueByName(const string_q& fieldName, const string_q& fieldValue)
                 char *p = (char *)fieldValue.c_str();
                 while (p && *p) {
                     CFunction item;
-                    uint32_t nFields = 0;
+                    size_t nFields = 0;
                     p = item.parseJson(p, nFields);
                     if (nFields)
                         abiByEncoding.push_back(item);
@@ -135,7 +135,7 @@ void CAbi::registerClass(void) {
     if (been_here) return;
     been_here = true;
 
-    uint32_t fieldNum = 1000;
+    size_t fieldNum = 1000;
     ADD_FIELD(CAbi, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CAbi, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CAbi, "showing", T_BOOL,  ++fieldNum);
@@ -201,24 +201,24 @@ string_q CAbi::getValueByName(const string_q& fieldName) const {
     switch (tolower(fieldName[0])) {
         case 'a':
             if ( fieldName % "abiByName" || fieldName % "abiByNameCnt" ) {
-                uint32_t cnt = abiByName.size();
+                size_t cnt = abiByName.size();
                 if (endsWith(fieldName, "Cnt"))
                     return asStringU(cnt);
                 if (!cnt) return "";
                 string_q retS;
-                for (uint32_t i = 0 ; i < cnt ; i++) {
+                for (size_t i = 0 ; i < cnt ; i++) {
                     retS += abiByName[i].Format();
                     retS += ((i < cnt - 1) ? ",\n" : "\n");
                 }
                 return retS;
             }
             if ( fieldName % "abiByEncoding" || fieldName % "abiByEncodingCnt" ) {
-                uint32_t cnt = abiByEncoding.size();
+                size_t cnt = abiByEncoding.size();
                 if (endsWith(fieldName, "Cnt"))
                     return asStringU(cnt);
                 if (!cnt) return "";
                 string_q retS;
-                for (uint32_t i = 0 ; i < cnt ; i++) {
+                for (size_t i = 0 ; i < cnt ; i++) {
                     retS += abiByEncoding[i].Format();
                     retS += ((i < cnt - 1) ? ",\n" : "\n");
                 }
@@ -238,10 +238,10 @@ string_q CAbi::getValueByName(const string_q& fieldName) const {
 ostream& operator<<(ostream& os, const CAbi& item) {
     // EXISTING_CODE
     if (sizeof(item) != 0) { // do this to always go through here, but avoid a warning
-        for (uint32_t i = 0 ; i < item.abiByName.size() ; i++ ) {
+        for (size_t i = 0 ; i < item.abiByName.size() ; i++ ) {
             os << item.abiByName[i].Format() << "\n";
         }
-        for (uint32_t i = 0 ; i < item.abiByEncoding.size() ; i++ ) {
+        for (size_t i = 0 ; i < item.abiByEncoding.size() ; i++ ) {
             os << item.abiByEncoding[i].Format() << "\n";
         }
         { return os; }
@@ -253,7 +253,7 @@ ostream& operator<<(ostream& os, const CAbi& item) {
 }
 
 //---------------------------------------------------------------------------
-const CBaseNode *CAbi::getObjectAt(const string_q& fieldName, uint32_t index) const {
+const CBaseNode *CAbi::getObjectAt(const string_q& fieldName, size_t index) const {
     if ( fieldName % "abiByName" && index < abiByName.size() )
         return &abiByName[index];
     if ( fieldName % "abiByEncoding" && index < abiByEncoding.size() )
@@ -320,7 +320,7 @@ void CAbi::clearABI(void) {
 
 //---------------------------------------------------------------------------
 string_q abis[1000][2];
-uint32_t nAbis = 0;
+size_t nAbis = 0;
 
 //---------------------------------------------------------------------------
 void clearAbis(void) {
@@ -361,7 +361,7 @@ bool CAbi::loadABIFromFile(const string_q& fileName) {
     char *p = cleanUpJson((char *)contents.c_str());
     while (p && *p) {
         CFunction func;
-        uint32_t nFields = 0;
+        size_t nFields = 0;
         p = func.parseJson(p, nFields);
         if (nFields) {
             abiByName.push_back(func);
@@ -387,7 +387,7 @@ bool CAbi::loadABIFromCSV(const string_q& fileName) {
         string_q json = nextTokenClear(contents,'\n');
         string_q encoding = nextTokenClear(json,'\t');
         CFunction func;
-        uint32_t nFields = 0;
+        size_t nFields = 0;
         char *p = cleanUpJson((char *)json.c_str());
         func.parseJson(p, nFields);
         if (nFields) {
@@ -415,14 +415,14 @@ bool CAbi::loadABI(const string_q& addr) {
         string_q abis1;
 
         // Get the encodings
-        for (uint32_t i=0;i<abiByName.size();i++) {
+        for (size_t i=0;i<abiByName.size();i++) {
             CFunction funct = abiByName[i];
             getEncoding(abiFilename, addr, funct);
             abis1 += abiByName[i].Format("[{NAME}]|[{ENCODING}]\n");
         }
 
         // We need to do both since they are copies
-        for (uint32_t i=0;i<abiByEncoding.size();i++) {
+        for (size_t i=0;i<abiByEncoding.size();i++) {
             CFunction funct = abiByEncoding[i];
             getEncoding(abiFilename, addr, funct);
         }
@@ -431,7 +431,7 @@ bool CAbi::loadABI(const string_q& addr) {
             stringToAsciiFile(blockCachePath("abis/" + addr + ".abi"), abis1);
 
         if (verbose) {
-            for (uint32_t i = 0 ; i < abiByName.size() ; i++) {
+            for (size_t i = 0 ; i < abiByName.size() ; i++) {
                 const CFunction *f = &abiByName[i];
                 if (f->type == "function")
                     cerr << substitute(f->Format("[\"{NAME}|][{ENCODING}\"]"), "\n", " ") << "\n";
@@ -464,7 +464,7 @@ void rebuildFourByteDB(void) {
         string_q fileName = nextTokenClear(fileList, '\n');
         CAbi abi;
         abi.loadABIFromFile(fileName);
-        for (uint32_t f = 0 ; f < abi.abiByEncoding.size() ; f++) {
+        for (size_t f = 0 ; f < abi.abiByEncoding.size() ; f++) {
             funcArray.push_back(abi.abiByEncoding[f]);
             cout << abi.abiByEncoding[f].encoding << " : " << abi.abiByEncoding[f].name << " : " << abi.abiByEncoding[f].signature << "\n";
         }

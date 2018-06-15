@@ -15,6 +15,6 @@
 
 namespace qblocks {
 
-    uint32_t unused = 0;
+    size_t unused = 0;
 
 } // namespace qblocks

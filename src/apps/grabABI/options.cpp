@@ -29,7 +29,7 @@ CParams params[] = {
     CParams("",           "Fetches the ABI for a smart contract. Optionally generates C++ source code "
                           "representing that ABI.\n"),
 };
-uint32_t nParams = sizeof(params) / sizeof(CParams);
+size_t nParams = sizeof(params) / sizeof(CParams);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
@@ -129,7 +129,7 @@ void COptions::Init(void) {
     raw = false;
     decNames = true;
     asData = false;
-    for (uint32_t i = 0 ; i < MAX_ADDRS ; i++) {
+    for (size_t i = 0 ; i < MAX_ADDRS ; i++) {
         addrs[i] = "";
     }
     nAddrs = 0;

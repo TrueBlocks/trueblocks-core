@@ -25,7 +25,7 @@ CParams params[] = {
     CParams("-source",      "search 'source' field as well name and address (the default)"),
     CParams("",             "Query Ethereum addresses and/or names making it easy to remember accounts.\n"),
 };
-uint32_t nParams = sizeof(params) / sizeof(CParams);
+size_t nParams = sizeof(params) / sizeof(CParams);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {

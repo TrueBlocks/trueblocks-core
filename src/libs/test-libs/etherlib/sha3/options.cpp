@@ -16,7 +16,7 @@
 CParams params[] = {
     CParams("",  "Testing code for the sha3 functionality of etherlib.\n"),
 };
-uint32_t nParams = sizeof(params) / sizeof(CParams);
+size_t nParams = sizeof(params) / sizeof(CParams);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {

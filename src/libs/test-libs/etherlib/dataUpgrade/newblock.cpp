@@ -105,7 +105,7 @@ bool CNewBlock::setValueByName(const string_q& fieldName, const string_q& fieldV
                 char *p = (char *)fieldValue.c_str();
                 while (p && *p) {
                     CTransaction item;
-                    uint32_t nFields = 0;
+                    size_t nFields = 0;
                     p = item.parseJson(p, nFields);
                     if (nFields)
                         transactions.push_back(item);
@@ -122,8 +122,8 @@ bool CNewBlock::setValueByName(const string_q& fieldName, const string_q& fieldV
 //---------------------------------------------------------------------------------------------------
 void CNewBlock::finishParse() {
     // EXISTING_CODE
-    for (uint32_t i=0;i<transactions.size();i++)
-        transactions[i].pBlock = (CBlock*)this;
+    for (size_t i = 0 ; i < transactions.size() ; i++)
+        transactions.at(i).pBlock = (CBlock*)this; // .at cannot access past the end of vector
     // EXISTING_CODE
 }
 
@@ -184,7 +184,7 @@ void CNewBlock::registerClass(void) {
     if (been_here) return;
     been_here = true;
 
-    uint32_t fieldNum = 1000;
+    size_t fieldNum = 1000;
     ADD_FIELD(CNewBlock, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CNewBlock, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CNewBlock, "showing", T_BOOL,  ++fieldNum);
@@ -220,10 +220,10 @@ string_q nextNewblockChunk_custom(const string_q& fieldIn, const void *dataPtr) 
                 break;
             case 't':
                 if ( expContext().hashesOnly && fieldIn % "transactions" ) {
-                    uint32_t cnt = newp->transactions.size();
+                    size_t cnt = newp->transactions.size();
                     if (!cnt) return EMPTY;
                     string_q ret;
-                    for (uint32_t i = 0 ; i < cnt ; i++) {
+                    for (size_t i = 0 ; i < cnt ; i++) {
                         ret += newp->transactions[i].hash;
                         ret += ((i < cnt-1) ? ",\n" : "\n");
                     }
@@ -271,7 +271,7 @@ bool CNewBlock::readBackLevel(SFArchive& archive) {
         // TODO -- technically we should re-read these values from the node
         string_q save = getCurlContext()->provider;
         getCurlContext()->provider = "local";
-        CBlock upgrade;uint32_t unused;
+        CBlock upgrade;size_t unused;
         queryBlock(upgrade, asStringU(blockNumber), false, false, unused);
         getCurlContext()->provider = save;
         miner = upgrade.miner;
@@ -332,12 +332,12 @@ string_q CNewBlock::getValueByName(const string_q& fieldName) const {
         case 't':
             if ( fieldName % "timestamp" ) return fromTimestamp(timestamp);
             if ( fieldName % "transactions" || fieldName % "transactionsCnt" ) {
-                uint32_t cnt = transactions.size();
+                size_t cnt = transactions.size();
                 if (endsWith(fieldName, "Cnt"))
                     return asStringU(cnt);
                 if (!cnt) return "";
                 string_q retS;
-                for (uint32_t i = 0 ; i < cnt ; i++) {
+                for (size_t i = 0 ; i < cnt ; i++) {
                     retS += transactions[i].Format();
                     retS += ((i < cnt - 1) ? ",\n" : "\n");
                 }
@@ -363,7 +363,7 @@ ostream& operator<<(ostream& os, const CNewBlock& item) {
 }
 
 //---------------------------------------------------------------------------
-const CBaseNode *CNewBlock::getObjectAt(const string_q& fieldName, uint32_t index) const {
+const CBaseNode *CNewBlock::getObjectAt(const string_q& fieldName, size_t index) const {
     if ( fieldName % "transactions" && index < transactions.size() )
         return &transactions[index];
     return NULL;
@@ -411,7 +411,7 @@ bool readOneNewBlock_fromJson(CNewBlock& block, const string_q& fileName) {
     }
 
     char *p = cleanUpJson((char *)contents.c_str());
-    uint32_t nFields=0;
+    size_t nFields=0;
     block.parseJson(p,nFields);
     return nFields;
 }

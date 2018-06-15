@@ -66,7 +66,7 @@ namespace qblocks {
         gasUsed  = t->receipt.gasUsed;
         gasPrice = t->gasPrice;
         isError  = t->isError;
-        nTraces  = getTraceCount(t->hash);
+        nTraces  = (uint32_t)getTraceCount(t->hash);
         strncpy(value, fromWei(t->value), 40); value[40] = '\0';
     }
 

@@ -22,12 +22,12 @@
 namespace qblocks {
 
     //--------------------------------------------------------------------------------
-    static uint32_t nP = 0;
+    static size_t nP = 0;
     static CParams ps[] = { };
     static CDefaultOptions defOpts;
 
     //--------------------------------------------------------------------------------
-    uint32_t& nParamsRef = nP;
+    size_t& nParamsRef = nP;
     CParams *paramsPtr  = &ps[0];
     COptionsBase *pOptions = &defOpts;
 
@@ -66,8 +66,8 @@ namespace qblocks {
         for (int i=0; i<argc; i++) {
             nChars += string_q(argv[i]).length();
         }
-        uint32_t nArgs = 0;
-        string_q *args = new string_q[argc+nChars+2];
+        size_t nArgs = 0;
+        string_q *args = new string_q[argc + nChars + 2];
 
         bool hasStdIn = false;
         for (int i = 1 ; i < argc ; i++) {
@@ -131,11 +131,11 @@ namespace qblocks {
         //-----------------------------------------------------------------------------------
         // Collapse commands that have 'permitted' sub options (i.e. colon ":" args)
         //-----------------------------------------------------------------------------------
-        uint32_t curArg = 0;
-        for (uint32_t i = 0 ; i < nArgs ; i++) {
+        size_t curArg = 0;
+        for (size_t i = 0 ; i < nArgs ; i++) {
             string_q arg = args[i];
             bool combine = false;
-            for (uint32_t j = 0 ; j < nParamsRef && !combine ; j++) {
+            for (size_t j = 0 ; j < nParamsRef && !combine ; j++) {
                 if (!paramsPtr[j].permitted.empty()) {
                     string_q shortName = paramsPtr[j].shortName;
                     string_q longName  = "-"+paramsPtr[j].longName;
@@ -669,7 +669,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
         char *p = cleanUpJson((char *)specialsStr.c_str());
         while (p && *p) {
             CNameValue pair;
-            uint32_t nFields = 0;
+            size_t nFields = 0;
             p = pair.parseJson(p, nFields);
             if (nFields) {
                 specials.push_back(pair);
@@ -683,7 +683,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
     bool COptionsBase::findSpecial(CNameValue& pair, const string_q& arg) const {
         if (specials.size() == 0)
             ((COptionsBase*)this)->loadSpecials();
-        for (uint32_t i = 0 ; i < specials.size() ; i++) {
+        for (size_t i = 0 ; i < specials.size() ; i++) {
             if (arg == specials[i].getName()) {
                 pair = specials[i];
                 return true;
@@ -711,7 +711,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
             verbose = save;
         }
 
-        for (uint32_t i = 0 ; i < namedAccounts.size() ; i++) {
+        for (size_t i = 0 ; i < namedAccounts.size() ; i++) {
             if (namedAccounts[i].addr % addr) {
                 acct = namedAccounts[i];
                 return true;

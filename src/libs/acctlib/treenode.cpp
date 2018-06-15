@@ -117,7 +117,7 @@ void CTreeNode::registerClass(void) {
     if (been_here) return;
     been_here = true;
 
-    uint32_t fieldNum = 1000;
+    size_t fieldNum = 1000;
     ADD_FIELD(CTreeNode, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CTreeNode, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CTreeNode, "showing", T_BOOL,  ++fieldNum);

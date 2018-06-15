@@ -136,7 +136,7 @@ void CLogEntry::registerClass(void) {
     if (been_here) return;
     been_here = true;
 
-    uint32_t fieldNum = 1000;
+    size_t fieldNum = 1000;
     ADD_FIELD(CLogEntry, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CLogEntry, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CLogEntry, "showing", T_BOOL,  ++fieldNum);
@@ -225,12 +225,12 @@ string_q CLogEntry::getValueByName(const string_q& fieldName) const {
             break;
         case 't':
             if ( fieldName % "topics" || fieldName % "topicsCnt" ) {
-                uint32_t cnt = topics.size();
+                size_t cnt = topics.size();
                 if (endsWith(fieldName, "Cnt"))
                     return asStringU(cnt);
                 if (!cnt) return "";
                 string_q retS;
-                for (uint32_t i = 0 ; i < cnt ; i++) {
+                for (size_t i = 0 ; i < cnt ; i++) {
                     retS += ("\"" + fromTopic(topics[i]) + "\"");
                     retS += ((i < cnt - 1) ? ",\n" + indent() : "\n");
                 }
@@ -262,7 +262,7 @@ ostream& operator<<(ostream& os, const CLogEntry& item) {
 }
 
 //---------------------------------------------------------------------------
-const string_q CLogEntry::getStringAt(const string_q& name, uint32_t i) const {
+const string_q CLogEntry::getStringAt(const string_q& name, size_t i) const {
     if ( name % "topics" && i < topics.size() )
         return fromTopic(topics[i]);
     return "";
@@ -277,7 +277,7 @@ bool CLogEntry::operator==(const CLogEntry& test) const {
     EQ_TEST(data);
     EQ_TEST(logIndex);
     EQ_TEST(topics.size());
-    for (uint32_t i = 0 ; i < topics.size() ; i++)
+    for (size_t i = 0 ; i < topics.size() ; i++)
         if (test.topics[i] != topics[i])
             return false;
 

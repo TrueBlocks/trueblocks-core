@@ -103,7 +103,8 @@ void [{CLASS_NAME}]::registerClass(void) {
     if (been_here) return;
     been_here = true;
 
-    [{PARENT_REG}]uint32_t fieldNum = 1000;
+    [{PARENT_REG}]
+    size_t fieldNum = 1000;
     ADD_FIELD([{CLASS_NAME}], "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD([{CLASS_NAME}], "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD([{CLASS_NAME}], "showing", T_BOOL,  ++fieldNum);

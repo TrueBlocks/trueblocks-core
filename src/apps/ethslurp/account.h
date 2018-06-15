@@ -49,11 +49,11 @@ public:
 
     DECLARE_NODE(CAccount);
 
-    const CBaseNode *getObjectAt(const string_q& fieldName, uint32_t index) const override;
+    const CBaseNode *getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
     CAbi abi;
-    uint32_t deleteNotShowing(void);
+    size_t deleteNotShowing(void);
     // EXISTING_CODE
     friend ostream& operator<<(ostream& os, const CAccount& item);
 

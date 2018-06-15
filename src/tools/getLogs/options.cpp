@@ -19,7 +19,7 @@ CParams params[] = {
     CParams("-raw",            "retrieve raw transaction directly from the running node"),
     CParams("",                "Retrieve a transaction's logs from the local cache or a running node."),
 };
-uint32_t nParams = sizeof(params) / sizeof(CParams);
+size_t nParams = sizeof(params) / sizeof(CParams);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
