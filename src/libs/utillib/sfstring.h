@@ -19,7 +19,7 @@ namespace qblocks {
 #define NOPOS ((size_t)-1)
 
     //--------------------------------------------------------------------
-//#define NATIVE
+#define NATIVE
 #ifdef NATIVE
     class string_q : public string {
 public:
