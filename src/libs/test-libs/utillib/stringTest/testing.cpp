@@ -24,6 +24,13 @@ public:
 };
 
 //------------------------------------------------------------------------
+#ifdef NATIVE
+#define strVal(a) a
+#else
+#define strVal(a) a.c_str()
+#endif
+
+//------------------------------------------------------------------------
 TEST_F(CThisTest, TestRelational) {
     string foo = "alpha"; string_q xfoo(foo.c_str());
     string bar = "beta";  string_q xbar(bar.c_str());
@@ -74,6 +81,7 @@ TEST_F(CThisTest, TestCompare) {
     return true;
 }}
 
+
 //------------------------------------------------------------------------
 TEST_F(CThisTest, TestAssignment) {
     string str1("Test string: "), str2, str3;
@@ -93,15 +101,9 @@ TEST_F(CThisTest, TestAssignment) {
     ASSERT_TRUE("qb-string set2", xstr2 == "x");
     ASSERT_TRUE("c-string set3",   str3 == "Test string: x");
     ASSERT_TRUE("qb-string set3", xstr3 == "Test string: x");
-#ifdef NATIVE
-    ASSERT_TRUE("set1 equal",      str1 == xstr1);
-    ASSERT_TRUE("set2 equal",      str2 == xstr2);
-    ASSERT_TRUE("set3 equal",      str3 == xstr3);
-#else
-    ASSERT_TRUE("set1 equal",      str1 == xstr1.c_str());
-    ASSERT_TRUE("set2 equal",      str2 == xstr2.c_str())
-    ASSERT_TRUE("set3 equal",      str3 == xstr3.c_str())
-#endif
+    ASSERT_TRUE("set1 equal",      str1 == strVal(xstr1));
+    ASSERT_TRUE("set2 equal",      str2 == strVal(xstr2));
+    ASSERT_TRUE("set3 equal",      str3 == strVal(xstr3));
     return true;
 }}
 
@@ -203,11 +205,7 @@ TEST_F(CThisTest, TestCStr) {
     string es1;
     ASSERT_TRUE("es1 is empty", es1.empty())
     ASSERT_TRUE("es1 == \"\"", es1 == "");
-#ifdef NATIVE
-    ASSERT_TRUE("es1 == EMPTY", es1 == (EMPTY));
-#else
-    ASSERT_TRUE("es1 == EMPTY", es1 == (EMPTY).c_str());
-#endif
+    ASSERT_TRUE("es1 == EMPTY", es1 == strVal(EMPTY));
     ASSERT_TRUE("es1 == nullStr", es1 == nullStr);
 
     string_q es2;
