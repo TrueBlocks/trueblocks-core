@@ -24,29 +24,17 @@ namespace qblocks {
 
     //-------------------------------------------------------------
     CExportContext& CExportContext::operator<<(bool b) {
-#if 1
         ostringstream os;
         os << b;
         Output(os.str().c_str());
-#else
-        char val[64];
-        sprintf(val, "%c", b ? '1' : '0');
-        Output(val);
-#endif
         return *this;
     }
 
     //-------------------------------------------------------------
     CExportContext& CExportContext::operator<<(char c) {
-#if 1
         ostringstream os;
         os << c;
         Output(os.str().c_str());
-#else
-        char val[64];
-        sprintf(val, "%c", c);
-        Output(val);
-#endif
         return *this;
     }
 
@@ -60,15 +48,9 @@ namespace qblocks {
 
     //-------------------------------------------------------------
     CExportContext& CExportContext::operator<<(unsigned int ui) {
-#if 1
         ostringstream os;
         os << ui;
         Output(os.str().c_str());
-#else
-        char val[64];
-        sprintf(val, (fmt.empty() ? "%d" : fmt.c_str()), ui);
-        Output(val);
-#endif
         return *this;
     }
 
@@ -82,15 +64,9 @@ namespace qblocks {
 
     //-------------------------------------------------------------
     CExportContext& CExportContext::operator<<(int i) {
-#if 1
         ostringstream os;
         os << i;
         Output(os.str().c_str());
-#else
-        char val[64];
-        sprintf(val, (fmt.empty() ? "%d" : fmt.c_str()), i);
-        Output(val);
-#endif
         return *this;
     }
 

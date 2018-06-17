@@ -2,7 +2,6 @@ dataUpgrade argc: 2 [1:CParameter]
 dataUpgrade CParameter 
 --------------------------------------------------------------------------------
 className: CParameter
-objectSize: 120
 baseClass: CBaseNode
 	fieldName: schema
 	  fieldID: 1001
