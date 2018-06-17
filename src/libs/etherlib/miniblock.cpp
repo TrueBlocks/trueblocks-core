@@ -38,12 +38,12 @@ namespace qblocks {
 
     //--------------------------------------------------------------------------
     string_q CMiniBlock::Format(void) const {
-        CStringExportContext ctx;
-        ctx << "blockNumber: " << blockNumber << " ";
-        ctx << "timestamp: "   << timestamp   << " ";
-        ctx << "firstTrans: "  << firstTrans  << " ";
-        ctx << "nTrans: "      << nTrans      << " ";
-        return ctx.str;
+        ostringstream os;
+        os << "blockNumber: " << blockNumber << " ";
+        os << "timestamp: "   << timestamp   << " ";
+        os << "firstTrans: "  << firstTrans  << " ";
+        os << "nTrans: "      << nTrans      << " ";
+        return os.str().c_str();
     }
 
     //--------------------------------------------------------------------------
@@ -82,14 +82,14 @@ namespace qblocks {
 
     //--------------------------------------------------------------------------
     string_q CMiniTrans::Format(void) const {
-        CStringExportContext ctx;
-        ctx << "index: "    << index      << " ";
-        ctx << "isError: "  << isError    << " ";
-        ctx << "nTraces: "  << nTraces    << " ";
-        ctx << "gasUsed: "  << gasUsed    << " ";
-        ctx << "gasPrice: " << gasPrice   << " ";
-        ctx << "value: "    << value      << " ";
-        return ctx.str;
+        ostringstream os;
+        os << "index: "    << index      << " ";
+        os << "isError: "  << isError    << " ";
+        os << "nTraces: "  << nTraces    << " ";
+        os << "gasUsed: "  << gasUsed    << " ";
+        os << "gasPrice: " << gasPrice   << " ";
+        os << "value: "    << value      << " ";
+        return os.str().c_str();
     }
 
     //--------------------------------------------------------------------------
@@ -136,17 +136,17 @@ namespace qblocks {
 
     //--------------------------------------------------------------------------
     inline string_q TIMER_IN(double& st) {
-        CStringExportContext ctx;
-        ctx << (qbNow()-st) << ": ";
+        ostringstream os;
+        os << (qbNow()-st) << ": ";
         st = qbNow();
-        return ctx.str;
+        return os.str().c_str();
     }
 
     //-------------------------------------------------------------------------
     inline string_q TIMER_TICK(double st) {
-        CStringExportContext ctx;
-        ctx << "in " << cGreen << (qbNow()-st) << cOff << " seconds.";
-        return ctx.str;
+        ostringstream os;
+        os << "in " << cGreen << (qbNow()-st) << cOff << " seconds.";
+        return os.str().c_str();
     }
 
     //--------------------------------------------------------------------------

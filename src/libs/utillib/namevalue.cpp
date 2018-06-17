@@ -36,8 +36,8 @@ void CNameValue::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPt
     }
 
     string_q fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, dataPtr))
-        return;
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     while (!fmt.empty())
         ctx << getNextChunk(fmt, nextNamevalueChunk, this);
@@ -172,13 +172,6 @@ string_q nextNamevalueChunk_custom(const string_q& fieldIn, const void *dataPtr)
     }
 
     return "";
-}
-
-//---------------------------------------------------------------------------
-bool CNameValue::handleCustomFormat(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
-    return false;
 }
 
 //---------------------------------------------------------------------------

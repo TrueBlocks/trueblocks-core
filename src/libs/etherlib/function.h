@@ -97,9 +97,6 @@ inline CFunction::~CFunction(void) {
 
 //--------------------------------------------------------------------------
 inline void CFunction::clear(void) {
-    inputs.clear();
-    outputs.clear();
-
     // EXISTING_CODE
     // EXISTING_CODE
 }

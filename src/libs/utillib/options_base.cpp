@@ -346,9 +346,9 @@ namespace qblocks {
     string_q options(void) {
         string_q required;
 
-        CStringExportContext ctx;
+        ostringstream os;
         if (!COptionsBase::needsOption)
-            ctx << "[";
+            os << "[";
         for (uint64_t i = 0 ; i < nParamsRef ; i++) {
             if (startsWith(paramsPtr[i].shortName, '~')) {
                 required += (" " + substitute(paramsPtr[i].longName.substr(1), "!", ""));
@@ -357,21 +357,21 @@ namespace qblocks {
                 // invisible option
 
             } else if (!paramsPtr[i].shortName.empty()) {
-                ctx << paramsPtr[i].shortName << "|";
+                os << paramsPtr[i].shortName << "|";
 
             } else if (!paramsPtr[i].shortName.empty()) {
-                ctx << paramsPtr[i].shortName << "|";
+                os << paramsPtr[i].shortName << "|";
             }
         }
         if (isEnabled(OPT_VERBOSE))
-            ctx << "-v|";
-        ctx << "-h";
+            os << "-v|";
+        os << "-h";
         if (!COptionsBase::needsOption)
-            ctx << "]";
-        ctx << required;
+            os << "]";
+        os << required;
 
         ASSERT(pOptions);
-        string_q ret = pOptions->postProcess("options", ctx.str);
+        string_q ret = pOptions->postProcess("options", os.str().c_str());
         if (COptionsBase::isReadme)
             ret = substitute(substitute(ret, "<", "&lt;"), ">", "&gt;");
         return ret;
@@ -435,7 +435,8 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
 
     //--------------------------------------------------------------------------------
     string_q notes(void) {
-        CStringExportContext ctx;
+
+        ostringstream os;
         ASSERT(pOptions);
         string_q ret = pOptions->postProcess("notes", "");
         if (!ret.empty()) {
@@ -451,27 +452,29 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
             replaceAll(ret, "[{", sepy1);
             replaceAll(ret, "}]", sepy2);
 
-            ctx << bYellow << sep << "Notes:" << sep << cOff << "\n";
-            ctx << (COptionsBase::isReadme ? "\n" : "");
+            os << bYellow << sep << "Notes:" << sep << cOff << "\n";
+            os << (COptionsBase::isReadme ? "\n" : "");
             while (!ret.empty()) {
                 string_q line = substitute(nextTokenClear(ret,'\n'), "|","\n" + lead + "  ");
-                ctx << lead << tick << line << "\n";
+                os << lead << tick << line << "\n";
             }
-            ctx << "\n";
-            replaceAll(ctx.str, "-   ","  - ");
+            os << "\n";
+            ret = os.str().c_str();
+            replaceAll(ret, "-   ","  - ");
         }
-        return ctx.str;
+        return ret;
     }
 
     //--------------------------------------------------------------------------------
     string_q descriptions(void) {
         string_q required;
-        CStringExportContext ctx;
-        ctx << bYellow << sep << "Where:" << sep << cOff << "  \n";
+
+        ostringstream os;
+        os << bYellow << sep << "Where:" << sep << cOff << "  \n";
         if (COptionsBase::isReadme) {
-            ctx << "\n";
-            ctx << "| Short Cut | Option | Description |\n";
-            ctx << "| -------: | :------- | :------- |\n";
+            os << "\n";
+            os << "| Short Cut | Option | Description |\n";
+            os << "| -------: | :------- | :------- |\n";
         }
 
         bool showHidden = (getEnvStr("SHOW_HIDDEN_OPTIONS") == "true");
@@ -488,15 +491,15 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
                 bool isReq = isMode && !contains(lName, '!');
                 sName = (isMode ? "" : sName);
                 lName = substitute(substitute((isMode ? substitute(lName, "-", "") : lName), "!", ""), "~", "");
-                ctx << oneDescription(sName, lName, descr, isMode, isReq);
+                os << oneDescription(sName, lName, descr, isMode, isReq);
             }
         }
 
         if (isEnabled(OPT_VERBOSE))
-            ctx << oneDescription("-v", "-verbose", "set verbose level. Either -v, --verbose or -v:n where 'n' is level", false, false);
-        ctx << oneDescription("-h", "-help", "display this help screen", false, false);
+            os << oneDescription("-v", "-verbose", "set verbose level. Either -v, --verbose or -v:n where 'n' is level", false, false);
+        os << oneDescription("-h", "-help", "display this help screen", false, false);
         ASSERT(pOptions);
-        return pOptions->postProcess("description", ctx.str);
+        return pOptions->postProcess("description", os.str().c_str());
     }
 
     //--------------------------------------------------------------------------------
@@ -512,8 +515,6 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
                 return ret;
             }
         }
-
-        CStringExportContext ctx;
 
         // Not an option
         if (!startsWith(arg, '-') || startsWith(arg, "--")) {
@@ -537,8 +538,8 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
         if (arg == "-th" || arg == "-ht") {
             COptionsBase::isReadme = true;
             arg = "";
-            replaceAll(ret, "-th","");
-            replaceAll(ret, "-ht","");
+            replaceAll(ret, "-th", "");
+            replaceAll(ret, "-ht", "");
             return ret;
         }
 

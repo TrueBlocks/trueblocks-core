@@ -42,5 +42,3 @@ private:
 //---------------------------------------------------------------------------------------------------
 extern bool establishFolders(CToml& toml);
 extern void findBlockRange(const string_q& contents, size_t& minBlock, size_t& maxBlock);
-
-extern CFileExportContext outScreen;
