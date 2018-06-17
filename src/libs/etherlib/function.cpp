@@ -36,8 +36,8 @@ void CFunction::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr
     }
 
     string_q fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, dataPtr))
-        return;
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     while (!fmt.empty())
         ctx << getNextChunk(fmt, nextFunctionChunk, this);
@@ -283,13 +283,6 @@ string_q nextFunctionChunk_custom(const string_q& fieldIn, const void *dataPtr) 
 }
 
 //---------------------------------------------------------------------------
-bool CFunction::handleCustomFormat(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
-    return false;
-}
-
-//---------------------------------------------------------------------------
 bool CFunction::readBackLevel(SFArchive& archive) {
 
     CBaseNode::readBackLevel(archive);
@@ -398,30 +391,31 @@ string_q CFunction::getSignature(uint64_t parts) const {
     size_t v1 = 35 - tl;
     size_t ll = (nl > v1 ? 0 : v1 - nl);
 
-    CStringExportContext ctx;
-    ctx << (parts & SIG_FTYPE  ? "\t"+type+" " : "");
-    ctx << (parts & SIG_FNAME  ? nm            : "");
-    ctx << (parts & SIG_FSPACE ? string_q(ll, ' ') : "");
-    ctx << (parts & SIG_FTYPE || parts & SIG_FNAME  ? "("    : "");
+    ostringstream os;
+    os << (parts & SIG_FTYPE  ? "\t"+type+" " : "");
+    os << (parts & SIG_FNAME  ? nm            : "");
+    os << (parts & SIG_FSPACE ? string_q(ll, ' ') : "");
+    os << (parts & SIG_FTYPE || parts & SIG_FNAME  ? "("    : "");
     for (size_t j = 0 ; j < cnt ; j++) {
-        ctx << (parts & SIG_ITYPE    ? inputs[j].type : "");
-        ctx << (parts & SIG_IINDEXED ? (inputs[j].indexed ? " indexed" : "") : "");
-        ctx << (parts & SIG_INAME    ? " "+inputs[j].name : "");
-        ctx << (parts & SIG_ITYPE    ? (j < cnt-1 ? "," : "") : "");
+        os << (parts & SIG_ITYPE    ? inputs[j].type : "");
+        os << (parts & SIG_IINDEXED ? (inputs[j].indexed ? " indexed" : "") : "");
+        os << (parts & SIG_INAME    ? " "+inputs[j].name : "");
+        os << (parts & SIG_ITYPE    ? (j < cnt-1 ? "," : "") : "");
     }
-    ctx << (parts & SIG_FTYPE || parts & SIG_FNAME  ? ")" : "");
+    os << (parts & SIG_FTYPE || parts & SIG_FNAME  ? ")" : "");
     if (parts == SIG_ENCODE)
-        ctx << (parts & SIG_ENCODE ? (parts & SIG_FNAME ? " " + encoding : encoding + " ") : "");
+        os << (parts & SIG_ENCODE ? (parts & SIG_FNAME ? " " + encoding : encoding + " ") : "");
     else
-        ctx << (parts & SIG_ENCODE ? " [" + encoding + "]" : "");
+        os << (parts & SIG_ENCODE ? " [" + encoding + "]" : "");
     if (verbose && parts != SIG_CANONICAL) {
-        ctx << (anonymous ? " anonymous" : "");
-        ctx << (constant  ? " constant" : "");
-        ctx << (payable   ? " payable" : "");
+        os << (anonymous ? " anonymous" : "");
+        os << (constant  ? " constant" : "");
+        os << (payable   ? " payable" : "");
     }
 
-    replaceAll(ctx.str, " )", ")");
-    return trim(ctx.str);
+    string_q ret = os.str().c_str();
+    replaceAll(ret, " )", ")");
+    return trim(ret);
 }
 
 //-----------------------------------------------------------------------

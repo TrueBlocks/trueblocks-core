@@ -39,8 +39,8 @@ void CAcctCacheItem::Format(CExportContext& ctx, const string_q& fmtIn, void *da
     }
 
     string_q fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, dataPtr))
-        return;
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     while (!fmt.empty())
         ctx << getNextChunk(fmt, nextAcctcacheitemChunk, this);
@@ -175,13 +175,6 @@ string_q nextAcctcacheitemChunk_custom(const string_q& fieldIn, const void *data
     }
 
     return "";
-}
-
-//---------------------------------------------------------------------------
-bool CAcctCacheItem::handleCustomFormat(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
-    return false;
 }
 
 //---------------------------------------------------------------------------

@@ -63,6 +63,7 @@ namespace qblocks {
         virtual CExportContext& operator<<(unsigned int ui);
         virtual CExportContext& operator<<(int64_t dw);
         virtual CExportContext& operator<<(uint64_t ui);
+        virtual CExportContext& operator<<(size_t sz);
         virtual CExportContext& operator<<(int i);
         virtual CExportContext& operator<<(float f);
         virtual CExportContext& operator<<(double f);
@@ -77,45 +78,6 @@ namespace qblocks {
         virtual void* getOutput(void) const = 0;
         virtual void Output(const string_q& str) = 0;
         virtual void flush(void) = 0;
-    };
-
-    // Handy for debugging
-    class CFileExportContext : public CExportContext {
-    public:
-        FILE *m_output;
-
-        explicit CFileExportContext(void *output = NULL) {
-            m_output = ((output == NULL) ? stdout : reinterpret_cast<FILE*>(output));
-        }
-
-        CFileExportContext(const string_q& filename, const string_q& mode) {
-            m_output = fopen(filename.c_str(), mode.c_str());
-            if (!m_output)
-                m_output = stdout;
-        }
-
-        ~CFileExportContext(void) {
-            Close();
-        }
-
-        void  setOutput(void *output);
-        void *getOutput(void) const { return m_output; }
-        void  Output(const string_q& str);
-        void  flush(void) {
-            ASSERT(m_output)
-            fflush(m_output);
-        }
-        void Close(void) {
-            flush();
-            if (m_output != stdout && m_output != stderr)
-                fclose(m_output);
-            m_output = stdout;
-        }
-    };
-
-    class CErrorExportContext : public CFileExportContext {
-    public:
-        CErrorExportContext(void) : CFileExportContext(stderr) {}
     };
 
     // Handy for generating code into strings

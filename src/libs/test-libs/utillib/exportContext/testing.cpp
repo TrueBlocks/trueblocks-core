@@ -33,7 +33,6 @@ int main(int argc, const char *argv[]) {
     double d = 1001001010.01121112;
 
     CStringExportContext ctx;
-//    ctx << "my string: " << myStr << " : " << sizeme(myStr) << "\n";
     ctx << "bool: " << b << " : " << sizeof(b) << "\n";
     ctx << "char: " << c << " : " << sizeof(c) << "\n";
     ctx << "unsigned int: " << ui << " : " << sizeof(ui) << "\n";
@@ -47,7 +46,6 @@ int main(int argc, const char *argv[]) {
     ostringstream os;
     os.setf(ios::fixed);
     os << setprecision(10);
-//    os << "my string: " << myStr << " : " << sizeof(myStr) << "\n";
     os << "bool: " << b << " : " << sizeof(b) << "\n";
     os << "char: " << c << " : " << sizeof(c) << "\n";
     os << "unsigned int: " << ui << " : " << sizeof(ui) << "\n";

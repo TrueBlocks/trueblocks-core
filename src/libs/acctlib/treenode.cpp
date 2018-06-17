@@ -37,8 +37,8 @@ void CTreeNode::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr
     }
 
     string_q fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, dataPtr))
-        return;
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     while (!fmt.empty())
         ctx << getNextChunk(fmt, nextTreenodeChunk, this);
@@ -173,13 +173,6 @@ string_q nextTreenodeChunk_custom(const string_q& fieldIn, const void *dataPtr) 
     }
 
     return "";
-}
-
-//---------------------------------------------------------------------------
-bool CTreeNode::handleCustomFormat(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
-    return false;
 }
 
 //---------------------------------------------------------------------------

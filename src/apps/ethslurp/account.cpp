@@ -36,8 +36,10 @@ void CAccount::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr)
     }
 
     string_q fmt = fmtIn;
+    // EXISTING_CODE
     if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
+    // EXISTING_CODE
 
     while (!fmt.empty())
         ctx << getNextChunk(fmt, nextAccountChunk, this);
@@ -230,58 +232,6 @@ string_q nextAccountChunk_custom(const string_q& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------
-bool CAccount::handleCustomFormat(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
-    // EXISTING_CODE
-    // Split the format string into three parts: pre, post and records.
-    // If no records, just process as normal. We do this because it's so slow
-    // copying the records into a string, so we write it directly to the
-    // export context. If there is no {RECORDS}, then just send handle it like normal
-    if (!contains(fmtIn, "{RECORDS}") || transactions.size() == 0) {
-        string_q fmt = fmtIn;
-
-        while (!fmt.empty())
-            ctx << getNextChunk(fmt, nextAccountChunk, this);
-
-    } else {
-        string_q postFmt = fmtIn;
-        replace(postFmt, "{RECORDS}", "|");
-        string_q preFmt = nextTokenClear(postFmt, '|');
-
-        // We assume here that the token was properly formed. For the pre-text we
-        // have to clear out the start '[', and for the post text we clear out the ']'
-        replaceReverse(preFmt, "[", "");
-        replace(postFmt, "]", "");
-
-        // We handle the display in three parts: pre, records, and post so as
-        // to avoid building the entire record list into an ever-growing and
-        // ever-slowing string
-        while (!preFmt.empty())
-            ctx << getNextChunk(preFmt, nextAccountChunk, this);
-        size_t cnt = 0;
-        for (size_t i = 0 ; i < transactions.size() ; i++) {
-            cnt += transactions[i].m_showing;
-            if (cnt && !(cnt % REP_INFREQ)) {
-                cerr << "\tExporting record " << cnt << " of " << nVisible;
-                if (!isTestMode()) {
-                    cerr << (transactions.size() != nVisible ? " visible" : "") << " records\r";
-                    cerr.flush();
-                }
-            }
-
-            ctx << transactions[i].Format(displayString);
-            if (cnt >= nVisible)
-                break;  // no need to keep spinning if we've shown them all
-        }
-        ctx << "\n";
-        while (!postFmt.empty())
-            ctx << getNextChunk(postFmt, nextAccountChunk, this);
-    }
-    return true;
-    // EXISTING_CODE
-    return false;
-}
-
-//---------------------------------------------------------------------------
 bool CAccount::readBackLevel(SFArchive& archive) {
 
     CBaseNode::readBackLevel(archive);
@@ -371,6 +321,55 @@ size_t CAccount::deleteNotShowing(void) {
         }
     }
     return nDeleted;
+}
+
+//---------------------------------------------------------------------------
+bool CAccount::handleCustomFormat(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
+    // Split the format string into three parts: pre, post and records.
+    // If no records, just process as normal. We do this because it's so slow
+    // copying the records into a string, so we write it directly to the
+    // export context. If there is no {RECORDS}, then just send handle it like normal
+    if (!contains(fmtIn, "{RECORDS}") || transactions.size() == 0) {
+        string_q fmt = fmtIn;
+
+        while (!fmt.empty())
+            ctx << getNextChunk(fmt, nextAccountChunk, this);
+
+    } else {
+        string_q postFmt = fmtIn;
+        replace(postFmt, "{RECORDS}", "|");
+        string_q preFmt = nextTokenClear(postFmt, '|');
+
+        // We assume here that the token was properly formed. For the pre-text we
+        // have to clear out the start '[', and for the post text we clear out the ']'
+        replaceReverse(preFmt, "[", "");
+        replace(postFmt, "]", "");
+
+        // We handle the display in three parts: pre, records, and post so as
+        // to avoid building the entire record list into an ever-growing and
+        // ever-slowing string
+        while (!preFmt.empty())
+            ctx << getNextChunk(preFmt, nextAccountChunk, this);
+        size_t cnt = 0;
+        for (size_t i = 0 ; i < transactions.size() ; i++) {
+            cnt += transactions[i].m_showing;
+            if (cnt && !(cnt % REP_INFREQ)) {
+                cerr << "\tExporting record " << cnt << " of " << nVisible;
+                if (!isTestMode()) {
+                    cerr << (transactions.size() != nVisible ? " visible" : "") << " records\r";
+                    cerr.flush();
+                }
+            }
+
+            ctx << transactions[i].Format(displayString);
+            if (cnt >= nVisible)
+                break;  // no need to keep spinning if we've shown them all
+        }
+        ctx << "\n";
+        while (!postFmt.empty())
+            ctx << getNextChunk(postFmt, nextAccountChunk, this);
+    }
+    return true;
 }
 // EXISTING_CODE
 }  // namespace qblocks

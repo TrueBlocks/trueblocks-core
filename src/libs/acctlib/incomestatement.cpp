@@ -37,8 +37,8 @@ void CIncomeStatement::Format(CExportContext& ctx, const string_q& fmtIn, void *
     }
 
     string_q fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, dataPtr))
-        return;
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     while (!fmt.empty())
         ctx << getNextChunk(fmt, nextIncomestatementChunk, this);
@@ -195,13 +195,6 @@ string_q nextIncomestatementChunk_custom(const string_q& fieldIn, const void *da
     }
 
     return "";
-}
-
-//---------------------------------------------------------------------------
-bool CIncomeStatement::handleCustomFormat(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
-    return false;
 }
 
 //---------------------------------------------------------------------------

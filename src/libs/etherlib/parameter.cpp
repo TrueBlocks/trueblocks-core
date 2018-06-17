@@ -36,8 +36,8 @@ void CParameter::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPt
     }
 
     string_q fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, dataPtr))
-        return;
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     while (!fmt.empty())
         ctx << getNextChunk(fmt, nextParameterChunk, this);
@@ -196,13 +196,6 @@ string_q nextParameterChunk_custom(const string_q& fieldIn, const void *dataPtr)
     }
 
     return "";
-}
-
-//---------------------------------------------------------------------------
-bool CParameter::handleCustomFormat(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
-    return false;
 }
 
 //---------------------------------------------------------------------------

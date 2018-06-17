@@ -63,6 +63,14 @@ namespace qblocks {
     }
 
     //-------------------------------------------------------------
+    CExportContext& CExportContext::operator<<(size_t sz) {
+        ostringstream os;
+        os << sz;
+        Output(os.str().c_str());
+        return *this;
+    }
+
+    //-------------------------------------------------------------
     CExportContext& CExportContext::operator<<(int i) {
         ostringstream os;
         os << i;
@@ -99,18 +107,6 @@ namespace qblocks {
         else
             Output(str);
         return *this;
-    }
-
-    //-------------------------------------------------------------
-    void CFileExportContext::setOutput(void *output) {
-        Close();  // just in case
-        m_output = output == NULL ? stdout : reinterpret_cast<FILE*>(output);
-    }
-
-    //-------------------------------------------------------------
-    void CFileExportContext::Output(const string_q& sss) {
-        ASSERT(m_output);
-        fprintf(m_output, "%s", sss.c_str());
     }
 
     //-------------------------------------------------------------

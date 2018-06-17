@@ -89,7 +89,6 @@ bool setValueByName(const string_q& fieldName, const string_q& fieldValue) overr
 bool Serialize(SFArchive& archive) override; \
 bool SerializeC(SFArchive& archive) const override; \
 void finishParse(void) override; \
-bool handleCustomFormat(CExportContext& ctx, const string_q& fmtIn, void *data = NULL) const override; \
 void Format(CExportContext& ctx, const string_q& fmtIn, void *data = NULL) const override; \
 string_q Format(const string_q& fmtIn = "") const override { \
     CStringExportContext ctx; Format(ctx, fmtIn, NULL); return ctx.str; } \

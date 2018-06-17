@@ -37,8 +37,8 @@ void CTransaction::Format(CExportContext& ctx, const string_q& fmtIn, void *data
     }
 
     string_q fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, dataPtr))
-        return;
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     while (!fmt.empty())
         ctx << getNextChunk(fmt, nextTransactionChunk, this);
@@ -366,13 +366,6 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void *dataPt
     }
 
     return "";
-}
-
-//---------------------------------------------------------------------------
-bool CTransaction::handleCustomFormat(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
-    return false;
 }
 
 //---------------------------------------------------------------------------
