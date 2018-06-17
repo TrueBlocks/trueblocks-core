@@ -62,9 +62,9 @@ public:
     friend ostream& operator<<(ostream& os, const CFunction& item);
 
 protected:
-    void Clear(void);
-    void Init(void);
-    void Copy(const CFunction& fu);
+    void clear(void);
+    void initialize(void);
+    void duplicate(const CFunction& fu);
     bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
@@ -73,7 +73,7 @@ protected:
 
 //--------------------------------------------------------------------------
 inline CFunction::CFunction(void) {
-    Init();
+    initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
@@ -82,7 +82,7 @@ inline CFunction::CFunction(void) {
 inline CFunction::CFunction(const CFunction& fu) {
     // EXISTING_CODE
     // EXISTING_CODE
-    Copy(fu);
+    duplicate(fu);
 }
 
 // EXISTING_CODE
@@ -90,20 +90,20 @@ inline CFunction::CFunction(const CFunction& fu) {
 
 //--------------------------------------------------------------------------
 inline CFunction::~CFunction(void) {
-    Clear();
+    clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CFunction::Clear(void) {
+inline void CFunction::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CFunction::Init(void) {
-    CBaseNode::Init();
+inline void CFunction::initialize(void) {
+    CBaseNode::initialize();
 
     name = "";
     type = "";
@@ -123,9 +123,9 @@ inline void CFunction::Init(void) {
 }
 
 //--------------------------------------------------------------------------
-inline void CFunction::Copy(const CFunction& fu) {
-    Clear();
-    CBaseNode::Copy(fu);
+inline void CFunction::duplicate(const CFunction& fu) {
+    clear();
+    CBaseNode::duplicate(fu);
 
     name = fu.name;
     type = fu.type;
@@ -147,16 +147,15 @@ inline void CFunction::Copy(const CFunction& fu) {
 
 //--------------------------------------------------------------------------
 inline CFunction& CFunction::operator=(const CFunction& fu) {
-    Copy(fu);
+    duplicate(fu);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
 //---------------------------------------------------------------------------
-IMPLEMENT_ARCHIVE_ARRAY(CFunctionArray);
-IMPLEMENT_ARCHIVE_ARRAY_C(CFunctionArray);
-IMPLEMENT_ARCHIVE_LIST(CFunctionList);
+extern SFArchive& operator>>(SFArchive& archive, CFunctionArray& array);
+extern SFArchive& operator<<(SFArchive& archive, const CFunctionArray& array);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

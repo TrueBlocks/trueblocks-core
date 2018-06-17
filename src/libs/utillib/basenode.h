@@ -65,8 +65,8 @@ namespace qblocks {
         void doExport(ostream& os) const;
 
     protected:
-        void Init(void);
-        void Copy(const CBaseNode& bn);
+        void initialize(void);
+        void duplicate(const CBaseNode& bn);
     };
 
     //------------------------------------------------------------------

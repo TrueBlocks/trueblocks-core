@@ -136,41 +136,6 @@ GETRUNTIME_CLASS(CLASS_NAME)->hideAllFields();
 #define SHOW_ALL_FIELDS(CLASS_NAME) \
 GETRUNTIME_CLASS(CLASS_NAME)->showAllFields();
 
-    //------------------------------------------------------------
-    // Archive array containers
-#define IMPLEMENT_ARCHIVE_ARRAY(ARRAY_CLASS) \
-inline SFArchive& operator>>(SFArchive& archive, ARRAY_CLASS& array) \
-{ \
-    uint64_t count; \
-    archive >> count; \
-    array.reserve(count + 1); \
-    for (size_t i = 0 ; i < count ; i++) { \
-        ASSERT(i < array.capacity()); \
-        array.at(i).Serialize(archive); \
-    } \
-    return archive; \
-}
-
-    //------------------------------------------------------------
-#define IMPLEMENT_ARCHIVE_ARRAY_C(ARRAY_CLASS) \
-inline SFArchive& operator<<(SFArchive& archive, const ARRAY_CLASS& array) { \
-    uint64_t count = array.size(); \
-    archive << count; \
-    for (size_t i = 0 ; i < array.size() ; i++) \
-        array[i].SerializeC(archive); \
-    return archive; \
-}
-
-    //------------------------------------------------------------
-    // Archive list containers
-#define IMPLEMENT_ARCHIVE_LIST(LIST_CLASS) \
-inline SFArchive& operator<<(SFArchive& archive, LIST_CLASS& array) { \
-    return archive; \
-} \
-inline SFArchive& operator>>(SFArchive& archive, LIST_CLASS& array) { \
-    return archive; \
-}
-
     //---------------------------------------------------------------------------
     extern string_q nextBasenodeChunk(const string_q& fieldIn, const CBaseNode *node);
 }  // namespace qblocks

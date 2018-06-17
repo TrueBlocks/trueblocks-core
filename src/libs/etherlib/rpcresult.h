@@ -48,9 +48,9 @@ public:
     friend ostream& operator<<(ostream& os, const CRPCResult& item);
 
 protected:
-    void Clear(void);
-    void Init(void);
-    void Copy(const CRPCResult& rp);
+    void clear(void);
+    void initialize(void);
+    void duplicate(const CRPCResult& rp);
     bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
@@ -59,7 +59,7 @@ protected:
 
 //--------------------------------------------------------------------------
 inline CRPCResult::CRPCResult(void) {
-    Init();
+    initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
@@ -68,7 +68,7 @@ inline CRPCResult::CRPCResult(void) {
 inline CRPCResult::CRPCResult(const CRPCResult& rp) {
     // EXISTING_CODE
     // EXISTING_CODE
-    Copy(rp);
+    duplicate(rp);
 }
 
 // EXISTING_CODE
@@ -76,20 +76,20 @@ inline CRPCResult::CRPCResult(const CRPCResult& rp) {
 
 //--------------------------------------------------------------------------
 inline CRPCResult::~CRPCResult(void) {
-    Clear();
+    clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CRPCResult::Clear(void) {
+inline void CRPCResult::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CRPCResult::Init(void) {
-    CBaseNode::Init();
+inline void CRPCResult::initialize(void) {
+    CBaseNode::initialize();
 
     jsonrpc = "";
     result = "";
@@ -100,9 +100,9 @@ inline void CRPCResult::Init(void) {
 }
 
 //--------------------------------------------------------------------------
-inline void CRPCResult::Copy(const CRPCResult& rp) {
-    Clear();
-    CBaseNode::Copy(rp);
+inline void CRPCResult::duplicate(const CRPCResult& rp) {
+    clear();
+    CBaseNode::duplicate(rp);
 
     jsonrpc = rp.jsonrpc;
     result = rp.result;
@@ -115,16 +115,15 @@ inline void CRPCResult::Copy(const CRPCResult& rp) {
 
 //--------------------------------------------------------------------------
 inline CRPCResult& CRPCResult::operator=(const CRPCResult& rp) {
-    Copy(rp);
+    duplicate(rp);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
 //---------------------------------------------------------------------------
-IMPLEMENT_ARCHIVE_ARRAY(CRPCResultArray);
-IMPLEMENT_ARCHIVE_ARRAY_C(CRPCResultArray);
-IMPLEMENT_ARCHIVE_LIST(CRPCResultList);
+extern SFArchive& operator>>(SFArchive& archive, CRPCResultArray& array);
+extern SFArchive& operator<<(SFArchive& archive, const CRPCResultArray& array);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

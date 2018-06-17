@@ -68,9 +68,9 @@ public:
     friend ostream& operator<<(ostream& os, const CParameter& item);
 
 protected:
-    void Clear(void);
-    void Init(void);
-    void Copy(const CParameter& pa);
+    void clear(void);
+    void initialize(void);
+    void duplicate(const CParameter& pa);
     bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
@@ -79,7 +79,7 @@ protected:
 
 //--------------------------------------------------------------------------
 inline CParameter::CParameter(void) {
-    Init();
+    initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
@@ -88,7 +88,7 @@ inline CParameter::CParameter(void) {
 inline CParameter::CParameter(const CParameter& pa) {
     // EXISTING_CODE
     // EXISTING_CODE
-    Copy(pa);
+    duplicate(pa);
 }
 
 // EXISTING_CODE
@@ -96,20 +96,20 @@ inline CParameter::CParameter(const CParameter& pa) {
 
 //--------------------------------------------------------------------------
 inline CParameter::~CParameter(void) {
-    Clear();
+    clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CParameter::Clear(void) {
+inline void CParameter::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CParameter::Init(void) {
-    CBaseNode::Init();
+inline void CParameter::initialize(void) {
+    CBaseNode::initialize();
 
     indexed = 0;
     name = "";
@@ -124,9 +124,9 @@ inline void CParameter::Init(void) {
 }
 
 //--------------------------------------------------------------------------
-inline void CParameter::Copy(const CParameter& pa) {
-    Clear();
-    CBaseNode::Copy(pa);
+inline void CParameter::duplicate(const CParameter& pa) {
+    clear();
+    CBaseNode::duplicate(pa);
 
     indexed = pa.indexed;
     name = pa.name;
@@ -143,16 +143,15 @@ inline void CParameter::Copy(const CParameter& pa) {
 
 //--------------------------------------------------------------------------
 inline CParameter& CParameter::operator=(const CParameter& pa) {
-    Copy(pa);
+    duplicate(pa);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
 //---------------------------------------------------------------------------
-IMPLEMENT_ARCHIVE_ARRAY(CParameterArray);
-IMPLEMENT_ARCHIVE_ARRAY_C(CParameterArray);
-IMPLEMENT_ARCHIVE_LIST(CParameterList);
+extern SFArchive& operator>>(SFArchive& archive, CParameterArray& array);
+extern SFArchive& operator<<(SFArchive& archive, const CParameterArray& array);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

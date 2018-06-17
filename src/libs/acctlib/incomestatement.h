@@ -57,9 +57,9 @@ public:
     friend ostream& operator<<(ostream& os, const CIncomeStatement& item);
 
 protected:
-    void Clear(void);
-    void Init(void);
-    void Copy(const CIncomeStatement& in);
+    void clear(void);
+    void initialize(void);
+    void duplicate(const CIncomeStatement& in);
     bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
@@ -68,7 +68,7 @@ protected:
 
 //--------------------------------------------------------------------------
 inline CIncomeStatement::CIncomeStatement(void) {
-    Init();
+    initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
@@ -77,7 +77,7 @@ inline CIncomeStatement::CIncomeStatement(void) {
 inline CIncomeStatement::CIncomeStatement(const CIncomeStatement& in) {
     // EXISTING_CODE
     // EXISTING_CODE
-    Copy(in);
+    duplicate(in);
 }
 
 // EXISTING_CODE
@@ -85,20 +85,20 @@ inline CIncomeStatement::CIncomeStatement(const CIncomeStatement& in) {
 
 //--------------------------------------------------------------------------
 inline CIncomeStatement::~CIncomeStatement(void) {
-    Clear();
+    clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CIncomeStatement::Clear(void) {
+inline void CIncomeStatement::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CIncomeStatement::Init(void) {
-    CBaseNode::Init();
+inline void CIncomeStatement::initialize(void) {
+    CBaseNode::initialize();
 
     begBal = 0;
     inflow = 0;
@@ -112,9 +112,9 @@ inline void CIncomeStatement::Init(void) {
 }
 
 //--------------------------------------------------------------------------
-inline void CIncomeStatement::Copy(const CIncomeStatement& in) {
-    Clear();
-    CBaseNode::Copy(in);
+inline void CIncomeStatement::duplicate(const CIncomeStatement& in) {
+    clear();
+    CBaseNode::duplicate(in);
 
     begBal = in.begBal;
     inflow = in.inflow;
@@ -130,16 +130,15 @@ inline void CIncomeStatement::Copy(const CIncomeStatement& in) {
 
 //--------------------------------------------------------------------------
 inline CIncomeStatement& CIncomeStatement::operator=(const CIncomeStatement& in) {
-    Copy(in);
+    duplicate(in);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
 //---------------------------------------------------------------------------
-IMPLEMENT_ARCHIVE_ARRAY(CIncomeStatementArray);
-IMPLEMENT_ARCHIVE_ARRAY_C(CIncomeStatementArray);
-IMPLEMENT_ARCHIVE_LIST(CIncomeStatementList);
+extern SFArchive& operator>>(SFArchive& archive, CIncomeStatementArray& array);
+extern SFArchive& operator<<(SFArchive& archive, const CIncomeStatementArray& array);
 
 //---------------------------------------------------------------------------
 extern SFArchive& operator<<(SFArchive& archive, const CIncomeStatement& inc);

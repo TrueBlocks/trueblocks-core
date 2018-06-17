@@ -56,9 +56,9 @@ public:
     friend ostream& operator<<(ostream& os, const CLogEntry& item);
 
 protected:
-    void Clear(void);
-    void Init(void);
-    void Copy(const CLogEntry& lo);
+    void clear(void);
+    void initialize(void);
+    void duplicate(const CLogEntry& lo);
     bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
@@ -67,7 +67,7 @@ protected:
 
 //--------------------------------------------------------------------------
 inline CLogEntry::CLogEntry(void) {
-    Init();
+    initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
@@ -76,7 +76,7 @@ inline CLogEntry::CLogEntry(void) {
 inline CLogEntry::CLogEntry(const CLogEntry& lo) {
     // EXISTING_CODE
     // EXISTING_CODE
-    Copy(lo);
+    duplicate(lo);
 }
 
 // EXISTING_CODE
@@ -84,20 +84,20 @@ inline CLogEntry::CLogEntry(const CLogEntry& lo) {
 
 //--------------------------------------------------------------------------
 inline CLogEntry::~CLogEntry(void) {
-    Clear();
+    clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CLogEntry::Clear(void) {
+inline void CLogEntry::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CLogEntry::Init(void) {
-    CBaseNode::Init();
+inline void CLogEntry::initialize(void) {
+    CBaseNode::initialize();
 
     address = "";
     data = "";
@@ -116,9 +116,9 @@ inline void CLogEntry::Init(void) {
 }
 
 //--------------------------------------------------------------------------
-inline void CLogEntry::Copy(const CLogEntry& lo) {
-    Clear();
-    CBaseNode::Copy(lo);
+inline void CLogEntry::duplicate(const CLogEntry& lo) {
+    clear();
+    CBaseNode::duplicate(lo);
 
     address = lo.address;
     data = lo.data;
@@ -140,16 +140,15 @@ inline void CLogEntry::Copy(const CLogEntry& lo) {
 
 //--------------------------------------------------------------------------
 inline CLogEntry& CLogEntry::operator=(const CLogEntry& lo) {
-    Copy(lo);
+    duplicate(lo);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
 //---------------------------------------------------------------------------
-IMPLEMENT_ARCHIVE_ARRAY(CLogEntryArray);
-IMPLEMENT_ARCHIVE_ARRAY_C(CLogEntryArray);
-IMPLEMENT_ARCHIVE_LIST(CLogEntryList);
+extern SFArchive& operator>>(SFArchive& archive, CLogEntryArray& array);
+extern SFArchive& operator<<(SFArchive& archive, const CLogEntryArray& array);
 
 //---------------------------------------------------------------------------
 extern SFArchive& operator<<(SFArchive& archive, const CLogEntry& log);

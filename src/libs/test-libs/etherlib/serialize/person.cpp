@@ -59,12 +59,12 @@ bool CPerson::setValueByName(const string_q& fieldName, const string_q& fieldVal
 
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "age" ) { age = toLongU(fieldValue); return true; }
+            if ( fieldName % "age" ) { age = toUnsigned(fieldValue); return true; }
             break;
         case 'n':
             if ( fieldName % "name" ) { name = fieldValue; return true; }
             if ( fieldName % "next" ) {
-                Clear();
+                clear();
                 next = new CPerson;
                 if (next) {
                     char *p = cleanUpJson((char *)fieldValue.c_str());
@@ -129,6 +129,27 @@ bool CPerson::SerializeC(SFArchive& archive) const {
         next->SerializeC(archive);
 
     return true;
+}
+
+//---------------------------------------------------------------------------
+SFArchive& operator>>(SFArchive& archive, CPersonArray& array) {
+    uint64_t count;
+    archive >> count;
+    array.resize(count);
+    for (size_t i = 0 ; i < count ; i++) {
+        ASSERT(i < array.capacity());
+        array.at(i).Serialize(archive);
+    }
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+SFArchive& operator<<(SFArchive& archive, const CPersonArray& array) {
+    uint64_t count = array.size();
+    archive << count;
+    for (size_t i = 0 ; i < array.size() ; i++)
+        array[i].SerializeC(archive);
+    return archive;
 }
 
 //---------------------------------------------------------------------------

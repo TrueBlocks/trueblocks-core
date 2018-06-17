@@ -71,9 +71,9 @@ public:
     friend ostream& operator<<(ostream& os, const CAccountWatch& item);
 
 protected:
-    void Clear(void);
-    void Init(void);
-    void Copy(const CAccountWatch& ac);
+    void clear(void);
+    void initialize(void);
+    void duplicate(const CAccountWatch& ac);
     bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
@@ -82,7 +82,7 @@ protected:
 
 //--------------------------------------------------------------------------
 inline CAccountWatch::CAccountWatch(void) {
-    Init();
+    initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
@@ -91,7 +91,7 @@ inline CAccountWatch::CAccountWatch(void) {
 inline CAccountWatch::CAccountWatch(const CAccountWatch& ac) {
     // EXISTING_CODE
     // EXISTING_CODE
-    Copy(ac);
+    duplicate(ac);
 }
 
 // EXISTING_CODE
@@ -99,20 +99,20 @@ inline CAccountWatch::CAccountWatch(const CAccountWatch& ac) {
 
 //--------------------------------------------------------------------------
 inline CAccountWatch::~CAccountWatch(void) {
-    Clear();
+    clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CAccountWatch::Clear(void) {
+inline void CAccountWatch::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CAccountWatch::Init(void) {
-    CBaseNode::Init();
+inline void CAccountWatch::initialize(void) {
+    CBaseNode::initialize();
 
     address = "";
     name = "";
@@ -120,7 +120,7 @@ inline void CAccountWatch::Init(void) {
     firstBlock = 0;
     lastBlock = 0;
     deepScan = 0;
-    qbis.Init();
+    qbis.initialize();
     nodeBal = 0;
 
     // EXISTING_CODE
@@ -132,9 +132,9 @@ inline void CAccountWatch::Init(void) {
 }
 
 //--------------------------------------------------------------------------
-inline void CAccountWatch::Copy(const CAccountWatch& ac) {
-    Clear();
-    CBaseNode::Copy(ac);
+inline void CAccountWatch::duplicate(const CAccountWatch& ac) {
+    clear();
+    CBaseNode::duplicate(ac);
 
     address = ac.address;
     name = ac.name;
@@ -156,16 +156,15 @@ inline void CAccountWatch::Copy(const CAccountWatch& ac) {
 
 //--------------------------------------------------------------------------
 inline CAccountWatch& CAccountWatch::operator=(const CAccountWatch& ac) {
-    Copy(ac);
+    duplicate(ac);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
 //---------------------------------------------------------------------------
-IMPLEMENT_ARCHIVE_ARRAY(CAccountWatchArray);
-IMPLEMENT_ARCHIVE_ARRAY_C(CAccountWatchArray);
-IMPLEMENT_ARCHIVE_LIST(CAccountWatchList);
+extern SFArchive& operator>>(SFArchive& archive, CAccountWatchArray& array);
+extern SFArchive& operator<<(SFArchive& archive, const CAccountWatchArray& array);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
