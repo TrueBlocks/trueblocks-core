@@ -81,7 +81,6 @@ TEST_F(CThisTest, TestCompare) {
     return true;
 }}
 
-
 //------------------------------------------------------------------------
 TEST_F(CThisTest, TestAssignment) {
     string str1("Test string: "), str2, str3;
