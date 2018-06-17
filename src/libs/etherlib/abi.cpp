@@ -389,8 +389,8 @@ bool CAbi::loadABIFromFile(const string_q& fileName) {
             abiByEncoding.push_back(func);
         }
     }
-    abiByName.Sort(sortFuncTableByName);
-    abiByEncoding.Sort(sortFuncTableByEncoding);
+//    abiByName.Sort(sortFuncTableByName);
+//    abiByEncoding.Sort(sortFuncTableByEncoding);
     return abiByName.size();
 }
 

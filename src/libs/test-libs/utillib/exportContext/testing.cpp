@@ -13,7 +13,6 @@
 #include "utillib.h"
 #include <iomanip>
 
-#define sizeme(a) ((uint64_t)sizeof(a))
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
@@ -34,29 +33,29 @@ int main(int argc, const char *argv[]) {
     double d = 1001001010.01121112;
 
     CStringExportContext ctx;
-    ctx << "my string: " << myStr << " : " << sizeme(myStr) << "\n";
-    ctx << "bool: " << b << " : " << sizeme(b) << "\n";
-    ctx << "char: " << c << " : " << sizeme(c) << "\n";
-    ctx << "unsigned int (this is a bug, should be 4294967295): " << ui << " : " << sizeme(ui) << "\n";
-    ctx << "int: " << i << " : " << sizeme(i) << "\n";
-    ctx << "float: " << f << " : " << sizeme(f) << "\n";
-    ctx << "double: " << d << " : " << sizeme(d) << "\n";
-    ctx << "int64_t: " << il << " : " << sizeme(il) << "\n";
-    ctx << "uint64_t: " << uil << " : " << sizeme(uil) << "\n";
+//    ctx << "my string: " << myStr << " : " << sizeme(myStr) << "\n";
+    ctx << "bool: " << b << " : " << sizeof(b) << "\n";
+    ctx << "char: " << c << " : " << sizeof(c) << "\n";
+    ctx << "unsigned int: " << ui << " : " << sizeof(ui) << "\n";
+    ctx << "int: " << i << " : " << sizeof(i) << "\n";
+    ctx << "float: " << f << " : " << sizeof(f) << "\n";
+    ctx << "double: " << d << " : " << sizeof(d) << "\n";
+    ctx << "int64_t: " << il << " : " << sizeof(il) << "\n";
+    ctx << "uint64_t: " << uil << " : " << sizeof(uil) << "\n";
     cout << ctx.str << "\n";
 
     ostringstream os;
     os.setf(ios::fixed);
     os << setprecision(10);
-    os << "my string: " << myStr << " : " << sizeme(myStr) << "\n";
-    os << "bool: " << b << " : " << sizeme(b) << "\n";
-    os << "char: " << c << " : " << sizeme(c) << "\n";
-    os << "unsigned int: " << ui << " : " << sizeme(ui) << "\n";
-    os << "int: " << i << " : " << sizeme(i) << "\n";
-    os << "float: " << f << " : " << sizeme(f) << "\n";
-    os << "double: " << d << " : " << sizeme(d) << "\n";
-    os << "int64_t: " << il << " : " << sizeme(il) << "\n";
-    os << "uint64_t: " << uil << " : " << sizeme(uil) << "\n";
+//    os << "my string: " << myStr << " : " << sizeof(myStr) << "\n";
+    os << "bool: " << b << " : " << sizeof(b) << "\n";
+    os << "char: " << c << " : " << sizeof(c) << "\n";
+    os << "unsigned int: " << ui << " : " << sizeof(ui) << "\n";
+    os << "int: " << i << " : " << sizeof(i) << "\n";
+    os << "float: " << f << " : " << sizeof(f) << "\n";
+    os << "double: " << d << " : " << sizeof(d) << "\n";
+    os << "int64_t: " << il << " : " << sizeof(il) << "\n";
+    os << "uint64_t: " << uil << " : " << sizeof(uil) << "\n";
     cout << os.str();
 
     return 0;
