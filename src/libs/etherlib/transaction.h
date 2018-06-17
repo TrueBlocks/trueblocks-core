@@ -74,9 +74,9 @@ public:
     friend ostream& operator<<(ostream& os, const CTransaction& item);
 
 protected:
-    void Clear(void);
-    void Init(void);
-    void Copy(const CTransaction& tr);
+    void clear(void);
+    void initialize(void);
+    void duplicate(const CTransaction& tr);
     bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
@@ -86,7 +86,7 @@ protected:
 
 //--------------------------------------------------------------------------
 inline CTransaction::CTransaction(void) {
-    Init();
+    initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
@@ -95,7 +95,7 @@ inline CTransaction::CTransaction(void) {
 inline CTransaction::CTransaction(const CTransaction& tr) {
     // EXISTING_CODE
     // EXISTING_CODE
-    Copy(tr);
+    duplicate(tr);
 }
 
 // EXISTING_CODE
@@ -103,20 +103,20 @@ inline CTransaction::CTransaction(const CTransaction& tr) {
 
 //--------------------------------------------------------------------------
 inline CTransaction::~CTransaction(void) {
-    Clear();
+    clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CTransaction::Clear(void) {
+inline void CTransaction::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CTransaction::Init(void) {
-    CBaseNode::Init();
+inline void CTransaction::initialize(void) {
+    CBaseNode::initialize();
 
     hash = "";
     blockHash = "";
@@ -132,7 +132,7 @@ inline void CTransaction::Init(void) {
     input = "";
     isError = 0;
     isInternal = 0;
-    receipt.Init();
+    receipt.initialize();
 
     // EXISTING_CODE
     pBlock = NULL;
@@ -153,9 +153,9 @@ inline void CTransaction::Init(void) {
 }
 
 //--------------------------------------------------------------------------
-inline void CTransaction::Copy(const CTransaction& tr) {
-    Clear();
-    CBaseNode::Copy(tr);
+inline void CTransaction::duplicate(const CTransaction& tr) {
+    clear();
+    CBaseNode::duplicate(tr);
 
     hash = tr.hash;
     blockHash = tr.blockHash;
@@ -194,16 +194,15 @@ inline void CTransaction::Copy(const CTransaction& tr) {
 
 //--------------------------------------------------------------------------
 inline CTransaction& CTransaction::operator=(const CTransaction& tr) {
-    Copy(tr);
+    duplicate(tr);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
 //---------------------------------------------------------------------------
-IMPLEMENT_ARCHIVE_ARRAY(CTransactionArray);
-IMPLEMENT_ARCHIVE_ARRAY_C(CTransactionArray);
-IMPLEMENT_ARCHIVE_LIST(CTransactionList);
+extern SFArchive& operator>>(SFArchive& archive, CTransactionArray& array);
+extern SFArchive& operator<<(SFArchive& archive, const CTransactionArray& array);
 
 //---------------------------------------------------------------------------
 extern SFArchive& operator<<(SFArchive& archive, const CTransaction& tra);

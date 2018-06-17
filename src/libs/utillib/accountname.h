@@ -54,9 +54,9 @@ public:
     friend ostream& operator<<(ostream& os, const CAccountName& item);
 
 protected:
-    void Clear(void);
-    void Init(void);
-    void Copy(const CAccountName& ac);
+    void clear(void);
+    void initialize(void);
+    void duplicate(const CAccountName& ac);
     bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
@@ -65,7 +65,7 @@ protected:
 
 //--------------------------------------------------------------------------
 inline CAccountName::CAccountName(void) {
-    Init();
+    initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
@@ -74,7 +74,7 @@ inline CAccountName::CAccountName(void) {
 inline CAccountName::CAccountName(const CAccountName& ac) {
     // EXISTING_CODE
     // EXISTING_CODE
-    Copy(ac);
+    duplicate(ac);
 }
 
 // EXISTING_CODE
@@ -82,20 +82,20 @@ inline CAccountName::CAccountName(const CAccountName& ac) {
 
 //--------------------------------------------------------------------------
 inline CAccountName::~CAccountName(void) {
-    Clear();
+    clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CAccountName::Clear(void) {
+inline void CAccountName::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CAccountName::Init(void) {
-    CBaseNode::Init();
+inline void CAccountName::initialize(void) {
+    CBaseNode::initialize();
 
     symbol = "";
     name = "";
@@ -108,9 +108,9 @@ inline void CAccountName::Init(void) {
 }
 
 //--------------------------------------------------------------------------
-inline void CAccountName::Copy(const CAccountName& ac) {
-    Clear();
-    CBaseNode::Copy(ac);
+inline void CAccountName::duplicate(const CAccountName& ac) {
+    clear();
+    CBaseNode::duplicate(ac);
 
     symbol = ac.symbol;
     name = ac.name;
@@ -125,16 +125,15 @@ inline void CAccountName::Copy(const CAccountName& ac) {
 
 //--------------------------------------------------------------------------
 inline CAccountName& CAccountName::operator=(const CAccountName& ac) {
-    Copy(ac);
+    duplicate(ac);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
 //---------------------------------------------------------------------------
-IMPLEMENT_ARCHIVE_ARRAY(CAccountNameArray);
-IMPLEMENT_ARCHIVE_ARRAY_C(CAccountNameArray);
-IMPLEMENT_ARCHIVE_LIST(CAccountNameList);
+extern SFArchive& operator>>(SFArchive& archive, CAccountNameArray& array);
+extern SFArchive& operator<<(SFArchive& archive, const CAccountNameArray& array);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

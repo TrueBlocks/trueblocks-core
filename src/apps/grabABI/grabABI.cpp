@@ -529,7 +529,7 @@ string_q getEventAssign(const CParameter *p, uint64_t which, uint64_t nIndexed) 
 //    //  funcs.push_back(func);
 //    func.type = "event";
 //    func.name = "event";
-//    func.inputs.Clear();
+//    func.inputs.clear();
 //    funcs.push_back(func);
 //}
 

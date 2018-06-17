@@ -55,9 +55,9 @@ public:
     friend ostream& operator<<(ostream& os, const CInfix& item);
 
 protected:
-    void Clear(void);
-    void Init(void);
-    void Copy(const CInfix& in);
+    void clear(void);
+    void initialize(void);
+    void duplicate(const CInfix& in);
     bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
@@ -66,7 +66,7 @@ protected:
 
 //--------------------------------------------------------------------------
 inline CInfix::CInfix(void) {
-    Init();
+    initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
@@ -75,7 +75,7 @@ inline CInfix::CInfix(void) {
 inline CInfix::CInfix(const CInfix& in) {
     // EXISTING_CODE
     // EXISTING_CODE
-    Copy(in);
+    duplicate(in);
 }
 
 // EXISTING_CODE
@@ -83,13 +83,13 @@ inline CInfix::CInfix(const CInfix& in) {
 
 //--------------------------------------------------------------------------
 inline CInfix::~CInfix(void) {
-    Clear();
+    clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CInfix::Clear(void) {
+inline void CInfix::clear(void) {
     if (next)
         delete next;
     next = NULL;
@@ -98,8 +98,8 @@ inline void CInfix::Clear(void) {
 }
 
 //--------------------------------------------------------------------------
-inline void CInfix::Init(void) {
-    CTreeNode::Init();
+inline void CInfix::initialize(void) {
+    CTreeNode::initialize();
 
     next = NULL;
 
@@ -108,9 +108,9 @@ inline void CInfix::Init(void) {
 }
 
 //--------------------------------------------------------------------------
-inline void CInfix::Copy(const CInfix& in) {
-    Clear();
-    CTreeNode::Copy(in);
+inline void CInfix::duplicate(const CInfix& in) {
+    clear();
+    CTreeNode::duplicate(in);
 
     if (in.next) {
         next = new CTreeNode;
@@ -124,16 +124,15 @@ inline void CInfix::Copy(const CInfix& in) {
 
 //--------------------------------------------------------------------------
 inline CInfix& CInfix::operator=(const CInfix& in) {
-    Copy(in);
+    duplicate(in);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
 //---------------------------------------------------------------------------
-IMPLEMENT_ARCHIVE_ARRAY(CInfixArray);
-IMPLEMENT_ARCHIVE_ARRAY_C(CInfixArray);
-IMPLEMENT_ARCHIVE_LIST(CInfixList);
+extern SFArchive& operator>>(SFArchive& archive, CInfixArray& array);
+extern SFArchive& operator<<(SFArchive& archive, const CInfixArray& array);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

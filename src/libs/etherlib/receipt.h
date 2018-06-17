@@ -58,9 +58,9 @@ public:
     friend ostream& operator<<(ostream& os, const CReceipt& item);
 
 protected:
-    void Clear(void);
-    void Init(void);
-    void Copy(const CReceipt& re);
+    void clear(void);
+    void initialize(void);
+    void duplicate(const CReceipt& re);
     bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
@@ -69,7 +69,7 @@ protected:
 
 //--------------------------------------------------------------------------
 inline CReceipt::CReceipt(void) {
-    Init();
+    initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
@@ -78,7 +78,7 @@ inline CReceipt::CReceipt(void) {
 inline CReceipt::CReceipt(const CReceipt& re) {
     // EXISTING_CODE
     // EXISTING_CODE
-    Copy(re);
+    duplicate(re);
 }
 
 // EXISTING_CODE
@@ -86,20 +86,20 @@ inline CReceipt::CReceipt(const CReceipt& re) {
 
 //--------------------------------------------------------------------------
 inline CReceipt::~CReceipt(void) {
-    Clear();
+    clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CReceipt::Clear(void) {
+inline void CReceipt::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CReceipt::Init(void) {
-    CBaseNode::Init();
+inline void CReceipt::initialize(void) {
+    CBaseNode::initialize();
 
     contractAddress = "";
     gasUsed = 0;
@@ -122,9 +122,9 @@ inline void CReceipt::Init(void) {
 }
 
 //--------------------------------------------------------------------------
-inline void CReceipt::Copy(const CReceipt& re) {
-    Clear();
-    CBaseNode::Copy(re);
+inline void CReceipt::duplicate(const CReceipt& re) {
+    clear();
+    CBaseNode::duplicate(re);
 
     contractAddress = re.contractAddress;
     gasUsed = re.gasUsed;
@@ -149,16 +149,15 @@ inline void CReceipt::Copy(const CReceipt& re) {
 
 //--------------------------------------------------------------------------
 inline CReceipt& CReceipt::operator=(const CReceipt& re) {
-    Copy(re);
+    duplicate(re);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
 //---------------------------------------------------------------------------
-IMPLEMENT_ARCHIVE_ARRAY(CReceiptArray);
-IMPLEMENT_ARCHIVE_ARRAY_C(CReceiptArray);
-IMPLEMENT_ARCHIVE_LIST(CReceiptList);
+extern SFArchive& operator>>(SFArchive& archive, CReceiptArray& array);
+extern SFArchive& operator<<(SFArchive& archive, const CReceiptArray& array);
 
 //---------------------------------------------------------------------------
 extern SFArchive& operator<<(SFArchive& archive, const CReceipt& rec);

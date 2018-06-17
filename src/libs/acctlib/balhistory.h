@@ -49,9 +49,9 @@ public:
     friend ostream& operator<<(ostream& os, const CBalHistory& item);
 
 protected:
-    void Clear(void);
-    void Init(void);
-    void Copy(const CBalHistory& ba);
+    void clear(void);
+    void initialize(void);
+    void duplicate(const CBalHistory& ba);
     bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
@@ -60,7 +60,7 @@ protected:
 
 //--------------------------------------------------------------------------
 inline CBalHistory::CBalHistory(void) {
-    Init();
+    initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
@@ -69,7 +69,7 @@ inline CBalHistory::CBalHistory(void) {
 inline CBalHistory::CBalHistory(const CBalHistory& ba) {
     // EXISTING_CODE
     // EXISTING_CODE
-    Copy(ba);
+    duplicate(ba);
 }
 
 // EXISTING_CODE
@@ -77,20 +77,20 @@ inline CBalHistory::CBalHistory(const CBalHistory& ba) {
 
 //--------------------------------------------------------------------------
 inline CBalHistory::~CBalHistory(void) {
-    Clear();
+    clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CBalHistory::Clear(void) {
+inline void CBalHistory::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CBalHistory::Init(void) {
-    CBaseNode::Init();
+inline void CBalHistory::initialize(void) {
+    CBaseNode::initialize();
 
     recordID = "";
     timestamp = 0;
@@ -101,9 +101,9 @@ inline void CBalHistory::Init(void) {
 }
 
 //--------------------------------------------------------------------------
-inline void CBalHistory::Copy(const CBalHistory& ba) {
-    Clear();
-    CBaseNode::Copy(ba);
+inline void CBalHistory::duplicate(const CBalHistory& ba) {
+    clear();
+    CBaseNode::duplicate(ba);
 
     recordID = ba.recordID;
     timestamp = ba.timestamp;
@@ -116,16 +116,15 @@ inline void CBalHistory::Copy(const CBalHistory& ba) {
 
 //--------------------------------------------------------------------------
 inline CBalHistory& CBalHistory::operator=(const CBalHistory& ba) {
-    Copy(ba);
+    duplicate(ba);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
 //---------------------------------------------------------------------------
-IMPLEMENT_ARCHIVE_ARRAY(CBalHistoryArray);
-IMPLEMENT_ARCHIVE_ARRAY_C(CBalHistoryArray);
-IMPLEMENT_ARCHIVE_LIST(CBalHistoryList);
+extern SFArchive& operator>>(SFArchive& archive, CBalHistoryArray& array);
+extern SFArchive& operator<<(SFArchive& archive, const CBalHistoryArray& array);
 
 //---------------------------------------------------------------------------
 extern SFArchive& operator<<(SFArchive& archive, const CBalHistory& bal);

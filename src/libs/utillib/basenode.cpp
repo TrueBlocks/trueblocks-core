@@ -27,7 +27,7 @@ namespace qblocks {
 
     //--------------------------------------------------------------------------------
     CBaseNode::CBaseNode(void) {
-        Init();
+        initialize();
     }
 
     //--------------------------------------------------------------------------------
@@ -35,14 +35,14 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    void CBaseNode::Init(void) {
+    void CBaseNode::initialize(void) {
         m_deleted  = false;
         m_schema = getVersionNum();
         m_showing = true;
     }
 
     //--------------------------------------------------------------------------------
-    void CBaseNode::Copy(const CBaseNode& bn) {
+    void CBaseNode::duplicate(const CBaseNode& bn) {
         m_deleted  = bn.m_deleted;
         m_schema = bn.m_schema;
         m_showing = bn.m_showing;

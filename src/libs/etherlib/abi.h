@@ -57,9 +57,9 @@ public:
     friend ostream& operator<<(ostream& os, const CAbi& item);
 
 protected:
-    void Clear(void);
-    void Init(void);
-    void Copy(const CAbi& ab);
+    void clear(void);
+    void initialize(void);
+    void duplicate(const CAbi& ab);
     bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
@@ -68,7 +68,7 @@ protected:
 
 //--------------------------------------------------------------------------
 inline CAbi::CAbi(void) {
-    Init();
+    initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
@@ -77,7 +77,7 @@ inline CAbi::CAbi(void) {
 inline CAbi::CAbi(const CAbi& ab) {
     // EXISTING_CODE
     // EXISTING_CODE
-    Copy(ab);
+    duplicate(ab);
 }
 
 // EXISTING_CODE
@@ -85,13 +85,13 @@ inline CAbi::CAbi(const CAbi& ab) {
 
 //--------------------------------------------------------------------------
 inline CAbi::~CAbi(void) {
-    Clear();
+    clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CAbi::Clear(void) {
+inline void CAbi::clear(void) {
     // EXISTING_CODE
     abiByName.clear();
     abiByEncoding.clear();
@@ -99,8 +99,8 @@ inline void CAbi::Clear(void) {
 }
 
 //--------------------------------------------------------------------------
-inline void CAbi::Init(void) {
-    CBaseNode::Init();
+inline void CAbi::initialize(void) {
+    CBaseNode::initialize();
 
     abiByName.clear();
     abiByEncoding.clear();
@@ -110,9 +110,9 @@ inline void CAbi::Init(void) {
 }
 
 //--------------------------------------------------------------------------
-inline void CAbi::Copy(const CAbi& ab) {
-    Clear();
-    CBaseNode::Copy(ab);
+inline void CAbi::duplicate(const CAbi& ab) {
+    clear();
+    CBaseNode::duplicate(ab);
 
     abiByName = ab.abiByName;
     abiByEncoding = ab.abiByEncoding;
@@ -124,16 +124,15 @@ inline void CAbi::Copy(const CAbi& ab) {
 
 //--------------------------------------------------------------------------
 inline CAbi& CAbi::operator=(const CAbi& ab) {
-    Copy(ab);
+    duplicate(ab);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
 //---------------------------------------------------------------------------
-IMPLEMENT_ARCHIVE_ARRAY(CAbiArray);
-IMPLEMENT_ARCHIVE_ARRAY_C(CAbiArray);
-IMPLEMENT_ARCHIVE_LIST(CAbiList);
+extern SFArchive& operator>>(SFArchive& archive, CAbiArray& array);
+extern SFArchive& operator<<(SFArchive& archive, const CAbiArray& array);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

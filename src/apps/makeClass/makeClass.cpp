@@ -257,11 +257,11 @@ void generateCode(const COptions& options, CToml& toml, const string_q& dataFile
         } else if (fld->type == "double")    { setFmt = "\t[{NAME}] = [{DEFF}];\n"; regType = "T_DOUBLE";
         } else if (fld->type == "time")      { setFmt = "\t[{NAME}] = [{DEFT}];\n"; regType = "T_DATE";
         } else if (fld->isPointer)           { setFmt = "\t[{NAME}] = [{DEFP}];\n"; regType = "T_POINTER";
-        } else if (fld->isObject)            { setFmt = "\t[{NAME}].Init();\n";     regType = "T_OBJECT";
+        } else if (fld->isObject)            { setFmt = "\t[{NAME}].initialize();\n";     regType = "T_OBJECT";
         } else                               { setFmt = badSet;                     regType = "T_TEXT"; }
 
         if (contains(fld->type, "Array")) {
-            setFmt = "\t[{NAME}].Clear();\n";
+            setFmt = "\t[{NAME}].clear();\n";
             if (contains(fld->type, "Address")) {
                 regType = "T_ADDRESS|TS_ARRAY";
             } else if (contains(fld->type, "String")) {
@@ -782,7 +782,7 @@ const char *PTR_GET_CASE =
 //------------------------------------------------------------------------------------------------------------
 const char* PTR_SET_CASE =
 " {\n"
-"\t\t\t\tClear();\n"
+"\t\t\t\tclear();\n"
 "\t\t\t\t[{NAME}] = new [{TYPE}];\n"
 "\t\t\t\tif ([{NAME}]) {\n"
 "\t\t\t\t\tchar *p = cleanUpJson((char *)fieldValue.c_str());\n"

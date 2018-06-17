@@ -65,9 +65,9 @@ public:
     friend ostream& operator<<(ostream& os, const CBlock& item);
 
 protected:
-    void Clear(void);
-    void Init(void);
-    void Copy(const CBlock& bl);
+    void clear(void);
+    void initialize(void);
+    void duplicate(const CBlock& bl);
     bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
@@ -76,7 +76,7 @@ protected:
 
 //--------------------------------------------------------------------------
 inline CBlock::CBlock(void) {
-    Init();
+    initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
@@ -85,7 +85,7 @@ inline CBlock::CBlock(void) {
 inline CBlock::CBlock(const CBlock& bl) {
     // EXISTING_CODE
     // EXISTING_CODE
-    Copy(bl);
+    duplicate(bl);
 }
 
 // EXISTING_CODE
@@ -93,20 +93,20 @@ inline CBlock::CBlock(const CBlock& bl) {
 
 //--------------------------------------------------------------------------
 inline CBlock::~CBlock(void) {
-    Clear();
+    clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CBlock::Clear(void) {
+inline void CBlock::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CBlock::Init(void) {
-    CBaseNode::Init();
+inline void CBlock::initialize(void) {
+    CBaseNode::initialize();
 
     gasLimit = 0;
     gasUsed = 0;
@@ -125,9 +125,9 @@ inline void CBlock::Init(void) {
 }
 
 //--------------------------------------------------------------------------
-inline void CBlock::Copy(const CBlock& bl) {
-    Clear();
-    CBaseNode::Copy(bl);
+inline void CBlock::duplicate(const CBlock& bl) {
+    clear();
+    CBaseNode::duplicate(bl);
 
     gasLimit = bl.gasLimit;
     gasUsed = bl.gasUsed;
@@ -148,16 +148,15 @@ inline void CBlock::Copy(const CBlock& bl) {
 
 //--------------------------------------------------------------------------
 inline CBlock& CBlock::operator=(const CBlock& bl) {
-    Copy(bl);
+    duplicate(bl);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
 //---------------------------------------------------------------------------
-IMPLEMENT_ARCHIVE_ARRAY(CBlockArray);
-IMPLEMENT_ARCHIVE_ARRAY_C(CBlockArray);
-IMPLEMENT_ARCHIVE_LIST(CBlockList);
+extern SFArchive& operator>>(SFArchive& archive, CBlockArray& array);
+extern SFArchive& operator<<(SFArchive& archive, const CBlockArray& array);
 
 //---------------------------------------------------------------------------
 extern SFArchive& operator<<(SFArchive& archive, const CBlock& blo);

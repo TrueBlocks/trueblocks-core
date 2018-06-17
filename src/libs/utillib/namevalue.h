@@ -55,9 +55,9 @@ public:
     friend ostream& operator<<(ostream& os, const CNameValue& item);
 
 protected:
-    void Clear(void);
-    void Init(void);
-    void Copy(const CNameValue& na);
+    void clear(void);
+    void initialize(void);
+    void duplicate(const CNameValue& na);
     bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
@@ -66,7 +66,7 @@ protected:
 
 //--------------------------------------------------------------------------
 inline CNameValue::CNameValue(void) {
-    Init();
+    initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
@@ -75,7 +75,7 @@ inline CNameValue::CNameValue(void) {
 inline CNameValue::CNameValue(const CNameValue& na) {
     // EXISTING_CODE
     // EXISTING_CODE
-    Copy(na);
+    duplicate(na);
 }
 
 // EXISTING_CODE
@@ -83,20 +83,20 @@ inline CNameValue::CNameValue(const CNameValue& na) {
 
 //--------------------------------------------------------------------------
 inline CNameValue::~CNameValue(void) {
-    Clear();
+    clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CNameValue::Clear(void) {
+inline void CNameValue::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CNameValue::Init(void) {
-    CBaseNode::Init();
+inline void CNameValue::initialize(void) {
+    CBaseNode::initialize();
 
     name = "";
     value = "";
@@ -106,9 +106,9 @@ inline void CNameValue::Init(void) {
 }
 
 //--------------------------------------------------------------------------
-inline void CNameValue::Copy(const CNameValue& na) {
-    Clear();
-    CBaseNode::Copy(na);
+inline void CNameValue::duplicate(const CNameValue& na) {
+    clear();
+    CBaseNode::duplicate(na);
 
     name = na.name;
     value = na.value;
@@ -120,16 +120,15 @@ inline void CNameValue::Copy(const CNameValue& na) {
 
 //--------------------------------------------------------------------------
 inline CNameValue& CNameValue::operator=(const CNameValue& na) {
-    Copy(na);
+    duplicate(na);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
 //---------------------------------------------------------------------------
-IMPLEMENT_ARCHIVE_ARRAY(CNameValueArray);
-IMPLEMENT_ARCHIVE_ARRAY_C(CNameValueArray);
-IMPLEMENT_ARCHIVE_LIST(CNameValueList);
+extern SFArchive& operator>>(SFArchive& archive, CNameValueArray& array);
+extern SFArchive& operator<<(SFArchive& archive, const CNameValueArray& array);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
