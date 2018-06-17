@@ -271,3 +271,14 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
     return str;
 }
 
+//--------------------------------------------------------------------------------
+void CFileExportContext::setOutput(void *output) {
+    Close();  // just in case
+    m_output = output == NULL ? stdout : reinterpret_cast<FILE*>(output);
+}
+
+//--------------------------------------------------------------------------------
+void CFileExportContext::Output(const string_q& sss) {
+    ASSERT(m_output);
+    fprintf(m_output, "%s", sss.c_str());
+}

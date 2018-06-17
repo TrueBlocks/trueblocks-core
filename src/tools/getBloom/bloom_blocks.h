@@ -17,7 +17,6 @@
 inline void CLASS_NAME::finishParse(void) {} \
 inline bool CLASS_NAME::Serialize(SFArchive& archive) {return true;} \
 inline bool CLASS_NAME::SerializeC(SFArchive& archive) const {return true;} \
-inline bool CLASS_NAME::handleCustomFormat(CExportContext& ctx, const string_q& fieldName, void*data) const {return false;}
 
 //-----------------------------------------------------------------------------
 class CBloomReceipt : public CBaseNode {

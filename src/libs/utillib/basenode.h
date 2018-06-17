@@ -58,9 +58,6 @@ namespace qblocks {
         virtual string_q Format(const string_q& fmtIn = "") const { return ""; }
         virtual const CBaseNode *getObjectAt(const string_q& name, size_t i) const { return NULL; }
         virtual const string_q   getStringAt(const string_q& name, size_t i) const { return ""; }
-        virtual bool handleCustomFormat(CExportContext& ctx, const string_q& fmtIn, void *data = NULL) const {
-            return false;
-        }
 
         void doExport(ostream& os) const;
 

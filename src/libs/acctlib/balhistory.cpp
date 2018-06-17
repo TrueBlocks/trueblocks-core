@@ -40,8 +40,8 @@ void CBalHistory::Format(CExportContext& ctx, const string_q& fmtIn, void *dataP
     }
 
     string_q fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, dataPtr))
-        return;
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     while (!fmt.empty())
         ctx << getNextChunk(fmt, nextBalhistoryChunk, this);
@@ -182,13 +182,6 @@ string_q nextBalhistoryChunk_custom(const string_q& fieldIn, const void *dataPtr
     }
 
     return "";
-}
-
-//---------------------------------------------------------------------------
-bool CBalHistory::handleCustomFormat(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
-    return false;
 }
 
 //---------------------------------------------------------------------------

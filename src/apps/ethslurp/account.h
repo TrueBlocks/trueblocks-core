@@ -54,6 +54,7 @@ public:
     // EXISTING_CODE
     CAbi abi;
     size_t deleteNotShowing(void);
+    bool handleCustomFormat(CExportContext& ctx, const string_q& fmtIn, void *data = NULL) const;
     // EXISTING_CODE
     friend ostream& operator<<(ostream& os, const CAccount& item);
 

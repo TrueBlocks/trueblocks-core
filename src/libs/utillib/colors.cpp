@@ -110,11 +110,11 @@ namespace qblocks {
             return;
         }
 
-        CStringExportContext ctx;
+        ostringstream os;
         if (_tim > 0.) {
             pb_Value = max(pb_Value, _tim);  // keep it monotonic
-            ctx << " in " << cYellow << pb_Value << cOff << " seconds.";
+            os << " in " << cYellow << pb_Value << cOff << " seconds.";
         }
-        progressBar(_part, _whole, begMsg+"|"+ctx.str);
+        progressBar(_part, _whole, begMsg + "|" + os.str().c_str());
     }
 }  // namespace qblocks
