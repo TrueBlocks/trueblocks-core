@@ -25,9 +25,6 @@ namespace qblocks {
     string_q::~string_q() { }
     string_q string_q::substr(size_t first) const { return substr(first, length()-first); }
     string_q string_q::substr(size_t first, size_t len) const { return string::substr(first, len).c_str(); }
-    string_q string_q::extract(size_t start, size_t len) const {
-        return string::substr(start, len).c_str();
-    }
     const string_q& string_q::operator=(const string_q& str) {
         this->string::operator=(str);
         return *this;
@@ -55,19 +52,19 @@ namespace qblocks {
 #else
     //---------------------------------------------------------------------------------------
     string_q::string_q() {
-        init();
+        initialize();
         reserve(0);
     }
 
     //---------------------------------------------------------------------------------------
     string_q::string_q(const string_q& str) {
-        init();
+        initialize();
         *this = str.m_Values;
     }
 
     //---------------------------------------------------------------------------------------
     string_q::string_q(const char *str, size_t start, size_t len) {
-        init();
+        initialize();
 
         size_t strLen = (str ? strlen(str) : 0);
         len = (len == NOPOS ? strLen : min(len,strLen));
@@ -82,7 +79,7 @@ namespace qblocks {
 
     //---------------------------------------------------------------------------------------
     string_q::string_q(size_t len, char ch) {
-        init();
+        initialize();
 
         if ((long)len > 0) {
             reserve(len);
@@ -232,7 +229,7 @@ namespace qblocks {
     }
 
     //---------------------------------------------------------------------------------------
-    void string_q::init() {
+    void string_q::initialize() {
         m_nValues     = 0;
         m_buffSize    = 0;
         m_Values      = nullStr;

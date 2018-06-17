@@ -58,9 +58,9 @@ public:
     friend ostream& operator<<(ostream& os, const CAccount& item);
 
 protected:
-    void Clear(void);
-    void Init(void);
-    void Copy(const CAccount& ac);
+    void clear(void);
+    void initialize(void);
+    void duplicate(const CAccount& ac);
     bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
@@ -69,7 +69,7 @@ protected:
 
 //--------------------------------------------------------------------------
 inline CAccount::CAccount(void) {
-    Init();
+    initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
@@ -78,7 +78,7 @@ inline CAccount::CAccount(void) {
 inline CAccount::CAccount(const CAccount& ac) {
     // EXISTING_CODE
     // EXISTING_CODE
-    Copy(ac);
+    duplicate(ac);
 }
 
 // EXISTING_CODE
@@ -86,13 +86,13 @@ inline CAccount::CAccount(const CAccount& ac) {
 
 //--------------------------------------------------------------------------
 inline CAccount::~CAccount(void) {
-    Clear();
+    clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CAccount::Clear(void) {
+inline void CAccount::clear(void) {
     // EXISTING_CODE
     abi.abiByName.clear();
     abi.abiByEncoding.clear();
@@ -100,8 +100,8 @@ inline void CAccount::Clear(void) {
 }
 
 //--------------------------------------------------------------------------
-inline void CAccount::Init(void) {
-    CBaseNode::Init();
+inline void CAccount::initialize(void) {
+    CBaseNode::initialize();
 
     addr = "";
     header = "";
@@ -113,14 +113,14 @@ inline void CAccount::Init(void) {
     transactions.clear();
 
     // EXISTING_CODE
-    abi.Init();
+    abi.initialize();
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CAccount::Copy(const CAccount& ac) {
-    Clear();
-    CBaseNode::Copy(ac);
+inline void CAccount::duplicate(const CAccount& ac) {
+    clear();
+    CBaseNode::duplicate(ac);
 
     addr = ac.addr;
     header = ac.header;
@@ -141,16 +141,15 @@ inline void CAccount::Copy(const CAccount& ac) {
 
 //--------------------------------------------------------------------------
 inline CAccount& CAccount::operator=(const CAccount& ac) {
-    Copy(ac);
+    duplicate(ac);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
 //---------------------------------------------------------------------------
-IMPLEMENT_ARCHIVE_ARRAY(CAccountArray);
-IMPLEMENT_ARCHIVE_ARRAY_C(CAccountArray);
-IMPLEMENT_ARCHIVE_LIST(CAccountList);
+extern SFArchive& operator>>(SFArchive& archive, CAccountArray& array);
+extern SFArchive& operator<<(SFArchive& archive, const CAccountArray& array);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

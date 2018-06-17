@@ -69,9 +69,9 @@ public:
     friend ostream& operator<<(ostream& os, const CTreeRoot& item);
 
 protected:
-    void Clear(void);
-    void Init(void);
-    void Copy(const CTreeRoot& tr);
+    void clear(void);
+    void initialize(void);
+    void duplicate(const CTreeRoot& tr);
     bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
@@ -80,7 +80,7 @@ protected:
 
 //--------------------------------------------------------------------------
 inline CTreeRoot::CTreeRoot(void) {
-    Init();
+    initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
@@ -89,7 +89,7 @@ inline CTreeRoot::CTreeRoot(void) {
 inline CTreeRoot::CTreeRoot(const CTreeRoot& tr) {
     // EXISTING_CODE
     // EXISTING_CODE
-    Copy(tr);
+    duplicate(tr);
 }
 
 // EXISTING_CODE
@@ -97,13 +97,13 @@ inline CTreeRoot::CTreeRoot(const CTreeRoot& tr) {
 
 //--------------------------------------------------------------------------
 inline CTreeRoot::~CTreeRoot(void) {
-    Clear();
+    clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CTreeRoot::Clear(void) {
+inline void CTreeRoot::clear(void) {
     if (root)
         delete root;
     root = NULL;
@@ -112,8 +112,8 @@ inline void CTreeRoot::Clear(void) {
 }
 
 //--------------------------------------------------------------------------
-inline void CTreeRoot::Init(void) {
-    CBaseNode::Init();
+inline void CTreeRoot::initialize(void) {
+    CBaseNode::initialize();
 
     root = NULL;
 
@@ -122,9 +122,9 @@ inline void CTreeRoot::Init(void) {
 }
 
 //--------------------------------------------------------------------------
-inline void CTreeRoot::Copy(const CTreeRoot& tr) {
-    Clear();
-    CBaseNode::Copy(tr);
+inline void CTreeRoot::duplicate(const CTreeRoot& tr) {
+    clear();
+    CBaseNode::duplicate(tr);
 
     if (tr.root) {
         root = new CTreeNode;
@@ -138,16 +138,15 @@ inline void CTreeRoot::Copy(const CTreeRoot& tr) {
 
 //--------------------------------------------------------------------------
 inline CTreeRoot& CTreeRoot::operator=(const CTreeRoot& tr) {
-    Copy(tr);
+    duplicate(tr);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
 //---------------------------------------------------------------------------
-IMPLEMENT_ARCHIVE_ARRAY(CTreeRootArray);
-IMPLEMENT_ARCHIVE_ARRAY_C(CTreeRootArray);
-IMPLEMENT_ARCHIVE_LIST(CTreeRootList);
+extern SFArchive& operator>>(SFArchive& archive, CTreeRootArray& array);
+extern SFArchive& operator<<(SFArchive& archive, const CTreeRootArray& array);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

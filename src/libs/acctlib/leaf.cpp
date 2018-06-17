@@ -74,7 +74,7 @@ bool CLeaf::setValueByName(const string_q& fieldName, const string_q& fieldValue
             }
             break;
         case 'c':
-            if ( fieldName % "counter" ) { counter = toLongU(fieldValue); return true; }
+            if ( fieldName % "counter" ) { counter = toUnsigned(fieldValue); return true; }
             break;
         default:
             break;
@@ -117,6 +117,27 @@ bool CLeaf::SerializeC(SFArchive& archive) const {
     archive << counter;
 
     return true;
+}
+
+//---------------------------------------------------------------------------
+SFArchive& operator>>(SFArchive& archive, CLeafArray& array) {
+    uint64_t count;
+    archive >> count;
+    array.resize(count);
+    for (size_t i = 0 ; i < count ; i++) {
+        ASSERT(i < array.capacity());
+        array.at(i).Serialize(archive);
+    }
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+SFArchive& operator<<(SFArchive& archive, const CLeafArray& array) {
+    uint64_t count = array.size();
+    archive << count;
+    for (size_t i = 0 ; i < array.size() ; i++)
+        array[i].SerializeC(archive);
+    return archive;
 }
 
 //---------------------------------------------------------------------------

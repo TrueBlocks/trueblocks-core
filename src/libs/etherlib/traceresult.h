@@ -50,9 +50,9 @@ public:
     friend ostream& operator<<(ostream& os, const CTraceResult& item);
 
 protected:
-    void Clear(void);
-    void Init(void);
-    void Copy(const CTraceResult& tr);
+    void clear(void);
+    void initialize(void);
+    void duplicate(const CTraceResult& tr);
     bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
@@ -61,7 +61,7 @@ protected:
 
 //--------------------------------------------------------------------------
 inline CTraceResult::CTraceResult(void) {
-    Init();
+    initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
@@ -70,7 +70,7 @@ inline CTraceResult::CTraceResult(void) {
 inline CTraceResult::CTraceResult(const CTraceResult& tr) {
     // EXISTING_CODE
     // EXISTING_CODE
-    Copy(tr);
+    duplicate(tr);
 }
 
 // EXISTING_CODE
@@ -78,20 +78,20 @@ inline CTraceResult::CTraceResult(const CTraceResult& tr) {
 
 //--------------------------------------------------------------------------
 inline CTraceResult::~CTraceResult(void) {
-    Clear();
+    clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CTraceResult::Clear(void) {
+inline void CTraceResult::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CTraceResult::Init(void) {
-    CBaseNode::Init();
+inline void CTraceResult::initialize(void) {
+    CBaseNode::initialize();
 
     address = "";
     code = "";
@@ -103,9 +103,9 @@ inline void CTraceResult::Init(void) {
 }
 
 //--------------------------------------------------------------------------
-inline void CTraceResult::Copy(const CTraceResult& tr) {
-    Clear();
-    CBaseNode::Copy(tr);
+inline void CTraceResult::duplicate(const CTraceResult& tr) {
+    clear();
+    CBaseNode::duplicate(tr);
 
     address = tr.address;
     code = tr.code;
@@ -119,16 +119,15 @@ inline void CTraceResult::Copy(const CTraceResult& tr) {
 
 //--------------------------------------------------------------------------
 inline CTraceResult& CTraceResult::operator=(const CTraceResult& tr) {
-    Copy(tr);
+    duplicate(tr);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
 //---------------------------------------------------------------------------
-IMPLEMENT_ARCHIVE_ARRAY(CTraceResultArray);
-IMPLEMENT_ARCHIVE_ARRAY_C(CTraceResultArray);
-IMPLEMENT_ARCHIVE_LIST(CTraceResultList);
+extern SFArchive& operator>>(SFArchive& archive, CTraceResultArray& array);
+extern SFArchive& operator<<(SFArchive& archive, const CTraceResultArray& array);
 
 //---------------------------------------------------------------------------
 extern SFArchive& operator<<(SFArchive& archive, const CTraceResult& tra);

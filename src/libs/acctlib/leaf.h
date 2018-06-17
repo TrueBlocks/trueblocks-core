@@ -57,9 +57,9 @@ private:
     friend ostream& operator<<(ostream& os, const CLeaf& item);
 
 protected:
-    void Clear(void);
-    void Init(void);
-    void Copy(const CLeaf& le);
+    void clear(void);
+    void initialize(void);
+    void duplicate(const CLeaf& le);
     bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
@@ -68,7 +68,7 @@ protected:
 
 //--------------------------------------------------------------------------
 inline CLeaf::CLeaf(void) {
-    Init();
+    initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
@@ -77,7 +77,7 @@ inline CLeaf::CLeaf(void) {
 inline CLeaf::CLeaf(const CLeaf& le) {
     // EXISTING_CODE
     // EXISTING_CODE
-    Copy(le);
+    duplicate(le);
 }
 
 // EXISTING_CODE
@@ -85,20 +85,20 @@ inline CLeaf::CLeaf(const CLeaf& le) {
 
 //--------------------------------------------------------------------------
 inline CLeaf::~CLeaf(void) {
-    Clear();
+    clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CLeaf::Clear(void) {
+inline void CLeaf::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CLeaf::Init(void) {
-    CTreeNode::Init();
+inline void CLeaf::initialize(void) {
+    CTreeNode::initialize();
 
     blocks.clear();
     counter = 0;
@@ -108,9 +108,9 @@ inline void CLeaf::Init(void) {
 }
 
 //--------------------------------------------------------------------------
-inline void CLeaf::Copy(const CLeaf& le) {
-    Clear();
-    CTreeNode::Copy(le);
+inline void CLeaf::duplicate(const CLeaf& le) {
+    clear();
+    CTreeNode::duplicate(le);
 
     blocks = le.blocks;
     counter = le.counter;
@@ -122,16 +122,15 @@ inline void CLeaf::Copy(const CLeaf& le) {
 
 //--------------------------------------------------------------------------
 inline CLeaf& CLeaf::operator=(const CLeaf& le) {
-    Copy(le);
+    duplicate(le);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
 //---------------------------------------------------------------------------
-IMPLEMENT_ARCHIVE_ARRAY(CLeafArray);
-IMPLEMENT_ARCHIVE_ARRAY_C(CLeafArray);
-IMPLEMENT_ARCHIVE_LIST(CLeafList);
+extern SFArchive& operator>>(SFArchive& archive, CLeafArray& array);
+extern SFArchive& operator<<(SFArchive& archive, const CLeafArray& array);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

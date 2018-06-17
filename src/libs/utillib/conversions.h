@@ -162,7 +162,11 @@ namespace qblocks {
 #define SFGas          uint64_t
 #define blknum_t       uint64_t
 #define txnum_t        uint64_t
+#ifdef NATIVE
+    typedef vector<string_q> SFAddressArray;
+#else
     typedef SFArrayBase<SFAddress> SFAddressArray;
+#endif
     typedef SFArrayBase<SFBloom> SFBloomArray;
 
 #define toHash(a)      toLower(a)

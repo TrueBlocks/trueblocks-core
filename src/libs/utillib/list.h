@@ -47,6 +47,7 @@ namespace qblocks {
               void   push_back (TYPE x);
               void   clear     (void);
               void   reserve   (size_t newSize);
+              void   resize    (size_t newSize) { reserve(newSize); }
 
         void Sort(SORTINGFUNC func) { qsort(&m_Items[0], m_nItems, sizeof(TYPE), func); }
         TYPE *Find(const TYPE *key, SEARCHFUNC func) {
@@ -56,20 +57,20 @@ namespace qblocks {
 
     private:
         void checkSize(size_t sizeNeeded);
-        void copy(const SFArrayBase& cop);
-        void init(size_t cap, size_t count, TYPE *values);
+        void duplicate(const SFArrayBase& cop);
+        void initialize(size_t cap, size_t count, TYPE *values);
     };
 
     //----------------------------------------------------------------------
     template<class TYPE>
     inline SFArrayBase<TYPE>::SFArrayBase(void) {
-        init(0, 0, NULL);
+        initialize(0, 0, NULL);
     }
 
     //----------------------------------------------------------------------
     template<class TYPE>
     inline SFArrayBase<TYPE>::SFArrayBase(const SFArrayBase<TYPE>& cop) {
-        copy(cop);
+        duplicate(cop);
     }
 
     //----------------------------------------------------------------------
@@ -82,13 +83,13 @@ namespace qblocks {
     template<class TYPE>
     inline SFArrayBase<TYPE>& SFArrayBase<TYPE>::operator=(const SFArrayBase<TYPE>& cop) {
         clear();
-        copy(cop);
+        duplicate(cop);
         return *this;
     }
 
     //----------------------------------------------------------------------
     template<class TYPE>
-    inline void SFArrayBase<TYPE>::init(size_t cap, size_t count, TYPE *values) {
+    inline void SFArrayBase<TYPE>::initialize(size_t cap, size_t count, TYPE *values) {
         m_nCapacity = cap;
         m_nItems = count;
         m_Items  = values;
@@ -99,12 +100,12 @@ namespace qblocks {
     inline void SFArrayBase<TYPE>::clear(void) {
         if (m_Items)
             delete [] m_Items;
-        init(0, 0, NULL);
+        initialize(0, 0, NULL);
     }
 
     //----------------------------------------------------------------------
     template<class TYPE>
-    inline void SFArrayBase<TYPE>::copy(const SFArrayBase<TYPE>& cop) {
+    inline void SFArrayBase<TYPE>::duplicate(const SFArrayBase<TYPE>& cop) {
         checkSize(cop.capacity());
         for (size_t i = 0 ; i < cop.size() ; i++)
             m_Items[i] = cop.m_Items[i];
@@ -135,7 +136,7 @@ namespace qblocks {
                 delete [] m_Items;
             m_Items = NULL;
         }
-        init(newSize, m_nItems, newArray);
+        initialize(newSize, m_nItems, newArray);
     }
 
     //----------------------------------------------------------------------

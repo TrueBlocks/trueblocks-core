@@ -53,9 +53,9 @@ public:
     friend ostream& operator<<(ostream& os, const CTreeNode& item);
 
 protected:
-    void Clear(void);
-    void Init(void);
-    void Copy(const CTreeNode& tr);
+    void clear(void);
+    void initialize(void);
+    void duplicate(const CTreeNode& tr);
     bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
@@ -64,7 +64,7 @@ protected:
 
 //--------------------------------------------------------------------------
 inline CTreeNode::CTreeNode(void) {
-    Init();
+    initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
@@ -73,7 +73,7 @@ inline CTreeNode::CTreeNode(void) {
 inline CTreeNode::CTreeNode(const CTreeNode& tr) {
     // EXISTING_CODE
     // EXISTING_CODE
-    Copy(tr);
+    duplicate(tr);
 }
 
 // EXISTING_CODE
@@ -81,20 +81,20 @@ inline CTreeNode::CTreeNode(const CTreeNode& tr) {
 
 //--------------------------------------------------------------------------
 inline CTreeNode::~CTreeNode(void) {
-    Clear();
+    clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CTreeNode::Clear(void) {
+inline void CTreeNode::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CTreeNode::Init(void) {
-    CBaseNode::Init();
+inline void CTreeNode::initialize(void) {
+    CBaseNode::initialize();
 
     index = 0;
     prefixS = "";
@@ -104,9 +104,9 @@ inline void CTreeNode::Init(void) {
 }
 
 //--------------------------------------------------------------------------
-inline void CTreeNode::Copy(const CTreeNode& tr) {
-    Clear();
-    CBaseNode::Copy(tr);
+inline void CTreeNode::duplicate(const CTreeNode& tr) {
+    clear();
+    CBaseNode::duplicate(tr);
 
     index = tr.index;
     prefixS = tr.prefixS;
@@ -118,16 +118,15 @@ inline void CTreeNode::Copy(const CTreeNode& tr) {
 
 //--------------------------------------------------------------------------
 inline CTreeNode& CTreeNode::operator=(const CTreeNode& tr) {
-    Copy(tr);
+    duplicate(tr);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
 //---------------------------------------------------------------------------
-IMPLEMENT_ARCHIVE_ARRAY(CTreeNodeArray);
-IMPLEMENT_ARCHIVE_ARRAY_C(CTreeNodeArray);
-IMPLEMENT_ARCHIVE_LIST(CTreeNodeList);
+extern SFArchive& operator>>(SFArchive& archive, CTreeNodeArray& array);
+extern SFArchive& operator<<(SFArchive& archive, const CTreeNodeArray& array);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

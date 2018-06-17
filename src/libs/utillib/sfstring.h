@@ -31,7 +31,6 @@ public:
         string_q   (size_t reps, char ch);
         string_q   (const char *str, size_t start=0, size_t len=NOPOS);
         ~string_q   (void);
-        string_q        extract    (size_t first, size_t len) const;
         string_q        substr     (size_t first, size_t len) const;
         string_q        substr     (size_t first) const;
         friend string_q operator+  (const string_q& str1, const string_q& str2);
@@ -131,7 +130,7 @@ public:
         }
 
     protected:
-        void    init      (void);
+        void initialize(void);
     };
 
     //---------------------------------------------------------------------------------------
