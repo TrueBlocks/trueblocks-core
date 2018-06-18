@@ -19,25 +19,9 @@ namespace qblocks {
 #define NOPOS ((size_t)-1)
 
     //--------------------------------------------------------------------
-//#define NATIVE
+#define NATIVE
 #ifdef NATIVE
-    class string_q : public string {
-public:
-        string_q   (void);
-        string_q   (const string_q& str);
-        const string_q&  operator=  (const string_q& str);
-        const string_q&  operator=  (char ch);
-        string_q   (char ch);
-        string_q   (size_t reps, char ch);
-        string_q   (const char *str, size_t start=0, size_t len=NOPOS);
-        ~string_q   (void);
-        string_q        substr     (size_t first, size_t len) const;
-        string_q        substr     (size_t first) const;
-        friend string_q operator+  (const string_q& str1, const string_q& str2);
-        friend string_q operator+  (const string_q& str1, const char*     str2);
-        friend string_q operator+  (const char*     str1, const string_q& str2);
-        friend string_q operator+  (const string_q& str1, char            ch);
-    };
+typedef std::string string_q;
 #else
     class string_q {
     private:
@@ -324,9 +308,8 @@ public:
 
     //--------------------------------------------------------------------
     extern string_q nextTokenClearReverse(string_q& str, char token);
-    extern string_q nextTokenClear(string_q& line, char delim, bool doClear=true);
-    extern string_q snagFieldClear(      string_q& in, const string_q& tagName, const string_q& defVal="");
-    extern string_q snagField     (const string_q& in, const string_q& tagName, const string_q& defVal="");
+    extern string_q nextTokenClear       (string_q& str, char delim, bool doClear=true);
+    extern string_q snagFieldClear       (string_q& str, const string_q& tagName, const string_q& defVal="");
 
     //--------------------------------------------------------------------
     #define EMPTY string_q("")

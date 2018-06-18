@@ -13,7 +13,6 @@
 #include "etherlib.h"
 #include "options.h"
 
-extern string_q getTestData(void);
 extern bool test_encodings(void);
 extern bool test_generation(void);
 //--------------------------------------------------------------
@@ -45,6 +44,9 @@ int main(int argc, const char *argv[]) {
     return 0;
 }
 
+extern string_q getTestData(void);
+extern string_q getAlreadySortedJson(void);
+extern string_q getNotSortedJson(void);
 //--------------------------------------------------------------
 bool test_encodings(void) {
 
@@ -71,20 +73,61 @@ bool test_encodings(void) {
     return ret;
 }
 
+//---------------------------------------------------------------------------
+int sortFuncTableByName1(const void *ob1, const void *ob2) {
+    CFunction *f1 = (CFunction*)ob1;
+    string_q s1 = f1->name;
+    CFunction *f2 = (CFunction*)ob2;
+    string_q s2 = f2->name;
+
+    if (s2 < s1)
+        return 1;
+    if (s2 > s1)
+        return -1;
+    if (s2 == s1)
+        return 0;
+
+    return 0;
+}
+
+//---------------------------------------------------------------------------
+bool loadABIFromString(CAbi& abi, const string_q& in) {
+
+    string_q contents = in;
+    ASSERT(!contents.empty());
+    char *p = cleanUpJson((char *)contents.c_str());
+    while (p && *p) {
+        CFunction func;
+        size_t nFields = 0;
+        p = func.parseJson(p, nFields);
+        if (nFields) {
+            abi.abiByName.push_back(func);
+        }
+    }
+    return true; //abiByName.size();
+}
+
 //--------------------------------------------------------------
 bool test_generation(void) {
     CFunction::registerClass();
     CParameter::registerClass();
 
-    CAbi abi;
-    cout << "ABI of test1.json\n";
-    abi.loadABIFromFile("./test1.json");
-    cout << abi << "\n";
-    abi.clearABI();
+    {
+        CAbi abi;
+        cout << "Testing of already sorted JSON\n";
+        loadABIFromString(abi, getAlreadySortedJson());
+        abi.abiByName.Sort(sortFuncTableByName1);
+        cout << abi << "\n";
+    }
 
-    cout << "ABI of test2.json\n";
-    abi.loadABIFromFile("./test2.json");
-    cout << abi << "\n";
+    {
+        CAbi abi;
+        cout << "Testing of not sorted JSON\n";
+        loadABIFromString(abi, getNotSortedJson());
+        abi.abiByName.Sort(sortFuncTableByName1);
+        cout << abi << "\n";
+    }
+
     return true;
 }
 
@@ -113,3 +156,22 @@ string_q getTestData(void) {
       "function approve(address,uint256)                   0x095ea7b3\n"
       "function transfer(address,uint256)                  0xa9059cbb\n";
 }
+
+//--------------------------------------------------------------
+string_q getAlreadySortedJson(void) {
+    return
+        "["
+            "{\"constant\":true,\"inputs\":[],\"name\":\"a\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"type\":\"function\"},"
+            "{\"constant\":true,\"inputs\":[],\"name\":\"b\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"type\":\"function\"},"
+        "]";
+}
+
+//--------------------------------------------------------------
+string_q getNotSortedJson(void) {
+    return
+        "["
+            "{\"constant\":true,\"inputs\":[],\"name\":\"a\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"type\":\"function\"},"
+            "{\"constant\":true,\"inputs\":[],\"name\":\"b\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"type\":\"function\"},"
+        "]";
+}
+
