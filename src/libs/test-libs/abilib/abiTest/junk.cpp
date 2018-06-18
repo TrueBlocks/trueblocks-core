@@ -30,7 +30,8 @@ bool CJunk::setValueByName(const string_q& fieldName, const string_q& fieldValue
             size_t nFields = 0;
             p = item.parseJson(p, nFields);
             if (nFields)
-                array.push_back(item.Format());
+                array1.push_back(item.Format());
+                array2.push_back(item);
         }
         return true;
     }
@@ -38,13 +39,14 @@ bool CJunk::setValueByName(const string_q& fieldName, const string_q& fieldValue
 }
 string_q CJunk::getValueByName(const string_q& fieldName) const {
     if (fieldName == "array") {
-        size_t cnt = array.size();
+        size_t cnt = array1.size();
         if (endsWith(fieldName, "Cnt"))
             return asStringU(cnt);
         if (!cnt) return "";
         string_q retS;
         for (size_t i = 0 ; i < cnt ; i++) {
-            retS += array[i]; //.Format();
+            retS += array1[i];
+            retS += array2[i].Format();
             retS += ((i < cnt - 1) ? ",\n" : "\n");
         }
         return retS;
