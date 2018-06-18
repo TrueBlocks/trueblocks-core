@@ -12,6 +12,7 @@
  *-------------------------------------------------------------------------------------------*/
 #include "etherlib.h"
 #include "options.h"
+#include "junk.h"
 
 extern bool test_encodings(void);
 extern bool test_generation(void);
@@ -91,7 +92,7 @@ int sortFuncTableByName1(const void *ob1, const void *ob2) {
 }
 
 //---------------------------------------------------------------------------
-bool loadABIFromString(CAbi& abi, const string_q& in) {
+bool loadABIFromString(CJunk& abi, const string_q& in) {
 
     string_q contents = in;
     ASSERT(!contents.empty());
@@ -101,7 +102,7 @@ bool loadABIFromString(CAbi& abi, const string_q& in) {
         size_t nFields = 0;
         p = func.parseJson(p, nFields);
         if (nFields) {
-            abi.abiByName.push_back(func);
+            abi.array.push_back(func);
         }
     }
     return true; //abiByName.size();
@@ -109,23 +110,24 @@ bool loadABIFromString(CAbi& abi, const string_q& in) {
 
 //--------------------------------------------------------------
 bool test_generation(void) {
+//    CJunk::registerClass();
     CFunction::registerClass();
     CParameter::registerClass();
 
     {
-        CAbi abi;
+        CJunk abi;
         cout << "Testing of already sorted JSON\n";
         loadABIFromString(abi, getAlreadySortedJson());
-        abi.abiByName.Sort(sortFuncTableByName1);
-        cout << abi << "\n";
+        abi.array.Sort(sortFuncTableByName1);
+        cout << abi.Format() << "\n";
     }
 
     {
-        CAbi abi;
+        CJunk abi;
         cout << "Testing of not sorted JSON\n";
         loadABIFromString(abi, getNotSortedJson());
-        abi.abiByName.Sort(sortFuncTableByName1);
-        cout << abi << "\n";
+        abi.array.Sort(sortFuncTableByName1);
+        cout << abi.Format() << "\n";
     }
 
     return true;
