@@ -15,41 +15,7 @@
 
 namespace qblocks {
 
-#ifdef NATIVE
-    //---------------------------------------------------------------------------------------
-    string_q::string_q() : string() { }
-    string_q::string_q(const string_q& str) : string(str) { }
-    string_q::string_q(const char *str, size_t start, size_t len) : string(str, start, len) { }
-    string_q::string_q(size_t len, char ch) : string(len, ch) { }
-    string_q::string_q(char ch) : string(1, ch) { }
-    string_q::~string_q() { }
-    string_q string_q::substr(size_t first) const { return substr(first, length()-first); }
-    string_q string_q::substr(size_t first, size_t len) const { return string::substr(first, len).c_str(); }
-    const string_q& string_q::operator=(const string_q& str) {
-        this->string::operator=(str);
-        return *this;
-    }
-    const string_q& string_q::operator=(char ch) {
-        string str(1,ch);
-        this->string::operator=(str);
-        return *this;
-    }
-    string_q operator+(const string_q& str1, const string_q& str2) {
-        string s1(str1.c_str());
-        string s2(str2.c_str());
-        return (s1 + s2).c_str();
-    }
-    string_q operator+(const string_q& str1, const char *str2) {
-        return operator+(str1, string_q(str2));
-    }
-    string_q operator+(const char *str1, const string_q& str2) {
-        return operator+(string_q(str1), str2);
-    }
-    string_q operator+(const string_q& str,  char ch) {
-        return operator+(str, string_q(1, ch));
-    }
-
-#else
+#ifndef NATIVE
     //---------------------------------------------------------------------------------------
     string_q::string_q() {
         initialize();
@@ -319,7 +285,6 @@ namespace qblocks {
         ASSERT(index < length());
         return m_Values[index];
     }
-
 #endif
 
     //---------------------------------------------------------------------------------------
@@ -406,7 +371,6 @@ namespace qblocks {
         reverse(target);
     }
 
-#ifdef NATIVE
     //---------------------------------------------------------------------------------------
     void reverse(string_q& target) {
         size_t i,j;
@@ -417,19 +381,6 @@ namespace qblocks {
             target[j] = tmp;
         }
     }
-#else
-    //---------------------------------------------------------------------------------------
-    void reverse(string_q& target) {
-        size_t i,j;
-        size_t n = target.length();
-        char *t = (char *)target.c_str();
-        for ( i = 0, j = n-1 ; i < n/2; i++, j-- ) {
-            char tmp = t[i];
-            t[i] = t[j];
-            t[j] = tmp;
-        }
-    }
-#endif
 
     //----------------------------------------------------------------------------------------
     string_q nextTokenClearReverse(string_q& str, char token) {
@@ -442,17 +393,6 @@ namespace qblocks {
 
     //---------------------------------------------------------------------------------------
     string_q snagFieldClear(string_q& in, const string_q& field, const string_q& defVal) {
-#ifdef _DEBUG
-        bool start = contains(in, "<"+field+">");
-        bool stop  = contains(in, "</"+field+">");
-        if (start != stop)
-        {
-            string_q out = in;
-            replaceAll(out, "<", "&lt;");
-            replaceAll(out, ">", "&gt;");
-            printf("%s", (string_q("<h3>'") + field + "' not found in '" + out + "'<h3><br>").c_str());
-        }
-#endif
         string_q f1 = "</" + field + ">";
         string_q ret = in.substr(0,in.find(f1));
 
@@ -460,31 +400,6 @@ namespace qblocks {
         ret = ret.substr(ret.find(f2)+f2.length());
 
         replace(in, f2 + ret + f1, "");
-
-        if (ret.empty())
-            ret = defVal;
-
-        return ret;
-    }
-
-    //---------------------------------------------------------------------------------------
-    string_q snagField(const string_q& in, const string_q& field, const string_q& defVal) {
-#ifdef _DEBUG
-        bool start = contains(in, "<"+field+">");
-        bool stop  = contains(in, "</"+field+">");
-        if (start != stop)
-        {
-            string_q out = in;
-            replaceAll(out, "<", "&lt;");
-            replaceAll(out, ">", "&gt;");
-            printf("%s", (string_q("<h3>'") + field + "' not found in '" + out + "'<h3><br>").c_str());
-        }
-#endif
-        string_q f = "</" + field + ">";
-        string_q ret = in.substr(0,in.find(f));
-
-        replace(f, "</", "<");
-        ret = ret.substr(ret.find(f)+f.length());
 
         if (ret.empty())
             ret = defVal;
