@@ -60,10 +60,9 @@ namespace qblocks {
 
         virtual CExportContext& operator<<(bool b);
         virtual CExportContext& operator<<(char c);
-        virtual CExportContext& operator<<(unsigned int ui);
         virtual CExportContext& operator<<(int64_t dw);
         virtual CExportContext& operator<<(uint64_t ui);
-        virtual CExportContext& operator<<(size_t sz);
+        virtual CExportContext& operator<<(uint32_t sz);
         virtual CExportContext& operator<<(int i);
         virtual CExportContext& operator<<(float f);
         virtual CExportContext& operator<<(double f);

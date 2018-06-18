@@ -47,14 +47,6 @@ namespace qblocks {
     }
 
     //-------------------------------------------------------------
-    CExportContext& CExportContext::operator<<(unsigned int ui) {
-        ostringstream os;
-        os << ui;
-        Output(os.str().c_str());
-        return *this;
-    }
-
-    //-------------------------------------------------------------
     CExportContext& CExportContext::operator<<(uint64_t ul) {
         ostringstream os;
         os << ul;
@@ -63,7 +55,7 @@ namespace qblocks {
     }
 
     //-------------------------------------------------------------
-    CExportContext& CExportContext::operator<<(size_t sz) {
+    CExportContext& CExportContext::operator<<(uint32_t sz) {
         ostringstream os;
         os << sz;
         Output(os.str().c_str());
