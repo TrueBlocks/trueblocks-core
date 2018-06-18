@@ -6,57 +6,30 @@ Testing of already sorted JSON
   "array": [
     {
       "name": "a",
-      "type": "function",
-      "constant": 1,
+      "constant": 0,
       "payable": 0,
       "signature": "a()",
       "encoding": "0x0dbe671f",
       "inputs": [],
-      "outputs": [
-        {
-          "indexed": 0,
-          "type": "uint256",
-          "isPointer": 0,
-          "isArray": 0,
-          "isObject": 0
-        }
-      ]
+      "outputs": []
     },
     {
       "name": "b",
-      "type": "function",
-      "constant": 1,
+      "constant": 0,
       "payable": 0,
       "signature": "b()",
       "encoding": "0x4df7e3d0",
       "inputs": [],
-      "outputs": [
-        {
-          "indexed": 0,
-          "type": "address",
-          "isPointer": 0,
-          "isArray": 0,
-          "isObject": 0
-        }
-      ]
+      "outputs": []
     },
     {
-      "name": "c",
-      "type": "function",
-      "constant": 1,
+      "name": "z",
+      "constant": 0,
       "payable": 0,
-      "signature": "c()",
-      "encoding": "0xc3da42b8",
+      "signature": "z()",
+      "encoding": "0xc5d7802e",
       "inputs": [],
-      "outputs": [
-        {
-          "indexed": 0,
-          "type": "address",
-          "isPointer": 0,
-          "isArray": 0,
-          "isObject": 0
-        }
-      ]
+      "outputs": []
     }
   ]
 }
@@ -65,57 +38,30 @@ Testing of not sorted JSON
   "array": [
     {
       "name": "a",
-      "type": "function",
-      "constant": 1,
+      "constant": 0,
       "payable": 0,
       "signature": "a()",
       "encoding": "0x0dbe671f",
       "inputs": [],
-      "outputs": [
-        {
-          "indexed": 0,
-          "type": "uint256",
-          "isPointer": 0,
-          "isArray": 0,
-          "isObject": 0
-        }
-      ]
+      "outputs": []
     },
     {
       "name": "b",
-      "type": "function",
-      "constant": 1,
+      "constant": 0,
       "payable": 0,
       "signature": "b()",
       "encoding": "0x4df7e3d0",
       "inputs": [],
-      "outputs": [
-        {
-          "indexed": 0,
-          "type": "address",
-          "isPointer": 0,
-          "isArray": 0,
-          "isObject": 0
-        }
-      ]
+      "outputs": []
     },
     {
       "name": "z",
-      "type": "function",
-      "constant": 1,
+      "constant": 0,
       "payable": 0,
       "signature": "z()",
       "encoding": "0xc5d7802e",
       "inputs": [],
-      "outputs": [
-        {
-          "indexed": 0,
-          "type": "address",
-          "isPointer": 0,
-          "isArray": 0,
-          "isObject": 0
-        }
-      ]
+      "outputs": []
     }
   ]
 }

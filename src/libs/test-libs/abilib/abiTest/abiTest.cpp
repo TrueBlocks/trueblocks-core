@@ -163,9 +163,9 @@ string_q getTestData(void) {
 string_q getAlreadySortedJson(void) {
     return
         "["
-            "{\"constant\":true,\"inputs\":[],\"name\":\"a\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"type\":\"function\"},"
-            "{\"constant\":true,\"inputs\":[],\"name\":\"b\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"type\":\"function\"},"
-            "{\"constant\":true,\"inputs\":[],\"name\":\"c\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"type\":\"function\"},"
+            "{\"name\":\"a\"},"
+            "{\"name\":\"b\"},"
+            "{\"name\":\"z\"},"
         "]";
 }
 
@@ -173,9 +173,9 @@ string_q getAlreadySortedJson(void) {
 string_q getNotSortedJson(void) {
     return
         "["
-            "{\"constant\":true,\"inputs\":[],\"name\":\"a\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"type\":\"function\"},"
-            "{\"constant\":true,\"inputs\":[],\"name\":\"b\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"type\":\"function\"},"
-            "{\"constant\":true,\"inputs\":[],\"name\":\"z\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"type\":\"function\"},"
+            "{\"name\":\"a\"},"
+            "{\"name\":\"b\"},"
+            "{\"name\":\"z\"},"
         "]";
 }
 
