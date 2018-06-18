@@ -58,6 +58,10 @@ public:
     string_q encodeItem(void) const;
     bool isBuiltin;
     string_q origName;
+#ifdef NATIVE
+    friend bool operator<(const CFunction& f1, const CFunction& f2) { return f1.name < f2.name; };
+    friend bool operator>(const CFunction& f1, const CFunction& f2) { return f1.name > f2.name; };
+#endif
     // EXISTING_CODE
     friend ostream& operator<<(ostream& os, const CFunction& item);
 
