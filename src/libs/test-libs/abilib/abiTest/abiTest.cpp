@@ -120,7 +120,7 @@ bool test_generation(void) {
         cout << "Testing of already sorted JSON\n";
         loadABIFromString(abi, getAlreadySortedJson());
         sort(abi.array1.begin(), abi.array1.end());
-             abi.array2.Sort(sortFuncTableByName1);
+//             abi.array2.Sort(sortFuncTableByName1);
         cout << abi.Format() << "\n";
     }
 
@@ -129,7 +129,7 @@ bool test_generation(void) {
         cout << "Testing of not sorted JSON\n";
         loadABIFromString(abi, getNotSortedJson());
         sort(abi.array1.begin(), abi.array1.end());
-        abi.array2.Sort(sortFuncTableByName1);
+//        abi.array2.Sort(sortFuncTableByName1);
         cout << abi.Format() << "\n";
     }
 
@@ -176,9 +176,9 @@ string_q getAlreadySortedJson(void) {
 string_q getNotSortedJson(void) {
     return
         "["
+            "{\"name\":\"z\"},"
             "{\"name\":\"a\"},"
             "{\"name\":\"b\"},"
-            "{\"name\":\"z\"},"
         "]";
 }
 
