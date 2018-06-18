@@ -102,7 +102,7 @@ bool loadABIFromString(CJunk& abi, const string_q& in) {
         size_t nFields = 0;
         p = func.parseJson(p, nFields);
         if (nFields) {
-            abi.array1.push_back(func.Format());
+            abi.array1.push_back(func.name);
             abi.array2.push_back(func);
         }
     }
