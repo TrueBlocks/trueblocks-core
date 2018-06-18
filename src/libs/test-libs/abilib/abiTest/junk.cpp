@@ -18,27 +18,16 @@ IMPLEMENT_NODE(CJunk, CBaseNode);
 CJunk::CJunk(void) {
     static bool been_here=false;
     if (!been_here) {
-        ADD_FIELD(CJunk, "array", T_OBJECT|TS_ARRAY, 1001);
+        ADD_FIELD(CJunk, "array1", T_OBJECT|TS_ARRAY, 1001);
+        ADD_FIELD(CJunk, "array2", T_OBJECT|TS_ARRAY, 1001);
         been_here=true;
     }
 }
 bool CJunk::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
-    if (fieldName == "array") {
-        char *p = (char *)fieldValue.c_str();
-        while (p && *p) {
-            CFunction item;
-            size_t nFields = 0;
-            p = item.parseJson(p, nFields);
-            if (nFields)
-                array1.push_back(item.Format());
-                array2.push_back(item);
-        }
-        return true;
-    }
     return true;
 }
 string_q CJunk::getValueByName(const string_q& fieldName) const {
-    if (fieldName == "array") {
+    if (fieldName == "array1") {
         size_t cnt = array1.size();
         if (endsWith(fieldName, "Cnt"))
             return asStringU(cnt);
@@ -46,6 +35,17 @@ string_q CJunk::getValueByName(const string_q& fieldName) const {
         string_q retS;
         for (size_t i = 0 ; i < cnt ; i++) {
             retS += array1[i];
+            retS += ((i < cnt - 1) ? ",\n" : "\n");
+        }
+        return retS;
+    }
+    if (fieldName == "array2") {
+        size_t cnt = array2.size();
+        if (endsWith(fieldName, "Cnt"))
+            return asStringU(cnt);
+        if (!cnt) return "";
+        string_q retS;
+        for (size_t i = 0 ; i < cnt ; i++) {
             retS += array2[i].Format();
             retS += ((i < cnt - 1) ? ",\n" : "\n");
         }
