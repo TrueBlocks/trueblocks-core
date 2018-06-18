@@ -163,6 +163,7 @@ string_q getAlreadySortedJson(void) {
         "["
             "{\"constant\":true,\"inputs\":[],\"name\":\"a\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"type\":\"function\"},"
             "{\"constant\":true,\"inputs\":[],\"name\":\"b\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"type\":\"function\"},"
+            "{\"constant\":true,\"inputs\":[],\"name\":\"c\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"type\":\"function\"},"
         "]";
 }
 
@@ -170,6 +171,7 @@ string_q getAlreadySortedJson(void) {
 string_q getNotSortedJson(void) {
     return
         "["
+            "{\"constant\":true,\"inputs\":[],\"name\":\"z\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"type\":\"function\"},"
             "{\"constant\":true,\"inputs\":[],\"name\":\"a\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"type\":\"function\"},"
             "{\"constant\":true,\"inputs\":[],\"name\":\"b\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"type\":\"function\"},"
         "]";
