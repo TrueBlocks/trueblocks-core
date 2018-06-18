@@ -3,16 +3,13 @@ abiTest generation encoding
 Generation test...
 Testing of already sorted JSON
 {
-  "array": [
+  "array1": [
+    a,
+b,
+z
+  ],
+  "array2": [
     {
-  "name": "a",
-  "constant": 0,
-  "payable": 0,
-  "signature": "a()",
-  "encoding": "0x0dbe671f",
-  "inputs": [],
-  "outputs": []
-}{
       "name": "a",
       "constant": 0,
       "payable": 0,
@@ -22,14 +19,6 @@ Testing of already sorted JSON
       "outputs": []
     },
     {
-  "name": "b",
-  "constant": 0,
-  "payable": 0,
-  "signature": "b()",
-  "encoding": "0x4df7e3d0",
-  "inputs": [],
-  "outputs": []
-}{
       "name": "b",
       "constant": 0,
       "payable": 0,
@@ -39,14 +28,6 @@ Testing of already sorted JSON
       "outputs": []
     },
     {
-  "name": "z",
-  "constant": 0,
-  "payable": 0,
-  "signature": "z()",
-  "encoding": "0xc5d7802e",
-  "inputs": [],
-  "outputs": []
-}{
       "name": "z",
       "constant": 0,
       "payable": 0,
@@ -59,16 +40,13 @@ Testing of already sorted JSON
 }
 Testing of not sorted JSON
 {
-  "array": [
+  "array1": [
+    a,
+b,
+z
+  ],
+  "array2": [
     {
-  "name": "a",
-  "constant": 0,
-  "payable": 0,
-  "signature": "a()",
-  "encoding": "0x0dbe671f",
-  "inputs": [],
-  "outputs": []
-}{
       "name": "a",
       "constant": 0,
       "payable": 0,
@@ -78,14 +56,6 @@ Testing of not sorted JSON
       "outputs": []
     },
     {
-  "name": "b",
-  "constant": 0,
-  "payable": 0,
-  "signature": "b()",
-  "encoding": "0x4df7e3d0",
-  "inputs": [],
-  "outputs": []
-}{
       "name": "b",
       "constant": 0,
       "payable": 0,
@@ -95,14 +65,6 @@ Testing of not sorted JSON
       "outputs": []
     },
     {
-  "name": "z",
-  "constant": 0,
-  "payable": 0,
-  "signature": "z()",
-  "encoding": "0xc5d7802e",
-  "inputs": [],
-  "outputs": []
-}{
       "name": "z",
       "constant": 0,
       "payable": 0,
