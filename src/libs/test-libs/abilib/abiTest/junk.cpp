@@ -19,7 +19,6 @@ CJunk::CJunk(void) {
     static bool been_here=false;
     if (!been_here) {
         ADD_FIELD(CJunk, "array1", T_OBJECT|TS_ARRAY, 1001);
-        ADD_FIELD(CJunk, "array2", T_OBJECT|TS_ARRAY, 1001);
         been_here=true;
     }
 }
@@ -34,19 +33,7 @@ string_q CJunk::getValueByName(const string_q& fieldName) const {
         if (!cnt) return "";
         string_q retS;
         for (size_t i = 0 ; i < cnt ; i++) {
-            retS += array1[i];
-            retS += ((i < cnt - 1) ? ",\n" : "\n");
-        }
-        return retS;
-    }
-    if (fieldName == "array2") {
-        size_t cnt = array2.size();
-        if (endsWith(fieldName, "Cnt"))
-            return asStringU(cnt);
-        if (!cnt) return "";
-        string_q retS;
-        for (size_t i = 0 ; i < cnt ; i++) {
-            retS += array2[i].Format();
+            retS += array1[i].Format();
             retS += ((i < cnt - 1) ? ",\n" : "\n");
         }
         return retS;

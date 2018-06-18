@@ -4,11 +4,6 @@ Generation test...
 Testing of already sorted JSON
 {
   "array1": [
-    a,
-b,
-z
-  ],
-  "array2": [
     {
       "name": "a",
       "constant": 0,
@@ -41,11 +36,6 @@ z
 Testing of not sorted JSON
 {
   "array1": [
-    a,
-b,
-z
-  ],
-  "array2": [
     {
       "name": "a",
       "constant": 0,
