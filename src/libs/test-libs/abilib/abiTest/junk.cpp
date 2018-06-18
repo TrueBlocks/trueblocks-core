@@ -30,7 +30,7 @@ bool CJunk::setValueByName(const string_q& fieldName, const string_q& fieldValue
             size_t nFields = 0;
             p = item.parseJson(p, nFields);
             if (nFields)
-                array.push_back(item);
+                array.push_back(item.Format());
         }
         return true;
     }
@@ -44,7 +44,7 @@ string_q CJunk::getValueByName(const string_q& fieldName) const {
         if (!cnt) return "";
         string_q retS;
         for (size_t i = 0 ; i < cnt ; i++) {
-            retS += array[i].Format();
+            retS += array[i]; //.Format();
             retS += ((i < cnt - 1) ? ",\n" : "\n");
         }
         return retS;
@@ -55,4 +55,3 @@ void CJunk::Format(CExportContext& ctx, const string_q& fmtIn, void* dataPtr) co
     ctx << toJson();
     return;
 }
-

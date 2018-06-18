@@ -16,7 +16,7 @@
 //-----------------------------------------------------------------------------
 class CJunk : public CBaseNode {
 public:
-    CFunctionArray array;
+    CStringArray array;
     DECLARE_NODE(CJunk);
     CJunk(void);
 };
