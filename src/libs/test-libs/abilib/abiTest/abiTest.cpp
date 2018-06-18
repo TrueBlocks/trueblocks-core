@@ -102,8 +102,7 @@ bool loadABIFromString(CJunk& abi, const string_q& in) {
         size_t nFields = 0;
         p = func.parseJson(p, nFields);
         if (nFields) {
-            abi.array1.push_back(func.name);
-            abi.array2.push_back(func);
+            abi.array1.push_back(func);
         }
     }
     return true; //abiByName.size();
@@ -111,7 +110,6 @@ bool loadABIFromString(CJunk& abi, const string_q& in) {
 
 //--------------------------------------------------------------
 bool test_generation(void) {
-//    CJunk::registerClass();
     CFunction::registerClass();
     CParameter::registerClass();
 
@@ -120,7 +118,6 @@ bool test_generation(void) {
         cout << "Testing of already sorted JSON\n";
         loadABIFromString(abi, getAlreadySortedJson());
         sort(abi.array1.begin(), abi.array1.end());
-//             abi.array2.Sort(sortFuncTableByName1);
         cout << abi.Format() << "\n";
     }
 
@@ -129,7 +126,6 @@ bool test_generation(void) {
         cout << "Testing of not sorted JSON\n";
         loadABIFromString(abi, getNotSortedJson());
         sort(abi.array1.begin(), abi.array1.end());
-//        abi.array2.Sort(sortFuncTableByName1);
         cout << abi.Format() << "\n";
     }
 
@@ -167,8 +163,8 @@ string_q getAlreadySortedJson(void) {
     return
         "["
             "{\"name\":\"a\"},"
-            "{\"name\":\"b\"},"
             "{\"name\":\"z\"},"
+            "{\"name\":\"b\"},"
         "]";
 }
 
