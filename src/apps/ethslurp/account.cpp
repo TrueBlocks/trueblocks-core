@@ -374,3 +374,4 @@ bool CAccount::handleCustomFormat(CExportContext& ctx, const string_q& fmtIn, vo
 }
 // EXISTING_CODE
 }  // namespace qblocks
+
