@@ -23,7 +23,6 @@ namespace qblocks {
 class CTreeNode;
 typedef SFArrayBase<CTreeNode>         CTreeNodeArray;
 typedef SFList<CTreeNode*>             CTreeNodeList;
-typedef SFUniqueList<CTreeNode*>       CTreeNodeListU;
 
 // EXISTING_CODE
 using ACCTVISITOR = bool (*)(const CTreeNode *v, void *data);

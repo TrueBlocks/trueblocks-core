@@ -25,7 +25,6 @@ namespace qblocks {
 class CTransaction;
 typedef SFArrayBase<CTransaction>         CTransactionArray;
 typedef SFList<CTransaction*>             CTransactionList;
-typedef SFUniqueList<CTransaction*>       CTransactionListU;
 
 // EXISTING_CODE
 class CBlock;
