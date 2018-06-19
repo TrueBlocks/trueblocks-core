@@ -21,7 +21,7 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------
-    CMiniBlock::CMiniBlock(CBlock *block) {
+    CMiniBlock::CMiniBlock(const CBlock *block) {
         bzero(this, sizeof(CMiniBlock));
         blockNumber = block->blockNumber;
         timestamp   = block->timestamp;
@@ -60,7 +60,7 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------
-    CMiniTrans::CMiniTrans(CTransaction *t) {
+    CMiniTrans::CMiniTrans(const CTransaction *t) {
         bzero(this, sizeof(CMiniTrans));
         index    = (uint32_t)t->transactionIndex;
         gasUsed  = t->receipt.gasUsed;
