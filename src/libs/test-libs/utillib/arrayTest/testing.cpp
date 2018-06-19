@@ -31,13 +31,8 @@ TEST_F(CThisTest, TestInsertion) {
     strArray.push_back(string_q("string_q"));
     string str = "string"; strArray.push_back(str.c_str());
     strArray.push_back("When will we be loved?");
-#ifdef NATIVE
     for (auto elem : strArray)
         cout << TESTID("array ", 20) << elem << "\n";
-#else
-    for (size_t i = 0 ; i < strArray.size() ; i++)
-        cout << TESTID("array ", 20) << strArray[i] << "\n";
-#endif
 
     SFUintArray myvector;
     for (size_t i = 0; i < 10; i++)

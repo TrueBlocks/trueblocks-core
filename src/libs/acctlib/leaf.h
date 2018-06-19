@@ -32,7 +32,7 @@ typedef SFUniqueList<CLeaf*>       CLeafListU;
 //--------------------------------------------------------------------------
 class CLeaf : public CTreeNode {
 public:
-    SFBlockArray blocks;
+    CBlockNumArray blocks;
     uint64_t counter;
 
 public:
