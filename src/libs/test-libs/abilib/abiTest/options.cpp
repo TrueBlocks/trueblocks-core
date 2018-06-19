@@ -28,7 +28,7 @@ bool COptions::parseArguments(string_q& command) {
     Init();
     while (!command.empty()) {
         string_q arg = nextTokenClear(command, ' ');
-        if (arg == "encoding" || arg == "generation") {
+        if (arg == "encoding" || arg == "generation" || arg == "old_bug") {
             mode += (arg + "|");
         } else {
             return usage("Invalid argument " + arg + ". Please enter either 'encoding' or 'generation'. Quitting...");

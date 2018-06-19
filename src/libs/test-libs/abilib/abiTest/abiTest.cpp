@@ -14,8 +14,9 @@
 #include "options.h"
 #include "junk.h"
 
-extern bool test_encodings(void);
+extern bool test_encodings (void);
 extern bool test_generation(void);
+extern bool test_old_bug   (void);
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
@@ -38,6 +39,11 @@ int main(int argc, const char *argv[]) {
             } else if (mode == "generation") {
                 cout << "Generation test...\n";
                 cout << (test_generation() ? "...passed" : "...failed") << "\n";
+                cout << "\n";
+
+            } else if (mode == "old_bug") {
+                cout << "Old bug test...\n";
+                cout << (test_old_bug() ? "...passed" : "...failed") << "\n";
                 cout << "\n";
             }
         }
@@ -75,21 +81,7 @@ bool test_encodings(void) {
 }
 
 //---------------------------------------------------------------------------
-int sortFuncTableByName1(const void *ob1, const void *ob2) {
-    CFunction *f1 = (CFunction*)ob1;
-    string_q s1 = f1->name;
-    CFunction *f2 = (CFunction*)ob2;
-    string_q s2 = f2->name;
-
-    if (s2 < s1)
-        return 1;
-    if (s2 > s1)
-        return -1;
-    if (s2 == s1)
-        return 0;
-
-    return 0;
-}
+bool sortByFunctionName(const CFunction& f1, const CFunction& f2) { return f1.name < f2.name; }
 
 //---------------------------------------------------------------------------
 bool loadABIFromString(CJunk& abi, const string_q& in) {
@@ -117,18 +109,40 @@ bool test_generation(void) {
         CJunk abi;
         cout << "Testing of already sorted JSON\n";
         loadABIFromString(abi, getAlreadySortedJson());
+        sort(abi.array1.begin(), abi.array1.end(), sortByFunctionName);
+        cout << abi.Format() << "\n\n";
         sort(abi.array1.begin(), abi.array1.end());
-        cout << abi.Format() << "\n";
+        cout << abi.Format() << "\n\n";
     }
 
     {
         CJunk abi;
         cout << "Testing of not sorted JSON\n";
         loadABIFromString(abi, getNotSortedJson());
+        sort(abi.array1.begin(), abi.array1.end(), sortByFunctionName);
+        cout << abi.Format() << "\n\n";
         sort(abi.array1.begin(), abi.array1.end());
-        cout << abi.Format() << "\n";
+        cout << abi.Format() << "\n\n";
     }
 
+    return true;
+}
+
+//--------------------------------------------------------------
+bool test_old_bug(void) {
+    // This used to core dump when we first shifted to native c++ strings
+    CFunction::registerClass();
+    CParameter::registerClass();
+
+    CAbi abi;
+    cout << string_q(120, '-') << "\nABI of test1.json\n" << string_q(120, '-') << "\n";
+    abi.loadABIFromFile("./test1.json");
+    cout << abi << "\n";
+    abi = CAbi();
+
+    cout << string_q(120, '-') << "\nABI of test2.json\n" << string_q(120, '-') << "\n";
+    abi.loadABIFromFile("./test2.json");
+    cout << abi << "\n";
     return true;
 }
 
@@ -177,18 +191,9 @@ string_q getNotSortedJson(void) {
             "{\"name\":\"z\"},"
             "{\"name\":\"a\"},"
             "{\"name\":\"b\"},"
-            "{\"name\":\"za\"},"
-            "{\"name\":\"aa\"},"
-            "{\"name\":\"ba\"},"
             "{\"name\":\"zz\"},"
             "{\"name\":\"az\"},"
             "{\"name\":\"bz\"},"
-            "{\"name\":\"zd\"},"
-            "{\"name\":\"ad\"},"
-            "{\"name\":\"bd\"},"
-            "{\"name\":\"zm\"},"
-            "{\"name\":\"am\"},"
-            "{\"name\":\"bm\"},"
             "{\"name\":\"za1\"},"
             "{\"name\":\"aa1\"},"
             "{\"name\":\"ba1\"},"

@@ -64,6 +64,7 @@ bool COptions::parseArguments(string_q& command) {
             noconst = true;
 
         } else if (arg == "-f" || arg == "--freshen") {
+extern void rebuildFourByteDB(void);
             rebuildFourByteDB();
             exit(0);
 
@@ -167,4 +168,40 @@ string_q getPrefix(const string_q& inIn) {
     in = nextTokenClear(in, '/'); // remove /parselib
     reverse(in);
     return in;
+}
+
+//---------------------------------------------------------------------------
+bool visitABIs(const string_q& path, void *dataPtr) {
+
+    if (endsWith(path, ".json")) {
+        string_q *str = (string_q*)dataPtr;
+        *str += (path+"\n");
+    }
+    return true;
+}
+
+//---------------------------------------------------------------------------
+void rebuildFourByteDB(void) {
+
+    string_q fileList;
+    string_q abiPath = blockCachePath("abis/");
+    cout << abiPath << "\n";
+    forEveryFileInFolder(abiPath+"*", visitABIs, &fileList);
+
+    CFunctionArray funcArray;
+    while (!fileList.empty()) {
+        string_q fileName = nextTokenClear(fileList, '\n');
+        CAbi abi;
+        abi.loadABIFromFile(fileName);
+        for (size_t f = 0 ; f < abi.abiByEncoding.size() ; f++) {
+            funcArray.push_back(abi.abiByEncoding[f]);
+            cout << abi.abiByEncoding[f].encoding << " : " << abi.abiByEncoding[f].name << " : " << abi.abiByEncoding[f].signature << "\n";
+        }
+    }
+    sort(funcArray.begin(), funcArray.end());
+    SFArchive funcCache(WRITING_ARCHIVE);
+    if (funcCache.Lock(abiPath+"abis.bin", binaryWriteCreate, LOCK_CREATE)) {
+        funcCache << funcArray;
+        funcCache.Release();
+    }
 }
