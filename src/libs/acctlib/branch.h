@@ -24,7 +24,6 @@ namespace qblocks {
 class CBranch;
 typedef SFArrayBase<CBranch>         CBranchArray;
 typedef SFList<CBranch*>             CBranchList;
-typedef SFUniqueList<CBranch*>       CBranchListU;
 
 // EXISTING_CODE
 // EXISTING_CODE

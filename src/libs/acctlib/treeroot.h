@@ -27,7 +27,6 @@ namespace qblocks {
 class CTreeRoot;
 typedef SFArrayBase<CTreeRoot>         CTreeRootArray;
 typedef SFList<CTreeRoot*>             CTreeRootList;
-typedef SFUniqueList<CTreeRoot*>       CTreeRootListU;
 
 // EXISTING_CODE
 //----------------------------------------------------------

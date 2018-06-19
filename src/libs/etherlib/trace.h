@@ -25,7 +25,6 @@ namespace qblocks {
 class CTrace;
 typedef SFArrayBase<CTrace>         CTraceArray;
 typedef SFList<CTrace*>             CTraceList;
-typedef SFUniqueList<CTrace*>       CTraceListU;
 
 // EXISTING_CODE
 /*
