@@ -22,7 +22,6 @@
 class CNewBlock;
 typedef SFArrayBase<CNewBlock>         CNewBlockArray;
 typedef SFList<CNewBlock*>             CNewBlockList;
-typedef SFUniqueList<CNewBlock*>       CNewBlockListU;
 
 // EXISTING_CODE
 // EXISTING_CODE

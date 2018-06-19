@@ -24,7 +24,6 @@ namespace qblocks {
 class CReceipt;
 typedef SFArrayBase<CReceipt>         CReceiptArray;
 typedef SFList<CReceipt*>             CReceiptList;
-typedef SFUniqueList<CReceipt*>       CReceiptListU;
 
 // EXISTING_CODE
 class CTransaction;

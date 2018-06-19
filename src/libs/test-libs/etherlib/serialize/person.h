@@ -21,7 +21,6 @@
 class CPerson;
 typedef SFArrayBase<CPerson>         CPersonArray;
 typedef SFList<CPerson*>             CPersonList;
-typedef SFUniqueList<CPerson*>       CPersonListU;
 
 // EXISTING_CODE
 // EXISTING_CODE

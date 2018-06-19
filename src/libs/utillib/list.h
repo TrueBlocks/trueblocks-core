@@ -541,55 +541,11 @@ namespace qblocks {
         return true;
     }
 
-    //---------------------------------------------------------------------------------
-    template<class TYPE>
-    class SFStack : public SFList<TYPE> {
-    public:
-        SFStack(void) {}
-        ~SFStack(void) { while (Peek()) delete Pop(); }
-
-        void Push(TYPE val) { SFList<TYPE>::AddHead(val); }
-        TYPE Peek(void) { return SFList<TYPE>::empty() ? NULL : SFList<TYPE>::GetHead(); }
-        TYPE Pop(void) { return SFList<TYPE>::RemoveHead(); }
-    };
-
-    //---------------------------------------------------------------------------------
-    template<class TYPE>
-    class SFUniqueList : public SFList<TYPE> {
-        SORTINGFUNC   sortFunc;
-        DUPLICATEFUNC compFunc;
-    public:
-        SFUniqueList(SORTINGFUNC sFunc, DUPLICATEFUNC cFunc) {
-            sortFunc = sFunc;
-            compFunc = cFunc;
-        }
-        bool AddItemUnique(TYPE item) {
-            return SFList<TYPE>::AddSorted(item, sortFunc, compFunc);
-        }
-    };
-
     //-----------------------------------------------------------------------------------------
     inline int sortByStringValue(const void *rr1, const void *rr2) {
         string_q n1 = * reinterpret_cast<const string_q*>(rr1);
         string_q n2 = * reinterpret_cast<const string_q*>(rr2);
         return strcasecmp(n1.c_str(), n2.c_str());
     }
-
-    //-----------------------------------------------------------------------------------------
-    inline int findByStringValue(const void *rr1, const void *rr2) {
-        // return -1, 0, or 1
-        return sortByStringValue(rr1, rr2);
-    }
-
-    //-----------------------------------------------------------------------------------------
-    inline int isDuplicate(const void *rr1, const void *rr2) {
-        // return true of these are the same string
-        return !sortByStringValue(rr1, rr2);
-    }
-
-    //----------------------------------------------------------------------------------------
-    class SFUniqueStringList : public SFUniqueList<const string_q&> {
-    public:
-        SFUniqueStringList(void) : SFUniqueList(sortByStringValue, isDuplicate) { }
-    };
 }  // namespace qblocks
+

@@ -24,7 +24,6 @@ namespace qblocks {
 class CAccount;
 typedef SFArrayBase<CAccount>         CAccountArray;
 typedef SFList<CAccount*>             CAccountList;
-typedef SFUniqueList<CAccount*>       CAccountListU;
 
 // EXISTING_CODE
 // EXISTING_CODE

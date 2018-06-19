@@ -22,7 +22,6 @@
 class CNewReceipt;
 typedef SFArrayBase<CNewReceipt>         CNewReceiptArray;
 typedef SFList<CNewReceipt*>             CNewReceiptList;
-typedef SFUniqueList<CNewReceipt*>       CNewReceiptListU;
 
 // EXISTING_CODE
 // EXISTING_CODE
