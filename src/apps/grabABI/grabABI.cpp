@@ -335,9 +335,9 @@ int main(int argc, const char *argv[]) {
                             // hack warning
                             replaceAll(out, "bytes32[]", "CStringArray");
                             replaceAll(out, "uint256[]", "SFBigUintArray");  // order matters
-                            replaceAll(out, "int256[]", "SFBigIntArray");
-                            replaceAll(out, "uint32[]", "SFUintArray");  // order matters
-                            replaceAll(out, "int32[]", "SFIntArray");
+                            replaceAll(out, "int256[]",  "SFBigIntArray");
+                            replaceAll(out, "uint32[]",  "SFUintArray");  // order matters
+                            replaceAll(out, "int32[]",   "SFIntArray");
                             stringToAsciiFile(classDefs+fileName, out);
                             if (func->type == "event")
                                 cout << "Generating class for event type: '" << theClass << "'\n";

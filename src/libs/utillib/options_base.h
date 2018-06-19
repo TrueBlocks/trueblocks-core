@@ -120,7 +120,7 @@ namespace qblocks {
     typedef uint64_t (*HASHFINDFUNC)(const SFHash& hash, void *data);
     class COptionsBlockList {
     public:
-        SFBlockArray numList;
+        CBlockNumArray numList;
         CStringArray hashList;
         HASHFINDFUNC hashFind;
         blknum_t start;

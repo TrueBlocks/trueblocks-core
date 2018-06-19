@@ -278,7 +278,7 @@ void generateCode(const COptions& options, CToml& toml, const string_q& dataFile
         if (contains(fld.type, "Array") || (fld.isObject && !fld.isPointer)) {
 
             if (contains(fld.type, "CStringArray")  ||
-                contains(fld.type, "SFBlockArray")   ||
+                contains(fld.type, "CBlockNumArray")   ||
                 contains(fld.type, "SFAddressArray") ||
                 contains(fld.type, "SFBigUintArray") ||
                 contains(fld.type, "SFTopicArray")) {
@@ -287,7 +287,7 @@ void generateCode(const COptions& options, CToml& toml, const string_q& dataFile
                 replaceAll(fieldGetStr, "[{FIELD}]", fld.name);
                 if (fld.name == "topics") {
                     replaceAll(fieldGetStr, "THING", "fromTopic");
-                } else if (contains(fld.type, "SFBlockArray")) {
+                } else if (contains(fld.type, "CBlockNumArray")) {
                     replaceAll(fieldGetStr, "THING", "asStringU");
                 } else {
                     replaceAll(fieldGetStr, "THING", "");
@@ -646,10 +646,10 @@ string_q getCaseSetCode(const string_q& fieldCase) {
                     } else if (type == "double") {
                         caseCode +=  " { " + field + " = str2Double(fieldValue); return true; }";
 
-                    } else if (contains(type, "CStringArray") || contains(type, "SFBlockArray")) {
+                    } else if (contains(type, "CStringArray") || contains(type, "CBlockNumArray")) {
                         string_q str = strArraySet;
                         replaceAll(str, "[{NAME}]", field);
-                        if (contains(type, "SFBlockArray"))
+                        if (contains(type, "CBlockNumArray"))
                             replaceAll(str, "nextTokenClear(str,',')", "toUnsigned(nextTokenClear(str,','))");
                         caseCode += str;
 

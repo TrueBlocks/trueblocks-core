@@ -274,4 +274,10 @@ namespace qblocks {
         return string_q(r);
     }
 
+    typedef vector<string_q> CStringArray;
+    typedef vector<uint64_t> SFUintArray;
+    typedef vector<int64_t>  SFIntArray;
+
+    #define CBlockNumArray SFUintArray
+
 }  // namespace qblocks
