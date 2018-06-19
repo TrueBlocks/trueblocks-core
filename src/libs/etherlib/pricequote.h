@@ -22,7 +22,6 @@ namespace qblocks {
 //--------------------------------------------------------------------------
 class CPriceQuote;
 typedef SFArrayBase<CPriceQuote>         CPriceQuoteArray;
-typedef SFList<CPriceQuote*>             CPriceQuoteList;
 
 // EXISTING_CODE
 // EXISTING_CODE

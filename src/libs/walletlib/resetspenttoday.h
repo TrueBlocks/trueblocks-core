@@ -20,7 +20,6 @@
 //--------------------------------------------------------------------------
 class QResetSpentToday;
 typedef SFArrayBase<QResetSpentToday>         QResetSpentTodayArray;
-typedef SFList<QResetSpentToday*>             QResetSpentTodayList;
 
 // EXISTING_CODE
 // EXISTING_CODE

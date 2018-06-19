@@ -22,7 +22,6 @@ namespace qblocks {
 //--------------------------------------------------------------------------
 class CBalHistory;
 typedef SFArrayBase<CBalHistory>         CBalHistoryArray;
-typedef SFList<CBalHistory*>             CBalHistoryList;
 
 // EXISTING_CODE
 // EXISTING_CODE

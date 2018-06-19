@@ -20,7 +20,6 @@
 //--------------------------------------------------------------------------
 class QSetDailyLimit;
 typedef SFArrayBase<QSetDailyLimit>         QSetDailyLimitArray;
-typedef SFList<QSetDailyLimit*>             QSetDailyLimitList;
 
 // EXISTING_CODE
 // EXISTING_CODE

@@ -20,7 +20,6 @@
 //--------------------------------------------------------------------------
 class QRequirementChangedEvent;
 typedef SFArrayBase<QRequirementChangedEvent>         QRequirementChangedEventArray;
-typedef SFList<QRequirementChangedEvent*>             QRequirementChangedEventList;
 
 // EXISTING_CODE
 // EXISTING_CODE

@@ -22,7 +22,6 @@ namespace qblocks {
 //--------------------------------------------------------------------------
 class CTraceAction;
 typedef SFArrayBase<CTraceAction>         CTraceActionArray;
-typedef SFList<CTraceAction*>             CTraceActionList;
 
 // EXISTING_CODE
 // EXISTING_CODE

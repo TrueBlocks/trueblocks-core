@@ -20,7 +20,6 @@
 //--------------------------------------------------------------------------
 class QApproveAndCall;
 typedef SFArrayBase<QApproveAndCall>         QApproveAndCallArray;
-typedef SFList<QApproveAndCall*>             QApproveAndCallList;
 
 // EXISTING_CODE
 // EXISTING_CODE

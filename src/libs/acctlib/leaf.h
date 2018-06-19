@@ -23,7 +23,6 @@ namespace qblocks {
 //--------------------------------------------------------------------------
 class CLeaf;
 typedef SFArrayBase<CLeaf>         CLeafArray;
-typedef SFList<CLeaf*>             CLeafList;
 
 // EXISTING_CODE
 // EXISTING_CODE

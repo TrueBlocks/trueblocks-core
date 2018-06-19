@@ -22,7 +22,6 @@ namespace qblocks {
 //--------------------------------------------------------------------------
 class CRPCResult;
 typedef SFArrayBase<CRPCResult>         CRPCResultArray;
-typedef SFList<CRPCResult*>             CRPCResultList;
 
 // EXISTING_CODE
 // EXISTING_CODE
