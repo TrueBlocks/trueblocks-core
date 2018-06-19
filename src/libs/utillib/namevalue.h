@@ -25,7 +25,6 @@ namespace qblocks {
 //--------------------------------------------------------------------------
 class CNameValue;
 typedef SFArrayBase<CNameValue>         CNameValueArray;
-typedef SFList<CNameValue*>             CNameValueList;
 
 // EXISTING_CODE
 // EXISTING_CODE

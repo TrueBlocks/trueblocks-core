@@ -127,3 +127,4 @@ extern SFArchive& operator<<(SFArchive& archive, const CAbiArray& array);
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks
+
