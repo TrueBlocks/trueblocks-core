@@ -20,7 +20,6 @@
 //--------------------------------------------------------------------------
 class [{CLASS_NAME}];
 typedef SFArrayBase<[{CLASS_NAME}]>         [{CLASS_NAME}]Array;
-typedef SFList<[{CLASS_NAME}]*>             [{CLASS_NAME}]List;
 
 // EXISTING_CODE
 // EXISTING_CODE
