@@ -20,7 +20,6 @@
 //--------------------------------------------------------------------------
 class QTransfer;
 typedef SFArrayBase<QTransfer>         QTransferArray;
-typedef SFList<QTransfer*>             QTransferList;
 
 // EXISTING_CODE
 // EXISTING_CODE

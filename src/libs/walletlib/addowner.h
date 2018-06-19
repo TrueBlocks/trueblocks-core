@@ -20,7 +20,6 @@
 //--------------------------------------------------------------------------
 class QAddOwner;
 typedef SFArrayBase<QAddOwner>         QAddOwnerArray;
-typedef SFList<QAddOwner*>             QAddOwnerList;
 
 // EXISTING_CODE
 // EXISTING_CODE

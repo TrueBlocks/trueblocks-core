@@ -20,7 +20,6 @@
 //--------------------------------------------------------------------------
 class QKill;
 typedef SFArrayBase<QKill>         QKillArray;
-typedef SFList<QKill*>             QKillList;
 
 // EXISTING_CODE
 // EXISTING_CODE

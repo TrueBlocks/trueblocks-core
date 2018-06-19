@@ -20,7 +20,6 @@
 //--------------------------------------------------------------------------
 class QChangeRequirement;
 typedef SFArrayBase<QChangeRequirement>         QChangeRequirementArray;
-typedef SFList<QChangeRequirement*>             QChangeRequirementList;
 
 // EXISTING_CODE
 // EXISTING_CODE

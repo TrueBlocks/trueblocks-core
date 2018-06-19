@@ -20,7 +20,6 @@
 //--------------------------------------------------------------------------
 class QConfirmationNeededEvent;
 typedef SFArrayBase<QConfirmationNeededEvent>         QConfirmationNeededEventArray;
-typedef SFList<QConfirmationNeededEvent*>             QConfirmationNeededEventList;
 
 // EXISTING_CODE
 // EXISTING_CODE

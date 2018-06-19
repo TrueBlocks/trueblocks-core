@@ -22,7 +22,6 @@ namespace qblocks {
 //--------------------------------------------------------------------------
 class CAcctCacheItem;
 typedef SFArrayBase<CAcctCacheItem>         CAcctCacheItemArray;
-typedef SFList<CAcctCacheItem*>             CAcctCacheItemList;
 
 // EXISTING_CODE
 // EXISTING_CODE

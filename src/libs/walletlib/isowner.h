@@ -20,7 +20,6 @@
 //--------------------------------------------------------------------------
 class QIsOwner;
 typedef SFArrayBase<QIsOwner>         QIsOwnerArray;
-typedef SFList<QIsOwner*>             QIsOwnerList;
 
 // EXISTING_CODE
 // EXISTING_CODE

@@ -20,7 +20,6 @@
 //--------------------------------------------------------------------------
 class QChangeOwner;
 typedef SFArrayBase<QChangeOwner>         QChangeOwnerArray;
-typedef SFList<QChangeOwner*>             QChangeOwnerList;
 
 // EXISTING_CODE
 // EXISTING_CODE

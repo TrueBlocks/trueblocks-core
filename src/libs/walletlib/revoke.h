@@ -20,7 +20,6 @@
 //--------------------------------------------------------------------------
 class QRevoke;
 typedef SFArrayBase<QRevoke>         QRevokeArray;
-typedef SFList<QRevoke*>             QRevokeList;
 
 // EXISTING_CODE
 // EXISTING_CODE

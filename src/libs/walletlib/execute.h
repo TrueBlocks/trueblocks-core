@@ -20,7 +20,6 @@
 //--------------------------------------------------------------------------
 class QExecute;
 typedef SFArrayBase<QExecute>         QExecuteArray;
-typedef SFList<QExecute*>             QExecuteList;
 
 // EXISTING_CODE
 // EXISTING_CODE
