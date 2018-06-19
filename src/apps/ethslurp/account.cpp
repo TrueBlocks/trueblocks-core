@@ -105,7 +105,7 @@ void CAccount::finishParse() {
     // EXISTING_CODE
     for (size_t i = 0 ; i < transactions.size() ; i++) {
         CTransaction *t = &transactions.at(i);
-        string_q encoding = t->input.substr(0,10);
+        string_q encoding = extract(t->input, 0, 10);
 extern CFunction *findFunctionByEncoding(CAbi& abi, const string_q& search);
         t->funcPtr = findFunctionByEncoding(abi, encoding);
     }

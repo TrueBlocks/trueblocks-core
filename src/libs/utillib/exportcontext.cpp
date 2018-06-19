@@ -92,8 +92,8 @@ namespace qblocks {
 
     //-------------------------------------------------------------
     CExportContext& CExportContext::operator<<(const string_q& str) {
-        if (str.length() >= 3 && str.substr(0,2) == "`%" && str.at(2) != '%')
-            fmt = str.substr(1);
+        if (str.length() >= 3 && extract(str, 0, 2) == "`%" && str.at(2) != '%')
+            fmt = extract(str, 1);
         else if (str == "%")
             fmt = EMPTY;
         else

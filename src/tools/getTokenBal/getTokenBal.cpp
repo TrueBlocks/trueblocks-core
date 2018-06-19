@@ -206,8 +206,8 @@ SFUintBN getTokenInfo(const string_q& value, const SFAddress& token, const SFAdd
     ASSERT(isAddress(token));
     ASSERT(isAddress(holder));
 
-    string_q t = "0x" + padLeft(token.substr(2), 40, '0');  // address to send the command to
-    string_q h =        padLeft(holder.substr(2), 64, '0'); // encoded data for the transaction
+    string_q t = "0x" + padLeft(extract(token, 2), 40, '0');  // address to send the command to
+    string_q h =        padLeft(extract(holder, 2), 64, '0'); // encoded data for the transaction
 
     string_q cmd = "[{\"to\": \"[TOKEN]\", \"data\": \"0x70a08231[HOLDER]\"}, \"[BLOCK]\"]";
     //        string_q cmd = "[{\"to\": \"[TOKEN]\", \"data\": \"0x18160ddd\"}, \"[BLOCK]\"]";

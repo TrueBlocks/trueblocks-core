@@ -69,7 +69,7 @@ namespace qblocks {
             fileName = EMPTY;
 
         } else {
-            path = fn.substr(0,fn.rfind('/')+1);
+            path = extract(fn, 0, fn.rfind('/')+1);
             fileName = substitute(fn, path, EMPTY);
         }
     }

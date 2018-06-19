@@ -20,8 +20,8 @@ namespace qblocks {
         string_q ret;
         size_t find = line.find(delim);
         if (find != string::npos) {
-            ret  = line.substr(0,find);
-            line = line.substr(find+1);
+            ret  = extract(line, 0, find);
+            line = extract(line, find+1);
 
         } else if (!line.empty()) {
             ret  = line;
@@ -57,7 +57,7 @@ namespace qblocks {
     void replace(string_q& target, const string_q& what, const string_q& with) {
         size_t f = target.find(what);
         if (f != string::npos)
-            target = (target.substr(0, f) + string_q(with.c_str()) + target.substr(f + what.length()));
+            target = (extract(target, 0, f) + string_q(with.c_str()) + extract(target, f + what.length()));
     }
 
     //---------------------------------------------------------------------------------------
@@ -122,10 +122,10 @@ namespace qblocks {
     //---------------------------------------------------------------------------------------
     string_q snagFieldClear(string_q& in, const string_q& field, const string_q& defVal) {
         string_q f1 = "</" + field + ">";
-        string_q ret = in.substr(0,in.find(f1));
+        string_q ret = extract(in, 0, in.find(f1));
 
         string_q f2 = "<" + field + ">";
-        ret = ret.substr(ret.find(f2)+f2.length());
+        ret = extract(ret, ret.find(f2)+f2.length());
 
         replace(in, f2 + ret + f1, "");
 
@@ -146,7 +146,7 @@ namespace qblocks {
         string_q hay = haystack.c_str();
         if (hay.empty() || needle.empty())
             return false;
-        return (hay.substr(0, needle.length()) == needle);
+        return (extract(hay, 0, needle.length()) == needle);
     }
 
     //--------------------------------------------------------------------
@@ -161,7 +161,7 @@ namespace qblocks {
         string_q hay = haystack.c_str();
         if (hay.empty() || needle.empty())
             return false;
-        return (hay.substr(hay.length() - needle.length(), needle.length()) == needle);
+        return (extract(hay, hay.length() - needle.length(), needle.length()) == needle);
     }
 
     //--------------------------------------------------------------------
@@ -231,7 +231,7 @@ namespace qblocks {
     string_q trimTrailing(const string_q& str, char c) {
         string_q ret = str;
         while (endsWith(ret, c))
-            ret = ret.substr(0,ret.length()-1);
+            ret = extract(ret, 0, ret.length()-1);
         return ret;
     }
 
@@ -239,7 +239,7 @@ namespace qblocks {
     string_q trimLeading(const string_q& str, char c) {
         string_q ret = str.c_str();
         while (startsWith(ret, c))
-            ret = ret.substr(1);
+            ret = extract(ret, 1);
         return ret.c_str();
     }
 
@@ -276,4 +276,12 @@ namespace qblocks {
         }
         return str;
     }
+
+    string_q extract(const string_q& haystack, size_t pos, size_t len) {
+        if (pos >= haystack.length())
+            return "";
+#undef substr
+        return haystack.substr(pos, len);
+    }
+
 }  // namespace qblocks

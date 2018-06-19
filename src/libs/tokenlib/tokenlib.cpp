@@ -46,8 +46,8 @@ const CTransaction *promoteToToken(const CTransaction *p)
         string_q items[256];
         uint32_t nItems=0;
 
-        string_q encoding = p->input.substr(0,10);
-        string_q params   = p->input.substr(10);
+        string_q encoding = extract(p->input, 0, 10);
+        string_q params   = extract(p->input, 10);
         // EXISTING_CODE
         // EXISTING_CODE
 
@@ -57,8 +57,8 @@ const CTransaction *promoteToToken(const CTransaction *p)
             // 0x095ea7b3
             QApprove *a = new QApprove;
             *(CTransaction*)a = *p; // copy in
-            a->_spender = toAddress(params.substr(0*64,64));
-            a->_value = toWei("0x"+params.substr(1*64,64));
+            a->_spender = toAddress(extract(params, 0*64, 64));
+            a->_value = toWei("0x" + extract(params, 1*64, 64));
             items[nItems++] = "address";
             items[nItems++] = "uint256";
             a->function = toFunction("approve", params, nItems, items);
@@ -70,9 +70,9 @@ const CTransaction *promoteToToken(const CTransaction *p)
             // 0xcae9ca51
             QApproveAndCall *a = new QApproveAndCall;
             *(CTransaction*)a = *p; // copy in
-            a->_spender = toAddress(params.substr(0*64,64));
-            a->_value = toWei("0x"+params.substr(1*64,64));
-            a->_extraData = params.substr(2*64);
+            a->_spender = toAddress(extract(params, 0*64, 64));
+            a->_value = toWei("0x" + extract(params, 1*64, 64));
+            a->_extraData = extract(params, 2*64);
             items[nItems++] = "address";
             items[nItems++] = "uint256";
             items[nItems++] = "bytes";
@@ -85,8 +85,8 @@ const CTransaction *promoteToToken(const CTransaction *p)
             // 0xa9059cbb
             QTransfer *a = new QTransfer;
             *(CTransaction*)a = *p; // copy in
-            a->_to = toAddress(params.substr(0*64,64));
-            a->_value = toWei("0x"+params.substr(1*64,64));
+            a->_to = toAddress(extract(params, 0*64, 64));
+            a->_value = toWei("0x" + extract(params, 1*64, 64));
             items[nItems++] = "address";
             items[nItems++] = "uint256";
             a->function = toFunction("transfer", params, nItems, items);
@@ -98,9 +98,9 @@ const CTransaction *promoteToToken(const CTransaction *p)
             // 0x23b872dd
             QTransferFrom *a = new QTransferFrom;
             *(CTransaction*)a = *p; // copy in
-            a->_from = toAddress(params.substr(0*64,64));
-            a->_to = toAddress(params.substr(1*64,64));
-            a->_value = toWei("0x"+params.substr(2*64,64));
+            a->_from = toAddress(extract(params, 0*64, 64));
+            a->_to = toAddress(extract(params, 1*64, 64));
+            a->_value = toWei("0x" + extract(params, 2*64, 64));
             items[nItems++] = "address";
             items[nItems++] = "address";
             items[nItems++] = "uint256";
@@ -131,7 +131,7 @@ const CLogEntry *promoteToTokenEvent(const CLogEntry *p)
     uint64_t nTops = p->topics.size();
     if (nTops>0) // the '0'th topic is the event signature
     {
-        string_q data = p->data.substr(2);
+        string_q data = extract(p->data, 2);
         // EXISTING_CODE
         // EXISTING_CODE
 
@@ -143,7 +143,7 @@ const CLogEntry *promoteToTokenEvent(const CLogEntry *p)
             *(CLogEntry*)a = *p; // copy in
             a->_owner = toAddress(nTops > 1 ? fromTopic(p->topics[1]) : "");
             a->_spender = toAddress(nTops > 2 ? fromTopic(p->topics[2]) : "");
-            a->_value = toWei("0x"+data.substr(0*64,64));
+            a->_value = toWei("0x" + extract(data, 0*64, 64));
             return a;
 
         } else if (fromTopic(p->topics[0]) % evt_Transfer_qb)
@@ -154,7 +154,7 @@ const CLogEntry *promoteToTokenEvent(const CLogEntry *p)
             *(CLogEntry*)a = *p; // copy in
             a->_from = toAddress(nTops > 1 ? fromTopic(p->topics[1]) : "");
             a->_to = toAddress(nTops > 2 ? fromTopic(p->topics[2]) : "");
-            a->_value = toWei("0x"+data.substr(0*64,64));
+            a->_value = toWei("0x" + extract(data, 0*64, 64));
             return a;
 
         }

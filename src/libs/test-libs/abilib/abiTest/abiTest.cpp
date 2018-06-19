@@ -69,7 +69,7 @@ bool test_encodings(void) {
             string_q myHex = string2Hex(text);
             string_q mySha = getSha3(myHex);
             if (type == "function")
-                mySha = mySha.substr(0,10);
+                mySha = extract(mySha, 0, 10);
             bool result = mySha == expected;
             cout << "\t" << type << ": " << text << " "
                     << "encoding: " << mySha << " "

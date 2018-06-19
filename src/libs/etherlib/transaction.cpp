@@ -315,14 +315,14 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void *dataPt
                     timestamp_t ts = (tra->pBlock ? tra->pBlock->timestamp : tra->timestamp);
                     string_q ret = dateFromTimeStamp(ts).Format(FMT_JSON);
                     if (fieldIn % "datesh") // short date
-                        return ret.substr(0, 10);
+                        return extract(ret, 0, 10);
                     return ret;
                 }
                 break;
             case 'e':
                 if ( fieldIn % "ether" ) return wei2Ether(asStringBN(tra->value));
                 if ( fieldIn % "encoding" ) {
-                    return tra->input.substr(0,10);
+                    return extract(tra->input, 0, 10);
                 }
                 if ( fieldIn % "events" ) {
                     if (tra->receipt.logs.size())
@@ -346,7 +346,7 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void *dataPt
                 if ( fieldIn % "timestamp" && tra->pBlock) return asString(tra->pBlock->timestamp);
                 if ( fieldIn % "time") {
                     timestamp_t ts = (tra->pBlock ? tra->pBlock->timestamp : tra->timestamp);
-                    return dateFromTimeStamp(ts).Format(FMT_JSON).substr(12,1000);
+                    return extract(dateFromTimeStamp(ts).Format(FMT_JSON), 12);
                 }
                 break;
             // EXISTING_CODE
@@ -556,16 +556,17 @@ inline unsigned char hex2Ascii(char *str) {
 
 //----------------------------------------------------------------------------
 inline string_q hex2String(const string_q& inHex) {
-    string_q ret, in = startsWith(inHex, "0x") ? inHex.substr(2) : inHex;
+    string_q ret, in = startsWith(inHex, "0x") ? extract(inHex, 2) : inHex;
     while (!in.empty()) {
-        string_q nibble = in.substr(0,2);
-        in = in.substr(2);
+        string_q nibble = extract(in, 0, 2);
+        in = extract(in, 2);
         ret += (char)hex2Ascii((char*)nibble.c_str());
     }
     return ret;
 }
 
 //------------------------------------------------------------------------------
+#undef substr
 #define toBigNum2(a,b)      string_q(to_string(canonicalWei("0x"+grabPart(a,b))).c_str())
 #define grabPart(a,b)       trimLeading((a).substr(64*(b),64),'0')
 #define grabBigNum(a,b)     strtoull(grabPart(a,b).c_str(),NULL,16)
@@ -574,7 +575,7 @@ inline string_q hex2String(const string_q& inHex) {
 #define toAscString(a,b)    hex2String("0x"+grabPart(a,b))
 #define toBigNum(a,b)       asStringULL(grabBigNum(a,b))
 #define toBigNum3(a,b)      padNum3(grabBigNum(a,b))
-#define theRest(a,b)        (a).substr(64*(b),(a).length());
+#define theRest(a,b)        extract((a), 64*(b), (a).length());
 #define toVote(a,b)         (grabBigNum(a,b)?"Yea":"Nay")
 #define toBoolean(a,b)      (grabBigNum(a,b)?"true":"false")
 #define toBytes(a,b)        ((a).substr(64*(b),64))
@@ -603,10 +604,10 @@ string_q parse(const string_q& params, size_t nItems, string_q *types) {
                 len = params.length()-start;
             if (t == "string") {
                 val = "\"";
-                val += substitute(substitute(substitute(hex2String(params.substr((start+1) * 64, len * 2)), "\n","\\n"), "\r",""), "\"","\\\"");
+                val += substitute(substitute(substitute(hex2String(extract(params, (start+1) * 64, len * 2)), "\n","\\n"), "\r",""), "\"","\\\"");
                 val += "\"";
             } else {
-                val = "0x"+params.substr((start+1) * 64, len * 2);
+                val = "0x" + extract(params, (start+1) * 64, len * 2);
             }
         }
         ret += ("|" + val);
@@ -617,7 +618,7 @@ string_q parse(const string_q& params, size_t nItems, string_q *types) {
 
 //---------------------------------------------------------------------------
 string_q toFunction(const string_q& name, const string_q& input, size_t nItems, string_q *items) {
-    return "[ \"" + name + "\", " + substitute(parse(input.substr(10), nItems, items), "|", "\", \"") + " ]";
+    return "[ \"" + name + "\", " + substitute(parse(extract(input, 10), nItems, items), "|", "\", \"") + " ]";
 }
 
 //---------------------------------------------------------------------------

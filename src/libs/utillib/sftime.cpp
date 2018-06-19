@@ -519,7 +519,7 @@ namespace qblocks {
 
         size_t find = timeStr.find(" ");
         if (find != string::npos) {
-            str = toLower(timeStr.substr(find));
+            str = toLower(extract(timeStr, find));
             if (contains(str, "p"))
                 am = false;
         }
@@ -802,12 +802,12 @@ namespace qblocks {
             str += "120000";
         }
 
-        uint32_t y  = toLong32u(str.substr(0, 4));
-        uint32_t m  = toLong32u(str.substr(4, 2));
-        uint32_t d  = toLong32u(str.substr(6, 2));
-        uint32_t h  = toLong32u(str.substr(8, 2));
-        uint32_t mn = toLong32u(str.substr(10, 2));
-        uint32_t s  = toLong32u(str.substr(12, 2));
+        uint32_t y  = toLong32u(extract(str,  0, 4));
+        uint32_t m  = toLong32u(extract(str,  4, 2));
+        uint32_t d  = toLong32u(extract(str,  6, 2));
+        uint32_t h  = toLong32u(extract(str,  8, 2));
+        uint32_t mn = toLong32u(extract(str, 10, 2));
+        uint32_t s  = toLong32u(extract(str, 12, 2));
 
         return SFTime(y, m, d, h, mn, s);
     }

@@ -87,6 +87,24 @@ return false; \
 } \
 }
 
+#define SHOULD_THROW(msg, a) \
+cout << TESTID(msg, 32) << "The test should throw. "; \
+try { \
+    (a); \
+    cout << " --> Test did not throw\n"; \
+} catch (exception e) { \
+    cout << " --> Test threw with message: " << e.what() << "\n"; \
+}
+
+#define SHOULD_NOT_THROW(msg, a) \
+cout << TESTID(msg, 32) << "The test should not throw. "; \
+try { \
+    (a); \
+    cout << " --> Test did not throw\n"; \
+} catch (exception e) { \
+    cout << " --> Test threw with message: " << e.what() << "\n"; \
+}
+
 }  // namespace testing
 
 inline int RUN_ALL_TESTS(void) {

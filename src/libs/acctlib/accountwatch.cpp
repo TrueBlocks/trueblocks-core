@@ -312,15 +312,15 @@ string_q CAccountWatch::displayName(bool expand, bool useColor, bool terse, size
 //            ret += color;
         if (expand)
             ret += "[000000000000";
-        ret += name.substr(0,42-6);
-        ret += " (" + address.substr(0,need) + "...)";
+        ret += extract(name, 0, 42-6);
+        ret += " (" + extract(address, 0, need) + "...)";
         if (expand)
             ret += "]";
 //        if (useColor)
 //            ret += cOff;
         return ret;
     }
-    return padRight(name.substr(0,w1),w1) + " " + address.substr(0,w2) + " ";
+    return padRight(extract(name, 0, w1), w1) + " " + extract(address, 0, w2) + " ";
 }
 
 //-----------------------------------------------------------------------
