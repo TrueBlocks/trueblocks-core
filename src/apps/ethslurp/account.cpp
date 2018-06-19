@@ -106,7 +106,8 @@ void CAccount::finishParse() {
     for (size_t i = 0 ; i < transactions.size() ; i++) {
         CTransaction *t = &transactions.at(i);
         string_q encoding = t->input.substr(0,10);
-        t->funcPtr = abi.findFunctionByEncoding(encoding);
+extern CFunction *findFunctionByEncoding(CAbi& abi, const string_q& search);
+        t->funcPtr = findFunctionByEncoding(abi, encoding);
     }
     // EXISTING_CODE
 }
@@ -373,4 +374,3 @@ bool CAccount::handleCustomFormat(CExportContext& ctx, const string_q& fmtIn, vo
 }
 // EXISTING_CODE
 }  // namespace qblocks
-

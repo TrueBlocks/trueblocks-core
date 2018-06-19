@@ -55,11 +55,11 @@ run_test("grabABI_invalid_1"                     "0x00001")
 #run_test("grabABI_not_found"                     "0x1728039ce0d18a799c081c5c7fa2090dd365a8d0" " -o")
 
 #run_test("grabABI_no_abi1"                       "0x1728039ce0d18a799c081c5c7fa2090dd365a8d0" " --raw")
-#run_test("grabABI_no_abi2"                       "0x1728039ce0d18a799c081c5c7fa2090dd365a8d0" " --json")
+run_test("grabABI_no_abi2"                       "0x1728039ce0d18a799c081c5c7fa2090dd365a8d0" " --json")
 
 run_test("grabABI_known_prev_bug1"               "0x5901deb2c898d5dbe5923e05e510e95968a35067" " --raw")
 run_test("grabABI_known_prev_bug2"               "0x5f742383b6d1298980030d6af943b76cdd902143" " --raw")
-run_test("grabABI_known_prev_json_bug1"          "0x5901deb2c898d5dbe5923e05e510e95968a35067" " --json")
+#run_test("grabABI_known_prev_json_bug1"          "0x5901deb2c898d5dbe5923e05e510e95968a35067" " --json")
 run_test("grabABI_known_prev_json_bug2"          "0x5f742383b6d1298980030d6af943b76cdd902143" " --json")
 
 run_special_test("grabABI_known_prev_bug3"       "0x6090a6e47849629b7245dfa1ca21d94cd15878ef" " --raw")

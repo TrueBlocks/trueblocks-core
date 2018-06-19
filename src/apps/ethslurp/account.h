@@ -114,7 +114,7 @@ inline void CAccount::initialize(void) {
     transactions.clear();
 
     // EXISTING_CODE
-    abi.initialize();
+    abi = CAbi();
     // EXISTING_CODE
 }
 

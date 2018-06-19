@@ -20,12 +20,6 @@
 
 namespace qblocks {
 
-//--------------------------------------------------------------------------
-class CFunction;
-typedef SFArrayBase<CFunction>         CFunctionArray;
-typedef SFList<CFunction*>             CFunctionList;
-typedef SFUniqueList<CFunction*>       CFunctionListU;
-
 // EXISTING_CODE
 // EXISTING_CODE
 
@@ -58,11 +52,8 @@ public:
     string_q encodeItem(void) const;
     bool isBuiltin;
     string_q origName;
-#ifdef NATIVE
-    friend bool operator<(const CFunction& f1, const CFunction& f2) { return f1.name < f2.name; };
-    friend bool operator>(const CFunction& f1, const CFunction& f2) { return f1.name > f2.name; };
-#endif
     // EXISTING_CODE
+    friend bool operator<(const CFunction& f1, const CFunction& f2);
     friend ostream& operator<<(ostream& os, const CFunction& item);
 
 protected:
@@ -157,12 +148,20 @@ inline CFunction& CFunction::operator=(const CFunction& fu) {
     return *this;
 }
 
+//--------------------------------------------------------------------------
+inline bool operator<(const CFunction& v1, const CFunction& v2) {
+    return v1.encoding < v2.encoding;
+};
+
 //---------------------------------------------------------------------------
+typedef vector<CFunction> CFunctionArray;
 extern SFArchive& operator>>(SFArchive& archive, CFunctionArray& array);
 extern SFArchive& operator<<(SFArchive& archive, const CFunctionArray& array);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
+inline bool sortByFuncName(const CFunction& f1, const CFunction& f2) {
+    return f2.name < f1.name;
+}
 // EXISTING_CODE
 }  // namespace qblocks
-
