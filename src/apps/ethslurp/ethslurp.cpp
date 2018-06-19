@@ -538,16 +538,16 @@ void findBlockRange(const string_q& json, size_t& minBlock, size_t& maxBlock) {
     size_t len = search.length();
 
     minBlock = 0;
-    int64_t first = (int64_t)json.find(search);
-    if (first != (int64_t)NOPOS) {
-        string_q str = json.substr(((size_t)first+len));
+    size_t first = json.find(search);
+    if (first != string::npos) {
+        string_q str = json.substr(first + len);
         minBlock = toLongU(str);
     }
 
     string_q end = json.substr(json.rfind('{'));  // pull off the last transaction
     size_t last = end.find(search);
-    if (last != NOPOS) {
-        string_q str = end.substr(last+len);
+    if (last != string::npos) {
+        string_q str = end.substr(last + len);
         maxBlock = toLongU(str);
     }
 }

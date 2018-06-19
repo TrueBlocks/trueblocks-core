@@ -44,6 +44,5 @@ bool COptions::parseArguments(string_q& command) {
 void COptions::Init(void) {
     paramsPtr = params;
     nParamsRef = nParams;
-
     testNum = NOPOS;
 }

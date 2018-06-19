@@ -171,7 +171,7 @@ TEST_F(CThisTest, TestCStr) {
 
     string_q target = "Target1|Target2|Target3|Target4";
     cout << TESTID("base case",15) << target << "\n";
-    while (target.find("get") != NOPOS) {
+    while (target.find("get") != string::npos) {
         replaceReverse(target, "get", "tan");
         cout << TESTID("rev replace",15) << target << "\n";
     }
