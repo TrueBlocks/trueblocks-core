@@ -593,11 +593,7 @@ namespace qblocks {
         SFUniqueStringList(void) : SFUniqueList(sortByStringValue, isDuplicate) { }
     };
 
-#ifdef NATIVE
     typedef vector<string_q> CStringArray;
-#else
-    typedef SFArrayBase<string_q> CStringArray;
-#endif
     typedef SFList<string_q> CStringList;
     typedef SFArrayBase<uint64_t> SFUintArray;
     typedef SFArrayBase<int64_t> SFIntArray;

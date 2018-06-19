@@ -518,7 +518,7 @@ namespace qblocks {
         }
 
         size_t find = timeStr.find(" ");
-        if (find != NOPOS) {
+        if (find != string::npos) {
             str = toLower(timeStr.substr(find));
             if (contains(str, "p"))
                 am = false;

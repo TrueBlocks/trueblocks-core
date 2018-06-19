@@ -50,15 +50,3 @@ int main(int argc, const char *argv[]) {
 
     return 0;
 }
-
-#if 0
-// PRINTING HEX
-int main(int argc, char *argv[]) {
-    uint64_t x = NOPOS;
-    char ss[100];
-    sprintf(ss,"%016llx\n", x);
-    string_q s = ss;
-    cout << "0x" << toLower(s) << "\n";
-    return 1;
-}
-#endif
