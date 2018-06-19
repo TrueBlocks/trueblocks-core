@@ -20,7 +20,6 @@
 //--------------------------------------------------------------------------
 class QRemoveOwner;
 typedef SFArrayBase<QRemoveOwner>         QRemoveOwnerArray;
-typedef SFList<QRemoveOwner*>             QRemoveOwnerList;
 
 // EXISTING_CODE
 // EXISTING_CODE

@@ -20,7 +20,6 @@
 //--------------------------------------------------------------------------
 class QDepositEvent;
 typedef SFArrayBase<QDepositEvent>         QDepositEventArray;
-typedef SFList<QDepositEvent*>             QDepositEventList;
 
 // EXISTING_CODE
 // EXISTING_CODE

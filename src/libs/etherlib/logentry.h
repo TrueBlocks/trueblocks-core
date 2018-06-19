@@ -22,7 +22,6 @@ namespace qblocks {
 //--------------------------------------------------------------------------
 class CLogEntry;
 typedef SFArrayBase<CLogEntry>         CLogEntryArray;
-typedef SFList<CLogEntry*>             CLogEntryList;
 
 // EXISTING_CODE
 class CReceipt;

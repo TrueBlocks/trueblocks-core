@@ -22,7 +22,6 @@ namespace qblocks {
 //--------------------------------------------------------------------------
 class CTraceResult;
 typedef SFArrayBase<CTraceResult>         CTraceResultArray;
-typedef SFList<CTraceResult*>             CTraceResultList;
 
 // EXISTING_CODE
 // EXISTING_CODE

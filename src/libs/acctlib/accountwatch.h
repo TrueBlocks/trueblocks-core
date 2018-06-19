@@ -24,7 +24,6 @@ namespace qblocks {
 //--------------------------------------------------------------------------
 class CAccountWatch;
 typedef SFArrayBase<CAccountWatch>         CAccountWatchArray;
-typedef SFList<CAccountWatch*>             CAccountWatchList;
 
 // EXISTING_CODE
 class CBalanceHistory {

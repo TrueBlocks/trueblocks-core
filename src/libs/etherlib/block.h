@@ -23,7 +23,6 @@ namespace qblocks {
 //--------------------------------------------------------------------------
 class CBlock;
 typedef SFArrayBase<CBlock>         CBlockArray;
-typedef SFList<CBlock*>             CBlockList;
 
 // EXISTING_CODE
 typedef bool (*ADDRESSFUNC)(blknum_t bn, blknum_t tx, blknum_t tc, const SFAddress& addr, void *data);

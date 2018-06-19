@@ -20,7 +20,6 @@
 //--------------------------------------------------------------------------
 class QConfirm;
 typedef SFArrayBase<QConfirm>         QConfirmArray;
-typedef SFList<QConfirm*>             QConfirmList;
 
 // EXISTING_CODE
 // EXISTING_CODE

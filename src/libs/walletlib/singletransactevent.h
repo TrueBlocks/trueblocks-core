@@ -20,7 +20,6 @@
 //--------------------------------------------------------------------------
 class QSingleTransactEvent;
 typedef SFArrayBase<QSingleTransactEvent>         QSingleTransactEventArray;
-typedef SFList<QSingleTransactEvent*>             QSingleTransactEventList;
 
 // EXISTING_CODE
 // EXISTING_CODE

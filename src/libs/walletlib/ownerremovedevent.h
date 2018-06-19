@@ -20,7 +20,6 @@
 //--------------------------------------------------------------------------
 class QOwnerRemovedEvent;
 typedef SFArrayBase<QOwnerRemovedEvent>         QOwnerRemovedEventArray;
-typedef SFList<QOwnerRemovedEvent*>             QOwnerRemovedEventList;
 
 // EXISTING_CODE
 // EXISTING_CODE

@@ -23,7 +23,6 @@ namespace qblocks {
 //--------------------------------------------------------------------------
 class CInfix;
 typedef SFArrayBase<CInfix>         CInfixArray;
-typedef SFList<CInfix*>             CInfixList;
 
 // EXISTING_CODE
 // EXISTING_CODE

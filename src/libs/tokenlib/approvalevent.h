@@ -20,7 +20,6 @@
 //--------------------------------------------------------------------------
 class QApprovalEvent;
 typedef SFArrayBase<QApprovalEvent>         QApprovalEventArray;
-typedef SFList<QApprovalEvent*>             QApprovalEventList;
 
 // EXISTING_CODE
 // EXISTING_CODE

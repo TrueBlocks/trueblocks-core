@@ -22,7 +22,6 @@ namespace qblocks {
 //--------------------------------------------------------------------------
 class CIncomeStatement;
 typedef SFArrayBase<CIncomeStatement>         CIncomeStatementArray;
-typedef SFList<CIncomeStatement*>             CIncomeStatementList;
 
 // EXISTING_CODE
 // EXISTING_CODE

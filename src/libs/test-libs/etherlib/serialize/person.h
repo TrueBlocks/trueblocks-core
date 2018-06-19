@@ -20,7 +20,6 @@
 //--------------------------------------------------------------------------
 class CPerson;
 typedef SFArrayBase<CPerson>         CPersonArray;
-typedef SFList<CPerson*>             CPersonList;
 
 // EXISTING_CODE
 // EXISTING_CODE
