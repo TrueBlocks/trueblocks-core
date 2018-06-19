@@ -361,7 +361,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
     bool hasTraceAt(const string_q& hashIn, size_t where) {
         string_q cmd = "[\"" + fixHash(hashIn) +"\",[\"" + toHex(where) + "\"]]";
         string_q ret = callRPC("trace_get", cmd.c_str(), true);
-        return ret.find("blockNumber") != NOPOS;
+        return ret.find("blockNumber") != string::npos;
     }
 
     //--------------------------------------------------------------

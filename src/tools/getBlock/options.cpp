@@ -80,7 +80,7 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-l" || arg == "--latest") {
             uint64_t lastUpdate = toUnsigned(asciiFileToString("/tmp/getBlock_junk.txt"));
-            uint64_t cache=NOPOS, client=NOPOS;
+            uint64_t cache = NOPOS, client = NOPOS;
             getLatestBlocks(cache, client);
             uint64_t diff = cache > client ? 0 : client - cache;
             stringToAsciiFile("/tmp/getBlock_junk.txt", asStringU(diff)); // for next time

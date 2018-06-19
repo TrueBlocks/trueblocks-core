@@ -99,15 +99,6 @@ namespace qblocks {
     extern SFUintBN str2BigUint(const string &s);
     #define toBigUint str2BigUint
 
-#ifdef NATIVE
-#else
-    inline SFUintBN str2BigUint(const string_q &s) {
-        string ss;
-        ss = s.c_str();
-        return str2BigUint(ss);
-    }
-#endif
-
     extern SFIntBN exp2BigInt(const string& s);
     //--------------------------------------------------------------------------------
     inline SFUintBN exp2BigUint(const string &s) {
@@ -162,11 +153,7 @@ namespace qblocks {
 #define SFGas          uint64_t
 #define blknum_t       uint64_t
 #define txnum_t        uint64_t
-#ifdef NATIVE
     typedef vector<string_q> SFAddressArray;
-#else
-    typedef SFArrayBase<SFAddress> SFAddressArray;
-#endif
     typedef SFArrayBase<SFBloom> SFBloomArray;
 
 #define toHash(a)      toLower(a)
