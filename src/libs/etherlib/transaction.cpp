@@ -575,7 +575,7 @@ inline string_q hex2String(const string_q& inHex) {
 #define toAscString(a,b)    hex2String("0x"+grabPart(a,b))
 #define toBigNum(a,b)       asStringULL(grabBigNum(a,b))
 #define toBigNum3(a,b)      padNum3(grabBigNum(a,b))
-#define theRest(a,b)        extract((a), 64*(b), (a).length());
+#define theRest(a,b)        (a).substr(64*(b),(a).length());
 #define toVote(a,b)         (grabBigNum(a,b)?"Yea":"Nay")
 #define toBoolean(a,b)      (grabBigNum(a,b)?"true":"false")
 #define toBytes(a,b)        ((a).substr(64*(b),64))
