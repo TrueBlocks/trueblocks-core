@@ -592,10 +592,4 @@ namespace qblocks {
     public:
         SFUniqueStringList(void) : SFUniqueList(sortByStringValue, isDuplicate) { }
     };
-
-    typedef vector<string_q> CStringArray;
-    typedef SFList<string_q> CStringList;
-    typedef SFArrayBase<uint64_t> SFUintArray;
-    typedef SFArrayBase<int64_t> SFIntArray;
-#define SFBlockArray SFUintArray
 }  // namespace qblocks
