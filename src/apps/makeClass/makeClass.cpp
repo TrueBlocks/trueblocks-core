@@ -205,24 +205,22 @@ void generateCode(const COptions& options, CToml& toml, const string_q& dataFile
     //------------------------------------------------------------------------------------------------
     // build the field list from the config file string
     string_q fields = substitute(toml.getConfigStr("settings", "fields", ""), "address[]", "SFAddressArray");
-    CParameterList fieldList;
+    CParameterArray fieldList;
     while (!fields.empty()) {
         string_q fieldDef = nextTokenClear(fields, '|');
-        CParameter *f = new CParameter(fieldDef);
-        fieldList.AddTail(f);
+        CParameter param(fieldDef);
+        fieldList.push_back(param);
     }
 
     //------------------------------------------------------------------------------------------------
-    LISTPOS lPos = fieldList.GetHeadPosition();
-    while (lPos) {
-        CParameter *fld = fieldList.GetNext(lPos);
+    for (auto fld : fieldList) {
 
         string_q decFmt  = "\t[{TYPE}] *[{NAME}];";
-        if (!fld->isPointer) {
+        if (!fld.isPointer) {
             replace(decFmt, "*", "");
         }
         string_q copyFmt = "\t[{NAME}] = +SHORT+.[{NAME}];\n";
-        if (fld->isPointer)
+        if (fld.isPointer)
             copyFmt = "\tif ([+SHORT+.{NAME}]) {\n\t\t[{NAME}] = new [{TYPE}];\n"
                         "\t\t*[{NAME}] = *[+SHORT+.{NAME}];\n\t}\n";
         string_q badSet   = "//\t[{NAME}] = ??; /""* unknown type: [{TYPE}] */\n";
@@ -231,90 +229,90 @@ void generateCode(const COptions& options, CToml& toml, const string_q& dataFile
         string_q clearFmt = "\tif ([{NAME}])\n\t\tdelete [{NAME}];\n\t[{NAME}] = NULL;\n";
         string_q subClsFmt = STR_SUBCLASS;
 
-               if (fld->type == "bloom")     { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_BLOOM";
-        } else if (fld->type == "wei")       { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_WEI";
-        } else if (fld->type == "gas")       { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_GAS";
-        } else if (fld->type == "timestamp") { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_TIMESTAMP";
-        } else if (fld->type == "blknum")    { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
-        } else if (fld->type == "string")    { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_TEXT";
-        } else if (fld->type == "addr")      { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_ADDRESS";
-        } else if (fld->type == "address")   { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_ADDRESS";
-        } else if (fld->type == "hash")      { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_HASH";
-        } else if (fld->type == "bytes32")   { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_TEXT";
-        } else if (fld->type == "bytes")     { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_TEXT";
-        } else if (fld->type == "int8")      { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
-        } else if (fld->type == "int16")     { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
-        } else if (fld->type == "int32")     { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
-        } else if (fld->type == "int64")     { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
-        } else if (fld->type == "int256")    { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
-        } else if (fld->type == "uint8")     { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
-        } else if (fld->type == "uint16")    { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
-        } else if (fld->type == "uint32")    { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
-        } else if (fld->type == "uint64")    { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
-        } else if (fld->type == "uint256")   { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
-        } else if (fld->type == "bbool")     { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_BOOL";
-        } else if (fld->type == "bool")      { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_BOOL";
-        } else if (fld->type == "double")    { setFmt = "\t[{NAME}] = [{DEFF}];\n"; regType = "T_DOUBLE";
-        } else if (fld->type == "time")      { setFmt = "\t[{NAME}] = [{DEFT}];\n"; regType = "T_DATE";
-        } else if (fld->isPointer)           { setFmt = "\t[{NAME}] = [{DEFP}];\n"; regType = "T_POINTER";
-        } else if (fld->isObject)            { setFmt = "\t[{NAME}].initialize();\n";     regType = "T_OBJECT";
+               if (fld.type == "bloom")     { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_BLOOM";
+        } else if (fld.type == "wei")       { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_WEI";
+        } else if (fld.type == "gas")       { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_GAS";
+        } else if (fld.type == "timestamp") { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_TIMESTAMP";
+        } else if (fld.type == "blknum")    { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
+        } else if (fld.type == "string")    { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_TEXT";
+        } else if (fld.type == "addr")      { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_ADDRESS";
+        } else if (fld.type == "address")   { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_ADDRESS";
+        } else if (fld.type == "hash")      { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_HASH";
+        } else if (fld.type == "bytes32")   { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_TEXT";
+        } else if (fld.type == "bytes")     { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_TEXT";
+        } else if (fld.type == "int8")      { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
+        } else if (fld.type == "int16")     { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
+        } else if (fld.type == "int32")     { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
+        } else if (fld.type == "int64")     { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
+        } else if (fld.type == "int256")    { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
+        } else if (fld.type == "uint8")     { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
+        } else if (fld.type == "uint16")    { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
+        } else if (fld.type == "uint32")    { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
+        } else if (fld.type == "uint64")    { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
+        } else if (fld.type == "uint256")   { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
+        } else if (fld.type == "bbool")     { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_BOOL";
+        } else if (fld.type == "bool")      { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_BOOL";
+        } else if (fld.type == "double")    { setFmt = "\t[{NAME}] = [{DEFF}];\n"; regType = "T_DOUBLE";
+        } else if (fld.type == "time")      { setFmt = "\t[{NAME}] = [{DEFT}];\n"; regType = "T_DATE";
+        } else if (fld.isPointer)           { setFmt = "\t[{NAME}] = [{DEFP}];\n"; regType = "T_POINTER";
+        } else if (fld.isObject)            { setFmt = "\t[{NAME}].initialize();\n";     regType = "T_OBJECT";
         } else                               { setFmt = badSet;                     regType = "T_TEXT"; }
 
-        if (contains(fld->type, "Array")) {
+        if (contains(fld.type, "Array")) {
             setFmt = "\t[{NAME}].clear();\n";
-            if (contains(fld->type, "Address")) {
+            if (contains(fld.type, "Address")) {
                 regType = "T_ADDRESS|TS_ARRAY";
-            } else if (contains(fld->type, "String")) {
+            } else if (contains(fld.type, "String")) {
                 regType = "T_TEXT|TS_ARRAY";
             } else {
                 regType = "T_OBJECT|TS_ARRAY";
             }
         }
-#define getDefault(a) (fld->strDefault.empty() ? (a) : fld->strDefault )
+#define getDefault(a) (fld.strDefault.empty() ? (a) : fld.strDefault )
         replace(setFmt, "[{DEFS}]", getDefault("\"\""));
         replace(setFmt, "[{DEF}]",  getDefault("0"));
         replace(setFmt, "[{DEFF}]", getDefault("0.0"));
         replace(setFmt, "[{DEFT}]", getDefault("earliestDate"));
         replace(setFmt, "[{DEFP}]", getDefault("NULL"));
 
-        if (contains(fld->type, "Array") || (fld->isObject && !fld->isPointer)) {
+        if (contains(fld.type, "Array") || (fld.isObject && !fld.isPointer)) {
 
-            if (contains(fld->type, "CStringArray")  ||
-                contains(fld->type, "SFBlockArray")   ||
-                contains(fld->type, "SFAddressArray") ||
-                contains(fld->type, "SFBigUintArray") ||
-                contains(fld->type, "SFTopicArray")) {
+            if (contains(fld.type, "CStringArray")  ||
+                contains(fld.type, "SFBlockArray")   ||
+                contains(fld.type, "SFAddressArray") ||
+                contains(fld.type, "SFBigUintArray") ||
+                contains(fld.type, "SFTopicArray")) {
 
                 fieldGetStr += STR_GETSTR_CODE_FIELD;
-                replaceAll(fieldGetStr, "[{FIELD}]", fld->name);
-                if (fld->name == "topics") {
+                replaceAll(fieldGetStr, "[{FIELD}]", fld.name);
+                if (fld.name == "topics") {
                     replaceAll(fieldGetStr, "THING", "fromTopic");
-                } else if (contains(fld->type, "SFBlockArray")) {
+                } else if (contains(fld.type, "SFBlockArray")) {
                     replaceAll(fieldGetStr, "THING", "asStringU");
                 } else {
                     replaceAll(fieldGetStr, "THING", "");
                 }
             } else {
                 fieldGetObj += STR_GETOBJ_CODE_FIELD;
-                if (!contains(fld->type, "Array")) {
+                if (!contains(fld.type, "Array")) {
                     replace(fieldGetObj, " && index < [{FIELD}].size()", "");
                     replace(fieldGetObj, "[index]", "");
                 }
-                replaceAll(fieldGetObj, "[{FIELD}]", fld->name);
+                replaceAll(fieldGetObj, "[{FIELD}]", fld.name);
             }
         }
 
-        fieldReg   += substitute(fld->Format(regFmt), "T_TEXT", regType); replaceAll(fieldReg, "CL_NM", "[{CLASS_NAME}]");
-        fieldCase  += fld->Format("[{TYPE}]+[{NAME}]-[{ISPOINTER}]~[{ISOBJECT}]|");
-        fieldDec   += (convertTypes(fld->Format(decFmt)) + "\n");
-        fieldCopy  += substitute(substitute(fld->Format(copyFmt), "+SHORT+", "[{SHORT}]"), "++CLASS++", "[{CLASS_NAME}]");
-        fieldSet   += fld->Format(setFmt);
-        fieldClear += (fld->isPointer ? fld->Format(clearFmt) : "");
-        if (fld->isObject && !fld->isPointer && !contains(fld->type, "Array")) {
+        fieldReg   += substitute(fld.Format(regFmt), "T_TEXT", regType); replaceAll(fieldReg, "CL_NM", "[{CLASS_NAME}]");
+        fieldCase  += fld.Format("[{TYPE}]+[{NAME}]-[{ISPOINTER}]~[{ISOBJECT}]|");
+        fieldDec   += (convertTypes(fld.Format(decFmt)) + "\n");
+        fieldCopy  += substitute(substitute(fld.Format(copyFmt), "+SHORT+", "[{SHORT}]"), "++CLASS++", "[{CLASS_NAME}]");
+        fieldSet   += fld.Format(setFmt);
+        fieldClear += (fld.isPointer ? fld.Format(clearFmt) : "");
+        if (fld.isObject && !fld.isPointer && !contains(fld.type, "Array")) {
             string_q fmt = subClsFmt;
-            replaceAll(fmt, "[FNAME]", fld->name);
+            replaceAll(fmt, "[FNAME]", fld.name);
             replaceAll(fmt, "[SH3]", short3(baseLower));
-            string_q fldStr = fld->Format(fmt);
+            string_q fldStr = fld.Format(fmt);
             replace(fldStr, "++", "[{");
             replace(fldStr, "++", "}]");
             if (fieldSubCls.empty())
@@ -338,8 +336,8 @@ string_q ptrWriteFmt =
 "    if ([{NAME}])\n"
 "        [{NAME}]->SerializeC(archive);\n";
 
-        fieldArchiveRead  += fld->Format(fld->isPointer ? ptrReadFmt  : "\tarchive >> [{NAME}];\n");
-        fieldArchiveWrite += fld->Format(fld->isPointer ? ptrWriteFmt : "\tarchive << [{NAME}];\n");
+        fieldArchiveRead  += fld.Format(fld.isPointer ? ptrReadFmt  : "\tarchive >> [{NAME}];\n");
+        fieldArchiveWrite += fld.Format(fld.isPointer ? ptrWriteFmt : "\tarchive << [{NAME}];\n");
     }
 
     //------------------------------------------------------------------------------------------------

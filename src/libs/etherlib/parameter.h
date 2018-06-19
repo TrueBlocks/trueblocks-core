@@ -19,14 +19,7 @@
 
 namespace qblocks {
 
-//--------------------------------------------------------------------------
-class CParameter;
-typedef SFArrayBase<CParameter>         CParameterArray;
-typedef SFList<CParameter*>             CParameterList;
-typedef SFUniqueList<CParameter*>       CParameterListU;
-
 // EXISTING_CODE
-class CFunction;
 //--------------------------------------------------------------------------
 #define SIG_FTYPE     (1<<1)
 #define SIG_FNAME     (1<<2)
@@ -65,6 +58,7 @@ public:
     // EXISTING_CODE
     CParameter(string_q& txtIn);
     // EXISTING_CODE
+    friend bool operator<(const CParameter& p1, const CParameter& p2);
     friend ostream& operator<<(ostream& os, const CParameter& item);
 
 protected:
@@ -149,7 +143,13 @@ inline CParameter& CParameter::operator=(const CParameter& pa) {
     return *this;
 }
 
+//-------------------------------------------------------------------------
+inline bool operator<(const CParameter& v1, const CParameter& v2) {
+    return v1.name < v2.name;
+}
+
 //---------------------------------------------------------------------------
+typedef vector<CParameter> CParameterArray;
 extern SFArchive& operator>>(SFArchive& archive, CParameterArray& array);
 extern SFArchive& operator<<(SFArchive& archive, const CParameterArray& array);
 

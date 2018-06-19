@@ -161,7 +161,7 @@ bool CSlurperApp::Slurp(COptions& options, string_q& message) {
     double start = qbNow();
 
     // We always need the ABI
-    theAccount.abi.loadABI(theAccount.addr);
+    loadABI(theAccount.abi, theAccount.addr);
 
     // Do we have the data for this address cached?
     string_q cacheFilename = blockCachePath("slurps/" + theAccount.addr + ".bin");
@@ -607,3 +607,131 @@ int sortReverseChron(const void *rr1, const void *rr2) {
         return ret;
     return sortTransactionsForWrite(rr1, rr2);
 }
+
+//---------------------------------------------------------------------------
+string_q abis[1000][2];
+size_t nAbis = 0;
+
+//---------------------------------------------------------------------------
+void clearAbis(void) {
+    nAbis = 0;
+}
+
+//---------------------------------------------------------------------------
+string_q findEncoding(const string_q& addr, CFunction& func) {
+    if (!nAbis) {
+        string_q contents = asciiFileToString(blockCachePath("abis/" + addr + ".abi"));
+        while (!contents.empty()) {
+            abis[nAbis][1] = nextTokenClear(contents, '\n');
+            abis[nAbis][0] = nextTokenClear(abis[nAbis][1], '|');
+            nAbis++;
+        }
+    }
+
+    for (uint64_t i = 0 ; i < nAbis ; i++)
+        if (abis[i][0] == func.name)
+            return abis[i][1];
+    return EMPTY;
+}
+
+//---------------------------------------------------------------------------
+static bool getEncoding(const string_q& abiFilename, const string_q& addr, CFunction& func) {
+    if (func.type != "function")
+        return false;
+    func.name     = nextTokenClear(func.name, '(');
+    func.encoding = findEncoding(addr, func);
+    return !func.encoding.empty();
+}
+
+//---------------------------------------------------------------------------
+bool loadABI(CAbi& abi, const string_q& addr) {
+    // Already loaded?
+    if (abi.abiByName.size() && abi.abiByEncoding.size())
+        return true;
+
+    string_q abiFilename = blockCachePath("abis/" + addr + ".json");
+    if (!fileExists(abiFilename))
+        return false;
+
+    cerr << "\tLoading abi file: " << abiFilename << "...\n";
+    if (abi.loadABIFromFile(abiFilename)) {
+
+        string_q abis1;
+
+        // Get the encodings
+        for (size_t i = 0 ; i < abi.abiByName.size() ; i++) {
+            CFunction funct = abi.abiByName[i];
+            getEncoding(abiFilename, addr, funct);
+            abis1 += abi.abiByName[i].Format("[{NAME}]|[{ENCODING}]\n");
+        }
+
+        // We need to do both since they are copies
+        for (size_t i = 0 ; i < abi.abiByEncoding.size() ; i++) {
+            CFunction funct = abi.abiByEncoding[i];
+            getEncoding(abiFilename, addr, funct);
+        }
+
+        if (!fileExists(blockCachePath("abis/" + addr + ".abi")) && !abis1.empty())
+            stringToAsciiFile(blockCachePath("abis/" + addr + ".abi"), abis1);
+
+        if (verbose) {
+            for (size_t i = 0 ; i < abi.abiByName.size() ; i++) {
+                const CFunction *f = &abi.abiByName[i];
+                if (f->type == "function")
+                    cerr << substitute(f->Format("[\"{NAME}|][{ENCODING}\"]"), "\n", " ") << "\n";
+            }
+        }
+    }
+    return abi.abiByName.size();
+}
+
+//---------------------------------------------------------------------------
+static CFunctionArray *getABIArray(void) {
+
+    static CFunctionArray *theArrayPtr = NULL;
+    if (!theArrayPtr) {
+        static CFunctionArray theArray;
+        string_q abiPath = blockCachePath("abis/abis.bin");
+        SFArchive funcCache(READING_ARCHIVE);
+        if (funcCache.Lock(abiPath, binaryReadOnly, LOCK_WAIT)) {
+            funcCache >> theArray;
+            funcCache.Release();
+        }
+        theArrayPtr = &theArray;
+    }
+    return theArrayPtr;
+}
+
+//---------------------------------------------------------------------------
+int findByEncoding(const void *rr1, const void *rr2) {
+    CFunction *f1 = (CFunction*)rr1;
+    CFunction *f2 = (CFunction*)rr2;
+    return f2->encoding.compare(f1->encoding);
+}
+
+//---------------------------------------------------------------------------
+int findByEncodingI(const void *rr1, const void *rr2) {
+    CFunction *f1 = (CFunction*)rr1;
+    CFunction *f2 = (CFunction*)rr2;
+    return toLower(f2->encoding).compare(toLower(f1->encoding));
+}
+
+//---------------------------------------------------------------------------
+CFunction *findFunctionByEncoding(const string_q& encoding) {
+    CFunctionArray *array = getABIArray();
+    if (array) {
+        CFunction search;
+        search.encoding = encoding;
+        return NULL; //array->Find(&search, findByEncodingI);
+    }
+    return NULL;
+}
+
+namespace qblocks {
+//---------------------------------------------------------------------------
+CFunction *findFunctionByEncoding(CAbi& abi, const string_q& enc) {
+    CFunction search;
+    search.encoding = enc;
+    return NULL; //abi.abiByEncoding.Find(&search, findByEncoding);
+}
+};

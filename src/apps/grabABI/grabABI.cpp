@@ -32,13 +32,6 @@ extern const char* STR_FORMAT_FUNCDATA;
 //-----------------------------------------------------------------------
 string_q templateFolder = configPath("grabABI/");
 
-//-----------------------------------------------------------------------
-int sortFunctionByName(const void *v1, const void *v2) {
-    const CFunction *f1 = reinterpret_cast<const CFunction*>(v1);
-    const CFunction *f2 = reinterpret_cast<const CFunction*>(v2);
-    return f1->name.compare(f2->name);
-}
-
 string_q classDir;
 //-----------------------------------------------------------------------
 inline string_q projectName(void) {
@@ -230,7 +223,7 @@ int main(int argc, const char *argv[]) {
 
         } else {
             verbose = false;
-            functions.Sort(sortFunctionByName);
+            sort(functions.begin(), functions.end(), sortByFuncName);
 //            if (options.isToken())
 //                addDefaultFuncs(functions);
 

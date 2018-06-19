@@ -20,12 +20,6 @@
 
 namespace qblocks {
 
-//--------------------------------------------------------------------------
-class CAbi;
-typedef SFArrayBase<CAbi>         CAbiArray;
-typedef SFList<CAbi*>             CAbiList;
-typedef SFUniqueList<CAbi*>       CAbiListU;
-
 // EXISTING_CODE
 // EXISTING_CODE
 
@@ -46,13 +40,7 @@ public:
     const CBaseNode *getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
-    void clearABI(void);
-    bool loadABI(const string_q& addr);
     bool loadABIFromFile(const string_q& fileName);
-    bool loadABIFromCSV(const string_q& fileName);
-    CFunction *findFunctionByName(const string_q& search);
-    CFunction *findFunctionByEncoding(const string_q& search);
-    friend class CAccount;
     // EXISTING_CODE
     friend ostream& operator<<(ostream& os, const CAbi& item);
 
@@ -131,17 +119,11 @@ inline CAbi& CAbi::operator=(const CAbi& ab) {
 }
 
 //---------------------------------------------------------------------------
+typedef vector<CAbi> CAbiArray;
 extern SFArchive& operator>>(SFArchive& archive, CAbiArray& array);
 extern SFArchive& operator<<(SFArchive& archive, const CAbiArray& array);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-extern uint64_t verbose;
-#define REP_FREQ   11
-#define REP_INFREQ 563
-void clearAbis(void);
-void rebuildFourByteDB(void);
-CFunction *findFunctionByEncoding(const string_q& encoding);
 // EXISTING_CODE
 }  // namespace qblocks
-
