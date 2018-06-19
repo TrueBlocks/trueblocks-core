@@ -27,8 +27,8 @@ namespace qblocks {
             for (size_t i = 0 ; i < 16 ; i++) {
                 string_q m1, m2;
                 for (size_t j = 0 ; j < 128 ; j = j + 10) {
-                    m1 += s1.substr(i*128, 128).substr(j,10) + " ";
-                    m2 += s2.substr(i*128, 128).substr(j,10) + " ";
+                    m1 += extract(extract(s1, i*128, 128), j, 10) + " ";
+                    m2 += extract(extract(s2, i*128, 128), j, 10) + " ";
                 }
                 str += ("\n\t" + cRed + m1 + cOff + "\n\t" + m2);
             }
@@ -39,8 +39,8 @@ namespace qblocks {
             for (size_t i = 0 ; i < 4 ; i++) {
                 string_q m1, m2;
                 for (size_t j = 0 ; j < 128 ; j = j + 10) {
-                    m1 += s1.substr(i*128, 128).substr(j,10) + " ";
-                    m2 += s2.substr(i*128, 128).substr(j,10) + " ";
+                    m1 += extract(extract(s1, i*128, 128), j, 10) + " ";
+                    m2 += extract(extract(s2, i*128, 128), j, 10) + " ";
                 }
                 str += ("\n\t" + cRed + m1 + cOff + "\n\t" + m2 + "\n");
             }

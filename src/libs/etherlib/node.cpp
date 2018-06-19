@@ -238,7 +238,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
     SFHash getRawBlockHash(blknum_t bn) {
         string_q blockStr;
         queryRawBlock(blockStr, asStringU(bn), false, true);
-        blockStr = substitute(blockStr.substr(blockStr.find("\"hash\":"),blockStr.length()), "\"hash\":\"","");
+        blockStr = substitute(extract(blockStr, blockStr.find("\"hash\":"), blockStr.length()), "\"hash\":\"","");
         blockStr = nextTokenClear(blockStr, '\"');
         return blockStr;
     }
@@ -337,7 +337,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
 
     //-------------------------------------------------------------------------
     bool getCode(const string_q& addr, string_q& theCode) {
-        string_q a = startsWith(addr, "0x") ? addr.substr(2) : addr;
+        string_q a = startsWith(addr, "0x") ? extract(addr, 2) : addr;
         a = padLeft(a,40,'0');
         theCode = callRPC("eth_getCode", "[\"0x" + a +"\"]", false);
         return theCode.length()!=0;
@@ -345,7 +345,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
 
     //-------------------------------------------------------------------------
     SFUintBN getBalance(const string_q& addr, blknum_t blockNum, bool isDemo) {
-        string_q a = addr.substr(2);
+        string_q a = extract(addr, 2);
         a = padLeft(a,40,'0');
         string_q ret = callRPC("eth_getBalance", "[\"0x" + a +"\",\""+toHex(blockNum)+"\"]", false);
         return toWei(ret);
@@ -528,7 +528,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
         string_q fn  = (asPath ? "" : num + (asJson ? ".json" : ".bin"));
 
         sprintf(ret, (blockCachePath("")+fmt).c_str(),
-                      num.substr(0,2).c_str(), num.substr(2,2).c_str(), num.substr(4,2).c_str(),
+                      extract(num, 0, 2).c_str(), extract(num, 2, 2).c_str(), extract(num, 4, 2).c_str(),
                       fn.c_str());
         return ret;
     }

@@ -424,7 +424,7 @@ string_q CFunction::encodeItem(void) const {
     string_q ret;
 extern bool getSha3(const string_q& hexIn, string_q& shaOut);
     getSha3(hex, ret);
-    ret = (type == "event" ? ret : ret.substr(0,10));
+    ret = (type == "event" ? ret : extract(ret, 0, 10));
     return ret;
 }
 // EXISTING_CODE

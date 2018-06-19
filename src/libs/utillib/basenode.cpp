@@ -172,8 +172,8 @@ namespace qblocks {
         string_q tt('-',25);
         tt += "\n";
         cout << tt << s << "\n" << tt;
-        cout << tt << ss.substr(ss.find("{"),   300) << "\n" << tt;
-        cout << tt << ss.substr(ss.length()-300,300) << "\n" << tt;
+        cout << tt << extract(ss, ss.find("{"),   300) << "\n" << tt;
+        cout << tt << extract(ss, ss.length()-300,300) << "\n" << tt;
         cout.flush();
         tbs+="\t";
 #endif
@@ -498,15 +498,15 @@ namespace qblocks {
     string_q decBigNum(const string_q& str) {
         string_q ret = str;
         size_t len = ret.length();
-             if (len > 29) ret = ret.substr(0,1) + "." + trimTrailing(ret.substr(1), '0') + "e+29";
-        else if (len > 28) ret = ret.substr(0,1) + "." + trimTrailing(ret.substr(1), '0') + "e+28";
-        else if (len > 27) ret = ret.substr(0,1) + "." + trimTrailing(ret.substr(1), '0') + "e+27";
-        else if (len > 26) ret = ret.substr(0,1) + "." + trimTrailing(ret.substr(1), '0') + "e+26";
-        else if (len > 25) ret = ret.substr(0,1) + "." + trimTrailing(ret.substr(1), '0') + "e+25";
-        else if (len > 24) ret = ret.substr(0,1) + "." + trimTrailing(ret.substr(1), '0') + "e+24";
-        else if (len > 23) ret = ret.substr(0,1) + "." + trimTrailing(ret.substr(1), '0') + "e+23";
-        else if (len > 22) ret = ret.substr(0,1) + "." + trimTrailing(ret.substr(1), '0') + "e+22";
-        else if (len > 21) ret = ret.substr(0,1) + "." + trimTrailing(ret.substr(1), '0') + "e+21";
+             if (len > 29) ret = extract(ret, 0, 1) + "." + trimTrailing(extract(ret, 1), '0') + "e+29";
+        else if (len > 28) ret = extract(ret, 0, 1) + "." + trimTrailing(extract(ret, 1), '0') + "e+28";
+        else if (len > 27) ret = extract(ret, 0, 1) + "." + trimTrailing(extract(ret, 1), '0') + "e+27";
+        else if (len > 26) ret = extract(ret, 0, 1) + "." + trimTrailing(extract(ret, 1), '0') + "e+26";
+        else if (len > 25) ret = extract(ret, 0, 1) + "." + trimTrailing(extract(ret, 1), '0') + "e+25";
+        else if (len > 24) ret = extract(ret, 0, 1) + "." + trimTrailing(extract(ret, 1), '0') + "e+24";
+        else if (len > 23) ret = extract(ret, 0, 1) + "." + trimTrailing(extract(ret, 1), '0') + "e+23";
+        else if (len > 22) ret = extract(ret, 0, 1) + "." + trimTrailing(extract(ret, 1), '0') + "e+22";
+        else if (len > 21) ret = extract(ret, 0, 1) + "." + trimTrailing(extract(ret, 1), '0') + "e+21";
         replace(ret, ".e+", "e+");
         return ret;
     }
@@ -616,18 +616,18 @@ namespace qblocks {
         size_t maxWidth = 0xdeadbeef, lineWidth = 0xdeadbeef;
         bool rightJust = false, lineJust = false;
         if (contains(fieldName, "w:")) {
-            ASSERT(fieldName.substr(0,2) % "w:");  // must be first modifier in the string
+            ASSERT(extract(fieldName, 0, 2) % "w:");  // must be first modifier in the string
             replace(fieldName, "w:", EMPTY);   // get rid of the 'w:'
             maxWidth = toLongU(fieldName);   // grab the width
             nextTokenClear(fieldName, ':');    // skip to the start of the fieldname
         } else if (contains(fieldName, "r:")) {
-            ASSERT(fieldName.substr(0,2) % "r:");  // must be first modifier in the string
+            ASSERT(extract(fieldName, 0, 2) % "r:");  // must be first modifier in the string
             replace(fieldName, "r:", EMPTY);   // get rid of the 'w:'
             maxWidth = toLongU(fieldName);   // grab the width
             nextTokenClear(fieldName, ':');    // skip to the start of the fieldname
             rightJust = true;
         } else if (contains(fieldName, "l:")) {
-            ASSERT(fieldName.substr(0,2) % "l:");  // must be first modifier in the string
+            ASSERT(extract(fieldName, 0, 2) % "l:");  // must be first modifier in the string
             replace(fieldName, "l:", "");   // get rid of the 'w:'
             lineWidth = toLongU(fieldName);   // grab the width
             nextTokenClear(fieldName, ':');    // skip to the start of the fieldname
@@ -635,8 +635,8 @@ namespace qblocks {
         }
 
         //--------------------------------------------------------------------
-#define truncPad(str, size)  (size == 0xdeadbeef ? str : padRight(str.substr(0,size), size))
-#define truncPadR(str, size) (size == 0xdeadbeef ? str : padLeft (str.substr(0,size), size))
+#define truncPad(str, size)  (size == 0xdeadbeef ? str : padRight(extract(str, 0, size), size))
+#define truncPadR(str, size) (size == 0xdeadbeef ? str : padLeft (extract(str, 0, size), size))
 
         // Get the value of the field.  If the value of the field is empty we return empty for the entire token.
         string_q fieldValue = (func)(fieldName, data);
@@ -755,7 +755,7 @@ extern string_q reformat1(const string_q& in, size_t len);
         if (ret.length() > len+10) {
             CStringArray parts;
             while (!ret.empty()) {
-                string_q s = ret.substr(0, len);
+                string_q s = extract(ret, 0, len);
                 replace(ret, s, "");
                 if (s.length() == len) {
                     s += "...";

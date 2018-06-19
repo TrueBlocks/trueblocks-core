@@ -277,7 +277,7 @@ ostream& operator<<(ostream& os, const CBranch& item) {
 
         int idx = nodeIndex(_key[0]);
         if (nodes[idx])
-            return nodes[idx]->at(_key.substr(1));
+            return nodes[idx]->at(extract(_key, 1));
 
         return "";
     }
@@ -302,11 +302,11 @@ ostream& operator<<(ostream& os, const CBranch& item) {
             int idx = nodeIndex(_key[0]);
             if (nodes[nodeIndex(_key[0])]) {
                 // There is already something stored here, so we need to find room for it
-                nodes[idx] = nodes[idx]->insert(_key.substr(1), _value);
+                nodes[idx] = nodes[idx]->insert(extract(_key, 1), _value);
 
             } else {
                 // we've reached a leaf
-                nodes[idx] = new CLeaf(_key.substr(1), _value);
+                nodes[idx] = new CLeaf(extract(_key, 1), _value);
             }
         }
         return this;

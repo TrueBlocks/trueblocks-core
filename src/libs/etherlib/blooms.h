@@ -41,7 +41,7 @@ extern string_q getSha3 (const string_q& hexIn);
         string_q sha = getSha3(hexIn);
         SFUintBN bloom;
         for (size_t i = 0 ; i < 3 ; i++)
-            bloom |= (SFUintBN(1) << (strtoul(("0x"+sha.substr(2+(i*4),4)).c_str(),NULL,16))%2048);
+            bloom |= (SFUintBN(1) << (strtoul(("0x" + extract(sha, 2 + (i*4), 4)).c_str(),NULL,16))%2048);
         return bloom;
     }
 

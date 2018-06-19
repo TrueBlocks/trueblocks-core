@@ -75,7 +75,7 @@ namespace qblocks {
         if (ret.length() < 18)
             ret = substitute(padLeft(_value, 18), " ", "0");
         reverse(ret);
-        ret = ret.substr(0,18) + "." + ret.substr(18);
+        ret = extract(ret, 0, 18) + "." + extract(ret, 18);
         reverse(ret);
         ret = trimLeading(ret, '0');
         if (startsWith(ret, '.'))
@@ -117,8 +117,8 @@ namespace qblocks {
 
     //--------------------------------------------------------------------------------
     inline SFIntBN str2BigInt(const string &s) {
-        return (s[0] == '-') ? SFIntBN(str2BigUint(s.substr(1, s.length() - 1)), -1)
-        : (s[0] == '+') ? SFIntBN(str2BigUint(s.substr(1, s.length() - 1)))
+        return (s[0] == '-') ? SFIntBN(str2BigUint(extract(s, 1, s.length() - 1)), -1)
+        : (s[0] == '+') ? SFIntBN(str2BigUint(extract(s, 1, s.length() - 1)))
         : SFIntBN(str2BigUint(s));
     }
 
@@ -130,7 +130,7 @@ namespace qblocks {
     //--------------------------------------------------------------------------------
     inline SFUintBN canonicalWei(const string_q& _value) {
         if (contains(_value, "0x"))
-            return hex2BigUint(_value.substr(2).c_str());
+            return hex2BigUint(extract(_value, 2).c_str());
         if (contains(_value, "e"))
             return exp2BigUint(_value.c_str());
         return str2BigUint(_value);
@@ -188,7 +188,7 @@ namespace qblocks {
 
     //----------------------------------------------------------------------------------
     inline string_q fixHash(const string_q& hashIn) {
-        string_q ret = startsWith(hashIn, "0x") ? hashIn.substr(2) : hashIn;
+        string_q ret = startsWith(hashIn, "0x") ? extract(hashIn, 2) : hashIn;
         return "0x" + padLeft(ret, 32 * 2, '0');
     }
 
@@ -199,7 +199,7 @@ namespace qblocks {
 
     //----------------------------------------------------------------------------------
     inline string_q fixAddress(const SFAddress& addrIn) {
-        string_q ret = startsWith(addrIn, "0x") ? addrIn.substr(2) : addrIn;
+        string_q ret = startsWith(addrIn, "0x") ? extract(addrIn, 2) : addrIn;
         return "0x" + ret;
     }
 

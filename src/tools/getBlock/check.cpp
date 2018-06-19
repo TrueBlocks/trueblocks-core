@@ -39,14 +39,14 @@ string_q removeField(const string_q& strIn, const string_q& field) {
     //while (contains(str, search))
     {
         size_t start = str.find(search);
-        string_q before = str.substr(0,start);
-        string_q rest   = str.substr(start);
+        string_q before = extract(str, 0, start);
+        string_q rest   = extract(str, start);
 
         size_t end = rest.find(",")+1; // first comma
         if (startsWith(rest, search+"[")) // unless it's an array, then end of array
             end = rest.find("]")+1;
-        string_q during = rest.substr(0,end);
-        string_q after  = rest.substr(end);
+        string_q during = extract(rest, 0, end);
+        string_q after  = extract(rest, end);
 
         before = trim(before, '\n');
         during = trim(during, '\n');

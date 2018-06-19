@@ -516,7 +516,7 @@ bool isPotentialAddr(SFUintBN test, SFAddress& addrOut) {
 
     if (addrOut.length()<40)
         addrOut = padLeft(addrOut, 40, '0');
-    addrOut = addrOut.substr(addrOut.length()-40,40);
+    addrOut = extract(addrOut, addrOut.length()-40, 40);
     addrOut = toLower("0x" + addrOut);
 
     return true;
@@ -531,7 +531,7 @@ void processPotentialAddrs(blknum_t bn, blknum_t tx, blknum_t tc, const string_q
     // Pull out 32-byte chunks and check to see if they are addresses
     SFAddress addr;
     for (size_t s = 0 ; s < potList.length() / 64 ; s++) {
-        SFUintBN test  = hex2BN("0x" + potList.substr(s*64,64));
+        SFUintBN test  = hex2BN("0x" + extract(potList, s*64, 64));
         if (isPotentialAddr(test, addr))
             (*func)(bn, tx, tc, addr, data);
     }
@@ -551,7 +551,7 @@ bool CBlock::forEveryAddress(ADDRESSFUNC func, TRANSFUNC filterFunc, void *data)
         (*func)(blockNumber, tr, 0, trans->from, data);
         (*func)(blockNumber, tr, 0, trans->to,   data);
         (*func)(blockNumber, tr, 0, receipt->contractAddress, data);
-        processPotentialAddrs(blockNumber, tr, 0, trans->input.substr(10), func, data);
+        processPotentialAddrs(blockNumber, tr, 0, extract(trans->input, 10), func, data);
         for (size_t l = 0 ; l < receipt->logs.size() ; l++) {
             const CLogEntry *log = &receipt->logs[l];
             (*func)(blockNumber, tr, 0, log->address, data);
@@ -561,7 +561,7 @@ bool CBlock::forEveryAddress(ADDRESSFUNC func, TRANSFUNC filterFunc, void *data)
                     (*func)(blockNumber, tr, 0, addr, data);
                 }
             }
-            processPotentialAddrs(blockNumber, tr, 0, log->data.substr(2), func, data);
+            processPotentialAddrs(blockNumber, tr, 0, extract(log->data, 2), func, data);
         }
 
         // If we're not filtering, or the filter passes, proceed. Note the filter depends on the
@@ -576,7 +576,7 @@ bool CBlock::forEveryAddress(ADDRESSFUNC func, TRANSFUNC filterFunc, void *data)
                 (*func)(blockNumber, tr, t+10, trace->action.refundAddress, data);
                 (*func)(blockNumber, tr, t+10, trace->action.address, data);
                 (*func)(blockNumber, tr, t+10, trace->result.address, data);
-                string_q input = trace->action.input.substr(10);
+                string_q input = extract(trace->action.input, 10);
                 if (!input.empty())
                     processPotentialAddrs(blockNumber, tr, t+10, input, func, data);
             }

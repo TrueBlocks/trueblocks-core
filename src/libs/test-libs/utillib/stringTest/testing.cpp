@@ -209,6 +209,20 @@ TEST_F(CThisTest, TestCStr) {
     return true;
 }}
 
+//------------------------------------------------------------------------
+TEST_F(CThisTest, TestExtract) {
+    string   foo = "a fairly long string and so forth";
+    string_q xfoo = "a fairly long string and so forth";
+
+    ASSERT_EQ("base", foo, xfoo);
+    ASSERT_EQ("0-10", "a fairly l",   extract(xfoo, 0, 10));
+    ASSERT_EQ("5-10", "rly long s",   extract(xfoo, 5, 10));
+    SHOULD_NOT_THROW("doesn't throw", extract(xfoo, 100));
+#undef substr
+    SHOULD_THROW    ("throws",        xfoo.substr(100));
+    return true;
+}}
+
 #include "options.h"
 //------------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
@@ -227,6 +241,7 @@ int main(int argc, const char *argv[]) {
             case 1: LOAD_TEST(TestCompare);    break;
             case 2: LOAD_TEST(TestAssignment); break;
             case 3: LOAD_TEST(TestCStr);       break;
+            case 4: LOAD_TEST(TestExtract);    break;
         }
     }
 

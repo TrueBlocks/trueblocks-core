@@ -248,7 +248,7 @@ ostream& operator<<(ostream& os, const CInfix& item) {
     //-----------------------------------------------------------------------------
     string_q CInfix::at(const string_q& _key) const {
         ASSERT(next);
-        return contains(_key) ? next->at(_key.substr(prefixS.length())) : "";
+        return contains(_key) ? next->at(extract(_key, prefixS.length())) : "";
     }
 
     //-----------------------------------------------------------------------------
@@ -268,7 +268,7 @@ ostream& operator<<(ostream& os, const CInfix& item) {
         if (verbose == 2) { cerr << "\tinfix inserting " << _key << " at " << _value << "\n"; }
         ASSERT(_value.length());
         if (contains(_key)) {
-            next = next->insert(_key.substr(prefixS.length()), _value);
+            next = next->insert(extract(_key, prefixS.length()), _value);
             return this;
 
         } else {
@@ -276,13 +276,13 @@ ostream& operator<<(ostream& os, const CInfix& item) {
             if (prefixA) {
                 // one infix becomes two infixes, then insert into the second
                 // instead of pop_front()...
-                prefixS = prefixS.substr(prefixA);
-                return new CInfix(_key.substr(0, prefixA), insert(_key.substr(prefixA), _value));
+                prefixS = extract(prefixS, prefixA);
+                return new CInfix(extract(_key, 0, prefixA), insert(extract(_key, prefixA), _value));
 
             } else {
                 // split here.
                 auto f = prefixS[0];
-                prefixS = prefixS.substr(1);
+                prefixS = extract(prefixS, 1);
                 CTreeNode* n = prefixS.empty() ? next : this;
                 if (n != this) {
                     next = NULL;
@@ -307,7 +307,7 @@ ostream& operator<<(ostream& os, const CInfix& item) {
         }
 
         if (contains(_key)) {
-            string_q newKey = _key.substr(prefixS.length());
+            string_q newKey = extract(_key, prefixS.length());
             next = next->remove(newKey);
             if (auto p = next) {
                 // merge with child...
