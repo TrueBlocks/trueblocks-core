@@ -30,7 +30,7 @@ namespace qblocks {
         txnum_t     nTrans;
 
                  CMiniBlock (void);
-                 CMiniBlock (CBlock *block);
+                 CMiniBlock (const CBlock *block);
         bool     operator== (const CBlock& b) const;
         void     toBlock    (CBlock& block) const;
         string_q Format     (void) const;
@@ -47,7 +47,7 @@ namespace qblocks {
         char     value[41];
 
                  CMiniTrans (void);
-                 CMiniTrans (CTransaction *t);
+                 CMiniTrans (const CTransaction *t);
         void     toTrans    (CTransaction& trans) const;
         string_q Format     (void) const;
     };
