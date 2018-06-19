@@ -167,8 +167,8 @@ void generateCode(const COptions& options, CToml& toml, const string_q& dataFile
     bool     serialize  = toml.getConfigBool("settings", "serialize", false);
 
     //------------------------------------------------------------------------------------------------
-    string_q baseBase   = toProper(baseClass.substr(1));
-    string_q baseName   = className.substr(1);
+    string_q baseBase   = toProper(extract(baseClass, 1));
+    string_q baseName   = extract(className, 1);
     string_q baseProper = toProper(baseName);
     string_q baseLower  = toLower(baseName);
     string_q baseUpper  = toUpper(baseName);
@@ -357,7 +357,7 @@ string_q ptrWriteFmt =
     string_q subClsCodeStr  = fieldSubCls;
 
     //------------------------------------------------------------------------------------------------
-    string_q sorts[4] = { baseLower.substr(0,2)+"_Name", "", baseLower+"ID", "" };
+    string_q sorts[4] = { extract(baseLower, 0, 2)+"_Name", "", baseLower+"ID", "" };
     string_q sortString = toml.getConfigStr("settings", "sort", "");
     size_t cnt = 0;
     while (!sortString.empty())
@@ -381,7 +381,7 @@ string_q ptrWriteFmt =
     replaceAll(headSource, "[{COMMENT_LINE}]", STR_COMMENT_LINE);
     replaceAll(headSource, "[{LONG}]",         baseLower);
     replaceAll(headSource, "[{PROPER}]",       baseProper);
-    replaceAll(headSource, "[{SHORT}]",        baseLower.substr(0,2));
+    replaceAll(headSource, "[{SHORT}]",        extract(baseLower, 0, 2));
     replaceAll(headSource, "[{BASE_CLASS}]",   baseClass);
     replaceAll(headSource, "[{BASE_BASE}]",    baseBase);
     replaceAll(headSource, "[{BASE}]",         baseUpper);
@@ -390,7 +390,7 @@ string_q ptrWriteFmt =
     replaceAll(headSource, "[{LONG}]",         baseLower);
     replaceAll(headSource, "[{PROPER}]",       baseProper);
     replaceAll(headSource, "[{SHORT3}]",       short3(baseLower));
-    replaceAll(headSource, "[{SHORT}]",        baseLower.substr(0,2));
+    replaceAll(headSource, "[{SHORT}]",        extract(baseLower, 0, 2));
     replaceAll(headSource, "[{SCOPE}]",        scope);
     replaceAll(headSource, "[{NAMESPACE1}]",   (ns.empty() ? "" : "\nnamespace qblocks {\n\n"));
     replaceAll(headSource, "[{NAMESPACE2}]",   (ns.empty() ? "" : "}  // namespace qblocks\n"));
@@ -427,7 +427,7 @@ string_q ptrWriteFmt =
     replaceAll(srcSource, "[{COMMENT_LINE}]",    STR_COMMENT_LINE);
     replaceAll(srcSource, "[{LONG}]",            baseLower);
     replaceAll(srcSource, "[{PROPER}]",          baseProper);
-    replaceAll(srcSource, "[{SHORT}]",           baseLower.substr(0,2));
+    replaceAll(srcSource, "[{SHORT}]",           extract(baseLower, 0, 2));
     replaceAll(srcSource, "[{NAME_SORT1}]",      sorts[0]);
     replaceAll(srcSource, "[{NAME_SORT2}]",      sorts[1]);
     replaceAll(srcSource, "[{ID_SORT1}]",        sorts[2]);
@@ -440,7 +440,7 @@ string_q ptrWriteFmt =
     replaceAll(srcSource, "[{LONG}]",            baseLower);
     replaceAll(srcSource, "[{PROPER}]",          baseProper);
     replaceAll(srcSource, "[{SHORT3}]",          short3(baseLower));
-    replaceAll(srcSource, "[{SHORT}]",           baseLower.substr(0,2));
+    replaceAll(srcSource, "[{SHORT}]",           extract(baseLower, 0, 2));
     replaceAll(srcSource, "[{SCOPE}]",           scope);
     replaceAll(srcSource, "[{NAMESPACE1}]",      (ns.empty() ? "" : "\nnamespace qblocks {\n\n"));
     replaceAll(srcSource, "[{NAMESPACE2}]",      (ns.empty() ? "" : "}  // namespace qblocks\n"));
@@ -657,7 +657,7 @@ string_q getCaseSetCode(const string_q& fieldCase) {
                         string_q str = strArraySet;
                         replaceAll(str, "[{NAME}]", field);
                         replaceAll(str, "nextTokenClear(str,',')", "to[{TYPE}](nextTokenClear(str,','))");
-                        replaceAll(str, "[{TYPE}]", substitute(type.substr(2), "Array", ""));
+                        replaceAll(str, "[{TYPE}]", substitute(extract(type, 2), "Array", ""));
                         caseCode += str;
 
                     } else if (contains(type, "Array")) {
@@ -829,7 +829,7 @@ const char *STR_UPGRADE_CODE =
 
 //------------------------------------------------------------------------------------------------------------
 string_q short3(const string_q& str) {
-    string_q ret = str.substr(0,3);
+    string_q ret = extract(str, 0, 3);
     if (ret == "new")
         ret = "newp";
     if (ret == "ret")

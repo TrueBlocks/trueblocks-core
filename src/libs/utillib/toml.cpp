@@ -115,7 +115,7 @@ extern string_q collapseArrays(const string_q& inStr);
             string_q value = trimWhitespace(nextTokenClear(contents, '\n'));
             bool comment = startsWith(value, '#');
             if (comment)
-                value = value.substr(1);
+                value = extract(value, 1);
             if (!value.empty()) {
                 bool isArray = contains(value, "[[");
                 if (startsWith(value, '[')) {  // it's a group
@@ -224,7 +224,7 @@ extern string_q collapseArrays(const string_q& inStr);
     //-------------------------------------------------------------------------
     void CToml::setConfigStr(const string_q& group, const string_q& keyIn, const string_q& value) {
         bool comment = startsWith(keyIn, '#');
-        string_q key = (comment ? keyIn.substr(1) : keyIn);
+        string_q key = (comment ? extract(keyIn, 1) : keyIn);
 
         CTomlGroup *grp = findGroup(group);
         if (!grp) {

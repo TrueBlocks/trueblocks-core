@@ -90,7 +90,7 @@ namespace qblocks {
 
                     // filter specified directories and remove trailing '/'
                     if (endsWith(path, '/'))
-                        path = path.substr(0,path.length() - 1);
+                        path = extract(path, 0, path.length() - 1);
 
                     if (!keepPaths) {
                         // trim path to last directory / file
@@ -101,7 +101,7 @@ namespace qblocks {
                         path = basename((char *)path.c_str());  // NOLINT
 #endif
                         if (startsWith(path, '/'))
-                            path = path.substr(1);
+                            path = extract(path, 1);
                         // The path we return is always just the name of the folder or file
                         // without any leading (or even existing) '/'
                         ASSERT(path.length() && path[0] != '/');
@@ -245,7 +245,7 @@ namespace qblocks {
         CFilename fullPath(path);
         string_q targetFolder = fullPath.getFullPath();
         size_t find = targetFolder.rfind('/');
-        targetFolder = targetFolder.substr(0,find) + "/";
+        targetFolder = extract(targetFolder, 0, find) + "/";
         string_q folder = targetFolder;
         string_q curFolder = "/";
         while (!folder.empty()) {

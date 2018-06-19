@@ -283,7 +283,7 @@ namespace qblocks {
                 dummy = " val";
         }
         if (!name.empty()) {
-            shortName = name.substr(0,2);
+            shortName = extract(name, 0, 2);
             if (name.length() > 2)
                 longName = name + dummy;
 
@@ -351,7 +351,7 @@ namespace qblocks {
             os << "[";
         for (uint64_t i = 0 ; i < nParamsRef ; i++) {
             if (startsWith(paramsPtr[i].shortName, '~')) {
-                required += (" " + substitute(paramsPtr[i].longName.substr(1), "!", ""));
+                required += (" " + substitute(extract(paramsPtr[i].longName, 1), "!", ""));
 
             } else if (startsWith(paramsPtr[i].shortName, '@')) {
                 // invisible option
@@ -545,8 +545,8 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
 
         // This may be a command with two -a -b (or more) single options
         if (arg.length()>2 && arg[2] == ' ') {
-            ret = arg.substr(0,2);
-            arg = arg.substr(3);
+            ret = extract(arg, 0, 2);
+            arg = extract(arg, 3);
             return ret;
         }
 
@@ -559,8 +559,8 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
 
         // This is a ganged-up option. We need to pull it apart by returning
         // the first two chars, and saving the rest for later.
-        ret = arg.substr(0,2);
-        arg = "-"+arg.substr(2);
+        ret = extract(arg, 0, 2);
+        arg = "-" + extract(arg, 2);
         return ret;
     }
 

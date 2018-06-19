@@ -65,7 +65,7 @@ void addIfUnique(const string_q& addr, CFunctionArray& functions, CFunction& fun
         // the first four characters of the contract's address.
         if (decorateNames && functions[i].name == func.name) {
             func.origName = func.name;
-            func.name += (startsWith(addr, "0x") ? addr.substr(2,4) : addr.substr(0,4));
+            func.name += (startsWith(addr, "0x") ? extract(addr, 2, 4) : extract(addr, 0, 4));
         }
     }
 
@@ -243,11 +243,11 @@ int main(int argc, const char *argv[]) {
                     if (name == "eventEvent")
                         name = "logEntry";
                     if (startsWith(name, '_'))
-                        name = name.substr(1);
+                        name = extract(name, 1);
                     char ch = static_cast<char>(toupper(name[0]));
                     string_q fixed;
                     fixed = ch;
-                    name = fixed + name.substr(1);
+                    name = fixed + extract(name, 1);
                     string_q theClass = (options.isBuiltin() ? "Q" : "C") + name;
                     bool isConst = func->constant;
                     bool isEmpty = name.empty() || func->type.empty();
@@ -462,8 +462,8 @@ string_q getAssign(const CParameter *p, uint64_t which) {
     if (contains(type, "[") && contains(type, "]")) {
         const char* STR_ASSIGNARRAY =
             "\t\t\twhile (!params.empty()) {\n"
-            "\t\t\t\tstring_q val = params.substr(0,64);\n"
-            "\t\t\t\tparams = params.substr(64);\n"
+            "\t\t\t\tstring_q val = extract(params, 0, 64);\n"
+            "\t\t\t\tparams = extract(params, 64);\n"
             "\t\t\t\ta->[{NAME}]XXXXa->[{NAME}].size()YYYY = val;\n"
             "\t\t\t}\n";
         return p->Format(STR_ASSIGNARRAY);
@@ -478,7 +478,7 @@ string_q getAssign(const CParameter *p, uint64_t which) {
     } else { ass = "[{VAL}];";
     }
 
-    replace(ass, "[{VAL}]", "params.substr(" + asStringU(which) + "*64" + (type == "bytes" ? "" : ",64") + ")");
+    replace(ass, "[{VAL}]", "extract(params, " + asStringU(which) + "*64" + (type == "bytes" ? "" : ",64") + ")");
     return p->Format("\t\t\ta->[{NAME}] = " + ass + "\n");
 }
 
@@ -498,11 +498,11 @@ string_q getEventAssign(const CParameter *p, uint64_t which, uint64_t nIndexed) 
         replace(ass, "[{VAL}]", "nTops > [{WHICH}] ? fromTopic(p->topics[{IDX}]) : \"\"");
 
     } else if (type == "bytes") {
-        replace(ass, "[{VAL}]", "\"0x\"+data.substr([{WHICH}]*64)");
+        replace(ass, "[{VAL}]", "\"0x\" + extract(data, [{WHICH}]*64)");
         which -= (nIndexed+1);
 
     } else {
-        replace(ass, "[{VAL}]", string_q(type == "address" ? "" : "\"0x\"+") + "data.substr([{WHICH}]*64,64)");
+        replace(ass, "[{VAL}]", string_q(type == "address" ? "" : "\"0x\" + ") + "extract(data, [{WHICH}]*64, 64)");
         which -= (nIndexed+1);
     }
     replace(ass, "[{IDX}]", "++" + asStringU(which)+"++");
@@ -649,8 +649,8 @@ const char* STR_ITEMS =
 "\t\tstring_q items[256];\n"
 "\t\tsize_t nItems=0;\n"
 "\n"
-"\t\tstring_q encoding = p->input.substr(0,10);\n"
-"\t\tstring_q params   = p->input.substr(10);\n";
+"\t\tstring_q encoding = extract(p->input, 0, 10);\n"
+"\t\tstring_q params   = extract(p->input, 10);\n";
 
 //-----------------------------------------------------------------------
 const char* STR_FORMAT_FUNCDATA =

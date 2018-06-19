@@ -200,12 +200,12 @@ SFTime grabDate(const string_q& strIn) {
 #define toLong32u(a) (uint32_t)toLongU((a))
     uint32_t y, m, d, h, mn, s;
     y = m = d = h = mn = s = NP;
-    if (isUnsigned(str.substr( 0,4))) { y  = toLong32u(str.substr( 0, 4)); }
-    if (isUnsigned(str.substr( 4,2))) { m  = toLong32u(str.substr( 4, 2)); }
-    if (isUnsigned(str.substr( 6,2))) { d  = toLong32u(str.substr( 6, 2)); }
-    if (isUnsigned(str.substr( 8,2))) { h  = toLong32u(str.substr( 8, 2)); }
-    if (isUnsigned(str.substr(10,2))) { mn = toLong32u(str.substr(10, 2)); }
-    if (isUnsigned(str.substr(12,2))) { s  = toLong32u(str.substr(12, 2)); }
+    if (isUnsigned(extract(str,  0, 4))) { y  = toLong32u(extract(str,  0, 4)); }
+    if (isUnsigned(extract(str,  4, 2))) { m  = toLong32u(extract(str,  4, 2)); }
+    if (isUnsigned(extract(str,  6, 2))) { d  = toLong32u(extract(str,  6, 2)); }
+    if (isUnsigned(extract(str,  8, 2))) { h  = toLong32u(extract(str,  8, 2)); }
+    if (isUnsigned(extract(str, 10, 2))) { mn = toLong32u(extract(str, 10, 2)); }
+    if (isUnsigned(extract(str, 12, 2))) { s  = toLong32u(extract(str, 12, 2)); }
 
     // If any of them was not an unsigned int, it's a fail
     if (y == NP || m == NP || d == NP || h == NP || mn == NP || s == NP)

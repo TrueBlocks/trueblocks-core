@@ -289,8 +289,8 @@ string_q insertCommas(const string_q& dIn) {
     reverse(d);
     string_q ret;
     while (!d.empty()) {
-        string_q three = d.substr(0,3);
-        d = d.substr(3);
+        string_q three = extract(d, 0, 3);
+        d = extract(d, 3);
         reverse(three);
         ret = (d.empty()?"":",") + three + ret;
     }
@@ -302,7 +302,7 @@ string_q dispDollars(timestamp_t ts, SFUintBN weiIn) {
     string_q sBal = asDollars(ts, weiIn);
     string_q d = nextTokenClear(sBal,'.');
     d = insertCommas(d);
-    sBal = (sBal.empty() ? "0.00" : d + "." + sBal.substr(0,2));
+    sBal = (sBal.empty() ? "0.00" : d + "." + extract(sBal, 0, 2));
     return sBal;
 }
 // EXISTING_CODE

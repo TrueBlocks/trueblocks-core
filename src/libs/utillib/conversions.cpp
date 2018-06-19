@@ -34,7 +34,7 @@ namespace qblocks {
     //----------------------------------------------------------------------------
     uint64_t hex2LongU(const string_q& str) {
 
-        string_q hex = toLower(startsWith(str, "0x") ? str.substr(2) : str);
+        string_q hex = toLower(startsWith(str, "0x") ? extract(str, 2) : str);
         reverse(hex);
 
         char *s = (char *)hex.c_str();

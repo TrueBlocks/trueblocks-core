@@ -49,7 +49,7 @@ int main(int argc, const char * argv[]) {
 }
 
 string_q toBits(const string_q& blIn) {
-    string_q ret = toLower(blIn).substr(2);
+    string_q ret = extract(toLower(blIn), 2);
     replaceAll(ret, "0", "0000");
     replaceAll(ret, "1", "0001");
     replaceAll(ret, "2", "0010");
@@ -69,7 +69,7 @@ string_q toBits(const string_q& blIn) {
     return "0x"+ret;
 }
 string_q asBar(const string_q& blIn) {
-    return substitute(substitute(substitute(toBits(blIn).substr(2), "0", ""), "1", "-"), "---", "🁡");
+    return substitute(substitute(substitute(extract(toBits(blIn), 2), "0", ""), "1", "-"), "---", "🁡");
 }
 
 #include "bloom_blocks.h"
