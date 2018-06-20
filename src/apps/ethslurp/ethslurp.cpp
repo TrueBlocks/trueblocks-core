@@ -407,8 +407,9 @@ bool CSlurperApp::Display(COptions& options, string_q& message) {
     message = "";
     double start = qbNow();
 
-    if (options.reverseSort)
-        theAccount.transactions.Sort(sortReverseChron);
+    if (options.reverseSort) {
+        qsort(&theAccount.transactions.m_Items[0], theAccount.transactions.m_nItems, sizeof(CTransaction), sortReverseChron);
+    }
 
     if (options.cache) {
         for (size_t i = 0 ; i < theAccount.transactions.size() ; i++) {
