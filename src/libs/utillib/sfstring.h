@@ -19,7 +19,7 @@ namespace qblocks {
     typedef std::string string_q;
 
     //---------------------------------------------------------------------------------------
-    // we force this to fail so we don't use it since it throws if accessed past the end of string
+    // We force this to fail so we don't use it since it throws if accessed past the end of string
 #define substr xxx
     extern string_q extract(const string_q& haystack, size_t pos, size_t len = string::npos);
 

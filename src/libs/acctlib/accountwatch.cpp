@@ -371,7 +371,8 @@ SFUintBN getNodeBal(CBalanceHistoryArray& history, const SFAddress& addr, blknum
     // First, we try to find it using a binary search. Many times this will hit...
     CBalanceHistory find;
     find.bn = blockNum;
-    CBalanceHistory *found = history.Find(&find, findBalance);
+
+    CBalanceHistory *found = reinterpret_cast<CBalanceHistory*>(bsearch(&find, &history.m_Items[0], history.m_nItems, sizeof(CBalanceHistory), findBalance));
     if (found)
         return found->balance;
 
