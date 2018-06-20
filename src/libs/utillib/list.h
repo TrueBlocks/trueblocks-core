@@ -28,7 +28,7 @@ namespace qblocks {
     //----------------------------------------------------------------------
     template<class TYPE>
     class SFArrayBase {
-    protected:
+    public:
         size_t m_nCapacity;
         size_t m_nItems;
         TYPE  *m_Items;
@@ -49,7 +49,6 @@ namespace qblocks {
               void   reserve   (size_t newSize);
               void   resize    (size_t newSize) { reserve(newSize); }
 
-        void Sort(SORTINGFUNC func) { qsort(&m_Items[0], m_nItems, sizeof(TYPE), func); }
         TYPE *Find(const TYPE *key, SEARCHFUNC func) {
             // note: use the same function you would use to sort. Return <0, 0, or >0 if less, equal, greater
             return reinterpret_cast<TYPE*>(bsearch(key, &m_Items[0], m_nItems, sizeof(TYPE), func));
