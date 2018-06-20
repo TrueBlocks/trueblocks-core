@@ -40,7 +40,7 @@ public:
     SFHash blockHash;
     blknum_t blockNumber;
     uint64_t subtraces;
-    SFAddressArray traceAddress;
+    CStringArray traceAddress;
     SFHash transactionHash;
     uint64_t transactionPosition;
     string_q type;
