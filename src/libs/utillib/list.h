@@ -49,11 +49,6 @@ namespace qblocks {
               void   reserve   (size_t newSize);
               void   resize    (size_t newSize) { reserve(newSize); }
 
-        TYPE *Find(const TYPE *key, SEARCHFUNC func) {
-            // note: use the same function you would use to sort. Return <0, 0, or >0 if less, equal, greater
-            return reinterpret_cast<TYPE*>(bsearch(key, &m_Items[0], m_nItems, sizeof(TYPE), func));
-        }
-
     private:
         void checkSize(size_t sizeNeeded);
         void duplicate(const SFArrayBase& cop);
