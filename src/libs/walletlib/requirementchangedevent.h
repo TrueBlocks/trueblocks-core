@@ -17,10 +17,6 @@
  */
 #include "logentry.h"
 
-//--------------------------------------------------------------------------
-class QRequirementChangedEvent;
-typedef SFArrayBase<QRequirementChangedEvent>         QRequirementChangedEventArray;
-
 // EXISTING_CODE
 // EXISTING_CODE
 
@@ -39,6 +35,7 @@ public:
 
     // EXISTING_CODE
     // EXISTING_CODE
+    friend bool operator<(const QRequirementChangedEvent& v1, const QRequirementChangedEvent& v2);
     friend ostream& operator<<(ostream& os, const QRequirementChangedEvent& item);
 
 protected:
@@ -111,7 +108,16 @@ inline QRequirementChangedEvent& QRequirementChangedEvent::operator=(const QRequ
     return *this;
 }
 
+//-------------------------------------------------------------------------
+inline bool operator<(const QRequirementChangedEvent& v1, const QRequirementChangedEvent& v2) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default sort defined in class definition, assume already sorted
+    return true;
+}
+
 //---------------------------------------------------------------------------
+typedef SFArrayBase<QRequirementChangedEvent> QRequirementChangedEventArray;
 extern SFArchive& operator>>(SFArchive& archive, QRequirementChangedEventArray& array);
 extern SFArchive& operator<<(SFArchive& archive, const QRequirementChangedEventArray& array);
 

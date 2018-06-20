@@ -162,6 +162,8 @@ string_q nextRequirementchangedeventChunk_custom(const string_q& fieldIn, const 
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
                     return nextBasenodeChunk(fieldIn, req);
+                // EXISTING_CODE
+                // EXISTING_CODE
                 break;
 
             default:

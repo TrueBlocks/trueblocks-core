@@ -17,10 +17,6 @@
  */
 #include "transaction.h"
 
-//--------------------------------------------------------------------------
-class QApproveAndCall;
-typedef SFArrayBase<QApproveAndCall>         QApproveAndCallArray;
-
 // EXISTING_CODE
 // EXISTING_CODE
 
@@ -41,6 +37,7 @@ public:
 
     // EXISTING_CODE
     // EXISTING_CODE
+    friend bool operator<(const QApproveAndCall& v1, const QApproveAndCall& v2);
     friend ostream& operator<<(ostream& os, const QApproveAndCall& item);
 
 protected:
@@ -117,7 +114,16 @@ inline QApproveAndCall& QApproveAndCall::operator=(const QApproveAndCall& ap) {
     return *this;
 }
 
+//-------------------------------------------------------------------------
+inline bool operator<(const QApproveAndCall& v1, const QApproveAndCall& v2) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default sort defined in class definition, assume already sorted
+    return true;
+}
+
 //---------------------------------------------------------------------------
+typedef SFArrayBase<QApproveAndCall> QApproveAndCallArray;
 extern SFArchive& operator>>(SFArchive& archive, QApproveAndCallArray& array);
 extern SFArchive& operator<<(SFArchive& archive, const QApproveAndCallArray& array);
 

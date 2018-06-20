@@ -280,6 +280,8 @@ string_q nextBlockChunk_custom(const string_q& fieldIn, const void *dataPtr) {
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
                     return nextBasenodeChunk(fieldIn, blo);
+                // EXISTING_CODE
+                // EXISTING_CODE
                 break;
 
             default:
@@ -449,40 +451,28 @@ bool CBlock::operator==(const CBlock& test) const {
 }
 
 //---------------------------------------------------------------------------
-class CAddressItem {
-public:
-    blknum_t blockNum;
-    blknum_t transIndex;
-    blknum_t traceId;
-    SFAddress addr;
-    CAddressItem(void) : blockNum(0), transIndex(0), traceId(0) { }
-};
-typedef SFArrayBase<CAddressItem> CAddressItemArray;
+ostream& operator<<(ostream& os, const CAddressItem& item) {
+    os << item.blockNum << "\t";
+    os << (item.transIndex == NOPOS ? -1 : int32_t(item.transIndex)) << "\t";
+    os << (item.traceId < 10 ? "" : asStringU(item.traceId - 10)) << "\t";
+    os << item.addr;
+    return os;
+}
 
 //---------------------------------------------------------------------------
-int compareAddr(const void *ob1, const void *ob2) {
-    const CAddressItem *a1 = (const CAddressItem*)ob1;
-    const CAddressItem *a2 = (const CAddressItem*)ob2;
-//    cout << "comparing: " << *a1 << " to: " << *a2 << " r: " << (*a1 != *a2) << "\n";
-    return a1->addr.compare(a2->addr);
+uint64_t insertUnique(CAddressItemMap *addrMap, const CAddressItem& _value) {
+    CAddressItemMap::iterator it = addrMap->find(_value);
+    if (it == addrMap->end()) // not found
+        it = addrMap->insert(make_pair(_value, true)).first;
+    return it->second;
 }
 
 //---------------------------------------------------------------------------
 bool accumulateAddresses(blknum_t bn, blknum_t tx, blknum_t tc, const SFAddress& addr, void *data) {
     if (zeroAddr(addr))
         return true;
-
-    //    cout << "\n--------------------------------------------\n";
-    CAddressItem search;
-    search.addr = addr;
-    search.blockNum = bn;
-    search.transIndex = tx;
-    search.traceId = tc;
-    CAddressItemArray *array = (CAddressItemArray *)data;
-    if (!array->Find(&search, compareAddr)) {
-        array->push_back(search);
-        array->Sort(compareAddr);
-    }
+    CAddressItem search(bn, tx, tc, addr);
+    insertUnique((CAddressItemMap*)data, search);
     return true;
 }
 
@@ -491,11 +481,11 @@ bool CBlock::forEveryUniqueAddress(ADDRESSFUNC func, TRANSFUNC filterFunc, void 
     if (!func)
         return false;
 
-    CAddressItemArray array;
-    forEveryAddress(accumulateAddresses, filterFunc, &array);
-    for (size_t i = 0 ; i < array.size() ; i++) {
-        (*func)(array[i].blockNum, array[i].transIndex, array[i].traceId, array[i].addr, data);
-    }
+    CAddressItemMap addrMap;
+    forEveryAddress(accumulateAddresses, filterFunc, &addrMap);
+    for (CAddressItemMap::iterator it = addrMap.begin(); it != addrMap.end(); ++it)
+        (*func)(it->first.blockNum, it->first.transIndex, it->first.traceId, it->first.addr, data);
+
     return true;
 }
 

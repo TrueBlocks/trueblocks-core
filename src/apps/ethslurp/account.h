@@ -20,10 +20,6 @@
 
 namespace qblocks {
 
-//--------------------------------------------------------------------------
-class CAccount;
-typedef SFArrayBase<CAccount>         CAccountArray;
-
 // EXISTING_CODE
 // EXISTING_CODE
 
@@ -54,6 +50,7 @@ public:
     size_t deleteNotShowing(void);
     bool handleCustomFormat(CExportContext& ctx, const string_q& fmtIn, void *data = NULL) const;
     // EXISTING_CODE
+    friend bool operator<(const CAccount& v1, const CAccount& v2);
     friend ostream& operator<<(ostream& os, const CAccount& item);
 
 protected:
@@ -146,7 +143,16 @@ inline CAccount& CAccount::operator=(const CAccount& ac) {
     return *this;
 }
 
+//-------------------------------------------------------------------------
+inline bool operator<(const CAccount& v1, const CAccount& v2) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default sort defined in class definition, assume already sorted
+    return true;
+}
+
 //---------------------------------------------------------------------------
+typedef SFArrayBase<CAccount> CAccountArray;
 extern SFArchive& operator>>(SFArchive& archive, CAccountArray& array);
 extern SFArchive& operator<<(SFArchive& archive, const CAccountArray& array);
 

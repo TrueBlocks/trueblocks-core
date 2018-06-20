@@ -27,9 +27,6 @@ static string_q nextAcctcacheitemChunk_custom(const string_q& fieldIn, const voi
 
 //---------------------------------------------------------------------------
 void CAcctCacheItem::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
-
-    CAcctCacheItem::registerClass();
-
     if (!m_showing)
         return;
 
@@ -167,6 +164,8 @@ string_q nextAcctcacheitemChunk_custom(const string_q& fieldIn, const void *data
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
                     return nextBasenodeChunk(fieldIn, acc);
+                // EXISTING_CODE
+                // EXISTING_CODE
                 break;
 
             default:

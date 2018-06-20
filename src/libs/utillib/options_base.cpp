@@ -676,7 +676,6 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
                 specials.push_back(pair);
             }
         }
-        specials.Sort(sortByBlockNum);
         return;
     }
 

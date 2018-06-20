@@ -44,7 +44,7 @@ const CTransaction *promoteToToken(const CTransaction *p)
     if (p && (p->input.length()>=10 || p->input == "0x"))
     {
         string_q items[256];
-        uint32_t nItems=0;
+        size_t nItems=0;
 
         string_q encoding = extract(p->input, 0, 10);
         string_q params   = extract(p->input, 10);
@@ -57,8 +57,8 @@ const CTransaction *promoteToToken(const CTransaction *p)
             // 0x095ea7b3
             QApprove *a = new QApprove;
             *(CTransaction*)a = *p; // copy in
-            a->_spender = toAddress(extract(params, 0*64, 64));
-            a->_value = toWei("0x" + extract(params, 1*64, 64));
+            a->_spender = toAddress(extract(params, 0*64,64));
+            a->_value = toWei("0x"+extract(params, 1*64,64));
             items[nItems++] = "address";
             items[nItems++] = "uint256";
             a->function = toFunction("approve", params, nItems, items);
@@ -70,8 +70,8 @@ const CTransaction *promoteToToken(const CTransaction *p)
             // 0xcae9ca51
             QApproveAndCall *a = new QApproveAndCall;
             *(CTransaction*)a = *p; // copy in
-            a->_spender = toAddress(extract(params, 0*64, 64));
-            a->_value = toWei("0x" + extract(params, 1*64, 64));
+            a->_spender = toAddress(extract(params, 0*64,64));
+            a->_value = toWei("0x"+extract(params, 1*64,64));
             a->_extraData = extract(params, 2*64);
             items[nItems++] = "address";
             items[nItems++] = "uint256";
@@ -85,8 +85,8 @@ const CTransaction *promoteToToken(const CTransaction *p)
             // 0xa9059cbb
             QTransfer *a = new QTransfer;
             *(CTransaction*)a = *p; // copy in
-            a->_to = toAddress(extract(params, 0*64, 64));
-            a->_value = toWei("0x" + extract(params, 1*64, 64));
+            a->_to = toAddress(extract(params, 0*64,64));
+            a->_value = toWei("0x"+extract(params, 1*64,64));
             items[nItems++] = "address";
             items[nItems++] = "uint256";
             a->function = toFunction("transfer", params, nItems, items);
@@ -98,9 +98,9 @@ const CTransaction *promoteToToken(const CTransaction *p)
             // 0x23b872dd
             QTransferFrom *a = new QTransferFrom;
             *(CTransaction*)a = *p; // copy in
-            a->_from = toAddress(extract(params, 0*64, 64));
-            a->_to = toAddress(extract(params, 1*64, 64));
-            a->_value = toWei("0x" + extract(params, 2*64, 64));
+            a->_from = toAddress(extract(params, 0*64,64));
+            a->_to = toAddress(extract(params, 1*64,64));
+            a->_value = toWei("0x"+extract(params, 2*64,64));
             items[nItems++] = "address";
             items[nItems++] = "address";
             items[nItems++] = "uint256";
@@ -128,7 +128,7 @@ const CLogEntry *promoteToTokenEvent(const CLogEntry *p)
     if (!p)
         return NULL;
 
-    uint64_t nTops = p->topics.size();
+    size_t nTops = p->topics.size();
     if (nTops>0) // the '0'th topic is the event signature
     {
         string_q data = extract(p->data, 2);

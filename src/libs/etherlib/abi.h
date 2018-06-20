@@ -42,6 +42,7 @@ public:
     // EXISTING_CODE
     bool loadABIFromFile(const string_q& fileName);
     // EXISTING_CODE
+    friend bool operator<(const CAbi& v1, const CAbi& v2);
     friend ostream& operator<<(ostream& os, const CAbi& item);
 
 protected:
@@ -116,6 +117,14 @@ inline CAbi& CAbi::operator=(const CAbi& ab) {
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
+}
+
+//-------------------------------------------------------------------------
+inline bool operator<(const CAbi& v1, const CAbi& v2) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default sort defined in class definition, assume already sorted
+    return true;
 }
 
 //---------------------------------------------------------------------------

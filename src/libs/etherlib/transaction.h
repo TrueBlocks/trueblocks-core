@@ -21,10 +21,6 @@
 
 namespace qblocks {
 
-//--------------------------------------------------------------------------
-class CTransaction;
-typedef SFArrayBase<CTransaction>         CTransactionArray;
-
 // EXISTING_CODE
 class CBlock;
 // EXISTING_CODE
@@ -69,6 +65,7 @@ public:
     bool operator==(const CTransaction& tr) const;
     bool operator!=(const CTransaction& tr) const { return !operator==(tr); }
     // EXISTING_CODE
+    friend bool operator<(const CTransaction& v1, const CTransaction& v2);
     friend ostream& operator<<(ostream& os, const CTransaction& item);
 
 protected:
@@ -198,7 +195,16 @@ inline CTransaction& CTransaction::operator=(const CTransaction& tr) {
     return *this;
 }
 
+//-------------------------------------------------------------------------
+inline bool operator<(const CTransaction& v1, const CTransaction& v2) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default sort defined in class definition, assume already sorted
+    return true;
+}
+
 //---------------------------------------------------------------------------
+typedef SFArrayBase<CTransaction> CTransactionArray;
 extern SFArchive& operator>>(SFArchive& archive, CTransactionArray& array);
 extern SFArchive& operator<<(SFArchive& archive, const CTransactionArray& array);
 

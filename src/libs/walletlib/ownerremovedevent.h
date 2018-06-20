@@ -17,10 +17,6 @@
  */
 #include "logentry.h"
 
-//--------------------------------------------------------------------------
-class QOwnerRemovedEvent;
-typedef SFArrayBase<QOwnerRemovedEvent>         QOwnerRemovedEventArray;
-
 // EXISTING_CODE
 // EXISTING_CODE
 
@@ -39,6 +35,7 @@ public:
 
     // EXISTING_CODE
     // EXISTING_CODE
+    friend bool operator<(const QOwnerRemovedEvent& v1, const QOwnerRemovedEvent& v2);
     friend ostream& operator<<(ostream& os, const QOwnerRemovedEvent& item);
 
 protected:
@@ -111,7 +108,16 @@ inline QOwnerRemovedEvent& QOwnerRemovedEvent::operator=(const QOwnerRemovedEven
     return *this;
 }
 
+//-------------------------------------------------------------------------
+inline bool operator<(const QOwnerRemovedEvent& v1, const QOwnerRemovedEvent& v2) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default sort defined in class definition, assume already sorted
+    return true;
+}
+
 //---------------------------------------------------------------------------
+typedef SFArrayBase<QOwnerRemovedEvent> QOwnerRemovedEventArray;
 extern SFArchive& operator>>(SFArchive& archive, QOwnerRemovedEventArray& array);
 extern SFArchive& operator<<(SFArchive& archive, const QOwnerRemovedEventArray& array);
 

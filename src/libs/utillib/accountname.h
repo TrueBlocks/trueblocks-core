@@ -21,10 +21,6 @@
 
 namespace qblocks {
 
-//--------------------------------------------------------------------------
-class CAccountName;
-typedef SFArrayBase<CAccountName>         CAccountNameArray;
-
 // EXISTING_CODE
 // EXISTING_CODE
 
@@ -49,6 +45,7 @@ public:
     explicit CAccountName(string_q& nameIn);
     bool Match(const string_q& s1, const string_q& s2, const string_q& s3, bool matchCase, bool all) const;
     // EXISTING_CODE
+    friend bool operator<(const CAccountName& v1, const CAccountName& v2);
     friend ostream& operator<<(ostream& os, const CAccountName& item);
 
 protected:
@@ -129,7 +126,16 @@ inline CAccountName& CAccountName::operator=(const CAccountName& ac) {
     return *this;
 }
 
+//-------------------------------------------------------------------------
+inline bool operator<(const CAccountName& v1, const CAccountName& v2) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default sort defined in class definition, assume already sorted
+    return true;
+}
+
 //---------------------------------------------------------------------------
+typedef SFArrayBase<CAccountName> CAccountNameArray;
 extern SFArchive& operator>>(SFArchive& archive, CAccountNameArray& array);
 extern SFArchive& operator<<(SFArchive& archive, const CAccountNameArray& array);
 

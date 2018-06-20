@@ -17,10 +17,6 @@
  */
 #include "transaction.h"
 
-//--------------------------------------------------------------------------
-class QChangeOwner;
-typedef SFArrayBase<QChangeOwner>         QChangeOwnerArray;
-
 // EXISTING_CODE
 // EXISTING_CODE
 
@@ -40,6 +36,7 @@ public:
 
     // EXISTING_CODE
     // EXISTING_CODE
+    friend bool operator<(const QChangeOwner& v1, const QChangeOwner& v2);
     friend ostream& operator<<(ostream& os, const QChangeOwner& item);
 
 protected:
@@ -114,7 +111,16 @@ inline QChangeOwner& QChangeOwner::operator=(const QChangeOwner& ch) {
     return *this;
 }
 
+//-------------------------------------------------------------------------
+inline bool operator<(const QChangeOwner& v1, const QChangeOwner& v2) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default sort defined in class definition, assume already sorted
+    return true;
+}
+
 //---------------------------------------------------------------------------
+typedef SFArrayBase<QChangeOwner> QChangeOwnerArray;
 extern SFArchive& operator>>(SFArchive& archive, QChangeOwnerArray& array);
 extern SFArchive& operator<<(SFArchive& archive, const QChangeOwnerArray& array);
 

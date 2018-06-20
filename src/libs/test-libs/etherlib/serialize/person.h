@@ -17,10 +17,6 @@
  */
 #include "etherlib.h"
 
-//--------------------------------------------------------------------------
-class CPerson;
-typedef SFArrayBase<CPerson>         CPersonArray;
-
 // EXISTING_CODE
 // EXISTING_CODE
 
@@ -42,6 +38,7 @@ public:
     // EXISTING_CODE
     CPerson(const string_q& n, uint64_t a) : name(n), age(a), next(NULL) { }
     // EXISTING_CODE
+    friend bool operator<(const CPerson& v1, const CPerson& v2);
     friend ostream& operator<<(ostream& os, const CPerson& item);
 
 protected:
@@ -124,7 +121,16 @@ inline CPerson& CPerson::operator=(const CPerson& pe) {
     return *this;
 }
 
+//-------------------------------------------------------------------------
+inline bool operator<(const CPerson& v1, const CPerson& v2) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default sort defined in class definition, assume already sorted
+    return true;
+}
+
 //---------------------------------------------------------------------------
+typedef SFArrayBase<CPerson> CPersonArray;
 extern SFArchive& operator>>(SFArchive& archive, CPersonArray& array);
 extern SFArchive& operator<<(SFArchive& archive, const CPersonArray& array);
 

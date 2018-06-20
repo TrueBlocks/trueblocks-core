@@ -19,10 +19,6 @@
 
 namespace qblocks {
 
-//--------------------------------------------------------------------------
-class CBalHistory;
-typedef SFArrayBase<CBalHistory>         CBalHistoryArray;
-
 // EXISTING_CODE
 // EXISTING_CODE
 
@@ -44,6 +40,7 @@ public:
     // EXISTING_CODE
     CBalHistory(const string_q& _recID, SFIntBN bal) : recordID(_recID), balance(bal) { }
     // EXISTING_CODE
+    friend bool operator<(const CBalHistory& v1, const CBalHistory& v2);
     friend ostream& operator<<(ostream& os, const CBalHistory& item);
 
 protected:
@@ -120,7 +117,16 @@ inline CBalHistory& CBalHistory::operator=(const CBalHistory& ba) {
     return *this;
 }
 
+//-------------------------------------------------------------------------
+inline bool operator<(const CBalHistory& v1, const CBalHistory& v2) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default sort defined in class definition, assume already sorted
+    return true;
+}
+
 //---------------------------------------------------------------------------
+typedef SFArrayBase<CBalHistory> CBalHistoryArray;
 extern SFArchive& operator>>(SFArchive& archive, CBalHistoryArray& array);
 extern SFArchive& operator<<(SFArchive& archive, const CBalHistoryArray& array);
 

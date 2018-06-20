@@ -28,9 +28,6 @@ static string_q nextBalhistoryChunk_custom(const string_q& fieldIn, const void *
 
 //---------------------------------------------------------------------------
 void CBalHistory::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
-
-    CBalHistory::registerClass();
-
     if (!m_showing)
         return;
 
@@ -65,7 +62,7 @@ bool CBalHistory::setValueByName(const string_q& fieldName, const string_q& fiel
 
     switch (tolower(fieldName[0])) {
         case 'b':
-            if ( fieldName % "balance" ) { balance = toLong(fieldValue); return true; }
+            if ( fieldName % "balance" ) { balance = toWei(fieldValue); return true; }
             break;
         case 'r':
             if ( fieldName % "recordID" ) { recordID = fieldValue; return true; }
@@ -174,6 +171,8 @@ string_q nextBalhistoryChunk_custom(const string_q& fieldIn, const void *dataPtr
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
                     return nextBasenodeChunk(fieldIn, bal);
+                // EXISTING_CODE
+                // EXISTING_CODE
                 break;
 
             default:

@@ -17,10 +17,6 @@
  */
 #include "transaction.h"
 
-//--------------------------------------------------------------------------
-class QChangeRequirement;
-typedef SFArrayBase<QChangeRequirement>         QChangeRequirementArray;
-
 // EXISTING_CODE
 // EXISTING_CODE
 
@@ -39,6 +35,7 @@ public:
 
     // EXISTING_CODE
     // EXISTING_CODE
+    friend bool operator<(const QChangeRequirement& v1, const QChangeRequirement& v2);
     friend ostream& operator<<(ostream& os, const QChangeRequirement& item);
 
 protected:
@@ -111,7 +108,16 @@ inline QChangeRequirement& QChangeRequirement::operator=(const QChangeRequiremen
     return *this;
 }
 
+//-------------------------------------------------------------------------
+inline bool operator<(const QChangeRequirement& v1, const QChangeRequirement& v2) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default sort defined in class definition, assume already sorted
+    return true;
+}
+
 //---------------------------------------------------------------------------
+typedef SFArrayBase<QChangeRequirement> QChangeRequirementArray;
 extern SFArchive& operator>>(SFArchive& archive, QChangeRequirementArray& array);
 extern SFArchive& operator<<(SFArchive& archive, const QChangeRequirementArray& array);
 

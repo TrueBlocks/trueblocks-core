@@ -17,10 +17,6 @@
  */
 #include "transaction.h"
 
-//--------------------------------------------------------------------------
-class QConfirm;
-typedef SFArrayBase<QConfirm>         QConfirmArray;
-
 // EXISTING_CODE
 // EXISTING_CODE
 
@@ -39,6 +35,7 @@ public:
 
     // EXISTING_CODE
     // EXISTING_CODE
+    friend bool operator<(const QConfirm& v1, const QConfirm& v2);
     friend ostream& operator<<(ostream& os, const QConfirm& item);
 
 protected:
@@ -111,7 +108,16 @@ inline QConfirm& QConfirm::operator=(const QConfirm& co) {
     return *this;
 }
 
+//-------------------------------------------------------------------------
+inline bool operator<(const QConfirm& v1, const QConfirm& v2) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default sort defined in class definition, assume already sorted
+    return true;
+}
+
 //---------------------------------------------------------------------------
+typedef SFArrayBase<QConfirm> QConfirmArray;
 extern SFArchive& operator>>(SFArchive& archive, QConfirmArray& array);
 extern SFArchive& operator<<(SFArchive& archive, const QConfirmArray& array);
 

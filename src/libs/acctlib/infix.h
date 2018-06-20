@@ -20,10 +20,6 @@
 
 namespace qblocks {
 
-//--------------------------------------------------------------------------
-class CInfix;
-typedef SFArrayBase<CInfix>         CInfixArray;
-
 // EXISTING_CODE
 // EXISTING_CODE
 
@@ -50,6 +46,7 @@ public:
     bool visitItems(ACCTVISITOR func, void *data) const override;
     bool contains(const string_q& _key) const;
     // EXISTING_CODE
+    friend bool operator<(const CInfix& v1, const CInfix& v2);
     friend ostream& operator<<(ostream& os, const CInfix& item);
 
 protected:
@@ -128,7 +125,16 @@ inline CInfix& CInfix::operator=(const CInfix& in) {
     return *this;
 }
 
+//-------------------------------------------------------------------------
+inline bool operator<(const CInfix& v1, const CInfix& v2) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default sort defined in class definition, assume already sorted
+    return true;
+}
+
 //---------------------------------------------------------------------------
+typedef SFArrayBase<CInfix> CInfixArray;
 extern SFArchive& operator>>(SFArchive& archive, CInfixArray& array);
 extern SFArchive& operator<<(SFArchive& archive, const CInfixArray& array);
 

@@ -17,10 +17,6 @@
  */
 #include "transaction.h"
 
-//--------------------------------------------------------------------------
-class QResetSpentToday;
-typedef SFArrayBase<QResetSpentToday>         QResetSpentTodayArray;
-
 // EXISTING_CODE
 // EXISTING_CODE
 
@@ -38,6 +34,7 @@ public:
 
     // EXISTING_CODE
     // EXISTING_CODE
+    friend bool operator<(const QResetSpentToday& v1, const QResetSpentToday& v2);
     friend ostream& operator<<(ostream& os, const QResetSpentToday& item);
 
 protected:
@@ -106,7 +103,16 @@ inline QResetSpentToday& QResetSpentToday::operator=(const QResetSpentToday& re)
     return *this;
 }
 
+//-------------------------------------------------------------------------
+inline bool operator<(const QResetSpentToday& v1, const QResetSpentToday& v2) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default sort defined in class definition, assume already sorted
+    return true;
+}
+
 //---------------------------------------------------------------------------
+typedef SFArrayBase<QResetSpentToday> QResetSpentTodayArray;
 extern SFArchive& operator>>(SFArchive& archive, QResetSpentTodayArray& array);
 extern SFArchive& operator<<(SFArchive& archive, const QResetSpentTodayArray& array);
 

@@ -152,6 +152,8 @@ extern const char* STR_GETSTR_CODE_FIELD;
 extern const char* STR_GETOBJ_HEAD;
 extern const char* STR_GETSTR_HEAD;
 extern const char* STR_UPGRADE_CODE;
+extern const char* STR_SORT_COMMENT_1;
+extern const char* STR_SORT_COMMENT_2;
 
 string_q tab = string_q("\t");
 
@@ -357,11 +359,10 @@ string_q ptrWriteFmt =
     string_q subClsCodeStr  = fieldSubCls;
 
     //------------------------------------------------------------------------------------------------
-    string_q sorts[4] = { extract(baseLower, 0, 2)+"_Name", "", baseLower+"ID", "" };
-    string_q sortString = toml.getConfigStr("settings", "sort", "");
-    size_t cnt = 0;
-    while (!sortString.empty())
-        sorts[cnt++] = nextTokenClear(sortString, '|');
+    string_q sortStr = toml.getConfigStr("settings", "sort", "");
+    CStringArray sorts;
+    while (!sortStr.empty())
+        sorts.push_back(nextTokenClear(sortStr, '|'));
 
     //------------------------------------------------------------------------------------------------
     string_q headerFile = substitute(substitute(dataFile, ".txt", ".h"), "./classDefinitions/", "./");
@@ -392,6 +393,8 @@ string_q ptrWriteFmt =
     replaceAll(headSource, "[{SHORT3}]",       short3(baseLower));
     replaceAll(headSource, "[{SHORT}]",        extract(baseLower, 0, 2));
     replaceAll(headSource, "[{SCOPE}]",        scope);
+    replaceAll(headSource, "[{SORT_COMMENT}]", (sorts.size() ? STR_SORT_COMMENT_1 : STR_SORT_COMMENT_2));
+    replaceAll(headSource, "[{SORTCODE}]",     (sorts.size() ? "XXX" : "true"));
     replaceAll(headSource, "[{NAMESPACE1}]",   (ns.empty() ? "" : "\nnamespace qblocks {\n\n"));
     replaceAll(headSource, "[{NAMESPACE2}]",   (ns.empty() ? "" : "}  // namespace qblocks\n"));
     if (options.writeHeader)
@@ -428,10 +431,6 @@ string_q ptrWriteFmt =
     replaceAll(srcSource, "[{LONG}]",            baseLower);
     replaceAll(srcSource, "[{PROPER}]",          baseProper);
     replaceAll(srcSource, "[{SHORT}]",           extract(baseLower, 0, 2));
-    replaceAll(srcSource, "[{NAME_SORT1}]",      sorts[0]);
-    replaceAll(srcSource, "[{NAME_SORT2}]",      sorts[1]);
-    replaceAll(srcSource, "[{ID_SORT1}]",        sorts[2]);
-    replaceAll(srcSource, "[{ID_SORT2}]",        sorts[3]);
     replaceAll(srcSource, "[{BASE_CLASS}]",      baseClass);
     replaceAll(srcSource, "[{BASE_BASE}]",       baseBase);
     replaceAll(srcSource, "[{BASE}]",            baseUpper);
@@ -826,6 +825,14 @@ const char *STR_GETSTR_CODE =
 //------------------------------------------------------------------------------------------------------------
 const char *STR_UPGRADE_CODE =
 "version of the data\n\t(([{CLASS_NAME}]*)this)->m_schema = getVersionNum();\n";
+
+//------------------------------------------------------------------------------------------------------------
+const char* STR_SORT_COMMENT_1 =
+"Default sort as defined in class definition";
+
+//------------------------------------------------------------------------------------------------------------
+const char* STR_SORT_COMMENT_2 =
+"No default sort defined in class definition, assume already sorted";
 
 //------------------------------------------------------------------------------------------------------------
 string_q short3(const string_q& str) {

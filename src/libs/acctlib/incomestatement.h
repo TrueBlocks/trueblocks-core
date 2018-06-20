@@ -19,10 +19,6 @@
 
 namespace qblocks {
 
-//--------------------------------------------------------------------------
-class CIncomeStatement;
-typedef SFArrayBase<CIncomeStatement>         CIncomeStatementArray;
-
 // EXISTING_CODE
 // EXISTING_CODE
 
@@ -32,7 +28,7 @@ public:
     SFIntBN begBal;
     SFIntBN inflow;
     SFIntBN outflow;
-    SFIntBN gasCost;
+    SFIntBN gasCostInWei;
     SFIntBN endBal;
     blknum_t blockNum;
 
@@ -52,6 +48,7 @@ public:
     void correct(void) { endBal = nodeBal; }
     friend class CAccountWatch;
     // EXISTING_CODE
+    friend bool operator<(const CIncomeStatement& v1, const CIncomeStatement& v2);
     friend ostream& operator<<(ostream& os, const CIncomeStatement& item);
 
 protected:
@@ -101,7 +98,7 @@ inline void CIncomeStatement::initialize(void) {
     begBal = 0;
     inflow = 0;
     outflow = 0;
-    gasCost = 0;
+    gasCostInWei = 0;
     endBal = 0;
     blockNum = 0;
 
@@ -117,7 +114,7 @@ inline void CIncomeStatement::duplicate(const CIncomeStatement& in) {
     begBal = in.begBal;
     inflow = in.inflow;
     outflow = in.outflow;
-    gasCost = in.gasCost;
+    gasCostInWei = in.gasCostInWei;
     endBal = in.endBal;
     blockNum = in.blockNum;
 
@@ -134,7 +131,16 @@ inline CIncomeStatement& CIncomeStatement::operator=(const CIncomeStatement& in)
     return *this;
 }
 
+//-------------------------------------------------------------------------
+inline bool operator<(const CIncomeStatement& v1, const CIncomeStatement& v2) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default sort defined in class definition, assume already sorted
+    return true;
+}
+
 //---------------------------------------------------------------------------
+typedef SFArrayBase<CIncomeStatement> CIncomeStatementArray;
 extern SFArchive& operator>>(SFArchive& archive, CIncomeStatementArray& array);
 extern SFArchive& operator<<(SFArchive& archive, const CIncomeStatementArray& array);
 
@@ -150,7 +156,7 @@ inline void CIncomeStatement::operator+=(const CIncomeStatement &x)
     begBal += x.begBal;
     inflow += x.inflow;
     outflow += x.outflow;
-    gasCost += x.gasCost;
+    gasCostInWei += x.gasCostInWei;
     endBal += x.endBal;
     blockNum = x.blockNum;
 }
