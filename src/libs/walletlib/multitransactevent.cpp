@@ -184,6 +184,8 @@ string_q nextMultitransacteventChunk_custom(const string_q& fieldIn, const void 
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
                     return nextBasenodeChunk(fieldIn, mul);
+                // EXISTING_CODE
+                // EXISTING_CODE
                 break;
 
             default:

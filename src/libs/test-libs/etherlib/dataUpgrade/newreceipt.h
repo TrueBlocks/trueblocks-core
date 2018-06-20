@@ -18,10 +18,6 @@
 #include "abilib.h"
 #include "logentry.h"
 
-//--------------------------------------------------------------------------
-class CNewReceipt;
-typedef SFArrayBase<CNewReceipt>         CNewReceiptArray;
-
 // EXISTING_CODE
 // EXISTING_CODE
 
@@ -47,6 +43,7 @@ public:
     // EXISTING_CODE
     friend class CTransaction;
     // EXISTING_CODE
+    friend bool operator<(const CNewReceipt& v1, const CNewReceipt& v2);
     friend ostream& operator<<(ostream& os, const CNewReceipt& item);
 
 protected:
@@ -127,7 +124,16 @@ inline CNewReceipt& CNewReceipt::operator=(const CNewReceipt& ne) {
     return *this;
 }
 
+//-------------------------------------------------------------------------
+inline bool operator<(const CNewReceipt& v1, const CNewReceipt& v2) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default sort defined in class definition, assume already sorted
+    return true;
+}
+
 //---------------------------------------------------------------------------
+typedef SFArrayBase<CNewReceipt> CNewReceiptArray;
 extern SFArchive& operator>>(SFArchive& archive, CNewReceiptArray& array);
 extern SFArchive& operator<<(SFArchive& archive, const CNewReceiptArray& array);
 

@@ -23,7 +23,6 @@ CParams params[] = {
 };
 size_t nParams = sizeof(params) / sizeof(CParams);
 
-extern int sortByBlockNum(const void *v1, const void *v2);
 extern SFTime grabDate(const string_q& strIn);
 extern bool containsAny(const string_q& haystack, const string_q& needle);
 //---------------------------------------------------------------------------------------------------

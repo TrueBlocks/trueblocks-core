@@ -17,9 +17,6 @@
  */
 [H_INCLUDES]
 [{NAMESPACE1}]
-//--------------------------------------------------------------------------
-class [{CLASS_NAME}];
-typedef SFArrayBase<[{CLASS_NAME}]>         [{CLASS_NAME}]Array;
 
 // EXISTING_CODE
 // EXISTING_CODE
@@ -38,6 +35,7 @@ public:
 
 [{GET_OBJ}][{GET_STR}]    // EXISTING_CODE
     // EXISTING_CODE
+    friend bool operator<(const [{CLASS_NAME}]& v1, const [{CLASS_NAME}]& v2);
     friend ostream& operator<<(ostream& os, const [{CLASS_NAME}]& item);
 
 protected:
@@ -108,7 +106,16 @@ inline [{CLASS_NAME}]& [{CLASS_NAME}]::operator=(const [{CLASS_NAME}]& [{SHORT}]
     return *this;
 }
 
+//-------------------------------------------------------------------------
+inline bool operator<(const [{CLASS_NAME}]& v1, const [{CLASS_NAME}]& v2) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // [{SORT_COMMENT}]
+    return [{SORTCODE}];
+}
+
 //---------------------------------------------------------------------------
+typedef SFArrayBase<[{CLASS_NAME}]> [{CLASS_NAME}]Array;
 extern SFArchive& operator>>(SFArchive& archive, [{CLASS_NAME}]Array& array);
 extern SFArchive& operator<<(SFArchive& archive, const [{CLASS_NAME}]Array& array);
 

@@ -2,4 +2,3 @@
 class    = CNameValue
 fields   = string name|string value
 includes = basetypes.h|basenode.h|conversions.h|sfarchive.h
-

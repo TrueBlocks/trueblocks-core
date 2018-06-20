@@ -166,6 +166,8 @@ string_q nextRevokeeventChunk_custom(const string_q& fieldIn, const void *dataPt
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
                     return nextBasenodeChunk(fieldIn, rev);
+                // EXISTING_CODE
+                // EXISTING_CODE
                 break;
 
             default:

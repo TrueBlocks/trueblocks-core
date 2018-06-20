@@ -17,10 +17,6 @@
  */
 #include "transaction.h"
 
-//--------------------------------------------------------------------------
-class QTransfer;
-typedef SFArrayBase<QTransfer>         QTransferArray;
-
 // EXISTING_CODE
 // EXISTING_CODE
 
@@ -40,6 +36,7 @@ public:
 
     // EXISTING_CODE
     // EXISTING_CODE
+    friend bool operator<(const QTransfer& v1, const QTransfer& v2);
     friend ostream& operator<<(ostream& os, const QTransfer& item);
 
 protected:
@@ -114,7 +111,16 @@ inline QTransfer& QTransfer::operator=(const QTransfer& tr) {
     return *this;
 }
 
+//-------------------------------------------------------------------------
+inline bool operator<(const QTransfer& v1, const QTransfer& v2) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default sort defined in class definition, assume already sorted
+    return true;
+}
+
 //---------------------------------------------------------------------------
+typedef SFArrayBase<QTransfer> QTransferArray;
 extern SFArchive& operator>>(SFArchive& archive, QTransferArray& array);
 extern SFArchive& operator<<(SFArchive& archive, const QTransferArray& array);
 

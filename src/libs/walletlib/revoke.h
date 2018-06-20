@@ -17,10 +17,6 @@
  */
 #include "transaction.h"
 
-//--------------------------------------------------------------------------
-class QRevoke;
-typedef SFArrayBase<QRevoke>         QRevokeArray;
-
 // EXISTING_CODE
 // EXISTING_CODE
 
@@ -39,6 +35,7 @@ public:
 
     // EXISTING_CODE
     // EXISTING_CODE
+    friend bool operator<(const QRevoke& v1, const QRevoke& v2);
     friend ostream& operator<<(ostream& os, const QRevoke& item);
 
 protected:
@@ -111,7 +108,16 @@ inline QRevoke& QRevoke::operator=(const QRevoke& re) {
     return *this;
 }
 
+//-------------------------------------------------------------------------
+inline bool operator<(const QRevoke& v1, const QRevoke& v2) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default sort defined in class definition, assume already sorted
+    return true;
+}
+
 //---------------------------------------------------------------------------
+typedef SFArrayBase<QRevoke> QRevokeArray;
 extern SFArchive& operator>>(SFArchive& archive, QRevokeArray& array);
 extern SFArchive& operator<<(SFArchive& archive, const QRevokeArray& array);
 

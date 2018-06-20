@@ -19,10 +19,6 @@
 
 namespace qblocks {
 
-//--------------------------------------------------------------------------
-class CTraceAction;
-typedef SFArrayBase<CTraceAction>         CTraceActionArray;
-
 // EXISTING_CODE
 // EXISTING_CODE
 
@@ -51,6 +47,7 @@ public:
     // EXISTING_CODE
     friend class CTrace;
     // EXISTING_CODE
+    friend bool operator<(const CTraceAction& v1, const CTraceAction& v2);
     friend ostream& operator<<(ostream& os, const CTraceAction& item);
 
 protected:
@@ -141,7 +138,16 @@ inline CTraceAction& CTraceAction::operator=(const CTraceAction& tr) {
     return *this;
 }
 
+//-------------------------------------------------------------------------
+inline bool operator<(const CTraceAction& v1, const CTraceAction& v2) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default sort defined in class definition, assume already sorted
+    return true;
+}
+
 //---------------------------------------------------------------------------
+typedef SFArrayBase<CTraceAction> CTraceActionArray;
 extern SFArchive& operator>>(SFArchive& archive, CTraceActionArray& array);
 extern SFArchive& operator<<(SFArchive& archive, const CTraceActionArray& array);
 

@@ -17,10 +17,6 @@
  */
 #include "logentry.h"
 
-//--------------------------------------------------------------------------
-class QConfirmationEvent;
-typedef SFArrayBase<QConfirmationEvent>         QConfirmationEventArray;
-
 // EXISTING_CODE
 // EXISTING_CODE
 
@@ -40,6 +36,7 @@ public:
 
     // EXISTING_CODE
     // EXISTING_CODE
+    friend bool operator<(const QConfirmationEvent& v1, const QConfirmationEvent& v2);
     friend ostream& operator<<(ostream& os, const QConfirmationEvent& item);
 
 protected:
@@ -114,7 +111,16 @@ inline QConfirmationEvent& QConfirmationEvent::operator=(const QConfirmationEven
     return *this;
 }
 
+//-------------------------------------------------------------------------
+inline bool operator<(const QConfirmationEvent& v1, const QConfirmationEvent& v2) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default sort defined in class definition, assume already sorted
+    return true;
+}
+
 //---------------------------------------------------------------------------
+typedef SFArrayBase<QConfirmationEvent> QConfirmationEventArray;
 extern SFArchive& operator>>(SFArchive& archive, QConfirmationEventArray& array);
 extern SFArchive& operator<<(SFArchive& archive, const QConfirmationEventArray& array);
 

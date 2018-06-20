@@ -22,10 +22,6 @@
 
 namespace qblocks {
 
-//--------------------------------------------------------------------------
-class CNameValue;
-typedef SFArrayBase<CNameValue>         CNameValueArray;
-
 // EXISTING_CODE
 // EXISTING_CODE
 
@@ -50,6 +46,7 @@ public:
     SFUintBN getValueBN(void) const { return toWei     (value); }
     string_q getName   (void) const { return            name;   }
     // EXISTING_CODE
+    friend bool operator<(const CNameValue& v1, const CNameValue& v2);
     friend ostream& operator<<(ostream& os, const CNameValue& item);
 
 protected:
@@ -124,7 +121,16 @@ inline CNameValue& CNameValue::operator=(const CNameValue& na) {
     return *this;
 }
 
+//-------------------------------------------------------------------------
+inline bool operator<(const CNameValue& v1, const CNameValue& v2) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default sort defined in class definition, assume already sorted
+    return true;
+}
+
 //---------------------------------------------------------------------------
+typedef SFArrayBase<CNameValue> CNameValueArray;
 extern SFArchive& operator>>(SFArchive& archive, CNameValueArray& array);
 extern SFArchive& operator<<(SFArchive& archive, const CNameValueArray& array);
 

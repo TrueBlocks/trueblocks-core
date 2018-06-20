@@ -17,10 +17,6 @@
  */
 #include "transaction.h"
 
-//--------------------------------------------------------------------------
-class QKill;
-typedef SFArrayBase<QKill>         QKillArray;
-
 // EXISTING_CODE
 // EXISTING_CODE
 
@@ -39,6 +35,7 @@ public:
 
     // EXISTING_CODE
     // EXISTING_CODE
+    friend bool operator<(const QKill& v1, const QKill& v2);
     friend ostream& operator<<(ostream& os, const QKill& item);
 
 protected:
@@ -111,7 +108,16 @@ inline QKill& QKill::operator=(const QKill& ki) {
     return *this;
 }
 
+//-------------------------------------------------------------------------
+inline bool operator<(const QKill& v1, const QKill& v2) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default sort defined in class definition, assume already sorted
+    return true;
+}
+
 //---------------------------------------------------------------------------
+typedef SFArrayBase<QKill> QKillArray;
 extern SFArchive& operator>>(SFArchive& archive, QKillArray& array);
 extern SFArchive& operator<<(SFArchive& archive, const QKillArray& array);
 

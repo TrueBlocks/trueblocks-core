@@ -19,11 +19,8 @@
 
 namespace qblocks {
 
-//--------------------------------------------------------------------------
-class CTreeNode;
-typedef SFArrayBase<CTreeNode>         CTreeNodeArray;
-
 // EXISTING_CODE
+class CTreeNode;
 using ACCTVISITOR = bool (*)(const CTreeNode *v, void *data);
 // EXISTING_CODE
 
@@ -48,6 +45,7 @@ public:
     virtual bool visitItems(ACCTVISITOR func, void *data) const { return true; }
     CTreeNode* newBranch(const string_q& _k1, const string_q& _v1, const string_q& _k2, const string_q& _v2);
     // EXISTING_CODE
+    friend bool operator<(const CTreeNode& v1, const CTreeNode& v2);
     friend ostream& operator<<(ostream& os, const CTreeNode& item);
 
 protected:
@@ -122,7 +120,16 @@ inline CTreeNode& CTreeNode::operator=(const CTreeNode& tr) {
     return *this;
 }
 
+//-------------------------------------------------------------------------
+inline bool operator<(const CTreeNode& v1, const CTreeNode& v2) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default sort defined in class definition, assume already sorted
+    return true;
+}
+
 //---------------------------------------------------------------------------
+typedef SFArrayBase<CTreeNode> CTreeNodeArray;
 extern SFArchive& operator>>(SFArchive& archive, CTreeNodeArray& array);
 extern SFArchive& operator<<(SFArchive& archive, const CTreeNodeArray& array);
 

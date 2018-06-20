@@ -183,6 +183,8 @@ string_q nextTreerootChunk_custom(const string_q& fieldIn, const void *dataPtr) 
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
                     return nextBasenodeChunk(fieldIn, tre);
+                // EXISTING_CODE
+                // EXISTING_CODE
                 break;
 
             default:

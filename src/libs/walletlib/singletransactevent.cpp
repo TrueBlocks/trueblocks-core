@@ -180,6 +180,8 @@ string_q nextSingletransacteventChunk_custom(const string_q& fieldIn, const void
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
                     return nextBasenodeChunk(fieldIn, sin);
+                // EXISTING_CODE
+                // EXISTING_CODE
                 break;
 
             default:

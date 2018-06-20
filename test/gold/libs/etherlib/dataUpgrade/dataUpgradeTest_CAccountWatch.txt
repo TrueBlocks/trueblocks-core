@@ -56,7 +56,7 @@ baseClass: CBaseNode
     "begBal": 0,
     "inflow": 0,
     "outflow": 0,
-    "gasCost": 0,
+    "gasCostInWei": 0,
     "endBal": 0,
     "blockNum": 0
   },

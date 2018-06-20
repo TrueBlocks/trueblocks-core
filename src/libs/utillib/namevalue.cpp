@@ -164,6 +164,8 @@ string_q nextNamevalueChunk_custom(const string_q& fieldIn, const void *dataPtr)
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
                     return nextBasenodeChunk(fieldIn, nam);
+                // EXISTING_CODE
+                // EXISTING_CODE
                 break;
 
             default:

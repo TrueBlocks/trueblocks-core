@@ -19,10 +19,6 @@
 
 namespace qblocks {
 
-//--------------------------------------------------------------------------
-class CTraceResult;
-typedef SFArrayBase<CTraceResult>         CTraceResultArray;
-
 // EXISTING_CODE
 // EXISTING_CODE
 
@@ -45,6 +41,7 @@ public:
     // EXISTING_CODE
     friend class CTrace;
     // EXISTING_CODE
+    friend bool operator<(const CTraceResult& v1, const CTraceResult& v2);
     friend ostream& operator<<(ostream& os, const CTraceResult& item);
 
 protected:
@@ -123,7 +120,16 @@ inline CTraceResult& CTraceResult::operator=(const CTraceResult& tr) {
     return *this;
 }
 
+//-------------------------------------------------------------------------
+inline bool operator<(const CTraceResult& v1, const CTraceResult& v2) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default sort defined in class definition, assume already sorted
+    return true;
+}
+
 //---------------------------------------------------------------------------
+typedef SFArrayBase<CTraceResult> CTraceResultArray;
 extern SFArchive& operator>>(SFArchive& archive, CTraceResultArray& array);
 extern SFArchive& operator<<(SFArchive& archive, const CTraceResultArray& array);
 

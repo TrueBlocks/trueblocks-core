@@ -19,10 +19,6 @@
 
 namespace qblocks {
 
-//--------------------------------------------------------------------------
-class CPriceQuote;
-typedef SFArrayBase<CPriceQuote>         CPriceQuoteArray;
-
 // EXISTING_CODE
 // EXISTING_CODE
 
@@ -43,6 +39,7 @@ public:
     // EXISTING_CODE
     SFTime date;
     // EXISTING_CODE
+    friend bool operator<(const CPriceQuote& v1, const CPriceQuote& v2);
     friend ostream& operator<<(ostream& os, const CPriceQuote& item);
 
 protected:
@@ -119,7 +116,16 @@ inline CPriceQuote& CPriceQuote::operator=(const CPriceQuote& pr) {
     return *this;
 }
 
+//-------------------------------------------------------------------------
+inline bool operator<(const CPriceQuote& v1, const CPriceQuote& v2) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default sort defined in class definition, assume already sorted
+    return true;
+}
+
 //---------------------------------------------------------------------------
+typedef SFArrayBase<CPriceQuote> CPriceQuoteArray;
 extern SFArchive& operator>>(SFArchive& archive, CPriceQuoteArray& array);
 extern SFArchive& operator<<(SFArchive& archive, const CPriceQuoteArray& array);
 

@@ -20,10 +20,6 @@
 
 namespace qblocks {
 
-//--------------------------------------------------------------------------
-class CBlock;
-typedef SFArrayBase<CBlock>         CBlockArray;
-
 // EXISTING_CODE
 typedef bool (*ADDRESSFUNC)(blknum_t bn, blknum_t tx, blknum_t tc, const SFAddress& addr, void *data);
 typedef bool (*TRANSFUNC)(const CTransaction *trans, void *data);
@@ -60,6 +56,7 @@ public:
     bool operator==(const CBlock& bl) const;
     bool operator!=(const CBlock& bl) const { return !operator==(bl); }
     // EXISTING_CODE
+    friend bool operator<(const CBlock& v1, const CBlock& v2);
     friend ostream& operator<<(ostream& os, const CBlock& item);
 
 protected:
@@ -152,7 +149,16 @@ inline CBlock& CBlock::operator=(const CBlock& bl) {
     return *this;
 }
 
+//-------------------------------------------------------------------------
+inline bool operator<(const CBlock& v1, const CBlock& v2) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default sort defined in class definition, assume already sorted
+    return true;
+}
+
 //---------------------------------------------------------------------------
+typedef SFArrayBase<CBlock> CBlockArray;
 extern SFArchive& operator>>(SFArchive& archive, CBlockArray& array);
 extern SFArchive& operator<<(SFArchive& archive, const CBlockArray& array);
 
@@ -177,6 +183,27 @@ inline bool isBlockFinal(timestamp_t ts_block, timestamp_t ts_chain, timestamp_t
 }
 extern bool isPotentialAddr(SFUintBN test, SFAddress& addrOut);
 extern void processPotentialAddrs(blknum_t bn, blknum_t tx, blknum_t tc, const string_q& potList, ADDRESSFUNC func, void *data);
+
+//---------------------------------------------------------------------------
+class CAddressItem {
+public:
+    blknum_t blockNum;
+    blknum_t transIndex;
+    blknum_t traceId;
+    SFAddress addr;
+    CAddressItem(void) : blockNum(0), transIndex(0), traceId(0), addr("") { }
+    CAddressItem(const CAddressItem& item) : blockNum(item.blockNum), transIndex(item.transIndex), traceId(item.traceId), addr(item.addr) { }
+    CAddressItem& operator=(const CAddressItem& item) {
+        blockNum = item.blockNum;
+        transIndex = item.transIndex;
+        traceId = item.traceId;
+        addr = item.addr;
+        return *this;
+    }
+    CAddressItem(blknum_t bn, blknum_t tx, blknum_t tc, const SFAddress& a) : blockNum(bn), transIndex(tx), traceId(tc), addr(a) { }
+    friend bool operator<(const CAddressItem& v1, const CAddressItem& v2) { return v1.addr < v2.addr; }
+    friend ostream& operator<<(ostream& os, const CAddressItem& item);
+};
+typedef map<CAddressItem, uint64_t> CAddressItemMap;
 // EXISTING_CODE
 }  // namespace qblocks
-

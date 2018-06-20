@@ -17,10 +17,6 @@
  */
 #include "transaction.h"
 
-//--------------------------------------------------------------------------
-class QAddOwner;
-typedef SFArrayBase<QAddOwner>         QAddOwnerArray;
-
 // EXISTING_CODE
 // EXISTING_CODE
 
@@ -39,6 +35,7 @@ public:
 
     // EXISTING_CODE
     // EXISTING_CODE
+    friend bool operator<(const QAddOwner& v1, const QAddOwner& v2);
     friend ostream& operator<<(ostream& os, const QAddOwner& item);
 
 protected:
@@ -111,7 +108,16 @@ inline QAddOwner& QAddOwner::operator=(const QAddOwner& ad) {
     return *this;
 }
 
+//-------------------------------------------------------------------------
+inline bool operator<(const QAddOwner& v1, const QAddOwner& v2) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default sort defined in class definition, assume already sorted
+    return true;
+}
+
 //---------------------------------------------------------------------------
+typedef SFArrayBase<QAddOwner> QAddOwnerArray;
 extern SFArchive& operator>>(SFArchive& archive, QAddOwnerArray& array);
 extern SFArchive& operator<<(SFArchive& archive, const QAddOwnerArray& array);
 

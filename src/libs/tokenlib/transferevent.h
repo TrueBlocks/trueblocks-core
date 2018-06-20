@@ -17,10 +17,6 @@
  */
 #include "logentry.h"
 
-//--------------------------------------------------------------------------
-class QTransferEvent;
-typedef SFArrayBase<QTransferEvent>         QTransferEventArray;
-
 // EXISTING_CODE
 // EXISTING_CODE
 
@@ -41,6 +37,7 @@ public:
 
     // EXISTING_CODE
     // EXISTING_CODE
+    friend bool operator<(const QTransferEvent& v1, const QTransferEvent& v2);
     friend ostream& operator<<(ostream& os, const QTransferEvent& item);
 
 protected:
@@ -117,7 +114,16 @@ inline QTransferEvent& QTransferEvent::operator=(const QTransferEvent& tr) {
     return *this;
 }
 
+//-------------------------------------------------------------------------
+inline bool operator<(const QTransferEvent& v1, const QTransferEvent& v2) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default sort defined in class definition, assume already sorted
+    return true;
+}
+
 //---------------------------------------------------------------------------
+typedef SFArrayBase<QTransferEvent> QTransferEventArray;
 extern SFArchive& operator>>(SFArchive& archive, QTransferEventArray& array);
 extern SFArchive& operator<<(SFArchive& archive, const QTransferEventArray& array);
 

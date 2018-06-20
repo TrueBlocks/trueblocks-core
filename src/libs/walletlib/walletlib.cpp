@@ -62,7 +62,7 @@ const CTransaction *promoteToWallet(const CTransaction *p)
     if (p && (p->input.length()>=10 || p->input == "0x"))
     {
         string_q items[256];
-        uint32_t nItems=0;
+        size_t nItems=0;
 
         string_q encoding = extract(p->input, 0, 10);
         string_q params   = extract(p->input, 10);
@@ -75,7 +75,7 @@ const CTransaction *promoteToWallet(const CTransaction *p)
             // 0x7065cb48
             QAddOwner *a = new QAddOwner;
             *(CTransaction*)a = *p; // copy in
-            a->_owner = toAddress(extract(params, 0*64, 64));
+            a->_owner = toAddress(extract(params, 0*64,64));
             items[nItems++] = "address";
             a->function = toFunction("addOwner", params, nItems, items);
             return a;
@@ -86,8 +86,8 @@ const CTransaction *promoteToWallet(const CTransaction *p)
             // 0xf00d4b5d
             QChangeOwner *a = new QChangeOwner;
             *(CTransaction*)a = *p; // copy in
-            a->_from = toAddress(extract(params, 0*64, 64));
-            a->_to = toAddress(extract(params, 1*64, 64));
+            a->_from = toAddress(extract(params, 0*64,64));
+            a->_to = toAddress(extract(params, 1*64,64));
             items[nItems++] = "address";
             items[nItems++] = "address";
             a->function = toFunction("changeOwner", params, nItems, items);
@@ -99,7 +99,7 @@ const CTransaction *promoteToWallet(const CTransaction *p)
             // 0xba51a6df
             QChangeRequirement *a = new QChangeRequirement;
             *(CTransaction*)a = *p; // copy in
-            a->_newRequired = toWei("0x" + extract(params, 0*64, 64));
+            a->_newRequired = toWei("0x"+extract(params, 0*64,64));
             items[nItems++] = "uint256";
             a->function = toFunction("changeRequirement", params, nItems, items);
             return a;
@@ -110,7 +110,7 @@ const CTransaction *promoteToWallet(const CTransaction *p)
             // 0x797af627
             QConfirm *a = new QConfirm;
             *(CTransaction*)a = *p; // copy in
-            a->_h = extract(params, 0*64, 64);
+            a->_h = extract(params, 0*64,64);
             items[nItems++] = "bytes32";
             a->function = toFunction("confirm", params, nItems, items);
             return a;
@@ -121,8 +121,8 @@ const CTransaction *promoteToWallet(const CTransaction *p)
             // 0xb61d27f6
             QExecute *a = new QExecute;
             *(CTransaction*)a = *p; // copy in
-            a->_to = toAddress(extract(params, 0*64, 64));
-            a->_value = toWei("0x" + extract(params, 1*64, 64));
+            a->_to = toAddress(extract(params, 0*64,64));
+            a->_value = toWei("0x"+extract(params, 1*64,64));
             a->_data = extract(params, 2*64);
             items[nItems++] = "address";
             items[nItems++] = "uint256";
@@ -136,7 +136,7 @@ const CTransaction *promoteToWallet(const CTransaction *p)
             // 0x2f54bf6e
             QIsOwner *a = new QIsOwner;
             *(CTransaction*)a = *p; // copy in
-            a->_addr = toAddress(extract(params, 0*64, 64));
+            a->_addr = toAddress(extract(params, 0*64,64));
             items[nItems++] = "address";
             a->function = toFunction("isOwner", params, nItems, items);
             return a;
@@ -147,7 +147,7 @@ const CTransaction *promoteToWallet(const CTransaction *p)
             // 0xcbf0b0c0
             QKill *a = new QKill;
             *(CTransaction*)a = *p; // copy in
-            a->_to = toAddress(extract(params, 0*64, 64));
+            a->_to = toAddress(extract(params, 0*64,64));
             items[nItems++] = "address";
             a->function = toFunction("kill", params, nItems, items);
             return a;
@@ -158,7 +158,7 @@ const CTransaction *promoteToWallet(const CTransaction *p)
             // 0x173825d9
             QRemoveOwner *a = new QRemoveOwner;
             *(CTransaction*)a = *p; // copy in
-            a->_owner = toAddress(extract(params, 0*64, 64));
+            a->_owner = toAddress(extract(params, 0*64,64));
             items[nItems++] = "address";
             a->function = toFunction("removeOwner", params, nItems, items);
             return a;
@@ -178,7 +178,7 @@ const CTransaction *promoteToWallet(const CTransaction *p)
             // 0xb75c7dc6
             QRevoke *a = new QRevoke;
             *(CTransaction*)a = *p; // copy in
-            a->_operation = extract(params, 0*64, 64);
+            a->_operation = extract(params, 0*64,64);
             items[nItems++] = "bytes32";
             a->function = toFunction("revoke", params, nItems, items);
             return a;
@@ -189,7 +189,7 @@ const CTransaction *promoteToWallet(const CTransaction *p)
             // 0xb20d30a9
             QSetDailyLimit *a = new QSetDailyLimit;
             *(CTransaction*)a = *p; // copy in
-            a->_newLimit = toWei("0x" + extract(params, 0*64, 64));
+            a->_newLimit = toWei("0x"+extract(params, 0*64,64));
             items[nItems++] = "uint256";
             a->function = toFunction("setDailyLimit", params, nItems, items);
             return a;
@@ -223,7 +223,7 @@ const CLogEntry *promoteToWalletEvent(const CLogEntry *p)
     if (!p)
         return NULL;
 
-    uint64_t nTops = p->topics.size();
+    size_t nTops = p->topics.size();
     if (nTops>0) // the '0'th topic is the event signature
     {
         string_q data = extract(p->data, 2);

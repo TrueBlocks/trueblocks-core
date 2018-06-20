@@ -19,10 +19,6 @@
 
 namespace qblocks {
 
-//--------------------------------------------------------------------------
-class CAcctCacheItem;
-typedef SFArrayBase<CAcctCacheItem>         CAcctCacheItemArray;
-
 // EXISTING_CODE
 // EXISTING_CODE
 
@@ -48,6 +44,7 @@ public:
     }
     bool operator!=(const CAcctCacheItem& item) { return !operator==(item); }
     // EXISTING_CODE
+    friend bool operator<(const CAcctCacheItem& v1, const CAcctCacheItem& v2);
     friend ostream& operator<<(ostream& os, const CAcctCacheItem& item);
 
 protected:
@@ -122,7 +119,16 @@ inline CAcctCacheItem& CAcctCacheItem::operator=(const CAcctCacheItem& ac) {
     return *this;
 }
 
+//-------------------------------------------------------------------------
+inline bool operator<(const CAcctCacheItem& v1, const CAcctCacheItem& v2) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default sort defined in class definition, assume already sorted
+    return true;
+}
+
 //---------------------------------------------------------------------------
+typedef SFArrayBase<CAcctCacheItem> CAcctCacheItemArray;
 extern SFArchive& operator>>(SFArchive& archive, CAcctCacheItemArray& array);
 extern SFArchive& operator<<(SFArchive& archive, const CAcctCacheItemArray& array);
 

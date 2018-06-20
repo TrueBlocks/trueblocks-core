@@ -193,7 +193,7 @@ baseClass: CBaseNode
     "begBal": 0,
     "inflow": 0,
     "outflow": 0,
-    "gasCost": 0,
+    "gasCostInWei": 0,
     "endBal": 0,
     "blockNum": 0
   },
@@ -336,7 +336,7 @@ baseClass: CBaseNode
 	  fieldID: 1006
 	  fieldType: T_NUMBER TS_NUMERAL 65561
 	  hidden: 0
-	fieldName: gasCost
+	fieldName: gasCostInWei
 	  fieldID: 1007
 	  fieldType: T_NUMBER TS_NUMERAL 65561
 	  hidden: 0
@@ -352,7 +352,7 @@ baseClass: CBaseNode
   "begBal": 0,
   "inflow": 0,
   "outflow": 0,
-  "gasCost": 0,
+  "gasCostInWei": 0,
   "endBal": 0,
   "blockNum": 0
 }
