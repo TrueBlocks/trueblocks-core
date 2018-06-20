@@ -43,7 +43,6 @@ speedTest
 sql
 toWei
 tokenFactory
-traceCheck
 tracingNeed
 transPer
 visitor
