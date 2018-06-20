@@ -17,10 +17,6 @@
  */
 #include "logentry.h"
 
-//--------------------------------------------------------------------------
-class QRevokeEvent;
-typedef SFArrayBase<QRevokeEvent>         QRevokeEventArray;
-
 // EXISTING_CODE
 // EXISTING_CODE
 
@@ -40,6 +36,7 @@ public:
 
     // EXISTING_CODE
     // EXISTING_CODE
+    friend bool operator<(const QRevokeEvent& v1, const QRevokeEvent& v2);
     friend ostream& operator<<(ostream& os, const QRevokeEvent& item);
 
 protected:
@@ -114,7 +111,16 @@ inline QRevokeEvent& QRevokeEvent::operator=(const QRevokeEvent& re) {
     return *this;
 }
 
+//-------------------------------------------------------------------------
+inline bool operator<(const QRevokeEvent& v1, const QRevokeEvent& v2) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default sort defined in class definition, assume already sorted
+    return true;
+}
+
 //---------------------------------------------------------------------------
+typedef SFArrayBase<QRevokeEvent> QRevokeEventArray;
 extern SFArchive& operator>>(SFArchive& archive, QRevokeEventArray& array);
 extern SFArchive& operator<<(SFArchive& archive, const QRevokeEventArray& array);
 

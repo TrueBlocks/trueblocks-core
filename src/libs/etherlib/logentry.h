@@ -19,10 +19,6 @@
 
 namespace qblocks {
 
-//--------------------------------------------------------------------------
-class CLogEntry;
-typedef SFArrayBase<CLogEntry>         CLogEntryArray;
-
 // EXISTING_CODE
 class CReceipt;
 #define SFTopicArray SFBigUintArray
@@ -51,6 +47,7 @@ public:
     bool operator==(const CLogEntry& le) const;
     bool operator!=(const CLogEntry& le) const { return !operator==(le); };
     // EXISTING_CODE
+    friend bool operator<(const CLogEntry& v1, const CLogEntry& v2);
     friend ostream& operator<<(ostream& os, const CLogEntry& item);
 
 protected:
@@ -144,7 +141,16 @@ inline CLogEntry& CLogEntry::operator=(const CLogEntry& lo) {
     return *this;
 }
 
+//-------------------------------------------------------------------------
+inline bool operator<(const CLogEntry& v1, const CLogEntry& v2) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default sort defined in class definition, assume already sorted
+    return true;
+}
+
 //---------------------------------------------------------------------------
+typedef SFArrayBase<CLogEntry> CLogEntryArray;
 extern SFArchive& operator>>(SFArchive& archive, CLogEntryArray& array);
 extern SFArchive& operator<<(SFArchive& archive, const CLogEntryArray& array);
 

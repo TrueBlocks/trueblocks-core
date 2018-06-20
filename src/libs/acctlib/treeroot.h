@@ -23,10 +23,6 @@
 
 namespace qblocks {
 
-//--------------------------------------------------------------------------
-class CTreeRoot;
-typedef SFArrayBase<CTreeRoot>         CTreeRootArray;
-
 // EXISTING_CODE
 //----------------------------------------------------------
 #define T_TOP       (0)
@@ -64,6 +60,7 @@ public:
     void remove(const string_q& _key);
     bool visitItems(ACCTVISITOR func, void *data) const;
     // EXISTING_CODE
+    friend bool operator<(const CTreeRoot& v1, const CTreeRoot& v2);
     friend ostream& operator<<(ostream& os, const CTreeRoot& item);
 
 protected:
@@ -142,7 +139,16 @@ inline CTreeRoot& CTreeRoot::operator=(const CTreeRoot& tr) {
     return *this;
 }
 
+//-------------------------------------------------------------------------
+inline bool operator<(const CTreeRoot& v1, const CTreeRoot& v2) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default sort defined in class definition, assume already sorted
+    return true;
+}
+
 //---------------------------------------------------------------------------
+typedef SFArrayBase<CTreeRoot> CTreeRootArray;
 extern SFArchive& operator>>(SFArchive& archive, CTreeRootArray& array);
 extern SFArchive& operator<<(SFArchive& archive, const CTreeRootArray& array);
 

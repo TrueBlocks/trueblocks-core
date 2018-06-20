@@ -20,10 +20,6 @@
 
 namespace qblocks {
 
-//--------------------------------------------------------------------------
-class CBranch;
-typedef SFArrayBase<CBranch>         CBranchArray;
-
 // EXISTING_CODE
 // EXISTING_CODE
 
@@ -53,6 +49,7 @@ private:
     char activeBranch() const;
     CTreeNode *rejig();
     // EXISTING_CODE
+    friend bool operator<(const CBranch& v1, const CBranch& v2);
     friend ostream& operator<<(ostream& os, const CBranch& item);
 
 protected:
@@ -133,7 +130,16 @@ inline CBranch& CBranch::operator=(const CBranch& br) {
     return *this;
 }
 
+//-------------------------------------------------------------------------
+inline bool operator<(const CBranch& v1, const CBranch& v2) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default sort defined in class definition, assume already sorted
+    return true;
+}
+
 //---------------------------------------------------------------------------
+typedef SFArrayBase<CBranch> CBranchArray;
 extern SFArchive& operator>>(SFArchive& archive, CBranchArray& array);
 extern SFArchive& operator<<(SFArchive& archive, const CBranchArray& array);
 

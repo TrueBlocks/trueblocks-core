@@ -20,10 +20,6 @@
 
 namespace qblocks {
 
-//--------------------------------------------------------------------------
-class CLeaf;
-typedef SFArrayBase<CLeaf>         CLeafArray;
-
 // EXISTING_CODE
 // EXISTING_CODE
 
@@ -52,6 +48,7 @@ public:
 private:
     bool contains(const string_q& _key) const;
     // EXISTING_CODE
+    friend bool operator<(const CLeaf& v1, const CLeaf& v2);
     friend ostream& operator<<(ostream& os, const CLeaf& item);
 
 protected:
@@ -126,7 +123,16 @@ inline CLeaf& CLeaf::operator=(const CLeaf& le) {
     return *this;
 }
 
+//-------------------------------------------------------------------------
+inline bool operator<(const CLeaf& v1, const CLeaf& v2) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default sort defined in class definition, assume already sorted
+    return true;
+}
+
 //---------------------------------------------------------------------------
+typedef SFArrayBase<CLeaf> CLeafArray;
 extern SFArchive& operator>>(SFArchive& archive, CLeafArray& array);
 extern SFArchive& operator<<(SFArchive& archive, const CLeafArray& array);
 

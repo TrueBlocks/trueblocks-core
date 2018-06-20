@@ -18,10 +18,6 @@
 #include "etherlib.h"
 #include "transaction.h"
 
-//--------------------------------------------------------------------------
-class CNewBlock;
-typedef SFArrayBase<CNewBlock>         CNewBlockArray;
-
 // EXISTING_CODE
 // EXISTING_CODE
 
@@ -53,6 +49,7 @@ public:
     // EXISTING_CODE
     CNewBlock(const CBlock& block);
     // EXISTING_CODE
+    friend bool operator<(const CNewBlock& v1, const CNewBlock& v2);
     friend ostream& operator<<(ostream& os, const CNewBlock& item);
 
 protected:
@@ -145,7 +142,16 @@ inline CNewBlock& CNewBlock::operator=(const CNewBlock& ne) {
     return *this;
 }
 
+//-------------------------------------------------------------------------
+inline bool operator<(const CNewBlock& v1, const CNewBlock& v2) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default sort defined in class definition, assume already sorted
+    return true;
+}
+
 //---------------------------------------------------------------------------
+typedef SFArrayBase<CNewBlock> CNewBlockArray;
 extern SFArchive& operator>>(SFArchive& archive, CNewBlockArray& array);
 extern SFArchive& operator<<(SFArchive& archive, const CNewBlockArray& array);
 

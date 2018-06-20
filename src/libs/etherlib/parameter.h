@@ -58,7 +58,7 @@ public:
     // EXISTING_CODE
     CParameter(string_q& txtIn);
     // EXISTING_CODE
-    friend bool operator<(const CParameter& p1, const CParameter& p2);
+    friend bool operator<(const CParameter& v1, const CParameter& v2);
     friend ostream& operator<<(ostream& os, const CParameter& item);
 
 protected:
@@ -145,7 +145,10 @@ inline CParameter& CParameter::operator=(const CParameter& pa) {
 
 //-------------------------------------------------------------------------
 inline bool operator<(const CParameter& v1, const CParameter& v2) {
-    return v1.name < v2.name;
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default sort defined in class definition, assume already sorted
+    return true;
 }
 
 //---------------------------------------------------------------------------

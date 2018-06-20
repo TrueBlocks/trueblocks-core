@@ -17,10 +17,6 @@
  */
 #include "transaction.h"
 
-//--------------------------------------------------------------------------
-class QSetDailyLimit;
-typedef SFArrayBase<QSetDailyLimit>         QSetDailyLimitArray;
-
 // EXISTING_CODE
 // EXISTING_CODE
 
@@ -39,6 +35,7 @@ public:
 
     // EXISTING_CODE
     // EXISTING_CODE
+    friend bool operator<(const QSetDailyLimit& v1, const QSetDailyLimit& v2);
     friend ostream& operator<<(ostream& os, const QSetDailyLimit& item);
 
 protected:
@@ -111,7 +108,16 @@ inline QSetDailyLimit& QSetDailyLimit::operator=(const QSetDailyLimit& se) {
     return *this;
 }
 
+//-------------------------------------------------------------------------
+inline bool operator<(const QSetDailyLimit& v1, const QSetDailyLimit& v2) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default sort defined in class definition, assume already sorted
+    return true;
+}
+
 //---------------------------------------------------------------------------
+typedef SFArrayBase<QSetDailyLimit> QSetDailyLimitArray;
 extern SFArchive& operator>>(SFArchive& archive, QSetDailyLimitArray& array);
 extern SFArchive& operator<<(SFArchive& archive, const QSetDailyLimitArray& array);
 

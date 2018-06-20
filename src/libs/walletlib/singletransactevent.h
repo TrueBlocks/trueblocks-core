@@ -17,10 +17,6 @@
  */
 #include "logentry.h"
 
-//--------------------------------------------------------------------------
-class QSingleTransactEvent;
-typedef SFArrayBase<QSingleTransactEvent>         QSingleTransactEventArray;
-
 // EXISTING_CODE
 // EXISTING_CODE
 
@@ -42,6 +38,7 @@ public:
 
     // EXISTING_CODE
     // EXISTING_CODE
+    friend bool operator<(const QSingleTransactEvent& v1, const QSingleTransactEvent& v2);
     friend ostream& operator<<(ostream& os, const QSingleTransactEvent& item);
 
 protected:
@@ -120,7 +117,16 @@ inline QSingleTransactEvent& QSingleTransactEvent::operator=(const QSingleTransa
     return *this;
 }
 
+//-------------------------------------------------------------------------
+inline bool operator<(const QSingleTransactEvent& v1, const QSingleTransactEvent& v2) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default sort defined in class definition, assume already sorted
+    return true;
+}
+
 //---------------------------------------------------------------------------
+typedef SFArrayBase<QSingleTransactEvent> QSingleTransactEventArray;
 extern SFArchive& operator>>(SFArchive& archive, QSingleTransactEventArray& array);
 extern SFArchive& operator<<(SFArchive& archive, const QSingleTransactEventArray& array);
 

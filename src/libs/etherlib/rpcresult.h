@@ -19,10 +19,6 @@
 
 namespace qblocks {
 
-//--------------------------------------------------------------------------
-class CRPCResult;
-typedef SFArrayBase<CRPCResult>         CRPCResultArray;
-
 // EXISTING_CODE
 // EXISTING_CODE
 
@@ -43,6 +39,7 @@ public:
 
     // EXISTING_CODE
     // EXISTING_CODE
+    friend bool operator<(const CRPCResult& v1, const CRPCResult& v2);
     friend ostream& operator<<(ostream& os, const CRPCResult& item);
 
 protected:
@@ -119,7 +116,16 @@ inline CRPCResult& CRPCResult::operator=(const CRPCResult& rp) {
     return *this;
 }
 
+//-------------------------------------------------------------------------
+inline bool operator<(const CRPCResult& v1, const CRPCResult& v2) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default sort defined in class definition, assume already sorted
+    return true;
+}
+
 //---------------------------------------------------------------------------
+typedef SFArrayBase<CRPCResult> CRPCResultArray;
 extern SFArchive& operator>>(SFArchive& archive, CRPCResultArray& array);
 extern SFArchive& operator<<(SFArchive& archive, const CRPCResultArray& array);
 

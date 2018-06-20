@@ -17,10 +17,6 @@
  */
 #include "transaction.h"
 
-//--------------------------------------------------------------------------
-class QExecute;
-typedef SFArrayBase<QExecute>         QExecuteArray;
-
 // EXISTING_CODE
 // EXISTING_CODE
 
@@ -41,6 +37,7 @@ public:
 
     // EXISTING_CODE
     // EXISTING_CODE
+    friend bool operator<(const QExecute& v1, const QExecute& v2);
     friend ostream& operator<<(ostream& os, const QExecute& item);
 
 protected:
@@ -117,7 +114,16 @@ inline QExecute& QExecute::operator=(const QExecute& ex) {
     return *this;
 }
 
+//-------------------------------------------------------------------------
+inline bool operator<(const QExecute& v1, const QExecute& v2) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default sort defined in class definition, assume already sorted
+    return true;
+}
+
 //---------------------------------------------------------------------------
+typedef SFArrayBase<QExecute> QExecuteArray;
 extern SFArchive& operator>>(SFArchive& archive, QExecuteArray& array);
 extern SFArchive& operator<<(SFArchive& archive, const QExecuteArray& array);
 

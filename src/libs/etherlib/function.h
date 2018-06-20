@@ -53,7 +53,7 @@ public:
     bool isBuiltin;
     string_q origName;
     // EXISTING_CODE
-    friend bool operator<(const CFunction& f1, const CFunction& f2);
+    friend bool operator<(const CFunction& v1, const CFunction& v2);
     friend ostream& operator<<(ostream& os, const CFunction& item);
 
 protected:
@@ -148,10 +148,13 @@ inline CFunction& CFunction::operator=(const CFunction& fu) {
     return *this;
 }
 
-//--------------------------------------------------------------------------
+//-------------------------------------------------------------------------
 inline bool operator<(const CFunction& v1, const CFunction& v2) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // Default sort as defined in class definition
     return v1.encoding < v2.encoding;
-};
+}
 
 //---------------------------------------------------------------------------
 typedef vector<CFunction> CFunctionArray;

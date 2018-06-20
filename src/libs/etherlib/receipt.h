@@ -20,10 +20,6 @@
 
 namespace qblocks {
 
-//--------------------------------------------------------------------------
-class CReceipt;
-typedef SFArrayBase<CReceipt>         CReceiptArray;
-
 // EXISTING_CODE
 class CTransaction;
 #define NO_STATUS ((uint32_t)-1)
@@ -53,6 +49,7 @@ public:
     bool operator==(const CReceipt& r) const;
     bool operator!=(const CReceipt& r) const { return !operator==(r); }
     // EXISTING_CODE
+    friend bool operator<(const CReceipt& v1, const CReceipt& v2);
     friend ostream& operator<<(ostream& os, const CReceipt& item);
 
 protected:
@@ -153,7 +150,16 @@ inline CReceipt& CReceipt::operator=(const CReceipt& re) {
     return *this;
 }
 
+//-------------------------------------------------------------------------
+inline bool operator<(const CReceipt& v1, const CReceipt& v2) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default sort defined in class definition, assume already sorted
+    return true;
+}
+
 //---------------------------------------------------------------------------
+typedef SFArrayBase<CReceipt> CReceiptArray;
 extern SFArchive& operator>>(SFArchive& archive, CReceiptArray& array);
 extern SFArchive& operator<<(SFArchive& archive, const CReceiptArray& array);
 

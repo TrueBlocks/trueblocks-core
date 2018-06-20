@@ -21,10 +21,6 @@
 
 namespace qblocks {
 
-//--------------------------------------------------------------------------
-class CAccountWatch;
-typedef SFArrayBase<CAccountWatch>         CAccountWatchArray;
-
 // EXISTING_CODE
 class CBalanceHistory {
 public:
@@ -66,6 +62,7 @@ public:
     bool inBlock;
     CBalanceHistoryArray balanceHistory;
     // EXISTING_CODE
+    friend bool operator<(const CAccountWatch& v1, const CAccountWatch& v2);
     friend ostream& operator<<(ostream& os, const CAccountWatch& item);
 
 protected:
@@ -160,7 +157,16 @@ inline CAccountWatch& CAccountWatch::operator=(const CAccountWatch& ac) {
     return *this;
 }
 
+//-------------------------------------------------------------------------
+inline bool operator<(const CAccountWatch& v1, const CAccountWatch& v2) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default sort defined in class definition, assume already sorted
+    return true;
+}
+
 //---------------------------------------------------------------------------
+typedef SFArrayBase<CAccountWatch> CAccountWatchArray;
 extern SFArchive& operator>>(SFArchive& archive, CAccountWatchArray& array);
 extern SFArchive& operator<<(SFArchive& archive, const CAccountWatchArray& array);
 

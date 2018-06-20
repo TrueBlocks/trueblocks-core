@@ -17,10 +17,6 @@
  */
 #include "transaction.h"
 
-//--------------------------------------------------------------------------
-class QRemoveOwner;
-typedef SFArrayBase<QRemoveOwner>         QRemoveOwnerArray;
-
 // EXISTING_CODE
 // EXISTING_CODE
 
@@ -39,6 +35,7 @@ public:
 
     // EXISTING_CODE
     // EXISTING_CODE
+    friend bool operator<(const QRemoveOwner& v1, const QRemoveOwner& v2);
     friend ostream& operator<<(ostream& os, const QRemoveOwner& item);
 
 protected:
@@ -111,7 +108,16 @@ inline QRemoveOwner& QRemoveOwner::operator=(const QRemoveOwner& re) {
     return *this;
 }
 
+//-------------------------------------------------------------------------
+inline bool operator<(const QRemoveOwner& v1, const QRemoveOwner& v2) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default sort defined in class definition, assume already sorted
+    return true;
+}
+
 //---------------------------------------------------------------------------
+typedef SFArrayBase<QRemoveOwner> QRemoveOwnerArray;
 extern SFArchive& operator>>(SFArchive& archive, QRemoveOwnerArray& array);
 extern SFArchive& operator<<(SFArchive& archive, const QRemoveOwnerArray& array);
 

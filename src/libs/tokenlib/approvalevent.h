@@ -17,10 +17,6 @@
  */
 #include "logentry.h"
 
-//--------------------------------------------------------------------------
-class QApprovalEvent;
-typedef SFArrayBase<QApprovalEvent>         QApprovalEventArray;
-
 // EXISTING_CODE
 // EXISTING_CODE
 
@@ -41,6 +37,7 @@ public:
 
     // EXISTING_CODE
     // EXISTING_CODE
+    friend bool operator<(const QApprovalEvent& v1, const QApprovalEvent& v2);
     friend ostream& operator<<(ostream& os, const QApprovalEvent& item);
 
 protected:
@@ -117,7 +114,16 @@ inline QApprovalEvent& QApprovalEvent::operator=(const QApprovalEvent& ap) {
     return *this;
 }
 
+//-------------------------------------------------------------------------
+inline bool operator<(const QApprovalEvent& v1, const QApprovalEvent& v2) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default sort defined in class definition, assume already sorted
+    return true;
+}
+
 //---------------------------------------------------------------------------
+typedef SFArrayBase<QApprovalEvent> QApprovalEventArray;
 extern SFArchive& operator>>(SFArchive& archive, QApprovalEventArray& array);
 extern SFArchive& operator<<(SFArchive& archive, const QApprovalEventArray& array);
 
