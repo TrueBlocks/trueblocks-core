@@ -17,26 +17,10 @@ namespace qblocks {
 
     //-------------------------------------------------------------------------
     CRuntimeClass::CRuntimeClass(void) {
-        m_FieldList = new CFieldList;
-    }
-
-    //-------------------------------------------------------------------------
-    CFieldList *CRuntimeClass::GetFieldList(void) const {
-        return m_FieldList;
     }
 
     //-------------------------------------------------------------------------
     CRuntimeClass::~CRuntimeClass(void) {
-        if (m_FieldList) {
-            LISTPOS p = m_FieldList->GetHeadPosition();
-            while (p) {
-                CFieldData *field = m_FieldList->GetNext(p);
-                delete field;
-            }
-            m_FieldList->RemoveAll();
-            delete m_FieldList;
-            m_FieldList = NULL;
-        }
     }
 
     //-------------------------------------------------------------------------
@@ -45,7 +29,7 @@ namespace qblocks {
     }
 
     //-------------------------------------------------------------------------
-    bool CRuntimeClass::IsDerivedFrom(const CRuntimeClass* pBaseClass) const {
+    bool CRuntimeClass::isDerivedFrom(const CRuntimeClass* pBaseClass) const {
         const CRuntimeClass* pClassThis = this;
         while (pClassThis != NULL) {
             if (pClassThis == pBaseClass)
@@ -56,7 +40,7 @@ namespace qblocks {
     }
 
     //-------------------------------------------------------------------------
-    CBaseNode *CRuntimeClass::CreateObject(void) {
+    CBaseNode *CRuntimeClass::createObject(void) {
         if (m_CreateFunc)
             return (*m_CreateFunc)();
         return NULL;
@@ -64,9 +48,10 @@ namespace qblocks {
 
     //-------------------------------------------------------------------------
     CFieldData *CRuntimeClass::findField(const string_q& fieldName) {
-        for (auto field : newList)
-            if (field->getName() == fieldName)
-                return field;
+        for (size_t i = 0 ; i < fieldList.size() ; i++) {
+            if (fieldList[i].getName() == fieldName)
+                return &fieldList[i];
+        }
         return NULL;
     }
 
@@ -79,41 +64,30 @@ namespace qblocks {
     }
 
     //-------------------------------------------------------------------------
-    void CRuntimeClass::AddField(const string_q& fieldName, size_t dataType, size_t fieldID) {
-        CFieldData *field = new CFieldData(fieldName, fieldID, dataType);
-        if (field) {
-            m_FieldList->AddTail(field);
-            newList.push_back(field);
-        }
-    }
-
-    //-------------------------------------------------------------------------
-    bool compareByName(const CFieldData *v1, const CFieldData *v2 ) {
-        return v1->getName() < v2->getName();
+    void CRuntimeClass::addField(const string_q& fieldName, size_t dataType, size_t fieldID) {
+        CFieldData field(fieldName, fieldID, dataType);
+        fieldList.push_back(field);
     }
 
     //-------------------------------------------------------------------------
     void CRuntimeClass::sortFieldList(void) {
-        sort(newList.begin(), newList.end(), compareByName);
-        if (m_FieldList) {
-            *m_FieldList = CFieldList();
-            for (auto field : newList)
-                m_FieldList->AddTail(field);
-        }
+        sort(fieldList.begin(), fieldList.end());
         return;
     }
 
     //-------------------------------------------------------------------------
     void CRuntimeClass::hideAllFields(void) {
-        for (auto field : newList)
-            field->setHidden(true);
+        for (size_t i = 0 ; i < fieldList.size(); i++) {
+            fieldList.at(i).setHidden(true);
+        }
         return;
     }
 
     //-------------------------------------------------------------------------
     void CRuntimeClass::showAllFields(void) {
-        for (auto field : newList)
-            field->setHidden(false);
+        for (size_t i = 0 ; i < fieldList.size(); i++) {
+            fieldList.at(i).setHidden(false);
+        }
         return;
     }
 
@@ -122,7 +96,7 @@ namespace qblocks {
         if (!func)
             return true;
 
-        for (auto field : newList) {
+        for (const auto field : fieldList) {
             if (!(*func)(field, data))
                 return false;
         }
@@ -138,7 +112,6 @@ namespace qblocks {
             pClass->m_ClassName = strdup(copy.c_str());
         pClass->m_ObjectSize = size;
         pClass->m_BaseClass  = pBase;
-        pClass->m_FieldList  = NULL;
         pClass->m_CreateFunc = createFunc;
     }
 }  // namespace qblocks

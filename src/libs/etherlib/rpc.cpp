@@ -67,12 +67,11 @@ CReceipt RPCSession::eth_getTransactionReceipt(const string_q& _transactionHash)
     }
     receipt.gasUsed = result["gasUsed"];
     receipt.contractAddress = result["contractAddress"];
-    for (auto const& log: result["logs"])
-    {
+    for (const auto const& log: result["logs"]) {
         LogEntry entry;
         entry.address = log["address"];
         entry.data = log["data"];
-        for (auto const& topic: log["topics"])
+        for (const auto const& topic: log["topics"])
             entry.topics.push_back(topic);
         receipt.logEntries.push_back(entry);
     }

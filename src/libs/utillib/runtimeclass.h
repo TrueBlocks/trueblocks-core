@@ -27,7 +27,7 @@ namespace qblocks {
     };
 
     //----------------------------------------------------------------------------
-    typedef bool (*FIELDVISITFUNC) (const CFieldData *fld, void *data);
+    typedef bool (*FIELDVISITFUNC) (const CFieldData& fld, void *data);
 
     //----------------------------------------------------------------------------
     class CRuntimeClass {
@@ -36,20 +36,18 @@ namespace qblocks {
         size_t m_ObjectSize;
         PFNV m_CreateFunc;
         CRuntimeClass *m_BaseClass;
-        CFieldList *m_FieldList;
-        vector<CFieldData*> newList;
+        vector<CFieldData> fieldList;
 
     public:
         CRuntimeClass(void);
         virtual ~CRuntimeClass(void);
 
         char *getClassNamePtr(void) const;
-        bool IsDerivedFrom(const CRuntimeClass* pBaseClass) const;
-        void Initialize(const string_q& protoName);
-        CBaseNode *CreateObject(void);
+        bool isDerivedFrom(const CRuntimeClass* pBaseClass) const;
+        void initialize(const string_q& protoName);
+        CBaseNode *createObject(void);
 
-        void AddField(const string_q& fieldName, size_t dataType, size_t fieldID);
-        CFieldList *GetFieldList(void) const;
+        void addField(const string_q& fieldName, size_t dataType, size_t fieldID);
         void hideAllFields(void);
         void showAllFields(void);
         void sortFieldList(void);
@@ -70,7 +68,7 @@ namespace qblocks {
 #define DECLARE_NODE(CLASS_NAME) \
 public: \
     static CRuntimeClass  class##CLASS_NAME; \
-    static CBaseNode     *CreateObject    (void); \
+    static CBaseNode     *createObject    (void); \
     static void           registerClass   (void); \
            CRuntimeClass *getRuntimeClass (void) const override; \
            string_q       getValueByName  (const string_q& fieldName) const override; \
@@ -84,15 +82,15 @@ public: \
 
 //------------------------------------------------------------
 #define IMPLEMENT_NODE(CLASS_NAME, BASECLASS_NAME) \
-    static CBuiltIn       _bi##CLASS_NAME(&CLASS_NAME::class##CLASS_NAME, #CLASS_NAME, sizeof(CLASS_NAME), CLASS_NAME::CreateObject, GETRUNTIME_CLASS(BASECLASS_NAME)); \
+    static CBuiltIn       _bi##CLASS_NAME(&CLASS_NAME::class##CLASS_NAME, #CLASS_NAME, sizeof(CLASS_NAME), CLASS_NAME::createObject, GETRUNTIME_CLASS(BASECLASS_NAME)); \
            CRuntimeClass  CLASS_NAME::class##CLASS_NAME; \
            CRuntimeClass *CLASS_NAME::getRuntimeClass(void) const { return &CLASS_NAME::class##CLASS_NAME; } \
            string_q       CLASS_NAME::getClassName   (void) const { return CLASS_NAME::class##CLASS_NAME.getClassNamePtr(); } \
-           CBaseNode     *CLASS_NAME::CreateObject   (void)       { return new CLASS_NAME; }
+           CBaseNode     *CLASS_NAME::createObject   (void)       { return new CLASS_NAME; }
 
 //------------------------------------------------------------
 #define ADD_FIELD(CLASS_NAME, FIELD_NAME, FIELD_TYPE, FIELD_ID) \
-    GETRUNTIME_CLASS(CLASS_NAME)->AddField(FIELD_NAME, FIELD_TYPE, FIELD_ID);
+    GETRUNTIME_CLASS(CLASS_NAME)->addField(FIELD_NAME, FIELD_TYPE, FIELD_ID);
 
 //------------------------------------------------------------
 #define SUBFIELD_FMT(a, sf, b) string_q("[\"") + string_q(sf) + string_q("\": \"{") + \
