@@ -50,6 +50,7 @@ namespace qblocks {
 
     public:
         CFieldData(void) : m_fieldID(0), m_fieldType(0), m_hidden(false) { }
+        CFieldData(const string_q& fn, size_t id, uint64_t t) : m_fieldName(fn), m_fieldID(id), m_fieldType(t), m_hidden(false) { }
 
         bool isHidden(void) const { return m_hidden; }
         void setHidden(bool hide) { m_hidden = hide; }
@@ -70,18 +71,20 @@ namespace qblocks {
             return true;
         }
         bool operator!=(const CFieldData& data) { return !operator==(data); }
+        friend bool operator<(const CFieldData& v1, const CFieldData& v2) {
+            return v1.getName() < v2.getName();
+        }
+        friend ostream& operator<<(ostream& os, const CFieldData& item);
 
         friend class CRuntimeClass;
         friend class CFieldList;
         friend class CBaseNode;
-        friend int sortFieldsByName(const void *v1, const void *v2);
     };
 
     //-------------------------------------------------------------------------
     class CFieldList : public SFList<CFieldData*> {
     public:
         CFieldList(void) : SFList<CFieldData*>() { }
-        const CFieldData *getFieldByID(size_t id) const;
         const CFieldData *getFieldByName(const string_q& name) const;
     };
 }  // namespace qblocks

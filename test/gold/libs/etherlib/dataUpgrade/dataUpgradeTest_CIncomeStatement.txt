@@ -3,43 +3,55 @@ dataUpgrade CIncomeStatement
 --------------------------------------------------------------------------------
 className: CIncomeStatement
 baseClass: CBaseNode
-	fieldName: schema
-	  fieldID: 1001
-	  fieldType: T_NUMBER TS_NUMERAL 65561
-	  hidden: 1
-	fieldName: deleted
-	  fieldID: 1002
-	  fieldType: T_BOOL TS_NUMERAL 65556
-	  hidden: 1
-	fieldName: showing
-	  fieldID: 1003
-	  fieldType: T_BOOL TS_NUMERAL 65556
-	  hidden: 1
-	fieldName: begBal
-	  fieldID: 1004
-	  fieldType: T_NUMBER TS_NUMERAL 65561
-	  hidden: 0
-	fieldName: inflow
-	  fieldID: 1005
-	  fieldType: T_NUMBER TS_NUMERAL 65561
-	  hidden: 0
-	fieldName: outflow
-	  fieldID: 1006
-	  fieldType: T_NUMBER TS_NUMERAL 65561
-	  hidden: 0
-	fieldName: gasCostInWei
-	  fieldID: 1007
-	  fieldType: T_NUMBER TS_NUMERAL 65561
-	  hidden: 0
-	fieldName: endBal
-	  fieldID: 1008
-	  fieldType: T_NUMBER TS_NUMERAL 65561
-	  hidden: 0
-	fieldName: blockNum
-	  fieldID: 1009
-	  fieldType: T_NUMBER TS_NUMERAL 65561
-	  hidden: 0
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+begBal              	1004	0	65561	T_NUMBER TS_NUMERAL
+inflow              	1005	0	65561	T_NUMBER TS_NUMERAL
+outflow             	1006	0	65561	T_NUMBER TS_NUMERAL
+gasCostInWei        	1007	0	65561	T_NUMBER TS_NUMERAL
+endBal              	1008	0	65561	T_NUMBER TS_NUMERAL
+blockNum            	1009	0	65561	T_NUMBER TS_NUMERAL
 {
+  "begBal": 0,
+  "inflow": 0,
+  "outflow": 0,
+  "gasCostInWei": 0,
+  "endBal": 0,
+  "blockNum": 0
+}
+
+--------------------------------------------------------------------------------
+className: CIncomeStatement
+baseClass: CBaseNode
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+begBal              	1004	1	65561	T_NUMBER TS_NUMERAL
+inflow              	1005	1	65561	T_NUMBER TS_NUMERAL
+outflow             	1006	1	65561	T_NUMBER TS_NUMERAL
+gasCostInWei        	1007	1	65561	T_NUMBER TS_NUMERAL
+endBal              	1008	1	65561	T_NUMBER TS_NUMERAL
+blockNum            	1009	1	65561	T_NUMBER TS_NUMERAL
+{
+}
+
+--------------------------------------------------------------------------------
+className: CIncomeStatement
+baseClass: CBaseNode
+schema              	1001	0	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	0	65556	T_BOOL TS_NUMERAL
+showing             	1003	0	65556	T_BOOL TS_NUMERAL
+begBal              	1004	0	65561	T_NUMBER TS_NUMERAL
+inflow              	1005	0	65561	T_NUMBER TS_NUMERAL
+outflow             	1006	0	65561	T_NUMBER TS_NUMERAL
+gasCostInWei        	1007	0	65561	T_NUMBER TS_NUMERAL
+endBal              	1008	0	65561	T_NUMBER TS_NUMERAL
+blockNum            	1009	0	65561	T_NUMBER TS_NUMERAL
+{
+  "schema": 5001,
+  "deleted": 0,
+  "showing": 1,
   "begBal": 0,
   "inflow": 0,
   "outflow": 0,

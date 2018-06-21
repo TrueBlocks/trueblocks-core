@@ -54,18 +54,8 @@ bool COptions::parseArguments(string_q& command) {
             expContext().spcs = 4;
             expContext().hexNums = true;
             expContext().quoteNums = true;
-            CRuntimeClass *pClass = GETRUNTIME_CLASS(CBlock);
-            if (pClass) {
-                CFieldData *pField = pClass->FindField("blockNumber");
-                if (pField)
-                    pField->setName("number");
-            }
-            pClass = GETRUNTIME_CLASS(CBlock);
-            if (pClass) {
-                CFieldData *pField = pClass->FindField("hash");
-                if (pField)
-                    pField->setName("blockHash");
-            }
+            RENAME_FIELD(CBlock, "blockNumber", "number");
+            RENAME_FIELD(CBlock, "hash", "blockHash");
             GETRUNTIME_CLASS(CBlock)->sortFieldList();
             GETRUNTIME_CLASS(CTransaction)->sortFieldList();
             GETRUNTIME_CLASS(CReceipt)->sortFieldList();
@@ -125,14 +115,14 @@ bool COptions::parseArguments(string_q& command) {
             string_q mode = substitute(substitute(arg, "-f:",""), "--fields:","");
 
             if (mode == "a" || mode == "all") {
-                SHOW_ALL_FIELDS(CBlock);
-                SHOW_ALL_FIELDS(CTransaction);
-                SHOW_ALL_FIELDS(CReceipt);
+                GETRUNTIME_CLASS(CBlock)->showAllFields();
+                GETRUNTIME_CLASS(CTransaction)->showAllFields();
+                GETRUNTIME_CLASS(CReceipt)->showAllFields();
 
             } else if (mode == "m" || mode == "mini") {
-                HIDE_ALL_FIELDS(CBlock);
-                HIDE_ALL_FIELDS(CTransaction);
-                HIDE_ALL_FIELDS(CReceipt);
+                GETRUNTIME_CLASS(CBlock)->hideAllFields();
+                GETRUNTIME_CLASS(CTransaction)->hideAllFields();
+                GETRUNTIME_CLASS(CReceipt)->hideAllFields();
                 UNHIDE_FIELD(CBlock, "blockNumber");
                 UNHIDE_FIELD(CBlock, "timestamp");
                 UNHIDE_FIELD(CBlock, "transactions");
@@ -148,9 +138,9 @@ bool COptions::parseArguments(string_q& command) {
 
             } else if (mode == "r" || mode == "raw") {
             } else if (mode == "c" || mode == "cache") {
-                HIDE_ALL_FIELDS(CBlock);
-                HIDE_ALL_FIELDS(CTransaction);
-                HIDE_ALL_FIELDS(CReceipt);
+                GETRUNTIME_CLASS(CBlock)->hideAllFields();
+                GETRUNTIME_CLASS(CTransaction)->hideAllFields();
+                GETRUNTIME_CLASS(CReceipt)->hideAllFields();
                 UNHIDE_FIELD(CBlock, "blockNumber");
                 UNHIDE_FIELD(CBlock, "timestamp");
                 UNHIDE_FIELD(CBlock, "transactions");
@@ -187,13 +177,8 @@ bool COptions::parseArguments(string_q& command) {
         HIDE_FIELD(CTransaction, "cumulativeGasUsed");
         HIDE_FIELD(CTransaction, "gasUsed");
         HIDE_FIELD(CTransaction, "timestamp");
-        CRuntimeClass *pClass = GETRUNTIME_CLASS(CBlock);
-        if (pClass) {
-            CFieldData *pField = pClass->FindField("blockNumber");
-            if (pField)
-                pField->setName("number");
-            pClass->sortFieldList();
-        }
+        RENAME_FIELD(CBlock, "blockNumber", "number");
+        GETRUNTIME_CLASS(CBlock)->sortFieldList();
     }
 
     if (hashes && !isRaw)

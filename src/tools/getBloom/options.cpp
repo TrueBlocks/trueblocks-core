@@ -107,13 +107,9 @@ COptions::COptions(void) {
     expContext().quoteNums = false;
 
     // will sort the fields in these classes if --parity is given
-    sorts[0] = GETRUNTIME_CLASS(CBlock);
-    sorts[1] = GETRUNTIME_CLASS(CTransaction);
-    sorts[2] = GETRUNTIME_CLASS(CReceipt);
-
-    HIDE_ALL_FIELDS(CBlock);
-    HIDE_ALL_FIELDS(CTransaction);
-    HIDE_ALL_FIELDS(CReceipt);
+    sorts[0] = GETRUNTIME_CLASS(CBlock);       sorts[0]->hideAllFields();
+    sorts[1] = GETRUNTIME_CLASS(CTransaction); sorts[1]->hideAllFields();
+    sorts[2] = GETRUNTIME_CLASS(CReceipt);     sorts[2]->hideAllFields();
     UNHIDE_FIELD(CBlock, "blockNumber");
     UNHIDE_FIELD(CBlock, "logsBloom");
     Init();

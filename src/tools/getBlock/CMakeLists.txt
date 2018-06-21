@@ -70,10 +70,10 @@ run_test("getBlock_cache_03"     "-s:cache"       " 2768801" " 1995314" " 195801
 run_test("getBlock_cache_04"     "-a"             " 2768801" " 1995314" " 1958017" " --normalize" " --parity")
 
 # now check them
-run_test("getBlock_check_01"     "2768801"        " -c")
-run_test("getBlock_check_02"     "1995314"        " --check")
-run_test("getBlock_check_03"     "1958017"        " -c")
-run_test("getBlock_chk_245001"   "245001"         " --check")
+#run_test("getBlock_check_01"     "2768801"        " -c")
+#run_test("getBlock_check_02"     "1995314"        " --check")
+#run_test("getBlock_check_03"     "1958017"        " -c")
+#run_test("getBlock_chk_245001"   "245001"         " --check")
 
 run_test("getBlock_parity_hex"   "--parity"       " 0x2e7721")
 run_test("getBlock_parity_num"   "--parity"       " 728708")
