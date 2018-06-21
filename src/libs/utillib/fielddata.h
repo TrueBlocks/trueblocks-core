@@ -80,11 +80,4 @@ namespace qblocks {
         friend class CFieldList;
         friend class CBaseNode;
     };
-
-    //-------------------------------------------------------------------------
-    class CFieldList : public SFList<CFieldData*> {
-    public:
-        CFieldList(void) : SFList<CFieldData*>() { }
-        const CFieldData *getFieldByName(const string_q& name) const;
-    };
 }  // namespace qblocks

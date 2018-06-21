@@ -397,30 +397,33 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    string_q CBaseNode::toJson(const string_q& fieldsIn) const {
-        const CFieldList *fieldList = getRuntimeClass()->GetFieldList();
+    string_q CBaseNode::toJson(const string_q& fieldStrIn) const {
+
+        CRuntimeClass *pClass = getRuntimeClass();
+        if (!pClass)
+            return "";
+
+        const CFieldList *fieldList = pClass->GetFieldList();
         if (!fieldList) {
-            cerr << "No fieldList in " << getRuntimeClass()->m_ClassName
-                << ". Did you register the class? Quitting...\n";
-            cerr.flush();
-            exit(0);
+            cerr << "No fieldList in " << pClass->m_ClassName << ". Did you register the class?\n";
+            return "";
         }
 
-        // TODO(tjayrush): THIS PER DISPLAY LOOKUP IS SLOW - SAVE THIS STRING FIELD LIST AND ONLY
-        // LOAD IF DIFFERENT USE STATIC
-        CFieldList theList;
-        string_q fields = fieldsIn;
-        while (!fields.empty()) {
-            string_q field = nextTokenClear(fields, '|');
-            const CFieldData *fld = fieldList->getFieldByName(field);
-            if (!fld) {
-                cerr << "Could not find field " << field << " in class "
-                    << getRuntimeClass()->m_ClassName << ". Quitting...\n";
-                cerr.flush();
-                exit(0);
-            }
-            theList.AddTail((CFieldData*)(fld));  // NOLINT
+        vector<CFieldData*> fields;
+        string_q fieldStr = fieldStrIn;
+        while (!fieldStr.empty()) {
+            string_q field = nextTokenClear(fieldStr, '|');
+            CFieldData *fld = pClass->findField(field);
+            if (!fld)
+                cerr << "Could not find field " << field << " in class " << pClass->m_ClassName << ".\n";
+            else
+                fields.push_back(fld);
         }
+
+        CFieldList theList;
+        for (auto fld : fields)
+            theList.AddTail(fld);
+
         return toJson(&theList);
     }
 
