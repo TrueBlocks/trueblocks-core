@@ -174,7 +174,7 @@ namespace qblocks {
     //---------------------------------------------------------------------------------------
     bool startsWithAny(const string_q& haystack, const string_q& needles) {
         string need = needles.c_str();
-        for (auto elem : need)
+        for (const auto elem : need)
             if (startsWith(haystack, elem))
                 return true;
         return false;
@@ -183,7 +183,7 @@ namespace qblocks {
     //---------------------------------------------------------------------------------------
     bool endsWithAny(const string_q& haystack, const string_q& needles) {
         string need = needles.c_str();
-        for (auto elem : need)
+        for (const auto elem : need)
             if (endsWith(haystack, elem))
                 return true;
         return false;
@@ -193,7 +193,7 @@ namespace qblocks {
     string_q toLower(const string_q& in) {
         string ret;
         string str = in.c_str();
-        for (auto elem : str)
+        for (const auto elem : str)
             ret += (char)tolower(elem);
         return ret.c_str();
     }
@@ -202,7 +202,7 @@ namespace qblocks {
     string_q toUpper(const string_q& in) {
         string ret;
         string str = in.c_str();
-        for (auto elem : str)
+        for (const auto elem : str)
             ret += (char)toupper(elem);
         return ret.c_str();
     }
@@ -212,7 +212,7 @@ namespace qblocks {
         string ret;
         string str = in.c_str();
         char prev = ' '; // not a space
-        for (auto elem : str) {
+        for (const auto elem : str) {
             if (isspace(prev) || prev == '_')
                 ret += (char)toupper(elem);
             else

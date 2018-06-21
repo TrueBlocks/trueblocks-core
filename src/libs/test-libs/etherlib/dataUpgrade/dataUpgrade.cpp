@@ -151,34 +151,34 @@ bool testReadWrite(COptions& options) {
 //--------------------------------------------------------------
 CBaseNode *getNode(const string_q& nodeType) {
     CBaseNode *node = NULL;
-         if (nodeType == "CAbi")             node = CAbi::CreateObject();
-    else if (nodeType == "CFunction")        node = CFunction::CreateObject();
-    else if (nodeType == "CParameter")       node = CParameter::CreateObject();
-    else if (nodeType == "CBranch")          node = CBranch::CreateObject();
-    else if (nodeType == "CInfix")           node = CInfix::CreateObject();
-    else if (nodeType == "CLeaf")            node = CLeaf::CreateObject();
-    else if (nodeType == "CTreeNode")        node = CTreeNode::CreateObject();
-    else if (nodeType == "CTreeRoot")        node = CTreeRoot::CreateObject();
-    else if (nodeType == "CAccountWatch")    node = CAccountWatch::CreateObject();
-    else if (nodeType == "CBalHistory")      node = CBalHistory::CreateObject();
-    else if (nodeType == "CBlock")           node = CBlock::CreateObject();
-    else if (nodeType == "CIncomeStatement") node = CIncomeStatement::CreateObject();
-    else if (nodeType == "CLogEntry")        node = CLogEntry::CreateObject();
-    else if (nodeType == "CPriceQuote")      node = CPriceQuote::CreateObject();
-    else if (nodeType == "CReceipt")         node = CReceipt::CreateObject();
-    else if (nodeType == "CRPCResult")       node = CRPCResult::CreateObject();
-    else if (nodeType == "CTrace")           node = CTrace::CreateObject();
-    else if (nodeType == "CTraceAction")     node = CTraceAction::CreateObject();
-    else if (nodeType == "CTraceResult")     node = CTraceResult::CreateObject();
-    else if (nodeType == "CTransaction")     node = CTransaction::CreateObject();
-    else if (nodeType == "CNewBlock")        node = CNewBlock::CreateObject();
-    else if (nodeType == "CNewReceipt")      node = CNewReceipt::CreateObject();
+         if (nodeType == "CAbi")             node = CAbi::createObject();
+    else if (nodeType == "CFunction")        node = CFunction::createObject();
+    else if (nodeType == "CParameter")       node = CParameter::createObject();
+    else if (nodeType == "CBranch")          node = CBranch::createObject();
+    else if (nodeType == "CInfix")           node = CInfix::createObject();
+    else if (nodeType == "CLeaf")            node = CLeaf::createObject();
+    else if (nodeType == "CTreeNode")        node = CTreeNode::createObject();
+    else if (nodeType == "CTreeRoot")        node = CTreeRoot::createObject();
+    else if (nodeType == "CAccountWatch")    node = CAccountWatch::createObject();
+    else if (nodeType == "CBalHistory")      node = CBalHistory::createObject();
+    else if (nodeType == "CBlock")           node = CBlock::createObject();
+    else if (nodeType == "CIncomeStatement") node = CIncomeStatement::createObject();
+    else if (nodeType == "CLogEntry")        node = CLogEntry::createObject();
+    else if (nodeType == "CPriceQuote")      node = CPriceQuote::createObject();
+    else if (nodeType == "CReceipt")         node = CReceipt::createObject();
+    else if (nodeType == "CRPCResult")       node = CRPCResult::createObject();
+    else if (nodeType == "CTrace")           node = CTrace::createObject();
+    else if (nodeType == "CTraceAction")     node = CTraceAction::createObject();
+    else if (nodeType == "CTraceResult")     node = CTraceResult::createObject();
+    else if (nodeType == "CTransaction")     node = CTransaction::createObject();
+    else if (nodeType == "CNewBlock")        node = CNewBlock::createObject();
+    else if (nodeType == "CNewReceipt")      node = CNewReceipt::createObject();
     return node;
 }
 
 //--------------------------------------------------------------
-bool visitField(const CFieldData *fld, void *data) {
-    cout << *fld << "\n";
+bool visitField(const CFieldData& fld, void *data) {
+    cout << fld << "\n";
     return true;
 }
 

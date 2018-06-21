@@ -10,7 +10,9 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
+#define NOWALLETLIB
 #include "acctlib.h"
+#include "fromtransferfrom.h"
 #include "options.h"
 
 extern bool visitAddrs(blknum_t bn, blknum_t tx, blknum_t tc, const SFAddress& addr, void *data);
@@ -51,21 +53,50 @@ int main(int argc, const char *argv[]) {
         vector<CAddressItem> array;
         block.forEveryUniqueAddress(accumAddrs, transFilter, &array);
         sort(array.begin(), array.end(), sortAddressArray);
-        for (auto elem : array)
+        for (const auto elem : array)
             cout << elem << "\n";
     } else {
+
+        QTransferFrom::registerClass();
 
         cout << "Testing JSON export of a block\n";
         CBlock block1;
         getBlock(block1, 22000);
+
         cout << sep << "\nUsing doExport\n" << sep << "\n";
         block1.doExport(cout) ;
+
         cout << sep << "\nUsing operator<<\n" << sep << "\n";
         cout << block1;
+
         cout << sep << "\nUsing Format\n" << sep << "\n";
         cout << block1.Format() << "\n";
+
+        verbose = 5;
         cout << sep << "\nUsing Format(fmt) - TODO: should report missing field, does not.\n" << sep << "\n";
-        cout << block1.Format("[{BLOCKNUMBER}]\t[{HASH}]\t[{MINER}]\t[{NOT_A_FIELD}]") << "\n";
+        cout << block1.Format("[{PARSED}]\t[{BLOCKNUMBER}]\t[{HASH}]\t[{MINER}]\t[{NOT_A_FIELD}]") << "\n";
+
+        QTransferFrom tf;
+        tf._from = "0xTransferFromFrom";
+        tf._to = "0xTransferFromTo";
+        tf._value = 1001010100;
+        tf.transactionIndex = 1002;
+        cout << sep << "\nUsing Format(fmt) on a derived class QTransferFrom.\n" << sep << "\n";
+        cout << tf.Format("[{PARSED}]\t[{_FROM}]\t[{_TO}]\t[{TRANSACTIONINDEX}]\t[{NOT_A_FIELD}]") << "\n";
+
+        QFromTransferFrom ftf;
+        cout << sep << "\nNot registered, should error out\n" << sep << "\n";
+        cout << ftf.Format("[{PARSED}]\t[{_FROM}]\t[{_TO}]\t[{TRANSACTIONINDEX}]\t[{NOT_A_FIELD}]") << "\n";
+
+        QFromTransferFrom::registerClass();
+        ftf._from = "0xFromTransferFromFrom";
+        ftf._to = "0xFromTransferFromTo";
+        ftf.whop = "John";
+        ftf.werp = "Jim";
+        ftf._value = 121212121;
+        ftf.transactionIndex = 1212;
+        cout << sep << "\nUsing Format(fmt) on a derived class derived from QTransferFrom.\n" << sep << "\n";
+        cout << ftf.Format("[{PARSED}]\t[{_FROM}]\t[{_TO}]\t[{TRANSACTIONINDEX}]\t[{NOT_A_FIELD}]") << "\n";
     }
 
     return 0;

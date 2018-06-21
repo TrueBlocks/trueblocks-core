@@ -51,9 +51,25 @@ namespace qblocks {
     public:
         CFieldData(void) : m_fieldID(0), m_fieldType(0), m_hidden(false) { }
         CFieldData(const string_q& fn, size_t id, uint64_t t) : m_fieldName(fn), m_fieldID(id), m_fieldType(t), m_hidden(false) { }
-
-        bool isHidden(void) const { return m_hidden; }
-        void setHidden(bool hide) { m_hidden = hide; }
+        CFieldData(const CFieldData& cp) {
+            m_fieldName = cp.m_fieldName;
+            m_fieldID = cp.m_fieldID;
+            m_fieldType = cp.m_fieldType;
+            m_hidden = cp.m_hidden;
+        }
+        CFieldData& operator=(const CFieldData& cp) {
+            m_fieldName = cp.m_fieldName;
+            m_fieldID = cp.m_fieldID;
+            m_fieldType = cp.m_fieldType;
+            m_hidden = cp.m_hidden;
+            return *this;
+        }
+        bool isHidden(void) const {
+            return m_hidden;
+        }
+        void setHidden(bool hide) {
+            m_hidden = hide;
+        }
 
         bool isObject(void) const { return m_fieldType & TS_OBJECT; }
         bool isArray (void) const { return m_fieldType & TS_ARRAY;  }
