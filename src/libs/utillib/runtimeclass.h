@@ -27,6 +27,9 @@ namespace qblocks {
     };
 
     //----------------------------------------------------------------------------
+    typedef bool (*FIELDVISITFUNC) (const CFieldData *fld, void *data);
+
+    //----------------------------------------------------------------------------
     class CRuntimeClass {
     public:
         char *m_ClassName;
@@ -34,107 +37,86 @@ namespace qblocks {
         PFNV m_CreateFunc;
         CRuntimeClass *m_BaseClass;
         CFieldList *m_FieldList;
+        vector<CFieldData*> newList;
 
     public:
+        CRuntimeClass(void);
         virtual ~CRuntimeClass(void);
 
         char *getClassNamePtr(void) const;
         bool IsDerivedFrom(const CRuntimeClass* pBaseClass) const;
-        void AddField(const string_q& fieldName, size_t dataType, size_t fieldID);
-        void ClearFieldList(void);
-        string_q listOfFields(char sep = '|') const;
-        CFieldList *GetFieldList(void) const { return m_FieldList; }
         void Initialize(const string_q& protoName);
+        CBaseNode *CreateObject(void);
+
+        void AddField(const string_q& fieldName, size_t dataType, size_t fieldID);
+        CFieldList *GetFieldList(void) const;
         void hideAllFields(void);
         void showAllFields(void);
         void sortFieldList(void);
+        bool forEveryField(FIELDVISITFUNC func, void *data);
 
-        CBaseNode *CreateObject(void) {
-            if (m_CreateFunc)
-                return (*m_CreateFunc)();
-            return NULL;
-        }
-
-        virtual CFieldData *FindField(const string_q& fieldName) {
-            if (m_FieldList) {
-                LISTPOS pos = m_FieldList->GetHeadPosition();
-                while (pos) {
-                    CFieldData *field = m_FieldList->GetNext(pos);
-                    if (field->m_fieldName == fieldName)
-                        return field;
-                }
-            }
-            return NULL;
-        }
-        bool isFieldHidden(const string_q& fieldName) {
-            CFieldData *f = FindField(fieldName);
-            if (f)
-                return f->isHidden();
-            return false;
-        }
+        CFieldData *findField(const string_q& fieldName);
+        bool isFieldHidden(const string_q& fieldName);
     };
-
-    //------------------------------------------------------------
-#define GETRUNTIME_CLASS(CLASS_NAME) \
-(&CLASS_NAME::class##CLASS_NAME)
-
-    //------------------------------------------------------------
-#define DECLARE_NODE(CLASS_NAME) \
-public: \
-static CRuntimeClass class##CLASS_NAME; \
-static CBaseNode *CreateObject(void); \
-CRuntimeClass *getRuntimeClass(void) const override; \
-string_q getValueByName(const string_q& fieldName) const override; \
-bool setValueByName(const string_q& fieldName, const string_q& fieldValue) override; \
-bool Serialize(SFArchive& archive) override; \
-bool SerializeC(SFArchive& archive) const override; \
-void finishParse(void) override; \
-void Format(CExportContext& ctx, const string_q& fmtIn, void *data = NULL) const override; \
-string_q Format(const string_q& fmtIn = "") const override { \
-    CStringExportContext ctx; Format(ctx, fmtIn, NULL); return ctx.str; } \
-string_q getClassName(void) const; \
-static void registerClass(void)
-
-    //------------------------------------------------------------
-#define IMPLEMENT_NODE(CLASS_NAME, BASECLASS_NAME) \
-CRuntimeClass CLASS_NAME::class##CLASS_NAME; \
-CRuntimeClass *CLASS_NAME::getRuntimeClass(void) const { return &CLASS_NAME::class##CLASS_NAME; } \
-string_q CLASS_NAME::getClassName(void) const { return CLASS_NAME::class##CLASS_NAME.getClassNamePtr(); } \
-CBaseNode* CLASS_NAME::CreateObject(void) { return new CLASS_NAME; } \
-static CBuiltIn _bi##CLASS_NAME(&CLASS_NAME::class##CLASS_NAME, #CLASS_NAME, sizeof(CLASS_NAME), \
-CLASS_NAME::CreateObject, GETRUNTIME_CLASS(BASECLASS_NAME));
-
-    //------------------------------------------------------------
-#define ADD_FIELD(CLASS_NAME, FIELD_NAME, FIELD_TYPE, FIELD_ID) \
-GETRUNTIME_CLASS(CLASS_NAME)->AddField(FIELD_NAME, FIELD_TYPE, FIELD_ID);
-
-    //------------------------------------------------------------
-#define HIDE_FIELD(CLASS_NAME, FIELD_NAME) {\
-CFieldData *f = GETRUNTIME_CLASS(CLASS_NAME)->FindField(FIELD_NAME); if (f) { f->setHidden(true); }\
-}
-
-    //------------------------------------------------------------
-#define SUBFIELD_FMT(a, sf, b) string_q("[\"") + string_q(sf) + string_q("\": \"{") + \
-toUpper(string_q(a)) + "::" + toUpper(string_q(sf)) + "}\"" + (b ? ", ]" : "]")
-
-    //------------------------------------------------------------
-#define UNHIDE_FIELD(CLASS_NAME, FIELD_NAME) {\
-CFieldData *f = GETRUNTIME_CLASS(CLASS_NAME)->FindField(FIELD_NAME); if (f) { f->setHidden(false); }\
-}
-
-    //------------------------------------------------------------
-#define RENAME_FIELD(CLASS_NAME, OLD_NAME, NEW_NAME) {\
-CFieldData *f = GETRUNTIME_CLASS(CLASS_NAME)->FindField(OLD_NAME); if (f) { f->setName(NEW_NAME); }\
-}
-
-    //------------------------------------------------------------
-#define HIDE_ALL_FIELDS(CLASS_NAME) \
-GETRUNTIME_CLASS(CLASS_NAME)->hideAllFields();
-
-    //------------------------------------------------------------
-#define SHOW_ALL_FIELDS(CLASS_NAME) \
-GETRUNTIME_CLASS(CLASS_NAME)->showAllFields();
 
     //---------------------------------------------------------------------------
     extern string_q nextBasenodeChunk(const string_q& fieldIn, const CBaseNode *node);
+
+//------------------------------------------------------------
+#define GETRUNTIME_CLASS(CLASS_NAME) \
+(&CLASS_NAME::class##CLASS_NAME)
+
+//------------------------------------------------------------
+#define DECLARE_NODE(CLASS_NAME) \
+public: \
+    static CRuntimeClass  class##CLASS_NAME; \
+    static CBaseNode     *CreateObject    (void); \
+    static void           registerClass   (void); \
+           CRuntimeClass *getRuntimeClass (void) const override; \
+           string_q       getValueByName  (const string_q& fieldName) const override; \
+           bool           setValueByName  (const string_q& fieldName, const string_q& fieldValue) override; \
+           void           finishParse     (void) override; \
+           bool           Serialize       (SFArchive& archive) override; \
+           bool           SerializeC      (SFArchive& archive) const override; \
+           void           Format          (CExportContext& ctx, const string_q& fmtIn, void *data = NULL) const override; \
+           string_q       Format          (const string_q& fmtIn = "") const override { CStringExportContext ctx; Format(ctx, fmtIn, NULL); return ctx.str; } \
+           string_q       getClassName    (void) const;
+
+//------------------------------------------------------------
+#define IMPLEMENT_NODE(CLASS_NAME, BASECLASS_NAME) \
+    static CBuiltIn       _bi##CLASS_NAME(&CLASS_NAME::class##CLASS_NAME, #CLASS_NAME, sizeof(CLASS_NAME), CLASS_NAME::CreateObject, GETRUNTIME_CLASS(BASECLASS_NAME)); \
+           CRuntimeClass  CLASS_NAME::class##CLASS_NAME; \
+           CRuntimeClass *CLASS_NAME::getRuntimeClass(void) const { return &CLASS_NAME::class##CLASS_NAME; } \
+           string_q       CLASS_NAME::getClassName   (void) const { return CLASS_NAME::class##CLASS_NAME.getClassNamePtr(); } \
+           CBaseNode     *CLASS_NAME::CreateObject   (void)       { return new CLASS_NAME; }
+
+//------------------------------------------------------------
+#define ADD_FIELD(CLASS_NAME, FIELD_NAME, FIELD_TYPE, FIELD_ID) \
+    GETRUNTIME_CLASS(CLASS_NAME)->AddField(FIELD_NAME, FIELD_TYPE, FIELD_ID);
+
+//------------------------------------------------------------
+#define SUBFIELD_FMT(a, sf, b) string_q("[\"") + string_q(sf) + string_q("\": \"{") + \
+    toUpper(string_q(a)) + "::" + toUpper(string_q(sf)) + "}\"" + (b ? ", ]" : "]")
+
+//------------------------------------------------------------
+#define HIDE_FIELD(CLASS_NAME, FIELD_NAME) { \
+    CFieldData *f = GETRUNTIME_CLASS(CLASS_NAME)->findField(FIELD_NAME); \
+    if (f) \
+        f->setHidden(true); \
+}
+
+//------------------------------------------------------------
+#define UNHIDE_FIELD(CLASS_NAME, FIELD_NAME) { \
+    CFieldData *f = GETRUNTIME_CLASS(CLASS_NAME)->findField(FIELD_NAME); \
+    if (f) \
+        f->setHidden(false); \
+}
+
+//------------------------------------------------------------
+#define RENAME_FIELD(CLASS_NAME, OLD_NAME, NEW_NAME) { \
+    CFieldData *f = GETRUNTIME_CLASS(CLASS_NAME)->findField(OLD_NAME); \
+    if (f) \
+        f->setName(NEW_NAME); \
+}
+
 }  // namespace qblocks

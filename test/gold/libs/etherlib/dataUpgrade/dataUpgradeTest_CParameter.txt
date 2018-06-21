@@ -3,47 +3,56 @@ dataUpgrade CParameter
 --------------------------------------------------------------------------------
 className: CParameter
 baseClass: CBaseNode
-	fieldName: schema
-	  fieldID: 1001
-	  fieldType: T_NUMBER TS_NUMERAL 65561
-	  hidden: 1
-	fieldName: deleted
-	  fieldID: 1002
-	  fieldType: T_BOOL TS_NUMERAL 65556
-	  hidden: 1
-	fieldName: showing
-	  fieldID: 1003
-	  fieldType: T_BOOL TS_NUMERAL 65556
-	  hidden: 1
-	fieldName: indexed
-	  fieldID: 1004
-	  fieldType: T_BOOL TS_NUMERAL 65556
-	  hidden: 0
-	fieldName: name
-	  fieldID: 1005
-	  fieldType: T_TEXT TS_STRING 131122
-	  hidden: 0
-	fieldName: type
-	  fieldID: 1006
-	  fieldType: T_TEXT TS_STRING 131122
-	  hidden: 0
-	fieldName: isPointer
-	  fieldID: 1007
-	  fieldType: T_BOOL TS_NUMERAL 65556
-	  hidden: 0
-	fieldName: isArray
-	  fieldID: 1008
-	  fieldType: T_BOOL TS_NUMERAL 65556
-	  hidden: 0
-	fieldName: isObject
-	  fieldID: 1009
-	  fieldType: T_BOOL TS_NUMERAL 65556
-	  hidden: 0
-	fieldName: strDefault
-	  fieldID: 1010
-	  fieldType: T_TEXT TS_STRING 131122
-	  hidden: 0
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+indexed             	1004	0	65556	T_BOOL TS_NUMERAL
+name                	1005	0	131122	T_TEXT TS_STRING
+type                	1006	0	131122	T_TEXT TS_STRING
+isPointer           	1007	0	65556	T_BOOL TS_NUMERAL
+isArray             	1008	0	65556	T_BOOL TS_NUMERAL
+isObject            	1009	0	65556	T_BOOL TS_NUMERAL
+strDefault          	1010	0	131122	T_TEXT TS_STRING
 {
+  "indexed": 0,
+  "isPointer": 0,
+  "isArray": 0,
+  "isObject": 0
+}
+
+--------------------------------------------------------------------------------
+className: CParameter
+baseClass: CBaseNode
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+indexed             	1004	1	65556	T_BOOL TS_NUMERAL
+name                	1005	1	131122	T_TEXT TS_STRING
+type                	1006	1	131122	T_TEXT TS_STRING
+isPointer           	1007	1	65556	T_BOOL TS_NUMERAL
+isArray             	1008	1	65556	T_BOOL TS_NUMERAL
+isObject            	1009	1	65556	T_BOOL TS_NUMERAL
+strDefault          	1010	1	131122	T_TEXT TS_STRING
+{
+}
+
+--------------------------------------------------------------------------------
+className: CParameter
+baseClass: CBaseNode
+schema              	1001	0	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	0	65556	T_BOOL TS_NUMERAL
+showing             	1003	0	65556	T_BOOL TS_NUMERAL
+indexed             	1004	0	65556	T_BOOL TS_NUMERAL
+name                	1005	0	131122	T_TEXT TS_STRING
+type                	1006	0	131122	T_TEXT TS_STRING
+isPointer           	1007	0	65556	T_BOOL TS_NUMERAL
+isArray             	1008	0	65556	T_BOOL TS_NUMERAL
+isObject            	1009	0	65556	T_BOOL TS_NUMERAL
+strDefault          	1010	0	131122	T_TEXT TS_STRING
+{
+  "schema": 5001,
+  "deleted": 0,
+  "showing": 1,
   "indexed": 0,
   "isPointer": 0,
   "isArray": 0,

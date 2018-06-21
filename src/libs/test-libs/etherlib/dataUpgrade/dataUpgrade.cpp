@@ -173,74 +173,27 @@ CBaseNode *getNode(const string_q& nodeType) {
     else if (nodeType == "CTransaction")     node = CTransaction::CreateObject();
     else if (nodeType == "CNewBlock")        node = CNewBlock::CreateObject();
     else if (nodeType == "CNewReceipt")      node = CNewReceipt::CreateObject();
-    //    else if (nodeType == "CInfuraStats")     node = CInfuraStats::CreateObject();
-    //    else if (nodeType == "CPerson")          node = CPerson::CreateObject();
-    //    else if (nodeType == "CAccountName")     node = CAccountName::CreateObject();
     return node;
 }
 
 //--------------------------------------------------------------
-string_q baseTypeName(uint64_t type) {
-    string_q ret;
-    if (type & TS_NUMERAL) ret += (" TS_NUMERAL " + asStringU(type));
-    if (type & TS_STRING)  ret += (" TS_STRING "  + asStringU(type));
-    if (type & TS_DATE)    ret += (" TS_DATE "    + asStringU(type));
-    if (type & TS_ARRAY)   ret += (" TS_ARRAY "   + asStringU(type));
-    if (type & TS_OBJECT)  ret += (" TS_OBJECT "  + asStringU(type));
-    if (type & TS_POINTER) ret += (" TS_POINTER " + asStringU(type));
-    if (type & TS_BIGNUM)  ret += (" TS_BIGNUM "  + asStringU(type));
-    return trim(substitute(ret, "  "," "));
-}
-
-//--------------------------------------------------------------
-string_q typeName(uint64_t type) {
-
-    if (type == T_DATE)      return "T_DATE "    + baseTypeName(type);
-    if (type == T_TIME)      return "T_TIME "    + baseTypeName(type);
-    if (type == T_BOOL)      return "T_BOOL "    + baseTypeName(type);
-    if (type == T_NUMBER)    return "T_NUMBER "  + baseTypeName(type);
-    if (type == T_DOUBLE)    return "T_DOUBLE "  + baseTypeName(type);
-    if (type == T_WEI)       return "T_WEI "     + baseTypeName(type);
-    if (type == T_GAS)       return "T_GAS "     + baseTypeName(type);
-    if (type == T_ETHER)     return "T_ETHER "   + baseTypeName(type);
-    if (type == T_TEXT)      return "T_TEXT "    + baseTypeName(type);
-    if (type == T_ADDRESS)   return "T_ADDRESS " + baseTypeName(type);
-    if (type == T_TIMESTAMP) return "T_TIMESPAN "+ baseTypeName(type);
-    if (type == T_HASH)      return "T_HASH "    + baseTypeName(type);
-    if (type == T_BLOOM)     return "T_BLOOM "   + baseTypeName(type);
-    if (type == T_POINTER)   return "T_POINTER " + baseTypeName(type);
-    if (type == T_OBJECT)    return "T_OBJECT "  + baseTypeName(type);
-
-    if (type == (T_OBJECT|TS_ARRAY))  return "T_OBJECT|TS_ARRAY "  + baseTypeName(type);
-    if (type == (T_TEXT|TS_ARRAY))    return "T_TEXT|TS_ARRAY "    + baseTypeName(type);
-    if (type == (T_ADDRESS|TS_ARRAY)) return "T_ADDRESS|TS_ARRAY " + baseTypeName(type);
-
-    return "Unknown" + asStringU(type);
+bool visitField(const CFieldData *fld, void *data) {
+    cout << *fld << "\n";
+    return true;
 }
 
 //--------------------------------------------------------------
 void reportNode(CBaseNode *node) {
-    CRuntimeClass *pClass = node->getRuntimeClass();
 
+    CRuntimeClass *pClass = node->getRuntimeClass();
     cout << string_q(80, '-') << "\n";
     cout << "className: " << pClass->m_ClassName << "\n";
     cout << "baseClass: " << (pClass->m_BaseClass ? pClass->m_BaseClass->m_ClassName : "None") << "\n";
-    CFieldList *theList = pClass->m_FieldList;
-    if (!theList) {
-        cout << "Field list not found for " << pClass->m_ClassName << "\n";
-    } else {
-        LISTPOS pPos = theList->GetHeadPosition();
-        while (pPos) {
-            const CFieldData *item = theList->GetNext(pPos);
-            cout << "\tfieldName: " << item->getName()  << "\n";
-            cout << "\t  fieldID: "   << item->getID()    << "\n";
-            cout << "\t  fieldType: " << typeName(item->getType())  << "\n";
-            cout << "\t  hidden: "    << item->isHidden() << "\n";
-        }
-        cout << node->Format() << "\n";
-        cout << "\n";
-    }
+    pClass->forEveryField(visitField, NULL);
+    cout << node->Format() << "\n";
+    cout << "\n";
     cout.flush();
+
 }
 
 //--------------------------------------------------------------
@@ -248,6 +201,10 @@ bool testUpgrade(COptions& options) {
 
     CBaseNode *node = getNode(options.className);
     if (node) {
+        reportNode(node);
+        node->getRuntimeClass()->hideAllFields();
+        reportNode(node);
+        node->getRuntimeClass()->showAllFields();
         reportNode(node);
         delete node;
     } else {

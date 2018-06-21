@@ -3,27 +3,39 @@ dataUpgrade --file:cmd_file2
 --------------------------------------------------------------------------------
 className: CAbi
 baseClass: CBaseNode
-	fieldName: schema
-	  fieldID: 1001
-	  fieldType: T_NUMBER TS_NUMERAL 65561
-	  hidden: 1
-	fieldName: deleted
-	  fieldID: 1002
-	  fieldType: T_BOOL TS_NUMERAL 65556
-	  hidden: 1
-	fieldName: showing
-	  fieldID: 1003
-	  fieldType: T_BOOL TS_NUMERAL 65556
-	  hidden: 1
-	fieldName: abiByName
-	  fieldID: 1004
-	  fieldType: T_OBJECT|TS_ARRAY TS_ARRAY 1572939 TS_OBJECT 1572939
-	  hidden: 0
-	fieldName: abiByEncoding
-	  fieldID: 1005
-	  fieldType: T_OBJECT|TS_ARRAY TS_ARRAY 1572939 TS_OBJECT 1572939
-	  hidden: 0
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+abiByName           	1004	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+abiByEncoding       	1005	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 {
+  "abiByName": [],
+  "abiByEncoding": []
+}
+
+--------------------------------------------------------------------------------
+className: CAbi
+baseClass: CBaseNode
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+abiByName           	1004	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+abiByEncoding       	1005	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+{
+}
+
+--------------------------------------------------------------------------------
+className: CAbi
+baseClass: CBaseNode
+schema              	1001	0	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	0	65556	T_BOOL TS_NUMERAL
+showing             	1003	0	65556	T_BOOL TS_NUMERAL
+abiByName           	1004	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+abiByEncoding       	1005	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+{
+  "schema": 5001,
+  "deleted": 0,
+  "showing": 1,
   "abiByName": [],
   "abiByEncoding": []
 }
@@ -31,55 +43,63 @@ baseClass: CBaseNode
 --------------------------------------------------------------------------------
 className: CFunction
 baseClass: CBaseNode
-	fieldName: schema
-	  fieldID: 1001
-	  fieldType: T_NUMBER TS_NUMERAL 65561
-	  hidden: 1
-	fieldName: deleted
-	  fieldID: 1002
-	  fieldType: T_BOOL TS_NUMERAL 65556
-	  hidden: 1
-	fieldName: showing
-	  fieldID: 1003
-	  fieldType: T_BOOL TS_NUMERAL 65556
-	  hidden: 1
-	fieldName: name
-	  fieldID: 1004
-	  fieldType: T_TEXT TS_STRING 131122
-	  hidden: 0
-	fieldName: type
-	  fieldID: 1005
-	  fieldType: T_TEXT TS_STRING 131122
-	  hidden: 0
-	fieldName: anonymous
-	  fieldID: 1006
-	  fieldType: T_BOOL TS_NUMERAL 65556
-	  hidden: 1
-	fieldName: constant
-	  fieldID: 1007
-	  fieldType: T_BOOL TS_NUMERAL 65556
-	  hidden: 0
-	fieldName: payable
-	  fieldID: 1008
-	  fieldType: T_BOOL TS_NUMERAL 65556
-	  hidden: 0
-	fieldName: signature
-	  fieldID: 1009
-	  fieldType: T_TEXT TS_STRING 131122
-	  hidden: 0
-	fieldName: encoding
-	  fieldID: 1010
-	  fieldType: T_TEXT TS_STRING 131122
-	  hidden: 0
-	fieldName: inputs
-	  fieldID: 1011
-	  fieldType: T_OBJECT|TS_ARRAY TS_ARRAY 1572939 TS_OBJECT 1572939
-	  hidden: 0
-	fieldName: outputs
-	  fieldID: 1012
-	  fieldType: T_OBJECT|TS_ARRAY TS_ARRAY 1572939 TS_OBJECT 1572939
-	  hidden: 0
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+name                	1004	0	131122	T_TEXT TS_STRING
+type                	1005	0	131122	T_TEXT TS_STRING
+anonymous           	1006	1	65556	T_BOOL TS_NUMERAL
+constant            	1007	0	65556	T_BOOL TS_NUMERAL
+payable             	1008	0	65556	T_BOOL TS_NUMERAL
+signature           	1009	0	131122	T_TEXT TS_STRING
+encoding            	1010	0	131122	T_TEXT TS_STRING
+inputs              	1011	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+outputs             	1012	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 {
+  "constant": 0,
+  "payable": 0,
+  "inputs": [],
+  "outputs": []
+}
+
+--------------------------------------------------------------------------------
+className: CFunction
+baseClass: CBaseNode
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+name                	1004	1	131122	T_TEXT TS_STRING
+type                	1005	1	131122	T_TEXT TS_STRING
+anonymous           	1006	1	65556	T_BOOL TS_NUMERAL
+constant            	1007	1	65556	T_BOOL TS_NUMERAL
+payable             	1008	1	65556	T_BOOL TS_NUMERAL
+signature           	1009	1	131122	T_TEXT TS_STRING
+encoding            	1010	1	131122	T_TEXT TS_STRING
+inputs              	1011	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+outputs             	1012	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+{
+}
+
+--------------------------------------------------------------------------------
+className: CFunction
+baseClass: CBaseNode
+schema              	1001	0	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	0	65556	T_BOOL TS_NUMERAL
+showing             	1003	0	65556	T_BOOL TS_NUMERAL
+name                	1004	0	131122	T_TEXT TS_STRING
+type                	1005	0	131122	T_TEXT TS_STRING
+anonymous           	1006	0	65556	T_BOOL TS_NUMERAL
+constant            	1007	0	65556	T_BOOL TS_NUMERAL
+payable             	1008	0	65556	T_BOOL TS_NUMERAL
+signature           	1009	0	131122	T_TEXT TS_STRING
+encoding            	1010	0	131122	T_TEXT TS_STRING
+inputs              	1011	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+outputs             	1012	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+{
+  "schema": 5001,
+  "deleted": 0,
+  "showing": 1,
+  "anonymous": 0,
   "constant": 0,
   "payable": 0,
   "inputs": [],
@@ -89,47 +109,56 @@ baseClass: CBaseNode
 --------------------------------------------------------------------------------
 className: CParameter
 baseClass: CBaseNode
-	fieldName: schema
-	  fieldID: 1001
-	  fieldType: T_NUMBER TS_NUMERAL 65561
-	  hidden: 1
-	fieldName: deleted
-	  fieldID: 1002
-	  fieldType: T_BOOL TS_NUMERAL 65556
-	  hidden: 1
-	fieldName: showing
-	  fieldID: 1003
-	  fieldType: T_BOOL TS_NUMERAL 65556
-	  hidden: 1
-	fieldName: indexed
-	  fieldID: 1004
-	  fieldType: T_BOOL TS_NUMERAL 65556
-	  hidden: 0
-	fieldName: name
-	  fieldID: 1005
-	  fieldType: T_TEXT TS_STRING 131122
-	  hidden: 0
-	fieldName: type
-	  fieldID: 1006
-	  fieldType: T_TEXT TS_STRING 131122
-	  hidden: 0
-	fieldName: isPointer
-	  fieldID: 1007
-	  fieldType: T_BOOL TS_NUMERAL 65556
-	  hidden: 0
-	fieldName: isArray
-	  fieldID: 1008
-	  fieldType: T_BOOL TS_NUMERAL 65556
-	  hidden: 0
-	fieldName: isObject
-	  fieldID: 1009
-	  fieldType: T_BOOL TS_NUMERAL 65556
-	  hidden: 0
-	fieldName: strDefault
-	  fieldID: 1010
-	  fieldType: T_TEXT TS_STRING 131122
-	  hidden: 0
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+indexed             	1004	0	65556	T_BOOL TS_NUMERAL
+name                	1005	0	131122	T_TEXT TS_STRING
+type                	1006	0	131122	T_TEXT TS_STRING
+isPointer           	1007	0	65556	T_BOOL TS_NUMERAL
+isArray             	1008	0	65556	T_BOOL TS_NUMERAL
+isObject            	1009	0	65556	T_BOOL TS_NUMERAL
+strDefault          	1010	0	131122	T_TEXT TS_STRING
 {
+  "indexed": 0,
+  "isPointer": 0,
+  "isArray": 0,
+  "isObject": 0
+}
+
+--------------------------------------------------------------------------------
+className: CParameter
+baseClass: CBaseNode
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+indexed             	1004	1	65556	T_BOOL TS_NUMERAL
+name                	1005	1	131122	T_TEXT TS_STRING
+type                	1006	1	131122	T_TEXT TS_STRING
+isPointer           	1007	1	65556	T_BOOL TS_NUMERAL
+isArray             	1008	1	65556	T_BOOL TS_NUMERAL
+isObject            	1009	1	65556	T_BOOL TS_NUMERAL
+strDefault          	1010	1	131122	T_TEXT TS_STRING
+{
+}
+
+--------------------------------------------------------------------------------
+className: CParameter
+baseClass: CBaseNode
+schema              	1001	0	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	0	65556	T_BOOL TS_NUMERAL
+showing             	1003	0	65556	T_BOOL TS_NUMERAL
+indexed             	1004	0	65556	T_BOOL TS_NUMERAL
+name                	1005	0	131122	T_TEXT TS_STRING
+type                	1006	0	131122	T_TEXT TS_STRING
+isPointer           	1007	0	65556	T_BOOL TS_NUMERAL
+isArray             	1008	0	65556	T_BOOL TS_NUMERAL
+isObject            	1009	0	65556	T_BOOL TS_NUMERAL
+strDefault          	1010	0	131122	T_TEXT TS_STRING
+{
+  "schema": 5001,
+  "deleted": 0,
+  "showing": 1,
   "indexed": 0,
   "isPointer": 0,
   "isArray": 0,
@@ -140,51 +169,68 @@ Unknown node of type CAccount not created.
 --------------------------------------------------------------------------------
 className: CAccountWatch
 baseClass: CBaseNode
-	fieldName: schema
-	  fieldID: 1001
-	  fieldType: T_NUMBER TS_NUMERAL 65561
-	  hidden: 1
-	fieldName: deleted
-	  fieldID: 1002
-	  fieldType: T_BOOL TS_NUMERAL 65556
-	  hidden: 1
-	fieldName: showing
-	  fieldID: 1003
-	  fieldType: T_BOOL TS_NUMERAL 65556
-	  hidden: 1
-	fieldName: address
-	  fieldID: 1004
-	  fieldType: T_ADDRESS TS_STRING 131127
-	  hidden: 0
-	fieldName: name
-	  fieldID: 1005
-	  fieldType: T_TEXT TS_STRING 131122
-	  hidden: 0
-	fieldName: color
-	  fieldID: 1006
-	  fieldType: T_TEXT TS_STRING 131122
-	  hidden: 0
-	fieldName: firstBlock
-	  fieldID: 1007
-	  fieldType: T_NUMBER TS_NUMERAL 65561
-	  hidden: 0
-	fieldName: lastBlock
-	  fieldID: 1008
-	  fieldType: T_NUMBER TS_NUMERAL 65561
-	  hidden: 0
-	fieldName: deepScan
-	  fieldID: 1009
-	  fieldType: T_BOOL TS_NUMERAL 65556
-	  hidden: 0
-	fieldName: qbis
-	  fieldID: 1010
-	  fieldType: T_OBJECT TS_OBJECT 1048651
-	  hidden: 0
-	fieldName: nodeBal
-	  fieldID: 1011
-	  fieldType: T_WEI TS_NUMERAL 4259875 TS_BIGNUM 4259875
-	  hidden: 0
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+address             	1004	0	131127	T_ADDRESS TS_STRING
+name                	1005	0	131122	T_TEXT TS_STRING
+color               	1006	0	131122	T_TEXT TS_STRING
+firstBlock          	1007	0	65561	T_NUMBER TS_NUMERAL
+lastBlock           	1008	0	65561	T_NUMBER TS_NUMERAL
+deepScan            	1009	0	65556	T_BOOL TS_NUMERAL
+qbis                	1010	0	1048651	T_OBJECT TS_OBJECT
+nodeBal             	1011	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
 {
+  "address": "0x0",
+  "firstBlock": 0,
+  "lastBlock": 4294967295,
+  "deepScan": 0,
+  "qbis": {
+    "begBal": 0,
+    "inflow": 0,
+    "outflow": 0,
+    "gasCostInWei": 0,
+    "endBal": 0,
+    "blockNum": 0
+  },
+  "nodeBal": 0
+}
+
+--------------------------------------------------------------------------------
+className: CAccountWatch
+baseClass: CBaseNode
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+address             	1004	1	131127	T_ADDRESS TS_STRING
+name                	1005	1	131122	T_TEXT TS_STRING
+color               	1006	1	131122	T_TEXT TS_STRING
+firstBlock          	1007	1	65561	T_NUMBER TS_NUMERAL
+lastBlock           	1008	1	65561	T_NUMBER TS_NUMERAL
+deepScan            	1009	1	65556	T_BOOL TS_NUMERAL
+qbis                	1010	1	1048651	T_OBJECT TS_OBJECT
+nodeBal             	1011	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+{
+}
+
+--------------------------------------------------------------------------------
+className: CAccountWatch
+baseClass: CBaseNode
+schema              	1001	0	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	0	65556	T_BOOL TS_NUMERAL
+showing             	1003	0	65556	T_BOOL TS_NUMERAL
+address             	1004	0	131127	T_ADDRESS TS_STRING
+name                	1005	0	131122	T_TEXT TS_STRING
+color               	1006	0	131122	T_TEXT TS_STRING
+firstBlock          	1007	0	65561	T_NUMBER TS_NUMERAL
+lastBlock           	1008	0	65561	T_NUMBER TS_NUMERAL
+deepScan            	1009	0	65556	T_BOOL TS_NUMERAL
+qbis                	1010	0	1048651	T_OBJECT TS_OBJECT
+nodeBal             	1011	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+{
+  "schema": 5001,
+  "deleted": 0,
+  "showing": 1,
   "address": "0x0",
   "firstBlock": 0,
   "lastBlock": 4294967295,
@@ -203,31 +249,42 @@ baseClass: CBaseNode
 --------------------------------------------------------------------------------
 className: CBalHistory
 baseClass: CBaseNode
-	fieldName: schema
-	  fieldID: 1001
-	  fieldType: T_NUMBER TS_NUMERAL 65561
-	  hidden: 1
-	fieldName: deleted
-	  fieldID: 1002
-	  fieldType: T_BOOL TS_NUMERAL 65556
-	  hidden: 1
-	fieldName: showing
-	  fieldID: 1003
-	  fieldType: T_BOOL TS_NUMERAL 65556
-	  hidden: 1
-	fieldName: recordID
-	  fieldID: 1004
-	  fieldType: T_TEXT TS_STRING 131122
-	  hidden: 0
-	fieldName: timestamp
-	  fieldID: 1005
-	  fieldType: T_TIMESPAN TS_NUMERAL 65551
-	  hidden: 0
-	fieldName: balance
-	  fieldID: 1006
-	  fieldType: T_NUMBER TS_NUMERAL 65561
-	  hidden: 0
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+recordID            	1004	0	131122	T_TEXT TS_STRING
+timestamp           	1005	0	65551	T_TIMESPAN TS_NUMERAL
+balance             	1006	0	65561	T_NUMBER TS_NUMERAL
 {
+  "timestamp": 0,
+  "balance": 0
+}
+
+--------------------------------------------------------------------------------
+className: CBalHistory
+baseClass: CBaseNode
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+recordID            	1004	1	131122	T_TEXT TS_STRING
+timestamp           	1005	1	65551	T_TIMESPAN TS_NUMERAL
+balance             	1006	1	65561	T_NUMBER TS_NUMERAL
+{
+}
+
+--------------------------------------------------------------------------------
+className: CBalHistory
+baseClass: CBaseNode
+schema              	1001	0	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	0	65556	T_BOOL TS_NUMERAL
+showing             	1003	0	65556	T_BOOL TS_NUMERAL
+recordID            	1004	0	131122	T_TEXT TS_STRING
+timestamp           	1005	0	65551	T_TIMESPAN TS_NUMERAL
+balance             	1006	0	65561	T_NUMBER TS_NUMERAL
+{
+  "schema": 5001,
+  "deleted": 0,
+  "showing": 1,
   "timestamp": 0,
   "balance": 0
 }
@@ -235,66 +292,21 @@ baseClass: CBaseNode
 --------------------------------------------------------------------------------
 className: CBlock
 baseClass: CBaseNode
-	fieldName: schema
-	  fieldID: 1001
-	  fieldType: T_NUMBER TS_NUMERAL 65561
-	  hidden: 1
-	fieldName: deleted
-	  fieldID: 1002
-	  fieldType: T_BOOL TS_NUMERAL 65556
-	  hidden: 1
-	fieldName: showing
-	  fieldID: 1003
-	  fieldType: T_BOOL TS_NUMERAL 65556
-	  hidden: 1
-	fieldName: gasLimit
-	  fieldID: 1004
-	  fieldType: T_GAS TS_NUMERAL 4259880 TS_BIGNUM 4259880
-	  hidden: 0
-	fieldName: gasUsed
-	  fieldID: 1005
-	  fieldType: T_GAS TS_NUMERAL 4259880 TS_BIGNUM 4259880
-	  hidden: 0
-	fieldName: hash
-	  fieldID: 1006
-	  fieldType: T_HASH TS_STRING 131132
-	  hidden: 0
-	fieldName: blockNumber
-	  fieldID: 1007
-	  fieldType: T_NUMBER TS_NUMERAL 65561
-	  hidden: 0
-	fieldName: parentHash
-	  fieldID: 1008
-	  fieldType: T_HASH TS_STRING 131132
-	  hidden: 0
-	fieldName: miner
-	  fieldID: 1009
-	  fieldType: T_ADDRESS TS_STRING 131127
-	  hidden: 0
-	fieldName: difficulty
-	  fieldID: 1010
-	  fieldType: T_NUMBER TS_NUMERAL 65561
-	  hidden: 0
-	fieldName: price
-	  fieldID: 1011
-	  fieldType: T_DOUBLE TS_NUMERAL 65566
-	  hidden: 0
-	fieldName: finalized
-	  fieldID: 1012
-	  fieldType: T_BOOL TS_NUMERAL 65556
-	  hidden: 0
-	fieldName: timestamp
-	  fieldID: 1013
-	  fieldType: T_TIMESPAN TS_NUMERAL 65551
-	  hidden: 0
-	fieldName: transactions
-	  fieldID: 1014
-	  fieldType: T_OBJECT|TS_ARRAY TS_ARRAY 1572939 TS_OBJECT 1572939
-	  hidden: 0
-	fieldName: date
-	  fieldID: 1015
-	  fieldType: T_DATE TS_DATE 262149
-	  hidden: 1
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+gasLimit            	1004	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+gasUsed             	1005	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+hash                	1006	0	131132	T_HASH TS_STRING
+blockNumber         	1007	0	65561	T_NUMBER TS_NUMERAL
+parentHash          	1008	0	131132	T_HASH TS_STRING
+miner               	1009	0	131127	T_ADDRESS TS_STRING
+difficulty          	1010	0	65561	T_NUMBER TS_NUMERAL
+price               	1011	0	65566	T_DOUBLE TS_NUMERAL
+finalized           	1012	0	65556	T_BOOL TS_NUMERAL
+timestamp           	1013	0	65551	T_TIMESPAN TS_NUMERAL
+transactions        	1014	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+date                	1015	1	262149	T_DATE TS_DATE
 {
   "gasLimit": 0,
   "gasUsed": 0,
@@ -310,45 +322,114 @@ baseClass: CBaseNode
 }
 
 --------------------------------------------------------------------------------
+className: CBlock
+baseClass: CBaseNode
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+gasLimit            	1004	1	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+gasUsed             	1005	1	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+hash                	1006	1	131132	T_HASH TS_STRING
+blockNumber         	1007	1	65561	T_NUMBER TS_NUMERAL
+parentHash          	1008	1	131132	T_HASH TS_STRING
+miner               	1009	1	131127	T_ADDRESS TS_STRING
+difficulty          	1010	1	65561	T_NUMBER TS_NUMERAL
+price               	1011	1	65566	T_DOUBLE TS_NUMERAL
+finalized           	1012	1	65556	T_BOOL TS_NUMERAL
+timestamp           	1013	1	65551	T_TIMESPAN TS_NUMERAL
+transactions        	1014	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+date                	1015	1	262149	T_DATE TS_DATE
+{
+}
+
+--------------------------------------------------------------------------------
+className: CBlock
+baseClass: CBaseNode
+schema              	1001	0	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	0	65556	T_BOOL TS_NUMERAL
+showing             	1003	0	65556	T_BOOL TS_NUMERAL
+gasLimit            	1004	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+gasUsed             	1005	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+hash                	1006	0	131132	T_HASH TS_STRING
+blockNumber         	1007	0	65561	T_NUMBER TS_NUMERAL
+parentHash          	1008	0	131132	T_HASH TS_STRING
+miner               	1009	0	131127	T_ADDRESS TS_STRING
+difficulty          	1010	0	65561	T_NUMBER TS_NUMERAL
+price               	1011	0	65566	T_DOUBLE TS_NUMERAL
+finalized           	1012	0	65556	T_BOOL TS_NUMERAL
+timestamp           	1013	0	65551	T_TIMESPAN TS_NUMERAL
+transactions        	1014	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+date                	1015	0	262149	T_DATE TS_DATE
+{
+  "schema": 5001,
+  "deleted": 0,
+  "showing": 1,
+  "gasLimit": 0,
+  "gasUsed": 0,
+  "hash": "0x0",
+  "blockNumber": 0,
+  "parentHash": "0x0",
+  "miner": "0x0",
+  "difficulty": 0,
+  "price": 0,
+  "finalized": 0,
+  "timestamp": 0,
+  "transactions": [],
+  "date": "1970-01-01 00:00:00 UTC"
+}
+
+--------------------------------------------------------------------------------
 className: CIncomeStatement
 baseClass: CBaseNode
-	fieldName: schema
-	  fieldID: 1001
-	  fieldType: T_NUMBER TS_NUMERAL 65561
-	  hidden: 1
-	fieldName: deleted
-	  fieldID: 1002
-	  fieldType: T_BOOL TS_NUMERAL 65556
-	  hidden: 1
-	fieldName: showing
-	  fieldID: 1003
-	  fieldType: T_BOOL TS_NUMERAL 65556
-	  hidden: 1
-	fieldName: begBal
-	  fieldID: 1004
-	  fieldType: T_NUMBER TS_NUMERAL 65561
-	  hidden: 0
-	fieldName: inflow
-	  fieldID: 1005
-	  fieldType: T_NUMBER TS_NUMERAL 65561
-	  hidden: 0
-	fieldName: outflow
-	  fieldID: 1006
-	  fieldType: T_NUMBER TS_NUMERAL 65561
-	  hidden: 0
-	fieldName: gasCostInWei
-	  fieldID: 1007
-	  fieldType: T_NUMBER TS_NUMERAL 65561
-	  hidden: 0
-	fieldName: endBal
-	  fieldID: 1008
-	  fieldType: T_NUMBER TS_NUMERAL 65561
-	  hidden: 0
-	fieldName: blockNum
-	  fieldID: 1009
-	  fieldType: T_NUMBER TS_NUMERAL 65561
-	  hidden: 0
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+begBal              	1004	0	65561	T_NUMBER TS_NUMERAL
+inflow              	1005	0	65561	T_NUMBER TS_NUMERAL
+outflow             	1006	0	65561	T_NUMBER TS_NUMERAL
+gasCostInWei        	1007	0	65561	T_NUMBER TS_NUMERAL
+endBal              	1008	0	65561	T_NUMBER TS_NUMERAL
+blockNum            	1009	0	65561	T_NUMBER TS_NUMERAL
 {
+  "begBal": 0,
+  "inflow": 0,
+  "outflow": 0,
+  "gasCostInWei": 0,
+  "endBal": 0,
+  "blockNum": 0
+}
+
+--------------------------------------------------------------------------------
+className: CIncomeStatement
+baseClass: CBaseNode
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+begBal              	1004	1	65561	T_NUMBER TS_NUMERAL
+inflow              	1005	1	65561	T_NUMBER TS_NUMERAL
+outflow             	1006	1	65561	T_NUMBER TS_NUMERAL
+gasCostInWei        	1007	1	65561	T_NUMBER TS_NUMERAL
+endBal              	1008	1	65561	T_NUMBER TS_NUMERAL
+blockNum            	1009	1	65561	T_NUMBER TS_NUMERAL
+{
+}
+
+--------------------------------------------------------------------------------
+className: CIncomeStatement
+baseClass: CBaseNode
+schema              	1001	0	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	0	65556	T_BOOL TS_NUMERAL
+showing             	1003	0	65556	T_BOOL TS_NUMERAL
+begBal              	1004	0	65561	T_NUMBER TS_NUMERAL
+inflow              	1005	0	65561	T_NUMBER TS_NUMERAL
+outflow             	1006	0	65561	T_NUMBER TS_NUMERAL
+gasCostInWei        	1007	0	65561	T_NUMBER TS_NUMERAL
+endBal              	1008	0	65561	T_NUMBER TS_NUMERAL
+blockNum            	1009	0	65561	T_NUMBER TS_NUMERAL
+{
+  "schema": 5001,
+  "deleted": 0,
+  "showing": 1,
   "begBal": 0,
   "inflow": 0,
   "outflow": 0,
@@ -360,35 +441,46 @@ baseClass: CBaseNode
 --------------------------------------------------------------------------------
 className: CLogEntry
 baseClass: CBaseNode
-	fieldName: schema
-	  fieldID: 1001
-	  fieldType: T_NUMBER TS_NUMERAL 65561
-	  hidden: 1
-	fieldName: deleted
-	  fieldID: 1002
-	  fieldType: T_BOOL TS_NUMERAL 65556
-	  hidden: 1
-	fieldName: showing
-	  fieldID: 1003
-	  fieldType: T_BOOL TS_NUMERAL 65556
-	  hidden: 1
-	fieldName: address
-	  fieldID: 1004
-	  fieldType: T_ADDRESS TS_STRING 131127
-	  hidden: 0
-	fieldName: data
-	  fieldID: 1005
-	  fieldType: T_TEXT TS_STRING 131122
-	  hidden: 0
-	fieldName: logIndex
-	  fieldID: 1006
-	  fieldType: T_NUMBER TS_NUMERAL 65561
-	  hidden: 0
-	fieldName: topics
-	  fieldID: 1007
-	  fieldType: T_OBJECT|TS_ARRAY TS_ARRAY 1572939 TS_OBJECT 1572939
-	  hidden: 0
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+address             	1004	0	131127	T_ADDRESS TS_STRING
+data                	1005	0	131122	T_TEXT TS_STRING
+logIndex            	1006	0	65561	T_NUMBER TS_NUMERAL
+topics              	1007	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 {
+  "address": "0x0",
+  "logIndex": 0,
+  "topics": []
+}
+
+--------------------------------------------------------------------------------
+className: CLogEntry
+baseClass: CBaseNode
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+address             	1004	1	131127	T_ADDRESS TS_STRING
+data                	1005	1	131122	T_TEXT TS_STRING
+logIndex            	1006	1	65561	T_NUMBER TS_NUMERAL
+topics              	1007	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+{
+}
+
+--------------------------------------------------------------------------------
+className: CLogEntry
+baseClass: CBaseNode
+schema              	1001	0	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	0	65556	T_BOOL TS_NUMERAL
+showing             	1003	0	65556	T_BOOL TS_NUMERAL
+address             	1004	0	131127	T_ADDRESS TS_STRING
+data                	1005	0	131122	T_TEXT TS_STRING
+logIndex            	1006	0	65561	T_NUMBER TS_NUMERAL
+topics              	1007	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+{
+  "schema": 5001,
+  "deleted": 0,
+  "showing": 1,
   "address": "0x0",
   "logIndex": 0,
   "topics": []
@@ -397,31 +489,43 @@ baseClass: CBaseNode
 --------------------------------------------------------------------------------
 className: CPriceQuote
 baseClass: CBaseNode
-	fieldName: schema
-	  fieldID: 1001
-	  fieldType: T_NUMBER TS_NUMERAL 65561
-	  hidden: 1
-	fieldName: deleted
-	  fieldID: 1002
-	  fieldType: T_BOOL TS_NUMERAL 65556
-	  hidden: 1
-	fieldName: showing
-	  fieldID: 1003
-	  fieldType: T_BOOL TS_NUMERAL 65556
-	  hidden: 1
-	fieldName: timestamp
-	  fieldID: 1004
-	  fieldType: T_TIMESPAN TS_NUMERAL 65551
-	  hidden: 0
-	fieldName: close
-	  fieldID: 1005
-	  fieldType: T_DOUBLE TS_NUMERAL 65566
-	  hidden: 0
-	fieldName: date
-	  fieldID: 1006
-	  fieldType: T_DATE TS_DATE 262149
-	  hidden: 0
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+timestamp           	1004	0	65551	T_TIMESPAN TS_NUMERAL
+close               	1005	0	65566	T_DOUBLE TS_NUMERAL
+date                	1006	0	262149	T_DATE TS_DATE
 {
+  "timestamp": 0,
+  "close": 0,
+  "date": "1700-01-01 00:00:01 UTC"
+}
+
+--------------------------------------------------------------------------------
+className: CPriceQuote
+baseClass: CBaseNode
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+timestamp           	1004	1	65551	T_TIMESPAN TS_NUMERAL
+close               	1005	1	65566	T_DOUBLE TS_NUMERAL
+date                	1006	1	262149	T_DATE TS_DATE
+{
+}
+
+--------------------------------------------------------------------------------
+className: CPriceQuote
+baseClass: CBaseNode
+schema              	1001	0	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	0	65556	T_BOOL TS_NUMERAL
+showing             	1003	0	65556	T_BOOL TS_NUMERAL
+timestamp           	1004	0	65551	T_TIMESPAN TS_NUMERAL
+close               	1005	0	65566	T_DOUBLE TS_NUMERAL
+date                	1006	0	262149	T_DATE TS_DATE
+{
+  "schema": 5001,
+  "deleted": 0,
+  "showing": 1,
   "timestamp": 0,
   "close": 0,
   "date": "1700-01-01 00:00:01 UTC"
@@ -430,35 +534,47 @@ baseClass: CBaseNode
 --------------------------------------------------------------------------------
 className: CReceipt
 baseClass: CBaseNode
-	fieldName: schema
-	  fieldID: 1001
-	  fieldType: T_NUMBER TS_NUMERAL 65561
-	  hidden: 1
-	fieldName: deleted
-	  fieldID: 1002
-	  fieldType: T_BOOL TS_NUMERAL 65556
-	  hidden: 1
-	fieldName: showing
-	  fieldID: 1003
-	  fieldType: T_BOOL TS_NUMERAL 65556
-	  hidden: 1
-	fieldName: contractAddress
-	  fieldID: 1004
-	  fieldType: T_ADDRESS TS_STRING 131127
-	  hidden: 0
-	fieldName: gasUsed
-	  fieldID: 1005
-	  fieldType: T_GAS TS_NUMERAL 4259880 TS_BIGNUM 4259880
-	  hidden: 0
-	fieldName: logs
-	  fieldID: 1006
-	  fieldType: T_OBJECT|TS_ARRAY TS_ARRAY 1572939 TS_OBJECT 1572939
-	  hidden: 0
-	fieldName: status
-	  fieldID: 1007
-	  fieldType: T_NUMBER TS_NUMERAL 65561
-	  hidden: 0
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+contractAddress     	1004	0	131127	T_ADDRESS TS_STRING
+gasUsed             	1005	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+logs                	1006	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+status              	1007	0	65561	T_NUMBER TS_NUMERAL
 {
+  "contractAddress": "0x0",
+  "gasUsed": 0,
+  "logs": [],
+  "status": null
+}
+
+--------------------------------------------------------------------------------
+className: CReceipt
+baseClass: CBaseNode
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+contractAddress     	1004	1	131127	T_ADDRESS TS_STRING
+gasUsed             	1005	1	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+logs                	1006	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+status              	1007	1	65561	T_NUMBER TS_NUMERAL
+{
+}
+
+--------------------------------------------------------------------------------
+className: CReceipt
+baseClass: CBaseNode
+schema              	1001	0	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	0	65556	T_BOOL TS_NUMERAL
+showing             	1003	0	65556	T_BOOL TS_NUMERAL
+contractAddress     	1004	0	131127	T_ADDRESS TS_STRING
+gasUsed             	1005	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+logs                	1006	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+status              	1007	0	65561	T_NUMBER TS_NUMERAL
+{
+  "schema": 5001,
+  "deleted": 0,
+  "showing": 1,
   "contractAddress": "0x0",
   "gasUsed": 0,
   "logs": [],
@@ -468,89 +584,119 @@ baseClass: CBaseNode
 --------------------------------------------------------------------------------
 className: CRPCResult
 baseClass: CBaseNode
-	fieldName: schema
-	  fieldID: 1001
-	  fieldType: T_NUMBER TS_NUMERAL 65561
-	  hidden: 1
-	fieldName: deleted
-	  fieldID: 1002
-	  fieldType: T_BOOL TS_NUMERAL 65556
-	  hidden: 1
-	fieldName: showing
-	  fieldID: 1003
-	  fieldType: T_BOOL TS_NUMERAL 65556
-	  hidden: 1
-	fieldName: jsonrpc
-	  fieldID: 1004
-	  fieldType: T_TEXT TS_STRING 131122
-	  hidden: 0
-	fieldName: result
-	  fieldID: 1005
-	  fieldType: T_TEXT TS_STRING 131122
-	  hidden: 0
-	fieldName: id
-	  fieldID: 1006
-	  fieldType: T_TEXT TS_STRING 131122
-	  hidden: 0
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+jsonrpc             	1004	0	131122	T_TEXT TS_STRING
+result              	1005	0	131122	T_TEXT TS_STRING
+id                  	1006	0	131122	T_TEXT TS_STRING
+{
+}
+
+--------------------------------------------------------------------------------
+className: CRPCResult
+baseClass: CBaseNode
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+jsonrpc             	1004	1	131122	T_TEXT TS_STRING
+result              	1005	1	131122	T_TEXT TS_STRING
+id                  	1006	1	131122	T_TEXT TS_STRING
+{
+}
+
+--------------------------------------------------------------------------------
+className: CRPCResult
+baseClass: CBaseNode
+schema              	1001	0	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	0	65556	T_BOOL TS_NUMERAL
+showing             	1003	0	65556	T_BOOL TS_NUMERAL
+jsonrpc             	1004	0	131122	T_TEXT TS_STRING
+result              	1005	0	131122	T_TEXT TS_STRING
+id                  	1006	0	131122	T_TEXT TS_STRING
+{
+  "schema": 5001,
+  "deleted": 0,
+  "showing": 1
+}
+
+--------------------------------------------------------------------------------
+className: CTrace
+baseClass: CBaseNode
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+blockHash           	1004	0	131132	T_HASH TS_STRING
+blockNumber         	1005	0	65561	T_NUMBER TS_NUMERAL
+subtraces           	1006	0	65561	T_NUMBER TS_NUMERAL
+traceAddress        	1007	0	655415	T_ADDRESS|TS_ARRAY TS_STRING TS_ARRAY
+transactionHash     	1008	0	131132	T_HASH TS_STRING
+transactionPosition 	1009	0	65561	T_NUMBER TS_NUMERAL
+type                	1010	0	131122	T_TEXT TS_STRING
+error               	1011	0	131122	T_TEXT TS_STRING
+action              	1012	0	1048651	T_OBJECT TS_OBJECT
+result              	1013	0	1048651	T_OBJECT TS_OBJECT
+{
+  "blockHash": "0x0",
+  "blockNumber": 0,
+  "subtraces": 0,
+  "traceAddress": [],
+  "transactionHash": "0x0",
+  "transactionPosition": 0,
+  "action": {
+    "address": "0x0",
+    "balance": 0,
+    "from": "0x0",
+    "gas": 0,
+    "refundAddress": "0x0",
+    "to": "0x0",
+    "value": 0
+  },
+  "result": {
+    "address": "0x0",
+    "gasUsed": 0
+  }
+}
+
+--------------------------------------------------------------------------------
+className: CTrace
+baseClass: CBaseNode
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+blockHash           	1004	1	131132	T_HASH TS_STRING
+blockNumber         	1005	1	65561	T_NUMBER TS_NUMERAL
+subtraces           	1006	1	65561	T_NUMBER TS_NUMERAL
+traceAddress        	1007	1	655415	T_ADDRESS|TS_ARRAY TS_STRING TS_ARRAY
+transactionHash     	1008	1	131132	T_HASH TS_STRING
+transactionPosition 	1009	1	65561	T_NUMBER TS_NUMERAL
+type                	1010	1	131122	T_TEXT TS_STRING
+error               	1011	1	131122	T_TEXT TS_STRING
+action              	1012	1	1048651	T_OBJECT TS_OBJECT
+result              	1013	1	1048651	T_OBJECT TS_OBJECT
 {
 }
 
 --------------------------------------------------------------------------------
 className: CTrace
 baseClass: CBaseNode
-	fieldName: schema
-	  fieldID: 1001
-	  fieldType: T_NUMBER TS_NUMERAL 65561
-	  hidden: 1
-	fieldName: deleted
-	  fieldID: 1002
-	  fieldType: T_BOOL TS_NUMERAL 65556
-	  hidden: 1
-	fieldName: showing
-	  fieldID: 1003
-	  fieldType: T_BOOL TS_NUMERAL 65556
-	  hidden: 1
-	fieldName: blockHash
-	  fieldID: 1004
-	  fieldType: T_HASH TS_STRING 131132
-	  hidden: 0
-	fieldName: blockNumber
-	  fieldID: 1005
-	  fieldType: T_NUMBER TS_NUMERAL 65561
-	  hidden: 0
-	fieldName: subtraces
-	  fieldID: 1006
-	  fieldType: T_NUMBER TS_NUMERAL 65561
-	  hidden: 0
-	fieldName: traceAddress
-	  fieldID: 1007
-	  fieldType: T_ADDRESS|TS_ARRAY TS_STRING 655415 TS_ARRAY 655415
-	  hidden: 0
-	fieldName: transactionHash
-	  fieldID: 1008
-	  fieldType: T_HASH TS_STRING 131132
-	  hidden: 0
-	fieldName: transactionPosition
-	  fieldID: 1009
-	  fieldType: T_NUMBER TS_NUMERAL 65561
-	  hidden: 0
-	fieldName: type
-	  fieldID: 1010
-	  fieldType: T_TEXT TS_STRING 131122
-	  hidden: 0
-	fieldName: error
-	  fieldID: 1011
-	  fieldType: T_TEXT TS_STRING 131122
-	  hidden: 0
-	fieldName: action
-	  fieldID: 1012
-	  fieldType: T_OBJECT TS_OBJECT 1048651
-	  hidden: 0
-	fieldName: result
-	  fieldID: 1013
-	  fieldType: T_OBJECT TS_OBJECT 1048651
-	  hidden: 0
+schema              	1001	0	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	0	65556	T_BOOL TS_NUMERAL
+showing             	1003	0	65556	T_BOOL TS_NUMERAL
+blockHash           	1004	0	131132	T_HASH TS_STRING
+blockNumber         	1005	0	65561	T_NUMBER TS_NUMERAL
+subtraces           	1006	0	65561	T_NUMBER TS_NUMERAL
+traceAddress        	1007	0	655415	T_ADDRESS|TS_ARRAY TS_STRING TS_ARRAY
+transactionHash     	1008	0	131132	T_HASH TS_STRING
+transactionPosition 	1009	0	65561	T_NUMBER TS_NUMERAL
+type                	1010	0	131122	T_TEXT TS_STRING
+error               	1011	0	131122	T_TEXT TS_STRING
+action              	1012	0	1048651	T_OBJECT TS_OBJECT
+result              	1013	0	1048651	T_OBJECT TS_OBJECT
 {
+  "schema": 5001,
+  "deleted": 0,
+  "showing": 1,
   "blockHash": "0x0",
   "blockNumber": 0,
   "subtraces": 0,
@@ -575,59 +721,68 @@ baseClass: CBaseNode
 --------------------------------------------------------------------------------
 className: CTraceAction
 baseClass: CBaseNode
-	fieldName: schema
-	  fieldID: 1001
-	  fieldType: T_NUMBER TS_NUMERAL 65561
-	  hidden: 1
-	fieldName: deleted
-	  fieldID: 1002
-	  fieldType: T_BOOL TS_NUMERAL 65556
-	  hidden: 1
-	fieldName: showing
-	  fieldID: 1003
-	  fieldType: T_BOOL TS_NUMERAL 65556
-	  hidden: 1
-	fieldName: address
-	  fieldID: 1004
-	  fieldType: T_ADDRESS TS_STRING 131127
-	  hidden: 0
-	fieldName: balance
-	  fieldID: 1005
-	  fieldType: T_WEI TS_NUMERAL 4259875 TS_BIGNUM 4259875
-	  hidden: 0
-	fieldName: callType
-	  fieldID: 1006
-	  fieldType: T_TEXT TS_STRING 131122
-	  hidden: 0
-	fieldName: from
-	  fieldID: 1007
-	  fieldType: T_ADDRESS TS_STRING 131127
-	  hidden: 0
-	fieldName: gas
-	  fieldID: 1008
-	  fieldType: T_GAS TS_NUMERAL 4259880 TS_BIGNUM 4259880
-	  hidden: 0
-	fieldName: init
-	  fieldID: 1009
-	  fieldType: T_TEXT TS_STRING 131122
-	  hidden: 0
-	fieldName: input
-	  fieldID: 1010
-	  fieldType: T_TEXT TS_STRING 131122
-	  hidden: 0
-	fieldName: refundAddress
-	  fieldID: 1011
-	  fieldType: T_ADDRESS TS_STRING 131127
-	  hidden: 0
-	fieldName: to
-	  fieldID: 1012
-	  fieldType: T_ADDRESS TS_STRING 131127
-	  hidden: 0
-	fieldName: value
-	  fieldID: 1013
-	  fieldType: T_WEI TS_NUMERAL 4259875 TS_BIGNUM 4259875
-	  hidden: 0
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+address             	1004	0	131127	T_ADDRESS TS_STRING
+balance             	1005	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+callType            	1006	0	131122	T_TEXT TS_STRING
+from                	1007	0	131127	T_ADDRESS TS_STRING
+gas                 	1008	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+init                	1009	0	131122	T_TEXT TS_STRING
+input               	1010	0	131122	T_TEXT TS_STRING
+refundAddress       	1011	0	131127	T_ADDRESS TS_STRING
+to                  	1012	0	131127	T_ADDRESS TS_STRING
+value               	1013	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
 {
+  "address": "0x0",
+  "balance": 0,
+  "from": "0x0",
+  "gas": 0,
+  "refundAddress": "0x0",
+  "to": "0x0",
+  "value": 0
+}
+
+--------------------------------------------------------------------------------
+className: CTraceAction
+baseClass: CBaseNode
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+address             	1004	1	131127	T_ADDRESS TS_STRING
+balance             	1005	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+callType            	1006	1	131122	T_TEXT TS_STRING
+from                	1007	1	131127	T_ADDRESS TS_STRING
+gas                 	1008	1	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+init                	1009	1	131122	T_TEXT TS_STRING
+input               	1010	1	131122	T_TEXT TS_STRING
+refundAddress       	1011	1	131127	T_ADDRESS TS_STRING
+to                  	1012	1	131127	T_ADDRESS TS_STRING
+value               	1013	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+{
+}
+
+--------------------------------------------------------------------------------
+className: CTraceAction
+baseClass: CBaseNode
+schema              	1001	0	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	0	65556	T_BOOL TS_NUMERAL
+showing             	1003	0	65556	T_BOOL TS_NUMERAL
+address             	1004	0	131127	T_ADDRESS TS_STRING
+balance             	1005	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+callType            	1006	0	131122	T_TEXT TS_STRING
+from                	1007	0	131127	T_ADDRESS TS_STRING
+gas                 	1008	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+init                	1009	0	131122	T_TEXT TS_STRING
+input               	1010	0	131122	T_TEXT TS_STRING
+refundAddress       	1011	0	131127	T_ADDRESS TS_STRING
+to                  	1012	0	131127	T_ADDRESS TS_STRING
+value               	1013	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+{
+  "schema": 5001,
+  "deleted": 0,
+  "showing": 1,
   "address": "0x0",
   "balance": 0,
   "from": "0x0",
@@ -640,35 +795,45 @@ baseClass: CBaseNode
 --------------------------------------------------------------------------------
 className: CTraceResult
 baseClass: CBaseNode
-	fieldName: schema
-	  fieldID: 1001
-	  fieldType: T_NUMBER TS_NUMERAL 65561
-	  hidden: 1
-	fieldName: deleted
-	  fieldID: 1002
-	  fieldType: T_BOOL TS_NUMERAL 65556
-	  hidden: 1
-	fieldName: showing
-	  fieldID: 1003
-	  fieldType: T_BOOL TS_NUMERAL 65556
-	  hidden: 1
-	fieldName: address
-	  fieldID: 1004
-	  fieldType: T_ADDRESS TS_STRING 131127
-	  hidden: 0
-	fieldName: code
-	  fieldID: 1005
-	  fieldType: T_TEXT TS_STRING 131122
-	  hidden: 0
-	fieldName: gasUsed
-	  fieldID: 1006
-	  fieldType: T_GAS TS_NUMERAL 4259880 TS_BIGNUM 4259880
-	  hidden: 0
-	fieldName: output
-	  fieldID: 1007
-	  fieldType: T_TEXT TS_STRING 131122
-	  hidden: 0
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+address             	1004	0	131127	T_ADDRESS TS_STRING
+code                	1005	0	131122	T_TEXT TS_STRING
+gasUsed             	1006	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+output              	1007	0	131122	T_TEXT TS_STRING
 {
+  "address": "0x0",
+  "gasUsed": 0
+}
+
+--------------------------------------------------------------------------------
+className: CTraceResult
+baseClass: CBaseNode
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+address             	1004	1	131127	T_ADDRESS TS_STRING
+code                	1005	1	131122	T_TEXT TS_STRING
+gasUsed             	1006	1	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+output              	1007	1	131122	T_TEXT TS_STRING
+{
+}
+
+--------------------------------------------------------------------------------
+className: CTraceResult
+baseClass: CBaseNode
+schema              	1001	0	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	0	65556	T_BOOL TS_NUMERAL
+showing             	1003	0	65556	T_BOOL TS_NUMERAL
+address             	1004	0	131127	T_ADDRESS TS_STRING
+code                	1005	0	131122	T_TEXT TS_STRING
+gasUsed             	1006	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+output              	1007	0	131122	T_TEXT TS_STRING
+{
+  "schema": 5001,
+  "deleted": 0,
+  "showing": 1,
   "address": "0x0",
   "gasUsed": 0
 }
@@ -676,126 +841,36 @@ baseClass: CBaseNode
 --------------------------------------------------------------------------------
 className: CTransaction
 baseClass: CBaseNode
-	fieldName: schema
-	  fieldID: 1001
-	  fieldType: T_NUMBER TS_NUMERAL 65561
-	  hidden: 1
-	fieldName: deleted
-	  fieldID: 1002
-	  fieldType: T_BOOL TS_NUMERAL 65556
-	  hidden: 1
-	fieldName: showing
-	  fieldID: 1003
-	  fieldType: T_BOOL TS_NUMERAL 65556
-	  hidden: 1
-	fieldName: hash
-	  fieldID: 1004
-	  fieldType: T_HASH TS_STRING 131132
-	  hidden: 0
-	fieldName: blockHash
-	  fieldID: 1005
-	  fieldType: T_HASH TS_STRING 131132
-	  hidden: 0
-	fieldName: blockNumber
-	  fieldID: 1006
-	  fieldType: T_NUMBER TS_NUMERAL 65561
-	  hidden: 0
-	fieldName: transactionIndex
-	  fieldID: 1007
-	  fieldType: T_NUMBER TS_NUMERAL 65561
-	  hidden: 0
-	fieldName: nonce
-	  fieldID: 1008
-	  fieldType: T_NUMBER TS_NUMERAL 65561
-	  hidden: 0
-	fieldName: timestamp
-	  fieldID: 1009
-	  fieldType: T_TIMESPAN TS_NUMERAL 65551
-	  hidden: 0
-	fieldName: from
-	  fieldID: 1010
-	  fieldType: T_ADDRESS TS_STRING 131127
-	  hidden: 0
-	fieldName: to
-	  fieldID: 1011
-	  fieldType: T_ADDRESS TS_STRING 131127
-	  hidden: 0
-	fieldName: value
-	  fieldID: 1012
-	  fieldType: T_WEI TS_NUMERAL 4259875 TS_BIGNUM 4259875
-	  hidden: 0
-	fieldName: gas
-	  fieldID: 1013
-	  fieldType: T_GAS TS_NUMERAL 4259880 TS_BIGNUM 4259880
-	  hidden: 0
-	fieldName: gasPrice
-	  fieldID: 1014
-	  fieldType: T_GAS TS_NUMERAL 4259880 TS_BIGNUM 4259880
-	  hidden: 0
-	fieldName: input
-	  fieldID: 1015
-	  fieldType: T_TEXT TS_STRING 131122
-	  hidden: 0
-	fieldName: isError
-	  fieldID: 1016
-	  fieldType: T_NUMBER TS_NUMERAL 65561
-	  hidden: 0
-	fieldName: isInternal
-	  fieldID: 1017
-	  fieldType: T_NUMBER TS_NUMERAL 65561
-	  hidden: 1
-	fieldName: receipt
-	  fieldID: 1018
-	  fieldType: T_OBJECT TS_OBJECT 1048651
-	  hidden: 0
-	fieldName: confirmations
-	  fieldID: 1019
-	  fieldType: T_NUMBER TS_NUMERAL 65561
-	  hidden: 1
-	fieldName: gasCost
-	  fieldID: 1020
-	  fieldType: T_WEI TS_NUMERAL 4259875 TS_BIGNUM 4259875
-	  hidden: 1
-	fieldName: function
-	  fieldID: 1021
-	  fieldType: T_TEXT TS_STRING 131122
-	  hidden: 1
-	fieldName: articulated
-	  fieldID: 1022
-	  fieldType: T_TEXT TS_STRING 131122
-	  hidden: 1
-	fieldName: events
-	  fieldID: 1023
-	  fieldType: T_TEXT TS_STRING 131122
-	  hidden: 1
-	fieldName: price
-	  fieldID: 1024
-	  fieldType: T_TEXT TS_STRING 131122
-	  hidden: 1
-	fieldName: gasUsed
-	  fieldID: 1025
-	  fieldType: T_GAS TS_NUMERAL 4259880 TS_BIGNUM 4259880
-	  hidden: 0
-	fieldName: date
-	  fieldID: 1026
-	  fieldType: T_DATE TS_DATE 262149
-	  hidden: 1
-	fieldName: datesh
-	  fieldID: 1027
-	  fieldType: T_DATE TS_DATE 262149
-	  hidden: 1
-	fieldName: time
-	  fieldID: 1028
-	  fieldType: T_DATE TS_DATE 262149
-	  hidden: 1
-	fieldName: ether
-	  fieldID: 1029
-	  fieldType: T_ETHER TS_NUMERAL 4259885 TS_BIGNUM 4259885
-	  hidden: 1
-	fieldName: encoding
-	  fieldID: 1030
-	  fieldType: T_TEXT TS_STRING 131122
-	  hidden: 1
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+hash                	1004	0	131132	T_HASH TS_STRING
+blockHash           	1005	0	131132	T_HASH TS_STRING
+blockNumber         	1006	0	65561	T_NUMBER TS_NUMERAL
+transactionIndex    	1007	0	65561	T_NUMBER TS_NUMERAL
+nonce               	1008	0	65561	T_NUMBER TS_NUMERAL
+timestamp           	1009	0	65551	T_TIMESPAN TS_NUMERAL
+from                	1010	0	131127	T_ADDRESS TS_STRING
+to                  	1011	0	131127	T_ADDRESS TS_STRING
+value               	1012	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+gas                 	1013	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+gasPrice            	1014	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+input               	1015	0	131122	T_TEXT TS_STRING
+isError             	1016	0	65561	T_NUMBER TS_NUMERAL
+isInternal          	1017	1	65561	T_NUMBER TS_NUMERAL
+receipt             	1018	0	1048651	T_OBJECT TS_OBJECT
+confirmations       	1019	1	65561	T_NUMBER TS_NUMERAL
+gasCost             	1020	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+function            	1021	1	131122	T_TEXT TS_STRING
+articulated         	1022	1	131122	T_TEXT TS_STRING
+events              	1023	1	131122	T_TEXT TS_STRING
+price               	1024	1	131122	T_TEXT TS_STRING
+gasUsed             	1025	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+date                	1026	1	262149	T_DATE TS_DATE
+datesh              	1027	1	262149	T_DATE TS_DATE
+time                	1028	1	262149	T_DATE TS_DATE
+ether               	1029	1	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
+encoding            	1030	1	131122	T_TEXT TS_STRING
 {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -810,6 +885,9 @@ baseClass: CBaseNode
   "gasPrice": 0,
   "isError": 0,
   "receipt": {
+    "schema": 5001,
+    "deleted": 0,
+    "showing": 1,
     "contractAddress": "0x0",
     "gasUsed": 0,
     "logs": [],
@@ -819,65 +897,183 @@ baseClass: CBaseNode
 }
 
 --------------------------------------------------------------------------------
+className: CTransaction
+baseClass: CBaseNode
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+hash                	1004	1	131132	T_HASH TS_STRING
+blockHash           	1005	1	131132	T_HASH TS_STRING
+blockNumber         	1006	1	65561	T_NUMBER TS_NUMERAL
+transactionIndex    	1007	1	65561	T_NUMBER TS_NUMERAL
+nonce               	1008	1	65561	T_NUMBER TS_NUMERAL
+timestamp           	1009	1	65551	T_TIMESPAN TS_NUMERAL
+from                	1010	1	131127	T_ADDRESS TS_STRING
+to                  	1011	1	131127	T_ADDRESS TS_STRING
+value               	1012	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+gas                 	1013	1	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+gasPrice            	1014	1	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+input               	1015	1	131122	T_TEXT TS_STRING
+isError             	1016	1	65561	T_NUMBER TS_NUMERAL
+isInternal          	1017	1	65561	T_NUMBER TS_NUMERAL
+receipt             	1018	1	1048651	T_OBJECT TS_OBJECT
+confirmations       	1019	1	65561	T_NUMBER TS_NUMERAL
+gasCost             	1020	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+function            	1021	1	131122	T_TEXT TS_STRING
+articulated         	1022	1	131122	T_TEXT TS_STRING
+events              	1023	1	131122	T_TEXT TS_STRING
+price               	1024	1	131122	T_TEXT TS_STRING
+gasUsed             	1025	1	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+date                	1026	1	262149	T_DATE TS_DATE
+datesh              	1027	1	262149	T_DATE TS_DATE
+time                	1028	1	262149	T_DATE TS_DATE
+ether               	1029	1	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
+encoding            	1030	1	131122	T_TEXT TS_STRING
+{
+}
+
+--------------------------------------------------------------------------------
+className: CTransaction
+baseClass: CBaseNode
+schema              	1001	0	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	0	65556	T_BOOL TS_NUMERAL
+showing             	1003	0	65556	T_BOOL TS_NUMERAL
+hash                	1004	0	131132	T_HASH TS_STRING
+blockHash           	1005	0	131132	T_HASH TS_STRING
+blockNumber         	1006	0	65561	T_NUMBER TS_NUMERAL
+transactionIndex    	1007	0	65561	T_NUMBER TS_NUMERAL
+nonce               	1008	0	65561	T_NUMBER TS_NUMERAL
+timestamp           	1009	0	65551	T_TIMESPAN TS_NUMERAL
+from                	1010	0	131127	T_ADDRESS TS_STRING
+to                  	1011	0	131127	T_ADDRESS TS_STRING
+value               	1012	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+gas                 	1013	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+gasPrice            	1014	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+input               	1015	0	131122	T_TEXT TS_STRING
+isError             	1016	0	65561	T_NUMBER TS_NUMERAL
+isInternal          	1017	0	65561	T_NUMBER TS_NUMERAL
+receipt             	1018	0	1048651	T_OBJECT TS_OBJECT
+confirmations       	1019	0	65561	T_NUMBER TS_NUMERAL
+gasCost             	1020	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+function            	1021	0	131122	T_TEXT TS_STRING
+articulated         	1022	0	131122	T_TEXT TS_STRING
+events              	1023	0	131122	T_TEXT TS_STRING
+price               	1024	0	131122	T_TEXT TS_STRING
+gasUsed             	1025	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+date                	1026	0	262149	T_DATE TS_DATE
+datesh              	1027	0	262149	T_DATE TS_DATE
+time                	1028	0	262149	T_DATE TS_DATE
+ether               	1029	0	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
+encoding            	1030	0	131122	T_TEXT TS_STRING
+{
+  "schema": 5001,
+  "deleted": 0,
+  "showing": 1,
+  "hash": "0x0",
+  "blockHash": "0x0",
+  "blockNumber": 0,
+  "transactionIndex": 0,
+  "nonce": 0,
+  "timestamp": 0,
+  "from": "0x0",
+  "to": "0x0",
+  "value": 0,
+  "gas": 0,
+  "gasPrice": 0,
+  "isError": 0,
+  "isInternal": 0,
+  "receipt": {
+    "schema": 5001,
+    "deleted": 0,
+    "showing": 1,
+    "contractAddress": "0x0",
+    "gasUsed": 0,
+    "logs": [],
+    "status": null
+  },
+  "gasCost": 0,
+  "function": " ",
+  "articulated": "[ "" ]",
+  "price": "++PRICE++",
+  "gasUsed": 0,
+  "date": "1970-01-01 00:00:00 UTC",
+  "datesh": "1970-01-01",
+  "time": "0:00:00 UTC",
+  "ether": 0.000000000000000000
+}
+
+--------------------------------------------------------------------------------
 className: CNewBlock
 baseClass: CBaseNode
-	fieldName: schema
-	  fieldID: 1001
-	  fieldType: T_NUMBER TS_NUMERAL 65561
-	  hidden: 1
-	fieldName: deleted
-	  fieldID: 1002
-	  fieldType: T_BOOL TS_NUMERAL 65556
-	  hidden: 1
-	fieldName: showing
-	  fieldID: 1003
-	  fieldType: T_BOOL TS_NUMERAL 65556
-	  hidden: 1
-	fieldName: gasLimit
-	  fieldID: 1004
-	  fieldType: T_GAS TS_NUMERAL 4259880 TS_BIGNUM 4259880
-	  hidden: 0
-	fieldName: gasUsed
-	  fieldID: 1005
-	  fieldType: T_GAS TS_NUMERAL 4259880 TS_BIGNUM 4259880
-	  hidden: 0
-	fieldName: hash
-	  fieldID: 1006
-	  fieldType: T_HASH TS_STRING 131132
-	  hidden: 0
-	fieldName: blockNumber
-	  fieldID: 1007
-	  fieldType: T_NUMBER TS_NUMERAL 65561
-	  hidden: 0
-	fieldName: parentHash
-	  fieldID: 1008
-	  fieldType: T_HASH TS_STRING 131132
-	  hidden: 0
-	fieldName: miner
-	  fieldID: 1009
-	  fieldType: T_ADDRESS TS_STRING 131127
-	  hidden: 0
-	fieldName: difficulty
-	  fieldID: 1010
-	  fieldType: T_NUMBER TS_NUMERAL 65561
-	  hidden: 0
-	fieldName: price
-	  fieldID: 1011
-	  fieldType: T_DOUBLE TS_NUMERAL 65566
-	  hidden: 0
-	fieldName: finalized
-	  fieldID: 1012
-	  fieldType: T_BOOL TS_NUMERAL 65556
-	  hidden: 0
-	fieldName: timestamp
-	  fieldID: 1013
-	  fieldType: T_TIMESPAN TS_NUMERAL 65551
-	  hidden: 0
-	fieldName: transactions
-	  fieldID: 1014
-	  fieldType: T_OBJECT|TS_ARRAY TS_ARRAY 1572939 TS_OBJECT 1572939
-	  hidden: 0
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+gasLimit            	1004	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+gasUsed             	1005	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+hash                	1006	0	131132	T_HASH TS_STRING
+blockNumber         	1007	0	65561	T_NUMBER TS_NUMERAL
+parentHash          	1008	0	131132	T_HASH TS_STRING
+miner               	1009	0	131127	T_ADDRESS TS_STRING
+difficulty          	1010	0	65561	T_NUMBER TS_NUMERAL
+price               	1011	0	65566	T_DOUBLE TS_NUMERAL
+finalized           	1012	0	65556	T_BOOL TS_NUMERAL
+timestamp           	1013	0	65551	T_TIMESPAN TS_NUMERAL
+transactions        	1014	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 {
+  "gasLimit": 0,
+  "gasUsed": 0,
+  "hash": "0x0",
+  "blockNumber": 0,
+  "parentHash": "0x0",
+  "miner": "0x0",
+  "difficulty": 0,
+  "price": 0,
+  "finalized": 0,
+  "timestamp": 0,
+  "transactions": []
+}
+
+--------------------------------------------------------------------------------
+className: CNewBlock
+baseClass: CBaseNode
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+gasLimit            	1004	1	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+gasUsed             	1005	1	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+hash                	1006	1	131132	T_HASH TS_STRING
+blockNumber         	1007	1	65561	T_NUMBER TS_NUMERAL
+parentHash          	1008	1	131132	T_HASH TS_STRING
+miner               	1009	1	131127	T_ADDRESS TS_STRING
+difficulty          	1010	1	65561	T_NUMBER TS_NUMERAL
+price               	1011	1	65566	T_DOUBLE TS_NUMERAL
+finalized           	1012	1	65556	T_BOOL TS_NUMERAL
+timestamp           	1013	1	65551	T_TIMESPAN TS_NUMERAL
+transactions        	1014	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+{
+}
+
+--------------------------------------------------------------------------------
+className: CNewBlock
+baseClass: CBaseNode
+schema              	1001	0	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	0	65556	T_BOOL TS_NUMERAL
+showing             	1003	0	65556	T_BOOL TS_NUMERAL
+gasLimit            	1004	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+gasUsed             	1005	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+hash                	1006	0	131132	T_HASH TS_STRING
+blockNumber         	1007	0	65561	T_NUMBER TS_NUMERAL
+parentHash          	1008	0	131132	T_HASH TS_STRING
+miner               	1009	0	131127	T_ADDRESS TS_STRING
+difficulty          	1010	0	65561	T_NUMBER TS_NUMERAL
+price               	1011	0	65566	T_DOUBLE TS_NUMERAL
+finalized           	1012	0	65556	T_BOOL TS_NUMERAL
+timestamp           	1013	0	65551	T_TIMESPAN TS_NUMERAL
+transactions        	1014	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+{
+  "schema": 5001,
+  "deleted": 0,
+  "showing": 1,
   "gasLimit": 0,
   "gasUsed": 0,
   "hash": "0x0",
@@ -894,39 +1090,51 @@ baseClass: CBaseNode
 --------------------------------------------------------------------------------
 className: CNewReceipt
 baseClass: CBaseNode
-	fieldName: schema
-	  fieldID: 1001
-	  fieldType: T_NUMBER TS_NUMERAL 65561
-	  hidden: 1
-	fieldName: deleted
-	  fieldID: 1002
-	  fieldType: T_BOOL TS_NUMERAL 65556
-	  hidden: 1
-	fieldName: showing
-	  fieldID: 1003
-	  fieldType: T_BOOL TS_NUMERAL 65556
-	  hidden: 1
-	fieldName: contractAddress
-	  fieldID: 1004
-	  fieldType: T_ADDRESS TS_STRING 131127
-	  hidden: 0
-	fieldName: gasUsed
-	  fieldID: 1005
-	  fieldType: T_GAS TS_NUMERAL 4259880 TS_BIGNUM 4259880
-	  hidden: 0
-	fieldName: logs
-	  fieldID: 1006
-	  fieldType: T_OBJECT|TS_ARRAY TS_ARRAY 1572939 TS_OBJECT 1572939
-	  hidden: 0
-	fieldName: logsBloom
-	  fieldID: 1007
-	  fieldType: T_BLOOM TS_STRING 131137
-	  hidden: 0
-	fieldName: isError
-	  fieldID: 1008
-	  fieldType: T_BOOL TS_NUMERAL 65556
-	  hidden: 0
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+contractAddress     	1004	0	131127	T_ADDRESS TS_STRING
+gasUsed             	1005	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+logs                	1006	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+logsBloom           	1007	0	131137	T_BLOOM TS_STRING
+isError             	1008	0	65556	T_BOOL TS_NUMERAL
 {
+  "contractAddress": "0x0",
+  "gasUsed": 0,
+  "logs": [],
+  "logsBloom": "0x0",
+  "isError": 0
+}
+
+--------------------------------------------------------------------------------
+className: CNewReceipt
+baseClass: CBaseNode
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+contractAddress     	1004	1	131127	T_ADDRESS TS_STRING
+gasUsed             	1005	1	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+logs                	1006	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+logsBloom           	1007	1	131137	T_BLOOM TS_STRING
+isError             	1008	1	65556	T_BOOL TS_NUMERAL
+{
+}
+
+--------------------------------------------------------------------------------
+className: CNewReceipt
+baseClass: CBaseNode
+schema              	1001	0	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	0	65556	T_BOOL TS_NUMERAL
+showing             	1003	0	65556	T_BOOL TS_NUMERAL
+contractAddress     	1004	0	131127	T_ADDRESS TS_STRING
+gasUsed             	1005	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+logs                	1006	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+logsBloom           	1007	0	131137	T_BLOOM TS_STRING
+isError             	1008	0	65556	T_BOOL TS_NUMERAL
+{
+  "schema": 5001,
+  "deleted": 0,
+  "showing": 1,
   "contractAddress": "0x0",
   "gasUsed": 0,
   "logs": [],

@@ -3,31 +3,42 @@ dataUpgrade CBalHistory
 --------------------------------------------------------------------------------
 className: CBalHistory
 baseClass: CBaseNode
-	fieldName: schema
-	  fieldID: 1001
-	  fieldType: T_NUMBER TS_NUMERAL 65561
-	  hidden: 1
-	fieldName: deleted
-	  fieldID: 1002
-	  fieldType: T_BOOL TS_NUMERAL 65556
-	  hidden: 1
-	fieldName: showing
-	  fieldID: 1003
-	  fieldType: T_BOOL TS_NUMERAL 65556
-	  hidden: 1
-	fieldName: recordID
-	  fieldID: 1004
-	  fieldType: T_TEXT TS_STRING 131122
-	  hidden: 0
-	fieldName: timestamp
-	  fieldID: 1005
-	  fieldType: T_TIMESPAN TS_NUMERAL 65551
-	  hidden: 0
-	fieldName: balance
-	  fieldID: 1006
-	  fieldType: T_NUMBER TS_NUMERAL 65561
-	  hidden: 0
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+recordID            	1004	0	131122	T_TEXT TS_STRING
+timestamp           	1005	0	65551	T_TIMESPAN TS_NUMERAL
+balance             	1006	0	65561	T_NUMBER TS_NUMERAL
 {
+  "timestamp": 0,
+  "balance": 0
+}
+
+--------------------------------------------------------------------------------
+className: CBalHistory
+baseClass: CBaseNode
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+recordID            	1004	1	131122	T_TEXT TS_STRING
+timestamp           	1005	1	65551	T_TIMESPAN TS_NUMERAL
+balance             	1006	1	65561	T_NUMBER TS_NUMERAL
+{
+}
+
+--------------------------------------------------------------------------------
+className: CBalHistory
+baseClass: CBaseNode
+schema              	1001	0	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	0	65556	T_BOOL TS_NUMERAL
+showing             	1003	0	65556	T_BOOL TS_NUMERAL
+recordID            	1004	0	131122	T_TEXT TS_STRING
+timestamp           	1005	0	65551	T_TIMESPAN TS_NUMERAL
+balance             	1006	0	65561	T_NUMBER TS_NUMERAL
+{
+  "schema": 5001,
+  "deleted": 0,
+  "showing": 1,
   "timestamp": 0,
   "balance": 0
 }

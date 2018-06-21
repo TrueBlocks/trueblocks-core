@@ -477,6 +477,13 @@ const char *ERR_NO_DISPLAY_STR =
 }
 
 //---------------------------------------------------------------------------------------------------
+bool buildFieldList(const CFieldData *fld, void *data) {
+    string_q *s = (string_q*)data;
+    *s += (fld->getName() + "|");
+    return true;
+}
+
+//---------------------------------------------------------------------------------------------------
 void CSlurperApp::buildDisplayStrings(COptions& options) {
     // Set the default if it's not set
     if (options.exportFormat.empty())
@@ -493,7 +500,8 @@ void CSlurperApp::buildDisplayStrings(COptions& options) {
     string_q defList = toml.getConfigStr("display", "fmt_fieldList", EMPTY);
     string_q fieldList = toml.getConfigStr("display", "fmt_"+options.exportFormat+"_fieldList", defList);
     if (fieldList.empty())
-        fieldList = GETRUNTIME_CLASS(CTransaction)->listOfFields();
+        GETRUNTIME_CLASS(CTransaction)->forEveryField(buildFieldList, &fieldList);
+
     string_q origList = fieldList;
 
     theAccount.displayString = EMPTY;
@@ -503,7 +511,7 @@ void CSlurperApp::buildDisplayStrings(COptions& options) {
         bool force = contains(fieldName, "*");
         replace(fieldName, "*", EMPTY);
 
-        const CFieldData *field = GETRUNTIME_CLASS(CTransaction)->FindField(fieldName);
+        const CFieldData *field = GETRUNTIME_CLASS(CTransaction)->findField(fieldName);
         if (!field) {
             cerr << "Field '" << fieldName << "' not found in fieldList '" << origList << "'. Quitting...\n";
             exit(0);

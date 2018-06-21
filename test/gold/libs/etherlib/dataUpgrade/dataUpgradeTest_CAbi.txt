@@ -3,27 +3,39 @@ dataUpgrade CAbi
 --------------------------------------------------------------------------------
 className: CAbi
 baseClass: CBaseNode
-	fieldName: schema
-	  fieldID: 1001
-	  fieldType: T_NUMBER TS_NUMERAL 65561
-	  hidden: 1
-	fieldName: deleted
-	  fieldID: 1002
-	  fieldType: T_BOOL TS_NUMERAL 65556
-	  hidden: 1
-	fieldName: showing
-	  fieldID: 1003
-	  fieldType: T_BOOL TS_NUMERAL 65556
-	  hidden: 1
-	fieldName: abiByName
-	  fieldID: 1004
-	  fieldType: T_OBJECT|TS_ARRAY TS_ARRAY 1572939 TS_OBJECT 1572939
-	  hidden: 0
-	fieldName: abiByEncoding
-	  fieldID: 1005
-	  fieldType: T_OBJECT|TS_ARRAY TS_ARRAY 1572939 TS_OBJECT 1572939
-	  hidden: 0
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+abiByName           	1004	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+abiByEncoding       	1005	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 {
+  "abiByName": [],
+  "abiByEncoding": []
+}
+
+--------------------------------------------------------------------------------
+className: CAbi
+baseClass: CBaseNode
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+abiByName           	1004	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+abiByEncoding       	1005	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+{
+}
+
+--------------------------------------------------------------------------------
+className: CAbi
+baseClass: CBaseNode
+schema              	1001	0	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	0	65556	T_BOOL TS_NUMERAL
+showing             	1003	0	65556	T_BOOL TS_NUMERAL
+abiByName           	1004	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+abiByEncoding       	1005	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+{
+  "schema": 5001,
+  "deleted": 0,
+  "showing": 1,
   "abiByName": [],
   "abiByEncoding": []
 }
