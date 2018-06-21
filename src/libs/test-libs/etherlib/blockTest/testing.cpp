@@ -33,7 +33,8 @@ int main(int argc, const char *argv[]) {
     CBlock block;
     getBlock(block, 4312145);
 
-    cout << string_q(120, '-') << "\n";
+    string_q sep(120, '-');
+    cout << sep << "\n";
     if (options.testNum == 0) {
 
         cout << "Every address in block 4312145\n";
@@ -44,7 +45,7 @@ int main(int argc, const char *argv[]) {
         cout << "Every unique addresses in block 4312145\n";
         block.forEveryUniqueAddress(visitAddrs, transFilter, NULL);
 
-    } else {
+    } else if (options.testNum == 2) {
 
         cout << "Every unique addresses in block 4312145 (sorted)\n";
         vector<CAddressItem> array;
@@ -52,6 +53,19 @@ int main(int argc, const char *argv[]) {
         sort(array.begin(), array.end(), sortAddressArray);
         for (auto elem : array)
             cout << elem << "\n";
+    } else {
+
+        cout << "Testing JSON export of a block\n";
+        CBlock block1;
+        getBlock(block1, 22000);
+        cout << sep << "\nUsing doExport\n" << sep << "\n";
+        block1.doExport(cout) ;
+        cout << sep << "\nUsing operator<<\n" << sep << "\n";
+        cout << block1;
+        cout << sep << "\nUsing Format\n" << sep << "\n";
+        cout << block1.Format() << "\n";
+        cout << sep << "\nUsing Format(fmt) - TODO: should report missing field, does not.\n" << sep << "\n";
+        cout << block1.Format("[{BLOCKNUMBER}]\t[{HASH}]\t[{MINER}]\t[{NOT_A_FIELD}]") << "\n";
     }
 
     return 0;
