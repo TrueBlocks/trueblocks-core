@@ -41,12 +41,11 @@ namespace qblocks {
         virtual string_q toJson1(void) const;
         virtual string_q toJson(void) const;
         virtual string_q toJson(const string_q& fields) const;
-        virtual string_q toJson(const CFieldList *fields) const;
-        virtual string_q toJsonFldList(const CFieldList *fieldList) const;
+        virtual string_q jsonFromArray(const vector<CFieldData> array) const;
 
     public:
         static CRuntimeClass classCBaseNode;
-        static CBaseNode *CreateObject(void);
+        static CBaseNode *createObject(void);
         virtual CRuntimeClass *getRuntimeClass(void) const;
         virtual string_q getValueByName(const string_q& fieldName) const;
         virtual bool setValueByName(const string_q& fieldName, const string_q& fieldValue) { return false; }

@@ -215,7 +215,7 @@ void generateCode(const COptions& options, CToml& toml, const string_q& dataFile
     }
 
     //------------------------------------------------------------------------------------------------
-    for (auto fld : fieldList) {
+    for (const auto fld : fieldList) {
 
         string_q decFmt  = "\t[{TYPE}] *[{NAME}];";
         if (!fld.isPointer) {

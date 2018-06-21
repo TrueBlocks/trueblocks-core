@@ -139,11 +139,11 @@ extern string_q collapseArrays(const string_q& inStr);
         }
 
         bool first = true;
-        for (auto group : groups) {
+        for (const auto group : groups) {
             ostringstream os;
             os << (first?"":"\n") << (group.isComment?"#":"");
             os << (group.isArray?"[[":"[") << group.groupName << (group.isArray?"]]":"]") << "\n";
-            for (auto key : group.keys)
+            for (const auto key : group.keys)
                 os << (key.comment?"#":EMPTY) << key.keyName << "=" << key.value << "\n";
             WriteLine(os.str().c_str());
             first = false;
@@ -154,8 +154,8 @@ extern string_q collapseArrays(const string_q& inStr);
 
     //---------------------------------------------------------------------------------------
     void CToml::mergeFile(CToml *tomlIn) {
-        for (auto group : tomlIn->groups) {
-            for (auto key : group.keys)
+        for (const auto group : tomlIn->groups) {
+            for (const auto key : group.keys)
                 setConfigStr(group.groupName, key.keyName, key.value);
         }
     }
@@ -221,9 +221,9 @@ extern string_q collapseArrays(const string_q& inStr);
 
     //-------------------------------------------------------------------------
     ostream& operator<<(ostream& os, const CToml& tomlIn) {
-        for (auto group : tomlIn.groups) {
+        for (const auto group : tomlIn.groups) {
             os << (group.isArray?"[[":"[") << group.groupName << (group.isComment?":comment ":"") << (group.isArray?"]]":"]") << "\n";
-            for (auto key : group.keys)
+            for (const auto key : group.keys)
                 os << "\t" << key.keyName << (key.comment?":comment":"") << "=" << key.value << "\n";;
         }
         return os;
@@ -282,7 +282,7 @@ extern string_q collapseArrays(const string_q& inStr);
         isComment = group.isComment;
         isArray   = group.isArray;
         keys.clear();
-        for (auto key : group.keys)
+        for (const auto key : group.keys)
             keys.push_back(key);
     }
 

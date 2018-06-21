@@ -477,9 +477,9 @@ const char *ERR_NO_DISPLAY_STR =
 }
 
 //---------------------------------------------------------------------------------------------------
-bool buildFieldList(const CFieldData *fld, void *data) {
+bool buildFieldList(const CFieldData& fld, void *data) {
     string_q *s = (string_q*)data;
-    *s += (fld->getName() + "|");
+    *s += (fld.getName() + "|");
     return true;
 }
 
