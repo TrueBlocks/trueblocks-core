@@ -4,62 +4,20 @@ dataUpgrade 5
 --------------------------------------------------------------------------------
 className: CNewBlock
 baseClass: CBaseNode
-	fieldName: schema
-	  fieldID: 1001
-	  fieldType: T_NUMBER TS_NUMERAL 65561
-	  hidden: 1
-	fieldName: deleted
-	  fieldID: 1002
-	  fieldType: T_BOOL TS_NUMERAL 65556
-	  hidden: 1
-	fieldName: showing
-	  fieldID: 1003
-	  fieldType: T_BOOL TS_NUMERAL 65556
-	  hidden: 1
-	fieldName: gasLimit
-	  fieldID: 1004
-	  fieldType: T_GAS TS_NUMERAL 4259880 TS_BIGNUM 4259880
-	  hidden: 0
-	fieldName: gasUsed
-	  fieldID: 1005
-	  fieldType: T_GAS TS_NUMERAL 4259880 TS_BIGNUM 4259880
-	  hidden: 0
-	fieldName: hash
-	  fieldID: 1006
-	  fieldType: T_HASH TS_STRING 131132
-	  hidden: 0
-	fieldName: blockNumber
-	  fieldID: 1007
-	  fieldType: T_NUMBER TS_NUMERAL 65561
-	  hidden: 0
-	fieldName: parentHash
-	  fieldID: 1008
-	  fieldType: T_HASH TS_STRING 131132
-	  hidden: 0
-	fieldName: miner
-	  fieldID: 1009
-	  fieldType: T_ADDRESS TS_STRING 131127
-	  hidden: 0
-	fieldName: difficulty
-	  fieldID: 1010
-	  fieldType: T_NUMBER TS_NUMERAL 65561
-	  hidden: 0
-	fieldName: price
-	  fieldID: 1011
-	  fieldType: T_DOUBLE TS_NUMERAL 65566
-	  hidden: 0
-	fieldName: finalized
-	  fieldID: 1012
-	  fieldType: T_BOOL TS_NUMERAL 65556
-	  hidden: 0
-	fieldName: timestamp
-	  fieldID: 1013
-	  fieldType: T_TIMESPAN TS_NUMERAL 65551
-	  hidden: 0
-	fieldName: transactions
-	  fieldID: 1014
-	  fieldType: T_OBJECT|TS_ARRAY TS_ARRAY 1572939 TS_OBJECT 1572939
-	  hidden: 0
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+gasLimit            	1004	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+gasUsed             	1005	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+hash                	1006	0	131132	T_HASH TS_STRING
+blockNumber         	1007	0	65561	T_NUMBER TS_NUMERAL
+parentHash          	1008	0	131132	T_HASH TS_STRING
+miner               	1009	0	131127	T_ADDRESS TS_STRING
+difficulty          	1010	0	65561	T_NUMBER TS_NUMERAL
+price               	1011	0	65566	T_DOUBLE TS_NUMERAL
+finalized           	1012	0	65556	T_BOOL TS_NUMERAL
+timestamp           	1013	0	65551	T_TIMESPAN TS_NUMERAL
+transactions        	1014	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 {
   "gasLimit": 3141592,
   "gasUsed": 21000,

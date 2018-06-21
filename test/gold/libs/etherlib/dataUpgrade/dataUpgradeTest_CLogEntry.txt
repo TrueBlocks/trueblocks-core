@@ -3,35 +3,46 @@ dataUpgrade CLogEntry
 --------------------------------------------------------------------------------
 className: CLogEntry
 baseClass: CBaseNode
-	fieldName: schema
-	  fieldID: 1001
-	  fieldType: T_NUMBER TS_NUMERAL 65561
-	  hidden: 1
-	fieldName: deleted
-	  fieldID: 1002
-	  fieldType: T_BOOL TS_NUMERAL 65556
-	  hidden: 1
-	fieldName: showing
-	  fieldID: 1003
-	  fieldType: T_BOOL TS_NUMERAL 65556
-	  hidden: 1
-	fieldName: address
-	  fieldID: 1004
-	  fieldType: T_ADDRESS TS_STRING 131127
-	  hidden: 0
-	fieldName: data
-	  fieldID: 1005
-	  fieldType: T_TEXT TS_STRING 131122
-	  hidden: 0
-	fieldName: logIndex
-	  fieldID: 1006
-	  fieldType: T_NUMBER TS_NUMERAL 65561
-	  hidden: 0
-	fieldName: topics
-	  fieldID: 1007
-	  fieldType: T_OBJECT|TS_ARRAY TS_ARRAY 1572939 TS_OBJECT 1572939
-	  hidden: 0
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+address             	1004	0	131127	T_ADDRESS TS_STRING
+data                	1005	0	131122	T_TEXT TS_STRING
+logIndex            	1006	0	65561	T_NUMBER TS_NUMERAL
+topics              	1007	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 {
+  "address": "0x0",
+  "logIndex": 0,
+  "topics": []
+}
+
+--------------------------------------------------------------------------------
+className: CLogEntry
+baseClass: CBaseNode
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+address             	1004	1	131127	T_ADDRESS TS_STRING
+data                	1005	1	131122	T_TEXT TS_STRING
+logIndex            	1006	1	65561	T_NUMBER TS_NUMERAL
+topics              	1007	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+{
+}
+
+--------------------------------------------------------------------------------
+className: CLogEntry
+baseClass: CBaseNode
+schema              	1001	0	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	0	65556	T_BOOL TS_NUMERAL
+showing             	1003	0	65556	T_BOOL TS_NUMERAL
+address             	1004	0	131127	T_ADDRESS TS_STRING
+data                	1005	0	131122	T_TEXT TS_STRING
+logIndex            	1006	0	65561	T_NUMBER TS_NUMERAL
+topics              	1007	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+{
+  "schema": 5001,
+  "deleted": 0,
+  "showing": 1,
   "address": "0x0",
   "logIndex": 0,
   "topics": []
