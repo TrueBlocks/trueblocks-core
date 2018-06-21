@@ -48,4 +48,5 @@ test00.toml
 	fmt_split_record=[{NAME}]\t[{FIELDS}]\n
 	fmt_split_field=\t[{FIELD}]
 
-Done.
+name: 		NONAME
+max_width: 	10000

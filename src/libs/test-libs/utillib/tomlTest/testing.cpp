@@ -30,7 +30,8 @@ int main(int argc, const char *argv[]) {
 
         CToml toml(options.filename);
         cout << options.filename << "\n" << toml << "\n";
-        cout << "Done.\n";
+        cout << "name: " << "\t\t" << toml.getConfigStr("settings", "name", "NONAME") << "\n";
+        cout << "max_width: " << "\t" << toml.getConfigInt("display", "max_width", 10000) << "\n";
     }
     return 0;
 }

@@ -21,7 +21,8 @@ namespace qblocks {
     //-------------------------------------------------------------------------
     class CToml : public CSharedResource {
     private:
-        void Clear(void);
+        void clear(void);
+
         // no default construction or copies
         CToml(void) {}
         CToml(const CToml& toml);
@@ -36,46 +37,44 @@ namespace qblocks {
             bool     comment;
 
             CTomlKey(void);
+            CTomlKey(const string_q& n, const string_q& v, bool c) : keyName(n), value(v), comment(c) { }
             CTomlKey(const CTomlKey& key);
             CTomlKey& operator=(const CTomlKey& key);
         };
-        typedef SFList<CTomlKey*> CTomlKeyList;
 
         //-------------------------------------------------------------------------
         // support class for toml file
         class CTomlGroup {
         public:
-            string_q  groupName;
-            bool      isArray;
-            bool      isComment;
-            CTomlKeyList keys;
+            string_q         groupName;
+            bool             isArray;
+            bool             isComment;
+            vector<CTomlKey> keys;
 
             CTomlGroup(void);
+            CTomlGroup(const string_q& n, bool a, bool c) : groupName(n), isArray(a), isComment(c) { }
             CTomlGroup(const CTomlGroup& group);
 
             ~CTomlGroup(void);
 
             CTomlGroup& operator=(const CTomlGroup& group);
-
-            CTomlKey *addKey(const string_q& keyName, const string_q& val, bool commented);
-            CTomlKey *findKey(const string_q& keyName) const;
+            void addKey(const string_q& keyName, const string_q& val, bool commented);
 
         private:
-            void Clear(void);
-            void Copy(const CTomlGroup& group);
+            void clear(void);
+            void copy(const CTomlGroup& group);
 
         };
-        typedef SFList<CTomlGroup*> CTomlGroupList;
 
     protected:
-        CTomlGroup *addGroup(const string_q& group, bool commented, bool array);
-        CTomlGroup *findGroup(const string_q& group) const;
+        void addGroup(const string_q& group, bool commented, bool array);
+        void addKey  (const string_q& group, const string_q& key, const string_q& val, bool commented);
 
-        CTomlKey *addKey(const string_q& group, const string_q& key, const string_q& val, bool commented);
-        CTomlKey *findKey(const string_q& group, const string_q& key) const;
+        CTomlGroup *findGroup(const string_q& group) const;
+        CTomlKey   *findKey  (const string_q& group, const string_q& key) const;
 
     public:
-        CTomlGroupList groups;
+        vector<CTomlGroup> groups;
 
         CToml(const string_q& fileName);
         ~CToml(void);

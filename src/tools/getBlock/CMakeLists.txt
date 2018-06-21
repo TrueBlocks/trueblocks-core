@@ -56,9 +56,9 @@ run_test("getBlock_combo_two_range" "1590000" " 4000001-4000002" " 1001001-10011
 # display a bunch of blocks raw
 run_test("getBlock_raw_01"       "--source:raw"   " 2768801" " 1995314" " 1958017" " --normalize")
 run_test("getBlock_raw_02"       "-s:r"           " 2768801" " 1995314" " 1958017" " --normalize")
-run_test("getBlock_raw_03"       "-s:raw"         " 2768801" " 1995314" " 1958017" " --normalize")
-run_test("getBlock_raw_04"       "-r"             " 2768801" " 1995314" " 1958017" " --normalize")
-run_test("getBlock_raw_05"       "--raw"          " 2768801" " 1995314" " 1958017" " --normalize")
+run_special_test("getBlock_raw_03"       "-s:raw"         " 2768801" " 1995314" " 1958017" " --normalize")
+run_special_test("getBlock_raw_04"       "-r"             " 2768801" " 1995314" " 1958017" " --normalize")
+run_special_test("getBlock_raw_05"       "--raw"          " 2768801" " 1995314" " 1958017" " --normalize")
 
 # so that the test works, we must first bring these blocks onto the cache (uses undocumented options)
 run_the_test(${TEST_PATH} ${GOLD_PATH} "getBlock_force_01" ${EXECUTABLE_OUTPUT_PATH}/getBlock " 2768801" " 1995314" " 1958017" " -o")
@@ -77,7 +77,7 @@ run_test("getBlock_chk_245001"   "245001"         " --check")
 
 run_test("getBlock_parity_hex"   "--parity"       " 0x2e7721")
 run_test("getBlock_parity_num"   "--parity"       " 728708")
-run_test("getBlock_parity_range" "--parity"       " 358450-0x5785a")
+run_special_test("getBlock_parity_range" "--parity"       " 358450-0x5785a")
 
 run_test("getBlock_force_02"                  " 2769609" " 2799895" " 2872831" " 3076260" " -o")
 run_test("getBlock_multi1"   "--parity" " -r" " 2769609" " 2799895" " 2872831" " 3076260")
@@ -86,8 +86,8 @@ run_test("getBlock_multi2"   "--parity" " -a" " 2769609" " 2799895" " 2872831" "
 run_test("getBlock_terse_no_raw"  "-a"           " 4001001")
 run_test("getBlock_terse_yes_raw" "-a" " -s:raw" " 4001001")
 
-run_test("getBlock_cmd_file1" "--file:cmd_file1")
-run_test("getBlock_cmd_file2" "--file:cmd_file2")
+run_special_test("getBlock_cmd_file1" "--file:cmd_file1")
+run_special_test("getBlock_cmd_file2" "--file:cmd_file2")
 
 # More options
 run_test("getBlock_help" "-h")

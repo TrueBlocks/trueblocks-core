@@ -6,4 +6,5 @@ test10.toml
 [settings]
 	name=CheckProposalCodeFunction.txt
 
-Done.
+name: 		CheckProposalCodeFunction.txt
+max_width: 	10000
