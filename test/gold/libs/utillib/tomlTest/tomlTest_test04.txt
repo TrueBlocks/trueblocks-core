@@ -6,4 +6,5 @@ test04.toml
 [settings]
 	name=data/045_ChildDAO
 
-Done.
+name: 		data/045_ChildDAO
+max_width: 	10000

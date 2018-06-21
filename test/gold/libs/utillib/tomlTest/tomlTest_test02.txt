@@ -2,4 +2,5 @@ tomlTest argc: 2 [1:test02.toml]
 tomlTest test02.toml 
 test02.toml
 
-Done.
+name: 		NONAME
+max_width: 	10000

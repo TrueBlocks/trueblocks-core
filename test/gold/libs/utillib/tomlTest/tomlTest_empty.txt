@@ -2,4 +2,5 @@ tomlTest argc: 2 [1:empty.toml]
 tomlTest empty.toml 
 empty.toml
 
-Done.
+name: 		NONAME
+max_width: 	10000
