@@ -16,32 +16,6 @@
 
 namespace qblocks {
 
-    //-------------------------------------------------------------------------
-    const CFieldData *CFieldList::getFieldByName(const string_q& fieldString) const {
-
-        // the input may contain more than just fieldName
-        string_q fieldName = fieldString;
-        fieldName = nextTokenClear(fieldName, '|');
-
-        const CFieldData *field = NULL;
-        LISTPOS lPos = GetHeadPosition();
-        while (lPos) {
-            CFieldData *current = GetNext(lPos);
-            if (current->m_fieldName % fieldName) {
-                field = current;
-                continue;
-            }
-        }
-
-        if (!field) {
-            static CFieldData non_field;
-            non_field.m_fieldName = "unknown";
-            field = &non_field;
-        }
-
-        return field;
-    }
-
     //--------------------------------------------------------------
     static string_q baseTypeName(uint64_t type) {
         string_q ret;

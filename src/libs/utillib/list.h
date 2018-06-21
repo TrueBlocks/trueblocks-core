@@ -316,5 +316,12 @@ namespace qblocks {
         m_Tail      = NULL;
         m_Count     = 0;
     }
+
+    //-------------------------------------------------------------------------
+    class CFieldData;
+    class CFieldList : public SFList<CFieldData*> {
+    public:
+        CFieldList(void) : SFList<CFieldData*>() { }
+    };
 }  // namespace qblocks
 
