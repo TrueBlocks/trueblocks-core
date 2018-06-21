@@ -96,7 +96,7 @@ namespace qblocks {
         if (!func)
             return true;
 
-        for (const auto field : fieldList) {
+        for (auto field : fieldList) {
             if (!(*func)(field, data))
                 return false;
         }

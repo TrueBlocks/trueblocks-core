@@ -188,11 +188,11 @@ int main(int argc, const char *argv[]) {
         CFunctionArray functions;
         string_q addrList;
         bool isGenerate = !options.classDir.empty();
-        if (!(options.addrs[0] % "0xTokenLib") && !(options.addrs[0] % "0xWalletLib") && isGenerate)
-        {
+        if (!(options.addrs[0] % "0xTokenLib") && !(options.addrs[0] % "0xWalletLib") && isGenerate) {
             acquireABI(functions, "0xTokenLib",  options, true);
             acquireABI(functions, "0xWalletLib", options, true);
         }
+
         for (uint64_t i = 0 ; i < options.nAddrs ; i++) {
             options.theABI += ("ABI for addr : " + options.addrs[i] + "\n");
             options.theABI += acquireABI(functions, options.addrs[i], options, false) + "\n\n";

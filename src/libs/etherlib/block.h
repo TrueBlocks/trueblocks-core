@@ -207,3 +207,4 @@ public:
 typedef map<CAddressItem, uint64_t> CAddressItemMap;
 // EXISTING_CODE
 }  // namespace qblocks
+

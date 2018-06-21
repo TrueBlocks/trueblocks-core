@@ -164,7 +164,7 @@ extern SFArchive& operator<<(SFArchive& archive, const CFunctionArray& array);
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 inline bool sortByFuncName(const CFunction& f1, const CFunction& f2) {
-    return f2.name < f1.name;
+    return f1.name < f2.name;
 }
 // EXISTING_CODE
 }  // namespace qblocks
