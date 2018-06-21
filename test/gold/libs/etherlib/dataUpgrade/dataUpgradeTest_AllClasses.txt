@@ -629,7 +629,7 @@ showing             	1003	1	65556	T_BOOL TS_NUMERAL
 blockHash           	1004	0	131132	T_HASH TS_STRING
 blockNumber         	1005	0	65561	T_NUMBER TS_NUMERAL
 subtraces           	1006	0	65561	T_NUMBER TS_NUMERAL
-traceAddress        	1007	0	655415	T_ADDRESS|TS_ARRAY TS_STRING TS_ARRAY
+traceAddress        	1007	0	655410	T_TEXT|TS_ARRAY TS_STRING TS_ARRAY
 transactionHash     	1008	0	131132	T_HASH TS_STRING
 transactionPosition 	1009	0	65561	T_NUMBER TS_NUMERAL
 type                	1010	0	131122	T_TEXT TS_STRING
@@ -667,7 +667,7 @@ showing             	1003	1	65556	T_BOOL TS_NUMERAL
 blockHash           	1004	1	131132	T_HASH TS_STRING
 blockNumber         	1005	1	65561	T_NUMBER TS_NUMERAL
 subtraces           	1006	1	65561	T_NUMBER TS_NUMERAL
-traceAddress        	1007	1	655415	T_ADDRESS|TS_ARRAY TS_STRING TS_ARRAY
+traceAddress        	1007	1	655410	T_TEXT|TS_ARRAY TS_STRING TS_ARRAY
 transactionHash     	1008	1	131132	T_HASH TS_STRING
 transactionPosition 	1009	1	65561	T_NUMBER TS_NUMERAL
 type                	1010	1	131122	T_TEXT TS_STRING
@@ -686,7 +686,7 @@ showing             	1003	0	65556	T_BOOL TS_NUMERAL
 blockHash           	1004	0	131132	T_HASH TS_STRING
 blockNumber         	1005	0	65561	T_NUMBER TS_NUMERAL
 subtraces           	1006	0	65561	T_NUMBER TS_NUMERAL
-traceAddress        	1007	0	655415	T_ADDRESS|TS_ARRAY TS_STRING TS_ARRAY
+traceAddress        	1007	0	655410	T_TEXT|TS_ARRAY TS_STRING TS_ARRAY
 transactionHash     	1008	0	131132	T_HASH TS_STRING
 transactionPosition 	1009	0	65561	T_NUMBER TS_NUMERAL
 type                	1010	0	131122	T_TEXT TS_STRING

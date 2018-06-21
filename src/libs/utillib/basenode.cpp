@@ -374,13 +374,13 @@ namespace qblocks {
         vector<CFieldData> fields;
 
         // Pick up the fields from this class
-        for (const auto field : pClass->fieldList)
+        for (auto field : pClass->fieldList)
             fields.push_back(field);
 
         // Pick up the fields from parents classes (if any)
         CRuntimeClass *pParent = pClass->m_BaseClass;
         while (pParent != GETRUNTIME_CLASS(CBaseNode)) {
-            for (const auto pField : pParent->fieldList)
+            for (auto pField : pParent->fieldList)
                 fields.push_back(pField);
             pParent = pParent->m_BaseClass;
         }
@@ -428,7 +428,7 @@ namespace qblocks {
             ret += indent();
         expContext().noFrst = false;
 
-        for (const auto field : fields) {
+        for (auto field : fields) {
             incIndent();
             string_q val = getValueByName(field.m_fieldName);
             if (!field.isHidden() && (!val.empty() || field.isArray())) {
@@ -485,7 +485,7 @@ namespace qblocks {
             return;
 
         string_q last;
-        for (const auto field : pClass->fieldList) {
+        for (auto field : pClass->fieldList) {
             if (!field.isHidden()) {
                 last = field.getName();
             }
@@ -493,7 +493,7 @@ namespace qblocks {
 
         os << "{\n";
         incIndent();
-        for (const auto field : pClass->fieldList) {
+        for (auto field : pClass->fieldList) {
             if (!field.isHidden()) {
                 string_q name = field.getName();
                 os << indent() << "\"" << name << "\": ";

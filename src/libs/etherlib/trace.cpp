@@ -92,7 +92,7 @@ bool CTrace::setValueByName(const string_q& fieldName, const string_q& fieldValu
             if ( fieldName % "traceAddress" ) {
                 string_q str = fieldValue;
                 while (!str.empty()) {
-                    traceAddress.push_back(toAddress(nextTokenClear(str,',')));
+                    traceAddress.push_back(nextTokenClear(str,','));
                 }
                 return true;
             }
@@ -194,7 +194,7 @@ void CTrace::registerClass(void) {
     ADD_FIELD(CTrace, "blockHash", T_HASH, ++fieldNum);
     ADD_FIELD(CTrace, "blockNumber", T_NUMBER, ++fieldNum);
     ADD_FIELD(CTrace, "subtraces", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CTrace, "traceAddress", T_ADDRESS|TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CTrace, "traceAddress", T_TEXT|TS_ARRAY, ++fieldNum);
     ADD_FIELD(CTrace, "transactionHash", T_HASH, ++fieldNum);
     ADD_FIELD(CTrace, "transactionPosition", T_NUMBER, ++fieldNum);
     ADD_FIELD(CTrace, "type", T_TEXT, ++fieldNum);
