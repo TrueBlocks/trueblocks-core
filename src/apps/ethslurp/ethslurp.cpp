@@ -74,20 +74,21 @@ bool CSlurperApp::Initialize(COptions& options, string_q& message) {
     HIDE_FIELD(CTransaction, "receipt");
     HIDE_FIELD(CTransaction, "traces");
 
-    // If this is the first time we've ever run, build the toml file
-    if (!establishFolders(toml)) {
+    // If this is the first time we've ever run, make sure we have somewhere to write our data
+    // Note: the config file will already exist by virtue of the installer
+    if (!establishFolder(blockCachePath("slurps/"))) {
         message = "Unable to create data folders at " + blockCachePath("slurps/");
         return false;
     }
 
     // Note this may not return if user chooses to exit
-    api.checkKey(toml);
+    api.checkKey();
 
     // If we are told to get the address from the rerun address, and the
     // user hasn't supplied one, do so...
     string_q addr = options.addr;
     if (addr.empty() && options.rerun)
-        addr = toml.getConfigStr("settings", "rerun", EMPTY);
+        addr = getGlobalConfig("ethslurp")->getConfigStr("settings", "rerun", EMPTY);
 
     // Ethereum addresses are case insensitive. Force all address to lower case
     // to avoid mismatches with Mist browser for example
@@ -122,6 +123,7 @@ bool CSlurperApp::Initialize(COptions& options, string_q& message) {
     }
 
     // Save the address and name for later
+    CToml toml(configPath("ethslurp.toml"));
     toml.setConfigStr("settings", "rerun", addr);
     toml.writeFile();
 
@@ -132,7 +134,7 @@ bool CSlurperApp::Initialize(COptions& options, string_q& message) {
         perAddr.setFilename(customConfig);
         if (fileExists(customConfig)) {
             perAddr.readFile(customConfig);
-            toml.mergeFile(&perAddr);
+            ((CToml*)getGlobalConfig("ethslurp"))->mergeFile(&perAddr);
         }
     }
 
@@ -186,7 +188,7 @@ bool CSlurperApp::Slurp(COptions& options, string_q& message) {
 
     // If the user tells us he/she wants to update the cache, or the cache
     // hasn't been updated in five minutes, then update it
-    uint64_t nSeconds = max((uint64_t)60, toml.getConfigInt("settings", "update_freq", 300));
+    uint64_t nSeconds = max((uint64_t)60, getGlobalConfig("ethslurp")->getConfigInt("settings", "update_freq", 300));
     if (uint64_t(now - fileTime) > nSeconds) {
         // This is how many records we currently have
         uint64_t origCount  = theAccount.transactions.size();
@@ -245,6 +247,7 @@ bool CSlurperApp::Slurp(COptions& options, string_q& message) {
             // Make sure we don't spin forever
             if (nRead >= options.maxTransactions)
                 done = true;
+done = true;
         }
 
         size_t minBlock = 0, maxBlock = 0;
@@ -440,7 +443,7 @@ string_q CSlurperApp::getFormatString(COptions& options, const string_q& which, 
     string_q errMsg;
 
     string_q formatName = "fmt_" + options.exportFormat + "_" + which;
-    string_q ret = toml.getConfigStr("display", formatName, EMPTY);
+    string_q ret = getGlobalConfig("ethslurp")->getConfigStr("display", formatName, EMPTY);
     if (contains(ret, "file:")) {
         string_q file = substitute(ret, "file:", EMPTY);
         if (!fileExists(file))
@@ -451,7 +454,7 @@ string_q CSlurperApp::getFormatString(COptions& options, const string_q& which, 
 
     } else if (contains(ret, "fmt_")) {  // it's referring to another format string...
         string_q newName = ret;
-        ret = toml.getConfigStr("display", newName, EMPTY);
+        ret = getGlobalConfig("ethslurp")->getConfigStr("display", newName, EMPTY);
         formatName += ":" + newName;
     }
     ret = substitute(substitute(ret, "\\n", "\n"), "\\t", "\t");
@@ -497,8 +500,8 @@ void CSlurperApp::buildDisplayStrings(COptions& options) {
     const string_q fmtForFields  = getFormatString(options, "field", !contains(fmtForRecords, "{FIELDS}"));
     ASSERT(!fmtForFields.empty());
 
-    string_q defList = toml.getConfigStr("display", "fmt_fieldList", EMPTY);
-    string_q fieldList = toml.getConfigStr("display", "fmt_"+options.exportFormat+"_fieldList", defList);
+    string_q defList = getGlobalConfig("ethslurp")->getConfigStr("display", "fmt_fieldList", EMPTY);
+    string_q fieldList = getGlobalConfig("ethslurp")->getConfigStr("display", "fmt_"+options.exportFormat+"_fieldList", defList);
     if (fieldList.empty())
         GETRUNTIME_CLASS(CTransaction)->forEveryField(buildFieldList, &fieldList);
 
@@ -520,7 +523,7 @@ void CSlurperApp::buildDisplayStrings(COptions& options) {
         if (!field->isHidden()) {
             string_q resolved = fieldName;
             if (options.exportFormat != "json")
-                resolved = toml.getConfigStr("field_str", fieldName, fieldName);
+                resolved = getGlobalConfig("ethslurp")->getConfigStr("field_str", fieldName, fieldName);
             theAccount.displayString += substitute(substitute(fmtForFields, "{FIELD}", "{" + toUpper(resolved)+"}"), "{p:FIELD}", "{p:"+resolved+"}");
             theAccount.header += substitute(substitute(substitute(substitute(fmtForFields, "{FIELD}", resolved), "[", EMPTY), "]", EMPTY), "<td ", "<th ");
         }
@@ -559,51 +562,6 @@ void findBlockRange(const string_q& json, size_t& minBlock, size_t& maxBlock) {
         string_q str = extract(end, last + len);
         maxBlock = toLongU(str);
     }
-}
-
-//--------------------------------------------------------------------------------
-// Make sure our data folder exist, if not establish it
-bool establishFolders(CToml& toml) {
-
-    string_q configFilename = configPath("quickBlocks.toml");
-    toml.setFilename(configFilename);
-    if (folderExists(blockCachePath("slurps/")) && fileExists(configFilename)) {
-        toml.readFile(configFilename);
-        return true;
-    }
-
-    // create the main folder
-    mkdir(configPath("").c_str(), (mode_t)0755);
-    if (!folderExists(configPath("")))
-        return false;
-
-    // create the folder for the data
-    mkdir(blockCachePath("slurps/").c_str(), (mode_t)0755);
-    if (!folderExists(blockCachePath("slurps/")))
-        return false;
-
-    toml.setConfigStr("settings", "api_key",          "<NOT_SET>");
-    toml.setConfigStr("settings", "blockCachePath",   "<NOT_SET>");
-
-    toml.setConfigStr("display", "fmt_fieldList",     "");
-    toml.setConfigStr("display", "fmt_txt_file",      "[{HEADER}]\\n[{RECORDS}]");
-    toml.setConfigStr("display", "fmt_txt_record",    "[{FIELDS}]\\n");
-    toml.setConfigStr("display", "fmt_txt_field",     "\\t[{FIELD}]");
-    toml.setConfigStr("display", "fmt_csv_file",      "[{HEADER}]\\n[{RECORDS}]");
-    toml.setConfigStr("display", "fmt_csv_record",    "[{FIELDS}]\\n");
-    toml.setConfigStr("display", "fmt_csv_field",     "[\"{FIELD}\"],");
-    toml.setConfigStr("display", "fmt_html_file",     "<table>\\n[{HEADER}]\\n[{RECORDS}]</table>\\n");
-    toml.setConfigStr("display", "fmt_html_record",   "\\t<tr>\\n[{FIELDS}]</tr>\\n");
-    toml.setConfigStr("display", "fmt_html_field",    "\\t\\t<td>[{FIELD}]</td>\\n");
-    toml.setConfigStr("display", "fmt_json_file",     "[{RECORDS}]\\n");
-    toml.setConfigStr("display", "fmt_json_record",   "\\n        {\\n[{FIELDS}]        },");
-    toml.setConfigStr("display", "fmt_json_field",    "\"[{p:FIELD}]\":\"[{FIELD}]\",");
-    toml.setConfigStr("display", "fmt_custom_file",   "file:custom.txt");
-    toml.setConfigStr("display", "fmt_custom_record", "fmt_txt_record");
-    toml.setConfigStr("display", "fmt_custom_field",  "fmt_txt_field");
-
-    toml.writeFile();
-    return fileExists(toml.getFilename());
 }
 
 //----------------------------------------------------------------------------------------

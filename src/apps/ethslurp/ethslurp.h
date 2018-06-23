@@ -20,13 +20,12 @@
 //---------------------------------------------------------------------------------------------------
 class CSlurperApp {
 private:
-    CToml toml;
     CWebAPI api;
 
 public:
     CAccount theAccount;
 
-    CSlurperApp(void) : toml("") { }
+    CSlurperApp(void) { }
     ~CSlurperApp(void) { }
 
     bool Initialize(COptions& options, string_q& message);
@@ -40,7 +39,6 @@ private:
 };
 
 //---------------------------------------------------------------------------------------------------
-extern bool establishFolders(CToml& toml);
 extern void findBlockRange(const string_q& contents, size_t& minBlock, size_t& maxBlock);
 extern void clearAbis(void);
 extern bool loadABI(CAbi& abi, const string_q& addr);
