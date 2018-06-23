@@ -102,6 +102,9 @@ string_q convertTypes(const string_q& inStr) {
     string_q outStr = inStr;
     replaceAll(outStr, "address ",   "SFAddress "  );
     replaceAll(outStr, "bytes32 ",   "string_q "   );
+    replaceAll(outStr, "bytes16 ",   "string_q "   );
+    replaceAll(outStr, "bytes8 ",    "string_q "   );
+    replaceAll(outStr, "bytes4 ",    "string_q "   );
     replaceAll(outStr, "bytes ",     "string_q "   );
     replaceAll(outStr, "bloom ",     "SFBloom "    );
     replaceAll(outStr, "wei ",       "SFWei "      );
@@ -240,8 +243,7 @@ void generateCode(const COptions& options, CToml& toml, const string_q& dataFile
         } else if (fld.type == "addr")      { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_ADDRESS";
         } else if (fld.type == "address")   { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_ADDRESS";
         } else if (fld.type == "hash")      { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_HASH";
-        } else if (fld.type == "bytes32")   { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_TEXT";
-        } else if (fld.type == "bytes")     { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_TEXT";
+        } else if (startsWith(fld.type, "bytes")){ setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_TEXT";
         } else if (fld.type == "int8")      { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
         } else if (fld.type == "int16")     { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
         } else if (fld.type == "int32")     { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
@@ -500,7 +502,7 @@ string_q getCaseCode(const string_q& fieldCase, const string_q& ex) {
                     } else if (type == "hash") {
                         caseCode += " return fromHash([{PTR}]" + field + ");";
 
-                    } else if (type == "bytes" || type == "bytes32") {
+                    } else if (startsWith(type, "bytes")) {
                         caseCode += " return [{PTR}]" + field + ";";
 
                     } else if (type == "uint8" || type == "uint16" || type == "uint32" || type == "uint64") {
@@ -618,7 +620,7 @@ string_q getCaseSetCode(const string_q& fieldCase) {
                     } else if (type == "hash") {
                         caseCode += " { " + field + " = toHash(fieldValue); return true; }";
 
-                    } else if (contains(type, "bytes")) {
+                    } else if (startsWith(type, "bytes")) {
                         caseCode += " { " + field + " = toLower(fieldValue); return true; }";
 
                     } else if (type == "int8" || type == "int16" || type == "int32") {
@@ -850,10 +852,11 @@ string_q checkType(const string_q& typeIn) {
     if (endsWith(typeIn, "Array")) return typeIn;
 
     string_q keywords[] = {
-        "address", "bloom",  "bool",  "bytes",     "bytes32",
-        "double",  "gas",    "hash",  "int256",    "int32",
-        "int64",   "string", "time",  "timestamp", "uint256",
-        "uint32",  "uint64", "uint8", "wei",       "blknum",
+        "address", "bloom",  "bool",
+        "bytes",   "bytes4", "bytes8",  "bytes16",   "bytes32",
+        "double",  "gas",    "hash",    "int256",    "int32",
+        "int64",   "string", "time",    "timestamp", "uint256",
+        "uint32",  "uint64", "uint8",   "wei",       "blknum",
     };
     size_t cnt = sizeof(keywords) / sizeof(string_q);
     for (size_t i = 0 ; i < cnt ; i++) {

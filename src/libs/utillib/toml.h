@@ -17,7 +17,6 @@
 namespace qblocks {
 
     extern string_q cTeal, cOff;
-    #define cleanFmt(str) ((str).Substitute("\\n\\\n", "\\n").Substitute("\n", "").Substitute("\\n", "\n").Substitute("\\t", "\t").Substitute("\\r", "\r"))
     //-------------------------------------------------------------------------
     class CToml : public CSharedResource {
     private:

@@ -218,7 +218,6 @@ TEST_F(CThisTest, TestExtract) {
     ASSERT_EQ("0-10", "a fairly l",   extract(xfoo, 0, 10));
     ASSERT_EQ("5-10", "rly long s",   extract(xfoo, 5, 10));
     SHOULD_NOT_THROW("doesn't throw", extract(xfoo, 100));
-#undef substr
     SHOULD_THROW    ("throws",        xfoo.substr(100));
     return true;
 }}

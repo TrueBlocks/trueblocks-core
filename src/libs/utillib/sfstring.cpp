@@ -280,7 +280,6 @@ namespace qblocks {
     string_q extract(const string_q& haystack, size_t pos, size_t len) {
         if (pos >= haystack.length())
             return "";
-#undef substr
         return haystack.substr(pos, len);
     }
 

@@ -566,19 +566,18 @@ inline string_q hex2String(const string_q& inHex) {
 }
 
 //------------------------------------------------------------------------------
-#undef substr
 #define toBigNum2(a,b)      string_q(to_string(canonicalWei("0x"+grabPart(a,b))).c_str())
-#define grabPart(a,b)       trimLeading((a).substr(64*(b),64),'0')
+#define grabPart(a,b)       trimLeading(extract((a), 64*(b), 64), '0')
 #define grabBigNum(a,b)     strtoull(grabPart(a,b).c_str(),NULL,16)
 #define toAddr(a,b)         "0x"+padLeft(grabPart(a,b),40,'0')
 #define toAddrOld(a,b)      "0x"+grabPart(a,b)
 #define toAscString(a,b)    hex2String("0x"+grabPart(a,b))
 #define toBigNum(a,b)       asStringULL(grabBigNum(a,b))
 #define toBigNum3(a,b)      padNum3(grabBigNum(a,b))
-#define theRest(a,b)        (a).substr(64*(b),(a).length());
+#define theRest(a,b)        extract((a), 64*(b), (a).length())
 #define toVote(a,b)         (grabBigNum(a,b)?"Yea":"Nay")
 #define toBoolean(a,b)      (grabBigNum(a,b)?"true":"false")
-#define toBytes(a,b)        ((a).substr(64*(b),64))
+#define toBytes(a,b)        extract((a), 64*(b), 64)
 string_q parse(const string_q& params, size_t nItems, string_q *types) {
 
     string_q ret;

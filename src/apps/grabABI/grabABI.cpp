@@ -472,13 +472,13 @@ string_q getAssign(const CParameter *p, uint64_t which) {
     if (type == "uint" || type == "uint256") { ass = "toWei(\"0x\"+[{VAL}]);";
     } else if (contains(type, "gas")) { ass = "toGas([{VAL}]);";
     } else if (contains(type, "uint64")) { ass = "toLongU([{VAL}]);";
-    } else if (contains(type, "uint")) { ass = "toLongU([{VAL}]);";
+    } else if (contains(type, "uint")) { ass = "(uint32_t)toLongU([{VAL}]);";
     } else if (contains(type, "int") || contains(type, "bool")) { ass = "toLong([{VAL}]);";
     } else if (contains(type, "address")) { ass = "toAddress([{VAL}]);";
     } else { ass = "[{VAL}];";
     }
 
-    replace(ass, "[{VAL}]", "extract(params, " + asStringU(which) + "*64" + (type == "bytes" ? "" : ",64") + ")");
+    replace(ass, "[{VAL}]", "extract(params, " + asStringU(which) + "*64" + (type == "bytes" ? "" : ", 64") + ")");
     return p->Format("\t\t\ta->[{NAME}] = " + ass + "\n");
 }
 
@@ -488,7 +488,7 @@ string_q getEventAssign(const CParameter *p, uint64_t which, uint64_t nIndexed) 
     if (type == "uint" || type == "uint256") { ass = "toWei([{VAL}]);";
     } else if (contains(type, "gas")) { ass = "toGas([{VAL}]);";
     } else if (contains(type, "uint64")) { ass = "toLongU([{VAL}]);";
-    } else if (contains(type, "uint")) { ass = "toLongU([{VAL}]);";
+    } else if (contains(type, "uint")) { ass = "(uint32_t)toLongU([{VAL}]);";
     } else if (contains(type, "int") || contains(type, "bool")) { ass = "toLong([{VAL}]);";
     } else if (contains(type, "address")) { ass = "toAddress([{VAL}]);";
     } else { ass = "[{VAL}];";

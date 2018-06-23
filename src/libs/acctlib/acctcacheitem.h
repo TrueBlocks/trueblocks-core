@@ -123,12 +123,14 @@ inline CAcctCacheItem& CAcctCacheItem::operator=(const CAcctCacheItem& ac) {
 inline bool operator<(const CAcctCacheItem& v1, const CAcctCacheItem& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
-    // No default sort defined in class definition, assume already sorted
-    return true;
+    // Default sort as defined in class definition
+    if (v1.blockNum != v2.blockNum)
+        return v1.blockNum < v2.blockNum;
+    return v1.transIndex < v2.transIndex;
 }
 
 //---------------------------------------------------------------------------
-typedef SFArrayBase<CAcctCacheItem> CAcctCacheItemArray;
+typedef vector<CAcctCacheItem> CAcctCacheItemArray;
 extern SFArchive& operator>>(SFArchive& archive, CAcctCacheItemArray& array);
 extern SFArchive& operator<<(SFArchive& archive, const CAcctCacheItemArray& array);
 
