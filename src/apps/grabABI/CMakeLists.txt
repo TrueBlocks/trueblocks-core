@@ -31,7 +31,7 @@ build_readme(${CMAKE_CURRENT_SOURCE_DIR} ${TOOL_NAME})
 add_custom_target(test-all COMMAND ${CMAKE_CTEST_COMMAND} -C test_all)
 
 # Copy a test file we need for the case where the ABI is a local file
-file(COPY "tests/0x314159265dd8dbb310642f98f50c066173c1259c.json" DESTINATION "${GOLD_PATH}" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
+file(COPY "data/0x314159265dd8dbb310642f98f50c066173c1259c.json" DESTINATION "${GOLD_PATH}" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
 
 # Function to run an special or slow test case
 function(run_special_test testName)
