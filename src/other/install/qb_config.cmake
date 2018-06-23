@@ -26,6 +26,13 @@ if (NOT EXISTS "${QUICKBLOCKS_TOML_FILE}")
     file(COPY "${CMAKE_SOURCE_DIR}/../../../src/other/install/whenBlock.toml" DESTINATION "${QUICKBLOCKS_HOME}" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
 endif()
 
+# Create toml file only if it does not exist
+set(QUICKBLOCKS_TOML_FILE "${QUICKBLOCKS_HOME}/ethslurp.toml")
+if (NOT EXISTS "${QUICKBLOCKS_TOML_FILE}")
+    message(STATUS "Copying custom configuration file ${QUICKBLOCKS_TOML_FILE}")
+    file(COPY "${CMAKE_SOURCE_DIR}/../../../src/other/install/ethslurp.toml" DESTINATION "${QUICKBLOCKS_HOME}" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
+endif()
+
 # Create names fie only if it does not exist
 set(QUICKBLOCKS_NAMES_FILE "${QUICKBLOCKS_HOME}/names/names.txt")
 if (NOT EXISTS "${QUICKBLOCKS_NAMES_FILE}")
@@ -36,9 +43,9 @@ endif()
 # makeClass content
 file(COPY "${CMAKE_SOURCE_DIR}/../../../bin/makeClass" DESTINATION "${QUICKBLOCKS_HOME}/makeClass")
 file(GLOB TARGET_FILES "${CMAKE_SOURCE_DIR}/../../../src/apps/makeClass/templates/blank*")
-foreach(FILE ${TARGET_FILES} ) 
+foreach(FILE ${TARGET_FILES} )
 	file(COPY "${FILE}" DESTINATION "${QUICKBLOCKS_HOME}/makeClass")
-endforeach( FILE ) 
+endforeach( FILE )
 
 # grabABI content
 file(GLOB TARGET_FILES "${CMAKE_SOURCE_DIR}/../../../src/apps/grabABI/templates/*")
