@@ -223,10 +223,9 @@ int main(int argc, const char *argv[]) {
 
         } else {
             verbose = false;
-            sort(functions.begin(), functions.end(), sortByFuncName);
+            sort(functions.begin(), functions.end(), ::sortByFuncName);
 //            if (options.isToken())
 //                addDefaultFuncs(functions);
-
             classDir = substitute((options.classDir), "~/", getHomeFolder());
             string_q classDefs = classDir + "classDefinitions/";
             establishFolder(classDefs);
