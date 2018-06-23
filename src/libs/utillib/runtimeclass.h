@@ -36,7 +36,7 @@ namespace qblocks {
         size_t m_ObjectSize;
         PFNV m_CreateFunc;
         CRuntimeClass *m_BaseClass;
-        vector<CFieldData> fieldList;
+        CFieldDataArray fieldList;
 
     public:
         CRuntimeClass(void);

@@ -96,4 +96,5 @@ namespace qblocks {
         friend class CFieldList;
         friend class CBaseNode;
     };
+    typedef vector<CFieldData> CFieldDataArray;
 }  // namespace qblocks
