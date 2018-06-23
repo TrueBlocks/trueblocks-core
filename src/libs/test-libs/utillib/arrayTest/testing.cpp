@@ -31,7 +31,7 @@ TEST_F(CThisTest, TestInsertion) {
     strArray.push_back(string_q("string_q"));
     string str = "string"; strArray.push_back(str.c_str());
     strArray.push_back("When will we be loved?");
-    for (const auto elem : strArray)
+    for (auto elem : strArray)
         cout << TESTID("array ", 20) << elem << "\n";
 
     SFUintArray myvector;

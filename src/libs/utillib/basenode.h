@@ -41,7 +41,7 @@ namespace qblocks {
         virtual string_q toJson1(void) const;
         virtual string_q toJson(void) const;
         virtual string_q toJson(const string_q& fields) const;
-        virtual string_q jsonFromArray(const vector<CFieldData> array) const;
+        virtual string_q jsonFromArray(const CFieldDataArray& array) const;
 
     public:
         static CRuntimeClass classCBaseNode;

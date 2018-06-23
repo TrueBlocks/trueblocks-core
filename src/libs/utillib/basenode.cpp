@@ -371,7 +371,7 @@ namespace qblocks {
         if (!pClass)
             return "";
 
-        vector<CFieldData> fields;
+        CFieldDataArray fields;
 
         // Pick up the fields from this class
         for (auto field : pClass->fieldList)
@@ -400,7 +400,7 @@ namespace qblocks {
         if (!pClass)
             return "";
 
-        vector<CFieldData> fields;
+        CFieldDataArray fields;
         string_q fieldStr = fieldStrIn;
         while (!fieldStr.empty()) {
             string_q field = nextTokenClear(fieldStr, '|');
@@ -420,7 +420,7 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    string_q CBaseNode::jsonFromArray(const vector<CFieldData> fields) const {
+    string_q CBaseNode::jsonFromArray(const CFieldDataArray& fields) const {
 
         string_q ret;
         bool first = true;

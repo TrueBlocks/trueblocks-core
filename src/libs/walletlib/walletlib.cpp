@@ -57,10 +57,8 @@ const string_q func_revoke_qb = "0xb75c7dc6";
 const string_q func_setDailyLimit_qb = "0xb20d30a9";
 
 //-----------------------------------------------------------------------
-const CTransaction *promoteToWallet(const CTransaction *p)
-{
-    if (p && (p->input.length()>=10 || p->input == "0x"))
-    {
+const CTransaction *promoteToWallet(const CTransaction *p) {
+    if (p && (p->input.length()>=10 || p->input == "0x")) {
         string_q items[256];
         size_t nItems=0;
 
@@ -218,14 +216,12 @@ const string_q evt_Revoke_qb = "0xc7fb647e59b18047309aa15aad418e5d7ca96d173ad704
 const string_q evt_SingleTransact_qb = "0x92ca3a80853e6663fa31fa10b99225f18d4902939b4c53a9caae9043f6efd004";
 
 //-----------------------------------------------------------------------
-const CLogEntry *promoteToWalletEvent(const CLogEntry *p)
-{
+const CLogEntry *promoteToWalletEvent(const CLogEntry *p) {
     if (!p)
         return NULL;
 
     size_t nTops = p->topics.size();
-    if (nTops>0) // the '0'th topic is the event signature
-    {
+    if (nTops>0) { // the '0'th topic is the event signature
         string_q data = extract(p->data, 2);
         // EXISTING_CODE
         // EXISTING_CODE
