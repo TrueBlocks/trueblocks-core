@@ -78,8 +78,10 @@ string_q acquireABI(CFunctionArray& functions, const SFAddress& addr, const COpt
     string_q results, ret;
     string_q fileName = blockCachePath("abis/" + addr + ".json");
     string_q localFile("./" + addr + ".json");
-    if (fileExists(localFile))
+    if (fileExists(localFile)) {
+        cerr << "Local file copied to cache\n";
         copyFile(localFile, fileName);
+    }
 
     string_q dispName = substitute(fileName, configPath(""), "|");
     nextTokenClear(dispName, '|');
@@ -117,6 +119,17 @@ string_q acquireABI(CFunctionArray& functions, const SFAddress& addr, const COpt
             }
             establishFolder(fileName);
             stringToAsciiFile(fileName, "["+results+"]");
+        } else if (contains(results, "source code not verified")) {
+            if (!opt.silent) {
+                cerr << "\n";
+                cerr << cRed << "Warning: " << cOff;
+                cerr << "Failed to grab the ABI. Etherscan returned:\n\n\t";
+                cerr << cTeal << results << cOff << "\n\n";
+                cerr << "However, the ABI may actually be present on EtherScan. Quickblocks will use it if\n";
+                cerr << "you copy and paste the ABI json to this file:\n\n\t";
+                cerr << cTeal << localFile << cOff << "\n\n";
+                exit(0);
+            }
         } else {
             if (!opt.silent) {
                 cerr << "Etherscan returned " << results << "\n";
