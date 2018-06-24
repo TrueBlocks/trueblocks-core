@@ -10,6 +10,7 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
+#include <string>
 #include "basetypes.h"
 #include "conversions.h"
 
@@ -101,7 +102,7 @@ namespace qblocks {
 
     //---------------------------------------------------------------------------------------
     void reverse(string_q& target) {
-        size_t i,j;
+        size_t i, j;
         size_t n = target.length();
         for ( i = 0, j = n-1 ; i < n/2; i++, j-- ) {
             char tmp = target[i];
@@ -194,7 +195,7 @@ namespace qblocks {
         string ret;
         string str = in.c_str();
         for (const auto elem : str)
-            ret += (char)tolower(elem);
+            ret += static_cast<char>(tolower(elem));
         return ret.c_str();
     }
 
@@ -203,7 +204,7 @@ namespace qblocks {
         string ret;
         string str = in.c_str();
         for (const auto elem : str)
-            ret += (char)toupper(elem);
+            ret += static_cast<char>(toupper(elem));
         return ret.c_str();
     }
 
@@ -211,12 +212,12 @@ namespace qblocks {
     string_q toProper(const string_q& in) {
         string ret;
         string str = in.c_str();
-        char prev = ' '; // not a space
+        char prev = ' ';  // not a space
         for (const auto elem : str) {
             if (isspace(prev) || prev == '_')
-                ret += (char)toupper(elem);
+                ret += static_cast<char>(toupper(elem));
             else
-                ret += (char)tolower(elem);
+                ret += static_cast<char>(tolower(elem));
             prev = elem;
         }
         return ret.c_str();

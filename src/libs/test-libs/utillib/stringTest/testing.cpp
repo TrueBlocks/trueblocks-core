@@ -244,5 +244,5 @@ int main(int argc, const char *argv[]) {
         }
     }
 
-    return RUN_ALL_TESTS();
+    return testing::RUN_ALL_TESTS();
 }

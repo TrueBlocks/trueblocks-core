@@ -13,12 +13,11 @@
 #include <glob.h>
 #include <libgen.h>
 #include <algorithm>
-
 #include "basetypes.h"
-
 #include "sfos.h"
 #include "sftime.h"
 #include "string.h"
+#include "filenames.h"
 
 namespace qblocks {
 
@@ -232,11 +231,7 @@ extern string_q binaryFileToString(const string_q& filename);
         stat(filename.c_str(), &statBuf);
         return (uint64_t)statBuf.st_size;
     }
-} // namespace qblocks
 
-#include "filenames.h"
-
-namespace qblocks {
     //----------------------------------------------------------------------------
     bool establishFolder(const string_q& path, string_q& created) {
         if (fileExists(path) || folderExists(path))

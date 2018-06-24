@@ -135,7 +135,7 @@ namespace qblocks {
     //----------------------------------------------------------------------
     template<class TYPE>
     inline TYPE& SFArrayBase<TYPE>::at(size_t index) {
-        // TODO: This should definitly not grow the array. If we use this to grow the array, 
+        // TODO(tjayrush): This should definitly not grow the array. If we use this to grow the array,
         // when we switch to a native vector, this will break
         checkSize(index);
         if (index >= m_nItems)

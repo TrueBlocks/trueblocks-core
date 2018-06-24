@@ -10,6 +10,7 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
+#include <algorithm>
 #include "basetypes.h"
 #include "runtimeclass.h"
 
@@ -105,7 +106,8 @@ namespace qblocks {
     }
 
     //-------------------------------------------------------------------------
-    CBuiltIn::CBuiltIn(CRuntimeClass *pClass, const string_q& className, size_t size, PFNV createFunc, CRuntimeClass *pBase) {
+    CBuiltIn::CBuiltIn(CRuntimeClass *pClass, const string_q& className, size_t size, \
+                            PFNV createFunc, CRuntimeClass *pBase) {
         m_pClass = pClass;
         string_q copy = className;
         if (!copy.empty())

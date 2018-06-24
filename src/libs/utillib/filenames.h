@@ -29,7 +29,7 @@ namespace qblocks {
         string_q getPath(void) const;
         string_q getFilename(void) const;
         string_q getFullPath(void) const;
-        string_q relativePath(const string_q& relTo="") const;
+        string_q relativePath(const string_q& relTo = "") const;
         virtual bool isValid(void) { return fileExists(getFullPath()); }
     };
 
@@ -47,7 +47,6 @@ namespace qblocks {
     typedef bool (*FILEVISITOR)(const string_q& str, void *data);
 
     //------------------------------------------------------------------
-    extern int globErrFunc(const char *epath, int eerrno);
     extern bool forAllFiles(const string_q& mask, FILEVISITOR func, void *data);
     extern bool forEveryFileInFolder(const string_q& mask, FILEVISITOR func, void *data);
     extern string_q getHomeFolder(void);

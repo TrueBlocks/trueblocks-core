@@ -16,7 +16,7 @@
 namespace qblocks {
 
     //--------------------------------------------------------------------------------
-    extern string_q getVersionStr(const string_q& sep1=".", const string_q& sep2="-");
+    extern string_q getVersionStr(const string_q& sep1 = ".", const string_q& sep2 = "-");
     extern uint32_t getVersionNum(uint16_t maj, uint16_t min, uint16_t build);
     extern uint32_t getVersionNum(void);
 

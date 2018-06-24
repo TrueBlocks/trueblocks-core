@@ -76,16 +76,20 @@ public: \
            void           finishParse     (void) override; \
            bool           Serialize       (SFArchive& archive) override; \
            bool           SerializeC      (SFArchive& archive) const override; \
-           void           Format          (CExportContext& ctx, const string_q& fmtIn, void *data = NULL) const override; \
-           string_q       Format          (const string_q& fmtIn = "") const override { CStringExportContext ctx; Format(ctx, fmtIn, NULL); return ctx.str; } \
+           void           Format          (CExportContext& ctx, const string_q& fmtIn, void *data = NULL) \
+                                                     const override; \
+           string_q       Format          (const string_q& fmtIn = "") const override \
+                            { CStringExportContext ctx; Format(ctx, fmtIn, NULL); return ctx.str; } \
            string_q       getClassName    (void) const;
 
 //------------------------------------------------------------
 #define IMPLEMENT_NODE(CLASS_NAME, BASECLASS_NAME) \
-    static CBuiltIn       _bi##CLASS_NAME(&CLASS_NAME::class##CLASS_NAME, #CLASS_NAME, sizeof(CLASS_NAME), CLASS_NAME::createObject, GETRUNTIME_CLASS(BASECLASS_NAME)); \
+    static CBuiltIn       _bi##CLASS_NAME(&CLASS_NAME::class##CLASS_NAME, #CLASS_NAME, sizeof(CLASS_NAME), \
+                                CLASS_NAME::createObject, GETRUNTIME_CLASS(BASECLASS_NAME)); \
            CRuntimeClass  CLASS_NAME::class##CLASS_NAME; \
            CRuntimeClass *CLASS_NAME::getRuntimeClass(void) const { return &CLASS_NAME::class##CLASS_NAME; } \
-           string_q       CLASS_NAME::getClassName   (void) const { return CLASS_NAME::class##CLASS_NAME.getClassNamePtr(); } \
+           string_q       CLASS_NAME::getClassName (void) const \
+                                { return CLASS_NAME::class##CLASS_NAME.getClassNamePtr(); } \
            CBaseNode     *CLASS_NAME::createObject   (void)       { return new CLASS_NAME; }
 
 //------------------------------------------------------------

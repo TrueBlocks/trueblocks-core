@@ -69,5 +69,5 @@ int main(int argc, const char *argv[]) {
         LOAD_TEST(TestSizes);
     }
 
-    return RUN_ALL_TESTS();
+    return testing::RUN_ALL_TESTS();
 }

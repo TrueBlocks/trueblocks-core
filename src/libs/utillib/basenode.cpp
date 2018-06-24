@@ -160,7 +160,7 @@ namespace qblocks {
         return parseJson(s, nFields);
     }
 
-//#define DEBUG_PARSER
+// #define DEBUG_PARSER
 #ifdef DEBUG_PARSER
     string_q tbs;
 #endif
@@ -169,11 +169,11 @@ namespace qblocks {
     char *CBaseNode::parseJson(char *s, size_t& nFields) {
 #ifdef DEBUG_PARSER
         string_q ss = s;
-        string_q tt('-',25);
+        string_q tt(25, '-');
         tt += "\n";
         cout << tt << s << "\n" << tt;
-        cout << tt << extract(ss, ss.find("{"),   300) << "\n" << tt;
-        cout << tt << extract(ss, ss.length()-300,300) << "\n" << tt;
+        cout << tt << extract(ss, ss.find("{"),    300) << "\n" << tt;
+        cout << tt << extract(ss, ss.length()-300, 300) << "\n" << tt;
         cout.flush();
         tbs+="\t";
 #endif
@@ -277,7 +277,8 @@ namespace qblocks {
 
     //--------------------------------------------------------------------
     inline bool isWhiteSpace(char c) {
-        // TODO: this is unsafe if the JSON contains preservable spaces. Since that is not the case with Ethereum data, it's okay
+        // TODO(tjayrush): this is unsafe if the JSON contains preservable spaces. Since that is not
+        // the case with Ethereum data, it's okay
         return (c == '\0' || c == ' ' || c == '\n' || c == '\r' || c == '\t');
     }
 
@@ -328,7 +329,7 @@ namespace qblocks {
 
         // Not happy with this, but we must set the schema to the latest before we write data
         // since we always write the latest version to the hard drive.
-        ((CBaseNode*)this)->m_schema = getVersionNum();
+        ((CBaseNode*)this)->m_schema = getVersionNum();  //NOLINT
 
         archive << m_deleted;
         archive << m_schema;
@@ -586,7 +587,7 @@ namespace qblocks {
     string_q decBigNum(const string_q& str) {
         string_q ret = str;
         size_t len = ret.length();
-             if (len > 29) ret = extract(ret, 0, 1) + "." + trimTrailing(extract(ret, 1), '0') + "e+29";
+             if (len > 29) ret = extract(ret, 0, 1) + "." + trimTrailing(extract(ret, 1), '0') + "e+29";  // NOLINT
         else if (len > 28) ret = extract(ret, 0, 1) + "." + trimTrailing(extract(ret, 1), '0') + "e+28";
         else if (len > 27) ret = extract(ret, 0, 1) + "." + trimTrailing(extract(ret, 1), '0') + "e+27";
         else if (len > 26) ret = extract(ret, 0, 1) + "." + trimTrailing(extract(ret, 1), '0') + "e+26";
@@ -601,6 +602,7 @@ namespace qblocks {
 
     //---------------------------------------------------------------------------------------------
     string_q getNextChunk(string_q& fmtOut, NEXTCHUNKFUNC func, const void *data) {
+
         string_q chunk = fmtOut;
         if (!contains(fmtOut, "[")) {
             // There are no more tokens.  Return the last chunk and empty out the format
@@ -693,7 +695,7 @@ namespace qblocks {
             fieldValue = "";
         if (!isPrompt && fieldValue.empty())
             return EMPTY;
-        if (isBool) // we know it's true, so we want to only show the pre and post
+        if (isBool)  // we know it's true, so we want to only show the pre and post
             fieldValue = "";
         if (rightJust) {
             fieldValue = truncPadR(fieldValue, maxWidth);  // pad or truncate

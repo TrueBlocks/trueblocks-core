@@ -64,7 +64,7 @@ int main(int argc, const char *argv[]) {
             return 0;
         cout << string_q(80,'-') << "\n";
         opts.output();
-        ret &= RUN_ALL_TESTS();
+        ret &= testing::RUN_ALL_TESTS();
     }
     cout << "ret: " << ret << "\n";
     return ret;  // if all tests passes, return '0'

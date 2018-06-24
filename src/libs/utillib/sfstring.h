@@ -11,6 +11,7 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
+#include <string>
 #include "basetypes.h"
 
 namespace qblocks {
@@ -84,20 +85,20 @@ namespace qblocks {
     extern string_q toProper      (const string_q& in);
 
     //--------------------------------------------------------------------
-    extern string_q padRight      (const string_q& str, size_t len, char p=' ');
-    extern string_q padLeft       (const string_q& str, size_t len, char p=' ');
-    extern string_q padCenter     (const string_q& str, size_t len, char p=' ');
+    extern string_q padRight      (const string_q& str, size_t len, char p = ' ');
+    extern string_q padLeft       (const string_q& str, size_t len, char p = ' ');
+    extern string_q padCenter     (const string_q& str, size_t len, char p = ' ');
 
     //--------------------------------------------------------------------
     extern string_q trim          (const string_q& str, char c = ' ');
     extern string_q trimTrailing  (const string_q& str, char c = ' ');
     extern string_q trimLeading   (const string_q& str, char c = ' ');
-    extern string_q trimWhitespace(const string_q& str, const string_q& add="");
+    extern string_q trimWhitespace(const string_q& str, const string_q& add = "");
 
     //--------------------------------------------------------------------
     extern string_q nextTokenClearReverse(string_q& str, char token);
-    extern string_q nextTokenClear       (string_q& str, char delim, bool doClear=true);
-    extern string_q snagFieldClear       (string_q& str, const string_q& tagName, const string_q& defVal="");
+    extern string_q nextTokenClear       (string_q& str, char delim, bool doClear = true);
+    extern string_q snagFieldClear       (string_q& str, const string_q& tagName, const string_q& defVal = "");
 
     //--------------------------------------------------------------------
     #define EMPTY string_q("")
@@ -105,9 +106,9 @@ namespace qblocks {
     //---------------------------------------------------------------------------------------
     extern char nullStr[];
 
-	inline string_q getEnvStr(const char* name) {
-    	char *sss = getenv(name);
-    	return ( sss ? string_q(sss) : string_q(""));
-	}
+    inline string_q getEnvStr(const char* name) {
+        char *sss = getenv(name);
+        return ( sss ? string_q(sss) : string_q(""));
+    }
 
 }  // namespace qblocks
