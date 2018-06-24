@@ -11,6 +11,8 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
+#include <string>
+#include <vector>
 #include "sfos.h"
 #include "biglib.h"
 #include "conversions_base.h"
@@ -103,13 +105,13 @@ namespace qblocks {
     //--------------------------------------------------------------------------------
     inline SFUintBN exp2BigUint(const string &s) {
         string_q exponent = s.c_str();
-        string_q decimals = nextTokenClear(exponent,'e');
-        string_q num = nextTokenClear(decimals,'.');
-        long nD = (long)decimals.length();
+        string_q decimals = nextTokenClear(exponent, 'e');
+        string_q num = nextTokenClear(decimals, '.');
+        uint64_t nD = decimals.length();
         uint64_t e = toLongU(exponent);
         SFUintBN ee = 1;
-        uint64_t power = e - (uint64_t)nD;
-        for (uint64_t i=0;i<power;i++)
+        uint64_t power = e - nD;
+        for (uint64_t i = 0 ; i < power ; i++)
             ee *= 10;
         num += decimals;
         return str2BigUint(num) * ee;
@@ -166,7 +168,7 @@ namespace qblocks {
 #define fromAddress(a)  ((a).empty() ? "0x0" : (a))
 #define fromHash(a)     ((a).empty() ? "0x0" : (a))
 #define fromWei(a)      to_string((a)).c_str()
-#define fromTopic(a)    ("0x"+padLeft(toLower(string_q(to_hex((a)).c_str())),64,'0'))
+#define fromTopic(a)    ("0x" + padLeft(toLower(string_q(to_hex((a)).c_str())), 64, '0'))
 #define fromGas(a)      asStringU(a)
 
     //-------------------------------------------------------------------------
@@ -240,7 +242,7 @@ namespace qblocks {
         if (!isdigit(in[0]))
             return false;
         // ...or first two must be '0x' and the third must be non negative hex digit
-        if (startsWith(in,"0x") && in.length() > 2)
+        if (startsWith(in, "0x") && in.length() > 2)
             return isxdigit(in.at(2));
         return true;
     }
@@ -252,8 +254,8 @@ namespace qblocks {
 
         // Shorten, but only if all leading zeros
         string_q leading('0', 64-40);
-        if (ret.length()==64 && startsWith(ret, leading))
-            replace(ret, leading,"");
+        if (ret.length() == 64 && startsWith(ret, leading))
+            replace(ret, leading, "");
 
         // Special case
         if (ret.empty())
@@ -263,14 +265,14 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------
-    inline string_q double2Str(double f, size_t nDecimals=10) {
+    inline string_q double2Str(double f, size_t nDecimals = 10) {
         char s[100], r[100];
-        memset(s,'\0',100);
-        memset(r,'\0',100);
-        sprintf(s, "%.*g", (int)nDecimals, ((int64_t)(  pow(10, nDecimals) * (  fabs(f) - labs( (int64_t) f )  )  + 0.5)) / pow(10,nDecimals));
+        memset(s, '\0', 100);
+        memset(r, '\0', 100);
+        sprintf(s, "%.*g", (int)nDecimals, ((int64_t)(  pow(10, nDecimals) * (  fabs(f) - labs( (int64_t) f )  )  + 0.5)) / pow(10,nDecimals));  // NOLINT
         if (strchr(s, 'e'))
-        s[1] = '\0';
-        sprintf(r, "%d%s", (int)f, s+1);
+            s[1] = '\0';
+        sprintf(r, "%d%s", static_cast<int>(f), s+1);  // NOLINT
         return string_q(r);
     }
 

@@ -4353,7 +4353,7 @@ def CheckStyle(filename, clean_lines, linenum, file_extension, nesting_state,
   CheckParenthesisSpacing(filename, clean_lines, linenum, error)
   CheckCommaSpacing(filename, clean_lines, linenum, error)
   CheckBracesSpacing(filename, clean_lines, linenum, nesting_state, error)
-  CheckSpacingForFunctionCall(filename, clean_lines, linenum, error)
+#  CheckSpacingForFunctionCall(filename, clean_lines, linenum, error)
   CheckCheck(filename, clean_lines, linenum, error)
   CheckAltTokens(filename, clean_lines, linenum, error)
   classinfo = nesting_state.InnermostClass()

@@ -18,15 +18,17 @@
 using namespace std;
 
 //----------------------------------------------------------------------
-#define TEST(expr,exp) do {\
-	string s1,e1;\
-	try {\
-		s1 = to_string((expr));\
-	} catch (const char *err) {\
-		s1 = "error";\
-		e1 = err;\
-	}\
-	cout << "Test " << testID++ << ": " << s1 << e1 << " expected: " << (exp) << " " << ((s1!=exp)?redX:greenCheck) << endl;\
+#define TEST(expr,exp) do { \
+	string s1,e1; \
+	try { \
+		s1 = to_string((expr)); \
+	} catch (const char *err) { \
+		s1 = "error"; \
+		e1 = err; \
+	} \
+    cout << "Test " << testID++; \
+    cout << " [--" << #expr << "--]"; \
+    cout << ": " << s1 << e1 << " expected: " << (exp) << " " << ((s1!=exp)?redX:greenCheck) << endl; \
 } while (0)
 
 //----------------------------------------------------------------------
@@ -42,10 +44,10 @@ int main(int argc, const char *argv[])
 
 	try
 	{
-		short pathologicalShort = (short)~((unsigned short)(~0) >> 1);
-		int   pathologicalInt   = (int)~((unsigned int)(~0) >> 1);
-		long  pathologicalLong  = (long)~((unsigned long)(~0) >> 1);
-		unsigned long testID = 0;
+		short    pathologicalShort = (short)~((unsigned short)(~0) >> 1);
+		int      pathologicalInt   = (int)~((unsigned int)(~0) >> 1);
+		uint64_t pathologicalLong  = (uint64_t)~((uint64_t)(~0) >> 1);
+		uint64_t testID = 0;
 
 		SFIntBN a;
 		int b = 535;
@@ -108,7 +110,7 @@ int main(int argc, const char *argv[])
 //       i=0xFF0000FF
 //       j=0x0000FFFF;
 // i & j = 0x0000FFFF - true if both are true
-		TEST( i&j,                                                        "255"               );
+        TEST( i&j,                                                        "255"               );
 // i | j = 0xFF00FF00 - true if one is true and the other is false
 		TEST( i|j,                                                        "4278255615"        );
 // i ^ j = 0xFF00FFFF - true if either is true
@@ -198,8 +200,8 @@ int main(int argc, const char *argv[])
 		TEST( SFUintBN   (pathologicalShort),                             "error"             );
 		TEST( SFUintBN   (-1),                                            "error"             );
 		TEST( SFUintBN   (pathologicalInt),                               "error"             );
-		TEST( SFUintBN   (long(-1)),                                      "error"             );
-		TEST( SFUintBN   (pathologicalLong),                              "error"             );
+		TEST( SFUintBN   (uint64_t(-1)),                                  "18446744073709551615");
+		TEST( SFUintBN   (pathologicalLong),                              "9223372036854775808");
 		TEST( SFUintBN   (5) - SFUintBN(6),                               "error"             );
 		TEST( ss1 - ss2,                                                  "error"             );
 		TEST( check( SFUintBN(5)-SFUintBN(5) ),                           "0"                 );
@@ -266,7 +268,13 @@ int main(int argc, const char *argv[])
 		TEST( (four&sixteen)|four,                                        "4"                 );
 		TEST( sixteen%9,                                                  "7"                 );
 		TEST( coreDump,                                                   "1000000000000000000");
-		TEST( modexp(10,9,10000000000)*modexp(10,9,10000000000),          "1000000000000000000");
+		TEST( modexp(10,
+                     9,
+                     uint64_t(10000000000)
+                     ) *
+              modexp(10,
+                     9,
+                     uint64_t(10000000000)), "1000000000000000000");
 
 	} catch(char const* err)
 	{

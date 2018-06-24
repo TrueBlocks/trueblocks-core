@@ -43,9 +43,11 @@ namespace qblocks {
 
     //-------------------------------------------------------------------------
     CToml::CTomlGroup *CToml::findGroup(const string_q& group) const {
-        for (size_t i = 0 ; i < groups.size() ; i++)
-            if (groups[i].groupName == group)
-                return &((CToml*)this)->groups[i];
+        for (size_t i = 0 ; i < groups.size() ; i++) {
+            if (groups[i].groupName == group) {
+                return &((CToml*)this)->groups[i];  // NOLINT
+                }
+            }
         return NULL;
     }
 
@@ -99,9 +101,9 @@ extern string_q collapseArrays(const string_q& inStr);
         clear();
 
         string_q contents = asciiFileToString(filename);
-        replaceAll(contents, "\\\n ", "\\\n"); // if ends with '\' + '\n' + space, make it just '\' + '\n'
-        replaceAll(contents, "\\\n", "");      // if ends with '\' + '\n', its a continuation, so fold in
-        replaceAll(contents, "\\\r\n", "");    // same for \r\n
+        replaceAll(contents, "\\\n ", "\\\n");  // if ends with '\' + '\n' + space, make it just '\' + '\n'
+        replaceAll(contents, "\\\n", "");       // if ends with '\' + '\n', its a continuation, so fold in
+        replaceAll(contents, "\\\r\n", "");     // same for \r\n
         contents = collapseArrays(stripFullLineComments(contents));
         while (!contents.empty()) {
             string_q value = trimWhitespace(nextTokenClear(contents, '\n'));
@@ -190,12 +192,12 @@ extern string_q collapseArrays(const string_q& inStr);
             replaceAll(fmt, "}", "}"+cOff);
         }
 
-		string_q ret = substitute(fmt, "\\n\\\n", "\\n");
-		ret = substitute(ret, "\n", "");
-		ret = substitute(ret, "\\n", "\n");
-		ret = substitute(ret, "\\t", "\t");
-		ret = substitute(ret, "\\r", "\r");
-		return ret;
+        string_q ret = substitute(fmt, "\\n\\\n", "\\n");
+        ret = substitute(ret, "\n", "");
+        ret = substitute(ret, "\\n", "\n");
+        ret = substitute(ret, "\\t", "\t");
+        ret = substitute(ret, "\\r", "\r");
+        return ret;
     }
 
     //-------------------------------------------------------------------------
@@ -222,7 +224,11 @@ extern string_q collapseArrays(const string_q& inStr);
     //-------------------------------------------------------------------------
     ostream& operator<<(ostream& os, const CToml& tomlIn) {
         for (auto group : tomlIn.groups) {
-            os << (group.isArray?"[[":"[") << group.groupName << (group.isComment?":comment ":"") << (group.isArray?"]]":"]") << "\n";
+            os << (group.isArray?"[[":"[");
+            os << group.groupName;
+            os << (group.isComment?":comment ":"");
+            os << (group.isArray?"]]":"]");
+            os << "\n";
             for (auto key : group.keys)
                 os << "\t" << key.keyName << (key.comment?":comment":"") << "=" << key.value << "\n";;
         }
@@ -312,23 +318,23 @@ extern string_q collapseArrays(const string_q& inStr);
             return inStr;
 
         string_q ret;
-        string_q str = substitute(inStr, "  "," ");
-        replace(str, "[[","`");
+        string_q str = substitute(inStr, "  ", " ");
+        replace(str, "[[", "`");
         string_q front = nextTokenClear(str, '`');
         str = "[[" + str;
-        str = substitute(str, "[[","<array>");
-        str = substitute(str, "]]","</array>\n<name>");
-        str = substitute(str, "[","</name>\n<value>");
-        str = substitute(str, "]","</value>\n<name>");
+        str = substitute(str, "[[", "<array>");
+        str = substitute(str, "]]", "</array>\n<name>");
+        str = substitute(str, "[", "</name>\n<value>");
+        str = substitute(str, "]", "</value>\n<name>");
         replaceReverse(str, "<name>", "");
-        replaceAll(str, "<name>\n","<name>");
-        replaceAll(str, " = </name>","</name>");
+        replaceAll(str, "<name>\n", "<name>");
+        replaceAll(str, " = </name>", "</name>");
         while (contains(str, "</array>")) {
-            string_q array = snagFieldClear(str,"array");
+            string_q array = snagFieldClear(str, "array");
             string_q vals;
             while (contains(str, "</value>")) {
-                string_q name = substitute(substitute(snagFieldClear(str,"name"), "=",""), "\n","");
-                string_q value = substitute(substitute(snagFieldClear(str,"value"), "\n",""), "=",":");
+                string_q name = substitute(substitute(snagFieldClear(str, "name"), "=", ""), "\n", "");
+                string_q value = substitute(substitute(snagFieldClear(str, "value"), "\n", ""), "=", ":");
                 vals += name + " = [ " + value + " ]\n";
             }
             string_q line = "[[" + array + "]]\n" + vals;

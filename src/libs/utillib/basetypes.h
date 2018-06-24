@@ -49,7 +49,7 @@ using namespace std;  // NOLINT
 #define NOPOS ((size_t)-1)
 
 //-------------------------------------------------------------------------
-//#define DEBUG 1
+// #define DEBUG 1
 #ifdef _DEBUG
 #define ASSERT(a) { if (!(a)) { cout << "error at " << __FILE__ << "(" << __LINE__ << ")\n"; } }
 #define XX(a) { cout << __FILE__ << " : " << __LINE__ << "\n\t" << (a) << "\n" ; cout.flush(); }

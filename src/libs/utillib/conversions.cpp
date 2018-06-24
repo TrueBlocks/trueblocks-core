@@ -15,20 +15,20 @@
 
 namespace qblocks {
 
-    // TODO: inline these conversions
+    // TODO(tjayrush): inline these conversions
     //----------------------------------------------------------------------------
     uint64_t toLongU(const string_q& str) {
-        return (uint64_t)(startsWith(str,"0x") ? hex2LongU(str.c_str()) : strtoul(str.c_str(), NULL, 10));
+        return (uint64_t)(startsWith(str, "0x") ? hex2LongU(str.c_str()) : strtoul(str.c_str(), NULL, 10));
     }
 
     //----------------------------------------------------------------------------
     double str2Double(const string_q& str) {
-        return (double)strtold(str.c_str(), NULL);
+        return static_cast<double>(strtold(str.c_str(), NULL));
     }
 
     //----------------------------------------------------------------------------
     bool str2Bool(const string_q& str) {
-        return (bool)(str % "true" || toLong(str) != 0);
+        return static_cast<bool>(str % "true" || toLong(str) != 0);
     }
 
     //----------------------------------------------------------------------------
@@ -37,14 +37,15 @@ namespace qblocks {
         string_q hex = toLower(startsWith(str, "0x") ? extract(str, 2) : str);
         reverse(hex);
 
-        char *s = (char *)hex.c_str();
-        uint64_t ret = 0, mult=1;
+        const char *s = hex.c_str();
+        uint64_t ret = 0, mult = 1;
         while (*s) {
             int val = *s - '0';
             if (*s >= 'a' && *s <= 'f')
                 val = *s - 'a' + 10;
             ret += (mult * (uint64_t)val);
-            s++;mult*=16;
+            s++;
+            mult *= 16;
         }
 
         return ret;
@@ -58,7 +59,7 @@ namespace qblocks {
 
         if (str.empty())
             return "0x";
-        
+
         string_q ret;
         for (size_t i = 0 ; i < str.length() ; i++) {
             ostringstream os;
@@ -71,7 +72,7 @@ namespace qblocks {
     //------------------------------------------------------------------
     class SFBloomHex : public SFBigNumStore<unsigned char> {
     public:
-        SFBloomHex(const SFUintBN& numIn);
+        explicit SFBloomHex(const SFUintBN& numIn);
         string_q str;
     };
 
@@ -83,8 +84,7 @@ namespace qblocks {
 
         SFUintBN x2(numIn);
         unsigned int nDigits = 0;
-        while (x2.len != 0)
-        {
+        while (x2.len != 0) {
             SFUintBN lastDigit(x2);
             lastDigit.divide(16, x2);
             blk[nDigits] = (unsigned char)lastDigit.to_ushort();
@@ -93,10 +93,10 @@ namespace qblocks {
         len = nDigits;
 
         char s[1024+1];
-		memset(s,'\0',sizeof(s));
-        for (unsigned int p=0;p<len;p++) {
-            unsigned short c = blk[len-1-p];
-            s[p] = ((c < 10) ? char('0'+c) : char('A'+c-10));
+        memset(s, '\0', sizeof(s));
+        for (unsigned int p = 0 ; p < len ; p++) {
+            unsigned short c = blk[len-1-p];  // NOLINT
+            s[p] = ((c < 10) ? char('0' + c) : char('A' + c - 10));  // NOLINT
         }
         str = s;
     }
@@ -106,7 +106,7 @@ namespace qblocks {
         if (bl == 0)
             return "0x0";
         SFBloomHex b2(bl);
-        return ("0x" + padLeft(toLower(b2.str),512,'0'));
+        return ("0x" + padLeft(toLower(b2.str), 512, '0'));
     }
 
     //-------------------------------------------------------------------------

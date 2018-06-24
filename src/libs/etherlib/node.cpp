@@ -849,6 +849,6 @@ extern void registerQuitHandler(QUITHANDLER qh);
     }
 
     //--------------------------------------------------------------------------
-    SFUintBN weiPerEther = (modexp(10,9,10000000000)*modexp(10,9,10000000000));
+    SFUintBN weiPerEther = (modexp(10,9,uint64_t(10000000000))*modexp(10,9,uint64_t(10000000000)));
 
 }  // namespace qblocks

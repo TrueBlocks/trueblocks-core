@@ -4,16 +4,20 @@
 // Page accessed: October 21, 2017 - 11:13:20 PM EST
 // Author Stephan Brumme Rudolf-Breitscheid-Str. 226 14482 Potsdam, Germany
 // License
-// Unless otherwise noted in a file's first 5 lines, all source code and its sub-pages is licensed similar to the zlib license:
-// This software is provided 'as-is', without any express or implied warranty. In no event will the author be held liable for
-// any damages arising from the use of this software. Permission is granted to anyone to use this software for any purpose,
-// including commercial applications, and to alter it and redistribute it freely, subject to the following restrictions:
-// o - The origin of this software must not be misrepresented; you must not claim that you wrote the original software.
-// o - If you use this software in a product, an acknowledgment in the product documentation would be appreciated but is not required.
-// o - Altered source versions must be plainly marked as such, and must not be misrepresented as being the original software.
-//
+// Unless otherwise noted in a file's first 5 lines, all source code and its sub-pages is licensed similar
+// to the zlib license: This software is provided 'as-is', without any express or implied warranty. In no
+// event will the author be held liable for any damages arising from the use of this software. Permission
+// is granted to anyone to use this software for any purpose, including commercial applications, and to
+// alter it and redistribute it freely, subject to the following restrictions:
+// o - The origin of this software must not be misrepresented; you must not claim that you wrote the
+//     original software.
+// o - If you use this software in a product, an acknowledgment in the product documentation would be
+//     appreciated but is not required.
+// o - Altered source versions must be plainly marked as such, and must not be misrepresented as being
+//     the original software.
 // Notice: This code has been modified to conform to QuickBlocks formatting preferences as well as other minor changes
 //
+#include <string>
 #include "utillib.h"
 
 CMemMapFile::CMemMapFile()

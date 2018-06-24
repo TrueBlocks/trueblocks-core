@@ -32,7 +32,7 @@ namespace qblocks {
             if (!(func)(globBuf.gl_pathv[i], data))
                 quitEarly = true;
         globfree(&globBuf);
-        return !quitEarly; // if we quit early, we want to return false, true if we quit naturally
+        return !quitEarly;  // if we quit early, we want to return false, true if we quit naturally
     }
 
     //----------------------------------------------------------------------------------
