@@ -37,7 +37,7 @@ namespace qblocks {
         CURLCALLBACKFUNC setCurlCallback(CURLCALLBACKFUNC func);
     };
 
-    extern CURL         *getCurl         (bool cleanup=false);
+    extern CURL         *getCurl         (bool cleanup = false);
     extern bool          isNodeRunning   (void);
     extern bool          nodeHasBalances (void);
     extern bool          getObjectViaRPC (CBaseNode &node, const string_q& method, const string_q& params);

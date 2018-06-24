@@ -11,11 +11,9 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 
+#include <mysql.h>
 #include <iostream>
 #include <string>
-
-#include <mysql.h>
-
 #include "etherlib.h"
 
 //--------------------------------------------------------------------------
@@ -24,9 +22,9 @@
 MYSQL *conn = NULL;
 
 // connection credentials, normally at config file
-std::string host = "127.0.0.1";
-std::string user = "root";
-std::string password = "";
+const char *host = "127.0.0.1";
+const char *user = "root";
+const char *password = "";
 
 //--------------------------------------------------------------------------
 extern int runQuery(const char* query);
@@ -41,18 +39,18 @@ extern int displayDbData(void);
 int main() {
 
     // Stablish connection with mysql server
-    if(connectServer()) {
+    if (connectServer()) {
         return -1;
     }
 
     // Create db and tables
-    if(initDb()) {
+    if (initDb()) {
         disconnectServer();
         return -1;
     }
 
     // Insert some dummy data
-    if(addDbData()) {
+    if (addDbData()) {
         disconnectServer();
         return -1;
     }
@@ -92,7 +90,7 @@ void disconnectServer() {
 
 //--------------------------------------------------------------------------
 int createTable(const char* query) {
-    if(runQuery(query)) {
+    if (runQuery(query)) {
         cerr << "ERROR: Unable to create table\n";
         return 1;
     }
@@ -104,7 +102,7 @@ int createTable(const char* query) {
 int initDb() {
     std::string query = "CREATE DATABASE IF NOT EXISTS quickBlocks;";
     // create database from scratch
-    if(runQuery(query.c_str())) {
+    if (runQuery(query.c_str())) {
         cerr << "ERROR: Unable to create QBLOCKS database\n";
         return 1;
     }
@@ -112,7 +110,7 @@ int initDb() {
     // use this database now onwards
     query = "USE quickBlocks;";
 
-    if(runQuery(query.c_str())) {
+    if (runQuery(query.c_str())) {
         cerr << "ERROR: Unable to use QBLOCKS database\n";
         return 1;
     }
@@ -120,28 +118,28 @@ int initDb() {
     // create the tables required
 
     // Blocks table
-    query = "CREATE TABLE IF NOT EXISTS Blocks ( \
-    blockNumber BIGINT, \
-    timestamp TIMESTAMP, \
-    PRIMARY KEY (blockNumber) \
-    );";
+    query = "CREATE TABLE IF NOT EXISTS Blocks ( "
+        "blockNumber BIGINT, "
+        "timestamp TIMESTAMP, "
+        "PRIMARY KEY (blockNumber) "
+        ");";
 
-    if(createTable(query.c_str())) {
+    if (createTable(query.c_str())) {
         return 1;
     }
 
     // Transactions table
-    query = "CREATE TABLE IF NOT EXISTS Transactions ( \
-    blockNumber BIGINT, \
-    indexInTheBlock INT, \
-    fromAddr VARCHAR(256), \
-    toAddr VARCHAR(256), \
-    value VARCHAR(256), \
-    input VARCHAR(256), \
-    FOREIGN KEY (blockNumber) REFERENCES Blocks(blockNumber) \
-    );";
+    query = "CREATE TABLE IF NOT EXISTS Transactions ( "
+        "blockNumber BIGINT, "
+        "indexInTheBlock INT, "
+        "fromAddr VARCHAR(256), "
+        "toAddr VARCHAR(256), "
+        "value VARCHAR(256), "
+        "input VARCHAR(256), "
+        "FOREIGN KEY (blockNumber) REFERENCES Blocks(blockNumber) "
+        ");";
 
-    if(createTable(query.c_str())) {
+    if (createTable(query.c_str())) {
         return 1;
     }
 
@@ -157,12 +155,12 @@ int addDbData() {
     // Add N blocks
     int dummyBlocksNum = 100;
 
-    for(int i=0; i < dummyBlocksNum; i++) {
+    for (int i = 0; i < dummyBlocksNum; i++) {
         std::ostringstream stringStream;
         stringStream << "INSERT INTO Blocks VALUES(" << i << "," <<
         "STR_TO_DATE('26,10,2017','%d,%m,%Y'));";
 
-        if(runQuery(stringStream.str().c_str())) {
+        if (runQuery(stringStream.str().c_str())) {
             cerr << "ERROR: Unable to insert block " << i << "\n";
             return 1;
         }
@@ -175,7 +173,7 @@ int addDbData() {
 int displayDbData() {
     std::string query = "SELECT * from Blocks;";
 
-    if(runQuery(query.c_str())) {
+    if (runQuery(query.c_str())) {
         cerr << "ERROR: Unable to display Blocks information\n";
         return 1;
     }
@@ -183,7 +181,7 @@ int displayDbData() {
     // Once query is executed we retrieve the result
     MYSQL_RES *result = mysql_store_result(conn);
 
-    if(result) {
+    if (result) {
         // Get now the rows information present in result
         // row will be an array with as many fields as select filter (we request '*' = 2 fields )
         MYSQL_ROW row;
@@ -202,7 +200,7 @@ int displayDbData() {
 int runQuery(const char* query) {
     int result = 1;
 
-    if(query) {
+    if (query) {
         // run the query
         cout << "Running query [" <<  query  << "]\n";
 

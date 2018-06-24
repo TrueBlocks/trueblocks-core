@@ -59,7 +59,7 @@ string_q nextAccountwatchChunk(const string_q& fieldIn, const void *dataPtr) {
 bool CAccountWatch::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
     // EXISTING_CODE
     if (fieldName % "qbis") {
-        char *p = (char *)fieldValue.c_str();
+        char *p = (char *)fieldValue.c_str();  // NOLINT
         size_t nFields = 0;
         qbis.parseJson(p, nFields);
         return true;
@@ -308,7 +308,7 @@ string_q CAccountWatch::displayName(bool expand, bool useColor, bool terse, size
 
     if (terse) {
         uint64_t len = name.length();
-        uint64_t need = 42 - len - 6; // the six is for " (" and "...)"
+        uint64_t need = 42 - len - 6;  // the six is for " (" and "...)"
         string_q ret;
 //        if (useColor)
 //            ret += color;
@@ -332,7 +332,8 @@ SFUintBN getNodeBal(CBalanceHistoryArray& history, const SFAddress& addr, blknum
     if (!startsWith(addr, "0x"))
         return 0;
 
-    // This will return 'true' if the node has historical balances - we want to use those balances if they are there
+    // This will return 'true' if the node has historical balances - we want to use those
+    // balances if they are there
     if (nodeHasBalances())
         return getBalance(addr, blockNum, false);
 
@@ -372,7 +373,8 @@ SFUintBN getNodeBal(CBalanceHistoryArray& history, const SFAddress& addr, blknum
     CBalanceHistory find;
     find.bn = blockNum;
 
-    CBalanceHistory *found = reinterpret_cast<CBalanceHistory*>(bsearch(&find, &history.m_Items[0], history.m_nItems, sizeof(CBalanceHistory), findBalance));
+    CBalanceHistory *found = (CBalanceHistory*)  // NOLINT
+            bsearch(&find, &history.m_Items[0], history.m_nItems, sizeof(CBalanceHistory), findBalance);
     if (found)
         return found->balance;
 
@@ -403,9 +405,9 @@ SFUintBN getNodeBal(CBalanceHistoryArray& history, const SFAddress& addr, blknum
 
 //---------------------------------------------------------------------------
 int findBalance(const void *ob1, const void *ob2) {
-    CBalanceHistory *h1 = (CBalanceHistory*)ob1;
-    CBalanceHistory *h2 = (CBalanceHistory*)ob2;
-         if (h1->bn > h2->bn) return 1;
+    CBalanceHistory *h1 = (CBalanceHistory*)ob1;  // NOLINT
+    CBalanceHistory *h2 = (CBalanceHistory*)ob2;  // NOLINT
+         if (h1->bn > h2->bn) return 1;  // NOLINT
     else if (h1->bn < h2->bn) return -1;
     return 0;
 }
@@ -415,7 +417,7 @@ int findBalance(const void *ob1, const void *ob2) {
 void loadWatchList(const CToml& toml, CAccountWatchArray& watches, const string_q& key) {
 
     string_q watchStr = toml.getConfigStr("watches", key, "");
-    char *p = cleanUpJson((char *)watchStr.c_str());
+    char *p = cleanUpJson((char *)watchStr.c_str());  // NOLINT
     while (p && *p) {
         CAccountWatch watch;
         size_t nFields = 0;

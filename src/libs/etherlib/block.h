@@ -15,6 +15,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <map>
 #include "etherlib.h"
 #include "transaction.h"
 
@@ -175,14 +176,16 @@ inline blknum_t bnFromPath(const string_q& path) {
 }
 
 //---------------------------------------------------------------------------
-inline bool isBlockFinal(timestamp_t ts_block, timestamp_t ts_chain, timestamp_t seconds = (60 * 4)) { // default to ten minutes
+inline bool isBlockFinal(timestamp_t ts_block, timestamp_t ts_chain, timestamp_t seconds = (60 * 4)) {
+    // Default to four minutes
     // If the distance from the front of the node's current view of the front of the chain
     // is more than the numbers of seconds provided, consider the block final (even if it isn't
     // in a perfectly mathematical sense
     return ((ts_chain - ts_block) > seconds);
 }
 extern bool isPotentialAddr(SFUintBN test, SFAddress& addrOut);
-extern void processPotentialAddrs(blknum_t bn, blknum_t tx, blknum_t tc, const string_q& potList, ADDRESSFUNC func, void *data);
+extern void processPotentialAddrs(blknum_t bn, blknum_t tx, blknum_t tc,
+                                    const string_q& potList, ADDRESSFUNC func, void *data);
 
 //---------------------------------------------------------------------------
 class CAddressItem {
@@ -191,8 +194,10 @@ public:
     blknum_t transIndex;
     blknum_t traceId;
     SFAddress addr;
-    CAddressItem(void) : blockNum(0), transIndex(0), traceId(0), addr("") { }
-    CAddressItem(const CAddressItem& item) : blockNum(item.blockNum), transIndex(item.transIndex), traceId(item.traceId), addr(item.addr) { }
+    CAddressItem(void)
+        : blockNum(0), transIndex(0), traceId(0), addr("") { }
+    CAddressItem(const CAddressItem& item)
+        : blockNum(item.blockNum), transIndex(item.transIndex), traceId(item.traceId), addr(item.addr) { }
     CAddressItem& operator=(const CAddressItem& item) {
         blockNum = item.blockNum;
         transIndex = item.transIndex;
@@ -200,8 +205,11 @@ public:
         addr = item.addr;
         return *this;
     }
-    CAddressItem(blknum_t bn, blknum_t tx, blknum_t tc, const SFAddress& a) : blockNum(bn), transIndex(tx), traceId(tc), addr(a) { }
-    friend bool operator<(const CAddressItem& v1, const CAddressItem& v2) { return v1.addr < v2.addr; }
+    CAddressItem(blknum_t bn, blknum_t tx, blknum_t tc, const SFAddress& a)
+        : blockNum(bn), transIndex(tx), traceId(tc), addr(a) { }
+    friend bool operator<(const CAddressItem& v1, const CAddressItem& v2) {
+        return v1.addr < v2.addr;
+    }
     friend ostream& operator<<(ostream& os, const CAddressItem& item);
 };
 typedef map<CAddressItem, uint64_t> CAddressItemMap;

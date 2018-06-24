@@ -70,7 +70,7 @@ bool CNewReceipt::setValueByName(const string_q& fieldName, const string_q& fiel
             break;
         case 'l':
             if ( fieldName % "logs" ) {
-                char *p = (char *)fieldValue.c_str();
+                char *p = (char *)fieldValue.c_str();  // NOLINT
                 while (p && *p) {
                     CLogEntry item;
                     size_t nFields = 0;
@@ -119,7 +119,7 @@ bool CNewReceipt::Serialize(SFArchive& archive) {
 bool CNewReceipt::SerializeC(SFArchive& archive) const {
 
     // Writing always write the latest version of the data
-    ((CNewReceipt*)this)->m_schema = getVersionNum();
+    ((CNewReceipt*)this)->m_schema = getVersionNum();  // NOLINT
     CBaseNode::SerializeC(archive);
 
     // EXISTING_CODE
@@ -181,7 +181,7 @@ void CNewReceipt::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextNewreceiptChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CNewReceipt *newp = (const CNewReceipt *)dataPtr;
+    const CNewReceipt *newp = (const CNewReceipt *)dataPtr;  // NOLINT
     if (newp) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE

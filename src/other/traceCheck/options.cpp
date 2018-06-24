@@ -10,7 +10,8 @@
 //---------------------------------------------------------------------------------------------------
 CParams params[] = {
     CParams("~block_list", "a space-separated list of one or more blocks to retrieve"),
-    CParams("",            "Visit all traces in the given blocks and do stuff (change the code to change the stuff).\n"),
+    CParams("",            "Visit all traces in the given blocks and do stuff (change the code to "
+                                "change the stuff).\n"),
 };
 uint32_t nParams = sizeof(params) / sizeof(CParams);
 

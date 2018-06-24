@@ -214,7 +214,7 @@ string_q CAcctCacheItem::getValueByName(const string_q& fieldName) const {
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const CAcctCacheItem& item) {
     // EXISTING_CODE
-    if (sizeof(item) != 0) { // do this to always go through here, but avoid a warning
+    if (sizeof(item) != 0) {  // do this to always go through here, but avoid a warning
         os << item.blockNum << "." << item.transIndex;
         return os;
     }
@@ -230,10 +230,10 @@ CAcctCacheItem::CAcctCacheItem(string_q& line) {
 
     replaceAll(line, ".", "\t");
 
-    string_q val = nextTokenClear(line,'\t');
+    string_q val = nextTokenClear(line, '\t');
     blockNum = toUnsigned(val);
 
-    val = nextTokenClear(line,'\t');
+    val = nextTokenClear(line, '\t');
     transIndex = toUnsigned(val);
 }
 // EXISTING_CODE

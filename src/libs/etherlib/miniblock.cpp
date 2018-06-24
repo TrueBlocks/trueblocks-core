@@ -10,6 +10,7 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
+#include <algorithm>
 #include "node.h"
 #include "miniblock.h"
 
@@ -176,7 +177,7 @@ namespace qblocks {
         count = min(_start + _count, latestBlock) - _start;
 
         CMemMapFile blockFile(miniBlockCache.c_str(),  CMemMapFile::WholeFile, CMemMapFile::SequentialScan);
-        blocks = (CMiniBlock*)(blockFile.getData());
+        blocks = (CMiniBlock*)(blockFile.getData());  // NOLINT
 
         CMemMapFile transFile(miniTransCache.c_str(),  CMemMapFile::WholeFile, CMemMapFile::SequentialScan);
         trans  = reinterpret_cast<const CMiniTrans *>(transFile.getData());
@@ -217,7 +218,7 @@ namespace qblocks {
     bool forEveryMiniBlockInMemory(MINIBLOCKVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip) {
 
         CInMemoryCache *cache = getTheCache();
-        if (!cache->Load(start,count))
+        if (!cache->Load(start, count))
             return false;
 
         blknum_t first = cache->firstBlock();
@@ -226,12 +227,12 @@ namespace qblocks {
         bool done = false;
         for (blknum_t i = first ; i < last && !done ; i = i + skip) {
 
-            if (inRange(cache->blocks[i].blockNumber, start, start+count-1)) {
+            if (inRange(cache->blocks[i].blockNumber, start, start + count - 1)) {
 
                 if (!(*func)(cache->blocks[i], &cache->trans[0], data))
                     return false;
 
-            } else if (cache->blocks[i].blockNumber >= start+count) {
+            } else if (cache->blocks[i].blockNumber >= start + count) {
 
                 done = true;
 
@@ -254,15 +255,17 @@ namespace qblocks {
         blknum_t first = cache->firstBlock();
         blknum_t last  = cache->lastBlock();
 
-        bool done=false;
+        bool done = false;
         for (blknum_t i = first ; i < last && !done ; i = i + skip) {
 
-            if (inRange(cache->blocks[i].blockNumber, start, start+count-1)) {
+            if (inRange(cache->blocks[i].blockNumber, start, start + count - 1)) {
 
                 CBlock block;
                 cache->blocks[i].toBlock(block);
                 SFGas gasUsed = 0;
-                for (txnum_t tr = cache->blocks[i].firstTrans ; tr < cache->blocks[i].firstTrans + cache->blocks[i].nTrans ; tr++) {
+                for (txnum_t tr = cache->blocks[i].firstTrans ;
+                        tr < cache->blocks[i].firstTrans + cache->blocks[i].nTrans;
+                        tr++) {
                     CTransaction tt;
                     cache->trans[tr].toTrans(tt);
                     gasUsed += tt.receipt.gasUsed;
@@ -272,9 +275,9 @@ namespace qblocks {
                 if (!(*func)(block, data))
                     return false;
 
-            } else if (cache->blocks[i].blockNumber >= start+count) {
+            } else if (cache->blocks[i].blockNumber >= start + count) {
 
-                done=true;
+                done = true;
 
             } else {
 

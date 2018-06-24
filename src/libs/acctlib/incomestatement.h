@@ -151,8 +151,7 @@ extern SFArchive& operator>>(SFArchive& archive, CIncomeStatement& inc);
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 //------------------------------------------------------------
-inline void CIncomeStatement::operator+=(const CIncomeStatement &x)
-{
+inline void CIncomeStatement::operator+=(const CIncomeStatement &x) {
     begBal += x.begBal;
     inflow += x.inflow;
     outflow += x.outflow;

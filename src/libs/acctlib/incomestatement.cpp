@@ -259,7 +259,7 @@ string_q CIncomeStatement::getValueByName(const string_q& fieldName) const {
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const CIncomeStatement& item) {
     // EXISTING_CODE
-    if (sizeof(item) != 0) { // do this to always go through here, but avoid a warning
+    if (sizeof(item) != 0) {  // do this to always go through here, but avoid a warning
         uint64_t width = 22;
         if (item.begBal == item.endBal && item.begBal == -1) {
             os << padCenter("begBal", width) << "   "
@@ -268,11 +268,11 @@ ostream& operator<<(ostream& os, const CIncomeStatement& item) {
                 << padCenter("gasCost", width) << "   "
                 << padCenter("endBal", width);
         } else {
-            os << (item.begBal>0?cGreen:bBlack) << padLeft(wei2Ether(to_string(item.begBal).c_str()),width) << bBlack << "   ";
-            os << (item.inflow>0?cYellow:"") << padLeft(wei2Ether(to_string(item.inflow).c_str()),width) << bBlack << "   ";
-            os << (item.outflow>0?cYellow:"") << padLeft(wei2Ether(to_string(item.outflow).c_str()),width) << bBlack << "   ";
-            os << (item.gasCostInWei>0?cYellow:"") << padLeft(wei2Ether(to_string(item.gasCostInWei).c_str()),width) << cOff << "   ";
-            os << (item.endBal>0?cGreen:bBlack) << padLeft(wei2Ether(to_string(item.endBal).c_str()),width);
+            os << (item.begBal>0?cGreen:bBlack) << padLeft(wei2Ether(to_string(item.begBal).c_str()),width) << bBlack << "   ";  // NOLINT
+            os << (item.inflow>0?cYellow:"") << padLeft(wei2Ether(to_string(item.inflow).c_str()),width) << bBlack << "   ";  // NOLINT
+            os << (item.outflow>0?cYellow:"") << padLeft(wei2Ether(to_string(item.outflow).c_str()),width) << bBlack << "   ";  // NOLINT
+            os << (item.gasCostInWei>0?cYellow:"") << padLeft(wei2Ether(to_string(item.gasCostInWei).c_str()),width) << cOff << "   ";  // NOLINT
+            os << (item.endBal>0?cGreen:bBlack) << padLeft(wei2Ether(to_string(item.endBal).c_str()),width);  // NOLINT
         }
         { return os; }
     }

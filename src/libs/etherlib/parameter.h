@@ -15,6 +15,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <vector>
 #include "utillib.h"
 
 namespace qblocks {
@@ -56,7 +57,7 @@ public:
     DECLARE_NODE(CParameter);
 
     // EXISTING_CODE
-    CParameter(string_q& txtIn);
+    explicit CParameter(string_q& txtIn);
     // EXISTING_CODE
     friend bool operator<(const CParameter& v1, const CParameter& v2);
     friend ostream& operator<<(ostream& os, const CParameter& item);

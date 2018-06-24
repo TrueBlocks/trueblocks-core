@@ -58,15 +58,15 @@ string_q nextTraceChunk(const string_q& fieldIn, const void *dataPtr) {
 bool CTrace::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
     // EXISTING_CODE
     if (fieldName % "action") {
-        char *p = (char *)fieldValue.c_str();
-        size_t nFields=0;
-        action.parseJson(p,nFields);
+        char *p = (char *)fieldValue.c_str();  // NOLINT
+        size_t nFields = 0;
+        action.parseJson(p, nFields);
         return true;
 
     } else if (fieldName % "result") {
-        char *p = (char *)fieldValue.c_str();
-        size_t nFields=0;
-        result.parseJson(p,nFields);
+        char *p = (char *)fieldValue.c_str();  // NOLINT
+        size_t nFields = 0;
+        result.parseJson(p, nFields);
         return true;
     }
     // EXISTING_CODE
@@ -92,7 +92,7 @@ bool CTrace::setValueByName(const string_q& fieldName, const string_q& fieldValu
             if ( fieldName % "traceAddress" ) {
                 string_q str = fieldValue;
                 while (!str.empty()) {
-                    traceAddress.push_back(nextTokenClear(str,','));
+                    traceAddress.push_back(nextTokenClear(str, ','));
                 }
                 return true;
             }

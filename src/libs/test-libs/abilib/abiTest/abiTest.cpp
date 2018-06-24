@@ -10,6 +10,7 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
+#include <algorithm>
 #include "etherlib.h"
 #include "options.h"
 #include "junk.h"
@@ -88,7 +89,7 @@ bool loadABIFromString(CJunk& abi, const string_q& in) {
 
     string_q contents = in;
     ASSERT(!contents.empty());
-    char *p = cleanUpJson((char *)contents.c_str());
+    char *p = cleanUpJson((char *)contents.c_str());  // NOLINT
     while (p && *p) {
         CFunction func;
         size_t nFields = 0;
@@ -97,7 +98,7 @@ bool loadABIFromString(CJunk& abi, const string_q& in) {
             abi.array1.push_back(func);
         }
     }
-    return true; //abiByName.size();
+    return true;  // abiByName.size();
 }
 
 //--------------------------------------------------------------

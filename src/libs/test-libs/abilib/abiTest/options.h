@@ -17,7 +17,7 @@
 class COptions : public COptionsBase {
 public:
     string_q mode;
-    
+
     COptions(void);
     ~COptions(void);
 

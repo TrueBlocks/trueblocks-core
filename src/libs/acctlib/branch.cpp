@@ -89,7 +89,7 @@ bool CBranch::Serialize(SFArchive& archive) {
     CTreeNode::Serialize(archive);
 
     // EXISTING_CODE
-    for (int i=0;i<16;i++) {
+    for (int i = 0 ; i < 16 ; i++) {
         if (nodes[i]) {
             delete nodes[i];
             nodes[i] = NULL;
@@ -119,7 +119,7 @@ bool CBranch::SerializeC(SFArchive& archive) const {
     CTreeNode::SerializeC(archive);
 
     // EXISTING_CODE
-    for (int i=0;i<16;i++) {
+    for (int i = 0 ; i < 16 ; i++) {
         archive << bool(nodes[i] != NULL);
         if (nodes[i]) {
             string_q className = nodes[i]->getRuntimeClass()->getClassNamePtr();
@@ -186,7 +186,7 @@ string_q nextBranchChunk_custom(const string_q& fieldIn, const void *dataPtr) {
             case 'n':
                 if ( fieldIn % "nodes" ) {
                     string_q ret;
-                    for (int i=0;i<16;i++) {
+                    for (int i = 0 ; i < 16 ; i++) {
                         if (bra->nodes[i]) {
                             ret += bra->nodes[i]->Format();
                         }
@@ -417,12 +417,12 @@ ostream& operator<<(ostream& os, const CBranch& item) {
         vd->type = T_BRANCH;
         vd->counter = 0;
         vd->strs = vd->strs + branchValue + "+";
-        //vd->strs = vd->strs + "+";
+        // vd->strs = vd->strs + "+";
         (*func)(this, data);
         for (size_t i = 0; i < 16; ++i) {
             if (nodes[i]) {
                 vd->level++;
-                vd->strs = vd->strs + "-" + idex((char)i);
+                vd->strs = vd->strs + "-" + idex((char)i);  // NOLINT
                 nodes[i]->visitItems(func, data);
                 nextTokenClearReverse(vd->strs, '-');
                 vd->level--;

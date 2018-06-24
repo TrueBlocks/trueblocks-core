@@ -15,6 +15,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <vector>
 #include "etherlib.h"
 
 namespace qblocks {
@@ -38,7 +39,7 @@ public:
 
     // EXISTING_CODE
     CAcctCacheItem(uint64_t b, uint64_t t) : blockNum(b), transIndex(t) {}
-    CAcctCacheItem(string_q& str);
+    explicit CAcctCacheItem(string_q& str);
     bool operator==(const CAcctCacheItem& item) {
         return (blockNum == item.blockNum && transIndex == item.transIndex);
     }

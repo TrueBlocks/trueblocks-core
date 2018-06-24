@@ -15,12 +15,9 @@
 #include <sstream>
 #include "utillib.h"
 
-using namespace std;
-
 //----------------------------------------------------------------------
-int main(int argc, const char *argv[])
-{
+int main(int argc, const char *argv[]) {
     cout << substitute(urlToString("http:/""/google.com"), "\r", "") << "\n";
     cout << substitute(urlToString("https:/""/quickblocks.io"), "\r", "") << "\n";
-	return 0;
+    return 0;
 }

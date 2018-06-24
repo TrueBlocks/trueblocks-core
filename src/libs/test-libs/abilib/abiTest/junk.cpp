@@ -16,10 +16,10 @@
 //-------------------------------------------------------------------------
 IMPLEMENT_NODE(CJunk, CBaseNode);
 CJunk::CJunk(void) {
-    static bool been_here=false;
+    static bool been_here = false;
     if (!been_here) {
         ADD_FIELD(CJunk, "array1", T_OBJECT|TS_ARRAY, 1001);
-        been_here=true;
+        been_here = true;
     }
 }
 bool CJunk::setValueByName(const string_q& fieldName, const string_q& fieldValue) {

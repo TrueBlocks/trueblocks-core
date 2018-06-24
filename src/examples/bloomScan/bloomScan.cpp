@@ -46,7 +46,7 @@ extern bool displayBloom(blknum_t bn, const SFBloom& bloom, void *data);
                     bloom |= blooms[i];
                 }
             }
-            COptions *options = (COptions*)data;
+            COptions *options = (COptions*)data;  // NOLINT
             if (options->asData)
                 cout << bnFromPath(path) << "," << fileSize(path) << "," << bitsTwiddled(bloom) << "\n";
             else
@@ -59,7 +59,7 @@ extern bool displayBloom(blknum_t bn, const SFBloom& bloom, void *data);
 //-------------------------------------------------------------
 bool displayBloom(blknum_t bn, const SFBloom& bloom, void *data) {
     string_q s = bloom2Bytes(bloom);
-    COptions *opt = (COptions*)data;
+    COptions *opt = (COptions*)data;  // NOLINT
     if (opt->mode == "short") {
         size_t len = s.length();
         replace(s,    "0x",     "");
@@ -89,10 +89,10 @@ bool displayBloom(blknum_t bn, const SFBloom& bloom, void *data) {
         replaceAll(s, "e",  "-+");
         replaceAll(s, "f",  "%@");
 //        replaceAll(s, " ",cOff);
-        replaceAll(s, "[",cOff+cWhite);
-        replaceAll(s, "+",cOff+cYellow);
-        replaceAll(s, "-",cOff+cMagenta);
-        replaceAll(s, "%",cOff+bBlue);
+        replaceAll(s, "[", cOff + cWhite);
+        replaceAll(s, "+", cOff + cYellow);
+        replaceAll(s, "-", cOff + cMagenta);
+        replaceAll(s, "%", cOff + bBlue);
     }
     cout << cOff << bn << s << "\n";
     cout.flush();

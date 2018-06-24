@@ -16,6 +16,6 @@ stringTest 0
 	000.009 c-string greater than or eq      ==> passed '(foo >= bar)' is false
 	000.010 qb-string greater than or eq     ==> passed '(xfoo >= xbar)' is false
 	000.011 c-string min                     ==> passed '(min(foo, bar) == bar)' is false
-	000.012 c-string max                     ==> passed '(max(foo, bar) == bar)' is true
+	000.012 c-string max                     ==> passed 'max(foo, bar)' is equal to 'bar'
 	000.013 qb-string min                    ==> passed '(min(xfoo, xbar) == xbar)' is false
-	000.014 qb-string max                    ==> passed '(max(xfoo, xbar) == xbar)' is true
+	000.014 qb-string max                    ==> passed 'max(xfoo, xbar)' is equal to 'xbar'
