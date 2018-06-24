@@ -26,7 +26,7 @@ namespace qblocks {
 
     //---------------------------------------------------------------------------
     string_q CPriceSource::getDatabasePath(void) const {
-        string_q source = substitute(substitute(url, "http://",""), "https://","");
+        string_q source = substitute(substitute(url, "http://", ""), "https://", "");
         source = nextTokenClear(source, '.');
         string_q ret = blockCachePath("prices/" + source + "_" + pair + ".bin");
         establishFolder(ret);
@@ -34,18 +34,19 @@ namespace qblocks {
     }
 
     //---------------------------------------------------------------------------
-    bool loadPriceData(const CPriceSource& source, CPriceQuoteArray& quotes, bool freshen, string_q& message, uint64_t step) {
+    bool loadPriceData(const CPriceSource& source, CPriceQuoteArray& quotes, bool freshen,
+                            string_q& message, uint64_t step) {
 
         string_q cacheFile = source.getDatabasePath();
 
         // Load and possibly refresh the price database
         SFTime lastRead = SFTime(2015, 1, 1, 0, 0, 0);
         if (contains(source.pair, "BTC"))
-            lastRead = SFTime(2009,1,1,0,0,0);
+            lastRead = SFTime(2009, 1, 1, 0, 0, 0);
         if (fileExists(cacheFile)) {
             SFArchive priceCache(READING_ARCHIVE);
             if (priceCache.Lock(cacheFile, binaryReadOnly, LOCK_NOWAIT)) {
-                priceCache.readHeader(); // we read the header even though it may not be the current version...
+                priceCache.readHeader();  // we read the header even though it may not be the current version...
                 priceCache >> lastRead.m_nSeconds;
                 priceCache >> quotes;
                 priceCache.Close();
@@ -65,7 +66,7 @@ namespace qblocks {
             }
 
         } else {
-            freshen=true;
+            freshen = true;
             if (verbose)
                 cerr << "Price database not found. Creating it.\n";
         }
@@ -74,7 +75,8 @@ namespace qblocks {
         SFTime firstDate = SFTime(2015, 6, 1, 0, 0, 0);
         SFTime now       = Now();
         SFTime nextRead  = (lastRead == SFTime(2015, 1, 1, 0, 0, 0) ? firstDate : lastRead + 5*60);  // 5 minutes
-                                                                                                     //#define DEBUGGING
+
+// #define DEBUGGING
 #ifdef DEBUGGING
         cerr << "firstDate: " << firstDate << "\n";
         cerr << "now: " << now << "\n";
@@ -196,7 +198,7 @@ namespace qblocks {
         if (step != 1) {
             CPriceQuoteArray ret;
             for (size_t i = 0 ; i < quotes.size() ; i += step)
-                ret.push_back(quotes[i]); // grows the vector
+                ret.push_back(quotes[i]);  // grows the vector
             quotes = ret;
         }
 
@@ -204,7 +206,12 @@ namespace qblocks {
     }
 
     const char* STR_PRICE_URL =
-    "https://poloniex.com/public?command=returnChartData&currencyPair=[{PAIR}]&start=[{START}]&end=[{END}]&period=[{PERIOD}]";
+    "https://poloniex.com/public"
+        "?command=returnChartData"
+        "&currencyPair=[{PAIR}]"
+        "&start=[{START}]"
+        "&end=[{END}]"
+        "&period=[{PERIOD}]";
 
 }  // namespace qblocks
 

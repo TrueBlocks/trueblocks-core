@@ -127,7 +127,7 @@ inline void CReceipt::duplicate(const CReceipt& re) {
     status = re.status;
 
     // EXISTING_CODE
-    pTrans = re.pTrans; // no deep copy becuase it's const
+    pTrans = re.pTrans;  // no deep copy becuase it's const
 #if 0
     blockHash = re.blockHash;
     blockNumber = re.blockNumber;

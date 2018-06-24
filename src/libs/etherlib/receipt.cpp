@@ -59,13 +59,13 @@ string_q nextReceiptChunk(const string_q& fieldIn, const void *dataPtr) {
 bool CReceipt::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
     // EXISTING_CODE
     if (fieldName == "contractAddress" && fieldValue == "null") {
-        *((string_q*)&fieldValue) = "0";
+        *((string_q*)&fieldValue) = "0";  // NOLINT
     } else if (fieldName == "status" && (fieldValue == "null" || fieldValue == "0x")) {
-        *((string_q*)&fieldValue) = asStringU(NO_STATUS);
+        *((string_q*)&fieldValue) = asStringU(NO_STATUS);  // NOLINT
     }
 
     if (pTrans)
-        if (((CTransaction*)pTrans)->setValueByName(fieldName, fieldValue))
+        if (((CTransaction*)pTrans)->setValueByName(fieldName, fieldValue))  // NOLINT
             return true;
     // EXISTING_CODE
 
@@ -78,7 +78,7 @@ bool CReceipt::setValueByName(const string_q& fieldName, const string_q& fieldVa
             break;
         case 'l':
             if ( fieldName % "logs" ) {
-                char *p = (char *)fieldValue.c_str();
+                char *p = (char *)fieldValue.c_str();  // NOLINT
                 while (p && *p) {
                     CLogEntry item;
                     size_t nFields = 0;
@@ -102,7 +102,7 @@ bool CReceipt::setValueByName(const string_q& fieldName, const string_q& fieldVa
 void CReceipt::finishParse() {
     // EXISTING_CODE
     for (size_t i = 0 ; i < logs.size() ; i++) {
-        logs.at(i).pReceipt = this; // taking a non-const reference of an element that already exists
+        logs.at(i).pReceipt = this;  // taking a non-const reference of an element that already exists
     }
     // EXISTING_CODE
 }
@@ -229,11 +229,11 @@ bool CReceipt::readBackLevel(SFArchive& archive) {
     bool done = false;
     // EXISTING_CODE
     SFBloom removed;
-    if (m_schema < getVersionNum(0,2,0)) {
+    if (m_schema < getVersionNum(0, 2, 0)) {
         archive >> contractAddress;
         archive >> gasUsed;
         archive >> logs;
-        archive >> removed; // was logsBloom
+        archive >> removed;  // was logsBloom
         // The 'status' field will be corrected in CBlock::finishParse() once we have a block
         // number. We set status here to NO_STATUS assuming pre-byzantium. After byzantium, we
         // have to pick up the value (0 or 1) from the node
@@ -241,11 +241,11 @@ bool CReceipt::readBackLevel(SFArchive& archive) {
         finishParse();
         done = true;
 
-    } else if (m_schema <= getVersionNum(0,3,0)) {
+    } else if (m_schema <= getVersionNum(0, 3, 0)) {
         archive >> contractAddress;
         archive >> gasUsed;
         archive >> logs;
-        archive >> removed; // was logsBloom
+        archive >> removed;  // was logsBloom
         archive >> status;
         finishParse();
         done = true;

@@ -14,6 +14,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <utility>
 #include "block.h"
 #include "etherlib.h"
 
@@ -59,13 +60,13 @@ string_q nextBlockChunk(const string_q& fieldIn, const void *dataPtr) {
 bool CBlock::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
     // EXISTING_CODE
     if (fieldName % "number") {
-        *(string_q*)&fieldName = "blockNumber";
+        *(string_q*)&fieldName = "blockNumber";  // NOLINT
 
     } else if (fieldName % "author") {
-        *(string_q*)&fieldName = "miner";
+        *(string_q*)&fieldName = "miner";  // NOLINT
 
     } else if (isTestMode() && fieldName % "blockHash") {
-        *(string_q*)&fieldName = "hash";
+        *(string_q*)&fieldName = "hash";  // NOLINT
 
     } else if (fieldName % "transactions") {
         // Transactions come to us either as a JSON objects or lists of hashes (i.e. a string array). JSON objects have
@@ -109,7 +110,7 @@ bool CBlock::setValueByName(const string_q& fieldName, const string_q& fieldValu
         case 't':
             if ( fieldName % "timestamp" ) { timestamp = toTimestamp(fieldValue); return true; }
             if ( fieldName % "transactions" ) {
-                char *p = (char *)fieldValue.c_str();
+                char *p = (char *)fieldValue.c_str();  // NOLINT
                 while (p && *p) {
                     CTransaction item;
                     size_t nFields = 0;
@@ -130,7 +131,7 @@ bool CBlock::setValueByName(const string_q& fieldName, const string_q& fieldValu
 void CBlock::finishParse() {
     // EXISTING_CODE
     for (size_t i = 0 ; i < transactions.size() ; i++) {
-        CTransaction *trans = &transactions.at(i); // taking a non-const reference
+        CTransaction *trans = &transactions.at(i);  // taking a non-const reference
         trans->pBlock = this;
         if (blockNumber >= byzantiumBlock && trans->receipt.status == NO_STATUS) {
             // If we have NO_STATUS in a receipt after the byzantium block, we have to pick it up.
@@ -139,7 +140,6 @@ void CBlock::finishParse() {
             trans->receipt.status = rec.status;
         }
     }
-    //finalized = isFinal(timestamp);
     // EXISTING_CODE
 }
 
@@ -254,8 +254,7 @@ string_q nextBlockChunk_custom(const string_q& fieldIn, const void *dataPtr) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             case 'd':
-                if (fieldIn % "date")
-                {
+                if (fieldIn % "date") {
                     timestamp_t ts = (timestamp_t)blo->timestamp;
                     return dateFromTimeStamp(ts).Format(FMT_JSON);
                 }
@@ -299,19 +298,20 @@ bool CBlock::readBackLevel(SFArchive& archive) {
     bool done = false;
     // EXISTING_CODE
     SFBloom removed;
-    if (m_schema <= getVersionNum(0,3,0)) {
+    if (m_schema <= getVersionNum(0, 3, 0)) {
         archive >> gasLimit;
         archive >> gasUsed;
         archive >> hash;
-        archive >> removed; // used to be logsBloom
+        archive >> removed;  // used to be logsBloom
         archive >> blockNumber;
         archive >> parentHash;
         archive >> timestamp;
         archive >> transactions;
-        // TODO -- technically we should re-read these values from the node
+        // TODO(tjayrush) -- technically we should re-read these values from the node
         string_q save = getCurlContext()->provider;
         getCurlContext()->provider = "local";
-        CBlock upgrade;size_t unused;
+        CBlock upgrade;
+        size_t unused;
         queryBlock(upgrade, asStringU(blockNumber), false, false, unused);
         getCurlContext()->provider = save;
         miner = upgrade.miner;
@@ -320,7 +320,7 @@ bool CBlock::readBackLevel(SFArchive& archive) {
         finalized = false;
         finishParse();
         done = true;
-    } else if (m_schema <= getVersionNum(0,4,0)) {
+    } else if (m_schema <= getVersionNum(0, 4, 0)) {
         archive >> gasLimit;
         archive >> gasUsed;
         archive >> hash;
@@ -462,7 +462,7 @@ ostream& operator<<(ostream& os, const CAddressItem& item) {
 //---------------------------------------------------------------------------
 uint64_t insertUnique(CAddressItemMap *addrMap, const CAddressItem& _value) {
     CAddressItemMap::iterator it = addrMap->find(_value);
-    if (it == addrMap->end()) // not found
+    if (it == addrMap->end())  // not found
         it = addrMap->insert(make_pair(_value, true)).first;
     return it->second;
 }
@@ -472,7 +472,7 @@ bool accumulateAddresses(blknum_t bn, blknum_t tx, blknum_t tc, const SFAddress&
     if (zeroAddr(addr))
         return true;
     CAddressItem search(bn, tx, tc, addr);
-    insertUnique((CAddressItemMap*)data, search);
+    insertUnique((CAddressItemMap*)data, search);  // NOLINT
     return true;
 }
 
@@ -494,8 +494,8 @@ bool isPotentialAddr(SFUintBN test, SFAddress& addrOut) {
 
     addrOut = "";
 
-    static const SFUintBN small = hex2BN(  "0x00000000000000ffffffffffffffffffffffffff"); // the smallest address we search for
-    static const SFUintBN large = hex2BN("0x010000000000000000000000000000000000000000"); // the largest address we search for
+    static const SFUintBN small = hex2BN(  "0x00000000000000ffffffffffffffffffffffffff");  // smallest address we find
+    static const SFUintBN large = hex2BN("0x010000000000000000000000000000000000000000");  // largest address we find
     if (test <= small || test >= large)
         return false;
 
@@ -504,16 +504,17 @@ bool isPotentialAddr(SFUintBN test, SFAddress& addrOut) {
     if (endsWith(addrOut, "00000000"))
         return false;
 
-    if (addrOut.length()<40)
+    if (addrOut.length() < 40)
         addrOut = padLeft(addrOut, 40, '0');
-    addrOut = extract(addrOut, addrOut.length()-40, 40);
+    addrOut = extract(addrOut, addrOut.length() - 40, 40);
     addrOut = toLower("0x" + addrOut);
 
     return true;
 }
 
 //---------------------------------------------------------------------------
-void processPotentialAddrs(blknum_t bn, blknum_t tx, blknum_t tc, const string_q& potList, ADDRESSFUNC func, void *data) {
+void processPotentialAddrs(blknum_t bn, blknum_t tx, blknum_t tc,
+                            const string_q& potList, ADDRESSFUNC func, void *data) {
 
     if (!func)
         return;
@@ -556,11 +557,11 @@ bool CBlock::forEveryAddress(ADDRESSFUNC func, TRANSFUNC filterFunc, void *data)
 
         // If we're not filtering, or the filter passes, proceed. Note the filter depends on the
         // transaction only, not on any address.
-        if (!filterFunc || !filterFunc(trans, data)) { // may look at DDos range and nTraces for example
+        if (!filterFunc || !filterFunc(trans, data)) {  // may look at DDos range and nTraces for example
             CTraceArray traces;
             getTraces(traces, trans->hash);
             for (size_t t = 0 ; t < traces.size() ; t++) {
-                const CTrace *trace = &traces[t]; // taking a non-const reference
+                const CTrace *trace = &traces[t];  // taking a non-const reference
                 (*func)(blockNumber, tr, t+10, trace->action.from, data);
                 (*func)(blockNumber, tr, t+10, trace->action.to, data);
                 (*func)(blockNumber, tr, t+10, trace->action.refundAddress, data);
@@ -576,4 +577,3 @@ bool CBlock::forEveryAddress(ADDRESSFUNC func, TRANSFUNC filterFunc, void *data)
 }
 // EXISTING_CODE
 }  // namespace qblocks
-

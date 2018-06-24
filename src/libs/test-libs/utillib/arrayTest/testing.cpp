@@ -38,7 +38,7 @@ TEST_F(CThisTest, TestInsertion) {
     for (size_t i = 0; i < 10; i++)
         myvector.push_back(i);
     cout << TESTID("int array", 20);
-    for (size_t i=0; i<10; i++)
+    for (size_t i = 0 ; i < 10 ; i++)
         cout << ' ' << myvector[i];
     cout << '\n';
     for (size_t i = 0; i < myvector.size() / 2; i++) {
@@ -48,7 +48,7 @@ TEST_F(CThisTest, TestInsertion) {
         myvector.at(i) = temp;
     }
     cout << TESTID("reversed", 20);
-    for (size_t i=0; i<10; i++)
+    for (size_t i = 0 ; i < 10 ; i++)
         cout << ' ' << myvector[i];
     cout << '\n';
 

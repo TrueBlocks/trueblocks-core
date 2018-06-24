@@ -45,7 +45,7 @@ public:
     // EXISTING_CODE
     const CReceipt *pReceipt;
     bool operator==(const CLogEntry& le) const;
-    bool operator!=(const CLogEntry& le) const { return !operator==(le); };
+    bool operator!=(const CLogEntry& le) const { return !operator==(le); }
     // EXISTING_CODE
     friend bool operator<(const CLogEntry& v1, const CLogEntry& v2);
     friend ostream& operator<<(ostream& os, const CLogEntry& item);

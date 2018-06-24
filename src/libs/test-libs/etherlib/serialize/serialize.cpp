@@ -1,3 +1,19 @@
+/*-------------------------------------------------------------------------------------------
+ * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
+ * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ *
+ * This program is free software: you may redistribute it and/or modify it under the terms
+ * of the GNU General Public License as published by the Free Software Foundation, either
+ * version 3 of the License, or (at your option) any later version. This program is
+ * distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+ * the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details. You should have received a copy of the GNU General
+ * Public License along with this program. If not, see http://www.gnu.org/licenses/.
+ *-------------------------------------------------------------------------------------------*/
+/*
+ * This file was generated with makeClass. Edit only those parts of the code inside
+ * of 'EXISTING_CODE' tags.
+ */
 #include "utillib.h"
 #include "options.h"
 #include "person.h"
@@ -5,8 +21,7 @@
 CPerson leader("Leader", 100);
 CPerson *lastAdded = &leader;
 
-int main(int argc, const char *argv[])
-{
+int main(int argc, const char *argv[]) {
 
     etherlib_init();
 
@@ -15,7 +30,7 @@ int main(int argc, const char *argv[])
     if (!options.prepareArguments(argc, argv))
         return 0;
 
-    //while (!options.commandList.empty())
+    // while (!options.commandList.empty())
     {
         string_q command = nextTokenClear(options.commandList, '\n');
         if (!options.parseArguments(command))

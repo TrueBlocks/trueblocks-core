@@ -151,7 +151,7 @@ bool testReadWrite(COptions& options) {
 //--------------------------------------------------------------
 CBaseNode *getNode(const string_q& nodeType) {
     CBaseNode *node = NULL;
-         if (nodeType == "CAbi")             node = CAbi::createObject();
+         if (nodeType == "CAbi")             node = CAbi::createObject();  // NOLINT
     else if (nodeType == "CFunction")        node = CFunction::createObject();
     else if (nodeType == "CParameter")       node = CParameter::createObject();
     else if (nodeType == "CBranch")          node = CBranch::createObject();

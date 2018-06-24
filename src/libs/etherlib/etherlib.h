@@ -28,5 +28,4 @@
 #include "blooms.h"
 #include "blockoptions.h"
 
-using namespace qblocks;
-
+using namespace qblocks;  // NOLINT

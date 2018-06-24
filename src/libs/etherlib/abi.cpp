@@ -14,6 +14,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <algorithm>
 #include "abi.h"
 #include "node.h"
 
@@ -63,7 +64,7 @@ bool CAbi::setValueByName(const string_q& fieldName, const string_q& fieldValue)
     switch (tolower(fieldName[0])) {
         case 'a':
             if ( fieldName % "abiByName" ) {
-                char *p = (char *)fieldValue.c_str();
+                char *p = (char *)fieldValue.c_str();  // NOLINT
                 while (p && *p) {
                     CFunction item;
                     size_t nFields = 0;
@@ -74,7 +75,7 @@ bool CAbi::setValueByName(const string_q& fieldName, const string_q& fieldValue)
                 return true;
             }
             if ( fieldName % "abiByEncoding" ) {
-                char *p = (char *)fieldValue.c_str();
+                char *p = (char *)fieldValue.c_str();  // NOLINT
                 while (p && *p) {
                     CFunction item;
                     size_t nFields = 0;
@@ -253,14 +254,14 @@ string_q CAbi::getValueByName(const string_q& fieldName) const {
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const CAbi& item) {
     // EXISTING_CODE
-    if (sizeof(item) != 0) { // do this to always go through here, but avoid a warning
-        for (size_t i = 0 ; i < item.abiByName.size() ; i++ ) {
+    if (sizeof(item) != 0) {  // do this to always go through here, but avoid a warning
+        for (size_t i = 0 ; i < item.abiByName.size() ; i++) {
             os << item.abiByName[i].Format() << "\n";
         }
-        for (size_t i = 0 ; i < item.abiByEncoding.size() ; i++ ) {
+        for (size_t i = 0 ; i < item.abiByEncoding.size() ; i++) {
             os << item.abiByEncoding[i].Format() << "\n";
         }
-        { return os; }
+        return os;
     }
     // EXISTING_CODE
 
@@ -284,7 +285,7 @@ bool CAbi::loadABIFromFile(const string_q& fileName) {
 
     string_q contents = asciiFileToString(fileName);
     ASSERT(!contents.empty());
-    char *p = cleanUpJson((char *)contents.c_str());
+    char *p = cleanUpJson((char *)contents.c_str());  // NOLINT
     while (p && *p) {
         CFunction func;
         size_t nFields = 0;
@@ -295,7 +296,7 @@ bool CAbi::loadABIFromFile(const string_q& fileName) {
         }
     }
     sort(abiByName.begin(), abiByName.end(), sortByFuncName);
-    sort(abiByEncoding.begin(), abiByEncoding.end()); // encoding is default sort
+    sort(abiByEncoding.begin(), abiByEncoding.end());  // encoding is default sort
     return abiByName.size();
 }
 // EXISTING_CODE

@@ -14,6 +14,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <algorithm>
 #include "pricequote.h"
 #include "etherlib.h"
 #include "pricesource.h"
@@ -108,7 +109,7 @@ bool CPriceQuote::Serialize(SFArchive& archive) {
 bool CPriceQuote::SerializeC(SFArchive& archive) const {
 
     // Writing always write the latest version of the data
-    ((CPriceQuote*)this)->m_schema = getVersionNum();
+    ((CPriceQuote*)this)->m_schema = getVersionNum();  // NOLINT
     CBaseNode::SerializeC(archive);
 
     // EXISTING_CODE
@@ -277,7 +278,7 @@ string_q asDollars(timestamp_t ts, SFUintBN weiIn) {
         }
     }
     uint64_t index = indexFromTimeStamp(quotes, ts);
-    const CPriceQuote *q = &quotes[index]; // taking a non-const reference
+    const CPriceQuote *q = &quotes[index];  // taking a non-const reference
     double price = q->close * 100.0;
     uint64_t pInt = (uint64_t)price;
     weiIn *= pInt;
@@ -302,7 +303,7 @@ string_q insertCommas(const string_q& dIn) {
 //-----------------------------------------------------------------------
 string_q dispDollars(timestamp_t ts, SFUintBN weiIn) {
     string_q sBal = asDollars(ts, weiIn);
-    string_q d = nextTokenClear(sBal,'.');
+    string_q d = nextTokenClear(sBal, '.');
     d = insertCommas(d);
     sBal = (sBal.empty() ? "0.00" : d + "." + extract(sBal, 0, 2));
     return sBal;

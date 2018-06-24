@@ -43,8 +43,9 @@ bool COptions::parseArguments(string_q& command) {
             } else if (arg == "0" || arg == "false") {
                 boolOption = false;
                 boolSet = true;
-            } else
+            } else {
                 usage("Invalid bool: " + orig);
+            }
 
         } else if (startsWith(arg, "-i:") || startsWith(arg, "--int:")) {
             arg = substitute(substitute(arg, "-i:", ""), "--int:", "");
@@ -55,7 +56,7 @@ bool COptions::parseArguments(string_q& command) {
         } else if (startsWith(arg, "-u:") || startsWith(arg, "--uint:")) {
             arg = substitute(substitute(arg, "-u:", ""), "--uint:", "");
             if (arg.empty() || (arg[0] != '+' && !isdigit(arg[0]))) {
-                //return usage("--uint requires a non-negative number. Quitting");
+                // return usage("--uint requires a non-negative number. Quitting");
             } else {
                 numOption = toLong(arg);
             }

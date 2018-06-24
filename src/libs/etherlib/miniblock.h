@@ -16,9 +16,9 @@ namespace qblocks {
 
     //--------------------------------------------------------------------------
     typedef enum {
-        miniBlock=(0x1<<1),
-        miniTrans=(0x1<<2),
-        miniBlocks=(miniBlock|miniTrans)
+        miniBlock = (0x1<<1),
+        miniTrans = (0x1<<2),
+        miniBlocks = (miniBlock|miniTrans)
     } miniBlockType;
 
     //------------------------------------------------------------------------
@@ -30,7 +30,7 @@ namespace qblocks {
         txnum_t     nTrans;
 
                  CMiniBlock (void);
-                 CMiniBlock (const CBlock *block);
+        explicit CMiniBlock (const CBlock *block);
         bool     operator== (const CBlock& b) const;
         void     toBlock    (CBlock& block) const;
         string_q Format     (void) const;
@@ -47,7 +47,7 @@ namespace qblocks {
         char     value[41];
 
                  CMiniTrans (void);
-                 CMiniTrans (const CTransaction *t);
+        explicit CMiniTrans (const CTransaction *t);
         void     toTrans    (CTransaction& trans) const;
         string_q Format     (void) const;
     };
@@ -91,10 +91,10 @@ namespace qblocks {
     typedef bool (*BLOCKVISITFUNC)(CBlock& block, void *data);
 
     //-------------------------------------------------------------------------
-    extern bool forEveryFullBlockInMemory    (BLOCKVISITFUNC     func, void *data, uint64_t start, uint64_t count, uint64_t skip=1);
-    extern bool forEveryMiniBlockInMemory    (MINIBLOCKVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip=1);
-    extern bool forOnlyMiniBlocks            (MINIBLOCKVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip=1);
-    extern bool forOnlyMiniTransactions      (MINITRANSVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip=1);
+    extern bool forEveryFullBlockInMemory    (BLOCKVISITFUNC     func, void *data, uint64_t start, uint64_t count, uint64_t skip=1);  // NOLINT
+    extern bool forEveryMiniBlockInMemory    (MINIBLOCKVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip=1);  // NOLINT
+    extern bool forOnlyMiniBlocks            (MINIBLOCKVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip=1);  // NOLINT
+    extern bool forOnlyMiniTransactions      (MINITRANSVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip=1);  // NOLINT
     extern void clearInMemoryCache           (void);
 
 }  // namespace qblocks

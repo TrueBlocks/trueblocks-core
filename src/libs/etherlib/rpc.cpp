@@ -10,42 +10,49 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-#if 0
 #include <stdio.h>
 #include "rpc.h"
 
 namespace qblocks {
 
+    void unused2(void) {}
+
+}  // namespace qblocks
+
+#if 0
 //-----------------------------------------------------
-IPCSocket::IPCSocket(const string_q& _path): m_path(_path)
-{
-    if (_path.length() >= sizeof(sockaddr_un::sun_path))
-    { cerr << "Error opening IPC: socket path is too long!" << "\n"; exit(0); }
+IPCSocket::IPCSocket(const string_q& _path): m_path(_path) {
+    if (_path.length() >= sizeof(sockaddr_un::sun_path)) {
+        cerr << "Error opening IPC: socket path is too long!" << "\n";
+        exit(0);
+    }
 
     struct sockaddr_un saun;
     memset(&saun, 0, sizeof(sockaddr_un));
     saun.sun_family = AF_UNIX;
-    strcpy(saun.sun_path, _path.c_str());
+    strcpy(saun.sun_path, _path.c_str());  // NOLINT
     saun.sun_len = sizeof(struct sockaddr_un);
 
-    if ((m_socket = socket(AF_UNIX, SOCK_STREAM, 0)) < 0)
-    { cerr << "Error creating IPC socket object" << "\n"; exit(0); }
+    if ((m_socket = socket(AF_UNIX, SOCK_STREAM, 0)) < 0) {
+        cerr << "Error creating IPC socket object" << "\n";
+        exit(0);
+    }
 
-    if (connect(m_socket, reinterpret_cast<struct sockaddr const*>(&saun), sizeof(struct sockaddr_un)) < 0)
-    { cerr << "Error connecting to IPC socket: " << "\n"; exit(0); }
+    if (connect(m_socket, reinterpret_cast<struct sockaddr const*>(&saun), sizeof(struct sockaddr_un)) < 0) {
+        cerr << "Error connecting to IPC socket: " << "\n";
+        exit(0);
+    }
 
     m_fp = fdopen(m_socket, "r");
 }
 
 //-----------------------------------------------------
-string_q IPCSocket::sendRequest(const string_q& _req)
-{
+string_q IPCSocket::sendRequest(const string_q& _req) {
     send(m_socket, (const char*)_req, _req.length(), 0);
 
     char c;
     string_q response;
-    while ((c = fgetc(m_fp)) != EOF)
-    {
+    while ((c = fgetc(m_fp)) != EOF) {
         if (c != '\n')
             response += c;
         else
@@ -55,23 +62,21 @@ string_q IPCSocket::sendRequest(const string_q& _req)
 }
 
 //-----------------------------------------------------
-CReceipt RPCSession::eth_getTransactionReceipt(const string_q& _transactionHash)
-{
+CReceipt RPCSession::eth_getTransactionReceipt(const string_q& _transactionHash) {
     CReceipt receipt;
 
     string_q const result = rpcCall("eth_getTransactionReceipt", { _transactionHash });
-    if (result.empty())
-    {
+    if (result.empty()) {
         cerr << "Result from eth_getTransactionReceipt call is empty. Quitting...\n";
         exit(0);
     }
     receipt.gasUsed = result["gasUsed"];
     receipt.contractAddress = result["contractAddress"];
-    for (auto const& log: result["logs"]) {
+    for (auto const& log : result["logs"]) {
         LogEntry entry;
         entry.address = log["address"];
         entry.data = log["data"];
-        for (auto const& topic: log["topics"])
+        for (auto const& topic : log["topics"])
             entry.topics.push_back(topic);
         receipt.logEntries.push_back(entry);
     }
@@ -79,12 +84,10 @@ CReceipt RPCSession::eth_getTransactionReceipt(const string_q& _transactionHash)
 }
 
 //-----------------------------------------------------
-string_q RPCSession::rpcCall(const string_q& _methodName, const string_q& _args)
-{
+string_q RPCSession::rpcCall(const string_q& _methodName, const string_q& _args) {
     string_q request = "{\"jsonrpc\":\"2.0\",\"method\":\"" + _methodName + "\",\"params\":[";
     string_q args = _args;
-    while (!args.empty())
-    {
+    while (!args.empty()) {
         request += "\"" + nextTokenClear(args, '|') + "\"";
         if (!args.empty())
             request += ",";
@@ -101,30 +104,22 @@ string_q RPCSession::rpcCall(const string_q& _methodName, const string_q& _args)
 }
 
 //-----------------------------------------------------
-string_q RPCSession::eth_getCode(const string_q& _address, const string_q& _blockNumber)
-{
+string_q RPCSession::eth_getCode(const string_q& _address, const string_q& _blockNumber) {
     return rpcCall("eth_getCode", _address + "|" + _blockNumber);
 }
 
 //-----------------------------------------------------
-string_q RPCSession::eth_getBalanc e(const string_q& _address, const string_q& _blockNumber)
-{
+string_q RPCSession::eth_getBalance(const string_q& _address, const string_q& _blockNumber) {
     return rpcCall("eth_getBalanc e", _address + "|" + _blockNumber);
 }
 
 //-----------------------------------------------------
-string_q RPCSession::eth_getSt orageRoot(const string_q& _address, const string_q& _blockNumber)
-{
+string_q RPCSession::eth_getSt orageRoot(const string_q& _address, const string_q& _blockNumber) {
     return rpcCall("eth_getSt orageRoot", _address + "|" + _blockNumber);
 }
 
 //-----------------------------------------------------
-RPCSession::RPCSession(const string_q& _path) : m_ipcSocket(_path)
-{
+RPCSession::RPCSession(const string_q& _path) : m_ipcSocket(_path) {
 }
 
-}  // namespace qblocks
-
 #endif
-
-void unused2(void) {}

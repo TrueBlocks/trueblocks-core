@@ -78,7 +78,7 @@ bool CFunction::setValueByName(const string_q& fieldName, const string_q& fieldV
             break;
         case 'i':
             if ( fieldName % "inputs" ) {
-                char *p = (char *)fieldValue.c_str();
+                char *p = (char *)fieldValue.c_str();  // NOLINT
                 while (p && *p) {
                     CParameter item;
                     size_t nFields = 0;
@@ -94,7 +94,7 @@ bool CFunction::setValueByName(const string_q& fieldName, const string_q& fieldV
             break;
         case 'o':
             if ( fieldName % "outputs" ) {
-                char *p = (char *)fieldValue.c_str();
+                char *p = (char *)fieldValue.c_str();  // NOLINT
                 while (p && *p) {
                     CParameter item;
                     size_t nFields = 0;
@@ -131,7 +131,7 @@ void CFunction::finishParse() {
     int cnt = 0;
     for (size_t i = 0 ; i < inputs.size() ; i++) {
         if (inputs[i].name.empty())
-            inputs.at(i).name = "param_" + asString(cnt++); // the non-const reference already exists
+            inputs.at(i).name = "param_" + asString(cnt++);  // the non-const reference already exists
     }
     // EXISTING_CODE
 }

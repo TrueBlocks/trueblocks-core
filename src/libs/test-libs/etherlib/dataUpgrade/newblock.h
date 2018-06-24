@@ -47,7 +47,7 @@ public:
     const CBaseNode *getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
-    CNewBlock(const CBlock& block);
+    explicit CNewBlock(const CBlock& block);
     // EXISTING_CODE
     friend bool operator<(const CNewBlock& v1, const CNewBlock& v2);
     friend ostream& operator<<(ostream& os, const CNewBlock& item);

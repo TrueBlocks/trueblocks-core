@@ -17,4 +17,4 @@ namespace qblocks {
 
     size_t unused = 0;
 
-} // namespace qblocks
+}  // namespace qblocks
