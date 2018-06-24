@@ -79,8 +79,8 @@ namespace qblocks {
             return (m_fp != NULL);
         }
 
-        long Tell(void) const;
-        void Seek(long offset, int whence) const;
+        long Tell(void) const;  // NOLINT
+        void Seek(long offset, int whence) const;  // NOLINT
         bool Eof(void) const;
         char *ReadLine(char *buff, size_t maxBuff);
         void WriteLine(const string_q& str);
@@ -106,10 +106,10 @@ namespace qblocks {
         size_t Read(char& val);
         size_t Read(int& val);
         size_t Read(unsigned int& val);
-        size_t Read(long& val);
-        size_t Read(unsigned long& val);
-        size_t Read(long long& val);
-        size_t Read(unsigned long long& val);
+        size_t Read(long& val);  // NOLINT
+        size_t Read(unsigned long& val);  // NOLINT
+        size_t Read(long long& val);  // NOLINT
+        size_t Read(unsigned long long& val);  // NOLINT
         size_t Read(float& val);
         size_t Read(double& val);
         size_t Read(string_q& val);
@@ -118,10 +118,10 @@ namespace qblocks {
         size_t Write(char val) const;
         size_t Write(int val) const;
         size_t Write(unsigned int val) const;
-        size_t Write(long val) const;
-        size_t Write(unsigned long val) const;
-        size_t Write(long long val) const;
-        size_t Write(unsigned long long val) const;
+        size_t Write(long val) const;  // NOLINT
+        size_t Write(unsigned long val) const;  // NOLINT
+        size_t Write(long long val) const;  // NOLINT
+        size_t Write(unsigned long long val) const;  // NOLINT
         size_t Write(float val) const;
         size_t Write(double val) const;
         size_t Write(const string_q& val) const;
@@ -147,7 +147,8 @@ namespace qblocks {
     //----------------------------------------------------------------------
     extern size_t stringToAsciiFile(const string_q& fileName, const string_q& contents);
     extern string_q binaryFileToString(const string_q& filename);
-    extern bool asciiFileToBuffer(const string_q& filename, size_t& nChars, string_q *buffer, size_t maxLines = INT_MAX);
+    extern bool asciiFileToBuffer(const string_q& filename, size_t& nChars,
+                                        string_q *buffer, size_t maxLines = INT_MAX);
     extern uint64_t appendToAsciiFile(const string_q& fileName, const string_q& addContents);
 
     //----------------------------------------------------------------------
@@ -165,7 +166,8 @@ namespace qblocks {
     //----------------------------------------------------------------------
     extern bool shouldQuit(void);
     extern void lockSection(bool lock);
-    extern void writeTheCode(const string_q& fileName, const string_q& code, const string_q& ns = "", bool spaces = true);
+    extern void writeTheCode(const string_q& fileName, const string_q& code,
+                                const string_q& ns = "", bool spaces = true);
 
     //----------------------------------------------------------------------
     inline bool asciiFileToBuffer(const string_q& filename, string_q *contents, size_t maxLines = INT_MAX) {

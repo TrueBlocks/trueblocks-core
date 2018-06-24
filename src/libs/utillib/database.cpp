@@ -27,8 +27,8 @@ namespace qblocks {
     #define LK_NO_REMOVE_LOCK      4
 
     //----------------------------------------------------------------------
-    extern string_q manageRemoveList(const string_q& filename="");
-    extern size_t quitCount(size_t s=0);
+    extern string_q manageRemoveList(const string_q& filename = "");
+    extern size_t quitCount(size_t s = 0);
     bool CSharedResource::g_locking = true;
 
     //----------------------------------------------------------------------
@@ -274,13 +274,13 @@ namespace qblocks {
     }
 
     //----------------------------------------------------------------------
-    void CSharedResource::Seek(long offset, int whence) const {
+    void CSharedResource::Seek(long offset, int whence) const {  // NOLINT
         ASSERT(isOpen());
         fseek(m_fp, offset, whence);
     }
 
     //----------------------------------------------------------------------
-    long CSharedResource::Tell(void) const {
+    long CSharedResource::Tell(void) const {  // NOLINT
         ASSERT(isOpen());
         return ftell(m_fp);
     }
@@ -296,10 +296,10 @@ namespace qblocks {
     size_t CSharedResource::Read(char& val) { return Read(&val, sizeof(char), 1); }
     size_t CSharedResource::Read(int& val) { return Read(&val, sizeof(int), 1); }
     size_t CSharedResource::Read(unsigned int& val) { return Read(&val, sizeof(int), 1); }
-    size_t CSharedResource::Read(long& val) { return Read(&val, sizeof(long), 1); }
-    size_t CSharedResource::Read(unsigned long& val) { return Read(&val, sizeof(long), 1); }
-    size_t CSharedResource::Read(long long& val) { return Read(&val, sizeof(long long), 1); }
-    size_t CSharedResource::Read(unsigned long long& val) { return Read(&val, sizeof(long long), 1); }
+    size_t CSharedResource::Read(long& val) { return Read(&val, sizeof(long), 1); }  // NOLINT
+    size_t CSharedResource::Read(unsigned long& val) { return Read(&val, sizeof(long), 1); }  // NOLINT
+    size_t CSharedResource::Read(long long& val) { return Read(&val, sizeof(long long), 1); }  // NOLINT
+    size_t CSharedResource::Read(unsigned long long& val) { return Read(&val, sizeof(long long), 1); }  // NOLINT
     size_t CSharedResource::Read(float& val) { return Read(&val, sizeof(float), 1); }
     size_t CSharedResource::Read(double& val) { return Read(&val, sizeof(double), 1); }
 
@@ -308,8 +308,8 @@ namespace qblocks {
         ASSERT(isOpen());
         ASSERT(!isAscii());
 
-        unsigned long len;
-        Read(&len, sizeof(unsigned long), 1);
+        unsigned long len;  // NOLINT
+        Read(&len, sizeof(unsigned long), 1);  // NOLINT
 
         if (len < 8192) {
             char buff[8192];
@@ -345,10 +345,10 @@ namespace qblocks {
     size_t CSharedResource::Write(char val) const { return Write(&val, sizeof(char), 1); }
     size_t CSharedResource::Write(int val) const { return Write(&val, sizeof(int), 1); }
     size_t CSharedResource::Write(unsigned int val) const { return Write(&val, sizeof(int), 1); }
-    size_t CSharedResource::Write(long val) const { return Write(&val, sizeof(long), 1); }
-    size_t CSharedResource::Write(unsigned long val) const { return Write(&val, sizeof(long), 1); }
-    size_t CSharedResource::Write(long long val) const { return Write(&val, sizeof(long long), 1); }
-    size_t CSharedResource::Write(unsigned long long     val) const { return Write(&val, sizeof(long long), 1); }
+    size_t CSharedResource::Write(long val) const { return Write(&val, sizeof(long), 1); }  // NOLINT
+    size_t CSharedResource::Write(unsigned long val) const { return Write(&val, sizeof(long), 1); }  // NOLINT
+    size_t CSharedResource::Write(long long val) const { return Write(&val, sizeof(long long), 1); }  // NOLINT
+    size_t CSharedResource::Write(unsigned long long     val) const { return Write(&val, sizeof(long long), 1); }  // NOLINT
     size_t CSharedResource::Write(float val) const { return Write(&val, sizeof(float), 1); }
     size_t CSharedResource::Write(double val) const { return Write(&val, sizeof(double), 1); }
 
@@ -357,8 +357,8 @@ namespace qblocks {
         ASSERT(isOpen());
         ASSERT(!isAscii());
 
-        unsigned long len = val.length();
-        size_t ret = Write(&len, sizeof(unsigned long), 1);
+        unsigned long len = val.length();  // NOLINT
+        size_t ret = Write(&len, sizeof(unsigned long), 1);  // NOLINT
         return Write(val.c_str(), sizeof(char), len) + ret;
     }
 
@@ -481,7 +481,7 @@ namespace qblocks {
     void writeTheCode(const string_q& fileName, const string_q& codeOutIn, const string_q& ns, bool spaces) {
         string_q codeOut = codeOutIn;
         string_q orig = asciiFileToString(fileName);
-        string_q existingCode = substitute(orig, "//EXISTING_CODE","// EXISTING_CODE");
+        string_q existingCode = substitute(orig, "//EXISTING_CODE", "// EXISTING_CODE");
         if (spaces) {
             replaceAll(existingCode, "    ", "\t");
             replaceAll(codeOut,      "    ", "\t");
@@ -531,7 +531,7 @@ namespace qblocks {
     //-----------------------------------------------------------------------
     size_t quitCount(size_t s) {
         static size_t cnt = 0;
-        if (cnt && sectionLocked) // ignore if we're locked
+        if (cnt && sectionLocked)  // ignore if we're locked
             return false;
         cnt += s;
         return cnt;

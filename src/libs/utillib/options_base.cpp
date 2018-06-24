@@ -41,18 +41,18 @@ namespace qblocks {
         if (string_q(env) == "true")
             colorsOff();
 
-        programName = basename((char*)argv[0]);
+        programName = basename((char*)argv[0]);  // NOLINT
         if (isTestMode()) {
             // we present the data once for clarity...
             cout << programName << " argc: " << argc << " ";
-            for (int i=1;i<argc;i++) {
+            for (int i = 1 ; i < argc ; i++) {
                 string_q str = argv[i];
                 cout << "[" << i << ":" << trim(str) << "] ";
             }
             cout << "\n";
             // ... and once to use as a command line for copy/paste
             cout << programName << " ";
-            for (int i=1;i<argc;i++) {
+            for (int i = 1 ; i < argc ; i++) {
                 string_q str = argv[i];
                 cout << trim(str) << " ";
             }
@@ -63,7 +63,7 @@ namespace qblocks {
             return usage("Not enough arguments presented.");
 
         int nChars = 0;
-        for (int i=0; i<argc; i++) {
+        for (int i = 0 ; i < argc ; i++) {
             nChars += string_q(argv[i]).length();
         }
         size_t nArgs = 0;
@@ -139,10 +139,8 @@ namespace qblocks {
                 if (!paramsPtr[j].permitted.empty()) {
                     string_q shortName = paramsPtr[j].shortName;
                     string_q longName  = "-"+paramsPtr[j].longName;
-                    if (shortName == arg ||
-                        startsWith(longName, arg))
-                    {
-                        // we want to pull the next parameter into this one since it's a ':' param
+                    if (shortName == arg || startsWith(longName, arg)) {
+                        // We want to pull the next parameter into this one since it's a ':' param
                         combine = true;
                     }
                 }
@@ -178,7 +176,7 @@ namespace qblocks {
             }
             if (startsWith(contents, "NOPARSE\n")) {
                 commandList = contents;
-                nextTokenClear(commandList,'\n');
+                nextTokenClear(commandList, '\n');
             } else {
                 while (!contents.empty()) {
                     string_q command = trimWhitespace(nextTokenClear(contents, '\n'));
@@ -207,34 +205,34 @@ namespace qblocks {
             exit(0);
 
         } else if (contains(cmdLine, "--nocolor ")) {
-            replaceAll(cmdLine, "--nocolor ","");
+            replaceAll(cmdLine, "--nocolor ", "");
             colorsOff();
 
         } else if (isEnabled(OPT_DENOM) && contains(cmdLine, "--ether " )) {
-            replaceAll(cmdLine, "--ether ","");
+            replaceAll(cmdLine, "--ether ", "");
             expContext().asEther = true;
             expContext().asDollars = false;
             expContext().asWei = false;
 
         } else if (isEnabled(OPT_DENOM) && contains(cmdLine, "--wei ")) {
-            replaceAll(cmdLine, "--wei ","");
+            replaceAll(cmdLine, "--wei ", "");
             expContext().asEther = false;
             expContext().asDollars = false;
             expContext().asWei = true;
 
         } else if (isEnabled(OPT_DENOM) && contains(cmdLine, "--dollars ")) {
-            replaceAll(cmdLine, "--dollars ","");
+            replaceAll(cmdLine, "--dollars ", "");
             expContext().asEther = false;
             expContext().asDollars = true;
             expContext().asWei = false;
 
         } else if (isEnabled(OPT_PARITY) && contains(cmdLine, "--parity ")) {
-            replaceAll(cmdLine, "--parity ","");
+            replaceAll(cmdLine, "--parity ", "");
             expContext().spcs = 4;
             expContext().hexNums = true;
             expContext().quoteNums = true;
             expContext().isParity = true;
-            for (int i=0;i<5;i++)
+            for (int i = 0 ; i < 5 ; i++)
                 if (sorts[i])
                     sorts[i]->sortFieldList();
         }
@@ -269,7 +267,7 @@ namespace qblocks {
         string_q dummy;
         if (contains(name, ":<") || contains(name, ":[")) {
             permitted = name;
-            name = nextTokenClear(permitted,':');
+            name = nextTokenClear(permitted, ':');
             // order matters
             if (permitted == "<range>")
                 dummy = " range";
@@ -300,9 +298,9 @@ namespace qblocks {
 
             if (contains(longName, "(") && contains(longName, ")")) {
                 hotKey = longName;
-                nextTokenClear(hotKey,'(');
+                nextTokenClear(hotKey, '(');
                 hotKey = nextTokenClear(hotKey, ')');
-                replaceAny(longName, "()","");
+                replaceAny(longName, "()", "");
                 string_q ss;
                 ss = shortName[0];
                 shortName = ss + hotKey;
@@ -335,8 +333,10 @@ namespace qblocks {
         os << purpose();
         os << descriptions() << "\n";
         os << notes();
-        if (!COptionsBase::isReadme)
-            os << bBlue << "  Powered by QuickBlocks" << (isTestMode() ? "" : " (" + getVersionStr() + ")") << "\n" << cOff;
+        if (!COptionsBase::isReadme) {
+            os << bBlue << "  Powered by QuickBlocks";
+            os << (isTestMode() ? "" : " (" + getVersionStr() + ")") << "\n" << cOff;
+        }
         string_q ret = os.str().c_str();
         ASSERT(pOptions);
         return pOptions->postProcess("usage", ret);
@@ -419,11 +419,11 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
         } else {
 
             // When we are writing to the command line...
-            string_q line = "\t" + substitute(substitute(string_q(STR_ONE_LINE), " ",""), "|","");
+            string_q line = "\t" + substitute(substitute(string_q(STR_ONE_LINE), " ", ""), "|", "");
             replace(line, "{S}", (isMode ? "" : padRight(sN, 3)));
-            if (isMode)
+            if (isMode) {
                 replace(line, "{L}", padRight(lN , 22));
-            else {
+            } else {
                 replace(line, "{L}", padRight((lN.empty() ? "" : " (-" + lN + ")") , 19));
             }
             replace(line, "{D}", d + (required ? " (required)" : ""));
@@ -455,12 +455,12 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
             os << bYellow << sep << "Notes:" << sep << cOff << "\n";
             os << (COptionsBase::isReadme ? "\n" : "");
             while (!ret.empty()) {
-                string_q line = substitute(nextTokenClear(ret,'\n'), "|","\n" + lead + "  ");
+                string_q line = substitute(nextTokenClear(ret, '\n'), "|", "\n" + lead + "  ");
                 os << lead << tick << line << "\n";
             }
             os << "\n";
             ret = os.str().c_str();
-            replaceAll(ret, "-   ","  - ");
+            replaceAll(ret, "-   ", "  - ");
         }
         return ret;
     }
@@ -496,7 +496,8 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
         }
 
         if (isEnabled(OPT_VERBOSE))
-            os << oneDescription("-v", "-verbose", "set verbose level. Either -v, --verbose or -v:n where 'n' is level", false, false);
+            os << oneDescription("-v", "-verbose",
+                    "set verbose level. Either -v, --verbose or -v:n where 'n' is level", false, false);
         os << oneDescription("-h", "-help", "display this help screen", false, false);
         ASSERT(pOptions);
         return pOptions->postProcess("description", os.str().c_str());
@@ -544,7 +545,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
         }
 
         // This may be a command with two -a -b (or more) single options
-        if (arg.length()>2 && arg[2] == ' ') {
+        if (arg.length() > 2 && arg[2] == ' ') {
             ret = extract(arg, 0, 2);
             arg = extract(arg, 3);
             return ret;
@@ -628,7 +629,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
             return 1;
         if (contains(b2->getValue(), "tbd"))
             return -1;
-        return (int)(b1->getValueU() - b2->getValueU());
+        return (int)(b1->getValueU() - b2->getValueU());  // NOLINT
     }
 
     //-----------------------------------------------------------------------
@@ -667,7 +668,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
 
         specials.clear();
         string_q specialsStr = toml->getConfigStr("specials", "list", "");
-        char *p = cleanUpJson((char *)specialsStr.c_str());
+        char *p = cleanUpJson((char *)specialsStr.c_str());  // NOLINT
         while (p && *p) {
             CNameValue pair;
             size_t nFields = 0;
@@ -682,7 +683,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
     //--------------------------------------------------------------------------------
     bool COptionsBase::findSpecial(CNameValue& pair, const string_q& arg) const {
         if (specials.size() == 0)
-            ((COptionsBase*)this)->loadSpecials();
+            ((COptionsBase*)this)->loadSpecials();  // NOLINT
         for (size_t i = 0 ; i < specials.size() ; i++) {
             if (arg == specials[i].getName()) {
                 pair = specials[i];
@@ -698,7 +699,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
         minArgs = 1;
         isReadme = false;
         needsOption = false;
-        for (int i=0;i<5;i++)
+        for (int i = 0 ; i < 5 ; i++)
             sorts[i] = NULL;
     }
 
@@ -707,7 +708,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
         if (namedAccounts.size() == 0) {
             uint64_t save = verbose;
             verbose = false;
-            ((COptionsBase*)this)->loadNames();
+            ((COptionsBase*)this)->loadNames();  // NOLINT
             verbose = save;
         }
 

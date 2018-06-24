@@ -16,12 +16,9 @@ namespace qblocks {
 
     extern SFUintBN gcd(SFUintBN a, SFUintBN b);
     extern SFUintBN modinv(const SFIntBN& x, const SFUintBN& n);
-    extern SFUintBN modexp(const SFIntBN& base, const SFUintBN& exponent,const SFUintBN& modulus);
+    extern SFUintBN modexp(const SFIntBN& base, const SFUintBN& exponent, const SFUintBN& modulus);
 
     typedef SFArrayBase<SFUintBN> SFBigUintArray;
     typedef SFArrayBase<SFIntBN> SFBigIntArray;
 
 }  // namespace qblocks
-
-using namespace qblocks;
-

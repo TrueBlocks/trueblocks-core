@@ -9,53 +9,47 @@
 namespace qblocks {
 
     //----------------------------------------------------------------------
-    SFUintBN::SFUintBN(void) : SFBigNumStore<uint64_t>()
-    {
+    SFUintBN::SFUintBN(void) : SFBigNumStore<uint64_t>() {
     }
 
     //----------------------------------------------------------------------
-    SFUintBN::SFUintBN(const SFUintBN &x) : SFBigNumStore<uint64_t>(x)
-    {
+    SFUintBN::SFUintBN(const SFUintBN &x) : SFBigNumStore<uint64_t>(x) {
     }
 
     //----------------------------------------------------------------------
-    SFUintBN& SFUintBN::operator=(const SFUintBN &x)
-    {
+    SFUintBN& SFUintBN::operator=(const SFUintBN &x) {
         SFBigNumStore<uint64_t>::operator=(x);
         return *this;
     }
 
     //----------------------------------------------------------------------
-    SFUintBN::SFUintBN(int unused, unsigned int c) : SFBigNumStore<uint64_t>(0, c)
-    {
+    SFUintBN::SFUintBN(int unused, unsigned int c) : SFBigNumStore<uint64_t>(0, c) {
     }
 
     //----------------------------------------------------------------------
-    SFUintBN::SFUintBN(const uint64_t *b, unsigned int blen) : SFBigNumStore<uint64_t>(b, blen)
-    {
+    SFUintBN::SFUintBN(const uint64_t *b, unsigned int blen) : SFBigNumStore<uint64_t>(b, blen) {
         trimLeadingZeros();
     }
 
     //----------------------------------------------------------------------
-    SFUintBN::~SFUintBN()
-    {
+    SFUintBN::~SFUintBN() {
     }
 
     //----------------------------------------------------------------------
-    static const char *msg="Cannot convert from negative number.";
-    SFUintBN::SFUintBN(uint64_t x) { if (x!=0) {capacity=0;allocate(1);if(blk){len=1;blk[0]=(uint64_t)(x);}}}
-    SFUintBN::SFUintBN(unsigned int x) { if (x!=0) {capacity=0;allocate(1);if(blk){len=1;blk[0]=(uint64_t)(x);}}}
-    SFUintBN::SFUintBN(unsigned short x) { if (x!=0) {capacity=0;allocate(1);if(blk){len=1;blk[0]=(uint64_t)(x);}}}
-    SFUintBN::SFUintBN(long x) { if (x<0) throw msg; else if (x!=0) {capacity=0;allocate(1);if(blk){len=1;blk[0]=(uint64_t)(x);}}}
-    SFUintBN::SFUintBN(int x) { if (x<0) throw msg; else if (x!=0) {capacity=0;allocate(1);if(blk){len=1;blk[0]=(uint64_t)(x);}}}
-    SFUintBN::SFUintBN(short x) { if (x<0) throw msg; else if (x!=0) {capacity=0;allocate(1);if(blk){len=1;blk[0]=(uint64_t)(x);}}}
+    static const char *msg = "Cannot convert from negative number.";
+    SFUintBN::SFUintBN(uint64_t x) { if (x!=0) {capacity=0;allocate(1);if(blk){len=1;blk[0]=(uint64_t)(x);}}} // NOLINT
+    SFUintBN::SFUintBN(uint32_t x) { if (x!=0) {capacity=0;allocate(1);if(blk){len=1;blk[0]=(uint64_t)(x);}}} // NOLINT
+    SFUintBN::SFUintBN(uint16_t x) { if (x!=0) {capacity=0;allocate(1);if(blk){len=1;blk[0]=(uint64_t)(x);}}} // NOLINT
+    SFUintBN::SFUintBN(int64_t x) { if (x<0) throw msg; else if (x!=0) {capacity=0;allocate(1);if(blk){len=1;blk[0]=(uint64_t)(x);}}} // NOLINT
+    SFUintBN::SFUintBN(int32_t x) { if (x<0) throw msg; else if (x!=0) {capacity=0;allocate(1);if(blk){len=1;blk[0]=(uint64_t)(x);}}} // NOLINT
+    SFUintBN::SFUintBN(int16_t x) { if (x<0) throw msg; else if (x!=0) {capacity=0;allocate(1);if(blk){len=1;blk[0]=(uint64_t)(x);}}} // NOLINT
 
     //----------------------------------------------------------------------
     template <class X>
     X SFUintBN::convertToPrimitive() const {
-        if (len == 0)
+        if (len == 0) {
             return 0;
-        else if (len == 1) {
+        } else if (len == 1) {
             X x = X(blk[0]);
             if (((uint64_t)(x)) == blk[0])
                 return x;
@@ -75,35 +69,29 @@ namespace qblocks {
     }
 
     //----------------------------------------------------------------------
-    uint64_t SFUintBN::to_ulong(void) const { return convertToPrimitive<uint64_t> (); }
-    unsigned int SFUintBN::to_uint(void) const { return convertToPrimitive<unsigned int> (); }
-    unsigned short SFUintBN::to_ushort(void) const { return convertToPrimitive<unsigned short> (); }
-    long SFUintBN::to_long(void) const { return convertToSignedPrimitive <long> (); }
-    int SFUintBN::to_int(void) const { return convertToSignedPrimitive <int> (); }
-    short SFUintBN::to_short(void) const { return convertToSignedPrimitive <short> (); }
+    uint64_t SFUintBN::to_ulong(void) const  { return convertToPrimitive<uint64_t> (); }
+    uint32_t SFUintBN::to_uint(void) const   { return convertToPrimitive<uint32_t> (); }
+    uint16_t SFUintBN::to_ushort(void) const { return convertToPrimitive<uint16_t> (); }
+    int64_t  SFUintBN::to_long(void) const   { return convertToSignedPrimitive<int64_t> (); }
+    int32_t  SFUintBN::to_int(void) const    { return convertToSignedPrimitive<int32_t> (); }
+    int16_t  SFUintBN::to_short(void) const  { return convertToSignedPrimitive<int16_t> (); }
 
     //----------------------------------------------------------------------
-    void SFUintBN::trimLeadingZeros(void)
-    {
+    void SFUintBN::trimLeadingZeros(void) {
         while (len > 0 && blk[len-1] == 0)
             len--;
     }
 
     //----------------------------------------------------------------------
-    void SFUintBN::setBlock(unsigned int i, uint64_t newBlock)
-    {
-        if (newBlock==0)
-        {
-            if (i<len)
-            {
+    void SFUintBN::setBlock(unsigned int i, uint64_t newBlock) {
+        if (newBlock == 0) {
+            if (i < len) {
                 blk[i] = 0;
                 trimLeadingZeros();
             }
 
-        } else
-        {
-            if (i>=len)
-            {
+        } else {
+            if (i >= len) {
                 allocateAndCopy(i+1);
                 for (unsigned int j = len; j < i; j++)
                     blk[j] = 0;
@@ -114,14 +102,11 @@ namespace qblocks {
     }
 
     //----------------------------------------------------------------------
-    unsigned int SFUintBN::bitLength() const
-    {
-        if (len==0)
-        {
+    unsigned int SFUintBN::bitLength() const {
+        if (len == 0) {
             return 0;
 
-        } else
-        {
+        } else {
             uint64_t leftmostBlock = getBlock(len - 1);
             unsigned int leftmostBlockLen = 0;
             while (leftmostBlock != 0) {
@@ -133,8 +118,7 @@ namespace qblocks {
     }
 
     //----------------------------------------------------------------------
-    void SFUintBN::setBit(unsigned int bi, bool newBit)
-    {
+    void SFUintBN::setBit(unsigned int bi, bool newBit) {
         unsigned int blockI = bi / N;
         uint64_t block = getBlock(blockI), mask = ((uint64_t)(1)) << (bi % N);
         block = newBit ? (block | mask) : (block & ~mask);
@@ -142,14 +126,12 @@ namespace qblocks {
     }
 
     //----------------------------------------------------------------------
-    int SFUintBN::compareTo(const SFUintBN &x) const
-    {
+    int SFUintBN::compareTo(const SFUintBN &x) const {
         unsigned int i = len;
 
         if (i < x.len) return -1;
         if (i > x.len) return  1;
-        while (i > 0)
-        {
+        while (i > 0) {
             i--;
             if (blk[i] == x.blk[i]) continue;
             else if (blk[i] >  x.blk[i]) return  1;
@@ -159,24 +141,20 @@ namespace qblocks {
     }
 
     //----------------------------------------------------------------------
-    void SFUintBN::add(const SFUintBN &a, const SFUintBN &b)
-    {
-        if (thisIsMe(a) || thisIsMe(b))
-        {
+    void SFUintBN::add(const SFUintBN &a, const SFUintBN &b) {
+        if (thisIsMe(a) || thisIsMe(b)) {
             // don't operate on top of ourselves
             SFUintBN tmp;
-            tmp.add(a,b);
+            tmp.add(a, b);
             *this = tmp;
             return;
         }
 
-        if (a.len == 0)
-        {
+        if (a.len == 0) {
             operator =(b);
             return;
 
-        } else if (b.len == 0)
-        {
+        } else if (b.len == 0) {
             operator =(a);
             return;
         }
@@ -186,12 +164,10 @@ namespace qblocks {
         unsigned int i;
 
         const SFUintBN *a2, *b2;
-        if (a.len >= b.len)
-        {
+        if (a.len >= b.len) {
             a2 = &a;
             b2 = &b;
-        } else
-        {
+        } else {
             a2 = &b;
             b2 = &a;
         }
@@ -199,12 +175,10 @@ namespace qblocks {
         len = a2->len + 1;
         allocate(len);
 
-        for (i = 0, carryIn = false; i < b2->len; i++)
-        {
+        for (i = 0, carryIn = false; i < b2->len; i++) {
             temp = a2->blk[i] + b2->blk[i];
-            carryOut = (temp < a2->blk[i]); // If a rollover occurred, the result is less than either input.
-            if (carryIn)
-            {
+            carryOut = (temp < a2->blk[i]);  // If a rollover occurred, the result is less than either input.
+            if (carryIn) {
                 temp++;
                 carryOut |= (temp == 0);
             }
@@ -213,8 +187,7 @@ namespace qblocks {
         }
 
         // If there is a carry left over, increase blocks until one does not roll over.
-        for (; i < a2->len && carryIn; i++)
-        {
+        for (; i < a2->len && carryIn; i++) {
             temp = a2->blk[i] + 1;
             carryIn = (temp == 0);
             blk[i] = temp;
@@ -233,24 +206,20 @@ namespace qblocks {
     }
 
     //----------------------------------------------------------------------
-    void SFUintBN::subtract(const SFUintBN &a, const SFUintBN &b)
-    {
-        if (thisIsMe(a) || thisIsMe(b))
-        {
+    void SFUintBN::subtract(const SFUintBN &a, const SFUintBN &b) {
+        if (thisIsMe(a) || thisIsMe(b)) {
             // don't operate on top of ourselves
             SFUintBN tmp;
-            tmp.subtract(a,b);
+            tmp.subtract(a, b);
             *this = tmp;
             return;
         }
 
-        if (b.len == 0)
-        {
+        if (b.len == 0) {
             operator=(a);
             return;
 
-        } else if (a.len < b.len)
-        {
+        } else if (a.len < b.len) {
             throw "SFUintBN::subtract: Negative result in unsigned calculation";
         }
 
@@ -261,12 +230,11 @@ namespace qblocks {
         len = a.len;
         allocate(len);
 
-        for (i = 0, borrowIn = false; i < b.len; i++)
-        {
+        for (i = 0, borrowIn = false; i < b.len; i++) {
             temp = a.blk[i] - b.blk[i];
-            borrowOut = (temp > a.blk[i]); // If a reverse rollover occurred, the result is greater than the block from a.
-            if (borrowIn)
-            {
+            // If a reverse rollover occurred, the result is greater than the block from a.
+            borrowOut = (temp > a.blk[i]);
+            if (borrowIn) {
                 borrowOut |= (temp == 0);
                 temp--;
             }
@@ -275,20 +243,17 @@ namespace qblocks {
         }
 
         // If there is a borrow left over, decrease blocks until one does not reverse rollover.
-        for (; i < a.len && borrowIn; i++)
-        {
+        for (; i < a.len && borrowIn; i++) {
             borrowIn = (a.blk[i] == 0);
             blk[i] = a.blk[i] - 1;
         }
 
         // If there's still a borrow, the result is negative. Throw an exception, but zero out this
         // object so as to leave it in a predictable state.
-        if (borrowIn)
-        {
+        if (borrowIn) {
             len = 0;
             throw "SFUintBN::subtract: Negative result in unsigned calculation";
-        } else
-        {
+        } else {
             for (; i < a.len; i++)
                 blk[i] = a.blk[i];
         }
@@ -334,28 +299,24 @@ namespace qblocks {
      * the test 'y == 0' handles this case specially.
      */
     //----------------------------------------------------------------------
-    uint64_t getShiftedBlock(const SFUintBN &num, unsigned int x, unsigned int y)
-    {
+    uint64_t getShiftedBlock(const SFUintBN &num, unsigned int x, unsigned int y) {
         uint64_t part1 = (x == 0 || y == 0) ? 0 : (num.blk[x - 1] >> (SFUintBN::N - y));
         uint64_t part2 = (x == num.len) ? 0 : (num.blk[x] << y);
         return part1 | part2;
     }
 
     //----------------------------------------------------------------------
-    void SFUintBN::multiply(const SFUintBN &a, const SFUintBN &b)
-    {
-        if (thisIsMe(a) || thisIsMe(b))
-        {
+    void SFUintBN::multiply(const SFUintBN &a, const SFUintBN &b) {
+        if (thisIsMe(a) || thisIsMe(b)) {
             // don't operate on top of ourselves
             SFUintBN tmp;
-            tmp.multiply(a,b);
+            tmp.multiply(a, b);
             *this = tmp;
             return;
         }
 
         // If either a or b is zero, set to zero.
-        if (a.len == 0 || b.len == 0)
-        {
+        if (a.len == 0 || b.len == 0) {
             len = 0;
             return;
         }
@@ -379,11 +340,9 @@ namespace qblocks {
         for (i = 0; i < len; i++)
             blk[i] = 0;
         // For each block of the first number...
-        for (i = 0; i < a.len; i++)
-        {
+        for (i = 0; i < a.len; i++) {
             // For each 1-bit of that block...
-            for (i2 = 0; i2 < N; i2++)
-            {
+            for (i2 = 0; i2 < N; i2++) {
                 if ((a.blk[i] & (((uint64_t)(1)) << i2)) == 0)
                     continue;
                 /*
@@ -399,8 +358,7 @@ namespace qblocks {
                  * Instead, this loop runs an additional time with j == b.len.
                  * These changes were made on 2005.01.11.
                  */
-                for (j = 0, k = i, carryIn = false; j <= b.len; j++, k++)
-                {
+                for (j = 0, k = i, carryIn = false; j <= b.len; j++, k++) {
                     /*
                      * The body of this loop is very similar to the body of the first loop
                      * in 'add', except that this loop does a '+=' instead of a '+'.
@@ -416,8 +374,7 @@ namespace qblocks {
                 }
                 // No more extra iteration to deal with 'bHigh'.
                 // Roll-over a carry as necessary.
-                for (; carryIn; k++)
-                {
+                for (; carryIn; k++) {
                     blk[k]++;
                     carryIn = (blk[k] == 0);
                 }
@@ -459,11 +416,10 @@ namespace qblocks {
 
         /* At this point *this and q are separate, so the only concern is that b might be
          * aliased to one of them.  If so, use a temporary copy of b. */
-        if (thisIsMe(b) || &q == &b)
-        {
+        if (thisIsMe(b) || &q == &b) {
             // don't operate on top of ourselves
             SFUintBN tmpB(b);
-            divide(tmpB,q);
+            divide(tmpB, q);
             return;
         }
 
@@ -534,12 +490,12 @@ namespace qblocks {
          * extra zero block ensures sensible behavior; we need
          * an extra block in 'subtractBuf' for exactly the same reason.
          */
-        unsigned int origLen = len; // Save real length.
+        unsigned int origLen = len;  // Save real length.
         /* To avoid an out-of-bounds access in case of reallocation, allocate
          * first and then increment the logical length. */
         allocateAndCopy(len + 1);
         len++;
-        blk[origLen] = 0; // Zero the added block.
+        blk[origLen] = 0;  // Zero the added block.
 
         // subtractBuf holds part of the result of a subtraction; see above.
         uint64_t *subtractBuf = new uint64_t[len];
@@ -605,6 +561,7 @@ namespace qblocks {
                 }
             }
         }
+
         // Zap possible leading zero in quotient
         if (q.blk[q.len - 1] == 0)
             q.len--;
@@ -616,13 +573,11 @@ namespace qblocks {
     }
 
     //----------------------------------------------------------------------
-    void SFUintBN::bitwiseAnd(const SFUintBN &a, const SFUintBN &b)
-    {
-        if (thisIsMe(a) || thisIsMe(b))
-        {
+    void SFUintBN::bitwiseAnd(const SFUintBN &a, const SFUintBN &b) {
+        if (thisIsMe(a) || thisIsMe(b)) {
             // don't operate on top of ourselves
             SFUintBN tmp;
-            tmp.bitwiseAnd(a,b);
+            tmp.bitwiseAnd(a, b);
             *this = tmp;
             return;
         }
@@ -636,13 +591,11 @@ namespace qblocks {
     }
 
     //----------------------------------------------------------------------
-    void SFUintBN::bitwiseOr(const SFUintBN &a, const SFUintBN &b)
-    {
-        if (thisIsMe(a) || thisIsMe(b))
-        {
+    void SFUintBN::bitwiseOr(const SFUintBN &a, const SFUintBN &b) {
+        if (thisIsMe(a) || thisIsMe(b)) {
             // don't operate on top of ourselves
             SFUintBN tmp;
-            tmp.bitwiseOr(a,b);
+            tmp.bitwiseOr(a, b);
             *this = tmp;
             return;
         }
@@ -650,12 +603,10 @@ namespace qblocks {
         unsigned int i;
         const SFUintBN *a2, *b2;
 
-        if (a.len >= b.len)
-        {
+        if (a.len >= b.len) {
             a2 = &a;
             b2 = &b;
-        } else
-        {
+        } else {
             a2 = &b;
             b2 = &a;
         }
@@ -670,25 +621,21 @@ namespace qblocks {
     }
 
     //----------------------------------------------------------------------
-    void SFUintBN::bitwiseXor(const SFUintBN &a, const SFUintBN &b)
-    {
-        if (thisIsMe(a) || thisIsMe(b))
-        {
+    void SFUintBN::bitwiseXor(const SFUintBN &a, const SFUintBN &b) {
+        if (thisIsMe(a) || thisIsMe(b)) {
             // don't operate on top of ourselves
             SFUintBN tmp;
-            tmp.bitwiseXor(a,b);
+            tmp.bitwiseXor(a, b);
             *this = tmp;
             return;
         }
 
         unsigned int i;
         const SFUintBN *a2, *b2;
-        if (a.len >= b.len)
-        {
+        if (a.len >= b.len) {
             a2 = &a;
             b2 = &b;
-        } else
-        {
+        } else {
             a2 = &b;
             b2 = &a;
         }
@@ -703,26 +650,22 @@ namespace qblocks {
         trimLeadingZeros();
     }
 
-    // Negative shift amounts translate to opposite-direction shifts, except for -2^(8*sizeof(int)-1) which is unimplemented.
+    // Negative shift amounts translate to opposite-direction shifts, except for -2^(8*sizeof(int)-1)
+    // which is unimplemented.
     //----------------------------------------------------------------------
-    void SFUintBN::shiftLeft(const SFUintBN &a, int b)
-    {
-        if (thisIsMe(a))
-        {
+    void SFUintBN::shiftLeft(const SFUintBN &a, int b) {
+        if (thisIsMe(a)) {
             // don't operate on top of ourselves
             SFUintBN tmp;
-            tmp.shiftLeft(a,b);
+            tmp.shiftLeft(a, b);
             *this = tmp;
             return;
         }
 
-        if (b < 0)
-        {
-            if (b << 1 == 0)
-            {
+        if (b < 0) {
+            if (b << 1 == 0) {
                 throw "SFUintBN::shiftLeft: Pathological shift amount not implemented";
-            } else
-            {
+            } else {
                 shiftRight(a, -b);
                 return;
             }
@@ -746,36 +689,31 @@ namespace qblocks {
     }
 
     //----------------------------------------------------------------------
-    void SFUintBN::shiftRight(const SFUintBN &a, int b)
-    {
-        if (thisIsMe(a))
-        {
+    void SFUintBN::shiftRight(const SFUintBN &a, int b) {
+        if (thisIsMe(a)) {
             // don't operate on top of ourselves
             SFUintBN tmp;
-            tmp.shiftRight(a,b);
+            tmp.shiftRight(a, b);
             *this = tmp;
             return;
         }
 
-        if (b < 0)
-        {
-            if (b << 1 == 0)
-            {
+        if (b < 0) {
+            if (b << 1 == 0) {
                 throw "SFUintBN::shiftRight: Pathological shift amount not implemented";
-            } else
-            {
-                shiftLeft(a,-b);
+            } else {
+                shiftLeft(a, -b);
                 return;
             }
         }
 
-        // This calculation is wacky, but expressing the shift as a left bit shift within each block lets us use getShiftedBlock.
+        // This calculation is wacky, but expressing the shift as a left bit shift within each
+        // block lets us use getShiftedBlock.
         unsigned int rightShiftBlocks = ((unsigned int)b + N - 1) / N;
         unsigned int leftShiftBits    = N * rightShiftBlocks - (unsigned int)b;
 
         // At this point (N * rightShiftBlocks - leftShiftBits) == b and 0 <= leftShiftBits < N.
-        if (rightShiftBlocks >= a.len + 1)
-        {
+        if (rightShiftBlocks >= a.len + 1) {
             // All of a is guaranteed to be shifted off, even considering the left bit shift.
             len = 0;
             return;
@@ -790,4 +728,4 @@ namespace qblocks {
 
         trimLeadingZeros();
     }
-}
+}  // namespace qblocks

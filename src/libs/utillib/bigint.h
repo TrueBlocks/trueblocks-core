@@ -10,8 +10,7 @@
 namespace qblocks {
 
     //---------------------------------------------------------------
-    class SFIntBN
-    {
+    class SFIntBN {
     public:
         int sign;
         SFUintBN mag;
@@ -20,27 +19,27 @@ namespace qblocks {
         SFIntBN(const SFIntBN& x);
         SFIntBN& operator=(const SFIntBN& x);
 
-        SFIntBN(const SFUintBN& x);
+        SFIntBN(const SFUintBN& x);  // NOLINT
         SFIntBN(const SFUintBN& x, int s);
 
         SFIntBN(const uint64_t *b, unsigned int len);
         SFIntBN(const uint64_t *b, unsigned int len, int sgn);
 
-        SFIntBN(int64_t x);
-        SFIntBN(int x);
-        SFIntBN(short x);
+        SFIntBN(int64_t x);  // NOLINT
+        SFIntBN(int32_t x);  // NOLINT
+        SFIntBN(int16_t x);  // NOLINT
 
-        SFIntBN(uint64_t x);
-        SFIntBN(unsigned int x);
-        SFIntBN(unsigned short x);
+        SFIntBN(uint64_t x);  // NOLINT
+        SFIntBN(uint32_t x);  // NOLINT
+        SFIntBN(uint16_t x);  // NOLINT
 
         int64_t to_long(void) const;
-        int to_int(void) const;
-        short to_short(void) const;
+        int32_t to_int(void) const;
+        int16_t to_short(void) const;
 
         uint64_t to_ulong(void) const;
-        unsigned int to_uint(void) const;
-        unsigned short to_ushort(void) const;
+        uint32_t to_uint(void) const;
+        uint16_t to_ushort(void) const;
 
         int compareTo(const SFIntBN& x) const;
         bool operator==(const SFIntBN& x) const;
@@ -83,101 +82,85 @@ namespace qblocks {
     };
 
     //------------------------------------------------------------
-    inline void SFIntBN::operator++(int) { operator++(); }
-    inline void SFIntBN::operator++(void)
-    {
-        if (sign == -1)
-        {
+    inline void SFIntBN::operator++(int) { operator++(); }  // NOLINT
+    inline void SFIntBN::operator++(void) {
+        if (sign == -1) {
             mag--;
             if (mag == 0)
                 sign = 0;
-        } else
-        {
+        } else {
             mag++;
             sign = 1;
         }
     }
 
     //------------------------------------------------------------
-    inline void SFIntBN::operator--(int) { operator--(); }
-    inline void SFIntBN::operator--(void)
-    {
-        if (sign == 1)
-        {
+    inline void SFIntBN::operator--(int) { operator--(); }  // NOLINT
+    inline void SFIntBN::operator--(void) {
+        if (sign == 1) {
             mag--;
             if (mag == 0)
                 sign = 0;
-        } else
-        {
+        } else {
             mag++;
             sign = -1;
         }
     }
 
     //------------------------------------------------------------
-    inline bool SFIntBN::operator!=(const SFIntBN &x) const
-    {
+    inline bool SFIntBN::operator!=(const SFIntBN &x) const {
         return !operator==(x);
     }
 
     //------------------------------------------------------------
-    inline bool SFIntBN::operator<(const SFIntBN &x) const
-    {
+    inline bool SFIntBN::operator<(const SFIntBN &x) const {
         return compareTo(x) < 0;
     }
 
     //------------------------------------------------------------
-    inline bool SFIntBN::operator<=(const SFIntBN &x) const
-    {
+    inline bool SFIntBN::operator<=(const SFIntBN &x) const {
         return compareTo(x) <= 0;
     }
 
     //------------------------------------------------------------
-    inline bool SFIntBN::operator>(const SFIntBN &x) const
-    {
+    inline bool SFIntBN::operator>(const SFIntBN &x) const {
         return compareTo(x) > 0;
     }
 
     //------------------------------------------------------------
-    inline bool SFIntBN::operator>=(const SFIntBN &x) const
-    {
+    inline bool SFIntBN::operator>=(const SFIntBN &x) const {
         return compareTo(x) >= 0;
     }
 
     //------------------------------------------------------------
-    inline bool SFIntBN::operator==(const SFIntBN &x) const
-    {
+    inline bool SFIntBN::operator==(const SFIntBN &x) const {
         return (sign == x.sign) && (mag == x.mag);
     }
 
     //------------------------------------------------------------
-    inline SFIntBN SFIntBN::operator+(const SFIntBN &x) const
-    {
+    inline SFIntBN SFIntBN::operator+(const SFIntBN &x) const {
         SFIntBN ans;
         ans.add(*this, x);
         return ans;
     }
 
     //------------------------------------------------------------
-    inline SFIntBN SFIntBN::operator-(const SFIntBN &x) const
-    {
+    inline SFIntBN SFIntBN::operator-(const SFIntBN &x) const {
         SFIntBN ans;
         ans.subtract(*this, x);
         return ans;
     }
 
     //------------------------------------------------------------
-    inline SFIntBN SFIntBN::operator*(const SFIntBN &x) const
-    {
+    inline SFIntBN SFIntBN::operator*(const SFIntBN &x) const {
         SFIntBN ans;
         ans.multiply(*this, x);
         return ans;
     }
 
     //------------------------------------------------------------
-    inline SFIntBN SFIntBN::operator/(const SFIntBN &x) const
-    {
-        if (sign==0)
+    inline SFIntBN SFIntBN::operator/(const SFIntBN &x) const {
+        if (sign == 0)
             throw "SFIntBN::operator /: division by zero";
         SFIntBN q, r;
         r = *this;
@@ -186,9 +169,8 @@ namespace qblocks {
     }
 
     //------------------------------------------------------------
-    inline SFIntBN SFIntBN::operator%(const SFIntBN &x) const
-    {
-        if (x.sign==0)
+    inline SFIntBN SFIntBN::operator%(const SFIntBN &x) const {
+        if (x.sign == 0)
             throw "SFIntBN::operator %: division by zero";
         SFIntBN q, r;
         r = *this;
@@ -197,48 +179,41 @@ namespace qblocks {
     }
 
     //------------------------------------------------------------
-    inline SFIntBN SFIntBN::operator-() const
-    {
+    inline SFIntBN SFIntBN::operator-() const {
         SFIntBN ans;
         ans.negate(*this);
         return ans;
     }
 
     //------------------------------------------------------------
-    inline void SFIntBN::operator+=(const SFIntBN &x)
-    {
+    inline void SFIntBN::operator+=(const SFIntBN &x) {
         add(*this, x);
     }
 
     //------------------------------------------------------------
-    inline void SFIntBN::operator-=(const SFIntBN &x)
-    {
+    inline void SFIntBN::operator-=(const SFIntBN &x) {
         subtract(*this, x);
     }
 
     //------------------------------------------------------------
-    inline void SFIntBN::operator*=(const SFIntBN &x)
-    {
+    inline void SFIntBN::operator*=(const SFIntBN &x) {
         multiply(*this, x);
     }
 
     //------------------------------------------------------------
-    inline void SFIntBN::operator/=(const SFIntBN &x)
-    {
-        if (x.sign==0)
+    inline void SFIntBN::operator/=(const SFIntBN &x) {
+        if (x.sign == 0)
             throw "SFIntBN::operator /=: division by zero";
-
         SFIntBN q;
         divide(x, q);
         *this = q;
     }
 
     //------------------------------------------------------------
-    inline void SFIntBN::operator %=(const SFIntBN &x)
-    {
-        if (x.sign==0)
+    inline void SFIntBN::operator %=(const SFIntBN &x) {
+        if (x.sign == 0)
             throw "SFIntBN::operator %=: division by zero";
         SFIntBN q;
         divide(x, q);
     }
-}
+}  // namespace qblocks

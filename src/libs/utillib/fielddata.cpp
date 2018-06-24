@@ -26,7 +26,7 @@ namespace qblocks {
         if (type & TS_OBJECT)  ret += (" TS_OBJECT " );
         if (type & TS_POINTER) ret += (" TS_POINTER ");
         if (type & TS_BIGNUM)  ret += (" TS_BIGNUM " );
-        return trim(substitute(ret, "  "," "));
+        return trim(substitute(ret, "  ", " "));
     }
 
     //--------------------------------------------------------------
@@ -57,7 +57,10 @@ namespace qblocks {
     }
 
     ostream& operator<<(ostream& os, const CFieldData& item) {
-        os << padRight(item.getName(),20) << "\t" << item.getID() << "\t" << item.isHidden() << "\t" << typeName(item.getType());
+        os << padRight(item.getName(), 20) << "\t";
+        os << item.getID() << "\t";
+        os << item.isHidden() << "\t";
+        os << typeName(item.getType());
         return os;
     }
 

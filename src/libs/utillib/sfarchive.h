@@ -39,14 +39,14 @@ namespace qblocks {
     public:
         SFArchiveHeader  m_header;
         bool             m_isReading;
-        //VISITARCHIVEFUNC writeMsgFunc;
-        //VISITARCHIVEFUNC readMsgFunc;
+        // VISITARCHIVEFUNC writeMsgFunc;
+        // VISITARCHIVEFUNC readMsgFunc;
 
-        SFArchive(bool isReading) : CSharedResource() {
+        explicit SFArchive(bool isReading) : CSharedResource() {
             m_isReading        = isReading;
             m_header.m_version = getVersionNum();
-            //writeMsgFunc     = NULL;
-            //readMsgFunc      = NULL;
+            // writeMsgFunc     = NULL;
+            // readMsgFunc      = NULL;
         }
 
         string_q getType(void) const override { return "SFArchive"; }

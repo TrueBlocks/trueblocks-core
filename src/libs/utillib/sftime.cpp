@@ -11,6 +11,7 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 #include <algorithm>
+#include <string>
 #include "basetypes.h"
 #include "sftime.h"
 #include "sfos.h"
@@ -65,7 +66,7 @@ namespace qblocks {
     SFTime::SFTime(const tm& st, bool useDayOfWeek) {
         tm sysTime = st;
         if (!sysTime.tm_year)
-            sysTime.tm_year = (int)Now().GetYear();
+            sysTime.tm_year = static_cast<int>(Now().GetYear());
         ASSERT(sysTime.tm_year);
 
         if (useDayOfWeek) {
@@ -921,7 +922,7 @@ namespace qblocks {
     //----------------------------------------------------------------------------------------------------
     SFTime BOW(const SFTime& tm) {
         SFTime ret = BOD(tm);
-        while (getDayOfWeek(ret.getDatePart()) > 1) // if it equals '1', it's Sunday at 00:00:01
+        while (getDayOfWeek(ret.getDatePart()) > 1)  // if it equals '1', it's Sunday at 00:00:01
             ret = SubtractOneDay(ret);
         return ret;
     }
@@ -929,7 +930,7 @@ namespace qblocks {
     //----------------------------------------------------------------------------------------------------
     SFTime EOW(const SFTime& tm) {
         SFTime ret = EOD(tm);
-        while (getDayOfWeek(tm.getDatePart()) < 7) // if it equals '7', it's Saturday 12:59:59
+        while (getDayOfWeek(tm.getDatePart()) < 7)  // if it equals '7', it's Saturday 12:59:59
             ret = AddOneDay(ret);
         return ret;
     }

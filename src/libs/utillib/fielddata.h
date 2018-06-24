@@ -11,6 +11,7 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
+#include <vector>
 #include "list.h"
 
 namespace qblocks {
@@ -50,7 +51,8 @@ namespace qblocks {
 
     public:
         CFieldData(void) : m_fieldID(0), m_fieldType(0), m_hidden(false) { }
-        CFieldData(const string_q& fn, size_t id, uint64_t t) : m_fieldName(fn), m_fieldID(id), m_fieldType(t), m_hidden(false) { }
+        CFieldData(const string_q& fn, size_t id, uint64_t t)
+            : m_fieldName(fn), m_fieldID(id), m_fieldType(t), m_hidden(false) { }
         CFieldData(const CFieldData& cp) {
             m_fieldName = cp.m_fieldName;
             m_fieldID = cp.m_fieldID;

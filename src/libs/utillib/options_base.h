@@ -114,7 +114,7 @@ namespace qblocks {
     extern void optionOn (uint32_t q);
 
     //--------------------------------------------------------------------------------
-    extern const CToml *getGlobalConfig(const string_q& name="");
+    extern const CToml *getGlobalConfig(const string_q& name = "");
 
     typedef bool (*UINT64VISITFUNC)(uint64_t num, void *data);
     typedef uint64_t (*HASHFINDFUNC)(const SFHash& hash, void *data);
