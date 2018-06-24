@@ -54,9 +54,9 @@ namespace qblocks {
         if (blooms.size() == 0)
             blooms.push_back(0);
         size_t cnt = blooms.size();
-        blooms.at(cnt - 1) = joinBloom(blooms[cnt - 1], makeBloom(addr)); // assignments requires the non-const reference
+        blooms.at(cnt - 1) = joinBloom(blooms[cnt - 1], makeBloom(addr));  // requires the non-const reference
         if (bitsTwiddled(blooms[cnt - 1]) > maxBits) {
-            blooms.push_back(0); // start a new bloom
+            blooms.push_back(0);  // start a new bloom
             return true;
         }
         return false;

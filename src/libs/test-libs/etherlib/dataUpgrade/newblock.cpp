@@ -57,7 +57,7 @@ string_q nextNewblockChunk(const string_q& fieldIn, const void *dataPtr) {
 bool CNewBlock::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
     // EXISTING_CODE
     if (fieldName % "number") {
-        *(string_q*)&fieldName = "blockNumber";
+        *(string_q*)&fieldName = "blockNumber";  // NOLINT
 
     } else if (fieldName % "transactions") {
         // Transactions come to us either as a JSON objects or lists
@@ -102,7 +102,7 @@ bool CNewBlock::setValueByName(const string_q& fieldName, const string_q& fieldV
         case 't':
             if ( fieldName % "timestamp" ) { timestamp = toTimestamp(fieldValue); return true; }
             if ( fieldName % "transactions" ) {
-                char *p = (char *)fieldValue.c_str();
+                char *p = (char *)fieldValue.c_str();  // NOLINT
                 while (p && *p) {
                     CTransaction item;
                     size_t nFields = 0;
@@ -123,7 +123,7 @@ bool CNewBlock::setValueByName(const string_q& fieldName, const string_q& fieldV
 void CNewBlock::finishParse() {
     // EXISTING_CODE
     for (size_t i = 0 ; i < transactions.size() ; i++)
-        transactions.at(i).pBlock = (CBlock*)this; // .at cannot access past the end of vector
+        transactions.at(i).pBlock = (CBlock*)this; // .at cannot access past the end of vector  // NOLINT
     // EXISTING_CODE
 }
 
@@ -131,7 +131,7 @@ void CNewBlock::finishParse() {
 bool CNewBlock::Serialize(SFArchive& archive) {
 
     if (archive.isWriting())
-        return ((const CNewBlock*)this)->SerializeC(archive);
+        return ((const CNewBlock*)this)->SerializeC(archive);  // NOLINT
 
     // If we're reading a back level, read the whole thing and we're done.
     if (readBackLevel(archive))
@@ -158,7 +158,7 @@ bool CNewBlock::Serialize(SFArchive& archive) {
 bool CNewBlock::SerializeC(SFArchive& archive) const {
 
     // Writing always write the latest version of the data
-    ((CNewBlock*)this)->m_schema = getVersionNum();
+    ((CNewBlock*)this)->m_schema = getVersionNum();  // NOLINT
     CBaseNode::SerializeC(archive);
 
     // EXISTING_CODE
@@ -279,15 +279,16 @@ bool CNewBlock::readBackLevel(SFArchive& archive) {
         archive >> gasLimit;
         archive >> gasUsed;
         archive >> hash;
-        archive >> removed; // used to be logsBloom
+        archive >> removed;  // used to be logsBloom
         archive >> blockNumber;
         archive >> parentHash;
         archive >> timestamp;
         archive >> transactions;
-        // TODO -- technically we should re-read these values from the node
+        // TODO(tjayrush) -- technically we should re-read these values from the node
         string_q save = getCurlContext()->provider;
         getCurlContext()->provider = "local";
-        CBlock upgrade;size_t unused;
+        CBlock upgrade;
+        size_t unused;
         queryBlock(upgrade, asStringU(blockNumber), false, false, unused);
         getCurlContext()->provider = save;
         miner = upgrade.miner;
@@ -402,10 +403,9 @@ CNewBlock::CNewBlock(const CBlock& block) {
 
 //-----------------------------------------------------------------------
 bool readOneNewBlock_fromBinary(CNewBlock& block, const string_q& fileName) {
-    block = CNewBlock(); // reset
+    block = CNewBlock();  // reset
     SFArchive archive(READING_ARCHIVE);
-    if (archive.Lock(fileName, binaryReadOnly, LOCK_NOWAIT))
-    {
+    if (archive.Lock(fileName, binaryReadOnly, LOCK_NOWAIT)) {
         block.Serialize(archive);
         archive.Close();
         return block.blockNumber;
@@ -415,7 +415,7 @@ bool readOneNewBlock_fromBinary(CNewBlock& block, const string_q& fileName) {
 
 //-----------------------------------------------------------------------
 bool readOneNewBlock_fromJson(CNewBlock& block, const string_q& fileName) {
-    block = CNewBlock(); // reset
+    block = CNewBlock();  // reset
     string_q contents = asciiFileToString(fileName);
     if (contains(contents, "null")) {
         replaceAll(contents, "null", "\"0x\"");
@@ -423,12 +423,12 @@ bool readOneNewBlock_fromJson(CNewBlock& block, const string_q& fileName) {
     }
 
     if (!endsWith(contents, '\n')) {
-        stringToAsciiFile(fileName, contents+"\n");
+        stringToAsciiFile(fileName, contents + "\n");
     }
 
-    char *p = cleanUpJson((char *)contents.c_str());
-    size_t nFields=0;
-    block.parseJson(p,nFields);
+    char *p = cleanUpJson((char *)contents.c_str());  // NOLINT
+    size_t nFields = 0;
+    block.parseJson(p, nFields);
     return nFields;
 }
 // EXISTING_CODE

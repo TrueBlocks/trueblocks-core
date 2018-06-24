@@ -10,11 +10,11 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
+#include <iostream>
+#include <iomanip>
 #include "etherlib.h"
 
 //-------------------------------------------------------------------------
-#include <iostream>
-#include <iomanip>
 char sep = '\t';
 
 //-------------------------------------------------------------------------
@@ -33,27 +33,26 @@ public:
         string_q contents = asciiFileToString("./data/countsByWeek.txt");
         string_q last;
         while (!contents.empty()) {
-            string_q str = trim(nextTokenClear(contents,'\n'));
+            string_q str = trim(nextTokenClear(contents, '\n'));
             if (!str.empty())
                 last = str;
         }
-//4305968 2017-09-24 00:00:17 UTC 1398084 2907884 0.675315    60868104    20.9321 14.1358 0
+// 4305968 2017-09-24 00:00:17 UTC 1398084 2907884 0.675315    60868104    20.9321 14.1358 0
         string_q str;
-        str = nextTokenClear(last,sep); startBlock = toUnsigned(str);
-        nextTokenClear(last,sep);
-        str = nextTokenClear(last,sep); nEmpty     = toUnsigned(str);
-        str = nextTokenClear(last,sep); nFull      = toUnsigned(str);
-        str = nextTokenClear(last,sep);
-        str = nextTokenClear(last,sep); nTrans     = toUnsigned(str);
-        str = nextTokenClear(last,sep);
-        str = nextTokenClear(last,sep);
-        str = nextTokenClear(last,sep); nTraces    = toUnsigned(str);
+        str = nextTokenClear(last, sep); startBlock = toUnsigned(str);
+              nextTokenClear(last, sep);
+        str = nextTokenClear(last, sep); nEmpty     = toUnsigned(str);
+        str = nextTokenClear(last, sep); nFull      = toUnsigned(str);
+        str = nextTokenClear(last, sep);
+        str = nextTokenClear(last, sep); nTrans     = toUnsigned(str);
+        str = nextTokenClear(last, sep);
+        str = nextTokenClear(last, sep);
+        str = nextTokenClear(last, sep); nTraces    = toUnsigned(str);
     }
 };
 
 //-------------------------------------------------------------------------
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
     etherlib_init();
 
     cout << "blockNum" << sep
@@ -95,7 +94,12 @@ void CCounter::countOne(const CBlock &block) {
     static SFTime last = earliestDate;
 #ifdef SUBTOTAL_BY_FIVE_MINS
     SFTime thisOne = dateFromTimeStamp(block.timestamp);
-    thisOne = SFTime(thisOne.GetYear(),thisOne.GetMonth(),thisOne.GetDay(),thisOne.GetHour(),thisOne.GetMinute()/5,0);
+    thisOne = SFTime(thisOne.GetYear(),
+                        thisOne.GetMonth(),
+                        thisOne.GetDay(),
+                        thisOne.GetHour(),
+                        thisOne.GetMinute()/5,
+                        0);
 #else
     SFTime thisOne = SubtractOneDay(SubtractOneDay(BOW(dateFromTimeStamp(block.timestamp))));
 #endif
@@ -117,10 +121,10 @@ void CCounter::countOne(const CBlock &block) {
         << dateFromTimeStamp(block.timestamp) << sep
         << nEmpty << sep
         << nFull << sep
-        << ((double)nFull/(double)(block.blockNumber)) << sep
+        << ((double)nFull/(double)(block.blockNumber)) << sep  // NOLINT
         << nTrans << sep
-        << ((double)nTrans/(double)(nFull)) << sep
-        << ((double)nTrans/(double)(block.blockNumber)) << sep
+        << ((double)nTrans/(double)(nFull)) << sep  // NOLINT
+        << ((double)nTrans/(double)(block.blockNumber)) << sep  // NOLINT
         << nTraces;
 
     if (last != thisOne) {

@@ -18,7 +18,7 @@ namespace qblocks {
 
     //-------------------------------------------------------------------------
     // Helps debug a bloom filter
-#define dbgBloom(a) substitute(bloom2Bytes(a), "0"," ")
+#define dbgBloom(a) substitute(bloom2Bytes(a), "0", " ")
 
     //-------------------------------------------------------------------------
     inline size_t bitsTwiddled(SFBloom n) {
@@ -41,7 +41,8 @@ extern string_q getSha3 (const string_q& hexIn);
         string_q sha = getSha3(hexIn);
         SFUintBN bloom;
         for (size_t i = 0 ; i < 3 ; i++)
-            bloom |= (SFUintBN(1) << (strtoul(("0x" + extract(sha, 2 + (i*4), 4)).c_str(),NULL,16))%2048);
+            bloom |= (SFUintBN(1) << (strtoul(("0x" +
+                            extract(sha, 2 + (i * 4), 4)).c_str(), NULL, 16)) % 2048);
         return bloom;
     }
 
@@ -57,7 +58,7 @@ extern string_q getSha3 (const string_q& hexIn);
 
     //-------------------------------------------------------------------------
     inline bool isBloomHit(const string_q& hexIn, const SFUintBN filter) {
-        return isBloomHit(makeBloom(hexIn),filter);
+        return isBloomHit(makeBloom(hexIn), filter);
     }
 
     //----------------------------------------------------------------------------------

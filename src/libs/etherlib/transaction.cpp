@@ -59,38 +59,33 @@ string_q nextTransactionChunk(const string_q& fieldIn, const void *dataPtr) {
 bool CTransaction::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
     // EXISTING_CODE
     if (fieldName == "to" && fieldValue == "null")
-        *((string_q*)&fieldValue) = "0x";
+        *((string_q*)&fieldValue) = "0x";  // NOLINT
 
-    if ( fieldName % "input" )
-    {
+    if ( fieldName % "input" ) {
         input = fieldValue;
         function = Format("[{FUNCTION}]");
         return true;
 
-    } else if ( fieldName % "value" )
-    {
+    } else if ( fieldName % "value" ) {
         value = canonicalWei(fieldValue);
         ether = str2Double(Format("[{ETHER}]"));
         return true;
 
-    } else if ( fieldName % "contractAddress" )
-    {
+    } else if ( fieldName % "contractAddress" ) {
         receipt.contractAddress = toAddress(fieldValue);
         return true;
 
-    } else if ( fieldName % "gasUsed" )
-    {
+    } else if ( fieldName % "gasUsed" ) {
         receipt.gasUsed = toUnsigned(fieldValue);
         return true;
-    } else if ( fieldName % "receipt" )
-    {
-        char *p = (char *)fieldValue.c_str();
-        size_t nFields=0;
-        receipt.parseJson(p,nFields);
+    } else if ( fieldName % "receipt" ) {
+        char *p = (char *)fieldValue.c_str();  // NOLINT
+        size_t nFields = 0;
+        receipt.parseJson(p, nFields);
         return true;
     }
     if (pBlock)
-        if (((CBlock*)pBlock)->setValueByName(fieldName, fieldValue))
+        if (((CBlock*)pBlock)->setValueByName(fieldName, fieldValue))  // NOLINT
             return true;
     // EXISTING_CODE
 
@@ -147,7 +142,7 @@ void CTransaction::finishParse() {
 bool CTransaction::Serialize(SFArchive& archive) {
 
     if (archive.isWriting())
-        return ((const CTransaction*)this)->SerializeC(archive);
+        return ((const CTransaction*)this)->SerializeC(archive);  // NOLINT
 
     // If we're reading a back level, read the whole thing and we're done.
     if (readBackLevel(archive))
@@ -314,7 +309,7 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void *dataPt
                 if (fieldIn % "date" || fieldIn % "datesh") {
                     timestamp_t ts = (tra->pBlock ? tra->pBlock->timestamp : tra->timestamp);
                     string_q ret = dateFromTimeStamp(ts).Format(FMT_JSON);
-                    if (fieldIn % "datesh") // short date
+                    if (fieldIn % "datesh")  // short date
                         return extract(ret, 0, 10);
                     return ret;
                 }
@@ -344,7 +339,7 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void *dataPt
                 break;
             case 't':
                 if ( fieldIn % "timestamp" && tra->pBlock) return asString(tra->pBlock->timestamp);
-                if ( fieldIn % "time") {
+                if ( fieldIn % "time" ) {
                     timestamp_t ts = (tra->pBlock ? tra->pBlock->timestamp : tra->timestamp);
                     return extract(dateFromTimeStamp(ts).Format(FMT_JSON), 12);
                 }
@@ -374,8 +369,8 @@ bool CTransaction::readBackLevel(SFArchive& archive) {
     CBaseNode::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
-    if (m_schema <= getVersionNum(0,4,0)) {
-        SFWei removed; // used to be cumulativeGasUsed
+    if (m_schema <= getVersionNum(0, 4, 0)) {
+        SFWei removed;  // used to be cumulativeGasUsed
         archive >> hash;
         archive >> blockHash;
         archive >> blockNumber;
@@ -520,10 +515,9 @@ bool CTransaction::operator==(const CTransaction& test) const {
     return true;
 }
 
-int sortTransactionsForWrite(const void *rr1, const void *rr2)
-{
-    CTransaction *tr1 = (CTransaction*)rr1;
-    CTransaction *tr2 = (CTransaction*)rr2;
+int sortTransactionsForWrite(const void *rr1, const void *rr2) {
+    CTransaction *tr1 = (CTransaction*)rr1;  // NOLINT
+    CTransaction *tr2 = (CTransaction*)rr2;  // NOLINT
 
     if (tr1->timestamp > tr2->timestamp)
         return 1;
@@ -560,50 +554,56 @@ inline string_q hex2String(const string_q& inHex) {
     while (!in.empty()) {
         string_q nibble = extract(in, 0, 2);
         in = extract(in, 2);
-        ret += (char)hex2Ascii((char*)nibble.c_str());
+        ret += (char)hex2Ascii((char*)nibble.c_str());  // NOLINT
     }
     return ret;
 }
 
 //------------------------------------------------------------------------------
-#define toBigNum2(a,b)      string_q(to_string(canonicalWei("0x"+grabPart(a,b))).c_str())
-#define grabPart(a,b)       trimLeading(extract((a), 64*(b), 64), '0')
-#define grabBigNum(a,b)     strtoull(grabPart(a,b).c_str(),NULL,16)
-#define toAddr(a,b)         "0x"+padLeft(grabPart(a,b),40,'0')
-#define toAddrOld(a,b)      "0x"+grabPart(a,b)
-#define toAscString(a,b)    hex2String("0x"+grabPart(a,b))
-#define toBigNum(a,b)       asStringULL(grabBigNum(a,b))
-#define toBigNum3(a,b)      padNum3(grabBigNum(a,b))
-#define theRest(a,b)        extract((a), 64*(b), (a).length())
-#define toVote(a,b)         (grabBigNum(a,b)?"Yea":"Nay")
-#define toBoolean(a,b)      (grabBigNum(a,b)?"true":"false")
-#define toBytes(a,b)        extract((a), 64*(b), 64)
+#define toBigNum2(a, b)      string_q(to_string(canonicalWei("0x" + grabPart(a, b))).c_str())
+#define grabPart(a, b)       trimLeading(extract((a), 64*(b), 64), '0')
+#define grabBigNum(a, b)     strtoull(grabPart(a, b).c_str(), NULL, 16)
+#define toAddr(a, b)         "0x" + padLeft(grabPart(a, b), 40, '0')
+#define toAddrOld(a, b)      "0x" + grabPart(a, b)
+#define toAscString(a, b)    hex2String("0x" + grabPart(a, b))
+#define toBigNum(a, b)       asStringULL(grabBigNum(a, b))
+#define toBigNum3(a, b)      padNum3(grabBigNum(a, b))
+#define theRest(a, b)        extract((a), 64*(b), (a).length())
+#define toVote(a, b)         (grabBigNum(a, b) ? "Yea" : "Nay")
+#define toBoolean(a, b)      (grabBigNum(a, b) ? "true" : "false")
+#define toBytes(a, b)        extract((a), 64*(b), 64)
 string_q parse(const string_q& params, size_t nItems, string_q *types) {
 
     string_q ret;
     for (size_t item = 0 ; item < (size_t)nItems ; item++) {
         string_q t = types[item];
-        bool isDynamic = (t=="string" || t=="bytes" || contains(t, "[]"));
+        bool isDynamic = (t == "string" || t == "bytes" || contains(t, "[]"));
         string_q val;
 
-             if ( t == "address"                    )   val =          toAddr      (params,item);
-        else if ( t == "bool"                       )   val =          toBoolean   (params,item);
-        else if ( t == "vote"                       )   val =          toVote      (params,item);
-        else if ( t == "uint3"                      )   val =          toBigNum3   (params,item);
-        else if ( t == "bytes256"                   )   val =          toAscString (params,item);
-        else if ( contains(t, "int") &&   !isDynamic)   val =          toBigNum2   (params,item);
-        else if ( contains(t, "bytes") && !isDynamic)   val =          toBytes     (params,item);
-        else if ( isDynamic                         )   val = "off:" + toBigNum2   (params,item);
+             if ( t == "address"                    )   val =          toAddr      (params, item);  // NOLINT
+        else if ( t == "bool"                       )   val =          toBoolean   (params, item);
+        else if ( t == "vote"                       )   val =          toVote      (params, item);
+        else if ( t == "uint3"                      )   val =          toBigNum3   (params, item);
+        else if ( t == "bytes256"                   )   val =          toAscString (params, item);
+        else if ( contains(t, "int") &&   !isDynamic)   val =          toBigNum2   (params, item);
+        else if ( contains(t, "bytes") && !isDynamic)   val =          toBytes     (params, item);
+        else if ( isDynamic                         )   val = "off:" + toBigNum2   (params, item);
         else                                            val = "unknown type: " + t;
 
         if (contains(val, "off:")) {
             size_t start = toLongU(substitute(val, "off:", "")) / (size_t)32;
-            size_t len   = grabBigNum(params,start);
+            size_t len   = grabBigNum(params, start);
             if (len == NOPOS)
                 len = params.length()-start;
             if (t == "string") {
                 val = "\"";
-                val += substitute(substitute(substitute(hex2String(extract(params, (start+1) * 64, len * 2)), "\n","\\n"), "\r",""), "\"","\\\"");
+                val += substitute(
+                            substitute(
+                                substitute(
+                                    hex2String(extract(params, (start+1) * 64, len * 2)),
+                                "\n", "\\n"),
+                            "\r", ""),
+                        "\"", "\\\"");
                 val += "\"";
             } else {
                 val = "0x" + extract(params, (start+1) * 64, len * 2);
@@ -622,7 +622,7 @@ string_q toFunction(const string_q& name, const string_q& input, size_t nItems, 
 
 //---------------------------------------------------------------------------
 string_q CTransaction::inputToFunction(void) const {
-    if (input.length()<10)
+    if (input.length() < 10)
         return " ";
 
     if (funcPtr) {

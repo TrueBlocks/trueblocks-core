@@ -23,6 +23,7 @@
 //--------------------------------------------------------------------------
 class QResetSpentToday : public CTransaction {
 public:
+    // NOLINT
 
 public:
     QResetSpentToday(void);

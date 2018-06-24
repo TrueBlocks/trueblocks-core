@@ -59,7 +59,7 @@ string_q nextLogentryChunk(const string_q& fieldIn, const void *dataPtr) {
 bool CLogEntry::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
     // EXISTING_CODE
     if (pReceipt)
-        if (((CReceipt*)pReceipt)->setValueByName(fieldName, fieldValue))
+        if (((CReceipt*)pReceipt)->setValueByName(fieldName, fieldValue))  // NOLINT
             return true;
     // EXISTING_CODE
 
@@ -77,7 +77,7 @@ bool CLogEntry::setValueByName(const string_q& fieldName, const string_q& fieldV
             if ( fieldName % "topics" ) {
                 string_q str = fieldValue;
                 while (!str.empty()) {
-                    topics.push_back(toTopic(nextTokenClear(str,',')));
+                    topics.push_back(toTopic(nextTokenClear(str, ',')));
                 }
                 return true;
             }

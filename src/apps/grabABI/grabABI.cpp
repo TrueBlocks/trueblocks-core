@@ -540,12 +540,11 @@ string_q getEventAssign(const CParameter *p, uint64_t which, uint64_t nIndexed) 
 
 //-----------------------------------------------------------------------
 const char* STR_FACTORY1 =
-"\t\t} else if (encoding == func_[{LOWER}]{QB})\n"
-"\t\t{\n"
+"\t\t} else if (encoding == func_[{LOWER}]{QB}) {\n"
 "\t\t\t// [{SIGNATURE}]\n"
 "\t\t\t// [{ENCODING}]\n"
 "\t\t\t[{CLASS}] *a = new [{CLASS}];\n"
-"\t\t\t*(C[{BASE}]*)a = *p; // copy in\n"
+"\t\t\t*(C[{BASE}]*)a = *p;  // NOLINT\n"
 "[{ASSIGNS1}]"
 "[{ITEMS1}]"
 "\t\t\ta->function = [{PARSEIT}];\n"
@@ -554,12 +553,11 @@ const char* STR_FACTORY1 =
 
 //-----------------------------------------------------------------------
 const char* STR_FACTORY2 =
-"\t\t} else if (fromTopic(p->topics[0]) % evt_[{LOWER}]{QB})\n"
-"\t\t{\n"
+"\t\t} else if (fromTopic(p->topics[0]) % evt_[{LOWER}]{QB}) {\n"
 "\t\t\t// [{SIGNATURE}]\n"
 "\t\t\t// [{ENCODING}]\n"
 "\t\t\t[{CLASS}] *a = new [{CLASS}];\n"
-"\t\t\t*(C[{BASE}]*)a = *p; // copy in\n"
+"\t\t\t*(C[{BASE}]*)a = *p;  // NOLINT\n"
 "[{ASSIGNS2}]"
 "\t\t\treturn a;\n"
 "\n";
@@ -659,7 +657,7 @@ const char* STR_BLOCK_PATH = "etherlib_init(qh);\n\n";
 //-----------------------------------------------------------------------
 const char* STR_ITEMS =
 "\t\tstring_q items[256];\n"
-"\t\tsize_t nItems=0;\n"
+"\t\tsize_t nItems = 0;\n"
 "\n"
 "\t\tstring_q encoding = extract(p->input, 0, 10);\n"
 "\t\tstring_q params   = extract(p->input, 10);\n";

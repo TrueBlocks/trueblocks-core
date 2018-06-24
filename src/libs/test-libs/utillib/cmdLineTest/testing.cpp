@@ -62,7 +62,7 @@ int main(int argc, const char *argv[]) {
         string_q command = nextTokenClear(opts.commandList, '\n');
         if (!opts.parseArguments(command))
             return 0;
-        cout << string_q(80,'-') << "\n";
+        cout << string_q(80, '-') << "\n";
         opts.output();
         ret &= testing::RUN_ALL_TESTS();
     }

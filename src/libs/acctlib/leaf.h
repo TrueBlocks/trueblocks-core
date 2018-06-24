@@ -45,6 +45,7 @@ public:
     CTreeNode* insert(const string_q& _key, const string_q& _value) override;
     CTreeNode* remove(const string_q& _key) override;
     bool visitItems(ACCTVISITOR func, void *data) const override;
+
 private:
     bool contains(const string_q& _key) const;
     // EXISTING_CODE

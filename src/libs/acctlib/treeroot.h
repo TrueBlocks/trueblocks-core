@@ -156,7 +156,7 @@ extern SFArchive& operator<<(SFArchive& archive, const CTreeRootArray& array);
 // EXISTING_CODE
 //----------------------------------------------------------
 inline int nodeIndex(char c) {
-    char l = (char)tolower(c);
+    char l = (char)tolower(c);  // NOLINT
     int ret =  (l < 'a' ? l - '0' : l - 'a' + 10) % 16;
     return ret;
 }

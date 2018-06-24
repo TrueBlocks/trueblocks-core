@@ -12,8 +12,8 @@ Test 8 [--g%h--]: 134 expected: 134 ✓
 Test 9 [--i&j--]: 255 expected: 255 ✓
 Test 10 [--i|j--]: 4278255615 expected: 4278255615 ✓
 Test 11 [--i^j--]: 4278255360 expected: 4278255360 ✓
-Test 12 [--j<<21--]: 137436856320 expected: 137436856320 ✓
-Test 13 [--j>>10--]: 63 expected: 63 ✓
+Test 12 [--j << 21--]: 137436856320 expected: 137436856320 ✓
+Test 13 [--j >> 10--]: 63 expected: 63 ✓
 Test 14 [--x--]: 1 expected: 1 ✓
 Test 15 [--x--]: 314 expected: 314 ✓
 Test 16 [--x--]: 98596 expected: 98596 ✓
@@ -93,7 +93,7 @@ Test 89 [--SFIntBN (-32767).to_short()--]: -32767 expected: -32767 ✓
 Test 90 [--SFIntBN (0).to_short()--]: 0 expected: 0 ✓
 Test 91 [--SFIntBN (32767).to_short()--]: 32767 expected: 32767 ✓
 Test 92 [--SFIntBN (32768).to_short()--]: errorSFIntBN::to<Primitive>: Value is too big to fit in the requested type expected: error ✓
-Test 93 [--SFUintBN (short(-1))--]: errorCannot convert from negative number. expected: error ✓
+Test 93 [--SFUintBN (int16_t(-1))--]: errorCannot convert from negative number. expected: error ✓
 Test 94 [--SFUintBN (pathologicalShort)--]: errorCannot convert from negative number. expected: error ✓
 Test 95 [--SFUintBN (-1)--]: errorCannot convert from negative number. expected: error ✓
 Test 96 [--SFUintBN (pathologicalInt)--]: errorCannot convert from negative number. expected: error ✓
@@ -145,15 +145,15 @@ Test 141 [--bbbb--]: 4294967321 expected: 4294967321 ✓
 Test 142 [--check(bbbb)--]: 4294967321 expected: 2147483673 X
 Test 143 [--p1--]: 15 expected: 15 ✓
 Test 144 [--p2--]: -15 expected: -15 ✓
-Test 145 [--(num.divide(denom,quotient),check(quotient) )--]: 0 expected: 2 X
-Test 146 [--(num.divide(denom,quotient),check(quotient))--]: 1 expected: 0 X
+Test 145 [--(num.divide(denom, quotient), check(quotient))--]: 0 expected: 2 X
+Test 146 [--(num.divide(denom, quotient), check(quotient))--]: 1 expected: 0 X
 Test 147 [--check(ans).sign--]: -1 expected: -1 ✓
 Test 148 [--check(fff)--]: 12 expected: 12 ✓
 Test 149 [--ans--]: 3 expected: 3 ✓
 Test 150 [--check(num)--]: 25 expected: 25 ✓
 Test 151 [--SFUintBN(0xf)--]: 15 expected: 15 ✓
-Test 152 [--one<<2--]: 4 expected: 4 ✓
-Test 153 [--(one<<2)>>2--]: 1 expected: 1 ✓
+Test 152 [--one << 2--]: 4 expected: 4 ✓
+Test 153 [--(one << 2) >> 2--]: 1 expected: 1 ✓
 Test 154 [--(one<<255)--]: 57896044618658097711785492504343953926634992332820282019728792003956564819968 expected: 57896044618658097711785492504343953926634992332820282019728792003956564819968 ✓
 Test 155 [--four--]: 4 expected: 4 ✓
 Test 156 [--eight--]: 8 expected: 8 ✓

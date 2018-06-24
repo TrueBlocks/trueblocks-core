@@ -10,6 +10,8 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
+#include <algorithm>
+#include <vector>
 #define NOWALLETLIB
 #include "acctlib.h"
 #include "fromtransferfrom.h"
@@ -64,7 +66,7 @@ int main(int argc, const char *argv[]) {
         getBlock(block1, 22000);
 
         cout << sep << "\nUsing doExport\n" << sep << "\n";
-        block1.doExport(cout) ;
+        block1.doExport(cout);
 
         cout << sep << "\nUsing operator<<\n" << sep << "\n";
         cout << block1;

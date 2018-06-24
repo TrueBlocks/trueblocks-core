@@ -34,7 +34,7 @@ bool COptions::parseArguments(string_q& command) {
     Init();
     string_q source;
     while (!command.empty()) {
-        string_q arg = nextTokenClear(command,' ');
+        string_q arg = nextTokenClear(command, ' ');
         string_q orig = arg;
         if (startsWith(arg, "-m:") || startsWith(arg, "--mode:")) {
             arg = substitute(substitute(arg, "-m:", ""), "--mode:", "");
