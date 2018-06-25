@@ -13,7 +13,7 @@ extern bool visitTrace(CTrace& trace, void *data);
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
-    etherlib_init();
+    etherlib_init(quickQuitHander);
 
     // Parse command line, allowing for command files
     COptions options;
@@ -53,8 +53,8 @@ bool visitTransaction(CTransaction& trans, void *data) {
 //--------------------------------------------------------------
 extern bool visitTrace(CTrace& trace, void *data) {
 
-    string_q str = substitute(string_q(trace.traceAddress.size()+1, ' '), " ", "   ");
-    replaceReverse(str, "   ", cYellow + "--- " + cOff);
+    string_q str = substitute(string_q(trace.traceAddress.size()+1, '.'), ".", "  ");
+    replaceReverse(str, "  ", cYellow + "--- " + cOff);
     cout << str;
     cout << trace.action.from << cTeal << " [" << trace.action.callType << "] " << cOff;
     cout << trace.action.to << " (" << trace.result.gasUsed << ") " << trace.action.input.length() << ".\n";

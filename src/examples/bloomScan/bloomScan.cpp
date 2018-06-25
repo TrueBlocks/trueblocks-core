@@ -17,7 +17,7 @@ extern bool visitBloom(const string_q& path, void *data);
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
-    etherlib_init();
+    etherlib_init(quickQuitHander);
 
     COptions opt;
     if (opt.parseArguments(argc, argv)) {

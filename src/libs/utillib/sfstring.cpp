@@ -33,9 +33,6 @@ namespace qblocks {
     }
 
     //---------------------------------------------------------------------------------------
-    char nullStr[2];
-
-    //---------------------------------------------------------------------------------------
     bool contains(const string_q& haystack, const string_q& needle) {
         return (haystack.find(needle) != string::npos);
     }
