@@ -49,7 +49,10 @@ int main(int argc, const char *argv[]) {
             } else if (expContext().asDollars) {
                 CBlock blk;
                 getBlock(blk, getLatestBlockFromClient());
-                sBal = padLeft("$" + dispDollars(blk.timestamp, options.state.totalVal), 14);
+                if (options.asData)
+                    sBal = substitute(dispDollars(blk.timestamp, options.state.totalVal), ",", "");
+                else
+                    sBal = padLeft("$" + dispDollars(blk.timestamp, options.state.totalVal), 14);
             }
             cout << "        Total for " << cGreen << nAccts << cOff;
             cout << " accounts at " << cTeal << "latest" << cOff << " block";
@@ -87,7 +90,10 @@ bool visitBlock(uint64_t blockNum, void *data) {
     } else if (expContext().asDollars) {
         CBlock blk;
         getBlock(blk, blockNum);
-        sBal = padLeft("$" + dispDollars(blk.timestamp, bal), 14);
+        if (options->asData)
+            sBal = substitute(dispDollars(blk.timestamp, bal), ",", "");
+        else
+            sBal = padLeft("$" + dispDollars(blk.timestamp, bal), 14);
     }
 
     options->state.needsNewline = true;
