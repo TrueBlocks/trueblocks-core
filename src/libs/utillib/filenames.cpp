@@ -66,11 +66,11 @@ namespace qblocks {
 
         if (endsWith(fn, '/')) {
             path = fn;
-            fileName = EMPTY;
+            fileName = "";
 
         } else {
             path = extract(fn, 0, fn.rfind('/')+1);
-            fileName = substitute(fn, path, EMPTY);
+            fileName = substitute(fn, path, "");
         }
     }
 

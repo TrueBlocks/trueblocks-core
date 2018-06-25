@@ -580,7 +580,7 @@ namespace qblocks {
             }
         }
 
-        return EMPTY;
+        return "";
     }
 
     //--------------------------------------------------------------------------------
@@ -606,7 +606,7 @@ namespace qblocks {
         string_q chunk = fmtOut;
         if (!contains(fmtOut, "[")) {
             // There are no more tokens.  Return the last chunk and empty out the format
-            fmtOut = EMPTY;
+            fmtOut = "";
             return chunk;
         }
 
@@ -651,7 +651,7 @@ namespace qblocks {
         bool isBool = false;
         if (contains(fieldName, "b:")) {
             isBool = true;
-            replace(fieldName, "b:", EMPTY);
+            replace(fieldName, "b:", "");
         }
 
         // The fieldname may contain p: or w:width: or both.  If it contains either it
@@ -660,7 +660,7 @@ namespace qblocks {
         string_q promptName = fieldName;
         if (contains(fieldName, "p:")) {
             isPrompt = true;
-            replace(fieldName, "p:", EMPTY);
+            replace(fieldName, "p:", "");
             promptName = fieldName;
         }
 
@@ -668,12 +668,12 @@ namespace qblocks {
         bool rightJust = false, lineJust = false;
         if (contains(fieldName, "w:")) {
             ASSERT(extract(fieldName, 0, 2) % "w:");  // must be first modifier in the string
-            replace(fieldName, "w:", EMPTY);   // get rid of the 'w:'
+            replace(fieldName, "w:", "");   // get rid of the 'w:'
             maxWidth = toLongU(fieldName);   // grab the width
             nextTokenClear(fieldName, ':');    // skip to the start of the fieldname
         } else if (contains(fieldName, "r:")) {
             ASSERT(extract(fieldName, 0, 2) % "r:");  // must be first modifier in the string
-            replace(fieldName, "r:", EMPTY);   // get rid of the 'w:'
+            replace(fieldName, "r:", "");   // get rid of the 'w:'
             maxWidth = toLongU(fieldName);   // grab the width
             nextTokenClear(fieldName, ':');    // skip to the start of the fieldname
             rightJust = true;
@@ -694,7 +694,7 @@ namespace qblocks {
         if (isBool && fieldValue == "0")
             fieldValue = "";
         if (!isPrompt && fieldValue.empty())
-            return EMPTY;
+            return "";
         if (isBool)  // we know it's true, so we want to only show the pre and post
             fieldValue = "";
         if (rightJust) {

@@ -306,7 +306,7 @@ string_q CReceipt::getValueByName(const string_q& fieldName) const {
     // See if this field belongs to the item's container
     ret = nextTransactionChunk(fieldName, pTrans);
     if (contains(ret, "Field not found"))
-        ret = EMPTY;
+        ret = "";
     if (!ret.empty())
         return ret;
     // EXISTING_CODE

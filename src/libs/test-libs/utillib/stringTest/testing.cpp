@@ -201,13 +201,11 @@ TEST_F(CThisTest, TestCStr) {
     string es1;
     ASSERT_TRUE("es1 is empty", es1.empty())
     ASSERT_EQ("es1 == \"\"",    es1, "");
-    ASSERT_EQ("es1 == EMPTY",   es1, EMPTY);
     ASSERT_EQ("es1 == nullStr", es1, nullStr);
 
     string_q es2;
     ASSERT_TRUE("es2 is empty", es2.empty())
     ASSERT_EQ("es2 == \"\"",    es2, "");
-    ASSERT_EQ("es2 == EMPTY",   es2, EMPTY);
     ASSERT_EQ("es2 == nullStr", es2, nullStr);
 
     return true;

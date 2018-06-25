@@ -146,7 +146,7 @@ extern string_q collapseArrays(const string_q& inStr);
             os << (first?"":"\n") << (group.isComment?"#":"");
             os << (group.isArray?"[[":"[") << group.groupName << (group.isArray?"]]":"]") << "\n";
             for (auto key : group.keys)
-                os << (key.comment?"#":EMPTY) << key.keyName << "=" << key.value << "\n";
+                os << (key.comment ? "#" : "") << key.keyName << "=" << key.value << "\n";
             WriteLine(os.str().c_str());
             first = false;
         }
@@ -274,7 +274,7 @@ extern string_q collapseArrays(const string_q& inStr);
 
     //-------------------------------------------------------------------------
     void CToml::CTomlGroup::clear(void) {
-        groupName = EMPTY;
+        groupName = "";
         isComment = false;
         isArray = false;
         keys.clear();
