@@ -59,6 +59,11 @@ int main(int argc, const char *argv[]) {
 
     if (options.state.needsNewline)
         cerr << string_q(103, ' ') << "\n";
+
+    if (!nodeHasBalances() && (options.state.latestBlock - options.state.earliestBlock) > 250)
+        cerr << cRed << "    Warning: " << cOff << "The node you're using does not have historical balances. Reported "
+                                                    "values may be wrong.\n";
+
     return 0;
 }
 
@@ -66,6 +71,9 @@ int main(int argc, const char *argv[]) {
 bool visitBlock(uint64_t blockNum, void *data) {
 
     COptions *options = (COptions*)data;  // NOLINT
+    if (blockNum < options->state.earliestBlock)
+        options->state.earliestBlock = blockNum;
+
     if (blockNum > options->state.latestBlock) {
         string_q late = (isTestMode() ? "--" : asStringU(options->state.latestBlock));
         return usage("Block " + asStringU(blockNum) + " is later than the last valid block " + late + ". Quitting...");
