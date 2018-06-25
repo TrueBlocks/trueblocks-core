@@ -24,7 +24,7 @@ CWebAPI::~CWebAPI(void) {
 
 //--------------------------------------------------------------------------------
 bool CWebAPI::checkKey(void) {
-    key      = getGlobalConfig("ethslurp")->getConfigStr("settings", "api_key",      EMPTY);
+    key      = getGlobalConfig("ethslurp")->getConfigStr("settings", "api_key",      "");
     provider = getGlobalConfig("ethslurp")->getConfigStr("settings", "api_provider", "EtherScan");
     url      = getGlobalConfig("ethslurp")->getConfigStr("settings", "api_url",      "http://etherscan.io/apis");
 

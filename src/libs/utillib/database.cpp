@@ -374,7 +374,7 @@ namespace qblocks {
         if (!fileExists(filename) || folderExists(filename)) {
             nChars = 0;
             if (buffer)
-                *buffer = EMPTY;
+                *buffer = "";
             return false;
         }
 

@@ -100,9 +100,6 @@ namespace qblocks {
     extern string_q nextTokenClear       (string_q& str, char delim, bool doClear = true);
     extern string_q snagFieldClear       (string_q& str, const string_q& tagName, const string_q& defVal = "");
 
-    //--------------------------------------------------------------------
-    #define EMPTY string_q("")
-
     //---------------------------------------------------------------------------------------
     extern char nullStr[];
 

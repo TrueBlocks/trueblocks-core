@@ -455,7 +455,7 @@ string_q CTransaction::getValueByName(const string_q& fieldName) const {
     // See if this field belongs to the item's container
     ret = nextBlockChunk(fieldName, pBlock);
     if (contains(ret, "Field not found"))
-        ret = EMPTY;
+        ret = "";
     if (!ret.empty())
         return ret;
     // EXISTING_CODE
