@@ -16,6 +16,8 @@
 //-----------------------------------------------------------------------------
 class COptions : public CBlockOptions {
 public:
+    blknum_t latestBlock;
+    blknum_t earliestBlock;
     string_q tokens;
     string_q holders;
     bool asData;

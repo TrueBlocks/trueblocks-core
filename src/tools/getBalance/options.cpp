@@ -36,6 +36,7 @@ bool COptions::parseArguments(string_q& command) {
 
     Init();
     blknum_t latestBlock = getLatestBlockFromClient();
+    state.earliestBlock = latestBlock;
     string_q address_list;
     while (!command.empty()) {
         string_q arg = nextTokenClear(command, ' ');
