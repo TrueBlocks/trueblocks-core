@@ -1,15 +1,8 @@
 getBlock argc: 3 [1:--hash_only] [2:4001001] 
 getBlock --hash_only 4001001 
 {
-    "gasLimit": 6738847,
-    "gasUsed": 6725189,
     "hash": "0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f",
     "blockNumber": 4001001,
-    "parentHash": "0x7721d6149047de2b5ab2cfcf0204a7a3dcdc563635003926f8f76cd652b173cb",
-    "miner": "0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5",
-    "difficulty": 1168837283932625,
-    "price": 0,
-    "finalized": 1,
     "timestamp": 1499651592,
     "transactions": [
         "0xdd2f0abd8c4ac950fc76cd03870cc99c2ef108a620f1d400de231f5ae7bdaf73",

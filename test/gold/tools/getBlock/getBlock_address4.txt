@@ -1,5 +1,7 @@
-getBlock argc: 2 [1:--help] 
-getBlock --help 
+getBlock argc: 3 [1:245001] [2:--addr] 
+getBlock 245001 --addr 
+
+  Invalid option: --addr
 
   Usage:    getBlock [-r|-n|-c|-l|-a|-v|-h] <block> [block...]  
   Purpose:  Returns block(s) from local cache or directly from a running node.
