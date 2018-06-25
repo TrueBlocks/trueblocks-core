@@ -15,6 +15,6 @@
 
 namespace qblocks {
 
-    extern string_q urlToString(const string_q& url = EMPTY);
+    extern string_q urlToString(const string_q& url = "");
 
 }  // namespace qblocks

@@ -95,7 +95,7 @@ namespace qblocks {
         if (str.length() >= 3 && extract(str, 0, 2) == "`%" && str.at(2) != '%')
             fmt = extract(str, 1);
         else if (str == "%")
-            fmt = EMPTY;
+            fmt = "";
         else
             Output(str);
         return *this;

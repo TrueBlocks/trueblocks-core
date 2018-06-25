@@ -90,7 +90,7 @@ bool CSlurperApp::Initialize(COptions& options, string_q& message) {
     // user hasn't supplied one, do so...
     string_q addr = options.addr;
     if (addr.empty() && options.rerun)
-        addr = getGlobalConfig("ethslurp")->getConfigStr("settings", "rerun", EMPTY);
+        addr = getGlobalConfig("ethslurp")->getConfigStr("settings", "rerun", "");
 
     // Ethereum addresses are case insensitive. Force all address to lower case
     // to avoid mismatches with Mist browser for example
@@ -113,7 +113,7 @@ bool CSlurperApp::Initialize(COptions& options, string_q& message) {
             return usage("-a and -n may not both be empty. Specify either an archive file or a name. Quitting...");
 
         string_q fn = (contains(options.name, "/") ? options.name : options.exportFormat + "/" + options.name) +
-                        (contains(options.name, ".")?"":"." + options.exportFormat);
+                        (contains(options.name, ".") ? "" : "." + options.exportFormat);
         CFilename filename(fn);
         if (options.archiveFile.empty())
             options.archiveFile = filename.getFullPath();
@@ -446,9 +446,9 @@ string_q CSlurperApp::getFormatString(COptions& options, const string_q& which, 
     string_q errMsg;
 
     string_q formatName = "fmt_" + options.exportFormat + "_" + which;
-    string_q ret = getGlobalConfig("ethslurp")->getConfigStr("display", formatName, EMPTY);
+    string_q ret = getGlobalConfig("ethslurp")->getConfigStr("display", formatName, "");
     if (contains(ret, "file:")) {
-        string_q file = substitute(ret, "file:", EMPTY);
+        string_q file = substitute(ret, "file:", "");
         if (!fileExists(file))
             errMsg = string_q("Formatting file '") + file +
                         "' for display string '" + formatName + "' not found. Quiting...\n";
@@ -457,7 +457,7 @@ string_q CSlurperApp::getFormatString(COptions& options, const string_q& which, 
 
     } else if (contains(ret, "fmt_")) {  // it's referring to another format string...
         string_q newName = ret;
-        ret = getGlobalConfig("ethslurp")->getConfigStr("display", newName, EMPTY);
+        ret = getGlobalConfig("ethslurp")->getConfigStr("display", newName, "");
         formatName += ":" + newName;
     }
     ret = substitute(substitute(ret, "\\n", "\n"), "\\t", "\t");
@@ -503,7 +503,7 @@ void CSlurperApp::buildDisplayStrings(COptions& options) {
     const string_q fmtForFields  = getFormatString(options, "field", !contains(fmtForRecords, "{FIELDS}"));
     ASSERT(!fmtForFields.empty());
 
-    string_q defList = getGlobalConfig("ethslurp")->getConfigStr("display", "fmt_fieldList", EMPTY);
+    string_q defList = getGlobalConfig("ethslurp")->getConfigStr("display", "fmt_fieldList", "");
     string_q fieldList = getGlobalConfig("ethslurp")->getConfigStr("display",
                                                 "fmt_" + options.exportFormat + "_fieldList", defList);
     if (fieldList.empty())
@@ -511,12 +511,12 @@ void CSlurperApp::buildDisplayStrings(COptions& options) {
 
     string_q origList = fieldList;
 
-    theAccount.displayString = EMPTY;
-    theAccount.header = EMPTY;
+    theAccount.displayString = "";
+    theAccount.header = "";
     while (!fieldList.empty()) {
         string_q fieldName = nextTokenClear(fieldList, '|');
         bool force = contains(fieldName, "*");
-        replace(fieldName, "*", EMPTY);
+        replace(fieldName, "*", "");
 
         const CFieldData *field = GETRUNTIME_CLASS(CTransaction)->findField(fieldName);
         if (!field) {
@@ -535,7 +535,7 @@ void CSlurperApp::buildDisplayStrings(COptions& options) {
                 substitute(
                 substitute(
                 substitute(
-                substitute(fmtForFields, "{FIELD}", resolved), "[", EMPTY), "]", EMPTY), "<td ", "<th ");
+                substitute(fmtForFields, "{FIELD}", resolved), "[", ""), "]", ""), "<td ", "<th ");
         }
     }
     theAccount.displayString = trimWhitespace(theAccount.displayString);
@@ -608,7 +608,7 @@ string_q findEncoding(const string_q& addr, CFunction& func) {
     for (uint64_t i = 0 ; i < nAbis ; i++)
         if (abis[i][0] == func.name)
             return abis[i][1];
-    return EMPTY;
+    return "";
 }
 
 //---------------------------------------------------------------------------

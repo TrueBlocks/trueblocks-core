@@ -242,7 +242,7 @@ string_q nextNewblockChunk_custom(const string_q& fieldIn, const void *dataPtr) 
             case 't':
                 if ( expContext().hashesOnly && fieldIn % "transactions" ) {
                     size_t cnt = newp->transactions.size();
-                    if (!cnt) return EMPTY;
+                    if (!cnt) return "";
                     string_q ret;
                     for (size_t i = 0 ; i < cnt ; i++) {
                         ret += newp->transactions[i].hash;

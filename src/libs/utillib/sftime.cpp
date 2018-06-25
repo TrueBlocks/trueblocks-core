@@ -798,7 +798,7 @@ namespace qblocks {
             return earliestDate;
 
         string_q str = strIn;
-        replaceAll(str, ";", EMPTY);
+        replaceAll(str, ";", "");
         if (str.length() != 14) {
             str += "120000";
         }
