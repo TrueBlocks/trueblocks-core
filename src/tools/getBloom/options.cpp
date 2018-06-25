@@ -21,7 +21,8 @@ CParams params[] = {
     CParams("-a(s)bars",         "display the bloom filter as bar charts instead of hex"),
     CParams("-recei(p)t",        "display blooms from the transaction receipts as opposed to block (--raw only)"),
     CParams("@force",            "force a re-write of the bloom to the cache"),
-    CParams("",                  "Returns bloom filter(s) from running node (the default) or as EAB from local cache.\n"),
+    CParams("",                  "Returns bloom filter(s) from running node (the default) or as EAB "
+                                    "from local cache.\n"),
 };
 size_t nParams = sizeof(params) / sizeof(CParams);
 
@@ -134,8 +135,10 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
     } else if (which == "notes" && (verbose || COptions::isReadme)) {
 
         string_q ret;
-        ret += "[{block_list}] is a space-separated list of values, a start-end range, a [{special}], or any combination.\n";
-        ret += "This tool retrieves information from the local node or the ${FALLBACK} node, if configured (see documentation).\n";
+        ret += "[{block_list}] is a space-separated list of values, a start-end range, a [{special}], "
+                        "or any combination.\n";
+        ret += "This tool retrieves information from the local node or the ${FALLBACK} node, if "
+                        "configured (see documentation).\n";
         ret += "[{special}] blocks are detailed under " + cTeal + "[{whenBlock --list}]" + cOff + ".\n";
         return ret;
     }

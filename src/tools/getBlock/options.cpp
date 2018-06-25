@@ -22,9 +22,12 @@ CParams params[] = {
     CParams("-latest",           "display the latest blocks at both the node and the cache"),
     CParams("@force",            "force a re-write of the block to the cache"),
     CParams("@quiet",            "do not print results to screen, used for speed testing and data checking"),
-    CParams("@source:[c|r]",     "either :c(a)che or :(r)aw, source for data retrival. (shortcuts -c = qblocks, -r = node)"),
-    CParams("@fields:[a|m|c|r]", "either :(a)ll, (m)ini, (c)ache or :(r)aw; which fields to include in output (all is default)"),
-    CParams("@normalize",        "normalize (remove un-common fields and sort) for comparison with other results (testing)"),
+    CParams("@source:[c|r]",     "either :c(a)che or :(r)aw, source for data retrival. (shortcuts "
+                                    "-c = qblocks, -r = node)"),
+    CParams("@fields:[a|m|c|r]", "either :(a)ll, (m)ini, (c)ache or :(r)aw; which fields to include in output "
+                                    "(all is default)"),
+    CParams("@normalize",        "normalize (remove un-common fields and sort) for comparison with other "
+                                    "results (testing)"),
     CParams("",                  "Returns block(s) from local cache or directly from a running node.\n"),
 };
 size_t nParams = sizeof(params) / sizeof(CParams);
@@ -50,7 +53,7 @@ bool COptions::parseArguments(string_q& command) {
         if (arg == "-c" || arg == "--check") {
             setenv("TEST_MODE", "true", true);
             isCheck = true;
-            quiet++; // if both --check and --quiet are present, be very quiet...
+            quiet++;  // if both --check and --quiet are present, be very quiet...
             expContext().spcs = 4;
             expContext().hexNums = true;
             expContext().quoteNums = true;
@@ -73,11 +76,14 @@ bool COptions::parseArguments(string_q& command) {
             uint64_t cache = NOPOS, client = NOPOS;
             getLatestBlocks(cache, client);
             uint64_t diff = cache > client ? 0 : client - cache;
-            stringToAsciiFile("/tmp/getBlock_junk.txt", asStringU(diff)); // for next time
+            stringToAsciiFile("/tmp/getBlock_junk.txt", asStringU(diff));  // for next time
 
-            cout << "Latest block in cache:  " << cYellow << (isTestMode() ? "--cache--"  : padNum8T(cache))  << cOff << "\n";
-            cout << "Latest block at client: " << cYellow << (isTestMode() ? "--client--" : padNum8T(client)) << cOff << "\n";
-            cout << "Difference:             " << cYellow << (isTestMode() ? "--diff--"   : padNum8T(diff));
+            cout << "Latest block in cache:  " << cYellow;
+            cout << (isTestMode() ? "--cache--"  : padNum8T(cache))  << cOff << "\n";
+            cout << "Latest block at client: " << cYellow;
+            cout << (isTestMode() ? "--client--" : padNum8T(client)) << cOff << "\n";
+            cout << "Difference:             " << cYellow;
+            cout << (isTestMode() ? "--diff--"   : padNum8T(diff));
             if (!isTestMode() && lastUpdate) {
                 uint64_t diffDiff = lastUpdate - diff;
                 cout << " (+" << diffDiff << ")";
@@ -86,7 +92,7 @@ bool COptions::parseArguments(string_q& command) {
             isLatest = true;
 
         } else if (startsWith(arg, "-s:") || startsWith(arg, "--source:")) {
-            string_q mode = substitute(substitute(arg, "-s:",""), "--source:","");
+            string_q mode = substitute(substitute(arg, "-s:", ""), "--source:", "");
             if (mode == "r" || mode == "raw") {
                 isRaw = true;
 
@@ -109,10 +115,10 @@ bool COptions::parseArguments(string_q& command) {
             traces = true;
 
         } else if (arg == "-q" || arg == "--quiet") {
-            quiet++; // if both --check and --quiet are present, be very quiet...
+            quiet++;  // if both --check and --quiet are present, be very quiet...
 
         } else if (startsWith(arg, "-f:") || startsWith(arg, "--fields:")) {
-            string_q mode = substitute(substitute(arg, "-f:",""), "--fields:","");
+            string_q mode = substitute(substitute(arg, "-f:", ""), "--fields:", "");
 
             if (mode == "a" || mode == "all") {
                 GETRUNTIME_CLASS(CBlock)->showAllFields();
@@ -208,7 +214,7 @@ void COptions::Init(void) {
     force       = false;
     normalize   = false;
     isCache     = false;
-    quiet       = 0; // quiet has levels
+    quiet       = 0;  // quiet has levels
     format      = "";
     priceBlocks = false;
     blocks.Init();
@@ -247,11 +253,12 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
     } else if (which == "notes" && (verbose || COptions::isReadme)) {
 
         string_q ret;
-        ret += "[{block_list}] is a space-separated list of values, a start-end range, a [{special}], or any combination.\n";
-        ret += "This tool retrieves information from the local node or the ${FALLBACK} node, if configured (see documentation).\n";
+        ret += "[{block_list}] is a space-separated list of values, a start-end range, a [{special}], "
+                    "or any combination.\n";
+        ret += "This tool retrieves information from the local node or the ${FALLBACK} node, if configured "
+                    "(see documentation).\n";
         ret += "[{special}] blocks are detailed under " + cTeal + "[{whenBlock --list}]" + cOff + ".\n";
         return ret;
     }
     return str;
 }
-

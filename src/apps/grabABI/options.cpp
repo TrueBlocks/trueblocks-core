@@ -10,6 +10,7 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
+#include <algorithm>
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
@@ -87,8 +88,6 @@ extern void rebuildFourByteDB(void);
             }
 
         } else {
-            if (nAddrs>=MAX_ADDRS)
-                return usage("You may provide at most " + asString(MAX_ADDRS) + " addresses");
             if (primaryAddr.empty())
                 primaryAddr = arg;
             SFAddress addr = fixAddress(toLower(arg));
@@ -96,7 +95,7 @@ extern void rebuildFourByteDB(void);
                 addr = arg;
             if (!isAddress(addr) && addr != "0xTokenLib" && addr != "0xWalletLib")
                 return usage("Invalid address '" + addr + "'. Length is not equal to 40 characters (20 bytes).\n");
-            addrs[nAddrs++] = addr;
+            addrs.push_back(addr);
         }
     }
 
@@ -106,7 +105,7 @@ extern void rebuildFourByteDB(void);
     if (parts != SIG_CANONICAL && verbose)
         parts |= SIG_DETAILS;
 
-    if (!nAddrs)
+    if (!addrs.size())
         return usage("Please supply at least one Ethereum address.\n");
 
     bool isGenerate = !classDir.empty();
@@ -130,10 +129,7 @@ void COptions::Init(void) {
     raw = false;
     decNames = true;
     asData = false;
-    for (size_t i = 0 ; i < MAX_ADDRS ; i++) {
-        addrs[i] = "";
-    }
-    nAddrs = 0;
+    addrs.clear();
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -161,11 +157,11 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
 //--------------------------------------------------------------------------------
 string_q getPrefix(const string_q& inIn) {
 
-    string_q in = inIn; // for example ./ENS/parselib/
-    replace(in, "parseLib","parselib"); // hack: to fix dao monitor
+    string_q in = inIn;  // for example ./ENS/parselib/
+    replace(in, "parseLib", "parselib");  // hack: to fix dao monitor
     reverse(in);
-    replace(in, "/", ""); // remove trailing '/'
-    in = nextTokenClear(in, '/'); // remove /parselib
+    replace(in, "/", "");  // remove trailing '/'
+    in = nextTokenClear(in, '/');  // remove /parselib
     reverse(in);
     return in;
 }
@@ -174,7 +170,7 @@ string_q getPrefix(const string_q& inIn) {
 bool visitABIs(const string_q& path, void *dataPtr) {
 
     if (endsWith(path, ".json")) {
-        string_q *str = (string_q*)dataPtr;
+        string_q *str = (string_q*)dataPtr;  // NOLINT
         *str += (path+"\n");
     }
     return true;
@@ -195,7 +191,9 @@ void rebuildFourByteDB(void) {
         abi.loadABIFromFile(fileName);
         for (size_t f = 0 ; f < abi.abiByEncoding.size() ; f++) {
             funcArray.push_back(abi.abiByEncoding[f]);
-            cout << abi.abiByEncoding[f].encoding << " : " << abi.abiByEncoding[f].name << " : " << abi.abiByEncoding[f].signature << "\n";
+            cout << abi.abiByEncoding[f].encoding << " : ";
+            cout << abi.abiByEncoding[f].name << " : ";
+            cout << abi.abiByEncoding[f].signature << "\n";
         }
     }
     sort(funcArray.begin(), funcArray.end());

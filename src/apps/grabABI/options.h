@@ -13,7 +13,6 @@
  *-------------------------------------------------------------------------------------------*/
 #include "etherlib.h"
 
-#define MAX_ADDRS 400
 class COptions : public COptionsBase {
 public:
     uint64_t parts;
@@ -23,8 +22,7 @@ public:
     bool raw;
     bool asData;
     bool decNames;
-    SFAddress addrs[MAX_ADDRS+2];
-    uint64_t nAddrs;
+    SFAddressArray addrs;
     string_q primaryAddr;
     string_q classDir;
     string_q prefix;

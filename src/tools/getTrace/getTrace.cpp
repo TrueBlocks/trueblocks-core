@@ -39,10 +39,11 @@ bool visitTransaction(CTransaction& trans, void *data) {
 
     bool badHash = !isHash(trans.hash);
     bool isBlock = contains(trans.hash, "block");
-    trans.hash = substitute(substitute(trans.hash, "-block_not_found",""), "-trans_not_found","");
+    trans.hash = substitute(substitute(trans.hash, "-block_not_found", ""), "-trans_not_found", "");
     if (opt->isRaw) {
         if (badHash) {
-            cerr << "{\"jsonrpc\":\"2.0\",\"result\":{\"hash\":\"" << substitute(trans.hash, " ", "") << "\",\"result\":\"";
+            cerr << "{\"jsonrpc\":\"2.0\",\"result\":{\"hash\":\"";
+            cerr << substitute(trans.hash, " ", "") << "\",\"result\":\"";
             cerr << (isBlock ? "block " : "");
             cerr << "hash not found\"},\"id\":-1}" << "\n";
             return true;
@@ -56,7 +57,8 @@ bool visitTransaction(CTransaction& trans, void *data) {
     }
 
     if (badHash) {
-        cerr << cRed << "Warning:" << cOff << " The " << (isBlock ? "block " : "") << "hash " << cYellow << trans.hash << cOff << " was not found.\n";
+        cerr << cRed << "Warning:" << cOff;
+        cerr << " The " << (isBlock ? "block " : "") << "hash " << cYellow << trans.hash << cOff << " was not found.\n";
         return true;
     }
 
