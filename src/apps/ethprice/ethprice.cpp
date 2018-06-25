@@ -60,7 +60,7 @@ int main(int argc, const char* argv[]) {
 //                        return 0;
 //                    }
                     cout << quotes[i].Format(fmtStr);
-                    if (isTestMode() && dateFromTimeStamp(ts) >= SFTime(2017,8,15,0,0,0))
+                    if (isTestMode() && dateFromTimeStamp(ts) >= SFTime(2017, 8, 15, 0, 0, 0))
                         done = true;
                 }
                 if (isJson)

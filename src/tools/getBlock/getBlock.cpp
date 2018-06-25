@@ -84,11 +84,11 @@ string_q doOneBlock(uint64_t num, const COptions& opt) {
         if (!queryRawBlock(result, numStr, true, opt.hashes)) {
             result = "Could not query raw block " + numStr + ". Is an Ethereum node running?";
         } else {
-            if (opt.force) { // turn this on to force a write of the block to the disc
+            if (opt.force) {  // turn this on to force a write of the block to the disc
                 CRPCResult generic;
-                generic.parseJson(cleanUpJson((char*)result.c_str()));
+                generic.parseJson(cleanUpJson((char*)result.c_str()));  // NOLINT
                 result = generic.result;
-                gold.parseJson((char*)result.c_str());
+                gold.parseJson((char*)result.c_str());  // NOLINT
                 string_q fileName = getBinaryFilename(num);
                 gold.finalized = isBlockFinal(gold.timestamp, latest.timestamp);
                 writeBlockToBinary(gold, fileName);
@@ -102,13 +102,13 @@ string_q doOneBlock(uint64_t num, const COptions& opt) {
             // --source::cache mode doesn't include timestamp in transactions
             readBlockFromBinary(gold, fileName);
             for (size_t t = 0 ; t < gold.transactions.size() ; t++)
-                gold.transactions.at(t).timestamp = gold.timestamp; // .at cannot go past end of vector!
+                gold.transactions.at(t).timestamp = gold.timestamp;  // .at cannot go past end of vector!
 
         } else {
             queryBlock(gold, numStr, true, false);
         }
 
-        if (opt.force) { // turn this on to force a write of the block to the disc
+        if (opt.force) {  // turn this on to force a write of the block to the disc
             gold.finalized = isBlockFinal(gold.timestamp, latest.timestamp);
             writeBlockToBinary(gold, fileName);
         }
@@ -138,7 +138,7 @@ string_q checkOneBlock(uint64_t num, const COptions& opt) {
     // Get the block raw from the node...
     string_q fromNode;
     queryRawBlock(fromNode, numStr, true, false);
-    replace(fromNode, "\"hash\":","\"blockHash\":");
+    replace(fromNode, "\"hash\":", "\"blockHash\":");
     if (verbose)
         cout << num << "\n";
     fromNode = normalizeBlock(fromNode, true, num >= byzantiumBlock);
@@ -152,15 +152,16 @@ string_q checkOneBlock(uint64_t num, const COptions& opt) {
         // not. Therefore, we must set the transactions' gasUsed and logsBloom
         // to be the same as the block's (even though they are not) so they
         // are removed as duplicates. Otherwise, the blocks won't match
-        qBlocks.transactions.at(i).receipt.gasUsed = qBlocks.gasUsed; // .at cannot go past end of vector!
-        //qBlocks.transactions[i].receipt.logsBloom = qBlocks.logsBloom;
+        qBlocks.transactions.at(i).receipt.gasUsed = qBlocks.gasUsed;  // .at cannot go past end of vector!
+        // qBlocks.transactions[i].receipt.logsBloom = qBlocks.logsBloom;
     }
     if (verbose)
         cout << num << "\n";
     fromQblocks = normalizeBlock(qBlocks.Format(), true, num >= byzantiumBlock);
 
 extern string_q hiddenFields(void);
-    string_q result = hiddenFields() + "The strings are "; result += ((fromNode != fromQblocks) ? "different\n" : "the same\n");
+    string_q result = hiddenFields() + "The strings are ";
+             result += ((fromNode != fromQblocks) ? "different\n" : "the same\n");
     string_q diffA  = "In fromNode but not fromQblocks:\n" + diffStr(fromNode, fromQblocks);
     string_q diffB  = "In fromQblocks but not fromNode:\n" + diffStr(fromQblocks, fromNode);
 

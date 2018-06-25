@@ -91,13 +91,14 @@ string_q doOneBloom(uint64_t num, const COptions& opt) {
 
         string_q r = getRawBlock(num);
         CBloomBlock rawBlock;
-        rawBlock.parseJson(cleanUpJson((char*)r.c_str()));
-        HIDE_FIELD(CBloomTrans,"hash");
+        rawBlock.parseJson(cleanUpJson((char*)r.c_str()));  // NOLINT
+        HIDE_FIELD(CBloomTrans, "hash");
 
         if (opt.asBits) {
             rawBlock.logsBloom = toBits(rawBlock.logsBloom);
             for (size_t i = 0 ; i < rawBlock.transactions.size() ; i++)
-                rawBlock.transactions.at(i).receipt.logsBloom = toBits(rawBlock.transactions[i].receipt.logsBloom); // .at cannot go past end of vector!
+                rawBlock.transactions.at(i).receipt.logsBloom =
+                    toBits(rawBlock.transactions[i].receipt.logsBloom);  // .at cannot go past end of vector!
         }
         if (opt.asBars) {
             ostringstream os;

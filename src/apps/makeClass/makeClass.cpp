@@ -129,7 +129,7 @@ string_q convertTypes(const string_q& inStr) {
     replaceAll(outStr, "32uint ",    "uint32_t "   );
     replaceAll(outStr, "64uint ",    "uint64_t "   );
 
-	if (getEnvStr("TRACING") == "true")
+    if (getEnvStr("TRACING") == "true")
         cerr << "\tconvert: " << padRight(inStr, 30) << " ==> " << outStr << "\n";
 
     return outStr;
@@ -243,7 +243,7 @@ void generateCode(const COptions& options, CToml& toml, const string_q& dataFile
         } else if (fld.type == "addr")      { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_ADDRESS";
         } else if (fld.type == "address")   { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_ADDRESS";
         } else if (fld.type == "hash")      { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_HASH";
-        } else if (startsWith(fld.type, "bytes")){ setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_TEXT";
+        } else if (startsWith(fld.type, "bytes")) { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_TEXT";
         } else if (fld.type == "int8")      { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
         } else if (fld.type == "int16")     { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
         } else if (fld.type == "int32")     { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
@@ -306,11 +306,11 @@ void generateCode(const COptions& options, CToml& toml, const string_q& dataFile
             }
         }
 
-        fieldReg   += substitute(fld.Format(regFmt), "T_TEXT", regType); replaceAll(fieldReg, "CL_NM", "[{CLASS_NAME}]");
-        fieldCase  += fld.Format("[{TYPE}]+[{NAME}]-[{ISPOINTER}]~[{ISOBJECT}]|");
-        fieldDec   += (convertTypes(fld.Format(decFmt)) + "\n");
-        fieldCopy  += substitute(substitute(fld.Format(copyFmt), "+SHORT+", "[{SHORT}]"), "++CLASS++", "[{CLASS_NAME}]");
-        fieldSet   += fld.Format(setFmt);
+        fieldReg  += substitute(fld.Format(regFmt), "T_TEXT", regType); replaceAll(fieldReg, "CL_NM", "[{CLASS_NAME}]");
+        fieldCase += fld.Format("[{TYPE}]+[{NAME}]-[{ISPOINTER}]~[{ISOBJECT}]|");
+        fieldDec  += (convertTypes(fld.Format(decFmt)) + "\n");
+        fieldCopy += substitute(substitute(fld.Format(copyFmt), "+SHORT+", "[{SHORT}]"), "++CLASS++", "[{CLASS_NAME}]");
+        fieldSet  += fld.Format(setFmt);
         fieldClear += (fld.isPointer ? fld.Format(clearFmt) : "");
         if (fld.isObject && !fld.isPointer && !contains(fld.type, "Array")) {
             string_q fmt = subClsFmt;
@@ -654,7 +654,9 @@ string_q getCaseSetCode(const string_q& fieldCase) {
                             replaceAll(str, "nextTokenClear(str,',')", "toUnsigned(nextTokenClear(str,','))");
                         caseCode += str;
 
-                    } else if (contains(type, "SFAddressArray") || contains(type, "SFBigUintArray") || contains(type, "SFTopicArray")) {
+                    } else if (contains(type, "SFAddressArray") ||
+                               contains(type, "SFBigUintArray") ||
+                               contains(type, "SFTopicArray")) {
                         string_q str = strArraySet;
                         replaceAll(str, "[{NAME}]", field);
                         replaceAll(str, "nextTokenClear(str,',')", "to[{TYPE}](nextTokenClear(str,','))");

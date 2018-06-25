@@ -49,23 +49,23 @@ int main(int argc, const char *argv[]) {
             } else if (expContext().asDollars) {
                 CBlock blk;
                 getBlock(blk, getLatestBlockFromClient());
-                sBal = padLeft("$" + dispDollars(blk.timestamp, options.state.totalVal),14);
+                sBal = padLeft("$" + dispDollars(blk.timestamp, options.state.totalVal), 14);
             }
             cout << "        Total for " << cGreen << nAccts << cOff;
             cout << " accounts at " << cTeal << "latest" << cOff << " block";
-            cout << " is " << cYellow << substitute(sBal, "  "," ") << cOff << "\n";
+            cout << " is " << cYellow << substitute(sBal, "  ", " ") << cOff << "\n";
         }
     }
 
     if (options.state.needsNewline)
-        cerr << "                                                                                                                 \n";
+        cerr << string_q(103, ' ') << "\n";
     return 0;
 }
 
 //--------------------------------------------------------------
 bool visitBlock(uint64_t blockNum, void *data) {
 
-    COptions *options = (COptions*)data;
+    COptions *options = (COptions*)data;  // NOLINT
     if (blockNum > options->state.latestBlock) {
         string_q late = (isTestMode() ? "--" : asStringU(options->state.latestBlock));
         return usage("Block " + asStringU(blockNum) + " is later than the last valid block " + late + ". Quitting...");

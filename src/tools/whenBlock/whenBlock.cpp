@@ -32,7 +32,7 @@ int main(int argc, const char *argv[]) {
         if (!options.parseArguments(command))
             return 0;
 
-        for (size_t i = 0 ; i < options.requests.size() ; i++ ) {
+        for (size_t i = 0 ; i < options.requests.size() ; i++) {
 
             string_q value = options.requests[i];
             string_q mode = nextTokenClear(value, ':');
@@ -40,7 +40,7 @@ int main(int argc, const char *argv[]) {
             string_q special;
             if (mode == "special") {
                 mode = "block";
-                special = nextTokenClear(value,'|');
+                special = nextTokenClear(value, '|');
                 if (toUnsigned(value) > getLatestBlockFromClient()) {
                     cout << "The block number you requested (";
                     cout << cTeal << special << ": " << value << cOff;
@@ -74,7 +74,9 @@ int main(int argc, const char *argv[]) {
             if (block.blockNumber == 0)
                 block.timestamp = 1438269960;
 
-            string_q def = (options.alone ? "[{BLOCKNUMBER}\\t][{DATE}]\\n" : "block #[{BLOCKNUMBER}][ : {TIMESTAMP}][ : {DATE}]\\n");
+            string_q def = (options.alone ?
+                                    "[{BLOCKNUMBER}\\t][{DATE}]\\n" :
+                                    "block #[{BLOCKNUMBER}][ : {TIMESTAMP}][ : {DATE}]\\n");
             string_q fmt = getGlobalConfig()->getDisplayStr(options.alone, def);
             if (verbose && !special.empty()) {
                 string_q sp = "(" + special + ")";

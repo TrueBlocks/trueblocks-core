@@ -10,6 +10,7 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
+#include <algorithm>
 #include "etherlib.h"
 #include "options.h"
 
@@ -37,8 +38,8 @@ string_q classDir;
 inline string_q projectName(void) {
     CFilename fn(classDir+"tmp");
     string_q ret = substitute(substitute(substitute(fn.getPath(), "parselib/", ""), "parseLib/", ""), "//", "");
-    nextTokenClearReverse(ret,'/');
-    ret = nextTokenClearReverse(ret,'/');
+    nextTokenClearReverse(ret, '/');
+    ret = nextTokenClearReverse(ret, '/');
     return ret;
 }
 
@@ -51,9 +52,8 @@ inline void makeTheCode(const string_q& fn, const string_q& addr) {
 }
 
 //-----------------------------------------------------------------------
-void addIfUnique(const string_q& addr, CFunctionArray& functions, CFunction& func, bool decorateNames)
-{
-    if (func.name.empty()) // && func.type != "constructor")
+void addIfUnique(const string_q& addr, CFunctionArray& functions, CFunction& func, bool decorateNames) {
+    if (func.name.empty())  // && func.type != "constructor")
         return;
 
     for (size_t i = 0 ; i < functions.size() ; i++) {
@@ -100,18 +100,18 @@ string_q acquireABI(CFunctionArray& functions, const SFAddress& addr, const COpt
             cerr.flush();
         }
         string_q url = string_q("http:/")
-                            + "/api.etherscan.io/api?module=contract&action=getabi&address="
-                            + addr;
+        + "/api.etherscan.io/api?module=contract&action=getabi&address="
+        + addr;
         results = substitute(urlToString(url), "\\", "");
         if (!contains(results, "NOTOK")) {
-        	// clear the RPC wrapper
-        	replace(results, "{\"status\":\"1\",\"message\":\"OK\",\"result\":\"","");
-        	replaceReverse(results, "]\"}", "");
-        	if (verbose) {
-            	if (!isTestMode())
-                	cout << verbose << "---------->" << results << "\n";
-            	cout.flush();
-        	}
+            // Clear the RPC wrapper
+            replace(results, "{\"status\":\"1\",\"message\":\"OK\",\"result\":\"", "");
+            replaceReverse(results, "]\"}", "");
+            if (verbose) {
+                if (!isTestMode())
+                    cout << verbose << "---------->" << results << "\n";
+                cout.flush();
+            }
             nextTokenClear(results, '[');
             replaceReverse(results, "]}", "");
             if (!isTestMode()) {
@@ -136,8 +136,8 @@ string_q acquireABI(CFunctionArray& functions, const SFAddress& addr, const COpt
                 cerr << "Could not grab ABI for " + addr + " from etherscan.io.\n";
                 exit(0);
             }
-            // TODO: If we store the ABI here even if empty, we won't have to get it again, but then what happens
-            // if user later posts the ABI? Need a 'refresh' option or clear cache option
+            // TODO(tjayrush): If we store the ABI here even if empty, we won't have to get it again, but then
+            // what happens if user later posts the ABI? Need a 'refresh' option or clear cache option
             establishFolder(fileName);
             stringToAsciiFile(fileName, "[]");
         }
@@ -175,7 +175,7 @@ int main(int argc, const char *argv[]) {
             return 0;
 
         if (options.open) {
-            for (uint64_t i = 0 ; i < options.nAddrs ; i++) {
+            for (uint64_t i = 0 ; i < options.addrs.size() ; i++) {
                 string_q fileName = blockCachePath("abis/" + options.addrs[i] + ".json");
                 if (!fileExists(fileName)) {
                     cerr << "ABI for '" + options.addrs[i] + "' not found. Quitting...\n";
@@ -187,7 +187,7 @@ int main(int argc, const char *argv[]) {
         }
 
         if (options.asJson) {
-            for (uint64_t i = 0 ; i < options.nAddrs ; i++) {
+            for (uint64_t i = 0 ; i < options.addrs.size() ; i++) {
                 string_q fileName = blockCachePath("abis/" + options.addrs[i] + ".json");
                 if (!fileExists(fileName)) {
                     cerr << "ABI for '" + options.addrs[i] + "' not found. Quitting...\n";
@@ -206,7 +206,7 @@ int main(int argc, const char *argv[]) {
             acquireABI(functions, "0xWalletLib", options, true);
         }
 
-        for (uint64_t i = 0 ; i < options.nAddrs ; i++) {
+        for (uint64_t i = 0 ; i < options.addrs.size() ; i++) {
             options.theABI += ("ABI for addr : " + options.addrs[i] + "\n");
             options.theABI += acquireABI(functions, options.addrs[i], options, false) + "\n\n";
             addrList += (options.addrs[i] + "|");
@@ -225,7 +225,8 @@ int main(int argc, const char *argv[]) {
 
             } else {
                 // print to a buffer because we have to modify it before we print it
-                cout << "ABI for address " << options.primaryAddr << (options.nAddrs>1 ? " and others" : "") << "\n";
+                cout << "ABI for address " << options.primaryAddr;
+                cout << (options.addrs.size() > 1 ? " and others" : "") << "\n";
                 for (size_t i = 0 ; i < functions.size() ; i++) {
                     const CFunction *func = &functions[i];
                     if (!func->constant || !options.noconst)
@@ -237,8 +238,8 @@ int main(int argc, const char *argv[]) {
         } else {
             verbose = false;
             sort(functions.begin(), functions.end(), ::sortByFuncName);
-//            if (options.isToken())
-//                addDefaultFuncs(functions);
+            //            if (options.isToken())
+            //                addDefaultFuncs(functions);
             classDir = substitute((options.classDir), "~/", getHomeFolder());
             string_q classDefs = classDir + "classDefinitions/";
             establishFolder(classDefs);
@@ -264,8 +265,8 @@ int main(int argc, const char *argv[]) {
                     bool isConst = func->constant;
                     bool isEmpty = name.empty() || func->type.empty();
                     bool isLog = contains(toLower(name), "logentry");
-//                    bool isConstructor = func->type % "constructor";
-//                    if (!isConst && !isEmpty && !isLog) { // && !isConstructor) {
+                    //                    bool isConstructor = func->type % "constructor";
+                    //                    if (!isConst && !isEmpty && !isLog) { // && !isConstructor) {
                     if (!isEmpty && !isLog) {
                         if (name != "DefFunction") {
                             if (func->type == "event") {
@@ -326,7 +327,12 @@ int main(int argc, const char *argv[]) {
                             string_q parseIt = "toFunction(\"" + fName + "\", params, nItems, items)";
                             replaceAll(f1, "[{PARSEIT}]", parseIt);
                             replaceAll(f1, "[{BASE}]", base);
-                            replaceAll(f1, "[{SIGNATURE}]", substitute(substitute(substitute(substitute(func->getSignature(SIG_DEFAULT), "\t", ""), "  ", " "), " (", "("), ",", ", "));
+                            replaceAll(f1, "[{SIGNATURE}]",
+                                       substitute(
+                                       substitute(
+                                       substitute(
+                                       substitute(func->getSignature(SIG_DEFAULT), "\t", ""),
+                                                  "  ", " "), " (", "("), ",", ", "));
                             replace(f1, "[{ENCODING}]", func->getSignature(SIG_ENCODE));
                             replace(f1, " defFunction(string)", "()");
                             if (!isConst)
@@ -334,10 +340,16 @@ int main(int argc, const char *argv[]) {
 
                         } else if (name != "LogEntry") {
                             string_q f2, fName = func->Format("[{NAME}]");
-                            f2 = substitute(substitute(string_q(STR_FACTORY2), "[{CLASS}]", theClass), "[{LOWER}]", fName);
+                            f2 = substitute(
+                                substitute(string_q(STR_FACTORY2), "[{CLASS}]", theClass), "[{LOWER}]", fName);
                             replace(f2, "[{ASSIGNS2}]", assigns2);
                             replace(f2, "[{BASE}]", base);
-                            replace(f2, "[{SIGNATURE}]",substitute(substitute(substitute(substitute(func->getSignature(SIG_DEFAULT|SIG_IINDEXED), "\t", ""), "  ", " "), " (", "("), ",", ", "));
+                            replace(f2, "[{SIGNATURE}]",
+                                    substitute(
+                                    substitute(
+                                    substitute(
+                                    substitute(func->getSignature(SIG_DEFAULT|SIG_IINDEXED), "\t", ""),
+                                               "  ", " "), " (", "("), ",", ", "));
                             replace(f2, "[{ENCODING}]", func->getSignature(SIG_ENCODE));
                             if (!isConst)
                                 factory2 += f2;
@@ -358,7 +370,8 @@ int main(int argc, const char *argv[]) {
 
                             string_q makeClass = configPath("makeClass/makeClass");
                             if (!fileExists(makeClass)) {
-                                cerr << makeClass << " was not found. This executable is required to run grabABI. Quitting...\n";
+                                cerr << makeClass << " was not found. This executable is required "
+                                                        "to run grabABI. Quitting...\n";
                                 exit(0);
                             }
                             string_q res = doCommand(makeClass + " -r " + toLower(name));
@@ -420,7 +433,7 @@ int main(int argc, const char *argv[]) {
             replaceAll(sourceCode, "[{ABI}]", options.theABI);
             replaceAll(sourceCode, "[{REGISTERS}]", registers);
             string_q chainInit = (options.isToken() ?
-                                    "\twalletlib_init();\n" :
+                                  "\twalletlib_init();\n" :
                                   (options.isWallet() ? "" : "\ttokenlib_init();\n"));
             replaceAll(sourceCode, "[{CHAINLIB}]",  chainInit);
             replaceAll(sourceCode, "[{FACTORY1}]",  factory1.empty() ? "\t\t{\n\t\t\t// No functions\n" : factory1);
@@ -441,11 +454,14 @@ int main(int argc, const char *argv[]) {
             replaceAll(sourceCode, "[{EVENT_DECLS}]", evtDecls.empty() ? "// No events" : evtDecls);
             replaceAll(sourceCode, "[{EVTS}]", evts.empty() ? "\t// No events\n" : evts);
             sourceCode = substitute(sourceCode, "{QB}", (options.isBuiltin() ? "_qb" : ""));
-            writeTheCode(classDir + options.prefix + ".cpp", substitute(substitute(sourceCode, "XXXX","["), "YYYY","]"));
+            writeTheCode(classDir + options.prefix + ".cpp",
+                         substitute(
+                         substitute(sourceCode, "XXXX", "["),
+                                    "YYYY", "]"));
 
             // The code
             if (!options.isBuiltin()) {
-                makeTheCode("rebuild",        substitute(trimTrailing(addrList,'|'), "|", " "));
+                makeTheCode("rebuild",        substitute(trimTrailing(addrList, '|'), "|", " "));
                 makeTheCode("CMakeLists.txt", options.primaryAddr);
                 makeTheCode("debug.h",        options.primaryAddr);
                 makeTheCode("debug.cpp",      options.primaryAddr);
@@ -473,11 +489,11 @@ string_q getAssign(const CParameter *p, uint64_t which) {
 
     if (contains(type, "[") && contains(type, "]")) {
         const char* STR_ASSIGNARRAY =
-            "\t\t\twhile (!params.empty()) {\n"
-            "\t\t\t\tstring_q val = extract(params, 0, 64);\n"
-            "\t\t\t\tparams = extract(params, 64);\n"
-            "\t\t\t\ta->[{NAME}]XXXXa->[{NAME}].size()YYYY = val;\n"
-            "\t\t\t}\n";
+        "\t\t\twhile (!params.empty()) {\n"
+        "\t\t\t\tstring_q val = extract(params, 0, 64);\n"
+        "\t\t\t\tparams = extract(params, 64);\n"
+        "\t\t\t\ta->[{NAME}]XXXXa->[{NAME}].size()YYYY = val;\n"
+        "\t\t\t}\n";
         return p->Format(STR_ASSIGNARRAY);
     }
 
@@ -524,7 +540,7 @@ string_q getEventAssign(const CParameter *p, uint64_t which, uint64_t nIndexed) 
 }
 
 //-----------------------------------------------------------------------
-//void addDefaultFuncs(CFunctionArray& funcs) {
+// void addDefaultFuncs(CFunctionArray& funcs) {
 //    CFunction func;
 //    func.constant = false;
 //    //  func.type = "function";
@@ -536,7 +552,7 @@ string_q getEventAssign(const CParameter *p, uint64_t which, uint64_t nIndexed) 
 //    func.name = "event";
 //    func.inputs.clear();
 //    funcs.push_back(func);
-//}
+// }
 
 //-----------------------------------------------------------------------
 const char* STR_FACTORY1 =

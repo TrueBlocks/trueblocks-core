@@ -932,12 +932,12 @@ class _CppLintState(object):
         self.errors_by_category[category] = 0
       self.errors_by_category[category] += 1
 
-  def PrintErrorCounts(self):
-    """Print a summary of errors by category, and the total."""
-    for category, count in self.errors_by_category.iteritems():
-      sys.stderr.write('Category \'%s\' errors found: %d\n' %
-                       (category, count))
-    sys.stdout.write('Total errors found: %d\n' % self.error_count)
+#  def PrintErrorCounts(self):
+#    """Print a summary of errors by category, and the total."""
+#    for category, count in self.errors_by_category.iteritems():
+#      sys.stderr.write('Category \'%s\' errors found: %d\n' %
+#                       (category, count))
+#    sys.stdout.write('Total errors found: %d\n' % self.error_count)
 
 _cpplint_state = _CppLintState()
 
@@ -6018,12 +6018,11 @@ def ProcessFile(filename, vlevel, extra_check_functions=[]):
 
   # When reading from stdin, the extension is unknown, so no cpplint tests
   # should rely on the extension.
-  if filename != '-' and file_extension not in _valid_extensions:
-    sys.stderr.write('Ignoring %s; not a valid file name '
-                     '(%s)\n' % (filename, ', '.join(_valid_extensions)))
-  else:
-    ProcessFileData(filename, file_extension, lines, Error,
-                    extra_check_functions)
+  if (filename == '-' or file_extension in _valid_extensions):
+#    sys.stderr.write('Ignoring %s; not a valid file name '
+#                     '(%s)\n' % (filename, ', '.join(_valid_extensions)))
+#  else:
+    ProcessFileData(filename, file_extension, lines, Error, extra_check_functions)
 
     # If end-of-line sequences are a mix of LF and CR-LF, issue
     # warnings on the lines with CR.
@@ -6155,7 +6154,7 @@ def main():
   _cpplint_state.ResetErrorCounts()
   for filename in filenames:
     ProcessFile(filename, _cpplint_state.verbose_level)
-  _cpplint_state.PrintErrorCounts()
+#  _cpplint_state.PrintErrorCounts()
 
   sys.exit(_cpplint_state.error_count > 0)
 

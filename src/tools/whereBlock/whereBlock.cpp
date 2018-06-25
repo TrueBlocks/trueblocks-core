@@ -23,7 +23,7 @@ int main(int argc, const char *argv[]) {
     if (!options.prepareArguments(argc, argv))
         return 0;
 
-    //while (!options.commandList.empty())
+    // while (!options.commandList.empty())
     {
         string_q command = nextTokenClear(options.commandList, '\n');
         if (!options.parseArguments(command))
@@ -32,7 +32,8 @@ int main(int argc, const char *argv[]) {
         string_q cachePath = substitute(blockCachePath(""), "/blocks/", "/"+options.mode+"s/");
         if (isTestMode())
             cachePath = "--";
-        cout << cYellow << "\nReport on " << options.mode << " locations:" << cOff << (verbose ? "" : "\n  (cache folder: " + cachePath + ")") << "\n";
+        cout << cYellow << "\nReport on " << options.mode << " locations:" << cOff;
+        cout << (verbose ? "" : "\n  (cache folder: " + cachePath + ")") << "\n";
 
         string_q list = options.getBlockNumList();
         while (!list.empty()) {
@@ -40,7 +41,9 @@ int main(int argc, const char *argv[]) {
             CFilename fileName(substitute(getBinaryFilename(bn), "/blocks/", "/"+options.mode+"s/"));
             bool exists = fileExists(fileName.getFullPath());
 
-            string_q path = (verbose ? fileName.getFullPath() : fileName.relativePath(substitute(blockCachePath(""), "/blocks/", "/"+options.mode+"s/")));
+            string_q path = (verbose ? fileName.getFullPath() :
+                                fileName.relativePath(substitute(blockCachePath(""),
+                                                        "/blocks/", "/"+options.mode + "s/")));
             string_q vers = getVersionFromClient();
             if (isTestMode() && verbose)
                 path = "--";
@@ -49,7 +52,7 @@ int main(int argc, const char *argv[]) {
             string_q fallback = getEnvStr("FALLBACK");
             bool running_node = isNodeRunning();
 
-            cout << "\t" << options.mode << " " << cTeal << padLeft(asStringU(bn),9) << cOff << " ";
+            cout << "\t" << options.mode << " " << cTeal << padLeft(asStringU(bn), 9) << cOff << " ";
             if (exists)            cout << "found at cache:  " << cTeal << path << cOff << "\n";
             else if (running_node)      cout << "found at node:   " << vers << "\n";
             else if (!fallback.empty()) cout << "found at remote: " << fallback << "\n";
