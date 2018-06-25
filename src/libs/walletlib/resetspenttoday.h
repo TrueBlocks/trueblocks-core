@@ -113,7 +113,7 @@ inline bool operator<(const QResetSpentToday& v1, const QResetSpentToday& v2) {
 }
 
 //---------------------------------------------------------------------------
-typedef SFArrayBase<QResetSpentToday> QResetSpentTodayArray;
+typedef vector<QResetSpentToday> QResetSpentTodayArray;
 extern SFArchive& operator>>(SFArchive& archive, QResetSpentTodayArray& array);
 extern SFArchive& operator<<(SFArchive& archive, const QResetSpentTodayArray& array);
 

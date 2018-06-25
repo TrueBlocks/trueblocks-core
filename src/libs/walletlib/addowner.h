@@ -117,7 +117,7 @@ inline bool operator<(const QAddOwner& v1, const QAddOwner& v2) {
 }
 
 //---------------------------------------------------------------------------
-typedef SFArrayBase<QAddOwner> QAddOwnerArray;
+typedef vector<QAddOwner> QAddOwnerArray;
 extern SFArchive& operator>>(SFArchive& archive, QAddOwnerArray& array);
 extern SFArchive& operator<<(SFArchive& archive, const QAddOwnerArray& array);
 

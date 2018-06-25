@@ -117,7 +117,7 @@ inline bool operator<(const QOwnerRemovedEvent& v1, const QOwnerRemovedEvent& v2
 }
 
 //---------------------------------------------------------------------------
-typedef SFArrayBase<QOwnerRemovedEvent> QOwnerRemovedEventArray;
+typedef vector<QOwnerRemovedEvent> QOwnerRemovedEventArray;
 extern SFArchive& operator>>(SFArchive& archive, QOwnerRemovedEventArray& array);
 extern SFArchive& operator<<(SFArchive& archive, const QOwnerRemovedEventArray& array);
 

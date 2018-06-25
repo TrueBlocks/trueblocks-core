@@ -117,7 +117,7 @@ inline bool operator<(const QConfirm& v1, const QConfirm& v2) {
 }
 
 //---------------------------------------------------------------------------
-typedef SFArrayBase<QConfirm> QConfirmArray;
+typedef vector<QConfirm> QConfirmArray;
 extern SFArchive& operator>>(SFArchive& archive, QConfirmArray& array);
 extern SFArchive& operator<<(SFArchive& archive, const QConfirmArray& array);
 

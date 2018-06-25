@@ -120,7 +120,7 @@ inline bool operator<(const QDepositEvent& v1, const QDepositEvent& v2) {
 }
 
 //---------------------------------------------------------------------------
-typedef SFArrayBase<QDepositEvent> QDepositEventArray;
+typedef vector<QDepositEvent> QDepositEventArray;
 extern SFArchive& operator>>(SFArchive& archive, QDepositEventArray& array);
 extern SFArchive& operator<<(SFArchive& archive, const QDepositEventArray& array);
 

@@ -126,7 +126,7 @@ inline bool operator<(const QSingleTransactEvent& v1, const QSingleTransactEvent
 }
 
 //---------------------------------------------------------------------------
-typedef SFArrayBase<QSingleTransactEvent> QSingleTransactEventArray;
+typedef vector<QSingleTransactEvent> QSingleTransactEventArray;
 extern SFArchive& operator>>(SFArchive& archive, QSingleTransactEventArray& array);
 extern SFArchive& operator<<(SFArchive& archive, const QSingleTransactEventArray& array);
 
