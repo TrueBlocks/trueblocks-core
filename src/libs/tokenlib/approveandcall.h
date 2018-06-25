@@ -123,7 +123,7 @@ inline bool operator<(const QApproveAndCall& v1, const QApproveAndCall& v2) {
 }
 
 //---------------------------------------------------------------------------
-typedef SFArrayBase<QApproveAndCall> QApproveAndCallArray;
+typedef vector<QApproveAndCall> QApproveAndCallArray;
 extern SFArchive& operator>>(SFArchive& archive, QApproveAndCallArray& array);
 extern SFArchive& operator<<(SFArchive& archive, const QApproveAndCallArray& array);
 

@@ -117,7 +117,7 @@ inline bool operator<(const QKill& v1, const QKill& v2) {
 }
 
 //---------------------------------------------------------------------------
-typedef SFArrayBase<QKill> QKillArray;
+typedef vector<QKill> QKillArray;
 extern SFArchive& operator>>(SFArchive& archive, QKillArray& array);
 extern SFArchive& operator<<(SFArchive& archive, const QKillArray& array);
 

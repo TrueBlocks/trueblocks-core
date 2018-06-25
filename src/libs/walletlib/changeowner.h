@@ -120,7 +120,7 @@ inline bool operator<(const QChangeOwner& v1, const QChangeOwner& v2) {
 }
 
 //---------------------------------------------------------------------------
-typedef SFArrayBase<QChangeOwner> QChangeOwnerArray;
+typedef vector<QChangeOwner> QChangeOwnerArray;
 extern SFArchive& operator>>(SFArchive& archive, QChangeOwnerArray& array);
 extern SFArchive& operator<<(SFArchive& archive, const QChangeOwnerArray& array);
 

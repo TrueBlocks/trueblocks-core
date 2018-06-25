@@ -117,7 +117,7 @@ inline bool operator<(const QSetDailyLimit& v1, const QSetDailyLimit& v2) {
 }
 
 //---------------------------------------------------------------------------
-typedef SFArrayBase<QSetDailyLimit> QSetDailyLimitArray;
+typedef vector<QSetDailyLimit> QSetDailyLimitArray;
 extern SFArchive& operator>>(SFArchive& archive, QSetDailyLimitArray& array);
 extern SFArchive& operator<<(SFArchive& archive, const QSetDailyLimitArray& array);
 

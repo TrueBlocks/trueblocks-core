@@ -120,7 +120,7 @@ inline bool operator<(const QRevokeEvent& v1, const QRevokeEvent& v2) {
 }
 
 //---------------------------------------------------------------------------
-typedef SFArrayBase<QRevokeEvent> QRevokeEventArray;
+typedef vector<QRevokeEvent> QRevokeEventArray;
 extern SFArchive& operator>>(SFArchive& archive, QRevokeEventArray& array);
 extern SFArchive& operator<<(SFArchive& archive, const QRevokeEventArray& array);
 

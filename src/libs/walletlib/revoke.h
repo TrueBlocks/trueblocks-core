@@ -117,7 +117,7 @@ inline bool operator<(const QRevoke& v1, const QRevoke& v2) {
 }
 
 //---------------------------------------------------------------------------
-typedef SFArrayBase<QRevoke> QRevokeArray;
+typedef vector<QRevoke> QRevokeArray;
 extern SFArchive& operator>>(SFArchive& archive, QRevokeArray& array);
 extern SFArchive& operator<<(SFArchive& archive, const QRevokeArray& array);
 
