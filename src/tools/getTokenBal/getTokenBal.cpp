@@ -41,6 +41,11 @@ int main(int argc, const char *argv[]) {
             reportByToken(options);
 
     }
+
+    if (!nodeHasBalances() && (options.latestBlock - options.earliestBlock) > 250)
+        cerr << cRed << "    Warning: " << cOff << "The node you're using does not have historical balances. Reported "
+                                                    "values may be wrong.\n";
+
     return 0;
 }
 
@@ -68,6 +73,8 @@ void reportByToken(COptions& options) {
             string_q blocks = options.getBlockNumList();
             while (!blocks.empty()) {
                 blknum_t blockNum = toLongU(nextTokenClear(blocks, '|'));
+                if (blockNum < options.earliestBlock)
+                    options.earliestBlock = blockNum;
                 SFUintBN bal = getTokenInfo("balance", token, holder, blockNum);
                 totalVal += bal;
                 string_q sBal = to_string(bal).c_str();
@@ -146,6 +153,8 @@ void reportByAccount(COptions& options) {
             string_q blocks = options.getBlockNumList();
             while (!blocks.empty()) {
                 blknum_t blockNum = toLongU(nextTokenClear(blocks, '|'));
+                if (blockNum < options.earliestBlock)
+                    options.earliestBlock = blockNum;
                 SFUintBN bal = getTokenInfo("balance", token, holder, blockNum);
                 totalVal += bal;
                 string_q sBal = to_string(bal).c_str();
