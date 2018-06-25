@@ -117,7 +117,7 @@ inline bool operator<(const QRequirementChangedEvent& v1, const QRequirementChan
 }
 
 //---------------------------------------------------------------------------
-typedef SFArrayBase<QRequirementChangedEvent> QRequirementChangedEventArray;
+typedef vector<QRequirementChangedEvent> QRequirementChangedEventArray;
 extern SFArchive& operator>>(SFArchive& archive, QRequirementChangedEventArray& array);
 extern SFArchive& operator<<(SFArchive& archive, const QRequirementChangedEventArray& array);
 

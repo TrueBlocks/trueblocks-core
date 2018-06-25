@@ -117,7 +117,7 @@ inline bool operator<(const QIsOwner& v1, const QIsOwner& v2) {
 }
 
 //---------------------------------------------------------------------------
-typedef SFArrayBase<QIsOwner> QIsOwnerArray;
+typedef vector<QIsOwner> QIsOwnerArray;
 extern SFArchive& operator>>(SFArchive& archive, QIsOwnerArray& array);
 extern SFArchive& operator<<(SFArchive& archive, const QIsOwnerArray& array);
 

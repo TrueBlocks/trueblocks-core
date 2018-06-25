@@ -123,7 +123,7 @@ inline bool operator<(const QTransferEvent& v1, const QTransferEvent& v2) {
 }
 
 //---------------------------------------------------------------------------
-typedef SFArrayBase<QTransferEvent> QTransferEventArray;
+typedef vector<QTransferEvent> QTransferEventArray;
 extern SFArchive& operator>>(SFArchive& archive, QTransferEventArray& array);
 extern SFArchive& operator<<(SFArchive& archive, const QTransferEventArray& array);
 

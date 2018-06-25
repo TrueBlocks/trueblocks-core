@@ -117,7 +117,7 @@ inline bool operator<(const QChangeRequirement& v1, const QChangeRequirement& v2
 }
 
 //---------------------------------------------------------------------------
-typedef SFArrayBase<QChangeRequirement> QChangeRequirementArray;
+typedef vector<QChangeRequirement> QChangeRequirementArray;
 extern SFArchive& operator>>(SFArchive& archive, QChangeRequirementArray& array);
 extern SFArchive& operator<<(SFArchive& archive, const QChangeRequirementArray& array);
 

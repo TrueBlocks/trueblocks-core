@@ -123,7 +123,7 @@ inline bool operator<(const QExecute& v1, const QExecute& v2) {
 }
 
 //---------------------------------------------------------------------------
-typedef SFArrayBase<QExecute> QExecuteArray;
+typedef vector<QExecute> QExecuteArray;
 extern SFArchive& operator>>(SFArchive& archive, QExecuteArray& array);
 extern SFArchive& operator<<(SFArchive& archive, const QExecuteArray& array);
 

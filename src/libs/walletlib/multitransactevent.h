@@ -129,7 +129,7 @@ inline bool operator<(const QMultiTransactEvent& v1, const QMultiTransactEvent& 
 }
 
 //---------------------------------------------------------------------------
-typedef SFArrayBase<QMultiTransactEvent> QMultiTransactEventArray;
+typedef vector<QMultiTransactEvent> QMultiTransactEventArray;
 extern SFArchive& operator>>(SFArchive& archive, QMultiTransactEventArray& array);
 extern SFArchive& operator<<(SFArchive& archive, const QMultiTransactEventArray& array);
 

@@ -129,7 +129,7 @@ inline bool operator<(const QConfirmationNeededEvent& v1, const QConfirmationNee
 }
 
 //---------------------------------------------------------------------------
-typedef SFArrayBase<QConfirmationNeededEvent> QConfirmationNeededEventArray;
+typedef vector<QConfirmationNeededEvent> QConfirmationNeededEventArray;
 extern SFArchive& operator>>(SFArchive& archive, QConfirmationNeededEventArray& array);
 extern SFArchive& operator<<(SFArchive& archive, const QConfirmationNeededEventArray& array);
 
