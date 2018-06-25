@@ -20,7 +20,7 @@ extern SFUintBN getTokenInfo(const string_q& value, const SFAddress& token, cons
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
-    etherlib_init();
+    etherlib_init(quickQuitHander);
 
     // Parse command line, allowing for command files
     COptions options;
