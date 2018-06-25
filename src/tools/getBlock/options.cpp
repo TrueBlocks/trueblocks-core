@@ -16,11 +16,11 @@
 CParams params[] = {
     CParams("~block_list",       "a space-separated list of one or more blocks to retrieve"),
     CParams("-raw",              "pull the block data from the running Ethereum node (no cache)"),
-    CParams("-h(a)shes",         "display only transaction hashes, default is to display full transaction detail"),
+    CParams("-hash_o(n)ly",      "display only transaction hashes, default is to display full transaction detail"),
 //    CParams("-trac(e)s",         "include transaction traces in the export"),
     CParams("-check",            "compare results between qblocks and Ethereum node, report differences, if any"),
     CParams("-latest",           "display the latest blocks at both the node and the cache"),
-    CParams("@force",            "force a re-write of the block to the cache"),
+    CParams("@f(o)rce",          "force a re-write of the block to the cache"),
     CParams("@quiet",            "do not print results to screen, used for speed testing and data checking"),
     CParams("@source:[c|r]",     "either :c(a)che or :(r)aw, source for data retrival. (shortcuts "
                                     "-c = qblocks, -r = node)"),
@@ -108,7 +108,7 @@ bool COptions::parseArguments(string_q& command) {
                 return usage("Invalide source. Must be either '(r)aw' or '(c)ache'. Quitting...");
             }
 
-        } else if (arg == "-a" || arg == "--hashes") {
+        } else if (arg == "-n" || arg == "--hash_only") {
             hashes = true;
 
         } else if (arg == "-e" || arg == "--traces") {
@@ -187,8 +187,26 @@ bool COptions::parseArguments(string_q& command) {
         GETRUNTIME_CLASS(CBlock)->sortFieldList();
     }
 
-    if (hashes && !isRaw)
-        return usage("The --hashes option works only with --raw. Quitting...");
+    if (hashes) {
+        HIDE_FIELD(CTransaction, "blockHash");
+        HIDE_FIELD(CTransaction, "blockNumber");
+        HIDE_FIELD(CTransaction, "transactionIndex");
+        HIDE_FIELD(CTransaction, "nonce");
+        HIDE_FIELD(CTransaction, "timestamp");
+        HIDE_FIELD(CTransaction, "from");
+        HIDE_FIELD(CTransaction, "to");
+        HIDE_FIELD(CTransaction, "value");
+        HIDE_FIELD(CTransaction, "gas");
+        HIDE_FIELD(CTransaction, "gasPrice");
+        HIDE_FIELD(CTransaction, "input");
+        HIDE_FIELD(CTransaction, "isError");
+        HIDE_FIELD(CTransaction, "receipt");
+        HIDE_FIELD(CTransaction, "gasUsed");
+        HIDE_FIELD(CReceipt,     "contractAddress");
+        HIDE_FIELD(CReceipt,     "gasUsed");
+        HIDE_FIELD(CReceipt,     "logs");
+        HIDE_FIELD(CReceipt,     "status");
+    }
 
     if (!blocks.hasBlocks() && !isLatest)
         return usage("You must specify at least one block.");

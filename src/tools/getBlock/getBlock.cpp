@@ -121,6 +121,12 @@ string_q doOneBlock(uint64_t num, const COptions& opt) {
 //                replace(format, "{PRICE:CLOSE}", dollars);
 //            }
             result = gold.Format(format);
+            if (opt.hashes) {
+                result = substitute(result, "        {\n            \"hash\":", "       ");
+                result = substitute(result, "\n            \"receipt\": {\n            }\n        }", "");
+                result = substitute(result, ",,", ",");
+                result = substitute(result, ",\n    ]", "\n    ]");
+            }
         }
     }
     return result;
