@@ -452,9 +452,9 @@ bool CBlock::operator==(const CBlock& test) const {
 
 //---------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const CAddressItem& item) {
-    os << item.blockNum << "\t";
-    os << (item.transIndex == NOPOS ? -1 : int32_t(item.transIndex)) << "\t";
-    os << (item.traceId < 10 ? "" : asStringU(item.traceId - 10)) << "\t";
+    os << item.bn << "\t";
+    os << (item.tx == NOPOS ? -1 : int32_t(item.tx)) << "\t";
+    os << (item.tc < 10 ? "" : asStringU(item.tc - 10)) << "\t";
     os << item.addr;
     return os;
 }
@@ -468,10 +468,10 @@ uint64_t insertUnique(CAddressItemMap *addrMap, const CAddressItem& _value) {
 }
 
 //---------------------------------------------------------------------------
-bool accumulateAddresses(blknum_t bn, blknum_t tx, blknum_t tc, const SFAddress& addr, void *data) {
-    if (zeroAddr(addr))
+bool accumulateAddresses(const CAddressItem& item, void *data) {
+    if (zeroAddr(item.addr))
         return true;
-    CAddressItem search(bn, tx, tc, addr);
+    CAddressItem search(item.bn, item.tx, item.tc, item.addr);
     insertUnique((CAddressItemMap*)data, search);  // NOLINT
     return true;
 }
@@ -484,7 +484,7 @@ bool CBlock::forEveryUniqueAddress(ADDRESSFUNC func, TRANSFUNC filterFunc, void 
     CAddressItemMap addrMap;
     forEveryAddress(accumulateAddresses, filterFunc, &addrMap);
     for (CAddressItemMap::iterator it = addrMap.begin(); it != addrMap.end(); ++it)
-        (*func)(it->first.blockNum, it->first.transIndex, it->first.traceId, it->first.addr, data);
+        (*func)(it->first, data);
 
     return true;
 }
@@ -513,8 +513,7 @@ bool isPotentialAddr(SFUintBN test, SFAddress& addrOut) {
 }
 
 //---------------------------------------------------------------------------
-void processPotentialAddrs(blknum_t bn, blknum_t tx, blknum_t tc,
-                            const string_q& potList, ADDRESSFUNC func, void *data) {
+void potentialAddr(ADDRESSFUNC func, void *data, const CAddressItem& item, const string_q& potList) {
 
     if (!func)
         return;
@@ -522,10 +521,25 @@ void processPotentialAddrs(blknum_t bn, blknum_t tx, blknum_t tc,
     // Pull out 32-byte chunks and check to see if they are addresses
     SFAddress addr;
     for (size_t s = 0 ; s < potList.length() / 64 ; s++) {
-        SFUintBN test  = hex2BN("0x" + extract(potList, s*64, 64));
-        if (isPotentialAddr(test, addr))
-            (*func)(bn, tx, tc, addr, data);
+        SFUintBN test = hex2BN("0x" + extract(potList, s*64, 64));
+        if (isPotentialAddr(test, addr)) {
+            CAddressItem it(item);
+            it.addr = addr;
+            (*func)(it, data);
+        }
     }
+}
+
+//---------------------------------------------------------------------------
+void foundOne(ADDRESSFUNC func, void *data, blknum_t bn, blknum_t tx, blknum_t tc, const SFAddress& addr) {
+    CAddressItem item(bn, tx, tc, addr);
+    (*func)(item, data);
+}
+
+//---------------------------------------------------------------------------
+void foundPot(ADDRESSFUNC func, void *data, blknum_t bn, blknum_t tx, blknum_t tc, const string_q& potList) {
+    CAddressItem item(bn, tx, tc, "");
+    potentialAddr(func, data, item, potList);
 }
 
 //---------------------------------------------------------------------------
@@ -534,25 +548,24 @@ bool CBlock::forEveryAddress(ADDRESSFUNC func, TRANSFUNC filterFunc, void *data)
     if (!func)
         return false;
 
-    (*func)(blockNumber, NOPOS, 0, miner, data);
-
+    foundOne(func, data, blockNumber, NOPOS, 0, miner);
     for (size_t tr = 0 ; tr < transactions.size() ; tr++) {
         const CTransaction *trans   = &transactions[tr];
         const CReceipt     *receipt = &trans->receipt;
-        (*func)(blockNumber, tr, 0, trans->from, data);
-        (*func)(blockNumber, tr, 0, trans->to,   data);
-        (*func)(blockNumber, tr, 0, receipt->contractAddress, data);
-        processPotentialAddrs(blockNumber, tr, 0, extract(trans->input, 10), func, data);
+        foundOne(func, data, blockNumber, tr, 0, trans->from);
+        foundOne(func, data, blockNumber, tr, 0, trans->to);
+        foundOne(func, data, blockNumber, tr, 0, receipt->contractAddress);
+        foundPot(func, data, blockNumber, tr, 0, extract(trans->input, 10));
         for (size_t l = 0 ; l < receipt->logs.size() ; l++) {
             const CLogEntry *log = &receipt->logs[l];
-            (*func)(blockNumber, tr, 0, log->address, data);
+            foundOne(func, data, blockNumber, tr, 0, log->address);
             for (size_t t = 0 ; t < log->topics.size() ; t++) {
                 SFAddress addr;
                 if (isPotentialAddr(log->topics[t], addr)) {
-                    (*func)(blockNumber, tr, 0, addr, data);
+                    foundOne(func, data, blockNumber, tr, 0, addr);
                 }
             }
-            processPotentialAddrs(blockNumber, tr, 0, extract(log->data, 2), func, data);
+            foundPot(func, data, blockNumber, tr, 0, extract(log->data, 2));
         }
 
         // If we're not filtering, or the filter passes, proceed. Note the filter depends on the
@@ -562,14 +575,14 @@ bool CBlock::forEveryAddress(ADDRESSFUNC func, TRANSFUNC filterFunc, void *data)
             getTraces(traces, trans->hash);
             for (size_t t = 0 ; t < traces.size() ; t++) {
                 const CTrace *trace = &traces[t];  // taking a non-const reference
-                (*func)(blockNumber, tr, t+10, trace->action.from, data);
-                (*func)(blockNumber, tr, t+10, trace->action.to, data);
-                (*func)(blockNumber, tr, t+10, trace->action.refundAddress, data);
-                (*func)(blockNumber, tr, t+10, trace->action.address, data);
-                (*func)(blockNumber, tr, t+10, trace->result.address, data);
+                foundOne(func, data, blockNumber, tr, t+10, trace->action.from);
+                foundOne(func, data, blockNumber, tr, t+10, trace->action.to);
+                foundOne(func, data, blockNumber, tr, t+10, trace->action.refundAddress);
+                foundOne(func, data, blockNumber, tr, t+10, trace->action.address);
+                foundOne(func, data, blockNumber, tr, t+10, trace->result.address);
                 string_q input = extract(trace->action.input, 10);
                 if (!input.empty())
-                    processPotentialAddrs(blockNumber, tr, t+10, input, func, data);
+                    foundPot(func, data, blockNumber, tr, t+10, input);
             }
         }
     }

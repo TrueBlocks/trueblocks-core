@@ -2,7 +2,7 @@ getBlock argc: 2 [1:-th]
 getBlock -th 
 #### Usage
 
-`Usage:`    getBlock [-r|-n|-c|-l|-v|-h] &lt;block&gt; [block...]  
+`Usage:`    getBlock [-r|-n|-c|-l|-a|-v|-h] &lt;block&gt; [block...]  
 `Purpose:`  Returns block(s) from local cache or directly from a running node.
              
 `Where:`  
@@ -14,6 +14,7 @@ getBlock -th
 | -n | --hash_only | display only transaction hashes, default is to display full transaction detail |
 | -c | --check | compare results between qblocks and Ethereum node, report differences, if any |
 | -l | --latest | display the latest blocks at both the node and the cache |
+| -a | --addresses | display addresses included in the block |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 

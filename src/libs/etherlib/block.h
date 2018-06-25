@@ -22,7 +22,8 @@
 namespace qblocks {
 
 // EXISTING_CODE
-typedef bool (*ADDRESSFUNC)(blknum_t bn, blknum_t tx, blknum_t tc, const SFAddress& addr, void *data);
+class CAddressItem;
+typedef bool (*ADDRESSFUNC)(const CAddressItem& item, void *data);
 typedef bool (*TRANSFUNC)(const CTransaction *trans, void *data);
 // EXISTING_CODE
 
@@ -169,9 +170,38 @@ extern SFArchive& operator>>(SFArchive& archive, CBlock& blo);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
+//---------------------------------------------------------------------------
+class CAddressItem {
+public:
+    blknum_t bn;
+    blknum_t tx;
+    blknum_t tc;
+    SFAddress addr;
+    CAddressItem(void) : bn(0), tx(0), tc(0), addr("") { }
+    CAddressItem(const CAddressItem& item)
+        : bn(item.bn), tx(item.tx), tc(item.tc), addr(item.addr) { }
+    CAddressItem& operator=(const CAddressItem& item) {
+        bn = item.bn;
+        tx = item.tx;
+        tc = item.tc;
+        addr = item.addr;
+        return *this;
+    }
+    CAddressItem(blknum_t b, blknum_t x, blknum_t c, const SFAddress& a)
+        : bn(b), tx(x), tc(c), addr(a) { }
+    friend bool operator<(const CAddressItem& v1, const CAddressItem& v2) {
+        return v1.addr < v2.addr;
+    }
+    friend ostream& operator<<(ostream& os, const CAddressItem& item);
+};
+typedef map<CAddressItem, uint64_t> CAddressItemMap;
+
+//---------------------------------------------------------------------------
 inline blknum_t bnFromPath(const string_q& path) {
     string_q p = substitute(path, ".bin", "");
-    reverse(p); p = nextTokenClear(p, '/'); reverse(p);
+    reverse(p);
+    p = nextTokenClear(p, '/');
+    reverse(p);
     return toUnsigned(p);
 }
 
@@ -183,36 +213,10 @@ inline bool isBlockFinal(timestamp_t ts_block, timestamp_t ts_chain, timestamp_t
     // in a perfectly mathematical sense
     return ((ts_chain - ts_block) > seconds);
 }
-extern bool isPotentialAddr(SFUintBN test, SFAddress& addrOut);
-extern void processPotentialAddrs(blknum_t bn, blknum_t tx, blknum_t tc,
-                                    const string_q& potList, ADDRESSFUNC func, void *data);
 
 //---------------------------------------------------------------------------
-class CAddressItem {
-public:
-    blknum_t blockNum;
-    blknum_t transIndex;
-    blknum_t traceId;
-    SFAddress addr;
-    CAddressItem(void)
-        : blockNum(0), transIndex(0), traceId(0), addr("") { }
-    CAddressItem(const CAddressItem& item)
-        : blockNum(item.blockNum), transIndex(item.transIndex), traceId(item.traceId), addr(item.addr) { }
-    CAddressItem& operator=(const CAddressItem& item) {
-        blockNum = item.blockNum;
-        transIndex = item.transIndex;
-        traceId = item.traceId;
-        addr = item.addr;
-        return *this;
-    }
-    CAddressItem(blknum_t bn, blknum_t tx, blknum_t tc, const SFAddress& a)
-        : blockNum(bn), transIndex(tx), traceId(tc), addr(a) { }
-    friend bool operator<(const CAddressItem& v1, const CAddressItem& v2) {
-        return v1.addr < v2.addr;
-    }
-    friend ostream& operator<<(ostream& os, const CAddressItem& item);
-};
-typedef map<CAddressItem, uint64_t> CAddressItemMap;
+extern bool isPotentialAddr(SFUintBN test, SFAddress& addrOut);
+extern void potentialAddr(ADDRESSFUNC func, void *data, const CAddressItem& item, const string_q& potList);
 // EXISTING_CODE
 }  // namespace qblocks
 

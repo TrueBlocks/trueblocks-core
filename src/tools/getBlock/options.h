@@ -20,6 +20,7 @@ public:
     bool isRaw;
     bool isCache;
     bool hashes;
+    bool addrs;
     bool traces;
     bool force;
     bool normalize;
@@ -40,6 +41,7 @@ public:
 //-----------------------------------------------------------------------------
 extern string_q doOneBlock(uint64_t num, const COptions& opt);
 extern string_q checkOneBlock(uint64_t num, const COptions& opt);
+extern string_q getAddresses(uint64_t num, const COptions& opt);
 extern string_q normalizeBlock(const string_q& inIn, bool remove, bool isByzan);
 extern string_q diffStr(const string_q& str1, const string_q& str2);
 extern void interumReport(ostream& os, blknum_t i);
