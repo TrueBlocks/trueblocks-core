@@ -101,8 +101,6 @@ namespace qblocks {
     extern string_q snagFieldClear       (string_q& str, const string_q& tagName, const string_q& defVal = "");
 
     //---------------------------------------------------------------------------------------
-    extern char nullStr[];
-
     inline string_q getEnvStr(const char* name) {
         char *sss = getenv(name);
         return ( sss ? string_q(sss) : string_q(""));
