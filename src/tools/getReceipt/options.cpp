@@ -14,7 +14,8 @@
 
 //---------------------------------------------------------------------------------------------------
 CParams params[] = {
-    CParams("~!trans_list", "a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)"),
+    CParams("~!trans_list", "a space-separated list of one or more transaction identifiers "
+                                "(tx_hash, bn.txID, blk_hash.txID)"),
     CParams("-raw",         "retrieve raw transaction directly from the running node"),
     CParams("",             "Retrieve a transaction's receipt from the local cache or a running node."),
 };
@@ -91,7 +92,8 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
         ret += "[{trans_list}] is one or more space-separated identifiers which may be either a transaction hash,|"
                 "a blockNumber.transactionID pair, or a blockHash.transactionID pair, or any combination.\n";
         ret += "This tool checks for valid input syntax, but does not check that the transaction requested exists.\n";
-        ret += "This tool retrieves information from the local node or the ${FALLBACK} node, if configured (see documentation).\n";
+        ret += "This tool retrieves information from the local node or the ${FALLBACK} node, if configured "
+                    "(see documentation).\n";
         ret += "If the queried node does not store historical state, the results may be undefined.\n";
         return ret;
     }

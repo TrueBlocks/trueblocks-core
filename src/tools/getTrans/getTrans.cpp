@@ -10,6 +10,7 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
+#include <algorithm>
 #include "etherlib.h"
 #include "options.h"
 
@@ -41,7 +42,7 @@ int main(int argc, const char *argv[]) {
 
 //--------------------------------------------------------------
 bool visitTransaction(CTransaction& trans, void *data) {
-    COptions *opt = (COptions*)data;
+    COptions *opt = (COptions*)data;  // NOLINT
     opt->nVisited++;
 
     bool badHash = !isHash(trans.hash);
@@ -49,7 +50,8 @@ bool visitTransaction(CTransaction& trans, void *data) {
     trans.hash = substitute(substitute(trans.hash, "-block_not_found", ""), "-trans_not_found", "");
     if (opt->isRaw) {
         if (badHash) {
-            cerr << "{\"jsonrpc\":\"2.0\",\"result\":{\"hash\":\"" << substitute(trans.hash, " ", "") << "\",\"result\":\"";
+            cerr << "{\"jsonrpc\":\"2.0\",\"result\":{\"hash\":\"";
+            cerr << substitute(trans.hash, " ", "") << "\",\"result\":\"";
             cerr << (isBlock ? "block " : "");
             cerr << "hash not found\"},\"id\":-1}" << "\n";
             return true;
@@ -63,7 +65,8 @@ bool visitTransaction(CTransaction& trans, void *data) {
     }
 
     if (badHash) {
-        cerr << cRed << "Warning:" << cOff << " The " << (isBlock ? "block " : "") << "hash " << cYellow << trans.hash << cOff << " was not found.\n";
+        cerr << cRed << "Warning:" << cOff;
+        cerr << " The " << (isBlock ? "block " : "") << "hash " << cYellow << trans.hash << cOff << " was not found.\n";
         return true;
     }
 
@@ -84,14 +87,19 @@ bool visitTransaction(CTransaction& trans, void *data) {
             size_t dTs = 0;
             cout << "[";
             for (size_t i = 0 ; i < traces.size() ; i++) {
-            	const CTrace *trace = &traces[i]; 
+                const CTrace *trace = &traces[i];
                 trace->doExport(cout);
                 dTs = max(dTs, trace->traceAddress.size());
             }
             cout << "]\n";
             if (opt->nTraces) {
                 string_q fmt = ",{ \"nTraces\": [N]-[NN], \"depth\": [D] }";
-                cout << substitute(substitute(substitute(fmt, "[N]", asStringU(nTr)), "[NN]", asStringU(traces.size())), "[D]", asStringU(dTs));
+                cout << substitute(
+                        substitute(
+                        substitute(fmt,
+                                   "[N]", asStringU(nTr)),
+                                   "[NN]", asStringU(traces.size())),
+                                   "[D]", asStringU(dTs));
             }
         }
     }

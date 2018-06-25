@@ -16,7 +16,7 @@
 
 void reportByToken(COptions& options);
 void reportByAccount(COptions& options);
-extern SFUintBN getTokenInfo(const string_q& value,  const SFAddress& token, const SFAddress& holder, blknum_t blockNum);
+extern SFUintBN getTokenInfo(const string_q& value, const SFAddress& token, const SFAddress& holder, blknum_t blockNum);
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
@@ -76,7 +76,7 @@ void reportByToken(COptions& options) {
                 } else if (expContext().asDollars) {
                     CBlock blk;
                     getBlock(blk, blockNum);
-                    sBal = padLeft("$" + dispDollars(blk.timestamp, bal),14);
+                    sBal = padLeft("$" + dispDollars(blk.timestamp, bal), 14);
                 }
 
                 needsNewline = true;
@@ -111,7 +111,7 @@ void reportByToken(COptions& options) {
         } else if (expContext().asDollars) {
             CBlock blk;
             getBlock(blk, getLatestBlockFromClient());
-            sBal = padLeft("$" + dispDollars(blk.timestamp, totalVal),14);
+            sBal = padLeft("$" + dispDollars(blk.timestamp, totalVal), 14);
         }
         cout << "        Total for " << cGreen << nAccts << cOff;
         cout << " accounts at " << cTeal << "latest" << cOff << " block";
@@ -119,7 +119,7 @@ void reportByToken(COptions& options) {
     }
 
     if (needsNewline)
-        cerr << "                                                                                              \n";
+        cerr << string_q(104, ' ') << "\n";
 }
 
 //--------------------------------------------------------------
@@ -154,7 +154,7 @@ void reportByAccount(COptions& options) {
                 } else if (expContext().asDollars) {
                     CBlock blk;
                     getBlock(blk, blockNum);
-                    sBal = padLeft("$" + dispDollars(blk.timestamp, bal),14);
+                    sBal = padLeft("$" + dispDollars(blk.timestamp, bal), 14);
                 }
 
                 needsNewline = true;
@@ -189,7 +189,7 @@ void reportByAccount(COptions& options) {
         } else if (expContext().asDollars) {
             CBlock blk;
             getBlock(blk, getLatestBlockFromClient());
-            sBal = padLeft("$" + dispDollars(blk.timestamp, totalVal),14);
+            sBal = padLeft("$" + dispDollars(blk.timestamp, totalVal), 14);
         }
         cout << "        Total for " << cGreen << nAccts << cOff;
         cout << " accounts at " << cTeal << "latest" << cOff << " block";
@@ -207,7 +207,7 @@ SFUintBN getTokenInfo(const string_q& value, const SFAddress& token, const SFAdd
     ASSERT(isAddress(holder));
 
     string_q t = "0x" + padLeft(extract(token, 2), 40, '0');  // address to send the command to
-    string_q h =        padLeft(extract(holder, 2), 64, '0'); // encoded data for the transaction
+    string_q h =        padLeft(extract(holder, 2), 64, '0');  // encoded data for the transaction
 
     string_q cmd = "[{\"to\": \"[TOKEN]\", \"data\": \"0x70a08231[HOLDER]\"}, \"[BLOCK]\"]";
     //        string_q cmd = "[{\"to\": \"[TOKEN]\", \"data\": \"0x18160ddd\"}, \"[BLOCK]\"]";

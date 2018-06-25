@@ -21,7 +21,7 @@ public:
     CPriceSource source;
 
     COptions(void);
-    ~COptions(void) {};
+    ~COptions(void) { }
 
     bool parseArguments(string_q& command) override;
     void Init(void) override;

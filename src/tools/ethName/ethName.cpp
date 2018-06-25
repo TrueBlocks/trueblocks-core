@@ -71,7 +71,7 @@ string_q COptions::showMatches(void) {
     }
 
     if (count)
-        ret = asStringU(hits) + " match" + (hits==1?"":"es") + "\n" + (verbose ? ret : "");
+        ret = asStringU(hits) + " match" + (hits == 1 ? "" : "es") + "\n" + (verbose ? ret : "");
 
     return ret;
 }

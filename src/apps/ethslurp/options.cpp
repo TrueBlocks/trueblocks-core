@@ -105,7 +105,7 @@ bool COptions::parseArguments(string_q& command) {
             } else if (!ret.empty()) {
                 return usage(ret);
             }
-            // HACK ALERT: ethslurp, being old, used to provide inclusive block ranges (i.e. last was included in range).
+            // HACK ALERT: ethslurp used to provide inclusive block ranges (i.e. last was included in range).
             // New version does not include last in range, so we add one here to make it work the same.
             blocks.stop++;
 
@@ -201,7 +201,8 @@ bool COptions::parseArguments(string_q& command) {
 
             addr = fixAddress(arg);
             if (!isAddress(addr))
-                 return usage(addr + " appears to be an invalid address. Valid addresses start with '0x' and are 20 bytes (40 chars) long. Quitting...");
+                 return usage(addr + " appears to be an invalid address. Valid addresses start with '0x' "
+                              "and are 20 bytes (40 chars) long. Quitting...");
         }
     }
 

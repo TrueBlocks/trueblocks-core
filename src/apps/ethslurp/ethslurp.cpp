@@ -10,6 +10,7 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
+#include <string>
 #include "ethslurp.h"
 #include "options.h"
 
@@ -46,8 +47,9 @@ int main(int argc, const char * argv[]) {
                 // Fix for issue #252.
                 cerr << cRed << "\t" << message << cOff << "\n";
                 return 0;
-            } else
+            } else {
                 return usage(message);
+            }
         }
 
         // Apply the filters if any...
@@ -134,7 +136,7 @@ bool CSlurperApp::Initialize(COptions& options, string_q& message) {
         perAddr.setFilename(customConfig);
         if (fileExists(customConfig)) {
             perAddr.readFile(customConfig);
-            ((CToml*)getGlobalConfig("ethslurp"))->mergeFile(&perAddr);
+            ((CToml*)getGlobalConfig("ethslurp"))->mergeFile(&perAddr);  // NOLINT
         }
     }
 
@@ -358,9 +360,9 @@ bool CSlurperApp::Filter(COptions& options, string_q& message) {
         }
 
 // TAKEN OUT OF CTransaction class during cleanup
-////---------------------------------------------------------------------------
-//bool CTransaction::isFunction(const string_q& func) const
-//{
+// //---------------------------------------------------------------------------
+// bool CTransaction::isFunction(const string_q& func) const
+// {
 //    if (func=="none")
 //    {
 //        string_q ret = inputToFunction();
@@ -369,7 +371,7 @@ bool CSlurperApp::Filter(COptions& options, string_q& message) {
 //        return (ret==" ");
 //    }
 //    return (funcPtr ? funcPtr->name == func : false);
-//}
+// }
 //        if (!options.funcFilter.empty()) {
 //            bool show = false;
 //            for (uint64_t jj = 0 ; jj < nFuncFilts ; jj++)
@@ -411,7 +413,8 @@ bool CSlurperApp::Display(COptions& options, string_q& message) {
     double start = qbNow();
 
     if (options.reverseSort) {
-        qsort(&theAccount.transactions.m_Items[0], theAccount.transactions.m_nItems, sizeof(CTransaction), sortReverseChron);
+        qsort(&theAccount.transactions.m_Items[0], theAccount.transactions.m_nItems,
+                    sizeof(CTransaction), sortReverseChron);
     }
 
     if (options.cache) {
@@ -481,7 +484,7 @@ const char *ERR_NO_DISPLAY_STR =
 
 //---------------------------------------------------------------------------------------------------
 bool buildFieldList(const CFieldData& fld, void *data) {
-    string_q *s = (string_q*)data;
+    string_q *s = (string_q*)data;  // NOLINT
     *s += (fld.getName() + "|");
     return true;
 }
@@ -501,7 +504,8 @@ void CSlurperApp::buildDisplayStrings(COptions& options) {
     ASSERT(!fmtForFields.empty());
 
     string_q defList = getGlobalConfig("ethslurp")->getConfigStr("display", "fmt_fieldList", EMPTY);
-    string_q fieldList = getGlobalConfig("ethslurp")->getConfigStr("display", "fmt_"+options.exportFormat+"_fieldList", defList);
+    string_q fieldList = getGlobalConfig("ethslurp")->getConfigStr("display",
+                                                "fmt_" + options.exportFormat + "_fieldList", defList);
     if (fieldList.empty())
         GETRUNTIME_CLASS(CTransaction)->forEveryField(buildFieldList, &fieldList);
 
@@ -524,8 +528,14 @@ void CSlurperApp::buildDisplayStrings(COptions& options) {
             string_q resolved = fieldName;
             if (options.exportFormat != "json")
                 resolved = getGlobalConfig("ethslurp")->getConfigStr("field_str", fieldName, fieldName);
-            theAccount.displayString += substitute(substitute(fmtForFields, "{FIELD}", "{" + toUpper(resolved)+"}"), "{p:FIELD}", "{p:"+resolved+"}");
-            theAccount.header += substitute(substitute(substitute(substitute(fmtForFields, "{FIELD}", resolved), "[", EMPTY), "]", EMPTY), "<td ", "<th ");
+            theAccount.displayString +=
+                substitute(
+                substitute(fmtForFields, "{FIELD}", "{" + toUpper(resolved)+"}"), "{p:FIELD}", "{p:"+resolved+"}");
+            theAccount.header +=
+                substitute(
+                substitute(
+                substitute(
+                substitute(fmtForFields, "{FIELD}", resolved), "[", EMPTY), "]", EMPTY), "<td ", "<th ");
         }
     }
     theAccount.displayString = trimWhitespace(theAccount.displayString);
@@ -671,15 +681,15 @@ static CFunctionArray *getABIArray(void) {
 
 //---------------------------------------------------------------------------
 int findByEncoding(const void *rr1, const void *rr2) {
-    CFunction *f1 = (CFunction*)rr1;
-    CFunction *f2 = (CFunction*)rr2;
+    CFunction *f1 = (CFunction*)rr1;  // NOLINT
+    CFunction *f2 = (CFunction*)rr2;  // NOLINT
     return f2->encoding.compare(f1->encoding);
 }
 
 //---------------------------------------------------------------------------
 int findByEncodingI(const void *rr1, const void *rr2) {
-    CFunction *f1 = (CFunction*)rr1;
-    CFunction *f2 = (CFunction*)rr2;
+    CFunction *f1 = (CFunction*)rr1;  // NOLINT
+    CFunction *f2 = (CFunction*)rr2;  // NOLINT
     return toLower(f2->encoding).compare(toLower(f1->encoding));
 }
 
@@ -689,7 +699,8 @@ CFunction *findFunctionByEncoding(const string_q& encoding) {
     if (array) {
         CFunction search;
         search.encoding = encoding;
-        return NULL; //array->Find(&search, findByEncodingI);
+        // TODO(tjayrush): This was removed when we move to vector class
+        return NULL;  // array->Find(&search, findByEncodingI);
     }
     return NULL;
 }
@@ -699,6 +710,7 @@ namespace qblocks {
 CFunction *findFunctionByEncoding(CAbi& abi, const string_q& enc) {
     CFunction search;
     search.encoding = enc;
-    return NULL; //abi.abiByEncoding.Find(&search, findByEncoding);
+    // TODO(tjayrush): This was removed when we move to vector class
+    return NULL;  // abi.abiByEncoding.Find(&search, findByEncoding);
 }
 };

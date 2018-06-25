@@ -83,7 +83,7 @@ bool CAccount::setValueByName(const string_q& fieldName, const string_q& fieldVa
             break;
         case 't':
             if ( fieldName % "transactions" ) {
-                char *p = (char *)fieldValue.c_str();
+                char *p = (char *)fieldValue.c_str();  // NOLINT
                 while (p && *p) {
                     CTransaction item;
                     size_t nFields = 0;

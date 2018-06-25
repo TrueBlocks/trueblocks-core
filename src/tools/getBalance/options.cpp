@@ -15,13 +15,16 @@
 //---------------------------------------------------------------------------------------------------
 CParams params[] = {
     CParams("~address_list", "one or more addresses (0x...) from which to retrieve balances"),
-    CParams("~!block_list",  "an optional list of one or more blocks at which to report balances, defaults to 'latest'"),
+    CParams("~!block_list",  "an optional list of one or more blocks at which to report balances, "
+                                    "defaults to 'latest'"),
     CParams("-data",         "render results as tab delimited data"),
-    CParams("-list:<fn>",    "an alternative way to specify an address_list; place one address per line in the file 'fn'"),
+    CParams("-list:<fn>",    "an alternative way to specify an address_list; place one address per "
+                                    "line in the file 'fn'"),
     CParams("-noZero",       "suppress the display of zero balance accounts"),
     CParams("-total",        "if more than one balance is requested, display a total as well."),
     CParams("-changes",      "only report a balance when it changes from one block to the next"),
-    CParams("",              "Retrieve the balance (in wei) for one or more addresses at the given block(s).\n"),
+    CParams("",              "Retrieve the balance (in wei) for one or more addresses at the given "
+                                    "block(s).\n"),
 };
 size_t nParams = sizeof(params) / sizeof(CParams);
 
@@ -58,11 +61,13 @@ bool COptions::parseArguments(string_q& command) {
                 return usage("File " + fileName.relativePath() + " not found. Quitting...");
             string_q contents = asciiFileToString(fileName.getFullPath());
             if (contents.empty())
-                return usage("No addresses were found in file " + fileName.relativePath() + ". Quitting...");
+                return usage("No addresses were found in file " +
+                                        fileName.relativePath() + ". Quitting...");
             while (!contents.empty()) {
                 string_q line = nextTokenClear(contents, '\n');
                 if (!isAddress(line))
-                    return usage(line + " does not appear to be a valid Ethereum address. Quitting...");
+                    return usage(line + " does not appear to be a valid "
+                                        "Ethereum address. Quitting...");
                 address_list += line + "|";
             }
 
@@ -148,14 +153,17 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
 
     if (which == "options") {
         return
-            substitute(substitute(str, "address_list block_list", "<address> [address...] [block...]"), "-l|", "-l fn|");
+            substitute(substitute(str, "address_list block_list", "<address> [address...] [block...]"),
+                                            "-l|", "-l fn|");
 
     } else if (which == "notes" && (verbose || COptions::isReadme)) {
 
         string_q ret;
         ret += "[{addresses}] must start with '0x' and be forty characters long.\n";
-        ret += "[{block_list}] may be a space-separated list of values, a start-end range, a [{special}], or any combination.\n";
-        ret += "This tool retrieves information from the local node or the ${FALLBACK} node, if configured (see documentation).\n";
+        ret += "[{block_list}] may be a space-separated list of values, a start-end range, a "
+                    "[{special}], or any combination.\n";
+        ret += "This tool retrieves information from the local node or the ${FALLBACK} node, if "
+                    "configured (see documentation).\n";
         ret += "If the queried node does not store historical state, the results are undefined.\n";
         ret += "[{special}] blocks are detailed under " + cTeal + "[{whenBlock --list}]" + cOff + ".\n";
         return ret;

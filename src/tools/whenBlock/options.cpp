@@ -10,6 +10,7 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
+#include <string>
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
@@ -71,7 +72,7 @@ bool COptions::parseArguments(string_q& command) {
                 cout << ") is in the future. No such block. Quitting...\n";
                 return false;
 
-            } else if (date < SFTime(2015,07,30,15,25,00)) {
+            } else if (date < SFTime(2015, 7, 30, 15, 25, 00)) {
                 // first block was at 15:26:00
                 cout << "The date you specified (";
                 cout << cTeal << orig << cOff;
@@ -108,7 +109,7 @@ bool COptions::parseArguments(string_q& command) {
                 string_q blockList = getBlockNumList();
                 blocks.Init();
                 while (!blockList.empty()) {
-                    requests.push_back("block:" + nextTokenClear(blockList,'|'));
+                    requests.push_back("block:" + nextTokenClear(blockList, '|'));
                 }
                 foundOne = true;
             }
@@ -177,20 +178,21 @@ SFTime grabDate(const string_q& strIn) {
         return earliestDate;
     }
 
-//#error
+// #error
     string_q str = strIn;
-    replaceAny(str, " -:",";");
+    replaceAny(str, " -:", ";");
     replace(str, ";UTC", "");
-    str = nextTokenClear(str,'.');
+    str = nextTokenClear(str, '.');
 
     // Expects four number year, two number month and day at a minimum. Fields may be separated by '-' or ';'
     //    YYYYMMDD or YYYY;MM;DD
     replaceAll(str, ";", "");
     if (contains(str, "T")) {
-        replace(str, "T","");
-        if      (str.length() == 10) str += "0000";
-        else if (str.length() == 12) str += "00";
-        else if (str.length() != 14) { cerr << "Bad: " << str << "\n"; return earliestDate; }
+        replace(str, "T", "");
+               if (str.length() == 10) { str += "0000";
+        } else if (str.length() == 12) { str += "00";
+        } else if (str.length() != 14) { cerr << "Bad: " << str << "\n"; return earliestDate;
+        }
     } else {
         str += "000000";
     }
@@ -222,7 +224,7 @@ SFTime grabDate(const string_q& strIn) {
 //--------------------------------------------------------------------------------
 string_q COptions::listSpecials(bool terse) const {
     if (specials.size() == 0)
-        ((COptionsBase*)this)->loadSpecials();
+        ((COptionsBase*)this)->loadSpecials();  // NOLINT
 
     ostringstream os;
     if (!alone) {
@@ -259,11 +261,12 @@ string_q COptions::listSpecials(bool terse) const {
                 if (!((i+1)%4)) {
                     if (i < specials.size()-1)
                         os << "\n  ";
-                } else if (i < specials.size()-1)
+                } else if (i < specials.size()-1) {
                     os << ", ";
+                }
             } else {
                 os << "\n      - " << padRight(name, 15);
-                os << cTeal << padLeft(bn,9) << cOff;
+                os << cTeal << padLeft(bn, 9) << cOff;
                 if (verbose) {
                     CBlock block;
                     getBlock(block, bn);
@@ -273,7 +276,7 @@ string_q COptions::listSpecials(bool terse) const {
                         os << block.Format(" [{DATE}] ([{TIMESTAMP}])");
                     }
                 }
-                os << extra ;
+                os << extra;
             }
         }
     }
