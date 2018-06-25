@@ -17,8 +17,8 @@
 #include "fromtransferfrom.h"
 #include "options.h"
 
-extern bool visitAddrs(blknum_t bn, blknum_t tx, blknum_t tc, const SFAddress& addr, void *data);
-extern bool accumAddrs(blknum_t bn, blknum_t tx, blknum_t tc, const SFAddress& addr, void *data);
+extern bool visitAddrs(const CAddressItem& item, void *data);
+extern bool accumAddrs(const CAddressItem& item, void *data);
 extern bool transFilter(const CTransaction *trans, void *data);
 extern bool sortAddressArray(const CAddressItem& v1, const CAddressItem& v2);
 //--------------------------------------------------------------
@@ -55,7 +55,7 @@ int main(int argc, const char *argv[]) {
         vector<CAddressItem> array;
         block.forEveryUniqueAddress(accumAddrs, transFilter, &array);
         sort(array.begin(), array.end(), sortAddressArray);
-        for (const auto elem : array)
+        for (auto elem : array)
             cout << elem << "\n";
     } else {
 
@@ -105,21 +105,17 @@ int main(int argc, const char *argv[]) {
 }
 
 //----------------------------------------------------------------
-bool visitAddrs(blknum_t bn, blknum_t tx, blknum_t tc, const SFAddress& addr, void *data) {
-    if (zeroAddr(addr))
+bool visitAddrs(const CAddressItem& item, void *data) {
+    if (zeroAddr(item.addr))
         return true;
-
-    CAddressItem item(bn, tx, tc, addr);
     cout << item << "\n";
     return true;
 }
 
 //----------------------------------------------------------------
-bool accumAddrs(blknum_t bn, blknum_t tx, blknum_t tc, const SFAddress& addr, void *data) {
-    if (zeroAddr(addr))
+bool accumAddrs(const CAddressItem& item, void *data) {
+    if (zeroAddr(item.addr))
         return true;
-
-    CAddressItem item(bn, tx, tc, addr);
     vector<CAddressItem> *array = (vector<CAddressItem> *)data;
     array->push_back(item);
     return true;
@@ -133,13 +129,13 @@ bool transFilter(const CTransaction *trans, void *data) {
 
 //----------------------------------------------------------------
 bool sortAddressArray(const CAddressItem& v1, const CAddressItem& v2) {
-    if (v1.blockNum != v2.blockNum)
-        return v1.blockNum < v2.blockNum;
-    int64_t vv1 = (int64_t)v1.transIndex;
-    int64_t vv2 = (int64_t)v2.transIndex;
+    if (v1.bn != v2.bn)
+        return v1.bn < v2.bn;
+    int64_t vv1 = (int64_t)v1.tx;
+    int64_t vv2 = (int64_t)v2.tx;
     if (vv1 != vv2)
         return vv1 < vv2;
-    if (v1.traceId != v2.traceId)
-        return v1.traceId < v2.traceId;
+    if (v1.tc != v2.tc)
+        return v1.tc < v2.tc;
     return v1.addr < v2.addr;
 }

@@ -23,21 +23,28 @@ int main(int argc, const char * argv[]) {
     if (!options.prepareArguments(argc, argv))
         return 0;
 
-    string_q checkResults;
     while (!options.commandList.empty()) {
         string_q command = nextTokenClear(options.commandList, '\n');
         if (!options.parseArguments(command))
             return 0;
 
         // There can be more than one thing to do...
-        if (!options.quiet)
+        if (!options.quiet && !options.addrs)
             cout << (options.isMulti() ? "[" : "");
 
         string_q list = options.getBlockNumList();
         while (!list.empty() && !shouldQuit()) {
             blknum_t bn = toLongU(nextTokenClear(list, '|'));
-            if (options.isCheck) {
-                checkResults += checkOneBlock(bn, options);
+            if (options.addrs) {
+                string_q checkResults = getAddresses(bn, options);
+                cout << checkResults;
+                cout.flush();
+
+            } else if (options.isCheck) {
+                string_q checkResults = checkOneBlock(bn, options);
+                cout << checkResults << (options.quiet > 1 ? "" : "\n");
+                cout.flush();
+
             } else {
                 string_q result = doOneBlock(bn, options);
                 if (options.normalize) {
@@ -57,13 +64,8 @@ int main(int argc, const char * argv[]) {
             }
         }
 
-        if (!options.quiet)
+        if (!options.quiet && !options.addrs)
             cout << (options.isMulti() ? "]" : "");
-
-        if (options.isCheck) {
-            cout << checkResults << (options.quiet > 1 ? "" : "\n");
-            cout.flush();
-        }
     }
 
     return 0;
@@ -195,4 +197,35 @@ extern string_q hiddenFields(void);
 void interumReport(ostream& os, blknum_t i) {
     os << (!(i%150) ? "." : (!(i%1000)) ? "+" : "");  // dots '.' at every 150, '+' at every 1000
     os.flush();
+}
+
+extern bool visitAddrs(const CAddressItem& item, void *data);
+extern bool transFilter(const CTransaction *trans, void *data);
+//------------------------------------------------------------
+string_q getAddresses(uint64_t num, const COptions& opt) {
+
+    SFAddressArray array;
+    CBlock block;
+    getBlock(block, num);
+    block.forEveryUniqueAddress(visitAddrs, transFilter, &array);
+    ostringstream os;
+    for (auto elem : array)
+        os << num << "\t" << elem << "\n";
+    return os.str().c_str();
+}
+
+//----------------------------------------------------------------
+bool visitAddrs(const CAddressItem& item, void *data) {
+    SFAddressArray *array = (SFAddressArray*)data;
+    array->push_back(item.addr);
+    return true;
+}
+
+//----------------------------------------------------------------
+// Return 'true' if we want the caller NOT to visit the traces of this transaction
+bool transFilter(const CTransaction *trans, void *data) {
+    // TODO: Use an option here for deep trace
+    if (!ddosRange(trans->blockNumber))
+        return false;
+    return (getTraceCount(trans->hash) > 250);
 }

@@ -17,9 +17,13 @@ CParams params[] = {
     CParams("~block_list",       "a space-separated list of one or more blocks to retrieve"),
     CParams("-raw",              "pull the block data from the running Ethereum node (no cache)"),
     CParams("-hash_o(n)ly",      "display only transaction hashes, default is to display full transaction detail"),
-//    CParams("-trac(e)s",         "include transaction traces in the export"),
     CParams("-check",            "compare results between qblocks and Ethereum node, report differences, if any"),
     CParams("-latest",           "display the latest blocks at both the node and the cache"),
+    CParams("-addresses",        "display addresses included in the block"),
+//  CParams("-trac(e)s",         "include transaction traces in the export"),
+//    CParams("-addresses:<val>",  "display addresses included in block as one of: [ all | to | from |\n\t\t\t\t"
+//            "self-destruct | create | log-topic | log-data | input-data |\n\t\t\t\t"
+//            "trace-to | trace-from | trace-data | trace-call ]"),
     CParams("@f(o)rce",          "force a re-write of the block to the cache"),
     CParams("@quiet",            "do not print results to screen, used for speed testing and data checking"),
     CParams("@source:[c|r]",     "either :c(a)che or :(r)aw, source for data retrival. (shortcuts "
@@ -47,7 +51,7 @@ bool COptions::parseArguments(string_q& command) {
 
         // shortcuts
         if (arg == "-r" || arg == "--raw")   { arg = "--source:raw";   }
-        if (arg == "-a" || arg == "--cache") { arg = "--source:cache"; }
+        if (arg == "-d" || arg == "--cache") { arg = "--source:cache"; }
 
         // do not collapse
         if (arg == "-c" || arg == "--check") {
@@ -91,8 +95,8 @@ bool COptions::parseArguments(string_q& command) {
             cout << cOff << "\n";
             isLatest = true;
 
-        } else if (startsWith(arg, "-s:") || startsWith(arg, "--source:")) {
-            string_q mode = substitute(substitute(arg, "-s:", ""), "--source:", "");
+        } else if (startsWith(arg, "--source:")) {
+            string_q mode = substitute(arg, "--source:", "");
             if (mode == "r" || mode == "raw") {
                 isRaw = true;
 
@@ -110,6 +114,9 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-n" || arg == "--hash_only") {
             hashes = true;
+
+        } else if (arg == "-a" || arg == "--addresses") {
+            addrs = true;
 
         } else if (arg == "-e" || arg == "--traces") {
             traces = true;
@@ -206,6 +213,13 @@ bool COptions::parseArguments(string_q& command) {
         HIDE_FIELD(CReceipt,     "gasUsed");
         HIDE_FIELD(CReceipt,     "logs");
         HIDE_FIELD(CReceipt,     "status");
+        HIDE_FIELD(CBlock,       "gasLimit");
+        HIDE_FIELD(CBlock,       "gasUsed");
+        HIDE_FIELD(CBlock,       "parentHash");
+        HIDE_FIELD(CBlock,       "miner");
+        HIDE_FIELD(CBlock,       "difficulty");
+        HIDE_FIELD(CBlock,       "price");
+        HIDE_FIELD(CBlock,       "finalized");
     }
 
     if (!blocks.hasBlocks() && !isLatest)
@@ -227,11 +241,13 @@ void COptions::Init(void) {
 
     isCheck     = false;
     isRaw       = false;
+    isCache     = false;
     hashes      = false;
+    addrs       = false;
     traces      = false;
     force       = false;
     normalize   = false;
-    isCache     = false;
+    silent      = false;
     quiet       = 0;  // quiet has levels
     format      = "";
     priceBlocks = false;
