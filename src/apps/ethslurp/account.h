@@ -153,7 +153,7 @@ inline bool operator<(const CAccount& v1, const CAccount& v2) {
 }
 
 //---------------------------------------------------------------------------
-typedef vector<CAccount> CAccountArray;
+typedef SFArrayBase<CAccount> CAccountArray;
 extern SFArchive& operator>>(SFArchive& archive, CAccountArray& array);
 extern SFArchive& operator<<(SFArchive& archive, const CAccountArray& array);
 
