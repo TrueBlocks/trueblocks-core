@@ -63,7 +63,7 @@ int main(int argc, const char *argv[]) {
     if (options.state.needsNewline)
         cerr << string_q(103, ' ') << "\n";
 
-    if (!nodeHasBalances() && (options.state.latestBlock - options.state.earliestBlock) > 250)
+    if ((options.state.latestBlock - options.state.earliestBlock) > 250 && !nodeHasBalances() && !isTestMode())
         cerr << cRed << "    Warning: " << cOff << "The node you're using does not have historical balances. Reported "
                                                     "values may be wrong.\n";
 
