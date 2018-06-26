@@ -15,6 +15,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <vector>
 #include "etherlib.h"
 #include "transaction.h"
 
@@ -151,7 +152,7 @@ inline bool operator<(const CNewBlock& v1, const CNewBlock& v2) {
 }
 
 //---------------------------------------------------------------------------
-typedef SFArrayBase<CNewBlock> CNewBlockArray;
+typedef vector<CNewBlock> CNewBlockArray;
 extern SFArchive& operator>>(SFArchive& archive, CNewBlockArray& array);
 extern SFArchive& operator<<(SFArchive& archive, const CNewBlockArray& array);
 

@@ -15,6 +15,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <vector>
 #include "etherlib.h"
 #include "treenode.h"
 
@@ -140,7 +141,7 @@ inline bool operator<(const CBranch& v1, const CBranch& v2) {
 }
 
 //---------------------------------------------------------------------------
-typedef SFArrayBase<CBranch> CBranchArray;
+typedef vector<CBranch> CBranchArray;
 extern SFArchive& operator>>(SFArchive& archive, CBranchArray& array);
 extern SFArchive& operator<<(SFArchive& archive, const CBranchArray& array);
 

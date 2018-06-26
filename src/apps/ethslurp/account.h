@@ -15,6 +15,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <vector>
 #include "abilib.h"
 #include "transaction.h"
 
@@ -152,7 +153,7 @@ inline bool operator<(const CAccount& v1, const CAccount& v2) {
 }
 
 //---------------------------------------------------------------------------
-typedef SFArrayBase<CAccount> CAccountArray;
+typedef vector<CAccount> CAccountArray;
 extern SFArchive& operator>>(SFArchive& archive, CAccountArray& array);
 extern SFArchive& operator<<(SFArchive& archive, const CAccountArray& array);
 

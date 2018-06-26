@@ -15,6 +15,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <vector>
 #include "basetypes.h"
 #include "basenode.h"
 #include "sfarchive.h"
@@ -135,7 +136,7 @@ inline bool operator<(const CAccountName& v1, const CAccountName& v2) {
 }
 
 //---------------------------------------------------------------------------
-typedef SFArrayBase<CAccountName> CAccountNameArray;
+typedef vector<CAccountName> CAccountNameArray;
 extern SFArchive& operator>>(SFArchive& archive, CAccountNameArray& array);
 extern SFArchive& operator<<(SFArchive& archive, const CAccountNameArray& array);
 

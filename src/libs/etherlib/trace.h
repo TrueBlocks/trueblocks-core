@@ -15,6 +15,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <vector>
 #include "abilib.h"
 #include "traceaction.h"
 #include "traceresult.h"
@@ -162,7 +163,7 @@ inline bool operator<(const CTrace& v1, const CTrace& v2) {
 }
 
 //---------------------------------------------------------------------------
-typedef SFArrayBase<CTrace> CTraceArray;
+typedef vector<CTrace> CTraceArray;
 extern SFArchive& operator>>(SFArchive& archive, CTraceArray& array);
 extern SFArchive& operator<<(SFArchive& archive, const CTraceArray& array);
 

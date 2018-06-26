@@ -15,6 +15,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <vector>
 #include "transferfrom.h"
 
 // EXISTING_CODE
@@ -120,7 +121,7 @@ inline bool operator<(const QFromTransferFrom& v1, const QFromTransferFrom& v2) 
 }
 
 //---------------------------------------------------------------------------
-typedef SFArrayBase<QFromTransferFrom> QFromTransferFromArray;
+typedef vector<QFromTransferFrom> QFromTransferFromArray;
 extern SFArchive& operator>>(SFArchive& archive, QFromTransferFromArray& array);
 extern SFArchive& operator<<(SFArchive& archive, const QFromTransferFromArray& array);
 
