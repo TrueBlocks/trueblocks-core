@@ -150,13 +150,13 @@ namespace qblocks {
 
 #define SFAddress      string_q
 #define SFHash         string_q
-#define SFBloom        SFUintBN
 #define SFWei          SFUintBN
+#define SFBloom        SFUintBN
 #define SFGas          uint64_t
 #define blknum_t       uint64_t
 #define txnum_t        uint64_t
     typedef vector<string_q> SFAddressArray;
-    typedef SFArrayBase<SFBloom> SFBloomArray;
+    typedef vector<SFBloom> SFBloomArray;
 
 #define toHash(a)      toLower(a)
 #define toTopic(a)     canonicalWei(a)

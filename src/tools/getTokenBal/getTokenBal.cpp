@@ -42,7 +42,7 @@ int main(int argc, const char *argv[]) {
 
     }
 
-    if (!nodeHasBalances() && (options.latestBlock - options.earliestBlock) > 250)
+    if ((options.latestBlock - options.earliestBlock) > 250 && !nodeHasBalances() && !isTestMode())
         cerr << cRed << "    Warning: " << cOff << "The node you're using does not have historical balances. Reported "
                                                     "values may be wrong.\n";
 
