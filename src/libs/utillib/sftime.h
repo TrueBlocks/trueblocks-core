@@ -160,8 +160,6 @@ public:
     extern const SFTime latestDate;
     extern const SFTime earliestDate;
 
-    typedef SFArrayBase<SFTime> SFTimeArray;
-
 #define FMT_JSON string_q("%Y-%m-%d %H:%M:%S UTC")
 
     extern uint32_t DaysInMonth(uint32_t year, uint32_t month);
