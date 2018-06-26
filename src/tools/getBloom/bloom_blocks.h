@@ -44,7 +44,7 @@ class CBloomBlock : public CBaseNode {
 public:
     string_q logsBloom;
     blknum_t number;
-    SFArrayBase<CBloomTrans> transactions;
+    vector<CBloomTrans> transactions;
     DECLARE_NODE(CBloomBlock);
     CBloomBlock(void);
     const CBaseNode *getObjectAt(const string_q& name, size_t i) const override;
