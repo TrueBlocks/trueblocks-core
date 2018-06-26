@@ -279,6 +279,8 @@ namespace qblocks {
     typedef vector<string_q> CStringArray;
     typedef vector<uint64_t> SFUintArray;
     typedef vector<int64_t>  SFIntArray;
+    typedef SFArrayBase<SFUintBN> SFBigUintArray;
+    typedef SFArrayBase<SFIntBN> SFBigIntArray;
 
     #define CBlockNumArray SFUintArray
 
