@@ -216,7 +216,7 @@ string_q getAddresses(uint64_t num, const COptions& opt) {
 
 //----------------------------------------------------------------
 bool visitAddrs(const CAddressItem& item, void *data) {
-    SFAddressArray *array = (SFAddressArray*)data;
+    SFAddressArray *array = (SFAddressArray*)data;  // NOLINT
     array->push_back(item.addr);
     return true;
 }
@@ -224,7 +224,7 @@ bool visitAddrs(const CAddressItem& item, void *data) {
 //----------------------------------------------------------------
 // Return 'true' if we want the caller NOT to visit the traces of this transaction
 bool transFilter(const CTransaction *trans, void *data) {
-    // TODO: Use an option here for deep trace
+    // TODO(tjayrush): Use an option here for deep trace
     if (!ddosRange(trans->blockNumber))
         return false;
     return (getTraceCount(trans->hash) > 250);
