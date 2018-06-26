@@ -15,6 +15,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <vector>
 #include "abilib.h"
 #include "logentry.h"
 
@@ -133,7 +134,7 @@ inline bool operator<(const CNewReceipt& v1, const CNewReceipt& v2) {
 }
 
 //---------------------------------------------------------------------------
-typedef SFArrayBase<CNewReceipt> CNewReceiptArray;
+typedef vector<CNewReceipt> CNewReceiptArray;
 extern SFArchive& operator>>(SFArchive& archive, CNewReceiptArray& array);
 extern SFArchive& operator<<(SFArchive& archive, const CNewReceiptArray& array);
 

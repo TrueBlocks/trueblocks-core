@@ -15,6 +15,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <vector>
 #include <algorithm>
 #include "etherlib.h"
 #include "treenode.h"
@@ -135,7 +136,7 @@ inline bool operator<(const CInfix& v1, const CInfix& v2) {
 }
 
 //---------------------------------------------------------------------------
-typedef SFArrayBase<CInfix> CInfixArray;
+typedef vector<CInfix> CInfixArray;
 extern SFArchive& operator>>(SFArchive& archive, CInfixArray& array);
 extern SFArchive& operator<<(SFArchive& archive, const CInfixArray& array);
 

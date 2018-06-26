@@ -15,6 +15,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <vector>
 #include "abilib.h"
 
 namespace qblocks {
@@ -140,7 +141,7 @@ inline bool operator<(const CIncomeStatement& v1, const CIncomeStatement& v2) {
 }
 
 //---------------------------------------------------------------------------
-typedef SFArrayBase<CIncomeStatement> CIncomeStatementArray;
+typedef vector<CIncomeStatement> CIncomeStatementArray;
 extern SFArchive& operator>>(SFArchive& archive, CIncomeStatementArray& array);
 extern SFArchive& operator<<(SFArchive& archive, const CIncomeStatementArray& array);
 

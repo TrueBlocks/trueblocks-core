@@ -590,3 +590,4 @@ bool CBlock::forEveryAddress(ADDRESSFUNC func, TRANSFUNC filterFunc, void *data)
 }
 // EXISTING_CODE
 }  // namespace qblocks
+
