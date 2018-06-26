@@ -515,21 +515,19 @@ bool CTransaction::operator==(const CTransaction& test) const {
     return true;
 }
 
-int sortTransactionsForWrite(const void *rr1, const void *rr2) {
-    CTransaction *tr1 = (CTransaction*)rr1;  // NOLINT
-    CTransaction *tr2 = (CTransaction*)rr2;  // NOLINT
-
-    if (tr1->timestamp > tr2->timestamp)
+//--------------------------------------------------------------------
+bool sortTransactionsForWrite(const CTransaction& tr1, const CTransaction& tr2) {
+    if (tr1.timestamp > tr2.timestamp)
         return 1;
-    else if (tr1->timestamp < tr2->timestamp)
+    else if (tr1.timestamp < tr2.timestamp)
         return -1;
-    if (tr1->from.compare(tr2->from))
-        return tr1->from.compare(tr2->from);
-    if (tr1->transactionIndex > tr2->transactionIndex)
+    if (tr1.from.compare(tr2.from))
+        return tr1.from.compare(tr2.from);
+    if (tr1.transactionIndex > tr2.transactionIndex)
         return 1;
-    else if (tr1->transactionIndex < tr2->transactionIndex)
+    else if (tr1.transactionIndex < tr2.transactionIndex)
         return -1;
-    return tr1->hash.compare(tr2->hash);
+    return tr1.hash.compare(tr2.hash);
 }
 
 //--------------------------------------------------------------------

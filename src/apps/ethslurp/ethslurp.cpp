@@ -14,7 +14,7 @@
 #include "ethslurp.h"
 #include "options.h"
 
-extern int sortReverseChron(const void *rr1, const void *rr2);
+extern bool sortReverseChron(const CTransaction& t1, const CTransaction& t2);
 //--------------------------------------------------------------------------------
 int main(int argc, const char * argv[]) {
 
@@ -413,8 +413,7 @@ bool CSlurperApp::Display(COptions& options, string_q& message) {
     double start = qbNow();
 
     if (options.reverseSort) {
-        qsort(&theAccount.transactions.m_Items[0], theAccount.transactions.m_nItems,
-                    sizeof(CTransaction), sortReverseChron);
+        sort(theAccount.transactions.begin(), theAccount.transactions.end(), sortReverseChron);
     }
 
     if (options.cache) {
@@ -575,14 +574,10 @@ void findBlockRange(const string_q& json, size_t& minBlock, size_t& maxBlock) {
 }
 
 //----------------------------------------------------------------------------------------
-int sortReverseChron(const void *rr1, const void *rr2) {
-    const CTransaction *tr1 = reinterpret_cast<const CTransaction*>(rr1);
-    const CTransaction *tr2 = reinterpret_cast<const CTransaction*>(rr2);
-
-    int32_t ret = ((int32_t)tr2->timestamp - (int32_t)tr1->timestamp);
-    if (ret != 0)
-        return ret;
-    return sortTransactionsForWrite(rr1, rr2);
+bool sortReverseChron(const CTransaction& t1, const CTransaction& t2) {
+    if (t1.timestamp != t2.timestamp)
+        return t1.timestamp < t2.timestamp;
+    return sortTransactionsForWrite(t1, t2);
 }
 
 //---------------------------------------------------------------------------

@@ -15,6 +15,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <vector>
 #include "abilib.h"
 #include "logentry.h"
 
@@ -159,7 +160,7 @@ inline bool operator<(const CReceipt& v1, const CReceipt& v2) {
 }
 
 //---------------------------------------------------------------------------
-typedef SFArrayBase<CReceipt> CReceiptArray;
+typedef vector<CReceipt> CReceiptArray;
 extern SFArchive& operator>>(SFArchive& archive, CReceiptArray& array);
 extern SFArchive& operator<<(SFArchive& archive, const CReceiptArray& array);
 

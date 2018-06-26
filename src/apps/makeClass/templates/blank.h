@@ -116,7 +116,7 @@ inline bool operator<(const [{CLASS_NAME}]& v1, const [{CLASS_NAME}]& v2) {
 }
 
 //---------------------------------------------------------------------------
-typedef SFArrayBase<[{CLASS_NAME}]> [{CLASS_NAME}]Array;
+typedef vector<[{CLASS_NAME}]> [{CLASS_NAME}]Array;
 extern SFArchive& operator>>(SFArchive& archive, [{CLASS_NAME}]Array& array);
 extern SFArchive& operator<<(SFArchive& archive, const [{CLASS_NAME}]Array& array);
 

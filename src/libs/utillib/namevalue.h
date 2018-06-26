@@ -15,6 +15,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <vector>
 #include "basetypes.h"
 #include "basenode.h"
 #include "conversions.h"
@@ -130,7 +131,7 @@ inline bool operator<(const CNameValue& v1, const CNameValue& v2) {
 }
 
 //---------------------------------------------------------------------------
-typedef SFArrayBase<CNameValue> CNameValueArray;
+typedef vector<CNameValue> CNameValueArray;
 extern SFArchive& operator>>(SFArchive& archive, CNameValueArray& array);
 extern SFArchive& operator<<(SFArchive& archive, const CNameValueArray& array);
 

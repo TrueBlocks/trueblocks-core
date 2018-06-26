@@ -15,6 +15,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <vector>
 #include "utillib.h"
 
 namespace qblocks {
@@ -125,7 +126,7 @@ inline bool operator<(const CRPCResult& v1, const CRPCResult& v2) {
 }
 
 //---------------------------------------------------------------------------
-typedef SFArrayBase<CRPCResult> CRPCResultArray;
+typedef vector<CRPCResult> CRPCResultArray;
 extern SFArchive& operator>>(SFArchive& archive, CRPCResultArray& array);
 extern SFArchive& operator<<(SFArchive& archive, const CRPCResultArray& array);
 

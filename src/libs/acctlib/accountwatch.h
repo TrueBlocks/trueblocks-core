@@ -15,6 +15,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <vector>
 #include "abilib.h"
 #include "transaction.h"
 #include "incomestatement.h"
@@ -167,7 +168,7 @@ inline bool operator<(const CAccountWatch& v1, const CAccountWatch& v2) {
 }
 
 //---------------------------------------------------------------------------
-typedef SFArrayBase<CAccountWatch> CAccountWatchArray;
+typedef vector<CAccountWatch> CAccountWatchArray;
 extern SFArchive& operator>>(SFArchive& archive, CAccountWatchArray& array);
 extern SFArchive& operator<<(SFArchive& archive, const CAccountWatchArray& array);
 
