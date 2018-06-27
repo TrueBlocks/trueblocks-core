@@ -4,4 +4,3 @@ fields    = int256 begBal|int256 inflow|int256 outflow|int256 gasCostInWei|int25
 includes  = abilib.h
 cIncs     = #include "etherlib.h"
 serialize = true
-

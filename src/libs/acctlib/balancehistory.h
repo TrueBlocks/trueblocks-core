@@ -24,32 +24,30 @@ namespace qblocks {
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CAcctCacheItem : public CBaseNode {
+class CBalanceHistory : public CBaseNode {
 public:
-    uint64_t blockNum;
-    uint64_t transIndex;
+    blknum_t bn;
+    SFUintBN balance;
 
 public:
-    CAcctCacheItem(void);
-    CAcctCacheItem(const CAcctCacheItem& ac);
-    virtual ~CAcctCacheItem(void);
-    CAcctCacheItem& operator=(const CAcctCacheItem& ac);
+    CBalanceHistory(void);
+    CBalanceHistory(const CBalanceHistory& ba);
+    virtual ~CBalanceHistory(void);
+    CBalanceHistory& operator=(const CBalanceHistory& ba);
 
-    DECLARE_NODE(CAcctCacheItem);
+    DECLARE_NODE(CBalanceHistory);
 
     // EXISTING_CODE
-    CAcctCacheItem(uint64_t b, uint64_t t) : blockNum(b), transIndex(t) {}
-    explicit CAcctCacheItem(string_q& str);
     // EXISTING_CODE
-    bool operator==(const CAcctCacheItem& item);
-    bool operator!=(const CAcctCacheItem& item) { return !operator==(item); }
-    friend bool operator<(const CAcctCacheItem& v1, const CAcctCacheItem& v2);
-    friend ostream& operator<<(ostream& os, const CAcctCacheItem& item);
+    bool operator==(const CBalanceHistory& item);
+    bool operator!=(const CBalanceHistory& item) { return !operator==(item); }
+    friend bool operator<(const CBalanceHistory& v1, const CBalanceHistory& v2);
+    friend ostream& operator<<(ostream& os, const CBalanceHistory& item);
 
 protected:
     void clear(void);
     void initialize(void);
-    void duplicate(const CAcctCacheItem& ac);
+    void duplicate(const CBalanceHistory& ba);
     bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
@@ -57,53 +55,53 @@ protected:
 };
 
 //--------------------------------------------------------------------------
-inline CAcctCacheItem::CAcctCacheItem(void) {
+inline CBalanceHistory::CBalanceHistory(void) {
     initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CAcctCacheItem::CAcctCacheItem(const CAcctCacheItem& ac) {
+inline CBalanceHistory::CBalanceHistory(const CBalanceHistory& ba) {
     // EXISTING_CODE
     // EXISTING_CODE
-    duplicate(ac);
+    duplicate(ba);
 }
 
 // EXISTING_CODE
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline CAcctCacheItem::~CAcctCacheItem(void) {
+inline CBalanceHistory::~CBalanceHistory(void) {
     clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CAcctCacheItem::clear(void) {
+inline void CBalanceHistory::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CAcctCacheItem::initialize(void) {
+inline void CBalanceHistory::initialize(void) {
     CBaseNode::initialize();
 
-    blockNum = 0;
-    transIndex = 0;
+    bn = 0;
+    balance = 0;
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CAcctCacheItem::duplicate(const CAcctCacheItem& ac) {
+inline void CBalanceHistory::duplicate(const CBalanceHistory& ba) {
     clear();
-    CBaseNode::duplicate(ac);
+    CBaseNode::duplicate(ba);
 
-    blockNum = ac.blockNum;
-    transIndex = ac.transIndex;
+    bn = ba.bn;
+    balance = ba.balance;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -111,35 +109,32 @@ inline void CAcctCacheItem::duplicate(const CAcctCacheItem& ac) {
 }
 
 //--------------------------------------------------------------------------
-inline CAcctCacheItem& CAcctCacheItem::operator=(const CAcctCacheItem& ac) {
-    duplicate(ac);
+inline CBalanceHistory& CBalanceHistory::operator=(const CBalanceHistory& ba) {
+    duplicate(ba);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
 //-------------------------------------------------------------------------
-inline bool CAcctCacheItem::operator==(const CAcctCacheItem& item) {
-    return (
-            blockNum == item.blockNum &&
-            transIndex == item.transIndex
-        );
+inline bool CBalanceHistory::operator==(const CBalanceHistory& item) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    return item.bn == item.bn;
 }
 
 //-------------------------------------------------------------------------
-inline bool operator<(const CAcctCacheItem& v1, const CAcctCacheItem& v2) {
+inline bool operator<(const CBalanceHistory& v1, const CBalanceHistory& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
-    // Default sort as defined in class definition
-    if (v1.blockNum != v2.blockNum)
-        return v1.blockNum < v2.blockNum;
-    return v1.transIndex < v2.transIndex;
+    // Default sort as defined in class definition, assume already sorted
+    return v1.bn < v2.bn;
 }
 
 //---------------------------------------------------------------------------
-typedef vector<CAcctCacheItem> CAcctCacheItemArray;
-extern SFArchive& operator>>(SFArchive& archive, CAcctCacheItemArray& array);
-extern SFArchive& operator<<(SFArchive& archive, const CAcctCacheItemArray& array);
+typedef vector<CBalanceHistory> CBalanceHistoryArray;
+extern SFArchive& operator>>(SFArchive& archive, CBalanceHistoryArray& array);
+extern SFArchive& operator<<(SFArchive& archive, const CBalanceHistoryArray& array);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
