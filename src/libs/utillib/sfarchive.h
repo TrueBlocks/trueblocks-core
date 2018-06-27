@@ -111,4 +111,5 @@ namespace qblocks {
     extern SFArchive& operator>>(SFArchive& archive, SFBigUintArray& array);
     extern SFArchive& operator>>(SFArchive& archive, SFBloomArray& array);
     extern SFArchive& operator>>(SFArchive& archive, SFUintArray& array);
+
 }  // namespace qblocks

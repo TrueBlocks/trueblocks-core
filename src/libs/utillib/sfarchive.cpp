@@ -68,6 +68,20 @@ namespace qblocks {
         return *this;
     }
 
+    SFArchive& SFArchive::operator<<(const SFUintBN& bn) {
+        *this << bn.capacity;
+        *this << bn.len;
+        for (size_t i=0 ; i < bn.len ; i++)
+            *this << (uint64_t)bn.blk[i];
+        return *this;
+    }
+
+    SFArchive& SFArchive::operator<<(const SFIntBN& bn) {
+        *this << (const unsigned int)bn.sign;
+        *this << bn.mag;
+        return *this;
+    }
+
     SFArchive& operator<<(SFArchive& archive, const CStringArray& array) {
         uint64_t count = array.size();
         archive << count;
@@ -98,20 +112,6 @@ namespace qblocks {
         for (size_t i = 0 ; i < array.size() ; i++)
             archive << array[i];
         return archive;
-    }
-
-    SFArchive& SFArchive::operator<<(const SFUintBN& bn) {
-        *this << bn.capacity;
-        *this << bn.len;
-        for (size_t i=0 ; i < bn.len ; i++)
-            *this << (uint64_t)bn.blk[i];
-        return *this;
-    }
-
-    SFArchive& SFArchive::operator<<(const SFIntBN& bn) {
-        *this << (const unsigned int)bn.sign;
-        *this << bn.mag;
-        return *this;
     }
 
     ///////////////////////////////////////////////////////////////////
@@ -160,6 +160,26 @@ namespace qblocks {
         return *this;
     }
 
+    SFArchive& SFArchive::operator>>(SFUintBN& bn) {
+        // Note: I experimented with writing out
+        // the blk in one Read/Write but it was
+        // always slower on my machine
+        unsigned int size;
+        *this >> size;
+        bn.allocate(size);
+        bn.capacity = size;
+        *this >> bn.len;
+        for (size_t i=0 ; i < bn.len ; i++)
+            *this >> bn.blk[i];
+        return *this;
+    }
+
+    SFArchive& SFArchive::operator>>(SFIntBN& bn) {
+        *this >> bn.sign;
+        *this >> bn.mag;
+        return *this;
+    }
+
     SFArchive& operator>>(SFArchive& archive, CStringArray& array) {
         uint64_t count;
         archive >> count;
@@ -202,26 +222,6 @@ namespace qblocks {
             array.push_back(num);
         }
         return archive;
-    }
-
-    SFArchive& SFArchive::operator>>(SFUintBN& bn) {
-        // Note: I experimented with writing out
-        // the blk in one Read/Write but it was
-        // always slower on my machine
-        unsigned int size;
-        *this >> size;
-        bn.allocate(size);
-        bn.capacity = size;
-        *this >> bn.len;
-        for (size_t i=0 ; i < bn.len ; i++)
-            *this >> bn.blk[i];
-        return *this;
-    }
-
-    SFArchive& SFArchive::operator>>(SFIntBN& bn) {
-        *this >> bn.sign;
-        *this >> bn.mag;
-        return *this;
     }
 
     //----------------------------------------------------------------------

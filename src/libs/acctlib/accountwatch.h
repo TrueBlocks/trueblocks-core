@@ -19,17 +19,11 @@
 #include "abilib.h"
 #include "transaction.h"
 #include "incomestatement.h"
+#include "balancehistory.h"
 
 namespace qblocks {
 
 // EXISTING_CODE
-class CBalanceHistory {
-public:
-    blknum_t bn;
-    SFUintBN balance;
-    CBalanceHistory(void) { bn = 0; balance = 0; }
-};
-typedef SFArrayBase<CBalanceHistory> CBalanceHistoryArray;
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
@@ -42,6 +36,7 @@ public:
     blknum_t lastBlock;
     bool deepScan;
     CIncomeStatement qbis;
+    CBalanceHistoryArray balanceHistory;
     SFWei nodeBal;
 
 public:
@@ -62,7 +57,6 @@ public:
     string_q displayName(bool expand, bool useColor, bool terse, size_t w1 = 20, size_t w2 = 8) const;
     SFBloom bloom;
     bool inBlock;
-    CBalanceHistoryArray balanceHistory;
     // EXISTING_CODE
     friend bool operator<(const CAccountWatch& v1, const CAccountWatch& v2);
     friend ostream& operator<<(ostream& os, const CAccountWatch& item);
@@ -118,13 +112,13 @@ inline void CAccountWatch::initialize(void) {
     lastBlock = 0;
     deepScan = 0;
     qbis.initialize();
+    balanceHistory.clear();
     nodeBal = 0;
 
     // EXISTING_CODE
     lastBlock = UINT_MAX;
     bloom = 0;
     inBlock = false;
-    balanceHistory.clear();
     // EXISTING_CODE
 }
 
@@ -140,13 +134,13 @@ inline void CAccountWatch::duplicate(const CAccountWatch& ac) {
     lastBlock = ac.lastBlock;
     deepScan = ac.deepScan;
     qbis = ac.qbis;
+    balanceHistory = ac.balanceHistory;
     nodeBal = ac.nodeBal;
 
     // EXISTING_CODE
     lastBlock = ac.lastBlock;
     bloom = ac.bloom;
     inBlock = ac.inBlock;
-    balanceHistory = ac.balanceHistory;
     // EXISTING_CODE
     finishParse();
 }

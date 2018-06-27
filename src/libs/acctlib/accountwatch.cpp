@@ -74,6 +74,19 @@ bool CAccountWatch::setValueByName(const string_q& fieldName, const string_q& fi
         case 'a':
             if ( fieldName % "address" ) { address = toAddress(fieldValue); return true; }
             break;
+        case 'b':
+            if ( fieldName % "balanceHistory" ) {
+                char *p = (char *)fieldValue.c_str();  // NOLINT
+                while (p && *p) {
+                    CBalanceHistory item;
+                    size_t nFields = 0;
+                    p = item.parseJson(p, nFields);
+                    if (nFields)
+                        balanceHistory.push_back(item);
+                }
+                return true;
+            }
+            break;
         case 'c':
             if ( fieldName % "color" ) { color = fieldValue; return true; }
             break;
@@ -125,6 +138,8 @@ bool CAccountWatch::Serialize(SFArchive& archive) {
     archive >> lastBlock;
     archive >> deepScan;
     archive >> qbis;
+// need to be able to not write fields that are otherwise part of the class
+//    archive >> balanceHistory;
     archive >> nodeBal;
     finishParse();
     return true;
@@ -145,6 +160,7 @@ bool CAccountWatch::SerializeC(SFArchive& archive) const {
     archive << lastBlock;
     archive << deepScan;
     archive << qbis;
+//    archive << balanceHistory;
     archive << nodeBal;
 
     return true;
@@ -188,6 +204,7 @@ void CAccountWatch::registerClass(void) {
     ADD_FIELD(CAccountWatch, "lastBlock", T_NUMBER, ++fieldNum);
     ADD_FIELD(CAccountWatch, "deepScan", T_BOOL, ++fieldNum);
     ADD_FIELD(CAccountWatch, "qbis", T_OBJECT, ++fieldNum);
+    ADD_FIELD(CAccountWatch, "balanceHistory", T_OBJECT|TS_ARRAY, ++fieldNum);
     ADD_FIELD(CAccountWatch, "nodeBal", T_WEI, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
@@ -245,6 +262,20 @@ string_q CAccountWatch::getValueByName(const string_q& fieldName) const {
         case 'a':
             if ( fieldName % "address" ) return fromAddress(address);
             break;
+        case 'b':
+            if ( fieldName % "balanceHistory" || fieldName % "balanceHistoryCnt" ) {
+                size_t cnt = balanceHistory.size();
+                if (endsWith(fieldName, "Cnt"))
+                    return asStringU(cnt);
+                if (!cnt) return "";
+                string_q retS;
+                for (size_t i = 0 ; i < cnt ; i++) {
+                    retS += balanceHistory[i].Format();
+                    retS += ((i < cnt - 1) ? ",\n" : "\n");
+                }
+                return retS;
+            }
+            break;
         case 'c':
             if ( fieldName % "color" ) return color;
             break;
@@ -295,6 +326,8 @@ ostream& operator<<(ostream& os, const CAccountWatch& item) {
 const CBaseNode *CAccountWatch::getObjectAt(const string_q& fieldName, size_t index) const {
     if ( fieldName % "qbis" )
         return &qbis;
+    if ( fieldName % "balanceHistory" && index < balanceHistory.size() )
+        return &balanceHistory[index];
     return NULL;
 }
 
@@ -326,7 +359,6 @@ string_q CAccountWatch::displayName(bool expand, bool useColor, bool terse, size
 }
 
 //-----------------------------------------------------------------------
-extern int findBalance(const void *ob1, const void *ob2);
 SFUintBN getNodeBal(CBalanceHistoryArray& history, const SFAddress& addr, blknum_t blockNum) {
 
     if (!startsWith(addr, "0x"))
@@ -370,13 +402,11 @@ SFUintBN getNodeBal(CBalanceHistoryArray& history, const SFAddress& addr, blknum
     }
 
     // First, we try to find it using a binary search. Many times this will hit...
-    CBalanceHistory find;
-    find.bn = blockNum;
-
-    CBalanceHistory *found = (CBalanceHistory*)  // NOLINT
-            bsearch(&find, &history.m_Items[0], history.m_nItems, sizeof(CBalanceHistory), findBalance);
-    if (found)
-        return found->balance;
+    CBalanceHistory search;
+    search.bn = blockNum;
+    const CBalanceHistoryArray::iterator it = find(history.begin(), history.end(), search);
+    if (it != history.end())
+        return it->balance;
 
     // ...if it doesn't hit, we need to find the most recent balance
     SFUintBN ret = 0;
@@ -401,15 +431,6 @@ SFUintBN getNodeBal(CBalanceHistoryArray& history, const SFAddress& addr, blknum
 
     // We finally fall to the node in case we're near the head
     return getBalance(addr, blockNum, false);
-}
-
-//---------------------------------------------------------------------------
-int findBalance(const void *ob1, const void *ob2) {
-    CBalanceHistory *h1 = (CBalanceHistory*)ob1;  // NOLINT
-    CBalanceHistory *h2 = (CBalanceHistory*)ob2;  // NOLINT
-         if (h1->bn > h2->bn) return 1;  // NOLINT
-    else if (h1->bn < h2->bn) return -1;
-    return 0;
 }
 
 //-----------------------------------------------------------------------
