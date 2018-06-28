@@ -125,7 +125,7 @@ time                	1028	0	262149	T_DATE TS_DATE
 ether               	1029	0	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
 encoding            	1030	0	131122	T_TEXT TS_STRING
 {
-  "schema": 5001,
+  "schema": 5002,
   "deleted": 0,
   "showing": 1,
   "hash": "0x0",

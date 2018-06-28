@@ -17,7 +17,7 @@ namespace qblocks {
 
 #define MAJOR 0
 #define MINOR 5
-#define BUILD 1
+#define BUILD 2
 #define SUBVERS "alpha"
     //--------------------------------------------------------------------------------
     uint32_t getVersionNum(void) {
