@@ -32,3 +32,4 @@ will return a list of addresses in the latest block (your milage may vary):
     3001001    3    3   0x77a79a78c56504c6c1f7499852b6e1918a6d0ab4    trace3_to
     3001001    2        0xea674fdde714fd979de3edf0f56aa9716b898ec8    miner
 
+Notice that where the address was found in the block appears in the list. This might be useful, for example, to search for occurences of your address as a miner or a log generator. In [the next tutorial](tutorial3.md), we will talk about using multiple of these tools together.
