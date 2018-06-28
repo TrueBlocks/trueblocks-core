@@ -431,9 +431,10 @@ const CBaseNode *CBlock::getObjectAt(const string_q& fieldName, size_t index) co
 //---------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const CAddressItem& item) {
     os << item.bn << "\t";
-    os << (item.tx == NOPOS ? -1 : int32_t(item.tx)) << "\t";
+    os << (item.tx == NOPOS ? "" : asStringU(item.tx)) << "\t";
     os << (item.tc < 10 ? "" : asStringU(item.tc - 10)) << "\t";
-    os << item.addr;
+    os << item.addr2 << "\t";
+    os << item.reason;
     return os;
 }
 
@@ -447,9 +448,9 @@ uint64_t insertUnique(CAddressItemMap *addrMap, const CAddressItem& _value) {
 
 //---------------------------------------------------------------------------
 bool accumulateAddresses(const CAddressItem& item, void *data) {
-    if (zeroAddr(item.addr))
+    if (zeroAddr(item.addr2))
         return true;
-    CAddressItem search(item.bn, item.tx, item.tc, item.addr);
+    CAddressItem search(item.bn, item.tx, item.tc, item.addr2, item.reason);
     insertUnique((CAddressItemMap*)data, search);  // NOLINT
     return true;
 }
@@ -502,21 +503,21 @@ void potentialAddr(ADDRESSFUNC func, void *data, const CAddressItem& item, const
         SFUintBN test = hex2BN("0x" + extract(potList, s*64, 64));
         if (isPotentialAddr(test, addr)) {
             CAddressItem it(item);
-            it.addr = addr;
+            it.addr2 = addr;
             (*func)(it, data);
         }
     }
 }
 
 //---------------------------------------------------------------------------
-void foundOne(ADDRESSFUNC func, void *data, blknum_t bn, blknum_t tx, blknum_t tc, const SFAddress& addr) {
-    CAddressItem item(bn, tx, tc, addr);
+void foundOne(ADDRESSFUNC func, void *data, blknum_t bn, blknum_t tx, blknum_t tc, const SFAddress& addr, const string_q& reason) {
+    CAddressItem item(bn, tx, tc, addr, reason);
     (*func)(item, data);
 }
 
 //---------------------------------------------------------------------------
-void foundPot(ADDRESSFUNC func, void *data, blknum_t bn, blknum_t tx, blknum_t tc, const string_q& potList) {
-    CAddressItem item(bn, tx, tc, "");
+void foundPot(ADDRESSFUNC func, void *data, blknum_t bn, blknum_t tx, blknum_t tc, const string_q& potList, const string_q& reason) {
+    CAddressItem item(bn, tx, tc, "", reason);
     potentialAddr(func, data, item, potList);
 }
 
@@ -526,24 +527,26 @@ bool CBlock::forEveryAddress(ADDRESSFUNC func, TRANSFUNC filterFunc, void *data)
     if (!func)
         return false;
 
-    foundOne(func, data, blockNumber, NOPOS, 0, miner);
+    foundOne(func, data, blockNumber, NOPOS, 0, miner, "miner");
     for (size_t tr = 0 ; tr < transactions.size() ; tr++) {
         const CTransaction *trans   = &transactions[tr];
         const CReceipt     *receipt = &trans->receipt;
-        foundOne(func, data, blockNumber, tr, 0, trans->from);
-        foundOne(func, data, blockNumber, tr, 0, trans->to);
-        foundOne(func, data, blockNumber, tr, 0, receipt->contractAddress);
-        foundPot(func, data, blockNumber, tr, 0, extract(trans->input, 10));
+        foundOne(func, data, blockNumber, tr, 0, trans->from, "from");
+        foundOne(func, data, blockNumber, tr, 0, trans->to, "to");
+        foundOne(func, data, blockNumber, tr, 0, receipt->contractAddress, "creation");
+        foundPot(func, data, blockNumber, tr, 0, extract(trans->input, 10), "input");
         for (size_t l = 0 ; l < receipt->logs.size() ; l++) {
             const CLogEntry *log = &receipt->logs[l];
-            foundOne(func, data, blockNumber, tr, 0, log->address);
+            string_q logId = "log" + asStringU(l) + "_";
+            foundOne(func, data, blockNumber, tr, 0, log->address, logId + "generator");
             for (size_t t = 0 ; t < log->topics.size() ; t++) {
                 SFAddress addr;
+                string_q topId = asStringU(t);
                 if (isPotentialAddr(log->topics[t], addr)) {
-                    foundOne(func, data, blockNumber, tr, 0, addr);
+                    foundOne(func, data, blockNumber, tr, 0, addr, logId + "topic_" + topId);
                 }
             }
-            foundPot(func, data, blockNumber, tr, 0, extract(log->data, 2));
+            foundPot(func, data, blockNumber, tr, 0, extract(log->data, 2), logId + "data");
         }
 
         // If we're not filtering, or the filter passes, proceed. Note the filter depends on the
@@ -551,16 +554,17 @@ bool CBlock::forEveryAddress(ADDRESSFUNC func, TRANSFUNC filterFunc, void *data)
         if (!filterFunc || !filterFunc(trans, data)) {  // may look at DDos range and nTraces for example
             CTraceArray traces;
             getTraces(traces, trans->hash);
-            for (size_t t = 0 ; t < traces.size() ; t++) {
+            for (size_t t = 1 ; t < traces.size() ; t++) {
                 const CTrace *trace = &traces[t];  // taking a non-const reference
-                foundOne(func, data, blockNumber, tr, t+10, trace->action.from);
-                foundOne(func, data, blockNumber, tr, t+10, trace->action.to);
-                foundOne(func, data, blockNumber, tr, t+10, trace->action.refundAddress);
-                foundOne(func, data, blockNumber, tr, t+10, trace->action.address);
-                foundOne(func, data, blockNumber, tr, t+10, trace->result.address);
+                string_q trID = "trace" + asStringU(t) + "_";
+                foundOne(func, data, blockNumber, tr, t+10, trace->action.from, trID + "from");
+                foundOne(func, data, blockNumber, tr, t+10, trace->action.to, trID + "to");
+                foundOne(func, data, blockNumber, tr, t+10, trace->action.refundAddress, trID + "refundAddr");
+                foundOne(func, data, blockNumber, tr, t+10, trace->action.address, trID + "creation");
+                foundOne(func, data, blockNumber, tr, t+10, trace->result.address, trID + "self-destruct");
                 string_q input = extract(trace->action.input, 10);
                 if (!input.empty())
-                    foundPot(func, data, blockNumber, tr, t+10, input);
+                    foundPot(func, data, blockNumber, tr, t+10, input, trID + "input");
             }
         }
     }
