@@ -132,16 +132,6 @@ inline void CTransaction::initialize(void) {
     function = "";
     funcPtr = NULL;
     ether = 0.;
-#if 0
-    creates = "";
-    confirmations = 0;
-    contractAddress = "";
-    r = "";
-    raw = "";
-    s = "";
-    v = "";
-    trace.Init();
-#endif
     // EXISTING_CODE
 }
 
@@ -171,16 +161,6 @@ inline void CTransaction::duplicate(const CTransaction& tr) {
     funcPtr = tr.funcPtr;
     function = tr.function;
     ether = tr.ether;
-#if 0
-    creates = tr.creates;
-    confirmations = tr.confirmations;
-    contractAddress = tr.contractAddress;
-    r = tr.r;
-    raw = tr.raw;
-    s = tr.s;
-    v = tr.v;
-    trace = tr.trace;
-#endif
     // EXISTING_CODE
     finishParse();
 }
