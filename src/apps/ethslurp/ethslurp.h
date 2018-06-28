@@ -42,5 +42,3 @@ private:
 extern void findBlockRange(const string_q& contents, size_t& minBlock, size_t& maxBlock);
 extern void clearAbis(void);
 extern bool loadABI(CAbi& abi, const string_q& addr);
-CFunction *findFunctionByEncoding(CAbi& abi, const string_q& search);
-CFunction *findFunctionByEncoding(const string_q& encoding);
