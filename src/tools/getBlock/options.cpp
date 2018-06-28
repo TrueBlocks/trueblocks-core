@@ -19,7 +19,8 @@ CParams params[] = {
     CParams("-hash_o(n)ly",      "display only transaction hashes, default is to display full transaction detail"),
     CParams("-check",            "compare results between qblocks and Ethereum node, report differences, if any"),
     CParams("-latest",           "display the latest blocks at both the node and the cache"),
-    CParams("-addresses",        "display addresses included in the block"),
+    CParams("-addrs",            "display all addresses included in the block"),
+    CParams("-uniq",             "display only uniq addresses found in the block"),
 //  CParams("-trac(e)s",         "include transaction traces in the export"),
 //    CParams("-addresses:<val>",  "display addresses included in block as one of: [ all | to | from |\n\t\t\t\t"
 //            "self-destruct | create | log-topic | log-data | input-data |\n\t\t\t\t"
@@ -115,8 +116,11 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-n" || arg == "--hash_only") {
             hashes = true;
 
-        } else if (arg == "-a" || arg == "--addresses") {
-            addrs = true;
+        } else if (arg == "-a" || arg == "--addrs") {
+            showAddrs = true;
+
+        } else if (arg == "-u" || arg == "--uniq") {
+            uniqAddrs = true;
 
         } else if (arg == "-e" || arg == "--traces") {
             traces = true;
@@ -243,7 +247,8 @@ void COptions::Init(void) {
     isRaw       = false;
     isCache     = false;
     hashes      = false;
-    addrs       = false;
+    showAddrs   = false;
+    uniqAddrs   = false;
     traces      = false;
     force       = false;
     normalize   = false;
