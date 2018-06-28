@@ -3,20 +3,20 @@
 This gets a bit more expressive using the `getBlock` tool along with some other tools. First, the `ethName` tool allows you to find the address of certain well-known addresses. You can give `ethName` part of an address or a name, thus:
 
     ethName omisigo
-
-which returns
-
-    { "symbol": "OMG", "name": "OmisiGo", "addr": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07", "source": "Etherscan.io", "description": "A public Ethereum-based financial technology for use in mainstream digital wallets" }
+    > { "symbol": "OMG", "name": "OmisiGo", "addr": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07", "source": "Etherscan.io", "description": "A public Ethereum-based financial technology for use in mainstream digital wallets" }
     
 or, if you add the --address or -a option you get just the address:
 
-    0xd26114cd6ee289accf82350c8d8487fedb8a0c07
+    ethName omisigo -a
+    > 0xd26114cd6ee289accf82350c8d8487fedb8a0c07
     
 Another tool we have is `getBalance` which you can feed an address and a block and it will tell you the balance of that address at that block:
 
     getBalance 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 `ethName omisigo -a`
+    > Balance for account 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 at block 5871733 is 0
+    > Balance for account 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 at block 5871733 is 0
     
-You can use `ethName` to get the address without having to remember. Now, we will go back to `getBlock`. You can use `getBlock`'s --uniq option to list the addresses in a block:
+You can use `ethName` to get the address without having to remember it, and you can add your own names. Now, we will go back to `getBlock` to see what else we can do. You can use `getBlock`'s --uniq option to list the addresses in a block:
 
     getBlock --uniq latest
      
