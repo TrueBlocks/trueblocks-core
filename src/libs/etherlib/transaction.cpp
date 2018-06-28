@@ -491,30 +491,6 @@ const CBaseNode *CTransaction::getObjectAt(const string_q& fieldName, size_t ind
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-//#define EQ_TEST(a) { if (test.a != a) return false; }
-//---------------------------------------------------------------------------
-//bool CTransaction::operator==(const CTransaction& test) const {
-//
-//    EQ_TEST(hash);
-//    EQ_TEST(blockHash);
-//    EQ_TEST(blockNumber);
-//    EQ_TEST(transactionIndex);
-//    EQ_TEST(nonce);
-//    EQ_TEST(timestamp);
-//    EQ_TEST(from);
-//    EQ_TEST(to);
-//    EQ_TEST(value);
-//    EQ_TEST(gas);
-//    EQ_TEST(gasPrice);
-//    EQ_TEST(input);
-//    EQ_TEST(isError);
-//    EQ_TEST(isInternal);
-//    if (test.receipt != receipt)
-//        return false;
-//
-//    return true;
-//}
-
 //--------------------------------------------------------------------
 bool sortTransactionsForWrite(const CTransaction& t1, const CTransaction& t2) {
     if (t1.timestamp != t2.timestamp)

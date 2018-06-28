@@ -64,8 +64,6 @@ public:
 
     string_q inputToFunction(void) const;
     // EXISTING_CODE
-//    bool operator==(const CTransaction& tr) const;
-//    bool operator!=(const CTransaction& tr) const { return !operator==(tr); }
     friend bool operator<(const CTransaction& v1, const CTransaction& v2);
     friend ostream& operator<<(ostream& os, const CTransaction& item);
 
