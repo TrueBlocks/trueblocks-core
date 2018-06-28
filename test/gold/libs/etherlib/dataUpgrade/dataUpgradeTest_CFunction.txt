@@ -56,7 +56,7 @@ encoding            	1010	0	131122	T_TEXT TS_STRING
 inputs              	1011	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 outputs             	1012	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 {
-  "schema": 5001,
+  "schema": 5002,
   "deleted": 0,
   "showing": 1,
   "anonymous": 0,

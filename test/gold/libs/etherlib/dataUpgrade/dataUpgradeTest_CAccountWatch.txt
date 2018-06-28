@@ -66,7 +66,7 @@ qbis                	1010	0	1048651	T_OBJECT TS_OBJECT
 balanceHistory      	1011	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 nodeBal             	1012	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
 {
-  "schema": 5001,
+  "schema": 5002,
   "deleted": 0,
   "showing": 1,
   "address": "0x0",
