@@ -57,8 +57,6 @@ public:
     bool forEveryAddress      (ADDRESSFUNC func, TRANSFUNC filt, void *data);
     bool forEveryUniqueAddress(ADDRESSFUNC func, TRANSFUNC filt, void *data);
     // EXISTING_CODE
-//    bool operator==(const CBlock& bl) const;
-//    bool operator!=(const CBlock& bl) const { return !operator==(bl); }
     friend bool operator<(const CBlock& v1, const CBlock& v2);
     friend ostream& operator<<(ostream& os, const CBlock& item);
 
