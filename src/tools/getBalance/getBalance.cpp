@@ -17,7 +17,7 @@ bool visitBlock(uint64_t num, void *data);
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
-    etherlib_init();
+    etherlib_init(quickQuitHander);
 
     // Parse command line, allowing for command files
     COptions options;
@@ -49,23 +49,34 @@ int main(int argc, const char *argv[]) {
             } else if (expContext().asDollars) {
                 CBlock blk;
                 getBlock(blk, getLatestBlockFromClient());
-                sBal = padLeft("$" + dispDollars(blk.timestamp, options.state.totalVal),14);
+                if (options.asData)
+                    sBal = substitute(dispDollars(blk.timestamp, options.state.totalVal), ",", "");
+                else
+                    sBal = padLeft("$" + dispDollars(blk.timestamp, options.state.totalVal), 14);
             }
             cout << "        Total for " << cGreen << nAccts << cOff;
             cout << " accounts at " << cTeal << "latest" << cOff << " block";
-            cout << " is " << cYellow << sBal.Substitute("  "," ") << cOff << "\n";
+            cout << " is " << cYellow << substitute(sBal, "  ", " ") << cOff << "\n";
         }
     }
 
     if (options.state.needsNewline)
-        cerr << "                                                                                                                 \n";
+        cerr << string_q(103, ' ') << "\n";
+
+    if ((options.state.latestBlock - options.state.earliestBlock) > 250 && !nodeHasBalances() && !isTestMode())
+        cerr << cRed << "    Warning: " << cOff << "The node you're using does not have historical balances. Reported "
+                                                    "values may be wrong.\n";
+
     return 0;
 }
 
 //--------------------------------------------------------------
 bool visitBlock(uint64_t blockNum, void *data) {
 
-    COptions *options = (COptions*)data;
+    COptions *options = (COptions*)data;  // NOLINT
+    if (blockNum < options->state.earliestBlock)
+        options->state.earliestBlock = blockNum;
+
     if (blockNum > options->state.latestBlock) {
         string_q late = (isTestMode() ? "--" : asStringU(options->state.latestBlock));
         return usage("Block " + asStringU(blockNum) + " is later than the last valid block " + late + ". Quitting...");
@@ -79,7 +90,10 @@ bool visitBlock(uint64_t blockNum, void *data) {
     } else if (expContext().asDollars) {
         CBlock blk;
         getBlock(blk, blockNum);
-        sBal = padLeft("$" + dispDollars(blk.timestamp, bal), 14);
+        if (options->asData)
+            sBal = substitute(dispDollars(blk.timestamp, bal), ",", "");
+        else
+            sBal = padLeft("$" + dispDollars(blk.timestamp, bal), 14);
     }
 
     options->state.needsNewline = true;

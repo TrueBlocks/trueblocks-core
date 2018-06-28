@@ -17,7 +17,7 @@ extern bool visitBloom(const string_q& path, void *data);
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
-    etherlib_init();
+    etherlib_init(quickQuitHander);
 
     COptions opt;
     if (opt.parseArguments(argc, argv)) {
@@ -42,11 +42,11 @@ extern bool displayBloom(blknum_t bn, const SFBloom& bloom, void *data);
                 SFBloomArray blooms;
                 archive >> blooms;
                 archive.Release();
-                for (uint32_t i = 0 ; i < blooms.getCount() ; i++) {
+                for (size_t i = 0 ; i < blooms.size() ; i++) {
                     bloom |= blooms[i];
                 }
             }
-            COptions *options = (COptions*)data;
+            COptions *options = (COptions*)data;  // NOLINT
             if (options->asData)
                 cout << bnFromPath(path) << "," << fileSize(path) << "," << bitsTwiddled(bloom) << "\n";
             else
@@ -59,7 +59,7 @@ extern bool displayBloom(blknum_t bn, const SFBloom& bloom, void *data);
 //-------------------------------------------------------------
 bool displayBloom(blknum_t bn, const SFBloom& bloom, void *data) {
     string_q s = bloom2Bytes(bloom);
-    COptions *opt = (COptions*)data;
+    COptions *opt = (COptions*)data;  // NOLINT
     if (opt->mode == "short") {
         size_t len = s.length();
         replace(s,    "0x",     "");
@@ -69,7 +69,7 @@ bool displayBloom(blknum_t bn, const SFBloom& bloom, void *data) {
         replaceAny(s, "7bde",   "+");
         replaceAny(s, "f",      "@");
         size_t rem = len - s.length();
-        s = s + string_q(' ', rem) + "|";
+        s = s + string_q(rem, ' ') + "|";
     } else {
         replace(s,    "0x", cOff);
         replaceAll(s, "0",  " ");
@@ -89,10 +89,10 @@ bool displayBloom(blknum_t bn, const SFBloom& bloom, void *data) {
         replaceAll(s, "e",  "-+");
         replaceAll(s, "f",  "%@");
 //        replaceAll(s, " ",cOff);
-        replaceAll(s, "[",cOff+cWhite);
-        replaceAll(s, "+",cOff+cYellow);
-        replaceAll(s, "-",cOff+cMagenta);
-        replaceAll(s, "%",cOff+bBlue);
+        replaceAll(s, "[", cOff + cWhite);
+        replaceAll(s, "+", cOff + cYellow);
+        replaceAll(s, "-", cOff + cMagenta);
+        replaceAll(s, "%", cOff + bBlue);
     }
     cout << cOff << bn << s << "\n";
     cout.flush();

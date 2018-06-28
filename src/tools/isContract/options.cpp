@@ -21,7 +21,7 @@ CParams params[] = {
     CParams("",              "Returns 'true' or 'false' if the given address(es) holds byte code "
                              "(optionally displays the code).\n"),
 };
-uint32_t nParams = sizeof(params) / sizeof(CParams);
+size_t nParams = sizeof(params) / sizeof(CParams);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
@@ -78,7 +78,7 @@ void COptions::Init(void) {
     nParamsRef = nParams;
     pOptions = this;
 
-    for (uint32_t i = 0 ; i < MAX_ADDRS ; i++) {
+    for (size_t i = 0 ; i < MAX_ADDRS ; i++) {
         addrs[i] = "";
     }
     nAddrs = 0;
@@ -104,7 +104,7 @@ COptions::~COptions(void) {
 //--------------------------------------------------------------------------------
 string_q COptions::postProcess(const string_q& which, const string_q& str) const {
     if (which == "options") {
-        return str.Substitute("address_list", "<address> [address...]");
+        return substitute(str, "address_list", "<address> [address...]");
 
     } else if (which == "notes" && (verbose || COptions::isReadme)) {
         string_q ret;

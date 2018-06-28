@@ -104,7 +104,8 @@ public:
         SFTime(const SFTime& date);
 
         SFTime(uint32_t year, uint32_t month, uint32_t day, uint32_t hour, uint32_t minute, uint32_t sec);
-        SFTime(uint32_t year, uint32_t month, uint32_t weekInMonth, uint32_t dayOfWeek, uint32_t hour, uint32_t minute, uint32_t sec);
+        SFTime(uint32_t year, uint32_t month, uint32_t weekInMonth, uint32_t dayOfWeek,
+                            uint32_t hour, uint32_t minute, uint32_t sec);
         SFTime(uint32_t days, uint32_t hour, uint32_t minute, uint32_t sec);
         SFTime(const SFDate& date, const SFTimeOfDay& tod);
         SFTime(const string_q& dateStr, const string_q& fmtStr);
@@ -158,8 +159,6 @@ public:
 
     extern const SFTime latestDate;
     extern const SFTime earliestDate;
-
-    typedef SFArrayBase<SFTime> SFTimeArray;
 
 #define FMT_JSON string_q("%Y-%m-%d %H:%M:%S UTC")
 

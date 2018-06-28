@@ -15,16 +15,11 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <vector>
 #include "function.h"
 #include "parameter.h"
 
 namespace qblocks {
-
-//--------------------------------------------------------------------------
-class CAbi;
-typedef SFArrayBase<CAbi>         CAbiArray;
-typedef SFList<CAbi*>             CAbiList;
-typedef SFUniqueList<CAbi*>       CAbiListU;
 
 // EXISTING_CODE
 // EXISTING_CODE
@@ -43,23 +38,18 @@ public:
 
     DECLARE_NODE(CAbi);
 
-    const CBaseNode *getObjectAt(const string_q& fieldName, uint32_t index) const override;
+    const CBaseNode *getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
-    void clearABI(void);
-    bool loadABI(const string_q& addr);
     bool loadABIFromFile(const string_q& fileName);
-    bool loadABIFromCSV(const string_q& fileName);
-    CFunction *findFunctionByName(const string_q& search);
-    CFunction *findFunctionByEncoding(const string_q& search);
-    friend class CAccount;
     // EXISTING_CODE
+    friend bool operator<(const CAbi& v1, const CAbi& v2);
     friend ostream& operator<<(ostream& os, const CAbi& item);
 
 protected:
-    void Clear(void);
-    void Init(void);
-    void Copy(const CAbi& ab);
+    void clear(void);
+    void initialize(void);
+    void duplicate(const CAbi& ab);
     bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
@@ -68,7 +58,7 @@ protected:
 
 //--------------------------------------------------------------------------
 inline CAbi::CAbi(void) {
-    Init();
+    initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
@@ -77,7 +67,7 @@ inline CAbi::CAbi(void) {
 inline CAbi::CAbi(const CAbi& ab) {
     // EXISTING_CODE
     // EXISTING_CODE
-    Copy(ab);
+    duplicate(ab);
 }
 
 // EXISTING_CODE
@@ -85,34 +75,34 @@ inline CAbi::CAbi(const CAbi& ab) {
 
 //--------------------------------------------------------------------------
 inline CAbi::~CAbi(void) {
-    Clear();
+    clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CAbi::Clear(void) {
+inline void CAbi::clear(void) {
     // EXISTING_CODE
-    abiByName.Clear();
-    abiByEncoding.Clear();
-    // EXISTING_CODE
-}
-
-//--------------------------------------------------------------------------
-inline void CAbi::Init(void) {
-    CBaseNode::Init();
-
-    abiByName.Clear();
-    abiByEncoding.Clear();
-
-    // EXISTING_CODE
+    abiByName.clear();
+    abiByEncoding.clear();
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CAbi::Copy(const CAbi& ab) {
-    Clear();
-    CBaseNode::Copy(ab);
+inline void CAbi::initialize(void) {
+    CBaseNode::initialize();
+
+    abiByName.clear();
+    abiByEncoding.clear();
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+}
+
+//--------------------------------------------------------------------------
+inline void CAbi::duplicate(const CAbi& ab) {
+    clear();
+    CBaseNode::duplicate(ab);
 
     abiByName = ab.abiByName;
     abiByEncoding = ab.abiByEncoding;
@@ -124,25 +114,27 @@ inline void CAbi::Copy(const CAbi& ab) {
 
 //--------------------------------------------------------------------------
 inline CAbi& CAbi::operator=(const CAbi& ab) {
-    Copy(ab);
+    duplicate(ab);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
+//-------------------------------------------------------------------------
+inline bool operator<(const CAbi& v1, const CAbi& v2) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default sort defined in class definition, assume already sorted
+    return true;
+}
+
 //---------------------------------------------------------------------------
-IMPLEMENT_ARCHIVE_ARRAY(CAbiArray);
-IMPLEMENT_ARCHIVE_ARRAY_C(CAbiArray);
-IMPLEMENT_ARCHIVE_LIST(CAbiList);
+typedef vector<CAbi> CAbiArray;
+extern SFArchive& operator>>(SFArchive& archive, CAbiArray& array);
+extern SFArchive& operator<<(SFArchive& archive, const CAbiArray& array);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-extern uint64_t verbose;
-#define REP_FREQ   11
-#define REP_INFREQ 563
-void clearAbis(void);
-void rebuildFourByteDB(void);
-CFunction *findFunctionByEncoding(const string_q& encoding);
 // EXISTING_CODE
 }  // namespace qblocks
 

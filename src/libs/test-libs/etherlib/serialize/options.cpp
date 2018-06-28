@@ -17,7 +17,7 @@ CParams params[] = {
     CParams("-testNum:[1|2]", "which test to run (either 1 and 2)"),
     CParams("",               "This program tests floating point printing and conversions.\n"),
 };
-uint32_t nParams = sizeof(params) / sizeof(CParams);
+size_t nParams = sizeof(params) / sizeof(CParams);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {

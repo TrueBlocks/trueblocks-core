@@ -17,7 +17,7 @@ CParams params[] = {
     CParams("~mode", "a number between 0 and 2 inclusive"),
     CParams("",      "Test 'c' library strings against quickBlocks strings.\n"),
 };
-uint32_t nParams = sizeof(params) / sizeof(CParams);
+size_t nParams = sizeof(params) / sizeof(CParams);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {

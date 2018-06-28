@@ -15,16 +15,11 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <vector>
 #include "abilib.h"
 #include "logentry.h"
 
 namespace qblocks {
-
-//--------------------------------------------------------------------------
-class CReceipt;
-typedef SFArrayBase<CReceipt>         CReceiptArray;
-typedef SFList<CReceipt*>             CReceiptList;
-typedef SFUniqueList<CReceipt*>       CReceiptListU;
 
 // EXISTING_CODE
 class CTransaction;
@@ -47,30 +42,19 @@ public:
 
     DECLARE_NODE(CReceipt);
 
-    const CBaseNode *getObjectAt(const string_q& fieldName, uint32_t index) const override;
+    const CBaseNode *getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
     const CTransaction *pTrans;
     friend class CTransaction;
-#if 0
-    uint32_t cumulativeGasUsed;
-    SFAddress from12;
-    SFHash blockHash;
-    uint32_t blockNumber;
-    string_q root;
-    SFAddress to;
-    SFHash transactionHash;
-    uint32_t transactionIndex;
-#endif
-    bool operator==(const CReceipt& r) const;
-    bool operator!=(const CReceipt& r) const { return !operator==(r); }
     // EXISTING_CODE
+    friend bool operator<(const CReceipt& v1, const CReceipt& v2);
     friend ostream& operator<<(ostream& os, const CReceipt& item);
 
 protected:
-    void Clear(void);
-    void Init(void);
-    void Copy(const CReceipt& re);
+    void clear(void);
+    void initialize(void);
+    void duplicate(const CReceipt& re);
     bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
@@ -79,7 +63,7 @@ protected:
 
 //--------------------------------------------------------------------------
 inline CReceipt::CReceipt(void) {
-    Init();
+    initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
@@ -88,7 +72,7 @@ inline CReceipt::CReceipt(void) {
 inline CReceipt::CReceipt(const CReceipt& re) {
     // EXISTING_CODE
     // EXISTING_CODE
-    Copy(re);
+    duplicate(re);
 }
 
 // EXISTING_CODE
@@ -96,24 +80,24 @@ inline CReceipt::CReceipt(const CReceipt& re) {
 
 //--------------------------------------------------------------------------
 inline CReceipt::~CReceipt(void) {
-    Clear();
+    clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CReceipt::Clear(void) {
+inline void CReceipt::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CReceipt::Init(void) {
-    CBaseNode::Init();
+inline void CReceipt::initialize(void) {
+    CBaseNode::initialize();
 
     contractAddress = "";
     gasUsed = 0;
-    logs.Clear();
+    logs.clear();
     status = NO_STATUS;
 
     // EXISTING_CODE
@@ -132,9 +116,9 @@ inline void CReceipt::Init(void) {
 }
 
 //--------------------------------------------------------------------------
-inline void CReceipt::Copy(const CReceipt& re) {
-    Clear();
-    CBaseNode::Copy(re);
+inline void CReceipt::duplicate(const CReceipt& re) {
+    clear();
+    CBaseNode::duplicate(re);
 
     contractAddress = re.contractAddress;
     gasUsed = re.gasUsed;
@@ -142,7 +126,7 @@ inline void CReceipt::Copy(const CReceipt& re) {
     status = re.status;
 
     // EXISTING_CODE
-    pTrans = re.pTrans; // no deep copy becuase it's const
+    pTrans = re.pTrans;  // no deep copy becuase it's const
 #if 0
     blockHash = re.blockHash;
     blockNumber = re.blockNumber;
@@ -159,16 +143,24 @@ inline void CReceipt::Copy(const CReceipt& re) {
 
 //--------------------------------------------------------------------------
 inline CReceipt& CReceipt::operator=(const CReceipt& re) {
-    Copy(re);
+    duplicate(re);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
+//-------------------------------------------------------------------------
+inline bool operator<(const CReceipt& v1, const CReceipt& v2) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default sort defined in class definition, assume already sorted
+    return true;
+}
+
 //---------------------------------------------------------------------------
-IMPLEMENT_ARCHIVE_ARRAY(CReceiptArray);
-IMPLEMENT_ARCHIVE_ARRAY_C(CReceiptArray);
-IMPLEMENT_ARCHIVE_LIST(CReceiptList);
+typedef vector<CReceipt> CReceiptArray;
+extern SFArchive& operator>>(SFArchive& archive, CReceiptArray& array);
+extern SFArchive& operator<<(SFArchive& archive, const CReceiptArray& array);
 
 //---------------------------------------------------------------------------
 extern SFArchive& operator<<(SFArchive& archive, const CReceipt& rec);

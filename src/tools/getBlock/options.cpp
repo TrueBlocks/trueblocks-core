@@ -16,18 +16,25 @@
 CParams params[] = {
     CParams("~block_list",       "a space-separated list of one or more blocks to retrieve"),
     CParams("-raw",              "pull the block data from the running Ethereum node (no cache)"),
-    CParams("-h(a)shes",         "display only transaction hashes, default is to display full transaction detail"),
-//    CParams("-trac(e)s",         "include transaction traces in the export"),
+    CParams("-hash_o(n)ly",      "display only transaction hashes, default is to display full transaction detail"),
     CParams("-check",            "compare results between qblocks and Ethereum node, report differences, if any"),
     CParams("-latest",           "display the latest blocks at both the node and the cache"),
-    CParams("@force",            "force a re-write of the block to the cache"),
+    CParams("-addresses",        "display addresses included in the block"),
+//  CParams("-trac(e)s",         "include transaction traces in the export"),
+//    CParams("-addresses:<val>",  "display addresses included in block as one of: [ all | to | from |\n\t\t\t\t"
+//            "self-destruct | create | log-topic | log-data | input-data |\n\t\t\t\t"
+//            "trace-to | trace-from | trace-data | trace-call ]"),
+    CParams("@f(o)rce",          "force a re-write of the block to the cache"),
     CParams("@quiet",            "do not print results to screen, used for speed testing and data checking"),
-    CParams("@source:[c|r]",     "either :c(a)che or :(r)aw, source for data retrival. (shortcuts -c = qblocks, -r = node)"),
-    CParams("@fields:[a|m|c|r]", "either :(a)ll, (m)ini, (c)ache or :(r)aw; which fields to include in output (all is default)"),
-    CParams("@normalize",        "normalize (remove un-common fields and sort) for comparison with other results (testing)"),
+    CParams("@source:[c|r]",     "either :c(a)che or :(r)aw, source for data retrival. (shortcuts "
+                                    "-c = qblocks, -r = node)"),
+    CParams("@fields:[a|m|c|r]", "either :(a)ll, (m)ini, (c)ache or :(r)aw; which fields to include in output "
+                                    "(all is default)"),
+    CParams("@normalize",        "normalize (remove un-common fields and sort) for comparison with other "
+                                    "results (testing)"),
     CParams("",                  "Returns block(s) from local cache or directly from a running node.\n"),
 };
-uint32_t nParams = sizeof(params) / sizeof(CParams);
+size_t nParams = sizeof(params) / sizeof(CParams);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
@@ -44,28 +51,18 @@ bool COptions::parseArguments(string_q& command) {
 
         // shortcuts
         if (arg == "-r" || arg == "--raw")   { arg = "--source:raw";   }
-        if (arg == "-a" || arg == "--cache") { arg = "--source:cache"; }
+        if (arg == "-d" || arg == "--cache") { arg = "--source:cache"; }
 
         // do not collapse
         if (arg == "-c" || arg == "--check") {
             setenv("TEST_MODE", "true", true);
             isCheck = true;
-            quiet++; // if both --check and --quiet are present, be very quiet...
+            quiet++;  // if both --check and --quiet are present, be very quiet...
             expContext().spcs = 4;
             expContext().hexNums = true;
             expContext().quoteNums = true;
-            CRuntimeClass *pClass = GETRUNTIME_CLASS(CBlock);
-            if (pClass) {
-                CFieldData *pField = pClass->FindField("blockNumber");
-                if (pField)
-                    pField->setName("number");
-            }
-            pClass = GETRUNTIME_CLASS(CBlock);
-            if (pClass) {
-                CFieldData *pField = pClass->FindField("hash");
-                if (pField)
-                    pField->setName("blockHash");
-            }
+            RENAME_FIELD(CBlock, "blockNumber", "number");
+            RENAME_FIELD(CBlock, "hash", "blockHash");
             GETRUNTIME_CLASS(CBlock)->sortFieldList();
             GETRUNTIME_CLASS(CTransaction)->sortFieldList();
             GETRUNTIME_CLASS(CReceipt)->sortFieldList();
@@ -80,14 +77,17 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-l" || arg == "--latest") {
             uint64_t lastUpdate = toUnsigned(asciiFileToString("/tmp/getBlock_junk.txt"));
-            uint64_t cache=NOPOS, client=NOPOS;
+            uint64_t cache = NOPOS, client = NOPOS;
             getLatestBlocks(cache, client);
             uint64_t diff = cache > client ? 0 : client - cache;
-            stringToAsciiFile("/tmp/getBlock_junk.txt", asStringU(diff)); // for next time
+            stringToAsciiFile("/tmp/getBlock_junk.txt", asStringU(diff));  // for next time
 
-            cout << "Latest block in cache:  " << cYellow << (isTestMode() ? "--cache--"  : padNum8T(cache))  << cOff << "\n";
-            cout << "Latest block at client: " << cYellow << (isTestMode() ? "--client--" : padNum8T(client)) << cOff << "\n";
-            cout << "Difference:             " << cYellow << (isTestMode() ? "--diff--"   : padNum8T(diff));
+            cout << "Latest block in cache:  " << cYellow;
+            cout << (isTestMode() ? "--cache--"  : padNum8T(cache))  << cOff << "\n";
+            cout << "Latest block at client: " << cYellow;
+            cout << (isTestMode() ? "--client--" : padNum8T(client)) << cOff << "\n";
+            cout << "Difference:             " << cYellow;
+            cout << (isTestMode() ? "--diff--"   : padNum8T(diff));
             if (!isTestMode() && lastUpdate) {
                 uint64_t diffDiff = lastUpdate - diff;
                 cout << " (+" << diffDiff << ")";
@@ -95,8 +95,8 @@ bool COptions::parseArguments(string_q& command) {
             cout << cOff << "\n";
             isLatest = true;
 
-        } else if (startsWith(arg, "-s:") || startsWith(arg, "--source:")) {
-            string_q mode = arg.Substitute("-s:","").Substitute("--source:","");
+        } else if (startsWith(arg, "--source:")) {
+            string_q mode = substitute(arg, "--source:", "");
             if (mode == "r" || mode == "raw") {
                 isRaw = true;
 
@@ -112,27 +112,30 @@ bool COptions::parseArguments(string_q& command) {
                 return usage("Invalide source. Must be either '(r)aw' or '(c)ache'. Quitting...");
             }
 
-        } else if (arg == "-a" || arg == "--hashes") {
+        } else if (arg == "-n" || arg == "--hash_only") {
             hashes = true;
+
+        } else if (arg == "-a" || arg == "--addresses") {
+            addrs = true;
 
         } else if (arg == "-e" || arg == "--traces") {
             traces = true;
 
         } else if (arg == "-q" || arg == "--quiet") {
-            quiet++; // if both --check and --quiet are present, be very quiet...
+            quiet++;  // if both --check and --quiet are present, be very quiet...
 
         } else if (startsWith(arg, "-f:") || startsWith(arg, "--fields:")) {
-            string_q mode = arg.Substitute("-f:","").Substitute("--fields:","");
+            string_q mode = substitute(substitute(arg, "-f:", ""), "--fields:", "");
 
             if (mode == "a" || mode == "all") {
-                SHOW_ALL_FIELDS(CBlock);
-                SHOW_ALL_FIELDS(CTransaction);
-                SHOW_ALL_FIELDS(CReceipt);
+                GETRUNTIME_CLASS(CBlock)->showAllFields();
+                GETRUNTIME_CLASS(CTransaction)->showAllFields();
+                GETRUNTIME_CLASS(CReceipt)->showAllFields();
 
             } else if (mode == "m" || mode == "mini") {
-                HIDE_ALL_FIELDS(CBlock);
-                HIDE_ALL_FIELDS(CTransaction);
-                HIDE_ALL_FIELDS(CReceipt);
+                GETRUNTIME_CLASS(CBlock)->hideAllFields();
+                GETRUNTIME_CLASS(CTransaction)->hideAllFields();
+                GETRUNTIME_CLASS(CReceipt)->hideAllFields();
                 UNHIDE_FIELD(CBlock, "blockNumber");
                 UNHIDE_FIELD(CBlock, "timestamp");
                 UNHIDE_FIELD(CBlock, "transactions");
@@ -148,9 +151,9 @@ bool COptions::parseArguments(string_q& command) {
 
             } else if (mode == "r" || mode == "raw") {
             } else if (mode == "c" || mode == "cache") {
-                HIDE_ALL_FIELDS(CBlock);
-                HIDE_ALL_FIELDS(CTransaction);
-                HIDE_ALL_FIELDS(CReceipt);
+                GETRUNTIME_CLASS(CBlock)->hideAllFields();
+                GETRUNTIME_CLASS(CTransaction)->hideAllFields();
+                GETRUNTIME_CLASS(CReceipt)->hideAllFields();
                 UNHIDE_FIELD(CBlock, "blockNumber");
                 UNHIDE_FIELD(CBlock, "timestamp");
                 UNHIDE_FIELD(CBlock, "transactions");
@@ -187,17 +190,37 @@ bool COptions::parseArguments(string_q& command) {
         HIDE_FIELD(CTransaction, "cumulativeGasUsed");
         HIDE_FIELD(CTransaction, "gasUsed");
         HIDE_FIELD(CTransaction, "timestamp");
-        CRuntimeClass *pClass = GETRUNTIME_CLASS(CBlock);
-        if (pClass) {
-            CFieldData *pField = pClass->FindField("blockNumber");
-            if (pField)
-                pField->setName("number");
-            pClass->sortFieldList();
-        }
+        RENAME_FIELD(CBlock, "blockNumber", "number");
+        GETRUNTIME_CLASS(CBlock)->sortFieldList();
     }
 
-    if (hashes && !isRaw)
-        return usage("The --hashes option works only with --raw. Quitting...");
+    if (hashes) {
+        HIDE_FIELD(CTransaction, "blockHash");
+        HIDE_FIELD(CTransaction, "blockNumber");
+        HIDE_FIELD(CTransaction, "transactionIndex");
+        HIDE_FIELD(CTransaction, "nonce");
+        HIDE_FIELD(CTransaction, "timestamp");
+        HIDE_FIELD(CTransaction, "from");
+        HIDE_FIELD(CTransaction, "to");
+        HIDE_FIELD(CTransaction, "value");
+        HIDE_FIELD(CTransaction, "gas");
+        HIDE_FIELD(CTransaction, "gasPrice");
+        HIDE_FIELD(CTransaction, "input");
+        HIDE_FIELD(CTransaction, "isError");
+        HIDE_FIELD(CTransaction, "receipt");
+        HIDE_FIELD(CTransaction, "gasUsed");
+        HIDE_FIELD(CReceipt,     "contractAddress");
+        HIDE_FIELD(CReceipt,     "gasUsed");
+        HIDE_FIELD(CReceipt,     "logs");
+        HIDE_FIELD(CReceipt,     "status");
+        HIDE_FIELD(CBlock,       "gasLimit");
+        HIDE_FIELD(CBlock,       "gasUsed");
+        HIDE_FIELD(CBlock,       "parentHash");
+        HIDE_FIELD(CBlock,       "miner");
+        HIDE_FIELD(CBlock,       "difficulty");
+        HIDE_FIELD(CBlock,       "price");
+        HIDE_FIELD(CBlock,       "finalized");
+    }
 
     if (!blocks.hasBlocks() && !isLatest)
         return usage("You must specify at least one block.");
@@ -218,12 +241,14 @@ void COptions::Init(void) {
 
     isCheck     = false;
     isRaw       = false;
+    isCache     = false;
     hashes      = false;
+    addrs       = false;
     traces      = false;
     force       = false;
     normalize   = false;
-    isCache     = false;
-    quiet       = 0; // quiet has levels
+    silent      = false;
+    quiet       = 0;  // quiet has levels
     format      = "";
     priceBlocks = false;
     blocks.Init();
@@ -250,23 +275,24 @@ COptions::~COptions(void) {
 
 //--------------------------------------------------------------------------------
 bool COptions::isMulti(void) const {
-    return ((blocks.stop - blocks.start) > 1 || blocks.hashList.getCount() > 1 || blocks.numList.getCount() > 1);
+    return ((blocks.stop - blocks.start) > 1 || blocks.hashList.size() > 1 || blocks.numList.size() > 1);
 }
 
 //--------------------------------------------------------------------------------
 string_q COptions::postProcess(const string_q& which, const string_q& str) const {
 
     if (which == "options") {
-        return str.Substitute("block_list", "<block> [block...]");
+        return substitute(str, "block_list", "<block> [block...]");
 
     } else if (which == "notes" && (verbose || COptions::isReadme)) {
 
         string_q ret;
-        ret += "[{block_list}] is a space-separated list of values, a start-end range, a [{special}], or any combination.\n";
-        ret += "This tool retrieves information from the local node or the ${FALLBACK} node, if configured (see documentation).\n";
+        ret += "[{block_list}] is a space-separated list of values, a start-end range, a [{special}], "
+                    "or any combination.\n";
+        ret += "This tool retrieves information from the local node or the ${FALLBACK} node, if configured "
+                    "(see documentation).\n";
         ret += "[{special}] blocks are detailed under " + cTeal + "[{whenBlock --list}]" + cOff + ".\n";
         return ret;
     }
     return str;
 }
-

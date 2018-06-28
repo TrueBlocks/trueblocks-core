@@ -21,9 +21,10 @@ CParams params[] = {
     CParams("-a(s)bars",         "display the bloom filter as bar charts instead of hex"),
     CParams("-recei(p)t",        "display blooms from the transaction receipts as opposed to block (--raw only)"),
     CParams("@force",            "force a re-write of the bloom to the cache"),
-    CParams("",                  "Returns bloom filter(s) from running node (the default) or as EAB from local cache.\n"),
+    CParams("",                  "Returns bloom filter(s) from running node (the default) or as EAB "
+                                    "from local cache.\n"),
 };
-uint32_t nParams = sizeof(params) / sizeof(CParams);
+size_t nParams = sizeof(params) / sizeof(CParams);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
@@ -107,13 +108,9 @@ COptions::COptions(void) {
     expContext().quoteNums = false;
 
     // will sort the fields in these classes if --parity is given
-    sorts[0] = GETRUNTIME_CLASS(CBlock);
-    sorts[1] = GETRUNTIME_CLASS(CTransaction);
-    sorts[2] = GETRUNTIME_CLASS(CReceipt);
-
-    HIDE_ALL_FIELDS(CBlock);
-    HIDE_ALL_FIELDS(CTransaction);
-    HIDE_ALL_FIELDS(CReceipt);
+    sorts[0] = GETRUNTIME_CLASS(CBlock);       sorts[0]->hideAllFields();
+    sorts[1] = GETRUNTIME_CLASS(CTransaction); sorts[1]->hideAllFields();
+    sorts[2] = GETRUNTIME_CLASS(CReceipt);     sorts[2]->hideAllFields();
     UNHIDE_FIELD(CBlock, "blockNumber");
     UNHIDE_FIELD(CBlock, "logsBloom");
     Init();
@@ -125,7 +122,7 @@ COptions::~COptions(void) {
 
 //--------------------------------------------------------------------------------
 bool COptions::isMulti(void) const {
-    return ((blocks.stop - blocks.start) > 1 || blocks.hashList.getCount() > 1 || blocks.numList.getCount() > 1);
+    return ((blocks.stop - blocks.start) > 1 || blocks.hashList.size() > 1 || blocks.numList.size() > 1);
 }
 
 //--------------------------------------------------------------------------------
@@ -133,14 +130,15 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
 
     if (which == "options") {
         return
-            str.Substitute("block_list", "<block> [block...]")
-                .Substitute("-l|", "-l fn|");
+            substitute(substitute(str, "block_list", "<block> [block...]"), "-l|", "-l fn|");
 
     } else if (which == "notes" && (verbose || COptions::isReadme)) {
 
         string_q ret;
-        ret += "[{block_list}] is a space-separated list of values, a start-end range, a [{special}], or any combination.\n";
-        ret += "This tool retrieves information from the local node or the ${FALLBACK} node, if configured (see documentation).\n";
+        ret += "[{block_list}] is a space-separated list of values, a start-end range, a [{special}], "
+                        "or any combination.\n";
+        ret += "This tool retrieves information from the local node or the ${FALLBACK} node, if "
+                        "configured (see documentation).\n";
         ret += "[{special}] blocks are detailed under " + cTeal + "[{whenBlock --list}]" + cOff + ".\n";
         return ret;
     }

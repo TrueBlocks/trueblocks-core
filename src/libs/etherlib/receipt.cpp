@@ -37,8 +37,8 @@ void CReceipt::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr)
     }
 
     string_q fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, dataPtr))
-        return;
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     while (!fmt.empty())
         ctx << getNextChunk(fmt, nextReceiptChunk, this);
@@ -59,13 +59,13 @@ string_q nextReceiptChunk(const string_q& fieldIn, const void *dataPtr) {
 bool CReceipt::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
     // EXISTING_CODE
     if (fieldName == "contractAddress" && fieldValue == "null") {
-        *((string_q*)&fieldValue) = "0";
+        *((string_q*)&fieldValue) = "0";  // NOLINT
     } else if (fieldName == "status" && (fieldValue == "null" || fieldValue == "0x")) {
-        *((string_q*)&fieldValue) = asStringU(NO_STATUS);
+        *((string_q*)&fieldValue) = asStringU(NO_STATUS);  // NOLINT
     }
 
     if (pTrans)
-        if (((CTransaction*)pTrans)->setValueByName(fieldName, fieldValue))
+        if (((CTransaction*)pTrans)->setValueByName(fieldName, fieldValue))  // NOLINT
             return true;
     // EXISTING_CODE
 
@@ -78,13 +78,13 @@ bool CReceipt::setValueByName(const string_q& fieldName, const string_q& fieldVa
             break;
         case 'l':
             if ( fieldName % "logs" ) {
-                char *p = (char *)fieldValue.c_str();
+                char *p = (char *)fieldValue.c_str();  // NOLINT
                 while (p && *p) {
                     CLogEntry item;
-                    uint32_t nFields = 0;
+                    size_t nFields = 0;
                     p = item.parseJson(p, nFields);
                     if (nFields)
-                        logs[logs.getCount()] = item;
+                        logs.push_back(item);
                 }
                 return true;
             }
@@ -101,8 +101,8 @@ bool CReceipt::setValueByName(const string_q& fieldName, const string_q& fieldVa
 //---------------------------------------------------------------------------------------------------
 void CReceipt::finishParse() {
     // EXISTING_CODE
-    for (uint32_t i = 0 ; i < logs.getCount() ; i++) {
-        logs[i].pReceipt = this;
+    for (size_t i = 0 ; i < logs.size() ; i++) {
+        logs.at(i).pReceipt = this;  // taking a non-const reference of an element that already exists
     }
     // EXISTING_CODE
 }
@@ -144,12 +144,33 @@ bool CReceipt::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
+SFArchive& operator>>(SFArchive& archive, CReceiptArray& array) {
+    uint64_t count;
+    archive >> count;
+    array.resize(count);
+    for (size_t i = 0 ; i < count ; i++) {
+        ASSERT(i < array.capacity());
+        array.at(i).Serialize(archive);
+    }
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+SFArchive& operator<<(SFArchive& archive, const CReceiptArray& array) {
+    uint64_t count = array.size();
+    archive << count;
+    for (size_t i = 0 ; i < array.size() ; i++)
+        array[i].SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
 void CReceipt::registerClass(void) {
     static bool been_here = false;
     if (been_here) return;
     been_here = true;
 
-    uint32_t fieldNum = 1000;
+    size_t fieldNum = 1000;
     ADD_FIELD(CReceipt, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CReceipt, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CReceipt, "showing", T_BOOL,  ++fieldNum);
@@ -189,6 +210,8 @@ string_q nextReceiptChunk_custom(const string_q& fieldIn, const void *dataPtr) {
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
                     return nextBasenodeChunk(fieldIn, rec);
+                // EXISTING_CODE
+                // EXISTING_CODE
                 break;
 
             default:
@@ -200,24 +223,17 @@ string_q nextReceiptChunk_custom(const string_q& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------
-bool CReceipt::handleCustomFormat(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
-    return false;
-}
-
-//---------------------------------------------------------------------------
 bool CReceipt::readBackLevel(SFArchive& archive) {
 
     CBaseNode::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
     SFBloom removed;
-    if (m_schema < getVersionNum(0,2,0)) {
+    if (m_schema < getVersionNum(0, 2, 0)) {
         archive >> contractAddress;
         archive >> gasUsed;
         archive >> logs;
-        archive >> removed; // was logsBloom
+        archive >> removed;  // was logsBloom
         // The 'status' field will be corrected in CBlock::finishParse() once we have a block
         // number. We set status here to NO_STATUS assuming pre-byzantium. After byzantium, we
         // have to pick up the value (0 or 1) from the node
@@ -225,11 +241,11 @@ bool CReceipt::readBackLevel(SFArchive& archive) {
         finishParse();
         done = true;
 
-    } else if (m_schema <= getVersionNum(0,3,0)) {
+    } else if (m_schema <= getVersionNum(0, 3, 0)) {
         archive >> contractAddress;
         archive >> gasUsed;
         archive >> logs;
-        archive >> removed; // was logsBloom
+        archive >> removed;  // was logsBloom
         archive >> status;
         finishParse();
         done = true;
@@ -269,12 +285,12 @@ string_q CReceipt::getValueByName(const string_q& fieldName) const {
             break;
         case 'l':
             if ( fieldName % "logs" || fieldName % "logsCnt" ) {
-                uint32_t cnt = logs.getCount();
+                size_t cnt = logs.size();
                 if (endsWith(fieldName, "Cnt"))
                     return asStringU(cnt);
                 if (!cnt) return "";
                 string_q retS;
-                for (uint32_t i = 0 ; i < cnt ; i++) {
+                for (size_t i = 0 ; i < cnt ; i++) {
                     retS += logs[i].Format();
                     retS += ((i < cnt - 1) ? ",\n" : "\n");
                 }
@@ -290,7 +306,7 @@ string_q CReceipt::getValueByName(const string_q& fieldName) const {
     // See if this field belongs to the item's container
     ret = nextTransactionChunk(fieldName, pTrans);
     if (contains(ret, "Field not found"))
-        ret = EMPTY;
+        ret = "";
     if (!ret.empty())
         return ret;
     // EXISTING_CODE
@@ -309,29 +325,14 @@ ostream& operator<<(ostream& os, const CReceipt& item) {
 }
 
 //---------------------------------------------------------------------------
-const CBaseNode *CReceipt::getObjectAt(const string_q& fieldName, uint32_t index) const {
-    if ( fieldName % "logs" && index < logs.getCount() )
+const CBaseNode *CReceipt::getObjectAt(const string_q& fieldName, size_t index) const {
+    if ( fieldName % "logs" && index < logs.size() )
         return &logs[index];
     return NULL;
 }
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-#define EQ_TEST(a) { if (test.a != a) return false; }
-bool CReceipt::operator==(const CReceipt& test) const {
-
-    EQ_TEST(contractAddress);
-    EQ_TEST(gasUsed);
-    EQ_TEST(status);
-    EQ_TEST(logs.getCount());
-    for (uint32_t i = 0 ; i < logs.getCount() ; i++)
-        if (test.logs[i] != logs[i])
-            return false;
-
-    return true;
-}
-
-//---------------------------------------------------------------------------
 // EXISTING_CODE
 }  // namespace qblocks
 

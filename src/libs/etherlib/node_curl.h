@@ -28,7 +28,7 @@ namespace qblocks {
         string_q         result;
         string_q         provider;
         bool             is_error;
-        uint32_t         theID;
+        size_t           theID;
 
         CCurlContext(void);
         string_q getCurlID(void);
@@ -37,7 +37,7 @@ namespace qblocks {
         CURLCALLBACKFUNC setCurlCallback(CURLCALLBACKFUNC func);
     };
 
-    extern CURL         *getCurl         (bool cleanup=false);
+    extern CURL         *getCurl         (bool cleanup = false);
     extern bool          isNodeRunning   (void);
     extern bool          nodeHasBalances (void);
     extern bool          getObjectViaRPC (CBaseNode &node, const string_q& method, const string_q& params);

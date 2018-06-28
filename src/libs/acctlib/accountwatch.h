@@ -15,26 +15,15 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <vector>
 #include "abilib.h"
 #include "transaction.h"
 #include "incomestatement.h"
+#include "balancehistory.h"
 
 namespace qblocks {
 
-//--------------------------------------------------------------------------
-class CAccountWatch;
-typedef SFArrayBase<CAccountWatch>         CAccountWatchArray;
-typedef SFList<CAccountWatch*>             CAccountWatchList;
-typedef SFUniqueList<CAccountWatch*>       CAccountWatchListU;
-
 // EXISTING_CODE
-class CBalanceHistory {
-public:
-    blknum_t bn;
-    SFUintBN balance;
-    CBalanceHistory(void) { bn = 0; balance = 0; }
-};
-typedef SFArrayBase<CBalanceHistory> CBalanceHistoryArray;
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
@@ -47,6 +36,7 @@ public:
     blknum_t lastBlock;
     bool deepScan;
     CIncomeStatement qbis;
+    CBalanceHistoryArray balanceHistory;
     SFWei nodeBal;
 
 public:
@@ -57,23 +47,24 @@ public:
 
     DECLARE_NODE(CAccountWatch);
 
-    const CBaseNode *getObjectAt(const string_q& fieldName, uint32_t index) const override;
+    const CBaseNode *getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
     CAccountWatch(const string_q& _addr, const string_q& _name, blknum_t fB, blknum_t lB, const string_q& _color)
     : address(toLower(_addr)), name(_name), color(_color), firstBlock(fB), lastBlock(lB) {}
-    string_q displayName(bool expand, bool terse, uint32_t w1=20, uint32_t w2=8) const { return displayName(expand, true,terse,w1,w2); }
-    string_q displayName(bool expand, bool useColor, bool terse, uint32_t w1=20, uint32_t w2=8) const;
+    string_q displayName(bool expand, bool terse, size_t w1 = 20, size_t w2 = 8) const
+        { return displayName(expand, true, terse, w1, w2); }
+    string_q displayName(bool expand, bool useColor, bool terse, size_t w1 = 20, size_t w2 = 8) const;
     SFBloom bloom;
     bool inBlock;
-    CBalanceHistoryArray balanceHistory;
     // EXISTING_CODE
+    friend bool operator<(const CAccountWatch& v1, const CAccountWatch& v2);
     friend ostream& operator<<(ostream& os, const CAccountWatch& item);
 
 protected:
-    void Clear(void);
-    void Init(void);
-    void Copy(const CAccountWatch& ac);
+    void clear(void);
+    void initialize(void);
+    void duplicate(const CAccountWatch& ac);
     bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
@@ -82,7 +73,7 @@ protected:
 
 //--------------------------------------------------------------------------
 inline CAccountWatch::CAccountWatch(void) {
-    Init();
+    initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
@@ -91,7 +82,7 @@ inline CAccountWatch::CAccountWatch(void) {
 inline CAccountWatch::CAccountWatch(const CAccountWatch& ac) {
     // EXISTING_CODE
     // EXISTING_CODE
-    Copy(ac);
+    duplicate(ac);
 }
 
 // EXISTING_CODE
@@ -99,20 +90,20 @@ inline CAccountWatch::CAccountWatch(const CAccountWatch& ac) {
 
 //--------------------------------------------------------------------------
 inline CAccountWatch::~CAccountWatch(void) {
-    Clear();
+    clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CAccountWatch::Clear(void) {
+inline void CAccountWatch::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CAccountWatch::Init(void) {
-    CBaseNode::Init();
+inline void CAccountWatch::initialize(void) {
+    CBaseNode::initialize();
 
     address = "";
     name = "";
@@ -120,21 +111,21 @@ inline void CAccountWatch::Init(void) {
     firstBlock = 0;
     lastBlock = 0;
     deepScan = 0;
-    qbis.Init();
+    qbis.initialize();
+    balanceHistory.clear();
     nodeBal = 0;
 
     // EXISTING_CODE
     lastBlock = UINT_MAX;
     bloom = 0;
     inBlock = false;
-    balanceHistory.Clear();
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CAccountWatch::Copy(const CAccountWatch& ac) {
-    Clear();
-    CBaseNode::Copy(ac);
+inline void CAccountWatch::duplicate(const CAccountWatch& ac) {
+    clear();
+    CBaseNode::duplicate(ac);
 
     address = ac.address;
     name = ac.name;
@@ -143,29 +134,37 @@ inline void CAccountWatch::Copy(const CAccountWatch& ac) {
     lastBlock = ac.lastBlock;
     deepScan = ac.deepScan;
     qbis = ac.qbis;
+    balanceHistory = ac.balanceHistory;
     nodeBal = ac.nodeBal;
 
     // EXISTING_CODE
     lastBlock = ac.lastBlock;
     bloom = ac.bloom;
     inBlock = ac.inBlock;
-    balanceHistory = ac.balanceHistory;
     // EXISTING_CODE
     finishParse();
 }
 
 //--------------------------------------------------------------------------
 inline CAccountWatch& CAccountWatch::operator=(const CAccountWatch& ac) {
-    Copy(ac);
+    duplicate(ac);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
+//-------------------------------------------------------------------------
+inline bool operator<(const CAccountWatch& v1, const CAccountWatch& v2) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default sort defined in class definition, assume already sorted
+    return true;
+}
+
 //---------------------------------------------------------------------------
-IMPLEMENT_ARCHIVE_ARRAY(CAccountWatchArray);
-IMPLEMENT_ARCHIVE_ARRAY_C(CAccountWatchArray);
-IMPLEMENT_ARCHIVE_LIST(CAccountWatchList);
+typedef vector<CAccountWatch> CAccountWatchArray;
+extern SFArchive& operator>>(SFArchive& archive, CAccountWatchArray& array);
+extern SFArchive& operator<<(SFArchive& archive, const CAccountWatchArray& array);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

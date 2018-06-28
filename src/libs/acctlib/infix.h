@@ -15,16 +15,12 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <vector>
+#include <algorithm>
 #include "etherlib.h"
 #include "treenode.h"
 
 namespace qblocks {
-
-//--------------------------------------------------------------------------
-class CInfix;
-typedef SFArrayBase<CInfix>         CInfixArray;
-typedef SFList<CInfix*>             CInfixList;
-typedef SFUniqueList<CInfix*>       CInfixListU;
 
 // EXISTING_CODE
 // EXISTING_CODE
@@ -52,12 +48,13 @@ public:
     bool visitItems(ACCTVISITOR func, void *data) const override;
     bool contains(const string_q& _key) const;
     // EXISTING_CODE
+    friend bool operator<(const CInfix& v1, const CInfix& v2);
     friend ostream& operator<<(ostream& os, const CInfix& item);
 
 protected:
-    void Clear(void);
-    void Init(void);
-    void Copy(const CInfix& in);
+    void clear(void);
+    void initialize(void);
+    void duplicate(const CInfix& in);
     bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
@@ -66,7 +63,7 @@ protected:
 
 //--------------------------------------------------------------------------
 inline CInfix::CInfix(void) {
-    Init();
+    initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
@@ -75,7 +72,7 @@ inline CInfix::CInfix(void) {
 inline CInfix::CInfix(const CInfix& in) {
     // EXISTING_CODE
     // EXISTING_CODE
-    Copy(in);
+    duplicate(in);
 }
 
 // EXISTING_CODE
@@ -83,13 +80,13 @@ inline CInfix::CInfix(const CInfix& in) {
 
 //--------------------------------------------------------------------------
 inline CInfix::~CInfix(void) {
-    Clear();
+    clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CInfix::Clear(void) {
+inline void CInfix::clear(void) {
     if (next)
         delete next;
     next = NULL;
@@ -98,8 +95,8 @@ inline void CInfix::Clear(void) {
 }
 
 //--------------------------------------------------------------------------
-inline void CInfix::Init(void) {
-    CTreeNode::Init();
+inline void CInfix::initialize(void) {
+    CTreeNode::initialize();
 
     next = NULL;
 
@@ -108,9 +105,9 @@ inline void CInfix::Init(void) {
 }
 
 //--------------------------------------------------------------------------
-inline void CInfix::Copy(const CInfix& in) {
-    Clear();
-    CTreeNode::Copy(in);
+inline void CInfix::duplicate(const CInfix& in) {
+    clear();
+    CTreeNode::duplicate(in);
 
     if (in.next) {
         next = new CTreeNode;
@@ -124,16 +121,24 @@ inline void CInfix::Copy(const CInfix& in) {
 
 //--------------------------------------------------------------------------
 inline CInfix& CInfix::operator=(const CInfix& in) {
-    Copy(in);
+    duplicate(in);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
+//-------------------------------------------------------------------------
+inline bool operator<(const CInfix& v1, const CInfix& v2) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default sort defined in class definition, assume already sorted
+    return true;
+}
+
 //---------------------------------------------------------------------------
-IMPLEMENT_ARCHIVE_ARRAY(CInfixArray);
-IMPLEMENT_ARCHIVE_ARRAY_C(CInfixArray);
-IMPLEMENT_ARCHIVE_LIST(CInfixList);
+typedef vector<CInfix> CInfixArray;
+extern SFArchive& operator>>(SFArchive& archive, CInfixArray& array);
+extern SFArchive& operator<<(SFArchive& archive, const CInfixArray& array);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

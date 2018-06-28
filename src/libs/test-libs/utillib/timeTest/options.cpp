@@ -17,7 +17,7 @@ static CParams params[] = {
     CParams("~mode", "a number between 0 and 2 inclusive"),
     CParams("",      "Test 'c' library strings against quickBlocks strings.\n"),
 };
-static uint32_t nParams = sizeof(params) / sizeof(CParams);
+size_t nParams = sizeof(params) / sizeof(CParams);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
@@ -28,7 +28,7 @@ bool COptions::parseArguments(string_q& command) {
     Init();
     while (!command.empty()) {
         string_q arg = nextTokenClear(command, ' ');
-        if (startsWith(arg, '-')) {  // do not collapse
+        if (startsWith(arg, '-')) {   // do not collapse
 
             if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);

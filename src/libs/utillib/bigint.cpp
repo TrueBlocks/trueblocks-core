@@ -9,18 +9,15 @@
 namespace qblocks {
 
     //------------------------------------------------------------
-    SFIntBN::SFIntBN(void) : sign(0), mag()
-    {
+    SFIntBN::SFIntBN(void) : sign(0), mag() {
     }
 
     //------------------------------------------------------------
-    SFIntBN::SFIntBN(const SFIntBN &x) : sign(x.sign), mag(x.mag)
-    {
+    SFIntBN::SFIntBN(const SFIntBN &x) : sign(x.sign), mag(x.mag) {
     }
 
     //------------------------------------------------------------
-    SFIntBN& SFIntBN::operator=(const SFIntBN& x)
-    {
+    SFIntBN& SFIntBN::operator=(const SFIntBN& x) {
         if (thisIsMe(x))
             return *this;
         sign = x.sign;
@@ -29,88 +26,83 @@ namespace qblocks {
     }
 
     //------------------------------------------------------------
-    SFIntBN::SFIntBN(const SFUintBN &x) : mag(x)
-    {
-        sign = (mag.len==0) ? 0 : 1;
+    SFIntBN::SFIntBN(const SFUintBN &x) : mag(x) {
+        sign = (mag.len == 0) ? 0 : 1;
     }
 
     //------------------------------------------------------------
-    SFIntBN::SFIntBN(const uint64_t *b, unsigned int len) : mag(b, len)
-    {
-        sign = (mag.len==0) ? 0 : 1;
+    SFIntBN::SFIntBN(const uint64_t *b, unsigned int len) : mag(b, len) {
+        sign = (mag.len == 0) ? 0 : 1;
     }
 
     //------------------------------------------------------------
-    SFIntBN::SFIntBN(const uint64_t *b, unsigned int blen, int sgn) : mag(b, blen)
-    {
-        switch (sgn)
-        {
+    SFIntBN::SFIntBN(const uint64_t *b, unsigned int blen, int sgn) : mag(b, blen) {
+        switch (sgn) {
             case 0:
-                if (mag.len!=0)
-                    throw "SFIntBN::SFIntBN(const uint64_t *, unsigned int, int): Cannot use a sign of zero with a nonzero magnitude";
+                if (mag.len != 0)
+                    throw "SFIntBN::SFIntBN(const uint64_t *, unsigned int, int): "
+                        "Cannot use a sign of zero with a nonzero magnitude";
                 sign = 0;
                 break;
 
             case  1:
             case -1:
-                sign = ((mag.len==0) ? 0 : sgn);
+                sign = ((mag.len == 0) ? 0 : sgn);
                 break;
 
             default:
                 // do nothing with bad data
-                ;
+                break;
         }
     }
 
     //------------------------------------------------------------
-    SFIntBN::SFIntBN(const SFUintBN &x, int sgn) : mag(x)
-    {
-        switch (sgn)
-        {
+    SFIntBN::SFIntBN(const SFUintBN &x, int sgn) : mag(x) {
+        switch (sgn) {
             case 0:
-                if (mag.len!=0)
-                    throw "SFIntBN::SFIntBN(const SFUintBN &, int): Cannot use a sign of zero with a nonzero magnitude";
+                if (mag.len != 0)
+                    throw "SFIntBN::SFIntBN(const SFUintBN &, int): "
+                        "Cannot use a sign of zero with a nonzero magnitude";
                 sign = 0;
                 break;
 
             case  1:
             case -1:
                 // If the magnitude is zero, force the sign to zero.
-                sign = ((mag.len==0) ? 0 : sgn);
+                sign = ((mag.len == 0) ? 0 : sgn);
                 break;
 
             default:
                 // do nothing with bad data
-                ;
+                break;
         }
     }
 
     //------------------------------------------------------------
-    SFIntBN::SFIntBN(uint64_t  x) : mag(x)
-    {
-        sign = ((mag.len==0) ? 0 : 1);
+    SFIntBN::SFIntBN(uint64_t x) : mag(x) {
+        sign = ((mag.len == 0) ? 0 : 1);
     }
 
     //------------------------------------------------------------
-    SFIntBN::SFIntBN(unsigned int   x) : mag(x)
-    {
-        sign = ((mag.len==0) ? 0 : 1);
+    SFIntBN::SFIntBN(uint32_t x) : mag(x) {
+        sign = ((mag.len == 0) ? 0 : 1);
     }
 
     //------------------------------------------------------------
-    SFIntBN::SFIntBN(unsigned short x) : mag(x)
-    {
-        sign = ((mag.len==0) ? 0 : 1);
+    SFIntBN::SFIntBN(uint16_t x) : mag(x) {
+        sign = ((mag.len == 0) ? 0 : 1);
     }
 
     // For signed input, determine the desired magnitude and sign separately.
+    //------------------------------------------------------------
     template <class X, class UX>
-    uint64_t magOf(X x)
-    {
-        /* UX(...) cast needed to stop short(-2^15), which negates to
-         * itself, from sign-extending in the conversion to uint64_t. */
+    uint64_t magOf(X x) {
+        // UX(...) cast needed to stop short(-2^15), which negates to
+        // itself, from sign-extending in the conversion to uint64_t.
         return ((uint64_t)(x < 0 ? UX(-x) : (uint32_t)x));
     }
+
+    //------------------------------------------------------------
     template <class X>
     int signOf(X x) {
         return (x == 0) ? 0
@@ -119,23 +111,19 @@ namespace qblocks {
     }
 
     //------------------------------------------------------------
-    SFIntBN::SFIntBN(int64_t x) : sign(signOf(x)), mag(magOf<int64_t , uint64_t >(x)) {}
-    //------------------------------------------------------------
-    SFIntBN::SFIntBN(int x) : sign(signOf(x)), mag(magOf<int  , unsigned int  >(x)) {}
-    //------------------------------------------------------------
-    SFIntBN::SFIntBN(short x) : sign(signOf(x)), mag(magOf<short, unsigned short>(x)) {}
+    SFIntBN::SFIntBN(int64_t x) : sign(signOf(x)), mag(magOf<int64_t, uint64_t>(x)) {}
+    SFIntBN::SFIntBN(int32_t x) : sign(signOf(x)), mag(magOf<int32_t, uint32_t>(x)) {}
+    SFIntBN::SFIntBN(int16_t x) : sign(signOf(x)), mag(magOf<int16_t, uint16_t>(x)) {}
 
     //------------------------------------------------------------
     template <class X>
-    X convertBigUnsignedToPrimitiveAccess(const SFUintBN &a)
-    {
+    X convertBigUnsignedToPrimitiveAccess(const SFUintBN &a) {
         return a.convertToPrimitive<X>();
     }
 
     //------------------------------------------------------------
     template <class X>
-    X SFIntBN::convertToUnsignedPrimitive() const
-    {
+    X SFIntBN::convertToUnsignedPrimitive() const {
         if (sign == -1)
             throw "SFIntBN::to<Primitive>: Cannot convert a negative integer to an unsigned type";
         else
@@ -144,26 +132,21 @@ namespace qblocks {
 
     //------------------------------------------------------------
     template <class X, class UX>
-    X SFIntBN::convertToSignedPrimitive() const
-    {
-        if (sign == 0)
-        {
+    X SFIntBN::convertToSignedPrimitive() const {
+        if (sign == 0) {
             return 0;
 
-        } else if (mag.len == 1)
-        {
+        } else if (mag.len == 1) {
             // The single block might fit in an X.  Try the conversion.
             uint64_t b = mag.getBlock(0);
-            if (sign == 1)
-            {
+            if (sign == 1) {
                 X x = X(b);
                 if (x >= 0 && ((uint64_t)(x)) == b)
                     return x;
-            } else
-            {
+            } else {
                 X x = -X(b);
-                /* UX(...) needed to avoid rejecting conversion of
-                 * -2^15 to a short. */
+                // UX(...) needed to avoid rejecting conversion of
+                // -2^15 to a short.
                 if (x < 0 && ((uint64_t)(UX(-x))) == b)
                     return x;
             }
@@ -174,11 +157,10 @@ namespace qblocks {
 
     //------------------------------------------------------------
     template <class X>
-    X SFUintBN::convertToPrimitive() const
-    {
-        if (len == 0)
+    X SFUintBN::convertToPrimitive() const {
+        if (len == 0) {
             return 0;
-        else if (len == 1) {
+        } else if (len == 1) {
             X x = X(blk[0]);
             if (((uint64_t)(x)) == blk[0])
                 return x;
@@ -198,65 +180,55 @@ namespace qblocks {
     }
 
     //------------------------------------------------------------
-    int64_t SFIntBN::to_long(void) const
-    {
-        return convertToSignedPrimitive  <int64_t, uint64_t> ();
-    }
+    int64_t  SFIntBN::to_long(void) const   { return convertToSignedPrimitive<int64_t, uint64_t>(); }
+    int32_t  SFIntBN::to_int(void) const    { return convertToSignedPrimitive<int32_t, uint32_t>(); }
+    int16_t  SFIntBN::to_short(void) const  { return convertToSignedPrimitive<int16_t, uint16_t>(); }
+    uint64_t SFIntBN::to_ulong(void) const  { return convertToUnsignedPrimitive<uint64_t>(); }
+    uint32_t SFIntBN::to_uint(void) const   { return convertToUnsignedPrimitive<uint32_t>(); }
+    uint16_t SFIntBN::to_ushort(void) const { return convertToUnsignedPrimitive<uint16_t>(); }
 
     //------------------------------------------------------------
-    int SFIntBN::to_int(void) const { return convertToSignedPrimitive<int, unsigned int>(); }
-    //------------------------------------------------------------
-    short SFIntBN::to_short(void) const { return convertToSignedPrimitive<short, unsigned short>(); }
-    //------------------------------------------------------------
-    uint64_t SFIntBN::to_ulong(void) const { return convertToUnsignedPrimitive<uint64_t>(); }
-    //------------------------------------------------------------
-    unsigned int SFIntBN::to_uint(void) const { return convertToUnsignedPrimitive<unsigned int>(); }
-    //------------------------------------------------------------
-    unsigned short SFIntBN::to_ushort(void) const { return convertToUnsignedPrimitive<unsigned short>(); }
-
-    //------------------------------------------------------------
-    int SFIntBN::compareTo(const SFIntBN &x) const
-    {
-        if (sign < x.sign)
+    int SFIntBN::compareTo(const SFIntBN &x) const {
+        if (sign < x.sign) {
             return -1;
 
-        else if (sign > x.sign)
+        } else if (sign > x.sign) {
             return 1;
 
-        else switch (sign)
-        {
-            case  0: return  0;
-            case  1: return  mag.compareTo(x.mag);
-            case -1: return -mag.compareTo(x.mag);
-            default:
-                // ignore bad data
-                ;
+        } else {
+            switch (sign) {
+                case  0: return  0;
+                case  1: return  mag.compareTo(x.mag);
+                case -1: return -mag.compareTo(x.mag);
+                default:
+                    // ignore bad data
+                break;
+            }
         }
         return 0;
     }
 
     //------------------------------------------------------------
     #define DTRT_ALIASED(cond, op) \
-    if (cond) { \
-    SFIntBN tmpThis; \
-    tmpThis.op; \
-    *this = tmpThis; \
-    return; \
+        if (cond) { \
+            SFIntBN tmpThis; \
+        tmpThis.op; \
+        *this = tmpThis; \
+        return; \
     }
 
     //------------------------------------------------------------
-    void SFIntBN::add(const SFIntBN &a, const SFIntBN &b)
-    {
+    void SFIntBN::add(const SFIntBN &a, const SFIntBN &b) {
         DTRT_ALIASED(this == &a || this == &b, add(a, b));
 
         // If one argument is zero, copy the other.
-        if (a.sign == 0)
-            operator =(b);
-        else if (b.sign == 0)
-            operator =(a);
+        if (a.sign == 0) {
+            operator=(b);
+        } else if (b.sign == 0) {
+            operator=(a);
         // If the arguments have the same sign, take the
         // common sign and add their magnitudes.
-        else if (a.sign == b.sign) {
+        } else if (a.sign == b.sign) {
             sign = a.sign;
             mag.add(a.mag, b.mag);
         } else {
@@ -282,8 +254,7 @@ namespace qblocks {
     }
 
     //------------------------------------------------------------
-    void SFIntBN::subtract(const SFIntBN &a, const SFIntBN &b)
-    {
+    void SFIntBN::subtract(const SFIntBN &a, const SFIntBN &b) {
         // Notice that this routine is identical to SFIntBN::add,
         // if one replaces b.sign by its opposite.
         DTRT_ALIASED(this == &a || this == &b, subtract(a, b));
@@ -293,10 +264,10 @@ namespace qblocks {
             // Take the negative of _b_'s, sign, not ours.
             // Bug pointed out by Sam Larkin on 2005.03.30.
             sign = -b.sign;
-        } else if (b.sign == 0)
+        } else if (b.sign == 0) {
             operator =(a);
         // If their signs differ, take a.sign and add the magnitudes.
-        else if (a.sign != b.sign) {
+        } else if (a.sign != b.sign) {
             sign = a.sign;
             mag.add(a.mag, b.mag);
         } else {
@@ -324,8 +295,7 @@ namespace qblocks {
     }
 
     //------------------------------------------------------------
-    void SFIntBN::multiply(const SFIntBN &a, const SFIntBN &b)
-    {
+    void SFIntBN::multiply(const SFIntBN &a, const SFIntBN &b) {
         DTRT_ALIASED(this == &a || this == &b, multiply(a, b));
 
         // If one object is zero, copy zero and return.
@@ -343,8 +313,7 @@ namespace qblocks {
     }
 
     //------------------------------------------------------------
-    void SFIntBN::divide(const SFIntBN &b, SFIntBN &q)
-    {
+    void SFIntBN::divide(const SFIntBN &b, SFIntBN &q) {
         if (this == &q)
             throw "SFIntBN::divide: Cannot write quotient and remainder into the same variable";
 
@@ -399,10 +368,10 @@ namespace qblocks {
              * Find r = (b - 1) - R and give it the desired sign.
              */
         }
-        
+
         // Divide the magnitudes.
         mag.divide(b.mag, q.mag);
-        
+
         if (sign != b.sign) {
             // More for the harder case (as described):
             // Increase the magnitude of the quotient by one.
@@ -411,42 +380,38 @@ namespace qblocks {
             mag.subtract(b.mag, mag);
             mag--;
         }
-        
+
         // Sign of the remainder is always the sign of the divisor b.
         sign = b.sign;
-        
+
         // Set signs to zero as necessary.  (Thanks David Allen!)
-        if (mag.len==0)
+        if (mag.len == 0)
             sign = 0;
-        if (q.mag.len==0)
+        if (q.mag.len == 0)
             q.sign = 0;
-        
+
         // WHEW!!!
     }
-    
+
     //------------------------------------------------------------
-    void SFIntBN::negate(const SFIntBN &a)
-    {
+    void SFIntBN::negate(const SFIntBN &a) {
         DTRT_ALIASED(this == &a, negate(a));
         mag  =  a.mag;
         sign = -a.sign;
     }
-    
+
     //------------------------------------------------------------
-    bool SFIntBN::isNegative(void) const
-    {
+    bool SFIntBN::isNegative(void) const {
         return operator<(0);
     }
-    
+
     //------------------------------------------------------------
-    const SFUintBN& SFIntBN::getMagnitude(void) const
-    {
+    const SFUintBN& SFIntBN::getMagnitude(void) const {
         return mag;
     }
-    
+
     //------------------------------------------------------------
-    uint64_t SFIntBN::getBlock(unsigned int i) const
-    {
+    uint64_t SFIntBN::getBlock(unsigned int i) const {
         return mag.getBlock(i);
     }
-}
+}  // namespace qblocks

@@ -89,8 +89,8 @@ namespace qblocks {
         uint64_t len = (uint64_t)(barLen() * percent);
 
         cout << begMsg << (begMsg.empty() ? " " : "");
-        cout << " [" << string_q('x', len).Substitute("x", "░");
-        cout << string_q(' ', max((uint64_t)0, barLen() - len));
+        cout << " [" << substitute(string_q(len, 'x'), "x", "░");
+        cout << string_q(max((uint64_t)0, barLen() - len), ' ');
         cout << "] ";
         cout << cYellow << _part << cOff << " of " << cYellow << _whole << cOff;
         cout << " (" << bBlue << double2Str(100. * percent, 1) << cOff << "%)";
@@ -110,11 +110,11 @@ namespace qblocks {
             return;
         }
 
-        CStringExportContext ctx;
+        ostringstream os;
         if (_tim > 0.) {
             pb_Value = max(pb_Value, _tim);  // keep it monotonic
-            ctx << " in " << cYellow << pb_Value << cOff << " seconds.";
+            os << " in " << cYellow << pb_Value << cOff << " seconds.";
         }
-        progressBar(_part, _whole, begMsg+"|"+ctx.str);
+        progressBar(_part, _whole, begMsg + "|" + os.str().c_str());
     }
 }  // namespace qblocks

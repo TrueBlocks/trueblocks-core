@@ -15,15 +15,10 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <vector>
 #include "abilib.h"
 
 namespace qblocks {
-
-//--------------------------------------------------------------------------
-class CTraceResult;
-typedef SFArrayBase<CTraceResult>         CTraceResultArray;
-typedef SFList<CTraceResult*>             CTraceResultList;
-typedef SFUniqueList<CTraceResult*>       CTraceResultListU;
 
 // EXISTING_CODE
 // EXISTING_CODE
@@ -47,12 +42,13 @@ public:
     // EXISTING_CODE
     friend class CTrace;
     // EXISTING_CODE
+    friend bool operator<(const CTraceResult& v1, const CTraceResult& v2);
     friend ostream& operator<<(ostream& os, const CTraceResult& item);
 
 protected:
-    void Clear(void);
-    void Init(void);
-    void Copy(const CTraceResult& tr);
+    void clear(void);
+    void initialize(void);
+    void duplicate(const CTraceResult& tr);
     bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
@@ -61,7 +57,7 @@ protected:
 
 //--------------------------------------------------------------------------
 inline CTraceResult::CTraceResult(void) {
-    Init();
+    initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
@@ -70,7 +66,7 @@ inline CTraceResult::CTraceResult(void) {
 inline CTraceResult::CTraceResult(const CTraceResult& tr) {
     // EXISTING_CODE
     // EXISTING_CODE
-    Copy(tr);
+    duplicate(tr);
 }
 
 // EXISTING_CODE
@@ -78,20 +74,20 @@ inline CTraceResult::CTraceResult(const CTraceResult& tr) {
 
 //--------------------------------------------------------------------------
 inline CTraceResult::~CTraceResult(void) {
-    Clear();
+    clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CTraceResult::Clear(void) {
+inline void CTraceResult::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CTraceResult::Init(void) {
-    CBaseNode::Init();
+inline void CTraceResult::initialize(void) {
+    CBaseNode::initialize();
 
     address = "";
     code = "";
@@ -103,9 +99,9 @@ inline void CTraceResult::Init(void) {
 }
 
 //--------------------------------------------------------------------------
-inline void CTraceResult::Copy(const CTraceResult& tr) {
-    Clear();
-    CBaseNode::Copy(tr);
+inline void CTraceResult::duplicate(const CTraceResult& tr) {
+    clear();
+    CBaseNode::duplicate(tr);
 
     address = tr.address;
     code = tr.code;
@@ -119,16 +115,24 @@ inline void CTraceResult::Copy(const CTraceResult& tr) {
 
 //--------------------------------------------------------------------------
 inline CTraceResult& CTraceResult::operator=(const CTraceResult& tr) {
-    Copy(tr);
+    duplicate(tr);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
+//-------------------------------------------------------------------------
+inline bool operator<(const CTraceResult& v1, const CTraceResult& v2) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default sort defined in class definition, assume already sorted
+    return true;
+}
+
 //---------------------------------------------------------------------------
-IMPLEMENT_ARCHIVE_ARRAY(CTraceResultArray);
-IMPLEMENT_ARCHIVE_ARRAY_C(CTraceResultArray);
-IMPLEMENT_ARCHIVE_LIST(CTraceResultList);
+typedef vector<CTraceResult> CTraceResultArray;
+extern SFArchive& operator>>(SFArchive& archive, CTraceResultArray& array);
+extern SFArchive& operator<<(SFArchive& archive, const CTraceResultArray& array);
 
 //---------------------------------------------------------------------------
 extern SFArchive& operator<<(SFArchive& archive, const CTraceResult& tra);

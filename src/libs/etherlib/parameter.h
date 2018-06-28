@@ -15,18 +15,12 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <vector>
 #include "utillib.h"
 
 namespace qblocks {
 
-//--------------------------------------------------------------------------
-class CParameter;
-typedef SFArrayBase<CParameter>         CParameterArray;
-typedef SFList<CParameter*>             CParameterList;
-typedef SFUniqueList<CParameter*>       CParameterListU;
-
 // EXISTING_CODE
-class CFunction;
 //--------------------------------------------------------------------------
 #define SIG_FTYPE     (1<<1)
 #define SIG_FNAME     (1<<2)
@@ -63,14 +57,15 @@ public:
     DECLARE_NODE(CParameter);
 
     // EXISTING_CODE
-    CParameter(string_q& txtIn);
+    explicit CParameter(string_q& txtIn);
     // EXISTING_CODE
+    friend bool operator<(const CParameter& v1, const CParameter& v2);
     friend ostream& operator<<(ostream& os, const CParameter& item);
 
 protected:
-    void Clear(void);
-    void Init(void);
-    void Copy(const CParameter& pa);
+    void clear(void);
+    void initialize(void);
+    void duplicate(const CParameter& pa);
     bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
@@ -79,7 +74,7 @@ protected:
 
 //--------------------------------------------------------------------------
 inline CParameter::CParameter(void) {
-    Init();
+    initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
@@ -88,7 +83,7 @@ inline CParameter::CParameter(void) {
 inline CParameter::CParameter(const CParameter& pa) {
     // EXISTING_CODE
     // EXISTING_CODE
-    Copy(pa);
+    duplicate(pa);
 }
 
 // EXISTING_CODE
@@ -96,20 +91,20 @@ inline CParameter::CParameter(const CParameter& pa) {
 
 //--------------------------------------------------------------------------
 inline CParameter::~CParameter(void) {
-    Clear();
+    clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CParameter::Clear(void) {
+inline void CParameter::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CParameter::Init(void) {
-    CBaseNode::Init();
+inline void CParameter::initialize(void) {
+    CBaseNode::initialize();
 
     indexed = 0;
     name = "";
@@ -124,9 +119,9 @@ inline void CParameter::Init(void) {
 }
 
 //--------------------------------------------------------------------------
-inline void CParameter::Copy(const CParameter& pa) {
-    Clear();
-    CBaseNode::Copy(pa);
+inline void CParameter::duplicate(const CParameter& pa) {
+    clear();
+    CBaseNode::duplicate(pa);
 
     indexed = pa.indexed;
     name = pa.name;
@@ -143,16 +138,24 @@ inline void CParameter::Copy(const CParameter& pa) {
 
 //--------------------------------------------------------------------------
 inline CParameter& CParameter::operator=(const CParameter& pa) {
-    Copy(pa);
+    duplicate(pa);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
+//-------------------------------------------------------------------------
+inline bool operator<(const CParameter& v1, const CParameter& v2) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default sort defined in class definition, assume already sorted
+    return true;
+}
+
 //---------------------------------------------------------------------------
-IMPLEMENT_ARCHIVE_ARRAY(CParameterArray);
-IMPLEMENT_ARCHIVE_ARRAY_C(CParameterArray);
-IMPLEMENT_ARCHIVE_LIST(CParameterList);
+typedef vector<CParameter> CParameterArray;
+extern SFArchive& operator>>(SFArchive& archive, CParameterArray& array);
+extern SFArchive& operator<<(SFArchive& archive, const CParameterArray& array);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

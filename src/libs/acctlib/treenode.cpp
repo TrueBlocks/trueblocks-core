@@ -37,8 +37,8 @@ void CTreeNode::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr
     }
 
     string_q fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, dataPtr))
-        return;
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     while (!fmt.empty())
         ctx << getNextChunk(fmt, nextTreenodeChunk, this);
@@ -112,12 +112,33 @@ bool CTreeNode::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
+SFArchive& operator>>(SFArchive& archive, CTreeNodeArray& array) {
+    uint64_t count;
+    archive >> count;
+    array.resize(count);
+    for (size_t i = 0 ; i < count ; i++) {
+        ASSERT(i < array.capacity());
+        array.at(i).Serialize(archive);
+    }
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+SFArchive& operator<<(SFArchive& archive, const CTreeNodeArray& array) {
+    uint64_t count = array.size();
+    archive << count;
+    for (size_t i = 0 ; i < array.size() ; i++)
+        array[i].SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
 void CTreeNode::registerClass(void) {
     static bool been_here = false;
     if (been_here) return;
     been_here = true;
 
-    uint32_t fieldNum = 1000;
+    size_t fieldNum = 1000;
     ADD_FIELD(CTreeNode, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CTreeNode, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CTreeNode, "showing", T_BOOL,  ++fieldNum);
@@ -144,6 +165,8 @@ string_q nextTreenodeChunk_custom(const string_q& fieldIn, const void *dataPtr) 
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
                     return nextBasenodeChunk(fieldIn, tre);
+                // EXISTING_CODE
+                // EXISTING_CODE
                 break;
 
             default:
@@ -152,13 +175,6 @@ string_q nextTreenodeChunk_custom(const string_q& fieldIn, const void *dataPtr) 
     }
 
     return "";
-}
-
-//---------------------------------------------------------------------------
-bool CTreeNode::handleCustomFormat(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
-    return false;
 }
 
 //---------------------------------------------------------------------------
@@ -217,25 +233,25 @@ CTreeNode* CTreeNode::newBranch(
     CTreeNode* ret;
     if (_k1.length() == prefix) {
         if (verbose == 2) cerr << "k1 matches up to " << prefix << endl;
-        ret = new CBranch(_k2[(int)prefix], new CLeaf(_k2.substr(prefix+1), _v2), _v1);
+        ret = new CBranch(_k2[prefix], new CLeaf(extract(_k2, prefix+1), _v2), _v1);
 
     } else if (_k2.length() == prefix) {
         if (verbose == 2) cerr << "k2 matches up to " << prefix << endl;
-        ret = new CBranch(_k1[(int)prefix], new CLeaf(_k1.substr(prefix+1), _v1), _v2);
+        ret = new CBranch(_k1[prefix], new CLeaf(extract(_k1, prefix+1), _v1), _v2);
 
     } else {
         // both continue after split
         if (verbose == 2) cerr << "both keys continue past prefix " << prefix << endl;
-        ret = new CBranch(_k1[(int)prefix],
-                          new CLeaf(_k1.substr(prefix+1), _v1),
-                          _k2[(int)prefix],
-                          new CLeaf(_k2.substr(prefix+1), _v2));
+        ret = new CBranch(_k1[prefix],
+                          new CLeaf(extract(_k1, prefix+1), _v1),
+                          _k2[prefix],
+                          new CLeaf(extract(_k2, prefix+1), _v2));
     }
 
     if (prefix) {
         // have shared prefix - split.
         if (verbose == 2) cerr << "shared prefix " << prefix << endl;
-        ret = new CInfix(_k1.substr(0, prefix), ret);
+        ret = new CInfix(extract(_k1, 0, prefix), ret);
     }
 
     return ret;

@@ -38,7 +38,7 @@ CParams params[] = {
                                 "contract. Optionally formats the output to your specification. Note: --income "
                                 "and --expense are mutually exclusive as are --blocks and --dates.\n"),
 };
-uint32_t nParams = sizeof(params) / sizeof(CParams);
+size_t nParams = sizeof(params) / sizeof(CParams);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
@@ -68,12 +68,12 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (startsWith(arg, "-f:") || startsWith(arg, "--fmt:")) {
             prettyPrint = true;
-            exportFormat = arg.Substitute("-f:", "").Substitute("--fmt:", "");
+            exportFormat = substitute(substitute(arg, "-f:", ""), "--fmt:", "");
             if (exportFormat.empty())
                 return usage("Please provide a formatting option with " + orig + ". Quitting...");
 
         } else if (startsWith(arg, "--func:")) {
-            funcFilter = arg.Substitute("--func:", "");
+            funcFilter = substitute(arg, "--func:", "");
             if (funcFilter.empty())
                 return usage("Please provide a function to filter on " + orig + ". Quitting...");
 
@@ -85,8 +85,8 @@ bool COptions::parseArguments(string_q& command) {
             reverseSort = true;
 
         } else if (startsWith(arg, "--acct_id:")) {
-            arg = arg.Substitute("--acct_id:", "");
-            acct_id = toLong32u(arg);
+            arg = substitute(arg, "--acct_id:", "");
+            acct_id = toLongU(arg);
 
         } else if (startsWith(arg, "--cache")) {
             cache = true;
@@ -96,7 +96,7 @@ bool COptions::parseArguments(string_q& command) {
             if (firstDate != earliestDate || lastDate != latestDate)
                 return usage("Specifiy either a date range or a block range, not both. Quitting...");
 
-            string_q ret = blocks.parseBlockList(arg.Substitute("-b:","").Substitute("--blocks:",""), latestBlock);
+            string_q ret = blocks.parseBlockList(substitute(substitute(arg, "-b:", ""), "--blocks:", ""), latestBlock);
             if (contains(ret, "'stop' must be strictly larger than 'start'"))
                 ret = "";
             if (endsWith(ret, "\n")) {
@@ -105,7 +105,7 @@ bool COptions::parseArguments(string_q& command) {
             } else if (!ret.empty()) {
                 return usage(ret);
             }
-            // HACK ALERT: ethslurp, being old, used to provide inclusive block ranges (i.e. last was included in range).
+            // HACK ALERT: ethslurp used to provide inclusive block ranges (i.e. last was included in range).
             // New version does not include last in range, so we add one here to make it work the same.
             blocks.stop++;
 
@@ -117,7 +117,7 @@ bool COptions::parseArguments(string_q& command) {
             if (blocks.hasBlocks())
                 return usage("Specifiy either a date range or a block range, not both. Quitting...");
 
-            string_q lateStr = arg.Substitute("-d:", "").Substitute("--dates:", "");
+            string_q lateStr = substitute(substitute(arg, "-d:", ""), "--dates:", "");
             string_q earlyStr = nextTokenClear(lateStr, ':');
             if (!earlyStr.empty() && !isNumeral(earlyStr))
                 return usage("Invalid date: " + orig + ". Quitting...");
@@ -150,23 +150,23 @@ bool COptions::parseArguments(string_q& command) {
             rerun = true;
 
         } else if (startsWith(arg, "--sleep:")) {
-            arg = arg.Substitute("--sleep:", "");
+            arg = substitute(arg, "--sleep:", "");
             if (arg.empty() || !isdigit(arg[0]))
                 return usage("Sleep amount must be a numeral. Quitting...");
-            uint32_t wait = toLong32u(arg);
+            useconds_t wait = (useconds_t)toLongU(arg);
             if (wait) {
                 cerr << "Sleeping " << wait << " seconds\n";
                 usleep(wait * 1000000);
             }
 
         } else if (startsWith(arg, "-m:") || startsWith(arg, "--max:")) {
-            string_q val = arg.Substitute("-m:", "").Substitute("--max:", "");
+            string_q val = substitute(substitute(arg, "-m:", ""), "--max:", "");
             if (val.empty() || !isdigit(val[0]))
                 return usage("Please supply a value with the --max: option. Quitting...");
-            maxTransactions = toLong32u(val);
+            maxTransactions = toLongU(val);
 
         } else if (startsWith(arg, "-n:") || startsWith(arg, "--name:")) {
-            string_q val = arg.Substitute("-n:", "").Substitute("--name:", "");
+            string_q val = substitute(substitute(arg, "-n:", ""), "--name:", "");
             if (val.empty())
                 return usage("You must supply a name with the --name option. Quitting...");
             name = val;
@@ -178,7 +178,7 @@ bool COptions::parseArguments(string_q& command) {
             archiveFile = "";
 
         } else if (startsWith(arg, "-a:") || startsWith(arg, "--archive:")) {
-            string_q fileName = arg.Substitute("-a:", "").Substitute("--archive:", "");
+            string_q fileName = substitute(substitute(arg, "-a:", ""), "--archive:", "");
 
             CFilename filename(fileName);
             if (!startsWith(filename.getPath(), '/'))
@@ -201,7 +201,8 @@ bool COptions::parseArguments(string_q& command) {
 
             addr = fixAddress(arg);
             if (!isAddress(addr))
-                 return usage(addr + " appears to be an invalid address. Valid addresses start with '0x' and are 20 bytes (40 chars) long. Quitting...");
+                 return usage(addr + " appears to be an invalid address. Valid addresses start with '0x' "
+                              "and are 20 bytes (40 chars) long. Quitting...");
         }
     }
 
@@ -271,3 +272,14 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
     return str;
 }
 
+//--------------------------------------------------------------------------------
+void CFileExportContext::setOutput(void *output) {
+    Close();  // just in case
+    m_output = output == NULL ? stdout : reinterpret_cast<FILE*>(output);
+}
+
+//--------------------------------------------------------------------------------
+void CFileExportContext::Output(const string_q& sss) {
+    ASSERT(m_output);
+    fprintf(m_output, "%s", sss.c_str());
+}

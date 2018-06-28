@@ -15,16 +15,11 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <vector>
 #include "etherlib.h"
 #include "treenode.h"
 
 namespace qblocks {
-
-//--------------------------------------------------------------------------
-class CBranch;
-typedef SFArrayBase<CBranch>         CBranchArray;
-typedef SFList<CBranch*>             CBranchList;
-typedef SFUniqueList<CBranch*>       CBranchListU;
 
 // EXISTING_CODE
 // EXISTING_CODE
@@ -51,16 +46,18 @@ public:
     CTreeNode* insert(const string_q& _key, const string_q& _value) override;
     CTreeNode* remove(const string_q& _key) override;
     bool visitItems(ACCTVISITOR func, void *data) const override;
+
 private:
     char activeBranch() const;
     CTreeNode *rejig();
     // EXISTING_CODE
+    friend bool operator<(const CBranch& v1, const CBranch& v2);
     friend ostream& operator<<(ostream& os, const CBranch& item);
 
 protected:
-    void Clear(void);
-    void Init(void);
-    void Copy(const CBranch& br);
+    void clear(void);
+    void initialize(void);
+    void duplicate(const CBranch& br);
     bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
@@ -69,7 +66,7 @@ protected:
 
 //--------------------------------------------------------------------------
 inline CBranch::CBranch(void) {
-    Init();
+    initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
@@ -78,7 +75,7 @@ inline CBranch::CBranch(void) {
 inline CBranch::CBranch(const CBranch& br) {
     // EXISTING_CODE
     // EXISTING_CODE
-    Copy(br);
+    duplicate(br);
 }
 
 // EXISTING_CODE
@@ -86,13 +83,13 @@ inline CBranch::CBranch(const CBranch& br) {
 
 //--------------------------------------------------------------------------
 inline CBranch::~CBranch(void) {
-    Clear();
+    clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CBranch::Clear(void) {
+inline void CBranch::clear(void) {
     // EXISTING_CODE
     for (int i = 0 ; i < 16 ; i++)
         if (nodes[i])
@@ -102,8 +99,8 @@ inline void CBranch::Clear(void) {
 }
 
 //--------------------------------------------------------------------------
-inline void CBranch::Init(void) {
-    CTreeNode::Init();
+inline void CBranch::initialize(void) {
+    CTreeNode::initialize();
 
     branchValue = "";
 
@@ -113,9 +110,9 @@ inline void CBranch::Init(void) {
 }
 
 //--------------------------------------------------------------------------
-inline void CBranch::Copy(const CBranch& br) {
-    Clear();
-    CTreeNode::Copy(br);
+inline void CBranch::duplicate(const CBranch& br) {
+    clear();
+    CTreeNode::duplicate(br);
 
     branchValue = br.branchValue;
 
@@ -129,16 +126,24 @@ inline void CBranch::Copy(const CBranch& br) {
 
 //--------------------------------------------------------------------------
 inline CBranch& CBranch::operator=(const CBranch& br) {
-    Copy(br);
+    duplicate(br);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
+//-------------------------------------------------------------------------
+inline bool operator<(const CBranch& v1, const CBranch& v2) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default sort defined in class definition, assume already sorted
+    return true;
+}
+
 //---------------------------------------------------------------------------
-IMPLEMENT_ARCHIVE_ARRAY(CBranchArray);
-IMPLEMENT_ARCHIVE_ARRAY_C(CBranchArray);
-IMPLEMENT_ARCHIVE_LIST(CBranchList);
+typedef vector<CBranch> CBranchArray;
+extern SFArchive& operator>>(SFArchive& archive, CBranchArray& array);
+extern SFArchive& operator<<(SFArchive& archive, const CBranchArray& array);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

@@ -37,8 +37,8 @@ void CLogEntry::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr
     }
 
     string_q fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, dataPtr))
-        return;
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     while (!fmt.empty())
         ctx << getNextChunk(fmt, nextLogentryChunk, this);
@@ -59,7 +59,7 @@ string_q nextLogentryChunk(const string_q& fieldIn, const void *dataPtr) {
 bool CLogEntry::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
     // EXISTING_CODE
     if (pReceipt)
-        if (((CReceipt*)pReceipt)->setValueByName(fieldName, fieldValue))
+        if (((CReceipt*)pReceipt)->setValueByName(fieldName, fieldValue))  // NOLINT
             return true;
     // EXISTING_CODE
 
@@ -77,7 +77,7 @@ bool CLogEntry::setValueByName(const string_q& fieldName, const string_q& fieldV
             if ( fieldName % "topics" ) {
                 string_q str = fieldValue;
                 while (!str.empty()) {
-                    topics[topics.getCount()] = toTopic(nextTokenClear(str,','));
+                    topics.push_back(toTopic(nextTokenClear(str, ',')));
                 }
                 return true;
             }
@@ -131,12 +131,33 @@ bool CLogEntry::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
+SFArchive& operator>>(SFArchive& archive, CLogEntryArray& array) {
+    uint64_t count;
+    archive >> count;
+    array.resize(count);
+    for (size_t i = 0 ; i < count ; i++) {
+        ASSERT(i < array.capacity());
+        array.at(i).Serialize(archive);
+    }
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+SFArchive& operator<<(SFArchive& archive, const CLogEntryArray& array) {
+    uint64_t count = array.size();
+    archive << count;
+    for (size_t i = 0 ; i < array.size() ; i++)
+        array[i].SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
 void CLogEntry::registerClass(void) {
     static bool been_here = false;
     if (been_here) return;
     been_here = true;
 
-    uint32_t fieldNum = 1000;
+    size_t fieldNum = 1000;
     ADD_FIELD(CLogEntry, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CLogEntry, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CLogEntry, "showing", T_BOOL,  ++fieldNum);
@@ -165,6 +186,8 @@ string_q nextLogentryChunk_custom(const string_q& fieldIn, const void *dataPtr) 
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
                     return nextBasenodeChunk(fieldIn, log);
+                // EXISTING_CODE
+                // EXISTING_CODE
                 break;
 
             default:
@@ -173,13 +196,6 @@ string_q nextLogentryChunk_custom(const string_q& fieldIn, const void *dataPtr) 
     }
 
     return "";
-}
-
-//---------------------------------------------------------------------------
-bool CLogEntry::handleCustomFormat(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
-    return false;
 }
 
 //---------------------------------------------------------------------------
@@ -225,12 +241,12 @@ string_q CLogEntry::getValueByName(const string_q& fieldName) const {
             break;
         case 't':
             if ( fieldName % "topics" || fieldName % "topicsCnt" ) {
-                uint32_t cnt = topics.getCount();
+                size_t cnt = topics.size();
                 if (endsWith(fieldName, "Cnt"))
                     return asStringU(cnt);
                 if (!cnt) return "";
                 string_q retS;
-                for (uint32_t i = 0 ; i < cnt ; i++) {
+                for (size_t i = 0 ; i < cnt ; i++) {
                     retS += ("\"" + fromTopic(topics[i]) + "\"");
                     retS += ((i < cnt - 1) ? ",\n" + indent() : "\n");
                 }
@@ -243,7 +259,7 @@ string_q CLogEntry::getValueByName(const string_q& fieldName) const {
     // See if this field belongs to the item's container
     ret = nextReceiptChunk(fieldName, pReceipt);
     if (contains(ret, "Field not found"))
-        ret = EMPTY;
+        ret = "";
     if (!ret.empty())
         return ret;
     // EXISTING_CODE
@@ -262,29 +278,14 @@ ostream& operator<<(ostream& os, const CLogEntry& item) {
 }
 
 //---------------------------------------------------------------------------
-const string_q CLogEntry::getStringAt(const string_q& name, uint32_t i) const {
-    if ( name % "topics" && i < topics.getCount() )
+const string_q CLogEntry::getStringAt(const string_q& name, size_t i) const {
+    if ( name % "topics" && i < topics.size() )
         return fromTopic(topics[i]);
     return "";
 }
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-#define EQ_TEST(a) { if (test.a != a) return false; }
-bool CLogEntry::operator==(const CLogEntry& test) const {
-
-    EQ_TEST(address);
-    EQ_TEST(data);
-    EQ_TEST(logIndex);
-    EQ_TEST(topics.getCount());
-    for (uint32_t i = 0 ; i < topics.getCount() ; i++)
-        if (test.topics[i] != topics[i])
-            return false;
-
-    return true;
-}
-
-//---------------------------------------------------------------------------
 // EXISTING_CODE
 }  // namespace qblocks
 

@@ -14,17 +14,22 @@
 
 //---------------------------------------------------------------------------------------------------
 CParams params[] = {
-    CParams("~address_list", "two or more addresses (0x...), the first is an ERC20 token, balances for the rest are reported"),
-    CParams("~!block_list",  "an optional list of one or more blocks at which to report balances, defaults to 'latest'"),
-    CParams("-byAcct",       "consider each address an ERC20 token except the last, whose balance is reported for each token"),
+    CParams("~address_list", "two or more addresses (0x...), the first is an ERC20 token, balances for the "
+                                "rest are reported"),
+    CParams("~!block_list",  "an optional list of one or more blocks at which to report balances, defaults "
+                                "to 'latest'"),
+    CParams("-byAcct",       "consider each address an ERC20 token except the last, whose balance is reported "
+                                "for each token"),
     CParams("-data",         "render results as tab delimited data (for example, to build a cap table)"),
-    CParams("-list:<fn>",    "an alternative way to specify an address_list, place one address per line in the file 'fn'"),
+    CParams("-list:<fn>",    "an alternative way to specify an address_list, place one address per line in "
+                                "the file 'fn'"),
     CParams("-noZero",       "suppress the display of zero balance accounts"),
     CParams("-total",        "if more than one balance is requested, display a total as well"),
     CParams("-info",         "retreive standarized information (name, decimals, totalSupply, etc.) about the token"),
-    CParams("",              "Retrieve the token balance(s) for one or more addresses at the given (or latest) block(s).\n"),
+    CParams("",              "Retrieve the token balance(s) for one or more addresses at the given (or "
+                                "latest) block(s).\n"),
 };
-uint32_t nParams = sizeof(params) / sizeof(CParams);
+size_t nParams = sizeof(params) / sizeof(CParams);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
@@ -33,7 +38,8 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     Init();
-    blknum_t latestBlock = getLatestBlockFromClient();
+    latestBlock = getLatestBlockFromClient();
+    earliestBlock = latestBlock;
     string_q address_list;
     while (!command.empty()) {
         string_q arg = nextTokenClear(command, ' ');
@@ -55,7 +61,7 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (startsWith(arg, "-l:") || startsWith(arg, "--list:")) {
 
-            CFilename fileName(arg.Substitute("-l:","").Substitute("--list:",""));
+            CFilename fileName(substitute(substitute(arg, "-l:", ""), "--list:", ""));
             if (!fileName.isValid())
                 return usage("Not a valid filename: " + orig + ". Quitting...");
             if (!fileExists(fileName.getFullPath()))
@@ -121,13 +127,13 @@ bool COptions::parseArguments(string_q& command) {
         reverse(address_list);
         // holder token2 token1 - reversed
         tokens = address_list;
-        holders = nextTokenClear(tokens,'|');
+        holders = nextTokenClear(tokens, '|');
         reverse(tokens); reverse(holders);
     }
 
     if (!blocks.hasBlocks()) {
         // use 'latest'
-        blocks.numList[blocks.numList.getCount()] = latestBlock;
+        blocks.numList.push_back(latestBlock);
     }
 
     return true;
@@ -168,16 +174,19 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
 
     if (which == "options") {
         return
-            str.Substitute("address_list block_list", "<address> <address> [address...] [block...]")
-                .Substitute("-l|", "-l fn|");
+            substitute(substitute(str, "address_list block_list",
+                        "<address> <address> [address...] [block...]"), "-l|", "-l fn|");
 
     } else if (which == "notes" && (verbose || COptions::isReadme)) {
 
         string_q ret;
         ret += "[{addresses}] must start with '0x' and be forty characters long.\n";
-        ret += "[{block_list}] may be space-separated list of values, a start-end range, a [{special}], or any combination.\n";
-        ret += "This tool retrieves information from the local node or the ${FALLBACK} node, if configured (see documentation).\n";
-        ret += "If the token contract(s) from which you request balances are not ERC20 compliant, the results are undefined.\n";
+        ret += "[{block_list}] may be space-separated list of values, a start-end range, a [{special}], "
+                    "or any combination.\n";
+        ret += "This tool retrieves information from the local node or the ${FALLBACK} node, if configured "
+                    "(see documentation).\n";
+        ret += "If the token contract(s) from which you request balances are not ERC20 compliant, the results "
+                    "are undefined.\n";
         ret += "If the queried node does not store historical state, the results are undefined.\n";
         ret += "[{special}] blocks are detailed under " + cTeal + "[{whenBlock --list}]" + cOff + ".\n";
         return ret;

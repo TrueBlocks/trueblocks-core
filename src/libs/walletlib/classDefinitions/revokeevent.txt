@@ -1,0 +1,6 @@
+[settings]
+class     = QRevokeEvent
+baseClass = CLogEntry
+fields    = address owner|bytes32 operation|
+includes  = logentry.h
+cIncs     = #include "etherlib.h"

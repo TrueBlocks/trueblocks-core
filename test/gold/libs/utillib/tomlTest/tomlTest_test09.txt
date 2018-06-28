@@ -6,4 +6,5 @@ test09.toml
 [settings]
 	name=TOP_15_060000.csv
 
-Done.
+name: 		TOP_15_060000.csv
+max_width: 	10000

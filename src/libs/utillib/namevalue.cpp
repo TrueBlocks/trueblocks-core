@@ -36,8 +36,8 @@ void CNameValue::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPt
     }
 
     string_q fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, dataPtr))
-        return;
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     while (!fmt.empty())
         ctx << getNextChunk(fmt, nextNamevalueChunk, this);
@@ -111,12 +111,33 @@ bool CNameValue::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
+SFArchive& operator>>(SFArchive& archive, CNameValueArray& array) {
+    uint64_t count;
+    archive >> count;
+    array.resize(count);
+    for (size_t i = 0 ; i < count ; i++) {
+        ASSERT(i < array.capacity());
+        array.at(i).Serialize(archive);
+    }
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+SFArchive& operator<<(SFArchive& archive, const CNameValueArray& array) {
+    uint64_t count = array.size();
+    archive << count;
+    for (size_t i = 0 ; i < array.size() ; i++)
+        array[i].SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
 void CNameValue::registerClass(void) {
     static bool been_here = false;
     if (been_here) return;
     been_here = true;
 
-    uint32_t fieldNum = 1000;
+    size_t fieldNum = 1000;
     ADD_FIELD(CNameValue, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CNameValue, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CNameValue, "showing", T_BOOL,  ++fieldNum);
@@ -143,6 +164,8 @@ string_q nextNamevalueChunk_custom(const string_q& fieldIn, const void *dataPtr)
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
                     return nextBasenodeChunk(fieldIn, nam);
+                // EXISTING_CODE
+                // EXISTING_CODE
                 break;
 
             default:
@@ -151,13 +174,6 @@ string_q nextNamevalueChunk_custom(const string_q& fieldIn, const void *dataPtr)
     }
 
     return "";
-}
-
-//---------------------------------------------------------------------------
-bool CNameValue::handleCustomFormat(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
-    return false;
 }
 
 //---------------------------------------------------------------------------

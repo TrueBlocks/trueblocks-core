@@ -10,6 +10,7 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
+#include <algorithm>
 #include "node.h"
 #include "miniblock.h"
 
@@ -21,7 +22,7 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------
-    CMiniBlock::CMiniBlock(CBlock *block) {
+    CMiniBlock::CMiniBlock(const CBlock *block) {
         bzero(this, sizeof(CMiniBlock));
         blockNumber = block->blockNumber;
         timestamp   = block->timestamp;
@@ -38,19 +39,19 @@ namespace qblocks {
 
     //--------------------------------------------------------------------------
     string_q CMiniBlock::Format(void) const {
-        CStringExportContext ctx;
-        ctx << "blockNumber: " << blockNumber << " ";
-        ctx << "timestamp: "   << timestamp   << " ";
-        ctx << "firstTrans: "  << firstTrans  << " ";
-        ctx << "nTrans: "      << nTrans      << " ";
-        return ctx.str;
+        ostringstream os;
+        os << "blockNumber: " << blockNumber << " ";
+        os << "timestamp: "   << timestamp   << " ";
+        os << "firstTrans: "  << firstTrans  << " ";
+        os << "nTrans: "      << nTrans      << " ";
+        return os.str().c_str();
     }
 
     //--------------------------------------------------------------------------
     bool CMiniBlock::operator==(const CBlock& b) const {
-        if (b.blockNumber             != blockNumber) return false;
-        if (b.timestamp               != timestamp) return false;
-        if (b.transactions.getCount() != nTrans) return false;
+        if (b.blockNumber         != blockNumber) return false;
+        if (b.timestamp           != timestamp) return false;
+        if (b.transactions.size() != nTrans) return false;
         return true;
     }
 
@@ -60,13 +61,13 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------
-    CMiniTrans::CMiniTrans(CTransaction *t) {
+    CMiniTrans::CMiniTrans(const CTransaction *t) {
         bzero(this, sizeof(CMiniTrans));
         index    = (uint32_t)t->transactionIndex;
         gasUsed  = t->receipt.gasUsed;
         gasPrice = t->gasPrice;
         isError  = t->isError;
-        nTraces  = getTraceCount(t->hash);
+        nTraces  = (uint32_t)getTraceCount(t->hash);
         strncpy(value, fromWei(t->value), 40); value[40] = '\0';
     }
 
@@ -82,14 +83,14 @@ namespace qblocks {
 
     //--------------------------------------------------------------------------
     string_q CMiniTrans::Format(void) const {
-        CStringExportContext ctx;
-        ctx << "index: "    << index      << " ";
-        ctx << "isError: "  << isError    << " ";
-        ctx << "nTraces: "  << nTraces    << " ";
-        ctx << "gasUsed: "  << gasUsed    << " ";
-        ctx << "gasPrice: " << gasPrice   << " ";
-        ctx << "value: "    << value      << " ";
-        return ctx.str;
+        ostringstream os;
+        os << "index: "    << index      << " ";
+        os << "isError: "  << isError    << " ";
+        os << "nTraces: "  << nTraces    << " ";
+        os << "gasUsed: "  << gasUsed    << " ";
+        os << "gasPrice: " << gasPrice   << " ";
+        os << "value: "    << value      << " ";
+        return os.str().c_str();
     }
 
     //--------------------------------------------------------------------------
@@ -136,17 +137,17 @@ namespace qblocks {
 
     //--------------------------------------------------------------------------
     inline string_q TIMER_IN(double& st) {
-        CStringExportContext ctx;
-        ctx << (qbNow()-st) << ": ";
+        ostringstream os;
+        os << (qbNow()-st) << ": ";
         st = qbNow();
-        return ctx.str;
+        return os.str().c_str();
     }
 
     //-------------------------------------------------------------------------
     inline string_q TIMER_TICK(double st) {
-        CStringExportContext ctx;
-        ctx << "in " << cGreen << (qbNow()-st) << cOff << " seconds.";
-        return ctx.str;
+        ostringstream os;
+        os << "in " << cGreen << (qbNow()-st) << cOff << " seconds.";
+        return os.str().c_str();
     }
 
     //--------------------------------------------------------------------------
@@ -176,7 +177,7 @@ namespace qblocks {
         count = min(_start + _count, latestBlock) - _start;
 
         CMemMapFile blockFile(miniBlockCache.c_str(),  CMemMapFile::WholeFile, CMemMapFile::SequentialScan);
-        blocks = (CMiniBlock*)(blockFile.getData());
+        blocks = (CMiniBlock*)(blockFile.getData());  // NOLINT
 
         CMemMapFile transFile(miniTransCache.c_str(),  CMemMapFile::WholeFile, CMemMapFile::SequentialScan);
         trans  = reinterpret_cast<const CMiniTrans *>(transFile.getData());
@@ -217,7 +218,7 @@ namespace qblocks {
     bool forEveryMiniBlockInMemory(MINIBLOCKVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip) {
 
         CInMemoryCache *cache = getTheCache();
-        if (!cache->Load(start,count))
+        if (!cache->Load(start, count))
             return false;
 
         blknum_t first = cache->firstBlock();
@@ -226,12 +227,12 @@ namespace qblocks {
         bool done = false;
         for (blknum_t i = first ; i < last && !done ; i = i + skip) {
 
-            if (inRange(cache->blocks[i].blockNumber, start, start+count-1)) {
+            if (inRange(cache->blocks[i].blockNumber, start, start + count - 1)) {
 
                 if (!(*func)(cache->blocks[i], &cache->trans[0], data))
                     return false;
 
-            } else if (cache->blocks[i].blockNumber >= start+count) {
+            } else if (cache->blocks[i].blockNumber >= start + count) {
 
                 done = true;
 
@@ -254,27 +255,29 @@ namespace qblocks {
         blknum_t first = cache->firstBlock();
         blknum_t last  = cache->lastBlock();
 
-        bool done=false;
+        bool done = false;
         for (blknum_t i = first ; i < last && !done ; i = i + skip) {
 
-            if (inRange(cache->blocks[i].blockNumber, start, start+count-1)) {
+            if (inRange(cache->blocks[i].blockNumber, start, start + count - 1)) {
 
                 CBlock block;
                 cache->blocks[i].toBlock(block);
                 SFGas gasUsed = 0;
-                for (txnum_t tr = cache->blocks[i].firstTrans ; tr < cache->blocks[i].firstTrans + cache->blocks[i].nTrans ; tr++) {
+                for (txnum_t tr = cache->blocks[i].firstTrans ;
+                        tr < cache->blocks[i].firstTrans + cache->blocks[i].nTrans;
+                        tr++) {
                     CTransaction tt;
                     cache->trans[tr].toTrans(tt);
                     gasUsed += tt.receipt.gasUsed;
-                    block.transactions[block.transactions.getCount()] = tt;
+                    block.transactions.push_back(tt);
                 }
                 block.gasUsed = gasUsed;
                 if (!(*func)(block, data))
                     return false;
 
-            } else if (cache->blocks[i].blockNumber >= start+count) {
+            } else if (cache->blocks[i].blockNumber >= start + count) {
 
-                done=true;
+                done = true;
 
             } else {
 

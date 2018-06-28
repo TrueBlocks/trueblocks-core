@@ -14,8 +14,7 @@
 #include "etherlib.h"
 
 //-----------------------------------------------------------------------------
-class COptions : public COptionsBase
-{
+class COptions : public COptionsBase {
 public:
     blknum_t start;
     blknum_t stop;
@@ -24,12 +23,12 @@ public:
     bool asData;
     string_q mode;
 
-	        COptions  (void);
-	       ~COptions  (void);
+         COptions  (void);
+        ~COptions  (void);
 
-	bool parseArguments(string_q& command);
-	bool parseArguments(int argc, const char *argv[]);
-	void Init (void);
+    bool parseArguments(string_q& command);
+    bool parseArguments(int argc, const char *argv[]);
+    void Init (void);
 };
 
 //-----------------------------------------------------------------------------
@@ -37,11 +36,12 @@ extern bool visitNonEmptyBlock(CBlock& node, void *data);
 extern bool displayBloom(CBlock& node, void *data);
 extern bool checkBloom(CBlock& node, void *data);
 inline string_q dateColor(uint64_t bn) {
-	if (1442339 <= bn && bn <= 1439214) return bBlue;
-	return bYellow;
+    if (1442339 <= bn && bn <= 1439214)
+        return bBlue;
+    return bYellow;
 }
+
 inline SFTime toDate(timestamp_t ts) { return dateFromTimeStamp(ts); }
-#define null ((void*)0)
 #define toSpaces dbgBloom
 
 inline bool COptions::parseArguments(int argc, const char *argv[]) {

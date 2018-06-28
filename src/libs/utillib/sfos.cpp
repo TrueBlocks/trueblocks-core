@@ -13,12 +13,11 @@
 #include <glob.h>
 #include <libgen.h>
 #include <algorithm>
-
 #include "basetypes.h"
-
 #include "sfos.h"
 #include "sftime.h"
 #include "string.h"
+#include "filenames.h"
 
 namespace qblocks {
 
@@ -56,7 +55,7 @@ namespace qblocks {
     //------------------------------------------------------------------
     // Returns a list of either files or folders, but not both.
     //------------------------------------------------------------------
-    void doGlob(uint32_t& nStrs, string_q *strs, const string_q& maskIn, int wantFiles, bool keepPaths ) {
+    void doGlob(size_t& nStrs, string_q *strs, const string_q& maskIn, int wantFiles, bool keepPaths ) {
         ASSERT(!strs || nStrs);
 
         glob_t globBuf;
@@ -67,7 +66,7 @@ namespace qblocks {
         glob(mask.c_str(), GLOB_MARK, globErrFunc, &globBuf);
 
         size_t n = globBuf.gl_pathc;
-        uint32_t mx = nStrs;
+        size_t mx = nStrs;
         nStrs = 0;
         char c;
 
@@ -90,7 +89,7 @@ namespace qblocks {
 
                     // filter specified directories and remove trailing '/'
                     if (endsWith(path, '/'))
-                        path = path.substr(0,path.length() - 1);
+                        path = extract(path, 0, path.length() - 1);
 
                     if (!keepPaths) {
                         // trim path to last directory / file
@@ -101,7 +100,7 @@ namespace qblocks {
                         path = basename((char *)path.c_str());  // NOLINT
 #endif
                         if (startsWith(path, '/'))
-                            path = path.substr(1);
+                            path = extract(path, 1);
                         // The path we return is always just the name of the folder or file
                         // without any leading (or even existing) '/'
                         ASSERT(path.length() && path[0] != '/');
@@ -129,8 +128,8 @@ namespace qblocks {
 
     //-------------------------------------------------------------------------------------------------------------
     inline bool waitForCreate(const string_q& filename) {
-        uint32_t mx = 1000;
-        uint32_t cnt = 0;
+        size_t mx = 1000;
+        size_t cnt = 0;
         while (cnt < mx && !fileExists(filename))
             cnt++;
 
@@ -191,7 +190,7 @@ extern string_q binaryFileToString(const string_q& filename);
         if (!endsWith(folder, '/'))
             folder += '/';
 
-        uint32_t nFiles = 0;
+        size_t nFiles = 0;
         listFiles(nFiles, NULL, folder+"*.*");
         // check to see if it is just folders
         if (!nFiles)
@@ -203,22 +202,22 @@ extern string_q binaryFileToString(const string_q& filename);
     }
 
     //------------------------------------------------------------------
-    void listFiles(uint32_t& nStrs, string_q *strs, const string_q& mask) {
-        uint32_t ret = 0;
+    void listFiles(size_t& nStrs, string_q *strs, const string_q& mask) {
+        size_t ret = 0;
         doGlob(ret, strs, mask, true, contains(mask, "/*/")); /* fixes color coding in pico */
         nStrs = ret;
     }
 
     //------------------------------------------------------------------
-    void listFolders(uint32_t& nStrs, string_q *strs, const string_q& mask) {
-        uint32_t ret = 0;
+    void listFolders(size_t& nStrs, string_q *strs, const string_q& mask) {
+        size_t ret = 0;
         doGlob(ret, strs, mask, false, contains(mask, "/*/")); /* fixes color coding in pico */
         nStrs = ret;
     }
 
     //------------------------------------------------------------------
-    void listFilesOrFolders(uint32_t& nStrs, string_q *strs, const string_q& mask) {
-        uint32_t ret = 0;
+    void listFilesOrFolders(size_t& nStrs, string_q *strs, const string_q& mask) {
+        size_t ret = 0;
         doGlob(ret, strs, mask, ANY_FILETYPE, contains(mask, "/*/"));
         nStrs = ret;
     }
@@ -232,11 +231,7 @@ extern string_q binaryFileToString(const string_q& filename);
         stat(filename.c_str(), &statBuf);
         return (uint64_t)statBuf.st_size;
     }
-} // namespace qblocks
 
-#include "filenames.h"
-
-namespace qblocks {
     //----------------------------------------------------------------------------
     bool establishFolder(const string_q& path, string_q& created) {
         if (fileExists(path) || folderExists(path))
@@ -245,7 +240,7 @@ namespace qblocks {
         CFilename fullPath(path);
         string_q targetFolder = fullPath.getFullPath();
         size_t find = targetFolder.rfind('/');
-        targetFolder = targetFolder.substr(0,find) + "/";
+        targetFolder = extract(targetFolder, 0, find) + "/";
         string_q folder = targetFolder;
         string_q curFolder = "/";
         while (!folder.empty()) {

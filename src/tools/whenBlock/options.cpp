@@ -10,6 +10,7 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
+#include <string>
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
@@ -21,9 +22,8 @@ CParams params[] = {
     CParams("",        "Finds the nearest block prior to a date, or the nearest date prior to a block.\n"
                        " Alternatively, search for one of special 'named' blocks.\n"),
 };
-uint32_t nParams = sizeof(params) / sizeof(CParams);
+size_t nParams = sizeof(params) / sizeof(CParams);
 
-extern int sortByBlockNum(const void *v1, const void *v2);
 extern SFTime grabDate(const string_q& strIn);
 extern bool containsAny(const string_q& haystack, const string_q& needle);
 //---------------------------------------------------------------------------------------------------
@@ -72,7 +72,7 @@ bool COptions::parseArguments(string_q& command) {
                 cout << ") is in the future. No such block. Quitting...\n";
                 return false;
 
-            } else if (date < SFTime(2015,07,30,15,25,00)) {
+            } else if (date < SFTime(2015, 7, 30, 15, 25, 00)) {
                 // first block was at 15:26:00
                 cout << "The date you specified (";
                 cout << cTeal << orig << cOff;
@@ -81,7 +81,7 @@ bool COptions::parseArguments(string_q& command) {
             }
 
             foundOne = true;
-            requests[requests.getCount()] = "date:" + asString(toTimestamp(date));
+            requests.push_back("date:" + asString(toTimestamp(date)));
 
         } else {
 
@@ -94,7 +94,7 @@ bool COptions::parseArguments(string_q& command) {
                 string_q val = spec.getValue();
                 if (spec.getName() == "latest")
                     val = asStringU(getLatestBlockFromClient());
-                requests[requests.getCount()] = "special:" + spec.getName() + "|" + val;
+                requests.push_back("special:" + spec.getName() + "|" + val);
                 foundOne = true;
 
             } else  {
@@ -109,7 +109,7 @@ bool COptions::parseArguments(string_q& command) {
                 string_q blockList = getBlockNumList();
                 blocks.Init();
                 while (!blockList.empty()) {
-                    requests[requests.getCount()] = "block:" + nextTokenClear(blockList,'|');
+                    requests.push_back("block:" + nextTokenClear(blockList, '|'));
                 }
                 foundOne = true;
             }
@@ -117,7 +117,7 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     if (isList) {
-        if (requests.getCount())
+        if (requests.size())
             return usage("The --list option must appear alone on the line. Quitting...");
         cout << listSpecials(false);
         return false;
@@ -135,7 +135,7 @@ void COptions::Init(void) {
     nParamsRef = nParams;
     pOptions = this;
 
-    requests.Clear();
+    requests.clear();
     alone = false;
     optionOff(OPT_DENOM);
 }
@@ -158,7 +158,7 @@ COptions::~COptions(void) {
 string_q COptions::postProcess(const string_q& which, const string_q& str) const {
 
     if (which == "options") {
-        return str.Substitute("block date", "< block | date > [ block... | date... ]");
+        return substitute(str, "block date", "< block | date > [ block... | date... ]");
 
     } else if (which == "notes") {
         string_q ret = str;
@@ -178,33 +178,35 @@ SFTime grabDate(const string_q& strIn) {
         return earliestDate;
     }
 
-//#error
+// #error
     string_q str = strIn;
-    replaceAny(str, " -:",";");
+    replaceAny(str, " -:", ";");
     replace(str, ";UTC", "");
-    str = nextTokenClear(str,'.');
+    str = nextTokenClear(str, '.');
 
     // Expects four number year, two number month and day at a minimum. Fields may be separated by '-' or ';'
     //    YYYYMMDD or YYYY;MM;DD
     replaceAll(str, ";", "");
     if (contains(str, "T")) {
-        replace(str, "T","");
-        if      (str.length() == 10) str += "0000";
-        else if (str.length() == 12) str += "00";
-        else if (str.length() != 14) { cerr << "Bad: " << str << "\n"; return earliestDate; }
+        replace(str, "T", "");
+               if (str.length() == 10) { str += "0000";
+        } else if (str.length() == 12) { str += "00";
+        } else if (str.length() != 14) { cerr << "Bad: " << str << "\n"; return earliestDate;
+        }
     } else {
         str += "000000";
     }
 
 #define NP ((uint32_t)-1)
+#define toLong32u(a) (uint32_t)toLongU((a))
     uint32_t y, m, d, h, mn, s;
     y = m = d = h = mn = s = NP;
-    if (isUnsigned(str.substr( 0,4))) { y  = toLong32u(str.substr( 0, 4)); }
-    if (isUnsigned(str.substr( 4,2))) { m  = toLong32u(str.substr( 4, 2)); }
-    if (isUnsigned(str.substr( 6,2))) { d  = toLong32u(str.substr( 6, 2)); }
-    if (isUnsigned(str.substr( 8,2))) { h  = toLong32u(str.substr( 8, 2)); }
-    if (isUnsigned(str.substr(10,2))) { mn = toLong32u(str.substr(10, 2)); }
-    if (isUnsigned(str.substr(12,2))) { s  = toLong32u(str.substr(12, 2)); }
+    if (isUnsigned(extract(str,  0, 4))) { y  = toLong32u(extract(str,  0, 4)); }
+    if (isUnsigned(extract(str,  4, 2))) { m  = toLong32u(extract(str,  4, 2)); }
+    if (isUnsigned(extract(str,  6, 2))) { d  = toLong32u(extract(str,  6, 2)); }
+    if (isUnsigned(extract(str,  8, 2))) { h  = toLong32u(extract(str,  8, 2)); }
+    if (isUnsigned(extract(str, 10, 2))) { mn = toLong32u(extract(str, 10, 2)); }
+    if (isUnsigned(extract(str, 12, 2))) { s  = toLong32u(extract(str, 12, 2)); }
 
     // If any of them was not an unsigned int, it's a fail
     if (y == NP || m == NP || d == NP || h == NP || mn == NP || s == NP)
@@ -221,8 +223,8 @@ SFTime grabDate(const string_q& strIn) {
 
 //--------------------------------------------------------------------------------
 string_q COptions::listSpecials(bool terse) const {
-    if (specials.getCount() == 0)
-        ((COptionsBase*)this)->loadSpecials();
+    if (specials.size() == 0)
+        ((COptionsBase*)this)->loadSpecials();  // NOLINT
 
     ostringstream os;
     if (!alone) {
@@ -234,7 +236,7 @@ string_q COptions::listSpecials(bool terse) const {
     }
 
     string_q extra;
-    for (uint32_t i = 0 ; i < specials.getCount(); i++) {
+    for (size_t i = 0 ; i < specials.size(); i++) {
 
         string_q name = specials[i].getName();
         string_q bn = specials[i].getValue();
@@ -257,13 +259,14 @@ string_q COptions::listSpecials(bool terse) const {
                 os << name;
                 os << " (" << cTeal << bn << extra << cOff << ")";
                 if (!((i+1)%4)) {
-                    if (i < specials.getCount()-1)
+                    if (i < specials.size()-1)
                         os << "\n  ";
-                } else if (i < specials.getCount()-1)
+                } else if (i < specials.size()-1) {
                     os << ", ";
+                }
             } else {
                 os << "\n      - " << padRight(name, 15);
-                os << cTeal << padLeft(bn,9) << cOff;
+                os << cTeal << padLeft(bn, 9) << cOff;
                 if (verbose) {
                     CBlock block;
                     getBlock(block, bn);
@@ -273,12 +276,12 @@ string_q COptions::listSpecials(bool terse) const {
                         os << block.Format(" [{DATE}] ([{TIMESTAMP}])");
                     }
                 }
-                os << extra ;
+                os << extra;
             }
         }
     }
     if (terse) {
-        if (specials.getCount() % 4)
+        if (specials.size() % 4)
             os << "\n";
     } else {
         os << "\n";
@@ -289,7 +292,7 @@ string_q COptions::listSpecials(bool terse) const {
 //---------------------------------------------------------------------------------------
 bool containsAny(const string_q& haystack, const string_q& needle) {
     string need = needle.c_str();
-    for (auto elem : need)
+    for (const auto elem : need)
         if (contains(haystack, elem))
             return true;
     return false;

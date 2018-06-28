@@ -15,15 +15,10 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <vector>
 #include "abilib.h"
 
 namespace qblocks {
-
-//--------------------------------------------------------------------------
-class CTraceAction;
-typedef SFArrayBase<CTraceAction>         CTraceActionArray;
-typedef SFList<CTraceAction*>             CTraceActionList;
-typedef SFUniqueList<CTraceAction*>       CTraceActionListU;
 
 // EXISTING_CODE
 // EXISTING_CODE
@@ -53,12 +48,13 @@ public:
     // EXISTING_CODE
     friend class CTrace;
     // EXISTING_CODE
+    friend bool operator<(const CTraceAction& v1, const CTraceAction& v2);
     friend ostream& operator<<(ostream& os, const CTraceAction& item);
 
 protected:
-    void Clear(void);
-    void Init(void);
-    void Copy(const CTraceAction& tr);
+    void clear(void);
+    void initialize(void);
+    void duplicate(const CTraceAction& tr);
     bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
@@ -67,7 +63,7 @@ protected:
 
 //--------------------------------------------------------------------------
 inline CTraceAction::CTraceAction(void) {
-    Init();
+    initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
@@ -76,7 +72,7 @@ inline CTraceAction::CTraceAction(void) {
 inline CTraceAction::CTraceAction(const CTraceAction& tr) {
     // EXISTING_CODE
     // EXISTING_CODE
-    Copy(tr);
+    duplicate(tr);
 }
 
 // EXISTING_CODE
@@ -84,20 +80,20 @@ inline CTraceAction::CTraceAction(const CTraceAction& tr) {
 
 //--------------------------------------------------------------------------
 inline CTraceAction::~CTraceAction(void) {
-    Clear();
+    clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CTraceAction::Clear(void) {
+inline void CTraceAction::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CTraceAction::Init(void) {
-    CBaseNode::Init();
+inline void CTraceAction::initialize(void) {
+    CBaseNode::initialize();
 
     address = "";
     balance = 0;
@@ -115,9 +111,9 @@ inline void CTraceAction::Init(void) {
 }
 
 //--------------------------------------------------------------------------
-inline void CTraceAction::Copy(const CTraceAction& tr) {
-    Clear();
-    CBaseNode::Copy(tr);
+inline void CTraceAction::duplicate(const CTraceAction& tr) {
+    clear();
+    CBaseNode::duplicate(tr);
 
     address = tr.address;
     balance = tr.balance;
@@ -137,16 +133,24 @@ inline void CTraceAction::Copy(const CTraceAction& tr) {
 
 //--------------------------------------------------------------------------
 inline CTraceAction& CTraceAction::operator=(const CTraceAction& tr) {
-    Copy(tr);
+    duplicate(tr);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
+//-------------------------------------------------------------------------
+inline bool operator<(const CTraceAction& v1, const CTraceAction& v2) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default sort defined in class definition, assume already sorted
+    return true;
+}
+
 //---------------------------------------------------------------------------
-IMPLEMENT_ARCHIVE_ARRAY(CTraceActionArray);
-IMPLEMENT_ARCHIVE_ARRAY_C(CTraceActionArray);
-IMPLEMENT_ARCHIVE_LIST(CTraceActionList);
+typedef vector<CTraceAction> CTraceActionArray;
+extern SFArchive& operator>>(SFArchive& archive, CTraceActionArray& array);
+extern SFArchive& operator<<(SFArchive& archive, const CTraceActionArray& array);
 
 //---------------------------------------------------------------------------
 extern SFArchive& operator<<(SFArchive& archive, const CTraceAction& tra);

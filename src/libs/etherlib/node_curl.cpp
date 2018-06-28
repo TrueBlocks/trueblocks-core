@@ -31,11 +31,11 @@ namespace qblocks {
 
     //-------------------------------------------------------------------------
     string_q CCurlContext::getCurlID(void) {
-        return asString(isTestMode() ? 1 : theID++);
+        return asStringU(isTestMode() ? 1 : theID++);
     }
 
     //-------------------------------------------------------------------------
-//#define DEBUG_RPC
+// #define DEBUG_RPC
     void CCurlContext::setPostData(const string_q& method, const string_q& params) {
         Clear();
         postData += "{";
@@ -92,7 +92,7 @@ namespace qblocks {
             string_q head = getCurlContext()->headers;
             while (!head.empty()) {
                 string_q next = nextTokenClear(head, '\n');
-                headers = curl_slist_append(headers, (char*)next.c_str());
+                headers = curl_slist_append(headers, (char*)next.c_str());  // NOLINT
             }
             curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
 
@@ -132,13 +132,13 @@ namespace qblocks {
     //-------------------------------------------------------------------------
     string_q callRPC(const string_q& method, const string_q& params, bool raw) {
 
-        //getCurlContext()->callBackFunc = writeCallback;
+        // getCurlContext()->callBackFunc = writeCallback;
         getCurlContext()->setPostData(method, params);
 
         CURLcode res = curl_easy_perform(getCurl());
         if (res != CURLE_OK && !getCurlContext()->earlyAbort) {
             string_q currentSource = getCurlContext()->provider;
-            string_q fallBack = getenv("FALLBACK");
+            string_q fallBack = getEnvStr("FALLBACK");
             if (!fallBack.empty() && currentSource != fallBack) {
                 if (fallBack != "infura") {
                     cerr << cYellow;
@@ -184,16 +184,16 @@ namespace qblocks {
             cerr << "\n";
             exit(0);
         } else if (contains(getCurlContext()->result, "error")) {
-            if (verbose>1) {
+            if (verbose > 1) {
                 cerr << getCurlContext()->result;
                 cerr << getCurlContext()->postData << "\n";
             }
         }
 
 #ifdef DEBUG_RPC
-        //    cout << "\n" << string_q('-',80) << "\n";
+        //    cout << "\n" << string_q(80, '-') << "\n";
         //    cout << thePost << "\n";
-        cout << string_q('=',60) << "\n";
+        cout << string_q(60, '=') << "\n";
         cout << "received: " << getCurlContext()->result << "\n";
         cout.flush();
 #endif
@@ -201,7 +201,7 @@ namespace qblocks {
         if (raw)
             return getCurlContext()->result;
         CRPCResult generic;
-        char *p = cleanUpJson((char*)getCurlContext()->result.c_str());
+        char *p = cleanUpJson((char*)getCurlContext()->result.c_str());  // NOLINT
         generic.parseJson(p);
         return generic.result;
     }
@@ -209,7 +209,7 @@ namespace qblocks {
     //-------------------------------------------------------------------------
     bool getObjectViaRPC(CBaseNode &node, const string_q& method, const string_q& params) {
         string_q ret = callRPC(method, params, false);
-        node.parseJson((char *)ret.c_str());
+        node.parseJson((char *)ret.c_str());  // NOLINT
         return true;
     }
 
@@ -217,11 +217,11 @@ namespace qblocks {
     size_t writeCallback(char *ptr, size_t size, size_t nmemb, void *userdata) {
         string_q part;
         part.reserve(size*nmemb+1);
-        char *s = (char*)part.c_str();
-        strncpy(s,ptr,size*nmemb);
+        char *s = (char*)part.c_str();  // NOLINT
+        strncpy(s, ptr, size * nmemb);
         s[size*nmemb]='\0';
         ASSERT(userdata);
-        CCurlContext *data = (CCurlContext*)userdata;
+        CCurlContext *data = (CCurlContext*)userdata;  // NOLINT
         data->result += s;
         // Starting around block 3804005, there was a hack wherein the byte code 5b5b5b5b5b5b5b5b5b5b5b5b
         // repeated thousands of times, doing nothing. If we don't handle this, it dominates the scanning
@@ -246,9 +246,9 @@ namespace qblocks {
     size_t traceCallback(char *ptr, size_t size, size_t nmemb, void *userdata) {
         // Curl does not close the string, so we have to
         ptr[size*nmemb-1] = '\0';
-        CCurlContext *data = (CCurlContext*)userdata;
+        CCurlContext *data = (CCurlContext*)userdata;  // NOLINT
         data->result = "ok";
-        if (strstr(ptr,"erro")!=NULL) {
+        if (strstr(ptr, "erro") != NULL) {
             data->result = "error";
             getCurlContext()->is_error = true;
             getCurlContext()->earlyAbort = true;

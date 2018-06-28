@@ -15,15 +15,10 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <vector>
 #include "abilib.h"
 
 namespace qblocks {
-
-//--------------------------------------------------------------------------
-class CLogEntry;
-typedef SFArrayBase<CLogEntry>         CLogEntryArray;
-typedef SFList<CLogEntry*>             CLogEntryList;
-typedef SFUniqueList<CLogEntry*>       CLogEntryListU;
 
 // EXISTING_CODE
 class CReceipt;
@@ -46,25 +41,18 @@ public:
 
     DECLARE_NODE(CLogEntry);
 
-    const string_q getStringAt(const string_q& name, uint32_t i) const override;
+    const string_q getStringAt(const string_q& name, size_t i) const override;
 
     // EXISTING_CODE
     const CReceipt *pReceipt;
-#if 0
-    SFHash blockHash;
-    uint32_t blockNumber;
-    SFHash transactionHash;
-    uint32_t transactionIndex;
-#endif
-    bool operator==(const CLogEntry& le) const;
-    bool operator!=(const CLogEntry& le) const { return !operator==(le); };
     // EXISTING_CODE
+    friend bool operator<(const CLogEntry& v1, const CLogEntry& v2);
     friend ostream& operator<<(ostream& os, const CLogEntry& item);
 
 protected:
-    void Clear(void);
-    void Init(void);
-    void Copy(const CLogEntry& lo);
+    void clear(void);
+    void initialize(void);
+    void duplicate(const CLogEntry& lo);
     bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
@@ -73,7 +61,7 @@ protected:
 
 //--------------------------------------------------------------------------
 inline CLogEntry::CLogEntry(void) {
-    Init();
+    initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
@@ -82,7 +70,7 @@ inline CLogEntry::CLogEntry(void) {
 inline CLogEntry::CLogEntry(const CLogEntry& lo) {
     // EXISTING_CODE
     // EXISTING_CODE
-    Copy(lo);
+    duplicate(lo);
 }
 
 // EXISTING_CODE
@@ -90,25 +78,25 @@ inline CLogEntry::CLogEntry(const CLogEntry& lo) {
 
 //--------------------------------------------------------------------------
 inline CLogEntry::~CLogEntry(void) {
-    Clear();
+    clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CLogEntry::Clear(void) {
+inline void CLogEntry::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CLogEntry::Init(void) {
-    CBaseNode::Init();
+inline void CLogEntry::initialize(void) {
+    CBaseNode::initialize();
 
     address = "";
     data = "";
     logIndex = 0;
-    topics.Clear();
+    topics.clear();
 
     // EXISTING_CODE
 #if 0
@@ -122,9 +110,9 @@ inline void CLogEntry::Init(void) {
 }
 
 //--------------------------------------------------------------------------
-inline void CLogEntry::Copy(const CLogEntry& lo) {
-    Clear();
-    CBaseNode::Copy(lo);
+inline void CLogEntry::duplicate(const CLogEntry& lo) {
+    clear();
+    CBaseNode::duplicate(lo);
 
     address = lo.address;
     data = lo.data;
@@ -146,16 +134,24 @@ inline void CLogEntry::Copy(const CLogEntry& lo) {
 
 //--------------------------------------------------------------------------
 inline CLogEntry& CLogEntry::operator=(const CLogEntry& lo) {
-    Copy(lo);
+    duplicate(lo);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
+//-------------------------------------------------------------------------
+inline bool operator<(const CLogEntry& v1, const CLogEntry& v2) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default sort defined in class definition, assume already sorted
+    return true;
+}
+
 //---------------------------------------------------------------------------
-IMPLEMENT_ARCHIVE_ARRAY(CLogEntryArray);
-IMPLEMENT_ARCHIVE_ARRAY_C(CLogEntryArray);
-IMPLEMENT_ARCHIVE_LIST(CLogEntryList);
+typedef vector<CLogEntry> CLogEntryArray;
+extern SFArchive& operator>>(SFArchive& archive, CLogEntryArray& array);
+extern SFArchive& operator<<(SFArchive& archive, const CLogEntryArray& array);
 
 //---------------------------------------------------------------------------
 extern SFArchive& operator<<(SFArchive& archive, const CLogEntry& log);

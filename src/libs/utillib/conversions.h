@@ -11,6 +11,8 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
+#include <string>
+#include <vector>
 #include "sfos.h"
 #include "biglib.h"
 #include "conversions_base.h"
@@ -51,10 +53,6 @@ namespace qblocks {
     inline string_q padNum9T(uint64_t n) { return padLeft(asStringU((n)), 9); }
 
     //--------------------------------------------------------------------
-    inline string_q padNum3T(uint32_t n) { return padLeft(asStringU((n)), 3); }
-    inline string_q padNum4T(uint32_t n) { return padLeft(asStringU((n)), 4); }
-
-    //--------------------------------------------------------------------
     inline string_q padNum2 (int64_t n) { return padLeft(asString((n)), 2, '0'); }
     inline string_q padNum3i(int64_t n) { return padLeft(asString((n)), 3, '0'); }
     inline string_q padNum4 (int64_t n) { return padLeft(asString((n)), 4, '0'); }
@@ -77,23 +75,22 @@ namespace qblocks {
         // trim leading '0's except the tens digit.
         string_q ret = _value;
         if (ret.length() < 18)
-            ret = padLeft(_value, 18).Substitute(" ", "0");
+            ret = substitute(padLeft(_value, 18), " ", "0");
         reverse(ret);
-        ret = ret.substr(0,18) + "." + ret.substr(18);
+        ret = extract(ret, 0, 18) + "." + extract(ret, 18);
         reverse(ret);
         ret = trimLeading(ret, '0');
         if (startsWith(ret, '.'))
             ret = "0" + ret;
         if (contains(ret, "0-")) {
-            ret = "-" + ret.Substitute("0-","0");
+            ret = "-" + substitute(ret, "0-", "0");
         }
-        ret = ret.Substitute("-.","-0.");
+        ret = substitute(ret, "-.", "-0.");
         return ret;
     }
 
     //-------------------------------------------------------------------------
     inline int64_t  toLong   (const string_q& str) { return (int64_t) strtol (str.c_str(), NULL, 10); }
-    inline uint32_t toLong32u(const string_q& str) { return (uint32_t)strtoul(str.c_str(), NULL, 10); }
 
     extern string to_string(const SFUintBN& bu);
     extern string to_hex(const SFUintBN& bu);
@@ -104,22 +101,17 @@ namespace qblocks {
     extern SFUintBN str2BigUint(const string &s);
     #define toBigUint str2BigUint
 
-    //--------------------------------------------------------------------------------
-    inline SFUintBN str2BigUint(const string_q& s) {
-        string ss = s.c_str(); return str2BigUint(ss);
-    }
-
     extern SFIntBN exp2BigInt(const string& s);
     //--------------------------------------------------------------------------------
     inline SFUintBN exp2BigUint(const string &s) {
         string_q exponent = s.c_str();
-        string_q decimals = nextTokenClear(exponent,'e');
-        string_q num = nextTokenClear(decimals,'.');
-        long nD = (long)decimals.length();
+        string_q decimals = nextTokenClear(exponent, 'e');
+        string_q num = nextTokenClear(decimals, '.');
+        uint64_t nD = decimals.length();
         uint64_t e = toLongU(exponent);
         SFUintBN ee = 1;
-        uint64_t power = e - (uint64_t)nD;
-        for (uint64_t i=0;i<power;i++)
+        uint64_t power = e - nD;
+        for (uint64_t i = 0 ; i < power ; i++)
             ee *= 10;
         num += decimals;
         return str2BigUint(num) * ee;
@@ -127,8 +119,8 @@ namespace qblocks {
 
     //--------------------------------------------------------------------------------
     inline SFIntBN str2BigInt(const string &s) {
-        return (s[0] == '-') ? SFIntBN(str2BigUint(s.substr(1, s.length() - 1)), -1)
-        : (s[0] == '+') ? SFIntBN(str2BigUint(s.substr(1, s.length() - 1)))
+        return (s[0] == '-') ? SFIntBN(str2BigUint(extract(s, 1, s.length() - 1)), -1)
+        : (s[0] == '+') ? SFIntBN(str2BigUint(extract(s, 1, s.length() - 1)))
         : SFIntBN(str2BigUint(s));
     }
 
@@ -140,7 +132,7 @@ namespace qblocks {
     //--------------------------------------------------------------------------------
     inline SFUintBN canonicalWei(const string_q& _value) {
         if (contains(_value, "0x"))
-            return hex2BigUint(_value.substr(2).c_str());
+            return hex2BigUint(extract(_value, 2).c_str());
         if (contains(_value, "e"))
             return exp2BigUint(_value.c_str());
         return str2BigUint(_value);
@@ -158,13 +150,13 @@ namespace qblocks {
 
 #define SFAddress      string_q
 #define SFHash         string_q
-#define SFBloom        SFUintBN
 #define SFWei          SFUintBN
+#define SFBloom        SFUintBN
 #define SFGas          uint64_t
 #define blknum_t       uint64_t
 #define txnum_t        uint64_t
-    typedef SFArrayBase<SFAddress> SFAddressArray;
-    typedef SFArrayBase<SFBloom> SFBloomArray;
+    typedef vector<string_q> SFAddressArray;
+    typedef vector<SFBloom> SFBloomArray;
 
 #define toHash(a)      toLower(a)
 #define toTopic(a)     canonicalWei(a)
@@ -176,7 +168,7 @@ namespace qblocks {
 #define fromAddress(a)  ((a).empty() ? "0x0" : (a))
 #define fromHash(a)     ((a).empty() ? "0x0" : (a))
 #define fromWei(a)      to_string((a)).c_str()
-#define fromTopic(a)    ("0x"+padLeft(toLower(string_q(to_hex((a)).c_str())),64,'0'))
+#define fromTopic(a)    ("0x" + padLeft(toLower(string_q(to_hex((a)).c_str())), 64, '0'))
 #define fromGas(a)      asStringU(a)
 
     //-------------------------------------------------------------------------
@@ -198,7 +190,7 @@ namespace qblocks {
 
     //----------------------------------------------------------------------------------
     inline string_q fixHash(const string_q& hashIn) {
-        string_q ret = startsWith(hashIn, "0x") ? hashIn.substr(2) : hashIn;
+        string_q ret = startsWith(hashIn, "0x") ? extract(hashIn, 2) : hashIn;
         return "0x" + padLeft(ret, 32 * 2, '0');
     }
 
@@ -209,7 +201,7 @@ namespace qblocks {
 
     //----------------------------------------------------------------------------------
     inline string_q fixAddress(const SFAddress& addrIn) {
-        string_q ret = startsWith(addrIn, "0x") ? addrIn.substr(2) : addrIn;
+        string_q ret = startsWith(addrIn, "0x") ? extract(addrIn, 2) : addrIn;
         return "0x" + ret;
     }
 
@@ -250,7 +242,7 @@ namespace qblocks {
         if (!isdigit(in[0]))
             return false;
         // ...or first two must be '0x' and the third must be non negative hex digit
-        if (startsWith(in,"0x") && in.length() > 2)
+        if (startsWith(in, "0x") && in.length() > 2)
             return isxdigit(in.at(2));
         return true;
     }
@@ -258,12 +250,12 @@ namespace qblocks {
     //------------------------------------------------------
     inline SFAddress toAddress(const SFAddress& strIn) {
         // trim it if it's there. We will put it back
-        string_q ret = strIn.Substitute("0x","");
+        string_q ret = substitute(strIn, "0x", "");
 
         // Shorten, but only if all leading zeros
         string_q leading('0', 64-40);
-        if (ret.length()==64 && startsWith(ret, leading))
-            replace(ret, leading,"");
+        if (ret.length() == 64 && startsWith(ret, leading))
+            replace(ret, leading, "");
 
         // Special case
         if (ret.empty())
@@ -273,15 +265,23 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------
-    inline string_q double2Str(double f, uint32_t nDecimals=10) {
+    inline string_q double2Str(double f, size_t nDecimals = 10) {
         char s[100], r[100];
-        memset(s,'\0',100);
-        memset(r,'\0',100);
-        sprintf(s, "%.*g", (int)nDecimals, ((int64_t)(  pow(10, nDecimals) * (  fabs(f) - labs( (int64_t) f )  )  + 0.5)) / pow(10,nDecimals));
+        memset(s, '\0', 100);
+        memset(r, '\0', 100);
+        sprintf(s, "%.*g", (int)nDecimals, ((int64_t)(  pow(10, nDecimals) * (  fabs(f) - labs( (int64_t) f )  )  + 0.5)) / pow(10,nDecimals));  // NOLINT
         if (strchr(s, 'e'))
-        s[1] = '\0';
-        sprintf(r, "%d%s", (int)f, s+1);
+            s[1] = '\0';
+        sprintf(r, "%d%s", static_cast<int>(f), s+1);  // NOLINT
         return string_q(r);
     }
+
+    typedef vector<string_q> CStringArray;
+    typedef vector<uint64_t> SFUintArray;
+    typedef vector<int64_t>  SFIntArray;
+    typedef vector<SFUintBN> SFBigUintArray;
+    typedef vector<SFIntBN>  SFBigIntArray;
+
+    #define CBlockNumArray   SFUintArray
 
 }  // namespace qblocks

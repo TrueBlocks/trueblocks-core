@@ -21,7 +21,7 @@ int main(int argc, const char *argv[]) {
     if (!options.prepareArguments(argc, argv))
         return 0;
 
-    //while (!options.commandList.empty())
+    // while (!options.commandList.empty())
     {
         string_q command = nextTokenClear(options.commandList, '\n');
         if (!options.parseArguments(command))
@@ -29,21 +29,21 @@ int main(int argc, const char *argv[]) {
 
         SFAddressArray addrs;
         if (options.named) {
-            for (uint32_t i = 0 ; i < options.namedAccounts.getCount() ; i++)
-                addrs[addrs.getCount()] = options.namedAccounts[i].addr;
+            for (size_t i = 0 ; i < options.namedAccounts.size() ; i++)
+                addrs.push_back(options.namedAccounts[i].addr);
 
         } else {
             getAccounts(addrs);
             if (isTestMode()) {
-               addrs.Clear();
-               addrs[addrs.getCount()] = "0x0000000000000000000000000000000000000000";
-               addrs[addrs.getCount()] = "0x0000000000000000000000000000000000000001";
-               addrs[addrs.getCount()] = "0x0000000000000000000000000000000000000002";
-               addrs[addrs.getCount()] = "0x0000000000000000000000000000000000000003";
+               addrs.clear();
+               addrs.push_back("0x0000000000000000000000000000000000000000");
+               addrs.push_back("0x0000000000000000000000000000000000000001");
+               addrs.push_back("0x0000000000000000000000000000000000000002");
+               addrs.push_back("0x0000000000000000000000000000000000000003");
             }
         }
 
-        for (uint32_t i = 0 ; i < addrs.getCount() ; i++) {
+        for (size_t i = 0 ; i < addrs.size() ; i++) {
             CAccountName acct;
             bool found = verbose && options.getNamedAccount(acct, addrs[i]);
             cout << addrs[i] << (found ? acct.Format(" ([{NAME}])") : "") << "\n";

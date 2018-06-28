@@ -17,7 +17,7 @@ CParams params[] = {
     CParams("~mode:[0-5]", "either a number between 0 and 5, a C++ quickBlocks class name, the word 'upgradeTest'"),
     CParams("",            "Test upgrading binary data to new format.\n"),
 };
-uint32_t nParams = sizeof(params) / sizeof(CParams);
+size_t nParams = sizeof(params) / sizeof(CParams);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {

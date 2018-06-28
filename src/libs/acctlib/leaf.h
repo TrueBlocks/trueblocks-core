@@ -15,16 +15,11 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <vector>
 #include "etherlib.h"
 #include "treenode.h"
 
 namespace qblocks {
-
-//--------------------------------------------------------------------------
-class CLeaf;
-typedef SFArrayBase<CLeaf>         CLeafArray;
-typedef SFList<CLeaf*>             CLeafList;
-typedef SFUniqueList<CLeaf*>       CLeafListU;
 
 // EXISTING_CODE
 // EXISTING_CODE
@@ -32,8 +27,8 @@ typedef SFUniqueList<CLeaf*>       CLeafListU;
 //--------------------------------------------------------------------------
 class CLeaf : public CTreeNode {
 public:
-    SFBlockArray blocks;
-    uint32_t counter;
+    CBlockNumArray blocks;
+    uint64_t counter;
 
 public:
     CLeaf(void);
@@ -43,7 +38,7 @@ public:
 
     DECLARE_NODE(CLeaf);
 
-    const string_q getStringAt(const string_q& name, uint32_t i) const override;
+    const string_q getStringAt(const string_q& name, size_t i) const override;
 
     // EXISTING_CODE
     CLeaf(const string_q& _key, const string_q& _value);
@@ -51,15 +46,17 @@ public:
     CTreeNode* insert(const string_q& _key, const string_q& _value) override;
     CTreeNode* remove(const string_q& _key) override;
     bool visitItems(ACCTVISITOR func, void *data) const override;
+
 private:
     bool contains(const string_q& _key) const;
     // EXISTING_CODE
+    friend bool operator<(const CLeaf& v1, const CLeaf& v2);
     friend ostream& operator<<(ostream& os, const CLeaf& item);
 
 protected:
-    void Clear(void);
-    void Init(void);
-    void Copy(const CLeaf& le);
+    void clear(void);
+    void initialize(void);
+    void duplicate(const CLeaf& le);
     bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
@@ -68,7 +65,7 @@ protected:
 
 //--------------------------------------------------------------------------
 inline CLeaf::CLeaf(void) {
-    Init();
+    initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
@@ -77,7 +74,7 @@ inline CLeaf::CLeaf(void) {
 inline CLeaf::CLeaf(const CLeaf& le) {
     // EXISTING_CODE
     // EXISTING_CODE
-    Copy(le);
+    duplicate(le);
 }
 
 // EXISTING_CODE
@@ -85,22 +82,22 @@ inline CLeaf::CLeaf(const CLeaf& le) {
 
 //--------------------------------------------------------------------------
 inline CLeaf::~CLeaf(void) {
-    Clear();
+    clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CLeaf::Clear(void) {
+inline void CLeaf::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CLeaf::Init(void) {
-    CTreeNode::Init();
+inline void CLeaf::initialize(void) {
+    CTreeNode::initialize();
 
-    blocks.Clear();
+    blocks.clear();
     counter = 0;
 
     // EXISTING_CODE
@@ -108,9 +105,9 @@ inline void CLeaf::Init(void) {
 }
 
 //--------------------------------------------------------------------------
-inline void CLeaf::Copy(const CLeaf& le) {
-    Clear();
-    CTreeNode::Copy(le);
+inline void CLeaf::duplicate(const CLeaf& le) {
+    clear();
+    CTreeNode::duplicate(le);
 
     blocks = le.blocks;
     counter = le.counter;
@@ -122,16 +119,24 @@ inline void CLeaf::Copy(const CLeaf& le) {
 
 //--------------------------------------------------------------------------
 inline CLeaf& CLeaf::operator=(const CLeaf& le) {
-    Copy(le);
+    duplicate(le);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
+//-------------------------------------------------------------------------
+inline bool operator<(const CLeaf& v1, const CLeaf& v2) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default sort defined in class definition, assume already sorted
+    return true;
+}
+
 //---------------------------------------------------------------------------
-IMPLEMENT_ARCHIVE_ARRAY(CLeafArray);
-IMPLEMENT_ARCHIVE_ARRAY_C(CLeafArray);
-IMPLEMENT_ARCHIVE_LIST(CLeafList);
+typedef vector<CLeaf> CLeafArray;
+extern SFArchive& operator>>(SFArchive& archive, CLeafArray& array);
+extern SFArchive& operator<<(SFArchive& archive, const CLeafArray& array);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

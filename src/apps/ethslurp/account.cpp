@@ -14,6 +14,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include "etherlib.h"
 #include "account.h"
 
 namespace qblocks {
@@ -36,8 +37,10 @@ void CAccount::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr)
     }
 
     string_q fmt = fmtIn;
+    // EXISTING_CODE
     if (handleCustomFormat(ctx, fmt, dataPtr))
         return;
+    // EXISTING_CODE
 
     while (!fmt.empty())
         ctx << getNextChunk(fmt, nextAccountChunk, this);
@@ -81,13 +84,13 @@ bool CAccount::setValueByName(const string_q& fieldName, const string_q& fieldVa
             break;
         case 't':
             if ( fieldName % "transactions" ) {
-                char *p = (char *)fieldValue.c_str();
+                char *p = (char *)fieldValue.c_str();  // NOLINT
                 while (p && *p) {
                     CTransaction item;
-                    uint32_t nFields = 0;
+                    size_t nFields = 0;
                     p = item.parseJson(p, nFields);
                     if (nFields)
-                        transactions[transactions.getCount()] = item;
+                        transactions.push_back(item);
                 }
                 return true;
             }
@@ -101,10 +104,11 @@ bool CAccount::setValueByName(const string_q& fieldName, const string_q& fieldVa
 //---------------------------------------------------------------------------------------------------
 void CAccount::finishParse() {
     // EXISTING_CODE
-    for (uint32_t i = 0 ; i < transactions.getCount() ; i++) {
-        CTransaction *t = &transactions[i];
-        string_q encoding = t->input.substr(0,10);
-        t->funcPtr = abi.findFunctionByEncoding(encoding);
+    for (size_t i = 0 ; i < transactions.size() ; i++) {
+        CTransaction *t = &transactions.at(i);
+        string_q encoding = extract(t->input, 0, 10);
+extern const CFunction *findFunctionByEncoding(const CFunctionArray& array, const string_q& search);
+        t->funcPtr = findFunctionByEncoding(abi.abiByEncoding, encoding);
     }
     // EXISTING_CODE
 }
@@ -154,12 +158,33 @@ bool CAccount::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
+SFArchive& operator>>(SFArchive& archive, CAccountArray& array) {
+    uint64_t count;
+    archive >> count;
+    array.resize(count);
+    for (size_t i = 0 ; i < count ; i++) {
+        ASSERT(i < array.capacity());
+        array.at(i).Serialize(archive);
+    }
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+SFArchive& operator<<(SFArchive& archive, const CAccountArray& array) {
+    uint64_t count = array.size();
+    archive << count;
+    for (size_t i = 0 ; i < array.size() ; i++)
+        array[i].SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
 void CAccount::registerClass(void) {
     static bool been_here = false;
     if (been_here) return;
     been_here = true;
 
-    uint32_t fieldNum = 1000;
+    size_t fieldNum = 1000;
     ADD_FIELD(CAccount, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CAccount, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CAccount, "showing", T_BOOL,  ++fieldNum);
@@ -191,13 +216,15 @@ string_q nextAccountChunk_custom(const string_q& fieldIn, const void *dataPtr) {
                 if ( fieldIn % "now" ) return (isTestMode() ? "TESTING_TIME" : Now().Format(FMT_JSON));
                 break;
             case 'r':
-                if ( fieldIn % "records" ) return (acc->transactions.getCount() == 0 ? "No records" : "");
+                if ( fieldIn % "records" ) return (acc->transactions.size() == 0 ? "No records" : "");
                 break;
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
                     return nextBasenodeChunk(fieldIn, acc);
+                // EXISTING_CODE
+                // EXISTING_CODE
                 break;
 
             default:
@@ -206,58 +233,6 @@ string_q nextAccountChunk_custom(const string_q& fieldIn, const void *dataPtr) {
     }
 
     return "";
-}
-
-//---------------------------------------------------------------------------
-bool CAccount::handleCustomFormat(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
-    // EXISTING_CODE
-    // Split the format string into three parts: pre, post and records.
-    // If no records, just process as normal. We do this because it's so slow
-    // copying the records into a string, so we write it directly to the
-    // export context. If there is no {RECORDS}, then just send handle it like normal
-    if (!contains(fmtIn, "{RECORDS}") || transactions.getCount() == 0) {
-        string_q fmt = fmtIn;
-
-        while (!fmt.empty())
-            ctx << getNextChunk(fmt, nextAccountChunk, this);
-
-    } else {
-        string_q postFmt = fmtIn;
-        replace(postFmt, "{RECORDS}", "|");
-        string_q preFmt = nextTokenClear(postFmt, '|');
-
-        // We assume here that the token was properly formed. For the pre-text we
-        // have to clear out the start '[', and for the post text we clear out the ']'
-        replaceReverse(preFmt, "[", "");
-        replace(postFmt, "]", "");
-
-        // We handle the display in three parts: pre, records, and post so as
-        // to avoid building the entire record list into an ever-growing and
-        // ever-slowing string
-        while (!preFmt.empty())
-            ctx << getNextChunk(preFmt, nextAccountChunk, this);
-        uint32_t cnt = 0;
-        for (uint32_t i = 0 ; i < transactions.getCount() ; i++) {
-            cnt += transactions[i].m_showing;
-            if (cnt && !(cnt % REP_INFREQ)) {
-                cerr << "\tExporting record " << cnt << " of " << nVisible;
-                if (!isTestMode()) {
-                    cerr << (transactions.getCount() != nVisible ? " visible" : "") << " records\r";
-                    cerr.flush();
-                }
-            }
-
-            ctx << transactions[i].Format(displayString);
-            if (cnt >= nVisible)
-                break;  // no need to keep spinning if we've shown them all
-        }
-        ctx << "\n";
-        while (!postFmt.empty())
-            ctx << getNextChunk(postFmt, nextAccountChunk, this);
-    }
-    return true;
-    // EXISTING_CODE
-    return false;
 }
 
 //---------------------------------------------------------------------------
@@ -301,12 +276,12 @@ string_q CAccount::getValueByName(const string_q& fieldName) const {
             break;
         case 't':
             if ( fieldName % "transactions" || fieldName % "transactionsCnt" ) {
-                uint32_t cnt = transactions.getCount();
+                size_t cnt = transactions.size();
                 if (endsWith(fieldName, "Cnt"))
                     return asStringU(cnt);
                 if (!cnt) return "";
                 string_q retS;
-                for (uint32_t i = 0 ; i < cnt ; i++) {
+                for (size_t i = 0 ; i < cnt ; i++) {
                     retS += transactions[i].Format();
                     retS += ((i < cnt - 1) ? ",\n" : "\n");
                 }
@@ -332,18 +307,18 @@ ostream& operator<<(ostream& os, const CAccount& item) {
 }
 
 //---------------------------------------------------------------------------
-const CBaseNode *CAccount::getObjectAt(const string_q& fieldName, uint32_t index) const {
-    if ( fieldName % "transactions" && index < transactions.getCount() )
+const CBaseNode *CAccount::getObjectAt(const string_q& fieldName, size_t index) const {
+    if ( fieldName % "transactions" && index < transactions.size() )
         return &transactions[index];
     return NULL;
 }
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-uint32_t CAccount::deleteNotShowing(void) {
-    uint32_t nDeleted = 0;
-    for (uint32_t i = 0 ; i < transactions.getCount() ; i++) {
-        CTransaction *t = &transactions[i];
+size_t CAccount::deleteNotShowing(void) {
+    size_t nDeleted = 0;
+    for (size_t i = 0 ; i < transactions.size() ; i++) {
+        CTransaction *t = &transactions.at(i);
         if (!t->m_showing) {
             t->setDeleted(true);
             nDeleted++;
@@ -351,6 +326,68 @@ uint32_t CAccount::deleteNotShowing(void) {
     }
     return nDeleted;
 }
+
+//---------------------------------------------------------------------------
+bool CAccount::handleCustomFormat(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
+    // Split the format string into three parts: pre, post and records.
+    // If no records, just process as normal. We do this because it's so slow
+    // copying the records into a string, so we write it directly to the
+    // export context. If there is no {RECORDS}, then just send handle it like normal
+    if (!contains(fmtIn, "{RECORDS}") || transactions.size() == 0) {
+        string_q fmt = fmtIn;
+
+        while (!fmt.empty())
+            ctx << getNextChunk(fmt, nextAccountChunk, this);
+
+    } else {
+        string_q postFmt = fmtIn;
+        replace(postFmt, "{RECORDS}", "|");
+        string_q preFmt = nextTokenClear(postFmt, '|');
+
+        // We assume here that the token was properly formed. For the pre-text we
+        // have to clear out the start '[', and for the post text we clear out the ']'
+        replaceReverse(preFmt, "[", "");
+        replace(postFmt, "]", "");
+
+        // We handle the display in three parts: pre, records, and post so as
+        // to avoid building the entire record list into an ever-growing and
+        // ever-slowing string
+        while (!preFmt.empty())
+            ctx << getNextChunk(preFmt, nextAccountChunk, this);
+        size_t cnt = 0;
+        for (size_t i = 0 ; i < transactions.size() ; i++) {
+            cnt += transactions[i].m_showing;
+            if (cnt && !(cnt % REP_INFREQ)) {
+                cerr << "\tExporting record " << cnt << " of " << nVisible;
+                if (!isTestMode()) {
+                    cerr << (transactions.size() != nVisible ? " visible" : "") << " records\r";
+                    cerr.flush();
+                }
+            }
+
+            ctx << transactions[i].Format(displayString);
+            if (cnt >= nVisible)
+                break;  // no need to keep spinning if we've shown them all
+        }
+        ctx << "\n";
+        while (!postFmt.empty())
+            ctx << getNextChunk(postFmt, nextAccountChunk, this);
+    }
+    return true;
+}
+
+//---------------------------------------------------------------------------
+const CFunction *findFunctionByEncoding(const CFunctionArray& array, const string_q& enc) {
+    CFunction search;
+    search.encoding = enc;
+    auto i1 = array.cbegin();
+    auto i2 = array.cend();
+    for ( ; i1 != i2 ; ++i1) {
+        if (search == *i1){
+            return &*i1;
+        }
+    }
+    return nullptr;
+}
 // EXISTING_CODE
 }  // namespace qblocks
-

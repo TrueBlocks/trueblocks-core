@@ -19,7 +19,7 @@ CParams params[] = {
     CParams("-bloom",      "find a bloom file, not the block file"),
     CParams("",            "Reports if a block was found in the cache, at a local, or at a remote node.\n"),
 };
-uint32_t nParams = sizeof(params) / sizeof(CParams);
+size_t nParams = sizeof(params) / sizeof(CParams);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
@@ -88,6 +88,6 @@ COptions::~COptions(void) {
 //--------------------------------------------------------------------------------
 string_q COptions::postProcess(const string_q& which, const string_q& str) const {
     if (which == "options")
-        return str.Substitute("block_list", "<block> [block...]");
+        return substitute(str, "block_list", "<block> [block...]");
     return str;
 }

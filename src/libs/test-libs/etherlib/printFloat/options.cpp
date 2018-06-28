@@ -17,7 +17,7 @@ CParams params[] = {
     CParams("-testNum:[1|2]", "which test to run (either 1 and 2)"),
     CParams("",               "This program tests floating point printing and conversions.\n"),
 };
-uint32_t nParams = sizeof(params) / sizeof(CParams);
+size_t nParams = sizeof(params) / sizeof(CParams);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
@@ -30,8 +30,7 @@ bool COptions::parseArguments(string_q& command) {
         string_q arg = nextTokenClear(command, ' ');
         if (startsWith(arg, "-t:") || startsWith(arg, "--testNum:")) {
             string_q orig = arg;
-            replaceAny(arg, "--testNum:", "");
-            replaceAny(arg, "-t:", "");
+            arg = substitute(substitute(arg, "--testNum:", ""), "-t:", "");
             testNum = (int32_t)toLong(arg);
             if (!testNum || testNum > 2)
                 return usage("Invalid argument: " + orig + ". Quitting...");

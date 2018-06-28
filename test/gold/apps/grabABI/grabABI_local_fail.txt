@@ -1,0 +1,12 @@
+grabABI argc: 2 [1:0x314159265dd8dbb310642f98f50c066173c1259b] 
+grabABI 0x314159265dd8dbb310642f98f50c066173c1259b 
+
+Warning: Failed to grab the ABI. Etherscan returned:
+
+	{"status":"0","message":"NOTOK","result":"Contract source code not verified"}
+
+However, the ABI may actually be present on EtherScan. Quickblocks will use it if
+you copy and paste the ABI json to this file:
+
+	./0x314159265dd8dbb310642f98f50c066173c1259b.json
+

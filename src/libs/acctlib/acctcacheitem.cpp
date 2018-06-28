@@ -27,9 +27,6 @@ static string_q nextAcctcacheitemChunk_custom(const string_q& fieldIn, const voi
 
 //---------------------------------------------------------------------------
 void CAcctCacheItem::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
-
-    CAcctCacheItem::registerClass();
-
     if (!m_showing)
         return;
 
@@ -39,8 +36,8 @@ void CAcctCacheItem::Format(CExportContext& ctx, const string_q& fmtIn, void *da
     }
 
     string_q fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, dataPtr))
-        return;
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     while (!fmt.empty())
         ctx << getNextChunk(fmt, nextAcctcacheitemChunk, this);
@@ -114,12 +111,33 @@ bool CAcctCacheItem::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
+SFArchive& operator>>(SFArchive& archive, CAcctCacheItemArray& array) {
+    uint64_t count;
+    archive >> count;
+    array.resize(count);
+    for (size_t i = 0 ; i < count ; i++) {
+        ASSERT(i < array.capacity());
+        array.at(i).Serialize(archive);
+    }
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+SFArchive& operator<<(SFArchive& archive, const CAcctCacheItemArray& array) {
+    uint64_t count = array.size();
+    archive << count;
+    for (size_t i = 0 ; i < array.size() ; i++)
+        array[i].SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
 void CAcctCacheItem::registerClass(void) {
     static bool been_here = false;
     if (been_here) return;
     been_here = true;
 
-    uint32_t fieldNum = 1000;
+    size_t fieldNum = 1000;
     ADD_FIELD(CAcctCacheItem, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CAcctCacheItem, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CAcctCacheItem, "showing", T_BOOL,  ++fieldNum);
@@ -146,6 +164,8 @@ string_q nextAcctcacheitemChunk_custom(const string_q& fieldIn, const void *data
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
                     return nextBasenodeChunk(fieldIn, acc);
+                // EXISTING_CODE
+                // EXISTING_CODE
                 break;
 
             default:
@@ -154,13 +174,6 @@ string_q nextAcctcacheitemChunk_custom(const string_q& fieldIn, const void *data
     }
 
     return "";
-}
-
-//---------------------------------------------------------------------------
-bool CAcctCacheItem::handleCustomFormat(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
-    return false;
 }
 
 //---------------------------------------------------------------------------
@@ -201,7 +214,7 @@ string_q CAcctCacheItem::getValueByName(const string_q& fieldName) const {
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const CAcctCacheItem& item) {
     // EXISTING_CODE
-    if (sizeof(item) != 0) { // do this to always go through here, but avoid a warning
+    if (sizeof(item) != 0) {  // do this to always go through here, but avoid a warning
         os << item.blockNum << "." << item.transIndex;
         return os;
     }
@@ -217,10 +230,10 @@ CAcctCacheItem::CAcctCacheItem(string_q& line) {
 
     replaceAll(line, ".", "\t");
 
-    string_q val = nextTokenClear(line,'\t');
+    string_q val = nextTokenClear(line, '\t');
     blockNum = toUnsigned(val);
 
-    val = nextTokenClear(line,'\t');
+    val = nextTokenClear(line, '\t');
     transIndex = toUnsigned(val);
 }
 // EXISTING_CODE

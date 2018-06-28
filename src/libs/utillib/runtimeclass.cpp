@@ -10,15 +10,18 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
+#include <algorithm>
 #include "basetypes.h"
 #include "runtimeclass.h"
 
 namespace qblocks {
 
     //-------------------------------------------------------------------------
+    CRuntimeClass::CRuntimeClass(void) {
+    }
+
+    //-------------------------------------------------------------------------
     CRuntimeClass::~CRuntimeClass(void) {
-        ClearFieldList();
-        ASSERT(!m_FieldList);
     }
 
     //-------------------------------------------------------------------------
@@ -27,7 +30,7 @@ namespace qblocks {
     }
 
     //-------------------------------------------------------------------------
-    bool CRuntimeClass::IsDerivedFrom(const CRuntimeClass* pBaseClass) const {
+    bool CRuntimeClass::isDerivedFrom(const CRuntimeClass* pBaseClass) const {
         const CRuntimeClass* pClassThis = this;
         while (pClassThis != NULL) {
             if (pClassThis == pBaseClass)
@@ -38,113 +41,79 @@ namespace qblocks {
     }
 
     //-------------------------------------------------------------------------
-    void CRuntimeClass::ClearFieldList(void) {
-        if (m_FieldList) {
-            LISTPOS p = m_FieldList->GetHeadPosition();
-            while (p) {
-                CFieldData *field = m_FieldList->GetNext(p);
-                delete field;
-            }
-            m_FieldList->RemoveAll();
-            delete m_FieldList;
-            m_FieldList = NULL;
-        }
+    CBaseNode *CRuntimeClass::createObject(void) {
+        if (m_CreateFunc)
+            return (*m_CreateFunc)();
+        return NULL;
     }
 
     //-------------------------------------------------------------------------
-    string_q CRuntimeClass::listOfFields(char sep) const {
-        string_q ret;
-        if (m_FieldList) {
-            LISTPOS p = m_FieldList->GetHeadPosition();
-            while (p) {
-                CFieldData *field = m_FieldList->GetNext(p);
-                ret += field->m_fieldName + sep;
-            }
+    CFieldData *CRuntimeClass::findField(const string_q& fieldName) {
+        for (size_t i = 0 ; i < fieldList.size() ; i++) {
+            if (fieldList[i].getName() == fieldName)
+                return &fieldList[i];
         }
-        return ret;
+        return NULL;
+    }
+
+    //-------------------------------------------------------------------------
+    bool CRuntimeClass::isFieldHidden(const string_q& fieldName) {
+        const CFieldData *f = findField(fieldName);
+        if (f)
+            return f->isHidden();
+        return false;
+    }
+
+    //-------------------------------------------------------------------------
+    void CRuntimeClass::addField(const string_q& fieldName, size_t dataType, size_t fieldID) {
+        CFieldData field(fieldName, fieldID, dataType);
+        fieldList.push_back(field);
+    }
+
+    //-------------------------------------------------------------------------
+    void CRuntimeClass::sortFieldList(void) {
+        sort(fieldList.begin(), fieldList.end());
+        return;
     }
 
     //-------------------------------------------------------------------------
     void CRuntimeClass::hideAllFields(void) {
-        if (m_FieldList) {
-            LISTPOS p = m_FieldList->GetHeadPosition();
-            while (p) {
-                CFieldData *field = m_FieldList->GetNext(p);
-                field->setHidden(true);
-            }
+        for (size_t i = 0 ; i < fieldList.size(); i++) {
+            fieldList.at(i).setHidden(true);
         }
         return;
     }
 
     //-------------------------------------------------------------------------
     void CRuntimeClass::showAllFields(void) {
-        if (m_FieldList) {
-            LISTPOS p = m_FieldList->GetHeadPosition();
-            while (p) {
-                CFieldData *field = m_FieldList->GetNext(p);
-                field->setHidden(false);
-            }
+        for (size_t i = 0 ; i < fieldList.size(); i++) {
+            fieldList.at(i).setHidden(false);
         }
         return;
     }
 
     //-------------------------------------------------------------------------
-    int sortFieldsByName(const void *v1, const void *v2) {
-        CFieldData *f1 = (CFieldData *)v1;
-        CFieldData *f2 = (CFieldData *)v2;
-        return f1->m_fieldName.compare(f2->m_fieldName);
-    }
-    //-------------------------------------------------------------------------
-    void CRuntimeClass::sortFieldList(void) {
-        if (m_FieldList) {
+    bool CRuntimeClass::forEveryField(FIELDVISITFUNC func, void *data) {
+        if (!func)
+            return true;
 
-            // Sort it into a temporary list...
-            CFieldList tmpList;
-            LISTPOS p = m_FieldList->GetHeadPosition();
-            while (p) {
-                CFieldData *field = m_FieldList->GetNext(p);
-                tmpList.AddSorted(field, sortFieldsByName);
-            }
-
-            // ...clear it out...
-            *m_FieldList = CFieldList();
-
-            // ...sort it into the original list
-            p = tmpList.GetHeadPosition();
-            while (p) {
-                CFieldData *field = tmpList.GetNext(p);
-                m_FieldList->AddTail(field);
-            }
+        for (auto field : fieldList) {
+            if (!(*func)(field, data))
+                return false;
         }
-        return;
+
+        return true;
     }
 
     //-------------------------------------------------------------------------
-    void CRuntimeClass::AddField(const string_q& fieldName, uint32_t dataType, uint32_t fieldID) {
-        if (!m_FieldList)
-            m_FieldList = new CFieldList;
-        ASSERT(m_FieldList);
-
-        CFieldData *field = new CFieldData;
-        if (field) {
-            field->m_fieldName = fieldName;
-            field->m_fieldType = dataType;
-            field->m_fieldID = fieldID;
-            m_FieldList->AddTail(field);
-        }
-    }
-
-    //-------------------------------------------------------------------------
-    CBuiltIn::CBuiltIn(CRuntimeClass *pClass, const string_q& className, uint32_t size,
-                       PFNV createFunc, CRuntimeClass *pBase) {
+    CBuiltIn::CBuiltIn(CRuntimeClass *pClass, const string_q& className, size_t size, \
+                            PFNV createFunc, CRuntimeClass *pBase) {
         m_pClass = pClass;
         string_q copy = className;
         if (!copy.empty())
             pClass->m_ClassName = strdup(copy.c_str());
-
-        pClass->m_ObjectSize    = size;
-        pClass->m_BaseClass     = pBase;
-        pClass->m_FieldList     = NULL;
-        pClass->m_CreateFunc    = createFunc;
+        pClass->m_ObjectSize = size;
+        pClass->m_BaseClass  = pBase;
+        pClass->m_CreateFunc = createFunc;
     }
 }  // namespace qblocks

@@ -32,7 +32,7 @@ namespace qblocks {
             if (!(func)(globBuf.gl_pathv[i], data))
                 quitEarly = true;
         globfree(&globBuf);
-        return !quitEarly; // if we quit early, we want to return false, true if we quit naturally
+        return !quitEarly;  // if we quit early, we want to return false, true if we quit naturally
     }
 
     //----------------------------------------------------------------------------------
@@ -66,11 +66,11 @@ namespace qblocks {
 
         if (endsWith(fn, '/')) {
             path = fn;
-            fileName = EMPTY;
+            fileName = "";
 
         } else {
-            path = fn.substr(0,fn.rfind('/')+1);
-            fileName = fn.Substitute(path, EMPTY);
+            path = extract(fn, 0, fn.rfind('/')+1);
+            fileName = substitute(fn, path, "");
         }
     }
 
@@ -86,13 +86,13 @@ namespace qblocks {
 
     //----------------------------------------------------------------------------------
     string_q CFilename::getFullPath(void) const {
-        return (path + fileName).Substitute("//", "/");
+        return substitute((path + fileName), "//", "/");
     }
 
     //----------------------------------------------------------------------------------
     string_q CFilename::relativePath(const string_q& relTo) const {
         string_q rel = (relTo.empty() ? getCWD() : relTo);
-        return getFullPath().Substitute(rel, "./");
+        return substitute(getFullPath(), rel, "./");
     }
 
 }  // namespace qblocks

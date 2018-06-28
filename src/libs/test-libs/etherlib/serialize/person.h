@@ -15,13 +15,8 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <vector>
 #include "etherlib.h"
-
-//--------------------------------------------------------------------------
-class CPerson;
-typedef SFArrayBase<CPerson>         CPersonArray;
-typedef SFList<CPerson*>             CPersonList;
-typedef SFUniqueList<CPerson*>       CPersonListU;
 
 // EXISTING_CODE
 // EXISTING_CODE
@@ -30,7 +25,7 @@ typedef SFUniqueList<CPerson*>       CPersonListU;
 class CPerson : public CBaseNode {
 public:
     string_q name;
-    uint32_t age;
+    uint64_t age;
     CPerson *next;
 
 public:
@@ -42,14 +37,15 @@ public:
     DECLARE_NODE(CPerson);
 
     // EXISTING_CODE
-    CPerson(const string_q& n, uint32_t a) : name(n), age(a), next(NULL) { }
+    CPerson(const string_q& n, uint64_t a) : name(n), age(a), next(NULL) { }
     // EXISTING_CODE
+    friend bool operator<(const CPerson& v1, const CPerson& v2);
     friend ostream& operator<<(ostream& os, const CPerson& item);
 
 protected:
-    void Clear(void);
-    void Init(void);
-    void Copy(const CPerson& pe);
+    void clear(void);
+    void initialize(void);
+    void duplicate(const CPerson& pe);
     bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
@@ -58,7 +54,7 @@ protected:
 
 //--------------------------------------------------------------------------
 inline CPerson::CPerson(void) {
-    Init();
+    initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
@@ -67,7 +63,7 @@ inline CPerson::CPerson(void) {
 inline CPerson::CPerson(const CPerson& pe) {
     // EXISTING_CODE
     // EXISTING_CODE
-    Copy(pe);
+    duplicate(pe);
 }
 
 // EXISTING_CODE
@@ -75,13 +71,13 @@ inline CPerson::CPerson(const CPerson& pe) {
 
 //--------------------------------------------------------------------------
 inline CPerson::~CPerson(void) {
-    Clear();
+    clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CPerson::Clear(void) {
+inline void CPerson::clear(void) {
     if (next)
         delete next;
     next = NULL;
@@ -90,8 +86,8 @@ inline void CPerson::Clear(void) {
 }
 
 //--------------------------------------------------------------------------
-inline void CPerson::Init(void) {
-    CBaseNode::Init();
+inline void CPerson::initialize(void) {
+    CBaseNode::initialize();
 
     name = "";
     age = 0;
@@ -102,9 +98,9 @@ inline void CPerson::Init(void) {
 }
 
 //--------------------------------------------------------------------------
-inline void CPerson::Copy(const CPerson& pe) {
-    Clear();
-    CBaseNode::Copy(pe);
+inline void CPerson::duplicate(const CPerson& pe) {
+    clear();
+    CBaseNode::duplicate(pe);
 
     name = pe.name;
     age = pe.age;
@@ -120,16 +116,24 @@ inline void CPerson::Copy(const CPerson& pe) {
 
 //--------------------------------------------------------------------------
 inline CPerson& CPerson::operator=(const CPerson& pe) {
-    Copy(pe);
+    duplicate(pe);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
+//-------------------------------------------------------------------------
+inline bool operator<(const CPerson& v1, const CPerson& v2) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default sort defined in class definition, assume already sorted
+    return true;
+}
+
 //---------------------------------------------------------------------------
-IMPLEMENT_ARCHIVE_ARRAY(CPersonArray);
-IMPLEMENT_ARCHIVE_ARRAY_C(CPersonArray);
-IMPLEMENT_ARCHIVE_LIST(CPersonList);
+typedef vector<CPerson> CPersonArray;
+extern SFArchive& operator>>(SFArchive& archive, CPersonArray& array);
+extern SFArchive& operator<<(SFArchive& archive, const CPersonArray& array);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

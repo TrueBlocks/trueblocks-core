@@ -37,8 +37,8 @@ void CLeaf::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) co
     }
 
     string_q fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, dataPtr))
-        return;
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     while (!fmt.empty())
         ctx << getNextChunk(fmt, nextLeafChunk, this);
@@ -68,13 +68,13 @@ bool CLeaf::setValueByName(const string_q& fieldName, const string_q& fieldValue
             if ( fieldName % "blocks" ) {
                 string_q str = fieldValue;
                 while (!str.empty()) {
-                    blocks[blocks.getCount()] = toUnsigned(nextTokenClear(str,','));
+                    blocks.push_back(toUnsigned(nextTokenClear(str, ',')));
                 }
                 return true;
             }
             break;
         case 'c':
-            if ( fieldName % "counter" ) { counter = toLong32u(fieldValue); return true; }
+            if ( fieldName % "counter" ) { counter = toUnsigned(fieldValue); return true; }
             break;
         default:
             break;
@@ -120,6 +120,27 @@ bool CLeaf::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
+SFArchive& operator>>(SFArchive& archive, CLeafArray& array) {
+    uint64_t count;
+    archive >> count;
+    array.resize(count);
+    for (size_t i = 0 ; i < count ; i++) {
+        ASSERT(i < array.capacity());
+        array.at(i).Serialize(archive);
+    }
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+SFArchive& operator<<(SFArchive& archive, const CLeafArray& array) {
+    uint64_t count = array.size();
+    archive << count;
+    for (size_t i = 0 ; i < array.size() ; i++)
+        array[i].SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
 void CLeaf::registerClass(void) {
     static bool been_here = false;
     if (been_here) return;
@@ -127,7 +148,7 @@ void CLeaf::registerClass(void) {
 
     CTreeNode::registerClass();
 
-    uint32_t fieldNum = 1000;
+    size_t fieldNum = 1000;
     ADD_FIELD(CLeaf, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CLeaf, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CLeaf, "showing", T_BOOL,  ++fieldNum);
@@ -154,6 +175,8 @@ string_q nextLeafChunk_custom(const string_q& fieldIn, const void *dataPtr) {
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
                     return nextBasenodeChunk(fieldIn, lea);
+                // EXISTING_CODE
+                // EXISTING_CODE
                 break;
 
             default:
@@ -162,13 +185,6 @@ string_q nextLeafChunk_custom(const string_q& fieldIn, const void *dataPtr) {
     }
 
     return "";
-}
-
-//---------------------------------------------------------------------------
-bool CLeaf::handleCustomFormat(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
-    return false;
 }
 
 //---------------------------------------------------------------------------
@@ -193,12 +209,12 @@ string_q CLeaf::getValueByName(const string_q& fieldName) const {
     switch (tolower(fieldName[0])) {
         case 'b':
             if ( fieldName % "blocks" || fieldName % "blocksCnt" ) {
-                uint32_t cnt = blocks.getCount();
+                size_t cnt = blocks.size();
                 if (endsWith(fieldName, "Cnt"))
                     return asStringU(cnt);
                 if (!cnt) return "";
                 string_q retS;
-                for (uint32_t i = 0 ; i < cnt ; i++) {
+                for (size_t i = 0 ; i < cnt ; i++) {
                     retS += asStringU(blocks[i]);
                     retS += ((i < cnt - 1) ? ",\n" : "\n");
                 }
@@ -227,8 +243,8 @@ ostream& operator<<(ostream& os, const CLeaf& item) {
 }
 
 //---------------------------------------------------------------------------
-const string_q CLeaf::getStringAt(const string_q& name, uint32_t i) const {
-    if ( name % "blocks" && i < blocks.getCount() )
+const string_q CLeaf::getStringAt(const string_q& name, size_t i) const {
+    if ( name % "blocks" && i < blocks.size() )
         return asStringU(blocks[i]);
     return "";
 }
@@ -241,9 +257,9 @@ const string_q CLeaf::getStringAt(const string_q& name, uint32_t i) const {
         string_q last = _value;
         string_q first = nextTokenClear(last, '|');
         if (!first.empty()) {
-            blocks[blocks.getCount()] = toUnsigned(first);
+            blocks.push_back(toUnsigned(first));
             if (!last.empty())
-                blocks[blocks.getCount()] = toUnsigned(last);;
+                blocks.push_back(toUnsigned(last));
         }
 #else
         counter = 1;
@@ -259,9 +275,9 @@ const string_q CLeaf::getStringAt(const string_q& name, uint32_t i) const {
 
         string_q ret;
 #ifdef OLD_CODE_Y
-        for (int i = 0 ; i < blocks.getCount() ; i++) {
+        for (int i = 0 ; i < blocks.size() ; i++) {
             ret += asString(blocks[i]);
-            if (i < blocks.getCount()-1)
+            if (i < blocks.size()-1)
                 ret += ",";
         }
 #else
@@ -298,7 +314,7 @@ const string_q CLeaf::getStringAt(const string_q& name, uint32_t i) const {
 //                    << " (" << first << ")"
                     << "\n";
 #ifdef OLD_CODE_Y
-                blocks[blocks.getCount()] = toUnsigned(_value);
+                blocks.push_back(toUnsigned(_value));
 #else
                 counter++;
 #endif
@@ -309,13 +325,13 @@ const string_q CLeaf::getStringAt(const string_q& name, uint32_t i) const {
             // If the leaf is not the key, delete and convert to a branch
             if (verbose == 2) { cerr << "\tleaf branching " << _key << " at " << _value << "\n"; }
             string_q curVal;
-            if (!contains(_key) || blocks.getCount() == 0) {
+            if (!contains(_key) || blocks.size() == 0) {
                 curVal = "";
             } else {
 #ifdef OLD_CODE_Y
-                for (int i = 0 ; i < blocks.getCount() ; i++) {
+                for (int i = 0 ; i < blocks.size() ; i++) {
                     curVal += asString(blocks[i]);
-                    if (i < blocks.getCount()-1)
+                    if (i < blocks.size()-1)
                         curVal += ",";
                 }
 #else
@@ -332,8 +348,8 @@ const string_q CLeaf::getStringAt(const string_q& name, uint32_t i) const {
     CTreeNode* CLeaf::remove(const string_q& _key) {
         if (verbose)
             cerr << endl<< endl<< endl
-            << idnt << string_q('-', 80) << endl
-            << idnt << string_q('-', 80) << endl
+            << idnt << string_q(80, '-') << endl
+            << idnt << string_q(80, '-') << endl
             << idnt << "remove infix at [" << _key << "]: ";
 
         if (contains(_key)) {
@@ -351,7 +367,7 @@ const string_q CLeaf::getStringAt(const string_q& name, uint32_t i) const {
     bool CLeaf::visitItems(ACCTVISITOR func, void *data) const {
         ASSERT(func);
         CVisitData *vd = reinterpret_cast<CVisitData*>(data);
-        uint32_t save = vd->type;
+        uint64_t save = vd->type;
         vd->counter = counter;
         vd->type = T_LEAF;
         vd->strs = vd->strs + "+" + (cMagenta+prefixS + cOff + "|" + cBlue + at(prefixS) + cOff);

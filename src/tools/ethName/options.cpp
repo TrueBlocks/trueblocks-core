@@ -25,7 +25,7 @@ CParams params[] = {
     CParams("-source",      "search 'source' field as well name and address (the default)"),
     CParams("",             "Query Ethereum addresses and/or names making it easy to remember accounts.\n"),
 };
-uint32_t nParams = sizeof(params) / sizeof(CParams);
+size_t nParams = sizeof(params) / sizeof(CParams);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
@@ -112,7 +112,9 @@ COptions::COptions(void) {
     namesFile = CFilename(configPath("names/names.txt"));
     establishFolder(namesFile.getPath());
     if (!fileExists(namesFile.getFullPath()))
-        stringToAsciiFile(namesFile.getFullPath(), string_q(STR_DEFAULT_DATA).Substitute(" |","|").Substitute("|","\t"));
+        stringToAsciiFile(namesFile.getFullPath(),
+                          substitute(
+                          substitute(string_q(STR_DEFAULT_DATA), " |", "|"), "|", "\t"));
     loadNames();
     Init();
 }
@@ -120,7 +122,7 @@ COptions::COptions(void) {
 //--------------------------------------------------------------------------------
 string_q COptions::postProcess(const string_q& which, const string_q& str) const {
     if (which == "options") {
-        return str.Substitute("terms", "<term> [term...]");
+        return substitute(str, "terms", "<term> [term...]");
 
     } else if (which == "notes" && (verbose || COptions::isReadme)) {
         string_q ret;
@@ -128,12 +130,16 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
         ret += "With two search terms, the first term must match the [{address}] field, and the "
                 "second term must match the [{name}] field.\n";
         ret += "When there are two search terms, both must match.\n";
-        ret += "If one mixes options, the [{--edit}] option predominates (i.e. the program opens the database and then quits).\n";
-        ret += "The [{--list}] option predominates otherwise. If present, the tool displays a list of stored names and addresses and then quits.\n";
+        ret += "If one mixes options, the [{--edit}] option predominates (i.e. the program opens the "
+                    "database and then quits).\n";
+        ret += "The [{--list}] option predominates otherwise. If present, the tool displays a list of "
+                    "stored names and addresses and then quits.\n";
         ret += "The [{--count}] option works with any other option and will simply display the number of matches.\n";
         ret += "The [{--matchCase}] option requires case sensitive matching. It works with all other options.\n";
         ret += "The [{--addrOnly}] option modifies the display output and therefore works with any other options.\n";
-        ret += "Name file: [{" + namesFile.getFullPath().Substitute(getHomeFolder(),"~/") + "}] (" + asStringU(fileSize(namesFile.getFullPath())) + ")\n";
+        ret += "Name file: [{" +
+                substitute(namesFile.getFullPath(), getHomeFolder(), "~/") +
+                    "}] (" + asStringU(fileSize(namesFile.getFullPath())) + ")\n";
         return ret;
     }
     return str;

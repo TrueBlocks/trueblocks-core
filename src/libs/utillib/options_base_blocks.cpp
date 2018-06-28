@@ -81,14 +81,14 @@ namespace qblocks {
         } else {
 
             if (isHash(arg)) {
-                hashList[hashList.getCount()] = arg;
+                hashList.push_back(arg);
 
             } else {
                 string_q msg = arg;
                 blknum_t num = parseBlockOption(msg, lastBlock);
                 if (!msg.empty())
                     return msg;
-                numList[numList.getCount()] = num;
+                numList.push_back(num);
             }
         }
 
@@ -98,8 +98,8 @@ namespace qblocks {
 
     //--------------------------------------------------------------------------------
     void COptionsBlockList::Init(void) {
-        numList.Clear();
-        hashList.Clear();
+        numList.clear();
+        hashList.clear();
         start = stop = 0;
         hashFind = NULL;
     }
@@ -118,13 +118,13 @@ namespace qblocks {
             if (!(*func)(i, data))
                 return false;
         }
-        for (uint32_t i = 0 ; i < numList.getCount() ; i++) {
+        for (size_t i = 0 ; i < numList.size() ; i++) {
             uint64_t n = numList[i];
             if (!(*func)(n, data))
                 return false;
         }
         if (hashFind) {
-            for (uint32_t i = 0 ; i < hashList.getCount() ; i++) {
+            for (size_t i = 0 ; i < hashList.size() ; i++) {
                 uint64_t n = (*hashFind)(hashList[i], data);
                 if (!(*func)(n, data))
                     return false;
@@ -137,7 +137,7 @@ namespace qblocks {
     bool COptionsBlockList::isInRange(blknum_t bn) const {
         if (start <= bn && bn < stop)
             return true;
-        for (uint32_t i = 0 ; i < numList.getCount() ; i++)
+        for (size_t i = 0 ; i < numList.size() ; i++)
             if (bn == numList[i])
                 return true;
         return false;

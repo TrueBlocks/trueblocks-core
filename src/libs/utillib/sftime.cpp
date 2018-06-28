@@ -11,6 +11,7 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 #include <algorithm>
+#include <string>
 #include "basetypes.h"
 #include "sftime.h"
 #include "sfos.h"
@@ -65,7 +66,7 @@ namespace qblocks {
     SFTime::SFTime(const tm& st, bool useDayOfWeek) {
         tm sysTime = st;
         if (!sysTime.tm_year)
-            sysTime.tm_year = (int)Now().GetYear();
+            sysTime.tm_year = static_cast<int>(Now().GetYear());
         ASSERT(sysTime.tm_year);
 
         if (useDayOfWeek) {
@@ -460,6 +461,9 @@ namespace qblocks {
     }
 
     //-------------------------------------------------------------------------
+    #define toLong32u(a) (uint32_t)toLongU((a))
+
+    //-------------------------------------------------------------------------
     //
     // dateStr is a legal date string as defined by fmtStr.
     //
@@ -515,8 +519,8 @@ namespace qblocks {
         }
 
         size_t find = timeStr.find(" ");
-        if (find != NOPOS) {
-            str = toLower(timeStr.substr(find));
+        if (find != string::npos) {
+            str = toLower(extract(timeStr, find));
             if (contains(str, "p"))
                 am = false;
         }
@@ -794,17 +798,17 @@ namespace qblocks {
             return earliestDate;
 
         string_q str = strIn;
-        replaceAll(str, ";", EMPTY);
+        replaceAll(str, ";", "");
         if (str.length() != 14) {
             str += "120000";
         }
 
-        uint32_t y  = toLong32u(str.substr(0, 4));
-        uint32_t m  = toLong32u(str.substr(4, 2));
-        uint32_t d  = toLong32u(str.substr(6, 2));
-        uint32_t h  = toLong32u(str.substr(8, 2));
-        uint32_t mn = toLong32u(str.substr(10, 2));
-        uint32_t s  = toLong32u(str.substr(12, 2));
+        uint32_t y  = toLong32u(extract(str,  0, 4));
+        uint32_t m  = toLong32u(extract(str,  4, 2));
+        uint32_t d  = toLong32u(extract(str,  6, 2));
+        uint32_t h  = toLong32u(extract(str,  8, 2));
+        uint32_t mn = toLong32u(extract(str, 10, 2));
+        uint32_t s  = toLong32u(extract(str, 12, 2));
 
         return SFTime(y, m, d, h, mn, s);
     }
@@ -918,7 +922,7 @@ namespace qblocks {
     //----------------------------------------------------------------------------------------------------
     SFTime BOW(const SFTime& tm) {
         SFTime ret = BOD(tm);
-        while (getDayOfWeek(ret.getDatePart()) > 1) // if it equals '1', it's Sunday at 00:00:01
+        while (getDayOfWeek(ret.getDatePart()) > 1)  // if it equals '1', it's Sunday at 00:00:01
             ret = SubtractOneDay(ret);
         return ret;
     }
@@ -926,7 +930,7 @@ namespace qblocks {
     //----------------------------------------------------------------------------------------------------
     SFTime EOW(const SFTime& tm) {
         SFTime ret = EOD(tm);
-        while (getDayOfWeek(tm.getDatePart()) < 7) // if it equals '7', it's Saturday 12:59:59
+        while (getDayOfWeek(tm.getDatePart()) < 7)  // if it equals '7', it's Saturday 12:59:59
             ret = AddOneDay(ret);
         return ret;
     }

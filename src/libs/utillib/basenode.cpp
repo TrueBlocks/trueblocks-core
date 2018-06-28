@@ -27,7 +27,7 @@ namespace qblocks {
 
     //--------------------------------------------------------------------------------
     CBaseNode::CBaseNode(void) {
-        Init();
+        initialize();
     }
 
     //--------------------------------------------------------------------------------
@@ -35,14 +35,14 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    void CBaseNode::Init(void) {
+    void CBaseNode::initialize(void) {
         m_deleted  = false;
         m_schema = getVersionNum();
         m_showing = true;
     }
 
     //--------------------------------------------------------------------------------
-    void CBaseNode::Copy(const CBaseNode& bn) {
+    void CBaseNode::duplicate(const CBaseNode& bn) {
         m_deleted  = bn.m_deleted;
         m_schema = bn.m_schema;
         m_showing = bn.m_showing;
@@ -61,7 +61,7 @@ namespace qblocks {
     //--------------------------------------------------------------------------------
     bool CBaseNode::isKindOf(const CRuntimeClass* pClass) const {
         CRuntimeClass* pClassThis = getRuntimeClass();
-        return pClassThis->IsDerivedFrom(pClass);
+        return pClassThis->isDerivedFrom(pClass);
     }
 
     //--------------------------------------------------------------------------------
@@ -86,7 +86,7 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    char *CBaseNode::parseCSV(char *s, uint32_t& nFields, const string_q *fields) {
+    char *CBaseNode::parseCSV(char *s, size_t& nFields, const string_q *fields) {
         nFields = 0;
 
         typedef enum { OUTSIDE = 0, INSIDE } parseState;
@@ -127,8 +127,8 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    char *CBaseNode::parseText(char *s, uint32_t& nFields, const string_q *fields) {
-        uint32_t max = nFields;
+    char *CBaseNode::parseText(char *s, size_t& nFields, const string_q *fields) {
+        size_t max = nFields;
         nFields = 0;
         char *fieldVal = s;
         while (s && *s) {
@@ -156,24 +156,24 @@ namespace qblocks {
 
     //--------------------------------------------------------------------------------
     char *CBaseNode::parseJson(char *s) {
-        uint32_t nFields = 0;
+        size_t nFields = 0;
         return parseJson(s, nFields);
     }
 
-//#define DEBUG_PARSER
+// #define DEBUG_PARSER
 #ifdef DEBUG_PARSER
     string_q tbs;
 #endif
 
     //--------------------------------------------------------------------------------
-    char *CBaseNode::parseJson(char *s, uint32_t& nFields) {
+    char *CBaseNode::parseJson(char *s, size_t& nFields) {
 #ifdef DEBUG_PARSER
         string_q ss = s;
-        string_q tt('-',25);
+        string_q tt(25, '-');
         tt += "\n";
         cout << tt << s << "\n" << tt;
-        cout << tt << ss.substr(ss.find("{"),   300) << "\n" << tt;
-        cout << tt << ss.substr(ss.length()-300,300) << "\n" << tt;
+        cout << tt << extract(ss, ss.find("{"),    300) << "\n" << tt;
+        cout << tt << extract(ss, ss.length()-300, 300) << "\n" << tt;
         cout.flush();
         tbs+="\t";
 #endif
@@ -277,7 +277,8 @@ namespace qblocks {
 
     //--------------------------------------------------------------------
     inline bool isWhiteSpace(char c) {
-        // TODO: this is unsafe if the JSON contains preservable spaces. Since that is not the case with Ethereum data, it's okay
+        // TODO(tjayrush): this is unsafe if the JSON contains preservable spaces. Since that is not
+        // the case with Ethereum data, it's okay
         return (c == '\0' || c == ' ' || c == '\n' || c == '\r' || c == '\t');
     }
 
@@ -328,7 +329,7 @@ namespace qblocks {
 
         // Not happy with this, but we must set the schema to the latest before we write data
         // since we always write the latest version to the hard drive.
-        ((CBaseNode*)this)->m_schema = getVersionNum();
+        ((CBaseNode*)this)->m_schema = getVersionNum();  //NOLINT
 
         archive << m_deleted;
         archive << m_schema;
@@ -355,87 +356,83 @@ namespace qblocks {
 
     //---------------------------------------------------------------------------
     string_q indent(void) {
-        return string_q(expC.tab, expC.spcs*expC.lev);
+        return string_q(expC.spcs*expC.lev, expC.tab);
     }
 
     extern string_q decBigNum(const string_q& str);
     //--------------------------------------------------------------------------------
     string_q CBaseNode::toJson1(void) const {
-        return toJson().Substitute("\t", " ").Substitute("\n", "").Substitute("  ", " ");
+        return substitute(substitute(substitute(toJson(), "\t", " "), "\n", ""), "  ", " ");
     }
+
     //--------------------------------------------------------------------------------
     string_q CBaseNode::toJson(void) const {
-        const CFieldList *fieldList = getRuntimeClass()->GetFieldList();
-        if (!fieldList) {
-            cerr << "No fieldList in " << getRuntimeClass()->m_ClassName
-                << ". Did you register the class? Quitting...\n";
-            cerr.flush();
-            exit(0);
+
+        CRuntimeClass *pClass = getRuntimeClass();
+        if (!pClass)
+            return "";
+
+        CFieldDataArray fields;
+
+        // Pick up the fields from this class
+        for (auto field : pClass->fieldList)
+            fields.push_back(field);
+
+        // Pick up the fields from parents classes (if any)
+        CRuntimeClass *pParent = pClass->m_BaseClass;
+        while (pParent != GETRUNTIME_CLASS(CBaseNode)) {
+            for (auto pField : pParent->fieldList)
+                fields.push_back(pField);
+            pParent = pParent->m_BaseClass;
         }
 
-        // TODO(tjayrush): THIS PER DISPLAY LOOKUP IS SLOW - THIS SHOULD ONLY BE DONE ONCE
-        // If a class is not a direct decendent of CBaseNode we want to include the parent nodes' fields
-        // in the list as well
-        CRuntimeClass *pThis = getRuntimeClass();
-        CRuntimeClass *pPar  = pThis->m_BaseClass;
-        CRuntimeClass *pBase = GETRUNTIME_CLASS(CBaseNode);
-        if (pPar != pBase) {
-            CFieldList theList = *fieldList;
-            const CFieldList *fieldListA = pPar->GetFieldList();
-            if (fieldListA) {
-                LISTPOS lPos = fieldListA->SFList<CFieldData *>::GetHeadPosition();
-                while (lPos) {
-                    CFieldData *fld = fieldListA->GetNext(lPos);
-                    if (!fld->isHidden())
-                        theList.AddTail(fld);
-                }
-            }
-            return toJson(&theList);
+        if (fields.size() == 0) {
+            cerr << "No fieldList in " << pClass->m_ClassName << ". Did you register the class?\n";
+            return "";
         }
-        return toJson(fieldList);
+
+        return "{" + trim(jsonFromArray(fields)) + "\n" + indent() + "}";
     }
 
     //--------------------------------------------------------------------------------
-    string_q CBaseNode::toJson(const string_q& fieldsIn) const {
-        const CFieldList *fieldList = getRuntimeClass()->GetFieldList();
-        if (!fieldList) {
-            cerr << "No fieldList in " << getRuntimeClass()->m_ClassName
-                << ". Did you register the class? Quitting...\n";
-            cerr.flush();
-            exit(0);
+    string_q CBaseNode::toJson(const string_q& fieldStrIn) const {
+
+        CRuntimeClass *pClass = getRuntimeClass();
+        if (!pClass)
+            return "";
+
+        CFieldDataArray fields;
+        string_q fieldStr = fieldStrIn;
+        while (!fieldStr.empty()) {
+            string_q field = nextTokenClear(fieldStr, '|');
+            CFieldData *fld = pClass->findField(field);
+            if (!fld)
+                cerr << "Could not find field " << field << " in class " << pClass->m_ClassName << ".\n";
+            else
+                fields.push_back(*fld);
         }
 
-        // TODO(tjayrush): THIS PER DISPLAY LOOKUP IS SLOW - SAVE THIS STRING FIELD LIST AND ONLY
-        // LOAD IF DIFFERENT USE STATIC
-        CFieldList theList;
-        string_q fields = fieldsIn;
-        while (!fields.empty()) {
-            string_q field = nextTokenClear(fields, '|');
-            const CFieldData *fld = fieldList->getFieldByName(field);
-            if (!fld) {
-                cerr << "Could not find field " << field << " in class "
-                    << getRuntimeClass()->m_ClassName << ". Quitting...\n";
-                cerr.flush();
-                exit(0);
-            }
-            theList.AddTail((CFieldData*)(fld));  // NOLINT
+        if (fields.size() == 0) {
+            cerr << "No fieldList in " << pClass->m_ClassName << ". Did you register the class?\n";
+            return "";
         }
-        return toJson(&theList);
+
+        return "{" + trim(jsonFromArray(fields)) + "\n" + indent() + "}";
     }
 
     //--------------------------------------------------------------------------------
-    string_q CBaseNode::toJsonFldList(const CFieldList *fieldList) const {
+    string_q CBaseNode::jsonFromArray(const CFieldDataArray& fields) const {
+
         string_q ret;
         bool first = true;
         if (!expContext().noFrst)
             ret += indent();
         expContext().noFrst = false;
-        LISTPOS lPos = fieldList->SFList<CFieldData *>::GetHeadPosition();
-        while (lPos) {
+
+        for (auto field : fields) {
             incIndent();
-            CFieldData *fld = fieldList->GetNext(lPos);
-            string_q val = getValueByName(fld->m_fieldName);
-            if (!fld->isHidden() && (!val.empty() || fld->isArray())) {
+            string_q val = getValueByName(field.m_fieldName);
+            if (!field.isHidden() && (!val.empty() || field.isArray())) {
                 if (!first) {
                     if (expContext().colored)
                         ret += "#";
@@ -445,25 +442,25 @@ namespace qblocks {
                 }
                 first = false;
                 ret += indent();
-                ret += "\"" + fld->m_fieldName + "\"";
+                ret += "\"" + field.m_fieldName + "\"";
                 ret += ": ";
                 if (expContext().colored)
                     ret += "%";
-                if (fld->isArray()) {
+                if (field.isArray()) {
                     incIndent();
-                    val = getValueByName(fld->m_fieldName).Substitute("\n{","\n"+indent()+"{");
+                    val = substitute(getValueByName(field.m_fieldName), "\n{", "\n"+indent()+"{");
                     ret += (val.empty() ? "[]" : "[\n" + indent() + val);
                     decIndent();
                     ret += (val.empty() ? "" : indent() + "]");
 
-                } else if (fld->isObject()) {
+                } else if (field.isObject()) {
                     ret += val;
 
-                } else if (fld->m_fieldType == T_BLOOM) {
+                } else if (field.m_fieldType == T_BLOOM) {
                     ret += "\"" + val + "\"";
 
 
-                } else if (fld->m_fieldType & TS_NUMERAL) {
+                } else if (field.m_fieldType & TS_NUMERAL) {
                     if (expContext().quoteNums) ret += "\"";
                     ret += (expContext().hexNums) ? toHex(val) : decBigNum(val);
                     if (expContext().quoteNums) ret += "\"";
@@ -482,32 +479,74 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    string_q CBaseNode::toJson(const CFieldList *fieldList) const {
-        ASSERT(fieldList);
-        string_q ret;
-        ret += "{";
-        ret += trim(toJsonFldList(fieldList));
-        ret += "\n";
-        ret += indent();
-        ret += "}";
-        return ret;
-    }
+    void CBaseNode::doExport(ostream& os) const {
 
-    //--------------------------------------------------------------------------------
-    string_q decBigNum(const string_q& str) {
-        string_q ret = str;
-        size_t len = ret.length();
-             if (len > 29) ret = ret.substr(0,1) + "." + trimTrailing(ret.substr(1), '0') + "e+29";
-        else if (len > 28) ret = ret.substr(0,1) + "." + trimTrailing(ret.substr(1), '0') + "e+28";
-        else if (len > 27) ret = ret.substr(0,1) + "." + trimTrailing(ret.substr(1), '0') + "e+27";
-        else if (len > 26) ret = ret.substr(0,1) + "." + trimTrailing(ret.substr(1), '0') + "e+26";
-        else if (len > 25) ret = ret.substr(0,1) + "." + trimTrailing(ret.substr(1), '0') + "e+25";
-        else if (len > 24) ret = ret.substr(0,1) + "." + trimTrailing(ret.substr(1), '0') + "e+24";
-        else if (len > 23) ret = ret.substr(0,1) + "." + trimTrailing(ret.substr(1), '0') + "e+23";
-        else if (len > 22) ret = ret.substr(0,1) + "." + trimTrailing(ret.substr(1), '0') + "e+22";
-        else if (len > 21) ret = ret.substr(0,1) + "." + trimTrailing(ret.substr(1), '0') + "e+21";
-        replace(ret, ".e+", "e+");
-        return ret;
+        CRuntimeClass *pClass = getRuntimeClass();
+        if (!pClass)
+            return;
+
+        string_q last;
+        for (auto field : pClass->fieldList) {
+            if (!field.isHidden()) {
+                last = field.getName();
+            }
+        }
+
+        os << "{\n";
+        incIndent();
+        for (auto field : pClass->fieldList) {
+            if (!field.isHidden()) {
+                string_q name = field.getName();
+                os << indent() << "\"" << name << "\": ";
+                if (field.isArray()) {
+                    uint64_t cnt = toLongU(getValueByName(name+"Cnt"));
+                    os << "[";
+                    if (cnt) {
+                        incIndent();
+                        os << "\n";
+                        for (size_t i = 0 ; i < cnt ; i++) {
+                            os << indent();
+                            const CBaseNode *node = getObjectAt(name, i);
+                            if (node) {
+                                node->doExport(os);
+                            } else {
+                                os << "\"" << getStringAt(name, i) << "\"";
+                            }
+                            if (i < cnt-1)
+                                os << ",";
+                            os << "\n";
+                        }
+                        decIndent();
+                        os << indent();
+                    }
+                    os << "]";
+                } else if (field.isObject()) {
+                    const CBaseNode *node = getObjectAt(name, 0);
+                    if (node) {
+                        node->doExport(os);
+                    } else {
+                        os << getValueByName(name);
+                    }
+                } else {
+                    string_q val = getValueByName(name);
+                    bool isNum = field.m_fieldType & TS_NUMERAL;
+                    if (isNum && expContext().hexNums && !startsWith(val, "0x"))
+                        val = toHex(val);
+                    bool quote = (!isNum || expContext().quoteNums) && val != "null";
+                    if (quote)
+                        os << "\"";
+                    os << val;
+                    if (quote)
+                        os << "\"";
+                }
+                if (field.getName() != last)
+                    os << ",";
+                os << "\n";
+            }
+        }
+        decIndent();
+        os << indent();
+        os << "}";
     }
 
     //--------------------------------------------------------------------------------
@@ -523,18 +562,13 @@ namespace qblocks {
                     break;
                 case 'p':
                     if ( fieldIn % "parsed" ) {
-                        const CFieldList *fieldList = node->getRuntimeClass()->GetFieldList();
-                        if (!fieldList) {
+                        CRuntimeClass *pClass = node->getRuntimeClass();
+                        if (!pClass || pClass->fieldList.size() == 0) {
                             cerr << "No fieldList in " << node->getRuntimeClass()->m_ClassName
-                                << ". Did you register the class? Quitting...\n";
-                            cerr.flush();
-                            exit(0);
+                            << ". Did you register the class?\n";
+                            return "";
                         }
-                        string_q ret;
-                        ret += "{";
-                        ret += node->toJsonFldList(fieldList);
-                        ret += "}";
-                        return ret.Substitute("\n", "");;
+                        return "{" + substitute(node->jsonFromArray(pClass->fieldList), "\n", "") + "}";
                     }
                     break;
                 case 's':
@@ -546,15 +580,33 @@ namespace qblocks {
             }
         }
 
-        return EMPTY;
+        return "";
+    }
+
+    //--------------------------------------------------------------------------------
+    string_q decBigNum(const string_q& str) {
+        string_q ret = str;
+        size_t len = ret.length();
+             if (len > 29) ret = extract(ret, 0, 1) + "." + trimTrailing(extract(ret, 1), '0') + "e+29";  // NOLINT
+        else if (len > 28) ret = extract(ret, 0, 1) + "." + trimTrailing(extract(ret, 1), '0') + "e+28";
+        else if (len > 27) ret = extract(ret, 0, 1) + "." + trimTrailing(extract(ret, 1), '0') + "e+27";
+        else if (len > 26) ret = extract(ret, 0, 1) + "." + trimTrailing(extract(ret, 1), '0') + "e+26";
+        else if (len > 25) ret = extract(ret, 0, 1) + "." + trimTrailing(extract(ret, 1), '0') + "e+25";
+        else if (len > 24) ret = extract(ret, 0, 1) + "." + trimTrailing(extract(ret, 1), '0') + "e+24";
+        else if (len > 23) ret = extract(ret, 0, 1) + "." + trimTrailing(extract(ret, 1), '0') + "e+23";
+        else if (len > 22) ret = extract(ret, 0, 1) + "." + trimTrailing(extract(ret, 1), '0') + "e+22";
+        else if (len > 21) ret = extract(ret, 0, 1) + "." + trimTrailing(extract(ret, 1), '0') + "e+21";
+        replace(ret, ".e+", "e+");
+        return ret;
     }
 
     //---------------------------------------------------------------------------------------------
     string_q getNextChunk(string_q& fmtOut, NEXTCHUNKFUNC func, const void *data) {
+
         string_q chunk = fmtOut;
         if (!contains(fmtOut, "[")) {
             // There are no more tokens.  Return the last chunk and empty out the format
-            fmtOut = EMPTY;
+            fmtOut = "";
             return chunk;
         }
 
@@ -599,7 +651,7 @@ namespace qblocks {
         bool isBool = false;
         if (contains(fieldName, "b:")) {
             isBool = true;
-            replace(fieldName, "b:", EMPTY);
+            replace(fieldName, "b:", "");
         }
 
         // The fieldname may contain p: or w:width: or both.  If it contains either it
@@ -608,42 +660,42 @@ namespace qblocks {
         string_q promptName = fieldName;
         if (contains(fieldName, "p:")) {
             isPrompt = true;
-            replace(fieldName, "p:", EMPTY);
+            replace(fieldName, "p:", "");
             promptName = fieldName;
         }
 
-        uint32_t maxWidth = 0xdeadbeef, lineWidth = 0xdeadbeef;
+        size_t maxWidth = 0xdeadbeef, lineWidth = 0xdeadbeef;
         bool rightJust = false, lineJust = false;
         if (contains(fieldName, "w:")) {
-            ASSERT(fieldName.substr(0,2) % "w:");  // must be first modifier in the string
-            replace(fieldName, "w:", EMPTY);   // get rid of the 'w:'
-            maxWidth = toLong32u(fieldName);   // grab the width
+            ASSERT(extract(fieldName, 0, 2) % "w:");  // must be first modifier in the string
+            replace(fieldName, "w:", "");   // get rid of the 'w:'
+            maxWidth = toLongU(fieldName);   // grab the width
             nextTokenClear(fieldName, ':');    // skip to the start of the fieldname
         } else if (contains(fieldName, "r:")) {
-            ASSERT(fieldName.substr(0,2) % "r:");  // must be first modifier in the string
-            replace(fieldName, "r:", EMPTY);   // get rid of the 'w:'
-            maxWidth = toLong32u(fieldName);   // grab the width
+            ASSERT(extract(fieldName, 0, 2) % "r:");  // must be first modifier in the string
+            replace(fieldName, "r:", "");   // get rid of the 'w:'
+            maxWidth = toLongU(fieldName);   // grab the width
             nextTokenClear(fieldName, ':');    // skip to the start of the fieldname
             rightJust = true;
         } else if (contains(fieldName, "l:")) {
-            ASSERT(fieldName.substr(0,2) % "l:");  // must be first modifier in the string
+            ASSERT(extract(fieldName, 0, 2) % "l:");  // must be first modifier in the string
             replace(fieldName, "l:", "");   // get rid of the 'w:'
-            lineWidth = toLong32u(fieldName);   // grab the width
+            lineWidth = toLongU(fieldName);   // grab the width
             nextTokenClear(fieldName, ':');    // skip to the start of the fieldname
             lineJust = true;
         }
 
         //--------------------------------------------------------------------
-#define truncPad(str, size)  (size == 0xdeadbeef ? str : padRight(str.substr(0,size), size))
-#define truncPadR(str, size) (size == 0xdeadbeef ? str : padLeft (str.substr(0,size), size))
+#define truncPad(str, size)  (size == 0xdeadbeef ? str : padRight(extract(str, 0, size), size))
+#define truncPadR(str, size) (size == 0xdeadbeef ? str : padLeft (extract(str, 0, size), size))
 
         // Get the value of the field.  If the value of the field is empty we return empty for the entire token.
         string_q fieldValue = (func)(fieldName, data);
         if (isBool && fieldValue == "0")
             fieldValue = "";
         if (!isPrompt && fieldValue.empty())
-            return EMPTY;
-        if (isBool) // we know it's true, so we want to only show the pre and post
+            return "";
+        if (isBool)  // we know it's true, so we want to only show the pre and post
             fieldValue = "";
         if (rightJust) {
             fieldValue = truncPadR(fieldValue, maxWidth);  // pad or truncate
@@ -651,7 +703,7 @@ namespace qblocks {
             fieldValue = truncPad(fieldValue, maxWidth);  // pad or truncate
         }
         if (lineJust) {
-extern string_q reformat1(const string_q& in, uint32_t len);
+extern string_q reformat1(const string_q& in, size_t len);
             fieldValue = reformat1(fieldValue, lineWidth);
         }
 
@@ -675,95 +727,23 @@ extern string_q reformat1(const string_q& in, uint32_t len);
         return "Field not found: " + str + "\n";
     }
 
-    //--------------------------------------------------------------------------------
-    void CBaseNode::doExport(ostream& os) const {
-
-        CFieldList *list = getRuntimeClass()->GetFieldList();
-        LISTPOS pos;
-
-        CFieldData *lastVisible = NULL;
-        pos = list->GetHeadPosition();
-        while (pos) {
-            CFieldData *field = list->GetNext(pos);
-            if (!field->isHidden())
-                lastVisible = field;
-        }
-
-        os << "{\n";
-        incIndent();
-        pos = list->GetHeadPosition();
-        while (pos) {
-            CFieldData *field = list->GetNext(pos);
-            if (!field->isHidden()) {
-                string_q name = field->getName();
-                os << indent() << "\"" << name << "\": ";
-                if (field->isArray()) {
-                    uint64_t cnt = toLongU(getValueByName(name+"Cnt"));
-                    os << "[";
-                    if (cnt) {
-                        incIndent();
-                        os << "\n";
-                        for (uint32_t i = 0 ; i < cnt ; i++) {
-                            os << indent();
-                            const CBaseNode *node = getObjectAt(name, i);
-                            if (node) {
-                                node->doExport(os);
-                            } else {
-                                os << "\"" << getStringAt(name, i) << "\"";
-                            }
-                            if (i < cnt-1)
-                                os << ",";
-                            os << "\n";
-                        }
-                        decIndent();
-                        os << indent();
-                    }
-                    os << "]";
-                } else if (field->isObject()) {
-                    const CBaseNode *node = getObjectAt(name, 0);
-                    if (node) {
-                        node->doExport(os);
-                    } else {
-                        os << getValueByName(name);
-                    }
-                } else {
-                    string_q val = getValueByName(name);
-                    bool isNum = field->m_fieldType & TS_NUMERAL;
-                    if (isNum && expContext().hexNums && !startsWith(val, "0x"))
-                        val = toHex(val);
-                    bool quote = (!isNum || expContext().quoteNums) && val != "null";
-                    if (quote)
-                        os << "\"";
-                    os << val;
-                    if (quote)
-                        os << "\"";
-                }
-                if (field != lastVisible)
-                    os << ",";
-                os << "\n";
-            }
-        }
-        decIndent();
-        os << indent();
-        os << "}";
-    }
-
     //-----------------------------------------------------------------------
-    string_q reformat1(const string_q& in, uint32_t len) {
+    string_q reformat1(const string_q& in, size_t len) {
         string_q ret = in;
         if (ret.length() > len+10) {
-            string_q parts[1000];
-            uint32_t nParts = 0;
+            CStringArray parts;
             while (!ret.empty()) {
-                parts[nParts++] = ret.substr(0, len);
-                replace(ret, parts[nParts-1], "");
-                if (parts[nParts-1].length()==len) {
-                    parts[nParts-1] += "...";
-                    parts[nParts-1] += "\r\n\t\t\t    ";
+                string_q s = extract(ret, 0, len);
+                replace(ret, s, "");
+                if (s.length() == len) {
+                    s += "...";
+                    s += "\r\n\t\t\t    ";
                 }
+                parts.push_back(s);
             }
-            for (uint32_t xx = 0 ; xx < nParts ; xx++)
-                ret += parts[xx];
+            ASSERT(ret.empty());
+            for (size_t i = 0 ; i < parts.size() ; i++)
+                ret += parts[i];
         }
         return ret;
     }

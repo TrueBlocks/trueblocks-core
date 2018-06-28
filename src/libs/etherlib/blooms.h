@@ -18,11 +18,11 @@ namespace qblocks {
 
     //-------------------------------------------------------------------------
     // Helps debug a bloom filter
-#define dbgBloom(a) bloom2Bytes(a).Substitute("0"," ")
+#define dbgBloom(a) substitute(bloom2Bytes(a), "0", " ")
 
     //-------------------------------------------------------------------------
-    inline uint32_t bitsTwiddled(SFBloom n) {
-        uint32_t count = 0;
+    inline size_t bitsTwiddled(SFBloom n) {
+        size_t count = 0;
         while (n != 0) {
             SFUintBN x = n - 1;
             SFUintBN y = n & x;
@@ -40,8 +40,9 @@ namespace qblocks {
 extern string_q getSha3 (const string_q& hexIn);
         string_q sha = getSha3(hexIn);
         SFUintBN bloom;
-        for (uint32_t i=0;i<3;i++)
-            bloom |= (SFUintBN(1) << (strtoul(("0x"+sha.substr(2+(i*4),4)).c_str(),NULL,16))%2048);
+        for (size_t i = 0 ; i < 3 ; i++)
+            bloom |= (SFUintBN(1) << (strtoul(("0x" +
+                            extract(sha, 2 + (i * 4), 4)).c_str(), NULL, 16)) % 2048);
         return bloom;
     }
 
@@ -57,12 +58,12 @@ extern string_q getSha3 (const string_q& hexIn);
 
     //-------------------------------------------------------------------------
     inline bool isBloomHit(const string_q& hexIn, const SFUintBN filter) {
-        return isBloomHit(makeBloom(hexIn),filter);
+        return isBloomHit(makeBloom(hexIn), filter);
     }
 
     //----------------------------------------------------------------------------------
     extern bool compareBlooms(const SFBloom& b1, const SFBloom& b2, string_q& str);
-    extern bool addAddrToBloom(const SFAddress& addr, SFBloomArray& blooms, uint32_t maxBits);
+    extern bool addAddrToBloom(const SFAddress& addr, SFBloomArray& blooms, size_t maxBits);
 
     //----------------------------------------------------------------------------------
     extern bool readBloomArray (      SFBloomArray& blooms, const string_q& fileName);

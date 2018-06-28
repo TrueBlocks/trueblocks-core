@@ -10,10 +10,11 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-#include "utillib.h"
 #include <iomanip>
+#include <string>
+#include "utillib.h"
 
-#define sizeme(a) ((uint64_t)sizeof(a))
+#define sizeme(a) ((uint64_t)sizeof((a)))
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
@@ -29,15 +30,14 @@ int main(int argc, const char *argv[]) {
     unsigned int ui = (unsigned int)-1;
     int i = -1;
     int64_t il = -1;
-    uint64_t uil = (uint64_t)-1;
-    float f = (float)10.333;
+    uint64_t uil = static_cast<uint64_t>(-1);
+    float f = 10.333f;
     double d = 1001001010.01121112;
 
     CStringExportContext ctx;
-    ctx << "my string: " << myStr << " : " << sizeme(myStr) << "\n";
     ctx << "bool: " << b << " : " << sizeme(b) << "\n";
     ctx << "char: " << c << " : " << sizeme(c) << "\n";
-    ctx << "unsigned int (this is a bug, should be 4294967295): " << ui << " : " << sizeme(ui) << "\n";
+    ctx << "unsigned int: " << ui << " : " << sizeme(ui) << "\n";
     ctx << "int: " << i << " : " << sizeme(i) << "\n";
     ctx << "float: " << f << " : " << sizeme(f) << "\n";
     ctx << "double: " << d << " : " << sizeme(d) << "\n";
@@ -48,7 +48,6 @@ int main(int argc, const char *argv[]) {
     ostringstream os;
     os.setf(ios::fixed);
     os << setprecision(10);
-    os << "my string: " << myStr << " : " << sizeme(myStr) << "\n";
     os << "bool: " << b << " : " << sizeme(b) << "\n";
     os << "char: " << c << " : " << sizeme(c) << "\n";
     os << "unsigned int: " << ui << " : " << sizeme(ui) << "\n";

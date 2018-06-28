@@ -17,7 +17,6 @@
 inline void CLASS_NAME::finishParse(void) {} \
 inline bool CLASS_NAME::Serialize(SFArchive& archive) {return true;} \
 inline bool CLASS_NAME::SerializeC(SFArchive& archive) const {return true;} \
-inline bool CLASS_NAME::handleCustomFormat(CExportContext& ctx, const string_q& fieldName, void*data) const {return false;}
 
 //-----------------------------------------------------------------------------
 class CBloomReceipt : public CBaseNode {
@@ -36,7 +35,7 @@ public:
     CBloomReceipt receipt;
     DECLARE_NODE(CBloomTrans);
     CBloomTrans(void);
-    const CBaseNode *getObjectAt(const string_q& name, uint32_t i) const override;
+    const CBaseNode *getObjectAt(const string_q& name, size_t i) const override;
 };
 IMPLEMENT_UNUSED(CBloomTrans);
 
@@ -45,9 +44,9 @@ class CBloomBlock : public CBaseNode {
 public:
     string_q logsBloom;
     blknum_t number;
-    SFArrayBase<CBloomTrans> transactions;
+    vector<CBloomTrans> transactions;
     DECLARE_NODE(CBloomBlock);
     CBloomBlock(void);
-    const CBaseNode *getObjectAt(const string_q& name, uint32_t i) const override;
+    const CBaseNode *getObjectAt(const string_q& name, size_t i) const override;
 };
 IMPLEMENT_UNUSED(CBloomBlock);
