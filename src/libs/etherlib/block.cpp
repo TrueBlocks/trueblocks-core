@@ -429,28 +429,6 @@ const CBaseNode *CBlock::getObjectAt(const string_q& fieldName, size_t index) co
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 //---------------------------------------------------------------------------
-//#define EQ_TEST(a) { if (test.a != a) return false; }
-//bool CBlock::operator==(const CBlock& test) const {
-//
-//    EQ_TEST(gasLimit);
-//    EQ_TEST(gasUsed);
-//    EQ_TEST(hash);
-//    EQ_TEST(blockNumber);
-//    EQ_TEST(parentHash);
-//    EQ_TEST(miner);
-//    EQ_TEST(difficulty);
-//    EQ_TEST(price);
-//    EQ_TEST(finalized);
-//    EQ_TEST(timestamp);
-//    EQ_TEST(transactions.size());
-//    for (size_t i = 0 ; i < transactions.size() ; i++)
-//        if (test.transactions[i] != transactions[i])
-//            return false;
-//
-//    return true;
-//}
-
-//---------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const CAddressItem& item) {
     os << item.bn << "\t";
     os << (item.tx == NOPOS ? -1 : int32_t(item.tx)) << "\t";
