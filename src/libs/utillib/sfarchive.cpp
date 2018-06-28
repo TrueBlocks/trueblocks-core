@@ -68,30 +68,6 @@ namespace qblocks {
         return *this;
     }
 
-    SFArchive& operator<<(SFArchive& archive, const CStringArray& array) {
-        uint64_t count = array.getCount();
-        archive << count;
-        for (uint32_t i = 0 ; i < array.getCount() ; i++)
-            archive << array[i];
-        return archive;
-    }
-
-    SFArchive& operator<<(SFArchive& archive, const SFBigUintArray& array) {
-        uint64_t count = array.getCount();
-        archive << count;
-        for (uint32_t i = 0 ; i < array.getCount() ; i++)
-            archive << array[i];
-        return archive;
-    }
-
-    SFArchive& operator<<(SFArchive& archive, const SFUintArray& array) {
-        uint64_t count = array.getCount();
-        archive << count;
-        for (uint32_t i = 0 ; i < array.getCount() ; i++)
-            archive << array[i];
-        return archive;
-    }
-
     SFArchive& SFArchive::operator<<(const SFUintBN& bn) {
         *this << bn.capacity;
         *this << bn.len;
@@ -104,6 +80,30 @@ namespace qblocks {
         *this << (const unsigned int)bn.sign;
         *this << bn.mag;
         return *this;
+    }
+
+    SFArchive& operator<<(SFArchive& archive, const CStringArray& array) {
+        uint64_t count = array.size();
+        archive << count;
+        for (size_t i = 0 ; i < array.size() ; i++)
+            archive << array[i];
+        return archive;
+    }
+
+    SFArchive& operator<<(SFArchive& archive, const SFBigUintArray& array) {
+        uint64_t count = array.size();
+        archive << count;
+        for (size_t i = 0 ; i < array.size() ; i++)
+            archive << array[i];
+        return archive;
+    }
+
+    SFArchive& operator<<(SFArchive& archive, const SFUintArray& array) {
+        uint64_t count = array.size();
+        archive << count;
+        for (size_t i = 0 ; i < array.size() ; i++)
+            archive << array[i];
+        return archive;
     }
 
     ///////////////////////////////////////////////////////////////////
@@ -152,30 +152,6 @@ namespace qblocks {
         return *this;
     }
 
-    SFArchive& operator>>(SFArchive& archive, CStringArray& array) {
-        uint64_t count;
-        archive >> count;
-        for (uint32_t i = 0 ; i < count ; i++)
-            archive >> array[i];
-        return archive;
-    }
-
-    SFArchive& operator>>(SFArchive& archive, SFBigUintArray& array) {
-        uint64_t count;
-        archive >> count;
-        for (uint32_t i = 0 ; i < count ; i++)
-            archive >> array[i];
-        return archive;
-    }
-
-    SFArchive& operator>>(SFArchive& archive, SFUintArray& array) {
-        uint64_t count;
-        archive >> count;
-        for (uint32_t i = 0 ; i < count ; i++)
-            archive >> array[i];
-        return archive;
-    }
-
     SFArchive& SFArchive::operator>>(SFUintBN& bn) {
         // Note: I experimented with writing out
         // the blk in one Read/Write but it was
@@ -194,6 +170,39 @@ namespace qblocks {
         *this >> bn.sign;
         *this >> bn.mag;
         return *this;
+    }
+
+    SFArchive& operator>>(SFArchive& archive, CStringArray& array) {
+        uint64_t count;
+        archive >> count;
+        for (size_t i = 0 ; i < count ; i++) {
+            string_q str;
+            archive >> str;
+            array.push_back(str);
+        }
+        return archive;
+    }
+
+    SFArchive& operator>>(SFArchive& archive, SFBigUintArray& array) {
+        uint64_t count;
+        archive >> count;
+        for (size_t i = 0 ; i < count ; i++) {
+            SFUintBN num;
+            archive >> num;
+            array.push_back(num);
+        }
+        return archive;
+    }
+
+    SFArchive& operator>>(SFArchive& archive, SFUintArray& array) {
+        uint64_t count;
+        archive >> count;
+        for (size_t i = 0 ; i < count ; i++) {
+            uint64_t num;
+            archive >> num;
+            array.push_back(num);
+        }
+        return archive;
     }
 
     //----------------------------------------------------------------------

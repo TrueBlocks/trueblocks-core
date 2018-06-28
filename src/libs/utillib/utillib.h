@@ -20,7 +20,6 @@
 #include "sfos.h"
 #include "database.h"
 #include "toml.h"
-#include "list.h"
 #include "exportcontext.h"
 #include "sfarchive.h"
 #include "fielddata.h"

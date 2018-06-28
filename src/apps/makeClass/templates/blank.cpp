@@ -35,8 +35,8 @@ void [{CLASS_NAME}]::Format(CExportContext& ctx, const string_q& fmtIn, void *da
     }
 
     string_q fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, dataPtr))
-        return;
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     while (!fmt.empty())
         ctx << getNextChunk(fmt, next[{PROPER}]Chunk, this);
@@ -98,12 +98,33 @@ bool [{CLASS_NAME}]::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
+SFArchive& operator>>(SFArchive& archive, [{CLASS_NAME}]Array& array) {
+    uint64_t count;
+    archive >> count;
+    array.resize(count);
+    for (size_t i = 0 ; i < count ; i++) {
+        ASSERT(i < array.capacity());
+        array.at(i).Serialize(archive);
+    }
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+SFArchive& operator<<(SFArchive& archive, const [{CLASS_NAME}]Array& array) {
+    uint64_t count = array.size();
+    archive << count;
+    for (size_t i = 0 ; i < array.size() ; i++)
+        array[i].SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
 void [{CLASS_NAME}]::registerClass(void) {
     static bool been_here = false;
     if (been_here) return;
     been_here = true;
 
-    [{PARENT_REG}]uint32_t fieldNum = 1000;
+    [{PARENT_REG}]size_t fieldNum = 1000;
     ADD_FIELD([{CLASS_NAME}], "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD([{CLASS_NAME}], "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD([{CLASS_NAME}], "showing", T_BOOL,  ++fieldNum);
@@ -129,6 +150,8 @@ string_q next[{PROPER}]Chunk_custom(const string_q& fieldIn, const void *dataPtr
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
                     return nextBasenodeChunk(fieldIn, [{SHORT3}]);
+                // EXISTING_CODE
+                // EXISTING_CODE
                 break;
 
             default:
@@ -137,13 +160,6 @@ string_q next[{PROPER}]Chunk_custom(const string_q& fieldIn, const void *dataPtr
     }
 
     return "";
-}
-
-//---------------------------------------------------------------------------
-bool [{CLASS_NAME}]::handleCustomFormat(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
-    return false;
 }
 
 //---------------------------------------------------------------------------

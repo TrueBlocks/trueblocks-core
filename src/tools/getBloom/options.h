@@ -32,4 +32,4 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-extern uint32_t foundFile(const string_q& path, void *data);
+extern size_t foundFile(const string_q& path, void *data);

@@ -16,10 +16,10 @@
 //-------------------------------------------------------------------------
 IMPLEMENT_NODE(CBloomReceipt, CBaseNode);
 CBloomReceipt::CBloomReceipt(void) {
-    static bool been_here=false;
+    static bool been_here = false;
     if (!been_here) {
-        ADD_FIELD(CBloomReceipt,"logsBloom",TS_STRING,1);
-        been_here=true;
+        ADD_FIELD(CBloomReceipt, "logsBloom", TS_STRING, 1);
+        been_here = true;
     }
 }
 bool CBloomReceipt::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
@@ -38,12 +38,12 @@ void CBloomReceipt::Format(CExportContext& ctx, const string_q& fmtIn, void* dat
 //-------------------------------------------------------------------------
 IMPLEMENT_NODE(CBloomTrans, CBaseNode);
 CBloomTrans::CBloomTrans(void) {
-    static bool been_here=false;
+    static bool been_here = false;
     if (!been_here) {
-        ADD_FIELD(CBloomTrans,"hash",TS_STRING,1);
-        ADD_FIELD(CBloomTrans,"receipt",T_OBJECT,2);
-        ADD_FIELD(CBloomTrans,"transactionIndex",TS_STRING,3);
-        been_here=true;
+        ADD_FIELD(CBloomTrans, "hash", TS_STRING, 1);
+        ADD_FIELD(CBloomTrans, "receipt", T_OBJECT, 2);
+        ADD_FIELD(CBloomTrans, "transactionIndex", TS_STRING, 3);
+        been_here = true;
     }
 }
 bool CBloomTrans::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
@@ -61,7 +61,7 @@ void CBloomTrans::Format(CExportContext& ctx, const string_q& fmtIn, void* dataP
     ctx << toJson();
     return;
 }
-const CBaseNode *CBloomTrans::getObjectAt(const string_q& name, uint32_t i) const {
+const CBaseNode *CBloomTrans::getObjectAt(const string_q& name, size_t i) const {
     if (name == "receipt")
         return &receipt;
     return NULL;
@@ -70,31 +70,31 @@ const CBaseNode *CBloomTrans::getObjectAt(const string_q& name, uint32_t i) cons
 //-------------------------------------------------------------------------
 IMPLEMENT_NODE(CBloomBlock, CBaseNode);
 CBloomBlock::CBloomBlock(void) {
-    static bool been_here=false;
+    static bool been_here = false;
     if (!been_here) {
-        ADD_FIELD(CBloomBlock,"logsBloom",TS_STRING,1);
-        ADD_FIELD(CBloomBlock,"number",TS_STRING,2);
-        ADD_FIELD(CBloomBlock,"transactions",T_OBJECT|TS_ARRAY,3);
-        been_here=true;
+        ADD_FIELD(CBloomBlock, "logsBloom", TS_STRING, 1);
+        ADD_FIELD(CBloomBlock, "number", TS_STRING, 2);
+        ADD_FIELD(CBloomBlock, "transactions", T_OBJECT|TS_ARRAY, 3);
+        been_here = true;
     }
 }
 bool CBloomBlock::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
     if (fieldName == "logsBloom"   ) { logsBloom    = fieldValue; return true; }
     if (fieldName == "number"      ) { number       = toUnsigned(fieldValue); return true; }
     if (fieldName == "transactions") {
-        char *p = cleanUpJson((char*)fieldValue.c_str());
+        char *p = cleanUpJson((char*)fieldValue.c_str());  // NOLINT
         while (p && *p) {
             CBloomTrans item;
-            uint32_t nFields = 0;
+            size_t nFields = 0;
             p = item.parseJson(p, nFields);
             if (nFields) {
                 string_q result;
                 queryRawReceipt(result, item.hash);
                 CRPCResult generic;
-                char *r = cleanUpJson((char*)result.c_str());
+                char *r = cleanUpJson((char*)result.c_str());  // NOLINT
                 generic.parseJson(r);
-                item.receipt.parseJson(cleanUpJson((char*)generic.result.c_str()));
-                transactions[transactions.getCount()] = item;
+                item.receipt.parseJson(cleanUpJson((char*)generic.result.c_str()));  // NOLINT
+                transactions.push_back(item);
             }
         }
         return true;
@@ -104,12 +104,12 @@ bool CBloomBlock::setValueByName(const string_q& fieldName, const string_q& fiel
 string_q CBloomBlock::getValueByName(const string_q& fieldName) const {
     if (fieldName == "logsBloom"   ) return logsBloom;
     if (fieldName == "number"      ) return asStringU(number);
-    if (fieldName == "transactionsCnt") return asStringU(transactions.getCount());
+    if (fieldName == "transactionsCnt") return asStringU(transactions.size());
     if (fieldName == "transactions") {
         if (GETRUNTIME_CLASS(CBloomBlock)->isFieldHidden("transactions"))
             return "";
         string_q ret;
-        for (uint32_t i = 0 ; i < transactions.getCount(); i++)
+        for (size_t i = 0 ; i < transactions.size(); i++)
             ret += transactions[i].Format();
         return ret;
     }
@@ -119,8 +119,8 @@ void CBloomBlock::Format(CExportContext& ctx, const string_q& fmtIn, void* dataP
     ctx << toJson();
     return;
 }
-const CBaseNode *CBloomBlock::getObjectAt(const string_q& name, uint32_t i) const {
-    if (name == "transactions" && i < transactions.getCount())
+const CBaseNode *CBloomBlock::getObjectAt(const string_q& name, size_t i) const {
+    if (name == "transactions" && i < transactions.size())
         return &transactions[i];
     return NULL;
 }

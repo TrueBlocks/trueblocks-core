@@ -34,8 +34,8 @@ void CPerson::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) 
     }
 
     string_q fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, dataPtr))
-        return;
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     while (!fmt.empty())
         ctx << getNextChunk(fmt, nextPersonChunk, this);
@@ -59,16 +59,16 @@ bool CPerson::setValueByName(const string_q& fieldName, const string_q& fieldVal
 
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "age" ) { age = toLong32u(fieldValue); return true; }
+            if ( fieldName % "age" ) { age = toUnsigned(fieldValue); return true; }
             break;
         case 'n':
             if ( fieldName % "name" ) { name = fieldValue; return true; }
             if ( fieldName % "next" ) {
-                Clear();
+                clear();
                 next = new CPerson;
                 if (next) {
-                    char *p = cleanUpJson((char *)fieldValue.c_str());
-                    uint32_t nFields = 0;
+                    char *p = cleanUpJson((char *)fieldValue.c_str());  // NOLINT
+                    size_t nFields = 0;
                     next->parseJson(p, nFields);
                     return true;
                 }
@@ -132,12 +132,33 @@ bool CPerson::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
+SFArchive& operator>>(SFArchive& archive, CPersonArray& array) {
+    uint64_t count;
+    archive >> count;
+    array.resize(count);
+    for (size_t i = 0 ; i < count ; i++) {
+        ASSERT(i < array.capacity());
+        array.at(i).Serialize(archive);
+    }
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+SFArchive& operator<<(SFArchive& archive, const CPersonArray& array) {
+    uint64_t count = array.size();
+    archive << count;
+    for (size_t i = 0 ; i < array.size() ; i++)
+        array[i].SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
 void CPerson::registerClass(void) {
     static bool been_here = false;
     if (been_here) return;
     been_here = true;
 
-    uint32_t fieldNum = 1000;
+    size_t fieldNum = 1000;
     ADD_FIELD(CPerson, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CPerson, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CPerson, "showing", T_BOOL,  ++fieldNum);
@@ -165,6 +186,8 @@ string_q nextPersonChunk_custom(const string_q& fieldIn, const void *dataPtr) {
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
                     return nextBasenodeChunk(fieldIn, per);
+                // EXISTING_CODE
+                // EXISTING_CODE
                 break;
 
             default:
@@ -173,13 +196,6 @@ string_q nextPersonChunk_custom(const string_q& fieldIn, const void *dataPtr) {
     }
 
     return "";
-}
-
-//---------------------------------------------------------------------------
-bool CPerson::handleCustomFormat(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
-    return false;
 }
 
 //---------------------------------------------------------------------------

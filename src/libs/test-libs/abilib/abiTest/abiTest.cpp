@@ -10,12 +10,14 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
+#include <algorithm>
 #include "etherlib.h"
 #include "options.h"
+#include "junk.h"
 
-extern string_q getTestData(void);
-extern bool test_encodings(void);
+extern bool test_encodings (void);
 extern bool test_generation(void);
+extern bool test_old_bug   (void);
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
@@ -39,18 +41,26 @@ int main(int argc, const char *argv[]) {
                 cout << "Generation test...\n";
                 cout << (test_generation() ? "...passed" : "...failed") << "\n";
                 cout << "\n";
+
+            } else if (mode == "old_bug") {
+                cout << "Old bug test...\n";
+                cout << (test_old_bug() ? "...passed" : "...failed") << "\n";
+                cout << "\n";
             }
         }
     }
     return 0;
 }
 
+extern string_q getTestData(void);
+extern string_q getAlreadySortedJson(void);
+extern string_q getNotSortedJson(void);
 //--------------------------------------------------------------
 bool test_encodings(void) {
 
     bool ret = true;
 
-    string_q contents = getTestData().Substitute("  ", " ");
+    string_q contents = substitute(getTestData(), "  ", " ");
     nextTokenClear(contents, '\n');  // skip header row
     while (!contents.empty()) {
         string_q expected = nextTokenClear(contents, '\n');
@@ -60,7 +70,7 @@ bool test_encodings(void) {
             string_q myHex = string2Hex(text);
             string_q mySha = getSha3(myHex);
             if (type == "function")
-                mySha = mySha.substr(0,10);
+                mySha = extract(mySha, 0, 10);
             bool result = mySha == expected;
             cout << "\t" << type << ": " << text << " "
                     << "encoding: " << mySha << " "
@@ -71,18 +81,67 @@ bool test_encodings(void) {
     return ret;
 }
 
+//---------------------------------------------------------------------------
+bool sortByFunctionName(const CFunction& f1, const CFunction& f2) { return f1.name < f2.name; }
+
+//---------------------------------------------------------------------------
+bool loadABIFromString(CJunk& abi, const string_q& in) {
+
+    string_q contents = in;
+    ASSERT(!contents.empty());
+    char *p = cleanUpJson((char *)contents.c_str());  // NOLINT
+    while (p && *p) {
+        CFunction func;
+        size_t nFields = 0;
+        p = func.parseJson(p, nFields);
+        if (nFields) {
+            abi.array1.push_back(func);
+        }
+    }
+    return true;  // abiByName.size();
+}
+
 //--------------------------------------------------------------
 bool test_generation(void) {
     CFunction::registerClass();
     CParameter::registerClass();
 
+    {
+        CJunk abi;
+        cout << "Testing of already sorted JSON\n";
+        loadABIFromString(abi, getAlreadySortedJson());
+        sort(abi.array1.begin(), abi.array1.end(), sortByFunctionName);
+        cout << abi.Format() << "\n\n";
+        sort(abi.array1.begin(), abi.array1.end());
+        cout << abi.Format() << "\n\n";
+    }
+
+    {
+        CJunk abi;
+        cout << "Testing of not sorted JSON\n";
+        loadABIFromString(abi, getNotSortedJson());
+        sort(abi.array1.begin(), abi.array1.end(), sortByFunctionName);
+        cout << abi.Format() << "\n\n";
+        sort(abi.array1.begin(), abi.array1.end());
+        cout << abi.Format() << "\n\n";
+    }
+
+    return true;
+}
+
+//--------------------------------------------------------------
+bool test_old_bug(void) {
+    // This used to core dump when we first shifted to native c++ strings
+    CFunction::registerClass();
+    CParameter::registerClass();
+
     CAbi abi;
-    cout << "ABI of test1.json\n";
+    cout << string_q(120, '-') << "\nABI of test1.json\n" << string_q(120, '-') << "\n";
     abi.loadABIFromFile("./test1.json");
     cout << abi << "\n";
-    abi.clearABI();
+    abi = CAbi();
 
-    cout << "ABI of test2.json\n";
+    cout << string_q(120, '-') << "\nABI of test2.json\n" << string_q(120, '-') << "\n";
     abi.loadABIFromFile("./test2.json");
     cout << abi << "\n";
     return true;
@@ -113,3 +172,32 @@ string_q getTestData(void) {
       "function approve(address,uint256)                   0x095ea7b3\n"
       "function transfer(address,uint256)                  0xa9059cbb\n";
 }
+
+//--------------------------------------------------------------
+string_q getAlreadySortedJson(void) {
+    return
+        "["
+            "{\"name\":\"a\"},"
+            "{\"name\":\"c\"},"
+            "{\"name\":\"d\"},"
+            "{\"name\":\"e\"},"
+            "{\"name\":\"m\"},"
+        "]";
+}
+
+//--------------------------------------------------------------
+string_q getNotSortedJson(void) {
+    return
+        "["
+            "{\"name\":\"z\"},"
+            "{\"name\":\"a\"},"
+            "{\"name\":\"b\"},"
+            "{\"name\":\"zz\"},"
+            "{\"name\":\"az\"},"
+            "{\"name\":\"bz\"},"
+            "{\"name\":\"za1\"},"
+            "{\"name\":\"aa1\"},"
+            "{\"name\":\"ba1\"},"
+        "]";
+}
+

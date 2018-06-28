@@ -15,13 +15,9 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <vector>
 [H_INCLUDES]
 [{NAMESPACE1}]
-//--------------------------------------------------------------------------
-class [{CLASS_NAME}];
-typedef SFArrayBase<[{CLASS_NAME}]>         [{CLASS_NAME}]Array;
-typedef SFList<[{CLASS_NAME}]*>             [{CLASS_NAME}]List;
-typedef SFUniqueList<[{CLASS_NAME}]*>       [{CLASS_NAME}]ListU;
 
 // EXISTING_CODE
 // EXISTING_CODE
@@ -40,12 +36,13 @@ public:
 
 [{GET_OBJ}][{GET_STR}]    // EXISTING_CODE
     // EXISTING_CODE
+    friend bool operator<(const [{CLASS_NAME}]& v1, const [{CLASS_NAME}]& v2);
     friend ostream& operator<<(ostream& os, const [{CLASS_NAME}]& item);
 
 protected:
-    void Clear(void);
-    void Init(void);
-    void Copy(const [{CLASS_NAME}]& [{SHORT}]);
+    void clear(void);
+    void initialize(void);
+    void duplicate(const [{CLASS_NAME}]& [{SHORT}]);
     bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
@@ -54,7 +51,7 @@ protected:
 
 //--------------------------------------------------------------------------
 inline [{CLASS_NAME}]::[{CLASS_NAME}](void) {
-    Init();
+    initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
@@ -63,7 +60,7 @@ inline [{CLASS_NAME}]::[{CLASS_NAME}](void) {
 inline [{CLASS_NAME}]::[{CLASS_NAME}](const [{CLASS_NAME}]& [{SHORT}]) {
     // EXISTING_CODE
     // EXISTING_CODE
-    Copy([{SHORT}]);
+    duplicate([{SHORT}]);
 }
 
 // EXISTING_CODE
@@ -71,20 +68,20 @@ inline [{CLASS_NAME}]::[{CLASS_NAME}](const [{CLASS_NAME}]& [{SHORT}]) {
 
 //--------------------------------------------------------------------------
 inline [{CLASS_NAME}]::~[{CLASS_NAME}](void) {
-    Clear();
+    clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void [{CLASS_NAME}]::Clear(void) {
+inline void [{CLASS_NAME}]::clear(void) {
 [FIELD_CLEAR]    // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void [{CLASS_NAME}]::Init(void) {
-    [{BASE_CLASS}]::Init();
+inline void [{CLASS_NAME}]::initialize(void) {
+    [{BASE_CLASS}]::initialize();
 
 [FIELD_SET]
     // EXISTING_CODE
@@ -92,9 +89,9 @@ inline void [{CLASS_NAME}]::Init(void) {
 }
 
 //--------------------------------------------------------------------------
-inline void [{CLASS_NAME}]::Copy(const [{CLASS_NAME}]& [{SHORT}]) {
-    Clear();
-    [{BASE_CLASS}]::Copy([{SHORT}]);
+inline void [{CLASS_NAME}]::duplicate(const [{CLASS_NAME}]& [{SHORT}]) {
+    clear();
+    [{BASE_CLASS}]::duplicate([{SHORT}]);
 
 [FIELD_COPY]
     // EXISTING_CODE
@@ -104,16 +101,24 @@ inline void [{CLASS_NAME}]::Copy(const [{CLASS_NAME}]& [{SHORT}]) {
 
 //--------------------------------------------------------------------------
 inline [{CLASS_NAME}]& [{CLASS_NAME}]::operator=(const [{CLASS_NAME}]& [{SHORT}]) {
-    Copy([{SHORT}]);
+    duplicate([{SHORT}]);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
+//-------------------------------------------------------------------------
+inline bool operator<(const [{CLASS_NAME}]& v1, const [{CLASS_NAME}]& v2) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // [{SORT_COMMENT}]
+    return [{SORTCODE}];
+}
+
 //---------------------------------------------------------------------------
-IMPLEMENT_ARCHIVE_ARRAY([{CLASS_NAME}]Array);
-IMPLEMENT_ARCHIVE_ARRAY_C([{CLASS_NAME}]Array);
-IMPLEMENT_ARCHIVE_LIST([{CLASS_NAME}]List);
+typedef vector<[{CLASS_NAME}]> [{CLASS_NAME}]Array;
+extern SFArchive& operator>>(SFArchive& archive, [{CLASS_NAME}]Array& array);
+extern SFArchive& operator<<(SFArchive& archive, const [{CLASS_NAME}]Array& array);
 
 [{OPERATORS}]//---------------------------------------------------------------------------
 // EXISTING_CODE

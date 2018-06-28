@@ -36,8 +36,8 @@ void CTrace::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) c
     }
 
     string_q fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, dataPtr))
-        return;
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     while (!fmt.empty())
         ctx << getNextChunk(fmt, nextTraceChunk, this);
@@ -58,15 +58,15 @@ string_q nextTraceChunk(const string_q& fieldIn, const void *dataPtr) {
 bool CTrace::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
     // EXISTING_CODE
     if (fieldName % "action") {
-        char *p = (char *)fieldValue.c_str();
-        uint32_t nFields=0;
-        action.parseJson(p,nFields);
+        char *p = (char *)fieldValue.c_str();  // NOLINT
+        size_t nFields = 0;
+        action.parseJson(p, nFields);
         return true;
 
     } else if (fieldName % "result") {
-        char *p = (char *)fieldValue.c_str();
-        uint32_t nFields=0;
-        result.parseJson(p,nFields);
+        char *p = (char *)fieldValue.c_str();  // NOLINT
+        size_t nFields = 0;
+        result.parseJson(p, nFields);
         return true;
     }
     // EXISTING_CODE
@@ -92,7 +92,7 @@ bool CTrace::setValueByName(const string_q& fieldName, const string_q& fieldValu
             if ( fieldName % "traceAddress" ) {
                 string_q str = fieldValue;
                 while (!str.empty()) {
-                    traceAddress[traceAddress.getCount()] = toAddress(nextTokenClear(str,','));
+                    traceAddress.push_back(nextTokenClear(str, ','));
                 }
                 return true;
             }
@@ -161,19 +161,40 @@ bool CTrace::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
+SFArchive& operator>>(SFArchive& archive, CTraceArray& array) {
+    uint64_t count;
+    archive >> count;
+    array.resize(count);
+    for (size_t i = 0 ; i < count ; i++) {
+        ASSERT(i < array.capacity());
+        array.at(i).Serialize(archive);
+    }
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+SFArchive& operator<<(SFArchive& archive, const CTraceArray& array) {
+    uint64_t count = array.size();
+    archive << count;
+    for (size_t i = 0 ; i < array.size() ; i++)
+        array[i].SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
 void CTrace::registerClass(void) {
     static bool been_here = false;
     if (been_here) return;
     been_here = true;
 
-    uint32_t fieldNum = 1000;
+    size_t fieldNum = 1000;
     ADD_FIELD(CTrace, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CTrace, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CTrace, "showing", T_BOOL,  ++fieldNum);
     ADD_FIELD(CTrace, "blockHash", T_HASH, ++fieldNum);
     ADD_FIELD(CTrace, "blockNumber", T_NUMBER, ++fieldNum);
     ADD_FIELD(CTrace, "subtraces", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CTrace, "traceAddress", T_ADDRESS|TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CTrace, "traceAddress", T_TEXT|TS_ARRAY, ++fieldNum);
     ADD_FIELD(CTrace, "transactionHash", T_HASH, ++fieldNum);
     ADD_FIELD(CTrace, "transactionPosition", T_NUMBER, ++fieldNum);
     ADD_FIELD(CTrace, "type", T_TEXT, ++fieldNum);
@@ -201,6 +222,8 @@ string_q nextTraceChunk_custom(const string_q& fieldIn, const void *dataPtr) {
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
                     return nextBasenodeChunk(fieldIn, tra);
+                // EXISTING_CODE
+                // EXISTING_CODE
                 break;
 
             default:
@@ -209,13 +232,6 @@ string_q nextTraceChunk_custom(const string_q& fieldIn, const void *dataPtr) {
     }
 
     return "";
-}
-
-//---------------------------------------------------------------------------
-bool CTrace::handleCustomFormat(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
-    return false;
 }
 
 //---------------------------------------------------------------------------
@@ -256,12 +272,12 @@ string_q CTrace::getValueByName(const string_q& fieldName) const {
             break;
         case 't':
             if ( fieldName % "traceAddress" || fieldName % "traceAddressCnt" ) {
-                uint32_t cnt = traceAddress.getCount();
+                size_t cnt = traceAddress.size();
                 if (endsWith(fieldName, "Cnt"))
                     return asStringU(cnt);
                 if (!cnt) return "";
                 string_q retS;
-                for (uint32_t i = 0 ; i < cnt ; i++) {
+                for (size_t i = 0 ; i < cnt ; i++) {
                     retS += ("\"" + traceAddress[i] + "\"");
                     retS += ((i < cnt - 1) ? ",\n" + indent() : "\n");
                 }
@@ -307,7 +323,7 @@ ostream& operator<<(ostream& os, const CTrace& item) {
 }
 
 //---------------------------------------------------------------------------
-const CBaseNode *CTrace::getObjectAt(const string_q& fieldName, uint32_t index) const {
+const CBaseNode *CTrace::getObjectAt(const string_q& fieldName, size_t index) const {
     if ( fieldName % "action" )
         return &action;
     if ( fieldName % "result" )
@@ -316,8 +332,8 @@ const CBaseNode *CTrace::getObjectAt(const string_q& fieldName, uint32_t index) 
 }
 
 //---------------------------------------------------------------------------
-const string_q CTrace::getStringAt(const string_q& name, uint32_t i) const {
-    if ( name % "traceAddress" && i < traceAddress.getCount() )
+const string_q CTrace::getStringAt(const string_q& name, size_t i) const {
+    if ( name % "traceAddress" && i < traceAddress.size() )
         return (traceAddress[i]);
     return "";
 }

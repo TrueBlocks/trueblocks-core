@@ -18,8 +18,9 @@ namespace qblocks {
 
     //-------------------------------------------------------------------------
     // setup and tear down of the library
-    extern void     etherlib_init           (const string_q& primarySource="binary", QUITHANDLER qh=defaultQuitHandler);
-    inline void     etherlib_init           (QUITHANDLER qh) { etherlib_init("binary", qh); };
+    extern void     etherlib_init           (const string_q& primarySource = "binary",
+                                                QUITHANDLER qh = defaultQuitHandler);
+    inline void     etherlib_init           (QUITHANDLER qh) { etherlib_init("binary", qh); }
     extern void     etherlib_cleanup        (void);
 
     //-------------------------------------------------------------------------
@@ -29,7 +30,7 @@ namespace qblocks {
     extern bool     getReceipt              (CReceipt& receipt,   const SFHash& txHash);
     extern bool     getLogEntry             (CLogEntry& log,      const SFHash& txHash);
     extern void     getTraces               (CTraceArray& traces, const SFHash& txHash);
-    extern uint32_t getTraceCount           (const SFHash& hashIn);
+    extern size_t   getTraceCount           (const SFHash& hashIn);
 
     //-------------------------------------------------------------------------
     // other methods to access data
@@ -38,17 +39,20 @@ namespace qblocks {
     extern bool     getTransaction          (CTransaction& trans, const SFHash& blockHash, txnum_t txID);
 
     //-------------------------------------------------------------------------
-    extern bool     queryBlock              (CBlock& block,       const string_q& num, bool needTrace, bool byHash, uint32_t& nTraces);
+    extern bool     queryBlock              (CBlock& block,       const string_q& num, bool needTrace, bool byHash,
+                                                                    size_t& nTraces);
     extern bool     queryBlock              (CBlock& block,       const string_q& num, bool needTrace, bool byHash);
 
     //-------------------------------------------------------------------------
     // lower level access to the node's responses
-    extern bool     queryRawBlock           (string_q& results,   const string_q& blockNum, bool needTrace, bool hashesOnly);
+    extern bool     queryRawBlock           (string_q& results,   const string_q& blockNum,
+                                                    bool needTrace, bool hashesOnly);
     extern bool     queryRawTransaction     (string_q& results,   const SFHash& txHash);
     extern bool     queryRawReceipt         (string_q& results,   const SFHash& txHash);
     extern bool     queryRawLog             (string_q& results,   const SFHash& hashIn);
     extern bool     queryRawTrace           (string_q& results,   const SFHash& hashIn);
-    extern bool     queryRawLogs            (string_q& results,   const SFAddress& addr, uint64_t fromBlock, uint64_t toBlock);
+    extern bool     queryRawLogs            (string_q& results,   const SFAddress& addr,
+                                                    uint64_t fromBlock, uint64_t toBlock);
 
     //-----------------------------------------------------------------------
     extern SFHash   getRawBlock             (blknum_t bn);
@@ -65,8 +69,8 @@ namespace qblocks {
 
     //-------------------------------------------------------------------------
     extern string_q getVersionFromClient    (void);
-    inline bool     isGeth                  (void) { return contains(toLower(getVersionFromClient()), "geth"); }
-    inline bool     isParity                (void) { return contains(toLower(getVersionFromClient()), "parity"); }
+    inline bool     isGeth                  (void) { return contains(toLower(getVersionFromClient()), "geth"); }  // NOLINT
+    inline bool     isParity                (void) { return contains(toLower(getVersionFromClient()), "parity"); }  // NOLINT
     extern bool     getAccounts             (SFAddressArray& addrs);
     extern uint64_t getLatestBlockFromClient(void);
     extern uint64_t getLatestBlockFromCache (void);
@@ -74,11 +78,11 @@ namespace qblocks {
 
     //-------------------------------------------------------------------------
     extern bool     getCode                 (const SFAddress& addr, string_q& theCode);
-    inline string_q getCode                 (const SFAddress& addr) { string_q ret; getCode(addr, ret); return ret; }
-    inline bool     isContract              (const SFAddress& addr) { return !getCode(addr).Substitute("0x","").empty(); }
+    inline string_q getCode                 (const SFAddress& addr) { string_q ret; getCode(addr, ret); return ret; }  // NOLINT
+    inline bool     isContract              (const SFAddress& addr) { return !substitute(getCode(addr), "0x", "").empty(); }  // NOLINT
     extern SFUintBN getBalance              (const SFAddress& addr, blknum_t blockNum, bool isDemo);
     extern bool     getSha3                 (const string_q& hexIn, string_q& shaOut);
-    inline string_q getSha3                 (const string_q& hexIn) { string_q ret; getSha3(hexIn,ret); return ret; }
+    inline string_q getSha3                 (const string_q& hexIn) { string_q ret; getSha3(hexIn,ret); return ret; }  // NOLINT
 
     //-------------------------------------------------------------------------
     extern string_q getJsonFilename         (uint64_t num);
@@ -94,16 +98,15 @@ namespace qblocks {
 
     //-------------------------------------------------------------------------
     // forEvery functions
-    extern bool forEveryBlock                (BLOCKVISITFUNC func, void *data, const string_q& block_list);
-    extern bool forEveryBlock                (BLOCKVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip=1);
-    extern bool forEveryBlockOnDisc          (BLOCKVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip=1);
-    extern bool forEveryNonEmptyBlockOnDisc  (BLOCKVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip=1);
-    extern bool forEveryEmptyBlockOnDisc     (BLOCKVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip=1);
+    extern bool forEveryBlock                (BLOCKVISITFUNC func, void *data, const string_q& block_list);  // NOLINT
+    extern bool forEveryBlock                (BLOCKVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip=1);  // NOLINT
+    extern bool forEveryBlockOnDisc          (BLOCKVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip=1);  // NOLINT
+    extern bool forEveryNonEmptyBlockOnDisc  (BLOCKVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip=1);  // NOLINT
+    extern bool forEveryEmptyBlockOnDisc     (BLOCKVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip=1);  // NOLINT
 
     //-------------------------------------------------------------------------
     // forEvery functions
-    extern bool forEveryBloomFile            (FILEVISITOR    func, void *data, uint64_t start, uint64_t count, uint64_t skip=1);
-
+    extern bool forEveryBloomFile            (FILEVISITOR    func, void *data, uint64_t start, uint64_t count, uint64_t skip = 1);  // NOLINT
     //-------------------------------------------------------------------------
     // forEvery functions
     extern bool forEveryTransactionInList    (TRANSVISITFUNC func, void *data, const string_q& trans_list);

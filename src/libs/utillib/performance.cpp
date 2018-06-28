@@ -18,8 +18,8 @@ namespace qblocks {
     double qbNow(void) {
         struct timeval tv;
         gettimeofday(&tv, 0);
-        double secs = (double)tv.tv_sec;
-        double usecs = (double)tv.tv_usec;
+        double secs = static_cast<double>(tv.tv_sec);
+        double usecs = static_cast<double>(tv.tv_usec);
         return (secs + (usecs / 100000.0));
     }
 

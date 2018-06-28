@@ -15,6 +15,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <vector>
 #include "etherlib.h"
 #include "treenode.h"
 #include "leaf.h"
@@ -22,12 +23,6 @@
 #include "infix.h"
 
 namespace qblocks {
-
-//--------------------------------------------------------------------------
-class CTreeRoot;
-typedef SFArrayBase<CTreeRoot>         CTreeRootArray;
-typedef SFList<CTreeRoot*>             CTreeRootList;
-typedef SFUniqueList<CTreeRoot*>       CTreeRootListU;
 
 // EXISTING_CODE
 //----------------------------------------------------------
@@ -39,8 +34,8 @@ typedef SFUniqueList<CTreeRoot*>       CTreeRootListU;
 //----------------------------------------------------------
 class CVisitData {
 public:
-    uint32_t type;
-    uint32_t level;
+    uint64_t type;
+    uint64_t level;
     uint64_t counter;
     string_q strs;
     CVisitData(void) : type(0), level(0), counter(0) { }
@@ -66,12 +61,13 @@ public:
     void remove(const string_q& _key);
     bool visitItems(ACCTVISITOR func, void *data) const;
     // EXISTING_CODE
+    friend bool operator<(const CTreeRoot& v1, const CTreeRoot& v2);
     friend ostream& operator<<(ostream& os, const CTreeRoot& item);
 
 protected:
-    void Clear(void);
-    void Init(void);
-    void Copy(const CTreeRoot& tr);
+    void clear(void);
+    void initialize(void);
+    void duplicate(const CTreeRoot& tr);
     bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
@@ -80,7 +76,7 @@ protected:
 
 //--------------------------------------------------------------------------
 inline CTreeRoot::CTreeRoot(void) {
-    Init();
+    initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
@@ -89,7 +85,7 @@ inline CTreeRoot::CTreeRoot(void) {
 inline CTreeRoot::CTreeRoot(const CTreeRoot& tr) {
     // EXISTING_CODE
     // EXISTING_CODE
-    Copy(tr);
+    duplicate(tr);
 }
 
 // EXISTING_CODE
@@ -97,13 +93,13 @@ inline CTreeRoot::CTreeRoot(const CTreeRoot& tr) {
 
 //--------------------------------------------------------------------------
 inline CTreeRoot::~CTreeRoot(void) {
-    Clear();
+    clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CTreeRoot::Clear(void) {
+inline void CTreeRoot::clear(void) {
     if (root)
         delete root;
     root = NULL;
@@ -112,8 +108,8 @@ inline void CTreeRoot::Clear(void) {
 }
 
 //--------------------------------------------------------------------------
-inline void CTreeRoot::Init(void) {
-    CBaseNode::Init();
+inline void CTreeRoot::initialize(void) {
+    CBaseNode::initialize();
 
     root = NULL;
 
@@ -122,9 +118,9 @@ inline void CTreeRoot::Init(void) {
 }
 
 //--------------------------------------------------------------------------
-inline void CTreeRoot::Copy(const CTreeRoot& tr) {
-    Clear();
-    CBaseNode::Copy(tr);
+inline void CTreeRoot::duplicate(const CTreeRoot& tr) {
+    clear();
+    CBaseNode::duplicate(tr);
 
     if (tr.root) {
         root = new CTreeNode;
@@ -138,22 +134,30 @@ inline void CTreeRoot::Copy(const CTreeRoot& tr) {
 
 //--------------------------------------------------------------------------
 inline CTreeRoot& CTreeRoot::operator=(const CTreeRoot& tr) {
-    Copy(tr);
+    duplicate(tr);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
+//-------------------------------------------------------------------------
+inline bool operator<(const CTreeRoot& v1, const CTreeRoot& v2) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default sort defined in class definition, assume already sorted
+    return true;
+}
+
 //---------------------------------------------------------------------------
-IMPLEMENT_ARCHIVE_ARRAY(CTreeRootArray);
-IMPLEMENT_ARCHIVE_ARRAY_C(CTreeRootArray);
-IMPLEMENT_ARCHIVE_LIST(CTreeRootList);
+typedef vector<CTreeRoot> CTreeRootArray;
+extern SFArchive& operator>>(SFArchive& archive, CTreeRootArray& array);
+extern SFArchive& operator<<(SFArchive& archive, const CTreeRootArray& array);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 //----------------------------------------------------------
 inline int nodeIndex(char c) {
-    char l = (char)tolower(c);
+    char l = (char)tolower(c);  // NOLINT
     int ret =  (l < 'a' ? l - '0' : l - 'a' + 10) % 16;
     return ret;
 }

@@ -17,7 +17,7 @@ CParams params[] = {
     CParams("~filename",    "toml filename to test"),
     CParams("",             "Simple test program for toml files.\n"),
 };
-uint32_t nParams = sizeof(params) / sizeof(CParams);
+size_t nParams = sizeof(params) / sizeof(CParams);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {

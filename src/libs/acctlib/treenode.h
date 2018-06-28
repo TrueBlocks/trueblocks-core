@@ -15,17 +15,14 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <vector>
+#include <algorithm>
 #include "etherlib.h"
 
 namespace qblocks {
 
-//--------------------------------------------------------------------------
-class CTreeNode;
-typedef SFArrayBase<CTreeNode>         CTreeNodeArray;
-typedef SFList<CTreeNode*>             CTreeNodeList;
-typedef SFUniqueList<CTreeNode*>       CTreeNodeListU;
-
 // EXISTING_CODE
+class CTreeNode;
 using ACCTVISITOR = bool (*)(const CTreeNode *v, void *data);
 // EXISTING_CODE
 
@@ -50,12 +47,13 @@ public:
     virtual bool visitItems(ACCTVISITOR func, void *data) const { return true; }
     CTreeNode* newBranch(const string_q& _k1, const string_q& _v1, const string_q& _k2, const string_q& _v2);
     // EXISTING_CODE
+    friend bool operator<(const CTreeNode& v1, const CTreeNode& v2);
     friend ostream& operator<<(ostream& os, const CTreeNode& item);
 
 protected:
-    void Clear(void);
-    void Init(void);
-    void Copy(const CTreeNode& tr);
+    void clear(void);
+    void initialize(void);
+    void duplicate(const CTreeNode& tr);
     bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
@@ -64,7 +62,7 @@ protected:
 
 //--------------------------------------------------------------------------
 inline CTreeNode::CTreeNode(void) {
-    Init();
+    initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
@@ -73,7 +71,7 @@ inline CTreeNode::CTreeNode(void) {
 inline CTreeNode::CTreeNode(const CTreeNode& tr) {
     // EXISTING_CODE
     // EXISTING_CODE
-    Copy(tr);
+    duplicate(tr);
 }
 
 // EXISTING_CODE
@@ -81,20 +79,20 @@ inline CTreeNode::CTreeNode(const CTreeNode& tr) {
 
 //--------------------------------------------------------------------------
 inline CTreeNode::~CTreeNode(void) {
-    Clear();
+    clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CTreeNode::Clear(void) {
+inline void CTreeNode::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CTreeNode::Init(void) {
-    CBaseNode::Init();
+inline void CTreeNode::initialize(void) {
+    CBaseNode::initialize();
 
     index = 0;
     prefixS = "";
@@ -104,9 +102,9 @@ inline void CTreeNode::Init(void) {
 }
 
 //--------------------------------------------------------------------------
-inline void CTreeNode::Copy(const CTreeNode& tr) {
-    Clear();
-    CBaseNode::Copy(tr);
+inline void CTreeNode::duplicate(const CTreeNode& tr) {
+    clear();
+    CBaseNode::duplicate(tr);
 
     index = tr.index;
     prefixS = tr.prefixS;
@@ -118,23 +116,31 @@ inline void CTreeNode::Copy(const CTreeNode& tr) {
 
 //--------------------------------------------------------------------------
 inline CTreeNode& CTreeNode::operator=(const CTreeNode& tr) {
-    Copy(tr);
+    duplicate(tr);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
+//-------------------------------------------------------------------------
+inline bool operator<(const CTreeNode& v1, const CTreeNode& v2) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default sort defined in class definition, assume already sorted
+    return true;
+}
+
 //---------------------------------------------------------------------------
-IMPLEMENT_ARCHIVE_ARRAY(CTreeNodeArray);
-IMPLEMENT_ARCHIVE_ARRAY_C(CTreeNodeArray);
-IMPLEMENT_ARCHIVE_LIST(CTreeNodeList);
+typedef vector<CTreeNode> CTreeNodeArray;
+extern SFArchive& operator>>(SFArchive& archive, CTreeNodeArray& array);
+extern SFArchive& operator<<(SFArchive& archive, const CTreeNodeArray& array);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 //---------------------------------------------------------------------------
 inline unsigned commonPrefix(const string_q& _t, const string_q& _u) {
-    int32_t s = (int32_t)min(_t.length(), _u.length());
-    for (int32_t i = 0 ; ; ++i)
+    size_t s = min(_t.length(), _u.length());
+    for (size_t i = 0 ; ; ++i)
         if (i == s || (_t[i] != _u[i]))
             return (unsigned)i;
     return (unsigned)s;

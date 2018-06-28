@@ -15,15 +15,10 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <vector>
 #include "etherlib.h"
 
 namespace qblocks {
-
-//--------------------------------------------------------------------------
-class CAcctCacheItem;
-typedef SFArrayBase<CAcctCacheItem>         CAcctCacheItemArray;
-typedef SFList<CAcctCacheItem*>             CAcctCacheItemList;
-typedef SFUniqueList<CAcctCacheItem*>       CAcctCacheItemListU;
 
 // EXISTING_CODE
 // EXISTING_CODE
@@ -44,18 +39,17 @@ public:
 
     // EXISTING_CODE
     CAcctCacheItem(uint64_t b, uint64_t t) : blockNum(b), transIndex(t) {}
-    CAcctCacheItem(string_q& str);
-    bool operator==(const CAcctCacheItem& item) {
-        return (blockNum == item.blockNum && transIndex == item.transIndex);
-    }
-    bool operator!=(const CAcctCacheItem& item) { return !operator==(item); }
+    explicit CAcctCacheItem(string_q& str);
     // EXISTING_CODE
+    bool operator==(const CAcctCacheItem& item);
+    bool operator!=(const CAcctCacheItem& item) { return !operator==(item); }
+    friend bool operator<(const CAcctCacheItem& v1, const CAcctCacheItem& v2);
     friend ostream& operator<<(ostream& os, const CAcctCacheItem& item);
 
 protected:
-    void Clear(void);
-    void Init(void);
-    void Copy(const CAcctCacheItem& ac);
+    void clear(void);
+    void initialize(void);
+    void duplicate(const CAcctCacheItem& ac);
     bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
@@ -64,7 +58,7 @@ protected:
 
 //--------------------------------------------------------------------------
 inline CAcctCacheItem::CAcctCacheItem(void) {
-    Init();
+    initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
@@ -73,7 +67,7 @@ inline CAcctCacheItem::CAcctCacheItem(void) {
 inline CAcctCacheItem::CAcctCacheItem(const CAcctCacheItem& ac) {
     // EXISTING_CODE
     // EXISTING_CODE
-    Copy(ac);
+    duplicate(ac);
 }
 
 // EXISTING_CODE
@@ -81,20 +75,20 @@ inline CAcctCacheItem::CAcctCacheItem(const CAcctCacheItem& ac) {
 
 //--------------------------------------------------------------------------
 inline CAcctCacheItem::~CAcctCacheItem(void) {
-    Clear();
+    clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CAcctCacheItem::Clear(void) {
+inline void CAcctCacheItem::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CAcctCacheItem::Init(void) {
-    CBaseNode::Init();
+inline void CAcctCacheItem::initialize(void) {
+    CBaseNode::initialize();
 
     blockNum = 0;
     transIndex = 0;
@@ -104,9 +98,9 @@ inline void CAcctCacheItem::Init(void) {
 }
 
 //--------------------------------------------------------------------------
-inline void CAcctCacheItem::Copy(const CAcctCacheItem& ac) {
-    Clear();
-    CBaseNode::Copy(ac);
+inline void CAcctCacheItem::duplicate(const CAcctCacheItem& ac) {
+    clear();
+    CBaseNode::duplicate(ac);
 
     blockNum = ac.blockNum;
     transIndex = ac.transIndex;
@@ -118,16 +112,34 @@ inline void CAcctCacheItem::Copy(const CAcctCacheItem& ac) {
 
 //--------------------------------------------------------------------------
 inline CAcctCacheItem& CAcctCacheItem::operator=(const CAcctCacheItem& ac) {
-    Copy(ac);
+    duplicate(ac);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
+//-------------------------------------------------------------------------
+inline bool CAcctCacheItem::operator==(const CAcctCacheItem& item) {
+    return (
+            blockNum == item.blockNum &&
+            transIndex == item.transIndex
+        );
+}
+
+//-------------------------------------------------------------------------
+inline bool operator<(const CAcctCacheItem& v1, const CAcctCacheItem& v2) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // Default sort as defined in class definition
+    if (v1.blockNum != v2.blockNum)
+        return v1.blockNum < v2.blockNum;
+    return v1.transIndex < v2.transIndex;
+}
+
 //---------------------------------------------------------------------------
-IMPLEMENT_ARCHIVE_ARRAY(CAcctCacheItemArray);
-IMPLEMENT_ARCHIVE_ARRAY_C(CAcctCacheItemArray);
-IMPLEMENT_ARCHIVE_LIST(CAcctCacheItemList);
+typedef vector<CAcctCacheItem> CAcctCacheItemArray;
+extern SFArchive& operator>>(SFArchive& archive, CAcctCacheItemArray& array);
+extern SFArchive& operator<<(SFArchive& archive, const CAcctCacheItemArray& array);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

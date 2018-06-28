@@ -12,44 +12,56 @@
  *-------------------------------------------------------------------------------------------*/
 #include "basetypes.h"
 #include "fielddata.h"
+#include "conversions.h"
 
 namespace qblocks {
 
-    //-------------------------------------------------------------------------
-    const CFieldData *CFieldList::getFieldByID(uint32_t id) const {
-        LISTPOS lPos = GetHeadPosition();
-        while (lPos) {
-            CFieldData *field = GetNext(lPos);
-            if (field->m_fieldID == id)
-                return field;
-        }
-
-        ASSERT(0);  // should never happen
-        return NULL;
+    //--------------------------------------------------------------
+    static string_q baseTypeName(uint64_t type) {
+        string_q ret;
+        if (type & TS_NUMERAL) ret += (" TS_NUMERAL ");
+        if (type & TS_STRING)  ret += (" TS_STRING " );
+        if (type & TS_DATE)    ret += (" TS_DATE "   );
+        if (type & TS_ARRAY)   ret += (" TS_ARRAY "  );
+        if (type & TS_OBJECT)  ret += (" TS_OBJECT " );
+        if (type & TS_POINTER) ret += (" TS_POINTER ");
+        if (type & TS_BIGNUM)  ret += (" TS_BIGNUM " );
+        return trim(substitute(ret, "  ", " "));
     }
 
-    //-------------------------------------------------------------------------
-    const CFieldData *CFieldList::getFieldByName(const string_q& fieldString) const {
+    //--------------------------------------------------------------
+    static string_q typeName(uint64_t type) {
 
-        // the input may contain more than just fieldName
-        string_q fieldName = fieldString; fieldName = nextTokenClear(fieldName, '|');
+        string_q t("\t");
+        if (type == T_DATE)      return asStringU(type) + t + "T_DATE "    + baseTypeName(type);
+        if (type == T_TIME)      return asStringU(type) + t + "T_TIME "    + baseTypeName(type);
+        if (type == T_BOOL)      return asStringU(type) + t + "T_BOOL "    + baseTypeName(type);
+        if (type == T_NUMBER)    return asStringU(type) + t + "T_NUMBER "  + baseTypeName(type);
+        if (type == T_DOUBLE)    return asStringU(type) + t + "T_DOUBLE "  + baseTypeName(type);
+        if (type == T_WEI)       return asStringU(type) + t + "T_WEI "     + baseTypeName(type);
+        if (type == T_GAS)       return asStringU(type) + t + "T_GAS "     + baseTypeName(type);
+        if (type == T_ETHER)     return asStringU(type) + t + "T_ETHER "   + baseTypeName(type);
+        if (type == T_TEXT)      return asStringU(type) + t + "T_TEXT "    + baseTypeName(type);
+        if (type == T_ADDRESS)   return asStringU(type) + t + "T_ADDRESS " + baseTypeName(type);
+        if (type == T_TIMESTAMP) return asStringU(type) + t + "T_TIMESPAN "+ baseTypeName(type);
+        if (type == T_HASH)      return asStringU(type) + t + "T_HASH "    + baseTypeName(type);
+        if (type == T_BLOOM)     return asStringU(type) + t + "T_BLOOM "   + baseTypeName(type);
+        if (type == T_POINTER)   return asStringU(type) + t + "T_POINTER " + baseTypeName(type);
+        if (type == T_OBJECT)    return asStringU(type) + t + "T_OBJECT "  + baseTypeName(type);
 
-        const CFieldData *field = NULL;
-        LISTPOS lPos = GetHeadPosition();
-        while (lPos) {
-            CFieldData *current = GetNext(lPos);
-            if (current->m_fieldName % fieldName) {
-                field = current;
-                continue;
-            }
-        }
+        if (type == (T_OBJECT|TS_ARRAY))  return asStringU(type) + t + "T_OBJECT|TS_ARRAY "  + baseTypeName(type);
+        if (type == (T_TEXT|TS_ARRAY))    return asStringU(type) + t + "T_TEXT|TS_ARRAY "    + baseTypeName(type);
+        if (type == (T_ADDRESS|TS_ARRAY)) return asStringU(type) + t + "T_ADDRESS|TS_ARRAY " + baseTypeName(type);
 
-        if (!field) {
-            static CFieldData non_field;
-            non_field.m_fieldName = "unknown";
-            field = &non_field;
-        }
-
-        return field;
+        return asStringU(type) + t + "Unknown";
     }
+
+    ostream& operator<<(ostream& os, const CFieldData& item) {
+        os << padRight(item.getName(), 20) << "\t";
+        os << item.getID() << "\t";
+        os << item.isHidden() << "\t";
+        os << typeName(item.getType());
+        return os;
+    }
+
 }  // namespace qblocks

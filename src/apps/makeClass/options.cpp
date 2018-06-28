@@ -27,7 +27,7 @@ CParams params[] = {
     CParams("@edit",               "edit <className(s)> definition file in local folder"),
     CParams("",                    "Creates C++ code based on definition file at ./classDefinition/<className>.\n"),
 };
-uint32_t nParams = sizeof(params) / sizeof(CParams);
+size_t nParams = sizeof(params) / sizeof(CParams);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
@@ -61,7 +61,7 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (startsWith(arg, "-n:") || startsWith(arg, "--namespace:")) {
 
-            namesp = arg.Substitute("-n:", "").Substitute(".--namespace:", "");
+            namesp = substitute(substitute(arg, "-n:", ""), ".--namespace:", "");
 
         } else if (contains(arg, "-f")) {
             string_q orig = arg;
@@ -81,7 +81,7 @@ bool COptions::parseArguments(string_q& command) {
         } else if (!startsWith(arg, '-')) {
             if (!classNames.empty())
                 classNames += "|";
-            classNames += arg.Substitute("classDefinitions/", "").Substitute(".txt", "");
+            classNames += substitute(substitute(arg, "classDefinitions/", ""), ".txt", "");
 
         } else if (arg != "-t" && arg != "-h" && !contains(arg, "-v")) {
             return usage("Unknown parameter: " + arg);
@@ -119,13 +119,11 @@ bool COptions::parseArguments(string_q& command) {
         return usage(errMsg);
     }
 
-    if (string_q(getenv("NO_HEADER")) == "true") {
+    if (getEnvStr("NO_HEADER") == "true")
         writeSource = true;
-    }
 
-    if (string_q(getenv("NO_SOURCE")) == "true") {
+    if (getEnvStr("NO_SOURCE") == "true")
         writeHeader = true;
-    }
 
     // If neither is lit, light them both
     if (!writeHeader && !writeSource) {
@@ -170,7 +168,7 @@ bool listClasses(const string_q& path, void *data) {
     } else {
         if (contains(path, ".txt")) {
             string_q file = path;
-            file = nextTokenClearReverse(file, '/').Substitute(".txt", "");
+            file = substitute(nextTokenClearReverse(file, '/'), ".txt", "");
             COptions *opts = reinterpret_cast<COptions*>(data);
             bool include = true;
             if (!opts->filter.empty()) {

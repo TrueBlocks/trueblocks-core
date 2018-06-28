@@ -41,9 +41,9 @@ int main(int argc, const char *argv[]) {
         string_q fmt = (options.addrOnly ? "[{ADDR}]" : (options.data ? STR_NAME_DATA : ""));
         if (options.list) {
             if (options.count)
-                cout << options.namedAccounts.getCount() << " items\n";
-            for (uint32_t i = 0 ; i < options.namedAccounts.getCount() ; i++)
-                cout << options.namedAccounts[i].Format(fmt).Substitute("\n", " ").Substitute("  ", " ") << "\n";
+                cout << options.namedAccounts.size() << " items\n";
+            for (size_t i = 0 ; i < options.namedAccounts.size() ; i++)
+                cout << substitute(substitute(options.namedAccounts[i].Format(fmt), "\n", " "), "  ", " ") << "\n";
             exit(0);
         }
 
@@ -61,17 +61,17 @@ int main(int argc, const char *argv[]) {
 //-----------------------------------------------------------------------
 string_q COptions::showMatches(void) {
     string_q ret;
-    uint32_t hits = 0;
+    size_t hits = 0;
     string_q fmt = (addrOnly ? "[{ADDR}]" : "");
-    for (uint32_t i = 0 ; i < namedAccounts.getCount() ; i++) {
+    for (size_t i = 0 ; i < namedAccounts.size() ; i++) {
         if (namedAccounts[i].Match(addr, name, source, matchCase, all)) {
-            ret += (namedAccounts[i].Format(fmt).Substitute("\n", " ").Substitute("  ", " ") + "\n");
+            ret += (substitute(substitute(namedAccounts[i].Format(fmt), "\n", " "), "  ", " ") + "\n");
             hits++;
         }
     }
 
     if (count)
-        ret = asString(hits) + " match" + (hits==1?"":"es") + "\n" + (verbose ? ret : "");
+        ret = asStringU(hits) + " match" + (hits == 1 ? "" : "es") + "\n" + (verbose ? ret : "");
 
     return ret;
 }

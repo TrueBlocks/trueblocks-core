@@ -4,6 +4,7 @@
  * of the original Big Integer Library, waive my copyright to it, placing it
  * in the public domain.  The library comes with absolutely no warranty.
  *------------------------------------------------------------------------*/
+#include <string>
 #include "basetypes.h"
 #include "biglib.h"
 #include "conversions.h"
@@ -34,13 +35,12 @@
 
 namespace qblocks {
 
-    class BigUnsignedInABase : public SFBigNumStore<unsigned short>
-    {
+    class BigUnsignedInABase : public SFBigNumStore<unsigned short> {  // NOLINT
     public:
-        unsigned short base;
+        unsigned short base;  // NOLINT
 
         // Creates a BigUnsignedInABase with a capacity; for internal use.
-        BigUnsignedInABase(int, unsigned int c) : SFBigNumStore<unsigned short>(0, c) {}
+        BigUnsignedInABase(int, unsigned int c) : SFBigNumStore<unsigned short>(0, c) {}  // NOLINT
 
         // Decreases len to eliminate any leading zero igits.
         void trimLeadingZeros(void) {
@@ -49,60 +49,60 @@ namespace qblocks {
         }
 
         // Constructs zero in base 2.
-        BigUnsignedInABase() : SFBigNumStore<unsigned short>(), base(2) {}
+        BigUnsignedInABase() : SFBigNumStore<unsigned short>(), base(2) {}  // NOLINT
 
         // Copy constructor
-        BigUnsignedInABase(const BigUnsignedInABase &x) : SFBigNumStore<unsigned short>(x), base(x.base) {}
+        BigUnsignedInABase(const BigUnsignedInABase &x) : SFBigNumStore<unsigned short>(x), base(x.base) {}  // NOLINT
 
         // Assignment operator
         void operator =(const BigUnsignedInABase &x) {
-            SFBigNumStore<unsigned short>::operator =(x);
+            SFBigNumStore<unsigned short>::operator =(x);  // NOLINT
             base = x.base;
         }
 
         // Constructor that copies from a given array of igits.
-        BigUnsignedInABase(const unsigned short *d, unsigned int l, unsigned short base);
+        BigUnsignedInABase(const unsigned short *d, unsigned int l, unsigned short base);  // NOLINT
 
         // Destructor.  SFBigNumStore does the delete for us.
         ~BigUnsignedInABase() {}
 
         // LINKS TO BIGUNSIGNED
-        BigUnsignedInABase(const SFUintBN &x, unsigned short base);
+        BigUnsignedInABase(const SFUintBN &x, unsigned short base);  // NOLINT
         operator SFUintBN() const;
 
         operator string() const;
-        BigUnsignedInABase(const string &s, unsigned short base);
+        BigUnsignedInABase(const string &s, unsigned short base);  // NOLINT
 
         /*
          * Equality test.  For the purposes of this test, two BigUnsignedInABase
          * values must have the same base to be equal.
          */
         bool operator ==(const BigUnsignedInABase &x) const {
-            return base == x.base && SFBigNumStore<unsigned short>::operator ==(x);
+            return base == x.base && SFBigNumStore<unsigned short>::operator==(x);  // NOLINT
         }
-        bool operator !=(const BigUnsignedInABase &x) const { return !operator ==(x); }
+        bool operator !=(const BigUnsignedInABase &x) const { return !operator==(x); }
 
     };
 
-    inline BigUnsignedInABase::BigUnsignedInABase(const unsigned short *d, unsigned int l, unsigned short base)
-    : SFBigNumStore<unsigned short>(d, l), base(base)
-    {
+    inline BigUnsignedInABase::BigUnsignedInABase(const unsigned short *d,  // NOLINT
+                                                    unsigned int l, unsigned short base)  // NOLINT
+        : SFBigNumStore<unsigned short>(d, l), base(base) {  // NOLINT
         if (base < 2)
-            throw "BigUnsignedInABase::BigUnsignedInABase(const unsigned short *, unsigned int, unsigned short): The base must be at least 2";
+            throw "BigUnsignedInABase::BigUnsignedInABase(const unsigned short *, unsigned int, unsigned short): "
+                    "The base must be at least 2";
 
         for (unsigned int i = 0; i < l; i++)
             if (blk[i] >= base)
-                throw "BigUnsignedInABase::BigUnsignedInABase(const unsigned short *, unsigned int, unsigned short): A d igit is too large for the specified base";
+                throw "BigUnsignedInABase::BigUnsignedInABase(const unsigned short *, unsigned int, unsigned short): "
+                    "A digit is too large for the specified base";
 
         trimLeadingZeros();
     }
 
     //------------------------------------------------------------------
-    unsigned int bitLen(unsigned int x)
-    {
-        unsigned int len = 0;
-        while (x > 0)
-        {
+    unsigned int bitLen(unsigned int x) {  // NOLINT
+        unsigned int len = 0;  // NOLINT
+        while (x > 0) {
             x >>= 1;
             len++;
         }
@@ -110,25 +110,23 @@ namespace qblocks {
     }
 
     //------------------------------------------------------------------
-    BigUnsignedInABase::BigUnsignedInABase(const SFUintBN &x, unsigned short base)
-    {
+    BigUnsignedInABase::BigUnsignedInABase(const SFUintBN &x, unsigned short base) {  // NOLINT
         if (base < 2)
             throw "BigUnsignedInABase(SFUintBN, Base): The base must be at least 2";
         this->base = base;
 
         // Get an upper bound on how much space we need
-        int maxBitLenOfX    = (int)(x.len * SFUintBN::N);
-        int minBitsPerDigit = (int)bitLen(base) - 1;
-        int maxDigitLenOfX  = (maxBitLenOfX + minBitsPerDigit - 1) / minBitsPerDigit;
+        int maxBitLenOfX    = static_cast<int>(x.len * SFUintBN::N);  // NOLINT
+        int minBitsPerDigit = static_cast<int>(bitLen(base) - 1);  // NOLINT
+        int maxDigitLenOfX  = (maxBitLenOfX + minBitsPerDigit - 1) / minBitsPerDigit;  // NOLINT
 
-        len = (unsigned int)maxDigitLenOfX; // Another change to comply with 'staying in bounds'.
-        allocate(len); // Get the space
+        len = (unsigned int)maxDigitLenOfX;  // Another change to comply with 'staying in bounds'.
+        allocate(len);  // Get the space
 
         SFUintBN x2(x), buBase(base);
         unsigned int digitNum = 0;
 
-        while (x2.len!=0)
-        {
+        while (x2.len != 0) {
             // Get last digit.  This is like 'lastDigit = x2 % buBase, x2 /= buBase'.
             SFUintBN lastDigit(x2);
             lastDigit.divide(buBase, x2);
@@ -143,10 +141,12 @@ namespace qblocks {
     }
 
     //------------------------------------------------------------------
-    BigUnsignedInABase::BigUnsignedInABase(const string &s, unsigned short base)
-    {
+    BigUnsignedInABase::BigUnsignedInABase(const string &s, unsigned short base) {  // NOLINT
         if (base > 36)
-            throw "BigUnsignedInABase(string, unsigned short): The default string conversion routines use the symbol set 0-9, A-Z and therefore support only up to base 36.  You tried a conversion with a base over 36; write your own string conversion routine.";
+            throw "BigUnsignedInABase(string, unsigned short): "
+                    "The default string conversion routines use the symbol set 0-9, A-Z and "
+                    "therefore support only up to base 36.  You tried a conversion with a base "
+                    "over 36; write your own string conversion routine.";
 
         this->base = base;
 
@@ -156,36 +156,35 @@ namespace qblocks {
         allocate(len);
 
         unsigned int digitNum, symbolNumInString;
-        for (digitNum = 0; digitNum < len; digitNum++)
-        {
+        for (digitNum = 0; digitNum < len; digitNum++) {
             symbolNumInString = len - 1 - digitNum;
             char theSymbol = s[symbolNumInString];
 
             if (theSymbol >= '0' && theSymbol <= '9')
-                blk[digitNum] = (unsigned short)(theSymbol - '0');
+                blk[digitNum] = (unsigned short)(theSymbol - '0');  // NOLINT
 
             else if (theSymbol >= 'A' && theSymbol <= 'Z')
-                blk[digitNum] = (unsigned short)(theSymbol - 'A' + 10);
+                blk[digitNum] = (unsigned short)(theSymbol - 'A' + 10);  // NOLINT
 
             else if (theSymbol >= 'a' && theSymbol <= 'z')
-                blk[digitNum] = (unsigned short)(theSymbol - 'a' + 10);
+                blk[digitNum] = (unsigned short)(theSymbol - 'a' + 10);  // NOLINT
 
             else
-                throw "BigUnsignedInABase(string, unsigned short): Bad symbol in input.  Only 0-9, A-Z, a-z are accepted.";
+                throw "BigUnsignedInABase(string, unsigned short): "
+                        "Bad symbol in input.  Only 0-9, A-Z, a-z are accepted.";
 
             if (blk[digitNum] >= base)
-                throw "BigUnsignedInABase::BigUnsignedInABase(const unsigned short *, unsigned int, unsigned short): A digit is too large for the specified base";
+                throw "BigUnsignedInABase::BigUnsignedInABase(const unsigned short *, unsigned int, unsigned short): "
+                    "A digit is too large for the specified base";
         }
         trimLeadingZeros();
     }
 
     //------------------------------------------------------------------
-    BigUnsignedInABase::operator SFUintBN(void) const
-    {
+    BigUnsignedInABase::operator SFUintBN(void) const {
         SFUintBN ans(0), buBase(base), temp;
         unsigned int digitNum = len;
-        while (digitNum > 0)
-        {
+        while (digitNum > 0) {
             digitNum--;
             temp.multiply(ans, buBase);
             ans.add(temp, SFUintBN(blk[digitNum]));
@@ -194,17 +193,14 @@ namespace qblocks {
     }
 
     //------------------------------------------------------------------
-    BigUnsignedInABase::operator string(void) const
-    {
-        if (len==0)
+    BigUnsignedInABase::operator string(void) const {
+        if (len == 0)
             return string("0");
-
         char *s = new char[len+1];
-        memset(s,'\0',len+1);
-        for (unsigned int p=0;p<len;p++)
-        {
-            unsigned short c = blk[len-1-p];
-            s[p] = ((c < 10) ? char('0'+c) : char('A'+c-10));
+        memset(s, '\0', len + 1);
+        for (unsigned int p = 0 ; p < len ; p++) {  // NOLINT
+            unsigned short c = blk[len - 1 - p];  // NOLINT
+            s[p] = ((c < 10) ? char('0'+c) : char('A'+c-10));  // NOLINT
         }
 
         string ret = s;
@@ -213,52 +209,44 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    string to_hex(const SFUintBN& i)
-    {
+    string to_hex(const SFUintBN& i) {
         return string(BigUnsignedInABase(i, 16));
     }
 
     //--------------------------------------------------------------------------------
-    string to_string(const SFIntBN& i)
-    {
+    string to_string(const SFIntBN& i) {
         return (i.isNegative() ? string("-") : "") + to_string(i.getMagnitude());
     }
 
     //--------------------------------------------------------------------------------
-    string to_string(const SFUintBN& i)
-    {
+    string to_string(const SFUintBN& i) {
         return string(BigUnsignedInABase(i, 10));
     }
 
     //--------------------------------------------------------------------------------
-    SFUintBN hex2BigUint(const string &s)
-    {
+    SFUintBN hex2BigUint(const string &s) {
         return SFUintBN(BigUnsignedInABase(s, 16));
     }
 
     //--------------------------------------------------------------------------------
-    SFUintBN gcd(SFUintBN a, SFUintBN b)
-    {
+    SFUintBN gcd(SFUintBN a, SFUintBN b) {
         SFUintBN trash;
-        for (;;)
-        {
-            if (b.len==0)
+        for ( ; ; ) {
+            if (b.len == 0)
                 return a;
             a.divide(b, trash);
-            if (a.len==0)
+            if (a.len == 0)
                 return b;
             b.divide(a, trash);
         }
     }
 
     //--------------------------------------------------------------------------------
-    SFUintBN modexp(const SFIntBN &base, const SFUintBN& exponent, const SFUintBN& modulus)
-    {
+    SFUintBN modexp(const SFIntBN &base, const SFUintBN& exponent, const SFUintBN& modulus) {
         SFUintBN ans = 1, base2 = (base % modulus).getMagnitude();
         unsigned int i = exponent.bitLength();
         // For each bit of the exponent, most to least significant...
-        while (i > 0)
-        {
+        while (i > 0) {
             i--;
             // Square.
             ans *= ans;
@@ -273,8 +261,7 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    static void exteuclidean(SFIntBN m, SFIntBN n, SFIntBN &g, SFIntBN &r, SFIntBN &s)
-    {
+    static void exteuclidean(SFIntBN m, SFIntBN n, SFIntBN &g, SFIntBN &r, SFIntBN &s) {
         if (&g == &r || &g == &s || &r == &s)
             throw "SFIntBN exteuclidean: Outputs are aliased";
         SFIntBN r1(1), s1(0), r2(0), s2(1), q;
@@ -283,8 +270,8 @@ namespace qblocks {
          * r1*m(orig) + s1*n(orig) == m(current)
          * r2*m(orig) + s2*n(orig) == n(current)
          */
-        for (;;) {
-            if (n.sign==0) {
+        for ( ; ; ) {
+            if (n.sign == 0) {
                 r = r1; s = s1; g = m;
                 return;
             }
@@ -292,7 +279,7 @@ namespace qblocks {
             m.divide(n, q);
             r1 -= q*r2; s1 -= q*s2;
 
-            if (m.sign==0) {
+            if (m.sign == 0) {
                 r = r2; s = s2; g = n;
                 return;
             }
@@ -303,49 +290,42 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    SFUintBN modinv(const SFIntBN &x, const SFUintBN& n)
-    {
+    SFUintBN modinv(const SFIntBN &x, const SFUintBN& n) {
         SFIntBN g, r, s;
         exteuclidean(x, n, g, r, s);
         if (g == 1)
             // r*x + s*n == 1, so r*x === 1 (mod n), so r is the answer.
-            return (r % n).getMagnitude(); // (r % n) will be nonnegative
+            return (r % n).getMagnitude();  // (r % n) will be nonnegative
         else
             throw "SFIntBN modinv: x and n have a common factor";
     }
 
     //--------------------------------------------------------------------------------
-    ostream &operator <<(ostream &os, const SFUintBN& x)
-    {
-        unsigned short base;
-        
-        long osFlags = os.flags();
-        if (osFlags & os.dec)
-        {
+    ostream &operator <<(ostream &os, const SFUintBN& x) {
+        unsigned short base;  // NOLINT
+
+        long osFlags = os.flags();  // NOLINT
+        if (osFlags & os.dec) {
             base = 10;
-            
-        } else if (osFlags & os.hex)
-        {
+
+        } else if (osFlags & os.hex) {
             base = 16;
             if (osFlags & os.showbase)
                 os << "0x";
-            
-        } else if (osFlags & os.oct)
-        {
+
+        } else if (osFlags & os.oct) {
             base = 8;
             if (osFlags & os.showbase)
                 os << '0';
-        } else
-        {
+        } else {
             throw "ostream << SFUintBN: Could not determine the desired base from output-stream flags";
         }
         os << string(BigUnsignedInABase(x, base));
         return os;
     }
-    
+
     //--------------------------------------------------------------------------------
-    ostream &operator <<(ostream &os, const SFIntBN &x)
-    {
+    ostream &operator <<(ostream &os, const SFIntBN &x) {
         if (x.isNegative())
             os << '-';
         os << x.getMagnitude();
@@ -356,4 +336,4 @@ namespace qblocks {
     SFUintBN str2BigUint(const string &s) {
         return SFUintBN(BigUnsignedInABase(s, 10));
     }
-}
+}  // namespace qblocks

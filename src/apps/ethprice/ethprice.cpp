@@ -31,23 +31,22 @@ int main(int argc, const char* argv[]) {
         string_q message;
 
         CPriceQuoteArray quotes;
-        if (loadPriceData(options.source, quotes, options.freshen, message) && quotes.getCount()) {
+        if (loadPriceData(options.source, quotes, options.freshen, message) && quotes.size()) {
 
             string_q def = (verbose ? "" : "{ \"date\": \"[{DATE}]\", \"price\": \"[{CLOSE}]\" }");
             string_q fmtStr = getGlobalConfig()->getDisplayStr(!verbose, def, "");
             bool isJson = ((startsWith(fmtStr, "{") && endsWith(fmtStr, "}")) || fmtStr.empty());
             if (options.at) {
-                cout << quotes[(uint32_t)indexFromTimeStamp(quotes, options.at)].Format(fmtStr);
+                cout << quotes[indexFromTimeStamp(quotes, options.at)].Format(fmtStr);
 
             } else {
                 if (verbose > 1)
                     UNHIDE_FIELD(CPriceQuote, "schema");
                 if (isJson)
                     cout << "[\n";
-                uint32_t step = (uint32_t)options.freq / 5;
+                size_t step = (options.freq / 5);
                 bool done = false;
-                for (uint32_t i = 0 ; i < quotes.getCount() && !done ; i = i + step) {
-
+                for (size_t i = 0 ; i < quotes.size() && !done ; i = i + step) {
                     timestamp_t ts = toTimestamp(quotes[i].Format("[{TIMESTAMP}]"));
                     if (i > 0) {
                         if (isJson)
@@ -61,8 +60,7 @@ int main(int argc, const char* argv[]) {
 //                        return 0;
 //                    }
                     cout << quotes[i].Format(fmtStr);
-
-                    if (isTestMode() && dateFromTimeStamp(ts) >= SFTime(2017,8,15,0,0,0))
+                    if (isTestMode() && dateFromTimeStamp(ts) >= SFTime(2017, 8, 15, 0, 0, 0))
                         done = true;
                 }
                 if (isJson)

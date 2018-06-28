@@ -22,12 +22,12 @@
 namespace qblocks {
 
     //--------------------------------------------------------------------------------
-    static uint32_t nP = 0;
+    static size_t nP = 0;
     static CParams ps[] = { };
     static CDefaultOptions defOpts;
 
     //--------------------------------------------------------------------------------
-    uint32_t& nParamsRef = nP;
+    size_t& nParamsRef = nP;
     CParams *paramsPtr  = &ps[0];
     COptionsBase *pOptions = &defOpts;
 
@@ -37,22 +37,22 @@ namespace qblocks {
     //--------------------------------------------------------------------------------
     bool COptionsBase::prepareArguments(int argc, const char *argv[]) {
 
-        string_q env = getenv("NO_COLOR");
+        string_q env = getEnvStr("NO_COLOR");
         if (string_q(env) == "true")
             colorsOff();
 
-        programName = basename((char*)argv[0]);
+        programName = basename((char*)argv[0]);  // NOLINT
         if (isTestMode()) {
             // we present the data once for clarity...
             cout << programName << " argc: " << argc << " ";
-            for (int i=1;i<argc;i++) {
+            for (int i = 1 ; i < argc ; i++) {
                 string_q str = argv[i];
                 cout << "[" << i << ":" << trim(str) << "] ";
             }
             cout << "\n";
             // ... and once to use as a command line for copy/paste
             cout << programName << " ";
-            for (int i=1;i<argc;i++) {
+            for (int i = 1 ; i < argc ; i++) {
                 string_q str = argv[i];
                 cout << trim(str) << " ";
             }
@@ -63,11 +63,11 @@ namespace qblocks {
             return usage("Not enough arguments presented.");
 
         int nChars = 0;
-        for (int i=0; i<argc; i++) {
+        for (int i = 0 ; i < argc ; i++) {
             nChars += string_q(argv[i]).length();
         }
-        uint32_t nArgs = 0;
-        string_q *args = new string_q[argc+nChars+2];
+        size_t nArgs = 0;
+        string_q *args = new string_q[argc + nChars + 2];
 
         bool hasStdIn = false;
         for (int i = 1 ; i < argc ; i++) {
@@ -111,7 +111,7 @@ namespace qblocks {
         for (uint64_t i = 0 ; i < nArgs ; i++) {
             string_q arg = args[i];
             if (startsWith(arg, "--file:")) {
-                cmdFileName = arg.Substitute("--file:", "");
+                cmdFileName = substitute(arg, "--file:", "");
                 replace(cmdFileName, "~/", getHomeFolder());
                 if (!fileExists(cmdFileName)) {
                     if (args) delete [] args;
@@ -119,7 +119,7 @@ namespace qblocks {
                 }
             } else if (startsWith(arg, "-v") || startsWith(arg, "--verbose")) {
                 verbose = true;
-                arg = arg.Substitute("-v", "").Substitute("--verbose", "").Substitute(":", "");
+                arg = substitute(substitute(substitute(arg, "-v", ""), "--verbose", ""), ":", "");
                 if (!arg.empty()) {
                     if (!isUnsigned(arg))
                         return usage("Invalid verbose level '" + arg + "'. Quitting...");
@@ -131,18 +131,16 @@ namespace qblocks {
         //-----------------------------------------------------------------------------------
         // Collapse commands that have 'permitted' sub options (i.e. colon ":" args)
         //-----------------------------------------------------------------------------------
-        uint32_t curArg = 0;
-        for (uint32_t i = 0 ; i < nArgs ; i++) {
+        size_t curArg = 0;
+        for (size_t i = 0 ; i < nArgs ; i++) {
             string_q arg = args[i];
             bool combine = false;
-            for (uint32_t j = 0 ; j < nParamsRef && !combine ; j++) {
+            for (size_t j = 0 ; j < nParamsRef && !combine ; j++) {
                 if (!paramsPtr[j].permitted.empty()) {
                     string_q shortName = paramsPtr[j].shortName;
                     string_q longName  = "-"+paramsPtr[j].longName;
-                    if (shortName == arg ||
-                        startsWith(longName, arg))
-                    {
-                        // we want to pull the next parameter into this one since it's a ':' param
+                    if (shortName == arg || startsWith(longName, arg)) {
+                        // We want to pull the next parameter into this one since it's a ':' param
                         combine = true;
                     }
                 }
@@ -167,15 +165,18 @@ namespace qblocks {
 
         } else {
             fromFile = true;
-            string_q contents =  asciiFileToString(cmdFileName).Substitute("\t", " ").
-                                            Substitute("-v", "").Substitute("-h", "").
-                                            Substitute("  ", " ").Substitute("\\\n", "");
+            string_q contents =  asciiFileToString(cmdFileName);
+            replaceAll(contents, "\t", " ");
+            replaceAll(contents, "-v", "");
+            replaceAll(contents, "-h", "");
+            replaceAll(contents, "  ", " ");
+            replaceAll(contents, "\\\n", "");
             if (contents.empty()) {
                 return usage("Command file '" + cmdFileName + "' is empty. Quitting...");
             }
             if (startsWith(contents, "NOPARSE\n")) {
                 commandList = contents;
-                nextTokenClear(commandList,'\n');
+                nextTokenClear(commandList, '\n');
             } else {
                 while (!contents.empty()) {
                     string_q command = trimWhitespace(nextTokenClear(contents, '\n'));
@@ -204,34 +205,34 @@ namespace qblocks {
             exit(0);
 
         } else if (contains(cmdLine, "--nocolor ")) {
-            replaceAll(cmdLine, "--nocolor ","");
+            replaceAll(cmdLine, "--nocolor ", "");
             colorsOff();
 
         } else if (isEnabled(OPT_DENOM) && contains(cmdLine, "--ether " )) {
-            replaceAll(cmdLine, "--ether ","");
+            replaceAll(cmdLine, "--ether ", "");
             expContext().asEther = true;
             expContext().asDollars = false;
             expContext().asWei = false;
 
         } else if (isEnabled(OPT_DENOM) && contains(cmdLine, "--wei ")) {
-            replaceAll(cmdLine, "--wei ","");
+            replaceAll(cmdLine, "--wei ", "");
             expContext().asEther = false;
             expContext().asDollars = false;
             expContext().asWei = true;
 
         } else if (isEnabled(OPT_DENOM) && contains(cmdLine, "--dollars ")) {
-            replaceAll(cmdLine, "--dollars ","");
+            replaceAll(cmdLine, "--dollars ", "");
             expContext().asEther = false;
             expContext().asDollars = true;
             expContext().asWei = false;
 
         } else if (isEnabled(OPT_PARITY) && contains(cmdLine, "--parity ")) {
-            replaceAll(cmdLine, "--parity ","");
+            replaceAll(cmdLine, "--parity ", "");
             expContext().spcs = 4;
             expContext().hexNums = true;
             expContext().quoteNums = true;
             expContext().isParity = true;
-            for (int i=0;i<5;i++)
+            for (int i = 0 ; i < 5 ; i++)
                 if (sorts[i])
                     sorts[i]->sortFieldList();
         }
@@ -266,7 +267,7 @@ namespace qblocks {
         string_q dummy;
         if (contains(name, ":<") || contains(name, ":[")) {
             permitted = name;
-            name = nextTokenClear(permitted,':');
+            name = nextTokenClear(permitted, ':');
             // order matters
             if (permitted == "<range>")
                 dummy = " range";
@@ -280,7 +281,7 @@ namespace qblocks {
                 dummy = " val";
         }
         if (!name.empty()) {
-            shortName = name.substr(0,2);
+            shortName = extract(name, 0, 2);
             if (name.length() > 2)
                 longName = name + dummy;
 
@@ -297,10 +298,12 @@ namespace qblocks {
 
             if (contains(longName, "(") && contains(longName, ")")) {
                 hotKey = longName;
-                nextTokenClear(hotKey,'(');
+                nextTokenClear(hotKey, '(');
                 hotKey = nextTokenClear(hotKey, ')');
-                replaceAny(longName, "()","");
-                shortName = string_q(shortName[0]) + hotKey;
+                replaceAny(longName, "()", "");
+                string_q ss;
+                ss = shortName[0];
+                shortName = ss + hotKey;
             }
         }
     }
@@ -330,8 +333,10 @@ namespace qblocks {
         os << purpose();
         os << descriptions() << "\n";
         os << notes();
-        if (!COptionsBase::isReadme)
-            os << bBlue << "  Powered by QuickBlocks" << (isTestMode() ? "" : " (" + getVersionStr() + ")") << "\n" << cOff;
+        if (!COptionsBase::isReadme) {
+            os << bBlue << "  Powered by QuickBlocks";
+            os << (isTestMode() ? "" : " (" + getVersionStr() + ")") << "\n" << cOff;
+        }
         string_q ret = os.str().c_str();
         ASSERT(pOptions);
         return pOptions->postProcess("usage", ret);
@@ -341,34 +346,34 @@ namespace qblocks {
     string_q options(void) {
         string_q required;
 
-        CStringExportContext ctx;
+        ostringstream os;
         if (!COptionsBase::needsOption)
-            ctx << "[";
+            os << "[";
         for (uint64_t i = 0 ; i < nParamsRef ; i++) {
             if (startsWith(paramsPtr[i].shortName, '~')) {
-                required += (" " + paramsPtr[i].longName.substr(1).Substitute("!", ""));
+                required += (" " + substitute(extract(paramsPtr[i].longName, 1), "!", ""));
 
             } else if (startsWith(paramsPtr[i].shortName, '@')) {
                 // invisible option
 
             } else if (!paramsPtr[i].shortName.empty()) {
-                ctx << paramsPtr[i].shortName << "|";
+                os << paramsPtr[i].shortName << "|";
 
             } else if (!paramsPtr[i].shortName.empty()) {
-                ctx << paramsPtr[i].shortName << "|";
+                os << paramsPtr[i].shortName << "|";
             }
         }
         if (isEnabled(OPT_VERBOSE))
-            ctx << "-v|";
-        ctx << "-h";
+            os << "-v|";
+        os << "-h";
         if (!COptionsBase::needsOption)
-            ctx << "]";
-        ctx << required;
+            os << "]";
+        os << required;
 
         ASSERT(pOptions);
-        string_q ret = pOptions->postProcess("options", ctx.str);
+        string_q ret = pOptions->postProcess("options", os.str().c_str());
         if (COptionsBase::isReadme)
-            ret = ret.Substitute("<", "&lt;").Substitute(">", "&gt;");
+            ret = substitute(substitute(ret, "<", "&lt;"), ">", "&gt;");
         return ret;
     }
 
@@ -379,50 +384,59 @@ namespace qblocks {
             if (paramsPtr[i].shortName.empty())
                 purpose += ("\n           " + paramsPtr[i].description);
 
-        CStringExportContext ctx;
+        ostringstream os;
         if (!purpose.empty()) {
             replace(purpose, "\n           ", "");
-            ctx << bYellow << sep << "Purpose:" << sep2 << "  " << cOff
-                << purpose.Substitute("\n", "\n           ") << "  \n";
+            string_q xxx;
+            xxx = substitute(purpose, "\n", "\n           ");
+            os << bYellow;
+            os << sep;
+            os << "Purpose:";
+            os << sep2;
+            os << "  ";
+            os << cOff;
+            os << xxx;
+            os << "  \n";
         }
         ASSERT(pOptions);
-        return pOptions->postProcess("purpose", ctx.str);
+        return pOptions->postProcess("purpose", os.str().c_str());
     }
 
     //--------------------------------------------------------------------------------
 const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
 
     string_q oneDescription(const string_q& sN, const string_q& lN, const string_q& d, bool isMode, bool required) {
-        CStringExportContext ctx;
+        ostringstream os;
         if (COptionsBase::isReadme) {
 
             // When we are writing the readme file...
             string_q line = STR_ONE_LINE;
             replace(line, "{S}", sN);
             replace(line, "{L}", (isMode ? "" : "-") + lN);
-            replace(line, "{D}", d.Substitute("|", "&#124;"));
-            ctx << line;
+            replace(line, "{D}", substitute(d, "|", "&#124;"));
+            os << line;
 
         } else {
 
             // When we are writing to the command line...
-            string_q line = "\t" + string_q(STR_ONE_LINE).Substitute(" ","").Substitute("|","");
+            string_q line = "\t" + substitute(substitute(string_q(STR_ONE_LINE), " ", ""), "|", "");
             replace(line, "{S}", (isMode ? "" : padRight(sN, 3)));
-            if (isMode)
+            if (isMode) {
                 replace(line, "{L}", padRight(lN , 22));
-            else {
+            } else {
                 replace(line, "{L}", padRight((lN.empty() ? "" : " (-" + lN + ")") , 19));
             }
             replace(line, "{D}", d + (required ? " (required)" : ""));
-            ctx << line;
+            os << line;
         }
         ASSERT(pOptions);
-        return pOptions->postProcess("oneDescription", ctx.str);
+        return pOptions->postProcess("oneDescription", os.str().c_str());
     }
 
     //--------------------------------------------------------------------------------
     string_q notes(void) {
-        CStringExportContext ctx;
+
+        ostringstream os;
         ASSERT(pOptions);
         string_q ret = pOptions->postProcess("notes", "");
         if (!ret.empty()) {
@@ -438,30 +452,32 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
             replaceAll(ret, "[{", sepy1);
             replaceAll(ret, "}]", sepy2);
 
-            ctx << bYellow << sep << "Notes:" << sep << cOff << "\n";
-            ctx << (COptionsBase::isReadme ? "\n" : "");
+            os << bYellow << sep << "Notes:" << sep << cOff << "\n";
+            os << (COptionsBase::isReadme ? "\n" : "");
             while (!ret.empty()) {
-                string_q line = nextTokenClear(ret,'\n').Substitute("|","\n" + lead + "  ");
-                ctx << lead << tick << line << "\n";
+                string_q line = substitute(nextTokenClear(ret, '\n'), "|", "\n" + lead + "  ");
+                os << lead << tick << line << "\n";
             }
-            ctx << "\n";
-            replaceAll(ctx.str, "-   ","  - ");
+            os << "\n";
+            ret = os.str().c_str();
+            replaceAll(ret, "-   ", "  - ");
         }
-        return ctx.str;
+        return ret;
     }
 
     //--------------------------------------------------------------------------------
     string_q descriptions(void) {
         string_q required;
-        CStringExportContext ctx;
-        ctx << bYellow << sep << "Where:" << sep << cOff << "  \n";
+
+        ostringstream os;
+        os << bYellow << sep << "Where:" << sep << cOff << "  \n";
         if (COptionsBase::isReadme) {
-            ctx << "\n";
-            ctx << "| Short Cut | Option | Description |\n";
-            ctx << "| -------: | :------- | :------- |\n";
+            os << "\n";
+            os << "| Short Cut | Option | Description |\n";
+            os << "| -------: | :------- | :------- |\n";
         }
 
-        bool showHidden = (string_q(getenv("SHOW_HIDDEN_OPTIONS")) == "true");
+        bool showHidden = (getEnvStr("SHOW_HIDDEN_OPTIONS") == "true");
         for (uint64_t i = 0 ; i < nParamsRef ; i++) {
             string_q sName = paramsPtr[i].shortName;
             string_q lName = paramsPtr[i].longName;
@@ -474,16 +490,17 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
                 // ~ makes the option a required mode, ! makes it not required
                 bool isReq = isMode && !contains(lName, '!');
                 sName = (isMode ? "" : sName);
-                lName = (isMode ? lName.Substitute('-', "") : lName).Substitute("!", "").Substitute("~", "");
-                ctx << oneDescription(sName, lName, descr, isMode, isReq);
+                lName = substitute(substitute((isMode ? substitute(lName, "-", "") : lName), "!", ""), "~", "");
+                os << oneDescription(sName, lName, descr, isMode, isReq);
             }
         }
 
         if (isEnabled(OPT_VERBOSE))
-            ctx << oneDescription("-v", "-verbose", "set verbose level. Either -v, --verbose or -v:n where 'n' is level", false, false);
-        ctx << oneDescription("-h", "-help", "display this help screen", false, false);
+            os << oneDescription("-v", "-verbose",
+                    "set verbose level. Either -v, --verbose or -v:n where 'n' is level", false, false);
+        os << oneDescription("-h", "-help", "display this help screen", false, false);
         ASSERT(pOptions);
-        return pOptions->postProcess("description", ctx.str);
+        return pOptions->postProcess("description", os.str().c_str());
     }
 
     //--------------------------------------------------------------------------------
@@ -499,8 +516,6 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
                 return ret;
             }
         }
-
-        CStringExportContext ctx;
 
         // Not an option
         if (!startsWith(arg, '-') || startsWith(arg, "--")) {
@@ -524,15 +539,15 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
         if (arg == "-th" || arg == "-ht") {
             COptionsBase::isReadme = true;
             arg = "";
-            replaceAll(ret, "-th","");
-            replaceAll(ret, "-ht","");
+            replaceAll(ret, "-th", "");
+            replaceAll(ret, "-ht", "");
             return ret;
         }
 
         // This may be a command with two -a -b (or more) single options
-        if (arg.length()>2 && arg[2] == ' ') {
-            ret = arg.substr(0,2);
-            arg = arg.substr(3);
+        if (arg.length() > 2 && arg[2] == ' ') {
+            ret = extract(arg, 0, 2);
+            arg = extract(arg, 3);
             return ret;
         }
 
@@ -545,8 +560,8 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
 
         // This is a ganged-up option. We need to pull it apart by returning
         // the first two chars, and saving the rest for later.
-        ret = arg.substr(0,2);
-        arg = "-"+arg.substr(2);
+        ret = extract(arg, 0, 2);
+        arg = "-" + extract(arg, 2);
         return ret;
     }
 
@@ -614,7 +629,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
             return 1;
         if (contains(b2->getValue(), "tbd"))
             return -1;
-        return (int)(b1->getValueU() - b2->getValueU());
+        return (int)(b1->getValueU() - b2->getValueU());  // NOLINT
     }
 
     //-----------------------------------------------------------------------
@@ -651,26 +666,25 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
 
         const CToml *toml = getGlobalConfig("whenBlock");
 
-        specials.Clear();
+        specials.clear();
         string_q specialsStr = toml->getConfigStr("specials", "list", "");
-        char *p = cleanUpJson((char *)specialsStr.c_str());
+        char *p = cleanUpJson((char *)specialsStr.c_str());  // NOLINT
         while (p && *p) {
             CNameValue pair;
-            uint32_t nFields = 0;
+            size_t nFields = 0;
             p = pair.parseJson(p, nFields);
             if (nFields) {
-                specials[specials.getCount()] = pair;
+                specials.push_back(pair);
             }
         }
-        specials.Sort(sortByBlockNum);
         return;
     }
 
     //--------------------------------------------------------------------------------
     bool COptionsBase::findSpecial(CNameValue& pair, const string_q& arg) const {
-        if (specials.getCount() == 0)
-            ((COptionsBase*)this)->loadSpecials();
-        for (uint32_t i = 0 ; i < specials.getCount() ; i++) {
+        if (specials.size() == 0)
+            ((COptionsBase*)this)->loadSpecials();  // NOLINT
+        for (size_t i = 0 ; i < specials.size() ; i++) {
             if (arg == specials[i].getName()) {
                 pair = specials[i];
                 return true;
@@ -685,20 +699,20 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
         minArgs = 1;
         isReadme = false;
         needsOption = false;
-        for (int i=0;i<5;i++)
+        for (int i = 0 ; i < 5 ; i++)
             sorts[i] = NULL;
     }
 
     //-----------------------------------------------------------------------
     bool COptionsBase::getNamedAccount(CAccountName& acct, const string_q& addr) const {
-        if (namedAccounts.getCount() == 0) {
+        if (namedAccounts.size() == 0) {
             uint64_t save = verbose;
             verbose = false;
-            ((COptionsBase*)this)->loadNames();
+            ((COptionsBase*)this)->loadNames();  // NOLINT
             verbose = save;
         }
 
-        for (uint32_t i = 0 ; i < namedAccounts.getCount() ; i++) {
+        for (size_t i = 0 ; i < namedAccounts.size() ; i++) {
             if (namedAccounts[i].addr % addr) {
                 acct = namedAccounts[i];
                 return true;
@@ -711,11 +725,11 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
     bool COptionsBase::loadNames(void) {
 
         // If we're already loaded or editing, return
-        if (namedAccounts.getCount() > 0)
+        if (namedAccounts.size() > 0)
             return true;
 
         string_q textFile = namesFile.getFullPath();
-        string_q binFile  = textFile.Substitute(".txt",".bin");
+        string_q binFile  = substitute(textFile, ".txt", ".bin");
 
         SFTime txtDate = fileLastModifyDate(textFile);
         SFTime binDate = fileLastModifyDate(binFile);
@@ -752,7 +766,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
 
                 } else {
                     CAccountName account(line);
-                    namedAccounts[namedAccounts.getCount()] = account;
+                    namedAccounts.push_back(account);
                 }
             }
         }

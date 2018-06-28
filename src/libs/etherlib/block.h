@@ -15,19 +15,16 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <vector>
+#include <map>
 #include "etherlib.h"
 #include "transaction.h"
 
 namespace qblocks {
 
-//--------------------------------------------------------------------------
-class CBlock;
-typedef SFArrayBase<CBlock>         CBlockArray;
-typedef SFList<CBlock*>             CBlockList;
-typedef SFUniqueList<CBlock*>       CBlockListU;
-
 // EXISTING_CODE
-typedef bool (*ADDRESSFUNC)(blknum_t bn, blknum_t tx, blknum_t tc, const SFAddress& addr, void *data);
+class CAddressItem;
+typedef bool (*ADDRESSFUNC)(const CAddressItem& item, void *data);
 typedef bool (*TRANSFUNC)(const CTransaction *trans, void *data);
 // EXISTING_CODE
 
@@ -54,20 +51,19 @@ public:
 
     DECLARE_NODE(CBlock);
 
-    const CBaseNode *getObjectAt(const string_q& fieldName, uint32_t index) const override;
+    const CBaseNode *getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
     bool forEveryAddress      (ADDRESSFUNC func, TRANSFUNC filt, void *data);
     bool forEveryUniqueAddress(ADDRESSFUNC func, TRANSFUNC filt, void *data);
-    bool operator==(const CBlock& bl) const;
-    bool operator!=(const CBlock& bl) const { return !operator==(bl); }
     // EXISTING_CODE
+    friend bool operator<(const CBlock& v1, const CBlock& v2);
     friend ostream& operator<<(ostream& os, const CBlock& item);
 
 protected:
-    void Clear(void);
-    void Init(void);
-    void Copy(const CBlock& bl);
+    void clear(void);
+    void initialize(void);
+    void duplicate(const CBlock& bl);
     bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
@@ -76,7 +72,7 @@ protected:
 
 //--------------------------------------------------------------------------
 inline CBlock::CBlock(void) {
-    Init();
+    initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
@@ -85,7 +81,7 @@ inline CBlock::CBlock(void) {
 inline CBlock::CBlock(const CBlock& bl) {
     // EXISTING_CODE
     // EXISTING_CODE
-    Copy(bl);
+    duplicate(bl);
 }
 
 // EXISTING_CODE
@@ -93,20 +89,20 @@ inline CBlock::CBlock(const CBlock& bl) {
 
 //--------------------------------------------------------------------------
 inline CBlock::~CBlock(void) {
-    Clear();
+    clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CBlock::Clear(void) {
+inline void CBlock::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CBlock::Init(void) {
-    CBaseNode::Init();
+inline void CBlock::initialize(void) {
+    CBaseNode::initialize();
 
     gasLimit = 0;
     gasUsed = 0;
@@ -118,16 +114,16 @@ inline void CBlock::Init(void) {
     price = 0.0;
     finalized = 0;
     timestamp = 0;
-    transactions.Clear();
+    transactions.clear();
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CBlock::Copy(const CBlock& bl) {
-    Clear();
-    CBaseNode::Copy(bl);
+inline void CBlock::duplicate(const CBlock& bl) {
+    clear();
+    CBaseNode::duplicate(bl);
 
     gasLimit = bl.gasLimit;
     gasUsed = bl.gasUsed;
@@ -148,16 +144,24 @@ inline void CBlock::Copy(const CBlock& bl) {
 
 //--------------------------------------------------------------------------
 inline CBlock& CBlock::operator=(const CBlock& bl) {
-    Copy(bl);
+    duplicate(bl);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
+//-------------------------------------------------------------------------
+inline bool operator<(const CBlock& v1, const CBlock& v2) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default sort defined in class definition, assume already sorted
+    return true;
+}
+
 //---------------------------------------------------------------------------
-IMPLEMENT_ARCHIVE_ARRAY(CBlockArray);
-IMPLEMENT_ARCHIVE_ARRAY_C(CBlockArray);
-IMPLEMENT_ARCHIVE_LIST(CBlockList);
+typedef vector<CBlock> CBlockArray;
+extern SFArchive& operator>>(SFArchive& archive, CBlockArray& array);
+extern SFArchive& operator<<(SFArchive& archive, const CBlockArray& array);
 
 //---------------------------------------------------------------------------
 extern SFArchive& operator<<(SFArchive& archive, const CBlock& blo);
@@ -165,21 +169,53 @@ extern SFArchive& operator>>(SFArchive& archive, CBlock& blo);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
+//---------------------------------------------------------------------------
+class CAddressItem {
+public:
+    blknum_t bn;
+    blknum_t tx;
+    blknum_t tc;
+    SFAddress addr;
+    CAddressItem(void) : bn(0), tx(0), tc(0), addr("") { }
+    CAddressItem(const CAddressItem& item)
+        : bn(item.bn), tx(item.tx), tc(item.tc), addr(item.addr) { }
+    CAddressItem& operator=(const CAddressItem& item) {
+        bn = item.bn;
+        tx = item.tx;
+        tc = item.tc;
+        addr = item.addr;
+        return *this;
+    }
+    CAddressItem(blknum_t b, blknum_t x, blknum_t c, const SFAddress& a)
+        : bn(b), tx(x), tc(c), addr(a) { }
+    friend bool operator<(const CAddressItem& v1, const CAddressItem& v2) {
+        return v1.addr < v2.addr;
+    }
+    friend ostream& operator<<(ostream& os, const CAddressItem& item);
+};
+typedef map<CAddressItem, uint64_t> CAddressItemMap;
+
+//---------------------------------------------------------------------------
 inline blknum_t bnFromPath(const string_q& path) {
-    string_q p = path.Substitute(".bin","");
-    reverse(p); p = nextTokenClear(p, '/'); reverse(p);
+    string_q p = substitute(path, ".bin", "");
+    reverse(p);
+    p = nextTokenClear(p, '/');
+    reverse(p);
     return toUnsigned(p);
 }
 
 //---------------------------------------------------------------------------
-inline bool isBlockFinal(timestamp_t ts_block, timestamp_t ts_chain, timestamp_t seconds = (60 * 4)) { // default to ten minutes
+inline bool isBlockFinal(timestamp_t ts_block, timestamp_t ts_chain, timestamp_t seconds = (60 * 4)) {
+    // Default to four minutes
     // If the distance from the front of the node's current view of the front of the chain
     // is more than the numbers of seconds provided, consider the block final (even if it isn't
     // in a perfectly mathematical sense
     return ((ts_chain - ts_block) > seconds);
 }
+
+//---------------------------------------------------------------------------
 extern bool isPotentialAddr(SFUintBN test, SFAddress& addrOut);
-extern void processPotentialAddrs(blknum_t bn, blknum_t tx, blknum_t tc, const string_q& potList, ADDRESSFUNC func, void *data);
+extern void potentialAddr(ADDRESSFUNC func, void *data, const CAddressItem& item, const string_q& potList);
 // EXISTING_CODE
 }  // namespace qblocks
 

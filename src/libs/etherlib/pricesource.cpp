@@ -20,13 +20,13 @@ namespace qblocks {
 
     //---------------------------------------------------------------------------
     char *parsePoloniex(CPriceQuote& quote, char *p) {
-        uint32_t nFields = 0;
+        size_t nFields = 0;
         return quote.parseJson(p, nFields);
     }
 
     //---------------------------------------------------------------------------
     string_q CPriceSource::getDatabasePath(void) const {
-        string_q source = url.Substitute("http://","").Substitute("https://","");
+        string_q source = substitute(substitute(url, "http://", ""), "https://", "");
         source = nextTokenClear(source, '.');
         string_q ret = blockCachePath("prices/" + source + "_" + pair + ".bin");
         establishFolder(ret);
@@ -34,24 +34,25 @@ namespace qblocks {
     }
 
     //---------------------------------------------------------------------------
-    bool loadPriceData(const CPriceSource& source, CPriceQuoteArray& quotes, bool freshen, string_q& message, uint64_t step) {
+    bool loadPriceData(const CPriceSource& source, CPriceQuoteArray& quotes, bool freshen,
+                            string_q& message, uint64_t step) {
 
         string_q cacheFile = source.getDatabasePath();
 
         // Load and possibly refresh the price database
         SFTime lastRead = SFTime(2015, 1, 1, 0, 0, 0);
         if (contains(source.pair, "BTC"))
-            lastRead = SFTime(2009,1,1,0,0,0);
+            lastRead = SFTime(2009, 1, 1, 0, 0, 0);
         if (fileExists(cacheFile)) {
             SFArchive priceCache(READING_ARCHIVE);
             if (priceCache.Lock(cacheFile, binaryReadOnly, LOCK_NOWAIT)) {
-                priceCache.readHeader(); // we read the header even though it may not be the current version...
+                priceCache.readHeader();  // we read the header even though it may not be the current version...
                 priceCache >> lastRead.m_nSeconds;
                 priceCache >> quotes;
                 priceCache.Close();
                 if (verbose) {
                     string_q date = lastRead.Format(FMT_JSON);
-                    string_q count = asString(quotes.getCount());
+                    string_q count = asStringU(quotes.size());
                     if (isTestMode()) {
                         date = "Now";
                         count = "cnt";
@@ -65,7 +66,7 @@ namespace qblocks {
             }
 
         } else {
-            freshen=true;
+            freshen = true;
             if (verbose)
                 cerr << "Price database not found. Creating it.\n";
         }
@@ -74,7 +75,8 @@ namespace qblocks {
         SFTime firstDate = SFTime(2015, 6, 1, 0, 0, 0);
         SFTime now       = Now();
         SFTime nextRead  = (lastRead == SFTime(2015, 1, 1, 0, 0, 0) ? firstDate : lastRead + 5*60);  // 5 minutes
-                                                                                                     //#define DEBUGGING
+
+// #define DEBUGGING
 #ifdef DEBUGGING
         cerr << "firstDate: " << firstDate << "\n";
         cerr << "now: " << now << "\n";
@@ -119,7 +121,7 @@ namespace qblocks {
                 string_q response = urlToString(url);
 
                 // Figure out how many new records there are
-                uint32_t nRecords = (uint32_t)countOf(response, '}');
+                size_t nRecords = countOf(response, '}');
                 nRecords--;
                 if (verbose)
                     cerr << "Response: " << nRecords << " were sent from Poloniex\n";
@@ -127,7 +129,7 @@ namespace qblocks {
                 //                cerr << "JSON: " << response << "\n";
 
                 // And grow the array so we don't have to allocate for each new record
-                quotes.Grow(nRecords+10);
+                quotes.reserve(nRecords+10);
 
                 // Parse the response and populate the array
                 char *p = cleanUpJson((char *)response.c_str());  // NOLINT
@@ -150,8 +152,8 @@ namespace qblocks {
                     // So as to not inadvertantly add records we already have
                     if (addToArray) {
                         // First entry should be on a two hour mark so we hit midnight in default two hour case
-                        if (quotes.getCount() || (quote.date.onTheHour() && (!quote.date.GetHour()%2))) {
-                            quotes[quotes.getCount()] = quote;
+                        if (quotes.size() || (quote.date.onTheHour() && (!quote.date.GetHour()%2))) {
+                            quotes.push_back(quote);
 #ifdef DEBUGGING
                             cerr << quote.Format() << "\n";
 #endif
@@ -173,7 +175,7 @@ namespace qblocks {
                 priceCache << quotes;
                 priceCache.Close();
                 if (verbose) {
-                    cerr << "Wrote " << quotes.getCount() << " price quotes to file ";
+                    cerr << "Wrote " << quotes.size() << " price quotes to file ";
                     cerr << "(lastRead: " << lastRead << ").\n";
                 }
 //            } else {
@@ -184,7 +186,7 @@ namespace qblocks {
 
         if (!reportAtEnd) {
             string_q date = lastRead.Format(FMT_JSON);
-            string_q count = asString(quotes.getCount());
+            string_q count = asStringU(quotes.size());
             if (isTestMode()) {
                 date = "Now";
                 count = "cnt";
@@ -195,9 +197,8 @@ namespace qblocks {
 
         if (step != 1) {
             CPriceQuoteArray ret;
-            uint32_t cur = 0;
-            for (uint32_t i = 0 ; i < quotes.getCount() ; i += step)
-                ret[cur++] = quotes[i];
+            for (size_t i = 0 ; i < quotes.size() ; i += step)
+                ret.push_back(quotes[i]);  // grows the vector
             quotes = ret;
         }
 
@@ -205,7 +206,12 @@ namespace qblocks {
     }
 
     const char* STR_PRICE_URL =
-    "https://poloniex.com/public?command=returnChartData&currencyPair=[{PAIR}]&start=[{START}]&end=[{END}]&period=[{PERIOD}]";
+    "https://poloniex.com/public"
+        "?command=returnChartData"
+        "&currencyPair=[{PAIR}]"
+        "&start=[{START}]"
+        "&end=[{END}]"
+        "&period=[{PERIOD}]";
 
 }  // namespace qblocks
 

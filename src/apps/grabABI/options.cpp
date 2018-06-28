@@ -10,6 +10,7 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
+#include <algorithm>
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
@@ -29,7 +30,7 @@ CParams params[] = {
     CParams("",           "Fetches the ABI for a smart contract. Optionally generates C++ source code "
                           "representing that ABI.\n"),
 };
-uint32_t nParams = sizeof(params) / sizeof(CParams);
+size_t nParams = sizeof(params) / sizeof(CParams);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
@@ -64,6 +65,7 @@ bool COptions::parseArguments(string_q& command) {
             noconst = true;
 
         } else if (arg == "-f" || arg == "--freshen") {
+extern void rebuildFourByteDB(void);
             rebuildFourByteDB();
             exit(0);
 
@@ -86,8 +88,6 @@ bool COptions::parseArguments(string_q& command) {
             }
 
         } else {
-            if (nAddrs>=MAX_ADDRS)
-                return usage("You may provide at most " + asString(MAX_ADDRS) + " addresses");
             if (primaryAddr.empty())
                 primaryAddr = arg;
             SFAddress addr = fixAddress(toLower(arg));
@@ -95,7 +95,7 @@ bool COptions::parseArguments(string_q& command) {
                 addr = arg;
             if (!isAddress(addr) && addr != "0xTokenLib" && addr != "0xWalletLib")
                 return usage("Invalid address '" + addr + "'. Length is not equal to 40 characters (20 bytes).\n");
-            addrs[nAddrs++] = addr;
+            addrs.push_back(addr);
         }
     }
 
@@ -105,7 +105,7 @@ bool COptions::parseArguments(string_q& command) {
     if (parts != SIG_CANONICAL && verbose)
         parts |= SIG_DETAILS;
 
-    if (!nAddrs)
+    if (!addrs.size())
         return usage("Please supply at least one Ethereum address.\n");
 
     bool isGenerate = !classDir.empty();
@@ -129,10 +129,7 @@ void COptions::Init(void) {
     raw = false;
     decNames = true;
     asData = false;
-    for (uint32_t i = 0 ; i < MAX_ADDRS ; i++) {
-        addrs[i] = "";
-    }
-    nAddrs = 0;
+    addrs.clear();
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -160,11 +157,49 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
 //--------------------------------------------------------------------------------
 string_q getPrefix(const string_q& inIn) {
 
-    string_q in = inIn; // for example ./ENS/parselib/
-    replace(in, "parseLib","parselib"); // hack: to fix dao monitor
+    string_q in = inIn;  // for example ./ENS/parselib/
+    replace(in, "parseLib", "parselib");  // hack: to fix dao monitor
     reverse(in);
-    replace(in, "/", ""); // remove trailing '/'
-    in = nextTokenClear(in, '/'); // remove /parselib
+    replace(in, "/", "");  // remove trailing '/'
+    in = nextTokenClear(in, '/');  // remove /parselib
     reverse(in);
     return in;
+}
+
+//---------------------------------------------------------------------------
+bool visitABIs(const string_q& path, void *dataPtr) {
+
+    if (endsWith(path, ".json")) {
+        string_q *str = (string_q*)dataPtr;  // NOLINT
+        *str += (path+"\n");
+    }
+    return true;
+}
+
+//---------------------------------------------------------------------------
+void rebuildFourByteDB(void) {
+
+    string_q fileList;
+    string_q abiPath = blockCachePath("abis/");
+    cout << abiPath << "\n";
+    forEveryFileInFolder(abiPath+"*", visitABIs, &fileList);
+
+    CFunctionArray funcArray;
+    while (!fileList.empty()) {
+        string_q fileName = nextTokenClear(fileList, '\n');
+        CAbi abi;
+        abi.loadABIFromFile(fileName);
+        for (size_t f = 0 ; f < abi.abiByEncoding.size() ; f++) {
+            funcArray.push_back(abi.abiByEncoding[f]);
+            cout << abi.abiByEncoding[f].encoding << " : ";
+            cout << abi.abiByEncoding[f].name << " : ";
+            cout << abi.abiByEncoding[f].signature << "\n";
+        }
+    }
+    sort(funcArray.begin(), funcArray.end());
+    SFArchive funcCache(WRITING_ARCHIVE);
+    if (funcCache.Lock(abiPath+"abis.bin", binaryWriteCreate, LOCK_CREATE)) {
+        funcCache << funcArray;
+        funcCache.Release();
+    }
 }

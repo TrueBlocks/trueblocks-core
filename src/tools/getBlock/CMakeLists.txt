@@ -40,7 +40,7 @@ endfunction(run_test)
 # Enter one line for each individual test
 run_test("getBlock_README"      "-th")
 run_test("getBlock_no_params")
-run_test("getBlock_invalid_option" "-s" " 1001001")
+run_test("getBlock_invalid_option" "-x" " 1001001")
 run_test("getBlock_empty"        "1001001")
 run_test("getBlock_bloom"        "4000001")
 run_test("getBlock_byhash"       "0x79990fd526c4751139a7a3afc7420cde1a1141b1920d2afd411858ecb4926a39")
@@ -54,20 +54,21 @@ run_test("getBlock_combo_one_range" "1590000" " 4000001-4000002" " 1001001" " 12
 run_test("getBlock_combo_two_range" "1590000" " 4000001-4000002" " 1001001-1001100" " 1234567")
 
 # display a bunch of blocks raw
-run_test("getBlock_raw_01"       "--source:raw"   " 2768801" " 1995314" " 1958017" " --normalize")
-run_test("getBlock_raw_02"       "-s:r"           " 2768801" " 1995314" " 1958017" " --normalize")
-run_test("getBlock_raw_03"       "-s:raw"         " 2768801" " 1995314" " 1958017" " --normalize")
-run_test("getBlock_raw_04"       "-r"             " 2768801" " 1995314" " 1958017" " --normalize")
-run_test("getBlock_raw_05"       "--raw"          " 2768801" " 1995314" " 1958017" " --normalize")
+run_test("getBlock_raw_01"         "--source:raw"   " 2768801" " 1995314" " 1958017" " --normalize")
+run_test("getBlock_raw_02"         "--source:r"     " 2768801" " 1995314" " 1958017" " --normalize")
+run_special_test("getBlock_raw_03" "--source:raw"   " 2768801" " 1995314" " 1958017" " --normalize")
+run_special_test("getBlock_raw_04" "--raw"          " 2768801" " 1995314" " 1958017" " --normalize")
+run_special_test("getBlock_raw_05" "-r"             " 2768801" " 1995314" " 1958017" " --normalize")
 
 # so that the test works, we must first bring these blocks onto the cache (uses undocumented options)
 run_the_test(${TEST_PATH} ${GOLD_PATH} "getBlock_force_01" ${EXECUTABLE_OUTPUT_PATH}/getBlock " 2768801" " 1995314" " 1958017" " -o")
 
 # display a bunch of blocks from cache
 run_test("getBlock_cache_01"     "--source:cache" " 2768801" " 1995314" " 1958017" " --normalize" " --parity")
-run_test("getBlock_cache_02"     "-s:c"           " 2768801" " 1995314" " 1958017" " --normalize" " --parity")
-run_test("getBlock_cache_03"     "-s:cache"       " 2768801" " 1995314" " 1958017" " --normalize" " --parity")
-run_test("getBlock_cache_04"     "-a"             " 2768801" " 1995314" " 1958017" " --normalize" " --parity")
+run_test("getBlock_cache_02"     "--source:c"     " 2768801" " 1995314" " 1958017" " --normalize" " --parity")
+run_test("getBlock_cache_03"     "--source:cache" " 2768801" " 1995314" " 1958017" " --normalize" " --parity")
+run_test("getBlock_cache_04"     "--cache"        " 2768801" " 1995314" " 1958017" " --normalize" " --parity")
+run_test("getBlock_cache_05"     "-d"             " 2768801" " 1995314" " 1958017" " --normalize" " --parity")
 
 # now check them
 run_test("getBlock_check_01"     "2768801"        " -c")
@@ -77,17 +78,27 @@ run_test("getBlock_chk_245001"   "245001"         " --check")
 
 run_test("getBlock_parity_hex"   "--parity"       " 0x2e7721")
 run_test("getBlock_parity_num"   "--parity"       " 728708")
-run_test("getBlock_parity_range" "--parity"       " 358450-0x5785a")
+run_special_test("getBlock_parity_range" "--parity"       " 358450-0x5785a")
 
 run_test("getBlock_force_02"                  " 2769609" " 2799895" " 2872831" " 3076260" " -o")
 run_test("getBlock_multi1"   "--parity" " -r" " 2769609" " 2799895" " 2872831" " 3076260")
-run_test("getBlock_multi2"   "--parity" " -a" " 2769609" " 2799895" " 2872831" " 3076260")
+run_test("getBlock_multi2"   "--parity" " -d" " 2769609" " 2799895" " 2872831" " 3076260")
 
-run_test("getBlock_terse_no_raw"  "-a"           " 4001001")
-run_test("getBlock_terse_yes_raw" "-a" " -s:raw" " 4001001")
+run_test("getBlock_terse_no_raw"  "-n"                 " 4001001-4001003")
+run_test("getBlock_terse_yes_raw" "-n" " --source:raw" " 4001001")
 
-run_test("getBlock_cmd_file1" "--file:cmd_file1")
-run_test("getBlock_cmd_file2" "--file:cmd_file2")
+run_test("getBlock_hashes_1" "--hash_only"                 " 4001001")
+run_test("getBlock_hashes_2" "--hash_only" " --source:raw" " 4001001")
+run_test("getBlock_hashes_3" "-n"                          " 4001001")
+run_test("getBlock_hashes_4" "-n"          " --source:raw" " 4001001")
+
+run_test("getBlock_address1"  "2768801"        " -a")
+run_test("getBlock_address2"  "1995314"        " --addresses")
+run_test("getBlock_address3"  "1958017"        " -a" " -v")
+run_test("getBlock_address4"  "245001"         " --addr")
+
+run_special_test("getBlock_cmd_file1" "--file:cmd_file1")
+run_special_test("getBlock_cmd_file2" "--file:cmd_file2")
 
 # More options
 run_test("getBlock_help" "-h")

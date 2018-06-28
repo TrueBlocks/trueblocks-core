@@ -22,7 +22,7 @@ CParams params[] = {
     CParams("-pair:<val>",                     "Which price pair to freshen or list (see Poloniex)"),
     CParams("",                                "Freshen and/or display Ethereum price data and other purposes.\n"),
 };
-uint32_t nParams = sizeof(params) / sizeof(CParams);
+size_t nParams = sizeof(params) / sizeof(CParams);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
@@ -43,7 +43,7 @@ bool COptions::parseArguments(string_q& command) {
             freshen = true;
 
         } else if (startsWith(arg, "-a:") || startsWith(arg, "--at:")) {
-            arg = orig.Substitute("-a:","").Substitute("--at:","");
+            arg = substitute(substitute(orig, "-a:", ""), "--at:", "");
             if (arg == "now") {
                 at = toTimestamp(Now());
             } else {
@@ -53,13 +53,13 @@ bool COptions::parseArguments(string_q& command) {
             }
 
         } else if (startsWith(arg, "-p:") || startsWith(arg, "--period:")) {
-            arg = orig.Substitute("-p:","").Substitute("--period:","");
+            arg = substitute(substitute(orig, "-p:", ""), "--period:", "");
             freq = toLongU(arg);
             if (!isUnsigned(arg) || freq % 5)
                 return usage("Positive multiple of 5 expected: " + orig);
 
         } else if (startsWith(arg, "--pair:")) {
-            arg = orig.Substitute("--pair:","");
+            arg = substitute(orig, "--pair:", "");
             source.pair = arg;
 
         } else {
@@ -98,18 +98,20 @@ COptions::COptions(void) {
 string_q COptions::postProcess(const string_q& which, const string_q& str) const {
 
     if (which == "options") {
-        //return str.Substitute("address_list block_list", "<address> [address...] [block...]")
-        //        .Substitute("-l|", "-l fn|");
+        // return substitute(
+        //       substitute(str, "address_list block_list", "<address> [address...] [block...]"), "-l|", "-l fn|");
 
     } else if (which == "notes" && (verbose || COptions::isReadme)) {
 
-        //string_q ret;
-        //ret += "[{addresses}] must start with '0x' and be forty characters long.\n";
-        //ret += "[{block_list}] may be a space-separated list of values, a start-end range, a [{special}], or any combination.\n";
-        //ret += "This tool retrieves information from the local node or the ${FALLBACK} node, if configured (see documentation).\n";
-        //ret += "If the queried node does not store historical state, the results are undefined.\n";
-        //ret += "[{special}] blocks are detailed under " + cTeal + "[{whenBlock --list}]" + cOff + ".\n";
-        //return ret;
+        // string_q ret;
+        // ret += "[{addresses}] must start with '0x' and be forty characters long.\n";
+        // ret += "[{block_list}] may be a space-separated list of values, a start-end range, a [{special}], "
+        //          "or any combination.\n";
+        // ret += "This tool retrieves information from the local node or the ${FALLBACK} node, if configured "
+        //          "(see documentation).\n";
+        // ret += "If the queried node does not store historical state, the results are undefined.\n";
+        // ret += "[{special}] blocks are detailed under " + cTeal + "[{whenBlock --list}]" + cOff + ".\n";
+        // return ret;
     }
     return str;
 }

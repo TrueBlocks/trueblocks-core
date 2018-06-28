@@ -11,7 +11,7 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-#include "list.h"
+#include <vector>
 
 namespace qblocks {
 
@@ -44,22 +44,40 @@ namespace qblocks {
     class CFieldData {
     private:
         string_q m_fieldName;
-        uint32_t m_fieldID;
-        uint32_t m_fieldType;
+        size_t   m_fieldID;
+        uint64_t m_fieldType;
         bool     m_hidden;
 
     public:
         CFieldData(void) : m_fieldID(0), m_fieldType(0), m_hidden(false) { }
-
-        bool isHidden(void) const { return m_hidden; }
-        void setHidden(bool hide) { m_hidden = hide; }
+        CFieldData(const string_q& fn, size_t id, uint64_t t)
+            : m_fieldName(fn), m_fieldID(id), m_fieldType(t), m_hidden(false) { }
+        CFieldData(const CFieldData& cp) {
+            m_fieldName = cp.m_fieldName;
+            m_fieldID = cp.m_fieldID;
+            m_fieldType = cp.m_fieldType;
+            m_hidden = cp.m_hidden;
+        }
+        CFieldData& operator=(const CFieldData& cp) {
+            m_fieldName = cp.m_fieldName;
+            m_fieldID = cp.m_fieldID;
+            m_fieldType = cp.m_fieldType;
+            m_hidden = cp.m_hidden;
+            return *this;
+        }
+        bool isHidden(void) const {
+            return m_hidden;
+        }
+        void setHidden(bool hide) {
+            m_hidden = hide;
+        }
 
         bool isObject(void) const { return m_fieldType & TS_OBJECT; }
         bool isArray (void) const { return m_fieldType & TS_ARRAY;  }
 
         string_q getName(void) const { return m_fieldName; }
-        uint32_t getID  (void) const { return m_fieldID;   }
-        uint32_t getType(void) const { return m_fieldType; }
+        size_t   getID  (void) const { return m_fieldID;  }
+        uint64_t getType(void) const { return m_fieldType; }
         void     setName(const string_q& str) { m_fieldName = str; }
 
         bool operator==(const CFieldData& data) {
@@ -70,18 +88,14 @@ namespace qblocks {
             return true;
         }
         bool operator!=(const CFieldData& data) { return !operator==(data); }
+        friend bool operator<(const CFieldData& v1, const CFieldData& v2) {
+            return v1.getName() < v2.getName();
+        }
+        friend ostream& operator<<(ostream& os, const CFieldData& item);
 
         friend class CRuntimeClass;
         friend class CFieldList;
         friend class CBaseNode;
-        friend int sortFieldsByName(const void *v1, const void *v2);
     };
-
-    //-------------------------------------------------------------------------
-    class CFieldList : public SFList<CFieldData*> {
-    public:
-        CFieldList(void) : SFList<CFieldData*>() { }
-        const CFieldData *getFieldByID(uint32_t id) const;
-        const CFieldData *getFieldByName(const string_q& name) const;
-    };
+    typedef vector<CFieldData> CFieldDataArray;
 }  // namespace qblocks

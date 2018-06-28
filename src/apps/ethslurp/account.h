@@ -15,16 +15,11 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <vector>
 #include "abilib.h"
 #include "transaction.h"
 
 namespace qblocks {
-
-//--------------------------------------------------------------------------
-class CAccount;
-typedef SFArrayBase<CAccount>         CAccountArray;
-typedef SFList<CAccount*>             CAccountList;
-typedef SFUniqueList<CAccount*>       CAccountListU;
 
 // EXISTING_CODE
 // EXISTING_CODE
@@ -49,18 +44,20 @@ public:
 
     DECLARE_NODE(CAccount);
 
-    const CBaseNode *getObjectAt(const string_q& fieldName, uint32_t index) const override;
+    const CBaseNode *getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
     CAbi abi;
-    uint32_t deleteNotShowing(void);
+    size_t deleteNotShowing(void);
+    bool handleCustomFormat(CExportContext& ctx, const string_q& fmtIn, void *data = NULL) const;
     // EXISTING_CODE
+    friend bool operator<(const CAccount& v1, const CAccount& v2);
     friend ostream& operator<<(ostream& os, const CAccount& item);
 
 protected:
-    void Clear(void);
-    void Init(void);
-    void Copy(const CAccount& ac);
+    void clear(void);
+    void initialize(void);
+    void duplicate(const CAccount& ac);
     bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
@@ -69,7 +66,7 @@ protected:
 
 //--------------------------------------------------------------------------
 inline CAccount::CAccount(void) {
-    Init();
+    initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
@@ -78,7 +75,7 @@ inline CAccount::CAccount(void) {
 inline CAccount::CAccount(const CAccount& ac) {
     // EXISTING_CODE
     // EXISTING_CODE
-    Copy(ac);
+    duplicate(ac);
 }
 
 // EXISTING_CODE
@@ -86,22 +83,22 @@ inline CAccount::CAccount(const CAccount& ac) {
 
 //--------------------------------------------------------------------------
 inline CAccount::~CAccount(void) {
-    Clear();
+    clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CAccount::Clear(void) {
+inline void CAccount::clear(void) {
     // EXISTING_CODE
-    abi.abiByName.Clear();
-    abi.abiByEncoding.Clear();
+    abi.abiByName.clear();
+    abi.abiByEncoding.clear();
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CAccount::Init(void) {
-    CBaseNode::Init();
+inline void CAccount::initialize(void) {
+    CBaseNode::initialize();
 
     addr = "";
     header = "";
@@ -110,17 +107,17 @@ inline void CAccount::Init(void) {
     lastPage = 0;
     lastBlock = -1;
     nVisible = 0;
-    transactions.Clear();
+    transactions.clear();
 
     // EXISTING_CODE
-    abi.Init();
+    abi = CAbi();
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CAccount::Copy(const CAccount& ac) {
-    Clear();
-    CBaseNode::Copy(ac);
+inline void CAccount::duplicate(const CAccount& ac) {
+    clear();
+    CBaseNode::duplicate(ac);
 
     addr = ac.addr;
     header = ac.header;
@@ -141,16 +138,24 @@ inline void CAccount::Copy(const CAccount& ac) {
 
 //--------------------------------------------------------------------------
 inline CAccount& CAccount::operator=(const CAccount& ac) {
-    Copy(ac);
+    duplicate(ac);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
+//-------------------------------------------------------------------------
+inline bool operator<(const CAccount& v1, const CAccount& v2) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default sort defined in class definition, assume already sorted
+    return true;
+}
+
 //---------------------------------------------------------------------------
-IMPLEMENT_ARCHIVE_ARRAY(CAccountArray);
-IMPLEMENT_ARCHIVE_ARRAY_C(CAccountArray);
-IMPLEMENT_ARCHIVE_LIST(CAccountList);
+typedef vector<CAccount> CAccountArray;
+extern SFArchive& operator>>(SFArchive& archive, CAccountArray& array);
+extern SFArchive& operator<<(SFArchive& archive, const CAccountArray& array);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

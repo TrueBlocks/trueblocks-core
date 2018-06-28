@@ -15,16 +15,11 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <vector>
 #include "utillib.h"
 #include "parameter.h"
 
 namespace qblocks {
-
-//--------------------------------------------------------------------------
-class CFunction;
-typedef SFArrayBase<CFunction>         CFunctionArray;
-typedef SFList<CFunction*>             CFunctionList;
-typedef SFUniqueList<CFunction*>       CFunctionListU;
 
 // EXISTING_CODE
 // EXISTING_CODE
@@ -50,7 +45,7 @@ public:
 
     DECLARE_NODE(CFunction);
 
-    const CBaseNode *getObjectAt(const string_q& fieldName, uint32_t index) const override;
+    const CBaseNode *getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
     bool hasAddrs;
@@ -59,12 +54,14 @@ public:
     bool isBuiltin;
     string_q origName;
     // EXISTING_CODE
+    bool operator==(const CFunction& item) const;
+    friend bool operator<(const CFunction& v1, const CFunction& v2);
     friend ostream& operator<<(ostream& os, const CFunction& item);
 
 protected:
-    void Clear(void);
-    void Init(void);
-    void Copy(const CFunction& fu);
+    void clear(void);
+    void initialize(void);
+    void duplicate(const CFunction& fu);
     bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
@@ -73,7 +70,7 @@ protected:
 
 //--------------------------------------------------------------------------
 inline CFunction::CFunction(void) {
-    Init();
+    initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
@@ -82,7 +79,7 @@ inline CFunction::CFunction(void) {
 inline CFunction::CFunction(const CFunction& fu) {
     // EXISTING_CODE
     // EXISTING_CODE
-    Copy(fu);
+    duplicate(fu);
 }
 
 // EXISTING_CODE
@@ -90,20 +87,20 @@ inline CFunction::CFunction(const CFunction& fu) {
 
 //--------------------------------------------------------------------------
 inline CFunction::~CFunction(void) {
-    Clear();
+    clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CFunction::Clear(void) {
+inline void CFunction::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CFunction::Init(void) {
-    CBaseNode::Init();
+inline void CFunction::initialize(void) {
+    CBaseNode::initialize();
 
     name = "";
     type = "";
@@ -112,8 +109,8 @@ inline void CFunction::Init(void) {
     payable = 0;
     signature = "";
     encoding = "";
-    inputs.Clear();
-    outputs.Clear();
+    inputs.clear();
+    outputs.clear();
 
     // EXISTING_CODE
     hasAddrs = false;
@@ -123,9 +120,9 @@ inline void CFunction::Init(void) {
 }
 
 //--------------------------------------------------------------------------
-inline void CFunction::Copy(const CFunction& fu) {
-    Clear();
-    CBaseNode::Copy(fu);
+inline void CFunction::duplicate(const CFunction& fu) {
+    clear();
+    CBaseNode::duplicate(fu);
 
     name = fu.name;
     type = fu.type;
@@ -147,19 +144,37 @@ inline void CFunction::Copy(const CFunction& fu) {
 
 //--------------------------------------------------------------------------
 inline CFunction& CFunction::operator=(const CFunction& fu) {
-    Copy(fu);
+    duplicate(fu);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
+//-------------------------------------------------------------------------
+inline bool CFunction::operator==(const CFunction& item) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    return encoding % item.encoding;
+}
+
+//-------------------------------------------------------------------------
+inline bool operator<(const CFunction& v1, const CFunction& v2) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // Default sort as defined in class definition
+    return v1.encoding < v2.encoding;
+}
+
 //---------------------------------------------------------------------------
-IMPLEMENT_ARCHIVE_ARRAY(CFunctionArray);
-IMPLEMENT_ARCHIVE_ARRAY_C(CFunctionArray);
-IMPLEMENT_ARCHIVE_LIST(CFunctionList);
+typedef vector<CFunction> CFunctionArray;
+extern SFArchive& operator>>(SFArchive& archive, CFunctionArray& array);
+extern SFArchive& operator<<(SFArchive& archive, const CFunctionArray& array);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
+inline bool sortByFuncName(const CFunction& f1, const CFunction& f2) {
+    return f1.name < f2.name;
+}
 // EXISTING_CODE
 }  // namespace qblocks
 

@@ -18,6 +18,7 @@ class CState {
 public:
     bool needsNewline;
     blknum_t latestBlock;
+    blknum_t earliestBlock;
     SFUintBN totalVal;
     SFUintBN lastBal;
     SFAddress curAddr;

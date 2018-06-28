@@ -15,15 +15,10 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <vector>
 #include "abilib.h"
 
 namespace qblocks {
-
-//--------------------------------------------------------------------------
-class CIncomeStatement;
-typedef SFArrayBase<CIncomeStatement>         CIncomeStatementArray;
-typedef SFList<CIncomeStatement*>             CIncomeStatementList;
-typedef SFUniqueList<CIncomeStatement*>       CIncomeStatementListU;
 
 // EXISTING_CODE
 // EXISTING_CODE
@@ -34,7 +29,7 @@ public:
     SFIntBN begBal;
     SFIntBN inflow;
     SFIntBN outflow;
-    SFIntBN gasCost;
+    SFIntBN gasCostInWei;
     SFIntBN endBal;
     blknum_t blockNum;
 
@@ -54,12 +49,13 @@ public:
     void correct(void) { endBal = nodeBal; }
     friend class CAccountWatch;
     // EXISTING_CODE
+    friend bool operator<(const CIncomeStatement& v1, const CIncomeStatement& v2);
     friend ostream& operator<<(ostream& os, const CIncomeStatement& item);
 
 protected:
-    void Clear(void);
-    void Init(void);
-    void Copy(const CIncomeStatement& in);
+    void clear(void);
+    void initialize(void);
+    void duplicate(const CIncomeStatement& in);
     bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
@@ -68,7 +64,7 @@ protected:
 
 //--------------------------------------------------------------------------
 inline CIncomeStatement::CIncomeStatement(void) {
-    Init();
+    initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
@@ -77,7 +73,7 @@ inline CIncomeStatement::CIncomeStatement(void) {
 inline CIncomeStatement::CIncomeStatement(const CIncomeStatement& in) {
     // EXISTING_CODE
     // EXISTING_CODE
-    Copy(in);
+    duplicate(in);
 }
 
 // EXISTING_CODE
@@ -85,25 +81,25 @@ inline CIncomeStatement::CIncomeStatement(const CIncomeStatement& in) {
 
 //--------------------------------------------------------------------------
 inline CIncomeStatement::~CIncomeStatement(void) {
-    Clear();
+    clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CIncomeStatement::Clear(void) {
+inline void CIncomeStatement::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CIncomeStatement::Init(void) {
-    CBaseNode::Init();
+inline void CIncomeStatement::initialize(void) {
+    CBaseNode::initialize();
 
     begBal = 0;
     inflow = 0;
     outflow = 0;
-    gasCost = 0;
+    gasCostInWei = 0;
     endBal = 0;
     blockNum = 0;
 
@@ -112,14 +108,14 @@ inline void CIncomeStatement::Init(void) {
 }
 
 //--------------------------------------------------------------------------
-inline void CIncomeStatement::Copy(const CIncomeStatement& in) {
-    Clear();
-    CBaseNode::Copy(in);
+inline void CIncomeStatement::duplicate(const CIncomeStatement& in) {
+    clear();
+    CBaseNode::duplicate(in);
 
     begBal = in.begBal;
     inflow = in.inflow;
     outflow = in.outflow;
-    gasCost = in.gasCost;
+    gasCostInWei = in.gasCostInWei;
     endBal = in.endBal;
     blockNum = in.blockNum;
 
@@ -130,16 +126,24 @@ inline void CIncomeStatement::Copy(const CIncomeStatement& in) {
 
 //--------------------------------------------------------------------------
 inline CIncomeStatement& CIncomeStatement::operator=(const CIncomeStatement& in) {
-    Copy(in);
+    duplicate(in);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
+//-------------------------------------------------------------------------
+inline bool operator<(const CIncomeStatement& v1, const CIncomeStatement& v2) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default sort defined in class definition, assume already sorted
+    return true;
+}
+
 //---------------------------------------------------------------------------
-IMPLEMENT_ARCHIVE_ARRAY(CIncomeStatementArray);
-IMPLEMENT_ARCHIVE_ARRAY_C(CIncomeStatementArray);
-IMPLEMENT_ARCHIVE_LIST(CIncomeStatementList);
+typedef vector<CIncomeStatement> CIncomeStatementArray;
+extern SFArchive& operator>>(SFArchive& archive, CIncomeStatementArray& array);
+extern SFArchive& operator<<(SFArchive& archive, const CIncomeStatementArray& array);
 
 //---------------------------------------------------------------------------
 extern SFArchive& operator<<(SFArchive& archive, const CIncomeStatement& inc);
@@ -148,12 +152,11 @@ extern SFArchive& operator>>(SFArchive& archive, CIncomeStatement& inc);
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 //------------------------------------------------------------
-inline void CIncomeStatement::operator+=(const CIncomeStatement &x)
-{
+inline void CIncomeStatement::operator+=(const CIncomeStatement &x) {
     begBal += x.begBal;
     inflow += x.inflow;
     outflow += x.outflow;
-    gasCost += x.gasCost;
+    gasCostInWei += x.gasCostInWei;
     endBal += x.endBal;
     blockNum = x.blockNum;
 }

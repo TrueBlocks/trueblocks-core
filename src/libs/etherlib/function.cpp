@@ -36,8 +36,8 @@ void CFunction::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr
     }
 
     string_q fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, dataPtr))
-        return;
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     while (!fmt.empty())
         ctx << getNextChunk(fmt, nextFunctionChunk, this);
@@ -61,7 +61,7 @@ bool CFunction::setValueByName(const string_q& fieldName, const string_q& fieldV
         signature = getSignature(SIG_CANONICAL);
         return true;
     } else if (fieldName % "name") {
-        name = fieldValue.Substitute("_","");
+        name = substitute(fieldValue, "_", "");
         return true;
     }
     // EXISTING_CODE
@@ -78,13 +78,13 @@ bool CFunction::setValueByName(const string_q& fieldName, const string_q& fieldV
             break;
         case 'i':
             if ( fieldName % "inputs" ) {
-                char *p = (char *)fieldValue.c_str();
+                char *p = (char *)fieldValue.c_str();  // NOLINT
                 while (p && *p) {
                     CParameter item;
-                    uint32_t nFields = 0;
+                    size_t nFields = 0;
                     p = item.parseJson(p, nFields);
                     if (nFields)
-                        inputs[inputs.getCount()] = item;
+                        inputs.push_back(item);
                 }
                 return true;
             }
@@ -94,13 +94,13 @@ bool CFunction::setValueByName(const string_q& fieldName, const string_q& fieldV
             break;
         case 'o':
             if ( fieldName % "outputs" ) {
-                char *p = (char *)fieldValue.c_str();
+                char *p = (char *)fieldValue.c_str();  // NOLINT
                 while (p && *p) {
                     CParameter item;
-                    uint32_t nFields = 0;
+                    size_t nFields = 0;
                     p = item.parseJson(p, nFields);
                     if (nFields)
-                        outputs[outputs.getCount()] = item;
+                        outputs.push_back(item);
                 }
                 return true;
             }
@@ -123,15 +123,15 @@ bool CFunction::setValueByName(const string_q& fieldName, const string_q& fieldV
 //---------------------------------------------------------------------------------------------------
 void CFunction::finishParse() {
     // EXISTING_CODE
-    for (uint32_t i = 0 ; i < inputs.getCount() ; i++)
+    for (size_t i = 0 ; i < inputs.size() ; i++)
         hasAddrs |= (inputs[i].type == "address");
     signature = getSignature(SIG_CANONICAL);
     encoding  = encodeItem();
     // The input parameters need to have a name. If not, we provide one
     int cnt = 0;
-    for (uint32_t i = 0 ; i < inputs.getCount() ; i++) {
+    for (size_t i = 0 ; i < inputs.size() ; i++) {
         if (inputs[i].name.empty())
-            inputs[i].name = "param_" + asString(cnt++);
+            inputs.at(i).name = "param_" + asString(cnt++);  // the non-const reference already exists
     }
     // EXISTING_CODE
 }
@@ -183,12 +183,33 @@ bool CFunction::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
+SFArchive& operator>>(SFArchive& archive, CFunctionArray& array) {
+    uint64_t count;
+    archive >> count;
+    array.resize(count);
+    for (size_t i = 0 ; i < count ; i++) {
+        ASSERT(i < array.capacity());
+        array.at(i).Serialize(archive);
+    }
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+SFArchive& operator<<(SFArchive& archive, const CFunctionArray& array) {
+    uint64_t count = array.size();
+    archive << count;
+    for (size_t i = 0 ; i < array.size() ; i++)
+        array[i].SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
 void CFunction::registerClass(void) {
     static bool been_here = false;
     if (been_here) return;
     been_here = true;
 
-    uint32_t fieldNum = 1000;
+    size_t fieldNum = 1000;
     ADD_FIELD(CFunction, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CFunction, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CFunction, "showing", T_BOOL,  ++fieldNum);
@@ -222,9 +243,9 @@ string_q nextFunctionChunk_custom(const string_q& fieldIn, const void *dataPtr) 
             case 'h':
                 if ( fieldIn % "hex" ) {
                     string_q ret = fun->name + "(";
-                    for (uint32_t i = 0 ; i < fun->inputs.getCount() ; i++) {
+                    for (size_t i = 0 ; i < fun->inputs.size() ; i++) {
                         ret += fun->inputs[i].type;
-                        if (i < fun->inputs.getCount())
+                        if (i < fun->inputs.size())
                             ret += ",";
                     }
                     ret += ")";
@@ -251,6 +272,8 @@ string_q nextFunctionChunk_custom(const string_q& fieldIn, const void *dataPtr) 
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
                     return nextBasenodeChunk(fieldIn, fun);
+                // EXISTING_CODE
+                // EXISTING_CODE
                 break;
 
             default:
@@ -259,13 +282,6 @@ string_q nextFunctionChunk_custom(const string_q& fieldIn, const void *dataPtr) 
     }
 
     return "";
-}
-
-//---------------------------------------------------------------------------
-bool CFunction::handleCustomFormat(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
-    return false;
 }
 
 //---------------------------------------------------------------------------
@@ -299,12 +315,12 @@ string_q CFunction::getValueByName(const string_q& fieldName) const {
             break;
         case 'i':
             if ( fieldName % "inputs" || fieldName % "inputsCnt" ) {
-                uint32_t cnt = inputs.getCount();
+                size_t cnt = inputs.size();
                 if (endsWith(fieldName, "Cnt"))
                     return asStringU(cnt);
                 if (!cnt) return "";
                 string_q retS;
-                for (uint32_t i = 0 ; i < cnt ; i++) {
+                for (size_t i = 0 ; i < cnt ; i++) {
                     retS += inputs[i].Format();
                     retS += ((i < cnt - 1) ? ",\n" : "\n");
                 }
@@ -316,12 +332,12 @@ string_q CFunction::getValueByName(const string_q& fieldName) const {
             break;
         case 'o':
             if ( fieldName % "outputs" || fieldName % "outputsCnt" ) {
-                uint32_t cnt = outputs.getCount();
+                size_t cnt = outputs.size();
                 if (endsWith(fieldName, "Cnt"))
                     return asStringU(cnt);
                 if (!cnt) return "";
                 string_q retS;
-                for (uint32_t i = 0 ; i < cnt ; i++) {
+                for (size_t i = 0 ; i < cnt ; i++) {
                     retS += outputs[i].Format();
                     retS += ((i < cnt - 1) ? ",\n" : "\n");
                 }
@@ -356,10 +372,10 @@ ostream& operator<<(ostream& os, const CFunction& item) {
 }
 
 //---------------------------------------------------------------------------
-const CBaseNode *CFunction::getObjectAt(const string_q& fieldName, uint32_t index) const {
-    if ( fieldName % "inputs" && index < inputs.getCount() )
+const CBaseNode *CFunction::getObjectAt(const string_q& fieldName, size_t index) const {
+    if ( fieldName % "inputs" && index < inputs.size() )
         return &inputs[index];
-    if ( fieldName % "outputs" && index < outputs.getCount() )
+    if ( fieldName % "outputs" && index < outputs.size() )
         return &outputs[index];
     return NULL;
 }
@@ -368,33 +384,40 @@ const CBaseNode *CFunction::getObjectAt(const string_q& fieldName, uint32_t inde
 // EXISTING_CODE
 //---------------------------------------------------------------------------
 string_q CFunction::getSignature(uint64_t parts) const {
-    uint32_t cnt = inputs.getCount();
+    size_t cnt = inputs.size();
 
     string_q nm = (origName.empty() ? name : origName);
-    CStringExportContext ctx;
-    ctx << (parts & SIG_FTYPE  ? "\t"+type+" " : "");
-    ctx << (parts & SIG_FNAME  ? nm            : "");
-    ctx << (parts & SIG_FSPACE ? string_q(' ', 35-type.length()-nm.length()) : "");
-    ctx << (parts & SIG_FTYPE || parts & SIG_FNAME  ? "("    : "");
-    for (uint32_t j = 0 ; j < cnt ; j++) {
-        ctx << (parts & SIG_ITYPE    ? inputs[j].type : "");
-        ctx << (parts & SIG_IINDEXED ? (inputs[j].indexed ? " indexed" : "") : "");
-        ctx << (parts & SIG_INAME    ? " "+inputs[j].name : "");
-        ctx << (parts & SIG_ITYPE    ? (j < cnt-1 ? "," : "") : "");
+
+    size_t tl = type.length();
+    size_t nl = nm.length();
+    size_t v1 = 35 - tl;
+    size_t ll = (nl > v1 ? 0 : v1 - nl);
+
+    ostringstream os;
+    os << (parts & SIG_FTYPE  ? "\t"+type+" " : "");
+    os << (parts & SIG_FNAME  ? nm            : "");
+    os << (parts & SIG_FSPACE ? string_q(ll, ' ') : "");
+    os << (parts & SIG_FTYPE || parts & SIG_FNAME  ? "("    : "");
+    for (size_t j = 0 ; j < cnt ; j++) {
+        os << (parts & SIG_ITYPE    ? inputs[j].type : "");
+        os << (parts & SIG_IINDEXED ? (inputs[j].indexed ? " indexed" : "") : "");
+        os << (parts & SIG_INAME    ? " "+inputs[j].name : "");
+        os << (parts & SIG_ITYPE    ? (j < cnt-1 ? "," : "") : "");
     }
-    ctx << (parts & SIG_FTYPE || parts & SIG_FNAME  ? ")" : "");
+    os << (parts & SIG_FTYPE || parts & SIG_FNAME  ? ")" : "");
     if (parts == SIG_ENCODE)
-        ctx << (parts & SIG_ENCODE ? (parts & SIG_FNAME ? " " + encoding : encoding + " ") : "");
+        os << (parts & SIG_ENCODE ? (parts & SIG_FNAME ? " " + encoding : encoding + " ") : "");
     else
-        ctx << (parts & SIG_ENCODE ? " [" + encoding + "]" : "");
+        os << (parts & SIG_ENCODE ? " [" + encoding + "]" : "");
     if (verbose && parts != SIG_CANONICAL) {
-        ctx << (anonymous ? " anonymous" : "");
-        ctx << (constant  ? " constant" : "");
-        ctx << (payable   ? " payable" : "");
+        os << (anonymous ? " anonymous" : "");
+        os << (constant  ? " constant" : "");
+        os << (payable   ? " payable" : "");
     }
 
-    replaceAll(ctx.str, " )", ")");
-    return trim(ctx.str);
+    string_q ret = os.str().c_str();
+    replaceAll(ret, " )", ")");
+    return trim(ret);
 }
 
 //-----------------------------------------------------------------------
@@ -403,7 +426,7 @@ string_q CFunction::encodeItem(void) const {
     string_q ret;
 extern bool getSha3(const string_q& hexIn, string_q& shaOut);
     getSha3(hex, ret);
-    ret = (type == "event" ? ret : ret.substr(0,10));
+    ret = (type == "event" ? ret : extract(ret, 0, 10));
     return ret;
 }
 // EXISTING_CODE

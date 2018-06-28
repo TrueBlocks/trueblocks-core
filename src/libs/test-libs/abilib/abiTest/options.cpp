@@ -17,7 +17,7 @@ CParams params[] = {
     CParams("~mode", "Mode of operation. One or more of 'encoding' or 'generation'.\n"),
     CParams("",      "Simple program to illustrate how to encode function and event signatures.\n"),
 };
-uint32_t nParams = sizeof(params) / sizeof(CParams);
+size_t nParams = sizeof(params) / sizeof(CParams);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
@@ -28,7 +28,7 @@ bool COptions::parseArguments(string_q& command) {
     Init();
     while (!command.empty()) {
         string_q arg = nextTokenClear(command, ' ');
-        if (arg == "encoding" || arg == "generation") {
+        if (arg == "encoding" || arg == "generation" || arg == "old_bug") {
             mode += (arg + "|");
         } else {
             return usage("Invalid argument " + arg + ". Please enter either 'encoding' or 'generation'. Quitting...");

@@ -28,14 +28,14 @@ public:
     SFTime lastDate;
     bool openFile;
     string_q addr;
-    uint32_t maxTransactions;
-    uint32_t pageSize;
+    size_t maxTransactions;
+    size_t pageSize;
     string_q exportFormat;
     string_q name;
     string_q archiveFile;
     bool wantsArchive;
     bool cache;
-    uint32_t acct_id;
+    size_t acct_id;
     FILE *output;  // for use when -a is on
 
     COptions(void);
@@ -45,3 +45,38 @@ public:
     bool parseArguments(string_q& command) override;
     void Init(void) override;
 };
+
+//---------------------------------------------------------------------------------------------------
+class CFileExportContext : public CExportContext {
+public:
+    FILE *m_output;
+    explicit CFileExportContext(void *output = NULL) {
+        m_output = ((output == NULL) ? stdout : reinterpret_cast<FILE*>(output));
+    }
+
+    CFileExportContext(const string_q& filename, const string_q& mode) {
+        m_output = fopen(filename.c_str(), mode.c_str());
+        if (!m_output)
+            m_output = stdout;
+    }
+
+    ~CFileExportContext(void) {
+        Close();
+    }
+
+    void  setOutput(void *output);
+    void *getOutput(void) const { return m_output; }
+    void  Output(const string_q& str);
+    void  flush(void) {
+        ASSERT(m_output)
+        fflush(m_output);
+    }
+    void Close(void) {
+        flush();
+        if (m_output != stdout && m_output != stderr)
+            fclose(m_output);
+        m_output = stdout;
+    }
+};
+
+extern CFileExportContext outScreen;

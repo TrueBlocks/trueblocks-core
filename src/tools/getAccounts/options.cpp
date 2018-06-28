@@ -18,7 +18,7 @@ CParams params[] = {
     CParams("-named",    "Show addresses from named accounts as per ethName"),
     CParams("",          "Show the list of Ethereum accounts known to the local node or named accounts."),
 };
-uint32_t nParams = sizeof(params) / sizeof(CParams);
+size_t nParams = sizeof(params) / sizeof(CParams);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
@@ -57,7 +57,7 @@ void COptions::Init(void) {
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
-    // will sort the fields in these classes if --parity is given
+    // Will sort the fields in these classes if --parity is given
     sorts[0] = GETRUNTIME_CLASS(CBlock);
     sorts[1] = GETRUNTIME_CLASS(CTransaction);
     sorts[2] = GETRUNTIME_CLASS(CReceipt);
@@ -66,7 +66,9 @@ COptions::COptions(void) {
     namesFile = CFilename(configPath("names/names.txt"));
     establishFolder(namesFile.getPath());
     if (!fileExists(namesFile.getFullPath()))
-        stringToAsciiFile(namesFile.getFullPath(), string_q(STR_DEFAULT_DATA).Substitute(" |","|").Substitute("|","\t"));
+        stringToAsciiFile(namesFile.getFullPath(),
+                substitute(
+                substitute(string_q(STR_DEFAULT_DATA), " |", "|"), "|", "\t"));
     loadNames();
     Init();
 }

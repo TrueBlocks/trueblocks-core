@@ -37,8 +37,8 @@ void CIncomeStatement::Format(CExportContext& ctx, const string_q& fmtIn, void *
     }
 
     string_q fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, dataPtr))
-        return;
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     while (!fmt.empty())
         ctx << getNextChunk(fmt, nextIncomestatementChunk, this);
@@ -62,20 +62,20 @@ bool CIncomeStatement::setValueByName(const string_q& fieldName, const string_q&
 
     switch (tolower(fieldName[0])) {
         case 'b':
-            if ( fieldName % "begBal" ) { begBal = toLong(fieldValue); return true; }
+            if ( fieldName % "begBal" ) { begBal = toWei(fieldValue); return true; }
             if ( fieldName % "blockNum" ) { blockNum = toUnsigned(fieldValue); return true; }
             break;
         case 'e':
-            if ( fieldName % "endBal" ) { endBal = toLong(fieldValue); return true; }
+            if ( fieldName % "endBal" ) { endBal = toWei(fieldValue); return true; }
             break;
         case 'g':
-            if ( fieldName % "gasCost" ) { gasCost = toLong(fieldValue); return true; }
+            if ( fieldName % "gasCostInWei" ) { gasCostInWei = toWei(fieldValue); return true; }
             break;
         case 'i':
-            if ( fieldName % "inflow" ) { inflow = toLong(fieldValue); return true; }
+            if ( fieldName % "inflow" ) { inflow = toWei(fieldValue); return true; }
             break;
         case 'o':
-            if ( fieldName % "outflow" ) { outflow = toLong(fieldValue); return true; }
+            if ( fieldName % "outflow" ) { outflow = toWei(fieldValue); return true; }
             break;
         default:
             break;
@@ -104,7 +104,7 @@ bool CIncomeStatement::Serialize(SFArchive& archive) {
     archive >> begBal;
     archive >> inflow;
     archive >> outflow;
-    archive >> gasCost;
+    archive >> gasCostInWei;
     archive >> endBal;
     archive >> blockNum;
     finishParse();
@@ -122,11 +122,32 @@ bool CIncomeStatement::SerializeC(SFArchive& archive) const {
     archive << begBal;
     archive << inflow;
     archive << outflow;
-    archive << gasCost;
+    archive << gasCostInWei;
     archive << endBal;
     archive << blockNum;
 
     return true;
+}
+
+//---------------------------------------------------------------------------
+SFArchive& operator>>(SFArchive& archive, CIncomeStatementArray& array) {
+    uint64_t count;
+    archive >> count;
+    array.resize(count);
+    for (size_t i = 0 ; i < count ; i++) {
+        ASSERT(i < array.capacity());
+        array.at(i).Serialize(archive);
+    }
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+SFArchive& operator<<(SFArchive& archive, const CIncomeStatementArray& array) {
+    uint64_t count = array.size();
+    archive << count;
+    for (size_t i = 0 ; i < array.size() ; i++)
+        array[i].SerializeC(archive);
+    return archive;
 }
 
 //---------------------------------------------------------------------------
@@ -135,14 +156,14 @@ void CIncomeStatement::registerClass(void) {
     if (been_here) return;
     been_here = true;
 
-    uint32_t fieldNum = 1000;
+    size_t fieldNum = 1000;
     ADD_FIELD(CIncomeStatement, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CIncomeStatement, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CIncomeStatement, "showing", T_BOOL,  ++fieldNum);
     ADD_FIELD(CIncomeStatement, "begBal", T_NUMBER, ++fieldNum);
     ADD_FIELD(CIncomeStatement, "inflow", T_NUMBER, ++fieldNum);
     ADD_FIELD(CIncomeStatement, "outflow", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CIncomeStatement, "gasCost", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CIncomeStatement, "gasCostInWei", T_NUMBER, ++fieldNum);
     ADD_FIELD(CIncomeStatement, "endBal", T_NUMBER, ++fieldNum);
     ADD_FIELD(CIncomeStatement, "blockNum", T_NUMBER, ++fieldNum);
 
@@ -166,6 +187,8 @@ string_q nextIncomestatementChunk_custom(const string_q& fieldIn, const void *da
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
                     return nextBasenodeChunk(fieldIn, inc);
+                // EXISTING_CODE
+                // EXISTING_CODE
                 break;
 
             default:
@@ -174,13 +197,6 @@ string_q nextIncomestatementChunk_custom(const string_q& fieldIn, const void *da
     }
 
     return "";
-}
-
-//---------------------------------------------------------------------------
-bool CIncomeStatement::handleCustomFormat(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
-    return false;
 }
 
 //---------------------------------------------------------------------------
@@ -223,7 +239,7 @@ string_q CIncomeStatement::getValueByName(const string_q& fieldName) const {
             if ( fieldName % "endBal" ) return asStringBN(endBal);
             break;
         case 'g':
-            if ( fieldName % "gasCost" ) return asStringBN(gasCost);
+            if ( fieldName % "gasCostInWei" ) return asStringBN(gasCostInWei);
             break;
         case 'i':
             if ( fieldName % "inflow" ) return asStringBN(inflow);
@@ -243,8 +259,8 @@ string_q CIncomeStatement::getValueByName(const string_q& fieldName) const {
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const CIncomeStatement& item) {
     // EXISTING_CODE
-    if (sizeof(item) != 0) { // do this to always go through here, but avoid a warning
-        uint32_t width = 22;
+    if (sizeof(item) != 0) {  // do this to always go through here, but avoid a warning
+        uint64_t width = 22;
         if (item.begBal == item.endBal && item.begBal == -1) {
             os << padCenter("begBal", width) << "   "
                 << padCenter("inFlow", width) << "   "
@@ -252,11 +268,11 @@ ostream& operator<<(ostream& os, const CIncomeStatement& item) {
                 << padCenter("gasCost", width) << "   "
                 << padCenter("endBal", width);
         } else {
-            os << (item.begBal>0?cGreen:bBlack) << padLeft(wei2Ether(to_string(item.begBal).c_str()),width) << bBlack << "   ";
-            os << (item.inflow>0?cYellow:"") << padLeft(wei2Ether(to_string(item.inflow).c_str()),width) << bBlack << "   ";
-            os << (item.outflow>0?cYellow:"") << padLeft(wei2Ether(to_string(item.outflow).c_str()),width) << bBlack << "   ";
-            os << (item.gasCost>0?cYellow:"") << padLeft(wei2Ether(to_string(item.gasCost).c_str()),width) << cOff << "   ";
-            os << (item.endBal>0?cGreen:bBlack) << padLeft(wei2Ether(to_string(item.endBal).c_str()),width);
+            os << (item.begBal>0?cGreen:bBlack) << padLeft(wei2Ether(to_string(item.begBal).c_str()),width) << bBlack << "   ";  // NOLINT
+            os << (item.inflow>0?cYellow:"") << padLeft(wei2Ether(to_string(item.inflow).c_str()),width) << bBlack << "   ";  // NOLINT
+            os << (item.outflow>0?cYellow:"") << padLeft(wei2Ether(to_string(item.outflow).c_str()),width) << bBlack << "   ";  // NOLINT
+            os << (item.gasCostInWei>0?cYellow:"") << padLeft(wei2Ether(to_string(item.gasCostInWei).c_str()),width) << cOff << "   ";  // NOLINT
+            os << (item.endBal>0?cGreen:bBlack) << padLeft(wei2Ether(to_string(item.endBal).c_str()),width);  // NOLINT
         }
         { return os; }
     }

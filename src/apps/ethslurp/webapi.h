@@ -27,7 +27,7 @@ public:
     CWebAPI(void);
     ~CWebAPI(void);
 
-    bool checkKey(CToml& toml);
+    bool checkKey(void);
     string_q getKey(void) const;
 };
 }  // namespace qblocks

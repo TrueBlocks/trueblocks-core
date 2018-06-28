@@ -15,15 +15,10 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <vector>
 #include "abilib.h"
 
 namespace qblocks {
-
-//--------------------------------------------------------------------------
-class CPriceQuote;
-typedef SFArrayBase<CPriceQuote>         CPriceQuoteArray;
-typedef SFList<CPriceQuote*>             CPriceQuoteList;
-typedef SFUniqueList<CPriceQuote*>       CPriceQuoteListU;
 
 // EXISTING_CODE
 // EXISTING_CODE
@@ -45,12 +40,13 @@ public:
     // EXISTING_CODE
     SFTime date;
     // EXISTING_CODE
+    friend bool operator<(const CPriceQuote& v1, const CPriceQuote& v2);
     friend ostream& operator<<(ostream& os, const CPriceQuote& item);
 
 protected:
-    void Clear(void);
-    void Init(void);
-    void Copy(const CPriceQuote& pr);
+    void clear(void);
+    void initialize(void);
+    void duplicate(const CPriceQuote& pr);
     bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
@@ -59,7 +55,7 @@ protected:
 
 //--------------------------------------------------------------------------
 inline CPriceQuote::CPriceQuote(void) {
-    Init();
+    initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
@@ -68,7 +64,7 @@ inline CPriceQuote::CPriceQuote(void) {
 inline CPriceQuote::CPriceQuote(const CPriceQuote& pr) {
     // EXISTING_CODE
     // EXISTING_CODE
-    Copy(pr);
+    duplicate(pr);
 }
 
 // EXISTING_CODE
@@ -76,20 +72,20 @@ inline CPriceQuote::CPriceQuote(const CPriceQuote& pr) {
 
 //--------------------------------------------------------------------------
 inline CPriceQuote::~CPriceQuote(void) {
-    Clear();
+    clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CPriceQuote::Clear(void) {
+inline void CPriceQuote::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CPriceQuote::Init(void) {
-    CBaseNode::Init();
+inline void CPriceQuote::initialize(void) {
+    CBaseNode::initialize();
 
     timestamp = 0;
     close = 0.0;
@@ -100,9 +96,9 @@ inline void CPriceQuote::Init(void) {
 }
 
 //--------------------------------------------------------------------------
-inline void CPriceQuote::Copy(const CPriceQuote& pr) {
-    Clear();
-    CBaseNode::Copy(pr);
+inline void CPriceQuote::duplicate(const CPriceQuote& pr) {
+    clear();
+    CBaseNode::duplicate(pr);
 
     timestamp = pr.timestamp;
     close = pr.close;
@@ -115,16 +111,24 @@ inline void CPriceQuote::Copy(const CPriceQuote& pr) {
 
 //--------------------------------------------------------------------------
 inline CPriceQuote& CPriceQuote::operator=(const CPriceQuote& pr) {
-    Copy(pr);
+    duplicate(pr);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
+//-------------------------------------------------------------------------
+inline bool operator<(const CPriceQuote& v1, const CPriceQuote& v2) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default sort defined in class definition, assume already sorted
+    return true;
+}
+
 //---------------------------------------------------------------------------
-IMPLEMENT_ARCHIVE_ARRAY(CPriceQuoteArray);
-IMPLEMENT_ARCHIVE_ARRAY_C(CPriceQuoteArray);
-IMPLEMENT_ARCHIVE_LIST(CPriceQuoteList);
+typedef vector<CPriceQuote> CPriceQuoteArray;
+extern SFArchive& operator>>(SFArchive& archive, CPriceQuoteArray& array);
+extern SFArchive& operator<<(SFArchive& archive, const CPriceQuoteArray& array);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

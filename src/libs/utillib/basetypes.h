@@ -38,12 +38,18 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <vector>
+#include <map>
+#include <tuple>
 
 //-------------------------------------------------------------------------
 using namespace std;  // NOLINT
 
+//--------------------------------------------------------------------
+#define NOPOS ((size_t)-1)
+
 //-------------------------------------------------------------------------
-//#define DEBUG 1
+// #define DEBUG 1
 #ifdef _DEBUG
 #define ASSERT(a) { if (!(a)) { cout << "error at " << __FILE__ << "(" << __LINE__ << ")\n"; } }
 #define XX(a) { cout << __FILE__ << " : " << __LINE__ << "\n\t" << (a) << "\n" ; cout.flush(); }
@@ -54,12 +60,16 @@ using namespace std;  // NOLINT
 
 //-------------------------------------------------------------------------
 #include "sfstring.h"
-#include "list.h"
 
 namespace qblocks {
+    //-------------------------------------------------------------------------
+    typedef bool (*APPLYFUNC)(string_q& line, void *data);
+    typedef int  (*SEARCHFUNC)    (const void *ob1, const void *ob2);
+    typedef int  (*SORTINGFUNC)   (const void *ob1, const void *ob2);
+
     //---------------------------------------------------------------------------
     inline bool isTestMode(void) {
-        return (string_q(getenv("TEST_MODE")) == "true");
+        return (getEnvStr("TEST_MODE") == "true");
     }
 }  // namespace qblocks
 

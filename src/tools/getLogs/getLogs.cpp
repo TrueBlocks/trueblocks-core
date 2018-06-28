@@ -39,35 +39,37 @@ bool visitTransaction(CTransaction& trans, void *data) {
 
     bool badHash = !isHash(trans.hash);
     bool isBlock = contains(trans.hash, "block");
-    trans.hash = trans.hash.Substitute("-block_not_found","").Substitute("-trans_not_found","");
+    trans.hash = substitute(substitute(trans.hash, "-block_not_found", ""), "-trans_not_found", "");
     if (opt->isRaw) {
         if (badHash) {
-            cerr << "{\"jsonrpc\":\"2.0\",\"result\":{\"hash\":\"" << trans.hash.Substitute(" ","") << "\",\"result\":\"";
+            cerr << "{\"jsonrpc\":\"2.0\",\"result\":{\"hash\":\"";
+            cerr << substitute(trans.hash, " ", "") << "\",\"result\":\"";
             cerr << (isBlock ? "block " : "");
             cerr << "hash not found\"},\"id\":-1}" << "\n";
             return true;
         }
 
         // Note: this call is redundant. The transaction is already populated (if it's valid), but we need the raw data)
-//        string_q results;
-//        queryRawLogs(results, trans.getValueByName("hash"));
-//        cout << results;
-//        return true;
+        //        string_q results;
+        //        queryRawLogs(results, trans.getValueByName("hash"));
+        //        cout << results;
+        //        return true;
         cout << "Raw option is not implemented.\n";
         exit(0);
     }
 
     if (badHash) {
-        cerr << cRed << "Warning:" << cOff << " The " << (isBlock ? "block " : "") << "hash " << cYellow << trans.hash << cOff << " was not found.\n";
+        cerr << cRed << "Warning:" << cOff;
+        cerr << " The " << (isBlock ? "block " : "") << "hash " << cYellow << trans.hash << cOff << " was not found.\n";
         return true;
     }
 
-	cout << "[";
-	for (uint32_t i = 0 ; i < trans.receipt.logs.getCount() ; i++) {
-		trans.receipt.logs[i].doExport(cout);
-		cout << (i < trans.receipt.logs.getCount()-1 ? ",\n" : "\n");
-	}
-	cout << "]\n";
+    cout << "[";
+    for (size_t i = 0 ; i < trans.receipt.logs.size() ; i++) {
+        trans.receipt.logs[i].doExport(cout);
+        cout << (i < trans.receipt.logs.size()-1 ? ",\n" : "\n");
+    }
+    cout << "]\n";
 
     return true;
 }

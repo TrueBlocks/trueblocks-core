@@ -15,17 +15,12 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <vector>
 #include "abilib.h"
 #include "receipt.h"
 #include "trace.h"
 
 namespace qblocks {
-
-//--------------------------------------------------------------------------
-class CTransaction;
-typedef SFArrayBase<CTransaction>         CTransactionArray;
-typedef SFList<CTransaction*>             CTransactionList;
-typedef SFUniqueList<CTransaction*>       CTransactionListU;
 
 // EXISTING_CODE
 class CBlock;
@@ -58,45 +53,33 @@ public:
 
     DECLARE_NODE(CTransaction);
 
-    const CBaseNode *getObjectAt(const string_q& fieldName, uint32_t index) const override;
+    const CBaseNode *getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
     const CBlock *pBlock;
-    CFunction *funcPtr;
+    const CFunction *funcPtr;
     string_q function;
     double ether;
     CTraceArray traces;
 
     string_q inputToFunction(void) const;
-#if 0
-    string_q creates;
-    uint32_t confirmations;
-    SFAddress contractAddress;
-    SFHash r;
-    string_q raw;
-    SFHash s;
-    SFHash v;
-    CTrace trace;
-#endif
-    bool operator==(const CTransaction& tr) const;
-    bool operator!=(const CTransaction& tr) const { return !operator==(tr); }
     // EXISTING_CODE
+    friend bool operator<(const CTransaction& v1, const CTransaction& v2);
     friend ostream& operator<<(ostream& os, const CTransaction& item);
 
 protected:
-    void Clear(void);
-    void Init(void);
-    void Copy(const CTransaction& tr);
+    void clear(void);
+    void initialize(void);
+    void duplicate(const CTransaction& tr);
     bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
-    friend int sortTransactionsForWrite(const void *rr1, const void *rr2);
     // EXISTING_CODE
 };
 
 //--------------------------------------------------------------------------
 inline CTransaction::CTransaction(void) {
-    Init();
+    initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
@@ -105,7 +88,7 @@ inline CTransaction::CTransaction(void) {
 inline CTransaction::CTransaction(const CTransaction& tr) {
     // EXISTING_CODE
     // EXISTING_CODE
-    Copy(tr);
+    duplicate(tr);
 }
 
 // EXISTING_CODE
@@ -113,20 +96,20 @@ inline CTransaction::CTransaction(const CTransaction& tr) {
 
 //--------------------------------------------------------------------------
 inline CTransaction::~CTransaction(void) {
-    Clear();
+    clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CTransaction::Clear(void) {
+inline void CTransaction::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CTransaction::Init(void) {
-    CBaseNode::Init();
+inline void CTransaction::initialize(void) {
+    CBaseNode::initialize();
 
     hash = "";
     blockHash = "";
@@ -142,30 +125,20 @@ inline void CTransaction::Init(void) {
     input = "";
     isError = 0;
     isInternal = 0;
-    receipt.Init();
+    receipt.initialize();
 
     // EXISTING_CODE
     pBlock = NULL;
     function = "";
     funcPtr = NULL;
     ether = 0.;
-#if 0
-    creates = "";
-    confirmations = 0;
-    contractAddress = "";
-    r = "";
-    raw = "";
-    s = "";
-    v = "";
-    trace.Init();
-#endif
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CTransaction::Copy(const CTransaction& tr) {
-    Clear();
-    CBaseNode::Copy(tr);
+inline void CTransaction::duplicate(const CTransaction& tr) {
+    clear();
+    CBaseNode::duplicate(tr);
 
     hash = tr.hash;
     blockHash = tr.blockHash;
@@ -188,32 +161,30 @@ inline void CTransaction::Copy(const CTransaction& tr) {
     funcPtr = tr.funcPtr;
     function = tr.function;
     ether = tr.ether;
-#if 0
-    creates = tr.creates;
-    confirmations = tr.confirmations;
-    contractAddress = tr.contractAddress;
-    r = tr.r;
-    raw = tr.raw;
-    s = tr.s;
-    v = tr.v;
-    trace = tr.trace;
-#endif
     // EXISTING_CODE
     finishParse();
 }
 
 //--------------------------------------------------------------------------
 inline CTransaction& CTransaction::operator=(const CTransaction& tr) {
-    Copy(tr);
+    duplicate(tr);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
+//-------------------------------------------------------------------------
+inline bool operator<(const CTransaction& v1, const CTransaction& v2) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default sort defined in class definition, assume already sorted
+    return true;
+}
+
 //---------------------------------------------------------------------------
-IMPLEMENT_ARCHIVE_ARRAY(CTransactionArray);
-IMPLEMENT_ARCHIVE_ARRAY_C(CTransactionArray);
-IMPLEMENT_ARCHIVE_LIST(CTransactionList);
+typedef vector<CTransaction> CTransactionArray;
+extern SFArchive& operator>>(SFArchive& archive, CTransactionArray& array);
+extern SFArchive& operator<<(SFArchive& archive, const CTransactionArray& array);
 
 //---------------------------------------------------------------------------
 extern SFArchive& operator<<(SFArchive& archive, const CTransaction& tra);
@@ -221,10 +192,9 @@ extern SFArchive& operator>>(SFArchive& archive, CTransaction& tra);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-extern int sortTransactionsForWrite(const void *rr1, const void *rr2);
-extern string_q parse(const string_q& params, uint32_t nItems, string_q *types);
-extern string_q toFunction(const string_q& name, const string_q& input, uint32_t nItems, string_q *items);
+extern bool sortTransactionsForWrite(const CTransaction& t1, const CTransaction& t2);
+extern string_q parse(const string_q& params, size_t nItems, string_q *types);
+extern string_q toFunction(const string_q& name, const string_q& input, size_t nItems, string_q *items);
 extern string_q nextBlockChunk(const string_q& fieldIn, const void *data);
 // EXISTING_CODE
 }  // namespace qblocks
-

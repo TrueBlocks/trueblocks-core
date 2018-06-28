@@ -12,19 +12,19 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 
-namespace testing {
+namespace testing {  // NOLINT
 
     typedef bool (*PF)(uint64_t testID);
     class Test {
     public:
         static PF funcs[100];
         static uint64_t nFuncs;
-        Test(void)  { for (uint32_t i=0;i<100;i++) { funcs[i] = NULL; } }
-        virtual ~Test(void) {}
+        Test(void)  { memset(funcs, '\0', 100); }
+        virtual ~Test(void) { }
         virtual void SetUp(void) = 0;
         virtual void TearDown(void) = 0;
         static void addFunc(PF func) {
-            for (uint32_t i=0;i<nFuncs;i++) {
+            for (size_t i = 0 ; i < nFuncs ; i++) {
                 if (funcs[i])
                     return;
             }
@@ -33,68 +33,86 @@ namespace testing {
     };
 
 #define LOAD_TEST(funcName) \
-testing::Test::addFunc(func_##funcName);
+    testing::Test::addFunc(func_##funcName);
 
 #define TEST_F(testClass, funcName) \
-extern bool func_##funcName(uint64_t testID); \
-bool func_##funcName(uint64_t testID) { \
-uint64_t subTestID = 0; \
-string_q testName = #funcName; \
+    extern bool func_##funcName(uint64_t testID); \
+    bool func_##funcName(uint64_t testID) { \
+    uint64_t subTestID = 0; \
+    string_q testName = #funcName;
 
 #define TESTID(msg, wid) \
-"\t" << padNum3(testID) << "." << padNum3(subTestID++) << " " << padRight(msg, wid) << " ==> "
+    "\t" << padNum3(testID) << "." << padNum3(subTestID++) << " " << padRight(msg, wid) << " ==> "
 
 #define TEST_ID() \
-TESTID("",1)
+    TESTID("", 1)
 
 #define ASSERT_TRUE(msg, test) { \
-cout << TESTID(msg, 32); \
-if ((test)) { \
-cout << "passed '" << #test<< "' is true\n"; \
-} else { \
-cout << "failed '" << #test << "' is false\n"; \
-return false; \
-} \
+    cout << TESTID(msg, 32); \
+    if ((test)) { \
+        cout << "passed '" << #test<< "' is true\n"; \
+    } else { \
+        cout << "failed '" << #test << "' is false\n"; \
+        return false; \
+    } \
 }
 
 #define ASSERT_FALSE(msg, test) { \
-cout << TESTID(msg, 32); \
-if (!(test)) { \
-cout << "passed '" << #test << "' is false\n"; \
-} else { \
-cout << "failed '" << #test << "' is true\n"; \
-return false; \
-} \
+    cout << TESTID(msg, 32); \
+    if (!(test)) { \
+        cout << "passed '" << #test << "' is false\n"; \
+    } else { \
+        cout << "failed '" << #test << "' is true\n"; \
+    return false; \
+    } \
 }
 
 #define ASSERT_NOT_EQ(msg, a, b) { \
-cout << TESTID(msg, 32); \
-if ((a) != (b)) { \
-cout << "passed '" << #a << "' is not equal to '" << #b << "'" << "\n"; \
-} else { \
-cout << "failed '" << #a << "' should not be equal to '" << #b << "'" << "\n"; \
-return false; \
-} \
+    cout << TESTID(msg, 32); \
+    if ((a) != (b)) { \
+        cout << "passed '" << #a << "' is not equal to '" << #b << "'" << "\n"; \
+    } else { \
+        cout << "failed '" << #a << "' should not be equal to '" << #b << "'" << "\n"; \
+        return false; \
+    } \
 }
 
 #define ASSERT_EQ(msg, a, b) { \
-cout << TESTID(msg, 32); \
-if ((a) == (b)) { \
-cout << "passed '" << #a << "' is equal to '" << #b << "'" << "\n"; \
-} else { \
-cout << "failed '" << #a << "' should be equal to '" << #b << "'" << "\n"; \
-return false; \
-} \
+    cout << TESTID(msg, 32); \
+    if ((a) == (b)) { \
+        cout << "passed '" << #a << "' is equal to '" << #b << "'" << "\n"; \
+    } else { \
+        cout << "failed '" << #a << "' should be equal to '" << #b << "'" << "\n"; \
+        return false; \
+    } \
 }
 
-}  // namespace testing
+#define SHOULD_THROW(msg, a) \
+    cout << TESTID(msg, 32) << "The test should throw. "; \
+    try { \
+        (a); \
+        cout << " --> Test did not throw\n"; \
+    } catch (exception e) { \
+        cout << " --> Test threw with message: " << e.what() << "\n"; \
+    }
+
+#define SHOULD_NOT_THROW(msg, a) \
+    cout << TESTID(msg, 32) << "The test should not throw. "; \
+    try { \
+        (a); \
+        cout << " --> Test did not throw\n"; \
+    } catch (exception e) { \
+        cout << " --> Test threw with message: " << e.what() << "\n"; \
+    }
 
 inline int RUN_ALL_TESTS(void) {
     bool result = false;
-    for (uint32_t i = 0 ; i < testing::Test::nFuncs ; i++)
+    for (size_t i = 0 ; i < testing::Test::nFuncs ; i++)
         if (testing::Test::funcs[i]) {
             cerr << i << ". ";
             result |= !((*(testing::Test::funcs[i]))(i));
         }
     return result;
 }
+
+}  // namespace testing

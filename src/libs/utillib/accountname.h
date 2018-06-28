@@ -15,17 +15,12 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <vector>
 #include "basetypes.h"
 #include "basenode.h"
 #include "sfarchive.h"
 
 namespace qblocks {
-
-//--------------------------------------------------------------------------
-class CAccountName;
-typedef SFArrayBase<CAccountName>         CAccountNameArray;
-typedef SFList<CAccountName*>             CAccountNameList;
-typedef SFUniqueList<CAccountName*>       CAccountNameListU;
 
 // EXISTING_CODE
 // EXISTING_CODE
@@ -51,12 +46,13 @@ public:
     explicit CAccountName(string_q& nameIn);
     bool Match(const string_q& s1, const string_q& s2, const string_q& s3, bool matchCase, bool all) const;
     // EXISTING_CODE
+    friend bool operator<(const CAccountName& v1, const CAccountName& v2);
     friend ostream& operator<<(ostream& os, const CAccountName& item);
 
 protected:
-    void Clear(void);
-    void Init(void);
-    void Copy(const CAccountName& ac);
+    void clear(void);
+    void initialize(void);
+    void duplicate(const CAccountName& ac);
     bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
@@ -65,7 +61,7 @@ protected:
 
 //--------------------------------------------------------------------------
 inline CAccountName::CAccountName(void) {
-    Init();
+    initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
@@ -74,7 +70,7 @@ inline CAccountName::CAccountName(void) {
 inline CAccountName::CAccountName(const CAccountName& ac) {
     // EXISTING_CODE
     // EXISTING_CODE
-    Copy(ac);
+    duplicate(ac);
 }
 
 // EXISTING_CODE
@@ -82,20 +78,20 @@ inline CAccountName::CAccountName(const CAccountName& ac) {
 
 //--------------------------------------------------------------------------
 inline CAccountName::~CAccountName(void) {
-    Clear();
+    clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CAccountName::Clear(void) {
+inline void CAccountName::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CAccountName::Init(void) {
-    CBaseNode::Init();
+inline void CAccountName::initialize(void) {
+    CBaseNode::initialize();
 
     symbol = "";
     name = "";
@@ -108,9 +104,9 @@ inline void CAccountName::Init(void) {
 }
 
 //--------------------------------------------------------------------------
-inline void CAccountName::Copy(const CAccountName& ac) {
-    Clear();
-    CBaseNode::Copy(ac);
+inline void CAccountName::duplicate(const CAccountName& ac) {
+    clear();
+    CBaseNode::duplicate(ac);
 
     symbol = ac.symbol;
     name = ac.name;
@@ -125,16 +121,24 @@ inline void CAccountName::Copy(const CAccountName& ac) {
 
 //--------------------------------------------------------------------------
 inline CAccountName& CAccountName::operator=(const CAccountName& ac) {
-    Copy(ac);
+    duplicate(ac);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
+//-------------------------------------------------------------------------
+inline bool operator<(const CAccountName& v1, const CAccountName& v2) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default sort defined in class definition, assume already sorted
+    return true;
+}
+
 //---------------------------------------------------------------------------
-IMPLEMENT_ARCHIVE_ARRAY(CAccountNameArray);
-IMPLEMENT_ARCHIVE_ARRAY_C(CAccountNameArray);
-IMPLEMENT_ARCHIVE_LIST(CAccountNameList);
+typedef vector<CAccountName> CAccountNameArray;
+extern SFArchive& operator>>(SFArchive& archive, CAccountNameArray& array);
+extern SFArchive& operator<<(SFArchive& archive, const CAccountNameArray& array);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

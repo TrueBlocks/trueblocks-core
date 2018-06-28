@@ -14,12 +14,13 @@
 
 //---------------------------------------------------------------------------------------------------
 CParams params[] = {
-    CParams("~!trans_list",    "a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)"),
+    CParams("~!trans_list",    "a space-separated list of one or more transaction identifiers "
+                                    "(tx_hash, bn.txID, blk_hash.txID)"),
 //    CParams("-address:<addr>", "retrieve raw transaction for a given Ethereum address"),
     CParams("-raw",            "retrieve raw transaction directly from the running node"),
     CParams("",                "Retrieve a transaction's logs from the local cache or a running node."),
 };
-uint32_t nParams = sizeof(params) / sizeof(CParams);
+size_t nParams = sizeof(params) / sizeof(CParams);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
@@ -35,10 +36,10 @@ bool COptions::parseArguments(string_q& command) {
             isRaw = true;
 
         } else if (startsWith(arg, "-a:") || startsWith(arg, "--address:")) {
-            arg = arg.Substitute("-a:", "").Substitute("--address:", "");
+            arg = substitute(substitute(arg, "-a:", ""), "--address:", "");
             if (!isAddress(arg))
                 return usage(orig + " does not appear to be a valid Ethereum address. Quitting...");
-            address_list += arg + "|";
+            address_list += (arg + "|");
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 
@@ -89,15 +90,16 @@ COptions::~COptions(void) {
 //--------------------------------------------------------------------------------
 string_q COptions::postProcess(const string_q& which, const string_q& str) const {
     if (which == "options") {
-        return str.Substitute("trans_list","<transID> [transID...]");
+        return substitute(str, "trans_list", "<transID> [transID...]");
 
     } else if (which == "notes" && (verbose || COptions::isReadme)) {
 
         string_q ret;
         ret += "[{trans_list}] is one or more space-separated identifiers which may be either a transaction hash,|"
-                "a blockNumber.transactionID pair, or a blockHash.transactionID pair, or any combination.\n";
+                    "a blockNumber.transactionID pair, or a blockHash.transactionID pair, or any combination.\n";
         ret += "This tool checks for valid input syntax, but does not check that the transaction requested exists.\n";
-        ret += "This tool retrieves information from the local node or the ${FALLBACK} node, if configured (see documentation).\n";
+        ret += "This tool retrieves information from the local node or the ${FALLBACK} node, if configured "
+                    "(see documentation).\n";
         ret += "If the queried node does not store historical state, the results may be undefined.\n";
         return ret;
     }

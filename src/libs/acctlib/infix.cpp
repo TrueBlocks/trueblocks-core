@@ -37,8 +37,8 @@ void CInfix::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) c
     }
 
     string_q fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, dataPtr))
-        return;
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     while (!fmt.empty())
         ctx << getNextChunk(fmt, nextInfixChunk, this);
@@ -66,11 +66,11 @@ bool CInfix::setValueByName(const string_q& fieldName, const string_q& fieldValu
     switch (tolower(fieldName[0])) {
         case 'n':
             if ( fieldName % "next" ) {
-                Clear();
+                clear();
                 next = new CTreeNode;
                 if (next) {
-                    char *p = cleanUpJson((char *)fieldValue.c_str());
-                    uint32_t nFields = 0;
+                    char *p = cleanUpJson((char *)fieldValue.c_str());  // NOLINT
+                    size_t nFields = 0;
                     next->parseJson(p, nFields);
                     return true;
                 }
@@ -134,6 +134,27 @@ bool CInfix::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
+SFArchive& operator>>(SFArchive& archive, CInfixArray& array) {
+    uint64_t count;
+    archive >> count;
+    array.resize(count);
+    for (size_t i = 0 ; i < count ; i++) {
+        ASSERT(i < array.capacity());
+        array.at(i).Serialize(archive);
+    }
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+SFArchive& operator<<(SFArchive& archive, const CInfixArray& array) {
+    uint64_t count = array.size();
+    archive << count;
+    for (size_t i = 0 ; i < array.size() ; i++)
+        array[i].SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
 void CInfix::registerClass(void) {
     static bool been_here = false;
     if (been_here) return;
@@ -141,7 +162,7 @@ void CInfix::registerClass(void) {
 
     CTreeNode::registerClass();
 
-    uint32_t fieldNum = 1000;
+    size_t fieldNum = 1000;
     ADD_FIELD(CInfix, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CInfix, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CInfix, "showing", T_BOOL,  ++fieldNum);
@@ -167,6 +188,8 @@ string_q nextInfixChunk_custom(const string_q& fieldIn, const void *dataPtr) {
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
                     return nextBasenodeChunk(fieldIn, inf);
+                // EXISTING_CODE
+                // EXISTING_CODE
                 break;
 
             default:
@@ -175,13 +198,6 @@ string_q nextInfixChunk_custom(const string_q& fieldIn, const void *dataPtr) {
     }
 
     return "";
-}
-
-//---------------------------------------------------------------------------
-bool CInfix::handleCustomFormat(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
-    return false;
 }
 
 //---------------------------------------------------------------------------
@@ -234,7 +250,7 @@ ostream& operator<<(ostream& os, const CInfix& item) {
     //-----------------------------------------------------------------------------
     string_q CInfix::at(const string_q& _key) const {
         ASSERT(next);
-        return contains(_key) ? next->at(_key.substr(prefixS.length())) : "";
+        return contains(_key) ? next->at(extract(_key, prefixS.length())) : "";
     }
 
     //-----------------------------------------------------------------------------
@@ -254,7 +270,7 @@ ostream& operator<<(ostream& os, const CInfix& item) {
         if (verbose == 2) { cerr << "\tinfix inserting " << _key << " at " << _value << "\n"; }
         ASSERT(_value.length());
         if (contains(_key)) {
-            next = next->insert(_key.substr(prefixS.length()), _value);
+            next = next->insert(extract(_key, prefixS.length()), _value);
             return this;
 
         } else {
@@ -262,13 +278,13 @@ ostream& operator<<(ostream& os, const CInfix& item) {
             if (prefixA) {
                 // one infix becomes two infixes, then insert into the second
                 // instead of pop_front()...
-                prefixS = prefixS.substr(prefixA);
-                return new CInfix(_key.substr(0, prefixA), insert(_key.substr(prefixA), _value));
+                prefixS = extract(prefixS, prefixA);
+                return new CInfix(extract(_key, 0, prefixA), insert(extract(_key, prefixA), _value));
 
             } else {
                 // split here.
                 auto f = prefixS[0];
-                prefixS = prefixS.substr(1);
+                prefixS = extract(prefixS, 1);
                 CTreeNode* n = prefixS.empty() ? next : this;
                 if (n != this) {
                     next = NULL;
@@ -286,14 +302,14 @@ ostream& operator<<(ostream& os, const CInfix& item) {
     CTreeNode* CInfix::remove(const string_q& _key) {
         if (verbose) {
             cerr << endl << endl<< endl
-            << idnt << string_q('-', 80) << endl
-            << idnt << string_q('-', 80) << endl
+            << idnt << string_q(80, '-') << endl
+            << idnt << string_q(80, '-') << endl
             << idnt << "remove infix [" << prefixS << "] at [" << _key << "]: ";
             idnt+="\t";
         }
 
         if (contains(_key)) {
-            string_q newKey = _key.substr(prefixS.length());
+            string_q newKey = extract(_key, prefixS.length());
             next = next->remove(newKey);
             if (auto p = next) {
                 // merge with child...
@@ -320,7 +336,7 @@ ostream& operator<<(ostream& os, const CInfix& item) {
     bool CInfix::visitItems(ACCTVISITOR func, void *data) const {
         ASSERT(func);
         CVisitData *vd = reinterpret_cast<CVisitData*>(data);
-        uint32_t save = vd->type;
+        uint64_t save = vd->type;
         vd->counter = 0;
         vd->type = T_INFIX;
         vd->strs = vd->strs + "+" + prefixS;

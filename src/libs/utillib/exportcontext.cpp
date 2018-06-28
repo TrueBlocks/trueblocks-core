@@ -24,29 +24,17 @@ namespace qblocks {
 
     //-------------------------------------------------------------
     CExportContext& CExportContext::operator<<(bool b) {
-#if 1
         ostringstream os;
         os << b;
         Output(os.str().c_str());
-#else
-        char val[64];
-        sprintf(val, "%c", b ? '1' : '0');
-        Output(val);
-#endif
         return *this;
     }
 
     //-------------------------------------------------------------
     CExportContext& CExportContext::operator<<(char c) {
-#if 1
         ostringstream os;
         os << c;
         Output(os.str().c_str());
-#else
-        char val[64];
-        sprintf(val, "%c", c);
-        Output(val);
-#endif
         return *this;
     }
 
@@ -59,20 +47,6 @@ namespace qblocks {
     }
 
     //-------------------------------------------------------------
-    CExportContext& CExportContext::operator<<(unsigned int ui) {
-#if 1
-        ostringstream os;
-        os << ui;
-        Output(os.str().c_str());
-#else
-        char val[64];
-        sprintf(val, (fmt.empty() ? "%d" : fmt.c_str()), ui);
-        Output(val);
-#endif
-        return *this;
-    }
-
-    //-------------------------------------------------------------
     CExportContext& CExportContext::operator<<(uint64_t ul) {
         ostringstream os;
         os << ul;
@@ -81,16 +55,18 @@ namespace qblocks {
     }
 
     //-------------------------------------------------------------
+    CExportContext& CExportContext::operator<<(uint32_t sz) {
+        ostringstream os;
+        os << sz;
+        Output(os.str().c_str());
+        return *this;
+    }
+
+    //-------------------------------------------------------------
     CExportContext& CExportContext::operator<<(int i) {
-#if 1
         ostringstream os;
         os << i;
         Output(os.str().c_str());
-#else
-        char val[64];
-        sprintf(val, (fmt.empty() ? "%d" : fmt.c_str()), i);
-        Output(val);
-#endif
         return *this;
     }
 
@@ -116,25 +92,13 @@ namespace qblocks {
 
     //-------------------------------------------------------------
     CExportContext& CExportContext::operator<<(const string_q& str) {
-        if (str.length() >= 3 && str.substr(0,2) == "`%" && str.at(2) != '%')
-            fmt = str.substr(1);
+        if (str.length() >= 3 && extract(str, 0, 2) == "`%" && str.at(2) != '%')
+            fmt = extract(str, 1);
         else if (str == "%")
-            fmt = EMPTY;
+            fmt = "";
         else
             Output(str);
         return *this;
-    }
-
-    //-------------------------------------------------------------
-    void CFileExportContext::setOutput(void *output) {
-        Close();  // just in case
-        m_output = output == NULL ? stdout : reinterpret_cast<FILE*>(output);
-    }
-
-    //-------------------------------------------------------------
-    void CFileExportContext::Output(const string_q& sss) {
-        ASSERT(m_output);
-        fprintf(m_output, "%s", sss.c_str());
     }
 
     //-------------------------------------------------------------

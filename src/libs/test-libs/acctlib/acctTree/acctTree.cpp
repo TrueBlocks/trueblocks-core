@@ -64,7 +64,7 @@ bool buildTree(CBlock& block, void *data) {
     CReporter *r = reinterpret_cast<CReporter*>(data);
 
     r->nBlocksVisited++;
-    for (uint32_t i = 0 ; i < block.transactions.getCount() ; i++) {
+    for (size_t i = 0 ; i < block.transactions.size() ; i++) {
         CTransaction *tr = (CTransaction*)&block.transactions[i];  // NOLINT
         if (string_q(tr->to).empty())
             tr->to = "0x0";
@@ -121,6 +121,6 @@ void CReporter::interumReport(void) {
         cGreen   + "\n""T_INFIX " + cOff,
     };
 
-    cout << types[type] << " " << strs.Substitute("+", "").Substitute("-", "").Substitute("|0", "") << "\n";
+    cout << types[type] << " " << substitute(substitute(substitute(strs, "+", ""), "-", ""), "|0", "") << "\n";
 }
 

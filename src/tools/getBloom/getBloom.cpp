@@ -49,7 +49,7 @@ int main(int argc, const char * argv[]) {
 }
 
 string_q toBits(const string_q& blIn) {
-    string_q ret = toLower(blIn).substr(2);
+    string_q ret = extract(toLower(blIn), 2);
     replaceAll(ret, "0", "0000");
     replaceAll(ret, "1", "0001");
     replaceAll(ret, "2", "0010");
@@ -69,7 +69,7 @@ string_q toBits(const string_q& blIn) {
     return "0x"+ret;
 }
 string_q asBar(const string_q& blIn) {
-    return toBits(blIn).substr(2).Substitute("0", "").Substitute("1", "-").Substitute("---", "🁡");
+    return substitute(substitute(substitute(extract(toBits(blIn), 2), "0", ""), "1", "-"), "---", "🁡");
 }
 
 #include "bloom_blocks.h"
@@ -91,22 +91,23 @@ string_q doOneBloom(uint64_t num, const COptions& opt) {
 
         string_q r = getRawBlock(num);
         CBloomBlock rawBlock;
-        rawBlock.parseJson(cleanUpJson((char*)r.c_str()));
-        HIDE_FIELD(CBloomTrans,"hash");
+        rawBlock.parseJson(cleanUpJson((char*)r.c_str()));  // NOLINT
+        HIDE_FIELD(CBloomTrans, "hash");
 
         if (opt.asBits) {
             rawBlock.logsBloom = toBits(rawBlock.logsBloom);
-            for (uint32_t i = 0 ; i < rawBlock.transactions.getCount() ; i++)
-                rawBlock.transactions[i].receipt.logsBloom = toBits(rawBlock.transactions[i].receipt.logsBloom);
+            for (size_t i = 0 ; i < rawBlock.transactions.size() ; i++)
+                rawBlock.transactions.at(i).receipt.logsBloom =
+                    toBits(rawBlock.transactions[i].receipt.logsBloom);  // .at cannot go past end of vector!
         }
         if (opt.asBars) {
             ostringstream os;
             if (opt.receipt)
-                os << "\n" << string_q('-',90) << " " << rawBlock.number << string_q('-',90) << "\n";
+                os << "\n" << string_q(90, '-') << " " << rawBlock.number << string_q(90, '-') << "\n";
             else
                 os << num << ": ";
             os << asBar(rawBlock.logsBloom) << "\n";
-            for (uint32_t i = 0 ; i < rawBlock.transactions.getCount() ; i++) {
+            for (size_t i = 0 ; i < rawBlock.transactions.size() ; i++) {
                 if (opt.receipt) {
                     string_q x = asBar(rawBlock.transactions[i].receipt.logsBloom);
                     if (!x.empty())
@@ -123,10 +124,10 @@ string_q doOneBloom(uint64_t num, const COptions& opt) {
     } else {
 
         SFBloomArray blooms;
-        readBloomArray(blooms, getBinaryFilename(num).Substitute("/blocks/", "/blooms/"));
+        readBloomArray(blooms, substitute(getBinaryFilename(num), "/blocks/", "/blooms/"));
         ostringstream os;
-        os << "\n" << string_q('-',90) << " " << num << string_q('-',90) << "\n";
-        for (uint32_t i = 0 ; i < blooms.getCount(); i++) {
+        os << "\n" << string_q(90, '-') << " " << num << string_q(90, '-') << "\n";
+        for (size_t i = 0 ; i < blooms.size(); i++) {
             os << asBar(bloom2Bits(blooms[i])) << "\n";
         }
         result = os.str().c_str();

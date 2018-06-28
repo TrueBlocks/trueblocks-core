@@ -6,4 +6,5 @@ test07.toml
 [settings]
 	name=data/018_ChildDAO
 
-Done.
+name: 		data/018_ChildDAO
+max_width: 	10000

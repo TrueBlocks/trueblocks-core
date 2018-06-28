@@ -14,6 +14,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <algorithm>
 #include "pricequote.h"
 #include "etherlib.h"
 #include "pricesource.h"
@@ -38,8 +39,8 @@ void CPriceQuote::Format(CExportContext& ctx, const string_q& fmtIn, void *dataP
     }
 
     string_q fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, dataPtr))
-        return;
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     while (!fmt.empty())
         ctx << getNextChunk(fmt, nextPricequoteChunk, this);
@@ -108,7 +109,7 @@ bool CPriceQuote::Serialize(SFArchive& archive) {
 bool CPriceQuote::SerializeC(SFArchive& archive) const {
 
     // Writing always write the latest version of the data
-    ((CPriceQuote*)this)->m_schema = getVersionNum();
+    ((CPriceQuote*)this)->m_schema = getVersionNum();  // NOLINT
     CBaseNode::SerializeC(archive);
 
     // EXISTING_CODE
@@ -120,12 +121,33 @@ bool CPriceQuote::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
+SFArchive& operator>>(SFArchive& archive, CPriceQuoteArray& array) {
+    uint64_t count;
+    archive >> count;
+    array.resize(count);
+    for (size_t i = 0 ; i < count ; i++) {
+        ASSERT(i < array.capacity());
+        array.at(i).Serialize(archive);
+    }
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+SFArchive& operator<<(SFArchive& archive, const CPriceQuoteArray& array) {
+    uint64_t count = array.size();
+    archive << count;
+    for (size_t i = 0 ; i < array.size() ; i++)
+        array[i].SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
 void CPriceQuote::registerClass(void) {
     static bool been_here = false;
     if (been_here) return;
     been_here = true;
 
-    uint32_t fieldNum = 1000;
+    size_t fieldNum = 1000;
     ADD_FIELD(CPriceQuote, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CPriceQuote, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CPriceQuote, "showing", T_BOOL,  ++fieldNum);
@@ -156,6 +178,8 @@ string_q nextPricequoteChunk_custom(const string_q& fieldIn, const void *dataPtr
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
                     return nextBasenodeChunk(fieldIn, pri);
+                // EXISTING_CODE
+                // EXISTING_CODE
                 break;
 
             default:
@@ -164,13 +188,6 @@ string_q nextPricequoteChunk_custom(const string_q& fieldIn, const void *dataPtr
     }
 
     return "";
-}
-
-//---------------------------------------------------------------------------
-bool CPriceQuote::handleCustomFormat(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
-    return false;
 }
 
 //---------------------------------------------------------------------------
@@ -244,7 +261,7 @@ uint64_t indexFromTimeStamp(const CPriceQuoteArray& quotes, timestamp_t ts) {
     if (ts < first)
         return 0;
     timestamp_t since = ts - first;
-    return min(quotes.getCount()-1, uint32_t(since / (5*60)));
+    return min(quotes.size()-1, size_t(since / (5*60)));
 }
 
 //-----------------------------------------------------------------------
@@ -252,7 +269,7 @@ string_q asDollars(timestamp_t ts, SFUintBN weiIn) {
     if (weiIn == 0)
         return "";
     static CPriceQuoteArray quotes;
-    if (!quotes.getCount()) {
+    if (!quotes.size()) {
         string_q message;
         CPriceSource source;
         if (!loadPriceData(source, quotes, false, message, 1)) {
@@ -261,7 +278,7 @@ string_q asDollars(timestamp_t ts, SFUintBN weiIn) {
         }
     }
     uint64_t index = indexFromTimeStamp(quotes, ts);
-    CPriceQuote *q = &quotes[(uint32_t)index];
+    const CPriceQuote *q = &quotes[index];  // taking a non-const reference
     double price = q->close * 100.0;
     uint64_t pInt = (uint64_t)price;
     weiIn *= pInt;
@@ -275,8 +292,8 @@ string_q insertCommas(const string_q& dIn) {
     reverse(d);
     string_q ret;
     while (!d.empty()) {
-        string_q three = d.substr(0,3);
-        d = d.substr(3);
+        string_q three = extract(d, 0, 3);
+        d = extract(d, 3);
         reverse(three);
         ret = (d.empty()?"":",") + three + ret;
     }
@@ -286,9 +303,9 @@ string_q insertCommas(const string_q& dIn) {
 //-----------------------------------------------------------------------
 string_q dispDollars(timestamp_t ts, SFUintBN weiIn) {
     string_q sBal = asDollars(ts, weiIn);
-    string_q d = nextTokenClear(sBal,'.');
+    string_q d = nextTokenClear(sBal, '.');
     d = insertCommas(d);
-    sBal = (sBal.empty() ? "0.00" : d + "." + sBal.substr(0,2));
+    sBal = (sBal.empty() ? "0.00" : d + "." + extract(sBal, 0, 2));
     return sBal;
 }
 // EXISTING_CODE

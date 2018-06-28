@@ -25,7 +25,7 @@ The `getTrans` tool retrieves transactions from the running Ethereum node (using
 - If the queried node does not store historical state, the results may be undefined.
 
 *See Also*: This command-line tool implements these RPC interfaces:
-[eth_getTransactionByHash](https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_gettransactionbyhash), 
+[eth_getTransactionByHash](https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_gettransactionbyhash),
 [eth_getTransactionByBlockNumberAndIndex](https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_gettransactionbyblocknumberandindex),
 [eth_getTransactionByBlockHashAndIndex](https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_gettransactionbyblockhashandindex).
 

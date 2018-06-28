@@ -15,15 +15,10 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <vector>
 #include "utillib.h"
 
 namespace qblocks {
-
-//--------------------------------------------------------------------------
-class CRPCResult;
-typedef SFArrayBase<CRPCResult>         CRPCResultArray;
-typedef SFList<CRPCResult*>             CRPCResultList;
-typedef SFUniqueList<CRPCResult*>       CRPCResultListU;
 
 // EXISTING_CODE
 // EXISTING_CODE
@@ -45,12 +40,13 @@ public:
 
     // EXISTING_CODE
     // EXISTING_CODE
+    friend bool operator<(const CRPCResult& v1, const CRPCResult& v2);
     friend ostream& operator<<(ostream& os, const CRPCResult& item);
 
 protected:
-    void Clear(void);
-    void Init(void);
-    void Copy(const CRPCResult& rp);
+    void clear(void);
+    void initialize(void);
+    void duplicate(const CRPCResult& rp);
     bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
@@ -59,7 +55,7 @@ protected:
 
 //--------------------------------------------------------------------------
 inline CRPCResult::CRPCResult(void) {
-    Init();
+    initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
@@ -68,7 +64,7 @@ inline CRPCResult::CRPCResult(void) {
 inline CRPCResult::CRPCResult(const CRPCResult& rp) {
     // EXISTING_CODE
     // EXISTING_CODE
-    Copy(rp);
+    duplicate(rp);
 }
 
 // EXISTING_CODE
@@ -76,20 +72,20 @@ inline CRPCResult::CRPCResult(const CRPCResult& rp) {
 
 //--------------------------------------------------------------------------
 inline CRPCResult::~CRPCResult(void) {
-    Clear();
+    clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CRPCResult::Clear(void) {
+inline void CRPCResult::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CRPCResult::Init(void) {
-    CBaseNode::Init();
+inline void CRPCResult::initialize(void) {
+    CBaseNode::initialize();
 
     jsonrpc = "";
     result = "";
@@ -100,9 +96,9 @@ inline void CRPCResult::Init(void) {
 }
 
 //--------------------------------------------------------------------------
-inline void CRPCResult::Copy(const CRPCResult& rp) {
-    Clear();
-    CBaseNode::Copy(rp);
+inline void CRPCResult::duplicate(const CRPCResult& rp) {
+    clear();
+    CBaseNode::duplicate(rp);
 
     jsonrpc = rp.jsonrpc;
     result = rp.result;
@@ -115,16 +111,24 @@ inline void CRPCResult::Copy(const CRPCResult& rp) {
 
 //--------------------------------------------------------------------------
 inline CRPCResult& CRPCResult::operator=(const CRPCResult& rp) {
-    Copy(rp);
+    duplicate(rp);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
+//-------------------------------------------------------------------------
+inline bool operator<(const CRPCResult& v1, const CRPCResult& v2) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default sort defined in class definition, assume already sorted
+    return true;
+}
+
 //---------------------------------------------------------------------------
-IMPLEMENT_ARCHIVE_ARRAY(CRPCResultArray);
-IMPLEMENT_ARCHIVE_ARRAY_C(CRPCResultArray);
-IMPLEMENT_ARCHIVE_LIST(CRPCResultList);
+typedef vector<CRPCResult> CRPCResultArray;
+extern SFArchive& operator>>(SFArchive& archive, CRPCResultArray& array);
+extern SFArchive& operator<<(SFArchive& archive, const CRPCResultArray& array);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

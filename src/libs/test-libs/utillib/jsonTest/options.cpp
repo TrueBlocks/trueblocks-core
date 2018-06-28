@@ -17,7 +17,7 @@ CParams params[] = {
     CParams("~file(s)", "One or more files to parse"),
     CParams("",         "Test the json parsing facility in quickBlocks.\n"),
 };
-uint32_t nParams = sizeof(params) / sizeof(CParams);
+size_t nParams = sizeof(params) / sizeof(CParams);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {

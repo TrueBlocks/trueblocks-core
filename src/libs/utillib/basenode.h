@@ -11,6 +11,7 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
+#include <algorithm>
 #include "runtimeclass.h"
 
 namespace qblocks {
@@ -34,19 +35,18 @@ namespace qblocks {
         void setDeleted(bool val);
 
         virtual bool isKindOf(const CRuntimeClass* pClass) const;
-        virtual char *parseJson(char *s, uint32_t& nFields);
+        virtual char *parseJson(char *s, size_t& nFields);
         virtual char *parseJson(char *s);
-        virtual char *parseCSV(char *s, uint32_t& nFields, const string_q *fields);
-        virtual char *parseText(char *s, uint32_t& nFields, const string_q *fields);
+        virtual char *parseCSV(char *s, size_t& nFields, const string_q *fields);
+        virtual char *parseText(char *s, size_t& nFields, const string_q *fields);
         virtual string_q toJson1(void) const;
         virtual string_q toJson(void) const;
         virtual string_q toJson(const string_q& fields) const;
-        virtual string_q toJson(const CFieldList *fields) const;
-        virtual string_q toJsonFldList(const CFieldList *fieldList) const;
+        virtual string_q jsonFromArray(const CFieldDataArray& array) const;
 
     public:
         static CRuntimeClass classCBaseNode;
-        static CBaseNode *CreateObject(void);
+        static CBaseNode *createObject(void);
         virtual CRuntimeClass *getRuntimeClass(void) const;
         virtual string_q getValueByName(const string_q& fieldName) const;
         virtual bool setValueByName(const string_q& fieldName, const string_q& fieldValue) { return false; }
@@ -56,17 +56,14 @@ namespace qblocks {
         virtual void finishParse(void) { }
         virtual void Format(CExportContext& ctx, const string_q& fmtIn, void *data = NULL) const { }
         virtual string_q Format(const string_q& fmtIn = "") const { return ""; }
-        virtual const CBaseNode *getObjectAt(const string_q& name, uint32_t i) const { return NULL; }
-        virtual const string_q   getStringAt(const string_q& name, uint32_t i) const { return ""; }
-        virtual bool handleCustomFormat(CExportContext& ctx, const string_q& fmtIn, void *data = NULL) const {
-            return false;
-        }
+        virtual const CBaseNode *getObjectAt(const string_q& name, size_t i) const { return NULL; }
+        virtual const string_q   getStringAt(const string_q& name, size_t i) const { return ""; }
 
         void doExport(ostream& os) const;
 
     protected:
-        void Init(void);
-        void Copy(const CBaseNode& bn);
+        void initialize(void);
+        void duplicate(const CBaseNode& bn);
     };
 
     //------------------------------------------------------------------

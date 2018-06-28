@@ -1,0 +1,6 @@
+[settings]
+class     = CBalanceHistory
+fields    = blknum bn|uint256 balance
+includes  = etherlib.h
+cIncs     = #include "etherlib.h"
+sort      = bn

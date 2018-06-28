@@ -35,8 +35,8 @@ void CNewReceipt::Format(CExportContext& ctx, const string_q& fmtIn, void *dataP
     }
 
     string_q fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, dataPtr))
-        return;
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     while (!fmt.empty())
         ctx << getNextChunk(fmt, nextNewreceiptChunk, this);
@@ -70,13 +70,13 @@ bool CNewReceipt::setValueByName(const string_q& fieldName, const string_q& fiel
             break;
         case 'l':
             if ( fieldName % "logs" ) {
-                char *p = (char *)fieldValue.c_str();
+                char *p = (char *)fieldValue.c_str();  // NOLINT
                 while (p && *p) {
                     CLogEntry item;
-                    uint32_t nFields = 0;
+                    size_t nFields = 0;
                     p = item.parseJson(p, nFields);
                     if (nFields)
-                        logs[logs.getCount()] = item;
+                        logs.push_back(item);
                 }
                 return true;
             }
@@ -119,7 +119,7 @@ bool CNewReceipt::Serialize(SFArchive& archive) {
 bool CNewReceipt::SerializeC(SFArchive& archive) const {
 
     // Writing always write the latest version of the data
-    ((CNewReceipt*)this)->m_schema = getVersionNum();
+    ((CNewReceipt*)this)->m_schema = getVersionNum();  // NOLINT
     CBaseNode::SerializeC(archive);
 
     // EXISTING_CODE
@@ -134,12 +134,33 @@ bool CNewReceipt::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
+SFArchive& operator>>(SFArchive& archive, CNewReceiptArray& array) {
+    uint64_t count;
+    archive >> count;
+    array.resize(count);
+    for (size_t i = 0 ; i < count ; i++) {
+        ASSERT(i < array.capacity());
+        array.at(i).Serialize(archive);
+    }
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+SFArchive& operator<<(SFArchive& archive, const CNewReceiptArray& array) {
+    uint64_t count = array.size();
+    archive << count;
+    for (size_t i = 0 ; i < array.size() ; i++)
+        array[i].SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
 void CNewReceipt::registerClass(void) {
     static bool been_here = false;
     if (been_here) return;
     been_here = true;
 
-    uint32_t fieldNum = 1000;
+    size_t fieldNum = 1000;
     ADD_FIELD(CNewReceipt, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CNewReceipt, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CNewReceipt, "showing", T_BOOL,  ++fieldNum);
@@ -160,7 +181,7 @@ void CNewReceipt::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextNewreceiptChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CNewReceipt *newp = (const CNewReceipt *)dataPtr;
+    const CNewReceipt *newp = (const CNewReceipt *)dataPtr;  // NOLINT
     if (newp) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -169,6 +190,8 @@ string_q nextNewreceiptChunk_custom(const string_q& fieldIn, const void *dataPtr
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
                     return nextBasenodeChunk(fieldIn, newp);
+                // EXISTING_CODE
+                // EXISTING_CODE
                 break;
 
             default:
@@ -177,13 +200,6 @@ string_q nextNewreceiptChunk_custom(const string_q& fieldIn, const void *dataPtr
     }
 
     return "";
-}
-
-//---------------------------------------------------------------------------
-bool CNewReceipt::handleCustomFormat(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
-    return false;
 }
 
 //---------------------------------------------------------------------------
@@ -229,12 +245,12 @@ string_q CNewReceipt::getValueByName(const string_q& fieldName) const {
             break;
         case 'l':
             if ( fieldName % "logs" || fieldName % "logsCnt" ) {
-                uint32_t cnt = logs.getCount();
+                size_t cnt = logs.size();
                 if (endsWith(fieldName, "Cnt"))
                     return asStringU(cnt);
                 if (!cnt) return "";
                 string_q retS;
-                for (uint32_t i = 0 ; i < cnt ; i++) {
+                for (size_t i = 0 ; i < cnt ; i++) {
                     retS += logs[i].Format();
                     retS += ((i < cnt - 1) ? ",\n" : "\n");
                 }
@@ -261,8 +277,8 @@ ostream& operator<<(ostream& os, const CNewReceipt& item) {
 }
 
 //---------------------------------------------------------------------------
-const CBaseNode *CNewReceipt::getObjectAt(const string_q& fieldName, uint32_t index) const {
-    if ( fieldName % "logs" && index < logs.getCount() )
+const CBaseNode *CNewReceipt::getObjectAt(const string_q& fieldName, size_t index) const {
+    if ( fieldName % "logs" && index < logs.size() )
         return &logs[index];
     return NULL;
 }

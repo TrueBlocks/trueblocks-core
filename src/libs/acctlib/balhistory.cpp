@@ -28,9 +28,6 @@ static string_q nextBalhistoryChunk_custom(const string_q& fieldIn, const void *
 
 //---------------------------------------------------------------------------
 void CBalHistory::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
-
-    CBalHistory::registerClass();
-
     if (!m_showing)
         return;
 
@@ -40,8 +37,8 @@ void CBalHistory::Format(CExportContext& ctx, const string_q& fmtIn, void *dataP
     }
 
     string_q fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, dataPtr))
-        return;
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     while (!fmt.empty())
         ctx << getNextChunk(fmt, nextBalhistoryChunk, this);
@@ -65,7 +62,7 @@ bool CBalHistory::setValueByName(const string_q& fieldName, const string_q& fiel
 
     switch (tolower(fieldName[0])) {
         case 'b':
-            if ( fieldName % "balance" ) { balance = toLong(fieldValue); return true; }
+            if ( fieldName % "balance" ) { balance = toWei(fieldValue); return true; }
             break;
         case 'r':
             if ( fieldName % "recordID" ) { recordID = fieldValue; return true; }
@@ -120,12 +117,33 @@ bool CBalHistory::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
+SFArchive& operator>>(SFArchive& archive, CBalHistoryArray& array) {
+    uint64_t count;
+    archive >> count;
+    array.resize(count);
+    for (size_t i = 0 ; i < count ; i++) {
+        ASSERT(i < array.capacity());
+        array.at(i).Serialize(archive);
+    }
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+SFArchive& operator<<(SFArchive& archive, const CBalHistoryArray& array) {
+    uint64_t count = array.size();
+    archive << count;
+    for (size_t i = 0 ; i < array.size() ; i++)
+        array[i].SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
 void CBalHistory::registerClass(void) {
     static bool been_here = false;
     if (been_here) return;
     been_here = true;
 
-    uint32_t fieldNum = 1000;
+    size_t fieldNum = 1000;
     ADD_FIELD(CBalHistory, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CBalHistory, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CBalHistory, "showing", T_BOOL,  ++fieldNum);
@@ -153,6 +171,8 @@ string_q nextBalhistoryChunk_custom(const string_q& fieldIn, const void *dataPtr
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
                     return nextBasenodeChunk(fieldIn, bal);
+                // EXISTING_CODE
+                // EXISTING_CODE
                 break;
 
             default:
@@ -161,13 +181,6 @@ string_q nextBalhistoryChunk_custom(const string_q& fieldIn, const void *dataPtr
     }
 
     return "";
-}
-
-//---------------------------------------------------------------------------
-bool CBalHistory::handleCustomFormat(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
-    return false;
 }
 
 //---------------------------------------------------------------------------

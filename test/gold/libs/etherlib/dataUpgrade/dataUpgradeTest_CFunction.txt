@@ -2,57 +2,64 @@ dataUpgrade argc: 2 [1:CFunction]
 dataUpgrade CFunction 
 --------------------------------------------------------------------------------
 className: CFunction
-objectSize: 200
 baseClass: CBaseNode
-	fieldName: schema
-	  fieldID: 1001
-	  fieldType: T_NUMBER TS_NUMERAL 65561
-	  hidden: 1
-	fieldName: deleted
-	  fieldID: 1002
-	  fieldType: T_BOOL TS_NUMERAL 65556
-	  hidden: 1
-	fieldName: showing
-	  fieldID: 1003
-	  fieldType: T_BOOL TS_NUMERAL 65556
-	  hidden: 1
-	fieldName: name
-	  fieldID: 1004
-	  fieldType: T_TEXT TS_STRING 131122
-	  hidden: 0
-	fieldName: type
-	  fieldID: 1005
-	  fieldType: T_TEXT TS_STRING 131122
-	  hidden: 0
-	fieldName: anonymous
-	  fieldID: 1006
-	  fieldType: T_BOOL TS_NUMERAL 65556
-	  hidden: 1
-	fieldName: constant
-	  fieldID: 1007
-	  fieldType: T_BOOL TS_NUMERAL 65556
-	  hidden: 0
-	fieldName: payable
-	  fieldID: 1008
-	  fieldType: T_BOOL TS_NUMERAL 65556
-	  hidden: 0
-	fieldName: signature
-	  fieldID: 1009
-	  fieldType: T_TEXT TS_STRING 131122
-	  hidden: 0
-	fieldName: encoding
-	  fieldID: 1010
-	  fieldType: T_TEXT TS_STRING 131122
-	  hidden: 0
-	fieldName: inputs
-	  fieldID: 1011
-	  fieldType: T_OBJECT|TS_ARRAY TS_ARRAY 1572939 TS_OBJECT 1572939
-	  hidden: 0
-	fieldName: outputs
-	  fieldID: 1012
-	  fieldType: T_OBJECT|TS_ARRAY TS_ARRAY 1572939 TS_OBJECT 1572939
-	  hidden: 0
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+name                	1004	0	131122	T_TEXT TS_STRING
+type                	1005	0	131122	T_TEXT TS_STRING
+anonymous           	1006	1	65556	T_BOOL TS_NUMERAL
+constant            	1007	0	65556	T_BOOL TS_NUMERAL
+payable             	1008	0	65556	T_BOOL TS_NUMERAL
+signature           	1009	0	131122	T_TEXT TS_STRING
+encoding            	1010	0	131122	T_TEXT TS_STRING
+inputs              	1011	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+outputs             	1012	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 {
+  "constant": 0,
+  "payable": 0,
+  "inputs": [],
+  "outputs": []
+}
+
+--------------------------------------------------------------------------------
+className: CFunction
+baseClass: CBaseNode
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+name                	1004	1	131122	T_TEXT TS_STRING
+type                	1005	1	131122	T_TEXT TS_STRING
+anonymous           	1006	1	65556	T_BOOL TS_NUMERAL
+constant            	1007	1	65556	T_BOOL TS_NUMERAL
+payable             	1008	1	65556	T_BOOL TS_NUMERAL
+signature           	1009	1	131122	T_TEXT TS_STRING
+encoding            	1010	1	131122	T_TEXT TS_STRING
+inputs              	1011	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+outputs             	1012	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+{
+}
+
+--------------------------------------------------------------------------------
+className: CFunction
+baseClass: CBaseNode
+schema              	1001	0	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	0	65556	T_BOOL TS_NUMERAL
+showing             	1003	0	65556	T_BOOL TS_NUMERAL
+name                	1004	0	131122	T_TEXT TS_STRING
+type                	1005	0	131122	T_TEXT TS_STRING
+anonymous           	1006	0	65556	T_BOOL TS_NUMERAL
+constant            	1007	0	65556	T_BOOL TS_NUMERAL
+payable             	1008	0	65556	T_BOOL TS_NUMERAL
+signature           	1009	0	131122	T_TEXT TS_STRING
+encoding            	1010	0	131122	T_TEXT TS_STRING
+inputs              	1011	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+outputs             	1012	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+{
+  "schema": 5001,
+  "deleted": 0,
+  "showing": 1,
+  "anonymous": 0,
   "constant": 0,
   "payable": 0,
   "inputs": [],

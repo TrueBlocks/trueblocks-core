@@ -26,53 +26,47 @@ namespace qblocks {
 
     //-------------------------------------------------------------------------
     CToml::~CToml(void) {
-        Clear();
+        clear();
     }
 
     //-------------------------------------------------------------------------
-    void CToml::Clear(void) {
-        LISTPOS gPos = groups.GetHeadPosition();
-        while (gPos) {
-            CTomlGroup *group = groups.GetNext(gPos);
-            delete group;
-        }
-        groups.RemoveAll();
+    void CToml::clear(void) {
     }
 
     //-------------------------------------------------------------------------
-    CToml::CTomlGroup *CToml::addGroup(const string_q& group, bool commented, bool array) {
-        ASSERT(!findGroup(group));
-        CTomlGroup *newGroup = new CTomlGroup;
-        newGroup->isArray = array;
-        newGroup->isComment = commented;
-        newGroup->groupName = group;
-        groups.AddTail(newGroup);
-        return newGroup;
+    void CToml::addGroup(const string_q& group, bool commented, bool array) {
+        if (findGroup(group))
+            return;
+        CTomlGroup newGroup(group, array, commented);
+        groups.push_back(newGroup);
     }
 
     //-------------------------------------------------------------------------
     CToml::CTomlGroup *CToml::findGroup(const string_q& group) const {
-        LISTPOS gPos = groups.GetHeadPosition();
-        while (gPos) {
-            CTomlGroup *grp = groups.GetNext(gPos);
-            if (grp->groupName == group)
-                return grp;
-        }
+        for (size_t i = 0 ; i < groups.size() ; i++) {
+            if (groups[i].groupName == group) {
+                return &((CToml*)this)->groups[i];  // NOLINT
+                }
+            }
         return NULL;
     }
 
     //-------------------------------------------------------------------------
-    CToml::CTomlKey *CToml::addKey(const string_q& group, const string_q& key, const string_q& val, bool commented) {
+    void CToml::addKey(const string_q& group, const string_q& key, const string_q& val, bool commented) {
         CTomlGroup *grp = findGroup(group);
-        ASSERT(grp);
-        return grp->addKey(key, val, commented);
+        if (grp)
+            grp->addKey(key, val, commented);
+        return;
     }
 
     //-------------------------------------------------------------------------
-    CToml::CTomlKey *CToml::findKey(const string_q& group, const string_q& key) const {
+    CToml::CTomlKey *CToml::findKey(const string_q& group, const string_q& keyIn) const {
         CTomlGroup *grp = findGroup(group);
-        if (grp)
-            return grp->findKey(key);
+        if (grp) {
+            for (size_t i = 0 ; i < grp->keys.size() ; i++)
+                if (grp->keys[i].keyName == keyIn)
+                    return &grp->keys[i];
+        }
         return NULL;
     }
 
@@ -104,22 +98,22 @@ extern string_q stripFullLineComments(const string_q& inStr);
 extern string_q collapseArrays(const string_q& inStr);
     bool CToml::readFile(const string_q& filename) {
         string_q curGroup;
-        Clear();
+        clear();
 
-        string_q contents = asciiFileToString(filename)
-                            .Substitute("\\\n ", "\\\n") // if ends with '\' + '\n' + space, make it just '\' + '\n'
-                            .Substitute("\\\n", "")      // if ends with '\' + '\n', its a continuation, so fold in
-                            .Substitute("\\\r\n", "");   // same for \r\n
+        string_q contents = asciiFileToString(filename);
+        replaceAll(contents, "\\\n ", "\\\n");  // if ends with '\' + '\n' + space, make it just '\' + '\n'
+        replaceAll(contents, "\\\n", "");       // if ends with '\' + '\n', its a continuation, so fold in
+        replaceAll(contents, "\\\r\n", "");     // same for \r\n
         contents = collapseArrays(stripFullLineComments(contents));
         while (!contents.empty()) {
             string_q value = trimWhitespace(nextTokenClear(contents, '\n'));
             bool comment = startsWith(value, '#');
             if (comment)
-                value = value.substr(1);
+                value = extract(value, 1);
             if (!value.empty()) {
                 bool isArray = contains(value, "[[");
                 if (startsWith(value, '[')) {  // it's a group
-                    value = trimWhitespace(value.Substitute("[", "").Substitute("]", ""));
+                    value = trimWhitespace(substitute(substitute(value, "[", ""), "]", ""));
                     addGroup(value, comment, isArray);
                     curGroup = value;
 
@@ -147,19 +141,12 @@ extern string_q collapseArrays(const string_q& inStr);
         }
 
         bool first = true;
-        LISTPOS gPos = groups.GetHeadPosition();
-        while (gPos) {
-            CTomlGroup *group = groups.GetNext(gPos);
-            ASSERT(group);
-
+        for (auto group : groups) {
             ostringstream os;
-            os << (first?"":"\n") << (group->isComment?"#":"");
-            os << (group->isArray?"[[":"[") << group->groupName << (group->isArray?"]]":"]") << "\n";
-            LISTPOS kPos = group->keys.GetHeadPosition();
-            while (kPos) {
-                CTomlKey *key = group->keys.GetNext(kPos);
-                os << (key->comment?"#":EMPTY) << key->keyName << "=" << key->value << "\n";
-            }
+            os << (first?"":"\n") << (group.isComment?"#":"");
+            os << (group.isArray?"[[":"[") << group.groupName << (group.isArray?"]]":"]") << "\n";
+            for (auto key : group.keys)
+                os << (key.comment ? "#" : "") << key.keyName << "=" << key.value << "\n";
             WriteLine(os.str().c_str());
             first = false;
         }
@@ -169,17 +156,13 @@ extern string_q collapseArrays(const string_q& inStr);
 
     //---------------------------------------------------------------------------------------
     void CToml::mergeFile(CToml *tomlIn) {
-        LISTPOS gPos = tomlIn->groups.GetHeadPosition();
-        while (gPos) {
-            CTomlGroup *group = tomlIn->groups.GetNext(gPos);
-            LISTPOS kPos = group->keys.GetHeadPosition();
-            while (kPos) {
-                CTomlKey *key = group->keys.GetNext(kPos);
-                setConfigStr(group->groupName, key->keyName, key->value);
-            }
+        for (auto group : tomlIn->groups) {
+            for (auto key : group.keys)
+                setConfigStr(group.groupName, key.keyName, key.value);
         }
     }
 
+    //---------------------------------------------------------------------------------------
     SFUintBN CToml::getConfigBigInt(const string_q& group, const string_q& key, SFUintBN def) const {
         string_q ret = getConfigStr(group, key, to_string(def).c_str());
         string_q check = ret;
@@ -193,14 +176,10 @@ extern string_q collapseArrays(const string_q& inStr);
 
     //---------------------------------------------------------------------------------------
     string_q CToml::getConfigStr(const string_q& group, const string_q& key, const string_q& def) const {
-        string_q ret = def;
-        CTomlGroup *grp = findGroup(group);
-        if (grp) {
-            CTomlKey *k = grp->findKey(key);
-            if (k && !k->comment)
-                ret = k->value;
-        }
-        return ret;
+        CTomlKey *found = findKey(group, key);
+        if (found && !found->comment)
+            return found->value;
+        return def;
     }
 
     //-------------------------------------------------------------------------
@@ -212,13 +191,19 @@ extern string_q collapseArrays(const string_q& inStr);
             replaceAll(fmt, "{", color+"{");
             replaceAll(fmt, "}", "}"+cOff);
         }
-        return cleanFmt(fmt);
+
+        string_q ret = substitute(fmt, "\\n\\\n", "\\n");
+        ret = substitute(ret, "\n", "");
+        ret = substitute(ret, "\\n", "\n");
+        ret = substitute(ret, "\\t", "\t");
+        ret = substitute(ret, "\\r", "\r");
+        return ret;
     }
 
     //-------------------------------------------------------------------------
     void CToml::setConfigStr(const string_q& group, const string_q& keyIn, const string_q& value) {
         bool comment = startsWith(keyIn, '#');
-        string_q key = (comment ? keyIn.substr(1) : keyIn);
+        string_q key = (comment ? extract(keyIn, 1) : keyIn);
 
         CTomlGroup *grp = findGroup(group);
         if (!grp) {
@@ -226,11 +211,10 @@ extern string_q collapseArrays(const string_q& inStr);
             addKey(group, key, value, comment);
 
         } else {
-            CTomlKey *k = grp->findKey(key);
-            if (k) {
-                // last in wins
-                k->comment = comment;
-                k->value = value;
+            CTomlKey *found = findKey(group, key);
+            if (found) {
+                found->comment = comment;
+                found->value = value;
             } else {
                 addKey(group, key, value, comment);
             }
@@ -239,15 +223,14 @@ extern string_q collapseArrays(const string_q& inStr);
 
     //-------------------------------------------------------------------------
     ostream& operator<<(ostream& os, const CToml& tomlIn) {
-        LISTPOS gPos = tomlIn.groups.GetHeadPosition();
-        while (gPos) {
-            const CToml::CTomlGroup *grp = tomlIn.groups.GetNext(gPos);
-            os << (grp->isArray?"[[":"[") << grp->groupName << (grp->isComment?":comment ":"") << (grp->isArray?"]]":"]") << "\n";
-            LISTPOS kPos = grp->keys.GetHeadPosition();
-            while (kPos) {
-                const CToml::CTomlKey *key = grp->keys.GetNext(kPos);
-                os << "\t" << key->keyName << (key->comment?":comment":"") << "=" << key->value << "\n";;
-            }
+        for (auto group : tomlIn.groups) {
+            os << (group.isArray?"[[":"[");
+            os << group.groupName;
+            os << (group.isComment?":comment ":"");
+            os << (group.isArray?"]]":"]");
+            os << "\n";
+            for (auto key : group.keys)
+                os << "\t" << key.keyName << (key.comment?":comment":"") << "=" << key.value << "\n";;
         }
         return os;
     }
@@ -270,74 +253,50 @@ extern string_q collapseArrays(const string_q& inStr);
 
     //-------------------------------------------------------------------------
     CToml::CTomlGroup::CTomlGroup(void) {
-        Clear();
+        clear();
     }
 
     //-------------------------------------------------------------------------
     CToml::CTomlGroup::CTomlGroup(const CTomlGroup& group) {
-        Copy(group);
+        copy(group);
     }
 
     //-------------------------------------------------------------------------
     CToml::CTomlGroup::~CTomlGroup(void) {
-        Clear();
+        clear();
     }
 
     //-------------------------------------------------------------------------
     CToml::CTomlGroup& CToml::CTomlGroup::operator=(const CTomlGroup& group) {
-        Copy(group);
+        copy(group);
         return *this;
     }
 
     //-------------------------------------------------------------------------
-    void CToml::CTomlGroup::Clear(void) {
-        groupName = EMPTY;
+    void CToml::CTomlGroup::clear(void) {
+        groupName = "";
         isComment = false;
         isArray = false;
-        LISTPOS kPos = keys.GetHeadPosition();
-        while (kPos) {
-            CTomlKey *key = keys.GetNext(kPos);
-            delete key;
-        }
-        keys.RemoveAll();
+        keys.clear();
     }
 
     //-------------------------------------------------------------------------
-    void CToml::CTomlGroup::Copy(const CTomlGroup& group) {
-        Clear();
+    void CToml::CTomlGroup::copy(const CTomlGroup& group) {
+        clear();
 
         groupName = group.groupName;
         isComment = group.isComment;
         isArray   = group.isArray;
-
-        LISTPOS kPos = group.keys.GetHeadPosition();
-        while (kPos) {
-            CTomlKey *orig = group.keys.GetNext(kPos);
-            CTomlKey *copy = new CTomlKey(*orig);
-            keys.AddTail(copy);
-        }
+        keys.clear();
+        for (auto key : group.keys)
+            keys.push_back(key);
     }
 
     //---------------------------------------------------------------------------------------
-    CToml::CTomlKey *CToml::CTomlGroup::addKey(const string_q& keyName, const string_q& val, bool commented) {
-        CTomlKey *key = new CTomlKey;
-        key->comment = commented;
-        key->keyName = keyName;
-        key->value = val;
-        keys.AddTail(key);
-        return key;
-    }
-
-    //---------------------------------------------------------------------------------------
-    CToml::CTomlKey *CToml::CTomlGroup::findKey(const string_q& keyName) const {
-        LISTPOS kPos = keys.GetHeadPosition();
-        while (kPos) {
-            CTomlKey *key = keys.GetNext(kPos);
-            string_q name = key->keyName;
-            if (name == keyName)
-                return key;
-        }
-        return NULL;
+    void CToml::CTomlGroup::addKey(const string_q& keyName, const string_q& val, bool commented) {
+        CTomlKey key(keyName, val, commented);
+        keys.push_back(key);
+        return;
     }
 
     //---------------------------------------------------------------------------------------
@@ -359,23 +318,23 @@ extern string_q collapseArrays(const string_q& inStr);
             return inStr;
 
         string_q ret;
-        string_q str = inStr.Substitute("  "," ");
-        replace(str, "[[","`");
+        string_q str = substitute(inStr, "  ", " ");
+        replace(str, "[[", "`");
         string_q front = nextTokenClear(str, '`');
         str = "[[" + str;
-        str = str.Substitute("[[","<array>");
-        str = str.Substitute("]]","</array>\n<name>");
-        str = str.Substitute("[","</name>\n<value>");
-        str = str.Substitute("]","</value>\n<name>");
+        str = substitute(str, "[[", "<array>");
+        str = substitute(str, "]]", "</array>\n<name>");
+        str = substitute(str, "[", "</name>\n<value>");
+        str = substitute(str, "]", "</value>\n<name>");
         replaceReverse(str, "<name>", "");
-        replaceAll(str, "<name>\n","<name>");
-        replaceAll(str, " = </name>","</name>");
+        replaceAll(str, "<name>\n", "<name>");
+        replaceAll(str, " = </name>", "</name>");
         while (contains(str, "</array>")) {
-            string_q array = snagFieldClear(str,"array");
+            string_q array = snagFieldClear(str, "array");
             string_q vals;
             while (contains(str, "</value>")) {
-                string_q name = snagFieldClear(str,"name").Substitute("=","").Substitute("\n","");
-                string_q value = snagFieldClear(str,"value").Substitute("\n","").Substitute("=",":");
+                string_q name = substitute(substitute(snagFieldClear(str, "name"), "=", ""), "\n", "");
+                string_q value = substitute(substitute(snagFieldClear(str, "value"), "\n", ""), "=", ":");
                 vals += name + " = [ " + value + " ]\n";
             }
             string_q line = "[[" + array + "]]\n" + vals;

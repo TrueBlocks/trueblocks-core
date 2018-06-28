@@ -15,14 +15,9 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <vector>
 #include "etherlib.h"
 #include "transaction.h"
-
-//--------------------------------------------------------------------------
-class CNewBlock;
-typedef SFArrayBase<CNewBlock>         CNewBlockArray;
-typedef SFList<CNewBlock*>             CNewBlockList;
-typedef SFUniqueList<CNewBlock*>       CNewBlockListU;
 
 // EXISTING_CODE
 // EXISTING_CODE
@@ -50,17 +45,18 @@ public:
 
     DECLARE_NODE(CNewBlock);
 
-    const CBaseNode *getObjectAt(const string_q& fieldName, uint32_t index) const override;
+    const CBaseNode *getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
-    CNewBlock(const CBlock& block);
+    explicit CNewBlock(const CBlock& block);
     // EXISTING_CODE
+    friend bool operator<(const CNewBlock& v1, const CNewBlock& v2);
     friend ostream& operator<<(ostream& os, const CNewBlock& item);
 
 protected:
-    void Clear(void);
-    void Init(void);
-    void Copy(const CNewBlock& ne);
+    void clear(void);
+    void initialize(void);
+    void duplicate(const CNewBlock& ne);
     bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
@@ -69,7 +65,7 @@ protected:
 
 //--------------------------------------------------------------------------
 inline CNewBlock::CNewBlock(void) {
-    Init();
+    initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
@@ -78,7 +74,7 @@ inline CNewBlock::CNewBlock(void) {
 inline CNewBlock::CNewBlock(const CNewBlock& ne) {
     // EXISTING_CODE
     // EXISTING_CODE
-    Copy(ne);
+    duplicate(ne);
 }
 
 // EXISTING_CODE
@@ -86,20 +82,20 @@ inline CNewBlock::CNewBlock(const CNewBlock& ne) {
 
 //--------------------------------------------------------------------------
 inline CNewBlock::~CNewBlock(void) {
-    Clear();
+    clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CNewBlock::Clear(void) {
+inline void CNewBlock::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CNewBlock::Init(void) {
-    CBaseNode::Init();
+inline void CNewBlock::initialize(void) {
+    CBaseNode::initialize();
 
     gasLimit = 0;
     gasUsed = 0;
@@ -111,16 +107,16 @@ inline void CNewBlock::Init(void) {
     price = 0.0;
     finalized = 0;
     timestamp = 0;
-    transactions.Clear();
+    transactions.clear();
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CNewBlock::Copy(const CNewBlock& ne) {
-    Clear();
-    CBaseNode::Copy(ne);
+inline void CNewBlock::duplicate(const CNewBlock& ne) {
+    clear();
+    CBaseNode::duplicate(ne);
 
     gasLimit = ne.gasLimit;
     gasUsed = ne.gasUsed;
@@ -141,16 +137,24 @@ inline void CNewBlock::Copy(const CNewBlock& ne) {
 
 //--------------------------------------------------------------------------
 inline CNewBlock& CNewBlock::operator=(const CNewBlock& ne) {
-    Copy(ne);
+    duplicate(ne);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
+//-------------------------------------------------------------------------
+inline bool operator<(const CNewBlock& v1, const CNewBlock& v2) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default sort defined in class definition, assume already sorted
+    return true;
+}
+
 //---------------------------------------------------------------------------
-IMPLEMENT_ARCHIVE_ARRAY(CNewBlockArray);
-IMPLEMENT_ARCHIVE_ARRAY_C(CNewBlockArray);
-IMPLEMENT_ARCHIVE_LIST(CNewBlockList);
+typedef vector<CNewBlock> CNewBlockArray;
+extern SFArchive& operator>>(SFArchive& archive, CNewBlockArray& array);
+extern SFArchive& operator<<(SFArchive& archive, const CNewBlockArray& array);
 
 //---------------------------------------------------------------------------
 extern SFArchive& operator<<(SFArchive& archive, const CNewBlock& newp);

@@ -23,7 +23,7 @@ CParams params[] = {
     CParams("-list:<list>",     "enter a list of value separated by commas (no spaces or quoted)"),
     CParams("",                 "Tests various command line behavior.\n"),
 };
-uint32_t nParams = sizeof(params) / sizeof(CParams);
+size_t nParams = sizeof(params) / sizeof(CParams);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
@@ -36,26 +36,27 @@ bool COptions::parseArguments(string_q& command) {
         string_q arg = nextTokenClear(command, ' ');
         string_q orig = arg;
         if (startsWith(arg, "-b:") || startsWith(arg, "--bool:")) {
-            arg = arg.Substitute("-b:","").Substitute("--bool:","");
+            arg = substitute(substitute(arg, "-b:", ""), "--bool:", "");
             if (arg == "1" || arg == "true") {
                 boolOption = true;
                 boolSet = true;
             } else if (arg == "0" || arg == "false") {
                 boolOption = false;
                 boolSet = true;
-            } else
+            } else {
                 usage("Invalid bool: " + orig);
+            }
 
         } else if (startsWith(arg, "-i:") || startsWith(arg, "--int:")) {
-            arg = arg.Substitute("-i:","").Substitute("--int:","");
+            arg = substitute(substitute(arg, "-i:", ""), "--int:", "");
             if (arg.empty() || (arg[0] != '-' && arg[0] != '+' && !isdigit(arg[0])))
                 return usage("--int requires a number. Quitting");
             numOption = toLong(arg);
 
         } else if (startsWith(arg, "-u:") || startsWith(arg, "--uint:")) {
-            arg = arg.Substitute("-u:","").Substitute("--uint:","");
+            arg = substitute(substitute(arg, "-u:", ""), "--uint:", "");
             if (arg.empty() || (arg[0] != '+' && !isdigit(arg[0]))) {
-                //return usage("--uint requires a non-negative number. Quitting");
+                // return usage("--uint requires a non-negative number. Quitting");
             } else {
                 numOption = toLong(arg);
             }

@@ -37,8 +37,8 @@ void CBranch::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) 
     }
 
     string_q fmt = fmtIn;
-    if (handleCustomFormat(ctx, fmt, dataPtr))
-        return;
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     while (!fmt.empty())
         ctx << getNextChunk(fmt, nextBranchChunk, this);
@@ -89,7 +89,7 @@ bool CBranch::Serialize(SFArchive& archive) {
     CTreeNode::Serialize(archive);
 
     // EXISTING_CODE
-    for (int i=0;i<16;i++) {
+    for (int i = 0 ; i < 16 ; i++) {
         if (nodes[i]) {
             delete nodes[i];
             nodes[i] = NULL;
@@ -119,7 +119,7 @@ bool CBranch::SerializeC(SFArchive& archive) const {
     CTreeNode::SerializeC(archive);
 
     // EXISTING_CODE
-    for (int i=0;i<16;i++) {
+    for (int i = 0 ; i < 16 ; i++) {
         archive << bool(nodes[i] != NULL);
         if (nodes[i]) {
             string_q className = nodes[i]->getRuntimeClass()->getClassNamePtr();
@@ -134,6 +134,27 @@ bool CBranch::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
+SFArchive& operator>>(SFArchive& archive, CBranchArray& array) {
+    uint64_t count;
+    archive >> count;
+    array.resize(count);
+    for (size_t i = 0 ; i < count ; i++) {
+        ASSERT(i < array.capacity());
+        array.at(i).Serialize(archive);
+    }
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+SFArchive& operator<<(SFArchive& archive, const CBranchArray& array) {
+    uint64_t count = array.size();
+    archive << count;
+    for (size_t i = 0 ; i < array.size() ; i++)
+        array[i].SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
 void CBranch::registerClass(void) {
     static bool been_here = false;
     if (been_here) return;
@@ -141,7 +162,7 @@ void CBranch::registerClass(void) {
 
     CTreeNode::registerClass();
 
-    uint32_t fieldNum = 1000;
+    size_t fieldNum = 1000;
     ADD_FIELD(CBranch, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CBranch, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CBranch, "showing", T_BOOL,  ++fieldNum);
@@ -165,7 +186,7 @@ string_q nextBranchChunk_custom(const string_q& fieldIn, const void *dataPtr) {
             case 'n':
                 if ( fieldIn % "nodes" ) {
                     string_q ret;
-                    for (int i=0;i<16;i++) {
+                    for (int i = 0 ; i < 16 ; i++) {
                         if (bra->nodes[i]) {
                             ret += bra->nodes[i]->Format();
                         }
@@ -178,6 +199,8 @@ string_q nextBranchChunk_custom(const string_q& fieldIn, const void *dataPtr) {
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
                     return nextBasenodeChunk(fieldIn, bra);
+                // EXISTING_CODE
+                // EXISTING_CODE
                 break;
 
             default:
@@ -186,13 +209,6 @@ string_q nextBranchChunk_custom(const string_q& fieldIn, const void *dataPtr) {
     }
 
     return "";
-}
-
-//---------------------------------------------------------------------------
-bool CBranch::handleCustomFormat(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
-    return false;
 }
 
 //---------------------------------------------------------------------------
@@ -263,7 +279,7 @@ ostream& operator<<(ostream& os, const CBranch& item) {
 
         int idx = nodeIndex(_key[0]);
         if (nodes[idx])
-            return nodes[idx]->at(_key.substr(1));
+            return nodes[idx]->at(extract(_key, 1));
 
         return "";
     }
@@ -288,11 +304,11 @@ ostream& operator<<(ostream& os, const CBranch& item) {
             int idx = nodeIndex(_key[0]);
             if (nodes[nodeIndex(_key[0])]) {
                 // There is already something stored here, so we need to find room for it
-                nodes[idx] = nodes[idx]->insert(_key.substr(1), _value);
+                nodes[idx] = nodes[idx]->insert(extract(_key, 1), _value);
 
             } else {
                 // we've reached a leaf
-                nodes[idx] = new CLeaf(_key.substr(1), _value);
+                nodes[idx] = new CLeaf(extract(_key, 1), _value);
             }
         }
         return this;
@@ -302,8 +318,8 @@ ostream& operator<<(ostream& os, const CBranch& item) {
     CTreeNode* CBranch::remove(const string_q& _key) {
         if (verbose) {
             cerr << endl<< endl<< endl
-            << idnt << string_q('-', 80) << endl
-            << idnt << string_q('-', 80) << endl
+            << idnt << string_q(80, '-') << endl
+            << idnt << string_q(80, '-') << endl
             << idnt << "remove branch at [" << _key << "]: ";
             idnt+="\t";
         }
@@ -397,16 +413,16 @@ ostream& operator<<(ostream& os, const CBranch& item) {
     bool CBranch::visitItems(ACCTVISITOR func, void *data) const {
         ASSERT(func);
         CVisitData *vd = reinterpret_cast<CVisitData*>(data);
-        uint32_t save = vd->type;
+        uint64_t save = vd->type;
         vd->type = T_BRANCH;
         vd->counter = 0;
         vd->strs = vd->strs + branchValue + "+";
-        //vd->strs = vd->strs + "+";
+        // vd->strs = vd->strs + "+";
         (*func)(this, data);
-        for (uint32_t i = 0; i < 16; ++i) {
+        for (size_t i = 0; i < 16; ++i) {
             if (nodes[i]) {
                 vd->level++;
-                vd->strs = vd->strs + "-" + idex((char)i);
+                vd->strs = vd->strs + "-" + idex((char)i);  // NOLINT
                 nodes[i]->visitItems(func, data);
                 nextTokenClearReverse(vd->strs, '-');
                 vd->level--;

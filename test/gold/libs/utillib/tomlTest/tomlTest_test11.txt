@@ -5,4 +5,5 @@ test11.toml
 	version=0:9:0
 [settings]
 
-Done.
+name: 		NONAME
+max_width: 	10000
