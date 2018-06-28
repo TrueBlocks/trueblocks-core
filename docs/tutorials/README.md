@@ -1,4 +1,4 @@
-### Tutorial 1 - Basic with getBlock
+### #1 getBlock Basics
 
 This tutorial assumes you've already built QuickBlocks and added the QuickBlocks folder to your path. Build instructions are here. The command
 
