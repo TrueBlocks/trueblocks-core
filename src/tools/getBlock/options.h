@@ -20,7 +20,8 @@ public:
     bool isRaw;
     bool isCache;
     bool hashes;
-    bool addrs;
+    bool showAddrs;
+    bool uniqAddrs;
     bool traces;
     bool force;
     bool normalize;

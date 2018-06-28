@@ -175,25 +175,28 @@ public:
     blknum_t bn;
     blknum_t tx;
     blknum_t tc;
-    SFAddress addr;
-    CAddressItem(void) : bn(0), tx(0), tc(0), addr("") { }
+    SFAddress addr2;
+    string_q reason;
+    CAddressItem(void) : bn(0), tx(0), tc(0), addr2(""), reason("") { }
     CAddressItem(const CAddressItem& item)
-        : bn(item.bn), tx(item.tx), tc(item.tc), addr(item.addr) { }
+        : bn(item.bn), tx(item.tx), tc(item.tc), addr2(item.addr2), reason(item.reason) { }
     CAddressItem& operator=(const CAddressItem& item) {
         bn = item.bn;
         tx = item.tx;
         tc = item.tc;
-        addr = item.addr;
+        addr2 = item.addr2;
+        reason = item.reason;
         return *this;
     }
-    CAddressItem(blknum_t b, blknum_t x, blknum_t c, const SFAddress& a)
-        : bn(b), tx(x), tc(c), addr(a) { }
+    CAddressItem(blknum_t b, blknum_t x, blknum_t c, const SFAddress& a, const string_q r)
+        : bn(b), tx(x), tc(c), addr2(a), reason(r) { }
     friend bool operator<(const CAddressItem& v1, const CAddressItem& v2) {
-        return v1.addr < v2.addr;
+        return v1.addr2 < v2.addr2;
     }
     friend ostream& operator<<(ostream& os, const CAddressItem& item);
 };
 typedef map<CAddressItem, uint64_t> CAddressItemMap;
+typedef vector<CAddressItem> CAddressItemArray;
 
 //---------------------------------------------------------------------------
 inline blknum_t bnFromPath(const string_q& path) {
