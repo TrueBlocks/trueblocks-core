@@ -286,19 +286,19 @@ const string_q CLogEntry::getStringAt(const string_q& name, size_t i) const {
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-#define EQ_TEST(a) { if (test.a != a) return false; }
-bool CLogEntry::operator==(const CLogEntry& test) const {
-
-    EQ_TEST(address);
-    EQ_TEST(data);
-    EQ_TEST(logIndex);
-    EQ_TEST(topics.size());
-    for (size_t i = 0 ; i < topics.size() ; i++)
-        if (test.topics[i] != topics[i])
-            return false;
-
-    return true;
-}
+//#define EQ_TEST(a) { if (test.a != a) return false; }
+//bool CLogEntry::operator==(const CLogEntry& test) const {
+//
+//    EQ_TEST(address);
+//    EQ_TEST(data);
+//    EQ_TEST(logIndex);
+//    EQ_TEST(topics.size());
+//    for (size_t i = 0 ; i < topics.size() ; i++)
+//        if (test.topics[i] != topics[i])
+//            return false;
+//
+//    return true;
+//}
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

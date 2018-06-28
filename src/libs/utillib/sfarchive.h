@@ -104,12 +104,10 @@ namespace qblocks {
 
     extern SFArchive& operator<<(SFArchive& archive, const CStringArray& array);
     extern SFArchive& operator<<(SFArchive& archive, const SFBigUintArray& array);
-    extern SFArchive& operator<<(SFArchive& archive, const SFBloomArray& array);
     extern SFArchive& operator<<(SFArchive& archive, const SFUintArray& array);
 
     extern SFArchive& operator>>(SFArchive& archive, CStringArray& array);
     extern SFArchive& operator>>(SFArchive& archive, SFBigUintArray& array);
-    extern SFArchive& operator>>(SFArchive& archive, SFBloomArray& array);
     extern SFArchive& operator>>(SFArchive& archive, SFUintArray& array);
 
 }  // namespace qblocks

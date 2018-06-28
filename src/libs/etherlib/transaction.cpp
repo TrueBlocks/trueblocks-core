@@ -491,45 +491,39 @@ const CBaseNode *CTransaction::getObjectAt(const string_q& fieldName, size_t ind
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-#define EQ_TEST(a) { if (test.a != a) return false; }
+//#define EQ_TEST(a) { if (test.a != a) return false; }
 //---------------------------------------------------------------------------
-bool CTransaction::operator==(const CTransaction& test) const {
+//bool CTransaction::operator==(const CTransaction& test) const {
+//
+//    EQ_TEST(hash);
+//    EQ_TEST(blockHash);
+//    EQ_TEST(blockNumber);
+//    EQ_TEST(transactionIndex);
+//    EQ_TEST(nonce);
+//    EQ_TEST(timestamp);
+//    EQ_TEST(from);
+//    EQ_TEST(to);
+//    EQ_TEST(value);
+//    EQ_TEST(gas);
+//    EQ_TEST(gasPrice);
+//    EQ_TEST(input);
+//    EQ_TEST(isError);
+//    EQ_TEST(isInternal);
+//    if (test.receipt != receipt)
+//        return false;
+//
+//    return true;
+//}
 
-    EQ_TEST(hash);
-    EQ_TEST(blockHash);
-    EQ_TEST(blockNumber);
-    EQ_TEST(transactionIndex);
-    EQ_TEST(nonce);
-    EQ_TEST(timestamp);
-    EQ_TEST(from);
-    EQ_TEST(to);
-    EQ_TEST(value);
-    EQ_TEST(gas);
-    EQ_TEST(gasPrice);
-    EQ_TEST(input);
-    EQ_TEST(isError);
-    EQ_TEST(isInternal);
-    if (test.receipt != receipt)
-        return false;
-
-    return true;
-}
-
-int sortTransactionsForWrite(const void *rr1, const void *rr2) {
-    CTransaction *tr1 = (CTransaction*)rr1;  // NOLINT
-    CTransaction *tr2 = (CTransaction*)rr2;  // NOLINT
-
-    if (tr1->timestamp > tr2->timestamp)
-        return 1;
-    else if (tr1->timestamp < tr2->timestamp)
-        return -1;
-    if (tr1->from.compare(tr2->from))
-        return tr1->from.compare(tr2->from);
-    if (tr1->transactionIndex > tr2->transactionIndex)
-        return 1;
-    else if (tr1->transactionIndex < tr2->transactionIndex)
-        return -1;
-    return tr1->hash.compare(tr2->hash);
+//--------------------------------------------------------------------
+bool sortTransactionsForWrite(const CTransaction& t1, const CTransaction& t2) {
+    if (t1.timestamp != t2.timestamp)
+        return t1.timestamp < t2.timestamp;
+    else if (t1.from.compare(t2.from))  // not equal
+        return t1.from < t2.from;
+    else if (t1.transactionIndex != t2.transactionIndex)
+        return t1.transactionIndex < t2.transactionIndex;
+    return t1.hash < t2.hash;
 }
 
 //--------------------------------------------------------------------

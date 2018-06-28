@@ -63,9 +63,9 @@ public:
     CTraceArray traces;
 
     string_q inputToFunction(void) const;
-    bool operator==(const CTransaction& tr) const;
-    bool operator!=(const CTransaction& tr) const { return !operator==(tr); }
     // EXISTING_CODE
+//    bool operator==(const CTransaction& tr) const;
+//    bool operator!=(const CTransaction& tr) const { return !operator==(tr); }
     friend bool operator<(const CTransaction& v1, const CTransaction& v2);
     friend ostream& operator<<(ostream& os, const CTransaction& item);
 
@@ -76,7 +76,6 @@ protected:
     bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
-    friend int sortTransactionsForWrite(const void *rr1, const void *rr2);
     // EXISTING_CODE
 };
 
@@ -205,7 +204,7 @@ inline bool operator<(const CTransaction& v1, const CTransaction& v2) {
 }
 
 //---------------------------------------------------------------------------
-typedef SFArrayBase<CTransaction> CTransactionArray;
+typedef vector<CTransaction> CTransactionArray;
 extern SFArchive& operator>>(SFArchive& archive, CTransactionArray& array);
 extern SFArchive& operator<<(SFArchive& archive, const CTransactionArray& array);
 
@@ -215,10 +214,9 @@ extern SFArchive& operator>>(SFArchive& archive, CTransaction& tra);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-extern int sortTransactionsForWrite(const void *rr1, const void *rr2);
+extern bool sortTransactionsForWrite(const CTransaction& t1, const CTransaction& t2);
 extern string_q parse(const string_q& params, size_t nItems, string_q *types);
 extern string_q toFunction(const string_q& name, const string_q& input, size_t nItems, string_q *items);
 extern string_q nextBlockChunk(const string_q& fieldIn, const void *data);
 // EXISTING_CODE
 }  // namespace qblocks
-

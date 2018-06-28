@@ -47,9 +47,9 @@ public:
     // EXISTING_CODE
     const CTransaction *pTrans;
     friend class CTransaction;
-    bool operator==(const CReceipt& r) const;
-    bool operator!=(const CReceipt& r) const { return !operator==(r); }
     // EXISTING_CODE
+//    bool operator==(const CReceipt& r) const;
+//    bool operator!=(const CReceipt& r) const { return !operator==(r); }
     friend bool operator<(const CReceipt& v1, const CReceipt& v2);
     friend ostream& operator<<(ostream& os, const CReceipt& item);
 
