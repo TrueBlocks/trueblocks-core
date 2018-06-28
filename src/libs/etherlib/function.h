@@ -54,6 +54,7 @@ public:
     bool isBuiltin;
     string_q origName;
     // EXISTING_CODE
+    bool operator==(const CFunction& item) const;
     friend bool operator<(const CFunction& v1, const CFunction& v2);
     friend ostream& operator<<(ostream& os, const CFunction& item);
 
@@ -147,6 +148,13 @@ inline CFunction& CFunction::operator=(const CFunction& fu) {
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
+}
+
+//-------------------------------------------------------------------------
+inline bool CFunction::operator==(const CFunction& item) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    return encoding % item.encoding;
 }
 
 //-------------------------------------------------------------------------

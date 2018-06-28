@@ -57,7 +57,7 @@ public:
 
     // EXISTING_CODE
     const CBlock *pBlock;
-    CFunction *funcPtr;
+    const CFunction *funcPtr;
     string_q function;
     double ether;
     CTraceArray traces;
