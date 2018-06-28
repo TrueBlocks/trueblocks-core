@@ -249,7 +249,6 @@ bool CSlurperApp::Slurp(COptions& options, string_q& message) {
             // Make sure we don't spin forever
             if (nRead >= options.maxTransactions)
                 done = true;
-done = true;
         }
 
         size_t minBlock = 0, maxBlock = 0;
@@ -359,25 +358,13 @@ bool CSlurperApp::Filter(COptions& options, string_q& message) {
             trans->m_showing = false;
         }
 
-// TAKEN OUT OF CTransaction class during cleanup
-// //---------------------------------------------------------------------------
-// bool CTransaction::isFunction(const string_q& func) const
-// {
-//    if (func=="none")
-//    {
-//        string_q ret = inputToFunction();
-//         if (containsAny(ret, "acghrstuv"))
-//            return false;
-//        return (ret==" ");
-//    }
-//    return (funcPtr ? funcPtr->name == func : false);
-// }
-//        if (!options.funcFilter.empty()) {
-//            bool show = false;
-//            for (uint64_t jj = 0 ; jj < nFuncFilts ; jj++)
-//                show = (show || trans->isFunction(funcFilts[jj]));
-//            trans->m_showing = show;
-//        }
+extern bool isFunction(const CTransaction *trans, const string_q& func);
+        if (!options.funcFilter.empty()) {
+            bool show = false;
+            for (uint64_t jj = 0 ; jj < nFuncFilts ; jj++)
+                show = (show || isFunction(trans, funcFilts[jj]));
+            trans->m_showing = show;
+        }
 
         // We only apply this if another filter has not already hidden the transaction
         if (trans->m_showing && options.errFilt) {
@@ -504,7 +491,7 @@ void CSlurperApp::buildDisplayStrings(COptions& options) {
 
     string_q defList = getGlobalConfig("ethslurp")->getConfigStr("display", "fmt_fieldList", "");
     string_q fieldList = getGlobalConfig("ethslurp")->getConfigStr("display",
-                                                "fmt_" + options.exportFormat + "_fieldList", defList);
+                                                                   "fmt_" + options.exportFormat + "_fieldList", defList);
     if (fieldList.empty())
         GETRUNTIME_CLASS(CTransaction)->forEveryField(buildFieldList, &fieldList);
 
@@ -657,54 +644,8 @@ bool loadABI(CAbi& abi, const string_q& addr) {
 }
 
 //---------------------------------------------------------------------------
-static CFunctionArray *getABIArray(void) {
-
-    static CFunctionArray *theArrayPtr = NULL;
-    if (!theArrayPtr) {
-        static CFunctionArray theArray;
-        string_q abiPath = blockCachePath("abis/abis.bin");
-        SFArchive funcCache(READING_ARCHIVE);
-        if (funcCache.Lock(abiPath, binaryReadOnly, LOCK_WAIT)) {
-            funcCache >> theArray;
-            funcCache.Release();
-        }
-        theArrayPtr = &theArray;
-    }
-    return theArrayPtr;
+bool isFunction(const CTransaction *trans, const string_q& func) {
+    if (func=="none")
+        return (trans->inputToFunction() == " ");
+    return (trans->funcPtr ? trans->funcPtr->name == func : false);
 }
-
-//---------------------------------------------------------------------------
-int findByEncoding(const void *rr1, const void *rr2) {
-    CFunction *f1 = (CFunction*)rr1;  // NOLINT
-    CFunction *f2 = (CFunction*)rr2;  // NOLINT
-    return f2->encoding.compare(f1->encoding);
-}
-
-//---------------------------------------------------------------------------
-int findByEncodingI(const void *rr1, const void *rr2) {
-    CFunction *f1 = (CFunction*)rr1;  // NOLINT
-    CFunction *f2 = (CFunction*)rr2;  // NOLINT
-    return toLower(f2->encoding).compare(toLower(f1->encoding));
-}
-
-//---------------------------------------------------------------------------
-CFunction *findFunctionByEncoding(const string_q& encoding) {
-    CFunctionArray *array = getABIArray();
-    if (array) {
-        CFunction search;
-        search.encoding = encoding;
-        // TODO(tjayrush): This was removed when we move to vector class
-        return NULL;  // array->Find(&search, findByEncodingI);
-    }
-    return NULL;
-}
-
-namespace qblocks {
-//---------------------------------------------------------------------------
-CFunction *findFunctionByEncoding(CAbi& abi, const string_q& enc) {
-    CFunction search;
-    search.encoding = enc;
-    // TODO(tjayrush): This was removed when we move to vector class
-    return NULL;  // abi.abiByEncoding.Find(&search, findByEncoding);
-}
-};

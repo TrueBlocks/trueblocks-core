@@ -14,6 +14,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include "etherlib.h"
 #include "account.h"
 
 namespace qblocks {
@@ -106,8 +107,8 @@ void CAccount::finishParse() {
     for (size_t i = 0 ; i < transactions.size() ; i++) {
         CTransaction *t = &transactions.at(i);
         string_q encoding = extract(t->input, 0, 10);
-extern CFunction *findFunctionByEncoding(CAbi& abi, const string_q& search);
-        t->funcPtr = findFunctionByEncoding(abi, encoding);
+extern const CFunction *findFunctionByEncoding(const CFunctionArray& array, const string_q& search);
+        t->funcPtr = findFunctionByEncoding(abi.abiByEncoding, encoding);
     }
     // EXISTING_CODE
 }
@@ -374,6 +375,19 @@ bool CAccount::handleCustomFormat(CExportContext& ctx, const string_q& fmtIn, vo
     }
     return true;
 }
+
+//---------------------------------------------------------------------------
+const CFunction *findFunctionByEncoding(const CFunctionArray& array, const string_q& enc) {
+    CFunction search;
+    search.encoding = enc;
+    auto i1 = array.cbegin();
+    auto i2 = array.cend();
+    for ( ; i1 != i2 ; ++i1) {
+        if (search == *i1){
+            return &*i1;
+        }
+    }
+    return nullptr;
+}
 // EXISTING_CODE
 }  // namespace qblocks
-
