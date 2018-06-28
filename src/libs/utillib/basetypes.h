@@ -60,9 +60,13 @@ using namespace std;  // NOLINT
 
 //-------------------------------------------------------------------------
 #include "sfstring.h"
-#include "list.h"
 
 namespace qblocks {
+    //-------------------------------------------------------------------------
+    typedef bool (*APPLYFUNC)(string_q& line, void *data);
+    typedef int  (*SEARCHFUNC)    (const void *ob1, const void *ob2);
+    typedef int  (*SORTINGFUNC)   (const void *ob1, const void *ob2);
+
     //---------------------------------------------------------------------------
     inline bool isTestMode(void) {
         return (getEnvStr("TEST_MODE") == "true");
