@@ -53,7 +53,7 @@ int main(int argc, const char *argv[]) {
 
 //----------------------------------------------------------------
 bool visitAddrs(const CAddressItem& item, void *data) {
-    if (zeroAddr(item.addr2))
+    if (zeroAddr(item.addr))
         return true;
     cout << item << "\n";
     return true;
@@ -61,7 +61,7 @@ bool visitAddrs(const CAddressItem& item, void *data) {
 
 //----------------------------------------------------------------
 bool accumAddrs(const CAddressItem& item, void *data) {
-    if (zeroAddr(item.addr2))
+    if (zeroAddr(item.addr))
         return true;
     vector<CAddressItem> *array = (vector<CAddressItem> *)data;
     array->push_back(item);
@@ -84,7 +84,7 @@ bool sortAddressArray(const CAddressItem& v1, const CAddressItem& v2) {
         return vv1 < vv2;
     if (v1.tc != v2.tc)
         return v1.tc < v2.tc;
-    return v1.addr2 < v2.addr2;
+    return v1.addr < v2.addr;
 }
 
 //--------------------------------------------------------------

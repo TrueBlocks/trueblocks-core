@@ -433,7 +433,7 @@ ostream& operator<<(ostream& os, const CAddressItem& item) {
     os << item.bn << "\t";
     os << (item.tx == NOPOS ? "" : asStringU(item.tx)) << "\t";
     os << (item.tc < 10 ? "" : asStringU(item.tc - 10)) << "\t";
-    os << item.addr2 << "\t";
+    os << item.addr << "\t";
     os << item.reason;
     return os;
 }
@@ -448,9 +448,9 @@ uint64_t insertUnique(CAddressItemMap *addrMap, const CAddressItem& _value) {
 
 //---------------------------------------------------------------------------
 bool accumulateAddresses(const CAddressItem& item, void *data) {
-    if (zeroAddr(item.addr2))
+    if (zeroAddr(item.addr))
         return true;
-    CAddressItem search(item.bn, item.tx, item.tc, item.addr2, item.reason);
+    CAddressItem search(item.bn, item.tx, item.tc, item.addr, item.reason);
     insertUnique((CAddressItemMap*)data, search);  // NOLINT
     return true;
 }
@@ -503,7 +503,7 @@ void potentialAddr(ADDRESSFUNC func, void *data, const CAddressItem& item, const
         SFUintBN test = hex2BN("0x" + extract(potList, s*64, 64));
         if (isPotentialAddr(test, addr)) {
             CAddressItem it(item);
-            it.addr2 = addr;
+            it.addr = addr;
             (*func)(it, data);
         }
     }
@@ -554,7 +554,7 @@ bool CBlock::forEveryAddress(ADDRESSFUNC func, TRANSFUNC filterFunc, void *data)
         if (!filterFunc || !filterFunc(trans, data)) {  // may look at DDos range and nTraces for example
             CTraceArray traces;
             getTraces(traces, trans->hash);
-            for (size_t t = 1 ; t < traces.size() ; t++) {
+            for (size_t t = 0 ; t < traces.size() ; t++) {
                 const CTrace *trace = &traces[t];  // taking a non-const reference
                 string_q trID = "trace" + asStringU(t) + "_";
                 foundOne(func, data, blockNumber, tr, t+10, trace->action.from, trID + "from");
