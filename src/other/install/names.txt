@@ -51,3 +51,4 @@ BCAP	Blockchain Capital	0xFf3519eeeEA3e76F1F699CCcE5E23ee0bdDa41aC	Etherscan.io	
 PLU	Pluton			0xD8912C10681D8B21Fd3742244f44658dBA12264E	Etherscan.io	With Plutus Tap & Pay, you can pay at any NFC-enabled merchant
 UNI	Unicorns		0x89205A3A3b2A69De6Dbf7f01ED13B2108B2c43e7	Ethereum.org	Ethereum tip jar unicorn tokens
 EEAR	Eth Early Adoption Reg	0x713b73c3994442b533e6a083ec968e40606810ec	quickBlocks.io	An early, known-dead address useful for testing
+CK	CryptoKitties		0x06012c8cf97BEaD5deAe237070F9587f8E7A266d	Etherscan.io	The famous first ERC721 token
