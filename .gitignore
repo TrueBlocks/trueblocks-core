@@ -28,3 +28,10 @@ build
 
 # Hidden files
 .DS_Store
+
+# Python
+py-ext/build/
+py-ext/dist/
+*.pyc
+*.pyo
+*.egg-info
