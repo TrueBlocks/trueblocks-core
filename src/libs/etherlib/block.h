@@ -175,23 +175,23 @@ public:
     blknum_t bn;
     blknum_t tx;
     blknum_t tc;
-    SFAddress addr2;
+    SFAddress addr;
     string_q reason;
-    CAddressItem(void) : bn(0), tx(0), tc(0), addr2(""), reason("") { }
+    CAddressItem(void) : bn(0), tx(0), tc(0), addr(""), reason("") { }
     CAddressItem(const CAddressItem& item)
-        : bn(item.bn), tx(item.tx), tc(item.tc), addr2(item.addr2), reason(item.reason) { }
+        : bn(item.bn), tx(item.tx), tc(item.tc), addr(item.addr), reason(item.reason) { }
     CAddressItem& operator=(const CAddressItem& item) {
         bn = item.bn;
         tx = item.tx;
         tc = item.tc;
-        addr2 = item.addr2;
+        addr = item.addr;
         reason = item.reason;
         return *this;
     }
     CAddressItem(blknum_t b, blknum_t x, blknum_t c, const SFAddress& a, const string_q r)
-        : bn(b), tx(x), tc(c), addr2(a), reason(r) { }
+        : bn(b), tx(x), tc(c), addr(a), reason(r) { }
     friend bool operator<(const CAddressItem& v1, const CAddressItem& v2) {
-        return v1.addr2 < v2.addr2;
+        return v1.addr < v2.addr;
     }
     friend ostream& operator<<(ostream& os, const CAddressItem& item);
 };
