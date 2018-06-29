@@ -209,7 +209,7 @@ bool sortByBlocknumTxId(const CAddressItem& v1, const CAddressItem& v2) {
         return v1.tc < v2.tc;
     else if (v1.reason != v2.reason)
         return v1.reason < v2.reason;
-    return v1.addr2 < v2.addr2;
+    return v1.addr < v2.addr;
 }
 
 extern bool visitAddrs(const CAddressItem& item, void *data);
@@ -234,7 +234,7 @@ string_q getAddresses(uint64_t num, const COptions& opt) {
 //----------------------------------------------------------------
 bool visitAddrs(const CAddressItem& item, void *data) {
     CAddressItemArray *array = (CAddressItemArray*)data;  // NOLINT
-    if (!zeroAddr(item.addr2))
+    if (!zeroAddr(item.addr))
         array->push_back(item);
     return true;
 }
