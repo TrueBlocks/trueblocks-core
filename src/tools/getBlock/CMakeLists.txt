@@ -93,9 +93,11 @@ run_test("getBlock_hashes_3" "-n"                          " 4001001")
 run_test("getBlock_hashes_4" "-n"          " --source:raw" " 4001001")
 
 run_test("getBlock_address1"  "2768801"        " -a")
-run_test("getBlock_address2"  "1995314"        " --addresses")
+run_test("getBlock_address2"  "1995314"        " --addrs")
 run_test("getBlock_address3"  "1958017"        " -a" " -v")
 run_test("getBlock_address4"  "245001"         " --addr")
+run_test("getBlock_address5"  "245001"         " --uniq")
+run_test("getBlock_address6"  "245001"         " -u")
 
 run_special_test("getBlock_cmd_file1" "--file:cmd_file1")
 run_special_test("getBlock_cmd_file2" "--file:cmd_file2")

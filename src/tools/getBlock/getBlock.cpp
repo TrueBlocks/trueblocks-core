@@ -29,13 +29,13 @@ int main(int argc, const char * argv[]) {
             return 0;
 
         // There can be more than one thing to do...
-        if (!options.quiet && !options.addrs)
+        if (!options.quiet && !options.showAddrs && !options.uniqAddrs)
             cout << (options.isMulti() ? "[" : "");
 
         string_q list = options.getBlockNumList();
         while (!list.empty() && !shouldQuit()) {
             blknum_t bn = toLongU(nextTokenClear(list, '|'));
-            if (options.addrs) {
+            if (options.showAddrs || options.uniqAddrs) {
                 string_q checkResults = getAddresses(bn, options);
                 cout << checkResults;
                 cout.flush();
@@ -64,7 +64,7 @@ int main(int argc, const char * argv[]) {
             }
         }
 
-        if (!options.quiet && !options.addrs)
+        if (!options.quiet && !options.showAddrs && !options.uniqAddrs)
             cout << (options.isMulti() ? "]" : "");
     }
 
@@ -199,25 +199,43 @@ void interumReport(ostream& os, blknum_t i) {
     os.flush();
 }
 
+//------------------------------------------------------------
+bool sortByBlocknumTxId(const CAddressItem& v1, const CAddressItem& v2) {
+    if (v1.bn != v2.bn)
+        return v1.bn < v2.bn;
+    else if (v1.tx != v2.tx)
+        return v1.tx < v2.tx;
+    else if (v1.tc != v2.tc)
+        return v1.tc < v2.tc;
+    else if (v1.reason != v2.reason)
+        return v1.reason < v2.reason;
+    return v1.addr < v2.addr;
+}
+
 extern bool visitAddrs(const CAddressItem& item, void *data);
 extern bool transFilter(const CTransaction *trans, void *data);
 //------------------------------------------------------------
 string_q getAddresses(uint64_t num, const COptions& opt) {
 
-    SFAddressArray array;
+    CAddressItemArray array;
     CBlock block;
     getBlock(block, num);
-    block.forEveryUniqueAddress(visitAddrs, transFilter, &array);
+    if (opt.uniqAddrs)
+        block.forEveryUniqueAddress(visitAddrs, transFilter, &array);
+    else
+        block.forEveryAddress(visitAddrs, transFilter, &array);
+    sort(array.begin(), array.end(), sortByBlocknumTxId);
     ostringstream os;
     for (auto elem : array)
-        os << num << "\t" << elem << "\n";
+        os << elem << "\n";
     return os.str().c_str();
 }
 
 //----------------------------------------------------------------
 bool visitAddrs(const CAddressItem& item, void *data) {
-    SFAddressArray *array = (SFAddressArray*)data;  // NOLINT
-    array->push_back(item.addr);
+    CAddressItemArray *array = (CAddressItemArray*)data;  // NOLINT
+    if (!zeroAddr(item.addr))
+        array->push_back(item);
     return true;
 }
 
