@@ -100,6 +100,7 @@ string_q doOneBloom(uint64_t num, const COptions& opt) {
                 rawBlock.transactions.at(i).receipt.logsBloom =
                     toBits(rawBlock.transactions[i].receipt.logsBloom);  // .at cannot go past end of vector!
         }
+
         if (opt.asBars) {
             ostringstream os;
             if (opt.receipt)
@@ -128,7 +129,8 @@ string_q doOneBloom(uint64_t num, const COptions& opt) {
         ostringstream os;
         os << "\n" << string_q(90, '-') << " " << num << string_q(90, '-') << "\n";
         for (size_t i = 0 ; i < blooms.size(); i++) {
-            os << asBar(bloom2Bits(blooms[i])) << "\n";
+            //            os << asBar(bloom2Bits(blooms[i])) << "\n";
+            os << "0x" << blooms[i] << "\n";
         }
         result = os.str().c_str();
     }

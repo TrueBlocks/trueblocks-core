@@ -24,3 +24,7 @@ inline void queryTraces(CTraceArray& traces, const CBlock& block, uint32_t txID)
     etherlib_init();
     getTraces(traces, block.transactions[txID].hash);
 }
+
+extern bool visitBlock(uint64_t num, void *data);
+extern bool visitTransaction(CTransaction& trans, void *data);
+extern bool visitTrace(CTrace& trace, void *data);
