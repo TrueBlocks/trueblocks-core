@@ -108,22 +108,6 @@ bool CSlurperApp::Initialize(COptions& options, string_q& message) {
     // string is not in the config file. Don't remove it.
     getFormatString(options, "file", false);
 
-    if (options.wantsArchive) {
-        if (options.archiveFile.empty() && options.name.empty())
-            return usage("-a and -n may not both be empty. Specify either an archive file or a name. Quitting...");
-
-        string_q fn = (contains(options.name, "/") ? options.name : options.exportFormat + "/" + options.name) +
-                        (contains(options.name, ".") ? "" : "." + options.exportFormat);
-        CFilename filename(fn);
-        if (options.archiveFile.empty())
-            options.archiveFile = filename.getFullPath();
-        ASSERT(options.output == NULL);
-        options.output = fopen(options.archiveFile.c_str(), asciiWriteCreate);
-        if (!options.output)
-            return usage("file '" + options.archiveFile + "' could not be opened. Quitting.");
-        outScreen.setOutput(options.output);
-    }
-
     // Save the address and name for later
     CToml toml(configPath("ethslurp.toml"));
     toml.setConfigStr("settings", "rerun", addr);
@@ -406,11 +390,11 @@ bool CSlurperApp::Display(COptions& options, string_q& message) {
     if (options.cache) {
         for (size_t i = 0 ; i < theAccount.transactions.size() ; i++) {
             const CTransaction *t = &theAccount.transactions[i];
-            outScreen << t->Format("[{BLOCKNUMBER}]\t[{TRANSACTIONINDEX}]\t" + asStringU(options.acct_id)) << "\n";
+            cout << t->Format("[{BLOCKNUMBER}]\t[{TRANSACTIONINDEX}]\t" + asStringU(options.acct_id)) << "\n";
         }
     } else {
 
-        theAccount.Format(outScreen, getFormatString(options, "file", false));
+        theAccount.Format(getFormatString(options, "file", false));
     }
 
     if (!isTestMode()) {
@@ -528,7 +512,6 @@ void CSlurperApp::buildDisplayStrings(COptions& options) {
     theAccount.header        = trimWhitespace(theAccount.header);
 
     theAccount.displayString = trim(substitute(fmtForRecords, "[{FIELDS}]", theAccount.displayString), '\t');
-    replaceAll(theAccount.displayString, "[{NAME}]", options.archiveFile);
     if (options.exportFormat == "json") {
         // One little hack to make raw json more readable
         replaceReverse(theAccount.displayString, "}]\",", "}]\"\n");

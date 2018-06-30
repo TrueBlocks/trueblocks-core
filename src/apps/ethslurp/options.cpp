@@ -1,3 +1,10 @@
+/*
+ name
+exportFormat
+exportFormat
+output
+*/
+
 /*-------------------------------------------------------------------------------------------
  * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
  * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
@@ -13,12 +20,8 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-CFileExportContext outScreen;
-
-//---------------------------------------------------------------------------------------------------
 CParams params[] = {
     CParams("~addr",            "the address of the account or contract to slurp"),
-    CParams("-archive:<str>",   "filename of output (stdout otherwise)"),
     CParams("-blocks:<range>",  "export records in block range (:0[:max])"),
     CParams("-dates:<date>",    "export records in date range (:yyyymmdd[hhmmss][:yyyymmdd[hhmmss]])"),
     CParams("-fmt:<str>",       "pretty print, optionally add ':txt,' ':csv,' or ':html'"),
@@ -171,22 +174,6 @@ bool COptions::parseArguments(string_q& command) {
                 return usage("You must supply a name with the --name option. Quitting...");
             name = val;
 
-        } else if (arg == "-a") {
-            // -a is acceptable but only if we get a -name (or we have only already)
-            // checked during slurp since we don't have an address yet
-            wantsArchive = true;
-            archiveFile = "";
-
-        } else if (startsWith(arg, "-a:") || startsWith(arg, "--archive:")) {
-            string_q fileName = substitute(substitute(arg, "-a:", ""), "--archive:", "");
-
-            CFilename filename(fileName);
-            if (!startsWith(filename.getPath(), '/'))
-                return usage("Archive file '" + arg + "' does not resolve to a full path. "
-                             "Use ./path/filename, ~/path/filename, or a fully qualified path.");
-            archiveFile = filename.getFullPath();
-            wantsArchive = true;
-
         } else if (arg == "-o" || arg == "--open") {
 
             editFile(configPath("quickBlocks.toml"));
@@ -205,9 +192,6 @@ bool COptions::parseArguments(string_q& command) {
                               "and are 20 bytes (40 chars) long. Quitting...");
         }
     }
-
-    if (wantsArchive && archiveFile.empty() && name.empty())
-        return usage("If -a is provided without an archive name, -n must be provided. Quitting...");
 
     return true;
 }
@@ -232,14 +216,9 @@ void COptions::Init(void) {
     maxTransactions = 250000;
     pageSize = 5000;
     exportFormat = "json";
-    archiveFile = "";
-    wantsArchive = false;
     cache = false;
     acct_id = 0;
     addr = "";
-
-    outScreen.setOutput(stdout);  // so we know where it is at the start of each run
-    output = NULL;
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -253,8 +232,6 @@ COptions::COptions(void) {
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
-    outScreen.setOutput(stdout);  // flushes and clears archive file if any
-    output = NULL;
 }
 
 //--------------------------------------------------------------------------------
@@ -270,16 +247,4 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
         return ret;
     }
     return str;
-}
-
-//--------------------------------------------------------------------------------
-void CFileExportContext::setOutput(void *output) {
-    Close();  // just in case
-    m_output = output == NULL ? stdout : reinterpret_cast<FILE*>(output);
-}
-
-//--------------------------------------------------------------------------------
-void CFileExportContext::Output(const string_q& sss) {
-    ASSERT(m_output);
-    fprintf(m_output, "%s", sss.c_str());
 }
