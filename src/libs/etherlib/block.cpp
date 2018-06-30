@@ -415,7 +415,8 @@ ostream& operator<<(ostream& os, const CBlock& item) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    os << item.Format() << "\n";
+    item.Format(os, "", nullptr);
+    os << "\n";
     return os;
 }
 

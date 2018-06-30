@@ -290,12 +290,12 @@ bool CSlurperApp::Slurp(COptions& options, string_q& message) {
         }
     }
 
-    if (!isTestMode()) {
-        double stop = qbNow();
-        double timeSpent = stop-start;
-        fprintf(stderr, "\tLoaded %ld total records in %f seconds\n", theAccount.transactions.size(), timeSpent);
-        fflush(stderr);
-    }
+    double stop = qbNow();
+    double timeSpent = stop-start;
+    string_q timeRep = (isTestMode() ? "--time--" : double2Str(timeSpent));
+    cout << "\tLoaded " << theAccount.transactions.size() << " total records in "
+            << timeRep << " seconds\n";
+    fflush(stderr);
 
     return (options.fromFile || theAccount.transactions.size() > 0);
 }
@@ -366,14 +366,12 @@ extern bool isFunction(const CTransaction *trans, const string_q& func);
         }
     }
 
-    if (!isTestMode()) {
-        double stop = qbNow();
-        double timeSpent = stop-start;
-        cerr << "\tFilter passed " << theAccount.nVisible
-                << " visible records of " << theAccount.transactions.size()
-                << " in " << timeSpent << " seconds\n";
-        cerr.flush();
-    }
+    double stop = qbNow();
+    double timeSpent = stop-start;
+    string_q timeRep = (isTestMode() ? "--time--" : double2Str(timeSpent));
+    cerr << "\tFilter passed " << theAccount.nVisible << " visible records of "
+            << theAccount.transactions.size() << " in " << timeRep << " seconds\n";
+    cerr.flush();
 
     return true;
 }
@@ -394,16 +392,15 @@ bool CSlurperApp::Display(COptions& options, string_q& message) {
         }
     } else {
 
-        theAccount.Format(getFormatString(options, "file", false));
+        theAccount.Format(cout, getFormatString(options, "file", false));
     }
 
-    if (!isTestMode()) {
-        double stop = qbNow();
-        double timeSpent = stop-start;
-        cerr << "\tExported " << theAccount.nVisible
-                << " records in " << timeSpent << " seconds             \n\n";
-        cerr.flush();
-    }
+    double stop = qbNow();
+    double timeSpent = stop-start;
+    string_q timeRep = (isTestMode() ? "--time--" : double2Str(timeSpent));
+    cerr << "\tExported " << theAccount.nVisible << " records in " << timeRep << " seconds             \n\n";
+    cerr.flush();
+
     return true;
 }
 
