@@ -25,7 +25,7 @@ static string_q nextRequirementchangedeventChunk(const string_q& fieldIn, const 
 static string_q nextRequirementchangedeventChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void QRequirementChangedEvent::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
+void QRequirementChangedEvent::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 

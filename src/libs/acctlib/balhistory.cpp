@@ -27,7 +27,7 @@ static string_q nextBalhistoryChunk(const string_q& fieldIn, const void *dataPtr
 static string_q nextBalhistoryChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CBalHistory::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
+void CBalHistory::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 

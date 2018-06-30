@@ -25,7 +25,7 @@ static string_q nextResetspenttodayChunk(const string_q& fieldIn, const void *da
 static string_q nextResetspenttodayChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void QResetSpentToday::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
+void QResetSpentToday::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 

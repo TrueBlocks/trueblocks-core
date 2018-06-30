@@ -27,7 +27,7 @@ static string_q nextBalancehistoryChunk(const string_q& fieldIn, const void *dat
 static string_q nextBalancehistoryChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CBalanceHistory::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
+void CBalanceHistory::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 

@@ -26,7 +26,7 @@ static string_q nextNamevalueChunk(const string_q& fieldIn, const void *dataPtr)
 static string_q nextNamevalueChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CNameValue::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
+void CNameValue::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 

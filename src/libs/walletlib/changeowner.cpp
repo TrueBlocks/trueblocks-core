@@ -25,7 +25,7 @@ static string_q nextChangeownerChunk(const string_q& fieldIn, const void *dataPt
 static string_q nextChangeownerChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void QChangeOwner::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
+void QChangeOwner::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 

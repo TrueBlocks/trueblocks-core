@@ -25,7 +25,7 @@ static string_q nextIsownerChunk(const string_q& fieldIn, const void *dataPtr);
 static string_q nextIsownerChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void QIsOwner::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
+void QIsOwner::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 

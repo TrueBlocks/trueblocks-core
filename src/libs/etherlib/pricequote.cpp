@@ -29,7 +29,7 @@ static string_q nextPricequoteChunk(const string_q& fieldIn, const void *dataPtr
 static string_q nextPricequoteChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CPriceQuote::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
+void CPriceQuote::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 

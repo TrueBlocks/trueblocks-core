@@ -25,7 +25,7 @@ static string_q nextDepositeventChunk(const string_q& fieldIn, const void *dataP
 static string_q nextDepositeventChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void QDepositEvent::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
+void QDepositEvent::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 

@@ -25,7 +25,7 @@ static string_q nextOwneraddedeventChunk(const string_q& fieldIn, const void *da
 static string_q nextOwneraddedeventChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void QOwnerAddedEvent::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
+void QOwnerAddedEvent::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 

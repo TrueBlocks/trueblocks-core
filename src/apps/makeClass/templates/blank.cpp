@@ -25,7 +25,7 @@ IMPLEMENT_NODE([{CLASS_NAME}], [{BASE_CLASS}]);
 static string_q next[{PROPER}]Chunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void [{CLASS_NAME}]::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
+void [{CLASS_NAME}]::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 

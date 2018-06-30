@@ -26,7 +26,7 @@ static string_q nextParameterChunk(const string_q& fieldIn, const void *dataPtr)
 static string_q nextParameterChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CParameter::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
+void CParameter::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 

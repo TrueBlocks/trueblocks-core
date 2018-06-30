@@ -53,7 +53,7 @@ namespace qblocks {
         virtual bool SerializeC(SFArchive& archive) const;
         virtual bool readBackLevel(SFArchive& archive);
         virtual void finishParse(void) { }
-        virtual void Format(CExportContext& ctx, const string_q& fmtIn, void *data = NULL) const { }
+        virtual void Format(ostream& ctx, const string_q& fmtIn, void *data = NULL) const { }
         virtual string_q Format(const string_q& fmtIn = "") const { return ""; }
         virtual const CBaseNode *getObjectAt(const string_q& name, size_t i) const { return NULL; }
         virtual const string_q   getStringAt(const string_q& name, size_t i) const { return ""; }

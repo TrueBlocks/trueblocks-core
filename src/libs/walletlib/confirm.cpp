@@ -25,7 +25,7 @@ static string_q nextConfirmChunk(const string_q& fieldIn, const void *dataPtr);
 static string_q nextConfirmChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void QConfirm::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
+void QConfirm::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 

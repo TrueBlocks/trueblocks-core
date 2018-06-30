@@ -27,7 +27,7 @@ static string_q nextTraceresultChunk(const string_q& fieldIn, const void *dataPt
 static string_q nextTraceresultChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CTraceResult::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
+void CTraceResult::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 

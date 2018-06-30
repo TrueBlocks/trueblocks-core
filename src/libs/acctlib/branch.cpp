@@ -27,7 +27,7 @@ static string_q nextBranchChunk(const string_q& fieldIn, const void *dataPtr);
 static string_q nextBranchChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CBranch::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
+void CBranch::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 

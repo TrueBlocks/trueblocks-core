@@ -25,7 +25,7 @@ static string_q nextSetdailylimitChunk(const string_q& fieldIn, const void *data
 static string_q nextSetdailylimitChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void QSetDailyLimit::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
+void QSetDailyLimit::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 

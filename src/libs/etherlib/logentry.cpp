@@ -27,7 +27,7 @@ extern string_q nextLogentryChunk(const string_q& fieldIn, const void *dataPtr);
 static string_q nextLogentryChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CLogEntry::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
+void CLogEntry::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 

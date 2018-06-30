@@ -25,7 +25,7 @@ static string_q nextApprovaleventChunk(const string_q& fieldIn, const void *data
 static string_q nextApprovaleventChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void QApprovalEvent::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
+void QApprovalEvent::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
