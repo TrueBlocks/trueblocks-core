@@ -1,3 +1,5 @@
+[BRAIN DUMP FROM TELEGRAM GROUP](brain_dump.md)
+
 ## Possible Test Cases
 
 This is beginning list of possible test cases for open source blockchain explorers and/or address explorers. The goal of the following division is to keep make it clear what data come directly from the node without any manipulation, what data comes from manipulation by removing items from the raw data (very easy to verify), data easily derived from the raw data (including traces), and data that spans multiple blocks (or time series data). The reason for this last distinction is because dealing with individual blocks is easy to parallize. Providing test cases that are easily paralizable seems prudent.
