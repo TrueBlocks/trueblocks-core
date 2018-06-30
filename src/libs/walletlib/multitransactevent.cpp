@@ -25,7 +25,7 @@ static string_q nextMultitransacteventChunk(const string_q& fieldIn, const void 
 static string_q nextMultitransacteventChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void QMultiTransactEvent::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
+void QMultiTransactEvent::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 

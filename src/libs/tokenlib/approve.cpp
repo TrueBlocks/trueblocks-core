@@ -25,7 +25,7 @@ static string_q nextApproveChunk(const string_q& fieldIn, const void *dataPtr);
 static string_q nextApproveChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void QApprove::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
+void QApprove::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 

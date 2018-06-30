@@ -27,7 +27,7 @@ static string_q nextRpcresultChunk(const string_q& fieldIn, const void *dataPtr)
 static string_q nextRpcresultChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CRPCResult::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
+void CRPCResult::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 

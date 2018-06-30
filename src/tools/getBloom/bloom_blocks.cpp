@@ -30,7 +30,7 @@ string_q CBloomReceipt::getValueByName(const string_q& fieldName) const {
     if (fieldName == "logsBloom"   ) return logsBloom;
     return "";
 }
-void CBloomReceipt::Format(CExportContext& ctx, const string_q& fmtIn, void* dataPtr) const {
+void CBloomReceipt::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
     ctx << toJson();
     return;
 }
@@ -57,7 +57,7 @@ string_q CBloomTrans::getValueByName(const string_q& fieldName) const {
     if (fieldName == "transactionIndex"   ) return asStringU(transactionIndex);
     return "";
 }
-void CBloomTrans::Format(CExportContext& ctx, const string_q& fmtIn, void* dataPtr) const {
+void CBloomTrans::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
     ctx << toJson();
     return;
 }
@@ -115,7 +115,7 @@ string_q CBloomBlock::getValueByName(const string_q& fieldName) const {
     }
     return "";
 }
-void CBloomBlock::Format(CExportContext& ctx, const string_q& fmtIn, void* dataPtr) const {
+void CBloomBlock::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
     ctx << toJson();
     return;
 }

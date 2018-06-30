@@ -27,7 +27,7 @@ extern string_q nextTransactionChunk(const string_q& fieldIn, const void *dataPt
 static string_q nextTransactionChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CTransaction::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
+void CTransaction::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 

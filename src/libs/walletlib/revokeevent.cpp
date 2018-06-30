@@ -25,7 +25,7 @@ static string_q nextRevokeeventChunk(const string_q& fieldIn, const void *dataPt
 static string_q nextRevokeeventChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void QRevokeEvent::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
+void QRevokeEvent::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 

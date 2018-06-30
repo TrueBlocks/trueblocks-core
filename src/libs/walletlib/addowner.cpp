@@ -25,7 +25,7 @@ static string_q nextAddownerChunk(const string_q& fieldIn, const void *dataPtr);
 static string_q nextAddownerChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void QAddOwner::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
+void QAddOwner::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 

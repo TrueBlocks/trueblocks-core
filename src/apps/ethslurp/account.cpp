@@ -27,7 +27,7 @@ static string_q nextAccountChunk(const string_q& fieldIn, const void *dataPtr);
 static string_q nextAccountChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CAccount::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
+void CAccount::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -328,7 +328,7 @@ size_t CAccount::deleteNotShowing(void) {
 }
 
 //---------------------------------------------------------------------------
-bool CAccount::handleCustomFormat(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
+bool CAccount::handleCustomFormat(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     // Split the format string into three parts: pre, post and records.
     // If no records, just process as normal. We do this because it's so slow
     // copying the records into a string, so we write it directly to the

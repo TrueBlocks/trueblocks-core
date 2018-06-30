@@ -25,7 +25,7 @@ static string_q nextKillChunk(const string_q& fieldIn, const void *dataPtr);
 static string_q nextKillChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void QKill::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
+void QKill::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 

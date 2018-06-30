@@ -27,7 +27,7 @@ extern string_q nextTreenodeChunk(const string_q& fieldIn, const void *dataPtr);
 static string_q nextTreenodeChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CTreeNode::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
+void CTreeNode::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 

@@ -27,7 +27,7 @@ static string_q nextAccountwatchChunk(const string_q& fieldIn, const void *dataP
 static string_q nextAccountwatchChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CAccountWatch::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
+void CAccountWatch::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 

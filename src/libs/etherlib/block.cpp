@@ -28,7 +28,7 @@ extern string_q nextBlockChunk(const string_q& fieldIn, const void *dataPtr);
 static string_q nextBlockChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CBlock::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
+void CBlock::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 

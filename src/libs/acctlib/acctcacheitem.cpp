@@ -26,7 +26,7 @@ static string_q nextAcctcacheitemChunk(const string_q& fieldIn, const void *data
 static string_q nextAcctcacheitemChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CAcctCacheItem::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
+void CAcctCacheItem::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 

@@ -25,7 +25,7 @@ static string_q nextConfirmationneededeventChunk(const string_q& fieldIn, const 
 static string_q nextConfirmationneededeventChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void QConfirmationNeededEvent::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
+void QConfirmationNeededEvent::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 

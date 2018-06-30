@@ -27,7 +27,7 @@ static string_q nextIncomestatementChunk(const string_q& fieldIn, const void *da
 static string_q nextIncomestatementChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CIncomeStatement::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
+void CIncomeStatement::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 

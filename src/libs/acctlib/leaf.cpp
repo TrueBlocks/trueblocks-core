@@ -27,7 +27,7 @@ static string_q nextLeafChunk(const string_q& fieldIn, const void *dataPtr);
 static string_q nextLeafChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CLeaf::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
+void CLeaf::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 

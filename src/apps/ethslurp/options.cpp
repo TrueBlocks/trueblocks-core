@@ -1,10 +1,3 @@
-/*
- name
-exportFormat
-exportFormat
-output
-*/
-
 /*-------------------------------------------------------------------------------------------
  * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
  * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)

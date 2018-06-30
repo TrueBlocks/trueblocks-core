@@ -25,7 +25,7 @@ static string_q nextSingletransacteventChunk(const string_q& fieldIn, const void
 static string_q nextSingletransacteventChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void QSingleTransactEvent::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
+void QSingleTransactEvent::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
