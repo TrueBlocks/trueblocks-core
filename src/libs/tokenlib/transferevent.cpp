@@ -25,7 +25,7 @@ static string_q nextTransfereventChunk(const string_q& fieldIn, const void *data
 static string_q nextTransfereventChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void QTransferEvent::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
+void QTransferEvent::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 

@@ -27,7 +27,7 @@ static string_q nextInfixChunk(const string_q& fieldIn, const void *dataPtr);
 static string_q nextInfixChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CInfix::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
+void CInfix::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 

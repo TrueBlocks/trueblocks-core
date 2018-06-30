@@ -40,7 +40,7 @@ string_q CJunk::getValueByName(const string_q& fieldName) const {
     }
     return "";
 }
-void CJunk::Format(CExportContext& ctx, const string_q& fmtIn, void* dataPtr) const {
+void CJunk::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
     ctx << toJson();
     return;
 }

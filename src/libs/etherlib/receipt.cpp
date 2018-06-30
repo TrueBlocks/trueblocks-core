@@ -27,7 +27,7 @@ extern string_q nextReceiptChunk(const string_q& fieldIn, const void *dataPtr);
 static string_q nextReceiptChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CReceipt::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
+void CReceipt::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 

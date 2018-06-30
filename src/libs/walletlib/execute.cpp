@@ -25,7 +25,7 @@ static string_q nextExecuteChunk(const string_q& fieldIn, const void *dataPtr);
 static string_q nextExecuteChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void QExecute::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
+void QExecute::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 

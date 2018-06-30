@@ -25,7 +25,7 @@ static string_q nextChangerequirementChunk(const string_q& fieldIn, const void *
 static string_q nextChangerequirementChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void QChangeRequirement::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
+void QChangeRequirement::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 

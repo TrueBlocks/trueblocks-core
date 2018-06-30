@@ -28,7 +28,7 @@ static string_q nextAbiChunk(const string_q& fieldIn, const void *dataPtr);
 static string_q nextAbiChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CAbi::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
+void CAbi::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 

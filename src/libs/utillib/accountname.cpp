@@ -26,7 +26,7 @@ static string_q nextAccountnameChunk(const string_q& fieldIn, const void *dataPt
 static string_q nextAccountnameChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CAccountName::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
+void CAccountName::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
