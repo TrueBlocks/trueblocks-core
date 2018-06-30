@@ -79,7 +79,7 @@ public: \
            void           Format          (CExportContext& ctx, const string_q& fmtIn, void *data = NULL) \
                                                      const override; \
            string_q       Format          (const string_q& fmtIn = "") const override \
-                            { CStringExportContext ctx; Format(ctx, fmtIn, NULL); return ctx.str; } \
+                            { stringstream ctx; Format(ctx, fmtIn, NULL); return ctx.str(); } \
            string_q       getClassName    (void) const;
 
 //------------------------------------------------------------
