@@ -14,6 +14,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <algorithm>
 #include "logentry.h"
 #include "etherlib.h"
 
@@ -77,7 +78,7 @@ bool CLogEntry::setValueByName(const string_q& fieldName, const string_q& fieldV
             if ( fieldName % "topics" ) {
                 string_q str = fieldValue;
                 while (!str.empty()) {
-                    topics.push_back(toTopic(nextTokenClear(str, ',')));
+                    topics.push_back(toTopic(nextTokenClear(str,',')));
                 }
                 return true;
             }
@@ -98,7 +99,7 @@ void CLogEntry::finishParse() {
 bool CLogEntry::Serialize(SFArchive& archive) {
 
     if (archive.isWriting())
-        return ((const CLogEntry*)this)->SerializeC(archive);
+        return SerializeC(archive);
 
     // If we're reading a back level, read the whole thing and we're done.
     if (readBackLevel(archive))
@@ -177,7 +178,7 @@ void CLogEntry::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextLogentryChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CLogEntry *log = (const CLogEntry *)dataPtr;
+    const CLogEntry *log = (const CLogEntry *)dataPtr;  // NOLINT
     if (log) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -273,7 +274,8 @@ ostream& operator<<(ostream& os, const CLogEntry& item) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    os << item.Format() << "\n";
+    item.Format(os, "", nullptr);
+    os << "\n";
     return os;
 }
 

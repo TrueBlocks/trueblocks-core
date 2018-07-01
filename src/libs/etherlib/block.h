@@ -57,6 +57,8 @@ public:
     bool forEveryAddress      (ADDRESSFUNC func, TRANSFUNC filt, void *data);
     bool forEveryUniqueAddress(ADDRESSFUNC func, TRANSFUNC filt, void *data);
     // EXISTING_CODE
+    bool operator==(const CBlock& item) const;
+    bool operator!=(const CBlock& item) const { return !operator==(item); }
     friend bool operator<(const CBlock& v1, const CBlock& v2);
     friend ostream& operator<<(ostream& os, const CBlock& item);
 
@@ -151,10 +153,18 @@ inline CBlock& CBlock::operator=(const CBlock& bl) {
 }
 
 //-------------------------------------------------------------------------
+inline bool CBlock::operator==(const CBlock& item) const {
+    // EXISTING1_CODE
+    // EXISTING1_CODE
+    // No default equal operator in class definition, assume none are equal (so find fails)
+    return false;
+}
+
+//-------------------------------------------------------------------------
 inline bool operator<(const CBlock& v1, const CBlock& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
-    // No default sort defined in class definition, assume already sorted
+    // No default sort defined in class definition, assume already sorted, preserve ordering
     return true;
 }
 

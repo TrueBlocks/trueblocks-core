@@ -16,6 +16,7 @@
  * of 'EXISTING_CODE' tags.
  */
 #include <vector>
+#include <map>
 #include "utillib.h"
 
 namespace qblocks {
@@ -40,6 +41,8 @@ public:
 
     // EXISTING_CODE
     // EXISTING_CODE
+    bool operator==(const CRPCResult& item) const;
+    bool operator!=(const CRPCResult& item) const { return !operator==(item); }
     friend bool operator<(const CRPCResult& v1, const CRPCResult& v2);
     friend ostream& operator<<(ostream& os, const CRPCResult& item);
 
@@ -118,10 +121,18 @@ inline CRPCResult& CRPCResult::operator=(const CRPCResult& rp) {
 }
 
 //-------------------------------------------------------------------------
+inline bool CRPCResult::operator==(const CRPCResult& item) const {
+    // EXISTING1_CODE
+    // EXISTING1_CODE
+    // No default equal operator in class definition, assume none are equal (so find fails)
+    return false;
+}
+
+//-------------------------------------------------------------------------
 inline bool operator<(const CRPCResult& v1, const CRPCResult& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
-    // No default sort defined in class definition, assume already sorted
+    // No default sort defined in class definition, assume already sorted, preserve ordering
     return true;
 }
 

@@ -16,6 +16,7 @@
  * of 'EXISTING_CODE' tags.
  */
 #include <vector>
+#include <map>
 #include "logentry.h"
 
 // EXISTING_CODE
@@ -37,6 +38,8 @@ public:
 
     // EXISTING_CODE
     // EXISTING_CODE
+    bool operator==(const QConfirmationEvent& item) const;
+    bool operator!=(const QConfirmationEvent& item) const { return !operator==(item); }
     friend bool operator<(const QConfirmationEvent& v1, const QConfirmationEvent& v2);
     friend ostream& operator<<(ostream& os, const QConfirmationEvent& item);
 
@@ -113,10 +116,18 @@ inline QConfirmationEvent& QConfirmationEvent::operator=(const QConfirmationEven
 }
 
 //-------------------------------------------------------------------------
+inline bool QConfirmationEvent::operator==(const QConfirmationEvent& item) const {
+    // EXISTING1_CODE
+    // EXISTING1_CODE
+    // No default equal operator in class definition, assume none are equal (so find fails)
+    return false;
+}
+
+//-------------------------------------------------------------------------
 inline bool operator<(const QConfirmationEvent& v1, const QConfirmationEvent& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
-    // No default sort defined in class definition, assume already sorted
+    // No default sort defined in class definition, assume already sorted, preserve ordering
     return true;
 }
 

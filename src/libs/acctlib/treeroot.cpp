@@ -14,6 +14,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <algorithm>
 #include "treeroot.h"
 
 namespace qblocks {
@@ -89,12 +90,13 @@ void CTreeRoot::finishParse() {
 bool CTreeRoot::Serialize(SFArchive& archive) {
 
     if (archive.isWriting())
-        return ((const CTreeRoot*)this)->SerializeC(archive);
+        return SerializeC(archive);
 
     // If we're reading a back level, read the whole thing and we're done.
     if (readBackLevel(archive))
         return true;
 
+    // EXISTING_CODE
     // EXISTING_CODE
     root = NULL;
     bool has_root = false;
@@ -107,7 +109,6 @@ bool CTreeRoot::Serialize(SFArchive& archive) {
             return false;
         root->Serialize(archive);
     }
-    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -119,13 +120,13 @@ bool CTreeRoot::SerializeC(SFArchive& archive) const {
     CBaseNode::SerializeC(archive);
 
     // EXISTING_CODE
+    // EXISTING_CODE
     archive << (root != NULL);
     if (root) {
         string_q className = root->getRuntimeClass()->getClassNamePtr();
         archive << className;
         root->SerializeC(archive);
     }
-    // EXISTING_CODE
 
     return true;
 }
@@ -174,7 +175,7 @@ void CTreeRoot::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextTreerootChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CTreeRoot *tre = (const CTreeRoot *)dataPtr;
+    const CTreeRoot *tre = (const CTreeRoot *)dataPtr;  // NOLINT
     if (tre) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -236,7 +237,8 @@ ostream& operator<<(ostream& os, const CTreeRoot& item) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    os << item.Format() << "\n";
+    item.Format(os, "", nullptr);
+    os << "\n";
     return os;
 }
 

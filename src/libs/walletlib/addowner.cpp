@@ -14,6 +14,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <algorithm>
 #include "addowner.h"
 #include "etherlib.h"
 
@@ -81,7 +82,7 @@ void QAddOwner::finishParse() {
 bool QAddOwner::Serialize(SFArchive& archive) {
 
     if (archive.isWriting())
-        return ((const QAddOwner*)this)->SerializeC(archive);
+        return SerializeC(archive);
 
     // If we're reading a back level, read the whole thing and we're done.
     if (readBackLevel(archive))
@@ -153,7 +154,7 @@ void QAddOwner::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextAddownerChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const QAddOwner *add = (const QAddOwner *)dataPtr;
+    const QAddOwner *add = (const QAddOwner *)dataPtr;  // NOLINT
     if (add) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -211,7 +212,8 @@ ostream& operator<<(ostream& os, const QAddOwner& item) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    os << item.Format() << "\n";
+    item.Format(os, "", nullptr);
+    os << "\n";
     return os;
 }
 

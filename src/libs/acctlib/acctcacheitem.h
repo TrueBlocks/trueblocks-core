@@ -16,6 +16,7 @@
  * of 'EXISTING_CODE' tags.
  */
 #include <vector>
+#include <map>
 #include "etherlib.h"
 
 namespace qblocks {
@@ -41,8 +42,8 @@ public:
     CAcctCacheItem(uint64_t b, uint64_t t) : blockNum(b), transIndex(t) {}
     explicit CAcctCacheItem(string_q& str);
     // EXISTING_CODE
-    bool operator==(const CAcctCacheItem& item);
-    bool operator!=(const CAcctCacheItem& item) { return !operator==(item); }
+    bool operator==(const CAcctCacheItem& item) const;
+    bool operator!=(const CAcctCacheItem& item) const { return !operator==(item); }
     friend bool operator<(const CAcctCacheItem& v1, const CAcctCacheItem& v2);
     friend ostream& operator<<(ostream& os, const CAcctCacheItem& item);
 
@@ -119,11 +120,11 @@ inline CAcctCacheItem& CAcctCacheItem::operator=(const CAcctCacheItem& ac) {
 }
 
 //-------------------------------------------------------------------------
-inline bool CAcctCacheItem::operator==(const CAcctCacheItem& item) {
-    return (
-            blockNum == item.blockNum &&
-            transIndex == item.transIndex
-        );
+inline bool CAcctCacheItem::operator==(const CAcctCacheItem& item) const {
+    // EXISTING1_CODE
+    // EXISTING1_CODE
+    // Default equality operator as defined in class definition
+    return (blockNum == item.blockNum && transIndex == item.transIndex);
 }
 
 //-------------------------------------------------------------------------
@@ -131,9 +132,7 @@ inline bool operator<(const CAcctCacheItem& v1, const CAcctCacheItem& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
     // Default sort as defined in class definition
-    if (v1.blockNum != v2.blockNum)
-        return v1.blockNum < v2.blockNum;
-    return v1.transIndex < v2.transIndex;
+    return ((v1.blockNum != v2.blockNum) ? v1.blockNum < v2.blockNum : v1.transIndex < v2.transIndex);
 }
 
 //---------------------------------------------------------------------------

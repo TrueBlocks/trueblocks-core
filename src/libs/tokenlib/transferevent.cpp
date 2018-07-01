@@ -14,6 +14,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <algorithm>
 #include "transferevent.h"
 #include "etherlib.h"
 
@@ -83,7 +84,7 @@ void QTransferEvent::finishParse() {
 bool QTransferEvent::Serialize(SFArchive& archive) {
 
     if (archive.isWriting())
-        return ((const QTransferEvent*)this)->SerializeC(archive);
+        return SerializeC(archive);
 
     // If we're reading a back level, read the whole thing and we're done.
     if (readBackLevel(archive))
@@ -161,7 +162,7 @@ void QTransferEvent::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextTransfereventChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const QTransferEvent *tra = (const QTransferEvent *)dataPtr;
+    const QTransferEvent *tra = (const QTransferEvent *)dataPtr;  // NOLINT
     if (tra) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -221,7 +222,8 @@ ostream& operator<<(ostream& os, const QTransferEvent& item) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    os << item.Format() << "\n";
+    item.Format(os, "", nullptr);
+    os << "\n";
     return os;
 }
 

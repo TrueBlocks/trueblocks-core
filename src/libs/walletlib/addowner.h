@@ -16,6 +16,7 @@
  * of 'EXISTING_CODE' tags.
  */
 #include <vector>
+#include <map>
 #include "transaction.h"
 
 // EXISTING_CODE
@@ -36,6 +37,8 @@ public:
 
     // EXISTING_CODE
     // EXISTING_CODE
+    bool operator==(const QAddOwner& item) const;
+    bool operator!=(const QAddOwner& item) const { return !operator==(item); }
     friend bool operator<(const QAddOwner& v1, const QAddOwner& v2);
     friend ostream& operator<<(ostream& os, const QAddOwner& item);
 
@@ -110,10 +113,18 @@ inline QAddOwner& QAddOwner::operator=(const QAddOwner& ad) {
 }
 
 //-------------------------------------------------------------------------
+inline bool QAddOwner::operator==(const QAddOwner& item) const {
+    // EXISTING1_CODE
+    // EXISTING1_CODE
+    // No default equal operator in class definition, assume none are equal (so find fails)
+    return false;
+}
+
+//-------------------------------------------------------------------------
 inline bool operator<(const QAddOwner& v1, const QAddOwner& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
-    // No default sort defined in class definition, assume already sorted
+    // No default sort defined in class definition, assume already sorted, preserve ordering
     return true;
 }
 

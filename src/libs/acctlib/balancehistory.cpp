@@ -14,6 +14,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <algorithm>
 #include "balancehistory.h"
 #include "etherlib.h"
 
@@ -81,7 +82,7 @@ void CBalanceHistory::finishParse() {
 bool CBalanceHistory::Serialize(SFArchive& archive) {
 
     if (archive.isWriting())
-        return ((const CBalanceHistory*)this)->SerializeC(archive);
+        return SerializeC(archive);
 
     // If we're reading a back level, read the whole thing and we're done.
     if (readBackLevel(archive))
@@ -154,7 +155,7 @@ void CBalanceHistory::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextBalancehistoryChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CBalanceHistory *bal = (const CBalanceHistory *)dataPtr;
+    const CBalanceHistory *bal = (const CBalanceHistory *)dataPtr;  // NOLINT
     if (bal) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -213,7 +214,8 @@ ostream& operator<<(ostream& os, const CBalanceHistory& item) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    os << item.Format() << "\n";
+    item.Format(os, "", nullptr);
+    os << "\n";
     return os;
 }
 

@@ -16,6 +16,7 @@
  * of 'EXISTING_CODE' tags.
  */
 #include <vector>
+#include <map>
 #include "abilib.h"
 
 namespace qblocks {
@@ -40,6 +41,8 @@ public:
     // EXISTING_CODE
     SFTime date;
     // EXISTING_CODE
+    bool operator==(const CPriceQuote& item) const;
+    bool operator!=(const CPriceQuote& item) const { return !operator==(item); }
     friend bool operator<(const CPriceQuote& v1, const CPriceQuote& v2);
     friend ostream& operator<<(ostream& os, const CPriceQuote& item);
 
@@ -118,10 +121,18 @@ inline CPriceQuote& CPriceQuote::operator=(const CPriceQuote& pr) {
 }
 
 //-------------------------------------------------------------------------
+inline bool CPriceQuote::operator==(const CPriceQuote& item) const {
+    // EXISTING1_CODE
+    // EXISTING1_CODE
+    // No default equal operator in class definition, assume none are equal (so find fails)
+    return false;
+}
+
+//-------------------------------------------------------------------------
 inline bool operator<(const CPriceQuote& v1, const CPriceQuote& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
-    // No default sort defined in class definition, assume already sorted
+    // No default sort defined in class definition, assume already sorted, preserve ordering
     return true;
 }
 

@@ -14,6 +14,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <algorithm>
 #include "approve.h"
 #include "etherlib.h"
 
@@ -82,7 +83,7 @@ void QApprove::finishParse() {
 bool QApprove::Serialize(SFArchive& archive) {
 
     if (archive.isWriting())
-        return ((const QApprove*)this)->SerializeC(archive);
+        return SerializeC(archive);
 
     // If we're reading a back level, read the whole thing and we're done.
     if (readBackLevel(archive))
@@ -157,7 +158,7 @@ void QApprove::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextApproveChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const QApprove *app = (const QApprove *)dataPtr;
+    const QApprove *app = (const QApprove *)dataPtr;  // NOLINT
     if (app) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -216,7 +217,8 @@ ostream& operator<<(ostream& os, const QApprove& item) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    os << item.Format() << "\n";
+    item.Format(os, "", nullptr);
+    os << "\n";
     return os;
 }
 

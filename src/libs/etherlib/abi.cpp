@@ -102,7 +102,7 @@ void CAbi::finishParse() {
 bool CAbi::Serialize(SFArchive& archive) {
 
     if (archive.isWriting())
-        return ((const CAbi*)this)->SerializeC(archive);
+        return SerializeC(archive);
 
     // If we're reading a back level, read the whole thing and we're done.
     if (readBackLevel(archive))
@@ -175,7 +175,7 @@ void CAbi::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextAbiChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CAbi *abi = (const CAbi *)dataPtr;
+    const CAbi *abi = (const CAbi *)dataPtr;  // NOLINT
     if (abi) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -265,7 +265,8 @@ ostream& operator<<(ostream& os, const CAbi& item) {
     }
     // EXISTING_CODE
 
-    os << item.Format() << "\n";
+    item.Format(os, "", nullptr);
+    os << "\n";
     return os;
 }
 

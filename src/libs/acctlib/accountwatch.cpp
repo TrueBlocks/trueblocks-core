@@ -14,6 +14,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <algorithm>
 #include "accountwatch.h"
 #include "etherlib.h"
 
@@ -123,7 +124,7 @@ void CAccountWatch::finishParse() {
 bool CAccountWatch::Serialize(SFArchive& archive) {
 
     if (archive.isWriting())
-        return ((const CAccountWatch*)this)->SerializeC(archive);
+        return SerializeC(archive);
 
     // If we're reading a back level, read the whole thing and we're done.
     if (readBackLevel(archive))
@@ -138,8 +139,7 @@ bool CAccountWatch::Serialize(SFArchive& archive) {
     archive >> lastBlock;
     archive >> deepScan;
     archive >> qbis;
-// need to be able to not write fields that are otherwise part of the class
-//    archive >> balanceHistory;
+    archive >> balanceHistory;
     archive >> nodeBal;
     finishParse();
     return true;
@@ -160,7 +160,7 @@ bool CAccountWatch::SerializeC(SFArchive& archive) const {
     archive << lastBlock;
     archive << deepScan;
     archive << qbis;
-//    archive << balanceHistory;
+    archive << balanceHistory;
     archive << nodeBal;
 
     return true;
@@ -218,7 +218,7 @@ void CAccountWatch::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextAccountwatchChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CAccountWatch *acc = (const CAccountWatch *)dataPtr;
+    const CAccountWatch *acc = (const CAccountWatch *)dataPtr;  // NOLINT
     if (acc) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -318,7 +318,8 @@ ostream& operator<<(ostream& os, const CAccountWatch& item) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    os << item.Format() << "\n";
+    item.Format(os, "", nullptr);
+    os << "\n";
     return os;
 }
 

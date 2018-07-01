@@ -14,6 +14,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <algorithm>
 #include "confirmationevent.h"
 #include "etherlib.h"
 
@@ -82,7 +83,7 @@ void QConfirmationEvent::finishParse() {
 bool QConfirmationEvent::Serialize(SFArchive& archive) {
 
     if (archive.isWriting())
-        return ((const QConfirmationEvent*)this)->SerializeC(archive);
+        return SerializeC(archive);
 
     // If we're reading a back level, read the whole thing and we're done.
     if (readBackLevel(archive))
@@ -157,7 +158,7 @@ void QConfirmationEvent::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextConfirmationeventChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const QConfirmationEvent *con = (const QConfirmationEvent *)dataPtr;
+    const QConfirmationEvent *con = (const QConfirmationEvent *)dataPtr;  // NOLINT
     if (con) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -216,7 +217,8 @@ ostream& operator<<(ostream& os, const QConfirmationEvent& item) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    os << item.Format() << "\n";
+    item.Format(os, "", nullptr);
+    os << "\n";
     return os;
 }
 

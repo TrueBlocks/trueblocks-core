@@ -16,6 +16,7 @@
  * of 'EXISTING_CODE' tags.
  */
 #include <vector>
+#include <map>
 #include "etherlib.h"
 
 namespace qblocks {
@@ -39,8 +40,8 @@ public:
 
     // EXISTING_CODE
     // EXISTING_CODE
-    bool operator==(const CBalanceHistory& item);
-    bool operator!=(const CBalanceHistory& item) { return !operator==(item); }
+    bool operator==(const CBalanceHistory& item) const;
+    bool operator!=(const CBalanceHistory& item) const { return !operator==(item); }
     friend bool operator<(const CBalanceHistory& v1, const CBalanceHistory& v2);
     friend ostream& operator<<(ostream& os, const CBalanceHistory& item);
 
@@ -117,9 +118,10 @@ inline CBalanceHistory& CBalanceHistory::operator=(const CBalanceHistory& ba) {
 }
 
 //-------------------------------------------------------------------------
-inline bool CBalanceHistory::operator==(const CBalanceHistory& item) {
-    // EXISTING_CODE
-    // EXISTING_CODE
+inline bool CBalanceHistory::operator==(const CBalanceHistory& item) const {
+    // EXISTING1_CODE
+    // EXISTING1_CODE
+    // Default equality operator as defined in class definition
     return item.bn == item.bn;
 }
 
@@ -127,7 +129,7 @@ inline bool CBalanceHistory::operator==(const CBalanceHistory& item) {
 inline bool operator<(const CBalanceHistory& v1, const CBalanceHistory& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
-    // Default sort as defined in class definition, assume already sorted
+    // Default sort as defined in class definition
     return v1.bn < v2.bn;
 }
 

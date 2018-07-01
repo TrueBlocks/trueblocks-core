@@ -14,6 +14,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <algorithm>
 #include "leaf.h"
 #include "treeroot.h"
 
@@ -68,7 +69,7 @@ bool CLeaf::setValueByName(const string_q& fieldName, const string_q& fieldValue
             if ( fieldName % "blocks" ) {
                 string_q str = fieldValue;
                 while (!str.empty()) {
-                    blocks.push_back(toUnsigned(nextTokenClear(str, ',')));
+                    blocks.push_back(toUnsigned(nextTokenClear(str,',')));
                 }
                 return true;
             }
@@ -92,7 +93,7 @@ void CLeaf::finishParse() {
 bool CLeaf::Serialize(SFArchive& archive) {
 
     if (archive.isWriting())
-        return ((const CLeaf*)this)->SerializeC(archive);
+        return SerializeC(archive);
 
     // If we're reading a back level, read the whole thing and we're done.
     CTreeNode::Serialize(archive);
@@ -166,7 +167,7 @@ void CLeaf::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextLeafChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CLeaf *lea = (const CLeaf *)dataPtr;
+    const CLeaf *lea = (const CLeaf *)dataPtr;  // NOLINT
     if (lea) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -238,7 +239,8 @@ ostream& operator<<(ostream& os, const CLeaf& item) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    os << item.Format() << "\n";
+    item.Format(os, "", nullptr);
+    os << "\n";
     return os;
 }
 

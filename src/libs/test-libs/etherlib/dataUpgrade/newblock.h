@@ -16,6 +16,7 @@
  * of 'EXISTING_CODE' tags.
  */
 #include <vector>
+#include <map>
 #include "etherlib.h"
 #include "transaction.h"
 
@@ -50,6 +51,8 @@ public:
     // EXISTING_CODE
     explicit CNewBlock(const CBlock& block);
     // EXISTING_CODE
+    bool operator==(const CNewBlock& item) const;
+    bool operator!=(const CNewBlock& item) const { return !operator==(item); }
     friend bool operator<(const CNewBlock& v1, const CNewBlock& v2);
     friend ostream& operator<<(ostream& os, const CNewBlock& item);
 
@@ -144,10 +147,18 @@ inline CNewBlock& CNewBlock::operator=(const CNewBlock& ne) {
 }
 
 //-------------------------------------------------------------------------
+inline bool CNewBlock::operator==(const CNewBlock& item) const {
+    // EXISTING1_CODE
+    // EXISTING1_CODE
+    // No default equal operator in class definition, assume none are equal (so find fails)
+    return false;
+}
+
+//-------------------------------------------------------------------------
 inline bool operator<(const CNewBlock& v1, const CNewBlock& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
-    // No default sort defined in class definition, assume already sorted
+    // No default sort defined in class definition, assume already sorted, preserve ordering
     return true;
 }
 
