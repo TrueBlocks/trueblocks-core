@@ -16,6 +16,7 @@
  * of 'EXISTING_CODE' tags.
  */
 #include <vector>
+#include <map>
 #include "abilib.h"
 #include "logentry.h"
 
@@ -48,6 +49,8 @@ public:
     const CTransaction *pTrans;
     friend class CTransaction;
     // EXISTING_CODE
+    bool operator==(const CReceipt& item) const;
+    bool operator!=(const CReceipt& item) const { return !operator==(item); }
     friend bool operator<(const CReceipt& v1, const CReceipt& v2);
     friend ostream& operator<<(ostream& os, const CReceipt& item);
 
@@ -150,10 +153,18 @@ inline CReceipt& CReceipt::operator=(const CReceipt& re) {
 }
 
 //-------------------------------------------------------------------------
+inline bool CReceipt::operator==(const CReceipt& item) const {
+    // EXISTING1_CODE
+    // EXISTING1_CODE
+    // No default equal operator in class definition, assume none are equal (so find fails)
+    return false;
+}
+
+//-------------------------------------------------------------------------
 inline bool operator<(const CReceipt& v1, const CReceipt& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
-    // No default sort defined in class definition, assume already sorted
+    // No default sort defined in class definition, assume already sorted, preserve ordering
     return true;
 }
 

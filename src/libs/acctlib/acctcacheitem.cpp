@@ -14,6 +14,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <algorithm>
 #include "acctcacheitem.h"
 
 namespace qblocks {
@@ -82,7 +83,7 @@ void CAcctCacheItem::finishParse() {
 bool CAcctCacheItem::Serialize(SFArchive& archive) {
 
     if (archive.isWriting())
-        return ((const CAcctCacheItem*)this)->SerializeC(archive);
+        return SerializeC(archive);
 
     // If we're reading a back level, read the whole thing and we're done.
     if (readBackLevel(archive))
@@ -155,7 +156,7 @@ void CAcctCacheItem::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextAcctcacheitemChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CAcctCacheItem *acc = (const CAcctCacheItem *)dataPtr;
+    const CAcctCacheItem *acc = (const CAcctCacheItem *)dataPtr;  // NOLINT
     if (acc) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -220,7 +221,8 @@ ostream& operator<<(ostream& os, const CAcctCacheItem& item) {
     }
     // EXISTING_CODE
 
-    os << item.Format() << "\n";
+    item.Format(os, "", nullptr);
+    os << "\n";
     return os;
 }
 

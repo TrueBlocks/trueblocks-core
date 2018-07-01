@@ -16,7 +16,7 @@
  * of 'EXISTING_CODE' tags.
  */
 #include <vector>
-#include <algorithm>
+#include <map>
 #include "etherlib.h"
 
 namespace qblocks {
@@ -47,6 +47,8 @@ public:
     virtual bool visitItems(ACCTVISITOR func, void *data) const { return true; }
     CTreeNode* newBranch(const string_q& _k1, const string_q& _v1, const string_q& _k2, const string_q& _v2);
     // EXISTING_CODE
+    bool operator==(const CTreeNode& item) const;
+    bool operator!=(const CTreeNode& item) const { return !operator==(item); }
     friend bool operator<(const CTreeNode& v1, const CTreeNode& v2);
     friend ostream& operator<<(ostream& os, const CTreeNode& item);
 
@@ -123,10 +125,18 @@ inline CTreeNode& CTreeNode::operator=(const CTreeNode& tr) {
 }
 
 //-------------------------------------------------------------------------
+inline bool CTreeNode::operator==(const CTreeNode& item) const {
+    // EXISTING1_CODE
+    // EXISTING1_CODE
+    // No default equal operator in class definition, assume none are equal (so find fails)
+    return false;
+}
+
+//-------------------------------------------------------------------------
 inline bool operator<(const CTreeNode& v1, const CTreeNode& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
-    // No default sort defined in class definition, assume already sorted
+    // No default sort defined in class definition, assume already sorted, preserve ordering
     return true;
 }
 

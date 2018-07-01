@@ -91,7 +91,7 @@ void CPriceQuote::finishParse() {
 bool CPriceQuote::Serialize(SFArchive& archive) {
 
     if (archive.isWriting())
-        return ((const CPriceQuote*)this)->SerializeC(archive);
+        return SerializeC(archive);
 
     // If we're reading a back level, read the whole thing and we're done.
     if (readBackLevel(archive))
@@ -166,7 +166,7 @@ void CPriceQuote::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextPricequoteChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CPriceQuote *pri = (const CPriceQuote *)dataPtr;
+    const CPriceQuote *pri = (const CPriceQuote *)dataPtr;  // NOLINT
     if (pri) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -249,7 +249,8 @@ ostream& operator<<(ostream& os, const CPriceQuote& item) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    os << item.Format() << "\n";
+    item.Format(os, "", nullptr);
+    os << "\n";
     return os;
 }
 

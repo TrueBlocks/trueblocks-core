@@ -14,6 +14,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <algorithm>
 #include "branch.h"
 #include "treeroot.h"
 
@@ -83,7 +84,7 @@ void CBranch::finishParse() {
 bool CBranch::Serialize(SFArchive& archive) {
 
     if (archive.isWriting())
-        return ((const CBranch*)this)->SerializeC(archive);
+        return SerializeC(archive);
 
     // If we're reading a back level, read the whole thing and we're done.
     CTreeNode::Serialize(archive);
@@ -179,7 +180,7 @@ void CBranch::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextBranchChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CBranch *bra = (const CBranch *)dataPtr;
+    const CBranch *bra = (const CBranch *)dataPtr;  // NOLINT
     if (bra) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -248,7 +249,8 @@ ostream& operator<<(ostream& os, const CBranch& item) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    os << item.Format() << "\n";
+    item.Format(os, "", nullptr);
+    os << "\n";
     return os;
 }
 

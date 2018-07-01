@@ -16,6 +16,7 @@
  * of 'EXISTING_CODE' tags.
  */
 #include <vector>
+#include <map>
 #include "abilib.h"
 
 namespace qblocks {
@@ -46,6 +47,8 @@ public:
     // EXISTING_CODE
     const CReceipt *pReceipt;
     // EXISTING_CODE
+    bool operator==(const CLogEntry& item) const;
+    bool operator!=(const CLogEntry& item) const { return !operator==(item); }
     friend bool operator<(const CLogEntry& v1, const CLogEntry& v2);
     friend ostream& operator<<(ostream& os, const CLogEntry& item);
 
@@ -141,10 +144,18 @@ inline CLogEntry& CLogEntry::operator=(const CLogEntry& lo) {
 }
 
 //-------------------------------------------------------------------------
+inline bool CLogEntry::operator==(const CLogEntry& item) const {
+    // EXISTING1_CODE
+    // EXISTING1_CODE
+    // No default equal operator in class definition, assume none are equal (so find fails)
+    return false;
+}
+
+//-------------------------------------------------------------------------
 inline bool operator<(const CLogEntry& v1, const CLogEntry& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
-    // No default sort defined in class definition, assume already sorted
+    // No default sort defined in class definition, assume already sorted, preserve ordering
     return true;
 }
 

@@ -16,6 +16,7 @@
  * of 'EXISTING_CODE' tags.
  */
 #include <vector>
+#include <map>
 #include "basetypes.h"
 #include "basenode.h"
 #include "sfarchive.h"
@@ -46,6 +47,8 @@ public:
     explicit CAccountName(string_q& nameIn);
     bool Match(const string_q& s1, const string_q& s2, const string_q& s3, bool matchCase, bool all) const;
     // EXISTING_CODE
+    bool operator==(const CAccountName& item) const;
+    bool operator!=(const CAccountName& item) const { return !operator==(item); }
     friend bool operator<(const CAccountName& v1, const CAccountName& v2);
     friend ostream& operator<<(ostream& os, const CAccountName& item);
 
@@ -128,10 +131,18 @@ inline CAccountName& CAccountName::operator=(const CAccountName& ac) {
 }
 
 //-------------------------------------------------------------------------
+inline bool CAccountName::operator==(const CAccountName& item) const {
+    // EXISTING1_CODE
+    // EXISTING1_CODE
+    // No default equal operator in class definition, assume none are equal (so find fails)
+    return false;
+}
+
+//-------------------------------------------------------------------------
 inline bool operator<(const CAccountName& v1, const CAccountName& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
-    // No default sort defined in class definition, assume already sorted
+    // No default sort defined in class definition, assume already sorted, preserve ordering
     return true;
 }
 

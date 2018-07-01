@@ -14,6 +14,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <algorithm>
 #include "traceaction.h"
 #include "trace.h"
 
@@ -105,7 +106,7 @@ void CTraceAction::finishParse() {
 bool CTraceAction::Serialize(SFArchive& archive) {
 
     if (archive.isWriting())
-        return ((const CTraceAction*)this)->SerializeC(archive);
+        return SerializeC(archive);
 
     // If we're reading a back level, read the whole thing and we're done.
     if (readBackLevel(archive))
@@ -202,7 +203,7 @@ void CTraceAction::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextTraceactionChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CTraceAction *tra = (const CTraceAction *)dataPtr;
+    const CTraceAction *tra = (const CTraceAction *)dataPtr;  // NOLINT
     if (tra) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -297,7 +298,8 @@ ostream& operator<<(ostream& os, const CTraceAction& item) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    os << item.Format() << "\n";
+    item.Format(os, "", nullptr);
+    os << "\n";
     return os;
 }
 

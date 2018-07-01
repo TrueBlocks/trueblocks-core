@@ -16,6 +16,7 @@
  * of 'EXISTING_CODE' tags.
  */
 #include <vector>
+#include <map>
 #include "abilib.h"
 
 namespace qblocks {
@@ -42,6 +43,8 @@ public:
     // EXISTING_CODE
     friend class CTrace;
     // EXISTING_CODE
+    bool operator==(const CTraceResult& item) const;
+    bool operator!=(const CTraceResult& item) const { return !operator==(item); }
     friend bool operator<(const CTraceResult& v1, const CTraceResult& v2);
     friend ostream& operator<<(ostream& os, const CTraceResult& item);
 
@@ -122,10 +125,18 @@ inline CTraceResult& CTraceResult::operator=(const CTraceResult& tr) {
 }
 
 //-------------------------------------------------------------------------
+inline bool CTraceResult::operator==(const CTraceResult& item) const {
+    // EXISTING1_CODE
+    // EXISTING1_CODE
+    // No default equal operator in class definition, assume none are equal (so find fails)
+    return false;
+}
+
+//-------------------------------------------------------------------------
 inline bool operator<(const CTraceResult& v1, const CTraceResult& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
-    // No default sort defined in class definition, assume already sorted
+    // No default sort defined in class definition, assume already sorted, preserve ordering
     return true;
 }
 

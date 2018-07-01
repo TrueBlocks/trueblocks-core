@@ -16,6 +16,7 @@
  * of 'EXISTING_CODE' tags.
  */
 #include <vector>
+#include <map>
 #include "basetypes.h"
 #include "basenode.h"
 #include "conversions.h"
@@ -47,6 +48,8 @@ public:
     SFUintBN getValueBN(void) const { return toWei     (value); }
     string_q getName   (void) const { return            name;   }
     // EXISTING_CODE
+    bool operator==(const CNameValue& item) const;
+    bool operator!=(const CNameValue& item) const { return !operator==(item); }
     friend bool operator<(const CNameValue& v1, const CNameValue& v2);
     friend ostream& operator<<(ostream& os, const CNameValue& item);
 
@@ -123,10 +126,18 @@ inline CNameValue& CNameValue::operator=(const CNameValue& na) {
 }
 
 //-------------------------------------------------------------------------
+inline bool CNameValue::operator==(const CNameValue& item) const {
+    // EXISTING1_CODE
+    // EXISTING1_CODE
+    // No default equal operator in class definition, assume none are equal (so find fails)
+    return false;
+}
+
+//-------------------------------------------------------------------------
 inline bool operator<(const CNameValue& v1, const CNameValue& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
-    // No default sort defined in class definition, assume already sorted
+    // No default sort defined in class definition, assume already sorted, preserve ordering
     return true;
 }
 

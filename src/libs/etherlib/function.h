@@ -16,6 +16,7 @@
  * of 'EXISTING_CODE' tags.
  */
 #include <vector>
+#include <map>
 #include "utillib.h"
 #include "parameter.h"
 
@@ -55,6 +56,7 @@ public:
     string_q origName;
     // EXISTING_CODE
     bool operator==(const CFunction& item) const;
+    bool operator!=(const CFunction& item) const { return !operator==(item); }
     friend bool operator<(const CFunction& v1, const CFunction& v2);
     friend ostream& operator<<(ostream& os, const CFunction& item);
 
@@ -152,8 +154,9 @@ inline CFunction& CFunction::operator=(const CFunction& fu) {
 
 //-------------------------------------------------------------------------
 inline bool CFunction::operator==(const CFunction& item) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
+    // EXISTING1_CODE
+    // EXISTING1_CODE
+    // Default equality operator as defined in class definition
     return encoding % item.encoding;
 }
 

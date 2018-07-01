@@ -14,6 +14,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <algorithm>
 #include "removeowner.h"
 #include "etherlib.h"
 
@@ -81,7 +82,7 @@ void QRemoveOwner::finishParse() {
 bool QRemoveOwner::Serialize(SFArchive& archive) {
 
     if (archive.isWriting())
-        return ((const QRemoveOwner*)this)->SerializeC(archive);
+        return SerializeC(archive);
 
     // If we're reading a back level, read the whole thing and we're done.
     if (readBackLevel(archive))
@@ -153,7 +154,7 @@ void QRemoveOwner::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextRemoveownerChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const QRemoveOwner *rem = (const QRemoveOwner *)dataPtr;
+    const QRemoveOwner *rem = (const QRemoveOwner *)dataPtr;  // NOLINT
     if (rem) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -211,7 +212,8 @@ ostream& operator<<(ostream& os, const QRemoveOwner& item) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    os << item.Format() << "\n";
+    item.Format(os, "", nullptr);
+    os << "\n";
     return os;
 }
 

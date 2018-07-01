@@ -14,8 +14,9 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
-#include "etherlib.h"
+#include <algorithm>
 #include "account.h"
+#include "etherlib.h"
 
 namespace qblocks {
 
@@ -117,7 +118,7 @@ extern const CFunction *findFunctionByEncoding(const CFunctionArray& array, cons
 bool CAccount::Serialize(SFArchive& archive) {
 
     if (archive.isWriting())
-        return ((const CAccount*)this)->SerializeC(archive);
+        return SerializeC(archive);
 
     // If we're reading a back level, read the whole thing and we're done.
     if (readBackLevel(archive))
@@ -208,7 +209,7 @@ void CAccount::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextAccountChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CAccount *acc = (const CAccount *)dataPtr;
+    const CAccount *acc = (const CAccount *)dataPtr;  // NOLINT
     if (acc) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -302,7 +303,8 @@ ostream& operator<<(ostream& os, const CAccount& item) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    os << item.Format() << "\n";
+    item.Format(os, "", nullptr);
+    os << "\n";
     return os;
 }
 
@@ -391,3 +393,4 @@ const CFunction *findFunctionByEncoding(const CFunctionArray& array, const strin
 }
 // EXISTING_CODE
 }  // namespace qblocks
+

@@ -16,6 +16,7 @@
  * of 'EXISTING_CODE' tags.
  */
 #include <vector>
+#include <map>
 #include "abilib.h"
 #include "receipt.h"
 #include "trace.h"
@@ -64,6 +65,8 @@ public:
 
     string_q inputToFunction(void) const;
     // EXISTING_CODE
+    bool operator==(const CTransaction& item) const;
+    bool operator!=(const CTransaction& item) const { return !operator==(item); }
     friend bool operator<(const CTransaction& v1, const CTransaction& v2);
     friend ostream& operator<<(ostream& os, const CTransaction& item);
 
@@ -174,10 +177,18 @@ inline CTransaction& CTransaction::operator=(const CTransaction& tr) {
 }
 
 //-------------------------------------------------------------------------
+inline bool CTransaction::operator==(const CTransaction& item) const {
+    // EXISTING1_CODE
+    // EXISTING1_CODE
+    // No default equal operator in class definition, assume none are equal (so find fails)
+    return false;
+}
+
+//-------------------------------------------------------------------------
 inline bool operator<(const CTransaction& v1, const CTransaction& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
-    // No default sort defined in class definition, assume already sorted
+    // No default sort defined in class definition, assume already sorted, preserve ordering
     return true;
 }
 
@@ -198,3 +209,4 @@ extern string_q toFunction(const string_q& name, const string_q& input, size_t n
 extern string_q nextBlockChunk(const string_q& fieldIn, const void *data);
 // EXISTING_CODE
 }  // namespace qblocks
+

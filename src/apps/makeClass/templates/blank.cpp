@@ -14,6 +14,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <algorithm>
 #include "[{LONG}].h"
 [OTHER_INCS]
 [{NAMESPACE1}]
@@ -74,7 +75,7 @@ void [{CLASS_NAME}]::finishParse() {
 bool [{CLASS_NAME}]::Serialize(SFArchive& archive) {
 
     if (archive.isWriting())
-        return ((const [{CLASS_NAME}]*)this)->SerializeC(archive);
+        return SerializeC(archive);
 
     // If we're reading a back level, read the whole thing and we're done.
     if (readBackLevel(archive))
@@ -141,7 +142,7 @@ void [{CLASS_NAME}]::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q next[{PROPER}]Chunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const [{CLASS_NAME}] *[{SHORT3}] = (const [{CLASS_NAME}] *)dataPtr;
+    const [{CLASS_NAME}] *[{SHORT3}] = (const [{CLASS_NAME}] *)dataPtr;  // NOLINT
     if ([{SHORT3}]) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -195,7 +196,8 @@ ostream& operator<<(ostream& os, const [{CLASS_NAME}]& item) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    os << item.Format() << "\n";
+    item.Format(os, "", nullptr);
+    os << "\n";
     return os;
 }
 

@@ -16,6 +16,7 @@
  * of 'EXISTING_CODE' tags.
  */
 #include <vector>
+#include <map>
 #include "abilib.h"
 
 namespace qblocks {
@@ -41,6 +42,8 @@ public:
     // EXISTING_CODE
     CBalHistory(const string_q& _recID, SFIntBN bal) : recordID(_recID), balance(bal) { }
     // EXISTING_CODE
+    bool operator==(const CBalHistory& item) const;
+    bool operator!=(const CBalHistory& item) const { return !operator==(item); }
     friend bool operator<(const CBalHistory& v1, const CBalHistory& v2);
     friend ostream& operator<<(ostream& os, const CBalHistory& item);
 
@@ -119,10 +122,18 @@ inline CBalHistory& CBalHistory::operator=(const CBalHistory& ba) {
 }
 
 //-------------------------------------------------------------------------
+inline bool CBalHistory::operator==(const CBalHistory& item) const {
+    // EXISTING1_CODE
+    // EXISTING1_CODE
+    // No default equal operator in class definition, assume none are equal (so find fails)
+    return false;
+}
+
+//-------------------------------------------------------------------------
 inline bool operator<(const CBalHistory& v1, const CBalHistory& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
-    // No default sort defined in class definition, assume already sorted
+    // No default sort defined in class definition, assume already sorted, preserve ordering
     return true;
 }
 

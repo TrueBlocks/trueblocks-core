@@ -14,7 +14,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
-#include <utility>
+#include <algorithm>
 #include "block.h"
 #include "etherlib.h"
 
@@ -147,7 +147,7 @@ void CBlock::finishParse() {
 bool CBlock::Serialize(SFArchive& archive) {
 
     if (archive.isWriting())
-        return ((const CBlock*)this)->SerializeC(archive);
+        return SerializeC(archive);
 
     // If we're reading a back level, read the whole thing and we're done.
     if (readBackLevel(archive))
@@ -249,7 +249,7 @@ void CBlock::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextBlockChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CBlock *blo = (const CBlock *)dataPtr;
+    const CBlock *blo = (const CBlock *)dataPtr;  // NOLINT
     if (blo) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
