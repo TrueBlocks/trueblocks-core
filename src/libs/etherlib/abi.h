@@ -16,6 +16,7 @@
  * of 'EXISTING_CODE' tags.
  */
 #include <vector>
+#include <map>
 #include "function.h"
 #include "parameter.h"
 
@@ -43,6 +44,8 @@ public:
     // EXISTING_CODE
     bool loadABIFromFile(const string_q& fileName);
     // EXISTING_CODE
+    bool operator==(const CAbi& item) const;
+    bool operator!=(const CAbi& item) const { return !operator==(item); }
     friend bool operator<(const CAbi& v1, const CAbi& v2);
     friend ostream& operator<<(ostream& os, const CAbi& item);
 
@@ -121,10 +124,18 @@ inline CAbi& CAbi::operator=(const CAbi& ab) {
 }
 
 //-------------------------------------------------------------------------
+inline bool CAbi::operator==(const CAbi& item) const {
+    // EXISTING1_CODE
+    // EXISTING1_CODE
+    // No default equal operator in class definition, assume none are equal (so find fails)
+    return false;
+}
+
+//-------------------------------------------------------------------------
 inline bool operator<(const CAbi& v1, const CAbi& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
-    // No default sort defined in class definition, assume already sorted
+    // No default sort defined in class definition, assume already sorted, preserve ordering
     return true;
 }
 

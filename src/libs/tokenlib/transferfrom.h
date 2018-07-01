@@ -16,6 +16,7 @@
  * of 'EXISTING_CODE' tags.
  */
 #include <vector>
+#include <map>
 #include "transaction.h"
 
 // EXISTING_CODE
@@ -38,6 +39,8 @@ public:
 
     // EXISTING_CODE
     // EXISTING_CODE
+    bool operator==(const QTransferFrom& item) const;
+    bool operator!=(const QTransferFrom& item) const { return !operator==(item); }
     friend bool operator<(const QTransferFrom& v1, const QTransferFrom& v2);
     friend ostream& operator<<(ostream& os, const QTransferFrom& item);
 
@@ -116,10 +119,18 @@ inline QTransferFrom& QTransferFrom::operator=(const QTransferFrom& tr) {
 }
 
 //-------------------------------------------------------------------------
+inline bool QTransferFrom::operator==(const QTransferFrom& item) const {
+    // EXISTING1_CODE
+    // EXISTING1_CODE
+    // No default equal operator in class definition, assume none are equal (so find fails)
+    return false;
+}
+
+//-------------------------------------------------------------------------
 inline bool operator<(const QTransferFrom& v1, const QTransferFrom& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
-    // No default sort defined in class definition, assume already sorted
+    // No default sort defined in class definition, assume already sorted, preserve ordering
     return true;
 }
 

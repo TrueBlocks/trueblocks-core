@@ -16,7 +16,7 @@
  * of 'EXISTING_CODE' tags.
  */
 #include <vector>
-#include <algorithm>
+#include <map>
 #include "etherlib.h"
 #include "treenode.h"
 
@@ -48,6 +48,8 @@ public:
     bool visitItems(ACCTVISITOR func, void *data) const override;
     bool contains(const string_q& _key) const;
     // EXISTING_CODE
+    bool operator==(const CInfix& item) const;
+    bool operator!=(const CInfix& item) const { return !operator==(item); }
     friend bool operator<(const CInfix& v1, const CInfix& v2);
     friend ostream& operator<<(ostream& os, const CInfix& item);
 
@@ -128,10 +130,18 @@ inline CInfix& CInfix::operator=(const CInfix& in) {
 }
 
 //-------------------------------------------------------------------------
+inline bool CInfix::operator==(const CInfix& item) const {
+    // EXISTING1_CODE
+    // EXISTING1_CODE
+    // No default equal operator in class definition, assume none are equal (so find fails)
+    return false;
+}
+
+//-------------------------------------------------------------------------
 inline bool operator<(const CInfix& v1, const CInfix& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
-    // No default sort defined in class definition, assume already sorted
+    // No default sort defined in class definition, assume already sorted, preserve ordering
     return true;
 }
 

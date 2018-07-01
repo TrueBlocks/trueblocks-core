@@ -14,6 +14,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <algorithm>
 #include "infix.h"
 #include "treeroot.h"
 
@@ -93,11 +94,12 @@ void CInfix::finishParse() {
 bool CInfix::Serialize(SFArchive& archive) {
 
     if (archive.isWriting())
-        return ((const CInfix*)this)->SerializeC(archive);
+        return SerializeC(archive);
 
     // If we're reading a back level, read the whole thing and we're done.
     CTreeNode::Serialize(archive);
 
+    // EXISTING_CODE
     // EXISTING_CODE
     next = NULL;
     bool has_next = false;
@@ -110,7 +112,6 @@ bool CInfix::Serialize(SFArchive& archive) {
             return false;
         next->Serialize(archive);
     }
-    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -179,7 +180,7 @@ void CInfix::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextInfixChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CInfix *inf = (const CInfix *)dataPtr;
+    const CInfix *inf = (const CInfix *)dataPtr;  // NOLINT
     if (inf) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -241,7 +242,8 @@ ostream& operator<<(ostream& os, const CInfix& item) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    os << item.Format() << "\n";
+    item.Format(os, "", nullptr);
+    os << "\n";
     return os;
 }
 

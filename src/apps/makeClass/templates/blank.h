@@ -16,6 +16,7 @@
  * of 'EXISTING_CODE' tags.
  */
 #include <vector>
+#include <map>
 [H_INCLUDES]
 [{NAMESPACE1}]
 
@@ -36,6 +37,8 @@ public:
 
 [{GET_OBJ}][{GET_STR}]    // EXISTING_CODE
     // EXISTING_CODE
+    bool operator==(const [{CLASS_NAME}]& item) const;
+    bool operator!=(const [{CLASS_NAME}]& item) const { return !operator==(item); }
     friend bool operator<(const [{CLASS_NAME}]& v1, const [{CLASS_NAME}]& v2);
     friend ostream& operator<<(ostream& os, const [{CLASS_NAME}]& item);
 
@@ -108,11 +111,19 @@ inline [{CLASS_NAME}]& [{CLASS_NAME}]::operator=(const [{CLASS_NAME}]& [{SHORT}]
 }
 
 //-------------------------------------------------------------------------
+inline bool [{CLASS_NAME}]::operator==(const [{CLASS_NAME}]& item) const {
+    // EXISTING1_CODE
+    // EXISTING1_CODE
+    // [{EQUAL_COMMENT}]
+    return [{EQUAL_CODE}];
+}
+
+//-------------------------------------------------------------------------
 inline bool operator<(const [{CLASS_NAME}]& v1, const [{CLASS_NAME}]& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
     // [{SORT_COMMENT}]
-    return [{SORTCODE}];
+    return [{SORT_CODE}];
 }
 
 //---------------------------------------------------------------------------

@@ -14,6 +14,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <algorithm>
 #include "transaction.h"
 #include "etherlib.h"
 
@@ -142,7 +143,7 @@ void CTransaction::finishParse() {
 bool CTransaction::Serialize(SFArchive& archive) {
 
     if (archive.isWriting())
-        return ((const CTransaction*)this)->SerializeC(archive);  // NOLINT
+        return SerializeC(archive);
 
     // If we're reading a back level, read the whole thing and we're done.
     if (readBackLevel(archive))
@@ -291,7 +292,7 @@ void CTransaction::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextTransactionChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CTransaction *tra = (const CTransaction *)dataPtr;
+    const CTransaction *tra = (const CTransaction *)dataPtr;  // NOLINT
     if (tra) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -478,7 +479,8 @@ ostream& operator<<(ostream& os, const CTransaction& item) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    os << item.Format() << "\n";
+    item.Format(os, "", nullptr);
+    os << "\n";
     return os;
 }
 

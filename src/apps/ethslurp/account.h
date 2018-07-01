@@ -16,6 +16,7 @@
  * of 'EXISTING_CODE' tags.
  */
 #include <vector>
+#include <map>
 #include "abilib.h"
 #include "transaction.h"
 
@@ -51,6 +52,8 @@ public:
     size_t deleteNotShowing(void);
     bool handleCustomFormat(ostream& ctx, const string_q& fmtIn, void *data = NULL) const;
     // EXISTING_CODE
+    bool operator==(const CAccount& item) const;
+    bool operator!=(const CAccount& item) const { return !operator==(item); }
     friend bool operator<(const CAccount& v1, const CAccount& v2);
     friend ostream& operator<<(ostream& os, const CAccount& item);
 
@@ -145,10 +148,18 @@ inline CAccount& CAccount::operator=(const CAccount& ac) {
 }
 
 //-------------------------------------------------------------------------
+inline bool CAccount::operator==(const CAccount& item) const {
+    // EXISTING1_CODE
+    // EXISTING1_CODE
+    // No default equal operator in class definition, assume none are equal (so find fails)
+    return false;
+}
+
+//-------------------------------------------------------------------------
 inline bool operator<(const CAccount& v1, const CAccount& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
-    // No default sort defined in class definition, assume already sorted
+    // No default sort defined in class definition, assume already sorted, preserve ordering
     return true;
 }
 

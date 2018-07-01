@@ -14,6 +14,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <algorithm>
 #include "revokeevent.h"
 #include "etherlib.h"
 
@@ -82,7 +83,7 @@ void QRevokeEvent::finishParse() {
 bool QRevokeEvent::Serialize(SFArchive& archive) {
 
     if (archive.isWriting())
-        return ((const QRevokeEvent*)this)->SerializeC(archive);
+        return SerializeC(archive);
 
     // If we're reading a back level, read the whole thing and we're done.
     if (readBackLevel(archive))
@@ -157,7 +158,7 @@ void QRevokeEvent::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextRevokeeventChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const QRevokeEvent *rev = (const QRevokeEvent *)dataPtr;
+    const QRevokeEvent *rev = (const QRevokeEvent *)dataPtr;  // NOLINT
     if (rev) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -216,7 +217,8 @@ ostream& operator<<(ostream& os, const QRevokeEvent& item) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    os << item.Format() << "\n";
+    item.Format(os, "", nullptr);
+    os << "\n";
     return os;
 }
 

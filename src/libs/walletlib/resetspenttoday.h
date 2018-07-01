@@ -16,6 +16,7 @@
  * of 'EXISTING_CODE' tags.
  */
 #include <vector>
+#include <map>
 #include "transaction.h"
 
 // EXISTING_CODE
@@ -24,7 +25,6 @@
 //--------------------------------------------------------------------------
 class QResetSpentToday : public CTransaction {
 public:
-    // NOLINT
 
 public:
     QResetSpentToday(void);
@@ -36,6 +36,8 @@ public:
 
     // EXISTING_CODE
     // EXISTING_CODE
+    bool operator==(const QResetSpentToday& item) const;
+    bool operator!=(const QResetSpentToday& item) const { return !operator==(item); }
     friend bool operator<(const QResetSpentToday& v1, const QResetSpentToday& v2);
     friend ostream& operator<<(ostream& os, const QResetSpentToday& item);
 
@@ -106,10 +108,18 @@ inline QResetSpentToday& QResetSpentToday::operator=(const QResetSpentToday& re)
 }
 
 //-------------------------------------------------------------------------
+inline bool QResetSpentToday::operator==(const QResetSpentToday& item) const {
+    // EXISTING1_CODE
+    // EXISTING1_CODE
+    // No default equal operator in class definition, assume none are equal (so find fails)
+    return false;
+}
+
+//-------------------------------------------------------------------------
 inline bool operator<(const QResetSpentToday& v1, const QResetSpentToday& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
-    // No default sort defined in class definition, assume already sorted
+    // No default sort defined in class definition, assume already sorted, preserve ordering
     return true;
 }
 

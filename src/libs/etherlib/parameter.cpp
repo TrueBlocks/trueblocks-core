@@ -14,6 +14,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <algorithm>
 #include "parameter.h"
 
 namespace qblocks {
@@ -91,7 +92,7 @@ void CParameter::finishParse() {
 bool CParameter::Serialize(SFArchive& archive) {
 
     if (archive.isWriting())
-        return ((const CParameter*)this)->SerializeC(archive);
+        return SerializeC(archive);
 
     // If we're reading a back level, read the whole thing and we're done.
     if (readBackLevel(archive))
@@ -179,7 +180,7 @@ void CParameter::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextParameterChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CParameter *par = (const CParameter *)dataPtr;
+    const CParameter *par = (const CParameter *)dataPtr;  // NOLINT
     if (par) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -249,7 +250,8 @@ ostream& operator<<(ostream& os, const CParameter& item) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    os << item.Format() << "\n";
+    item.Format(os, "", nullptr);
+    os << "\n";
     return os;
 }
 

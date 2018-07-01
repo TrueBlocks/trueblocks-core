@@ -14,6 +14,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <algorithm>
 #include "trace.h"
 
 namespace qblocks {
@@ -92,7 +93,7 @@ bool CTrace::setValueByName(const string_q& fieldName, const string_q& fieldValu
             if ( fieldName % "traceAddress" ) {
                 string_q str = fieldValue;
                 while (!str.empty()) {
-                    traceAddress.push_back(nextTokenClear(str, ','));
+                    traceAddress.push_back(nextTokenClear(str,','));
                 }
                 return true;
             }
@@ -116,7 +117,7 @@ void CTrace::finishParse() {
 bool CTrace::Serialize(SFArchive& archive) {
 
     if (archive.isWriting())
-        return ((const CTrace*)this)->SerializeC(archive);
+        return SerializeC(archive);
 
     // If we're reading a back level, read the whole thing and we're done.
     if (readBackLevel(archive))
@@ -213,7 +214,7 @@ void CTrace::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextTraceChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CTrace *tra = (const CTrace *)dataPtr;
+    const CTrace *tra = (const CTrace *)dataPtr;  // NOLINT
     if (tra) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -318,7 +319,8 @@ ostream& operator<<(ostream& os, const CTrace& item) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    os << item.Format() << "\n";
+    item.Format(os, "", nullptr);
+    os << "\n";
     return os;
 }
 

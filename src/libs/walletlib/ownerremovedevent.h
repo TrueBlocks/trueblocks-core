@@ -16,6 +16,7 @@
  * of 'EXISTING_CODE' tags.
  */
 #include <vector>
+#include <map>
 #include "logentry.h"
 
 // EXISTING_CODE
@@ -36,6 +37,8 @@ public:
 
     // EXISTING_CODE
     // EXISTING_CODE
+    bool operator==(const QOwnerRemovedEvent& item) const;
+    bool operator!=(const QOwnerRemovedEvent& item) const { return !operator==(item); }
     friend bool operator<(const QOwnerRemovedEvent& v1, const QOwnerRemovedEvent& v2);
     friend ostream& operator<<(ostream& os, const QOwnerRemovedEvent& item);
 
@@ -110,10 +113,18 @@ inline QOwnerRemovedEvent& QOwnerRemovedEvent::operator=(const QOwnerRemovedEven
 }
 
 //-------------------------------------------------------------------------
+inline bool QOwnerRemovedEvent::operator==(const QOwnerRemovedEvent& item) const {
+    // EXISTING1_CODE
+    // EXISTING1_CODE
+    // No default equal operator in class definition, assume none are equal (so find fails)
+    return false;
+}
+
+//-------------------------------------------------------------------------
 inline bool operator<(const QOwnerRemovedEvent& v1, const QOwnerRemovedEvent& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
-    // No default sort defined in class definition, assume already sorted
+    // No default sort defined in class definition, assume already sorted, preserve ordering
     return true;
 }
 

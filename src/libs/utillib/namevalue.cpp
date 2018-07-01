@@ -14,6 +14,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <algorithm>
 #include "namevalue.h"
 
 namespace qblocks {
@@ -82,7 +83,7 @@ void CNameValue::finishParse() {
 bool CNameValue::Serialize(SFArchive& archive) {
 
     if (archive.isWriting())
-        return ((const CNameValue*)this)->SerializeC(archive);
+        return SerializeC(archive);
 
     // If we're reading a back level, read the whole thing and we're done.
     if (readBackLevel(archive))
@@ -155,7 +156,7 @@ void CNameValue::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextNamevalueChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CNameValue *nam = (const CNameValue *)dataPtr;
+    const CNameValue *nam = (const CNameValue *)dataPtr;  // NOLINT
     if (nam) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -216,7 +217,8 @@ ostream& operator<<(ostream& os, const CNameValue& item) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    os << item.Format() << "\n";
+    item.Format(os, "", nullptr);
+    os << "\n";
     return os;
 }
 

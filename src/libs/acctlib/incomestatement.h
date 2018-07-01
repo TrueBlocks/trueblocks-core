@@ -16,6 +16,7 @@
  * of 'EXISTING_CODE' tags.
  */
 #include <vector>
+#include <map>
 #include "abilib.h"
 
 namespace qblocks {
@@ -49,6 +50,8 @@ public:
     void correct(void) { endBal = nodeBal; }
     friend class CAccountWatch;
     // EXISTING_CODE
+    bool operator==(const CIncomeStatement& item) const;
+    bool operator!=(const CIncomeStatement& item) const { return !operator==(item); }
     friend bool operator<(const CIncomeStatement& v1, const CIncomeStatement& v2);
     friend ostream& operator<<(ostream& os, const CIncomeStatement& item);
 
@@ -133,10 +136,18 @@ inline CIncomeStatement& CIncomeStatement::operator=(const CIncomeStatement& in)
 }
 
 //-------------------------------------------------------------------------
+inline bool CIncomeStatement::operator==(const CIncomeStatement& item) const {
+    // EXISTING1_CODE
+    // EXISTING1_CODE
+    // No default equal operator in class definition, assume none are equal (so find fails)
+    return false;
+}
+
+//-------------------------------------------------------------------------
 inline bool operator<(const CIncomeStatement& v1, const CIncomeStatement& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
-    // No default sort defined in class definition, assume already sorted
+    // No default sort defined in class definition, assume already sorted, preserve ordering
     return true;
 }
 

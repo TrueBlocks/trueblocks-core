@@ -16,6 +16,7 @@
  * of 'EXISTING_CODE' tags.
  */
 #include <vector>
+#include <map>
 #include "abilib.h"
 #include "traceaction.h"
 #include "traceresult.h"
@@ -63,6 +64,8 @@ public:
     // EXISTING_CODE
     bool isError(void) const;
     // EXISTING_CODE
+    bool operator==(const CTrace& item) const;
+    bool operator!=(const CTrace& item) const { return !operator==(item); }
     friend bool operator<(const CTrace& v1, const CTrace& v2);
     friend ostream& operator<<(ostream& os, const CTrace& item);
 
@@ -155,10 +158,18 @@ inline CTrace& CTrace::operator=(const CTrace& tr) {
 }
 
 //-------------------------------------------------------------------------
+inline bool CTrace::operator==(const CTrace& item) const {
+    // EXISTING1_CODE
+    // EXISTING1_CODE
+    // No default equal operator in class definition, assume none are equal (so find fails)
+    return false;
+}
+
+//-------------------------------------------------------------------------
 inline bool operator<(const CTrace& v1, const CTrace& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
-    // No default sort defined in class definition, assume already sorted
+    // No default sort defined in class definition, assume already sorted, preserve ordering
     return true;
 }
 

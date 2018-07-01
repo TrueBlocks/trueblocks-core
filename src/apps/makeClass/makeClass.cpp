@@ -157,7 +157,8 @@ extern const char* STR_GETSTR_HEAD;
 extern const char* STR_UPGRADE_CODE;
 extern const char* STR_SORT_COMMENT_1;
 extern const char* STR_SORT_COMMENT_2;
-
+extern const char* STR_EQUAL_COMMENT_1;
+extern const char* STR_EQUAL_COMMENT_2;
 string_q tab = string_q("\t");
 
 //------------------------------------------------------------------------------------------------------------
@@ -362,9 +363,7 @@ string_q ptrWriteFmt =
 
     //------------------------------------------------------------------------------------------------
     string_q sortStr = toml.getConfigStr("settings", "sort", "");
-    CStringArray sorts;
-    while (!sortStr.empty())
-        sorts.push_back(nextTokenClear(sortStr, '|'));
+    string_q eqStr   = toml.getConfigStr("settings", "equals", "");
 
     //------------------------------------------------------------------------------------------------
     string_q headerFile = substitute(substitute(dataFile, ".txt", ".h"), "./classDefinitions/", "./");
@@ -395,8 +394,10 @@ string_q ptrWriteFmt =
     replaceAll(headSource, "[{SHORT3}]",       short3(baseLower));
     replaceAll(headSource, "[{SHORT}]",        extract(baseLower, 0, 2));
     replaceAll(headSource, "[{SCOPE}]",        scope);
-    replaceAll(headSource, "[{SORT_COMMENT}]", (sorts.size() ? STR_SORT_COMMENT_1 : STR_SORT_COMMENT_2));
-    replaceAll(headSource, "[{SORTCODE}]",     (sorts.size() ? "XXX" : "true"));
+    replaceAll(headSource, "[{SORT_COMMENT}]", (sortStr.length() ? STR_SORT_COMMENT_1 : STR_SORT_COMMENT_2));
+    replaceAll(headSource, "[{SORT_CODE}]",    (sortStr.length() ? sortStr : "true"));
+    replaceAll(headSource, "[{EQUAL_COMMENT}]",(eqStr.length() ? STR_EQUAL_COMMENT_1 : STR_EQUAL_COMMENT_2));
+    replaceAll(headSource, "[{EQUAL_CODE}]",   (eqStr.length() ? eqStr : "false"));
     replaceAll(headSource, "[{NAMESPACE1}]",   (ns.empty() ? "" : "\nnamespace qblocks {\n\n"));
     replaceAll(headSource, "[{NAMESPACE2}]",   (ns.empty() ? "" : "}  // namespace qblocks\n"));
     if (options.writeHeader)
@@ -695,7 +696,7 @@ const char* STR_CLASSFILE =
 //------------------------------------------------------------------------------------------------------------
 const char* STR_CASE_SET_CODE_ARRAY =
 " {\n"
-"\t\t\t\tchar *p = (char *)fieldValue.c_str();\n"
+"\t\t\t\tchar *p = (char *)fieldValue.c_str();  // NOLINT\n"
 "\t\t\t\twhile (p && *p) {\n"
 "\t\t\t\t\t[{TYPE}] item;\n"
 "\t\t\t\t\tsize_t nFields = 0;\n"
@@ -786,7 +787,7 @@ const char* PTR_SET_CASE =
 "\t\t\t\tclear();\n"
 "\t\t\t\t[{NAME}] = new [{TYPE}];\n"
 "\t\t\t\tif ([{NAME}]) {\n"
-"\t\t\t\t\tchar *p = cleanUpJson((char *)fieldValue.c_str());\n"
+"\t\t\t\t\tchar *p = cleanUpJson((char *)fieldValue.c_str());  // NOLINT\n"
 "\t\t\t\t\tsize_t nFields = 0;\n"
 "\t\t\t\t\t[{NAME}]->parseJson(p, nFields);\n"
 "\t\t\t\t\treturn true;\n"
@@ -828,7 +829,7 @@ const char *STR_GETSTR_CODE =
 
 //------------------------------------------------------------------------------------------------------------
 const char *STR_UPGRADE_CODE =
-"version of the data\n\t(([{CLASS_NAME}]*)this)->m_schema = getVersionNum();\n";
+"version of the data\n\t(([{CLASS_NAME}]*)this)->m_schema = getVersionNum();  // NOLINT\n";
 
 //------------------------------------------------------------------------------------------------------------
 const char* STR_SORT_COMMENT_1 =
@@ -836,7 +837,15 @@ const char* STR_SORT_COMMENT_1 =
 
 //------------------------------------------------------------------------------------------------------------
 const char* STR_SORT_COMMENT_2 =
-"No default sort defined in class definition, assume already sorted";
+"No default sort defined in class definition, assume already sorted, preserve ordering";
+
+//------------------------------------------------------------------------------------------------------------
+const char* STR_EQUAL_COMMENT_1 =
+"Default equality operator as defined in class definition";
+
+//------------------------------------------------------------------------------------------------------------
+const char* STR_EQUAL_COMMENT_2 =
+"No default equal operator in class definition, assume none are equal (so find fails)";
 
 //------------------------------------------------------------------------------------------------------------
 string_q short3(const string_q& str) {

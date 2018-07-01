@@ -16,6 +16,7 @@
  * of 'EXISTING_CODE' tags.
  */
 #include <vector>
+#include <map>
 #include "abilib.h"
 #include "transaction.h"
 #include "incomestatement.h"
@@ -58,6 +59,8 @@ public:
     SFBloom bloom;
     bool inBlock;
     // EXISTING_CODE
+    bool operator==(const CAccountWatch& item) const;
+    bool operator!=(const CAccountWatch& item) const { return !operator==(item); }
     friend bool operator<(const CAccountWatch& v1, const CAccountWatch& v2);
     friend ostream& operator<<(ostream& os, const CAccountWatch& item);
 
@@ -154,10 +157,18 @@ inline CAccountWatch& CAccountWatch::operator=(const CAccountWatch& ac) {
 }
 
 //-------------------------------------------------------------------------
+inline bool CAccountWatch::operator==(const CAccountWatch& item) const {
+    // EXISTING1_CODE
+    // EXISTING1_CODE
+    // No default equal operator in class definition, assume none are equal (so find fails)
+    return false;
+}
+
+//-------------------------------------------------------------------------
 inline bool operator<(const CAccountWatch& v1, const CAccountWatch& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
-    // No default sort defined in class definition, assume already sorted
+    // No default sort defined in class definition, assume already sorted, preserve ordering
     return true;
 }
 

@@ -14,6 +14,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <algorithm>
 #include "requirementchangedevent.h"
 #include "etherlib.h"
 
@@ -81,7 +82,7 @@ void QRequirementChangedEvent::finishParse() {
 bool QRequirementChangedEvent::Serialize(SFArchive& archive) {
 
     if (archive.isWriting())
-        return ((const QRequirementChangedEvent*)this)->SerializeC(archive);
+        return SerializeC(archive);
 
     // If we're reading a back level, read the whole thing and we're done.
     if (readBackLevel(archive))
@@ -153,7 +154,7 @@ void QRequirementChangedEvent::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextRequirementchangedeventChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const QRequirementChangedEvent *req = (const QRequirementChangedEvent *)dataPtr;
+    const QRequirementChangedEvent *req = (const QRequirementChangedEvent *)dataPtr;  // NOLINT
     if (req) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -211,7 +212,8 @@ ostream& operator<<(ostream& os, const QRequirementChangedEvent& item) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    os << item.Format() << "\n";
+    item.Format(os, "", nullptr);
+    os << "\n";
     return os;
 }
 
