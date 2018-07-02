@@ -148,6 +148,8 @@ void QRemoveOwner::registerClass(void) {
     HIDE_FIELD(QRemoveOwner, "deleted");
     HIDE_FIELD(QRemoveOwner, "showing");
 
+    builtIns.push_back(_biQRemoveOwner);
+
     // EXISTING_CODE
     // EXISTING_CODE
 }

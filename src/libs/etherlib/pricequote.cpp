@@ -159,6 +159,8 @@ void CPriceQuote::registerClass(void) {
     HIDE_FIELD(CPriceQuote, "deleted");
     HIDE_FIELD(CPriceQuote, "showing");
 
+    builtIns.push_back(_biCPriceQuote);
+
     // EXISTING_CODE
     ADD_FIELD(CPriceQuote, "date", T_DATE, ++fieldNum);
     // EXISTING_CODE

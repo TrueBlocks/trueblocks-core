@@ -148,6 +148,8 @@ void QSetDailyLimit::registerClass(void) {
     HIDE_FIELD(QSetDailyLimit, "deleted");
     HIDE_FIELD(QSetDailyLimit, "showing");
 
+    builtIns.push_back(_biQSetDailyLimit);
+
     // EXISTING_CODE
     // EXISTING_CODE
 }

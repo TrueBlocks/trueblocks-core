@@ -148,6 +148,8 @@ void QAddOwner::registerClass(void) {
     HIDE_FIELD(QAddOwner, "deleted");
     HIDE_FIELD(QAddOwner, "showing");
 
+    builtIns.push_back(_biQAddOwner);
+
     // EXISTING_CODE
     // EXISTING_CODE
 }

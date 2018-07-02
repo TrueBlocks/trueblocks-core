@@ -172,6 +172,8 @@ void QConfirmationNeededEvent::registerClass(void) {
     HIDE_FIELD(QConfirmationNeededEvent, "deleted");
     HIDE_FIELD(QConfirmationNeededEvent, "showing");
 
+    builtIns.push_back(_biQConfirmationNeededEvent);
+
     // EXISTING_CODE
     // EXISTING_CODE
 }

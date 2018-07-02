@@ -148,6 +148,8 @@ void QConfirm::registerClass(void) {
     HIDE_FIELD(QConfirm, "deleted");
     HIDE_FIELD(QConfirm, "showing");
 
+    builtIns.push_back(_biQConfirm);
+
     // EXISTING_CODE
     // EXISTING_CODE
 }

@@ -148,6 +148,8 @@ void QOwnerRemovedEvent::registerClass(void) {
     HIDE_FIELD(QOwnerRemovedEvent, "deleted");
     HIDE_FIELD(QOwnerRemovedEvent, "showing");
 
+    builtIns.push_back(_biQOwnerRemovedEvent);
+
     // EXISTING_CODE
     // EXISTING_CODE
 }

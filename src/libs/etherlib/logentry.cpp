@@ -172,6 +172,8 @@ void CLogEntry::registerClass(void) {
     HIDE_FIELD(CLogEntry, "deleted");
     HIDE_FIELD(CLogEntry, "showing");
 
+    builtIns.push_back(_biCLogEntry);
+
     // EXISTING_CODE
     // EXISTING_CODE
 }

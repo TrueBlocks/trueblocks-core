@@ -212,6 +212,8 @@ void CAccountWatch::registerClass(void) {
     HIDE_FIELD(CAccountWatch, "deleted");
     HIDE_FIELD(CAccountWatch, "showing");
 
+    builtIns.push_back(_biCAccountWatch);
+
     // EXISTING_CODE
     // EXISTING_CODE
 }

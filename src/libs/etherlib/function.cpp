@@ -229,6 +229,8 @@ void CFunction::registerClass(void) {
     HIDE_FIELD(CFunction, "deleted");
     HIDE_FIELD(CFunction, "showing");
 
+    builtIns.push_back(_biCFunction);
+
     // EXISTING_CODE
     HIDE_FIELD(CFunction, "indexed");
     HIDE_FIELD(CFunction, "anonymous");

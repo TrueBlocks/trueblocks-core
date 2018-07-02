@@ -176,6 +176,8 @@ void CNewReceipt::registerClass(void) {
     HIDE_FIELD(CNewReceipt, "deleted");
     HIDE_FIELD(CNewReceipt, "showing");
 
+    builtIns.push_back(_biCNewReceipt);
+
     // EXISTING_CODE
     // EXISTING_CODE
 }

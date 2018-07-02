@@ -197,6 +197,8 @@ void CTraceAction::registerClass(void) {
     HIDE_FIELD(CTraceAction, "deleted");
     HIDE_FIELD(CTraceAction, "showing");
 
+    builtIns.push_back(_biCTraceAction);
+
     // EXISTING_CODE
     // EXISTING_CODE
 }

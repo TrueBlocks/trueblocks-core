@@ -151,6 +151,8 @@ void CTreeNode::registerClass(void) {
     HIDE_FIELD(CTreeNode, "deleted");
     HIDE_FIELD(CTreeNode, "showing");
 
+    builtIns.push_back(_biCTreeNode);
+
     // EXISTING_CODE
     // EXISTING_CODE
 }

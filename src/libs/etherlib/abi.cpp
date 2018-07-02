@@ -169,6 +169,8 @@ void CAbi::registerClass(void) {
     HIDE_FIELD(CAbi, "deleted");
     HIDE_FIELD(CAbi, "showing");
 
+    builtIns.push_back(_biCAbi);
+
     // EXISTING_CODE
     // EXISTING_CODE
 }

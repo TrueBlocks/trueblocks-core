@@ -185,6 +185,8 @@ void CReceipt::registerClass(void) {
     HIDE_FIELD(CReceipt, "deleted");
     HIDE_FIELD(CReceipt, "showing");
 
+    builtIns.push_back(_biCReceipt);
+
     // EXISTING_CODE
     // EXISTING_CODE
 }

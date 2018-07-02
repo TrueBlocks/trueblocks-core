@@ -227,6 +227,8 @@ void CNewBlock::registerClass(void) {
     HIDE_FIELD(CNewBlock, "deleted");
     HIDE_FIELD(CNewBlock, "showing");
 
+    builtIns.push_back(_biCNewBlock);
+
     // EXISTING_CODE
     // EXISTING_CODE
 }

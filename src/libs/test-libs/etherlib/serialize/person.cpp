@@ -106,7 +106,9 @@ bool CPerson::Serialize(SFArchive& archive) {
     bool has_next = false;
     archive >> has_next;
     if (has_next) {
-        next = new CPerson;
+        string_q className;
+        archive >> className;
+        next = (CPerson *)createObjectOfType(className);  // NOLINT
         if (!next)
             return false;
         next->Serialize(archive);
@@ -126,8 +128,10 @@ bool CPerson::SerializeC(SFArchive& archive) const {
     archive << name;
     archive << age;
     archive << (next != NULL);
-    if (next)
+    if (next) {
+        archive << next->getRuntimeClass()->getClassNamePtr();
         next->SerializeC(archive);
+    }
 
     return true;
 }
@@ -171,6 +175,8 @@ void CPerson::registerClass(void) {
     HIDE_FIELD(CPerson, "schema");
     HIDE_FIELD(CPerson, "deleted");
     HIDE_FIELD(CPerson, "showing");
+
+    builtIns.push_back(_biCPerson);
 
     // EXISTING_CODE
     // EXISTING_CODE

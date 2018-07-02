@@ -330,7 +330,9 @@ string_q ptrReadFmt =
 "    bool has_[{NAME}] = false;\n"
 "    archive >> has_[{NAME}];\n"
 "    if (has_[{NAME}]) {\n"
-"        [{NAME}] = new [{TYPE}];\n"
+"        string_q className;\n"
+"        archive >> className;\n"
+"        [{NAME}] = ([{CLASS_NAME}] *)createObjectOfType(className);  // NOLINT\n"
 "        if (![{NAME}])\n"
 "            return false;\n"
 "        [{NAME}]->Serialize(archive);\n"
@@ -338,8 +340,10 @@ string_q ptrReadFmt =
 
 string_q ptrWriteFmt =
 "    archive << ([{NAME}] != NULL);\n"
-"    if ([{NAME}])\n"
-"        [{NAME}]->SerializeC(archive);\n";
+"    if ([{NAME}]) {\n"
+"        archive << [{NAME}]->getRuntimeClass()->getClassNamePtr();\n"
+"        [{NAME}]->SerializeC(archive);\n"
+"    }\n";
 
         fieldArchiveRead  += fld.Format(fld.isPointer ? ptrReadFmt  : "\tarchive >> [{NAME}];\n");
         fieldArchiveWrite += fld.Format(fld.isPointer ? ptrWriteFmt : "\tarchive << [{NAME}];\n");

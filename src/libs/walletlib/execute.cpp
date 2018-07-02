@@ -156,6 +156,8 @@ void QExecute::registerClass(void) {
     HIDE_FIELD(QExecute, "deleted");
     HIDE_FIELD(QExecute, "showing");
 
+    builtIns.push_back(_biQExecute);
+
     // EXISTING_CODE
     // EXISTING_CODE
 }

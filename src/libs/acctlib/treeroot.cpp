@@ -104,7 +104,7 @@ bool CTreeRoot::Serialize(SFArchive& archive) {
     if (has_root) {
         string_q className;
         archive >> className;
-        root = createTreeNode(className);
+        root = (CTreeNode *)createObjectOfType(className);  // NOLINT
         if (!root)
             return false;
         root->Serialize(archive);
@@ -123,8 +123,7 @@ bool CTreeRoot::SerializeC(SFArchive& archive) const {
     // EXISTING_CODE
     archive << (root != NULL);
     if (root) {
-        string_q className = root->getRuntimeClass()->getClassNamePtr();
-        archive << className;
+        archive << root->getRuntimeClass()->getClassNamePtr();
         root->SerializeC(archive);
     }
 
@@ -168,6 +167,8 @@ void CTreeRoot::registerClass(void) {
     HIDE_FIELD(CTreeRoot, "schema");
     HIDE_FIELD(CTreeRoot, "deleted");
     HIDE_FIELD(CTreeRoot, "showing");
+
+    builtIns.push_back(_biCTreeRoot);
 
     // EXISTING_CODE
     // EXISTING_CODE

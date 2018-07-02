@@ -166,6 +166,8 @@ void CAccountName::registerClass(void) {
     HIDE_FIELD(CAccountName, "deleted");
     HIDE_FIELD(CAccountName, "showing");
 
+    builtIns.push_back(_biCAccountName);
+
     // EXISTING_CODE
     // EXISTING_CODE
 }

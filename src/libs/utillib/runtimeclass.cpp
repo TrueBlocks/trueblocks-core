@@ -116,4 +116,17 @@ namespace qblocks {
         pClass->m_BaseClass  = pBase;
         pClass->m_CreateFunc = createFunc;
     }
+
+    bool operator<(const CBuiltIn& v1, const CBuiltIn& v2) {
+        if (!v1.m_pClass || v2.m_pClass)
+            return false;
+        return v1.m_pClass->m_ClassName < v2.m_pClass->m_ClassName;
+    }
+
+    bool CBuiltIn::operator==(const CBuiltIn& item) const {
+        if (!m_pClass || !item.m_pClass)
+            return false;
+        bool ret = string_q(m_pClass->m_ClassName) == string_q(item.m_pClass->m_ClassName);
+        return ret;
+    }
 }  // namespace qblocks

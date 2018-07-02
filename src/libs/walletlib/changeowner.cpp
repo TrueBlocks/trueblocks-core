@@ -152,6 +152,8 @@ void QChangeOwner::registerClass(void) {
     HIDE_FIELD(QChangeOwner, "deleted");
     HIDE_FIELD(QChangeOwner, "showing");
 
+    builtIns.push_back(_biQChangeOwner);
+
     // EXISTING_CODE
     // EXISTING_CODE
 }

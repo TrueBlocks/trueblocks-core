@@ -166,6 +166,8 @@ void QSingleTransactEvent::registerClass(void) {
     HIDE_FIELD(QSingleTransactEvent, "deleted");
     HIDE_FIELD(QSingleTransactEvent, "showing");
 
+    builtIns.push_back(_biQSingleTransactEvent);
+
     // EXISTING_CODE
     // EXISTING_CODE
 }
