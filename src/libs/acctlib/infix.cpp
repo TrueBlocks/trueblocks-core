@@ -107,7 +107,7 @@ bool CInfix::Serialize(SFArchive& archive) {
     if (has_next) {
         string_q className;
         archive >> className;
-        next = createTreeNode(className);
+        next = (CTreeNode *)createObjectOfType(className);  // NOLINT
         if (!next)
             return false;
         next->Serialize(archive);
@@ -126,8 +126,7 @@ bool CInfix::SerializeC(SFArchive& archive) const {
     // EXISTING_CODE
     archive << (next != NULL);
     if (next) {
-        string_q className = next->getRuntimeClass()->getClassNamePtr();
-        archive << className;
+        archive << next->getRuntimeClass()->getClassNamePtr();
         next->SerializeC(archive);
     }
 
@@ -173,6 +172,8 @@ void CInfix::registerClass(void) {
     HIDE_FIELD(CInfix, "schema");
     HIDE_FIELD(CInfix, "deleted");
     HIDE_FIELD(CInfix, "showing");
+
+    builtIns.push_back(_biCInfix);
 
     // EXISTING_CODE
     // EXISTING_CODE

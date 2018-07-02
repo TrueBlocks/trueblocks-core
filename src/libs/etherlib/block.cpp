@@ -241,6 +241,8 @@ void CBlock::registerClass(void) {
     HIDE_FIELD(CBlock, "deleted");
     HIDE_FIELD(CBlock, "showing");
 
+    builtIns.push_back(_biCBlock);
+
     // EXISTING_CODE
     ADD_FIELD(CBlock, "date", T_DATE, ++fieldNum);
     HIDE_FIELD(CBlock, "date");

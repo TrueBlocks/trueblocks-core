@@ -249,6 +249,8 @@ void CTransaction::registerClass(void) {
     HIDE_FIELD(CTransaction, "deleted");
     HIDE_FIELD(CTransaction, "showing");
 
+    builtIns.push_back(_biCTransaction);
+
     // EXISTING_CODE
     // These are 'phony' fields needed because etherscan.io sends them
     // as part of a transaction from its API; however, these fields

@@ -148,6 +148,8 @@ void QRevoke::registerClass(void) {
     HIDE_FIELD(QRevoke, "deleted");
     HIDE_FIELD(QRevoke, "showing");
 
+    builtIns.push_back(_biQRevoke);
+
     // EXISTING_CODE
     // EXISTING_CODE
 }

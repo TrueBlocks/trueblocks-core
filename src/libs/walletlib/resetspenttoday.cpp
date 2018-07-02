@@ -142,6 +142,8 @@ void QResetSpentToday::registerClass(void) {
     HIDE_FIELD(QResetSpentToday, "deleted");
     HIDE_FIELD(QResetSpentToday, "showing");
 
+    builtIns.push_back(_biQResetSpentToday);
+
     // EXISTING_CODE
     // EXISTING_CODE
 }

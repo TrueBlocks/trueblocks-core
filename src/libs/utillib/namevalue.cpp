@@ -150,6 +150,8 @@ void CNameValue::registerClass(void) {
     HIDE_FIELD(CNameValue, "deleted");
     HIDE_FIELD(CNameValue, "showing");
 
+    builtIns.push_back(_biCNameValue);
+
     // EXISTING_CODE
     // EXISTING_CODE
 }

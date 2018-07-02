@@ -152,6 +152,8 @@ void QRevokeEvent::registerClass(void) {
     HIDE_FIELD(QRevokeEvent, "deleted");
     HIDE_FIELD(QRevokeEvent, "showing");
 
+    builtIns.push_back(_biQRevokeEvent);
+
     // EXISTING_CODE
     // EXISTING_CODE
 }

@@ -161,6 +161,8 @@ void CLeaf::registerClass(void) {
     HIDE_FIELD(CLeaf, "deleted");
     HIDE_FIELD(CLeaf, "showing");
 
+    builtIns.push_back(_biCLeaf);
+
     // EXISTING_CODE
     // EXISTING_CODE
 }

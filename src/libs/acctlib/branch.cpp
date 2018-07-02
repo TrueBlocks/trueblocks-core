@@ -174,6 +174,8 @@ void CBranch::registerClass(void) {
     HIDE_FIELD(CBranch, "deleted");
     HIDE_FIELD(CBranch, "showing");
 
+    builtIns.push_back(_biCBranch);
+
     // EXISTING_CODE
     // EXISTING_CODE
 }

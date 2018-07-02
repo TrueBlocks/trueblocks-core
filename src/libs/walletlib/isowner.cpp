@@ -148,6 +148,8 @@ void QIsOwner::registerClass(void) {
     HIDE_FIELD(QIsOwner, "deleted");
     HIDE_FIELD(QIsOwner, "showing");
 
+    builtIns.push_back(_biQIsOwner);
+
     // EXISTING_CODE
     // EXISTING_CODE
 }

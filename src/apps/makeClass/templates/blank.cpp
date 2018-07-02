@@ -136,6 +136,8 @@ void [{CLASS_NAME}]::registerClass(void) {
     HIDE_FIELD([{CLASS_NAME}], "deleted");
     HIDE_FIELD([{CLASS_NAME}], "showing");
 
+    builtIns.push_back(_bi[{CLASS_NAME}]);
+
     // EXISTING_CODE
     // EXISTING_CODE
 }

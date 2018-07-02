@@ -152,6 +152,8 @@ void QConfirmationEvent::registerClass(void) {
     HIDE_FIELD(QConfirmationEvent, "deleted");
     HIDE_FIELD(QConfirmationEvent, "showing");
 
+    builtIns.push_back(_biQConfirmationEvent);
+
     // EXISTING_CODE
     // EXISTING_CODE
 }

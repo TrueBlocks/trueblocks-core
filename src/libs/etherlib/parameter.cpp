@@ -174,6 +174,8 @@ void CParameter::registerClass(void) {
     HIDE_FIELD(CParameter, "deleted");
     HIDE_FIELD(CParameter, "showing");
 
+    builtIns.push_back(_biCParameter);
+
     // EXISTING_CODE
     // EXISTING_CODE
 }

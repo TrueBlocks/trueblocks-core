@@ -163,6 +163,8 @@ void CTraceResult::registerClass(void) {
     HIDE_FIELD(CTraceResult, "deleted");
     HIDE_FIELD(CTraceResult, "showing");
 
+    builtIns.push_back(_biCTraceResult);
+
     // EXISTING_CODE
     // EXISTING_CODE
 }

@@ -24,6 +24,7 @@ namespace qblocks {
     //--------------------------------------------------------------------------------
     CRuntimeClass CBaseNode::classCBaseNode;
     static CBuiltIn _biBaseNode(&CBaseNode::classCBaseNode, "CBaseNode", sizeof(CBaseNode), NULL, NULL);
+    vector<CBuiltIn> builtIns;  // Keeps track of all the classes that have beebn registered
 
     //--------------------------------------------------------------------------------
     CBaseNode::CBaseNode(void) {
@@ -722,6 +723,22 @@ extern string_q reformat1(const string_q& in, size_t len);
         return pre + prompt + post;
     }
 
+    //---------------------------------------------------------------------------------------------------
+    CBaseNode *createObjectOfType(const string_q& className) {
+        static bool isSorted = false;
+        if (!isSorted) {
+            sort(builtIns.begin(), builtIns.end());
+            isSorted = true;
+        }
+
+        CRuntimeClass *pClass = &CBaseNode::classCBaseNode;
+        CBuiltIn search(pClass, className, sizeof(CBaseNode), NULL, NULL);
+        const vector<CBuiltIn>::iterator it = find(builtIns.begin(), builtIns.end(), search);
+        if (it != builtIns.end() && it->m_pClass && it->m_pClass->m_CreateFunc)
+            return (*it->m_pClass->m_CreateFunc)();
+        return NULL;
+    }
+
     //--------------------------------------------------------------------------------
     string_q fldNotFound(const string_q& str) {
         return "Field not found: " + str + "\n";
@@ -751,4 +768,3 @@ extern string_q reformat1(const string_q& in, size_t len);
 
 uint64_t testing::Test::nFuncs;
 testing::PF testing::Test::funcs[];
-

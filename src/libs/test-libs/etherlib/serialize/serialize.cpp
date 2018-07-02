@@ -23,6 +23,8 @@ CPerson *lastAdded = &leader;
 
 int main(int argc, const char *argv[]) {
 
+    CPerson::registerClass();
+
     etherlib_init();
 
     // Parse command line, allowing for command files

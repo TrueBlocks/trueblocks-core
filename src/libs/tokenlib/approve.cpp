@@ -152,6 +152,8 @@ void QApprove::registerClass(void) {
     HIDE_FIELD(QApprove, "deleted");
     HIDE_FIELD(QApprove, "showing");
 
+    builtIns.push_back(_biQApprove);
+
     // EXISTING_CODE
     // EXISTING_CODE
 }

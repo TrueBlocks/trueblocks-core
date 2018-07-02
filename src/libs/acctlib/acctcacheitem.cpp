@@ -150,6 +150,8 @@ void CAcctCacheItem::registerClass(void) {
     HIDE_FIELD(CAcctCacheItem, "deleted");
     HIDE_FIELD(CAcctCacheItem, "showing");
 
+    builtIns.push_back(_biCAcctCacheItem);
+
     // EXISTING_CODE
     // EXISTING_CODE
 }

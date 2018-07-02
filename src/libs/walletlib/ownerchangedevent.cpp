@@ -154,6 +154,8 @@ void QOwnerChangedEvent::registerClass(void) {
     HIDE_FIELD(QOwnerChangedEvent, "deleted");
     HIDE_FIELD(QOwnerChangedEvent, "showing");
 
+    builtIns.push_back(_biQOwnerChangedEvent);
+
     // EXISTING_CODE
     // EXISTING_CODE
 }
