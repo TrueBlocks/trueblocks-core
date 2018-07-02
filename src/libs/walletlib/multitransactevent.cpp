@@ -170,6 +170,8 @@ void QMultiTransactEvent::registerClass(void) {
     HIDE_FIELD(QMultiTransactEvent, "deleted");
     HIDE_FIELD(QMultiTransactEvent, "showing");
 
+    builtIns.push_back(_biQMultiTransactEvent);
+
     // EXISTING_CODE
     // EXISTING_CODE
 }

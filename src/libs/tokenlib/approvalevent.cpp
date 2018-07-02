@@ -156,6 +156,8 @@ void QApprovalEvent::registerClass(void) {
     HIDE_FIELD(QApprovalEvent, "deleted");
     HIDE_FIELD(QApprovalEvent, "showing");
 
+    builtIns.push_back(_biQApprovalEvent);
+
     // EXISTING_CODE
     // EXISTING_CODE
 }

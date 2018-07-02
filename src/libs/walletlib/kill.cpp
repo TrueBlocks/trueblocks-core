@@ -148,6 +148,8 @@ void QKill::registerClass(void) {
     HIDE_FIELD(QKill, "deleted");
     HIDE_FIELD(QKill, "showing");
 
+    builtIns.push_back(_biQKill);
+
     // EXISTING_CODE
     // EXISTING_CODE
 }

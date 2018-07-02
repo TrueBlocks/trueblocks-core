@@ -157,6 +157,8 @@ void CBalHistory::registerClass(void) {
     HIDE_FIELD(CBalHistory, "deleted");
     HIDE_FIELD(CBalHistory, "showing");
 
+    builtIns.push_back(_biCBalHistory);
+
     // EXISTING_CODE
     // EXISTING_CODE
 }

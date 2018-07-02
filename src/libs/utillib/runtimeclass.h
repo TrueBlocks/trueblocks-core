@@ -24,7 +24,12 @@ namespace qblocks {
     public:
         const CRuntimeClass *m_pClass;
         CBuiltIn(CRuntimeClass *pClass, const string_q& className, size_t size, PFNV createFunc, CRuntimeClass *pBase);
+        friend bool operator<(const CBuiltIn& v1, const CBuiltIn& v2);
+        bool operator==(const CBuiltIn& item) const;
+        bool operator!=(const CBuiltIn& item) const { return !operator==(item); }
     };
+	CBaseNode *createObjectOfType(const string_q& className);
+    extern vector<CBuiltIn> builtIns;
 
     //----------------------------------------------------------------------------
     typedef bool (*FIELDVISITFUNC) (const CFieldData& fld, void *data);

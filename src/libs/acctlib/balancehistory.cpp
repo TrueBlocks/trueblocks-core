@@ -149,6 +149,8 @@ void CBalanceHistory::registerClass(void) {
     HIDE_FIELD(CBalanceHistory, "deleted");
     HIDE_FIELD(CBalanceHistory, "showing");
 
+    builtIns.push_back(_biCBalanceHistory);
+
     // EXISTING_CODE
     // EXISTING_CODE
 }

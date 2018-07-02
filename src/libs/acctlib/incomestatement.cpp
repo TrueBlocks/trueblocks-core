@@ -173,6 +173,8 @@ void CIncomeStatement::registerClass(void) {
     HIDE_FIELD(CIncomeStatement, "deleted");
     HIDE_FIELD(CIncomeStatement, "showing");
 
+    builtIns.push_back(_biCIncomeStatement);
+
     // EXISTING_CODE
     // EXISTING_CODE
 }

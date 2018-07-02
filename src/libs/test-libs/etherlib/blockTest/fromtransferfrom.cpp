@@ -152,6 +152,8 @@ void QFromTransferFrom::registerClass(void) {
     HIDE_FIELD(QFromTransferFrom, "deleted");
     HIDE_FIELD(QFromTransferFrom, "showing");
 
+    builtIns.push_back(_biQFromTransferFrom);
+
     // EXISTING_CODE
     // EXISTING_CODE
 }

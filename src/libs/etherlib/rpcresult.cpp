@@ -157,6 +157,8 @@ void CRPCResult::registerClass(void) {
     HIDE_FIELD(CRPCResult, "deleted");
     HIDE_FIELD(CRPCResult, "showing");
 
+    builtIns.push_back(_biCRPCResult);
+
     // EXISTING_CODE
     // EXISTING_CODE
 }

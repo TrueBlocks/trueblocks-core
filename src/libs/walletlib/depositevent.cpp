@@ -154,6 +154,8 @@ void QDepositEvent::registerClass(void) {
     HIDE_FIELD(QDepositEvent, "deleted");
     HIDE_FIELD(QDepositEvent, "showing");
 
+    builtIns.push_back(_biQDepositEvent);
+
     // EXISTING_CODE
     // EXISTING_CODE
 }

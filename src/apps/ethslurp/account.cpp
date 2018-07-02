@@ -203,6 +203,8 @@ void CAccount::registerClass(void) {
     HIDE_FIELD(CAccount, "deleted");
     HIDE_FIELD(CAccount, "showing");
 
+    builtIns.push_back(_biCAccount);
+
     // EXISTING_CODE
     // EXISTING_CODE
 }

@@ -148,6 +148,8 @@ void QChangeRequirement::registerClass(void) {
     HIDE_FIELD(QChangeRequirement, "deleted");
     HIDE_FIELD(QChangeRequirement, "showing");
 
+    builtIns.push_back(_biQChangeRequirement);
+
     // EXISTING_CODE
     // EXISTING_CODE
 }
