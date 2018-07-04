@@ -4,4 +4,4 @@ fields    = blknum bn|uint256 balance
 includes  = etherlib.h
 cIncs     = #include "etherlib.h"
 sort      = v1.bn < v2.bn
-equals    = item.bn == item.bn
+equals    = bn == item.bn
