@@ -19,7 +19,7 @@ namespace testing {  // NOLINT
     public:
         static PF funcs[100];
         static uint64_t nFuncs;
-        Test(void)  { memset(funcs, '\0', 100); }
+        Test(void)  { memset(funcs, '\0', sizeof(funcs)); }
         virtual ~Test(void) { }
         virtual void SetUp(void) = 0;
         virtual void TearDown(void) = 0;
