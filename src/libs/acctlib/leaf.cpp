@@ -69,7 +69,7 @@ bool CLeaf::setValueByName(const string_q& fieldName, const string_q& fieldValue
             if ( fieldName % "blocks" ) {
                 string_q str = fieldValue;
                 while (!str.empty()) {
-                    blocks.push_back(toUnsigned(nextTokenClear(str,',')));
+                    blocks.push_back(toUnsigned(nextTokenClear(str, ',')));
                 }
                 return true;
             }

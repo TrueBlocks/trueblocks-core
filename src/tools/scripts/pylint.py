@@ -203,7 +203,7 @@ _ERROR_CATEGORIES = [
     'build/include',
     'build/include_alpha',
     'build/include_order',
-    'build/include_what_you_use',
+#    'build/include_what_you_use',
     'build/namespaces',
     'build/printf_format',
     'build/storage_class',
@@ -5866,7 +5866,7 @@ def ProcessFileData(filename, file_extension, lines, error,
     FlagCxx11Features(filename, clean_lines, line, error)
   nesting_state.CheckCompletedBlocks(filename, error)
 
-  CheckForIncludeWhatYouUse(filename, clean_lines, include_state, error)
+#  CheckForIncludeWhatYouUse(filename, clean_lines, include_state, error)
 
   # Check that the .cc file has included its header if it exists.
   if _IsSourceExtension(file_extension):
