@@ -93,7 +93,7 @@ bool CTrace::setValueByName(const string_q& fieldName, const string_q& fieldValu
             if ( fieldName % "traceAddress" ) {
                 string_q str = fieldValue;
                 while (!str.empty()) {
-                    traceAddress.push_back(nextTokenClear(str,','));
+                    traceAddress.push_back(nextTokenClear(str, ','));
                 }
                 return true;
             }

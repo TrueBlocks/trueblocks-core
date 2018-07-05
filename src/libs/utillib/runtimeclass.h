@@ -28,7 +28,7 @@ namespace qblocks {
         bool operator==(const CBuiltIn& item) const;
         bool operator!=(const CBuiltIn& item) const { return !operator==(item); }
     };
-	CBaseNode *createObjectOfType(const string_q& className);
+    CBaseNode *createObjectOfType(const string_q& className);
     extern vector<CBuiltIn> builtIns;
 
     //----------------------------------------------------------------------------

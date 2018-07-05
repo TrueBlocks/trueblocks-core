@@ -472,7 +472,7 @@ void CSlurperApp::buildDisplayStrings(COptions& options) {
 
     string_q defList = getGlobalConfig("ethslurp")->getConfigStr("display", "fmt_fieldList", "");
     string_q fieldList = getGlobalConfig("ethslurp")->getConfigStr("display",
-                                                                   "fmt_" + options.exportFormat + "_fieldList", defList);
+                                                   "fmt_" + options.exportFormat + "_fieldList", defList);
     if (fieldList.empty())
         GETRUNTIME_CLASS(CTransaction)->forEveryField(buildFieldList, &fieldList);
 
@@ -625,7 +625,7 @@ bool loadABI(CAbi& abi, const string_q& addr) {
 
 //---------------------------------------------------------------------------
 bool isFunction(const CTransaction *trans, const string_q& func) {
-    if (func=="none")
+    if (func == "none")
         return (trans->inputToFunction() == " ");
     return (trans->funcPtr ? trans->funcPtr->name == func : false);
 }

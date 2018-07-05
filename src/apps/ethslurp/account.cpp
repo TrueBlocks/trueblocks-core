@@ -387,7 +387,7 @@ const CFunction *findFunctionByEncoding(const CFunctionArray& array, const strin
     auto i1 = array.cbegin();
     auto i2 = array.cend();
     for ( ; i1 != i2 ; ++i1) {
-        if (search == *i1){
+        if (search == *i1) {
             return &*i1;
         }
     }

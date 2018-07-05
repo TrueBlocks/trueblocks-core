@@ -513,13 +513,13 @@ void potentialAddr(ADDRESSFUNC func, void *data, const CAddressItem& item, const
 }
 
 //---------------------------------------------------------------------------
-void foundOne(ADDRESSFUNC func, void *data, blknum_t bn, blknum_t tx, blknum_t tc, const SFAddress& addr, const string_q& reason) {
+void foundOne(ADDRESSFUNC func, void *data, blknum_t bn, blknum_t tx, blknum_t tc, const SFAddress& addr, const string_q& reason) {  // NOLINT
     CAddressItem item(bn, tx, tc, addr, reason);
     (*func)(item, data);
 }
 
 //---------------------------------------------------------------------------
-void foundPot(ADDRESSFUNC func, void *data, blknum_t bn, blknum_t tx, blknum_t tc, const string_q& potList, const string_q& reason) {
+void foundPot(ADDRESSFUNC func, void *data, blknum_t bn, blknum_t tx, blknum_t tc, const string_q& potList, const string_q& reason) {  // NOLINT
     CAddressItem item(bn, tx, tc, "", reason);
     potentialAddr(func, data, item, potList);
 }
