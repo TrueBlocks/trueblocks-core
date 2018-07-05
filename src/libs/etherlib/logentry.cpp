@@ -78,7 +78,7 @@ bool CLogEntry::setValueByName(const string_q& fieldName, const string_q& fieldV
             if ( fieldName % "topics" ) {
                 string_q str = fieldValue;
                 while (!str.empty()) {
-                    topics.push_back(toTopic(nextTokenClear(str,',')));
+                    topics.push_back(toTopic(nextTokenClear(str, ',')));
                 }
                 return true;
             }

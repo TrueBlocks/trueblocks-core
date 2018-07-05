@@ -400,7 +400,7 @@ string_q ptrWriteFmt =
     replaceAll(headSource, "[{SCOPE}]",        scope);
     replaceAll(headSource, "[{SORT_COMMENT}]", (sortStr.length() ? STR_SORT_COMMENT_1 : STR_SORT_COMMENT_2));
     replaceAll(headSource, "[{SORT_CODE}]",    (sortStr.length() ? sortStr : "true"));
-    replaceAll(headSource, "[{EQUAL_COMMENT}]",(eqStr.length() ? STR_EQUAL_COMMENT_1 : STR_EQUAL_COMMENT_2));
+    replaceAll(headSource, "[{EQUAL_COMMENT}]",(eqStr.length() ? STR_EQUAL_COMMENT_1 : STR_EQUAL_COMMENT_2));  // NOLINT
     replaceAll(headSource, "[{EQUAL_CODE}]",   (eqStr.length() ? eqStr : "false"));
     replaceAll(headSource, "[{NAMESPACE1}]",   (ns.empty() ? "" : "\nnamespace qblocks {\n\n"));
     replaceAll(headSource, "[{NAMESPACE2}]",   (ns.empty() ? "" : "}  // namespace qblocks\n"));
@@ -570,7 +570,7 @@ string_q strArraySet =
 " {\n"
 "\t\t\t\tstring_q str = fieldValue;\n"
 "\t\t\t\twhile (!str.empty()) {\n"
-"\t\t\t\t\t[{NAME}].push_back(nextTokenClear(str,','));\n"
+"\t\t\t\t\t[{NAME}].push_back(nextTokenClear(str, ','));\n"
 "\t\t\t\t}\n"
 "\t\t\t\treturn true;\n"
 "\t\t\t}";
@@ -656,7 +656,7 @@ string_q getCaseSetCode(const string_q& fieldCase) {
                         string_q str = strArraySet;
                         replaceAll(str, "[{NAME}]", field);
                         if (contains(type, "CBlockNumArray"))
-                            replaceAll(str, "nextTokenClear(str,',')", "toUnsigned(nextTokenClear(str,','))");
+                            replaceAll(str, "nextTokenClear(str, ',')", "toUnsigned(nextTokenClear(str, ','))");
                         caseCode += str;
 
                     } else if (contains(type, "SFAddressArray") ||
@@ -664,7 +664,7 @@ string_q getCaseSetCode(const string_q& fieldCase) {
                                contains(type, "SFTopicArray")) {
                         string_q str = strArraySet;
                         replaceAll(str, "[{NAME}]", field);
-                        replaceAll(str, "nextTokenClear(str,',')", "to[{TYPE}](nextTokenClear(str,','))");
+                        replaceAll(str, "nextTokenClear(str, ',')", "to[{TYPE}](nextTokenClear(str, ','))");
                         replaceAll(str, "[{TYPE}]", substitute(extract(type, 2), "Array", ""));
                         caseCode += str;
 

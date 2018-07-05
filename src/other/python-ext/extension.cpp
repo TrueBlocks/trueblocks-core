@@ -40,7 +40,7 @@ static PyObject* get_block(PyObject* self, PyObject *args) {
     getBlock(block, i);
     block.finalized = true;
     if (cache) {
-	writeBlockToBinary(block, getBinaryFilename(i));
+        writeBlockToBinary(block, getBinaryFilename(i));
     }
     return Py_BuildValue("s", block.Format().c_str());
 }
@@ -52,8 +52,7 @@ static PyMethodDef _quickblocks_methods[] = {
     {NULL, NULL, 0, NULL}
 };
 
-static struct PyModuleDef cModPyDem =
-{
+static struct PyModuleDef cModPyDem = {
     PyModuleDef_HEAD_INIT,
     "_quickblocks",
     "",
