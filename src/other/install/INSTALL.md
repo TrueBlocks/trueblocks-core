@@ -59,7 +59,7 @@ sudo apt install build-essential git cmake python python-dev libcurl3-dev
 ### for MAC OSX
 
    > `curl/libcurl` and `python` are already installed  
-   > Install `cmake` [using these instructions](https://cmake.org/download/).  
+   > Install `cmake` [using these instructions](https://cmake.org/download/) or `brew install cmake`  
    > Install `git` [using these instructions](https://git-scm.com/download/mac).
 
 [Continue below](#finish) to build and install QuickBlocks
@@ -71,7 +71,7 @@ sudo apt install build-essential git cmake python python-dev libcurl3-dev
 Open a terminal and change to whatever folder you normally store GitHub repos. Then:
 
 ```bash
-git clone https://github.com/Great-Hill-Corporation/quickBlocks.git .
+git clone https://github.com/Great-Hill-Corporation/quickBlocks.git
 cd quickBlocks
 mkdir build
 cd build
