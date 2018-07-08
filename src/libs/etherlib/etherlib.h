@@ -22,7 +22,6 @@
 #include "trace.h"
 #include "traceaction.h"
 #include "traceresult.h"
-#include "rpcresult.h"
 #include "miniblock.h"
 #include "node.h"
 #include "blooms.h"

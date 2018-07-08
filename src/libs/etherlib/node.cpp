@@ -53,7 +53,6 @@ extern void registerQuitHandler(QUITHANDLER qh);
         CFunction::registerClass();
         CParameter::registerClass();
         CRPCResult::registerClass();
-        CNameValue::registerClass();
         CAccountName::registerClass();
 
         if (sourceIn != "remote" && sourceIn != "local" && sourceIn != "ropsten")

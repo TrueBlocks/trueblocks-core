@@ -16,19 +16,19 @@
 #include "options_base.h"
 #include "colors.h"
 #include "filenames.h"
-#include "namevalue.h"
 #include "accountname.h"
+#include "rpcresult.h"
 
 namespace qblocks {
 
     //--------------------------------------------------------------------------------
     static size_t nP = 0;
-    static CParams ps[] = { };
+    static COption ps[] = { };
     static CDefaultOptions defOpts;
 
     //--------------------------------------------------------------------------------
     size_t& nParamsRef = nP;
-    CParams *paramsPtr  = &ps[0];
+    COption *paramsPtr  = &ps[0];
     COptionsBase *pOptions = &defOpts;
 
     //--------------------------------------------------------------------------------
@@ -260,7 +260,7 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    CParams::CParams(const string_q& nameIn, const string_q& descr) {
+    COption::COption(const string_q& nameIn, const string_q& descr) {
         string_q name = nameIn;
 
         description = descr;
@@ -280,6 +280,7 @@ namespace qblocks {
             else if (!permitted.empty())
                 dummy = " val";
         }
+
         if (!name.empty()) {
             shortName = extract(name, 0, 2);
             if (name.length() > 2)
@@ -567,8 +568,8 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
 
     //--------------------------------------------------------------------------------
     int sortParams(const void *c1, const void *c2) {
-        const CParams *p1 = reinterpret_cast<const CParams*>(c1);
-        const CParams *p2 = reinterpret_cast<const CParams*>(c2);
+        const COption *p1 = reinterpret_cast<const COption*>(c1);
+        const COption *p2 = reinterpret_cast<const COption*>(c2);
         if (p1->shortName == "-h")
             return 1;
         else if (p2->shortName == "-h")
@@ -619,17 +620,17 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
     int sortByBlockNum(const void *v1, const void *v2) {
         CNameValue *b1 = (CNameValue *)v1;  // NOLINT
         CNameValue *b2 = (CNameValue *)v2;  // NOLINT
-        if (b1->getName() == "latest")
+        if (b1->first == "latest")
             return 1;
-        if (b2->getName() == "latest")
+        if (b2->first == "latest")
             return -1;
-        if (contains(b1->getValue(), "tbd") && contains(b1->getValue(), "tbd"))
-            return b1->getValue().compare(b2->getValue());
-        if (contains(b1->getValue(), "tbd"))
+        if (contains(b1->second, "tbd") && contains(b1->second, "tbd"))
+            return b1->second.compare(b2->second);
+        if (contains(b1->second, "tbd"))
             return 1;
-        if (contains(b2->getValue(), "tbd"))
+        if (contains(b2->second, "tbd"))
             return -1;
-        return (int)(b1->getValueU() - b2->getValueU());  // NOLINT
+        return (int)(toUnsigned(b1->second) - toUnsigned(b2->second));  // NOLINT
     }
 
     //-----------------------------------------------------------------------
@@ -670,10 +671,11 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
         string_q specialsStr = toml->getConfigStr("specials", "list", "");
         char *p = cleanUpJson((char *)specialsStr.c_str());  // NOLINT
         while (p && *p) {
-            CNameValue pair;
+            CKeyValuePair keyVal;
             size_t nFields = 0;
-            p = pair.parseJson(p, nFields);
+            p = keyVal.parseJson(p, nFields);
             if (nFields) {
+                CNameValue pair = make_pair(keyVal.jsonrpc, keyVal.result);
                 specials.push_back(pair);
             }
         }
@@ -685,7 +687,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
         if (specials.size() == 0)
             ((COptionsBase*)this)->loadSpecials();  // NOLINT
         for (size_t i = 0 ; i < specials.size() ; i++) {
-            if (arg == specials[i].getName()) {
+            if (arg == specials[i].first) {
                 pair = specials[i];
                 return true;
             }

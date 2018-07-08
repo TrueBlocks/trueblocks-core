@@ -12,7 +12,6 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 #include "version.h"
-#include "namevalue.h"
 #include "accountname.h"
 #include "filenames.h"
 #include "toml.h"
@@ -75,14 +74,14 @@ namespace qblocks {
     };
 
     //--------------------------------------------------------------------------------
-    class CParams {
+    class COption {
     public:
         string_q  shortName;
         string_q  longName;
         string_q  hotKey;
         string_q  description;
         string_q  permitted;
-        CParams(const string_q& name, const string_q& descr);
+        COption(const string_q& name, const string_q& descr);
     };
 
     //--------------------------------------------------------------------------------
@@ -105,7 +104,7 @@ namespace qblocks {
     extern string_q configPath(const string_q& part);
 
     //--------------------------------------------------------------------------------
-    extern CParams *paramsPtr;
+    extern COption *paramsPtr;
     extern size_t& nParamsRef;
     extern COptionsBase *pOptions;
 
