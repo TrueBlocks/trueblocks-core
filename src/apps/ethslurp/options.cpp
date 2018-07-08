@@ -13,28 +13,28 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-CParams params[] = {
-    CParams("~addr",            "the address of the account or contract to slurp"),
-    CParams("-blocks:<range>",  "export records in block range (:0[:max])"),
-    CParams("-dates:<date>",    "export records in date range (:yyyymmdd[hhmmss][:yyyymmdd[hhmmss]])"),
-    CParams("-fmt:<str>",       "pretty print, optionally add ':txt,' ':csv,' or ':html'"),
-    CParams("-income",          "include income transactions only"),
-    CParams("-expense",         "include expenditures only"),
-    CParams("@--rerun",         "re-run the most recent slurp"),
-    CParams("@--open",          "open the configuration file for editing"),
-    CParams("@--max:<val>",     "maximum transactions to slurp (:250000)"),
-    CParams("@--sleep:<val>",   "sleep for :x seconds"),
-    CParams("@--func:<str>",    "display only --func:functionName records"),
-    CParams("@--errFilt:<val>", "display only non-error transactions or only errors with :errsOnly"),
-    CParams("@--reverse",       "display results sorted in reverse chronological order (chronological by default)"),
-    CParams("@--acct_id:<val>", "for 'cache' mode, use this as the :acct_id for the cache (0 otherwise)"),
-    CParams("@--cache",         "write the data to a local QuickBlocks cache"),
-    CParams("@--name:<str>",    "name this address"),
-    CParams("",                 "Fetches data off the Ethereum blockchain for an arbitrary account or smart "
+static COption params[] = {
+    COption("~addr",            "the address of the account or contract to slurp"),
+    COption("-blocks:<range>",  "export records in block range (:0[:max])"),
+    COption("-dates:<date>",    "export records in date range (:yyyymmdd[hhmmss][:yyyymmdd[hhmmss]])"),
+    COption("-fmt:<str>",       "pretty print, optionally add ':txt,' ':csv,' or ':html'"),
+    COption("-income",          "include income transactions only"),
+    COption("-expense",         "include expenditures only"),
+    COption("@--rerun",         "re-run the most recent slurp"),
+    COption("@--open",          "open the configuration file for editing"),
+    COption("@--max:<val>",     "maximum transactions to slurp (:250000)"),
+    COption("@--sleep:<val>",   "sleep for :x seconds"),
+    COption("@--func:<str>",    "display only --func:functionName records"),
+    COption("@--errFilt:<val>", "display only non-error transactions or only errors with :errsOnly"),
+    COption("@--reverse",       "display results sorted in reverse chronological order (chronological by default)"),
+    COption("@--acct_id:<val>", "for 'cache' mode, use this as the :acct_id for the cache (0 otherwise)"),
+    COption("@--cache",         "write the data to a local QuickBlocks cache"),
+    COption("@--name:<str>",    "name this address"),
+    COption("",                 "Fetches data off the Ethereum blockchain for an arbitrary account or smart "
                                 "contract. Optionally formats the output to your specification. Note: --income "
                                 "and --expense are mutually exclusive as are --blocks and --dates.\n"),
 };
-size_t nParams = sizeof(params) / sizeof(CParams);
+static size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {

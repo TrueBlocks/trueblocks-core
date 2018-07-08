@@ -13,20 +13,20 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-CParams params[] = {
-    CParams("~address_list", "one or more addresses (0x...) from which to retrieve balances"),
-    CParams("~!block_list",  "an optional list of one or more blocks at which to report balances, "
+static COption params[] = {
+    COption("~address_list", "one or more addresses (0x...) from which to retrieve balances"),
+    COption("~!block_list",  "an optional list of one or more blocks at which to report balances, "
                                     "defaults to 'latest'"),
-    CParams("-data",         "render results as tab delimited data"),
-    CParams("-list:<fn>",    "an alternative way to specify an address_list; place one address per "
+    COption("-data",         "render results as tab delimited data"),
+    COption("-list:<fn>",    "an alternative way to specify an address_list; place one address per "
                                     "line in the file 'fn'"),
-    CParams("-noZero",       "suppress the display of zero balance accounts"),
-    CParams("-total",        "if more than one balance is requested, display a total as well."),
-    CParams("-changes",      "only report a balance when it changes from one block to the next"),
-    CParams("",              "Retrieve the balance (in wei) for one or more addresses at the given "
+    COption("-noZero",       "suppress the display of zero balance accounts"),
+    COption("-total",        "if more than one balance is requested, display a total as well."),
+    COption("-changes",      "only report a balance when it changes from one block to the next"),
+    COption("",              "Retrieve the balance (in wei) for one or more addresses at the given "
                                     "block(s).\n"),
 };
-size_t nParams = sizeof(params) / sizeof(CParams);
+static size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {

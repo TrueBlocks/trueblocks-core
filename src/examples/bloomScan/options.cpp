@@ -14,16 +14,16 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-CParams params[] = {
-    CParams( "~source",      "source for the data (either 'remote', 'pairty', 'binary')"),
-    CParams( "~begin",       "block to start with"),
-    CParams( "~end",         "block to end on"),
-    CParams( "-mode:<mode>", "if not present, display in 'short' mode, otherwise 'full' mode"),
-    CParams( "-data",        "show results as data instead of displaying bloom filters"),
-    CParams( "~@skip",       "optional skip step (default 100)"),
-    CParams( "",             "Scans blocks looking for saturated bloomFilters.\n"),
+static COption params[] = {
+    COption( "~source",      "source for the data (either 'remote', 'pairty', 'binary')"),
+    COption( "~begin",       "block to start with"),
+    COption( "~end",         "block to end on"),
+    COption( "-mode:<mode>", "if not present, display in 'short' mode, otherwise 'full' mode"),
+    COption( "-data",        "show results as data instead of displaying bloom filters"),
+    COption( "~@skip",       "optional skip step (default 100)"),
+    COption( "",             "Scans blocks looking for saturated bloomFilters.\n"),
 };
-size_t nParams = sizeof(params) / sizeof(CParams);
+static size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {

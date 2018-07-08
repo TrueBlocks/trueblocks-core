@@ -13,12 +13,12 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-CParams params[] = {
-    CParams("~block_list", "a space-separated list of one or more blocks to retrieve"),
-    CParams("",            "Visit all traces in the given blocks and do stuff (change the code to "
+static COption params[] = {
+    COption("~block_list", "a space-separated list of one or more blocks to retrieve"),
+    COption("",            "Visit all traces in the given blocks and do stuff (change the code to "
                                 "change the stuff).\n"),
 };
-uint32_t nParams = sizeof(params) / sizeof(CParams);
+static size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {

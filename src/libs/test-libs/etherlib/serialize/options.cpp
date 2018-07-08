@@ -13,11 +13,11 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-CParams params[] = {
-    CParams("-testNum:[1|2]", "which test to run (either 1 and 2)"),
-    CParams("",               "This program tests floating point printing and conversions.\n"),
+static COption params[] = {
+    COption("-testNum:[1|2]", "which test to run (either 1 and 2)"),
+    COption("",               "This program tests floating point printing and conversions.\n"),
 };
-size_t nParams = sizeof(params) / sizeof(CParams);
+static size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {

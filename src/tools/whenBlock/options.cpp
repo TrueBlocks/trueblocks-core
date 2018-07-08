@@ -14,15 +14,15 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-CParams params[] = {
-    CParams("~!block", "one or more block numbers (or a 'special' block), or..."),
-    CParams("~!date",  "one or more dates formatted as YYYY-MM-DD[THH[:MM[:SS]]]"),
-    CParams("-data",   "display the result as data (tab delimited; useful for scripting)"),
-    CParams("-list",   "list names and block numbers for special blocks"),
-    CParams("",        "Finds the nearest block prior to a date, or the nearest date prior to a block.\n"
+static COption params[] = {
+    COption("~!block", "one or more block numbers (or a 'special' block), or..."),
+    COption("~!date",  "one or more dates formatted as YYYY-MM-DD[THH[:MM[:SS]]]"),
+    COption("-data",   "display the result as data (tab delimited; useful for scripting)"),
+    COption("-list",   "list names and block numbers for special blocks"),
+    COption("",        "Finds the nearest block prior to a date, or the nearest date prior to a block.\n"
                        " Alternatively, search for one of special 'named' blocks.\n"),
 };
-size_t nParams = sizeof(params) / sizeof(CParams);
+static size_t nParams = sizeof(params) / sizeof(COption);
 
 extern SFTime grabDate(const string_q& strIn);
 extern bool containsAny(const string_q& haystack, const string_q& needle);
@@ -91,10 +91,10 @@ bool COptions::parseArguments(string_q& command) {
             // if we're here, we better have a good block, assume we don't
             CNameValue spec;
             if (findSpecial(spec, arg)) {
-                string_q val = spec.getValue();
-                if (spec.getName() == "latest")
+                string_q val = spec.second;
+                if (spec.first == "latest")
                     val = asStringU(getLatestBlockFromClient());
-                requests.push_back("special:" + spec.getName() + "|" + val);
+                requests.push_back("special:" + spec.first + "|" + val);
                 foundOne = true;
 
             } else  {
@@ -106,12 +106,14 @@ bool COptions::parseArguments(string_q& command) {
                 } else if (!ret.empty()) {
                     return usage(ret);
                 }
+
+                // Now we transfer the list of blocks to the requests array
                 string_q blockList = getBlockNumList();
                 blocks.Init();
                 while (!blockList.empty()) {
                     requests.push_back("block:" + nextTokenClear(blockList, '|'));
+                    foundOne = true;
                 }
-                foundOne = true;
             }
         }
     }
@@ -238,15 +240,15 @@ string_q COptions::listSpecials(bool terse) const {
     string_q extra;
     for (size_t i = 0 ; i < specials.size(); i++) {
 
-        string_q name = specials[i].getName();
-        string_q bn = specials[i].getValue();
+        string_q name = specials[i].first;
+        string_q bn = specials[i].second;
         if (name == "latest") {
             bn = asStringU(getLatestBlockFromClient());
             if (isTestMode()) {
                 bn = "";
             } else if (COptionsBase::isReadme) {
                 bn = "--";
-            } else if (i > 0 && specials[i-1].getValueU() >= getLatestBlockFromClient()) {
+            } else if (i > 0 && toUnsigned(specials[i-1].second) >= getLatestBlockFromClient()) {
                 extra = iWhite + " (syncing)" + cOff;
             }
         }

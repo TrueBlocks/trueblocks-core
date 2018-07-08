@@ -13,15 +13,15 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-CParams params[] = {
-    CParams("~address_list", "a space-separated list of one or more Ethereum addresses"),
-    CParams("-data",         "display results as data (addr <tab> is_contract)"),
-    CParams("-bytes",        "display the byte code at the address(es)"),
-    CParams("-nodiff",       "return 'true' if (exactly) two Ethereum addresses have identical code"),
-    CParams("",              "Returns 'true' or 'false' if the given address(es) holds byte code "
+static COption params[] = {
+    COption("~address_list", "a space-separated list of one or more Ethereum addresses"),
+    COption("-data",         "display results as data (addr <tab> is_contract)"),
+    COption("-bytes",        "display the byte code at the address(es)"),
+    COption("-nodiff",       "return 'true' if (exactly) two Ethereum addresses have identical code"),
+    COption("",              "Returns 'true' or 'false' if the given address(es) holds byte code "
                              "(optionally displays the code).\n"),
 };
-size_t nParams = sizeof(params) / sizeof(CParams);
+static size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
