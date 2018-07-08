@@ -62,6 +62,11 @@ using namespace std;  // NOLINT
 #include "sfstring.h"
 
 namespace qblocks {
+
+    //-------------------------------------------------------------------------
+    typedef pair<string_q, string_q> CNameValue;
+    typedef vector<CNameValue> CNameValueArray;
+
     //-------------------------------------------------------------------------
     typedef bool (*APPLYFUNC)(string_q& line, void *data);
     typedef int  (*SEARCHFUNC)    (const void *ob1, const void *ob2);

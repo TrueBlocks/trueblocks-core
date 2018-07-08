@@ -17,46 +17,41 @@
  */
 #include <vector>
 #include <map>
-#include "basetypes.h"
-#include "basenode.h"
-#include "conversions.h"
-#include "sfarchive.h"
+#include "utillib.h"
 
 namespace qblocks {
 
 // EXISTING_CODE
+// Note: this class doubles as a key/value pair for json parsing
+#define CKeyValuePair CRPCResult
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CNameValue : public CBaseNode {
+class CRPCResult : public CBaseNode {
 public:
-    string_q name;
-    string_q value;
+    string_q jsonrpc;
+    string_q result;
+    string_q id;
 
 public:
-    CNameValue(void);
-    CNameValue(const CNameValue& na);
-    virtual ~CNameValue(void);
-    CNameValue& operator=(const CNameValue& na);
+    CRPCResult(void);
+    CRPCResult(const CRPCResult& rp);
+    virtual ~CRPCResult(void);
+    CRPCResult& operator=(const CRPCResult& rp);
 
-    DECLARE_NODE(CNameValue);
+    DECLARE_NODE(CRPCResult);
 
     // EXISTING_CODE
-    string_q getValue  (void) const { return            value;  }
-    uint64_t getValueU (void) const { return toUnsigned(value); }
-    int64_t  getValueI (void) const { return toLong    (value); }
-    SFUintBN getValueBN(void) const { return toWei     (value); }
-    string_q getName   (void) const { return            name;   }
     // EXISTING_CODE
-    bool operator==(const CNameValue& item) const;
-    bool operator!=(const CNameValue& item) const { return !operator==(item); }
-    friend bool operator<(const CNameValue& v1, const CNameValue& v2);
-    friend ostream& operator<<(ostream& os, const CNameValue& item);
+    bool operator==(const CRPCResult& item) const;
+    bool operator!=(const CRPCResult& item) const { return !operator==(item); }
+    friend bool operator<(const CRPCResult& v1, const CRPCResult& v2);
+    friend ostream& operator<<(ostream& os, const CRPCResult& item);
 
 protected:
     void clear(void);
     void initialize(void);
-    void duplicate(const CNameValue& na);
+    void duplicate(const CRPCResult& rp);
     bool readBackLevel(SFArchive& archive) override;
 
     // EXISTING_CODE
@@ -64,53 +59,55 @@ protected:
 };
 
 //--------------------------------------------------------------------------
-inline CNameValue::CNameValue(void) {
+inline CRPCResult::CRPCResult(void) {
     initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CNameValue::CNameValue(const CNameValue& na) {
+inline CRPCResult::CRPCResult(const CRPCResult& rp) {
     // EXISTING_CODE
     // EXISTING_CODE
-    duplicate(na);
+    duplicate(rp);
 }
 
 // EXISTING_CODE
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline CNameValue::~CNameValue(void) {
+inline CRPCResult::~CRPCResult(void) {
     clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CNameValue::clear(void) {
+inline void CRPCResult::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CNameValue::initialize(void) {
+inline void CRPCResult::initialize(void) {
     CBaseNode::initialize();
 
-    name = "";
-    value = "";
+    jsonrpc = "";
+    result = "";
+    id = "";
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CNameValue::duplicate(const CNameValue& na) {
+inline void CRPCResult::duplicate(const CRPCResult& rp) {
     clear();
-    CBaseNode::duplicate(na);
+    CBaseNode::duplicate(rp);
 
-    name = na.name;
-    value = na.value;
+    jsonrpc = rp.jsonrpc;
+    result = rp.result;
+    id = rp.id;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -118,15 +115,15 @@ inline void CNameValue::duplicate(const CNameValue& na) {
 }
 
 //--------------------------------------------------------------------------
-inline CNameValue& CNameValue::operator=(const CNameValue& na) {
-    duplicate(na);
+inline CRPCResult& CRPCResult::operator=(const CRPCResult& rp) {
+    duplicate(rp);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
 //-------------------------------------------------------------------------
-inline bool CNameValue::operator==(const CNameValue& item) const {
+inline bool CRPCResult::operator==(const CRPCResult& item) const {
     // EXISTING1_CODE
     // EXISTING1_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)
@@ -134,7 +131,7 @@ inline bool CNameValue::operator==(const CNameValue& item) const {
 }
 
 //-------------------------------------------------------------------------
-inline bool operator<(const CNameValue& v1, const CNameValue& v2) {
+inline bool operator<(const CRPCResult& v1, const CRPCResult& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default sort defined in class definition, assume already sorted, preserve ordering
@@ -142,9 +139,9 @@ inline bool operator<(const CNameValue& v1, const CNameValue& v2) {
 }
 
 //---------------------------------------------------------------------------
-typedef vector<CNameValue> CNameValueArray;
-extern SFArchive& operator>>(SFArchive& archive, CNameValueArray& array);
-extern SFArchive& operator<<(SFArchive& archive, const CNameValueArray& array);
+typedef vector<CRPCResult> CRPCResultArray;
+extern SFArchive& operator>>(SFArchive& archive, CRPCResultArray& array);
+extern SFArchive& operator<<(SFArchive& archive, const CRPCResultArray& array);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

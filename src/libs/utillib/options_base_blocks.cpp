@@ -32,10 +32,10 @@ namespace qblocks {
             // if it's not a number, it better be a special value, and we better be able to find it
             CNameValue spec;
             if (pOptions && pOptions->findSpecial(spec, arg)) {
-                if (spec.getName() == "latest") {
+                if (spec.first == "latest") {
                     ret = lastBlock;
                 } else {
-                    ret = toUnsigned(spec.getValue());
+                    ret = toUnsigned(spec.second);
                 }
             } else {
                 msg = "The given value '" + arg + "' is not a numeral or a special named block. Quitting...\n";

@@ -15,19 +15,19 @@
  * of 'EXISTING_CODE' tags.
  */
 #include <algorithm>
-#include "namevalue.h"
+#include "rpcresult.h"
 
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CNameValue, CBaseNode);
+IMPLEMENT_NODE(CRPCResult, CBaseNode);
 
 //---------------------------------------------------------------------------
-static string_q nextNamevalueChunk(const string_q& fieldIn, const void *dataPtr);
-static string_q nextNamevalueChunk_custom(const string_q& fieldIn, const void *dataPtr);
+static string_q nextRpcresultChunk(const string_q& fieldIn, const void *dataPtr);
+static string_q nextRpcresultChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CNameValue::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
+void CRPCResult::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -41,13 +41,13 @@ void CNameValue::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) cons
     // EXISTING_CODE
 
     while (!fmt.empty())
-        ctx << getNextChunk(fmt, nextNamevalueChunk, this);
+        ctx << getNextChunk(fmt, nextRpcresultChunk, this);
 }
 
 //---------------------------------------------------------------------------
-string_q nextNamevalueChunk(const string_q& fieldIn, const void *dataPtr) {
+string_q nextRpcresultChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const CNameValue *)dataPtr)->getValueByName(fieldIn);
+        return ((const CRPCResult *)dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -56,16 +56,24 @@ string_q nextNamevalueChunk(const string_q& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CNameValue::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
+bool CRPCResult::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
     // EXISTING_CODE
+    // Note: This class doubles as a name/value pair for json parsing
+    if (fieldName == "name")
+        *(string_q*)&fieldName = "jsonrpc";
+    else if (fieldName == "value")
+        *(string_q*)&fieldName = "result";
     // EXISTING_CODE
 
     switch (tolower(fieldName[0])) {
-        case 'n':
-            if ( fieldName % "name" ) { name = fieldValue; return true; }
+        case 'i':
+            if ( fieldName % "id" ) { id = fieldValue; return true; }
             break;
-        case 'v':
-            if ( fieldName % "value" ) { value = fieldValue; return true; }
+        case 'j':
+            if ( fieldName % "jsonrpc" ) { jsonrpc = fieldValue; return true; }
+            break;
+        case 'r':
+            if ( fieldName % "result" ) { result = fieldValue; return true; }
             break;
         default:
             break;
@@ -74,13 +82,13 @@ bool CNameValue::setValueByName(const string_q& fieldName, const string_q& field
 }
 
 //---------------------------------------------------------------------------------------------------
-void CNameValue::finishParse() {
+void CRPCResult::finishParse() {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CNameValue::Serialize(SFArchive& archive) {
+bool CRPCResult::Serialize(SFArchive& archive) {
 
     if (archive.isWriting())
         return SerializeC(archive);
@@ -91,28 +99,30 @@ bool CNameValue::Serialize(SFArchive& archive) {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive >> name;
-    archive >> value;
+    archive >> jsonrpc;
+    archive >> result;
+    archive >> id;
     finishParse();
     return true;
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CNameValue::SerializeC(SFArchive& archive) const {
+bool CRPCResult::SerializeC(SFArchive& archive) const {
 
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive << name;
-    archive << value;
+    archive << jsonrpc;
+    archive << result;
+    archive << id;
 
     return true;
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, CNameValueArray& array) {
+SFArchive& operator>>(SFArchive& archive, CRPCResultArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -124,7 +134,7 @@ SFArchive& operator>>(SFArchive& archive, CNameValueArray& array) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const CNameValueArray& array) {
+SFArchive& operator<<(SFArchive& archive, const CRPCResultArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -133,40 +143,41 @@ SFArchive& operator<<(SFArchive& archive, const CNameValueArray& array) {
 }
 
 //---------------------------------------------------------------------------
-void CNameValue::registerClass(void) {
+void CRPCResult::registerClass(void) {
     static bool been_here = false;
     if (been_here) return;
     been_here = true;
 
     size_t fieldNum = 1000;
-    ADD_FIELD(CNameValue, "schema",  T_NUMBER, ++fieldNum);
-    ADD_FIELD(CNameValue, "deleted", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CNameValue, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CNameValue, "name", T_TEXT, ++fieldNum);
-    ADD_FIELD(CNameValue, "value", T_TEXT, ++fieldNum);
+    ADD_FIELD(CRPCResult, "schema",  T_NUMBER, ++fieldNum);
+    ADD_FIELD(CRPCResult, "deleted", T_BOOL,  ++fieldNum);
+    ADD_FIELD(CRPCResult, "showing", T_BOOL,  ++fieldNum);
+    ADD_FIELD(CRPCResult, "jsonrpc", T_TEXT, ++fieldNum);
+    ADD_FIELD(CRPCResult, "result", T_TEXT, ++fieldNum);
+    ADD_FIELD(CRPCResult, "id", T_TEXT, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
-    HIDE_FIELD(CNameValue, "schema");
-    HIDE_FIELD(CNameValue, "deleted");
-    HIDE_FIELD(CNameValue, "showing");
+    HIDE_FIELD(CRPCResult, "schema");
+    HIDE_FIELD(CRPCResult, "deleted");
+    HIDE_FIELD(CRPCResult, "showing");
 
-    builtIns.push_back(_biCNameValue);
+    builtIns.push_back(_biCRPCResult);
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------
-string_q nextNamevalueChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CNameValue *nam = (const CNameValue *)dataPtr;  // NOLINT
-    if (nam) {
+string_q nextRpcresultChunk_custom(const string_q& fieldIn, const void *dataPtr) {
+    const CRPCResult *rpc = (const CRPCResult *)dataPtr;  // NOLINT
+    if (rpc) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn, nam);
+                    return nextBasenodeChunk(fieldIn, rpc);
                 // EXISTING_CODE
                 // EXISTING_CODE
                 break;
@@ -180,7 +191,7 @@ string_q nextNamevalueChunk_custom(const string_q& fieldIn, const void *dataPtr)
 }
 
 //---------------------------------------------------------------------------
-bool CNameValue::readBackLevel(SFArchive& archive) {
+bool CRPCResult::readBackLevel(SFArchive& archive) {
 
     CBaseNode::readBackLevel(archive);
     bool done = false;
@@ -190,20 +201,23 @@ bool CNameValue::readBackLevel(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------
-string_q CNameValue::getValueByName(const string_q& fieldName) const {
+string_q CRPCResult::getValueByName(const string_q& fieldName) const {
 
     // Give customized code a chance to override first
-    string_q ret = nextNamevalueChunk_custom(fieldName, this);
+    string_q ret = nextRpcresultChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
     // Return field values
     switch (tolower(fieldName[0])) {
-        case 'n':
-            if ( fieldName % "name" ) return name;
+        case 'i':
+            if ( fieldName % "id" ) return id;
             break;
-        case 'v':
-            if ( fieldName % "value" ) return value;
+        case 'j':
+            if ( fieldName % "jsonrpc" ) return jsonrpc;
+            break;
+        case 'r':
+            if ( fieldName % "result" ) return result;
             break;
     }
 
@@ -215,7 +229,7 @@ string_q CNameValue::getValueByName(const string_q& fieldName) const {
 }
 
 //-------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const CNameValue& item) {
+ostream& operator<<(ostream& os, const CRPCResult& item) {
     // EXISTING_CODE
     // EXISTING_CODE
 
