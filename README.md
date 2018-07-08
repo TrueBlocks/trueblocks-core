@@ -1,3 +1,8 @@
+## Two Important Notes
+
+1. This code is alpha code. That means that we may (and probably will) make breaking changes as we move forward.
+2. We will be changing the name of our project in the near future. Stay tuned.
+
 #### Contact Info
 
 Visit our [Website](http://quickblocks.io)  
