@@ -1,0 +1,7 @@
+[settings]
+class     = CNewReceipt
+fields    = address contractAddress|gas gasUsed|CLogEntryArray logs|bloom logsBloom|bool isError
+includes  = abilib.h|logentry.h
+cIncs     = #include "etherlib.h"
+scope     = extern
+serialize = true

@@ -1,0 +1,6 @@
+[settings]
+class     = CBalHistory
+fields    = string recordID|timestamp timestamp|int256 balance
+includes  = abilib.h
+cIncs     = #include "etherlib.h"
+serialize = true

@@ -14,11 +14,11 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-CParams params[] = {
-    CParams("-named",    "Show addresses from named accounts as per ethName"),
-    CParams("",          "Show the list of Ethereum accounts known to the local node or named accounts."),
+static COption params[] = {
+    COption("-named",    "Show addresses from named accounts as per ethName"),
+    COption("",          "Show the list of Ethereum accounts known to the local node or named accounts."),
 };
-size_t nParams = sizeof(params) / sizeof(CParams);
+static size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {

@@ -13,13 +13,13 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-CParams params[] = {
-    CParams("~block_list", "a space-separated list of one or more blocks to search for"),
-    CParams("-account",    "find an account file, not the block file"),
-    CParams("-bloom",      "find a bloom file, not the block file"),
-    CParams("",            "Reports if a block was found in the cache, at a local, or at a remote node.\n"),
+static COption params[] = {
+    COption("~block_list", "a space-separated list of one or more blocks to search for"),
+    COption("-account",    "find an account file, not the block file"),
+    COption("-bloom",      "find a bloom file, not the block file"),
+    COption("",            "Reports if a block was found in the cache, at a local, or at a remote node.\n"),
 };
-size_t nParams = sizeof(params) / sizeof(CParams);
+static size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {

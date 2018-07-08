@@ -1,0 +1,6 @@
+[settings]
+class     = QSetApprovalForAll
+baseClass = CTransaction
+fields    = address _operator|bool _approved|
+includes  = transaction.h
+cIncs     = #include "etherlib.h"

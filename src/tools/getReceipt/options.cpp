@@ -13,13 +13,13 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-CParams params[] = {
-    CParams("~!trans_list", "a space-separated list of one or more transaction identifiers "
+static COption params[] = {
+    COption("~!trans_list", "a space-separated list of one or more transaction identifiers "
                                 "(tx_hash, bn.txID, blk_hash.txID)"),
-    CParams("-raw",         "retrieve raw transaction directly from the running node"),
-    CParams("",             "Retrieve a transaction's receipt from the local cache or a running node."),
+    COption("-raw",         "retrieve raw transaction directly from the running node"),
+    COption("",             "Retrieve a transaction's receipt from the local cache or a running node."),
 };
-size_t nParams = sizeof(params) / sizeof(CParams);
+static size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {

@@ -1,0 +1,7 @@
+[settings]
+class     = CLogEntry
+fields    = address address|string data|uint64 logIndex|SFTopicArray topics
+includes  = abilib.h
+cIncs     = #include "etherlib.h"
+scope     = extern
+serialize = true

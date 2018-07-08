@@ -13,21 +13,21 @@
 #include "utillib.h"
 #include "options.h"
 
-CParams params[] = {
-    CParams("~className",          "name of C++ class(es) to process"),
-    CParams("-open",               "edit <className(s)> definition file in local folder"),
-    CParams("-run",                "run the class maker on associated <className(s)>"),
-    CParams("-filter:<string>",    "process only files with :filter in their names"),
-    CParams("-list",               "list all definition files found in the local folder"),
-    CParams("-header",             "write headers files only"),
-    CParams("-sour(c)e",           "write source files only"),
-    CParams("-namespace:<string>", "surround the code with a --namespace:ns"),
-    CParams("-silent",             "on error (no classDefinition file) exit silently"),
-    CParams("-all",                "clear, edit, list, or run all class definitions found in the local folder"),
-    CParams("@edit",               "edit <className(s)> definition file in local folder"),
-    CParams("",                    "Creates C++ code based on definition file at ./classDefinition/<className>.\n"),
+static COption params[] = {
+    COption("~className",          "name of C++ class(es) to process"),
+    COption("-open",               "edit <className(s)> definition file in local folder"),
+    COption("-run",                "run the class maker on associated <className(s)>"),
+    COption("-filter:<string>",    "process only files with :filter in their names"),
+    COption("-list",               "list all definition files found in the local folder"),
+    COption("-header",             "write headers files only"),
+    COption("-sour(c)e",           "write source files only"),
+    COption("-namespace:<string>", "surround the code with a --namespace:ns"),
+    COption("-silent",             "on error (no classDefinition file) exit silently"),
+    COption("-all",                "clear, edit, list, or run all class definitions found in the local folder"),
+    COption("@edit",               "edit <className(s)> definition file in local folder"),
+    COption("",                    "Creates C++ code based on definition file at ./classDefinition/<className>.\n"),
 };
-size_t nParams = sizeof(params) / sizeof(CParams);
+static size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
