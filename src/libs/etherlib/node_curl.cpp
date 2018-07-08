@@ -223,9 +223,14 @@ namespace qblocks {
         ASSERT(userdata);
         CCurlContext *data = (CCurlContext*)userdata;  // NOLINT
         data->result += s;
-        // Starting around block 3804005, there was a hack wherein the byte code 5b5b5b5b5b5b5b5b5b5b5b5b
-        // repeated thousands of times, doing nothing. If we don't handle this, it dominates the scanning
-        // for no reason
+        
+        // Note: we used to skip over any trace that contained a long string
+        // of characters with '5b5b5b5b5b5b5b5b5b5b5b5b' which started around
+        // block 38004005 and ran for about 5000 blocks. We no longer do that
+        // here, but it requires correcting blooms and cached blocks since
+        // they would be skipped.
+        // TODO(tjayrush): has issue #124 on QuickBlocks private been fixed?
+#if 0
         if (strstr(s, "5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b") != NULL) {
             // This is the hack trace (there are many), so skip it
             cerr << "Curl response contains '5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b'. Aborting.\n";
@@ -233,6 +238,7 @@ namespace qblocks {
             getCurlContext()->earlyAbort = true;
             return 0;
         }
+#endif
 
 //        if (shouldQuit()) {
 //            getCurlContext()->earlyAbort = true;
