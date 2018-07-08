@@ -13,23 +13,23 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-CParams params[] = {
-    CParams("~address_list", "two or more addresses (0x...), the first is an ERC20 token, balances for the "
+static COption params[] = {
+    COption("~address_list", "two or more addresses (0x...), the first is an ERC20 token, balances for the "
                                 "rest are reported"),
-    CParams("~!block_list",  "an optional list of one or more blocks at which to report balances, defaults "
+    COption("~!block_list",  "an optional list of one or more blocks at which to report balances, defaults "
                                 "to 'latest'"),
-    CParams("-byAcct",       "consider each address an ERC20 token except the last, whose balance is reported "
+    COption("-byAcct",       "consider each address an ERC20 token except the last, whose balance is reported "
                                 "for each token"),
-    CParams("-data",         "render results as tab delimited data (for example, to build a cap table)"),
-    CParams("-list:<fn>",    "an alternative way to specify an address_list, place one address per line in "
+    COption("-data",         "render results as tab delimited data (for example, to build a cap table)"),
+    COption("-list:<fn>",    "an alternative way to specify an address_list, place one address per line in "
                                 "the file 'fn'"),
-    CParams("-noZero",       "suppress the display of zero balance accounts"),
-    CParams("-total",        "if more than one balance is requested, display a total as well"),
-    CParams("-info",         "retreive standarized information (name, decimals, totalSupply, etc.) about the token"),
-    CParams("",              "Retrieve the token balance(s) for one or more addresses at the given (or "
+    COption("-noZero",       "suppress the display of zero balance accounts"),
+    COption("-total",        "if more than one balance is requested, display a total as well"),
+    COption("-info",         "retreive standarized information (name, decimals, totalSupply, etc.) about the token"),
+    COption("",              "Retrieve the token balance(s) for one or more addresses at the given (or "
                                 "latest) block(s).\n"),
 };
-size_t nParams = sizeof(params) / sizeof(CParams);
+static size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {

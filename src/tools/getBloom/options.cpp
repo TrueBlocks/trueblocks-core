@@ -13,18 +13,18 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-CParams params[] = {
-    CParams("~block_list",       "a space-separated list of one or more blocks for which to retrieve blooms"),
-    CParams("-raw",              "pull the bloom filter directly from the running node (the default)"),
-    CParams("-eab",              "pull the enhanced adaptive bloom filters (EAB) from the local cache"),
-    CParams("-asbits",           "display the bloom filter as bits instead of hex"),
-    CParams("-a(s)bars",         "display the bloom filter as bar charts instead of hex"),
-    CParams("-recei(p)t",        "display blooms from the transaction receipts as opposed to block (--raw only)"),
-    CParams("@force",            "force a re-write of the bloom to the cache"),
-    CParams("",                  "Returns bloom filter(s) from running node (the default) or as EAB "
+static COption params[] = {
+    COption("~block_list",       "a space-separated list of one or more blocks for which to retrieve blooms"),
+    COption("-raw",              "pull the bloom filter directly from the running node (the default)"),
+    COption("-eab",              "pull the enhanced adaptive bloom filters (EAB) from the local cache"),
+    COption("-asbits",           "display the bloom filter as bits instead of hex"),
+    COption("-a(s)bars",         "display the bloom filter as bar charts instead of hex"),
+    COption("-recei(p)t",        "display blooms from the transaction receipts as opposed to block (--raw only)"),
+    COption("@force",            "force a re-write of the bloom to the cache"),
+    COption("",                  "Returns bloom filter(s) from running node (the default) or as EAB "
                                     "from local cache.\n"),
 };
-size_t nParams = sizeof(params) / sizeof(CParams);
+static size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {

@@ -1,0 +1,9 @@
+[settings]
+class       = CReceipt
+fields      = address contractAddress|gas gasUsed|CLogEntryArray logs|uint32 status=NO_STATUS
+backfields1 = version_030|address contractAddress|gas gasUsed|CLogEntryArray logs|bloom logsBloom|uint32 status=NO_STATUS
+backfields2 = version_020|address contractAddress|gas gasUsed|CLogEntryArray logs|bloom logsBloom
+includes    = abilib.h|logentry.h
+cIncs       = #include "etherlib.h"
+scope       = extern
+serialize   = true

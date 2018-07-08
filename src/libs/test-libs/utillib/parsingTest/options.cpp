@@ -13,11 +13,11 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-static CParams params[] = {
-    CParams("~mode", "a number between 0 and 2 inclusive"),
-    CParams("",      "Test 'c' library strings against quickBlocks strings.\n"),
+static COption params[] = {
+    COption("~mode", "a number between 0 and 2 inclusive"),
+    COption("",      "Test 'c' library strings against quickBlocks strings.\n"),
 };
-size_t nParams = sizeof(params) / sizeof(CParams);
+static size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {

@@ -14,15 +14,15 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-CParams params[] = {
-    CParams("-at:<timestamp>",                 "Report the price since nearest five minutes to the given timestamp"),
-    CParams("-current",                        "Report on the current price (i.e. -at:now)"),
-    CParams("-freshen",                        "Freshen database (append new data)"),
-    CParams("-period:<5|15|30|*120|240|1440>", "Display prices in this increment. One of [5|15|30|120*|240|1440]"),
-    CParams("-pair:<val>",                     "Which price pair to freshen or list (see Poloniex)"),
-    CParams("",                                "Freshen and/or display Ethereum price data and other purposes.\n"),
+static COption params[] = {
+    COption("-at:<timestamp>",                 "Report the price since nearest five minutes to the given timestamp"),
+    COption("-current",                        "Report on the current price (i.e. -at:now)"),
+    COption("-freshen",                        "Freshen database (append new data)"),
+    COption("-period:<5|15|30|*120|240|1440>", "Display prices in this increment. One of [5|15|30|120*|240|1440]"),
+    COption("-pair:<val>",                     "Which price pair to freshen or list (see Poloniex)"),
+    COption("",                                "Freshen and/or display Ethereum price data and other purposes.\n"),
 };
-size_t nParams = sizeof(params) / sizeof(CParams);
+static size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {

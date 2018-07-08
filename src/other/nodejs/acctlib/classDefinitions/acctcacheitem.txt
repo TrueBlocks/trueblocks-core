@@ -1,0 +1,6 @@
+[settings]
+class = CAcctCacheItem
+fields = uint64 blockNum|uint64 transIndex
+includes = etherlib.h
+sort = ((v1.blockNum != v2.blockNum) ? v1.blockNum < v2.blockNum : v1.transIndex < v2.transIndex)
+equals = (blockNum == item.blockNum && transIndex == item.transIndex)
