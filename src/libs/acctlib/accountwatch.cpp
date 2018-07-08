@@ -139,7 +139,8 @@ bool CAccountWatch::Serialize(SFArchive& archive) {
     archive >> lastBlock;
     archive >> deepScan;
     archive >> qbis;
-    archive >> balanceHistory;
+// need to be able to not write fields that are otherwise part of the class
+//    archive >> balanceHistory;
     archive >> nodeBal;
     finishParse();
     return true;
@@ -160,7 +161,7 @@ bool CAccountWatch::SerializeC(SFArchive& archive) const {
     archive << lastBlock;
     archive << deepScan;
     archive << qbis;
-    archive << balanceHistory;
+//    archive << balanceHistory;
     archive << nodeBal;
 
     return true;
