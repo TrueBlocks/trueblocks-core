@@ -15,12 +15,16 @@
 #include "options.h"
 #include "junk.h"
 
-extern bool test_encodings (void);
-extern bool test_generation(void);
-extern bool test_old_bug   (void);
+extern bool test_encodings  (void);
+extern bool test_generation (void);
+extern bool test_old_bug    (void);
+extern bool test_func_assign(void);
+extern bool test_evt_assign (void);
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
+    CParameter::registerClass();
+    
     COptions options;
     if (!options.prepareArguments(argc, argv))
         return 0;
@@ -45,6 +49,16 @@ int main(int argc, const char *argv[]) {
             } else if (mode == "old_bug") {
                 cout << "Old bug test...\n";
                 cout << (test_old_bug() ? "...passed" : "...failed") << "\n";
+                cout << "\n";
+
+            } else if (mode == "func_assign") {
+                cout << "function assignment test...\n";
+                cout << (test_func_assign() ? "...passed" : "...failed") << "\n";
+                cout << "\n";
+
+            } else if (mode == "evt_assign") {
+                cout << "event assignment test...\n";
+                cout << (test_evt_assign() ? "...passed" : "...failed") << "\n";
                 cout << "\n";
             }
         }
@@ -144,6 +158,39 @@ bool test_old_bug(void) {
     cout << string_q(120, '-') << "\nABI of test2.json\n" << string_q(120, '-') << "\n";
     abi.loadABIFromFile("./test2.json");
     cout << abi << "\n";
+    return true;
+}
+
+string_q data =
+"CBalanceHistoryArray|CBlockNumArray|CFunctionArray|CIncomeStatement|CLogEntryArray|CParameterArray|CPerson|CReceipt|"
+"CNewReceipt|CNewTransactionArray|SFBigUintArray|SFTopicArray|address[]|bytes4|time|uint8|"
+"CStringArray|CTraceAction|CTraceResult|CTransactionArray|CTreeNode *|SFTopicArray|address|blknum|bloom|bool|bytes|bytes32|"
+"double|gas|hash|int256|int64|string|timestamp|uint256|uint32|uint64|wei";
+//--------------------------------------------------------------
+bool test_func_assign(void) {
+
+    string_q types = data;
+    while (!types.empty()) {
+        string_q type = nextTokenClear(types, '|');
+        type += ((contains(type, "*") ? "" : " ") + string_q("_val"));
+        CParameter param(type);
+        cout << param.type << "\t" << param.getFunctionAssign(0);
+    }
+
+    return true;
+}
+
+//--------------------------------------------------------------
+bool test_evt_assign(void) {
+
+    string_q types = data;
+    while (!types.empty()) {
+        string_q type = nextTokenClear(types, '|');
+        type += ((contains(type, "*") ? "" : " ") + string_q("_val"));
+        CParameter param(type);
+        cout << param.type << "\t" << param.getEventAssign(0);
+    }
+
     return true;
 }
 

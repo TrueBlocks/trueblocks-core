@@ -192,12 +192,9 @@ void generateCode(const COptions& options, CToml& toml, const string_q& dataFile
 
     //------------------------------------------------------------------------------------------------
     bool isBase = (baseClass == "CBaseNode");
-    string_q parFnc = isBase ?
-                        "readBackLevel" :
-                        "readBackLevel";
-    string_q parSer = isBase ?
-                        "\t[{BASE_CLASS}]::Serialize(archive);\n" :
-                        "\t[{BASE_CLASS}]::Serialize(archive);\n\n";
+    string_q parSer2 = isBase ?
+                        "\t[{BASE_CLASS}]::SerializeC(archive);\n" :
+                        "\t[{BASE_CLASS}]::SerializeC(archive);\n\n";
     string_q parReg = isBase ?
                         "" :
                         "[{BASE_CLASS}]::registerClass();\n\n\t";
@@ -294,6 +291,8 @@ void generateCode(const COptions& options, CToml& toml, const string_q& dataFile
                     replaceAll(fieldGetStr, "THING", "fromTopic");
                 } else if (contains(fld.type, "CBlockNumArray")) {
                     replaceAll(fieldGetStr, "THING", "asStringU");
+                } else if (contains(fld.type, "SFBigUintArray")) {
+                    replaceAll(fieldGetStr, "THING", "asStringBN");
                 } else {
                     replaceAll(fieldGetStr, "THING", "");
                 }
@@ -332,7 +331,7 @@ string_q ptrReadFmt =
 "    if (has_[{NAME}]) {\n"
 "        string_q className;\n"
 "        archive >> className;\n"
-"        [{NAME}] = ([{CLASS_NAME}] *)createObjectOfType(className);  // NOLINT\n"
+"        [{NAME}] = ([{TYPE}] *)createObjectOfType(className);  // NOLINT\n"
 "        if (![{NAME}])\n"
 "            return false;\n"
 "        [{NAME}]->Serialize(archive);\n"
@@ -424,12 +423,10 @@ string_q ptrWriteFmt =
     replaceAll(srcSource, "[OTHER_INCS]",        otherIncs);
     replaceAll(srcSource, "[FIELD_SETCASE]",     caseSetCodeStr);
     replaceAll(srcSource, "[{SUBCLASSFLDS}]",    subClsCodeStr);
-    replaceAll(srcSource, "[{PARENT_SER1}]",     parSer);
-    replaceAll(srcSource, "[{PARENT_SER2}]",     substitute(parSer, "Serialize", "SerializeC"));
+    replaceAll(srcSource, "[{PARENT_SER2}]",     parSer2);
     replaceAll(srcSource, "[{PARENT_REG}]",      parReg);
     replaceAll(srcSource, "[{PARENT_CHNK}]\n",   parCnk);
     replaceAll(srcSource, "[{PARENT_SET}]\n",    parSet);
-    replaceAll(srcSource, "[{PAR_READ_HEAD}]",   parFnc);
     replaceAll(srcSource, "[{BASE_CLASS}]",      baseClass);
     replaceAll(srcSource, "[{BASE_BASE}]",       baseBase);
     replaceAll(srcSource, "[{BASE}]",            baseUpper);

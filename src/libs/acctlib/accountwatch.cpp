@@ -126,7 +126,9 @@ bool CAccountWatch::Serialize(SFArchive& archive) {
     if (archive.isWriting())
         return SerializeC(archive);
 
-    // If we're reading a back level, read the whole thing and we're done.
+    // Always read the base class (it will handle its own backLevels if any, then
+    // read this object's back level (if any) or the current version.
+    CBaseNode::Serialize(archive);
     if (readBackLevel(archive))
         return true;
 
@@ -139,8 +141,7 @@ bool CAccountWatch::Serialize(SFArchive& archive) {
     archive >> lastBlock;
     archive >> deepScan;
     archive >> qbis;
-// need to be able to not write fields that are otherwise part of the class
-//    archive >> balanceHistory;
+    archive >> balanceHistory;
     archive >> nodeBal;
     finishParse();
     return true;
@@ -161,7 +162,7 @@ bool CAccountWatch::SerializeC(SFArchive& archive) const {
     archive << lastBlock;
     archive << deepScan;
     archive << qbis;
-//    archive << balanceHistory;
+    archive << balanceHistory;
     archive << nodeBal;
 
     return true;
@@ -245,7 +246,6 @@ string_q nextAccountwatchChunk_custom(const string_q& fieldIn, const void *dataP
 //---------------------------------------------------------------------------
 bool CAccountWatch::readBackLevel(SFArchive& archive) {
 
-    CBaseNode::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE

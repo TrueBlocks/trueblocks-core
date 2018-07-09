@@ -43,6 +43,8 @@ endfunction(run_test)
 # Enter one line for each individual test
 run_test("abilibTest_README"             "-th")
 run_test("abilibTest_01"                 "ecoding")
+run_test("abilibTest_funcassign"         "func_assign")
+run_test("abilibTest_evtassign"          "evt_assign")
 run_special_test("abilibTest_02"         "encoding")
 run_special_test("abilibTest_03"         "generation" " encoding")
 run_special_test("abilibTest_04"         "generation" " encoding" " bad")
