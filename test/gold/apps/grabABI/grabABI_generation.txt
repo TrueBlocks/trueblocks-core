@@ -16,6 +16,14 @@ grabABI 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 -v -n -e -g code
 	-n  (--noconst)       generate encodings for non-constant functions and events only (always true when generating)
 	-o  (--open)          open the ABI file for editing, download if not already present
 	-r  (--raw)           force retrieval of ABI from etherscan (ignoring cache)
+
+#### Hidden options (shown during testing only)
+	-j  (--json)          print the ABI to the screen as json
+	-s  (--silent)        if ABI cannot be acquired, fail silently (useful for scripting)
+	-n  (--nodec)         do not decorate duplicate names
+	-f  (--freshen)       regenerate the binary database version of all ABIs in the abi cache
+#### Hidden options (shown during testing only)
+
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
 	-h  (--help)          display this help screen
 

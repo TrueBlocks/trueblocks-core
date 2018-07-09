@@ -15,6 +15,11 @@ getBloom -th
 | -a | --asbits | display the bloom filter as bits instead of hex |
 | -s | --asbars | display the bloom filter as bar charts instead of hex |
 | -p | --receipt | display blooms from the transaction receipts as opposed to block (--raw only) |
+
+#### Hidden options (shown during testing only)
+| -f | --force | force a re-write of the bloom to the cache |
+#### Hidden options (shown during testing only)
+
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 

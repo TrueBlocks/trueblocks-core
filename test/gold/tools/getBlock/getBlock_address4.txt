@@ -14,6 +14,15 @@ getBlock 245001 --addr
 	-l  (--latest)        display the latest blocks at both the node and the cache
 	-a  (--addrs)         display all addresses included in the block
 	-u  (--uniq)          display only uniq addresses found in the block
+
+#### Hidden options (shown during testing only)
+	-o  (--force)         force a re-write of the block to the cache
+	-q  (--quiet)         do not print results to screen, used for speed testing and data checking
+	-s  (--source val)    either :c(a)che or :(r)aw, source for data retrival. (shortcuts -c = qblocks, -r = node)
+	-f  (--fields val)    either :(a)ll, (m)ini, (c)ache or :(r)aw; which fields to include in output (all is default)
+	-n  (--normalize)     normalize (remove un-common fields and sort) for comparison with other results (testing)
+#### Hidden options (shown during testing only)
+
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
 	-h  (--help)          display this help screen
 
