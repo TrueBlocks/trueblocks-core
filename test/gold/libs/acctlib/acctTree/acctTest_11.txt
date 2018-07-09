@@ -1,6 +1,5 @@
 acctTree argc: 5 [1:--start] [2:1500000] [3:--nblocks] [4:250] 
 acctTree --start 1500000 --nblocks 250 
-/Users/jrush/src.GitHub/quickBlocks/test/gold/libs/acctlib/acctTree/ : /Users/jrush/src.GitHub/quickBlocks/test/gold/libs/acctlib/acctTree/accts.bin
 Reading accounts between blocks 1500000 and 1500250 (nBlocks: 250)
 Displaying accounts...
 
