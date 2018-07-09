@@ -119,8 +119,8 @@ inline CBalanceHistory& CBalanceHistory::operator=(const CBalanceHistory& ba) {
 
 //-------------------------------------------------------------------------
 inline bool CBalanceHistory::operator==(const CBalanceHistory& item) const {
-    // EXISTING1_CODE
-    // EXISTING1_CODE
+    // EXISTING_CODE
+    // EXISTING_CODE
     // Default equality operator as defined in class definition
     return bn == item.bn;
 }

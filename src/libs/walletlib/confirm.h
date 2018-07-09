@@ -114,8 +114,8 @@ inline QConfirm& QConfirm::operator=(const QConfirm& co) {
 
 //-------------------------------------------------------------------------
 inline bool QConfirm::operator==(const QConfirm& item) const {
-    // EXISTING1_CODE
-    // EXISTING1_CODE
+    // EXISTING_CODE
+    // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)
     return false;
 }
