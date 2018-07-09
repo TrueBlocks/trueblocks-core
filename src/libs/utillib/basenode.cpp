@@ -309,9 +309,8 @@ namespace qblocks {
         string_q str;
         archive >> str;
         ASSERT(str == string_q(getRuntimeClass()->getClassNamePtr()));
-
-        // Return true if this is a back level version
-        return true;
+        // We can never upgrade the base node data, so we always return false here (true means we've upgraded)
+        return false;
     }
 
     //---------------------------------------------------------------------------

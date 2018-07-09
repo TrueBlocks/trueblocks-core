@@ -94,7 +94,9 @@ bool CParameter::Serialize(SFArchive& archive) {
     if (archive.isWriting())
         return SerializeC(archive);
 
-    // If we're reading a back level, read the whole thing and we're done.
+    // Always read the base class (it will handle its own backLevels if any, then
+    // read this object's back level (if any) or the current version.
+    CBaseNode::Serialize(archive);
     if (readBackLevel(archive))
         return true;
 
@@ -206,7 +208,6 @@ string_q nextParameterChunk_custom(const string_q& fieldIn, const void *dataPtr)
 //---------------------------------------------------------------------------
 bool CParameter::readBackLevel(SFArchive& archive) {
 
-    CBaseNode::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -261,6 +262,7 @@ ostream& operator<<(ostream& os, const CParameter& item) {
 // EXISTING_CODE
 //---------------------------------------------------------------------------
 CParameter::CParameter(string_q& textIn) {
+    initialize();
     if (contains(textIn, "=")) {
         strDefault = textIn;
         textIn = nextTokenClear(strDefault, '=');
@@ -270,6 +272,68 @@ CParameter::CParameter(string_q& textIn) {
     isArray    = contains(textIn, "Array");
     isObject   = !isArray && startsWith(type, 'C');
     name       = substitute(textIn, "*", "");
+}
+
+//-----------------------------------------------------------------------
+string_q CParameter::getFunctionAssign(uint64_t which) const {
+
+    string_q ass;
+    if (contains(type, "[") && contains(type, "]")) {
+        const char* STR_ASSIGNARRAY =
+            "\t\t\twhile (!params.empty()) {\n"
+            "\t\t\t\tstring_q val = extract(params, 0, 64);\n"
+            "\t\t\t\tparams = extract(params, 64);\n"
+            "\t\t\t\ta->[{NAME}].push_back(val);\n"
+            "\t\t\t}\n";
+        return Format(STR_ASSIGNARRAY);
+    }
+
+           if (         type == "uint")    { ass = "toWei(\"0x\" + [{VAL}]);";
+    } else if (         type == "uint256") { ass = "toWei(\"0x\" + [{VAL}]);";
+    } else if (contains(type, "gas"))      { ass = "toGas([{VAL}]);";
+    } else if (contains(type, "uint64"))   { ass = "toLongU([{VAL}]);";
+    } else if (contains(type, "uint"))     { ass = "(uint32_t)toLongU([{VAL}]);";
+    } else if (contains(type, "int"))      { ass = "toLong([{VAL}]);";
+    } else if (contains(type, "bool"))     { ass = "toLong([{VAL}]);";
+    } else if (contains(type, "address"))  { ass = "toAddress([{VAL}]);";
+    } else                                 { ass = "[{VAL}];";
+    }
+
+    replace(ass, "[{VAL}]", "extract(params, " + asStringU(which) + "*64" + (type == "bytes" ? "" : ", 64") + ")");
+    return Format("\t\t\ta->[{NAME}] = " + ass + "\n");
+}
+
+//-----------------------------------------------------------------------
+string_q CParameter::getEventAssign(uint64_t which, uint64_t nIndexed) const {
+    string_q ass;
+
+           if (         type == "uint")    { ass = "toWei([{VAL}]);";
+    } else if (         type == "uint256") { ass = "toWei([{VAL}]);";
+    } else if (contains(type, "gas"))      { ass = "toGas([{VAL}]);";
+    } else if (contains(type, "uint64"))   { ass = "toLongU([{VAL}]);";
+    } else if (contains(type, "uint"))     { ass = "(uint32_t)toLongU([{VAL}]);";
+    } else if (contains(type, "int"))      { ass = "toLong([{VAL}]);";
+    } else if (contains(type, "bool"))     { ass = "toLong([{VAL}]);";
+    } else if (contains(type, "address"))  { ass = "toAddress([{VAL}]);";
+    } else                                 { ass = "[{VAL}];";
+    }
+
+    if (indexed) {
+        replace(ass, "[{VAL}]", "nTops > [{WHICH}] ? fromTopic(p->topics[{IDX}]) : \"\"");
+
+    } else if (type == "bytes") {
+        replace(ass, "[{VAL}]", "\"0x\" + extract(data, [{WHICH}]*64)");
+        which -= (nIndexed+1);
+
+    } else {
+        replace(ass, "[{VAL}]", string_q(type == "address" ? "" : "\"0x\" + ") + "extract(data, [{WHICH}]*64, 64)");
+        which -= (nIndexed+1);
+    }
+
+    replace(ass, "[{IDX}]", "++" + asStringU(which) + "++");
+    replace(ass, "[{WHICH}]", asStringU(which));
+    string_q fmt = "\t\t\ta->[{NAME}] = " + ass + "\n";
+    return Format(fmt);
 }
 // EXISTING_CODE
 }  // namespace qblocks

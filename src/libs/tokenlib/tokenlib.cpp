@@ -65,7 +65,7 @@ const CTransaction *promoteToToken(const CTransaction *p) {
             QApprove *a = new QApprove;
             *(CTransaction*)a = *p;  // NOLINT
             a->_spender = toAddress(extract(params, 0*64, 64));
-            a->_value = toWei("0x"+extract(params, 1*64, 64));
+            a->_value = toWei("0x" + extract(params, 1*64, 64));
             items[nItems++] = "address";
             items[nItems++] = "uint256";
             a->function = toFunction("approve", params, nItems, items);
@@ -77,7 +77,7 @@ const CTransaction *promoteToToken(const CTransaction *p) {
             QApproveAndCall *a = new QApproveAndCall;
             *(CTransaction*)a = *p;  // NOLINT
             a->_spender = toAddress(extract(params, 0*64, 64));
-            a->_value = toWei("0x"+extract(params, 1*64, 64));
+            a->_value = toWei("0x" + extract(params, 1*64, 64));
             a->_extraData = extract(params, 2*64);
             items[nItems++] = "address";
             items[nItems++] = "uint256";
@@ -90,7 +90,7 @@ const CTransaction *promoteToToken(const CTransaction *p) {
             // 0x6352211e
             QOwnerOf *a = new QOwnerOf;
             *(CTransaction*)a = *p;  // NOLINT
-            a->_tokenId = toWei("0x"+extract(params, 0*64, 64));
+            a->_tokenId = toWei("0x" + extract(params, 0*64, 64));
             items[nItems++] = "uint256";
             a->function = toFunction("ownerOf", params, nItems, items);
             return a;
@@ -102,7 +102,7 @@ const CTransaction *promoteToToken(const CTransaction *p) {
             *(CTransaction*)a = *p;  // NOLINT
             a->_from = toAddress(extract(params, 0*64, 64));
             a->_to = toAddress(extract(params, 1*64, 64));
-            a->_tokenId = toWei("0x"+extract(params, 2*64, 64));
+            a->_tokenId = toWei("0x" + extract(params, 2*64, 64));
             items[nItems++] = "address";
             items[nItems++] = "address";
             items[nItems++] = "uint256";
@@ -116,7 +116,7 @@ const CTransaction *promoteToToken(const CTransaction *p) {
             *(CTransaction*)a = *p;  // NOLINT
             a->_from = toAddress(extract(params, 0*64, 64));
             a->_to = toAddress(extract(params, 1*64, 64));
-            a->_tokenId = toWei("0x"+extract(params, 2*64, 64));
+            a->_tokenId = toWei("0x" + extract(params, 2*64, 64));
             a->_data = extract(params, 3*64);
             items[nItems++] = "address";
             items[nItems++] = "address";
@@ -143,7 +143,7 @@ const CTransaction *promoteToToken(const CTransaction *p) {
             QTransfer *a = new QTransfer;
             *(CTransaction*)a = *p;  // NOLINT
             a->_to = toAddress(extract(params, 0*64, 64));
-            a->_value = toWei("0x"+extract(params, 1*64, 64));
+            a->_value = toWei("0x" + extract(params, 1*64, 64));
             items[nItems++] = "address";
             items[nItems++] = "uint256";
             a->function = toFunction("transfer", params, nItems, items);
@@ -156,7 +156,7 @@ const CTransaction *promoteToToken(const CTransaction *p) {
             *(CTransaction*)a = *p;  // NOLINT
             a->_from = toAddress(extract(params, 0*64, 64));
             a->_to = toAddress(extract(params, 1*64, 64));
-            a->_value = toWei("0x"+extract(params, 2*64, 64));
+            a->_value = toWei("0x" + extract(params, 2*64, 64));
             items[nItems++] = "address";
             items[nItems++] = "address";
             items[nItems++] = "uint256";

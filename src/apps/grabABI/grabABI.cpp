@@ -16,8 +16,6 @@
 
 //-----------------------------------------------------------------------
 extern void addDefaultFuncs(CFunctionArray& funcs);
-extern string_q getAssign(const CParameter *p, uint64_t which);
-extern string_q getEventAssign(const CParameter *p, uint64_t which, uint64_t prevIdxs);
 
 //-----------------------------------------------------------------------
 extern const char* STR_FACTORY1;
@@ -287,10 +285,10 @@ int main(int argc, const char *argv[]) {
                         uint64_t nIndexed = 0;
                         for (size_t j = 0 ; j < func->inputs.size() ; j++) {
                             fields   += func->inputs[j].Format("[{TYPE}][ {NAME}]|");
-                            assigns1 += func->inputs[j].Format(getAssign(&func->inputs[j], j));
+                            assigns1 += func->inputs[j].Format(func->inputs[j].getFunctionAssign(j));
                             items1   += "\t\t\titems[nItems++] = \"" + func->inputs[j].type + "\";\n";
                             nIndexed += func->inputs[j].indexed;
-                            string_q res = func->inputs[j].Format(getEventAssign(&func->inputs[j], j+1, nIndexed));
+                            string_q res = func->inputs[j].Format(func->inputs[j].getEventAssign(j+1, nIndexed));
                             replace(res, "++", "[");
                             replace(res, "++", "]");
                             assigns2 += res;
@@ -454,10 +452,7 @@ int main(int argc, const char *argv[]) {
             replaceAll(sourceCode, "[{EVENT_DECLS}]", evtDecls.empty() ? "// No events" : evtDecls);
             replaceAll(sourceCode, "[{EVTS}]", evts.empty() ? "\t// No events\n" : evts);
             sourceCode = substitute(sourceCode, "{QB}", (options.isBuiltin() ? "_qb" : ""));
-            writeTheCode(classDir + options.prefix + ".cpp",
-                         substitute(
-                         substitute(sourceCode, "XXXX", "["),
-                                    "YYYY", "]"));
+            writeTheCode(classDir + options.prefix + ".cpp", sourceCode);
 
             // The code
             if (!options.isBuiltin()) {
@@ -479,64 +474,6 @@ int main(int argc, const char *argv[]) {
         }
     }
     return 0;
-}
-
-//-----------------------------------------------------------------------
-string_q getAssign(const CParameter *p, uint64_t which) {
-
-    string_q ass;
-    string_q type = p->Format("[{TYPE}]");
-
-    if (contains(type, "[") && contains(type, "]")) {
-        const char* STR_ASSIGNARRAY =
-        "\t\t\twhile (!params.empty()) {\n"
-        "\t\t\t\tstring_q val = extract(params, 0, 64);\n"
-        "\t\t\t\tparams = extract(params, 64);\n"
-        "\t\t\t\ta->[{NAME}]XXXXa->[{NAME}].size()YYYY = val;\n"
-        "\t\t\t}\n";
-        return p->Format(STR_ASSIGNARRAY);
-    }
-
-    if (type == "uint" || type == "uint256") { ass = "toWei(\"0x\"+[{VAL}]);";
-    } else if (contains(type, "gas")) { ass = "toGas([{VAL}]);";
-    } else if (contains(type, "uint64")) { ass = "toLongU([{VAL}]);";
-    } else if (contains(type, "uint")) { ass = "(uint32_t)toLongU([{VAL}]);";
-    } else if (contains(type, "int") || contains(type, "bool")) { ass = "toLong([{VAL}]);";
-    } else if (contains(type, "address")) { ass = "toAddress([{VAL}]);";
-    } else { ass = "[{VAL}];";
-    }
-
-    replace(ass, "[{VAL}]", "extract(params, " + asStringU(which) + "*64" + (type == "bytes" ? "" : ", 64") + ")");
-    return p->Format("\t\t\ta->[{NAME}] = " + ass + "\n");
-}
-
-//-----------------------------------------------------------------------
-string_q getEventAssign(const CParameter *p, uint64_t which, uint64_t nIndexed) {
-    string_q type = p->Format("[{TYPE}]"), ass;
-    if (type == "uint" || type == "uint256") { ass = "toWei([{VAL}]);";
-    } else if (contains(type, "gas")) { ass = "toGas([{VAL}]);";
-    } else if (contains(type, "uint64")) { ass = "toLongU([{VAL}]);";
-    } else if (contains(type, "uint")) { ass = "(uint32_t)toLongU([{VAL}]);";
-    } else if (contains(type, "int") || contains(type, "bool")) { ass = "toLong([{VAL}]);";
-    } else if (contains(type, "address")) { ass = "toAddress([{VAL}]);";
-    } else { ass = "[{VAL}];";
-    }
-
-    if (p->indexed) {
-        replace(ass, "[{VAL}]", "nTops > [{WHICH}] ? fromTopic(p->topics[{IDX}]) : \"\"");
-
-    } else if (type == "bytes") {
-        replace(ass, "[{VAL}]", "\"0x\" + extract(data, [{WHICH}]*64)");
-        which -= (nIndexed+1);
-
-    } else {
-        replace(ass, "[{VAL}]", string_q(type == "address" ? "" : "\"0x\" + ") + "extract(data, [{WHICH}]*64, 64)");
-        which -= (nIndexed+1);
-    }
-    replace(ass, "[{IDX}]", "++" + asStringU(which)+"++");
-    replace(ass, "[{WHICH}]", asStringU(which));
-    string_q fmt = "\t\t\ta->[{NAME}] = " + ass + "\n";
-    return p->Format(fmt);
 }
 
 //-----------------------------------------------------------------------
@@ -668,7 +605,7 @@ const char* STR_CODE_SIGS =
 "\n";
 
 //-----------------------------------------------------------------------
-const char* STR_BLOCK_PATH = "etherlib_init(qh);\n\n";
+const char* STR_BLOCK_PATH = "\n\tetherlib_init(qh);";
 
 //-----------------------------------------------------------------------
 const char* STR_ITEMS =

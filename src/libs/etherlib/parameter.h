@@ -59,6 +59,8 @@ public:
 
     // EXISTING_CODE
     explicit CParameter(string_q& txtIn);
+    string_q getFunctionAssign(uint64_t which) const;
+    string_q getEventAssign(uint64_t which, uint64_t nIndexed=NOPOS) const;
     // EXISTING_CODE
     bool operator==(const CParameter& item) const;
     bool operator!=(const CParameter& item) const { return !operator==(item); }
