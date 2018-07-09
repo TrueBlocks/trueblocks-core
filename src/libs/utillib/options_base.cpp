@@ -261,8 +261,9 @@ namespace qblocks {
 
     //--------------------------------------------------------------------------------
     COption::COption(const string_q& nameIn, const string_q& descr) {
-        string_q name = nameIn;
 
+        hidden = contains(nameIn, "@");
+        string_q name = substitute(nameIn, "@", "-");
         description = descr;
         string_q dummy;
         if (contains(name, ":<") || contains(name, ":[")) {
@@ -354,7 +355,7 @@ namespace qblocks {
             if (startsWith(paramsPtr[i].shortName, '~')) {
                 required += (" " + substitute(extract(paramsPtr[i].longName, 1), "!", ""));
 
-            } else if (startsWith(paramsPtr[i].shortName, '@')) {
+            } else if (paramsPtr[i].hidden) {
                 // invisible option
 
             } else if (!paramsPtr[i].shortName.empty()) {
@@ -478,15 +479,12 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
             os << "| -------: | :------- | :------- |\n";
         }
 
-        bool showHidden = (getEnvStr("SHOW_HIDDEN_OPTIONS") == "true");
+        size_t nHidden = 0;
         for (uint64_t i = 0 ; i < nParamsRef ; i++) {
             string_q sName = paramsPtr[i].shortName;
             string_q lName = paramsPtr[i].longName;
             string_q descr = trim(paramsPtr[i].description);
-            if (startsWith(sName, '@') && !showHidden) {
-                // invisible option
-
-            } else if (!sName.empty()) {
+            if (!paramsPtr[i].hidden && !sName.empty()) {
                 bool isMode = startsWith(sName, '~');
                 // ~ makes the option a required mode, ! makes it not required
                 bool isReq = isMode && !contains(lName, '!');
@@ -494,6 +492,28 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
                 lName = substitute(substitute((isMode ? substitute(lName, "-", "") : lName), "!", ""), "~", "");
                 os << oneDescription(sName, lName, descr, isMode, isReq);
             }
+            if (paramsPtr[i].hidden)
+                nHidden++;
+        }
+
+        // For testing purposes, we show the hidden options
+        if (isTestMode() && nHidden) {
+            os << "\n#### Hidden options (shown during testing only)\n";
+            for (uint64_t i = 0 ; i < nParamsRef ; i++) {
+                string_q sName = paramsPtr[i].shortName;
+                string_q lName = paramsPtr[i].longName;
+                string_q descr = trim(paramsPtr[i].description);
+                if (paramsPtr[i].hidden && !sName.empty()) {
+                    bool isMode = startsWith(sName, '~');
+                    // ~ makes the option a required mode, ! makes it not required
+                    bool isReq = isMode && !contains(lName, '!');
+                    lName = substitute(substitute((isMode ? substitute(lName, "-", "") : lName), "!", ""), "~", "");
+                    lName = substitute(lName, "@-", "");
+                    sName = (isMode ? "" : paramsPtr[i].shortName);
+                    os << oneDescription(sName, lName, descr, isMode, isReq);
+                }
+            }
+            os << "#### Hidden options (shown during testing only)\n\n";
         }
 
         if (isEnabled(OPT_VERBOSE))

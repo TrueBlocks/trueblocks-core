@@ -23,10 +23,10 @@ static COption params[] = {
     COption("-noconst",   "generate encodings for non-constant functions and events only (always true when generating)"), // NOLINT
     COption("-open",      "open the ABI file for editing, download if not already present"),
     COption("-raw",       "force retrieval of ABI from etherscan (ignoring cache)"),
-    COption("@-json",     "print the ABI to the screen as json"),
-    COption("@-silent",   "if ABI cannot be acquired, fail silently (useful for scripting)"),
-    COption("@-nodec",    "do not decorate duplicate names"),
-    COption("@-freshen",  "regenerate the binary database version of all ABIs in the abi cache"),
+    COption("@json",      "print the ABI to the screen as json"),
+    COption("@silent",    "if ABI cannot be acquired, fail silently (useful for scripting)"),
+    COption("@nodec",     "do not decorate duplicate names"),
+    COption("@freshen",   "regenerate the binary database version of all ABIs in the abi cache"),
     COption("",           "Fetches the ABI for a smart contract. Optionally generates C++ source code "
                           "representing that ABI.\n"),
 };

@@ -6,7 +6,7 @@ While `ethslurp` does have its shortcomings, it also provides some nice features
 
 #### Usage
 
-`Usage:`    ethslurp [-a|-b|-d|-f|-i|-e|-v|-h] addr  
+`Usage:`    ethslurp [-b|-d|-f|-i|-e|-v|-h] addr  
 `Purpose:`  Fetches data off the Ethereum blockchain for an arbitrary account or smart contract. Optionally formats the output to your specification. Note: --income and --expense are mutually exclusive as are --blocks and --dates.
              
 `Where:`  
@@ -14,7 +14,6 @@ While `ethslurp` does have its shortcomings, it also provides some nice features
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
 |  | addr | the address of the account or contract to slurp |
-| -a | --archive val | filename of output (stdout otherwise) |
 | -b | --blocks range | export records in block range (:0[:max]) |
 | -d | --dates val | export records in date range (:yyyymmdd[hhmmss][:yyyymmdd[hhmmss]]) |
 | -f | --fmt val | pretty print, optionally add ':txt,' ':csv,' or ':html' |
