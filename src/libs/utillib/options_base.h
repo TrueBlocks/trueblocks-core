@@ -81,6 +81,7 @@ namespace qblocks {
         string_q  hotKey;
         string_q  description;
         string_q  permitted;
+        bool      hidden;
         COption(const string_q& name, const string_q& descr);
     };
 

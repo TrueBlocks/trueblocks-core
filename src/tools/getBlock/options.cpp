@@ -14,26 +14,26 @@
 
 //---------------------------------------------------------------------------------------------------
 static COption params[] = {
-    COption("~block_list",       "a space-separated list of one or more blocks to retrieve"),
-    COption("-raw",              "pull the block data from the running Ethereum node (no cache)"),
-    COption("-hash_o(n)ly",      "display only transaction hashes, default is to display full transaction detail"),
-    COption("-check",            "compare results between qblocks and Ethereum node, report differences, if any"),
-    COption("-latest",           "display the latest blocks at both the node and the cache"),
-    COption("-addrs",            "display all addresses included in the block"),
-    COption("-uniq",             "display only uniq addresses found in the block"),
+    COption("~block_list",         "a space-separated list of one or more blocks to retrieve"),
+    COption("-raw",                "pull the block data from the running Ethereum node (no cache)"),
+    COption("-hash_o(n)ly",        "display only transaction hashes, default is to display full transaction detail"),
+    COption("-check",              "compare results between qblocks and Ethereum node, report differences, if any"),
+    COption("-latest",             "display the latest blocks at both the node and the cache"),
+    COption("-addrs",              "display all addresses included in the block"),
+    COption("-uniq",               "display only uniq addresses found in the block"),
 //    COption("-trac(e)s",         "include transaction traces in the export"),
 //    COption("-addresses:<val>",  "display addresses included in block as one of: [ all | to | from |\n\t\t\t\t"
 //            "self-destruct | create | log-topic | log-data | input-data |\n\t\t\t\t"
 //            "trace-to | trace-from | trace-data | trace-call ]"),
-    COption("@f(o)rce",          "force a re-write of the block to the cache"),
-    COption("@quiet",            "do not print results to screen, used for speed testing and data checking"),
-    COption("@source:[c|r]",     "either :c(a)che or :(r)aw, source for data retrival. (shortcuts "
+    COption("@f(o)rce",            "force a re-write of the block to the cache"),
+    COption("@quiet",              "do not print results to screen, used for speed testing and data checking"),
+    COption("@source:[c|r]",       "either :c(a)che or :(r)aw, source for data retrival. (shortcuts "
                                     "-c = qblocks, -r = node)"),
-    COption("@fields:[a|m|c|r]", "either :(a)ll, (m)ini, (c)ache or :(r)aw; which fields to include in output "
+    COption("@fields:[a|m|c|r]",   "either :(a)ll, (m)ini, (c)ache or :(r)aw; which fields to include in output "
                                     "(all is default)"),
-    COption("@normalize",        "normalize (remove un-common fields and sort) for comparison with other "
+    COption("@normalize",          "normalize (remove un-common fields and sort) for comparison with other "
                                     "results (testing)"),
-    COption("",                  "Returns block(s) from local cache or directly from a running node.\n"),
+    COption("",                    "Returns block(s) from local cache or directly from a running node.\n"),
 };
 static size_t nParams = sizeof(params) / sizeof(COption);
 
