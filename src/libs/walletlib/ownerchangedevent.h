@@ -117,8 +117,8 @@ inline QOwnerChangedEvent& QOwnerChangedEvent::operator=(const QOwnerChangedEven
 
 //-------------------------------------------------------------------------
 inline bool QOwnerChangedEvent::operator==(const QOwnerChangedEvent& item) const {
-    // EXISTING1_CODE
-    // EXISTING1_CODE
+    // EXISTING_CODE
+    // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)
     return false;
 }

@@ -126,8 +126,8 @@ inline QMultiTransactEvent& QMultiTransactEvent::operator=(const QMultiTransactE
 
 //-------------------------------------------------------------------------
 inline bool QMultiTransactEvent::operator==(const QMultiTransactEvent& item) const {
-    // EXISTING1_CODE
-    // EXISTING1_CODE
+    // EXISTING_CODE
+    // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)
     return false;
 }

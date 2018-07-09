@@ -121,8 +121,8 @@ inline CAcctCacheItem& CAcctCacheItem::operator=(const CAcctCacheItem& ac) {
 
 //-------------------------------------------------------------------------
 inline bool CAcctCacheItem::operator==(const CAcctCacheItem& item) const {
-    // EXISTING1_CODE
-    // EXISTING1_CODE
+    // EXISTING_CODE
+    // EXISTING_CODE
     // Default equality operator as defined in class definition
     return (blockNum == item.blockNum && transIndex == item.transIndex);
 }

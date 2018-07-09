@@ -112,8 +112,8 @@ inline [{CLASS_NAME}]& [{CLASS_NAME}]::operator=(const [{CLASS_NAME}]& [{SHORT}]
 
 //-------------------------------------------------------------------------
 inline bool [{CLASS_NAME}]::operator==(const [{CLASS_NAME}]& item) const {
-    // EXISTING1_CODE
-    // EXISTING1_CODE
+    // EXISTING_CODE
+    // EXISTING_CODE
     // [{EQUAL_COMMENT}]
     return [{EQUAL_CODE}];
 }

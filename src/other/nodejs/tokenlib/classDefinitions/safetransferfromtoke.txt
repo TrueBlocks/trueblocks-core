@@ -1,6 +1,0 @@
-[settings]
-class     = QSafeTransferFromToke
-baseClass = CTransaction
-fields    = address _from|address _to|uint256 _tokenId|bytes _data|
-includes  = transaction.h
-cIncs     = #include "etherlib.h"
