@@ -41,7 +41,6 @@ int main(int argc, const char *argv[]) {
         }
 
         CFilename fn("accts.bin");
-        cout << getCWD() << " : " << fn.getFullPath() << "\n";
         bool exists = fileExists(fn.getFullPath());
         string_q msg = string_q(exists ? "Reading" : "Accumulating") + " accounts between blocks " +
                             asStringU(options.startBlock) + " and " +
