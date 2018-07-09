@@ -208,19 +208,19 @@ namespace qblocks {
             replaceAll(cmdLine, "--nocolor ", "");
             colorsOff();
 
-        } else if (isEnabled(OPT_DENOM) && contains(cmdLine, "--ether " )) {
+        } else if (isEnabled(OPT_ETHER) && contains(cmdLine, "--ether " )) {
             replaceAll(cmdLine, "--ether ", "");
             expContext().asEther = true;
             expContext().asDollars = false;
             expContext().asWei = false;
 
-        } else if (isEnabled(OPT_DENOM) && contains(cmdLine, "--wei ")) {
+        } else if (isEnabled(OPT_WEI) && contains(cmdLine, "--wei ")) {
             replaceAll(cmdLine, "--wei ", "");
             expContext().asEther = false;
             expContext().asDollars = false;
             expContext().asWei = true;
 
-        } else if (isEnabled(OPT_DENOM) && contains(cmdLine, "--dollars ")) {
+        } else if (isEnabled(OPT_DOLLARS) && contains(cmdLine, "--dollars ")) {
             replaceAll(cmdLine, "--dollars ", "");
             expContext().asEther = false;
             expContext().asDollars = true;
@@ -244,7 +244,11 @@ namespace qblocks {
     bool COptionsBase::builtInCmd(const string_q& arg) {
         if (isEnabled(OPT_VERBOSE) && (arg == "-v" || startsWith(arg, "-v:") || startsWith(arg, "--verbose")))
             return true;
-        if (isEnabled(OPT_DENOM) && (arg == "--ether" || arg == "--wei" || arg == "--dollars"))
+        if (isEnabled(OPT_ETHER) && arg == "--ether")
+            return true;
+        if (isEnabled(OPT_WEI) && arg == "--wei")
+            return true;
+        if (isEnabled(OPT_DOLLARS) && arg == "--ether")
             return true;
         if (isEnabled(OPT_PARITY) && (arg == "--parity"))
             return true;
@@ -260,9 +264,24 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
+    // If nameIn starts with (modes are required -- unless noted. --options are optional):
+    //      -    ==> regular option
+    //      @    ==> hidden option
+    //      ~    ==> mode (no leading --option needed)
+    //      ~!   ==> non-required mode
+    //      empty nameIn means description is for the whole program (not the option)
+    //--------------------------------------------------------------------------------
     COption::COption(const string_q& nameIn, const string_q& descr) {
 
-        hidden = contains(nameIn, "@");
+        hidden      = startsWith(nameIn, "@");
+//        mode        = startsWith(nameIn, "~");
+//        optional    = contains  (nameIn, "!");
+        shortName   = nameIn;
+        replaceAll(shortName, "-", "");
+        replaceAll(shortName, "~", "");
+        replaceAll(shortName, "@", "");
+        replaceAll(shortName, "!", "");
+
         string_q name = substitute(nameIn, "@", "-");
         description = descr;
         string_q dummy;
