@@ -78,10 +78,11 @@ namespace qblocks {
     public:
         string_q  shortName;
         string_q  longName;
-        string_q  hotKey;
         string_q  description;
         string_q  permitted;
         bool      hidden;
+        bool      mode;
+        bool      optional;
         COption(const string_q& name, const string_q& descr);
     };
 
