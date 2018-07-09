@@ -15,13 +15,13 @@
 
 //---------------------------------------------------------------------------------------------------
 static COption params[] = {
-    COption( "~source",      "source for the data (either 'remote', 'pairty', 'binary')"),
-    COption( "~begin",       "block to start with"),
-    COption( "~end",         "block to end on"),
-    COption( "-mode:<mode>", "if not present, display in 'short' mode, otherwise 'full' mode"),
-    COption( "-data",        "show results as data instead of displaying bloom filters"),
-    COption( "~@skip",       "optional skip step (default 100)"),
-    COption( "",             "Scans blocks looking for saturated bloomFilters.\n"),
+    COption("~source",      "source for the data (either 'remote', 'pairty', 'binary')"),
+    COption("~begin",       "block to start with"),
+    COption("~end",         "block to end on"),
+    COption("~!skip",       "optional skip step (default 100)"),
+    COption("-mode:<mode>", "if not present, display in 'short' mode, otherwise 'full' mode"),
+    COption("-data",        "show results as data instead of displaying bloom filters"),
+    COption("",             "Scans blocks looking for saturated bloomFilters.\n"),
 };
 static size_t nParams = sizeof(params) / sizeof(COption);
 
