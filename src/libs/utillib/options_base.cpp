@@ -138,7 +138,7 @@ namespace qblocks {
             for (size_t j = 0 ; j < nParamsRef && !combine ; j++) {
                 if (!paramsPtr[j].permitted.empty()) {
                     string_q shortName = paramsPtr[j].shortName;
-                    string_q longName  = "-"+paramsPtr[j].longName;
+                    string_q longName  = paramsPtr[j].longName;
                     if (shortName == arg || startsWith(longName, arg)) {
                         // We want to pull the next parameter into this one since it's a ':' param
                         combine = true;
@@ -273,59 +273,42 @@ namespace qblocks {
     //--------------------------------------------------------------------------------
     COption::COption(const string_q& nameIn, const string_q& descr) {
 
+        description = descr;
+        if (nameIn.empty())
+            return;
+
         hidden      = startsWith(nameIn, "@");
-//        mode        = startsWith(nameIn, "~");
-//        optional    = contains  (nameIn, "!");
+        mode        = startsWith(nameIn, "~");
+        optional    = contains  (nameIn, "!");
+
         shortName   = nameIn;
         replaceAll(shortName, "-", "");
         replaceAll(shortName, "~", "");
         replaceAll(shortName, "@", "");
         replaceAll(shortName, "!", "");
 
-        string_q name = substitute(nameIn, "@", "-");
-        description = descr;
-        string_q dummy;
-        if (contains(name, ":<") || contains(name, ":[")) {
-            permitted = name;
-            name = nextTokenClear(permitted, ':');
-            // order matters
-            if (permitted == "<range>")
-                dummy = " range";
-            else if (permitted == "<list>")
-                dummy = " list";
-            else if (permitted == "<fn>")
-                dummy = " fn";
-            else if (permitted == "<mode>")
-                dummy = " mode";
-            else if (!permitted.empty())
-                dummy = " val";
+        if (!mode) {
+            longName = "--" + shortName;
+            shortName = "-" + extract(shortName, 0, 1);
+        } else {
+            longName = shortName;
         }
 
-        if (!name.empty()) {
-            shortName = extract(name, 0, 2);
-            if (name.length() > 2)
-                longName = name + dummy;
+        if (contains(longName, ":")) {
+            permitted = longName;
+            longName = nextTokenClear(permitted, ':');
+            replaceAny(permitted, "<>", "");
+            if (permitted != "range" && permitted != "list" && permitted != "fn" && permitted != "mode")
+                permitted = "val";
+            longName += (" " + permitted);
+        }
 
-            if (contains(name, "{")) {
-                replace(name, "{", "|{");
-                nextTokenClear(name, '|');
-                shortName += name;
-
-            } else if (contains(name, ":")) {
-                nextTokenClear(name, ':');
-                shortName += name[0];
-                longName = "-" + name + dummy;
-            }
-
-            if (contains(longName, "(") && contains(longName, ")")) {
-                hotKey = longName;
-                nextTokenClear(hotKey, '(');
-                hotKey = nextTokenClear(hotKey, ')');
-                replaceAny(longName, "()", "");
-                string_q ss;
-                ss = shortName[0];
-                shortName = ss + hotKey;
-            }
+        if (contains(longName, "(") && contains(longName, ")")) {
+            string_q hotKey = longName;
+            nextTokenClear(hotKey, '(');
+            hotKey = nextTokenClear(hotKey, ')');
+            replaceAny(longName, "()", "");
+            shortName = "-" + hotKey;
         }
     }
 
@@ -371,8 +354,8 @@ namespace qblocks {
         if (!COptionsBase::needsOption)
             os << "[";
         for (uint64_t i = 0 ; i < nParamsRef ; i++) {
-            if (startsWith(paramsPtr[i].shortName, '~')) {
-                required += (" " + substitute(extract(paramsPtr[i].longName, 1), "!", ""));
+            if (paramsPtr[i].mode) {
+                required += (" " + paramsPtr[i].longName);
 
             } else if (paramsPtr[i].hidden) {
                 // invisible option
@@ -433,7 +416,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
             // When we are writing the readme file...
             string_q line = STR_ONE_LINE;
             replace(line, "{S}", sN);
-            replace(line, "{L}", (isMode ? "" : "-") + lN);
+            replace(line, "{L}", lN);
             replace(line, "{D}", substitute(d, "|", "&#124;"));
             os << line;
 
@@ -445,9 +428,9 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
             if (isMode) {
                 replace(line, "{L}", padRight(lN , 22));
             } else {
-                replace(line, "{L}", padRight((lN.empty() ? "" : " (-" + lN + ")") , 19));
+                replace(line, "{L}", padRight((lN.empty() ? "" : " (" + lN + ")") , 19));
             }
-            replace(line, "{D}", d + (required ? " (required)" : ""));
+            replace(line, "{D}", d + (required && isMode ? " (required)" : ""));
             os << line;
         }
         ASSERT(pOptions);
@@ -488,7 +471,6 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
 
     //--------------------------------------------------------------------------------
     string_q descriptions(void) {
-        string_q required;
 
         ostringstream os;
         os << bYellow << sep << "Where:" << sep << cOff << "  \n";
@@ -503,10 +485,9 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
             string_q sName = paramsPtr[i].shortName;
             string_q lName = paramsPtr[i].longName;
             string_q descr = trim(paramsPtr[i].description);
+            bool isMode = paramsPtr[i].mode;
             if (!paramsPtr[i].hidden && !sName.empty()) {
-                bool isMode = startsWith(sName, '~');
-                // ~ makes the option a required mode, ! makes it not required
-                bool isReq = isMode && !contains(lName, '!');
+                bool isReq = !paramsPtr[i].optional;
                 sName = (isMode ? "" : sName);
                 lName = substitute(substitute((isMode ? substitute(lName, "-", "") : lName), "!", ""), "~", "");
                 os << oneDescription(sName, lName, descr, isMode, isReq);
@@ -522,10 +503,9 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
                 string_q sName = paramsPtr[i].shortName;
                 string_q lName = paramsPtr[i].longName;
                 string_q descr = trim(paramsPtr[i].description);
+                bool isMode = paramsPtr[i].mode;
                 if (paramsPtr[i].hidden && !sName.empty()) {
-                    bool isMode = startsWith(sName, '~');
-                    // ~ makes the option a required mode, ! makes it not required
-                    bool isReq = isMode && !contains(lName, '!');
+                    bool isReq = !paramsPtr[i].optional;
                     lName = substitute(substitute((isMode ? substitute(lName, "-", "") : lName), "!", ""), "~", "");
                     lName = substitute(lName, "@-", "");
                     sName = (isMode ? "" : paramsPtr[i].shortName);
@@ -536,9 +516,9 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
         }
 
         if (isEnabled(OPT_VERBOSE))
-            os << oneDescription("-v", "-verbose",
+            os << oneDescription("-v", "--verbose",
                     "set verbose level. Either -v, --verbose or -v:n where 'n' is level", false, false);
-        os << oneDescription("-h", "-help", "display this help screen", false, false);
+        os << oneDescription("-h", "--help", "display this help screen", false, false);
         ASSERT(pOptions);
         return pOptions->postProcess("description", os.str().c_str());
     }
