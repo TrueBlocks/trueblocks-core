@@ -101,7 +101,9 @@ bool CNewReceipt::Serialize(SFArchive& archive) {
     if (archive.isWriting())
         return SerializeC(archive);
 
-    // If we're reading a back level, read the whole thing and we're done.
+    // Always read the base class (it will handle its own backLevels if any, then
+    // read this object's back level (if any) or the current version.
+    CBaseNode::Serialize(archive);
     if (readBackLevel(archive))
         return true;
 
@@ -208,7 +210,6 @@ string_q nextNewreceiptChunk_custom(const string_q& fieldIn, const void *dataPtr
 //---------------------------------------------------------------------------
 bool CNewReceipt::readBackLevel(SFArchive& archive) {
 
-    CBaseNode::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE

@@ -1,0 +1,48 @@
+abiTest argc: 2 [1:func_assign] 
+abiTest func_assign 
+function assignment test...
+CBalanceHistoryArray				a->_val = extract(params, 0*64, 64);
+CBlockNumArray				a->_val = extract(params, 0*64, 64);
+CFunctionArray				a->_val = extract(params, 0*64, 64);
+CIncomeStatement				a->_val = extract(params, 0*64, 64);
+CLogEntryArray				a->_val = extract(params, 0*64, 64);
+CParameterArray				a->_val = extract(params, 0*64, 64);
+CPerson				a->_val = extract(params, 0*64, 64);
+CReceipt				a->_val = extract(params, 0*64, 64);
+CNewReceipt				a->_val = extract(params, 0*64, 64);
+CNewTransactionArray				a->_val = extract(params, 0*64, 64);
+SFBigUintArray				a->_val = toLong(extract(params, 0*64, 64));
+SFTopicArray				a->_val = extract(params, 0*64, 64);
+address[]				while (!params.empty()) {
+				string_q val = extract(params, 0, 64);
+				params = extract(params, 64);
+				a->_val.push_back(val);
+			}
+bytes4				a->_val = extract(params, 0*64, 64);
+time				a->_val = extract(params, 0*64, 64);
+uint8				a->_val = (uint32_t)toLongU(extract(params, 0*64, 64));
+CStringArray				a->_val = extract(params, 0*64, 64);
+CTraceAction				a->_val = extract(params, 0*64, 64);
+CTraceResult				a->_val = extract(params, 0*64, 64);
+CTransactionArray				a->_val = extract(params, 0*64, 64);
+CTreeNode				a->_val = extract(params, 0*64, 64);
+SFTopicArray				a->_val = extract(params, 0*64, 64);
+address				a->_val = toAddress(extract(params, 0*64, 64));
+blknum				a->_val = extract(params, 0*64, 64);
+bloom				a->_val = extract(params, 0*64, 64);
+bool				a->_val = toLong(extract(params, 0*64, 64));
+bytes				a->_val = extract(params, 0*64);
+bytes32				a->_val = extract(params, 0*64, 64);
+double				a->_val = extract(params, 0*64, 64);
+gas				a->_val = toGas(extract(params, 0*64, 64));
+hash				a->_val = extract(params, 0*64, 64);
+int256				a->_val = toLong(extract(params, 0*64, 64));
+int64				a->_val = toLong(extract(params, 0*64, 64));
+string				a->_val = extract(params, 0*64, 64);
+timestamp				a->_val = extract(params, 0*64, 64);
+uint256				a->_val = toWei("0x" + extract(params, 0*64, 64));
+uint32				a->_val = (uint32_t)toLongU(extract(params, 0*64, 64));
+uint64				a->_val = toLongU(extract(params, 0*64, 64));
+wei				a->_val = extract(params, 0*64, 64);
+...passed
+

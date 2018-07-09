@@ -1,0 +1,44 @@
+abiTest argc: 2 [1:evt_assign] 
+abiTest evt_assign 
+event assignment test...
+CBalanceHistoryArray				a->_val = "0x" + extract(data, 0*64, 64);
+CBlockNumArray				a->_val = "0x" + extract(data, 0*64, 64);
+CFunctionArray				a->_val = "0x" + extract(data, 0*64, 64);
+CIncomeStatement				a->_val = "0x" + extract(data, 0*64, 64);
+CLogEntryArray				a->_val = "0x" + extract(data, 0*64, 64);
+CParameterArray				a->_val = "0x" + extract(data, 0*64, 64);
+CPerson				a->_val = "0x" + extract(data, 0*64, 64);
+CReceipt				a->_val = "0x" + extract(data, 0*64, 64);
+CNewReceipt				a->_val = "0x" + extract(data, 0*64, 64);
+CNewTransactionArray				a->_val = "0x" + extract(data, 0*64, 64);
+SFBigUintArray				a->_val = toLong("0x" + extract(data, 0*64, 64));
+SFTopicArray				a->_val = "0x" + extract(data, 0*64, 64);
+address[]				a->_val = toAddress("0x" + extract(data, 0*64, 64));
+bytes4				a->_val = "0x" + extract(data, 0*64, 64);
+time				a->_val = "0x" + extract(data, 0*64, 64);
+uint8				a->_val = (uint32_t)toLongU("0x" + extract(data, 0*64, 64));
+CStringArray				a->_val = "0x" + extract(data, 0*64, 64);
+CTraceAction				a->_val = "0x" + extract(data, 0*64, 64);
+CTraceResult				a->_val = "0x" + extract(data, 0*64, 64);
+CTransactionArray				a->_val = "0x" + extract(data, 0*64, 64);
+CTreeNode				a->_val = "0x" + extract(data, 0*64, 64);
+SFTopicArray				a->_val = "0x" + extract(data, 0*64, 64);
+address				a->_val = toAddress(extract(data, 0*64, 64));
+blknum				a->_val = "0x" + extract(data, 0*64, 64);
+bloom				a->_val = "0x" + extract(data, 0*64, 64);
+bool				a->_val = toLong("0x" + extract(data, 0*64, 64));
+bytes				a->_val = "0x" + extract(data, 0*64);
+bytes32				a->_val = "0x" + extract(data, 0*64, 64);
+double				a->_val = "0x" + extract(data, 0*64, 64);
+gas				a->_val = toGas("0x" + extract(data, 0*64, 64));
+hash				a->_val = "0x" + extract(data, 0*64, 64);
+int256				a->_val = toLong("0x" + extract(data, 0*64, 64));
+int64				a->_val = toLong("0x" + extract(data, 0*64, 64));
+string				a->_val = "0x" + extract(data, 0*64, 64);
+timestamp				a->_val = "0x" + extract(data, 0*64, 64);
+uint256				a->_val = toWei("0x" + extract(data, 0*64, 64));
+uint32				a->_val = (uint32_t)toLongU("0x" + extract(data, 0*64, 64));
+uint64				a->_val = toLongU("0x" + extract(data, 0*64, 64));
+wei				a->_val = "0x" + extract(data, 0*64, 64);
+...passed
+

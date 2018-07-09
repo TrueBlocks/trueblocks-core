@@ -92,7 +92,7 @@ const CTransaction *promoteToWallet(const CTransaction *p) {
             // 0xba51a6df
             QChangeRequirement *a = new QChangeRequirement;
             *(CTransaction*)a = *p;  // NOLINT
-            a->_newRequired = toWei("0x"+extract(params, 0*64, 64));
+            a->_newRequired = toWei("0x" + extract(params, 0*64, 64));
             items[nItems++] = "uint256";
             a->function = toFunction("changeRequirement", params, nItems, items);
             return a;
@@ -113,7 +113,7 @@ const CTransaction *promoteToWallet(const CTransaction *p) {
             QExecute *a = new QExecute;
             *(CTransaction*)a = *p;  // NOLINT
             a->_to = toAddress(extract(params, 0*64, 64));
-            a->_value = toWei("0x"+extract(params, 1*64, 64));
+            a->_value = toWei("0x" + extract(params, 1*64, 64));
             a->_data = extract(params, 2*64);
             items[nItems++] = "address";
             items[nItems++] = "uint256";
@@ -174,7 +174,7 @@ const CTransaction *promoteToWallet(const CTransaction *p) {
             // 0xb20d30a9
             QSetDailyLimit *a = new QSetDailyLimit;
             *(CTransaction*)a = *p;  // NOLINT
-            a->_newLimit = toWei("0x"+extract(params, 0*64, 64));
+            a->_newLimit = toWei("0x" + extract(params, 0*64, 64));
             items[nItems++] = "uint256";
             a->function = toFunction("setDailyLimit", params, nItems, items);
             return a;
