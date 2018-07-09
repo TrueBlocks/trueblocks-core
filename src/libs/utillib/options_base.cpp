@@ -156,14 +156,19 @@ namespace qblocks {
         nArgs = curArg;
 
         // If we have a command file, we will use it, if not we will creat one and pretend we have one.
-        commandList = "";
         fromFile = false;
-        if (cmdFileName.empty()) {
-            for (uint64_t i = 0 ; i < nArgs ; i++)
-                commandList += (args[i] + " ");
-            commandList += '\n';
+        commandList = "";
+        for (uint64_t i = 0 ; i < nArgs ; i++) {
+            string_q a = args[i];
+            if (!contains(a, "--file"))
+                commandList += (a + " ");
+        }
+        commandList += '\n';
 
-        } else {
+        if (!cmdFileName.empty()) {
+            string_q save = commandList;
+            commandList = "";
+            // The command line also has a --file in it, so add these commands as well
             fromFile = true;
             string_q contents =  asciiFileToString(cmdFileName);
             replaceAll(contents, "\t", " ");
@@ -171,9 +176,8 @@ namespace qblocks {
             replaceAll(contents, "-h", "");
             replaceAll(contents, "  ", " ");
             replaceAll(contents, "\\\n", "");
-            if (contents.empty()) {
+            if (contents.empty())
                 return usage("Command file '" + cmdFileName + "' is empty. Quitting...");
-            }
             if (startsWith(contents, "NOPARSE\n")) {
                 commandList = contents;
                 nextTokenClear(commandList, '\n');
@@ -184,6 +188,7 @@ namespace qblocks {
                         commandList += (command+"\n");
                 }
             }
+            commandList += save;
         }
         commandList += stdInCmds;
         replaceAll(commandList, " \n", "\n");
