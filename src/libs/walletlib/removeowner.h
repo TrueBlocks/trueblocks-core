@@ -114,8 +114,8 @@ inline QRemoveOwner& QRemoveOwner::operator=(const QRemoveOwner& re) {
 
 //-------------------------------------------------------------------------
 inline bool QRemoveOwner::operator==(const QRemoveOwner& item) const {
-    // EXISTING1_CODE
-    // EXISTING1_CODE
+    // EXISTING_CODE
+    // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)
     return false;
 }

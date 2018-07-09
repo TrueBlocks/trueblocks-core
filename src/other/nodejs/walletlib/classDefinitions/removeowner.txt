@@ -1,6 +1,0 @@
-[settings]
-class     = QRemoveOwner
-baseClass = CTransaction
-fields    = address _owner|
-includes  = transaction.h
-cIncs     = #include "etherlib.h"

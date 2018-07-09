@@ -154,8 +154,8 @@ inline CFunction& CFunction::operator=(const CFunction& fu) {
 
 //-------------------------------------------------------------------------
 inline bool CFunction::operator==(const CFunction& item) const {
-    // EXISTING1_CODE
-    // EXISTING1_CODE
+    // EXISTING_CODE
+    // EXISTING_CODE
     // Default equality operator as defined in class definition
     return encoding % item.encoding;
 }

@@ -117,8 +117,8 @@ inline QApprove& QApprove::operator=(const QApprove& ap) {
 
 //-------------------------------------------------------------------------
 inline bool QApprove::operator==(const QApprove& item) const {
-    // EXISTING1_CODE
-    // EXISTING1_CODE
+    // EXISTING_CODE
+    // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)
     return false;
 }
