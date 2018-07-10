@@ -170,6 +170,7 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-o" || arg == "--open") {
 
             editFile(configPath("quickBlocks.toml"));
+            editFile(configPath("ethslurp.toml"));
             exit(0);
 
         } else if (startsWith(arg, '-')) {  // do not collapse
