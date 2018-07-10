@@ -29,7 +29,7 @@ public:
 class COptions : public CBlockOptions {
 public:
     CState state;
-    string_q addrs;
+    SFAddressArray addrs;
     bool asData;
     bool noZero;
     bool total;

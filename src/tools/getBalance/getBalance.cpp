@@ -33,12 +33,12 @@ int main(int argc, const char *argv[]) {
         if (!options.parseArguments(command))
             return 0;
 
-        uint64_t nAccts = countOf(options.addrs, '|') + 1;
+        size_t nAccts = options.addrs.size();
         bool needsTotal = (nAccts > 1 && options.total);
 
         // For each address
-        while (!options.addrs.empty()) {
-            options.state.curAddr = nextTokenClear(options.addrs, '|');
+        for (auto addr : options.addrs) {
+            options.state.curAddr = addr;
             options.blocks.forEveryBlockNumber(visitBlock, &options);
         }
 
