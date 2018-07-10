@@ -9,4 +9,4 @@ getBalance -n 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 0x6f46cf5569aefa1acc100
     Balance for account 0xf27daff52c38b2c373ad2b9392652ddf433303c4 at block 3500000 is 672784612482328644707614
     Balance for account 0xf27daff52c38b2c373ad2b9392652ddf433303c4 at block 3700000 is 672784612482328644707614
     Balance for account 0xf27daff52c38b2c373ad2b9392652ddf433303c4 at block 4000000 is 672784612482328644707614
-        Total for 4 accounts at latest block is 6560773966313826302230982
+        Total for 3 accounts at latest block is 6560773966313826302230982
