@@ -627,7 +627,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
 #endif
         string_q cmd = editor + " \"" + fileName + "\"";
         if (isTestMode()) {
-            cout << "Testing editFile: " << cmd << "\n";
+            cout << "Testing editFile: " << substitute(cmd, "nano", "open") << "\n";
             cout << asciiFileToString(fileName) << "\n";
         } else {
             if (system(cmd.c_str())) {}  // do not remove. Silences compiler warnings
