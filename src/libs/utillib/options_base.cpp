@@ -617,7 +617,11 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
     //------------------------------------------------------------------
     void editFile(const string_q& fileName) {
         CToml toml(configPath("quickBlocks.toml"));
+#ifdef __APPLE__
         string_q editor = toml.getConfigStr("settings", "editor", "open ");
+#else
+        string_q editor = toml.getConfigStr("settings", "editor", "nano ");
+#endif
         string_q cmd = editor + " \"" + fileName + "\"";
         if (isTestMode()) {
             cout << "Testing editFile: " << cmd << "\n";
