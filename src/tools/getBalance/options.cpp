@@ -37,7 +37,6 @@ bool COptions::parseArguments(string_q& command) {
     Init();
     blknum_t latestBlock = getLatestBlockFromClient();
     state.earliestBlock = latestBlock;
-    string_q address_list;
     while (!command.empty()) {
         string_q arg = nextTokenClear(command, ' ');
         string_q orig = arg;
@@ -69,7 +68,7 @@ bool COptions::parseArguments(string_q& command) {
                 if (!isAddress(line))
                     return usage(line + " does not appear to be a valid "
                                         "Ethereum address. Quitting...");
-                address_list += line + "|";
+                addrs.push_back(line);
             }
 
         } else if (startsWith(arg, '-')) {  // do not collapse
@@ -91,7 +90,7 @@ bool COptions::parseArguments(string_q& command) {
 
             if (!isAddress(arg))
                 return usage(arg + " does not appear to be a valid Ethereum address. Quitting...");
-            address_list += arg + "|";
+            addrs.push_back(arg);
 
         } else {
 
@@ -108,14 +107,11 @@ bool COptions::parseArguments(string_q& command) {
     if (asData && total)
         return usage("Totalling is not available when exporting data.");
 
-    if (address_list.empty())
+    if (!addrs.size())
         return usage("You must provide at least one Ethereum address.");
-    addrs = address_list;
 
-    if (!blocks.hasBlocks()) {
-        // use 'latest'
-        blocks.numList.push_back(latestBlock);
-    }
+    if (!blocks.hasBlocks())
+        blocks.numList.push_back(latestBlock);  // use 'latest'
 
     return true;
 }
@@ -126,7 +122,7 @@ void COptions::Init(void) {
     nParamsRef = nParams;
     pOptions = this;
 
-    addrs = "";
+    addrs.clear();
     asData = false;
     noZero = false;
     total = false;
