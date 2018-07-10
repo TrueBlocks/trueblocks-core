@@ -12,6 +12,7 @@
  *-------------------------------------------------------------------------------------------*/
 #include "options.h"
 
+extern void readCustomAddrs(SFAddressArray& array);
 //-----------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
@@ -34,6 +35,7 @@ int main(int argc, const char *argv[]) {
 
         } else {
             getAccounts(addrs);
+            readCustomAddrs(addrs);
             if (isTestMode()) {
                addrs.clear();
                addrs.push_back("0x0000000000000000000000000000000000000000");
@@ -52,3 +54,12 @@ int main(int argc, const char *argv[]) {
     return 0;
 }
 
+//-----------------------------------------------------------------------
+void readCustomAddrs(SFAddressArray& array) {
+    size_t n = getGlobalConfig()->getConfigInt("extra_accounts", "n", 0);
+    for (size_t i = 0 ; i < n ; i++) {
+        string_q addr = getGlobalConfig()->getConfigStr("extra_accounts", "ea_" + asStringU(i), "");
+        if (!zeroAddr(addr))
+            array.push_back(addr);
+    }
+}
