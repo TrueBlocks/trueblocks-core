@@ -166,7 +166,9 @@ namespace qblocks {
         commandList += '\n';
 
         if (!cmdFileName.empty()) {
-            string_q save = commandList;
+            string_q toAll;
+            if (!commandList.empty())
+                toAll = (" " + substitute(commandList, "\n", ""));
             commandList = "";
             // The command line also has a --file in it, so add these commands as well
             fromFile = true;
@@ -181,14 +183,15 @@ namespace qblocks {
             if (startsWith(contents, "NOPARSE\n")) {
                 commandList = contents;
                 nextTokenClear(commandList, '\n');
+                commandList += toAll;
             } else {
                 while (!contents.empty()) {
                     string_q command = trimWhitespace(nextTokenClear(contents, '\n'));
-                    if (!command.empty() && !startsWith(command, ";"))  // ignore comments
-                        commandList += (command+"\n");
+                    if (!command.empty() && !startsWith(command, ";")) {  // ignore comments
+                        commandList += (command + toAll + "\n");
+                    }
                 }
             }
-            commandList += save;
         }
         commandList += stdInCmds;
         replaceAll(commandList, " \n", "\n");
