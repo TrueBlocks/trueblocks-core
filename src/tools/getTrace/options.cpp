@@ -17,6 +17,7 @@ static COption params[] = {
     COption("~!trans_list", "a space-separated list of one or more transaction identifiers "
                                 "(tx_hash, bn.txID, blk_hash.txID)"),
     COption("-raw",         "retrieve raw transaction directly from the running node"),
+    COption("-countOnly",   "show the number of traces for the transaction only"),
     COption("",             "Retrieve a transaction's traces from the local cache or a running node."),
 };
 static size_t nParams = sizeof(params) / sizeof(COption);
@@ -33,7 +34,10 @@ bool COptions::parseArguments(string_q& command) {
         if (arg == "-r" || arg == "--raw") {
             isRaw = true;
 
-        } else if (startsWith(arg, '-')) {  // do not collapse
+        } else if (arg == "-c" || arg == "--countOnly") {
+            countOnly = true;
+
+       } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);
@@ -65,6 +69,7 @@ void COptions::Init(void) {
 
     transList.Init();
     isRaw = false;
+    countOnly = false;
 }
 
 //---------------------------------------------------------------------------------------------------
