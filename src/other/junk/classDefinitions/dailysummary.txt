@@ -1,7 +1,0 @@
-[settings]
-class       = CDailySummary
-fields      = timestamp timestamp|blknum nBlocks|blknum startBlock|blknum endBlock|blknum nTraces|blknum nTxErrors|blknum nTcErrors|blknum nSuccess|blknum nReward|blknum nTxCreates|blknum nTcCreates|blknum nTcFails|blknum nCalls|blknum nSelfDestruct
-includes    = etherlib.h
-cIncs       = #include "etherlib.h"
-scope       = extern
-serialize   = true
