@@ -1,3 +1,0 @@
-cat web3scan.txt | cut -f1-5,12-100 >counts.txt
-cat web3scan.txt | cut -f1,3,6-8 >errors.txt
-#cat web3scan.txt | cut -f1,3,10-12 >creates.txt
