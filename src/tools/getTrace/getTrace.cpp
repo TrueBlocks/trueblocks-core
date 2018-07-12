@@ -62,15 +62,20 @@ bool visitTransaction(CTransaction& trans, void *data) {
         return true;
     }
 
-    CTraceArray traces;
-    getTraces(traces, trans.getValueByName("hash"));
+    if (opt->countOnly) {
+        cout << trans.hash << "\t" << getTraceCount(trans.hash) << "\n";
 
-    cout << "[";
-    for (size_t i = 0 ; i < traces.size() ; i++) {
-        traces[i].doExport(cout);
-        cout << (i < traces.size()-1 ? ",\n" : "\n");
+    } else {
+        CTraceArray traces;
+        getTraces(traces, trans.getValueByName("hash"));
+
+        cout << "[";
+        for (size_t i = 0 ; i < traces.size() ; i++) {
+            traces[i].doExport(cout);
+            cout << (i < traces.size()-1 ? ",\n" : "\n");
+        }
+        cout << "]\n";
     }
-    cout << "]\n";
 
     return true;
 }

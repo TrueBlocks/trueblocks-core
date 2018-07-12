@@ -40,6 +40,7 @@ namespace qblocks {
     extern CURL         *getCurl         (bool cleanup = false);
     extern bool          isNodeRunning   (void);
     extern bool          nodeHasBalances (void);
+    extern bool          nodeHasTraces   (void);
     extern bool          getObjectViaRPC (CBaseNode &node, const string_q& method, const string_q& params);
     extern string_q      callRPC         (const string_q& method, const string_q& params, bool raw);
     extern CCurlContext *getCurlContext  (void);
