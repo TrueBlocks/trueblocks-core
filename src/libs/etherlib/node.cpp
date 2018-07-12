@@ -359,8 +359,19 @@ extern void registerQuitHandler(QUITHANDLER qh);
     bool nodeHasBalances(void) {
         // The known balance of the DAO smart contract at block 1,500,001 was 4423518369662462108465682, if the
         // node reports this correctly, it has historical balances
+        // TODO(tjayrush): Return the balance of the one of the original genesis accounts because this won't work
+        // if the node is not yet synced to this block.
         return getBalance("0xbb9bc244d798123fde783fcc1c72d3bb8c189413", 1500001, false) ==
                                 canonicalWei("4423518369662462108465682");
+    }
+
+    //-------------------------------------------------------------------------
+    bool nodeHasTraces(void) {
+        // At block 50871 transaction 0, (hash: 0x0ec3f2488a93839524add10ea229e773f6bc891b4eb4794c3337d4495263790b)
+        // we know there were exactly 23 traces as per Parity. We check that here to see if the node is
+        // running with --tracing enabled. Not sure how this works with Geth
+        size_t count = getTraceCount("0x0ec3f2488a93839524add10ea229e773f6bc891b4eb4794c3337d4495263790b");
+        return (count == 23);
     }
 
     //-------------------------------------------------------------------------
