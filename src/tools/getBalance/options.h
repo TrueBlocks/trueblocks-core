@@ -28,6 +28,7 @@ public:
 //-----------------------------------------------------------------------------
 class COptions : public CBlockOptions {
 public:
+    map<blknum_t, timestamp_t> timestampMap;
     CState state;
     SFAddressArray addrs;
     bool asData;
