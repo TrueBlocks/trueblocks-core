@@ -16,6 +16,7 @@ extern void readCustomAddrs(SFAddressArray& array);
 //-----------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
+    getCurlContext()->provider = "None"; // --named option runs without a node
     etherlib_init();
 
     COptions options;
