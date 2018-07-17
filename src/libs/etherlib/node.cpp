@@ -20,7 +20,7 @@ namespace qblocks {
     void etherlib_init(const string_q& sourceIn, QUITHANDLER qh) {
 
         string_q fallBack = getEnvStr("FALLBACK");
-        if (!isNodeRunning() && fallBack.empty()) {
+        if (!isNodeRunning() && fallBack.empty() && getCurlContext()->provider != "None") {
             cerr << "\n\t";
             cerr << cTeal << "Warning: " << cOff << "QuickBlocks requires a running Ethereum\n";
             cerr << "\tnode to operate properly. Please start your node.\n";
