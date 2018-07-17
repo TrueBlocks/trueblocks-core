@@ -44,6 +44,8 @@ namespace qblocks {
         if (contains(source.pair, "BTC"))
             lastRead = SFTime(2009, 1, 1, 0, 0, 0);
         if (fileExists(cacheFile)) {
+            if (!isTestMode())
+                cerr << "Updating prices...";
             SFArchive priceCache(READING_ARCHIVE);
             if (priceCache.Lock(cacheFile, binaryReadOnly, LOCK_NOWAIT)) {
                 priceCache.readHeader();  // we read the header even though it may not be the current version...
