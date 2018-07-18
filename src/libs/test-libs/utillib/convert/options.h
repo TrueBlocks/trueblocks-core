@@ -16,8 +16,10 @@
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
-    COptions(void);
-    ~COptions(void);
+    uint64_t testNum;
+
+    COptions(void)  { Init(); }
+    ~COptions(void) { }
 
     bool parseArguments(string_q& command);
     void Init(void);

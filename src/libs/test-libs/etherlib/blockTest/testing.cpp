@@ -53,7 +53,7 @@ int main(int argc, const char *argv[]) {
 
 //----------------------------------------------------------------
 bool visitAddrs(const CAddressItem& item, void *data) {
-    if (zeroAddr(item.addr))
+    if (isZeroAddr(item.addr))
         return true;
     cout << item << "\n";
     return true;
@@ -61,7 +61,7 @@ bool visitAddrs(const CAddressItem& item, void *data) {
 
 //----------------------------------------------------------------
 bool accumAddrs(const CAddressItem& item, void *data) {
-    if (zeroAddr(item.addr))
+    if (isZeroAddr(item.addr))
         return true;
     vector<CAddressItem> *array = (vector<CAddressItem> *)data;
     array->push_back(item);

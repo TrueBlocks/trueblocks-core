@@ -14,7 +14,8 @@
 
 //---------------------------------------------------------------------------------------------------
 static COption params[] = {
-    COption("", "This is what the program does.\n"),
+    COption("~mode", "a number between 0 and 3 inclusive"),
+    COption("",      "Test all the ridiculous conversions from whatever2Whatever.\n"),
 };
 static size_t nParams = sizeof(params) / sizeof(COption);
 
@@ -28,12 +29,14 @@ bool COptions::parseArguments(string_q& command) {
     while (!command.empty()) {
         string_q arg = nextTokenClear(command, ' ');
         if (startsWith(arg, '-')) {  // do not collapse
+
             if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);
             }
+        } else {
+            testNum = toLongU(arg);
         }
     }
-
     return true;
 }
 
@@ -41,15 +44,5 @@ bool COptions::parseArguments(string_q& command) {
 void COptions::Init(void) {
     paramsPtr = params;
     nParamsRef = nParams;
-
-    minArgs = 0;
-}
-
-//---------------------------------------------------------------------------------------------------
-COptions::COptions(void) {
-    Init();
-}
-
-//--------------------------------------------------------------------------------
-COptions::~COptions(void) {
+    testNum = NOPOS;
 }

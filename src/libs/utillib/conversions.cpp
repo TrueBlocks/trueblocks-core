@@ -15,12 +15,9 @@
 
 namespace qblocks {
 
-    // TODO(tjayrush): inline these conversions
-    //----------------------------------------------------------------------------
-    uint64_t toLongU(const string_q& str) {
-        return (uint64_t)(startsWith(str, "0x") ? hex2LongU(str.c_str()) : strtoul(str.c_str(), NULL, 10));
-    }
+    extern uint64_t hex_2_Uint64(const string_q& str);
 
+    // TODO(tjayrush): inline these conversions
     //----------------------------------------------------------------------------
     double str2Double(const string_q& str) {
         return static_cast<double>(strtold(str.c_str(), NULL));
@@ -31,8 +28,18 @@ namespace qblocks {
         return static_cast<bool>(str % "true" || toLong(str) != 0);
     }
 
+    //----------------------------------------------------------------------------------------------------
+    timestamp_t toTimestamp(const string_q& str) {
+        return (timestamp_t)toLongU(str);
+    }
+
     //----------------------------------------------------------------------------
-    uint64_t hex2LongU(const string_q& str) {
+    uint64_t toLongU(const string_q& str) {
+        return (uint64_t)(startsWith(str, "0x") ? hex_2_Uint64(str) : strtoul(str.c_str(), NULL, 10));
+    }
+
+    //----------------------------------------------------------------------------
+    uint64_t hex_2_Uint64(const string_q& str) {
 
         string_q hex = toLower(startsWith(str, "0x") ? extract(str, 2) : str);
         reverse(hex);
@@ -51,6 +58,11 @@ namespace qblocks {
         return ret;
     }
 
+    //----------------------------------------------------------------------------------------------------
+    string_q fromTimestamp(timestamp_t ts) {
+        return asString(ts);
+    }
+
     //----------------------------------------------------------------------------
     string_q string2Hex(const string_q& str) {
 
@@ -67,6 +79,47 @@ namespace qblocks {
             ret = (ret + os.str().c_str());
         }
         return ("0x" + ret);
+    }
+
+    //--------------------------------------------------------------------------------
+    string_q decBigNum(const string_q& str) {
+        string_q ret = str;
+        size_t len = ret.length();
+             if (len > 29) ret = extract(ret, 0, 1) + "." + trimTrailing(extract(ret, 1), '0') + "e+29";  // NOLINT
+        else if (len > 28) ret = extract(ret, 0, 1) + "." + trimTrailing(extract(ret, 1), '0') + "e+28";
+        else if (len > 27) ret = extract(ret, 0, 1) + "." + trimTrailing(extract(ret, 1), '0') + "e+27";
+        else if (len > 26) ret = extract(ret, 0, 1) + "." + trimTrailing(extract(ret, 1), '0') + "e+26";
+        else if (len > 25) ret = extract(ret, 0, 1) + "." + trimTrailing(extract(ret, 1), '0') + "e+25";
+        else if (len > 24) ret = extract(ret, 0, 1) + "." + trimTrailing(extract(ret, 1), '0') + "e+24";
+        else if (len > 23) ret = extract(ret, 0, 1) + "." + trimTrailing(extract(ret, 1), '0') + "e+23";
+        else if (len > 22) ret = extract(ret, 0, 1) + "." + trimTrailing(extract(ret, 1), '0') + "e+22";
+        else if (len > 21) ret = extract(ret, 0, 1) + "." + trimTrailing(extract(ret, 1), '0') + "e+21";
+        replace(ret, ".e+", "e+");
+        return ret;
+    }
+
+    //--------------------------------------------------------------------------------
+    inline SFUintBN exp2BigUint(const string &s) {
+        string_q exponent = s.c_str();
+        string_q decimals = nextTokenClear(exponent, 'e');
+        string_q num = nextTokenClear(decimals, '.');
+        uint64_t nD = decimals.length();
+        uint64_t e = toLongU(exponent);
+        SFUintBN ee = 1;
+        uint64_t power = e - nD;
+        for (uint64_t i = 0 ; i < power ; i++)
+            ee *= 10;
+        num += decimals;
+        return str2BigUint(num) * ee;
+    }
+
+    //--------------------------------------------------------------------------------
+    SFUintBN canonicalWei(const string_q& str) {
+        if (contains(str, "0x"))
+            return hex2BigUint(extract(str, 2).c_str());
+        if (contains(str, "e"))
+            return exp2BigUint(str.c_str());
+        return str2BigUint(str);
     }
 
     //------------------------------------------------------------------
