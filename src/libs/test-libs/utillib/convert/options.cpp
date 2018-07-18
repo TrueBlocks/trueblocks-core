@@ -14,7 +14,7 @@
 
 //---------------------------------------------------------------------------------------------------
 static COption params[] = {
-    COption("",        "This is what the program does.\n"),
+    COption("", "This is what the program does.\n"),
 };
 static size_t nParams = sizeof(params) / sizeof(COption);
 
@@ -27,22 +27,12 @@ bool COptions::parseArguments(string_q& command) {
     Init();
     while (!command.empty()) {
         string_q arg = nextTokenClear(command, ' ');
-        if (arg == "-o" || arg == "--option1") {
-            option1 = true;
-
-        } else if (arg == "-t" || arg == "--thing") {
-            option2 = true;
-
-        } else if (startsWith(arg, '-')) {  // do not collapse
-
+        if (startsWith(arg, '-')) {  // do not collapse
             if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);
             }
         }
     }
-
-    if (option1 && option2)
-        return usage("Option 1 and option 2 cannot both be true.");
 
     return true;
 }
@@ -52,8 +42,7 @@ void COptions::Init(void) {
     paramsPtr = params;
     nParamsRef = nParams;
 
-    option1 = false;
-    option2 = false;
+    minArgs = 0;
 }
 
 //---------------------------------------------------------------------------------------------------
