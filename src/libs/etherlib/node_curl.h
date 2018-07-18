@@ -16,13 +16,12 @@
 namespace qblocks {
 
     //-------------------------------------------------------------------------
-    typedef size_t (*CURLCALLBACKFUNC)(char *ptr, size_t size, size_t nmemb, void *userdata);
-
     class CCurlContext {
     public:
         string_q         headers;
         string_q         baseURL;
         CURLCALLBACKFUNC callBackFunc;
+        CURLCALLBACKFUNC curlNoteFunc;
         bool             earlyAbort;
         string_q         postData;
         string_q         result;
