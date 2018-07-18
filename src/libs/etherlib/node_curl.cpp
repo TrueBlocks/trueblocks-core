@@ -25,6 +25,7 @@ namespace qblocks {
         headers      = "Content-Type: application/json\n";
         baseURL      = "http://localhost:8545";
         callBackFunc = writeCallback;
+        curlNoteFunc = NULL;
         theID        = 1;
         Clear();
     }
@@ -223,7 +224,11 @@ namespace qblocks {
         ASSERT(userdata);
         CCurlContext *data = (CCurlContext*)userdata;  // NOLINT
         data->result += s;
-        
+
+        if (data && data->curlNoteFunc)
+            if (!(*data->curlNoteFunc)(ptr, size, nmemb, userdata))  // returns zero if it wants us to stop
+                return 0;
+
         // Note: we used to skip over any trace that contained a long string
         // of characters with '5b5b5b5b5b5b5b5b5b5b5b5b' which started around
         // block 38004005 and ran for about 5000 blocks. We no longer do that

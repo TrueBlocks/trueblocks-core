@@ -33,6 +33,7 @@ namespace qblocks {
         return ret;
     }
 
+    extern size_t dotDot(char *ptr, size_t size, size_t nmemb, void *userdata);
     //---------------------------------------------------------------------------
     bool loadPriceData(const CPriceSource& source, CPriceQuoteArray& quotes, bool freshen,
                             string_q& message, uint64_t step) {
@@ -45,7 +46,7 @@ namespace qblocks {
             lastRead = SFTime(2009, 1, 1, 0, 0, 0);
         if (fileExists(cacheFile)) {
             if (!isTestMode())
-                cerr << "Updating prices...";
+                cerr << "Updating prices...\r";
             SFArchive priceCache(READING_ARCHIVE);
             if (priceCache.Lock(cacheFile, binaryReadOnly, LOCK_NOWAIT)) {
                 priceCache.readHeader();  // we read the header even though it may not be the current version...
@@ -98,7 +99,7 @@ namespace qblocks {
             if (freshen) {
                 if (verbose < 2) {
                     if (!isTestMode())
-                        cerr << "Retrieving price history data...\r";
+                        cerr << "Retrieving price history data...";
                     cerr.flush();
                 }
                 timestamp_t start = toTimestamp(nextRead);
@@ -120,7 +121,10 @@ namespace qblocks {
                     cerr << "Fetching: " << url << "\n";
 
                 // Ask Poloniex for the latest data
+                setCurlNoteFunc(dotDot);
                 string_q response = urlToString(url);
+                setCurlNoteFunc(NULL);
+                cerr << "\r";
 
                 // Figure out how many new records there are
                 size_t nRecords = countOf(response, '}');
@@ -148,7 +152,7 @@ namespace qblocks {
                         << " lastRead(ts): " << dateFromTimeStamp(toTimestamp(lastRead)) << "\n";
                     } else {
                         if (!isTestMode())
-                            cerr << dateFromTimeStamp((timestamp_t)quote.timestamp) << "\r";
+                            cerr << dateFromTimeStamp(quote.timestamp) << "                    \r";
                     }
 
                     // So as to not inadvertantly add records we already have
@@ -215,5 +219,14 @@ namespace qblocks {
         "&end=[{END}]"
         "&period=[{PERIOD}]";
 
-}  // namespace qblocks
+    //---------------------------------------------------------------------------
+    size_t dotDot(char *ptr, size_t size, size_t nmemb, void *userdata) {
+        static int cnt=0;
+        if (!(++cnt % 25)) {
+            cerr << ".";
+            cerr.flush();
+        }
+        return size * nmemb;
+    }
 
+}  // namespace qblocks
