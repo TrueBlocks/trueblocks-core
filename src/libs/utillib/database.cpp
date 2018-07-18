@@ -570,7 +570,7 @@ namespace qblocks {
     }
 
     //-----------------------------------------------------------------------
-    void quickQuitHander(int signum) {
+    void quickQuitHandler(int signum) {
         cleanFileLocks();
         if (signum != -1)
             exit(1);
