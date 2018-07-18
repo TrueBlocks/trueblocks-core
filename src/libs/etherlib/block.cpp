@@ -452,7 +452,7 @@ uint64_t insertUnique(CAddressItemMap *addrMap, const CAddressItem& _value) {
 
 //---------------------------------------------------------------------------
 bool accumulateAddresses(const CAddressItem& item, void *data) {
-    if (zeroAddr(item.addr))
+    if (isZeroAddr(item.addr))
         return true;
     CAddressItem search(item.bn, item.tx, item.tc, item.addr, item.reason);
     insertUnique((CAddressItemMap*)data, search);  // NOLINT

@@ -333,7 +333,9 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    SFUintBN str2BigUint(const string &s) {
-        return SFUintBN(BigUnsignedInABase(s, 10));
+    SFUintBN str2BigUint(const string &str) {
+        if (startsWith(str, "0x"))
+            return canonicalWei(str);
+        return SFUintBN(BigUnsignedInABase(str, 10));
     }
 }  // namespace qblocks
