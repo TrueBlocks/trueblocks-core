@@ -359,7 +359,6 @@ namespace qblocks {
         return string_q(expC.spcs*expC.lev, expC.tab);
     }
 
-    extern string_q decBigNum(const string_q& str);
     //--------------------------------------------------------------------------------
     string_q CBaseNode::toJson1(void) const {
         return substitute(substitute(substitute(toJson(), "\t", " "), "\n", ""), "  ", " ");
@@ -581,23 +580,6 @@ namespace qblocks {
         }
 
         return "";
-    }
-
-    //--------------------------------------------------------------------------------
-    string_q decBigNum(const string_q& str) {
-        string_q ret = str;
-        size_t len = ret.length();
-             if (len > 29) ret = extract(ret, 0, 1) + "." + trimTrailing(extract(ret, 1), '0') + "e+29";  // NOLINT
-        else if (len > 28) ret = extract(ret, 0, 1) + "." + trimTrailing(extract(ret, 1), '0') + "e+28";
-        else if (len > 27) ret = extract(ret, 0, 1) + "." + trimTrailing(extract(ret, 1), '0') + "e+27";
-        else if (len > 26) ret = extract(ret, 0, 1) + "." + trimTrailing(extract(ret, 1), '0') + "e+26";
-        else if (len > 25) ret = extract(ret, 0, 1) + "." + trimTrailing(extract(ret, 1), '0') + "e+25";
-        else if (len > 24) ret = extract(ret, 0, 1) + "." + trimTrailing(extract(ret, 1), '0') + "e+24";
-        else if (len > 23) ret = extract(ret, 0, 1) + "." + trimTrailing(extract(ret, 1), '0') + "e+23";
-        else if (len > 22) ret = extract(ret, 0, 1) + "." + trimTrailing(extract(ret, 1), '0') + "e+22";
-        else if (len > 21) ret = extract(ret, 0, 1) + "." + trimTrailing(extract(ret, 1), '0') + "e+21";
-        replace(ret, ".e+", "e+");
-        return ret;
     }
 
     //---------------------------------------------------------------------------------------------

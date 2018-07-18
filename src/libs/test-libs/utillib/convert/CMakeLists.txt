@@ -38,4 +38,7 @@ function(run_test testName)
 endfunction(run_test)
 
 # Enter one line for each individual test
-run_test("convertTest_00")
+run_test("convertTest_00"  "0")
+run_test("convertTest_01"  "1")
+run_test("convertTest_02"  "2")
+run_test("convertTest_03"  "3")

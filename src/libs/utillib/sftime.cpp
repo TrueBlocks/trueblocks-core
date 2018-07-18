@@ -966,16 +966,6 @@ namespace qblocks {
     }
 
     //----------------------------------------------------------------------------------------------------
-    string_q fromTimestamp(timestamp_t ts) {
-        return asString(ts);
-    }
-
-    //----------------------------------------------------------------------------------------------------
-    timestamp_t toTimestamp(const string_q& timeIn) {
-        return (startsWith(timeIn, "0x") ? (timestamp_t)hex2LongU(timeIn) : (timestamp_t)toLong(timeIn));
-    }
-
-    //----------------------------------------------------------------------------------------------------
     SFTime fileLastModifyDate(const string_q& filename) {
         if (!fileExists(filename))
             return earliestDate;

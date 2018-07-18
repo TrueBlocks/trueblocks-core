@@ -234,7 +234,7 @@ string_q getAddresses(uint64_t num, const COptions& opt) {
 //----------------------------------------------------------------
 bool visitAddrs(const CAddressItem& item, void *data) {
     CAddressItemArray *array = (CAddressItemArray*)data;  // NOLINT
-    if (!zeroAddr(item.addr))
+    if (!isZeroAddr(item.addr))
         array->push_back(item);
     return true;
 }
