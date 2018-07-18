@@ -507,13 +507,6 @@ bool sortTransactionsForWrite(const CTransaction& t1, const CTransaction& t2) {
     return t1.hash < t2.hash;
 }
 
-//--------------------------------------------------------------------
-inline string_q asStringULL(uint64_t i) {
-    ostringstream os;
-    os << i;
-    return os.str().c_str();
-}
-
 //----------------------------------------------------------------------------
 inline unsigned char hex2Ascii(char *str) {
     unsigned char c;
@@ -535,18 +528,13 @@ inline string_q hex2String(const string_q& inHex) {
 }
 
 //------------------------------------------------------------------------------
-#define toBigNum2(a, b)      string_q(to_string(canonicalWei("0x" + grabPart(a, b))).c_str())
-#define grabPart(a, b)       trimLeading(extract((a), 64*(b), 64), '0')
-#define grabBigNum(a, b)     strtoull(grabPart(a, b).c_str(), NULL, 16)
-#define toAddr(a, b)         "0x" + padLeft(grabPart(a, b), 40, '0')
-#define toAddrOld(a, b)      "0x" + grabPart(a, b)
-#define toAscString(a, b)    hex2String("0x" + grabPart(a, b))
-#define toBigNum(a, b)       asStringULL(grabBigNum(a, b))
-#define toBigNum3(a, b)      padNum3(grabBigNum(a, b))
-#define theRest(a, b)        extract((a), 64*(b), (a).length())
-#define toVote(a, b)         (grabBigNum(a, b) ? "Yea" : "Nay")
-#define toBoolean(a, b)      (grabBigNum(a, b) ? "true" : "false")
-#define toBytes(a, b)        extract((a), 64*(b), 64)
+#define old_grabPart(a, b)       trimLeading(extract((a), 64*(b), 64), '0')
+#define old_toBigNum2(a, b)      string_q(to_string(canonicalWei("0x" + old_grabPart(a, b))).c_str())
+#define old_grabBigNum(a, b)     strtoull(old_grabPart(a, b).c_str(), NULL, 16)
+#define old_toAddr(a, b)         "0x" + padLeft(old_grabPart(a, b), 40, '0')
+#define old_toBigNum3(a, b)      padNum3(old_grabBigNum(a, b))
+#define old_toBoolean(a, b)      (old_grabBigNum(a, b) ? "true" : "false")
+#define old_toBytes(a, b)        extract((a), 64*(b), 64)
 string_q parse(const string_q& params, size_t nItems, string_q *types) {
 
     string_q ret;
@@ -555,19 +543,17 @@ string_q parse(const string_q& params, size_t nItems, string_q *types) {
         bool isDynamic = (t == "string" || t == "bytes" || contains(t, "[]"));
         string_q val;
 
-             if ( t == "address"                    )   val =          toAddr      (params, item);  // NOLINT
-        else if ( t == "bool"                       )   val =          toBoolean   (params, item);
-        else if ( t == "vote"                       )   val =          toVote      (params, item);
-        else if ( t == "uint3"                      )   val =          toBigNum3   (params, item);
-        else if ( t == "bytes256"                   )   val =          toAscString (params, item);
-        else if ( contains(t, "int") &&   !isDynamic)   val =          toBigNum2   (params, item);
-        else if ( contains(t, "bytes") && !isDynamic)   val =          toBytes     (params, item);
-        else if ( isDynamic                         )   val = "off:" + toBigNum2   (params, item);
+             if ( t == "address"                    )   val =          old_toAddr     (params, item);  // NOLINT
+        else if ( t == "bool"                       )   val =          old_toBoolean  (params, item);
+        else if ( t == "uint3"                      )   val =          old_toBigNum3  (params, item);
+        else if ( contains(t, "int") &&   !isDynamic)   val =          old_toBigNum2  (params, item);
+        else if ( contains(t, "bytes") && !isDynamic)   val =          old_toBytes    (params, item);
+        else if ( isDynamic                         )   val = "off:" + old_toBigNum2  (params, item);
         else                                            val = "unknown type: " + t;
 
         if (contains(val, "off:")) {
             size_t start = toLongU(substitute(val, "off:", "")) / (size_t)32;
-            size_t len   = grabBigNum(params, start);
+            size_t len   = old_grabBigNum(params, start);
             if (len == NOPOS)
                 len = params.length()-start;
             if (t == "string") {
