@@ -16,16 +16,9 @@
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
-    bool option1;
-    bool option2;
-
     COptions(void);
     ~COptions(void);
 
     bool parseArguments(string_q& command);
     void Init(void);
 };
-
-//-----------------------------------------------------------------------------
-extern bool visitNonEmptyBlock(CBlock& node, void *data);
-extern bool visitEmptyBlock(CBlock& node, void *data);
