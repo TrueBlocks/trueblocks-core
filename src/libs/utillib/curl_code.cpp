@@ -37,6 +37,12 @@ namespace qblocks {
         return curl;
     }
 
+    //---------------------------------------------------------------------------------------------------
+    static CURLCALLBACKFUNC curlNoteFunc = NULL;
+    void setCurlNoteFunc(CURLCALLBACKFUNC func) {
+        curlNoteFunc = func;
+    }
+
     //-------------------------------------------------------------------------
     size_t internalCallback(char *ptr, size_t size, size_t nmemb, void *userdata) {
 
@@ -56,6 +62,9 @@ namespace qblocks {
         string *str = reinterpret_cast<string*>(userdata);
         ASSERT(str);
         *str += result;
+
+        if (curlNoteFunc)
+            (*curlNoteFunc)(ptr, size, nmemb, userdata);
 
         // We've handeled everything, tell curl to keep going
         return size * nmemb;

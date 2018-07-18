@@ -47,12 +47,15 @@ int main(int argc, const char *argv[]) {
             if (expContext().asEther) {
                 sBal = wei2Ether(to_string(options.state.totalVal).c_str());
             } else if (expContext().asDollars) {
-                CBlock blk;
-                getBlock(blk, getLatestBlockFromClient());
+                if (options.timestampMap[options.state.latestBlock] == (timestamp_t)0) {
+                    CBlock blk;
+                    getBlock(blk, options.state.latestBlock);
+                    options.timestampMap[options.state.latestBlock] = blk.timestamp;
+                }
                 if (options.asData)
-                    sBal = substitute(dispDollars(blk.timestamp, options.state.totalVal), ",", "");
+                    sBal = substitute(dispDollars(options.timestampMap[options.state.latestBlock], options.state.totalVal), ",", "");
                 else
-                    sBal = padLeft("$" + dispDollars(blk.timestamp, options.state.totalVal), 14);
+                    sBal = padLeft("$" + dispDollars(options.timestampMap[options.state.latestBlock], options.state.totalVal), 14);
             }
             cout << "        Total for " << cGreen << nAccts << cOff;
             cout << " accounts at " << cTeal << "latest" << cOff << " block";
@@ -88,12 +91,15 @@ bool visitBlock(uint64_t blockNum, void *data) {
     if (expContext().asEther) {
         sBal = wei2Ether(to_string(bal).c_str());
     } else if (expContext().asDollars) {
-        CBlock blk;
-        getBlock(blk, blockNum);
+        if (options->timestampMap[blockNum] == (timestamp_t)0) {
+            CBlock blk;
+            getBlock(blk, blockNum);
+            options->timestampMap[blockNum] = blk.timestamp;
+        }
         if (options->asData)
-            sBal = substitute(dispDollars(blk.timestamp, bal), ",", "");
+            sBal = substitute(dispDollars(options->timestampMap[blockNum], bal), ",", "");
         else
-            sBal = padLeft("$" + dispDollars(blk.timestamp, bal), 14);
+            sBal = padLeft("$" + dispDollars(options->timestampMap[blockNum], bal), 14);
     }
 
     options->state.needsNewline = true;
