@@ -14,19 +14,96 @@
 #include "options.h"
 
 //--------------------------------------------------------------
+uint32_t blkSize(SFUintBN num) {
+    if (!num.len)
+        return 0;
+    return sizeof(num.blk[0]);
+}
+
+//--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
     etherlib_init();
 
-    CDefaultOptions options;
-    options.minArgs = 0;
+    COptions options;
     if (!options.prepareArguments(argc, argv))
         return 0;
 
-    SFAddress addrs[] = { "", "0x", "0x0", "0x0000000000000000000000000000000000000000" };
+    SFAddress addrs[] = { "", "0x", "0x0", "0x0000000000000000000000000000000000000000", "0x1111111111111111111111111111111111111111" };
     size_t nAddrs = sizeof(addrs) / sizeof(SFAddress);
     for (size_t i = 0 ; i < nAddrs ; i++) {
-        cout << addrs[i] << " : " << addr2BN(addrs[i]) << " : " << sizeof(addr2BN(addrs[i])) << "\n";
+        SFUintBN num = addr2BN(addrs[i]);
+        cout << addrs[i] << " : ";
+        cout << num << " : ";
+        cout << sizeof(num) << " + (" << num.len << " * " << blkSize(num) << "): ";
+        cout << sizeof(num) + (num.len * blkSize(num)) << "\n";
     }
     return 0;
 }
+
+#if 0
+toAddr
+toAddrOld
+toAddress
+toBigNum
+toBigNum2
+toBigNum3
+toBloom
+toBool
+toBool_in
+toBoolean
+toBytes
+toDouble
+toEther
+toFloat
+toHash
+toLong
+toLong32u
+toLongU
+toTopic
+toUnsigned
+toWei
+toAscString
+toBlock
+toHex
+toDate
+toDayName
+toJson
+toJson1
+toJsonFldList
+toLower
+toMonthName
+toProper
+toRecordID
+toSpaces
+toSpaces2
+toString
+toTimeStamp
+toTrans
+toUpper
+to_hex
+to_int
+to_long
+to_short
+to_string
+to_uint
+to_ulong
+to_ushort
+
+
+fromAddress
+fromBloom
+fromHash
+fromTopic
+fromUnsigned
+fromWei
+
+asBitmap
+asDollars
+asEther
+asHex
+asPct
+asString
+asStringBN
+asStringU
+#endif
