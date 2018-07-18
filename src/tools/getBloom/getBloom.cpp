@@ -30,7 +30,7 @@ int main(int argc, const char * argv[]) {
         if (!options.parseArguments(command))
             return 0;
 
-        cout << (options.isMulti() ? "[" : "");
+        cout << (options.isMulti() || !options.isRaw ? "[" : "");
         string_q list = options.getBlockNumList();
         while (!list.empty()) {
             blknum_t bn = toLongU(nextTokenClear(list, '|'));
@@ -42,7 +42,7 @@ int main(int argc, const char * argv[]) {
                 cout << "\n";
             }
         }
-        cout << (options.isMulti() ? "]" : "");
+        cout << (options.isMulti() || !options.isRaw ? "]" : "");
     }
 
     return 0;
@@ -127,7 +127,7 @@ string_q doOneBloom(uint64_t num, const COptions& opt) {
         SFBloomArray blooms;
         readBloomArray(blooms, substitute(getBinaryFilename(num), "/blocks/", "/blooms/"));
         ostringstream os;
-        os << "\n" << string_q(90, '-') << " " << num << string_q(90, '-') << "\n";
+        os << "\n\t\"blockNumber\": \"" << num << "\"\n";
         for (size_t i = 0 ; i < blooms.size(); i++) {
             //            os << asBar(bloom2Bits(blooms[i])) << "\n";
             os << "0x" << blooms[i] << "\n";
