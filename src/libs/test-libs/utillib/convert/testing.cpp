@@ -62,11 +62,11 @@ TEST_F(CThisTest, TestConverts_0) {
     ASSERT_EQ("timestamp overflow",      toTimestamp(array[4]), 0);
     cout << "\n";
 
-    ASSERT_EQ("bn empty address",        toBigUint  (array[0]), 0);
-    ASSERT_EQ("bn hex ony",              toBigUint  (array[1]), 0);
-    ASSERT_EQ("bn zero addr",            toBigUint  (array[2]), 0);
-    ASSERT_EQ("bn full zero",            toBigUint  (array[3]), 0);
-    ASSERT_EQ("bn overflow",             toBigUint  (array[4]), canonicalWei("91343852333181432387730302044767688728495783936"));
+    ASSERT_EQ("bn empty address",        str2BigUint(array[0]), 0);
+    ASSERT_EQ("bn hex ony",              str2BigUint(array[1]), 0);
+    ASSERT_EQ("bn zero addr",            str2BigUint(array[2]), 0);
+    ASSERT_EQ("bn full zero",            str2BigUint(array[3]), 0);
+    ASSERT_EQ("bn overflow",             str2BigUint(array[4]), canonicalWei("91343852333181432387730302044767688728495783936"));
 
     return true;
 }}
@@ -75,9 +75,19 @@ TEST_F(CThisTest, TestConverts_0) {
 TEST_F(CThisTest, TestConverts_1) {
     cout << "Running " << testName << "\n";
 
+    ASSERT_EQ("str_2_Hex1", str_2_Hex("This is a test of the emergency broadcast system"),
+              "0x5468697320697320612074657374206f662074686520656d657267656e63792062726f6164636173742073797374656d");
+    ASSERT_EQ("str_2_Hex2", str_2_Hex("The quick brown fox jumps over the lazy dog"),
+              "0x54686520717569636b2062726f776e20666f78206a756d7073206f76657220746865206c617a7920646f67");
+    ASSERT_EQ("str_2_Hex3", str_2_Hex(""), "0x");
+    ASSERT_EQ("str_2_Hex4", str_2_Hex("0x"), "0x");
+    ASSERT_EQ("str_2_Hex5", str_2_Hex("0x0"), "0x0");
+    ASSERT_EQ("str_2_Hex6", str_2_Hex("0"), "0x30");
+    ASSERT_EQ("str_2_Hex7", str_2_Hex("0x0123456789abcdef"), "0x0123456789abcdef");
+    ASSERT_EQ("str_2_Hex8", str_2_Hex("0xabcdefg"), "0xabcdefg");
+    ASSERT_EQ("str_2_Hex9", str_2_Hex("012345"), "0x303132333435");
 
-
-    return subTestID==0;
+    return true;
 }}
 
 //------------------------------------------------------------------------

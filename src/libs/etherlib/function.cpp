@@ -255,7 +255,7 @@ string_q nextFunctionChunk_custom(const string_q& fieldIn, const void *dataPtr) 
                     }
                     ret += ")";
                     replace(ret, ",)", ")");
-                    return (ret + "\t" + string2Hex(ret));
+                    return (ret + "\t" + str_2_Hex(ret));
 
                 } else if ( fieldIn % "hasAddrs" ) {
                     return asString(fun->hasAddrs);
@@ -427,7 +427,7 @@ string_q CFunction::getSignature(uint64_t parts) const {
 
 //-----------------------------------------------------------------------
 string_q CFunction::encodeItem(void) const {
-    string_q hex = string2Hex(signature);
+    string_q hex = str_2_Hex(signature);
     string_q ret;
 extern bool getSha3(const string_q& hexIn, string_q& shaOut);
     getSha3(hex, ret);

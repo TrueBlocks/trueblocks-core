@@ -460,9 +460,11 @@ namespace qblocks {
 
 
                 } else if (field.m_fieldType & TS_NUMERAL) {
-                    if (expContext().quoteNums) ret += "\"";
-                    ret += (expContext().hexNums) ? toHex(val) : decBigNum(val);
-                    if (expContext().quoteNums) ret += "\"";
+                    if (expContext().quoteNums)
+                        ret += "\"";
+                    ret += (expContext().hexNums) ? toHex(val) : val;
+                    if (expContext().quoteNums)
+                        ret += "\"";
 
                 } else if (val == "null") {
                     ret += val;

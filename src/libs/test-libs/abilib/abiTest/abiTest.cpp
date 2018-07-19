@@ -81,7 +81,7 @@ bool test_encodings(void) {
         if (!startsWith(expected, ';')) {
             string_q type  = nextTokenClear(expected, ' ');
             string_q text  = nextTokenClear(expected, ' ');
-            string_q myHex = string2Hex(text);
+            string_q myHex = str_2_Hex(text);
             string_q mySha = getSha3(myHex);
             if (type == "function")
                 mySha = extract(mySha, 0, 10);
