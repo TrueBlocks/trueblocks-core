@@ -120,7 +120,7 @@ inline CBalanceHistory& CBalanceHistory::operator=(const CBalanceHistory& ba) {
 inline bool CBalanceHistory::operator==(const CBalanceHistory& item) {
     // EXISTING_CODE
     // EXISTING_CODE
-    return item.bn == item.bn;
+    return bn == item.bn;
 }
 
 //-------------------------------------------------------------------------
