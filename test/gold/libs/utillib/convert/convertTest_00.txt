@@ -25,8 +25,8 @@ convert 0
 	000.018 timestamp full zero              ==> passed 'toTimestamp(array[3])' is equal to '0'
 	000.019 timestamp overflow               ==> passed 'toTimestamp(array[4])' is equal to '0'
 
-	000.020 bn empty address                 ==> passed 'toBigUint (array[0])' is equal to '0'
-	000.021 bn hex ony                       ==> passed 'toBigUint (array[1])' is equal to '0'
-	000.022 bn zero addr                     ==> passed 'toBigUint (array[2])' is equal to '0'
-	000.023 bn full zero                     ==> passed 'toBigUint (array[3])' is equal to '0'
-	000.024 bn overflow                      ==> passed 'toBigUint (array[4])' is equal to 'canonicalWei("91343852333181432387730302044767688728495783936")'
+	000.020 bn empty address                 ==> passed 'str2BigUint(array[0])' is equal to '0'
+	000.021 bn hex ony                       ==> passed 'str2BigUint(array[1])' is equal to '0'
+	000.022 bn zero addr                     ==> passed 'str2BigUint(array[2])' is equal to '0'
+	000.023 bn full zero                     ==> passed 'str2BigUint(array[3])' is equal to '0'
+	000.024 bn overflow                      ==> passed 'str2BigUint(array[4])' is equal to 'canonicalWei("91343852333181432387730302044767688728495783936")'

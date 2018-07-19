@@ -1,3 +1,12 @@
 convert argc: 2 [1:1] 
 convert 1 
 0. Running TestConverts_1
+	000.000 str_2_Hex1                       ==> passed 'str_2_Hex("This is a test of the emergency broadcast system")' is equal to '"0x5468697320697320612074657374206f662074686520656d657267656e63792062726f6164636173742073797374656d"'
+	000.001 str_2_Hex2                       ==> passed 'str_2_Hex("The quick brown fox jumps over the lazy dog")' is equal to '"0x54686520717569636b2062726f776e20666f78206a756d7073206f76657220746865206c617a7920646f67"'
+	000.002 str_2_Hex3                       ==> passed 'str_2_Hex("")' is equal to '"0x"'
+	000.003 str_2_Hex4                       ==> passed 'str_2_Hex("0x")' is equal to '"0x"'
+	000.004 str_2_Hex5                       ==> passed 'str_2_Hex("0x0")' is equal to '"0x0"'
+	000.005 str_2_Hex6                       ==> passed 'str_2_Hex("0")' is equal to '"0x30"'
+	000.006 str_2_Hex7                       ==> passed 'str_2_Hex("0x0123456789abcdef")' is equal to '"0x0123456789abcdef"'
+	000.007 str_2_Hex8                       ==> passed 'str_2_Hex("0xabcdefg")' is equal to '"0xabcdefg"'
+	000.008 str_2_Hex9                       ==> passed 'str_2_Hex("012345")' is equal to '"0x303132333435"'
