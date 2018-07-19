@@ -25,7 +25,7 @@ namespace qblocks {
     extern uint64_t toLongU   (const string_q& str);
     extern double   str2Double(const string_q& str);
     extern bool     str2Bool  (const string_q& str);
-    extern string_q string2Hex(const string_q& str);
+    extern string_q str_2_Hex (const string_q& str);
 
     //--------------------------------------------------------------------
     inline string_q asString(int64_t i) {
@@ -64,8 +64,6 @@ namespace qblocks {
 
     //-------------------------------------------------------------------------
     inline int64_t  toLong   (const string_q& str) { return (int64_t) strtol (str.c_str(), NULL, 10); }
-
-    extern string_q decBigNum(const string_q& str);
 
     extern string to_string(const SFUintBN& bu);
     extern string to_hex(const SFUintBN& bu);
@@ -113,7 +111,6 @@ namespace qblocks {
 #define toUnsigned(a)  toLongU((a))
 #define toGas(a)       toLongU((a))
 #define toEther        wei2Ether
-#define toBigUint      str2BigUint
 #define toTopic(a)     canonicalWei(a)
 #define toBloom(a)     canonicalWei(a)
 #define toWei(a)       canonicalWei(a)
