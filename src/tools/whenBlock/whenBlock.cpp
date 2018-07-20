@@ -41,7 +41,7 @@ int main(int argc, const char *argv[]) {
             if (mode == "special") {
                 mode = "block";
                 special = nextTokenClear(value, '|');
-                if (toUnsigned(value) > getLatestBlockFromClient()) {
+                if (str_2_Uint(value) > getLatestBlockFromClient()) {
                     cout << "The block number you requested (";
                     cout << cTeal << special << ": " << value << cOff;
                     cout << ") is after the latest block (";
@@ -61,7 +61,7 @@ int main(int argc, const char *argv[]) {
                     cout << "database, which is an advanced feature.\n";
 
                 } else {
-                    SFTime date = dateFromTimeStamp((timestamp_t)toUnsigned(value));
+                    SFTime date = dateFromTimeStamp((timestamp_t)str_2_Uint(value));
                     bool found = lookupDate(block, date);
                     if (!found) {
                         unloadCache();

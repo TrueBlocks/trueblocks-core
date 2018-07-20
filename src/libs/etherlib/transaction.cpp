@@ -69,7 +69,7 @@ bool CTransaction::setValueByName(const string_q& fieldName, const string_q& fie
 
     } else if ( fieldName % "value" ) {
         value = canonicalWei(fieldValue);
-        ether = str2Double(Format("[{ETHER}]"));
+        ether = str_2_Double(Format("[{ETHER}]"));
         return true;
 
     } else if ( fieldName % "contractAddress" ) {
@@ -77,7 +77,7 @@ bool CTransaction::setValueByName(const string_q& fieldName, const string_q& fie
         return true;
 
     } else if ( fieldName % "gasUsed" ) {
-        receipt.gasUsed = toUnsigned(fieldValue);
+        receipt.gasUsed = str_2_Uint(fieldValue);
         return true;
     } else if ( fieldName % "receipt" ) {
         char *p = (char *)fieldValue.c_str();  // NOLINT
@@ -93,7 +93,7 @@ bool CTransaction::setValueByName(const string_q& fieldName, const string_q& fie
     switch (tolower(fieldName[0])) {
         case 'b':
             if ( fieldName % "blockHash" ) { blockHash = toHash(fieldValue); return true; }
-            if ( fieldName % "blockNumber" ) { blockNumber = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "blockNumber" ) { blockNumber = str_2_Uint(fieldValue); return true; }
             break;
         case 'f':
             if ( fieldName % "from" ) { from = toAddress(fieldValue); return true; }
@@ -107,17 +107,17 @@ bool CTransaction::setValueByName(const string_q& fieldName, const string_q& fie
             break;
         case 'i':
             if ( fieldName % "input" ) { input = fieldValue; return true; }
-            if ( fieldName % "isError" ) { isError = toUnsigned(fieldValue); return true; }
-            if ( fieldName % "isInternal" ) { isInternal = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "isError" ) { isError = str_2_Uint(fieldValue); return true; }
+            if ( fieldName % "isInternal" ) { isInternal = str_2_Uint(fieldValue); return true; }
             break;
         case 'n':
-            if ( fieldName % "nonce" ) { nonce = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "nonce" ) { nonce = str_2_Uint(fieldValue); return true; }
             break;
         case 'r':
             if ( fieldName % "receipt" ) { /* receipt = fieldValue; */ return false; }
             break;
         case 't':
-            if ( fieldName % "transactionIndex" ) { transactionIndex = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "transactionIndex" ) { transactionIndex = str_2_Uint(fieldValue); return true; }
             if ( fieldName % "timestamp" ) { timestamp = toTimestamp(fieldValue); return true; }
             if ( fieldName % "to" ) { to = toAddress(fieldValue); return true; }
             break;
@@ -134,7 +134,7 @@ bool CTransaction::setValueByName(const string_q& fieldName, const string_q& fie
 void CTransaction::finishParse() {
     // EXISTING_CODE
     function = Format("[{FUNCTION}]");
-    ether = str2Double(Format("[{ETHER}]"));
+    ether = str_2_Double(Format("[{ETHER}]"));
     receipt.pTrans = this;
     // EXISTING_CODE
 }
@@ -552,7 +552,7 @@ string_q parse(const string_q& params, size_t nItems, string_q *types) {
         else                                            val = "unknown type: " + t;
 
         if (contains(val, "off:")) {
-            size_t start = toLongU(substitute(val, "off:", "")) / (size_t)32;
+            size_t start = str_2_Uint(substitute(val, "off:", "")) / (size_t)32;
             size_t len   = old_grabBigNum(params, start);
             if (len == NOPOS)
                 len = params.length()-start;

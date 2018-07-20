@@ -47,13 +47,13 @@ Test 43 [--check( SFIntBN(myZeroBlocks, 1, -1) )--]: 0 expected: 0 ✓
 Test 44 [--check( SFIntBN(myZeroBlocks, 1, 0) )--]: 0 expected: 0 ✓
 Test 45 [--SFUintBN (0).to_ulong()--]: 0 expected: 0 ✓
 Test 46 [--SFUintBN (4294967295U).to_ulong()--]: 4294967295 expected: 4294967295 ✓
-Test 47 [--str2BigUint (string_q("4294967296")).to_ulong()--]: 4294967296 expected: error X
+Test 47 [--str_2_BigUint (string_q("4294967296")).to_ulong()--]: 4294967296 expected: error X
 Test 48 [--SFUintBN (0).to_long()--]: 0 expected: 0 ✓
 Test 49 [--SFUintBN (2147483647).to_long()--]: 2147483647 expected: 2147483647 ✓
 Test 50 [--SFUintBN (2147483648U).to_long()--]: 2147483648 expected: error X
 Test 51 [--SFUintBN (0).to_uint()--]: 0 expected: 0 ✓
 Test 52 [--SFUintBN (4294967295U).to_uint()--]: 4294967295 expected: 4294967295 ✓
-Test 53 [--str2BigUint (string_q("4294967296")).to_uint()--]: errorSFUintBN::to<Primitive>: Value is too big to fit in the requested type expected: error ✓
+Test 53 [--str_2_BigUint (string_q("4294967296")).to_uint()--]: errorSFUintBN::to<Primitive>: Value is too big to fit in the requested type expected: error ✓
 Test 54 [--SFUintBN (0).to_int()--]: 0 expected: 0 ✓
 Test 55 [--SFUintBN (2147483647).to_int()--]: 2147483647 expected: 2147483647 ✓
 Test 56 [--SFUintBN (2147483648U).to_int()--]: errorSFUintBN::to<Primitive>: Value is too big to fit in the requested type expected: error ✓
@@ -66,9 +66,9 @@ Test 62 [--SFUintBN (32768).to_short()--]: errorSFUintBN::to<Primitive>: Value i
 Test 63 [--SFIntBN (-1).to_ulong()--]: errorSFIntBN::to<Primitive>: Cannot convert a negative integer to an unsigned type expected: error ✓
 Test 64 [--SFIntBN (0).to_ulong()--]: 0 expected: 0 ✓
 Test 65 [--SFIntBN (4294967295U).to_ulong()--]: 4294967295 expected: 4294967295 ✓
-Test 66 [--str2BigInt ("4294967296").to_ulong()--]: 4294967296 expected: error X
-Test 67 [--str2BigInt ("-2147483649").to_long()--]: -2147483649 expected: error X
-Test 68 [--str2BigInt ("-2147483648").to_long()--]: -2147483648 expected: -2147483648 ✓
+Test 66 [--str_2_BigInt ("4294967296").to_ulong()--]: 4294967296 expected: error X
+Test 67 [--str_2_BigInt ("-2147483649").to_long()--]: -2147483649 expected: error X
+Test 68 [--str_2_BigInt ("-2147483648").to_long()--]: -2147483648 expected: -2147483648 ✓
 Test 69 [--SFIntBN (-2147483647).to_long()--]: -2147483647 expected: -2147483647 ✓
 Test 70 [--SFIntBN (0).to_long()--]: 0 expected: 0 ✓
 Test 71 [--SFIntBN (2147483647).to_long()--]: 2147483647 expected: 2147483647 ✓
@@ -76,9 +76,9 @@ Test 72 [--SFIntBN (2147483648U).to_long()--]: 2147483648 expected: error X
 Test 73 [--SFIntBN (-1).to_uint()--]: errorSFIntBN::to<Primitive>: Cannot convert a negative integer to an unsigned type expected: error ✓
 Test 74 [--SFIntBN (0).to_uint()--]: 0 expected: 0 ✓
 Test 75 [--SFIntBN (4294967295U).to_uint()--]: 4294967295 expected: 4294967295 ✓
-Test 76 [--str2BigInt ("4294967296").to_uint()--]: errorSFUintBN::to<Primitive>: Value is too big to fit in the requested type expected: error ✓
-Test 77 [--str2BigInt ("-2147483649").to_int()--]: errorSFIntBN::to<Primitive>: Value is too big to fit in the requested type expected: error ✓
-Test 78 [--str2BigInt ("-2147483645").to_int()--]: -2147483645 expected: -2147483645 ✓
+Test 76 [--str_2_BigInt ("4294967296").to_uint()--]: errorSFUintBN::to<Primitive>: Value is too big to fit in the requested type expected: error ✓
+Test 77 [--str_2_BigInt ("-2147483649").to_int()--]: errorSFIntBN::to<Primitive>: Value is too big to fit in the requested type expected: error ✓
+Test 78 [--str_2_BigInt ("-2147483645").to_int()--]: -2147483645 expected: -2147483645 ✓
 Test 79 [--SFIntBN (-2147483647).to_int()--]: -2147483647 expected: -2147483647 ✓
 Test 80 [--SFIntBN (0).to_int()--]: 0 expected: 0 ✓
 Test 81 [--SFIntBN (2147483647).to_int()--]: 2147483647 expected: 2147483647 ✓
@@ -106,12 +106,12 @@ Test 102 [--check( ss1 - ss2 )--]: errorSFUintBN::subtract: Negative result in u
 Test 103 [--check( ss3 - SFUintBN(1) )--]: 4294967295 expected: 4294967295 ✓
 Test 104 [--check( SFUintBN(0) + 0 )--]: 0 expected: 0 ✓
 Test 105 [--check( SFUintBN(0) + 1 )--]: 1 expected: 1 ✓
-Test 106 [--check( str2BigUint(string_q("8589934591")) + ss4 )--]: 12884901889 expected: 12884901889 ✓
+Test 106 [--check( str_2_BigUint(string_q("8589934591")) + ss4 )--]: 12884901889 expected: 12884901889 ✓
 Test 107 [--check( SFUintBN(0xFFFFFFFFU) + 1 )--]: 4294967296 expected: 4294967296 ✓
 Test 108 [--check( SFUintBN(1) - 0 )--]: 1 expected: 1 ✓
 Test 109 [--check( SFUintBN(1) - 1 )--]: 0 expected: 0 ✓
 Test 110 [--check( SFUintBN(2) - 1 )--]: 1 expected: 1 ✓
-Test 111 [--check( str2BigUint(string_q("12884901889")) - ss4)--]: 8589934591 expected: 8589934591 ✓
+Test 111 [--check( str_2_BigUint(string_q("12884901889")) - ss4)--]: 8589934591 expected: 8589934591 ✓
 Test 112 [--check( ss3 - 1 )--]: 4294967295 expected: 4294967295 ✓
 Test 113 [--aa--]: 112776680263877595 expected: 112776680263877595 ✓
 Test 114 [--aa / 123--]: 916883579381118 expected: 916883579381118 ✓
@@ -134,7 +134,7 @@ Test 130 [--SFUintBN(0).bitLength()--]: 0 expected: 0 ✓
 Test 131 [--SFUintBN(1).bitLength()--]: 1 expected: 1 ✓
 Test 132 [--SFUintBN(4095).bitLength()--]: 12 expected: 12 ✓
 Test 133 [--SFUintBN(4096).bitLength()--]: 13 expected: 13 ✓
-Test 134 [--str2BigUint(string_q("5000000000")).bitLength()--]: 33 expected: 33 ✓
+Test 134 [--str_2_BigUint(string_q("5000000000")).bitLength()--]: 33 expected: 33 ✓
 Test 135 [--bbbb.getBit(4)--]: 1 expected: 1 ✓
 Test 136 [--bbbb.getBit(3)--]: 1 expected: 1 ✓
 Test 137 [--bbbb.getBit(2)--]: 0 expected: 0 ✓

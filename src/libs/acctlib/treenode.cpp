@@ -63,7 +63,7 @@ bool CTreeNode::setValueByName(const string_q& fieldName, const string_q& fieldV
 
     switch (tolower(fieldName[0])) {
         case 'i':
-            if ( fieldName % "index" ) { index = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "index" ) { index = str_2_Uint(fieldValue); return true; }
             break;
         case 'p':
             if ( fieldName % "prefixS" ) { prefixS = fieldValue; return true; }

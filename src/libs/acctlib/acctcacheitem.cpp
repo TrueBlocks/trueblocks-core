@@ -62,10 +62,10 @@ bool CAcctCacheItem::setValueByName(const string_q& fieldName, const string_q& f
 
     switch (tolower(fieldName[0])) {
         case 'b':
-            if ( fieldName % "blockNum" ) { blockNum = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "blockNum" ) { blockNum = str_2_Uint(fieldValue); return true; }
             break;
         case 't':
-            if ( fieldName % "transIndex" ) { transIndex = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "transIndex" ) { transIndex = str_2_Uint(fieldValue); return true; }
             break;
         default:
             break;
@@ -236,10 +236,10 @@ CAcctCacheItem::CAcctCacheItem(string_q& line) {
     replaceAll(line, ".", "\t");
 
     string_q val = nextTokenClear(line, '\t');
-    blockNum = toUnsigned(val);
+    blockNum = str_2_Uint(val);
 
     val = nextTokenClear(line, '\t');
-    transIndex = toUnsigned(val);
+    transIndex = str_2_Uint(val);
 }
 // EXISTING_CODE
 }  // namespace qblocks

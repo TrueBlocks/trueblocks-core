@@ -53,14 +53,14 @@ bool COptions::parseArguments(string_q& command) {
             arg = substitute(substitute(arg, "-i:", ""), "--int:", "");
             if (arg.empty() || (arg[0] != '-' && arg[0] != '+' && !isdigit(arg[0])))
                 return usage("--int requires a number. Quitting");
-            numOption = toLong(arg);
+            numOption = str_2_Int(arg);
 
         } else if (startsWith(arg, "-u:") || startsWith(arg, "--uint:")) {
             arg = substitute(substitute(arg, "-u:", ""), "--uint:", "");
             if (arg.empty() || (arg[0] != '+' && !isdigit(arg[0]))) {
                 // return usage("--uint requires a non-negative number. Quitting");
             } else {
-                numOption = toLong(arg);
+                numOption = str_2_Int(arg);
             }
 
         } else if (startsWith(arg, "-d") || startsWith(arg, "--hiddenOption")) {
@@ -74,7 +74,7 @@ bool COptions::parseArguments(string_q& command) {
             }
 
         } else {
-            testNum = (int32_t)toLong(arg);
+            testNum = (int32_t)str_2_Int(arg);
         }
     }
     return true;

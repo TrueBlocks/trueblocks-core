@@ -63,7 +63,7 @@ bool CBalanceHistory::setValueByName(const string_q& fieldName, const string_q& 
 
     switch (tolower(fieldName[0])) {
         case 'b':
-            if ( fieldName % "bn" ) { bn = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "bn" ) { bn = str_2_Uint(fieldValue); return true; }
             if ( fieldName % "balance" ) { balance = toWei(fieldValue); return true; }
             break;
         default:

@@ -64,7 +64,7 @@ bool CIncomeStatement::setValueByName(const string_q& fieldName, const string_q&
     switch (tolower(fieldName[0])) {
         case 'b':
             if ( fieldName % "begBal" ) { begBal = toWei(fieldValue); return true; }
-            if ( fieldName % "blockNum" ) { blockNum = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "blockNum" ) { blockNum = str_2_Uint(fieldValue); return true; }
             break;
         case 'e':
             if ( fieldName % "endBal" ) { endBal = toWei(fieldValue); return true; }

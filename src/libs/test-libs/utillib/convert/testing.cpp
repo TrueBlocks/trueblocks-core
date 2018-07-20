@@ -41,18 +41,18 @@ TEST_F(CThisTest, TestConverts_0) {
     ASSERT_EQ("big num",                             array[4], "0x1000000000000000000000000000000000000000");
     cout << "\n";
 
-    ASSERT_EQ("long empty address",      toLong(array[0]), 0);
-    ASSERT_EQ("long hex ony",            toLong(array[1]), 0);
-    ASSERT_EQ("long zero addr",          toLong(array[2]), 0);
-    ASSERT_EQ("long full zero",          toLong(array[3]), 0);
-    ASSERT_EQ("long overflow",           toLong(array[4]), 0);
+    ASSERT_EQ("long empty address",      str_2_Int(array[0]), 0);
+    ASSERT_EQ("long hex ony",            str_2_Int(array[1]), 0);
+    ASSERT_EQ("long zero addr",          str_2_Int(array[2]), 0);
+    ASSERT_EQ("long full zero",          str_2_Int(array[3]), 0);
+    ASSERT_EQ("long overflow",           str_2_Int(array[4]), 0);
     cout << "\n";
 
-    ASSERT_EQ("ulong empty address",     toLongU(array[0]), 0);
-    ASSERT_EQ("ulong hex ony",           toLongU(array[1]), 0);
-    ASSERT_EQ("ulong zero addr",         toLongU(array[2]), 0);
-    ASSERT_EQ("ulong full zero",         toLongU(array[3]), 0);
-    ASSERT_EQ("ulong overflow",          toLongU(array[4]), 0);
+    ASSERT_EQ("ulong empty address",     str_2_Uint(array[0]), 0);
+    ASSERT_EQ("ulong hex ony",           str_2_Uint(array[1]), 0);
+    ASSERT_EQ("ulong zero addr",         str_2_Uint(array[2]), 0);
+    ASSERT_EQ("ulong full zero",         str_2_Uint(array[3]), 0);
+    ASSERT_EQ("ulong overflow",          str_2_Uint(array[4]), 0);
     cout << "\n";
 
     ASSERT_EQ("toHash1",                 toHash("12312ABcdE12"),   "0x000000000000000000000000000000000000000000000000000012312abcde12");
@@ -76,11 +76,11 @@ TEST_F(CThisTest, TestConverts_0) {
     ASSERT_EQ("timestamp overflow",      toTimestamp(array[4]), 0);
     cout << "\n";
 
-    ASSERT_EQ("bn empty address",        str2BigUint(array[0]), 0);
-    ASSERT_EQ("bn hex ony",              str2BigUint(array[1]), 0);
-    ASSERT_EQ("bn zero addr",            str2BigUint(array[2]), 0);
-    ASSERT_EQ("bn full zero",            str2BigUint(array[3]), 0);
-    ASSERT_EQ("bn overflow",             str2BigUint(array[4]), canonicalWei("91343852333181432387730302044767688728495783936"));
+    ASSERT_EQ("bn empty address",        str_2_BigUint(array[0]), 0);
+    ASSERT_EQ("bn hex ony",              str_2_BigUint(array[1]), 0);
+    ASSERT_EQ("bn zero addr",            str_2_BigUint(array[2]), 0);
+    ASSERT_EQ("bn full zero",            str_2_BigUint(array[3]), 0);
+    ASSERT_EQ("bn overflow",             str_2_BigUint(array[4]), canonicalWei("91343852333181432387730302044767688728495783936"));
 
     return true;
 }}
@@ -89,34 +89,34 @@ TEST_F(CThisTest, TestConverts_0) {
 TEST_F(CThisTest, TestConverts_1) {
     cout << "Running " << testName << "\n";
 
-    ASSERT_EQ("str_2_Hex1", str_2_Hex("This is a test of the emergency broadcast system"),
+    ASSERT_EQ("chr_2_HexStr1", chr_2_HexStr("This is a test of the emergency broadcast system"),
               "0x5468697320697320612074657374206f662074686520656d657267656e63792062726f6164636173742073797374656d");
-    ASSERT_EQ("str_2_Hex2", str_2_Hex("The quick brown fox jumps over the lazy dog"),
+    ASSERT_EQ("chr_2_HexStr2", chr_2_HexStr("The quick brown fox jumps over the lazy dog"),
               "0x54686520717569636b2062726f776e20666f78206a756d7073206f76657220746865206c617a7920646f67");
-    ASSERT_EQ("str_2_Hex3", str_2_Hex(""), "0x");
-    ASSERT_EQ("str_2_Hex4", str_2_Hex("0x"), "0x");
-    ASSERT_EQ("str_2_Hex5", str_2_Hex("0x0"), "0x0");
-    ASSERT_EQ("str_2_Hex6", str_2_Hex("0"), "0x30");
-    ASSERT_EQ("str_2_Hex7", str_2_Hex("0x0123456789abcdef"), "0x0123456789abcdef");
-    ASSERT_EQ("str_2_Hex8", str_2_Hex("0xabcdefg"), "0xabcdefg");
-    ASSERT_EQ("str_2_Hex9", str_2_Hex("012345"), "0x303132333435");
+    ASSERT_EQ("chr_2_HexStr3", chr_2_HexStr(""), "0x");
+    ASSERT_EQ("chr_2_HexStr4", chr_2_HexStr("0x"), "0x");
+    ASSERT_EQ("chr_2_HexStr5", chr_2_HexStr("0x0"), "0x0");
+    ASSERT_EQ("chr_2_HexStr6", chr_2_HexStr("0"), "0x30");
+    ASSERT_EQ("chr_2_HexStr7", chr_2_HexStr("0x0123456789abcdef"), "0x0123456789abcdef");
+    ASSERT_EQ("chr_2_HexStr8", chr_2_HexStr("0xabcdefg"), "0xabcdefg");
+    ASSERT_EQ("chr_2_HexStr9", chr_2_HexStr("012345"), "0x303132333435");
 
-    ASSERT_EQ("convert1",  str2Double("1"), 1);
-    ASSERT_EQ("convert2",  str2Double("10000.10001"), 10000.10001);
-    ASSERT_EQ("convert3",  str2Double("-100101.1212"), -100101.1212);
-    ASSERT_EQ("convert4",  str2Double(".000000121.4123+e12"), .000000121);
-    ASSERT_EQ("convert6",  str2Bool("false"), 0);
-    ASSERT_EQ("convert7",  str2Bool("xxx"), 0);
-    ASSERT_EQ("convert8",  str2Bool("1"), 1);
-    ASSERT_EQ("convert9",  str2Bool("0"), 0);
-    ASSERT_EQ("convert10", str2Bool("338"), 1);
-    ASSERT_EQ("convert11", str2Bool("true"), 1);
+    ASSERT_EQ("convert1",  str_2_Double("1"), 1);
+    ASSERT_EQ("convert2",  str_2_Double("10000.10001"), 10000.10001);
+    ASSERT_EQ("convert3",  str_2_Double("-100101.1212"), -100101.1212);
+    ASSERT_EQ("convert4",  str_2_Double(".000000121.4123+e12"), .000000121);
+    ASSERT_EQ("convert6",  str_2_Bool("false"), 0);
+    ASSERT_EQ("convert7",  str_2_Bool("xxx"), 0);
+    ASSERT_EQ("convert8",  str_2_Bool("1"), 1);
+    ASSERT_EQ("convert9",  str_2_Bool("0"), 0);
+    ASSERT_EQ("convert10", str_2_Bool("338"), 1);
+    ASSERT_EQ("convert11", str_2_Bool("true"), 1);
 
-    ASSERT_EQ("bigint1", str2BigUint("40000000000000000000"), canonicalWei("40000000000000000000"));
-    ASSERT_EQ("bigint2", str2BigInt ("-40000000000000000000"), SFIntBN(str2BigUint("40000000000000000000"), -1));
-    ASSERT_EQ("bigint2", str2BigInt ("+3"), 3);
+    ASSERT_EQ("bigint1", str_2_BigUint("40000000000000000000"), canonicalWei("40000000000000000000"));
+    ASSERT_EQ("bigint2", str_2_BigInt ("-40000000000000000000"), SFIntBN(str_2_BigUint("40000000000000000000"), -1));
+    ASSERT_EQ("bigint2", str_2_BigInt ("+3"), 3);
     SFUintBN bn = 300000000; bn *= 100000000; bn *= 100;
-    ASSERT_EQ("bigint2", str2BigInt ("+3000000000000000000"), bn);
+    ASSERT_EQ("bigint2", str_2_BigInt ("+3000000000000000000"), bn);
 
     return true;
 }}
@@ -170,13 +170,13 @@ toBool_in
 toBoolean
 toBytes
 toDouble
-toEther
+wei2Ether
 toFloat
-toLong
-toLong32u
-toLongU
+str_2_Int
+str_2_Int32u
+str_2_Uint
 toTopic
-toUnsigned
+str_2_Uint
 toWei
 toAscString
 toBlock
@@ -196,7 +196,7 @@ toString
 toTimeStamp
 toTrans
 toUpper
-to_hex
+bnu_2_Hex
 to_int
 to_long
 to_short

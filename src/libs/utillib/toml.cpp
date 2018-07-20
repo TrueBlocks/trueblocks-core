@@ -73,7 +73,7 @@ namespace qblocks {
     //-------------------------------------------------------------------------
     uint64_t CToml::getConfigInt(const string_q& group, const string_q& key, uint64_t def) const {
         string_q ret = getConfigStr(group, key, toStringU(def));
-        return toLongU(ret);
+        return str_2_Uint(ret);
     }
 
     //-------------------------------------------------------------------------
@@ -171,7 +171,7 @@ extern string_q collapseArrays(const string_q& inStr);
             cerr << "Big int config item " << group << "::" << key << " is not an integer...returning zero.";
             return 0;
         }
-        return str2BigUint(ret);
+        return str_2_BigUint(ret);
     }
 
     //---------------------------------------------------------------------------------------

@@ -34,7 +34,7 @@ int main(int argc, const char * argv[]) {
 
         string_q list = options.getBlockNumList();
         while (!list.empty() && !shouldQuit()) {
-            blknum_t bn = toLongU(nextTokenClear(list, '|'));
+            blknum_t bn = str_2_Uint(nextTokenClear(list, '|'));
             if (options.showAddrs || options.uniqAddrs) {
                 string_q checkResults = getAddresses(bn, options);
                 cout << checkResults;

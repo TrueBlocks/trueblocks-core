@@ -37,7 +37,7 @@ int main(int argc, const char *argv[]) {
 
         string_q list = options.getBlockNumList();
         while (!list.empty()) {
-            blknum_t bn = toLongU(nextTokenClear(list, '|'));
+            blknum_t bn = str_2_Uint(nextTokenClear(list, '|'));
             CFilename fileName(substitute(getBinaryFilename(bn), "/blocks/", "/"+options.mode+"s/"));
             bool exists = fileExists(fileName.getFullPath());
 

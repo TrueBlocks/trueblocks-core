@@ -72,7 +72,7 @@ void reportByToken(COptions& options) {
             // For each block
             string_q blocks = options.getBlockNumList();
             while (!blocks.empty()) {
-                blknum_t blockNum = toLongU(nextTokenClear(blocks, '|'));
+                blknum_t blockNum = str_2_Uint(nextTokenClear(blocks, '|'));
                 if (blockNum < options.earliestBlock)
                     options.earliestBlock = blockNum;
                 SFUintBN bal = getTokenInfo("balance", token, holder, blockNum);
@@ -152,7 +152,7 @@ void reportByAccount(COptions& options) {
             // For each block
             string_q blocks = options.getBlockNumList();
             while (!blocks.empty()) {
-                blknum_t blockNum = toLongU(nextTokenClear(blocks, '|'));
+                blknum_t blockNum = str_2_Uint(nextTokenClear(blocks, '|'));
                 if (blockNum < options.earliestBlock)
                     options.earliestBlock = blockNum;
                 SFUintBN bal = getTokenInfo("balance", token, holder, blockNum);
@@ -222,7 +222,7 @@ SFUintBN getTokenInfo(const string_q& value, const SFAddress& token, const SFAdd
     //        string_q cmd = "[{\"to\": \"[TOKEN]\", \"data\": \"0x18160ddd\"}, \"[BLOCK]\"]";
     replace(cmd, "[TOKEN]",  t);
     replace(cmd, "[HOLDER]", h);
-    replace(cmd, "[BLOCK]",  toHex(blockNum));
+    replace(cmd, "[BLOCK]",  uint_2_Hex(blockNum));
 
     return toWei(callRPC("eth_call", cmd, false));
 }

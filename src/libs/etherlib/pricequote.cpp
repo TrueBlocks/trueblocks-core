@@ -61,7 +61,7 @@ string_q nextPricequoteChunk(const string_q& fieldIn, const void *dataPtr) {
 bool CPriceQuote::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
     // EXISTING_CODE
     if ( fieldName % "date" || fieldName % "timestamp" ) {
-        timestamp = toLong(fieldValue);
+        timestamp = str_2_Int(fieldValue);
         date = dateFromTimeStamp((timestamp_t)timestamp);
         return true;
     }
@@ -69,7 +69,7 @@ bool CPriceQuote::setValueByName(const string_q& fieldName, const string_q& fiel
 
     switch (tolower(fieldName[0])) {
         case 'c':
-            if ( fieldName % "close" ) { close = str2Double(fieldValue); return true; }
+            if ( fieldName % "close" ) { close = str_2_Double(fieldValue); return true; }
             break;
         case 't':
             if ( fieldName % "timestamp" ) { timestamp = toTimestamp(fieldValue); return true; }

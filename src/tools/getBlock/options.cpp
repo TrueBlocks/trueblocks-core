@@ -77,7 +77,7 @@ bool COptions::parseArguments(string_q& command) {
             normalize = true;
 
         } else if (arg == "-l" || arg == "--latest") {
-            uint64_t lastUpdate = toUnsigned(asciiFileToString("/tmp/getBlock_junk.txt"));
+            uint64_t lastUpdate = str_2_Uint(asciiFileToString("/tmp/getBlock_junk.txt"));
             uint64_t cache = NOPOS, client = NOPOS;
             getLatestBlocks(cache, client);
             uint64_t diff = cache > client ? 0 : client - cache;

@@ -39,12 +39,12 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (startsWith(arg, "-n:") || startsWith(arg, "--nblocks:")) {
             arg = substitute(substitute(orig, "-n:", ""), "--nblocks:", "");
-            nBlocks = toLongU(arg);
+            nBlocks = str_2_Uint(arg);
             hasN = true;
 
         } else if (startsWith(arg, "-s:") || startsWith(arg, "--start:")) {
             arg = substitute(substitute(orig, "-s:", ""), "--start:", "");
-            startBlock = toLongU(arg);
+            startBlock = str_2_Uint(arg);
             if (!isUnsigned(arg))
                 return usage("Positive start block number expected: " + orig);
 
@@ -53,7 +53,7 @@ bool COptions::parseArguments(string_q& command) {
             if (arg == "latest") {
                 endBlock = getLatestBlockFromClient();
             } else {
-                endBlock = toLongU(arg);
+                endBlock = str_2_Uint(arg);
                 if (!isUnsigned(arg))
                     return usage("Positive end block number expected: " + orig);
             }

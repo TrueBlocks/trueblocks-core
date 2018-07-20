@@ -69,13 +69,13 @@ bool CLeaf::setValueByName(const string_q& fieldName, const string_q& fieldValue
             if ( fieldName % "blocks" ) {
                 string_q str = fieldValue;
                 while (!str.empty()) {
-                    blocks.push_back(toUnsigned(nextTokenClear(str, ',')));
+                    blocks.push_back(str_2_Uint(nextTokenClear(str, ',')));
                 }
                 return true;
             }
             break;
         case 'c':
-            if ( fieldName % "counter" ) { counter = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "counter" ) { counter = str_2_Uint(fieldValue); return true; }
             break;
         default:
             break;
@@ -263,9 +263,9 @@ const string_q CLeaf::getStringAt(const string_q& name, size_t i) const {
         string_q last = _value;
         string_q first = nextTokenClear(last, '|');
         if (!first.empty()) {
-            blocks.push_back(toUnsigned(first));
+            blocks.push_back(str_2_Uint(first));
             if (!last.empty())
-                blocks.push_back(toUnsigned(last));
+                blocks.push_back(str_2_Uint(last));
         }
 #else
         counter = 1;
@@ -311,7 +311,7 @@ const string_q CLeaf::getStringAt(const string_q& name, size_t i) const {
 //            if (first == 0) {
 //                // store the first encountered block
 //                if (verbose) cerr << "\t\tStoring first contents " << _key << " at " << _value << "\n";
-//                first = toUnsigned(_value);
+//                first = str_2_Uint(_value);
 //
 //            } else
             {
@@ -320,7 +320,7 @@ const string_q CLeaf::getStringAt(const string_q& name, size_t i) const {
 //                    << " (" << first << ")"
                     << "\n";
 #ifdef OLD_CODE_Y
-                blocks.push_back(toUnsigned(_value));
+                blocks.push_back(str_2_Uint(_value));
 #else
                 counter++;
 #endif

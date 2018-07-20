@@ -40,8 +40,8 @@ TEST_F(CThisTest, Test01) {
     cout << "val64: "  << val64  << "\n";
     cout << "sVal: "   << sVal   << "\n";
 
-    ASSERT_EQ("Testing 1",          val64u, toLongU(sValu));
-    ASSERT_EQ("Testing 2",          val64,  toLong(sVal));
+    ASSERT_EQ("Testing 1",          val64u, str_2_Uint(sValu));
+    ASSERT_EQ("Testing 2",          val64,  str_2_Int(sVal));
     ASSERT_EQ("Testing 3", (int64_t)val64u, -1);
     ASSERT_EQ("Testing 4",          val64,  -1);
 

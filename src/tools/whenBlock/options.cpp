@@ -200,15 +200,15 @@ SFTime grabDate(const string_q& strIn) {
     }
 
 #define NP ((uint32_t)-1)
-#define toLong32u(a) (uint32_t)toLongU((a))
+#define str_2_Int32u(a) (uint32_t)str_2_Uint((a))
     uint32_t y, m, d, h, mn, s;
     y = m = d = h = mn = s = NP;
-    if (isUnsigned(extract(str,  0, 4))) { y  = toLong32u(extract(str,  0, 4)); }
-    if (isUnsigned(extract(str,  4, 2))) { m  = toLong32u(extract(str,  4, 2)); }
-    if (isUnsigned(extract(str,  6, 2))) { d  = toLong32u(extract(str,  6, 2)); }
-    if (isUnsigned(extract(str,  8, 2))) { h  = toLong32u(extract(str,  8, 2)); }
-    if (isUnsigned(extract(str, 10, 2))) { mn = toLong32u(extract(str, 10, 2)); }
-    if (isUnsigned(extract(str, 12, 2))) { s  = toLong32u(extract(str, 12, 2)); }
+    if (isUnsigned(extract(str,  0, 4))) { y  = str_2_Int32u(extract(str,  0, 4)); }
+    if (isUnsigned(extract(str,  4, 2))) { m  = str_2_Int32u(extract(str,  4, 2)); }
+    if (isUnsigned(extract(str,  6, 2))) { d  = str_2_Int32u(extract(str,  6, 2)); }
+    if (isUnsigned(extract(str,  8, 2))) { h  = str_2_Int32u(extract(str,  8, 2)); }
+    if (isUnsigned(extract(str, 10, 2))) { mn = str_2_Int32u(extract(str, 10, 2)); }
+    if (isUnsigned(extract(str, 12, 2))) { s  = str_2_Int32u(extract(str, 12, 2)); }
 
     // If any of them was not an unsigned int, it's a fail
     if (y == NP || m == NP || d == NP || h == NP || mn == NP || s == NP)
@@ -248,7 +248,7 @@ string_q COptions::listSpecials(bool terse) const {
                 bn = "";
             } else if (COptionsBase::isReadme) {
                 bn = "--";
-            } else if (i > 0 && toUnsigned(specials[i-1].second) >= getLatestBlockFromClient()) {
+            } else if (i > 0 && str_2_Uint(specials[i-1].second) >= getLatestBlockFromClient()) {
                 extra = iWhite + " (syncing)" + cOff;
             }
         }

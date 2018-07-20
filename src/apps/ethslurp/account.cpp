@@ -74,14 +74,14 @@ bool CAccount::setValueByName(const string_q& fieldName, const string_q& fieldVa
             if ( fieldName % "header" ) { header = fieldValue; return true; }
             break;
         case 'l':
-            if ( fieldName % "lastPage" ) { lastPage = toUnsigned(fieldValue); return true; }
-            if ( fieldName % "lastBlock" ) { lastBlock = toLong(fieldValue); return true; }
+            if ( fieldName % "lastPage" ) { lastPage = str_2_Uint(fieldValue); return true; }
+            if ( fieldName % "lastBlock" ) { lastBlock = str_2_Int(fieldValue); return true; }
             break;
         case 'n':
-            if ( fieldName % "nVisible" ) { nVisible = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "nVisible" ) { nVisible = str_2_Uint(fieldValue); return true; }
             break;
         case 'p':
-            if ( fieldName % "pageSize" ) { pageSize = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "pageSize" ) { pageSize = str_2_Uint(fieldValue); return true; }
             break;
         case 't':
             if ( fieldName % "transactions" ) {

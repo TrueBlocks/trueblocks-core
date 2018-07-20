@@ -101,7 +101,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
     //-------------------------------------------------------------------------
     bool getTransaction(CTransaction& trans, const SFHash& blockHash, txnum_t txID) {
         getObjectViaRPC(trans, "eth_getTransactionByBlockHashAndIndex",
-                                    "[\"" + toHash(blockHash) +"\",\"" + toHex(txID) + "\"]");
+                                    "[\"" + toHash(blockHash) +"\",\"" + uint_2_Hex(txID) + "\"]");
         trans.finishParse();
         return true;
     }
@@ -121,7 +121,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
         }
 
         getObjectViaRPC(trans, "eth_getTransactionByBlockNumberAndIndex",
-                                    "[\"" + toHex(blockNum) +"\",\"" + toHex(txID) + "\"]");
+                                    "[\"" + uint_2_Hex(blockNum) +"\",\"" + uint_2_Hex(txID) + "\"]");
         trans.finishParse();
         return true;
     }
@@ -170,7 +170,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
             getObjectViaRPC(block, "eth_getBlockByHash", "["+quote(datIn)+",true]");
 
         } else {
-            uint64_t num = toLongU(datIn);
+            uint64_t num = str_2_Uint(datIn);
             if (getCurlContext()->provider == "binary" && fileSize(getBinaryFilename(num)) > 0) {
                 UNHIDE_FIELD(CTransaction, "receipt");
                 block = CBlock();
@@ -179,7 +179,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
             }
 
             HIDE_FIELD(CTransaction, "receipt");
-            getObjectViaRPC(block, "eth_getBlockByNumber", "["+quote(toHex(num))+",true]");
+            getObjectViaRPC(block, "eth_getBlockByNumber", "["+quote(uint_2_Hex(num))+",true]");
         }
 
         // If there are no transactions, we do not have to trace and we want to tell the caller that
@@ -277,8 +277,8 @@ extern void registerQuitHandler(QUITHANDLER qh);
     //-------------------------------------------------------------------------
     bool queryRawLogs(string_q& results, const SFAddress& addr, uint64_t fromBlock, uint64_t toBlock) {
         string_q data = "[{\"fromBlock\":\"[START]\",\"toBlock\":\"[STOP]\", \"address\": \"[ADDR]\"}]";
-        replace(data, "[START]", toHex(fromBlock));
-        replace(data, "[STOP]",  toHex(toBlock));
+        replace(data, "[START]", uint_2_Hex(fromBlock));
+        replace(data, "[STOP]",  uint_2_Hex(toBlock));
         replace(data, "[ADDR]",  fromAddress(addr));
         results = callRPC("eth_getLogs", data, true);
         return true;
@@ -300,7 +300,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
     //-------------------------------------------------------------------------
     uint64_t getLatestBlockFromClient(void) {
         string_q ret = callRPC("eth_blockNumber", "[]", false);
-        uint64_t retN = toUnsigned(ret);
+        uint64_t retN = str_2_Uint(ret);
         if (retN == 0) {
             // Try a different way just in case. Geth, for example, doesn't
             // return blockNumber until the chain is synced (Parity may--don't know
@@ -309,7 +309,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
             replace(str, "currentBlock:", "|");
             nextTokenClear(str, '|');
             str = nextTokenClear(str, ',');
-            retN = toUnsigned(str);
+            retN = str_2_Uint(str);
         }
         return retN;
     }
@@ -351,7 +351,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
     SFUintBN getBalance(const string_q& addr, blknum_t blockNum, bool isDemo) {
         string_q a = extract(addr, 2);
         a = padLeft(a, 40, '0');
-        string_q ret = callRPC("eth_getBalance", "[\"0x" + a + "\",\"" + toHex(blockNum) + "\"]", false);
+        string_q ret = callRPC("eth_getBalance", "[\"0x" + a + "\",\"" + uint_2_Hex(blockNum) + "\"]", false);
         return toWei(ret);
     }
 
@@ -376,7 +376,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
 
     //-------------------------------------------------------------------------
     bool hasTraceAt(const string_q& hashIn, size_t where) {
-        string_q cmd = "[\"" + toHash(hashIn) +"\",[\"" + toHex(where) + "\"]]";
+        string_q cmd = "[\"" + toHash(hashIn) +"\",[\"" + uint_2_Hex(where) + "\"]]";
         string_q ret = callRPC("trace_get", cmd.c_str(), true);
         return ret.find("blockNumber") != string::npos;
     }
@@ -805,7 +805,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
             bool hasHex = startsWith(item, "0x");
 
             string_q hash = nextTokenClear(item, '.');
-            uint64_t txID = toLongU(item);
+            uint64_t txID = str_2_Uint(item);
 
             CTransaction trans;
             if (hasHex) {
@@ -817,7 +817,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
                     getTransaction(trans, hash);  // transHash
                 }
             } else {
-                getTransaction(trans, toLongU(hash), txID);  // blockNum.txID
+                getTransaction(trans, str_2_Uint(hash), txID);  // blockNum.txID
             }
 
             CBlock block;
