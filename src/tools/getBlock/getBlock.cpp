@@ -200,7 +200,7 @@ void interumReport(ostream& os, blknum_t i) {
 }
 
 //------------------------------------------------------------
-bool sortByBlocknumTxId(const CAddressItem& v1, const CAddressItem& v2) {
+bool sortByBlocknumTxId(const CAddressAppearance& v1, const CAddressAppearance& v2) {
     if (v1.bn != v2.bn)
         return v1.bn < v2.bn;
     else if (v1.tx != v2.tx)
@@ -212,12 +212,12 @@ bool sortByBlocknumTxId(const CAddressItem& v1, const CAddressItem& v2) {
     return v1.addr < v2.addr;
 }
 
-extern bool visitAddrs(const CAddressItem& item, void *data);
+extern bool visitAddrs(const CAddressAppearance& item, void *data);
 extern bool transFilter(const CTransaction *trans, void *data);
 //------------------------------------------------------------
 string_q getAddresses(uint64_t num, const COptions& opt) {
 
-    CAddressItemArray array;
+    CAddressAppearanceArray array;
     CBlock block;
     getBlock(block, num);
     if (opt.uniqAddrs)
@@ -232,8 +232,8 @@ string_q getAddresses(uint64_t num, const COptions& opt) {
 }
 
 //----------------------------------------------------------------
-bool visitAddrs(const CAddressItem& item, void *data) {
-    CAddressItemArray *array = (CAddressItemArray*)data;  // NOLINT
+bool visitAddrs(const CAddressAppearance& item, void *data) {
+    CAddressAppearanceArray *array = (CAddressAppearanceArray*)data;  // NOLINT
     if (!isZeroAddr(item.addr))
         array->push_back(item);
     return true;

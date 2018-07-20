@@ -19,12 +19,12 @@
 #include <map>
 #include "etherlib.h"
 #include "transaction.h"
+#include "addressappearance.h"
 
 namespace qblocks {
 
 // EXISTING_CODE
-class CAddressItem;
-typedef bool (*ADDRESSFUNC)(const CAddressItem& item, void *data);
+typedef bool (*ADDRESSFUNC)(const CAddressAppearance& item, void *data);
 typedef bool (*TRANSFUNC)(const CTransaction *trans, void *data);
 // EXISTING_CODE
 
@@ -180,35 +180,6 @@ extern SFArchive& operator>>(SFArchive& archive, CBlock& blo);
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 //---------------------------------------------------------------------------
-class CAddressItem {
-public:
-    blknum_t bn;
-    blknum_t tx;
-    blknum_t tc;
-    SFAddress addr;
-    string_q reason;
-    CAddressItem(void) : bn(0), tx(0), tc(0), addr(""), reason("") { }
-    CAddressItem(const CAddressItem& item)
-        : bn(item.bn), tx(item.tx), tc(item.tc), addr(item.addr), reason(item.reason) { }
-    CAddressItem& operator=(const CAddressItem& item) {
-        bn = item.bn;
-        tx = item.tx;
-        tc = item.tc;
-        addr = item.addr;
-        reason = item.reason;
-        return *this;
-    }
-    CAddressItem(blknum_t b, blknum_t x, blknum_t c, const SFAddress& a, const string_q r)
-        : bn(b), tx(x), tc(c), addr(a), reason(r) { }
-    friend bool operator<(const CAddressItem& v1, const CAddressItem& v2) {
-        return v1.addr < v2.addr;
-    }
-    friend ostream& operator<<(ostream& os, const CAddressItem& item);
-};
-typedef map<CAddressItem, uint64_t> CAddressItemMap;
-typedef vector<CAddressItem> CAddressItemArray;
-
-//---------------------------------------------------------------------------
 inline blknum_t bnFromPath(const string_q& path) {
     string_q p = substitute(path, ".bin", "");
     reverse(p);
@@ -225,10 +196,6 @@ inline bool isBlockFinal(timestamp_t ts_block, timestamp_t ts_chain, timestamp_t
     // in a perfectly mathematical sense
     return ((ts_chain - ts_block) > seconds);
 }
-
-//---------------------------------------------------------------------------
-extern bool isPotentialAddr(SFUintBN test, SFAddress& addrOut);
-extern void potentialAddr(ADDRESSFUNC func, void *data, const CAddressItem& item, const string_q& potList);
 // EXISTING_CODE
 }  // namespace qblocks
 
