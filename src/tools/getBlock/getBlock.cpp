@@ -80,7 +80,7 @@ string_q doOneBlock(uint64_t num, const COptions& opt) {
     CBlock gold;
     gold.blockNumber = num;
     string_q result;
-    string_q numStr = asStringU(num);
+    string_q numStr = toStringU(num);
     if (opt.isRaw) {
 
         if (!queryRawBlock(result, numStr, true, opt.hashes)) {
@@ -138,10 +138,10 @@ string_q doOneBlock(uint64_t num, const COptions& opt) {
 string_q checkOneBlock(uint64_t num, const COptions& opt) {
 
     if (opt.quiet == 2) {
-        cout << "Checking block " << cYellow << asStringU(num) << cOff << "...       \r";
+        cout << "Checking block " << cYellow << toStringU(num) << cOff << "...       \r";
         cout.flush();
     }
-    string_q numStr = asStringU(num);
+    string_q numStr = toStringU(num);
 
     // Get the block raw from the node...
     string_q fromNode;
@@ -178,9 +178,9 @@ extern string_q hiddenFields(void);
     if (opt.quiet == 2) {
         // only report results if we're being very quiet
         if (fromNode != fromQblocks)
-            return "Difference at block " + cYellow + asStringU(num) + cOff + ".\n" +
+            return "Difference at block " + cYellow + toStringU(num) + cOff + ".\n" +
             "\t" + diffStr(fromNode, fromQblocks) + "\t" + diffStr(fromQblocks, fromNode);
-        cout << "Checking block " + cYellow + asStringU(num) + cOff + "...";
+        cout << "Checking block " + cYellow + toStringU(num) + cOff + "...";
         cout << greenCheck << "         \r";
         cout.flush();
         return "";

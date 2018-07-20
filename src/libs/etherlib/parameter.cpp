@@ -225,10 +225,10 @@ string_q CParameter::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'i':
-            if ( fieldName % "indexed" ) return asString(indexed);
-            if ( fieldName % "isPointer" ) return asString(isPointer);
-            if ( fieldName % "isArray" ) return asString(isArray);
-            if ( fieldName % "isObject" ) return asString(isObject);
+            if ( fieldName % "indexed" ) return toString(indexed);
+            if ( fieldName % "isPointer" ) return toString(isPointer);
+            if ( fieldName % "isArray" ) return toString(isArray);
+            if ( fieldName % "isObject" ) return toString(isObject);
             break;
         case 'n':
             if ( fieldName % "name" ) return name;
@@ -299,7 +299,7 @@ string_q CParameter::getFunctionAssign(uint64_t which) const {
     } else                                 { ass = "[{VAL}];";
     }
 
-    replace(ass, "[{VAL}]", "extract(params, " + asStringU(which) + "*64" + (type == "bytes" ? "" : ", 64") + ")");
+    replace(ass, "[{VAL}]", "extract(params, " + toStringU(which) + "*64" + (type == "bytes" ? "" : ", 64") + ")");
     return Format("\t\t\ta->[{NAME}] = " + ass + "\n");
 }
 
@@ -330,8 +330,8 @@ string_q CParameter::getEventAssign(uint64_t which, uint64_t nIndexed) const {
         which -= (nIndexed+1);
     }
 
-    replace(ass, "[{IDX}]", "++" + asStringU(which) + "++");
-    replace(ass, "[{WHICH}]", asStringU(which));
+    replace(ass, "[{IDX}]", "++" + toStringU(which) + "++");
+    replace(ass, "[{WHICH}]", toStringU(which));
     string_q fmt = "\t\t\ta->[{NAME}] = " + ass + "\n";
     return Format(fmt);
 }

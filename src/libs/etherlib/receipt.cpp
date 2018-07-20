@@ -62,7 +62,7 @@ bool CReceipt::setValueByName(const string_q& fieldName, const string_q& fieldVa
     if (fieldName == "contractAddress" && fieldValue == "null") {
         *((string_q*)&fieldValue) = "0";  // NOLINT
     } else if (fieldName == "status" && (fieldValue == "null" || fieldValue == "0x")) {
-        *((string_q*)&fieldValue) = asStringU(NO_STATUS);  // NOLINT
+        *((string_q*)&fieldValue) = toStringU(NO_STATUS);  // NOLINT
     }
 
     if (pTrans)
@@ -291,7 +291,7 @@ string_q CReceipt::getValueByName(const string_q& fieldName) const {
             if ( fieldName % "logs" || fieldName % "logsCnt" ) {
                 size_t cnt = logs.size();
                 if (endsWith(fieldName, "Cnt"))
-                    return asStringU(cnt);
+                    return toStringU(cnt);
                 if (!cnt) return "";
                 string_q retS;
                 for (size_t i = 0 ; i < cnt ; i++) {
@@ -302,7 +302,7 @@ string_q CReceipt::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 's':
-            if ( fieldName % "status" ) return asStringU(status);
+            if ( fieldName % "status" ) return toStringU(status);
             break;
     }
 

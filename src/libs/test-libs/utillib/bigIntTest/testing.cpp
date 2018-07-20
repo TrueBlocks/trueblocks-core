@@ -30,6 +30,20 @@
 } while (0)
 
 //----------------------------------------------------------------------
+#define TEST2(expr, exp) do { \
+    string s1, e1; \
+    try { \
+        s1 = to_string2((expr)); \
+    } catch (const char *err) { \
+        s1 = "error"; \
+        e1 = err; \
+    } \
+    cout << "Test " << testID++; \
+    cout << " [--" << #expr << "--]"; \
+    cout << ": " << s1 << e1 << " expected: " << (exp) << " " << ((s1 != exp) ? redX : greenCheck) << endl; \
+} while (0)
+
+//----------------------------------------------------------------------
 extern const SFUintBN& check(const SFUintBN& x);
 extern const SFIntBN&  check(const SFIntBN& x);
 
@@ -90,21 +104,21 @@ int main(int argc, const char *argv[]) {
         SFUintBN aaaaa(0), bbbbb(3);
         SFUintBN four(4), eight(8), sixteen(16);
 
-        TEST( a,                                                          "0"                 );
+        TEST2( a,                                                          "0"                 );
         a = b;
-        TEST( a,                                                          "535"               );
+        TEST2( a,                                                          "535"               );
         b = a.to_int();
         f = str2BigInt(s);
-        s2 = to_string(f);
-        TEST( f,                                                          "3141592653589793238462643383279");
+        s2 = to_string2(f);
+        TEST2( f,                                                          "3141592653589793238462643383279");
         s = "1142b0090b6460000";
         f = hex2BigUint(s);
-        TEST( f,                                                          "19900000000000000000");
-        TEST( g+h,                                                        "314424"            );
-        TEST( g-h,                                                        "313894"            );
-        TEST( g*h,                                                        "83252135"          );
-        TEST( g/h,                                                        "1185"              );
-        TEST( g%h,                                                        "134"               );
+        TEST2( f,                                                          "19900000000000000000");
+        TEST2( g+h,                                                        "314424"            );
+        TEST2( g-h,                                                        "313894"            );
+        TEST2( g*h,                                                        "83252135"          );
+        TEST2( g/h,                                                        "1185"              );
+        TEST2( g%h,                                                        "134"               );
 //       i=0xFF0000FF
 //       j=0x0000FFFF;
 // i & j = 0x0000FFFF - true if both are true
@@ -133,19 +147,19 @@ int main(int argc, const char *argv[]) {
         TEST( one,                                                        "1"                 );
         TEST( ten,                                                        "10"                );
         TEST( check( SFUintBN() ),                                        "0"                 );
-        TEST( check( SFIntBN () ),                                        "0"                 );
+        TEST2( check( SFIntBN () ),                                        "0"                 );
         TEST( check( bu ),                                                "17179869187"       );
-        TEST( check( SFIntBN(myBlocks, 3) ),                              "-7179869187"       );
-        TEST( check( SFIntBN(bu) ),                                       "error"             );
-        TEST( check( SFIntBN(myBlocks, 3, 1) ),                           "17179869187"       );
-        TEST( check( SFIntBN(myBlocks, 3, -1) ),                          "-17179869187"      );
-        TEST( check( SFIntBN(myBlocks, 3, 0    ) ),                       "error"             );
-        TEST( check( SFIntBN(bu, 1) ),                                    "17179869187"       );
-        TEST( check( SFIntBN(bu, -1) ),                                   "-17179869187"      );
-        TEST( check( SFIntBN(bu, 0    ) ),                                "error"             );
-        TEST( check( SFIntBN(myZeroBlocks, 1, 1) ),                       "0"                 );
-        TEST( check( SFIntBN(myZeroBlocks, 1, -1) ),                      "0"                 );
-        TEST( check( SFIntBN(myZeroBlocks, 1, 0) ),                       "0"                 );
+        TEST2( check( SFIntBN(myBlocks, 3) ),                              "-7179869187"       );
+        TEST2( check( SFIntBN(bu) ),                                       "error"             );
+        TEST2( check( SFIntBN(myBlocks, 3, 1) ),                           "17179869187"       );
+        TEST2( check( SFIntBN(myBlocks, 3, -1) ),                          "-17179869187"      );
+        TEST2( check( SFIntBN(myBlocks, 3, 0    ) ),                       "error"             );
+        TEST2( check( SFIntBN(bu, 1) ),                                    "17179869187"       );
+        TEST2( check( SFIntBN(bu, -1) ),                                   "-17179869187"      );
+        TEST2( check( SFIntBN(bu, 0    ) ),                                "error"             );
+        TEST2( check( SFIntBN(myZeroBlocks, 1, 1) ),                       "0"                 );
+        TEST2( check( SFIntBN(myZeroBlocks, 1, -1) ),                      "0"                 );
+        TEST2( check( SFIntBN(myZeroBlocks, 1, 0) ),                       "0"                 );
         TEST( SFUintBN   (0).to_ulong(),                                  "0"                 );
         TEST( SFUintBN   (4294967295U).to_ulong(),                        "4294967295"        );
         TEST( str2BigUint (string_q("4294967296")).to_ulong(),            "error"             );
@@ -164,36 +178,36 @@ int main(int argc, const char *argv[]) {
         TEST( SFUintBN   (0).to_short(),                                  "0"                 );
         TEST( SFUintBN   (32767).to_short(),                              "32767"             );
         TEST( SFUintBN   (32768).to_short(),                              "error"             );
-        TEST( SFIntBN    (-1).to_ulong(),                                 "error"             );
-        TEST( SFIntBN    (0).to_ulong(),                                  "0"                 );
-        TEST( SFIntBN    (4294967295U).to_ulong(),                        "4294967295"        );
-        TEST( str2BigInt  ("4294967296").to_ulong(),                      "error"             );
-        TEST( str2BigInt  ("-2147483649").to_long(),                      "error"             );
-        TEST( str2BigInt  ("-2147483648").to_long(),                      "-2147483648"       );
-        TEST( SFIntBN    (-2147483647).to_long(),                         "-2147483647"       );
-        TEST( SFIntBN    (0).to_long(),                                   "0"                 );
-        TEST( SFIntBN    (2147483647).to_long(),                          "2147483647"        );
-        TEST( SFIntBN    (2147483648U).to_long(),                         "error"             );
-        TEST( SFIntBN    (-1).to_uint(),                                  "error"             );
-        TEST( SFIntBN    (0).to_uint(),                                   "0"                 );
-        TEST( SFIntBN    (4294967295U).to_uint(),                         "4294967295"        );
-        TEST( str2BigInt  ("4294967296").to_uint(),                       "error"             );
-        TEST( str2BigInt  ("-2147483649").to_int(),                       "error"             );
-        TEST( str2BigInt  ("-2147483645").to_int(),                       "-2147483645"       );
-        TEST( SFIntBN    (-2147483647).to_int(),                          "-2147483647"       );
-        TEST( SFIntBN    (0).to_int(),                                    "0"                 );
-        TEST( SFIntBN    (2147483647).to_int(),                           "2147483647"        );
-        TEST( SFIntBN    (2147483648U).to_int(),                          "error"             );
-        TEST( SFIntBN    (-1).to_ushort(),                                "error"             );
-        TEST( SFIntBN    (0).to_ushort(),                                 "0"                 );
-        TEST( SFIntBN    (65535).to_ushort(),                             "65535"             );
-        TEST( SFIntBN    (65536).to_ushort(),                             "error"             );
-        TEST( SFIntBN    (-32769).to_short(),                             "error"             );
-        TEST( SFIntBN    (-32768).to_short(),                             "-32768"            );
-        TEST( SFIntBN    (-32767).to_short(),                             "-32767"            );
-        TEST( SFIntBN    (0).to_short(),                                  "0"                 );
-        TEST( SFIntBN    (32767).to_short(),                              "32767"             );
-        TEST( SFIntBN    (32768).to_short(),                              "error"             );
+        TEST2( SFIntBN    (-1).to_ulong(),                                 "error"             );
+        TEST2( SFIntBN    (0).to_ulong(),                                  "0"                 );
+        TEST2( SFIntBN    (4294967295U).to_ulong(),                        "4294967295"        );
+        TEST2( str2BigInt  ("4294967296").to_ulong(),                      "error"             );
+        TEST2( str2BigInt  ("-2147483649").to_long(),                      "error"             );
+        TEST2( str2BigInt  ("-2147483648").to_long(),                      "-2147483648"       );
+        TEST2( SFIntBN    (-2147483647).to_long(),                         "-2147483647"       );
+        TEST2( SFIntBN    (0).to_long(),                                   "0"                 );
+        TEST2( SFIntBN    (2147483647).to_long(),                          "2147483647"        );
+        TEST2( SFIntBN    (2147483648U).to_long(),                         "error"             );
+        TEST2( SFIntBN    (-1).to_uint(),                                  "error"             );
+        TEST2( SFIntBN    (0).to_uint(),                                   "0"                 );
+        TEST2( SFIntBN    (4294967295U).to_uint(),                         "4294967295"        );
+        TEST2( str2BigInt  ("4294967296").to_uint(),                       "error"             );
+        TEST2( str2BigInt  ("-2147483649").to_int(),                       "error"             );
+        TEST2( str2BigInt  ("-2147483645").to_int(),                       "-2147483645"       );
+        TEST2( SFIntBN    (-2147483647).to_int(),                          "-2147483647"       );
+        TEST2( SFIntBN    (0).to_int(),                                    "0"                 );
+        TEST2( SFIntBN    (2147483647).to_int(),                           "2147483647"        );
+        TEST2( SFIntBN    (2147483648U).to_int(),                          "error"             );
+        TEST2( SFIntBN    (-1).to_ushort(),                                "error"             );
+        TEST2( SFIntBN    (0).to_ushort(),                                 "0"                 );
+        TEST2( SFIntBN    (65535).to_ushort(),                             "65535"             );
+        TEST2( SFIntBN    (65536).to_ushort(),                             "error"             );
+        TEST2( SFIntBN    (-32769).to_short(),                             "error"             );
+        TEST2( SFIntBN    (-32768).to_short(),                             "-32768"            );
+        TEST2( SFIntBN    (-32767).to_short(),                             "-32767"            );
+        TEST2( SFIntBN    (0).to_short(),                                  "0"                 );
+        TEST2( SFIntBN    (32767).to_short(),                              "32767"             );
+        TEST2( SFIntBN    (32768).to_short(),                              "error"             );
         TEST( SFUintBN   (int16_t(-1)),                                     "error"           );
         TEST( SFUintBN   (pathologicalShort),                             "error"             );
         TEST( SFUintBN   (-1),                                            "error"             );
@@ -245,13 +259,13 @@ int main(int argc, const char *argv[]) {
         TEST( bbbb,                                                       "4294967321"        ); bbb.setBit(31, true);bbb.setBit(32, false);  // NOLINT
         TEST( check(bbbb) ,                                               "2147483673"        );
         TEST( p1,                                                         "15"                );
-        TEST( p2,                                                         "-15"               );
-        TEST( (num.divide(denom, quotient), check(quotient)),             "2"                 ); num = 5;
-        TEST( (num.divide(denom, quotient), check(quotient)),             "0"                 ); ans = zero - three;
+        TEST2( p2,                                                         "-15"               );
+        TEST2( (num.divide(denom, quotient), check(quotient)),             "2"                 ); num = 5;
+        TEST2( (num.divide(denom, quotient), check(quotient)),             "0"                 ); ans = zero - three;
         TEST( check(ans).sign,                                            "-1"                );
-        TEST( check(fff),                                                 "12"                ); ans = aaaaa ^ bbbbb;
-        TEST( ans,                                                        "3"                 ); num = 5; num *= num;
-        TEST( check(num),                                                 "25"                );
+        TEST2( check(fff),                                                 "12"                ); ans = aaaaa ^ bbbbb;
+        TEST2( ans,                                                        "3"                 ); num = 5; num *= num;
+        TEST2( check(num),                                                 "25"                );
         TEST( SFUintBN(0xf),                                              "15"                );
         TEST( one << 2,                                                   "4"                 );
         TEST( (one << 2) >> 2,                                            "1"                 );
@@ -262,7 +276,7 @@ int main(int argc, const char *argv[]) {
         TEST( four|eight,                                                 "12"                );
         TEST( four|sixteen|3,                                             "23"                );
         TEST( four&eight,                                                 "0"                 );
-        TEST( SFIntBN(four)-sixteen,                                      "-12"               );
+        TEST2( SFIntBN(four)-sixteen,                                      "-12"               );
         TEST( (four&sixteen)|four,                                        "4"                 );
         TEST( sixteen%9,                                                  "7"                 );
         TEST( coreDump,                                                   "1000000000000000000");

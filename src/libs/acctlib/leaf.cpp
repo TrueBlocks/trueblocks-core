@@ -216,18 +216,18 @@ string_q CLeaf::getValueByName(const string_q& fieldName) const {
             if ( fieldName % "blocks" || fieldName % "blocksCnt" ) {
                 size_t cnt = blocks.size();
                 if (endsWith(fieldName, "Cnt"))
-                    return asStringU(cnt);
+                    return toStringU(cnt);
                 if (!cnt) return "";
                 string_q retS;
                 for (size_t i = 0 ; i < cnt ; i++) {
-                    retS += asStringU(blocks[i]);
+                    retS += toStringU(blocks[i]);
                     retS += ((i < cnt - 1) ? ",\n" : "\n");
                 }
                 return retS;
             }
             break;
         case 'c':
-            if ( fieldName % "counter" ) return asStringU(counter);
+            if ( fieldName % "counter" ) return toStringU(counter);
             break;
     }
 
@@ -251,7 +251,7 @@ ostream& operator<<(ostream& os, const CLeaf& item) {
 //---------------------------------------------------------------------------
 const string_q CLeaf::getStringAt(const string_q& name, size_t i) const {
     if ( name % "blocks" && i < blocks.size() )
-        return asStringU(blocks[i]);
+        return toStringU(blocks[i]);
     return "";
 }
 
@@ -282,12 +282,12 @@ const string_q CLeaf::getStringAt(const string_q& name, size_t i) const {
         string_q ret;
 #ifdef OLD_CODE_Y
         for (int i = 0 ; i < blocks.size() ; i++) {
-            ret += asString(blocks[i]);
+            ret += toString(blocks[i]);
             if (i < blocks.size()-1)
                 ret += ",";
         }
 #else
-        ret = asStringU(counter);
+        ret = toStringU(counter);
 #endif
         return ret;
     }
@@ -336,12 +336,12 @@ const string_q CLeaf::getStringAt(const string_q& name, size_t i) const {
             } else {
 #ifdef OLD_CODE_Y
                 for (int i = 0 ; i < blocks.size() ; i++) {
-                    curVal += asString(blocks[i]);
+                    curVal += toString(blocks[i]);
                     if (i < blocks.size()-1)
                         curVal += ",";
                 }
 #else
-                curVal = asStringU(counter);
+                curVal = toStringU(counter);
 #endif
             }
             CTreeNode *n = CTreeNode::newBranch(_key, _value, prefixS, curVal);

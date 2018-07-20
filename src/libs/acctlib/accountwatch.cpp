@@ -269,7 +269,7 @@ string_q CAccountWatch::getValueByName(const string_q& fieldName) const {
             if ( fieldName % "balanceHistory" || fieldName % "balanceHistoryCnt" ) {
                 size_t cnt = balanceHistory.size();
                 if (endsWith(fieldName, "Cnt"))
-                    return asStringU(cnt);
+                    return toStringU(cnt);
                 if (!cnt) return "";
                 string_q retS;
                 for (size_t i = 0 ; i < cnt ; i++) {
@@ -283,13 +283,13 @@ string_q CAccountWatch::getValueByName(const string_q& fieldName) const {
             if ( fieldName % "color" ) return color;
             break;
         case 'd':
-            if ( fieldName % "deepScan" ) return asString(deepScan);
+            if ( fieldName % "deepScan" ) return toString(deepScan);
             break;
         case 'f':
-            if ( fieldName % "firstBlock" ) return asStringU(firstBlock);
+            if ( fieldName % "firstBlock" ) return toStringU(firstBlock);
             break;
         case 'l':
-            if ( fieldName % "lastBlock" ) return asStringU(lastBlock);
+            if ( fieldName % "lastBlock" ) return toStringU(lastBlock);
             break;
         case 'n':
             if ( fieldName % "name" ) return name;
@@ -449,7 +449,7 @@ void loadWatchList(const CToml& toml, CAccountWatchArray& watches, const string_
         p = watch.parseJson(p, nFields);
         if (nFields) {
             // cleanup and add to list of watches
-            watch.address = fixAddress(toLower(watch.address));
+            watch.address = toAddress(toLower(watch.address));
             watch.color   = convertColor(watch.color);
             watches.push_back(watch);
         }

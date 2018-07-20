@@ -54,7 +54,7 @@ bool CBloomTrans::setValueByName(const string_q& fieldName, const string_q& fiel
 string_q CBloomTrans::getValueByName(const string_q& fieldName) const {
     if (fieldName == "hash"   ) return hash;
     if (fieldName == "receipt") return receipt.Format();
-    if (fieldName == "transactionIndex"   ) return asStringU(transactionIndex);
+    if (fieldName == "transactionIndex"   ) return toStringU(transactionIndex);
     return "";
 }
 void CBloomTrans::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
@@ -103,8 +103,8 @@ bool CBloomBlock::setValueByName(const string_q& fieldName, const string_q& fiel
 }
 string_q CBloomBlock::getValueByName(const string_q& fieldName) const {
     if (fieldName == "logsBloom"   ) return logsBloom;
-    if (fieldName == "number"      ) return asStringU(number);
-    if (fieldName == "transactionsCnt") return asStringU(transactions.size());
+    if (fieldName == "number"      ) return toStringU(number);
+    if (fieldName == "transactionsCnt") return toStringU(transactions.size());
     if (fieldName == "transactions") {
         if (GETRUNTIME_CLASS(CBloomBlock)->isFieldHidden("transactions"))
             return "";

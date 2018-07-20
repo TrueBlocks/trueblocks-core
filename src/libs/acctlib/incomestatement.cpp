@@ -236,20 +236,20 @@ string_q CIncomeStatement::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'b':
-            if ( fieldName % "begBal" ) return asStringBN(begBal);
-            if ( fieldName % "blockNum" ) return asStringU(blockNum);
+            if ( fieldName % "begBal" ) return toStringBN(begBal);
+            if ( fieldName % "blockNum" ) return toStringU(blockNum);
             break;
         case 'e':
-            if ( fieldName % "endBal" ) return asStringBN(endBal);
+            if ( fieldName % "endBal" ) return toStringBN(endBal);
             break;
         case 'g':
-            if ( fieldName % "gasCostInWei" ) return asStringBN(gasCostInWei);
+            if ( fieldName % "gasCostInWei" ) return toStringBN(gasCostInWei);
             break;
         case 'i':
-            if ( fieldName % "inflow" ) return asStringBN(inflow);
+            if ( fieldName % "inflow" ) return toStringBN(inflow);
             break;
         case 'o':
-            if ( fieldName % "outflow" ) return asStringBN(outflow);
+            if ( fieldName % "outflow" ) return toStringBN(outflow);
             break;
     }
 
@@ -272,11 +272,11 @@ ostream& operator<<(ostream& os, const CIncomeStatement& item) {
                 << padCenter("gasCost", width) << "   "
                 << padCenter("endBal", width);
         } else {
-            os << (item.begBal>0?cGreen:bBlack) << padLeft(wei2Ether(to_string(item.begBal).c_str()),width) << bBlack << "   ";  // NOLINT
-            os << (item.inflow>0?cYellow:"") << padLeft(wei2Ether(to_string(item.inflow).c_str()),width) << bBlack << "   ";  // NOLINT
-            os << (item.outflow>0?cYellow:"") << padLeft(wei2Ether(to_string(item.outflow).c_str()),width) << bBlack << "   ";  // NOLINT
-            os << (item.gasCostInWei>0?cYellow:"") << padLeft(wei2Ether(to_string(item.gasCostInWei).c_str()),width) << cOff << "   ";  // NOLINT
-            os << (item.endBal>0?cGreen:bBlack) << padLeft(wei2Ether(to_string(item.endBal).c_str()),width);  // NOLINT
+            os << (item.begBal       > 0 ? cGreen  : bBlack) << padLeft( wei2Ether( to_string2( item.begBal       )), width) << bBlack << "   ";  // NOLINT
+            os << (item.inflow       > 0 ? cYellow : ""    ) << padLeft( wei2Ether( to_string2( item.inflow       )), width) << bBlack << "   ";  // NOLINT
+            os << (item.outflow      > 0 ? cYellow : ""    ) << padLeft( wei2Ether( to_string2( item.outflow      )), width) << bBlack << "   ";  // NOLINT
+            os << (item.gasCostInWei > 0 ? cYellow : ""    ) << padLeft( wei2Ether( to_string2( item.gasCostInWei )), width) << cOff   << "   ";  // NOLINT
+            os << (item.endBal       > 0 ? cGreen  : bBlack) << padLeft( wei2Ether( to_string2( item.endBal       )), width);  // NOLINT
         }
         { return os; }
     }

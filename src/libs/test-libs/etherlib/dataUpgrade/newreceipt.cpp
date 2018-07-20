@@ -245,13 +245,13 @@ string_q CNewReceipt::getValueByName(const string_q& fieldName) const {
             if ( fieldName % "gasUsed" ) return fromGas(gasUsed);
             break;
         case 'i':
-            if ( fieldName % "isError" ) return asString(isError);
+            if ( fieldName % "isError" ) return toString(isError);
             break;
         case 'l':
             if ( fieldName % "logs" || fieldName % "logsCnt" ) {
                 size_t cnt = logs.size();
                 if (endsWith(fieldName, "Cnt"))
-                    return asStringU(cnt);
+                    return toStringU(cnt);
                 if (!cnt) return "";
                 string_q retS;
                 for (size_t i = 0 ; i < cnt ; i++) {

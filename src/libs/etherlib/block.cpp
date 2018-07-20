@@ -264,7 +264,7 @@ string_q nextBlockChunk_custom(const string_q& fieldIn, const void *dataPtr) {
                 }
                 break;
             case 'n':
-                if ( fieldIn % "number" ) return asStringU(blo->blockNumber);
+                if ( fieldIn % "number" ) return toStringU(blo->blockNumber);
                 break;
             case 't':
                 if ( expContext().hashesOnly && fieldIn % "transactions" ) {
@@ -315,7 +315,7 @@ bool CBlock::readBackLevel(SFArchive& archive) {
         getCurlContext()->provider = "local";
         CBlock upgrade;
         size_t unused;
-        queryBlock(upgrade, asStringU(blockNumber), false, false, unused);
+        queryBlock(upgrade, toStringU(blockNumber), false, false, unused);
         getCurlContext()->provider = save;
         miner = upgrade.miner;
         difficulty = upgrade.difficulty;
@@ -365,13 +365,13 @@ string_q CBlock::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'b':
-            if ( fieldName % "blockNumber" ) return asStringU(blockNumber);
+            if ( fieldName % "blockNumber" ) return toStringU(blockNumber);
             break;
         case 'd':
-            if ( fieldName % "difficulty" ) return asStringU(difficulty);
+            if ( fieldName % "difficulty" ) return toStringU(difficulty);
             break;
         case 'f':
-            if ( fieldName % "finalized" ) return asString(finalized);
+            if ( fieldName % "finalized" ) return toString(finalized);
             break;
         case 'g':
             if ( fieldName % "gasLimit" ) return fromGas(gasLimit);
@@ -392,7 +392,7 @@ string_q CBlock::getValueByName(const string_q& fieldName) const {
             if ( fieldName % "transactions" || fieldName % "transactionsCnt" ) {
                 size_t cnt = transactions.size();
                 if (endsWith(fieldName, "Cnt"))
-                    return asStringU(cnt);
+                    return toStringU(cnt);
                 if (!cnt) return "";
                 string_q retS;
                 for (size_t i = 0 ; i < cnt ; i++) {
@@ -435,8 +435,8 @@ const CBaseNode *CBlock::getObjectAt(const string_q& fieldName, size_t index) co
 //---------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const CAddressItem& item) {
     os << item.bn << "\t";
-    os << (item.tx == NOPOS ? "" : asStringU(item.tx)) << "\t";
-    os << (item.tc < 10 ? "" : asStringU(item.tc - 10)) << "\t";
+    os << (item.tx == NOPOS ? "" : toStringU(item.tx)) << "\t";
+    os << (item.tc < 10 ? "" : toStringU(item.tc - 10)) << "\t";
     os << item.addr << "\t";
     os << item.reason;
     return os;
@@ -541,11 +541,11 @@ bool CBlock::forEveryAddress(ADDRESSFUNC func, TRANSFUNC filterFunc, void *data)
         foundPot(func, data, blockNumber, tr, 0, extract(trans->input, 10), "input");
         for (size_t l = 0 ; l < receipt->logs.size() ; l++) {
             const CLogEntry *log = &receipt->logs[l];
-            string_q logId = "log" + asStringU(l) + "_";
+            string_q logId = "log" + toStringU(l) + "_";
             foundOne(func, data, blockNumber, tr, 0, log->address, logId + "generator");
             for (size_t t = 0 ; t < log->topics.size() ; t++) {
                 SFAddress addr;
-                string_q topId = asStringU(t);
+                string_q topId = toStringU(t);
                 if (isPotentialAddr(log->topics[t], addr)) {
                     foundOne(func, data, blockNumber, tr, 0, addr, logId + "topic_" + topId);
                 }
@@ -560,7 +560,7 @@ bool CBlock::forEveryAddress(ADDRESSFUNC func, TRANSFUNC filterFunc, void *data)
             getTraces(traces, trans->hash);
             for (size_t t = 0 ; t < traces.size() ; t++) {
                 const CTrace *trace = &traces[t];  // taking a non-const reference
-                string_q trID = "trace" + asStringU(t) + "_";
+                string_q trID = "trace" + toStringU(t) + "_";
                 foundOne(func, data, blockNumber, tr, t+10, trace->action.from, trID + "from");
                 foundOne(func, data, blockNumber, tr, t+10, trace->action.to, trID + "to");
                 foundOne(func, data, blockNumber, tr, t+10, trace->action.refundAddress, trID + "refundAddr");

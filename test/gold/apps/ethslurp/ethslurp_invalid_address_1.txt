@@ -2,7 +2,7 @@ ethslurp argc: 2 [1:invalid]
 ethslurp invalid 
 Processing: invalid
 
-  0xinvalid appears to be an invalid address. Valid addresses start with '0x' and are 20 bytes (40 chars) long. Quitting...
+  invalid appears to be an invalid address. Valid addresses start with '0x' and are 20 bytes (40 chars) long. Quitting...
 
   Usage:    ethslurp [-b|-d|-f|-i|-e|-v|-h] addr  
   Purpose:  Fetches data off the Ethereum blockchain for an arbitrary account or smart contract. Optionally formats the output to your specification. Note: --income and --expense are mutually exclusive as are --blocks and --dates.

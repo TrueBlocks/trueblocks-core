@@ -81,8 +81,8 @@ bool visitBlock(uint64_t blockNum, void *data) {
         options->state.earliestBlock = blockNum;
 
     if (blockNum > options->state.latestBlock) {
-        string_q late = (isTestMode() ? "--" : asStringU(options->state.latestBlock));
-        return usage("Block " + asStringU(blockNum) + " is later than the last valid block " + late + ". Quitting...");
+        string_q late = (isTestMode() ? "--" : toStringU(options->state.latestBlock));
+        return usage("Block " + toStringU(blockNum) + " is later than the last valid block " + late + ". Quitting...");
     }
 
     SFUintBN bal = getBalance(options->state.curAddr, blockNum, false);

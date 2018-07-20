@@ -242,7 +242,7 @@ string_q nextNewblockChunk_custom(const string_q& fieldIn, const void *dataPtr) 
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             case 'n':
-                if ( fieldIn % "number" ) return asStringU(newp->blockNumber);
+                if ( fieldIn % "number" ) return toStringU(newp->blockNumber);
                 break;
             case 't':
                 if ( expContext().hashesOnly && fieldIn % "transactions" ) {
@@ -293,7 +293,7 @@ bool CNewBlock::readBackLevel(SFArchive& archive) {
         getCurlContext()->provider = "local";
         CBlock upgrade;
         size_t unused;
-        queryBlock(upgrade, asStringU(blockNumber), false, false, unused);
+        queryBlock(upgrade, toStringU(blockNumber), false, false, unused);
         getCurlContext()->provider = save;
         miner = upgrade.miner;
         difficulty = upgrade.difficulty;
@@ -328,13 +328,13 @@ string_q CNewBlock::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'b':
-            if ( fieldName % "blockNumber" ) return asStringU(blockNumber);
+            if ( fieldName % "blockNumber" ) return toStringU(blockNumber);
             break;
         case 'd':
-            if ( fieldName % "difficulty" ) return asStringU(difficulty);
+            if ( fieldName % "difficulty" ) return toStringU(difficulty);
             break;
         case 'f':
-            if ( fieldName % "finalized" ) return asString(finalized);
+            if ( fieldName % "finalized" ) return toString(finalized);
             break;
         case 'g':
             if ( fieldName % "gasLimit" ) return fromGas(gasLimit);
@@ -355,7 +355,7 @@ string_q CNewBlock::getValueByName(const string_q& fieldName) const {
             if ( fieldName % "transactions" || fieldName % "transactionsCnt" ) {
                 size_t cnt = transactions.size();
                 if (endsWith(fieldName, "Cnt"))
-                    return asStringU(cnt);
+                    return toStringU(cnt);
                 if (!cnt) return "";
                 string_q retS;
                 for (size_t i = 0 ; i < cnt ; i++) {

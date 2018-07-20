@@ -1,7 +1,7 @@
 grabABI argc: 7 [1:0xbb9bc244d798123fde783fcc1c72d3bb8c189413] [2:-v] [3:-n] [4:-e] [5:-g] [6:code] 
 grabABI 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 -v -n -e -g code 
 
-  Invalid address '0xcode'. Length is not equal to 40 characters (20 bytes).
+  Invalid address 'code'. Length is not equal to 40 characters (20 bytes).
 
 
   Usage:    grabABI [-c|-g|-d|-e|-n|-o|-r|-v|-h] addr  

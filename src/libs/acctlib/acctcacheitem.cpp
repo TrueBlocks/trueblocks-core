@@ -201,10 +201,10 @@ string_q CAcctCacheItem::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'b':
-            if ( fieldName % "blockNum" ) return asStringU(blockNum);
+            if ( fieldName % "blockNum" ) return toStringU(blockNum);
             break;
         case 't':
-            if ( fieldName % "transIndex" ) return asStringU(transIndex);
+            if ( fieldName % "transIndex" ) return toStringU(transIndex);
             break;
     }
 

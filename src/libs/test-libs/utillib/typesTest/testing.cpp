@@ -31,9 +31,9 @@ TEST_F(CThisTest, Test01) {
     cerr << "Running " << testName << "\n";
 
     uint64_t val64u = uint64_t(-1);
-    string_q sValu = asStringU(val64u);
+    string_q sValu = toStringU(val64u);
     int64_t val64 = -1;
-    string_q sVal = asString(val64);
+    string_q sVal = toString(val64);
 
     cout << "val64u: " << val64u << "\n";
     cout << "sValu: "  << sValu  << "\n";

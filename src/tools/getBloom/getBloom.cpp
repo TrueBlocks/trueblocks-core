@@ -78,7 +78,7 @@ string_q doOneBloom(uint64_t num, const COptions& opt) {
     CBlock gold;
     gold.blockNumber = num;
     string_q result;
-    string_q numStr = asStringU(num);
+    string_q numStr = toStringU(num);
 
     if (opt.isRaw) {
 

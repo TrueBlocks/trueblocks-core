@@ -202,7 +202,7 @@ string_q CTreeNode::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'i':
-            if ( fieldName % "index" ) return asStringU(index);
+            if ( fieldName % "index" ) return toStringU(index);
             break;
         case 'p':
             if ( fieldName % "prefixS" ) return prefixS;

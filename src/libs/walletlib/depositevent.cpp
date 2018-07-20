@@ -208,7 +208,7 @@ string_q QDepositEvent::getValueByName(const string_q& fieldName) const {
             if ( fieldName % "from" ) return fromAddress(from);
             break;
         case 'v':
-            if ( fieldName % "value" ) return asStringBN(value);
+            if ( fieldName % "value" ) return toStringBN(value);
             break;
     }
 

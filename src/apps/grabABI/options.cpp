@@ -90,11 +90,11 @@ extern void rebuildFourByteDB(void);
         } else {
             if (primaryAddr.empty())
                 primaryAddr = arg;
-            SFAddress addr = fixAddress(toLower(arg));
+            if (!isAddress(arg) && arg != "0xTokenLib" && arg != "0xWalletLib")
+                return usage("Invalid address '" + arg + "'. Length is not equal to 40 characters (20 bytes).\n");
+            SFAddress addr = toAddress(arg);
             if (arg == "0xTokenLib" || arg == "0xWalletLib")
                 addr = arg;
-            if (!isAddress(addr) && addr != "0xTokenLib" && addr != "0xWalletLib")
-                return usage("Invalid address '" + addr + "'. Length is not equal to 40 characters (20 bytes).\n");
             addrs.push_back(addr);
         }
     }
