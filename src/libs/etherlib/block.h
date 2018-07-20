@@ -24,8 +24,6 @@
 namespace qblocks {
 
 // EXISTING_CODE
-typedef bool (*ADDRESSFUNC)(const CAddressAppearance& item, void *data);
-typedef bool (*TRANSFUNC)(const CTransaction *trans, void *data);
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
