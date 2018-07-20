@@ -34,7 +34,7 @@ bool COptions::parseArguments(string_q& command) {
                 return usage("Invalid option: " + arg);
             }
         } else {
-            testNum = toLongU(arg);
+            testNum = str_2_Uint(arg);
         }
     }
     return true;

@@ -66,7 +66,7 @@ bool QApprovalForAllEvent::setValueByName(const string_q& fieldName, const strin
         case '_':
             if ( fieldName % "_owner" ) { _owner = toAddress(fieldValue); return true; }
             if ( fieldName % "_operator" ) { _operator = toAddress(fieldValue); return true; }
-            if ( fieldName % "_approved" ) { _approved = str2Bool(fieldValue); return true; }
+            if ( fieldName % "_approved" ) { _approved = str_2_Bool(fieldValue); return true; }
             break;
         default:
             break;

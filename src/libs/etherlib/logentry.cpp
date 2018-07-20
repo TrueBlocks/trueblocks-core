@@ -72,7 +72,7 @@ bool CLogEntry::setValueByName(const string_q& fieldName, const string_q& fieldV
             if ( fieldName % "data" ) { data = fieldValue; return true; }
             break;
         case 'l':
-            if ( fieldName % "logIndex" ) { logIndex = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "logIndex" ) { logIndex = str_2_Uint(fieldValue); return true; }
             break;
         case 't':
             if ( fieldName % "topics" ) {

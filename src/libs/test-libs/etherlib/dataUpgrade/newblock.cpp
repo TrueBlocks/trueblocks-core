@@ -78,13 +78,13 @@ bool CNewBlock::setValueByName(const string_q& fieldName, const string_q& fieldV
 
     switch (tolower(fieldName[0])) {
         case 'b':
-            if ( fieldName % "blockNumber" ) { blockNumber = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "blockNumber" ) { blockNumber = str_2_Uint(fieldValue); return true; }
             break;
         case 'd':
-            if ( fieldName % "difficulty" ) { difficulty = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "difficulty" ) { difficulty = str_2_Uint(fieldValue); return true; }
             break;
         case 'f':
-            if ( fieldName % "finalized" ) { finalized = str2Bool(fieldValue); return true; }
+            if ( fieldName % "finalized" ) { finalized = str_2_Bool(fieldValue); return true; }
             break;
         case 'g':
             if ( fieldName % "gasLimit" ) { gasLimit = toGas(fieldValue); return true; }
@@ -98,7 +98,7 @@ bool CNewBlock::setValueByName(const string_q& fieldName, const string_q& fieldV
             break;
         case 'p':
             if ( fieldName % "parentHash" ) { parentHash = toHash(fieldValue); return true; }
-            if ( fieldName % "price" ) { price = str2Double(fieldValue); return true; }
+            if ( fieldName % "price" ) { price = str_2_Double(fieldValue); return true; }
             break;
         case 't':
             if ( fieldName % "timestamp" ) { timestamp = toTimestamp(fieldValue); return true; }

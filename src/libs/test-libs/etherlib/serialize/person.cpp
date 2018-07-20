@@ -60,7 +60,7 @@ bool CPerson::setValueByName(const string_q& fieldName, const string_q& fieldVal
 
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "age" ) { age = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "age" ) { age = str_2_Uint(fieldValue); return true; }
             break;
         case 'n':
             if ( fieldName % "name" ) { name = fieldValue; return true; }

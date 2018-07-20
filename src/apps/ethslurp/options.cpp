@@ -82,7 +82,7 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (startsWith(arg, "--acct_id:")) {
             arg = substitute(arg, "--acct_id:", "");
-            acct_id = toLongU(arg);
+            acct_id = str_2_Uint(arg);
 
         } else if (startsWith(arg, "--cache")) {
             cache = true;
@@ -149,7 +149,7 @@ bool COptions::parseArguments(string_q& command) {
             arg = substitute(arg, "--sleep:", "");
             if (arg.empty() || !isdigit(arg[0]))
                 return usage("Sleep amount must be a numeral. Quitting...");
-            useconds_t wait = (useconds_t)toLongU(arg);
+            useconds_t wait = (useconds_t)str_2_Uint(arg);
             if (wait) {
                 cerr << "Sleeping " << wait << " seconds\n";
                 usleep(wait * 1000000);
@@ -159,7 +159,7 @@ bool COptions::parseArguments(string_q& command) {
             string_q val = substitute(substitute(arg, "-m:", ""), "--max:", "");
             if (val.empty() || !isdigit(val[0]))
                 return usage("Please supply a value with the --max: option. Quitting...");
-            maxTransactions = toLongU(val);
+            maxTransactions = str_2_Uint(val);
 
         } else if (startsWith(arg, "-n:") || startsWith(arg, "--name:")) {
             string_q val = substitute(substitute(arg, "-n:", ""), "--name:", "");

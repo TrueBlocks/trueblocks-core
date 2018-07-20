@@ -69,10 +69,10 @@ bool CFunction::setValueByName(const string_q& fieldName, const string_q& fieldV
 
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "anonymous" ) { anonymous = str2Bool(fieldValue); return true; }
+            if ( fieldName % "anonymous" ) { anonymous = str_2_Bool(fieldValue); return true; }
             break;
         case 'c':
-            if ( fieldName % "constant" ) { constant = str2Bool(fieldValue); return true; }
+            if ( fieldName % "constant" ) { constant = str_2_Bool(fieldValue); return true; }
             break;
         case 'e':
             if ( fieldName % "encoding" ) { encoding = fieldValue; return true; }
@@ -107,7 +107,7 @@ bool CFunction::setValueByName(const string_q& fieldName, const string_q& fieldV
             }
             break;
         case 'p':
-            if ( fieldName % "payable" ) { payable = str2Bool(fieldValue); return true; }
+            if ( fieldName % "payable" ) { payable = str_2_Bool(fieldValue); return true; }
             break;
         case 's':
             if ( fieldName % "signature" ) { signature = fieldValue; return true; }
@@ -255,7 +255,7 @@ string_q nextFunctionChunk_custom(const string_q& fieldIn, const void *dataPtr) 
                     }
                     ret += ")";
                     replace(ret, ",)", ")");
-                    return (ret + "\t" + str_2_Hex(ret));
+                    return (ret + "\t" + chr_2_HexStr(ret));
 
                 } else if ( fieldIn % "hasAddrs" ) {
                     return toString(fun->hasAddrs);
@@ -427,7 +427,7 @@ string_q CFunction::getSignature(uint64_t parts) const {
 
 //-----------------------------------------------------------------------
 string_q CFunction::encodeItem(void) const {
-    string_q hex = str_2_Hex(signature);
+    string_q hex = chr_2_HexStr(signature);
     string_q ret;
 extern bool getSha3(const string_q& hexIn, string_q& shaOut);
     getSha3(hex, ret);

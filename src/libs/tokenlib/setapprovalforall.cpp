@@ -65,7 +65,7 @@ bool QSetApprovalForAll::setValueByName(const string_q& fieldName, const string_
     switch (tolower(fieldName[0])) {
         case '_':
             if ( fieldName % "_operator" ) { _operator = toAddress(fieldValue); return true; }
-            if ( fieldName % "_approved" ) { _approved = str2Bool(fieldValue); return true; }
+            if ( fieldName % "_approved" ) { _approved = str_2_Bool(fieldValue); return true; }
             break;
         default:
             break;

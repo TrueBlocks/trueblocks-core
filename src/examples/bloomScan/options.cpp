@@ -58,11 +58,11 @@ bool COptions::parseArguments(string_q& command) {
                 source = arg;
             } else {
                 if (start == NOPOS)
-                    start = toUnsigned(arg);
+                    start = str_2_Uint(arg);
                 else if (stop == NOPOS)
-                    stop = toUnsigned(arg);
+                    stop = str_2_Uint(arg);
                 else if (skip == NOPOS)
-                    skip = toUnsigned(arg);
+                    skip = str_2_Uint(arg);
                 else
                     return usage("Too many parameters");
             }

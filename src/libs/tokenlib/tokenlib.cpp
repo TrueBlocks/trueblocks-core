@@ -131,7 +131,7 @@ const CTransaction *promoteToToken(const CTransaction *p) {
             QSetApprovalForAll *a = new QSetApprovalForAll;
             *(CTransaction*)a = *p;  // NOLINT
             a->_operator = toAddress(extract(params, 0*64, 64));
-            a->_approved = toLong(extract(params, 1*64, 64));
+            a->_approved = str_2_Int(extract(params, 1*64, 64));
             items[nItems++] = "address";
             items[nItems++] = "bool";
             a->function = toFunction("setApprovalForAll", params, nItems, items);
@@ -207,7 +207,7 @@ const CLogEntry *promoteToTokenEvent(const CLogEntry *p) {
             *(CLogEntry*)a = *p;  // NOLINT
             a->_owner = toAddress(nTops > 1 ? fromTopic(p->topics[1]) : "");
             a->_operator = toAddress(nTops > 2 ? fromTopic(p->topics[2]) : "");
-            a->_approved = toLong("0x" + extract(data, 0*64, 64));
+            a->_approved = str_2_Int("0x" + extract(data, 0*64, 64));
             return a;
 
         } else if (fromTopic(p->topics[0]) % evt_Transfer_qb) {

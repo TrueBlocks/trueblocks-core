@@ -33,7 +33,7 @@ int main(int argc, const char *argv[]) {
                 return 0;
             string_q in = argv[1];
             cout << "in: " << in << "\n";
-            string_q hex = str_2_Hex(in);
+            string_q hex = chr_2_HexStr(in);
             cout << "hex: " << hex << "\n";
             string_q out = getSha3(hex);
             cout << "out: " << out << "\n";
@@ -57,7 +57,7 @@ void doTests(void) {
                 in = line;
                 hasIn = true;
             } else {
-                string_q hex = str_2_Hex(in);
+                string_q hex = chr_2_HexStr(in);
                 string_q out = getSha3(hex);
                 cout << string_q(80, '-') << "\n"
                     << comment << "\n"

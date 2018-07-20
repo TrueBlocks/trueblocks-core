@@ -461,7 +461,7 @@ namespace qblocks {
     }
 
     //-------------------------------------------------------------------------
-    #define toLong32u(a) (uint32_t)toLongU((a))
+    #define str_2_Int32u(a) (uint32_t)str_2_Uint((a))
 
     //-------------------------------------------------------------------------
     //
@@ -503,17 +503,17 @@ namespace qblocks {
             switch (fmtStr[i]) {
                 case 'h':
                 case 'H':
-                    hour = toLong32u(nextTokenClear(str, sep));
+                    hour = str_2_Int32u(nextTokenClear(str, sep));
                     break;
 
                 case 'm':
                 case 'M':
-                    minute = toLong32u(nextTokenClear(str, sep));
+                    minute = str_2_Int32u(nextTokenClear(str, sep));
                     break;
 
                 case 's':
                 case 'S':
-                    secs = toLong32u(nextTokenClear(str, sep));
+                    secs = str_2_Int32u(nextTokenClear(str, sep));
                     break;
             }
         }
@@ -665,16 +665,16 @@ namespace qblocks {
             switch (fmtStr[i]) {
                 case 'd':
                 case 'D':
-                    day = toLong32u(nextTokenClear(str, sep));
+                    day = str_2_Int32u(nextTokenClear(str, sep));
                     break;
                 case 'm':
                 case 'M':
-                    month = toLong32u(nextTokenClear(str, sep));
+                    month = str_2_Int32u(nextTokenClear(str, sep));
                     break;
                 case 'y':
                 case 'Y':
                 {
-                    year = toLong32u(nextTokenClear(str, sep));
+                    year = str_2_Int32u(nextTokenClear(str, sep));
                     char c = fmtStr.at(3);
                     ASSERT((c == '2') || (c == '4'));
                     if (c == '2' || year < 100) {
@@ -803,12 +803,12 @@ namespace qblocks {
             str += "120000";
         }
 
-        uint32_t y  = toLong32u(extract(str,  0, 4));
-        uint32_t m  = toLong32u(extract(str,  4, 2));
-        uint32_t d  = toLong32u(extract(str,  6, 2));
-        uint32_t h  = toLong32u(extract(str,  8, 2));
-        uint32_t mn = toLong32u(extract(str, 10, 2));
-        uint32_t s  = toLong32u(extract(str, 12, 2));
+        uint32_t y  = str_2_Int32u(extract(str,  0, 4));
+        uint32_t m  = str_2_Int32u(extract(str,  4, 2));
+        uint32_t d  = str_2_Int32u(extract(str,  6, 2));
+        uint32_t h  = str_2_Int32u(extract(str,  8, 2));
+        uint32_t mn = str_2_Int32u(extract(str, 10, 2));
+        uint32_t s  = str_2_Int32u(extract(str, 12, 2));
 
         return SFTime(y, m, d, h, mn, s);
     }
@@ -956,12 +956,12 @@ namespace qblocks {
         strftime(retStr, sizeof(retStr), "%Y-%m-%d %H:%M:%S UTC", ret);
 
         string_q str = retStr;
-        uint32_t y = toLong32u(nextTokenClear(str, '-'));
-        uint32_t m = toLong32u(nextTokenClear(str, '-'));
-        uint32_t d = toLong32u(nextTokenClear(str, ' '));
-        uint32_t h = toLong32u(nextTokenClear(str, ':'));
-        uint32_t mn = toLong32u(nextTokenClear(str, ':'));
-        uint32_t s = toLong32u(nextTokenClear(str, ' '));
+        uint32_t y = str_2_Int32u(nextTokenClear(str, '-'));
+        uint32_t m = str_2_Int32u(nextTokenClear(str, '-'));
+        uint32_t d = str_2_Int32u(nextTokenClear(str, ' '));
+        uint32_t h = str_2_Int32u(nextTokenClear(str, ':'));
+        uint32_t mn = str_2_Int32u(nextTokenClear(str, ':'));
+        uint32_t s = str_2_Int32u(nextTokenClear(str, ' '));
         return SFTime(y, m, d, h, mn, s);
     }
 

@@ -123,7 +123,7 @@ namespace qblocks {
                 if (!arg.empty()) {
                     if (!isUnsigned(arg))
                         return usage("Invalid verbose level '" + arg + "'. Quitting...");
-                    verbose = toUnsigned(arg);
+                    verbose = str_2_Uint(arg);
                 }
             }
         }
@@ -661,7 +661,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
             return 1;
         if (contains(b2->second, "tbd"))
             return -1;
-        return (int)(toUnsigned(b1->second) - toUnsigned(b2->second));  // NOLINT
+        return (int)(str_2_Uint(b1->second) - str_2_Uint(b2->second));  // NOLINT
     }
 
     //-----------------------------------------------------------------------

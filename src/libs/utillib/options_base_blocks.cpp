@@ -26,7 +26,7 @@ namespace qblocks {
 
         // if it's a number, return it
         if (isNumeral(arg) || isHexStr(arg)) {
-            ret = toUnsigned(arg);
+            ret = str_2_Uint(arg);
 
         } else {
             // if it's not a number, it better be a special value, and we better be able to find it
@@ -35,7 +35,7 @@ namespace qblocks {
                 if (spec.first == "latest") {
                     ret = lastBlock;
                 } else {
-                    ret = toUnsigned(spec.second);
+                    ret = str_2_Uint(spec.second);
                 }
             } else {
                 msg = "The given value '" + arg + "' is not a numeral or a special named block. Quitting...\n";

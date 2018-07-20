@@ -92,13 +92,13 @@ bool CAccountWatch::setValueByName(const string_q& fieldName, const string_q& fi
             if ( fieldName % "color" ) { color = fieldValue; return true; }
             break;
         case 'd':
-            if ( fieldName % "deepScan" ) { deepScan = str2Bool(fieldValue); return true; }
+            if ( fieldName % "deepScan" ) { deepScan = str_2_Bool(fieldValue); return true; }
             break;
         case 'f':
-            if ( fieldName % "firstBlock" ) { firstBlock = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "firstBlock" ) { firstBlock = str_2_Uint(fieldValue); return true; }
             break;
         case 'l':
-            if ( fieldName % "lastBlock" ) { lastBlock = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "lastBlock" ) { lastBlock = str_2_Uint(fieldValue); return true; }
             break;
         case 'n':
             if ( fieldName % "name" ) { name = fieldValue; return true; }

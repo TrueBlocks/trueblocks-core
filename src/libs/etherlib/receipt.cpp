@@ -91,7 +91,7 @@ bool CReceipt::setValueByName(const string_q& fieldName, const string_q& fieldVa
             }
             break;
         case 's':
-            if ( fieldName % "status" ) { status = (uint32_t)toLongU(fieldValue); return true; }
+            if ( fieldName % "status" ) { status = (uint32_t)str_2_Uint(fieldValue); return true; }
             break;
         default:
             break;
