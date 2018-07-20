@@ -65,13 +65,14 @@ namespace qblocks {
     //-------------------------------------------------------------------------
     extern string_q  to_string    (const SFUintBN& bu);
     extern string_q  to_string2   (const SFIntBN&  bi);
-    extern SFAddress toAddress    (const SFAddress& strIn);
-    extern string_q  toHash       (const string_q& hashIn);
+    extern SFAddress toAddress    (const string_q& str);
+    extern SFHash    toHash       (const string_q& str);
 
     //--------------------------------------------------------------------
     extern SFUintBN  canonicalWei (const string_q& _value);
     extern SFUintBN  canonicalWei (uint64_t _value);
     extern string_q  wei2Ether    (const string_q& _value);
+    extern string_q  wei2Ether    (SFUintBN in);
 
     //-------------------------------------------------------------------------
     extern SFUintBN  hex2BigUint  (const string& s);
