@@ -185,7 +185,6 @@ toBool_in
 toBoolean
 toBytes
 toDouble
-wei2Ether
 toFloat
 str_2_Int
 str_2_Int32u

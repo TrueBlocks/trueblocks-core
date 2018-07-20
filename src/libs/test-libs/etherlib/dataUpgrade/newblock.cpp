@@ -87,8 +87,8 @@ bool CNewBlock::setValueByName(const string_q& fieldName, const string_q& fieldV
             if ( fieldName % "finalized" ) { finalized = str_2_Bool(fieldValue); return true; }
             break;
         case 'g':
-            if ( fieldName % "gasLimit" ) { gasLimit = toGas(fieldValue); return true; }
-            if ( fieldName % "gasUsed" ) { gasUsed = toGas(fieldValue); return true; }
+            if ( fieldName % "gasLimit" ) { gasLimit = str_2_Gas(fieldValue); return true; }
+            if ( fieldName % "gasUsed" ) { gasUsed = str_2_Gas(fieldValue); return true; }
             break;
         case 'h':
             if ( fieldName % "hash" ) { hash = toHash(fieldValue); return true; }
