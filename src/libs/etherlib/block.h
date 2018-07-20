@@ -214,7 +214,7 @@ inline blknum_t bnFromPath(const string_q& path) {
     reverse(p);
     p = nextTokenClear(p, '/');
     reverse(p);
-    return toUnsigned(p);
+    return str_2_Uint(p);
 }
 
 //---------------------------------------------------------------------------

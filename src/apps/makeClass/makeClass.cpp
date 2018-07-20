@@ -466,8 +466,8 @@ string_q getCaseCode(const string_q& fieldCase, const string_q& ex) {
                 string_q type  = nextTokenClear(isObj, '+');
                 string_q field = nextTokenClear(isObj, '-');
                 string_q isPtr = nextTokenClear(isObj, '~');
-                bool     isPointer = str2Bool(isPtr);
-                bool     isObject  = str2Bool(isObj);
+                bool     isPointer = str_2_Bool(isPtr);
+                bool     isObject  = str_2_Bool(isObj);
 
                 if (tolower(field[0]) == ch) {
                     caseCode += baseTab + tab + "if ( fieldName % \"" + field + "\"";
@@ -587,8 +587,8 @@ string_q getCaseSetCode(const string_q& fieldCase) {
                 string_q type  = nextTokenClear(isObj, '+');
                 string_q field = nextTokenClear(isObj, '-');
                 string_q isPtr = nextTokenClear(isObj, '~');
-                bool     isPointer = str2Bool(isPtr);
-                bool     isObject  = str2Bool(isObj);
+                bool     isPointer = str_2_Bool(isPtr);
+                bool     isObject  = str_2_Bool(isObj);
 
                 if (tolower(field[0]) == ch) {
                     caseCode += baseTab + tab + "if ( fieldName % \"" + field + "\" )";
@@ -602,7 +602,7 @@ string_q getCaseSetCode(const string_q& fieldCase) {
                         caseCode += " { " + field + " = parseDate(fieldValue); return true; }";
 
                     } else if (type == "bbool" || type == "bool") {
-                        caseCode +=  " { " + field + " = str2Bool(fieldValue); return true; }";
+                        caseCode +=  " { " + field + " = str_2_Bool(fieldValue); return true; }";
 
                     } else if (type == "bloom") {
                         caseCode +=  " { " + field + " = toBloom(fieldValue); return true; }";
@@ -626,34 +626,34 @@ string_q getCaseSetCode(const string_q& fieldCase) {
                         caseCode += " { " + field + " = toLower(fieldValue); return true; }";
 
                     } else if (type == "int8" || type == "int16" || type == "int32") {
-                        caseCode +=  " { " + field + " = (int32_t)toLongU(fieldValue); return true; }";
+                        caseCode +=  " { " + field + " = (int32_t)str_2_Uint(fieldValue); return true; }";
 
                     } else if (type == "int64") {
-                        caseCode +=  " { " + field + " = toLong(fieldValue); return true; }";
+                        caseCode +=  " { " + field + " = str_2_Int(fieldValue); return true; }";
 
                     } else if (type == "int256") {
                         caseCode +=  " { " + field + " = toWei(fieldValue); return true; }";
 
                     } else if (type == "uint8" || type == "uint16" || type == "uint32") {
-                        caseCode +=  " { " + field + " = (uint32_t)toLongU(fieldValue); return true; }";
+                        caseCode +=  " { " + field + " = (uint32_t)str_2_Uint(fieldValue); return true; }";
 
                     } else if (type == "uint64") {
-                        caseCode +=  " { " + field + " = toUnsigned(fieldValue); return true; }";
+                        caseCode +=  " { " + field + " = str_2_Uint(fieldValue); return true; }";
 
                     } else if (type == "uint256") {
                         caseCode +=  " { " + field + " = toWei(fieldValue); return true; }";
 
                     } else if (type == "blknum") {
-                        caseCode +=  " { " + field + " = toUnsigned(fieldValue); return true; }";
+                        caseCode +=  " { " + field + " = str_2_Uint(fieldValue); return true; }";
 
                     } else if (type == "double") {
-                        caseCode +=  " { " + field + " = str2Double(fieldValue); return true; }";
+                        caseCode +=  " { " + field + " = str_2_Double(fieldValue); return true; }";
 
                     } else if (contains(type, "CStringArray") || contains(type, "CBlockNumArray")) {
                         string_q str = strArraySet;
                         replaceAll(str, "[{NAME}]", field);
                         if (contains(type, "CBlockNumArray"))
-                            replaceAll(str, "nextTokenClear(str, ',')", "toUnsigned(nextTokenClear(str, ','))");
+                            replaceAll(str, "nextTokenClear(str, ',')", "str_2_Uint(nextTokenClear(str, ','))");
                         caseCode += str;
 
                     } else if (contains(type, "SFAddressArray") ||

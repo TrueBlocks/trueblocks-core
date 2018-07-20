@@ -62,10 +62,10 @@ bool CParameter::setValueByName(const string_q& fieldName, const string_q& field
 
     switch (tolower(fieldName[0])) {
         case 'i':
-            if ( fieldName % "indexed" ) { indexed = str2Bool(fieldValue); return true; }
-            if ( fieldName % "isPointer" ) { isPointer = str2Bool(fieldValue); return true; }
-            if ( fieldName % "isArray" ) { isArray = str2Bool(fieldValue); return true; }
-            if ( fieldName % "isObject" ) { isObject = str2Bool(fieldValue); return true; }
+            if ( fieldName % "indexed" ) { indexed = str_2_Bool(fieldValue); return true; }
+            if ( fieldName % "isPointer" ) { isPointer = str_2_Bool(fieldValue); return true; }
+            if ( fieldName % "isArray" ) { isArray = str_2_Bool(fieldValue); return true; }
+            if ( fieldName % "isObject" ) { isObject = str_2_Bool(fieldValue); return true; }
             break;
         case 'n':
             if ( fieldName % "name" ) { name = fieldValue; return true; }
@@ -291,10 +291,10 @@ string_q CParameter::getFunctionAssign(uint64_t which) const {
            if (         type == "uint")    { ass = "toWei(\"0x\" + [{VAL}]);";
     } else if (         type == "uint256") { ass = "toWei(\"0x\" + [{VAL}]);";
     } else if (contains(type, "gas"))      { ass = "toGas([{VAL}]);";
-    } else if (contains(type, "uint64"))   { ass = "toLongU([{VAL}]);";
-    } else if (contains(type, "uint"))     { ass = "(uint32_t)toLongU([{VAL}]);";
-    } else if (contains(type, "int"))      { ass = "toLong([{VAL}]);";
-    } else if (contains(type, "bool"))     { ass = "toLong([{VAL}]);";
+    } else if (contains(type, "uint64"))   { ass = "str_2_Uint([{VAL}]);";
+    } else if (contains(type, "uint"))     { ass = "(uint32_t)str_2_Uint([{VAL}]);";
+    } else if (contains(type, "int"))      { ass = "str_2_Int([{VAL}]);";
+    } else if (contains(type, "bool"))     { ass = "str_2_Int([{VAL}]);";
     } else if (contains(type, "address"))  { ass = "toAddress([{VAL}]);";
     } else                                 { ass = "[{VAL}];";
     }
@@ -310,10 +310,10 @@ string_q CParameter::getEventAssign(uint64_t which, uint64_t nIndexed) const {
            if (         type == "uint")    { ass = "toWei([{VAL}]);";
     } else if (         type == "uint256") { ass = "toWei([{VAL}]);";
     } else if (contains(type, "gas"))      { ass = "toGas([{VAL}]);";
-    } else if (contains(type, "uint64"))   { ass = "toLongU([{VAL}]);";
-    } else if (contains(type, "uint"))     { ass = "(uint32_t)toLongU([{VAL}]);";
-    } else if (contains(type, "int"))      { ass = "toLong([{VAL}]);";
-    } else if (contains(type, "bool"))     { ass = "toLong([{VAL}]);";
+    } else if (contains(type, "uint64"))   { ass = "str_2_Uint([{VAL}]);";
+    } else if (contains(type, "uint"))     { ass = "(uint32_t)str_2_Uint([{VAL}]);";
+    } else if (contains(type, "int"))      { ass = "str_2_Int([{VAL}]);";
+    } else if (contains(type, "bool"))     { ass = "str_2_Int([{VAL}]);";
     } else if (contains(type, "address"))  { ass = "toAddress([{VAL}]);";
     } else                                 { ass = "[{VAL}];";
     }

@@ -33,7 +33,7 @@ int main(int argc, const char * argv[]) {
         cout << (options.isMulti() || !options.isRaw ? "[" : "");
         string_q list = options.getBlockNumList();
         while (!list.empty()) {
-            blknum_t bn = toLongU(nextTokenClear(list, '|'));
+            blknum_t bn = str_2_Uint(nextTokenClear(list, '|'));
             string_q result = doOneBloom(bn, options);
             cout << result;
             if (!options.asBars) {

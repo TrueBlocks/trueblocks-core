@@ -19,22 +19,22 @@ namespace qblocks {
 
     // TODO(tjayrush): inline these conversions
     //--------------------------------------------------------------------------------
-    double str2Double(const string_q& str) {
+    double str_2_Double(const string_q& str) {
         return static_cast<double>(strtold(str.c_str(), NULL));
     }
 
     //--------------------------------------------------------------------------------
-    bool str2Bool(const string_q& str) {
-        return static_cast<bool>(str % "true" || toLong(str) != 0);
+    bool str_2_Bool(const string_q& str) {
+        return static_cast<bool>(str % "true" || str_2_Int(str) != 0);
     }
 
     //--------------------------------------------------------------------------------
     timestamp_t toTimestamp(const string_q& str) {
-        return (timestamp_t)toLongU(str);
+        return (timestamp_t)str_2_Uint(str);
     }
 
     //--------------------------------------------------------------------------------
-    uint64_t toLongU(const string_q& str) {
+    uint64_t str_2_Uint(const string_q& str) {
         return (uint64_t)(startsWith(str, "0x") ? hex_2_Uint64(str) : strtoul(str.c_str(), NULL, 10));
     }
 
@@ -64,8 +64,28 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    string_q str_2_Hex(const string_q& str) {
+    string_q bnu_2_Hex(const SFUintBN& i) {
+        return string(BigUnsignedInABase(i, 16));
+    }
 
+    //--------------------------------------------------------------------------------
+    string_q uint_2_Hex(uint64_t num) {
+        SFUintBN bn = num;
+        return toLower("0x" + bnu_2_Hex(bn));
+    }
+
+    //--------------------------------------------------------------------------------
+    string_q toHex(const string_q& str) {
+        if (str == "null")
+            return str;
+        if (str.empty())
+            return "0x0";
+        SFUintBN bn = canonicalWei(str);
+        return toLower("0x" + bnu_2_Hex(bn));
+    }
+
+    //--------------------------------------------------------------------------------
+    string_q chr_2_HexStr(const string_q& str) {
         if (startsWith(str, "0x"))
             return str.c_str();
 
@@ -82,23 +102,28 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    SFUintBN exp2BigUint(const string &s) {
+    SFUintBN exp2BigUint(const string_q &s) {
         string_q exponent = s.c_str();
         string_q decimals = nextTokenClear(exponent, 'e');
         string_q num = nextTokenClear(decimals, '.');
         uint64_t nD = decimals.length();
-        uint64_t e = toLongU(exponent);
+        uint64_t e = str_2_Uint(exponent);
         SFUintBN ee = 1;
         uint64_t power = e - nD;
         for (uint64_t i = 0 ; i < power ; i++)
             ee *= 10;
         num += decimals;
-        return str2BigUint(num) * ee;
+        return str_2_BigUint(num) * ee;
     }
 
     //--------------------------------------------------------------------------------
-    SFUintBN hex2BigUint(const string &s) {
+    SFUintBN hex2BigUint(const string_q &s) {
         return SFUintBN(BigUnsignedInABase(s, 16));
+    }
+
+    //--------------------------------------------------------------------------------
+    SFUintBN canonicalWei(uint64_t _value) {
+        return SFUintBN(_value);
     }
 
     //--------------------------------------------------------------------------------
@@ -107,7 +132,7 @@ namespace qblocks {
             return hex2BigUint(extract(str, 2).c_str());
         if (contains(str, "e"))
             return exp2BigUint(str.c_str());
-        return str2BigUint(str);
+        return str_2_BigUint(str);
     }
 
     //--------------------------------------------------------------------------------
@@ -208,27 +233,22 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    int64_t toLong(const string_q& str) {
+    int64_t str_2_Int(const string_q& str) {
         return (int64_t) strtol (str.c_str(), NULL, 10);
     }
 
     //--------------------------------------------------------------------------------
-    SFUintBN str2BigUint(const string &str) {
+    SFUintBN str_2_BigUint(const string_q& str) {
         if (startsWith(str, "0x"))
             return canonicalWei(str);
         return SFUintBN(BigUnsignedInABase(str, 10));
     }
 
     //--------------------------------------------------------------------------------
-    SFIntBN str2BigInt(const string &s) {
-        return (s[0] == '-') ? SFIntBN(str2BigUint(extract(s, 1, s.length() - 1)), -1)
-        : (s[0] == '+') ? SFIntBN(str2BigUint(extract(s, 1, s.length() - 1)))
-        : SFIntBN(str2BigUint(s));
-    }
-
-    //--------------------------------------------------------------------------------
-    SFUintBN canonicalWei(uint64_t _value) {
-        return SFUintBN(_value);
+    SFIntBN str_2_BigInt(const string_q& s) {
+        return (s[0] == '-') ? SFIntBN(str_2_BigUint(extract(s, 1, s.length() - 1)), -1)
+        : (s[0] == '+') ? SFIntBN(str_2_BigUint(extract(s, 1, s.length() - 1)))
+        : SFIntBN(str_2_BigUint(s));
     }
 
     //--------------------------------------------------------------------------------
@@ -239,20 +259,6 @@ namespace qblocks {
     //--------------------------------------------------------------------------------
     string_q toStringBN(const SFIntBN& bn) {
         return to_string2(bn).c_str();
-    }
-
-    //--------------------------------------------------------------------------------
-    string_q toHex(const string_q& str) {
-        if (str == "null")
-            return str;
-        SFUintBN bn = canonicalWei(str);
-        return toLower("0x" + string_q(to_hex(bn).c_str()));
-    }
-
-    //--------------------------------------------------------------------------------
-    string_q toHex(uint64_t num) {
-        SFUintBN bn = num;
-        return toLower("0x" + string_q(to_hex(bn).c_str()));
     }
 
     //--------------------------------------------------------------------------------
@@ -344,11 +350,6 @@ namespace qblocks {
     //--------------------------------------------------------------------------------
     string to_string2(const SFIntBN& i) {
         return (i.isNegative() ? string("-") : "") + to_string(i.getMagnitude());
-    }
-
-    //--------------------------------------------------------------------------------
-    string to_hex(const SFUintBN& i) {
-        return string(BigUnsignedInABase(i, 16));
     }
 
 }  // namespace qblocks

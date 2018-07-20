@@ -31,7 +31,7 @@ bool COptions::parseArguments(string_q& command) {
         if (startsWith(arg, "-t:") || startsWith(arg, "--testNum:")) {
             string_q orig = arg;
             arg = substitute(substitute(arg, "--testNum:", ""), "-t:", "");
-            testNum = (int32_t)toLong(arg);
+            testNum = (int32_t)str_2_Int(arg);
             if (!testNum || testNum > 2)
                 return usage("Invalid argument: " + orig + ". Quitting...");
 

@@ -78,7 +78,7 @@ bool CTrace::setValueByName(const string_q& fieldName, const string_q& fieldValu
             break;
         case 'b':
             if ( fieldName % "blockHash" ) { blockHash = toHash(fieldValue); return true; }
-            if ( fieldName % "blockNumber" ) { blockNumber = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "blockNumber" ) { blockNumber = str_2_Uint(fieldValue); return true; }
             break;
         case 'e':
             if ( fieldName % "error" ) { error = fieldValue; return true; }
@@ -87,7 +87,7 @@ bool CTrace::setValueByName(const string_q& fieldName, const string_q& fieldValu
             if ( fieldName % "result" ) { /* result = fieldValue; */ return false; }
             break;
         case 's':
-            if ( fieldName % "subtraces" ) { subtraces = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "subtraces" ) { subtraces = str_2_Uint(fieldValue); return true; }
             break;
         case 't':
             if ( fieldName % "traceAddress" ) {
@@ -98,7 +98,7 @@ bool CTrace::setValueByName(const string_q& fieldName, const string_q& fieldValu
                 return true;
             }
             if ( fieldName % "transactionHash" ) { transactionHash = toHash(fieldValue); return true; }
-            if ( fieldName % "transactionPosition" ) { transactionPosition = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "transactionPosition" ) { transactionPosition = str_2_Uint(fieldValue); return true; }
             if ( fieldName % "type" ) { type = fieldValue; return true; }
             break;
         default:

@@ -34,7 +34,7 @@ bool COptions::parseArguments(string_q& command) {
                 return usage("Invalid option: " + arg);
             }
         } else {
-            testNum = (int32_t)toLong(arg);
+            testNum = (int32_t)str_2_Int(arg);
         }
     }
     return true;

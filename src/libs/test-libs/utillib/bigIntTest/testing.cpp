@@ -91,10 +91,10 @@ int main(int argc, const char *argv[]) {
         SFUintBN bbb(314);
         SFUintBN bbbb(25);
 
-        SFUintBN ss1 = str2BigUint(string_q("314159265358979323"));
-        SFUintBN ss2 = str2BigUint(string_q("314159265358979324"));
-        SFUintBN ss3 = str2BigUint(string_q("4294967296"));
-        SFUintBN ss4 = str2BigUint(string_q("4294967298"));
+        SFUintBN ss1 = str_2_BigUint(string_q("314159265358979323"));
+        SFUintBN ss2 = str_2_BigUint(string_q("314159265358979324"));
+        SFUintBN ss3 = str_2_BigUint(string_q("4294967296"));
+        SFUintBN ss4 = str_2_BigUint(string_q("4294967298"));
 
         SFUintBN p1 = SFUintBN(3) * 5;
         SFIntBN p2 = SFIntBN(SFUintBN(3)) * -5;
@@ -108,7 +108,7 @@ int main(int argc, const char *argv[]) {
         a = b;
         TEST2( a,                                                          "535"               );
         b = a.to_int();
-        f = str2BigInt(s);
+        f = str_2_BigInt(s);
         s2 = to_string2(f);
         TEST2( f,                                                          "3141592653589793238462643383279");
         s = "1142b0090b6460000";
@@ -162,13 +162,13 @@ int main(int argc, const char *argv[]) {
         TEST2( check( SFIntBN(myZeroBlocks, 1, 0) ),                       "0"                 );
         TEST( SFUintBN   (0).to_ulong(),                                  "0"                 );
         TEST( SFUintBN   (4294967295U).to_ulong(),                        "4294967295"        );
-        TEST( str2BigUint (string_q("4294967296")).to_ulong(),            "error"             );
+        TEST( str_2_BigUint (string_q("4294967296")).to_ulong(),            "error"             );
         TEST( SFUintBN   (0).to_long(),                                   "0"                 );
         TEST( SFUintBN   (2147483647).to_long(),                          "2147483647"        );
         TEST( SFUintBN   (2147483648U).to_long(),                         "error"             );
         TEST( SFUintBN   (0).to_uint(),                                   "0"                 );
         TEST( SFUintBN   (4294967295U).to_uint(),                         "4294967295"        );
-        TEST( str2BigUint (string_q("4294967296")).to_uint(),             "error"             );
+        TEST( str_2_BigUint (string_q("4294967296")).to_uint(),             "error"             );
         TEST( SFUintBN   (0).to_int(),                                    "0"                 );
         TEST( SFUintBN   (2147483647).to_int(),                           "2147483647"        );
         TEST( SFUintBN   (2147483648U).to_int(),                          "error"             );
@@ -181,9 +181,9 @@ int main(int argc, const char *argv[]) {
         TEST2( SFIntBN    (-1).to_ulong(),                                 "error"             );
         TEST2( SFIntBN    (0).to_ulong(),                                  "0"                 );
         TEST2( SFIntBN    (4294967295U).to_ulong(),                        "4294967295"        );
-        TEST2( str2BigInt  ("4294967296").to_ulong(),                      "error"             );
-        TEST2( str2BigInt  ("-2147483649").to_long(),                      "error"             );
-        TEST2( str2BigInt  ("-2147483648").to_long(),                      "-2147483648"       );
+        TEST2( str_2_BigInt  ("4294967296").to_ulong(),                      "error"             );
+        TEST2( str_2_BigInt  ("-2147483649").to_long(),                      "error"             );
+        TEST2( str_2_BigInt  ("-2147483648").to_long(),                      "-2147483648"       );
         TEST2( SFIntBN    (-2147483647).to_long(),                         "-2147483647"       );
         TEST2( SFIntBN    (0).to_long(),                                   "0"                 );
         TEST2( SFIntBN    (2147483647).to_long(),                          "2147483647"        );
@@ -191,9 +191,9 @@ int main(int argc, const char *argv[]) {
         TEST2( SFIntBN    (-1).to_uint(),                                  "error"             );
         TEST2( SFIntBN    (0).to_uint(),                                   "0"                 );
         TEST2( SFIntBN    (4294967295U).to_uint(),                         "4294967295"        );
-        TEST2( str2BigInt  ("4294967296").to_uint(),                       "error"             );
-        TEST2( str2BigInt  ("-2147483649").to_int(),                       "error"             );
-        TEST2( str2BigInt  ("-2147483645").to_int(),                       "-2147483645"       );
+        TEST2( str_2_BigInt  ("4294967296").to_uint(),                       "error"             );
+        TEST2( str_2_BigInt  ("-2147483649").to_int(),                       "error"             );
+        TEST2( str_2_BigInt  ("-2147483645").to_int(),                       "-2147483645"       );
         TEST2( SFIntBN    (-2147483647).to_int(),                          "-2147483647"       );
         TEST2( SFIntBN    (0).to_int(),                                    "0"                 );
         TEST2( SFIntBN    (2147483647).to_int(),                           "2147483647"        );
@@ -221,12 +221,12 @@ int main(int argc, const char *argv[]) {
         TEST( check( ss3 - SFUintBN(1) ),                                 "4294967295"        );
         TEST( check( SFUintBN(0) + 0 ),                                   "0"                 );
         TEST( check( SFUintBN(0) + 1 ),                                   "1"                 );
-        TEST( check( str2BigUint(string_q("8589934591")) + ss4 ),         "12884901889"       );
+        TEST( check( str_2_BigUint(string_q("8589934591")) + ss4 ),         "12884901889"       );
         TEST( check( SFUintBN(0xFFFFFFFFU) + 1 ),                         "4294967296"        );
         TEST( check( SFUintBN(1) - 0 ),                                   "1"                 );
         TEST( check( SFUintBN(1) - 1 ),                                   "0"                 );
         TEST( check( SFUintBN(2) - 1 ),                                   "1"                 );
-        TEST( check( str2BigUint(string_q("12884901889")) - ss4),         "8589934591"        );
+        TEST( check( str_2_BigUint(string_q("12884901889")) - ss4),         "8589934591"        );
         TEST( check( ss3 - 1 ),                                           "4294967295"        );
         TEST( aa,                                                         "112776680263877595");
         TEST( aa / 123,                                                   "916883579381118"   );
@@ -249,7 +249,7 @@ int main(int argc, const char *argv[]) {
         TEST( SFUintBN(1).bitLength(),                                    "1"                 );
         TEST( SFUintBN(4095).bitLength(),                                 "12"                );
         TEST( SFUintBN(4096).bitLength(),                                 "13"                );
-        TEST( str2BigUint(string_q("5000000000")).bitLength(),            "33"                );
+        TEST( str_2_BigUint(string_q("5000000000")).bitLength(),            "33"                );
         TEST( bbbb.getBit(4),                                             "1"                 );
         TEST( bbbb.getBit(3),                                             "1"                 );
         TEST( bbbb.getBit(2),                                             "0"                 );

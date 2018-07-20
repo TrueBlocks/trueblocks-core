@@ -85,13 +85,13 @@ bool CBlock::setValueByName(const string_q& fieldName, const string_q& fieldValu
 
     switch (tolower(fieldName[0])) {
         case 'b':
-            if ( fieldName % "blockNumber" ) { blockNumber = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "blockNumber" ) { blockNumber = str_2_Uint(fieldValue); return true; }
             break;
         case 'd':
-            if ( fieldName % "difficulty" ) { difficulty = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "difficulty" ) { difficulty = str_2_Uint(fieldValue); return true; }
             break;
         case 'f':
-            if ( fieldName % "finalized" ) { finalized = str2Bool(fieldValue); return true; }
+            if ( fieldName % "finalized" ) { finalized = str_2_Bool(fieldValue); return true; }
             break;
         case 'g':
             if ( fieldName % "gasLimit" ) { gasLimit = toGas(fieldValue); return true; }
@@ -105,7 +105,7 @@ bool CBlock::setValueByName(const string_q& fieldName, const string_q& fieldValu
             break;
         case 'p':
             if ( fieldName % "parentHash" ) { parentHash = toHash(fieldValue); return true; }
-            if ( fieldName % "price" ) { price = str2Double(fieldValue); return true; }
+            if ( fieldName % "price" ) { price = str_2_Double(fieldValue); return true; }
             break;
         case 't':
             if ( fieldName % "timestamp" ) { timestamp = toTimestamp(fieldValue); return true; }
@@ -482,7 +482,7 @@ bool isPotentialAddr(SFUintBN test, SFAddress& addrOut) {
     if (test <= small || test >= large)
         return false;
 
-    addrOut = to_hex(test).c_str();
+    addrOut = bnu_2_Hex(test).c_str();
     // Totally a heuristic that can't really be supported, but a good probability that this isn't an address
     if (endsWith(addrOut, "00000000"))
         return false;

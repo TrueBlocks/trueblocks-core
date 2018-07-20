@@ -39,15 +39,15 @@ public:
         }
 // 4305968 2017-09-24 00:00:17 UTC 1398084 2907884 0.675315    60868104    20.9321 14.1358 0
         string_q str;
-        str = nextTokenClear(last, sep); startBlock = toUnsigned(str);
+        str = nextTokenClear(last, sep); startBlock = str_2_Uint(str);
               nextTokenClear(last, sep);
-        str = nextTokenClear(last, sep); nEmpty     = toUnsigned(str);
-        str = nextTokenClear(last, sep); nFull      = toUnsigned(str);
+        str = nextTokenClear(last, sep); nEmpty     = str_2_Uint(str);
+        str = nextTokenClear(last, sep); nFull      = str_2_Uint(str);
         str = nextTokenClear(last, sep);
-        str = nextTokenClear(last, sep); nTrans     = toUnsigned(str);
+        str = nextTokenClear(last, sep); nTrans     = str_2_Uint(str);
         str = nextTokenClear(last, sep);
         str = nextTokenClear(last, sep);
-        str = nextTokenClear(last, sep); nTraces    = toUnsigned(str);
+        str = nextTokenClear(last, sep); nTraces    = str_2_Uint(str);
     }
 };
 

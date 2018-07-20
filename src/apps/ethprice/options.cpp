@@ -54,7 +54,7 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (startsWith(arg, "-p:") || startsWith(arg, "--period:")) {
             arg = substitute(substitute(orig, "-p:", ""), "--period:", "");
-            freq = toLongU(arg);
+            freq = str_2_Uint(arg);
             if (!isUnsigned(arg) || freq % 5)
                 return usage("Positive multiple of 5 expected: " + orig);
 

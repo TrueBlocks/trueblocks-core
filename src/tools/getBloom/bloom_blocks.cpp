@@ -47,7 +47,7 @@ CBloomTrans::CBloomTrans(void) {
     }
 }
 bool CBloomTrans::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
-    if (fieldName == "transactionIndex"   ) { transactionIndex = toUnsigned(fieldValue); return true; }
+    if (fieldName == "transactionIndex"   ) { transactionIndex = str_2_Uint(fieldValue); return true; }
     if (fieldName == "hash"   ) { hash = fieldValue; return true; }
     return true;
 }
@@ -80,7 +80,7 @@ CBloomBlock::CBloomBlock(void) {
 }
 bool CBloomBlock::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
     if (fieldName == "logsBloom"   ) { logsBloom    = fieldValue; return true; }
-    if (fieldName == "number"      ) { number       = toUnsigned(fieldValue); return true; }
+    if (fieldName == "number"      ) { number       = str_2_Uint(fieldValue); return true; }
     if (fieldName == "transactions") {
         char *p = cleanUpJson((char*)fieldValue.c_str());  // NOLINT
         while (p && *p) {

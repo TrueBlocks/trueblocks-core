@@ -354,7 +354,7 @@ extern bool isFunction(const CTransaction *trans, const string_q& func);
         if (trans->m_showing && options.errFilt) {
             // The filter is either equal to '2' (errOnly) in which case
             // we show only errors. Otherwise, show only non-errors.
-            bool isError = toLong(trans->Format("[{ISERROR}]"));
+            bool isError = str_2_Int(trans->Format("[{ISERROR}]"));
             trans->m_showing = (options.errFilt == 2 ? isError : !isError);
         }
 
@@ -529,14 +529,14 @@ void findBlockRange(const string_q& json, size_t& minBlock, size_t& maxBlock) {
     size_t first = json.find(search);
     if (first != string::npos) {
         string_q str = extract(json, first + len);
-        minBlock = toLongU(str);
+        minBlock = str_2_Uint(str);
     }
 
     string_q end = extract(json, json.rfind('{'));  // pull off the last transaction
     size_t last = end.find(search);
     if (last != string::npos) {
         string_q str = extract(end, last + len);
-        maxBlock = toLongU(str);
+        maxBlock = str_2_Uint(str);
     }
 }
 

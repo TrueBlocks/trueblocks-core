@@ -500,7 +500,7 @@ namespace qblocks {
                 string_q name = field.getName();
                 os << indent() << "\"" << name << "\": ";
                 if (field.isArray()) {
-                    uint64_t cnt = toLongU(getValueByName(name+"Cnt"));
+                    uint64_t cnt = str_2_Uint(getValueByName(name+"Cnt"));
                     os << "[";
                     if (cnt) {
                         incIndent();
@@ -653,18 +653,18 @@ namespace qblocks {
         if (contains(fieldName, "w:")) {
             ASSERT(extract(fieldName, 0, 2) % "w:");  // must be first modifier in the string
             replace(fieldName, "w:", "");   // get rid of the 'w:'
-            maxWidth = toLongU(fieldName);   // grab the width
+            maxWidth = str_2_Uint(fieldName);   // grab the width
             nextTokenClear(fieldName, ':');    // skip to the start of the fieldname
         } else if (contains(fieldName, "r:")) {
             ASSERT(extract(fieldName, 0, 2) % "r:");  // must be first modifier in the string
             replace(fieldName, "r:", "");   // get rid of the 'w:'
-            maxWidth = toLongU(fieldName);   // grab the width
+            maxWidth = str_2_Uint(fieldName);   // grab the width
             nextTokenClear(fieldName, ':');    // skip to the start of the fieldname
             rightJust = true;
         } else if (contains(fieldName, "l:")) {
             ASSERT(extract(fieldName, 0, 2) % "l:");  // must be first modifier in the string
             replace(fieldName, "l:", "");   // get rid of the 'w:'
-            lineWidth = toLongU(fieldName);   // grab the width
+            lineWidth = str_2_Uint(fieldName);   // grab the width
             nextTokenClear(fieldName, ':');    // skip to the start of the fieldname
             lineJust = true;
         }
