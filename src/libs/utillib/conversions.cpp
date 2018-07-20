@@ -232,6 +232,14 @@ namespace qblocks {
         return ret;
     }
 
+    //-----------------------------------------------------------------------
+    string_q wei2Ether(SFUintBN in) {
+        string_q ret = wei2Ether(toStringBN(in));
+        if (contains(ret, "."))
+            ret = trimTrailing(ret,'0');
+        return trimTrailing(ret,'.');
+    }
+
     //--------------------------------------------------------------------------------
     int64_t str_2_Int(const string_q& str) {
         return (int64_t) strtol (str.c_str(), NULL, 10);
@@ -262,9 +270,9 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    SFAddress toAddress(const SFAddress& strIn) {
+    SFAddress toAddress(const string_q& str) {
 
-        string_q ret = startsWith(strIn, "0x") ? extract(strIn, 2) : strIn;
+        string_q ret = startsWith(str, "0x") ? extract(str, 2) : str;
 
         string_q leading('0', 64-40);
         if (ret.length() == 64 && startsWith(ret, leading))
@@ -275,8 +283,8 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    string_q toHash(const string_q& hashIn) {
-        string_q ret = startsWith(hashIn, "0x") ? extract(hashIn, 2) : hashIn;
+    SFHash toHash(const string_q& str) {
+        string_q ret = startsWith(str, "0x") ? extract(str, 2) : str;
         return toLower("0x" + padLeft(ret, 32 * 2, '0'));
     }
 
