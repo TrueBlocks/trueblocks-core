@@ -64,7 +64,7 @@ bool CNewReceipt::setValueByName(const string_q& fieldName, const string_q& fiel
             if ( fieldName % "contractAddress" ) { contractAddress = toAddress(fieldValue); return true; }
             break;
         case 'g':
-            if ( fieldName % "gasUsed" ) { gasUsed = toGas(fieldValue); return true; }
+            if ( fieldName % "gasUsed" ) { gasUsed = str_2_Gas(fieldValue); return true; }
             break;
         case 'i':
             if ( fieldName % "isError" ) { isError = str_2_Bool(fieldValue); return true; }

@@ -611,7 +611,7 @@ string_q getCaseSetCode(const string_q& fieldCase) {
                         caseCode +=  " { " + field + " = toWei(fieldValue); return true; }";
 
                     } else if (type == "gas") {
-                        caseCode +=  " { " + field + " = toGas(fieldValue); return true; }";
+                        caseCode +=  " { " + field + " = str_2_Gas(fieldValue); return true; }";
 
                     } else if (type == "timestamp") {
                         caseCode +=  " { " + field + " = toTimestamp(fieldValue); return true; }";

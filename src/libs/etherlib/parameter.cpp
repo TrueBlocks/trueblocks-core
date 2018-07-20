@@ -290,7 +290,7 @@ string_q CParameter::getFunctionAssign(uint64_t which) const {
 
            if (         type == "uint")    { ass = "toWei(\"0x\" + [{VAL}]);";
     } else if (         type == "uint256") { ass = "toWei(\"0x\" + [{VAL}]);";
-    } else if (contains(type, "gas"))      { ass = "toGas([{VAL}]);";
+    } else if (contains(type, "gas"))      { ass = "str_2_Gas([{VAL}]);";
     } else if (contains(type, "uint64"))   { ass = "str_2_Uint([{VAL}]);";
     } else if (contains(type, "uint"))     { ass = "(uint32_t)str_2_Uint([{VAL}]);";
     } else if (contains(type, "int"))      { ass = "str_2_Int([{VAL}]);";
@@ -309,7 +309,7 @@ string_q CParameter::getEventAssign(uint64_t which, uint64_t nIndexed) const {
 
            if (         type == "uint")    { ass = "toWei([{VAL}]);";
     } else if (         type == "uint256") { ass = "toWei([{VAL}]);";
-    } else if (contains(type, "gas"))      { ass = "toGas([{VAL}]);";
+    } else if (contains(type, "gas"))      { ass = "str_2_Gas([{VAL}]);";
     } else if (contains(type, "uint64"))   { ass = "str_2_Uint([{VAL}]);";
     } else if (contains(type, "uint"))     { ass = "(uint32_t)str_2_Uint([{VAL}]);";
     } else if (contains(type, "int"))      { ass = "str_2_Int([{VAL}]);";

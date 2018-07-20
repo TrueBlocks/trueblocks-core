@@ -272,11 +272,11 @@ ostream& operator<<(ostream& os, const CIncomeStatement& item) {
                 << padCenter("gasCost", width) << "   "
                 << padCenter("endBal", width);
         } else {
-            os << (item.begBal       > 0 ? cGreen  : bBlack) << padLeft( wei2Ether( to_string2( item.begBal       )), width) << bBlack << "   ";  // NOLINT
-            os << (item.inflow       > 0 ? cYellow : ""    ) << padLeft( wei2Ether( to_string2( item.inflow       )), width) << bBlack << "   ";  // NOLINT
-            os << (item.outflow      > 0 ? cYellow : ""    ) << padLeft( wei2Ether( to_string2( item.outflow      )), width) << bBlack << "   ";  // NOLINT
-            os << (item.gasCostInWei > 0 ? cYellow : ""    ) << padLeft( wei2Ether( to_string2( item.gasCostInWei )), width) << cOff   << "   ";  // NOLINT
-            os << (item.endBal       > 0 ? cGreen  : bBlack) << padLeft( wei2Ether( to_string2( item.endBal       )), width);  // NOLINT
+            os << (item.begBal       > 0 ? cGreen  : bBlack) << padLeft( wei2Ether(to_string2( item.begBal       )), width) << bBlack << "   ";  // NOLINT
+            os << (item.inflow       > 0 ? cYellow : ""    ) << padLeft( wei2Ether(to_string2( item.inflow       )), width) << bBlack << "   ";  // NOLINT
+            os << (item.outflow      > 0 ? cYellow : ""    ) << padLeft( wei2Ether(to_string2( item.outflow      )), width) << bBlack << "   ";  // NOLINT
+            os << (item.gasCostInWei > 0 ? cYellow : ""    ) << padLeft( wei2Ether(to_string2( item.gasCostInWei )), width) << cOff   << "   ";  // NOLINT
+            os << (item.endBal       > 0 ? cGreen  : bBlack) << padLeft( wei2Ether(to_string2( item.endBal       )), width);  // NOLINT
         }
         { return os; }
     }

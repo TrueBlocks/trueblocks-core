@@ -75,7 +75,7 @@ bool CReceipt::setValueByName(const string_q& fieldName, const string_q& fieldVa
             if ( fieldName % "contractAddress" ) { contractAddress = toAddress(fieldValue); return true; }
             break;
         case 'g':
-            if ( fieldName % "gasUsed" ) { gasUsed = toGas(fieldValue); return true; }
+            if ( fieldName % "gasUsed" ) { gasUsed = str_2_Gas(fieldValue); return true; }
             break;
         case 'l':
             if ( fieldName % "logs" ) {
