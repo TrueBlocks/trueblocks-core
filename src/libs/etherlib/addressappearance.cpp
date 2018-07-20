@@ -38,7 +38,7 @@ uint64_t insertUnique(CAddressAppearanceMap *addrMap, const CAddressAppearance& 
 bool accumulateAddresses(const CAddressAppearance& item, void *data) {
     if (isZeroAddr(item.addr))
         return true;
-    CAddressAppearance search(item.bn, item.tx, item.tc, item.addr, item.reason);
+    CAddressAppearance search(item.getBn(), item.getTx(), item.getTc(), item.addr, item.reason);
     insertUnique((CAddressAppearanceMap*)data, search);  // NOLINT
     return true;
 }
@@ -95,6 +95,19 @@ void foundPot(ADDRESSFUNC func, void *data, blknum_t bn, blknum_t tx, blknum_t t
     CAddressAppearance item(bn, tx, tc, "", reason);
     potentialAddr(func, data, item, potList);
 }
+
+//---------------------------------------------------------------------------
+blknum_t CAddressAppearance::getBn(void) const { return bn; }
+//---------------------------------------------------------------------------
+blknum_t CAddressAppearance::getTx(void) const { return tx; }
+//---------------------------------------------------------------------------
+blknum_t CAddressAppearance::getTc(void) const { return tc; }
+//---------------------------------------------------------------------------
+void CAddressAppearance::setBlock(CBlock *pBlock) { bn = pBlock->blockNumber; }
+//---------------------------------------------------------------------------
+void CAddressAppearance::setTrans(CTransaction *pTrans) { tx = pTrans->transactionIndex; }
+//---------------------------------------------------------------------------
+void CAddressAppearance::setTrace(CTrace *pTrace, blknum_t t) { tc = t; }
 
 }  // namespace qblocks
 

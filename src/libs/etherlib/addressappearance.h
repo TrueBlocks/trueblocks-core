@@ -18,16 +18,17 @@
 #include <vector>
 #include <map>
 #include "etherlib.h"
+#include "block.h"
 #include "transaction.h"
 
 namespace qblocks {
 
 //---------------------------------------------------------------------------
 class CAddressAppearance {
-public:
     blknum_t bn;
     blknum_t tx;
     blknum_t tc;
+public:
     SFAddress addr;
     string_q reason;
     CAddressAppearance(void) : bn(0), tx(0), tc(0), addr(""), reason("") { }
@@ -46,12 +47,20 @@ public:
     friend bool operator<(const CAddressAppearance& v1, const CAddressAppearance& v2) {
         return v1.addr < v2.addr;
     }
+    blknum_t getBn(void) const;
+    blknum_t getTx(void) const;
+    blknum_t getTc(void) const;
+    void setBlock(CBlock *pBlock);
+    void setTrans(CTransaction *pTrans);
+    void setTrace(CTrace *pTrace, blknum_t t);
     friend ostream& operator<<(ostream& os, const CAddressAppearance& item);
 };
 typedef map<CAddressAppearance, uint64_t> CAddressAppearanceMap;
 typedef vector<CAddressAppearance> CAddressAppearanceArray;
+typedef bool (*ADDRESSFUNC)(const CAddressAppearance& item, void *data);
+typedef bool (*TRANSFUNC)(const CTransaction *trans, void *data);
 
 extern bool isPotentialAddr(SFUintBN test, SFAddress& addrOut);
-extern void potentialAddr(ADDRESSFUNC func, void *data, const CAddressItem& item, const string_q& potList);
+extern void potentialAddr(ADDRESSFUNC func, void *data, const CAddressAppearance& item, const string_q& potList);
 }  // namespace qblocks
 

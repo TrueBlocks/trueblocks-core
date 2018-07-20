@@ -76,14 +76,14 @@ bool transFilter(const CTransaction *trans, void *data) {
 
 //----------------------------------------------------------------
 bool sortAddressArray(const CAddressAppearance& v1, const CAddressAppearance& v2) {
-    if (v1.bn != v2.bn)
-        return v1.bn < v2.bn;
-    int64_t vv1 = (int64_t)v1.tx;
-    int64_t vv2 = (int64_t)v2.tx;
+    if (v1.getBn() != v2.getBn())
+        return v1.getBn() < v2.getBn();
+    int64_t vv1 = (int64_t)v1.getTx();
+    int64_t vv2 = (int64_t)v2.getTx();
     if (vv1 != vv2)
         return vv1 < vv2;
-    if (v1.tc != v2.tc)
-        return v1.tc < v2.tc;
+    if (v1.getTc() != v2.getTc())
+        return v1.getTc() < v2.getTc();
     return v1.addr < v2.addr;
 }
 
