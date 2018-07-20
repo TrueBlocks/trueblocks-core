@@ -75,11 +75,11 @@ namespace qblocks {
 
         switch (tolower(fieldName[0])) {
             case 'd':
-                if ( fieldName % "deleted" ) return asStringU(m_deleted);
+                if ( fieldName % "deleted" ) return toStringU(m_deleted);
                 break;
             case 's':
-                if ( fieldName % "schema" ) return asStringU(m_schema);
-                if ( fieldName % "showing" ) return asStringU(m_showing);
+                if ( fieldName % "schema" ) return toStringU(m_schema);
+                if ( fieldName % "showing" ) return toStringU(m_showing);
                 break;
         }
 
@@ -556,7 +556,7 @@ namespace qblocks {
             string_q className = node->getRuntimeClass()->getClassNamePtr();
             switch (tolower(fieldIn[0])) {
                 case 'd':
-                    if ( fieldIn % "deleted" ) return asString(node->isDeleted());
+                    if ( fieldIn % "deleted" ) return toString(node->isDeleted());
                     break;
                 case 'n':
                     if ( fieldIn % "null" ) return "<x>";
@@ -573,8 +573,8 @@ namespace qblocks {
                     }
                     break;
                 case 's':
-                    if ( fieldIn % "schema" ) return asStringU(node->m_schema);
-                    if ( fieldIn % "showing" ) return asStringU(node->m_showing);
+                    if ( fieldIn % "schema" ) return toStringU(node->m_schema);
+                    if ( fieldIn % "showing" ) return toStringU(node->m_showing);
                     break;
                 default:
                     break;

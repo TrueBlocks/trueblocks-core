@@ -199,7 +199,7 @@ string_q QChangeRequirement::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case '_':
-            if ( fieldName % "_newRequired" ) return asStringBN(_newRequired);
+            if ( fieldName % "_newRequired" ) return toStringBN(_newRequired);
             break;
     }
 

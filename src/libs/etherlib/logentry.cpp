@@ -241,13 +241,13 @@ string_q CLogEntry::getValueByName(const string_q& fieldName) const {
             if ( fieldName % "data" ) return data;
             break;
         case 'l':
-            if ( fieldName % "logIndex" ) return asStringU(logIndex);
+            if ( fieldName % "logIndex" ) return toStringU(logIndex);
             break;
         case 't':
             if ( fieldName % "topics" || fieldName % "topicsCnt" ) {
                 size_t cnt = topics.size();
                 if (endsWith(fieldName, "Cnt"))
-                    return asStringU(cnt);
+                    return toStringU(cnt);
                 if (!cnt) return "";
                 string_q retS;
                 for (size_t i = 0 ; i < cnt ; i++) {

@@ -18,27 +18,27 @@ namespace qblocks {
     extern uint64_t hex_2_Uint64(const string_q& str);
 
     // TODO(tjayrush): inline these conversions
-    //----------------------------------------------------------------------------
+    //--------------------------------------------------------------------------------
     double str2Double(const string_q& str) {
         return static_cast<double>(strtold(str.c_str(), NULL));
     }
 
-    //----------------------------------------------------------------------------
+    //--------------------------------------------------------------------------------
     bool str2Bool(const string_q& str) {
         return static_cast<bool>(str % "true" || toLong(str) != 0);
     }
 
-    //----------------------------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------------
     timestamp_t toTimestamp(const string_q& str) {
         return (timestamp_t)toLongU(str);
     }
 
-    //----------------------------------------------------------------------------
+    //--------------------------------------------------------------------------------
     uint64_t toLongU(const string_q& str) {
         return (uint64_t)(startsWith(str, "0x") ? hex_2_Uint64(str) : strtoul(str.c_str(), NULL, 10));
     }
 
-    //----------------------------------------------------------------------------
+    //--------------------------------------------------------------------------------
     uint64_t hex_2_Uint64(const string_q& str) {
 
         string_q hex = toLower(startsWith(str, "0x") ? extract(str, 2) : str);
@@ -58,12 +58,12 @@ namespace qblocks {
         return ret;
     }
 
-    //----------------------------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------------
     string_q fromTimestamp(timestamp_t ts) {
-        return asString(ts);
+        return toString(ts);
     }
 
-    //----------------------------------------------------------------------------
+    //--------------------------------------------------------------------------------
     string_q str_2_Hex(const string_q& str) {
 
         if (startsWith(str, "0x"))
@@ -82,7 +82,7 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    inline SFUintBN exp2BigUint(const string &s) {
+    SFUintBN exp2BigUint(const string &s) {
         string_q exponent = s.c_str();
         string_q decimals = nextTokenClear(exponent, 'e');
         string_q num = nextTokenClear(decimals, '.');
@@ -97,6 +97,11 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
+    SFUintBN hex2BigUint(const string &s) {
+        return SFUintBN(BigUnsignedInABase(s, 16));
+    }
+
+    //--------------------------------------------------------------------------------
     SFUintBN canonicalWei(const string_q& str) {
         if (contains(str, "0x"))
             return hex2BigUint(extract(str, 2).c_str());
@@ -105,14 +110,14 @@ namespace qblocks {
         return str2BigUint(str);
     }
 
-    //------------------------------------------------------------------
+    //--------------------------------------------------------------------------------
     class SFBloomHex : public SFBigNumStore<unsigned char> {
     public:
         explicit SFBloomHex(const SFUintBN& numIn);
         string_q str;
     };
 
-    //------------------------------------------------------------------
+    //--------------------------------------------------------------------------------
     SFBloomHex::SFBloomHex(const SFUintBN& numIn) {
 
         len = 1024;
@@ -137,7 +142,7 @@ namespace qblocks {
         str = s;
     }
 
-    //------------------------------------------------------------------
+    //--------------------------------------------------------------------------------
     string_q bloom2Bytes(const SFBloom& bl) {
         if (bl == 0)
             return "0x0";
@@ -145,7 +150,7 @@ namespace qblocks {
         return ("0x" + padLeft(toLower(b2.str), 512, '0'));
     }
 
-    //-------------------------------------------------------------------------
+    //--------------------------------------------------------------------------------
     string_q bloom2Bits(const SFBloom& b) {
         string_q ret = substitute(bloom2Bytes(b), "0x", "");
         replaceAll(ret, "0", "0000");
@@ -166,4 +171,184 @@ namespace qblocks {
         replaceAll(ret, "f", "1111");
         return ret;
     }
+
+    //--------------------------------------------------------------------------------
+    string_q toString(int64_t i) {
+        ostringstream os;
+        os << i;
+        return os.str().c_str();
+    }
+
+    //--------------------------------------------------------------------------------
+    string_q toStringU(uint64_t i) {
+        ostringstream os;
+        os << i;
+        return os.str().c_str();
+    }
+
+    //--------------------------------------------------------------------------------
+    string_q wei2Ether(const string_q& _value) {
+        // Make sure the wei number is at least 18 characters long. Once it is,
+        // reverse it, put a decimal at the 18th position, reverse it back,
+        // trim leading '0's except the tens digit.
+        string_q ret = _value;
+        if (ret.length() < 18)
+            ret = substitute(padLeft(_value, 18), " ", "0");
+        reverse(ret);
+        ret = extract(ret, 0, 18) + "." + extract(ret, 18);
+        reverse(ret);
+        ret = trimLeading(ret, '0');
+        if (startsWith(ret, '.'))
+            ret = "0" + ret;
+        if (contains(ret, "0-")) {
+            ret = "-" + substitute(ret, "0-", "0");
+        }
+        ret = substitute(ret, "-.", "-0.");
+        return ret;
+    }
+
+    //--------------------------------------------------------------------------------
+    int64_t toLong(const string_q& str) {
+        return (int64_t) strtol (str.c_str(), NULL, 10);
+    }
+
+    //--------------------------------------------------------------------------------
+    SFUintBN str2BigUint(const string &str) {
+        if (startsWith(str, "0x"))
+            return canonicalWei(str);
+        return SFUintBN(BigUnsignedInABase(str, 10));
+    }
+
+    //--------------------------------------------------------------------------------
+    SFIntBN str2BigInt(const string &s) {
+        return (s[0] == '-') ? SFIntBN(str2BigUint(extract(s, 1, s.length() - 1)), -1)
+        : (s[0] == '+') ? SFIntBN(str2BigUint(extract(s, 1, s.length() - 1)))
+        : SFIntBN(str2BigUint(s));
+    }
+
+    //--------------------------------------------------------------------------------
+    SFUintBN canonicalWei(uint64_t _value) {
+        return SFUintBN(_value);
+    }
+
+    //--------------------------------------------------------------------------------
+    string_q toStringBN(const SFUintBN& bu) {
+        return to_string(bu).c_str();
+    }
+
+    //--------------------------------------------------------------------------------
+    string_q toStringBN(const SFIntBN& bn) {
+        return to_string2(bn).c_str();
+    }
+
+    //--------------------------------------------------------------------------------
+    string_q toHex(const string_q& str) {
+        if (str == "null")
+            return str;
+        SFUintBN bn = canonicalWei(str);
+        return toLower("0x" + string_q(to_hex(bn).c_str()));
+    }
+
+    //--------------------------------------------------------------------------------
+    string_q toHex(uint64_t num) {
+        SFUintBN bn = num;
+        return toLower("0x" + string_q(to_hex(bn).c_str()));
+    }
+
+    //--------------------------------------------------------------------------------
+    SFAddress toAddress(const SFAddress& strIn) {
+
+        string_q ret = startsWith(strIn, "0x") ? extract(strIn, 2) : strIn;
+
+        string_q leading('0', 64-40);
+        if (ret.length() == 64 && startsWith(ret, leading))
+            replace(ret, leading, "");
+
+        ret = "0x" + toLower(padLeft(ret, 20 * 2, '0'));
+        return (isZeroAddr(ret) ? "0x0" : ret);
+    }
+
+    //--------------------------------------------------------------------------------
+    string_q toHash(const string_q& hashIn) {
+        string_q ret = startsWith(hashIn, "0x") ? extract(hashIn, 2) : hashIn;
+        return toLower("0x" + padLeft(ret, 32 * 2, '0'));
+    }
+
+    //--------------------------------------------------------------------------------
+    string_q double2Str(double f, size_t nDecimals) {
+        char s[100], r[100];
+        memset(s, '\0', 100);
+        memset(r, '\0', 100);
+        sprintf(s, "%.*g", (int)nDecimals, ((int64_t)(  pow(10, nDecimals) * (  fabs(f) - labs( (int64_t) f )  )  + 0.5)) / pow(10,nDecimals));  // NOLINT
+        if (strchr(s, 'e'))
+            s[1] = '\0';
+        sprintf(r, "%d%s", static_cast<int>(f), s+1);  // NOLINT
+        return string_q(r);
+    }
+
+    // querying type
+    //--------------------------------------------------------------------------------
+    bool isZeroAddr(const SFAddress& addr) {
+        if (!isNumeral(addr) && !isHexStr(addr))
+            return false;
+        return (canonicalWei(addr) == 0);
+    }
+
+    //--------------------------------------------------------------------------------
+    bool isNumeral(const string_q& test) {
+        for (size_t i = 0 ; i < test.length() ; i++)
+            if (!isdigit(test[i]))
+                return false;
+        return true;
+    }
+
+    //--------------------------------------------------------------------------------
+    bool isHexStr(const string_q& str) {
+        if (!startsWith(str, "0x"))
+            return false;
+        for (size_t i = 2 ; i < str.length() ; i++)
+            if (!isxdigit(str[i]))
+                return false;
+        return true;
+    }
+
+    //--------------------------------------------------------------------------------
+    bool isAddress(const SFAddress& addrIn) {
+        return (addrIn.length() == 42 && isHexStr(addrIn));
+    }
+
+    //--------------------------------------------------------------------------------
+    bool isHash(const SFHash& hashIn) {
+        return (hashIn.length() == 66 && isHexStr(hashIn));
+    }
+
+    //--------------------------------------------------------------------------------
+    bool isUnsigned(const string_q& in) {
+        // Empty string is not valid...
+        if (in.empty())
+            return false;
+        // ...first character must be 0-9 (no negatives)...
+        if (!isdigit(in[0]))
+            return false;
+        // ...or first two must be '0x' and the third must be non negative hex digit
+        if (startsWith(in, "0x") && in.length() > 2)
+            return isxdigit(in.at(2));
+        return true;
+    }
+
+    //--------------------------------------------------------------------------------
+    string to_string(const SFUintBN& i) {
+        return string(BigUnsignedInABase(i, 10));
+    }
+
+    //--------------------------------------------------------------------------------
+    string to_string2(const SFIntBN& i) {
+        return (i.isNegative() ? string("-") : "") + to_string(i.getMagnitude());
+    }
+
+    //--------------------------------------------------------------------------------
+    string to_hex(const SFUintBN& i) {
+        return string(BigUnsignedInABase(i, 16));
+    }
+
 }  // namespace qblocks

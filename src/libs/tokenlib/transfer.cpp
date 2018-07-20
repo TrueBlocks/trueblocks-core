@@ -204,7 +204,7 @@ string_q QTransfer::getValueByName(const string_q& fieldName) const {
     switch (tolower(fieldName[0])) {
         case '_':
             if ( fieldName % "_to" ) return fromAddress(_to);
-            if ( fieldName % "_value" ) return asStringBN(_value);
+            if ( fieldName % "_value" ) return toStringBN(_value);
             break;
     }
 

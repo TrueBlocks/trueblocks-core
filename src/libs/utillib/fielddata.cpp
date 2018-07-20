@@ -33,27 +33,27 @@ namespace qblocks {
     static string_q typeName(uint64_t type) {
 
         string_q t("\t");
-        if (type == T_DATE)      return asStringU(type) + t + "T_DATE "    + baseTypeName(type);
-        if (type == T_TIME)      return asStringU(type) + t + "T_TIME "    + baseTypeName(type);
-        if (type == T_BOOL)      return asStringU(type) + t + "T_BOOL "    + baseTypeName(type);
-        if (type == T_NUMBER)    return asStringU(type) + t + "T_NUMBER "  + baseTypeName(type);
-        if (type == T_DOUBLE)    return asStringU(type) + t + "T_DOUBLE "  + baseTypeName(type);
-        if (type == T_WEI)       return asStringU(type) + t + "T_WEI "     + baseTypeName(type);
-        if (type == T_GAS)       return asStringU(type) + t + "T_GAS "     + baseTypeName(type);
-        if (type == T_ETHER)     return asStringU(type) + t + "T_ETHER "   + baseTypeName(type);
-        if (type == T_TEXT)      return asStringU(type) + t + "T_TEXT "    + baseTypeName(type);
-        if (type == T_ADDRESS)   return asStringU(type) + t + "T_ADDRESS " + baseTypeName(type);
-        if (type == T_TIMESTAMP) return asStringU(type) + t + "T_TIMESPAN "+ baseTypeName(type);
-        if (type == T_HASH)      return asStringU(type) + t + "T_HASH "    + baseTypeName(type);
-        if (type == T_BLOOM)     return asStringU(type) + t + "T_BLOOM "   + baseTypeName(type);
-        if (type == T_POINTER)   return asStringU(type) + t + "T_POINTER " + baseTypeName(type);
-        if (type == T_OBJECT)    return asStringU(type) + t + "T_OBJECT "  + baseTypeName(type);
+        if (type == T_DATE)      return toStringU(type) + t + "T_DATE "    + baseTypeName(type);
+        if (type == T_TIME)      return toStringU(type) + t + "T_TIME "    + baseTypeName(type);
+        if (type == T_BOOL)      return toStringU(type) + t + "T_BOOL "    + baseTypeName(type);
+        if (type == T_NUMBER)    return toStringU(type) + t + "T_NUMBER "  + baseTypeName(type);
+        if (type == T_DOUBLE)    return toStringU(type) + t + "T_DOUBLE "  + baseTypeName(type);
+        if (type == T_WEI)       return toStringU(type) + t + "T_WEI "     + baseTypeName(type);
+        if (type == T_GAS)       return toStringU(type) + t + "T_GAS "     + baseTypeName(type);
+        if (type == T_ETHER)     return toStringU(type) + t + "T_ETHER "   + baseTypeName(type);
+        if (type == T_TEXT)      return toStringU(type) + t + "T_TEXT "    + baseTypeName(type);
+        if (type == T_ADDRESS)   return toStringU(type) + t + "T_ADDRESS " + baseTypeName(type);
+        if (type == T_TIMESTAMP) return toStringU(type) + t + "T_TIMESPAN "+ baseTypeName(type);
+        if (type == T_HASH)      return toStringU(type) + t + "T_HASH "    + baseTypeName(type);
+        if (type == T_BLOOM)     return toStringU(type) + t + "T_BLOOM "   + baseTypeName(type);
+        if (type == T_POINTER)   return toStringU(type) + t + "T_POINTER " + baseTypeName(type);
+        if (type == T_OBJECT)    return toStringU(type) + t + "T_OBJECT "  + baseTypeName(type);
 
-        if (type == (T_OBJECT|TS_ARRAY))  return asStringU(type) + t + "T_OBJECT|TS_ARRAY "  + baseTypeName(type);
-        if (type == (T_TEXT|TS_ARRAY))    return asStringU(type) + t + "T_TEXT|TS_ARRAY "    + baseTypeName(type);
-        if (type == (T_ADDRESS|TS_ARRAY)) return asStringU(type) + t + "T_ADDRESS|TS_ARRAY " + baseTypeName(type);
+        if (type == (T_OBJECT|TS_ARRAY))  return toStringU(type) + t + "T_OBJECT|TS_ARRAY "  + baseTypeName(type);
+        if (type == (T_TEXT|TS_ARRAY))    return toStringU(type) + t + "T_TEXT|TS_ARRAY "    + baseTypeName(type);
+        if (type == (T_ADDRESS|TS_ARRAY)) return toStringU(type) + t + "T_ADDRESS|TS_ARRAY " + baseTypeName(type);
 
-        return asStringU(type) + t + "Unknown";
+        return toStringU(type) + t + "Unknown";
     }
 
     ostream& operator<<(ostream& os, const CFieldData& item) {

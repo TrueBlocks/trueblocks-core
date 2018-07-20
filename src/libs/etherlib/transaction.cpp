@@ -320,7 +320,7 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void *dataPt
                 }
                 break;
             case 'e':
-                if ( fieldIn % "ether" ) return wei2Ether(asStringBN(tra->value));
+                if ( fieldIn % "ether" ) return wei2Ether(toStringBN(tra->value));
                 if ( fieldIn % "encoding" ) {
                     return extract(tra->input, 0, 10);
                 }
@@ -335,7 +335,7 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void *dataPt
                     return tra->inputToFunction();
                 break;
             case 'g':
-                if ( fieldIn % "gasUsed" ) return asStringU(tra->receipt.gasUsed);
+                if ( fieldIn % "gasUsed" ) return toStringU(tra->receipt.gasUsed);
                 if ( fieldIn % "gasCost" ) {
                     SFUintBN used = tra->receipt.gasUsed;
                     SFUintBN price = tra->gasPrice;
@@ -343,7 +343,7 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void *dataPt
                 }
                 break;
             case 't':
-                if ( fieldIn % "timestamp" && tra->pBlock) return asString(tra->pBlock->timestamp);
+                if ( fieldIn % "timestamp" && tra->pBlock) return toString(tra->pBlock->timestamp);
                 if ( fieldIn % "time" ) {
                     timestamp_t ts = (tra->pBlock ? tra->pBlock->timestamp : tra->timestamp);
                     return extract(dateFromTimeStamp(ts).Format(FMT_JSON), 12);
@@ -422,7 +422,7 @@ string_q CTransaction::getValueByName(const string_q& fieldName) const {
     switch (tolower(fieldName[0])) {
         case 'b':
             if ( fieldName % "blockHash" ) return fromHash(blockHash);
-            if ( fieldName % "blockNumber" ) return asStringU(blockNumber);
+            if ( fieldName % "blockNumber" ) return toStringU(blockNumber);
             break;
         case 'f':
             if ( fieldName % "from" ) return fromAddress(from);
@@ -436,17 +436,17 @@ string_q CTransaction::getValueByName(const string_q& fieldName) const {
             break;
         case 'i':
             if ( fieldName % "input" ) return input;
-            if ( fieldName % "isError" ) return asStringU(isError);
-            if ( fieldName % "isInternal" ) return asStringU(isInternal);
+            if ( fieldName % "isError" ) return toStringU(isError);
+            if ( fieldName % "isInternal" ) return toStringU(isInternal);
             break;
         case 'n':
-            if ( fieldName % "nonce" ) return asStringU(nonce);
+            if ( fieldName % "nonce" ) return toStringU(nonce);
             break;
         case 'r':
             if ( fieldName % "receipt" ) { expContext().noFrst=true; return receipt.Format(); }
             break;
         case 't':
-            if ( fieldName % "transactionIndex" ) return asStringU(transactionIndex);
+            if ( fieldName % "transactionIndex" ) return toStringU(transactionIndex);
             if ( fieldName % "timestamp" ) return fromTimestamp(timestamp);
             if ( fieldName % "to" ) return fromAddress(to);
             break;

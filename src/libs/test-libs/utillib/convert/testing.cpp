@@ -41,18 +41,32 @@ TEST_F(CThisTest, TestConverts_0) {
     ASSERT_EQ("big num",                             array[4], "0x1000000000000000000000000000000000000000");
     cout << "\n";
 
-    ASSERT_EQ("long empty address",      toLong     (array[0]), 0);
-    ASSERT_EQ("long hex ony",            toLong     (array[1]), 0);
-    ASSERT_EQ("long zero addr",          toLong     (array[2]), 0);
-    ASSERT_EQ("long full zero",          toLong     (array[3]), 0);
-    ASSERT_EQ("long overflow",           toLong     (array[4]), 0);
+    ASSERT_EQ("long empty address",      toLong(array[0]), 0);
+    ASSERT_EQ("long hex ony",            toLong(array[1]), 0);
+    ASSERT_EQ("long zero addr",          toLong(array[2]), 0);
+    ASSERT_EQ("long full zero",          toLong(array[3]), 0);
+    ASSERT_EQ("long overflow",           toLong(array[4]), 0);
     cout << "\n";
 
-    ASSERT_EQ("ulong empty address",     toLongU    (array[0]), 0);
-    ASSERT_EQ("ulong hex ony",           toLongU    (array[1]), 0);
-    ASSERT_EQ("ulong zero addr",         toLongU    (array[2]), 0);
-    ASSERT_EQ("ulong full zero",         toLongU    (array[3]), 0);
-    ASSERT_EQ("ulong overflow",          toLongU    (array[4]), 0);
+    ASSERT_EQ("ulong empty address",     toLongU(array[0]), 0);
+    ASSERT_EQ("ulong hex ony",           toLongU(array[1]), 0);
+    ASSERT_EQ("ulong zero addr",         toLongU(array[2]), 0);
+    ASSERT_EQ("ulong full zero",         toLongU(array[3]), 0);
+    ASSERT_EQ("ulong overflow",          toLongU(array[4]), 0);
+    cout << "\n";
+
+    ASSERT_EQ("toHash1",                 toHash("12312ABcdE12"),   "0x000000000000000000000000000000000000000000000000000012312abcde12");
+    ASSERT_EQ("toHash2",                 toHash("a"),              "0x000000000000000000000000000000000000000000000000000000000000000a");
+    ASSERT_EQ("toHash3",                 toHash("0x"),             "0x0000000000000000000000000000000000000000000000000000000000000000");
+    ASSERT_EQ("toHash4",                 toHash(""),               "0x0000000000000000000000000000000000000000000000000000000000000000");
+    ASSERT_EQ("toHash5",                 toHash("0x12312abcde12"), "0x000000000000000000000000000000000000000000000000000012312abcde12");
+    cout << "\n";
+
+    ASSERT_EQ("toAddress1",              toAddress("12312ABcdE12"),   "0x000000000000000000000000000012312abcde12");
+    ASSERT_EQ("toAddress2",              toAddress("a"),              "0x000000000000000000000000000000000000000a");
+    ASSERT_EQ("toAddress3",              toAddress("0x"),             "0x0");
+    ASSERT_EQ("toAddress4",              toAddress(""),               "0x0");
+    ASSERT_EQ("toAddress5",              toAddress("0x12312abcde12"), "0x000000000000000000000000000012312abcde12");
     cout << "\n";
 
     ASSERT_EQ("timestamp empty address", toTimestamp(array[0]), 0);
@@ -86,6 +100,23 @@ TEST_F(CThisTest, TestConverts_1) {
     ASSERT_EQ("str_2_Hex7", str_2_Hex("0x0123456789abcdef"), "0x0123456789abcdef");
     ASSERT_EQ("str_2_Hex8", str_2_Hex("0xabcdefg"), "0xabcdefg");
     ASSERT_EQ("str_2_Hex9", str_2_Hex("012345"), "0x303132333435");
+
+    ASSERT_EQ("convert1",  str2Double("1"), 1);
+    ASSERT_EQ("convert2",  str2Double("10000.10001"), 10000.10001);
+    ASSERT_EQ("convert3",  str2Double("-100101.1212"), -100101.1212);
+    ASSERT_EQ("convert4",  str2Double(".000000121.4123+e12"), .000000121);
+    ASSERT_EQ("convert6",  str2Bool("false"), 0);
+    ASSERT_EQ("convert7",  str2Bool("xxx"), 0);
+    ASSERT_EQ("convert8",  str2Bool("1"), 1);
+    ASSERT_EQ("convert9",  str2Bool("0"), 0);
+    ASSERT_EQ("convert10", str2Bool("338"), 1);
+    ASSERT_EQ("convert11", str2Bool("true"), 1);
+
+    ASSERT_EQ("bigint1", str2BigUint("40000000000000000000"), canonicalWei("40000000000000000000"));
+    ASSERT_EQ("bigint2", str2BigInt ("-40000000000000000000"), SFIntBN(str2BigUint("40000000000000000000"), -1));
+    ASSERT_EQ("bigint2", str2BigInt ("+3"), 3);
+    SFUintBN bn = 300000000; bn *= 100000000; bn *= 100;
+    ASSERT_EQ("bigint2", str2BigInt ("+3000000000000000000"), bn);
 
     return true;
 }}
@@ -141,7 +172,6 @@ toBytes
 toDouble
 toEther
 toFloat
-toHash
 toLong
 toLong32u
 toLongU
@@ -188,9 +218,9 @@ asDollars
 asEther
 asHex
 asPct
-asString
-asStringBN
-asStringU
+toString
+toStringBN
+toStringU
 
 ASSERT_NOT_EQ("c-string non-equality",        foo,  bar      );
 ASSERT_EQ    ("string equality",              foo.c_str(), xfoo);

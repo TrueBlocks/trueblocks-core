@@ -199,7 +199,7 @@ string_q QRequirementChangedEvent::getValueByName(const string_q& fieldName) con
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'n':
-            if ( fieldName % "newRequirement" ) return asStringBN(newRequirement);
+            if ( fieldName % "newRequirement" ) return toStringBN(newRequirement);
             break;
     }
 

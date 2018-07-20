@@ -44,7 +44,7 @@ namespace qblocks {
         }
 
         if (ret > lastBlock) {
-            string_q lateStr = (isTestMode() ? "--" : asStringU(lastBlock));
+            string_q lateStr = (isTestMode() ? "--" : toStringU(lastBlock));
             msg = "Block " + arg + " is later than the last valid block " + lateStr + ". Quitting...\n";
             return NOPOS;
         }

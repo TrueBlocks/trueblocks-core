@@ -36,7 +36,7 @@ double testBuild(void) {
     double start = qbNow();
     establishFolder("./cache/");
     for (blknum_t b = FIRST ; b < FIRST+NBLKS ; b++) {
-        string_q fileName = "./cache/" + asStringU(b) + ".bin";
+        string_q fileName = "./cache/" + toStringU(b) + ".bin";
         CBlock block;
         getBlock(block, b);
         if (!fileExists(fileName)) {
@@ -54,7 +54,7 @@ double testBuild(void) {
 double testRetrieve(void) {
     double start = qbNow();
     for (blknum_t b = FIRST ; b < FIRST+NBLKS ; b++) {
-        string_q fileName = "./cache/" + asStringU(b) + ".bin";
+        string_q fileName = "./cache/" + toStringU(b) + ".bin";
         CBlock block;
         readFromBinary(block, fileName);
         cerr << "Reading " << block.blockNumber << "\r";

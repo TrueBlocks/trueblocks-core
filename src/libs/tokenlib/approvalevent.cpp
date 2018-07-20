@@ -209,7 +209,7 @@ string_q QApprovalEvent::getValueByName(const string_q& fieldName) const {
         case '_':
             if ( fieldName % "_owner" ) return fromAddress(_owner);
             if ( fieldName % "_spender" ) return fromAddress(_spender);
-            if ( fieldName % "_value" ) return asStringBN(_value);
+            if ( fieldName % "_value" ) return toStringBN(_value);
             break;
     }
 

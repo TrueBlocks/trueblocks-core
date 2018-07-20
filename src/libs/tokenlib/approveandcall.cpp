@@ -208,7 +208,7 @@ string_q QApproveAndCall::getValueByName(const string_q& fieldName) const {
     switch (tolower(fieldName[0])) {
         case '_':
             if ( fieldName % "_spender" ) return fromAddress(_spender);
-            if ( fieldName % "_value" ) return asStringBN(_value);
+            if ( fieldName % "_value" ) return toStringBN(_value);
             if ( fieldName % "_extraData" ) return _extraData;
             break;
     }

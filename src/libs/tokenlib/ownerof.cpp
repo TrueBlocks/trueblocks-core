@@ -199,7 +199,7 @@ string_q QOwnerOf::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case '_':
-            if ( fieldName % "_tokenId" ) return asStringBN(_tokenId);
+            if ( fieldName % "_tokenId" ) return toStringBN(_tokenId);
             break;
     }
 

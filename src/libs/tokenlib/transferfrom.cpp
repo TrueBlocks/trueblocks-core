@@ -209,7 +209,7 @@ string_q QTransferFrom::getValueByName(const string_q& fieldName) const {
         case '_':
             if ( fieldName % "_from" ) return fromAddress(_from);
             if ( fieldName % "_to" ) return fromAddress(_to);
-            if ( fieldName % "_value" ) return asStringBN(_value);
+            if ( fieldName % "_value" ) return toStringBN(_value);
             break;
     }
 

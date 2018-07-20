@@ -220,7 +220,7 @@ string_q CBalHistory::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'b':
-            if ( fieldName % "balance" ) return asStringBN(balance);
+            if ( fieldName % "balance" ) return toStringBN(balance);
             break;
         case 'r':
             if ( fieldName % "recordID" ) return recordID;

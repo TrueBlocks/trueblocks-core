@@ -290,9 +290,9 @@ void generateCode(const COptions& options, CToml& toml, const string_q& dataFile
                 if (fld.name == "topics") {
                     replaceAll(fieldGetStr, "THING", "fromTopic");
                 } else if (contains(fld.type, "CBlockNumArray")) {
-                    replaceAll(fieldGetStr, "THING", "asStringU");
+                    replaceAll(fieldGetStr, "THING", "toStringU");
                 } else if (contains(fld.type, "SFBigUintArray")) {
-                    replaceAll(fieldGetStr, "THING", "asStringBN");
+                    replaceAll(fieldGetStr, "THING", "toStringBN");
                 } else {
                     replaceAll(fieldGetStr, "THING", "");
                 }
@@ -484,7 +484,7 @@ string_q getCaseCode(const string_q& fieldCase, const string_q& ex) {
                         caseCode += " return [{PTR}]" + field + ".Format(FMT_JSON);";
 
                     } else if (type == "bbool" || type == "bool") {
-                        caseCode += " return asString([{PTR}]" + field + ");";
+                        caseCode += " return toString([{PTR}]" + field + ");";
 
                     } else if (type == "bloom") {
                         caseCode += " return bloom2Bytes([{PTR}]" + field + ");";
@@ -508,19 +508,19 @@ string_q getCaseCode(const string_q& fieldCase, const string_q& ex) {
                         caseCode += " return [{PTR}]" + field + ";";
 
                     } else if (type == "uint8" || type == "uint16" || type == "uint32" || type == "uint64") {
-                        caseCode += " return asStringU([{PTR}]" + field + ");";
+                        caseCode += " return toStringU([{PTR}]" + field + ");";
 
                     } else if (type == "blknum") {
-                        caseCode += " return asStringU([{PTR}]" + field + ");";
+                        caseCode += " return toStringU([{PTR}]" + field + ");";
 
                     } else if (type == "uint256") {
-                        caseCode += " return asStringBN([{PTR}]" + field + ");";
+                        caseCode += " return toStringBN([{PTR}]" + field + ");";
 
                     } else if (type == "int8" || type == "int16" || type == "int32" || type == "int64") {
-                        caseCode += " return asString([{PTR}]" + field + ");";
+                        caseCode += " return toString([{PTR}]" + field + ");";
 
                     } else if (type == "int256") {
-                        caseCode += " return asStringBN([{PTR}]" + field + ");";
+                        caseCode += " return toStringBN([{PTR}]" + field + ");";
 
                     } else if (type == "double") {
                         caseCode += " return double2Str([{PTR}]" + field + ");";
@@ -541,7 +541,7 @@ string_q getCaseCode(const string_q& fieldCase, const string_q& ex) {
                     } else if (contains(type, "Array")) {
                         string_q str = STR_CASE_CODE_ARRAY;
                         if (contains(type, "SFUint") || contains(type, "SFBlock"))
-                            replaceAll(str, "[{PTR}][{FIELD}][i].Format()", "asStringU([{PTR}][{FIELD}][i])");
+                            replaceAll(str, "[{PTR}][{FIELD}][i].Format()", "toStringU([{PTR}][{FIELD}][i])");
                         replaceAll(str, "[{FIELD}]", field);
                         caseCode += str;
 
@@ -713,7 +713,7 @@ const char* STR_CASE_CODE_ARRAY =
 " {\n"
 "[BTAB]\t\tsize_t cnt = [{PTR}][{FIELD}].size();\n"
 "[BTAB]\t\tif (endsWith(fieldName, \"Cnt\"))\n"
-"[BTAB]\t\t\treturn asStringU(cnt);\n"
+"[BTAB]\t\t\treturn toStringU(cnt);\n"
 "[BTAB]\t\tif (!cnt) return \"\";\n"
 "[BTAB]\t\tstring_q retS;\n"
 "[BTAB]\t\tfor (size_t i = 0 ; i < cnt ; i++) {\n"
@@ -728,7 +728,7 @@ const char* STR_CASE_CODE_STRINGARRAY =
 " {\n"
 "[BTAB]\t\tsize_t cnt = [{PTR}][{FIELD}].size();\n"
 "[BTAB]\t\tif (endsWith(fieldName, \"Cnt\"))\n"
-"[BTAB]\t\t\treturn asStringU(cnt);\n"
+"[BTAB]\t\t\treturn toStringU(cnt);\n"
 "[BTAB]\t\tif (!cnt) return \"\";\n"
 "[BTAB]\t\tstring_q retS;\n"
 "[BTAB]\t\tfor (size_t i = 0 ; i < cnt ; i++) {\n"

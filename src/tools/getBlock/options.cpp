@@ -81,7 +81,7 @@ bool COptions::parseArguments(string_q& command) {
             uint64_t cache = NOPOS, client = NOPOS;
             getLatestBlocks(cache, client);
             uint64_t diff = cache > client ? 0 : client - cache;
-            stringToAsciiFile("/tmp/getBlock_junk.txt", asStringU(diff));  // for next time
+            stringToAsciiFile("/tmp/getBlock_junk.txt", toStringU(diff));  // for next time
 
             cout << "Latest block in cache:  " << cYellow;
             cout << (isTestMode() ? "--cache--"  : padNum8T(cache))  << cOff << "\n";

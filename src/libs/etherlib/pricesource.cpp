@@ -55,7 +55,7 @@ namespace qblocks {
                 priceCache.Close();
                 if (verbose) {
                     string_q date = lastRead.Format(FMT_JSON);
-                    string_q count = asStringU(quotes.size());
+                    string_q count = toStringU(quotes.size());
                     if (isTestMode()) {
                         date = "Now";
                         count = "cnt";
@@ -114,9 +114,9 @@ namespace qblocks {
                 // we need to read some data
                 string_q url = source.url;
                 replace(url, "[{PAIR}]",   source.pair);
-                replace(url, "[{START}]",  asString(start));
-                replace(url, "[{END}]",    asString(end));
-                replace(url, "[{PERIOD}]", asString(5*60));
+                replace(url, "[{START}]",  toString(start));
+                replace(url, "[{END}]",    toString(end));
+                replace(url, "[{PERIOD}]", toString(5*60));
                 if (verbose)
                     cerr << "Fetching: " << url << "\n";
 
@@ -192,7 +192,7 @@ namespace qblocks {
 
         if (!reportAtEnd) {
             string_q date = lastRead.Format(FMT_JSON);
-            string_q count = asStringU(quotes.size());
+            string_q count = toStringU(quotes.size());
             if (isTestMode()) {
                 date = "Now";
                 count = "cnt";

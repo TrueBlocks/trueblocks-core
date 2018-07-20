@@ -146,7 +146,7 @@ namespace qblocks {
                                 uint32_t hour = GetHour();
                                 uint32_t minute  = GetMinute();
                                 uint32_t secs = GetSecond();
-                                ret += asString(hour * 60 * 60 + minute * 60 + secs);
+                                ret += toString(hour * 60 * 60 + minute * 60 + secs);
                                 break;
                             }
                             case 'H': {
