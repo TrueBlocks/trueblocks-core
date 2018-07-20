@@ -52,7 +52,7 @@ int main(int argc, const char *argv[]) {
 }
 
 //----------------------------------------------------------------
-bool visitAddrs(const CAddressItem& item, void *data) {
+bool visitAddrs(const CAddressAppearance& item, void *data) {
     if (isZeroAddr(item.addr))
         return true;
     cout << item << "\n";
@@ -60,10 +60,10 @@ bool visitAddrs(const CAddressItem& item, void *data) {
 }
 
 //----------------------------------------------------------------
-bool accumAddrs(const CAddressItem& item, void *data) {
+bool accumAddrs(const CAddressAppearance& item, void *data) {
     if (isZeroAddr(item.addr))
         return true;
-    vector<CAddressItem> *array = (vector<CAddressItem> *)data;
+    vector<CAddressAppearance> *array = (vector<CAddressAppearance> *)data;
     array->push_back(item);
     return true;
 }
@@ -75,7 +75,7 @@ bool transFilter(const CTransaction *trans, void *data) {
 }
 
 //----------------------------------------------------------------
-bool sortAddressArray(const CAddressItem& v1, const CAddressItem& v2) {
+bool sortAddressArray(const CAddressAppearance& v1, const CAddressAppearance& v2) {
     if (v1.bn != v2.bn)
         return v1.bn < v2.bn;
     int64_t vv1 = (int64_t)v1.tx;
@@ -102,7 +102,7 @@ void everyUniqueAddress(CBlock& block) {
 //--------------------------------------------------------------
 void everySortedUniqueAddress(CBlock& block) {
     cout << "Every unique addresses in block 4312145 (sorted)\n";
-    vector<CAddressItem> array;
+    vector<CAddressAppearance> array;
     block.forEveryUniqueAddress(accumAddrs, transFilter, &array);
     sort(array.begin(), array.end(), sortAddressArray);
     for (auto elem : array)
