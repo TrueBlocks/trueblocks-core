@@ -209,7 +209,7 @@ string_q QSafeTransferFrom::getValueByName(const string_q& fieldName) const {
         case '_':
             if ( fieldName % "_from" ) return fromAddress(_from);
             if ( fieldName % "_to" ) return fromAddress(_to);
-            if ( fieldName % "_tokenId" ) return asStringBN(_tokenId);
+            if ( fieldName % "_tokenId" ) return toStringBN(_tokenId);
             break;
     }
 

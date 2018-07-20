@@ -269,20 +269,20 @@ string_q CAccount::getValueByName(const string_q& fieldName) const {
             if ( fieldName % "header" ) return header;
             break;
         case 'l':
-            if ( fieldName % "lastPage" ) return asStringU(lastPage);
-            if ( fieldName % "lastBlock" ) return asString(lastBlock);
+            if ( fieldName % "lastPage" ) return toStringU(lastPage);
+            if ( fieldName % "lastBlock" ) return toString(lastBlock);
             break;
         case 'n':
-            if ( fieldName % "nVisible" ) return asStringU(nVisible);
+            if ( fieldName % "nVisible" ) return toStringU(nVisible);
             break;
         case 'p':
-            if ( fieldName % "pageSize" ) return asStringU(pageSize);
+            if ( fieldName % "pageSize" ) return toStringU(pageSize);
             break;
         case 't':
             if ( fieldName % "transactions" || fieldName % "transactionsCnt" ) {
                 size_t cnt = transactions.size();
                 if (endsWith(fieldName, "Cnt"))
-                    return asStringU(cnt);
+                    return toStringU(cnt);
                 if (!cnt) return "";
                 string_q retS;
                 for (size_t i = 0 ; i < cnt ; i++) {

@@ -198,8 +198,8 @@ bool CSlurperApp::Slurp(COptions& options, string_q& message) {
         while (!done) {
             string_q url = string_q("https://api.etherscan.io/api?module=account&action=txlist&sort=asc") +
             "&address=" + theAccount.addr +
-            "&page="    + asStringU(page) +
-            "&offset="  + asStringU(options.pageSize) +
+            "&page="    + toStringU(page) +
+            "&offset="  + toStringU(options.pageSize) +
             "&apikey="  + api.getKey();
 
             // Grab a page of data from the web api
@@ -388,7 +388,7 @@ bool CSlurperApp::Display(COptions& options, string_q& message) {
     if (options.cache) {
         for (size_t i = 0 ; i < theAccount.transactions.size() ; i++) {
             const CTransaction *t = &theAccount.transactions[i];
-            cout << t->Format("[{BLOCKNUMBER}]\t[{TRANSACTIONINDEX}]\t" + asStringU(options.acct_id)) << "\n";
+            cout << t->Format("[{BLOCKNUMBER}]\t[{TRANSACTIONINDEX}]\t" + toStringU(options.acct_id)) << "\n";
         }
     } else {
 

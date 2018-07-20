@@ -204,7 +204,7 @@ string_q QSetApprovalForAll::getValueByName(const string_q& fieldName) const {
     switch (tolower(fieldName[0])) {
         case '_':
             if ( fieldName % "_operator" ) return fromAddress(_operator);
-            if ( fieldName % "_approved" ) return asString(_approved);
+            if ( fieldName % "_approved" ) return toString(_approved);
             break;
     }
 

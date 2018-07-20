@@ -199,7 +199,7 @@ string_q QSetDailyLimit::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case '_':
-            if ( fieldName % "_newLimit" ) return asStringBN(_newLimit);
+            if ( fieldName % "_newLimit" ) return toStringBN(_newLimit);
             break;
     }
 

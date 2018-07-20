@@ -200,8 +200,8 @@ string_q CBalanceHistory::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'b':
-            if ( fieldName % "bn" ) return asStringU(bn);
-            if ( fieldName % "balance" ) return asStringBN(balance);
+            if ( fieldName % "bn" ) return toStringU(bn);
+            if ( fieldName % "balance" ) return toStringBN(balance);
             break;
     }
 

@@ -21,7 +21,7 @@ namespace qblocks {
     //-------------------------------------------------------------------------
     bool compareBlooms(const SFBloom& b1, const SFBloom& b2, string_q& str) {
         if (verbose > 2) {
-            str = "\n\tbits1: " + asStringU(bitsTwiddled(b1)) + " bits2: " + asStringU(bitsTwiddled(b2));
+            str = "\n\tbits1: " + toStringU(bitsTwiddled(b1)) + " bits2: " + toStringU(bitsTwiddled(b2));
             string_q s1 = substitute(bloom2Bits(b1), "0", ".");
             string_q s2 = substitute(bloom2Bits(b2), "0", ".");
             for (size_t i = 0 ; i < 16 ; i++) {
@@ -33,7 +33,7 @@ namespace qblocks {
                 str += ("\n\t" + cRed + m1 + cOff + "\n\t" + m2);
             }
         } else if (verbose > 1) {
-            str = "\n\tbits: " + asStringU(bitsTwiddled(b1)) + " " + asStringU(bitsTwiddled(b2));
+            str = "\n\tbits: " + toStringU(bitsTwiddled(b1)) + " " + toStringU(bitsTwiddled(b2));
             string_q s1 = substitute(substitute(bloom2Bytes(b1), "0x", ""), "0", ".");
             string_q s2 = substitute(substitute(bloom2Bytes(b2), "0x", ""), "0", ".");
             for (size_t i = 0 ; i < 4 ; i++) {
@@ -68,7 +68,7 @@ namespace qblocks {
         for (size_t i = 0; i < blooms.size(); i++) {
             uint64_t bits = bitsTwiddled(blooms[i]);
             if (bits) {
-                ret += asStringU(bits);
+                ret += toStringU(bits);
                 if (i < blooms.size()-1)
                     ret += ",";
             }

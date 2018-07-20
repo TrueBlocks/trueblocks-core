@@ -18,263 +18,85 @@
 
 namespace qblocks {
 
-    using timestamp_t = int64_t;
-
-    //-------------------------------------------------------------------------
-    extern int64_t  toLong    (const string_q& str);
-    extern uint64_t toLongU   (const string_q& str);
-    extern double   str2Double(const string_q& str);
-    extern bool     str2Bool  (const string_q& str);
-    extern string_q str_2_Hex (const string_q& str);
-
-    //--------------------------------------------------------------------
-    inline string_q asString(int64_t i) {
-        ostringstream os;
-        os << i;
-        return os.str().c_str();
-    }
-
-    //--------------------------------------------------------------------
-    inline string_q asStringU(uint64_t i) {
-        ostringstream os;
-        os << i;
-        return os.str().c_str();
-    }
-
-    //--------------------------------------------------------------------
-    inline string_q wei2Ether(const string_q& _value) {
-        // Make sure the wei number is at least 18 characters long. Once it is,
-        // reverse it, put a decimal at the 18th position, reverse it back,
-        // trim leading '0's except the tens digit.
-        string_q ret = _value;
-        if (ret.length() < 18)
-            ret = substitute(padLeft(_value, 18), " ", "0");
-        reverse(ret);
-        ret = extract(ret, 0, 18) + "." + extract(ret, 18);
-        reverse(ret);
-        ret = trimLeading(ret, '0');
-        if (startsWith(ret, '.'))
-            ret = "0" + ret;
-        if (contains(ret, "0-")) {
-            ret = "-" + substitute(ret, "0-", "0");
-        }
-        ret = substitute(ret, "-.", "-0.");
-        return ret;
-    }
-
-    //-------------------------------------------------------------------------
-    inline int64_t  toLong   (const string_q& str) { return (int64_t) strtol (str.c_str(), NULL, 10); }
-
-    extern string to_string(const SFUintBN& bu);
-    extern string to_hex(const SFUintBN& bu);
-    extern string to_string(const SFIntBN&  bi);
-
-    extern SFUintBN hex2BigUint(const string& s);
-    extern SFIntBN hex2BigInt(const string& s);
-    extern SFUintBN str2BigUint(const string &s);
-
-    extern SFIntBN exp2BigInt(const string& s);
-
-    //--------------------------------------------------------------------------------
-    inline SFIntBN str2BigInt(const string &s) {
-        return (s[0] == '-') ? SFIntBN(str2BigUint(extract(s, 1, s.length() - 1)), -1)
-        : (s[0] == '+') ? SFIntBN(str2BigUint(extract(s, 1, s.length() - 1)))
-        : SFIntBN(str2BigUint(s));
-    }
-
-    //-------------------------------------------------------------------------
-    inline SFUintBN canonicalWei(uint64_t _value) {
-        return SFUintBN(_value);
-    }
-    extern SFUintBN canonicalWei(const string_q& _value);
-
-    //--------------------------------------------------------------------------------
-    inline string_q asStringBN(const SFUintBN& bu) {
-        return to_string(bu).c_str();
-    }
-
-    //--------------------------------------------------------------------------------
-    inline string_q asStringBN(const SFIntBN& bn) {
-        return to_string(bn).c_str();
-    }
-
-#define SFAddress      string_q
-#define SFHash         string_q
-
-#define SFBloom        SFUintBN
-#define SFWei          SFUintBN
-
-#define SFGas          uint64_t
-#define blknum_t       uint64_t
-#define txnum_t        uint64_t
-
-#define toUnsigned(a)  toLongU((a))
-#define toGas(a)       toLongU((a))
-#define toEther        wei2Ether
-#define toTopic(a)     canonicalWei(a)
-#define toBloom(a)     canonicalWei(a)
-#define toWei(a)       canonicalWei(a)
-#define toHash(a)      toLower(a)
-
-#define addr2BN        toWei
-#define hex2BN         toWei
+#define toUnsigned(a)   toLongU((a))
+#define toGas(a)        toLongU((a))
+#define toEther(a)      wei2Ether((a))
+#define toTopic(a)      canonicalWei((a))
+#define toBloom(a)      canonicalWei((a))
+#define toWei(a)        canonicalWei((a))
+#define hex2BN(a)       canonicalWei((a))
 
 #define fromAddress(a)  ((a).empty() ? "0x0" : (a))
 #define fromHash(a)     ((a).empty() ? "0x0" : (a))
 #define fromWei(a)      to_string((a)).c_str()
 #define fromTopic(a)    ("0x" + padLeft(toLower(string_q(to_hex((a)).c_str())), 64, '0'))
-#define fromGas(a)      asStringU(a)
-
-    typedef vector<string_q>  CStringArray;
-    typedef vector<uint64_t>  CBlockNumArray;
-    typedef vector<uint64_t>  SFUintArray;
-    typedef vector<int64_t>   SFIntArray;
-    typedef vector<SFUintBN>  SFBigUintArray;
-    typedef vector<SFIntBN>   SFBigIntArray;
-    typedef vector<SFAddress> SFAddressArray;
-    typedef vector<SFBloom>   SFBloomArray;
+#define fromGas(a)      toStringU(a)
 
     //-------------------------------------------------------------------------
-    inline string_q toHex(const string_q& str) {
-        if (str == "null")
-            return str;
-        SFUintBN bn = canonicalWei(str);
-        return toLower("0x" + string_q(to_hex(bn).c_str()));
-    }
+    extern SFUintBN hex2BigUint(const string& s);
 
     //-------------------------------------------------------------------------
-    inline string_q toHex(uint64_t num) {
-        SFUintBN bn = num;
-        return toLower("0x" + string_q(to_hex(bn).c_str()));
-    }
-
-    extern string_q bloom2Bytes(const SFBloom& bl);
-    extern string_q bloom2Bits(const SFBloom& b);
-
-    //------------------------------------------------------
-    inline SFAddress toAddress(const SFAddress& strIn) {
-        // trim it if it's there. We will put it back
-        string_q ret = substitute(strIn, "0x", "");
-
-        // Shorten, but only if all leading zeros
-        string_q leading('0', 64-40);
-        if (ret.length() == 64 && startsWith(ret, leading))
-            replace(ret, leading, "");
-
-        // Special case
-        if (ret.empty())
-            ret = "0";
-
-        return "0x" + toLower(ret);
-    }
-
-    //--------------------------------------------------------------------
-    inline string_q double2Str(double f, size_t nDecimals = 10) {
-        char s[100], r[100];
-        memset(s, '\0', 100);
-        memset(r, '\0', 100);
-        sprintf(s, "%.*g", (int)nDecimals, ((int64_t)(  pow(10, nDecimals) * (  fabs(f) - labs( (int64_t) f )  )  + 0.5)) / pow(10,nDecimals));  // NOLINT
-        if (strchr(s, 'e'))
-            s[1] = '\0';
-        sprintf(r, "%d%s", static_cast<int>(f), s+1);  // NOLINT
-        return string_q(r);
-    }
-
-    // cleanup
-    //----------------------------------------------------------------------------------
-    inline string_q fixHash(const string_q& hashIn) {
-        string_q ret = startsWith(hashIn, "0x") ? extract(hashIn, 2) : hashIn;
-        return "0x" + padLeft(ret, 32 * 2, '0');
-    }
-
-    //----------------------------------------------------------------------------------
-    inline string_q fixAddress(const SFAddress& addrIn) {
-        string_q ret = startsWith(addrIn, "0x") ? extract(addrIn, 2) : addrIn;
-        return "0x" + ret;
-    }
-
-    // querying type
-    //----------------------------------------------------------------------------------
-    inline bool isZeroAddr(const SFAddress& addr) {
-        return (addr2BN(addr) == 0);
-    }
-
-    //----------------------------------------------------------------------------
-    inline bool isNumeral(const string_q& test) {
-        for (size_t i = 0 ; i < test.length() ; i++)
-            if (!isdigit(test[i]))
-                return false;
-        return true;
-    }
-
-    //----------------------------------------------------------------------------------
-    inline bool isHexStr(const string_q& str) {
-        if (!startsWith(str, "0x"))
-            return false;
-        for (size_t i = 2 ; i < str.length() ; i++)
-            if (!isxdigit(str[i]))
-                return false;
-        return true;
-    }
-
-    //----------------------------------------------------------------------------------
-    inline bool isAddress(const SFAddress& addrIn) {
-        return (addrIn.length() == 42 && isHexStr(addrIn));
-    }
-
-    //----------------------------------------------------------------------------------
-    inline bool isHash(const SFHash& hashIn) {
-        return (hashIn.length() == 66 && isHexStr(hashIn));
-    }
+    using timestamp_t = int64_t;
+    using blknum_t    = uint64_t;
+    using txnum_t     = uint64_t;
+    using SFGas       = uint64_t;
+    using SFAddress   = string_q;
+    using SFHash      = string_q;
+    using SFBloom     = SFUintBN;
+    using SFWei       = SFUintBN;
 
     //-------------------------------------------------------------------------
-    inline bool isUnsigned(const string_q& in) {
-        // Empty string is not valid...
-        if (in.empty())
-            return false;
-        // ...first character must be 0-9 (no negatives)...
-        if (!isdigit(in[0]))
-            return false;
-        // ...or first two must be '0x' and the third must be non negative hex digit
-        if (startsWith(in, "0x") && in.length() > 2)
-            return isxdigit(in.at(2));
-        return true;
-    }
+    using CStringArray   = vector < string_q  >;
+    using CBlockNumArray = vector < uint64_t  >;
+    using SFUintArray    = vector < uint64_t  >;
+    using SFIntArray     = vector < int64_t   >;
+    using SFBigUintArray = vector < SFUintBN  >;
+    using SFBigIntArray  = vector < SFIntBN   >;
+    using SFAddressArray = vector < SFAddress >;
+    using SFBloomArray   = vector < SFBloom   >;
 
-    // formatting only
-    //--------------------------------------------------------------------
-    inline string_q padNum2(uint64_t n) { return padLeft(asStringU((n)), 2, '0'); }
-    inline string_q padNum3(uint64_t n) { return padLeft(asStringU((n)), 3, '0'); }
-    inline string_q padNum4(uint64_t n) { return padLeft(asStringU((n)), 4, '0'); }
-    inline string_q padNum5(uint64_t n) { return padLeft(asStringU((n)), 5, '0'); }
-    inline string_q padNum6(uint64_t n) { return padLeft(asStringU((n)), 6, '0'); }
-    inline string_q padNum7(uint64_t n) { return padLeft(asStringU((n)), 7, '0'); }
-    inline string_q padNum8(uint64_t n) { return padLeft(asStringU((n)), 8, '0'); }
-    inline string_q padNum9(uint64_t n) { return padLeft(asStringU((n)), 9, '0'); }
+    //-------------------------------------------------------------------------
+    extern double    str2Double  (const string_q& str);
+    extern bool      str2Bool    (const string_q& str);
+    extern string_q  str_2_Hex   (const string_q& str);
+    extern SFUintBN  str2BigUint (const string &s);
+    extern SFIntBN   str2BigInt  (const string &s);
 
-    //--------------------------------------------------------------------
-    inline string_q padNum3T(uint64_t n) { return padLeft(asStringU((n)), 3); }
-    inline string_q padNum4T(uint64_t n) { return padLeft(asStringU((n)), 4); }
-    inline string_q padNum5T(uint64_t n) { return padLeft(asStringU((n)), 5); }
-    inline string_q padNum6T(uint64_t n) { return padLeft(asStringU((n)), 6); }
-    inline string_q padNum7T(uint64_t n) { return padLeft(asStringU((n)), 7); }
-    inline string_q padNum8T(uint64_t n) { return padLeft(asStringU((n)), 8); }
-    inline string_q padNum9T(uint64_t n) { return padLeft(asStringU((n)), 9); }
+    //-------------------------------------------------------------------------
+    extern int64_t   toLong      (const string_q& str);
+    extern uint64_t  toLongU     (const string_q& str);
+    extern string    to_string   (const SFUintBN& bu);
+    extern string    to_string2  (const SFIntBN&  bi);
+    extern string    to_hex      (const SFUintBN& bu);
+    extern string_q  toHex       (const string_q& str);
+    extern string_q  toHex       (uint64_t num);
+    extern SFAddress toAddress   (const SFAddress& strIn);
+    extern string_q  toHash      (const string_q& hashIn);
 
     //--------------------------------------------------------------------
-    inline string_q padNum2 (int64_t n) { return padLeft(asString((n)), 2, '0'); }
-    inline string_q padNum3i(int64_t n) { return padLeft(asString((n)), 3, '0'); }
-    inline string_q padNum4 (int64_t n) { return padLeft(asString((n)), 4, '0'); }
-    inline string_q padNum5 (int64_t n) { return padLeft(asString((n)), 5, '0'); }
-    inline string_q padNum6 (int64_t n) { return padLeft(asString((n)), 6, '0'); }
-    inline string_q padNum7 (int64_t n) { return padLeft(asString((n)), 7, '0'); }
-    inline string_q padNum8 (int64_t n) { return padLeft(asString((n)), 8, '0'); }
-    inline string_q padNum9 (int64_t n) { return padLeft(asString((n)), 9, '0'); }
+    extern SFUintBN  canonicalWei(const string_q& _value);
+    extern SFUintBN  canonicalWei(uint64_t _value);
+    extern string_q  wei2Ether   (const string_q& _value);
 
     //--------------------------------------------------------------------
-    inline string_q padNum3T(int64_t n) { return padLeft(asString((n)), 3); }
-    inline string_q padNum5T(int64_t n) { return padLeft(asString((n)), 5); }
-    inline string_q padNum7T(int64_t n) { return padLeft(asString((n)), 7); }
-    inline string_q padNum8T(int64_t n) { return padLeft(asString((n)), 8); }
+    extern string_q  bloom2Bytes (const SFBloom& bl);
+    extern string_q  bloom2Bits  (const SFBloom& b);
+
+    //--------------------------------------------------------------------
+    extern string_q  toString    (int64_t i);
+    extern string_q  toStringU   (uint64_t i);
+    extern string_q  toStringBN  (const SFUintBN& bu);
+    extern string_q  toStringBN  (const SFIntBN& bn);
+
+    //--------------------------------------------------------------------
+    extern string_q  double2Str  (double f, size_t nDecimals = 10);
+
+    //--------------------------------------------------------------------
+    extern bool      isZeroAddr  (const SFAddress& addr);
+    extern bool      isNumeral   (const string_q& test);
+    extern bool      isHexStr    (const string_q& str);
+    extern bool      isAddress   (const SFAddress& addrIn);
+    extern bool      isHash      (const SFHash& hashIn);
+    extern bool      isUnsigned  (const string_q& in);
 
 }  // namespace qblocks

@@ -72,25 +72,25 @@ namespace qblocks {
 
     //-------------------------------------------------------------------------
     uint64_t CToml::getConfigInt(const string_q& group, const string_q& key, uint64_t def) const {
-        string_q ret = getConfigStr(group, key, asStringU(def));
+        string_q ret = getConfigStr(group, key, toStringU(def));
         return toLongU(ret);
     }
 
     //-------------------------------------------------------------------------
     bool CToml::getConfigBool(const string_q& group, const string_q& key, bool def) const {
-        string_q ret = getConfigStr(group, key, asString(def?1:0));
+        string_q ret = getConfigStr(group, key, toString(def?1:0));
         replaceAny(ret, ";\t\n\r ", "");
         return ((ret == "true" || ret == "1") ? true : false);
     }
 
     //-------------------------------------------------------------------------
     void CToml::setConfigInt(const string_q& group, const string_q& key, uint64_t value) {
-        setConfigStr(group, key, asString((int64_t)value));
+        setConfigStr(group, key, toString((int64_t)value));
     }
 
     //-------------------------------------------------------------------------
     void CToml::setConfigBool(const string_q& group, const string_q& key, bool value) {
-        setConfigStr(group, key, asString(value));
+        setConfigStr(group, key, toString(value));
     }
 
     //---------------------------------------------------------------------------------------

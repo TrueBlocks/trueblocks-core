@@ -263,7 +263,7 @@ string_q CTrace::getValueByName(const string_q& fieldName) const {
             break;
         case 'b':
             if ( fieldName % "blockHash" ) return fromHash(blockHash);
-            if ( fieldName % "blockNumber" ) return asStringU(blockNumber);
+            if ( fieldName % "blockNumber" ) return toStringU(blockNumber);
             break;
         case 'e':
             if ( fieldName % "error" ) return error;
@@ -272,13 +272,13 @@ string_q CTrace::getValueByName(const string_q& fieldName) const {
             if ( fieldName % "result" ) { expContext().noFrst=true; return result.Format(); }
             break;
         case 's':
-            if ( fieldName % "subtraces" ) return asStringU(subtraces);
+            if ( fieldName % "subtraces" ) return toStringU(subtraces);
             break;
         case 't':
             if ( fieldName % "traceAddress" || fieldName % "traceAddressCnt" ) {
                 size_t cnt = traceAddress.size();
                 if (endsWith(fieldName, "Cnt"))
-                    return asStringU(cnt);
+                    return toStringU(cnt);
                 if (!cnt) return "";
                 string_q retS;
                 for (size_t i = 0 ; i < cnt ; i++) {
@@ -288,7 +288,7 @@ string_q CTrace::getValueByName(const string_q& fieldName) const {
                 return retS;
             }
             if ( fieldName % "transactionHash" ) return fromHash(transactionHash);
-            if ( fieldName % "transactionPosition" ) return asStringU(transactionPosition);
+            if ( fieldName % "transactionPosition" ) return toStringU(transactionPosition);
             if ( fieldName % "type" ) return type;
             break;
     }

@@ -226,7 +226,7 @@ string_q QSingleTransactEvent::getValueByName(const string_q& fieldName) const {
             if ( fieldName % "to" ) return fromAddress(to);
             break;
         case 'v':
-            if ( fieldName % "value" ) return asStringBN(value);
+            if ( fieldName % "value" ) return toStringBN(value);
             break;
     }
 

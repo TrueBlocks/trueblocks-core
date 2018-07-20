@@ -424,4 +424,55 @@ namespace qblocks {
     inline bool SFUintBN::getBit(unsigned int bi) const {
         return (getBlock(bi / N) & (((uint64_t)(1)) << (bi % N))) != 0;
     }
+
+    //----------------------------------------------------------------------
+    class BigUnsignedInABase : public SFBigNumStore<unsigned short> {  // NOLINT
+    public:
+        unsigned short base;  // NOLINT
+
+        // Creates a BigUnsignedInABase with a capacity; for internal use.
+        BigUnsignedInABase(int, unsigned int c) : SFBigNumStore<unsigned short>(0, c) {}  // NOLINT
+
+        // Decreases len to eliminate any leading zero igits.
+        void trimLeadingZeros(void) {
+            while (len > 0 && blk[len - 1] == 0)
+                len--;
+        }
+
+        // Constructs zero in base 2.
+        BigUnsignedInABase() : SFBigNumStore<unsigned short>(), base(2) {}  // NOLINT
+
+        // Copy constructor
+        BigUnsignedInABase(const BigUnsignedInABase &x) : SFBigNumStore<unsigned short>(x), base(x.base) {}  // NOLINT
+
+        // Assignment operator
+        void operator =(const BigUnsignedInABase &x) {
+            SFBigNumStore<unsigned short>::operator =(x);  // NOLINT
+            base = x.base;
+        }
+
+        // Constructor that copies from a given array of igits.
+        BigUnsignedInABase(const unsigned short *d, unsigned int l, unsigned short base);  // NOLINT
+
+        // Destructor.  SFBigNumStore does the delete for us.
+        ~BigUnsignedInABase() {}
+
+        // LINKS TO BIGUNSIGNED
+        BigUnsignedInABase(const SFUintBN &x, unsigned short base);  // NOLINT
+        operator SFUintBN() const;
+
+        operator string() const;
+        BigUnsignedInABase(const string &s, unsigned short base);  // NOLINT
+
+        /*
+         * Equality test.  For the purposes of this test, two BigUnsignedInABase
+         * values must have the same base to be equal.
+         */
+        bool operator ==(const BigUnsignedInABase &x) const {
+            return base == x.base && SFBigNumStore<unsigned short>::operator==(x);  // NOLINT
+        }
+        bool operator !=(const BigUnsignedInABase &x) const { return !operator==(x); }
+
+    };
+
 }  // namespace qblocks
