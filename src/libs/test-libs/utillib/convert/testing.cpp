@@ -124,6 +124,21 @@ TEST_F(CThisTest, TestConverts_1) {
 //------------------------------------------------------------------------
 TEST_F(CThisTest, TestConverts_2) {
     cout << "Running " << testName << "\n";
+
+    SFWei one   = 1200000000;
+    SFWei two   = 1030000000;
+    SFWei three = 1004000001;
+    SFWei val = (one * two * three) + 1;
+
+    ASSERT_EQ("wei1", one,   1200000000);
+    ASSERT_EQ("wei2", two,   1030000000);
+    ASSERT_EQ("wei3", three, 1004000001);
+    ASSERT_EQ("wei4", to_string(val), "1240944001236000000000000001");
+    ASSERT_EQ("eth1", wei2Ether(val), "1240944001.236000000000000001");
+    ASSERT_EQ("eth2", wei2Ether(val/1000000), "1240.944001236");
+    ASSERT_EQ("eth2", wei2Ether(to_string(val)), "1240944001.236000000000000001");
+    ASSERT_EQ("eth2", wei2Ether(to_string(val/1000000)), "1240.944001236000000000");
+
     return subTestID==0;
 }}
 
