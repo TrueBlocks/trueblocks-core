@@ -75,7 +75,7 @@ bool CTraceAction::setValueByName(const string_q& fieldName, const string_q& fie
             if ( fieldName % "from" ) { from = toAddress(fieldValue); return true; }
             break;
         case 'g':
-            if ( fieldName % "gas" ) { gas = toGas(fieldValue); return true; }
+            if ( fieldName % "gas" ) { gas = str_2_Gas(fieldValue); return true; }
             break;
         case 'i':
             if ( fieldName % "init" ) { init = fieldValue; return true; }

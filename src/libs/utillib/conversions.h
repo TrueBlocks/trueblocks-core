@@ -18,7 +18,6 @@
 
 namespace qblocks {
 
-#define toGas(a)        str_2_Uint((a))
 #define toTopic(a)      canonicalWei((a))
 #define toBloom(a)      canonicalWei((a))
 #define toWei(a)        canonicalWei((a))
@@ -53,6 +52,7 @@ namespace qblocks {
     //-------------------------------------------------------------------------
     extern int64_t   str_2_Int    (const string_q& str);
     extern uint64_t  str_2_Uint   (const string_q& str);
+    inline SFGas     str_2_Gas    (const string_q& str) { return str_2_Uint(str); }
     extern SFUintBN  str_2_BigUint(const string_q& str);
     extern SFIntBN   str_2_BigInt (const string_q& str);
     extern bool      str_2_Bool   (const string_q& str);
@@ -69,10 +69,10 @@ namespace qblocks {
     extern SFHash    toHash       (const string_q& str);
 
     //--------------------------------------------------------------------
-    extern SFUintBN  canonicalWei (const string_q& _value);
-    extern SFUintBN  canonicalWei (uint64_t _value);
-    extern string_q  wei2Ether    (const string_q& _value);
-    extern string_q  wei2Ether    (SFUintBN in);
+    extern SFUintBN  canonicalWei (const string_q& str);
+    extern SFUintBN  canonicalWei (uint64_t val);
+    extern string_q  wei2Ether    (const string_q& str);
+    extern string_q  wei2Ether    (SFUintBN val);
 
     //-------------------------------------------------------------------------
     extern SFUintBN  hex2BigUint  (const string& s);
