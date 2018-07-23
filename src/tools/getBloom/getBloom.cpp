@@ -104,7 +104,7 @@ string_q doOneBloom(uint64_t num, const COptions& opt) {
 
     } else {
 
-        SFBloomArray blooms;
+        CBloomArray blooms;
         readBloomArray(blooms, substitute(getBinaryFilename(num), "/blocks/", "/blooms/"));
         ostringstream os;
         os << "\n\t\"blockNumber\": \"" << num << "\"\n";

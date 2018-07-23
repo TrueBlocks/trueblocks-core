@@ -39,11 +39,11 @@ namespace qblocks {
 //--------------------------------------------------------------------------
 class CTrace : public CBaseNode {
 public:
-    SFHash blockHash;
+    hash_t blockHash;
     blknum_t blockNumber;
     uint64_t subtraces;
     CStringArray traceAddress;
-    SFHash transactionHash;
+    hash_t transactionHash;
     uint64_t transactionPosition;
     string_q type;
     string_q error;

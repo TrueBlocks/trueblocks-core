@@ -118,7 +118,7 @@ namespace qblocks {
     extern const CToml *getGlobalConfig(const string_q& name = "");
 
     typedef bool (*UINT64VISITFUNC)(uint64_t num, void *data);
-    typedef uint64_t (*HASHFINDFUNC)(const SFHash& hash, void *data);
+    typedef uint64_t (*HASHFINDFUNC)(const hash_t& hash, void *data);
     class COptionsBlockList {
     public:
         CBlockNumArray numList;

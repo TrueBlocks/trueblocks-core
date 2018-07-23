@@ -87,19 +87,19 @@ extern void registerQuitHandler(QUITHANDLER qh);
     }
 
     //-------------------------------------------------------------------------
-    bool getBlock(CBlock& block, const SFHash& blockHash) {
+    bool getBlock(CBlock& block, const hash_t& blockHash) {
         return queryBlock(block, blockHash, true, true);
     }
 
     //-------------------------------------------------------------------------
-    bool getTransaction(CTransaction& trans, const SFHash& txHash) {
+    bool getTransaction(CTransaction& trans, const hash_t& txHash) {
         getObjectViaRPC(trans, "eth_getTransactionByHash", "[\"" + str_2_Hash(txHash) +"\"]");
         trans.finishParse();
         return true;
     }
 
     //-------------------------------------------------------------------------
-    bool getTransaction(CTransaction& trans, const SFHash& blockHash, txnum_t txID) {
+    bool getTransaction(CTransaction& trans, const hash_t& blockHash, txnum_t txID) {
         getObjectViaRPC(trans, "eth_getTransactionByBlockHashAndIndex",
                                     "[\"" + str_2_Hash(blockHash) +"\",\"" + uint_2_Hex(txID) + "\"]");
         trans.finishParse();
@@ -127,14 +127,14 @@ extern void registerQuitHandler(QUITHANDLER qh);
     }
 
     //-------------------------------------------------------------------------
-    bool getReceipt(CReceipt& receipt, const SFHash& txHash) {
+    bool getReceipt(CReceipt& receipt, const hash_t& txHash) {
         receipt = CReceipt();
         getObjectViaRPC(receipt, "eth_getTransactionReceipt", "[\"" + str_2_Hash(txHash) + "\"]");
         return true;
     }
 
     //--------------------------------------------------------------
-    void getTraces(CTraceArray& traces, const SFHash& hash) {
+    void getTraces(CTraceArray& traces, const hash_t& hash) {
 
         string_q trace;
         queryRawTrace(trace, hash);
@@ -239,7 +239,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
     }
 
     //-------------------------------------------------------------------------
-    SFHash getRawBlockHash(blknum_t bn) {
+    hash_t getRawBlockHash(blknum_t bn) {
         string_q blockStr;
         queryRawBlock(blockStr, uint_2_Str(bn), false, true);
         blockStr = substitute(extract(blockStr, blockStr.find("\"hash\":"), blockStr.length()), "\"hash\":\"", "");
@@ -248,12 +248,12 @@ extern void registerQuitHandler(QUITHANDLER qh);
     }
 
     //-------------------------------------------------------------------------
-    SFHash getRawTransactionHash(blknum_t bn, txnum_t tx) {
+    hash_t getRawTransactionHash(blknum_t bn, txnum_t tx) {
         return "Not implemented";
     }
 
     //-------------------------------------------------------------------------
-    bool queryRawTransaction(string_q& results, const SFHash& txHash) {
+    bool queryRawTransaction(string_q& results, const hash_t& txHash) {
         string_q data = "[\"[HASH]\"]";
         replace(data, "[HASH]", txHash);
         results = callRPC("eth_getTransactionByHash", data, true);
@@ -261,7 +261,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
     }
 
     //-------------------------------------------------------------------------
-    bool queryRawReceipt(string_q& results, const SFHash& txHash) {
+    bool queryRawReceipt(string_q& results, const hash_t& txHash) {
         string_q data = "[\"[HASH]\"]";
         replace(data, "[HASH]", txHash);
         results = callRPC("eth_getTransactionReceipt", data, true);
@@ -382,7 +382,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
     }
 
     //--------------------------------------------------------------
-    size_t getTraceCount_binarySearch(const SFHash& hashIn, size_t first, size_t last) {
+    size_t getTraceCount_binarySearch(const hash_t& hashIn, size_t first, size_t last) {
         if (last > first) {
             size_t mid = first + ((last - first) / 2);
             bool atMid  = hasTraceAt(hashIn, mid);
@@ -402,7 +402,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
     // https://ethereum.stackexchange.com/questions/9883/why-is-my-node-synchronization-stuck
     // -extremely-slow-at-block-2-306-843/10453
     //--------------------------------------------------------------
-    size_t getTraceCount(const SFHash& hashIn) {
+    size_t getTraceCount(const hash_t& hashIn) {
         // handle most likely cases linearly
         for (size_t n = 2 ; n < 8 ; n++) {
             if (!hasTraceAt(hashIn, n)) {
@@ -505,7 +505,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
     }
 
     //----------------------------------------------------------------------------------
-    bool readBloomArray(SFBloomArray& blooms, const string_q& fileName) {
+    bool readBloomArray(CBloomArray& blooms, const string_q& fileName) {
         blooms.clear();
         SFArchive bloomCache(READING_ARCHIVE);
         if (bloomCache.Lock(fileName, binaryReadOnly, LOCK_NOWAIT)) {
@@ -517,7 +517,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
     }
 
     //-----------------------------------------------------------------------
-    bool writeBloomArray(const SFBloomArray& blooms, const string_q& fileName) {
+    bool writeBloomArray(const CBloomArray& blooms, const string_q& fileName) {
         if (blooms.size() == 0 || (blooms.size() == 1 && blooms[0] == 0))
             return false;
 

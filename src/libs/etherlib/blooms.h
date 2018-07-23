@@ -21,7 +21,7 @@ namespace qblocks {
 #define dbgBloom(a) substitute(bloom_2_Bytes(a), "0", " ")
 
     //-------------------------------------------------------------------------
-    inline size_t bitsTwiddled(SFBloom n) {
+    inline size_t bitsTwiddled(bloom_t n) {
         size_t count = 0;
         while (n != 0) {
             SFUintBN x = n - 1;
@@ -47,7 +47,7 @@ extern string_q getSha3 (const string_q& hexIn);
     }
 
     //-------------------------------------------------------------------------
-    inline SFBloom joinBloom(const SFBloom& b1, const SFBloom& b2) {
+    inline bloom_t joinBloom(const bloom_t& b1, const bloom_t& b2) {
         return (b1 | b2);
     }
 
@@ -62,13 +62,13 @@ extern string_q getSha3 (const string_q& hexIn);
     }
 
     //----------------------------------------------------------------------------------
-    extern bool compareBlooms(const SFBloom& b1, const SFBloom& b2, string_q& str);
-    extern bool addAddrToBloom(const address_t& addr, SFBloomArray& blooms, size_t maxBits);
+    extern bool compareBlooms(const bloom_t& b1, const bloom_t& b2, string_q& str);
+    extern bool addAddrToBloom(const address_t& addr, CBloomArray& blooms, size_t maxBits);
 
     //----------------------------------------------------------------------------------
-    extern bool readBloomArray (      SFBloomArray& blooms, const string_q& fileName);
-    extern bool writeBloomArray(const SFBloomArray& blooms, const string_q& fileName);
-    extern string_q reportBloom(const SFBloomArray& blooms);
+    extern bool readBloomArray (      CBloomArray& blooms, const string_q& fileName);
+    extern bool writeBloomArray(const CBloomArray& blooms, const string_q& fileName);
+    extern string_q reportBloom(const CBloomArray& blooms);
 
 }  // namespace qblocks
 

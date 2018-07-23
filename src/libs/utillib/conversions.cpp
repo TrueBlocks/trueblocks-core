@@ -73,22 +73,22 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    class SFBloomHex : public SFBigNumStore<unsigned char> {
+    class bloom_tHex : public SFBigNumStore<unsigned char> {
     public:
-        explicit SFBloomHex(const SFUintBN& numIn);
+        explicit bloom_tHex(const SFUintBN& numIn);
         string_q str;
     };
 
     //--------------------------------------------------------------------------------
-    string_q bloom_2_Bytes(const SFBloom& bl) {
+    string_q bloom_2_Bytes(const bloom_t& bl) {
         if (bl == 0)
             return "0x0";
-        SFBloomHex b2(bl);
+        bloom_tHex b2(bl);
         return ("0x" + padLeft(toLower(b2.str), 512, '0'));
     }
 
     //--------------------------------------------------------------------------------
-    string_q bloom_2_Bits(const SFBloom& b) {
+    string_q bloom_2_Bits(const bloom_t& b) {
         string_q ret = substitute(bloom_2_Bytes(b), "0x", "");
         replaceAll(ret, "0", "0000");
         replaceAll(ret, "1", "0001");
@@ -135,7 +135,7 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    SFGas str_2_Gas(const string_q& str) {
+    gas_t str_2_Gas(const string_q& str) {
         return str_2_Uint(str);
     }
 
@@ -174,7 +174,7 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    SFHash str_2_Hash(const string_q& str) {
+    hash_t str_2_Hash(const string_q& str) {
         if (isZeroHash(str))
             return "0x0";
         string_q ret = substitute(str, "0x", "");
@@ -191,7 +191,7 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    SFBloom str_2_Bloom(const string_q& str) {
+    bloom_t str_2_Bloom(const string_q& str) {
         return str_2_Wei(str);
     }
 
@@ -220,7 +220,7 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    string_q gas_2_Str(const SFGas& gas) {
+    string_q gas_2_Str(const gas_t& gas) {
         return uint_2_Str(gas);
     }
 
@@ -252,17 +252,17 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    string_q hash_2_Str(const SFHash& hash) {
+    string_q hash_2_Str(const hash_t& hash) {
         return (hash.empty() ? "0x0" : hash);
     }
 
     //--------------------------------------------------------------------------------
-    string_q wei_2_Str(const SFWei& wei) {
+    string_q wei_2_Str(const wei_t& wei) {
         return bnu_2_Str(wei);
     }
 
     //--------------------------------------------------------------------------------
-    string_q bloom_2_Str(const SFBloom& bloom) {
+    string_q bloom_2_Str(const bloom_t& bloom) {
         return bnu_2_Str(bloom);
     }
 
@@ -272,7 +272,7 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    bool isZeroHash(const SFHash& hash) {
+    bool isZeroHash(const hash_t& hash) {
         if (!isNumeral(hash) && !isHexStr(hash))
             return false;
         return (str_2_Wei(hash) == 0);
@@ -307,7 +307,7 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    bool isHash(const SFHash& hashIn) {
+    bool isHash(const hash_t& hashIn) {
         return (hashIn.length() == 66 && isHexStr(hashIn));
     }
 
@@ -404,7 +404,7 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    SFBloomHex::SFBloomHex(const SFUintBN& numIn) {
+    bloom_tHex::bloom_tHex(const SFUintBN& numIn) {
 
         len = 1024;
         allocate(1024);

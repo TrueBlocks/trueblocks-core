@@ -34,12 +34,12 @@ bool visitBloom(const string_q& path, void *data) {
         forAllFiles(path + "*", visitBloom, data);
 
     } else {
-extern bool displayBloom(blknum_t bn, const SFBloom& bloom, void *data);
+extern bool displayBloom(blknum_t bn, const bloom_t& bloom, void *data);
         if (endsWith(path, ".bin")) {
-            SFBloom bloom;
+            bloom_t bloom;
             SFArchive archive(READING_ARCHIVE);
             if (archive.Lock(path, binaryReadOnly, LOCK_NOWAIT)) {
-                SFBloomArray blooms;
+                CBloomArray blooms;
                 archive >> blooms;
                 archive.Release();
                 for (size_t i = 0 ; i < blooms.size() ; i++) {
@@ -57,7 +57,7 @@ extern bool displayBloom(blknum_t bn, const SFBloom& bloom, void *data);
 }
 
 //-------------------------------------------------------------
-bool displayBloom(blknum_t bn, const SFBloom& bloom, void *data) {
+bool displayBloom(blknum_t bn, const bloom_t& bloom, void *data) {
     string_q s = bloom_2_Bytes(bloom);
     COptions *opt = (COptions*)data;  // NOLINT
     if (opt->mode == "short") {
