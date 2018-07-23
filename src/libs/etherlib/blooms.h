@@ -18,7 +18,7 @@ namespace qblocks {
 
     //-------------------------------------------------------------------------
     // Helps debug a bloom filter
-#define dbgBloom(a) substitute(bloom2Bytes(a), "0", " ")
+#define dbgBloom(a) substitute(bloom_2_Bytes(a), "0", " ")
 
     //-------------------------------------------------------------------------
     inline size_t bitsTwiddled(SFBloom n) {

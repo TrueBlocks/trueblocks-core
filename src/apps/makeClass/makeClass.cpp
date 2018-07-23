@@ -288,11 +288,11 @@ void generateCode(const COptions& options, CToml& toml, const string_q& dataFile
                 fieldGetStr += STR_GETSTR_CODE_FIELD;
                 replaceAll(fieldGetStr, "[{FIELD}]", fld.name);
                 if (fld.name == "topics") {
-                    replaceAll(fieldGetStr, "THING", "fromTopic");
+                    replaceAll(fieldGetStr, "THING", "topic_2_Str");
                 } else if (contains(fld.type, "CBlockNumArray")) {
-                    replaceAll(fieldGetStr, "THING", "toStringU");
+                    replaceAll(fieldGetStr, "THING", "uint_2_Str");
                 } else if (contains(fld.type, "SFBigUintArray")) {
-                    replaceAll(fieldGetStr, "THING", "toStringBN");
+                    replaceAll(fieldGetStr, "THING", "bnu_2_Str");
                 } else {
                     replaceAll(fieldGetStr, "THING", "");
                 }
@@ -484,46 +484,46 @@ string_q getCaseCode(const string_q& fieldCase, const string_q& ex) {
                         caseCode += " return [{PTR}]" + field + ".Format(FMT_JSON);";
 
                     } else if (type == "bbool" || type == "bool") {
-                        caseCode += " return toString([{PTR}]" + field + ");";
+                        caseCode += " return int_2_Str([{PTR}]" + field + ");";
 
                     } else if (type == "bloom") {
-                        caseCode += " return bloom2Bytes([{PTR}]" + field + ");";
+                        caseCode += " return bloom_2_Bytes([{PTR}]" + field + ");";
 
                     } else if (type == "wei") {
-                        caseCode += " return fromWei([{PTR}]" + field + ");";
+                        caseCode += " return wei_2_Str([{PTR}]" + field + ");";
 
                     } else if (type == "gas") {
-                        caseCode += " return fromGas([{PTR}]" + field + ");";
+                        caseCode += " return gas_2_Str([{PTR}]" + field + ");";
 
                     } else if (type == "timestamp") {
                         caseCode += " return fromTimestamp([{PTR}]" + field + ");";
 
                     } else if (type == "addr" || type == "address") {
-                        caseCode += " return fromAddress([{PTR}]" + field + ");";
+                        caseCode += " return addr_2_Str([{PTR}]" + field + ");";
 
                     } else if (type == "hash") {
-                        caseCode += " return fromHash([{PTR}]" + field + ");";
+                        caseCode += " return hash_2_Str([{PTR}]" + field + ");";
 
                     } else if (startsWith(type, "bytes")) {
                         caseCode += " return [{PTR}]" + field + ";";
 
                     } else if (type == "uint8" || type == "uint16" || type == "uint32" || type == "uint64") {
-                        caseCode += " return toStringU([{PTR}]" + field + ");";
+                        caseCode += " return uint_2_Str([{PTR}]" + field + ");";
 
                     } else if (type == "blknum") {
-                        caseCode += " return toStringU([{PTR}]" + field + ");";
+                        caseCode += " return uint_2_Str([{PTR}]" + field + ");";
 
                     } else if (type == "uint256") {
-                        caseCode += " return toStringBN([{PTR}]" + field + ");";
+                        caseCode += " return bnu_2_Str([{PTR}]" + field + ");";
 
                     } else if (type == "int8" || type == "int16" || type == "int32" || type == "int64") {
-                        caseCode += " return toString([{PTR}]" + field + ");";
+                        caseCode += " return int_2_Str([{PTR}]" + field + ");";
 
                     } else if (type == "int256") {
-                        caseCode += " return toStringBN([{PTR}]" + field + ");";
+                        caseCode += " return bni_2_Str([{PTR}]" + field + ");";
 
                     } else if (type == "double") {
-                        caseCode += " return double2Str([{PTR}]" + field + ");";
+                        caseCode += " return double_2_Str([{PTR}]" + field + ");";
 
                     } else if (contains(type, "CStringArray") || contains(type, "SFAddressArray")) {
                         string_q str = STR_CASE_CODE_STRINGARRAY;
@@ -535,13 +535,13 @@ string_q getCaseCode(const string_q& fieldCase, const string_q& ex) {
                         // hack for size clause
                         replace(str, "[{FIELD}]", field);
                         // hack for the array access
-                        replace(str, "[{FIELD}][i]", "fromTopic("+field+"[i])");
+                        replace(str, "[{FIELD}][i]", "topic_2_Str("+field+"[i])");
                         caseCode += str;
 
                     } else if (contains(type, "Array")) {
                         string_q str = STR_CASE_CODE_ARRAY;
                         if (contains(type, "SFUint") || contains(type, "SFBlock"))
-                            replaceAll(str, "[{PTR}][{FIELD}][i].Format()", "toStringU([{PTR}][{FIELD}][i])");
+                            replaceAll(str, "[{PTR}][{FIELD}][i].Format()", "uint_2_Str([{PTR}][{FIELD}][i])");
                         replaceAll(str, "[{FIELD}]", field);
                         caseCode += str;
 
@@ -605,22 +605,22 @@ string_q getCaseSetCode(const string_q& fieldCase) {
                         caseCode +=  " { " + field + " = str_2_Bool(fieldValue); return true; }";
 
                     } else if (type == "bloom") {
-                        caseCode +=  " { " + field + " = toBloom(fieldValue); return true; }";
+                        caseCode +=  " { " + field + " = str_2_Bloom(fieldValue); return true; }";
 
                     } else if (type == "wei") {
-                        caseCode +=  " { " + field + " = toWei(fieldValue); return true; }";
+                        caseCode +=  " { " + field + " = str_2_Wei(fieldValue); return true; }";
 
                     } else if (type == "gas") {
-                        caseCode +=  " { " + field + " = str_2_Gas(fieldValue); return true; }";
+                        caseCode +=  " { " + field + " = toGas(fieldValue); return true; }";
 
                     } else if (type == "timestamp") {
                         caseCode +=  " { " + field + " = toTimestamp(fieldValue); return true; }";
 
                     } else if (type == "addr" || type == "address") {
-                        caseCode += " { " + field + " = toAddress(fieldValue); return true; }";
+                        caseCode += " { " + field + " = str_2_Addr(fieldValue); return true; }";
 
                     } else if (type == "hash") {
-                        caseCode += " { " + field + " = toHash(fieldValue); return true; }";
+                        caseCode += " { " + field + " = str_2_Hash(fieldValue); return true; }";
 
                     } else if (startsWith(type, "bytes")) {
                         caseCode += " { " + field + " = toLower(fieldValue); return true; }";
@@ -632,7 +632,7 @@ string_q getCaseSetCode(const string_q& fieldCase) {
                         caseCode +=  " { " + field + " = str_2_Int(fieldValue); return true; }";
 
                     } else if (type == "int256") {
-                        caseCode +=  " { " + field + " = toWei(fieldValue); return true; }";
+                        caseCode +=  " { " + field + " = str_2_Wei(fieldValue); return true; }";
 
                     } else if (type == "uint8" || type == "uint16" || type == "uint32") {
                         caseCode +=  " { " + field + " = (uint32_t)str_2_Uint(fieldValue); return true; }";
@@ -641,7 +641,7 @@ string_q getCaseSetCode(const string_q& fieldCase) {
                         caseCode +=  " { " + field + " = str_2_Uint(fieldValue); return true; }";
 
                     } else if (type == "uint256") {
-                        caseCode +=  " { " + field + " = toWei(fieldValue); return true; }";
+                        caseCode +=  " { " + field + " = str_2_Wei(fieldValue); return true; }";
 
                     } else if (type == "blknum") {
                         caseCode +=  " { " + field + " = str_2_Uint(fieldValue); return true; }";
@@ -713,7 +713,7 @@ const char* STR_CASE_CODE_ARRAY =
 " {\n"
 "[BTAB]\t\tsize_t cnt = [{PTR}][{FIELD}].size();\n"
 "[BTAB]\t\tif (endsWith(fieldName, \"Cnt\"))\n"
-"[BTAB]\t\t\treturn toStringU(cnt);\n"
+"[BTAB]\t\t\treturn uint_2_Str(cnt);\n"
 "[BTAB]\t\tif (!cnt) return \"\";\n"
 "[BTAB]\t\tstring_q retS;\n"
 "[BTAB]\t\tfor (size_t i = 0 ; i < cnt ; i++) {\n"
@@ -728,7 +728,7 @@ const char* STR_CASE_CODE_STRINGARRAY =
 " {\n"
 "[BTAB]\t\tsize_t cnt = [{PTR}][{FIELD}].size();\n"
 "[BTAB]\t\tif (endsWith(fieldName, \"Cnt\"))\n"
-"[BTAB]\t\t\treturn toStringU(cnt);\n"
+"[BTAB]\t\t\treturn uint_2_Str(cnt);\n"
 "[BTAB]\t\tif (!cnt) return \"\";\n"
 "[BTAB]\t\tstring_q retS;\n"
 "[BTAB]\t\tfor (size_t i = 0 ; i < cnt ; i++) {\n"

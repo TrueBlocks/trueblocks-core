@@ -43,7 +43,7 @@ int main(int argc, const char *argv[]) {
             cout << "Test " << options.testNum << "\n";
 
         } else {
-            return usage("Unknown test: " + toString(options.testNum) + "\n");
+            return usage("Unknown test: " + int_2_Str(options.testNum) + "\n");
 
         }
     }

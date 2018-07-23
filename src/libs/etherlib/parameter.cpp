@@ -225,10 +225,10 @@ string_q CParameter::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'i':
-            if ( fieldName % "indexed" ) return toString(indexed);
-            if ( fieldName % "isPointer" ) return toString(isPointer);
-            if ( fieldName % "isArray" ) return toString(isArray);
-            if ( fieldName % "isObject" ) return toString(isObject);
+            if ( fieldName % "indexed" ) return int_2_Str(indexed);
+            if ( fieldName % "isPointer" ) return int_2_Str(isPointer);
+            if ( fieldName % "isArray" ) return int_2_Str(isArray);
+            if ( fieldName % "isObject" ) return int_2_Str(isObject);
             break;
         case 'n':
             if ( fieldName % "name" ) return name;
@@ -288,18 +288,18 @@ string_q CParameter::getFunctionAssign(uint64_t which) const {
         return Format(STR_ASSIGNARRAY);
     }
 
-           if (         type == "uint")    { ass = "toWei(\"0x\" + [{VAL}]);";
-    } else if (         type == "uint256") { ass = "toWei(\"0x\" + [{VAL}]);";
+           if (         type == "uint")    { ass = "str_2_Wei(\"0x\" + [{VAL}]);";
+    } else if (         type == "uint256") { ass = "str_2_Wei(\"0x\" + [{VAL}]);";
     } else if (contains(type, "gas"))      { ass = "str_2_Gas([{VAL}]);";
     } else if (contains(type, "uint64"))   { ass = "str_2_Uint([{VAL}]);";
     } else if (contains(type, "uint"))     { ass = "(uint32_t)str_2_Uint([{VAL}]);";
     } else if (contains(type, "int"))      { ass = "str_2_Int([{VAL}]);";
     } else if (contains(type, "bool"))     { ass = "str_2_Int([{VAL}]);";
-    } else if (contains(type, "address"))  { ass = "toAddress([{VAL}]);";
+    } else if (contains(type, "address"))  { ass = "str_2_Addr([{VAL}]);";
     } else                                 { ass = "[{VAL}];";
     }
 
-    replace(ass, "[{VAL}]", "extract(params, " + toStringU(which) + "*64" + (type == "bytes" ? "" : ", 64") + ")");
+    replace(ass, "[{VAL}]", "extract(params, " + uint_2_Str(which) + "*64" + (type == "bytes" ? "" : ", 64") + ")");
     return Format("\t\t\ta->[{NAME}] = " + ass + "\n");
 }
 
@@ -307,19 +307,19 @@ string_q CParameter::getFunctionAssign(uint64_t which) const {
 string_q CParameter::getEventAssign(uint64_t which, uint64_t nIndexed) const {
     string_q ass;
 
-           if (         type == "uint")    { ass = "toWei([{VAL}]);";
-    } else if (         type == "uint256") { ass = "toWei([{VAL}]);";
+           if (         type == "uint")    { ass = "str_2_Wei([{VAL}]);";
+    } else if (         type == "uint256") { ass = "str_2_Wei([{VAL}]);";
     } else if (contains(type, "gas"))      { ass = "str_2_Gas([{VAL}]);";
     } else if (contains(type, "uint64"))   { ass = "str_2_Uint([{VAL}]);";
     } else if (contains(type, "uint"))     { ass = "(uint32_t)str_2_Uint([{VAL}]);";
     } else if (contains(type, "int"))      { ass = "str_2_Int([{VAL}]);";
     } else if (contains(type, "bool"))     { ass = "str_2_Int([{VAL}]);";
-    } else if (contains(type, "address"))  { ass = "toAddress([{VAL}]);";
+    } else if (contains(type, "address"))  { ass = "str_2_Addr([{VAL}]);";
     } else                                 { ass = "[{VAL}];";
     }
 
     if (indexed) {
-        replace(ass, "[{VAL}]", "nTops > [{WHICH}] ? fromTopic(p->topics[{IDX}]) : \"\"");
+        replace(ass, "[{VAL}]", "nTops > [{WHICH}] ? topic_2_Str(p->topics[{IDX}]) : \"\"");
 
     } else if (type == "bytes") {
         replace(ass, "[{VAL}]", "\"0x\" + extract(data, [{WHICH}]*64)");
@@ -330,8 +330,8 @@ string_q CParameter::getEventAssign(uint64_t which, uint64_t nIndexed) const {
         which -= (nIndexed+1);
     }
 
-    replace(ass, "[{IDX}]", "++" + toStringU(which) + "++");
-    replace(ass, "[{WHICH}]", toStringU(which));
+    replace(ass, "[{IDX}]", "++" + uint_2_Str(which) + "++");
+    replace(ass, "[{WHICH}]", uint_2_Str(which));
     string_q fmt = "\t\t\ta->[{NAME}] = " + ass + "\n";
     return Format(fmt);
 }

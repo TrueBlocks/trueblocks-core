@@ -64,8 +64,8 @@ bool QApprovalForAllEvent::setValueByName(const string_q& fieldName, const strin
 
     switch (tolower(fieldName[0])) {
         case '_':
-            if ( fieldName % "_owner" ) { _owner = toAddress(fieldValue); return true; }
-            if ( fieldName % "_operator" ) { _operator = toAddress(fieldValue); return true; }
+            if ( fieldName % "_owner" ) { _owner = str_2_Addr(fieldValue); return true; }
+            if ( fieldName % "_operator" ) { _operator = str_2_Addr(fieldValue); return true; }
             if ( fieldName % "_approved" ) { _approved = str_2_Bool(fieldValue); return true; }
             break;
         default:
@@ -207,9 +207,9 @@ string_q QApprovalForAllEvent::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case '_':
-            if ( fieldName % "_owner" ) return fromAddress(_owner);
-            if ( fieldName % "_operator" ) return fromAddress(_operator);
-            if ( fieldName % "_approved" ) return toString(_approved);
+            if ( fieldName % "_owner" ) return addr_2_Str(_owner);
+            if ( fieldName % "_operator" ) return addr_2_Str(_operator);
+            if ( fieldName % "_approved" ) return int_2_Str(_approved);
             break;
     }
 

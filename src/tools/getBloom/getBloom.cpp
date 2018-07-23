@@ -78,7 +78,7 @@ string_q doOneBloom(uint64_t num, const COptions& opt) {
     CBlock gold;
     gold.blockNumber = num;
     string_q result;
-    string_q numStr = toStringU(num);
+    string_q numStr = uint_2_Str(num);
 
     if (opt.isRaw) {
 
@@ -129,7 +129,7 @@ string_q doOneBloom(uint64_t num, const COptions& opt) {
         ostringstream os;
         os << "\n\t\"blockNumber\": \"" << num << "\"\n";
         for (size_t i = 0 ; i < blooms.size(); i++) {
-            //            os << asBar(bloom2Bits(blooms[i])) << "\n";
+            //            os << asBar(bloom_2_Bits(blooms[i])) << "\n";
             os << "0x" << blooms[i] << "\n";
         }
         result = os.str().c_str();

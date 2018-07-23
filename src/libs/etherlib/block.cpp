@@ -75,7 +75,7 @@ bool CBlock::setValueByName(const string_q& fieldName, const string_q& fieldValu
             string_q str = fieldValue;
             while (!str.empty()) {
                 CTransaction trans;
-                trans.hash = toAddress(nextTokenClear(str, ','));
+                trans.hash = str_2_Addr(nextTokenClear(str, ','));
                 transactions.push_back(trans);
             }
             return true;
@@ -98,13 +98,13 @@ bool CBlock::setValueByName(const string_q& fieldName, const string_q& fieldValu
             if ( fieldName % "gasUsed" ) { gasUsed = str_2_Gas(fieldValue); return true; }
             break;
         case 'h':
-            if ( fieldName % "hash" ) { hash = toHash(fieldValue); return true; }
+            if ( fieldName % "hash" ) { hash = str_2_Hash(fieldValue); return true; }
             break;
         case 'm':
-            if ( fieldName % "miner" ) { miner = toAddress(fieldValue); return true; }
+            if ( fieldName % "miner" ) { miner = str_2_Addr(fieldValue); return true; }
             break;
         case 'p':
-            if ( fieldName % "parentHash" ) { parentHash = toHash(fieldValue); return true; }
+            if ( fieldName % "parentHash" ) { parentHash = str_2_Hash(fieldValue); return true; }
             if ( fieldName % "price" ) { price = str_2_Double(fieldValue); return true; }
             break;
         case 't':
@@ -264,7 +264,7 @@ string_q nextBlockChunk_custom(const string_q& fieldIn, const void *dataPtr) {
                 }
                 break;
             case 'n':
-                if ( fieldIn % "number" ) return toStringU(blo->blockNumber);
+                if ( fieldIn % "number" ) return uint_2_Str(blo->blockNumber);
                 break;
             case 't':
                 if ( expContext().hashesOnly && fieldIn % "transactions" ) {
@@ -315,7 +315,7 @@ bool CBlock::readBackLevel(SFArchive& archive) {
         getCurlContext()->provider = "local";
         CBlock upgrade;
         size_t unused;
-        queryBlock(upgrade, toStringU(blockNumber), false, false, unused);
+        queryBlock(upgrade, uint_2_Str(blockNumber), false, false, unused);
         getCurlContext()->provider = save;
         miner = upgrade.miner;
         difficulty = upgrade.difficulty;
@@ -365,34 +365,34 @@ string_q CBlock::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'b':
-            if ( fieldName % "blockNumber" ) return toStringU(blockNumber);
+            if ( fieldName % "blockNumber" ) return uint_2_Str(blockNumber);
             break;
         case 'd':
-            if ( fieldName % "difficulty" ) return toStringU(difficulty);
+            if ( fieldName % "difficulty" ) return uint_2_Str(difficulty);
             break;
         case 'f':
-            if ( fieldName % "finalized" ) return toString(finalized);
+            if ( fieldName % "finalized" ) return int_2_Str(finalized);
             break;
         case 'g':
-            if ( fieldName % "gasLimit" ) return fromGas(gasLimit);
-            if ( fieldName % "gasUsed" ) return fromGas(gasUsed);
+            if ( fieldName % "gasLimit" ) return gas_2_Str(gasLimit);
+            if ( fieldName % "gasUsed" ) return gas_2_Str(gasUsed);
             break;
         case 'h':
-            if ( fieldName % "hash" ) return fromHash(hash);
+            if ( fieldName % "hash" ) return hash_2_Str(hash);
             break;
         case 'm':
-            if ( fieldName % "miner" ) return fromAddress(miner);
+            if ( fieldName % "miner" ) return addr_2_Str(miner);
             break;
         case 'p':
-            if ( fieldName % "parentHash" ) return fromHash(parentHash);
-            if ( fieldName % "price" ) return double2Str(price);
+            if ( fieldName % "parentHash" ) return hash_2_Str(parentHash);
+            if ( fieldName % "price" ) return double_2_Str(price);
             break;
         case 't':
             if ( fieldName % "timestamp" ) return fromTimestamp(timestamp);
             if ( fieldName % "transactions" || fieldName % "transactionsCnt" ) {
                 size_t cnt = transactions.size();
                 if (endsWith(fieldName, "Cnt"))
-                    return toStringU(cnt);
+                    return uint_2_Str(cnt);
                 if (!cnt) return "";
                 string_q retS;
                 for (size_t i = 0 ; i < cnt ; i++) {
@@ -406,7 +406,7 @@ string_q CBlock::getValueByName(const string_q& fieldName) const {
 
     // EXISTING_CODE
     if ( isTestMode() && fieldName % "blockHash" )
-        return fromHash(hash);
+        return hash_2_Str(hash);
     // EXISTING_CODE
 
     // Finally, give the parent class a chance
@@ -467,11 +467,11 @@ bool CBlock::forEveryAddress(ADDRESSFUNC func, TRANSFUNC filterFunc, void *data)
         foundPot(func, data, blockNumber, tr, 0, extract(trans->input, 10), "input");
         for (size_t l = 0 ; l < receipt->logs.size() ; l++) {
             const CLogEntry *log = &receipt->logs[l];
-            string_q logId = "log" + toStringU(l) + "_";
+            string_q logId = "log" + uint_2_Str(l) + "_";
             foundOne(func, data, blockNumber, tr, 0, log->address, logId +  "generator");
             for (size_t t = 0 ; t < log->topics.size() ; t++) {
                 SFAddress addr;
-                string_q topId = toStringU(t);
+                string_q topId = uint_2_Str(t);
                 if (isPotentialAddr(log->topics[t], addr)) {
                     foundOne(func, data, blockNumber, tr, 0, addr, logId +  "topic_" + topId);
                 }
@@ -486,7 +486,7 @@ bool CBlock::forEveryAddress(ADDRESSFUNC func, TRANSFUNC filterFunc, void *data)
             getTraces(traces, trans->hash);
             for (size_t t = 0 ; t < traces.size() ; t++) {
                 const CTrace *trace = &traces[t];  // taking a non-const reference
-                string_q trID = "trace" + toStringU(t) + "_";
+                string_q trID = "trace" + uint_2_Str(t) + "_";
                 foundOne(func, data, blockNumber, tr, t+10, trace->action.from,          trID + "from");
                 foundOne(func, data, blockNumber, tr, t+10, trace->action.to,            trID + "to");
                 foundOne(func, data, blockNumber, tr, t+10, trace->action.refundAddress, trID + "refundAddr");

@@ -63,16 +63,16 @@ bool CTraceAction::setValueByName(const string_q& fieldName, const string_q& fie
 
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "address" ) { address = toAddress(fieldValue); return true; }
+            if ( fieldName % "address" ) { address = str_2_Addr(fieldValue); return true; }
             break;
         case 'b':
-            if ( fieldName % "balance" ) { balance = toWei(fieldValue); return true; }
+            if ( fieldName % "balance" ) { balance = str_2_Wei(fieldValue); return true; }
             break;
         case 'c':
             if ( fieldName % "callType" ) { callType = fieldValue; return true; }
             break;
         case 'f':
-            if ( fieldName % "from" ) { from = toAddress(fieldValue); return true; }
+            if ( fieldName % "from" ) { from = str_2_Addr(fieldValue); return true; }
             break;
         case 'g':
             if ( fieldName % "gas" ) { gas = str_2_Gas(fieldValue); return true; }
@@ -82,13 +82,13 @@ bool CTraceAction::setValueByName(const string_q& fieldName, const string_q& fie
             if ( fieldName % "input" ) { input = fieldValue; return true; }
             break;
         case 'r':
-            if ( fieldName % "refundAddress" ) { refundAddress = toAddress(fieldValue); return true; }
+            if ( fieldName % "refundAddress" ) { refundAddress = str_2_Addr(fieldValue); return true; }
             break;
         case 't':
-            if ( fieldName % "to" ) { to = toAddress(fieldValue); return true; }
+            if ( fieldName % "to" ) { to = str_2_Addr(fieldValue); return true; }
             break;
         case 'v':
-            if ( fieldName % "value" ) { value = toWei(fieldValue); return true; }
+            if ( fieldName % "value" ) { value = str_2_Wei(fieldValue); return true; }
             break;
         default:
             break;
@@ -260,32 +260,32 @@ string_q CTraceAction::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "address" ) return fromAddress(address);
+            if ( fieldName % "address" ) return addr_2_Str(address);
             break;
         case 'b':
-            if ( fieldName % "balance" ) return fromWei(balance);
+            if ( fieldName % "balance" ) return wei_2_Str(balance);
             break;
         case 'c':
             if ( fieldName % "callType" ) return callType;
             break;
         case 'f':
-            if ( fieldName % "from" ) return fromAddress(from);
+            if ( fieldName % "from" ) return addr_2_Str(from);
             break;
         case 'g':
-            if ( fieldName % "gas" ) return fromGas(gas);
+            if ( fieldName % "gas" ) return gas_2_Str(gas);
             break;
         case 'i':
             if ( fieldName % "init" ) return init;
             if ( fieldName % "input" ) return input;
             break;
         case 'r':
-            if ( fieldName % "refundAddress" ) return fromAddress(refundAddress);
+            if ( fieldName % "refundAddress" ) return addr_2_Str(refundAddress);
             break;
         case 't':
-            if ( fieldName % "to" ) return fromAddress(to);
+            if ( fieldName % "to" ) return addr_2_Str(to);
             break;
         case 'v':
-            if ( fieldName % "value" ) return fromWei(value);
+            if ( fieldName % "value" ) return wei_2_Str(value);
             break;
     }
 

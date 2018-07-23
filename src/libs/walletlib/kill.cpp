@@ -64,7 +64,7 @@ bool QKill::setValueByName(const string_q& fieldName, const string_q& fieldValue
 
     switch (tolower(fieldName[0])) {
         case '_':
-            if ( fieldName % "_to" ) { _to = toAddress(fieldValue); return true; }
+            if ( fieldName % "_to" ) { _to = str_2_Addr(fieldValue); return true; }
             break;
         default:
             break;
@@ -199,7 +199,7 @@ string_q QKill::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case '_':
-            if ( fieldName % "_to" ) return fromAddress(_to);
+            if ( fieldName % "_to" ) return addr_2_Str(_to);
             break;
     }
 

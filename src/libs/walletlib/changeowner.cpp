@@ -64,8 +64,8 @@ bool QChangeOwner::setValueByName(const string_q& fieldName, const string_q& fie
 
     switch (tolower(fieldName[0])) {
         case '_':
-            if ( fieldName % "_from" ) { _from = toAddress(fieldValue); return true; }
-            if ( fieldName % "_to" ) { _to = toAddress(fieldValue); return true; }
+            if ( fieldName % "_from" ) { _from = str_2_Addr(fieldValue); return true; }
+            if ( fieldName % "_to" ) { _to = str_2_Addr(fieldValue); return true; }
             break;
         default:
             break;
@@ -203,8 +203,8 @@ string_q QChangeOwner::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case '_':
-            if ( fieldName % "_from" ) return fromAddress(_from);
-            if ( fieldName % "_to" ) return fromAddress(_to);
+            if ( fieldName % "_from" ) return addr_2_Str(_from);
+            if ( fieldName % "_to" ) return addr_2_Str(_to);
             break;
     }
 

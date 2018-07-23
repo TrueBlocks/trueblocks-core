@@ -62,7 +62,7 @@ bool CReceipt::setValueByName(const string_q& fieldName, const string_q& fieldVa
     if (fieldName == "contractAddress" && fieldValue == "null") {
         *((string_q*)&fieldValue) = "0";  // NOLINT
     } else if (fieldName == "status" && (fieldValue == "null" || fieldValue == "0x")) {
-        *((string_q*)&fieldValue) = toStringU(NO_STATUS);  // NOLINT
+        *((string_q*)&fieldValue) = uint_2_Str(NO_STATUS);  // NOLINT
     }
 
     if (pTrans)
@@ -72,7 +72,7 @@ bool CReceipt::setValueByName(const string_q& fieldName, const string_q& fieldVa
 
     switch (tolower(fieldName[0])) {
         case 'c':
-            if ( fieldName % "contractAddress" ) { contractAddress = toAddress(fieldValue); return true; }
+            if ( fieldName % "contractAddress" ) { contractAddress = str_2_Addr(fieldValue); return true; }
             break;
         case 'g':
             if ( fieldName % "gasUsed" ) { gasUsed = str_2_Gas(fieldValue); return true; }
@@ -282,16 +282,16 @@ string_q CReceipt::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'c':
-            if ( fieldName % "contractAddress" ) return fromAddress(contractAddress);
+            if ( fieldName % "contractAddress" ) return addr_2_Str(contractAddress);
             break;
         case 'g':
-            if ( fieldName % "gasUsed" ) return fromGas(gasUsed);
+            if ( fieldName % "gasUsed" ) return gas_2_Str(gasUsed);
             break;
         case 'l':
             if ( fieldName % "logs" || fieldName % "logsCnt" ) {
                 size_t cnt = logs.size();
                 if (endsWith(fieldName, "Cnt"))
-                    return toStringU(cnt);
+                    return uint_2_Str(cnt);
                 if (!cnt) return "";
                 string_q retS;
                 for (size_t i = 0 ; i < cnt ; i++) {
@@ -302,7 +302,7 @@ string_q CReceipt::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 's':
-            if ( fieldName % "status" ) return toStringU(status);
+            if ( fieldName % "status" ) return uint_2_Str(status);
             break;
     }
 

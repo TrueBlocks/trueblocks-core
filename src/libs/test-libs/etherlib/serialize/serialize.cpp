@@ -39,7 +39,7 @@ int main(int argc, const char *argv[]) {
             return 0;
 
         for (size_t i = 0 ; i < 10 ; i++) {
-            CPerson *newPerson = new CPerson("Person " + toStringU(i), i * 2);
+            CPerson *newPerson = new CPerson("Person " + uint_2_Str(i), i * 2);
             lastAdded->next = newPerson;
             lastAdded = newPerson;
         }

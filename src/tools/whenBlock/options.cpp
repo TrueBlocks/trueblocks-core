@@ -81,7 +81,7 @@ bool COptions::parseArguments(string_q& command) {
             }
 
             foundOne = true;
-            requests.push_back("date:" + toString(toTimestamp(date)));
+            requests.push_back("date:" + int_2_Str(toTimestamp(date)));
 
         } else {
 
@@ -93,7 +93,7 @@ bool COptions::parseArguments(string_q& command) {
             if (findSpecial(spec, arg)) {
                 string_q val = spec.second;
                 if (spec.first == "latest")
-                    val = toStringU(getLatestBlockFromClient());
+                    val = uint_2_Str(getLatestBlockFromClient());
                 requests.push_back("special:" + spec.first + "|" + val);
                 foundOne = true;
 
@@ -243,7 +243,7 @@ string_q COptions::listSpecials(bool terse) const {
         string_q name = specials[i].first;
         string_q bn = specials[i].second;
         if (name == "latest") {
-            bn = toStringU(getLatestBlockFromClient());
+            bn = uint_2_Str(getLatestBlockFromClient());
             if (isTestMode()) {
                 bn = "";
             } else if (COptionsBase::isReadme) {

@@ -77,7 +77,7 @@ bool CTrace::setValueByName(const string_q& fieldName, const string_q& fieldValu
             if ( fieldName % "action" ) { /* action = fieldValue; */ return false; }
             break;
         case 'b':
-            if ( fieldName % "blockHash" ) { blockHash = toHash(fieldValue); return true; }
+            if ( fieldName % "blockHash" ) { blockHash = str_2_Hash(fieldValue); return true; }
             if ( fieldName % "blockNumber" ) { blockNumber = str_2_Uint(fieldValue); return true; }
             break;
         case 'e':
@@ -97,7 +97,7 @@ bool CTrace::setValueByName(const string_q& fieldName, const string_q& fieldValu
                 }
                 return true;
             }
-            if ( fieldName % "transactionHash" ) { transactionHash = toHash(fieldValue); return true; }
+            if ( fieldName % "transactionHash" ) { transactionHash = str_2_Hash(fieldValue); return true; }
             if ( fieldName % "transactionPosition" ) { transactionPosition = str_2_Uint(fieldValue); return true; }
             if ( fieldName % "type" ) { type = fieldValue; return true; }
             break;
@@ -262,8 +262,8 @@ string_q CTrace::getValueByName(const string_q& fieldName) const {
             if ( fieldName % "action" ) { expContext().noFrst=true; return action.Format(); }
             break;
         case 'b':
-            if ( fieldName % "blockHash" ) return fromHash(blockHash);
-            if ( fieldName % "blockNumber" ) return toStringU(blockNumber);
+            if ( fieldName % "blockHash" ) return hash_2_Str(blockHash);
+            if ( fieldName % "blockNumber" ) return uint_2_Str(blockNumber);
             break;
         case 'e':
             if ( fieldName % "error" ) return error;
@@ -272,13 +272,13 @@ string_q CTrace::getValueByName(const string_q& fieldName) const {
             if ( fieldName % "result" ) { expContext().noFrst=true; return result.Format(); }
             break;
         case 's':
-            if ( fieldName % "subtraces" ) return toStringU(subtraces);
+            if ( fieldName % "subtraces" ) return uint_2_Str(subtraces);
             break;
         case 't':
             if ( fieldName % "traceAddress" || fieldName % "traceAddressCnt" ) {
                 size_t cnt = traceAddress.size();
                 if (endsWith(fieldName, "Cnt"))
-                    return toStringU(cnt);
+                    return uint_2_Str(cnt);
                 if (!cnt) return "";
                 string_q retS;
                 for (size_t i = 0 ; i < cnt ; i++) {
@@ -287,8 +287,8 @@ string_q CTrace::getValueByName(const string_q& fieldName) const {
                 }
                 return retS;
             }
-            if ( fieldName % "transactionHash" ) return fromHash(transactionHash);
-            if ( fieldName % "transactionPosition" ) return toStringU(transactionPosition);
+            if ( fieldName % "transactionHash" ) return hash_2_Str(transactionHash);
+            if ( fieldName % "transactionPosition" ) return uint_2_Str(transactionPosition);
             if ( fieldName % "type" ) return type;
             break;
     }

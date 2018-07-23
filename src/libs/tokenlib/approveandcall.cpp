@@ -64,8 +64,8 @@ bool QApproveAndCall::setValueByName(const string_q& fieldName, const string_q& 
 
     switch (tolower(fieldName[0])) {
         case '_':
-            if ( fieldName % "_spender" ) { _spender = toAddress(fieldValue); return true; }
-            if ( fieldName % "_value" ) { _value = toWei(fieldValue); return true; }
+            if ( fieldName % "_spender" ) { _spender = str_2_Addr(fieldValue); return true; }
+            if ( fieldName % "_value" ) { _value = str_2_Wei(fieldValue); return true; }
             if ( fieldName % "_extraData" ) { _extraData = toLower(fieldValue); return true; }
             break;
         default:
@@ -207,8 +207,8 @@ string_q QApproveAndCall::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case '_':
-            if ( fieldName % "_spender" ) return fromAddress(_spender);
-            if ( fieldName % "_value" ) return toStringBN(_value);
+            if ( fieldName % "_spender" ) return addr_2_Str(_spender);
+            if ( fieldName % "_value" ) return bnu_2_Str(_value);
             if ( fieldName % "_extraData" ) return _extraData;
             break;
     }

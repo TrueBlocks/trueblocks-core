@@ -64,7 +64,7 @@ bool QRequirementChangedEvent::setValueByName(const string_q& fieldName, const s
 
     switch (tolower(fieldName[0])) {
         case 'n':
-            if ( fieldName % "newRequirement" ) { newRequirement = toWei(fieldValue); return true; }
+            if ( fieldName % "newRequirement" ) { newRequirement = str_2_Wei(fieldValue); return true; }
             break;
         default:
             break;
@@ -199,7 +199,7 @@ string_q QRequirementChangedEvent::getValueByName(const string_q& fieldName) con
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'n':
-            if ( fieldName % "newRequirement" ) return toStringBN(newRequirement);
+            if ( fieldName % "newRequirement" ) return bnu_2_Str(newRequirement);
             break;
     }
 

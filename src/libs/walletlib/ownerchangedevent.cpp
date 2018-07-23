@@ -64,10 +64,10 @@ bool QOwnerChangedEvent::setValueByName(const string_q& fieldName, const string_
 
     switch (tolower(fieldName[0])) {
         case 'n':
-            if ( fieldName % "newOwner" ) { newOwner = toAddress(fieldValue); return true; }
+            if ( fieldName % "newOwner" ) { newOwner = str_2_Addr(fieldValue); return true; }
             break;
         case 'o':
-            if ( fieldName % "oldOwner" ) { oldOwner = toAddress(fieldValue); return true; }
+            if ( fieldName % "oldOwner" ) { oldOwner = str_2_Addr(fieldValue); return true; }
             break;
         default:
             break;
@@ -205,10 +205,10 @@ string_q QOwnerChangedEvent::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'n':
-            if ( fieldName % "newOwner" ) return fromAddress(newOwner);
+            if ( fieldName % "newOwner" ) return addr_2_Str(newOwner);
             break;
         case 'o':
-            if ( fieldName % "oldOwner" ) return fromAddress(oldOwner);
+            if ( fieldName % "oldOwner" ) return addr_2_Str(oldOwner);
             break;
     }
 

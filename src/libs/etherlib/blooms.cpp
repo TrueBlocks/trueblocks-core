@@ -21,9 +21,9 @@ namespace qblocks {
     //-------------------------------------------------------------------------
     bool compareBlooms(const SFBloom& b1, const SFBloom& b2, string_q& str) {
         if (verbose > 2) {
-            str = "\n\tbits1: " + toStringU(bitsTwiddled(b1)) + " bits2: " + toStringU(bitsTwiddled(b2));
-            string_q s1 = substitute(bloom2Bits(b1), "0", ".");
-            string_q s2 = substitute(bloom2Bits(b2), "0", ".");
+            str = "\n\tbits1: " + uint_2_Str(bitsTwiddled(b1)) + " bits2: " + uint_2_Str(bitsTwiddled(b2));
+            string_q s1 = substitute(bloom_2_Bits(b1), "0", ".");
+            string_q s2 = substitute(bloom_2_Bits(b2), "0", ".");
             for (size_t i = 0 ; i < 16 ; i++) {
                 string_q m1, m2;
                 for (size_t j = 0 ; j < 128 ; j = j + 10) {
@@ -33,9 +33,9 @@ namespace qblocks {
                 str += ("\n\t" + cRed + m1 + cOff + "\n\t" + m2);
             }
         } else if (verbose > 1) {
-            str = "\n\tbits: " + toStringU(bitsTwiddled(b1)) + " " + toStringU(bitsTwiddled(b2));
-            string_q s1 = substitute(substitute(bloom2Bytes(b1), "0x", ""), "0", ".");
-            string_q s2 = substitute(substitute(bloom2Bytes(b2), "0x", ""), "0", ".");
+            str = "\n\tbits: " + uint_2_Str(bitsTwiddled(b1)) + " " + uint_2_Str(bitsTwiddled(b2));
+            string_q s1 = substitute(substitute(bloom_2_Bytes(b1), "0x", ""), "0", ".");
+            string_q s2 = substitute(substitute(bloom_2_Bytes(b2), "0x", ""), "0", ".");
             for (size_t i = 0 ; i < 4 ; i++) {
                 string_q m1, m2;
                 for (size_t j = 0 ; j < 128 ; j = j + 10) {
@@ -68,7 +68,7 @@ namespace qblocks {
         for (size_t i = 0; i < blooms.size(); i++) {
             uint64_t bits = bitsTwiddled(blooms[i]);
             if (bits) {
-                ret += toStringU(bits);
+                ret += uint_2_Str(bits);
                 if (i < blooms.size()-1)
                     ret += ",";
             }

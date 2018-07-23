@@ -139,7 +139,7 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
         ret += "The [{--addrOnly}] option modifies the display output and therefore works with any other options.\n";
         ret += "Name file: [{" +
                 substitute(namesFile.getFullPath(), getHomeFolder(), "~/") +
-                    "}] (" + toStringU(fileSize(namesFile.getFullPath())) + ")\n";
+                    "}] (" + uint_2_Str(fileSize(namesFile.getFullPath())) + ")\n";
         return ret;
     }
     return str;

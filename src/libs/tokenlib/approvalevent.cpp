@@ -64,9 +64,9 @@ bool QApprovalEvent::setValueByName(const string_q& fieldName, const string_q& f
 
     switch (tolower(fieldName[0])) {
         case '_':
-            if ( fieldName % "_owner" ) { _owner = toAddress(fieldValue); return true; }
-            if ( fieldName % "_spender" ) { _spender = toAddress(fieldValue); return true; }
-            if ( fieldName % "_value" ) { _value = toWei(fieldValue); return true; }
+            if ( fieldName % "_owner" ) { _owner = str_2_Addr(fieldValue); return true; }
+            if ( fieldName % "_spender" ) { _spender = str_2_Addr(fieldValue); return true; }
+            if ( fieldName % "_value" ) { _value = str_2_Wei(fieldValue); return true; }
             break;
         default:
             break;
@@ -207,9 +207,9 @@ string_q QApprovalEvent::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case '_':
-            if ( fieldName % "_owner" ) return fromAddress(_owner);
-            if ( fieldName % "_spender" ) return fromAddress(_spender);
-            if ( fieldName % "_value" ) return toStringBN(_value);
+            if ( fieldName % "_owner" ) return addr_2_Str(_owner);
+            if ( fieldName % "_spender" ) return addr_2_Str(_spender);
+            if ( fieldName % "_value" ) return bnu_2_Str(_value);
             break;
     }
 

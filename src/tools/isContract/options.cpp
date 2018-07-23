@@ -51,10 +51,10 @@ bool COptions::parseArguments(string_q& command) {
          } else {
 
              if (nAddrs >= MAX_ADDRS)
-                 return usage("You may query at most " + toString(MAX_ADDRS) + " addresses. Quitting...");
+                 return usage("You may query at most " + int_2_Str(MAX_ADDRS) + " addresses. Quitting...");
              if (!isAddress(arg))
                  return usage(arg + " does not appear to be a valid Ethereum address.\n");
-            addrs[nAddrs++] = toAddress(toLower(arg));
+            addrs[nAddrs++] = str_2_Addr(toLower(arg));
 
         }
     }

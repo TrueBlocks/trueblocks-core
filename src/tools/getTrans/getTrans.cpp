@@ -97,9 +97,9 @@ bool visitTransaction(CTransaction& trans, void *data) {
                 cout << substitute(
                         substitute(
                         substitute(fmt,
-                                   "[N]", toStringU(nTr)),
-                                   "[NN]", toStringU(traces.size())),
-                                   "[D]", toStringU(dTs));
+                                   "[N]", uint_2_Str(nTr)),
+                                   "[NN]", uint_2_Str(traces.size())),
+                                   "[D]", uint_2_Str(dTs));
             }
         }
     }

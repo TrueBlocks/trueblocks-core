@@ -39,7 +39,7 @@ uint64_t findBlockNumByHash(const SFHash& hash, void *data) {
 bool blockNumToString(uint64_t num, void *data) {
     if (num != NOPOS) {
         string_q *str = (string_q*)data;  // NOLINT
-        *str += (toStringU(num) + "|");
+        *str += (uint_2_Str(num) + "|");
     }
     return true;
 }

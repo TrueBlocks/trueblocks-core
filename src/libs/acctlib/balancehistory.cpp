@@ -64,7 +64,7 @@ bool CBalanceHistory::setValueByName(const string_q& fieldName, const string_q& 
     switch (tolower(fieldName[0])) {
         case 'b':
             if ( fieldName % "bn" ) { bn = str_2_Uint(fieldValue); return true; }
-            if ( fieldName % "balance" ) { balance = toWei(fieldValue); return true; }
+            if ( fieldName % "balance" ) { balance = str_2_Wei(fieldValue); return true; }
             break;
         default:
             break;
@@ -200,8 +200,8 @@ string_q CBalanceHistory::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'b':
-            if ( fieldName % "bn" ) return toStringU(bn);
-            if ( fieldName % "balance" ) return toStringBN(balance);
+            if ( fieldName % "bn" ) return uint_2_Str(bn);
+            if ( fieldName % "balance" ) return bnu_2_Str(balance);
             break;
     }
 

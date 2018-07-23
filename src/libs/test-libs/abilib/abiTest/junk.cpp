@@ -29,7 +29,7 @@ string_q CJunk::getValueByName(const string_q& fieldName) const {
     if (fieldName == "array1") {
         size_t cnt = array1.size();
         if (endsWith(fieldName, "Cnt"))
-            return toStringU(cnt);
+            return uint_2_Str(cnt);
         if (!cnt) return "";
         string_q retS;
         for (size_t i = 0 ; i < cnt ; i++) {

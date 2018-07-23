@@ -64,8 +64,8 @@ bool QTransfer::setValueByName(const string_q& fieldName, const string_q& fieldV
 
     switch (tolower(fieldName[0])) {
         case '_':
-            if ( fieldName % "_to" ) { _to = toAddress(fieldValue); return true; }
-            if ( fieldName % "_value" ) { _value = toWei(fieldValue); return true; }
+            if ( fieldName % "_to" ) { _to = str_2_Addr(fieldValue); return true; }
+            if ( fieldName % "_value" ) { _value = str_2_Wei(fieldValue); return true; }
             break;
         default:
             break;
@@ -203,8 +203,8 @@ string_q QTransfer::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case '_':
-            if ( fieldName % "_to" ) return fromAddress(_to);
-            if ( fieldName % "_value" ) return toStringBN(_value);
+            if ( fieldName % "_to" ) return addr_2_Str(_to);
+            if ( fieldName % "_value" ) return bnu_2_Str(_value);
             break;
     }
 
