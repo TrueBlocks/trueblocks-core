@@ -434,7 +434,7 @@ const CBaseNode *CBlock::getObjectAt(const string_q& fieldName, size_t index) co
 // EXISTING_CODE
 //---------------------------------------------------------------------------
 extern bool accumulateAddresses(const CAddressAppearance& item, void *data);
-extern void foundOne(ADDRESSFUNC func, void *data, blknum_t bn, blknum_t tx, blknum_t tc, const SFAddress& addr, const string_q& reason);
+extern void foundOne(ADDRESSFUNC func, void *data, blknum_t bn, blknum_t tx, blknum_t tc, const address_t& addr, const string_q& reason);
 extern void foundPot(ADDRESSFUNC func, void *data, blknum_t bn, blknum_t tx, blknum_t tc, const string_q& potList, const string_q& reason);
 
 //---------------------------------------------------------------------------
@@ -470,7 +470,7 @@ bool CBlock::forEveryAddress(ADDRESSFUNC func, TRANSFUNC filterFunc, void *data)
             string_q logId = "log" + uint_2_Str(l) + "_";
             foundOne(func, data, blockNumber, tr, 0, log->address, logId +  "generator");
             for (size_t t = 0 ; t < log->topics.size() ; t++) {
-                SFAddress addr;
+                address_t addr;
                 string_q topId = uint_2_Str(t);
                 if (isPotentialAddr(log->topics[t], addr)) {
                     foundOne(func, data, blockNumber, tr, 0, addr, logId +  "topic_" + topId);

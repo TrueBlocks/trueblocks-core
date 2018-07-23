@@ -49,7 +49,7 @@ namespace qblocks {
     }
 
     //----------------------------------------------------------------------------------
-    bool addAddrToBloom(const SFAddress& addr, SFBloomArray& blooms, size_t maxBits) {
+    bool addAddrToBloom(const address_t& addr, SFBloomArray& blooms, size_t maxBits) {
         // Initialize if not already
         if (blooms.size() == 0)
             blooms.push_back(0);

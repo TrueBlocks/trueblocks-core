@@ -27,15 +27,15 @@ namespace qblocks {
 //--------------------------------------------------------------------------
 class CTraceAction : public CBaseNode {
 public:
-    SFAddress address;
+    address_t address;
     SFWei balance;
     string_q callType;
-    SFAddress from;
+    address_t from;
     SFGas gas;
     string_q init;
     string_q input;
-    SFAddress refundAddress;
-    SFAddress to;
+    address_t refundAddress;
+    address_t to;
     SFWei value;
 
 public:

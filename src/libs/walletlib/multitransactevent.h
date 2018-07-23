@@ -25,10 +25,10 @@
 //--------------------------------------------------------------------------
 class QMultiTransactEvent : public CLogEntry {
 public:
-    SFAddress owner;
+    address_t owner;
     string_q operation;
     SFUintBN value;
-    SFAddress to;
+    address_t to;
     string_q data;
 
 public:

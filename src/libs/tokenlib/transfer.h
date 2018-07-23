@@ -25,7 +25,7 @@
 //--------------------------------------------------------------------------
 class QTransfer : public CTransaction {
 public:
-    SFAddress _to;
+    address_t _to;
     SFUintBN _value;
 
 public:

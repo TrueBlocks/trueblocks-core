@@ -63,7 +63,7 @@ extern string_q getSha3 (const string_q& hexIn);
 
     //----------------------------------------------------------------------------------
     extern bool compareBlooms(const SFBloom& b1, const SFBloom& b2, string_q& str);
-    extern bool addAddrToBloom(const SFAddress& addr, SFBloomArray& blooms, size_t maxBits);
+    extern bool addAddrToBloom(const address_t& addr, SFBloomArray& blooms, size_t maxBits);
 
     //----------------------------------------------------------------------------------
     extern bool readBloomArray (      SFBloomArray& blooms, const string_q& fileName);

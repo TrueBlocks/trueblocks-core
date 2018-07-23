@@ -25,9 +25,9 @@
 //--------------------------------------------------------------------------
 class QSingleTransactEvent : public CLogEntry {
 public:
-    SFAddress owner;
+    address_t owner;
     SFUintBN value;
-    SFAddress to;
+    address_t to;
     string_q data;
 
 public:

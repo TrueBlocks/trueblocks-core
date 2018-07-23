@@ -27,7 +27,7 @@ public:
 TEST_F(CThisTest, TestConverts_0) {
     cout << "Running " << testName << "\n";
 
-    SFAddressArray array;
+    CAddressArray array;
     array.push_back("");
     array.push_back("0x");
     array.push_back("0x0");

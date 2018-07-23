@@ -25,8 +25,8 @@
 //--------------------------------------------------------------------------
 class QFromTransferFrom : public QTransferFrom {
 public:
-    SFAddress whop;
-    SFAddress werp;
+    address_t whop;
+    address_t werp;
 
 public:
     QFromTransferFrom(void);

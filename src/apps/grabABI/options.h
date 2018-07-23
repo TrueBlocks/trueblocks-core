@@ -22,7 +22,7 @@ public:
     bool raw;
     bool asData;
     bool decNames;
-    SFAddressArray addrs;
+    CAddressArray addrs;
     string_q primaryAddr;
     string_q classDir;
     string_q prefix;

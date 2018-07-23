@@ -25,8 +25,8 @@
 //--------------------------------------------------------------------------
 class QApprovalForAllEvent : public CLogEntry {
 public:
-    SFAddress _owner;
-    SFAddress _operator;
+    address_t _owner;
+    address_t _operator;
     bool _approved;
 
 public:

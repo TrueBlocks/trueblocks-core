@@ -36,8 +36,8 @@ public:
     uint64_t transactionIndex;
     uint64_t nonce;
     timestamp_t timestamp;
-    SFAddress from;
-    SFAddress to;
+    address_t from;
+    address_t to;
     SFWei value;
     SFGas gas;
     SFGas gasPrice;

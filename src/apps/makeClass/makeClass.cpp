@@ -100,7 +100,7 @@ string_q convertTypes(const string_q& inStr) {
     // Note: Watch out for trailing spaces. They are here to make sure it
     // matches only the types and not the field names.
     string_q outStr = inStr;
-    replaceAll(outStr, "address ",   "SFAddress "  );
+    replaceAll(outStr, "address ",   "address_t "  );
     replaceAll(outStr, "bytes32 ",   "string_q "   );
     replaceAll(outStr, "bytes16 ",   "string_q "   );
     replaceAll(outStr, "bytes8 ",    "string_q "   );
@@ -206,7 +206,7 @@ void generateCode(const COptions& options, CToml& toml, const string_q& dataFile
 
     //------------------------------------------------------------------------------------------------
     // build the field list from the config file string
-    string_q fields = substitute(toml.getConfigStr("settings", "fields", ""), "address[]", "SFAddressArray");
+    string_q fields = substitute(toml.getConfigStr("settings", "fields", ""), "address[]", "CAddressArray");
     CParameterArray fieldList;
     while (!fields.empty()) {
         string_q fieldDef = nextTokenClear(fields, '|');
@@ -279,7 +279,7 @@ void generateCode(const COptions& options, CToml& toml, const string_q& dataFile
 
             if (contains(fld.type, "CStringArray")  ||
                 contains(fld.type, "CBlockNumArray")   ||
-                contains(fld.type, "SFAddressArray") ||
+                contains(fld.type, "CAddressArray") ||
                 contains(fld.type, "SFBigUintArray") ||
                 contains(fld.type, "SFTopicArray")) {
 
@@ -520,7 +520,7 @@ string_q getCaseCode(const string_q& fieldCase, const string_q& ex) {
                     } else if (type == "double") {
                         caseCode += " return double_2_Str([{PTR}]" + field + ");";
 
-                    } else if (contains(type, "CStringArray") || contains(type, "SFAddressArray")) {
+                    } else if (contains(type, "CStringArray") || contains(type, "CAddressArray")) {
                         string_q str = STR_CASE_CODE_STRINGARRAY;
                         replaceAll(str, "[{FIELD}]", field);
                         caseCode += str;
@@ -648,7 +648,7 @@ string_q getCaseSetCode(const string_q& fieldCase) {
                             replaceAll(str, "nextTokenClear(str, ',')", "str_2_Uint(nextTokenClear(str, ','))");
                         caseCode += str;
 
-                    } else if (contains(type, "SFAddressArray") ||
+                    } else if (contains(type, "CAddressArray") ||
                                contains(type, "SFBigUintArray") ||
                                contains(type, "SFTopicArray")) {
                         string_q str = strArraySet;

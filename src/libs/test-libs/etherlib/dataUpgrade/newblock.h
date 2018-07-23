@@ -31,7 +31,7 @@ public:
     SFHash hash;
     blknum_t blockNumber;
     SFHash parentHash;
-    SFAddress miner;
+    address_t miner;
     uint64_t difficulty;
     double price;
     bool finalized;
