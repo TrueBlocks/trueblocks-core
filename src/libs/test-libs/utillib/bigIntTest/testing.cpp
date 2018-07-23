@@ -261,7 +261,7 @@ int main(int argc, const char *argv[]) {
         TEST2( p2,                                                         "-15"               );
         TEST2( (num.divide(denom, quotient), check(quotient)),             "2"                 ); num = 5;
         TEST2( (num.divide(denom, quotient), check(quotient)),             "0"                 ); ans = zero - three;
-        TEST( check(ans).sign,                                            "-1"                );
+        TEST2( check(ans).sign,                                            "-1"                );
         TEST2( check(fff),                                                 "12"                ); ans = aaaaa ^ bbbbb;
         TEST2( ans,                                                        "3"                 ); num = 5; num *= num;
         TEST2( check(num),                                                 "25"                );
