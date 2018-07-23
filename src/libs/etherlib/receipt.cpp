@@ -232,7 +232,7 @@ bool CReceipt::readBackLevel(SFArchive& archive) {
 
     bool done = false;
     // EXISTING_CODE
-    SFBloom removed;
+    bloom_t removed;
     if (m_schema < getVersionNum(0, 2, 0)) {
         archive >> contractAddress;
         archive >> gasUsed;

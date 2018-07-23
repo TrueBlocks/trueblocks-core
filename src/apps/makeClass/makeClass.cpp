@@ -106,10 +106,10 @@ string_q convertTypes(const string_q& inStr) {
     replaceAll(outStr, "bytes8 ",    "string_q "   );
     replaceAll(outStr, "bytes4 ",    "string_q "   );
     replaceAll(outStr, "bytes ",     "string_q "   );
-    replaceAll(outStr, "bloom ",     "SFBloom "    );
-    replaceAll(outStr, "wei ",       "SFWei "      );
-    replaceAll(outStr, "gas ",       "SFGas "      );
-    replaceAll(outStr, "hash ",      "SFHash "     );
+    replaceAll(outStr, "bloom ",     "bloom_t "    );
+    replaceAll(outStr, "wei ",       "wei_t "      );
+    replaceAll(outStr, "gas ",       "gas_t "      );
+    replaceAll(outStr, "hash ",      "hash_t "     );
     replaceAll(outStr, "string ",    "string_q "   );
     replaceAll(outStr, "uint256 ",   "SFUintBN "   );
     replaceAll(outStr, "int256 ",    "SFIntBN "    );

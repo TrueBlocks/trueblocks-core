@@ -29,7 +29,7 @@ class CTraceResult : public CBaseNode {
 public:
     address_t address;
     string_q code;
-    SFGas gasUsed;
+    gas_t gasUsed;
     string_q output;
 
 public:

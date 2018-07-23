@@ -374,7 +374,7 @@ bool CTransaction::readBackLevel(SFArchive& archive) {
     bool done = false;
     // EXISTING_CODE
     if (m_schema <= getVersionNum(0, 4, 0)) {
-        SFWei removed;  // used to be cumulativeGasUsed
+        wei_t removed;  // used to be cumulativeGasUsed
         archive >> hash;
         archive >> blockHash;
         archive >> blockNumber;

@@ -41,8 +41,8 @@ namespace qblocks {
     public:
         uint32_t index;
         bool     isError;
-        SFGas    gasUsed;
-        SFGas    gasPrice;
+        gas_t    gasUsed;
+        gas_t    gasPrice;
         uint32_t nTraces;
         char     value[41];
 

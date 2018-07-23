@@ -13,7 +13,7 @@
 #include "etherlib.h"
 #include "blockoptions.h"
 
-static uint64_t findBlockNumByHash(const SFHash& hash, void *data);
+static uint64_t findBlockNumByHash(const hash_t& hash, void *data);
 //--------------------------------------------------------------------------------
 CBlockOptions::CBlockOptions(void) {
     Init();
@@ -25,7 +25,7 @@ void CBlockOptions::Init(void) {
 }
 
 //--------------------------------------------------------------------------------
-uint64_t findBlockNumByHash(const SFHash& hash, void *data) {
+uint64_t findBlockNumByHash(const hash_t& hash, void *data) {
     ASSERT(isHash(hash));
     CBlock block;
     if (!getBlock(block, hash)) {

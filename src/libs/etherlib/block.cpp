@@ -300,7 +300,7 @@ bool CBlock::readBackLevel(SFArchive& archive) {
 
     bool done = false;
     // EXISTING_CODE
-    SFBloom removed;
+    bloom_t removed;
     if (m_schema <= getVersionNum(0, 3, 0)) {
         archive >> gasLimit;
         archive >> gasUsed;

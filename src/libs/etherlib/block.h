@@ -29,11 +29,11 @@ namespace qblocks {
 //--------------------------------------------------------------------------
 class CBlock : public CBaseNode {
 public:
-    SFGas gasLimit;
-    SFGas gasUsed;
-    SFHash hash;
+    gas_t gasLimit;
+    gas_t gasUsed;
+    hash_t hash;
     blknum_t blockNumber;
-    SFHash parentHash;
+    hash_t parentHash;
     address_t miner;
     uint64_t difficulty;
     double price;

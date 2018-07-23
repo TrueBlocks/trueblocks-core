@@ -30,17 +30,17 @@ class CBlock;
 //--------------------------------------------------------------------------
 class CTransaction : public CBaseNode {
 public:
-    SFHash hash;
-    SFHash blockHash;
+    hash_t hash;
+    hash_t blockHash;
     blknum_t blockNumber;
     uint64_t transactionIndex;
     uint64_t nonce;
     timestamp_t timestamp;
     address_t from;
     address_t to;
-    SFWei value;
-    SFGas gas;
-    SFGas gasPrice;
+    wei_t value;
+    gas_t gas;
+    gas_t gasPrice;
     string_q input;
     uint64_t isError;
     uint64_t isInternal;
