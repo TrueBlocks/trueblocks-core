@@ -61,7 +61,7 @@ bool CNewReceipt::setValueByName(const string_q& fieldName, const string_q& fiel
 
     switch (tolower(fieldName[0])) {
         case 'c':
-            if ( fieldName % "contractAddress" ) { contractAddress = toAddress(fieldValue); return true; }
+            if ( fieldName % "contractAddress" ) { contractAddress = str_2_Addr(fieldValue); return true; }
             break;
         case 'g':
             if ( fieldName % "gasUsed" ) { gasUsed = str_2_Gas(fieldValue); return true; }
@@ -81,7 +81,7 @@ bool CNewReceipt::setValueByName(const string_q& fieldName, const string_q& fiel
                 }
                 return true;
             }
-            if ( fieldName % "logsBloom" ) { logsBloom = toBloom(fieldValue); return true; }
+            if ( fieldName % "logsBloom" ) { logsBloom = str_2_Bloom(fieldValue); return true; }
             break;
         default:
             break;
@@ -239,19 +239,19 @@ string_q CNewReceipt::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'c':
-            if ( fieldName % "contractAddress" ) return fromAddress(contractAddress);
+            if ( fieldName % "contractAddress" ) return addr_2_Str(contractAddress);
             break;
         case 'g':
-            if ( fieldName % "gasUsed" ) return fromGas(gasUsed);
+            if ( fieldName % "gasUsed" ) return gas_2_Str(gasUsed);
             break;
         case 'i':
-            if ( fieldName % "isError" ) return toString(isError);
+            if ( fieldName % "isError" ) return int_2_Str(isError);
             break;
         case 'l':
             if ( fieldName % "logs" || fieldName % "logsCnt" ) {
                 size_t cnt = logs.size();
                 if (endsWith(fieldName, "Cnt"))
-                    return toStringU(cnt);
+                    return uint_2_Str(cnt);
                 if (!cnt) return "";
                 string_q retS;
                 for (size_t i = 0 ; i < cnt ; i++) {
@@ -260,7 +260,7 @@ string_q CNewReceipt::getValueByName(const string_q& fieldName) const {
                 }
                 return retS;
             }
-            if ( fieldName % "logsBloom" ) return bloom2Bytes(logsBloom);
+            if ( fieldName % "logsBloom" ) return bloom_2_Bytes(logsBloom);
             break;
     }
 

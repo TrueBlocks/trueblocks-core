@@ -64,9 +64,9 @@ bool QSafeTransferFromToke::setValueByName(const string_q& fieldName, const stri
 
     switch (tolower(fieldName[0])) {
         case '_':
-            if ( fieldName % "_from" ) { _from = toAddress(fieldValue); return true; }
-            if ( fieldName % "_to" ) { _to = toAddress(fieldValue); return true; }
-            if ( fieldName % "_tokenId" ) { _tokenId = toWei(fieldValue); return true; }
+            if ( fieldName % "_from" ) { _from = str_2_Addr(fieldValue); return true; }
+            if ( fieldName % "_to" ) { _to = str_2_Addr(fieldValue); return true; }
+            if ( fieldName % "_tokenId" ) { _tokenId = str_2_Wei(fieldValue); return true; }
             if ( fieldName % "_data" ) { _data = toLower(fieldValue); return true; }
             break;
         default:
@@ -211,9 +211,9 @@ string_q QSafeTransferFromToke::getValueByName(const string_q& fieldName) const 
     // Return field values
     switch (tolower(fieldName[0])) {
         case '_':
-            if ( fieldName % "_from" ) return fromAddress(_from);
-            if ( fieldName % "_to" ) return fromAddress(_to);
-            if ( fieldName % "_tokenId" ) return toStringBN(_tokenId);
+            if ( fieldName % "_from" ) return addr_2_Str(_from);
+            if ( fieldName % "_to" ) return addr_2_Str(_to);
+            if ( fieldName % "_tokenId" ) return bnu_2_Str(_tokenId);
             if ( fieldName % "_data" ) return _data;
             break;
     }

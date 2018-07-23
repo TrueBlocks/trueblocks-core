@@ -65,7 +65,7 @@ bool CAccount::setValueByName(const string_q& fieldName, const string_q& fieldVa
 
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "addr" ) { addr = toAddress(fieldValue); return true; }
+            if ( fieldName % "addr" ) { addr = str_2_Addr(fieldValue); return true; }
             break;
         case 'd':
             if ( fieldName % "displayString" ) { displayString = fieldValue; return true; }
@@ -260,7 +260,7 @@ string_q CAccount::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "addr" ) return fromAddress(addr);
+            if ( fieldName % "addr" ) return addr_2_Str(addr);
             break;
         case 'd':
             if ( fieldName % "displayString" ) return displayString;
@@ -269,20 +269,20 @@ string_q CAccount::getValueByName(const string_q& fieldName) const {
             if ( fieldName % "header" ) return header;
             break;
         case 'l':
-            if ( fieldName % "lastPage" ) return toStringU(lastPage);
-            if ( fieldName % "lastBlock" ) return toString(lastBlock);
+            if ( fieldName % "lastPage" ) return uint_2_Str(lastPage);
+            if ( fieldName % "lastBlock" ) return int_2_Str(lastBlock);
             break;
         case 'n':
-            if ( fieldName % "nVisible" ) return toStringU(nVisible);
+            if ( fieldName % "nVisible" ) return uint_2_Str(nVisible);
             break;
         case 'p':
-            if ( fieldName % "pageSize" ) return toStringU(pageSize);
+            if ( fieldName % "pageSize" ) return uint_2_Str(pageSize);
             break;
         case 't':
             if ( fieldName % "transactions" || fieldName % "transactionsCnt" ) {
                 size_t cnt = transactions.size();
                 if (endsWith(fieldName, "Cnt"))
-                    return toStringU(cnt);
+                    return uint_2_Str(cnt);
                 if (!cnt) return "";
                 string_q retS;
                 for (size_t i = 0 ; i < cnt ; i++) {

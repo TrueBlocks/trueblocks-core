@@ -64,7 +64,7 @@ bool QAddOwner::setValueByName(const string_q& fieldName, const string_q& fieldV
 
     switch (tolower(fieldName[0])) {
         case '_':
-            if ( fieldName % "_owner" ) { _owner = toAddress(fieldValue); return true; }
+            if ( fieldName % "_owner" ) { _owner = str_2_Addr(fieldValue); return true; }
             break;
         default:
             break;
@@ -199,7 +199,7 @@ string_q QAddOwner::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case '_':
-            if ( fieldName % "_owner" ) return fromAddress(_owner);
+            if ( fieldName % "_owner" ) return addr_2_Str(_owner);
             break;
     }
 

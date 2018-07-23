@@ -67,14 +67,14 @@ bool QMultiTransactEvent::setValueByName(const string_q& fieldName, const string
             if ( fieldName % "data" ) { data = toLower(fieldValue); return true; }
             break;
         case 'o':
-            if ( fieldName % "owner" ) { owner = toAddress(fieldValue); return true; }
+            if ( fieldName % "owner" ) { owner = str_2_Addr(fieldValue); return true; }
             if ( fieldName % "operation" ) { operation = toLower(fieldValue); return true; }
             break;
         case 't':
-            if ( fieldName % "to" ) { to = toAddress(fieldValue); return true; }
+            if ( fieldName % "to" ) { to = str_2_Addr(fieldValue); return true; }
             break;
         case 'v':
-            if ( fieldName % "value" ) { value = toWei(fieldValue); return true; }
+            if ( fieldName % "value" ) { value = str_2_Wei(fieldValue); return true; }
             break;
         default:
             break;
@@ -224,14 +224,14 @@ string_q QMultiTransactEvent::getValueByName(const string_q& fieldName) const {
             if ( fieldName % "data" ) return data;
             break;
         case 'o':
-            if ( fieldName % "owner" ) return fromAddress(owner);
+            if ( fieldName % "owner" ) return addr_2_Str(owner);
             if ( fieldName % "operation" ) return operation;
             break;
         case 't':
-            if ( fieldName % "to" ) return fromAddress(to);
+            if ( fieldName % "to" ) return addr_2_Str(to);
             break;
         case 'v':
-            if ( fieldName % "value" ) return toStringBN(value);
+            if ( fieldName % "value" ) return bnu_2_Str(value);
             break;
     }
 

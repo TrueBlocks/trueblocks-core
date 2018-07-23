@@ -183,7 +183,7 @@ bool COptions::parseArguments(string_q& command) {
             if (!isAddress(arg))
                  return usage(arg + " appears to be an invalid address. Valid addresses start with '0x' "
                               "and are 20 bytes (40 chars) long. Quitting...");
-            addr = toAddress(arg);
+            addr = str_2_Addr(arg);
         }
     }
 

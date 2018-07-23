@@ -63,7 +63,7 @@ bool CTraceResult::setValueByName(const string_q& fieldName, const string_q& fie
 
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "address" ) { address = toAddress(fieldValue); return true; }
+            if ( fieldName % "address" ) { address = str_2_Addr(fieldValue); return true; }
             break;
         case 'c':
             if ( fieldName % "code" ) { code = fieldValue; return true; }
@@ -226,13 +226,13 @@ string_q CTraceResult::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "address" ) return fromAddress(address);
+            if ( fieldName % "address" ) return addr_2_Str(address);
             break;
         case 'c':
             if ( fieldName % "code" ) return code;
             break;
         case 'g':
-            if ( fieldName % "gasUsed" ) return fromGas(gasUsed);
+            if ( fieldName % "gasUsed" ) return gas_2_Str(gasUsed);
             break;
         case 'o':
             if ( fieldName % "output" ) return output;

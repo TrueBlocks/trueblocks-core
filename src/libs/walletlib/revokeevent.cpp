@@ -64,7 +64,7 @@ bool QRevokeEvent::setValueByName(const string_q& fieldName, const string_q& fie
 
     switch (tolower(fieldName[0])) {
         case 'o':
-            if ( fieldName % "owner" ) { owner = toAddress(fieldValue); return true; }
+            if ( fieldName % "owner" ) { owner = str_2_Addr(fieldValue); return true; }
             if ( fieldName % "operation" ) { operation = toLower(fieldValue); return true; }
             break;
         default:
@@ -203,7 +203,7 @@ string_q QRevokeEvent::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'o':
-            if ( fieldName % "owner" ) return fromAddress(owner);
+            if ( fieldName % "owner" ) return addr_2_Str(owner);
             if ( fieldName % "operation" ) return operation;
             break;
     }

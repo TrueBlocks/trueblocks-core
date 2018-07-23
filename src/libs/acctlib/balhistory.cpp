@@ -63,7 +63,7 @@ bool CBalHistory::setValueByName(const string_q& fieldName, const string_q& fiel
 
     switch (tolower(fieldName[0])) {
         case 'b':
-            if ( fieldName % "balance" ) { balance = toWei(fieldValue); return true; }
+            if ( fieldName % "balance" ) { balance = str_2_Wei(fieldValue); return true; }
             break;
         case 'r':
             if ( fieldName % "recordID" ) { recordID = fieldValue; return true; }
@@ -220,7 +220,7 @@ string_q CBalHistory::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'b':
-            if ( fieldName % "balance" ) return toStringBN(balance);
+            if ( fieldName % "balance" ) return bni_2_Str(balance);
             break;
         case 'r':
             if ( fieldName % "recordID" ) return recordID;

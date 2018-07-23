@@ -223,7 +223,7 @@ string_q CAbi::getValueByName(const string_q& fieldName) const {
             if ( fieldName % "abiByName" || fieldName % "abiByNameCnt" ) {
                 size_t cnt = abiByName.size();
                 if (endsWith(fieldName, "Cnt"))
-                    return toStringU(cnt);
+                    return uint_2_Str(cnt);
                 if (!cnt) return "";
                 string_q retS;
                 for (size_t i = 0 ; i < cnt ; i++) {
@@ -235,7 +235,7 @@ string_q CAbi::getValueByName(const string_q& fieldName) const {
             if ( fieldName % "abiByEncoding" || fieldName % "abiByEncodingCnt" ) {
                 size_t cnt = abiByEncoding.size();
                 if (endsWith(fieldName, "Cnt"))
-                    return toStringU(cnt);
+                    return uint_2_Str(cnt);
                 if (!cnt) return "";
                 string_q retS;
                 for (size_t i = 0 ; i < cnt ; i++) {

@@ -55,18 +55,18 @@ TEST_F(CThisTest, TestConverts_0) {
     ASSERT_EQ("ulong overflow",          str_2_Uint(array[4]), 0);
     cout << "\n";
 
-    ASSERT_EQ("toHash1",                 toHash("12312ABcdE12"),   "0x000000000000000000000000000000000000000000000000000012312abcde12");
-    ASSERT_EQ("toHash2",                 toHash("a"),              "0x000000000000000000000000000000000000000000000000000000000000000a");
-    ASSERT_EQ("toHash3",                 toHash("0x"),             "0x0000000000000000000000000000000000000000000000000000000000000000");
-    ASSERT_EQ("toHash4",                 toHash(""),               "0x0000000000000000000000000000000000000000000000000000000000000000");
-    ASSERT_EQ("toHash5",                 toHash("0x12312abcde12"), "0x000000000000000000000000000000000000000000000000000012312abcde12");
+    ASSERT_EQ("str_2_Hash1",                 str_2_Hash("12312ABcdE12"),   "0x000000000000000000000000000000000000000000000000000012312abcde12");
+    ASSERT_EQ("str_2_Hash2",                 str_2_Hash("a"),              "0x000000000000000000000000000000000000000000000000000000000000000a");
+    ASSERT_EQ("str_2_Hash3",                 str_2_Hash("0x"),             "0x0");
+    ASSERT_EQ("str_2_Hash4",                 str_2_Hash(""),               "0x0");
+    ASSERT_EQ("str_2_Hash5",                 str_2_Hash("0x12312abcde12"), "0x000000000000000000000000000000000000000000000000000012312abcde12");
     cout << "\n";
 
-    ASSERT_EQ("toAddress1",              toAddress("12312ABcdE12"),   "0x000000000000000000000000000012312abcde12");
-    ASSERT_EQ("toAddress2",              toAddress("a"),              "0x000000000000000000000000000000000000000a");
-    ASSERT_EQ("toAddress3",              toAddress("0x"),             "0x0");
-    ASSERT_EQ("toAddress4",              toAddress(""),               "0x0");
-    ASSERT_EQ("toAddress5",              toAddress("0x12312abcde12"), "0x000000000000000000000000000012312abcde12");
+    ASSERT_EQ("str_2_Addr1",              str_2_Addr("12312ABcdE12"),   "0x000000000000000000000000000012312abcde12");
+    ASSERT_EQ("str_2_Addr2",              str_2_Addr("a"),              "0x000000000000000000000000000000000000000a");
+    ASSERT_EQ("str_2_Addr3",              str_2_Addr("0x"),             "0x0");
+    ASSERT_EQ("str_2_Addr4",              str_2_Addr(""),               "0x0");
+    ASSERT_EQ("str_2_Addr5",              str_2_Addr("0x12312abcde12"), "0x000000000000000000000000000012312abcde12");
     cout << "\n";
 
     ASSERT_EQ("timestamp empty address", toTimestamp(array[0]), 0);
@@ -80,7 +80,7 @@ TEST_F(CThisTest, TestConverts_0) {
     ASSERT_EQ("bn hex ony",              str_2_BigUint(array[1]), 0);
     ASSERT_EQ("bn zero addr",            str_2_BigUint(array[2]), 0);
     ASSERT_EQ("bn full zero",            str_2_BigUint(array[3]), 0);
-    ASSERT_EQ("bn overflow",             str_2_BigUint(array[4]), canonicalWei("91343852333181432387730302044767688728495783936"));
+    ASSERT_EQ("bn overflow",             str_2_BigUint(array[4]), str_2_Wei("91343852333181432387730302044767688728495783936"));
 
     return true;
 }}
@@ -112,7 +112,7 @@ TEST_F(CThisTest, TestConverts_1) {
     ASSERT_EQ("convert10", str_2_Bool("338"), 1);
     ASSERT_EQ("convert11", str_2_Bool("true"), 1);
 
-    ASSERT_EQ("bigint1", str_2_BigUint("40000000000000000000"), canonicalWei("40000000000000000000"));
+    ASSERT_EQ("bigint1", str_2_BigUint("40000000000000000000"), str_2_Wei("40000000000000000000"));
     ASSERT_EQ("bigint2", str_2_BigInt ("-40000000000000000000"), SFIntBN(str_2_BigUint("40000000000000000000"), -1));
     ASSERT_EQ("bigint2", str_2_BigInt ("+3"), 3);
     SFUintBN bn = 300000000; bn *= 100000000; bn *= 100;
@@ -133,11 +133,11 @@ TEST_F(CThisTest, TestConverts_2) {
     ASSERT_EQ("wei1", one,   1200000000);
     ASSERT_EQ("wei2", two,   1030000000);
     ASSERT_EQ("wei3", three, 1004000001);
-    ASSERT_EQ("wei4", to_string(val), "1240944001236000000000000001");
-    ASSERT_EQ("eth1", wei2Ether(val), "1240944001.236000000000000001");
-    ASSERT_EQ("eth2", wei2Ether(val/1000000), "1240.944001236");
-    ASSERT_EQ("eth2", wei2Ether(to_string(val)), "1240944001.236000000000000001");
-    ASSERT_EQ("eth2", wei2Ether(to_string(val/1000000)), "1240.944001236000000000");
+    ASSERT_EQ("wei4", bnu_2_Str(val), "1240944001236000000000000001");
+    ASSERT_EQ("eth1", wei_2_Ether(val), "1240944001.236000000000000001");
+    ASSERT_EQ("eth2", wei_2_Ether(val/1000000), "1240.944001236");
+    ASSERT_EQ("eth2", wei_2_Ether(bnu_2_Str(val)), "1240944001.236000000000000001");
+    ASSERT_EQ("eth2", wei_2_Ether(bnu_2_Str(val/1000000)), "1240.944001236000000000");
 
     return subTestID==0;
 }}
@@ -175,11 +175,11 @@ int main(int argc, const char *argv[]) {
 #if 0
 toAddr
 toAddrOld
-toAddress
+str_2_Addr
 toBigNum
 toBigNum2
 toBigNum3
-toBloom
+str_2_Bloom
 toBool
 toBool_in
 toBoolean
@@ -189,9 +189,9 @@ toFloat
 str_2_Int
 str_2_Int32u
 str_2_Uint
-toTopic
+str_2_Topic
 str_2_Uint
-toWei
+str_2_Wei
 toAscString
 toBlock
 toHex
@@ -206,7 +206,7 @@ toProper
 toRecordID
 toSpaces
 toSpaces2
-toString
+int_2_Str
 toTimeStamp
 toTrans
 toUpper
@@ -214,27 +214,26 @@ bnu_2_Hex
 to_int
 to_long
 to_short
-to_string
 to_uint
 to_ulong
 to_ushort
 
 
-fromAddress
+addr_2_Str
 fromBloom
-fromHash
-fromTopic
+hash_2_Str
+topic_2_Str
 fromUnsigned
-fromWei
+wei_2_Str
 
 asBitmap
 asDollars
 asEther
 asHex
 asPct
-toString
-toStringBN
-toStringU
+int_2_Str
+bnu_2_Str
+uint_2_Str
 
 ASSERT_NOT_EQ("c-string non-equality",        foo,  bar      );
 ASSERT_EQ    ("string equality",              foo.c_str(), xfoo);

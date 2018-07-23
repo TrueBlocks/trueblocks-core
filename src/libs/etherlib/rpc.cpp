@@ -92,7 +92,7 @@ string_q RPCSession::rpcCall(const string_q& _methodName, const string_q& _args)
         if (!args.empty())
             request += ",";
     }
-    request += "],\"id\":" + toString(m_rpcSequence) + "}";
+    request += "],\"id\":" + int_2_Str(m_rpcSequence) + "}";
     ++m_rpcSequence;
 
     string_q result = m_ipcSocket.sendRequest(request);

@@ -64,7 +64,7 @@ bool QOwnerOf::setValueByName(const string_q& fieldName, const string_q& fieldVa
 
     switch (tolower(fieldName[0])) {
         case '_':
-            if ( fieldName % "_tokenId" ) { _tokenId = toWei(fieldValue); return true; }
+            if ( fieldName % "_tokenId" ) { _tokenId = str_2_Wei(fieldValue); return true; }
             break;
         default:
             break;
@@ -199,7 +199,7 @@ string_q QOwnerOf::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case '_':
-            if ( fieldName % "_tokenId" ) return toStringBN(_tokenId);
+            if ( fieldName % "_tokenId" ) return bnu_2_Str(_tokenId);
             break;
     }
 

@@ -19,8 +19,8 @@ namespace qblocks {
 //---------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const CAddressAppearance& item) {
     os << item.bn << "\t";
-    os << (item.tx == NOPOS ? "" : toStringU(item.tx)) << "\t";
-    os << (item.tc < 10 ? "" : toStringU(item.tc - 10)) << "\t";
+    os << (item.tx == NOPOS ? "" : uint_2_Str(item.tx)) << "\t";
+    os << (item.tc < 10 ? "" : uint_2_Str(item.tc - 10)) << "\t";
     os << item.addr << "\t";
     os << item.reason;
     return os;
@@ -48,8 +48,8 @@ bool isPotentialAddr(SFUintBN test, SFAddress& addrOut) {
 
     addrOut = "";
 
-    static const SFUintBN small = hex2BN(  "0x00000000000000ffffffffffffffffffffffffff");  // smallest address we find
-    static const SFUintBN large = hex2BN("0x010000000000000000000000000000000000000000");  // largest address we find
+    static const SFUintBN small = str_2_Wei(  "0x00000000000000ffffffffffffffffffffffffff");  // smallest address we find
+    static const SFUintBN large = str_2_Wei("0x010000000000000000000000000000000000000000");  // largest address we find
     if (test <= small || test >= large)
         return false;
 
@@ -75,7 +75,7 @@ void potentialAddr(ADDRESSFUNC func, void *data, const CAddressAppearance& item,
     // Pull out 32-byte chunks and check to see if they are addresses
     SFAddress addr;
     for (size_t s = 0 ; s < potList.length() / 64 ; s++) {
-        SFUintBN test = hex2BN("0x" + extract(potList, s*64, 64));
+        SFUintBN test = str_2_Wei("0x" + extract(potList, s*64, 64));
         if (isPotentialAddr(test, addr)) {
             CAddressAppearance it(item);
             it.addr = addr;

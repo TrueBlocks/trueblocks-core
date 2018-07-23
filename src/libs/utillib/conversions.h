@@ -18,17 +18,6 @@
 
 namespace qblocks {
 
-#define toTopic(a)      canonicalWei((a))
-#define toBloom(a)      canonicalWei((a))
-#define toWei(a)        canonicalWei((a))
-#define hex2BN(a)       canonicalWei((a))
-
-#define fromAddress(a)  ((a).empty() ? "0x0" : (a))
-#define fromHash(a)     ((a).empty() ? "0x0" : (a))
-#define fromWei(a)      to_string((a)).c_str()
-#define fromTopic(a)    ("0x" + padLeft(toLower(string_q(bnu_2_Hex((a)).c_str())), 64, '0'))
-#define fromGas(a)      toStringU(a)
-
     //-------------------------------------------------------------------------
     using timestamp_t = int64_t;
     using blknum_t    = uint64_t;
@@ -50,51 +39,50 @@ namespace qblocks {
     using SFBloomArray   = vector < SFBloom   >;
 
     //-------------------------------------------------------------------------
+    extern string_q  toHex        (const string_q& str);
+
+    //-------------------------------------------------------------------------
+    extern string_q  chr_2_HexStr (const string_q& str);
+    extern string_q  bnu_2_Hex    (const SFUintBN& bu);
+    extern string_q  uint_2_Hex   (uint64_t num);
+    extern string_q  wei_2_Ether  (const string_q& str);
+    extern string_q  wei_2_Ether  (SFUintBN val);
+    extern string_q  bloom_2_Bytes(const SFBloom& bl);
+    extern string_q  bloom_2_Bits (const SFBloom& bl);
+
+    //-------------------------------------------------------------------------
+    extern bool      str_2_Bool   (const string_q& str);
     extern int64_t   str_2_Int    (const string_q& str);
     extern uint64_t  str_2_Uint   (const string_q& str);
     inline SFGas     str_2_Gas    (const string_q& str) { return str_2_Uint(str); }
-    extern SFUintBN  str_2_BigUint(const string_q& str);
-    extern SFIntBN   str_2_BigInt (const string_q& str);
-    extern bool      str_2_Bool   (const string_q& str);
     extern double    str_2_Double (const string_q& str);
-    extern string_q  chr_2_HexStr (const string_q& str);
-    extern string_q  toHex        (const string_q& str);
-    extern string_q  bnu_2_Hex    (const SFUintBN& bu);
-    extern string_q  uint_2_Hex   (uint64_t num);
+    extern SFIntBN   str_2_BigInt (const string_q& str);
+    extern SFUintBN  str_2_BigUint(const string_q& str);
+    extern SFAddress str_2_Addr   (const string_q& str);
+    extern SFHash    str_2_Hash   (const string_q& str);
+    extern SFUintBN  str_2_Wei    (const string_q& str);
+    inline SFBloom   str_2_Bloom  (const string_q& str) { return str_2_Wei(str); }
+    inline SFUintBN  str_2_Topic  (const string_q& str) { return str_2_Wei(str); }
 
     //-------------------------------------------------------------------------
-    extern string_q  to_string    (const SFUintBN& bu);
-    extern string_q  to_string2   (const SFIntBN&  bi);
-    extern SFAddress toAddress    (const string_q& str);
-    extern SFHash    toHash       (const string_q& str);
+    extern string_q  int_2_Str    (int64_t num);
+    extern string_q  uint_2_Str   (uint64_t num);
+    inline string_q  gas_2_Str    (const SFGas& gas)      { return uint_2_Str(gas); }
+    extern string_q  double_2_Str (double f, size_t nDecimals = 10);
+    extern string_q  bni_2_Str    (const SFIntBN& bn);
+    extern string_q  bnu_2_Str    (const SFUintBN& bu);
+    inline string_q  addr_2_Str   (const SFAddress& addr) { return (addr.empty() ? "0x0" : addr); }
+    inline string_q  hash_2_Str   (const SFHash& hash)    { return (hash.empty() ? "0x0" : hash); }
+    inline string_q  wei_2_Str    (const SFWei& wei)      { return bnu_2_Str(wei); }
+    inline string_q  bloom_2_Str  (const SFBloom& bloom)  { return bnu_2_Str(bloom); }
+    inline string_q  topic_2_Str  (const SFUintBN& topic) { return ("0x" + padLeft(toLower(bnu_2_Hex(topic)), 64, '0')); }
 
     //--------------------------------------------------------------------
-    extern SFUintBN  canonicalWei (const string_q& str);
-    extern SFUintBN  canonicalWei (uint64_t val);
-    extern string_q  wei2Ether    (const string_q& str);
-    extern string_q  wei2Ether    (SFUintBN val);
-
-    //-------------------------------------------------------------------------
-    extern SFUintBN  hex2BigUint  (const string& s);
-
-    //--------------------------------------------------------------------
-    extern string_q  bloom2Bytes  (const SFBloom& bl);
-    extern string_q  bloom2Bits   (const SFBloom& b);
-
-    //--------------------------------------------------------------------
-    extern string_q  toString     (int64_t i);
-    extern string_q  toStringU    (uint64_t i);
-    extern string_q  toStringBN   (const SFUintBN& bu);
-    extern string_q  toStringBN   (const SFIntBN& bn);
-
-    //--------------------------------------------------------------------
-    extern string_q  double2Str   (double f, size_t nDecimals = 10);
-
-    //--------------------------------------------------------------------
-    extern bool      isZeroAddr   (const SFAddress& addr);
+    extern bool      isZeroHash   (const SFHash& hash);
+    inline bool      isZeroAddr   (const SFAddress& addr) { return isZeroHash(addr); };
     extern bool      isNumeral    (const string_q& test);
     extern bool      isHexStr     (const string_q& str);
-    extern bool      isAddress    (const SFAddress& addrIn);
+    extern bool      isAddress    (const SFAddress& addr);
     extern bool      isHash       (const SFHash& hashIn);
     extern bool      isUnsigned   (const string_q& in);
 

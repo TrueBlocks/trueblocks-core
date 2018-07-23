@@ -63,20 +63,20 @@ bool CIncomeStatement::setValueByName(const string_q& fieldName, const string_q&
 
     switch (tolower(fieldName[0])) {
         case 'b':
-            if ( fieldName % "begBal" ) { begBal = toWei(fieldValue); return true; }
+            if ( fieldName % "begBal" ) { begBal = str_2_Wei(fieldValue); return true; }
             if ( fieldName % "blockNum" ) { blockNum = str_2_Uint(fieldValue); return true; }
             break;
         case 'e':
-            if ( fieldName % "endBal" ) { endBal = toWei(fieldValue); return true; }
+            if ( fieldName % "endBal" ) { endBal = str_2_Wei(fieldValue); return true; }
             break;
         case 'g':
-            if ( fieldName % "gasCostInWei" ) { gasCostInWei = toWei(fieldValue); return true; }
+            if ( fieldName % "gasCostInWei" ) { gasCostInWei = str_2_Wei(fieldValue); return true; }
             break;
         case 'i':
-            if ( fieldName % "inflow" ) { inflow = toWei(fieldValue); return true; }
+            if ( fieldName % "inflow" ) { inflow = str_2_Wei(fieldValue); return true; }
             break;
         case 'o':
-            if ( fieldName % "outflow" ) { outflow = toWei(fieldValue); return true; }
+            if ( fieldName % "outflow" ) { outflow = str_2_Wei(fieldValue); return true; }
             break;
         default:
             break;
@@ -236,20 +236,20 @@ string_q CIncomeStatement::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'b':
-            if ( fieldName % "begBal" ) return toStringBN(begBal);
-            if ( fieldName % "blockNum" ) return toStringU(blockNum);
+            if ( fieldName % "begBal" ) return bni_2_Str(begBal);
+            if ( fieldName % "blockNum" ) return uint_2_Str(blockNum);
             break;
         case 'e':
-            if ( fieldName % "endBal" ) return toStringBN(endBal);
+            if ( fieldName % "endBal" ) return bni_2_Str(endBal);
             break;
         case 'g':
-            if ( fieldName % "gasCostInWei" ) return toStringBN(gasCostInWei);
+            if ( fieldName % "gasCostInWei" ) return bni_2_Str(gasCostInWei);
             break;
         case 'i':
-            if ( fieldName % "inflow" ) return toStringBN(inflow);
+            if ( fieldName % "inflow" ) return bni_2_Str(inflow);
             break;
         case 'o':
-            if ( fieldName % "outflow" ) return toStringBN(outflow);
+            if ( fieldName % "outflow" ) return bni_2_Str(outflow);
             break;
     }
 
@@ -272,11 +272,11 @@ ostream& operator<<(ostream& os, const CIncomeStatement& item) {
                 << padCenter("gasCost", width) << "   "
                 << padCenter("endBal", width);
         } else {
-            os << (item.begBal       > 0 ? cGreen  : bBlack) << padLeft( wei2Ether(to_string2( item.begBal       )), width) << bBlack << "   ";  // NOLINT
-            os << (item.inflow       > 0 ? cYellow : ""    ) << padLeft( wei2Ether(to_string2( item.inflow       )), width) << bBlack << "   ";  // NOLINT
-            os << (item.outflow      > 0 ? cYellow : ""    ) << padLeft( wei2Ether(to_string2( item.outflow      )), width) << bBlack << "   ";  // NOLINT
-            os << (item.gasCostInWei > 0 ? cYellow : ""    ) << padLeft( wei2Ether(to_string2( item.gasCostInWei )), width) << cOff   << "   ";  // NOLINT
-            os << (item.endBal       > 0 ? cGreen  : bBlack) << padLeft( wei2Ether(to_string2( item.endBal       )), width);  // NOLINT
+            os << (item.begBal       > 0 ? cGreen  : bBlack) << padLeft( wei_2_Ether(bni_2_Str( item.begBal       )), width) << bBlack << "   ";  // NOLINT
+            os << (item.inflow       > 0 ? cYellow : ""    ) << padLeft( wei_2_Ether(bni_2_Str( item.inflow       )), width) << bBlack << "   ";  // NOLINT
+            os << (item.outflow      > 0 ? cYellow : ""    ) << padLeft( wei_2_Ether(bni_2_Str( item.outflow      )), width) << bBlack << "   ";  // NOLINT
+            os << (item.gasCostInWei > 0 ? cYellow : ""    ) << padLeft( wei_2_Ether(bni_2_Str( item.gasCostInWei )), width) << cOff   << "   ";  // NOLINT
+            os << (item.endBal       > 0 ? cGreen  : bBlack) << padLeft( wei_2_Ether(bni_2_Str( item.endBal       )), width);  // NOLINT
         }
         { return os; }
     }

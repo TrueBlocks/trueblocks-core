@@ -66,7 +66,7 @@ bool CLogEntry::setValueByName(const string_q& fieldName, const string_q& fieldV
 
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "address" ) { address = toAddress(fieldValue); return true; }
+            if ( fieldName % "address" ) { address = str_2_Addr(fieldValue); return true; }
             break;
         case 'd':
             if ( fieldName % "data" ) { data = fieldValue; return true; }
@@ -78,7 +78,7 @@ bool CLogEntry::setValueByName(const string_q& fieldName, const string_q& fieldV
             if ( fieldName % "topics" ) {
                 string_q str = fieldValue;
                 while (!str.empty()) {
-                    topics.push_back(toTopic(nextTokenClear(str, ',')));
+                    topics.push_back(str_2_Topic(nextTokenClear(str, ',')));
                 }
                 return true;
             }
@@ -235,23 +235,23 @@ string_q CLogEntry::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "address" ) return fromAddress(address);
+            if ( fieldName % "address" ) return addr_2_Str(address);
             break;
         case 'd':
             if ( fieldName % "data" ) return data;
             break;
         case 'l':
-            if ( fieldName % "logIndex" ) return toStringU(logIndex);
+            if ( fieldName % "logIndex" ) return uint_2_Str(logIndex);
             break;
         case 't':
             if ( fieldName % "topics" || fieldName % "topicsCnt" ) {
                 size_t cnt = topics.size();
                 if (endsWith(fieldName, "Cnt"))
-                    return toStringU(cnt);
+                    return uint_2_Str(cnt);
                 if (!cnt) return "";
                 string_q retS;
                 for (size_t i = 0 ; i < cnt ; i++) {
-                    retS += ("\"" + fromTopic(topics[i]) + "\"");
+                    retS += ("\"" + topic_2_Str(topics[i]) + "\"");
                     retS += ((i < cnt - 1) ? ",\n" + indent() : "\n");
                 }
                 return retS;
@@ -285,7 +285,7 @@ ostream& operator<<(ostream& os, const CLogEntry& item) {
 //---------------------------------------------------------------------------
 const string_q CLogEntry::getStringAt(const string_q& name, size_t i) const {
     if ( name % "topics" && i < topics.size() )
-        return fromTopic(topics[i]);
+        return topic_2_Str(topics[i]);
     return "";
 }
 

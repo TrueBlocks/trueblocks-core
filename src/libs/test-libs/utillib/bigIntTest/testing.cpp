@@ -19,7 +19,7 @@
 #define TEST(expr, exp) do { \
     string s1, e1; \
     try { \
-        s1 = to_string((expr)); \
+        s1 = bnu_2_Str((expr)); \
     } catch (const char *err) { \
         s1 = "error"; \
         e1 = err; \
@@ -33,7 +33,7 @@
 #define TEST2(expr, exp) do { \
     string s1, e1; \
     try { \
-        s1 = to_string2((expr)); \
+        s1 = bni_2_Str((expr)); \
     } catch (const char *err) { \
         s1 = "error"; \
         e1 = err; \
@@ -75,7 +75,7 @@ int main(int argc, const char *argv[]) {
         SFUintBN x(1), big314(314);
         int power = 0;
         SFUintBN z(0), one(1), ten(10);
-        SFUintBN coreDump = hex2BigUint("de0b6b3a7640000");
+        SFUintBN coreDump = SFUintBN(BigUnsignedInABase("de0b6b3a7640000", 16));
 
         uint64_t myBlocks[3];
         myBlocks[0] = 3;
@@ -109,10 +109,9 @@ int main(int argc, const char *argv[]) {
         TEST2( a,                                                          "535"               );
         b = a.to_int();
         f = str_2_BigInt(s);
-        s2 = to_string2(f);
+        s2 = bni_2_Str(f);
         TEST2( f,                                                          "3141592653589793238462643383279");
-        s = "1142b0090b6460000";
-        f = hex2BigUint(s);
+        f = SFUintBN(BigUnsignedInABase("1142b0090b6460000", 16));
         TEST2( f,                                                          "19900000000000000000");
         TEST2( g+h,                                                        "314424"            );
         TEST2( g-h,                                                        "313894"            );

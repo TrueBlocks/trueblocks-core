@@ -64,7 +64,7 @@ bool QChangeRequirement::setValueByName(const string_q& fieldName, const string_
 
     switch (tolower(fieldName[0])) {
         case '_':
-            if ( fieldName % "_newRequired" ) { _newRequired = toWei(fieldValue); return true; }
+            if ( fieldName % "_newRequired" ) { _newRequired = str_2_Wei(fieldValue); return true; }
             break;
         default:
             break;
@@ -199,7 +199,7 @@ string_q QChangeRequirement::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case '_':
-            if ( fieldName % "_newRequired" ) return toStringBN(_newRequired);
+            if ( fieldName % "_newRequired" ) return bnu_2_Str(_newRequired);
             break;
     }
 

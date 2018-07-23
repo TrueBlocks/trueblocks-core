@@ -80,7 +80,7 @@ string_q doOneBlock(uint64_t num, const COptions& opt) {
     CBlock gold;
     gold.blockNumber = num;
     string_q result;
-    string_q numStr = toStringU(num);
+    string_q numStr = uint_2_Str(num);
     if (opt.isRaw) {
 
         if (!queryRawBlock(result, numStr, true, opt.hashes)) {
@@ -118,7 +118,7 @@ string_q doOneBlock(uint64_t num, const COptions& opt) {
         if (!opt.silent) {
             string_q format = opt.format;
 //            if (false) { //opt.priceBlocks) {
-//                SFUintBN oneWei = canonicalWei("1000000000000000000");
+//                SFUintBN oneWei = str_2_Wei("1000000000000000000");
 //                string_q dollars = "$" + asDollars(gold.timestamp, oneWei);
 //                replace(format, "{PRICE:CLOSE}", dollars);
 //            }
@@ -138,10 +138,10 @@ string_q doOneBlock(uint64_t num, const COptions& opt) {
 string_q checkOneBlock(uint64_t num, const COptions& opt) {
 
     if (opt.quiet == 2) {
-        cout << "Checking block " << cYellow << toStringU(num) << cOff << "...       \r";
+        cout << "Checking block " << cYellow << uint_2_Str(num) << cOff << "...       \r";
         cout.flush();
     }
-    string_q numStr = toStringU(num);
+    string_q numStr = uint_2_Str(num);
 
     // Get the block raw from the node...
     string_q fromNode;
@@ -178,9 +178,9 @@ extern string_q hiddenFields(void);
     if (opt.quiet == 2) {
         // only report results if we're being very quiet
         if (fromNode != fromQblocks)
-            return "Difference at block " + cYellow + toStringU(num) + cOff + ".\n" +
+            return "Difference at block " + cYellow + uint_2_Str(num) + cOff + ".\n" +
             "\t" + diffStr(fromNode, fromQblocks) + "\t" + diffStr(fromQblocks, fromNode);
-        cout << "Checking block " + cYellow + toStringU(num) + cOff + "...";
+        cout << "Checking block " + cYellow + uint_2_Str(num) + cOff + "...";
         cout << greenCheck << "         \r";
         cout.flush();
         return "";

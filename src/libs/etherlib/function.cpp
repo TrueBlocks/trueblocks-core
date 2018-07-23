@@ -132,7 +132,7 @@ void CFunction::finishParse() {
     int cnt = 0;
     for (size_t i = 0 ; i < inputs.size() ; i++) {
         if (inputs[i].name.empty())
-            inputs.at(i).name = "param_" + toString(cnt++);  // the non-const reference already exists
+            inputs.at(i).name = "param_" + int_2_Str(cnt++);  // the non-const reference already exists
     }
     // EXISTING_CODE
 }
@@ -258,13 +258,13 @@ string_q nextFunctionChunk_custom(const string_q& fieldIn, const void *dataPtr) 
                     return (ret + "\t" + chr_2_HexStr(ret));
 
                 } else if ( fieldIn % "hasAddrs" ) {
-                    return toString(fun->hasAddrs);
+                    return int_2_Str(fun->hasAddrs);
 
                 }
                 break;
             case 'i':
                 if ( fieldIn % "isBuiltin" ) {
-                    return toString(fun->isBuiltin);
+                    return int_2_Str(fun->isBuiltin);
                 }
                 break;
             case 'o':
@@ -309,10 +309,10 @@ string_q CFunction::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "anonymous" ) return toString(anonymous);
+            if ( fieldName % "anonymous" ) return int_2_Str(anonymous);
             break;
         case 'c':
-            if ( fieldName % "constant" ) return toString(constant);
+            if ( fieldName % "constant" ) return int_2_Str(constant);
             break;
         case 'e':
             if ( fieldName % "encoding" ) return encoding;
@@ -321,7 +321,7 @@ string_q CFunction::getValueByName(const string_q& fieldName) const {
             if ( fieldName % "inputs" || fieldName % "inputsCnt" ) {
                 size_t cnt = inputs.size();
                 if (endsWith(fieldName, "Cnt"))
-                    return toStringU(cnt);
+                    return uint_2_Str(cnt);
                 if (!cnt) return "";
                 string_q retS;
                 for (size_t i = 0 ; i < cnt ; i++) {
@@ -338,7 +338,7 @@ string_q CFunction::getValueByName(const string_q& fieldName) const {
             if ( fieldName % "outputs" || fieldName % "outputsCnt" ) {
                 size_t cnt = outputs.size();
                 if (endsWith(fieldName, "Cnt"))
-                    return toStringU(cnt);
+                    return uint_2_Str(cnt);
                 if (!cnt) return "";
                 string_q retS;
                 for (size_t i = 0 ; i < cnt ; i++) {
@@ -349,7 +349,7 @@ string_q CFunction::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 'p':
-            if ( fieldName % "payable" ) return toString(payable);
+            if ( fieldName % "payable" ) return int_2_Str(payable);
             break;
         case 's':
             if ( fieldName % "signature" ) return signature;

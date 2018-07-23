@@ -43,9 +43,9 @@ int main(int argc, const char *argv[]) {
         }
 
         if (needsTotal) {
-            string_q sBal = to_string(options.state.totalVal).c_str();
+            string_q sBal = bnu_2_Str(options.state.totalVal);
             if (expContext().asEther) {
-                sBal = wei2Ether(to_string(options.state.totalVal).c_str());
+                sBal = wei_2_Ether(bnu_2_Str(options.state.totalVal));
             } else if (expContext().asDollars) {
                 if (options.timestampMap[options.state.latestBlock] == (timestamp_t)0) {
                     CBlock blk;
@@ -81,15 +81,15 @@ bool visitBlock(uint64_t blockNum, void *data) {
         options->state.earliestBlock = blockNum;
 
     if (blockNum > options->state.latestBlock) {
-        string_q late = (isTestMode() ? "--" : toStringU(options->state.latestBlock));
-        return usage("Block " + toStringU(blockNum) + " is later than the last valid block " + late + ". Quitting...");
+        string_q late = (isTestMode() ? "--" : uint_2_Str(options->state.latestBlock));
+        return usage("Block " + uint_2_Str(blockNum) + " is later than the last valid block " + late + ". Quitting...");
     }
 
     SFUintBN bal = getBalance(options->state.curAddr, blockNum, false);
     options->state.totalVal += bal;
-    string_q sBal = to_string(bal).c_str();
+    string_q sBal = bnu_2_Str(bal);
     if (expContext().asEther) {
-        sBal = wei2Ether(to_string(bal).c_str());
+        sBal = wei_2_Ether(bnu_2_Str(bal));
     } else if (expContext().asDollars) {
         if (options->timestampMap[blockNum] == (timestamp_t)0) {
             CBlock blk;

@@ -58,7 +58,7 @@ extern bool displayBloom(blknum_t bn, const SFBloom& bloom, void *data);
 
 //-------------------------------------------------------------
 bool displayBloom(blknum_t bn, const SFBloom& bloom, void *data) {
-    string_q s = bloom2Bytes(bloom);
+    string_q s = bloom_2_Bytes(bloom);
     COptions *opt = (COptions*)data;  // NOLINT
     if (opt->mode == "short") {
         size_t len = s.length();

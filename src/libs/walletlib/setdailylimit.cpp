@@ -64,7 +64,7 @@ bool QSetDailyLimit::setValueByName(const string_q& fieldName, const string_q& f
 
     switch (tolower(fieldName[0])) {
         case '_':
-            if ( fieldName % "_newLimit" ) { _newLimit = toWei(fieldValue); return true; }
+            if ( fieldName % "_newLimit" ) { _newLimit = str_2_Wei(fieldValue); return true; }
             break;
         default:
             break;
@@ -199,7 +199,7 @@ string_q QSetDailyLimit::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case '_':
-            if ( fieldName % "_newLimit" ) return toStringBN(_newLimit);
+            if ( fieldName % "_newLimit" ) return bnu_2_Str(_newLimit);
             break;
     }
 

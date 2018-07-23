@@ -64,8 +64,8 @@ const CTransaction *promoteToToken(const CTransaction *p) {
             // 0x095ea7b3
             QApprove *a = new QApprove;
             *(CTransaction*)a = *p;  // NOLINT
-            a->_spender = toAddress(extract(params, 0*64, 64));
-            a->_value = toWei("0x" + extract(params, 1*64, 64));
+            a->_spender = str_2_Addr(extract(params, 0*64, 64));
+            a->_value = str_2_Wei("0x" + extract(params, 1*64, 64));
             items[nItems++] = "address";
             items[nItems++] = "uint256";
             a->function = toFunction("approve", params, nItems, items);
@@ -76,8 +76,8 @@ const CTransaction *promoteToToken(const CTransaction *p) {
             // 0xcae9ca51
             QApproveAndCall *a = new QApproveAndCall;
             *(CTransaction*)a = *p;  // NOLINT
-            a->_spender = toAddress(extract(params, 0*64, 64));
-            a->_value = toWei("0x" + extract(params, 1*64, 64));
+            a->_spender = str_2_Addr(extract(params, 0*64, 64));
+            a->_value = str_2_Wei("0x" + extract(params, 1*64, 64));
             a->_extraData = extract(params, 2*64);
             items[nItems++] = "address";
             items[nItems++] = "uint256";
@@ -90,7 +90,7 @@ const CTransaction *promoteToToken(const CTransaction *p) {
             // 0x6352211e
             QOwnerOf *a = new QOwnerOf;
             *(CTransaction*)a = *p;  // NOLINT
-            a->_tokenId = toWei("0x" + extract(params, 0*64, 64));
+            a->_tokenId = str_2_Wei("0x" + extract(params, 0*64, 64));
             items[nItems++] = "uint256";
             a->function = toFunction("ownerOf", params, nItems, items);
             return a;
@@ -100,9 +100,9 @@ const CTransaction *promoteToToken(const CTransaction *p) {
             // 0x42842e0e
             QSafeTransferFrom *a = new QSafeTransferFrom;
             *(CTransaction*)a = *p;  // NOLINT
-            a->_from = toAddress(extract(params, 0*64, 64));
-            a->_to = toAddress(extract(params, 1*64, 64));
-            a->_tokenId = toWei("0x" + extract(params, 2*64, 64));
+            a->_from = str_2_Addr(extract(params, 0*64, 64));
+            a->_to = str_2_Addr(extract(params, 1*64, 64));
+            a->_tokenId = str_2_Wei("0x" + extract(params, 2*64, 64));
             items[nItems++] = "address";
             items[nItems++] = "address";
             items[nItems++] = "uint256";
@@ -114,9 +114,9 @@ const CTransaction *promoteToToken(const CTransaction *p) {
             // 0xb88d4fde
             QSafeTransferFromToke *a = new QSafeTransferFromToke;
             *(CTransaction*)a = *p;  // NOLINT
-            a->_from = toAddress(extract(params, 0*64, 64));
-            a->_to = toAddress(extract(params, 1*64, 64));
-            a->_tokenId = toWei("0x" + extract(params, 2*64, 64));
+            a->_from = str_2_Addr(extract(params, 0*64, 64));
+            a->_to = str_2_Addr(extract(params, 1*64, 64));
+            a->_tokenId = str_2_Wei("0x" + extract(params, 2*64, 64));
             a->_data = extract(params, 3*64);
             items[nItems++] = "address";
             items[nItems++] = "address";
@@ -130,7 +130,7 @@ const CTransaction *promoteToToken(const CTransaction *p) {
             // 0xa22cb465
             QSetApprovalForAll *a = new QSetApprovalForAll;
             *(CTransaction*)a = *p;  // NOLINT
-            a->_operator = toAddress(extract(params, 0*64, 64));
+            a->_operator = str_2_Addr(extract(params, 0*64, 64));
             a->_approved = str_2_Int(extract(params, 1*64, 64));
             items[nItems++] = "address";
             items[nItems++] = "bool";
@@ -142,8 +142,8 @@ const CTransaction *promoteToToken(const CTransaction *p) {
             // 0xa9059cbb
             QTransfer *a = new QTransfer;
             *(CTransaction*)a = *p;  // NOLINT
-            a->_to = toAddress(extract(params, 0*64, 64));
-            a->_value = toWei("0x" + extract(params, 1*64, 64));
+            a->_to = str_2_Addr(extract(params, 0*64, 64));
+            a->_value = str_2_Wei("0x" + extract(params, 1*64, 64));
             items[nItems++] = "address";
             items[nItems++] = "uint256";
             a->function = toFunction("transfer", params, nItems, items);
@@ -154,9 +154,9 @@ const CTransaction *promoteToToken(const CTransaction *p) {
             // 0x23b872dd
             QTransferFrom *a = new QTransferFrom;
             *(CTransaction*)a = *p;  // NOLINT
-            a->_from = toAddress(extract(params, 0*64, 64));
-            a->_to = toAddress(extract(params, 1*64, 64));
-            a->_value = toWei("0x" + extract(params, 2*64, 64));
+            a->_from = str_2_Addr(extract(params, 0*64, 64));
+            a->_to = str_2_Addr(extract(params, 1*64, 64));
+            a->_value = str_2_Wei("0x" + extract(params, 2*64, 64));
             items[nItems++] = "address";
             items[nItems++] = "address";
             items[nItems++] = "uint256";
@@ -190,34 +190,34 @@ const CLogEntry *promoteToTokenEvent(const CLogEntry *p) {
         // EXISTING_CODE
         // EXISTING_CODE
 
-        if (fromTopic(p->topics[0]) % evt_Approval_qb) {
+        if (topic_2_Str(p->topics[0]) % evt_Approval_qb) {
             // event Approval(address indexed _owner, address indexed _spender, uint256 _value)
             // 0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925
             QApprovalEvent *a = new QApprovalEvent;
             *(CLogEntry*)a = *p;  // NOLINT
-            a->_owner = toAddress(nTops > 1 ? fromTopic(p->topics[1]) : "");
-            a->_spender = toAddress(nTops > 2 ? fromTopic(p->topics[2]) : "");
-            a->_value = toWei("0x" + extract(data, 0*64, 64));
+            a->_owner = str_2_Addr(nTops > 1 ? topic_2_Str(p->topics[1]) : "");
+            a->_spender = str_2_Addr(nTops > 2 ? topic_2_Str(p->topics[2]) : "");
+            a->_value = str_2_Wei("0x" + extract(data, 0*64, 64));
             return a;
 
-        } else if (fromTopic(p->topics[0]) % evt_ApprovalForAll_qb) {
+        } else if (topic_2_Str(p->topics[0]) % evt_ApprovalForAll_qb) {
             // event ApprovalForAll(address indexed _owner, address indexed _operator, bool _approved)
             // 0x17307eab39ab6107e8899845ad3d59bd9653f200f220920489ca2b5937696c31
             QApprovalForAllEvent *a = new QApprovalForAllEvent;
             *(CLogEntry*)a = *p;  // NOLINT
-            a->_owner = toAddress(nTops > 1 ? fromTopic(p->topics[1]) : "");
-            a->_operator = toAddress(nTops > 2 ? fromTopic(p->topics[2]) : "");
+            a->_owner = str_2_Addr(nTops > 1 ? topic_2_Str(p->topics[1]) : "");
+            a->_operator = str_2_Addr(nTops > 2 ? topic_2_Str(p->topics[2]) : "");
             a->_approved = str_2_Int("0x" + extract(data, 0*64, 64));
             return a;
 
-        } else if (fromTopic(p->topics[0]) % evt_Transfer_qb) {
+        } else if (topic_2_Str(p->topics[0]) % evt_Transfer_qb) {
             // event Transfer(address indexed _from, address indexed _to, uint256 _value)
             // 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef
             QTransferEvent *a = new QTransferEvent;
             *(CLogEntry*)a = *p;  // NOLINT
-            a->_from = toAddress(nTops > 1 ? fromTopic(p->topics[1]) : "");
-            a->_to = toAddress(nTops > 2 ? fromTopic(p->topics[2]) : "");
-            a->_value = toWei("0x" + extract(data, 0*64, 64));
+            a->_from = str_2_Addr(nTops > 1 ? topic_2_Str(p->topics[1]) : "");
+            a->_to = str_2_Addr(nTops > 2 ? topic_2_Str(p->topics[2]) : "");
+            a->_value = str_2_Wei("0x" + extract(data, 0*64, 64));
             return a;
 
         }
