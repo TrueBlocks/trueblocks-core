@@ -35,11 +35,9 @@ namespace qblocks {
 
         int64_t to_long(void) const;
         int32_t to_int(void) const;
-        int16_t to_short(void) const;
 
         uint64_t to_ulong(void) const;
         uint32_t to_uint(void) const;
-        uint16_t to_ushort(void) const;
 
         int compareTo(const SFIntBN& x) const;
         bool operator==(const SFIntBN& x) const;

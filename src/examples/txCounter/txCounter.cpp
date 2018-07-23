@@ -93,7 +93,7 @@ void CCounter::countOne(const CBlock &block) {
 #else
     static SFTime last = earliestDate;
 #ifdef SUBTOTAL_BY_FIVE_MINS
-    SFTime thisOne = dateFromTimeStamp(block.timestamp);
+    SFTime thisOne = ts_2_Date(block.timestamp);
     thisOne = SFTime(thisOne.GetYear(),
                         thisOne.GetMonth(),
                         thisOne.GetDay(),
@@ -101,7 +101,7 @@ void CCounter::countOne(const CBlock &block) {
                         thisOne.GetMinute()/5,
                         0);
 #else
-    SFTime thisOne = SubtractOneDay(SubtractOneDay(BOW(dateFromTimeStamp(block.timestamp))));
+    SFTime thisOne = SubtractOneDay(SubtractOneDay(BOW(ts_2_Date(block.timestamp))));
 #endif
 #endif
 
@@ -118,7 +118,7 @@ void CCounter::countOne(const CBlock &block) {
         cerr << string_q(120, ' ') << "\r";
     }
     *os << block.blockNumber << sep
-        << dateFromTimeStamp(block.timestamp) << sep
+        << ts_2_Date(block.timestamp) << sep
         << nEmpty << sep
         << nFull << sep
         << ((double)nFull/(double)(block.blockNumber)) << sep  // NOLINT

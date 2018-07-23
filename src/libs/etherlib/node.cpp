@@ -222,7 +222,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
                                 "[" + quote(datIn) + "," + (hashesOnly ? "false" : "true") + "]", true);
         } else {
             blockStr = callRPC("eth_getBlockByNumber",
-                                "[" + quote(toHex(datIn)) + "," + (hashesOnly ? "false" : "true") + "]", true);
+                                "[" + quote(str_2_Hex(datIn)) + "," + (hashesOnly ? "false" : "true") + "]", true);
         }
         return true;
     }

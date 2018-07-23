@@ -61,7 +61,7 @@ int main(int argc, const char *argv[]) {
                     cout << "database, which is an advanced feature.\n";
 
                 } else {
-                    SFTime date = dateFromTimeStamp((timestamp_t)str_2_Uint(value));
+                    SFTime date = ts_2_Date((timestamp_t)str_2_Uint(value));
                     bool found = lookupDate(block, date);
                     if (!found) {
                         unloadCache();
@@ -95,7 +95,6 @@ static CMiniBlock *blocks = NULL;
 static uint64_t nBlocks = 0;
 static uint64_t below = ULONG_MAX;
 static uint64_t above = 0;
-#define tD(a) dateFromTimeStamp(a)
 
 //---------------------------------------------------------------
 int findFunc(const void *v1, const void *v2) {
@@ -150,7 +149,7 @@ bool lookupDate(CBlock& block, const SFTime& date) {
     }
 
     CMiniBlock mini;
-    mini.timestamp = toTimestamp(date);
+    mini.timestamp = date_2_Ts(date);
     CMiniBlock *found = reinterpret_cast<CMiniBlock*>(bsearch(&mini, blocks, nBlocks, sizeof(CMiniBlock), findFunc));
     if (found) {
         queryBlock(block, uint_2_Str(found->blockNumber), false, false);

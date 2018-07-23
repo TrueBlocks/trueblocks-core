@@ -102,13 +102,13 @@ namespace qblocks {
                         cerr << "Retrieving price history data...";
                     cerr.flush();
                 }
-                timestamp_t start = toTimestamp(nextRead);
+                timestamp_t start = date_2_Ts(nextRead);
                 // Polinex will give us as much as it has on the following day. Do this to account for time zones
-                timestamp_t end   = toTimestamp(EOD(BOND(now)));
+                timestamp_t end   = date_2_Ts(EOD(BOND(now)));
 
                 if (verbose > 1) {
-                    cerr << "start: " << dateFromTimeStamp(start) << "\n";
-                    cerr << "end: " << dateFromTimeStamp(end) << "\n";
+                    cerr << "start: " << ts_2_Date(start) << "\n";
+                    cerr << "end: " << ts_2_Date(end) << "\n";
                 }
 
                 // we need to read some data
@@ -141,18 +141,18 @@ namespace qblocks {
                 char *p = cleanUpJson((char *)response.c_str());  // NOLINT
                 while (p && *p) {
                     CPriceQuote quote;
-                    quote.timestamp = toTimestamp(SFTime(2015, 1, 1, 0, 0, 0));  // Ensures we get a good parse
+                    quote.timestamp = date_2_Ts(SFTime(2015, 1, 1, 0, 0, 0));  // Ensures we get a good parse
                     p = (*source.func)(quote, p);
 
-                    bool addToArray = (timestamp_t)quote.timestamp > toTimestamp(lastRead);
+                    bool addToArray = (timestamp_t)quote.timestamp > date_2_Ts(lastRead);
                     if (verbose > 1) {
                         cerr << "addToArray: " << addToArray
-                        << " quote: " << dateFromTimeStamp((timestamp_t)quote.timestamp)
+                        << " quote: " << ts_2_Date((timestamp_t)quote.timestamp)
                         << " lastRead: " << lastRead
-                        << " lastRead(ts): " << dateFromTimeStamp(toTimestamp(lastRead)) << "\n";
+                        << " lastRead(ts): " << ts_2_Date(date_2_Ts(lastRead)) << "\n";
                     } else {
                         if (!isTestMode())
-                            cerr << dateFromTimeStamp(quote.timestamp) << "                    \r";
+                            cerr << ts_2_Date(quote.timestamp) << "                    \r";
                     }
 
                     // So as to not inadvertantly add records we already have
@@ -163,7 +163,7 @@ namespace qblocks {
 #ifdef DEBUGGING
                             cerr << quote.Format() << "\n";
 #endif
-                            lastRead = dateFromTimeStamp((timestamp_t)quote.timestamp);
+                            lastRead = ts_2_Date((timestamp_t)quote.timestamp);
                         }
                     }
                 }

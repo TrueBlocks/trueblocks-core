@@ -215,4 +215,13 @@ namespace qblocks {
         return fileSize(fileName);
     }
 
+    void SFArchive::writeHeader(void) {
+        Seek(0, SEEK_SET);
+        m_header.m_lastWritten = date_2_Ts(Now());
+        operator<<(m_header.m_version);
+        operator<<(m_header.m_lastWritten);
+        bool unused = false;
+        operator<<(unused);
+    }
+
 }  // namespace qblocks

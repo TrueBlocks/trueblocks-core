@@ -41,7 +41,6 @@ inline string_q dateColor(uint64_t bn) {
     return bYellow;
 }
 
-inline SFTime toDate(timestamp_t ts) { return dateFromTimeStamp(ts); }
 #define toSpaces dbgBloom
 
 inline bool COptions::parseArguments(int argc, const char *argv[]) {

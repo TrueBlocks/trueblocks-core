@@ -98,7 +98,7 @@ bool buildTree(CBlock& block, void *data) {
         r->tree->insert(tr->from, uint_2_Str(block.blockNumber));
         r->tree->insert(tr->to, uint_2_Str(block.blockNumber));
     }
-    cerr << dateFromTimeStamp(block.timestamp) << " -- " << r->nBlocksVisited << ": " << r->nTransVisited << "\r";
+    cerr << ts_2_Date(block.timestamp) << " -- " << r->nBlocksVisited << ": " << r->nTransVisited << "\r";
     cerr.flush();
     return true;
 }

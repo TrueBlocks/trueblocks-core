@@ -108,7 +108,7 @@ bool CBlock::setValueByName(const string_q& fieldName, const string_q& fieldValu
             if ( fieldName % "price" ) { price = str_2_Double(fieldValue); return true; }
             break;
         case 't':
-            if ( fieldName % "timestamp" ) { timestamp = toTimestamp(fieldValue); return true; }
+            if ( fieldName % "timestamp" ) { timestamp = str_2_Ts(fieldValue); return true; }
             if ( fieldName % "transactions" ) {
                 char *p = (char *)fieldValue.c_str();  // NOLINT
                 while (p && *p) {
@@ -260,7 +260,7 @@ string_q nextBlockChunk_custom(const string_q& fieldIn, const void *dataPtr) {
             case 'd':
                 if (fieldIn % "date") {
                     timestamp_t ts = (timestamp_t)blo->timestamp;
-                    return dateFromTimeStamp(ts).Format(FMT_JSON);
+                    return ts_2_Date(ts).Format(FMT_JSON);
                 }
                 break;
             case 'n':
@@ -388,7 +388,7 @@ string_q CBlock::getValueByName(const string_q& fieldName) const {
             if ( fieldName % "price" ) return double_2_Str(price);
             break;
         case 't':
-            if ( fieldName % "timestamp" ) return fromTimestamp(timestamp);
+            if ( fieldName % "timestamp" ) return ts_2_Str(timestamp);
             if ( fieldName % "transactions" || fieldName % "transactionsCnt" ) {
                 size_t cnt = transactions.size();
                 if (endsWith(fieldName, "Cnt"))
@@ -502,3 +502,4 @@ bool CBlock::forEveryAddress(ADDRESSFUNC func, TRANSFUNC filterFunc, void *data)
 }
 // EXISTING_CODE
 }  // namespace qblocks
+

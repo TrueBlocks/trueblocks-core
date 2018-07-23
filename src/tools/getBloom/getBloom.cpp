@@ -48,28 +48,8 @@ int main(int argc, const char * argv[]) {
     return 0;
 }
 
-string_q toBits(const string_q& blIn) {
-    string_q ret = extract(toLower(blIn), 2);
-    replaceAll(ret, "0", "0000");
-    replaceAll(ret, "1", "0001");
-    replaceAll(ret, "2", "0010");
-    replaceAll(ret, "3", "0011");
-    replaceAll(ret, "4", "0100");
-    replaceAll(ret, "5", "0101");
-    replaceAll(ret, "6", "0110");
-    replaceAll(ret, "7", "0111");
-    replaceAll(ret, "8", "1000");
-    replaceAll(ret, "9", "1001");
-    replaceAll(ret, "a", "1010");
-    replaceAll(ret, "b", "1011");
-    replaceAll(ret, "c", "1100");
-    replaceAll(ret, "d", "1101");
-    replaceAll(ret, "e", "1110");
-    replaceAll(ret, "f", "1111");
-    return "0x"+ret;
-}
 string_q asBar(const string_q& blIn) {
-    return substitute(substitute(substitute(extract(toBits(blIn), 2), "0", ""), "1", "-"), "---", "🁡");
+    return substitute(substitute(substitute(extract("0x"+toBits(blIn), 2), "0", ""), "1", "-"), "---", "🁡");
 }
 
 #include "bloom_blocks.h"
