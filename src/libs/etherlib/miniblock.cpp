@@ -262,7 +262,7 @@ namespace qblocks {
 
                 CBlock block;
                 cache->blocks[i].toBlock(block);
-                SFGas gasUsed = 0;
+                gas_t gasUsed = 0;
                 for (txnum_t tr = cache->blocks[i].firstTrans ;
                         tr < cache->blocks[i].firstTrans + cache->blocks[i].nTrans;
                         tr++) {

@@ -38,7 +38,7 @@ public:
     bool deepScan;
     CIncomeStatement qbis;
     CBalanceHistoryArray balanceHistory;
-    SFWei nodeBal;
+    wei_t nodeBal;
 
 public:
     CAccountWatch(void);
@@ -56,7 +56,7 @@ public:
     string_q displayName(bool expand, bool terse, size_t w1 = 20, size_t w2 = 8) const
         { return displayName(expand, true, terse, w1, w2); }
     string_q displayName(bool expand, bool useColor, bool terse, size_t w1 = 20, size_t w2 = 8) const;
-    SFBloom bloom;
+    bloom_t bloom;
     bool inBlock;
     // EXISTING_CODE
     bool operator==(const CAccountWatch& item) const;

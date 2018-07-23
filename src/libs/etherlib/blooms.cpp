@@ -19,7 +19,7 @@
 namespace qblocks {
 
     //-------------------------------------------------------------------------
-    bool compareBlooms(const SFBloom& b1, const SFBloom& b2, string_q& str) {
+    bool compareBlooms(const bloom_t& b1, const bloom_t& b2, string_q& str) {
         if (verbose > 2) {
             str = "\n\tbits1: " + uint_2_Str(bitsTwiddled(b1)) + " bits2: " + uint_2_Str(bitsTwiddled(b2));
             string_q s1 = substitute(bloom_2_Bits(b1), "0", ".");
@@ -49,7 +49,7 @@ namespace qblocks {
     }
 
     //----------------------------------------------------------------------------------
-    bool addAddrToBloom(const address_t& addr, SFBloomArray& blooms, size_t maxBits) {
+    bool addAddrToBloom(const address_t& addr, CBloomArray& blooms, size_t maxBits) {
         // Initialize if not already
         if (blooms.size() == 0)
             blooms.push_back(0);
@@ -63,7 +63,7 @@ namespace qblocks {
     }
 
     //-----------------------------------------------------------------------
-    string_q reportBloom(const SFBloomArray& blooms) {
+    string_q reportBloom(const CBloomArray& blooms) {
         string_q ret;
         for (size_t i = 0; i < blooms.size(); i++) {
             uint64_t bits = bitsTwiddled(blooms[i]);

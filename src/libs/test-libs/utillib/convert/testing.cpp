@@ -125,10 +125,10 @@ TEST_F(CThisTest, TestConverts_1) {
 TEST_F(CThisTest, TestConverts_2) {
     cout << "Running " << testName << "\n";
 
-    SFWei one   = 1200000000;
-    SFWei two   = 1030000000;
-    SFWei three = 1004000001;
-    SFWei val = (one * two * three) + 1;
+    wei_t one   = 1200000000;
+    wei_t two   = 1030000000;
+    wei_t three = 1004000001;
+    wei_t val = (one * two * three) + 1;
 
     ASSERT_EQ("wei1", one,   1200000000);
     ASSERT_EQ("wei2", two,   1030000000);
@@ -159,7 +159,7 @@ TEST_F(CThisTest, TestConverts_3) {
     ASSERT_EQ("time6", str_2_Hex("1212"), "0x1212");
     ASSERT_EQ("time7", str_2_Gas("4000000000"), 4000000000);
     uint64_t x = 4000000000;
-    SFWei wei = x;
+    wei_t wei = x;
     wei *= x;
     ASSERT_EQ("time8", str_2_Wei("40000000004000000000"), wei);
     ASSERT_EQ("time9", str_2_Bloom("40000000004000000000"), wei);

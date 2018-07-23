@@ -27,16 +27,16 @@ namespace qblocks {
     // fastest methods to access data
     extern bool     getBlock                (CBlock& block,       blknum_t blockNum);
     extern bool     getTransaction          (CTransaction& trans, blknum_t blockNum, txnum_t txID);
-    extern bool     getReceipt              (CReceipt& receipt,   const SFHash& txHash);
-    extern bool     getLogEntry             (CLogEntry& log,      const SFHash& txHash);
-    extern void     getTraces               (CTraceArray& traces, const SFHash& txHash);
-    extern size_t   getTraceCount           (const SFHash& hashIn);
+    extern bool     getReceipt              (CReceipt& receipt,   const hash_t& txHash);
+    extern bool     getLogEntry             (CLogEntry& log,      const hash_t& txHash);
+    extern void     getTraces               (CTraceArray& traces, const hash_t& txHash);
+    extern size_t   getTraceCount           (const hash_t& hashIn);
 
     //-------------------------------------------------------------------------
     // other methods to access data
-    extern bool     getBlock                (CBlock& block,       const SFHash& blockHash);
-    extern bool     getTransaction          (CTransaction& trans, const SFHash& txHash);
-    extern bool     getTransaction          (CTransaction& trans, const SFHash& blockHash, txnum_t txID);
+    extern bool     getBlock                (CBlock& block,       const hash_t& blockHash);
+    extern bool     getTransaction          (CTransaction& trans, const hash_t& txHash);
+    extern bool     getTransaction          (CTransaction& trans, const hash_t& blockHash, txnum_t txID);
 
     //-------------------------------------------------------------------------
     extern bool     queryBlock              (CBlock& block,       const string_q& num, bool needTrace, bool byHash,
@@ -47,17 +47,17 @@ namespace qblocks {
     // lower level access to the node's responses
     extern bool     queryRawBlock           (string_q& results,   const string_q& blockNum,
                                                     bool needTrace, bool hashesOnly);
-    extern bool     queryRawTransaction     (string_q& results,   const SFHash& txHash);
-    extern bool     queryRawReceipt         (string_q& results,   const SFHash& txHash);
-    extern bool     queryRawLog             (string_q& results,   const SFHash& hashIn);
-    extern bool     queryRawTrace           (string_q& results,   const SFHash& hashIn);
+    extern bool     queryRawTransaction     (string_q& results,   const hash_t& txHash);
+    extern bool     queryRawReceipt         (string_q& results,   const hash_t& txHash);
+    extern bool     queryRawLog             (string_q& results,   const hash_t& hashIn);
+    extern bool     queryRawTrace           (string_q& results,   const hash_t& hashIn);
     extern bool     queryRawLogs            (string_q& results,   const address_t& addr,
                                                     uint64_t fromBlock, uint64_t toBlock);
 
     //-----------------------------------------------------------------------
-    extern SFHash   getRawBlock             (blknum_t bn);
-    extern SFHash   getRawBlockHash         (blknum_t bn);
-    extern SFHash   getRawTransactionHash   (blknum_t bn, txnum_t tx);
+    extern hash_t   getRawBlock             (blknum_t bn);
+    extern hash_t   getRawBlockHash         (blknum_t bn);
+    extern hash_t   getRawTransactionHash   (blknum_t bn, txnum_t tx);
 
     //-----------------------------------------------------------------------
     extern void     writeToJson             (const CBaseNode& node, const string_q& fileName);
