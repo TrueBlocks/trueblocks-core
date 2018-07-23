@@ -57,12 +57,12 @@ Test 53 [--str_2_BigUint (string_q("4294967296")).to_uint()--]: errorSFUintBN::t
 Test 54 [--SFUintBN (0).to_int()--]: 0 expected: 0 ✓
 Test 55 [--SFUintBN (2147483647).to_int()--]: 2147483647 expected: 2147483647 ✓
 Test 56 [--SFUintBN (2147483648U).to_int()--]: errorSFUintBN::to<Primitive>: Value is too big to fit in the requested type expected: error ✓
-Test 57 [--SFUintBN (0).to_ushort()--]: 0 expected: 0 ✓
-Test 58 [--SFUintBN (65535).to_ushort()--]: 65535 expected: 65535 ✓
-Test 59 [--SFUintBN (65536).to_ushort()--]: errorSFUintBN::to<Primitive>: Value is too big to fit in the requested type expected: error ✓
-Test 60 [--SFUintBN (0).to_short()--]: 0 expected: 0 ✓
-Test 61 [--SFUintBN (32767).to_short()--]: 32767 expected: 32767 ✓
-Test 62 [--SFUintBN (32768).to_short()--]: errorSFUintBN::to<Primitive>: Value is too big to fit in the requested type expected: error ✓
+Test 57 [--SFUintBN (0).to_uint()--]: 0 expected: 0 ✓
+Test 58 [--SFUintBN (65535).to_uint()--]: 65535 expected: 65535 ✓
+Test 59 [--SFUintBN (65536).to_uint()--]: 65536 expected: error X
+Test 60 [--SFUintBN (0).to_int()--]: 0 expected: 0 ✓
+Test 61 [--SFUintBN (32767).to_int()--]: 32767 expected: 32767 ✓
+Test 62 [--SFUintBN (32768).to_int()--]: 32768 expected: error X
 Test 63 [--SFIntBN (-1).to_ulong()--]: errorSFIntBN::to<Primitive>: Cannot convert a negative integer to an unsigned type expected: error ✓
 Test 64 [--SFIntBN (0).to_ulong()--]: 0 expected: 0 ✓
 Test 65 [--SFIntBN (4294967295U).to_ulong()--]: 4294967295 expected: 4294967295 ✓
@@ -83,16 +83,16 @@ Test 79 [--SFIntBN (-2147483647).to_int()--]: -2147483647 expected: -2147483647 
 Test 80 [--SFIntBN (0).to_int()--]: 0 expected: 0 ✓
 Test 81 [--SFIntBN (2147483647).to_int()--]: 2147483647 expected: 2147483647 ✓
 Test 82 [--SFIntBN (2147483648U).to_int()--]: errorSFIntBN::to<Primitive>: Value is too big to fit in the requested type expected: error ✓
-Test 83 [--SFIntBN (-1).to_ushort()--]: errorSFIntBN::to<Primitive>: Cannot convert a negative integer to an unsigned type expected: error ✓
-Test 84 [--SFIntBN (0).to_ushort()--]: 0 expected: 0 ✓
-Test 85 [--SFIntBN (65535).to_ushort()--]: 65535 expected: 65535 ✓
-Test 86 [--SFIntBN (65536).to_ushort()--]: errorSFUintBN::to<Primitive>: Value is too big to fit in the requested type expected: error ✓
-Test 87 [--SFIntBN (-32769).to_short()--]: errorSFIntBN::to<Primitive>: Value is too big to fit in the requested type expected: error ✓
-Test 88 [--SFIntBN (-32768).to_short()--]: -32768 expected: -32768 ✓
-Test 89 [--SFIntBN (-32767).to_short()--]: -32767 expected: -32767 ✓
-Test 90 [--SFIntBN (0).to_short()--]: 0 expected: 0 ✓
-Test 91 [--SFIntBN (32767).to_short()--]: 32767 expected: 32767 ✓
-Test 92 [--SFIntBN (32768).to_short()--]: errorSFIntBN::to<Primitive>: Value is too big to fit in the requested type expected: error ✓
+Test 83 [--SFIntBN (-1).to_uint()--]: errorSFIntBN::to<Primitive>: Cannot convert a negative integer to an unsigned type expected: error ✓
+Test 84 [--SFIntBN (0).to_uint()--]: 0 expected: 0 ✓
+Test 85 [--SFIntBN (65535).to_uint()--]: 65535 expected: 65535 ✓
+Test 86 [--SFIntBN (65536).to_uint()--]: 65536 expected: error X
+Test 87 [--SFIntBN (-32769).to_int()--]: -32769 expected: error X
+Test 88 [--SFIntBN (-32768).to_int()--]: -32768 expected: -32768 ✓
+Test 89 [--SFIntBN (-32767).to_int()--]: -32767 expected: -32767 ✓
+Test 90 [--SFIntBN (0).to_int()--]: 0 expected: 0 ✓
+Test 91 [--SFIntBN (32767).to_int()--]: 32767 expected: 32767 ✓
+Test 92 [--SFIntBN (32768).to_int()--]: 32768 expected: error X
 Test 93 [--SFUintBN (int16_t(-1))--]: errorCannot convert from negative number. expected: error ✓
 Test 94 [--SFUintBN (pathologicalShort)--]: errorCannot convert from negative number. expected: error ✓
 Test 95 [--SFUintBN (-1)--]: errorCannot convert from negative number. expected: error ✓

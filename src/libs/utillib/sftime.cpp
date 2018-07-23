@@ -461,9 +461,6 @@ namespace qblocks {
     }
 
     //-------------------------------------------------------------------------
-    #define str_2_Int32u(a) (uint32_t)str_2_Uint((a))
-
-    //-------------------------------------------------------------------------
     //
     // dateStr is a legal date string as defined by fmtStr.
     //
@@ -503,17 +500,17 @@ namespace qblocks {
             switch (fmtStr[i]) {
                 case 'h':
                 case 'H':
-                    hour = str_2_Int32u(nextTokenClear(str, sep));
+                    hour = (uint32_t)str_2_Uint(nextTokenClear(str, sep));
                     break;
 
                 case 'm':
                 case 'M':
-                    minute = str_2_Int32u(nextTokenClear(str, sep));
+                    minute = (uint32_t)str_2_Uint(nextTokenClear(str, sep));
                     break;
 
                 case 's':
                 case 'S':
-                    secs = str_2_Int32u(nextTokenClear(str, sep));
+                    secs = (uint32_t)str_2_Uint(nextTokenClear(str, sep));
                     break;
             }
         }
@@ -665,16 +662,16 @@ namespace qblocks {
             switch (fmtStr[i]) {
                 case 'd':
                 case 'D':
-                    day = str_2_Int32u(nextTokenClear(str, sep));
+                    day = (uint32_t)str_2_Uint(nextTokenClear(str, sep));
                     break;
                 case 'm':
                 case 'M':
-                    month = str_2_Int32u(nextTokenClear(str, sep));
+                    month = (uint32_t)str_2_Uint(nextTokenClear(str, sep));
                     break;
                 case 'y':
                 case 'Y':
                 {
-                    year = str_2_Int32u(nextTokenClear(str, sep));
+                    year = (uint32_t)str_2_Uint(nextTokenClear(str, sep));
                     char c = fmtStr.at(3);
                     ASSERT((c == '2') || (c == '4'));
                     if (c == '2' || year < 100) {
@@ -790,27 +787,6 @@ namespace qblocks {
     uint32_t getDayOfWeek(const SFTime::SFDate& date) {
         ASSERT(date.IsValid());
         return (date.GetTotalDays() % 7) + 1;
-    }
-
-    //---------------------------------------------------------------------------------------
-    SFTime parseDate(const string_q& strIn) {
-        if (strIn.empty())
-            return earliestDate;
-
-        string_q str = strIn;
-        replaceAll(str, ";", "");
-        if (str.length() != 14) {
-            str += "120000";
-        }
-
-        uint32_t y  = str_2_Int32u(extract(str,  0, 4));
-        uint32_t m  = str_2_Int32u(extract(str,  4, 2));
-        uint32_t d  = str_2_Int32u(extract(str,  6, 2));
-        uint32_t h  = str_2_Int32u(extract(str,  8, 2));
-        uint32_t mn = str_2_Int32u(extract(str, 10, 2));
-        uint32_t s  = str_2_Int32u(extract(str, 12, 2));
-
-        return SFTime(y, m, d, h, mn, s);
     }
 
     //---------------------------------------------------------------------------------------
@@ -933,36 +909,6 @@ namespace qblocks {
         while (getDayOfWeek(tm.getDatePart()) < 7)  // if it equals '7', it's Saturday 12:59:59
             ret = AddOneDay(ret);
         return ret;
-    }
-
-    //----------------------------------------------------------------------------------------------------
-    timestamp_t toTimestamp(const SFTime& timeIn) {
-        SFTime  jan1970(1970, 1, 1, 0, 0, 0);
-        if (timeIn < jan1970)
-            return 0;
-
-        int64_t j70 = jan1970.GetTotalSeconds();
-        int64_t t   = timeIn.GetTotalSeconds();
-        return (t - j70);
-    }
-
-    //----------------------------------------------------------------------------------------------------
-    SFTime dateFromTimeStamp(timestamp_t tsIn) {
-        time_t utc = tsIn;
-        tm unused;
-        struct tm *ret = gmtime_r(&utc, &unused);
-
-        char retStr[40];
-        strftime(retStr, sizeof(retStr), "%Y-%m-%d %H:%M:%S UTC", ret);
-
-        string_q str = retStr;
-        uint32_t y = str_2_Int32u(nextTokenClear(str, '-'));
-        uint32_t m = str_2_Int32u(nextTokenClear(str, '-'));
-        uint32_t d = str_2_Int32u(nextTokenClear(str, ' '));
-        uint32_t h = str_2_Int32u(nextTokenClear(str, ':'));
-        uint32_t mn = str_2_Int32u(nextTokenClear(str, ':'));
-        uint32_t s = str_2_Int32u(nextTokenClear(str, ' '));
-        return SFTime(y, m, d, h, mn, s);
     }
 
     //----------------------------------------------------------------------------------------------------

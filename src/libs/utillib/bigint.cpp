@@ -182,10 +182,8 @@ namespace qblocks {
     //------------------------------------------------------------
     int64_t  SFIntBN::to_long(void) const   { return convertToSignedPrimitive<int64_t, uint64_t>(); }
     int32_t  SFIntBN::to_int(void) const    { return convertToSignedPrimitive<int32_t, uint32_t>(); }
-    int16_t  SFIntBN::to_short(void) const  { return convertToSignedPrimitive<int16_t, uint16_t>(); }
     uint64_t SFIntBN::to_ulong(void) const  { return convertToUnsignedPrimitive<uint64_t>(); }
     uint32_t SFIntBN::to_uint(void) const   { return convertToUnsignedPrimitive<uint32_t>(); }
-    uint16_t SFIntBN::to_ushort(void) const { return convertToUnsignedPrimitive<uint16_t>(); }
 
     //------------------------------------------------------------
     int SFIntBN::compareTo(const SFIntBN &x) const {

@@ -462,7 +462,7 @@ namespace qblocks {
                 } else if (field.m_fieldType & TS_NUMERAL) {
                     if (expContext().quoteNums)
                         ret += "\"";
-                    ret += (expContext().hexNums) ? toHex(val) : val;
+                    ret += (expContext().hexNums) ? str_2_Hex(val) : val;
                     if (expContext().quoteNums)
                         ret += "\"";
 
@@ -532,7 +532,7 @@ namespace qblocks {
                     string_q val = getValueByName(name);
                     bool isNum = field.m_fieldType & TS_NUMERAL;
                     if (isNum && expContext().hexNums && !startsWith(val, "0x"))
-                        val = toHex(val);
+                        val = str_2_Hex(val);
                     bool quote = (!isNum || expContext().quoteNums) && val != "null";
                     if (quote)
                         os << "\"";

@@ -59,15 +59,7 @@ namespace qblocks {
             return m_isReading;
         }
 
-        void writeHeader(void) {
-            Seek(0, SEEK_SET);
-            m_header.m_lastWritten = toTimestamp(Now());
-            operator<<(m_header.m_version);
-            operator<<(m_header.m_lastWritten);
-            bool unused = false;
-            operator<<(unused);
-        }
-
+        void writeHeader(void);
         void readHeader(void) {
             Seek(0, SEEK_SET);
             operator>>(m_header.m_version);

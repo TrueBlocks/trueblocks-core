@@ -45,9 +45,9 @@ bool COptions::parseArguments(string_q& command) {
         } else if (startsWith(arg, "-a:") || startsWith(arg, "--at:")) {
             arg = substitute(substitute(orig, "-a:", ""), "--at:", "");
             if (arg == "now") {
-                at = toTimestamp(Now());
+                at = date_2_Ts(Now());
             } else {
-                at = toTimestamp(arg);
+                at = str_2_Ts(arg);
                 if (!isUnsigned(arg))
                     return usage("Timestamp expected: " + orig);
             }
