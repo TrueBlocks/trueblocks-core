@@ -55,18 +55,18 @@ TEST_F(CThisTest, TestConverts_0) {
     ASSERT_EQ("ulong overflow",          str_2_Uint(array[4]), 0);
     cout << "\n";
 
-    ASSERT_EQ("str_2_Hash1",                 str_2_Hash("12312ABcdE12"),   "0x000000000000000000000000000000000000000000000000000012312abcde12");
-    ASSERT_EQ("str_2_Hash2",                 str_2_Hash("a"),              "0x000000000000000000000000000000000000000000000000000000000000000a");
-    ASSERT_EQ("str_2_Hash3",                 str_2_Hash("0x"),             "0x0");
-    ASSERT_EQ("str_2_Hash4",                 str_2_Hash(""),               "0x0");
-    ASSERT_EQ("str_2_Hash5",                 str_2_Hash("0x12312abcde12"), "0x000000000000000000000000000000000000000000000000000012312abcde12");
+    ASSERT_EQ("str_2_Hash1",             str_2_Hash("12312ABcdE12"),   "0x000000000000000000000000000000000000000000000000000012312abcde12");
+    ASSERT_EQ("str_2_Hash2",             str_2_Hash("a"),              "0x000000000000000000000000000000000000000000000000000000000000000a");
+    ASSERT_EQ("str_2_Hash3",             str_2_Hash("0x"),             "0x0");
+    ASSERT_EQ("str_2_Hash4",             str_2_Hash(""),               "0x0");
+    ASSERT_EQ("str_2_Hash5",             str_2_Hash("0x12312abcde12"), "0x000000000000000000000000000000000000000000000000000012312abcde12");
     cout << "\n";
 
-    ASSERT_EQ("str_2_Addr1",              str_2_Addr("12312ABcdE12"),   "0x000000000000000000000000000012312abcde12");
-    ASSERT_EQ("str_2_Addr2",              str_2_Addr("a"),              "0x000000000000000000000000000000000000000a");
-    ASSERT_EQ("str_2_Addr3",              str_2_Addr("0x"),             "0x0");
-    ASSERT_EQ("str_2_Addr4",              str_2_Addr(""),               "0x0");
-    ASSERT_EQ("str_2_Addr5",              str_2_Addr("0x12312abcde12"), "0x000000000000000000000000000012312abcde12");
+    ASSERT_EQ("str_2_Addr1",             str_2_Addr("12312ABcdE12"),   "0x000000000000000000000000000012312abcde12");
+    ASSERT_EQ("str_2_Addr2",             str_2_Addr("a"),              "0x000000000000000000000000000000000000000a");
+    ASSERT_EQ("str_2_Addr3",             str_2_Addr("0x"),             "0x0");
+    ASSERT_EQ("str_2_Addr4",             str_2_Addr(""),               "0x0");
+    ASSERT_EQ("str_2_Addr5",             str_2_Addr("0x12312abcde12"), "0x000000000000000000000000000012312abcde12");
     cout << "\n";
 
     ASSERT_EQ("timestamp empty address", str_2_Ts(array[0]), 0);
@@ -154,6 +154,16 @@ TEST_F(CThisTest, TestConverts_3) {
     SFTime date = ts_2_Date(ts);
     ASSERT_EQ("time3", date, SFTime(2018,01,30,13,41,33));
     ASSERT_EQ("time4", date_2_Ts(date), ts);
+
+    ASSERT_EQ("time5", str_2_Bool("1"), true);
+    ASSERT_EQ("time6", str_2_Hex("1212"), "0x1212");
+    ASSERT_EQ("time7", str_2_Gas("4000000000"), 4000000000);
+    uint64_t x = 4000000000;
+    SFWei wei = x;
+    wei *= x;
+    ASSERT_EQ("time8", str_2_Wei("40000000004000000000"), wei);
+    ASSERT_EQ("time9", str_2_Bloom("40000000004000000000"), wei);
+    ASSERT_EQ("timeA", str_2_Topic("40000000004000000000"), wei);
 
     return subTestID==0;
 }}
