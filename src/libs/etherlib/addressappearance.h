@@ -29,7 +29,7 @@ class CAddressAppearance {
     blknum_t tx;
     blknum_t tc;
 public:
-    SFAddress addr;
+    address_t addr;
     string_q reason;
     CAddressAppearance(void) : bn(0), tx(0), tc(0), addr(""), reason("") { }
     CAddressAppearance(const CAddressAppearance& item)
@@ -42,7 +42,7 @@ public:
         reason = item.reason;
         return *this;
     }
-    CAddressAppearance(blknum_t b, blknum_t x, blknum_t c, const SFAddress& a, const string_q r)
+    CAddressAppearance(blknum_t b, blknum_t x, blknum_t c, const address_t& a, const string_q r)
         : bn(b), tx(x), tc(c), addr(a), reason(r) { }
     friend bool operator<(const CAddressAppearance& v1, const CAddressAppearance& v2) {
         return v1.addr < v2.addr;
@@ -60,7 +60,7 @@ typedef vector<CAddressAppearance> CAddressAppearanceArray;
 typedef bool (*ADDRESSFUNC)(const CAddressAppearance& item, void *data);
 typedef bool (*TRANSFUNC)(const CTransaction *trans, void *data);
 
-extern bool isPotentialAddr(SFUintBN test, SFAddress& addrOut);
+extern bool isPotentialAddr(SFUintBN test, address_t& addrOut);
 extern void potentialAddr(ADDRESSFUNC func, void *data, const CAddressAppearance& item, const string_q& potList);
 }  // namespace qblocks
 

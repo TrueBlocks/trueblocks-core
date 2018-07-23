@@ -25,7 +25,7 @@
 //--------------------------------------------------------------------------
 class QApprove : public CTransaction {
 public:
-    SFAddress _spender;
+    address_t _spender;
     SFUintBN _value;
 
 public:

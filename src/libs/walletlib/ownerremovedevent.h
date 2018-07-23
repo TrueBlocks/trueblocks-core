@@ -25,7 +25,7 @@
 //--------------------------------------------------------------------------
 class QOwnerRemovedEvent : public CLogEntry {
 public:
-    SFAddress oldOwner;
+    address_t oldOwner;
 
 public:
     QOwnerRemovedEvent(void);

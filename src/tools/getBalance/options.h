@@ -21,7 +21,7 @@ public:
     blknum_t earliestBlock;
     SFUintBN totalVal;
     SFUintBN lastBal;
-    SFAddress curAddr;
+    address_t curAddr;
     CState(void) { needsNewline = true; latestBlock = getLatestBlockFromClient(); totalVal = 0; lastBal = 0; }
 };
 
@@ -30,7 +30,7 @@ class COptions : public CBlockOptions {
 public:
     map<blknum_t, timestamp_t> timestampMap;
     CState state;
-    SFAddressArray addrs;
+    CAddressArray addrs;
     bool asData;
     bool noZero;
     bool total;

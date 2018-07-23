@@ -25,7 +25,7 @@
 //--------------------------------------------------------------------------
 class QSetApprovalForAll : public CTransaction {
 public:
-    SFAddress _operator;
+    address_t _operator;
     bool _approved;
 
 public:

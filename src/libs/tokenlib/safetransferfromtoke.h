@@ -25,8 +25,8 @@
 //--------------------------------------------------------------------------
 class QSafeTransferFromToke : public CTransaction {
 public:
-    SFAddress _from;
-    SFAddress _to;
+    address_t _from;
+    address_t _to;
     SFUintBN _tokenId;
     string_q _data;
 

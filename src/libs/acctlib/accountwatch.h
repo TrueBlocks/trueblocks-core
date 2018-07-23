@@ -30,7 +30,7 @@ namespace qblocks {
 //--------------------------------------------------------------------------
 class CAccountWatch : public CBaseNode {
 public:
-    SFAddress address;
+    address_t address;
     string_q name;
     string_q color;
     blknum_t firstBlock;
@@ -179,7 +179,7 @@ extern SFArchive& operator<<(SFArchive& archive, const CAccountWatchArray& array
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-extern SFUintBN getNodeBal(CBalanceHistoryArray& history, const SFAddress& addr, blknum_t blockNum);
+extern SFUintBN getNodeBal(CBalanceHistoryArray& history, const address_t& addr, blknum_t blockNum);
 extern void loadWatchList(const CToml& toml, CAccountWatchArray& watches, const string_q& key);
 // EXISTING_CODE
 }  // namespace qblocks

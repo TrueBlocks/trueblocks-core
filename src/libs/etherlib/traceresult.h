@@ -27,7 +27,7 @@ namespace qblocks {
 //--------------------------------------------------------------------------
 class CTraceResult : public CBaseNode {
 public:
-    SFAddress address;
+    address_t address;
     string_q code;
     SFGas gasUsed;
     string_q output;

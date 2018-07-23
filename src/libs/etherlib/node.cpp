@@ -275,7 +275,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
     }
 
     //-------------------------------------------------------------------------
-    bool queryRawLogs(string_q& results, const SFAddress& addr, uint64_t fromBlock, uint64_t toBlock) {
+    bool queryRawLogs(string_q& results, const address_t& addr, uint64_t fromBlock, uint64_t toBlock) {
         string_q data = "[{\"fromBlock\":\"[START]\",\"toBlock\":\"[STOP]\", \"address\": \"[ADDR]\"}]";
         replace(data, "[START]", uint_2_Hex(fromBlock));
         replace(data, "[STOP]",  uint_2_Hex(toBlock));
@@ -290,7 +290,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
     }
 
     //-------------------------------------------------------------------------
-    bool getAccounts(SFAddressArray& addrs) {
+    bool getAccounts(CAddressArray& addrs) {
         string_q results = callRPC("eth_accounts", "[]", false);
         while (!results.empty())
             addrs.push_back(nextTokenClear(results, ','));

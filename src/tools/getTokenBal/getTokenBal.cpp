@@ -16,7 +16,7 @@
 
 void reportByToken(COptions& options);
 void reportByAccount(COptions& options);
-extern SFUintBN getTokenInfo(const string_q& value, const SFAddress& token, const SFAddress& holder, blknum_t blockNum);
+extern SFUintBN getTokenInfo(const string_q& value, const address_t& token, const address_t& holder, blknum_t blockNum);
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
@@ -60,14 +60,14 @@ void reportByToken(COptions& options) {
     // For each token contract
     string_q tokens = options.tokens;
     while (!tokens.empty()) {
-        SFAddress token = nextTokenClear(tokens, '|');
+        address_t token = nextTokenClear(tokens, '|');
         if (!options.asData)
             cout << "\n  For token contract: " << bBlue << token << cOff << "\n";
 
         // For each holder
         string_q holders = options.holders;
         while (!holders.empty()) {
-            SFAddress holder = nextTokenClear(holders, '|');
+            address_t holder = nextTokenClear(holders, '|');
 
             // For each block
             string_q blocks = options.getBlockNumList();
@@ -140,14 +140,14 @@ void reportByAccount(COptions& options) {
     // For each holder
     string_q holders = options.holders;
     while (!holders.empty()) {
-        SFAddress holder = nextTokenClear(holders, '|');
+        address_t holder = nextTokenClear(holders, '|');
         if (!options.asData)
             cout << "\n  For account: " << bBlue << holder << cOff << "\n";
 
         // For each token contract
         string_q tokens = options.tokens;
         while (!tokens.empty()) {
-            SFAddress token = nextTokenClear(tokens, '|');
+            address_t token = nextTokenClear(tokens, '|');
 
             // For each block
             string_q blocks = options.getBlockNumList();
@@ -210,7 +210,7 @@ void reportByAccount(COptions& options) {
 }
 
 //-------------------------------------------------------------------------
-SFUintBN getTokenInfo(const string_q& value, const SFAddress& token, const SFAddress& holder, blknum_t blockNum) {
+SFUintBN getTokenInfo(const string_q& value, const address_t& token, const address_t& holder, blknum_t blockNum) {
 
     ASSERT(isAddress(token));
     ASSERT(isAddress(holder));

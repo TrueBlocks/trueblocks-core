@@ -44,7 +44,7 @@ bool accumulateAddresses(const CAddressAppearance& item, void *data) {
 }
 
 //---------------------------------------------------------------------------
-bool isPotentialAddr(SFUintBN test, SFAddress& addrOut) {
+bool isPotentialAddr(SFUintBN test, address_t& addrOut) {
 
     addrOut = "";
 
@@ -73,7 +73,7 @@ void potentialAddr(ADDRESSFUNC func, void *data, const CAddressAppearance& item,
         return;
 
     // Pull out 32-byte chunks and check to see if they are addresses
-    SFAddress addr;
+    address_t addr;
     for (size_t s = 0 ; s < potList.length() / 64 ; s++) {
         SFUintBN test = str_2_Wei("0x" + extract(potList, s*64, 64));
         if (isPotentialAddr(test, addr)) {
@@ -85,7 +85,7 @@ void potentialAddr(ADDRESSFUNC func, void *data, const CAddressAppearance& item,
 }
 
 //---------------------------------------------------------------------------
-void foundOne(ADDRESSFUNC func, void *data, blknum_t bn, blknum_t tx, blknum_t tc, const SFAddress& addr, const string_q& reason) {  // NOLINT
+void foundOne(ADDRESSFUNC func, void *data, blknum_t bn, blknum_t tx, blknum_t tc, const address_t& addr, const string_q& reason) {  // NOLINT
     CAddressAppearance item(bn, tx, tc, addr, reason);
     (*func)(item, data);
 }

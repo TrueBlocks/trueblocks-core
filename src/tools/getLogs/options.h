@@ -17,7 +17,7 @@
 class COptions : public COptionsBase {
 public:
     COptionsTransList transList;
-    SFAddress address_list;
+    string_q address_list;
     bool isRaw;
 
     COptions(void);

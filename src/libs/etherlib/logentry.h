@@ -29,7 +29,7 @@ class CReceipt;
 //--------------------------------------------------------------------------
 class CLogEntry : public CBaseNode {
 public:
-    SFAddress address;
+    address_t address;
     string_q data;
     uint64_t logIndex;
     SFTopicArray topics;

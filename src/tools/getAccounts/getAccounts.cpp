@@ -12,7 +12,7 @@
  *-------------------------------------------------------------------------------------------*/
 #include "options.h"
 
-extern void readCustomAddrs(SFAddressArray& array);
+extern void readCustomAddrs(CAddressArray& array);
 //-----------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
@@ -29,7 +29,7 @@ int main(int argc, const char *argv[]) {
         if (!options.parseArguments(command))
             return 0;
 
-        SFAddressArray addrs;
+        CAddressArray addrs;
         if (options.named) {
             for (size_t i = 0 ; i < options.namedAccounts.size() ; i++)
                 addrs.push_back(options.namedAccounts[i].addr);
@@ -56,7 +56,7 @@ int main(int argc, const char *argv[]) {
 }
 
 //-----------------------------------------------------------------------
-void readCustomAddrs(SFAddressArray& array) {
+void readCustomAddrs(CAddressArray& array) {
     size_t n = getGlobalConfig()->getConfigInt("extra_accounts", "n", 0);
     for (size_t i = 0 ; i < n ; i++) {
         string_q addr = getGlobalConfig()->getConfigStr("extra_accounts", "ea_" + uint_2_Str(i), "");

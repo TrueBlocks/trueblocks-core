@@ -25,8 +25,8 @@
 //--------------------------------------------------------------------------
 class QApprovalEvent : public CLogEntry {
 public:
-    SFAddress _owner;
-    SFAddress _spender;
+    address_t _owner;
+    address_t _spender;
     SFUintBN _value;
 
 public:

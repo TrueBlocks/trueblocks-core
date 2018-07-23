@@ -25,7 +25,7 @@
 //--------------------------------------------------------------------------
 class QConfirmationEvent : public CLogEntry {
 public:
-    SFAddress owner;
+    address_t owner;
     string_q operation;
 
 public:

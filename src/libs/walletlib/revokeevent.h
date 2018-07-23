@@ -25,7 +25,7 @@
 //--------------------------------------------------------------------------
 class QRevokeEvent : public CLogEntry {
 public:
-    SFAddress owner;
+    address_t owner;
     string_q operation;
 
 public:

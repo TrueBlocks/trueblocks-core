@@ -25,7 +25,7 @@
 //--------------------------------------------------------------------------
 class QIsOwner : public CTransaction {
 public:
-    SFAddress _addr;
+    address_t _addr;
 
 public:
     QIsOwner(void);

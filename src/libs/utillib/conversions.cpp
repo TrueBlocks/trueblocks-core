@@ -159,7 +159,7 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    SFAddress str_2_Addr(const string_q& str) {
+    address_t str_2_Addr(const string_q& str) {
         if (isZeroAddr(str))
             return "0x0";
 
@@ -247,7 +247,7 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    string_q addr_2_Str(const SFAddress& addr) {
+    string_q addr_2_Str(const address_t& addr) {
         return (addr.empty() ? "0x0" : addr);
     }
 
@@ -279,7 +279,7 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    bool isZeroAddr(const SFAddress& addr) {
+    bool isZeroAddr(const address_t& addr) {
         return isZeroHash(addr);
     }
 
@@ -302,7 +302,7 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    bool isAddress(const SFAddress& addrIn) {
+    bool isAddress(const address_t& addrIn) {
         return (addrIn.length() == 42 && isHexStr(addrIn));
     }
 

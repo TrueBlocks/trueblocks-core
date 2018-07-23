@@ -71,7 +71,7 @@ void addIfUnique(const string_q& addr, CFunctionArray& functions, CFunction& fun
 }
 
 //-----------------------------------------------------------------------
-string_q acquireABI(CFunctionArray& functions, const SFAddress& addr, const COptions& opt, bool builtIn) {
+string_q acquireABI(CFunctionArray& functions, const address_t& addr, const COptions& opt, bool builtIn) {
 
     string_q results, ret;
     string_q fileName = blockCachePath("abis/" + addr + ".json");

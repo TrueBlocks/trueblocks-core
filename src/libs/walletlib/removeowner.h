@@ -25,7 +25,7 @@
 //--------------------------------------------------------------------------
 class QRemoveOwner : public CTransaction {
 public:
-    SFAddress _owner;
+    address_t _owner;
 
 public:
     QRemoveOwner(void);
